@@ -104,7 +104,7 @@ var/list/xp_archive = list()
 				archive_xp(key, field_name, actual)
 	return
 //Wrapper for awarding exp without actually adding it to the byond medals database
-/proc/award_xp_local(var/key = null, var/field_name="debug", var/amount = 0, var/ignore_caps=0)
+/proc/award_xp_archive(var/key = null, var/field_name="debug", var/amount = 0, var/ignore_caps=0)
 	if(!key) return null
 	var/actual = round(amount * XP_GLOBAL_MOD)
 
@@ -118,6 +118,29 @@ var/list/xp_archive = list()
 				add_xp_throttle_entry(key, actual)
 				archive_xp(key, field_name, actual)
 	return
+
+//Saves the xp gained by players in this round into the byond scores db
+var/global/awarded_xp = 0
+/proc/award_archived_round_xp()
+	if (awarded_xp)
+		message_admins()
+		logTheThing("debug", null, null, "Tried to award job exp for the round more than once. Probably some fuckery is going on.")
+		return
+	if (!islist(xp_archive))
+		return
+	awarded_xp = 1
+
+	for (var/key in xp_archive)
+		var/list/v_list = xp_archive[key]
+		for (var/field in v_list)		//field is the job. Botanist, Clown, etc.
+
+			//This conditional is for testing, which I am doing with the "Botanist" job.
+			if (field != "Botanist") continue
+			//////////////////////////////////////////////////////////////////////////////
+
+			var/amt = v_list["[field]"]
+			add_xp(key, field, amt)
+
 //wrapper for set_xp
 /proc/add_xp(var/key = null, var/field_name="debug", var/amount = 0)
 	if(!key) return null
