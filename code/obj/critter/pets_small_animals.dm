@@ -335,11 +335,8 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 		return
 
 	CritterDeath()
-		src.alive = 0
-		set_density(0)
+		..()
 		src.icon_state = "cat[cattype]-dead"
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> dies!")
 		if(prob(5))
 			SPAWN_DBG(3 SECONDS)
 				src.visible_message("<b>[src]</b> comes back to life, good thing he has 9 lives!")
@@ -462,6 +459,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	firevuln = 1
 	brutevuln = 1
 	angertext = "growls at"
+	death_text = null // he's just asleep
 	atk_brute_amt = 2
 	crit_brute_amt = 4
 	chase_text = "jumps on"
@@ -533,10 +531,8 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 		return
 
 	CritterDeath()
-		src.alive = 0
-		set_density(0)
+		..()
 		src.icon_state = "[src.doggy]-lying"
-		walk_to(src,0)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='combat'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!</span>")
 		SPAWN_DBG(1 MINUTE)

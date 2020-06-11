@@ -346,12 +346,8 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 
 	CritterDeath()
 		if (!src.alive) return
-		src.icon_state = "meatboss_dead"
-		src.alive = 0
-		src.anchored = 1
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> dies!")
-
+		..()
+		src.icon_state = "meatboss_dead" // why can't you just use a - like everyone else
 
 	ai_think()
 		if(task == "chasing")
@@ -492,6 +488,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 
 /obj/critter/blobman/meaty_martha
 	generic = 0
+	death_text = "%src% collapses into viscera..."
 
 	New()
 		..()
@@ -535,7 +532,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 
 	CritterDeath()
 		if (!src.alive) return
-		src.visible_message("<b>[src]</b> collapses into viscera...")
+		..()
 		if (src.loc)
 			gibs(src.loc)
 		qdel(src)

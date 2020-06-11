@@ -1322,7 +1322,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			M.changeStatus("weakened", 2 SECONDS)
 			random_brute_damage(M, rand(1,2))
 	CritterDeath()
-		src.alive = 0
+		..()
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
 		var/obj/decal/cleanable/blood/gibs/gib = null
 		gib = make_cleanable(/obj/decal/cleanable/blood/gibs,src.loc)

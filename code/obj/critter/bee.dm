@@ -1553,11 +1553,7 @@
 			..()
 
 	CritterDeath()
-		src.alive = 0
-		set_density(0)
-		src.icon_state = "[initial(src.icon_state)]-dead"
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> dies!")
+		..()
 
 		modify_christmas_cheer(-5)
 		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src))
