@@ -340,7 +340,7 @@
 
 //Do stamina damage + disorient above 0 stamina. Stun/Weaken/Paralyze when we hit or drop below 0.
 /mob/living/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY)
-	if(!src.use_stamina) return
+	if(!src.use_stamina) return ..()
 	var/protection = 0
 
 	if (target_type & DISORIENT_BODY)
