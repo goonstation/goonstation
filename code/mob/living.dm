@@ -366,11 +366,12 @@
 		if ("resist")
 			src.resist()
 		if ("rest")
-			if(src.ai_active && !src.hasStatus("resting"))
-				src.show_text("You feel too restless to do that!", "red")
-			else
-				src.hasStatus("resting") ? src.delStatus("resting") : src.setStatus("resting", INFINITE_STATUS)
-				src.force_laydown_standup()
+			if (can_lie)
+				if(src.ai_active && !src.hasStatus("resting"))
+					src.show_text("You feel too restless to do that!", "red")
+				else
+					src.hasStatus("resting") ? src.delStatus("resting") : src.setStatus("resting", INFINITE_STATUS)
+					src.force_laydown_standup()
 
 		if ("SHIFT")//bEGIN A SPRINT
 			if (!src.client.tg_controls)
