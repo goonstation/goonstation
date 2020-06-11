@@ -337,6 +337,20 @@
 			src.say_radio()
 		if ("resist")
 			src.resist()
+		if ("rest")
+			if(src.ai_active && !src.hasStatus("resting"))
+				src.show_text("You feel too restless to do that!", "red")
+			else
+				src.hasStatus("resting") ? src.delStatus("resting") : src.setStatus("resting", INFINITE_STATUS)
+				src.force_laydown_standup()
+
+		if ("SHIFT")//bEGIN A SPRINT
+			if (!src.client.tg_controls)
+				start_sprint()
+			//else //indicate i am sprinting pls
+		if ("SPACE")
+			if (src.client.tg_controls)
+				start_sprint()
 		else
 			return ..()
 
@@ -1496,8 +1510,12 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 
 //this lets subtypes of living alter their movement delay WITHIN that big proc above - not before or after (which would fuck up the numbers greatly)
+//note : subtypes should not call this parent
 /mob/living/proc/special_movedelay_mod(delay,space_movement,aquatic_movement)
 	.= delay
+	if (src.lying)
+		. += 14
+
 
 /mob/living/critter/keys_changed(keys, changed)
 	..()

@@ -893,15 +893,6 @@
 			src.zone_sel.select_zone("l_leg")
 		if ("r_leg")
 			src.zone_sel.select_zone("r_leg")
-
-		//lol
-		if ("SHIFT")//bEGIN A SPRINT
-			if (!src.client.tg_controls)
-				start_sprint()
-			//else //indicate i am sprinting pls
-		if ("SPACE")
-			if (src.client.tg_controls)
-				start_sprint()
 		else
 			return ..()
 

@@ -400,11 +400,14 @@
 			return
 		return ..()
 
-	movement_delay()
+	//just adjust by whatever the critter var says the movedelay should be
+	special_movedelay_mod(delay,space_movement,aquatic_movement)
+		.= delay
 		if (src.m_intent == "walk")
-			return src.base_walk_delay + movement_delay_modifier
+			. += BASE_SPEED - src.base_walk_delay
 		else
-			return src.base_move_delay + movement_delay_modifier
+			. += (BASE_SPEED + WALK_DELAY_ADD) - src.base_move_delay
+
 
 	Move(var/turf/NewLoc, direct)
 		if (!src.lying && isturf(NewLoc) && NewLoc.turf_flags & MOB_STEP)
