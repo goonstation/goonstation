@@ -80,7 +80,7 @@
 	..()
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/blood)
-	add_lifeprocess(/datum/lifeprocess/bodytemp)
+	//add_lifeprocess(/datum/lifeprocess/bodytemp) //maybe enable per-critter
 	add_lifeprocess(/datum/lifeprocess/breath)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
