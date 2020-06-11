@@ -48,7 +48,7 @@
 
 	var/can_bleed = 1
 	blood_id = "blood"
-	var/blood_volume = 300
+	var/blood_volume = 500
 	var/blood_pressure = null
 	var/blood_color = DEFAULT_BLOOD_COLOR
 	var/bleeding = 0
@@ -112,7 +112,7 @@
 	blood_volume = 500
 
 /mob/living/proc/add_shit()
-	add_lifeprocess(/datum/lifeprocess/arrest_icon)
+	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/blood)
 	add_lifeprocess(/datum/lifeprocess/bodytemp)
@@ -133,9 +133,27 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
 
+/mob/living/critter/New()
+	..()
+	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/blood)
+	add_lifeprocess(/datum/lifeprocess/bodytemp)
+	add_lifeprocess(/datum/lifeprocess/breath)
+	add_lifeprocess(/datum/lifeprocess/canmove)
+	add_lifeprocess(/datum/lifeprocess/chems)
+	add_lifeprocess(/datum/lifeprocess/disability)
+	add_lifeprocess(/datum/lifeprocess/fire)
+	add_lifeprocess(/datum/lifeprocess/hud)
+	add_lifeprocess(/datum/lifeprocess/mutations)
+	add_lifeprocess(/datum/lifeprocess/organs)
+	add_lifeprocess(/datum/lifeprocess/sight)
+	add_lifeprocess(/datum/lifeprocess/skin)
+	add_lifeprocess(/datum/lifeprocess/statusupdate)
+	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+
 /mob/living/carbon/human/New()
 	..()
-	add_lifeprocess(/datum/lifeprocess/arrest_icon)
+	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/blood)
 	add_lifeprocess(/datum/lifeprocess/bodytemp)
@@ -256,7 +274,9 @@
 
 		///LIFE PROCESS
 		//Most stuff gets handled here but i've left some other code below because all living mobs can use it
-		for (var/datum/lifeprocess/L in src.lifeprocesses)
+		for (var/thing in src.lifeprocesses)
+			if (!thing) continue
+			var/datum/lifeprocess/L = src.lifeprocesses[thing]
 			L.process(environment)
 
 		for (var/obj/item/implant/I in src.implant)

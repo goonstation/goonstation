@@ -125,7 +125,7 @@
 				if (robot_owner.mind && robot_owner.mind.special_role)
 					robot_owner.handle_robot_antagonist_status("death", 1) // Mindslave or rogue (Convair880).
 
-				robot_owner.visible_message("<b>[src]</b> falls apart with no chest to keep it together!")
+				robot_owner.visible_message("<b>[owner]</b> falls apart with no chest to keep it together!")
 				logTheThing("combat", robot_owner, null, "was destroyed at [log_loc(robot_owner)].") // Brought in line with carbon mobs (Convair880).
 
 				if (robot_owner.part_arm_l)
@@ -181,9 +181,9 @@
 				if (robot_owner.mind && robot_owner.mind.special_role)
 					robot_owner.handle_robot_antagonist_status("death", 1) // Mindslave or rogue (Convair880).
 
-				robot_owner.visible_message("<b>[src]</b> completely stops moving and shuts down...")
+				robot_owner.visible_message("<b>[owner]</b> completely stops moving and shuts down...")
 				robot_owner.borg_death_alert()
-				logTheThing("combat", src, null, "was destroyed at [log_loc(robot_owner)].") // Ditto (Convair880).
+				logTheThing("combat", owner, null, "was destroyed at [log_loc(robot_owner)].") // Ditto (Convair880).
 
 				var/mob/dead/observer/newmob = robot_owner.ghostize()
 				if (newmob)

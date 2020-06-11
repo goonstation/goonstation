@@ -296,7 +296,7 @@
 		if (prob(15) && (FARD_pp > fart_smell_min))
 			boutput(owner, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
 			if ((FARD_pp > fart_vomit_min) && prob(50))
-				owner.visible_message("<span class='notice'>[src] vomits from the [pick("stink","stench","awful odor")]!!</span>")
+				owner.visible_message("<span class='notice'>[owner] vomits from the [pick("stink","stench","awful odor")]!!</span>")
 				owner.vomit()
 		if (FARD_pp > fart_choke_min)
 			owner.take_oxygen_deprivation(6.9 * mult)

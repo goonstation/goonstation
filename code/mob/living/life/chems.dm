@@ -15,7 +15,7 @@
 				owner.reagents.remove_reagent("blood", blood2absorb)
 				owner.blood_volume += blood2absorb
 			if (owner.metabolizes)
-				owner.reagents.metabolize(src, multiplier = reagent_time_multiplier)
+				owner.reagents.metabolize(owner, multiplier = reagent_time_multiplier)
 
 		if (owner.nutrition > owner.blood_volume)
 			owner.nutrition = owner.blood_volume

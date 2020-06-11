@@ -4,7 +4,7 @@
 		if (!owner.client) return ..()
 
 		//proc/handle_regular_hud_updates()
-		if (owner.stamina_bar) owner.stamina_bar.update_value(src)
+		if (owner.stamina_bar) owner.stamina_bar.update_value(owner)
 		//hud.update_indicators()
 
 
@@ -90,7 +90,7 @@
 					//G.updateIcons()
 		else
 			if (owner.druggy)
-				human_owner.vision.animate_color_mod(rgb(rand(0, 255), rand(0, 255), rand(0, 255)), 15)
+				owner.vision.animate_color_mod(rgb(rand(0, 255), rand(0, 255), rand(0, 255)), 15)
 			else
-				human_owner.vision.set_color_mod("#FFFFFF")
+				owner.vision.set_color_mod("#FFFFFF")
 		..()

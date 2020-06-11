@@ -1211,7 +1211,7 @@ datum
 				src = null
 				if(!volume_passed)
 					return
-				if(!ishuman(M)) // fucking human shitfucks
+				if(!isliving(M)) // fucking human shitfucks
 					return
 				if(method == TOUCH)
 					M.HealDamage("All", volume_passed, 0)
@@ -1224,11 +1224,10 @@ datum
 						if(!istype(affecting, /obj/item/organ))    continue
 						affecting.heal_damage(volume_passed, 0)*/
 
-					if (ishuman(M))
-						var/mob/living/carbon/human/H = M
-						if (H.bleeding)
-							repair_bleeding_damage(H, 90, rand(1,3))
-							//H.bleeding = min(H.bleeding, rand(0,5))
+					var/mob/living/L = M
+					if (L.bleeding)
+						repair_bleeding_damage(L, 90, rand(1,3))
+						//H.bleeding = min(H.bleeding, rand(0,5))
 
 					var/silent = 0
 					if (paramslist && paramslist.len)

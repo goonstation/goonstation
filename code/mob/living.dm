@@ -96,6 +96,8 @@
 	vision = new()
 	src.attach_hud(vision)
 	src.vis_contents += src.chat_text
+	if (can_bleed)
+		src.ensure_bp_list()
 	SPAWN_DBG(0)
 		src.get_static_image()
 		sleep_bubble.appearance_flags = RESET_TRANSFORM
