@@ -1152,7 +1152,9 @@ var/list/statusGroupLimits = list("Food"=4)
 		clicked(list/params)
 			L.delStatus("resting")
 			L.force_laydown_standup()
-			L.hud.update_resting()
+			if (ishuman(L))
+				var/mob/living/carbon/human/H = L
+				H.hud.update_resting()
 
 	ganger
 		id = "ganger"

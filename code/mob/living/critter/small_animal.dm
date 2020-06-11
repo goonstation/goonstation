@@ -65,7 +65,7 @@ todo: add more small animals!
 
 	New()
 		..()
-		H.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
+		src.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
 
 	setup_healths()
 		add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)

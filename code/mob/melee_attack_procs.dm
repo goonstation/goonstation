@@ -190,13 +190,7 @@
 		return 0
 	return 1
 
-/mob/living/critter/grab_self()
-	if (!..())
-		return
-	// i'm not feeling very creative right now, so sue me - cirr
-	src.visible_message("<span class='alert'><B>[src] gets a hold of [his_or_her(src)] body! That's [pick_string("tweak_yo_self.txt", "tweakadj")] [pick_string("tweak_yo_self.txt", "tweak")]!</B></span>")
-
-/mob/living/carbon/grab_self()
+/mob/living/grab_self()
 	if(!..())
 		return
 
