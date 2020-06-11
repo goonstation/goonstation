@@ -20,12 +20,18 @@
 			human_owner = owner
 		if (istype(owner,/mob/living/silicon/hivebot))
 			hivebot_owner = owner
+		if (istype(owner,/mob/living/silicon/robot))
+			robot_owner = owner
+		if (istype(owner,/mob/living/critter))
+			critter_owner = owner
 
 	disposing()
 		..()
 		owner = null
 		human_owner = null
 		hivebot_owner = null
+		robot_owner = null
+		critter_owner = null
 
 	proc/process(var/datum/gas_mixture/environment)
 		last_process = TIME
@@ -155,7 +161,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 
 
-/mob/living/silicon/robot/New()
+/mob/living/silicon/drone/New()
 	..()
 	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/canmove)
