@@ -39,7 +39,7 @@
 				owner.see_invisible = 21
 			else
 				owner.see_invisible = 2
-			return
+			return ..()
 		else
 			if (robot_owner)
 				//var/sight_therm = 0 //todo fix this
@@ -90,7 +90,7 @@
 						owner.see_invisible = ship.sensors.see_invisible
 					if(ship.sensors.centerlight)
 						owner.render_special.set_centerlight_icon(ship.sensors.centerlight, ship.sensors.centerlight_color)
-					return
+					return ..()
 
 		if (owner.traitHolder && owner.traitHolder.hasTrait("infravision"))
 			if (owner.see_infrared < 1)

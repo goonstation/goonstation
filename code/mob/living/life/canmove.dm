@@ -5,7 +5,7 @@
 		if (owner.buckled)
 			if (owner.buckled.loc != owner.loc)
 				owner.buckled = null
-				return
+				return ..()
 			owner.lying = istype(owner.buckled, /obj/stool/bed) || istype(owner.buckled, /obj/machinery/conveyor)
 			if (owner.lying)
 				owner.drop_item()
@@ -20,21 +20,21 @@
 
 		if (HAS_MOB_PROPERTY(owner, PROP_CANTMOVE))
 			owner.canmove = 0
-			return
+			return ..()
 
 		if (owner.buckled && owner.buckled.anchored)
 			if (istype(owner.buckled, /obj/stool/chair)) //this check so we can still rotate the chairs on their slower delay even if we are anchored
 				var/obj/stool/chair/chair = owner.buckled
 				if (!chair.rotatable)
 					owner.canmove = 0
-					return
+					return ..()
 			else
 				owner.canmove = 0
-				return
+				return ..()
 
 		if (owner.throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT | THROW_SLIP))
 			owner.canmove = 0
-			return
+			return ..()
 
 		owner.canmove = 1
 

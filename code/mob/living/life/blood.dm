@@ -131,7 +131,7 @@
 			if (prob(10))
 				owner.visible_message("<span class='alert'><b>[owner] bursts like a bloody balloon! Holy fucking shit!!</b></span>")
 				owner.gib(1) // :v
-				return
+				return ..()
 
 		if (isdead(owner))
 			return ..()

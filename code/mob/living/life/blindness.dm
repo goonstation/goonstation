@@ -28,7 +28,7 @@
 							eyes_blinded = 0
 
 			if (human_owner.last_eyes_blinded == eyes_blinded) // we don't need to update!
-				return 1
+				return ..()
 
 
 			if (!eyes_blinded) // neither eye is blind

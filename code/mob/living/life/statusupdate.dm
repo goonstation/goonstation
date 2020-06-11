@@ -116,7 +116,7 @@
 		if (hivebot_owner)
 			hivebot_owner.hud.update_charge()
 			hivebot_owner.health = hivebot_owner.max_health - (hivebot_owner.fireloss + hivebot_owner.bruteloss)
-			return 1
+			return ..()
 
 		if (robot_owner)
 			if(!robot_owner.part_chest)
