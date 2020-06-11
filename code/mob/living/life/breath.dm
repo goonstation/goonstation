@@ -49,9 +49,6 @@
 		..()
 
 	proc/breathe(datum/gas_mixture/environment)
-		//if (!owner.loc) //already checked
-		//	return
-
 		var/mult = get_multiplier()
 
 		var/atom/underwater = 0
