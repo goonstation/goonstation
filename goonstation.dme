@@ -430,7 +430,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\carbon\human\procs\damage.dm"
 #include "code\mob\living\carbon\human\procs\emote.dm"
 #include "code\mob\living\carbon\human\procs\get_desc.dm"
-#include "code\mob\living\carbon\human\procs\Life.dm"
 #include "code\mob\living\carbon\human\procs\update_icon.dm"
 #include "code\mob\living\critter\ai.dm"
 #include "code\mob\living\critter\aquatic.dm"
