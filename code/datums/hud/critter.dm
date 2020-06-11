@@ -10,6 +10,17 @@
 	var/obj/screen/hud/throwing
 	var/obj/screen/hud/pulling
 	var/obj/screen/hud/resist
+	var/obj/screen/hud/
+
+	var/obj/screen/hud
+		stamina
+		stamina_back
+		bodytemp
+		toxin
+		rad
+		bleeding
+		resting
+
 	var/mob/living/critter/master
 	var/icon/icon_hud = 'icons/mob/hud_human.dmi'
 	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(obj/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
@@ -34,9 +45,31 @@
 			hands += H
 		nr = hand_s + master.hands.len
 		health = create_screen("health", "health", src.icon_hud, "health0", "EAST[next_topright()],NORTH", HUD_LAYER+1)
+
+		if (master.use_stamina)
+			var/stamloc = "EAST-1, NORTH"
+			stamina = create_screen("stamina","Stamina", src.icon_hud, "stamina", stamloc, HUD_LAYER, tooltipTheme = "stamina")
+			stamina_back = create_screen("stamina_back","Stamina", src.icon_hud, "stamina_back", stamloc, HUD_LAYER-2)
+			if (master.stamina_bar)
+				stamina.desc = master.stamina_bar.getDesc(master)
+
+		bodytemp = create_screen("bodytemp","Temperature", src.icon_hud, "temp0", "EAST[next_topright()], NORTH", HUD_LAYER, tooltipTheme = "tempInd tempInd0")
+		bodytemp.desc = "The temperature feels fine."
+
 		if (master.get_health_holder("oxy"))
 			oxygen = create_screen("oxygen", "Suffocation Warning", src.icon_hud, "oxy0", "EAST[next_topright()], NORTH", HUD_LAYER)
+
 			fire = create_screen("fire","Fire Warning", src.icon_hud, "fire0", "EAST[next_topright()], NORTH", HUD_LAYER)
+
+			toxin = create_screen("toxin","Toxic Warning",src.icon_hud, "toxin0", "EAST[next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusToxin")
+			toxin.desc = "This indicator warns that you are poisoned. You will take toxic damage until the situation is remedied."
+
+			rad = create_screen("rad","Radiation Warning", src.icon_hud, "rad0", "EAST[next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusRad")
+			rad.desc = "This indicator warns that you are irradiated. You will take toxic and burn damage until the situation is remedied."
+
+		if (master.can_bleed)
+			bleeding = create_screen("bleeding","Bleed Warning", src.icon_hud, "blood0", "EAST[next_topright()], NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
+			bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
 
 		if (master.can_throw)
 			throwing = create_screen("throw", "throw mode", src.icon_hud, "throw0", "CENTER+[nr], SOUTH", HUD_LAYER+1)
@@ -48,7 +81,10 @@
 		mintent = create_screen("mintent", "movement mode", 'icons/mob/critter_ui.dmi', "move-run", "CENTER+[nr], SOUTH", HUD_LAYER+1)
 		nr++
 		resist = create_screen("resist", "resist", 'icons/mob/critter_ui.dmi', "resist_critter", "CENTER+[nr], SOUTH", HUD_LAYER+1)
+		resting = create_screen("rest", "resting", src.icon_hud, "rest0", "CENTER+[nr], SOUTH+0.5", HUD_LAYER+1)
 		nr++
+
+
 		for (var/i = 1, i <= master.equipment.len, i++)
 			var/datum/equipmentHolder/EH = master.equipment[i]
 			var/SL = loc_left()
@@ -171,6 +207,13 @@
 					master.resist()
 				if ("health")
 					boutput(master, "<span class='notice'>Your health: [master.health]/[master.max_health]</span>")
+				if ("rest")
+					if(master.ai_active && !master.hasStatus("resting"))
+						master.show_text("You feel too restless to do that!", "red")
+					else
+						master.hasStatus("resting") ? master.delStatus("resting") : master.setStatus("resting", INFINITE_STATUS)
+						master.force_laydown_standup()
+					src.update_resting()
 
 	proc/update_health()
 		if (!isdead(master))
@@ -242,6 +285,105 @@
 						pos_x -= spacing
 						animate_buff_in(U)
 		return
+//HUMAN COPOY PASTE
+	proc/set_sprint(var/on)
+		if(stamina)
+			stamina.icon_state = on ? "stamina_sprint" : "stamina"
+
+	proc/update_blood_indicator()
+		if (!bleeding || isdead(master))
+			bleeding.icon_state = "blood0"
+			bleeding.tooltipTheme = "healthDam healthDam0"
+			return
+
+		var/state = 0
+		var/theme = 0
+		switch (master.bleeding)
+			if (-INFINITY to 0)
+				state = 0 // blank
+				theme = 0
+			if (1 to 2)
+				state = 1
+				theme = 3
+			if (3 to 4)
+				state = 2
+				theme = 4
+			if (5 to INFINITY)
+				state = 3
+				theme = 6
+/*			if (-INFINITY to 0)
+				state = 0 // blank
+				theme = 0
+			if (1 to 3)
+				state = 1
+				theme = 3
+			if (4 to 6)
+				state = 2
+				theme = 4
+			if (7 to INFINITY)
+				state = 3
+				theme = 6
+*/
+		bleeding.icon_state = "blood[state]"
+		bleeding.tooltipTheme = "healthDam healthDam[theme]"
+
+	proc/update_temp_indicator()
+		if (!bodytemp)
+			return
+		if(master.getStatusDuration("burning") && !master.is_heat_resistant())
+			bodytemp.icon_state = "tempF" // on fire
+			bodytemp.tooltipTheme = "tempInd tempIndF"
+			bodytemp.desc = "OH FUCK FIRE FIRE FIRE OH GOD FIRE AAAAAAA"
+			return
+
+		var/dev = master.get_temp_deviation()
+		var/state
+		switch(dev)
+			if(4)
+				state = 4 // burning up
+				bodytemp.desc = "It's scorching hot!"
+			if(3)
+				state = 3 // far too hot
+				bodytemp.desc = "It's too hot."
+			if(2)
+				state = 2 // too hot
+				bodytemp.desc = "It's a bit warm, but nothing to worry about."
+			if(1)
+				state = 1 // warm but safe
+				bodytemp.desc = "It feels a little warm."
+			if(-1)
+				state = -1 // cool but safe
+				bodytemp.desc = "It feels a little cool."
+			if(-2)
+				state = -2 // too cold
+				bodytemp.desc = "It's a little cold, but nothing to worry about."
+			if(-3)
+				state = -3 // far too cold
+				bodytemp.desc = "It's too cold."
+			if(-4)
+				state = -4 // freezing
+				bodytemp.desc = "It's absolutely freezing!"
+			else
+				state = 0 // 310 is optimal body temp
+				bodytemp.desc = "The temperature feels fine."
+
+		bodytemp.icon_state = "temp[state]"
+		bodytemp.tooltipTheme = "tempInd tempInd[state]"
+
+	proc/update_tox_indicator(var/status)
+		if (!toxin)
+			return
+		toxin.icon_state = "tox[status]"
+
+	proc/update_rad_indicator(var/status)
+		if (!rad) // not rad :'(
+			return
+		rad.icon_state = "rad[status]"
+
+	proc/update_resting()
+		if (!resting) return 0
+		resting.icon_state = "rest[master.hasStatus("resting") ? 1 : 0]"
+
 
 /mob/living/critter/updateStatusUi()
 	if(src.hud && istype(src.hud, /datum/hud/critter))

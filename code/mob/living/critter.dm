@@ -109,6 +109,10 @@
 		src.attach_hud(hud)
 		src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
 
+		if (src.stamina_bar)
+			hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
+
+
 		health_update_queue |= src
 
 		src.abilityHolder = new /datum/abilityHolder/critter(src)
@@ -127,6 +131,9 @@
 			organHolder = null
 
 		if(hud)
+			if(src.stamina_bar)
+				hud.remove_object(stamina_bar)
+
 			hud.dispose()
 			hud = null
 
@@ -549,15 +556,6 @@
 		else
 			boutput(src, "<span class='alert'>You cannot attack with your [HH.name]!</span>")
 
-	proc/melee_attack_human(var/mob/living/carbon/human/M, var/extra_damage) // non-special limb attack
-		if (check_target_immunity(src, 0, M))
-			visible_message("<b><span class='alert'>[src]'s attack bounces uselessly off [M]!</span></b>")
-			playsound_local(M, "punch", 50, 0)
-			return
-		src.visible_message("<b><span class='alert'>[src] punches [M]!</span></b>")
-		playsound_local(M, "punch", 50, 0)
-		M.TakeDamageAccountArmor(zone_sel.selecting, rand(3,6), 0, 0, DAMAGE_BLUNT)
-
 	can_strip(mob/M, showInv = 0)
 		var/datum/handHolder/HH = get_active_hand()
 		if(!showInv && check_target_immunity(src, 0, M))
@@ -568,34 +566,6 @@
 			return 1
 		else
 			boutput(src, "<span class='alert'>You cannot strip other people with your [HH.name].</span>")
-
-	attack_hand(var/mob/living/M)
-		M.lastattacked = src
-		attack_particle(M,src)
-		switch (M.a_intent)
-			if (INTENT_HELP)
-				src.on_pet(M)
-			if (INTENT_DISARM)
-				actions.interrupt(src, INTERRUPT_ATTACKED)
-				if (src.hands.len)
-					M.disarm(src)
-			if (INTENT_HARM)
-				if(check_target_immunity(src, 0, M))
-					visible_message("<b><span class='alert'>[M]'s attack bounces off [src] uselessly!</span></b>")
-					return
-				actions.interrupt(src, INTERRUPT_ATTACKED)
-				src.TakeDamageAccountArmor(M.zone_sel.selecting, rand(1,3), 0)
-				playsound(src.loc, "punch", 50, 1)
-				visible_message("<b><span class='alert'>[M] punches [src]!</span></b>")
-			if (INTENT_GRAB)
-				if (M == src)
-					M.grab_self()
-					return
-				var/datum/limb/L = M.equipped_limb()
-				if (!L)
-					return
-				L.grab(src, M)
-				message_admin_on_attack(M, "grabs")
 
 	proc/on_pet(mob/user)
 		if (!user)

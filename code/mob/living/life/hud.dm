@@ -20,6 +20,9 @@
 
 		if (critter_owner)
 			critter_owner.hud.update_health()
+			critter_owner.hud.update_temp_indicator()
+			critter_owner.hud.update_blood_indicator()
+			critter_owner.hud.update_pulling()
 
 		if (human_owner)
 			human_owner.hud.update_health_indicator()

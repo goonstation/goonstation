@@ -60,7 +60,7 @@
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
 
-
+	var/use_stamina = 1
 	var/stamina = STAMINA_MAX
 	var/stamina_max = STAMINA_MAX
 	var/stamina_regen = STAMINA_REGEN
@@ -602,15 +602,13 @@
 			setStatus("paralysis", max(getStatusDuration("paralysis"), STAMINA_NEG_CAP_STUN_TIME))
 
 		//Modify stamina.
-		var/stam_time_passed = max(tick_spacing, world.timeofday - last_stam_change)
+		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)
 
 		var/final_mod = (src.stamina_regen + src.get_stam_mod_regen()) * (stam_time_passed / tick_spacing)
 		if (final_mod > 0)
 			src.add_stamina(abs(final_mod))
 		else if (final_mod < 0)
 			src.remove_stamina(abs(final_mod))
-
-		last_stam_change = world.timeofday
 
 		if (src.stamina_bar && src.client)
 			src.stamina_bar.update_value(src)

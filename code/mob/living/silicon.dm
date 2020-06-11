@@ -20,6 +20,8 @@
 
 	var/obj/item/cell/cell = null
 
+	use_stamina = 0
+
 	dna_to_absorb = 0 //robots dont have DNA for fuck sake
 
 	//voice_type = "robo"

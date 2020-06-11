@@ -555,13 +555,43 @@
 		return ..()
 
 /mob/living/silicon/hivebot/attack_hand(mob/user)
-	..()
-	if(user.a_intent == INTENT_GRAB && src.beebot == 1)
-		var/obj/item/clothing/suit/bee/B = new /obj/item/clothing/suit/bee(src.loc)
-		boutput(user, "You pull [B] off of [src]!")
-		src.beebot = 0
-		src.updateicon()
-	return
+	user.lastattacked = src
+	if(!user.stat)
+		actions.interrupt(src, INTERRUPT_ATTACKED)
+		switch(user.a_intent)
+			if(INTENT_HELP) //Friend person
+				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
+				user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
+			if(INTENT_DISARM) //Shove
+				SPAWN_DBG(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
+				user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
+			if(INTENT_GRAB) //Shake
+				if(src.beebot == 1)
+					var/obj/item/clothing/suit/bee/B = new /obj/item/clothing/suit/bee(src.loc)
+					boutput(user, "You pull [B] off of [src]!")
+					src.beebot = 0
+					src.updateicon()
+				else
+					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1, -2)
+					user.visible_message("<span class='alert'>[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!</span>")
+			if(INTENT_HARM) //Dumbo
+				if (user.is_hulk())
+					src.TakeDamage("All", 5, 0)
+					if (prob(40))
+						var/turf/T = get_edge_target_turf(user, user.dir)
+						if (isturf(T))
+							src.visible_message("<span class='alert'><B>[user] savagely punches [src], sending them flying!</B></span>")
+							SPAWN_DBG (0)
+								src.throw_at(T, 10, 2)
+				/*if (user.glove_weaponcheck())
+					user.energyclaws_attack(src)*/
+				else
+					user.visible_message("<span class='alert'><B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!</span>", "<span class='alert'><B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B></span>")
+					random_brute_damage(user, rand(2,5))
+					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
+					if(prob(10)) user.show_text("Your hand hurts...", "red")
+
+		add_fingerprint(user)
 
 /mob/living/silicon/hivebot/allowed(mob/M)
 	//check if it doesn't require any access at all

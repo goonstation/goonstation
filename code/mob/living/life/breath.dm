@@ -8,10 +8,14 @@
 	proc/update_oxy(var/on)
 		if (human_owner)
 			human_owner.hud.update_oxy_indicator(on)
+		if (critter_owner)
+			critter_owner.hud.set_suffocating(on)
 
 	proc/update_toxy(var/on)
 		if (human_owner)
 			human_owner.hud.update_tox_indicator(on)
+		if (critter_owner)
+			critter_owner.hud.update_tox_indicator(on)
 
 	process(var/datum/gas_mixture/environment)
 		//special (read: stupid) manual breathing stuff. weird numbers are so that messages don't pop up at the same time as manual blinking ones every time
