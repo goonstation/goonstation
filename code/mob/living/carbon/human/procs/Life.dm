@@ -275,9 +275,15 @@
 
 		//TODO : move this code somewhere else that updates from an event trigger instead of constantly
 		var/arrestState = ""
-		var/visibleName = name
-		if (wear_id)
-			visibleName = wear_id.registered_owner()
+
+		var/see_face = 1
+		if (istype(src.wear_mask) && !src.wear_mask.see_face)
+			see_face = 0
+		else if (istype(src.head) && !src.head.see_face)
+			see_face = 0
+		else if (istype(src.wear_suit) && !src.wear_suit.see_face)
+			see_face = 0
+		var/visibleName = see_face ? src.real_name : src.name
 
 		for (var/security_record in data_core.security)
 			var/datum/data/record/R = security_record
@@ -310,18 +316,50 @@
 
 				if (!myID)
 					myID = wear_id
-				if (myID && (access_carrypermit in myID.access))
+				if (myID && (access_carrypermit in myID.access) && (access_contrabandpermit in myID.access)) // has all permissions for contraband, don't check
 					myID = null
 				else
 					var/contrabandLevel = 0
-					if (l_hand)
-						contrabandLevel += l_hand.contraband
-					if (!contrabandLevel && r_hand)
-						contrabandLevel += r_hand.contraband
-					if (!contrabandLevel && belt)
-						contrabandLevel += belt.contraband
-					if (!contrabandLevel && wear_suit)
-						contrabandLevel += wear_suit.contraband
+					if (myID)
+						var/has_carry_permit = (access_carrypermit in myID.access)
+						var/has_contraband_permit = (access_contrabandpermit in myID.access)
+						if (l_hand)
+							if (istype(l_hand, /obj/item/gun/))
+								if(!has_carry_permit)
+									contrabandLevel += l_hand.contraband
+							else
+								if(!has_contraband_permit)
+									contrabandLevel += l_hand.contraband
+
+						if (!contrabandLevel && r_hand)
+							if (istype(r_hand, /obj/item/gun/))
+								if(!has_carry_permit)
+									contrabandLevel += r_hand.contraband
+							else
+								if(!has_contraband_permit)
+									contrabandLevel += r_hand.contraband
+
+						if (!contrabandLevel && belt)
+							if (istype(belt, /obj/item/gun/))
+								if(!has_carry_permit)
+									contrabandLevel += belt.contraband
+							else
+								if(!has_contraband_permit)
+									contrabandLevel += belt.contraband
+
+						if (!contrabandLevel && wear_suit)
+							if(!has_contraband_permit)
+								contrabandLevel += wear_suit.contraband
+
+					else
+						if (l_hand)
+							contrabandLevel += l_hand.contraband
+						if (!contrabandLevel && r_hand)
+							contrabandLevel += r_hand.contraband
+						if (!contrabandLevel && belt)
+							contrabandLevel += belt.contraband
+						if (!contrabandLevel && wear_suit)
+							contrabandLevel += wear_suit.contraband
 
 					if (contrabandLevel > 0)
 						arrestState = "Contraband"
