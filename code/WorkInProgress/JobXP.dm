@@ -139,6 +139,8 @@ var/global/awarded_xp = 0
 			//////////////////////////////////////////////////////////////////////////////
 
 			var/amt = v_list["[field]"]
+			if (amt > XP_ROUND_CAP)
+				amt = XP_ROUND_CAP
 			add_xp(key, field, amt)
 
 //wrapper for set_xp
