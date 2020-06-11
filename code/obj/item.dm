@@ -1228,7 +1228,7 @@
 /obj/item/proc/attach(var/mob/living/carbon/human/attachee,var/mob/attacher)
 	//if (!src.arm_icon) return //ANYTHING GOES!~!
 
-	if (src.object_flags & NO_ARM_ATTACH)
+	if (src.object_flags & NO_ARM_ATTACH || src.temp_flags & IS_LIMB_ITEM)
 		boutput(attacher, "<span class='alert'>You try to attach [src] to [attachee]'s stump, but it politely declines!</span>")
 		return
 
