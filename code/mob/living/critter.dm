@@ -404,9 +404,9 @@
 	special_movedelay_mod(delay,space_movement,aquatic_movement)
 		.= delay
 		if (src.m_intent == "walk")
-			. += BASE_SPEED - src.base_walk_delay
+			. += src.base_walk_delay - (BASE_SPEED + WALK_DELAY_ADD)
 		else
-			. += (BASE_SPEED + WALK_DELAY_ADD) - src.base_move_delay
+			. += src.base_move_delay - (BASE_SPEED)
 
 
 	Move(var/turf/NewLoc, direct)

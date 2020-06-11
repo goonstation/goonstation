@@ -12,10 +12,6 @@
 	nodamage = 1
 	opacity = 1
 
-	//Life(datum/controller/process/mobs/parent)
-		//..(parent)
-		//return
-
 	examine(mob/user)
 		. = list("<span class='notice'>*---------*</span>")
 		. += "<span class='notice'>This is a [bicon(src)] <B>[src.name]</B>!</span>"

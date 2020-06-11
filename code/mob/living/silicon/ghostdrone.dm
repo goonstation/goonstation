@@ -97,29 +97,6 @@
 			out(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
 			src.show_laws_drone()*/
 
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
-
-		for (var/obj/item/I in src)
-			if (!I.material) continue
-			I.material.triggerOnLife(src, I)
-
-		if (hud)
-			hud.update_environment()
-			hud.update_health()
-			hud.update_tools()
-
-		if (src.client)
-			src.updateStatic()
-			src.updateOverlaysClient(src.client)
-			src.antagonist_overlay_refresh(0, 0)
-
-		if (src.observers.len)
-			for (var/mob/x in src.observers)
-				if (x.client)
-					src.updateOverlaysClient(x.client)
-
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
 		if (!src.canmove)

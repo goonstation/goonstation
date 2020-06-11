@@ -111,28 +111,6 @@
 	blood_id = "blood"
 	blood_volume = 500
 
-/mob/living/proc/add_shit()
-	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
-	add_lifeprocess(/datum/lifeprocess/blindness)
-	add_lifeprocess(/datum/lifeprocess/blood)
-	add_lifeprocess(/datum/lifeprocess/bodytemp)
-	add_lifeprocess(/datum/lifeprocess/breath)
-	add_lifeprocess(/datum/lifeprocess/canmove)
-	add_lifeprocess(/datum/lifeprocess/chems)
-	add_lifeprocess(/datum/lifeprocess/critical)
-	add_lifeprocess(/datum/lifeprocess/decomposition)
-	add_lifeprocess(/datum/lifeprocess/disability)
-	add_lifeprocess(/datum/lifeprocess/fire)
-	add_lifeprocess(/datum/lifeprocess/arrest_icon)
-	add_lifeprocess(/datum/lifeprocess/hud)
-	add_lifeprocess(/datum/lifeprocess/mutations)
-	add_lifeprocess(/datum/lifeprocess/organs)
-	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/skin)
-	add_lifeprocess(/datum/lifeprocess/statusupdate)
-	add_lifeprocess(/datum/lifeprocess/stuns_lying)
-	add_lifeprocess(/datum/lifeprocess/viruses)
-
 /mob/living/critter/New()
 	..()
 	add_lifeprocess(/datum/lifeprocess/blindness)
@@ -173,6 +151,52 @@
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
+
+/mob/living/carbon/cube()
+	..()
+	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/canmove)
+	add_lifeprocess(/datum/lifeprocess/chems)
+	add_lifeprocess(/datum/lifeprocess/disability)
+	add_lifeprocess(/datum/lifeprocess/hud)
+	add_lifeprocess(/datum/lifeprocess/organs)
+	add_lifeprocess(/datum/lifeprocess/sight)
+	add_lifeprocess(/datum/lifeprocess/statusupdate)
+	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+
+/mob/living/silicon/ai/New()
+	..()
+	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/sight)
+
+/mob/living/silicon/hivebot/New()
+	..()
+	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
+	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/canmove)
+	add_lifeprocess(/datum/lifeprocess/hud)
+	add_lifeprocess(/datum/lifeprocess/sight)
+	add_lifeprocess(/datum/lifeprocess/statusupdate)
+	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+
+/mob/living/silicon/robot/New()
+	..()
+	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
+	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/canmove)
+	add_lifeprocess(/datum/lifeprocess/hud)
+	add_lifeprocess(/datum/lifeprocess/sight)
+	add_lifeprocess(/datum/lifeprocess/statusupdate)
+	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+
+
+/mob/living/silicon/robot/New()
+	..()
+	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
+	add_lifeprocess(/datum/lifeprocess/canmove)
+	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+
+
 
 /mob/living/carbon/human
 	proc/Thumper_createHeartbeatOverlays()
@@ -493,6 +517,82 @@
 		src.shell = 0
 		if(dependent)
 			mainframe_check()
+
+/mob/living/silicon/ghostdrone/Life(datum/controller/process/mobs/parent)
+	if (..(parent))
+		return 1
+
+	if (hud)
+		hud.update_environment()
+		hud.update_health()
+		hud.update_tools()
+
+	if (src.client)
+		src.updateStatic()
+
+/mob/living/silicon/drone/Life(datum/controller/process/mobs/parent)
+	if (..(parent))
+		return 1
+	//hud.update_health()
+	if (hud)
+		hud.update_charge()
+		hud.update_tools()
+
+/mob/living/seanceghost/Life(parent)
+	if (..(parent))
+		return 1
+	if (!src.abilityHolder)
+		src.abilityHolder = new /datum/abilityHolder/zoldorf(src)
+	else if (src.health < src.max_health)
+		src.health++
+
+/mob/living/object/Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		if (!src.item)
+			src.death(0)
+
+		if (src.item && src.item.loc != src) //ZeWaka: Fix for null.loc
+			if (isturf(src.item.loc))
+				src.item.loc = src
+			else
+				src.death(0)
+
+		for (var/atom/A as obj|mob in src)
+			if (A != src.item && A != src.dummy && A != src.owner && !istype(A, /obj/screen))
+				if (isobj(A) || ismob(A)) // what the heck else would this be?
+					A:set_loc(src.loc)
+
+		src.set_density(src.item ? src.item.density : 0)
+		src.item.dir = src.dir
+		src.icon = src.item.icon
+		src.icon_state = src.item.icon_state
+		src.color = src.item.color
+		src.overlays = src.item.overlays
+
+/mob/living/carbon/cube
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		// not sure if this could ever really happen but better to make sure
+		if (isdead(src))
+			pop()
+			return 0
+
+		// don't move or tick down the timer if we're in the fryer, we need to wait until we're well done
+		if (istype(loc, /obj/machinery/deep_fryer))
+			return 0
+
+		if (prob(30))
+			var/idle_message = get_cube_idle()
+			src.visible_message("<span class='alert'><b>[src] [idle_message]!</b></span>")
+
+		if (life_timer-- > 0)
+			return 0
+
+		pop()
 
 
 /mob/living/
