@@ -1,5 +1,10 @@
 
 (t)thu jun 11 20
+(u)Gerhazo
+(p)968
+(e)⚖🔄|balance, rework
+(*)Added a "handling of contraband permit" access level present on appropriate jobs' ID cards and identification computers. Firearm permit now only permits you to carry firearms, other kinds of contraband apply under this new permit, which scanners and bots will take into account.
+(*)Security sechud glasses, securitrons, guardbuddies and security scanners now prioritise a person's real identity rather than just the ID card they're holding, if the target's face is not concealed.
 (u)pali
 (p)1010
 (e)🔄🎨|rework, sprites
