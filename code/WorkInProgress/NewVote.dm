@@ -217,21 +217,40 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 			return src.curr_win
 		var/winner = null
 		var/winner_num = 0
+		var/adjAbstain = 0
 		for(var/A in options)
-			if(options[A])
-				if(options[A] > winner_num)
-					winner_num = options[A]
-					winner = A
+			if(options[A] >= 0)
+				if(A == "No") // abstain = partial no, in votes that contain a no option.
+					adjAbstain = options[A]
+					for(var/client/C in clients)
+						if(!((C.ckey in voted_ckey) || (C.computer_id in voted_id)))
+							adjAbstain = adjAbstain + 0.25
+					if(adjAbstain > winner_num)
+						winner_num = adjAbstain
+						winner = A
+				else
+					if(options[A] > winner_num)
+						winner_num = options[A]
+						winner = A
 		if(!winner) winner = "none"
 		src.curr_win = winner
 		return src.curr_win
 
 	proc/get_winner_num()
 		var/winner_num = 0
+		var/adjAbstain = 0
 		for(var/A in options)
-			if(options[A])
-				if(options[A] > winner_num)
-					winner_num = options[A]
+			if(options[A] >= 0)
+				if(A == "No")
+					adjAbstain = options[A]
+					for(var/client/C in clients)
+						if(!((C.ckey in voted_ckey) || (C.computer_id in voted_id)))
+							adjAbstain = adjAbstain + 0.25
+					if(adjAbstain > winner_num)
+						winner_num = adjAbstain
+				else
+					if(options[A] > winner_num)
+						winner_num = options[A]
 		return(winner_num)
 
 	proc/end_vote()
@@ -255,8 +274,8 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	end_vote()
 		. = ..()
 		// boutput(world, "<span class='success'><BIG><B>Vote gamemode result: [get_winner()]</B></BIG></span>")
-		if(get_winner() != "Yes" || get_winner_num() < round(total_clients() * 0.5))
-			boutput(world, "<span class='alert'><BIG><B>Minimum mode votes not reached (~50% of players), game mode not changed.</B></BIG></span>")
+		if(get_winner() != "Yes")
+			boutput(world, "<span class='alert'><BIG><B>Insufficient votes, game mode not changed.</B></BIG></span>")
 		else if(current_state == GAME_STATE_PREGAME)
 			boutput(world, "<span class='success'><BIG><B>Gamemode for upcoming round has been changed to [data].</B></BIG></span>")
 			master_mode = lowertext(data)
@@ -276,14 +295,11 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 		. = ..()
 		boutput(world, "<span class='success'><BIG><B>Vote restart result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
-			if(get_winner_num() < round(total_clients() * 0.5))
-				boutput(world, "<span class='success'><BIG><B>Minimum restart votes not reached (~50% of players).</B></BIG></span>")
-				qdel(src)
-				return
 			Reboot_server()
 		qdel(src)
 		return
 /*
+//these haven't been adjusted to new weighted vote stuff yet
 /datum/vote_new/ban
 	options = list("Yes","No")
 	details = ""
