@@ -82,6 +82,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	pregame_timeleft = 0
 	#endif
 
+	handle_mapvote()
+
 	while(current_state <= GAME_STATE_PREGAME)
 		sleep(1 SECOND)
 		if (!game_start_delayed)
@@ -248,17 +250,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
 
-	var/bustedMapSwitcher = isMapSwitcherBusted()
-	if (!bustedMapSwitcher)
-		SPAWN_DBG (mapSwitcher.autoVoteDelay)
-			//Trigger the automatic map vote
-			try
-				mapSwitcher.startMapVote(duration = mapSwitcher.autoVoteDuration)
-			catch (var/exception/e)
-				logTheThing("admin", usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]")
-				logTheThing("diary", usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]", "admin")
-				message_admins("[key_name(usr ? usr : src)] the automated map switch vote couldn't run because: [e.name]")
-
 	SPAWN_DBG (6000) // 10 minutes in
 		for(var/obj/machinery/power/generatorTemp/E in machine_registry[MACHINES_POWER])
 			LAGCHECK(LAG_LOW)
@@ -271,6 +262,19 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	if (total_clients() >= OVERLOAD_PLAYERCOUNT)
 		world.tick_lag = OVERLOADED_WORLD_TICKLAG
 
+//Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min). 
+//The voting will happen 30 seconds into the pre-game lobby. This is probably fine to leave. But if someone changes that var then it might start before the lobby timer ends.
+/datum/controller/gameticker/proc/handle_mapvote()
+	var/bustedMapSwitcher = isMapSwitcherBusted()
+	if (!bustedMapSwitcher)
+		SPAWN_DBG (mapSwitcher.autoVoteDelay)
+			//Trigger the automatic map vote
+			try
+				mapSwitcher.startMapVote(duration = mapSwitcher.autoVoteDuration)
+			catch (var/exception/e)
+				logTheThing("admin", usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]")
+				logTheThing("diary", usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]", "admin")
+				message_admins("[key_name(usr ? usr : src)] the automated map switch vote couldn't run because: [e.name]")
 
 /datum/controller/gameticker
 	proc/distribute_jobs()
