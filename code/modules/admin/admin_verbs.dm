@@ -14,6 +14,7 @@ var/list/admin_verbs = list(
 		/client/proc/admin_play,
 		/client/proc/admin_observe,
 		/client/proc/game_panel,
+		/client/proc/game_panel_but_called_secrets,
 		/client/proc/player_panel,
 		/client/proc/cmd_admin_view_playernotes,
 		/client/proc/toggle_pray,
@@ -658,6 +659,13 @@ var/list/special_pa_observing_verbs = list(
 /client/proc/game_panel()
 	set name = "Game Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	if (src.holder)
+		src.holder.Game()
+	return
+
+/client/proc/game_panel_but_called_secrets()
+	set name = "Secrets"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	if (src.holder)
 		src.holder.Game()
 	return
