@@ -25,7 +25,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 	var/playersVoting = 0 //are players currently voting on the map?
 	var/voteStartedAt = 0 //timestamp when the map vote was started
 	var/autoVoteDelay = 30 SECONDS //how long should we wait after round start to trigger to automatic map vote?
-	var/autoVoteDuration = 1200 //how long (in byond deciseconds) the automatic map vote should last (1200 = 2 mins)
+	var/autoVoteDuration = 7 MINUTES //how long (in byond deciseconds) the automatic map vote should last (1200 = 2 mins)
 	var/voteCurrentDuration = 0 //how long is the current vote set to last?
 	var/queuedVoteCompile = 0 //is a player map vote scheduled for after the current compilation?
 	var/voteChosenMap = "" //the map that the players voted to switch to
