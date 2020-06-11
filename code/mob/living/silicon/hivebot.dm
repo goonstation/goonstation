@@ -720,28 +720,24 @@ Frequency:
 		boutput(src, "<span class='alert'>You lack a dedicated mainframe!</span>")
 		return
 
-/mob/living/silicon/hivebot/Life(datum/controller/process/mobs/parent)
-	if (..(parent))
-		return 1
-
-	clamp_values()
-
-	update_icons_if_needed()
-	src.antagonist_overlay_refresh(0, 0)
-
-	handle_regular_status_updates()
-
-	if(client)
-		src.shell = 0
-		handle_regular_hud_updates()
-		if(dependent)
-			mainframe_check()
-
 /mob/living/silicon/hivebot
-	proc/clamp_values()
+	clamp_values()
+		..()
 		sleeping = max(min(sleeping, 1), 0)
 		bruteloss = max(bruteloss, 0)
 		fireloss = max(fireloss, 0)
+		if (src.stuttering)
+			src.stuttering = 0
+
+		src.lying = 0
+		src.set_density(1)
+
+		if (src.get_eye_blurry())
+			src.change_eye_blurry(-1)
+
+		if (src.druggy > 0)
+			src.druggy--
+			src.druggy = max(0, src.druggy)
 
 	use_power()
 		..()
@@ -772,73 +768,6 @@ Frequency:
 				sleep(0)
 				src.lastgasp() // calling lastgasp() here because we just ran out of power
 			setunconscious(src)
-
-
-	proc/handle_regular_status_updates()
-		hud.update_charge()
-		health = src.max_health - (fireloss + bruteloss)
-
-		if(health <= 0)
-			gib(1)
-
-		if (!isdead(src)) //Alive.
-
-			if (src.getStatusDuration("paralysis") || src.getStatusDuration("stunned") || src.getStatusDuration("weakened")) //Stunned etc.
-				var/setStat = src.stat
-				if (src.getStatusDuration("stunned") > 0)
-					setStat = 0
-				if (src.getStatusDuration("weakened"))
-					src.lying = 1
-					setStat = 0
-				if (src.getStatusDuration("paralysis"))
-					src.lying = 1
-					setStat = 1
-				if (isalive(src) && setStat == 1)
-					sleep(0)
-					src.lastgasp() // calling lastgasp() here because we just got knocked out
-				src.stat = setStat
-			else	//Not stunned.
-				src.lying = 0
-				setalive(src)
-
-		else //Dead.
-			setdead(src)
-
-		if (src.stuttering)
-			src.stuttering = 0
-
-		src.lying = 0
-		src.set_density(1)
-
-		if (src.get_eye_blurry())
-			src.change_eye_blurry(-1)
-
-		if (src.druggy > 0)
-			src.druggy--
-			src.druggy = max(0, src.druggy)
-
-		return 1
-
-	proc/handle_regular_hud_updates()
-
-		if (isdead(src) || src.bioHolder.HasEffect("xray"))
-			src.sight |= SEE_TURFS
-			src.sight |= SEE_MOBS
-			src.sight |= SEE_OBJS
-			src.see_in_dark = SEE_DARK_FULL
-			src.see_invisible = 2
-		else if (!isdead(src))
-			src.sight &= ~SEE_MOBS
-			src.sight &= ~SEE_TURFS
-			src.sight &= ~SEE_OBJS
-			src.see_in_dark = SEE_DARK_FULL
-			src.see_invisible = 2
-
-		if (!src.sight_check(1) && !isdead(src))
-			vision.set_color_mod("#000000")
-		else
-			vision.set_color_mod("#ffffff")
-		return 1
 
 	proc/mainframe_check()
 		if (mainframe)
@@ -1100,15 +1029,6 @@ Frequency:
 			src.mainframe.return_to(src)
 		else
 			return ..()
-
-	handle_regular_hud_updates()
-		..()
-		if (!ticker)
-			return
-		if (!ticker.mode)
-			return
-		if (ticker.mode && istype(ticker.mode, /datum/game_mode/construction))
-			see_invisible = 9
 
 /*-----Shell-Creation---------------------------------------*/
 

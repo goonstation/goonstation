@@ -83,7 +83,6 @@
 	var/charges = 0.0
 	var/urine = 0.0
 	var/nutrition = 100
-	var/last_recovering_msg = 0
 	var/losebreath = 0.0
 	var/intent = null
 	var/shakecamera = 0

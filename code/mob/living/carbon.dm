@@ -5,7 +5,6 @@
 
 /mob/living/carbon/
 	gender = MALE // WOW RUDE
-	var/list/stomach_contents = list()
 	var/last_eating = 0
 
 	var/oxyloss = 0
@@ -14,12 +13,6 @@
 	//var/brain_op_stage = 0.0
 	//var/heart_op_stage = 0.0
 
-	var/stamina = STAMINA_MAX
-	var/stamina_max = STAMINA_MAX
-	var/stamina_regen = STAMINA_REGEN
-	var/stamina_crit_chance = STAMINA_CRIT_CHANCE
-	var/list/stamina_mods_regen = list()
-	var/list/stamina_mods_max = list()
 
 	infra_luminosity = 4
 
@@ -507,7 +500,7 @@
 
 /mob/living/carbon/swap_hand()
 	var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
-	if(B) 
+	if(B)
 		qdel(B)
 	src.hand = !src.hand
 

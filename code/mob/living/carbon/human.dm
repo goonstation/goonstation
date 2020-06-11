@@ -53,9 +53,6 @@
 
 	var/last_b_state = 1.0
 
-	var/list/implant = list()
-	var/list/implant_images = list()
-
 	var/chest_cavity_open = 0
 	var/obj/item/chest_item = null	// Item stored in chest cavity
 	var/chest_item_sewn = 0			// Item is sewn in or is loose
@@ -64,20 +61,8 @@
 	var/cust_two_state = "None"
 	var/cust_three_state = "none"
 
-	var/can_bleed = 1
-	blood_id = "blood"
-	var/blood_volume = 500
-	var/blood_pressure = null
-	var/blood_color = DEFAULT_BLOOD_COLOR
-	var/bleeding = 0
-	var/bleeding_internal = 0
-	var/blood_absorption_rate = 1 // amount of blood to absorb from the reagent holder per Life()
-	var/list/bandaged = list()
-	var/being_staunched = 0 // is someone currently putting pressure on their wounds?
-
 	var/ignore_organs = 0 // set to 1 to basically skip the handle_organs() proc
 	var/last_eyes_blinded = 0 // used in handle_blindness_overlays() to determine if a change is needed!
-	var/last_sleep = 0 //used in handle_stuns_lying for sleep_bubble
 
 	var/obj/on_chair = 0
 	var/simple_examine = 0
@@ -118,12 +103,6 @@
 
 	max_health = 100
 
-	//april fools stuff
-	var/blinktimer = 0
-	var/blinkstate = 0
-	var/breathtimer = 0
-	var/breathstate = 0
-
 	var/obj/item/trinket = null //Used for spy_theft mode - this is an item that is eligible to have a bounty on it
 
 	//dismemberment stuff
@@ -158,7 +137,7 @@
 
 	var/datum/simsHolder/sims = null
 
-	var/list/random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
+	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r", "nosepick")
 
 	var/special_sprint = SPRINT_NORMAL
@@ -1043,7 +1022,7 @@
 			stat("Time Until Payday:", wagesystem.get_banking_timeleft())
 
 		stat(null, " ")
-		if (src.mind)
+		if (src.mind && src.mind.stealth_objective)
 			if (src.mind.objectives && istype(src.mind.objectives, /list))
 				for (var/datum/objective/O in src.mind.objectives)
 					if (istype(O, /datum/objective/specialist/stealth))
@@ -1565,10 +1544,6 @@
 /mob/living/carbon/human/set_pulling(atom/movable/A)
 	. = ..()
 	hud.update_pulling()
-
-
-/mob/living/carbon/human/var/co2overloadtime = null
-/mob/living/carbon/human/var/temperature_resistance = T0C+75
 
 // new damage icon system
 // now constructs damage icon for each organ from mask * damage field
@@ -3106,7 +3081,7 @@
 
 /mob/living/carbon/human/set_eye()
 	..()
-	src.handle_regular_sight_updates()
+	src.update_sight()
 
 /mob/living/carbon/human/heard_say(var/mob/other, var/message)
 	if (!sims)
@@ -3658,3 +3633,13 @@
 	else if (istype(src.gloves, /obj/item/clothing/gloves/ring/titanium))
 		return 1
 	return 0
+
+/mob/living/carbon/human/empty_hands()
+	var/h = src.hand
+	src.hand = 0
+	drop_item()
+	src.hand = 1
+	drop_item()
+	src.hand = h
+	if (src.juggling())
+		src.drop_juggle()

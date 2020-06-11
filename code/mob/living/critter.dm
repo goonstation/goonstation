@@ -33,8 +33,6 @@
 	var/can_grab = 0
 	var/can_disarm = 0
 
-	var/metabolizes = 1
-
 	var/reagent_capacity = 50
 	max_health = 0
 	health = 0
@@ -689,94 +687,6 @@
 			return 1
 		return 0
 
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
-
-		var/life_time_multiplier = clamp(TIME - last_life_process, 20, 90) / 20
-		src.last_life_process = TIME
-
-		if (isdead(src))
-			return 0
-
-		src.handle_digestion(life_time_multiplier) //keep. humans have organs
-
-		if (src.get_eye_blurry())
-			src.change_eye_blurry(-1)
-
-		if (src.drowsyness)
-			src.drowsyness = max(0, src.drowsyness - 1)
-			if (src.drowsyness >= tranquilizer_resistance)
-				src.change_eye_blurry(2)
-				if (prob(5 + src.drowsyness - tranquilizer_resistance))
-					src.sleeping = 2
-					src.setStatus("paralysis", 70)
-
-		handle_hud_overlays()
-		src.antagonist_overlay_refresh(0, 0)
-
-		if (src.hasStatus(list("weakened", "paralysis", "stunned", "dormant")))
-			canmove = 0
-		else
-			canmove = 1
-
-		update_stunned_icon(canmove)
-
-		if (sleeping)
-			sleeping = max(0, sleeping - 1)
-			setStatus("paralysis", 4 SECONDS * life_time_multiplier)
-			if (!sleeping)
-				src.on_wake()
-
-		var/may_deliver_recovery_warning = (src.hasStatus(list("weakened", "paralysis", "stunned")))
-
-		if (may_deliver_recovery_warning)
-			empty_hands()
-			actions.interrupt(src, INTERRUPT_STUNNED)
-
-		if (getStatusDuration("paralysis"))
-			if (isalive(src))
-				setunconscious(src)
-		else if (isunconscious(src))
-			setalive(src)
-
-		if (stuttering)
-			stuttering = max(0, stuttering-2)
-
-		if (misstep_chance > 0)
-			change_misstep_chance(-1)
-
-		if (reagents && metabolizes)
-			reagents.metabolize(src, multiplier = life_time_multiplier)
-
-		for (var/T in healthlist)
-			var/datum/healthHolder/HH = healthlist[T]
-			HH.Life()
-
-		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-			G.process(life_time_multiplier)
-
-		if (stat)
-			return 0
-
-//		if (!client && istype(current_task))
-
-	proc/handle_hud_overlays()
-		var/color_mod_r = 255
-		var/color_mod_g = 255
-		var/color_mod_b = 255
-		if (src.druggy)
-			vision.animate_color_mod(rgb(rand(0, 255), rand(0, 255), rand(0, 255)), 15)
-		else
-			vision.set_color_mod(rgb(color_mod_r, color_mod_g, color_mod_b))
-
-		if (isunconscious(src) || (!src.sight_check(1) && !isdead(src)))
-			src.addOverlayComposition(/datum/overlayComposition/blinded) //ov1
-		else
-			src.removeOverlayComposition(/datum/overlayComposition/blinded) //ov1
-		vision.animate_dither_alpha(src.get_eye_blurry() / 10 * 255, 15)
-		return 1
-
 	death(var/gibbed)
 		if (src.organHolder)
 			// believe me i hate this as much as you do
@@ -952,7 +862,7 @@
 				I.layer = initial(I.layer)
 				u_equip(I)
 
-	proc/empty_hands()
+	empty_hands()
 		for (var/datum/handHolder/HH in hands)
 			if (HH.item)
 				if (istype(HH.item, /obj/item/grab))

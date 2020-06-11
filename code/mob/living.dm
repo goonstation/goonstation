@@ -84,6 +84,13 @@
 	var/last_heard_name = null
 	var/last_chat_color = null
 
+
+	var/list/random_emotes
+
+
+	var/list/implant = list()
+	var/list/implant_images = list()
+
 /mob/living/New()
 	..()
 	vision = new()
@@ -1224,3 +1231,23 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			var/atom/movable/A = src
 			while(!istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
 			A.vis_contents += src.chat_text
+
+
+/mob/living/proc/empty_hands()
+	.=0
+
+/mob/living/proc/update_lying()
+	if (src.buckled)
+		if (src.buckled == src.loc)
+			src.lying = 1
+		else if (istype(src.buckled, /obj/stool/bed))
+			src.lying = 1
+		else
+			src.lying = 0
+
+	if (src.lying != src.lying_old)
+		src.lying_old = src.lying
+		animate_rest(src, !src.lying)
+		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
+
+
