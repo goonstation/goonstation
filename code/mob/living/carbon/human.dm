@@ -142,6 +142,10 @@
 
 	var/icon/flat_icon = null
 
+	can_bleed = 1
+	blood_id = "blood"
+	blood_volume = 500
+
 /mob/living/carbon/human/New()
 	default_static_icon = human_static_base_idiocy_bullshit_crap // FUCK
 	. = ..()

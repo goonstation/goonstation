@@ -41,36 +41,7 @@
 	var/const/tick_spacing = 20 //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
 	var/const/cap_tick_spacing = 90 //highest timeofday allowance between ticks to try to play catchup with realtime thingo
 	var/last_stam_change = 0
-
 	var/life_context = "begin"
-
-	var/metabolizes = 1
-
-	var/can_bleed = 1
-	blood_id = "blood"
-	var/blood_volume = 500
-	var/blood_pressure = null
-	var/blood_color = DEFAULT_BLOOD_COLOR
-	var/bleeding = 0
-	var/bleeding_internal = 0
-	var/blood_absorption_rate = 1 // amount of blood to absorb from the reagent holder per Life()
-	var/list/bandaged = list()
-	var/being_staunched = 0 // is someone currently putting pressure on their wounds?
-
-	var/co2overloadtime = null
-	var/temperature_resistance = T0C+75
-
-	var/use_stamina = 1
-	var/stamina = STAMINA_MAX
-	var/stamina_max = STAMINA_MAX
-	var/stamina_regen = STAMINA_REGEN
-	var/stamina_crit_chance = STAMINA_CRIT_CHANCE
-	var/list/stamina_mods_regen = list()
-	var/list/stamina_mods_max = list()
-
-	var/list/stomach_contents = list()
-
-	var/last_sleep = 0 //used for sleep_bubble
 
 	proc/add_lifeprocess(type)
 		var/datum/lifeprocess/L = new type(src)
@@ -91,9 +62,6 @@
 	proc/get_rad_protection()
 		.= 0
 
-/mob/living/carbon/human
-	var/last_human_life_tick = 0
-
 /mob/living/New()
 	..()
 	//wel gosh, its important that we do this otherwisde the crew could spawn into an airless room and then immediately die
@@ -106,10 +74,7 @@
 
 /mob/living/carbon/human
 	var/list/heartbeatOverlays = list()
-
-	can_bleed = 1
-	blood_id = "blood"
-	blood_volume = 500
+	var/last_human_life_tick = 0
 
 /mob/living/critter/New()
 	..()
@@ -152,7 +117,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
 
-/mob/living/carbon/cube()
+/mob/living/carbon/cube/New()
 	..()
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/canmove)
@@ -195,87 +160,6 @@
 	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
-
-
-
-/mob/living/carbon/human
-	proc/Thumper_createHeartbeatOverlays()
-		for (var/mob/x in (src.observers + src))
-			if(!heartbeatOverlays[x] && x.client)
-				var/obj/screen/hb = new
-				hb.icon = x.client.widescreen ? 'icons/effects/overlays/crit_thicc.png' : 'icons/effects/overlays/crit_thin.png'
-				hb.screen_loc = "1,1"
-				hb.layer = HUD_LAYER_UNDER_2
-				hb.plane = PLANE_HUD
-				hb.mouse_opacity = 0
-				x.client.screen += hb
-				heartbeatOverlays[x] = hb
-			else if(x.client && !(heartbeatOverlays[x] in x.client.screen))
-				x.client.screen += heartbeatOverlays[x]
-	proc/Thumper_thump(var/animateInitial)
-		Thumper_createHeartbeatOverlays()
-		var/sound/thud = sound('sound/effects/thump.ogg')
-#define HEARTBEAT_THUMP_APERTURE 3.5
-#define HEARTBEAT_THUMP_BASE 5
-#define HEARTBEAT_THUMP_INTENSITY 0.2
-#define HEARTBEAT_THUMP_INTENSITY_BASE 0.1
-		for(var/mob/x in src.heartbeatOverlays)
-			var/obj/screen/overlay = src.heartbeatOverlays[x]
-			if(x.client)
-				x.client << thud
-				if(animateInitial)
-					animate(overlay, alpha=255, color=list( list(HEARTBEAT_THUMP_INTENSITY,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,HEARTBEAT_THUMP_APERTURE)), 10, easing=ELASTIC_EASING)
-					animate(color=list( list(HEARTBEAT_THUMP_INTENSITY_BASE,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,HEARTBEAT_THUMP_BASE), list(0,0,0,0) ), 10, easing=ELASTIC_EASING, flags=ANIMATION_END_NOW)
-				else
-					//src << sound('sound/thump.ogg')
-					overlay.color=list( list(0.16,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,2.6), list(0,0,0,0) )//, 5, 0, ELASTIC_EASING)
-					animate(overlay, color=list( list(0.13,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,3.5), list(0,0,0,0) ), 13, easing = ELASTIC_EASING, flags = ANIMATION_END_NOW)
-
-
-#undef HEARTBEAT_THUMP_APERTURE
-#undef HEARTBEAT_THUMP_BASE
-#undef HEARTBEAT_THUMP_INTENSITY
-#undef HEARTBEAT_THUMP_INTENSITY_BASE
-	var/doThumps = 0
-	proc/Thumper_theThumpening()
-		if(doThumps) return
-		doThumps = 1
-		Thumper_thump(1)
-		SPAWN_DBG(2 SECONDS)
-			while(src.doThumps)
-				Thumper_thump(0)
-				sleep(2 SECONDS)
-	proc/Thumper_stopThumps()
-		doThumps = 0
-	proc/Thumper_paralyzed()
-		Thumper_createHeartbeatOverlays()
-		if(doThumps)//we're thumping dangit
-			doThumps = 0
-		for(var/mob/x in src.heartbeatOverlays)
-			var/obj/screen/overlay = src.heartbeatOverlays[x]
-			if(x.client)
-				animate(overlay, alpha = 255,
-					color = list( list(0,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,4) ),
-					10, flags=ANIMATION_END_NOW)//adjust the 4 to adjust aperture size
-	proc/Thumper_crit()
-		Thumper_createHeartbeatOverlays()
-		if(doThumps)
-			doThumps = 0
-		for(var/mob/x in src.heartbeatOverlays)
-			var/obj/screen/overlay = src.heartbeatOverlays[x]
-			if(x.client)
-				animate(overlay,
-					alpha = 255,
-					color = list( list(0.1,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,0.8), list(0,0,0,0) ),
-				time = 10, easing = SINE_EASING)
-
-	proc/Thumper_restore()
-		Thumper_createHeartbeatOverlays()
-		doThumps = 0
-		for(var/mob/x in src.heartbeatOverlays)
-			var/obj/screen/overlay = src.heartbeatOverlays[x]
-			if(x.client)
-				animate(overlay, color = list( list(0,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,-100), list(0,0,0,0) ), alpha = 0, 20, SINE_EASING )
 
 /mob/living/Life(datum/controller/process/mobs/parent)
 	set invisibility = 0
@@ -399,8 +283,11 @@
 
 	last_life_tick = TIME
 
+/////////////////////////////////////////////////////////////////////////////////////
 //LIFE() PROCS THAT ARE HIGHLY SPECIFIC ABOUT WHAT MOB THEY RUN
 //THIS INCLUDES EVERYTHING I COULDNT FIGURE OUT HOW TO WORK INTO A LIFEPROCESS NICELY
+//////////////////////////////////////////////////////////////////////////////////////
+
 
 /mob/living/carbon/human/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
@@ -547,29 +434,29 @@
 		src.health++
 
 /mob/living/object/Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
+	if (..(parent))
+		return 1
 
-		if (!src.item)
+	if (!src.item)
+		src.death(0)
+
+	if (src.item && src.item.loc != src) //ZeWaka: Fix for null.loc
+		if (isturf(src.item.loc))
+			src.item.loc = src
+		else
 			src.death(0)
 
-		if (src.item && src.item.loc != src) //ZeWaka: Fix for null.loc
-			if (isturf(src.item.loc))
-				src.item.loc = src
-			else
-				src.death(0)
+	for (var/atom/A as obj|mob in src)
+		if (A != src.item && A != src.dummy && A != src.owner && !istype(A, /obj/screen))
+			if (isobj(A) || ismob(A)) // what the heck else would this be?
+				A:set_loc(src.loc)
 
-		for (var/atom/A as obj|mob in src)
-			if (A != src.item && A != src.dummy && A != src.owner && !istype(A, /obj/screen))
-				if (isobj(A) || ismob(A)) // what the heck else would this be?
-					A:set_loc(src.loc)
-
-		src.set_density(src.item ? src.item.density : 0)
-		src.item.dir = src.dir
-		src.icon = src.item.icon
-		src.icon_state = src.item.icon_state
-		src.color = src.item.color
-		src.overlays = src.item.overlays
+	src.set_density(src.item ? src.item.density : 0)
+	src.item.dir = src.dir
+	src.icon = src.item.icon
+	src.icon_state = src.item.icon_state
+	src.color = src.item.color
+	src.overlays = src.item.overlays
 
 /mob/living/carbon/cube
 	Life(datum/controller/process/mobs/parent)
@@ -594,6 +481,9 @@
 
 		pop()
 
+/////////////////////////////////////////////////////////
+// 					MISC STUFF
+/////////////////////////////////////////////////////////
 
 /mob/living/
 	proc/clamp_values()
@@ -956,3 +846,86 @@
 				fire_prot += (shoes.protective_temperature/10)
 
 		return fire_prot
+
+////////////////////////////////////////
+//Unused heart thump stuff
+////////////////////////////////////////
+
+/mob/living/carbon/human
+	proc/Thumper_createHeartbeatOverlays()
+		for (var/mob/x in (src.observers + src))
+			if(!heartbeatOverlays[x] && x.client)
+				var/obj/screen/hb = new
+				hb.icon = x.client.widescreen ? 'icons/effects/overlays/crit_thicc.png' : 'icons/effects/overlays/crit_thin.png'
+				hb.screen_loc = "1,1"
+				hb.layer = HUD_LAYER_UNDER_2
+				hb.plane = PLANE_HUD
+				hb.mouse_opacity = 0
+				x.client.screen += hb
+				heartbeatOverlays[x] = hb
+			else if(x.client && !(heartbeatOverlays[x] in x.client.screen))
+				x.client.screen += heartbeatOverlays[x]
+	proc/Thumper_thump(var/animateInitial)
+		Thumper_createHeartbeatOverlays()
+		var/sound/thud = sound('sound/effects/thump.ogg')
+#define HEARTBEAT_THUMP_APERTURE 3.5
+#define HEARTBEAT_THUMP_BASE 5
+#define HEARTBEAT_THUMP_INTENSITY 0.2
+#define HEARTBEAT_THUMP_INTENSITY_BASE 0.1
+		for(var/mob/x in src.heartbeatOverlays)
+			var/obj/screen/overlay = src.heartbeatOverlays[x]
+			if(x.client)
+				x.client << thud
+				if(animateInitial)
+					animate(overlay, alpha=255, color=list( list(HEARTBEAT_THUMP_INTENSITY,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,HEARTBEAT_THUMP_APERTURE)), 10, easing=ELASTIC_EASING)
+					animate(color=list( list(HEARTBEAT_THUMP_INTENSITY_BASE,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,HEARTBEAT_THUMP_BASE), list(0,0,0,0) ), 10, easing=ELASTIC_EASING, flags=ANIMATION_END_NOW)
+				else
+					//src << sound('sound/thump.ogg')
+					overlay.color=list( list(0.16,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,2.6), list(0,0,0,0) )//, 5, 0, ELASTIC_EASING)
+					animate(overlay, color=list( list(0.13,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,3.5), list(0,0,0,0) ), 13, easing = ELASTIC_EASING, flags = ANIMATION_END_NOW)
+
+
+#undef HEARTBEAT_THUMP_APERTURE
+#undef HEARTBEAT_THUMP_BASE
+#undef HEARTBEAT_THUMP_INTENSITY
+#undef HEARTBEAT_THUMP_INTENSITY_BASE
+	var/doThumps = 0
+	proc/Thumper_theThumpening()
+		if(doThumps) return
+		doThumps = 1
+		Thumper_thump(1)
+		SPAWN_DBG(2 SECONDS)
+			while(src.doThumps)
+				Thumper_thump(0)
+				sleep(2 SECONDS)
+	proc/Thumper_stopThumps()
+		doThumps = 0
+	proc/Thumper_paralyzed()
+		Thumper_createHeartbeatOverlays()
+		if(doThumps)//we're thumping dangit
+			doThumps = 0
+		for(var/mob/x in src.heartbeatOverlays)
+			var/obj/screen/overlay = src.heartbeatOverlays[x]
+			if(x.client)
+				animate(overlay, alpha = 255,
+					color = list( list(0,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,4) ),
+					10, flags=ANIMATION_END_NOW)//adjust the 4 to adjust aperture size
+	proc/Thumper_crit()
+		Thumper_createHeartbeatOverlays()
+		if(doThumps)
+			doThumps = 0
+		for(var/mob/x in src.heartbeatOverlays)
+			var/obj/screen/overlay = src.heartbeatOverlays[x]
+			if(x.client)
+				animate(overlay,
+					alpha = 255,
+					color = list( list(0.1,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,0.8), list(0,0,0,0) ),
+				time = 10, easing = SINE_EASING)
+
+	proc/Thumper_restore()
+		Thumper_createHeartbeatOverlays()
+		doThumps = 0
+		for(var/mob/x in src.heartbeatOverlays)
+			var/obj/screen/overlay = src.heartbeatOverlays[x]
+			if(x.client)
+				animate(overlay, color = list( list(0,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,-100), list(0,0,0,0) ), alpha = 0, 20, SINE_EASING )

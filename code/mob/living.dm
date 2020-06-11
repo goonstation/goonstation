@@ -29,7 +29,6 @@
 #if ASS_JAM
 	var/ai_prefrozen //needed for timestop
 #endif
-	var/blood_id = null
 
 	var/mob/living/ai_target = null
 	var/list/mob/living/ai_target_old = list()
@@ -96,6 +95,35 @@
 	var/next_step_delay = 0
 	var/next_sprint_boost = 0
 	var/sustained_moves = 0
+
+	var/metabolizes = 1
+
+	var/can_bleed = 1
+	var/blood_id = null
+	var/blood_volume = 500
+	var/blood_pressure = null
+	var/blood_color = DEFAULT_BLOOD_COLOR
+	var/bleeding = 0
+	var/bleeding_internal = 0
+	var/blood_absorption_rate = 1 // amount of blood to absorb from the reagent holder per Life()
+	var/list/bandaged = list()
+	var/being_staunched = 0 // is someone currently putting pressure on their wounds?
+
+	var/co2overloadtime = null
+	var/temperature_resistance = T0C+75
+
+	var/use_stamina = 1
+	var/stamina = STAMINA_MAX
+	var/stamina_max = STAMINA_MAX
+	var/stamina_regen = STAMINA_REGEN
+	var/stamina_crit_chance = STAMINA_CRIT_CHANCE
+	var/list/stamina_mods_regen = list()
+	var/list/stamina_mods_max = list()
+
+	var/list/stomach_contents = list()
+
+	var/last_sleep = 0 //used for sleep_bubble
+
 
 
 /mob/living/New()
@@ -1580,3 +1608,4 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
 					if (locate(/mob) in A.contents)
 						. *= max(A.p_class,1)
+
