@@ -38,6 +38,14 @@
 	var/breathstate = 0
 
 
+	proc/update_oxy(var/on)
+		if (human_owner)
+			human_owner.hud.update_oxy_indicator(on)
+
+	proc/update_toxy(var/on)
+		if (human_owner)
+			human_owner.hud.update_tox_indicator(on)
+
 	process(var/datum/gas_mixture/environment)
 		//special (read: stupid) manual breathing stuff. weird numbers are so that messages don't pop up at the same time as manual blinking ones every time
 		if (manualbreathing && human_owner)
@@ -52,14 +60,14 @@
 				if (52)
 					boutput(owner, "<span class='alert'>Your lungs start to hurt. You really need to breathe!</span>")
 				if (53 to 61)
-					owner.hud.update_oxy_indicator(1)
+					update_oxy(1)
 					owner.take_oxygen_deprivation(breathtimer/12)
 				if (62)
-					owner.hud.update_oxy_indicator(1)
+					update_oxy(1)
 					boutput(owner, "<span class='alert'>Your lungs are burning and the need to take a breath is almost unbearable!</span>")
 					owner.take_oxygen_deprivation(10)
 				if (63 to INFINITY)
-					owner.hud.update_oxy_indicator(1)
+					update_oxy(1)
 					owner.take_oxygen_deprivation(breathtimer/6)
 		else // plain old automatic breathing
 			breathe(environment)
@@ -217,10 +225,10 @@
 				owner.take_oxygen_deprivation(6 * mult)
 			else
 				owner.take_oxygen_deprivation(3 * mult)
-			owner.hud.update_oxy_indicator(1)
+			update_oxy(1)
 
 			//consume some reagents if we drowning
-			if (underwater && (owner.oxyloss > 40 || underwater.type == /obj/fluid/airborne))
+			if (underwater && (owner.get_oxygen_deprivation() > 40 || underwater.type == /obj/fluid/airborne))
 				if (istype(underwater,/obj/fluid))
 					var/obj/fluid/F = underwater
 					F.force_mob_to_ingest(owner)// * mult
@@ -273,14 +281,14 @@
 				oxygen_used = breath.oxygen*ratio/6
 			else
 				owner.take_oxygen_deprivation(3 * mult)
-			owner.hud.update_oxy_indicator(1)
+			update_oxy(1)
 		else 									// We're in safe limits
 			//if (breath.oxygen/TOTAL_MOLES(breath) >= 0.95) //high oxygen concentration. lets slightly heal oxy damage because it feels right
 			//	take_oxygen_deprivation(-6 * mult)
 
 			owner.take_oxygen_deprivation(-6 * mult)
 			oxygen_used = breath.oxygen/6
-			owner.hud.update_oxy_indicator(0)
+			update_oxy(0)
 
 		breath.oxygen -= oxygen_used
 		breath.carbon_dioxide += oxygen_used
@@ -302,9 +310,9 @@
 		if (Toxins_pp > safe_toxins_max) // Too much toxins
 			var/ratio = breath.toxins/safe_toxins_max
 			owner.take_toxin_damage(min(ratio * 125,20) * mult)
-			owner.hud.update_tox_indicator(1)
+			update_toxy(1)
 		else
-			owner.hud.update_tox_indicator(0)
+			update_toxy(0)
 
 		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
 			for (var/datum/gas/sleeping_agent/SA in breath.trace_gases)
@@ -673,7 +681,7 @@
 
 /datum/lifeprocess/organs
 	process(var/datum/gas_mixture/environment)
-		owner.handle_organs(mult)
+		owner.handle_organs(get_multiplier())
 
 		//the master vore loop
 		if (owner.stomach_contents && owner.stomach_contents.len)
@@ -2060,22 +2068,24 @@
 		if (src.abilityHolder)
 			//MBC : update countdowns on topbar screen abilities
 			var/show = 1
-			if (src.hud.type == /datum/hud/human)
-				show = src.hud:current_ability_set == 1
-			if (istype(src.abilityHolder,/datum/abilityHolder/composite))
-				var/datum/abilityHolder/composite/composite = src.abilityHolder
-				for (var/datum/abilityHolder/H in composite.holders)
-					for(var/datum/targetable/B in H.abilities)
+			if (ishuman(src))//FUCKKK FIX THIS
+				var/mob/living/carbon/human/H = src
+				show = (H.hud.current_ability_set == 1)
+			if (show)
+				if (istype(src.abilityHolder,/datum/abilityHolder/composite))
+					var/datum/abilityHolder/composite/composite = src.abilityHolder
+					for (var/datum/abilityHolder/H in composite.holders)
+						for(var/datum/targetable/B in H.abilities)
+							if (B.display_available())
+								var/obj/screen/ability/topBar/button = B.object
+								if (istype(B))
+									button.update_on_hud(button.last_x, button.last_y)
+				else
+					for(var/datum/targetable/B in src.abilityHolder.abilities)
 						if (B.display_available())
 							var/obj/screen/ability/topBar/button = B.object
 							if (istype(B))
 								button.update_on_hud(button.last_x, button.last_y)
-			else
-				for(var/datum/targetable/B in src.abilityHolder.abilities)
-					if (B.display_available())
-						var/obj/screen/ability/topBar/button = B.object
-						if (istype(B))
-							button.update_on_hud(button.last_x, button.last_y)
 
 
 			src.abilityHolder.onLife((life_time_passed / tick_spacing))
