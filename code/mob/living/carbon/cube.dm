@@ -15,6 +15,7 @@
 	opacity = 0
 	var/life_timer = 10
 	sound_scream = 'sound/voice/screams/male_scream.ogg'
+	use_stamina = 0
 
 	examine(mob/user)
 		. = list("<span class='notice'>*---------*</span>")

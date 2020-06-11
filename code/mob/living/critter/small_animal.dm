@@ -63,6 +63,10 @@ todo: add more small animals!
 	var/fur_color = 0
 	var/eye_color = 0
 
+	New()
+		..()
+		H.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
+
 	setup_healths()
 		add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(-(src.health_burn), src.health_burn, src.health_burn_vuln)

@@ -1141,18 +1141,18 @@ var/list/statusGroupLimits = list("Food"=4)
 		unique = 1
 		duration = INFINITE_STATUS
 		maxDuration = null
-		var/mob/living/carbon/human/H
+		var/mob/living/L
 
 		onAdd(var/optional=null)
-			if (ishuman(owner))
-				H = owner
+			if (isliving(owner))
+				L = owner
 			else
 				owner.delStatus("resting")
 
 		clicked(list/params)
-			H.delStatus("resting")
-			H.force_laydown_standup()
-			H.hud.update_resting()
+			L.delStatus("resting")
+			L.force_laydown_standup()
+			L.hud.update_resting()
 
 	ganger
 		id = "ganger"

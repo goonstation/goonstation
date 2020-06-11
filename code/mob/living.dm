@@ -1398,32 +1398,33 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/OnMove(source = null)
 	var/turf/NewLoc = get_turf(src)
 	var/steps = 1
-	if (move_dir & (move_dir-1))
-		steps *= DIAG_MOVE_DELAY_MULT
+	if (src.use_stamina)
+		if (move_dir & (move_dir-1))
+			steps *= DIAG_MOVE_DELAY_MULT
 
-	if (world.time < src.next_move + SUSTAINED_RUN_GRACE)
-		if(move_dir & last_move_dir)
-			if (sustained_moves < SUSTAINED_RUN_REQ+1 && sustained_moves + steps >= SUSTAINED_RUN_REQ+1)
-				sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),move_dir)
-				playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.5)
-			sustained_moves += steps
+		if (world.time < src.next_move + SUSTAINED_RUN_GRACE)
+			if(move_dir & last_move_dir)
+				if (sustained_moves < SUSTAINED_RUN_REQ+1 && sustained_moves + steps >= SUSTAINED_RUN_REQ+1)
+					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),move_dir)
+					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.5)
+				sustained_moves += steps
+			else
+				if (sustained_moves >= SUSTAINED_RUN_REQ+1)
+					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
+					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
+				else if (move_dir == turn(last_move_dir,180))
+					sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
+					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.9)
+					if(src.bioHolder.HasEffect("magnets_pos") || src.bioHolder.HasEffect("magnets_neg"))
+						var/datum/bioEffect/hidden/magnetic/src_effect = src.bioHolder.GetEffect("magnets_pos")
+						if(src_effect == null) src_effect = src.bioHolder.GetEffect("magnets_neg")
+						if(src_effect.update_charge(1))
+							playsound(get_turf(src), "sound/effects/sparks[rand(1,6)].ogg", 25, 1,extrarange = -25)
+
+
+				sustained_moves = 0
 		else
-			if (sustained_moves >= SUSTAINED_RUN_REQ+1)
-				sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
-				playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
-			else if (move_dir == turn(last_move_dir,180))
-				sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
-				playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.9)
-				if(src.bioHolder.HasEffect("magnets_pos") || src.bioHolder.HasEffect("magnets_neg"))
-					var/datum/bioEffect/hidden/magnetic/src_effect = src.bioHolder.GetEffect("magnets_pos")
-					if(src_effect == null) src_effect = src.bioHolder.GetEffect("magnets_neg")
-					if(src_effect.update_charge(1))
-						playsound(get_turf(src), "sound/effects/sparks[rand(1,6)].ogg", 25, 1,extrarange = -25)
-
-
 			sustained_moves = 0
-	else
-		sustained_moves = 0
 
 	// Call movement traits
 	if(src.traitHolder)
@@ -1435,7 +1436,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 /mob/living/Move(var/turf/NewLoc, direct)
 	. = ..()
-	if (. && move_dir && !(direct & move_dir))
+	if (. && move_dir && !(direct & move_dir) && src.use_stamina)
 		if (sustained_moves >= SUSTAINED_RUN_REQ+1)
 			sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 			playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
@@ -1566,7 +1567,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			spell_batpoof(src, cloak = 1)
 		if (special_sprint & SPRINT_SNIPER)
 			begin_sniping()
-	else
+	else if (src.use_stamina)
 		if (!next_step_delay && world.time >= next_sprint_boost)
 			if (!HAS_MOB_PROPERTY(src, PROP_CANTMOVE))
 				//if (src.hasStatus("blocking"))

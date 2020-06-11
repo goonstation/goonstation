@@ -72,6 +72,8 @@
 
 	var/last_life_process = 0
 
+	blood_id = "blood"
+
 	New()
 //		if (ispath(default_task))
 //			default_task = new default_task
@@ -1001,6 +1003,10 @@
 		else if (B.stage == 3)
 			burning_image.icon_state = "fire3_[burning_suffix]"
 		UpdateOverlays(burning_image, "burning")
+
+	force_laydown_standup()
+		..()
+		update_stunned_icon()
 
 	proc/update_stunned_icon(var/canmove)
 		if(canmove != src.old_canmove)

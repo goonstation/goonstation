@@ -36,17 +36,6 @@
 	req_access = null
 	return ..()
 
-/mob/living/silicon/force_laydown_standup()
-	if (processScheduler.hasProcess("Mob"))
-		src.update_canmove()
-
-		if (src.client)
-			updateOverlaysClient(src.client)
-		if (src.observers.len)
-			for (var/mob/x in src.observers)
-				if (x.client)
-					src.updateOverlaysClient(x.client)
-
 ///mob/living/silicon/proc/update_canmove()
 //	..()
 	//canmove = !(src.hasStatus(list("weakened", "paralysis", "stunned")) || buckled)
