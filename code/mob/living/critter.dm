@@ -410,7 +410,7 @@
 		else
 			. += src.base_move_delay - (BASE_SPEED)
 		if (src.lying)
-		. += 14
+			. += 14
 
 	Move(var/turf/NewLoc, direct)
 		if (!src.lying && isturf(NewLoc) && NewLoc.turf_flags & MOB_STEP)

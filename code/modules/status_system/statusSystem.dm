@@ -794,10 +794,10 @@ var/list/statusGroupLimits = list("Food"=4)
 					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 
 			onRemove()
-				. = ..()
 				if (ismob(owner))
 					var/mob/mob_owner = owner
 					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+				. = ..()
 
 		weakened
 			id = "weakened"
@@ -814,10 +814,10 @@ var/list/statusGroupLimits = list("Food"=4)
 					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 
 			onRemove()
-				. = ..()
 				if (ismob(owner))
 					var/mob/mob_owner = owner
 					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+				. = ..()
 
 			pinned
 				id = "pinned"
@@ -871,10 +871,10 @@ var/list/statusGroupLimits = list("Food"=4)
 					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 
 			onRemove()
-				. = ..()
 				if (ismob(owner))
 					var/mob/mob_owner = owner
 					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+				. = ..()
 
 		dormant
 			id = "dormant"

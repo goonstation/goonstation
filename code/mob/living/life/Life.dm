@@ -569,9 +569,6 @@
 			L.process()
 
 	force_laydown_standup() //immediately force a laydown
-		//if (processScheduler.hasProcess("Mob"))
-		//	var/datum/controller/process/P = processScheduler.nameToProcessMap["Mob"]
-		//	src.handle_stuns_lying(P)
 		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/stuns_lying]
 		if (L)
 			L.process()
