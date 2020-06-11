@@ -1,4 +1,9 @@
 
+(t)thu jun 11 20
+(u)pali
+(p)1010
+(e)🔄🎨|rework, sprites
+(*)New airbridge visuals and other minor improvements.
 (t)wed jun 10 20
 (u)pali
 (p)972
