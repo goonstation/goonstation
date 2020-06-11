@@ -73,6 +73,15 @@
 			reagent_act(var/reagent_id,var/volume)
 				..()
 
+			side
+				icon_state = "catwalk_jen_side"
+
+			inner
+				icon_state = "catwalk_jen_inner"
+
+			4corners
+				icon_state = "catwalk_jen_4corner"
+
 	onMaterialChanged()
 		..()
 		if (istype(src.material))
