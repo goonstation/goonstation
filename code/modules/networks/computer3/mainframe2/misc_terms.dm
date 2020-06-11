@@ -2693,11 +2693,13 @@
 				if (1)
 					light.disable()
 					if (src.host_id && change)
-						src.post_status(src.host_id,"command","term_message","data","command=statechange&state=idle")
+						SPAWN_DBG(0)
+							src.post_status(src.host_id,"command","term_message","data","command=statechange&state=idle")
 				if (0)
 					light.disable()
 					if (src.host_id && change)
-						src.post_status(src.host_id,"command","term_message","data","command=statechange&state=inactive")
+						SPAWN_DBG(0)
+							src.post_status(src.host_id,"command","term_message","data","command=statechange&state=inactive")
 
 			return
 

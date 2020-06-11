@@ -396,6 +396,7 @@
 			take_damage(health_max/6)
 
 /obj/machinery/door/proc/break_me_complitely()
+	set waitfor = 0
 	robogibs(src.loc)
 	qdel(src)
 
@@ -433,7 +434,8 @@
 			A.shock(user, 3)
 
 		if (prob(2) && src.health <= health_max * 0.35 && istype(src, /obj/machinery/door/airlock) )
-			src.open()
+			SPAWN_DBG(0)
+				src.open()
 
 
 /obj/machinery/door/bullet_act(var/obj/projectile/P)

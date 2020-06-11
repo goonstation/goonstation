@@ -791,8 +791,10 @@
 			if(2.0) damage = 40
 			if(3.0) damage = 20
 
-		for (var/obj/item/parts/robot_parts/RP in src.contents)
-			if (RP.ropart_take_damage(damage,damage) == 1) src.compborg_lose_limb(RP)
+		SPAWN_DBG(0)
+			for (var/obj/item/parts/robot_parts/RP in src.contents)
+				if (RP.ropart_take_damage(damage,damage) == 1)
+					src.compborg_lose_limb(RP)
 
 		if (istype(cell,/obj/item/cell/erebite) && fire_protect != 1)
 			src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
