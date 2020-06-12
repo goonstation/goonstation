@@ -24,7 +24,6 @@ turf
 
 			for(var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.
 				item.temperature_expose(null, exposed_temperature, exposed_volume)
-				LAGCHECK(LAG_REALTIME)
 
 			if(!air_contents)
 				return 0

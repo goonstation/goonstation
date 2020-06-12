@@ -1,5 +1,6 @@
 
 /client/proc/wireTest()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "WireTest"
 	set hidden = 1
 	admin_only
@@ -123,7 +124,7 @@ var/global/deathConfettiActive = 0
 
 /client/proc/toggle_death_confetti()
 	set popup_menu = 0
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle Death Confetti"
 	set desc = "Toggles the fun confetti effect and sound whenever a mob dies"
 	admin_only
@@ -197,6 +198,7 @@ var/global/deathConfettiActive = 0
 /client/proc/ghostdroneAll()
 	set name = "Ghostdrone All"
 	set desc = "Makes every single person a ghostdrone. Why are you doing this."
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	set hidden = 1
 	admin_only
@@ -211,7 +213,7 @@ var/global/deathConfettiActive = 0
 
 
 /client/proc/toggle_hard_reboot()
-	set category = "Debug" // Not in toggles because it's not enabling/disabling game features
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER) // Not in toggles because it's not enabling/disabling game features
 	set name = "Toggle Hard Reboot"
 	set desc = "A hard reboot is when the game instance outright ends, and the backend server reinitialises it"
 

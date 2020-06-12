@@ -2,7 +2,7 @@
 var/global/atom_emergency_stop = 0
 
 /client/proc/cmd_atom_emergency_stop()
-	set category = "Atom"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set popup_menu = 0
 	set name = "Stop Atom Verbs"
 	set desc = "For when someone's used an atom verb and you've found yourself yelling \"Oh god the server is dying STOP SPINNING THINGS AAAAA STOP PLEASE I BEG YOU\""
@@ -23,7 +23,7 @@ var/global/atom_emergency_stop = 0
 /* ----------------- Transmute ------------------ */
 
 /client/proc/cmd_transmute_type()
-	set category = "Atom"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set popup_menu = 0
 	set name = "Transmute Type"
 	set desc = "Transmute all things under the path you specify."
@@ -84,7 +84,7 @@ var/global/atom_emergency_stop = 0
 /* -------------------- Emag -------------------- */
 
 /client/proc/cmd_emag_all()
-	set category = "Atom"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set popup_menu = 0
 	set name = "Emag All"
 	set desc = "Emags every atom. Every single one."
@@ -128,7 +128,7 @@ var/global/atom_emergency_stop = 0
 		return
 
 /client/proc/cmd_emag_type()
-	set category = "Atom"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set popup_menu = 0
 	set name = "Emag Type"
 	set desc = "Emag all things under the path you specify."
@@ -179,7 +179,7 @@ var/global/atom_emergency_stop = 0
 		return
 
 /client/proc/cmd_emag_target(var/atom/target as mob|obj|turf in world)
-	set category = "Atom"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 	set name = "Emag Target"
 	set desc = "Emag this thing. Not the other thing like this thing. THIS thing."
@@ -203,7 +203,7 @@ var/global/atom_emergency_stop = 0
 /* -------------------- Scale -------------------- */
 
 /client/proc/cmd_scale_all()
-	set category = "Atom"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set popup_menu = 0
 	set name = "Scale All"
 	set desc = "Scales every atom. Every single one."
@@ -253,7 +253,7 @@ var/global/atom_emergency_stop = 0
 		return
 
 /client/proc/cmd_scale_type()
-	set category = "Atom"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set popup_menu = 0
 	set name = "Scale Type"
 	set desc = "Scales all things under the path you specify."
@@ -311,7 +311,7 @@ var/global/atom_emergency_stop = 0
 		return
 
 /client/proc/cmd_scale_target(var/atom/target as mob|obj|turf in world)
-	set category = "Atom"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 	set name = "Scale Target"
 	set desc = "Scales a target."
@@ -339,7 +339,7 @@ var/global/atom_emergency_stop = 0
 /* -------------------- Rotate -------------------- */
 
 /client/proc/cmd_rotate_all()
-	set category = "Atom"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set popup_menu = 0
 	set name = "Rotate All Atoms"
 	set desc = "Rotates every atom. Every single one."
@@ -386,7 +386,7 @@ var/global/atom_emergency_stop = 0
 		return
 
 /client/proc/cmd_rotate_type()
-	set category = "Atom"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set popup_menu = 0
 	set name = "Rotate Type"
 	set desc = "Rotates all things under the path you specify."
@@ -441,7 +441,7 @@ var/global/atom_emergency_stop = 0
 		return
 
 /client/proc/cmd_rotate_target(var/atom/target as mob|obj|turf in world)
-	set category = "Atom"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 	set name = "Rotate Target"
 	set desc = "Rotates a target."
@@ -466,7 +466,7 @@ var/global/atom_emergency_stop = 0
 /* -------------------- Spin -------------------- */
 
 /client/proc/cmd_spin_all()
-	set category = "Atom"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set popup_menu = 0
 	set name = "Spin All"
 	set desc = "Spins every atom. Every single one."
@@ -524,7 +524,7 @@ var/global/atom_emergency_stop = 0
 		return
 
 /client/proc/cmd_spin_type()
-	set category = "Atom"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set popup_menu = 0
 	set name = "Spin Type"
 	set desc = "Spins all things under the path you specify."
@@ -591,7 +591,7 @@ var/global/atom_emergency_stop = 0
 		return
 
 /client/proc/cmd_spin_target(var/atom/target as mob|obj|turf in world)
-	set category = "Atom"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
 	set name = "Spin Target"
 	set desc = "Spins a target."
@@ -626,7 +626,7 @@ var/global/atom_emergency_stop = 0
 /* -------------------- Get -------------------- */
 
 /client/proc/cmd_get_all()
-	set category = "Atom"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set popup_menu = 0
 	set name = "Get All"
 	set desc = "Gets every object and mob. Every single one. Oh god no."
@@ -675,7 +675,7 @@ var/global/atom_emergency_stop = 0
 		return
 
 /client/proc/cmd_get_type()
-	set category = "Atom"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set popup_menu = 0
 	set name = "Get Type"
 	set desc = "Get all things under the path you specify. Don't give this /turf or /area stuff, it's not going to work."

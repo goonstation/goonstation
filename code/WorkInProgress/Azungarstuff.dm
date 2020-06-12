@@ -1232,6 +1232,7 @@
 			src.attacking = 0
 
 	CritterDeath()
+		..()
 		qdel(src)
 
 /obj/item/rpcargotele

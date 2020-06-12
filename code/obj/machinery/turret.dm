@@ -117,7 +117,7 @@
 		LAGCHECK(LAG_HIGH)
 		if (!C)
 			continue
-		if (!iscarbon(C) && !iscritter(C))
+		if (!iscarbon(C) && !ismobcritter(C))
 			continue
 		if (isdead(C))
 			continue
@@ -145,7 +145,7 @@
 	for(var/atom/AT in A)
 		var/mob/living/C = AT
 		if( istype(C) )
-			if (!iscarbon(C) && !iscritter(C))
+			if (!iscarbon(C) && !ismobcritter(C))
 				continue
 			if (isdead(C))
 				continue
@@ -229,7 +229,8 @@
 
 /obj/machinery/turret/ex_act(severity)
 	if(severity < 3)
-		src.die()
+		SPAWN_DBG(0)
+			src.die()
 
 /obj/machinery/turret/emp_act()
 	..()

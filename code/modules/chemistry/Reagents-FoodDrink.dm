@@ -167,7 +167,6 @@ datum
 				var/mytemp = holder.total_temperature
 				src = null
 				if(!volume_passed) return 1
-				if(!ishuman(M)) return 1
 				if(method == INGEST)
 					if(mytemp <= T0C+7) //Nice & cold.
 						if(M.get_toxin_damage())
@@ -362,7 +361,6 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				src = null
 				if(!volume_passed) return
-				if(!ishuman(M)) return
 				if(method == INGEST)
 					if(M.client && (istraitor(M) || isspythief(M)))
 						M.reagents.add_reagent("omnizine",10)
@@ -420,8 +418,8 @@ datum
 				if(method == INGEST)
 					var/alch = volume_passed * 0.75
 					M.reagents.add_reagent("ethanol", alch)
-					if(ishuman(M))
-						var/mob/living/carbon/human/H = M
+					if(isliving(M))
+						var/mob/living/H = M
 						if (isalcoholresistant(H))
 							return
 						if (volume_passed + H.reagents.get_reagent_amount("bojack") > 10)
@@ -665,8 +663,6 @@ datum
 				var/datum/reagents/old_holder = src.holder
 				src = null
 				if(!volume_passed)
-					return
-				if(!ishuman(M))
 					return
 
 				var/do_stunny = 1
@@ -1378,12 +1374,12 @@ datum
 
 			on_mob_life(var/mob/living/carbon/human/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(!M.mutantrace)
+				if(istype(M) && !M.mutantrace)
 					bioeffect_length++
 				..()
 
 			on_mob_life_complete(var/mob/living/carbon/human/M)
-				if(M)
+				if(M && istype(M))
 					if (!M.mutantrace)
 						if(M.bioHolder)
 							M.bioHolder.AddEffect("roach",0,bioeffect_length) //length of bioeffect proportionate to length grasshopper was in human
@@ -1727,9 +1723,6 @@ datum
 				src = null
 				if(!volume_passed)
 					return
-				if(!ishuman(M))
-					return
-
 				//var/mob/living/carbon/human/H = M
 				if(method == INGEST)
 					switch(rand(1,5))
@@ -1796,8 +1789,7 @@ datum
 				src = null
 				if(!volume_passed)
 					return
-				if(!ishuman(M))
-					return
+
 				//var/mob/living/carbon/human/H = M
 				if(method == INGEST)
 					if (volume_passed > 10)
@@ -1858,8 +1850,6 @@ datum
 				src = null
 				if(!volume_passed)
 					return
-				if(!ishuman(M))
-					return
 				//var/mob/living/carbon/human/H = M
 				if(method == INGEST)
 					boutput(M, "<span class='alert'><b>HOLY FUCK!!!!</b></span>")
@@ -1888,12 +1878,11 @@ datum
 			bladder_value = -0.2
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if (ishuman(M))
-					M.drowsyness = max(0,M.drowsyness-5)
-					if(M.bodytemperature > M.base_body_temp) // So it doesn't act like supertep
-						M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
-					..()
-					return
+				M.drowsyness = max(0,M.drowsyness-5)
+				if(M.bodytemperature > M.base_body_temp) // So it doesn't act like supertep
+					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
+				..()
+				return
 
 		fooddrink/sarsaparilla // traditionally non-caffeinated
 			name = "sarsaparilla"
@@ -2037,13 +2026,12 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
-				if (ishuman(M))
-					M.dizziness = max(0,M.dizziness-5)
-					M.drowsyness = max(0,M.drowsyness-3)
-					M.sleeping = 0
-					if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
-						M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
-					M.make_jittery(3)
+				M.dizziness = max(0,M.dizziness-5)
+				M.drowsyness = max(0,M.drowsyness-3)
+				M.sleeping = 0
+				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
+					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
+				M.make_jittery(3)
 
 		fooddrink/coffee/fresh
 			name = "freshly brewed coffee"
@@ -2372,14 +2360,16 @@ datum
 					if(M.losebreath)
 						M.lose_breath(-1)
 					M.HealDamage("All", 2, 2, 1)
-					if (ishuman(M))
-						var/mob/living/carbon/human/H = M
-						if (H.bleeding)
-							repair_bleeding_damage(H, 10, 1)
-						if (H.blood_volume < 500)
-							H.blood_volume ++
-						if (H.organHolder)
-							H.organHolder.heal_organs(1, 1, 1, target_organs)
+					if (isliving(M))
+						var/mob/living/L = M
+						if (L.bleeding)
+							repair_bleeding_damage(L, 10, 1)
+						if (L.blood_volume < 500)
+							L.blood_volume ++
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (H.organHolder)
+								H.organHolder.heal_organs(1, 1, 1, target_organs)
 
 		fooddrink/guacamole
 			name = "guacamole"
@@ -3756,7 +3746,7 @@ datum
 
 				..()
 
-			on_mob_life_complete(var/mob/living/carbon/human/M)
+			on_mob_life_complete(var/mob/living/M)
 				if(M)
 					M.reagents.add_reagent("ethanol", (alch_counter + (rand(2,3))))
 

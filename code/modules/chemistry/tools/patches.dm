@@ -105,7 +105,7 @@
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return
 
-		if (iscarbon(user) || iscritter(user))
+		if (iscarbon(user) || ismobcritter(user))
 			src.in_use = 1
 			user.visible_message("[user] applies [src] to [his_or_her(user)]self.",\
 			"<span class='notice'>You apply [src] to yourself.</span>")
@@ -116,7 +116,7 @@
 
 	throw_impact(mob/M as mob)
 		..()
-		if (src.medical && !borg && !src.in_use && (iscarbon(M) || iscritter(M)))
+		if (src.medical && !borg && !src.in_use && (iscarbon(M) || ismobcritter(M)))
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
 				M.visible_message("<span class='alert'>[src] lands on [M] sticky side down!</span>")
@@ -135,7 +135,7 @@
 
 		// No src.reagents check here because empty patches can be used to counteract bleeding.
 
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			src.in_use = 1
 			if (M == user)
 				//M.show_text("You put [src] on your arm.", "blue")
@@ -431,11 +431,11 @@
 				patches += target
 				update_overlay()
 				boutput(user, "<span class='notice'>You add [target] to the stack.</span>")
-		else if (ishuman(target))
+		else if (isliving(target))
 			if (patches.len)
 				var/obj/item/reagent_containers/patch/P = patches[patches.len]
 				patches -= P
-				var/mob/living/carbon/human/H = target
+				var/mob/living/H = target
 				P.attack(H, user, user.zone_sel && user.zone_sel.selecting ? user.zone_sel.selecting : null)
 
 				update_overlay()
@@ -485,7 +485,7 @@
 			. = ..()
 
 	proc/can_operate_on(atom/A)
-		.= (iscarbon(A) || iscritter(A))
+		.= (iscarbon(A) || ismobcritter(A))
 
 	proc/update_icon()
 		src.overlays = null

@@ -63,6 +63,7 @@
 	var/sleeping = 0.0
 	var/lying = 0.0
 	var/lying_old = 0
+	var/can_lie = 0
 	var/canmove = 1.0
 	var/timeofdeath = 0.0
 	var/fakeloss = 0
@@ -83,7 +84,6 @@
 	var/charges = 0.0
 	var/urine = 0.0
 	var/nutrition = 100
-	var/last_recovering_msg = 0
 	var/losebreath = 0.0
 	var/intent = null
 	var/shakecamera = 0
@@ -650,14 +650,14 @@
 
 		step(src,t)
 		AM.OnMove(src)
-		src.OnMove(src)
+		//src.OnMove(src) //dont do this here - this Bump() is called from a process_move which sould be calling onmove for us already
 		AM.glide_size = src.glide_size
 
 		//// MBC : I did this. this SUCKS. (pulling behavior is only applied in process_move... and step() doesn't trigger process_move nor is there anyway to override the step() behavior
 		// so yeah, i copy+pasted this from process_move.
 		if (old_loc != src.loc) //causes infinite pull loop without these checks. lol
 			var/list/pulling = list()
-			if (get_dist(old_loc, src.pulling) > 1 || src.pulling == src) // fucks sake
+			if ((get_dist(old_loc, src.pulling) > 1 && get_dist(src, src.pulling) > 1) || src.pulling == src) // fucks sake
 				src.pulling = null
 				//hud.update_pulling() // FIXME
 			else

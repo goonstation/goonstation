@@ -84,3 +84,7 @@
 // projectile signals
 /// After a projectile makes a valid hit on an atom (after immunity/other early returns, before other effects)
 #define COMSIG_PROJ_COLLIDE "proj_collide_atom"
+
+// obj/critter signals
+// When an obj/critter dies
+#define COMSIG_OBJ_CRITTER_DEATH "obj_critter_death"

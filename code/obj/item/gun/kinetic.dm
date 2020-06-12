@@ -967,6 +967,7 @@
 	max_ammo_capacity = 4 // to fuss with if i want 6 packs of ammo
 	two_handed = 1
 	can_dual_wield = 0
+	object_flags = NO_ARM_ATTACH
 
 	New()
 		ammo = new/obj/item/ammo/bullets/grenade_round/explosive
@@ -1198,7 +1199,7 @@
 	get_movement_controller()
 		.= snipermove
 
-/mob/living/carbon/human/proc/begin_sniping() //add overlay + sound here
+/mob/living/proc/begin_sniping() //add overlay + sound here
 	for (var/obj/item/gun/kinetic/sniper/S in equipped_list(check_for_magtractor = 0))
 		src.use_movement_controller = S
 		src.keys_changed(0,0xFFFF)
