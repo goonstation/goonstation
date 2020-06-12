@@ -616,23 +616,19 @@ datum
 			transparency = 155
 			data = null
 
-			on_add(var/mob/M)
-				if(!M && holder) M = holder.my_atom
-				if(M.bioHolder && M.bioHolder.HasEffect("quiet_voice")) data = 1
-				else data = 0
-				if(data == 1)
-					return
-				else
-					M.bioHolder.AddEffect("quiet_voice")
-				return
+			on_add()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					if(M.bioHolder && !M.bioHolder.HasEffect("quiet_voice"))
+						M.bioHolder.AddEffect("quiet_voice")
+				..()
 
-			on_remove(var/mob/M)
-				if(!M) M = holder.my_atom
-				if(M.bioHolder && M.bioHolder.HasEffect("quiet_voice") && data == 1)
-					return
-				else
-					M.bioHolder.RemoveEffect("quiet_voice")
-				return
+			on_remove()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					if(M?.bioHolder.HasEffect("quiet_voice"))
+						M.bioHolder.RemoveEffect("quiet_voice")
+				..()
 
 		radium
 			name = "radium"
