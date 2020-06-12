@@ -1,5 +1,9 @@
 
 (t)fri jun 12 20
+(u)pali & kubius
+(p)1047
+(e)🗺🔄🎨|mapping, rework, sprites
+(*)Nicer shuttle floors and shuttle lighting. Cog1 and Cog2 arrivals refurbished.
 (u)Tarmunora
 (p)1050
 (e)⛔|removal
