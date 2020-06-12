@@ -7,18 +7,15 @@
 //Generates file paths for browser resources when used in html tags e.g. <img>
 /proc/resource(file, group)
 	if (!file) return
-	var/path
 	if (cdn)
-		path = "[cdn]/[file]?serverrev=[vcs_revision]"
+		. = "[cdn]/[file]?serverrev=[vcs_revision]"
 	else
 		if (findtext(file, "{{resource")) //Got here via the dumb regex proc (local only)
 			file = group
 		if (findtext(file, "/"))
 			var/list/parts = splittext(file, "/")
 			file = parts[parts.len]
-		path = file
-
-	return path
+		. = file
 
 
 //Returns the file contents for storage in memory or further processing during runtime (e.g. many html files)
