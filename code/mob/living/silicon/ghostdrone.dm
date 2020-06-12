@@ -97,29 +97,6 @@
 			out(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
 			src.show_laws_drone()*/
 
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
-
-		for (var/obj/item/I in src)
-			if (!I.material) continue
-			I.material.triggerOnLife(src, I)
-
-		if (hud)
-			hud.update_environment()
-			hud.update_health()
-			hud.update_tools()
-
-		if (src.client)
-			src.updateStatic()
-			src.updateOverlaysClient(src.client)
-			src.antagonist_overlay_refresh(0, 0)
-
-		if (src.observers.len)
-			for (var/mob/x in src.observers)
-				if (x.client)
-					src.updateOverlaysClient(x.client)
-
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
 		if (!src.canmove)
@@ -1160,15 +1137,18 @@
 		src.flash(3 SECONDS)
 		switch (severity)
 			if (1.0)
-				src.gib(1)
+				SPAWN_DBG(0)
+					src.gib(1)
 
 			if (2.0)
-				src.TakeDamage(null, round(src.health / 2, 1.0))
-				src.changeStatus("stunned", 10 SECONDS)
+				SPAWN_DBG(0)
+					src.TakeDamage(null, round(src.health / 2, 1.0))
+					src.changeStatus("stunned", 10 SECONDS)
 
 			if (3.0)
-				src.TakeDamage(null, round(src.health / 3, 1.0))
-				src.changeStatus("stunned", 50)
+				SPAWN_DBG(0)
+					src.TakeDamage(null, round(src.health / 3, 1.0))
+					src.changeStatus("stunned", 50)
 
 	blob_act(var/power)
 		if (src.nodamage) return

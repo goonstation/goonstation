@@ -9,7 +9,7 @@
 	w_class = 2.0
 	c_flags = COVERSEYES
 	var/allow_blind_sight = 0
-	var/block_vision = 0
+	block_vision = 0
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
 	compatible_species = list("human", "werewolf", "flubber")

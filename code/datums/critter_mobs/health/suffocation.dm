@@ -37,6 +37,8 @@
 	proc/gain_breath(var/amt)
 		lose_breath(-amt)
 
+
+	//possibly not needed with new lifeprocess - didnt test tho lol
 	on_life()
 		var/atom/loc = holder.loc
 		var/datum/gas_mixture/environment = loc.return_air()

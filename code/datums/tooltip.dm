@@ -447,7 +447,7 @@ var/global/list/atomTooltips = new()
 /client/proc/cmd_tooltip_debug()
 	set name = "Debug Tooltips"
 	set desc = "Returns the amount of tooltips in existence everywhere"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 	admin_only
 

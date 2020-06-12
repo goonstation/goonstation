@@ -26,6 +26,7 @@
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
+	var/list/hidden_verbs = null
 
 	var/datum/buildmode_holder/buildmode = null
 	var/lastbuildtype = 0
@@ -276,8 +277,19 @@
 			SPAWN_DBG(0) del(src)
 			return
 */
+	//admins and mentors can enter a server through player caps. 
+	var/ignore_player_cap = 0
+	if (init_admin())
+		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
+		control_freak = 0	// heh
+		ignore_player_cap = 1
+	else if (player.mentor)
+		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
+		if (!src.holder)
+			src.verbs += /client/proc/toggle_mentorhelps
+		ignore_player_cap = 1
 
-	if(player_capa)
+	if(!ignore_player_cap && player_capa)
 		if(total_clients() >= player_cap)
 			if (!src.holder)
 				alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
@@ -287,13 +299,6 @@
 	if (join_motd)
 		boutput(src, "<div class=\"motd\">[join_motd]</div>")
 
-	if (init_admin())
-		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
-		control_freak = 0	// heh
-	else if (player.mentor)
-		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
-		if (!src.holder)
-			src.verbs += /client/proc/toggle_mentorhelps
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
 
@@ -393,9 +398,6 @@
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
-
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - update_world")
-		src.update_world()
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()

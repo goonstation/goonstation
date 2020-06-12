@@ -128,17 +128,17 @@ What are the archived variables for?
 
 					reacting = 1
 
-				if(farts)
-					var/reaction_rate = min(carbon_dioxide*0.75, toxins*0.25, farts*0.05)
+	if(temperature > 900 && farts && toxins > MINIMUM_HEAT_CAPACITY && carbon_dioxide > MINIMUM_HEAT_CAPACITY)
+		var/reaction_rate = min(carbon_dioxide*0.75, toxins*0.25, farts*0.05)
 
-					carbon_dioxide -= reaction_rate
-					toxins += reaction_rate
+		carbon_dioxide -= reaction_rate
+		toxins += reaction_rate
 
-					farts -= reaction_rate*0.05
+		farts -= reaction_rate*0.05
 
-					temperature += (reaction_rate*10000)/HEAT_CAPACITY(src)
+		temperature += (reaction_rate*10000)/HEAT_CAPACITY(src)
 
-					reacting = 1
+		reacting = 1
 
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)

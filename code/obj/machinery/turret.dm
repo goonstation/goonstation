@@ -229,7 +229,8 @@
 
 /obj/machinery/turret/ex_act(severity)
 	if(severity < 3)
-		src.die()
+		SPAWN_DBG(0)
+			src.die()
 
 /obj/machinery/turret/emp_act()
 	..()

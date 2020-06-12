@@ -269,7 +269,7 @@ var/datum/adminAntagPopups/aap
 
 /client/proc/cmd_admin_antag_popups()
 	set name = "View Antag Popups"
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	if (src.holder)
 		if (!aap)
 			aap = new

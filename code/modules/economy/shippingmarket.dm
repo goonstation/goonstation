@@ -246,14 +246,14 @@
 // Debugging and admin verbs (mostly coder)
 
 /client/proc/cmd_modify_market_variables()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Edit Market Variables"
 
 	if (shippingmarket == null) boutput(src, "UH OH!")
 	else src.debug_variables(shippingmarket)
 
 /client/proc/BK_finance_debug()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Financial Info"
 	set desc = "Shows budget variables and current market prices."
 
@@ -294,7 +294,7 @@
 	usr.Browse(dat, "window=budgetdebug;size=400x400")
 
 /client/proc/BK_alter_funds()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Alter Budget"
 	set desc = "Add to or subtract from a budget."
 

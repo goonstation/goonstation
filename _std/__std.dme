@@ -9,6 +9,7 @@
 #include "_mapDefines.dm"
 #include "_setup.dm"
 #include "code\_macros.dm"
+#include "defines\_admin.dm"
 #include "defines\_input.dm"
 #include "_types.dm"
 #include "atmos.dm"

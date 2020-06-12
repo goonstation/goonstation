@@ -220,7 +220,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 
 // for giving non-admins the ability to play music
 /client/proc/non_admin_dj(S as sound)
-	set category = "Special Verbs"
+	set category = "Commands"
 	set name = "Play Music"
 
 	if (src.play_music_real(S))

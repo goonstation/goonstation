@@ -5,9 +5,6 @@
 # In the event that multiple members are to be informed of changes
 # to the same file or dir, add them to the end under Multiple Owners
 
-# ZeWaka
-*.md @ZeWaka 
-
 # Kyle
 /code/WorkInProgress/JobXpRewards.dm @Kyle2143
 /code/obj/item/organs/ @Kyle2143
@@ -16,3 +13,8 @@
 /code/datums/abilities/kudzumen.dm @Kyle2143
 /code/datums/gamemodes/gangwar.dm @Kyle2143
 /code/procs/jobprocs.dm @Kyle2143
+
+# ZeWaka
+*.md @ZeWaka
+
+# Multiple Owners

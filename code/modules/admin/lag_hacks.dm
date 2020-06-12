@@ -3,7 +3,7 @@
 client/proc/show_admin_lag_hacks()
 	set name = "Lag Reduction"
 	set desc = "A few janky commands that can smooth the game during an Emergency."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	admin_only
 	src.holder.show_laghacks(src.mob)
 
@@ -30,7 +30,7 @@ client/proc/show_admin_lag_hacks()
 client/proc/lightweight_doors()
 	set name = "Force Doors Ignore Cameras and Lighting"
 	set desc = "Helps when server load is heavy. Might jank up the lighting system a bit, but its mostly OK."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set hidden = 1
 	admin_only
 
@@ -45,7 +45,7 @@ client/proc/lightweight_doors()
 client/proc/lightweight_lights()
 	set name = "Kneecap Light Queue"
 	set desc = "Helps when server load is heavy."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	admin_only
 
@@ -58,7 +58,7 @@ client/proc/lightweight_lights()
 client/proc/slow_fluids()
 	set name = "Slow Fluid Processing"
 	set desc = "Higher schedulde interval."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	admin_only
 
@@ -75,7 +75,7 @@ client/proc/slow_fluids()
 client/proc/slow_atmos()
 	set name = "Slow Atmos Processing"
 	set desc = "Higher schedulde interval. May fuck the TEG."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	admin_only
 
@@ -88,7 +88,7 @@ client/proc/slow_atmos()
 client/proc/slow_ticklag()
 	set name = "Change Ticklag Bounds"
 	set desc = "Change max/min ticklag bounds for smoother experience during super-highpop or especially bad rounds. Lower = smooth, Higher = For lag"
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	admin_only
 
@@ -103,7 +103,7 @@ client/proc/slow_ticklag()
 client/proc/disable_deletions()
 	set name = "Disable Deletion Queue"
 	set desc = "Disable delete queue (only GC'd items will truly be gone when deleted)"
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	admin_only
 

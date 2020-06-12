@@ -110,6 +110,7 @@
 	CritterDeath()
 		if(!src.alive) return
 		..()
+		if (honk) return // clown spiders have special deaths
 		playsound(src.loc, src.deathsound, 50, 0)
 		src.reagents.add_reagent(venom1, 50, null)
 		src.reagents.add_reagent(venom2, 50, null)
@@ -514,7 +515,7 @@
 		else ..()
 
 	CritterDeath()
-		src.alive = 0
+		..()
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
 		var/obj/decal/cleanable/blood/gibs/gib = null
 		gib = make_cleanable(/obj/decal/cleanable/blood/gibs,src.loc)
@@ -564,7 +565,7 @@
 			break
 
 	CritterDeath()
-		src.alive = 0
+		..()
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
 		var/obj/decal/cleanable/blood/gibs/gib = null
 		gib = make_cleanable( /obj/decal/cleanable/blood/gibs,src.loc)

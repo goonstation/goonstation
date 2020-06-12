@@ -24,7 +24,7 @@ var/global/client/ff_debugger = null
 	proc/debug_fireflash_here()
 		set name = "Debug Fireflash Here"
 		set popup_menu = 1
-		set category = null
+		SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 		set desc = "Debug-print the effects of all fireflashes affecting this tile."
 		ff_debug_turf = src
 		ff_debugger = usr.client
@@ -180,7 +180,7 @@ var/global/client/ff_debugger = null
 	mat_changename = 0
 	mat_changedesc = 0
 	throw_unlimited = 1
-	plane = PLANE_FLOOR
+	plane = PLANE_SPACE
 	special_volume_override = 0
 
 	flags = ALWAYS_SOLID_FLUID

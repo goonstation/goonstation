@@ -38,15 +38,19 @@
 		if(reagent_list.len)
 			for(var/R in reagent_list)
 				possible_reactions |= total_chem_reactions[R]
+#ifdef CHEM_REACTION_PRIORITIES
 		SortList(possible_reactions)//see: /datum/chemical_reaction/operator<()
+#endif
 
 	proc/append_possible_reactions(var/reagent_id)
 		chem_building_precaution
 		if(total_chem_reactions[reagent_id])
 			possible_reactions |= total_chem_reactions[reagent_id]
 			. = 1
+#ifdef CHEM_REACTION_PRIORITIES
 		// sorting it each time anew is bad and slow, especially since your sorting algorithm doesn't even work nicely with almost sorted lists!!
 		SortList(possible_reactions)//see: /datum/chemical_reaction/operator<()
+#endif
 
 	proc/remove_possible_reactions(var/reagent_id)
 		chem_building_precaution

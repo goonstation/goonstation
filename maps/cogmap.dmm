@@ -3294,7 +3294,7 @@
 "blr" = (/obj/machinery/conveyor{dir = 4; name = "cargo belt - east"; operating = 1},/turf/simulated/floor/plating,/area/station/maintenance/east)
 "bls" = (/obj/disposalpipe/segment,/obj/machinery/cargo_router/Router6,/turf/simulated/floor/plating,/area/station/maintenance/east)
 "blt" = (/obj/machinery/launcher_loader/east,/turf/simulated/floor/caution/northsouth,/area/station/maintenance/east)
-"blu" = (/obj/fluid_spawner{amount = 1200},/turf/simulated/floor/sand,/area/station/chapel/main)
+"blu" = (/obj/fluid_spawner{amount = 1700},/turf/simulated/floor/sand,/area/station/chapel/main)
 "blv" = (/obj/item/bananapeel,/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/disposalpipe/segment/morgue,/turf/simulated/floor/delivery,/area/station/maintenance/disposal)
 "blw" = (/obj/machinery/launcher_loader/north,/turf/simulated/floor/plating/airless,/area)
 "blx" = (/turf/space,/area/shuttle/merchant_shuttle/left_station/cogmap)

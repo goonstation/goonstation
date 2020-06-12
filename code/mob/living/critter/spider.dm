@@ -28,6 +28,7 @@
 	var/health_burn_vuln = 0.65
 	reagent_capacity = 100
 
+	can_help = 1
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
@@ -36,6 +37,10 @@
 	butcherable = 1
 	skinresult = /obj/item/material_piece/cloth/spidersilk
 	max_skins = 4
+
+	blood_id = "black_goop"
+
+	var/bite_transfer_amt = 2
 
 	New()
 		..()
@@ -114,8 +119,8 @@
 			else
 				M.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_STAB)
 			// now spiders won't poison themselves - cirr
-			M.reagents.add_reagent(src.venom1, 2)
-			M.reagents.add_reagent(src.venom2, 2)
+			M.reagents.add_reagent(src.venom1, bite_transfer_amt)
+			M.reagents.add_reagent(src.venom2, bite_transfer_amt)
 
 
 	proc/grow_up()
@@ -158,7 +163,26 @@
 	venom1 = "toxin"
 	venom2 = "black_goop"
 	babyspider = 1
+	adultpath = /mob/living/critter/spider/med
+	bite_transfer_amt = 0.5
+
+/mob/living/critter/spider/med
+	name = "medium space spider"
+	desc = "A medium tiny spider, from space. In space. A space spider."
+	icon_state = "med_spide"
+	icon_state_dead = "med_spide-dead"
+	density = 0
+	flags = TABLEPASS
+	fits_under_table = 1
+	health_brute = 25
+	health_burn = 25
+	good_grip = 0
+	max_skins = 1
+	venom1 = "toxin"
+	venom2 = "black_goop"
+	babyspider = 1
 	adultpath = /mob/living/critter/spider
+	bite_transfer_amt = 1.2
 
 /mob/living/critter/spider/ice
 	name = "ice spider"
