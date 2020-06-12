@@ -642,7 +642,7 @@ datum
 
 			reaction_obj(var/obj/item/O, var/volume)
 				src = null
-				if (istype(O) && prob(40))
+				if (istype(O) && prob(80))
 					if (O.burning)
 						O.burning = 0
 				return
@@ -653,6 +653,7 @@ datum
 					var/mob/living/L = M
 					if (istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -300)
+						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
 					if (istype(L,/mob/living/critter/fire_elemental))
 						L.TakeDamage("All", volume * 1.5, 0, 0, DAMAGE_BLUNT)
 						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.5)

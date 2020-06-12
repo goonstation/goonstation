@@ -777,7 +777,7 @@ datum
 			reaction_obj(var/obj/item/O, var/volume)
 				src = null
 				if(istype(O))
-					if(O.burning && prob(40))
+					if(O.burning && prob(80))
 						O.burning = 0
 					else if(istype(O, /obj/item/toy/sponge_capsule))
 						var/obj/item/toy/sponge_capsule/S = O
@@ -793,6 +793,7 @@ datum
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -10 * volume)
+						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
 				return 1
 
 		water/water_holy
