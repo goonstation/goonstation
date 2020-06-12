@@ -18,6 +18,8 @@
 			critter_owner.hud.update_tox_indicator(on)
 
 	process(var/datum/gas_mixture/environment)
+		if(isdead(owner))
+			return ..()
 		//special (read: stupid) manual breathing stuff. weird numbers are so that messages don't pop up at the same time as manual blinking ones every time
 		if (manualbreathing && human_owner)
 			breathtimer++
