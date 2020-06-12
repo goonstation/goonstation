@@ -1,5 +1,9 @@
 
 (t)thu jun 11 20
+(u)kyle
+(p)1038
+(e)|
+(+)Mapvoting for the succeeding round will now begin ~30 seconds into the pre-game lobby.
 (u)pali
 (*)Ghosts' Toggle Lighting now has a thrid state which removes the pseudo-night vision.
 (u)Gerhazo
