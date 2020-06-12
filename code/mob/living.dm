@@ -1,6 +1,9 @@
 // living
 
 /mob/living
+
+	event_handler_flags = USE_CANPASS | IS_FARTABLE
+
 	var/spell_soulguard = 0
 
 	// this is a read only variable. do not set it directly.

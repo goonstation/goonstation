@@ -92,41 +92,50 @@
 					else
 						m_type = 2
 						var/fart_on_other = 0
-						for (var/mob/living/M in src.loc) //TODO : FARTABLE FLAG?
-							if (M == src || !M.lying)
-								continue
-							message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
-							if (sims)
-								sims.affectMotive("fun", 4)
-							if (src.mind)
-								if (M.mind && M.mind.assigned_role == "Geneticist")
-									karma_update(10, "SAINT", src)
-							fart_on_other = 1
-							break
-						for (var/obj/item/storage/bible/B in src.loc)
-							B.farty_heresy(src)
-							fart_on_other = 1
-							break
-						for (var/obj/item/book_kinginyellow/K in src.loc)
-							K.farty_doom(src)
-							fart_on_other = 1
-							break
-						for (var/obj/item/photo/voodoo/V in src.loc) //kubius: voodoo photo farty party
-							var/mob/M = V.cursed_dude
-							if (!M || !M.lying)
-								continue
-							playsound(get_turf(M), src.sound_fart, 20, 0, 0, src.get_age_pitch())
-							switch(rand(1, 7))
-								if (1) M.visible_message("<span class='emote'><b>[M]</b> suddenly radiates an unwelcoming odor.</span>")
-								if (2) M.visible_message("<span class='emote'><b>[M]</b> is visited by ethereal incontinence.</span>")
-								if (3) M.visible_message("<span class='emote'><b>[M]</b> experiences paranormal gastrointestinal phenomena.</span>")
-								if (4) M.visible_message("<span class='emote'><b>[M]</b> involuntarily telecommutes to the farty party.</span>")
-								if (5) M.visible_message("<span class='emote'><b>[M]</b> is swept over by a mysterious draft.</span>")
-								if (6) M.visible_message("<span class='emote'><b>[M]</b> abruptly emits an odor of cheese.</span>")
-								if (7) M.visible_message("<span class='emote'><b>[M]</b> is set upon by extradimensional flatulence.</span>")
-							if (sims)
-								sims.affectMotive("fun", 4)
-							//break deliberately omitted
+
+						for (var/thing in src.loc)
+							var/atom/A = thing
+							if (A.event_handler_flags & IS_FARTABLE)
+								if (istype(A,/mob/living))
+									var/mob/living/M = A
+									if (M == src || !M.lying)
+										continue
+									message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
+									if (sims)
+										sims.affectMotive("fun", 4)
+									if (src.mind)
+										if (M.mind && M.mind.assigned_role == "Geneticist")
+											karma_update(10, "SAINT", src)
+									fart_on_other = 1
+									break
+								else if (istype(A,/obj/item/storage/bible))
+									var/obj/item/storage/bible/B = A
+									B.farty_heresy(src)
+									fart_on_other = 1
+									break
+								else if (istype(A,/obj/item/book_kinginyellow))
+									var/obj/item/book_kinginyellow/K = A
+									K.farty_doom(src)
+									fart_on_other = 1
+									break
+								else if (istype(A,/obj/item/photo/voodoo))
+									var/obj/item/photo/voodoo/V = A
+									var/mob/M = V.cursed_dude
+									if (!M || !M.lying)
+										continue
+									playsound(get_turf(M), src.sound_fart, 20, 0, 0, src.get_age_pitch())
+									switch(rand(1, 7))
+										if (1) M.visible_message("<span class='emote'><b>[M]</b> suddenly radiates an unwelcoming odor.</span>")
+										if (2) M.visible_message("<span class='emote'><b>[M]</b> is visited by ethereal incontinence.</span>")
+										if (3) M.visible_message("<span class='emote'><b>[M]</b> experiences paranormal gastrointestinal phenomena.</span>")
+										if (4) M.visible_message("<span class='emote'><b>[M]</b> involuntarily telecommutes to the farty party.</span>")
+										if (5) M.visible_message("<span class='emote'><b>[M]</b> is swept over by a mysterious draft.</span>")
+										if (6) M.visible_message("<span class='emote'><b>[M]</b> abruptly emits an odor of cheese.</span>")
+										if (7) M.visible_message("<span class='emote'><b>[M]</b> is set upon by extradimensional flatulence.</span>")
+									if (sims)
+										sims.affectMotive("fun", 4)
+									//break deliberately omitted
+
 						if (!fart_on_other)
 							switch(rand(1, 42))
 								if (1) message = "<B>[src]</B> lets out a girly little 'toot' from [his_or_her(src)] butt."
@@ -175,33 +184,51 @@
 								if (40) message = "<B>[src]</B> laughs! [his_or_her(src)] breath smells like a fart."
 								if (41) message = "<B>[src]</B> farts, and as such, blob cannot evoulate."
 								if (42) message = "<b>[src]</B> farts. It might have been the Citizen Kane of farts."
-						if (src.bioHolder && src.bioHolder.HasEffect("toxic_farts"))
-							message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
-							var/turf/fart_turf = get_turf(src)
-							fart_turf.fluid_react_single("toxic_fart",2,airborne = 1)
+
 						// If there is a chest item, see if it can be activated on fart (attack_self)
 						if (src && src.chest_item != null) //Gotta do that pre-emptive runtime protection!
 							src.chest_item_attack_self_on_fart()
-						if (src.bioHolder && src.bioHolder.HasEffect("linkedfart"))
-							message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
-							var/turf/fart_turf = get_turf(src)
-							fart_turf.fluid_react_single("toxic_fart",2,airborne = 1)
 
-							for(var/mob/living/H in mobs)
-								if (H.bioHolder && H.bioHolder.HasEffect("linkedfart")) continue
-								if(locate(/obj/item/storage/bible) in get_turf(H))
-									src.visible_message("<span class='alert'><b>A mysterious force smites [src.name] for inciting blasphemy!</b></span>")
-									src.gib()
-								else
-									H.emote("fart")
-						if (istype(src.loc, /turf/space))
-							// mbc : no actually fuck this it throws off the whole balance of space movement
-							if (src.getStatusDuration("food_space_farts"))
-								src.inertia_dir = src.dir
-								step(src, inertia_dir)
-								SPAWN_DBG(1 DECI SECOND)
+						if (src.bioHolder)
+							if (src.bioHolder.HasEffect("toxic_farts"))
+								message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
+								var/turf/fart_turf = get_turf(src)
+								fart_turf.fluid_react_single("toxic_fart",2,airborne = 1)
+
+							if (src.bioHolder.HasEffect("linkedfart"))
+								message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
+								var/turf/fart_turf = get_turf(src)
+								fart_turf.fluid_react_single("toxic_fart",2,airborne = 1)
+
+								for(var/mob/living/H in mobs)
+									if (H.bioHolder && H.bioHolder.HasEffect("linkedfart")) continue
+									var/found_bible = 0
+									for (var/thing in H.loc)
+										var/atom/A = thing
+										if (A.event_handler_flags & IS_FARTABLE)
+											if (istype(A,/obj/item/storage/bible))
+												found_bible = 1
+									if (found_bible)
+										src.visible_message("<span class='alert'><b>A mysterious force smites [src.name] for inciting blasphemy!</b></span>")
+										src.gib()
+									else
+										H.emote("fart")
+
+						var/turf/T = get_turf(src)
+						if (T == src.loc)
+							if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
+								if (src.getStatusDuration("food_space_farts"))
 									src.inertia_dir = src.dir
 									step(src, inertia_dir)
+									SPAWN_DBG(1 DECI SECOND)
+										src.inertia_dir = src.dir
+										step(src, inertia_dir)
+							else
+								if(prob(10) && istype(src.loc, /turf/simulated/floor/specialroom/freezer)) //ZeWaka: Fix for null.loc
+									message = "<b>[src]</B> farts. The fart freezes in MID-AIR!!!"
+									new/obj/item/material_piece/fart(src.loc)
+									var/obj/item/material_piece/fart/F = unpool(/obj/item/material_piece/fart)
+									F.set_loc(src.loc)
 
 						if (iscluwne(src))
 							playsound(get_turf(src), "sound/voice/farts/poo.ogg", 50, 1)
@@ -217,12 +244,6 @@
 									playsound(get_turf(src), src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3)
 								else
 									playsound(get_turf(src), src.sound_fart, 50, 0, 0, src.get_age_pitch())
-
-						if(src.loc && istype(src.loc, /turf/simulated/floor/specialroom/freezer) && prob(10)) //ZeWaka: Fix for null.loc
-							message = "<b>[src]</B> farts. The fart freezes in MID-AIR!!!"
-							new/obj/item/material_piece/fart(src.loc)
-							var/obj/item/material_piece/fart/F = unpool(/obj/item/material_piece/fart)
-							F.set_loc(src.loc)
 
 						src.expel_fart_gas(oxyplasmafart)
 
