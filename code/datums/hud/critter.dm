@@ -268,7 +268,7 @@
 				if((S in statusUiElements) && statusUiElements[S])
 					var/obj/screen/statusEffect/U = statusUiElements[S]
 					U.icon = icon_hud
-					U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH+0.3"
+					U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-0.7"
 					U.update_value()
 					add_screen(U)
 					pos_x -= spacing
@@ -279,7 +279,7 @@
 						U.icon = icon_hud
 						statusUiElements.Add(S)
 						statusUiElements[S] = U
-						U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH+0.3"
+						U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-0.7"
 						U.update_value()
 						add_screen(U)
 						pos_x -= spacing
