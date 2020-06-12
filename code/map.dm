@@ -729,7 +729,7 @@ var/global/list/mapNames = list(
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay),
 		"the security lobby" = list(/area/station/chapel/main),
 		"the chapel" = list(/area/station/security/secwing),
-		"the south crew quarters" = list(/area/station/crew_quarters/quarters_south),
+		"the south crew quarters" = list(/area/station/crew_quarters/quarters_south))
 
 
 
