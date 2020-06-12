@@ -402,15 +402,15 @@ mob/new_player
 			if (limit == 0 && c == 0)
 				// 0 slots, nobody in it, don't show it
 				return
+				
+			//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
+			if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution)) 
+				c = limit
 
 			// probalby could be a define but dont give a shite
 			var/maxslots = 5
 			var/list/slots = list()
 			var/shown = min(max(c, (limit == -1 ? 99 : limit)), maxslots)
-
-			//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
-			if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution)) 
-				c = limit
 
 			// if there's still an open space, show a final join link
 			if (limit == -1 || (limit > maxslots && c < limit))
