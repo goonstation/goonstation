@@ -404,15 +404,14 @@ mob/new_player
 				// 0 slots, nobody in it, don't show it
 				return
 
-			// probalby could be a define but dont give a shite
-			var/maxslots = 5
-			var/list/slots = list()
-			var/shown = min(max(c, (limit == -1 ? 99 : limit)), maxslots)
-
 			//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
 			if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
 				c = limit
 
+			// probalby could be a define but dont give a shite
+			var/maxslots = 5
+			var/list/slots = list()
+			var/shown = min(max(c, (limit == -1 ? 99 : limit)), maxslots)
 			// if there's still an open space, show a final join link
 			if (limit == -1 || (limit > maxslots && c < limit))
 				slots += "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];' title='Join the round as [J.name].'>&#x2713;&#xFE0E;</a>"
