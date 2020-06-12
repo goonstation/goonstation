@@ -305,7 +305,7 @@
 		src.emote("fart")
 
 	//Attaching a limb that didn't originally belong to you can do stuff
-	if(prob(2) && src.limbs)
+	if(!isdead(src) && prob(2) && src.limbs)
 		if(src.limbs.l_arm && istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/))
 			var/obj/item/parts/human_parts/arm/A = src.limbs.l_arm
 			if(A.original_holder && src != A.original_holder)
