@@ -17,7 +17,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 1, pitch = 0.6)
+					playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 1, pitch = 0.5)
 					return "<b><span class='alert'>[src] wails!</span></b>"
 
 		return null
@@ -52,7 +52,8 @@
 	New()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/cauterize)
-		abilityHolder.addAbility(/datum/targetable/critter/flamethrower)
+		abilityHolder.addAbility(/datum/targetable/critter/flamethrower/throwing)
+		abilityHolder.addAbility(/datum/targetable/critter/fire_sprint)
 
 	Life()
 		var/turf/T = src.loc
