@@ -1563,6 +1563,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (special_sprint && src.client)
 		if (special_sprint & SPRINT_BAT)
 			spell_batpoof(src, cloak = 0)
+		if (special_sprint & SPRINT_FIRE)
+			spell_firepoof(src)
 		if (special_sprint & SPRINT_BAT_CLOAKED)
 			spell_batpoof(src, cloak = 1)
 		if (special_sprint & SPRINT_SNIPER)
