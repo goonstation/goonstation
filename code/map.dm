@@ -31,6 +31,7 @@ var/global/list/mapNames = list(
 	"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,				"MaxPlayersAllowed" = 30),
 	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 30),
 	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 1),
+	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = ASS_JAM)
 )
 
 /obj/landmark/map
@@ -686,6 +687,51 @@ var/global/list/mapNames = list(
 		"the bar" = list(/area/station/crew_quarters/bar),
 		"the chapel" = list(/area/station/chapel/main))
 		//"the radio lab" = list(/area/station/crew_quarters/radio))
+
+/datum/map_settings/wrestlemap
+	name = "WRESTLEMAP"
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+	auto_walls = 1
+
+	arrivals_type = MAP_SPAWN_CRYO
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = 1
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
+	escape_centcom = /area/shuttle/escape/centcom/destiny
+	escape_transit = /area/shuttle/escape/transit/destiny
+	escape_station = /area/shuttle/escape/station/destiny
+	escape_dir = NORTH
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+
+	valid_nuke_targets = list("The Ring (near the bar)" = list(/area/station/crew_quarters/quarters),
+		"the monkeydome arena" = list(/area/station/medical/dome),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom),
+		"outside the Ringularity" = list(/area/station/engine/inner),
+		"the courtroom" = list(/area/station/storage/warehouse),
+		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay),
+		"the security lobby" = list(/area/station/chapel/main),
+		"the chapel" = list(/area/station/security/secwing),
+		"the south crew quarters" = list(/area/station/crew_quarters/quarters_south))
+
+
 
 /area/shuttle/escape/centcom
 	icon_state = "shuttle_escape"
