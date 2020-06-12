@@ -61,7 +61,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #endif
 #endif
 
-	pregame_timeleft = 150 // raised from 120 to 180 to accomodate the v500 ads, then raised back down to 150 after Z5 was introduced.
+	pregame_timeleft = PREGAME_LOBBY_TICKS
 	boutput(world, "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>")
 	boutput(world, "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds")
 	#if ASS_JAM
