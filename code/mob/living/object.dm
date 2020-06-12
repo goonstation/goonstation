@@ -127,19 +127,7 @@
 		// Let's just say it's powered by ethereal bullshit like ghost farts.
 		return 1
 
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
-
-		// var/life_time_passed = max(life_tick_spacing, world.timeofday - last_life_update)
-
-		//Removing this to fix the wraith item possession ability from giving obscene amounts of points. Call me if this breaks anything
-		//I don't see why it should, -kyle
-		// if (owner)
-		// 	if (owner.abilityHolder)
-		// 		if (owner.abilityHolder.usesPoints)
-		// 			owner.abilityHolder.generatePoints(mult = (life_time_passed / life_tick_spacing))
-
+	clamp_values()
 		delStatus("slowed")
 		sleeping = 0
 		change_misstep_chance(-INFINITY)
@@ -148,29 +136,6 @@
 		is_dizzy = 0
 		is_jittery = 0
 		jitteriness = 0
-
-		if (!src.item)
-			src.death(0)
-
-		if (src.item && src.item.loc != src) //ZeWaka: Fix for null.loc
-			if (isturf(src.item.loc))
-				src.item.loc = src
-			else
-				src.death(0)
-
-		for (var/atom/A as obj|mob in src)
-			if (A != src.item && A != src.dummy && A != src.owner && !istype(A, /obj/screen))
-				if (isobj(A) || ismob(A)) // what the heck else would this be?
-					A:set_loc(src.loc)
-
-		src.set_density(src.item ? src.item.density : 0)
-		src.item.dir = src.dir
-		src.icon = src.item.icon
-		src.icon_state = src.item.icon_state
-		src.color = src.item.color
-		src.overlays = src.item.overlays
-
-		last_life_update = world.timeofday
 
 	bullet_act(var/obj/projectile/P)
 		var/damage = 0

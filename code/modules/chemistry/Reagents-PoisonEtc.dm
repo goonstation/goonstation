@@ -196,7 +196,7 @@ datum
 
 				..()
 
-			on_mob_life_complete(var/mob/living/carbon/human/M)
+			on_mob_life_complete(var/mob/living/M)
 				if(M)
 					M.take_toxin_damage(damage_counter + (rand(2,3)))
 

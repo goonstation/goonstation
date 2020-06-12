@@ -89,8 +89,10 @@ var/datum/explosion_controller/explosions
 		// BEFORE that ordeal (which may sleep quite a few times), fuck the turfs up all at once to prevent lag
 		for (var/x in queued_turfs)
 			var/turf/T = x
+#ifndef UNDERWATER_MAP
 			if(istype(T, /turf/space))
 				continue
+#endif
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P2 [p]")

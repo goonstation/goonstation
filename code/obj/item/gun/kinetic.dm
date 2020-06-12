@@ -1199,7 +1199,7 @@
 	get_movement_controller()
 		.= snipermove
 
-/mob/living/carbon/human/proc/begin_sniping() //add overlay + sound here
+/mob/living/proc/begin_sniping() //add overlay + sound here
 	for (var/obj/item/gun/kinetic/sniper/S in equipped_list(check_for_magtractor = 0))
 		src.use_movement_controller = S
 		src.keys_changed(0,0xFFFF)

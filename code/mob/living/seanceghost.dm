@@ -19,19 +19,6 @@
 	is_spacefaring()
 		return 1
 
-	Life(parent)
-		if (..(parent))
-			return 1
-
-		if (src.client)
-			src.antagonist_overlay_refresh(0, 0)
-
-		if (!src.abilityHolder)
-			src.abilityHolder = new /datum/abilityHolder/zoldorf(src)
-
-		else if (src.health < src.max_health)
-			src.health++
-
 	ex_act(severity)
 		return
 
