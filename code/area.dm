@@ -474,7 +474,7 @@
 #else
 	requires_power = 0
 	luminosity = 1
-	force_fullbright = 1
+	force_fullbright = 0
 #endif
 	sound_environment = 2
 	expandable = 0
