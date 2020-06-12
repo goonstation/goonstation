@@ -1,5 +1,11 @@
 // im pali
 
+/obj/item/reagent_containers/pill/sheltestgrog
+	name = "pill"
+	New()
+		. = ..()
+		src.reagents.add_reagent("sheltestgrog", 100)
+
 /obj/item/ammo/bullets/beepsky
 	sname = "Beepsky"
 	name = "beepsky box"
@@ -54,7 +60,11 @@
 		else
 			..()
 
-
+/obj/item/gun/kinetic/beepsky/one_bullet
+	New()
+		. = ..()
+		src.ammo.amount_left = 1
+		src.ammo.max_amount = 1
 
 
 
