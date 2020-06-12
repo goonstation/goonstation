@@ -1,5 +1,9 @@
 
 (t)thu jun 11 20
+(u)Erinexx
+(p)805
+(e)🎨|sprites
+(+)New chemgrenade sprites, now with visible coloured reagents!
 (u)kyle
 (p)1038
 (e)|
