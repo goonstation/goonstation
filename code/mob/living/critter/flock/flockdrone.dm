@@ -714,25 +714,15 @@
 	if (user.floorrunning)
 		return // you'll need to be out of the floor to do anything
 	// CONVERT TURF
-//	message_admins("[target] target pre")//debugmessages
 	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock) || istype(target, /obj/structure/girder) || istype(target, /obj/machinery/door/feather)))
 		target = get_turf(target)
-//	message_admins("[target] target post")//debugmessages
 
 	if(istype(target, /turf) && !istype(target, /turf/simulated) && !istype(target, /turf/space))
 		boutput(user, "<span class='alert'>Something about this structure prevents it from being assimilated.</span>")
 	else if(isfeathertile(target))
 		if(istype(target, /turf/simulated/floor/feather))
 			var/turf/simulated/floor/feather/flocktarget = target
-//			var/anything_needs_repair = flocktarget.broken
-//			for(var/obj/machinery/door/feather/D in flocktarget)
-//				anything_needs_repair = anything_needs_repair || D.broken
-//			if(anything_needs_repair)
-//				if(user.resources < 10)
-//					boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
-//				else
-//					actions.start(new/datum/action/bar/flock_convert(target, 10), user)
-			/*else*/ if(user.a_intent == INTENT_DISARM)
+			if(user.a_intent == INTENT_DISARM)
 				if(!locate(/obj/grille/flock) in flocktarget)
 					if(user.resources < 25)
 						boutput(user, "<span class='alert'>Not enough resources to construct a barricade (you need 25).</span>")

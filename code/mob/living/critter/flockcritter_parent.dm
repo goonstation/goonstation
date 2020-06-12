@@ -432,7 +432,7 @@
 		var/mob/living/critter/flock/F = owner
 		if(F)
 			var/obj/icecube/flockdrone/cage = new /obj/icecube/flockdrone(target.loc, target, F.flock)
-			cage.visible_message("<span class='alert'>[src] forms around [target], entombing them completely!</span>")
+			cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
 			F.pay_resources(15)
 			playsound(get_turf(target), "sound/misc/flockmind/flockdrone_build_complete.ogg", 70, 1)
 
@@ -481,7 +481,7 @@
 		S.setMaterial(getMaterial("gnesisglass"))
 		c.dump_contents()
 		qdel(target)
-
+		target = null
 
 /datum/action/bar/flock_wall_decon
 	id = "flock_wall_decon"
@@ -563,3 +563,4 @@
 		S.set_loc(T)
 		S.setMaterial(getMaterial("gnesis"))
 		qdel(target)
+		target = null

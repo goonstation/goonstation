@@ -18,6 +18,9 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "beaker"
 	rc_flags = RC_VISIBLE | RC_SPECTRO
+	mat_changename = 0
+	mat_changedesc = 0
+	mat_changeappearance = 0
 
 /obj/item/reagent_containers/gnesis/New()
 	..()
@@ -25,7 +28,8 @@
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("flockdrone_fluid", 50)
-	R.gnesisstasis = 1
+	src.setMaterial(getMaterial("gnesis"))
+	src.mat_changename = 0
 
 ////////////////
 // FLOCKBURGER

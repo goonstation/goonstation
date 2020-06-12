@@ -37,7 +37,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 	if(!N)
 		return // abandon ship alart alart
 	for(var/client/C)
-		if (!istype(C,/mob/dead/observer))
+		if (!istype(C.mob, /mob/dead/observer))
 			continue
 		var/mob/dead/observer/O = C.mob
 		if(O && N.is_authorised(O))
