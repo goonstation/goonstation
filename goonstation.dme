@@ -287,6 +287,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\controllers\process\particles.dm"
 #include "code\datums\controllers\process\process.dm"
 #include "code\datums\controllers\process\railway.dm"
+#include "code\datums\controllers\process\respawn.dm"
 #include "code\datums\controllers\process\sea_hotspots.dm"
 #include "code\datums\controllers\process\statusEffects.dm"
 #include "code\datums\controllers\process\stock_market.dm"
