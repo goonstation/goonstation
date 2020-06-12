@@ -7,7 +7,7 @@
 	cooldown = 150
 	targeted = 1
 	target_anything = 1
-	throws = 0
+	var/throws = 0
 
 
 	cast(atom/target)
