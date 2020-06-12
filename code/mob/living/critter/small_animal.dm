@@ -48,6 +48,7 @@ todo: add more small animals!
 	density = 0
 	custom_gib_handler = /proc/gibs
 	hand_count = 1
+	can_help = 1
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
@@ -73,7 +74,9 @@ todo: add more small animals!
 		if(src.is_pet)
 			pets += src
 		..()
-
+		
+		src.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
+		
 	disposing()
 		if(src.is_pet)
 			pets -= src

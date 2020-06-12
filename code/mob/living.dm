@@ -29,7 +29,6 @@
 #if ASS_JAM
 	var/ai_prefrozen //needed for timestop
 #endif
-	var/blood_id = null
 
 	var/mob/living/ai_target = null
 	var/list/mob/living/ai_target_old = list()
@@ -84,14 +83,66 @@
 	var/last_heard_name = null
 	var/last_chat_color = null
 
+
+	var/list/random_emotes
+
+	var/list/implant = list()
+	var/list/implant_images = list()
+
+	var/stance = "normal"
+
+	var/special_sprint = SPRINT_NORMAL
+	var/next_step_delay = 0
+	var/next_sprint_boost = 0
+	var/sustained_moves = 0
+
+	var/metabolizes = 1
+
+	var/can_bleed = 1
+	var/blood_id = null
+	var/blood_volume = 500
+	var/blood_pressure = null
+	var/blood_color = DEFAULT_BLOOD_COLOR
+	var/bleeding = 0
+	var/bleeding_internal = 0
+	var/blood_absorption_rate = 1 // amount of blood to absorb from the reagent holder per Life()
+	var/list/bandaged = list()
+	var/being_staunched = 0 // is someone currently putting pressure on their wounds?
+
+	var/co2overloadtime = null
+	var/temperature_resistance = T0C+75
+
+	var/use_stamina = 1
+	var/stamina = STAMINA_MAX
+	var/stamina_max = STAMINA_MAX
+	var/stamina_regen = STAMINA_REGEN
+	var/stamina_crit_chance = STAMINA_CRIT_CHANCE
+	var/list/stamina_mods_regen = list()
+	var/list/stamina_mods_max = list()
+
+	var/list/stomach_contents = list()
+
+	var/last_sleep = 0 //used for sleep_bubble
+
+	can_lie = 1
+
 /mob/living/New()
 	..()
 	vision = new()
 	src.attach_hud(vision)
 	src.vis_contents += src.chat_text
+	if (can_bleed)
+		src.ensure_bp_list()
+
+	if (src.use_stamina)
+		src.stamina_bar = new(src)
+		//stamina bar gets added to the hud in subtypes human and critter... im sorry.
+		//eventual hud merger pls
+
 	SPAWN_DBG(0)
 		src.get_static_image()
 		sleep_bubble.appearance_flags = RESET_TRANSFORM
+
 
 /mob/living/flash(duration)
 	vision.flash(duration)
@@ -103,6 +154,12 @@
 
 	qdel(chat_text)
 	chat_text = null
+
+
+	for (var/datum/hud/thishud in huds)
+		thishud.remove_object(stamina_bar)
+
+	stamina_bar = null
 
 	for (var/atom in stomach_process)
 		var/atom/A = atom
@@ -308,6 +365,21 @@
 			src.say_radio()
 		if ("resist")
 			src.resist()
+		if ("rest")
+			if (can_lie)
+				if(src.ai_active && !src.hasStatus("resting"))
+					src.show_text("You feel too restless to do that!", "red")
+				else
+					src.hasStatus("resting") ? src.delStatus("resting") : src.setStatus("resting", INFINITE_STATUS)
+					src.force_laydown_standup()
+
+		if ("SHIFT")//bEGIN A SPRINT
+			if (!src.client.tg_controls)
+				start_sprint()
+			//else //indicate i am sprinting pls
+		if ("SPACE")
+			if (src.client.tg_controls)
+				start_sprint()
 		else
 			return ..()
 
@@ -1150,18 +1222,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	src.visible_message("<span class='subtle'>[message]</span>")
 
-/mob/living/proc/pull_speed_modifier(var/atom/move_target = 0)
-	. = 1
-	if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
-		var/atom/movable/A = src.pulling
-		// hi grayshift sorry grayshift
-		if (get_dist(src,A) > 0 && get_dist(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
-			if(pull_slowing)
-				. *= max(A.p_class, 1)
-			else
-				if(istype(A,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
-					. *= max(A.p_class, 1)
-
 //Phyvo: Resist generalization. For when humans can break or remove shackles/cuffs, see daughter proc in humans.dm
 /mob/living/proc/resist()
 	if (!isalive(src)) //can't resist when dead or unconscious
@@ -1224,3 +1284,330 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			var/atom/movable/A = src
 			while(!istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
 			A.vis_contents += src.chat_text
+
+
+/mob/living/proc/empty_hands()
+	.=0
+
+/mob/living/proc/update_lying()
+	if (src.buckled)
+		if (src.buckled == src.loc)
+			src.lying = 1
+		else if (istype(src.buckled, /obj/stool/bed))
+			src.lying = 1
+		else
+			src.lying = 0
+
+	if (src.lying != src.lying_old)
+		src.lying_old = src.lying
+		animate_rest(src, !src.lying)
+		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
+
+
+/mob/living/attack_hand(mob/living/M as mob, params, location, control)
+	if (!M || !src) //Apparently M could be a meatcube and this causes HELLA runtimes.
+		return
+
+	if (!ticker)
+		boutput(M, "You cannot interact with other people before the game has started.")
+		return
+
+	actions.interrupt(src, INTERRUPT_ATTACKED)
+	M.lastattacked = src
+
+	attack_particle(M,src)
+
+	if (M.a_intent != INTENT_HELP)
+		if (M.mob_flags & AT_GUNPOINT)
+			for(var/obj/item/grab/gunpoint/G in M.grabbed_by)
+				G.shoot()
+
+	var/obj/item/clothing/gloves/gloves
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		gloves = H.gloves
+	else
+		gloves = 0
+		//Todo: get critter gloves if they have a slot. also clean this up in general...
+
+	if (gloves && gloves.material)
+		gloves.material.triggerOnAttack(gloves, M, src)
+		for (var/atom/A in src)
+			if (A.material)
+				A.material.triggerOnAttacked(A, M, src, gloves)
+
+	M.viral_transmission(src,"Contact",1)
+
+	switch(M.a_intent)
+		if (INTENT_HELP)
+			var/datum/limb/L = M.equipped_limb()
+			if (!L)
+				return
+			L.help(src, M)
+
+		if (INTENT_DISARM)
+			if (M.is_mentally_dominated_by(src))
+				boutput(M, "<span class='alert'>You cannot harm your master!</span>")
+				return
+
+			var/datum/limb/L = M.equipped_limb()
+			if (!L)
+				return
+			L.disarm(src, M)
+
+		if (INTENT_GRAB)
+			if (M == src)
+				M.grab_self()
+				return
+			if (src.parry_or_dodge(M))
+				return
+			var/datum/limb/L = M.equipped_limb()
+			if (!L)
+				return
+			L.grab(src, M)
+			message_admin_on_attack(M, "grabs")
+
+		if (INTENT_HARM)
+			if (M.is_mentally_dominated_by(src))
+				boutput(M, "<span class='alert'>You cannot harm your master!</span>")
+				return
+
+			if (M != src)
+				attack_twitch(M)
+			M.violate_hippocratic_oath()
+			message_admin_on_attack(M, "punches")
+			/*
+			// instant kills are kinda boring. itd be fun to make it do more damage or smth, but
+			// as it is: no
+			if (src.shrunk == 2)
+				M.visible_message("<span class='alert'>[M] squashes [src] like a bug.</span>")
+				src.gib()
+				return
+			*/
+			if (gloves && gloves.activeweapon)
+				gloves.special_attack(src)
+				return
+
+			if (src.parry_or_dodge(M))
+				return
+
+			M.melee_attack(src)
+
+	return
+
+/mob/living/OnMove(source = null)
+	var/turf/NewLoc = get_turf(src)
+	var/steps = 1
+	if (src.use_stamina)
+		if (move_dir & (move_dir-1))
+			steps *= DIAG_MOVE_DELAY_MULT
+
+		if (world.time < src.next_move + SUSTAINED_RUN_GRACE)
+			if(move_dir & last_move_dir)
+				if (sustained_moves < SUSTAINED_RUN_REQ+1 && sustained_moves + steps >= SUSTAINED_RUN_REQ+1)
+					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),move_dir)
+					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.5)
+				sustained_moves += steps
+			else
+				if (sustained_moves >= SUSTAINED_RUN_REQ+1)
+					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
+					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
+				else if (move_dir == turn(last_move_dir,180))
+					sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
+					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.9)
+					if(src.bioHolder.HasEffect("magnets_pos") || src.bioHolder.HasEffect("magnets_neg"))
+						var/datum/bioEffect/hidden/magnetic/src_effect = src.bioHolder.GetEffect("magnets_pos")
+						if(src_effect == null) src_effect = src.bioHolder.GetEffect("magnets_neg")
+						if(src_effect.update_charge(1))
+							playsound(get_turf(src), "sound/effects/sparks[rand(1,6)].ogg", 25, 1,extrarange = -25)
+
+
+				sustained_moves = 0
+		else
+			sustained_moves = 0
+
+	// Call movement traits
+	if(src.traitHolder)
+		for(var/T in src.traitHolder.moveTraits)
+			var/obj/trait/O = getTraitById(T)
+			O.onMove(src)
+
+	..()
+
+/mob/living/Move(var/turf/NewLoc, direct)
+	. = ..()
+	if (. && move_dir && !(direct & move_dir) && src.use_stamina)
+		if (sustained_moves >= SUSTAINED_RUN_REQ+1)
+			sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
+			playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
+		sustained_moves = 0
+
+
+
+/mob/living/movement_delay(var/atom/move_target = 0, running = 0)
+	var/base_speed = BASE_SPEED
+	if (sustained_moves >= SUSTAINED_RUN_REQ)
+		base_speed = BASE_SPEED_SUSTAINED
+
+	. += base_speed
+	. += movement_delay_modifier
+
+
+	var/multiplier = 1 // applied before running multiplier
+	var/health_deficiency_adjustment = 0
+	var/maximum_slowdown = 100 // applied before pulling checks
+	var/pushpull_multiplier = 1
+	var/aquatic_movement = 0
+	var/space_movement = 0
+
+	var/datum/movement_modifier/modifier
+	for(var/type_or_instance in src.movement_modifiers)
+		if (ispath(type_or_instance))
+			modifier = movement_modifier_instances[type_or_instance]
+		else
+			modifier = type_or_instance
+
+		if (modifier.ask_proc) // if we have to call a proc
+			var/list/r = modifier.modifiers(src, move_target, running)
+			. += r[1]
+			multiplier *= r[2]
+
+		// collect modifiers from the datum
+		. += modifier.additive_slowdown
+		multiplier *= modifier.multiplicative_slowdown
+		health_deficiency_adjustment += modifier.health_deficiency_adjustment
+		pushpull_multiplier *= modifier.pushpull_multiplier
+		aquatic_movement += modifier.aquatic_movement
+		space_movement += modifier.space_movement
+
+		if (modifier.maximum_slowdown < maximum_slowdown)
+			maximum_slowdown = modifier.maximum_slowdown
+
+	if (m_intent == "walk")
+		. += WALK_DELAY_ADD
+
+	if (src.nodamage)
+		return .
+
+	if (src.drowsyness > 0)
+		. += 5
+
+	var/health_deficiency = (src.max_health - src.health) + health_deficiency_adjustment // cogwerks // let's treat this like pain
+
+	if (health_deficiency >= 30)
+		. += (health_deficiency / 35)
+
+	if (src.bodytemperature < src.base_body_temp - (src.temp_tolerance * 2) && !src.is_cold_resistant())
+		. += min( (((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 30), 2.2)
+
+	.= src.special_movedelay_mod(.,space_movement,aquatic_movement)
+
+	. = min(., maximum_slowdown)
+
+	if (pushpull_multiplier != 0) // if we're not completely ignoring pushing/pulling
+		if (src.pulling)
+			. *= (pull_speed_modifier(move_target) * pushpull_multiplier)
+
+		if (src.pushing && (src.pulling != src.pushing))
+			. *= (max(src.pushing.p_class, 1) * pushpull_multiplier)
+
+		for (var/obj/item/grab/G in list(src.r_hand, src.l_hand))
+			var/mob/M = G.affecting
+			if (isnull(M))
+				continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
+
+			if (G.state == 0)
+				if (get_dist(src,M) > 0 && get_dist(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
+					if(ismob(M) && M.lying)
+						. *= (max(M.p_class, 1) * pushpull_multiplier)
+			else
+				. *= (max(M.p_class, 1) * pushpull_multiplier)
+
+	. *= multiplier
+
+	if (next_step_delay)
+		. += next_step_delay
+		next_step_delay = 0
+
+	if (running)
+
+		var/runScaling = src.lying ? RUN_SCALING_LYING : RUN_SCALING
+		if (src.hasStatus(list("staggered","blocking")))
+			runScaling = RUN_SCALING_STAGGER
+		var/minSpeed = (1.0- runScaling * base_speed) / (1 - runScaling) // ensures sprinting with 1.2 tally drops it to 0.75
+		if (pulling) minSpeed = base_speed // not so fast, fucko
+		. = min(., minSpeed + (. - minSpeed) * runScaling) // i don't know what I'm doing, help
+
+
+//this lets subtypes of living alter their movement delay WITHIN that big proc above - not before or after (which would fuck up the numbers greatly)
+//note : subtypes should not call this parent
+/mob/living/proc/special_movedelay_mod(delay,space_movement,aquatic_movement)
+	.= delay
+	if (src.lying)
+		. += 14
+
+
+/mob/living/critter/keys_changed(keys, changed)
+	..()
+	if (changed & KEY_RUN)
+		if (hud)
+			src.hud.set_sprint(keys & KEY_RUN)
+
+/mob/living/carbon/human/keys_changed(keys, changed)
+	..()
+	if (changed & KEY_RUN)
+		if (hud)
+			src.hud.set_sprint(keys & KEY_RUN)
+
+/mob/living/proc/start_sprint()
+	if (special_sprint && src.client)
+		if (special_sprint & SPRINT_BAT)
+			spell_batpoof(src, cloak = 0)
+		if (special_sprint & SPRINT_BAT_CLOAKED)
+			spell_batpoof(src, cloak = 1)
+		if (special_sprint & SPRINT_SNIPER)
+			begin_sniping()
+	else if (src.use_stamina)
+		if (!next_step_delay && world.time >= next_sprint_boost)
+			if (!HAS_MOB_PROPERTY(src, PROP_CANTMOVE))
+				//if (src.hasStatus("blocking"))
+				//	for (var/obj/item/grab/block/G in src.equipped_list(check_for_magtractor = 0)) //instant break blocks when we start a sprint
+				//		qdel(G)
+
+				var/last = src.loc
+				var/force_puff = world.time < src.next_move + 0.5 SECONDS //assume we are still in a movement mindset even if we didnt change tiles
+
+				next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
+				src.next_move = world.time
+				src.attempt_move()
+				next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
+
+				if (src.loc != last || force_puff) //ugly check to prevent stationary sprint weirds
+					sprint_particle(src, last)
+					playsound(src.loc,"sound/effects/sprint_puff.ogg", 25, 1)
+
+/mob/living/proc/pull_speed_modifier(var/atom/move_target = 0)
+	. = 1
+	if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
+		var/atom/movable/A = src.pulling
+		// hi grayshift sorry grayshift
+		if (get_dist(src,A) > 0 && get_dist(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
+			if(pull_slowing)
+				. *= max(A.p_class, 1)
+			else
+				if(istype(A,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
+					. *= max(A.p_class, 1)
+				// else, ignore p_class*/
+				if(ismob(A))
+					var/mob/M = A
+					//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
+					if(M.lying)
+						if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
+							. *= 1		//do nothing
+						else
+							. *= max(A.p_class, 1)
+				else if(istype(A, /obj/storage))
+					// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
+					if (locate(/mob) in A.contents)
+						. *= max(A.p_class,1)
+

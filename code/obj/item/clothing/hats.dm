@@ -9,7 +9,7 @@
 	body_parts_covered = HEAD
 	compatible_species = list("human", "monkey", "werewolf", "flubber")
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
-	var/block_vision = 0
+	block_vision = 0
 
 
 	setupProperties()

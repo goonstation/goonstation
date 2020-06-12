@@ -403,43 +403,59 @@
 				if (!manualbreathing)
 					src.show_text("You are already breathing!")
 					return
-				if (src.breathstate)
-					src.show_text("You just breathed in, try breathing out next dummy!")
-					return
+
+				var/datum/lifeprocess/breath/B = lifeprocesses[/datum/lifeprocess/breath]
+				if (B)
+					if (B.breathstate)
+						src.show_text("You just breathed in, try breathing out next dummy!")
+						return
+					B.breathtimer = 0
+					B.breathstate = 1
+
 				src.show_text("You breathe in.")
-				src.breathtimer = 0
-				src.breathstate = 1
 
 			if ("exhale")
 				if (!manualbreathing)
 					src.show_text("You are already breathing!")
 					return
-				if (!src.breathstate)
-					src.show_text("You just breathed out, try breathing in next silly!")
-					return
+
+				var/datum/lifeprocess/breath/B = lifeprocesses[/datum/lifeprocess/breath]
+				if (B)
+					if (!B.breathstate)
+						src.show_text("You just breathed out, try breathing in next silly!")
+						return
+					B.breathstate = 0
+
 				src.show_text("You breathe out.")
-				src.breathstate = 0
 
 			if ("closeeyes")
 				if (!manualblinking)
 					src.show_text("Why would you want to do that?")
 					return
-				if (src.blinkstate)
-					src.show_text("You just closed your eyes, try opening them now dumbo!")
-					return
+
+				var/datum/lifeprocess/statusupdate/S = lifeprocesses[/datum/lifeprocess/breath]
+				if (S)
+					if (S.blinkstate)
+						src.show_text("You just closed your eyes, try opening them now dumbo!")
+						return
+					S.blinkstate = 1
+					S.blinktimer = 0
+
 				src.show_text("You close your eyes.")
-				src.blinkstate = 1
-				src.blinktimer = 0
 
 			if ("openeyes")
 				if (!manualblinking)
 					src.show_text("Your eyes are already open!")
 					return
-				if (!src.blinkstate)
-					src.show_text("Your eyes are already open, try closing them next moron!")
-					return
+
+				var/datum/lifeprocess/statusupdate/S = lifeprocesses[/datum/lifeprocess/breath]
+				if (S)
+					if (!S.blinkstate)
+						src.show_text("Your eyes are already open, try closing them next moron!")
+						return
+					S.blinkstate = 0
+
 				src.show_text("You open your eyes.")
-				src.blinkstate = 0
 
 	//april fools end
 

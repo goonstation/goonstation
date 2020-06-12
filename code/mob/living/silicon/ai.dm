@@ -1091,29 +1091,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				O.show_message("<span class='emote'>[message]</span>", m_type)
 	return
 
-/mob/living/silicon/ai/Life(datum/controller/process/mobs/parent)
-	if (..(parent))
-		return 1
 
-	if (isalive(src))
-		if (src.health < 0)
-			death()
-	else
-		//src:cameraFollow = null
-		tracker.cease_track()
-		src:current = null
-
-		if (src.health >= 0)
-			// sure keep trying to use power i guess.
-			use_power()
-
-
-	// Assign antag status if we don't have any yet (Convair880).
-	if (src.mind && (src.emagged || src.syndicate))
-		if (!src.mind.special_role)
-			src.handle_robot_antagonist_status()
-
-	// None of these vars are of any relevance to AI mobs (Convair880).
+/mob/living/silicon/ai/clamp_values()
+	..()
 	if (src.get_eye_blurry()) src.change_eye_blurry(-INFINITY)
 	if (src.get_eye_damage()) src.take_eye_damage(-INFINITY)
 	if (src.get_eye_damage(1)) src.take_eye_damage(-INFINITY, 1)
@@ -1125,37 +1105,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (src.druggy) src.druggy = 0
 	if (src.jitteriness) src.jitteriness = 0
 	if (src.sleeping) src.sleeping = 0
-
-	// Fix for permastunned AIs. Stunned and paralysis seem to be the only vars that matter in the existing code (Convair880).
-	src.clamp_values()
 	src.delStatus("weakened")
-
-	hud.update()
-	process_killswitch()
-	process_locks()
-
-	/*
-	if (src.health < 0)
-		src.setStatus("paralysis", 1 SECOND)
-		src.death_timer--
-	else
-		src.death_timer = max(0,min(src.death_timer + 5,100))
-
-	if (src.getStatusDuration("paralysis"))
-		src.set_vision(0)
-	else
-		if (src.power_mode != -1)
-			src.set_vision(1)
-	*/
-
-	if (!get_message_mob()?.client)
-		return
-
-	src.update_icons_if_needed()
-	src.antagonist_overlay_refresh(0, 0)
-
-/mob/living/silicon/ai/proc/clamp_values()
-	return
 
 /mob/living/silicon/ai/use_power()
 	..()
