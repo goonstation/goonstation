@@ -653,6 +653,9 @@ datum
 					var/mob/living/L = M
 					if (istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -300)
+					if (istype(L,/mob/living/critter/fire_elemental))
+						L.TakeDamage("All", volume * 1.5, 0, 0, DAMAGE_BLUNT)
+						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.5)
 				return
 
 		silicate
