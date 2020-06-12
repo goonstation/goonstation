@@ -91,8 +91,24 @@
 							message = "<B>[src]</B> grunts for a moment. Nothing happens."
 					else
 						m_type = 2
-						var/fart_on_other = 0
 
+
+						if (iscluwne(src))
+							playsound(get_turf(src), "sound/voice/farts/poo.ogg", 50, 1)
+						else if (src.organ_istype("butt", /obj/item/clothing/head/butt/cyberbutt))
+							playsound(get_turf(src), "sound/voice/farts/poo2_robot.ogg", 50, 1, 0, src.get_age_pitch())
+						else if (src.reagents && src.reagents.has_reagent("honk_fart"))
+							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
+						else
+							if (narrator_mode)
+								playsound(get_turf(src), 'sound/vox/fart.ogg', 50, 0, 0, src.get_age_pitch())
+							else
+								if (src.getStatusDuration("food_deep_fart"))
+									playsound(get_turf(src), src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3)
+								else
+									playsound(get_turf(src), src.sound_fart, 50, 0, 0, src.get_age_pitch())
+
+						var/fart_on_other = 0
 						for (var/thing in src.loc)
 							var/atom/A = thing
 							if (A.event_handler_flags & IS_FARTABLE)
@@ -215,7 +231,7 @@
 										H.emote("fart")
 
 						var/turf/T = get_turf(src)
-						if (T == src.loc)
+						if (T && T == src.loc)
 							if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
 								if (src.getStatusDuration("food_space_farts"))
 									src.inertia_dir = src.dir
@@ -229,21 +245,6 @@
 									new/obj/item/material_piece/fart(src.loc)
 									var/obj/item/material_piece/fart/F = unpool(/obj/item/material_piece/fart)
 									F.set_loc(src.loc)
-
-						if (iscluwne(src))
-							playsound(get_turf(src), "sound/voice/farts/poo.ogg", 50, 1)
-						else if (src.organ_istype("butt", /obj/item/clothing/head/butt/cyberbutt))
-							playsound(get_turf(src), "sound/voice/farts/poo2_robot.ogg", 50, 1, 0, src.get_age_pitch())
-						else if (src.reagents && src.reagents.has_reagent("honk_fart"))
-							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
-						else
-							if (narrator_mode)
-								playsound(get_turf(src), 'sound/vox/fart.ogg', 50, 0, 0, src.get_age_pitch())
-							else
-								if (src.getStatusDuration("food_deep_fart"))
-									playsound(get_turf(src), src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3)
-								else
-									playsound(get_turf(src), src.sound_fart, 50, 0, 0, src.get_age_pitch())
 
 						src.expel_fart_gas(oxyplasmafart)
 
