@@ -182,6 +182,7 @@
 	var/mob/cursed_dude = null //set at photo creation
 	var/enchant_power = 13 //how long the photo's magic lasts, negative values make it infinite
 	var/enchant_delay = 0 //rolling counter to prevent spam utilization
+	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 
 	//farting is handled in human.dm
 
