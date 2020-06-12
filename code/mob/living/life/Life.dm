@@ -102,7 +102,7 @@
 
 /mob/living/carbon/human/New()
 	..()
-	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
+	add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/blood)
 	add_lifeprocess(/datum/lifeprocess/bodytemp)
@@ -113,7 +113,7 @@
 	add_lifeprocess(/datum/lifeprocess/decomposition)
 	add_lifeprocess(/datum/lifeprocess/disability)
 	add_lifeprocess(/datum/lifeprocess/fire)
-	add_lifeprocess(/datum/lifeprocess/arrest_icon)
+	add_lifeprocess(/datum/lifeprocess/health_mon)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/mutations)
 	add_lifeprocess(/datum/lifeprocess/organs)
