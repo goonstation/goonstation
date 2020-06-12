@@ -41,18 +41,6 @@
 			return 1
 		if(get_dir(loc, O) == dir)
 			return !density
-		if (src.dir == NORTHWEST)
-			if(O.dir == WEST || O.dir == NORTH)
-				return !density
-		if (src.dir == NORTHEAST)
-			if(O.dir == EAST || O.dir == NORTH)
-				return !density
-		if (src.dir == SOUTHWEST)
-			if(O.dir == WEST || O.dir == SOUTH)
-				return !density
-		if (src.dir == SOUTHEAST)
-			if(O.dir == EAST || O.dir == SOUTH)
-				return !density
 		else
 			return 1
 
@@ -142,8 +130,6 @@
 				..()
 			if(air_group || (height==0))
 				..()
-			if (src.dir == NORTHWEST || src.dir == NORTHEAST || (src.dir == SOUTHWEST || src.dir == SOUTHEAST) )
-				return 1
 			if(get_dir(loc, O) == dir)
 				return !density
 			// If we're facing north or south (both east and west are covered in both railing sprite dirs)
