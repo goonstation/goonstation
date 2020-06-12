@@ -38,7 +38,7 @@
 		boutput(M, __red("Why would you want to bite yourself?"))
 		return 0
 
-	if (iscritter(M) && !istype(H))
+	if (ismobcritter(M) && !istype(H))
 		boutput(M, __red("Critter mobs currently don't have to worry about blood. Lucky you."))
 		return 0
 
@@ -168,7 +168,7 @@
 	if (src.blood_tally)
 		if (target in src.blood_tally)
 			.= src.blood_tally[target] < max_take_per_mob
-			
+
 /datum/abilityHolder/vampiric_zombie/proc/tally_bite(var/mob/living/carbon/human/target, var/blood_amt_taken)
 	if (!src.blood_tally)
 		src.blood_tally = list()
@@ -199,7 +199,7 @@
 		boutput(M, __red("Why would you want to bite yourself?"))
 		return 0
 
-	if (iscritter(M) && !istype(H))
+	if (ismobcritter(M) && !istype(H))
 		boutput(M, __red("Critter mobs currently don't have to worry about blood. Lucky you."))
 		return 0
 

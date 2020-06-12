@@ -15,6 +15,7 @@
 	opacity = 0
 	var/life_timer = 10
 	sound_scream = 'sound/voice/screams/male_scream.ogg'
+	use_stamina = 0
 
 	examine(mob/user)
 		. = list("<span class='notice'>*---------*</span>")
@@ -47,54 +48,6 @@
 				if (prob(25))
 					src.gib(1)
 			else
-		return
-
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
-
-		if (src.client)
-			src.antagonist_overlay_refresh(0, 0)
-
-		// not sure if this could ever really happen but better to make sure
-		if (isdead(src))
-			pop()
-			return 0
-
-		// don't move or tick down the timer if we're in the fryer, we need to wait until we're well done
-		if (istype(loc, /obj/machinery/deep_fryer))
-			return
-
-		// let's stop meat cubes from suddenly ceasing to be able to do ANYTHING thanks to one slip
-		// but they don't get to just ignore stuns anymore either
-		// (shamelessly stolen from mob/living/critter.dm)
-		if (getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened"))
-			canmove = 0
-		else
-			canmove = 1
-
-		var/may_deliver_recovery_warning = (getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened"))
-
-		if (may_deliver_recovery_warning)
-			src.pulling = null // no more dragging for you
-			actions.interrupt(src, INTERRUPT_STUNNED) // or removing peoples' stuff
-
-		src.handle_digestion()
-
-		if (getStatusDuration("paralysis"))
-			if (isalive(src))
-				setunconscious(src)
-		else if (isunconscious(src))
-			setalive(src)
-
-		if (prob(30))
-			var/idle_message = get_cube_idle()
-			src.visible_message("<span class='alert'><b>[src] [idle_message]!</b></span>")
-
-		if (life_timer-- > 0)
-			return
-
-		pop()
 		return
 
 	build_keybind_styles(client/C)

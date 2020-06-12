@@ -64,7 +64,7 @@
 
 
 /client/proc/debugResourceCache()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Resource Cache"
 	set hidden = 1
 	admin_only
@@ -76,7 +76,7 @@
 
 
 /client/proc/toggleResourceCache()
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle Resource Cache"
 	set desc = "Enable or disable the resource cache system"
 	admin_only

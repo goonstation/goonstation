@@ -61,7 +61,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #endif
 #endif
 
-	pregame_timeleft = 150 // raised from 120 to 180 to accomodate the v500 ads, then raised back down to 150 after Z5 was introduced.
+	pregame_timeleft = PREGAME_LOBBY_TICKS
 	boutput(world, "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>")
 	boutput(world, "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds")
 	#if ASS_JAM
@@ -81,6 +81,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		C.ready = 1
 	pregame_timeleft = 0
 	#endif
+
+	handle_mapvote()
 
 	while(current_state <= GAME_STATE_PREGAME)
 		sleep(1 SECOND)
@@ -248,6 +250,21 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
 
+	SPAWN_DBG (6000) // 10 minutes in
+		for(var/obj/machinery/power/generatorTemp/E in machine_registry[MACHINES_POWER])
+			LAGCHECK(LAG_LOW)
+			if (E.lastgen <= 0)
+				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning")
+			break
+
+	processScheduler.start()
+
+	if (total_clients() >= OVERLOAD_PLAYERCOUNT)
+		world.tick_lag = OVERLOADED_WORLD_TICKLAG
+
+//Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min). 
+//The voting will happen 30 seconds into the pre-game lobby. This is probably fine to leave. But if someone changes that var then it might start before the lobby timer ends.
+/datum/controller/gameticker/proc/handle_mapvote()
 	var/bustedMapSwitcher = isMapSwitcherBusted()
 	if (!bustedMapSwitcher)
 		SPAWN_DBG (mapSwitcher.autoVoteDelay)
@@ -258,19 +275,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				logTheThing("admin", usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]")
 				logTheThing("diary", usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]", "admin")
 				message_admins("[key_name(usr ? usr : src)] the automated map switch vote couldn't run because: [e.name]")
-
-	SPAWN_DBG (6000) // 10 minutes in
-		for(var/obj/machinery/power/generatorTemp/E in machine_registry[MACHINES_POWER])
-			LAGCHECK(LAG_LOW)
-			if (E.lastgen <= 0)
-				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning")
-			break
-
-	processScheduler.start()
-
-	if (clients.len >= OVERLOAD_PLAYERCOUNT)
-		world.tick_lag = OVERLOADED_WORLD_TICKLAG
-
 
 /datum/controller/gameticker
 	proc/distribute_jobs()
@@ -464,12 +468,23 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] round_end_data")
 	round_end_data(1) //Export round end packet (normal completion)
 
+	var/pets_rescued = 0
+	for(var/pet in pets)
+		if(iscritter(pet))
+			var/obj/critter/P = pet
+			if(P.alive && in_centcom(P)) pets_rescued++
+		else if(ismobcritter(pet))
+			var/mob/living/critter/P = pet
+			if(isalive(P) && in_centcom(P)) pets_rescued++
+
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] Processing end-of-round generic medals")
 	for(var/mob/living/player in mobs)
 		if (player.client)
 			if (!isdead(player))
 				if (in_centcom(player))
 					player.unlock_medal("100M dash", 1)
+					if (pets_rescued >= 6)
+						player.unlock_medal("Noah's Shuttle", 1)
 				player.unlock_medal("Survivor", 1)
 
 				if (player.check_contents_for(/obj/item/gnomechompski))
@@ -530,8 +545,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		final_score = 0
 	else
 		final_score = 100
-
-	boutput(world, score_tracker.escapee_facts())
 
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] ai law display")

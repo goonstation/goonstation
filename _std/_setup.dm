@@ -358,6 +358,7 @@
 #define SPRINT_BAT 1
 #define SPRINT_BAT_CLOAKED 2
 #define SPRINT_SNIPER 4
+#define SPRINT_FIRE 8
 
 //sound mute
 #define SOUND_NONE 0
@@ -712,7 +713,7 @@ proc/default_frequency_color(freq)
 #define STAMINA_CRIT_DIVISOR 2  		//Divide stamina by how much on a crit
 #define STAMINA_BLOCK_CHANCE 40 		//Chance to block an attack in disarm mode. Settings this to 0 effectively disables the blocking system.
 #define STAMINA_GRAB_BLOCK_CHANCE 85    //Chance to block grabs.
-#define STAMINA_DEFAULT_BLOCK_COST 7    //Cost of blocking an attack.
+#define STAMINA_DEFAULT_BLOCK_COST 5    //Cost of blocking an attack.
 #define STAMINA_LOW_COST_KICK 1 	    //Does kicking people on the ground cost less stamina ? (Right now it doesnt cost less but rather refunds some because kicking people on the ground is very relaxing OKAY)
 #define STAMINA_NO_ATTACK_CAP 1 		//Attacks only cost stamina up to the min atttack cap. after that they are free
 #define STAMINA_NEG_CRIT_KNOCKOUT 0     //Getting crit below or at 0 stamina will always knock out
@@ -976,6 +977,8 @@ proc/default_frequency_color(freq)
 //The value of mapvotes. A passive vote is one done through player preferences, an active vote is one where the player actively chooses a map
 #define MAPVOTE_PASSIVE_WEIGHT 0.25
 #define MAPVOTE_ACTIVE_WEIGHT 1.0
+//Amount of 1 Second ticks to spend in the pregame lobby before roundstart. Has been 150 seconds for a couple years.
+#define PREGAME_LOBBY_TICKS 150	// raised from 120 to 180 to accomodate the v500 ads, then raised back down to 150 after Z5 was introduced.
 
 //for light queue - when should we queue? and when should we pause processing our dowork loop?
 #define LIGHTING_MAX_TICKUSAGE 90
@@ -1117,6 +1120,9 @@ var/ZLOG_START_TIME
 
 //PATHOLOGY REMOVAL
 //#define CREATE_PATHOGENS 1
+
+//uncomment to enable sorting of reactions by priority (which is currently slow and bad)
+//#define CHEM_REACTION_PRIORITIES
 
 // This is here in lieu of a better place to put stuff that gets used all over the place but is specific to a context (in this case, machinery)
 #define DATA_TERMINAL_IS_VALID_MASTER(terminal, master) (master && (get_turf(master) == terminal.loc))

@@ -24,7 +24,7 @@ var/global/client/ff_debugger = null
 	proc/debug_fireflash_here()
 		set name = "Debug Fireflash Here"
 		set popup_menu = 1
-		set category = null
+		SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 		set desc = "Debug-print the effects of all fireflashes affecting this tile."
 		ff_debug_turf = src
 		ff_debugger = usr.client
@@ -180,7 +180,7 @@ var/global/client/ff_debugger = null
 	mat_changename = 0
 	mat_changedesc = 0
 	throw_unlimited = 1
-	plane = PLANE_FLOOR
+	plane = PLANE_SPACE
 	special_volume_override = 0
 
 	flags = ALWAYS_SOLID_FLUID
@@ -415,12 +415,12 @@ var/global/client/ff_debugger = null
 		if(O.level == 1)
 			O.hide(src.intact)
 
-/turf/unsimulated/ReplaceWith(var/what, force = 0, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1)
+/turf/unsimulated/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1, force = 0)
 	if (can_replace_with_stuff || force)
 		return ..(what, keep_old_material = keep_old_material, handle_air = handle_air)
 	return
 
-/turf/proc/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1)
+/turf/proc/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1, force = 0)
 	var/turf/simulated/new_turf
 	var/old_dir = dir
 
@@ -669,11 +669,11 @@ var/global/client/ff_debugger = null
 	var/turf/floor
 	if (my_area)
 		if (my_area.filler_turf)
-			floor = ReplaceWith(my_area.filler_turf, 1)
+			floor = ReplaceWith(my_area.filler_turf, force=1)
 		else
-			floor = ReplaceWith("Space", 1)
+			floor = ReplaceWith("Space", force=1)
 	else
-		floor = ReplaceWith("Space", 1)
+		floor = ReplaceWith("Space", force=1)
 
 	return floor
 

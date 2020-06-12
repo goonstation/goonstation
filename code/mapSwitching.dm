@@ -24,8 +24,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 	var/votingAllowed = 1 //is map voting allowed?
 	var/playersVoting = 0 //are players currently voting on the map?
 	var/voteStartedAt = 0 //timestamp when the map vote was started
-	var/autoVoteDelay = 3000 //how long should we wait after round start to trigger to automatic map vote? (3000 = 5 mins)
-	var/autoVoteDuration = 1200 //how long (in byond deciseconds) the automatic map vote should last (1200 = 2 mins)
+	var/autoVoteDelay = 30 SECONDS //how long should we wait after round start to trigger to automatic map vote?
+	var/autoVoteDuration = 7 MINUTES //how long (in byond deciseconds) the automatic map vote should last (1200 = 2 mins)
 	var/voteCurrentDuration = 0 //how long is the current vote set to last?
 	var/queuedVoteCompile = 0 //is a player map vote scheduled for after the current compilation?
 	var/voteChosenMap = "" //the map that the players voted to switch to
@@ -54,10 +54,10 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 			if (mapNames[map]["playerPickable"])
 				if (mapNames[map]["MinPlayersAllowed"])
-					if (clients.len < mapNames[map]["MinPlayersAllowed"])
+					if (total_clients() < mapNames[map]["MinPlayersAllowed"])
 						continue
 				if (mapNames[map]["MaxPlayersAllowed"])
-					if (clients.len > mapNames[map]["MaxPlayersAllowed"])
+					if (total_clients() > mapNames[map]["MaxPlayersAllowed"])
 						continue
 
 				src.playerPickable[map] += mapNames[map]
@@ -248,7 +248,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 		//announce vote
 		var/msg = "<br><span class='bold notice'>"
-		msg += "A vote for next round's map has started! Click the 'Map Vote' button in your status window, or use the 'Map-Vote' verb."
+		msg += "A vote for next round's map has started! Click here: [mapVoteLinkStat.chat_link()] or on the 'Map Vote' button in your status window."
+
 		if (duration)
 			msg += " It will end in [duration / 10] seconds."
 		msg += "</span><br><br>"
@@ -515,23 +516,14 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			else
 				mapSwitcher.showMapVote(C)
 
-
-	/*attackby(obj/item/I as obj, mob/user as mob)
-		var/client/C = user.client
-		if (!C || !mapSwitcher.playersVoting)
-			return ..()
-		var/map = null
-		if (istype(I, /obj/item/reagent_containers) && I:reagents:has_reagent("space_fungus") ) //the joke is too good
-			map = mapNames["Mushroom"]
-		else if(istype(I, /obj/item/reagent_containers/food/snacks/donut))
-			map = mapNames["Donut 2"]
-		if (!map) return ..()
-		else
-			mapSwitcher.passiveVotes.Remove(C.ckey)
-			mapSwitcher.playerVotes[C.ckey] = map
-			boutput(user, "Map vote successful???")*/
-
 	examine()
 		return list()
 
-var/global/mapVoteLinkStat = new /obj/mapVoteLink
+	proc/chat_link()
+		return "<a href='?src=\ref[src]'>[src]</a>"
+
+	Topic(href, href_list)
+		. = ..()
+		Click()
+
+var/global/obj/mapVoteLink/mapVoteLinkStat = new /obj/mapVoteLink

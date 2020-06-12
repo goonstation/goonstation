@@ -7,7 +7,7 @@
 
 /client/proc/toggle_mentorhelps()
 	set name = "Toggle Mentorhelps"
-	set category = "Special Verbs"
+	set category = "Commands"
 	set desc = "Show or hide mentorhelp messages. You will also no longer show up as a mentor in OOC and via the Who command if you disable mentorhelps."
 
 	if (!src.is_mentor() && !src.holder)

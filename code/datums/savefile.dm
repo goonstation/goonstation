@@ -325,10 +325,6 @@
 		src.tooltip_option = (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS) //For fucks sake.
 		src.keybind_prefs_updated(user)
 
-		//MBC tg controls popup cause idk where else to put it
-		if (!version || version < 8)
-			user.Browse(grabResource("html/tgControls.html"),"window=tgcontrolsinfo;size=600x400;title=TG Controls Help")
-
 
 		return 1
 

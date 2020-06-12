@@ -20,7 +20,13 @@
 
 	var/obj/item/cell/cell = null
 
+	can_bleed = 0
+	blood_id = "oil"
+	use_stamina = 0
+	can_lie = 0
+
 	dna_to_absorb = 0 //robots dont have DNA for fuck sake
+
 
 	//voice_type = "robo"
 
@@ -32,35 +38,9 @@
 	req_access = null
 	return ..()
 
-/mob/living/silicon/Life(datum/controller/process/mobs/parent)
-	set invisibility = 0
-
-	if (..(parent))
-		return 1
-
-	if (src.transforming)
-		return
-
-	if (isdead(src))
-		return
-
-	update_canmove()
-
-	use_power()
-
-/mob/living/silicon/force_laydown_standup()
-	if (processScheduler.hasProcess("Mob"))
-		src.update_canmove()
-
-		if (src.client)
-			updateOverlaysClient(src.client)
-		if (src.observers.len)
-			for (var/mob/x in src.observers)
-				if (x.client)
-					src.updateOverlaysClient(x.client)
-
-/mob/living/silicon/proc/update_canmove()
-	canmove = !(src.hasStatus(list("weakened", "paralysis", "stunned")) || buckled)
+///mob/living/silicon/proc/update_canmove()
+//	..()
+	//canmove = !(src.hasStatus(list("weakened", "paralysis", "stunned")) || buckled)
 
 /mob/living/silicon/proc/use_power()
 	return
@@ -444,7 +424,7 @@ var/global/list/module_editors = list()
 /client/proc/edit_module(var/mob/living/silicon/robot/M as mob in list_robots())
 	set name = "Edit Module"
 	set desc = "Module editor! Woo!"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
 	admin_only
 

@@ -95,7 +95,7 @@ var/list/genescanner_addresses = list()
 		if (src.occupant)
 			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return 0
-		if(iscritter(target))
+		if(ismobcritter(target))
 			boutput(M, "<span class='alert'><B>The scanner doesn't support this body type.</B></span>")
 			return 0
 		if(!iscarbon(target) )

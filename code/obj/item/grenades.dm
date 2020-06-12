@@ -1373,7 +1373,8 @@ PIPE BOMBS + CONSTRUCTION
 							var/yank_distance = 1
 							if (prob(50))
 								yank_distance = 2
-							M.throw_at(T, yank_distance, 2)
+							SPAWN_DBG(0)
+								M.throw_at(T, yank_distance, 2)
 				for (var/obj/O in view(1,src.loc))
 					O.throw_at(T, 2, 2)
 			if (extra_shrapnel)

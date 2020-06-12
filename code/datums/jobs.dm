@@ -80,7 +80,7 @@
 						if (D)
 							D.data["imp"] = "\ref[I]"
 
-			var/give_access_implant = iscritter(M)
+			var/give_access_implant = ismobcritter(M)
 			if(!spawn_id && (access.len > 0 || access.len == 1 && access[1] != access_fuck_all))
 				give_access_implant = 1
 			if (give_access_implant)

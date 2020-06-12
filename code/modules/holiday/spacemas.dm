@@ -306,13 +306,8 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 
 	CritterDeath()
 		if (!src.alive) return
-		src.icon_state += "-dead"
-		src.alive = 0
-		src.anchored = 0
-		src.set_density(0)
+		..()
 		src.desc = "The lifeless corpse of [src.name], why would anyone do such a thing?"
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> dies!")
 		modify_christmas_cheer(-20)
 		src.name = "dead space seal pup"
 		for (var/obj/critter/sealpup/S in view(7,src))

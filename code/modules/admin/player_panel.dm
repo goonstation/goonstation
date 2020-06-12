@@ -1,7 +1,7 @@
 
 /client/proc/cmd_admin_playeropt(mob/M as mob in world)
 	set name = "Player Options"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 1
 	if (src.holder)
 		src.holder.playeropt(M)

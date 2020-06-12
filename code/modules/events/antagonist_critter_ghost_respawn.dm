@@ -11,9 +11,17 @@
 	list(/mob/living/critter/gunbot),)
 
 
+	admin_call(var/source)
+		if (..())
+			return
+
+		var/input = input(usr,"Which one? Pick null for random???",src.name) as null|anything in list("fire_elemental","spider","gunbot")
+		if (!input || !istext(input))
+			return
+		event_effect(input)
 
 
-	event_effect()
+	event_effect(var/source)
 		..()
 
 		// 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
@@ -45,6 +53,14 @@
 			var/atom/pestlandmark = pick(EV)
 
 			var/list/select = pick(pest_invasion_critter_types)
+			if (source)
+				if (source == "fire_elemental")
+					select = list(/mob/living/critter/fire_elemental)
+				if (source == "spider")
+					select = list(/mob/living/critter/spider/baby)
+				if (source == "gunbot")
+					select = list(/mob/living/critter/gunbot)
+
 			var/howmany = rand(1,min(3,candidates.len))
 			for (var/i in 0 to howmany)
 				if (!candidates || !candidates.len)

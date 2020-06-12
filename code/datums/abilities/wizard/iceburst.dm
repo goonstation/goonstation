@@ -192,5 +192,6 @@
 	ex_act(severity)
 		for(var/atom/A in src)
 			A.ex_act(severity)
-		takeDamage(20 / severity)
+		SPAWN_DBG(0)
+			takeDamage(20 / severity)
 		..()
