@@ -79,8 +79,11 @@
 			inner
 				icon_state = "catwalk_jen_inner"
 
-			4corners
+			fourcorners
 				icon_state = "catwalk_jen_4corner"
+
+			twosides
+				icon_state = "catwalk_jen_2sides"
 
 	onMaterialChanged()
 		..()
