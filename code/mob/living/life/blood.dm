@@ -88,6 +88,16 @@
 
 		if (!blood_system)
 			return ..()
+
+
+		if (critter_owner)
+			if (critter_owner.blood_volume < 500 && critter_owner.blood_volume > 0) // if we're full or empty, don't bother v
+				if (prob(66))
+					critter_owner.blood_volume += 1 * mult // maybe get a little blood back ^
+			else if (critter_owner.blood_volume > 500)
+				if (prob(20))
+					critter_owner.blood_volume -= 1 * mult
+
 		// very low (90/60 or lower) (<375u)
 		// low (100/65) (<415u)
 		// normal (120/80) (500u)

@@ -807,7 +807,7 @@ datum
 			reaction_mob(var/mob/target, var/method=TOUCH, var/volume)
 				..()
 				var/reacted = 0
-				var/mob/living/carbon/human/M = target
+				var/mob/living/M = target
 				if(istype(M))
 					if(by_type[/obj/machinery/playerzoldorf] && by_type[/obj/machinery/playerzoldorf].len)
 						var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]

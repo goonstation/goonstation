@@ -373,3 +373,24 @@
 		src.changeStatus("disorient", disorient)
 
 //STAMINA UTILITY PROCS
+
+
+/mob/proc/process_stamina(var/cost)
+	return 1
+
+/mob/living/process_stamina(var/cost)
+	#if STAMINA_NO_ATTACK_CAP == 0
+	// why
+	// in what world is condition two not equivalent to condition one
+	// there are literally two outcomes to this
+	// if (true or true); and if (false or false)
+	if(src.stamina <= cost || (src.stamina - cost) <= 0)
+		boutput(src, STAMINA_EXHAUSTED_STR)
+		return 0
+	src.remove_stamina(cost)
+	#else
+	if(src.stamina > STAMINA_MIN_ATTACK)
+		cost = min(cost,src.stamina - STAMINA_MIN_ATTACK)
+		src.remove_stamina(cost)
+	#endif
+	return 1

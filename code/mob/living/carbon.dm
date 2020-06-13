@@ -155,13 +155,7 @@
 			var/grunt = pick("NGGH","OOF","UGH","ARGH","BLARGH","BLUH","URK")				// pick a grunt to append
 			src.say(copytext(enteredtext,6,0) + "--" + grunt, ignore_stamina_winded = 1)	// say the thing they were typing and grunt
 
-// cogwerks - fix for soulguard and revive
-/mob/living/carbon/proc/remove_ailments()
-	if (src.ailments)
-		for (var/datum/ailment_data/disease/D in src.ailments)
-			src.cure_disease(D)
-		for (var/datum/ailment_data/malady/M in src.ailments)
-			src.cure_disease(M)
+
 
 /mob/living/carbon/full_heal()
 	src.remove_ailments()
