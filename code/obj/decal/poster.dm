@@ -691,7 +691,7 @@
 			bound_width  = 96
 
 		fuq3
-			desc = "What the fuq?"
+			desc = "Our premier line of clothing is so diverse, you'll be sure to cry 'What le fuq?'"
 			name = "Fuq III"
 			icon = 'icons/effects/96x32.dmi'
 			icon_state = "fuq3"
