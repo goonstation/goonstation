@@ -1610,7 +1610,7 @@
 "fBW" = (/obj/machinery/light/emergency{dir = 8},/obj/disposalpipe/segment/mail/horizontal,/obj/cable{icon_state = "2-8"},/turf/simulated/floor/caution/west,/area/station/ai_monitored/storage/eva)
 "fBZ" = (/obj/cable{icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/horizontal,/turf/simulated/floor/blue,/area/station/medical/medbay)
 "fCd" = (/obj/machinery/vending/pda,/obj/decal/tile_edge/stripe{dir = 6; icon_state = "bot2"},/obj/disposalpipe/segment/mail/horizontal,/turf/simulated/floor/grey,/area/station/crew_quarters/data)
-"fCi" = (/obj/decal/tile_edge/stripe{dir = 6},/obj/cable{icon_state = "4-8"},/obj/landmark/start,/turf/simulated/floor/carpet/green/fancy/narrow/south,/area/station/crew_quarters/captain)
+"fCi" = (/obj/decal/tile_edge/stripe{dir = 6},/obj/cable{icon_state = "4-8"},/obj/landmark/start{name = "Captain"},/turf/simulated/floor/carpet/green/fancy/narrow/south,/area/station/crew_quarters/captain)
 "fCm" = (/obj/stool/chair/couch{dir = 4},/turf/simulated/floor/carpet/red/standard/edge/north,/area/station/security/main)
 "fCu" = (/obj/machinery/door/airlock/pyro/glass{dir = 4; name = "Artifact Lab"},/obj/firedoor_spawn,/obj/access_spawn/research,/obj/cable{icon_state = "1-2"},/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor,/area/station/science)
 "fCN" = (/obj/cable{icon_state = "4-8"},/turf/simulated/floor/purpleblack{dir = 1},/area/station/hallway/primary/west)
