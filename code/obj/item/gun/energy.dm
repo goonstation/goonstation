@@ -455,7 +455,7 @@
 	current_projectile = new/datum/projectile/claw
 	projectiles = null
 	is_syndicate = 1
-	custom_cell_max_capacity = 15000 //endless crab
+	custom_cell_max_capacity = 100 //endless crab
 
 	New()
 		current_projectile = new/datum/projectile/claw
