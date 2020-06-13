@@ -1699,7 +1699,7 @@ datum/pathogeneffects/malevolent/farts
 	infect_type = INFECT_AREA
 	spread = SPREAD_AIR
 	rarity = RARITY_VERY_COMMON
-	var/cooldown = 0 // we just use the name of the symptom to keep track of different fart effects, so their cooldowns do not interfere
+	var/cooldown = 50 // we just use the name of the symptom to keep track of different fart effects, so their cooldowns do not interfere
 	var/doInfect = 1 // smoke farts were just too good
 
 	proc/fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
