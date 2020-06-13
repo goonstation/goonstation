@@ -616,23 +616,19 @@ datum
 			transparency = 155
 			data = null
 
-			on_add(var/mob/M)
-				if(!M && holder) M = holder.my_atom
-				if(M.bioHolder && M.bioHolder.HasEffect("quiet_voice")) data = 1
-				else data = 0
-				if(data == 1)
-					return
-				else
-					M.bioHolder.AddEffect("quiet_voice")
-				return
+			on_add()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					if(M.bioHolder && !M.bioHolder.HasEffect("quiet_voice"))
+						M.bioHolder.AddEffect("quiet_voice")
+				..()
 
-			on_remove(var/mob/M)
-				if(!M) M = holder.my_atom
-				if(M.bioHolder && M.bioHolder.HasEffect("quiet_voice") && data == 1)
-					return
-				else
-					M.bioHolder.RemoveEffect("quiet_voice")
-				return
+			on_remove()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					if(M?.bioHolder.HasEffect("quiet_voice"))
+						M.bioHolder.RemoveEffect("quiet_voice")
+				..()
 
 		radium
 			name = "radium"
@@ -781,7 +777,7 @@ datum
 			reaction_obj(var/obj/item/O, var/volume)
 				src = null
 				if(istype(O))
-					if(O.burning && prob(40))
+					if(O.burning && prob(80))
 						O.burning = 0
 					else if(istype(O, /obj/item/toy/sponge_capsule))
 						var/obj/item/toy/sponge_capsule/S = O
@@ -797,6 +793,7 @@ datum
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -10 * volume)
+						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
 				return 1
 
 		water/water_holy
@@ -810,7 +807,7 @@ datum
 			reaction_mob(var/mob/target, var/method=TOUCH, var/volume)
 				..()
 				var/reacted = 0
-				var/mob/living/carbon/human/M = target
+				var/mob/living/M = target
 				if(istype(M))
 					if(by_type[/obj/machinery/playerzoldorf] && by_type[/obj/machinery/playerzoldorf].len)
 						var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]

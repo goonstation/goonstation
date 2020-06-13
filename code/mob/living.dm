@@ -1,6 +1,7 @@
 // living
 
 /mob/living
+	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | IS_FARTABLE
 	var/spell_soulguard = 0
 
 	// this is a read only variable. do not set it directly.
@@ -187,6 +188,7 @@
 	..()
 
 /mob/living/death(gibbed)
+	src.remove_ailments()
 	if (src.key) statlog_death(src,gibbed)
 	if (src.client && (ticker.round_elapsed_ticks >= 12000))
 		var/num_players = 0
@@ -1612,4 +1614,13 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
 					if (locate(/mob) in A.contents)
 						. *= max(A.p_class,1)
+
+
+// cogwerks - fix for soulguard and revive
+/mob/living/proc/remove_ailments()
+	if (src.ailments)
+		for (var/datum/ailment_data/disease/D in src.ailments)
+			src.cure_disease(D)
+		for (var/datum/ailment_data/malady/M in src.ailments)
+			src.cure_disease(M)
 

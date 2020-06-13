@@ -1,4 +1,22 @@
 
+(t)sat jun 13 20
+(u)kyle
+(p)1072
+(e)🆕|feature
+(*)Added fake wrestling belts so you can wrestle to your heart's content without actually hurting your opponent! Just like "real" wrestling!
+(t)fri jun 12 20
+(u)UrsulaMajor
+(p)1069
+(e)|
+(+)On Ass Jam, YEET! explosions are real
+(u)pali & kubius
+(p)1047
+(e)🗺🔄🎨|mapping, rework, sprites
+(*)Nicer shuttle floors and shuttle lighting. Cog1 and Cog2 arrivals refurbished.
+(u)Tarmunora
+(p)1050
+(e)⛔|removal
+(+)Lights will no longer break from being toggled off and on.
 (t)thu jun 11 20
 (u)Erinexx
 (p)805

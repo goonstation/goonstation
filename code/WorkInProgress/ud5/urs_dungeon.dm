@@ -187,8 +187,9 @@
 
 
 	equipped(var/mob/user, var/slot)
+		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == "eyes")
+		if(istype(H) && slot == SLOT_GLASSES)
 			SPAWN_DBG(1 SECOND)
 				enter_urs_dungeon(user)
 		return

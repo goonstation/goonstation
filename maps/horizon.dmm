@@ -4522,7 +4522,7 @@
 "bKq" = (/obj/disposalpipe/segment/food{dir = 4},/turf/simulated/wall/auto/reinforced/supernorn,/area/station/maintenance/SEmaint)
 "bKs" = (/obj/disposalpipe/segment/food{dir = 4},/turf/simulated/floor,/area/station/security/main)
 "bKt" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/disposalpipe/segment/bent/south,/turf/simulated/floor,/area/station/security/main)
-"bKu" = (/obj/disposalpipe/segment/bent/north,/obj/stool/bed,/obj/item/clothing/suit/bedsheet{bcolor = "red"; icon_state = "bedsheet-red"},/obj/landmark/start,/turf/simulated/floor/red/side{dir = 4},/area/station/security/main)
+"bKu" = (/obj/disposalpipe/segment/bent/north,/obj/stool/bed,/obj/item/clothing/suit/bedsheet{bcolor = "red"; icon_state = "bedsheet-red"},/obj/landmark/start{name = "Security Officer"},/turf/simulated/floor/red/side{dir = 4},/area/station/security/main)
 "bKv" = (/obj/disposalpipe/trunk{dir = 8},/obj/machinery/disposal,/turf/simulated/floor/red,/area/station/security/main)
 "bKw" = (/obj/disposalpipe/segment/ejection,/turf/simulated/wall/auto/reinforced/supernorn,/area/station/security/main)
 "bKx" = (/obj/disposalpipe/segment/bent/east,/turf/simulated/floor/red/side{dir = 1},/area/station/security/main)

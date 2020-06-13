@@ -86,6 +86,14 @@ var/list/globalPropList = null
 				if(X.id == propId)
 					.= 1
 
+/obj/item
+	setProperty()
+		..()
+		src.tooltip_rebuild = 1
+	delProperty()
+		..()
+		src.tooltip_rebuild = 1
+
 /datum/objectProperty
 	var/name = ""
 	var/id = ""

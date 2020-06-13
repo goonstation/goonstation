@@ -163,19 +163,19 @@
 	var/spam_flag = 0
 
 /obj/item/rubberduck/attack_self(mob/user as mob)
-	if (spam_flag == 0)
+	if (spam_flag < world.time)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.sims)
 				H.sims.affectMotive("fun", 1)
 		spam_flag = 1
 		if (narrator_mode)
-			playsound(src.loc, 'sound/vox/duct.ogg', 50, 1)
+			playsound(user, 'sound/vox/duct.ogg', 50, 1)
 		else
-			playsound(src.loc, 'sound/items/rubberduck.ogg', 50, 1)
+			playsound(user, 'sound/items/rubberduck.ogg', 50, 1)
 		if(prob(1))
 			user.drop_item()
-			playsound(src.loc, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 50, 1) // this is gonna spook some people!!
+			playsound(user, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 50, 1) // this is gonna spook some people!!
 			var/wacka = 0
 			while (wacka++ < 50)
 				sleep(0.2 SECONDS)
@@ -185,6 +185,5 @@
 				pixel_y = 0
 				pixel_x = 0
 		src.add_fingerprint(user)
-		SPAWN_DBG(2 SECONDS)
-			spam_flag = 0
+		spam_flag = world.time + 2 SECONDS
 	return

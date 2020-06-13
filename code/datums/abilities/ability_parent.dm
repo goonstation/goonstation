@@ -223,6 +223,8 @@
 		return A
 
 	proc/removeAbility(var/abilityType)
+		if (istext(abilityType))
+			abilityType = text2path(abilityType)
 		if (!ispath(abilityType))
 			return
 		for (var/datum/targetable/A in src.abilities)

@@ -99,10 +99,11 @@
 	add_lifeprocess(/datum/lifeprocess/skin)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+	add_lifeprocess(/datum/lifeprocess/viruses)
 
 /mob/living/carbon/human/New()
 	..()
-	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
+	add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/blood)
 	add_lifeprocess(/datum/lifeprocess/bodytemp)
@@ -113,7 +114,7 @@
 	add_lifeprocess(/datum/lifeprocess/decomposition)
 	add_lifeprocess(/datum/lifeprocess/disability)
 	add_lifeprocess(/datum/lifeprocess/fire)
-	add_lifeprocess(/datum/lifeprocess/arrest_icon)
+	add_lifeprocess(/datum/lifeprocess/health_mon)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/mutations)
 	add_lifeprocess(/datum/lifeprocess/organs)
@@ -175,7 +176,7 @@
 	if (src.transforming)
 		return 1
 
-	var/life_time_passed = max(tick_spacing, world.timeofday - last_life_tick)
+	var/life_time_passed = max(tick_spacing, TIME - last_life_tick)
 
 	// Jewel's attempted fix for: null.return_air()
 	// These objects should be garbage collected the next tick, so it's not too bad if it's not breathing I think? I might be totallly wrong here.
@@ -305,7 +306,7 @@
 		src.emote("fart")
 
 	//Attaching a limb that didn't originally belong to you can do stuff
-	if(prob(2) && src.limbs)
+	if(!isdead(src) && prob(2) && src.limbs)
 		if(src.limbs.l_arm && istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/))
 			var/obj/item/parts/human_parts/arm/A = src.limbs.l_arm
 			if(A.original_holder && src != A.original_holder)

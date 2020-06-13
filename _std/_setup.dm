@@ -71,8 +71,8 @@
 #define OVERLOADED_WORLD_TICKLAG 0.8 //max value ticklag can be
 #define TICKLAG_DILATION_INC 0.2 //how much to increase by when appropriate
 #define TICKLAG_DILATION_DEC 0.2 //how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
-#define TICKLAG_DILATION_THRESHOLD 6 //these values dont make sense to you? read the math in gameticker
-#define TICKLAG_NORMALIZATION_THRESHOLD 0.8 //these values dont make sense to you? read the math in gameticker
+#define TICKLAG_DILATION_THRESHOLD 5 //these values dont make sense to you? read the math in gameticker
+#define TICKLAG_NORMALIZATION_THRESHOLD 0.4 //these values dont make sense to you? read the math in gameticker
 #define TICKLAG_DILATE_INTERVAL 20
 
 #define OVERLOAD_PLAYERCOUNT 95 //when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
@@ -302,6 +302,7 @@
 #define IMMUNE_SINGULARITY 256
 #define IMMUNE_SINGULARITY_INACTIVE 512
 #define IS_TRINKET 1024 		//used for trinkets GC
+#define IS_FARTABLE 2048
 //TBD the rest
 
 //temp_flags lol for atoms and im gonna be constantly adding and removing these

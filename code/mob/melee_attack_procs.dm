@@ -908,7 +908,7 @@
 			if (stamina_self > 0)
 				owner.add_stamina(stamina_self)
 			else
-				owner.remove_stamina(-stamina_self)
+				owner.process_stamina(-stamina_self)
 
 		if (src.disarm == 1)
 			target.add_fingerprint(owner)

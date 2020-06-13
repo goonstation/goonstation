@@ -1,7 +1,8 @@
 
 /datum/lifeprocess/organs
 	process(var/datum/gas_mixture/environment)
-		owner.handle_organs(get_multiplier())
+		if(!isdead(owner))
+			owner.handle_organs(get_multiplier())
 
 		//the master vore loop
 		if (owner.stomach_contents && owner.stomach_contents.len)

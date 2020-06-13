@@ -11,6 +11,7 @@ var/list/bible_contents = list()
 	w_class = 3.0
 	max_wclass = 2
 	flags = FPRINT | TABLEPASS | NOSPLASH
+	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 	var/mob/affecting = null
 	var/heal_amt = 10
 

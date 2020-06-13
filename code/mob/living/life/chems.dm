@@ -2,6 +2,8 @@
 /datum/lifeprocess/chems
 	process(var/datum/gas_mixture/environment)
 		//proc/handle_chemicals_in_body()
+		if(isdead(owner))
+			return ..()
 		if (owner.nodamage)
 			return ..()
 
