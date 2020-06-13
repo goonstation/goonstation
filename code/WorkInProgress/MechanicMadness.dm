@@ -1428,7 +1428,7 @@ var/list/mechanics_telepads = new/list()
 		..()
 		mechanics.addInput("send file", "sendfile")
 		mechanics.addInput("add file to signal and send", "addandsendfile")
-		mechanics.addInput("save file", "savefile")
+		mechanics.addInput("save file", "storefile")
 		mechanics.addInput("delete file", "deletefile")
 		src.append_default_configs()
 
@@ -1450,7 +1450,7 @@ var/list/mechanics_telepads = new/list()
 		mechanics.fireOutgoing(input)
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
-	proc/savefile(var/datum/mechanicsMessage/input)
+	proc/storefile(var/datum/mechanicsMessage/input)
 		if (level == 2 || !input.data_file) return
 		src.stored_file = input.data_file.copy_file()
 		animate_flash_color_fill(src,"#00FF00",2, 2)
