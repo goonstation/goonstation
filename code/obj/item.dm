@@ -71,8 +71,12 @@
 	var/two_handed = 0 //Requires both hands. Do not change while equipped. Use proc for that (TBI)
 	var/click_delay = DEFAULT_CLICK_DELAY //Delay before next click after using this.
 	var/combat_click_delay = COMBAT_CLICK_DELAY
+
 	var/showTooltip = 1
 	var/showTooltipDesc = 1
+	var/lastTooltipTitle = null
+	var/lastTooltipContent = null
+	var/tooltip_rebuild = 1
 	var/rarity = ITEM_RARITY_COMMON //Just a little thing to indicate item rarity. RPG fluff.
 
 	var/datum/item_special/special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
@@ -142,6 +146,8 @@
 			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]</div>"
 		. = jointext(., "")
 
+		lastTooltipContent = .
+
 	MouseEntered(location, control, params)
 		if (showTooltip && usr.client.tooltipHolder)
 			var/show = 1
@@ -150,17 +156,23 @@
 			if (usr.client.preferences.tooltip_option == TOOLTIP_ALWAYS && !(ismob(src.loc) || (src.loc && src.loc.loc && ismob(src.loc.loc))) && !usr.client.check_key(KEY_EXAMINE))
 				show = 0
 
-			var/title = ""
-			if(rarity >= 7)
-				title = "<span class=\"rainbow\">[capitalize(src.name)]</span>"
+			boutput(world, "rebuild? [toolTip_rebuild]")
+
+			var/title
+			if (tooltip_rebuild)
+				if(rarity >= 7)
+					title = "<span class=\"rainbow\">[capitalize(src.name)]</span>"
+				else
+					title = "<span style=\"color:[RARITY_COLOR[rarity] || "#fff"]\">[capitalize(src.name)]</span>"
+				lastTooltipTitle = title
 			else
-				title = "<span style=\"color:[RARITY_COLOR[rarity] || "#fff"]\">[capitalize(src.name)]</span>"
+				title = lastTooltipTitle
 
 			if(show)
 				var/list/tooltipParams = list(
 					"params" = params,
 					"title" = title,
-					"content" = buildTooltipContent(),
+					"content" = tooltip_rebuild ? buildTooltipContent() : lastTooltipContent,
 					"theme" = usr.client.preferences.hud_style == "New" ? "newhud" : "item"
 				)
 
@@ -169,6 +181,8 @@
 					tooltipParams["flags"] = TOOLTIP_RIGHT
 
 				usr.client.tooltipHolder.showHover(src, tooltipParams)
+
+			toolTip_rebuild = 0
 
 	MouseExited()
 		if(showTooltip && usr.client.tooltipHolder)
