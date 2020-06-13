@@ -440,7 +440,7 @@
 			if(JOB.receives_disk)
 				var/obj/item/disk/data/floppy/D = new /obj/item/disk/data/floppy(src)
 				src.equip_if_possible(D, slot_in_backpack)
-				var/datum/data/record/R = new /datum/data/record(  )
+				var/datum/computer/file/clone/R = new
 				R.fields["ckey"] = ckey(src.key)
 				R.fields["name"] = src.real_name
 				R.fields["id"] = copytext(md5(src.real_name), 2, 6)
@@ -461,8 +461,8 @@
 
 				R.fields["imp"] = null
 				R.fields["mind"] = src.mind
-				D.data = R.fields
-				D.data_type = "cloning_record"
+				R.name = "CloneRecord-[ckey(src.real_name)]"
+				D.root.add_file(R)
 				D.name = "data disk - '[src.real_name]'"
 
 			if(JOB.receives_badge)
