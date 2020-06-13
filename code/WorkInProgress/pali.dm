@@ -391,6 +391,17 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 				src.last_item_bump = I
 				src.weapon_attack(AM, I, 1)
 
+	death(gibbed)
+		. = ..(1)
+		SPAWN_DBG(1 SECOND)
+			src.transforming = 1
+			src.canmove = 0
+			src.icon = null
+			src.invisibility = 101
+			if (src.mind || src.client)
+				src.ghostize()
+			qdel(src)
+
 	equipped()
 		return src.last_item_bump
 
@@ -403,9 +414,14 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 		else
 			M.Turn(-90)
 		animate(src, transform=M, time=src.base_move_delay)
+		if(size > 70 && istype(new_turf, /turf/simulated/floor))
+			var/turf/simulated/floor/floor = new_turf
+			floor.pry_tile(src.equipped(), src)
 		var/found = 0
 		for(var/obj/O in new_turf)
 			if(istype(O, /obj/overlay))
+				continue
+			if(O.invisibility > 10)
 				continue
 			var/obj/item/I = O
 			if(size < 40 && (!istype(O, /obj/item) || I.w_class > size / 10 + 1))
@@ -421,7 +437,7 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 			O.pixel_y = 0
 			var/matrix/tr = new
 			tr.Turn(rand(360))
-			tr.Translate(0, sqrt(size) * 3)
+			tr.Translate(sqrt(size) * 3 / 2, sqrt(size) * 3)
 			tr.Turn(rand(360))
 			O.transform = tr
 			size += 0.3
@@ -435,4 +451,7 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 		add_hh_robot(-150, 150, 1.15)
 
 	list_ejectables()
-		return src.contents
+		. = list()
+		for(var/x in src)
+			if(!istype(x, /obj/screen))
+				. += x
