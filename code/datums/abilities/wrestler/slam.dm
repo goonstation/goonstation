@@ -150,24 +150,25 @@
 			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 			M.visible_message("<span class='alert'><B>[M] [fluff] [HH]!</B></span>")
 
-			if (!isdead(HH))
-				HH.emote("scream")
-				HH.changeStatus("weakened", 2 SECONDS)
-				HH.changeStatus("stunned", 2 SECONDS)
-				HH.force_laydown_standup()
+			if (!fake)
+				if (!isdead(HH))
+					HH.emote("scream")
+					HH.changeStatus("weakened", 2 SECONDS)
+					HH.changeStatus("stunned", 2 SECONDS)
+					HH.force_laydown_standup()
 
-				switch (G.state)
-					if (2)
-						random_brute_damage(HH, 25, 1)
-					if (3)
-						HH.ex_act(3)
-					else
-						random_brute_damage(HH, 15, 1)
-			else
-				HH.ex_act(3)
+					switch (G.state)
+						if (2)
+							random_brute_damage(HH, 25, 1)
+						if (3)
+							HH.ex_act(3)
+						else
+							random_brute_damage(HH, 15, 1)
+				else
+					HH.ex_act(3)
 
 			qdel(G)
-			logTheThing("combat", M, HH, "uses the slam wrestling move on %target% at [log_loc(M)].")
+			logTheThing("combat", M, HH, "uses the [fake ? "fake " : ""]slam wrestling move on %target% at [log_loc(M)].")
 
 		else
 			if (M)
@@ -181,3 +182,6 @@
 			qdel(G)
 
 		return 0
+
+/datum/targetable/wrestler/slam/fake
+	fake = 1

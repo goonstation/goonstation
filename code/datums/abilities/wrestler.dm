@@ -2,22 +2,24 @@
 // the opportunity to do some clean-up as well (Convair880).
 
 //////////////////////////////////////////// Setup //////////////////////////////////////////////////
-
-/mob/proc/make_wrestler(var/make_inherent = 0, var/belt_check = 0, var/remove_powers = 0)
+//fake_wrestler - For the fake wrestling belt, make it so all abilities do no damage or stuns.
+/mob/proc/make_wrestler(var/make_inherent = 0, var/belt_check = 0, var/remove_powers = 0, var/fake_wrestler = 0)
 	if (ishuman(src) || ismobcritter(src))
 		if (ismobcritter(src))
 			var/mob/living/critter/C = src
 
 			if (remove_powers == 1)
-				var/datum/abilityHolder/wrestler/A = C.get_ability_holder(/datum/abilityHolder/wrestler)
-				if (A && istype(A))
+				if (istype(C.get_ability_holder(/datum/abilityHolder/wrestler), /datum/abilityHolder/wrestler))
 					C.remove_ability_holder(/datum/abilityHolder/wrestler)
+				else if (fake_wrestler && istype(C.get_ability_holder(/datum/abilityHolder/wrestler/fake), /datum/abilityHolder/wrestler/fake))
+					C.remove_ability_holder(/datum/abilityHolder/wrestler)
+
 				else
-					C.abilityHolder.removeAbility(/datum/targetable/wrestler/kick)
-					C.abilityHolder.removeAbility(/datum/targetable/wrestler/strike)
-					C.abilityHolder.removeAbility(/datum/targetable/wrestler/drop)
-					C.abilityHolder.removeAbility(/datum/targetable/wrestler/throw)
-					C.abilityHolder.removeAbility(/datum/targetable/wrestler/slam)
+					C.abilityHolder.removeAbility("/datum/targetable/wrestler/kick[fake_wrestler ? "/fake" : ""]")
+					C.abilityHolder.removeAbility("/datum/targetable/wrestler/strike[fake_wrestler ? "/fake" : ""]")
+					C.abilityHolder.removeAbility("/datum/targetable/wrestler/drop[fake_wrestler ? "/fake" : ""]")
+					C.abilityHolder.removeAbility("/datum/targetable/wrestler/throw[fake_wrestler ? "/fake" : ""]")
+					C.abilityHolder.removeAbility("/datum/targetable/wrestler/slam[fake_wrestler ? "/fake" : ""]")
 
 				return
 
@@ -26,32 +28,39 @@
 					return
 
 				if (isnull(C.abilityHolder)) // But they do have a critter AH by default...or should.
-					var/datum/abilityHolder/wrestler/A2 = C.add_ability_holder(/datum/abilityHolder/wrestler)
+					var/datum/abilityHolder/wrestler/A2 
+					if (fake_wrestler)
+						A2 = C.add_ability_holder(/datum/abilityHolder/wrestler/fake)
+					else
+						A2 = C.add_ability_holder(/datum/abilityHolder/wrestler)
 					if (!A2 || !istype(A2, /datum/abilityHolder/))
 						return
-
-				C.abilityHolder.addAbility(/datum/targetable/wrestler/kick)
-				C.abilityHolder.addAbility(/datum/targetable/wrestler/strike)
-				C.abilityHolder.addAbility(/datum/targetable/wrestler/drop)
-				C.abilityHolder.addAbility(/datum/targetable/wrestler/throw)
-				C.abilityHolder.addAbility(/datum/targetable/wrestler/slam)
+				C.abilityHolder.addAbility("/datum/targetable/wrestler/kick[fake_wrestler ? "/fake" : ""]")
+				C.abilityHolder.addAbility("/datum/targetable/wrestler/strike[fake_wrestler ? "/fake" : ""]")
+				C.abilityHolder.addAbility("/datum/targetable/wrestler/drop[fake_wrestler ? "/fake" : ""]")
+				C.abilityHolder.addAbility("/datum/targetable/wrestler/throw[fake_wrestler ? "/fake" : ""]")
+				C.abilityHolder.addAbility("/datum/targetable/wrestler/slam[fake_wrestler ? "/fake" : ""]")
 
 		if (ishuman(src))
 			var/mob/living/carbon/human/H = src
 
 			if (remove_powers == 1)
 				var/datum/abilityHolder/wrestler/A3 = H.get_ability_holder(/datum/abilityHolder/wrestler)
-				if (A3 && istype(A3))
+				if (istype(A3))
 					if (belt_check == 1 && A3.is_inherent == 1) // Wrestler/omnitraitor vs wrestling belt.
 						return
 					H.remove_ability_holder(/datum/abilityHolder/wrestler)
+				else if (fake_wrestler && istype(H.get_ability_holder(/datum/abilityHolder/wrestler/fake), /datum/abilityHolder/wrestler/fake))
+					H.remove_ability_holder(/datum/abilityHolder/wrestler)
+
 				else
 					if (!isnull(H.abilityHolder))
-						H.abilityHolder.removeAbility(/datum/targetable/wrestler/kick)
-						H.abilityHolder.removeAbility(/datum/targetable/wrestler/strike)
-						H.abilityHolder.removeAbility(/datum/targetable/wrestler/drop)
-						H.abilityHolder.removeAbility(/datum/targetable/wrestler/throw)
-						H.abilityHolder.removeAbility(/datum/targetable/wrestler/slam)
+						H.abilityHolder.removeAbility("/datum/targetable/wrestler/kick[fake_wrestler ? "/fake" : ""]")
+						H.abilityHolder.removeAbility("/datum/targetable/wrestler/strike[fake_wrestler ? "/fake" : ""]")
+						H.abilityHolder.removeAbility("/datum/targetable/wrestler/drop[fake_wrestler ? "/fake" : ""]")
+						H.abilityHolder.removeAbility("/datum/targetable/wrestler/throw[fake_wrestler ? "/fake" : ""]")
+						H.abilityHolder.removeAbility("/datum/targetable/wrestler/slam[fake_wrestler ? "/fake" : ""]")
+
 
 				return
 
@@ -60,15 +69,23 @@
 					return
 
 				var/datum/abilityHolder/wrestler/A4 = H.get_ability_holder(/datum/abilityHolder/wrestler)
-				if (A4 && istype(A4))
+				if (istype(A4))
+					return
+				var/datum/abilityHolder/wrestler/fake/F = H.get_ability_holder(/datum/abilityHolder/wrestler/fake)
+				if (fake_wrestler && istype(F))
 					return
 
-				var/datum/abilityHolder/wrestler/A5 = H.add_ability_holder(/datum/abilityHolder/wrestler)
-				A5.addAbility(/datum/targetable/wrestler/kick)
-				A5.addAbility(/datum/targetable/wrestler/strike)
-				A5.addAbility(/datum/targetable/wrestler/drop)
-				A5.addAbility(/datum/targetable/wrestler/throw)
-				A5.addAbility(/datum/targetable/wrestler/slam)
+				var/datum/abilityHolder/wrestler/A5
+				if (fake_wrestler)
+					A5 = H.add_ability_holder(/datum/abilityHolder/wrestler/fake)
+				else
+					A5 = H.add_ability_holder(/datum/abilityHolder/wrestler)
+
+				A5.addAbility("/datum/targetable/wrestler/kick[fake_wrestler ? "/fake" : ""]")
+				A5.addAbility("/datum/targetable/wrestler/strike[fake_wrestler ? "/fake" : ""]")
+				A5.addAbility("/datum/targetable/wrestler/drop[fake_wrestler ? "/fake" : ""]")
+				A5.addAbility("/datum/targetable/wrestler/throw[fake_wrestler ? "/fake" : ""]")
+				A5.addAbility("/datum/targetable/wrestler/slam[fake_wrestler ? "/fake" : ""]")
 
 				if (make_inherent == 1)
 					A5.is_inherent = 1
@@ -115,7 +132,10 @@
 	tabName = "Wrestler"
 	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
 	var/is_inherent = 0 // Are we a wrestler as opposed to somebody with a wrestling belt?
+	var/fake = 0
 
+/datum/abilityHolder/wrestler/fake
+	fake = 1
 /////////////////////////////////////////////// Wrestler spell parent ////////////////////////////
 
 /datum/targetable/wrestler
@@ -128,6 +148,7 @@
 	preferred_holder_type = /datum/abilityHolder/wrestler
 	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
+	var/fake = 0
 
 	New()
 		var/obj/screen/ability/topBar/wrestler/B = new /obj/screen/ability/topBar/wrestler(null)

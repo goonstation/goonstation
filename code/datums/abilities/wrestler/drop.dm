@@ -75,7 +75,7 @@
 
 			if ((falling == 0 && get_dist(M, target) > src.max_range) || (falling == 1 && get_dist(M, target) > (src.max_range + 1))) // We climbed onto stuff.
 				M.pixel_y = 0
-				if (falling == 1)
+				if (falling == 1 && !fake)
 					M.visible_message("<span class='alert'><B>...and dives head-first into the ground, ouch!</b></span>")
 					M.TakeDamageAccountArmor("head", 15, 0, 0, DAMAGE_BLUNT)
 					M.changeStatus("weakened", 3 SECONDS)
@@ -101,20 +101,21 @@
 			playsound(M.loc, "swing_hit", 50, 1)
 			M.emote("scream")
 
-			if (falling == 1)
-				if (prob(33) || isdead(target))
-					target.ex_act(3)
+			if (!fake)
+				if (falling == 1)
+					if (prob(33) || isdead(target))
+						target.ex_act(3)
+					else
+						random_brute_damage(target, 25, 1)
 				else
-					random_brute_damage(target, 25, 1)
-			else
-				random_brute_damage(target, 15, 1)
+					random_brute_damage(target, 15, 1)
 
 			target.changeStatus("weakened", 1 SECOND)
 			target.changeStatus("stunned", 2 SECONDS)
 			target.force_laydown_standup()
 
 			M.pixel_y = 0
-			logTheThing("combat", M, target, "uses the drop wrestling move on %target% at [log_loc(M)].")
+			logTheThing("combat", M, target, "uses the [fake ? "fake " : ""]drop wrestling move on %target% at [log_loc(M)].")
 
 		else
 			if (M)
@@ -123,5 +124,5 @@
 		return 0
 
 
-
-
+/datum/targetable/wrestler/drop/fake
+	fake = 1
