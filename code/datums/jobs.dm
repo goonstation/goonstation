@@ -2055,6 +2055,10 @@
 	slot_lhan = null
 	slot_rhan = /obj/item/gun/kinetic/pistol
 
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		bad_traitorify(M, "Syndicate Agent")
+
 /datum/job/special/syndicate_weak/no_ammo
 	name = "Poorly Equipped Junior Syndicate Operative"
 	slot_poc2 = null
@@ -2095,15 +2099,16 @@
 	special_spawn_location = 0
 #else
 	special_spawn_location = 1
-	spawn_x = 145
-	spawn_y = 284
-	spawn_z = 4
+	spawn_x = 96
+	spawn_y = 272
+	spawn_z = 2
 #endif
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
 		if (!M)
 			return
+		bad_traitorify(M, "Syndicate Agent")
 		M.show_text("<b>The assault has begun! Head over to the station and kill any and all Nanotrasen personnel you encounter!</b>", "red")
 
 
