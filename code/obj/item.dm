@@ -182,7 +182,7 @@
 
 				usr.client.tooltipHolder.showHover(src, tooltipParams)
 
-			toolTip_rebuild = 0
+			tooltip_rebuild = 0
 
 	MouseExited()
 		if(showTooltip && usr.client.tooltipHolder)
