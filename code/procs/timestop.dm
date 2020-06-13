@@ -161,7 +161,7 @@ proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE) // loopfr
 
 /obj/effect/timefield/proc/unfreeze_mob(mob/living/L)
 	if(ishuman(L))
-		var/mob/living/carbon/human/ H = L
+		var/mob/living/carbon/human/H = L
 		H.ai_set_active(L.ai_prefrozen)  // makes sure the ai is the same as before
 	L.paused = 0
 	L.TakeDamage("chest", L.pausedbrute, 0, 0, DAMAGE_BLUNT) // see below
