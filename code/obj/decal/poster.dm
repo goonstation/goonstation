@@ -659,6 +659,7 @@
 		fuck1 //do not add this to the random sign rotation, fuck I is a long-lost relic overshadowed entirely by its successor
 			name = "\proper fuck"
 			desc = "No... it can't be... the original?! This is a vintage!!"
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "fuckI"
 
 		fuck2
