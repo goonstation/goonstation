@@ -156,8 +156,6 @@
 			if (usr.client.preferences.tooltip_option == TOOLTIP_ALWAYS && !(ismob(src.loc) || (src.loc && src.loc.loc && ismob(src.loc.loc))) && !usr.client.check_key(KEY_EXAMINE))
 				show = 0
 
-			boutput(world, "rebuild? [toolTip_rebuild]")
-
 			var/title
 			if (tooltip_rebuild)
 				if(rarity >= 7)
