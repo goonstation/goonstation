@@ -392,6 +392,20 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 				src.weapon_attack(AM, I, 1)
 
 	death(gibbed)
+		src.vis_contents = null
+		var/list/turf/targets = list()
+		for(var/turf/T in view(6, src))
+			targets += T
+		for(var/atom/movable/AM in src)
+			if(istype(x, /obj/screen))
+				continue
+			AM.transform = null
+			AM.set_loc(pick(targets))
+			SPAWN_DBG(0)
+				var/orig_anchored = AM.anchored
+				AM.anchored = 0
+				AM.throw_at(pick(targets), rand(1, 10), rand(1, 10))
+				AM.anchored = orig_anchored
 		. = ..(1)
 		SPAWN_DBG(1 SECOND)
 			src.transforming = 1
@@ -449,9 +463,3 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 
 	setup_healths()
 		add_hh_robot(-150, 150, 1.15)
-
-	list_ejectables()
-		. = list()
-		for(var/x in src)
-			if(!istype(x, /obj/screen))
-				. += x
