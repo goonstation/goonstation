@@ -251,8 +251,8 @@
 	//Should be called before attacks begin. Make sure you call this when appropriate in your mouse procs etc.
 	//MBC : Removed Damage/Stamina modifications from preUse() and afterUse() and moved their to item.attack() to avoid race condition
 	proc/preUse(var/mob/person)
-		if(istype(person, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = person
+		if(isliving(person))
+			var/mob/living/H = person
 
 			if(STAMINA_NO_ATTACK_CAP && H.stamina > STAMINA_MIN_ATTACK)
 				var/cost = staminaCost
