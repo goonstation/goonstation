@@ -176,7 +176,7 @@
 	if (src.transforming)
 		return 1
 
-	var/life_time_passed = max(tick_spacing, world.timeofday - last_life_tick)
+	var/life_time_passed = max(tick_spacing, TIME - last_life_tick)
 
 	// Jewel's attempted fix for: null.return_air()
 	// These objects should be garbage collected the next tick, so it's not too bad if it's not breathing I think? I might be totallly wrong here.

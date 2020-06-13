@@ -273,7 +273,6 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 		..()
 
 	end_vote()
-		. = ..()
 		// boutput(world, "<span class='success'><BIG><B>Vote gamemode result: [get_winner()]</B></BIG></span>")
 		if(get_winner() != "Yes")
 			boutput(world, "<span class='alert'><BIG><B>Insufficient votes, game mode not changed.</B></BIG></span>")
@@ -283,8 +282,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 		else
 			boutput(world, "<span class='success'><BIG><B>Gamemode will be changed to [data] at next round start.</B></BIG></span>")
 			world.save_mode(lowertext(data))
-		qdel(src)
-		return
+		. = ..()
 
 /datum/vote_new/restart
 	options = list("Yes","No")
@@ -294,12 +292,10 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	vote_abstain_weight = 0.5
 
 	end_vote()
-		. = ..()
 		boutput(world, "<span class='success'><BIG><B>Vote restart result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
 			Reboot_server()
-		qdel(src)
-		return
+		. = ..()
 /*
 //these haven't been adjusted to new weighted vote stuff yet
 /datum/vote_new/ban
