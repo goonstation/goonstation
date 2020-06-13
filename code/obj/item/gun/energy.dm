@@ -462,6 +462,16 @@
 		projectiles = list(current_projectile)
 		..()
 
+	attackby(obj/item/b, mob/user)
+		if(istype(b, /obj/item/ammo/power_cell))
+			boutput(user, "<span class='alert'>You attempt to swap the cell but \the [src] bites you instead.</span>")
+			playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1, -6)
+			user.TakeDamage(user.zone_sel.selecting, 3, 0)
+			take_bleeding_damage(user, user, 3, DAMAGE_CUT)
+			return
+		. = ..()
+
+
 
 
 //////////////////////////////////////Disruptor
