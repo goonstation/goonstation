@@ -454,8 +454,8 @@ var/global
 	ooc_allowed = 1
 	looc_allowed = 0
 	dooc_allowed = 1
-	player_capa = 0
-	player_cap = 55
+	player_capa = 1
+	player_cap = 65
 	traitor_scaling = 1
 	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
