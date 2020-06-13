@@ -999,7 +999,11 @@
 		SPAWN_DBG(I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from))
 			if(yeet)
 				new/obj/effect/supplyexplosion(I.loc)
+#if ASS_JAM
+				explosion_new(I,get_turf(I),20,1)
+#else
 				playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+#endif
 				for(var/mob/M in view(7, I.loc))
 					shake_camera(M, 20, 1)
 
