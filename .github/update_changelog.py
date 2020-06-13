@@ -129,7 +129,7 @@ def main():
 		return
 
 	changelog_path = os.environ["ASS_CHANGELOG_PATH"] if any(label.name == 'ass-jam' for label in pr.labels) else os.environ["CHANGELOG_PATH"]
-	status = update_changelog(repo, changelog_path, date_string, pr_data, "Changelog for #{}".format(pr.number))
+	status = update_changelog(repo, changelog_path, date_string, pr_data, "Changelog for #{} [skip travis]".format(pr.number))
 
 	if not status:
 		sys.exit(1) # scream at people
