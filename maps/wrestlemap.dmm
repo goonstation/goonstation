@@ -714,7 +714,7 @@
 "cxA" = (/obj/cable{d1 = 2; d2 = 4; icon_state = "5-8"},/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plating,/area/station/maintenance/north)
 "cxP" = (/obj/machinery/air_vendor,/obj/disposalpipe/segment/horizontal,/obj/decal/tile_edge/stripe{dir = 6; icon_state = "delivery2"},/turf/simulated/floor/plating,/area/station/maintenance/inner)
 "cyg" = (/obj/cable{icon_state = "1-2"},/obj/cable{d1 = 2; d2 = 4; icon_state = "1-9"},/turf/simulated/floor/carpet/blue/fancy/edge/east,/area/station/chapel/main)
-"cyC" = (/obj/table/reinforced/chemistry/auto,/obj/item/reagent_containers/glass/vial/prepared,/obj/item/reagent_containers/glass/vial/prepared,/obj/item/reagent_containers/glass/vial/prepared,/obj/item/reagent_containers/glass/vial/prepared,/obj/item/reagent_containers/glass/vial/prepared,/obj/cable{icon_state = "1-2"},/turf/simulated/floor/white,/area/station/medical/cdc)
+"cyC" = (/obj/table/reinforced/chemistry/auto,/obj/cable{icon_state = "1-2"},/turf/simulated/floor/white,/area/station/medical/cdc)
 "cyE" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plating,/area/station/maintenance/north)
 "cyL" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/station/engine/gas)
 "cyM" = (/turf/simulated/floor/carpet/green/decal,/area/station/crew_quarters/bar)
