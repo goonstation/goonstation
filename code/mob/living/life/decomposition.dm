@@ -9,7 +9,7 @@
 			if (!T)
 				return ..()
 
-			if (T.temp_flags & HAS_KUDZU)
+			if (H.loc == T && T.temp_flags & HAS_KUDZU) //only infect if on the floor
 				H.infect_kudzu()
 
 			var/suspend_rot = 0
