@@ -1054,6 +1054,7 @@
 		icon_state = icon_state_alive ? icon_state_alive : initial(icon_state)
 		density = initial(density)
 		src.can_implant = initial(src.can_implant)
+		blood_volume = initial(blood_volume)
 
 	does_it_metabolize()
 		return metabolizes
