@@ -368,29 +368,37 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 	speechverb_say = "rattles"
 	speechverb_exclaim = "rattles"
 	speechverb_ask = "rattles"
+	flags = TABLEPASS
+	fits_under_table = 1
 	blood_id = "iron"
 	metabolizes = 0
 	var/size = 0
 	var/obj/item/implant/access/access
+	var/obj/item/last_item_bump
 
 	New()
 		. = ..()
 		access = new /obj/item/implant/access(src)
+		access.owner = src
 		access.uses = -1
 		access.implanted = 1
 
 	Bump(atom/movable/AM, yes)
 		. = ..()
-		if(src.contents)
+		if(src.contents && !istype(AM, /obj/table) && !ON_COOLDOWN(src, "bump_attack", 0.5 SECONDS))
 			var/obj/item/I = pick(src.contents)
 			if(istype(I))
+				src.last_item_bump = I
 				src.weapon_attack(AM, I, 1)
+
+	equipped()
+		return src.last_item_bump
 
 	Move(NewLoc, direct)
 		var/turf/new_turf = NewLoc
 		var/turf/old_turf = src.loc
 		var/matrix/M = src.transform
-		if(istype(new_turf) && istype(old_turf) && (old_turf.x < new_turf.x || old_turf.x == new_turf.x && old_turf.y < new_turf.y))
+		if(istype(new_turf) && istype(old_turf) && (old_turf.x < new_turf.x || old_turf.x == new_turf.x && old_turf.y > new_turf.y))
 			M.Turn(90)
 		else
 			M.Turn(-90)
@@ -400,13 +408,13 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 			if(istype(O, /obj/overlay))
 				continue
 			var/obj/item/I = O
-			if(size < 20 && (!istype(O, /obj/item) || I.w_class > size / 5 + 1))
+			if(size < 40 && (!istype(O, /obj/item) || I.w_class > size / 10 + 1))
 				continue
-			if(size < 40 && O.anchored)
+			if(size < 60 && O.anchored)
 				continue
 			if(istype(I, /obj/item/card/id))
 				var/obj/item/card/id/id = I
-				src.access.access |= id.access
+				src.access.access.access |= id.access // access
 			O.set_loc(src)
 			src.vis_contents += O
 			O.pixel_x = 0
@@ -419,7 +427,7 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 			size += 0.3
 			found = 1
 			break
-		if(size > 60 && !found && new_turf.density && !isrestrictedz(new_turf.z) && prob(20))
+		if(size > 80 && !found && new_turf.density && !isrestrictedz(new_turf.z) && prob(20))
 			new_turf.ex_act(prob(1) ? 1 : 2)
 		. = ..()
 
