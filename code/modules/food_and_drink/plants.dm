@@ -518,7 +518,7 @@
 			src.icon_state = "[base_icon_state]-spin-right"
 		else
 			src.icon_state = "[base_icon_state]-spin-left"
-		..(target, range, speed)
+		..()
 
 	attack_hand(mob/user as mob)
 		..()
