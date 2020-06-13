@@ -566,8 +566,6 @@
 	src.dizziness = 0
 	src.jitteriness = 0
 
-	src.remove_ailments()
-
 	for (var/obj/item/implant/H in src.implant)
 		H.on_death()
 

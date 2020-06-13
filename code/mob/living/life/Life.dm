@@ -99,6 +99,7 @@
 	add_lifeprocess(/datum/lifeprocess/skin)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+	add_lifeprocess(/datum/lifeprocess/viruses)
 
 /mob/living/carbon/human/New()
 	..()
