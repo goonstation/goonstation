@@ -86,6 +86,7 @@
 			if (give_access_implant)
 				var/obj/item/implant/access/I = new /obj/item/implant/access(M)
 				I.access.access = src.access.Copy()
+				I.owner = M
 				I.uses = -1
 				I.set_loc(M)
 				I.implanted = 1
