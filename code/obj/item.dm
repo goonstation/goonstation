@@ -152,6 +152,9 @@
 		if (showTooltip && usr.client.tooltipHolder)
 			var/show = 1
 
+			if (!lastTooltipContent || !lastTooltipTitle)
+				tooltip_rebuild = 1
+
 			//If user has tooltips to always show, and the item is in world, and alt key is NOT pressed, deny
 			if (usr.client.preferences.tooltip_option == TOOLTIP_ALWAYS && !(ismob(src.loc) || (src.loc && src.loc.loc && ismob(src.loc.loc))) && !usr.client.check_key(KEY_EXAMINE))
 				show = 0
