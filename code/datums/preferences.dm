@@ -406,7 +406,7 @@ datum/preferences
 		cursor: help;
 		}
 </style>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 <title>Character Setup</title>
 [jointext(profile_menu, "")]
@@ -422,7 +422,7 @@ datum/preferences
 			<a href="[pref_link]profile_name=input">[src.profile_name ? src.profile_name : "Unnamed"]
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>Name<span class="info-thing" title="Your character's name.">?</span></th>
@@ -433,7 +433,7 @@ datum/preferences
 			<br><a href="[pref_link]b_random_name=1" class="toggle">[crap_checkbox(src.be_random_name)] Use a random name instead</a>
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -443,7 +443,7 @@ datum/preferences
 			<a href="[pref_link]gender=input">[display_gender]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -459,7 +459,7 @@ datum/preferences
 			<a href='[pref_link]blType=input'>[src.random_blood ? "Random" : src.blType]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -469,7 +469,7 @@ datum/preferences
 			<a href="[pref_link]pin=random" class="toggle">[crap_checkbox(!(src.pin))] Random</a> &middot; <a href='[pref_link]pin=input' class="toggle">[src.pin ? (crap_checkbox(1) + " Set: [src.pin]") : (crap_checkbox(0) + " Set")]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -480,7 +480,7 @@ datum/preferences
 			[length(src.flavor_text) ? src.flavor_text : "<em>None</em>"]
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -491,7 +491,7 @@ datum/preferences
 			[length(src.security_note) ? src.security_note : "<em>None</em>"]
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -502,7 +502,7 @@ datum/preferences
 			[length(src.medical_note) ? src.medical_note : "<em>None</em>"]
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -512,7 +512,7 @@ datum/preferences
 			<a href="[pref_link]jobswindow=1">Change occupation preferences...</a><br><em>Favorite job: [favoriteJob ? "<strong>[favoriteJob]</strong>" : "(unset)"]</em>
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -522,7 +522,7 @@ datum/preferences
 			<a href="[pref_link]traitswindow=1">Choose traits...</a>
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -532,7 +532,7 @@ datum/preferences
 			<a href='[pref_link]fartsound=input'>[AH.fartsound]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -542,7 +542,7 @@ datum/preferences
 			<a href='[pref_link]screamsound=input'>[AH.screamsound]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -552,14 +552,14 @@ datum/preferences
 			<a href='[pref_link]voicetype=input'>[AH.voicetype]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th colspan="3">
 			Character Appearance
 		</th>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -576,7 +576,7 @@ datum/preferences
 			<a href="[pref_link]rotate_clockwise=1">&#x27f3;</a>
 		</th>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -587,7 +587,7 @@ datum/preferences
 			<span class='colorbit' style="background-color: [AH.e_color];">[AH.e_color]</span>
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -599,7 +599,7 @@ datum/preferences
 			[generate_select_table("custom_third", AH.customization_third, customization_styles)]
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -611,7 +611,7 @@ datum/preferences
 			[generate_select_table("custom_second", AH.customization_second, customization_styles)]
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -623,7 +623,7 @@ datum/preferences
 			[generate_select_table("custom_first", AH.customization_first, customization_styles)]
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -635,7 +635,7 @@ datum/preferences
 			[generate_select_table("underwear", AH.underwear, underwear_styles)]
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -645,7 +645,7 @@ datum/preferences
 			<a href="[pref_link]b_random_look=1" class="toggle">[crap_checkbox(src.be_random_look)] Always use a randomized appearance</a>
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 
 
@@ -662,7 +662,7 @@ datum/preferences
 			<a href="[pref_link]font_size=input">[src.font_size ? "[src.font_size]%" : "Default"]
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -676,7 +676,7 @@ datum/preferences
 			<a href="[pref_link]auto_capitalization=1" class="toggle">[crap_checkbox(src.auto_capitalization)] Auto-capitalize your messages</a><span class="info-thing" title="Chat messages you send will be automatically capitalized.">?</span>
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -695,7 +695,7 @@ datum/preferences
 			</div>
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -707,7 +707,7 @@ datum/preferences
 			<br><a href="[pref_link]tooltip=3" class="toggle">[crap_checkbox(src.tooltip_option == TOOLTIP_NEVER)] Never Show</a>
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -719,7 +719,7 @@ datum/preferences
 			<br><a href="[pref_link]tickets=1" class="toggle">[crap_checkbox(src.view_tickets)] Auto-open end-of-round ticket summary</a><span class="info-thing" title="The end-of-round ticketing summary shows the various tickets and fines that were handed out. If this option is off, you can still see them on Goonhub (goonhub.com).">?</span>
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
@@ -732,7 +732,7 @@ datum/preferences
 			<br>Familiar with /tg/station controls? You can enable/disable them under the Game/Interface menu in the top left.
 		</td>
 	</tr>"}
-		LAGCHECK(95)
+		LAGCHECK(80)
 		dat +={"
 	<tr>
 		<th>
