@@ -1,5 +1,9 @@
 
 (t)sat jun 13 20
+(u)Tarmunora
+(p)1025
+(e)🐛|bug
+(+)Corpses in body bags and welded lockers/etc will no longer produce miasma
 (u)kyle
 (p)1072
 (e)🆕|feature
