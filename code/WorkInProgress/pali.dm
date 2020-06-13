@@ -353,3 +353,78 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 		src.vis_contents -= light
 		light.dispose()
 		..()
+
+/mob/living/critter/katamari
+	name = "space thing"
+	desc = "Some kinda thing, from space. In space. A space thing."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "thing"
+	custom_gib_handler = /proc/gibs // TODO
+	density = 0
+	hand_count = 0
+	can_throw = 0
+	can_grab = 0
+	can_disarm = 0
+	speechverb_say = "rattles"
+	speechverb_exclaim = "rattles"
+	speechverb_ask = "rattles"
+	blood_id = "iron"
+	metabolizes = 0
+	var/size = 0
+	var/obj/item/implant/access/access
+
+	New()
+		. = ..()
+		access = new /obj/item/implant/access(src)
+		access.uses = -1
+		access.implanted = 1
+
+	Bump(atom/movable/AM, yes)
+		. = ..()
+		if(src.contents)
+			var/obj/item/I = pick(src.contents)
+			if(istype(I))
+				src.weapon_attack(AM, I, 1)
+
+	Move(NewLoc, direct)
+		var/turf/new_turf = NewLoc
+		var/turf/old_turf = src.loc
+		var/matrix/M = src.transform
+		if(istype(new_turf) && istype(old_turf) && (old_turf.x < new_turf.x || old_turf.x == new_turf.x && old_turf.y < new_turf.y))
+			M.Turn(90)
+		else
+			M.Turn(-90)
+		animate(src, transform=M, time=src.base_move_delay)
+		var/found = 0
+		for(var/obj/O in new_turf)
+			if(istype(O, /obj/overlay))
+				continue
+			var/obj/item/I = O
+			if(size < 20 && (!istype(O, /obj/item) || I.w_class > size / 5 + 1))
+				continue
+			if(size < 40 && O.anchored)
+				continue
+			if(istype(I, /obj/item/card/id))
+				var/obj/item/card/id/id = I
+				src.access.access |= id.access
+			O.set_loc(src)
+			src.vis_contents += O
+			O.pixel_x = 0
+			O.pixel_y = 0
+			var/matrix/tr = new
+			tr.Turn(rand(360))
+			tr.Translate(0, sqrt(size) * 3)
+			tr.Turn(rand(360))
+			O.transform = tr
+			size += 0.3
+			found = 1
+			break
+		if(size > 60 && !found && new_turf.density && !isrestrictedz(new_turf.z) && prob(20))
+			new_turf.ex_act(prob(1) ? 1 : 2)
+		. = ..()
+
+	setup_healths()
+		add_hh_robot(-150, 150, 1.15)
+
+	list_ejectables()
+		return src.contents
