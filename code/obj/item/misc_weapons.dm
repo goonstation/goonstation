@@ -52,7 +52,6 @@
 	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active.
 	stamina_cost = 30
 	stamina_crit_chance = 35
-	var/do_stun = 1 //controlled by itemspecial for csword. sorry.
 	var/active_force = 60
 	var/active_stamina_dmg = 40
 	var/inactive_stamina_dmg = 35
@@ -60,6 +59,10 @@
 	var/state_name = "sword"
 	var/off_w_class = 2
 	var/datum/component/holdertargeting/simple_light/light_c
+	var/do_stun = 0
+
+	stunner
+		do_stun = 1
 
 	New()
 		..()
@@ -121,6 +124,9 @@
 		if(active)
 			if (handle_parry(target, user))
 				return 1
+
+			if (do_stun)
+				target.do_disorient(150, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0)
 
 			var/mob/living/carbon/human/U = user
 			if(U.gender == MALE) playsound(get_turf(U), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
