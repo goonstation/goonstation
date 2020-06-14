@@ -1138,10 +1138,10 @@ var/list/globalContextActions = null
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/instrument/I = target
 			I.play_note(note,user)
+			flick("key2", src)
 
 		checkRequirements(var/atom/target, var/mob/user)
-			.= ((target.loc == user) || target.density && get_dist(user,target)<=1)
-
+			.= ((user.equipped() == target) || target.density && target.loc == get_turf(target) && get_dist(user,target)<=1 && istype(target,/obj/item/instrument))
 
 		special
 			icon_background = "key_special"
