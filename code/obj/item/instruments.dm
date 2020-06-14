@@ -81,6 +81,8 @@
 		.= 1
 
 	proc/play(var/mob/user)
+		if (pick_random_note && sounds_instrument && sounds_instrument.len)
+			play_note(rand(1,sounds_instrument.len),user)
 		if(contextActions.len)
 			user.showContextActions(contextActions, src)
 
@@ -171,6 +173,7 @@
 	'sound/musical_instruments/organ/bach2.ogg',
 	'sound/musical_instruments/organ/bridal1.ogg',
 	'sound/musical_instruments/organ/funeral.ogg')
+	pick_random_note = 1
 
 /* -------------------- Jukebox -------------------- */
 
@@ -185,6 +188,7 @@
 	'sound/musical_instruments/jukebox/vintage.ogg',
 	'sound/musical_instruments/jukebox/ultralounge.ogg',
 	'sound/musical_instruments/jukebox/jazzpiano.ogg')
+	pick_random_note = 1
 
 	show_play_message(mob/user as mob)
 		return
@@ -228,6 +232,7 @@
 	sounds_instrument = list('sound/musical_instruments/Bagpipes_1.ogg', 'sound/musical_instruments/Bagpipes_2.ogg','sound/musical_instruments/Bagpipes_3.ogg')
 	desc_sound = list("patriotic", "rowdy", "wee", "grand", "free", "Glaswegian", "sizzling", "carnal", "hedonistic")
 	module_research = list("audio" = 7, "metals" = 3)
+	pick_random_note = 1
 
 	New()
 		..()
@@ -248,6 +253,7 @@
 	desc_verb = list("honks")
 	note_time = 8
 	module_research = list("audio" = 8)
+	pick_random_note = 1
 
 	show_play_message(mob/user as mob)
 		return
@@ -326,6 +332,7 @@
 	sounds_instrument = list('sound/musical_instruments/Airhorn_1.ogg')
 	volume = 100
 	note_time = 10
+	pick_random_note = 1
 
 /* -------------------- Harmonica -------------------- */
 
@@ -342,6 +349,7 @@
 	note_time = 20
 	sounds_instrument = list('sound/musical_instruments/Harmonica_1.ogg', 'sound/musical_instruments/Harmonica_2.ogg', 'sound/musical_instruments/Harmonica_3.ogg')
 	desc_sound = list("delightful", "chilling", "upbeat")
+	pick_random_note = 1
 
 /* -------------------- Whistle -------------------- */
 
@@ -359,6 +367,7 @@
 	sounds_instrument = list('sound/musical_instruments/Whistle_Police.ogg')
 	volume = 35
 	randomized_pitch = 1
+	pick_random_note = 1
 
 	show_play_message(mob/user as mob)
 		if (user) return user.visible_message("<span style='color:red;font-weight:bold;font-size:120%'>[user] blows [src]!</span>")
@@ -395,6 +404,7 @@
 	stamina_cost = 6
 	sounds_instrument = list('sound/musical_instruments/Vuvuzela_1.ogg')
 	volume = 80
+	pick_random_note = 1
 
 	show_play_message(mob/user as mob)
 		..()
