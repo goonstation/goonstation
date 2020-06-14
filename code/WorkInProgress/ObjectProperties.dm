@@ -88,10 +88,10 @@ var/list/globalPropList = null
 
 /obj/item
 	setProperty()
-		..()
+		. = ..()
 		src.tooltip_rebuild = 1
 	delProperty()
-		..()
+		. = ..()
 		src.tooltip_rebuild = 1
 
 /datum/objectProperty
