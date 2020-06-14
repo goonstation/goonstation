@@ -137,6 +137,43 @@
 			else
 				..()
 
+		//Sampled these hex colors from each c-saber sprite.
+/obj/item/sword/proc/get_hex_color_from_blade(var/C as text)
+	switch(C)
+		if("R")
+			return "#FF0000"
+		if("O")
+			return "#FF9A00"
+		if("Y")
+			return "#FFFF00"
+		if("G")
+			return "#00FF78"
+		if("C")
+			return "#00FFFF"
+		if("B")
+			return "#0081DF"
+		if("P")
+			return "#CC00FF"
+		if("Pi")
+			return "#FFCCFF"
+		if("W")
+			return "#EBE6EB"
+	return "RAND"
+
+/obj/item/sword/proc/handle_deflect_visuals(mob/user)
+	var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
+	C.setup(user.loc)
+	C.color = get_hex_color_from_blade(src.bladecolor)
+	var/matrix/m = matrix()
+	m.Turn(rand(0,360))
+	C.transform = m
+	var/matrix/m1 = C.transform
+	m1.Scale(2,2)
+	var/turf/target = get_step(user,user.dir)
+	C.pixel_x = 32*(user.x - target.x)*0.2
+	C.pixel_y = 32*(user.y - target.y)*0.2
+	animate(C,transform=m1,time=8)
+
 /obj/item/sword/proc/handle_parry(mob/target, mob/user)
 	if (target != user && ishuman(target))
 		var/mob/living/carbon/human/H = target

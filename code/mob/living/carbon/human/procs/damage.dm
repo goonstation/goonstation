@@ -18,15 +18,15 @@
 			S.active = 0
 			S.icon_state = "shield0"
 
-	var/reflect = 0
-	var/obj/item/equipped = src.equipped()
-	if (equipped && equipped.hasProperty("reflection"))
-		reflect = 1
-	else
-		equipped = src.check_block()
-		if (equipped && equipped.hasProperty("reflection"))
-			reflect = 1
-	if (reflect)
+
+	if (HAS_MOB_PROPERTY(src, PROP_REFLECTPROT))
+
+		var/reflect = 0
+		var/obj/item/equipped = src.equipped()
+		if (equipped && istype(equipped,/obj/item/sword))
+			var/obj/item/sword/S = equipped
+			S.handle_deflect_visuals(src)
+
 		var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
 		P.die()
 		src.visible_message("<span class='alert'>[src] reflected [Q.name] with [equipped]!</span>")

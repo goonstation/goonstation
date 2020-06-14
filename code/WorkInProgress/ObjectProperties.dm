@@ -358,6 +358,14 @@ var/list/globalPropList = null
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "Reflecting"
 
+		updateMob(obj/item/owner, mob/user, value, oldValue=null)
+			. = ..()
+			APPLY_MOB_PROPERTY(user, PROP_REFLECTPROT, owner, value)
+
+		removeFromMob(obj/item/owner, mob/user, value)
+			. = ..()
+			REMOVE_MOB_PROPERTY(user, PROP_REFLECTPROT, owner)
+
 /*
 For properties that are on equipment and should do stuff when the item is equipped / deequipped.
 
