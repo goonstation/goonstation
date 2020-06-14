@@ -14,6 +14,7 @@
 		return
 
 	var/list/data = list(
+		"_streamer" = 1,
 		"auth" = config.player_notes_auth,
 		"action" = "get",
 		"ckey" = player
@@ -58,6 +59,7 @@
 		return
 
 	var/list/data = list(
+		"_streamer" = 1,
 		"auth" = config.player_notes_auth,
 		"action" = "add",
 		"server" = serverKey,
@@ -81,6 +83,7 @@
 		return
 
 	var/list/data = list(
+		"_streamer" = 1,
 		"auth" = config.player_notes_auth,
 		"action" = "delete",
 		"id" = id
