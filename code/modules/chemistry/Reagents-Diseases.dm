@@ -480,6 +480,7 @@ datum
 			fluid_b = 50
 			fluid_g = 180
 			transparency = 200
+			depletion_rate = 0.8
 
 			reaction_turf(var/turf/T, var/volume)
 				return
