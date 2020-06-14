@@ -210,9 +210,12 @@
 		BLOCK_ROD
 
 /obj/item/instrument/saxophone/attack(mob/M as mob, mob/user as mob)
-	playsound(get_turf(src), pick('sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_3.ogg','sound/impact_sounds/Generic_Punch_4.ogg'), 50, 1, -1)
-	playsound(get_turf(src), pick('sound/musical_instruments/saxbonk.ogg', 'sound/musical_instruments/saxbonk2.ogg', 'sound/musical_instruments/saxbonk3.ogg'), 50, 1, -1)
-	user.visible_message("<span class='alert'><b>[user] bonks [M] with [src]!</b></span>")
+	if(ismob(M))
+		playsound(get_turf(src), pick('sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_3.ogg','sound/impact_sounds/Generic_Punch_4.ogg'), 50, 1, -1)
+		playsound(get_turf(src), pick('sound/musical_instruments/saxbonk.ogg', 'sound/musical_instruments/saxbonk2.ogg', 'sound/musical_instruments/saxbonk3.ogg'), 50, 1, -1)
+		user.visible_message("<span class='alert'><b>[user] bonks [M] with [src]!</b></span>")
+	else
+		. = ..()
 
 /* -------------------- Bagpipe -------------------- */
 
