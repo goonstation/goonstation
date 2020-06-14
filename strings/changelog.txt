@@ -1,5 +1,10 @@
 
 (t)sun jun 14 20
+(u)mbc
+(p)1092
+(e)|
+(*)The cyalume saber is now an excellent blocking weapon that provides very high disorient resistance as well as reflecting all incoming projectiles while in block mode.
+(*)Removed the cyalume saber's ability to stun.
 (u)UrsulaMajor
 (p)1099
 (e)🆕🔄|feature, rework
