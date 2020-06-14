@@ -7,6 +7,7 @@ git:
 
 jobs:
   include:
+
     - name: "Run Linters"
       addons:
         apt:
@@ -16,11 +17,13 @@ jobs:
       cache:
         directories:
           - $HOME/SpacemanDMM
+      before_install:
+        - tools/travis/setup_submodule.sh
       install:
         - tools/travis/install_spaceman_dmm.sh dreamchecker
-        - touch +secret/__secret.dme
       script:
         - ~/dreamchecker
+
     - name: "Compile"
       addons:
         apt:
@@ -29,13 +32,32 @@ jobs:
       cache:
         directories:
           - $HOME/BYOND
+      before_install:
+        - tools/travis/setup_submodule.sh
       install:
         - tools/travis/install_byond.sh
         - source $HOME/BYOND/byond/bin/byondsetup
-        - touch +secret/__secret.dme
       script:
-        - tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS goonstation.dme
+        - tools/travis/dm.sh -DTRAVISBUILDING goonstation.dme
+
     - name: "Compile for Ass Jam"
+      addons:
+        apt:
+          packages:
+            - libstdc++6:i386
+      cache:
+        directories:
+          - $HOME/BYOND
+      before_install:
+        - tools/travis/setup_submodule.sh
+      install:
+        - tools/travis/install_byond.sh
+        - source $HOME/BYOND/byond/bin/byondsetup
+        - sed -i 's/BUILD_TIME_DAY 01/BUILD_TIME_DAY 13/' _std/__build.dm # Ass Jam occurs on the 13th of the month.
+      script:
+        - tools/travis/dm.sh -DTRAVISBUILDING -DTRAVIS_ASSJAM goonstation.dme
+
+    - name: "Compile without submodule"
       addons:
         apt:
           packages:
@@ -45,8 +67,7 @@ jobs:
           - $HOME/BYOND
       install:
         - tools/travis/install_byond.sh
-        - source $HOME/BYOND/byond/bin/byondsetup
         - touch +secret/__secret.dme
-        - sed -i 's/BUILD_TIME_DAY 01/BUILD_TIME_DAY 13/' _std/__build.dm #Ass Jam occurs on the 13th of the month.
+        - source $HOME/BYOND/byond/bin/byondsetup
       script:
-        - tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS goonstation.dme
+        - tools/travis/dm.sh -DTRAVISBUILDING -DTRAVIS_NOSUB goonstation.dme

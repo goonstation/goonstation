@@ -1407,7 +1407,7 @@
 
 	for (var/uid in src.pathogens)
 		var/datum/pathogen/P = src.pathogens[uid]
-		P.onsay(src, message)
+		message = P.onsay(message)
 
 	..(message)
 

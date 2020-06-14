@@ -1,4 +1,9 @@
 
+(t)sun jun 14 20
+(u)zjdtmkhzt
+(p)1037
+(e)🆕|feature
+(+)Added incubator to grow your pathogen samples. It can also fill vials by clicking it.  (Pathology is still disabled.)
 (t)sat jun 13 20
 (u)mbc
 (p)1089

@@ -1710,3 +1710,72 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/biocides, 20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/inhibitor, 20)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 4)
+
+/obj/machinery/incubator
+	name = "Incubator"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "heater"
+	var/static/image/icon_beaker = image('icons/obj/chemical.dmi', "heater-beaker")
+	desc = "A machine that can automatically provide a petri dish with nutrients. It can also directly fill vials with a sample of the pathogen inside."
+	anchored = 1
+	density = 1
+	var/obj/item/reagent_containers/glass/petridish/target = null
+	var/medium = null
+
+	New()
+		..()
+		flags |= NOSPLASH
+
+	proc/update_icon()
+		src.overlays -= src.icon_beaker
+		if (src.target)
+			src.overlays += src.icon_beaker
+
+	attack_hand(mob/user as mob)
+		if(isnull(user.equipped()))
+			if (src.target)
+				src.target.set_loc(src.loc)
+				usr.put_in_hand_or_eject(src.target)
+				src.target = null
+				src.update_icon()
+		return
+
+	attackby(var/obj/item/O as obj, var/mob/user as mob)
+		if (istype(O, /obj/item/reagent_containers/glass/petridish))
+			if (src.target)
+				boutput(user, "<span class='alert'>There is already a petri dish in the machine.</span>")
+				return
+			else
+				src.target = O
+				user.drop_item()
+				O.set_loc(src)
+				if (src.target.reagents.has_reagent("pathogen"))
+					var/datum/reagent/blood/pathogen/Q = src.target.reagents.reagent_list["pathogen"]
+					var/datum/pathogen/PT = Q.pathogens[pick(Q.pathogens)] 	// more than one pathogen in a petri dish won't grow properly anyway
+					medium = PT.body_type.growth_medium
+				boutput(user, "You insert the [O] into the machine.")
+				src.update_icon()
+		else if(istype(O, /obj/item/reagent_containers/glass/vial))
+			var/obj/item/reagent_containers/glass/vial/V = O
+			if(V.reagents.total_volume)
+				boutput(user, "The [V] already has reagents inside it!")
+			else if(src.target.reagents.total_volume <= 2)
+				boutput(user, "The [src] does not have enough pathogen to dispense a sample.")
+			else
+				boutput(user, "The [src] dispenses some pathogen into the [V].")
+				src.target.reagents.trans_to(V, 2)
+
+	process()
+		if(!src.target)
+			return
+		var/lowNutrients = isnull(src.target.nutrition)?1:0
+		for(var/N in src.target.nutrition)
+			if(src.target.nutrition[N] < 5 && N != "dna_mutagen") // noone ever gets a great mutatis anyway
+				lowNutrients = 1
+		if(lowNutrients)
+			src.target.reagents.add_reagent(medium, 5)
+
+	get_desc(dist)
+		if(src.target)
+			if (src.target.reagents.has_reagent("pathogen"))
+				. += "<br>The petri dish inside contains [src.target.reagents.reagent_list["pathogen"].volume] units of pathogen."

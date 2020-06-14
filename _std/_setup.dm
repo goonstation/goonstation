@@ -1011,7 +1011,7 @@ proc/default_frequency_color(freq)
 
 
 #if ASS_JAM
-#ifndef TRAVISBUILDING
+#ifndef TRAVIS_ASSJAM
 #warn Building with ASS_JAM features enabled. Toggle this by changing BUILD_TIME_DAY in __build.dm
 #endif
 #endif
