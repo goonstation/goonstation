@@ -468,6 +468,8 @@ var/list/globalContextActions = null
 	clicked(list/params)
 		if(action.checkRequirements(target, user)) //Let's just check again, just in case.
 			SPAWN_DBG(0) action.execute(target, user)
+			if (flick_on_click)
+				flick(flick_on_click, src)
 			if (action.close_clicked)
 				user.closeContextActions()
 
@@ -480,6 +482,7 @@ var/list/globalContextActions = null
 	var/tooltip_flags = null
 	var/use_tooltip = 1
 	var/close_clicked = 1
+	var/flick_on_click = null
 
 	proc/checkRequirements(var/atom/target, var/mob/user) //Is this action even allowed to show up under the given circumstances? 1=yes, 0=no
 		return 0
@@ -1132,13 +1135,13 @@ var/list/globalContextActions = null
 		use_tooltip = 0
 		close_clicked = 0
 		icon_background = "key"
+		flick_on_click = "key2"
 
 		var/note = 0
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/instrument/I = target
 			I.play_note(note,user)
-			flick("key2", src)
 
 		checkRequirements(var/atom/target, var/mob/user)
 			.= ((user.equipped() == target) || target.density && target.loc == get_turf(target) && get_dist(user,target)<=1 && istype(target,/obj/item/instrument))
