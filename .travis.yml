@@ -3,7 +3,7 @@ os: linux
 dist: xenial
 
 git:
-  submodules: false
+  submodules: true
 
 jobs:
   include:
@@ -16,9 +16,10 @@ jobs:
       cache:
         directories:
           - $HOME/SpacemanDMM
+      before_install: # Encrypted SSH Deploy Key for goonstation-secret
+        - openssl aes-256-cbc -K $encrypted_5f214af470e0_key -iv $encrypted_5f214af470e0_iv -in tools/travis/deploykey-secret.txt.enc -out tools/travis/deploykey-secret.txt -d
       install:
         - tools/travis/install_spaceman_dmm.sh dreamchecker
-        - touch +secret/__secret.dme
       script:
         - ~/dreamchecker
     - name: "Compile"
@@ -29,10 +30,11 @@ jobs:
       cache:
         directories:
           - $HOME/BYOND
+      before_install: # Encrypted SSH Deploy Key for goonstation-secret
+        - openssl aes-256-cbc -K $encrypted_5f214af470e0_key -iv $encrypted_5f214af470e0_iv -in tools/travis/deploykey-secret.txt.enc -out tools/travis/deploykey-secret.txt -d
       install:
         - tools/travis/install_byond.sh
         - source $HOME/BYOND/byond/bin/byondsetup
-        - touch +secret/__secret.dme
       script:
         - tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS goonstation.dme
     - name: "Compile for Ass Jam"
@@ -43,10 +45,11 @@ jobs:
       cache:
         directories:
           - $HOME/BYOND
+      before_install: # Encrypted SSH Deploy Key for goonstation-secret
+        - openssl aes-256-cbc -K $encrypted_5f214af470e0_key -iv $encrypted_5f214af470e0_iv -in tools/travis/deploykey-secret.txt.enc -out tools/travis/deploykey-secret.txt -d
       install:
         - tools/travis/install_byond.sh
         - source $HOME/BYOND/byond/bin/byondsetup
-        - touch +secret/__secret.dme
-        - sed -i 's/BUILD_TIME_DAY 01/BUILD_TIME_DAY 13/' _std/__build.dm #Ass Jam occurs on the 13th of the month.
+        - sed -i 's/BUILD_TIME_DAY 01/BUILD_TIME_DAY 13/' _std/__build.dm # Ass Jam occurs on the 13th of the month.
       script:
         - tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS goonstation.dme
