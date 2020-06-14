@@ -2968,6 +2968,7 @@ datum
 			hygiene_value = -2
 			hunger_value = 0.068
 			viscosity = 0.4
+			depletion_rate = 0
 
 			pooled()
 				..()
@@ -3031,6 +3032,7 @@ datum
 						var/datum/pathogen/P = src.pathogens[uid]
 						logTheThing("pathology", M, null, "metabolizing [src] containing pathogen [P].")
 						M.infected(P)
+				..()
 
 /* this begs the question how bloodbags worked at all if this was a thing
 				if (holder.has_reagent("dna_mutagen")) //If there's stable mutagen in the mix and it doesn't have data we gotta give it a chance to get some
