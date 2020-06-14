@@ -335,6 +335,12 @@
 	else if (href_list["disk"]) //Load or eject.
 		switch(href_list["disk"])
 			if("load")
+				if (src.diskette.read_only)
+					// The file needs to be deleted from the disk after loading the record
+					src.temp = "Load error - cannot transfer clone records from a disk in read only mode."
+					src.updateUsrDialog()
+					return
+
 				var/loaded = 0
 
 				for(var/datum/computer/file/clone/cloneRecord in src.diskette.root.contents)
@@ -360,11 +366,6 @@
 	else if (href_list["save_disk"]) //Save to disk!
 		if ((isnull(src.diskette)) || (src.diskette.read_only) || (isnull(src.active_record)))
 			src.temp = "Save error."
-			src.updateUsrDialog()
-			return
-
-		else if (src.diskette.data_type == "corrupt")
-			src.temp = "Save error. Disk corruption."
 			src.updateUsrDialog()
 			return
 

@@ -281,7 +281,7 @@
 
 /datum/computer/file/clone
 	name = "Clone Record"
-	extension = "CLN"
+	extension = "DNA"
 	size = 8
 	var/list/fields = list()
 
