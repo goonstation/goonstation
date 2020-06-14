@@ -437,6 +437,8 @@ var/list/globalContextActions = null
 			background = image('icons/ui/context16x16.dmi', src, "[action.getBackground(target, user)]0")
 			background.appearance_flags = RESET_COLOR
 			src.underlays += background
+		else
+			background.icon_state = "[action.getBackground(target, user)]0"
 		return
 
 	MouseEntered(location,control,params)

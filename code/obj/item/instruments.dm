@@ -431,15 +431,16 @@
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "trumpet"
 	item_state = "trumpet"
-	sounds_instrument = null
 	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive")
 	module_research = list("audio" = 7, "metals" = 3)
 	note_time = 0.18 SECONDS
+	sounds_instrument = null
 
 	New()
-		sounds_instrument = list()
-		for (var/i in 1 to 12)
-			sounds_instrument += "sound/musical_instruments/trumpet/trumpet_[i].ogg"
+		if (sounds_instrument == null)
+			sounds_instrument = list()
+			for (var/i in 1 to 12)
+				sounds_instrument += "sound/musical_instruments/trumpet/trumpet_[i].ogg"
 		..()
 
 /* -------------------- Spooky Trumpet -------------------- */
