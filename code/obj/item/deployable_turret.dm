@@ -52,7 +52,7 @@
 	*/
 
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
-		..(target,range,speed)
+		..()
 		if(src.quick_deploy_fuel > 0)
 			var/turf/thrown_to = get_turf(src)
 			var/spawn_direction = get_dir(thrown_to,thrown_from)
