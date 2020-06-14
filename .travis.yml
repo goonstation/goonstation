@@ -67,6 +67,7 @@ jobs:
           - $HOME/BYOND
       install:
         - tools/travis/install_byond.sh
+        - touch +secret/__secret.dme
         - source $HOME/BYOND/byond/bin/byondsetup
       script:
         - tools/travis/dm.sh -DTRAVISBUILDING -DTRAVIS_NOSUB goonstation.dme
