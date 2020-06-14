@@ -1718,7 +1718,7 @@
 "JR" = (/obj/wingrille_spawn/auto/crystal,/turf/simulated/floor/plating,/area/station/medical/cdc)
 "JS" = (/obj/machinery/pathogen_manipulator,/turf/simulated/floor/bluewhite{dir = 9},/area/station/medical/cdc)
 "JT" = (/obj/machinery/camera{c_tag = "autotag"; dir = 6; name = "autoname - SS13"; pixel_y = 20; tag = ""},/turf/simulated/floor/bluewhite{dir = 1},/area/station/medical/cdc)
-"JU" = (/obj/machinery/power/apc/autoname_north,/obj/cable{d2 = 4; icon_state = "0-4"},/turf/simulated/floor/bluewhite{dir = 1},/area/station/medical/cdc)
+"JU" = (/obj/machinery/power/apc/autoname_north,/obj/cable{d2 = 4; icon_state = "0-4"},/obj/machinery/incubator{dir = 1},/turf/simulated/floor/bluewhite{dir = 1},/area/station/medical/cdc)
 "JV" = (/obj/machinery/vending/pathology,/obj/cable{icon_state = "4-8"},/turf/simulated/floor/bluewhite{dir = 1},/area/station/medical/cdc)
 "JW" = (/obj/machinery/disposal/small{dir = 1; layer = 32; pixel_y = 32},/obj/disposalpipe/trunk{dir = 4; name = "factory pipe"},/obj/cable{icon_state = "4-8"},/turf/simulated/floor/bluewhite{dir = 1},/area/station/medical/cdc)
 "JX" = (/obj/machinery/light_switch/auto,/obj/disposalpipe/segment{dir = 4},/obj/cable{icon_state = "4-8"},/turf/simulated/floor/bluewhite{dir = 5},/area/station/medical/cdc)
