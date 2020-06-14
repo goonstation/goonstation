@@ -83,7 +83,7 @@ var/list/globalContextActions = null
 		showButtons(var/list/buttons, var/atom/target)
 			var/offX = 0
 			var/offY = spacingY
-			var/finalOff = spacingX * (buttons.len-2)
+			var/finalOff = spacingX * (buttons.len-3)
 			offX -= finalOff/2
 
 			for(var/obj/screen/contextButton/C in buttons) //todo : stop typechecking per context

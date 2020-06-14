@@ -63,7 +63,7 @@
 		next_play = TIME + note_time
 		//if drunk, play off pitch?
 		if (special_index && note >= special_index)
-			next_play = 100
+			next_play = TIME + 200
 
 		var/turf/T = get_turf(src)
 		playsound(T, sounds_instrument[note], src.volume, randomized_pitch, pitch = pitch_set)
@@ -140,6 +140,7 @@
 	item_state = "piano"
 	sounds_instrument = null
 	special_index = 13
+	note_time = 0.18 SECONDS
 
 	New()
 		sounds_instrument = list()
