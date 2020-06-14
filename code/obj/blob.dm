@@ -153,10 +153,10 @@ var/image/blob_icon_cache
 		if (istype(src.loc,/turf))
 			if (istype(src.loc.loc,/area))
 				src.loc.loc.Exited(src)
-		..()
 		healthbar.onDelete()
 		qdel(healthbar)
 		healthbar = null
+		..()
 		update_surrounding_blob_icons(T)
 		in_disposing = 0
 
