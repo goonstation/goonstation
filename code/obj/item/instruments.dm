@@ -559,3 +559,66 @@
 
 		some_poor_fucker.throw_at(T, 1, 1)
 		some_poor_fucker.changeStatus("weakened", 2 SECONDS)
+
+
+
+/obj/item/instrument/cowbell
+	name = "cowbell"
+	icon_state = "cowbell"
+	item_state = "cowbell"
+	sounds_instrument = null
+	note_time = 0.18 SECONDS
+	randomized_pitch = 0
+
+	New()
+		sounds_instrument = list()
+		for (var/i in 1 to 3)
+			sounds_instrument += "sound/musical_instruments/cowbell/cowbell_[i].ogg"
+		..()
+
+/obj/item/instrument/triangle
+	name = "triangle"
+	icon_state = "triangle"
+	item_state = "triangle"
+	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive")
+	sounds_instrument = null
+	note_time = 0.18 SECONDS
+	randomized_pitch = 0
+
+	New()
+		sounds_instrument = list()
+		for (var/i in 1 to 2)
+			sounds_instrument += "sound/musical_instruments/triangle/triangle_[i].ogg"
+		..()
+
+/obj/item/instrument/tambourine
+	name = "tambourine"
+	icon_state = "tambourine"
+	item_state = "tambourine"
+	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive")
+	sounds_instrument = null
+	note_time = 0.18 SECONDS
+	randomized_pitch = 0
+
+	New()
+		sounds_instrument = list()
+		for (var/i in 1 to 4)
+			sounds_instrument += "sound/musical_instruments/tambourine/tambourine_[i].ogg"
+		..()
+
+
+
+/obj/storage/crate/wooden/instruments
+	name = "instruments box"
+	desc = "A wooden crate labeled to contain instruments."
+	spawn_contents = list(/obj/item/instrument/tambourine,/obj/item/instrument/triangle,/obj/item/instrument/cowbell,/obj/item/instrument/trumpet, /obj/item/instrument/saxophone, /obj/item/instrument/fiddle)
+
+/obj/storage/crate/wooden/instruments/percussion
+	name = "percussive instruments box"
+	desc = "A wooden crate labeled to contain percussive instruments."
+	spawn_contents = list(/obj/item/instrument/tambourine,/obj/item/instrument/triangle,/obj/item/instrument/cowbell)
+
+/obj/storage/crate/wooden/wind
+	name = "wind instruments box"
+	desc = "A wooden crate labeled to contain wind instruments."
+	spawn_contents = list(/obj/item/instrument/trumpet, /obj/item/instrument/saxophone)
