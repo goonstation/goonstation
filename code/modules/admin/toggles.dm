@@ -214,9 +214,11 @@ var/global/IP_alerts = 1
 		player_mode_asay = 0
 		player_mode_ahelp = 0
 		player_mode_mhelp = 0
+		if (src.holder.popuptoggle)
+			src.toggle_popup_verbs()
 		boutput(usr, "<span class='notice'>Player mode now OFF.</span>")
 	else
-		var/choice = input(src, "ASAY = adminsay, AHELP = adminhelp, MHELP = mentorhelp", "Choose which messages to recieve") as null|anything in list("NONE", "ASAY, AHELP & MHELP", "ASAY & AHELP", "ASAY & MHELP", "AHELP & MHELP", "ASAY ONLY", "AHELP ONLY", "MHELP ONLY")
+		var/choice = input(src, "ASAY = adminsay, AHELP = adminhelp, MHELP = mentorhelp", "Choose which messages to recieve") as null|anything in list("NONE (Remove admin menus)","NONE (Keep admin menus)", "ASAY, AHELP & MHELP", "ASAY & AHELP", "ASAY & MHELP", "AHELP & MHELP", "ASAY ONLY", "AHELP ONLY", "MHELP ONLY")
 		switch (choice)
 			if ("ASAY, AHELP & MHELP")
 				player_mode = 1
@@ -253,11 +255,17 @@ var/global/IP_alerts = 1
 				player_mode_asay = 0
 				player_mode_ahelp = 0
 				player_mode_mhelp = 1
-			if ("NONE")
+			if ("NONE (Keep admin menus)")
 				player_mode = 1
 				player_mode_asay = 0
 				player_mode_ahelp = 0
 				player_mode_mhelp = 0
+			if ("NONE (Remove admin menus)")
+				player_mode = 1
+				player_mode_asay = 0
+				player_mode_ahelp = 0
+				player_mode_mhelp = 0
+				cmd_admin_disable()
 			else
 				// Cancel = don't turn on player mode
 				return
@@ -265,7 +273,7 @@ var/global/IP_alerts = 1
 		boutput(usr, "<span class='notice'>Player mode now on. [player_mode_asay ? "&mdash; ASAY ON" : ""] [player_mode_ahelp ? "&mdash; AHELPs ON" : ""] [player_mode_mhelp ? "&mdash; MHELPs ON" : ""]</span>")
 
 		// turn of popup verbs too
-		if (!src.holder.popuptoggle)
+		if (src.holder && !src.holder.popuptoggle)
 			src.toggle_popup_verbs()
 
 	logTheThing("admin", usr, null, "has set player mode to [(player_mode ? "On" : "Off")]")
