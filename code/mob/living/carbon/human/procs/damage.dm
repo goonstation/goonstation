@@ -20,8 +20,6 @@
 
 
 	if (HAS_MOB_PROPERTY(src, PROP_REFLECTPROT))
-
-		var/reflect = 0
 		var/obj/item/equipped = src.equipped()
 		if (equipped && istype(equipped,/obj/item/sword))
 			var/obj/item/sword/S = equipped

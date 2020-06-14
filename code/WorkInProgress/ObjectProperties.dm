@@ -520,11 +520,11 @@ to say if there's demand for that.
 	tooltipImg = "disorient_resist.png"
 	defaultValue = 0
 	getTooltipDesc(var/obj/propOwner, var/propVal)
-		return "Reflecting"
+		return "Reflecting projectiles"
 
 	updateMob(obj/item/owner, mob/user, value, oldValue=null)
 		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_REFLECTPROT, owner, value)
+		APPLY_MOB_PROPERTY(user, PROP_REFLECTPROT, owner)
 
 	removeFromMob(obj/item/owner, mob/user, value)
 		. = ..()

@@ -137,7 +137,6 @@
 			else
 				..()
 
-		//Sampled these hex colors from each c-saber sprite.
 /obj/item/sword/proc/get_hex_color_from_blade(var/C as text)
 	switch(C)
 		if("R")

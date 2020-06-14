@@ -513,8 +513,31 @@
 				overrideStaminaDamage = master.stamina_damage * 0.8
 				var/obj/item/toy/sword/saber = master
 				if (istype(saber))
-					swipe_color = saber.get_hex_color_from_blade(saber.bladecolor)
+					swipe_color = get_hex_color_from_blade(saber.bladecolor)
 			return
+
+				//Sampled these hex colors from each c-saber sprite.
+		proc/get_hex_color_from_blade(var/C as text)
+			switch(C)
+				if("R")
+					return "#FF0000"
+				if("O")
+					return "#FF9A00"
+				if("Y")
+					return "#FFFF00"
+				if("G")
+					return "#00FF78"
+				if("C")
+					return "#00FFFF"
+				if("B")
+					return "#0081DF"
+				if("P")
+					return "#CC00FF"
+				if("Pi")
+					return "#FFCCFF"
+				if("W")
+					return "#EBE6EB"
+			return "RAND"
 
 		pixelaction(atom/target, list/params, mob/user, reach)
 			if(!isturf(target.loc) && !isturf(target)) return
@@ -566,7 +589,7 @@
 					overrideStaminaDamage = master.stamina_damage * 0.9
 					var/obj/item/sword/saber = master
 					if (istype(saber))
-						swipe_color = saber.get_hex_color_from_blade(saber.bladecolor)
+						swipe_color = get_hex_color_from_blade(saber.bladecolor)
 				return
 
 		relicclaws
