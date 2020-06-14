@@ -8,11 +8,11 @@ datum/component/itemblock/saberblock/on_block_begin(obj/item/I, var/obj/item/gra
 	var/obj/item/sword/S = I
 	if(istype(S) && S.active && S.off_w_class == 2) //this is gross but it makes it so only active, extendable, swords (not d-saber) get defensive bonuses
 		B.setProperty("reflection", 1)
-		B.setProperty("disorient_resist", 90)
+		B.setProperty("disorient_resist", 80)
 
-		var/blockplus = DEFAULT_BLOCK_PROTECTION_BONUS + 4 //a bit of bonus protection. 1 point bonus per 3 items in the bag
+		var/blockplus = DEFAULT_BLOCK_PROTECTION_BONUS + 3
 		for (var/obj/item/grab/block/block in S.contents)
-			if(S.c_flags & BLOCK_CUT) //only increase the types we're actually blocking
+			if(S.c_flags & BLOCK_CUT)
 				block.setProperty("I_block_cut", blockplus)
 			if(S.c_flags & BLOCK_STAB)
 				block.setProperty("I_block_stab", blockplus)

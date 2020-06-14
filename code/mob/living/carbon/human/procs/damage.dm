@@ -18,6 +18,22 @@
 			S.active = 0
 			S.icon_state = "shield0"
 
+	var/reflect = 0
+	var/obj/item/equipped = src.equipped()
+	if (equipped && equipped.hasProperty("reflection"))
+		reflect = 1
+	else
+		equipped = src.check_block()
+		if (equipped && equipped.hasProperty("reflection"))
+			reflect = 1
+	if (reflect)
+		var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
+		P.die()
+		src.visible_message("<span class='alert'>[src] reflected [Q.name] with [equipped]!</span>")
+		playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
+		return
+
+
 	if(src.material) src.material.triggerOnBullet(src, src, P)
 	for (var/atom/A in src)
 		if (A.material)
