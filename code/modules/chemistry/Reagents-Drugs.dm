@@ -813,7 +813,7 @@ datum
 				if(!M) M = holder.my_atom
 
 				if(holder.has_reagent("methamphetamine")) return ..() //Since is created by a meth overdose, dont react while meth is in their system.
-				M.add_stun_resist_mod("triplemeth", 1000)
+				M.add_stun_resist_mod("triplemeth", 98)
 				M.add_stam_mod_regen("triplemeth", 1000)
 
 				if(hascall(holder.my_atom,"addOverlayComposition"))
