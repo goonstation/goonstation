@@ -67,6 +67,54 @@ var/list/globalContextActions = null
 
 			return buttons
 
+	instrumental
+		var/spacingX = 16
+		var/spacingY = 16
+		var/offsetX = 0
+		var/offsetY = 0
+
+		New(var/SpacingX = 10, var/SpacingY = 16, var/OffsetX = 0, var/OffsetY = 0)
+			spacingX = SpacingX
+			spacingY = SpacingY
+			offsetX = OffsetX
+			offsetY = OffsetY
+			return ..()
+
+		showButtons(var/list/buttons, var/atom/target)
+			var/offX = 0
+			var/offY = spacingY
+			var/finalOff = spacingX * (buttons.len-1)
+			offX -= finalOff/2
+
+			for(var/obj/screen/contextButton/C in buttons) //todo : stop typechecking per context
+				C.screen_loc = "CENTER,CENTER+0.6"
+
+				var/mob/living/carbon/human/H = usr
+				if(istype(H)) H.hud.add_screen(C)
+				var/mob/living/critter/R = usr
+				if(istype(R)) R.hud.add_screen(C)
+				var/mob/wraith/W = usr
+				if(istype(W)) W.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
+
+				var/matrix/trans = unpool(/matrix)
+				trans = trans.Reset()
+				trans.Translate(offX, offY)
+
+				animate(C, alpha=255, transform=trans, easing=CUBIC_EASING, time=1)
+
+				offX += spacingX
+				//if(offX >= spacingX)
+				//	offX = 0
+				//	offY -= spacingY
+
+			return buttons
+
 	experimentalcircle
 		showButtons(var/list/buttons, var/atom/target)
 			var/atom/screenCenter = get_turf(usr.client.virtual_eye)
@@ -396,7 +444,7 @@ var/list/globalContextActions = null
 		src.underlays.Cut()
 		background.icon_state = "[action.getBackground(target, user)]1"
 		src.underlays += background
-		if (usr.client.tooltipHolder && (action != null))
+		if (usr.client.tooltipHolder && (action != null) && action.use_tooltip)
 			usr.client.tooltipHolder.showHover(src, list(
 				"params" = params,
 				"title" = action.getName(target, user),
@@ -411,14 +459,15 @@ var/list/globalContextActions = null
 		src.underlays.Cut()
 		background.icon_state = "[action.getBackground(target, user)]0"
 		src.underlays += background
-		if (usr.client.tooltipHolder)
+		if (usr.client.tooltipHolder && action.use_tooltip)
 			usr.client.tooltipHolder.hideHover()
 		return
 
 	clicked(list/params)
 		if(action.checkRequirements(target, user)) //Let's just check again, just in case.
 			SPAWN_DBG(0) action.execute(target, user)
-			user.closeContextActions()
+			if (action.close_clicked)
+				user.closeContextActions()
 
 /datum/contextAction
 	var/icon = 'icons/ui/context16x16.dmi'
@@ -427,6 +476,8 @@ var/list/globalContextActions = null
 	var/name = ""
 	var/desc = ""
 	var/tooltip_flags = null
+	var/use_tooltip = 1
+	var/close_clicked = 1
 
 	proc/checkRequirements(var/atom/target, var/mob/user) //Is this action even allowed to show up under the given circumstances? 1=yes, 0=no
 		return 0
@@ -1070,6 +1121,24 @@ var/list/globalContextActions = null
 				var/obj/machinery/vehicle/V = target
 				V.return_to_station()
 
+
+	instrument
+		icon = 'icons/ui/context16x16.dmi'
+		name = "Play Note"
+		desc = "Click me to play a note!"
+		icon_state = "note"
+		use_tooltip = 0
+		close_clicked = 0
+		icon_background = "key"
+
+		var/note = 0
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/instrument/I = target
+			I.play_note(note,user)
+
+		checkRequirements(var/atom/target, var/mob/user)
+			.= (target.loc == user)
 /*
 	offered
 		icon = null
