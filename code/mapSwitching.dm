@@ -355,7 +355,6 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 	//rudely cancel the vote without counting votes/doing anything
 	proc/cancelMapVote()
 		src.playersVoting = 0
-		//src.playerVotes = new()
 
 		for (var/client/C in clients)
 			C.verbs -= /client/proc/mapVote
@@ -545,7 +544,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		client_vote_map[map_name] = 1
 
 	proc/voting_box(var/obj/voting_box/V,var/map_name)
-		var/vref = "\ref[src]"
+		var/vref = "\ref[V]"
 		vote_map[vref] = list(map_name)
 		vote_map[vref][map_name] = 1
 
