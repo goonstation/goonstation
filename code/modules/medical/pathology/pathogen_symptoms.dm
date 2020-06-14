@@ -85,14 +85,14 @@ datum/pathogeneffects
 	proc/infect_direct(var/mob/target as mob, var/datum/pathogen/origin, contact_type = "touch")
 		if (infect_attempt_message)
 			target.show_message(infect_attempt_message)
-			if(istype(target, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = target
-				if(prob(100-H.get_disease_protection()))
-					if (target.infected(origin))
-						if (infect_message)
-							target.show_message(infect_message)
-						logTheThing("pathology", origin.infected, target, "infects %target% with [origin.name] due to symptom [name] through direct contact ([contact_type]).")
-						return 1
+		if(istype(target, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = target
+			if(prob(100-H.get_disease_protection()))
+				if (target.infected(origin))
+					if (infect_message)
+						target.show_message(infect_message)
+					logTheThing("pathology", origin.infected, target, "infects %target% with [origin.name] due to symptom [name] through direct contact ([contact_type]).")
+					return 1
 
 	proc/onadd(var/datum/pathogen/origin)
 		return
