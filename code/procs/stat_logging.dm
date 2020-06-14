@@ -2,6 +2,7 @@
 
 //Called in tickets New() in datacore.dm
 /proc/statlog_ticket(var/datum/ticket/T, var/mob/living/M)
+	return
 	var/message[] = new()
 	message["data_type"] = "tickets"
 	message["data_status"] = "insert"
@@ -18,6 +19,7 @@
 
 //Called in fines New() in datacore.dm
 /proc/statlog_fine(var/datum/fine/F, var/mob/living/M)
+	return
 	var/message[] = new()
 	message["data_type"] = "fines"
 	message["data_status"] = "insert"
@@ -36,6 +38,7 @@
 
 //Called in crittergauntlet.dm
 /proc/statlog_gauntlet(var/mobs, var/final_score, var/last_completed_wave)
+	return
 	if (final_score == 0 && last_completed_wave < 2)
 		return
 	var/message[] = new()
@@ -50,6 +53,7 @@
 
 //Called in living death() in living.dm
 /proc/statlog_death(var/mob/living/M,var/gibbed)
+	return
 	var/message[] = new()
 	message["data_type"] = "deaths"
 	message["data_status"] = "insert"
@@ -73,6 +77,7 @@
 
 //Called in syndicate and integrated Topic() in uplinks.dm
 /proc/statlog_traitor_item(var/mob/living/M, var/itemIdentifier, var/cost)
+	return
 	if (!istype(M))
 		return 1
 
@@ -96,6 +101,7 @@
 
 //Called in gameticker.dm in proc/declare_completion
 /proc/statlog_traitors()
+	return
 	var/list/datum/mind/traitors = get_all_enemies()
 
 	for (var/datum/mind/M in traitors)
@@ -189,6 +195,7 @@
 
 //BEES
 /proc/statlog_bees(var/obj/critter/domestic_bee/B)
+	return
 	var/message[] = new()
 	message["data_type"] = "bees"
 	message["data_status"] = "insert"
@@ -203,7 +210,7 @@
 
 //Called in gameticker.dm at proc/declare_completion, ai_laws.dm at set_zeroth_law and add_supplied_law
 /proc/statlog_ailaws(var/during, var/law, adder)
-
+	return
 
 	//For individual laws
 	if (during)

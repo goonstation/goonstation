@@ -2,6 +2,7 @@
 
 // Called in world.dm at new()
 /proc/round_start_data()
+	return
 	set background = 1
 
 	var/message[] = new()
@@ -15,6 +16,7 @@
 
 // Called in gameticker.dm at the end of the round.
 /proc/round_end_data(var/reason)
+	return
 	set background = 1
 
 	var/message[] = new()
