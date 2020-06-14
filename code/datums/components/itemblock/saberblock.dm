@@ -10,7 +10,7 @@ datum/component/itemblock/saberblock/on_block_begin(obj/item/I, var/obj/item/gra
 		B.setProperty("reflection", 1)
 		B.setProperty("disorient_resist", 90)
 
-		var/blockplus = DEFAULT_BLOCK_PROTECTION_BONUS + 3 //a bit of bonus protection. 1 point bonus per 3 items in the bag
+		var/blockplus = DEFAULT_BLOCK_PROTECTION_BONUS + 4 //a bit of bonus protection. 1 point bonus per 3 items in the bag
 		for (var/obj/item/grab/block/block in S.contents)
 			if(S.c_flags & BLOCK_CUT) //only increase the types we're actually blocking
 				block.setProperty("I_block_cut", blockplus)

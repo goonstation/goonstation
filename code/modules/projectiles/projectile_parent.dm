@@ -171,13 +171,22 @@
 						var/isliving = isliving(X)
 						if (isliving)
 							var/mob/living/H = X
+							var/reflect = 0
 							var/obj/item/equipped = H.equipped()
-							if (equipped & equipped.hasProperty("reflection"))
+							if (equipped && equipped.hasProperty("reflection"))
+								reflect = 1
+							else
+								equipped = H.check_block()
+								if (equipped)
+									reflect = 1
+
+							if (reflect)
 								var/obj/projectile/Q = shoot_reflected_to_sender(src, X)
 								die()
 								src.visible_message("<span class='alert'>[X] reflected [Q.name] with [equipped]!</span>")
 								playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
 								return
+
 						X.bullet_act(src)
 						pierces_left--
 						//holy duplicate code batman. If someone can come up with a better solution, be my guest
