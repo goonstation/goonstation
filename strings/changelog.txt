@@ -1,5 +1,9 @@
 
 (t)sun jun 14 20
+(u)zjdtmkhzt
+(p)1077
+(e)⚖🆕|balance, feature
+(+)Changed the way spreading pathogen symptoms work to hopefully make it more obvious how to avoid being infected. (Pathology is still disabled.)
 (u)mbc
 (p)1092
 (e)|
