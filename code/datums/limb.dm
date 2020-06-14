@@ -39,7 +39,7 @@
 
 		target.attack_hand(user, params, location, control)
 
-	proc/harm(mob/living/carbon/human/target, var/mob/living/user)
+	proc/harm(mob/living/target, var/mob/living/user)
 		if (special_next)
 			if(!user || !target)
 				return 0
@@ -55,21 +55,25 @@
 			special_next = 0
 		else
 			user.melee_attack_normal(target, 0, 0, DAMAGE_BLUNT)
+		user.lastattacked = target
 
-	proc/help(mob/living/carbon/human/target, var/mob/living/user)
+	proc/help(mob/living/target, var/mob/living/user)
 		user.do_help(target)
+		user.lastattacked = target
 
-	proc/disarm(mob/living/carbon/human/target, var/mob/living/user)
+	proc/disarm(mob/living/target, var/mob/living/user)
 		if (special_next)
 			src.shove(target,user)
 			special_next = 0
 		else
 			user.disarm(target)
+		user.lastattacked = target
 
-	proc/grab(mob/living/carbon/human/target, var/mob/living/user)
+	proc/grab(mob/living/target, var/mob/living/user)
 		if (issilicon(target))
 			return
 		user.grab_other(target)
+		user.lastattacked = target
 
 	//calls attack specials if we got em
 	//Ok look i know this isn't a true pixelaction() but it fits into the itemspecial call so i'm doin it
@@ -97,7 +101,7 @@
 		return 0
 
 	//alt version of disarm that shoves the target away from the user instead of trying to slap item out of hand
-	proc/shove(mob/living/carbon/human/target, var/mob/living/user)
+	proc/shove(mob/living/target, var/mob/living/user)
 		user.disarm(target,0,0,DAMAGE_BLUNT,1)
 		special_next = 0
 
@@ -373,6 +377,7 @@
 			user.HealDamage("All", 2, 0)
 		else
 			user.visible_message("<b><span class='combat'>[user] attempts to bite [target] but misses!</span></b>")
+		user.lastattacked = target
 
 /datum/limb/mouth/small // for cats/mice/etc
 	sound_attack = "sound/impact_sounds/Flesh_Tear_1.ogg"
@@ -381,7 +386,7 @@
 	stam_damage_mult = 0.3
 
 	harm(mob/target, var/mob/user)
-		if (isghostcritter(user) && ishuman(target) && target.health < 80)
+		if (isghostcritter(user) && ishuman(target) && target.health < target.max_health * 0.8)
 			boutput(user, "Your spectral conscience refuses to damage this human any further.")
 			return 0
 		..()
@@ -429,6 +434,7 @@
 
 	help(mob/target, var/mob/living/user)
 		user.show_message("<span class='alert'>Nope. Not going to work. You're more likely to kill them.</span>")
+		user.lastattacked = target
 
 	disarm(mob/target, var/mob/living/user)
 		logTheThing("combat", user, target, "mauls %target% with bear limbs (disarm intent) at [log_loc(user)].")
@@ -453,6 +459,7 @@
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(60))
 			target.changeStatus("weakened", 2 SECONDS)
+		user.lastattacked = target
 
 /datum/limb/dualsaw
 
@@ -473,6 +480,7 @@
 
 	help(mob/target, var/mob/living/user)
 		user.show_message("<span class='alert'>Not going to work. You're more likely to kill them.</span>")
+		user.lastattacked = target
 
 	disarm(mob/target, var/mob/living/user)
 		logTheThing("combat", user, target, "slashes %target% with dual saw (disarm intent) at [log_loc(user)].")
@@ -514,6 +522,7 @@
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(60))
 			target.changeStatus("weakened",20)
+		user.lastattacked = target
 
 /datum/limb/wendigo
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
@@ -590,6 +599,7 @@
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(35 * quality))
 			target.changeStatus("weakened", (4 * quality)*10)
+		user.lastattacked = target
 
 #if ASS_JAM
 /datum/limb/hot //because
@@ -616,11 +626,6 @@
 				boutput(M, "<span class='alert'>\the [I] melts.</span>")
 			qdel(I)
 			return
-
-
-
-
-
 
 		..()
 		return
@@ -666,6 +671,7 @@
 		msgs.played_sound = "sound/impact_sounds/burn_sizzle.ogg"
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
 
 
 #endif
@@ -1027,7 +1033,7 @@
 		if (ismob(target))
 			user.melee_attack_normal(target, 5) // Slightly more powerful punches. This is bonus damage, not a multiplier.
 			return
-
+		user.lastattacked = target
 		..()
 		return
 
@@ -1140,6 +1146,7 @@
 		msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 		msgs.damage_type = DAMAGE_BLUNT
 		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
 
 
 //hey maybe later standardize this into flags per obj so we dont search this huge list every click ok??
@@ -1220,6 +1227,17 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 		..()
 		return
 
+	help(mob/target, var/mob/living/user)
+		if (issmallanimal(usr) && iscarbon(target))
+			user.lastattacked = target
+			var/mob/living/critter/small_animal/C = usr
+			if (C.ghost_spawned)
+				if (max_wclass < 3)
+					user.visible_message("<span class='alert'><b>[user] tries to help [target], but they're worse than useless!</b></span>", "<span class='alert'><b>You try to help [target], but your spectral will can only manage a poke!</b></span>")
+					playsound(user.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 25, 1, -1)
+					return
+		..()
+
 	//yeah they're not ACTUALLY biting them but let's just assume that they are because i don't want a mouse or a dog to KO someone with a brutal right hook
 	// changed to scratching, small mouths will take care of biting
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
@@ -1247,6 +1265,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 
 	grab(mob/target, var/mob/living/user)
 		if (issmallanimal(usr) && iscarbon(target))
+			user.lastattacked = target
 			var/mob/living/critter/small_animal/C = usr
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
@@ -1256,6 +1275,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 
 	disarm(mob/target, var/mob/living/user)
 		if (issmallanimal(usr) && iscarbon(target))
+			user.lastattacked = target
 			var/mob/living/critter/small_animal/C = usr
 			if (C.ghost_spawned)
 				if (max_wclass < 3)

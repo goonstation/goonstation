@@ -38,7 +38,7 @@
 		item_state = "emerg_inj-[label]"
 
 	attack(mob/M as mob, mob/user as mob)
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			if (src.empty || !src.reagents)
 				boutput(user, "<span class='alert'>There's nothing to inject, [src] has already been expended!</span>")
 				return
@@ -58,7 +58,7 @@
 			return
 
 	attack_self(mob/user)
-		if (iscarbon(user) || iscritter(user))
+		if (iscarbon(user) || ismobcritter(user))
 			if (src.empty || !src.reagents)
 				boutput(user, "<span class='alert'>There's nothing to inject, [src] has already been expended!</span>")
 				return

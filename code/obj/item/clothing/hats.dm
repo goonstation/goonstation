@@ -9,7 +9,7 @@
 	body_parts_covered = HEAD
 	compatible_species = list("human", "monkey", "werewolf", "flubber")
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
-	var/block_vision = 0
+	block_vision = 0
 
 
 	setupProperties()
@@ -762,7 +762,7 @@
 
 	equipped(var/mob/user, var/slot)
 		..()
-		if (slot == "head" && ishuman(user))
+		if (slot == SLOT_HEAD && ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.set_mutantrace(/datum/mutantrace/dwarf)
 
@@ -885,6 +885,7 @@
 				light.attach(src)
 
 	equipped(var/mob/user, var/slot)
+		..()
 		boutput(user, "<span class='notice'>You better start running! It's kill or be killed now, buddy!</span>")
 		SPAWN_DBG(1 SECOND)
 			playsound(src.loc, "sound/vox/time.ogg", 100, 1)

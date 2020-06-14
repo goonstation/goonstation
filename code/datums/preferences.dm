@@ -219,15 +219,17 @@ datum/preferences
 
 		sanitize_null_values()
 		update_preview_icon()
+		LAGCHECK(LAG_HIGH)
 		user << browse_rsc(preview_icon, "previewicon.png")
 		user << browse_rsc(icon(cursors_selection[target_cursor]), "tcursor.png")
 		user << browse_rsc(icon(hud_style_selection[hud_style], "preview"), "hud_preview.png")
-
+		LAGCHECK(LAG_HIGH)
 		var/display_gender = (src.gender == MALE ? "Male" : "Female") + " " + (!AH.pronouns ? (src.gender == MALE ? "(he/him)" : "(she/her)") : "(they/them)")
 
 		var/favoriteJob = src.job_favorite ? find_job_in_controller_by_string(src.job_favorite) : ""
 		//mbc is sorry
 		var/chui_toggle_script_jqery_thing = (user && user.client && !user.client.use_chui) ? "<script type='text/javascript' src='[resource("js/jquery.min.js")]'></script>" : ""
+		LAGCHECK(LAG_HIGH)
 		var/script = {"
 				[chui_toggle_script_jqery_thing]
 				<script type='text/javascript'>
@@ -291,15 +293,19 @@ datum/preferences
 	<br><strong>[savefile_get_profile_name(user, i) || "<em>(empty)</em>"]</strong>
 	<br><a href='[pref_link]save=[i]'>Save</a> &middot; <a href='[pref_link]load=[i]'>Load</a></div>
 				"}
+				LAGCHECK(LAG_REALTIME)
 
 			profile_menu += "</div>"
 
 		var/unsaved_changes_warning = ""
 		if (src.profile_modified)
 			unsaved_changes_warning = {"<div id="unsaved-warning"><strong>You may have unsaved changes.</strong><br>Any unsaved changes will take effect for this round only.</div> "}
-
-		var/dat = {"
-[script]
+		var/list/dat = list()
+		LAGCHECK(LAG_MED)
+		dat += {"
+[script]"}
+		LAGCHECK(LAG_HIGH)
+		dat +={"
 <style type="text/css">
 	a:link {
 		text-decoration: none;
@@ -399,7 +405,9 @@ datum/preferences
 		top: -1px;
 		cursor: help;
 		}
-</style>
+</style>"}
+		LAGCHECK(80)
+		dat +={"
 <title>Character Setup</title>
 [jointext(profile_menu, "")]
 <div style="clear: both; margin: 0.5em;"></div>
@@ -413,7 +421,9 @@ datum/preferences
 		<td colspan="2">
 			<a href="[pref_link]profile_name=input">[src.profile_name ? src.profile_name : "Unnamed"]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>Name<span class="info-thing" title="Your character's name.">?</span></th>
 		<td colspan="2">
@@ -422,7 +432,9 @@ datum/preferences
 			<a href="[pref_link]last_name=input">[length(src.name_last) ? src.name_last : "_"]</a>
 			<br><a href="[pref_link]b_random_name=1" class="toggle">[crap_checkbox(src.be_random_name)] Use a random name instead</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Gender<span class="info-thing" title="Your character's gender and pronouns.">?</span>
@@ -430,7 +442,9 @@ datum/preferences
 		<td colspan="2">
 			<a href="[pref_link]gender=input">[display_gender]</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Age<span class="info-thing" title="Your character's age. Determines the pitch of your screams and farts (lower is deeper) but otherwise has no effect.">?</span>
@@ -444,7 +458,9 @@ datum/preferences
 		<td colspan="2">
 			<a href='[pref_link]blType=input'>[src.random_blood ? "Random" : src.blType]</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Bank PIN<span class="info-thing" title="The PIN you use when using your ID card at an ATM or vending machine. You can check what your PIN is at any time by using the 'Notes' command, under the Commands tab in the top right.">?</span>
@@ -452,7 +468,9 @@ datum/preferences
 		<td colspan="2">
 			<a href="[pref_link]pin=random" class="toggle">[crap_checkbox(!(src.pin))] Random</a> &middot; <a href='[pref_link]pin=input' class="toggle">[src.pin ? (crap_checkbox(1) + " Set: [src.pin]") : (crap_checkbox(0) + " Set")]</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Flavor Text<span class="info-thing" title="This text is shown when examining your character.">?</span>
@@ -461,7 +479,9 @@ datum/preferences
 			<a href='[pref_link]flavor_text=input' style="float: left; margin: 0.2em;">&#9998;</a>
 			[length(src.flavor_text) ? src.flavor_text : "<em>None</em>"]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Security Note<span class="info-thing" title="This text is added to your Security Record. It has no other effects.">?</span>
@@ -470,7 +490,9 @@ datum/preferences
 			<a href='[pref_link]security_flavor_text=input' style="float: left; margin: 0.2em;">&#9998;</a>
 			[length(src.security_note) ? src.security_note : "<em>None</em>"]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Medical Note<span class="info-thing" title="This text is added to your Medical Record. It has no other effects.">?</span>
@@ -479,7 +501,9 @@ datum/preferences
 			<a href='[pref_link]medical_flavor_text=input' style="float: left; margin: 0.2em;">&#9998;</a>
 			[length(src.medical_note) ? src.medical_note : "<em>None</em>"]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Occupation<span class="info-thing" title="These are your occupation / job preferences. This only affects your job if you join when a round starts.">?</span>
@@ -487,7 +511,9 @@ datum/preferences
 		<td colspan="2">
 			<a href="[pref_link]jobswindow=1">Change occupation preferences...</a><br><em>Favorite job: [favoriteJob ? "<strong>[favoriteJob]</strong>" : "(unset)"]</em>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Traits<span class="info-thing" title="Traits are quirks and oddities you can give your character. They can affect things from giving your character accents or robot arms.">?</span>
@@ -495,7 +521,9 @@ datum/preferences
 		<td colspan="2">
 			<a href="[pref_link]traitswindow=1">Choose traits...</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Fart Sound<span class="info-thing" title="This is the sound your character makes when they fart. You will hear it a lot, so pick a good one.">?</span>
@@ -503,7 +531,9 @@ datum/preferences
 		<td colspan="2">
 			<a href='[pref_link]fartsound=input'>[AH.fartsound]</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Scream Sound<span class="info-thing" title="This is the sound your character makes when they scream.">?</span>
@@ -511,7 +541,9 @@ datum/preferences
 		<td colspan="2">
 			<a href='[pref_link]screamsound=input'>[AH.screamsound]</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Chat Sound<span class="info-thing" title="This sound will play when your character says something. It's very quiet, though.">?</span>
@@ -519,13 +551,16 @@ datum/preferences
 		<td colspan="2">
 			<a href='[pref_link]voicetype=input'>[AH.voicetype]</a>
 		</td>
-	</tr>
-
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th colspan="3">
 			Character Appearance
 		</th>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Skin Tone<span class="info-thing" title="Your character's skin tone.">?</span>
@@ -540,7 +575,9 @@ datum/preferences
 			<a href="[pref_link]rotate_counter_clockwise=1">&#x27f2;</a>
 			<a href="[pref_link]rotate_clockwise=1">&#x27f3;</a>
 		</th>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Eye Color<span class="info-thing" title="Your character's eye color. You can use one of the detail slots for heterochromia.">?</span>
@@ -549,7 +586,9 @@ datum/preferences
 			<a href='[pref_link]eyes=input'>&#9998;</a>
 			<span class='colorbit' style="background-color: [AH.e_color];">[AH.e_color]</span>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Top Detail<span class="info-thing" title="Hair or other features. This one is appied above the other ones.">?</span>
@@ -559,7 +598,9 @@ datum/preferences
 			<span class='colorbit' style="background-color: [AH.customization_third_color];">[AH.customization_third_color]</span>
 			[generate_select_table("custom_third", AH.customization_third, customization_styles)]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Mid Detail<span class="info-thing" title="Hair or other features. This one is placed between the top and bottom detail.">?</span>
@@ -569,7 +610,9 @@ datum/preferences
 			<span class='colorbit' style="background-color: [AH.customization_second_color];">[AH.customization_second_color]</span>
 			[generate_select_table("custom_second", AH.customization_second, customization_styles)]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Bottom Detail<span class="info-thing" title="Hair or other features. This one is placed at under the others, making it the best choice for things like beards.">?</span>
@@ -579,7 +622,9 @@ datum/preferences
 			<span class='colorbit' style="background-color: [AH.customization_first_color];">[AH.customization_first_color]</span>
 			[generate_select_table("custom_first", AH.customization_first, customization_styles)]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Underwear<span class="info-thing" title="These are the clothes that your character will wear under their jumpsuit/uniform, and when freshly cloned.">?</span>
@@ -589,7 +634,9 @@ datum/preferences
 			<span class='colorbit' style="background-color: [AH.u_color];">[AH.u_color]</span>
 			[generate_select_table("underwear", AH.underwear, underwear_styles)]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Randomization<span class="info-thing" title="You can let the game randomly make an appearance for you here. Note that the randomizer has even less of a sense of style than you do, so it might look weird.">?</span>
@@ -597,7 +644,9 @@ datum/preferences
 		<td colspan="2">
 			<a href="[pref_link]b_random_look=1" class="toggle">[crap_checkbox(src.be_random_look)] Always use a randomized appearance</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 
 
 	<tr>
@@ -612,7 +661,9 @@ datum/preferences
 		<td colspan="2">
 			<a href="[pref_link]font_size=input">[src.font_size ? "[src.font_size]%" : "Default"]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Messages<span class="info-thing" title="Toggles if certain messages are shown in the chat window by default. You can change these mid-round by using the Toggle OOC/LOOC commands under the Commands tab in the top right.">?</span>
@@ -624,7 +675,9 @@ datum/preferences
 			<a href="[pref_link]flying_chat_hidden=1" class="toggle">[crap_checkbox(!src.flying_chat_hidden)] See chat above people's heads</a><span class="info-thing" title="Chat messages will appear over characters as they're talking.">?</span><br>
 			<a href="[pref_link]auto_capitalization=1" class="toggle">[crap_checkbox(src.auto_capitalization)] Auto-capitalize your messages</a><span class="info-thing" title="Chat messages you send will be automatically capitalized.">?</span>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			HUD/UI<span class="info-thing" title="These affect the HUD that shows up in-game, as well as the cursor used when you have to target something.">?</span>
@@ -641,7 +694,9 @@ datum/preferences
 				<br><a href="[pref_link]tcursor=1">Change</a>
 			</div>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Tooltips<span class="info-thing" title="Tooltips can appear when hovering over items. These tooltips can provide bits of information about the item, such as attack strength, special moves, etc...">?</span>
@@ -651,7 +706,9 @@ datum/preferences
 			<br><a href="[pref_link]tooltip=2" class="toggle">[crap_checkbox(src.tooltip_option == TOOLTIP_ALT)] Show When ALT is held</a>
 			<br><a href="[pref_link]tooltip=3" class="toggle">[crap_checkbox(src.tooltip_option == TOOLTIP_NEVER)] Never Show</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Popups<span class="info-thing" title="These options toggle the popups that appear when logging in and at the end of a round.">?</span>
@@ -661,7 +718,9 @@ datum/preferences
 			<br><a href="[pref_link]scores=1" class="toggle">[crap_checkbox(src.view_score)] Auto-open end-of-round score</a><span class="info-thing" title="The end-of-round scoring shows various stats on how the round went. If this option is off, you won't be able to see it.">?</span>
 			<br><a href="[pref_link]tickets=1" class="toggle">[crap_checkbox(src.view_tickets)] Auto-open end-of-round ticket summary</a><span class="info-thing" title="The end-of-round ticketing summary shows the various tickets and fines that were handed out. If this option is off, you can still see them on Goonhub (goonhub.com).">?</span>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Controls<span class="info-thing" title="Various options for how you control your character and the game.">?</span>
@@ -672,7 +731,9 @@ datum/preferences
 			<br><a href="[pref_link]use_azerty=1" class="toggle">[crap_checkbox(src.use_azerty)] Use AZERTY Keyboard Layout</a><span class="info-thing" title="If you have an AZERTY keyboard, enable this. Yep. This sure is a tooltip.">?</span>
 			<br>Familiar with /tg/station controls? You can enable/disable them under the Game/Interface menu in the top left.
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		dat +={"
 	<tr>
 		<th>
 			Preferred Map<span class="info-thing" title="During a map vote, you will automatically vote for this map if you don't otherwise vote. Note that automatic votes are given much less weight!">?</span>
@@ -690,9 +751,9 @@ datum/preferences
 
 		LAGCHECK(LAG_MED)
 		traitPreferences.updateTraits(user)
-		LAGCHECK(LAG_REALTIME)
+		LAGCHECK(LAG_MED)
 
-		user.Browse(dat,"window=preferences;size=666x750;title=Character Setup")
+		user.Browse(dat.Join(),"window=preferences;size=666x750;title=Character Setup")
 
 
 	//id, The name of the Select table ID to be used.
@@ -707,6 +768,7 @@ datum/preferences
 				select += "<option value='[style_list[i]]' selected='selected'>[i]</option>"
 			else
 				select += "<option value='[style_list[i]]'>[i]</option>"
+			LAGCHECK(LAG_REALTIME)
 		select += "</select>"
 		return select.Join()
 

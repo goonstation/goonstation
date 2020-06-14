@@ -63,6 +63,7 @@
 	var/sleeping = 0.0
 	var/lying = 0.0
 	var/lying_old = 0
+	var/can_lie = 0
 	var/canmove = 1.0
 	var/timeofdeath = 0.0
 	var/fakeloss = 0
@@ -83,7 +84,6 @@
 	var/charges = 0.0
 	var/urine = 0.0
 	var/nutrition = 100
-	var/last_recovering_msg = 0
 	var/losebreath = 0.0
 	var/intent = null
 	var/shakecamera = 0
@@ -342,6 +342,7 @@
 	mobs.Remove(src)
 	if (ai)
 		qdel(ai)
+		ai = null
 	mind = null
 	ckey = null
 	client = null
@@ -529,9 +530,11 @@
 				var/datum/bioEffect/hidden/magnetic/src_effect = src.bioHolder.GetEffect("magnets_pos")
 				if(src_effect == null) src_effect = src.bioHolder.GetEffect("magnets_neg")
 
-				if(src_effect.active != 0 && tmob_effect.active != 0)
+				if(src_effect.active != 0 && tmob_effect.active != 0 && src_effect.charge > 0 && tmob_effect.charge > 0)
 					src_effect.deactivate(10)
+					src_effect.update_charge(-1)
 					tmob_effect.deactivate(10)
+					tmob_effect.update_charge(-1)
 					// like repels - bimp them away from each other
 					src.now_pushing = 0
 					var/atom/source = get_turf(tmob)
@@ -561,9 +564,12 @@
 				var/datum/bioEffect/hidden/magnetic/src_effect = src.bioHolder.GetEffect("magnets_pos")
 				if(src_effect == null) src_effect = src.bioHolder.GetEffect("magnets_neg")
 
-				if(src_effect.active != 0 && tmob_effect.active != 0)
+				if(src_effect.active != 0 && tmob_effect.active != 0 && src_effect.charge > 0 && tmob_effect.charge > 0)
+					var/throw_charge = (src_effect.charge + tmob_effect.charge)*2
 					src_effect.deactivate(10)
+					src_effect.update_charge(-src_effect.charge)
 					tmob_effect.deactivate(10)
+					tmob_effect.update_charge(-tmob_effect.charge)
 					// opposite attracts - fling everything nearby at these dumbasses
 					src.now_pushing = 1
 					tmob.now_pushing = 1
@@ -585,6 +591,10 @@
 					playsound(source, 'sound/effects/suck.ogg', 100, 1)
 					for(var/atom/movable/M in view(5, source))
 						if(M.anchored || M == source) continue
+						if(throw_charge > 0)
+							throw_charge--
+						else
+							break
 						M.throw_at(source, 20, 3)
 						LAGCHECK(LAG_MED)
 					sleep(5 SECONDS)
@@ -596,7 +606,7 @@
 					return
 
 		if (!issilicon(AM))
-			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled) // mutual brohugs all around!
+			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled && !src.throwing && !tmob.throwing) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
 				var/turf/newloc = tmob.loc
 
@@ -640,14 +650,14 @@
 
 		step(src,t)
 		AM.OnMove(src)
-		src.OnMove(src)
+		//src.OnMove(src) //dont do this here - this Bump() is called from a process_move which sould be calling onmove for us already
 		AM.glide_size = src.glide_size
 
 		//// MBC : I did this. this SUCKS. (pulling behavior is only applied in process_move... and step() doesn't trigger process_move nor is there anyway to override the step() behavior
 		// so yeah, i copy+pasted this from process_move.
 		if (old_loc != src.loc) //causes infinite pull loop without these checks. lol
 			var/list/pulling = list()
-			if (get_dist(old_loc, src.pulling) > 1 || src.pulling == src) // fucks sake
+			if ((get_dist(old_loc, src.pulling) > 1 && get_dist(src, src.pulling) > 1) || src.pulling == src) // fucks sake
 				src.pulling = null
 				//hud.update_pulling() // FIXME
 			else
@@ -2690,7 +2700,7 @@
 		qdel(animation)
 		newbody.anchored = 1 // Stop running into the lava every half second jeez!
 		SPAWN_DBG(4 SECONDS)
-			newbody.anchored = 0
+			reset_anchored(newbody)
 	return
 
 /mob/proc/damn()

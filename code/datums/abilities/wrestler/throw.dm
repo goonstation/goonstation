@@ -121,14 +121,21 @@
 				SPAWN_DBG(0)
 					if (!isdead(HH))
 						HH.emote("scream")
-					HH.throw_at(T, 10, 4)
-					HH.changeStatus("weakened", 2 SECONDS)
-					HH.force_laydown_standup()
-					HH.change_misstep_chance(33)
+					if (!fake)
+						HH.throw_at(T, 10, 4)
+						HH.changeStatus("weakened", 2 SECONDS)
+						HH.force_laydown_standup()
+						HH.change_misstep_chance(33)
+					else
+						HH.throw_at(T, 3, 1)
 
-			logTheThing("combat", M, HH, "uses the throw wrestling move on %target% at [log_loc(M)].")
+
+			logTheThing("combat", M, HH, "uses the [fake ? "fake " : ""]throw wrestling move on %target% at [log_loc(M)].")
 
 		if (G && istype(G)) // Target was gibbed before we could throw them, who knows.
 			qdel(G)
 
 		return 0
+
+/datum/targetable/wrestler/throw/fake
+	fake = 1

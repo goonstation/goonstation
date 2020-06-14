@@ -75,20 +75,6 @@
 		src.health = src.health_max
 		src.botcard.access = get_all_accesses()
 
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
-
-		//hud.update_health()
-		if (hud)
-			hud.update_charge()
-			hud.update_tools()
-
-		if(src.observers.len)
-			for(var/mob/x in src.observers)
-				if(x.client)
-					src.updateOverlaysClient(x.client)
-
 	examine()
 		. = ..()
 		if (src.controller)

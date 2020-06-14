@@ -149,7 +149,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 /client/proc/toggleIrcbotDebug()
 	set name = "Toggle IRCBot Debug"
 	set desc = "Enables in-depth logging of all IRC Bot exports and returns"
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 
 	admin_only
 
@@ -159,7 +159,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 
 /client/verb/linkDiscord(discordCode as text)
 	set name = "Link Discord"
-	set category = "Special Verbs"
+	set category = "Commands"
 	set desc = "Links your Byond key with your Discord account. Enter the code Spacebee gave you when you ran !link."
 	set popup_menu = 0
 

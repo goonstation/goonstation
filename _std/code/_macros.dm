@@ -29,7 +29,7 @@ var/list/detailed_spawn_dbg = list()
 #define iscarbon(x) istype(x, /mob/living/carbon)
 #define ismonkey(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/monkey))
 #define ishuman(x) istype(x, /mob/living/carbon/human)
-#define iscritter(x) istype(x, /mob/living/critter)
+#define iscritter(x) istype(x, /obj/critter)
 #define isintangible(x) istype(x, /mob/living/intangible)
 #define ismobcritter(x) istype(x, /mob/living/critter)
 
@@ -192,3 +192,14 @@ var/list/detailed_spawn_dbg = list()
 #define num2hex(X, len) num2text(X, len, 16)
 
 #define hex2num(X) text2num(X, 16)
+
+#define reset_anchored(M) do{\
+if(istype(M, /mob/living/carbon/human)){\
+	var/mob/living/carbon/human/HumToDeanchor = M;\
+	if(HumToDeanchor.shoes?.magnetic || HumToDeanchor.mutantrace?.anchor_to_floor){\
+		HumToDeanchor.anchored = 1;}\
+	else{\
+		HumToDeanchor.anchored = 0}}\
+else{\
+	M.anchored = 0;}}\
+while(FALSE)

@@ -10,7 +10,7 @@ var/datum/explosion_controller/explosions
 	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1)
 		var/atom/A = epicenter
 		if(istype(A))
-			var/severity = power >= 6 ? 1 : power >= 3 ? 2 : 3
+			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
 			var/fprint = null
 			if(istype(source))
 				fprint = source.fingerprintslast
@@ -30,7 +30,6 @@ var/datum/explosion_controller/explosions
 	proc/queue_damage(var/list/new_turfs)
 		for (var/turf/T in new_turfs)
 			queued_turfs[T] += new_turfs[T]
-			LAGCHECK(LAG_REALTIME)
 
 	proc/kaboom()
 		defer_powernet_rebuild = 1
@@ -42,35 +41,69 @@ var/datum/explosion_controller/explosions
 		var/p
 		var/last_touched
 
-		for (var/turf/T in queued_turfs)
+		for (var/y in queued_turfs)
+			var/turf/T = y
+			queued_turfs[T]=sqrt(queued_turfs[T])*2
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P1 [p]")
 			if (p >= 6)
-				for (var/atom/A as obj|mob in T)
-					A.ex_act(1, last_touched, p)
-					if (istype(A, /obj/cable)) // these two are hacky, newcables should relieve the need for this
+				for (var/mob/M in T)
+					M.ex_act(1, last_touched, p)
+			else if (p > 3)
+				for (var/mob/M in T)
+					M.ex_act(2, last_touched, p)
+			else
+				for (var/mob/M in T)
+					M.ex_act(3, last_touched, p)
+
+		LAGCHECK(LAG_HIGH)
+
+		for (var/y in queued_turfs)
+			var/turf/T = y
+			p = queued_turfs[T]
+			last_touched = queued_turfs_blame[T]
+			//boutput(world, "P1 [p]")
+			if (p >= 6)
+				for (var/obj/O in T)
+					if(istype(O, /obj/overlay))
+						continue
+					O.ex_act(1, last_touched, p)
+					if (istype(O, /obj/cable)) // these two are hacky, newcables should relieve the need for this
 						needrebuild = 1
-			else if (p >= 3)
-				for (var/atom/A as obj|mob in T)
-					A.ex_act(2, last_touched, p)
-					if (istype(A, /obj/cable))
+			else if (p > 3)
+				for (var/obj/O in T)
+					if(istype(O, /obj/overlay))
+						continue
+					O.ex_act(2, last_touched, p)
+					if (istype(O, /obj/cable))
 						needrebuild = 1
 			else
-				for (var/atom/A as obj|mob in T)
-					A.ex_act(3, last_touched, p)
+				for (var/obj/O in T)
+					if(istype(O, /obj/overlay))
+						continue
+					O.ex_act(3, last_touched, p)
+
+		LAGCHECK(LAG_HIGH)
 
 		// BEFORE that ordeal (which may sleep quite a few times), fuck the turfs up all at once to prevent lag
-		for (var/turf/T in queued_turfs)
+		for (var/x in queued_turfs)
+			var/turf/T = x
+#ifndef UNDERWATER_MAP
+			if(istype(T, /turf/space))
+				continue
+#endif
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P2 [p]")
 			if (p >= 6)
 				T.ex_act(1, last_touched)
-			else if (p >= 3)
+			else if (p > 3)
 				T.ex_act(2, last_touched)
 			else
 				T.ex_act(3, last_touched)
+
+		LAGCHECK(LAG_HIGH)
 
 		queued_turfs.len = 0
 		queued_turfs_blame.len = 0

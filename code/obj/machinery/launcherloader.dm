@@ -81,7 +81,7 @@
 			if(drive) activate()
 
 	HasEntered(atom/A)
-		if (isobserver(A) || isintangible(A) || iswraith(A)) return
+		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
 		return_if_overlay_or_effect(A)
 		activate()
 
@@ -174,7 +174,7 @@
 			if(drive) activate()
 
 	HasEntered(atom/A)
-		if (isobserver(A) || isintangible(A) || iswraith(A)) return
+		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
 
 		if (!trigger_when_no_match)
 			var/atom/movable/AM = A

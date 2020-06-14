@@ -251,9 +251,9 @@
 
 
 
-/obj/item/football/throw_at(atom/target, range, speed)
+/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
 	src.icon_state = "football_air"
-	..(target, range, speed)
+	..()
 
 /obj/item/football/throw_impact(atom/hit_atom)
 	..(hit_atom)

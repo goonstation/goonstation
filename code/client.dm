@@ -26,6 +26,7 @@
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
+	var/list/hidden_verbs = null
 
 	var/datum/buildmode_holder/buildmode = null
 	var/lastbuildtype = 0
@@ -215,7 +216,7 @@
 	//src.chui = new /datum/chui(src)
 
 	//Should eliminate any local resource loading issues with chui windows
-	if (!cdn)
+	if (!cdn && !(!address || (world.address == src.address)))
 		var/list/chuiResources = list(
 			"browserassets/js/jquery.min.js",
 			"browserassets/js/jquery.nanoscroller.min.js",
@@ -276,9 +277,20 @@
 			SPAWN_DBG(0) del(src)
 			return
 */
+	//admins and mentors can enter a server through player caps. 
+	var/ignore_player_cap = 0
+	if (init_admin())
+		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
+		control_freak = 0	// heh
+		ignore_player_cap = 1
+	else if (player.mentor)
+		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
+		if (!src.holder)
+			src.verbs += /client/proc/toggle_mentorhelps
+		ignore_player_cap = 1
 
-	if(player_capa)
-		if(clients.len >= player_cap)
+	if(!ignore_player_cap && player_capa)
+		if(total_clients() >= player_cap)
 			if (!src.holder)
 				alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
 				del(src)
@@ -287,13 +299,6 @@
 	if (join_motd)
 		boutput(src, "<div class=\"motd\">[join_motd]</div>")
 
-	if (init_admin())
-		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
-		control_freak = 0	// heh
-	else if (player.mentor)
-		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
-		if (!src.holder)
-			src.verbs += /client/proc/toggle_mentorhelps
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
 
@@ -334,6 +339,7 @@
 		updateXpRewards()
 
 	SPAWN_DBG(3 SECONDS)
+		var/is_newbie = 0
 		// new player logic, moving some of the preferences handling procs from new_player.Login
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - 3 sec spawn stuff")
 		if (!preferences)
@@ -343,19 +349,22 @@
 
 			//Load the preferences up here instead.
 			if(!preferences.savefile_load(src))
+#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 				//preferences.randomizeLook()
 				preferences.ShowChoices(src.mob)
+				src.mob.Browse(grabResource("html/tgControls.html"),"window=tgcontrolsinfo;size=600x400;title=TG Controls Help")
 				boutput(src, "<span class='alert'>Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!</span>")
 				//hey maybe put some 'new player mini-instructional' prompt here
 				//ok :)
-
+#endif
+				is_newbie = 1
 			else if(!src.holder)
 				preferences.sanitize_name()
 
 			if (noir)
 				animate_fade_grayscale(src, 50)
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
-			if (!changes && preferences.view_changelog)
+			if (!changes && preferences.view_changelog && !is_newbie)
 				if (!cdn)
 					//src << browse_rsc(file("browserassets/images/changelog/postcardsmall.jpg"))
 					src << browse_rsc(file("browserassets/images/changelog/88x31.png"))
@@ -389,9 +398,6 @@
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
-
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - update_world")
-		src.update_world()
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()

@@ -230,9 +230,6 @@
 		C.setOvermind(owner)
 		C.Life()
 		owner.started = 1
-		owner.remove_ability(/datum/blob_ability/plant_nucleus)
-		owner.remove_ability(/datum/blob_ability/set_color)
-		owner.remove_ability(/datum/blob_ability/tutorial)
 		owner.add_ability(/datum/blob_ability/spread)
 		owner.add_ability(/datum/blob_ability/attack)
 		owner.add_ability(/datum/blob_ability/consume)
@@ -252,6 +249,10 @@
 			//do a little "blobsplosion"
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
+
+		owner.remove_ability(/datum/blob_ability/plant_nucleus)
+		owner.remove_ability(/datum/blob_ability/set_color)
+		owner.remove_ability(/datum/blob_ability/tutorial)
 
 
 /datum/blob_ability/set_color
@@ -544,7 +545,7 @@
 				if (A:decomp_stage != 4)
 					M = A
 					break
-			if (iscritter(A))
+			if (ismobcritter(A))
 				M = A
 				break
 
@@ -602,7 +603,7 @@
 			return
 
 		//This whole first bit is all still pretty ugly cause this ability works on both critters and humans. I didn't have it in me to rewrite the whole thing - kyle
-		if (iscritter(target))
+		if (ismobcritter(target))
 			target.gib()
 			target.visible_message("<span class='alert'><b>The blob tries to absorb [target.name], but something goes horribly right!</b></span>")
 			if (blob_o && blob_o.mind) //ahem ahem AI blobs exist

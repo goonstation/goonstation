@@ -47,7 +47,7 @@
 	health_deficiency_adjustment = -65
 
 /datum/movement_modifier/reagent/morphine
-	health_deficiency_adjustment = -50
+	health_deficiency_adjustment = -60
 
 /datum/movement_modifier/reagent/salicylic_acid
 	health_deficiency_adjustment = -25

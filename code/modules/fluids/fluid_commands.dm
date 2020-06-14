@@ -4,14 +4,14 @@
 client/proc/enable_waterflow(var/enabled as num)
 	set name = "Set Fluid Flow Enabled"
 	set desc = "0 to disable, 1 to enable"
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 	waterflow_enabled = !!enabled
 
 client/proc/delete_fluids()
 	set name = "Delete All Fluids"
 	set desc = "Probably safe to run. Probably."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 
 	var/exenabled = waterflow_enabled
@@ -43,7 +43,7 @@ client/proc/delete_fluids()
 client/proc/special_fullbright()
 	set name = "Static Sea Light"
 	set desc = "Helps when server load is heavy. Doesn't affect trench."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	admin_only
 
@@ -58,7 +58,7 @@ client/proc/special_fullbright()
 client/proc/replace_space()
 	set name = "Replace All Space Tiles With Ocean"
 	set desc = "uh oh."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	admin_only
 
 	var/list/L = list()
@@ -97,9 +97,9 @@ client/proc/replace_space()
 		map_currently_underwater = 1
 
 client/proc/replace_space_exclusive()
-	set name = "Replace All Station-Zlevel Space Tiles With Ocean"
+	set name = "Oceanify"
 	set desc = "This is the safer one."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	admin_only
 
 	var/list/L = list()
@@ -152,9 +152,9 @@ client/proc/update_ocean_lighting()
 
 
 client/proc/dereplace_space()
-	set name = "Replace All Ocean Tiles With Space"
+	set name = "Unoceanify"
 	set desc = "uh oh."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	admin_only
 
 	var/answer = alert("Replace Z1 only?",,"Yes","No")

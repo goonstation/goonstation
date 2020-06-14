@@ -2,6 +2,7 @@
 	name = "flesh"
 	associated_damage_type = "brute"
 
+	/*
 	on_react(var/datum/reagents/R, var/method = 1, var/react_volume = null)
 		if (!R || !R.total_volume)
 			return
@@ -17,6 +18,7 @@
 			S = R.get_reagent("synthflesh")
 			if (S)
 				HealDamage(fract * S.volume * 1.5)
+	*/
 
 	on_life()
 		if (!holder.does_it_metabolize())

@@ -80,12 +80,13 @@
 						if (D)
 							D.data["imp"] = "\ref[I]"
 
-			var/give_access_implant = iscritter(M)
+			var/give_access_implant = ismobcritter(M)
 			if(!spawn_id && (access.len > 0 || access.len == 1 && access[1] != access_fuck_all))
 				give_access_implant = 1
 			if (give_access_implant)
 				var/obj/item/implant/access/I = new /obj/item/implant/access(M)
 				I.access.access = src.access.Copy()
+				I.owner = M
 				I.uses = -1
 				I.set_loc(M)
 				I.implanted = 1
@@ -2054,6 +2055,10 @@
 	slot_lhan = null
 	slot_rhan = /obj/item/gun/kinetic/pistol
 
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		bad_traitorify(M, "Syndicate Agent")
+
 /datum/job/special/syndicate_weak/no_ammo
 	name = "Poorly Equipped Junior Syndicate Operative"
 	slot_poc2 = null
@@ -2094,15 +2099,16 @@
 	special_spawn_location = 0
 #else
 	special_spawn_location = 1
-	spawn_x = 145
-	spawn_y = 284
-	spawn_z = 4
+	spawn_x = 96
+	spawn_y = 272
+	spawn_z = 2
 #endif
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
 		if (!M)
 			return
+		bad_traitorify(M, "Syndicate Agent")
 		M.show_text("<b>The assault has begun! Head over to the station and kill any and all Nanotrasen personnel you encounter!</b>", "red")
 
 

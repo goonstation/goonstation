@@ -68,7 +68,7 @@
 				saveStat("Map Vote Link:",mapVoteLinkStat)
 
 				if (mapSwitcher.voteCurrentDuration)
-					saveStat("Map Vote Time:", "([round(((mapSwitcher.voteStartedAt + mapSwitcher.voteCurrentDuration) - world.time) / 10)] seconds remaining, [mapSwitcher.playerVotes.len] vote[mapSwitcher.playerVotes.len != 1 ? "s" : ""])")
+					saveStat("Map Vote Time:", "([round(((mapSwitcher.voteStartedAt + mapSwitcher.voteCurrentDuration + PREGAME_LOBBY_TICKS) - world.time) / 10)] seconds remaining, [mapSwitcher.playerVotes.len] vote[mapSwitcher.playerVotes.len != 1 ? "s" : ""])")
 			else
 				stats["Map Vote Link:"] = 0
 				stats["Map Vote Time:"] = 0

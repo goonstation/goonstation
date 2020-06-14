@@ -143,15 +143,10 @@
 
 	C.apply_keybind("base")
 
-	if (!C.preferences.use_wasd)
-		C.apply_keybind("base_arrow")
-
 	if (C.preferences.use_azerty)
 		C.apply_keybind("base_azerty")
 	if (C.tg_controls)
 		C.apply_keybind("base_tg")
-
-	apply_custom_keybinds(C)
 
 /** apply_custom_keybinds: Applies the client's custom keybind changelist, fetched from the cloud.
  *	Called by build_keybind_styles if not resetting the custom keybinds of a u
@@ -175,6 +170,7 @@
 	if (src.client)
 		src.client.applied_keybind_styles = list() //Reset currently applied styles
 		build_keybind_styles(src.client)
+		apply_custom_keybinds(src.client)
 		if (src.use_movement_controller)
 			var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
 			if (controller)

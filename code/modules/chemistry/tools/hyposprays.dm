@@ -115,8 +115,12 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		return 1
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
-		if (!ishuman(M))
-			user.show_text("[src] can only be used on humans!", "red")
+		if (issilicon(M))
+			user.show_text("[src] cannot be used on silicon lifeforms!", "red")
+			return
+
+		if (!isliving(M))
+			user.show_text("[src] can only be used on the living!", "red")
 			return
 
 		if (!reagents.total_volume)

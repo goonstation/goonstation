@@ -4,7 +4,7 @@
 
 Master Status: [![Build Status](https://travis-ci.com/goonstation/goonstation.svg?branch=master)](https://travis-ci.com/goonstation/goonstation)
 
-Develop Status: [![Build Status](https://travis-ci.com/goonstation/goonstation.svg?branch=develop)](https://travis-ci.com/goonstation/goonstation)
+Develop Status: [![Build Status](https://travis-ci.com/goonstation/goonstation.svg?branch=develop)](https://travis-ci.com/github/goonstation/goonstation/branches)
 
 **Website:** [goonhub.com](https://goonhub.com)
 
@@ -31,6 +31,12 @@ Space Station 13 is a community developed, multiplayer round-based role playing 
 [Spriting Guidelines](https://hackmd.io/@ZeWaka/goonsprite)
 
 [Mapping Guidelines](https://hackmd.io/@ZeWaka/goonmap)
+
+## FAQ (Frequently Asked Question)
+
+#### Q: I'm getting a compilation error like `unable to open +secret\__secret.dme`.
+
+You’ll need to create a file named `__secret.dme` in the +secret subdirectory. It should be blank and have no contents. Read the [Goonstation Development Guide](https://hackmd.io/@ZeWaka/goondev) for additional details.
 
 ## LICENSE
 [![license-badge](https://forthebadge.com/images/badges/cc-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/3.0/)

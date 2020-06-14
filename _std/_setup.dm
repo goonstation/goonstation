@@ -71,8 +71,8 @@
 #define OVERLOADED_WORLD_TICKLAG 0.8 //max value ticklag can be
 #define TICKLAG_DILATION_INC 0.2 //how much to increase by when appropriate
 #define TICKLAG_DILATION_DEC 0.2 //how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
-#define TICKLAG_DILATION_THRESHOLD 6 //these values dont make sense to you? read the math in gameticker
-#define TICKLAG_NORMALIZATION_THRESHOLD 0.8 //these values dont make sense to you? read the math in gameticker
+#define TICKLAG_DILATION_THRESHOLD 5 //these values dont make sense to you? read the math in gameticker
+#define TICKLAG_NORMALIZATION_THRESHOLD 0.4 //these values dont make sense to you? read the math in gameticker
 #define TICKLAG_DILATE_INTERVAL 20
 
 #define OVERLOAD_PLAYERCOUNT 95 //when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
@@ -239,23 +239,23 @@
 #define ARMS			8
 
 // other clothing-specific bitflags, applied via the c_flags var
-#define SPACEWEAR 1				// combined HEADSPACE and SUITSPACE into this because seriously??
-#define MASKINTERNALS 2			// mask allows internals
-#define COVERSEYES 4			// combined COVERSEYES, COVERSEYES and COVERSEYES into this
-#define COVERSMOUTH 8			// combined COVERSMOUTH and COVERSMOUTH into this.
-#define ONESIZEFITSALL 16		// can be worn by fatties (or children? ugh)
-#define NOSLIP 32				// for galoshes/magic sandals/etc that prevent slipping on things
-#define SLEEVELESS 64			// ain't got no sleeeeeves
-#define BLOCKSMOKE 128			//block smoke inhalations (gas mask)
-#define IS_JETPACK 256
-#define EQUIPPED_WHILE_HELD 512			//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
-#define EQUIPPED_WHILE_HELD_ACTIVE 1024	//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
-#define HAS_GRAB_EQUIP 2048 			//similar effect as above, but this flag is applied to any item held when the item is being used for a certain type of grab
-#define BLOCK_TOOLTIP 4096				//whether or not we should show extra tooltip info about blocking with this item
-#define BLOCK_CUT 8192					//block an extra point of cut damage when used to block
-#define BLOCK_STAB 16384				//block an extra point of stab damage when used to block
-#define BLOCK_BURN 32768				//block an extra point of burn damage when used to block
-#define BLOCK_BLUNT 65536				//block an extra point of blunt damage when used to block
+#define SPACEWEAR					1		// combined HEADSPACE and SUITSPACE into this because seriously??
+#define MASKINTERNALS				2		// mask allows internals
+#define COVERSEYES					4		// combined COVERSEYES, COVERSEYES and COVERSEYES into this
+#define COVERSMOUTH					8		// combined COVERSMOUTH and COVERSMOUTH into this.
+#define ONESIZEFITSALL				16		// can be worn by fatties (or children? ugh)
+#define NOSLIP						32		// for galoshes/magic sandals/etc that prevent slipping on things
+#define SLEEVELESS					64		// ain't got no sleeeeeves
+#define BLOCKSMOKE					128		//block smoke inhalations (gas mask)
+#define IS_JETPACK					256
+#define EQUIPPED_WHILE_HELD			512		//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
+#define NOT_EQUIPPED_WHEN_WORN		1024	//return early out of equipped/unequipped, unless in SLOT_L_HAND or SLOT_R_HAND (i.e.: if EQUIPPED_WHILE_HELD)
+#define HAS_GRAB_EQUIP				2048 	//if we currently have a grab (or by extention, a block) attached to us
+#define BLOCK_TOOLTIP				4096	//whether or not we should show extra tooltip info about blocking with this item
+#define BLOCK_CUT					8192	//block an extra point of cut damage when used to block
+#define BLOCK_STAB					16384	//block an extra point of stab damage when used to block
+#define BLOCK_BURN					32768	//block an extra point of burn damage when used to block
+#define BLOCK_BLUNT					65536	//block an extra point of blunt damage when used to block
 
 //clothing dirty flags (not used for anything other than submerged overlay update currently. eventually merge into update_clothing)
 #define C_BACK 1
@@ -302,6 +302,7 @@
 #define IMMUNE_SINGULARITY 256
 #define IMMUNE_SINGULARITY_INACTIVE 512
 #define IS_TRINKET 1024 		//used for trinkets GC
+#define IS_FARTABLE 2048
 //TBD the rest
 
 //temp_flags lol for atoms and im gonna be constantly adding and removing these
@@ -358,6 +359,7 @@
 #define SPRINT_BAT 1
 #define SPRINT_BAT_CLOAKED 2
 #define SPRINT_SNIPER 4
+#define SPRINT_FIRE 8
 
 //sound mute
 #define SOUND_NONE 0
@@ -712,7 +714,7 @@ proc/default_frequency_color(freq)
 #define STAMINA_CRIT_DIVISOR 2  		//Divide stamina by how much on a crit
 #define STAMINA_BLOCK_CHANCE 40 		//Chance to block an attack in disarm mode. Settings this to 0 effectively disables the blocking system.
 #define STAMINA_GRAB_BLOCK_CHANCE 85    //Chance to block grabs.
-#define STAMINA_DEFAULT_BLOCK_COST 7    //Cost of blocking an attack.
+#define STAMINA_DEFAULT_BLOCK_COST 5    //Cost of blocking an attack.
 #define STAMINA_LOW_COST_KICK 1 	    //Does kicking people on the ground cost less stamina ? (Right now it doesnt cost less but rather refunds some because kicking people on the ground is very relaxing OKAY)
 #define STAMINA_NO_ATTACK_CAP 1 		//Attacks only cost stamina up to the min atttack cap. after that they are free
 #define STAMINA_NEG_CRIT_KNOCKOUT 0     //Getting crit below or at 0 stamina will always knock out
@@ -976,6 +978,8 @@ proc/default_frequency_color(freq)
 //The value of mapvotes. A passive vote is one done through player preferences, an active vote is one where the player actively chooses a map
 #define MAPVOTE_PASSIVE_WEIGHT 0.25
 #define MAPVOTE_ACTIVE_WEIGHT 1.0
+//Amount of 1 Second ticks to spend in the pregame lobby before roundstart. Has been 150 seconds for a couple years.
+#define PREGAME_LOBBY_TICKS 150	// raised from 120 to 180 to accomodate the v500 ads, then raised back down to 150 after Z5 was introduced.
 
 //for light queue - when should we queue? and when should we pause processing our dowork loop?
 #define LIGHTING_MAX_TICKUSAGE 90
@@ -1007,11 +1011,9 @@ proc/default_frequency_color(freq)
 
 
 #if ASS_JAM
+#ifndef TRAVISBUILDING
 #warn Building with ASS_JAM features enabled. Toggle this by changing BUILD_TIME_DAY in __build.dm
-//#else
-//#warn Building with ASS_JAM features disabled. Toggle this by setting BUILD_TIME_DAY == 13 in __build.dm
-//#warn Feel free to ban whoever added the above warning.
-//bluh bluh bluh im a crusty old coder who hates knowing things bluh bluh
+#endif
 #endif
 
 #ifdef Z_LOG_ENABLE
@@ -1110,6 +1112,9 @@ var/ZLOG_START_TIME
 
 //PATHOLOGY REMOVAL
 //#define CREATE_PATHOGENS 1
+
+//uncomment to enable sorting of reactions by priority (which is currently slow and bad)
+//#define CHEM_REACTION_PRIORITIES
 
 // This is here in lieu of a better place to put stuff that gets used all over the place but is specific to a context (in this case, machinery)
 #define DATA_TERMINAL_IS_VALID_MASTER(terminal, master) (master && (get_turf(master) == terminal.loc))

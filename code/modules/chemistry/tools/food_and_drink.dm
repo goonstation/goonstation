@@ -188,7 +188,7 @@
 			user.u_equip(src)
 			qdel(src)
 			return 0
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
 				if (!bypass_utensils)
 					if (src.needfork && !user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
@@ -477,7 +477,7 @@
 			boutput(user, "<span class='alert'>Nothing left in [src], oh no!</span>")
 			return 0
 
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
 				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>")
 			else if (M.mob_flags & IS_RELIQUARY)

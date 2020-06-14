@@ -1439,7 +1439,8 @@
 					break
 				X = pick(src.contents)
 				X.set_loc(src.loc)
-				X.throw_at(pick(src.nearby_turfs), 16, 3)
+				SPAWN_DBG(0)
+					X.throw_at(pick(src.nearby_turfs), 16, 3)
 				to_throw--
 		if (src.queue.len > 1 && prob(20))
 			var/list_counter = 0
@@ -1599,7 +1600,8 @@
 			playsound(src.loc, src.sound_damaged, 50, 2)
 			if (src.health == 0)
 				src.visible_message("<span class='alert'><b>[src.name] is destroyed!</b></span>")
-				robogibs(src.loc,null)
+				SPAWN_DBG(0)
+					robogibs(src.loc,null)
 				playsound(src.loc, src.sound_destroyed, 50, 2)
 				qdel(src)
 				return

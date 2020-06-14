@@ -75,11 +75,15 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"A" = KEY_LEFT,
 	"S" = KEY_BACKWARD,
 	"D" = KEY_RIGHT,
+	"NORTH" = KEY_FORWARD,
+	"SOUTH" = KEY_BACKWARD,
+	"WEST" = KEY_LEFT,
+	"EAST" = KEY_RIGHT,
 	"B" = KEY_POINT,
 	"T" = "say",
 	"Y" = "say_radio",
 	"ALT+W" = "whisper",
-	"ALT+C" = "ooc",
+	"O" = "ooc",
 	"ALT+L" = "looc",
 	"ALT+T" = "dsay",
 	"CTRL+T" = "asay",
@@ -102,6 +106,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"CTRL+X" = "flex",
 	"CTRL+Y" = "yawn",
 	"CTRL+Z" = "snap",
+	"M" = "emote",
 	"I" = "look_n",
 	"K" = "look_s",
 	"J" = "look_w",
@@ -117,15 +122,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"RETURN" = "mainfocus",
 	"`" = "admin_interact",
 	"~" = "admin_interact"
-	)
-
-/datum/keybind_style/arrow
-	name = "base_arrow"
-	changed_keys = list(
-		"NORTH" = KEY_FORWARD,
-		"SOUTH" = KEY_BACKWARD,
-		"WEST" = KEY_LEFT,
-		"EAST" = KEY_RIGHT,
 	)
 
 /datum/keybind_style/tg
@@ -196,10 +192,17 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"C" = "resist"
 	)
 
+/datum/keybind_style/human/tg/azerty
+	name = "human_tg_azerty"
+	changed_keys = list(
+	"W" = "attackself"
+	)
+
 /datum/keybind_style/human/azerty
 	name = "human_azerty"
 	changed_keys = list(
-		"A" = "drop"
+		"A" = "drop",
+		"Q" = KEY_LEFT
 	)
 
 //
@@ -242,10 +245,17 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"Z" = "attackself",
 	)
 
+/datum/keybind_style/robot/tg/azerty
+	name = "robot_tg_azerty"
+	changed_keys = list(
+		"W" = "attackself"
+	)
+
 /datum/keybind_style/robot/azerty
 	name = "robot_azerty"
 	changed_keys = list(
-		"A" = "unequip"
+		"A" = "unequip",
+		"Q" = KEY_LEFT
 	)
 
 //
@@ -276,7 +286,8 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /datum/keybind_style/drone/azerty
 	name = "drone_azerty"
 	changed_keys = list(
-		"A" = "unequip"
+		"A" = "unequip",
+		"Q" = KEY_LEFT
 	)
 
 //

@@ -200,10 +200,10 @@
 		src.throwing = 0
 	..()
 
-/atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1)
+/atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 	if (!target) return
-	if (src.anchored) return
+	if (src.anchored && !allow_anchored) return
 	if (reagents)
 		reagents.physical_shock(14)
 	src.throwing = throw_type

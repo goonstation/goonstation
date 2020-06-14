@@ -310,6 +310,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/eyedrops, 2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/antiviral, 6)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/insulin, 6)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/synaptizine, 6)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/calomel, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/heparin, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/proconvertin, 6)

@@ -600,7 +600,7 @@
 	opacity = 0
 	anchored = 2
 	density = 0
-	layer = 1.9
+	plane = PLANE_SPACE
 
 	x3
 		icon_state = "moon-green"

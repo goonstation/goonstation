@@ -1,4 +1,5 @@
 var/list/dirty_keystates = list()
+var/list/clients_move_scheduled = list()
 
 /client
 	var/key_state = 0
@@ -286,8 +287,7 @@ var/list/dirty_keystates = list()
 		return 0
 
 /mob
-	var/move_scheduled = 0
-	var/last_move_ticklag = MIN_TICKLAG //if ticklag changes big inc, can interrupt hold-press. we needa save this to counteract!
+	var/move_scheduled_ticks = 0
 
 	proc/keys_changed(keys, changed)
 		set waitfor = 0
@@ -298,33 +298,24 @@ var/list/dirty_keystates = list()
 		// stub
 
 	proc/attempt_move()
-		src.internal_process_move(src.client ? src.client.key_state : 0)
+		if(src.internal_process_move(src.client ? src.client.key_state : 0) && src.client)
+			clients_move_scheduled |= src.client
 
 	proc/recheck_keys()
 		if (src.client) keys_changed(src.client.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
 
 
-	//mbc : so this is fucky : ticklag values of 0.42 and 0.21 just dont work here.
-	//i dont understand why. it *must* be a rounding error or math thing. i couldnt find it sorry bro
-	//ALSO last_move_ticklag, it compensates for the change in ticklag while we hold a key. It's also not consistent at all values, probably rounding errors again
-	//ticklag values that are multiples of 0.2 appear to work best  :)  so i've set the time dilation thing to move in 0.2inc notches.
+	// returns 1 if it schedules a move
 	proc/internal_process_move(keys)
 		var/delay = src.process_move(keys)
 		if (isnull(delay))
 			return
 
-		var/actual_delay = max(ceil(delay / world.tick_lag), 1) * world.tick_lag
-		var/next = world.time + actual_delay
-		var/lmt = max(last_move_ticklag - world.tick_lag, 0)
+		src.move_scheduled_ticks = max(ceil(delay / world.tick_lag) - 1, 1)
+		// why -1? good question, I have no idea but that's what makes it behave as the previous version used to
 
-		// Tolerance of 0.01 seconds due to byond float weirdness -Spy
-		if ((src.move_scheduled - world.time) <= 0.01 + lmt || src.move_scheduled + lmt > next)
-
-			src.move_scheduled = next
-			SPAWN_DBG(max( actual_delay, world.tick_lag-0.01))
-				src.internal_process_move(src.client ? src.client.key_state : 0)
-
-		last_move_ticklag = world.tick_lag
+		if (client) // should prevent stuck directions when reconnecting
+			return 1
 
 /proc/process_keystates()
 	for (var/client/C in dirty_keystates)
@@ -351,6 +342,14 @@ var/list/dirty_keystates = list()
 
 /proc/start_input_loop()
 	SPAWN_DBG(0)
+		var/start_time
 		while (1)
+			start_time = TIME
 			process_keystates()
-			sleep(world.tick_lag)
+
+			for(var/client/C in clients_move_scheduled)
+				if(C?.mob && C.mob.move_scheduled_ticks-- <= 0 && /*decrease the countdown, check if we reached 0*/ \
+							!C.mob.internal_process_move(C.key_state)) /* deschedule only if internal_process_move tells us to */
+					clients_move_scheduled -= C
+
+			sleep(world.tick_lag - (TIME - start_time))

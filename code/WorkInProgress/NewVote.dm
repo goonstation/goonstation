@@ -85,7 +85,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 					boutput(C, "<span class='alert'>You may not start this type of vote because you recently died.</span>")
 					return
 				if(C.mob.stat && !C.holder)
-					boutput(C, "<span class='alert'>You may not start this type of vote while dying/unconcious.</span>")
+					boutput(C, "<span class='alert'>You may not start this type of vote while dying/unconscious.</span>")
 					return
 				if(active_vote) return 0
 				active_vote = new/datum/vote_new/restart()
@@ -175,6 +175,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	var/vote_name = ""
 	var/vote_length = 1200 //2 Minutes
 	var/vote_started = 0
+	var/vote_abstain_weight = 0.2 //how much each non-participant counts for in votes that have a "No" result
 	var/data = null
 	var/vote_flags = 0
 	var/curr_win = ""
@@ -217,21 +218,40 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 			return src.curr_win
 		var/winner = null
 		var/winner_num = 0
+		var/adjAbstain = 0
 		for(var/A in options)
-			if(options[A])
-				if(options[A] > winner_num)
-					winner_num = options[A]
-					winner = A
+			if(options[A] >= 0)
+				if(A == "No") // abstain = partial no, in votes that contain a no option.
+					adjAbstain = options[A]
+					for(var/client/C in clients)
+						if(!((C.ckey in voted_ckey) || (C.computer_id in voted_id)))
+							adjAbstain = adjAbstain + vote_abstain_weight
+					if(adjAbstain > winner_num)
+						winner_num = adjAbstain
+						winner = A
+				else
+					if(options[A] > winner_num)
+						winner_num = options[A]
+						winner = A
 		if(!winner) winner = "none"
 		src.curr_win = winner
 		return src.curr_win
 
 	proc/get_winner_num()
 		var/winner_num = 0
+		var/adjAbstain = 0
 		for(var/A in options)
-			if(options[A])
-				if(options[A] > winner_num)
-					winner_num = options[A]
+			if(options[A] >= 0)
+				if(A == "No")
+					adjAbstain = options[A]
+					for(var/client/C in clients)
+						if(!((C.ckey in voted_ckey) || (C.computer_id in voted_id)))
+							adjAbstain = adjAbstain + vote_abstain_weight
+					if(adjAbstain > winner_num)
+						winner_num = adjAbstain
+				else
+					if(options[A] > winner_num)
+						winner_num = options[A]
 		return(winner_num)
 
 	proc/end_vote()
@@ -253,37 +273,31 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 		..()
 
 	end_vote()
-		. = ..()
 		// boutput(world, "<span class='success'><BIG><B>Vote gamemode result: [get_winner()]</B></BIG></span>")
-		if(get_winner() != "Yes" || get_winner_num() < round(clients.len * 0.5))
-			boutput(world, "<span class='alert'><BIG><B>Minimum mode votes not reached (~50% of players), game mode not changed.</B></BIG></span>")
+		if(get_winner() != "Yes")
+			boutput(world, "<span class='alert'><BIG><B>Insufficient votes, game mode not changed.</B></BIG></span>")
 		else if(current_state == GAME_STATE_PREGAME)
 			boutput(world, "<span class='success'><BIG><B>Gamemode for upcoming round has been changed to [data].</B></BIG></span>")
 			master_mode = lowertext(data)
 		else
 			boutput(world, "<span class='success'><BIG><B>Gamemode will be changed to [data] at next round start.</B></BIG></span>")
 			world.save_mode(lowertext(data))
-		qdel(src)
-		return
+		. = ..()
 
 /datum/vote_new/restart
 	options = list("Yes","No")
 	details = "Restart the server?"
 	vote_name = "Vote restart"
 	vote_length = 1200 //2 Minutes
+	vote_abstain_weight = 0.5
 
 	end_vote()
-		. = ..()
 		boutput(world, "<span class='success'><BIG><B>Vote restart result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
-			if(get_winner_num() < round(clients.len * 0.5))
-				boutput(world, "<span class='success'><BIG><B>Minimum restart votes not reached (~50% of players).</B></BIG></span>")
-				qdel(src)
-				return
 			Reboot_server()
-		qdel(src)
-		return
+		. = ..()
 /*
+//these haven't been adjusted to new weighted vote stuff yet
 /datum/vote_new/ban
 	options = list("Yes","No")
 	details = ""
@@ -309,7 +323,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 		vote_manager.active_vote = null
 		boutput(world, "<span class='success'><BIG><B>Vote ban result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
-			if(get_winner_num() < round(clients.len * 0.7))
+			if(get_winner_num() < round(total_clients() * 0.7))
 				boutput(world, "<span class='success'><BIG><B>Minimum ban votes not reached (~70% of players) - Player not banned.</B></BIG></span>")
 				qdel(src)
 				return
@@ -348,7 +362,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 		vote_manager.active_vote = null
 		boutput(world, "<span class='success'>Vote mute result: [get_winner()]</span>")
 		if(get_winner() == "Yes")
-			if(get_winner_num() < round(clients.len * 0.5))
+			if(get_winner_num() < round(total_clients() * 0.5))
 				boutput(world, "<span class='success'><BIG><B>Minimum mute votes not reached (~50% of players) - Player not muted.</B></BIG></span>")
 				qdel(src)
 				return

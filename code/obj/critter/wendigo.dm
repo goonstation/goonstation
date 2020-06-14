@@ -46,15 +46,10 @@
 		..()
 
 	CritterDeath()
-		if (src.alive)
-			playsound(src.loc, "sound/voice/animal/wendigo_cry.ogg", 60, 1)
-			src.visible_message("<b>[src]</b> dies!")
-			src.alive = 0
-			walk_to(src,0)
-			src.update_dead_icon()
-			anchored = 0
-			set_density(0)
-			layer = initial(layer)
+		..()
+		layer = initial(layer)
+		if (king) return // king has his own death noises, spooky
+		playsound(src.loc, "sound/voice/animal/wendigo_cry.ogg", 60, 1)
 
 	seek_target()
 		src.anchored = 0
@@ -397,6 +392,7 @@
 /obj/critter/wendigo/king
 	name = "wendigo king"
 	desc = "You should run."
+	death_text = "%src% collapses in a heap!"
 	health = 500
 	icon_state = "wendigoking"
 	king = 1
@@ -408,13 +404,9 @@
 		quality = 200 // for the limbs
 
 	CritterDeath()
+		..()
 		playsound(src.loc, "sound/voice/animal/wendigo_roar.ogg", 75, 1)
 		playsound(src.loc, "sound/voice/animal/wendigo_cry.ogg", 75, 1)
-		src.visible_message("<b>[src]</b> collapses in a heap!")
-		src.alive = 0
-		walk_to(src,0)
-		icon_state = "wendigoking-dead"
-		set_density(0)
 
 ////////////////
 ////// e-egg?
