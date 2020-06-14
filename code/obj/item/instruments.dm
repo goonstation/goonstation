@@ -31,6 +31,7 @@
 	var/volume = 50
 	var/dog_bark = 1
 	var/affect_fun = 5
+	var/special_index = 0
 
 	module_research = list("audio" = 7)
 
@@ -45,7 +46,12 @@
 		src.contextActions = list()
 
 		for (var/i in 1 to sounds_instrument.len)
-			var/datum/contextAction/instrument/newcontext = new /datum/contextAction/instrument
+			var/datum/contextAction/instrument/newcontext
+
+			if (special_index && i >= special_index)
+				newcontext = new /datum/contextAction/instrument/special
+			else
+				newcontext = new /datum/contextAction/instrument
 			newcontext.note = i
 			contextActions += newcontext
 
@@ -56,9 +62,13 @@
 			return 0
 		next_play = TIME + note_time
 		//if drunk, play off pitch?
+		if (special_index && note >= special_index)
+			next_play = 100
 
 		var/turf/T = get_turf(src)
 		playsound(T, sounds_instrument[note], src.volume, randomized_pitch, pitch = pitch_set)
+
+
 
 		if (prob(5) || sounds_instrument.len == 1)
 			if (src.dog_bark)
@@ -128,11 +138,17 @@
 	desc = "Not very grand, is it?"
 	icon_state = "piano"
 	item_state = "piano"
-	sounds_instrument = list('sound/musical_instruments/piano/furelise.ogg',
-	'sound/musical_instruments/piano/gymno.ogg',
-	'sound/musical_instruments/piano/lune.ogg',
-	'sound/musical_instruments/piano/nachtmusik1.ogg',
-	'sound/musical_instruments/piano/nachtmusik2.ogg')
+	sounds_instrument = null
+	special_index = 13
+
+	New()
+		sounds_instrument = list()
+		for (var/i in 1 to 12)
+			sounds_instrument += "sound/musical_instruments/piano/piano_[i].ogg"
+
+		sounds_instrument += list("sound/musical_instruments/piano/furelise.ogg","sound/musical_instruments/piano/gymno.ogg","sound/musical_instruments/piano/lune.ogg","sound/musical_instruments/piano/nachtmusik1.ogg","sound/musical_instruments/piano/nachtmusik2.ogg")
+		..()
+
 
 /* -------------------- Grand Piano -------------------- */
 

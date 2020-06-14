@@ -83,7 +83,7 @@ var/list/globalContextActions = null
 		showButtons(var/list/buttons, var/atom/target)
 			var/offX = 0
 			var/offY = spacingY
-			var/finalOff = spacingX * (buttons.len-1)
+			var/finalOff = spacingX * (buttons.len-2)
 			offX -= finalOff/2
 
 			for(var/obj/screen/contextButton/C in buttons) //todo : stop typechecking per context
@@ -1138,7 +1138,11 @@ var/list/globalContextActions = null
 			I.play_note(note,user)
 
 		checkRequirements(var/atom/target, var/mob/user)
-			.= (target.loc == user)
+			.= ((target.loc == user) || target.density && get_dist(user,target)<=1)
+
+
+		special
+			icon_background = "key_special"
 /*
 	offered
 		icon = null
