@@ -11,15 +11,14 @@ datum/component/itemblock/saberblock/on_block_begin(obj/item/I, var/obj/item/gra
 		B.setProperty("disorient_resist", 80)
 
 		var/blockplus = DEFAULT_BLOCK_PROTECTION_BONUS + 3
-		for (var/obj/item/grab/block/block in S.contents)
-			if(S.c_flags & BLOCK_CUT)
-				block.setProperty("I_block_cut", blockplus)
-			if(S.c_flags & BLOCK_STAB)
-				block.setProperty("I_block_stab", blockplus)
-			if(S.c_flags & BLOCK_BURN)
-				block.setProperty("I_block_burn", blockplus)
-			if(S.c_flags & BLOCK_BLUNT)
-				block.setProperty("I_block_blunt", blockplus)
+		if(S.c_flags & BLOCK_CUT)
+			B.setProperty("I_block_cut", blockplus)
+		if(S.c_flags & BLOCK_STAB)
+			B.setProperty("I_block_stab", blockplus)
+		if(S.c_flags & BLOCK_BURN)
+			B.setProperty("I_block_burn", blockplus)
+		if(S.c_flags & BLOCK_BLUNT)
+			B.setProperty("I_block_blunt", blockplus)
 
 //proc that is called when the block is ended. The parent itemblock component has already registered this proc for the "COMSIG_ITEM_BLOCK_END" signal
 datum/component/itemblock/saberblock/on_block_end(obj/item/I, var/obj/item/grab/block/B)
