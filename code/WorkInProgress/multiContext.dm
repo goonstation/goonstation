@@ -439,7 +439,7 @@ var/list/globalContextActions = null
 			src.underlays += background
 		else
 			src.underlays.Cut()
-			background.icon_state = "[action.getBackground(target, user)]1"
+			background.icon_state = "[action.getBackground(target, user)]0"
 			src.underlays += background
 		return
 
