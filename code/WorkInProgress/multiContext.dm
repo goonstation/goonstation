@@ -468,8 +468,8 @@ var/list/globalContextActions = null
 	clicked(list/params)
 		if(action.checkRequirements(target, user)) //Let's just check again, just in case.
 			SPAWN_DBG(0) action.execute(target, user)
-			if (flick_on_click)
-				flick(flick_on_click, src)
+			if (action.flick_on_click)
+				flick(action.flick_on_click, src)
 			if (action.close_clicked)
 				user.closeContextActions()
 
