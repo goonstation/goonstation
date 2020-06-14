@@ -428,6 +428,8 @@ var/list/globalContextActions = null
 		transform = trans
 
 		background = null
+		src.underlays.Cut()
+
 		var/possible_bg = action.buildBackgroundIcon(target,user)
 		if (possible_bg)
 			background = possible_bg
@@ -436,10 +438,6 @@ var/list/globalContextActions = null
 		if(background == null)
 			background = image('icons/ui/context16x16.dmi', src, "[action.getBackground(target, user)]0")
 			background.appearance_flags = RESET_COLOR
-			src.underlays += background
-		else
-			src.underlays.Cut()
-			background.icon_state = "[action.getBackground(target, user)]0"
 			src.underlays += background
 		return
 

@@ -21,7 +21,7 @@
 	stamina_crit_chance = 5
 	var/next_play = 0
 	var/note_time = 100
-	var/randomized_pitch = 0
+	var/randomized_pitch = 1
 	var/pitch_set = 1
 	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
 	var/pick_random_note = 0
@@ -141,6 +141,7 @@
 	sounds_instrument = null
 	special_index = 13
 	note_time = 0.18 SECONDS
+	randomized_pitch = 0
 
 	New()
 		sounds_instrument = list()
@@ -199,6 +200,7 @@
 	module_research = list("audio" = 7, "metals" = 3)
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
+	randomized_pitch = 0
 
 	New()
 		sounds_instrument = list()
@@ -435,6 +437,7 @@
 	module_research = list("audio" = 7, "metals" = 3)
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
+	randomized_pitch = 0
 
 	New()
 		if (sounds_instrument == null)
@@ -507,6 +510,7 @@
 	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive") // works just as well for fiddles as it does for trumpets I guess  :v
 	sounds_instrument = null
 	note_time = 0.18 SECONDS
+	randomized_pitch = 0
 
 	New()
 		sounds_instrument = list()
