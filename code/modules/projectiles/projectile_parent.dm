@@ -168,6 +168,16 @@
 				var/turf/T = get_turf(A)
 				for (var/mob/X in T.contents)
 					if (X != A)
+						var/isliving = isliving(X)
+						if (isliving)
+							var/mob/living/H = X
+							var/obj/item/equipped = H.equipped()
+							if (equipped & equipped.hasProperty("reflection"))
+								var/obj/projectile/Q = shoot_reflected_to_sender(src, X)
+								die()
+								src.visible_message("<span class='alert'>[X] reflected [Q.name] with [equipped]!</span>")
+								playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
+								return
 						X.bullet_act(src)
 						pierces_left--
 						//holy duplicate code batman. If someone can come up with a better solution, be my guest
@@ -183,8 +193,8 @@
 							if (D.on)
 								D.disrupt(X)
 								src.visible_message("<span class='notice'><b>[X]'s disguiser is disrupted!</b></span>")
-						if (ishuman(X))
-							var/mob/living/carbon/human/H = X
+						if (isliving)
+							var/mob/living/H = X
 							H.stamina_stun()
 							if (istype(X, /mob/living/carbon/human/npc/monkey))
 								var/mob/living/carbon/human/npc/monkey/M = X

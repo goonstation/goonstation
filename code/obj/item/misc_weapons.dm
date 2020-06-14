@@ -54,7 +54,7 @@
 	stamina_crit_chance = 35
 	var/do_stun = 1 //controlled by itemspecial for csword. sorry.
 	var/active_force = 60
-	var/active_stamina_dmg = 150
+	var/active_stamina_dmg = 40
 	var/inactive_stamina_dmg = 35
 	var/inactive_force = 1
 	var/state_name = "sword"
@@ -121,14 +121,6 @@
 			if (handle_parry(target, user))
 				return 1
 
-			if (!is_special)
-#ifdef USE_STAMINA_DISORIENT
-				target.do_disorient(0, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0) //we don't want disorient protection to affect stamina damage
-#else
-				target.changeStatus("stunned", 50)
-				target.changeStatus("weakened", 5 SECONDS)
-#endif
-
 			var/mob/living/carbon/human/U = user
 			if(U.gender == MALE) playsound(get_turf(U), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
 			else playsound(get_turf(U), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
@@ -194,6 +186,7 @@
 		JOB_XP(user, "Clown", 1)
 	src.active = !( src.active )
 	if (src.active)
+		BLOCK_ALL
 		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
 		light_c.update(1)
 		boutput(user, "<span class='notice'>The sword is now active.</span>")

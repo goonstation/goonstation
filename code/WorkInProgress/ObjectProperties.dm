@@ -349,6 +349,15 @@ var/list/globalPropList = null
 			getTooltipDesc(var/obj/propOwner, var/propVal)
 				return "Burn Damage"
 
+	reflection // force increases as you attack players.
+		name = "Reflection"
+		id = "reflection"
+		desc = "Reflects projectiles while held."
+		tooltipImg = "disorient_resist.png"
+		defaultValue = 0
+		getTooltipDesc(var/obj/propOwner, var/propVal)
+			return "Reflecting"
+
 /*
 For properties that are on equipment and should do stuff when the item is equipped / deequipped.
 
