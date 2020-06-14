@@ -438,7 +438,9 @@ var/list/globalContextActions = null
 			background.appearance_flags = RESET_COLOR
 			src.underlays += background
 		else
-			background.icon_state = "[action.getBackground(target, user)]0"
+			src.underlays.Cut()
+			background.icon_state = "[action.getBackground(target, user)]1"
+			src.underlays += background
 		return
 
 	MouseEntered(location,control,params)
