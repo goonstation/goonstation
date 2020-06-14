@@ -1,5 +1,9 @@
 
 (t)sun jun 14 20
+(u)mbc + Flaborized
+(p)1103
+(e)🎨|sprites
+(*)Added triangle, tambourine, and cowbell instruments. You can order these through the QM.
 (u)zjdtmkhzt
 (p)1077
 (e)⚖🆕|balance, feature
