@@ -18,7 +18,7 @@ jobs:
         directories:
           - $HOME/SpacemanDMM
       before_install:
-        - setup_submodule.sh
+        - tools/travis/setup_submodule.sh
       install:
         - tools/travis/install_spaceman_dmm.sh dreamchecker
       script:
@@ -33,7 +33,7 @@ jobs:
         directories:
           - $HOME/BYOND
       before_install:
-        - setup_submodule.sh
+        - tools/travis/setup_submodule.sh
       install:
         - tools/travis/install_byond.sh
         - source $HOME/BYOND/byond/bin/byondsetup
@@ -49,7 +49,7 @@ jobs:
         directories:
           - $HOME/BYOND
       before_install:
-        - setup_submodule.sh
+        - tools/travis/setup_submodule.sh
       install:
         - tools/travis/install_byond.sh
         - source $HOME/BYOND/byond/bin/byondsetup
