@@ -566,7 +566,7 @@
 					overrideStaminaDamage = master.stamina_damage * 0.9
 					var/obj/item/sword/saber = master
 					if (istype(saber))
-						swipe_color = get_hex_color_from_blade(saber.bladecolor)
+						swipe_color = saber.get_hex_color_from_blade(saber.bladecolor)
 				return
 
 		relicclaws

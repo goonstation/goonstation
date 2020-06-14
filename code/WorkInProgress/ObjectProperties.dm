@@ -349,23 +349,6 @@ var/list/globalPropList = null
 			getTooltipDesc(var/obj/propOwner, var/propVal)
 				return "Burn Damage"
 
-	reflection // force increases as you attack players.
-		name = "Reflection"
-		id = "reflection"
-		desc = "Reflects projectiles while held."
-		tooltipImg = "disorient_resist.png"
-		defaultValue = 0
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "Reflecting"
-
-		updateMob(obj/item/owner, mob/user, value, oldValue=null)
-			. = ..()
-			APPLY_MOB_PROPERTY(user, PROP_REFLECTPROT, owner, value)
-
-		removeFromMob(obj/item/owner, mob/user, value)
-			. = ..()
-			REMOVE_MOB_PROPERTY(user, PROP_REFLECTPROT, owner)
-
 /*
 For properties that are on equipment and should do stuff when the item is equipped / deequipped.
 
@@ -527,3 +510,22 @@ to say if there's demand for that.
 	removeFromMob(obj/item/owner, mob/user, value)
 		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_EXPLOPROT, owner)
+
+
+
+/datum/objectProperty/equipment/reflection // force increases as you attack players.
+	name = "Reflection"
+	id = "reflection"
+	desc = "Reflects projectiles while held."
+	tooltipImg = "disorient_resist.png"
+	defaultValue = 0
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "Reflecting"
+
+	updateMob(obj/item/owner, mob/user, value, oldValue=null)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_REFLECTPROT, owner, value)
+
+	removeFromMob(obj/item/owner, mob/user, value)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_REFLECTPROT, owner)
