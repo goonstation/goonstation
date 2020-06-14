@@ -3,7 +3,7 @@ os: linux
 dist: xenial
 
 git:
-  submodules: true
+  submodules: false
 
 jobs:
   include:
