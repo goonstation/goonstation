@@ -306,6 +306,7 @@ datum/pathogeneffects/benevolent/oxytocinproduction
 	rarity = RARITY_COMMON
 	spread = SPREAD_BODY | SPREAD_HANDS
 	infect_message = "<span style=\"color:pink\">You can't help but feel loved.</span>"
+	infect_attempt_message = "Their touch is suspiciously soft..."
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
