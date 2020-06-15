@@ -1,5 +1,10 @@
 
 (t)mon jun 15 20
+(u)glassofmilk
+(p)830
+(e)🆕🎨|feature, sprites
+(*)Added a new File Component to the MechComp Dispenser that allows saving and re-sending computer files
+(+)Wifi and Powernet-networking Components now also transmit any files attached to packets they receive
 (u)pali
 (+)Create Viewport HUD button for AIs.
 (u)Sovexe
