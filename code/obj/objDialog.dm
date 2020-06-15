@@ -61,11 +61,8 @@ var/global/list/objects_using_dialogs
 				if (get_dist(C.mob,src) <= 1)
 					src.attack_hand(C.mob)
 				else
-					if (issilicon(C.mob))
+					if (C?.mob.mob_flags & USR_DIALOG_UPDATES_RANGE)
 						src.attack_ai(usr)
-					else if (isAIeye(C.mob))
-						var/mob/dead/aieye/E = C.mob
-						src.attack_ai(E)
 					else
 						src.remove_dialog(C.mob)
 

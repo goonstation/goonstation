@@ -1,4 +1,5 @@
 /mob/living/silicon
+	mob_flags = USR_DIALOG_UPDATES_RANGE
 	gender = NEUTER
 	var/syndicate = 0 // Do we get Syndicate laws?
 	var/syndicate_possible = 0 //  Can we become a Syndie robot?
