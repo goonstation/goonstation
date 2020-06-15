@@ -61,7 +61,7 @@ var/global/list/objects_using_dialogs
 				if (get_dist(C.mob,src) <= 1)
 					src.attack_hand(C.mob)
 				else
-					if (C?.mob.mob_flags & USR_DIALOG_UPDATES_RANGE)
+					if (C.mob.mob_flags & USR_DIALOG_UPDATES_RANGE)
 						src.attack_ai(usr)
 					else
 						src.remove_dialog(C.mob)
