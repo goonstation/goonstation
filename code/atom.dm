@@ -509,6 +509,8 @@
 	//	A.glide_size = src.glide_size
 
 	if (direct & (direct - 1))
+		ignore_simple_light_updates = 1 //to avoid double-updating on diagonal steps when we are really only taking a single step
+
 		if (direct & NORTH)
 			if (direct & EAST)
 				if (step(src, NORTH))
@@ -531,6 +533,14 @@
 					step(src, WEST)
 				else if (step(src, WEST))
 					step(src, SOUTH)
+
+		ignore_simple_light_updates = 0
+
+		if(src.medium_lights)
+			update_medium_light_visibility()
+		if (src.mdir_lights)
+			update_mdir_light_visibility(direct)
+
 		return // this should in turn fire off its own slew of move calls, so don't do anything here
 
 	var/atom/A = src.loc
@@ -590,8 +600,12 @@
 	else
 		last_turf = 0
 
-	if(src.medium_lights)
-		update_medium_light_visibility()
+	if (!ignore_simple_light_updates)
+		if(src.medium_lights)
+			update_medium_light_visibility()
+		if (src.mdir_lights)
+			update_mdir_light_visibility(direct)
+
 
 //called once per player-invoked move, regardless of diagonal etc
 //called via pulls and mob steps
@@ -930,6 +944,8 @@
 
 	if(src.medium_lights)
 		update_medium_light_visibility()
+	if (src.mdir_lights)
+		update_mdir_light_visibility(src.dir)
 
 	return src
 

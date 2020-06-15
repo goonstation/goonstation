@@ -1139,7 +1139,7 @@
 			if (held && !istype(held, /obj/ability_button))
 				W = held
 		if (!istype(W) || W.cant_drop) return
-		u_equip(W)
+
 		if (W && !W.qdeled)
 			if (istype(src.loc, /obj/vehicle))
 				var/obj/vehicle/V = src.loc
@@ -1156,8 +1156,10 @@
 
 			var/turf/T = get_turf(src.loc)
 			T.Entered(W)
+			u_equip(W)
 			.= 1
 		else
+			u_equip(W)
 			.= 0
 		if (origW)
 			origW.holding = null

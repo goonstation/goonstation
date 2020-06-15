@@ -352,8 +352,7 @@
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/space/engineer/J = the_item
-		if (ismob(J.loc))
-			J.light.attach(J.loc)
+
 		J.flashlight_toggle(the_mob)
 		if (J.on) src.icon_state = "off"
 		else  src.icon_state = "on"
@@ -367,8 +366,7 @@
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/hardhat/J = the_item
-		if (ismob(J.loc))
-			J.light.attach(J.loc)
+
 		J.flashlight_toggle(the_mob)
 		if (J.on) src.icon_state = "off"
 		else  src.icon_state = "on"

@@ -530,6 +530,41 @@ proc/get_angle(atom/a, atom/b)
 			py+=sdy
 			. += locate(px,py,M.z)
 
+//bnlah, same thing as above except instead of a list of turfs we return the first opaque turf
+/proc/getlineopaqueblocked(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
+	var/px=M.x		//starting x
+	var/py=M.y
+	. = get_turf(N)
+	var/dx=N.x-px	//x distance
+	var/dy=N.y-py
+	var/dxabs=abs(dx)//Absolute value of x distance
+	var/dyabs=abs(dy)
+	var/sdx=sign(dx)	//Sign of x distance (+ or -)
+	var/sdy=sign(dy)
+	var/x=dxabs>>1	//Counters for steps taken, setting to distance/2
+	var/y=dyabs>>1	//Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
+	var/j			//Generic integer for counting
+	if(dxabs>=dyabs)	//x distance is greater than y
+		for(j=0;j<dxabs;j++)//It'll take dxabs steps to get there
+			y+=dyabs
+			if(y>=dxabs)	//Every dyabs steps, step once in y direction
+				y-=dxabs
+				py+=sdy
+			px+=sdx		//Step on in x direction
+			var/turf/T = locate(px,py,M.z)//Add the turf to the list
+			if(!T || T.opacity || T.opaque_atom_count)
+				return T
+	else
+		for(j=0;j<dyabs;j++)
+			x+=dxabs
+			if(x>=dyabs)
+				x-=dyabs
+				px+=sdx
+			py+=sdy
+			var/turf/T = locate(px,py,M.z)
+			if(!T || T.opacity || T.opaque_atom_count)
+				return T
+
 /proc/getstraightlinewalled(atom/M,vx,vy,include_origin = 1)//hacky fuck for l ighting
 	if (!M) return null
 	var/turf/T = null
