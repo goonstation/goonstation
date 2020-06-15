@@ -1,5 +1,7 @@
 
 (t)mon jun 15 20
+(u)pali
+(+)Cairngorm now has a plaque tracking nukie wins / losses
 (u)glassofmilk
 (p)830
 (e)🆕🎨|feature, sprites
