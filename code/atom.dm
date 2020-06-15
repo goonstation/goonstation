@@ -455,6 +455,9 @@
 	if (temp_flags & SPACE_PUSHING)
 		EndSpacePush(src)
 
+	src.attached_objs?.Cut()
+	src.attached_objs = null
+
 
 //mbc comment out becausae im pretty sure this caused issuesss!
 /*
