@@ -850,6 +850,7 @@ atom
 
 	proc
 		RL_SetOpacity(new_opacity)
+			if(src.disposed) return
 			if (src.opacity == new_opacity)
 				return
 
