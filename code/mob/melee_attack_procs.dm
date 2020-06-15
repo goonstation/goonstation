@@ -821,10 +821,10 @@
 
 	proc/clear(var/mob/M)
 		target = M
-		visible_self = list()
-		visible_target = list()
-		show_self = list()
-		show_target = list()
+		visible_self.Cut()
+		visible_target.Cut()
+		show_self.Cut()
+		show_target.Cut()
 		if (istype(src, /datum/attackResults/disarm))
 			logs = list("disarms %target%")
 		else
@@ -843,7 +843,7 @@
 		bleed_always = 0 //Will cause bleeding regardless of damage type.
 		bleed_bonus = 0 //bonus to bleed damage specifically.
 
-		after_effects = list()
+		after_effects.Cut()
 
 	proc/show_message_self(var/message)
 		show_self += message
