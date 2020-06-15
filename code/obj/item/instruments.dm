@@ -579,6 +579,7 @@
 	sounds_instrument = null
 	note_time = 0.18 SECONDS
 	randomized_pitch = 0
+	volume = 80
 
 	New()
 		sounds_instrument = list()
@@ -594,6 +595,7 @@
 	sounds_instrument = null
 	note_time = 0.18 SECONDS
 	randomized_pitch = 0
+	volume = 90
 
 	New()
 		sounds_instrument = list()
@@ -609,6 +611,7 @@
 	sounds_instrument = null
 	note_time = 0.18 SECONDS
 	randomized_pitch = 0
+	volume = 80
 
 	New()
 		sounds_instrument = list()
