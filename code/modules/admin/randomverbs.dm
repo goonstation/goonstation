@@ -2558,5 +2558,10 @@ var/global/night_mode_enabled = 0
 	set name = "Toggle Text Mode"
 	set desc = "Makes a client see the game in ASCII vision."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	admin_only
+
 	var/is_text = winget(C,  "mapwindow.map", "text-mode") == "true"
+	logTheThing("admin", usr, C.mob, "has toggled %target%'s nodamage to [!is_text]")
+	logTheThing("diary", usr, C.mob, "has toggled %target%'s nodamage to [!is_text]", "admin")
+	message_admins("[key_name(usr)] has toggled [key_name(C.mob)]'s nodamage to [!is_text]")
 	winset(C, "mapwindow.map", "text-mode=[is_text ? "false" : "true"]" )
