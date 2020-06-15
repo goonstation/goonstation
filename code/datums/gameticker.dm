@@ -538,6 +538,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	else
 		final_score = 100
 
+	boutput(world, score_tracker.escapee_facts())
+	boutput(world, score_tracker.heisenhat_stats())
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] ai law display")
 	for (var/mob/living/silicon/ai/aiPlayer in AIs)
