@@ -29,7 +29,6 @@
 	R.my_atom = src
 	R.add_reagent("flockdrone_fluid", 50)
 	src.setMaterial(getMaterial("gnesis"))
-	src.mat_changename = 0
 
 ////////////////
 // FLOCKBURGER

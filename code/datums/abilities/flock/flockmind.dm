@@ -217,7 +217,7 @@
 		if(R && R.listening)
 			// your headset's on, you're fair game!!
 			targets += M
-	if(targets.len > 1)
+	if(targets.len >= 1)
 		playsound(get_turf(holder.owner), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
 		boutput(holder.owner, "<span class='notice'>You transmit the worst static you can weave into the headsets around you.</span>")
 		for(var/mob/living/M in targets)

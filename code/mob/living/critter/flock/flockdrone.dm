@@ -311,7 +311,6 @@
 		playsound(get_turf(src), "sound/effects/sparks[rand(1,6)].ogg", 50, 1)
 		if(I && I.health <= 0) // fix runtime Cannot read null.health
 			playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
-			boutput(src, "<span class='notice'>You finish converting [I] into resources (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]).</span>")
 			I.dropped(src)
 			if(I.contents.len > 0)
 				var/anything_tumbled = 0
@@ -326,6 +325,7 @@
 						"<span class='alert'>The contents of [I] tumble out of you.</span>",
 						"<span class='alert'>You hear things fall onto the floor.</span")
 			src.resources += src.absorb_completion
+			boutput(src, "<span class='notice'>You finish converting [I] into resources (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]).</span>")
 			if(istype(I, /obj/item/organ/heart/flock))
 				var/obj/item/organ/heart/flock/F = I
 				src.resources += F.resources
@@ -780,6 +780,7 @@
 	if(isflock(F))
 		if(F.get_health_percentage() >= 1.0)
 			boutput(user, "<span class='alert'>They don't need to be repaired, they're in perfect condition.</span>")
+			return
 		if(user.resources < 10)
 			boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
 		else

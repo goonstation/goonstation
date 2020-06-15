@@ -28,8 +28,7 @@
 	var/elapsed = getTimeInSecondsSinceTime(src.time_started)
 	if(elapsed >= build_time)
 		src.visible_message("<span class='text-blue'>Multiple shapes exit out of [src]!</span>")
-//		new /mob/living/critter/flock/drone(get_turf(src), src.flock)
-		var/j = pick(3, 4) + 1
+		var/j = pick(4, 5)
 		for(var/i=1, i<j, i++)
 			var/obj/item/flockcache/x = new(src.contents)
 			x.resources = rand(40, 50)
@@ -38,7 +37,6 @@
 			var/obj/flock_structure/egg/e = new(src.contents)
 			eject += e
 			e.flock = mainflock
-//		radial_flock_conversion(src, 2)
 		var/list/candidate_turfs = list()
 		for(var/turf/simulated/floor/S in orange(src, 4))
 			candidate_turfs += S
