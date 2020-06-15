@@ -21,6 +21,7 @@
 	var/datum/radio_frequency/frequency
 	var/static/manual_off_reactivate_idle = 8 //how many machine loop ticks to idle after being manually switched off
 	var/idle_count = 0
+	text = ""
 
 	desc = "A fire sensor and alarm system. When it detects fire or is manually activated, it closes all firelocks in the area to minimize the spread of fire."
 

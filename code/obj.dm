@@ -331,6 +331,7 @@
 	anchored = 1.0
 	layer = LATTICE_LAYER
 	//	flags = CONDUCT
+	text = "<font color=#333>+"
 
 	blob_act(var/power)
 		if(prob(75))
