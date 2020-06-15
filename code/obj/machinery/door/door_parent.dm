@@ -8,6 +8,7 @@
 	flags = FPRINT | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 	object_flags = BOTS_DIRBLOCK
+	text = "<font color=#D2691E>+"
 	var/secondsElectrified = 0
 	var/visible = 1
 	var/p_open = 0

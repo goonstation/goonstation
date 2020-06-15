@@ -2,7 +2,7 @@
 // Had a pipe on one end of a pump with 240 C, the other end was 20 C.
 
 obj/machinery/atmospherics/pipe
-//
+	text = ""
 	layer = PIPE_LAYER
 
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke

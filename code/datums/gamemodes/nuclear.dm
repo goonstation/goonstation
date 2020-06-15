@@ -312,6 +312,17 @@
 			game_stats.Increment("traitorloss")
 #endif
 
+	if(finished > 0)
+		var/value = world.load_intra_round_value("nukie_loss")
+		if(isnull(value))
+			value = 0
+		world.save_intra_round_value("nukie_loss", value + 1)
+	else if(finished < 0)
+		var/value = world.load_intra_round_value("nukie_win")
+		if(isnull(value))
+			value = 0
+		world.save_intra_round_value("nukie_win", value + 1)
+
 	for(var/datum/mind/M in syndicates)
 		var/syndtext = ""
 		if(M.current) syndtext += "<B>[M.key] played [M.current.real_name].</B> "

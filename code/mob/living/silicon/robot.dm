@@ -1329,7 +1329,7 @@
 
 	hand_attack(atom/target, params, location, control, origParams)
 		// Only allow it if the target is outside our contents or it is the equipped tool
-		if(!src.contents.Find(target) || target==src.equipped())
+		if(!src.contents.Find(target) || target==src.equipped() || ishelpermouse(target))
 			..()
 
 	attack_hand(mob/user)

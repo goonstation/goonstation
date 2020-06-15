@@ -218,6 +218,8 @@
 			src.implant.Add(MB)
 			MB.implanted(src)
 
+	src.text = "<font color=#[random_hex(3)]>@"
+
 /datum/human_limbs
 	var/mob/living/carbon/human/holder = null
 

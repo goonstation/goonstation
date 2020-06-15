@@ -1,6 +1,7 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items/items.dmi'
+	text = ""
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
 	var/force = null

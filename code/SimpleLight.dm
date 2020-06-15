@@ -12,6 +12,7 @@
 	appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
 	pixel_x = -32
 	pixel_y = -32
+	text = ""
 
 /atom/var/list/simple_light_rgbas = null
 /atom/var/obj/overlay/simple_light/simple_light = null

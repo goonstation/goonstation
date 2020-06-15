@@ -38,6 +38,7 @@
 	mouse_opacity = 0
 	mat_changename = 0
 	mat_changedesc = 0
+	text = ""
 	var/lightswitch = 1
 	var/may_eat_here_in_restricted_z = 0
 

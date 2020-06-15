@@ -1,6 +1,9 @@
 //very similar to playable_pests.dm :)
 /datum/random_event/major/antag/antagonist_pest
 	name = "Antagonist Critter Spawn"
+#ifdef RP_MODE
+	disabled = 1
+#endif
 
 	required_elapsed_round_time = 5 MINUTES
 
