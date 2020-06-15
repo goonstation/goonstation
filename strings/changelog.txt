@@ -1,5 +1,7 @@
 
 (t)mon jun 15 20
+(u)pali
+(+)Create Viewport HUD button for AIs.
 (u)Sovexe
 (p)1105
 (e)🐛🆕|bug, feature
