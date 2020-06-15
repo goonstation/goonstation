@@ -13,6 +13,7 @@
 	var/corrode_resist = 0
 	var/temp_resist = 0
 	var/shock_when_entered = 1
+	text = "<font color=#aaa>+"
 	anchored = 1
 	flags = FPRINT | CONDUCT | USEDELAY
 	pressure_resistance = 5*ONE_ATMOSPHERE
