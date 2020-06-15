@@ -1561,3 +1561,12 @@
 	cost = 5000
 	containertype = /obj/storage/crate/wooden
 	containername = "Printing Press Crate"
+
+/datum/supply_packs/percussion_band_kit
+	name = "Percussion Band Kit"
+	desc = "1x Tambourine, 1x Cowbell, 1x Triangle"
+	category = "Civilian Department"
+	cost = 2000
+	containername = "Percussion Band Kit"
+	contains = list(/obj/item/instrument/tambourine,/obj/item/instrument/triangle,/obj/item/instrument/cowbell)
+	containertype = /obj/storage/crate/wooden

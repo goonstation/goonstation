@@ -2968,6 +2968,7 @@ datum
 			hygiene_value = -2
 			hunger_value = 0.068
 			viscosity = 0.4
+			depletion_rate = 0
 
 			pooled()
 				..()
@@ -3031,6 +3032,7 @@ datum
 						var/datum/pathogen/P = src.pathogens[uid]
 						logTheThing("pathology", M, null, "metabolizing [src] containing pathogen [P].")
 						M.infected(P)
+				..()
 
 /* this begs the question how bloodbags worked at all if this was a thing
 				if (holder.has_reagent("dna_mutagen")) //If there's stable mutagen in the mix and it doesn't have data we gotta give it a chance to get some
@@ -3069,11 +3071,14 @@ datum
 			minimum_reaction_temperature = T0C + 50
 
 			reaction_temperature(exposed_temperature, exposed_volume)
+				var/list/covered = holder.covered_turf()
+				if (covered.len > 1 && (exposed_volume/covered.len) > 0.5)
+					return
+
 				if (holder.my_atom)
 					for (var/mob/O in AIviewers(get_turf(holder.my_atom), null))
 						boutput(O, "<span class='alert'>The blood tries to climb out of [holder.my_atom] before sizzling away!</span>")
 				else
-					var/list/covered = holder.covered_turf()
 					for(var/turf/t in covered)
 						for (var/mob/O in AIviewers(t, null))
 							boutput(O, "<span class='alert'>The blood reacts, attempting to escape the heat before sizzling away!</span>")

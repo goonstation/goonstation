@@ -33,7 +33,6 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 	var/nextMapIsVotedForPrior = 0 //we save the voted map state in the event of a failed compile, so we can restore
 	var/voteIndex = 0 //a count of votes
 	var/list/playerPickable = list() //list of maps players are allowed to pick
-	var/list/playerVotes = list() //list of map votes by people making an active choice
 	var/list/passiveVotes = list() //list of passive map votes
 	var/list/previousVotes = list() //a list of how people voted for every vote
 
@@ -283,8 +282,9 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		var/list/reportData = list()
 		var/list/votes = list()
 
-		tallyVotes(votes, reportData, passiveVotes, MAPVOTE_PASSIVE_WEIGHT)
-		tallyVotes(votes, reportData, playerVotes, MAPVOTE_ACTIVE_WEIGHT)
+		var/list/results = map_vote_holder.count_votes()
+		votes = results["tally"]
+		reportData = results["report"]
 
 		//save this vote data
 		src.previousVotes["vote[src.voteIndex]"] = reportData
@@ -292,9 +292,9 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 		logTheThing("debug", null, null, "<b>Map Vote Debug:</b> Vote data: [json_encode(votes)]. Report data: [json_encode(reportData)]")
 
-		//reset votes holder
-		src.playerVotes = new()
+		//reset votes holders
 		src.passiveVotes = new()
+		map_vote_holder.clear_votes()
 		//no one voted :(
 		if (votes.len == 0)
 			return
@@ -352,58 +352,12 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		logTheThing("diary", null, null, "The players voted for [src.voteChosenMap] as the next map.", "admin")
 		message_admins("The players voted for <b>[src.voteChosenMap]</b> as the next map. <a href='?src=\ref[src];type=view_mapvote_report;vote=[src.voteIndex]'>(View Voters)</a>")
 
-
-
-	proc/tallyVotes(var/list/vote_output, var/list/report_output, var/list/recorded_votes, var/weight as num)
-		for (var/ckey in recorded_votes)
-			var/mapName = recorded_votes[ckey]
-			// Only record the vote if the map is actually pickable by the players
-			// if (src.playerPickable.Find(mapName))
-			if (mapName in vote_output)
-				vote_output[mapName] += weight
-			else
-				vote_output[mapName] = weight
-
-			if (mapName in report_output)
-				report_output[mapName] += ckey
-			else
-				report_output[mapName] = list(ckey)
-
 	//rudely cancel the vote without counting votes/doing anything
 	proc/cancelMapVote()
 		src.playersVoting = 0
-		src.playerVotes = new()
 
 		for (var/client/C in clients)
 			C.verbs -= /client/proc/mapVote
-
-
-	//show filtered maps to vote on to players
-	proc/showMapVote(client/C)
-		if (!C)
-			throw EXCEPTION("Invalid client")
-
-		if (!src.playersVoting)
-			throw EXCEPTION("Player map voting is not currently active")
-
-
-
-		var/map = clientSelectMap(C)
-		if (!map) return
-
-		//we check this again because the input() above is blocking
-		if (!C)
-			throw EXCEPTION("Invalid client")
-
-		//maybe the player couldn't decide before the vote ended
-		if (!src.playersVoting)
-			return alert("The vote has ended, sorry.")
-
-		//record vote
-		src.passiveVotes.Remove(C.ckey)
-		src.playerVotes[C.ckey] = map
-
-		return map
 
 	// Standardized way to ask a user for a map
 	proc/clientSelectMap(client/C)
@@ -486,8 +440,149 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 	set category = "Commands"
 	set popup_menu = 0
 
-	mapSwitcher.showMapVote(src)
+	map_vote_holder.show_window(usr.client)
 
+/datum/map_vote_holder
+	var/list/client/vote_map = list() // a map of ckeys to (a map of map_names to the ckey's current vote)
+	var/voters = 0
+
+	disposing()
+		clear_votes()
+		..()
+
+	proc/clear_votes()
+		src.vote_map.len = 0
+
+	proc/count_votes()
+		var/list/results = list()
+		var/list/map_vote_count = list()
+		var/list/map_vote_report = list()
+		for(var/key in vote_map)
+			mapSwitcher.passiveVotes.Remove(key)
+			var/client_vote_map = vote_map[key]
+			for(var/map_name in client_vote_map)
+				if(client_vote_map[map_name])
+					if(map_name in map_vote_count)
+						map_vote_count[map_name] += MAPVOTE_ACTIVE_WEIGHT
+					else
+						map_vote_count[map_name] = MAPVOTE_ACTIVE_WEIGHT
+					if(map_name in map_vote_report)
+						map_vote_report[map_name] += key
+					else
+						map_vote_report[map_name] = list(key)
+
+		var/list/passive_votes = mapSwitcher.passiveVotes
+		for(var/key in passive_votes)
+			var/map_name = passive_votes[key]
+			if(map_name in map_vote_count)
+				map_vote_count[map_name] += MAPVOTE_PASSIVE_WEIGHT
+			else
+				map_vote_count[map_name] = MAPVOTE_PASSIVE_WEIGHT
+			if(map_name in map_vote_report)
+				map_vote_report[map_name] += key
+			else
+				map_vote_report[map_name] = list(key)
+
+		results["tally"] = map_vote_count
+		results["report"] = map_vote_report
+		return results
+
+	proc/setup_client_vote_map(var/client/C)
+		if(!C.ckey)
+			return
+		var/key = C.ckey
+		if(key in vote_map)
+			return
+		var/list/maps = list()
+		for(var/map in mapSwitcher.playerPickable)
+			maps[map] = 0
+		src.vote_map[key] = maps
+		voters++
+
+	proc/get_client_votes(var/client/C)
+		if(!C.ckey)
+			return
+		var/key = C.ckey
+		if(!(key in vote_map))
+			return
+		var/list/maps = list()
+		var/list/client_vote_map = vote_map[key]
+		for(var/map in client_vote_map)
+			if(client_vote_map[map] > 0)
+				maps += map
+		return maps
+
+	proc/toggle_vote(subaction, href_list)
+		var/client/C = locate(href_list["client"])
+		var/map_name = subaction
+		if(!(C.ckey in vote_map))
+			setup_client_vote_map(C)
+		var/list/client_vote_map = vote_map[C.ckey]
+		if(map_name in client_vote_map)
+			client_vote_map[map_name] = !client_vote_map[map_name]
+
+	proc/all_yes(subaction, href_list)
+		var/client/C = locate(href_list["client"])
+		if(!(C.ckey in vote_map))
+			setup_client_vote_map(C)
+		var/list/client_vote_map = vote_map[C.ckey]
+		for(var/map_name in client_vote_map)
+			client_vote_map[map_name] = 1
+
+	proc/all_no(subaction, href_list)
+		var/client/C = locate(href_list["client"])
+		if(!(C.ckey in vote_map))
+			setup_client_vote_map(C)
+		var/list/client_vote_map = vote_map[C.ckey]
+		for(var/map_name in client_vote_map)
+			client_vote_map[map_name] = 0
+
+	proc/special_vote(var/client/C,var/map_name)
+		if(!(C.ckey in vote_map))
+			setup_client_vote_map(C)
+		var/list/client_vote_map = vote_map[C.ckey]
+		client_vote_map[map_name] = 1
+
+	proc/voting_box(var/obj/voting_box/V,var/map_name)
+		var/vref = "\ref[V]"
+		vote_map[vref] = list(map_name)
+		vote_map[vref][map_name] = 1
+
+	proc/topicLink(action, subaction, var/list/extra)
+		return "?src=\ref[src]&action=[action][subaction ? "&subaction=[subaction]" : ""]&[extra && islist(extra) ? list2params(extra) : ""]"
+
+	proc/generate_window(var/client/C)
+		var/list/dat = list()
+		if(!mapSwitcher.playersVoting)
+			dat += "<h2>Sorry! The map vote is over!</h2><br>"
+			return dat.Join()
+		dat += "<h2>Vote For Some Maps:</h2><br>"
+		if(!(C.ckey in vote_map))
+			setup_client_vote_map(C)
+		var/list/client_vote_map = vote_map[C.ckey]
+		for(var/map_name in client_vote_map)
+			dat += "<B>[map_name]:</B> <A href='[topicLink("toggle_vote", "[map_name]",list("client" = "\ref[C]"))]'>[client_vote_map[map_name] ? "Yes" : "No"]</A><BR>"
+
+		dat += "<A href='[topicLink("all_yes", "all_yes",list("client" = "\ref[C]"))]'>MAKE THEM ALL YES</A><BR>"
+		dat += "<A href='[topicLink("all_no", "all_no",list("client" = "\ref[C]"))]'>MAKE THEM ALL NO</A>"
+
+		return dat.Join()
+
+	proc/show_window(var/client/C)
+		C.Browse(generate_window(C),"window=map_vote_holder;title=Map_Vote")
+
+	Topic(href, href_list)
+		. = ..()
+		var/subaction = (href_list["subaction"] ? href_list["subaction"] : null)
+
+		switch (href_list["action"])
+			if("toggle_vote")
+				toggle_vote(subaction, href_list)
+			if("all_yes")
+				all_yes(subaction,href_list)
+			if("all_no")
+				all_no(subaction,href_list)
+		src.show_window(usr.client)
 
 /obj/mapVoteLink
 	name = "<span style='color: green; text-decoration: underline;'>Map Vote</span>"
@@ -510,11 +605,11 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 		if (mapSwitcher.playersVoting)
 			if(chosenMap)
-				mapSwitcher.passiveVotes.Remove(C.ckey)
-				mapSwitcher.playerVotes[C.ckey] = chosenMap
+				map_vote_holder.special_vote(C,chosenMap)
 				boutput(C.mob, "Map vote successful???")
 			else
-				mapSwitcher.showMapVote(C)
+				map_vote_holder.show_window(C)
+
 
 	examine()
 		return list()
@@ -527,3 +622,4 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		Click()
 
 var/global/obj/mapVoteLink/mapVoteLinkStat = new /obj/mapVoteLink
+var/global/datum/map_vote_holder/map_vote_holder = new()

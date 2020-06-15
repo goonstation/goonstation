@@ -9,13 +9,13 @@
 			if (!T)
 				return ..()
 
-			if (T.temp_flags & HAS_KUDZU)
+			if (H.loc == T && T.temp_flags & HAS_KUDZU) //only infect if on the floor
 				H.infect_kudzu()
 
 			var/suspend_rot = 0
 			if (H.decomp_stage >= 4)
 				suspend_rot = (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell) || istype(owner.loc, /obj/morgue) || (owner.reagents && owner.reagents.has_reagent("formaldehyde")))
-				if (!suspend_rot)
+				if (!(suspend_rot || istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded)))
 					icky_icky_miasma(T)
 				return ..()
 
@@ -31,8 +31,8 @@
 			if (!suspend_rot)
 				env_temp = environment.temperature
 				H.next_decomp_time -= min(30, max(round((env_temp - T20C)/10), -60))
-
-				icky_icky_miasma(T)
+				if(!(istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded)))
+					icky_icky_miasma(T)
 
 			if (world.time > H.next_decomp_time) // advances every 4-10 game minutes
 				H.next_decomp_time = world.time + rand(240,600)*10

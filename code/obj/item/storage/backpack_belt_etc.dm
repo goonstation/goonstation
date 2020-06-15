@@ -411,14 +411,22 @@
 	contraband = 8
 	is_syndicate = 1
 	mats = 18 //SPACE IS THE PLACE FOR WRESTLESTATION 13
+	var/fake = 0		//So the moves are all fake.
 
 	equipped(var/mob/user)
 		..()
-		user.make_wrestler(0, 1, 0)
+		user.make_wrestler(0, 1, 0, fake)
 
 	unequipped(var/mob/user)
 		..()
-		user.make_wrestler(0, 1, 1)
+		user.make_wrestler(0, 1, 1, fake)
+
+/obj/item/storage/belt/wrestling/fake
+	name = "fake wrestling belt"
+	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
+	contraband = 0
+	is_syndicate = 0
+	fake = 1
 
 // I dunno where else to put these vOv
 /obj/item/inner_tube

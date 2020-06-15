@@ -152,7 +152,7 @@
 
 /mob/throw_end(list/params)
 	if (src.throwing & THROW_CHAIRFLIP)
-		src.changeStatus("weakened", 1.7 SECONDS)
+		src.changeStatus("weakened", 2.8 SECONDS)
 		src.force_laydown_standup()
 
 	if (length(params) && params["stun"])

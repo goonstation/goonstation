@@ -1,5 +1,44 @@
 
+(t)sun jun 14 20
+(u)mbc + Flaborized
+(p)1103
+(e)🎨|sprites
+(*)Added triangle, tambourine, and cowbell instruments. You can order these through the QM.
+(u)zjdtmkhzt
+(p)1077
+(e)⚖🆕|balance, feature
+(+)Changed the way spreading pathogen symptoms work to hopefully make it more obvious how to avoid being infected. (Pathology is still disabled.)
+(u)mbc
+(p)1092
+(e)|
+(*)The cyalume saber is now an excellent blocking weapon that provides very high disorient resistance as well as reflecting all incoming projectiles while in block mode.
+(*)Removed the cyalume saber's ability to stun.
+(u)UrsulaMajor
+(p)1099
+(e)🆕🔄|feature, rework
+(*)You can now vote for multiple maps
+(u)zjdtmkhzt
+(p)1037
+(e)🆕|feature
+(+)Added incubator to grow your pathogen samples. It can also fill vials by clicking it.  (Pathology is still disabled.)
+(t)sat jun 13 20
+(u)mbc
+(p)1089
+(e)🆕🎨|feature, sprites
+(*)Added a new way to play the sax, trumpet, fiddle, and piano.
+(u)Tarmunora
+(p)1025
+(e)🐛|bug
+(+)Corpses in body bags and welded lockers/etc will no longer produce miasma
+(u)kyle
+(p)1072
+(e)🆕|feature
+(*)Added fake wrestling belts so you can wrestle to your heart's content without actually hurting your opponent! Just like "real" wrestling!
 (t)fri jun 12 20
+(u)UrsulaMajor
+(p)1069
+(e)|
+(+)On Ass Jam, YEET! explosions are real
 (u)pali & kubius
 (p)1047
 (e)🗺🔄🎨|mapping, rework, sprites

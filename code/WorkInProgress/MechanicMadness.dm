@@ -2533,7 +2533,7 @@ var/list/mechanics_telepads = new/list()
 			instrument = I
 			sounds = I.sounds_instrument
 			volume = I.volume
-			delay = I.spam_timer
+			delay = I.note_time
 		else if (istype(W, /obj/item/clothing/head/butt))
 			instrument = W
 			sounds = 'sound/voice/farts/poo2.ogg'

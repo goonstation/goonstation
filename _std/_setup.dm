@@ -71,8 +71,8 @@
 #define OVERLOADED_WORLD_TICKLAG 0.8 //max value ticklag can be
 #define TICKLAG_DILATION_INC 0.2 //how much to increase by when appropriate
 #define TICKLAG_DILATION_DEC 0.2 //how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
-#define TICKLAG_DILATION_THRESHOLD 6 //these values dont make sense to you? read the math in gameticker
-#define TICKLAG_NORMALIZATION_THRESHOLD 0.8 //these values dont make sense to you? read the math in gameticker
+#define TICKLAG_DILATION_THRESHOLD 5 //these values dont make sense to you? read the math in gameticker
+#define TICKLAG_NORMALIZATION_THRESHOLD 0.4 //these values dont make sense to you? read the math in gameticker
 #define TICKLAG_DILATE_INTERVAL 20
 
 #define OVERLOAD_PLAYERCOUNT 95 //when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
@@ -976,7 +976,7 @@ proc/default_frequency_color(freq)
 #define SQUARE_TILE_WIDTH 15
 
 //The value of mapvotes. A passive vote is one done through player preferences, an active vote is one where the player actively chooses a map
-#define MAPVOTE_PASSIVE_WEIGHT 0.25
+#define MAPVOTE_PASSIVE_WEIGHT 1.0
 #define MAPVOTE_ACTIVE_WEIGHT 1.0
 //Amount of 1 Second ticks to spend in the pregame lobby before roundstart. Has been 150 seconds for a couple years.
 #define PREGAME_LOBBY_TICKS 150	// raised from 120 to 180 to accomodate the v500 ads, then raised back down to 150 after Z5 was introduced.
@@ -1011,11 +1011,9 @@ proc/default_frequency_color(freq)
 
 
 #if ASS_JAM
+#ifndef TRAVIS_ASSJAM
 #warn Building with ASS_JAM features enabled. Toggle this by changing BUILD_TIME_DAY in __build.dm
-//#else
-//#warn Building with ASS_JAM features disabled. Toggle this by setting BUILD_TIME_DAY == 13 in __build.dm
-//#warn Feel free to ban whoever added the above warning.
-//bluh bluh bluh im a crusty old coder who hates knowing things bluh bluh
+#endif
 #endif
 
 #ifdef Z_LOG_ENABLE

@@ -42,7 +42,9 @@ labelMappings:
     "[REWORK]": rework
     "[SECRET]": secret
     "[STYLE]": style
+    "[TOOLS]": tooling
     "[TOOLING]": tooling
     "[WIP]": WIP
     "[EASY]": good first issue
+    "[GFI]": good first issue
     "[GOOD FIRST ISSUE]": good first issue
