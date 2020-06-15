@@ -556,25 +556,6 @@
 				src.icon_state = "c_unpowered"
 				status |= NOPOWER
 
-
-//New loading/storing records is a todo while I determine how it should work.
-/obj/machinery/computer/cloning/proc
-	load_record()
-		if (!src.diskette || !src.diskette.root)
-			return -1
-
-
-		return 0
-
-	save_record()
-		if (!src.diskette || !src.diskette.root)
-			return -1
-
-
-
-		return 0
-
-
 //Find a dead mob with a brain and client.
 /proc/find_dead_player(var/find_key, needbrain=0)
 	if (isnull(find_key))
