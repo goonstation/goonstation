@@ -72,10 +72,10 @@ var/datum/event_controller/random_events
 			do_random_event(events)
 		else
 			message_admins("<span class='notice'>A random event would have happened now, but they are disabled!</span>")
-		message_admins("<span class='notice'>Next event will occur at [round(next_major_event / 600)] minutes into the round.</span>")
 
 		major_event_timer = rand(time_between_events_lower,time_between_events_upper)
 		next_major_event = TIME + major_event_timer
+		message_admins("<span class='notice'>Next event will occur at [round(next_major_event / 600)] minutes into the round.</span>")
 
 	proc/minor_event_cycle()
 		minor_event_cycle_count++
