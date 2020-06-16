@@ -240,9 +240,9 @@
 			return
 
 		if(istype(target, /obj/machinery/cruiser))
-			shoot_projectile_ST_pixel_spread(src, current_projectile, target, (target:x + 2) - start:x, (target:y + 2)- start:x, projectile_spread)
+			shoot_projectile_ST_pixel_spread(src, current_projectile, target, 64, 64, projectile_spread)
 		else
-			shoot_projectile_ST_pixel_spread(src, current_projectile, target, target:x - start:x, target:y - start:y, projectile_spread)
+			shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0, projectile_spread)
 		return
 
 	process() // override so drones don't just loaf all fuckin day
@@ -1271,5 +1271,4 @@
 			task = "sleeping"
 			src.health = 0
 			src.CritterDeath()
-
 
