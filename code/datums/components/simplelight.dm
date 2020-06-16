@@ -104,7 +104,6 @@
 /datum/component/holdertargeting/medium_directional_light/on_dropped(datum/source, mob/user)
 	. = ..()
 	var/obj/item/I = src.parent
-	boutput(world,"[I],[I.loc] and [user] and [source]")
 	if (I.loc == user)
 		src.light_target = user
 		return
