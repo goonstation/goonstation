@@ -12,7 +12,7 @@ client/proc/show_admin_lag_hacks()
 
 	var/HTML = "<html><head><title>Admin Lag Reductions</title></head><body>"
 	HTML += "<b><a href='?src=\ref[src];action=lightweight_doors'>Remove Light+Cam processing when doors open or close</a></b> (May jank up lights slightly)<br><br>"
-	HTML += "<b><a href='?src=\ref[src];action=lightweight_lights'>Slow down the light queue drastically</a></b> (May jank up lights slightly)<br><br>"
+	HTML += "<b><a href='?src=\ref[src];action=lightweight_mobs'>Slow Life() Processing</a></b> (Extremely safe - Life() compensates for the change automatically)<br><br>"
 	HTML += "<b><a href='?src=\ref[src];action=slow_atmos'>Slow atmos processing</a></b> (May jank up the TEG/Hellburns)<br><br>"
 	HTML += "<b><a href='?src=\ref[src];action=slow_fluids'>Slow fluid processing</a></b> (Safe, just feels weird)<br><br>"
 	HTML += "<b><a href='?src=\ref[src];action=special_sea_fullbright'>Stop Sea Light processing on Z1</a></b> (Safe, makes the Z1 ocean a little ugly)<br><br>"
@@ -29,7 +29,7 @@ client/proc/show_admin_lag_hacks()
 
 client/proc/lightweight_doors()
 	set name = "Force Doors Ignore Cameras and Lighting"
-	set desc = "Helps when server load is heavy. Might jank up the lighting system a bit, but its mostly OK."
+	set desc = "Helps when server load is heavy. Creates really ugly dark spots, try not to use this often."
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set hidden = 1
 	admin_only
@@ -42,18 +42,18 @@ client/proc/lightweight_doors()
 		message_admins("[key_name(src)] removed light/camera interactions from doors with Lag Reduction panel.")
 
 
-client/proc/lightweight_lights()
-	set name = "Kneecap Light Queue"
-	set desc = "Helps when server load is heavy."
+client/proc/lightweight_mobs()
+	set name = "Slow Mob Processing"
+	set desc = "Reduces load of Life(). Extremely safe - Life() compensates for the change automatically :)"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	admin_only
 
 	if (processScheduler.hasProcess("Lighting"))
-		var/datum/controller/process/lighting/L = processScheduler.nameToProcessMap["Lighting"]
-		L.max_chunk_size = 5
+		var/datum/controller/process/mobs/M = processScheduler.nameToProcessMap["Mob"]
+		M.schedule_interval = 65
 
-		message_admins("[key_name(src)] kneecapped the light queue processing speed with Lag Reduction panel.")
+		message_admins("[key_name(src)] slowed Mob process interval with Lag Reduction panel.")
 
 client/proc/slow_fluids()
 	set name = "Slow Fluid Processing"

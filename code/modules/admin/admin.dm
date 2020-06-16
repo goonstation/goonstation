@@ -3309,11 +3309,11 @@ var/global/noir = 0
 
 			usr.client.lightweight_doors()
 
-		if ("lightweight_lights")
+		if ("lightweight_mobs")
 			if (src.level < LEVEL_PA)
 				return alert("You must be at least a Primary Admin to do this.")
 
-			usr.client.lightweight_lights()
+			usr.client.lightweight_mobs()
 
 		if ("slow_atmos")
 			if (src.level < LEVEL_PA)
