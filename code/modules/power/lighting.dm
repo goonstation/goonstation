@@ -624,6 +624,7 @@
 		if(prob(1+W.force * 5))
 
 			boutput(user, "You hit the light, and it smashes!")
+			logTheThing("station", user, null, "smashes a light at [log_loc(src)]")
 			for(var/mob/M in AIviewers(src))
 				if(M == user)
 					continue
