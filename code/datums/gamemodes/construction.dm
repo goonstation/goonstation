@@ -19,6 +19,7 @@
 
 	var/g_smx
 	var/g_smy
+	do_antag_random_spawns = 0
 
 /datum/generation_marker
 	var/x

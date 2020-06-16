@@ -22,6 +22,8 @@
 
 	var/datum/game_mode/spy_theft/spy_market = 0	//In case any spies are spawned into a round that is NOT spy_theft, we need a place to hold their spy market.
 
+	var/do_antag_random_spawns = 1
+
 /datum/game_mode/proc/announce()
 	boutput(world, "<B>[src] did not define announce()</B>")
 
