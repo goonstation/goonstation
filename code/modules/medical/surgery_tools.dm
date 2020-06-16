@@ -413,7 +413,7 @@ CONTAINS:
 			src.cell.dispose()
 			src.cell = null
 
-	get_desc(dist)
+	get_desc()
 		..()
 		if (istype(src.cell))
 			if (src.cell.artifact)
@@ -528,6 +528,7 @@ CONTAINS:
 				if (prob(25 + suiciding))
 					cell.zap(user)
 				cell.use(cell.charge)
+				src.tooltip_rebuild = 1
 
 			if (emagged && !faulty && prob(10))
 				user.show_text("[src]'s on board scanner indicates that the target is undergoing a cardiac arrest!", "red")
@@ -648,7 +649,7 @@ CONTAINS:
 	var/in_use = 0
 	hide_attack = 2
 
-	get_desc(dist)
+	get_desc()
 		..()
 		if (src.uses >= 0)
 			switch (src.uses)
@@ -796,6 +797,7 @@ CONTAINS:
 				var/obj/item/bandage/B = tool
 				B.in_use = 0
 				B.uses --
+				B.tooltip_rebuild = 1
 				B.update_icon()
 			else if (istype(tool, /obj/item/material_piece/cloth))
 				ownerMob.u_equip(tool)

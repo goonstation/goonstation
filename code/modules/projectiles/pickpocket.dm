@@ -152,6 +152,7 @@
 				if ("r_leg", "l_leg") // Tie shoelaces
 					if (M.shoes && M.shoes.laces == LACES_NORMAL)
 						M.shoes.laces = LACES_TIED
+						M.shoes.tooltip_rebuild = 1
 						if (istype(M.shoes, /obj/item/clothing/shoes/clown_shoes))
 							boutput(M, "Your shoes give out one sad, final squeak. Oh no.")
 							M.shoes.step_sound = null

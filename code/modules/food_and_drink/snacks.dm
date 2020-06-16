@@ -2728,5 +2728,5 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 		phrase = pick(src.heart_phrases)
 		return
 
-	get_desc(dist)
+	get_desc()
 		. = "<br><span class='notice'>It says: [phrase]</span>"

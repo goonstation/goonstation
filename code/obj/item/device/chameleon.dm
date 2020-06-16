@@ -77,6 +77,7 @@
 	var/obj/overlay/anim = null //The toggle animation overlay will also be retained
 	var/obj/dummy/chameleon/cham = null //No sense creating / destroying this
 	var/active = 0
+	tooltip_flags = REBUILD_DIST
 
 	is_syndicate = 1
 	mats = 14
@@ -136,6 +137,7 @@
 			cham.icon_state = target.icon_state
 			cham.dir = target.dir
 			can_use = 1
+			tooltip_rebuild = 1
 		else
 			user.show_text("\The [target] is not compatible with the scanner.", "red")
 
@@ -185,8 +187,10 @@
 				A.set_loc(get_turf(cham))
 			cham.loc = src
 			can_use = 0
+			tooltip_rebuild = 1
 			SPAWN_DBG (100)
 				can_use = 1
+				tooltip_rebuild = 1
 
 /obj/item/device/chameleon/bomb
 	name = "chameleon bomb"

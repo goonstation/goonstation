@@ -257,6 +257,13 @@
 #define BLOCK_BURN					32768	//block an extra point of burn damage when used to block
 #define BLOCK_BLUNT					65536	//block an extra point of blunt damage when used to block
 
+//tooltip flags for rebuilding
+#define REBUILD_ALWAYS				1		//rebuild tooltip every single time without exception
+#define REBUILD_DIST				2		//force rebuild if dist does not match cache
+#define REBUILD_USER				4		//force rebuild if viewer has changed at all
+#define REBUILD_SPECTRO				8		//force rebuild if spectrospec status of viewer has changed
+
+
 //clothing dirty flags (not used for anything other than submerged overlay update currently. eventually merge into update_clothing)
 #define C_BACK 1
 #define C_MASK 2

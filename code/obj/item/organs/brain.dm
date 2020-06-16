@@ -16,6 +16,7 @@
 	module_research_type = /obj/item/organ/brain
 	FAIL_DAMAGE = 120
 	MAX_DAMAGE = 120
+	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
 
 	disposing()
 		if (owner && owner.brain == src)

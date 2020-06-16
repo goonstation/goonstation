@@ -289,6 +289,7 @@
 	desc = "You probably shouldn't eat this, unless you happen to be able to eat metal."
 	icon_state = "orange-clockwork"
 	validforhat = 0
+	tooltip_flags = REBUILD_ALWAYS
 
 	get_desc()
 		. += "[pick("The time is", "It's", "It's currently", "It reads", "It says")] [o_clock_time()]."

@@ -262,7 +262,7 @@
 					if (istype(thing, src.contained_item))
 						src.item_amount++
 
-	get_desc(dist)
+	get_desc()
 		if (src.item_amount > 15 || src.item_amount == -1)
 			. += "There's a whole, whole lot of things inside. Dang!"
 		else if (src.item_amount >= 1)
@@ -362,11 +362,13 @@
 		if (myItem)
 			if (src.item_amount >= 1)
 				src.item_amount--
+				tooltip_rebuild = 1
 			src.update_icon()
 			return myItem
 		else if (src.item_amount != 0) // should be either a positive number or -1
 			if (src.item_amount >= 1)
 				src.item_amount--
+				tooltip_rebuild = 1
 			var/obj/item/newItem = new src.contained_item(src)
 			src.update_icon()
 			return newItem
@@ -393,6 +395,7 @@
 				return 0
 			if (src.item_amount != -1)
 				src.item_amount ++
+				tooltip_rebuild = 1
 			src.update_icon()
 			if (user && show_messages)
 				boutput(user, "You stuff [I] into [src].")

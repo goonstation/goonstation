@@ -771,7 +771,7 @@
 	var/match_amt = 6 // -1 for infinite
 	rand_pos = 1
 
-	get_desc(dist)
+	get_desc()
 		if (src.match_amt == -1)
 			. += "There's a whole lot of matches left."
 		else if (src.match_amt >= 1)
@@ -789,6 +789,7 @@
 				user.put_in_hand_or_drop(W)
 				if (src.match_amt != -1)
 					src.match_amt --
+					tooltip_rebuild = 1
 			src.update_icon()
 		else
 			return ..()

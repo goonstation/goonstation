@@ -51,6 +51,7 @@
 	burn_output = 500
 	burn_possible = 1
 	health = 10
+	tooltip_flags = REBUILD_DIST
 	var/list/cards = list()
 	var/face_up = 0
 	var/card_name = "blank card"
@@ -75,7 +76,7 @@
 		if (!src.cards.len)
 			qdel(src)
 			return
-
+		tooltip_rebuild = 1
 		src.overlays = null
 		switch (src.cards.len)
 			if (-INFINITY to 0)

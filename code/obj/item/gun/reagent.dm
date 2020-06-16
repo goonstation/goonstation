@@ -104,6 +104,7 @@
 	capacity = 90
 	projectile_reagents = 1
 	dump_reagents_on_turf = 1
+	tooltip_flags = REBUILD_DIST
 
 	get_desc(dist)
 		if (dist > 2)

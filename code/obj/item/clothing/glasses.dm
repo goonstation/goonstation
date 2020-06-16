@@ -503,6 +503,14 @@
 		..()
 		setProperty("disorient_resist_eye", 5)
 
+	equipped(mob/user, slot)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_SPECTRO, src)
+
+	unequipped(mob/user)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_SPECTRO, src)
+
 // testing thing for static overlays
 /obj/item/clothing/glasses/staticgoggles
 	name = "goggles"

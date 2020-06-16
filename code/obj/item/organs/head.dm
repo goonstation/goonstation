@@ -15,6 +15,7 @@
 	edible = 0
 	rand_pos = 0 // we wanna override it below
 	made_from = "bone"
+	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
 	MAX_DAMAGE = INFINITY
 
 	var/obj/item/organ/brain/brain = null
