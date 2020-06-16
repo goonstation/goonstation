@@ -259,6 +259,7 @@ datum/preferences
 
 		if (user && !IsGuestKey(user.key)) //ZeWaka: Fix for null.key
 			if (rebuild_profile)
+				rebuild_profile = 0
 				profile_cache.len = 0
 				profile_cache += "<div id='cloudsaves'><strong>Cloud Saves</strong><hr>"
 				var/client/wtf = ismob( user ) ? user.client : user
