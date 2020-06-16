@@ -27,11 +27,10 @@
 	health = 10
 
 	buildTooltipContent()
-		var/Tcontent = ..()
+		. = ..()
 		var/list/L = get_contents()
-		Tcontent += "<br>Holding [L.len]/[slots] objects"
-
-		return Tcontent
+		. += "<br>Holding [L.len]/[slots] objects"
+		lastTooltipContent = .
 
 	New()
 		hud = new(src)

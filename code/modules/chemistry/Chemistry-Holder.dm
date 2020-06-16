@@ -564,7 +564,9 @@ datum
 						del_reagent(current_id)
 					else
 						total_volume += current_reagent.volume
-
+			if(isitem(my_atom))
+				var/obj/item/I = my_atom
+				I.tooltip_rebuild = 1
 			return 0
 
 		proc/clear_reagents()

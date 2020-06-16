@@ -276,9 +276,9 @@
 		. += "There are [src.charge]/[src.maxCharge] PU left."
 
 	buildTooltipContent()
-		var/content = ..()
-		content += "<br>There are [src.charge]/[src.maxCharge] PU left."
-		return content
+		. = ..()
+		. += "<br>There are [src.charge]/[src.maxCharge] PU left."
+		lastTooltipContent = .
 
 /obj/item/storage/belt/utility/prepared
 	spawn_contents = list(/obj/item/crowbar,

@@ -47,11 +47,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/shoot_delay = 4
 
 	buildTooltipContent()
-		var/Tcontent = ..()
+		. = ..()
 		if(current_projectile)
-			Tcontent += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> Bullet Power: [current_projectile.power] - [current_projectile.ks_ratio * 100]% lethal"
-
-		return Tcontent
+			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> Bullet Power: [current_projectile.power] - [current_projectile.ks_ratio * 100]% lethal"
+		lastTooltipContent = .
 
 	New()
 		SPAWN_DBG(2 SECONDS)
