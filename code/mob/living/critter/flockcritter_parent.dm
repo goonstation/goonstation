@@ -30,6 +30,10 @@
 	// AI STUFF
 	is_npc = 1
 
+	use_stamina = 0 //haha no
+
+	can_lie = 0 // no rotate when dead
+
 /mob/living/critter/flock/setup_healths()
 	add_hh_robot(-(src.health_brute), src.health_brute, src.health_brute_vuln)
 	add_hh_robot_burn(-(src.health_burn), src.health_burn, src.health_burn_vuln)

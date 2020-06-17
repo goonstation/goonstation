@@ -37,7 +37,7 @@
 	return 1
 
 /datum/game_mode/flock/check_finished()
-	//todo
+	//TODO
 	..()
 
 /datum/game_mode/flock/declare_completion()
