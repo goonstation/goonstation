@@ -247,7 +247,7 @@
 	show_mdir_light()
 
 	if (mdir_light_rgbas.len == 1) //dont loop/average if list only contains 1 thing
-		for(var/obj/overlay/simple_light/medium/directional/mdir_light in src.medium_lights)
+		for(var/obj/overlay/simple_light/medium/directional/mdir_light in src.mdir_lights)
 			if(mdir_light.dist == mdir_light_dists[mdir_light_dists.len])
 				mdir_light.color = rgb(rgba[1], rgba[2], rgba[3], min(255, rgba[4]))
 			else
