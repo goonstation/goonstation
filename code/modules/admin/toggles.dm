@@ -325,10 +325,10 @@ var/global/IP_alerts = 1
 	admin_only
 	if(!src.holder.animtoggle)
 		src.holder.animtoggle = 1
-		boutput(src, "Atom Verbs Toggled Off but not really, use Change Admin Preferences instead")
+		boutput(src, "Atom interaction options toggled on.")
 	else
 		src.holder.animtoggle = 0
-		boutput(src, "Atom Verbs Toggled On but not really, use Change Admin Preferences instead")
+		boutput(src, "Atom interaction options toggled off.")
 
 /client/proc/toggle_view_range()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
