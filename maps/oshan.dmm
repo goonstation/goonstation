@@ -6045,7 +6045,7 @@
 "nJp" = (/obj/submachine/cargopad{name = "Security Pod Bay Pad"},/obj/machinery/light/incandescent/greenish,/turf/simulated/floor,/area/station/hangar/sec)
 "oox" = (/obj/wingrille_spawn/auto/crystal,/obj/disposalpipe/segment/transport{dir = 4},/turf/space/fluid,/area/station/crew_quarters/lounge_port)
 "pIo" = (/obj/lattice{dir = 1; icon_state = "lattice-dir-b"},/obj/warp_beacon{name = "Secure Dock"},/turf/space/fluid,/area)
-"pRU" = (/obj/machinery/door/airlock/pyro/security/alt{dir = 4; req_access_txt = "1"},/obj/disposalpipe/segment/transport{dir = 4},/obj/cable{icon_state = "4-8"},/turf/simulated/floor,/area/station/hangar/sec)
+"pRU" = (/obj/machinery/door/airlock/pyro/security/alt{dir = 4; req_access_txt = "1"},/obj/disposalpipe/segment/transport{dir = 4},/obj/cable{icon_state = "4-8"},/obj/access_spawn/security,/turf/simulated/floor,/area/station/hangar/sec)
 "qcB" = (/obj/wingrille_spawn/auto/crystal,/obj/disposalpipe/segment/transport,/turf/simulated/floor/plating/random,/area/station/maintenance/disposal)
 "qPg" = (/obj/disposalpipe/segment/transport{dir = 8; icon_state = "pipe-c"},/obj/lattice{dir = 10; icon_state = "lattice-dir"},/turf/space/fluid,/area)
 "sBu" = (/obj/disposalpipe/segment/transport{dir = 4},/turf/simulated/wall/auto/reinforced/supernorn,/area/station/hangar/sec)
