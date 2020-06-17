@@ -199,6 +199,10 @@
 	var/obj/racing_clowncar/owner
 
 	disposing()
+		if(owner?.powerup == src)
+			if(owner?.driver?.client)
+				owner.driver.client.screen -= src
+			owner.powerup = null
 		owner = null
 		..()
 

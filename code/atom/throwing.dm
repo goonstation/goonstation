@@ -347,8 +347,7 @@
 
 	//done throwing, either because it hit something or it finished moving
 
-	if (throwing)
-		animate(src, transform = transform_original)
+	animate(src, transform = transform_original)
 
 	src.throw_end(params)
 

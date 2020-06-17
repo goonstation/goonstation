@@ -1506,7 +1506,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 	disposing()
 		if (next)
-			next.disposing()
+			next.dispose()
 			next = null
 
 		..()

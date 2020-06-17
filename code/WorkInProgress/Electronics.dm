@@ -744,7 +744,7 @@
 /obj/disposing()
 	if (src.decon_contexts)
 		for(var/datum/contextAction/C in src.decon_contexts)
-			C.disposing()
+			C.dispose()
 	..()
 
 /obj/proc/was_deconstructed_to_frame(mob/user)

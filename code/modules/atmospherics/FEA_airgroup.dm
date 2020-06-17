@@ -257,7 +257,7 @@
 						else
 							abort_group = 1
 							break
-				else if(isturf(enemy_tile))
+				else if(isturf(enemy_tile) && !enemy_tile.density) // optimization, if you ever need unsimmed walls to affect temperature change this
 					if(air.check_turf(enemy_tile))
 						connection_difference = air.mimic(enemy_tile)
 					else

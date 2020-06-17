@@ -901,6 +901,17 @@
 /turf/unsimulated/floor/vr/white
 	icon_state = "vrwhitehall"
 
+// simulated setpieces
+
+/turf/simulated/floor/setpieces
+	icon = 'icons/misc/worlds.dmi'
+	fullbright = 0
+
+	bloodfloor
+		name = "bloody floor"
+		desc = "Yuck."
+		icon_state = "bloodfloor_1"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/snow
@@ -958,6 +969,11 @@
 /////////////////////////////////////////
 
 /turf/simulated/floor/industrial
+	icon_state = "diamondtile"
+	step_material = "step_plating"
+	step_priority = STEP_PRIORITY_MED
+
+/turf/unsimulated/floor/industrial
 	icon_state = "diamondtile"
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED

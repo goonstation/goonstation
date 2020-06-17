@@ -109,11 +109,8 @@
 					continue
 				if(holder.organ_list[thing] == src)
 					holder.organ_list[thing] = null
-
-			//mbc : this following one might be unnecessary but organs are now GC-clean so im afraid to touch it
-			for(var/i = 1, i < src.holder.organ_list.len, i++)
-				if (src.holder.organ_list[i] == src)
-					src.holder.organ_list[i] = null
+				if(thing in holder.vars) // organ holders suck, refactor when they no longer suck
+					holder.vars[thing] = null
 
 
 		if (donor && donor.organs) //not all mobs have organs/organholders (fish)
@@ -121,7 +118,7 @@
 		donor = null
 
 		if (bones)
-			bones.disposing()
+			bones.dispose()
 
 		holder = null
 		..()

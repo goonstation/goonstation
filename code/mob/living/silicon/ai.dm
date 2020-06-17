@@ -404,10 +404,17 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			//	return
 	. = ..()
 
-/mob/living/silicon/ai/build_keymap(client/C)
-	var/datum/keymap/keymap = ..()
-	keymap.merge(client.get_keymap("robot"))
-	return keymap
+/mob/living/silicon/ai/build_keybind_styles(client/C)
+	..()
+	C.apply_keybind("robot")
+
+	if (!C.preferences.use_wasd)
+		C.apply_keybind("robot_arrow")
+
+	if (C.preferences.use_azerty)
+		C.apply_keybind("robot_azerty")
+	if (C.tg_controls)
+		C.apply_keybind("robot_tg")
 
 /mob/living/silicon/ai/proc/eject_brain(var/mob/user)
 	if (src.mind && src.mind.special_role)

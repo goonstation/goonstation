@@ -93,7 +93,7 @@ var/list/observers = list()
 		if (istype(M))
 			M.apply_camera(C)
 		else
-			..(C)
+			..()
 
 	cancel_camera()
 		set hidden = 1

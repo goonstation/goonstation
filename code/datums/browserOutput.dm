@@ -358,6 +358,8 @@ var/global
 		//Some macros remain in the string even after parsing and fuck up the eventual output
 		message = stripTextMacros(message)
 
+		message = replacetext(message, " ", "") // this character crashes the js side and I don't know how to fix it there
+
 		//Grab us a client if possible
 		var/client/C
 		if (isclient(target))

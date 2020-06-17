@@ -76,6 +76,8 @@
 	var/resourcesLoaded = 0 //Has this client done the mass resource downloading yet?
 	var/datum/tooltipHolder/tooltipHolder = null
 
+	var/chui/window/keybind_menu/keybind_menu = null
+
 	var/delete_state = DELETE_STOP
 
 	var/list/cloudsaves
@@ -949,7 +951,7 @@ var/global/curr_day = null
 	SPAWN_DBG(0)//I do not advocate this! So basically hide your eyes for one line of code.
 		world.Export( "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]" )//If it fails, oh well...
 //Returns some cloud data on the client
-/client/proc/cloud_get( var/key, var/value )
+/client/proc/cloud_get( var/key )
 	return clouddata ? clouddata[key] : null
 //Returns 1 if you can set or retrieve cloud data on the client
 /client/proc/cloud_available()
@@ -1088,7 +1090,7 @@ var/global/curr_day = null
 	tg_controls = tg
 	winset( src, "menu", "tg_controls.is-checked=[tg ? "true" : "false"]" )
 
-	src.mob.update_keymap()
+	src.mob.reset_keymap()
 
 /client/verb/set_tg_controls()
 	set hidden = 1

@@ -1,0 +1,15 @@
+name: label-merge-conflicts
+on:
+  push:
+    branches:
+      - master
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: zewaka/auto-label-merge-conflicts@master
+        with:
+          CONFLICT_LABEL_NAME: "merge conflict"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MAX_RETRIES: 10
+          WAIT_MS: 8000

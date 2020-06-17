@@ -489,6 +489,12 @@
 	return get_ability_holder(/datum/abilityHolder/vampiric_zombie)
 
 /mob/living/carbon/human/disposing()
+	for(var/obj/item/I in src)
+		if(I.equipped_in_slot != slot_w_uniform && I.equipped_in_slot != "i_clothing")
+			src.u_equip(I)
+	if(src.w_uniform) // last because pockets etc.
+		src.u_equip(src.w_uniform)
+
 	if (hud)
 		if (hud.master == src)
 			hud.master = null
@@ -500,39 +506,20 @@
 	hud.remove_object(stamina_bar)
 
 	for(var/obj/item/implant/imp in src.implant)
-		imp.disposing()
+		imp.dispose()
 	src.implant = null
 
-	for(var/image/im in health_mon_icons)
-		if(im.loc == src)
-			im.loc = null
-			im.dispose()
-			health_mon_icons -= im
-
-	for(var/image/im in arrestIconsAll)
-		if(im.loc == src)
-			im.loc = null
-			im.dispose()
-			health_mon_icons -= im
-
-	src.wear_suit = null
-	src.w_uniform = null
-	src.gloves = null
-	src.glasses = null
-	src.head = null
-	src.ears = null
-	src.shoes = null
-	src.belt = null
-	src.internal = null
-	src.internals = null
-	src.wear_mask = null
-	src.wear_id = null
-	src.r_store = null
-	src.l_store = null
-	src.back = null
-	src.handcuffs = null
-	src.r_hand = null
-	src.l_hand = null
+	for(var/client/C)
+		C.images -= list(health_mon, health_implant, arrestIcon)
+	if(health_mon)
+		health_mon.dispose()
+		health_mon_icons -= health_mon
+	if(health_implant)
+		health_implant.dispose()
+		health_mon_icons -= health_implant
+	if(arrestIcon)
+		arrestIcon.dispose()
+		arrestIconsAll -= arrestIcon
 
 	src.chest_item = null
 
@@ -567,7 +554,7 @@
 	for (var/obj/item/parts/HP in src)
 		if (istype(HP,/obj/item/parts/human_parts))
 			if (HP.bones && HP.bones.donor == src)
-				HP.disposing()
+				HP.dispose()
 
 			var/obj/item/parts/human_parts/humanpart = HP
 			humanpart.original_holder = null
@@ -1134,14 +1121,19 @@
 		else
 			return ..()
 
-///mob/living/carbon/human/click(atom/target, params)
+/mob/living/carbon/human/build_keybind_styles(client/C)
+	..()
+	C.apply_keybind("human")
 
-///mob/living/carbon/human/Stat()
+	if (!C.preferences.use_wasd)
+		C.apply_keybind("human_arrow")
 
-/mob/living/carbon/human/build_keymap(client/C)
-	var/datum/keymap/keymap = ..()
-	keymap.merge(client.get_keymap("human"))
-	return keymap
+	if (C.preferences.use_azerty)
+		C.apply_keybind("human_azerty")
+	if (C.tg_controls)
+		C.apply_keybind("human_tg")
+		if (C.preferences.use_azerty)
+			C.apply_keybind("human_tg_azerty")
 
 /mob/living/carbon/human/proc/toggle_throw_mode()
 	if (src.in_throw_mode)
@@ -2590,8 +2582,10 @@
 	else
 		src.limbs.mend()
 	//Unbreak organs. There really should be no way to do this so there's no proc, but I'm explicitly making to work for this. - kyle
-	for (var/obj/item/organ/O in src.organHolder.organ_list)
-		O.broken = 0
+	for (var/organ_slot in src.organHolder.organ_list)
+		var/obj/item/organ/O = src.organHolder.organ_list[organ_slot]
+		if(istype(O))
+			O.broken = 0
 	if (!src.organHolder)
 		src.organHolder = new(src)
 	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye"))
@@ -3539,6 +3533,12 @@
 			else if (move_dir == turn(last_move_dir,180))
 				sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 				playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.9)
+				if(src.bioHolder.HasEffect("magnets_pos") || src.bioHolder.HasEffect("magnets_neg"))
+					var/datum/bioEffect/hidden/magnetic/src_effect = src.bioHolder.GetEffect("magnets_pos")
+					if(src_effect == null) src_effect = src.bioHolder.GetEffect("magnets_neg")
+					if(src_effect.update_charge(1))
+						playsound(get_turf(src), "sound/effects/sparks[rand(1,6)].ogg", 25, 1,extrarange = -25)
+
 
 			sustained_moves = 0
 	else

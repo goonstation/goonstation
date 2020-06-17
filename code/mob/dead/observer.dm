@@ -27,9 +27,11 @@
 	corpse = null
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 		src.abilityHolder:remove_all_abilities()
-		src.abilityHolder.owner = null
+		src.abilityHolder.dispose()
+		src.abilityHolder = null
 	if (hud)
-		hud.disposing()
+		hud.dispose()
+		hud = null
 
 	..()
 
@@ -300,10 +302,9 @@
 	else
 		return 0.75 + movement_delay_modifier
 
-/mob/dead/observer/build_keymap(client/C)
-	var/datum/keymap/keymap = ..()
-	keymap.merge(client.get_keymap("human"))
-	return keymap
+/mob/dead/observer/build_keybind_styles(client/C)
+	..()
+	C.apply_keybind("human")
 
 /mob/dead/observer/is_spacefaring()
 	return 1

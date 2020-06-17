@@ -393,7 +393,7 @@
 			user.u_equip(src)
 			return 0
 
-		src.affecting.lastattacker = src
+		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
 		.= src.affecting
 		user.u_equip(src)

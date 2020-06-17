@@ -30,6 +30,6 @@
 
 /proc/enable_extools_debugger()
 	Z_LOG_DEBUG("Preload", "Loading extools debugger...")
-	var/dll = world.GetConfig("env", "EXTOOLS_DLL")
-	if (dll)
-		call(dll, "debug_initialize")()
+	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || (world.system_type == MS_WINDOWS ? "./byond-extools.dll" : "./libbyond-extools.so")
+	if(fexists(extools))
+		call(extools, "debug_initialize")()

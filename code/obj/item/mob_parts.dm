@@ -64,7 +64,7 @@
 		holder = null
 
 		if (bones)
-			bones.disposing()
+			bones.dispose()
 
 		..()
 

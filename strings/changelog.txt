@@ -1,4 +1,40 @@
 
+(t)sun jun 07 20
+(u)mbc
+(p)981
+(e)⚖🆕🔄|balance, feature, rework
+(*)Certain kinds of random events will be preferred when many players are dead or all the antagonists are dead.
+(*)Added two new random events : one that spawns dead players as random ghost critter pests (different from normal ghost critters) and another that spawns 1-3 dead players as an antagonistic critter
+(u)Sovexe
+(p)978
+(e)|
+(+)Monkeys will now drop all equipped items when meat spiked
+(u)UrsulaMajor
+(p)969
+(e)⚖|balance
+(*)Biomagnetic Fields now use charge to produce their effects. Charge builds up when you take tight turns.
+(u)UrsulaMajor
+(p)977
+(e)🐛|bug
+(+)Fixed bug where critters could attack really fast
+(u)Tarmunroa
+(p)692
+(e)⚖🔄|balance, rework
+(+)Globally enabled experimental smoke spread
+(u)MarkNstein
+(p)971
+(e)|
+(+)Command jobs now displayed as filled when late-joining during Rev-mode.
+(t)sat jun 06 20
+(u)ZeWaka
+(p)141
+(e)🆕|feature
+(*)Added a basic custom keybinding system to the game. 😸
+(*)Change your keybinds by going to the interface menu in the top left.
+(u)mbc
+(p)966
+(e)|
+(+)Fixed a few pushing related bugs relating to grabbing and stamina consumption while sprinting.
 (t)thu jun 04 20
 (u)mbc
 (p)955

@@ -21,10 +21,9 @@
 	var/flags
 
 	New(var/id, var/file, var/flags)
-		SPAWN_DBG(1 DECI SECOND)
-			src.id = id
-			src.ogg = file(file)
-			src.flags = flags
+		src.id = id
+		src.ogg = file
+		src.flags = flags
 
 	disposing()
 		ogg = null
@@ -2581,6 +2580,12 @@ proc/init_vox()
 "zorato" = new/datum/VOXsound("zorato", "sound/vox/zorato.ogg", NOUN),
 "zulu" = new/datum/VOXsound("zulu", "sound/vox/zulu.ogg", LETTER | NOUN)
 )
+
+	SPAWN_DBG(1)
+		for(var/id in voxsounds)
+			var/datum/VOXsound/vox = voxsounds[id]
+			vox.ogg = file(vox.ogg)
+
 	var/list/l
 	var/f
 	var/datum/VOXsound/vx

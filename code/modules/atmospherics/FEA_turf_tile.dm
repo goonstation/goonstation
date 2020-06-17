@@ -218,7 +218,7 @@ turf
 				else
 					air_master.active_singletons.Remove(src)
 			if(active_hotspot)
-				active_hotspot.disposing() // have to call this now to force the lighting cleanup
+				active_hotspot.dispose() // have to call this now to force the lighting cleanup
 				if (active_hotspot)
 					pool(active_hotspot)
 					active_hotspot = null

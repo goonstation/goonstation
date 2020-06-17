@@ -784,6 +784,11 @@ var/global/client/ff_debugger = null
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "grimy"
 
+/turf/unsimulated/grimycarpet
+	name = "grimy carpet"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "grimy"
+
 /turf/simulated/grass
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
@@ -1044,6 +1049,15 @@ var/global/client/ff_debugger = null
 /turf/unsimulated/floor/pool
 	name = "water"
 	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "poolwaterfloor"
+
+	New()
+		..()
+		dir = pick(NORTH,SOUTH)
+
+/turf/unsimulated/pool/no_animate
+	name = "pool floor"
+	icon = 'icons/obj/fluid.dmi'
 	icon_state = "poolwaterfloor"
 
 	New()
