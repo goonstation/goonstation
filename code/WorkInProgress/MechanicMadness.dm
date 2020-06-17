@@ -423,6 +423,7 @@ var/list/mechanics_telepads = new/list()
 							inp = 1000000
 							user.show_text("[src] is not designed to handle such large transactions. Input has been set to the allowable limit.", "red")
 						price = inp
+						tooltip_rebuild = 1
 						boutput(user, "Price set to [inp]")
 				if ("Set Code")
 					if (code)
@@ -458,6 +459,7 @@ var/list/mechanics_telepads = new/list()
 					user.put_in_hand_or_drop(C)
 
 				collected += price
+				tooltip_rebuild = 1
 				current_buffer = 0
 
 				usr.drop_item()
@@ -476,6 +478,7 @@ var/list/mechanics_telepads = new/list()
 			var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
 			S.setup(get_turf(src), collected)
 			collected = 0
+			tooltip_rebuild = 1
 		return
 
 /obj/item/mechanics/flushcomp
@@ -884,6 +887,7 @@ var/list/mechanics_telepads = new/list()
 					inp = max(inp, 10)
 					if(inp)
 						delay = inp
+						tooltip_rebuild = 1
 						boutput(user, "Set delay to [inp]")
 				if("Toggle Signal Changing")
 					changesig = !changesig
@@ -938,6 +942,7 @@ var/list/mechanics_telepads = new/list()
 					var/inp = input(user, "Enter Time Frame in 10ths of a second:", "Set Time Frame", timeframe) as num
 					if(inp)
 						timeframe = inp
+						tooltip_rebuild = 1
 						boutput(user, "Set Time Frame to [inp]")
 
 	proc/fire1(var/datum/mechanicsMessage/input)
@@ -1049,6 +1054,7 @@ var/list/mechanics_telepads = new/list()
 					if(length(inp))
 						inp = strip_html(html_decode(inp))
 						mechanics.triggerSignal = inp
+						tooltip_rebuild = 1
 						boutput(user, "Trigger Field set to [inp]")
 
 	proc/split(var/datum/mechanicsMessage/input)
@@ -1124,6 +1130,7 @@ var/list/mechanics_telepads = new/list()
 					if(length(inp))
 						expressionrepl = inp
 						boutput(user, "Replacement set to [html_encode(inp)]")
+			tooltip_rebuild = 1
 
 	proc/checkstr(var/datum/mechanicsMessage/input)
 		if(level == 2 || !length(expressionpatt)) return
@@ -1141,9 +1148,11 @@ var/list/mechanics_telepads = new/list()
 		return
 	proc/setregex(var/datum/mechanicsMessage/input)
 		expression = input.signal
+		tooltip_rebuild = 1
 
 	proc/setregexreplace(var/datum/mechanicsMessage/input)
 		expressionrepl = input.signal
+		tooltip_rebuild = 1
 
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_regrep"
@@ -1192,9 +1201,11 @@ var/list/mechanics_telepads = new/list()
 				if("Toggle Signal replacing")
 					replacesignal = !replacesignal
 					boutput(user, "[replacesignal ? "Now forwarding own Signal":"Now forwarding found String"]")
+			tooltip_rebuild = 1
 
 	proc/setregex(var/datum/mechanicsMessage/input)
 		expression = input.signal
+		tooltip_rebuild = 1
 	proc/checkstr(var/datum/mechanicsMessage/input)
 		if(level == 2 || !length(expression)) return
 		var/regex/R = new(expressionpatt, expressionflag)
@@ -1251,7 +1262,7 @@ var/list/mechanics_telepads = new/list()
 				if("Toggle Replace Signal")
 					changesig = !changesig
 					boutput(user, "Signal changing now [changesig ? "on":"off"]")
-
+			tooltip_rebuild = 1
 	proc/checkstr(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		if(findtext(input.signal, mechanics.triggerSignal))
@@ -1266,6 +1277,7 @@ var/list/mechanics_telepads = new/list()
 
 	proc/settrigger(var/datum/mechanicsMessage/input)
 		mechanics.triggerSignal = input.signal
+		tooltip_rebuild = 1
 
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_check"
@@ -1295,6 +1307,7 @@ var/list/mechanics_telepads = new/list()
 				if("Toggle Exact Match")
 					mechanics.exact_match = !mechanics.exact_match
 					boutput(user, "Exact match mode now [mechanics.exact_match ? "on" : "off"]")
+					tooltip_rebuild = 1
 
 	proc/dispatch(var/datum/mechanicsMessage/input)
 		if (level == 2) return
@@ -1344,10 +1357,11 @@ var/list/mechanics_telepads = new/list()
 					inp = strip_html(inp)
 					astr = inp
 					boutput(user, "String set to [inp]")
-
+			tooltip_rebuild = 1
 	proc/clrbff(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		buffer = ""
+		tooltip_rebuild = 1
 		return
 
 	proc/sendstr(var/datum/mechanicsMessage/input)
@@ -1357,16 +1371,19 @@ var/list/mechanics_telepads = new/list()
 		input.signal = finished
 		mechanics.fireOutgoing(input)
 		buffer = ""
+		tooltip_rebuild = 1
 		return
 
 	proc/addstr(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		buffer = "[buffer][input.signal]"
+		tooltip_rebuild = 1
 		return
 
 	proc/addstrsend(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		buffer = "[buffer][input.signal]"
+		tooltip_rebuild = 1
 		sendstr(input)
 		return
 
@@ -1399,6 +1416,7 @@ var/list/mechanics_telepads = new/list()
 				if("Toggle Signal Changing")
 					changesig = !changesig
 					boutput(user, "Signal changing now [changesig ? "on":"off"]")
+			tooltip_rebuild = 1
 
 	proc/relay(var/datum/mechanicsMessage/input)
 		if(level == 2 || !ready) return
@@ -1453,11 +1471,13 @@ var/list/mechanics_telepads = new/list()
 	proc/storefile(var/datum/mechanicsMessage/input)
 		if (level == 2 || !input.data_file) return
 		src.stored_file = input.data_file.copy_file()
+		tooltip_rebuild = 1
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/deletefile(var/datum/mechanicsMessage/input)
 		if (level == 2 || !src.stored_file) return
 		src.stored_file = null
+		tooltip_rebuild = 1
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	updateIcon()
@@ -1520,7 +1540,7 @@ var/list/mechanics_telepads = new/list()
 				if("Toggle Forward All")
 					send_full = !send_full
 					boutput(user, "[send_full ? "Now forwarding all Radio Messages as they are.":"Now processing only sendmsg and normal PDA messages."]")
-
+			tooltip_rebuild = 1
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		var/newfreq = text2num(input.signal)
 		if(!newfreq) return
@@ -1597,6 +1617,7 @@ var/list/mechanics_telepads = new/list()
 
 	proc/set_frequency(new_frequency)
 		if(!radio_controller) return
+		tooltip_rebuild = 1
 		new_frequency = max(1000, min(new_frequency, 1500))
 		radio_controller.remove_object(src, "[frequency]")
 		frequency = new_frequency
@@ -1698,12 +1719,14 @@ var/list/mechanics_telepads = new/list()
 				if("Toggle Allow Duplicate Entries")
 					allowDuplicates = !allowDuplicates
 					boutput(user, "[allowDuplicates ? "Allowing addition of duplicate items." : "Not allowing addition of duplicate items."]")
+			tooltip_rebuild = 1
 
 	proc/selitem(var/datum/mechanicsMessage/input)
 		if(!input) return
 
 		if(signals.Find(input.signal))
 			current_index = signals.Find(input.signal)
+			tooltip_rebuild = 1
 
 		if(announce)
 			componentSay("Current Selection : [signals[current_index]]")
@@ -1714,6 +1737,7 @@ var/list/mechanics_telepads = new/list()
 
 		if(signals.Find(input.signal))
 			current_index = signals.Find(input.signal)
+			tooltip_rebuild = 1
 		else
 			return // Don't send out a signal if not found
 
@@ -1730,6 +1754,7 @@ var/list/mechanics_telepads = new/list()
 
 		if(signals.Find(input.signal))
 			signals.Remove(input.signal)
+			tooltip_rebuild = 1
 			if(announce)
 				componentSay("Removed : [input.signal]")
 
@@ -1740,6 +1765,7 @@ var/list/mechanics_telepads = new/list()
 
 		for(var/s in signals)
 			signals.Remove(s)
+		tooltip_rebuild = 1
 
 		if(announce)
 			componentSay("Removed all signals.")
@@ -1752,12 +1778,14 @@ var/list/mechanics_telepads = new/list()
 		if(allowDuplicates)
 			signals.Add(input.signal)
 			signals[input.signal] = 1
+			tooltip_rebuild = 1
 			if(announce)
 				componentSay("Added: [input.signal]")
 
 		else
 			if(!signals[input.signal])
 				signals[input.signal] = 1
+				tooltip_rebuild = 1
 				if(announce)
 					componentSay("Added: [input.signal]")
 			else if(announce)
@@ -1790,6 +1818,7 @@ var/list/mechanics_telepads = new/list()
 			current_index = 1
 		else
 			current_index++
+		tooltip_rebuild = 1
 
 		if(announce)
 			componentSay("Current Selection : [signals[current_index]]")
@@ -1802,6 +1831,7 @@ var/list/mechanics_telepads = new/list()
 			current_index = 1
 		else
 			current_index++
+		tooltip_rebuild = 1
 
 		if(announce)
 			componentSay("Current Selection : [signals[current_index]]")
@@ -1816,6 +1846,7 @@ var/list/mechanics_telepads = new/list()
 			current_index = signals.len
 		else
 			current_index--
+		tooltip_rebuild = 1
 
 		if(announce)
 			componentSay("Current Selection : [signals[current_index]]")
@@ -1828,6 +1859,7 @@ var/list/mechanics_telepads = new/list()
 			current_index = signals.len
 		else
 			current_index--
+		tooltip_rebuild = 1
 
 		if(announce)
 			componentSay("Current Selection : [signals[current_index]]")
@@ -1879,11 +1911,13 @@ var/list/mechanics_telepads = new/list()
 						inp = adminscrub(inp)
 						signal_off = inp
 						boutput(user, "Off-Signal set to [inp]")
+			tooltip_rebuild = 1
 
 	proc/activate(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		on = 1
 		input.signal = signal_on
+		tooltip_rebuild = 1
 		updateIcon()
 		SPAWN_DBG(0)
 			mechanics.fireOutgoing(input)
@@ -1893,6 +1927,7 @@ var/list/mechanics_telepads = new/list()
 		if(level == 2) return
 		on = 0
 		input.signal = signal_off
+		tooltip_rebuild = 1
 		updateIcon()
 		SPAWN_DBG(0)
 			mechanics.fireOutgoing(input)
@@ -1902,6 +1937,7 @@ var/list/mechanics_telepads = new/list()
 		if(level == 2) return
 		on = !on
 		input.signal = (on ? signal_on : signal_off)
+		tooltip_rebuild = 1
 		updateIcon()
 		SPAWN_DBG(0)
 			mechanics.fireOutgoing(input)
@@ -1957,11 +1993,13 @@ var/list/mechanics_telepads = new/list()
 					else
 						src.overlays.Cut()
 					boutput(user, "Send-only Mode now [send_only ? "on":"off"]")
+			tooltip_rebuild = 1
 
 	proc/setidmsg(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		if(input.signal)
 			teleID = input.signal
+			tooltip_rebuild = 1
  		componentSay("ID Changed to : [input.signal]")
 		return
 
@@ -2050,7 +2088,7 @@ var/list/mechanics_telepads = new/list()
 					blue = min(blue, 1.0)
 
 					selcolor = rgb(red * 255, green * 255, blue * 255)
-
+					tooltip_rebuild = 1
 					light.set_color(red, green, blue)
 				if("Set Range")
 					var/inp = input(user,"Please enter Range(1 - 7):","Range setting", light_level) as num
@@ -2077,6 +2115,7 @@ var/list/mechanics_telepads = new/list()
 			if(active)
 				color = input.signal
 			selcolor = input.signal
+			tooltip_rebuild = 1
 			SPAWN_DBG(0) light.set_color(GetRedPart(selcolor) / 255, GetGreenPart(selcolor) / 255, GetBluePart(selcolor) / 255)
 
 	proc/turnon(var/datum/mechanicsMessage/input)
@@ -2195,6 +2234,7 @@ var/list/mechanics_telepads = new/list()
 		radio_controller.remove_object(src, "[frequency]")
 		frequency = new_frequency
 		radio_connection = radio_controller.add_object(src, "[frequency]")
+		tooltip_rebuild = 1
 
 	proc/hear_radio(mob/M as mob, msg, lang_id)
 		if (level == 2) return
@@ -2289,6 +2329,7 @@ var/list/mechanics_telepads = new/list()
 		if(..(W, user)) return
 		else if(ispulsingtool(W))
 			src.modify_configs()
+			tooltip_rebuild = 1
 			return
 		attack_hand(user)
 
@@ -2363,6 +2404,7 @@ var/list/mechanics_telepads = new/list()
 						if(!to_remove || to_remove == "*CANCEL*") return
 						src.active_buttons.Remove(to_remove)
 						boutput(user, "Removed button labeled [to_remove]")
+			tooltip_rebuild = 1
 
 	get_desc()
 		. += "<br><span class='notice'>Buttons:</span>"
@@ -2422,6 +2464,7 @@ var/list/mechanics_telepads = new/list()
 						logTheThing("station", user, null, "removes [Gun] from [src] at [log_loc(src)].")
 						Gun.loc = get_turf(src)
 						Gun = null
+						tooltip_flags &= ~REBUILD_ALWAYS
 					else
 						boutput(user, "<span class='alert'>There is no gun inside this component.</span>")
 		else if(istype(W, src.compatible_guns))
@@ -2431,6 +2474,7 @@ var/list/mechanics_telepads = new/list()
 				usr.drop_item()
 				Gun = W
 				Gun.loc = src
+				tooltip_flags |= REBUILD_ALWAYS
 			else
 				boutput(usr, "There is already a [Gun] inside the [src]")
 		else
@@ -2486,11 +2530,14 @@ var/list/mechanics_telepads = new/list()
 	process()
 		..()
 		if(level == 2)
-			if(charging) charging = 0
+			if(charging)
+				charging = 0
+				tooltip_rebuild = 1
 			return
 
 		if(!Gun && charging)
 			charging = 0
+			tooltip_rebuild = 1
 			updateIcon()
 
 		if(!istype(Gun, /obj/item/gun/energy) || !charging)
@@ -2503,12 +2550,14 @@ var/list/mechanics_telepads = new/list()
 			src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"This gun cannot be recharged manually.\"</span>")
 			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
 			charging = 0
+			tooltip_rebuild = 1
 			updateIcon()
 			return
 
 		if (E.cell)
 			if (E.cell.charge(15) != 1) // Same as other recharger.
 				src.charging = 0
+				tooltip_rebuild = 1
 				src.updateIcon()
 
 		E.update_icon()
@@ -2518,6 +2567,7 @@ var/list/mechanics_telepads = new/list()
 		if(charging || !Gun || level == 2) return
 		if(!istype(Gun, /obj/item/gun/energy)) return
 		charging = 1
+		tooltip_rebuild = 1
 		updateIcon()
 		return
 
@@ -2580,6 +2630,7 @@ var/list/mechanics_telepads = new/list()
 						logTheThing("station", user, null, "removes [instrument] from [src] at [log_loc(src)].")
 						instrument.loc = get_turf(src)
 						instrument = null
+						tooltip_rebuild = 1
 					else
 						boutput(user, "<span class='alert'>There is no instrument inside this component.</span>")
 			return
@@ -2616,6 +2667,7 @@ var/list/mechanics_telepads = new/list()
 			logTheThing("station", usr, null, "adds [W] to [src] at [log_loc(src)].")
 			usr.drop_item()
 			instrument.loc = src
+			tooltip_rebuild = 1
 
 /obj/item/mechanics/math
 	name = "Arithmetic Component"
@@ -2656,14 +2708,17 @@ var/list/mechanics_telepads = new/list()
 						B = input
 				if("Set Mode")
 					mode = input("Set the math mode to what?", "Mode Selector", mode) in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte")
+			tooltip_rebuild = 1
 
 	proc/setA(var/datum/mechanicsMessage/input)
 		if (!isnull(text2num(input.signal)))
 			A = text2num(input.signal)
+			tooltip_rebuild = 1
 
 	proc/setB(var/datum/mechanicsMessage/input)
 		if (!isnull(text2num(input.signal)))
 			B = text2num(input.signal)
+			tooltip_rebuild = 1
 
 	proc/evaluate()
 		switch(mode)

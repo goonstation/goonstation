@@ -1049,6 +1049,7 @@
 	custom_cell_max_capacity = 100
 	module_research = list("medicine" = 2, "science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10)
 	var/obj/item/heldItem = null
+	tooltip_flags = REBUILD_DIST
 
 	New()
 		current_projectile = new/datum/projectile/pickpocket/steal
@@ -1071,6 +1072,7 @@
 				boutput(user, "You remove \the [heldItem.name] from the gun.")
 				user.put_in_hand_or_drop(heldItem)
 				heldItem = null
+				tooltip_rebuild = 1
 			else
 				boutput(user, "The gun does not contain anything.")
 		else
@@ -1085,6 +1087,7 @@
 			user.u_equip(I)
 			I.dropped(user)
 			boutput(user, "You insert \the [heldItem.name] into the gun's gripper.")
+			tooltip_rebuild = 1
 		return ..()
 
 	attack(mob/M as mob, mob/user as mob)
@@ -1171,6 +1174,7 @@
 	icon = 'icons/obj/items/gun.dmi'
 	item_state = "lawg-detain"
 	icon_state = "lawbringer0"
+	desc = "A gun with a microphone. Fascinating."
 	var/old = 0
 	m_amt = 5000
 	g_amt = 2000
@@ -1219,6 +1223,7 @@
 			if (H.bioHolder)
 				owner_prints = H.bioHolder.uid_hash
 				src.name = "HoS [H.real_name]'s Lawbringer"
+				tooltip_rebuild = 1
 
 	//stolen the heartalk of microphone. the microphone can hear you from one tile away. unless you wanna
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
@@ -1395,56 +1400,6 @@
 			if (current_projectile.type == /datum/projectile/bullet/flare)
 				shoot_fire_hotspots(target, start, user)
 		return ..(target, start, user)
-
-	//gotta override this to set the desc name to the proper thing
-	special_desc()
-		var/output = "This is \an [src.name]."
-		// Added for forensics (Convair880).
-		if (isitem(src) && src.blood_DNA)
-			output = "<span class='alert'>This is a bloody [src.name].</span>"
-			if (src.desc && src.blood_DNA == "--conductive_substance--")
-				output += "<br>[src.desc] <span class='alert'>It seems to be covered in an odd azure liquid!</span>"
-			if (src.desc)
-				output += "<br>[src.desc] <span class='alert'>It seems to be covered in blood!</span>"
-		else if (src.desc)
-			output += "<br>[src.desc]"
-		var/dist = get_dist(src, usr)
-		var/extra = src.get_desc(dist, usr)
-		if (extra)
-			output += " [extra]"
-
-	get_desc()
-		set src in usr
-		var/gun_setting_name = "detain"
-		if(current_projectile.type == /datum/projectile/energy_bolt/aoe)
-			gun_setting_name = "detain"
-		else if (current_projectile.type == /datum/projectile/bullet/revolver_38)
-			gun_setting_name = "execute"
-		else if (current_projectile.type == /datum/projectile/bullet/smoke)
-			gun_setting_name = "smokeshot"
-		else if (current_projectile.type == /datum/projectile/bullet/tranq_dart/law_giver)
-			gun_setting_name = "knockout"
-		else if (current_projectile.type == /datum/projectile/bullet/flare)
-			gun_setting_name = "hotshot"
-		else if (current_projectile.type == /datum/projectile/bullet/aex/lawbringer)
-			gun_setting_name = "bigshot"
-		else if (current_projectile.type == /datum/projectile/bullet/clownshot)
-			gun_setting_name = "clownshot"
-		else if (current_projectile.type == /datum/projectile/energy_bolt/pulse)		//clownshot - pink
-			gun_setting_name = "pulse"
-
-		src.desc = "It is set to [gun_setting_name]."
-		if(src.cell)
-				//[src.projectiles ? "It will use the projectile: [src.current_projectile.sname]. " : ""]
-			src.desc += " There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
-		else
-			src.desc += " There is no cell loaded!"
-		if(current_projectile)
-			src.desc += " Each shot will currently use [src.current_projectile.cost] PUs!"
-		else
-			src.desc += " <span class='alert'>*ERROR* No output selected!</span>"
-		return
-
 
 /obj/item/gun/energy/lawbringer/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (user)

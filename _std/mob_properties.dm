@@ -173,6 +173,8 @@ To remove:
 #define PROP_HEATPROT(x) x("heatprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
 #define PROP_EXPLOPROT(x) x("exploprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
 #define PROP_REFLECTPROT(x) x("reflection", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
+#define PROP_SPECTRO(x) x("spectrovision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
+
 
 // In lieu of comments, these are the indexes used for list access in the macros below.
 #define MOB_PROPERTY_ACTIVE_VALUE 1

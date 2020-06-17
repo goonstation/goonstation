@@ -7,6 +7,7 @@
 	var/extinguisher_special = 0
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | OPENCONTAINER
+	tooltip_flags = REBUILD_DIST
 	throwforce = 10
 	w_class = 3.0
 	throw_speed = 2

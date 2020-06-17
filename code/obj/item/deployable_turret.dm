@@ -22,7 +22,7 @@
 		..()
 		icon_state = "[src.icon_tag]_deployer"
 
-	get_desc(dist)
+	get_desc()
 		. = "<br><span class='notice'>It looks [damage_words]</span>"
 
 
@@ -357,6 +357,7 @@
 		//deployer.emagged = src.emagged
 		deployer.damage_words = src.damage_words
 		deployer.quick_deploy_fuel = src.quick_deploy_fuel
+		deployer.tooltip_rebuild = 1
 		return deployer
 
 

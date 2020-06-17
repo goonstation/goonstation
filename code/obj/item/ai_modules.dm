@@ -39,6 +39,7 @@ AI MODULES
 			return
 		var/answer = input(user, text, title, default) as null|text
 		lawTarget = copytext(adminscrub(answer), 1, MAX_MESSAGE_LEN)
+		tooltip_rebuild = 1
 		boutput(user, "\The [src] now reads, \"[get_law_text()]\".")
 
 	proc/get_law_text()

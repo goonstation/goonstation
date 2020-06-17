@@ -984,6 +984,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 
 /obj/item/paper_bin/proc/update()
+	tooltip_rebuild = 1
 	src.icon_state = "paper_bin[(src.amount || locate(/obj/item/paper, src)) ? "1" : null]"
 	return
 

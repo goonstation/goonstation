@@ -1742,6 +1742,7 @@
 					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
 						dab_id = I
 						dab_id.dab_count++
+						dab_id.tooltip_rebuild = 1
 					karma_update(4, "SIN", src)
 					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
 						// determine the name of the perp (goes by ID if wearing one)

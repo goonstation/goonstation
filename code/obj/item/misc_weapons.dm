@@ -228,6 +228,7 @@
 		take_bleeding_damage(user, user, 5)
 		JOB_XP(user, "Clown", 1)
 	src.active = !( src.active )
+	tooltip_rebuild = 1
 	if (src.active)
 		BLOCK_ALL
 		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
@@ -1059,6 +1060,7 @@
 	throwforce = 5.0
 	delimb_prob = 1
 	contraband = 4
+	tooltip_flags = REBUILD_USER
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind && user.mind.assigned_role == "Captain")
@@ -1205,6 +1207,7 @@
 	ih_sheathed_state = "scabbard-cap1"
 	ih_sheath_state = "scabbard-cap0"
 	sword_path = /obj/item/katana/captain
+	tooltip_flags = REBUILD_USER
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (W.type == /obj/item/katana)

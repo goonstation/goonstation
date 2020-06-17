@@ -564,7 +564,9 @@ datum
 						del_reagent(current_id)
 					else
 						total_volume += current_reagent.volume
-
+			if(isitem(my_atom))
+				var/obj/item/I = my_atom
+				I.tooltip_rebuild = 1
 			return 0
 
 		proc/clear_reagents()
@@ -859,23 +861,7 @@ datum
 
 			// check to see if user wearing the spectoscopic glasses (or similar)
 			// if so give exact readout on what reagents are present
-			var/spectro = 0
-			if (ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if (istype(H.glasses, /obj/item/clothing/glasses/spectro))
-					spectro = 1
-				else if (H.eye_istype(/obj/item/organ/eye/cyber/spectro))
-					spectro = 1
-			else if (isrobot(user))
-				// check if they have an activated spectroscopic upgrade
-				var/mob/living/silicon/robot/R = user
-				for (var/obj/item/roboupgrade/U in R.upgrades)
-					if (istype(U, /obj/item/roboupgrade/spectro))
-						if (U.activated)
-							spectro = 1
-							break
-
-			if (spectro)
+			if (HAS_MOB_PROPERTY(user, PROP_SPECTRO))
 				if("cloak_juice" in reagent_list)
 					var/datum/reagent/cloaker = reagent_list["cloak_juice"]
 					if(cloaker.volume >= 5)

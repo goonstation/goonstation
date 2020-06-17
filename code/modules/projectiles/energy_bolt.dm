@@ -219,6 +219,7 @@ toxic - poisons
 /datum/projectile/energy_bolt/aoe
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "detain-projectile"
+	sname = "detain"
 	power = 20
 	cost = 50
 	dissipation_rate = 5

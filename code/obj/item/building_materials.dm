@@ -945,6 +945,7 @@ MATERIAL
 	stamina_damage = 25
 	stamina_cost = 25
 	stamina_crit_chance = 15
+	tooltip_flags = REBUILD_DIST
 
 	New()
 		..()
@@ -979,6 +980,7 @@ MATERIAL
 				F.setMaterial(getMaterial("steel"))
 			F.amount = 1
 			src.amount--
+			tooltip_rebuild = 1
 			user.put_in_hand_or_drop(F)
 			if (src.amount < 1)
 				//SN src = null
@@ -1004,6 +1006,7 @@ MATERIAL
 			else
 				src.build(S)
 				src.amount--
+				tooltip_rebuild = 1
 		if (src.amount < 1)
 			user.u_equip(src)
 			//SN src = null
@@ -1025,8 +1028,11 @@ MATERIAL
 		if (W.amount + src.amount > src.max_stack)
 			src.amount = W.amount + src.amount - src.max_stack
 			W.amount = src.max_stack
+			tooltip_rebuild = 1
+			W.tooltip_rebuild = 1
 		else
 			W.amount += src.amount
+			W.tooltip_rebuild = 1
 			//SN src = null
 			qdel(src)
 			return
