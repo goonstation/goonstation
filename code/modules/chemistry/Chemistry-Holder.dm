@@ -402,7 +402,7 @@ datum
 					var/total_matching_reagents = 0
 					var/created_volume = src.maximum_volume
 					for(var/B in C.required_reagents)
-						var/B_required_volume = max(1, round(C.required_reagents[B], 0.0001))
+						var/B_required_volume = max(1, C.required_reagents[B])
 
 
 						//var/amount = get_reagent_amount(B)
@@ -419,7 +419,7 @@ datum
 						//end my copy+paste
 
 
-						if(amount >= B_required_volume) //This will mean you can have < 1 stuff not react. This is fine.
+						if(round(amount, 0.0001) >= B_required_volume) //This will mean you can have < 1 stuff not react. This is fine.
 							total_matching_reagents++
 							created_volume = min(created_volume, amount * (C.result_amount ? C.result_amount : 1) / B_required_volume)
 						else
