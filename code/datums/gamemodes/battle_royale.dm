@@ -26,7 +26,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	var/datum/random_event/special/battlestorm/storm = null
 	var/datum/random_event/special/supplydrop/dropper = null
 	var/list/datum/mind/recently_deceased = list()
-
+	do_antag_random_spawns = 0
 
 /datum/game_mode/battle_royale/announce()
 	boutput(world, "<B>The current game mode is - Battle Royale!</B>")

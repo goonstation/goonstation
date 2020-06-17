@@ -105,6 +105,8 @@
 				else if (dir & WEST)
 					dir = WEST
 			src.update_directional_lights()
+			if (src.mdir_lights)
+				src.update_mdir_light_visibility(dir)
 
 /mob/proc/hotkey(name)
 	switch (name)

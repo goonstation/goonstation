@@ -72,10 +72,10 @@ var/datum/event_controller/random_events
 			do_random_event(events)
 		else
 			message_admins("<span class='notice'>A random event would have happened now, but they are disabled!</span>")
-		message_admins("<span class='notice'>Next event will occur at [round(next_major_event / 600)] minutes into the round.</span>")
 
 		major_event_timer = rand(time_between_events_lower,time_between_events_upper)
 		next_major_event = TIME + major_event_timer
+		message_admins("<span class='notice'>Next event will occur at [round(next_major_event / 600)] minutes into the round.</span>")
 
 	proc/minor_event_cycle()
 		minor_event_cycle_count++
@@ -123,12 +123,12 @@ var/datum/event_controller/random_events
 				do_random_event(player_spawn_events, source = "force_spawn")
 				message_admins("<span class='notice'>Player spawn event success!<br> ALIVE : [alive], TOTAL COUNTED : [(total_clients() - dead_dnr)]</span>")
 
-			else if (dead_antags >= round(antags * 0.75))
+			else if (dead_antags >= round(antags * 0.75) && !(ticker?.mode?.do_antag_random_spawns))
 				do_random_event(antag_spawn_events, source = "force_spawn")
 				message_admins("<span class='notice'>Antag spawn event success!<br>DEAD ANTAGS: [dead_antags], TOTAL ANTAGS: [antags]</span>")
 
 			else
-				message_admins("<span class='notice'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount!<br> ALIVE : [alive], TOTAL COUNTED : [(total_clients() - dead_dnr)], DEAD ANTAGS: [dead_antags]</span>")
+				message_admins("<span class='notice'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount or game mode!<br> ALIVE : [alive], TOTAL COUNTED : [(total_clients() - dead_dnr)], DEAD ANTAGS: [dead_antags]</span>")
 
 		next_spawn_event = TIME + time_between_spawn_events
 

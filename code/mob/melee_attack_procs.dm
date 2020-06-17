@@ -435,7 +435,7 @@
 	var/obj/item/I = target.equipped()
 	if (I)
 		var/disarm_item_prob = 37
-		if (target.check_block())
+		if (target.check_block() && !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)))
 			disarm_item_prob = 8
 
 		if (I.temp_flags & IS_LIMB_ITEM)

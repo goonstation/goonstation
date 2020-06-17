@@ -21,6 +21,8 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/token_players_assigned = 0
 
+	do_antag_random_spawns = 0
+
 /datum/game_mode/nuclear/announce()
 	boutput(world, "<B>The current game mode is - Nuclear Emergency!</B>")
 	boutput(world, "<B>[syndicate_name()] operatives are approaching [station_name(1)]! They intend to destroy the [station_or_ship()] with a nuclear warhead.</B>")

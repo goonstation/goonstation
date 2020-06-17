@@ -1,5 +1,7 @@
 
 (t)mon jun 15 20
+(u)mbc
+(*)New and improved directional lights (optimized + smoother)
 (u)pali
 (+)Cairngorm now has a plaque tracking nukie wins / losses
 (u)glassofmilk
