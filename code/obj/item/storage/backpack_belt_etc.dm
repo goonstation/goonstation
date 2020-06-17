@@ -105,6 +105,11 @@
 	spawn_contents = list(/obj/item/storage/box/starter,\
 	/obj/item/storage/box/balloonbox)
 
+/obj/item/storage/fanny/funny/mini
+	name = "mini funny pack"
+	desc = "Haha, get it? Get it? 'Funny'! This one seems a little smaller, and made of even cheaper material."
+	slots = 3
+
 /obj/item/storage/fanny/syndie
 	name = "syndicate tactical espionage belt pack"
 	desc = "It's different than a fanny pack. It's tactical and action-packed!"
