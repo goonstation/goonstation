@@ -399,7 +399,7 @@
 				forensic_data += "<br><span class='notice'>[wounds] gunshot [wounds == 1 ? "wound" : "wounds"] detected.</span>"
 
 		if (H.fingerprints) // Left by grabbing or pulling people.
-			var/list/FFP = params2list(H:fingerprints)
+			var/list/FFP = H:fingerprints
 			for(var/i in FFP)
 				fingerprint_data += "<br><span class='notice'>Foreign fingerprint on [H]:</span> [i]"
 
@@ -477,7 +477,7 @@
 				*///fingerprint_data += "<br><span class='notice'>Unable to locate any fingerprints.</span>"
 //		else
 		if (A.fingerprints)
-			var/list/FP = params2list(A:fingerprints)
+			var/list/FP = A:fingerprints
 			for(var/i in FP)
 				fingerprint_data += "<br><span class='notice'>[i]</span>"
 
