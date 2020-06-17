@@ -283,7 +283,8 @@
 
 
 	proc/adjust_frequency(var/old_freq, var/new_freq)
-		radio_controller.remove_object(master, "[old_freq]")
+		if (old_freq != 1149) // don't unregister the PDA itself
+			radio_controller.remove_object(master, "[old_freq]")
 		radio_controller.add_object(master, "[new_freq]")
 
 
