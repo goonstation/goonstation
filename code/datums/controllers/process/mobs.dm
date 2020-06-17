@@ -7,6 +7,8 @@ datum/controller/process/mobs
 	var/list/wraiths = list()
 	var/list/adminghosts = list()
 
+	var/nextpopcheck = 0
+
 	setup()
 		name = "Mob"
 		schedule_interval = 40
@@ -19,6 +21,13 @@ datum/controller/process/mobs
 	doWork()
 		src.mobs = global.mobs
 		var/c
+
+		if (TIME > nextpopcheck)
+			nextpopcheck = TIME + 4 MINUTES
+			if (total_clients() >= SLOW_LIFE_PLAYERCOUNT)  //hacky lag saving measure
+				schedule_interval = 65
+			else
+				schedule_interval = 40
 
 		for(var/X in src.mobs)
 			if(istype(X, /mob/living))
