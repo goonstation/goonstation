@@ -254,6 +254,9 @@
 		for (var/datum/computer/file/pda_program/P in src.cartridge.root.contents)
 			if (P.name == "Packet Sniffer")
 				radio_controller.remove_object(src, "[P:scan_freq]")
+				continue
+			if (P.name == "Ping Tool")
+				radio_controller.remove_object(src, "[P:send_freq]")
 		src.cartridge.dispose()
 		src.cartridge = null
 
@@ -265,6 +268,9 @@
 		for (var/datum/computer/file/pda_program/P in src.hd.root.contents)
 			if (P.name == "Packet Sniffer")
 				radio_controller.remove_object(src, "[P:scan_freq]")
+				continue
+			if (P.name == "Ping Tool")
+				radio_controller.remove_object(src, "[P:send_freq]")
 		src.hd.dispose()
 		src.hd = null
 
