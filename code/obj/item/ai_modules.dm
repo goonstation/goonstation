@@ -52,6 +52,9 @@ AI MODULES
 		if (comp.status & BROKEN)
 			boutput(usr, "\The [comp] computer is broken!")
 			return
+		if(ON_COOLDOWN(global, "ai_law_change", 10 SECONDS))
+			boutput(usr, "Centralized AI law database is still processing the last request. Wait [ON_COOLDOWN(global, "ai_law_change", 0)/10] seconds.")
+			return
 
 		src.transmitInstructions(usr)
 		boutput(usr, "Upload complete. AI and silicon laws have been modified.")
