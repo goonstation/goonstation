@@ -37,7 +37,7 @@
 	density = 0
 
 /obj/cairngorm_stats
-	name = "a scoreboard of sorts"
+	name = "scoreboard of sorts"
 	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "rip"
 	anchored = 1.0
