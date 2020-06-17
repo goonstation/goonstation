@@ -2198,9 +2198,9 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 
 	heal(var/mob/M)
 		if (tastesbad)
-			boutput(M, "color = <span class='alert'>[phrase]! That tasted like [flavor]...</span>")
+			boutput(M, "<span class='alert'>[phrase]! That tasted like [flavor]...</span>")
 		else
-			boutput(M, "color = <span class='notice'>[phrase]! That tasted like [flavor]...</span>")
+			boutput(M, "<span class='notice'>[phrase]! That tasted like [flavor]...</span>")
 
 //#ifdef HALLOWEEN
 /obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor

@@ -62,7 +62,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #endif
 
 	pregame_timeleft = PREGAME_LOBBY_TICKS
-	boutput(world, "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>")
+	boutput(world, "<B><FONT style='notice'>Welcome to the pre-game lobby!</FONT></B>")
 	boutput(world, "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds")
 	#if ASS_JAM
 	vote_manager.active_vote = new/datum/vote_new/mode("assday")
@@ -236,7 +236,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		shippingmarket.get_market_timeleft()
 
 		logTheThing("ooc", null, null, "<b>Current round begins</b>")
-		boutput(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
+		boutput(world, "<FONT class='notice'><B>Enjoy the game!</B></FONT>")
 		boutput(world, "<span class='notice'><b>Tip:</b> [pick(tips)]</span>")
 
 		//Setup the hub site logging
@@ -262,7 +262,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	if (total_clients() >= OVERLOAD_PLAYERCOUNT)
 		world.tick_lag = OVERLOADED_WORLD_TICKLAG
 
-//Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min). 
+//Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min).
 //The voting will happen 30 seconds into the pre-game lobby. This is probably fine to leave. But if someone changes that var then it might start before the lobby timer ends.
 /datum/controller/gameticker/proc/handle_mapvote()
 	var/bustedMapSwitcher = isMapSwitcherBusted()
