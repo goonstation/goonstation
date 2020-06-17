@@ -149,15 +149,14 @@ var/datum/action_controller/actions
 		if (owner != null && islist(A.attached_objs))
 			A.attached_objs.Remove(bar)
 			A.attached_objs.Remove(border)
-		SPAWN_DBG(0.5 SECONDS)
-			if (bar)
-				bar.set_loc(null)
-				pool(bar)
-				bar = null
-			if (border)
-				border.set_loc(null)
-				pool(border)
-				border = null
+		if (bar)
+			bar.set_loc(null)
+			pool(bar)
+			bar = null
+		if (border)
+			border.set_loc(null)
+			pool(border)
+			border = null
 		..()
 
 	onEnd()
