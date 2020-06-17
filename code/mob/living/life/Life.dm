@@ -262,6 +262,7 @@
 				if (found)
 					src.changeStatus("revspirit", 20 SECONDS)
 
+		if (src.abilityHolder)
 			src.abilityHolder.onLife((life_time_passed / tick_spacing))
 
 	last_life_tick = TIME
