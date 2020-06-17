@@ -1,4 +1,9 @@
 
+(t)wed jun 17 20
+(u)Sovexe
+(p)1121
+(e)🔄|rework
+(+)Drones are now capable of shooting projectiles properly again. Don't get shot.
 (t)mon jun 15 20
 (u)mbc
 (*)New and improved directional lights (optimized + smoother)
