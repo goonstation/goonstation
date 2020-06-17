@@ -866,7 +866,7 @@
 
 	onUpdate()
 		..()
-		if ((the_table == null || the_tool == null || owner == null || get_dist(owner, the_table) > 1) && !istype(owner, /mob/living/critter/flock/drone)) //allows flock drones to decon flock tables
+		if ((the_table == null || the_tool == null || owner == null || get_dist(owner, the_table) > 1) && !istype(owner, /mob/living/critter/flock/drone)) //allows flock drones to decon flock tables by preventing the update action from freaking out. if the flockdrone moves away n what not the action stops.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
