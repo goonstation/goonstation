@@ -119,7 +119,7 @@ var/datum/event_controller/random_events
 				else if (M.mind?.dnr)
 					dead_dnr++
 
-			if (alive <= (total_clients() - dead_dnr) * 0.75)
+			if (alive <= (total_clients() - dead_dnr) * 0.65)
 				do_random_event(player_spawn_events, source = "force_spawn")
 				message_admins("<span class='notice'>Player spawn event success!<br> ALIVE : [alive], TOTAL COUNTED : [(total_clients() - dead_dnr)]</span>")
 
