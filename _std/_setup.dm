@@ -895,6 +895,7 @@ proc/default_frequency_color(freq)
 #define INGEST 2
 #define INJECT 3
 #define MAX_TEMP_REACTION_VARIANCE 8
+#define CHEM_EPSILON 0.0001
 
 //moved from communications.dm
 #define TRANSMISSION_WIRE	0
