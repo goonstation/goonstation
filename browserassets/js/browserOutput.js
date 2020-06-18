@@ -386,6 +386,15 @@ function changeMode(mode) {
     }
 }
 
+
+function changeTheme(theme) {
+    var body = $('body');
+    body.removeClass(opts.currentTheme);
+    body.addClass(theme);
+    opts.currentTheme = theme;
+    setCookie('theme', theme, 365);
+}
+
 function handleClientData(ckey, ip, compid) {
     //byond sends player info to here
     var currentData = {'ckey': ckey, 'ip': ip, 'compid': compid};
@@ -464,6 +473,8 @@ function ehjaxCallback(data) {
             } else {
                 handleClientData(data.clientData.ckey, data.clientData.ip, data.clientData.compid);
             }
+        } else if (data.changeTheme) {
+            changeTheme(data.changeTheme);
         } else if (data.loadAdminCode) {
             if (opts.adminLoaded) {return;}
             var adminCode = data.loadAdminCode;
@@ -872,11 +883,7 @@ $(function() {
 
     $('body').on('click', '#changeTheme a', function(e) {
         var theme = $(this).attr('data-theme');
-        var body = $('body');
-        body.removeClass(opts.currentTheme);
-        body.addClass(theme);
-        opts.currentTheme = theme;
-        setCookie('theme', theme, 365);
+        changeTheme(theme);
     });
 
     $('#togglePing').click(function(e) {
