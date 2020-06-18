@@ -735,6 +735,20 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "rust_jen"
 	random_icon_states = null
 	plane = PLANE_NOSHADOW_BELOW
+	var/turf/my_turf = null
+
+	New()
+		..()
+		my_turf = get_turf_loc(src)
+
+	attack_hand(obj/M, mob/user)
+		return 0
+
+	attackby(obj/item/W, mob/user)
+		if (issnippingtool(W))
+			..()
+		else
+			my_turf.attackby(user.equipped(), user)
 
 /obj/decal/cleanable/balloon
 	name = "balloon"
@@ -1177,6 +1191,20 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	jen
 		icon_state = "dirt_jen"
 		plane = PLANE_NOSHADOW_BELOW
+		var/turf/my_turf = null
+
+		New()
+			..()
+			my_turf = get_turf_loc(src)
+
+		attack_hand(obj/M, mob/user)
+			return 0
+
+		attackby(obj/item/W, mob/user)
+			if (issnippingtool(W))
+				..()
+			else
+				my_turf.attackby(user.equipped(), user)
 
 /obj/decal/cleanable/cobweb
 	name = "cobweb"
