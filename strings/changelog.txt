@@ -1,5 +1,9 @@
 
 (t)thu jun 18 20
+(u)Mordent
+(p)1123
+(e)⚖|balance
+(+)Added variant "mini funny pack" that replaces the regular version found in comedy equipment crates that cargo can order.
 (u)mbc
 (p)1128
 (e)|
