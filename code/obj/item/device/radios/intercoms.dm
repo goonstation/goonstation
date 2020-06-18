@@ -4,7 +4,7 @@
 	anchored = 1.0
 	plane = PLANE_NOSHADOW_ABOVE
 	mats = 0
-	device_color = RADIOC_INTERCOM
+	chat_class = RADIOCL_INTERCOM
 	var/number = 0
 	rand_pos = 0
 	desc = "A wall-mounted radio intercom, used to communicate with the specified frequency. Usually turned off except during emergencies."

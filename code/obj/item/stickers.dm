@@ -562,4 +562,4 @@
 /obj/item/device/radio/spy/sec_only
 	locked_frequency = 1
 	frequency = R_FREQ_SECURITY
-	device_color = RADIOC_SECURITY
+	chat_class = RADIOCL_SECURITY
