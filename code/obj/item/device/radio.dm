@@ -306,7 +306,6 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		eqjobname = "Unknown"
 
 	var/list/receive = list()
-	var/list/receive_sfx = list()
 
 	var/display_freq = src.frequency //Frequency to display on radio broadcast messages
 
@@ -332,7 +331,11 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 					for (var/i in R.send_hear())
 						if (!(i in receive))
 							receive += i
-							receive_sfx += i
+
+							//mbc : i dont like doing this here but its the easiest place to fit it in since this is a point where we have access to both the receiving mob and the radio they are receiving through
+							var/mob/rmob = i
+							rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, -MAX_SOUND_RANGE+5, pitch = 1, ignore_flag = SOUND_SPEECH)//gfdsgfdsgfsfgs
+
 				else
 					for (var/i in R.send_hear())
 						if (!(i in receive))
@@ -397,9 +400,6 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 				heard_garbled += R
 
 		//DEBUG_MESSAGE("Message transmitted. Frequency: [display_freq]. Source: [src] at [log_loc(src)]. Receiver: [R] at [log_loc(R)].")
-
-	for (var/mob/R in receive_sfx)
-		R.playsound_local(src, 'sound/misc/talk/radio2.ogg', 25, 1, -MAX_SOUND_RANGE+5, pitch = 1, ignore_flag = SOUND_SPEECH)//gfdsgfdsgfsfgs
 
 	var/rendered
 
