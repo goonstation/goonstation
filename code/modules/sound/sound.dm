@@ -216,6 +216,9 @@ var/global/list/falloff_cache = list()
 			for (var/mob/M in src.observers)
 				if (CLIENT_IGNORES_SOUND(M.client))
 					continue
+					M.client.sound_playing[ S.channel ][1] = vol
+					M.client.sound_playing[ S.channel ][2] = channel
+
 					M << S
 
 //handles a wide variety of inputs and spits out a valid sound object
