@@ -7,7 +7,7 @@
 	Index:
 	- Vendor
 	- Materiel
-	- Supply credits
+	- Requisition tokens
 */
 
 /obj/submachine/weapon_vendor
@@ -19,19 +19,17 @@
 	opacity = 0
 	anchored = 1
 
-	deconstruct_flags = DECON_MULTITOOL
-
 	var/current_sidearm_credits = 0
 	var/current_loadout_credits = 0
 	var/temp = null
 	var/list/datum/materiel_stock = list()
-	//var/datum/light/light
 
 	New()
 		..()
 		// List of avaliable objects for purchase
 		materiel_stock += new/datum/materiel/sidearm/pistol
 		materiel_stock += new/datum/materiel/sidearm/revolver
+
 		materiel_stock += new/datum/materiel/loadout/assault
 		materiel_stock += new/datum/materiel/loadout/heavy
 		materiel_stock += new/datum/materiel/loadout/grenadier
@@ -40,20 +38,14 @@
 		materiel_stock += new/datum/materiel/loadout/firebrand
 		materiel_stock += new/datum/materiel/loadout/engineer
 		materiel_stock += new/datum/materiel/loadout/marksman
+
 		//materiel_stock += new/datum/materiel/ammo/
 		//materiel_stock += new/datum/materiel/misc/
 
-/*
-		light = new/datum/light/point
-		light.set_brightness(0.4)
-		light.attach(src)
-		light.enable()
-*/
-
 	attackby(var/obj/item/I as obj, user as mob)
-		if(istype(I, /obj/item/supply_credit))
+		if(istype(I, /obj/item/requisition_token))
 			qdel(I)
-			boutput(user, "<span class='notice'>You insert the supply credit into the vendor.</span>")
+			boutput(user, "<span class='notice'>You insert the requisition token into the vendor.</span>")
 			src.current_sidearm_credits++
 			src.current_loadout_credits++
 			src.updateUsrDialog()
@@ -84,13 +76,14 @@
 		usr.machine = src
 
 		if(href_list["redeem"])
-			src.temp = "<br>Please select the materiel that you wish to spend your supply credits on:<br><br>"
+			src.temp = "<br>Please select the materiel that you wish to spend your requisition tokens on:<br><br>"
 
 			src.temp += {"
 			<style>
 				table {border-collapse: collapse;}
-				th {padding: 5px; text-align: center; background-color: #800000; color: white;}
+				th {padding: 5px; text-align: center; background-color: #800000; color: white; height: 25px;}
 				td {padding: 5px; text-align: center;}
+				tr:hover {background-color: #c83737;}
 				.reward {display:block; color:white; padding: 2px 5px; margin: -5px -5px 2px -5px;
 																width: auto;
 																height: auto;
@@ -208,10 +201,10 @@
 	catagory = "Loadout"
 	description = "A standard syndicate uplink loaded with 12 telecrytals, allowing you to pick and choose from an array of syndicate items."
 
-// supply credits
+// Requisition tokens
 
-/obj/item/supply_credit
-	name = "ticket"
+/obj/item/requisition_token
+	name = "Requisition token"
 	desc = "It's a ticket."
 	icon = 'icons/obj/discountdans.dmi'
 	icon_state = "golden"
