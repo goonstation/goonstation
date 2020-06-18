@@ -399,7 +399,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		//DEBUG_MESSAGE("Message transmitted. Frequency: [display_freq]. Source: [src] at [log_loc(src)]. Receiver: [R] at [log_loc(R)].")
 
 	for (var/mob/R in receive_sfx)
-		R.playsound_local(src, 'sound/misc/talk/radio2.ogg', 30, 1, -MAX_SOUND_RANGE+3, pitch = 1, ignore_flag = SOUND_SPEECH)//gfdsgfdsgfsfgs
+		R.playsound_local(src, 'sound/misc/talk/radio2.ogg', 25, 1, -MAX_SOUND_RANGE+5, pitch = 1, ignore_flag = SOUND_SPEECH)//gfdsgfdsgfsfgs
 
 	var/rendered
 

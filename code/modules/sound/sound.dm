@@ -178,7 +178,7 @@ var/global/list/falloff_cache = list()
 	if (!source || !source.loc)
 		return
 
-	var/dist = max(GET_MANHATTAN_DIST(src, get_turf(source)), 1)
+	var/dist = max(GET_MANHATTAN_DIST(get_turf(src), get_turf(source)), 1)
 	if (dist > MAX_SOUND_RANGE + extrarange)
 		return
 
