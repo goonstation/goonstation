@@ -2561,7 +2561,7 @@ var/global/night_mode_enabled = 0
 	admin_only
 
 	var/is_text = winget(C,  "mapwindow.map", "text-mode") == "true"
-	logTheThing("admin", usr, C.mob, "has toggled %target%'s nodamage to [!is_text]")
-	logTheThing("diary", usr, C.mob, "has toggled %target%'s nodamage to [!is_text]", "admin")
-	message_admins("[key_name(usr)] has toggled [key_name(C.mob)]'s nodamage to [!is_text]")
+	logTheThing("admin", usr, C.mob, "has toggled %target%'s text mode to [!is_text]")
+	logTheThing("diary", usr, C.mob, "has toggled %target%'s text mode to [!is_text]", "admin")
+	message_admins("[key_name(usr)] has toggled [key_name(C.mob)]'s text mode to [!is_text]")
 	winset(C, "mapwindow.map", "text-mode=[is_text ? "false" : "true"]" )
