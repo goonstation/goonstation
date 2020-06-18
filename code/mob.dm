@@ -35,6 +35,8 @@
 	var/custom_gib_handler = null
 	var/obj/decal/cleanable/custom_vomit_type = /obj/decal/cleanable/vomit
 
+	var/list/mob/dead/target_observer/observers = list()
+
 	var/emote_allowed = 1
 	var/last_emote_time = 0
 	var/last_emote_wait = 0
