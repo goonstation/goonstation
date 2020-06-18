@@ -143,11 +143,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #ifdef RP_MODE
 	looc_allowed = 1
 	boutput(world, "<B>LOOC has been automatically enabled.</B>")
+	ooc_allowed = 0
+	boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #else
 	if (it_is_ass_day || istype(src.mode, /datum/game_mode/construction))
 		looc_allowed = 1
 		boutput(world, "<B>LOOC has been automatically enabled.</B>")
-
 	else
 		ooc_allowed = 0
 		boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
@@ -262,7 +263,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	if (total_clients() >= OVERLOAD_PLAYERCOUNT)
 		world.tick_lag = OVERLOADED_WORLD_TICKLAG
 
-//Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min). 
+//Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min).
 //The voting will happen 30 seconds into the pre-game lobby. This is probably fine to leave. But if someone changes that var then it might start before the lobby timer ends.
 /datum/controller/gameticker/proc/handle_mapvote()
 	var/bustedMapSwitcher = isMapSwitcherBusted()
