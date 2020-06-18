@@ -170,10 +170,6 @@
 	stomach_process = null
 	skin_process = null
 
-	for(var/mob/dead/target_observer/TO in observers)
-		observers -= TO
-		TO.ghostize()
-
 	for(var/mob/dead/aieye/E in src.contents)
 		E.cancel_camera()
 

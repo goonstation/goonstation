@@ -286,6 +286,10 @@
 		src.s_active = null
 
 /mob/disposing()
+	for(var/mob/dead/target_observer/TO in observers)
+		observers -= TO
+		TO.ghostize()
+
 	for(var/mob/m in src) //just in case...
 		m.loc = src.loc
 		m.ghostize()

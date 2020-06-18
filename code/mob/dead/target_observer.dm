@@ -134,11 +134,17 @@ var/list/observers = list()
 			for (var/datum/hud/hud in M.huds)
 				src.attach_hud(hud)
 
+		if (isobj(target))
+			src.RegisterSignal(target, list(COMSIG_PARENT_PRE_DISPOSING), .verb/stop_observing)
+
 
 	verb
 		stop_observing()
 			set name = "Stop Observing"
 			set category = "Commands"
+
+			if (isobj(target))
+				src.UnregisterSignal(target, list(COMSIG_PARENT_PRE_DISPOSING))
 
 			if (!my_ghost)
 				my_ghost = new(src.corpse)
