@@ -2,6 +2,8 @@
 #define EARLY_RETURN_IF_QUIET(v) if (v < TOO_QUIET) return
 #define EARLY_CONTINUE_IF_QUIET(v) if (v < TOO_QUIET) continue
 #define MAX_SOUND_RANGE 33
+#define CLIENT_IGNORES_SOUND(C) (C && C.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
+
 
 
 // returns 0 to 1 based on air pressure in turf
@@ -72,9 +74,6 @@ var/global/list/falloff_cache = list()
 
 	if( channel == VOLUME_CHANNEL_ADMIN )
 		src.chatOutput.adjustVolumeRaw( getMasterVolume() * volume )
-
-
-#define CLIENT_IGNORES_SOUND(C) (C && C.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
 
 /proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
 	// don't play if over the per-tick sound limit
@@ -212,6 +211,12 @@ var/global/list/falloff_cache = list()
 			S.pan = max(-100, min(100, dx/8.0 * 100))
 
 		src << S
+
+		if (src.observers.len)
+			for (var/mob/M in src.observers)
+				if (CLIENT_IGNORES_SOUND(M.client))
+					continue
+					M << S
 
 //handles a wide variety of inputs and spits out a valid sound object
 /proc/getSound(thing)
