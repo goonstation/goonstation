@@ -1,5 +1,9 @@
 
 (t)thu jun 18 20
+(u)mbc
+(p)1128
+(e)|
+(*)When someone in a secure channel you can hear speaks on the radio, you will get a short chat sound indicating this.
 (u)Mordent
 (p)1127
 (e)🗺|mapping
