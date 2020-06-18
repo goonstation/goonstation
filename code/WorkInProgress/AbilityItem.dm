@@ -337,11 +337,7 @@
 
 	execute_ability()
 		var/obj/item/device/light/flashlight/J = the_item
-		if (ismob(J.loc))
-			J.light.attach(J.loc)
-		J.attack_self(the_mob)
-		if(J.on) icon_state = "off"
-		else  icon_state = "on"
+		J.toggle()
 		..()
 
 ////////////////////////////////////////////////////////////
