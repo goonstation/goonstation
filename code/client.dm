@@ -1306,11 +1306,68 @@ if([removeOnFinish])
 	for(var/client/C)
 		C.showCinematic(name, removeOnFinish)
 
+#define SKIN_TEMPLATE "\
+rpane.background-color=[_SKIN_BG];\
+rpane.text-color=[_SKIN_TEXT];\
+rpanewindow.background-color=[_SKIN_BG];\
+rpanewindow.text-color=[_SKIN_TEXT];\
+textb.background-color=[_SKIN_BG];\
+textb.text-color=[_SKIN_TEXT];\
+browseb.background-color=[_SKIN_BG];\
+browseb.text-color=[_SKIN_TEXT];\
+infob.background-color=[_SKIN_BG];\
+infob.text-color=[_SKIN_TEXT];\
+menub.background-color=[_SKIN_BG];\
+menub.text-color=[_SKIN_TEXT];\
+bugreportb.background-color=[_SKIN_BG];\
+bugreportb.text-color=[_SKIN_TEXT];\
+wikib.background-color=[_SKIN_BG];\
+wikib.text-color=[_SKIN_TEXT];\
+mapb.background-color=[_SKIN_BG];\
+mapb.text-color=[_SKIN_TEXT];\
+forumb.background-color=[_SKIN_BG];\
+forumb.text-color=[_SKIN_TEXT];\
+infowindow.background-color=[_SKIN_BG];\
+infowindow.text-color=[_SKIN_TEXT];\
+info.background-color=[_SKIN_INFO_BG];\
+info.text-color=[_SKIN_TEXT];\
+mainwindow.background-color=[_SKIN_BG];\
+mainwindow.text-color=[_SKIN_TEXT];\
+mainvsplit.background-color=[_SKIN_BG];\
+falsepadding.background-color=[_SKIN_COMMAND_BG];\
+input.background-color=[_SKIN_COMMAND_BG];\
+input.text-color=[_SKIN_TEXT];\
+saybutton.background-color=[_SKIN_COMMAND_BG];\
+saybutton.text-color=[_SKIN_TEXT];\
+info.tab-background-color=[_SKIN_INFO_TAB_BG];\
+info.tab-text-color=[_SKIN_TEXT]"
+
 /client/verb/sync_dark_mode()
 	set hidden=1
 	if(winget(src, "menu.dark_mode", "is-checked") == "true")
-		winset(src, null, "rpane.background-color=#28292c;rpane.text-color=#d3d4d5;rpanewindow.background-color=#28292c;rpanewindow.text-color=#d3d4d5;textb.background-color=#28292c;textb.text-color=#d3d4d5;browseb.background-color=#28292c;browseb.text-color=#d3d4d5;infob.background-color=#28292c;infob.text-color=#d3d4d5;menub.background-color=#28292c;menub.text-color=#d3d4d5;bugreportb.background-color=#28292c;bugreportb.text-color=#d3d4d5;wikib.background-color=#28292c;wikib.text-color=#d3d4d5;mapb.background-color=#28292c;mapb.text-color=#d3d4d5;forumb.background-color=#28292c;forumb.text-color=#d3d4d5;infowindow.background-color=#28292c;infowindow.text-color=#d3d4d5;info.background-color=#28292c;info.text-color=#d3d4d5;mainwindow.background-color=#28292c;mainwindow.text-color=#d3d4d5;mainvsplit.background-color=#28292c;falsepadding.background-color=#28292c;input.background-color=#28294c;input.text-color=#d3d4d5;saybutton.background-color=#28294c;saybutton.text-color=#d3d4d5;info.tab-background-color=#28292c;info.tab-text-color=#d3d4d5")
+#define _SKIN_BG "#28292c"
+#define _SKIN_INFO_TAB_BG "#28292c"
+#define _SKIN_INFO_BG "#28292c"
+#define _SKIN_TEXT "#d3d4d5"
+#define _SKIN_COMMAND_BG "#28294c"
+		winset(src, null, SKIN_TEMPLATE)
 		chatOutput.changeTheme("theme-dark")
+#undef _SKIN_BG
+#undef _SKIN_INFO_TAB_BG
+#undef _SKIN_INFO_BG
+#undef _SKIN_TEXT
+#undef _SKIN_COMMAND_BG
+#define _SKIN_BG "none"
+#define _SKIN_INFO_TAB_BG "#f0f0f0"
+#define _SKIN_INFO_BG "#ffffff"
+#define _SKIN_TEXT "none"
+#define _SKIN_COMMAND_BG "#d3b5b5"
 	else
-		winset(src, null, "mainwindow.background-color=none;mainwindow.text-color=none;mainvsplit.background-color=none;falsepadding.background-color=#d3b5b5;input.background-color=#d3b5b5;input.text-color=none;saybutton.background-color=none;saybutton.text-color=none;rpane.background-color=none;rpane.text-color=none;rpanewindow.background-color=none;rpanewindow.text-color=none;textb.background-color=none;textb.text-color=none;browseb.background-color=none;browseb.text-color=none;infob.background-color=none;infob.text-color=none;menub.background-color=none;menub.text-color=none;bugreportb.background-color=none;bugreportb.text-color=none;wikib.background-color=none;wikib.text-color=none;mapb.background-color=none;mapb.text-color=none;forumb.background-color=none;forumb.text-color=none;infowindow.background-color=none;infowindow.text-color=none;info.background-color=#ffffff;info.text-color=none;info.tab-background-color=#f0f0f0;info.tab-text-color=none")
+		winset(src, null, SKIN_TEMPLATE)
 		chatOutput.changeTheme("theme-default")
+#undef _SKIN_BG
+#undef _SKIN_INFO_TAB_BG
+#undef _SKIN_INFO_BG
+#undef _SKIN_TEXT
+#undef _SKIN_COMMAND_BG
+#undef SKIN_TEMPLATE
