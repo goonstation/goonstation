@@ -1,7 +1,6 @@
 
 (t)thu jun 18 20
 (u)mbc
-(p)1128
 (*)BYOND 513 is no longer in beta. Please upgrade to the latest STABLE version - includes some fixes like eliminating the right-click lag again.
 (u)Mordent
 (p)1123
