@@ -419,7 +419,7 @@ datum
 						//end my copy+paste
 
 
-						if(amount >= B_required_volume) //This will mean you can have < 1 stuff not react. This is fine.
+						if(round(amount, CHEM_EPSILON) >= B_required_volume) //This will mean you can have < 1 stuff not react. This is fine.
 							total_matching_reagents++
 							created_volume = min(created_volume, amount * (C.result_amount ? C.result_amount : 1) / B_required_volume)
 						else
