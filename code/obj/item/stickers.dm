@@ -26,6 +26,8 @@
 			return
 		if (isarea(A) || istype(A, /obj/item/item_box))
 			return
+		if (A.layer == HUD_LAYER)
+			return
 		user.tri_message("<b>[user]</b> sticks [src] to [A]!",\
 		user, "You stick [src] to [user == A ? "yourself" : "[A]"]!",\
 		A, "[user == A ? "You stick" : "<b>[user]</b> sticks"] [src] to you[user == A ? "rself" : null]!")
