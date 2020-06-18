@@ -24,9 +24,7 @@
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		if (!A)
 			return
-		if (isarea(A) || istype(A, /obj/item/item_box))
-			return
-		if (A.layer == HUD_LAYER)
+		if (isarea(A) || istype(A, /obj/item/item_box) || istype(A, /obj/screen) || istype(A, /obj/ability_button))
 			return
 		user.tri_message("<b>[user]</b> sticks [src] to [A]!",\
 		user, "You stick [src] to [user == A ? "yourself" : "[A]"]!",\
