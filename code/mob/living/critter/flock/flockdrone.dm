@@ -740,25 +740,26 @@
 		if(istype(target, /turf))
 			actions.start(new/datum/action/bar/flock_convert(target), user)
 	if(user.a_intent == INTENT_HARM)
-		if(istype(target, /obj/table/flock))
-			actions.start(new /datum/action/bar/icon/table_tool_interact(target, null, TABLE_DISASSEMBLE), user)
-		else if(istype(target, /obj/storage/closet/flock))
-			//soap
-			actions.start(new /datum/action/bar/flock_locker_decon(target), user)
-		else if(istype(target, /turf/simulated/wall/auto/feather))
-			actions.start(new /datum/action/bar/flock_wall_decon(target), user)
-		else if(istype(target, /obj/structure/girder))
-			if(target?.material.mat_id == "gnesis")
-				var/atom/A = new /obj/item/sheet(get_turf(target))
-				if (target.material)
-					A.setMaterial(target.material)
-					qdel(target)
+		switch (target.type)
+			if(/obj/table/flock, /obj/table/flock/auto)
+				actions.start(new /datum/action/bar/flock_decon(target), user)
+			if(/obj/storage/closet/flock)
+				//soap
+				actions.start(new /datum/action/bar/flock_decon(target), user)
+			if(/turf/simulated/wall/auto/feather)
+				actions.start(new /datum/action/bar/flock_decon(target), user)
+			if(/obj/structure/girder)
+				if(target?.material.mat_id == "gnesis")
+					var/atom/A = new /obj/item/sheet(get_turf(target))
+					if (target.material)
+						A.setMaterial(target.material)
+						qdel(target)
+				else
+					return
+			if(/obj/machinery/door/feather)
+				actions.start(new /datum/action/bar/flock_decon(target), user)
 			else
-				return
-		else if(istype(target, /obj/machinery/door/feather))
-			actions.start(new /datum/action/bar/flock_door_decon(target), user)
-		else
-			..()
+				..()
 //help intent actions
 	else if(user.a_intent == INTENT_HELP)
 		if(istype(target, /obj/machinery/door/feather))
