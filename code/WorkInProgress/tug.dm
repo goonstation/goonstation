@@ -139,7 +139,6 @@
 	throw_dropped_items_overboard = 1
 	var/start_with_cart = 1
 	var/speed = 4
-	var/datum/component/holdertargeting/simple_light/light_dir
 
 	security
 		name = "security wagon"
@@ -178,8 +177,7 @@
 
 	New()
 		..()
-		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light,255, 255, 255, 150)
-		light_dir.update(1)
+		src.add_mdir_light("light", list(255, 255, 255, 150))
 
 	New()
 		..()
