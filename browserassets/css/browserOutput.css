@@ -337,8 +337,8 @@ h1.alert, h2.alert {color: #000000;}
 }
 
 /* bog-standard dark theme with easy, unsaturated colors */
-body.theme-dark { background-color: #23272a; color: #bbcfdd; }
-body.theme-dark .regular { color: #bbcfdd; }
+body.theme-dark { background-color: #23272a; color: #ffffd4; }
+body.theme-dark .regular { color: #ffffd4; }
 body.theme-dark .notice { color: #7996ff; }
 body.theme-dark .hint { color: #7996ff; }
 body.theme-dark .internal { color: #7996ff; }
