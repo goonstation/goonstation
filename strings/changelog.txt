@@ -15,7 +15,7 @@
 (u)pali
 (p)1130
 (e)🆕|feature
-(*)Added full dark mode and other related options. Check Game->Window in the top bar. For the true dark mode experience turn on all the buttons and also CHUI and custom CHUI frames if they don't break the game for you.
+(*)Added full dark mode and other related options. Check Display->Window in the top bar. For the true dark mode experience turn on all the buttons and also CHUI and custom CHUI frames if they don't break the game for you.
 (t)thu jun 18 20
 (u)mbc
 (*)BYOND 513 is no longer in beta. Please upgrade to the latest STABLE version - includes some fixes like eliminating the right-click lag again.
