@@ -80,6 +80,7 @@
 			owner.facing = owner.dir
 			owner.flying = owner.dir
 			next_rot = world.time + abs(rot)
+			owner.update_mdir_light_visibility(owner.dir)
 
 		if (!can_turn_while_parked && velocity_dir != owner.dir && (velocity_magnitude + accel) > velocity_max)
 			if (velocity_magnitude >= velocity_max) //we are at max speed
