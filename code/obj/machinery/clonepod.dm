@@ -80,6 +80,9 @@
 	disposing()
 		radio_controller.remove_object(src, "[pdafrequency]")
 		genResearch.clonepods.Remove(src) //Bye bye
+		connected.pod1 = null
+		connected?.scanner?.pods -= src
+		connected = null
 		..()
 
 	proc/send_pda_message(var/msg)

@@ -28,6 +28,15 @@
 	lg = 0.6
 	lb = 1
 
+	disposing()
+		scanner?.connected = null
+		pod1?.connected = null
+		scanner = null
+		pod1 = null
+		diskette = null
+		records = null
+		..()
+
 	old
 		icon_state = "old2"
 		desc = "With the price of cloning pods nowadays it's not unexpected to skimp on the controller."
@@ -75,6 +84,7 @@
 			src.temp += " <font color=red>POD1-ERROR</font>"
 		else
 			src.pod1.connected = src
+			src.scanner.connected = src
 
 		if (src.temp == "")
 			src.temp = "System ready."
@@ -602,6 +612,7 @@
 	anchored = 1.0
 	soundproofing = 10
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	var/obj/machinery/computer/cloning/connected = null
 
 	// In case someone wants a perfectly safe device. For some weird reason.
 	var/can_meat_grind = 1
@@ -634,6 +645,13 @@
 
 	relaymove(mob/user as mob, dir)
 		eject_occupant(user)
+
+	disposing()
+		connected.scanner = null
+		connected = null
+		pods = null
+		occupant = null
+		..()
 
 	MouseDrop_T(mob/living/target, mob/user)
 		if (!istype(target) || isAI(user))
