@@ -83,6 +83,9 @@
 		connected.pod1 = null
 		connected?.scanner?.pods -= src
 		connected = null
+		if(occupant)
+			occupant.set_loc(src.loc)
+		occupant = null
 		..()
 
 	proc/send_pda_message(var/msg)
