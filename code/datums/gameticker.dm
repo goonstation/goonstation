@@ -143,11 +143,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #ifdef RP_MODE
 	looc_allowed = 1
 	boutput(world, "<B>LOOC has been automatically enabled.</B>")
+	ooc_allowed = 0
+	boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #else
 	if (it_is_ass_day || istype(src.mode, /datum/game_mode/construction))
 		looc_allowed = 1
 		boutput(world, "<B>LOOC has been automatically enabled.</B>")
-
 	else
 		ooc_allowed = 0
 		boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
