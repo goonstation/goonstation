@@ -147,6 +147,8 @@ datum/shuttle_controller
 							for (var/atom/movable/AM as mob|obj in T)
 								if (isobserver(AM))
 									continue // skip ghosties
+								if (istype(AM, /obj/overlay/tile_effect))
+									continue
 								AM.set_loc(D)
 								// NOTE: Commenting this out to avoid recreating mass driver glitch
 								/*

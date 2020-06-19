@@ -327,7 +327,7 @@
 		destroy_mdir_light()
 
 /atom/proc/update_mdir_light_visibility(direct)
-	if(src.mdir_lights[1].invisibility == 101) // toggled off
+	if(!length(src.mdir_lights) || src.mdir_lights[1].invisibility == 101) // toggled off
 		return
 	if(!isturf(src.loc))
 		for(var/x in src.mdir_lights)

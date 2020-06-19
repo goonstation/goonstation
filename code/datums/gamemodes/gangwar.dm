@@ -155,7 +155,7 @@
 	if(leader.ears != null && istype(leader.ears,/obj/item/device/radio/headset))
 		var/obj/item/device/radio/headset/H = leader.ears
 		H.set_secure_frequency("g",leader.mind.gang.gang_frequency)
-		H.secure_colors["g"] = RADIOC_SYNDICATE
+		H.secure_classes["g"] = RADIOCL_SYNDICATE
 		boutput(leader, "Your headset has been tuned to your gang's frequency. Prefix a message with :g to communicate on this channel.")
 
 	return
@@ -1286,7 +1286,7 @@
 		if(target.ears != null && istype(target.ears,/obj/item/device/radio/headset))
 			var/obj/item/device/radio/headset/H = target.ears
 			H.set_secure_frequency("g",src.gang.gang_frequency)
-			H.secure_colors["g"] = RADIOC_SYNDICATE
+			H.secure_classes["g"] = RADIOCL_SYNDICATE
 			boutput(target, "Your headset has been tuned to your gang's frequency. Prefix a message with :g to communicate on this channel.")
 
 //		update_max_members()

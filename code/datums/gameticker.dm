@@ -62,7 +62,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #endif
 
 	pregame_timeleft = PREGAME_LOBBY_TICKS
-	boutput(world, "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>")
+	boutput(world, "<B><FONT style='notice'>Welcome to the pre-game lobby!</FONT></B>")
 	boutput(world, "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds")
 	#if ASS_JAM
 	vote_manager.active_vote = new/datum/vote_new/mode("assday")
@@ -143,11 +143,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #ifdef RP_MODE
 	looc_allowed = 1
 	boutput(world, "<B>LOOC has been automatically enabled.</B>")
+	ooc_allowed = 0
+	boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #else
 	if (it_is_ass_day || istype(src.mode, /datum/game_mode/construction))
 		looc_allowed = 1
 		boutput(world, "<B>LOOC has been automatically enabled.</B>")
-
 	else
 		ooc_allowed = 0
 		boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
@@ -236,7 +237,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		shippingmarket.get_market_timeleft()
 
 		logTheThing("ooc", null, null, "<b>Current round begins</b>")
-		boutput(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
+		boutput(world, "<FONT class='notice'><B>Enjoy the game!</B></FONT>")
 		boutput(world, "<span class='notice'><b>Tip:</b> [pick(tips)]</span>")
 
 		//Setup the hub site logging
@@ -262,7 +263,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	if (total_clients() >= OVERLOAD_PLAYERCOUNT)
 		world.tick_lag = OVERLOADED_WORLD_TICKLAG
 
-//Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min). 
+//Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min).
 //The voting will happen 30 seconds into the pre-game lobby. This is probably fine to leave. But if someone changes that var then it might start before the lobby timer ends.
 /datum/controller/gameticker/proc/handle_mapvote()
 	var/bustedMapSwitcher = isMapSwitcherBusted()
@@ -427,7 +428,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] one minute delay, game should restart now")
 
 				if (game_end_delayed == 1)
-					message_admins("<font color='blue'>Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]. Remove the delay for an immediate restart.</font>")
+					message_admins("<span class='internal>Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]. Remove the delay for an immediate restart.</span>")
 					game_end_delayed = 2
 					var/ircmsg[] = new()
 					ircmsg["msg"] = "Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]."

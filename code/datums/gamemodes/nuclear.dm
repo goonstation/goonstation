@@ -251,7 +251,7 @@
 			// Minor Syndicate Victory - crew escaped but bomb was armed and counting down
 			finished = -1
 			return 1
-		if ((!the_bomb || (the_bomb && !the_bomb.armed)))
+		if ((!the_bomb || the_bomb.disposed || (the_bomb && !the_bomb.armed)))
 			if (all_operatives_dead())
 				// Major Station Victory - bombing averted, all operatives dead/captured
 				finished = 2
@@ -264,7 +264,7 @@
 	if (no_automatic_ending)
 		return 0
 
-	if (the_bomb && the_bomb.armed && the_bomb.det_time)
+	if (the_bomb && the_bomb.armed && the_bomb.det_time && !the_bomb.disposed)
 		// don't end the game if the bomb is armed and counting, even if the ops are all dead
 		return 0
 
@@ -275,7 +275,7 @@
 
 	// Minor or major Station Victory - bombing averted in any case.
 	if (src.bomb_check_timestamp && world.time > src.bomb_check_timestamp + 300)
-		if (!src.the_bomb || !istype(src.the_bomb, /obj/machinery/nuclearbomb))
+		if (!src.the_bomb || src.the_bomb.disposed || !istype(src.the_bomb, /obj/machinery/nuclearbomb))
 			if (src.all_operatives_dead())
 				finished = 2
 			else

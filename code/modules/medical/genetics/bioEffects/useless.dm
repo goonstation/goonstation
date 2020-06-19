@@ -8,23 +8,14 @@
 	blockGaps = 1
 	msgGain = "Your skin begins to glow softly."
 	msgLose = "Your glow fades away."
-	var/datum/light/light
-
-	New()
-		..()
-		light = new /datum/light/point
-		light.set_color(rand(1,10) / 10, rand(1,10) / 10, rand(1,10) / 10)
-		light.set_brightness(0.7)
 
 	OnAdd()
 		..()
-		light.attach(owner)
-		light.enable()
+		owner.add_sm_light("glowy", list(rand(25,255), rand(25,255), rand(25,255), 150))
 
 	OnRemove()
 		..()
-		light.disable()
-		light.detach()
+		owner.add_sm_light("glowy", list(rand(25,255), rand(25,255), rand(25,255), 150))
 
 /datum/bioEffect/horns
 	name = "Cranial Keratin Formation"

@@ -1814,6 +1814,8 @@ $(function() {
 				else
 					boutput( user, "<span class='notice'>Savefile deleted!</span>" )
 			else if (link_tags["cloudload"] && user.client.cloudsaves[ link_tags["cloudload"] ])
+				for (var/x in rebuild_data)
+					rebuild_data[x] = 1
 				rebuild_profile = 1
 				var/ret = src.cloudsave_load( user.client, link_tags["cloudload"] )
 				if( istext( ret ) )
@@ -1826,6 +1828,9 @@ $(function() {
 				src.savefile_save(user, (isnum(text2num(link_tags["save"])) ? text2num(link_tags["save"]) : 1))
 				boutput(user, "<span class='notice'><b>Character saved to Slot [text2num(link_tags["save"])].</b></span>")
 			else if (link_tags["load"])
+				for (var/x in rebuild_data)
+					rebuild_data[x] = 1
+
 				rebuild_profile = 1
 				if (!src.savefile_load(user.client, (isnum(text2num(link_tags["load"])) ? text2num(link_tags["load"]) : 1)))
 					alert(user, "You do not have a savefile.")

@@ -138,7 +138,7 @@
 				src.deactivate()
 			else
 				src.activate()
-			message_admins("<span class='notice'>[key_name(user)] [src.active ? "activated" : "deactivated"] shields</span>")
+			message_admins("<span class='internal'>[key_name(user)] [src.active ? "activated" : "deactivated"] shields</span>")
 			logTheThing("station", null, null, "[key_name(user)] [src.active ? "activated" : "deactivated"] shields")
 		else
 			user.show_text("<span class='alert'><b>That is still not ready to be used again.</b></span>")
@@ -399,13 +399,13 @@
 					if ("sgen_actvd")
 						src.print_text("<b>Alert:</b> Shield generator activated.")
 						if (usr)
-							message_admins("<span class='notice'>[key_name(usr)] activated shields</span>")
+							message_admins("<span class='internal'>[key_name(usr)] activated shields</span>")
 							logTheThing("station", null, null, "[key_name(usr)] activated shields")
 
 					if ("sgen_dactvd")
 						src.print_text("<b>Alert:</b> Shield generator deactivated.")
 						if (usr)
-							message_admins("<span class='notice'>[key_name(usr)] deactivated shields</span>")
+							message_admins("<span class='internal'>[key_name(usr)] deactivated shields</span>")
 							logTheThing("station", null, null, "[key_name(usr)] deactivated shields")
 				return
 		return

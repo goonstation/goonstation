@@ -58,6 +58,7 @@
 
 /datum/component/holdertargeting/medium_directional_light
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	var/on_when_equipped = 1
 	var/r = 255
 	var/g = 255
 	var/b = 255
@@ -66,7 +67,7 @@
 	var/enabled = 1
 	var/atom/light_target = null
 
-/datum/component/holdertargeting/medium_directional_light/Initialize(r = 255, g = 255, b = 255, a = 127, enabled = 1)
+/datum/component/holdertargeting/medium_directional_light/Initialize(r = 255, g = 255, b = 255, a = 127, enabled = 1, on_when_equipped = 1)
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
@@ -74,7 +75,8 @@
 	src.g = g
 	src.b = b
 	src.a = a
-	src.enabled = 1
+	src.enabled = enabled
+	src.on_when_equipped =  on_when_equipped
 	src.light_name = "sl_comp_\ref[src]"
 
 /datum/component/holdertargeting/medium_directional_light/proc/update(var/new_enabled = -1)
@@ -104,7 +106,7 @@
 /datum/component/holdertargeting/medium_directional_light/on_dropped(datum/source, mob/user)
 	. = ..()
 	var/obj/item/I = src.parent
-	if (I.loc == user)
+	if (I.loc == user && src.on_when_equipped)
 		src.light_target = user
 		return
 

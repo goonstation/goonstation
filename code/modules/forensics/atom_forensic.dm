@@ -1,9 +1,9 @@
 /atom
-	var/fingerprints = null
-	var/list/fingerprintshidden = null//new/list()
-	var/fingerprintslast = null
-	var/blood_DNA = null
-	var/blood_type = null
+	var/tmp/fingerprints = null
+	var/tmp/list/fingerprintshidden = null//new/list()
+	var/tmp/fingerprintslast = null
+	var/tmp/blood_DNA = null
+	var/tmp/blood_type = null
 	//var/list/forensic_info = null
 	var/list/forensic_trace = null // list(fprint, bDNA, btype) - can't get rid of this so easy!
 

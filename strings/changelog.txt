@@ -1,12 +1,34 @@
 
+(t)fri jun 19 20
+(u)Kubius
+(p)1122
+(e)🗺|mapping
+(+)Adjustments to the southern region of Oshan Laboratory, primarily centered around Security by the maintenance side.
+(u)Mordent
+(p)1132
+(e)🆕|feature
+(*)OOC channel disabled mid-round on RP server
+(u)AwkwardDryad
+(p)347
+(e)|
+(+)Fixed tons of clothing booth bugs :D
+(u)Kubius
+(p)1133
+(e)🗺|mapping
+(+)Kondaru tweaks, including a rockbox and a cleaner AI perimeter.
+(u)pali
+(p)1130
+(e)🆕|feature
+(*)Added full dark mode and other related options. Check Display->Window in the top bar. For the true dark mode experience turn on all the buttons and also CHUI and custom CHUI frames if they don't break the game for you.
 (t)thu jun 18 20
+(u)mbc
+(*)BYOND 513 is no longer in beta. Please upgrade to the latest STABLE version - includes some fixes like eliminating the right-click lag again.
 (u)Mordent
 (p)1123
 (e)⚖|balance
 (+)Added variant "mini funny pack" that replaces the regular version found in comedy equipment crates that cargo can order.
 (u)mbc
 (p)1128
-(e)|
 (*)When someone in a secure channel you can hear speaks on the radio, you will get a short chat sound indicating this.
 (u)Mordent
 (p)1127

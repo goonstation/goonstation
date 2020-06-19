@@ -344,7 +344,7 @@ var/list/clients_move_scheduled = list()
 	SPAWN_DBG(0)
 		var/start_time
 		while (1)
-			start_time = TIME
+			start_time = world.time
 			process_keystates()
 
 			for(var/client/C in clients_move_scheduled)
@@ -352,4 +352,4 @@ var/list/clients_move_scheduled = list()
 							!C.mob.internal_process_move(C.key_state)) /* deschedule only if internal_process_move tells us to */
 					clients_move_scheduled -= C
 
-			sleep(world.tick_lag - (TIME - start_time))
+			sleep(world.tick_lag - (world.time - start_time))

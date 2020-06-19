@@ -420,6 +420,18 @@
 #define RADIOC_SYNDICATE "#962121"
 #define RADIOC_OTHER "#800080"
 
+// Radio (headset etc) css classes.
+#define RADIOCL_STANDARD "rstandard"
+#define RADIOCL_INTERCOM "rintercom"
+#define RADIOCL_COMMAND "rcommand"
+#define RADIOCL_SECURITY "rsecurity"
+#define RADIOCL_ENGINEERING "rengineering"
+#define RADIOCL_MEDICAL "rmedical"
+#define RADIOCL_RESEARCH "rresearch"
+#define RADIOCL_CIVILIAN "rcivilian"
+#define RADIOCL_SYNDICATE "rsyndicate"
+#define RADIOCL_OTHER "rother"
+
 // Frequency defines for headsets & intercoms (Convair880).
 #define R_FREQ_MINIMUM 1441		// Minimum "selectable" freq
 #define R_FREQ_MAXIMUM 1489		// Maximum "selectable" freq
