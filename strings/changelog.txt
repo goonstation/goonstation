@@ -1,5 +1,9 @@
 
 (t)fri jun 19 20
+(u)Kubius
+(p)1133
+(e)🗺|mapping
+(+)Kondaru tweaks, including a rockbox and a cleaner AI perimeter.
 (u)pali
 (p)1130
 (e)🆕|feature
