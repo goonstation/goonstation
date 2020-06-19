@@ -352,5 +352,4 @@ var/list/clients_move_scheduled = list()
 							!C.mob.internal_process_move(C.key_state)) /* deschedule only if internal_process_move tells us to */
 					clients_move_scheduled -= C
 
-			if(prob(0.1)) logTheThing("debug", text="input loop: took [world.time - start_time], ticklag: [world.tick_lag]")
 			sleep(world.tick_lag - (world.time - start_time))
