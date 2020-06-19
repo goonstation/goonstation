@@ -275,7 +275,7 @@
 
 	// Minor or major Station Victory - bombing averted in any case.
 	if (src.bomb_check_timestamp && world.time > src.bomb_check_timestamp + 300)
-		if (!src.the_bomb || src.the_bomb.disposed !istype(src.the_bomb, /obj/machinery/nuclearbomb))
+		if (!src.the_bomb || src.the_bomb.disposed || !istype(src.the_bomb, /obj/machinery/nuclearbomb))
 			if (src.all_operatives_dead())
 				finished = 2
 			else
