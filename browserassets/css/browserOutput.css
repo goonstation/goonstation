@@ -337,11 +337,11 @@ h1.alert, h2.alert {color: #000000;}
 }
 
 /* bog-standard dark theme with easy, unsaturated colors */
-body.theme-dark { background-color: #23272a; color: #99AAB5; }
-body.theme-dark .regular { color: #99AAB5; }
-body.theme-dark .notice { color: #677BC4; }
-body.theme-dark .hint { color: #677BC4; }
-body.theme-dark .internal { color: #677BC4; }
+body.theme-dark { background-color: #23272a; color: #bbcfdd; }
+body.theme-dark .regular { color: #bbcfdd; }
+body.theme-dark .notice { color: #7996ff; }
+body.theme-dark .hint { color: #7996ff; }
+body.theme-dark .internal { color: #7996ff; }
 body.theme-dark .alert { color: #FF6D6D; }
 body.theme-dark .system { color: #FF6D6D; }
 body.theme-dark .success { color: #92E592; }
