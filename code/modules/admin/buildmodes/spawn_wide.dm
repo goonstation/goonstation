@@ -156,7 +156,6 @@ change the direction of created objects.<br>
 					blink(T)
 				for (var/obj/O in T)
 					qdel (O)
-				new /area(T)
 				T.ReplaceWithSpaceForce()
 				LAGCHECK(LAG_LOW)
 			A = null
