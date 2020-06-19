@@ -269,10 +269,10 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 
 	if(user.a_intent != "help" && isliving(M))
 		if(!canshoot())
-			M.visible_message("<span style=\"color:red\"><B>[user] tries to fire [src] at [M] pointblank, but it was empty!</B></span>")
+			M.visible_message("<span class='alert'><B>[user] tries to fire [src] at [M] pointblank, but it was empty!</B></span>")
 			return
 		for(var/mob/O in AIviewers(M, null))
-			if (O.client)	O.show_message("<span style=\"color:red\"><B>[M] has been shot pointblank with [src] by [user]!</B></span>", 1, "<span style=\"color:red\">You hear someone fall.</span>", 2)
+			if (O.client)	O.show_message("<span class='alert'><B>[M] has been shot pointblank with [src] by [user]!</B></span>", 1, "<span class='alert'>You hear someone fall.</span>", 2)
 		if(M.stunned < 5) M.stunned = 5
 		M.lying = 1
 		var/mob/living/carbon/C = 0
@@ -305,7 +305,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 //			src.current_projectile_num = 1
 
 		src.current_projectile = src.projectiles[src.current_projectile_num]
-		boutput(user, "<span style=\"color:blue\">you set the output to [src.current_projectile.sname].</span>")
+		boutput(user, "<span class='notice'>you set the output to [src.current_projectile.sname].</span>")
 	return
 
 /obj/item/pixel_gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
@@ -332,7 +332,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 /obj/item/pixel_gun/proc/shoot(var/atom/target,var/mob/user)
 	//Check ammo
 	if(!process_ammo(user))
-		boutput(user, "<span style=\"color:red\">*click* *click*</span>")
+		boutput(user, "<span class='alert'>*click* *click*</span>")
 		return
 	//Update that icon, having it here means we dont need it in each process_ammo proc
 	update_icon()
@@ -363,7 +363,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 	return 0
 
 /obj/item/pixel_gun/proc/process_ammo(var/mob/user)
-	boutput(user, "<span style=\"color:red\">*click* *click*</span>")
+	boutput(user, "<span class='alert'>*click* *click*</span>")
 	return 0
 
 /obj/item/pixel_gun/energy
@@ -400,7 +400,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 		if(current_projectile)
 			src.desc += " Each shot will currently use [src.current_projectile.cost] PUs!"
 		else
-			src.desc += "<span style=\"color:red\">*ERROR* No output selected!</span>"
+			src.desc += "<span class='alert'>*ERROR* No output selected!</span>"
 		..()
 		return
 
@@ -422,19 +422,19 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 			if(src.cell && src.current_projectile)
 				if(src.cell.use(src.current_projectile.cost))
 					return 1
-			boutput(user, "<span style=\"color:red\">*click* *click*</span>")
+			boutput(user, "<span class='alert'>*click* *click*</span>")
 			return 0
 
 	attackby(obj/item/b as obj, mob/user as mob)
 		if(istype(b, /obj/item/ammo/power_cell) && !rechargeable)
 			if(src.cell)
 				if(b:swap(src))
-					boutput(user, "<span style=\"color:blue\">You change the cell in the [src]!</span>")
+					boutput(user, "<span class='notice'>You change the cell in the [src]!</span>")
 			else
 				src.cell = b
 				user.drop_item()
 				b.set_loc(src)
-				boutput(user, "<span style=\"color:blue\">You load the [src]!</span>")
+				boutput(user, "<span class='notice'>You load the [src]!</span>")
 		else
 			..()
 

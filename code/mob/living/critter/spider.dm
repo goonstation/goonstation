@@ -7,9 +7,9 @@
 	density = 1
 	hand_count = 8 // spiders!!!
 	add_abilities = list(/datum/targetable/critter/spider_bite,
-						/datum/targetable/critter/spider_spaz,
+						/datum/targetable/critter/spider_flail,
 						/datum/targetable/critter/spider_drain)
-	var/spazzing = 0
+	var/flailing = 0
 	var/feeding = 0
 	var/venom1 = "venom"  // making these modular so i don't have to rewrite this gigantic goddamn section for all the subtypes
 	var/venom2 = "spiders"
@@ -28,6 +28,7 @@
 	var/health_burn_vuln = 0.65
 	reagent_capacity = 100
 
+	can_help = 1
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
@@ -36,6 +37,10 @@
 	butcherable = 1
 	skinresult = /obj/item/material_piece/cloth/spidersilk
 	max_skins = 4
+
+	blood_id = "black_goop"
+
+	var/bite_transfer_amt = 2
 
 	New()
 		..()
@@ -74,8 +79,8 @@
 			return 1
 		if (prob(33))
 			playsound(get_turf(src), "sound/voice/babynoise.ogg", 50, 1)
-			src.visible_message("<span style='color:blue'><b>[src]</b> coos!</span>",\
-			"<span style='color:blue'>You coo!</span>")
+			src.visible_message("<span class='notice'><b>[src]</b> coos!</span>",\
+			"<span class='notice'>You coo!</span>")
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -114,16 +119,16 @@
 			else
 				M.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_STAB)
 			// now spiders won't poison themselves - cirr
-			M.reagents.add_reagent(src.venom1, 2)
-			M.reagents.add_reagent(src.venom2, 2)
+			M.reagents.add_reagent(src.venom1, bite_transfer_amt)
+			M.reagents.add_reagent(src.venom2, bite_transfer_amt)
 
 
 	proc/grow_up()
 		if (!src.babyspider || !ispath(src.adultpath))
 			return 0
 		src.unequip_all()
-		src.visible_message("<span style='color:red'><b>[src] grows up!</b></span>",\
-		"<span style='color:blue'><b>You grow up!</b></span>")
+		src.visible_message("<span class='alert'><b>[src] grows up!</b></span>",\
+		"<span class='notice'><b>You grow up!</b></span>")
 		SPAWN_DBG(0)
 			src.make_critter(src.adultpath)
 
@@ -158,7 +163,26 @@
 	venom1 = "toxin"
 	venom2 = "black_goop"
 	babyspider = 1
+	adultpath = /mob/living/critter/spider/med
+	bite_transfer_amt = 0.5
+
+/mob/living/critter/spider/med
+	name = "medium space spider"
+	desc = "A medium tiny spider, from space. In space. A space spider."
+	icon_state = "med_spide"
+	icon_state_dead = "med_spide-dead"
+	density = 0
+	flags = TABLEPASS
+	fits_under_table = 1
+	health_brute = 25
+	health_burn = 25
+	good_grip = 0
+	max_skins = 1
+	venom1 = "toxin"
+	venom2 = "black_goop"
+	babyspider = 1
 	adultpath = /mob/living/critter/spider
+	bite_transfer_amt = 1.2
 
 /mob/living/critter/spider/ice
 	name = "ice spider"

@@ -11,6 +11,7 @@
 	w_class = 1.0
 	rand_pos = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
+	tooltip_flags = REBUILD_DIST
 	body_parts_covered = TORSO
 	var/base_state = "trashbag"
 	var/max_stuff = 12 // can't hold more than this many stuff
@@ -28,6 +29,7 @@
 				. += "It's [get_fullness(current_stuff / max_stuff * 100)]."
 
 	equipped(var/mob/user)
+		..()
 		if (src.contents.len)
 			for (var/i=src.contents.len, i>0, i--)
 				if (prob(66))
@@ -41,16 +43,16 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (W.cant_self_remove)
-			boutput(user, "<span style='color:red'>You can't get [W] to come off of you!</span>")
+			boutput(user, "<span class='alert'>You can't get [W] to come off of you!</span>")
 			return
 		else if ((src.current_stuff + W.w_class) > src.max_stuff) // we too full
-			boutput(user, "<span style='color:red'>\The [src] is too full for [W] to fit!</span>")
+			boutput(user, "<span class='alert'>\The [src] is too full for [W] to fit!</span>")
 			return
 		else
 			if (istype(src.loc, /obj/item/storage))
 				var/obj/item/storage/S = src.loc
 				if (S.max_wclass < W.w_class) // too big to fit in the thing we're in already!
-					boutput(user, "<span style='color:red'>You can't fit [W] in [src] while [src] is inside [S]!</span>")
+					boutput(user, "<span class='alert'>You can't fit [W] in [src] while [src] is inside [S]!</span>")
 					return
 			user.u_equip(W)
 			W.set_loc(src)
@@ -67,7 +69,7 @@
 		if (!user.find_in_hand(src))
 			return ..()
 		if (!src.contents.len)
-			boutput(user, "<span style='color:red'>\The [src] is empty!</span>")
+			boutput(user, "<span class='alert'>\The [src] is empty!</span>")
 			return
 		else
 			var/obj/item/I = pick(src.contents)
@@ -98,6 +100,7 @@
 		for (var/obj/item/I in src.contents)
 			src.w_class = max(I.w_class, src.w_class) // as it turns out there are some w_class things above 5 so fuck it this is just a max() now
 			src.current_stuff += I.w_class
+			tooltip_rebuild = 1
 		if (src.contents.len == 1)
 			src.icon_state = src.base_state
 			src.item_state = src.base_state
@@ -111,7 +114,7 @@
 		if (A)
 			if (user)
 				user.visible_message("\An [A] falls out of [user]'s [src.name]!",\
-				"<span style='color:red'>\An [A] falls out of your [src.name]!</span>")
+				"<span class='alert'>\An [A] falls out of your [src.name]!</span>")
 			else
 				src.loc.visible_message("\An [A] falls out of [src]!")
 			A.set_loc(get_turf(src))
@@ -131,7 +134,7 @@
 					if (O.density && !istype(O, /obj/table) && !istype(O, /obj/rack))
 						return
 				if (!T.density)
-					return//usr.visible_message("<span style='color:red'>[usr] dumps the contents of [src] onto [T]!</span>")
+					return//usr.visible_message("<span class='alert'>[usr] dumps the contents of [src] onto [T]!</span>")
 
 /obj/item/clothing/under/trash_bag/biohazard
 	name = "hazardous waste bag"

@@ -221,16 +221,16 @@
 					if (ispath(A) && istype(W, A))
 						ok = 1
 			if (!ok)
-				boutput(user, "<span style='color:red'>[src] cannot hold [W].</span>")
+				boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")
 				return
 
 		else if (W.w_class > src.max_wclass)
-			boutput(user, "<span style='color:red'>[W] won't fit into [src]!</span>")
+			boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
 			return
 
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len >= slots)
-			boutput(user, "<span style='color:red'>[src] is full!</span>")
+			boutput(user, "<span class='alert'>[src] is full!</span>")
 			return 0
 
 		var/atom/checkloc = src.loc // no infinite loops for you
@@ -255,7 +255,7 @@
 		add_fingerprint(user)
 		animate_storage_rustle(src)
 		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span style='color:blue'>[user] has added [W] to [src]!</span>", "<span style='color:blue'>You have added [W] to [src].</span>")
+			user.visible_message("<span class='notice'>[user] has added [W] to [src]!</span>", "<span class='notice'>You have added [W] to [src].</span>")
 		playsound(src.loc, "rustle", 50, 1, -5)
 		return
 
@@ -399,16 +399,16 @@ obj/item/storage/wall/clothingrack/hatrack
 					if (ispath(A) && istype(W, A))
 						ok = 1
 			if (!ok)
-				boutput(user, "<span style='color:red'>[src] cannot hold [W].</span>")
+				boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")
 				return
 
 		else if (W.w_class > src.max_wclass)
-			boutput(user, "<span style='color:red'>[W] won't fit into [src]!</span>")
+			boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
 			return
 
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len >= slots)
-			boutput(user, "<span style='color:red'>[src] is full!</span>")
+			boutput(user, "<span class='alert'>[src] is full!</span>")
 			return 0
 
 		var/atom/checkloc = src.loc // no infinite loops for you
@@ -433,7 +433,7 @@ obj/item/storage/wall/clothingrack/hatrack
 		add_fingerprint(user)
 		animate_storage_rustle(src)
 		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span style='color:blue'>[user] has added [W] to [src]!</span>", "<span style='color:blue'>You have added [W] to [src].</span>")
+			user.visible_message("<span class='notice'>[user] has added [W] to [src]!</span>", "<span class='notice'>You have added [W] to [src].</span>")
 		playsound(src.loc, "rustle", 50, 1, -5)
 		return
 
@@ -473,16 +473,16 @@ obj/item/storage/wall/clothingrack/hatrack
 					if (ispath(A) && istype(W, A))
 						ok = 1
 			if (!ok)
-				boutput(user, "<span style='color:red'>[src] cannot hold [W].</span>")
+				boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")
 				return
 
 		else if (W.w_class > src.max_wclass)
-			boutput(user, "<span style='color:red'>[W] won't fit into [src]!</span>")
+			boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
 			return
 
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len >= slots)
-			boutput(user, "<span style='color:red'>[src] is full!</span>")
+			boutput(user, "<span class='alert'>[src] is full!</span>")
 			return 0
 
 		var/atom/checkloc = src.loc // no infinite loops for you
@@ -507,6 +507,6 @@ obj/item/storage/wall/clothingrack/hatrack
 		add_fingerprint(user)
 		animate_storage_rustle(src)
 		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span style='color:blue'>[user] has added [W] to [src]!</span>", "<span style='color:blue'>You have added [W] to [src].</span>")
+			user.visible_message("<span class='notice'>[user] has added [W] to [src]!</span>", "<span class='notice'>You have added [W] to [src].</span>")
 		playsound(src.loc, "rustle", 50, 1, -5)
 		return

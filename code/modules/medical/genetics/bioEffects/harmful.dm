@@ -163,13 +163,17 @@
 	OnAdd()
 		..()
 		if (ishuman(owner))
-			owner:set_body_icon_dirty()
-			owner.unlock_medal("Space Ham", 1)
+			var/mob/living/carbon/human/H = owner
+			H.set_body_icon_dirty()
+			H.unlock_medal("Space Ham", 1)
+			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/spaceham, src.type)
 
 	OnRemove()
 		..()
 		if (ishuman(owner))
-			owner:set_body_icon_dirty()
+			var/mob/living/carbon/human/H = owner
+			H.set_body_icon_dirty()
+			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/spaceham, src.type)
 
 	OnLife()
 		if(..()) return
@@ -240,7 +244,7 @@
 		if (isdead(owner))
 			return
 		if (prob(1) && !owner.getStatusDuration("paralysis"))
-			owner:visible_message("<span style=\"color:red\"><B>[owner] starts having a seizure!</span>", "<span style=\"color:red\">You have a seizure!</span>")
+			owner:visible_message("<span class='alert'><B>[owner] starts having a seizure!</span>", "<span class='alert'>You have a seizure!</span>")
 			owner.setStatus("paralysis", max(owner.getStatusDuration("paralysis"), 20))
 			owner:make_jittery(100)
 		return
@@ -409,32 +413,32 @@
 
 		if (src.limb_type == LIMB_IS_ARM)
 			if (prob(5))
-				owner.visible_message("<span style=\"color:red\">[owner.name]'s [src.limb] makes a [pick("rude", "funny", "weird", "lewd", "strange", "offensive", "cruel", "furious")] gesture!</span>")
+				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] makes a [pick("rude", "funny", "weird", "lewd", "strange", "offensive", "cruel", "furious")] gesture!</span>")
 			else if (prob(2))
 				owner.emote("slap")
 			else if (prob(2))
-				owner.visible_message("<span style=\"color:red\"><B>[owner.name]'s [src.limb] punches [him_or_her(owner)] in the face!</B></span>")
+				owner.visible_message("<span class='alert'><B>[owner.name]'s [src.limb] punches [him_or_her(owner)] in the face!</B></span>")
 				owner.TakeDamageAccountArmor("head", rand(2,5), 0, 0, DAMAGE_BLUNT)
 			else if (prob(1))
-				owner.visible_message("<span style=\"color:red\">[owner.name]'s [src.limb] tries to strangle [him_or_her(owner)]!</span>")
+				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] tries to strangle [him_or_her(owner)]!</span>")
 				while (prob(80) && owner.bioHolder.HasEffect("funky_limb"))
 					owner.losebreath = max(owner.losebreath, 2)
 					sleep(1 SECOND)
-				owner.visible_message("<span style=\"color:red\">[owner.name]'s [src.limb] stops trying to strangle [him_or_her(owner)].</span>")
+				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] stops trying to strangle [him_or_her(owner)].</span>")
 			return
 
 		else if (src.limb_type == LIMB_IS_LEG)
 			if (prob(5))
-				owner.visible_message("<span style=\"color:red\">[owner.name]'s [src.limb] twitches [pick("rudely", "awkwardly", "weirdly", "lewdly", "strangely", "offensively", "cruelly", "furiously")]!</span>")
+				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] twitches [pick("rudely", "awkwardly", "weirdly", "lewdly", "strangely", "offensively", "cruelly", "furiously")]!</span>")
 			else if (prob(3))
-				owner.visible_message("<span style=\"color:red\"><B>[owner.name] trips over [his_or_her(owner)] own [src.limb]!</B></span>")
+				owner.visible_message("<span class='alert'><B>[owner.name] trips over [his_or_her(owner)] own [src.limb]!</B></span>")
 				owner.changeStatus("weakened", 2 SECONDS)
 			else if (prob(2))
-				owner.visible_message("<span style=\"color:red\"><B>[owner.name]'s [src.limb] kicks [him_or_her(owner)] in the head somehow!</B></span>")
+				owner.visible_message("<span class='alert'><B>[owner.name]'s [src.limb] kicks [him_or_her(owner)] in the head somehow!</B></span>")
 				owner.changeStatus("paralysis", 70)
 				owner.TakeDamageAccountArmor("head", rand(5,10), 0, 0, DAMAGE_BLUNT)
 			else if (prob(2))
-				owner.visible_message("<span style=\"color:red\"><B>[owner.name] can't seem to control [his_or_her(owner)] [src.limb]!</B></span>")
+				owner.visible_message("<span class='alert'><B>[owner.name] can't seem to control [his_or_her(owner)] [src.limb]!</B></span>")
 				owner.change_misstep_chance(10)
 			return
 
@@ -472,7 +476,7 @@
 		for(var/mob/living/L in range(1, owner))
 			if (L == owner)
 				continue
-			boutput(L, "<span style=\"color:red\">You are enveloped by a soft green glow emanating from [owner].</span>")
+			boutput(L, "<span class='alert'>You are enveloped by a soft green glow emanating from [owner].</span>")
 			L.changeStatus("radiation", 50, 1)
 		return
 
@@ -545,7 +549,7 @@
 			return
 
 		if (isrestrictedz(L.z))
-			boutput(L, "<span style=\"color:blue\">You feel quite strange. Almost as if you're not supposed to be here.</span>")
+			boutput(L, "<span class='notice'>You feel quite strange. Almost as if you're not supposed to be here.</span>")
 			return
 
 		if (prob(tele_prob))
@@ -659,7 +663,7 @@
 		if (!istype(L) || (L.stat == 2))
 			return
 		if (prob(prob_sting))
-			boutput(src, "<span style=\"color:red\">A bee in your cloud stung you! How rude!</span>")
+			boutput(src, "<span class='alert'>A bee in your cloud stung you! How rude!</span>")
 			L.reagents.add_reagent("histamine", 2)
 
 /datum/bioEffect/emp_field
@@ -820,8 +824,8 @@
 				potential_victims += H
 			if (potential_victims.len)
 				var/mob/living/carbon/human/this_one = pick(potential_victims)
-				boutput(src, "<span style=\"color:red\">Your mind twangs uncomfortably!</span>")
-				boutput(this_one, "<span style=\"color:red\">Your mind twangs uncomfortably!</span>")
+				boutput(src, "<span class='alert'>Your mind twangs uncomfortably!</span>")
+				boutput(this_one, "<span class='alert'>Your mind twangs uncomfortably!</span>")
 				owner.mind.swap_with(this_one)
 
 /datum/bioEffect/mutagenic_field/prenerf
@@ -858,7 +862,7 @@
 	stability_loss = 15
 	var/prob_per_tick = 15
 	var/list/emotes = list("slap","snap","hiccup","burp","fart","dance","tantrum","flipoff","flip","boggle")
-	var/list/noises = list('sound/musical_instruments/WeirdHorn_0.ogg','sound/voice/animal/cat.ogg','sound/musical_instruments/Saxophone_CarelessWhisper.ogg',
+	var/list/noises = list('sound/musical_instruments/WeirdHorn_0.ogg','sound/voice/animal/cat.ogg','sound/musical_instruments/piano/furelise.ogg',
 	'sound/machines/engine_alert3.ogg','sound/machines/fortune_riff.ogg','sound/misc/ancientbot_grump2.ogg',
 	'sound/voice/farts/diarrhea.ogg','sound/misc/sad_server_death.ogg','sound/voice/animal/werewolf_howl.ogg',
 	'sound/voice/MEruncoward.ogg','sound/voice/macho/macho_become_enraged01.ogg',
@@ -881,7 +885,7 @@
 				if (2)
 
 					if (isrestrictedz(L.z))
-						boutput(L, "<span style=\"color:blue\">You feel your genes tingling inside you. Strange.</span>")
+						boutput(L, "<span class='notice'>You feel your genes tingling inside you. Strange.</span>")
 						return
 
 					var/list/randomturfs = new/list()
@@ -898,7 +902,7 @@
 					var/turf/T = get_turf(L)
 					T.color = random_color()
 				if (5)
-					L.visible_message("<span style=\"color:red\"><b>[L.name]</b> makes a weird noise!</span>")
+					L.visible_message("<span class='alert'><b>[L.name]</b> makes a weird noise!</span>")
 					playsound(L.loc, pick(noises), 50, 0)
 
 /datum/bioEffect/sneeze
@@ -920,4 +924,3 @@
 			else
 				owner:emote("sneeze")
 		return
-

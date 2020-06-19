@@ -7,6 +7,8 @@
 	var/mobtype = /mob/living
 
 /datum/component/wearertargeting/Initialize(_valid_slots)
+	SHOULD_CALL_PARENT(1)
+	..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	if (islist(_valid_slots))
@@ -15,10 +17,12 @@
 	RegisterSignal(parent, COMSIG_ITEM_UNEQUIPPED, .proc/on_unequip)
 
 /datum/component/wearertargeting/proc/on_equip(datum/source, mob/equipper, slot)
+	SHOULD_CALL_PARENT(1)
 	if((slot in valid_slots) && istype(equipper, mobtype))
 		RegisterSignal(equipper, signals, proctype, TRUE)
 	else
 		UnregisterSignal(equipper, signals)
 
 /datum/component/wearertargeting/proc/on_unequip(datum/source, mob/user)
+	SHOULD_CALL_PARENT(1)
 	UnregisterSignal(user, signals)

@@ -20,11 +20,11 @@
 
 		for (var/mob/*living/carbon/human*//H in oview(holder.owner))
 			if (H.traitHolder.hasTrait("training_chaplain"))
-				boutput(usr, "<span style=\"color:red\">[H]'s butt has divine protection from magic.</span>")
-				H.visible_message("<span style=\"color:red\">The spell fails to work on [H]!</span>")
+				boutput(usr, "<span class='alert'>[H]'s butt has divine protection from magic.</span>")
+				H.visible_message("<span class='alert'>The spell fails to work on [H]!</span>")
 				continue
 			if (iswizard(H))
-				H.visible_message("<span style=\"color:red\">[H] magically farts the spell away!</span>")
+				H.visible_message("<span class='alert'>[H] magically farts the spell away!</span>")
 				playsound(H, 'sound/vox/poo.ogg', 25, 1)
 				continue
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()

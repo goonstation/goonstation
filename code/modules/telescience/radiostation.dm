@@ -138,7 +138,7 @@
 /obj/submachine/mixing_desk/attack_hand(mob/user as mob)
 	if(..())
 		return
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "<a href='byond://?src=\ref[src];state=1'>[src.state_name]</a>"
 	if(state)
 		dat += "<center><h4>Mixing Desk</h4></center>"
@@ -176,7 +176,7 @@
 		var/message = html_encode(input("Choose something to say:","Message","") as null|text)
 		logTheThing("say", usr, voice, "SAY: [message] (Synthesizing the voice of <b>(%target%)</b>)")
 		var/original_name = usr.real_name
-		usr.real_name = copytext(voice, 1, 32)
+		usr.real_name = copytext(voice, 1, MOB_NAME_MAX_LENGTH)
 		usr.say(message)
 		usr.real_name = original_name
 
@@ -202,7 +202,7 @@
 			boutput(user, "The record player already has a record inside!")
 		else if(!is_playing)
 			boutput(user, "You insert the record into the record player.")
-			src.visible_message("<span style=\"color:blue\"><b>[user] inserts the record into the record player.</b></span>")
+			src.visible_message("<span class='notice'><b>[user] inserts the record into the record player.</b></span>")
 			user.drop_item()
 			W.set_loc(src)
 			src.record_inside = W
@@ -233,7 +233,7 @@
 	if(has_record)
 		if(!is_playing)
 			boutput(user, "You remove the record from the record player. It looks worse for the wear.")
-			src.visible_message("<span style=\"color:blue\"><b>[user] removes the record from the record player.</b></span>")
+			src.visible_message("<span class='notice'><b>[user] removes the record from the record player.</b></span>")
 			user.put_in_hand_or_drop(src.record_inside)
 			src.record_inside = null
 			src.has_record = 0
@@ -265,13 +265,12 @@
 /obj/item/record/attack(mob/M as mob, mob/user as mob) // copied plate code
 	if (user.a_intent == INTENT_HARM)
 		if (M == user)
-			boutput(user, "<span style=\"color:red\"><B>You smash the record over your own head!</b></span>")
+			boutput(user, "<span class='alert'><B>You smash the record over your own head!</b></span>")
 		else
-			M.visible_message("<span style=\"color:red\"><B>[user] smashes [src] over [M]'s head!</B></span>")
+			M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
 			logTheThing("combat", user, M, "smashes [src] over %target%'s head! ")
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
-		M.updatehealth()
 		playsound(src, "shatter", 70, 1)
 		var/obj/O = unpool (/obj/item/raw_material/shard/glass)
 		O.set_loc(get_turf(M))
@@ -279,7 +278,7 @@
 			O.setMaterial(copyMaterial(src.material))
 		qdel(src)
 	else
-		M.visible_message("<span style=\"color:red\">[user] taps [M] over the head with [src].</span>")
+		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
 		logTheThing("combat", user, M, "taps %target% over the head with [src].")
 
 /obj/item/record/random/adventure_1
@@ -413,7 +412,7 @@
 
 /obj/item/record/poo/attackby(obj/item/P as obj, mob/user as mob)
 	if (istype(P, /obj/item/magnifying_glass))
-		boutput(user, "<span style=\"color:blue\">You examine the record with the magnifying glass.</span>")
+		boutput(user, "<span class='notice'>You examine the record with the magnifying glass.</span>")
 		sleep(2 SECONDS)
 		boutput(user, "The scratch on the record, upon close examination, is actually tiny lettering. It says, <i>Fuck Discount Dan's. I hope more of your factories go under and you all drown in your toxic sewage.</i>")
 
@@ -532,7 +531,7 @@
 		if(has_tape)
 			boutput(user, "The tape deck already has a tape inserted!")
 		else if(!is_playing)
-			src.visible_message("<span style=\"color:blue\"><b>[user] inserts the compact tape into the tape deck.</b></span>",
+			src.visible_message("<span class='notice'><b>[user] inserts the compact tape into the tape deck.</b></span>",
 			"You insert the compact tape into the tape deck.")
 			user.drop_item()
 			W.set_loc(src)
@@ -555,7 +554,7 @@
 	if(has_tape)
 		if(!is_playing)
 			boutput(user, "You remove the tape from the tape deck.")
-			src.visible_message("<span style=\"color:blue\"><b>[user] removes the tape from the tape deck.</b></span>")
+			src.visible_message("<span class='notice'><b>[user] removes the tape from the tape deck.</b></span>")
 			user.put_in_hand_or_drop(src.tape_inside)
 			src.tape_inside = null
 			src.has_tape = 0
@@ -591,6 +590,13 @@
 	name = "compact tape - 'Discount Dan's Quik Noodles'"
 	audio = "sound/radio_station/quik_noodles.ogg"
 	name_of_thing = "Discount Dan's Quik Noodles"
+
+/obj/item/radio_tape/advertisement/danitos_burritos
+	name = "compact tape - 'Descuento Danito's Burritos'"
+	audio = "sound/radio_station/danitos_burritos.ogg"
+	name_of_thing = "Descuento Danito's Burritos"
+	desc = {"A small audio tape. Though, it looks too big to fit in an audio log.<br>
+	The music is Requiem for a Fish by The Freak Fandango Orchestra (CC BY-NC 4.0)"}
 
 /obj/item/radio_tape/advertisement/movie
 	name = "compact tape - 'Movie Ad'"

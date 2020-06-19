@@ -136,7 +136,7 @@
 			if (src.cupinside == 0 && top_on == 1)
 				user.show_text("You begin unscrewing the top of the [src].")
 				if (!do_after(user, 30))
-					boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 				else
 					src.top_on = 0
 					user.show_text("You have unscrewed the top of the [src].")
@@ -144,7 +144,7 @@
 			if (src.cupinside == 0 && top_on == 0)
 				user.show_text("You begin screwing the top of the [src] back on.")
 				if (!do_after(user, 30))
-					boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 				else
 					src.top_on = 1
 					user.show_text("You have screwed the top of the [src] back on.")
@@ -152,7 +152,7 @@
 			if (src.cupinside == 1 && top_on == 0)
 				user.show_text("You begin screwing the top of the [src] back on.")
 				if (!do_after(user, 30))
-					boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 				else
 					src.top_on = 1
 					user.show_text("You have screwed the top of the [src] back on.")
@@ -331,7 +331,7 @@
 			if (!src.my_carafe && top_on == 1)
 				user.show_text("You begin unscrewing the top of the [src].")
 				if (!do_after(user, 30))
-					boutput(user, "<span style='color:red'>You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 				else
 					src.top_on = 0
 					user.show_text("You have unscrewed the top of the [src].")
@@ -339,7 +339,7 @@
 			else if (!src.my_carafe && top_on == 0)
 				user.show_text("You begin screwing the top of the [src] back on.")
 				if (!do_after(user, 30))
-					boutput(user, "<span style='color:red'>You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 				else
 					src.top_on = 1
 					user.show_text("You have screwed the top of the [src] back on.")
@@ -347,7 +347,7 @@
 			else if (src.my_carafe && top_on == 0)
 				user.show_text("You begin screwing the top of the [src] back on.")
 				if (!do_after(user, 30))
-					boutput(user, "<span style='color:red'>You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 				else
 					src.top_on = 1
 					user.show_text("You have screwed the top of the [src] back on.")

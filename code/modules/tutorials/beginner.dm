@@ -28,7 +28,7 @@ area/tutorial_zone
 	Start()
 		if (!start_loc)
 			logTheThing("debug", usr, null, "<b>Beginner Tutorial</b>: Failed setup.")
-			boutput(usr, "<span style=\"color:red\"><b>Error setting up tutorial!</b></span>")
+			boutput(usr, "<span class='alert'><b>Error setting up tutorial!</b></span>")
 			qdel(src)
 			return
 		..()

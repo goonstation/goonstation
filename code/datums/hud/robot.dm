@@ -124,7 +124,7 @@
 				next.color = COLOR_MATRIX_IDENTITY
 			else
 				next.icon_state = "down_dis"
-				prev.color = COLOR_MATRIX_GRAYSCALE
+				next.color = COLOR_MATRIX_GRAYSCALE
 
 			for (var/i = items_screen, i < i_max, i++)
 				if (i > master.module.modules.len)
@@ -168,7 +168,7 @@
 				return
 			var/content_id = items_screen + i - 1
 			if (content_id > master.module.modules.len || content_id < 1)
-				boutput(usr, "<span style=\"color:red\">An error occurred. Please notify a coder immediately. (Content ID: [content_id].)</span>")
+				boutput(usr, "<span class='alert'>An error occurred. Please notify a coder immediately. (Content ID: [content_id].)</span>")
 			var/obj/item/O = master.module.modules[content_id]
 			if(!O || O.loc != master.module)
 				return
@@ -559,9 +559,9 @@
 			var/turf/T = get_turf(master)
 			if (T)
 				var/datum/gas_mixture/environment = T.return_air()
-				var/total = environment.total_moles()
+				var/total = TOTAL_MOLES(environment)
 				if (total > 0) // prevent a division by zero
-					oxy.icon_state = "oxy[environment.oxygen/total*environment.return_pressure() < 17]"
+					oxy.icon_state = "oxy[environment.oxygen/total*MIXTURE_PRESSURE(environment) < 17]"
 				else
 					oxy.icon_state = "oxy1"
 				switch (environment.temperature)

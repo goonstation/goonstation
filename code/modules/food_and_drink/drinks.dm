@@ -243,7 +243,7 @@
 
 	attack(mob/M as mob, mob/user as mob)
 		if (is_sealed)
-			boutput(user, "<span style=\"color:red\">You can't drink out of a sealed can!</span>") //idiot
+			boutput(user, "<span class='alert'>You can't drink out of a sealed can!</span>") //idiot
 			return
 		..()
 
@@ -257,7 +257,7 @@
 		if (!src.reagents || !src.reagents.total_volume)
 			var/zone = user.zone_sel.selecting
 			if (zone == "head")
-				user.visible_message("<span style=\"color:red\"><b>[user] crushes \the [src] against their forehead!! [pick("Bro!", "Epic!", "Damn!", "Gnarly!", "Sick!",\
+				user.visible_message("<span class='alert'><b>[user] crushes \the [src] against their forehead!! [pick("Bro!", "Epic!", "Damn!", "Gnarly!", "Sick!",\
 				"Crazy!", "Nice!", "Hot!", "What a monster!", "How sick is that?", "That's slick as shit, bro!")]", "You crush the can against your forehead! You feel super cool.")
 				drop_this_shit = 1
 			else

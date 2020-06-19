@@ -28,19 +28,19 @@
 
 		var/mob/living/HH = G.affecting
 		if(check_target_immunity( HH ))
-			M.visible_message("<span style='color:red'>You seem to attack [M]!</span>")
+			M.visible_message("<span class='alert'>You seem to attack [M]!</span>")
 			return 1
 		if (M.invisibility > 0)
 			for (var/obj/item/cloaking_device/I in M)
 				if (I.active)
 					I.deactivate(M)
-					M.visible_message("<span style=\"color:blue\"><b>[M]'s cloak is disrupted!</b></span>")
+					M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
 
 		HH.set_loc(M.loc)
 		M.dir = get_dir(M, HH)
 		HH.dir = get_dir(HH, M)
 
-		M.visible_message("<span style=\"color:red\"><B>[M] lifts [HH] up!</B></span>")
+		M.visible_message("<span class='alert'><B>[M] lifts [HH] up!</B></span>")
 
 		SPAWN_DBG (0)
 			if (HH)
@@ -148,26 +148,27 @@
 					playsound(M.loc, "sound/effects/explosionfar.ogg", 60, 1)
 
 			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
-			M.visible_message("<span style=\"color:red\"><B>[M] [fluff] [HH]!</B></span>")
+			M.visible_message("<span class='alert'><B>[M] [fluff] [HH]!</B></span>")
 
-			if (!isdead(HH))
-				HH.emote("scream")
-				HH.changeStatus("weakened", 2 SECONDS)
-				HH.changeStatus("stunned", 2 SECONDS)
-				HH.force_laydown_standup()
+			if (!fake)
+				if (!isdead(HH))
+					HH.emote("scream")
+					HH.changeStatus("weakened", 2 SECONDS)
+					HH.changeStatus("stunned", 2 SECONDS)
+					HH.force_laydown_standup()
 
-				switch (G.state)
-					if (2)
-						random_brute_damage(HH, 25, 1)
-					if (3)
-						HH.ex_act(3)
-					else
-						random_brute_damage(HH, 15, 1)
-			else
-				HH.ex_act(3)
+					switch (G.state)
+						if (2)
+							random_brute_damage(HH, 25, 1)
+						if (3)
+							HH.ex_act(3)
+						else
+							random_brute_damage(HH, 15, 1)
+				else
+					HH.ex_act(3)
 
 			qdel(G)
-			logTheThing("combat", M, HH, "uses the slam wrestling move on %target% at [log_loc(M)].")
+			logTheThing("combat", M, HH, "uses the [fake ? "fake " : ""]slam wrestling move on %target% at [log_loc(M)].")
 
 		else
 			if (M)
@@ -181,3 +182,6 @@
 			qdel(G)
 
 		return 0
+
+/datum/targetable/wrestler/slam/fake
+	fake = 1

@@ -43,5 +43,5 @@
 		if (istype(H))
 
 			if(H.bioHolder)
-				H.visible_message("<span style='color:red'><B>[H.name] is too racist!</B></span>", "<span style='color:red'><B>That's too racist!</B></span>")
+				H.visible_message("<span class='alert'><B>[H.name] is too racist!</B></span>", "<span class='alert'><B>That's too racist!</B></span>")
 				H.owlgib()

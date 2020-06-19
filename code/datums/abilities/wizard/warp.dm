@@ -20,13 +20,13 @@
 		..()
 
 		if (target.traitHolder.hasTrait("training_chaplain"))
-			boutput(holder.owner, "<span style=\"color:red\">[target] has divine protection from magic.</span>")
+			boutput(holder.owner, "<span class='alert'>[target] has divine protection from magic.</span>")
 			playsound(target.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
-			target.visible_message("<span style=\"color:red\">The spell fails to work on [target]!</span>")
+			target.visible_message("<span class='alert'>The spell fails to work on [target]!</span>")
 			return
 
 		if (iswizard(target))
-			target.visible_message("<span style=\"color:red\">The spell fails to work on [target]!</span>")
+			target.visible_message("<span class='alert'>The spell fails to work on [target]!</span>")
 			playsound(target.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
 			return
 
@@ -34,11 +34,11 @@
 		if (holder.owner.wizard_spellpower())
 			telerange = 25
 		else
-			boutput(holder.owner, "<span style=\"color:red\">Your spell is weak without a staff to focus it!</span>")
+			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 
 
 		if (isrestrictedz(holder.owner.z))
-			boutput(holder.owner, "<span style=\"color:blue\">You feel guilty for trying to use that spell here.</span>")
+			boutput(holder.owner, "<span class='notice'>You feel guilty for trying to use that spell here.</span>")
 			return
 
 
@@ -49,8 +49,8 @@
 		for(var/turf/T in orange(target, telerange))
 			if(istype(T, /turf/space) || T.density) continue
 			randomturfs.Add(T)
-		boutput(target, "<span style=\"color:blue\">You are caught in a magical warp field!</span>")
+		boutput(target, "<span class='notice'>You are caught in a magical warp field!</span>")
 		animate_blink(target)
-		target.visible_message("<span style=\"color:red\">[target] is warped away!</span>")
+		target.visible_message("<span class='alert'>[target] is warped away!</span>")
 		playsound(target.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
 		target.set_loc(pick(randomturfs))

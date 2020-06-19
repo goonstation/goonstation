@@ -150,7 +150,7 @@ obj/machinery/computer/airtunnel/attack_ai(user as mob)
 		return
 
 	var/dat = "<HTML><BODY><TT><B>Air Tunnel Controls</B><BR>"
-	user.machine = src
+	src.add_dialog(user)
 	if (SS13_airtunnel.operating == 1)
 		dat += "<B>Status:</B> RETRACTING<BR>"
 	else
@@ -225,7 +225,7 @@ obj/machinery/computer/airtunnel/attack_ai(user as mob)
 		return
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr))))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["retract"])
 			SS13_airtunnel.retract()
 		else if (href_list["stop"])
@@ -291,10 +291,10 @@ obj/machinery/computer/airtunnel/attack_ai(user as mob)
 	if(..())
 		return
 	if ((!( src.d1 ) || !( src.d2 )))
-		boutput(usr, "<span style=\"color:red\">Error: Cannot interface with door security!</span>")
+		boutput(usr, "<span class='alert'>Error: Cannot interface with door security!</span>")
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr))))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["card"])
 			if (src.scan)
 				src.scan.set_loc(src.loc)

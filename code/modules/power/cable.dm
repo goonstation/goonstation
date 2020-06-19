@@ -73,7 +73,9 @@
 	//var/image/cableimg = null
 	//^ is unnecessary, i think
 	layer = CABLE_LAYER
+	plane = PLANE_DEFAULT
 	color = "#DD0000"
+	text = ""
 
 	var/insulator_default = "synthrubber"
 	var/condcutor_default = "copper"
@@ -117,7 +119,7 @@
 			num = "fourth"
 		if (cuts == 5)
 			num = "fifth"
-		src.visible_message("<span style=\"color:red\">[user] cuts through the [num] section of [src].</span>")
+		src.visible_message("<span class='alert'>[user] cuts through the [num] section of [src].</span>")
 
 		if (cuts >= cuts_required)
 			..()
@@ -205,7 +207,7 @@
 			C.iconmod = src.iconmod
 			C.updateicon()
 
-	src.visible_message("<span style=\"color:red\">[user] cuts the cable.</span>")
+	src.visible_message("<span class='alert'>[user] cuts the cable.</span>")
 	src.log_wirelaying(user, 1)
 
 	shock(user, 50)
@@ -235,10 +237,10 @@
 		var/datum/powernet/PN = get_powernet()		// find the powernet
 
 		if(PN && (PN.avail > 0))		// is it powered?
-			boutput(user, "<span style=\"color:red\">[PN.avail]W in power network.</span>")
+			boutput(user, "<span class='alert'>[PN.avail]W in power network.</span>")
 
 		else
-			boutput(user, "<span style=\"color:red\">The cable is not powered.</span>")
+			boutput(user, "<span class='alert'>The cable is not powered.</span>")
 
 		if(prob(40))
 			shock(user, 10)
@@ -292,7 +294,7 @@
 	for (var/obj/cable/new_cable_d2 in src.get_connections_one_dir(is_it_d2 = 1))
 		cable_d2 = new_cable_d2
 		break
-	
+
 	// due to the first two lines of this proc it can happen that some cables are left at netnum 0, oh no
 	// this is bad and should be fixed, probably by having a queue of stuff to process once current makepowernets finishes
 	// but I'm too lazy to do that, so here's a bandaid
@@ -387,7 +389,7 @@
 			else if(M.netnum != src.netnum)
 				request_rebuild = 1
 				break
-	
+
 	if(request_rebuild)
 		makepowernets()
 

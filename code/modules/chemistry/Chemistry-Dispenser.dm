@@ -202,10 +202,10 @@
 				hit_twitch(src)
 				playsound(src,"sound/impact_sounds/Metal_Clang_2.ogg",50,1)
 				src.take_damage(damage)
-				user.visible_message("<span style='color:red'><b>[user] bashes [src] with [B]!</b></span>")
+				user.visible_message("<span class='alert'><b>[user] bashes [src] with [B]!</b></span>")
 			else
 				playsound(src,"sound/impact_sounds/Generic_Stab_1.ogg",50,1)
-				user.visible_message("<span style='color:red'><b>[user] uselessly taps [src] with [B]!</b></span>")
+				user.visible_message("<span class='alert'><b>[user] uselessly taps [src] with [B]!</b></span>")
 			return
 
 		if (B.incompatible_with_chem_dispensers == 1)
@@ -223,7 +223,7 @@
 			var/amount = input("How much of it do you want? (1 to [amtlimit])", "[dispenser_name] Dispenser", null, null) as null|num
 			if (isnull(amount) || amount <= 0)
 				return
-			amount = CLAMP(amount, 0, amtlimit)
+			amount = clamp(amount, 0, amtlimit)
 			if (get_dist(src,user) > 1)
 				boutput(user, "You need to move closer to get the chemicals!")
 				return
@@ -253,10 +253,12 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				src.take_damage(400)
+				SPAWN_DBG(0)
+					src.take_damage(400)
 				return
 			if(2.0)
-				src.take_damage(150)
+				SPAWN_DBG(0)
+					src.take_damage(150)
 				return
 
 	blob_act(var/power)
@@ -274,7 +276,7 @@
 		if (isghostcritter(usr)) return
 		if (doing_a_thing) return
 
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 
 		if (href_list["card"])
@@ -317,7 +319,7 @@
 					if (istext(reagentlist[reagent])) //Set a dispense amount
 						var/num = text2num(reagentlist[reagent])
 						if(!num) num = 10
-						G.reagents[lowertext(reagent)] = CLAMP(round(num), 1, 100)
+						G.reagents[lowertext(reagent)] = clamp(round(num), 1, 100)
 					else //Default to 10 if no specific amount given
 						G.reagents[lowertext(reagent)] = 10
 
@@ -357,7 +359,7 @@
 			if (isnull(nadd) || get_dist(src,usr) > 1)
 				doing_a_thing = 0
 				return
-			src.user_dispense_amt = CLAMP(round(nadd), 1, 100)
+			src.user_dispense_amt = clamp(round(nadd), 1, 100)
 			src.updateUsrDialog()
 			doing_a_thing = 0
 			return
@@ -368,7 +370,7 @@
 			if (isnull(nremove) || get_dist(src,usr) > 1)
 				doing_a_thing = 0
 				return
-			src.user_remove_amt = CLAMP(round(nremove), 1, 100)
+			src.user_remove_amt = clamp(round(nremove), 1, 100)
 			src.updateUsrDialog()
 			doing_a_thing = 0
 			return
@@ -473,7 +475,7 @@
 	attack_hand(mob/user as mob)
 		if(status & (NOPOWER|BROKEN))
 			return
-		user.machine = src
+		src.add_dialog(user)
 		/*
 		src.update_html()
 		user.Browse("<TITLE>[dispenser_name] Dispenser</TITLE>[dispenser_name] dispenser:<BR>[src.HTML]", "window=chem_dispenser;size=500x800;title=Chemistry Dispenser")
@@ -520,23 +522,23 @@
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))
-			boutput(usr, "<span style=\"color:red\">Only living mobs are able to set the dispenser's output target.</span>")
+			boutput(usr, "<span class='alert'>Only living mobs are able to set the dispenser's output target.</span>")
 			return
 
 		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span style=\"color:red\">The dispenser is too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>The dispenser is too far away from the target!</span>")
 			return
 
 		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You are too far away from the target!</span>")
+			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
 		else if (istype(over_object,/turf/simulated/floor/))
 			src.output_target = over_object
-			boutput(usr, "<span style=\"color:blue\">You set the dispenser to output to [over_object]!</span>")
+			boutput(usr, "<span class='notice'>You set the dispenser to output to [over_object]!</span>")
 
 		else
-			boutput(usr, "<span style=\"color:red\">You can't use that as an output target.</span>")
+			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
 	proc/take_damage(var/damage_amount = 5)
@@ -545,7 +547,7 @@
 			if (beaker)
 				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
 				beaker = null
-			src.visible_message("<span style=\"color:red\"><b>[name] falls apart into useless debris!</b></span>")
+			src.visible_message("<span class='alert'><b>[name] falls apart into useless debris!</b></span>")
 			robogibs(src.loc,null)
 			playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			qdel(src)

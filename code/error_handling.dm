@@ -34,7 +34,7 @@ var/global/runtime_count = 0
 
 
 /client/proc/cmd_view_runtimes()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "View Runtimes"
 	set desc = "View a detailed list of the runtimes during this round"
 	set popup_menu = 0

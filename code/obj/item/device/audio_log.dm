@@ -171,7 +171,7 @@
 		if (user.stat || user.restrained() || user.lying)
 			return
 		if ((user.contents.Find(src) || user.contents.Find(src.master) || get_dist(src, user) <= 1 && istype(src.loc, /turf)))
-			user.machine = src
+			src.add_dialog(user)
 
 			var/dat = "<TT><b>Audio Logger</b><br>"
 			if (src.tape)
@@ -190,7 +190,7 @@
 			onclose(user, "audiolog")
 		else
 			user.Browse(null, "window=audiolog")
-			user.machine = null
+			src.remove_dialog(user)
 
 		return
 
@@ -229,7 +229,7 @@
 		if (usr.stat || usr.restrained() || usr.lying)
 			return
 		if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_range(src, usr) && istype(src.loc, /turf)))
-			usr.machine = src
+			src.add_dialog(usr)
 			switch(href_list["command"])
 				if("rec")
 					src.mode = 1
@@ -355,7 +355,7 @@
 
 			if (ismob(src.loc))
 				var/mob/M = src.loc
-				M.show_message("<span style=\"color:red\">Your [src] explodes!</span>", 1)
+				M.show_message("<span class='alert'>Your [src] explodes!</span>", 1)
 
 			if(T)
 				T.hotspot_expose(700,125)

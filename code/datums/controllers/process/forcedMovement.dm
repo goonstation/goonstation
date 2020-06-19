@@ -77,7 +77,7 @@ datum/controller/process/fMove
 					prob_slip = round(prob_slip)
 					if (prob_slip < 5) //next to something, but they might slip off
 						if (prob(prob_slip) )
-							boutput(tmob, "<span style=\"color:blue\"><B>You slipped!</B></span>")
+							boutput(tmob, "<span class='notice'><B>You slipped!</B></span>")
 							tmob.inertia_dir = tmob.last_move
 							step(tmob, tmob.inertia_dir)
 							continue

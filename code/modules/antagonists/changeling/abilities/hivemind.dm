@@ -63,7 +63,7 @@
 			arm_type = owner.limbs.r_arm.type
 			owner.limbs.r_arm.delete()
 
-		holder.owner.visible_message(text("<span style=\"color:red\"><B>[holder.owner]'s arm falls off and starts moving!</B></span>"))
+		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s arm falls off and starts moving!</B></span>"))
 		logTheThing("combat", holder.owner, use_mob, "drops a handspider [use_mob] as a changeling [log_loc(holder.owner)].")
 
 		var/mob/living/critter/changeling/handspider/spider = new /mob/living/critter/changeling/handspider(get_turf(owner.loc))
@@ -159,7 +159,7 @@
 		else
 			qdel(owner.drop_organ("right_eye"))
 
-		holder.owner.visible_message(text("<span style=\"color:red\"><B>[holder.owner]'s eye shoots out and starts moving!</B></span>"))
+		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s eye shoots out and starts moving!</B></span>"))
 		logTheThing("combat", holder.owner, use_mob, "drops an eyespider [use_mob] as a changeling [log_loc(holder.owner)].")
 
 		var/mob/living/critter/changeling/eyespider/spider = new /mob/living/critter/changeling/eyespider(get_turf(owner.loc))
@@ -252,7 +252,7 @@
 		else
 			owner.limbs.r_leg.delete()
 
-		holder.owner.visible_message(text("<span style=\"color:red\"><B>[holder.owner]'s leg falls off and starts moving!</B></span>"))
+		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s leg falls off and starts moving!</B></span>"))
 		logTheThing("combat", holder.owner, use_mob, "drops a legworm [use_mob] as a changeling [log_loc(holder.owner)].")
 
 		var/mob/living/critter/changeling/legworm/spider = new /mob/living/critter/changeling/legworm(get_turf(owner.loc))
@@ -336,7 +336,7 @@
 
 		qdel(owner.drop_organ("butt"))
 
-		holder.owner.visible_message(text("<span style=\"color:red\"><B>[holder.owner]'s butt falls off and starts moving!</B></span>"))
+		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s butt falls off and starts moving!</B></span>"))
 		logTheThing("combat", holder.owner, use_mob, "drops a buttcrab [use_mob] as a changeling [log_loc(holder.owner)].")
 
 		var/mob/living/critter/changeling/buttcrab/crab = new /mob/living/critter/changeling/buttcrab(get_turf(owner.loc))

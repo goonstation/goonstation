@@ -8,20 +8,20 @@
 	heal_amt = 0
 
 	heal(var/mob/M)
-		boutput(M, "<span style=\"color:red\">It's just not good enough on its own...</span>")
+		boutput(M, "<span class='alert'>It's just not good enough on its own...</span>")
 
 	afterattack(atom/target, mob/user, flag)
 		if (!src.reagents || src.qdeled || src.pooled) return //how
 
 		if (istype(target, /obj/item/reagent_containers/food/snacks/))
-			user.visible_message("<span style=\"color:blue\">[user] adds [src] to \the [target].</span>", "<span style=\"color:blue\">You add [src] to \the [target].</span>")
+			user.visible_message("<span class='notice'>[user] adds [src] to \the [target].</span>", "<span class='notice'>You add [src] to \the [target].</span>")
 			src.reagents.trans_to(target, 100)
 			qdel (src)
 			return
 
 		if (istype(target, /obj/item/reagent_containers/))
-			user.visible_message("<span style='color:blue'><b>[user]</b> crushes up \the [src] in \the [target].</span>",\
-			"<span style='color:blue'>You crush up \the [src] in \the [target].</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> crushes up \the [src] in \the [target].</span>",\
+			"<span class='notice'>You crush up \the [src] in \the [target].</span>")
 			src.reagents.trans_to(target, 100)
 			qdel (src)
 
@@ -104,7 +104,7 @@
 
 	afterattack(atom/target, mob/user, flag)
 		if (istype(target, /obj/item/reagent_containers/food/snacks/) && src.reagents) //Wire: fix for Cannot execute null.trans to()
-			user.visible_message("<span style=\"color:blue\">[user] sprinkles [src] onto [target].</span>", "<span style=\"color:blue\">You sprinkle [src] onto [target].</span>")
+			user.visible_message("<span class='notice'>[user] sprinkles [src] onto [target].</span>", "<span class='notice'>You sprinkle [src] onto [target].</span>")
 			src.reagents.trans_to(target, 20)
 			qdel (src)
 		else return
@@ -155,25 +155,25 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES))
-				H.tri_message("<span style=\"color:red\"><b>[user]</b> uselessly [myVerb]s some [src.stuff] onto [H]'s headgear!</span>",\
-				H, "<span style=\"color:red\">[H == user ? "You uselessly [myVerb]" : "[user] uselessly [myVerb]s"] some [src.stuff] onto your headgear! Okay then.</span>",\
-				user, "<span style=\"color:red\">You uselessly [myVerb] some [src.stuff] onto [user == H ? "your" : "[H]'s"] headgear![user == H ? " Okay then." : null]</span>")
+				H.tri_message("<span class='alert'><b>[user]</b> uselessly [myVerb]s some [src.stuff] onto [H]'s headgear!</span>",\
+				H, "<span class='alert'>[H == user ? "You uselessly [myVerb]" : "[user] uselessly [myVerb]s"] some [src.stuff] onto your headgear! Okay then.</span>",\
+				user, "<span class='alert'>You uselessly [myVerb] some [src.stuff] onto [user == H ? "your" : "[H]'s"] headgear![user == H ? " Okay then." : null]</span>")
 				src.shakes ++
 				return
 			else
 				switch (src.stuff)
 					if ("salt")
-						H.tri_message("<span style=\"color:red\"><b>[user]</b> [myVerb]s something into [H]'s eyes!</span>",\
-						H, "<span style=\"color:red\">[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some salt into your eyes! <B>FUCK!</B></span>",\
-						user, "<span style=\"color:red\">You [myVerb] some salt into [user == H ? "your" : "[H]'s"] eyes![user == H ? " <B>FUCK!</B>" : null]</span>")
+						H.tri_message("<span class='alert'><b>[user]</b> [myVerb]s something into [H]'s eyes!</span>",\
+						H, "<span class='alert'>[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some salt into your eyes! <B>FUCK!</B></span>",\
+						user, "<span class='alert'>You [myVerb] some salt into [user == H ? "your" : "[H]'s"] eyes![user == H ? " <B>FUCK!</B>" : null]</span>")
 						H.emote("scream")
 						random_brute_damage(user, 1)
 						src.shakes ++
 						return
 					if ("pepper")
-						H.tri_message("<span style=\"color:red\"><b>[user]</b> [myVerb]s something onto [H]'s nose!</span>",\
-						H, "<span style=\"color:red\">[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some pepper onto your nose! <B>Why?!</B></span>",\
-						user, "<span style=\"color:red\">You [myVerb] some pepper onto [user == H ? "your" : "[H]'s"] nose![user == H ? " <B>Why?!</B>" : null]</span>")
+						H.tri_message("<span class='alert'><b>[user]</b> [myVerb]s something onto [H]'s nose!</span>",\
+						H, "<span class='alert'>[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some pepper onto your nose! <B>Why?!</B></span>",\
+						user, "<span class='alert'>You [myVerb] some pepper onto [user == H ? "your" : "[H]'s"] nose![user == H ? " <B>Why?!</B>" : null]</span>")
 						H.emote("sneeze")
 						src.shakes ++
 						for (var/i = 1, i <= 30, i++)
@@ -182,14 +182,14 @@
 									H.emote("sneeze")
 						return
 					else
-						H.tri_message("<span style=\"color:red\"><b>[user]</b> [myVerb]s some [src.stuff] at [H]'s head!</span>",\
-						H, "<span style=\"color:red\">[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some [src.stuff] at your head! Fuck!</span>",\
-						user, "<span style=\"color:red\">You [myVerb] some [src.stuff] at [user == H ? "your" : "[H]'s"] head![user == H ? " Fuck!" : null]</span>")
+						H.tri_message("<span class='alert'><b>[user]</b> [myVerb]s some [src.stuff] at [H]'s head!</span>",\
+						H, "<span class='alert'>[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some [src.stuff] at your head! Fuck!</span>",\
+						user, "<span class='alert'>You [myVerb] some [src.stuff] at [user == H ? "your" : "[H]'s"] head![user == H ? " Fuck!" : null]</span>")
 						src.shakes ++
 						return
 		else if (istype(M, /mob/living/critter/small_animal/slug) && src.stuff == "salt")
-			M.visible_message("<span style='color:red'><b>[user]</b> [myVerb]s some salt onto [M] and it shrivels up!</span>",\
-			"<span style='color:red'><b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b></span>")
+			M.visible_message("<span class='alert'><b>[user]</b> [myVerb]s some salt onto [M] and it shrivels up!</span>",\
+			"<span class='alert'><b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b></span>")
 			M.TakeDamage(null, 15, 15)
 			src.shakes ++
 			return

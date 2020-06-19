@@ -23,6 +23,12 @@
 
 	flags = FPRINT | CONDUCT | TABLEPASS
 
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(ispryingtool(W))
+			turn_off()
+			dir = turn(dir, -90)
+			if(on) turn_on()
+
 	attack_ai()
 		return
 
@@ -34,12 +40,6 @@
 			turn_off()
 
 		updateicon()
-
-	verb/rotate()
-		set src in view(1)
-		turn_off()
-		dir = turn(dir, -90)
-		if(on) turn_on()
 
 	Move(var/atom/newloc,var/newdir)
 		. = ..(newloc,newdir)

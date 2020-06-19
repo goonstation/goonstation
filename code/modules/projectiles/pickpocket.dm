@@ -131,7 +131,7 @@
 						M.u_equip(broke)
 						qdel(broke)
 					else // Eye gouge
-						boutput(M, "<span style=\"color:red\">Something suddenly gouges you in the eyes! JESUS FUCK OW</span>")
+						boutput(M, "<span class='alert'>Something suddenly gouges you in the eyes! JESUS FUCK OW</span>")
 						M.take_eye_damage(10)
 				if ("r_arm") // Stop hitting yourself, stop hitting yourself
 					if (M.r_hand && isitem(M.r_hand))
@@ -152,6 +152,7 @@
 				if ("r_leg", "l_leg") // Tie shoelaces
 					if (M.shoes && M.shoes.laces == LACES_NORMAL)
 						M.shoes.laces = LACES_TIED
+						M.shoes.tooltip_rebuild = 1
 						if (istype(M.shoes, /obj/item/clothing/shoes/clown_shoes))
 							boutput(M, "Your shoes give out one sad, final squeak. Oh no.")
 							M.shoes.step_sound = null

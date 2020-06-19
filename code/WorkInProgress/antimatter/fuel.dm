@@ -66,27 +66,26 @@
 	return
 
 
-/obj/item/fuel/examine()
-	set src in view(1)
-	if(usr && !usr.stat)
-		boutput(usr, "A magnetic storage ring, it contains [fuel]kg of [content ? content : "nothing"].")
+/obj/item/fuel/examine(mob/user)
+	if(user && !user.stat)
+		return list("A magnetic storage ring, it contains [fuel]kg of [content ? content : "nothing"].")
 
 /obj/item/fuel/proc/injest(mob/M as mob)
 	switch(content)
 		if("Anti-Hydrogen")
 			M.gib(1)
 		if("Hydrogen")
-			boutput(M, "<span style=\"color:blue\">You feel very light, as if you might just float away...</span>")
+			boutput(M, "<span class='notice'>You feel very light, as if you might just float away...</span>")
 	qdel(src)
 	return
 
 /obj/item/fuel/attack(mob/M as mob, mob/user as mob)
 	if (user != M)
-		user.visible_message("<span style=\"color:red\">[user] is trying to force [M] to eat the [src.content]!</span>")
+		user.visible_message("<span class='alert'>[user] is trying to force [M] to eat the [src.content]!</span>")
 		if (do_mob(user, M, 40))
-			user.visible_message("<span style=\"color:red\">[user] forced [M] to eat the [src.content]!</span>")
+			user.visible_message("<span class='alert'>[user] forced [M] to eat the [src.content]!</span>")
 			src.injest(M)
 	else
 		for(var/mob/O in viewers(M, null))
-			O.show_message(text("<span style=\"color:red\">[M] ate the [content ? content : "empty canister"]!</span>"), 1)
+			O.show_message(text("<span class='alert'>[M] ate the [content ? content : "empty canister"]!</span>"), 1)
 		src.injest(M)

@@ -94,7 +94,7 @@
 
 		var/datum/bioHolder/D = H.absorbed_dna[target_name]
 
-		holder.owner.visible_message(text("<span style=\"color:red\"><B>[holder.owner] transforms!</B></span>"))
+		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner] transforms!</B></span>"))
 		logTheThing("combat", holder.owner, target_name, "transforms into [target_name] as a changeling [log_loc(holder.owner)].")
 		var/mob/living/carbon/human/C = holder.owner
 		C.real_name = target_name

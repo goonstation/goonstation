@@ -187,8 +187,9 @@
 
 
 	equipped(var/mob/user, var/slot)
+		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == "eyes")
+		if(istype(H) && slot == SLOT_GLASSES)
 			SPAWN_DBG(1 SECOND)
 				enter_urs_dungeon(user)
 		return
@@ -198,7 +199,7 @@
 			H.u_equip(src)
 			src.set_loc(get_turf(H))
 
-			for(var/mob/O in AIviewers(src, null)) O.show_message("<span style=\"color:red\">[H.name] disappears in a flash of light!!</span>", 1)
+			for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>[H.name] disappears in a flash of light!!</span>", 1)
 			playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 			for (var/mob/N in viewers(src, null))
 				if (get_dist(N, src) <= 6)
@@ -213,7 +214,8 @@
 		return
 #else
 	equipped(var/mob/user, var/slot)
-		user.visible_message("<span style=\"color:blue\">[user] puts on the goggles, but nothing particularly special happens!</span>")
+		..()
+		user.visible_message("<span class='notice'>[user] puts on the goggles, but nothing particularly special happens!</span>")
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
 		return
@@ -231,8 +233,9 @@
 		..()
 
 	equipped(var/mob/user, var/slot)
+		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == "eyes")
+		if(istype(H) && slot == SLOT_GLASSES)
 			SPAWN_DBG(1 SECOND)
 				exit_urs_dungeon(user)
 		return
@@ -264,7 +267,7 @@
 					if (clear)
 						L += T3
 
-		for(var/mob/O in AIviewers(H, null)) O.show_message("<span style=\"color:red\">[H.name] disappears in a flash of light!!</span>", 1)
+		for(var/mob/O in AIviewers(H, null)) O.show_message("<span class='alert'>[H.name] disappears in a flash of light!!</span>", 1)
 		playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 
 		for (var/mob/N in viewers(H, null))
@@ -501,7 +504,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/shovel))
-			user.visible_message("<span style=\"color:blue\">[user] digs in [src] with [W]!</span>")
+			user.visible_message("<span class='notice'>[user] digs in [src] with [W]!</span>")
 			src.open()
 		return
 
@@ -586,11 +589,10 @@
 	return
 
 
-/obj/item/ursium/examine()
-	set src in view(1)
-	if(usr && !usr.stat)
-		boutput(usr, "A magnetic storage ring, it contains [ursium]kg of [content ? content : "nothing"].")
-	..()
+/obj/item/ursium/examine(mob/user)
+	. = ..()
+	if(user && !user.stat)
+		. += "A magnetic storage ring, it contains [ursium]kg of [content ? content : "nothing"]."
 
 /obj/item/ursium/proc/injest(mob/M as mob)
 	M.gib(1)
@@ -599,12 +601,12 @@
 /*
 /obj/item/ursium/attack(mob/M as mob, mob/user as mob)
 	if (user != M)
-		user.visible_message("<span style=\"color:red\">[user] is trying to force [M] to eat the [src.content]!</span>")
+		user.visible_message("<span class='alert'>[user] is trying to force [M] to eat the [src.content]!</span>")
 		if (do_mob(user, M, 40))
-			user.visible_message("<span style=\"color:red\">[user] forced [M] to eat the [src.content]!</span>")
+			user.visible_message("<span class='alert'>[user] forced [M] to eat the [src.content]!</span>")
 			src.injest(M)
 	else
 		for(var/mob/O in viewers(M, null))
-			O.show_message(text("<span style=\"color:red\">[M] ate the [content ? content : "empty canister"]!</span>"), 1)
+			O.show_message(text("<span class='alert'>[M] ate the [content ? content : "empty canister"]!</span>"), 1)
 		src.injest(M)
 */

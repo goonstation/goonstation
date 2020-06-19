@@ -60,7 +60,7 @@
 			return
 		A.locked = 1
 		playsound(M.loc, pick('sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-		M.visible_message("<span style=\"color:red\"><B>[M] lunges at [target]!</b></span>")
+		M.visible_message("<span class='alert'><B>[M] lunges at [target]!</b></span>")
 	onUpdate()
 		..()
 		var/mob/living/M = owner

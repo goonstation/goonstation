@@ -126,7 +126,7 @@
 		..()
 		owner.set_mutantrace(/datum/mutantrace/premature_clone)
 		if (!istype(owner.loc, /obj/machinery/clonepod))
-			boutput(owner, "<span style=\"color:red\">Your genes feel...disorderly.</span>")
+			boutput(owner, "<span class='alert'>Your genes feel...disorderly.</span>")
 		return
 
 	OnRemove()
@@ -142,11 +142,11 @@
 
 		if (outOfPod)
 			if (prob(6))
-				owner.visible_message("<span style=\"color:red\">[owner.name] suddenly and violently vomits!</span>")
+				owner.visible_message("<span class='alert'>[owner.name] suddenly and violently vomits!</span>")
 				owner.vomit()
 
 			else if (prob(2))
-				owner.visible_message("<span style=\"color:red\">[owner.name] vomits blood!</span>")
+				owner.visible_message("<span class='alert'>[owner.name] vomits blood!</span>")
 				playsound(owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 				random_brute_damage(owner, rand(5,8))
 				bleed(owner, rand(5,8), 5)
@@ -180,16 +180,40 @@
 				if (C == owner)
 					continue
 				if (src.variant == 2)
-					boutput(C, "<span style=\"color:red\">[src.personalized_stink]</span>")
+					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
 				else
-					boutput(C, "<span style=\"color:red\">[stinkString()]</span>")
+					boutput(C, "<span class='alert'>[stinkString()]</span>")
 
 // Magnetic Random Event
 
 /datum/bioEffect/hidden/magnetic
 	name = "magnetic charge parent"
 	desc = "This shouldn't be used."
+	effectType = effectTypeDisability
+	isBad = 1
+	can_copy = 0
+	curable_by_mutadone = 0
+	occur_in_genepools = 0
 	var/active = 1
+
+	var/max_charge = 10
+	var/charge = 5
+
+	proc/update_charge(var/amount)
+		var/init_charge = src.charge
+		src.charge += amount
+		src.charge = clamp(src.charge,0,src.max_charge)
+		if(src.charge != init_charge)
+			src.update_overlay()
+			return 1
+		return 0
+
+	proc/update_overlay()
+		if(src.overlay_image)
+			if(isliving(owner))
+				src.overlay_image.alpha = charge/max_charge*255
+				var/mob/living/L = owner
+				L.UpdateOverlays(overlay_image, id)
 
 	proc/deactivate(var/time)
 		active = 0
@@ -201,11 +225,6 @@
 	desc = "This person is charged with a strong positive magnetic field."
 	id = "magnets_pos"
 	msgGain = "You notice odd red static sparking on your skin."
-	effectType = effectTypeDisability
-	isBad = 1
-	can_copy = 0
-	curable_by_mutadone = 0
-	occur_in_genepools = 0
 
 	OnAdd()
 		if (ishuman(owner))
@@ -219,10 +238,6 @@
 	id = "magnets_neg"
 	msgGain = "You notice odd blue static sparking on your skin."
 	effectType = effectTypeDisability
-	isBad = 1
-	can_copy = 0
-	curable_by_mutadone = 0
-	occur_in_genepools = 0
 
 	OnAdd()
 		if (ishuman(owner))

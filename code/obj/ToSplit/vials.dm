@@ -297,10 +297,10 @@
 
 	attackby(obj/item/W, mob/user as mob)
 		if (src.contents.len >= 7)
-			boutput(user, "<span style=\"color:blue\">The test tube rack is full</span>")
+			boutput(user, "<span class='notice'>The test tube rack is full</span>")
 			return
 		if(istype(W, /obj/item/reagent_containers/glass/vial))
-			boutput(user, "<span style=\"color:blue\">You insert the test tube into the test tube rack</span>")
+			boutput(user, "<span class='notice'>You insert the test tube into the test tube rack</span>")
 			user.drop_vial()
 			W.set_loc(src)
 			return
@@ -309,11 +309,11 @@
 
 	attack_hand(mob/user as mob)
 		if(src.contents.len > 0)
-			boutput(user, "<span style=\"color:blue\">You slide a random test tube carefully out of the rack</span>")
+			boutput(user, "<span class='notice'>You slide a random test tube carefully out of the rack</span>")
 			var/obj/item/reagent_containers/glass/vial/V = pick(src.contents)
 			src.contents -= V
 			V.set_loc(src.loc)
 		else
-			boutput(user, "<span style=\"color:blue\">There are no test tubes in the rack</span>")
+			boutput(user, "<span class='notice'>There are no test tubes in the rack</span>")
 		return
 */

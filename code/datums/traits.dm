@@ -71,7 +71,7 @@
 					if(!user.client.qualifiedXpRewards.Find(C.requiredUnlock))
 						continue
 				else
-					boutput(user, "<span style=\"color:red\"><b>WARNING: XP unlocks failed to update. Some traits may not be available. Please try again in a moment.</b></span>")
+					boutput(user, "<span class='alert'><b>WARNING: XP unlocks failed to update. Some traits may not be available. Please try again in a moment.</b></span>")
 					SPAWN_DBG(0) user.client.updateXpRewards()
 					skipUnlocks = 1
 					continue
@@ -784,13 +784,13 @@
 		. = ..()
 
 	onAdd(var/mob/owner)
-		if(ishuman(owner))
+		if(isliving(owner))
 			addAddiction(owner)
 		return
 
 	onLife(var/mob/owner) //Just to be safe.
-		if(ishuman(owner) && prob(1))
-			var/mob/living/carbon/human/M = owner
+		if(isliving(owner) && prob(1))
+			var/mob/living/M = owner
 			for(var/datum/ailment_data/addiction/A in M.ailments)
 				if(istype(A, /datum/ailment_data/addiction))
 					if(A.associated_reagent == selected_reagent) return
@@ -798,7 +798,7 @@
 		return
 
 	proc/addAddiction(var/mob/owner)
-		var/mob/living/carbon/human/M = owner
+		var/mob/living/M = owner
 		var/datum/ailment_data/addiction/AD = new
 		AD.associated_reagent = selected_reagent
 		AD.last_reagent_dose = world.timeofday

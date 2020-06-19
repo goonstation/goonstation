@@ -59,7 +59,7 @@
 
 	attack_hand(mob/user as mob)
 		if(in_use)
-			boutput(user, "<span style=\"color:red\">Its already in use - wait a bit.</span>")
+			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
 		else
 			in_use = 1
@@ -68,7 +68,7 @@
 			user.dir = SOUTH
 			user.set_loc(src.loc)
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-			usr.visible_message(text("<span style=\"color:red\"><B>[usr] is [bragmessage]!</B></span>"))
+			usr.visible_message(text("<span class='alert'><B>[usr] is [bragmessage]!</B></span>"))
 			var/lifts = 0
 			while (lifts++ < 6)
 				if (user.loc != src.loc)
@@ -91,7 +91,7 @@
 			var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 			icon_state = "fitnesslifter"
 			user.changeStatus("fitness_stam_regen",1000)
-			boutput(user, "<span style=\"color:blue\">[finishmessage]</span>")
+			boutput(user, "<span class='notice'>[finishmessage]</span>")
 
 /obj/fitness/weightlifter
 	name = "Weight Machine"
@@ -105,7 +105,7 @@
 
 	attack_hand(mob/user as mob)
 		if(in_use)
-			boutput(user, "<span style=\"color:red\">Its already in use - wait a bit.</span>")
+			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
 		else
 			in_use = 1
@@ -120,7 +120,7 @@
 			W.anchored = 1
 			W.layer = MOB_LAYER_BASE+1
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-			usr.visible_message(text("<span style=\"color:red\"><B>[usr] is [bragmessage]!</B></span>"))
+			usr.visible_message(text("<span class='alert'><B>[usr] is [bragmessage]!</B></span>"))
 			var/reps = 0
 			user.pixel_y = 5
 			while (reps++ < 6)
@@ -147,7 +147,7 @@
 			var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 			icon_state = "fitnessweight"
 			qdel(W)
-			boutput(user, "<span style=\"color:blue\">[finishmessage]</span>")
+			boutput(user, "<span class='notice'>[finishmessage]</span>")
 			user.changeStatus("fitness_stam_max",1000)
 
 /obj/item/rubberduck
@@ -163,19 +163,19 @@
 	var/spam_flag = 0
 
 /obj/item/rubberduck/attack_self(mob/user as mob)
-	if (spam_flag == 0)
+	if (spam_flag < world.time)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.sims)
 				H.sims.affectMotive("fun", 1)
 		spam_flag = 1
 		if (narrator_mode)
-			playsound(src.loc, 'sound/vox/duct.ogg', 50, 1)
+			playsound(user, 'sound/vox/duct.ogg', 50, 1)
 		else
-			playsound(src.loc, 'sound/items/rubberduck.ogg', 50, 1)
+			playsound(user, 'sound/items/rubberduck.ogg', 50, 1)
 		if(prob(1))
 			user.drop_item()
-			playsound(src.loc, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 50, 1) // this is gonna spook some people!!
+			playsound(user, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 50, 1) // this is gonna spook some people!!
 			var/wacka = 0
 			while (wacka++ < 50)
 				sleep(0.2 SECONDS)
@@ -185,6 +185,5 @@
 				pixel_y = 0
 				pixel_x = 0
 		src.add_fingerprint(user)
-		SPAWN_DBG(2 SECONDS)
-			spam_flag = 0
+		spam_flag = world.time + 2 SECONDS
 	return

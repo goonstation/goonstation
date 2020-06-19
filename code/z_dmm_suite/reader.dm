@@ -225,7 +225,8 @@ dmm_suite
 				return num
 			//Check for file
 			else if(copytext(value,1,2) == "'")
-				return file(copytext(value,2,length(value)))
+				return get_cached_file(copytext(value,2,length(value)))
+				// return file(copytext(value,2,length(value)))
 			// Check for lists
 				// To Do
 

@@ -44,7 +44,7 @@
 			playsound(get_turf(ownerMob), "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
 			ownerMob.health = ownerMob.max_health
 			if (target == owner)
-				boutput(owner, "<span class='color:green'>Good. Job.</span>")
+				boutput(owner, "<span class='success'>Good. Job.</span>")
 			target.death()
 			target.ghostize()
 			if (iscarbon(target))

@@ -103,8 +103,8 @@
 
 		if (B)
 			B.throw_at(target, 6, 1)
-		H.visible_message("<span style=\"color:red\"><b>[H]</b>'s [magical ? "arse" : "ass"] flies off \his body[magical ? " in a magical explosion" : null]!</span>",\
-		"<span style=\"color:red\">Your [magical ? "arse" : "ass"] flies off your body[magical ? " in a magical explosion" : null]!</span>")
+		H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "arse" : "ass"] flies off \his body[magical ? " in a magical explosion" : null]!</span>",\
+		"<span class='alert'>Your [magical ? "arse" : "ass"] flies off your body[magical ? " in a magical explosion" : null]!</span>")
 		H.changeStatus("weakened", 2 SECONDS)
 		H.force_laydown_standup()
 

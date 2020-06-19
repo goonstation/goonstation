@@ -13,6 +13,7 @@
 
 	New()
 		..()
+		#ifdef UNDERWATER_MAP
 		var/datum/sea_hotspot/new_hotspot = 0
 		for (var/i = 1, i <= groups_to_create, i++)
 			new_hotspot = new
@@ -25,31 +26,38 @@
 				maxsearch--
 
 			new_hotspot.move_center_to(T)
-
+		#endif
 		//var/image/I = image(icon = 'icons/obj/sealab_power.dmi')
 		//var/obj/item/photo/P = new/obj/item/photo(get_turf(locate(1,1,1)), I, map, "test", "blah")
 
   		//var/obj/A = new /obj(locate(1,1,1))
   		//A.icon = map
 
+	#ifdef UNDERWATER_MAP
+	var/list/map_colors = list(
+		empty = rgb(0, 0, 50),
+		solid = rgb(0, 0, 255),
+		station = rgb(255, 153, 58),
+		other = rgb(120, 200, 120))
+	#else
+	var/list/map_colors = list(
+		empty = rgb(30, 30, 45),
+		solid = rgb(180,180,180),
+		station = rgb(27, 163, 186),
+		other = rgb(186, 0, 60))
+	#endif
 
 	proc/generate_map()
 		if (!map)
 			Z_LOG_DEBUG("Hotspot Map", "Generating map ...")
-			var/list/map_colors = list(
-				empty = rgb(0, 0, 50),
-				solid = rgb(0, 0, 255),
-				station = rgb(255, 153, 58),
-				other = rgb(120, 200, 120))
 			map = icon('icons/misc/trenchMapEmpty.dmi', "template")
 			var/turf_color = null
 			for (var/x = 1, x <= world.maxx, x++)
 				for (var/y = 1, y <= world.maxy, y++)
 					var/turf/T = locate(x,y,5)
-
 					if (T.name == "asteroid" || T.name == "cavern wall" || T.type == /turf/simulated/floor/plating/airless/asteroid)
 						turf_color = "solid"
-					else if (T.name == "trench floor")
+					else if (T.name == "trench floor" || T.name == "\proper space")
 						turf_color = "empty"
 					else
 						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower))
@@ -58,6 +66,11 @@
 							turf_color = "other"
 
 					map.DrawBox(map_colors[turf_color], x * 2, y * 2, x * 2 + 1, y * 2 + 1)
+
+			for (var/beacon in warp_beacons)
+				if (istype(beacon, /obj/warp_beacon/miningasteroidbelt))
+					var/turf/T = get_turf_loc(beacon)
+					map.DrawBox(map_colors["station"], T.x * 2 - 2, T.y * 2 - 2, T.x * 2 + 2, T.y * 2 + 2)
 
 			Z_LOG_DEBUG("Hotspot Map", "Map generation complete")
 			generate_map_html()
@@ -76,7 +89,7 @@
 <!doctype html>
 <html>
 <head>
-	<title>Trench Map</title>
+	[map_currently_underwater?"<title>Trench Map</title>":"<title>Mining Map</title>"]
 	<meta http-equiv="X-UA-Compatible" content="IE=edge;">
 	<style type="text/css">
 		body {
@@ -124,12 +137,11 @@
 			width: 1em;
 			border: 1px solid white;
 		}
-		.empty { background-color: rgb(0, 0, 50); }
-		.solid { background-color: rgb(0, 0, 255); }
-		.station { background-color: rgb(255, 153, 58); }
-		.other { background-color: rgb(120, 200, 120); }
+		.empty { background-color: [map_colors["empty"]]; }
+		.solid { background-color: [map_colors["solid"]]; }
+		.station { background-color: [map_colors["station"]]; }
+		.other { background-color: [map_colors["other"]]; }
 		.vent { background-color: rgb(255, 120, 120); }
-
 	</style>
 </head>
 <body>
@@ -141,8 +153,8 @@
 			<span><span class='solid'></span> Solid Rock</span>
 			<span><span class='station'></span> NT Asset</span>
 			<span><span class='other'></span> Unknown</span>
-			<span><span class='vent'></span> Hotspot</span>
-		</div>
+			[map_currently_underwater?"<span><span class='vent'></span> Hotspot</span>":""]
+			</div>
 </body>
 </html>
 "}
@@ -359,13 +371,13 @@
 			found = 1
 			if (phenomena_flags & PH_QUAKE_WEAK)
 				shake_camera(M, 4, 0.1)
-				M.show_text("<span style='color:red'><b>The ground rumbles softly.</b></span>")
+				M.show_text("<span class='alert'><b>The ground rumbles softly.</b></span>")
 
 			if (phenomena_flags & PH_QUAKE)
 				shake_camera(M, 5, 0.5)
 				random_brute_damage(M, 3)
 				M.changeStatus("weakened", 1 SECOND)
-				M.show_text("<span style='color:red'><b>The ground quakes and rumbles violently!</b></span>")
+				M.show_text("<span class='alert'><b>The ground quakes and rumbles violently!</b></span>")
 
 			LAGCHECK(LAG_HIGH)
 
@@ -383,10 +395,10 @@
 		else if (found)
 			playsound(phenomena_point, 'sound/misc/ground_rumble.ogg', 70, 1, 0.1, 1)
 
-
 		//hey recurse at this arbitrary heat value, thanks
 		if (heat > 8000 + (8000 * recursion))
-			if (recursion <= 0)
+			var/areaname = get_area_name(phenomena_point)
+			if (recursion <= 0 && areaname && areaname != "Ocean")
 				var/logmsg = "BIG hotspot phenomena (Heat : [heat])  at [log_loc(phenomena_point)]."
 				message_admins(logmsg)
 				logTheThing("bombing", null, null, logmsg)
@@ -396,7 +408,8 @@
 				LAGCHECK(LAG_HIGH)
 				src.do_phenomena( recursion++, heat - (9000 + (9000 * recursion)) )
 		else
-			if (phenomena_flags > PH_QUAKE && recursion <= 0)
+			var/areaname = get_area_name(phenomena_point)
+			if (phenomena_flags > PH_QUAKE && recursion <= 0 && areaname && areaname != "Ocean")
 				var/logmsg = "Hotspot phenomena (Heat : [heat])  at [log_loc(phenomena_point)]."
 				message_admins(logmsg)
 				logTheThing("bombing", null, null, logmsg)
@@ -461,7 +474,7 @@
 	item_state = "dowsing"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	desc = "Stick this rod into the sea floor to poll for underground heat. Distance readings may fluctuate based on the frequency of vibrational waves.<br>If the mass of heat moves via drift, this rod will follow its movements." //doppler effect lol i'm science
-	plane = 11
+	plane = PLANE_LIGHTING + 1
 	throwforce = 6
 	w_class = 2.0
 	force = 6
@@ -543,8 +556,8 @@
 					if (H.can_drift)
 						var/turf/dir_step = get_step(center, H.drift_dir)
 
-						var/angle = atan2(src.loc.y - center.y, src.loc.x - center.x)
-						var/angle2 = atan2(dir_step.y - center.y, dir_step.x - center.x) //todo : atan2 not necessary here. Make some dir2angle function for speed.
+						var/angle = arctan(src.loc.y - center.y, src.loc.x - center.x)
+						var/angle2 = arctan(dir_step.y - center.y, dir_step.x - center.x) //todo : atan2 not necessary here. Make some dir2angle function for speed.
 
 						var/diff = abs(angledifference(angle,angle2))
 						diff -= 90
@@ -558,18 +571,18 @@
 					placed = 0
 
 					for (var/mob/O in hearers(src, null))
-						O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"Estimated distance to center : [val]\"</span></span>", 2)
+						O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Estimated distance to center : [val]\"</span></span>", 2)
 
 
 					if (true_center) //stomper does this anywya, lets let them dowse for the true center instead of accidntally stomping and being annoying
 						playsound(src, "sound/machines/twobeep.ogg", 50, 1,0.1,0.7)
 						if (true_center > 1)
 							for (var/mob/O in hearers(src, null))
-								O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"[true_center] centers have been located!\"</span></span>", 2)
+								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[true_center] centers have been located!\"</span></span>", 2)
 
 						else
 							for (var/mob/O in hearers(src, null))
-								O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"True center has been located!\"</span></span>", 2)
+								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"True center has been located!\"</span></span>", 2)
 
 
 				speech_bubble.icon_state = "[val]"
@@ -864,7 +877,7 @@
 		power_up_realtime = 10
 		set_anchor = 0
 		for (var/mob/O in hearers(src, null))
-			O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"Safety restrictions disabled.\"</span></span>", 2)
+			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Safety restrictions disabled.\"</span></span>", 2)
 		..()
 
 	proc/update_icon()
@@ -879,13 +892,13 @@
 				cell.updateicon()
 				cell = null
 
-				usr.visible_message("<span style=\"color:blue\">[usr] removes the power cell from \the [src].</span>", "<span style=\"color:blue\">You remove the power cell from \the [src].</span>")
+				usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
 		else
 			activate()
 
 			playsound(src.loc, 'sound/machines/engine_alert3.ogg', 50, 1, 0.1, on ? 1 : 0.6)
 			update_icon()
-			user.visible_message("<span style=\"color:blue\">[user] switches [on ? "on" : "off"] the [src].</span>","<span style=\"color:blue\">You switch [on ? "on" : "off"] the [src].</span>")
+			user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
 
 	proc/activate()
 		on = !on
@@ -908,7 +921,7 @@
 		mode_toggle = !mode_toggle
 
 		for (var/mob/O in hearers(src, null))
-			O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"</span></span>", 2)
+			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"</span></span>", 2)
 
 	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/cell))
@@ -925,13 +938,13 @@
 						C.set_loc(src)
 						C.add_fingerprint(usr)
 
-						user.visible_message("<span style=\"color:blue\">[user] inserts a power cell into [src].</span>", "<span style=\"color:blue\">You insert the power cell into [src].</span>")
+						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
 				boutput(user, "The hatch must be open to insert a power cell.")
 				return
 		else if (ispryingtool(I))
 			open = !open
-			user.visible_message("<span style=\"color:blue\">[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span style=\"color:blue\">You [open ? "open" : "close"] the hatch on the [src].</span>")
+			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
 			update_icon()
 		else
 			..()
@@ -962,7 +975,7 @@
 			if (get_dist(src,H.center.turf()) <= 1)
 				playsound(src, "sound/machines/twobeep.ogg", 50, 1,0.1,0.7)
 				for (var/mob/O in hearers(src, null))
-					O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
+					O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
 
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 99, 1, 0.1, 0.7)
 
@@ -1107,7 +1120,7 @@
 /obj/item/trench_map
 	name = "sea trench map"
 	desc = null
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/posters.dmi'
 	icon_state = "wall_poster_trench"
 	throwforce = 0
 	w_class = 1.0
@@ -1121,9 +1134,10 @@
 	health = 100
 	var/can_put_up = 1
 
-	examine()
-		if (usr.client && hotspot_controller)
-			hotspot_controller.show_map(usr.client)
+	examine(mob/user)
+		if (user.client && hotspot_controller)
+			hotspot_controller.show_map(user.client)
+			return list()
 		else
 			return ..()
 
@@ -1135,8 +1149,8 @@
 				hotspot_controller.show_map(usr.client)
 			return
 		var/turf/T = src.loc
-		user.visible_message("<span style=\"color:red\"><b>[user]</b> rips down [src] from [T]!</span>",\
-		"<span style=\"color:red\">You rip down [src] from [T]!</span>")
+		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>",\
+		"<span class='alert'>You rip down [src] from [T]!</span>")
 		var/obj/decal/cleanable/ripped_poster/decal = make_cleanable(/obj/decal/cleanable/ripped_poster, T)
 		decal.icon_state = "[src.icon_state]-rip2"
 		decal.pixel_x = src.pixel_x

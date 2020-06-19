@@ -17,7 +17,7 @@ Ctrl + RMB                             = Remove pod door or door control<br>
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		counter++
 		id = "[usr.client.ckey][counter]"
-		boutput(usr, "<span style=\"color:blue\">ID now: [id]</span>")
+		boutput(usr, "<span class='notice'>ID now: [id]</span>")
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		var/obj/machinery/door/poddoor/newdoor = new/obj/machinery/door/poddoor(get_turf(object))

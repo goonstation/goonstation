@@ -53,8 +53,10 @@
 
 	var/list/unassigned = list()
 
-	for (var/mob/new_player/player in mobs)
-		if (player.client && player.ready && !player.mind.assigned_role)
+	for (var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+		if (player.ready && !player.mind.assigned_role)
 			unassigned += player
 
 	if (unassigned.len == 0)
@@ -99,9 +101,9 @@
 			available_job_roles.Add(JOB)
 
 	// Wiggle it like a pissy caterpillar
-	available_job_roles = shuffle(available_job_roles)
+	shuffle_list(available_job_roles)
 	// Wiggle the players too so that priority isn't determined by key alphabetization
-	unassigned = shuffle(unassigned)
+	shuffle_list(unassigned)
 
 	// First we deal with high-priority jobs like Captain or AI which generally will always
 	// be present on the station - we want these assigned first just to be sure
@@ -309,7 +311,7 @@
 
 	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB)
-		boutput(src, "<span style=\"color:red\"><b>Something went wrong setting up your rank and equipment! Report this to a coder.</b></span>")
+		boutput(src, "<span class='alert'><b>Something went wrong setting up your rank and equipment! Report this to a coder.</b></span>")
 		return
 
 	//if(JOB.name == "Captain")
@@ -363,12 +365,11 @@
 		// ok so all the below shit checks if you're a human.
 		// that's well and good but we need to be operating on possible_new_mob now,
 		// because that's what the player is, not the one we were initially given.
-		// I guess you could set src = possible_new_mob, but for now, let's try this:
-		boutput(possible_new_mob, "<tt><b>(DEBUG)</b> While creating your character, you were put into a new mob. This is normal! If you get any weird issues or things break, that's <em>not</em> normal and you should adminhelp it by pushing F1.</tt>")
-		return
+
+		src = possible_new_mob // let's hope this breaks nothing
 
 
-	if (ishuman(src))
+	if (ishuman(src) && JOB.add_to_manifest)
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
@@ -399,7 +400,7 @@
 				var/obj/machinery/vehicle/V = pick(random_pod_codes)
 				random_pod_codes -= V
 				if (V && V.lock && V.lock.code)
-					boutput(src, "<span style=\"color:blue\">The unlock code to your pod ([V]) is: [V.lock.code]</span>")
+					boutput(src, "<span class='notice'>The unlock code to your pod ([V]) is: [V.lock.code]</span>")
 					if (src.mind)
 						src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
 
@@ -411,7 +412,7 @@
 		sleep(0.1 SECONDS)
 		update_icons_if_needed()
 
-		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO)//!ismap("DESTINY") && !ismap("CLARION"))
+		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
 				for (var/obj/machinery/computer/announcement/A in machine_registry[MACHINES_ANNOUNCEMENTS])
 					if (!A.status && A.announces_arrivals)
@@ -432,9 +433,10 @@
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
 	if (JOB.slot_back)
 		src.equip_new_if_possible(JOB.slot_back, slot_back)
-		if (JOB.items_in_backpack.len && istype(src.back, /obj/item/storage))
+		if (istype(src.back, /obj/item/storage))
 			for (var/X in JOB.items_in_backpack)
-				src.equip_new_if_possible(X, slot_in_backpack)
+				if(ispath(X))
+					src.equip_new_if_possible(X, slot_in_backpack)
 			if(JOB.receives_disk)
 				var/obj/item/disk/data/floppy/D = new /obj/item/disk/data/floppy(src)
 				src.equip_if_possible(D, slot_in_backpack)
@@ -463,6 +465,12 @@
 				D.data_type = "cloning_record"
 				D.name = "data disk - '[src.real_name]'"
 
+			if(JOB.receives_badge)
+				var/obj/item/clothing/suit/security_badge/B = new /obj/item/clothing/suit/security_badge(src)
+				src.equip_if_possible(B, slot_in_backpack)
+				B.badge_owner_name = src.real_name
+				B.badge_owner_job = src.job
+
 	if (JOB.slot_jump)
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
 
@@ -473,9 +481,10 @@
 			src.equip_new_if_possible(JOB.slot_belt, slot_belt)
 			if (src.traitHolder && src.traitHolder.hasTrait("immigrant") && istype(src.belt, /obj/item/device/pda2))
 				del(src.belt) //UGHUGHUGHUGUUUUUUUU
-		if (JOB.items_in_belt.len && istype(src.belt, /obj/item/storage))
+		if (JOB?.items_in_belt.len && istype(src.belt, /obj/item/storage))
 			for (var/X in JOB.items_in_belt)
-				src.equip_new_if_possible(X, slot_in_belt)
+				if(ispath(X))
+					src.equip_new_if_possible(X, slot_in_belt)
 
 	if (JOB.slot_foot)
 		src.equip_new_if_possible(JOB.slot_foot, slot_shoes)
@@ -597,7 +606,7 @@
 		PDA.ownerAssignment = JOB.name
 		PDA.name = "PDA-[src.real_name]"
 
-	boutput(src, "<span style=\"color:blue\">Your pin to your ID is: [C.pin]</span>")
+	boutput(src, "<span class='notice'>Your pin to your ID is: [C.pin]</span>")
 	if (src.mind)
 		src.mind.store_memory("Your pin to your ID is: [C.pin]")
 
@@ -622,14 +631,15 @@
 /mob/living/carbon/human/proc/JobEquipSpawned(rank, no_special_spawn)
 	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB)
-		boutput(src, "<span style=\"color:red\"><b>UH OH, the game couldn't find your job to set it up! Report this to a coder.</b></span>")
+		boutput(src, "<span class='alert'><b>UH OH, the game couldn't find your job to set it up! Report this to a coder.</b></span>")
 		return
 
 	if (JOB.slot_back)
 		src.equip_new_if_possible(JOB.slot_back, slot_back)
-	if (JOB.slot_back && JOB.items_in_backpack.len)
+	if (JOB.slot_back && JOB?.items_in_backpack.len)
 		for (var/X in JOB.items_in_backpack)
-			src.equip_new_if_possible(X, slot_in_backpack)
+			if(ispath(X))
+				src.equip_new_if_possible(X, slot_in_backpack)
 	if (JOB.slot_jump)
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
 	if (JOB.slot_belt)
@@ -658,7 +668,7 @@
 	if (JOB.slot_lhan)
 		src.equip_new_if_possible(JOB.slot_lhan, slot_l_hand)
 
-	if (ishuman(src) && JOB.name != "Syndicate") // Sorry!
+	if (ishuman(src) && JOB.spawn_id)
 		src.spawnId(rank)
 
 	JOB.special_setup(src, no_special_spawn)
@@ -667,6 +677,25 @@
 	update_inhands()
 
 	return
+
+// this proc is shit, make a better one 2day
+proc/bad_traitorify(mob/H, traitor_role="hard-mode traitor")
+	var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
+	var/num_objectives = rand(1,3)
+	var/datum/objective/new_objective = null
+	for(var/i = 0, i < num_objectives, i++)
+		var/select_objective = pick(eligible_objectives)
+		new_objective = new select_objective
+		new_objective.owner = H.mind
+		new_objective.set_up()
+		H.mind.objectives += new_objective
+
+	H.mind.special_role = traitor_role
+	H << browse(grabResource("html/traitorTips/traitorhardTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+	if(!(H.mind in ticker.mode.traitors))
+		ticker.mode.traitors += H.mind
+	if (H.mind.current)
+		H.mind.current.antagonist_overlay_refresh(1, 0)
 
 //////////////////////////////////////////////
 // cogwerks - personalized trinkets project //

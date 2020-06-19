@@ -53,35 +53,35 @@
 /obj/machinery/shuttle/engine/propulsion/attackby(obj/item/W as obj, mob/user as mob)
 	if (isscrewingtool(W))
 		if (src.stat1 == 0)
-			boutput(usr, "<span style=\"color:blue\">Resecuring outer frame.</span>")
+			boutput(usr, "<span class='notice'>Resecuring outer frame.</span>")
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
 			sleep(2 SECONDS)
-			boutput(usr, "<span style=\"color:blue\">Outer frame secured.</span>")
+			boutput(usr, "<span class='notice'>Outer frame secured.</span>")
 			src.stat1 = 1
 			return
 		if (src.stat1 == 1)
-			boutput(usr, "<span style=\"color:red\">Unsecuring outer frame.</span>")
+			boutput(usr, "<span class='alert'>Unsecuring outer frame.</span>")
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
 			sleep(2 SECONDS)
-			boutput(usr, "<span style=\"color:red\">Done.</span>")
+			boutput(usr, "<span class='alert'>Done.</span>")
 			src.stat1 = 0
 			return
 		else
 			..()
 			return
 	else if (istype(W, /obj/item/rods) && src.stat2 == 0)
-		boutput(usr, "<span style=\"color:blue\">Now plating hull.</span>")
+		boutput(usr, "<span class='notice'>Now plating hull.</span>")
 		sleep(2 SECONDS)
-		boutput(usr, "<span style=\"color:blue\">Plating secured.</span>")
+		boutput(usr, "<span class='notice'>Plating secured.</span>")
 		qdel(W)
 		src.stat2 = 1
 		return
 	else if (iswrenchingtool(W) && src.stat2 == 1)
 		var/obj/item/rods/R = new /obj/item/rods
 		playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
-		boutput(usr, "<span style=\"color:red\">Removing outer hull plating.</span>")
+		boutput(usr, "<span class='alert'>Removing outer hull plating.</span>")
 		sleep(2 SECONDS)
-		boutput(usr, "<span style=\"color:red\">Done.</span>")
+		boutput(usr, "<span class='alert'>Done.</span>")
 		src.stat2 = 0
 		R.set_loc(src.loc)
 		return
@@ -91,25 +91,25 @@
 
 /obj/machinery/shuttle/engine/propulsion/examine()
 	if (src.stat1 == 1 && src.stat2 == 1)
-		boutput(usr, "<span style=\"color:blue\">The propulsion engine is working properly!</span>")
+		return list("<span class='notice'>The propulsion engine is working properly!</span>")
 	else
-		boutput(usr, "<span style=\"color:red\">The propulsion engine is not functioning.</span>")
+		return list("<span class='alert'>The propulsion engine is not functioning.</span>")
 
 /obj/machinery/shuttle/engine/propulsion/ex_act()
 	if(src.stat1 == 0 && src.stat2 == 0) // don't break twice, that'd be silly
-		src.visible_message("<span style=\"color:red\">[src] explodes!</span>")
+		src.visible_message("<span class='alert'>[src] explodes!</span>")
 		src.stat1 = 0
 		src.stat2 = 0
 		return
 /obj/machinery/shuttle/engine/propulsion/meteorhit()
 	if(src.stat1 == 0 && src.stat2 == 0)
-		src.visible_message("<span style=\"color:red\">[src] explodes!</span>")
+		src.visible_message("<span class='alert'>[src] explodes!</span>")
 		src.stat1 = 0
 		src.stat2 = 0
 		return
 /obj/machinery/shuttle/engine/propulsion/blob_act(var/power)
 	if(src.stat1 == 0 && src.stat2 == 0)
-		src.visible_message("<span style=\"color:red\">[src] explodes!</span>")
+		src.visible_message("<span class='alert'>[src] explodes!</span>")
 		src.stat1 = 0
 		src.stat2 = 0
 		return
@@ -153,10 +153,10 @@
 
 	proc/fire()
 		flick(src.icon_firing, src)
-		src.visible_message("<span style=\"color:red\">[src] is charging up!</span>")
+		src.visible_message("<span class='alert'>[src] is charging up!</span>")
 		playsound(src.loc, sound_firing, 70, 1)
 		sleep(1.3 SECONDS)
-		src.visible_message("<span style=\"color:red\"><b>[src] fires!</b></span>")
+		src.visible_message("<span class='alert'><b>[src] fires!</b></span>")
 		shoot_projectile_DIR(src, current_projectile, dir)
 
 /obj/item/material_piece/sphere/plasmaball // heh

@@ -71,7 +71,7 @@
 	// no parent calling, we're going to completely override this
 	if (!location)
 		location = get_turf(src)
-	visible_message("<span class='text-red'>[src.name] violently breaks apart!</span>")
+	visible_message("<span class='alert'>[src.name] violently breaks apart!</span>")
 	playsound(location, 'sound/impact_sounds/Glass_Shatter_2.ogg', 80, 1)
 	flockdronegibs(location)
 	var/num_pieces = rand(2,8)
@@ -95,9 +95,9 @@
 /obj/flock_structure/attack_hand(var/mob/user)
 	if(user.a_intent == INTENT_HARM)
 		if(isflock(user))
-			boutput(user, "<span class='text-red'>You find you can't bring yourself to harm [src]!</span>")
+			boutput(user, "<span class='alert'>You find you can't bring yourself to harm [src]!</span>")
 		else
-			user.visible_message("<span class='text-red'><b>[user]</b> punches [src]! It's very ineffective!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> punches [src]! It's very ineffective!</span>")
 			playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 80, 1)
 			src.takeDamage("brute", 1)
 	else
@@ -109,10 +109,10 @@
 				action = "pushes"
 			if(INTENT_GRAB)
 				action = "squeezes"
-		src.visible_message("<span class='text-red'><b>[user]</b> [action] [src], but nothing happens.</span>")
+		src.visible_message("<span class='alert'><b>[user]</b> [action] [src], but nothing happens.</span>")
 
 /obj/flock_structure/attackby(obj/item/W as obj, mob/user as mob)
-	src.visible_message("<span class='text-red'><b>[user]</b> attacks [src] with [W]!</span>")
+	src.visible_message("<span class='alert'><b>[user]</b> attacks [src] with [W]!</span>")
 	playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 80, 1)
 
 	var/damtype = "brute"
@@ -169,4 +169,4 @@
 	var/damage = rand(modifier, 12 + 8 * modifier)
 
 	takeDamage("mixed", damage)
-	src.visible_message("<span style=\"color:red\">[src] is hit by the blob!/span>")
+	src.visible_message("<span class='alert'>[src] is hit by the blob!/span>")

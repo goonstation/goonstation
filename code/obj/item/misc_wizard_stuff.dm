@@ -12,21 +12,22 @@
 	var/uses = 4.0
 	flags = FPRINT | TABLEPASS
 	w_class = 2.0
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	throw_speed = 4
 	throw_range = 20
 	desc = "This isn't that old, you just spilled mugwort tea on it the other day."
 
 /obj/item/teleportation_scroll/attack_self(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = ""
 	if (!iswizard(user))
-		user.machine = null
-		boutput(user, "<span style=\"color:red\"><b>The text is illegible!</b></span>")
+		src.remove_dialog(user)
+		boutput(user, "<span class='alert'><b>The text is illegible!</b></span>")
 		return
 	if (!src.uses)
-		boutput(user, "<span style=\"color:blue\"><b>The depleted scroll vanishes in a puff of smoke!</b></span>")
-		user.machine = null
+		boutput(user, "<span class='notice'><b>The depleted scroll vanishes in a puff of smoke!</b></span>")
+		src.remove_dialog(user)
 		user.Browse(null,"window=scroll")
 		qdel(src)
 		return
@@ -45,7 +46,7 @@
 	if (!( ishuman(H)))
 		return 1
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["spell_teleport"])
 			if (src.uses >= 1 && usr.teleportscroll(0, 1, src) == 1)
 				src.uses -= 1
@@ -82,7 +83,7 @@
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
 		. = ..()
 		if (prob(75))
-			source.show_message(text("<span style=\"color:red\">\The [src] just barely slips out of your grip!</span>"), 1)
+			source.show_message(text("<span class='alert'>\The [src] just barely slips out of your grip!</span>"), 1)
 			. = 0
 
 	// Part of the parent for convenience.
@@ -92,13 +93,13 @@
 
 		switch (severity)
 			if (0)
-				affected_mob.visible_message("<span style=\"color:red\">[affected_mob] is knocked off-balance by the curse upon [src]!</span>")
+				affected_mob.visible_message("<span class='alert'>[affected_mob] is knocked off-balance by the curse upon [src]!</span>")
 				affected_mob.do_disorient(30, weakened = 1 SECOND, stunned = 0, disorient = 1 SECOND, remove_stamina_below_zero = 0)
 				affected_mob.stuttering += 2
 				affected_mob.take_brain_damage(2)
 
 			if (1)
-				affected_mob.visible_message("<span style=\"color:red\">[affected_mob]'s consciousness is overwhelmed by the curse upon [src]!</span>")
+				affected_mob.visible_message("<span class='alert'>[affected_mob]'s consciousness is overwhelmed by the curse upon [src]!</span>")
 				affected_mob.show_text("Horrible visions of depravity and terror flood your mind!", "red")
 				if (prob(50))
 					affected_mob.emote("scream")
@@ -111,8 +112,8 @@
 				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 				s.set_up(4, 1, affected_mob)
 				s.start()
-				affected_mob.visible_message("<span style=\"color:red\">The curse upon [src] rebukes [affected_mob]!</span>")
-				boutput(affected_mob, "<span style=\"color:red\">Horrible visions of depravity and terror flood your mind!</span>")
+				affected_mob.visible_message("<span class='alert'>The curse upon [src] rebukes [affected_mob]!</span>")
+				boutput(affected_mob, "<span class='alert'>Horrible visions of depravity and terror flood your mind!</span>")
 				affected_mob.emote("scream")
 				affected_mob.changeStatus("paralysis", 80)
 				affected_mob.changeStatus("stunned", 10 SECONDS)
@@ -126,7 +127,7 @@
 		if (!src || !istype(src) || !M || !istype(M))
 			return
 
-		src.visible_message("<span style=\"color:red\"><b>The [src.name] is suddenly warped away!</b></span>")
+		src.visible_message("<span class='alert'><b>The [src.name] is suddenly warped away!</b></span>")
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(4, 1, get_turf(src))
 		s.start()
@@ -179,7 +180,7 @@
 		if (user.mind)
 			if (iswizard(user) || check_target_immunity(user))
 				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
-					boutput(user, "<span style=\"color:red\">The [src.name] is magically attuned to another wizard! You can use it, but the staff will refuse your attempts to control or summon it.</span>")
+					boutput(user, "<span class='alert'>The [src.name] is magically attuned to another wizard! You can use it, but the staff will refuse your attempts to control or summon it.</span>")
 				..()
 				return
 			else
@@ -196,12 +197,7 @@
 		..()
 		return
 
-	pull()
-		set src in oview(1)
-		set category = "Local"
-
-		var/mob/living/user = usr
-
+	pull(var/mob/user)
 		if(check_target_immunity(user))
 			return ..()
 
@@ -219,7 +215,7 @@
 /obj/magicmirror
 	desc = "An old mirror. A bit eeky and ooky."
 	name = "Magic Mirror"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
 	anchored = 1.0
 	opacity = 0
@@ -260,6 +256,6 @@
 		var/percentage
 		percentage = (corrupt / count) * 100
 		if (corrupt >= 2100)
-			. += "<br><span style=\"color:green\"><b>The Corruption</b> is at [percentage]%!</span>"
+			. += "<br><span class='success'><b>The Corruption</b> is at [percentage]%!</span>"
 		else
-			. += "<br><span style=\"color:red\"><b>The Corruption</b> is at [percentage]%!</span>"*/
+			. += "<br><span class='alert'><b>The Corruption</b> is at [percentage]%!</span>"*/

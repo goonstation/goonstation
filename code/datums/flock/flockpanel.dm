@@ -48,7 +48,7 @@
 	OnClick( var/client/who, var/id )
 		// no op
 
-	OnTopic(href, href_list[])
+	OnTopic(usr, href, href_list[])
 		switch(href_list["action"])
 			if("update")
 				src.PushUpdate(src.associated.describe_state())
@@ -59,7 +59,7 @@
 					var/turf/T = get_turf(origin)
 					if(T.z != 1)
 						// make sure they're not trying to spoof data and jump into a z-level they ought not to go
-						boutput(F, "<span style='text-red'>They seem to be beyond your capacity to reach.</span>")
+						boutput(F, "<span class='alert'>They seem to be beyond your capacity to reach.</span>")
 					else
 						F.set_loc(T)
 			if("rally")

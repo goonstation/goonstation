@@ -66,7 +66,7 @@ Contains:
 				.= 1
 
 	attack_self(mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		if (!(src.air_contents))
 			return
 
@@ -80,8 +80,8 @@ Contains:
 
 		var/message = {"
 		<b>[src]</b>
-		<br><b>Tank Pressure:</b> [air_contents.return_pressure()] kPa
-		<br>[fancy_pressure_bar(air_contents.return_pressure(), 10 * ONE_ATMOSPHERE)]
+		<br><b>Tank Pressure:</b> [MIXTURE_PRESSURE(air_contents)] kPa
+		<br>[fancy_pressure_bar(MIXTURE_PRESSURE(air_contents), 10 * ONE_ATMOSPHERE)]
 		<hr>
 		<b>Mask Release Valve:</b> <A href='?src=\ref[src];stat=1'>[using_internal?("Open"):("Closed")]</A>
 		<br><b>Mask Release Pressure:</b> <A href='?src=\ref[src];dist_p=-10'>-</A> <A href='?src=\ref[src];dist_p=-1'>-</A> <A href='?src=\ref[src];setpressure=1'>[distribute_pressure]</A> <A href='?src=\ref[src];dist_p=1'>+</A> <A href='?src=\ref[src];dist_p=10'>+</A>
@@ -95,7 +95,7 @@ Contains:
 		if (usr.stat|| usr.restrained())
 			return
 		if (src.loc == usr)
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["dist_p"])
 				var/cp = text2num(href_list["dist_p"])
 				src.distribute_pressure += cp
@@ -112,9 +112,7 @@ Contains:
 				return
 
 			src.add_fingerprint(usr)
-			for(var/mob/M in viewers(1, src.loc))
-				if ((M.client && M.machine == src))
-					src.attack_self(M)
+			src.updateSelfDialog()
 		else
 			usr.Browse(null, "window=tank")
 			return
@@ -142,7 +140,7 @@ Contains:
 					T.icon_state = "airoff"
 				location.internal = null
 				if (location.internals) location.internals.icon_state = "internal0"
-				boutput(usr, "<span style=\"color:blue\">You close the tank release valve.</span>")
+				boutput(usr, "<span class='notice'>You close the tank release valve.</span>")
 				return 0
 			else
 				if(location.wear_mask && (location.wear_mask.c_flags & MASKINTERNALS))
@@ -150,10 +148,10 @@ Contains:
 					for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
 						T.icon_state = "airon"
 					if (location.internals) location.internals.icon_state = "internal1"
-					boutput(usr, "<span style=\"color:blue\">You open the tank valve.</span>")
+					boutput(usr, "<span class='notice'>You open the tank valve.</span>")
 					return 1
 				else
-					boutput(usr, "<span style=\"color:blue\">The valve immediately closes. You must put on a mask first.</span>")
+					boutput(usr, "<span class='notice'>The valve immediately closes. You must put on a mask first.</span>")
 					playsound(src.loc, "sound/items/penclick.ogg", 50, 1)
 					return 0
 
@@ -161,7 +159,7 @@ Contains:
 		if(!air_contents)
 			return null
 
-		var/tank_pressure = air_contents.return_pressure()
+		var/tank_pressure = MIXTURE_PRESSURE(air_contents)
 		//if(tank_pressure < distribute_pressure)
 		//	distribute_pressure = max(tank_pressure,17)
 
@@ -182,15 +180,15 @@ Contains:
 		if(!air_contents)
 			return 0
 
-		var/pressure = air_contents.return_pressure()
+		var/pressure = MIXTURE_PRESSURE(air_contents)
 		if(pressure > TANK_FRAGMENT_PRESSURE) // 50 atmospheres, or: 5066.25 kpa under current _setup.dm conditions
-			//boutput(world, "<span style=\"color:blue\">[x],[y] tank is exploding: [pressure] kPa</span>")
+			//boutput(world, "<span class='notice'>[x],[y] tank is exploding: [pressure] kPa</span>")
 			//Give the gas a chance to build up more pressure through reacting
 			playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
 			air_contents.react()
 			air_contents.react()
 			air_contents.react()
-			pressure = air_contents.return_pressure()
+			pressure = MIXTURE_PRESSURE(air_contents)
 
 			var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 			// (pressure - 5066.25 kpa) divided by 1013.25 kpa
@@ -207,7 +205,7 @@ Contains:
 				return
 			var/turf/epicenter = get_turf(loc)
 
-			//boutput(world, "<span style=\"color:blue\">Exploding Pressure: [pressure] kPa, intensity: [range]</span>")
+			//boutput(world, "<span class='notice'>Exploding Pressure: [pressure] kPa, intensity: [range]</span>")
 
 
 			logTheThing("bombing", src, null, "exploded at [showCoords(epicenter.x, epicenter.y, epicenter.z)], , range: [range], last touched by: [src.fingerprintslast]")
@@ -215,7 +213,7 @@ Contains:
 			qdel(src)
 
 		else if(pressure > TANK_RUPTURE_PRESSURE)
-			//boutput(world, "<span style=\"color:blue\">[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]</span>")
+			//boutput(world, "<span class='notice'>[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]</span>")
 			if(integrity <= 0)
 				loc.assume_air(air_contents)
 				air_contents = null
@@ -226,7 +224,7 @@ Contains:
 				integrity--
 
 		else if(pressure > TANK_LEAK_PRESSURE)
-			//boutput(world, "<span style=\"color:blue\">[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]</span>")
+			//boutput(world, "<span class='notice'>[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]</span>")
 			if(integrity <= 0)
 				var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
 				loc.assume_air(leaked_gas)
@@ -237,13 +235,13 @@ Contains:
 			integrity++
 
 	examine()
-		set category = "Local"
-		var/obj/item/icon = src
 		if (istype(src.loc, /obj/item/assembly))
+			var/obj/item/icon = src
+			. = list()
 			icon = src.loc
 			if (!in_range(src, usr))
 				if (icon == src)
-					boutput(usr, "<span style=\"color:blue\">It's a [bicon(icon)]! If you want any more information you'll need to get closer.</span>")
+					. += "<span class='notice'>It's a [bicon(icon)]! If you want any more information you'll need to get closer.</span>"
 				return
 
 			var/celsius_temperature = src.air_contents.temperature-T0C
@@ -262,12 +260,9 @@ Contains:
 			else
 				descriptive = "furiously hot"
 
-			boutput(usr, "<span style=\"color:blue\">The [bicon(icon)] feels [descriptive]</span>")
-
+			. += "<span class='notice'>The [bicon(icon)] feels [descriptive]</span>"
 		else
-			..()
-
-		return
+			return ..()
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -318,13 +313,13 @@ Contains:
 		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
 		return
 
-	verb/toggle()
+	proc/toggle()
 		src.on = !( src.on )
 		src.icon_state = text("jetpack_mag[]", src.on)
 		if(src.on)
-			boutput(usr, "<span style=\"color:blue\">The jetpack is now on</span>")
+			boutput(usr, "<span class='notice'>The jetpack is now on</span>")
 		else
-			boutput(usr, "<span style=\"color:blue\">The jetpack is now off</span>")
+			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
 		return
 
 	proc/allow_thrust(num, mob/user as mob)
@@ -333,7 +328,7 @@ Contains:
 
 		if (!( src.on ))
 			return 0
-		if ((num < 0.01 || src.air_contents.total_moles() < num))
+		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
 			return 0
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)
@@ -345,7 +340,6 @@ Contains:
 				var/d = G.toxins / 2
 				d = min(abs(user.health + 100), d, 25)
 				user.TakeDamage("chest", 0, d)
-				user.updatehealth()
 			return (G.oxygen >= 0.0075 ? 0.5 : 0)
 		else
 			if (G.oxygen >= 0.0075)
@@ -377,19 +371,19 @@ Contains:
 		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
 		return
 
-	verb/toggle()
+	proc/toggle()
 		src.on = !( src.on )
 		src.icon_state = text("jetpack[]", src.on)
 		if(src.on)
-			boutput(usr, "<span style=\"color:blue\">The jetpack is now on</span>")
+			boutput(usr, "<span class='notice'>The jetpack is now on</span>")
 		else
-			boutput(usr, "<span style=\"color:blue\">The jetpack is now off</span>")
+			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
 		return
 
 	proc/allow_thrust(num, mob/user as mob)
 		if (!( src.on ))
 			return 0
-		if ((num < 0.01 || src.air_contents.total_moles() < num))
+		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
 			return 0
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)
@@ -401,7 +395,6 @@ Contains:
 				var/d = G.toxins / 2
 				d = min(abs(user.health + 100), d, 25)
 				user.TakeDamage("chest", 0, d)
-				user.updatehealth()
 			return (G.oxygen >= 0.0075 ? 0.5 : 0)
 		else
 			if (G.oxygen >= 0.0075)
@@ -481,7 +474,7 @@ Contains:
 		return
 
 	proc/release()
-		var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())
+		var/datum/gas_mixture/removed = air_contents.remove(TOTAL_MOLES(air_contents))
 		loc.assume_air(removed)
 
 	proc/ignite()
@@ -639,16 +632,16 @@ Contains:
 		src.on = !( src.on )
 		src.icon_state = text("jetpack_mk2_[]", src.on)
 		if(src.on)
-			boutput(usr, "<span style=\"color:blue\">The jetpack is now on</span>")
+			boutput(usr, "<span class='notice'>The jetpack is now on</span>")
 			playsound(src.loc, "sound/misc/JetpackMK2on.ogg", 50, 1)
 		else
-			boutput(usr, "<span style=\"color:blue\">The jetpack is now off</span>")
+			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
 		return
 
 	allow_thrust(num, mob/user as mob)
 		if (!( src.on ))
 			return 0
-		if ((num < 0.01 || src.air_contents.total_moles() < num))
+		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
 			return 0
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)
@@ -660,7 +653,6 @@ Contains:
 				var/d = G.toxins / 2
 				d = min(abs(user.health + 100), d, 25)
 				user.TakeDamage("chest", 0, d)
-				user.updatehealth()
 			return (G.oxygen >= 0.0075 ? 0.5 : 0)
 		else
 			if (G.oxygen >= 0.0075)
@@ -685,9 +677,9 @@ Contains:
 		src.on = !( src.on )
 		src.icon_state = text("sjetpack_mag[]", src.on)
 		if(src.on)
-			boutput(usr, "<span style=\"color:blue\">The jetpack is now on</span>")
+			boutput(usr, "<span class='notice'>The jetpack is now on</span>")
 		else
-			boutput(usr, "<span style=\"color:blue\">The jetpack is now off</span>")
+			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
 		return
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)

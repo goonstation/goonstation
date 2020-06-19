@@ -195,9 +195,9 @@
 		add_fingerprint(user)
 		src.disable = !src.disable
 		if (src.disable)
-			user.visible_message("<span style=\"color:red\">[user] has disconnected the [src]'s flashbulb!</span>", "<span style=\"color:red\">You disconnect the [src]'s flashbulb!</span>")
+			user.visible_message("<span class='alert'>[user] has disconnected the [src]'s flashbulb!</span>", "<span class='alert'>You disconnect the [src]'s flashbulb!</span>")
 		if (!src.disable)
-			user.visible_message("<span style=\"color:red\">[user] has connected the [src]'s flashbulb!</span>", "<span style=\"color:red\">You connect the [src]'s flashbulb!</span>")
+			user.visible_message("<span class='alert'>[user] has connected the [src]'s flashbulb!</span>", "<span class='alert'>You connect the [src]'s flashbulb!</span>")
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
@@ -226,7 +226,7 @@
 				O.overlays += image('icons/effects/fire.dmi', "2old")
 				sleep(1 SECOND)
 				if (O)
-					O.visible_message("<span style=\"color:red\">[src]'s flashbulb burns [O] to a crisp.</span>")
+					O.visible_message("<span class='alert'>[src]'s flashbulb burns [O] to a crisp.</span>")
 					qdel(O)
 
 	for (var/mob/O in viewers(src, null))
@@ -254,11 +254,11 @@
 
 		if (!src.anchored)
 			light.disable()
-			user.show_message(text("<span style=\"color:red\">[src] can now be moved.</span>"))
+			user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
 			src.overlays = null
 
 		else if (src.anchored)
 			if ( powered() )
 				light.enable()
-			user.show_message(text("<span style=\"color:red\">[src] is now secured.</span>"))
+			user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
 			src.overlays += "[base_state]-s"

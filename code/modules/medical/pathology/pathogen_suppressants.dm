@@ -34,8 +34,9 @@
 	proc/onshocked(var/datum/shockparam/param, var/datum/pathogen/P)
 	proc/onsay(message, var/datum/pathogen/P)
 	proc/onadd(var/datum/pathogen/P)
-	proc/onemote(var/mob/target, message, var/datum/pathogen/P)
+	proc/onemote(var/mob/M as mob, message, voluntary, var/datum/pathogen/P)
 	proc/ondeath(var/datum/pathogen/P)
+	proc/oncured(var/datum/pathogen/P)
 
 	// While doing pathogen research, the suppression method may define how the pathogen reacts to certain reagents.
 	// Returns null if the pathogen does not react to the reagent.
@@ -58,7 +59,7 @@
 	suppress_act(var/datum/pathogen/P)
 		if (P.infected.bodytemperature > 310 + P.suppression_threshold)
 			if (P.stage > 3 && prob(P.advance_speed * 2))
-				P.infected.show_message("<span style=\"color:blue\">You feel better.</span>")
+				P.infected.show_message("<span class='notice'>You feel better.</span>")
 				P.stage--
 			return 1
 		return 0
@@ -84,7 +85,7 @@
 	suppress_act(var/datum/pathogen/P)
 		if (P.infected.bodytemperature < 300 - P.suppression_threshold)
 			if (P.stage > 3 && prob(P.advance_speed * 2))
-				P.infected.show_message("<span style=\"color:blue\">You feel better.</span>")
+				P.infected.show_message("<span class='notice'>You feel better.</span>")
 				P.stage--
 			return 1
 		return 0
@@ -111,7 +112,7 @@
 			var/slept = P.symptom_data["suppressant"]
 			if (slept > P.suppression_threshold)
 				if (P.stage > 3 && prob(P.advance_speed * 4))
-					P.infected.show_message("<span style=\"color:blue\">You feel better.</span>")
+					P.infected.show_message("<span class='notice'>You feel better.</span>")
 					P.stage--
 					P.symptom_data["suppressant"] = 0
 				return 1
@@ -141,7 +142,7 @@
 	suppress_act(var/datum/pathogen/P)
 		if (P.infected.reagents.has_reagent("styptic_powder", P.suppression_threshold) || P.infected.reagents.has_reagent("synthflesh", P.suppression_threshold))
 			if (P.stage > 3 && prob(P.advance_speed * 2))
-				P.infected.show_message("<span style=\"color:blue\">You feel better.</span>")
+				P.infected.show_message("<span class='notice'>You feel better.</span>")
 				P.stage--
 			return 1
 		return 0
@@ -165,7 +166,7 @@
 	suppress_act(var/datum/pathogen/P)
 		if (P.infected.reagents.has_reagent("silver_sulfadiazine", P.suppression_threshold) || P.infected.reagents.has_reagent("synthflesh", P.suppression_threshold))
 			if (P.stage > 3 && prob(P.advance_speed * 2))
-				P.infected.show_message("<span style=\"color:blue\">You feel better.</span>")
+				P.infected.show_message("<span class='notice'>You feel better.</span>")
 				P.stage--
 			return 1
 		return 0
@@ -191,7 +192,7 @@
 	suppress_act(var/datum/pathogen/P)
 		if (P.infected.reagents.has_reagent("haloperidol", P.suppression_threshold) || P.infected.reagents.has_reagent("neurotoxin", P.suppression_threshold))
 			if (P.stage > 3 && prob(P.advance_speed * 2))
-				P.infected.show_message("<span style=\"color:blue\">You feel better.</span>")
+				P.infected.show_message("<span class='notice'>You feel better.</span>")
 				P.stage--
 			return 1
 		return 0
@@ -212,7 +213,7 @@
 				P.stage--
 				better = 1
 			if (param.amt > 30 || better)
-				P.infected.show_message("<span style=\"color:blue\">You feel better.</span>")
+				P.infected.show_message("<span class='notice'>You feel better.</span>")
 		if (P.suppressed == 0)
 			P.suppressed = 1
 
@@ -236,7 +237,7 @@
 	suppress_act(var/datum/pathogen/P)
 		if (P.infected.reagents.has_reagent("bad_grease", P.suppression_threshold) || P.infected.reagents.has_reagent("grease", P.suppression_threshold) || P.infected.reagents.has_reagent("porktonium", P.suppression_threshold) || P.infected.reagents.has_reagent("cholesterol", P.suppression_threshold))
 			if (P.stage > 3 && prob(P.advance_speed * 2))
-				P.infected.show_message("<span style=\"color:blue\">You feel better.</span>")
+				P.infected.show_message("<span class='notice'>You feel better.</span>")
 				P.stage--
 			return 1
 		return 0
@@ -260,7 +261,7 @@
 	suppress_act(var/datum/pathogen/P)
 		if (P.infected.reagents.has_reagent("chickensoup", P.suppression_threshold))
 			if (P.stage > 3 && prob(P.advance_speed * 2))
-				P.infected.show_message("<span style=\"color:blue\">You feel better.</span>")
+				P.infected.show_message("<span class='notice'>You feel better.</span>")
 				P.stage--
 			return 1
 		return 0
@@ -283,7 +284,7 @@
 	suppress_act(var/datum/pathogen/P)
 		if (P.infected.reagents.has_reagent("radium", P.suppression_threshold) || P.infected.reagents.has_reagent("dna_mutagen", P.suppression_threshold) || P.infected.reagents.has_reagent("mutagen", P.suppression_threshold) || (P.infected.getStatusDuration("radiation")/10) > P.suppression_threshold * 0.1)
 			if (P.stage > 3 && prob(P.advance_speed * 2))
-				P.infected.show_message("<span style=\"color:blue\">You feel better.</span>")
+				P.infected.show_message("<span class='notice'>You feel better.</span>")
 				P.stage--
 			return 1
 		return 0
@@ -306,7 +307,7 @@
 	suppress_act(var/datum/pathogen/P)
 		if (P.infected.reagents.has_reagent("mutagen", P.suppression_threshold) || P.infected.reagents.has_reagent("dna_mutagen", P.suppression_threshold))
 			if (P.stage > 3 && prob(P.advance_speed * 2))
-				P.infected.show_message("<span style=\"color:blue\">You feel better.</span>")
+				P.infected.show_message("<span class='notice'>You feel better.</span>")
 				P.stage--
 			return 1
 		return 0

@@ -94,7 +94,7 @@
 				if (attack_amt)
 					playsound(user, "sound/effects/elec_bigzap.ogg", 40, 1)
 				else
-					boutput(user, "<span style=\"color:red\"><b>[O]</b> crackles with electricity for a moment. Perhaps it couldn't find a target?</span>")
+					boutput(user, "<span class='alert'><b>[O]</b> crackles with electricity for a moment. Perhaps it couldn't find a target?</span>")
 
 			if("sonic")
 				playsound(T, "sound/effects/screech.ogg", 100, 1, 0)
@@ -125,7 +125,6 @@
 					R.maximum_volume = 15
 
 				R.add_reagent("sonicpowder_nofluff", 15, null, T0C + 200)
-				R.temperature_react()
 
 				if (R.total_volume)
 					R.clear_reagents()

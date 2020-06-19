@@ -17,7 +17,9 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					return "<b><span style='color:red'>[src] wails!</span></b>"
+					playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 1, pitch = 0.5)
+					return "<b><span class='alert'>[src] wails!</span></b>"
+
 		return null
 
 	specific_emote_type(var/act)
@@ -36,9 +38,9 @@
 		var/datum/handHolder/HH = hands[3]
 		HH.name = "control of fire"
 		HH.limb = new /datum/limb/gun/fire_elemental
-		HH.icon_state = "element-fire"
+		HH.icon_state = "fire_essence"
 		HH.icon = 'icons/mob/critter_ui.dmi'
-		HH.limb_name = "fire essence"
+		HH.limb_name = "fire_essence"
 		HH.can_hold_items = 0
 		HH.can_attack = 0
 		HH.can_range_attack = 1
@@ -50,7 +52,8 @@
 	New()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/cauterize)
-		abilityHolder.addAbility(/datum/targetable/critter/flamethrower)
+		abilityHolder.addAbility(/datum/targetable/critter/flamethrower/throwing)
+		abilityHolder.addAbility(/datum/targetable/critter/fire_sprint)
 
 	Life()
 		var/turf/T = src.loc

@@ -8,7 +8,7 @@ var/list/iomoon_puzzle_options = list("Ancient Robot Door" = /obj/iomoon_puzzle/
 	var/element_spawn_type
 
 	initialize()
-		boutput(usr, "<span style=\"color:blue\">Right click to select puzzle element, left click a turf to place the element, left click two elements to link them (activator -> target), ctrl+click anywhere to finish.</span>")
+		boutput(usr, "<span class='notice'>Right click to select puzzle element, left click a turf to place the element, left click two elements to link them (activator -> target), ctrl+click anywhere to finish.</span>")
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		var/turf/T = get_turf(object)

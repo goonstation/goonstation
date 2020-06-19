@@ -27,7 +27,7 @@
 	colors = list("#FF0000", "#7F0000", "#FF6A00", "#FFD800", "#7F3300", "#7F6A00")
 	animals = list(/obj/critter/microman,
 					/obj/critter/bear,
-					/obj/critter/spider,
+					/obj/critter/spider/aggressive,
 					/obj/critter/wendigo,
 					/obj/critter/bat/buff,
 					/obj/critter/spider/ice,
@@ -55,7 +55,7 @@
 	playsound(src.loc, 'sound/effects/cheridan_pop.ogg', 100, 1)
 	var/obj/critter/C = new animal_to_spawn(get_turf(src))
 	var/turf/T = get_turf(src)
-	T.visible_message("<span style=\"color:blue\">What was once [src] has become [C.name]!</span>")
+	T.visible_message("<span class='notice'>What was once [src] has become [C.name]!</span>")
 	qdel(src)
 
 /obj/item/toy/sponge_capsule/EnteredFluid(obj/fluid/F as obj, atom/oldloc)
@@ -63,7 +63,7 @@
 		src.add_water()
 
 /obj/item/toy/sponge_capsule/suicide(var/mob/user)
-	user.visible_message("<span style=\"color:red\"><b>[user] eats [src]!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] eats [src]!</b></span>")
 	var/obj/critter/C = new animal_to_spawn(user.loc)
 	C.name = user.real_name
 	C.desc = "Holy shit! That used to be [user.real_name]!"
@@ -72,7 +72,7 @@
 
 /obj/item/toy/sponge_capsule/afterattack(atom/target, mob/user as mob)
 	if(istype(target, /obj/item/spongecaps))
-		boutput(user, "<span style=\"color:red\">You awkwardly [pick("cram", "stuff", "jam", "pack")] [src] into [target], but it won't stay!</span>")
+		boutput(user, "<span class='alert'>You awkwardly [pick("cram", "stuff", "jam", "pack")] [src] into [target], but it won't stay!</span>")
 		return
 	return ..()
 
@@ -121,13 +121,14 @@
 /obj/item/spongecaps/attack_hand(mob/user)
 	if(user.find_in_hand(src))
 		if(caps_amt == 0)
-			boutput(user, "<span style=\"color:red\">There aren't any capsules left, you ignoramus!</span>")
+			boutput(user, "<span class='alert'>There aren't any capsules left, you ignoramus!</span>")
 			return
 		else
 			var/obj/item/toy/sponge_capsule/S = new caps_type(user)
 			user.put_in_hand_or_drop(S)
 			if(caps_amt != -1)
 				caps_amt--
+				tooltip_rebuild = 1
 		update_icon()
 	else
 		return ..()

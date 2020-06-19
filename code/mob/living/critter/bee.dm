@@ -150,8 +150,8 @@
 			for (var/mob/O in hearers(src, null))
 				O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
 		if (prob(10))
-			user.visible_message("<span style='color:blue'>[src] hugs [user] back!</span>",\
-			"<span style='color:blue'>[src] hugs you back!</span>")
+			user.visible_message("<span class='notice'>[src] hugs [user] back!</span>",\
+			"<span class='notice'>[src] hugs you back!</span>")
 			if (user.reagents)
 				user.reagents.add_reagent("hugs", 10)
 
@@ -324,7 +324,7 @@
 		else if (isitem(target))
 			var/obj/item/potentially_food = target
 			if (findtext(target.name,"bee") && !istype(target, /obj/item/reagent_containers/food/snacks/beefood))
-				boutput(user, "<span style='color:red'>Oh god, that's <b>repulsive</b>!</span>")
+				boutput(user, "<span class='alert'>Oh god, that's <b>repulsive</b>!</span>")
 				return
 			else if (potentially_food.edible)
 				potentially_food.Eat(user, user, 1)
@@ -590,21 +590,21 @@
 
 		if (istype(W, /obj/item/device/gps))
 			if (src.jittered)
-				boutput(user, "<span style='color:red'>[src] politely declines.</span>")
+				boutput(user, "<span class='alert'>[src] politely declines.</span>")
 				return
 
 			src.jittered = 1
-			user.visible_message("<span style='color:red'>[user] hands [src] the [W.name]</span>","You hand [src] the [W.name].")
+			user.visible_message("<span class='alert'>[user] hands [src] the [W.name]</span>","You hand [src] the [W.name].")
 
 			W.layer = initial(src.layer)
 			user.u_equip(W)
 			W.set_loc(src)
 
 			SPAWN_DBG(rand(10,20))
-				src.visible_message("<span style='color:red'><b>[src] begins to move at unpredicable speeds!</b></span>")
+				src.visible_message("<span class='alert'><b>[src] begins to move at unpredicable speeds!</b></span>")
 				animate_bumble(src, floatspeed = 3)
 				sleep(rand(30,50))
-				src.visible_message("<span style='color:red'>[W] goes flying!</span>")
+				src.visible_message("<span class='alert'>[W] goes flying!</span>")
 				if (W)
 					W.set_loc(src.loc)
 					var/edge = get_edge_target_turf(src, pick(alldirs))
@@ -718,18 +718,18 @@
 		if (addtime > 0) // we're adding more time
 			if (src.playing_dead <= 0) // we don't already have time on the clock
 				src.icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead" // so we gotta show the message + change icon + etc
-				src.visible_message("<span style='color:red'><b>[src]</b> dies!</span>",\
-				"<span style='color:red'><b>You die!</b></span>")
+				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>",\
+				"<span class='alert'><b>You die!</b></span>")
 				src.set_density(0)
-			src.playing_dead = CLAMP((src.playing_dead + addtime), 0, 100)
+			src.playing_dead = clamp((src.playing_dead + addtime), 0, 100)
 		if (src.playing_dead <= 0)
 			return
 		if (src.playing_dead == 1)
 			src.playing_dead = 0
 			src.set_density(1)
 			src.full_heal()
-			src.visible_message("<span style='color:blue'><b>[src]</b> seems to rise from the dead!</span>")
-			boutput(src, "<span style='color:blue'><b>You rise from the dead!</b></span>") // visible_message doesn't go through when this triggers
+			src.visible_message("<span class='notice'><b>[src]</b> seems to rise from the dead!</span>")
+			boutput(src, "<span class='notice'><b>You rise from the dead!</b></span>") // visible_message doesn't go through when this triggers
 			src.hud.update_health()
 			return
 		else
@@ -775,8 +775,8 @@
 			for (var/mob/O in hearers(src, null))
 				O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
 		if (prob(10))
-			user.visible_message("<span style='color:blue'>[src] hugs [user] back!</span>",\
-			"<span style='color:blue'>[src] hugs you back!</span>")
+			user.visible_message("<span class='notice'>[src] hugs [user] back!</span>",\
+			"<span class='notice'>[src] hugs you back!</span>")
 			if (user.reagents)
 				user.reagents.add_reagent("hugs", 10)
 		switch (src.hug_count++)
@@ -921,7 +921,7 @@
 		src.sleeping = rand(10, 20)
 		src.setStatus("paralysis", 2 SECONDS)
 		src.update_icon()
-		src.visible_message("<span style='color:blue'>[src] gets tired from all that work and takes a nap!</span>")
+		src.visible_message("<span class='notice'>[src] gets tired from all that work and takes a nap!</span>")
 		src.is_dancing = 0
 
 /mob/living/critter/small_animal/bee/queen
@@ -991,5 +991,21 @@
 
 /mob/living/critter/small_animal/bee/beestation //A special bee that should allow non-admins to play as a bee.
 	non_admin_bee_allowed = 1
+
+/mob/living/critter/small_animal/bee/ascbee
+	name = "ASCBee"
+	desc = "This bee looks rather... old school."
+	icon_body = "ascbee"
+	icon_state = "ascbee-wings"
+	icon_state_sleep = "ascbee-sleep"
+	honey_color = rgb(0, 255, 0)
+
+	on_pet(mob/user)
+		if (..())
+			return 1
+		if (prob(15))
+			for (var/mob/O in hearers(src, null))
+				O.show_message("[src] beeps[prob(50) ? " in a comforted manner, and gives [user] the ASCII" : ""].",2)
+		return
 
 #undef ADMIN_BEES_ONLY

@@ -43,7 +43,7 @@
 
 			F["ICONS.[iname]"] >> IDS.icon
 			if (!IDS.icon && usr)
-				boutput(usr, "<span style=\"color:red\">Fatal error: Saved copy of icon [iname] cannot be loaded. Local loading failed. Falling back to default icon.</span>")
+				boutput(usr, "<span class='alert'>Fatal error: Saved copy of icon [iname] cannot be loaded. Local loading failed. Falling back to default icon.</span>")
 			else if (IDS.icon)
 				F["[path].icon_state"] >> IDS.icon_state
 	else
@@ -83,6 +83,7 @@
 
 /atom
 	layer = TURF_LAYER
+	plane = PLANE_DEFAULT
 	var/datum/mechanics_holder/mechanics = null
 	var/level = 2
 	var/flags = FPRINT
@@ -216,6 +217,11 @@
 
 		fingerprintshidden = null
 		tag = null
+
+		if(length(src.statusEffects))
+			for(var/datum/statusEffect/effect in src.statusEffects)
+				src.delStatus(effect)
+			src.statusEffects = null
 		..()
 	///Chemistry.
 
@@ -250,10 +256,10 @@
 			return // what're we gunna do here?? ain't got no reagent holder
 
 		if (!src.reagents.total_volume) // Check to make sure the from container isn't empty.
-			boutput(user, "<span style=\"color:red\">[src] is empty!</span>")
+			boutput(user, "<span class='alert'>[src] is empty!</span>")
 			return
 		else if (A.reagents.total_volume == A.reagents.maximum_volume) // Destination Container is full, quit trying to do things what you can't do!
-			boutput(user, "<span style=\"color:red\">[A] is full!</span>") // Notify the user, then exit the process.
+			boutput(user, "<span class='alert'>[A] is full!</span>") // Notify the user, then exit the process.
 			return
 
 		var/T //Placeholder for total volume transferred
@@ -262,13 +268,13 @@
 			T = (A.reagents.maximum_volume - A.reagents.total_volume) // Dump only what fills up the destination container.
 			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // This wasn't logged. Call before trans_to (Convair880).
 			src.reagents.trans_to(A, T) // Dump the amount of reagents.
-			boutput(user, "<span style=\"color:blue\">You transfer [T] units into [A].</span>") // Tell the user they did a thing.
+			boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>") // Tell the user they did a thing.
 			return
 		else
 			T = src.reagents.total_volume // Just make T the whole dang amount then.
 			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
 			src.reagents.trans_to(A, T) // Dump it all!
-			boutput(user, "<span style=\"color:blue\">You transfer [T] units into [A].</span>")
+			boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>")
 			return
 
 	proc/signal_event(var/event) // Right now, we only signal our container
@@ -417,7 +423,7 @@
 	var/l_spd = 0
 	var/list/attached_objs = null //List of attached objects. Objects in this list will follow this atom around as it moves. --SOMEPOTATO: THIS MAKES ME UNCOMFORTABLE
 	var/no_gravity = 0 //Continue moving until a wall or solid object is hit.
-	var/p_class = 3.0 // how much it slows you down while pulling it, changed this from w_class because that's gunna cause issues with items that shouldn't fit in backpacks but also shouldn't slow you down to pull (sorry grayshift)
+	var/p_class = 2.5 // how much it slows you down while pulling it, changed this from w_class because that's gunna cause issues with items that shouldn't fit in backpacks but also shouldn't slow you down to pull (sorry grayshift)
 
 
 //some more of these event handler flag things are handled in set_loc far below . . .
@@ -448,6 +454,9 @@
 
 	if (temp_flags & SPACE_PUSHING)
 		EndSpacePush(src)
+
+	src.attached_objs?.Cut()
+	src.attached_objs = null
 
 
 //mbc comment out becausae im pretty sure this caused issuesss!
@@ -503,6 +512,8 @@
 	//	A.glide_size = src.glide_size
 
 	if (direct & (direct - 1))
+		ignore_simple_light_updates = 1 //to avoid double-updating on diagonal steps when we are really only taking a single step
+
 		if (direct & NORTH)
 			if (direct & EAST)
 				if (step(src, NORTH))
@@ -525,6 +536,14 @@
 					step(src, WEST)
 				else if (step(src, WEST))
 					step(src, SOUTH)
+
+		ignore_simple_light_updates = 0
+
+		if(src.medium_lights)
+			update_medium_light_visibility()
+		if (src.mdir_lights)
+			update_mdir_light_visibility(direct)
+
 		return // this should in turn fire off its own slew of move calls, so don't do anything here
 
 	var/atom/A = src.loc
@@ -584,10 +603,21 @@
 	else
 		last_turf = 0
 
-/atom/movable/verb/pull()
-	set name = "Pull"
-	set src in oview(1)
-	set category = "Local"
+	if (!ignore_simple_light_updates)
+		if(src.medium_lights)
+			update_medium_light_visibility()
+		if (src.mdir_lights)
+			update_mdir_light_visibility(direct)
+
+
+//called once per player-invoked move, regardless of diagonal etc
+//called via pulls and mob steps
+/atom/movable/proc/OnMove(source = null)
+
+/atom/movable/proc/pull()
+	//set name = "Pull"
+	//set src in oview(1)
+	//set category = "Local"
 
 	if (!( usr ))
 		return
@@ -612,16 +642,14 @@
 	if (issmallanimal(usr))
 		var/mob/living/critter/small_animal/C = usr
 		if (!C.can_pull(src))
-			boutput(usr,"<span style=\"color:red\"><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
-			//too spammy
-			//usr.visible_message("<span style=\"color:red\"><b>[usr] struggles, failing to pull [src]!</b></span>", "<span style=\"color:red\"><b>You struggle with [src], but it's too heavy for you to pull!</b></span>")
+			boutput(usr,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
 			return
 
 	if (iscarbon(usr) || issilicon(usr))
 		add_fingerprint(usr)
 
 	if (istype(src,/obj/item/old_grenade/light_gimmick))
-		boutput(usr, "<span style=\"color:blue\">You feel your hand reach out and clasp the grenade.</span>")
+		boutput(usr, "<span class='notice'>You feel your hand reach out and clasp the grenade.</span>")
 		src.attack_hand(usr)
 		return
 	if (!( src.anchored ))
@@ -640,45 +668,39 @@
 /atom/proc/special_desc(dist, mob/user)
 	return null
 
-/atom/verb/examine()
-	set name = "Examine"
-	set category = "Local"
-	set src in view(12)	//make it work from farther away
+/atom/proc/examine(mob/user)
+	RETURN_TYPE(/list)
+	if(src.hiddenFrom && hiddenFrom.Find(user.client)) //invislist
+		return list()
 
-	if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
-		return
-
-	var/dist = get_dist(src, usr)
-	if (istype(usr, /mob/dead/target_observer))
-		dist = get_dist(src, usr:target)
+	var/dist = get_dist(src, user)
+	if (istype(user, /mob/dead/target_observer))
+		var/mob/dead/target_observer/target_observer_user = user
+		dist = get_dist(src, target_observer_user.target)
 
 	// added for custom examine behaviour override - cirr
-	var/special_description = src.special_desc(dist, usr)
+	var/special_description = src.special_desc(dist, user)
 
 	if(special_description)
-		boutput(usr, special_description)
-		return
+		return list(special_description)
 	//////////////////////////////
 
-	var/output = "This is \an [src.name]."
+	. = list("This is \an [src.name].")
 
 	// Added for forensics (Convair880).
 	if (isitem(src) && src.blood_DNA)
-		output = "<span style='color:red'>This is a bloody [src.name].</span>"
+		. = list("<span class='alert'>This is a bloody [src.name].</span>")
 		if (src.desc)
 			if (src.desc && src.blood_DNA == "--conductive_substance--")
-				output += "<br>[src.desc] <span style='color:red'>It seems to be covered in an odd azure liquid!</span>"
+				. += "<br>[src.desc] <span class='alert'>It seems to be covered in an odd azure liquid!</span>"
 			else
-				output += "<br>[src.desc] <span style='color:red'>It seems to be covered in blood!</span>"
+				. += "<br>[src.desc] <span class='alert'>It seems to be covered in blood!</span>"
 	else if (src.desc)
-		output += "<br>[src.desc]"
+		. += "<br>[src.desc]"
 
 	var/extra = src.get_desc(dist, usr)
 	if (extra)
-		output += " [extra]"
-
-	if (output)
-		boutput(usr, output)
+		. += " [extra]"
 
 /atom/proc/MouseDrop_T()
 	return
@@ -923,7 +945,10 @@
 	else
 		last_turf = 0
 
-
+	if(src.medium_lights)
+		update_medium_light_visibility()
+	if (src.mdir_lights)
+		update_mdir_light_visibility(src.dir)
 
 	return src
 
@@ -1032,3 +1057,17 @@
 	message_admins("[key_name(usr)] rotated [target] by [rot] degrees")
 	target.Turn(rot)
 	return
+
+
+/atom/proc/interact(var/mob/user)
+	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(usr)))
+		return
+
+	if (!istype(src.loc, /turf) || user.stat || user.hasStatus(list("paralysis", "stunned", "weakened")) || user.restrained())
+		return
+
+	if (!can_reach(user, src))
+		return
+
+	if (user.client)
+		user.client.Click(src,get_turf(src))

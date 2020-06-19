@@ -36,7 +36,7 @@
 
 	attack_hand(mob/user)
 		if(..()) return
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = {"
 			<body>
 				<h1>Announcement Computer</h1>
@@ -57,11 +57,14 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/card/id))
+			if (src.ID)
+				src.ID.set_loc(src.loc)
+				boutput(user, "<span class='notice'>[src.ID] is ejected from the ID scanner.</span>")
 			usr.drop_item()
 			W.set_loc(src)
 			src.ID = W
 			src.unlocked = check_access(ID, 1)
-			boutput(user, "<span style=\"color:blue\">You insert [W].</span>")
+			boutput(user, "<span class='notice'>You insert [W].</span>")
 			return
 		..()
 

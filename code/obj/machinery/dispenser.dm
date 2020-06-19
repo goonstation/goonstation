@@ -68,7 +68,7 @@
 /obj/machinery/dispenser/attack_hand(mob/user as mob)
 	if(status & BROKEN)
 		return
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = text("<TT><B>Loaded Tank Dispensing Unit</B><BR><br><FONT color = 'blue'><B>Oxygen</B>: []</FONT> []<BR><br><FONT color = 'orange'><B>Plasma</B>: []</FONT> []<BR><br></TT>", src.o2tanks, (src.o2tanks ? text("<A href='?src=\ref[];oxygen=1'>Dispense</A>", src) : "empty"), src.pltanks, (src.pltanks ? text("<A href='?src=\ref[];plasma=1'>Dispense</A>", src) : "empty"))
 	user.Browse(dat, "window=dispenser")
 	onclose(user, "dispenser")
@@ -80,11 +80,11 @@
 	if(usr.stat || usr.restrained())
 		return
 	if (isAI(usr))
-		boutput(usr, "<span style=\"color:red\">You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
+		boutput(usr, "<span class='alert'>You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
 		return
 
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["oxygen"])
 			if (text2num(href_list["oxygen"]))
 				if (src.o2tanks > 0)
@@ -106,7 +106,7 @@
 					attack_hand(src.loc)
 		src.add_fingerprint(usr)
 		for(var/mob/M in viewers(1, src))
-			if ((M.client && M.machine == src))
+			if (M.using_dialog_of(src))
 				src.attack_hand(M)
 	else
 		usr.Browse(null, "window=dispenser")
@@ -164,7 +164,7 @@
 	attack_hand(mob/user as mob)
 		if(status & BROKEN)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>Chemical Dispenser Unit</B><BR><HR><BR>"
 
@@ -202,9 +202,9 @@
 	attackby(obj/item/W, mob/user as mob)
 		if(istype(W, /obj/item/reagent_containers/glass/vial))
 			if(src.active_vial)
-				boutput(user, "<span style=\"color:blue\">The dispenser already has a test tube in it</span>")
+				boutput(user, "<span class='notice'>The dispenser already has a test tube in it</span>")
 			else
-				boutput(user, "<span style=\"color:blue\">You insert the test tube into the dispenser</span>")
+				boutput(user, "<span class='notice'>You insert the test tube into the dispenser</span>")
 				user.drop_vial()
 				W.set_loc(src)
 				src.active_vial = W
@@ -212,7 +212,7 @@
 			return
 
 		else if(istype(W, /obj/item/reagent_containers))
-			boutput(user, "<span style=\"color:blue\">[W] is too big to fit in!</span>")
+			boutput(user, "<span class='notice'>[W] is too big to fit in!</span>")
 			return
 
 		else if (istype(W, /obj/item/disk/data/tape))
@@ -222,7 +222,7 @@
 				src.tape = W
 				boutput(user, "You insert [W].")
 			else
-				boutput(user, "<span style=\"color:red\">There is already a tape loaded!</span>")
+				boutput(user, "<span class='alert'>There is already a tape loaded!</span>")
 			src.updateUsrDialog()
 			return
 
@@ -236,11 +236,11 @@
 		if(usr.stat || usr.restrained())
 			return
 		if (isAI(usr))
-			boutput(usr, "<span style=\"color:red\">You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
+			boutput(usr, "<span class='alert'>You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
 			return
 
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if (href_list["eject"])
 				if(src.active_vial)

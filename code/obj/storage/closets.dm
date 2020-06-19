@@ -75,7 +75,8 @@
 							/obj/item/device/light/flashlight,
 							/obj/item/clothing/shoes/galoshes,
 							/obj/item/reagent_containers/glass/bottle/cleaner,
-							/obj/item/caution = 6)
+							/obj/item/caution = 6,
+							/obj/item/clothing/gloves/long)
 
 /obj/storage/closet/law
 	name = "\improper Legal closet"
@@ -175,7 +176,7 @@
 	spawn_contents = list(/obj/item/clothing/under/jersey/red,
 	/obj/item/clothing/under/jersey/red,
 	/obj/item/clothing/shoes/black = 2,
-	/obj/item/knife_butcher/predspear = 2,
+	/obj/item/knife/butcher/predspear = 2,
 	/obj/item/gun/energy/laser_gun/pred = 2,
 	/obj/item/stimpack = 2,
 	/obj/item/storage/belt/wrestling = 2)
@@ -187,7 +188,7 @@
 	spawn_contents = list(/obj/item/clothing/under/jersey/green,
 	/obj/item/clothing/under/jersey/green,
 	/obj/item/clothing/shoes/black = 2,
-	/obj/item/knife_butcher/predspear = 2,
+	/obj/item/knife/butcher/predspear = 2,
 	/obj/item/gun/energy/laser_gun/pred = 2,
 	/obj/item/stimpack = 2,
 	/obj/item/storage/belt/wrestling = 2)
@@ -203,6 +204,15 @@
 	desc = "A handy closet full of everything an aspiring apprentice welder could ever need."
 	spawn_contents = list(/obj/item/clothing/head/helmet/welding = 3,
 	/obj/item/weldingtool = 3)
+
+/obj/storage/closet/wrestling
+	name = "wrestling supplies closet"
+	desc = "A handy closet full of everything an aspiring fake showboater wrestler needs to launch his career."
+	spawn_contents = list(/obj/item/storage/belt/wrestling/fake = 3,
+	/obj/item/clothing/under/shorts/random = 3,
+	/obj/item/clothing/mask/wrestling/black = 1,
+	/obj/item/clothing/mask/wrestling/blue = 1,
+	/obj/item/clothing/mask/wrestling/green = 1)
 
 /obj/storage/closet/office
 	name = "office supply closet"
@@ -309,7 +319,7 @@
 			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_close())
-			visible_message("<span style='color:red'>It won't budge!</span>")
+			visible_message("<span class='alert'>It won't budge!</span>")
 			return 0
 
 		if(entangled && !entangleLogic)
@@ -332,7 +342,7 @@
 			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_open())
-			visible_message("<span style='color:red'>It won't budge!</span>")
+			visible_message("<span class='alert'>It won't budge!</span>")
 			return 0
 
 		src.open = 0
@@ -386,7 +396,7 @@
 		else if (istype(W, /obj/item/satchel/))
 			var/amt = W.contents.len
 			if (amt)
-				user.visible_message("<span style='color:blue'>[user] dumps out [W]'s contents into [src]!</span>")
+				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0
 				for (var/obj/item/I in W.contents)
 					if (open)
@@ -402,22 +412,21 @@
 				return
 
 		if (src.open)
-			if (!src.is_short && istype(W, /obj/item/weldingtool))
+			if (!src.is_short && isweldingtool(W))
 				return
 
 			else if (iswrenchingtool(W))
 				return
 
-		else if (!src.open && istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/welder = W
-			if(!welder.try_weld(user, 1, burn_eyes = 1))
+		else if (!src.open && isweldingtool(W))
+			if(!W:try_weld(user, 1, burn_eyes = 1))
 				return
 			if (!src.welded)
-				src.weld(1, welder, user)
-				src.visible_message("<span style='color:red'>[user] welds [src] closed with [welder].</span>")
+				src.weld(1, W, user)
+				src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
 			else
-				src.weld(0, welder, user)
-				src.visible_message("<span style='color:red'>[user] unwelds [src] with [welder].</span>")
+				src.weld(0, W, user)
+				src.visible_message("<span class='alert'>[user] unwelds [src] with [W].</span>")
 			return
 
 		if (src.secure)
@@ -429,7 +438,7 @@
 				if (src.allowed(user) || !src.registered || (istype(W, /obj/item/card/id) && src.registered == I.registered))
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
-					user.visible_message("<span style='color:blue'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
+					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
 					src.update_icon()
 					if (!src.registered)
 						src.registered = I.registered
@@ -441,7 +450,7 @@
 			else if (!src.personal && src.allowed(user))
 				if (!src.open)
 					src.locked = !src.locked
-					user.visible_message("<span style='color:blue'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
+					user.visible_message("<span class='notice'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
 					src.update_icon()
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")

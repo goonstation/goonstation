@@ -29,10 +29,10 @@
 
 	//to-do
 	if(leader)
-		boutput(cult_mob, "<span style=\"color:red\"><b>You are a leading cultist of [cult_name]!</b></span>")
+		boutput(cult_mob, "<span class='alert'><b>You are a leading cultist of [cult_name]!</b></span>")
 
 	else
-		boutput(cult_mob, "<span style=\"color:red\"><b>You are a loyal cultist of [cult_name]!</b></span>")
+		boutput(cult_mob, "<span class='alert'><b>You are a loyal cultist of [cult_name]!</b></span>")
 	cult_mob.equip_if_possible(new /obj/item/clothing/suit/cultist(cult_mob), cult_mob.slot_in_backpack)
 	return
 

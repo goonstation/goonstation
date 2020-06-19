@@ -1,3 +1,7 @@
+#define CLOSED_AND_OFF 1
+#define OPEN_AND_ON 2
+#define OPEN_AND_OFF 3
+
 // Contains:
 // - Baton parent
 // - Subtypes
@@ -11,7 +15,7 @@
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "stunbaton"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	item_state = "baton"
+	item_state = "baton-A"
 	uses_multiple_icon_states = 1
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 10
@@ -63,17 +67,18 @@
 	disposing()
 		if (src in processing_items)
 			processing_items.Remove(src)
+		if(cell)
+			cell.dispose()
+			cell = null
 		..()
-		return
 
 	examine()
-		..()
+		. = ..()
 		if (src.uses_charges != 0 && src.uses_electricity != 0)
 			if (!src.cell || !istype(src.cell))
-				boutput(usr, "<span style=\"color:red\">No power cell installed.</span>")
+				. += "<span class='alert'>No power cell installed.</span>"
 			else
-				boutput(usr, "The baton is turned [src.status ? "on" : "off"]. There are [src.cell.charge]/[src.cell.max_charge] PUs left! Each stun will use [src.cost_normal] PUs.")
-		return
+				. += "The baton is turned [src.status ? "on" : "off"]. There are [src.cell.charge]/[src.cell.max_charge] PUs left! Each stun will use [src.cost_normal] PUs."
 
 	emp_act()
 		if (src.uses_charges != 0 && src.uses_electricity != 0)
@@ -179,10 +184,19 @@
 						else if (src.cell.charge <= 0)
 							user.show_text("The [src.name] is now out of charge!", "red")
 							src.stamina_damage = initial(src.stamina_damage)
+							src.status = 0
+							src.item_state = "baton-D"
+							use_stamina_stun() //set stam damage amount
+							if (istype(src, /obj/item/baton/ntso)) //since ntso batons have some extra stuff, we need to set their state var to the correct value to make this work
+								var/obj/item/baton/ntso/B = src
+								B.state = OPEN_AND_OFF
+								B.item_state = "ntso-baton-d"
 				else if (amount > 0)
 					src.cell.charge(src.cost_normal * amount)
 
 		src.update_icon()
+		if(istype(user)) // user can be a Securitron sometims, scream
+			user.update_inhands()
 		return
 
 	proc/charge(var/amt)
@@ -215,16 +229,16 @@
 				logTheThing("combat", user, null, "accidentally stuns [himself_or_herself(user)] with the [src.name] at [log_loc(user)].")
 
 				if (src.uses_electricity != 0)
-					user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles with the [src.name] and accidentally stuns [himself_or_herself(user)]!</span>")
+					user.visible_message("<span class='alert'><b>[user]</b> fumbles with the [src.name] and accidentally stuns [himself_or_herself(user)]!</span>")
 					flick(flick_baton_active, src)
 					playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
 				else
-					user.visible_message("<span style=\"color:red\"><b>[user]</b> swings the [src.name] in the wrong way and accidentally hits [himself_or_herself(user)]!</span>")
+					user.visible_message("<span class='alert'><b>[user]</b> swings the [src.name] in the wrong way and accidentally hits [himself_or_herself(user)]!</span>")
 					playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
 					random_brute_damage(user, 2 * src.force)
 
 			if ("failed_stun")
-				user.visible_message("<span style=\"color:red\"><B>[victim] has been prodded with the [src.name] by [user]! Luckily it was off.</B></span>")
+				user.visible_message("<span class='alert'><B>[victim] has been prodded with the [src.name] by [user]! Luckily it was off.</B></span>")
 				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1, -1)
 				logTheThing("combat", user, victim, "unsuccessfully tries to stun %target% with the [src.name] at [log_loc(victim)].")
 
@@ -234,14 +248,14 @@
 				return
 
 			if ("failed_harm")
-				user.visible_message("<span style=\"color:red\"><B>[user] has attempted to beat [victim] with the [src.name] but held it wrong!</B></span>")
+				user.visible_message("<span class='alert'><B>[user] has attempted to beat [victim] with the [src.name] but held it wrong!</B></span>")
 				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
 				logTheThing("combat", user, victim, "unsuccessfully tries to beat %target% with the [src.name] at [log_loc(victim)].")
 
 			if ("stun", "stun_classic")
-				user.visible_message("<span style=\"color:red\"><B>[victim] has been stunned with the [src.name] by [user]!</B></span>")
+				user.visible_message("<span class='alert'><B>[victim] has been stunned with the [src.name] by [user]!</B></span>")
 				logTheThing("combat", user, victim, "stuns %target% with the [src.name] at [log_loc(victim)].")
-
+				JOB_XP(victim, "Clown", 3)
 				if (type == "stun_classic")
 					playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
 				else
@@ -249,7 +263,7 @@
 					playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
 
 			if ("harm_classic")
-				user.visible_message("<span style=\"color:red\"><B>[victim] has been beaten with the [src.name] by [user]!</B></span>")
+				user.visible_message("<span class='alert'><B>[victim] has been beaten with the [src.name] by [user]!</B></span>")
 				playsound(get_turf(src), "swing_hit", 50, 1, -1)
 				logTheThing("combat", user, victim, "beats %target% with the [src.name] at [log_loc(victim)].")
 
@@ -275,7 +289,7 @@
 
 		else
 			if (dude_to_stun.bioHolder && dude_to_stun.bioHolder.HasEffect("resist_electric") && src.uses_electricity != 0)
-				boutput(dude_to_stun, "<span style=\"color:blue\">Thankfully, electricity doesn't do much to you in your current state.</span>")
+				boutput(dude_to_stun, "<span class='notice'>Thankfully, electricity doesn't do much to you in your current state.</span>")
 			else
 				if (!src.use_stamina_stun() || (src.use_stamina_stun() && ismob(dude_to_stun) && !hasvar(dude_to_stun, "stamina")))
 					dude_to_stun.changeStatus("weakened", src.stun_normal_weakened * 10)
@@ -309,21 +323,29 @@
 		if (src.uses_electricity == 0)
 			return
 
+		if (!src.cell.charge || src.cell.charge - src.cost_normal <= 0)
+			boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
+			return
+
 		src.regulate_charge()
 		src.status = !src.status
 
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			src.do_stun(user, user, "failed", 1)
+			JOB_XP(user, "Clown", 2)
 			return
 
 		if (src.status)
-			user.show_text("The [src.name] is now on.", "blue")
+			boutput(user, "<span class='notice'>The [src.name] is now on.</span>")
+			src.item_state = "baton-A"
 			playsound(get_turf(src), "sparks", 75, 1, -1)
 		else
-			user.show_text("The [src.name] is now off.", "blue")
+			boutput(user, "<span class='notice'>The [src.name] is now off.</span>")
+			src.item_state = "baton-D"
 			playsound(get_turf(src), "sparks", 75, 1, -1)
 
 		src.update_icon()
+		user.update_inhands()
 		use_stamina_stun() //set stam damage amount
 
 		return
@@ -335,11 +357,12 @@
 		use_stamina_stun() //set stam damage amount
 
 		if(check_target_immunity( M ))
-			user.show_message("<span style='color:red'>[M] seems to be warded from attacks!</span>")
+			user.show_message("<span class='alert'>[M] seems to be warded from attacks!</span>")
 			return
 
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			src.do_stun(user, M, "failed", 1)
+			JOB_XP(user, "Clown", 1)
 			return
 
 		switch (user.a_intent)
@@ -379,12 +402,12 @@
 				processing_items.Add(src)
 			if (src.cell)
 				if (pcell.swap(src))
-					user.visible_message("<span style=\"color:red\">[user] swaps [src]'s power cell.</span>")
+					user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
 			else
 				src.cell = pcell
 				user.drop_item()
 				pcell.set_loc(src)
-				user.visible_message("<span style=\"color:red\">[user] swaps [src]'s power cell.</span>")
+				user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
 		else
 			..()
 
@@ -433,11 +456,6 @@
 		..()
 		src.setItemSpecial(/datum/item_special/simple) //override spark of parent
 
-
-#define CLOSED_AND_OFF 1
-#define OPEN_AND_ON 2
-#define OPEN_AND_OFF 3
-
 /obj/item/baton/ntso
 	name = "extendable stun baton"
 	desc = "An extendable stun baton for NT Security Operatives in sleek NanoTrasen blue."
@@ -479,34 +497,50 @@
 		//make it harder for them clowns...
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			src.do_stun(user, user, "failed", 1)
+			JOB_XP(user, "Clown", 2)
 			return
 
 		//move to next state
-		switch (state)
+		switch (src.state)
 			if (CLOSED_AND_OFF)		//move to open/on state
-				state = OPEN_AND_ON
+				if (!src.cell.charge || src.cell.charge - src.cost_normal <= 0) //ugly copy pasted code to move to next state if its depowered, cleanest solution i could think of
+					boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
+					src.state = OPEN_AND_OFF
+					src.status = 0
+					src.item_state = "ntso-baton-d"
+					src.w_class = 4
+					src.force = 7
+					playsound(get_turf(src), "sound/misc/lightswitch.ogg", 75, 1, -1)
+					boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
+					src.update_icon()
+					user.update_inhands()
+					use_stamina_stun() //set stam damage amount
+					return
+
+				//this is the stuff that normally happens
+				src.state = OPEN_AND_ON
 				src.status = 1
-				user.show_text("The [src.name] is now open and on.", "blue")
+				boutput(user, "<span class='notice'>The [src.name] is now open and on.</span>")
 				src.item_state = "ntso-baton-a"
 				src.w_class = 4
 				src.force = 7
 				playsound(get_turf(src), "sparks", 75, 1, -1)
 			if (OPEN_AND_ON)		//move to open/off state
-				state = OPEN_AND_OFF
+				src.state = OPEN_AND_OFF
 				src.status = 0
-				src.item_state = "ntso-baton-a"
+				src.item_state = "ntso-baton-d"
 				src.w_class = 4
 				src.force = 7
 				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 75, 1, -1)
-				user.show_text("The [src.name] is now open and unpowered.", "blue")
+				boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
 				// playsound(get_turf(src), "sparks", 75, 1, -1)
 			if (OPEN_AND_OFF)		//move to closed/off state
-				state = CLOSED_AND_OFF
+				src.state = CLOSED_AND_OFF
 				src.status = 0
 				src.item_state = "ntso-baton-c"
 				src.w_class = 2
 				src.force = 1
-				user.show_text("The [src.name] is now closed.", "blue")
+				boutput(user, "<span class='notice'>The [src.name] is now closed.</span>")
 				playsound(get_turf(src), "sparks", 75, 1, -1)
 
 		src.update_icon()
@@ -579,6 +613,13 @@
 	New()
 		..()
 		BLOCK_ALL
+		c_flags &= ~BLOCK_TOOLTIP
+
+	block_prop_setup(source, obj/item/grab/block/B)
+		if(src.status)
+			B.setProperty("rangedprot", 0.5)
+			B.setProperty("exploprot", 1)
+			. = ..()
 
 	proc/update_icon()
 		icon_state = status ? "barrier_1" : "barrier_0"
@@ -594,26 +635,30 @@
 			if (src.status)
 				w_class = 4
 				flags &= ~ONBELT //haha NO
-				setProperty("meleeprot", 9)
+				setProperty("meleeprot_all", 9)
 				setProperty("rangedprot", 1.5)
 				setProperty("movespeed", 0.3)
 				setProperty("disorient_resist", 65)
 				setProperty("disorient_resist_eye", 65)
 				setProperty("disorient_resist_ear", 50) //idk how lol ok
 				flick("barrier_a",src)
+				c_flags |= BLOCK_TOOLTIP
 
 				src.setItemSpecial(/datum/item_special/barrier)
 			else
 				w_class = 2
 				flags |= ONBELT
-				setProperty("meleeprot", 0)
-				setProperty("rangedprot", 0)
-				setProperty("movespeed", 0)
-				setProperty("disorient_resist", 0)
-				setProperty("disorient_resist_eye", 0)
-				setProperty("disorient_resist_ear", 0)
+				delProperty("meleeprot_all", 0)
+				delProperty("rangedprot", 0)
+				delProperty("movespeed", 0)
+				delProperty("disorient_resist", 0)
+				delProperty("disorient_resist_eye", 0)
+				delProperty("disorient_resist_ear", 0)
+				c_flags &= ~BLOCK_TOOLTIP
 
 				src.setItemSpecial(/datum/item_special/simple)
+
+			user.update_equipped_modifiers() // Call the bruteforce movement modifier proc because we changed movespeed while equipped
 
 			destroy_deployed_barrier(user)
 
@@ -636,7 +681,7 @@
 
 	move_callback(var/mob/living/M, var/turf/source, var/turf/target)
 		//don't delete the barrier while we are restrained from deploying the barrier
-		if (M.restrain_time > world.timeofday) //hey, maybe make this check a define if you're gonna start using it outside of mob/move. gosh
+		if (M.restrain_time > TIME)
 			return
 
 		if (source != target)
@@ -671,7 +716,7 @@
 
 	setupProperties()
 		..()
-		setProperty("meleeprot", 9)
+		setProperty("meleeprot_all", 9)
 		setProperty("rangedprot", 1.5)
 		setProperty("movespeed", 0.3)
 		setProperty("disorient_resist", 65)

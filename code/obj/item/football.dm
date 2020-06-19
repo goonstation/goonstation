@@ -110,7 +110,7 @@
 	if (ismob(target))
 		var/mob/M = target
 		var/msg = pick("tackles", "rushes into", "sacks", "steamrolls", "plows into", "bashes", "leaps into", "runs into", "bowls over")
-		M.visible_message("<span style=\"color:red\"><B>[src] [msg] [target]!</B></span>")
+		M.visible_message("<span class='alert'><B>[src] [msg] [target]!</B></span>")
 
 		M.changeStatus("stunned", 2 SECONDS)
 		M.changeStatus("weakened", 2 SECONDS)
@@ -135,7 +135,7 @@
 	else if (isobj(target))
 		var/obj/O = target
 		var/adjective = pick("hard", "strong", "powerful", "rough", "driven", "beefy", "big", "tough")
-		src.visible_message("<span style=\"color:red\"><B>[src] smashes into [target] with a [adjective] shoulder!</B></span>")
+		src.visible_message("<span class='alert'><B>[src] smashes into [target] with a [adjective] shoulder!</B></span>")
 		logTheThing("combat", src, target, "tackles [target] using football gear [log_loc(src)].")
 		switch (src.smash_through(O, list("window", "grille", "table"), 0))
 			if (0)
@@ -234,6 +234,7 @@
 			if (src.carrier)
 				src.carrier.vis_contents -= indicator
 			src.indicator = null
+		..()
 
 	throw_impact(atom/hit_atom)
 		if (hit_atom)
@@ -250,9 +251,9 @@
 
 
 
-/obj/item/football/throw_at(atom/target, range, speed)
+/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
 	src.icon_state = "football_air"
-	..(target, range, speed)
+	..()
 
 /obj/item/football/throw_impact(atom/hit_atom)
 	..(hit_atom)
@@ -266,10 +267,10 @@
 				SPAWN_DBG( 0 )
 					if (istype(user))
 						if (check_target_immunity(hitMob))
-							hitMob.visible_message("<span style='color:red'>The [src] bounces off of [hit_atom]!</span>")
+							hitMob.visible_message("<span class='alert'>The [src] bounces off of [hit_atom]!</span>")
 						else if (user.wearing_football_gear())
 							//boutput(hitMob, __red("Oof! The [src.name] knocks the wind right out of you!"))
-							hitMob.visible_message("<span style='color:red'><b>[src] hits [hit_atom] in the gut and knocks the wind right out of them!</b></span>")
+							hitMob.visible_message("<span class='alert'><b>[src] hits [hit_atom] in the gut and knocks the wind right out of them!</b></span>")
 							hitMob.changeStatus("stunned", 2 SECONDS)
 							hitMob.changeStatus("weakened", 2 SECONDS)
 							hitMob.remove_stamina(30)
@@ -283,17 +284,15 @@
 		return 0
 	if (ishuman(user))
 		if (user:wearing_football_gear())
-			user.visible_message("<span style='color:red'><b>[user] spikes [src] into the ground! TOUCHDOWN!!!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] spikes [src] into the ground! TOUCHDOWN!!!</b></span>")
 			user.TakeDamage("head", 150, 0)
 			playsound(src.loc, "sound/items/bball_bounce.ogg", 50, 1)
 			var/turf/T = get_turf(src.loc)
 			if(T)
 				explosion_new(src, T, 32)
-			user.updatehealth()
 			return 1
 
-	user.visible_message("<span style='color:red'><b>[user] spikes [src]. It bounces back up and hits [him_or_her(user)] square in the forehead!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] spikes [src]. It bounces back up and hits [him_or_her(user)] square in the forehead!</b></span>")
 	user.TakeDamage("head", 150, 0)
 	playsound(src.loc, "sound/items/bball_bounce.ogg", 50, 1)
-	user.updatehealth()
 	return 1

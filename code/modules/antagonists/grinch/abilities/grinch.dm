@@ -4,7 +4,7 @@
 //////////////////////////////////////////// Setup //////////////////////////////////////////////////
 
 /mob/proc/make_grinch()
-	if (ishuman(src) || iscritter(src))
+	if (ishuman(src) || ismobcritter(src))
 		if (ishuman(src))
 			var/datum/abilityHolder/grinch/A = src.get_ability_holder(/datum/abilityHolder/grinch)
 			if (A && istype(A))
@@ -19,7 +19,7 @@
 			SPAWN_DBG (25) // Don't remove.
 				if (src) src.assign_gimmick_skull()
 
-		else if (iscritter(src))
+		else if (ismobcritter(src))
 			var/mob/living/critter/C = src
 
 			if (isnull(C.abilityHolder)) // They do have a critter AH by default...or should.
@@ -47,7 +47,7 @@
 		if (!spell.holder)
 			return
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this ability here.</span>")
+			boutput(owner.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -67,7 +67,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Grinch"
-	notEnoughPointsMessage = "<span style=\"color:red\">You aren't strong enough to use this ability.</span>"
+	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
 
 /////////////////////////////////////////////// Grinch spell parent ////////////////////////////
 
@@ -142,7 +142,7 @@
 		if (!M)
 			return 0
 
-		if (!(ishuman(M) || iscritter(M)))
+		if (!(ishuman(M) || ismobcritter(M)))
 			boutput(M, __red("You cannot use any powers in your current form."))
 			return 0
 

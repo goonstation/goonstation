@@ -33,7 +33,7 @@
 		g = hex2num(copytext(kind, 4, 6)) / 255.0
 		b = hex2num(copytext(kind, 6, 8)) / 255.0
 		l = input(usr, "Luminosity?", "Luminosity", 1) as num
-		boutput(usr, "<span style=\"color:blue\">Now placing light emitters ([r],[g],[b]:[l]) in single spawn mode. Ctrl+click to toggle light on/off state.</span>")
+		boutput(usr, "<span class='notice'>Now placing light emitters ([r],[g],[b]:[l]) in single spawn mode. Ctrl+click to toggle light on/off state.</span>")
 
 	settings(var/ctrl, var/alt, var/shift)
 		selected()

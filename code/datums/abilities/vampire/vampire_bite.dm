@@ -38,7 +38,7 @@
 		boutput(M, __red("Why would you want to bite yourself?"))
 		return 0
 
-	if (iscritter(M) && !istype(H))
+	if (ismobcritter(M) && !istype(H))
 		boutput(M, __red("Critter mobs currently don't have to worry about blood. Lucky you."))
 		return 0
 
@@ -56,7 +56,7 @@
 		return 0
 
 	if (check_target_immunity(target) == 1)
-		target.visible_message("<span style=\"color:red\"><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
+		target.visible_message("<span class='alert'><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
 		return 0
 
 	if ((target.mind && target.mind.special_role == "vampthrall") && target.is_mentally_dominated_by(M))
@@ -97,7 +97,7 @@
 		if (istype(H)) H.blood_tracking_output()
 
 	else if (HH.bioHolder && HH.traitHolder.hasTrait("training_chaplain"))
-		M.visible_message("<span style=\"color:red\"><b>[M]</b> begins to crisp and burn!</span>", "<span style=\"color:red\">You drank the blood of a holy man! It burns!</span>")
+		M.visible_message("<span class='alert'><b>[M]</b> begins to crisp and burn!</span>", "<span class='alert'>You drank the blood of a holy man! It burns!</span>")
 		M.emote("scream")
 		if (M.get_vampire_blood() >= 20 * mult)
 			M.change_vampire_blood(-20 * mult, 0)
@@ -168,7 +168,7 @@
 	if (src.blood_tally)
 		if (target in src.blood_tally)
 			.= src.blood_tally[target] < max_take_per_mob
-			
+
 /datum/abilityHolder/vampiric_zombie/proc/tally_bite(var/mob/living/carbon/human/target, var/blood_amt_taken)
 	if (!src.blood_tally)
 		src.blood_tally = list()
@@ -199,7 +199,7 @@
 		boutput(M, __red("Why would you want to bite yourself?"))
 		return 0
 
-	if (iscritter(M) && !istype(H))
+	if (ismobcritter(M) && !istype(H))
 		boutput(M, __red("Critter mobs currently don't have to worry about blood. Lucky you."))
 		return 0
 
@@ -217,7 +217,7 @@
 		return 0
 
 	if (check_target_immunity(target) == 1)
-		target.visible_message("<span style=\"color:red\"><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
+		target.visible_message("<span class='alert'><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
 		return 0
 
 	var/mob/master = null
@@ -261,7 +261,7 @@
 			HH.blood_volume -= 20 * mult
 
 	else if (HH.bioHolder && HH.traitHolder.hasTrait("training_chaplain"))
-		M.visible_message("<span style=\"color:red\"><b>[M]</b> begins to crisp and burn!</span>", "<span style=\"color:red\">You drank the blood of a holy man! It burns!</span>")
+		M.visible_message("<span class='alert'><b>[M]</b> begins to crisp and burn!</span>", "<span class='alert'>You drank the blood of a holy man! It burns!</span>")
 		M.emote("scream")
 		if (M.get_vampire_blood() >= 20 * mult)
 			M.change_vampire_blood(-20 * mult, 0)
@@ -475,7 +475,7 @@
 
 
 		boutput(M, __blue("You bite [HH] and begin to drain them of blood."))
-		HH.visible_message("<span style=\"color:red\"><B>[M] bites [HH]!</B></span>")
+		HH.visible_message("<span class='alert'><B>[M] bites [HH]!</B></span>")
 
 		actions.start(new/datum/action/bar/icon/vamp_blood_suc(M,H,HH,src), M)
 

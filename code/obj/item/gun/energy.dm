@@ -27,17 +27,15 @@
 
 
 	examine()
-		set src in usr
+		. = ..()
 		if(src.cell)
-			src.desc = "[src.projectiles ? "It is set to [src.current_projectile.sname]. " : ""]There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
+			. += "[src.projectiles ? "It is set to [src.current_projectile.sname]. " : ""]There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
 		else
-			src.desc = "There is no cell loaded!"
+			. += "There is no cell loaded!"
 		if(current_projectile)
-			src.desc += " Each shot will currently use [src.current_projectile.cost] PUs!"
+			. += "Each shot will currently use [src.current_projectile.cost] PUs!"
 		else
-			src.desc += "<span style=\"color:red\">*ERROR* No output selected!</span>"
-		..()
-		return
+			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
 		return 0
@@ -87,7 +85,7 @@
 			if(src.cell && src.current_projectile)
 				if(src.cell.use(src.current_projectile.cost))
 					return 1
-			boutput(user, "<span style=\"color:red\">*click* *click*</span>")
+			boutput(user, "<span class='alert'>*click* *click*</span>")
 			if (!src.silenced)
 				playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
 			return 0
@@ -96,19 +94,19 @@
 		if (can_swap_cell && istype(b, /obj/item/ammo/power_cell))
 			var/obj/item/ammo/power_cell/pcell = b
 			if (src.custom_cell_max_capacity && (pcell.max_charge > src.custom_cell_max_capacity))
-				boutput(user, "<span style=\"color:red\">This [pcell.name] won't fit!</span>")
+				boutput(user, "<span class='alert'>This [pcell.name] won't fit!</span>")
 				return
 			src.logme_temp(user, src, pcell) //if (!src.rechargeable)
 			if (istype(pcell, /obj/item/ammo/power_cell/self_charging) && !(src in processing_items)) // Again, we want dynamic updates here (Convair880).
 				processing_items.Add(src)
 			if (src.cell)
 				if (pcell.swap(src))
-					user.visible_message("<span style=\"color:red\">[user] swaps [src]'s power cell.</span>")
+					user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
 			else
 				src.cell = pcell
 				user.drop_item()
 				pcell.set_loc(src)
-				user.visible_message("<span style=\"color:red\">[user] swaps [src]'s power cell.</span>")
+				user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
 		else
 			..()
 
@@ -324,7 +322,7 @@
 	force = 5.0
 	mats = 50
 	module_research = list("weapons" = 5, "energy" = 4, "miniaturization" = 5)
-	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawgiver/sabre AND an egun.
+	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 
 	New()
 		cell = new/obj/item/ammo/power_cell/med_power
@@ -396,8 +394,8 @@
 	item_state = "tasers"
 	force = 8.0
 	two_handed = 1
-	click_delay = 15
 	can_dual_wield = 0
+	shoot_delay = 6
 
 	New()
 		cell = new/obj/item/ammo/power_cell/high_power
@@ -412,6 +410,12 @@
 			set_icon_state("tasers[ratio]")
 			return
 
+	attack_self()
+		..()
+		if(istype(current_projectile, /datum/projectile/energy_bolt))
+			shoot_delay = 4
+		else
+			shoot_delay = 6
 
 
 ////////////////////////////////////VUVUV
@@ -433,6 +437,42 @@
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "vuvuzela[ratio]"
+
+//////////////////////////////////////Crabgun
+/obj/item/gun/energy/crabgun
+	name = "a strange crab"
+	desc = "Years of extreme genetic tinkering have finally led to the feared combination of crab and gun."
+	icon = 'icons/obj/crabgun.dmi'
+	icon_state = "crabgun"
+	item_state = "crabgun-world"
+	inhand_image_icon = 'icons/obj/crabgun.dmi'
+	w_class = 4.0
+	force = 12.0
+	throw_speed = 8
+	throw_range = 12
+	rechargeable = 0
+	cell = new/obj/item/ammo/power_cell/self_charging/slowcharge
+	current_projectile = new/datum/projectile/claw
+	projectiles = null
+	is_syndicate = 1
+	custom_cell_max_capacity = 100 //endless crab
+
+	New()
+		current_projectile = new/datum/projectile/claw
+		projectiles = list(current_projectile)
+		..()
+
+	attackby(obj/item/b, mob/user)
+		if(istype(b, /obj/item/ammo/power_cell))
+			boutput(user, "<span class='alert'>You attempt to swap the cell but \the [src] bites you instead.</span>")
+			playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1, -6)
+			user.TakeDamage(user.zone_sel.selecting, 3, 0)
+			take_bleeding_damage(user, user, 3, DAMAGE_CUT)
+			return
+		. = ..()
+
+
+
 
 //////////////////////////////////////Disruptor
 /obj/item/gun/energy/disruptor
@@ -714,17 +754,17 @@
 
 	/*examine()
 		set src in view()
-		boutput(usr, "<span style=\"color:blue\">Installed components:</span><br>")
+		boutput(usr, "<span class='notice'>Installed components:</span><br>")
 		if(emitter)
-			boutput(usr, "<span style=\"color:blue\">[src.emitter.name]</span>")
+			boutput(usr, "<span class='notice'>[src.emitter.name]</span>")
 		if(cell)
-			boutput(usr, "<span style=\"color:blue\">[src.cell.name]</span>")
+			boutput(usr, "<span class='notice'>[src.cell.name]</span>")
 		if(back)
-			boutput(usr, "<span style=\"color:blue\">[src.back.name]</span>")
+			boutput(usr, "<span class='notice'>[src.back.name]</span>")
 		if(top_rail)
-			boutput(usr, "<span style=\"color:blue\">[src.top_rail.name]</span>")
+			boutput(usr, "<span class='notice'>[src.top_rail.name]</span>")
 		if(bottom_rail)
-			boutput(usr, "<span style=\"color:blue\">[src.bottom_rail.name]</span>")
+			boutput(usr, "<span class='notice'>[src.bottom_rail.name]</span>")
 		..()*/
 
 	/*proc/generate_overlays()
@@ -907,6 +947,7 @@
 	update_icon()
 		return
 
+
 ///////////////////////////////////////Shrink Ray
 /obj/item/gun/energy/shrinkray
 	name = "Shrink ray"
@@ -1008,6 +1049,7 @@
 	custom_cell_max_capacity = 100
 	module_research = list("medicine" = 2, "science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10)
 	var/obj/item/heldItem = null
+	tooltip_flags = REBUILD_DIST
 
 	New()
 		current_projectile = new/datum/projectile/pickpocket/steal
@@ -1030,6 +1072,7 @@
 				boutput(user, "You remove \the [heldItem.name] from the gun.")
 				user.put_in_hand_or_drop(heldItem)
 				heldItem = null
+				tooltip_rebuild = 1
 			else
 				boutput(user, "The gun does not contain anything.")
 		else
@@ -1044,6 +1087,7 @@
 			user.u_equip(I)
 			I.dropped(user)
 			boutput(user, "You insert \the [heldItem.name] into the gun's gripper.")
+			tooltip_rebuild = 1
 		return ..()
 
 	attack(mob/M as mob, mob/user as mob)
@@ -1119,17 +1163,18 @@
 			return
 
 ///////////////////////////////////////////////////
-/obj/item/gun/energy/lawgiver/old
-	name = "Antique Lawgiver"
+/obj/item/gun/energy/lawbringer/old
+	name = "Antique Lawbringer"
 	icon = 'icons/obj/items/gun.dmi'
-	icon_state = "old-lawgiver0"
+	icon_state = "old-lawbringer0"
 	old = 1
 
-/obj/item/gun/energy/lawgiver
-	name = "Lawgiver"
+/obj/item/gun/energy/lawbringer
+	name = "Lawbringer"
 	icon = 'icons/obj/items/gun.dmi'
 	item_state = "lawg-detain"
-	icon_state = "lawgiver0"
+	icon_state = "lawbringer0"
+	desc = "A gun with a microphone. Fascinating."
 	var/old = 0
 	m_amt = 5000
 	g_amt = 2000
@@ -1140,10 +1185,10 @@
 	can_swap_cell = 0
 
 	New(var/mob/M)
-		cell = new/obj/item/ammo/power_cell/self_charging/lawgiver
+		cell = new/obj/item/ammo/power_cell/self_charging/lawbringer
 		current_projectile = new/datum/projectile/energy_bolt/aoe
-		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawgiver, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
-		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawgiver,new/datum/projectile/bullet/clownshot)
+		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawbringer, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
+		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
 
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
 		asign_name(M)
@@ -1157,7 +1202,7 @@
 
 	attack_hand(mob/user as mob)
 		if (!owner_prints)
-			boutput(user, "<span style=\"color:red\">[src] has accepted your fingerprint ID. You are its owner!</span>")
+			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
 			asign_name(user)
 		..()
 
@@ -1167,17 +1212,18 @@
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
 		if (!owner_prints)
-			boutput(user, "<span style=\"color:red\">[src] has accepted your fingerprint ID. You are its owner!</span>")
+			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
 			asign_name(user)
 		else
-			boutput(user, "<span style=\"color:blue\">There don't seem to be any buttons on [src] to press.</span>")
+			boutput(user, "<span class='notice'>There don't seem to be any buttons on [src] to press.</span>")
 
 	proc/asign_name(var/mob/M)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder)
-				owner_prints = md5(H.bioHolder.Uid)
-				src.name = "HoS [H.real_name]'s Lawgiver"
+				owner_prints = H.bioHolder.uid_hash
+				src.name = "HoS [H.real_name]'s Lawbringer"
+				tooltip_rebuild = 1
 
 	//stolen the heartalk of microphone. the microphone can hear you from one tile away. unless you wanna
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
@@ -1194,7 +1240,7 @@
 		//only work if the voice is the same as the voice of your owner fingerprints.
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (owner_prints && (md5(H.bioHolder.Uid) != owner_prints))
+			if (owner_prints && (H.bioHolder.uid_hash != owner_prints))
 				are_you_the_law(M, msg[1])
 				return
 		else
@@ -1202,7 +1248,7 @@
 			return //AFAIK only humans have fingerprints/"palmprints(in judge dredd)" so just ignore any talk from non-humans arlight? it's not a big deal.
 
 		if(!src.projectiles && !src.projectiles.len > 1)
-			boutput(M, "<span style=\"color:blue\">Gun broke. Call 1-800-CODER.</span>")
+			boutput(M, "<span class='notice'>Gun broke. Call 1-800-CODER.</span>")
 			current_projectile = new/datum/projectile/energy_bolt/aoe
 			item_state = "lawg-detain"
 			M.update_inhands()
@@ -1250,8 +1296,12 @@
 				if ("pulse")
 					current_projectile = projectiles["pulse"]
 					item_state = "lawg-pulse"
+#if ASS_JAM
+					playsound(M, "sound/vox/pull.ogg", 50)
+#else
 					playsound(M, "sound/vox/push.ogg", 50)
 
+#endif
 					/datum/projectile/energy_bolt/pulse
 		else		//if you're not the owner and try to change it, then fuck you
 			switch(text)
@@ -1261,7 +1311,7 @@
 					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 					s.set_up(2, 1, (get_turf(src)))
 					s.start()
-					M.visible_message("<span style=\"color:red\">[M] tries to fire [src]! The gun initiates its failsafe mode.</span>")
+					M.visible_message("<span class='alert'>[M] tries to fire [src]! The gun initiates its failsafe mode.</span>")
 					return
 
 		M.update_inhands()
@@ -1277,7 +1327,7 @@
 				if (M.job != "Head of Security")
 					src.cant_self_remove = 1
 					playsound(src.loc, "sound/weapons/armbomb.ogg", 75, 1, -3)
-					logTheThing("combat", src, null, "Is not the law. Caused explosion with Lawgiver.")
+					logTheThing("combat", src, null, "Is not the law. Caused explosion with Lawbringer.")
 
 					SPAWN_DBG(2 SECONDS)
 						explosion_new(null, get_turf(src), 15)
@@ -1285,9 +1335,9 @@
 				else
 					return 1
 
-	//all gun modes use the same base sprite icon "lawgiver0" depending on the current projectile/current mode, we apply a coloured overlay to it.
+	//all gun modes use the same base sprite icon "lawbringer0" depending on the current projectile/current mode, we apply a coloured overlay to it.
 	update_icon()
-		src.icon_state = "[old ? "old-" : ""]lawgiver0"
+		src.icon_state = "[old ? "old-" : ""]lawbringer0"
 		src.overlays = null
 
 		if(cell)
@@ -1296,7 +1346,7 @@
 			//if we're showing zero charge, don't do any overlay, since the main image shows an empty gun anyway
 			if (ratio == 0)
 				return
-			indicator_display.icon_state = "[old ? "old-" : ""]lawgiver-d[ratio]"
+			indicator_display.icon_state = "[old ? "old-" : ""]lawbringer-d[ratio]"
 
 			if(current_projectile.type == /datum/projectile/energy_bolt/aoe)			//detain - yellow
 				indicator_display.color = "#FFFF00"
@@ -1308,7 +1358,7 @@
 				indicator_display.color = "#008000"
 			else if (current_projectile.type == /datum/projectile/bullet/flare)			//hotshot - red
 				indicator_display.color = "#FF0000"
-			else if (current_projectile.type == /datum/projectile/bullet/aex/lawgiver)	//bigshot - purple
+			else if (current_projectile.type == /datum/projectile/bullet/aex/lawbringer)	//bigshot - purple
 				indicator_display.color = "#551A8B"
 			else if (current_projectile.type == /datum/projectile/bullet/clownshot)		//clownshot - pink
 				indicator_display.color = "#FFC0CB"
@@ -1329,7 +1379,7 @@
 	// Checks if the gun can shoot based on the fingerprints of the shooter.
 	//returns true if the prints match or there are no prints stored on the gun(emagged). false if it fails
 	proc/fingerprints_can_shoot(var/mob/user)
-		if (!owner_prints || (md5(user.bioHolder.Uid) == owner_prints))
+		if (!owner_prints || (user.bioHolder.uid_hash == owner_prints))
 			return 1
 		return 0
 
@@ -1344,71 +1394,21 @@
 			// 	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 			// 	s.set_up(2, 1, (get_turf(src)))
 			// 	s.start()
-			// 	user.visible_message("<span style=\"color:red\">[user] tries to fire [src]! The gun initiates its failsafe mode.</span>")
+			// 	user.visible_message("<span class='alert'>[user] tries to fire [src]! The gun initiates its failsafe mode.</span>")
 			// 	return
 
 			if (current_projectile.type == /datum/projectile/bullet/flare)
 				shoot_fire_hotspots(target, start, user)
 		return ..(target, start, user)
 
-	//gotta override this to set the desc name to the proper thing
-	special_desc()
-		var/output = "This is \an [src.name]."
-		// Added for forensics (Convair880).
-		if (isitem(src) && src.blood_DNA)
-			output = "<span style='color:red'>This is a bloody [src.name].</span>"
-			if (src.desc && src.blood_DNA == "--conductive_substance--")
-				output += "<br>[src.desc] <span style='color:red'>It seems to be covered in an odd azure liquid!</span>"
-			if (src.desc)
-				output += "<br>[src.desc] <span style='color:red'>It seems to be covered in blood!</span>"
-		else if (src.desc)
-			output += "<br>[src.desc]"
-		var/dist = get_dist(src, usr)
-		var/extra = src.get_desc(dist, usr)
-		if (extra)
-			output += " [extra]"
-
-	get_desc()
-		set src in usr
-		var/gun_setting_name = "detain"
-		if(current_projectile.type == /datum/projectile/energy_bolt/aoe)
-			gun_setting_name = "detain"
-		else if (current_projectile.type == /datum/projectile/bullet/revolver_38)
-			gun_setting_name = "execute"
-		else if (current_projectile.type == /datum/projectile/bullet/smoke)
-			gun_setting_name = "smokeshot"
-		else if (current_projectile.type == /datum/projectile/bullet/tranq_dart/law_giver)
-			gun_setting_name = "knockout"
-		else if (current_projectile.type == /datum/projectile/bullet/flare)
-			gun_setting_name = "hotshot"
-		else if (current_projectile.type == /datum/projectile/bullet/aex/lawgiver)
-			gun_setting_name = "bigshot"
-		else if (current_projectile.type == /datum/projectile/bullet/clownshot)
-			gun_setting_name = "clownshot"
-		else if (current_projectile.type == /datum/projectile/energy_bolt/pulse)		//clownshot - pink
-			gun_setting_name = "pulse"
-
-		src.desc = "It is set to [gun_setting_name]."
-		if(src.cell)
-				//[src.projectiles ? "It will use the projectile: [src.current_projectile.sname]. " : ""]
-			src.desc += " There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
-		else
-			src.desc += " There is no cell loaded!"
-		if(current_projectile)
-			src.desc += " Each shot will currently use [src.current_projectile.cost] PUs!"
-		else
-			src.desc += " <span style=\"color:red\">*ERROR* No output selected!</span>"
-		return
-
-
-/obj/item/gun/energy/lawgiver/emag_act(var/mob/user, var/obj/item/card/emag/E)
+/obj/item/gun/energy/lawbringer/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (user)
-		boutput(user, "<span style=\"color:red\">Anyone can use this gun now. Be careful! (use it in-hand to register your fingerprints)</span>")
+		boutput(user, "<span class='alert'>Anyone can use this gun now. Be careful! (use it in-hand to register your fingerprints)</span>")
 		owner_prints = null
 	return 0
 
 //stolen from firebreath in powers.dm
-/obj/item/gun/energy/lawgiver/proc/shoot_fire_hotspots(var/target,var/start,var/mob/user)
+/obj/item/gun/energy/lawbringer/proc/shoot_fire_hotspots(var/target,var/start,var/mob/user)
 	var/list/affected_turfs = getline(get_turf(start), get_turf(target))
 	var/range = 6
 	playsound(user.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
@@ -1428,10 +1428,14 @@
 		tfireflash(F,0.5,2400)
 
 // Pulse Rifle //
-// An energy gun that uses the lawgiver's Pulse setting, to beef up the current armory.
+// An energy gun that uses the lawbringer's Pulse setting, to beef up the current armory.
 
 /obj/item/gun/energy/pulse_rifle
+#if ASS_JAM
+	name = "pullse rifle"
+#else
 	name = "pulse rifle"
+#endif
 	desc = "todo"
 	icon_state = "pulse_rifle"
 	uses_multiple_icon_states = 1
@@ -1477,3 +1481,21 @@
 		current_projectile = new/datum/projectile/special/spreader/quadwasp
 		projectiles = list(current_projectile)
 		..()
+
+// HOWIZTER GUN
+// dumb meme admin item. not remotely fair, will probably kill person firing it.
+
+/obj/item/gun/energy/howitzer
+	name = "man-portable plasma howitzer"
+	desc = "How can you even lift this?"
+	icon_state = "bfg"
+	uses_multiple_icon_states = 0
+	force = 25
+	two_handed = 1
+	can_dual_wield = 0
+
+	New()
+		..()
+		cell = new/obj/item/ammo/power_cell/self_charging/howitzer
+		current_projectile = new/datum/projectile/special/howitzer
+		projectiles = list(new/datum/projectile/special/howitzer )

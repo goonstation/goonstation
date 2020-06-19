@@ -10,7 +10,7 @@
 		<script src="{{resource("js/pathoui-script.js")}}" type="text/javascript"></script>
 		<link href="{{resource("css/pathoui.css")}}" rel="stylesheet" type="text/css"></link>
 	</head>
-	
+
 	<body>
 		<div class="mainContent">
 			<!--Displays information about the currently loaded pathogen-->
@@ -29,7 +29,7 @@
 					<span class="label">Pathogen: </span>
 					<div class="text-field tf-med" id="txtPName">G68P68</div>
 					<div class="text-field tf-med" id="txtPType">(fungus)</div>
-					
+
 				</div>
 				<div class="noborder">
 					<span class="label">Slot: </span>
@@ -60,7 +60,7 @@
 							<div class="annunciator a-red" id="aMutSample">SAMPLE</div>
 							<div class="annunciator a-red" id="aMutNack">FAIL</div>
 						</div>
-						
+
 						<table>
 							<tr>
 								<td><span class="label lb-long">Mutativeness:</span></td>
@@ -92,17 +92,17 @@
 								<td><div class="text-field tf-narrow"  id="txtSth"></div></td>
 								<td><div class="button btn-tiny" data-tsk="sth=1">+</div></td>
 							</tr>
-							
+
 						</table>
 					</div>
 				</div>
-				
+
 				<div class="dataPage" id="dpSplice1">
 					<h1>Select splice target</h1>
 					<span class='label lb-slong'>The loaded DNA will be modified during this session.</span>
 					<div class='noborder splice-selection'>
 						<div class='noborder slot-holder' id='spliceSlots'>
-							
+
 						</div>
 						<div class='narrow-border button-holder' id='spliceButtons'>
 							<div class='annunciator a-red' id='annSpliceStatExp'>EXPOSED</div>
@@ -114,7 +114,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="dataPage" id="dpSplice2">
 					<h1>Splicing Session</h1>
 					<div class="noborder splice-selection">
@@ -138,7 +138,7 @@
 								<div class="button btn-small" dir=-1>Before</div>
 								<div class="button btn-small" dir=1>After</div>
 								<div class="button btn-small" dir=0>Remove</div>
-								
+
 							</div>
 							<div class='extrapad splice-sequence' id='spliceSourceField'>
 								<span class="label lb-long">Source sequence:</span>
@@ -163,7 +163,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="dataPage" id="dpTester">
 					<h1>DNA Stability Analyzer</h1>
 					<div class= "noborder" id="analyzerHolder">
@@ -193,12 +193,12 @@
 								<div class="text-field tf-enarrow" id="prevAnalysis4"></div>
 							</div>
 						</div>
-						
+
 						<div class="noborder extramargin">
-						
+
 							<div class="extrapad button-holder" id="analyzeComponents">
 							</div>
-							
+
 							<div class="narrow-border extrapad" id="analyzeResults">
 								<span class="label">Stable:</span>
 								<div class="annunciator a-green" id="annStableYes">YES</div>
@@ -213,24 +213,25 @@
 								<span class="label">Error:</span>
 								<div class="annunciator a-red" id="annErrBuffer">BUFFER</div>
 								<div class="annunciator a-red" id="annErrNack">NACK</div>
+								<br/>
 								<span class="label"></span>
 								<div class="annunciator a-yellow" id="annErrSample">SAMPLE</div>
 								<div class="annunciator a-yellow" id="annErrData">T. DATA</div>
 							</div>
 						</div>
-						
+
 						<div class="button btn-long" id="btnAnalysisLoad">Load Sample &amp; Clear Buffer</div>
 						<div class="button btn-long" id="btnAnalysisDoTest">Test DNA</div>
 					</div>
 				</div>
-				
+
 				<div class="dataPage" id="dpLoadSave">
 					<h1>Load / Save DNA</h1>
 					<div class="noborder slot-holder" id="dnaSlotHolder">
-						
+
 					</div>
 				</div>
-				
+
 				<div class="dataPage" id="dpWelcome">
 					<h1>Welcome to the Path-o-matic 2000</h1>
 					<span>The leading market solution for pathology research.</span>
@@ -243,9 +244,9 @@
 						<li>Pathogen Sample Identification</li>
 					</ul>
 				</div>
-				
+
 			</div>
-			
+
 			<!--The main menu, used for scrolling through the pages-->
 			<div id="mainMenu">
 				<div class="button" id="btnRetMain">Main Screen</div>
@@ -253,10 +254,10 @@
 				<div class="button" id="btnSplice">Splice</div>
 				<div class="button" id="btnTester">DNA Analyzer</div>
 				<div class="button" id="btnLoadSave">Load / Save DNA</div>
-				
+
 				<div class="annunciator a-yellow" id="annSynch">SYNCH</div>
 			</div>
-		
+
 		</div>
 	</body>
 </html>

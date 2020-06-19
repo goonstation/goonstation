@@ -27,7 +27,7 @@
 //Handles what happens when the npc becomes aggresive
 /obj/npc/proc/anger()
 	for(var/mob/M in AIviewers(src))
-		boutput(M, "<span style=\"color:red\"><B>[src.name]</B> becomes angry!</span>")
+		boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
 	src.desc = "[src] looks angry"
 	SPAWN_DBG(rand(1000,3000))
 		src.visible_message("<b>[src.name] calms down.</b>")
@@ -131,7 +131,7 @@
 
 	else
 		for(var/mob/M in AIviewers(src))
-			boutput(M, "<span style=\"color:red\"><B>[user]</B> pokes [src] with [W.name]!</span>")
+			boutput(M, "<span class='alert'><B>[user]</B> pokes [src] with [W.name]!</span>")
 
 		if(angry!=2)
 			if(prob(25))
@@ -139,5 +139,5 @@
 				src.anger()
 				activatesecurity()
 		*/
-	src.visible_message("<span style=\"color:red\"><B>[user]</B> pokes [src] with [W.name].</span>")
+	src.visible_message("<span class='alert'><B>[user]</B> pokes [src] with [W.name].</span>")
 	return

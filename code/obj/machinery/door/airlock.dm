@@ -100,6 +100,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/HTML = null
 	var/has_panel = 1
 
+	var/no_access = 0
+
 	autoclose = 1
 	power_usage = 50
 	operation_time = 6
@@ -115,6 +117,12 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+
+/obj/machinery/door/airlock/check_access(obj/item/I)
+	if (no_access) //nope :)
+		return 0
+	.= ..()
 
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/Doorcom.dmi'
@@ -886,7 +894,7 @@ About the new airlock wires panel:
 	else
 		shock_damage = min(rand(20,45),rand(20,45))*prot
 
-//		message_admins("<span style=\"color:blue\"><B>ADMIN: </B>DEBUG: shock_damage = [shock_damage] PN.avail = [PN.avail] user = [user] netnum = [netnum]</span>")
+//		message_admins("<span class='notice'><B>ADMIN: </B>DEBUG: shock_damage = [shock_damage] PN.avail = [PN.avail] user = [user] netnum = [netnum]</span>")
 
 	if (user.bioHolder.HasEffect("resist_electric") == 2)
 		var/healing = 0
@@ -894,15 +902,14 @@ About the new airlock wires panel:
 			healing = shock_damage / 3
 		user.HealDamage("All", healing, healing)
 		user.take_toxin_damage(0 - healing)
-		boutput(user, "<span style=\"color:blue\">You absorb the electrical shock, healing your body!</span>")
+		boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 		return
 	else if (user.bioHolder.HasEffect("resist_electric") == 1)
-		boutput(user, "<span style=\"color:blue\">You feel electricity course through you harmlessly!</span>")
+		boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 		return
 
 	user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
-	user.updatehealth()
-	boutput(user, "<span style=\"color:red\"><B>You feel a powerful shock course through your body!</B></span>")
+	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))
 		var/mob/living/L = user
@@ -913,7 +920,7 @@ About the new airlock wires panel:
 	if(user.getStatusDuration("weakened") < shock_damage * 10) user.changeStatus("weakened", 10 * prot)
 	for(var/mob/M in AIviewers(src))
 		if(M == user)	continue
-		M.show_message("<span style=\"color:red\">[user.name] was shocked by the [src.name]!</span>", 3, "<span style=\"color:red\">You hear a heavy electrical crack</span>", 2)
+		M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
 	return 1
 
 /obj/machinery/door/airlock/update_icon(var/toggling = 0)
@@ -970,7 +977,7 @@ About the new airlock wires panel:
 			return
 
 	//Separate interface for the AI.
-	user.machine = src
+	src.add_dialog(user)
 	var/t1 = text("<B>Airlock Control</B><br><br>")
 	t1 += "The access sensor reports the net identifier for this airlock is <i>[net_id]</i><br><br>"
 
@@ -1182,7 +1189,7 @@ About the new airlock wires panel:
 		return
 
 	if (src.p_open)
-		user.machine = src
+		src.add_dialog(user)
 		var/list/t1 = list(text("<B>Access Panel</B><br><br>"))
 		t1 += "An identifier is engraved under the airlock's card sensors: <i>[net_id]</i><br><br>"
 
@@ -1221,6 +1228,10 @@ About the new airlock wires panel:
 		onclose(user, "airlock")
 
 		interact_particle(user,src)
+	//clicking with no access, door closed, and help intent, and panel closed to knock
+	else if (!src.allowed(user) && (user.a_intent == INTENT_HELP) && src.density && src.requiresID())
+		knockOnDoor(user)
+		return //Opening the door just because knocks are on cooldown is rude!
 	else
 		..(user)
 	return
@@ -1232,15 +1243,14 @@ About the new airlock wires panel:
 		return
 	if (href_list["close"])
 		usr.Browse(null, "window=airlock")
-		if (usr.machine==src)
-			usr.machine = null
-			return
+		src.remove_dialog(usr)
+		return
 	if (!isAIeye(usr))
 		if (!isrobot(usr) && !ishivebot(usr))
 			if (!src.p_open)
 				return
 		if ((in_range(src, usr) && istype(src.loc, /turf)))
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["wires"])
 				var/t1 = text2num(href_list["wires"])
 				if (!usr.find_tool_in_hand(TOOL_SNIPPING))
@@ -1430,12 +1440,12 @@ About the new airlock wires panel:
 	src.add_fingerprint(user)
 	if (istype(C, /obj/item/device/t_scanner) || (istype(C, /obj/item/device/pda2) && istype(C:module, /obj/item/device/pda_module/tray)))
 		if(src.isElectrified())
-			boutput(usr, "<span style=\"color:red\">[bicon(C)] <b>WARNING</b>: Abnormal electrical response received from access panel.</span>")
+			boutput(usr, "<span class='alert'>[bicon(C)] <b>WARNING</b>: Abnormal electrical response received from access panel.</span>")
 		else
 			if(status & NOPOWER)
-				boutput(usr, "<span style=\"color:red\">[bicon(C)] No electrical response received from access panel.</span>")
+				boutput(usr, "<span class='alert'>[bicon(C)] No electrical response received from access panel.</span>")
 			else
-				boutput(usr, "<span style=\"color:blue\">[bicon(C)] Regular electrical response received from access panel.</span>")
+				boutput(usr, "<span class='notice'>[bicon(C)] Regular electrical response received from access panel.</span>")
 		return
 
 	if (!issilicon(usr))
@@ -1447,9 +1457,8 @@ About the new airlock wires panel:
 		..()
 		return
 
-	if ((istype(C, /obj/item/weldingtool) && !( src.operating ) && src.density))
-		var/obj/item/weldingtool/W = C
-		if(!W.try_weld(user, 1, burn_eyes = 1))
+	if ((isweldingtool(C) && !( src.operating ) && src.density))
+		if(!C:try_weld(user, 1, burn_eyes = 1))
 			return
 		if (!src.welded)
 			src.welded = 1
@@ -1461,16 +1470,16 @@ About the new airlock wires panel:
 
 		if (src.health < src.health_max)
 			src.heal_damage()
-			boutput(usr, "<span style=\"color:blue\">Your repair the damage to [src].</span>")
+			boutput(usr, "<span class='notice'>Your repair the damage to [src].</span>")
 
 		src.update_icon()
 		return
 	else if (isscrewingtool(C))
 		if (src.hardened == 1)
-			boutput(usr, "<span style=\"color:red\">Your tool can't pierce this airlock! Huh.</span>")
+			boutput(usr, "<span class='alert'>Your tool can't pierce this airlock! Huh.</span>")
 			return
 		if (!src.has_panel)
-			boutput(usr, "<span style=\"color:red\">[src] does not have a panel for you to unscrew!</span>")
+			boutput(usr, "<span class='alert'>[src] does not have a panel for you to unscrew!</span>")
 			return
 		src.p_open = !(src.p_open)
 		src.update_icon()
@@ -1523,13 +1532,13 @@ About the new airlock wires panel:
 					src.RL_SetOpacity(1)
 			src.operating = 0
 	else if (src.welded)
-		boutput(usr, "<span style=\"color:red\">You try to pry [src]  open, but it won't budge! The sides of \the [src] seem to be welded.</span>")
+		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The sides of \the [src] seem to be welded.</span>")
 
 	else if (src.locked)
-		boutput(usr, "<span style=\"color:red\">You try to pry [src]  open, but it won't budge! The bolts of \the [src] must be disabled first.</span>")
+		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The bolts of \the [src] must be disabled first.</span>")
 
 	else if (src.arePowerSystemsOn())
-		boutput(usr, "<span style=\"color:red\">You try to pry [src]  open, but it won't budge! The power of \the [src] must be disabled first.</span>")
+		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The power of \the [src] must be disabled first.</span>")
 
 	playsound(src, 'sound/machines/airlock_pry.ogg', 50, 1)
 
@@ -1547,7 +1556,7 @@ About the new airlock wires panel:
 		playsound(src.loc, 'sound/vox/door.ogg', 25, 1)
 	else
 		playsound(src.loc, src.sound_airlock, 25, 1)
-	src.current_user = usr
+
 	if (src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 		src.closeOther.close(1)
 
@@ -1790,6 +1799,7 @@ obj/machinery/door/airlock
 			radio_connection = radio_controller.add_object(src, "[frequency]")
 
 	initialize()
+		..()
 		if(frequency)
 			set_frequency(frequency)
 

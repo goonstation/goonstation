@@ -15,11 +15,11 @@
 			return
 
 		if(src.uses < 1)
-			boutput(user, "<span style=\"color:red\">The injector is expended and has no more uses.</span>")
+			boutput(user, "<span class='alert'>The injector is expended and has no more uses.</span>")
 			return
 
 		if(M == user)
-			user.visible_message("<span style=\"color:red\"><b>[user.name] injects [himself_or_herself(user)] with [src]!</b></span>")
+			user.visible_message("<span class='alert'><b>[user.name] injects [himself_or_herself(user)] with [src]!</b></span>")
 			src.injected(user,user)
 		else
 			actions.start(new/datum/action/bar/icon/genetics_injector(M,src), user)
@@ -47,7 +47,7 @@
 			if (..())
 				return
 			if (ishuman(target))
-				boutput(target, "<span style=\"color:red\">Your body changes! You feel completely different!</span>")
+				boutput(target, "<span class='alert'>Your body changes! You feel completely different!</span>")
 				randomize_look(target)
 				src.uses--
 				src.update_appearance()
@@ -129,11 +129,11 @@
 		if(ownerMob.r_hand != injector && ownerMob.l_hand != injector)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		owner.visible_message("<span style=\"color:red\"><b>[owner.name] begins to inject [target.name] with [injector]!</b></span>")
+		owner.visible_message("<span class='alert'><b>[owner.name] begins to inject [target.name] with [injector]!</b></span>")
 
 	onEnd()
 		..()
-		owner.visible_message("<span style=\"color:red\"><b>[owner.name] injects [target.name] with [injector].</b></span>")
+		owner.visible_message("<span class='alert'><b>[owner.name] injects [target.name] with [injector].</b></span>")
 		injector.injected(owner,target)
 
 // Traitor item
@@ -158,11 +158,11 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/genetics_injector/dna_injector/))
 			if (payload)
-				boutput(user, "<span style=\"color:red\">The injector is already loaded.</span>")
+				boutput(user, "<span class='alert'>The injector is already loaded.</span>")
 				return
 			var/obj/item/genetics_injector/dna_injector/DI = W
 			if (!istype(DI.BE) || DI.uses < 1)
-				boutput(user, "<span style=\"color:red\">The injector is rejecting [DI]. It mustn't be usable.</span>")
+				boutput(user, "<span class='alert'>The injector is rejecting [DI]. It mustn't be usable.</span>")
 				return
 			user.drop_item()
 			DI.set_loc(src)
@@ -179,11 +179,11 @@
 		if (!iscarbon(M))
 			return
 		if (payload)
-			boutput(user, "<span style=\"color:red\">You stab [M], injecting them.</span>")
+			boutput(user, "<span class='alert'>You stab [M], injecting them.</span>")
 			logTheThing("combat", user, M, "stabs %target% with the speed injector (<b>Payload:</b> [payload.name]).")
 			payload.injected(user,M)
 			qdel(payload)
 			payload = null
 		else
-			boutput(user, "<span style=\"color:red\">You stab [M], but nothing happens.</span>")
+			boutput(user, "<span class='alert'>You stab [M], but nothing happens.</span>")
 		return

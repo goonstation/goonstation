@@ -113,3 +113,27 @@
 		blacklight
 			name = "blacklight light tubes"
 			spawn_contents = list(/obj/item/light/tube/blacklight = 7)
+
+/obj/item/storage/box/glowstickbox
+	name = "emergency glowsticks"
+	icon = 'icons/obj/items/storage.dmi'
+	icon_state = "glowstickbox"
+	spawn_contents = list(/obj/item/device/light/glowstick = 7)
+
+	assorted
+		name = "assorted glowsticks"
+		spawn_contents = list()
+		make_my_stuff()
+			..()
+			var/glowstick
+			for (var/i=7,i>0,i--)
+				glowstick = pick(/obj/item/device/light/glowstick,
+				/obj/item/device/light/glowstick/red,
+				/obj/item/device/light/glowstick/blue,
+				/obj/item/device/light/glowstick/cyan,
+				/obj/item/device/light/glowstick/orange,
+				/obj/item/device/light/glowstick/yellow,
+				/obj/item/device/light/glowstick/pink,
+				/obj/item/device/light/glowstick/purple)
+				new glowstick(src)
+

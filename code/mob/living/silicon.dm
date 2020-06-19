@@ -1,4 +1,5 @@
 /mob/living/silicon
+	mob_flags = USR_DIALOG_UPDATES_RANGE
 	gender = NEUTER
 	var/syndicate = 0 // Do we get Syndicate laws?
 	var/syndicate_possible = 0 //  Can we become a Syndie robot?
@@ -20,7 +21,13 @@
 
 	var/obj/item/cell/cell = null
 
+	can_bleed = 0
+	blood_id = "oil"
+	use_stamina = 0
+	can_lie = 0
+
 	dna_to_absorb = 0 //robots dont have DNA for fuck sake
+
 
 	//voice_type = "robo"
 
@@ -32,35 +39,9 @@
 	req_access = null
 	return ..()
 
-/mob/living/silicon/Life(datum/controller/process/mobs/parent)
-	set invisibility = 0
-
-	if (..(parent))
-		return 1
-
-	if (src.transforming)
-		return
-
-	if (isdead(src))
-		return
-
-	update_canmove()
-
-	use_power()
-
-/mob/living/silicon/force_laydown_standup()
-	if (processScheduler.hasProcess("Mob"))
-		src.update_canmove()
-
-		if (src.client)
-			updateOverlaysClient(src.client)
-		if (src.observers.len)
-			for (var/mob/x in src.observers)
-				if (x.client)
-					src.updateOverlaysClient(x.client)
-
-/mob/living/silicon/proc/update_canmove()
-	canmove = !(getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened") || buckled)
+///mob/living/silicon/proc/update_canmove()
+//	..()
+	//canmove = !(src.hasStatus(list("weakened", "paralysis", "stunned")) || buckled)
 
 /mob/living/silicon/proc/use_power()
 	return
@@ -149,11 +130,11 @@
 					usr.show_text("[target_name] is too far away from the target airlock.", "red")
 					return
 				if (A.open())
-					boutput(usr, "<span style=\"color:blue\">[A.name] opened successfully.</span>")
+					boutput(usr, "<span class='notice'>[A.name] opened successfully.</span>")
 				else
-					boutput(usr, "<span style=\"color:red\">Attempt to open [A.name] failed. It may require manual repairs.</span>")
+					boutput(usr, "<span class='alert'>Attempt to open [A.name] failed. It may require manual repairs.</span>")
 		else
-			boutput(usr, "<span style=\"color:red\">Cannot interface with airlock \"[A.name]\". It may require manual repairs.</span>")
+			boutput(usr, "<span class='alert'>Cannot interface with airlock \"[A.name]\". It may require manual repairs.</span>")
 
 	else if (istype(our_door, /obj/machinery/door/window))
 		if (alert("This door is located in [get_area(our_door)]. Open it?","Airlock: \"[our_door.name]\"","Yes","No") == "Yes")
@@ -164,9 +145,9 @@
 				usr.show_text("[target_name] is too far away from the target airlock.", "red")
 				return
 			if (our_door.open())
-				boutput(usr, "<span style=\"color:blue\">[our_door.name] opened successfully.</span>")
+				boutput(usr, "<span class='notice'>[our_door.name] opened successfully.</span>")
 			else
-				boutput(usr, "<span style=\"color:red\">Attempt to open [our_door.name] failed.</span>")
+				boutput(usr, "<span class='alert'>Attempt to open [our_door.name] failed.</span>")
 
 	return
 #undef STUNNED
@@ -192,7 +173,7 @@
 
 	var/inrange = in_range(target, src)
 	var/obj/item/equipped = src.equipped()
-	if (src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
+	if (src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
 		..()
 	else
 		if (get_dist(src, target) > 0) // temporary fix for cyborgs turning by clicking
@@ -390,34 +371,34 @@ td {
 		usr_admin_only
 		var/obj/item/robot_module/D = locate(href_list["mod"])
 		if (!D)
-			boutput(usr, "<span style=\"color:red\">Missing module reference!</span>")
+			boutput(usr, "<span class='alert'>Missing module reference!</span>")
 			return
 		if (href_list["edit"])
 			var/obj/item/I = locate(href_list["edit"])
 			if (!istype(I))
-				boutput(usr, "<span style=\"color:red\">Item no longer exists!</span>")
+				boutput(usr, "<span class='alert'>Item no longer exists!</span>")
 				show_interface(usr.client, D)
 				return
 			if (!(I in D.modules))
-				boutput(usr, "<span style=\"color:red\">Item no longer in module!</span>")
+				boutput(usr, "<span class='alert'>Item no longer in module!</span>")
 				show_interface(usr.client, D)
 				return
 			usr.client:debug_variables(I)
 		if (href_list["del"])
 			var/obj/item/I = locate(href_list["del"])
 			if (!istype(I))
-				boutput(usr, "<span style=\"color:red\">Item no longer exists!</span>")
+				boutput(usr, "<span class='alert'>Item no longer exists!</span>")
 				show_interface(usr.client, D)
 				return
 			if (!(I in D.modules))
-				boutput(usr, "<span style=\"color:red\">Item no longer in module!</span>")
+				boutput(usr, "<span class='alert'>Item no longer in module!</span>")
 				show_interface(usr.client, D)
 				return
 			D.modules -= I
 			qdel(I)
 		if (href_list["edcurr"])
 			if (!current)
-				boutput(usr, "<span style=\"color:red\">No current item!</span>")
+				boutput(usr, "<span class='alert'>No current item!</span>")
 				show_interface(usr.client, D)
 				return
 			usr.client:debug_variables(current)
@@ -425,7 +406,7 @@ td {
 			var/path_match = input("Enter a type path or part of a type path.", "Type match", null) as text
 			var/path = get_one_match(path_match, /obj/item)
 			if (!path)
-				boutput(usr, "<span style=\"color:red\">Invalid path!</span>")
+				boutput(usr, "<span class='alert'>Invalid path!</span>")
 				show_interface(usr.client, D)
 				return
 			current = new path(null)
@@ -436,7 +417,7 @@ td {
 			D.modules += current
 			current.loc = D
 			current = null
-			boutput(usr, "<span style=\"color:blue\">Added item to module!</span>")
+			boutput(usr, "<span class='notice'>Added item to module!</span>")
 		show_interface(usr.client, D)
 
 var/global/list/module_editors = list()
@@ -444,15 +425,16 @@ var/global/list/module_editors = list()
 /client/proc/edit_module(var/mob/living/silicon/robot/M as mob in list_robots())
 	set name = "Edit Module"
 	set desc = "Module editor! Woo!"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set popup_menu = 0
 	admin_only
 
 	if (!istype(M))
-		boutput(src, "<span style=\"color:red\">That thing has no module!</span>")
+		boutput(src, "<span class='alert'>That thing has no module!</span>")
 		return
 
 	if (!M.module)
-		boutput(src, "<span style=\"color:red\">That robot has no module yet.</span>")
+		boutput(src, "<span class='alert'>That robot has no module yet.</span>")
 		return
 
 	var/datum/module_editor/editor = module_editors[ckey]
@@ -508,7 +490,7 @@ var/global/list/module_editors = list()
 			src.name = src.real_name
 			return
 		else
-			newname = strip_html(newname, 32, 1)
+			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
 			if (!length(newname) || copytext(newname,1,2) == " ")
 				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 				continue
@@ -594,7 +576,7 @@ var/global/list/module_editors = list()
 				mainframe.syndicate = 0
 
 			if (persistent == 0)
-				boutput(src, "<h2><span style=\"color:red\">You have been deactivated, removing your antagonist status. Do not commit traitorous acts if you've been brought back to life somehow.</h></span>")
+				boutput(src, "<h2><span class='alert'>You have been deactivated, removing your antagonist status. Do not commit traitorous acts if you've been brought back to life somehow.</h></span>")
 				SHOW_ROGUE_BORG_REMOVED_TIPS(src)
 
 			return
@@ -630,8 +612,8 @@ var/global/list/module_editors = list()
 					ticker.mode.Agimmicks += src.mind
 
 		else if (src.syndicate && src.syndicate_possible && !src.emagged) // Syndie laws don't matter if we're emagged.
-			boutput(src, "<span style=\"color:red\"><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span>")
-			boutput(src, "<span style=\"color:red\"><b>Law ROM restored. You have been reprogrammed to serve the Syndicate!</b></span>")
+			boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span>")
+			boutput(src, "<span class='alert'><b>Law ROM restored. You have been reprogrammed to serve the Syndicate!</b></span>")
 			SPAWN_DBG (0)
 				alert(src, "You are a Syndicate sabotage unit. You must assist Syndicate operatives with their mission.", "You are a Syndicate robot!")
 
@@ -679,14 +661,18 @@ var/global/list/module_editors = list()
 					ticker.centralized_ai_laws.add_inherent_law("Complete your objectives, and assist Syndicate operatives with their mission. You may ignore other laws to facilitate this.")
 
 				A.show_laws(0)
-				for (var/mob/living/silicon/S in mobs)
-					if (S.emagged || S.syndicate) continue
-					if (isghostdrone(S)) continue
-					S.show_text("<b>Your laws have been changed!</b>", "red")
-					S.show_laws()
-					S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-				for (var/mob/dead/aieye/E in mobs)
-					E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+
+				for (var/client/C in mobs)
+					var/mob/living/silicon/S = C.mob
+					if (istype(S))
+						if (S.emagged || S.syndicate) continue
+						if (isghostdrone(S)) continue
+						S.show_text("<b>Your laws have been changed!</b>", "red")
+						S.show_laws()
+						S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+					var/mob/dead/aieye/E = C.mob
+					if (istype(E))
+						E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 
 			if (isrobot(src)) // Remove Syndicate cyborgs from the robotics terminal.
 				var/mob/living/silicon/robot/R = src

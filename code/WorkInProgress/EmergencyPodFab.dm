@@ -15,7 +15,7 @@
 		if (istype(W, /obj/item/crowbar))
 			boutput(user, "There's no maintenance panel to open.")
 			return
-		if (istype(W, /obj/item/weldingtool))
+		if (isweldingtool(W))
 			boutput(user, "You can't repair this pod.")
 			return
 		..()
@@ -40,14 +40,14 @@
 	proc/fail()
 		failing = 1
 		pilot << sound('sound/machines/engine_alert1.ogg')
-		boutput(pilot, "<span style=\"color:red\">Your emergency pod is falling apart around you!</span>")
+		boutput(pilot, "<span class='alert'>Your emergency pod is falling apart around you!</span>")
 		while(src)
 			step(src,src.dir)
 			if(prob(steps_moved * 0.1))
 				make_cleanable( /obj/decal/cleanable/robot_debris/gib ,src.loc)
 			if(prob(steps_moved * 0.05))
 				if(pilot)
-					boutput(pilot, "<span style=\"color:red\">You are ejected from the emergency pod as it disintegrates!</span>")
+					boutput(pilot, "<span class='alert'>You are ejected from the emergency pod as it disintegrates!</span>")
 					src.eject(pilot)
 				new /obj/effects/explosion (src.loc)
 				playsound(src.loc, "explosion", 50, 1)
@@ -78,21 +78,21 @@
 
 	attack_hand(var/mob/user as mob)
 		if (active)
-			boutput(user, "<span style=\"color:red\">Manufacture in progress, please wait.</span>")
+			boutput(user, "<span class='alert'>Manufacture in progress, please wait.</span>")
 			return
 
 		if (!isSetup) initialAlloc()
 
 		outputLoc = get_turf(src.loc)
 		if(outputLoc.density)
-			boutput(user, "<span style=\"color:red\">There's no room to create another [itemName].</span>")
+			boutput(user, "<span class='alert'>There's no room to create another [itemName].</span>")
 			return
 
 		blocked = 0
 		for (var/obj/block in outputLoc)
 			if (block.density) blocked = 1
 		if(blocked)
-			boutput(user, "<span style=\"color:red\">There's no room to create another [itemName].</span>")
+			boutput(user, "<span class='alert'>There's no room to create another [itemName].</span>")
 			return
 
 		src.visible_message("<b>[user.name]</b> switches on [src].")
@@ -100,21 +100,21 @@
 
 	attack_ai(var/mob/user as mob)
 		if (active)
-			boutput(user, "<span style=\"color:red\">Manufacture in progress, please wait.</span>")
+			boutput(user, "<span class='alert'>Manufacture in progress, please wait.</span>")
 			return
 
 		if (!isSetup) initialAlloc()
 
 		outputLoc = get_turf(src.loc)
 		if(outputLoc.density)
-			boutput(user, "<span style=\"color:red\">There's no room to create another [itemName].</span>")
+			boutput(user, "<span class='alert'>There's no room to create another [itemName].</span>")
 			return
 
 		blocked = 0
 		for (var/obj/block in outputLoc)
 			if (block.density) blocked = 1
 		if(blocked)
-			boutput(user, "<span style=\"color:red\">There's no room to create another [itemName].</span>")
+			boutput(user, "<span class='alert'>There's no room to create another [itemName].</span>")
 			return
 
 		src.visible_message("[src] activates itself.")

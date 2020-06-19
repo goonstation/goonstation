@@ -35,12 +35,16 @@
 	var/tox_dam = 0
 	var/siemens_coefficient = 1
 	var/step_image_state = null // for legs, we leave footprints in this style (located in blood.dmi)
+	var/accepts_normal_human_overlays = 1 //for avoiding istype in update icon
+	var/datum/movement_modifier/movement_modifier // When attached, applies this movement modifier
 
 	New(atom/new_holder)
 		..()
 		if(istype(new_holder, /mob/living))
 			src.holder = new_holder
 		src.limb_data = new src.limb_type(src)
+		if (holder && movement_modifier)
+			APPLY_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 
 	disposing()
 		if (limb_data)
@@ -60,15 +64,18 @@
 		holder = null
 
 		if (bones)
-			bones.disposing()
+			bones.dispose()
 
 		..()
 
 	//just get rid of it. don't put it on the floor, don't show a message
 	proc/delete()
+		if (holder && movement_modifier)
+			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
 			H.limbs.vars[src.slot] = null
+			H.organs[src.slot] = null
 			if(remove_object)
 				if (H.l_hand == remove_object)
 					H.l_hand = null
@@ -90,6 +97,9 @@
 				qdel(src)
 			return
 
+		if (movement_modifier)
+			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
+
 		var/obj/item/object = src
 		if(remove_object)
 			object = remove_object
@@ -105,7 +115,7 @@
 		//object.name = "[src.holder.real_name]'s [initial(object.name)]"
 		object.add_fingerprint(src.holder)
 
-		if(show_message) holder.visible_message("<span style=\"color:red\">[holder.name]'s [object.name] falls off!</span>")
+		if(show_message) holder.visible_message("<span class='alert'>[holder.name]'s [object.name] falls off!</span>")
 
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
@@ -138,6 +148,9 @@
 				qdel(src)
 			return
 
+		if (movement_modifier)
+			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
+
 		if (user)
 			logTheThing("admin", user, src.holder, "severed %target%'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
 
@@ -158,7 +171,7 @@
 		//object.name = "[src.holder.real_name]'s [initial(object.name)]" //Luis Smith's Dr. Kay's Luis Smith's Sailor Dave's Left Arm
 		object.add_fingerprint(src.holder)
 
-		holder.visible_message("<span style=\"color:red\">[holder.name]'s [object.name] flies off in a [src.streak_descriptor] arc!</span>")
+		holder.visible_message("<span class='alert'>[holder.name]'s [object.name] flies off in a [src.streak_descriptor] arc!</span>")
 
 		switch(direction)
 			if(NORTH)
@@ -206,8 +219,26 @@
 
 	//for humans
 	attach(var/mob/living/carbon/human/attachee,var/mob/attacher,var/both_legs = 0)
-		if(!both_legs) attachee.limbs.vars[src.slot] = src
+		if(!src.easy_attach)
+			if(!surgeryCheck(attachee, attacher))
+				return
+
+		if(!both_legs)
+			if(attacher.zone_sel.selecting != slot || !ishuman(attachee))
+				return ..()
+
+			if(attachee.limbs.vars[src.slot])
+				boutput(attacher, "<span class='alert'>[attachee.name] already has one of those!</span>")
+				return
+
+			attachee.limbs.vars[src.slot] = src
 		else
+			if (!(attacher.zone_sel.selecting in list("l_leg","r_leg")))
+				return ..()
+			else if(attachee.limbs.vars["l_leg"] || attachee.limbs.vars["r_leg"])
+				boutput(attacher, "<span class='alert'>[attachee.name] still has one leg!</span>")
+				return
+
 			attachee.limbs.l_leg = src
 			attachee.limbs.r_leg = src
 		src.holder = attachee
@@ -217,27 +248,30 @@
 		src.set_loc(attachee)
 		src.remove_stage = 2
 
+		if (movement_modifier)
+			APPLY_MOVEMENT_MODIFIER(src.holder, movement_modifier, src.type)
+
 		for(var/mob/O in AIviewers(attachee, null))
 			if(O == (attacher || attachee))
 				continue
 			if(attacher == attachee)
-				O.show_message("<span style=\"color:red\">[attacher] attaches a [src] to \his own stump[both_legs? "s" : ""]!</span>", 1)
+				O.show_message("<span class='alert'>[attacher] attaches a [src] to \his own stump[both_legs? "s" : ""]!</span>", 1)
 			else
-				O.show_message("<span style=\"color:red\">[attachee] has a [src] attached to \his stump[both_legs? "s" : ""] by [attacher].</span>", 1)
+				O.show_message("<span class='alert'>[attachee] has a [src] attached to \his stump[both_legs? "s" : ""] by [attacher].</span>", 1)
 
 		if (src.easy_attach) //No need to make it drop off later if it attaches instantly.
 			if(attachee != attacher)
-				boutput(attachee, "<span style=\"color:red\">[attacher] attaches a [src] to your stump[both_legs? "s" : ""]. It fuses instantly with the muscles and tendons!</span>")
-				boutput(attacher, "<span style=\"color:red\">You attach a [src] to [attachee]'s stump[both_legs? "s" : ""]. It fuses instantly with the muscle and tendons!</span>")
+				boutput(attachee, "<span class='alert'>[attacher] attaches a [src] to your stump[both_legs? "s" : ""]. It fuses instantly with the muscles and tendons!</span>")
+				boutput(attacher, "<span class='alert'>You attach a [src] to [attachee]'s stump[both_legs? "s" : ""]. It fuses instantly with the muscle and tendons!</span>")
 			else
-				boutput(attacher, "<span style=\"color:red\">You attach a [src] to your own stump[both_legs? "s" : ""]. It fuses instantly with the muscle and tendons!</span>")
+				boutput(attacher, "<span class='alert'>You attach a [src] to your own stump[both_legs? "s" : ""]. It fuses instantly with the muscle and tendons!</span>")
 			src.remove_stage = 0
 		else
 			if(attachee != attacher)
-				boutput(attachee, "<span style=\"color:red\">[attacher] attaches a [src] to your stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
-				boutput(attacher, "<span style=\"color:red\">You attach a [src] to [attachee]'s stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
+				boutput(attachee, "<span class='alert'>[attacher] attaches a [src] to your stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
+				boutput(attacher, "<span class='alert'>You attach a [src] to [attachee]'s stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
 			else
-				boutput(attacher, "<span style=\"color:red\">You attach a [src] to your own stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
+				boutput(attacher, "<span class='alert'>You attach a [src] to your own stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
 
 			SPAWN_DBG(rand(150,200))
 				if(remove_stage == 2) src.remove()

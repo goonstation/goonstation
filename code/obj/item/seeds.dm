@@ -2,7 +2,7 @@
 /obj/item/seed/
 	name = "plant seed"
 	desc = "Plant this in soil to grow something."
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "seeds"
 	var/seedcolor = "#000000"
 	w_class = 1.0
@@ -90,7 +90,7 @@
 		// it to color in the seed packet so you can recognise the packets at a glance.
 		if (!colorRef) return
 		if (!src.artifact)
-			var/icon/I = new /icon('icons/obj/hydroponics/hydromisc.dmi',"seeds-ovl")
+			var/icon/I = new /icon('icons/obj/hydroponics/items_hydroponics.dmi',"seeds-ovl")
 			I.Blend(colorRef, ICON_ADD)
 			src.overlays += I
 
@@ -126,7 +126,7 @@
 /obj/item/seed/grass/
 	name = "grass seed"
 	seedcolor = "#CCFF99"
-	auxillary_datum = /datum/plant/grass
+	auxillary_datum = /datum/plant/herb/grass
 
 /obj/item/seed/maneater/
 	name = "strange seed"
@@ -135,7 +135,7 @@
 /obj/item/seed/creeper/
 	name = "creeper seed"
 	seedcolor = "#CC00FF"
-	auxillary_datum = /datum/plant/creeper
+	auxillary_datum = /datum/plant/weed/creeper
 
 /obj/item/seed/crystal/
 	name = "crystal seed"
@@ -145,7 +145,7 @@
 /obj/item/seed/cannabis/
 	name = "cannabis seed"
 	seedcolor = "#00FF00"
-	auxillary_datum = /datum/plant/cannabis
+	auxillary_datum = /datum/plant/herb/cannabis
 
 // weird alien plants
 

@@ -13,9 +13,9 @@
 			return
 		var/protectuser = 1
 		if (!holder.owner.wizard_spellpower())
-			boutput(holder.owner, "<span style=\"color:red\">Without your staff to focus your spell, you might be affected!</span>")
+			boutput(holder.owner, "<span class='alert'>Without your staff to focus your spell, you might be affected!</span>")
 			protectuser = 0
-		holder.owner.visible_message("<span style=\"color:red\"><b>[holder.owner] begins to cast a spell!</b></span>")
+		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell!</b></span>")
 		playsound(holder.owner.loc, "sound/effects/elec_bzzz.ogg", 25, 1, -1)
 		if (do_mob(holder.owner, holder.owner, 20))
 			holder.owner.say("ZA WARUDO, TOKI WO TOMARE!")

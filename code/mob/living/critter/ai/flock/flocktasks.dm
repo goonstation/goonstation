@@ -200,9 +200,9 @@
 		F.active_hand = 2 // nanite spray
 		sleep(0.1 SECONDS)
 		F.a_intent = INTENT_HELP
-		F.hud.update_intent()
+		F.hud?.update_intent()
 		sleep(0.1 SECONDS)
-		F.hud.update_hands() // for observers
+		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/repair/get_targets()
 	var/list/targets = list()

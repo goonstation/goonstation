@@ -27,16 +27,16 @@
 		..()
 
 		if(!holder.owner.wizard_spellpower())
-			boutput(holder.owner, "<span style=\"color:red\">Your spell is weak without a staff to focus it!</span>")
+			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 
 		for (var/mob/living/M as mob in oview())
 			if (isdead(M)) continue
 			if (ishuman(M))
 				if (M.traitHolder.hasTrait("training_chaplain"))
-					boutput(holder.owner, "<span style=\"color:red\">[M] has divine protection! The spell refuses to target \him!</span>")
+					boutput(holder.owner, "<span class='alert'>[M] has divine protection! The spell refuses to target \him!</span>")
 					continue
 			if (iswizard(M))
-				boutput(holder.owner, "<span style=\"color:red\">[M] has arcane protection! The spell refuses to target \him!</span>")
+				boutput(holder.owner, "<span class='alert'>[M] has arcane protection! The spell refuses to target \him!</span>")
 				continue
 
 			playsound(holder.owner.loc, "sound/effects/mag_magmislaunch.ogg", 25, 1, -1)
@@ -68,8 +68,8 @@
 					if (get_dist(A,M) == 0)
 						M.changeStatus("weakened", (5 - (min(mob_count2,4)))*10)
 						M.force_laydown_standup()
-						boutput(M, text("<span style=\"color:blue\">The magic missile SLAMS into you!</span>"))
-						M.visible_message("<span style=\"color:red\">[M] is struck by a magic missile!</span>")
+						boutput(M, text("<span class='notice'>The magic missile SLAMS into you!</span>"))
+						M.visible_message("<span class='alert'>[M] is struck by a magic missile!</span>")
 						playsound(M.loc, "sound/effects/mag_magmisimpact.ogg", 25, 1, -1)
 						M.TakeDamage("chest", 0, 10, 0, DAMAGE_BURN)
 						random_brute_damage(M, 5)

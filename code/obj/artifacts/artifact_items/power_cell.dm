@@ -24,13 +24,12 @@
 			..()
 
 	examine()
-		set src in oview()
-		boutput(usr, "You have no idea what this thing is!")
+		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
 		if (istext(A.examine_hint))
-			boutput(usr, "[A.examine_hint]")
+			. += A.examine_hint
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"

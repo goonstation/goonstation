@@ -227,10 +227,10 @@
 	if ((istype(tmploc.loc, /area) && tmploc.loc:teleport_blocked) || m_blocked)
 		if(use_teleblocks)
 			if(isliving(M))
-				boutput(M, "<span style=\"color:red\"><b>Teleportation failed!</b></span>")
+				boutput(M, "<span class='alert'><b>Teleportation failed!</b></span>")
 			else
 				for(var/mob/thing in M)
-					boutput(thing, "<span style=\"color:red\"><b>Teleportation failed!</b></span>")
+					boutput(thing, "<span class='alert'><b>Teleportation failed!</b></span>")
 			return
 
 	M.set_loc(tmploc)
@@ -254,4 +254,4 @@ proc/splinch(var/mob/M as mob, var/probability)
 			else
 				return H.organHolder.drop_organ(part_splinched)
 
-		// owner.visible_message("<span style=\"color:red\"><b>[M]</b> splinches themselves and their [part_splinched] falls off!</span>")
+		// owner.visible_message("<span class='alert'><b>[M]</b> splinches themselves and their [part_splinched] falls off!</span>")

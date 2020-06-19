@@ -9,7 +9,7 @@
 				holder.cancel_action_binding()
 			else
 				owner.waiting_for_hotkey = 1
-				boutput(usr, "<span style=\"color:blue\">Please press a number to bind this ability to...</span>")
+				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 		else if(params["left"])
 			if (!istype(spell))
 				return

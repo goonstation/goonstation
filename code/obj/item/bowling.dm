@@ -17,12 +17,12 @@
 	throw_speed = 1
 
 	proc/hitWeak(var/mob/hitMob, var/mob/user)
-		hitMob.visible_message("<span style=\"color:red\">[hitMob] is hit by [user]'s [src]!</span>")
+		hitMob.visible_message("<span class='alert'>[hitMob] is hit by [user]'s [src]!</span>")
 
 		src.damage(hitMob, 5, 10, user)
 
 	proc/hitHard(var/mob/hitMob, var/mob/user)
-		hitMob.visible_message("<span style=\"color:red\">[hitMob] is knocked over by [user]'s [src]!</span>")
+		hitMob.visible_message("<span class='alert'>[hitMob] is knocked over by [user]'s [src]!</span>")
 
 		src.damage(hitMob, 10, 15, user)
 
@@ -38,10 +38,10 @@
 			hitMob.stuttering = max(damMax-5, hitMob.stuttering)
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 
-	throw_at(atom/target, range, speed)
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
 		throw_unlimited = 1
 		src.icon_state = "bowling_ball_spin"
-		..(target, range, speed)
+		..()
 
 	attack_hand(mob/user as mob)
 		..()

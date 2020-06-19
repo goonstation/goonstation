@@ -272,10 +272,10 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 	var/list/miningZ = list()
 	var/startTime = world.timeofday
 	if(world.maxz < AST_ZLEVEL)
-		boutput(world, "<span style=\"color:red\">Skipping Mining Generation!</span>")
+		boutput(world, "<span class='alert'>Skipping Mining Generation!</span>")
 		return
 	else
-		boutput(world, "<span style=\"color:red\">Generating Mining Level ...</span>")
+		boutput(world, "<span class='alert'>Generating Mining Level ...</span>")
 
 	for(var/turf/T)
 		if(T.z == AST_ZLEVEL)
@@ -312,10 +312,9 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 	miningZ = D.generate(miningZ)
 
-	boutput(world, "<span style=\"color:red\">Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
+	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
 
-	if (map_currently_underwater)
-		hotspot_controller.generate_map()
+	hotspot_controller.generate_map()
 
 /proc/pickPrefab()
 	var/list/eligible = list()
@@ -483,13 +482,27 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabPath = "assets/maps/prefabs/prefab_janitor.dmm"
 		prefabSizeX = 16
 		prefabSizeY = 15
-	
+
 	pie_ship // Urs's ship originally built for the pie eating contest event
 		maxNum = 1
 		probability = 20
 		prefabPath = "assets/maps/prefabs/prefab_pie_ship.dmm"
 		prefabSizeX = 16
 		prefabSizeY = 21
+
+	bee_sanctuary_space // Sov's Bee Sanctuary (Space Variant)
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_beesanctuary.dmm"
+		prefabSizeX = 41
+		prefabSizeY = 24
+
+	bee_sanctuary_space // MarkNstein's Sequestered Cloner
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_sequestered_cloner.dmm"
+		prefabSizeX = 20
+		prefabSizeY = 15
 
 	//UNDERWATER AREAS FOR OSHAN
 
@@ -664,6 +677,22 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabPath = "assets/maps/prefabs/prefab_water_sketchy.dmm"
 		prefabSizeX = 21
 		prefabSizeY = 15
+
+	water_treatment // Sov's water treatment facility
+		underwater = 1
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_water_watertreatment.dmm"
+		prefabSizeX = 33
+		prefabSizeY = 14
+
+	bee_sanctuary //Sov's Bee Sanctuary
+		underwater = 1
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_water_beesanctuary.dmm"
+		prefabSizeX = 34
+		prefabSizeY = 19
 
 #if defined(MAP_OVERRIDE_OSHAN)
 	sea_miner

@@ -25,17 +25,17 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (iswrenchingtool(W) && isturf(loc) && !istype(loc, /turf/space))
 			if(secured)
-				boutput(usr, "<span style=\"color:red\">You unsecure the generator.</span>")
+				boutput(usr, "<span class='alert'>You unsecure the generator.</span>")
 				secured = 0
 				playsound(src, "sound/items/Ratchet.ogg", 60, 1)
 			else
-				boutput(usr, "<span style=\"color:red\">You secure the generator.</span>")
+				boutput(usr, "<span class='alert'>You secure the generator.</span>")
 				secured = 1
 				playsound(src, "sound/items/Ratchet.ogg", 60, 1)
 
 	attack_hand(mob/user as mob)
 		if(secured)
-			boutput(user, "<span style=\"color:red\">Its secured to the ground.</span>")
+			boutput(user, "<span class='alert'>Its secured to the ground.</span>")
 			return
 		else
 			return ..()
@@ -44,10 +44,10 @@
 		set src in view(1)
 		if (!isliving(usr)) return
 		if (!isturf(loc))
-			boutput(usr, "<span style=\"color:red\">You must place the generator on the ground to use it.</span>")
+			boutput(usr, "<span class='alert'>You must place the generator on the ground to use it.</span>")
 			return
 		range = min(range+1,3)
-		boutput(usr, "<span style=\"color:blue\">Range set to : [range]</span>")
+		boutput(usr, "<span class='notice'>Range set to : [range]</span>")
 		if(active)
 			turn_off()
 			turn_on()
@@ -56,10 +56,10 @@
 		set src in view(1)
 		if (!isliving(usr)) return
 		if (!isturf(loc))
-			boutput(usr, "<span style=\"color:red\">You must place the generator on the ground to use it.</span>")
+			boutput(usr, "<span class='alert'>You must place the generator on the ground to use it.</span>")
 			return
 		range = max(range-1,1)
-		boutput(usr, "<span style=\"color:blue\">Range set to : [range]</span>")
+		boutput(usr, "<span class='notice'>Range set to : [range]</span>")
 		if(active)
 			turn_off()
 			turn_on()
@@ -127,15 +127,15 @@
 		set src in view(1)
 		if (!isliving(usr)) return
 		if (!isturf(loc))
-			boutput(usr, "<span style=\"color:red\">You must place the generator on the ground to use it.</span>")
+			boutput(usr, "<span class='alert'>You must place the generator on the ground to use it.</span>")
 			return
 
 		if (!active)
 			turn_on()
-			boutput(usr, "<span style=\"color:blue\">You activate the generator.</span>")
+			boutput(usr, "<span class='notice'>You activate the generator.</span>")
 		else
 			turn_off()
-			boutput(usr, "<span style=\"color:blue\">You deactivate the generator.</span>")
+			boutput(usr, "<span class='notice'>You deactivate the generator.</span>")
 
 /obj/shieldwall
 	name = "shield"

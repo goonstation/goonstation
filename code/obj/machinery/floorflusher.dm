@@ -175,12 +175,12 @@
 	relaymove(mob/user as mob)
 		if(user.stat || src.flushing)
 			return
-		boutput(user, "<span style=\"color:red\">It's too deep. You can't climb out.</span>")
+		boutput(user, "<span class='alert'>It's too deep. You can't climb out.</span>")
 		return
 
 	// ai cannot interface.
 	attack_ai(mob/user as mob)
-		boutput(user, "<span style=\"color:red\">You cannot interface with this device.</span>")
+		boutput(user, "<span class='alert'>You cannot interface with this device.</span>")
 
 	// human interact with machine
 	attack_hand(mob/user as mob)
@@ -188,7 +188,7 @@
 		if (open != 1)
 			return
 		if(status & BROKEN)
-			user.machine = null
+			src.remove_dialog(user)
 			return
 
 		//fall in hilariously

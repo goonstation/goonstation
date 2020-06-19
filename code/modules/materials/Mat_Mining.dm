@@ -76,11 +76,10 @@
 		return
 
 	buildTooltipContent()
-		var/Tcontent = ..()
-		Tcontent += "<br>"
-		Tcontent += "<div><img src='[resource("images/tooltips/mining.png")]' alt='' class='icon' /><span>Mining Power: [power]</span></div>"
-
-		return Tcontent
+		. = ..()
+		. += "<br>"
+		. += "<div><img src='[resource("images/tooltips/mining.png")]' alt='' class='icon' /><span>Mining Power: [power]</span></div>"
+		lastTooltipContent = .
 
 /obj/item/mining_tools/pick
 	name = "Mining Pick"

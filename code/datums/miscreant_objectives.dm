@@ -16,7 +16,7 @@
 		if (crewMind.current && (isdead(crewMind.current) || isobserver(crewMind.current) || issilicon(crewMind.current) || isintangible(crewMind.current)))
 			return
 
-		var/list/objectiveTypes = childrentypesof(/datum/objective/miscreant)
+		var/list/objectiveTypes = concrete_typesof(/datum/objective/miscreant)
 		if (!objectiveTypes.len)
 			return
 
@@ -43,6 +43,7 @@
 		return
 #endif
 
+ABSTRACT_TYPE(/datum/objective/miscreant)
 /datum/objective/miscreant
 
 	whiny

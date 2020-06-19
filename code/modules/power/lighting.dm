@@ -59,14 +59,14 @@
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
 
-	/obj/machinery/light_area_manager/ex_act(severity)
-		return
+/obj/machinery/light_area_manager/ex_act(severity)
+	return
 
-	/obj/machinery/light_area_manager/process()
-		if(my_area && my_area.power_light && my_area.lightswitch)
-			..()
-			var/thepower = src.brightness_placeholder * LIGHTING_POWER_FACTOR
-			use_power(thepower * lights.len, LIGHT)
+/obj/machinery/light_area_manager/process()
+	if(my_area && my_area.power_light && my_area.lightswitch)
+		..()
+		var/thepower = src.brightness_placeholder * LIGHTING_POWER_FACTOR
+		use_power(thepower * lights.len, LIGHT)
 
 
 // the standard tube light fixture
@@ -79,18 +79,19 @@
 	icon_state = "tube1"
 	desc = "A lighting fixture."
 	anchored = 1
-	layer = EFFECTS_LAYER_UNDER_1  					// They were appearing under mobs which is a little weird - Ostaf
-	var/on = 0					// 1 if on, 0 if off
-	var/brightness = 1.6			// luminosity when on, also used in power calculation
-	var/light_status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
+	layer = EFFECTS_LAYER_UNDER_1
+	plane = PLANE_NOSHADOW_ABOVE
+	text = ""
+	var/on = 0 // 1 if on, 0 if off
+	var/brightness = 1.6 // luminosity when on, also used in power calculation
+	var/light_status = LIGHT_OK	// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 
-	var/obj/item/light/light_type = /obj/item/light/tube		// the type of the inserted light item
-	var/allowed_type = /obj/item/light/tube					// the type of allowed light items
+	var/obj/item/light/light_type = /obj/item/light/tube // the type of the inserted light item
+	var/allowed_type = /obj/item/light/tube // the type of allowed light items
 	var/light_name = "light tube"				// the name of the inserted light item
 
 	var/fitting = "tube"
-	var/switchcount = 0			// count of number of times switched on/off
-								// this is used to calc the probability the light burns out
+	var/breakprob = 0	// probability the light burns out
 
 	var/wallmounted = 1
 	var/nostick = 1 //If set to true, overrides the autopositioning.
@@ -342,10 +343,10 @@
 			src.anchored = !src.anchored
 
 			if (!src.anchored)
-				boutput(user, "<span style=\"color:red\">[src] can now be moved.</span>")
+				boutput(user, "<span class='alert'>[src] can now be moved.</span>")
 				src.on = 0
 			else
-				boutput(user, "<span style=\"color:red\">[src] is now secured.</span>")
+				boutput(user, "<span class='alert'>[src] is now secured.</span>")
 				src.on = 1
 
 			update()
@@ -360,7 +361,7 @@
 /obj/machinery/light/worn
 	desc = "A rather old-looking lighting fixture."
 	brightness = 1
-	switchcount = 50 //break probability is ((50*50*0.01)/2) = 12.5% Azungar edit: ((50*50*0.01)/4) = 6.25%
+	breakprob = 6.25
 
 // the desk lamp
 /obj/machinery/light/lamp
@@ -479,7 +480,6 @@
 
 	// if the state changed, inc the switching counter
 	//if(src.light.enabled != on)
-	switchcount++
 
 	if (on)
 		light.enable()
@@ -494,7 +494,7 @@
 					message_admins("[key_name(rigger)]'s rigged bulb exploded in [src.loc.loc], [showCoords(src.x, src.y, src.z)].")
 					logTheThing("combat", rigger, null, "'s rigged bulb exploded in [rigger.loc.loc] ([showCoords(src.x, src.y, src.z)])")
 				explode()
-			if(on && prob( min(25, (switchcount*switchcount*0.01)/4) ) )  // reduced max probability from 60 to 25, cut sensitivity to switchcount in half. Azungar was here and switched it from divided by 2 to 4 as it was still too much.
+			if(on && prob(breakprob))
 				light_status = LIGHT_BURNED
 				icon_state = "[base_state]-burned"
 				on = 0
@@ -502,7 +502,7 @@
 				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 				s.set_up(3, 1, src)
 				s.start()
-				logTheThing("station", null, null, "Light '[name]' burnt out (switchcount: [switchcount]) at ([showCoords(src.x, src.y, src.z)])")
+				logTheThing("station", null, null, "Light '[name]' burnt out (breakprob: [breakprob]) at ([showCoords(src.x, src.y, src.z)])")
 
 
 // attempt to set the light's on/off status
@@ -512,19 +512,21 @@
 	update()
 
 // examine verb
-/obj/machinery/light/examine()
-	set src in oview(1)
-	set category = "Local"
-	if(usr && !usr.stat)
-		switch(light_status)
-			if(LIGHT_OK)
-				boutput(usr, "[desc] It is turned [on? "on" : "off"].")
-			if(LIGHT_EMPTY)
-				boutput(usr, "[desc] The [fitting] has been removed.")
-			if(LIGHT_BURNED)
-				boutput(usr, "[desc] The [fitting] is burnt out.")
-			if(LIGHT_BROKEN)
-				boutput(usr, "[desc] The [fitting] has been smashed.")
+/obj/machinery/light/examine(mob/user)
+	. = ..()
+
+	if(!user || user.stat)
+		return
+
+	switch(light_status)
+		if(LIGHT_OK)
+			. += "It is turned [on? "on" : "off"]."
+		if(LIGHT_EMPTY)
+			. += "The [fitting] has been removed."
+		if(LIGHT_BURNED)
+			. += "The [fitting] is burnt out."
+		if(LIGHT_BROKEN)
+			. += "The [fitting] has been smashed."
 
 
 
@@ -569,15 +571,15 @@
 				light_name = L.name
 				light_status = L.light_status
 				boutput(user, "You insert the [L.name].")
-				switchcount = L.switchcount
+				breakprob = L.breakprob
 				rigged = L.rigged
 				rigger = L.rigger
 				light.set_color(L.color_r, L.color_g, L.color_b)
 				user.u_equip(L)
 				qdel(L)
 				user.put_in_hand_or_drop(OL)
-				OL.switchcount = switchcount
-				switchcount = 0
+				OL.breakprob = breakprob
+				breakprob = 0
 				OL.update()
 				on = has_power()
 				update()
@@ -596,7 +598,7 @@
 				light_name = L.name
 				light_status = L.light_status
 				boutput(user, "You insert the [L.name].")
-				switchcount = L.switchcount
+				breakprob = L.breakprob
 				rigged = L.rigged
 				rigger = L.rigger
 				light.set_color(L.color_r, L.color_g, L.color_b)
@@ -622,6 +624,7 @@
 		if(prob(1+W.force * 5))
 
 			boutput(user, "You hit the light, and it smashes!")
+			logTheThing("station", user, null, "smashes a light at [log_loc(src)]")
 			for(var/mob/M in AIviewers(src))
 				if(M == user)
 					continue
@@ -722,7 +725,6 @@
 			boutput(user, "You try to remove the light [fitting], but you burn your hand on it!")
 			H.UpdateDamageIcon()
 			H.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 5)
-			H.updatehealth()
 			return				// if burned, don't remove the light
 
 	// create a light tube/bulb item and put it in the user's hand
@@ -738,9 +740,9 @@
 	L.color_b = src.light.b
 	user.put_in_hand_or_drop(L)
 
-	// light item inherits the switchcount, then zero it
-	L.switchcount = switchcount
-	switchcount = 0
+	// light item inherits the breakprob, then zero it
+	L.breakprob = breakprob
+	breakprob = 0
 
 
 	L.update()
@@ -898,7 +900,7 @@
 	w_class = 2
 	var/light_status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
-	var/switchcount = 0	// number of times switched
+	var/breakprob = 0	// number of times switched
 	m_amt = 60
 	var/rigged = 0		// true if rigged to explode
 	var/mob/rigger = null // mob responsible
@@ -911,8 +913,8 @@
 /obj/item/light/tube
 	name = "light tube"
 	desc = "A replacement light tube."
-	icon_state = "ltube"
-	base_state = "ltube"
+	icon_state = "tube-white"
+	base_state = "tube-white"
 	item_state = "c_tube"
 	g_amt = 200
 	color_r = 0.95
@@ -922,104 +924,136 @@
 	red
 		name = "red light tube"
 		desc = "Fancy."
+		icon_state = "tube-red"
+		base_state = "tube-red"
 		color_r = 0.95
 		color_g = 0.2
 		color_b = 0.2
 	yellow
 		name = "yellow light tube"
 		desc = "Fancy."
+		icon_state = "tube-yellow"
+		base_state = "tube-yellow"
 		color_r = 0.95
 		color_g = 0.95
 		color_b = 0.2
 	green
 		name = "green light tube"
 		desc = "Fancy."
+		icon_state = "tube-green"
+		base_state = "tube-green"
 		color_r = 0.2
 		color_g = 0.95
 		color_b = 0.2
 	cyan
 		name = "cyan light tube"
 		desc = "Fancy."
+		icon_state = "tube-cyan"
+		base_state = "tube-cyan"
 		color_r = 0.2
 		color_g = 0.95
 		color_b = 0.95
 	blue
 		name = "blue light tube"
 		desc = "Fancy."
+		icon_state = "tube-blue"
+		base_state = "tube-blue"
 		color_r = 0.2
 		color_g = 0.2
 		color_b = 0.95
 	purple
 		name = "purple light tube"
 		desc = "Fancy."
+		icon_state = "tube-purple"
+		base_state = "tube-purple"
 		color_r = 0.95
 		color_g = 0.2
 		color_b = 0.95
 	blacklight
 		name = "black light tube"
 		desc = "Fancy."
-		icon_state = "btube" // this isn't working for some reason
-		base_state = "btube"
+		icon_state = "tube-uv"
+		base_state = "tube-uv"
 		color_r = 0.3
 		color_g = 0
 		color_b = 0.9
 
 	warm
 		name = "fluorescent light tube"
+		icon_state = "itube-orange"
+		base_state = "itube-orange"
 		color_r = 1
 		color_g = 0.844
 		color_b = 0.81
 
 		very
 			name = "warm fluorescent light tube"
+			icon_state = "itube-red"
+			base_state = "itube-red"
 			color_r = 1
 			color_g = 0.67
 			color_b = 0.67
 
 	neutral
 		name = "incandescent light tube"
+		icon_state = "itube-white"
+		base_state = "itube-white"
 		color_r = 0.95
 		color_g = 0.98
 		color_b = 0.97
 
 	greenish
 		name = "greenish incandescent light tube"
+		icon_state = "itube-yellow"
+		base_state = "itube-yellow"
 		color_r = 0.87
 		color_g = 0.98
 		color_b = 0.89
 
 	blueish
 		name = "blueish fluorescent light tube"
+		icon_state = "itube-blue"
+		base_state = "itube-blue"
 		color_r = 0.51
 		color_g = 0.66
 		color_b = 0.85
 
 	purpleish
 		name = "purpleish fluorescent light tube"
+		icon_state = "itube-purple"
+		base_state = "itube-purple"
 		color_r = 0.42
 		color_g = 0.20
 		color_b = 0.58
 
 	cool
 		name = "cool incandescent light tube"
+		icon_state = "itube-white"
+		base_state = "itube-white"
 		color_r = 0.88
 		color_g = 0.904
 		color_b = 1
 
 		very
 			name = "very cool incandescent light tube"
+			icon_state = "itube-purple"
+			base_state = "itube-purple"
 			color_r = 0.74
 			color_g = 0.74
 			color_b = 1
 
 	harsh
 		name = "harsh incandescent light tube"
+		icon_state = "itube-white"
+		base_state = "itube-white"
 		color_r = 0.99
 		color_g = 0.899
 		color_b = 0.99
 
 		very
 			name = "very harsh incandescent light tube"
+			icon_state = "itube-pink"
+			base_state = "itube-pink"
 			color_r = 0.99
 			color_g = 0.81
 			color_b = 0.99
@@ -1029,8 +1063,8 @@
 /obj/item/light/bulb
 	name = "light bulb"
 	desc = "A replacement light bulb."
-	icon_state = "lbulb"
-	base_state = "lbulb"
+	icon_state = "bulb-yellow"
+	base_state = "bulb-yellow"
 	item_state = "contvapour"
 	g_amt = 100
 	color_r = 1
@@ -1040,110 +1074,144 @@
 	red
 		name = "red light bulb"
 		desc = "Fancy."
+		icon_state = "bulb-red"
+		base_state = "bulb-red"
 		color_r = 0.95
 		color_g = 0.2
 		color_b = 0.2
 	yellow
 		name = "yellow light bulb"
 		desc = "Fancy."
+		icon_state = "bulb-yellow"
+		base_state = "bulb-yellow"
 		color_r = 0.95
 		color_g = 0.95
 		color_b = 0.2
 	green
 		name = "green light bulb"
 		desc = "Fancy."
+		icon_state = "bulb-green"
+		base_state = "bulb-green"
 		color_r = 0.2
 		color_g = 0.95
 		color_b = 0.2
 	cyan
 		name = "cyan light bulb"
 		desc = "Fancy."
+		icon_state = "bulb-cyan"
+		base_state = "bulb-cyan"
 		color_r = 0.2
 		color_g = 0.95
 		color_b = 0.95
 	blue
 		name = "blue light bulb"
 		desc = "Fancy."
+		icon_state = "bulb-blue"
+		base_state = "bulb-blue"
 		color_r = 0.2
 		color_g = 0.2
 		color_b = 0.95
 	purple
 		name = "purple light bulb"
 		desc = "Fancy."
+		icon_state = "bulb-purple"
+		base_state = "bulb-purple"
 		color_r = 0.95
 		color_g = 0.2
 		color_b = 0.95
 	blacklight
 		name = "black light bulb"
 		desc = "Fancy."
+		icon_state = "bulb-uv"
+		base_state = "bulb-uv"
 		color_r = 0.3
 		color_g = 0
 		color_r = 0.9
 	emergency
 		name = "emergency light bulb"
 		desc = "A frosted red bulb."
-		icon_state = "ebulb"
-		base_state = "ebulb"
+		icon_state = "bulb-emergency"
+		base_state = "bulb-emergency"
 		color_r = 1
 		color_g = 0.2
 		color_b = 0.2
 
 	warm
 		name = "fluorescent light bulb"
+		icon_state = "ibulb-yellow"
+		base_state = "ibulb-yellow"
 		color_r = 1
 		color_g = 0.844
 		color_b = 0.81
 
 		very
 			name = "warm fluorescent light bulb"
+			icon_state = "ibulb-yellow"
+			base_state = "ibulb-yellow"
 			color_r = 1
 			color_g = 0.67
 			color_b = 0.67
 
 	neutral
 		name = "incandescent light bulb"
+		icon_state = "ibulb-white"
+		base_state = "ibulb-white"
 		color_r = 0.95
 		color_g = 0.98
 		color_b = 0.97
 
 	greenish
 		name = "greenish incandescent light bulb"
+		icon_state = "ibulb-green"
+		base_state = "ibulb-green"
 		color_r = 0.87
 		color_g = 0.98
 		color_b = 0.89
 
 	blueish
 		name = "blueish fluorescent light bulb"
+		icon_state = "ibulb-blue"
+		base_state = "ibulb-blue"
 		color_r = 0.51
 		color_g = 0.66
 		color_b = 0.85
 
 	purpleish
 		name = "purpleish fluorescent light bulb"
+		icon_state = "ibulb-purple"
+		base_state = "ibulb-purple"
 		color_r = 0.42
 		color_g = 0.20
 		color_b = 0.58
 
 	cool
 		name = "cool incandescent light bulb"
+		icon_state = "ibulb-white"
+		base_state = "ibulb-white"
 		color_r = 0.88
 		color_g = 0.904
 		color_b = 1
 
 		very
 			name = "very cool incandescent light bulb"
+			icon_state = "ibulb-blue"
+			base_state = "ibulb-blue"
 			color_r = 0.74
 			color_g = 0.74
 			color_b = 1
 
 	harsh
 		name = "harsh incandescent light bulb"
+		icon_state = "ibulb-pink"
+		base_state = "ibulb-pink"
 		color_r = 0.99
 		color_g = 0.899
 		color_b = 0.99
 
 		very
 			name = "very harsh incandescent light bulb"
+			icon_state = "ibulb-pink"
+			base_state = "ibulb-pink"
 			color_r = 0.99
 			color_g = 0.81
 			color_b = 0.99

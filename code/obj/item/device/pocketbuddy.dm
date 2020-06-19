@@ -120,13 +120,13 @@
 /obj/item/device/pocketbuddy/attack_self(mob/user as mob)
   if(!src.on)
     if(src.cell.charge > 0)
-      boutput(user, "<span style=\"color:blue\">You turn the pocketbuddy on!</span>")
+      boutput(user, "<span class='notice'>You turn the pocketbuddy on!</span>")
       turn_on()
     else
-      boutput(user, "<span style=\"color:red\">You try to turn the pocketbuddy on, but nothing happens.</span>")
+      boutput(user, "<span class='alert'>You try to turn the pocketbuddy on, but nothing happens.</span>")
   else
     // apply PETS to BUDDY
-    boutput(user, "<span style=\"color:blue\">You pet the buddy!</span>")
+    boutput(user, "<span class='notice'>You pet the buddy!</span>")
     // src.react_to_pets
 
 

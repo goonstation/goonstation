@@ -34,7 +34,7 @@
 		if (istype(S))
 			S.venom_bite(MT)
 		else // no venom, very sad
-			playsound(get_turf(holder.owner), "sound/weapons/handcuffs.ogg", 50, 1)
+			playsound(get_turf(holder.owner), "sound/weapons/handcuffs.ogg", 50, 1, pitch = 1.6)
 			if (issilicon(MT))
 				var/mob/living/silicon/robot/R = MT
 				R.compborg_take_critter_damage("[pick("l","r")]_[pick("arm","leg")]", rand(2,4))
@@ -43,11 +43,11 @@
 		return 0
 
 // -----------------
-// Spider spaz skill
+// Spider flail skill
 // -----------------
-/datum/targetable/critter/spider_spaz
-	name = "Spaz"
-	desc = "Spaz out on a mob, stunning them and injecting them with your venom. (You do have venom, don't you?)"
+/datum/targetable/critter/spider_flail
+	name = "Flail"
+	desc = "Flail at a mob, stunning them and injecting them with your venom. (You do have venom, don't you?)"
 	cooldown = 300
 	targeted = 1
 	target_anything = 1
@@ -69,31 +69,30 @@
 					target = M
 					break
 			if (!ismob(target))
-				boutput(holder.owner, __red("Nothing to spaz at there."))
+				boutput(holder.owner, __red("Nothing to flail at there."))
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to spaz at."))
+			boutput(holder.owner, __red("That is too far away to flail at."))
 			return 1
 		var/mob/MT = target
 		var/mob/living/critter/spider/S = holder.owner
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] dives on [MT]!</b></span>",\
 		"<span class='combat'><b>You dive on [MT]!</b></span>")
-		playsound(get_turf(holder.owner), "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0)
+		playsound(get_turf(holder.owner), "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0, pitch = 1.6)
 		MT.TakeDamageAccountArmor("All", rand(4,10), 0, 0, DAMAGE_STAB)
 		if (!isdead(MT))
 			MT.emote("scream")
 		disabled = 1
 		SPAWN_DBG(0)
-			var/spaz = rand(10, 15)
+			var/flail = rand(10, 15)
 			holder.owner.canmove = 0
-			while (spaz > 0 && MT && !MT.disposed)
+			while (flail > 0 && MT && !MT.disposed)
 				MT.changeStatus("weakened", 2 SECONDS)
 				MT.canmove = 0
 				if (MT.loc)
 					holder.owner.set_loc(MT.loc)
-				holder.owner.changeStatus("stunned", 1 SECOND)
 				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
 					break
 				if (istype(S))
@@ -112,7 +111,7 @@
 				holder.owner.pixel_x = rand(-2,2) * 2
 				holder.owner.pixel_y = rand(-2,2) * 2
 				sleep(0.4 SECONDS)
-				spaz--
+				flail--
 			if (MT)
 				MT.canmove = 1
 			doCooldown()
@@ -159,7 +158,7 @@
 		var/mob/living/critter/spider/S = holder.owner
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] starts draining the fluids out of [H]!</b></span>",\
 		"<span class='combat'><b>You start draining the fluids out of [H]!</b></span>")
-		playsound(get_turf(holder.owner), "sound/misc/pourdrink.ogg", 50, 0)
+		playsound(get_turf(holder.owner), "sound/misc/pourdrink.ogg", 50, 0, pitch = 0.7)
 		disabled = 1
 		SPAWN_DBG(0)
 			var/drain = rand(65, 75)
@@ -168,7 +167,6 @@
 			while (drain > 0 && H && H.stat && !H.disposed)
 				if (H.loc && holder.owner.loc != H.loc)
 					break
-				holder.owner.changeStatus("stunned", 1 SECOND)
 				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
 					break
 				holder.owner.HealDamage("All", 1, 1)
@@ -304,9 +302,9 @@
 			MT.emote("scream")
 		disabled = 1
 		SPAWN_DBG(0)
-			var/spaz = 8
+			var/flail = 8
 			holder.owner.canmove = 0
-			while (spaz > 0 && MT && !MT.disposed)
+			while (flail > 0 && MT && !MT.disposed)
 				MT.changeStatus("weakened", 2 SECONDS)
 				MT.canmove = 0
 				if (MT.loc)
@@ -327,7 +325,7 @@
 				holder.owner.pixel_x = rand(-2,2) * 2
 				holder.owner.pixel_y = rand(-2,2) * 2
 				sleep(0.4 SECONDS)
-				spaz--
+				flail--
 			if (MT)
 				MT.canmove = 1
 			doCooldown()

@@ -965,7 +965,9 @@
 			if ("scan")
 				var/list/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"="scan"))
 				if (istype(success))
-					message_user("Scan Results:|nAtmosphere: O2:[success["o2"]], Tox:[success["tox"]], N2:[success["n2"]], CO2:[success["co2"]],  [success["temp"]] Kelvin, [success["pressure"]] kPa, [(success["burning"])?("BURNING"):(null)]","multiline")
+					#define _TELESCI_ATMOS_SCAN(GAS, _, NAME, ...) "[NAME]: [success[#GAS]], " +
+					message_user("Scan Results:|nAtmosphere: [APPLY_TO_GASES(_TELESCI_ATMOS_SCAN) " "][success["temp"]] Kelvin, [success["pressure"]] kPa, [(success["burning"])?("BURNING"):(null)]","multiline")
+					// undefined at the end of the file because of https://secure.byond.com/forum/post/2072419
 
 				else if (istext(success))
 					message_user("Invalid coordinates ([success])")
@@ -1219,8 +1221,8 @@
 						if(istype(callobj.loc, /obj/machinery/computer3))
 							calling_term = callobj.loc
 						if(istype(calling_term))
-							if(calling_term.current_user)
-								logUser = calling_term.current_user
+							if(usr)
+								logUser = usr
 							else
 								logUser = "Terminal \[[src.useracc.user_id]]"
 
@@ -2992,3 +2994,5 @@
 				return
 
 		return
+
+#undef _TELESCI_ATMOS_SCAN

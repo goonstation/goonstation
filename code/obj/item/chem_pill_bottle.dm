@@ -80,7 +80,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			W.dropped()
-			boutput(user, "<span style=\"color:blue\">You put [W] in [src].</span>")
+			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
 			rebuild_desc()
 		else ..()
 
@@ -94,12 +94,12 @@
 				P = src.create_pill()
 				i--
 			if (src.pcount + src.contents.len > 0)
-				boutput(user, "<span style=\"color:blue\">You tip out a bunch of pills from [src] into [T].</span>")
+				boutput(user, "<span class='notice'>You tip out a bunch of pills from [src] into [T].</span>")
 			else
-				boutput(user, "<span style=\"color:blue\">You tip out all the pills from [src] into [T].</span>")
+				boutput(user, "<span class='notice'>You tip out all the pills from [src] into [T].</span>")
 			rebuild_desc()
 		else
-			boutput(user, "<span style=\"color:red\">It's empty.</span>")
+			boutput(user, "<span class='alert'>It's empty.</span>")
 			return
 
 	attack_hand(mob/user as mob)
@@ -110,7 +110,7 @@
 				boutput(user, "You take [P] from [src].")
 				rebuild_desc()
 			else
-				boutput(user, "<span style=\"color:red\">It's empty.</span>")
+				boutput(user, "<span class='alert'>It's empty.</span>")
 				return
 
 		else
@@ -126,7 +126,7 @@
 			user.show_text("\The [src] can't hold anything but pills!", "red")
 			return
 
-		user.visible_message("<span style=\"color:blue\">[user] begins quickly filling [src]!</span>")
+		user.visible_message("<span class='notice'>[user] begins quickly filling [src]!</span>")
 		var/staystill = user.loc
 		for (var/obj/item/reagent_containers/pill/P in view(1,user))
 			if (P in user)
@@ -137,4 +137,4 @@
 			sleep(0.2 SECONDS)
 			if (user.loc != staystill)
 				break
-		boutput(user, "<span style=\"color:blue\">You finish filling [src]!</span>")
+		boutput(user, "<span class='notice'>You finish filling [src]!</span>")

@@ -2,6 +2,7 @@
 	name = "burn"
 	associated_damage_type = "burn"
 
+	/*
 	on_react(var/datum/reagents/R, var/method = 1, var/react_volume = null)
 		if (!R || !R.total_volume)
 			return
@@ -12,11 +13,12 @@
 			var/datum/reagent/S = R.get_reagent("silver_sulfadiazine")
 			if (S)
 				holder.emote("scream")
-				boutput(holder, "<span style=\"color:blue\">The silver sulfadiazine soothes your burns.</span>")
+				boutput(holder, "<span class='notice'>The silver sulfadiazine soothes your burns.</span>")
 				HealDamage(fract * S.volume * 2)
 			S = R.get_reagent("synthflesh")
 			if (S)
 				HealDamage(fract * S.volume * 1.5)
+	*/
 
 	on_life()
 		if (!holder.does_it_metabolize())

@@ -225,7 +225,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		L.gib()
 
 	else if (isobj(A))
-		//if (istype(A, /obj/item/gravaton_grenade))
+		//if (istype(A, /obj/item/graviton_grenade))
 			//src.warp = 100
 
 		if (istype(A, /obj/decal/cleanable)) //MBC : this check sucks, but its far better than cleanables doing hard-delete at the whims of the singularity. replace ASAP when i figure out cleanablessssss
@@ -253,7 +253,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (istype(I, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/C = I
 		if (!C.on)
-			C.light(user, "<span style=\"color:red\"><b>[user]</b> lights [C] on [src]. Holy fucking shit!</span>")
+			C.light(user, "<span class='alert'><b>[user]</b> lights [C] on [src]. Holy fucking shit!</span>")
 		else
 			return ..()
 	else
@@ -291,7 +291,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				return
 		M.take_toxin_damage(3)
 		M.changeStatus("radiation", 100)
-		M.updatehealth()
 		M.show_text("You feel odd.", "red")
 
 /obj/machinery/the_singularity/proc/Mezzer()
@@ -302,8 +301,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				M.show_text("You look directly into [src.name], good thing you had your protective eyewear on!", "green")
 				return
 		M.changeStatus("stunned", 3 SECONDS)
-		M.visible_message("<span style=\"color:red\"><B>[M] stares blankly at [src]!</B></span>",\
-		"<B>You look directly into [src]!<br><span style=\"color:red\">You feel weak!</span></B>")
+		M.visible_message("<span class='alert'><B>[M] stares blankly at [src]!</B></span>",\
+		"<B>You look directly into [src]!<br><span class='alert'>You feel weak!</span></B>")
 
 /obj/machinery/the_singularity/proc/BHolerip()
 	for (var/turf/T in orange(6,get_turf(src)))
@@ -467,7 +466,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.power -= 1
 		if(Varpower == 0)
 			if(src.power <= 0)
-				src.visible_message("<span style=\"color:red\">The [src.name] shuts down due to lack of power!</span>")
+				src.visible_message("<span class='alert'>The [src.name] shuts down due to lack of power!</span>")
 				icon_state = "Field_Gen"
 				src.set_active(0)
 				src.cleanup(1)
@@ -560,20 +559,18 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.anchored = 0
 			return
 
-	if(istype(W, /obj/item/weldingtool))
+	if(isweldingtool(W))
 
 		var/turf/T = user.loc
 
-		if(!W:try_weld(user, 1, noisy = 2))
-			return
-
 		if(state == 1)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to weld the field generator to the floor.")
 			sleep(2 SECONDS)
 
 			if ((user.loc == T && user.equipped() == W))
 				state = 3
-				W:eyecheck(user)
 				boutput(user, "You weld the field generator to the floor.")
 				src.get_link() //Set up a link, now that we're secure!
 			else if((isrobot(user) && (user.loc == T)))
@@ -583,6 +580,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 		if(state == 3)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to cut the field generator free from the floor.")
 			sleep(2 SECONDS)
 
@@ -591,7 +590,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				if(src.link) //Clear active link.
 					src.link.master = null
 					src.link = null
-				W:eyecheck(user)
 				boutput(user, "You cut the field generator free from the floor.")
 			else if((isrobot(user) && (user.loc == T)))
 				state = 1
@@ -608,14 +606,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 		else
-			boutput(user, "<span style=\"color:red\">Access denied.</span>")
+			boutput(user, "<span class='alert'>Access denied.</span>")
 
 	else
 		src.add_fingerprint(user)
-		boutput(user, "<span style=\"color:red\">You hit the [src.name] with your [W.name]!</span>")
+		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span style=\"color:red\">The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
 
 /obj/machinery/field_generator/proc/cleanup(var/NSEW)
 	var/obj/machinery/containment_field/F
@@ -781,15 +779,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				healing = shock_damage / 3
 			user.HealDamage("All", shock_damage, shock_damage)
 			user.take_toxin_damage(0 - healing)
-			boutput(user, "<span style=\"color:blue\">You absorb the electrical shock, healing your body!</span>")
+			boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 			return
 		else if (user.bioHolder.HasEffect("resist_electric") == 1)
-			boutput(user, "<span style=\"color:blue\">You feel electricity course through you harmlessly!</span>")
+			boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 			return
 
 	user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
-	user.updatehealth()
-	boutput(user, "<span style=\"color:red\"><B>You feel a powerful shock course through your body sending you flying!</B></span>")
+	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))
 		var/mob/living/L = user
@@ -814,7 +811,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		user.throw_at(target, 200, 4)
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span style=\"color:red\">[user.name] was shocked by the [src.name]!</span>", 3, "<span style=\"color:red\">You hear a heavy electrical crack</span>", 2)
+			M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
 
 	src.gen_primary.power -= 3
 	src.gen_secondary.power -= 3
@@ -940,7 +937,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		if ((src.dir - 1) & src.dir) // Not cardinal (not power of 2)
 			src.dir &= 12 // Cardinalize
-		src.visible_message("<span style=\"color:red\"><b>[src]</b> fires a bolt of energy!</span>")
+		src.visible_message("<span class='alert'><b>[src]</b> fires a bolt of energy!</span>")
 		shoot_projectile_DIR(src, current_projectile, dir)
 
 		if(prob(35))
@@ -950,7 +947,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	..()
 
 /obj/machinery/emitter/attackby(obj/item/W, mob/user)
-	if (iswrenchingtool(W))
+	if (ispryingtool(W))
+		if(!anchored)
+			src.dir = turn(src.dir, -90)
+			return
+		else
+			boutput(user, "The emitter is too firmly secured to be rotated!")
+			return
+	else if (iswrenchingtool(W))
 		if(active)
 			boutput(user, "Turn off the emitter first.")
 			return
@@ -971,15 +975,13 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			desc = "Shoots a high power laser when active."
 			return
 
-	if(istype(W, /obj/item/weldingtool) && W:welding)
+	if(isweldingtool(W))
 
 		var/turf/T = user.loc
 
-		if(!W:try_weld(user, 1, noisy = 2))
-			return
-
 		if(state == 1)
-			W:eyecheck(user)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to weld the emitter to the floor.")
 			sleep(2 SECONDS)
 
@@ -995,6 +997,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 		if(state == 3)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to cut the emitter free from the floor.")
 			sleep(2 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
@@ -1022,14 +1026,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if (!src.locked)
 				logTheThing("station", user, null, "unlocked emitter at at [log_loc(src)].")
 		else
-			boutput(user, "<span style=\"color:red\">Access denied.</span>")
+			boutput(user, "<span class='alert'>Access denied.</span>")
 
 	else
 		src.add_fingerprint(user)
-		boutput(user, "<span style=\"color:red\">You hit the [src.name] with your [W.name]!</span>")
+		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span style=\"color:red\">The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
 
 
 //Send a signal over our link, if possible.
@@ -1088,14 +1092,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.active = 0
 		icon_state = "Emitter"
 
-	return
-
-/obj/machinery/emitter/verb/rotate()
-	set src in view(1)
-	if (src.state != 0)
-		boutput(usr, "<span style=\"color:red\">It's secured to the floor and can't be rotated.</span>")
-		return
-	src.dir = turn(src.dir, 90)
 	return
 
 /////////////////////////////////// Collector array /////////////////////////////////
@@ -1182,7 +1178,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/power/collector_array/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		if(src.active)
-			boutput("<span style='color: red'>The [src.name] must be turned off first!</span>")
+			boutput("<span class='alert'>The [src.name] must be turned off first!</span>")
 		else
 			if (!src.anchored)
 				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
@@ -1195,7 +1191,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			logTheThing("station", user, null, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
 	else if(istype(W, /obj/item/tank/plasma))
 		if(src.P)
-			boutput(user, "<span style=\"color:red\">There appears to already be a plasma tank loaded!</span>")
+			boutput(user, "<span class='alert'>There appears to already be a plasma tank loaded!</span>")
 			return
 		src.P = W
 		W.set_loc(src)
@@ -1215,10 +1211,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		updateicon()
 	else
 		src.add_fingerprint(user)
-		boutput(user, "<span style=\"color:red\">You hit the [src.name] with your [W.name]!</span>")
+		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span style=\"color:red\">The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
 
 ////////////////////////// Collector array controller ////////////////////////////
 
@@ -1403,7 +1399,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/power/collector_control/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		if(src.active)
-			boutput("<span style='color: red'>The [src.name] must be turned off first!</span>")
+			boutput("<span class='alert'>The [src.name] must be turned off first!</span>")
 		else
 			if (!src.anchored)
 				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
@@ -1415,14 +1411,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				src.anchored = 0
 			logTheThing("station", user, null, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
 	else if(istype(W, /obj/item/device/analyzer/atmospheric))
-		boutput(user, "<span style=\"color:blue\">The analyzer detects that [lastpower]W are being produced.</span>")
+		boutput(user, "<span class='notice'>The analyzer detects that [lastpower]W are being produced.</span>")
 
 	else
 		src.add_fingerprint(user)
-		boutput(user, "<span style=\"color:red\">You hit the [src.name] with your [W.name]!</span>")
+		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span style=\"color:red\">The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
 
 ///////////////////////////////////////// Singularity bomb /////////////////////////////
 
@@ -1462,18 +1458,17 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.anchored = 0
 			return
 
-	if(istype(W, /obj/item/weldingtool) && W:welding)
+	if(isweldingtool(W))
 		if(timing)
 			boutput(user, "Stop the countdown first.")
 			return
 
 		var/turf/T = user.loc
 
-		if(!W:try_weld(user, 1, noisy = 2))
-			return
 
 		if(state == 1)
-			W:eyecheck(user)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to weld the bomb to the floor.")
 			sleep(5 SECONDS)
 
@@ -1490,6 +1485,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 		if(state == 3)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to cut the bomb free from the floor.")
 			sleep(5 SECONDS)
 
@@ -1508,17 +1505,17 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 	else
-		boutput(user, "<span style=\"color:red\">You hit the [src.name] with your [W.name]!</span>")
+		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span style=\"color:red\">The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
 
 /obj/machinery/the_singularitybomb/Topic(href, href_list)
 	..()
 	if (usr.stat || usr.restrained() || usr.lying)
 		return
 	if ((in_range(src, usr) && istype(src.loc, /turf)))
-		usr.machine = src
+		src.add_dialog(usr)
 		switch(href_list["action"]) //Yeah, this is weirdly set up. Planning to expand it later.
 			if("trigger")
 				switch(href_list["spec"])
@@ -1536,7 +1533,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 								src.activator = usr
 
 						else
-							boutput(usr, "<span style=\"color:red\">\The [src] is already primed!</span>")
+							boutput(usr, "<span class='alert'>\The [src] is already primed!</span>")
 					if("abort")
 						if(timing)
 							src.timing = 0
@@ -1547,14 +1544,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 							message_admins("[key_name(usr)] deactivated [src.name][src.activator ? " (primed by [key_name(src.activator)])" : ""] at [log_loc(src)].")
 
 						else
-							boutput(usr, "<span style=\"color:red\">\The [src] is already deactivated!</span>")
+							boutput(usr, "<span class='alert'>\The [src] is already deactivated!</span>")
 			if("timer")
 				if(!timing)
 					var/tp = text2num(href_list["tp"])
 					src.time += tp
 					src.time = min(max(round(src.time), 30), 600)
 				else
-					boutput(usr, "<span style=\"color:red\">You can't change the time while the timer is engaged!</span>")
+					boutput(usr, "<span class='alert'>You can't change the time while the timer is engaged!</span>")
 		/*
 		if (href_list["time"])
 			src.timing = text2num(href_list["time"])
@@ -1596,7 +1593,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (user.stat || user.restrained() || user.lying)
 		return
 	if ((get_dist(src, user) <= 1 && istype(src.loc, /turf)))
-		user.machine = src
+		src.add_dialog(user)
 		/*
 		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
 		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
@@ -1605,7 +1602,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		onclose(user, "timer")
 	else
 		user.Browse(null, "window=timer")
-		user.machine = null
+		src.remove_dialog(user)
 
 	src.add_fingerprint(user)
 	return
@@ -1660,7 +1657,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			attack_hand(src.loc)
 		else
 			for(var/mob/M in viewers(1, src))
-				if (M.client && (M.machine == src))
+				if (M.using_dialog_of(src))
 					src.attack_hand(M)
 
 	return

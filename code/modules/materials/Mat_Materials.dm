@@ -414,6 +414,7 @@
 	New()
 		setProperty("density", 65)
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
+		addTrigger(triggersOnAdd, new /datum/materialProc/soulsteel_add())
 		return ..()
 
 // Crystals
@@ -940,6 +941,19 @@
 		setProperty("stable", 53)
 		return ..()
 
+/datum/material/organic/cardboard
+	mat_id = "cardboard"
+	name = "cardboard"
+	desc = "Perfect for making boxes."
+	color = "#d3b173"
+	material_flags = MATERIAL_ORGANIC
+
+	New()
+		setProperty("density", 25)
+		setProperty("hard", 25)
+		setProperty("flammable", 67)
+		return ..()
+
 /datum/material/organic/chitin
 	mat_id = "chitin"
 	name = "chitin"
@@ -1198,6 +1212,7 @@
 		setProperty("permeable", 10)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
+		addTrigger(triggersOnAdd, new /datum/materialProc/soulsteel_add())
 		return ..()
 
 /datum/material/fabric/cloth/ectofibre

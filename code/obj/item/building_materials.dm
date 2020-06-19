@@ -59,7 +59,7 @@ MATERIAL
 	proc/amount_check(var/use_amount,var/mob/user)
 		if (src.amount < use_amount)
 			if (user)
-				boutput(user, "<span style=\"color:red\">You need at least [use_amount] sheets to do that.</span>")
+				boutput(user, "<span class='alert'>You need at least [use_amount] sheets to do that.</span>")
 			return 0
 		else
 			return 1
@@ -107,9 +107,9 @@ MATERIAL
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
 			if (splitnum >= amount || splitnum < 1)
-				boutput(user, "<span style=\"color:red\">Invalid entry, try again.</span>")
+				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(usr, "<span style=\"color:blue\">You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
+			boutput(usr, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
 			src.amount = diff
 			var/obj/item/sheet/new_stack = new /obj/item/sheet(get_turf(usr))
 			if(src.material)
@@ -144,21 +144,21 @@ MATERIAL
 					return
 
 				else
-					boutput(user, "<span style=\"color:red\">You can't mix different materials!</span>")
+					boutput(user, "<span class='alert'>You can't mix different materials!</span>")
 					return
 			if (S.reinforcement != src.reinforcement || (S.reinforcement && src.reinforcement && (S.reinforcement.mat_id != src.reinforcement.mat_id)))
-				boutput(user, "<span style=\"color:red\">You can't mix different reinforcements!</span>")
+				boutput(user, "<span class='alert'>You can't mix different reinforcements!</span>")
 				return
 			if (S.amount >= src.max_stack)
-				boutput(user, "<span style=\"color:red\">You can't put any more sheets in this stack!</span>")
+				boutput(user, "<span class='alert'>You can't put any more sheets in this stack!</span>")
 				return
 			if (S.amount + src.amount > src.max_stack)
 				src.amount = S.amount + src.amount - src.max_stack
 				S.amount = src.max_stack
-				boutput(user, "<span style=\"color:blue\">You add [S] to the stack. It now has [S.amount] sheets.</span>")
+				boutput(user, "<span class='notice'>You add [S] to the stack. It now has [S.amount] sheets.</span>")
 			else
 				S.amount += src.amount
-				boutput(user, "<span style=\"color:blue\">You add [S] to the stack. It now has [S.amount] sheets.</span>")
+				boutput(user, "<span class='notice'>You add [S] to the stack. It now has [S.amount] sheets.</span>")
 				//SN src = null
 				qdel(src)
 				return
@@ -166,10 +166,10 @@ MATERIAL
 		else if (istype(W,/obj/item/rods))
 			var/obj/item/rods/R = W
 			if (src.reinforcement)
-				boutput(user, "<span style=\"color:red\">That's already reinforced!</span>")
+				boutput(user, "<span class='alert'>That's already reinforced!</span>")
 				return
 			if (!R.material)
-				boutput(user, "<span style=\"color:red\">These rods won't work for reinforcing.</span>")
+				boutput(user, "<span class='alert'>These rods won't work for reinforcing.</span>")
 				return
 
 			if (src.material && (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL))
@@ -189,17 +189,17 @@ MATERIAL
 				R.consume_rods(sheetsinput)
 				src.consume_sheets(sheetsinput)
 			else
-				boutput(user, "<span style=\"color:red\">You may only reinforce metal or crystal sheets.</span>")
+				boutput(user, "<span class='alert'>You may only reinforce metal or crystal sheets.</span>")
 				return
 		else
 			..()
 		return
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style=\"color:blue\">[user] begins gathering up [src]!</span>")
+		user.visible_message("<span class='notice'>[user] begins gathering up [src]!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style=\"color:blue\">You finish gathering sheets.</span>")
+		boutput(user, "<span class='notice'>You finish gathering sheets.</span>")
 
 	check_valid_stack(atom/movable/O as obj)
 		if (!istype(O,/obj/item/sheet/))
@@ -227,17 +227,14 @@ MATERIAL
 		return 1
 
 	examine()
-		set src in view(1)
-
-		..()
-		boutput(usr, text("There are [] sheet\s on the stack.", src.amount))
-		return
+		. = ..()
+		. += "There are [src.amount] sheet\s on the stack."
 
 	attack_self(mob/user as mob)
 		var/t1 = text("<HTML><HEAD></HEAD><TT>Amount Left: [] <BR>", src.amount)
 		var/counter = 1
 		var/list/L = list(  )
-		if (src.material && src.material.material_flags & MATERIAL_METAL)
+		if (src?.material.material_flags & MATERIAL_METAL)
 			if (istype(src.reinforcement))
 				L["retable"] = "Reinforced Table Parts (2 Sheets)"
 				L["remetal"] = "Remove Reinforcement"
@@ -258,11 +255,13 @@ MATERIAL
 				L["tcomputer"] = "Computer Terminal Frame (3 Sheets)"
 				L["computer"] = "Console Frame (5 Sheets)"
 				L["hcomputer"] = "Computer Frame (5 Sheets)"
-		if (src.material && src.material.material_flags & MATERIAL_CRYSTAL)
+		if (src?.material.material_flags & MATERIAL_CRYSTAL)
 			L["smallwindow"] = "Thin Window"
 			L["bigwindow"] = "Large Window (2 Sheets)"
 			if (istype(src.reinforcement))
 				L["remetal"] = "Remove Reinforcement"
+		if (src?.material.mat_id == "cardboard")
+			L["c_box"] = "Cardboard Box (2 Sheets)"
 
 		for(var/t in L)
 			counter++
@@ -407,6 +406,15 @@ MATERIAL
 					a_icon_state = "closed"
 					a_name = "a closet"
 
+				if("c_box")
+					if (!amount_check(2,usr)) return
+					a_type = /obj/item/clothing/suit/cardboard_box
+					a_amount = 1
+					a_cost = 2
+					a_icon = 'icons/obj/clothing/overcoats/item_suit_cardboard.dmi'
+					a_icon_state = "c_box"
+					a_name = "a cardboard box"
+
 				if("pipef")
 					if (!amount_check(3,usr)) return
 					a_type = /obj/item/pipebomb/frame
@@ -456,10 +464,10 @@ MATERIAL
 					var/turf/T = get_turf(usr)
 					var/area/A = get_area (usr)
 					if (!istype(T, /turf/simulated/floor))
-						boutput(usr, "<span style=\"color:red\">You can't build girders here.</span>")
+						boutput(usr, "<span class='alert'>You can't build girders here.</span>")
 						return
 					if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
-						boutput(usr, "<span style=\"color:red\">You can't build girders here.</span>")
+						boutput(usr, "<span class='alert'>You can't build girders here.</span>")
 						return
 					if (!amount_check(2,usr)) return
 					a_type = /obj/structure/girder
@@ -615,27 +623,24 @@ MATERIAL
 			item_state = "rods"
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style=\"color:blue\">[user] begins gathering up [src]!</span>")
+		user.visible_message("<span class='notice'>[user] begins gathering up [src]!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		update_icon()
-		boutput(user, "<span style=\"color:blue\">You finish gathering rods.</span>")
+		boutput(user, "<span class='notice'>You finish gathering rods.</span>")
 
 	examine()
-		set src in view(1)
-
-		..()
-		boutput(usr, text("There are [amount] rods in this stack."))
-		return
+		. = ..()
+		. += "There are [src.amount] rod\s on this stack."
 
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
 			if (splitnum >= amount || splitnum < 1)
-				boutput(user, "<span style=\"color:red\">Invalid entry, try again.</span>")
+				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(usr, "<span style=\"color:blue\">You take [splitnum] rods from the stack, leaving [diff] rods behind.</span>")
+			boutput(usr, "<span class='notice'>You take [splitnum] rods from the stack, leaving [diff] rods behind.</span>")
 			src.amount = diff
 			var/obj/item/rods/new_stack = new src.type(usr.loc, diff)
 			if(src.material)
@@ -647,24 +652,23 @@ MATERIAL
 			..(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
+		if (isweldingtool(W))
 			if(src.amount < 2)
-				boutput(user, "<span style=\"color:red\">You need at least two rods to make a material sheet.</span>")
+				boutput(user, "<span class='alert'>You need at least two rods to make a material sheet.</span>")
 				return
 			if (!istype(src.loc,/turf/))
 				if (issilicon(user))
-					boutput(user, "<span style=\"color:red\">Hardcore as it sounds, smelting parts of yourself off isn't big or clever.</span>")
+					boutput(user, "<span class='alert'>Hardcore as it sounds, smelting parts of yourself off isn't big or clever.</span>")
 				else
-					boutput(user, "<span style=\"color:red\">You should probably put the rods down first.</span>")
+					boutput(user, "<span class='alert'>You should probably put the rods down first.</span>")
 				return
-			if(!WELD.try_weld(user, 1))
+			if(!W:try_weld(user, 1))
 				return
 
 			var/weldinput = 1
 			if (src.amount > 3)
 				var/makemetal = round(src.amount / 2)
-				boutput(user, "<span style=\"color:blue\">You could make up to [makemetal] sheets by welding this stack.</span>")
+				boutput(user, "<span class='notice'>You could make up to [makemetal] sheets by welding this stack.</span>")
 				weldinput = input("How many sheets do you want to make?","Welding",1) as num
 				if (weldinput < 1) return
 				if (weldinput > makemetal) weldinput = makemetal
@@ -673,33 +677,32 @@ MATERIAL
 			M.amount = weldinput
 			src.consume_rods(weldinput * 2)
 
-			WELD.eyecheck(user)
-			user.visible_message("<span style=\"color:red\"><B>[user]</B> welds the rods together into sheets.</span>")
+			user.visible_message("<span class='alert'><B>[user]</B> welds the rods together into sheets.</span>")
 			update_icon()
 			if(src.amount < 1)	qdel(src)
 			return
 		if (istype(W, /obj/item/rods))
 			var/obj/item/rods/R = W
 			if (R.amount == src.max_stack)
-				boutput(user, "<span style=\"color:red\">You can't put any more rods in this stack!</span>")
+				boutput(user, "<span class='alert'>You can't put any more rods in this stack!</span>")
 				return
 			if (W.material && src.material && (W.material.mat_id != src.material.mat_id))
-				boutput(user, "<span style=\"color:red\">You can't mix 2 stacks of different metals!</span>")
+				boutput(user, "<span class='alert'>You can't mix 2 stacks of different metals!</span>")
 				return
 			if (R.amount + src.amount > src.max_stack)
 				src.amount = R.amount + src.amount - src.max_stack
 				R.amount = src.max_stack
-				boutput(user, "<span style=\"color:blue\">You add the rods to the stack. It now has [R.amount] rods.</span>")
+				boutput(user, "<span class='notice'>You add the rods to the stack. It now has [R.amount] rods.</span>")
 				update_icon()
 			else
 				R.amount += src.amount
-				boutput(user, "<span style=\"color:blue\">You add [R.amount] rods to the stack. It now has [R.amount] rods.</span>")
+				boutput(user, "<span class='notice'>You add [R.amount] rods to the stack. It now has [R.amount] rods.</span>")
 				R.update_icon()
 				//SN src = null
 				qdel(src)
 				return
 		if (istype(W, /obj/item/organ/head))
-			user.visible_message("<span style=\"color:red\"><B>[user] impales [W.name] on a spike!</B></span>")
+			user.visible_message("<span class='alert'><B>[user] impales [W.name] on a spike!</B></span>")
 			var/obj/head_on_spike/HS = new /obj/head_on_spike(get_turf(src))
 			HS.heads += W
 			user.u_equip(W)
@@ -731,16 +734,16 @@ MATERIAL
 					G.update_icon()
 					if(src.material)
 						G.setMaterial(src.material)
-					boutput(user, "<span style=\"color:blue\">You repair the broken grille.</span>")
+					boutput(user, "<span class='notice'>You repair the broken grille.</span>")
 					src.consume_rods(1)
 				else
-					boutput(user, "<span style=\"color:red\">There is already a grille here.</span>")
+					boutput(user, "<span class='alert'>There is already a grille here.</span>")
 				break
 		else
 			if (src.amount < 2)
-				boutput(user, "<span style=\"color:red\">You need at least two rods to build a grille.</span>")
+				boutput(user, "<span class='alert'>You need at least two rods to build a grille.</span>")
 				return
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> begins building a grille.</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
 			var/turf/T = usr.loc
 			SPAWN_DBG(1.5 SECONDS)
 				if (T == usr.loc && !usr.getStatusDuration("weakened") && !usr.getStatusDuration("stunned"))
@@ -783,7 +786,7 @@ MATERIAL
 		if(heads.len)
 			var/obj/item/organ/head/head = heads[heads.len]
 
-			user.visible_message("<span style=\"color:red\"><B>[user.name] pulls [head.name] off of the spike!</B></span>")
+			user.visible_message("<span class='alert'><B>[user.name] pulls [head.name] off of the spike!</B></span>")
 			head.set_loc(user.loc)
 			head.attack_hand(user)
 			head.add_fingerprint(user)
@@ -801,29 +804,27 @@ MATERIAL
 			..(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
+		if (isweldingtool(W))
 			if(!src.anchored && !istype(src.loc,/turf/simulated/floor) && !istype(src.loc,/turf/unsimulated/floor))
-				boutput(user, "<span style=\"color:red\">There's nothing to weld that to.</span>")
+				boutput(user, "<span class='alert'>There's nothing to weld that to.</span>")
 				return
 
-			if(!WELD.try_weld(user, 1))
+			if(!W:try_weld(user, 1))
 				return
 
-			WELD.eyecheck(user)
-			if(!src.anchored) user.visible_message("<span style=\"color:red\"><B>[user.name] welds the [src.name] to the floor.</B></span>")
-			else user.visible_message("<span style=\"color:red\"><B>[user.name] cuts the [src.name] free from the floor.</B></span>")
+			if(!src.anchored) user.visible_message("<span class='alert'><B>[user.name] welds the [src.name] to the floor.</B></span>")
+			else user.visible_message("<span class='alert'><B>[user.name] cuts the [src.name] free from the floor.</B></span>")
 			src.anchored = !(src.anchored)
 
 			update()
 
 		else if (istype(W,/obj/item/organ/head))
 			if(!has_space())
-				boutput(user, "<span style=\"color:red\">There isn't room on that spike for another head.</span>")
+				boutput(user, "<span class='alert'>There isn't room on that spike for another head.</span>")
 				return
 
-			if(!heads.len) user.visible_message("<span style=\"color:red\"><B>[user.name] impales a [W.name] on the [src.name]!</B></span>")
-			else user.visible_message("<span style=\"color:red\"><B>[user.name] adds a [W.name] to the spike!</B></span>")
+			if(!heads.len) user.visible_message("<span class='alert'><B>[user.name] impales a [W.name] on the [src.name]!</B></span>")
+			else user.visible_message("<span class='alert'><B>[user.name] adds a [W.name] to the spike!</B></span>")
 
 			if(head_offset > 0) head_offset--
 
@@ -897,21 +898,20 @@ MATERIAL
 		if (!src.has_space() || !user.organHolder)//!hasvar(user,"organHolder")) STOP USING HASVAR YOU UTTER FUCKWITS
 			return 0
 
-		user.visible_message("<span style='color:red'><b>[user] headbutts the spike, impaling [his_or_her(user)] head on it!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] headbutts the spike, impaling [his_or_her(user)] head on it!</b></span>")
 		user.TakeDamage("head", 50, 0)
 		user.changeStatus("stunned", 500)
 		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 		if(prob(40)) user.emote("scream")
 
 		SPAWN_DBG(1 SECOND)
-			user.visible_message("<span style='color:red'><b>[user] tears [his_or_her(user)] body away from the spike, leaving [his_or_her(user)] head behind!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] tears [his_or_her(user)] body away from the spike, leaving [his_or_her(user)] head behind!</b></span>")
 			var/obj/head = user.organHolder.drop_organ("head")
 			head.set_loc(src)
 			heads += head
 			src.update()
 			make_cleanable( /obj/decal/cleanable/blood,user.loc)
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
-			user.updatehealth()
 
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
@@ -945,6 +945,7 @@ MATERIAL
 	stamina_damage = 25
 	stamina_cost = 25
 	stamina_crit_chance = 15
+	tooltip_flags = REBUILD_DIST
 
 	New()
 		..()
@@ -979,6 +980,7 @@ MATERIAL
 				F.setMaterial(getMaterial("steel"))
 			F.amount = 1
 			src.amount--
+			tooltip_rebuild = 1
 			user.put_in_hand_or_drop(F)
 			if (src.amount < 1)
 				//SN src = null
@@ -994,16 +996,17 @@ MATERIAL
 			return
 		var/T = user.loc
 		if (!( istype(T, /turf) ))
-			boutput(user, "<span style=\"color:blue\">You must be on the ground!</span>")
+			boutput(user, "<span class='notice'>You must be on the ground!</span>")
 			return
 		else
 			var/S = T
-			if (!( istype(S, /turf/space) ))
+			if (!( istype(S, /turf/space) || istype(S, /turf/simulated/floor/metalfoam)))
 				boutput(user, "You cannot build on or repair this turf!")
 				return
 			else
 				src.build(S)
 				src.amount--
+				tooltip_rebuild = 1
 		if (src.amount < 1)
 			user.u_equip(src)
 			//SN src = null
@@ -1017,7 +1020,7 @@ MATERIAL
 		if (!( istype(W, /obj/item/tile) ))
 			return
 		if(!check_valid_stack(W))
-			boutput(user, "<span style=\"color:red\">You cannot combine [src] with [W] as they contain different materials!</span>")
+			boutput(user, "<span class='alert'>You cannot combine [src] with [W] as they contain different materials!</span>")
 			return
 		if (W.amount == src.max_stack)
 			return
@@ -1025,18 +1028,21 @@ MATERIAL
 		if (W.amount + src.amount > src.max_stack)
 			src.amount = W.amount + src.amount - src.max_stack
 			W.amount = src.max_stack
+			tooltip_rebuild = 1
+			W.tooltip_rebuild = 1
 		else
 			W.amount += src.amount
+			W.tooltip_rebuild = 1
 			//SN src = null
 			qdel(src)
 			return
 		return
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style=\"color:blue\">[user] begins stacking [src]!</span>")
+		user.visible_message("<span class='notice'>[user] begins stacking [src]!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style=\"color:blue\">You finish stacking tiles.</span>")
+		boutput(user, "<span class='notice'>You finish stacking tiles.</span>")
 
 	proc/build(turf/S as turf)
 		var/turf/simulated/floor/W = S.ReplaceWithFloor()

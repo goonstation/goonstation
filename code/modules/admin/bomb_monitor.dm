@@ -292,13 +292,13 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 			if(O)
 				boutput(usr, scan_atmospheric(O)) // We've got a global proc for that now (Convair880).
 			else
-				boutput(usr, "<span style=\"color:red\">Unable to locate the object (it's been deleted, somehow. Explosion, probably).</span>")
+				boutput(usr, "<span class='alert'>Unable to locate the object (it's been deleted, somehow. Explosion, probably).</span>")
 
 		else if(href_list["toggle_dud"])
 			var/obj/item/I = locate(href_list["toggle_dud"])
 
 			if (!I)
-				boutput(usr, "<span style=\"color:red\">Unable to locate the object (it's been deleted, somehow. Explosion, probably).</span>")
+				boutput(usr, "<span class='alert'>Unable to locate the object (it's been deleted, somehow. Explosion, probably).</span>")
 				return
 
 			if (istype(I, /obj/item/assembly/detonator) || istype(I, /obj/item/device/transfer_valve) || istype(I, /obj/item/assembly/proximity_bomb) || istype(I, /obj/item/assembly/time_bomb/) || istype(I, /obj/item/assembly/radio_bomb/))
@@ -318,13 +318,13 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 			var/turf/T = get_turf(I)
 
 			if (!I || !T || !isturf(T)) // Cannot read null.x
-				boutput(usr, "<span style=\"color:red\">Unable to locate the object (it's been deleted, somehow. Explosion, probably).</span>")
+				boutput(usr, "<span class='alert'>Unable to locate the object (it's been deleted, somehow. Explosion, probably).</span>")
 				return
 
 			if (alert("Are you sure you want to detonate \the [I] at [T.x], [T.y], [T.z] ([get_area(I)])?", "Blow shit up.", "Yes", "No") != "Yes") return
 
 			if (!I) // Alerts wait for user input. Bomb might not exist anymore.
-				boutput(usr, "<span style=\"color:red\">Unable to locate the object (it's been deleted, somehow. Explosion, probably).</span>")
+				boutput(usr, "<span class='alert'>Unable to locate the object (it's been deleted, somehow. Explosion, probably).</span>")
 				return
 
 			message_admins("[key_name(usr)] made \the [I] at [log_loc(I)] detonate!")

@@ -30,14 +30,14 @@ change the direction of created objects.<br>
 	var/matrix/mtx = matrix()
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!objpath)
-			boutput(usr, "<span style=\"color:red\">No object path!</span>")
+			boutput(usr, "<span class='alert'>No object path!</span>")
 			return
 		if (!A)
 			mark_corner(object)
 		else
 			var/turf/B = get_turf(object)
 			if (!B || A.z != B.z)
-				boutput(usr, "<span style=\"color:red\">Corners must be on the same Z-level!</span>")
+				boutput(usr, "<span class='alert'>Corners must be on the same Z-level!</span>")
 				return
 			update_button_text("Spawning...")
 			var/cnt = 0
@@ -64,7 +64,7 @@ change the direction of created objects.<br>
 
 							var/atom/A = 0
 							if(ispath(objpath, /turf))
-								A = Q.ReplaceWith(objpath, 1, 0, 1)
+								A = Q.ReplaceWith(objpath, 1, 0, 1, force=1)
 							else
 								A = new objpath(Q)
 
@@ -98,7 +98,7 @@ change the direction of created objects.<br>
 
 								var/atom/A = 0
 								if(ispath(objpath, /turf))
-									A = Q.ReplaceWith(objpath, 1, 0, 1)
+									A = Q.ReplaceWith(objpath, 1, 0, 1, force=1)
 								else
 									A = new objpath(Q)
 
@@ -118,7 +118,7 @@ change the direction of created objects.<br>
 					if("Blink")
 						var/atom/A = 0
 						if(ispath(objpath, /turf))
-							A = Q.ReplaceWith(objpath, 1, 0, 1)
+							A = Q.ReplaceWith(objpath, 1, 0, 1, force=1)
 						else
 							A = new objpath(Q)
 
@@ -129,7 +129,7 @@ change the direction of created objects.<br>
 					else
 						var/atom/A = 0
 						if(ispath(objpath, /turf))
-							A = Q.ReplaceWith(objpath, 1, 0, 1)
+							A = Q.ReplaceWith(objpath, 1, 0, 1, force=1)
 						else
 							A = new objpath(Q)
 
@@ -149,7 +149,7 @@ change the direction of created objects.<br>
 		else
 			var/turf/B = get_turf(object)
 			if (A.z != B.z)
-				boutput(usr, "<span style=\"color:red\">Corners must be on the same Z-level!</span>")
+				boutput(usr, "<span class='alert'>Corners must be on the same Z-level!</span>")
 				return
 			for (var/turf/T in block(A,B))
 				if (cinematic == "Blink")

@@ -13,8 +13,9 @@
 
 	var/on = 1
 	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
-	var/scrub_CO2 = 1
-	var/scrub_Toxins = 1
+	#define _DEF_SCRUBBER_VAR(GAS, ...) var/scrub_##GAS = 1;
+	APPLY_TO_GASES(_DEF_SCRUBBER_VAR)
+	#undef _DEF_SCRUBBER_VAR
 
 	var/volume_rate = 120
 //
@@ -54,8 +55,9 @@
 		var/datum/gas_mixture/environment = loc.return_air()
 
 		if(scrubbing)
-			if((environment.toxins>0) || (environment.carbon_dioxide>0) || (environment.trace_gases && environment.trace_gases.len))
-				var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
+			var/moles = TOTAL_MOLES(environment)
+			if(moles)
+				var/transfer_moles = min(1, volume_rate/environment.volume) * moles
 
 				//Take a gas sample
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
@@ -63,14 +65,16 @@
 				//Filter it
 				var/datum/gas_mixture/filtered_out = unpool(/datum/gas_mixture)
 				filtered_out.temperature = removed.temperature
-				if(scrub_Toxins)
-					filtered_out.toxins = removed.toxins
-					removed.toxins = 0
-				if(scrub_CO2)
-					filtered_out.carbon_dioxide = removed.carbon_dioxide
-					removed.carbon_dioxide = 0
 
-				if(removed.trace_gases && removed.trace_gases.len)
+				#define _FILTER_OUT_GAS(GAS, ...) \
+					if(scrub_##GAS) { \
+						filtered_out.GAS = removed.GAS; \
+						removed.GAS = 0; \
+					}
+				APPLY_TO_GASES(_FILTER_OUT_GAS)
+				#undef _FILTER_OUT_GAS
+
+				if(length(removed.trace_gases))
 					for(var/datum/gas/trace_gas in removed.trace_gases)
 						if(istype(trace_gas, /datum/gas/oxygen_agent_b))
 							removed.trace_gases -= trace_gas
@@ -89,7 +93,7 @@
 					network.update = 1
 
 		else //Just siphoning all air
-			var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
+			var/transfer_moles = TOTAL_MOLES(environment)*(volume_rate/environment.volume)
 
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
@@ -132,3 +136,7 @@
 				scrubbing = 1
 
 		update_icon()
+
+/obj/machinery/atmospherics/unary/vent_scrubber/breathable
+	scrub_oxygen = 0
+	scrub_nitrogen = 0

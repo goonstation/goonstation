@@ -21,12 +21,12 @@
 
 	if (prob(15))
 		if (prob(33))
-			boutput(affected_mob, "<span style=\"color:red\">You feel sickly and weak.</span>")
+			boutput(affected_mob, "<span class='alert'>You feel sickly and weak.</span>")
 			affected_mob.changeStatus("slowed", 30)
 		affected_mob.take_toxin_damage(toxdamage)
 
 	if (prob(5))
-		boutput(affected_mob, "<span style=\"color:red\">Your joints ache horribly!</span>")
+		boutput(affected_mob, "<span class='alert'>Your joints ache horribly!</span>")
 		affected_mob.changeStatus("weakened", stuntime * 10)
 		affected_mob.changeStatus("stunned", stuntime * 10)
 
@@ -52,13 +52,13 @@
 			if (prob(5))
 				affected_mob.emote(pick("shiver", "pale"))
 			if (prob(8))
-				boutput(affected_mob, "<span style=\"color:red\">You taste blood.  Gross.</span>")
+				boutput(affected_mob, "<span class='alert'>You taste blood.  Gross.</span>")
 			if (prob(5))
 				affected_mob.emote(pick("shiver","pale","drool"))
 
 		else
 			if (prob(40))
-				boutput(affected_mob, "<span style=\"color:red\">Your heart stops...</span>")
+				boutput(affected_mob, "<span class='alert'>Your heart stops...</span>")
 				affected_mob.playsound_local(affected_mob.loc, "heartbeat.ogg", 50, 1)
 				affected_mob.emote("collapse")
 

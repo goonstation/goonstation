@@ -1,5 +1,5 @@
 /proc/pixel_everyone()
-	boutput(world, "<span style=\"color:red\">Changing all human mobs - please wait a moment.</span>")
+	boutput(world, "<span class='alert'>Changing all human mobs - please wait a moment.</span>")
 	sleep(1 SECOND)
 	for(var/mob/living/carbon/human/H in mobs)
 		var/mob/living/carbon/human/pixel/P = new/mob/living/carbon/human/pixel(get_turf(H.loc))

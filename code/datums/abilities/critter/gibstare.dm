@@ -30,10 +30,10 @@
 			return
 
 		for(var/mob/O in AIviewers(owner))
-			O.show_message("<span style=\"color:red\"><B>[owner]</B> stares at [target]!</span>", 1)
+			O.show_message("<span class='alert'><B>[owner]</B> stares at [target]!</span>", 1)
 		var/mob/ownerMob = owner
 		playsound(ownerMob.loc, "sound/weapons/phaseroverload.ogg", 100, 1)
-		boutput(target, "<span style=\"color:red\">You feel a horrible pain in your head!</span>")
+		boutput(target, "<span class='alert'>You feel a horrible pain in your head!</span>")
 		target.changeStatus("stunned", 1 SECOND)
 
 	onEnd()
@@ -42,9 +42,9 @@
 		if(owner && ownerMob && target && (target in view(owner)) && gibstare && gibstare.cooldowncheck())
 			logTheThing("combat", ownerMob, target, "gibs %target% using martin gib stare.")
 			for(var/mob/O in AIviewers(ownerMob))
-				O.show_message("<span style=\"color:red\"><b>[target.name]'s</b> head explodes!</span>", 1)
+				O.show_message("<span class='alert'><b>[target.name]'s</b> head explodes!</span>", 1)
 			if (target == owner)
-				boutput(owner, "<span class='color:green'>Good. Job.</span>")
+				boutput(owner, "<span class='success'>Good. Job.</span>")
 			target.gib()
 			gibstare.actionFinishCooldown()
 

@@ -4,6 +4,7 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "camera"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	text = ""
 
 	var/network = "SS13"
 	layer = EFFECTS_LAYER_UNDER_1
@@ -65,11 +66,11 @@
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 30, 1, -2)
 			actions.start(new/datum/action/bar/icon/cameraSecure(src, securedstate), user)
 		else if (securedstate)
-			boutput(user, "<span style=\"color:red\">You need to secure the floor bolts!</span>")
+			boutput(user, "<span class='alert'>You need to secure the floor bolts!</span>")
 	else if (iswrenchingtool(W))
 		if (src.securedstate <= 1)
 			playsound(src.loc, "sound/items/Wrench.ogg", 30, 1, -2)
-			boutput(user, "<span style=\"color:red\">You [securedstate == 1 ? "un" : ""]secure the floor bolts on the [src].</span>")
+			boutput(user, "<span class='alert'>You [securedstate == 1 ? "un" : ""]secure the floor bolts on the [src].</span>")
 			src.securedstate = (securedstate == 1) ? 0 : 1
 
 			if (securedstate == 0)
@@ -94,15 +95,15 @@
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span style=\"color:blue\">[] begins [secstate == 2 ? "un" : ""]securing the camera hookups on the [cam].</span>", owner), 1)
+			O.show_message(text("<span class='notice'>[] begins [secstate == 2 ? "un" : ""]securing the camera hookups on the [cam].</span>", owner), 1)
 
 	onInterrupt(var/flag)
 		..()
-		boutput(owner, "<span style=\"color:red\">You were interrupted!</span>")
+		boutput(owner, "<span class='alert'>You were interrupted!</span>")
 
 	onEnd()
 		..()
-		owner.visible_message("<span style=\"color:blue\">[owner.name] [secstate == 2 ? "un" : ""]secures the camera hookups on the [cam].</span>")
+		owner.visible_message("<span class='notice'>[owner.name] [secstate == 2 ? "un" : ""]secures the camera hookups on the [cam].</span>")
 		cam.securedstate = (secstate == 2) ? 1 : 2
 		if (cam.securedstate != 2)
 			cam.UnsubscribeProcess()
@@ -259,22 +260,22 @@
 				else
 					boutput(OAI, "Your connection to the camera has been lost.")
 		*/
-		if (istype(O.machine, /obj/machinery/computer/security))
-			var/obj/machinery/computer/security/S = O.machine
+		var/obj/machinery/computer/security/S = O.using_dialog_of_type(/obj/machinery/computer/security)
+		if (S)
 			if (S.current == src)
-				O.machine = null
+				S.remove_dialog(O)
 				S.current = null
 				O.set_eye(null)
 				boutput(O, "The screen bursts into static.")
 
 /obj/machinery/camera/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/parts/human_parts)) //dumb easter egg incoming
-		user.visible_message("<span style=\"color:red\">[user] wipes [src] with the bloody end of [W.name]. What the fuck?</span>", "<span style=\"color:red\">You wipe [src] with the bloody end of [W.name]. What the fuck?</span>")
+		user.visible_message("<span class='alert'>[user] wipes [src] with the bloody end of [W.name]. What the fuck?</span>", "<span class='alert'>You wipe [src] with the bloody end of [W.name]. What the fuck?</span>")
 		return
 	if (issnippingtool(W))
 		src.camera_status = !( src.camera_status )
 		if (!( src.camera_status ))
-			user.visible_message("<span style=\"color:red\">[user] has deactivated [src]!</span>", "<span style=\"color:red\">You have deactivated [src].</span>")
+			user.visible_message("<span class='alert'>[user] has deactivated [src]!</span>", "<span class='alert'>You have deactivated [src].</span>")
 			logTheThing("station", null, null, "[key_name(user)] deactivated a security camera ([showCoords(src.loc.x, src.loc.y, src.loc.z)])")
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
 			src.icon_state = "camera1"
@@ -284,7 +285,7 @@
 					O.removeCameraCoverage(src)
 				src.remove_from_turfs()
 		else
-			user.visible_message("<span style=\"color:red\">[user] has reactivated [src]!</span>", "<span style=\"color:red\">You have reactivated [src].</span>")
+			user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
 			src.icon_state = "camera"
 			add_fingerprint(user)
@@ -307,12 +308,13 @@
 				boutput(O, "[user] holds a paper up to one of your cameras ...")
 				O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
 				logTheThing("station", user, O, "holds up a paper to a camera at [log_loc(src)], forcing %target% to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
-			else if (istype(O.machine, /obj/machinery/computer/security))
-				var/obj/machinery/computer/security/S = O.machine
-				if (S.current == src)
-					boutput(O, "[user] holds a paper up to one of the cameras ...")
-					O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
-					logTheThing("station", user, O, "holds up a paper to a camera at [log_loc(src)], forcing %target% to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
+			else
+				var/obj/machinery/computer/security/S = O.using_dialog_of_type(/obj/machinery/computer/security)
+				if (S)
+					if (S.current == src)
+						boutput(O, "[user] holds a paper up to one of the cameras ...")
+						O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
+						logTheThing("station", user, O, "holds up a paper to a camera at [log_loc(src)], forcing %target% to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 
 //Return a working camera that can see a given mob
 //or null if none
@@ -372,11 +374,11 @@
 	if (issnippingtool(W) && locked == 1) return
 	if (isscrewingtool(W))
 		var/turf/T = user.loc
-		boutput(user, text("<span style=\"color:blue\">[]ing the access hatch... (this is a long process)</span>", (locked) ? "Open" : "Clos"))
+		boutput(user, text("<span class='notice'>[]ing the access hatch... (this is a long process)</span>", (locked) ? "Open" : "Clos"))
 		sleep(10 SECONDS)
 		if ((user.loc == T && user.equipped() == W && !( user.stat )))
 			src.locked ^= 1
-			boutput(user, text("<span style=\"color:blue\">The access hatch is now [].</span>", (locked) ? "closed" : "open"))
+			boutput(user, text("<span class='notice'>The access hatch is now [].</span>", (locked) ? "closed" : "open"))
 
 	..() // call the parent to (de|re)activate
 

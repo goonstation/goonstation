@@ -15,7 +15,7 @@
 		holder.owner.say("BRIXHUN MOHTYR")
 		..()
 		if(!holder.owner.wizard_spellpower())
-			boutput(holder.owner, "<span style=\"color:red\">Your spell is weak without a staff to focus it!</span>")
+			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 
 		playsound(holder.owner.loc, "sound/effects/mag_forcewall.ogg", 25, 1, -1)
 		var/forcefield1

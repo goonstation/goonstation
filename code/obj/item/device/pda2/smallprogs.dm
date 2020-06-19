@@ -538,12 +538,12 @@ Code:
 
 			stuff += "<B>Hot Loop</B><BR>"
 			stuff += "Temperature Inlet: [round(circ1.air1.temperature, 0.1)] K  Outlet: [round(circ1.air2.temperature, 0.1)] K<BR>"
-			stuff += "Pressure Inlet: [round(circ1.air1.return_pressure(), 0.1)] kPa  Outlet: [round(circ1.air2.return_pressure(), 0.1)] kPa<BR>"
+			stuff += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ1.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ1.air2), 0.1)] kPa<BR>"
 			stuff += "<BR>"
 
 			stuff += "<B>Cold Loop</B><BR>"
 			stuff += "Temperature Inlet: [round(circ2.air1.temperature, 0.1)] K  Outlet: [round(circ2.air2.temperature, 0.1)] K<BR>"
-			stuff += "Pressure Inlet: [round(circ2.air1.return_pressure(), 0.1)] kPa  Outlet: [round(circ2.air2.return_pressure(), 0.1)] kPa<BR>"
+			stuff += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ2.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ2.air2), 0.1)] kPa<BR>"
 			stuff += "<BR>"
 		else
 			stuff += "Error! No engine detected!<BR><BR>"
@@ -711,7 +711,7 @@ Code:
 			if (!(eye_loc.cameras && eye_loc.cameras.len))
 				an_area = get_area(eye_loc)
 
-		signal.data["message"] = "<b><span style=\"color:red\">***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
+		signal.data["message"] = "<b><span class='alert'>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
 
 		src.post_signal(signal)
 

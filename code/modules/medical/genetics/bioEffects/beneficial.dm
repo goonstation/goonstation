@@ -93,7 +93,7 @@
 		if (istype(owner, /mob/living) && owner:organHolder && owner:organHolder:heart && owner:organHolder:heart:robotic)
 			owner:organHolder:heart:broken = 1
 			owner:contract_disease(/datum/ailment/malady/flatline,null,null,1)
-			boutput(owner, "<span style=\"color:red\">Something is wrong with your cyberheart, it stops beating!</span>")
+			boutput(owner, "<span class='alert'>Something is wrong with your cyberheart, it stops beating!</span>")
 
 /datum/bioEffect/rad_resist
 	name = "Radiation Resistance"
@@ -296,6 +296,7 @@
 	lockedTries = 6
 	stability_loss = 5
 	icon_state  = "haze"
+	isBad = 1
 
 /datum/bioEffect/dead_scan
 	name = "Pseudonecrosis"
@@ -305,6 +306,7 @@
 	probability = 99
 	stability_loss = 5
 	icon_state  = "dead"
+	isBad = 1
 
 ///////////////////
 // General buffs //
@@ -319,6 +321,18 @@
 	msgGain = "You feel buff!"
 	msgLose = "You feel wimpy and weak."
 	icon_state  = "strong"
+
+	OnAdd()
+		..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
+
+	OnRemove()
+		..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
 
 /datum/bioEffect/radio_brain
 	name = "Meta-Neural Antenna"
@@ -371,7 +385,9 @@ var/list/radio_brains = list()
 	OnAdd()
 		owner.unlock_medal("It's not easy being green", 1)
 		if (ishuman(owner))
-			owner:set_body_icon_dirty()
+			var/mob/living/carbon/human/H = owner
+			H.set_body_icon_dirty()
+			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
 		..()
 
 	OnMobDraw()
@@ -383,13 +399,15 @@ var/list/radio_brains = list()
 
 	OnRemove()
 		if (ishuman(owner))
-			owner:set_body_icon_dirty()
+			var/mob/living/carbon/human/H = owner
+			H.set_body_icon_dirty()
+			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
 
 	OnLife()
 		if(..()) return
 		if (owner:health <= 25)
 			timeLeft = 1
-			boutput(owner, "<span style=\"color:red\">You suddenly feel very weak.</span>")
+			boutput(owner, "<span class='alert'>You suddenly feel very weak.</span>")
 			owner:changeStatus("weakened", 3 SECONDS)
 			owner:emote("collapse")
 

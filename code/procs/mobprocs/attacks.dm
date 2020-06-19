@@ -25,7 +25,7 @@
 	var/shielded = 0
 	if (src.spellshield)
 		shielded = 1
-		boutput(user, "<span style=\"color:red\"><b>[src]'s Spell Shield prevents your attack!</b></span>")
+		boutput(user, "<span class='alert'><b>[src]'s Spell Shield prevents your attack!</b></span>")
 	else
 		if (!src.spellshield)
 			for(var/obj/item/device/shield/S in src)

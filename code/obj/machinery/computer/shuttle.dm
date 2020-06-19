@@ -136,14 +136,14 @@
 		if(get_dist(user, src) > 1 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
 		switch(choice)
 			if("Launch")
-				boutput(world, "<span style=\"color:blue\"><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
+				boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
 				emergency_shuttle.settimeleft( 10 )
 				logTheThing("admin", user, null, "shortens Emergency Shuttle launch time to 10 seconds.")
 				return 1
 			if("Cancel")
 				return 1
 	else
-		boutput(world, "<span style=\"color:blue\"><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
+		boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
 		emergency_shuttle.settimeleft( 10 )
 		return 1
 	return 0
@@ -182,9 +182,9 @@
 				src.authorized -= W:registered
 				src.authorized += W:registered
 				if (src.auth_need - src.authorized.len > 0)
-					boutput(world, text("<span style=\"color:blue\"><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
+					boutput(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
 				else
-					boutput(world, "<span style=\"color:blue\"><B>Alert: Shuttle launch time shortened to 60 seconds!</B></span>")
+					boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 60 seconds!</B></span>")
 					emergency_shuttle.settimeleft(60)
 					//src.authorized = null
 					qdel(src.authorized)
@@ -192,10 +192,10 @@
 
 			if("Repeal")
 				src.authorized -= W:registered
-				boutput(world, text("<span style=\"color:blue\"><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
+				boutput(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
 
 			if("Abort")
-				boutput(world, "<span style=\"color:blue\"><B>All authorizations to shorting time for shuttle launch have been revoked!</B></span>")
+				boutput(world, "<span class='notice'><B>All authorizations to shorting time for shuttle launch have been revoked!</B></span>")
 				src.authorized.len = 0
 				src.authorized = list(  )
 	return
@@ -229,13 +229,13 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["send"])
 			src.send()
 
 		if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=shuttle")
 
 	src.add_fingerprint(usr)
@@ -246,7 +246,7 @@
 	if(!active)
 		for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 			active = 1
-			C.visible_message("<span style=\"color:red\">The Mining Shuttle has been Called and will leave shortly!</span>")
+			C.visible_message("<span class='alert'>The Mining Shuttle has been Called and will leave shortly!</span>")
 		SPAWN_DBG(10 SECONDS)
 			call_shuttle()
 
@@ -265,7 +265,7 @@
 
 	for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span style=\"color:red\">The Mining Shuttle has Moved!</span>")
+		C.visible_message("<span class='alert'>The Mining Shuttle has Moved!</span>")
 
 	return
 
@@ -298,19 +298,19 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["send"])
 			if(!active)
 				for(var/obj/machinery/computer/prison_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 					active = 1
-					C.visible_message("<span style=\"color:red\">The Prison Shuttle has been Called and will leave shortly!</span>")
+					C.visible_message("<span class='alert'>The Prison Shuttle has been Called and will leave shortly!</span>")
 
 				SPAWN_DBG(10 SECONDS)
 					call_shuttle()
 
 		else if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=shuttle")
 
 	src.add_fingerprint(usr)
@@ -351,7 +351,7 @@
 
 	for(var/obj/machinery/computer/prison_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span style=\"color:red\">The Prison Shuttle has Moved!</span>")
+		C.visible_message("<span class='alert'>The Prison Shuttle has Moved!</span>")
 
 	return
 
@@ -390,29 +390,29 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (isturf(src.loc) && in_range(src, usr))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["send"])
 			for(var/obj/machinery/shuttle/engine/propulsion/eng in machine_registry[MACHINES_SHUTTLEPROPULSION]) // ehh
 				if(eng.stat1 == 0 && eng.stat2 == 0 && eng.id == "zeta")
-					boutput(usr, "<span style=\"color:red\">Propulsion thruster damaged. Unable to move shuttle.</span>")
+					boutput(usr, "<span class='alert'>Propulsion thruster damaged. Unable to move shuttle.</span>")
 					return
 				else
 					continue
 
 			if(researchshuttle_lockdown)
-				boutput(usr, "<span style=\"color:red\">The shuttle cannot be called during lockdown.</span>")
+				boutput(usr, "<span class='alert'>The shuttle cannot be called during lockdown.</span>")
 				return
 
 			if(!active)
 				for(var/obj/machinery/computer/research_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 					active = 1
-					C.visible_message("<span style=\"color:red\">The Research Shuttle has been Called and will leave shortly!</span>")
+					C.visible_message("<span class='alert'>The Research Shuttle has been Called and will leave shortly!</span>")
 
 				SPAWN_DBG(10 SECONDS)
 					call_shuttle()
 
 		else if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=shuttle")
 
 	src.add_fingerprint(usr)
@@ -421,7 +421,7 @@
 
 /obj/machinery/computer/research_shuttle/proc/call_shuttle()
 	if(researchshuttle_lockdown)
-		boutput(usr, "<span style=\"color:red\">This shuttle is currently on lockdown and cannot be used.</span>")
+		boutput(usr, "<span class='alert'>This shuttle is currently on lockdown and cannot be used.</span>")
 		return
 
 	if(researchshuttle_location == 0)
@@ -438,7 +438,7 @@
 
 	for(var/obj/machinery/computer/research_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span style=\"color:red\">The Research Shuttle has Moved!</span>")
+		C.visible_message("<span class='alert'>The Research Shuttle has Moved!</span>")
 
 	return
 
@@ -467,18 +467,18 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["send"])
 			if(!active)
 				for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 					active = 1
-					C.visible_message("<span style=\"color:red\">The elevator begins to move!</span>")
+					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
 				SPAWN_DBG(5 SECONDS)
 					call_shuttle()
 
 		if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=ice_elevator")
 
 	src.add_fingerprint(usr)
@@ -503,7 +503,7 @@
 
 	for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 		active = 0
-		C.visible_message("<span style=\"color:red\">The elevator has moved.</span>")
+		C.visible_message("<span class='alert'>The elevator has moved.</span>")
 		C.location = src.location
 
 	return
@@ -531,18 +531,18 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["send"])
 			if(!active)
 				for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 					active = 1
-					C.visible_message("<span style=\"color:red\">The elevator begins to move!</span>")
+					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
 				SPAWN_DBG(5 SECONDS)
 					call_shuttle()
 
 		if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=biodome_elevator")
 
 	src.add_fingerprint(usr)
@@ -571,14 +571,14 @@
 
 	for(var/obj/machinery/computer/biodome_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 		active = 0
-		C.visible_message("<span style=\"color:red\">The elevator has moved.</span>")
+		C.visible_message("<span class='alert'>The elevator has moved.</span>")
 		C.location = src.location
 
 	return
 
 /obj/sign_accidents
 	name = "Elevator Safety Sign"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "accidents_sign"
 	flags = FPRINT
 	density = 0

@@ -114,9 +114,8 @@
 
 /obj/machinery/door/firedoor/attackby(obj/item/C as obj, mob/user as mob)
 	src.add_fingerprint(user)
-	if ((istype(C, /obj/item/weldingtool) && !( src.operating ) && src.density))
-		var/obj/item/weldingtool/W = C
-		if(!W.try_weld(user, 1))
+	if ((isweldingtool(C) && !( src.operating ) && src.density))
+		if(!C:try_weld(user, 1))
 			return
 		if (!( src.blocked ))
 			src.blocked = 1
@@ -257,7 +256,7 @@
 		return 0
 	if (!src.allowed(user) || src.density)
 		return 0
-	user.visible_message("<span style='color:red'><b>[user] sticks [his_or_her(user)] head into [src] and closes it!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and closes it!</b></span>")
 	src.close()
 	var/obj/head = user.organHolder.drop_organ("head")
 	qdel(head)

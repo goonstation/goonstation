@@ -11,7 +11,7 @@
 		if (T)
 			for (var/mob/living/carbon/human/M in view(src, 2))
 				if (istype(M.wear_suit, /obj/item/clothing/suit/armor))
-					boutput(M, "<span style=\"color:red\">Your armor blocks the shrapnel!</span>")
+					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
 					M.TakeDamage("chest", 5, 0)
 				else
 					M.TakeDamage("chest", 15, 0)
@@ -19,7 +19,7 @@
 					implanted.owner = M
 					M.implant += implanted
 					implanted.implanted(M, null, 2)
-					boutput(M, "<span style=\"color:red\">You are struck by shrapnel!</span>")
+					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 					if (!M.stat)
 						M.emote("scream")
 		qdel(src)
@@ -129,7 +129,7 @@
 		return movement_controller
 
 	attack_hand(mob/user as mob)
-		if(src.controller && !src.controller.loc == src)
+		if(src.controller && src.controller.loc != src)
 			src.exit(0)
 
 		if(inUse) return
@@ -147,10 +147,10 @@
 			inUse = 1
 			user.set_loc(src)
 			user.pixel_y = -8
-			boutput(user, "<span style=\"color:blue\"><b>Press Q or E to exit targeting.</b></span>")
+			boutput(user, "<span class='hint'><b>Press Q or E to exit targeting.</b></span>")
 			vis_contents += user
 			controller = user
-			user.update_keymap()
+			user.reset_keymap()
 			if(user.client && targeter)
 				user.client.images += targeter.trgImage
 				user.client.eye = targeter
@@ -182,7 +182,7 @@
 			if(set_location)
 				controller.set_loc(get_step(src, SOUTH))
 			vis_contents.Cut()
-			controller.update_keymap()
+			controller.reset_keymap()
 			if(controller.client && targeter)
 				controller.client.images -= targeter.trgImage
 				controller.client.eye = controller
@@ -285,7 +285,7 @@
 
 	proc/open()
 		if(is_blocked_turf(get_step(src, SOUTH)))
-			boutput(usr, "<span style=\"color:red\"><b>You can't open the tube, something is blocking the way.</b></span>")
+			boutput(usr, "<span class='alert'><b>You can't open the tube, something is blocking the way.</b></span>")
 			return
 		tray_obj = new/obj/torpedo_tube_tray(get_step(src, SOUTH))
 		tray_obj.parent = src
@@ -383,12 +383,12 @@
 				M.set_loc(src.loc)
 				logTheThing("combat", user, target, " laods %target% onto \the [src] at [showCoords(user.x, user.y, user.z)]")
 				logTheThing("diary", user, target, " laods %target% onto \the [src] at [showCoords(user.x, user.y, user.z)]", "combat")
-				user.visible_message("<span style=\"color:red\"><b>[user.name] shoves [target.name] onto [src]!</b></span>")
+				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto [src]!</b></span>")
 			else
 				M.set_loc(src.loc)
 				logTheThing("combat", usr, target, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]")
 				logTheThing("diary", usr, target, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
-				user.visible_message("<span style=\"color:red\"><b>[user.name] shoves [target.name] onto \the [src]!</b></span>")
+				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto \the [src]!</b></span>")
 				return
 
 	attackby(var/obj/item/I, var/mob/user)
@@ -399,7 +399,7 @@
 				GM.set_loc(src.loc)
 				GM.setStatus("resting", INFINITE_STATUS)
 				GM.force_laydown_standup()
-				user.visible_message("<span style=\"color:red\"><b>[user.name] shoves [GM.name] onto [src]!</b></span>")
+				user.visible_message("<span class='alert'><b>[user.name] shoves [GM.name] onto [src]!</b></span>")
 				logTheThing("combat", usr, GM, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]")
 				logTheThing("diary", usr, GM, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
 				qdel(G)

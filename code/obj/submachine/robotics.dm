@@ -1,5 +1,8 @@
 // Robotics Stuff
 
+/**
+ * @deprecated
+ */
 /obj/submachine/robomoduler
 	name = "Module Rewriter"
 	desc = "A device used to rewrite robotic and cybernetic software modules."
@@ -16,7 +19,7 @@
 		return src.attack_hand(user)
 
 	attack_hand(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		if (!src.working)
 			var/dat = {"<B>Module Rewriter</B><BR>
 			<HR><BR>
@@ -115,7 +118,7 @@
 	attack_self(var/mob/user as mob)
 		positive = !positive
 		icon_state = "robojumper-[positive? "plus": "minus"]"
-		boutput(user, "<span style=\"color:red\">The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"].</span>")
+		boutput(user, "<span class='alert'>The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"].</span>")
 
 /obj/item/atmosporter
 	name = "Atmospherics Transporter"
@@ -125,7 +128,7 @@
 	var/capacity = 2
 
 	attack_self(var/mob/user as mob)
-		if (src.contents.len == 0) boutput(user, "<span style=\"color:red\">You have nothing stored!</span>")
+		if (src.contents.len == 0) boutput(user, "<span class='alert'>You have nothing stored!</span>")
 		else
 			var/selection = input("What do you want to drop?", "Atmos Transporter", null, null) as null|anything in src.contents
 			if(!selection) return
@@ -148,10 +151,10 @@
 		var/obj/item/reagent_containers/glass/B = W
 
 		if(!B.reagents.reagent_list.len || B.reagents.total_volume < 1)
-			boutput(user, "<span style=\"color:red\">That beaker is empty! There are no reagents for the [src.name] to process!</span>")
+			boutput(user, "<span class='alert'>That beaker is empty! There are no reagents for the [src.name] to process!</span>")
 			return
 		if (working)
-			boutput(user, "<span style=\"color:red\">Chemmaster is working, be patient</span>")
+			boutput(user, "<span class='alert'>Chemmaster is working, be patient</span>")
 			return
 
 		working = 1
@@ -257,7 +260,7 @@
 				var/mob/living/silicon/robot/R = user
 				if (R.cell) R.cell.charge -= 100
 			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-			user.visible_message("<span style=\"color:blue\">[user] dispenses a [src.vend_this]!</span>", "<span style=\"color:blue\">You dispense a [src.vend_this]!</span>")
+			user.visible_message("<span class='notice'>[user] dispenses a [src.vend_this]!</span>", "<span class='notice'>You dispense a [src.vend_this]!</span>")
 			src.last_use = world.time
 			return
 
@@ -296,6 +299,7 @@ ported and crapped up by: haine
 	icon_state = "juicer"
 	amount_per_transfer_from_this = 10
 	initial_volume = 200
+	tooltip_flags = REBUILD_DIST
 
 	afterattack(obj/target, mob/user)
 		if (get_dist(user, src) > 1 || get_dist(user, target) > 1)
@@ -369,6 +373,7 @@ ported and crapped up by: haine
 	var/list/hydro_reagent_names = list() // the tank creation proc adds the names of the above reagents to this list
 	var/list/tanks = list() // what tanks we have
 	var/obj/item/reagent_containers/borghose_tank/active_tank = null // what tank is active
+	tooltip_flags = REBUILD_DIST //if anyone implements this, add some rebuilds
 
 	New() // So this goes through and adds all the reagents to the hose on creation. Pretty good for expandability.
 		..()

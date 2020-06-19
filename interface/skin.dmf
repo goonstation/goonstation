@@ -333,6 +333,14 @@ menu "menu"
 		command = ""
 		category = "&Interface"
 		saved-params = "is-checked"
+	elem "wasd_controls"
+		name = "&Modify Keybinds"
+		command = "modify-keybinds"
+		category = "&Interface"
+	elem
+		name = ""
+		command = ""
+		category = "&Interface"
 	elem "use_chui"
 		name = "&Use Chui (Styled Popups)"
 		command = "set-chui"
@@ -345,6 +353,35 @@ menu "menu"
 		command = "set-chui-custom-frames"
 		category = "&Interface"
 		is-checked = true
+		can-check = true
+		saved-params = "is-checked"
+	elem
+		name = "&Window"
+		command = ""
+		category = "&Game"
+		saved-params = "is-checked"
+	elem "fullscreen"
+		name = "&Fullscreen"
+		command = ".winset \"fullscreen.is-checked=true?mainwindow.titlebar=false mainwindow.is-maximized=true:mainwindow.titlebar=true\""
+		category = "&Window"
+		can-check = true
+		saved-params = "is-checked"
+	elem "dark_mode"
+		name = "&Dark mode"
+		command = "sync-dark-mode"
+		category = "&Window"
+		can-check = true
+		saved-params = "is-checked"
+	elem "hide_status_bar"
+		name = "&Hide status bar"
+		command = ".winset \"hide_status_bar.is-checked=true?mainwindow.statusbar=false:mainwindow.statusbar=true\""
+		category = "&Window"
+		can-check = true
+		saved-params = "is-checked"
+	elem "hide_menu"
+		name = "&Hide menu"
+		command = ".winset \"hide_menu.is-checked=true?mainwindow.menu='';menub.is-visible = true\""
+		category = "&Window"
 		can-check = true
 		saved-params = "is-checked"
 	elem
@@ -1439,6 +1476,16 @@ window "rpane"
 		command = ".winset \"rpanewindow.left=infowindow\""
 		group = "rpanemode"
 		button-type = pushbox
+	elem "menub"
+		type = BUTTON
+		pos = 135,5
+		size = 60x20
+		anchor1 = none
+		anchor2 = none
+		is-visible = false
+		saved-params = "is-checked"
+		text = "Menu"
+		command = ".winset \"mainwindow.menu='menu'; hide_menu.is-checked=false; menub.is-visible = false\""
 	elem "bugreportb"
 		type = BUTTON
 		pos = 380,5

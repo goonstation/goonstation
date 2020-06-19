@@ -143,7 +143,7 @@ Filter types:
 		if(!on)
 			return 0
 
-		var/output_starting_pressure = air_out2.return_pressure()
+		var/output_starting_pressure = MIXTURE_PRESSURE(air_out2)
 
 		if(output_starting_pressure >= target_pressure)
 			//No need to mix if target is already full!
@@ -194,7 +194,7 @@ Filter types:
 
 				if(4) //removing trace gases
 					if(removed)
-						if(removed.trace_gases && removed.trace_gases.len)
+						if(length(removed.trace_gases))
 							for(var/datum/gas/trace_gas in removed.trace_gases)
 								if(trace_gas)
 									removed.trace_gases -= trace_gas

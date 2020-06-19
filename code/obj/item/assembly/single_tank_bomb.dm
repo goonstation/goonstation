@@ -60,8 +60,8 @@
 	return
 
 /obj/item/assembly/proximity_bomb/examine()
-	..()
-	src.part3.examine()
+	. = ..()
+	. += src.part3.examine()
 
 /obj/item/assembly/proximity_bomb/disposing()
 	qdel(part1)
@@ -95,14 +95,14 @@
 		//SN src = null
 		qdel(src)
 		return
-	if (!( istype(W, /obj/item/weldingtool) ))
+	if (!(isweldingtool(W) && W:try_weld(user,0,-1,0,0)))
 		return
 	if (!( src.status ))
 		src.status = 1
-		user.show_message("<span style=\"color:blue\">A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
+		user.show_message("<span class='notice'>A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
 	else
 		src.status = 0
-		boutput(user, "<span style=\"color:blue\">The hole has been closed.</span>")
+		boutput(user, "<span class='notice'>The hole has been closed.</span>")
 
 	src.bomb_logs(user, src, "proximity", src.status == 1 ? 0 : 1, 0)
 	src.part2.status = src.status
@@ -189,8 +189,8 @@
 	return
 
 /obj/item/assembly/time_bomb/examine()
-	..()
-	src.part3.examine()
+	. = ..()
+	. += src.part3.examine()
 
 /obj/item/assembly/time_bomb/disposing()
 	qdel(part1)
@@ -224,14 +224,14 @@
 		//SN src = null
 		qdel(src)
 		return
-	if (!( istype(W, /obj/item/weldingtool) ))
+	if (!(isweldingtool(W) && W:try_weld(user,0,-1,0,0)))
 		return
 	if (!( src.status ))
 		src.status = 1
-		user.show_message("<span style=\"color:blue\">A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
+		user.show_message("<span class='notice'>A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
 	else
 		src.status = 0
-		boutput(user, "<span style=\"color:blue\">The hole has been closed.</span>")
+		boutput(user, "<span class='notice'>The hole has been closed.</span>")
 
 	src.part2.status = src.status
 	src.bomb_logs(user, src, "timer", src.status == 1 ? 0 : 1, 0)
@@ -273,8 +273,8 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 
 /obj/item/assembly/radio_bomb/examine()
-	..()
-	src.part3.examine()
+	. = ..()
+	. += src.part3.examine()
 
 /obj/item/assembly/radio_bomb/disposing()
 
@@ -309,14 +309,14 @@
 		//SN src = null
 		qdel(src)
 		return
-	if (!( istype(W, /obj/item/weldingtool) ))
+	if (!(isweldingtool(W) && W:try_weld(user,0,-1,0,0)))
 		return
 	if (!( src.status ))
 		src.status = 1
-		user.show_message("<span style=\"color:blue\">A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
+		user.show_message("<span class='notice'>A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
 	else
 		src.status = 0
-		boutput(user, "<span style=\"color:blue\">The hole has been closed.</span>")
+		boutput(user, "<span class='notice'>The hole has been closed.</span>")
 
 	src.bomb_logs(user, src, "radio", src.status == 1 ? 0 : 1, 0)
 	src.part2.status = src.status

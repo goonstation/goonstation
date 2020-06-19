@@ -31,12 +31,12 @@
 			return ..()
 
 		if (!assess_ghostdrone_eligibility(M))
-			out(G, "<span style='color: red; font-weight: bold;'>You are ineligible for ghostdrones!</span>")
+			out(G, "<span class='bold alert'>You are ineligible for ghostdrones!</span>")
 			return ..()
 
 		var/position = find_ghostdrone_position(M)
 		if (position)
-			out(G, "<span style='color: red; font-weight: bold;'>You are already #[position] in the ghostdrone queue!</span>")
+			out(G, "<span class='bold alert'>You are already #[position] in the ghostdrone queue!</span>")
 			return ..()
 
 		if (alert(G, "Add yourself to the ghostdrone queue?", "Confirmation", "Yes", "No") == "No")
@@ -44,7 +44,7 @@
 
 		ghostdrone_candidates += M
 		position = ghostdrone_candidates.len
-		out(G, "<span style='color: blue; font-weight: bold;font-size: 120%;'>You have been added to the ghostdrone queue. Now position #[position].</span>")
+		out(G, "<span class='bold notice'>You have been added to the ghostdrone queue. Now position #[position].</span>")
 
 	process()
 		..()
@@ -75,13 +75,13 @@
 				ghostdrone_candidates.Cut(i, (i--) + 1) //This looks like bullshit (and it is). It removes whatever is at position i in the list and subtracts 1 from i.
 				if(istype(M))
 					//Notify M that they've been punted due to ineligibility
-					out(M.current, "<span style='color: red; font-weight: bold;font-size: 120%;'>You were removed from the ghostdrone queue due to ineligibility!</span>")
+					out(M.current, "<span class='bold alert'>You were removed from the ghostdrone queue due to ineligibility!</span>")
 			else if(!.) //We have not yet selected a candidate, pick this one and dequeue
 				. = M
 				ghostdrone_candidates.Cut(i, (i--) + 1)
 			else
 				//Let them know that the queue has moved
-				out(M.current, "<span style='color: blue; font-weight: bold;'>You are now position #[i] in the ghostdrone queue.</span>")
+				out(M.current, "<span class='bold notice'>You are now position #[i] in the ghostdrone queue.</span>")
 
 /proc/assess_ghostdrone_eligibility(var/datum/mind/M)
 	if(!istype(M))

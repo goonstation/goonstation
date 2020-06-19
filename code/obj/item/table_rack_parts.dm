@@ -85,7 +85,7 @@ RACK PARTS
 	attack_self(mob/user as mob)
 		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration), user)
 
-	dispose()
+	disposing()
 		if (src.contained_storage && src.contained_storage.contents.len)
 			var/turf/T = get_turf(src)
 			for (var/atom/movable/A in src.contained_storage)
@@ -468,11 +468,11 @@ RACK PARTS
 
 	onStart()
 		..()
-		owner.visible_message("<span style='color:blue'>[owner] begins constructing \an [fname]!</span>")
+		owner.visible_message("<span class='notice'>[owner] begins constructing \an [fname]!</span>")
 
 	onEnd()
 		..()
-		owner.visible_message("<span style='color:blue'>[owner] constructs \an [fname]!</span>")
+		owner.visible_message("<span class='notice'>[owner] constructs \an [fname]!</span>")
 		fparts.construct(owner)
 
 /datum/action/bar/icon/furniture_deconstruct
@@ -512,10 +512,10 @@ RACK PARTS
 	onStart()
 		..()
 		playsound(get_turf(the_furniture), "sound/items/Ratchet.ogg", 50, 1)
-		owner.visible_message("<span style='color:blue'>[owner] begins disassembling [the_furniture].</span>")
+		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_furniture].</span>")
 
 	onEnd()
 		..()
 		playsound(get_turf(the_furniture), "sound/items/Deconstruct.ogg", 50, 1)
 		the_furniture:deconstruct() // yes a colon, bite me
-		owner.visible_message("<span style='color:blue'>[owner] disassembles [the_furniture].</span>")
+		owner.visible_message("<span class='notice'>[owner] disassembles [the_furniture].</span>")

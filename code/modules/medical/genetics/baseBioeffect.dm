@@ -85,7 +85,11 @@ var/const/effectTypeFood = 4
 	disposing()
 		if(!removed)
 			src.OnRemove()
+		holder = null
 		owner = null
+		if(dnaBlocks)
+			dnaBlocks.dispose()
+		dnaBlocks = null
 		..()
 
 	proc/OnAdd()     //Called when the effect is added.
@@ -103,11 +107,6 @@ var/const/effectTypeFood = 4
 				var/mob/living/L = owner
 				L.UpdateOverlays(null, id)
 		return
-
-	Del()
-		if(!removed)
-			src.OnRemove()
-		..()
 
 	proc/OnMobDraw() //Called when the overlays for the mob are drawn. Children should NOT run when this returns 1
 		return removed
@@ -144,6 +143,12 @@ var/const/effectTypeFood = 4
 	New(var/holder)
 		owner = holder
 		return ..()
+
+	disposing()
+		owner = null
+		blockList = null
+		blockListCurr = null
+		..()
 
 	proc/sequenceCorrect()
 		if(blockList.len != blockListCurr.len)
@@ -260,11 +265,11 @@ var/const/effectTypeFood = 4
 		var/mob/living/user = usr
 
 		if (!istype(user) || !istype(owner))
-			boutput(user, "<span style=\"color:red\">Oh christ something's gone completely batshit. Report this to a coder.</span>")
+			boutput(user, "<span class='alert'>Oh christ something's gone completely batshit. Report this to a coder.</span>")
 			return
 
 		if (!owner.cooldowncheck())
-			boutput(user, "<span style=\"color:red\">That ability is on cooldown for [round((owner.last_cast - world.time) / 10)] seconds.</span>")
+			boutput(user, "<span class='alert'>That ability is on cooldown for [round((owner.last_cast - world.time) / 10)] seconds.</span>")
 			return
 
 		if (!owner.targeted)
@@ -323,7 +328,7 @@ var/const/effectTypeFood = 4
 		if (can_act_check && !can_act(owner, needs_hands))
 			return 999
 		if (last_cast > world.time)
-			boutput(holder.owner, "<span style=\"color:red\">That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds.</span>")
+			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds.</span>")
 			return 999
 
 		if (has_misfire)

@@ -30,11 +30,11 @@
 		if(1 || 2)
 			if(prob(8))
 				playsound(affected_mob.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
-				affected_mob.show_message(text("<span style=\"color:red\">[] makes a strange honking sound!</span>", affected_mob), 1)
+				affected_mob.show_message(text("<span class='alert'>[] makes a strange honking sound!</span>", affected_mob), 1)
 			if(prob(8))
-				boutput(affected_mob, "<span style=\"color:red\">You feel your feet straining!</span>")
+				boutput(affected_mob, "<span class='alert'>You feel your feet straining!</span>")
 			if(prob(8))
-				boutput(affected_mob, "<span style=\"color:red\">Peels... gotta get me some peels...</span>")
+				boutput(affected_mob, "<span class='alert'>Peels... gotta get me some peels...</span>")
 			if(prob(8))
 				affected_mob.say("HONK!")
 		if(3)
@@ -67,7 +67,7 @@
 								affected_mob.set_loc(T2)
 								affected_mob.changeStatus("stunned", 2 SECONDS)
 								affected_mob.changeStatus("weakened", 2 SECONDS)
-								boutput(affected_mob, "<span style=\"color:red\">You feel clumsy and suddenly slip!</span>")
+								boutput(affected_mob, "<span class='alert'>You feel clumsy and suddenly slip!</span>")
 
 			if(prob(10))
 				playsound(affected_mob.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
@@ -88,10 +88,10 @@
 		if(4)
 #ifdef HALLOWEEN
 			if(prob(1))
-				boutput(affected_mob, "<span style=\"color:red\">You feel as if you could burst with joy!</span>")
+				boutput(affected_mob, "<span class='alert'>You feel as if you could burst with joy!</span>")
 				if(prob(50))
 					for(var/mob/O in viewers(affected_mob, null))
-						O.show_message(text("<span style=\"color:red\"><B>[]</B> starts convulsing violently!</span>", affected_mob), 1)
+						O.show_message(text("<span class='alert'><B>[]</B> starts convulsing violently!</span>", affected_mob), 1)
 					// affected_mob.weakened = max(15, affected_mob.weakened)
 					affected_mob.changeStatus("weakened", 2 SECONDS)
 					affected_mob.make_jittery(1000)
@@ -144,7 +144,7 @@
 
 			if(prob(8))
 				playsound(affected_mob.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
-				affected_mob.show_message(text("<span style=\"color:red\">[] makes a strange honking sound!</span>", affected_mob), 1)
+				affected_mob.show_message(text("<span class='alert'>[] makes a strange honking sound!</span>", affected_mob), 1)
 
 			if(prob(4) && isturf(affected_mob.loc))
 				var/turf/T = affected_mob.loc
@@ -171,4 +171,4 @@
 								affected_mob.set_loc(T2)
 								affected_mob.changeStatus("stunned", 2 SECONDS)
 								affected_mob.changeStatus("weakened", 2 SECONDS)
-								boutput(affected_mob, "<span style=\"color:red\">You feel clumsy and suddenly slip!</span>")
+								boutput(affected_mob, "<span class='alert'>You feel clumsy and suddenly slip!</span>")

@@ -169,8 +169,6 @@
 	if (isdead(src) || !src.classic_move)
 		return
 
-	user.machine = src
-
 	var/list/L = list()
 	for (var/obj/machinery/camera/C in cameras)
 		L.Add(C)
@@ -222,14 +220,13 @@
 		owner = null
 		tracking = null
 		global.tracking_list -= src
+		..()
 
 	proc/begin_track(mob/target as mob)
 		if(!owner || !target)
 			return
 
 		tracking = target
-		if(!owner.machine)
-			owner.machine = owner
 
 		if (!owner.deployed_to_eyecam)
 			if (!owner.deployed_to_eyecam)
@@ -293,7 +290,7 @@
 		//Target is not on station level
 		return (target.loc.z == 1) \
 				&& ((issilicon(target) && istype(target.loc, /turf) ) \
-				|| (iscritter(target) && istype(target.loc, /turf) ) \
+				|| (ismobcritter(target) && istype(target.loc, /turf) ) \
 				|| !((ishuman(target) \
 				&& istype(target:wear_id, /obj/item/card/id/syndicate)) \
 				|| (target:wear_id && istype(target:wear_id, /obj/item/device/pda2) && target:wear_id:ID_card && istype(target:wear_id:ID_card, /obj/item/card/id/syndicate)) \

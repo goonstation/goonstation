@@ -47,7 +47,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 	Start()
 		if (!initial_turf)
 			logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Failed setup.")
-			boutput(usr, "<span style=\"color:red\"><b>Error setting up tutorial!</b></span>")
+			boutput(usr, "<span class='alert'><b>Error setting up tutorial!</b></span>")
 			qdel(src)
 			return
 		if (..())
@@ -764,7 +764,7 @@ proc/AddBlobSteps(var/datum/tutorial/blob/T)
 /mob/living/intangible/blob_overmind/verb/help_my_tutorial_is_being_a_massive_shit()
 	set name = "EMERGENCY TUTORIAL STOP"
 	if (!tutorial)
-		boutput(src, "<span style=\"color:red\">You're not in a tutorial, doofus. It's real. IT'S ALL REAL.</span>")
+		boutput(src, "<span class='alert'>You're not in a tutorial, doofus. It's real. IT'S ALL REAL.</span>")
 		return
 	src.tutorial.Finish()
 	src.tutorial = null

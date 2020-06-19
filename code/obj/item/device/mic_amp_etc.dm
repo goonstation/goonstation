@@ -14,18 +14,19 @@
 
 	attack_self(mob/user as mob)
 		src.on = !(src.on)
+		tooltip_rebuild = 1
 		user.show_text("You switch [src] [src.on ? "on" : "off"].")
 		if (src.on && prob(5))
 			if (locate(/obj/loudspeaker) in range(2, user))
 				for (var/obj/loudspeaker/S in by_type[/obj/loudspeaker])
 					if(!DIST_CHECK(S, user, 7)) continue
-					S.visible_message("<span style=\"color:red\">[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
+					S.visible_message("<span class='alert'>[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
 					playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
 
 	attack_hand(mob/user as mob)
 		if (user.find_in_hand(src) && src.on)
 			playsound(get_turf(user), 'sound/misc/miccheck.ogg', 30, 1)
-			user.visible_message("<span style='color:#605b59'>[user] taps [src] with [his_or_her(user)] hand.</span>")
+			user.visible_message("<span class='emote'>[user] taps [src] with [his_or_her(user)] hand.</span>")
 		else
 			return ..()
 
@@ -61,7 +62,7 @@
 		if (prob(10) && locate(/obj/loudspeaker) in range(2, T))
 			for (var/obj/loudspeaker/S in by_type[/obj/loudspeaker])
 				if(!DIST_CHECK(S, T, 7)) continue
-				S.visible_message("<span style=\"color:red\">[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
+				S.visible_message("<span class='alert'>[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
 				playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
 
 /obj/mic_stand

@@ -75,11 +75,12 @@
 
 		if (istype(M.buckled,/obj/stool/chair))
 			var/obj/stool/chair/C = M.buckled
+			M.buckled.unbuckle()
 			C.buckledIn = 0
 			C.buckled_guy = 0
 		M.pixel_y = 0
 		M.buckled = null
-		M.anchored = 0
+		reset_anchored(M)
 
 		M.targeting_ability = null
 		M.update_cursor()
@@ -132,7 +133,7 @@
 					M.changeStatus("weakened", 7 SECONDS * effect_mult)
 					M.force_laydown_standup()
 			else if (M.traitHolder.hasTrait("training_security")) //consider rremoving this, prrobably not necessarry any more
-				M.visible_message("<span style=\"color:red\"><B>[src]</B></span> does a flying flip into <span style=\"color:red\">[M]</span>, but <span style=\"color:red\">[M]</span> skillfully slings them away!")
+				M.visible_message("<span class='alert'><B>[src]</B></span> does a flying flip into <span class='alert'>[M]</span>, but <span class='alert'>[M]</span> skillfully slings them away!")
 				src.changeStatus("weakened", 6 SECONDS)
 				var/atom/target = get_edge_target_turf(M, M.dir)
 				src.throw_at(target, 3, 10)
@@ -149,7 +150,12 @@
 					src.changeStatus("weakened", 3 SECONDS * effect_mult)
 				src.force_laydown_standup()
 
-/mob/throw_end()
+/mob/throw_end(list/params)
 	if (src.throwing & THROW_CHAIRFLIP)
-		src.changeStatus("weakened", 1.7 SECONDS)
+		src.changeStatus("weakened", 2.8 SECONDS)
 		src.force_laydown_standup()
+
+	if (length(params) && params["stun"])
+		if (src.getStatusDuration("weakened") < params["stun"])
+			src.setStatus("weakened", params["stun"])
+			src.force_laydown_standup()

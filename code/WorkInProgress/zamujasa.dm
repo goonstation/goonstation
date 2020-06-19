@@ -11,8 +11,8 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (issnippingtool(W))
 			logTheThing("station", user, null, "cut the don't-cut-this wire and got ghosted/disconnected as a result.")
-			//boutput(user, "<span style=\"color:red\">You snip the ca</span>")
-			user.visible_message("[user] nearly snips the cable with \the [W], but suddenly freezes in place just before it cuts!", "<span style=\"color:red\">You snip the ca</span>")
+			//boutput(user, "<span class='alert'>You snip the ca</span>")
+			user.visible_message("[user] nearly snips the cable with \the [W], but suddenly freezes in place just before it cuts!", "<span class='alert'>You snip the ca</span>")
 			var/client/C = user.client
 			user.ghostize()
 			del(C)
@@ -272,7 +272,7 @@
 		if (score == -1)
 			return ..()
 
-		boutput(user, "<span style=\"color:blue\">[src] mulches up [W].</span>")
+		boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
 		user.u_equip(W)
 		W.dropped()
 		mulch_item(W, score)
@@ -352,19 +352,19 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!isliving(user))
-			boutput(user, "<span style=\"color:red\">Excuse me you are dead, get your gross dead hands off that!</span>")
+			boutput(user, "<span class='alert'>Excuse me you are dead, get your gross dead hands off that!</span>")
 			return
 		if (get_dist(user,src) > 1)
-			boutput(user, "<span style=\"color:red\">You need to move closer to [src] to do that.</span>")
+			boutput(user, "<span class='alert'>You need to move closer to [src] to do that.</span>")
 			return
 		if (get_dist(O,src) > 1 || get_dist(O,user) > 1)
-			boutput(user, "<span style=\"color:red\">[O] is too far away to load into [src]!</span>")
+			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
 			return
 
 		var/score = 0
 		if (get_item_value(O) != -1)
 			var/MT = start_scoring()
-			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing things into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing things into [src]!</span>")
 			var/staystill = user.loc
 
 			for(var/obj/item/P in view(1,user))
@@ -377,14 +377,14 @@
 				update_score(MT, score)
 				sleep(0.1 SECONDS)
 
-			boutput(user, "<span style=\"color:blue\">You finish stuffing things into [src]!</span>")
+			boutput(user, "<span class='notice'>You finish stuffing things into [src]!</span>")
 			finish_scoring(MT)
 		else ..()
 
 /obj/death_button/clean_gunsim
 	name = "button that will clean the murderbox"
 	desc = "push this to clean the murderbox and probably not get killed. takes a minute."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "cleanbot1"
 
 	var/area/sim/gunsim/gunsim
@@ -406,7 +406,17 @@
 
 		SPAWN_DBG(0)
 			for (var/obj/item/I in gunsim)
-				qdel(I)
+				if(istype(I, /obj/item/device/radio/intercom)) //lets not delete the intercoms inside shall we?
+					continue
+				else
+					qdel(I)
+
+			for (var/atom/S in gunsim)
+				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery/bot) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy))
+					qdel(S)
+
+
+/*
 			for (var/obj/storage/S in gunsim)
 				qdel(S)
 			for (var/obj/artifact/A in gunsim)
@@ -417,13 +427,37 @@
 				qdel(B)
 			for (var/obj/decal/D in gunsim)
 				qdel(D)
-
+*/
 		SPAWN_DBG(60 SECONDS)
 			active = 0
 			alpha = 255
 			icon_state = "cleanbot1"
 
 
+/obj/death_button/create_dummy
+	name = "Button that creates a test dummy"
+	desc = "click this to create a test dummy"
+	icon = 'icons/mob/human.dmi'
+	icon_state = "ghost"
+	var/active = 0
+	alpha = 255
+
+	attack_hand(mob/user as mob)
+		if (active)
+			boutput(user, "did you already kill the dummy? either way wait a bit!")
+			return
+
+		active = 1
+		alpha = 128
+		boutput(user, "Spawning target dummy, stand by") //no need to be rude
+
+		new /mob/living/carbon/human/tdummy(locate(src.x+1, src.y, src.z))
+		//T.x = src.x + 1 // move it to the right
+
+
+		SPAWN_DBG(10 SECONDS)
+			active = 0
+			alpha = 255
 
 
 /proc/fancy_pressure_bar(var/pressure, var/max_pressure, var/width = 300)
@@ -627,6 +661,7 @@
 
 	disposing()
 		UnsubscribeProcess()
+		..()
 
 	process()
 		if (src.last_count != runtime_count)

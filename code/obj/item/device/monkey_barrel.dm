@@ -36,7 +36,7 @@
 					s.start()
 					playsound(my_barrel.loc, "sound/effects/Explosion1.ogg", 75, 1)
 				logTheThing("combat", usr, null, "explodes a barrel of monkeys at [log_loc(src.my_barrel.loc)].")
-				my_barrel.visible_message("<span style=\"color:red\">\The [my_barrel] explodes!</span>")
+				my_barrel.visible_message("<span class='alert'>\The [my_barrel] explodes!</span>")
 				my_barrel.dump_contents()
 				qdel(my_barrel)
 				qdel(src)

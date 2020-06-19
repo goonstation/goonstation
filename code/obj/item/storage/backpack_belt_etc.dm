@@ -5,6 +5,7 @@
 	name = "backpack"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
 	icon_state = "backpack"
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
 	flags = ONBACK | FPRINT | TABLEPASS | NOSPLASH
 	w_class = 4.0
@@ -16,6 +17,7 @@
 	New()
 		..()
 		BLOCK_LARGE
+		AddComponent(/datum/component/itemblock/backpackblock)
 
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
@@ -34,7 +36,8 @@
 
 /obj/item/storage/backpack/medic
 	name = "medic's backpack"
-	icon_state = "bp_medic"
+	icon_state = "bp_medic" //im doing inhands, im not getting baited into refactoring every icon state to use hyphens instead of underscores right now
+	item_state = "bp-medic"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 /obj/item/storage/backpack/satchel
@@ -102,6 +105,11 @@
 	spawn_contents = list(/obj/item/storage/box/starter,\
 	/obj/item/storage/box/balloonbox)
 
+/obj/item/storage/fanny/funny/mini
+	name = "mini funny pack"
+	desc = "Haha, get it? Get it? 'Funny'! This one seems a little smaller, and made of even cheaper material."
+	slots = 3
+
 /obj/item/storage/fanny/syndie
 	name = "syndicate tactical espionage belt pack"
 	desc = "It's different than a fanny pack. It's tactical and action-packed!"
@@ -135,19 +143,19 @@
 		var/mob/M = usr
 		if (!istype(over_object, /obj/screen))
 			if(!can_use())
-				boutput(M, "<span style=\"color:red\">I need to wear [src] for that.</span>")
+				boutput(M, "<span class='alert'>I need to wear [src] for that.</span>")
 				return
 		return ..()
 
 	attack_hand(mob/user as mob)
 		if (src.loc == user && !can_use())
-			boutput(user, "<span style=\"color:red\">I need to wear [src] for that.</span>")
+			boutput(user, "<span class='alert'>I need to wear [src] for that.</span>")
 			return
 		return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(!can_use())
-			boutput(user, "<span style=\"color:red\">I need to wear [src] for that.</span>")
+			boutput(user, "<span class='alert'>I need to wear [src] for that.</span>")
 			return
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
@@ -269,14 +277,13 @@
 		return ..()
 
 	examine()
-		..()
-		boutput(usr, "There are [src.charge]/[src.maxCharge] PU left.")
-		return
+		. = ..()
+		. += "There are [src.charge]/[src.maxCharge] PU left."
 
 	buildTooltipContent()
-		var/content = ..()
-		content += "<br>There are [src.charge]/[src.maxCharge] PU left."
-		return content
+		. = ..()
+		. += "<br>There are [src.charge]/[src.maxCharge] PU left."
+		lastTooltipContent = .
 
 /obj/item/storage/belt/utility/prepared
 	spawn_contents = list(/obj/item/crowbar,
@@ -324,8 +331,8 @@
 	/obj/item/gun/energy/phaser_gun,
 	/obj/item/gun/energy/laser_gun,
 	/obj/item/gun/energy/egun,
-	/obj/item/gun/energy/lawgiver,
-	/obj/item/gun/energy/lawgiver/old,
+	/obj/item/gun/energy/lawbringer,
+	/obj/item/gun/energy/lawbringer/old,
 	/obj/item/gun/energy/wavegun,
 	/obj/item/gun/kinetic/revolver,
 	/obj/item/gun/kinetic/zipgun)
@@ -409,12 +416,22 @@
 	contraband = 8
 	is_syndicate = 1
 	mats = 18 //SPACE IS THE PLACE FOR WRESTLESTATION 13
+	var/fake = 0		//So the moves are all fake.
 
 	equipped(var/mob/user)
-		user.make_wrestler(0, 1, 0)
+		..()
+		user.make_wrestler(0, 1, 0, fake)
 
 	unequipped(var/mob/user)
-		user.make_wrestler(0, 1, 1)
+		..()
+		user.make_wrestler(0, 1, 1, fake)
+
+/obj/item/storage/belt/wrestling/fake
+	name = "fake wrestling belt"
+	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
+	contraband = 0
+	is_syndicate = 0
+	fake = 1
 
 // I dunno where else to put these vOv
 /obj/item/inner_tube

@@ -9,6 +9,8 @@
 
 		shamecubed = 0
 
+		list/cooldowns = list()
+
 	New(key)
 		src.key = key
 		src.tag = "player-[ckey(key)]"

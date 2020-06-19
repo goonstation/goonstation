@@ -51,6 +51,7 @@ var/global
 	icon/hopIcon = icon('icons/mob/16.dmi',"hop",SOUTH,1)
 	icon/hosIcon = icon('icons/mob/16.dmi',"hos",SOUTH,1)
 	icon/clownIcon = icon('icons/mob/16.dmi',"clown",SOUTH,1)
+	icon/ntIcon = icon('icons/mob/16.dmi',"nt",SOUTH,1)
 
 	turf/buzztile = null
 
@@ -65,11 +66,13 @@ var/global
 	list/cameras = list()
 	list/clients = list()
 	list/mobs = list()
+	list/ai_mobs = list()
 	list/AIs = list() //sorry, quicker loop through when we searching for AIs
 	list/doors = list()
 	list/allcables = list()
 	list/atmos_machines = list() // need another list to pull atmos machines out of the main machine loop and in with the pipe networks
 	list/processing_items = list()
+	list/health_update_queue = list()
 	list/processing_fluid_groups = list()
 	list/processing_fluid_spreads = list()
 	list/processing_fluid_drains = list()
@@ -81,6 +84,7 @@ var/global
 
 	//list/total_deletes = list() //List of things totally deleted
 	list/critters = list()
+	list/pets = list() //station pets
 	list/ghost_drones = list()
 	list/muted_keys = list()
 
@@ -151,38 +155,7 @@ var/global
 	"Colorblind" = 'icons/mob/hud_human_new_colorblind.dmi')
 
 	list/customization_styles = list("None" = "none",
-	"Balding" = "balding",
-	"Tonsure" = "tonsure",
-	"Buzzcut" = "cut",
-	"Trimmed" = "short",
-	"Bangs" = "bangs",
-	"Combed" = "combed_s",
-	"Mohawk" = "mohawk",
-	"Mohawk: Fade from End" = "mohawkFT",
-	"Mohawk: Fade from Root" = "mohawkFB",
-	"Mohawk: Stripes" = "mohawkS",
-	"Flat Top" = "flattop",
-	"Pompadour" = "pomp",
-	"Pompadour: Greaser Shine" = "pompS",
-	"Temsik" = "temsik",
-	"Ponytail" = "ponytail",
-	"Mullet" = "long",
-	"Emo" = "emo",
-	"Emo: Highlight" = "emoH",
-	"Bun" = "bun",
-	"Bieber" = "bieb",
-	"Bowl Cut" = "bowl",
-	"Parted Hair" = "part",
-	"Einstein" = "einstein",
-	"Einstein: Alternating" = "einalt",
-	"Clown" = "clown",
-	"Clown: Top" = "clownT",
-	"Clown: Middle Band" = "clownM",
-	"Clown: Bottom" = "clownB",
-	"Draped" = "shoulders",
-	"Bedhead" = "bedhead",
-	"Dreadlocks" = "dreads",
-	"Dreadlocks: Alternating" = "dreadsA",
+	/*Short*/
 	"Afro" = "afro",
 	"Afro: Left Half" = "afroHR",
 	"Afro: Right Half" = "afroHL",
@@ -198,94 +171,136 @@ var/global
 	"Afro: SW Corner" = "afroCSW",
 	"Afro: Tall Stripes" = "afroSV",
 	"Afro: Long Stripes" = "afroSH",
-	"Long Braid" = "longbraid",
-	"Very Long" = "vlong",
-	"Hairmetal" = "80s",
-	"Hairmetal: Faded" = "80sfade",
-	"Glammetal" = "glammetal",
-	"Glammetal: Faded" = "glammetalO",
-	"Kingmetal" = "king-of-rock-and-roll",
-	"Scraggly" = "scraggly",
-	"Fabio" = "fabio",
-	"Right Half-Shaved" = "halfshavedL",
-	"Left Half-Shaved" = "halfshavedR",
-	"Long Half-Shaved" = "halfshaved_s",
-	"High Ponytail" = "spud",
-	"Low Ponytail" = "band",
-	"High Flat Top" = "charioteers",
-	"Double Braids" = "indian",
-	"Shoulder Drape" = "pulledf",
-	"Punky Flip" = "shortflip",
-	"Pigtails" = "pig",
-	"Low Pigtails" = "lowpig",
-	"Mini Pigtails" = "minipig",
-	"Mid-Back Length" = "midb",
-	"Split-Tails" = "twotail",
-	"Double Buns" = "doublebun",
-	"Shimada" = "geisha_s",
+	"Balding" = "balding",
+	"Bangs" = "bangs",
+	"Bieber" = "bieb",
 	"Bobcut" = "bobcut",
 	"Bobcut Alt" = "baum_s",
+	"Bowl Cut" = "bowl",
+	"Buzzcut" = "cut",
+	"Clown" = "clown",
+	"Clown: Top" = "clownT",
+	"Clown: Middle Band" = "clownM",
+	"Clown: Bottom" = "clownB",
+	"Combed" = "combed_s",
 	"Combed Bob" = "combedbob_s",
-	"Shoulder Length" = "shoulderl",
-	"Shoulder-Length Mess" = "slightlymessy_s",
-	"Pulled Back" = "pulledb",
 	"Choppy Short" = "chop_short",
-	"Long and Froofy" = "froofy_long",
-	"Mermaid" = "mermaid",
-	"Captor" = "sakura",
-	"Sage" = "sage",
-	"Fun Bun" = "fun_bun",
-	"Croft" = "croft",
+	"Einstein" = "einstein",
+	"Einstein: Alternating" = "einalt",
+	"Emo" = "emo",
+	"Emo: Highlight" = "emoH",
+	"Flat Top" = "flattop",
+	"Hair Streak" = "streak",
+	"Mohawk" = "mohawk",
+	"Mohawk: Fade from End" = "mohawkFT",
+	"Mohawk: Fade from Root" = "mohawkFB",
+	"Mohawk: Stripes" = "mohawkS",
+	"Mullet" = "long",
+	"Parted Hair" = "part",
+	"Pompadour" = "pomp",
+	"Pompadour: Greaser Shine" = "pompS",
+	"Punky Flip" = "shortflip",
+	"Temsik" = "temsik",
+	"Tonsure" = "tonsure",
+	"Trimmed" = "short",
+	/*Long*/
+	"Bang: Left" = "chub2_s",
+	"Bang: Right" = "chub_s",
+	"Bedhead" = "bedhead",
 	"Disheveled" = "disheveled",
-	"Mid-Length Curl" = "bluntbangs_s",
+	"Double-Part" = "doublepart",
+	"Draped" = "shoulders",
+	"Dreadlocks" = "dreads",
+	"Dreadlocks: Alternating" = "dreadsA",
+	"Fabio" = "fabio",
+	"Glammetal" = "glammetal",
+	"Glammetal: Faded" = "glammetalO",
+	"Hairmetal" = "80s",
+	"Hairmetal: Faded" = "80sfade",
+	"Half-Shaved: Left" = "halfshavedR",
+	"Half-Shaved: Long" = "halfshaved_s",
+	"Half-Shaved: Right" = "halfshavedL",
+	"Kingmetal" = "king-of-rock-and-roll",
+	"Long and Froofy" = "froofy_long",
+	"Long Braid" = "longbraid",
 	"Long Flip" = "longsidepart_s",
+	"Pulled Back" = "pulledb",
+	"Sage" = "sage",
+	"Scraggly" = "scraggly",
+	"Shoulder Drape" = "pulledf",
+	"Shoulder-Length" = "shoulderl",
+	"Shoulder-Length Mess" = "slightlymessy_s",
+	"Mermaid" = "mermaid",
+	"Mid-Back Length" = "midb",
+	"Mid-Length Curl" = "bluntbangs_s",
+	"Very Long" = "vlong",
+	/*Hair Up (Ponytails, buns, etc.)*/
+	"Bun" = "bun",
+	"Captor" = "sakura",
+	"Croft" = "croft",
+	"Double Braids" = "indian",
+	"Double Buns" = "doublebun",
+	"Drill" = "drill",
+	"Fun Bun" = "fun_bun",
+	"High Flat Top" = "charioteers",
+	"High Ponytail" = "spud",
+	"Low Pigtails" = "lowpig",
+	"Low Ponytail" = "band",
+	"Mini Pigtails" = "minipig",
+	"Pigtails" = "pig",
+	"Ponytail" = "ponytail",
+	"Shimada" = "geisha_s",
+	"Split-Tails" = "twotail",
 	"Wavy Ponytail" = "wavy_tail",
-	"Chaplin" = "chaplin",
-	"Selleck" = "selleck",
-	"Watson" = "watson",
-	"Old Nick" = "devil",
+	/*Moustaches*/
 	"Biker" = "fu",
-	"Twirly" = "villain",
+	"Chaplin" = "chaplin",
 	"Dali" = "dali",
 	"Hogan" = "hogan",
-	"Van Dyke" = "vandyke",
-	"Hipster" = "hip",
+	"Old Nick" = "devil",
 	"Robotnik" = "robo",
-	"Elvis" = "elvis",
-	"Goatee" = "gt",
-	"Chinstrap" = "chin",
-	"Neckbeard" = "neckbeard",
+	"Selleck" = "selleck",
+	"Twirly" = "villain",
+	"Van Dyke" = "vandyke",
+	"Watson" = "watson",
+	/*Beards*/
 	"Abe" = "abe",
-	"Full Beard" = "fullbeard",
+	"Beard Streaks" = "bstreak",
 	"Braided Beard" = "braided",
-	"Puffy Beard" = "puffbeard",
+	"Chinstrap" = "chin",
+	"Full Beard" = "fullbeard",
+	"Goatee" = "gt",
+	"Hipster" = "hip",
 	"Long Beard" = "longbeard",
+	"Neckbeard" = "neckbeard",
+	"Puffy Beard" = "puffbeard",
 	"Tramp" = "tramp",
 	"Tramp: Beard Stains" = "trampstains",
+	/*Sideburns*/
+	"Elvis" = "elvis",
+	/*Eyebrows*/
 	"Eyebrows" = "eyebrows",
 	"Huge Eyebrows" = "thufir",
-	"Hair Streak" = "streak",
-	"Beard Streaks" = "bstreak",
-	"Right Bang" = "chub_s",
-	"Left Bang" = "chub2_s",
+	/*Makeup*/
 	"Eyeshadow" = "eyeshadow",
 	"Lipstick" = "lipstick",
-	"Heterochromia Left" = "hetcroL",
-	"Heterochromia Right" = "hetcroR")
+	/*Biological*/
+	"Heterochromia: Left" = "hetcroL",
+	"Heterochromia: Right" = "hetcroR")
 
-	list/customization_styles_gimmick = list("Goku" = "goku",
-	"Homer" = "homer",
+	list/customization_styles_gimmick = list("Afro: Alternating Halves" = "afroHA",
+	"Afro: Rainbow" = "afroRB",
 	"Bart" = "bart",
-	"Jetson" = "jetson",
-	"X-COM Rookie" = "xcom",
-	"Zapped" = "zapped",
-	"Rainbow Afro" = "afroRB",
+	"Elegant Wave" = "ewave_s",
 	"Flame Hair" = "flames",
+	"Goku" = "goku",
+	"Homer" = "homer",
+	"Jetson" = "jetson",
 	"Sailor Moon" = "sailor_moon",
 	"Sakura" = "sakura",
-	"Elegant Wave" = "ewave_s",
 	"Wizard" = "wiz",
-	"Afro: Alternating Halves" = "afroHA")
+	"X-COM Rookie" = "xcom",
+	"Zapped" = "zapped")
 
 	list/underwear_styles = list("No Underwear" = "none",
 	"Briefs" = "briefs",
@@ -649,7 +664,7 @@ var/global
 	list/reagents_cache = list()
 
 	// if you want stuff to not be spawnable by the list or buildmode, put it in here:
-	list/do_not_spawn = list("/obj/bhole","/obj/item/old_grenade/gravaton","/mob/living/carbon/human/krampus")
+	list/do_not_spawn = list("/obj/bhole","/obj/item/old_grenade/graviton","/mob/living/carbon/human/krampus")
 
 	// list of miscreants since mode is irrelevant
 	list/miscreants = list()
@@ -735,12 +750,6 @@ var/global
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("credits","bux","tokens","cash","dollars","tokens","dollarydoos","tickets","souls","doubloons","Pesos","Rubles","Rupees")]"
 
-var/global/mentorhelp_text_color = "#CC0066"
-/proc/set_mentorhelp_color(var/new_color as color)
-	if (!new_color)
-		new_color = input(usr, "Select Mentorhelp color", "Selection", mentorhelp_text_color) as null|color
-	if (new_color)
-		mentorhelp_text_color = new_color
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])

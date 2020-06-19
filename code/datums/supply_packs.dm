@@ -286,13 +286,14 @@
 
 /datum/supply_packs/janitor
 	name = "Janitorial Supplies"
-	desc = "x3 Buckets, x1 Mop, x3 Wet Floor Signs, x3 Cleaning Grenades, x1 Mop Bucket"
+	desc = "x3 Buckets, x3 Mop, x3 Wet Floor Signs, x3 Cleaning Grenades, x1 Mop Bucket, x1 Rubber Gloves"
 	category = "Civilian Department"
 	contains = list(/obj/item/reagent_containers/glass/bucket = 3,
-					/obj/item/mop,
+					/obj/item/mop = 3,
 					/obj/item/caution = 3,
 					/obj/item/chem_grenade/cleaner = 3,
-					/obj/mopbucket)
+					/obj/mopbucket,
+					/obj/item/clothing/gloves/long)
 	cost = 500
 	containertype = /obj/storage/crate
 	containername = "Janitorial Supplies"
@@ -385,10 +386,11 @@
 // Added security resupply crate (Convair880).
 /datum/supply_packs/security_resupply
 	name = "Weapons Crate - Security Equipment (Cardlocked \[Security])"
-	desc = "x1 Port-a-Brig and remote, x1 Taser, x1 Stun Baton, x1 Security-Issue Grenade Box, x1 Handcuff Kit"
+	desc = "x1 Security Belt, 1x Armoured Vest, 1x Helmet, x1 Taser, x1 Stun Baton, x1 Security-Issue Grenade Box, x1 Handcuff Kit"
 	category = "Security Department"
-	contains = list(/obj/machinery/port_a_brig,
-					/obj/item/remote/porter/port_a_brig,
+	contains = list(/obj/item/storage/belt/security,
+					/obj/item/clothing/suit/armor/vest,
+					/obj/item/clothing/head/helmet/hardhat/security,
 					/obj/item/gun/energy/taser_gun,
 					/obj/item/baton,
 					/obj/item/storage/box/QM_grenadekit_security,
@@ -396,6 +398,17 @@
 	cost = 5000
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Security Equipment (Cardlocked \[Security])"
+	access = access_security
+
+/datum/supply_packs/security_brig_resupply
+	name = "Security Containment Crate - Security Equipment (Cardlocked \[Security])"
+	desc = "x1 Port-a-Brig and Remote"
+	category = "Security Department"
+	contains = list(/obj/machinery/port_a_brig,
+					/obj/item/remote/porter/port_a_brig)
+	cost = 1000
+	containertype = /obj/storage/secure/crate/weapon
+	containername = "Security Containment Crate - Security Equipment (Cardlocked \[Security])"
 	access = access_security
 
 /datum/supply_packs/security_upgrade //Azungar's upgrade pack for security.
@@ -432,17 +445,20 @@
 
 /datum/supply_packs/evacuation
 	name = "Emergency Equipment"
-	desc = "x4 Floor Bot, x5 Air Tank, x5 Gas Mask"
+	desc = "x4 Floor Bot, x4 Gas Tanks, x4 Gas Mask, x4 Emergency Space Suit Set"
 	contains = list(/obj/machinery/bot/floorbot = 4,
-	/obj/item/tank/air = 5,
-	/obj/item/clothing/mask/gas = 5)
+	/obj/item/clothing/mask/gas = 4,
+	/obj/item/tank/emergency_oxygen = 2,
+	/obj/item/tank/air = 2,
+	/obj/item/clothing/head/emerg = 4,
+	/obj/item/clothing/suit/space/emerg = 4)
 	cost = 1500
 	containertype = /obj/storage/crate/internals
 	containername = "Emergency Equipment"
 
 /datum/supply_packs/alcohol
-	name = "Alcohol Crate"
-	desc = "x8 Assorted Liquor"
+	name = "Alcohol Resupply Crate"
+	desc = "A collection of nine assorted liquors in case of stationwide alcohol deficiency"
 	category = "Civilian Department"
 	contains = list(/obj/item/storage/box/beer,
 					/obj/item/reagent_containers/food/drinks/bottle/beer,
@@ -451,10 +467,25 @@
 					/obj/item/reagent_containers/food/drinks/bottle/cider,
 					/obj/item/reagent_containers/food/drinks/bottle/rum,
 					/obj/item/reagent_containers/food/drinks/bottle/vodka,
-					/obj/item/reagent_containers/food/drinks/bottle/tequila)
-	cost = 300
+					/obj/item/reagent_containers/food/drinks/bottle/tequila,
+					/obj/item/reagent_containers/food/drinks/bottle/bojackson,
+					/obj/item/reagent_containers/food/drinks/curacao)
+	cost = 400
 	containertype = /obj/storage/crate
 	containername = "Alcohol Crate"
+
+/datum/supply_packs/cocktailparty
+	name = "Cocktail Party Supplies"
+	desc = "All the equipment you need to be the next up and coming amateur mixologist."
+	category = "Civilian Department"
+	contains = list(/obj/item/reagent_containers/food/drinks/cocktailshaker,
+					/obj/item/storage/box/cocktail_umbrellas = 2,
+					/obj/item/storage/box/cocktail_doodads = 2,
+					/obj/item/storage/box/fruit_wedges = 1,
+					/obj/item/shaker/salt = 1)
+	cost = 100
+	containertype = /obj/storage/crate
+	containername = "Cocktail Party Supplies"
 
 /datum/supply_packs/robot
 	name = "Robotics Crate"
@@ -526,6 +557,23 @@
 	cost = 750
 	containertype = /obj/storage/crate
 	containername = "Party Supplies"
+
+/datum/supply_packs/glowsticks
+	name = "Emergency Glowsticks Crate - 4 pack"
+	desc = "x4 Glowsticks Box (28 glowsticks total)"
+	category = "Civilian Department"
+	contains = list(/obj/item/storage/box/glowstickbox = 4)
+	cost = 500
+	containertype = /obj/storage/crate
+	containername = "Emergency Glowsticks Crate - 4 pack"
+
+/datum/supply_packs/glowsticksassorted
+	name = "Assorted Glowsticks Crate - 4 pack"
+	desc = "Everything you need for your very own DIY rave!"
+	contains = list(/obj/item/storage/box/glowstickbox/assorted = 4)
+	cost = 600
+	containertype = /obj/storage/crate
+	containername = "Assorted Glowsticks Crate - 4 pack"
 
 /datum/supply_packs/fueltank
 	name = "Welding Fuel tank"
@@ -616,11 +664,13 @@
 	name = "Comedy Equipment"
 	desc = "Entertainers burn bright but die young, outfit a new one with this crate!"
 	category = "Civilian Department"
-	contains = list(/obj/item/storage/box/costume/clown,
-					/obj/item/instrument/bikehorn,
-					/obj/item/bananapeel,
-					/obj/item/reagent_containers/food/snacks/pie/cream,
-					/obj/item/storage/box/balloonbox)
+	contains = list(
+		/obj/item/storage/box/costume/clown/recycled,
+		/obj/item/instrument/bikehorn,
+		/obj/item/bananapeel,
+		/obj/item/reagent_containers/food/snacks/pie/cream,
+		/obj/item/storage/box/balloonbox,
+	)
 	cost = 500
 	containertype = /obj/storage/crate/packing
 	containername = "Comedy Equipment"
@@ -888,6 +938,7 @@
 	category = "Civilian Department"
 	contains = list(/obj/item/chem_grenade/cleaner = 4,
 					/obj/item/spraybottle/cleaner = 2,
+					/obj/item/reagent_containers/glass/bottle/cleaner = 2,
 					/obj/item/storage/box/trash_bags,
 					/obj/item/storage/box/biohazard_bags)
 	cost = 500
@@ -1431,10 +1482,10 @@
 	category = "Medical Department"
 	contains = list(/obj/item/staple_gun,
 					/obj/item/scalpel,
-					/obj/item/circular_saw)
+					/obj/item/circular_saw,
+					/obj/item/circuitboard/robot_module_rewriter)
 	frames = list(/obj/machinery/manufacturer/robotics,
 					/obj/machinery/optable,
-					/obj/submachine/robomoduler,
 					/obj/machinery/recharge_station)
 	cost = 20000
 	containertype = /obj/storage/crate
@@ -1512,3 +1563,12 @@
 	cost = 5000
 	containertype = /obj/storage/crate/wooden
 	containername = "Printing Press Crate"
+
+/datum/supply_packs/percussion_band_kit
+	name = "Percussion Band Kit"
+	desc = "1x Tambourine, 1x Cowbell, 1x Triangle"
+	category = "Civilian Department"
+	cost = 2000
+	containername = "Percussion Band Kit"
+	contains = list(/obj/item/instrument/tambourine,/obj/item/instrument/triangle,/obj/item/instrument/cowbell)
+	containertype = /obj/storage/crate/wooden

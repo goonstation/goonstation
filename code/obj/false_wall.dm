@@ -86,17 +86,17 @@
 			//door is closed
 			if (known)
 				if (open())
-					boutput(user, "<span style=\"color:blue\">The wall slides open.</span>")
+					boutput(user, "<span class='notice'>The wall slides open.</span>")
 			else if (prob(prob_opens))
 				//it's hard to open
 				if (open())
-					boutput(user, "<span style=\"color:blue\">The wall slides open!</span>")
+					boutput(user, "<span class='notice'>The wall slides open!</span>")
 					known_by += user
 			else
 				return ..()
 		else
 			if (close())
-				boutput(user, "<span style=\"color:blue\">The wall slides shut.</span>")
+				boutput(user, "<span class='notice'>The wall slides shut.</span>")
 		return
 
 	attackby(obj/item/S as obj, mob/user as mob)
@@ -108,9 +108,9 @@
 				//without this, you can detect a false wall just by going down the line with screwdrivers
 				//if it's already open, you can disassemble it no problem
 				if (src.density && !known) //if it was closed, let them know that they did something
-					boutput(user, "<span style=\"color:blue\">It was a false wall!</span>")
+					boutput(user, "<span class='notice'>It was a false wall!</span>")
 				//disassemble it
-				boutput(user, "<span style=\"color:blue\">Now dismantling false wall.</span>")
+				boutput(user, "<span class='notice'>Now dismantling false wall.</span>")
 				var/floorname1	= src.floorname
 				var/floorintact1	= src.floorintact
 				var/floorburnt1	= src.floorburnt

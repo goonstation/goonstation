@@ -32,7 +32,7 @@
 
 			var/kickverb = pick("socks", "slams", "kicks", "boots", "throws", "flings", "launches")
 			var/kicktype = pick("kick", "roundhouse", "thrust")
-			ow.visible_message("<span style=\"color:red\"><B>[ow.name] [kickverb] [target] with a powerful [kicktype]!</B></span>")
+			ow.visible_message("<span class='alert'><B>[ow.name] [kickverb] [target] with a powerful [kicktype]!</B></span>")
 
 			playsound(ow.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 
@@ -75,7 +75,7 @@
 
 			var/kickverb = pick("socks", "slams", "kicks", "boots", "throws")
 			var/kicktype = pick("kick", "roundhouse", "thrust")
-			M.visible_message("<span style=\"color:red\"><B>[ow.name] [kickverb] [target] with a powerful [kicktype]!</B></span>")
+			M.visible_message("<span class='alert'><B>[ow.name] [kickverb] [target] with a powerful [kicktype]!</B></span>")
 
 			random_brute_damage(target, 10,1)
 			playsound(M.loc, "swing_hit", 60, 1)

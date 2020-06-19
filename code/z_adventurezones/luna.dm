@@ -1010,10 +1010,10 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			boutput(user, "If you got really close, you could probably compare foot sizes.")
 			return
 
-		user.visible_message("<b>[user]</b> steps right into [src.name].", "<span style=\"color:blue\">You step into the footprint. Ha ha, oh man, your foot fits right into that!</span>")
+		user.visible_message("<b>[user]</b> steps right into [src.name].", "<span class='notice'>You step into the footprint. Ha ha, oh man, your foot fits right into that!</span>")
 		if (!somebody_fucked_up)
 			desc += " There's some total idiot fucker's footprint smooshed into the center."
-			boutput(user, "<span style=\"color:red\">OH FUCK you left your footprint over it!  You fucked up a 90 year old famous footprint. You assumed it was covered in some kind of protective resin or something, shit!!</span>")
+			boutput(user, "<span class='alert'>OH FUCK you left your footprint over it!  You fucked up a 90 year old famous footprint. You assumed it was covered in some kind of protective resin or something, shit!!</span>")
 
 		somebody_fucked_up = 1
 
@@ -1073,15 +1073,16 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	flying = 0
 	death_text = "%src% tips over, its joints seizing and locking up.  It does not move again."
 	angertext = "seems to stare at"
+	is_pet = 0
 
 	var/does_creepy_stuff = 0
 	var/typeName = "Generic"
 
 	CritterAttack(mob/M)
 		src.attacking = 1
-		src.visible_message("<span style=\"color:red\"><B>[src]</B> awkwardly bashes [src.target]!</span>")
+		src.visible_message("<span class='alert'><B>[src]</B> awkwardly bashes [src.target]!</span>")
 		random_brute_damage(src.target, rand(5,15),1)
-		playsound(src.loc, "sound/misc/automaton_spaz.ogg", 50, 1)
+		playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
 		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 
@@ -1093,15 +1094,15 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 		if (prob(6))
 			playsound(src.loc, "sound/misc/automaton_tickhum.ogg", 60, 1)
-			src.visible_message("<span style=\"color:red\"><b>[src] emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] sound.</span>")
+			src.visible_message("<span class='alert'><b>[src] emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] sound.</span>")
 
 		if (prob(6))
 			playsound(src.loc, "sound/misc/automaton_ratchet.ogg", 60, 1)
-			src.visible_message("<span style=\"color:red\"><b>[src] emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise.</span>")
+			src.visible_message("<span class='alert'><b>[src] emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise.</span>")
 
 		if (prob(5))
-			playsound(src.loc, "sound/misc/automaton_spaz.ogg", 50, 1)
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
+			playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
+			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
 			src.dir = pick(alldirs)
 
 /obj/critter/moonspy
@@ -1123,27 +1124,25 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	sleeping_icon_state = "drone_service_bot_off"
 	flying = 0
 	generic = 0
-	death_text = "%src% stops moving."
+	death_text = "%src% blows apart! But not in a way at all like surveillance equipment. More like a washing machine or something."
 
 	var/static/list/non_spy_weapons = list("something that isn't a high gain microphone", "an object distinct from a tape recorder", "object that is, in all likelihood, not a spy camera")
 
 	ChaseAttack(mob/M)
-		src.visible_message("<span style=\"color:red\"><B>[src]</B> launches itself towards [M]!</span>")
+		src.visible_message("<span class='alert'><B>[src]</B> launches itself towards [M]!</span>")
 		if (prob(20)) M.changeStatus("stunned", 2 SECONDS)
 		random_brute_damage(M, rand(2,5))
 
 	CritterAttack(mob/M)
 		src.attacking = 1
-		src.visible_message("<span style=\"color:red\">The <B>[src.name]</B> [pick("conks", "whacks", "bops")] [src.target] with [pick(non_spy_weapons)]!</span>")
+		src.visible_message("<span class='alert'>The <B>[src.name]</B> [pick("conks", "whacks", "bops")] [src.target] with [pick(non_spy_weapons)]!</span>")
 		random_brute_damage(src.target, rand(2,4),1)
 		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath()
 		if (!src.alive) return
-		src.alive = 0
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> blows apart!  But not in a way at all like surveillance equipment.  More like a washing machine or something.")
+		..()
 
 		SPAWN_DBG(0)
 			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
@@ -1211,11 +1210,11 @@ obj/machinery/embedded_controller/radio/maintpanel
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/card/id))
 			if (user && src.allowed(user))
-				boutput(user, "<font style='color: green;'>Access approved..</font>")
+				boutput(user, "<span class='success'>Access approved..</span>")
 				src.locked = !src.locked
 				updateUsrDialog()
 			else
-				boutput(user, "<font style='color: red;'>Access denied.</font>")
+				boutput(user, "<font class='alert'>Access denied.</font>")
 
 		else
 			return ..()
@@ -1281,7 +1280,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 			icon_state = blinking ? "museum_control_blink" : "museum_control"
 
 	attack_hand(mob/user)
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = {"<!DOCTYPE html>
 <html>
 <head>
@@ -1556,7 +1555,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		if(program)
 			program.receive_user_command(href_list["command"])
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 	process()
 		if(!(status & NOPOWER) && program)
@@ -1567,7 +1566,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 	updateUsrDialog(var/reason)
 		var/list/nearby = viewers(1, src)
 		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
+			if (M.using_dialog_of(src))
 				if (reason || updateFlags)
 					src.dynamicUpdate(M, reason|updateFlags)
 					updateFlags = REASON_NONE
@@ -1576,7 +1575,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 
 		if (issilicon(usr))
 			if (!(usr in nearby))
-				if (usr.client && usr.machine==src)
+				if (usr.using_dialog_of(src))
 					if (reason || updateFlags)
 						src.dynamicUpdate(usr, reason|updateFlags)
 						updateFlags = REASON_NONE
@@ -1644,7 +1643,7 @@ datum/computer/file/embedded_program/maintpanel
 	disposing()
 		if (device_entries)
 			for (var/datum/entry in device_entries)
-				entry.disposing()
+				entry.dispose()
 
 			device_entries = null
 
@@ -2095,7 +2094,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 			return ..()
 		if(user.r_hand == src || user.l_hand == src)
 			if(src.amount == 0)
-				boutput(user, "<span style=\"color:red\">You're out of beans. You feel strangely sad.</span>")
+				boutput(user, "<span class='alert'>You're out of beans. You feel strangely sad.</span>")
 				return
 			else
 				var/obj/item/reagent_containers/food/snacks/candy/B = new /obj/item/reagent_containers/food/snacks/candy {name = "A Farty Snott's Every Flavour Bean"; desc = "A favorite halloween sweet worldwide!"; icon_state = "bean"; amount = 1; initial_volume = 100;} (user)
@@ -2134,7 +2133,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 		well_fuck_its_armed = 1
 		user.visible_message("<b>[user]</b> prods [src].", "You prod at [src].  It's a pretty accurate replica, it seems.  Neat.")
 		SPAWN_DBG (10)
-			src.visible_message("<span style='color:red'>[src] gives a grumpy beep! <b><font style='font-size:200%;'>OH FUCK</font></b></span>")
+			src.visible_message("<span class='alert'>[src] gives a grumpy beep! <b><font style='font-size:200%;'>OH FUCK</font></b></span>")
 
 			playsound(src.loc, "sound/weapons/armbomb.ogg", 50)
 

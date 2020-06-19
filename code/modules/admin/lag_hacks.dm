@@ -3,7 +3,7 @@
 client/proc/show_admin_lag_hacks()
 	set name = "Lag Reduction"
 	set desc = "A few janky commands that can smooth the game during an Emergency."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	admin_only
 	src.holder.show_laghacks(src.mob)
 
@@ -12,7 +12,7 @@ client/proc/show_admin_lag_hacks()
 
 	var/HTML = "<html><head><title>Admin Lag Reductions</title></head><body>"
 	HTML += "<b><a href='?src=\ref[src];action=lightweight_doors'>Remove Light+Cam processing when doors open or close</a></b> (May jank up lights slightly)<br><br>"
-	HTML += "<b><a href='?src=\ref[src];action=lightweight_lights'>Slow down the light queue drastically</a></b> (May jank up lights slightly)<br><br>"
+	HTML += "<b><a href='?src=\ref[src];action=lightweight_mobs'>Slow Life() Processing</a></b> (Extremely safe - Life() compensates for the change automatically)<br><br>"
 	HTML += "<b><a href='?src=\ref[src];action=slow_atmos'>Slow atmos processing</a></b> (May jank up the TEG/Hellburns)<br><br>"
 	HTML += "<b><a href='?src=\ref[src];action=slow_fluids'>Slow fluid processing</a></b> (Safe, just feels weird)<br><br>"
 	HTML += "<b><a href='?src=\ref[src];action=special_sea_fullbright'>Stop Sea Light processing on Z1</a></b> (Safe, makes the Z1 ocean a little ugly)<br><br>"
@@ -29,8 +29,8 @@ client/proc/show_admin_lag_hacks()
 
 client/proc/lightweight_doors()
 	set name = "Force Doors Ignore Cameras and Lighting"
-	set desc = "Helps when server load is heavy. Might jank up the lighting system a bit, but its mostly OK."
-	set category="Debug"
+	set desc = "Helps when server load is heavy. Creates really ugly dark spots, try not to use this often."
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set hidden = 1
 	admin_only
 
@@ -42,23 +42,23 @@ client/proc/lightweight_doors()
 		message_admins("[key_name(src)] removed light/camera interactions from doors with Lag Reduction panel.")
 
 
-client/proc/lightweight_lights()
-	set name = "Kneecap Light Queue"
-	set desc = "Helps when server load is heavy."
-	set category="Debug"
+client/proc/lightweight_mobs()
+	set name = "Slow Mob Processing"
+	set desc = "Reduces load of Life(). Extremely safe - Life() compensates for the change automatically :)"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	admin_only
 
 	if (processScheduler.hasProcess("Lighting"))
-		var/datum/controller/process/lighting/L = processScheduler.nameToProcessMap["Lighting"]
-		L.max_chunk_size = 5
+		var/datum/controller/process/mobs/M = processScheduler.nameToProcessMap["Mob"]
+		M.schedule_interval = 65
 
-		message_admins("[key_name(src)] kneecapped the light queue processing speed with Lag Reduction panel.")
+		message_admins("[key_name(src)] slowed Mob process interval with Lag Reduction panel.")
 
 client/proc/slow_fluids()
 	set name = "Slow Fluid Processing"
 	set desc = "Higher schedulde interval."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	admin_only
 
@@ -75,7 +75,7 @@ client/proc/slow_fluids()
 client/proc/slow_atmos()
 	set name = "Slow Atmos Processing"
 	set desc = "Higher schedulde interval. May fuck the TEG."
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	admin_only
 
@@ -88,7 +88,7 @@ client/proc/slow_atmos()
 client/proc/slow_ticklag()
 	set name = "Change Ticklag Bounds"
 	set desc = "Change max/min ticklag bounds for smoother experience during super-highpop or especially bad rounds. Lower = smooth, Higher = For lag"
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	admin_only
 
@@ -103,7 +103,7 @@ client/proc/slow_ticklag()
 client/proc/disable_deletions()
 	set name = "Disable Deletion Queue"
 	set desc = "Disable delete queue (only GC'd items will truly be gone when deleted)"
-	set category="Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	admin_only
 

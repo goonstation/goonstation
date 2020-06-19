@@ -55,11 +55,11 @@
 			else
 				. += "<br>It says:<br><font color='red'>ERROR: NO SUBJECT(S) DETECTED</font>"
 
-	attack_hand(mob/user as mob)
-		return src.examine()
+	attack_hand(mob/user)
+		return user.examine_verb(src)
 
-	attack_ai(mob/user as mob)
-		return src.examine()
+	attack_ai(mob/user)
+		return user.examine_verb(src)
 
 	find_partners(var/in_range = 0)
 		if (in_range)

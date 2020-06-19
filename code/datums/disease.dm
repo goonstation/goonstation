@@ -118,7 +118,7 @@
 		return 0
 
 	proc/scan_info()
-		var/text = "<span style='color:red'><b>"
+		var/text = "<span class='alert'><b>"
 		if (istype(src.master,/datum/ailment/disease) || istype(src.master,/datum/ailment/malady))
 			text += "[src.state] "
 		text += "[src.scantype ? src.scantype : src.master.scantype]:"
@@ -548,19 +548,19 @@
 			src.remove_stam_mod_regen("heart_shock")
 			src.remove_stam_mod_max("heart_shock")
 		if (prob(numHigh))
-			boutput(src, "<span style='color:red'>Your cyberheart spasms violently!</span>")
+			boutput(src, "<span class='alert'>Your cyberheart spasms violently!</span>")
 			random_brute_damage(src, numHigh)
 		if (prob(numHigh))
-			boutput(src, "<span style='color:red'>Your cyberheart shocks you painfully!</span>")
+			boutput(src, "<span class='alert'>Your cyberheart shocks you painfully!</span>")
 			random_burn_damage(src, numHigh)
 		if (prob(numMid))
-			boutput(src, "<span style='color:red'>Your cyberheart lurches awkwardly!</span>")
+			boutput(src, "<span class='alert'>Your cyberheart lurches awkwardly!</span>")
 			src.contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)
 		if (prob(numMid))
-			boutput(src, "<span style='color:red'><B>Your cyberheart stops beating!</B></span>")
+			boutput(src, "<span class='alert'><B>Your cyberheart stops beating!</B></span>")
 			src.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
 		if (prob(numLow))
-			boutput(src, "<span style='color:red'><B>Your cyberheart shuts down!</B></span>")
+			boutput(src, "<span class='alert'><B>Your cyberheart shuts down!</B></span>")
 			src.organHolder.heart.broken = 1
 			src.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
 	else if (src.organHolder.heart && src.organHolder.heart.robotic && !src.organHolder.heart.emagged && !src.organHolder.heart.broken)
@@ -570,11 +570,11 @@
 			src.remove_stam_mod_regen("heart_shock")
 			src.remove_stam_mod_max("heart_shock")
 		if (prob(numMid))
-			boutput(src, "<span style='color:red'>Your cyberheart spasms violently!</span>")
+			boutput(src, "<span class='alert'>Your cyberheart spasms violently!</span>")
 			random_brute_damage(src, numMid)
 		if (prob(numMid))
-			boutput(src, "<span style='color:red'>Your cyberheart shocks you painfully!</span>")
+			boutput(src, "<span class='alert'>Your cyberheart shocks you painfully!</span>")
 			random_burn_damage(src, numMid)
 		if (prob(numLow))
-			boutput(src, "<span style='color:red'>Your cyberheart lurches awkwardly!</span>")
+			boutput(src, "<span class='alert'>Your cyberheart lurches awkwardly!</span>")
 			src.contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)

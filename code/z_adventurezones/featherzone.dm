@@ -46,4 +46,4 @@
 			O.set_loc(src)
 
 	attack_hand(mob/user as mob)
-		user.visible_message("<span class='combat'><b>[user]</b> kicks [src], but it doesn't budge.</span>", "<span style=\"color:red\">You kick [src], but it doesn't budge.</span>")
+		user.visible_message("<span class='combat'><b>[user]</b> kicks [src], but it doesn't budge.</span>", "<span class='alert'>You kick [src], but it doesn't budge.</span>")

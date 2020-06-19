@@ -1,0 +1,11 @@
+{
+
+	// Lets you preview .dmi files in the editor
+	"workbench.editorAssociations": [
+		{
+				"filenamePattern": "*.dmi",
+				"viewType": "imagePreview.previewEditor"
+		}
+	]
+
+}

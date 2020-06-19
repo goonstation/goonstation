@@ -38,20 +38,20 @@ Atmos alert computer
 
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
 /obj/machinery/computer/atmosphere/alerts/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
 /obj/machinery/computer/atmosphere/alerts/attackby(var/obj/item/I as obj, user as mob)
 	if (isscrewingtool(I))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 20))
 			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -65,7 +65,7 @@ Atmos alert computer
 				A.anchored = 1
 				qdel(src)
 			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/circuitboard/atmospherealerts/M = new /obj/item/circuitboard/atmospherealerts( A )
@@ -81,8 +81,8 @@ Atmos alert computer
 	return
 
 
-/obj/machinery/computer/atmosphere/alerts/proc/interact(mob/user)
-	usr.machine = src
+/obj/machinery/computer/atmosphere/alerts/proc/interacted(mob/user)
+	src.add_dialog(usr)
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
 	dat += "<A HREF='?action=mach_close&window=alerts'>Close</A><br><br>"
 	for (var/cat in src.alarms)

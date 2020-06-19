@@ -333,7 +333,7 @@
 	onmarket = 1
 
 /datum/commodity/goldbar
-	comname = "Gold Ingot"
+	comname = "Gold Bullion"
 	comtype = /obj/item/material_piece/gold
 	price = 35000
 	baseprice = 35000

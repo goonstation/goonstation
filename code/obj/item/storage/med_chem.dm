@@ -4,7 +4,7 @@
 /obj/item/storage/firstaid
 	name = "first aid"
 	icon_state = "firstaid1"
-	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	throw_speed = 2
 	throw_range = 8
 	max_wclass = 2
@@ -114,7 +114,7 @@
 	item_state = "docbag1"
 	desc = "A old-fashioned doctor's bag designed to cary medical and surgical supplies."
 	kit_styles = list("docbag1", "docbag2", "docbag3")
-	spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/suture, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/iv_drip/blood)
+	spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/suture, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/iv_drip/blood, /obj/item/medical/medicaldiagnosis/stethoscope)
 
 /* -------------------- First Aid Kits - VR -------------------- */
 
@@ -447,8 +447,7 @@
 /obj/item/storage/pill_bottle/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span style='color:red'><b>[user] swallows [src] whole and begins to choke!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] swallows [src] whole and begins to choke!</b></span>")
 	user.take_oxygen_deprivation(175)
-	user.updatehealth()
 	qdel(src)
 	return 1

@@ -14,4 +14,4 @@
 		M.emote("cough")
 	if (prob(2))
 		M.changeStatus("stunned", 50)
-		M.visible_message("<span style=\"color:red\"><B>[M.name]</B> suffers a coughing fit</span>")
+		M.visible_message("<span class='alert'><B>[M.name]</B> suffers a coughing fit</span>")
