@@ -188,18 +188,17 @@
 				return
 
 		if (src.open)
-			if (!src.is_short && istype(W, /obj/item/weldingtool))
-				var/obj/item/weldingtool/welder = W
+			if (!src.is_short && isweldingtool(W))
 				if (!src.legholes)
-					if(!welder.try_weld(user, 1))
+					if(!W:try_weld(user, 1))
 						return
 					src.legholes = 1
-					src.visible_message("<span class='alert'>[user] adds some holes to the bottom of [src] with [welder].</span>")
+					src.visible_message("<span class='alert'>[user] adds some holes to the bottom of [src] with [W].</span>")
 					return
 				else if(!issilicon(user))
 					if(user.drop_item())
-						if (welder)
-							welder.set_loc(src.loc)
+						if (W)
+							W:set_loc(src.loc)
 					return
 
 			else if (iswrenchingtool(W))
@@ -212,16 +211,15 @@
 					if(W) W.set_loc(src.loc)
 				return
 
-		else if (!src.open && istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/welder = W
-			if(!welder.try_weld(user, 1, burn_eyes = 1))
+		else if (!src.open && isweldingtool(W))
+			if(!W:try_weld(user, 1, burn_eyes = 1))
 				return
 			if (!src.welded)
-				src.weld(1, welder, user)
-				src.visible_message("<span class='alert'>[user] welds [src] closed with [welder].</span>")
+				src.weld(1, W, user)
+				src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
 			else
-				src.weld(0, welder, user)
-				src.visible_message("<span class='alert'>[user] unwelds [src] with [welder].</span>")
+				src.weld(0, W, user)
+				src.visible_message("<span class='alert'>[user] unwelds [src] with [W].</span>")
 			return
 
 		if (src.secure)
@@ -230,7 +228,7 @@
 				return
 			else if (src.personal && istype(W, /obj/item/card/id))
 				var/obj/item/card/id/I = W
-				if (src.allowed(user) || !src.registered || (istype(W, /obj/item/card/id) && src.registered == I.registered))
+				if ((src.req_access && src.allowed(user)) || !src.registered || (istype(W, /obj/item/card/id) && src.registered == I.registered))
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
 					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
@@ -321,6 +319,7 @@
 					user.set_loc(src.loc)
 					if (!user.hasStatus("weakened"))
 						user.changeStatus("weakened", 10 SECONDS)
+					JOB_XP(user, "Clown", 3)
 					return
 				else
 					user.show_text("You scoot around [src].")

@@ -25,8 +25,7 @@
 			if(prob(1))
 				boutput(affected_mob, "<span class='alert'>Your stomach hurts.</span>")
 				if(prob(20))
-					affected_mob.toxloss += 2
-					affected_mob.updatehealth()
+					affected_mob.take_toxin_damage(2)
 		if(4)
 			if(!src.transformed)
 				if ((!strain_data["name"]) || (!strain_data["UI"]) || (!strain_data["SE"]))

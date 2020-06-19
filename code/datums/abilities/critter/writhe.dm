@@ -1,5 +1,5 @@
 // ----------------------------------
-// spazz out
+// writhe around
 // ----------------------------------
 /datum/targetable/critter/writhe
 	name = "Writhe"
@@ -13,7 +13,7 @@
 			return 1
 		var/mob/ow = holder.owner
 
-		ow.visible_message(text("<span class='alert'><B>[ow.name] spazms and writhes violently!</B></span>"))
+		ow.visible_message(text("<span class='alert'><B>[ow.name] spasms and writhes violently!</B></span>"))
 		ow.emote("flip")
 
 		var/found_target = 0

@@ -76,7 +76,7 @@
 		return src.attack_hand(user)
 
 	attack_hand(mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > (T0C - 20))
 			temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
@@ -88,7 +88,7 @@
 		var/dat = {"<B>Cryo gas cooling system</B><BR>
 		Current status: [ on ? "<A href='?src=\ref[src];start=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];start=1'>On</A>"]<BR>
 		Current gas temperature: [temp_text]<BR>
-		Current air pressure: [air_contents.return_pressure()]<BR>
+		Current air pressure: [MIXTURE_PRESSURE(air_contents)]<BR>
 		Target gas temperature: <A href='?src=\ref[src];temp=-10'>-</A> <A href='?src=\ref[src];temp=-1'>-</A> <A href='?src=\ref[src];settemp=1'>[current_temperature]</A> <A href='?src=\ref[src];temp=1'>+</A> <A href='?src=\ref[src];temp=10'>+</A><BR>
 		"}
 
@@ -97,7 +97,7 @@
 
 	Topic(href, href_list)
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["start"])
 				src.on = !src.on
 				update_icon()

@@ -69,6 +69,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
 	name = "synthmeat"
 	desc = "Synthetic meat grown in hydroponics."
+	icon_state = "meat-plant"
 	amount = 1
 	initial_volume = 20
 	initial_reagents = list("synthflesh"=2)
@@ -119,6 +120,7 @@
 	icon_state = "nugget0"
 	amount = 2
 	initial_volume = 15
+	doants = 0 // imagine 1000 nuggets on one tile all checking the other 999 nuggets if they aren't a table, yeah
 
 	New()
 		..()
@@ -467,7 +469,11 @@
 
 	heal(var/mob/M)
 		if(prob(15))
+			#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 			wrap_pathogen(M.reagents, generate_indigestion_pathogen(), 15)
+			#else
+			M.reagents.add_reagent("salmonella",15)
+			#endif
 			boutput(M, "<span class='alert'>That tasted a little bit...off.</span>")
 		..()
 

@@ -168,7 +168,7 @@
 	return attack_hand(user)
 
 /obj/machinery/computer/cloning/attack_hand(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	add_fingerprint(user)
 
 	if(status & (BROKEN|NOPOWER))
@@ -301,6 +301,7 @@
 		src.active_record = locate(href_list["view_rec"]) in records
 		if ((isnull(src.active_record.fields["ckey"])) || (src.active_record.fields["ckey"] == ""))
 			qdel(src.active_record)
+			src.active_record = null
 			src.temp = "ERROR: Record Corrupt"
 		else
 			src.menu = 3
@@ -316,6 +317,7 @@
 			logTheThing("combat", usr, null, "deletes the cloning record [src.active_record.fields["name"]] for player [src.active_record.fields["ckey"]] at [log_loc(src)].")
 			src.records.Remove(src.active_record)
 			qdel(src.active_record)
+			src.active_record = null
 			src.temp = "Record deleted."
 			src.menu = 2
 /*
@@ -324,6 +326,7 @@
 				if(src.check_access(C))
 					src.records.Remove(src.active_record)
 					qdel(src.active_record)
+					src.active_record = null
 					src.temp = "Record deleted."
 					src.menu = 2
 				else
@@ -573,7 +576,7 @@
 
 	for(var/mob/M in mobs)
 		//Dead people only thanks!
-		if (!(isdead(M) || isVRghost(M) || inafterlifebar(M)) || (!M.client))
+		if (!(isdead(M) || isVRghost(M) || isghostcritter(M) || inafterlifebar(M)) || (!M.client))
 			continue
 		//They need a brain!
 		if (needbrain && ishuman(M) && !M:brain)

@@ -25,5 +25,4 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] connects the wires from the multitool onto [his_or_her(user)] tongue and presses pulse. It's pretty shocking to look at.</b></span>")
 		user.TakeDamage("head", 0, 160)
-		user.updatehealth()
 		return 1

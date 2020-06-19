@@ -1,4 +1,5 @@
 /obj/decal
+	text = ""
 	var/list/random_icon_states = list()
 	var/random_dir = 0
 
@@ -79,7 +80,7 @@
 	opacity = 0
 	density = 0
 	anchored = 1
-	icon = 'icons/effects/3dimension.dmi'
+	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "skeleton_l"
 
 	decomposed_corpse
@@ -103,7 +104,7 @@
 		opacity = 0
 		density = 0
 		anchored = 1
-		icon = 'icons/effects/3dimension.dmi'
+		icon = 'icons/obj/adventurezones/void.dmi'
 		icon_state = "skeleton_l"
 
 /obj/decal/floatingtiles
@@ -112,7 +113,7 @@
 	opacity = 0
 	density = 0
 	anchored = 1
-	icon = 'icons/effects/3dimension.dmi'
+	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "floattiles1"
 
 /obj/decal/implo
@@ -477,7 +478,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/alienflower
 	name = "strange alien flower"
 	desc = "Is it going to eat you if you get too close?"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
 	random_dir = 8
 
@@ -489,7 +490,7 @@ obj/decal/fakeobjects/teleport_pad
 
 /obj/decal/cleanable/alienvine
 	name = "strange alien vine"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "avine_l1"
 	random_icon_states = list("avine_l1", "avine_l2", "avine_l3")
 	New()
@@ -519,19 +520,16 @@ obj/decal/fakeobjects/teleport_pad
 	if (iscarbon(AM))
 		var/mob/M =	AM
 		// drsingh fix for undefined variable mob/living/carbon/monkey/var/shoes
-		if (!M.can_slip(0) || M.getStatusDuration("weakened") || M.getStatusDuration("stunned"))
+
+		if (M.getStatusDuration("weakened") || M.getStatusDuration("stunned"))
 			return
 
-		M.pulling = null
-		boutput(M, "<span class='alert'>You slipped on [src]!</span>")
-		playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
-		M.changeStatus("stunned", 2 SECONDS)
-		M.changeStatus("weakened", 2 SECONDS)
-		M.force_laydown_standup()
-		if (prob(5))
-			M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)
-			M.visible_message("<span class='alert'><b>[M]</b> hits their head on [src]!</span>")
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1)
+		if (M.slip(0))
+			boutput(M, "<span class='alert'>You slipped on [src]!</span>")
+			if (prob(5))
+				M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)
+				M.visible_message("<span class='alert'><b>[M]</b> hits their head on [src]!</span>")
+				playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1)
 
 // These used to be static turfs derived from the standard grey floor tile and thus didn't always blend in very well (Convair880).
 /obj/decal/mule
@@ -539,7 +537,7 @@ obj/decal/fakeobjects/teleport_pad
 	mouse_opacity = 0
 	density = 0
 	anchored = 1
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank"
 	layer = TURF_LAYER + 0.1 // Should basically be part of a turf.
 
@@ -624,7 +622,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/tile_edge/floorguide
 	name = "navigation guide"
 	desc = "A navigation guide to help people find the department they're looking for."
-	icon = 'icons/obj/floorguides.dmi'
+	icon = 'icons/obj/decals/floorguides.dmi'
 	icon_state = "endpiece_s"
 
 /obj/decal/tile_edge/floorguide/security

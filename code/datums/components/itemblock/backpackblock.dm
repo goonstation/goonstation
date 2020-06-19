@@ -28,7 +28,7 @@
 	.= ..()
 	if(showTooltip)
 		var/obj/item/storage/I = parent
-		. += itemblock_tooltip_entry("special.png", "Blocks more damage when filled (+[round(I.get_contents().len/3)])")
+		. += itemblock_tooltip_entry("special.png", "Blocks more damage when filled (+[ceil(I.get_contents().len/3)])")
 		. += itemblock_tooltip_entry("minus.png", "Contents ejected when attacked")
 
 /datum/component/itemblock/backpackblock/proc/updateblock()

@@ -188,7 +188,7 @@
 		if (open != 1)
 			return
 		if(status & BROKEN)
-			user.machine = null
+			src.remove_dialog(user)
 			return
 
 		//fall in hilariously

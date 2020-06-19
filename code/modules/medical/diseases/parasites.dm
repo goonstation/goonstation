@@ -20,13 +20,11 @@
 			surgeon.visible_message("<span class='alert'><b>[surgeon] cuts open [affected_mob] in all the wrong places!</b></span>", "You dig around in [affected_mob]'s chest and accidentally snip something important looking!")
 			affected_mob.show_message("<span class='alert'><b>You feel a [numb ? "numb" : "sharp"] stabbing pain in your chest!</b></span>")
 			affected_mob.TakeDamage("chest", numb ? 37.5 : 75, 0, 0, DAMAGE_CUT)
-			affected_mob.updatehealth()
 			return 0
 		if (6 to 15)
 			surgeon.visible_message("<span class='alert'><b>[surgeon] clumsily cuts open [affected_mob]!</b></span>", "You dig around in [affected_mob]'s chest and accidentally snip something not so important looking!")
 			affected_mob.show_message("<span class='alert'><b>You feel a [numb ? "mild " : " "]stabbing pain in your chest!</b></span>")
 			affected_mob.TakeDamage("chest", numb ? 20 : 40, 0, 0, DAMAGE_CUT)
-			affected_mob.updatehealth()
 			return 0
 		if (16 to 60)
 			var/around_msg = ""
@@ -43,14 +41,12 @@
 			if (!numb)
 				affected_mob.show_message("<span class='alert'><b>You feel a mild stabbing pain in your chest!</b></span>")
 				affected_mob.TakeDamage("chest", 10, 0, 0, DAMAGE_STAB)
-				affected_mob.updatehealth()
 			return success
 		if (61 to INFINITY)
 			surgeon.visible_message("<span class='notice'><b>[surgeon] cuts open [affected_mob] and removes all traces of [name]</b></span>", "<span class='notice'>You masterfully remove the [name] from [affected_mob].</span>")
 			if (!numb)
 				affected_mob.show_message("<span class='alert'><b>You feel a mild stabbing pain in your chest!</b></span>")
 				affected_mob.TakeDamage("chest", 10, 0, 0, DAMAGE_STAB)
-				affected_mob.updatehealth()
 			return 1
 
 
@@ -114,12 +110,10 @@
 				boutput(affected_mob, "<span class='alert'>Your stomach hurts.</span>")
 				if(prob(20))
 					affected_mob.take_toxin_damage(1)
-					affected_mob.updatehealth()
 		if(5)
 			boutput(affected_mob, "<span class='alert'>You feel something tearing its way out of your stomach...</span>")
 			if (affected_mob.get_toxin_damage() < 30)
 				affected_mob.take_toxin_damage(10)
-			affected_mob.updatehealth()
 
 			if(prob(40))
 				var/obj/critter/domestic_bee_larva/larva = new /obj/critter/domestic_bee_larva (get_turf(affected_mob))

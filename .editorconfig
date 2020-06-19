@@ -22,3 +22,6 @@ trim_trailing_whitespace = false
 
 [*.sh]
 end_of_line = lf
+
+[*.yml]
+indent_style = space

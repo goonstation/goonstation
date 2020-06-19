@@ -37,7 +37,7 @@
 
 	if(on)
 		if(direction_out)
-			var/pressure_delta = target_pressure - environment.return_pressure()
+			var/pressure_delta = target_pressure - MIXTURE_PRESSURE(environment)
 			//Can not have a pressure delta that would cause environment pressure > tank pressure
 
 			var/transfer_moles = 0
@@ -52,7 +52,7 @@
 				else
 					loc.assume_air(removed)
 		else
-			var/pressure_delta = target_pressure - air_contents.return_pressure()
+			var/pressure_delta = target_pressure - MIXTURE_PRESSURE(air_contents)
 			//Can not have a pressure delta that would cause environment pressure > tank pressure
 
 			var/transfer_moles = 0
@@ -96,15 +96,15 @@
 
 /obj/machinery/portable_atmospherics/pump/attack_hand(var/mob/user as mob)
 
-	user.machine = src
+	src.add_dialog(user)
 	var/holding_text
 
 	if(holding)
-		holding_text = {"<BR><B>Tank Pressure</B>: [holding.air_contents.return_pressure()] KPa<BR>
+		holding_text = {"<BR><B>Tank Pressure</B>: [MIXTURE_PRESSURE(holding.air_contents)] KPa<BR>
 <A href='?src=\ref[src];remove_tank=1'>Remove Tank</A><BR>
 "}
 	var/output_text = {"<TT><B>[name]</B><BR>
-Pressure: [air_contents.return_pressure()] KPa<BR>
+Pressure: [MIXTURE_PRESSURE(air_contents)] KPa<BR>
 Port Status: [(connected_port)?("Connected"):("Disconnected")]
 [holding_text]
 <BR>
@@ -127,7 +127,7 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 		return
 
 	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if(href_list["power"])
 			on = !on

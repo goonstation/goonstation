@@ -119,6 +119,7 @@
 		F["use_azerty"] << src.use_azerty
 		F["preferred_map"] << src.preferred_map
 		F["flying_chat_hidden"] << src.flying_chat_hidden
+		F["auto_capitalization"] << src.auto_capitalization
 
 		if (returnSavefile)
 			return F
@@ -268,6 +269,7 @@
 		F["use_azerty"] >> src.use_azerty
 		F["preferred_map"] >> src.preferred_map
 		F["flying_chat_hidden"] >> src.flying_chat_hidden
+		F["auto_capitalization"] >> src.auto_capitalization
 
 
 		if (isnull(src.name_first) || !length(src.name_first) || isnull(src.name_last) || !length(src.name_last))
@@ -321,11 +323,7 @@
 
 
 		src.tooltip_option = (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS) //For fucks sake.
-		src.wasd_updated(user)
-
-		//MBC tg controls popup cause idk where else to put it
-		if (!version || version < 8)
-			user.Browse(grabResource("html/tgControls.html"),"window=tgcontrolsinfo;size=600x400;title=TG Controls Help")
+		src.keybind_prefs_updated(user)
 
 
 		return 1
@@ -335,6 +333,8 @@
 	savefile_get_profile_name(client/user, var/profileNum = 1)
 		if (IsGuestKey(user.key))
 			return 0
+
+		LAGCHECK(LAG_REALTIME)
 
 		var/path = savefile_path(user)
 

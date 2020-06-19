@@ -469,15 +469,14 @@
 			boutput(user, "<span class='alert'>It's way too dangerous to do that while it's active!</span>")
 			return
 
-		if (istype(W,/obj/item/weldingtool/))
-			var/obj/item/weldingtool/WELD = W
+		if (isweldingtool(W))
 			if (src.health < 50)
 				boutput(usr, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 				return
-			if(WELD.try_weld(user, 1))
+			if(W:try_weld(user, 1))
 				src.damage(-10)
 				src.malfunctioning = 0
-				user.visible_message("<b>[user]</b> uses [WELD] to repair some of [src]'s damage.")
+				user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 				if (src.health >= 100)
 					boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
 
@@ -628,7 +627,7 @@
 		return
 
 	proc/generate_interface(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<BR><B>Magnet Status:</B><BR>"
 		dat += "<u>Condition:</u> "
@@ -710,7 +709,7 @@
 		if (!rangecheck)
 			boutput(usr, "<span class='alert'>You aren't in range of the controls.</span>")
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (!istype(src))
 			boutput(usr, "Error. Magnet not detected.")
@@ -840,7 +839,7 @@
 		if (istype(linked_magnet))
 			linked_magnet.generate_interface(user)
 		else
-			user.machine = src
+			src.add_dialog(user)
 			var/dat = "<B>Mineral Mining Magnet Terminal</B><HR>"
 			dat += "<A href='?src=\ref[src];scan_for_connection=1'>Scan for Magnets</A><BR><BR>"
 			dat += "<B>Choose linked magnet:</B><BR>"
@@ -864,7 +863,7 @@
 			return
 
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 
 		src.add_fingerprint(usr)
 
@@ -1103,7 +1102,12 @@
 	Bumped(var/atom/A) //This is a bit hacky, sorry. Better than duplicating all the code.
 		if(isliving(A))
 			var/mob/living/L = A
-			L.click(src, list(), null, null)
+			var/mob/living/carbon/human/H
+			if(ishuman(L))
+				H = L
+			var/obj/item/held = L.equipped()
+			if(istype(held, /obj/item/mining_tool) || istype(held, /obj/item/mining_tools) || (isnull(held) && H && (H.is_hulk() || istype(H.gloves, /obj/item/clothing/gloves/concussive))))
+				L.click(src, list(), null, null)
 			return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -2260,7 +2264,7 @@ var/global/list/cargopads = list()
 			cargopads.Remove(src)
 		..()
 
-	was_built_from_frame(mob/user)
+	was_built_from_frame(mob/user, newly_built)
 		if (!cargopads.Find(src))
 			cargopads.Add(src)
 		..()
@@ -2361,6 +2365,20 @@ var/global/list/cargopads = list()
 		else return
 
 /turf/simulated/floor/ancient
+	name = "strange surface"
+	desc = "A strange jet black metal floor. There are odd lines carved into it."
+	icon_state = "ancient"
+	step_material = "step_plating"
+	step_priority = STEP_PRIORITY_MED
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		boutput(usr, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		return
+
+	ex_act(severity)
+		return
+
+/turf/unsimulated/floor/ancient
 	name = "strange surface"
 	desc = "A strange jet black metal floor. There are odd lines carved into it."
 	icon_state = "ancient"

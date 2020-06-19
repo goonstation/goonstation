@@ -719,7 +719,7 @@
 					src.manip.icon_state = "manipulator"
 				gui.sendToSubscribers({"{"exposed":[src.manip.exposed]}"}, "setUIState")
 		if (href_list["splice"])
-			var/slotid = CLAMP(text2num(href_list["splice"]), 1, src.manip.slots.len)
+			var/slotid = clamp(text2num(href_list["splice"]), 1, src.manip.slots.len)
 			src.manip.splicesource = slotid
 			gui.sendToSubscribers({"{"splice":{"selected":[src.manip.splicesource]}}"}, "setUIState")
 
@@ -812,14 +812,14 @@
 			var/rptr_index = text2num(href_list["rptr_index"])
 			var/t = text2num(href_list["target"])
 			if(t)
-				lptr_index = CLAMP(lptr_index+1, 1, src.manip.cache_target.len)
-				rptr_index = CLAMP(rptr_index+1, 1, src.manip.cache_target.len)
+				lptr_index = clamp(lptr_index+1, 1, src.manip.cache_target.len)
+				rptr_index = clamp(rptr_index+1, 1, src.manip.cache_target.len)
 				src.manip.sel_target_lptr = lptr_index
 				src.manip.sel_target_rptr = rptr_index
 				gui.sendToSubscribers({"{"splice":{"selTarget":{"lptr_index":[lptr_index], "rptr_index":[rptr_index]}}}"}, "setUIState")
 			else
-				lptr_index = CLAMP(lptr_index+1, 1, src.manip.cache_source.len)
-				rptr_index = CLAMP(rptr_index+1, 1, src.manip.cache_source.len)
+				lptr_index = clamp(lptr_index+1, 1, src.manip.cache_source.len)
+				rptr_index = clamp(rptr_index+1, 1, src.manip.cache_source.len)
 				src.manip.sel_source_lptr = lptr_index
 				src.manip.sel_source_rptr = rptr_index
 				gui.sendToSubscribers({"{"splice":{"selSource":{"lptr_index":[lptr_index], "rptr_index":[rptr_index]}}}"}, "setUIState")
@@ -834,10 +834,10 @@
 			if(direction == null || t_index == null || (direction != 0 && (s_index == null || s_len == null)) || (direction == 0 && t_len == null))
 				return
 
-			direction = CLAMP(direction, -1, 1)
+			direction = clamp(direction, -1, 1)
 			//Increase the positions by one since they are 0-indexed JS.
-			s_index = CLAMP(s_index+1, 1, src.manip.cache_source.len)
-			t_index = CLAMP(t_index+1, 1, src.manip.cache_target.len)
+			s_index = clamp(s_index+1, 1, src.manip.cache_source.len)
+			t_index = clamp(t_index+1, 1, src.manip.cache_target.len)
 
 			if(direction == 0) //Remove
 				if(src.manip.cache_target.len)
@@ -848,7 +848,7 @@
 			else	//Insert
 				direction = max(direction,0) //In case we're inserting before we don't want to subtract from the target index
 				if(src.manip.cache_source.len)
-					var/newpos = CLAMP(t_index + direction, 1, src.manip.cache_target.len+1) 	//Set the position to insert at
+					var/newpos = clamp(t_index + direction, 1, src.manip.cache_target.len+1) 	//Set the position to insert at
 					var/newseq = src.manip.cache_source.Copy(s_index, s_index + s_len) //Copy the elements from source we want to insert
 					src.manip.cache_target.Insert(newpos, newseq)	//Do the insertion
 					src.manip.cache_source.Cut(s_index, s_index + s_len) //Remove the DNA sequence from the source
@@ -920,7 +920,8 @@
 				var/success = 0
 
 				L.implode(src.manip.cache_target)
-				if (L.reevaluate())
+				var/result = L.reevaluate()
+				if (result == 1)
 					var/list/seqs = L.get_sequences()
 					for (var/s in seqs)
 						if (s in db.known_sequences)
@@ -956,7 +957,24 @@
 					var/datum/pathogendna/source = src.manip.slots[src.manip.splicesource]
 					logTheThing("pathology", usr, null, "splices pathogen [source.reference.name] into [oldname] creating [src.manip.loaded.reference.name].")
 				else
-					boutput(usr, "<span class='alert'>The DNA sequence is assembled by the manipulator, but it collapses!</span>")
+					// how about some more feedback for what went wrong? :)
+					var/reason = ""
+					switch(result)
+						if(2)
+							reason = ", because the suppressant code was invalid"
+						if(3)
+							reason = ", because there was no separator after the suppressant code"
+						if(4)
+							reason = ", because the carrier code was invalid"
+						if(5)
+							reason = ", because there was no separator after the carrier code"
+						if(6)
+							reason = ", due to an invalid symptom code"
+						if(7)
+							reason = ", because there was no symptom code between two separators"
+						if(8)
+							reason = ", because the microbody could not sustain the amount of symptoms"
+					boutput(usr, "<span class='alert'>The DNA sequence is assembled by the manipulator, but it collapses[reason]!</span>")
 					src.manip.loaded = null
 					new /obj/item/reagent_containers/glass/vial(get_turf(src.manip)) //Quit eating vials you fuck -Spy
 
@@ -1367,7 +1385,10 @@
 			else
 				output_text += "None<br><br>"
 			output_text += "<b>Research Budget:</b> [wagesystem.research_budget] Credits<br>"
-			output_text += "<a href='?src=\ref[src];buymats=1'>Synthesize a new pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
+			output_text += "<a href='?src=\ref[src];buymats=1;microbody=virus'>Synthesize a new virus pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
+			output_text += "<a href='?src=\ref[src];buymats=1;microbody=parasite'>Synthesize a new parasite pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
+			output_text += "<a href='?src=\ref[src];buymats=1;microbody=bacterium'>Synthesize a new bacterium pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
+			output_text += "<a href='?src=\ref[src];buymats=1;microbody=fungus'>Synthesize a new fungus pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
 			output_text += "<br>"
 			output_text += "<b>Inserted vials:</b><br>"
 			for (var/i = 1, i <= 5, i++)
@@ -1535,6 +1556,7 @@
 				src.antiagent.reagents.add_reagent(new_antiagent, added)
 				boutput(usr, "<span class='notice'>[added] units of anti-agent added to the beaker.</span>")
 			else if (href_list["buymats"])
+				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 				var/confirm = alert("Are you sure you want to spend [synthesize_pathogen_cost] credits to manufacture a new pathogen culture? This will take about five seconds.", "Confirm Purchase", "Yes", "No")
 				if (confirm == "Yes" && machine_state == 0 && (usr in range(1)))
 					if (synthesize_pathogen_cost > wagesystem.research_budget)
@@ -1550,7 +1572,18 @@
 							icon_state = "synth1"
 							for (var/mob/C in viewers(src))
 								C.show_message("The [src.name] shuts down and ejects a new pathogen sample.", 3)
-							new/obj/item/reagent_containers/glass/vial/prepared(src.loc)
+							switch(href_list["microbody"])
+								if("virus")
+									new /obj/item/reagent_containers/glass/vial/prepared/virus(src.loc)
+								if("parasite")
+									new /obj/item/reagent_containers/glass/vial/prepared/parasite(src.loc)
+								if("bacterium")
+									new /obj/item/reagent_containers/glass/vial/prepared/bacterium(src.loc)
+								if("fungus")
+									new /obj/item/reagent_containers/glass/vial/prepared/fungus(src.loc)
+				#else
+				boutput(usr, "<span class='alert'>[src] unable to complete task. Please contact your network administrator.</span>")
+				#endif
 		show_interface(usr)
 
 	proc/finish_creation(var/use_suppressant, var/use_antiagent)
@@ -1677,3 +1710,72 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/biocides, 20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/inhibitor, 20)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 4)
+
+/obj/machinery/incubator
+	name = "Incubator"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "heater"
+	var/static/image/icon_beaker = image('icons/obj/chemical.dmi', "heater-beaker")
+	desc = "A machine that can automatically provide a petri dish with nutrients. It can also directly fill vials with a sample of the pathogen inside."
+	anchored = 1
+	density = 1
+	var/obj/item/reagent_containers/glass/petridish/target = null
+	var/medium = null
+
+	New()
+		..()
+		flags |= NOSPLASH
+
+	proc/update_icon()
+		src.overlays -= src.icon_beaker
+		if (src.target)
+			src.overlays += src.icon_beaker
+
+	attack_hand(mob/user as mob)
+		if(isnull(user.equipped()))
+			if (src.target)
+				src.target.set_loc(src.loc)
+				usr.put_in_hand_or_eject(src.target)
+				src.target = null
+				src.update_icon()
+		return
+
+	attackby(var/obj/item/O as obj, var/mob/user as mob)
+		if (istype(O, /obj/item/reagent_containers/glass/petridish))
+			if (src.target)
+				boutput(user, "<span class='alert'>There is already a petri dish in the machine.</span>")
+				return
+			else
+				src.target = O
+				user.drop_item()
+				O.set_loc(src)
+				if (src.target.reagents.has_reagent("pathogen"))
+					var/datum/reagent/blood/pathogen/Q = src.target.reagents.reagent_list["pathogen"]
+					var/datum/pathogen/PT = Q.pathogens[pick(Q.pathogens)] 	// more than one pathogen in a petri dish won't grow properly anyway
+					medium = PT.body_type.growth_medium
+				boutput(user, "You insert the [O] into the machine.")
+				src.update_icon()
+		else if(istype(O, /obj/item/reagent_containers/glass/vial))
+			var/obj/item/reagent_containers/glass/vial/V = O
+			if(V.reagents.total_volume)
+				boutput(user, "The [V] already has reagents inside it!")
+			else if(src.target.reagents.total_volume <= 2)
+				boutput(user, "The [src] does not have enough pathogen to dispense a sample.")
+			else
+				boutput(user, "The [src] dispenses some pathogen into the [V].")
+				src.target.reagents.trans_to(V, 2)
+
+	process()
+		if(!src.target)
+			return
+		var/lowNutrients = isnull(src.target.nutrition)?1:0
+		for(var/N in src.target.nutrition)
+			if(src.target.nutrition[N] < 5 && N != "dna_mutagen") // noone ever gets a great mutatis anyway
+				lowNutrients = 1
+		if(lowNutrients)
+			src.target.reagents.add_reagent(medium, 5)
+
+	get_desc()
+		if(src.target)
+			if (src.target.reagents.has_reagent("pathogen"))
+				. += "<br>The petri dish inside contains [src.target.reagents.reagent_list["pathogen"].volume] units of pathogen."

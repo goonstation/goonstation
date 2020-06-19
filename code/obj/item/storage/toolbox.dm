@@ -36,7 +36,6 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] slams the toolbox closed on [his_or_her(user)] head repeatedly!</b></span>")
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -357,7 +356,6 @@
 			if(prob(4))
 				boutput(affected_mob, "<span class='alert'>We are too far from His Grace...</span>")
 				affected_mob.take_toxin_damage(5)
-				affected_mob.updatehealth()
 			else if(prob(6))
 				boutput(affected_mob, "<span class='alert'>You feel weak.</span>")
 				random_brute_damage(affected_mob, 5)

@@ -38,7 +38,7 @@
 				user.visible_message("<span class='notice'>[M] is unbuckled by [user].</span>", "<span class='notice'>You unbuckle [M].</span>")
 			else
 				user.visible_message("<span class='notice'>[M] unbuckles.</span>", "<span class='notice'>You unbuckle.</span>")
-			M.anchored = 0
+			reset_anchored(M)
 			M.buckled = null
 			src.add_fingerprint(user)
 			playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)

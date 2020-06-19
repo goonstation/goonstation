@@ -49,7 +49,6 @@ var/list/rollList = list()
 			return 0
 		user.visible_message("<span class='alert'><b>[user] attempts to swallow [src] and chokes on it.</b></span>")
 		user.take_oxygen_deprivation(160)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -103,9 +102,9 @@ var/list/rollList = list()
 		else
 			src.last_roll = null
 			src.visible_message("[src] shows... um. Something. It hurts to look at. [pick("What the fuck?", "You should probably find the chaplain.")]")
-
+		tooltip_rebuild = 1
 		if (src.dicePals.len)
-			shuffle(src.dicePals) // so they don't all roll in the same order they went into the pile
+			shuffle_list(src.dicePals) // so they don't all roll in the same order they went into the pile
 			for (var/obj/item/dice/D in src.dicePals)
 				D.set_loc(get_turf(src))
 				if (prob(75))
@@ -312,7 +311,6 @@ var/list/rollList = list()
 // 					H.weakened = max(3, H.weakened)
 // 					affecting.take_damage(5, 0)
 // 					H.UpdateDamageIcon()
-// 					H.updatehealth()
 // 			if((prob(2)) && (H.m_intent != "walk") && (!istype(src,/obj/item/dice/coin)))
 // 				H.visible_message("<span class='alert'><B>[H.name] comically slips on the [src]!</B></span>", "<span class='alert'><B>You comically slip on the [src]!</B></span>")
 // 				H.weakened = max(2, M.weakened)
@@ -467,7 +465,7 @@ var/list/rollList = list()
 			src.visible_message("[src] shows... um. Something. It hurts to look at. [pick("What the fuck?", "You should probably find the chaplain.")]")
 
 		if (src.dicePals.len)
-			shuffle(src.dicePals) // so they don't all roll in the same order they went into the pile
+			shuffle_list(src.dicePals) // so they don't all roll in the same order they went into the pile
 			for (var/obj/item/dice/D in src.dicePals)
 				D.set_loc(get_turf(src))
 				if (prob(75))
@@ -510,7 +508,7 @@ var/list/rollList = list()
 		else
 			src.last_roll = null
 			src.visible_message("[src] shows... um. This isn't a number. It hurts to look at. [pick("What the fuck?", "You should probably find the chaplain.")]")
-
+		tooltip_rebuild = 1
 	attack_self(var/mob/user as mob)
 		src.roll_dat_thang()
 
@@ -614,6 +612,7 @@ var/list/rollList = list()
 		for(var/i=1, i<=dicelist.len, i++) //shuffle the overlay colors to give the illusion of dice rolling inside the cup?
 			if (src.dicelist[i].sides && isnum(src.dicelist[i].sides)) //index out of bounds
 				src.dicelist[i].last_roll = rand(1, src.dicelist[i].sides)
+				src.dicelist[i].tooltip_rebuild = 1
 				src.localRollList.Add(list(list("sides"=src.dicelist[i].sides,"roll"=src.dicelist[i].last_roll,"color"=src.dicelist[i].color))) //need a check for dice without a color
 				if(src.dicelist[i].sides == 6)
 					src.dicelist[i].icon_state = "d6_[src.dicelist[i].last_roll]"

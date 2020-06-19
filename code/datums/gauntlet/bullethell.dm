@@ -94,7 +94,7 @@
 
 	anchored = 1
 	density = 1
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "secbot1"
 
 	var/datum/action/bar/bullethell/healthbar //Hack.

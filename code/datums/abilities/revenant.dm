@@ -84,12 +84,14 @@
 		animate_levitate(owner)
 
 		owner.add_stun_resist_mod("revenant", 1000)
+		APPLY_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)
 
 		..()
 
 	OnRemove()
 		if (owner)
 			owner.remove_stun_resist_mod("revenant")
+			REMOVE_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)
 		..()
 
 	proc/ghoulTouch(var/mob/living/carbon/human/poorSob, var/obj/item/affecting)
@@ -195,7 +197,6 @@
 		owner.bodytemperature = owner.base_body_temp
 		setalive(owner)
 
-		owner.updatehealth()
 
 		if (owner.health < -50)
 			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")

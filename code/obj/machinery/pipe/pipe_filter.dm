@@ -45,17 +45,17 @@
 /*	var/delta_gt
 
 	if(vnode1)
-		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - gas.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - TOTAL_MOLES(gas) / capmult)
 		calc_delta( src, gas, ngas, vnode1, delta_gt)
 	else
 		leak_to_turf(1)
 	if(vnode2)
-		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - gas.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - TOTAL_MOLES(gas) / capmult)
 		calc_delta( src, gas, ngas, vnode2, delta_gt)
 	else
 		leak_to_turf(2)
 	if(vnode3)
-		delta_gt = FLOWFRAC * ( vnode3.get_gas_val(src) - f_gas.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode3.get_gas_val(src) - TOTAL_MOLES(f_gas) / capmult)
 		calc_delta( src, f_gas, f_ngas, vnode3, delta_gt)
 	else
 		leak_to_turf(3)
@@ -70,7 +70,7 @@
 	src.updateUsrDialog()*/ //TODO: FIX
 
 /obj/machinery/pipefilter/get_gas_val(from)
-	return ((from == vnode3) ? f_gas.total_moles() : gas.total_moles())/capmult
+	return ((from == vnode3) ? TOTAL_MOLES(f_gas) : TOTAL_MOLES(gas))/capmult
 
 /obj/machinery/pipefilter/get_gas(from)
 	return (from == vnode3) ? f_gas : gas
@@ -173,12 +173,12 @@
 		return
 
 	var/list/gases = list("O2", "N2", "Plasma", "CO2", "N2O")
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "Filter Release Rate:<BR><br><A href='?src=\ref[src];fp=-[num2text(src.maxrate, 9)]'>M</A> <A href='?src=\ref[src];fp=-100000'>-</A> <A href='?src=\ref[src];fp=-10000'>-</A> <A href='?src=\ref[src];fp=-1000'>-</A> <A href='?src=\ref[src];fp=-100'>-</A> <A href='?src=\ref[src];fp=-1'>-</A> [src.f_per] <A href='?src=\ref[src];fp=1'>+</A> <A href='?src=\ref[src];fp=100'>+</A> <A href='?src=\ref[src];fp=1000'>+</A> <A href='?src=\ref[src];fp=10000'>+</A> <A href='?src=\ref[src];fp=100000'>+</A> <A href='?src=\ref[src];fp=[num2text(src.maxrate, 9)]'>M</A><BR><br>"
 	for (var/i = 1; i <= gases.len; i++)
 		dat += "[gases[i]]: <A HREF='?src=\ref[src];tg=[1 << (i - 1)]'>[(src.f_mask & 1 << (i - 1)) ? "Releasing" : "Passing"]</A><BR><br>"
-	if(gas.total_moles())
-		var/totalgas = gas.total_moles()
+	if(TOTAL_MOLES(gas))
+		var/totalgas = TOTAL_MOLES(gas)
 		var/pressure = round(totalgas / gas.maximum * 100)
 		var/nitrogen = gas.n2 / totalgas * 100
 		var/oxygen = gas.oxygen / totalgas * 100
@@ -199,7 +199,7 @@
 	if(usr.restrained() || usr.lying)
 		return
 	if ((((get_dist(src, usr) <= 1 || usr.telekinesis == 1) || isAI(usr)) && istype(src.loc, /turf)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["close"])
 			usr << browse(null, "window=pipefilter;")
 			usr.machine = null

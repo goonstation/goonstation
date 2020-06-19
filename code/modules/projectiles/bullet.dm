@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/projectile/bullet)
 /datum/projectile/bullet
 //How much of a punch this has, tends to be seconds/damage before any resist
 	power = 45
@@ -127,6 +128,7 @@ toxic - poisons
 
 /datum/projectile/bullet/revolver_38
 	name = "bullet"
+	sname = "execute"
 	power = 35
 	ks_ratio = 1.0
 	implanted = /obj/item/implant/projectile/bullet_38
@@ -155,6 +157,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/9x19NATO.ogg'
 	power = 6
 	ks_ratio = 0.9
+	hit_ground_chance = 75
 	dissipation_rate = 2
 	dissipation_delay = 8
 	projectile_speed = 36
@@ -162,6 +165,14 @@ toxic - poisons
 	icon_turf_hit = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_nine_mm_NATO
 	casing = /obj/item/casing/small
+
+	on_hit(atom/hit)
+		..()
+		if(ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(M.getStatusDuration("slowed") < 2.5 SECONDS)
+				M.changeStatus("slowed", 1 SECOND, optional = 2)
+
 
 /datum/projectile/bullet/nine_mm_NATO/burst
 	shot_number = 3
@@ -205,12 +216,17 @@ toxic - poisons
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
-	dissipation_delay = 15
+	dissipation_delay = 10
+	dissipation_rate = 0 //70 damage AP at all-ranges is fine, come to think of it
+	projectile_speed = 56
+	max_range = 100
 	casing = /obj/item/casing/rifle
 	caliber = 0.308
 	icon_turf_hit = "bhole-small"
-
-	on_hit(atom/hit, dirflag)
+	on_launch(obj/projectile/O)
+		O.AddComponent(/datum/component/sniper_wallpierce, 2) //pierces 2 walls/lockers/doors/etc. Does not function on restriced Z, rwalls and blast doors use both pierces
+				
+	on_hit(atom/hit, dirflag, obj/projectile/P)
 		if(ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			if(power > 40)
@@ -225,6 +241,7 @@ toxic - poisons
 				SPAWN_DBG(0)
 					M.throw_at(target, 3, 3, throw_type = THROW_GUNIMPACT)
 		..()
+	
 /datum/projectile/bullet/tranq_dart
 	name = "dart"
 	power = 10
@@ -252,6 +269,7 @@ toxic - poisons
 
 	//haha gannets, fuck you I stole ur shit! - kyle
 	law_giver
+		sname = "knockout"
 		caliber = 0.355
 		casing = /obj/item/casing/small
 		shot_sound = 'sound/weapons/tranq_pistol.ogg'
@@ -286,13 +304,14 @@ toxic - poisons
 /datum/projectile/bullet/derringer
 	name = "bullet"
 	shot_sound = 'sound/weapons/derringer.ogg'
-	power = 100
+	power = 120
 	dissipation_delay = 1
-	dissipation_rate = 25
+	dissipation_rate = 50
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
+	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_41
-	ks_ratio = 0.5
+	ks_ratio = 0.66
 	caliber = 0.41
 	icon_turf_hit = "bhole"
 	casing = /obj/item/casing/derringer
@@ -307,12 +326,13 @@ toxic - poisons
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	power = 70
 	ks_ratio = 1.0
-	dissipation_delay = 3//2
-	dissipation_rate = 15
+	dissipation_delay = 2//2
+	dissipation_rate = 10
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	caliber = 0.72 // roughly
 	icon_turf_hit = "bhole"
+	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_12ga
 	casing = /obj/item/casing/shotgun_red
 
@@ -329,10 +349,18 @@ toxic - poisons
 					if(!M.stat) M.emote("scream")
 					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
 					M.update_canmove()
+			if (M.organHolder)
+				var/targetorgan
+				for (var/i in 1 to (power/10)-2) //targets 5 organs for strong, 3 for weak
+					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+					M.organHolder.damage_organ(proj.power/M.get_ranged_protection(), 0, 0, prob(5) ? "heart" : targetorgan) //5% chance to hit the heart
+
+			if(prob(proj.power/4) && power > 50) //only for strong. Lowish chance
+				M.sever_limb(pick("l_arm","r_arm","l_leg","r_leg"))
 			..()
 
 	weak
-		power = 30
+		power = 50 //can have a little throwing, as a treat
 
 
 /datum/projectile/bullet/airzooka
@@ -407,6 +435,7 @@ toxic - poisons
 
 	lawbringer
 		name = "lawbringer"
+		sname = "bigshot"
 		power = 1
 		cost = 150
 
@@ -512,8 +541,8 @@ toxic - poisons
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if(slow && ishuman(hit))
 			var/mob/living/carbon/human/M = hit
-			M.changeStatus("slowed", 1.5 SECONDS, optional = 8)
-			hit.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
+			M.changeStatus("slowed", 0.5 SECONDS)
+			M.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
 /datum/projectile/bullet/lmg/weak
 	power = 1
@@ -589,6 +618,7 @@ toxic - poisons
 
 /datum/projectile/bullet/flare
 	name = "flare"
+	sname = "hotshot"
 	shot_sound = 'sound/weapons/flaregun.ogg'
 	power = 20
 	cost = 1
@@ -690,7 +720,11 @@ toxic - poisons
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
 		on_hit(atom/hit, angle, var/obj/projectile/P)
-			if (P.data || prob(10)) //maybe
+#if ASS_JAM
+			if (P.data || prob(100)) //Removing the data check would mean indenting is fucked, and im lazy
+#else
+			if (P.data || prob(10))
+#endif
 				..()
 			else
 				new /obj/effects/rendersparks(hit.loc)
@@ -868,6 +902,7 @@ toxic - poisons
 
 /datum/projectile/bullet/smoke
 	name = "smoke grenade"
+	sname = "smokeshot"
 	window_pass = 0
 	icon_state = "40mmB"
 	damage_type = D_KINETIC
@@ -1178,6 +1213,7 @@ toxic - poisons
 
 /datum/projectile/bullet/clownshot
 	name = "clownshot"
+	sname = "clownshot"
 	power = 1
 	cost = 15				//This should either cost a lot or a little I don't know. On one hand if it costs nothing you can truly tormet clowns with it, but on the other hand if it costs your full charge, then the clown will know how much you hate it because of how much you sacraficed to harm it. I settled for a med amount...
 	damage_type = D_KINETIC
@@ -1207,6 +1243,7 @@ toxic - poisons
 				SPAWN_DBG(0)
 					H.throw_at(get_offset_target_turf(H, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2, throw_type = THROW_GUNIMPACT)
 				H.emote("twitch_v")
+				JOB_XP(H, "Clown", 1)
 		return
 
 /datum/projectile/bullet/mininuke //Assday only.
@@ -1232,28 +1269,3 @@ toxic - poisons
 			explosion_new(null, T, 300, 1)
 		return
 
-
-/datum/projectile/bullet/gun //shoot guns
-	name = "gun"
-	power = 20 //20 damage from getting beaned with a gun idk
-	damage_type = D_KINETIC
-	hit_type = DAMAGE_BLUNT
-	shot_sound = 'sound/weapons/rocket.ogg'
-	icon_state = "gun"
-	implanted= null
-	casing = null
-	icon_turf_hit = null
-	var/already_gun_made = 0 //has a gun already been made?
-
-	on_launch(obj/projectile/O) //we only want 1 gun per fire
-		already_gun_made = 0
-
-	on_hit(atom/hit)
-		if (!already_gun_made)
-			new /obj/item/gun/kinetic/derringer(get_turf(hit))
-			already_gun_made = 1
-
-	on_end(obj/projectile/O)
-		if (!already_gun_made)
-			new /obj/item/gun/kinetic/derringer(get_turf(O))
-			already_gun_made = 1

@@ -21,13 +21,21 @@
 		if (!C) return
 
 		if (mapSwitcher.playersVoting)
-			var/hadVoted = mapSwitcher.playerVotes[C.ckey] ? 1 : 0
-			var/map = mapSwitcher.showMapVote(C)
+			var/hadVoted = 0
+			var/list/client_vote_map = map_vote_holder.vote_map[C.ckey]
+			if (client_vote_map)
+				hadVoted = 1
+
+			var/map = input("Your Civic Duty", "Which Map?") as null|anything in (client_vote_map ? client_vote_map : mapSwitcher.playerPickable)
 			if (map)
+				map_vote_holder.special_vote(C,map)
 				var/adv = pick("", "proudly", "confidently", "cautiously", "dismissively", "carelessly", "idly")
 				var/adj = pick("", "questionable", "decisive", "worthless", "important", "curious", "bizarre", "regrettable")
 				visible_message(__blue("<strong>[user]</strong> [adv] [hadVoted ? "changes their" : "casts a"] [adj] vote [hadVoted ? "to" : "for"] <strong>[map]</strong>."))
 				playsound(src.loc, "sound/machines/ping.ogg", 35)
+
+				if (user.real_name == bribeJerk)
+					map_vote_holder.voting_box(src,map)
 
 				if (!hadVoted)
 					var/obj/item/sticker = new /obj/item/sticker/ribbon/voter(get_turf(user))
@@ -50,25 +58,27 @@
 			if (!C)
 				return	// how the hell did you even get here.
 
-			if (user.real_name == bribeJerk)
-				// increase paid amount here
-				bribeAmount += S.amount
-				visible_message("<strong>[user] increases their bribe to [bribeAmount] credits!</strong>")
-
 			if (S.amount <= bribeAmount && user.real_name != bribeJerk)
 				// Someone already gave us a better bribe
 				boutput(user, __red("If you want this machine to vote for your map, you need to pay more than [bribeJerk]'s [bribeAmount] credits."))
 				return
 
-			if (S.amount > bribeAmount)
-				if (mapSwitcher.playerVotes[C.ckey])
-					// time to switch our vote.
-					bribeAmount = S.amount
-					bribeJerk = user.real_name
-					mapSwitcher.playerVotes["\ref[src]"] = mapSwitcher.playerVotes[C.ckey]
-					visible_message("<strong>[user] has paid [S.amount] credits to swing the map vote in their favor!</strong>")
-					boutput(user, __blue("You've puchased a vote for [mapSwitcher.playerVotes[C.ckey]]."))
-
+			if ((S.amount > bribeAmount) || (user.real_name == bribeJerk))
+				var/list/voted_maps = map_vote_holder.get_client_votes(C)
+				if(voted_maps.len > 0)
+					var/chosen = input("Money Talks", "Which Map?") as null|anything in voted_maps
+					if (chosen)
+						if (user.real_name == bribeJerk)
+							// increase paid amount here
+							bribeAmount += S.amount
+							visible_message("<strong>[user] increases their bribe to [bribeAmount] credits!</strong>")
+						else
+							// time to switch our vote.
+							visible_message("<strong>[user] has paid [S.amount] credits to swing the map vote in their favor!</strong>")
+							boutput(user, __blue("You've puchased a vote for [chosen]."))
+							bribeAmount = S.amount
+							bribeJerk = user.real_name
+							map_vote_holder.voting_box(src,chosen)
 				else
 					boutput(user, __red("You can't buy a vote when you haven't voted, doofus."))
 					return

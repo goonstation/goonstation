@@ -129,18 +129,13 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			return
 		if (iscarbon(AM))
 			var/mob/M =	AM
-			if (!M.can_slip())
-				return
 			if (prob(src.slippery))
-				M.pulling = null
-				M.visible_message("<span class='alert'><b>[M]</b> slips on [src]!</span>",\
-				"<span class='alert'>You slip on [src]!</span>")
-				playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
-				M.changeStatus("stunned", 3 SECONDS)
-				M.changeStatus("weakened", 3 SECONDS)
-				M.force_laydown_standup()
-				if (src.slipped_in_blood)
-					M.add_blood(src)
+				if (M.slip())
+					M.visible_message("<span class='alert'><b>[M]</b> slips on [src]!</span>",\
+					"<span class='alert'>You slip on [src]!</span>")
+
+					if (src.slipped_in_blood)
+						M.add_blood(src)
 
 	attackby(obj/item/W, mob/user)
 		if (src.can_sample && W.is_open_container() && W.reagents)
@@ -293,7 +288,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			if (!src.pooled)
 				for (var/obj/O in src.loc)
 					LAGCHECK(LAG_LOW)
-					if (O && (!src.pooled) && prob(max(src.reagents.total_volume*5, 10)))
+					if (O && (!src.pooled) && prob(max(src?.reagents.total_volume*5, 10)))
 						O.add_blood(src)
 
 	proc/set_sample_reagent_custom(var/reagent_id, var/amt = 10)
@@ -375,7 +370,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			M.set_clothing_icon_dirty()
 
 	disposing()
-		var/obj/decal/bloodtrace/B = locate() in src
+		var/obj/decal/bloodtrace/B = locate() in src.loc
 		if (!B) // hacky solution because I don't want there to be a million blood traces on a tile, ideally one trace should contain more samples
 			diseases = list()
 			B = new /obj/decal/bloodtrace(src.loc)
@@ -445,7 +440,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	disposing()
 		diseases = list()
-		var/obj/decal/bloodtrace/B = locate() in src
+		var/obj/decal/bloodtrace/B = locate() in src.loc
 		if(!B) // hacky solution because I don't want there to be a million blood traces on a tile, ideally one trace should contain more samples
 			B = new /obj/decal/bloodtrace(src.loc)
 			B.blood_DNA = src.blood_DNA
@@ -706,7 +701,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/paper
 	name = "paper"
 	desc = "Ripped up little flecks of paper."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "paper"
 	random_dir = 4
 	can_sample = 1
@@ -722,14 +717,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/leaves
 	name = "leaves"
 	desc = "A sad little pile of leaves from a sad, destroyed bush."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "leaves"
 	random_dir = 4
 
 /obj/decal/cleanable/rust
 	name = "rust"
 	desc = "That sure looks safe."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "rust1"
 	random_icon_states = list("rust1", "rust2", "rust3","rust4","rust5")
 	can_sample = 1
@@ -746,7 +741,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	name = "writing"
 	desc = "Someone's scribbled something here."
 	layer = TURF_LAYER + 1
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/decals/writing.dmi'
 	icon_state = "writing1"
 	color = "#000000"
 	random_icon_states = list("writing1", "writing2", "writing3", "writing4", "writing5", "writing6", "writing7")
@@ -1121,7 +1116,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/slime // made by slugs and snails
 	name = "slime"
 	desc = "Eww."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "slimeline1"
 	random_icon_states = list("slimeline1", "slimeline2", "slimeline3", "slimeline4")
 	color = "#A5BC64"
@@ -1155,7 +1150,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "dirt"
 	random_dir = 1
 	stain = "dirty"
@@ -1179,7 +1174,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	name = "cobweb"
 	desc = "Someone should remove that."
 	layer = MOB_LAYER+1
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "cobweb1"
 
 /obj/decal/cleanable/molten_item
@@ -1193,14 +1188,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	name = "cobweb"
 	desc = "Someone should remove that."
 	layer = MOB_LAYER+1
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "cobweb2"
 
 /obj/decal/cleanable/cobwebFloor
 	name = "cobweb"
 	desc = "\"Will you walk into my parlour?\" said the spider to the fly."
 	layer = MOB_LAYER-1
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "cobweb_floor-c"
 	event_handler_flags = USE_CANPASS
 
@@ -1216,7 +1211,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/fungus
 	name = "space fungus"
 	desc = "A fungal growth. Looks pretty nasty."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "fungus1"
 	var/amount = 1
 	can_sample = 1
@@ -1457,14 +1452,19 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	dry_time = 1200
 	var/datum/light/light
 
-	New()
-		..()
+	unpooled()
 		light = new /datum/light/point
 		light.set_brightness(0.4)
 		light.set_height(0.5)
 		light.set_color(0.2, 1, 0.2)
 		light.attach(src)
 		light.enable()
+		..()
+
+	disposing()
+		if(light)
+			qdel(light)
+		..()
 
 	setup()
 		..()
@@ -1472,7 +1472,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/saltpile
 	name = "salt pile"
 	desc = "Bad luck, that."
-	icon = 'icons/effects/salt.dmi'
+	icon = 'icons/obj/fluids/salt.dmi'
 	icon_state = "0"
 	can_sample = 1
 	sample_reagent = "salt"
@@ -1571,7 +1571,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/magnesiumpile
 	name = "magnesium pile"
 	desc = "Uh-oh."
-	icon = 'icons/effects/salt.dmi'
+	icon = 'icons/obj/fluids/salt.dmi'
 	icon_state = "0"
 	can_sample = 1
 	sample_reagent = "magnesium"
@@ -1732,7 +1732,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	density = 0
 	anchored = 1
 	layer = OBJ_LAYER
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/graffiti.dmi'
 	icon_state = "gangtag0"
 	var/datum/gang/owners = null
 

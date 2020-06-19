@@ -43,7 +43,7 @@ Contains:
 		if(rider && rider_visible && W.force)
 			W.attack(rider, user)
 			user.lastattacked = src
-			if (attacks_fast_eject || rider.getStatusDuration("weakened") || rider.getStatusDuration("stunned") || rider.getStatusDuration("paralysis"))
+			if (attacks_fast_eject || rider.hasStatus(list("weakened", "paralysis", "stunned")))
 				eject_rider()
 			W.visible_message("<span class='alert'>[user] swings at [rider] with [W]!</span>")
 		return
@@ -191,6 +191,7 @@ Contains:
 				continue
 			C.show_message("<span class='alert'><B>[rider] crashes into the wall with \the [src]!</B></span>", 1)
 		eject_rider(2)
+		JOB_XP(rider, "Clown", 1)
 		in_bump = 0
 		return
 	if(ismob(AM))
@@ -365,9 +366,8 @@ Contains:
 				T.attackby(joustingTool, R)
 				R.visible_message("[R] lances [T] with a spear!", "You stab at [T] in passing!")
 				if (prob(33))
-					R.u_equip(joustingTool)
-					joustingTool.dropped(R)
-					joustingTool.loc = get_turf(T)
+					R.drop_item(joustingTool)
+					joustingTool.set_loc(get_turf(T))
 					if (prob(50))
 						R.show_message("The spear sticks in [T] and you lose control of [src]!")
 						src.eject_rider(2)
@@ -948,7 +948,7 @@ Contains:
 	if(!M)
 		..()
 		return
-	if (iscritter(M))
+	if (ismobcritter(M))
 		var/mob/living/critter/C = M
 		if (isghostcritter(C))
 			..()
@@ -1440,7 +1440,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			M.set_loc(src.loc)
 
 /obj/vehicle/cat/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (rider || !istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+	if (rider || !istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.hasStatus(list("weakened", "paralysis", "stunned")) || user.stat || isAI(user))
 		return
 
 	var/msg
@@ -2001,7 +2001,6 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	var/openpanel = 0			//1 when the back panel is opened
 	var/broken = 0				//1 when the forklift is broken
 	var/light = 0				//1 when the yellow light is on
-	var/datum/light/actual_light
 	soundproofing = 5
 	throw_dropped_items_overboard = 1
 	var/image/image_light = null
@@ -2012,10 +2011,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 /obj/vehicle/forklift/New()
 	..()
-	actual_light = new /datum/light/point
-	actual_light.set_color(0.5, 0.5, 0.1)
-	actual_light.set_brightness(0.8)
-	actual_light.attach(src)
+	src.add_sm_light("forklift\ref[src]", list(0.5*255,0.5*255,0.5*255,255*0.67), directional = 1)
 
 /obj/vehicle/forklift/examine()
 	. = ..()
@@ -2141,13 +2137,13 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	if (!light)
 		light = 1
 		update_overlays()
-		actual_light.enable()
+		src.toggle_sm_light(1)
 		return
 
 	if (light)
 		light = 0
 		update_overlays()
-		actual_light.disable()
+		src.toggle_sm_light(0)
 	return
 
 /obj/vehicle/forklift/MouseDrop_T(atom/movable/A as obj|mob, mob/user as mob)
@@ -2273,7 +2269,7 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 	//break the light if it is on
 	if (light)
 		light = 0
-		actual_light.disable()
+		src.toggle_sm_light(0)
 		update_overlays()
 
 /obj/vehicle/forklift/proc/update_overlays()

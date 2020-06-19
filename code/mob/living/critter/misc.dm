@@ -41,7 +41,6 @@
 		var/datum/healthHolder/Bu = get_health_holder("burn")
 		if (Bu && (burn < 0 || !is_heat_resistant()))
 			Bu.TakeDamage(burn, no_burn_mult)
-		updatehealth()
 
 	attack_hand(var/mob/user as mob)
 		if (src.stat != 2)

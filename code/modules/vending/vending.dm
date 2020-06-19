@@ -310,6 +310,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/eyedrops, 2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/antiviral, 6)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/insulin, 6)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/synaptizine, 6)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/calomel, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/heparin, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/proconvertin, 6)
@@ -394,6 +395,7 @@
 
 	create_products()
 		..()
+		product_list += new/datum/data/vending_product(/obj/item/handcuffs/guardbot, 16)
 		product_list += new/datum/data/vending_product(/obj/item/handcuffs, 8)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 5)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/fog, 5)
@@ -401,6 +403,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/hardhat/security, 4)
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2/security, 2)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 2)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 2)
 		product_list += new/datum/data/vending_product(/obj/item/implantcase/antirev, 3)
 #ifdef RP_MODE
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/space_law, 1)
@@ -408,16 +411,23 @@
 		product_list += new/datum/data/vending_product(/obj/item/device/flash/turbo, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
 
-/obj/machinery/vending/security_ammo
+/obj/machinery/vending/security_ammo //ass jam time yes
+#if ASS_JAM
+	name = "Kinetitech"
+	desc = "A restricted weapon vendor, banned by the Space Geneva Convention in 2036 for being a 'warcrime'. Where the hell did the Head of Security find this?"
+	mats = 6669 //Yes its not traitor restricted, but good luck getting more of these. If you manage to get this, you deserve it
+#else
 	name = "AmmoTech"
 	desc = "A restricted ammunition vendor."
+#endif
 	icon_state = "sec"
 	icon_panel = "standard-panel"
 	icon_deny = "sec-deny"
 	req_access_txt = "37"
 	acceptcard = 0
+#if !ASS_JAM
 	is_syndicate = 1 // okay enough piles of spes ammo for any mechanic
-
+#endif
 	lr = 1
 	lg = 0.8
 	lb = 0.9
@@ -427,13 +437,48 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 6)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, 2)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 3)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO,3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/flare, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/smoke, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 3)
+#if ASS_JAM
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/ak47, 6)
+		product_list += new/datum/data/vending_product(/obj/item/gun/energy/tommy_gun, 6)
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/tactical_shotgun, 6)
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/hunting_rifle, 6)
+		product_list += new/datum/data/vending_product(/obj/item/baton/classic, 6)
+		product_list += new/datum/data/vending_product(/obj/item/gun/energy/egun, 6)
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/riot40mm, 6)
+		if(prob(10))
+			product_list += new/datum/data/vending_product(/obj/item/gun/energy/howitzer, 1)
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/detectiverevolver, 6)
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/clock_188, 200)
+		product_list += new/datum/data/vending_product(/obj/item/storage/pouch, 6)
+		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/stinger, 10)
+		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/frag, 10)
+		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/high_explosive, 10)
+		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/incendiary, 10)
+		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/smoke, 10)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/ak47, 20)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/aex, 20)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12, 40)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/rifle_3006, 20)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/bullet_9mm, 60)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 9999999)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 120)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, 40)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 60)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/flare, 60)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/smoke, 60)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 60)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 60)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/autocannon/seeker, 20)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/autocannon/knocker,20)
 
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12, 1, hidden=1) // this may be a bad idea, but it's only one box
-
+#else
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
+#endif
 /obj/machinery/vending/cola
 	name = "soda machine"
 	pay = 1
@@ -542,6 +587,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/pausecomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/dispatchcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/gunholder/recharging, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/filecomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/flushcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/accelerator, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/gunholder, 30)
@@ -554,6 +600,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/cashmoney, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/networkcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/pressureSensor, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/radioscanner, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/regfind, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/regreplace, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/relaycomp, 30)
@@ -817,7 +864,7 @@
 			return
 
 		if (usr.contents.Find(src) || in_range(src, usr) && istype(src.loc, /turf))
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["cook"])
 				if(!pizcooking)
 					if((credit < 50)&&(!emagged))
@@ -993,7 +1040,7 @@
 	var/sound_laugh = 'sound/machines/fortune_laugh.ogg'
 	var/sound_laugh_broken = 'sound/machines/fortune_laugh_broken.ogg'
 	var/sound_ding = 'sound/machines/ding.ogg'
-	var/list/sounds_working = list('sound/misc/automaton_spaz.ogg','sound/machines/mixer.ogg')
+	var/list/sounds_working = list('sound/misc/automaton_scratch.ogg','sound/machines/mixer.ogg')
 	var/list/sounds_broken = list('sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 
 	lr = 0.3
@@ -1016,7 +1063,7 @@
 	var/sound_laugh = 'sound/machines/fortune_laugh.ogg'
 	var/sound_laugh_broken = 'sound/machines/fortune_laugh_broken.ogg'
 	var/sound_ding = 'sound/machines/ding.ogg'
-	var/list/sounds_working = list('sound/misc/automaton_spaz.ogg','sound/machines/mixer.ogg')
+	var/list/sounds_working = list('sound/misc/automaton_scratch.ogg','sound/machines/mixer.ogg')
 	var/list/sounds_broken = list('sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 
 	lr = 0.3
@@ -1162,6 +1209,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/cocktail_doodads, 4)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/fruit_wedges, 1)
 		product_list += new/datum/data/vending_product(/obj/item/shaker/salt, 1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cocktailshaker, 1)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, hidden=1)
@@ -1224,6 +1272,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/card_box/booster, 20, cost=20)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/suit, 10, cost=15)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/tarot, 5, cost=25)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/storage, 5, cost=10)
 		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicebox, 5, cost=150)
 		product_list += new/datum/data/vending_product(/obj/item/storage/dicepouch, 5, cost=100)
 		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicecup, 5, cost=10)
@@ -1296,8 +1345,34 @@
 		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/dress_shoes, 1, cost=130, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/ring/gold, 2, cost=200, hidden=1)
 
+/obj/machinery/vending/janitor
+	name = "JaniTech Vendor"
+	desc = "One stop shop for all your custodial needs."
+	icon_state = "janitor"
+	icon_panel = "standard-panel"
+	icon_deny = "null"
+	pay = 1
+	acceptcard = 1
+	mats = 10
+	window_size = "400x475"
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/mop, 5)
+		product_list += new/datum/data/vending_product(/obj/item/sponge, 4)
+		product_list += new/datum/data/vending_product(/obj/item/spraybottle/cleaner, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bucket, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/cleaner, 4)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/trash_bags, 8)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/biohazard_bags, 8)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/mousetraps, 4)
+		product_list += new/datum/data/vending_product(/obj/item/caution, 10)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/long, 2)
+
+		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/cleaner, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
+
 //obj/machinery/vending
-/	var/const
 #define WIRE_EXTEND 1
 #define WIRE_SCANID 2
 #define WIRE_SHOCK 3
@@ -1560,7 +1635,7 @@
 /obj/machinery/vending/attack_hand(mob/user as mob)
 	if (status & (BROKEN|NOPOWER))
 		return
-	user.machine = src
+	src.add_dialog(user)
 
 	if (src.seconds_electrified != 0)
 		if (src.shock(user, 100))
@@ -1595,7 +1670,7 @@
 		return
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 		if ((href_list["vend"]) && (src.vend_ready))
 

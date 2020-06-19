@@ -23,6 +23,8 @@
 	var/anyone_can_activate = 0 // allows non-nukies to deploy the bomb
 	var/boom_size = "nuke" // varedit to number to get an explosion instead
 
+	var/started_light_animation = 0
+
 	flags = FPRINT
 	var/image/image_light = null
 	p_class = 1.5
@@ -58,6 +60,11 @@
 				S.visible_message("<span class='alert'>[S] cannot withstand the intense radiation and crumbles to pieces!</span>")
 				qdel(S)
 
+		if(det_time && src.simple_light && !src.started_light_animation && det_time - ticker.round_elapsed_ticks <= 2 MINUTES)
+			src.started_light_animation = 1
+			var/matrix/trans = matrix()
+			trans.Scale(3)
+			animate(src.simple_light, time = 2 MINUTES, alpha = 255, color = "#ff4444", transform = trans)
 
 		if (det_time && ticker.round_elapsed_ticks >= det_time)
 			explode()
@@ -134,6 +141,7 @@
 									src.UpdateOverlays(src.image_light, "light")
 								//src.icon_state = "nuclearbomb2"
 								src.det_time = ticker.round_elapsed_ticks + src.timer_default
+								src.add_simple_light("nuke", list(255, 127, 127, 127))
 								command_alert("\A [src] has been armed in [A]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [A] to disarm the bomb immediately.", "Nuclear Weapon Detected")
 								world << sound('sound/machines/bomb_planted.ogg')
 								logTheThing("bombing", user, null, "armed [src] at [log_loc(src)].")

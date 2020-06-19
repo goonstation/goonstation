@@ -31,7 +31,6 @@ datum
 					if(M.get_toxin_damage())
 						M.take_toxin_damage(-1 * mult)
 					M.HealDamage("All", 1 * mult, 1 * mult)
-				M.updatehealth()
 				..()
 				return
 
@@ -53,7 +52,6 @@ datum
 					M = holder.my_atom
 				if (M.get_toxin_damage() <= 25)
 					M.take_toxin_damage(-1 * mult)
-					M.updatehealth()
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if (bone_system)
@@ -149,6 +147,7 @@ datum
 			fluid_g = 64
 			fluid_b = 27
 			transparency = 190
+			minimum_reaction_temperature = -INFINITY
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(exposed_temperature <= T0C + 7)
@@ -168,12 +167,10 @@ datum
 				var/mytemp = holder.total_temperature
 				src = null
 				if(!volume_passed) return 1
-				if(!ishuman(M)) return 1
 				if(method == INGEST)
 					if(mytemp <= T0C+7) //Nice & cold.
 						if(M.get_toxin_damage())
 							M.take_toxin_damage(-5 * mult)
-							M.updatehealth()
 						if (prob(25)) boutput(M, "<span class='notice'>Nice and cold! How refreshing!</span>")
 					else if (mytemp > T0C + 30) //Warm & disgusting.
 						M.emote("frown")
@@ -364,7 +361,6 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				src = null
 				if(!volume_passed) return
-				if(!ishuman(M)) return
 				if(method == INGEST)
 					if(M.client && (istraitor(M) || isspythief(M)))
 						M.reagents.add_reagent("omnizine",10)
@@ -422,8 +418,8 @@ datum
 				if(method == INGEST)
 					var/alch = volume_passed * 0.75
 					M.reagents.add_reagent("ethanol", alch)
-					if(ishuman(M))
-						var/mob/living/carbon/human/H = M
+					if(isliving(M))
+						var/mob/living/H = M
 						if (isalcoholresistant(H))
 							return
 						if (volume_passed + H.reagents.get_reagent_amount("bojack") > 10)
@@ -523,7 +519,6 @@ datum
 				if(!M) M = holder.my_atom
 				if (prob(15))
 					M.take_toxin_damage(1 * mult)
-					M.updatehealth()
 				..()
 				return
 
@@ -668,8 +663,6 @@ datum
 				var/datum/reagents/old_holder = src.holder
 				src = null
 				if(!volume_passed)
-					return
-				if(!ishuman(M))
 					return
 
 				var/do_stunny = 1
@@ -1088,8 +1081,6 @@ datum
 						M.reagents.remove_reagent(reagent_id, 8 * mult)
 				if(M.health > 10)
 					M.take_toxin_damage(2 * mult)
-					M.updatehealth()
-				M.updatehealth()
 				if(prob(20))
 					M.visible_message("<span class='alert'>[M] pukes all over \himself!</span>")
 					M.vomit()
@@ -1383,12 +1374,12 @@ datum
 
 			on_mob_life(var/mob/living/carbon/human/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(!M.mutantrace)
+				if(istype(M) && !M.mutantrace)
 					bioeffect_length++
 				..()
 
 			on_mob_life_complete(var/mob/living/carbon/human/M)
-				if(M)
+				if(M && istype(M))
 					if (!M.mutantrace)
 						if(M.bioHolder)
 							M.bioHolder.AddEffect("roach",0,bioeffect_length) //length of bioeffect proportionate to length grasshopper was in human
@@ -1444,10 +1435,13 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if (prob(5))
-					M.say(pick("Placeholder.",\
-					"Placeholder.",\
-					"Placeholder.",\
-					"Placeholder."))
+					M.say(pick("Ye damned whale",\
+					"I don't shleep, I die.",\
+					"Call me Ishmael.",\
+					"Yo ho and a bottle of rum.",\
+					"This ish no place for a clergyman'sh shon!",\
+					"Ahoy!.",\
+					"There she blowsh."))
 				..()
 				return
 
@@ -1729,9 +1723,6 @@ datum
 				src = null
 				if(!volume_passed)
 					return
-				if(!ishuman(M))
-					return
-
 				//var/mob/living/carbon/human/H = M
 				if(method == INGEST)
 					switch(rand(1,5))
@@ -1792,15 +1783,13 @@ datum
 				if(prob(10))
 					M.emote(pick("cough"))
 					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 10 * mult))
-				M.updatehealth()
 				..()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				src = null
 				if(!volume_passed)
 					return
-				if(!ishuman(M))
-					return
+
 				//var/mob/living/carbon/human/H = M
 				if(method == INGEST)
 					if (volume_passed > 10)
@@ -1856,13 +1845,10 @@ datum
 				M.bodytemperature += rand(0,3) * mult
 				if(prob(10))
 					M.emote(pick("cough"))
-				M.updatehealth()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				src = null
 				if(!volume_passed)
-					return
-				if(!ishuman(M))
 					return
 				//var/mob/living/carbon/human/H = M
 				if(method == INGEST)
@@ -1892,12 +1878,11 @@ datum
 			bladder_value = -0.2
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if (ishuman(M))
-					M.drowsyness = max(0,M.drowsyness-5)
-					if(M.bodytemperature > M.base_body_temp) // So it doesn't act like supertep
-						M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
-					..()
-					return
+				M.drowsyness = max(0,M.drowsyness-5)
+				if(M.bodytemperature > M.base_body_temp) // So it doesn't act like supertep
+					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
+				..()
+				return
 
 		fooddrink/sarsaparilla // traditionally non-caffeinated
 			name = "sarsaparilla"
@@ -1932,6 +1917,7 @@ datum
 			transparency = 255
 			hunger_value = 1
 			viscosity = 0.5
+			minimum_reaction_temperature = -INFINITY
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(it_is_ass_day)
@@ -2040,13 +2026,12 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
-				if (ishuman(M))
-					M.dizziness = max(0,M.dizziness-5)
-					M.drowsyness = max(0,M.drowsyness-3)
-					M.sleeping = 0
-					if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
-						M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
-					M.make_jittery(3)
+				M.dizziness = max(0,M.dizziness-5)
+				M.drowsyness = max(0,M.drowsyness-3)
+				M.sleeping = 0
+				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
+					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
+				M.make_jittery(3)
 
 		fooddrink/coffee/fresh
 			name = "freshly brewed coffee"
@@ -2117,11 +2102,23 @@ datum
 			thirst_value = 0.055
 			bladder_value = 0.04
 			energy_value = 1
-			stun_resist = 8
+			stun_resist = 25
 
 			pooled()
 				..()
 				tickcounter = 0
+
+			on_add()
+				if (ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
+				return ..()
+
+			on_remove()
+				if (ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
+				return ..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -2161,8 +2158,9 @@ datum
 			addiction_prob = 1
 			addiction_prob2 = 1
 			addiction_min = 10
+			minimum_reaction_temperature = -INFINITY
 
-			reaction_temperature(exposed_temperature, exposed_volume) //Just an example.
+			reaction_temperature(exposed_temperature, exposed_volume)
 				if (exposed_temperature <= T0C + 7)
 					name = "iced tea"
 					description = "Tea, but cold!"
@@ -2362,14 +2360,16 @@ datum
 					if(M.losebreath)
 						M.lose_breath(-1)
 					M.HealDamage("All", 2, 2, 1)
-					if (ishuman(M))
-						var/mob/living/carbon/human/H = M
-						if (H.bleeding)
-							repair_bleeding_damage(H, 10, 1)
-						if (H.blood_volume < 500)
-							H.blood_volume ++
-						if (H.organHolder)
-							H.organHolder.heal_organs(1, 1, 1, target_organs)
+					if (isliving(M))
+						var/mob/living/L = M
+						if (L.bleeding)
+							repair_bleeding_damage(L, 10, 1)
+						if (L.blood_volume < 500)
+							L.blood_volume ++
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (H.organHolder)
+								H.organHolder.heal_organs(1, 1, 1, target_organs)
 
 		fooddrink/guacamole
 			name = "guacamole"
@@ -2598,7 +2598,6 @@ datum
 					M.losebreath -= (1 * mult)
 				if(prob(45))
 					M.HealDamage("All", 6 * mult, 6 * mult)
-				M.updatehealth()
 				//M.UpdateDamageIcon()
 				return
 
@@ -2663,7 +2662,6 @@ datum
 						M.take_oxygen_deprivation(25 * mult)
 						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 100 * mult))
 						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 60 * mult))
-					M.updatehealth()
 				else
 					depletion_rate = 0.2 * mult
 				..()
@@ -2759,7 +2757,6 @@ datum
 				if(ishuman(M) && ((M.bioHolder.bloodType != "A+") || prob(5)))
 					if (prob(10))
 						M.take_toxin_damage(rand(2.4) * mult)
-						M.updatehealth()
 					if (prob(7))
 						boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
 						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 40 * mult))
@@ -2845,7 +2842,6 @@ datum
 				if(M:losebreath)
 					M:losebreath -= (1 * mult)
 				M:HealDamage("All", 3 * mult, 3 * mult)
-				M:updatehealth()
 				M:UpdateDamageIcon()
 				..()
 				return
@@ -3184,7 +3180,6 @@ datum
 				if(method == INGEST)
 					if (M.get_toxin_damage())
 						M.take_toxin_damage(rand(1,2) * -1) //I assume this was not supposed to be poison.
-						M.updatehealth()
 
 		fooddrink/cocktail_triple
 			name = "Triple Triple"
@@ -3203,17 +3198,21 @@ datum
 			bladder_value = -2
 
 			on_add(var/mob/M)
-				return
+				if (ismob(M))
+					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
 
 			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
 				if(method == INGEST)
 					if (M.get_toxin_damage())
 						M.take_toxin_damage(9 * -1) //I assume this was not supposed to be poison.
-						M.updatehealth()
 					M.playsound_local(M, "sound/effects/bigwave.ogg", 50, 1)
 					boutput(M, "<span class='notice'><B>You feel refreshed.<B></span>")
 
 			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
+
 				if(hascall(holder.my_atom,"removeOverlayComposition"))
 					holder.my_atom:removeOverlayComposition(/datum/overlayComposition/triplemeth)
 
@@ -3223,10 +3222,10 @@ datum
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if(!M) M = holder.my_atom
+				if(!M)
+					M = holder.my_atom
 
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					holder.my_atom:add_stam_mod_regen("tripletriple", 3333)
+					M.add_stam_mod_regen("tripletriple", 3333)
 				if(prob(10))
 					new /obj/decal/cleanable/urine(M.loc)
 
@@ -3271,7 +3270,6 @@ datum
 			do_overdose(var/severity = 1, var/mob/M, var/mult = 1)
 				if (severity == 1)
 					M.take_toxin_damage(3 * mult)
-					M.updatehealth()
 					M.make_dizzy(33 * mult)
 
 					M.take_brain_damage(9 * mult)
@@ -3421,7 +3419,6 @@ datum
 				if (prob(5))
 					boutput(M, "<span class='alert'>GAH! My culture! Erased!</span>")
 					M.take_brain_damage(rand(1,2))
-					M.updatehealth()
 
 				return
 
@@ -3442,7 +3439,6 @@ datum
 				if (prob(5))
 					boutput(M, "<span class='alert'>GAH! My bones!</span>")
 					M.TakeDamage("All", 5, 0, 0, DAMAGE_CRUSH)
-					M.updatehealth()
 
 				return
 
@@ -3495,7 +3491,6 @@ datum
 				if (prob(8))
 					boutput(M, "<span class='alert'>You feel something squirming in your stomach. Your thoughts turn to cheese and you begin to sweat.</span>")
 					M.take_toxin_damage(rand(1,2) * mult)
-					M.updatehealth()
 
 				return
 
@@ -3751,6 +3746,16 @@ datum
 
 				..()
 
-			on_mob_life_complete(var/mob/living/carbon/human/M)
+			on_mob_life_complete(var/mob/living/M)
 				if(M)
 					M.reagents.add_reagent("ethanol", (alch_counter + (rand(2,3))))
+
+		fooddrink/alcoholic/hottoddy
+			name = "Hot Toddy"
+			id = "hottoddy"
+			fluid_r = 255
+			fluid_g = 220
+			fluid_b = 95
+			alch_strength = 0.4
+			description = "A warm, late night drink, usually enjoyed during long winter nights."
+			reagent_state = LIQUID

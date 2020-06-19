@@ -1,3 +1,5 @@
+#define KNOCK_DELAY 10
+
 /obj/machinery/door
 	name = "door"
 	icon_state = "door1"
@@ -6,6 +8,7 @@
 	flags = FPRINT | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 	object_flags = BOTS_DIRBLOCK
+	text = "<font color=#D2691E>+"
 	var/secondsElectrified = 0
 	var/visible = 1
 	var/p_open = 0
@@ -30,6 +33,7 @@
 	var/health = 600
 	var/health_max = 600
 	var/hitsound = "sound/impact_sounds/Generic_Hit_Heavy_1.ogg"
+	var/knocksound = 'sound/impact_sounds/Door_Metal_Knock_1.ogg' //knock knock
 
 	var/next_timeofday_opened = 0 //high tier jank
 
@@ -101,7 +105,6 @@
 					var/obj/item/affecting = C.organs["head"]
 					if (affecting)
 						affecting.take_damage(9, 0)
-						C.UpdateDamage()
 						C.UpdateDamageIcon()
 					C.changeStatus("weakened", 1 SECOND)
 				else
@@ -394,6 +397,7 @@
 			take_damage(health_max/6)
 
 /obj/machinery/door/proc/break_me_complitely()
+	set waitfor = 0
 	robogibs(src.loc)
 	qdel(src)
 
@@ -431,7 +435,8 @@
 			A.shock(user, 3)
 
 		if (prob(2) && src.health <= health_max * 0.35 && istype(src, /obj/machinery/door/airlock) )
-			src.open()
+			SPAWN_DBG(0)
+				src.open()
 
 
 /obj/machinery/door/bullet_act(var/obj/projectile/P)
@@ -603,6 +608,12 @@
 	if (!density && !operating && !locked)
 		close()
 	else return
+
+/obj/machinery/door/proc/knockOnDoor(mob/user)
+	if(world.time >= user.last_door_knock_time) //slow the fuck down cowboy
+		user.last_door_knock_time = world.time + KNOCK_DELAY
+		attack_particle(user,src)
+		playsound(src.loc, src.knocksound, 100, 1) //knock knock
 
 /obj/machinery/door/proc/checkForMultipleDoors()
 	if(!src.loc)
@@ -833,3 +844,5 @@
 
 /obj/machinery/door/control/oneshot
 	var/broken = 0
+
+#undef KNOCK_DELAY

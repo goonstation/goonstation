@@ -623,7 +623,7 @@
 		light.enable()
 
 /obj/decal/fakeobjects/Azarakcandles
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "candle"
 	name = "candle"
 	desc = "TEMP"
@@ -737,7 +737,7 @@
 	growthmode = "weed"
 	category = "Miscellaneous"
 	seedcolor = "#FF0000"
-	special_icon = "hellshroom"
+	override_icon_state = "hellshroom"
 	crop = /obj/item/reagent_containers/food/snacks/hellshroom
 	starthealth = 10
 	nothirst = 1
@@ -1154,7 +1154,7 @@
 	Bumped(mob/user as mob)
 		if(busy) return
 		if(get_dist(usr, src) > 1 || usr.z != src.z) return
-		user.machine = src
+		src.add_dialog(user)
 		busy = 1
 		showswirl(user.loc)
 		playsound(src, 'sound/effects/teleport.ogg', 60, 1)
@@ -1232,6 +1232,7 @@
 			src.attacking = 0
 
 	CritterDeath()
+		..()
 		qdel(src)
 
 /obj/item/rpcargotele

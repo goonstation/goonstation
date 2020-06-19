@@ -93,7 +93,7 @@ var/list/observers = list()
 		if (istype(M))
 			M.apply_camera(C)
 		else
-			..(C)
+			..()
 
 	cancel_camera()
 		set hidden = 1
@@ -138,7 +138,7 @@ var/list/observers = list()
 	verb
 		stop_observing()
 			set name = "Stop Observing"
-			set category = "Special Verbs"
+			set category = "Commands"
 
 			if (!my_ghost)
 				my_ghost = new(src.corpse)

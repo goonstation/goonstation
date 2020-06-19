@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/objective)
 /datum/objective
 	var/datum/mind/owner
 	var/explanation_text
@@ -78,7 +79,7 @@
 	check_completion()
 		if(target && target.current)
 			if(isdead(target.current) || !iscarbon(target.current) || inafterlife(target.current))
-				if (target.current.on_centcom())
+				if (in_centcom(target.current))
 					return 1
 				else
 					return 0
@@ -670,7 +671,7 @@ proc/create_fluff(var/datum/mind/target)
 		if(!owner.current || isdead(owner.current))
 			return 0
 
-		if(!src.owner.current.on_centcom())
+		if(!in_centcom(src.owner.current))
 			return 0
 
 		if (!owner.is_changeling)
@@ -729,6 +730,7 @@ proc/create_fluff(var/datum/mind/target)
 			if (player.client) num_players++
 		min_score = min(500, num_players * 10) + (rand(-5,5) * 10)
 		explanation_text = "Remain out of sight and accumulate [min_score] points."
+		owner.stealth_objective = 1
 
 	check_completion()
 		if(score >= min_score)
@@ -892,7 +894,7 @@ proc/create_fluff(var/datum/mind/target)
 	check_completion()
 		var/escapees = 0
 		for (var/mob/living/carbon/player in mobs)
-			if (player.on_centcom())
+			if (in_centcom(player))
 				escapees++
 
 		return escapees <= max_escapees
@@ -905,10 +907,9 @@ proc/create_fluff(var/datum/mind/target)
 		failed = 1
 
 	check_completion()
-		var/area/shuttle = locate(map_settings.escape_centcom)
 		if (failed)
 			return 0
-		if (get_turf(owner.current) in shuttle)
+		if (in_centcom(owner.current))
 			return 1
 		return 0
 
@@ -974,7 +975,7 @@ proc/create_fluff(var/datum/mind/target)
 		if(isghostcritter(owner.current))
 			return 0
 
-		return src.owner.current.on_centcom()
+		return in_centcom(src.owner.current)
 
 /datum/objective/escape/hijack
 	explanation_text = "Hijack the emergency shuttle by escaping alone."
@@ -997,7 +998,7 @@ proc/create_fluff(var/datum/mind/target)
 					return 0
 			else if (player.mind && (player.mind != owner))
 				if (!isdead(player) && !isghostcritter(player)) //they're not dead
-					if (get_turf(player) in shuttle)
+					if (in_centcom(player))
 						return 0
 
 		return 1
@@ -1031,7 +1032,7 @@ proc/create_fluff(var/datum/mind/target)
 
 	check_completion()
 		for(var/mob/living/carbon/human/npc/monkey/stirstir/M in mobs)
-			if(!isdead(M) && istype(get_area(M), map_settings.escape_centcom))
+			if(!isdead(M) && in_centcom(M))
 				return 1
 		return 0
 
@@ -1061,7 +1062,7 @@ proc/create_fluff(var/datum/mind/target)
 		targetname = target.current.real_name
 
 	check_completion()
-		if(target && target.current && !isdead(target.current) && ishuman(target.current) && istype(get_area(target.current), map_settings.escape_centcom))
+		if(target && target.current && !isdead(target.current) && ishuman(target.current) && in_centcom(target.current))
 			return 1
 		return 0
 
@@ -1079,12 +1080,10 @@ proc/create_fluff(var/datum/mind/target)
 		if(isghostcritter(owner.current))
 			return 0
 
-		var/area/shuttle = locate(map_settings.escape_centcom)
-
 		for(var/mob/living/player in mobs)
 			if (player.mind && (player.mind != owner) && !(player.mind in accomplices))
 				if (!isdead(player)) //they're not dead
-					if (get_turf(player) in shuttle)
+					if (in_centcom(player))
 						return 0
 
 		return 1
@@ -1093,6 +1092,7 @@ proc/create_fluff(var/datum/mind/target)
 // Conspirator objectives                              //
 /////////////////////////////////////////////////////////
 
+ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective/conspiracy
 	explanation_text = "Lay claim to a vital area of the station, fortify it, then announce your independance. Annex as much of the station as possible."
 

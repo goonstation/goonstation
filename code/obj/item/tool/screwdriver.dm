@@ -33,7 +33,6 @@
 		user.visible_message("<span class='alert'><b>[user] jams the screwdriver into [his_or_her(user)] eye over and over and over.</b></span>")
 		take_bleeding_damage(user, null, 25, DAMAGE_STAB)
 		user.TakeDamage("head", 160, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/screwdriver/vr

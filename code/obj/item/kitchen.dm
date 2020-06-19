@@ -76,11 +76,13 @@ TRAYS
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	desc = "A multi-pronged metal object, used to pick up objects by piercing them. Helps with eating some foods."
 	dir = NORTH
+	throwforce = 7
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and stabs \himself.</span>")
 			random_brute_damage(user, 10)
+			JOB_XP(user, "Clown", 1)
 		if(!saw_surgery(M,user)) // it doesn't make sense, no. but hey, it's something.
 			return ..()
 
@@ -92,7 +94,6 @@ TRAYS
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("chest", 150, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/kitchen/utensil/fork/plastic
@@ -106,6 +107,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and stabs \himself.</span>")
 			random_brute_damage(user, 5)
+			JOB_XP(user, "Clown", 1)
 		if(prob(20))
 			src.break_fork(user)
 			return
@@ -138,7 +140,7 @@ TRAYS
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 7.0
-	throwforce = 5
+	throwforce = 10
 	desc = "A long bit of metal that is sharpened on one side, used for cutting foods. Also useful for butchering dead animals. And live ones."
 	dir = NORTH
 
@@ -150,6 +152,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 			random_brute_damage(user, 20)
+			JOB_XP(user, "Clown", 1)
 		if(!scalpel_surgery(M,user))
 			return ..()
 
@@ -160,7 +163,6 @@ TRAYS
 		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/kitchen/utensil/knife/plastic
@@ -174,6 +176,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 			random_brute_damage(user, 5)
+			JOB_XP(user, "Clown", 1)
 		if(prob(20))
 			src.break_knife(user)
 			return
@@ -210,6 +213,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 			random_brute_damage(user, 20)
+			JOB_XP(user, "Clown", 1)
 		if(prob(5))
 			user.changeStatus("weakened", 4 SECONDS)
 			user.visible_message("<span class='alert'><b>[user]</b>'s hand slips from the [src] and accidentally cuts [himself_or_herself(user)]. </span>")
@@ -242,7 +246,6 @@ TRAYS
 		user.visible_message("<span class='alert'><b>[user] drags [src] over [his_or_her(user)] own throat!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/kitchen/utensil/knife/pizza_cutter
@@ -257,6 +260,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and pinches [his_or_her(user)] fingers against the blade guard.</span>")
 			random_brute_damage(user, 5)
+			JOB_XP(user, "Clown", 1)
 		if(!saw_surgery(M,user))
 			return ..()
 
@@ -264,7 +268,6 @@ TRAYS
 		user.visible_message("<span class='alert'><b>[user] rolls [src] repeatedly over [his_or_her(user)] own throat and slices it wide open!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/kitchen/utensil/spoon
@@ -277,6 +280,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and jabs [his_or_her(user)]self.</span>")
 			random_brute_damage(user, 5)
+			JOB_XP(user, "Clown", 1)
 		if(!spoon_surgery(M,user))
 			return ..()
 
@@ -289,7 +293,6 @@ TRAYS
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		return 1
 
 /obj/item/kitchen/utensil/spoon/plastic
@@ -303,6 +306,7 @@ TRAYS
 		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and jabs \himself.</span>")
 			random_brute_damage(user, 5)
+			JOB_XP(user, "Clown", 1)
 		if(prob(20))
 			src.break_spoon(user)
 			return
@@ -336,6 +340,7 @@ TRAYS
 	var/box_type = "donutbox"
 	var/contained_food = /obj/item/reagent_containers/food/snacks/donut/random
 	var/contained_food_name = "donut"
+	tooltip_flags = REBUILD_DIST
 
 	donut_box
 		name = "donut box"
@@ -382,6 +387,7 @@ TRAYS
 				user.drop_item()
 				W.set_loc(src)
 				src.amount ++
+				tooltip_rebuild = 1
 				boutput(user, "You place [W] into [src].")
 				src.update()
 			else return ..()
@@ -398,11 +404,13 @@ TRAYS
 		if(myFood)
 			if(src.amount >= 1)
 				src.amount--
+				tooltip_rebuild = 1
 			user.put_in_hand_or_drop(myFood)
 			boutput(user, "You take [myFood] out of [src].")
 		else
 			if(src.amount >= 1)
 				src.amount--
+				tooltip_rebuild = 1
 				var/obj/item/reagent_containers/food/snacks/newFood = new src.contained_food(src.loc)
 				user.put_in_hand_or_drop(newFood)
 				boutput(user, "You take [newFood] out of [src].")
@@ -427,11 +435,13 @@ TRAYS
 	throw_range = 8
 	force = 2
 	rand_pos = 0
+	pickup_sfx = "sound/items/pickup_plate.ogg"
 	var/list/ordered_contents = list()
 	var/food_desc = null
 	var/max_food = 2
 	var/list/throw_targets = list()
 	var/throw_dist = 3
+	tooltip_flags = REBUILD_DIST
 
 	New()
 		..()
@@ -439,9 +449,11 @@ TRAYS
 
 	proc/add_contents(var/obj/item/W)
 		ordered_contents += W
+		tooltip_rebuild = 1
 
 	proc/remove_contents(var/obj/item/W)
 		ordered_contents -= W
+		tooltip_rebuild = 1
 
 	proc/update_icon()
 		for (var/i = 1, i <= ordered_contents.len, i++)
@@ -475,22 +487,33 @@ TRAYS
 				F.throw_at(pick(throw_targets), 5, 1)
 
 	proc/unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
-		sleep(0.3 SECONDS)
+		attack_particle(user,M)
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		M.force_laydown_standup()
-		M.updatehealth()
-		playsound(src, "shatter", 70, 1)
-		var/obj/O = unpool(/obj/item/raw_material/shard/glass)
-		O.set_loc(get_turf(M))
-		if(src.material)
-			O.setMaterial(copyMaterial(src.material))
+		playsound(get_turf(src), "sound/impact_sounds/plate_break.ogg", 50, 1)
+
+		var/turf/shardturf = get_turf(M)
+
 		if(src.cant_drop == 1)
 			var/mob/living/carbon/human/H = user
 			H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
 		else
-			sleep(0.3 SECONDS)
-			qdel(src)
+			user.drop_item()
+			src.set_loc(shardturf)
+
+		SPAWN_DBG(0)
+			for (var/i in 1 to 2)
+				var/obj/O = unpool(/obj/item/raw_material/shard/glass)
+				O.set_loc(shardturf)
+				if(src.material)
+					O.setMaterial(copyMaterial(src.material))
+				O.throw_at(get_offset_target_turf(shardturf, rand(-4,4), rand(-4,4)), 7, 1)
+
+		qdel(src)
+
+	proc/unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
+		playsound(get_turf(src), "sound/items/plate_tap.ogg", 30, 1)
 
 	throw_impact(var/turf/T)
 		..()
@@ -602,6 +625,7 @@ TRAYS
 			unique_attack_garbage_fuck(M, user)
 		else
 			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
+			unique_tap_garbage_fluck(M,user)
 			logTheThing("combat", user, M, "taps %target% over the head with [src].")
 
 	attack_hand(mob/user as mob)
@@ -740,9 +764,8 @@ TRAYS
 		return "[health_desc] [food_desc]" //heres yr desc you *bastard*
 
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
-		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
-		user.changeStatus("weakened", rand(1,2) SECONDS)
-		M.updatehealth()
+		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
+		M.changeStatus("weakened", 2 SECONDS)
 		playsound(get_turf(src), "sound/weapons/trayhit.ogg", 50, 1)
 		src.visible_message("\The [src] falls out of [user]'s hands due to the impact!")
 		user.drop_item(src)
@@ -754,9 +777,12 @@ TRAYS
 			qdel(src)
 			return
 		tray_health--
+		tooltip_rebuild = 1
 
 		src.visible_message("\The [src] looks less sturdy now.")
 
+	unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
+		playsound(src, "step_lattice", 50, 1)
 
 /obj/item/fish
 	throwforce = 3
@@ -797,6 +823,7 @@ TRAYS
 	if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span class='alert'><b>[user]</b> swings [src] and hits \himself in the face!.</span>")
 		user.changeStatus("weakened", 20 * src.force)
+		JOB_XP(user, "Clown", 1)
 		return
 	else
 		playsound(src.loc, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)

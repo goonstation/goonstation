@@ -81,7 +81,7 @@
 			if(drive) activate()
 
 	HasEntered(atom/A)
-		if (isobserver(A) || isintangible(A) || iswraith(A)) return
+		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
 		return_if_overlay_or_effect(A)
 		activate()
 
@@ -174,7 +174,7 @@
 			if(drive) activate()
 
 	HasEntered(atom/A)
-		if (isobserver(A) || isintangible(A) || iswraith(A)) return
+		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
 
 		if (!trigger_when_no_match)
 			var/atom/movable/AM = A
@@ -320,7 +320,7 @@
 
 		dat += "<BR><b><A href='?src=\ref[src];add=1'>Add Tag</A></b>"
 
-		user.machine = src
+		src.add_dialog(user)
 		user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x400")
 		onclose(user, "bc_computer_[src]")
 		return
@@ -396,7 +396,7 @@
 
 		//dat += "<BR><b><A href='?src=\ref[src];add=1'>Add Tag</A></b>"
 
-		user.machine = src
+		src.add_dialog(user)
 		// Attempting to diagnose an infinite window refresh I can't duplicate, reverting the display style back to plain HTML to see what results that gets me.
 		// Hooray for having a playerbase to test shit on
 		//user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x400")

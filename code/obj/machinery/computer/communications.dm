@@ -44,7 +44,7 @@
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 
 	if(!href_list["operation"] || (dd_hasprefix(href_list["operation"], "ai-") && !issilicon(usr) && !isAI(usr)))
 		return
@@ -225,7 +225,7 @@
 	if(..())
 		return
 
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "<head><title>Communications Console</title></head><body>"
 	if (emergency_shuttle.online && emergency_shuttle.location == SHUTTLE_LOC_CENTCOM)
 		var/timeleft = emergency_shuttle.timeleft()
@@ -405,14 +405,10 @@
 	if(call_reason)
 		call_reason = copytext(html_decode(trim(strip_html(html_decode(call_reason)))), 1, 140)
 	if(!call_reason || length(call_reason) < 1)
-		call_reason = "<span class='italic'>No reason given.</span>"
-
+		call_reason = "No reason given."
 
 	emergency_shuttle.incall()
-	boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-	boutput(world, "<span class='notice'>- - - <b>Reason:</b> [call_reason]<B></span>")
-	boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
-
+	command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 	return 0
 
 /proc/cancel_call_proc(var/mob/user)

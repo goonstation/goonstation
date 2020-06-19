@@ -33,6 +33,7 @@
 				implants += I
 
 			H.in_fakedeath = 1
+			APPLY_MOB_PROPERTY(C, PROP_CANTMOVE, src.type)
 
 			C.lying = 1
 			C.canmove = 0
@@ -52,7 +53,6 @@
 					C.delStatus("weakened")
 					C.delStatus("radiation")
 					C.health = 100
-					C.updatehealth()
 					C.reagents.clear_reagents()
 					C.lying = 0
 					C.canmove = 1
@@ -69,6 +69,7 @@
 
 				C.set_clothing_icon_dirty()
 				H.in_fakedeath = 0
+				REMOVE_MOB_PROPERTY(C, PROP_CANTMOVE, src.type)
 		return 0
 
 /proc/changeling_super_heal_step(var/mob/living/carbon/human/healed, var/limb_regen_prob = 25, var/eye_regen_prob = 25, var/mult = 1, var/changer = 1)
@@ -172,7 +173,7 @@
 			return 1
 		boutput(holder.owner, __blue("Your skin begins reforming around your skeleton."))
 
-		while(C.health < 100 || !C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg)
+		while(C.health < C.max_health || !C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg)
 			if(isdead(C))
 				break
 			sleep(3 SECONDS)

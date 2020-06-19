@@ -1,5 +1,6 @@
 // Not all that crazy shit
 
+ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special
 	name = "special"
 	icon = 'icons/obj/projectiles.dmi'
@@ -519,7 +520,7 @@
 
 				var/setangle = 0
 				if (face_desired_dir)
-					setangle = atan2(desired_y,desired_x)
+					setangle = arctan(desired_y,desired_x)
 
 				P.setDirection(xchanged,ychanged, do_turn = rotate_proj, angle_override = setangle)
 				P.internal_speed = ( max(min_speed, min(max_speed, magnitude)) )
@@ -743,7 +744,7 @@
 	split_type = 0
 	shot_sound = 'sound/weapons/Taser.ogg'
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
-	var/spread_angle = 30
+	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
 	var/initial_angle_offset_mult = 0
@@ -775,18 +776,13 @@
 	dissipation_rate = 70
 	dissipation_delay = 0
 	window_pass = 0
-	spread_projectile_type = /datum/projectile/laser/wasp
+	spread_projectile_type = /datum/projectile/special/spawner/wasp
 	pellets_to_fire = 4
 	var/spread_angle = 60
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
 	var/initial_angle_offset_mult = 0
 
-
-	proc/throw_egg(var/turf/T)
-		if (T)
-			var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry/W = new(T)
-			W.throw_impact(T)
 
 	on_launch(var/obj/projectile/P)
 		angle_adjust_per_pellet = ((spread_angle * 2) / pellets_to_fire)
@@ -798,3 +794,104 @@
 		FC.rotateDirection(current_angle)
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
+
+/datum/projectile/special/spawner //shoot stuff
+	name = "dimensional pocket"
+	power = 1
+	cost = 1
+	shot_sound = 'sound/weapons/rocket.ogg'
+	icon_state = "bullet"
+	implanted= null
+	casing = null
+	icon_turf_hit = null
+	var/typetospawn = null
+	var/hasspawned = null
+
+	on_hit(atom/hit, direction, projectile)
+		if(ismob(hit) && typetospawn)
+			hasspawned = 1
+			. = new typetospawn(get_turf(hit))
+		return 
+
+
+	on_end(obj/projectile/O)
+		if(!hasspawned && typetospawn)
+			. = new typetospawn(get_turf(O))
+		hasspawned = null
+		return 
+
+/datum/projectile/special/spawner/gun //shoot guns
+	name = "gun"
+	power = 20 //20 damage from getting beaned with a gun idk
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	shot_sound = 'sound/weapons/rocket.ogg'
+	icon_state = "gun"
+	implanted= null
+	casing = null
+	icon_turf_hit = null
+	typetospawn = /obj/item/gun/kinetic/derringer
+
+
+/datum/projectile/special/spawner/wasp //shoot wasps
+	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
+	icon_state = "critter_egg"
+	name = "space wasp egg"
+	brightness = 0
+	sname = "space wasp egg"
+	shot_sound = null
+	shot_number = 1
+	silentshot = 1 //any noise will be handled by the egg splattering anyway
+	hit_ground_chance = 0
+	damage_type = D_KINETIC
+	power = 15
+	dissipation_delay = 30
+	dissipation_rate = 1
+	ks_ratio = 1.0
+	cost = 10
+	window_pass = 0
+	typetospawn = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
+
+	on_hit(atom/hit, direction, projectile)
+		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry/W = ..()
+		if(istype(W))
+			W.throw_impact(get_turf(hit))
+
+	on_end(obj/projectile/O)
+		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry/W = ..()
+		if(istype(W))
+			W.throw_impact(get_turf(O))
+		
+
+
+
+/datum/projectile/special/spawner/beepsky
+	name = "Beepsky"
+	window_pass = 0
+	icon = 'icons/obj/bots/aibots.dmi'
+	icon_state = "secbot1"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	power = 5
+	dissipation_delay = 30
+	cost = 1
+	shot_sound = 'sound/weapons/rocket.ogg'
+	ks_ratio = 1.0
+	caliber = 2
+	icon_turf_hit = "secbot1-wild"
+	implanted = null
+	typetospawn = /obj/machinery/bot/secbot
+
+	on_hit(atom/hit)
+		var/obj/machinery/bot/secbot/beepsky = ..()
+		if(istype(beepsky) && ismob(hit))
+			var/mob/hitguy = hit
+			hitguy.do_disorient(15, weakened = 20 * 10, disorient = 80)
+			beepsky.emagged = 1
+			if(istype(hitguy, /mob/living/carbon))
+				beepsky.target = hitguy
+
+	on_end(obj/projectile/O)
+		var/obj/machinery/bot/secbot/beepsky = ..()
+		if(istype(beepsky))
+			beepsky.emagged = 1

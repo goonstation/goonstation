@@ -205,7 +205,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					H.take_brain_damage(60)
 					H.changeStatus("stunned", 80)
 					H.changeStatus("weakened", 5 SECONDS)
-					H.UpdateDamage()
 					H.UpdateDamageIcon()
 					qdel(G)
 				else
@@ -232,7 +231,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					affecting.take_damage(500, 0)
 					H.changeStatus("stunned", 80)
 					H.changeStatus("weakened", 5 SECONDS)
-					H.UpdateDamage()
 					H.UpdateDamageIcon()
 					qdel(G)
 				else
@@ -949,7 +947,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 						affecting.heal_damage(50, 50) //heals 50 burn, 50 brute from all organs
 					src.take_toxin_damage(-INFINITY)
 					src.UpdateDamageIcon()
-					src.updatehealth()
 					if (H)
 						H.pixel_x = 0
 						H.pixel_y = 0
@@ -1014,7 +1011,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					src.verbs += /mob/living/carbon/human/machoman/verb/macho_heal
 					random_brute_damage(src, 25)
 					src.UpdateDamageIcon()
-					src.updatehealth()
 					SPAWN_DBG(0)
 						if (H)
 							H.pixel_x = 0
@@ -1326,7 +1322,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			M.changeStatus("weakened", 2 SECONDS)
 			random_brute_damage(M, rand(1,2))
 	CritterDeath()
-		src.alive = 0
+		..()
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
 		var/obj/decal/cleanable/blood/gibs/gib = null
 		gib = make_cleanable(/obj/decal/cleanable/blood/gibs,src.loc)
@@ -1399,7 +1395,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 						continue
 					affecting.heal_damage(50, 50) //heals 50 burn, 50 brute from all organs
 				H.UpdateDamageIcon()
-				target.updatehealth()
 				H.bodytemperature = H.base_body_temp
 		else
 			target.visible_message("<span class='alert'>[target] shoves \his face deep into [src]!</span>")

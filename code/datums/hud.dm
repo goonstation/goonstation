@@ -1,6 +1,7 @@
 /obj/screen
 	anchored = 1
 	plane = PLANE_HUD//wow WOW why won't you use /obj/screen/hud, HUD OBJECTS???
+	text = ""
 	New()
 		..()
 		appearance_flags |= NO_CLIENT_COLOR
@@ -56,6 +57,7 @@
 			remove_client(C)
 
 		src.clear_master()
+		..()
 
 	proc/clear_master() //only some have masters. i use this for clean gc. itzs messy, im sorry
 		.= 0

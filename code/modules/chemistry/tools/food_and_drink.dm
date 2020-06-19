@@ -73,7 +73,6 @@
 			boutput(M, "<span class='alert'>Your injuries are too severe to heal by nourishment alone!</span>")
 		else
 			M.HealDamage("All", healing, healing)
-			M.updatehealth()
 
 /* ================================================ */
 /* -------------------- Snacks -------------------- */
@@ -189,7 +188,7 @@
 			user.u_equip(src)
 			qdel(src)
 			return 0
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
 				if (!bypass_utensils)
 					if (src.needfork && !user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
@@ -478,7 +477,7 @@
 			boutput(user, "<span class='alert'>Nothing left in [src], oh no!</span>")
 			return 0
 
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
 				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>")
 			else if (M.mob_flags & IS_RELIQUARY)
@@ -549,11 +548,9 @@
 
 				F.group.reagents.skip_next_update = 1
 				F.group.update_amt_per_tile()
-				boutput(user, "<span class='notice'>You fill [src] with [F.group.amt_per_tile] units of [target].</span>")
-				F.group.reagents.trans_to_direct(src.reagents,F.group.amt_per_tile)
-				if (!F.group) return
-				F.group.contained_amt = F.group.reagents.total_volume
-				F.group.remove(F,0,F.group.updating)
+				var/amt = min(F.group.amt_per_tile, reagents.maximum_volume - reagents.total_volume)
+				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
+				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
 
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				var/turf/T = get_turf(F)
@@ -788,7 +785,6 @@
 			user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 			blood_slash(user, 25)
 			user.TakeDamage("head", 150, 0, 0, DAMAGE_CUT)
-			user.updatehealth()
 			SPAWN_DBG(50 SECONDS)
 				if (user && !isdead(user))
 					user.suiciding = 0
@@ -1039,6 +1035,7 @@
 					"You add [W] to [src].<br><span class='alert'>[src] is too full and spills!</span>")
 					src.reagents.reaction(get_turf(user), TOUCH, src.reagents.total_volume / 2)
 					src.reagents.add_reagent("ice", 5, null, (T0C - 1))
+					JOB_XP(user, "Clown", 1)
 					pool(W)
 					return
 				else
@@ -1135,7 +1132,8 @@
 		var/mob/living/carbon/human/H = user
 		var/list/choices = list()
 
-		if ((H.sims && H.sims.getValue("Bladder") <= 65) || (!H.sims && H.urine >= 2))
+		var/bladder = H.sims?.getValue("Bladder")
+		if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
 			choices += "pee in it"
 		if (src.in_glass)
 			choices += "remove [src.in_glass]"
@@ -1156,7 +1154,8 @@
 		var/obj/item/eat_thing
 
 		if (selection == "pee in it")
-			if ((H.sims && H.sims.getValue("Bladder") <= 65) || (!H.sims && H.urine >= 2))
+			bladder = H.sims?.getValue("Bladder")
+			if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
 				H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>")
 				playsound(get_turf(H), "sound/misc/pourdrink.ogg", 50, 1)
 				if (!H.sims)
@@ -1459,7 +1458,8 @@
 	icon_state = "fancycoffee"
 	item_state = "coffee"
 	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE //see _setup.dm
-	initial_volume = 10
+	initial_volume = 20
+	gulp_size = 2.5
 	g_amt = 2.5 //might be broken still, Whatever
 	var/glass_style = "fancycoffee"
 
@@ -1483,7 +1483,7 @@
 	icon_state = "carafe-eng"
 	item_state = "carafe-eng"
 	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
-	initial_volume = 40
+	initial_volume = 80
 	var/smashed = 0
 	var/shard_amt = 1
 	var/image/fluid_image
@@ -1536,7 +1536,6 @@
 			logTheThing("combat", user, M, "smashes [src] over %target%'s head! ")
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
-		M.updatehealth()
 		playsound(M, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		var/obj/O = unpool(/obj/item/raw_material/shard/glass)
 		O.set_loc(get_turf(M))
@@ -1600,3 +1599,25 @@
 	g_amt = 5
 	initial_volume = 40
 	initial_reagents = list("bojack"=40)
+
+/obj/item/reagent_containers/food/drinks/cocktailshaker
+	name = "cocktail shaker"
+	desc = "A stainless steel tumbler with a top, used to mix cocktails. Can hold up to 120 units."
+	icon = 'icons/obj/foodNdrink/bottle.dmi'
+	icon_state = "GannetsCocktailer"
+	initial_volume = 120
+
+	New()
+		..()
+		src.reagents.inert = 1
+
+	attack_self(mob/user)
+		if (src.reagents.total_volume > 0)
+			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
+			playsound(get_turf(src), "sound/items/CocktailShake.ogg", 50, 1, -6)
+			sleep (0.3 SECONDS)
+			src.reagents.inert = 0
+			src.reagents.handle_reactions()
+			src.reagents.inert = 1
+		else
+			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")

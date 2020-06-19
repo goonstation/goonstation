@@ -133,7 +133,7 @@
 		return
 
 	var/dat = "<HTML><BODY><TT><B>Mass Driver Controls</B>"
-	user.machine = src
+	src.add_dialog(user)
 	var/d2
 	if (src.timing)
 		d2 = text("<A href='?src=\ref[];time=0'>Stop Time Launch</A>", src)
@@ -185,14 +185,14 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["spell_teleport"])
 			//src.TPR = 1
 			//SPAWN_DBG(1 MINUTE)
 			//	if(src)
 			//		src.TPR = 0
 			//		src.updateDialog()
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=computer")
 			usr.teleportscroll(1, 2, src)
 			return

@@ -305,6 +305,7 @@
 	name = "Inactive Robot"
 	desc = "It looks like it hasn't been in service for decades."
 	icon_state = "mars_bot"
+	death_text = "%src% collapses!"
 	density = 1
 	health = 55
 	aggressive = 1
@@ -386,12 +387,7 @@
 
 	CritterDeath()
 		if (!src.alive) return
-		src.icon_state += "-dead"
-		src.alive = 0
-		src.anchored = 0
-		src.set_density(0)
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> collapses!")
+		..()
 		playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1)
 		speak("aaaaaaalkaAAAA##AAAAAAAAAAAAAAAAA'ERRAAAAAAAA!!!")
 
@@ -794,7 +790,7 @@
 		if (..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 		add_fingerprint(user)
 
 		var/dat = "<center><h4>Vault Computer</h4></center>"
@@ -810,7 +806,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 
 		if (href_list["unlock"])

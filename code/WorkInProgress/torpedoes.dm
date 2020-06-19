@@ -129,7 +129,7 @@
 		return movement_controller
 
 	attack_hand(mob/user as mob)
-		if(src.controller && !src.controller.loc == src)
+		if(src.controller && src.controller.loc != src)
 			src.exit(0)
 
 		if(inUse) return
@@ -150,7 +150,7 @@
 			boutput(user, "<span class='hint'><b>Press Q or E to exit targeting.</b></span>")
 			vis_contents += user
 			controller = user
-			user.update_keymap()
+			user.reset_keymap()
 			if(user.client && targeter)
 				user.client.images += targeter.trgImage
 				user.client.eye = targeter
@@ -182,7 +182,7 @@
 			if(set_location)
 				controller.set_loc(get_step(src, SOUTH))
 			vis_contents.Cut()
-			controller.update_keymap()
+			controller.reset_keymap()
 			if(controller.client && targeter)
 				controller.client.images -= targeter.trgImage
 				controller.client.eye = controller

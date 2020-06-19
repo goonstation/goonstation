@@ -87,24 +87,23 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	layer = OBJ_LAYER
+	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 
 	var/list/readers = new/list()
 	var/atom/curr_phantom = null
+	var/processing = 0
 
 	New()
-		work()
 		BLOCK_BOOK
 		return
 
-	proc/work()
+	process()
+		..()
 		if(readers.len)
 			var/mob/living/L = pick(readers)
 			var/turf/oovTile = get_oov_tile(L)
 			if(oovTile != null && curr_phantom == null)
 				curr_phantom = new/obj/kingyellow_phantom(oovTile, L)
-
-		SPAWN_DBG(3 SECONDS) work()
-		return
 
 	examine(mob/user)
 		. = list()
@@ -128,6 +127,8 @@
 					readers -= M
 
 				readers += reader
+				if(!processing)
+					processing_items.Add(src)
 			return
 		else
 			. += "This ancient data storage medium appears to contain data used for entertainment purposes."

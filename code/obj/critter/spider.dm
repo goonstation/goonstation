@@ -16,14 +16,14 @@
 	atk_brute_amt = 3
 	crit_chance = 0
 	var/venom1 = "venom"
-	var/spazzing = 0
+	var/flailing = 0
 
 	CritterAttack(mob/M)
 		..()
 		if(iscarbon(M) && M.reagents)
 			M.reagents.add_reagent("[venom1]", 3)
 		if(prob(15))
-			spiderspaz(src.target)
+			spiderflail(src.target)
 
 	attack_hand(mob/user as mob)
 		if (src.alive)
@@ -41,14 +41,14 @@
 
 		return
 
-	proc/spiderspaz(mob/M) //todo: centralize this fucking mess of spiders into one base type
-		if (spazzing)
+	proc/spiderflail(mob/M) //todo: centralize this fucking mess of spiders into one base type
+		if (flailing)
 			return
 
-		spazzing = 10
+		flailing = 10
 		playsound(src.loc, "rustle", 50, 0)
 		SPAWN_DBG(0)
-			while(spazzing-- > 0 && src.alive)
+			while(flailing-- > 0 && src.alive)
 				src.set_loc(M.loc)
 				src.pixel_x = rand(-2,2) * 2
 				src.pixel_y = rand(-2,2) * 2
@@ -61,8 +61,8 @@
 				sleep(0.4 SECONDS)
 			src.pixel_x = 0
 			src.pixel_y = 0
-			if(spazzing < 0)
-				spazzing = 0
+			if(flailing < 0)
+				flailing = 0
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider
 	name = "bumblespider egg"
@@ -84,7 +84,7 @@
 	angertext = "scuttles towards"
 	chase_text = "dives on"
 	butcherable = 1
-	var/spazzing = 0
+	var/flailing = 0
 	var/feeding = 0
 	var/venom1 = "venom"  // making these modular so i don't have to rewrite this gigantic goddamn section for all the subtypes
 	var/venom2 = "spiders"
@@ -110,6 +110,7 @@
 	CritterDeath()
 		if(!src.alive) return
 		..()
+		if (honk) return // clown spiders have special deaths
 		playsound(src.loc, src.deathsound, 50, 0)
 		src.reagents.add_reagent(venom1, 50, null)
 		src.reagents.add_reagent(venom2, 50, null)
@@ -150,7 +151,7 @@
 				M.changeStatus("weakened", 2 SECONDS)
 				M.changeStatus("stunned", 2 SECONDS)
 				random_brute_damage(M, rand(2,5),1)
-				src.spiderspaz(src.target)
+				src.spiderflail(src.target)
 				if(!M.stat) M.emote("scream") // don't scream while dead/asleep // why?
 			else
 				src.visible_message("<span class='alert'><B>[src]</B> bites [src.target]!</span>")
@@ -194,7 +195,7 @@
 					if(ishuman(M))
 						var/mob/living/carbon/human/T = M
 						feeding = 1
-						src.spiderspaz(src.target)
+						src.spiderflail(src.target)
 						src.visible_message("<span class='alert'><B>[src]</B> starts draining the fluids out of [T]!</span>")
 						src.set_loc(T.loc)
 						sleep(2 SECONDS)
@@ -250,7 +251,7 @@
 			M.changeStatus("weakened", 2 SECONDS)
 			M.changeStatus("stunned", 2 SECONDS)
 			random_brute_damage(M, rand(2,5),1)
-			src.spiderspaz(src.target)
+			src.spiderflail(src.target)
 			if(!M.stat) M.emote("scream") // don't scream while dead or KOd
 		else src.visible_message("<span class='alert'><B>[src]</B> dives at [M], but misses!</span>")
 
@@ -258,15 +259,15 @@
 		playsound(src.loc, 'sound/voice/babynoise.ogg', 50, 1)
 		src.visible_message("<span class='alert'><b>[src] coos!</b></span>", 1)
 
-	proc/spiderspaz(mob/M)
-		if (spazzing)
+	proc/spiderflail(mob/M)
+		if (flailing)
 			return
 
-		spazzing = 10
+		flailing = 10
 		if (src.stepsound)
 			playsound(src.loc, src.stepsound, 50, 0)
 		SPAWN_DBG(0)
-			while(spazzing-- > 0 && src.alive)
+			while(flailing-- > 0 && src.alive)
 				src.set_loc(M.loc)
 				src.pixel_x = rand(-2,2) * 2
 				src.pixel_y = rand(-2,2) * 2
@@ -295,8 +296,11 @@
 				sleep(0.4 SECONDS)
 			src.pixel_x = 0
 			src.pixel_y = 0
-			if(spazzing < 0)
-				spazzing = 0
+			if(flailing < 0)
+				flailing = 0
+
+/obj/critter/spider/aggressive
+	aggressive = 1
 
 /obj/critter/spider/baby
 	name = "li'l space spider"
@@ -511,7 +515,7 @@
 		else ..()
 
 	CritterDeath()
-		src.alive = 0
+		..()
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
 		var/obj/decal/cleanable/blood/gibs/gib = null
 		gib = make_cleanable(/obj/decal/cleanable/blood/gibs,src.loc)
@@ -561,7 +565,7 @@
 			break
 
 	CritterDeath()
-		src.alive = 0
+		..()
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
 		var/obj/decal/cleanable/blood/gibs/gib = null
 		gib = make_cleanable( /obj/decal/cleanable/blood/gibs,src.loc)

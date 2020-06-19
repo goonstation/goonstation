@@ -18,7 +18,7 @@
 	can_revive = 1
 	chase_text = "tackles"
 	var/boredom_countdown = 0
-	var/spazzing = 0
+	var/flailing = 0
 	var/frenzied = 0
 	var/king = 0
 
@@ -46,15 +46,10 @@
 		..()
 
 	CritterDeath()
-		if (src.alive)
-			playsound(src.loc, "sound/voice/animal/wendigo_cry.ogg", 60, 1)
-			src.visible_message("<b>[src]</b> dies!")
-			src.alive = 0
-			walk_to(src,0)
-			src.update_dead_icon()
-			anchored = 0
-			set_density(0)
-			layer = initial(layer)
+		..()
+		layer = initial(layer)
+		if (king) return // king has his own death noises, spooky
+		playsound(src.loc, "sound/voice/animal/wendigo_cry.ogg", 60, 1)
 
 	seek_target()
 		src.anchored = 0
@@ -346,21 +341,21 @@
 				src.icon_state = "wendigo"
 		return
 
-	proc/spaz()
-		if (spazzing)
+	proc/flail()
+		if (flailing)
 			return
 
-		spazzing = 25
+		flailing = 25
 		SPAWN_DBG(0)
-			while(spazzing-- > 0)
+			while(flailing-- > 0)
 				src.pixel_x = rand(-2,2) * 2
 				src.pixel_y = rand(-2,2) * 2
 				src.dir = pick(alldirs)
 				sleep(0.4 SECONDS)
 			src.pixel_x = 0
 			src.pixel_y = 0
-			if(spazzing < 0)
-				spazzing = 0
+			if(flailing < 0)
+				flailing = 0
 
 
 	// go crazy and make a huge goddamn mess
@@ -375,7 +370,7 @@
 				playsound(src.loc, "sound/voice/animal/wendigo_roar.ogg", 80, 1)
 				src.visible_message("<span class='alert'><b>[src] roars!</b></span>")
 			SPAWN_DBG(1 DECI SECOND)
-				if(!spazzing) src.spaz()
+				if(!flailing) src.flail()
 			src.set_loc(M.loc)
 			src.frenzied = 20
 			while(src.target && src.frenzied && src.alive && src.loc == M.loc )
@@ -397,6 +392,7 @@
 /obj/critter/wendigo/king
 	name = "wendigo king"
 	desc = "You should run."
+	death_text = "%src% collapses in a heap!"
 	health = 500
 	icon_state = "wendigoking"
 	king = 1
@@ -408,13 +404,9 @@
 		quality = 200 // for the limbs
 
 	CritterDeath()
+		..()
 		playsound(src.loc, "sound/voice/animal/wendigo_roar.ogg", 75, 1)
 		playsound(src.loc, "sound/voice/animal/wendigo_cry.ogg", 75, 1)
-		src.visible_message("<b>[src]</b> collapses in a heap!")
-		src.alive = 0
-		walk_to(src,0)
-		icon_state = "wendigoking-dead"
-		set_density(0)
 
 ////////////////
 ////// e-egg?

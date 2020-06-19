@@ -92,6 +92,7 @@
 			active = 1
 			for(var/X in by_type[/obj/item/card/id])
 				var/obj/item/card/id/I = X
+				if(!I) continue // the ID can get deleted in the lagcheck
 				for(var/datum/objective/regular/assassinate/A in src.owner.mind.objectives)
 					if(I.registered == null) continue
 					if(ckey(I.registered) == ckey(A.targetname))

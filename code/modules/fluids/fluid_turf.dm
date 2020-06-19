@@ -118,7 +118,7 @@
 			light.enable()
 
 //space/fluid/ReplaceWith() this is for future ctrl Fs
-	ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, var/handle_dir = 1)
+	ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, var/handle_dir = 1, force = 0)
 		.= ..(what, keep_old_material, handle_air)
 
 		if (handle_air)
@@ -433,7 +433,7 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["send"])
 			if(!active)
@@ -444,7 +444,7 @@
 					call_shuttle()
 
 		if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=sea_elevator")
 
 	src.add_fingerprint(usr)

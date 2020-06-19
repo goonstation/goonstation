@@ -347,7 +347,7 @@ var/global/list/playersSeen = list()
 
 //Admin verb to add bans
 /client/proc/cmd_admin_addban ()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Add Ban"
 	set popup_menu = 0
 
@@ -618,6 +618,7 @@ var/global/list/playersSeen = list()
 	bansHtml = replacetext(bansHtml, "null /* window_name */", "'[windowName]'")
 	bansHtml = replacetext(bansHtml, "null /* ref_src */", "'\ref[src]'")
 	bansHtml = replacetext(bansHtml, "null /* cminutes */", "[CMinutes]")
+	bansHtml = replacetext(bansHtml, "null /* api_data_params */", "data_server=[serverKey]&data_id=[config.server_id]&data_version=[config.goonhub_api_version]")
 	if (centralConn)
 		bansHtml = replacetext(bansHtml, "null /* api_key */", "'[md5(config.goonhub_api_web_token)]'")
 	usr << browse(bansHtml,"window=[windowName];size=1080x500")
@@ -625,7 +626,7 @@ var/global/list/playersSeen = list()
 
 /client/proc/openBanPanel()
 	set name = "Ban Panel"
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	if (src.holder && !src.holder.tempmin)
 		src.holder.banPanel()
 	else

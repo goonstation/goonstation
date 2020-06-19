@@ -758,7 +758,7 @@
 			return
 
 		if(src.host)
-			usr.machine = src.host
+			src.add_dialog(usr).host
 
 		if(href_list["card"])
 			if(!isnull(src.authid))
@@ -873,7 +873,7 @@
 			return
 
 		if(src.host)
-			usr.machine = src.host
+			src.add_dialog(usr).host
 
 		if(href_list["disk"])
 			if(!isnull(src.disk))
@@ -972,7 +972,7 @@
 			return
 
 		if(src.host)
-			usr.machine = src.host
+			src.add_dialog(usr).host
 
 		if(href_list["scanner"])
 			if(!isnull(src.scanner))

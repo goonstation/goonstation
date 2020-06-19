@@ -153,6 +153,7 @@
 		if (user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> accidentally grabs the blade of [src].</span>")
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 5, 5)
+			JOB_XP(user, "Clown", 1)
 		src.active = !( src.active )
 		if (src.active)
 			boutput(user, "<span class='notice'>[src] is now active.</span>")
@@ -331,7 +332,7 @@
 /obj/item/plantanalyzer/
 	name = "plant analyzer"
 	desc = "A device which examines the genes of plant seeds."
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "plantanalyzer"
 	w_class = 1.0
 	flags = ONBELT
@@ -400,7 +401,7 @@
 /obj/item/gardentrowel
 	name = "garden trowel"
 	desc = "A tool to uproot plants and transfer them to decorative pots"
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "trowel"
 
@@ -447,7 +448,7 @@
 /obj/item/reagent_containers/glass/wateringcan/
 	name = "watering can"
 	desc = "Used to water things. Obviously."
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "watercan"
 	amount_per_transfer_from_this = 60
 	w_class = 3.0
@@ -466,7 +467,7 @@
 /obj/item/reagent_containers/glass/compostbag/
 	name = "compost bag"
 	desc = "A big bag of shit."
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "compost"
 	amount_per_transfer_from_this = 10
 	w_class = 3.0
@@ -571,7 +572,7 @@
 /obj/item/reagent_containers/glass/happyplant
 	name = "Happy Plant Mixture"
 	desc = "250 units of things that make plants grow happy!"
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "happyplant"
 	amount_per_transfer_from_this = 50
 	w_class = 3.0

@@ -138,9 +138,8 @@
 	var/obj/tug_cart/cart = null
 	throw_dropped_items_overboard = 1
 	var/start_with_cart = 1
-	var/datum/light/light
 	var/speed = 4
-
+	var/datum/component/holdertargeting/simple_light/light_dir
 
 	security
 		name = "security wagon"
@@ -177,14 +176,15 @@
 				src.icon_state = "tractor-sec"
 				weeoo_in_progress = 0 */
 
+	New()
+		..()
+		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light,255, 255, 255, 150)
+		light_dir.update(1)
 
 	New()
 		..()
 		if (start_with_cart)
 			cart = new/obj/tug_cart/(get_turf(src))
-		light = new /datum/light/point
-		light.set_brightness(0.7)
-		light.attach(src)
 		if (!islist(src.ability_buttons))
 			ability_buttons = list()
 		ability_buttons += new /obj/ability_button/vehicle_speed

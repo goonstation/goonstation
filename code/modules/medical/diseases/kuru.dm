@@ -35,7 +35,6 @@
 				affected_mob.hand = !affected_mob.hand
 				random_brute_damage(affected_mob, 5)
 				affected_mob.take_oxygen_deprivation(5)
-				affected_mob.updatehealth()
 				affected_mob.changeStatus("stunned", 10 SECONDS)
 				affected_mob.changeStatus("weakened", 10 SECONDS)
 				affected_mob.make_jittery(250)

@@ -92,7 +92,7 @@
 /obj/machinery/bot/guardbot
 	name = "Guardbuddy"
 	desc = "The corporate security model of the popular PR-6 Robuddy."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy0"
 	layer = 5.0 //TODO LAYER
 	density = 0
@@ -124,7 +124,7 @@
 	var/last_dock_id = null
 	var/obj/item/clothing/head/hat = null
 	var/hat_shown = 0
-	var/hat_icon = 'icons/obj/aibots.dmi'
+	var/hat_icon = 'icons/obj/bots/aibots.dmi'
 	var/hat_x_offset = 0
 	var/hat_y_offset = 0
 	var/icon_needs_update = 1 //Call update_icon() in process
@@ -165,9 +165,9 @@
 		if (tool)
 			tool.master = null
 		if (task)
-			task.disposing()
+			task.dispose()
 		if (model_task)
-			model_task.disposing()
+			model_task.dispose()
 		radio_controller.remove_object(src, "[control_freq]")
 		radio_controller.remove_object(src, "[beacon_freq]")
 		..()
@@ -221,7 +221,7 @@
 	golden
 		name = "Goldbuddy"
 		desc = "A gold plated PR-4 Guardbuddy from a limited time raffle from like, a decade ago."
-		icon = 'icons/misc/oldbots.dmi'
+		icon = 'icons/obj/bots/oldbots.dmi'
 		icon_state = "Goldbuddy0"
 
 		update_icon()
@@ -483,7 +483,7 @@
 	attack_hand(mob/user as mob)
 		if(..())
 			return
-		if(user.a_intent == "help" && user.machine != src && (get_dist(user,src) <= 1))
+		if(user.a_intent == "help" && !user.using_dialog_of(src) && (get_dist(user,src) <= 1))
 			var/affection = pick("hug","cuddle","snuggle")
 			user.visible_message("<span class='notice'>[user] [affection]s [src]!</span>","<span class='notice'>You [affection] [src]!</span>")
 			if(src.task)
@@ -498,7 +498,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 		if ((href_list["power"]) && (!src.locked || (src.allowed(usr) && (issilicon(usr) || get_dist(usr, src) < 2))))
 			if(src.on)
@@ -711,7 +711,8 @@
 			throwparts += new /obj/item/guardbot_frame(T)
 			for(var/obj/O in throwparts) //This is why it is called "throwparts"
 				var/edge = get_edge_target_turf(src, pick(alldirs))
-				O.throw_at(edge, 100, 4)
+				SPAWN_DBG(0)
+					O.throw_at(edge, 100, 4)
 
 			SPAWN_DBG(0) //Delete the overlay when finished with it.
 				src.on = 0
@@ -1023,7 +1024,19 @@
 			src.icon_needs_update = 0
 			return
 
+		set_beacon_freq(var/newfreq)
+			if (!newfreq) return
+			newfreq = sanitize_frequency(newfreq)
+			radio_controller.remove_object(src, "[src.beacon_freq]")
+			src.beacon_freq = newfreq
+			src.beacon_connection = radio_controller.add_object(src, "[src.beacon_freq]")
 
+		set_control_freq(var/newfreq)
+			if (!newfreq) return
+			newfreq = sanitize_frequency(newfreq)
+			radio_controller.remove_object(src, "[src.control_freq]")
+			src.control_freq = newfreq
+			src.radio_connection = radio_controller.add_object(src, "[src.control_freq]")
 
 //Robot tools.  Flash boards, batons, etc
 /obj/item/device/guardbot_tool
@@ -1665,6 +1678,7 @@
 		var/tmp/last_cute_action = 0
 
 		var/weapon_access = access_carrypermit //These guys can use guns, ok!
+		var/contraband_access = access_contrabandpermit
 		var/lethal = 0 //Do we use lethal force (if possible) ?
 		var/panic = 0 //Martial law! Arrest all kinds!!
 		var/no_patrol = 1 //Don't patrol.
@@ -2134,24 +2148,52 @@
 				if (!istype(perp_id))
 					perp_id = perp.wear_id
 
-				if(perp_id)
+				var/has_carry_permit = 0
+				var/has_contraband_permit = 0
+
+				if(perp_id) //Checking for targets and permits
 					if(ckey(perp_id.registered) in target_names)
 						return 7
-
 					if(weapon_access in perp_id.access)
-						return 0
+						has_carry_permit = 1
+					if(contraband_access in perp_id.access)
+						has_contraband_permit = 1
 
 				if (istype(perp.l_hand))
-					. += perp.l_hand.contraband
+					if (istype(perp.l_hand, /obj/item/gun/)) // perp is carrying a gun
+						if(!has_carry_permit)
+							. += perp.l_hand.contraband
+					else // not carrying a gun, but potential contraband?
+						if(!has_contraband_permit)
+							. += perp.l_hand.contraband
 
 				if (istype(perp.r_hand))
-					. += perp.r_hand.contraband
-				if(ishuman(perp))
-					if (istype(perp.belt))
-						. += perp.belt.contraband * 0.5
+					if (istype(perp.r_hand, /obj/item/gun/)) // perp is carrying a gun
+						if(!has_carry_permit)
+							. += perp.r_hand.contraband
+					else // not carrying a gun, but potential contraband?
+						if(!has_contraband_permit)
+							. += perp.r_hand.contraband
 
-					if (istype(perp.wear_suit))
+				if (istype(perp.belt))
+					if (istype(perp.belt, /obj/item/gun/))
+						if (!has_carry_permit)
+							. += perp.belt.contraband * 0.5
+					else
+						if (!has_contraband_permit)
+							. += perp.belt.contraband * 0.5
+
+				if (istype(perp.wear_suit))
+					if (!has_contraband_permit)
 						. += perp.wear_suit.contraband
+
+				if (istype(perp.back))
+					if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
+						if (!has_carry_permit)
+							. += perp.back.contraband * 0.5
+					else // at moment of doing this we don't have other contraband back items, but maybe that'll change
+						if (!has_contraband_permit)
+							. += perp.back.contraband * 0.5
 
 				if(perp.mutantrace && perp.mutantrace.jerk)
 //					if(istype(perp.mutantrace, /datum/mutantrace/zombie))
@@ -3048,7 +3090,7 @@
 /obj/item/guardbot_core
 	name = "Guardbuddy mainboard"
 	desc = "The primary circuitry of a PR-6S Guardbuddy."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy_core-6"
 	mats = 6
 	w_class = 2.0
@@ -3077,7 +3119,7 @@
 /obj/item/guardbot_frame
 	name = "Guardbuddy frame"
 	desc = "The external casing of a PR-6S Guardbuddy."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy_frame-6-1"
 	mats = 5
 	var/stage = 1
@@ -3175,7 +3217,7 @@
 /obj/machinery/guardbot_dock
 	name = "docking station"
 	desc = "A recharging and command station for PR-6S Guardbuddies."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddycharger0"
 	mats = 8
 	anchored = 1
@@ -3215,7 +3257,7 @@
 		if(..() || status & NOPOWER)
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>PR-6S Docking Station</title></head><body>"
 
@@ -3249,7 +3291,7 @@
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["reset"])
 			if(last_reset && (last_reset + GUARDBOT_DOCK_RESET_DELAY >= world.time))
@@ -3448,6 +3490,30 @@
 								qdel(src.current.task)
 							src.post_wire_status(target,"command","term_message","data","command=status&status=wipe_success")
 							return
+
+						if("set_freq") //Set control or beacon frequency of current bot
+							if(!src.current)
+								src.post_wire_status(target,"command","term_message","data","command=status&status=nobot")
+								return
+
+							var/newfreq = text2num(data["freq"])
+							if(!newfreq || newfreq != sanitize_frequency(newfreq))
+								src.post_wire_status(target,"command","term_message","data","command=status&status=bad_freq")
+								return
+
+							var/freqtype = data["freq_type"]
+							switch(freqtype)
+								if("control")
+									src.current.set_control_freq(newfreq)
+									src.post_wire_status(target,"command","term_message","data","command=status&status=set_freq_success")
+									return
+								if("beacon")
+									src.current.set_beacon_freq(newfreq)
+									src.post_wire_status(target,"command","term_message","data","command=status&status=set_freq_success")
+									return
+								else
+									src.post_wire_status(target,"command","term_message","data","command=status&status=bad_freq_type")
+									return
 
 					return
 
@@ -3664,7 +3730,7 @@
 		if (..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 		add_fingerprint(user)
 
 		var/dat = "<center><h4>Tour Monitor</h4></center>"
@@ -3688,7 +3754,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 
 		if (href_list["start_tour"] && linked_bot && (linked_bot in orange(1, src)) && linked_bot.charge_dock)
@@ -3700,7 +3766,7 @@
 /obj/machinery/bot/guardbot/old
 	name = "Robuddy"
 	desc = "A PR-4 Robuddy. That's two models back by now! You didn't know any of these were still around."
-	icon = 'icons/misc/oldbots.dmi'
+	icon = 'icons/obj/bots/oldbots.dmi'
 
 	setup_no_costumes = 1
 	no_camera = 1
@@ -3813,7 +3879,7 @@
 
 /obj/item/guardbot_frame/old/golden
 	desc = "The external casing of a PR-4 Robuddy. This one is gold plated."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "goldbuddy_frame-4-1"
 	spawned_bot_type = /obj/machinery/bot/guardbot/golden
 	created_name = "Goldbuddy"

@@ -531,7 +531,7 @@ var/const/PHASER_SNIPER = 256
 		if(overloading) return
 		if(usr.stat || usr.restrained()) return
 		if(!in_range(src, usr)) return
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["power"])
 			var/change = href_list["power"]
 			prop_power += text2num(change)
@@ -565,7 +565,7 @@ var/const/PHASER_SNIPER = 256
 
 	attack_self(mob/user as mob)
 		if(overloading) return
-		usr.machine = src
+		src.add_dialog(usr)
 		var/dat = "Phaser settings:<BR><BR>"
 		dat += "Power:<BR>"
 		dat += "<A href='?src=\ref[src];power=-5'>(--)</A><A href='?src=\ref[src];power=-1'>(-)</A> [prop_power] <A href='?src=\ref[src];power=1'>(+)</A><A href='?src=\ref[src];power=5'>(++)</A><BR><BR>"

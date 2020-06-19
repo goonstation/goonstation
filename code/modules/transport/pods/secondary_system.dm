@@ -50,7 +50,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>[src] Console</B><BR><HR><BR>"
 		if(src.active)
@@ -82,7 +82,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>[src] Console</B><BR><HR><BR>"
 		dat += {"<BR><B>Capacity: [src.contents.len]/[src.capacity]</B><HR>"}
@@ -175,7 +175,7 @@
 /obj/item/shipcomponent/secondary_system/cargo/opencomputer(mob/user as mob)
 	if(user.loc != src.ship)
 		return
-	user.machine = src
+	src.add_dialog(user)
 
 	var/dat = {"<TT><B>[src] Console</B><BR><HR><BR>
 				<BR><B>Current Contents:</B><HR>"}
@@ -355,7 +355,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>[src] Console</B><BR><HR><BR>"
 		if(src.active)
@@ -440,7 +440,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>[src] Console</B><BR><HR><BR>"
 		if(src.active)
@@ -461,7 +461,7 @@
 		opencomputer(user)
 		return
 	opencomputer(mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>[src] Console</B><BR><HR><BR>"
 		dat+=  {"<BR><B>Located at:</B><HR>
@@ -497,7 +497,7 @@
 			return
 
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 		if (href_list["release"])
 			for(var/mob/M in ship)
 				if(cmptext(href_list["release"], M.name))
@@ -651,7 +651,7 @@
 			return
 
 		if ((usr.contents.Find(src) || (in_range(ship, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 
 		if (href_list["enter"])
 			if (configure_mode)

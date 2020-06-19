@@ -37,7 +37,7 @@
 		return
 
 	attack_hand(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		if (!src.scan)
 			var/dat = {"<B>Slot Machine</B><BR>
 			<HR><BR>
@@ -196,7 +196,7 @@
 		return
 
 	attack_hand(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		if (!src.scan)
 			var/dat = {"<B>Slot Machine</B><BR>
 			<HR><BR>
@@ -329,7 +329,7 @@
 		..()
 
 	attack_hand(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		if (src.working)
 			var/dat = {"<B>Slot Machine</B><BR>
 			<HR><BR>
@@ -426,7 +426,7 @@
 			pool(I)
 
 	attack_hand(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		if (src.working)
 			var/dat = {"<B>Slot Machine</B><BR>
 			<HR><BR>

@@ -536,6 +536,7 @@
 	burn_possible = 1
 	health = 20
 	rand_pos = 0
+	block_vision = 1
 
 	setupProperties()
 		..()
@@ -651,6 +652,7 @@
 			src.Bed.untuck_sheet()
 		src.Bed = null
 		src.eyeholes = 1
+		block_vision = 0
 		src.update_icon()
 		desc = "It's a bedsheet with eye holes cut in it."
 
@@ -661,6 +663,7 @@
 			src.Bed.untuck_sheet()
 		src.Bed = null
 		src.cape = 1
+		block_vision = 0
 		src.update_icon()
 		desc = "It's a bedsheet that's been tied into a cape."
 
@@ -671,6 +674,7 @@
 			src.Bed.untuck_sheet()
 		src.Bed = null
 		src.cape = 0
+		block_vision = !src.eyeholes
 		src.update_icon()
 		desc = "A linen sheet used to cover yourself while you sleep. Preferably on a bed."
 
@@ -1299,99 +1303,6 @@
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.01
 
-/obj/item/clothing/suit/cardboard_box
-	name = "cardboard box"
-	desc = "A pretty large box, made of cardboard. Looks a bit worn out."
-	icon_state = "c_box"
-	item_state = "c_box"
-	density = 1
-	see_face = 0
-	over_hair = 1
-	over_all = 1
-	c_flags = COVERSEYES | COVERSMOUTH
-	body_parts_covered = HEAD|TORSO|LEGS|ARMS
-	permeability_coefficient = 0.8
-	var/eyeholes = 0
-	var/moustache = 0
-
-	setupProperties()
-		..()
-		setProperty("movespeed", 0.7)
-		setProperty("coldprot", 33)
-		setProperty("heatprot", 33)
-		setProperty("meleeprot", 1)
-
-	attack_hand(mob/user as mob)
-		if (user.a_intent == INTENT_HARM)
-			user.visible_message("<span class='notice'>[user] taps [src].</span>",\
-			"<span class='notice'>You tap [src].</span>")
-		else
-			return ..()
-
-	attackby(obj/item/W, mob/user)
-		if (issnippingtool(W))
-			if (src.eyeholes)
-				user.show_text("\The [src] already has eyeholes cut out of it!", "red")
-				return
-			user.visible_message("<span class='notice'>[user] begins cutting eyeholes out of [src].</span>",\
-			"<span class='notice'>You begin cutting eyeholes out of [src].</span>")
-			if (!do_after(user, 20))
-				user.show_text("You were interrupted!", "red")
-				return
-			playsound(get_turf(src), "sound/items/Scissor.ogg", 100, 1)
-			user.visible_message("<span class='notice'>[user] cuts eyeholes out of [src].</span>",\
-			"<span class='notice'>You cut eyeholes out of [src].</span>")
-			src.eyeholes = 1
-			src.icon_state = "[initial(src.icon_state)]e"
-			return
-		else if (istype(W, /obj/item/clothing/mask/moustache))
-			src.moustache = 1
-			src.UpdateOverlays(image(src.icon, "c_box-moustache"), "moustache")
-			if (src.wear_image)
-				src.wear_image.overlays += image(src.wear_image_icon, "c_box-moustache")
-			user.visible_message("<span class='notice'>[user] adds [W] to [src]!</span>",\
-			"<span class='notice'>You add [W] to [src]!</span>")
-			user.u_equip(W)
-			qdel(W)
-			return
-		else
-			return ..()
-
-/obj/item/clothing/suit/cardboard_box/head_surgeon
-	name = "cardboard box - 'Head Surgeon'"
-	desc = "The HS looks a lot different today!"
-	icon_state = "c_box-HS"
-	item_state = "c_box-HS"
-	var/text2speech = 1
-
-	New()
-		..()
-		if (prob(50))
-			new /obj/machinery/bot/medbot/head_surgeon(src.loc)
-			qdel(src)
-
-	proc/speak(var/message)
-		if (!message)
-			return
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick("rustles", "folds", "womps", "boxes", "foffs", "flaps")], \"[message]\"")
-		if (src.text2speech)
-			var/audio = dectalk("\[:nk\][message]")
-			if (audio["audio"])
-				for (var/mob/O in hearers(src, null))
-					if (!O.client)
-						continue
-					ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
-				return 1
-			else
-				return 0
-		return
-
-/obj/item/clothing/suit/cardboard_box/captain
-	name = "cardboard box - 'Captain'"
-	desc = "The Captain looks a lot different today!"
-	icon_state = "c_box-cap"
-	item_state = "c_box-cap"
-
 /obj/item/clothing/suit/wizrobe
 	name = "blue wizard robe"
 	desc = "A traditional blue wizard's robe. It lacks all the stars and moons and stuff on it though."
@@ -1565,3 +1476,23 @@
 	icon_state = "nursedress"
 	item_state = "nursedress"
 	body_parts_covered = TORSO|LEGS|ARMS
+
+/obj/item/clothing/suit/security_badge
+	name = "Security Badge"
+	desc = "An official badge for a Nanotrasen Security Worker."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	w_class = 1.0
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	icon_state = "security_badge"
+	item_state = "security_badge"
+	var/badge_owner_name = null
+	var/badge_owner_job = null
+
+	setupProperties()
+
+	get_desc()
+		. += "This one belongs to [badge_owner_name], the [badge_owner_job]."
+
+	attack_self(mob/user as mob)
+		user.visible_message("[user] flashes the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")

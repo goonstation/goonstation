@@ -55,6 +55,7 @@
 	disposing()
 		clear_markers()
 		pool(selection)
+		..()
 
 	proc/clear_markers()
 		if (!selected)

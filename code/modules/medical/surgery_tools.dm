@@ -72,7 +72,6 @@ CONTAINS:
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -138,7 +137,6 @@ CONTAINS:
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -203,7 +201,6 @@ CONTAINS:
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -416,7 +413,7 @@ CONTAINS:
 			src.cell.dispose()
 			src.cell = null
 
-	get_desc(dist)
+	get_desc()
 		..()
 		if (istype(src.cell))
 			if (src.cell.artifact)
@@ -486,7 +483,6 @@ CONTAINS:
 					patient.take_oxygen_deprivation(-50)
 					if (patient.organHolder && patient.organHolder.heart)
 						patient.get_organ("heart").heal_damage(10,10,10)
-					patient.updatehealth()
 				else
 					patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond!</span>")
 
@@ -532,6 +528,7 @@ CONTAINS:
 				if (prob(25 + suiciding))
 					cell.zap(user)
 				cell.use(cell.charge)
+				src.tooltip_rebuild = 1
 
 			if (emagged && !faulty && prob(10))
 				user.show_text("[src]'s on board scanner indicates that the target is undergoing a cardiac arrest!", "red")
@@ -618,7 +615,6 @@ CONTAINS:
 			return 0
 		user.visible_message("<span class='alert'><b>[user] rapidly sews [his_or_her(user)] mouth and nose closed with [src]! Holy shit, how?!</b></span>")
 		user.take_oxygen_deprivation(160)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -653,7 +649,7 @@ CONTAINS:
 	var/in_use = 0
 	hide_attack = 2
 
-	get_desc(dist)
+	get_desc()
 		..()
 		if (src.uses >= 0)
 			switch (src.uses)
@@ -727,9 +723,9 @@ CONTAINS:
 		repair_amount = Repair
 		vrb = Vrb
 		if (zone && surgery_status)
-			duration = CLAMP((duration * surgery_status), 5, 50)
+			duration = clamp((duration * surgery_status), 5, 50)
 		else if (ishuman(target))
-			duration = CLAMP((duration * target.bleeding), 5, 50)
+			duration = clamp((duration * target.bleeding), 5, 50)
 		if (tool)
 			icon = tool.icon
 			icon_state = tool.icon_state
@@ -801,6 +797,7 @@ CONTAINS:
 				var/obj/item/bandage/B = tool
 				B.in_use = 0
 				B.uses --
+				B.tooltip_rebuild = 1
 				B.update_icon()
 			else if (istype(tool, /obj/item/material_piece/cloth))
 				ownerMob.u_equip(tool)
@@ -1096,7 +1093,7 @@ CONTAINS:
 		user, "<span class='alert'>You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
 		H, "<span class='alert'>[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src].</span>")
 
-		if (!do_mob(user, H, CLAMP(surgery_status * 4, 0, 100)))
+		if (!do_mob(user, H, clamp(surgery_status * 4, 0, 100)))
 			user.visible_message("<span class='alert'><b>[user]</b> was interrupted!</span>",\
 			"<span class='alert'>You were interrupted!</span>")
 			return
@@ -1212,7 +1209,7 @@ CONTAINS:
 	col_r = 0.9
 	col_g = 0.8
 	col_b = 0.7
-	brightness = 0.5
+	brightness = 2
 	module_research = list("science" = 1, "devices" = 1, "medicine" = 2)
 	var/anim_duration = 10 // testing var so I can adjust in-game to see what looks nice
 
@@ -1225,6 +1222,7 @@ CONTAINS:
 
 		if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(33))
 			M = user // hold the pen the right way, dingus!
+			JOB_XP(user, "Clown", 1)
 
 		if (!src.on || def_zone != "head")
 			M.tri_message("[user] wiggles [src] at [M == user ? "[his_or_her(user)] own" : "[M]'s"] [zone_sel2name[def_zone]].[!src.on ? " \The [src] isn't on, so it doesn't do much." : null]",\
@@ -1365,7 +1363,6 @@ CONTAINS:
 	icon_state = "tray"
 	density = 1
 	anchored = 0
-	var/list/stuff_to_move = null
 	var/max_to_move = 10
 	p_class = 1.5
 
@@ -1393,6 +1390,9 @@ keeping this here because I want to make something else with it eventually
 
 	New()
 		..()
+		src.layer -= 0.01
+		if (!islist(src.attached_objs))
+			src.attached_objs = list()
 		if (!ticker) // pre-roundstart, this is a thing made on the map so we want to grab whatever's been placed on top of us automatically
 			SPAWN_DBG(0)
 				var/stuff_added = 0
@@ -1400,16 +1400,10 @@ keeping this here because I want to make something else with it eventually
 					if (I.anchored || I.layer < src.layer)
 						continue
 					else
-						src.contents += I
-						src.vis_contents += I
+						attach(I)
 						stuff_added++
 						if (stuff_added >= src.max_to_move)
 							break
-
- 	//this might not be necessary, I'm not sure. but it can't hurt
-	Del()
-		src.vis_contents = null
-		src.contents = null
 
 	Move(NewLoc,Dir)
 		. = ..()
@@ -1419,11 +1413,11 @@ keeping this here because I want to make something else with it eventually
 
 			//if we're over the max amount a table can fit, have a chance to drop an item. Chance increases with items on tray
 			if (prob((src.contents.len-max_to_move)*1.1))
-				var/obj/item/falling = pick(src.contents)
+				var/obj/item/falling = pick(src.attached_objs)
+				detach(falling)
 				// src.visible_message("[falling] falls off of [src]!")
 				var/target = get_offset_target_turf(get_turf(src), rand(5)-rand(5), rand(5)-rand(5))
 				falling.set_loc(get_turf(src))
-				src.vis_contents -= falling
 
 				SPAWN_DBG(1 DECI SECOND)
 					if(falling)
@@ -1436,8 +1430,7 @@ keeping this here because I want to make something else with it eventually
 			return
 		else if (src.place_on(W, user, params))
 			user.show_text("You place [W] on [src].")
-			src.vis_contents += W
-			W.set_loc(src)
+			src.attach(W)
 			return
 		else
 			return ..()
@@ -1446,18 +1439,30 @@ keeping this here because I want to make something else with it eventually
 		..()
 		if (isitem(AM))
 			src.visible_message("[AM] lands on [src]!")
-			src.vis_contents += AM
-			AM.set_loc(src)
+			AM.set_loc(get_turf(src))
+			attach(AM)
 
+	disposing()
+		for (var/obj/item/I in src.attached_objs)
+			detach(I)
+		..()
 
 	proc/deconstruct()
 		var/obj/item/furniture_parts/surgery_tray/P = new /obj/item/furniture_parts/surgery_tray(src.loc)
 		if (P && src.material)
 			P.setMaterial(src.material)
-		for (var/obj/i in src.contents)
-			i.set_loc(src.loc)
 		qdel(src)
 		return
+
+	proc/attach(obj/item/I as obj)
+		src.attached_objs.Add(I) // attach the item to the table
+		I.glide_size = 0 // required for smooth movement with the tray
+		// register for pickup, register for being pulled off the table, register for item deletion while attached to table
+		RegisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING), .proc/detach)
+
+	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
+		src.attached_objs.Remove(I)
+		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING))
 
 /* ---------- Surgery Tray Parts ---------- */
 /obj/item/furniture_parts/surgery_tray

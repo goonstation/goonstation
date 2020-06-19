@@ -115,11 +115,11 @@
 		if ( (get_dist(src, user) > 1 ))
 			if (!issilicon(user))
 				boutput(user, text("Too far away."))
-				user.machine = null
+				src.remove_dialog(user)
 				user.Browse(null, "window=turretid")
 				return
 
-		user.machine = src
+		src.add_dialog(user)
 		var/t = "<TT><B>Turret Control Panel</B><BR><B>Controlled turrets:</B> [turrets.len] (<A href='?src=\ref[src];rescan=1'>Rescan</a>)<HR>"
 
 		if(src.locked && (!issilicon(user)))

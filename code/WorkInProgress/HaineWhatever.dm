@@ -161,7 +161,7 @@
 			src.reagents.add_reagent(src.initial_reagent, 5)
 
 	equipped(var/mob/user, var/slot)
-		if (slot == "mask" && istype(user))
+		if (slot == SLOT_WEAR_MASM && istype(user))
 			src.chewer = user
 			if (!(src in processing_items))
 				processing_items.Add(src)
@@ -1208,7 +1208,6 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		the_mob.say("MOON HEALING ESCALATION!")
 		for (var/mob/living/L in range(4, the_mob))
 			L.HealDamage("All", 50, 50)
-			L.updatehealth()
 			blink(get_turf(L))
 		icon_state = "shieldceoff"
 		return 1
@@ -1297,7 +1296,6 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -1918,19 +1916,20 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 // <bubs> baking soda, dropper, cocaine in oven makes crack
 
 	on_add()
-		if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-			holder.my_atom:add_stam_mod_regen("consumable_good", 200)
-		if(hascall(holder.my_atom,"addOverlayComposition"))
-			holder.my_atom:addOverlayComposition(/datum/overlayComposition/cocaine)
+		if(ismob(holder?.my_atom))
+			var/mob/M = holder.my_atom
+			M.add_stam_mod_regen("r_cocaine", 200)
+			M.addOverlayComposition(/datum/overlayComposition/cocaine)
 		return
+		
 	on_remove()
-		if(remove_buff)
-			if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-				holder.my_atom:remove_stam_mod_regen("consumable_good")
-		if(hascall(holder.my_atom,"removeOverlayComposition"))
-			holder.my_atom:removeOverlayComposition(/datum/overlayComposition/cocaine)
-			holder.my_atom:removeOverlayComposition(/datum/overlayComposition/cocaine_minor_od)
-			holder.my_atom:removeOverlayComposition(/datum/overlayComposition/cocaine_major_od)
+		if(ismob(holder?.my_atom))
+			var/mob/M = holder.my_atom
+			if (remove_buff)
+				M.remove_stam_mod_regen("r_cocaine")
+			M.removeOverlayComposition(/datum/overlayComposition/cocaine)
+			M.removeOverlayComposition(/datum/overlayComposition/cocaine_minor_od)
+			M.removeOverlayComposition(/datum/overlayComposition/cocaine_major_od)
 		return
 
 // grabbing shit from meth, crank and bathsalts for now, cause they do some stuff close to what I want
@@ -1952,7 +1951,6 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		if(prob(4))
 			boutput(M, "<span class='alert'><b>You feel kinda awful!</b></span>")
 			M.take_toxin_damage(1)
-			M.updatehealth()
 			M.make_jittery(30)
 			M.emote(pick("groan", "moan")) */
 		..(M)
@@ -1976,7 +1974,6 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 				M.bodytemperature += rand(10,30)
 				M.brainloss++
 				M.take_toxin_damage(1)
-				M.updatehealth()
 			else if (effect <= 7)
 				M.make_jittery(30)
 				M.emote(pick("blink", "blink_r", "twitch", "twitch_v", "stare", "leer"))
@@ -1990,13 +1987,11 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 				M.visible_message("<span class='alert'><b>[M.name]</b> is sweating like a pig!</span>", "<span class='alert'><b>Fuck, someone turn on the AC!</b></span>")
 				M.bodytemperature += rand(20,100)
 				M.take_toxin_damage(5)
-				M.updatehealth()
 			else if (effect <= 4)
 				M.visible_message("<span class='alert'><b>[M.name]</b> starts freaking the fuck out!</span>", "<span class='alert'><b>Holy shit, what the fuck was that?!</b></span>")
 				M.make_jittery(100)
 				M.take_toxin_damage(2)
 				M.brainloss += 8
-				M.updatehealth()
 				M.weakened += 3
 				M.change_misstep_chance(40)
 				M.emote("scream")

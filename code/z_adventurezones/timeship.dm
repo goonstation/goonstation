@@ -97,7 +97,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 /obj/machinery/bot/guardbot/future
 	name = "Wally-392"
 	desc = "A PR-7 Robuddy!  Whoa, these don't even exist yet!  Why does this one look so old then?"
-	icon = 'icons/misc/newbots.dmi'
+	icon = 'icons/obj/bots/newbots.dmi'
 	health = 50
 	setup_unique_name = 1
 	hat_x_offset = -6

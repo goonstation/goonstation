@@ -105,7 +105,7 @@
 
 		switch (stunned_only_is_okay)
 			if (0)
-				if (!isalive(M) || M.getStatusDuration("stunned") > 0 || M.getStatusDuration("paralysis") > 0 || M.getStatusDuration("weakened"))
+				if (!isalive(M) || M.hasStatus(list("stunned", "paralysis", "weakened")))
 					return 0
 				else
 					return 1
@@ -291,14 +291,14 @@
 		var/floormod1 = rand(0, 32)
 		var/floormod2 = rand(0, 32)
 		if(usr.plane == -100)
-			usr.plane = 0
+			usr.plane = PLANE_DEFAULT
 			usr.layer = 4
 			animate_slide(floorturf, floormod1, floormod2, 5)
 			animate_slide(floorturf, 0, 0, 5)
 
 		else
 			usr.layer = 4
-			usr.plane = -100
+			usr.plane = PLANE_UNDERFLOOR
 			animate_slide(floorturf, floormod1, floormod2, 5)
 			animate_slide(floorturf, 0, 0, 5)
 
@@ -329,5 +329,5 @@
 	var/grabtime = 65
 
 	cast(mob/target)
-		usr.plane = -100
+		usr.plane = PLANE_UNDERFLOOR
 		target.cluwnegib(grabtime)

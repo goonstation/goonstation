@@ -230,7 +230,6 @@
 		src.icon_state = "shittygrill_bake"
 		light.enable()
 		user.TakeDamage("head", 0, 175)
-		user.updatehealth()
 		SubscribeToProcess()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))

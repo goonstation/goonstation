@@ -45,13 +45,13 @@ limbs are their own thing not included here.
 		if(patient.lying)
 			return 1 // surgery is okay
 		else if (patient == surgeon)
-			return 2 // surgery is okay but hurts more
+			return 3.5 // surgery is okay but hurts more
 
 	else if (locate(/obj/stool/bed, patient.loc)) // is the patient on a bed and lying?
 		if(patient.lying)
 			return 1 // surgery is okay
 		else if (patient == surgeon)
-			return 2 // surgery is okay but hurts more
+			return 3.5 // surgery is okay but hurts more
 
 	else if (locate(/obj/table, patient.loc) && (patient.getStatusDuration("paralysis") || patient.stat)) // is the patient on a table and paralyzed or dead?
 		return 1 // surgery is okay
@@ -300,6 +300,7 @@ limbs are their own thing not included here.
 		"<span class='alert'>You fumble and stab yourself in the eye with [src]!</span>")
 		surgeon.bioHolder.AddEffect("blind")
 		surgeon.changeStatus("weakened", 4 SECONDS)
+		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(5, 15)
 		random_brute_damage(surgeon, damage)
 		take_bleeding_damage(surgeon, null, damage)
@@ -348,7 +349,6 @@ limbs are their own thing not included here.
 					take_bleeding_damage(patient, surgeon, damage_low)
 				else
 					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-				patient.updatehealth()
 				patient.organHolder.head.op_stage = 1.0
 				return 1
 
@@ -370,7 +370,6 @@ limbs are their own thing not included here.
 					take_bleeding_damage(patient, surgeon, damage_low)
 				else
 					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-				patient.updatehealth()
 				patient.organHolder.head.op_stage = 3.0
 				return 1
 
@@ -392,7 +391,6 @@ limbs are their own thing not included here.
 				take_bleeding_damage(patient, surgeon, damage_low)
 			else
 				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-			patient.updatehealth()
 			patient.organHolder.right_eye.op_stage = 2.0
 			return 1
 
@@ -414,7 +412,6 @@ limbs are their own thing not included here.
 				take_bleeding_damage(patient, surgeon, damage_low)
 			else
 				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-			patient.updatehealth()
 			patient.organHolder.left_eye.op_stage = 2.0
 			return 1
 
@@ -437,7 +434,6 @@ limbs are their own thing not included here.
 					take_bleeding_damage(patient, surgeon, damage_low)
 				else
 					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-				patient.updatehealth()
 				patient.organHolder.head.scalp_op_stage = 1.0
 				return 1
 
@@ -465,7 +461,6 @@ limbs are their own thing not included here.
 					take_bleeding_damage(patient, surgeon, damage_low)
 				else
 					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-				patient.updatehealth()
 				patient.organHolder.head.scalp_op_stage = 3.0
 				return 1
 			else if (patient.organHolder.head.scalp_op_stage == 4.0)
@@ -492,7 +487,6 @@ limbs are their own thing not included here.
 					take_bleeding_damage(patient, surgeon, damage_low)
 				else
 					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-				patient.updatehealth()
 				patient.organHolder.head.scalp_op_stage = 5.0
 				return 1
 
@@ -523,7 +517,6 @@ limbs are their own thing not included here.
 				take_bleeding_damage(patient, surgeon, damage_low)
 			else
 				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-			patient.updatehealth()
 			patient.butt_op_stage = 1.0
 			return 1
 
@@ -545,7 +538,6 @@ limbs are their own thing not included here.
 				take_bleeding_damage(patient, surgeon, damage_low)
 			else
 				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-			patient.updatehealth()
 			patient.butt_op_stage = 3.0
 			return 1
 
@@ -568,7 +560,6 @@ limbs are their own thing not included here.
 				take_bleeding_damage(patient, surgeon, damage_low)
 			else
 				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-			patient.updatehealth()
 
 			// Open chest cavity for item insertion
 			patient.chest_cavity_open = 1
@@ -593,7 +584,6 @@ limbs are their own thing not included here.
 				take_bleeding_damage(patient, surgeon, damage_low)
 			else
 				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-			patient.updatehealth()
 
 			// Cut item out of chest and move it outside of patient's body
 			var/location = get_turf(patient)
@@ -708,7 +698,6 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					patient.updatehealth()
 
 					patient.organHolder.chest.op_stage = 5.0
 					return 1
@@ -732,7 +721,6 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					patient.updatehealth()
 					patient.organHolder.chest.op_stage = 4.0
 					return 1
 
@@ -760,7 +748,6 @@ limbs are their own thing not included here.
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
 					logTheThing("combat", surgeon, patient, "removed %target%'s liver with [src].")
-					patient.updatehealth()
 					patient.organHolder.drop_organ("liver")
 
 					return 1
@@ -789,7 +776,6 @@ limbs are their own thing not included here.
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
 					logTheThing("combat", surgeon, patient, "removed %target%'s intestines with [src].")
-					patient.updatehealth()
 					patient.organHolder.drop_organ("intestines")
 
 					return 1
@@ -813,7 +799,6 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					patient.updatehealth()
 					patient.organHolder.chest.op_stage = 7.0
 
 					return 1
@@ -845,7 +830,6 @@ limbs are their own thing not included here.
 							surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
 
 						logTheThing("combat", surgeon, patient, "removed %target%'s spleen with [src].")
-						patient.updatehealth()
 						patient.organHolder.drop_organ("spleen")
 
 						return 1
@@ -870,7 +854,6 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					patient.updatehealth()
 					patient.organHolder.chest.op_stage = 9.0
 					return 1
 
@@ -911,6 +894,7 @@ limbs are their own thing not included here.
 		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> mishandles [src] and cuts [him_or_her(surgeon)]self!</span>",\
 		"<span class='alert'>You mishandle [src] and cut yourself!</span>")
 		surgeon.changeStatus("weakened", 1 SECOND)
+		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(10, 20)
 		random_brute_damage(surgeon, damage)
 		take_bleeding_damage(surgeon, damage)
@@ -960,7 +944,6 @@ limbs are their own thing not included here.
 					take_bleeding_damage(patient, surgeon, damage_low)
 				else
 					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-				patient.updatehealth()
 				patient.organHolder.head.op_stage = 2.0
 				return 1
 
@@ -1016,7 +999,6 @@ limbs are their own thing not included here.
 					take_bleeding_damage(patient, surgeon, damage_low)
 				else
 					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-				patient.updatehealth()
 				patient.organHolder.head.scalp_op_stage = 2.0
 				return 1
 
@@ -1081,7 +1063,6 @@ limbs are their own thing not included here.
 					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
 				patient.real_name = "Unknown"
 				patient.unlock_medal("Red Hood", 1)
-				patient.updatehealth()
 				patient.set_clothing_icon_dirty()
 				return 1
 			else
@@ -1112,7 +1093,6 @@ limbs are their own thing not included here.
 					take_bleeding_damage(patient, surgeon, damage_low)
 				else
 					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-				patient.updatehealth()
 				patient.butt_op_stage = 2.0
 				return 1
 
@@ -1134,7 +1114,6 @@ limbs are their own thing not included here.
 					take_bleeding_damage(patient, surgeon, damage_low)
 				else
 					surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-				patient.updatehealth()
 				patient.butt_op_stage = 4.0
 				logTheThing("combat", surgeon, patient, "removed %target%'s butt with [src].")
 				patient.organHolder.drop_organ("butt")
@@ -1167,7 +1146,6 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					patient.updatehealth()
 					patient.organHolder.chest.op_stage = 2.0
 
 					return 1
@@ -1190,7 +1168,6 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					patient.updatehealth()
 					patient.organHolder.chest.op_stage = 8.0
 					return 1
 
@@ -1214,7 +1191,6 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					patient.updatehealth()
 					logTheThing("combat", surgeon, patient, "removed %target%'s heart with [src].")
 					//patient.contract_disease(/datum/ailment/disease/noheart,null,null,1)
 
@@ -1256,6 +1232,7 @@ limbs are their own thing not included here.
 		// I'm not deleting it I'm just commenting it out so my shame will be eternal and perhaps future generations of coders can learn from my mistake
 		// - Haine
 		surgeon.changeStatus("weakened", 4 SECONDS)
+		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(1, 10)
 		random_brute_damage(surgeon, damage)
 		take_bleeding_damage(surgeon, damage)
@@ -1279,7 +1256,6 @@ limbs are their own thing not included here.
 			patient.TakeDamage("head", 2 * surgCheck * surgCheck, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
-			patient.updatehealth()
 			return 1
 
 		else if (patient.organHolder && patient.organHolder.head && patient.organHolder.head.scalp_op_stage > 0.0)
@@ -1291,7 +1267,6 @@ limbs are their own thing not included here.
 			patient.TakeDamage("head", 2 * surgCheck * surgCheck, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
-			patient.updatehealth()
 			return 1
 
 		else if (patient.organHolder && patient.organHolder.right_eye && patient.organHolder.right_eye.op_stage > 0.0)
@@ -1303,7 +1278,6 @@ limbs are their own thing not included here.
 			patient.TakeDamage("head", 2 * surgCheck * surgCheck, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
-			patient.updatehealth()
 
 		else if (patient.organHolder && patient.organHolder.left_eye && patient.organHolder.left_eye.op_stage > 0.0)
 			patient.tri_message("<span class='notice'><b>[surgeon]</b> sews the incision in [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] left eye socket closed with [src].</span>",\
@@ -1314,7 +1288,6 @@ limbs are their own thing not included here.
 			patient.TakeDamage("head", 2 * surgCheck * surgCheck, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
-			patient.updatehealth()
 
 		else if (patient.bleeding)
 			patient.tri_message("<span class='notice'><b>[surgeon]</b> sews [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds closed with [src].</span>",\
@@ -1323,7 +1296,6 @@ limbs are their own thing not included here.
 
 			random_brute_damage(patient, 2 * surgCheck * surgCheck)
 			repair_bleeding_damage(patient, 100, 10)
-			patient.updatehealth()
 			return 1
 
 		else
@@ -1341,7 +1313,6 @@ limbs are their own thing not included here.
 			patient.TakeDamage("chest", 2, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
-			patient.updatehealth()
 			return 1
 
 		// Sew chest cavity closed
@@ -1354,7 +1325,6 @@ limbs are their own thing not included here.
 			patient.TakeDamage("chest", 2 * surgCheck * surgCheck, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
-			patient.updatehealth()
 			return 1
 
 		// Sew chest item securely into chest cavity
@@ -1367,7 +1337,6 @@ limbs are their own thing not included here.
 			patient.TakeDamage("chest", 2 * surgCheck * surgCheck, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
-			patient.updatehealth()
 			return 1
 
 		else if (patient.butt_op_stage > 0.0 && patient.butt_op_stage < 4.0)
@@ -1379,7 +1348,6 @@ limbs are their own thing not included here.
 			patient.TakeDamage("chest", 2 * surgCheck * surgCheck, 0)
 			if (patient.bleeding)
 				repair_bleeding_damage(patient, 50, rand(1,3))
-			patient.updatehealth()
 			return 1
 
 		else if (patient.bleeding)
@@ -1389,7 +1357,6 @@ limbs are their own thing not included here.
 
 			random_brute_damage(patient, 2 * surgCheck * surgCheck)
 			repair_bleeding_damage(patient, 100, 10)
-			patient.updatehealth()
 			return 1
 
 		else
@@ -1429,6 +1396,7 @@ limbs are their own thing not included here.
 		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> burns [him_or_her(surgeon)]self with [src]!</span>",\
 		"<span class='alert'>You burn yourself with [src]</span>")
 
+		JOB_XP(surgeon, "Clown", 1)
 		surgeon.changeStatus("weakened", 4 SECONDS)
 		random_burn_damage(surgeon, damage)
 		return 1
@@ -1451,7 +1419,6 @@ limbs are their own thing not included here.
 			return 0
 
 		random_burn_damage(patient, damage)
-		patient.updatehealth()
 
 		if (quick_surgery)
 			patient.tri_message("<span class='notice'><b>[surgeon]</b> cauterizes the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck closed with [src].</span>",\
@@ -1493,7 +1460,6 @@ limbs are their own thing not included here.
 			return 0
 
 		random_burn_damage(patient, damage)
-		patient.updatehealth()
 
 		if (quick_surgery)
 			patient.tri_message("<span class='notice'><b>[surgeon]</b> cauterizes the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt closed with [src].</span>",\
@@ -1535,7 +1501,6 @@ limbs are their own thing not included here.
 			return 1
 
 		random_burn_damage(patient, damage)
-		patient.updatehealth()
 
 		if (quick_surgery)
 			patient.tri_message("<span class='notice'><b>[surgeon]</b> cauterizes [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds closed with [src].</span>",\
@@ -1640,7 +1605,6 @@ limbs are their own thing not included here.
 				take_bleeding_damage(patient, surgeon, damage_low)
 			else
 				surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-			patient.updatehealth()
 			target_eye.op_stage = 1.0
 			return 1
 
@@ -1693,6 +1657,7 @@ limbs are their own thing not included here.
 		surgeon.bioHolder.AddEffect("blind")
 		patient.changeStatus("weakened", 4)
 
+		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(5, 15)
 		random_brute_damage(surgeon, damage)
 		take_bleeding_damage(surgeon, null, damage)
@@ -1735,7 +1700,6 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					patient.updatehealth()
 
 					patient.organHolder.chest.op_stage = 1.0
 					return 1
@@ -1759,7 +1723,6 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					patient.updatehealth()
 					patient.organHolder.chest.op_stage = 3.0
 					return 1
 
@@ -1795,7 +1758,6 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					patient.updatehealth()
 					logTheThing("combat", surgeon, patient, "removed %target%'s [target_side] lung with [src].")
 
 					if (target_organ == patient.organHolder.left_lung)
@@ -1831,7 +1793,6 @@ limbs are their own thing not included here.
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
 
 					logTheThing("combat", surgeon, patient, "removed %target%'s appendix with [src].")
-					patient.updatehealth()
 					patient.organHolder.drop_organ("appendix")
 					return 1
 
@@ -1860,7 +1821,6 @@ limbs are their own thing not included here.
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
 					logTheThing("combat", surgeon, patient, "removed %target%'s stomach with [src].")
-					patient.updatehealth()
 					patient.organHolder.drop_organ("stomach")
 
 					return 1
@@ -1885,7 +1845,6 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					patient.updatehealth()
 					patient.organHolder.chest.op_stage = 6.0
 
 					return 1
@@ -1915,7 +1874,6 @@ limbs are their own thing not included here.
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
 					logTheThing("combat", surgeon, patient, "removed %target%'s pancreas with [src].")
-					patient.updatehealth()
 					patient.organHolder.drop_organ("pancreas")
 
 					return 1
@@ -1952,7 +1910,6 @@ limbs are their own thing not included here.
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					patient.updatehealth()
 					logTheThing("combat", surgeon, patient, "removed %target%'s [target_side] kidney with [src].")
 
 					if (target_organ == patient.organHolder.left_kidney)

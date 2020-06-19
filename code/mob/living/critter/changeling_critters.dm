@@ -18,7 +18,7 @@
 	// IMPORTANT gimmick features
 	var/obj/item/clothing/head/hat = null
 	var/hat_shown = 0
-	var/hat_icon = 'icons/obj/aibots.dmi' //yeah just use the buddy hats whatever close enough
+	var/hat_icon = 'icons/obj/bots/aibots.dmi' //yeah just use the buddy hats whatever close enough
 	var/hat_x_offset = -4
 	var/hat_y_offset = -2
 
@@ -286,7 +286,7 @@
 	name = "eyespider"
 	real_name = "eyespider"
 	desc = "It's a living disembodied eye with freaky spindly legs... That's messed up!"
-	density = 1
+	density = 0
 	icon_state = "eyespider"
 	icon_state_dead = "eyespider-dead"
 	abilityHolder
@@ -565,7 +565,7 @@
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/slam)
 		abilityHolder.updateButtons()
-		src.flags ^= TABLEPASS
+		src.flags ^= TABLEPASS | DOORPASS
 
 	setup_healths()
 		add_hh_flesh(-40, 40, 1)

@@ -36,7 +36,7 @@
 	density = 1
 	anchored = 1
 	dir = 1
-	plane = -10
+	plane = PLANE_FLOOR
 	var/obj/cruiser_shield_visual/shield_obj
 
 	var/image/frames
@@ -245,7 +245,7 @@
 		del(camera)
 		if(interior_area)
 			interior_area = null
-		return
+		..()
 
 	attack_hand(mob/user as mob)
 		return MouseDrop_T(user, user)

@@ -1,6 +1,7 @@
+ABSTRACT_TYPE(/datum/plant/artifact)
 /datum/plant/artifact
 	name = "Unknown"
-	special_dmi = 'icons/obj/hydroponics/hydro_alien.dmi'
+	plant_icon = 'icons/obj/hydroponics/plants_alien.dmi'
 	cantscan = 0
 	vending = 0
 
@@ -9,7 +10,7 @@
 /datum/plant/artifact/pukeplant
 	name = "Puker"
 	growthmode = "weed"
-	special_icon = "puker"
+	override_icon_state = "Puker"
 	unique_seed = /obj/item/seed/alien/pukeplant
 	nothirst = 1
 	starthealth = 80
@@ -33,7 +34,7 @@
 /datum/plant/artifact/peeker
 	name = "Peeker"
 	growthmode = "weed"
-	special_icon = "peeker"
+	override_icon_state = "Peeker"
 	unique_seed = /obj/item/seed/alien/peeker
 	nothirst = 1
 	starthealth = 120
@@ -59,26 +60,22 @@
 		else if(focus_level <= 2)
 			M.do_disorient(30, weakened = 1.5 SECONDS, stunned = 0, paralysis = 0, disorient = 1.5 SECONDS, remove_stamina_below_zero = 0)
 			M.take_brain_damage(5)
-			M.updatehealth()
 			boutput(M, "<span class='alert'>You feel a headache.</span>")
 		else if(focus_level <= 3)
 			M.do_disorient(30, weakened = 2 SECONDS, stunned = 0, paralysis = 0, disorient = 2 SECONDS, remove_stamina_below_zero = 0)
 			M.take_brain_damage(7)
 			M.TakeDamage("head", 5, 0)
-			M.updatehealth()
 			boutput(M, "<span class='alert'>Your head is pounding with extreme pain.</span>")
 		else if(focus_level <= 4)
 			M.do_disorient(50, weakened = 2.5 SECONDS, stunned = 0, paralysis = 0.5 SECONDS, disorient = 2.5 SECONDS, remove_stamina_below_zero = 0)
 			M.take_brain_damage(7)
 			blood_slash(M, 3)
 			M.TakeDamage("head", 10, 0)
-			M.updatehealth()
 			boutput(M, "<span class='alert'>The gaze seems to almost burrow into your skill. You feel like your head is going to split open.</span>")
 		else if(focus_level <= 5)
 			M.do_disorient(80, weakened = 3 SECONDS, stunned = 0, paralysis = 1 SECONDS, disorient = 3 SECONDS, remove_stamina_below_zero = 0)
 			blood_slash(M, 5)
 			M.TakeDamage("head", 15, 0)
-			M.updatehealth()
 			boutput(M, "<span class='alert'>The intensity of the plant's gaze makes you feel like your head is going to <i>literally</i> split open.</span>")
 		else if(focus_level <= 6)
 			boutput(M, "<span style=\"color:red;font-size:3em\">Run.</span>")
@@ -100,7 +97,6 @@
 					R.brain = null
 				R.update_appearance()
 				R.TakeDamage("head", 420, 0)
-				R.updatehealth()
 			else
 				M.gib()
 			M.visible_message("<span class='alert'><b>[M]'s head explodes!</b></span>")
@@ -141,7 +137,7 @@
 
 /datum/plant/artifact/dripper
 	name = "Dripper"
-	special_icon = "dripper"
+	override_icon_state = "Dripper"
 	crop = /obj/item/reagent_containers/food/snacks/plant/purplegoop
 	unique_seed = /obj/item/seed/alien/dripper
 	starthealth = 4
@@ -154,7 +150,7 @@
 
 /datum/plant/artifact/rocks
 	name = "Rock"
-	special_icon = "rocks"
+	override_icon_state = "Rocks"
 	crop = /obj/item/raw_material/rock
 	unique_seed = /obj/item/seed/alien/rocks
 	starthealth = 80
@@ -168,7 +164,7 @@
 
 /datum/plant/artifact/litelotus
 	name = "Light Lotus"
-	special_icon = "litelotus"
+	override_icon_state = "Litelotus"
 	crop = /obj/item/reagent_containers/food/snacks/plant/glowfruit
 	unique_seed = /obj/item/seed/alien/litelotus
 	starthealth = 30
@@ -181,7 +177,7 @@
 
 /datum/plant/artifact/plasma
 	name = "Plasma"
-	special_icon = "plasma"
+	override_icon_state = "Plasma"
 	crop = /obj/critter/spore
 	unique_seed = /obj/item/seed/alien/plasma
 	starthealth = 20
@@ -193,7 +189,7 @@
 
 /datum/plant/artifact/goldfish
 	name = "Goldfish"
-	special_icon = "goldfish"
+	override_icon_state = "Goldfish"
 	crop = /obj/item/reagent_containers/food/snacks/goldfish_cracker
 	unique_seed = /obj/item/seed/alien/goldfish
 	starthealth = 40
@@ -205,7 +201,7 @@
 
 /datum/plant/artifact/cat
 	name = "Synthetic Cat"
-	special_icon = "cat"
+	override_icon_state = "Cat"
 	crop = /obj/critter/cat/synth
 	unique_seed = /obj/item/seed/alien/cat
 	starthealth = 90 // 9 lives
@@ -248,6 +244,7 @@
 
 /datum/plant/maneater
 	name = "Man-Eating"
+	plant_icon = 'icons/obj/hydroponics/plants_alien.dmi'
 	sprite = "Maneater"
 	growthmode = "carnivore"
 	unique_seed = /obj/item/seed/maneater

@@ -58,6 +58,7 @@
 		if (isscrewingtool(W) && (src.locked == 1))
 			sleep(0.6 SECONDS)
 			src.open =! src.open
+			tooltip_rebuild = 1
 			user.show_message("<span class='notice'>You [src.open ? "open" : "close"] the service panel.</span>")
 			return
 
@@ -95,7 +96,7 @@
 	return ..()
 
 /obj/item/storage/secure/attack_self(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	add_fingerprint(user)
 	return show_lock_panel(user)
 

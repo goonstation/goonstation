@@ -195,10 +195,9 @@
 	if (src.bioHolder)
 		var/datum/bioHolder/original = new/datum/bioHolder(W)
 		original.CopyOther(src.bioHolder)
+		if(W.bioHolder)
+			qdel(W.bioHolder)
 		W.bioHolder = original
-	if (issmallanimal(W))
-		var/mob/living/critter/small_animal/small = W
-		small.setup_overlays()
 
 	var/mob/selfmob = src
 	src = null
@@ -213,6 +212,11 @@
 			ticker.minds += W.mind
 			W.mind.key = key
 			W.mind.current = W
+
+	if (issmallanimal(W))
+		var/mob/living/critter/small_animal/small = W
+		small.setup_overlays() // this requires the small animal to have a client to set things up properly
+
 	SPAWN_DBG(1 DECI SECOND)
 		qdel(selfmob)
 	return W
@@ -622,7 +626,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		time_left_message += "[seconds] second[seconds == 1 ? "" : "s"]"
 		boutput(src, "<span class='alert'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
 	else
-		if (alert(src, "Are you sure you want to respawn as an animal? You won't be able to come back as a human or cyborg!", "Respawn as Animal", "Yes", "No") != "Yes")
+		if (alert(src, "Are you sure you want to respawn as an animal?", "Respawn as Animal", "Yes", "No") != "Yes")
 			return
 		// you can be an animal
 		// get spawnpoints
@@ -639,10 +643,19 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		// be critter
 
 
-		var/mob/selfmob = src
-		src = null
-		var/mob/living/critter/C
-		var/traitor = checktraitor(selfmob)
+		src.make_ghost_critter(spawnpoint)
+
+
+/mob/proc/make_ghost_critter(var/turf/spawnpoint, var/list/types = null)
+	var/mob/selfmob = src
+	src = null
+	var/mob/living/critter/C
+	var/traitor = 0
+
+	if (types && types.len)
+		C = selfmob.make_critter(pick(types), spawnpoint)
+	else
+		traitor = checktraitor(selfmob)
 		if (traitor)
 			C = selfmob.make_critter(pick(antag_respawn_critter_types), spawnpoint)
 		else
@@ -652,22 +665,22 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 			else
 				C = selfmob.make_critter(pick(respawn_critter_types), spawnpoint)
 
-		C.mind.assigned_role = "Animal"
-		C.say_language = "animal"
-		C.literate = 0
-		C.ghost_spawned = 1
-		C.original_name = selfmob.real_name
+	C.mind.assigned_role = "Animal"
+	C.say_language = "animal"
+	C.literate = 0
+	C.ghost_spawned = 1
+	C.original_name = selfmob.real_name
 
-		if (traitor)
-			C.Browse(grabResource("html/ghostcritter.html"),"window=ghostcritter_antag;size=600x400;title=Ghost Critter Help")
-		else
-			C.Browse(grabResource("html/ghostcritter.html"),"window=ghostcritter;size=600x400;title=Ghost Critter Help")
+	if (traitor)
+		C.Browse(grabResource("html/ghostcritter.html"),"window=ghostcritter_antag;size=600x400;title=Ghost Critter Help")
+	else
+		C.Browse(grabResource("html/ghostcritter.html"),"window=ghostcritter;size=600x400;title=Ghost Critter Help")
 
-		//hacky fix : qdel brain to prevent reviving
-		if (C.organHolder)
-			var/obj/item/organ/brain/B = C.organHolder.get_organ("brain")
-			if (B)
-				qdel(B)
+	//hacky fix : qdel brain to prevent reviving
+	if (C.organHolder)
+		var/obj/item/organ/brain/B = C.organHolder.get_organ("brain")
+		if (B)
+			qdel(B)
 
 /mob/dead/observer/verb/respawn_as_mentor_mouse()
 	set name = "Respawn as Mentor Mouse"
@@ -856,8 +869,13 @@ var/respawn_arena_enabled = 0
 	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
 		return
 
-	var/mob/living/carbon/human/newbody = new()
 	if (!src.client) return //ZeWaka: fix for null.preferences
+
+	if(!src.client || !src.client.player || ON_COOLDOWN(src.client.player, "ass day arena", 2 MINUTES))
+		boutput(src, "Whoa whoa, you need to regenerate your ethereal essence to fight again, it'll take [time_to_text(ON_COOLDOWN(src?.client?.player, "ass day arena", 0))].")
+		return
+
+	var/mob/living/carbon/human/newbody = new()
 	src.client.preferences.copy_to(newbody,src,1)
 	newbody.real_name = src.real_name
 

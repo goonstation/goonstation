@@ -1,3 +1,5 @@
+////////////////////////////////////////////////// Cyalume knight stuff /////////////////////////////////////////////
+
 /mob/living/carbon/human/cyalume_knight
 	var/obj/item/sword/my_sword
 	New()
@@ -569,7 +571,6 @@
 			M.take_toxin_damage(-15)
 			M.take_oxygen_deprivation(-15)
 			M.losebreath = max(0, M.losebreath - 10)
-			M.updatehealth()
 			M.visible_message("<span class='alert'>Some of [M]'s wounds slowly fade away!</span>", "<span class='alert'>Your wounds begin to fade away.</span>")
 			playsound(get_turf(M), 'sound/items/mender.ogg', 50, 1)
 		else
@@ -592,3 +593,43 @@
 			boutput(M, "<span class='alert'>You don't have enough energy to continue healing.</span>")
 		else
 			boutput(M, "<span class='alert'>Your healing meditation was interrupted.</span>")
+
+////////////////////////////////////////////////// Cyalume knight stuff /////////////////////////////////////////////
+
+////////////////////////////////////////////////// Guardbuddy stuff /////////////////////////////////////////////
+
+/mob/living/silicon/robot/buddy/responsive
+	icon = 'icons/misc/GerhazoStuff.dmi'
+	icon_state = "robuddy-idle"
+
+	Login()
+		..()
+		boutput(src, "<span class='notice'>Access special emotes through *neutral, *sad, *happy, *flip, *wave!</span>")
+
+
+	emote(var/act, var/voluntary = 1)
+		if (findtext(act, " ", 1, null))
+			var/t1 = findtext(act, " ", 1, null)
+			act = copytext(act, 1, t1)
+
+		switch(lowertext(act))
+			if ("sad")
+				src.icon_state = "robuddy-sad"
+
+			if ("happy")
+				src.icon_state = "robuddy-vibin"
+
+			if("flip")
+				flick("robuddy-speen", src)
+				..(act, voluntary) // to let the regular emote also occur
+
+			if("wave")
+				flick("robuddy-wave", src)
+				..(act, voluntary) // to let the regular wave(wave message, etc) also occur
+
+			if("neutral")
+				src.icon_state = "robuddy-idle"
+
+			else
+				..(act, voluntary)
+////////////////////////////////////////////////// Guardbuddy stuff /////////////////////////////////////////////

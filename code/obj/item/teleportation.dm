@@ -20,7 +20,7 @@ HAND_TELE
 	m_amt = 400
 
 /obj/item/locator/attack_self(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	var/dat
 	if (src.temp)
 		dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
@@ -43,7 +43,7 @@ Frequency:
 	if (usr.stat || usr.restrained())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["refresh"])
 			src.temp = "<B>Persistent Signal Locator</B><HR>"
 			var/turf/sr = get_turf(src)
@@ -138,6 +138,20 @@ Frequency:
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
 
+		// Make sure you're holding the hand tele, or it's implanted, before you can use it.
+		var/obj/item/I = user.equipped()
+		var/obj/item/C = null
+		if (istype(user, /mob/living/carbon/human))
+			var/mob/living/carbon/human/humanuser = user
+			C = humanuser.chest_item
+		if (I != src && C != src)
+			if (istype(I, /obj/item/magtractor))
+				var/obj/item/magtractor/mag = I
+				if (mag.holding != src)
+					return
+			else
+				return
+
 		if (src.portals.len > 2)
 			user.show_text("The hand teleporter is recharging!", "red")
 			return
@@ -192,14 +206,6 @@ Frequency:
 		var/t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
 		if (user.stat || user.restrained())
 			return
-		var/obj/item/I = user.equipped()
-		if (I != src)
-			if (istype(I, /obj/item/magtractor))
-				var/obj/item/magtractor/mag = I
-				if (mag.holding != src)
-					return
-			else
-				return
 
 		if (t1 == "Cancel")
 			return
@@ -239,8 +245,13 @@ Frequency:
 			user.show_text("Error: invalid coordinates detected, please try again.", "red")
 			return
 
+		our_loc = get_turf(src)
+		if (our_loc && isrestrictedz(our_loc.z))
+			user.show_text("The [src.name] does not seem to work here!", "red")
+			return
+
 		var/obj/portal/P = unpool(/obj/portal)
-		P.set_loc(get_turf(src))
+		P.set_loc(our_loc)
 		portals += P
 		if (!src.our_target)
 			P.target = src.our_random_target

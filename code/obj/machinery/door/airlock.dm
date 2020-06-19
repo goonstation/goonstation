@@ -100,6 +100,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/HTML = null
 	var/has_panel = 1
 
+	var/no_access = 0
+
 	autoclose = 1
 	power_usage = 50
 	operation_time = 6
@@ -115,6 +117,12 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+
+/obj/machinery/door/airlock/check_access(obj/item/I)
+	if (no_access) //nope :)
+		return 0
+	.= ..()
 
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/Doorcom.dmi'
@@ -901,7 +909,6 @@ About the new airlock wires panel:
 		return
 
 	user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
-	user.updatehealth()
 	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))
@@ -970,7 +977,7 @@ About the new airlock wires panel:
 			return
 
 	//Separate interface for the AI.
-	user.machine = src
+	src.add_dialog(user)
 	var/t1 = text("<B>Airlock Control</B><br><br>")
 	t1 += "The access sensor reports the net identifier for this airlock is <i>[net_id]</i><br><br>"
 
@@ -1182,7 +1189,7 @@ About the new airlock wires panel:
 		return
 
 	if (src.p_open)
-		user.machine = src
+		src.add_dialog(user)
 		var/list/t1 = list(text("<B>Access Panel</B><br><br>"))
 		t1 += "An identifier is engraved under the airlock's card sensors: <i>[net_id]</i><br><br>"
 
@@ -1221,6 +1228,10 @@ About the new airlock wires panel:
 		onclose(user, "airlock")
 
 		interact_particle(user,src)
+	//clicking with no access, door closed, and help intent, and panel closed to knock
+	else if (!src.allowed(user) && (user.a_intent == INTENT_HELP) && src.density && src.requiresID())
+		knockOnDoor(user)
+		return //Opening the door just because knocks are on cooldown is rude!
 	else
 		..(user)
 	return
@@ -1232,15 +1243,14 @@ About the new airlock wires panel:
 		return
 	if (href_list["close"])
 		usr.Browse(null, "window=airlock")
-		if (usr.machine==src)
-			usr.machine = null
-			return
+		src.remove_dialog(usr)
+		return
 	if (!isAIeye(usr))
 		if (!isrobot(usr) && !ishivebot(usr))
 			if (!src.p_open)
 				return
 		if ((in_range(src, usr) && istype(src.loc, /turf)))
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["wires"])
 				var/t1 = text2num(href_list["wires"])
 				if (!usr.find_tool_in_hand(TOOL_SNIPPING))
@@ -1447,9 +1457,8 @@ About the new airlock wires panel:
 		..()
 		return
 
-	if ((istype(C, /obj/item/weldingtool) && !( src.operating ) && src.density))
-		var/obj/item/weldingtool/W = C
-		if(!W.try_weld(user, 1, burn_eyes = 1))
+	if ((isweldingtool(C) && !( src.operating ) && src.density))
+		if(!C:try_weld(user, 1, burn_eyes = 1))
 			return
 		if (!src.welded)
 			src.welded = 1
@@ -1547,7 +1556,7 @@ About the new airlock wires panel:
 		playsound(src.loc, 'sound/vox/door.ogg', 25, 1)
 	else
 		playsound(src.loc, src.sound_airlock, 25, 1)
-	src.current_user = usr
+
 	if (src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 		src.closeOther.close(1)
 
@@ -1790,6 +1799,7 @@ obj/machinery/door/airlock
 			radio_connection = radio_controller.add_object(src, "[frequency]")
 
 	initialize()
+		..()
 		if(frequency)
 			set_frequency(frequency)
 

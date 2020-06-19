@@ -45,7 +45,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/u_color = "#FFFFFF"
 
 	var/mob/owner = null
-	var/mob/parentHolder = null
+	var/datum/bioHolder/parentHolder = null
 
 	var/gender = MALE
 	var/pronouns = 0		//1 if using neutral pronouns (they/their);  0 if using gendered pronouns matching their gender var
@@ -107,6 +107,14 @@ var/list/datum/bioEffect/mutini_effects = list()
 		flavor_text = toCopy.flavor_text
 		return src
 
+	disposing()
+		owner = null
+		if(src.parentHolder)
+			if(src.parentHolder.mobAppearance == src)
+				src.parentHolder.mobAppearance = null
+			src.parentHolder = null
+		..()
+
 	// Disabling this for now as I have no idea how to fit it into hex strings
 	// I'm help -Spy
 	proc/StaggeredCopyOther(var/datum/appearanceHolder/toCopy, var/progress = 1)
@@ -152,7 +160,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			targetColor = hex2num(targetColor)
 
 			//Do the math and add to the output
-			. += num2hex(color + ((targetColor - color) / adjust_denominator))
+			. += num2hex(color + ((targetColor - color) / adjust_denominator), 0)
 
 	proc/UpdateMob() //Rebuild the appearance of the mob from the settings in this holder.
 		if (ishuman(owner))
@@ -199,12 +207,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 
 	var/Uid = "not initialized" //Unique id for the mob. Used for fingerprints and whatnot.
+	var/uid_hash
 
 	New(var/mob/owneri)
 		owner = owneri
 		Uid = CreateUid()
-		bioUids.Add(Uid)
-		bioUids[Uid] = owner
+		uid_hash = md5(Uid)
+		bioUids[Uid] = 1
 		mobAppearance = new/datum/appearanceHolder()
 
 		mobAppearance.owner = owner
@@ -218,19 +227,23 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return ..()
 
 	disposing()
-		src.RemoveAllEffects()
-		src.RemoveAllPoolEffects()
-
 		for(var/D in effects)
 			var/datum/bioEffect/BE = effects[D]
-			BE.disposing()
-			BE.owner = null
+			qdel(BE)
+			BE?.owner = null
 		for(var/D in effectPool)
 			var/datum/bioEffect/BE = effectPool[D]
-			BE.disposing()
-			BE.owner = null
+			qdel(BE)
+			BE?.owner = null
+
+		if(src.mobAppearance)
+			src.mobAppearance.dispose()
+			src.mobAppearance = null
+
 		src.owner = null
 
+		effects.len = 0
+		effectPool.len = 0
 		effects = null
 		effectPool = null
 
@@ -238,10 +251,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 			mobAppearance.owner = null
 			mobAppearance = null
 
-		..()
-
-	Del()
-		src.RemoveAllEffects()
 		..()
 
 	proc/ActivatePoolEffect(var/datum/bioEffect/E, var/overrideDNA = 0, var/grant_research = 1)
@@ -326,6 +335,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 		var/list/filteredBad = new/list()
 		var/list/filteredSecret = new/list()
 
+		for(var/datum/bioEffect/BE in effectPool)
+			qdel(BE)
 		effectPool.Cut()
 
 		if (!bioEffectList || !bioEffectList.len)
@@ -389,7 +400,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			effectPool[selectedNew.id] = selectedNew
 			filteredBad.Remove(selectedS)
 
-		effectPool = shuffle(effectPool)
+		shuffle_list(effectPool)
 
 	proc/OnLife()
 		var/datum/bioEffect/BE
@@ -434,6 +445,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			genetic_stability = toCopy.genetic_stability
 			ownerName = toCopy.ownerName
 			Uid = toCopy.Uid
+			uid_hash = md5(Uid)
 
 		if (copyPool)
 			src.RemoveAllPoolEffects()
@@ -507,7 +519,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 			effects[newEffect.id] = newEffect
 			newEffect.owner = owner
 			newEffect.holder = src
-			newEffect.OnAdd()
+			if(owner)
+				newEffect.OnAdd()
 			if (do_stability)
 				src.genetic_stability -= newEffect.stability_loss
 				src.genetic_stability = max(0,src.genetic_stability)
@@ -570,6 +583,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 			var/datum/bioEffect/BE = effects[D]
 			if(BE && (isnull(type) || BE.effectType == type))
 				RemoveEffect(BE.id)
+				BE.owner = null
+				BE.holder = null
+				if(istype(BE, /datum/bioEffect/power))
+					var/datum/bioEffect/power/BEP = BE
+					BEP?.ability.owner = null
 				//qdel(BE)
 		return 1
 
@@ -578,6 +596,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 			var/datum/bioEffect/BE = effectPool[D]
 			if(BE && (isnull(type) || BE.effectType == type))
 				effectPool.Remove(D)
+				BE.owner = null
+				BE.holder = null
+				if(istype(BE, /datum/bioEffect/power))
+					var/datum/bioEffect/power/BEP = BE
+					BEP?.ability.owner = null
 				//qdel(BE)
 		return 1
 

@@ -23,30 +23,26 @@ var/global/noir = 0
 				continue
 		else
 			boutput(C, replacetext(rendered, "%admin_ref%", "\ref[C.holder]")) //this doesnt fail if the placeholder doesnt exist ok dont worry
-		LAGCHECK(LAG_LOW)
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span></span>"
-	for (var/mob/M in mobs)
-		if (M && M.client && M.client.holder && rank_to_level(M.client.holder.rank) >= LEVEL_CODER) //This is for edge cases where a coder needs a goddamn notification when it happens
-			boutput(M, replacetext(rendered, "%admin_ref%", "\ref[M.client.holder]"))
-		LAGCHECK(LAG_LOW)
+	for (var/client/C)
+		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER) //This is for edge cases where a coder needs a goddamn notification when it happens
+			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/message_coders_vardbg(var/text, var/datum/d)
 	var/rendered
-	for (var/mob/M in mobs)
-		if (M && M.client && M.client.holder && rank_to_level(M.client.holder.rank) >= LEVEL_CODER)
-			var/dbg_html = M.client.debug_variable("", d, 0)
+	for (var/client/C)
+		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER)
+			var/dbg_html = C.debug_variable("", d, 0)
 			rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span>[dbg_html]</span>"
-			boutput(M, replacetext(rendered, "%admin_ref%", "\ref[M.client.holder]"))
-		LAGCHECK(LAG_LOW)
+			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/message_attack(var/text) //Sends a message to folks when an attack goes down
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK LOG:</span> <span class=\"message\">[text]</span></span>"
-	for (var/mob/M in mobs)
-		if (M && M.client && M.client.holder && rank_to_level(M.client.holder.rank) >= LEVEL_MOD && M.client.holder.attacktoggle && !M.client.player_mode)
-			boutput(M, replacetext(rendered, "%admin_ref%", "\ref[M.client.holder]"))
-		LAGCHECK(LAG_LOW)
+	for (var/client/C)
+		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_MOD && C.holder.attacktoggle && !C.player_mode)
+			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/rank_to_level(var/rank)
 	var/level = 0
@@ -55,12 +51,12 @@ var/global/noir = 0
 			level = LEVEL_HOST
 		if("Coder")
 			level = LEVEL_CODER
-		if("Shit Person")
-			level = LEVEL_SHITGUY
-		if("Primary Administrator")
-			level = LEVEL_PA
 		if("Administrator")
 			level = LEVEL_ADMIN
+		if("Primary Administrator")
+			level = LEVEL_PA
+		if("Intermediate Administrator")
+			level = LEVEL_IA
 		if("Secondary Administrator")
 			level = LEVEL_SA
 		if("Moderator")
@@ -76,12 +72,12 @@ var/global/noir = 0
 			rank = "Host"
 		if(LEVEL_CODER)
 			rank = "Coder"
-		if(LEVEL_SHITGUY)
-			rank = "Shit Person"
-		if(LEVEL_PA)
-			rank = "Primary Administrator"
 		if(LEVEL_ADMIN)
 			rank = "Administrator"
+		if(LEVEL_PA)
+			rank = "Primary Administrator"
+		if(LEVEL_IA)
+			rank = "Intermediate Administrator"
 		if(LEVEL_SA)
 			rank = "Secondary Administrator"
 		if(LEVEL_MOD)
@@ -155,6 +151,7 @@ var/global/noir = 0
 		if ("load_admin_prefs")
 			if (src.level >= LEVEL_MOD)
 				src.load_admin_prefs()
+			src.show_pref_window(usr)
 		if ("save_admin_prefs")
 			if (src.level >= LEVEL_MOD)
 				src.save_admin_prefs()
@@ -193,6 +190,19 @@ var/global/noir = 0
 		if ("toggle_buildmode_view")
 			if (src.level >= LEVEL_PA)
 				usr.client.holder.buildmode_view = !usr.client.holder.buildmode_view
+				src.show_pref_window(usr)
+		if ("toggle_category")
+			var/cat = href_list["cat"]
+			if(cat in src.hidden_categories)
+				src.owner?.show_verb_category(ADMIN_CAT_PREFIX + cat)
+				src.hidden_categories -= cat
+			else
+				src.owner?.hide_verb_category(ADMIN_CAT_PREFIX + cat)
+				src.hidden_categories |= cat
+			src.show_pref_window(usr)
+		if ("toggle_spawn_in_loc")
+			if (src.level >= LEVEL_MOD)
+				usr.client.holder.spawn_in_loc = !usr.client.holder.spawn_in_loc
 				src.show_pref_window(usr)
 		if ("toggle_auto_stealth")
 			if (src.level >= LEVEL_SA)
@@ -284,13 +294,11 @@ var/global/noir = 0
 					if("1")
 						if ((!( ticker ) || emergency_shuttle.location))
 							return
-						var/call_reason = input("Enter the reason for the shuttle call (or just hit OK to give no reason)","Shuttle Call Reason","<span class='italic'>No reason given.</span>") as null|text
+						var/call_reason = input("Enter the reason for the shuttle call (or just hit OK to give no reason)","Shuttle Call Reason","No reason given.") as null|text
 						if(!call_reason)
 							return
 						emergency_shuttle.incall()
-						boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-						boutput(world, "<span class='notice'>- - - <b>Reason:</b> [call_reason]<B></span>")
-						boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+						command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 						logTheThing("admin", usr, null,  "called the Emergency Shuttle (reason: [call_reason])")
 						logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 						message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
@@ -303,11 +311,9 @@ var/global/noir = 0
 								emergency_shuttle.incall()
 								var/call_reason = input("Enter the reason for the shuttle call (or just hit OK to give no reason)","Shuttle Call Reason","") as null|text
 								if(!call_reason)
-									call_reason = "<span class='italic'>No reason given.</span>"
+									call_reason = "No reason given."
 								emergency_shuttle.incall()
-								boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-								boutput(world, "<span class='notice'>- - - <b>Reason:</b> [call_reason]<B></span>")
-								boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+								command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 								logTheThing("admin", usr, null, "called the Emergency Shuttle (reason: [call_reason])")
 								logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 								message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
@@ -903,15 +909,15 @@ var/global/noir = 0
 				alert("You need to be at least a Secondary Adminstrator to jump to coords.")
 
 		if ("getmob")
-			if(( src.level >= LEVEL_SHITGUY ) || ((src.level >= LEVEL_SA) ))
+			if(( src.level >= LEVEL_ADMIN ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				usr.client.Getmob(M)
 			else
-				alert("If you are below the rank of Shit Person, you need to be observing and at least a Secondary Administrator to get a player.")
+				alert("If you are below the rank of Administrator, you need to be observing and at least a Secondary Administrator to get a player.")
 
 		if ("sendmob")
-			if(( src.level >= LEVEL_SHITGUY ) || ((src.level >= LEVEL_PA) ))
+			if(( src.level >= LEVEL_ADMIN ) || ((src.level >= LEVEL_PA) ))
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				var/list/areas = list( )
@@ -922,7 +928,7 @@ var/global/noir = 0
 				if (area)
 					usr.client.sendmob(M, area)
 			else
-				alert("If you are below the rank of Shit Person, you need to be observing and at least a Primary Administrator to get a player.")
+				alert("If you are below the rank of Administrator, you need to be observing and at least a Primary Administrator to get a player.")
 
 		if ("gib")
 			if( src.level >= LEVEL_PA )
@@ -1265,7 +1271,7 @@ var/global/noir = 0
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to check player contents.")
 
 		if ("dropcontents")
-			if(( src.level >= LEVEL_SHITGUY ) || ((src.level >= LEVEL_PA) ))
+			if(( src.level >= LEVEL_ADMIN ) || ((src.level >= LEVEL_PA) ))
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				if (alert(usr, "Make [M] drop everything?", "Confirmation", "Yes", "No") == "Yes")
@@ -1454,35 +1460,6 @@ var/global/noir = 0
 						amt = INFINITY
 					M.cubeize(amt, CT)
 
-		// hacks are all i'm made of - cirr
-		/*if ("makeintruder")
-			if( src.level < LEVEL_PA)
-				alert("You must be at least a Primary Administrator to make someone an intruder.")
-				return
-			if(!ticker || !ticker.mode)
-				alert("The game hasn't started yet!")
-				return
-			var/mob/M = locate(href_list["target"])
-			if (!M) return
-			if (alert("Make [M] an eldritch intruder?", "Make Intruder", "Yes", "No") == "Yes")
-				var/datum/mind/mind = M.mind
-				if (!mind)
-					mind = new /datum/mind(  )
-					mind.key = M.key
-					mind.current = M
-					ticker.minds += mind
-					M.mind = mind
-				var/mob/living/intangible/intruder/In = M.intruderize()
-				if (!In)
-					if (!istype(mind.current, /mob/living/intangible/intruder))
-						boutput(usr, "<span class='alert'>Could not into intruder. Cirr is a dum and must be shamed.</span>")
-						return
-					else
-						In = mind.current
-				mind.special_role = "intruder"
-				ticker.mode.Agimmicks += mind
-				In.antagonist_overlay_refresh(1, 0)
-		*/
 		if ("makeflock")
 			if( src.level < LEVEL_PA)
 				alert("You must be at least a Primary Administrator to make someone a flockmind or flocktrace.")
@@ -1611,7 +1588,7 @@ var/global/noir = 0
 				return
 
 			//they're nothing so turn them into a traitor!
-			if(ishuman(M) || isAI(M) || isrobot(M) || iscritter(M))
+			if(ishuman(M) || isAI(M) || isrobot(M) || ismobcritter(M))
 				var/traitorize = "Cancel"
 				traitorize = alert("Is not a traitor, make Traitor?", "Traitor", "Yes", "Cancel")
 				if(traitorize == "Cancel")
@@ -1619,7 +1596,7 @@ var/global/noir = 0
 				if(traitorize == "Yes")
 					if (issilicon(M))
 						evilize(M, "traitor")
-					else if (iscritter(M))
+					else if (ismobcritter(M))
 						// The only role that works for all critters at this point is hard-mode traitor, really. The majority of existing
 						// roles don't work for them, most can't wear clothes and some don't even have arms and/or can pick things up.
 						// That said, certain roles are mostly compatible and thus selectable.
@@ -1683,9 +1660,9 @@ var/global/noir = 0
 				if (src.level >= LEVEL_CODER)
 					dat += {"
 							<A href='?src=\ref[src];action=chgadlvl;type=Coder;target=\ref[C]'>Coder</A><BR>
-							<A href='?src=\ref[src];action=chgadlvl;type=Shit Person;target=\ref[C]'>Shit Person</A><BR>
+							<A href='?src=\ref[src];action=chgadlvl;type=Administrator;target=\ref[C]'>Administrator</A><BR>
 							"}
-				if (src.level >= LEVEL_SHITGUY)
+				if (src.level >= LEVEL_ADMIN)
 					dat += "<A href='?src=\ref[src];action=chgadlvl;type=Primary Administrator;target=\ref[C]'>Primary Administrator</A><BR>"
 				if (src.level >= LEVEL_PA)
 					dat += {"
@@ -1785,7 +1762,7 @@ var/global/noir = 0
 						return
 
 					var/list/offset = splittext(href_list["offset"],",")
-					var/number = CLAMP(text2num(href_list["object_count"]), 1, 100)
+					var/number = clamp(text2num(href_list["object_count"]), 1, 100)
 					var/X = offset.len > 0 ? text2num(offset[1]) : 0
 					var/Y = offset.len > 1 ? text2num(offset[2]) : 0
 					var/Z = offset.len > 2 ? text2num(offset[3]) : 0
@@ -1842,12 +1819,12 @@ var/global/noir = 0
 				alert("You need to be at least a Secondary Admin to polymorph a dude.")
 
 		if ("modcolor")
-			if (src.level >= LEVEL_SHITGUY)
+			if (src.level >= LEVEL_ADMIN)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				mod_color(M)
 			else
-				alert("You need to be at least a Shit Person to modify an icon.")
+				alert("You need to be at least a Administrator to modify an icon.")
 
 		if("giveantagtoken") //Gives player a token they can redeem to guarantee an antagonist role
 			if (src.level >= LEVEL_SA)
@@ -1885,12 +1862,12 @@ var/global/noir = 0
 				logTheThing("diary", usr, M, "Set %target%'s Persistent Bank (Spacebux) to [spacebux].")
 				message_admins( "[key_name(usr)] set [key_name(M)]'s Persistent Bank (Spacebux) to [spacebux]." )
 		if ("viewsave")
-			if (src.level >= LEVEL_SHITGUY)
+			if (src.level >= LEVEL_ADMIN)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				usr.client.view_save_data(M)
 			else
-				alert("You need to be at least a Shit Person to view save data.")
+				alert("You need to be at least a Administrator to view save data.")
 
 		if ("grantcontributor")
 			if (src.level >= LEVEL_CODER)
@@ -1944,16 +1921,6 @@ var/global/noir = 0
 					boutput( usr, "<span class='alert'>Failed to revoke, did they have the medal to begin with?</span>" )
 			else
 				alert("You need to be at least an SA to revoke this.")
-
-
-
-		if ("editvars")
-			if (src.level >= LEVEL_PA)
-				var/mob/M = locate(href_list["target"])
-				if (!M) return
-				usr.client.cmd_modify_object_variables(M)
-			else
-				alert("You need to be at least a Primary Administrator to edit variables.")
 
 		if ("viewvars")
 			if (src.level >= LEVEL_PA)
@@ -2134,7 +2101,7 @@ var/global/noir = 0
 								M.show_message(text("<span class='notice'>The chilling wind suddenly stops...</span>"), 1)
 							LAGCHECK(LAG_LOW)
 					if("stupify")
-						if (src.level >= LEVEL_SHITGUY)
+						if (src.level >= LEVEL_ADMIN)
 							if (alert("Do you wish to give everyone brain damage?", "Confirmation", "Yes", "No") != "Yes")
 								return
 							for (var/mob/living/carbon/human/H in mobs)
@@ -2481,7 +2448,7 @@ var/global/noir = 0
 							return
 
 					if("fakeguns")
-						if (src.level >= LEVEL_SHITGUY)
+						if (src.level >= LEVEL_ADMIN)
 							for(var/obj/item/W in world)
 								if(istype(W, /obj/item/clothing) || istype(W, /obj/item/card/id) || istype(W, /obj/item/disk) || istype(W, /obj/item/tank))
 									continue
@@ -2506,7 +2473,7 @@ var/global/noir = 0
 								setdir = EAST
 							if ("Upside down")
 								setdir = SOUTH
-						if (src.level >= LEVEL_SHITGUY)
+						if (src.level >= LEVEL_ADMIN)
 							for(var/mob/M in mobs)
 								if(M.client)
 									M.client.dir = setdir
@@ -2519,7 +2486,7 @@ var/global/noir = 0
 							return
 
 					if("raiseundead")
-						if (src.level >= LEVEL_SHITGUY)
+						if (src.level >= LEVEL_ADMIN)
 							for(var/mob/living/carbon/human/H in mobs) //Only humans can be zombies!
 								if(!isdead(H)) //Not dead!
 									continue
@@ -2580,7 +2547,7 @@ var/global/noir = 0
 							return
 
 					if("sawarms")
-						if (src.level >= LEVEL_SHITGUY)
+						if (src.level >= LEVEL_ADMIN)
 							for (var/mob/living/carbon/human/M in mobs)
 								if (!ismonkey(M))
 									for (var/obj/item/parts/human_parts/arm/P in M)
@@ -2611,7 +2578,7 @@ var/global/noir = 0
 							return
 
 					if("emag_all_things")
-						if (src.level >= LEVEL_SHITGUY)
+						if (src.level >= LEVEL_ADMIN)
 							if (alert("Do you really want to emag everything?","Bad Idea", "Yes", "No") == "Yes")
 								message_admins("[key_name(usr)] has started emagging everything!")
 								logTheThing("admin", usr, null, "used the Emag Everything secret.")
@@ -2626,11 +2593,11 @@ var/global/noir = 0
 								return
 
 						else
-							alert("You need to be at least a shit person to emag everything")
+							alert("You need to be at least a Administrator to emag everything")
 							return
 
 					if("shakecamera")
-						if (src.level >= LEVEL_SHITGUY)
+						if (src.level >= LEVEL_ADMIN)
 							var/intensity = input("Enter intensity of the shaking effect. (2 or over  will also cause mobs to trip over.)","Shaking intensity",null) as num|null
 							if (!intensity)
 								return
@@ -2645,23 +2612,23 @@ var/global/noir = 0
 									M.changeStatus("weakened", 2 SECONDS)
 
 						else
-							alert("You need to be at least a shit person to shake the camera.")
+							alert("You need to be at least a Administrator to shake the camera.")
 							return
 
 					if("creepifystation")
-						if (src.level >= LEVEL_SHITGUY)
+						if (src.level >= LEVEL_ADMIN)
 							if (alert("Are you sure you should creepify the station? There's no going back.", "PARENTAL CONTROL", "Sure thing!", "Not really.") == "Sure thing!")
 								message_admins("[key_name(usr)] creepified the station.")
 								logTheThing("admin", usr, null, "used the Creepify Station button")
 								logTheThing("diary", usr, null, "used the Creepify Station button", "admin")
 							creepify_station()
 						else
-							alert("You need to be at least a shit person to creepify the station.")
+							alert("You need to be at least a Administrator to creepify the station.")
 							return
 
 
 					if ("command_report_zalgo")
-						if (src.level >= LEVEL_SHITGUY)
+						if (src.level >= LEVEL_ADMIN)
 							var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as null|text
 							input = zalgoify(input, rand(0,2), rand(0, 2), rand(0, 2))
 							if(!input)
@@ -2682,7 +2649,7 @@ var/global/noir = 0
 								message_admins("[key_name(usr)] has created a command report (zalgo)")
 
 					if ("command_report_void")
-						if (src.level >= LEVEL_SHITGUY)
+						if (src.level >= LEVEL_ADMIN)
 							var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as null|text
 							input = voidSpeak(input)
 							if(!input)
@@ -2702,7 +2669,7 @@ var/global/noir = 0
 								message_admins("[key_name(usr)] has created a command report (void)")
 
 					if ("noir")
-						if(src.level >= LEVEL_SHITGUY)
+						if(src.level >= LEVEL_ADMIN)
 							if (noir)
 								if (alert("Had enough of noir?", "Good decisions", "Yes!", "Never!") == "Yes!")
 									noir = 0
@@ -2723,7 +2690,7 @@ var/global/noir = 0
 								logTheThing("diary", usr, null, "used the Noir secret", "admin")
 
 					if("the_great_switcharoo")
-						if(src.level >= LEVEL_SHITGUY) //Will be SG when tested
+						if(src.level >= LEVEL_ADMIN) //Will be SG when tested
 							if (alert("Do you really wanna do the great switcharoo?", "Awoo, awoo", "Sure thing!", "Not really.") == "Sure thing!")
 
 								var/list/mob/living/people_to_swap = list()
@@ -2755,7 +2722,7 @@ var/global/noir = 0
 
 
 					if("fartyparty")
-						if(src.level >= LEVEL_SHITGUY) //Will be SG when tested
+						if(src.level >= LEVEL_ADMIN) //Will be SG when tested
 							if (farty_party)
 								farty_party = 0
 								deep_farting = 0
@@ -3033,6 +3000,8 @@ var/global/noir = 0
 						usr.Browse(dat, "window=manifest;size=440x410")
 					if("jobcaps")
 						job_controls.job_config()
+					if("respawn_panel")
+						src.s_respawn()
 					if("randomevents")
 						random_events.event_config()
 					if("pathology")
@@ -3065,7 +3034,7 @@ var/global/noir = 0
 						for(var/mob/living/carbon/human/H in mobs)
 							if(H.ckey)
 								if(H.bioHolder.Uid)
-									dat += "<tr><td>[H]</td><td>[md5(H.bioHolder.Uid)]</td></tr>"
+									dat += "<tr><td>[H]</td><td>[H.bioHolder.uid_hash]</td></tr>"
 								else if(!H.bioHolder.Uid)
 									dat += "<tr><td>[H]</td><td>H.bioHolder.Uid = null</td></tr>"
 							LAGCHECK(LAG_LOW)
@@ -3112,7 +3081,7 @@ var/global/noir = 0
 				usr.Browse(adminLogHtml, "window=pathology_log;size=750x500")
 
 		if ("s_rez")
-			if (src.level >= LEVEL_SHITGUY)
+			if (src.level >= LEVEL_PA)
 				switch(href_list["type"])
 					if("spawn_syndies")
 						var/datum/special_respawn/SR = new /datum/special_respawn/
@@ -3132,7 +3101,7 @@ var/global/noir = 0
 
 					if("spawn_job")
 						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs
+						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
 						var/datum/job/job = input(usr,"Select job to spawn players as:","Respawn Panel",null) as null|anything in jobs
 						if(!job) return
 						var/amount = input(usr,"Amount to respawn:","Spawn Normal Players",3) as num
@@ -3183,6 +3152,19 @@ var/global/noir = 0
 				if (!M) return
 				var/mob/newM = usr.client.respawn_target(M)
 				href_list["target"] = "\ref[newM]"
+			else
+				alert ("You must be at least a Secondary Admin to respawn a target.")
+		if ("respawnas")
+			if (src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				var/client/C = M.client
+				if (!M) return
+				var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
+				var/datum/job/job = input(usr,"Select job to respawn [M] as:","Respawn As",null) as null|anything in jobs
+				if(!job) return
+				var/mob/new_player/newM = usr.client.respawn_target(M)
+				newM.AttemptLateSpawn(job, force=1)
+				href_list["target"] = "\ref[C.mob]"
 			else
 				alert ("You must be at least a Secondary Admin to respawn a target.")
 		if ("showrules")
@@ -3327,11 +3309,11 @@ var/global/noir = 0
 
 			usr.client.lightweight_doors()
 
-		if ("lightweight_lights")
+		if ("lightweight_mobs")
 			if (src.level < LEVEL_PA)
 				return alert("You must be at least a Primary Admin to do this.")
 
-			usr.client.lightweight_lights()
+			usr.client.lightweight_mobs()
 
 		if ("slow_atmos")
 			if (src.level < LEVEL_PA)
@@ -3591,6 +3573,7 @@ var/global/noir = 0
 	dat += {"<hr><div class='optionGroup' style='border-color:#FF6961'><b class='title' style='background:#FF6961'>Admin Tools</b>
 				<A href='?src=\ref[src];action=secretsadmin;type=check_antagonist'>Antagonists</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=jobcaps'>Job Controls</A><BR>
+				<A href='?src=\ref[src];action=secretsadmin;type=respawn_panel'>Respawn Panel</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=randomevents'>Random Event Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=artifacts'>Artifact Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=pathology'>CDC</A><BR>
@@ -3604,7 +3587,7 @@ var/global/noir = 0
 
 	dat += "</div>"
 
-	if (src.level >= LEVEL_SHITGUY)
+	if (src.level >= LEVEL_ADMIN)
 		dat += {"<hr><div class='optionGroup' style='border-color:#FFB347'><b class='title' style='background:#FFB347'>Coder Tools</b>
 					<A href='?src=\ref[src];action=secretsdebug;type=budget'>Wages/Money</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=market'>Shipping Market</A> |
@@ -3702,7 +3685,7 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsfun;type=randomguns'>Give everyone a random firearm</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=timewarp'>Set up a time warp</A><BR>
 				"}
-	if (src.level >= LEVEL_SHITGUY)
+	if (src.level >= LEVEL_ADMIN)
 		dat += {"<A href='?src=\ref[src];action=secretsfun;type=sawarms'>Give everyone saws for arms</A><BR>
 				<A href='?src=\ref[src];action=secretsfun;type=emag_all_things'>Emag everything</A><BR>
 				<A href='?src=\ref[src];action=secretsfun;type=noir'>Noir</A><BR>
@@ -3710,7 +3693,7 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsfun;type=fartyparty'>Farty Party All The Time</A><BR>
 		"}
 
-	if (src.level >= LEVEL_SHITGUY || (src.level == LEVEL_SA && usr.client.holder.state == 2))
+	if (src.level >= LEVEL_ADMIN || (src.level == LEVEL_SA && usr.client.holder.state == 2))
 		dat += {"<hr><div class='optionGroup' style='border-color:#92BB78'><b class='title' style='background:#92BB78'>Roleplaying Panel</b>
 					<A href='?src=\ref[src];action=secretsfun;type=shakecamera'>Apply camera shake</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=creepifystation'>Creepify station</A><BR>
@@ -3726,7 +3709,7 @@ var/global/noir = 0
 	return
 
 /datum/admins/proc/restart()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Restart"
 	set desc= "Restarts the world"
 
@@ -3753,7 +3736,7 @@ var/global/noir = 0
 		Reboot_server()
 
 /datum/admins/proc/announce()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Announce"
 	set desc="Announce your desires to the world"
 	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
@@ -3765,7 +3748,7 @@ var/global/noir = 0
 		logTheThing("diary", usr, null, ": [message]", "admin")
 
 /datum/admins/proc/startnow()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
 	if(!ticker)
@@ -3783,7 +3766,7 @@ var/global/noir = 0
 		return 0
 
 /datum/admins/proc/delay_start()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc="Delay the game start"
 	set name="Delay Round Start"
 
@@ -3803,7 +3786,7 @@ var/global/noir = 0
 		message_admins("<font color='blue'>[usr.key] has removed the game start delay.</font>")
 
 /datum/admins/proc/delay_end()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc="Delay the server restart"
 	set name="Delay Round End"
 
@@ -3917,7 +3900,7 @@ var/global/noir = 0
 			M.mind.objectives += escape_objective
 	else
 		var/list/eligible_objectives = list()
-		if (ishuman(M) || iscritter(M))
+		if (ishuman(M) || ismobcritter(M))
 			eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/)
 		else if (issilicon(M))
 			eligible_objectives = list(/datum/objective/regular,/datum/objective/regular/assassinate,
@@ -3983,7 +3966,7 @@ var/global/noir = 0
 		R.syndicate = 1
 		R.syndicate_possible = 1
 		R.handle_robot_antagonist_status("admin", 0, usr)
-	else if (ishuman(M) || iscritter(M))
+	else if (ishuman(M) || ismobcritter(M))
 		switch(traitor_type)
 			if("traitor")
 				M.show_text("<h2><font color=red><B>You have defected and become a traitor!</B></font></h2>", "red")
@@ -4155,7 +4138,7 @@ var/global/noir = 0
 	return chosen
 
 /datum/admins/proc/spawn_atom(var/object as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set desc="(atom path) Spawn an atom"
 	set name="Spawn"
 	if(!object)
@@ -4170,8 +4153,11 @@ var/global/noir = 0
 				if (location)
 					location.ReplaceWith(chosen, handle_air = 0)
 			else
-				var/atom/movable/A = new chosen()
-				A.set_loc(usr.loc)
+				var/atom/movable/A
+				if (usr.client.holder.spawn_in_loc)
+					A = new chosen(usr.loc)
+				else
+					A = new chosen(get_turf(usr))
 				if (usr.client.flourish)
 					spawn_animation1(A)
 			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
@@ -4182,7 +4168,7 @@ var/global/noir = 0
 		return
 
 /datum/admins/proc/heavenly_spawn_obj(var/obj/object as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set desc="(object path) Spawn an object. But all fancy-like"
 	set name="Spawn-Heavenly"
 	if(!object)
@@ -4224,7 +4210,7 @@ var/global/noir = 0
 
 /client/proc/respawn_target(mob/M as mob in world, var/forced = 0)
 	set name = "Respawn Target"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set desc = "Respawn a mob"
 	set popup_menu = 0
 	if (!M) return
@@ -4252,7 +4238,7 @@ var/global/noir = 0
 
 /client/proc/respawn_self()
 	set name = "Respawn Self"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc = "Respawn yourself"
 
 	if(!isobserver(usr))
@@ -4309,7 +4295,7 @@ var/global/noir = 0
 	//If the overlay dissapears you lose the cloaking too, so just retype cloak-self and it should work again
 	//If you don't lay down or force yourself to update clothing via fire or whatever it should be good enough to use for the purpose of spying on shitlords I guess.
 	set name = "Cloak self"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set desc = "Make yourself invisible!"
 
 	if (!iscarbon(usr))

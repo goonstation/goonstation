@@ -590,7 +590,7 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH
 	var/emagged = 0
 	var/last_used = 0
-	var/list/safe_smokables = list("nicotine", "THC")
+	var/list/safe_smokables = list("nicotine", "THC", "CBD")
 	var/datum/effects/system/bad_smoke_spread/smoke
 	var/range = 1
 
@@ -680,7 +680,7 @@
 			particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(target_loc, SOUTH))
 			particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(target_loc, EAST))
 			particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(target_loc, WEST))
-			usr.restrain_time = world.timeofday + 40
+			usr.restrain_time = TIME + 40
 			src.smoke.set_up(1, 0, target_loc,null,R.get_average_color())
 			src.smoke.attach(target_loc)
 			SPAWN_DBG (0) //vape is just the best for not annoying crowds I swear
@@ -706,19 +706,11 @@
 	item_state = "medivape"
 	icon_state = "medivape"
 
-	var/list/medical_cannabis = list("antihol", "charcoal", "epinephrine", "insulin", "mutadone", "teporone",\
-"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "stimulants", "synaptizine", "anti_rad",\
-"oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
-"salicylic_acid", "cryoxadone", "nicotine", "THC")
-
 	New()
 		..()
-		safe_smokables = medical_cannabis
+		safe_smokables += chem_whitelist
 		src.reagents.clear_reagents()
-		src.reagents.add_reagent(pick("antihol", "charcoal", "epinephrine", "insulin", "mutadone", "teporone",\
-"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "synaptizine", "anti_rad",\
-"oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
-"salicylic_acid", "cryoxadone", "nicotine", "THC"), 50)
+		src.reagents.add_reagent(pick(safe_smokables), 50)
 
 /obj/item/reagent_containers/vape/medical/o2 //sweet oxygen
 	desc = "Smoking, now in a doctor approved form! This one comes preloaded with salbutamol."
@@ -799,6 +791,7 @@
 	desc = "Gives the power of new life, but only on the most holy of days"
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "superbuttshell"
+	c_flags = EQUIPPED_WHILE_HELD
 	w_class = 4.0
 	var/mob/living/carbon/human/owner = null
 	var/changed = 0
@@ -808,6 +801,10 @@
 		..()
 		name = "The [pick("Most Holey","Sacred","Hallowed","Divine")] relic of [pick("Azzdey","Ah Sday","Ahsh dei","A s'dai","Ahes d'hei")]"
 		processing_items.Add(src)
+
+	setupProperties()
+		. = ..()
+		src.setProperty("movespeed", 1)
 
 	pickup(mob/user as mob)
 		if(user != owner)
@@ -822,6 +819,14 @@
 			owner = user
 			DEBUG_MESSAGE("The new artifact owner is [owner.name]")
 		..()
+
+	dropped(mob/user)
+		. = ..()
+		if(owner)
+			boutput(owner, "<h2>You have lost [src.name]!</h2>")
+			if(owner?.bioHolder.HasEffect("fire_resist"))
+				owner.bioHolder.RemoveEffect("fire_resist")
+			owner = null
 
 	process()
 		if(!owner) return

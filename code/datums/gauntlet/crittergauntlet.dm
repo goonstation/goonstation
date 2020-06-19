@@ -114,7 +114,7 @@
 			boutput(M, rendered)
 		for (var/mob/M in gauntlet)
 			boutput(M, rendered)
-		for (var/mob/M in mobs)//world)
+		for (var/mob/M in mobs)
 			LAGCHECK(LAG_LOW)
 			if (ismob(M.eye) && M.eye != M)
 				var/mob/N = M.eye
@@ -555,7 +555,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			src.cam.c_tag = src.name
 			src.cam.network = cam_network
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -793,7 +793,8 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		minimum_level = 0
 
 		setUp()
-			var/list/q = shuffle(gauntlet_controller.spawnturfs)
+			var/list/q = gauntlet_controller.spawnturfs.Copy()
+			shuffle_list(q)
 			var/percentage = rand(25, 45) * 0.01
 			q.len = round(q.len * percentage)
 			for (var/turf/T in q)

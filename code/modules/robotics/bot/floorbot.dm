@@ -2,7 +2,7 @@
 /obj/item/toolbox_tiles
 	desc = "It's a toolbox with tiles sticking out the top"
 	name = "tiles and toolbox"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "toolbox_tiles"
 	force = 3.0
 	throwforce = 10.0
@@ -14,7 +14,7 @@
 /obj/item/toolbox_tiles_sensor
 	desc = "It's a toolbox with tiles sticking out the top and a sensor attached"
 	name = "tiles, toolbox and sensor arrangement"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "toolbox_tiles_sensor"
 	force = 3.0
 	throwforce = 10.0
@@ -27,7 +27,7 @@
 /obj/machinery/bot/floorbot
 	name = "Floorbot"
 	desc = "A little floor repairing robot, he looks so excited!"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "floorbot0"
 	layer = 5.0 //TODO LAYER
 	density = 0
@@ -165,7 +165,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 /obj/machinery/bot/floorbot/Topic(href, href_list)
 	if (..())
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 	src.add_fingerprint(usr)
 	switch(href_list["operation"])
 		if ("start")
@@ -220,7 +220,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		// Search for incomplete/damaged floor
 		if (src.improvefloors)
 			for (var/turf/simulated/floor/F in view(src.search_range, src))
-				if (F != src.oldtarget && (!F.intact || F.burnt || F.broken) && !(F in floorbottargets) && !should_ignore_tile(F))
+				if (F != src.oldtarget && (!F.intact || F.burnt || F.broken || istype(F, /turf/simulated/floor/metalfoam)) && !(F in floorbottargets) && !should_ignore_tile(F))
 					return F
 
 
@@ -347,7 +347,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		src.repairing = 1
 		var/new_tile = 0
 
-		if (istype(target, /turf/space/))
+		if (istype(target, /turf/space/) || istype(target, /turf/simulated/floor/metalfoam))
 			src.visible_message("<span class='notice'>[src] begins building flooring.</span>")
 			new_tile = 1
 

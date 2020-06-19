@@ -18,7 +18,7 @@
 	var/can_pin = 1
 	var/dropped = 0
 
-	New(atom/loc)
+	New(atom/loc, mob/assailant = null)
 		..()
 
 		var/icon/hud_style = hud_style_selection[get_hud_style(src.assailant)]
@@ -33,6 +33,7 @@
 			ima.appearance_flags = RESET_COLOR | KEEP_APART | RESET_TRANSFORM
 
 			I.UpdateOverlays(ima, "grab", 0, 1)
+		src.assailant = assailant
 
 	proc/post_item_setup()//after grab is done being made with item
 		return
@@ -75,7 +76,8 @@
 				logTheThing("combat", src.assailant, src.affecting, "drops their pin on %target%")
 			else
 				logTheThing("combat", src.assailant, src.affecting, "drops their grab on %target%")
-			if (affecting.grabbed_by) affecting.grabbed_by -= src
+			if (affecting.grabbed_by)
+				affecting.grabbed_by -= src
 			affecting = null
 
 		assailant = null
@@ -83,7 +85,9 @@
 
 	dropped()
 		dropped += 1
-		qdel(src)
+		if(src.assailant)
+			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
+			qdel(src)
 
 	process(var/mult = 1)
 		if (check())
@@ -96,11 +100,6 @@
 		if (src.state >= GRAB_NECK)
 			if(H) H.remove_stamina(STAMINA_REGEN * 0.5 * mult)
 			src.affecting.set_density(0)
-
-		if (src.state == GRAB_PIN)
-			if (ishuman(src.assailant))
-				var/mob/living/carbon/human/HH = src.assailant
-				HH.remove_stamina(STAMINA_REGEN * 0.5 * mult)
 
 		if (src.state == GRAB_KILL)
 			//src.affecting.losebreath++
@@ -253,6 +252,7 @@
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
 		src.state = GRAB_KILL
+		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
 		src.assailant.lastattacked = src.affecting
 		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
@@ -295,6 +295,7 @@
 
 		if (ishuman(src.assailant))
 			var/mob/living/carbon/human/H = src.assailant
+			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src.type)
 			H.update_canmove()
 
 		if (ishuman(src.affecting))
@@ -353,7 +354,7 @@
 			if (resist_count >= 8 && prob(7)) //after 8 resists, start rolling for breakage. this is to make sure people with stamina buffs cant infinite-pin someone
 				succ = 1
 			else if (ishuman(src.assailant))
-				src.assailant.remove_stamina(29)
+				src.assailant.remove_stamina(19)
 				src.affecting.remove_stamina(10)
 				var/mob/living/carbon/human/H = src.assailant
 				if (H.stamina <= 0)
@@ -385,13 +386,14 @@
 	//returns an atom to be thrown if any
 	proc/handle_throw(var/mob/living/user, var/atom/target)
 		if (!src.affecting) return 0
-
+		if (get_dist(user, src.affecting) > 1)
+			return 0
 		if ((src.state < 1 && !(src.affecting.getStatusDuration("paralysis") || src.affecting.getStatusDuration("weakened") || src.affecting.stat)) || !isturf(user.loc))
 			user.visible_message("<span class='alert'>[src.affecting] stumbles a little!</span>")
 			user.u_equip(src)
 			return 0
 
-		src.affecting.lastattacker = src
+		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
 		.= src.affecting
 		user.u_equip(src)
@@ -695,7 +697,7 @@
 
 
 /obj/item/grab/block
-	c_flags = EQUIPPED_WHILE_HELD_ACTIVE
+	c_flags = EQUIPPED_WHILE_HELD
 	item_grab_overlay_state = "grab_block_small"
 	icon_state = "grab_block"
 	name = "block"
@@ -709,12 +711,17 @@
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags |= HAS_GRAB_EQUIP
+			I.tooltip_rebuild = 1
 		setProperty("I_disorient_resist", 15)
 
 	disposing()
+		for(var/datum/objectProperty/equipment/P in src.properties)
+			P.removeFromMob(src, src.assailant)
+
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags &= ~HAS_GRAB_EQUIP
+			I.tooltip_rebuild = 1
 			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_END, src)
 		else
 			if (assailant)
@@ -724,7 +731,7 @@
 		if (assailant)
 			assailant.visible_message("<span class='alert'>[assailant] lowers their defenses!</span>")
 			assailant.delStatus("blocking")
-			assailant.last_resist = world.time + (COMBAT_CLICK_DELAY/2)
+			assailant.last_resist = world.time + COMBAT_BLOCK_DELAY
 		..()
 
 	attack(atom/target, mob/user)
@@ -742,6 +749,16 @@
 			playsound(assailant.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0, 1.5)
 		qdel(src)
 
+	setProperty(propId, propVal)
+		var/datum/objectProperty/equipment/P = ..()
+		if(istype(P))
+			P.updateMob(src, src.assailant, propVal)
+
+	delProperty(propId)
+		var/propVal = getProperty(propId)
+		var/datum/objectProperty/equipment/P = ..()
+		if(istype(P))
+			P.removeFromMob(src, src.assailant, propVal)
 
 	proc/can_block(var/hit_type = null)
 		.= DEFAULT_BLOCK_PROTECTION_BONUS

@@ -31,7 +31,7 @@
 	if(..())
 		return
 
-	user.machine = src
+	src.add_dialog(user)
 	var/dat
 	if (!( ticker ))
 		return
@@ -125,7 +125,7 @@
 			var/research_access = list("<br>Science and Medical:")
 			var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry)
 			var/security_access = list("<br>Security:")
-			var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit)
+			var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit, access_contrabandpermit)
 			var/command_access = list("<br>Command:")
 			var/list/command_access_list = list(access_research_director, access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_ghostdrone)
 
@@ -181,7 +181,7 @@
 /obj/machinery/computer/card/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 	if (href_list["modify"])
 		if (src.modify)
 			src.modify.update_name()
@@ -320,7 +320,7 @@
 		src.scan_access = null
 		src.mode = text2num(href_list["mode"])
 	if (href_list["colour"])
-		if(src.modify && src.modify.icon_state != "gold" && src.modify.icon_state != "id_clown")
+		if(src.modify && src.modify.icon_state != "gold" && src.modify.icon_state != "id_clown" && src.modify.icon_state != "id_dab")
 			var/newcolour = href_list["colour"]
 			if (newcolour == "none")
 				src.modify.icon_state = "id"

@@ -137,7 +137,7 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	return crossed
 
 proc/get_angle(atom/a, atom/b)
-    .= atan2(b.y - a.y, b.x - a.x)
+    .= arctan(b.y - a.y, b.x - a.x)
 
 //list2params without the dumb encoding
 /proc/list2params_noencode(var/list/L)
@@ -243,62 +243,6 @@ proc/get_angle(atom/a, atom/b)
 			. = locate(1, world.maxy, A.z)
 
 
-//Returns an integer given a hex input, supports negative values "-ff"
-//skips preceding invalid characters
-//breaks when hittin invalid characters thereafter
-/proc/hex2num(hex)
-	. = 0
-	var/place = 1
-	for(var/i in length(hex) to 1 step -1)
-		var/num = text2ascii(hex, i)
-		switch(num)
-			if(48 to 57)
-				num -= 48	//0-9
-			if(97 to 102)
-				num -= 87	//a-f
-			if(65 to 70)
-				num -= 55	//A-F
-			if(45)
-				return . * -1 // -
-			else
-				CRASH("Malformed hex number")
-
-		. += num * place
-		place *= 16
-
-
-//Returns the hex value of a decimal number
-//len == length of returned string
-//if len < 0 then the returned string will be as long as it needs to be to contain the data
-//Only supports positive numbers
-//if an invalid number is provided, it assumes num==0
-//Note, unlike previous versions, this one works from low to high <-- that way
-/proc/num2hex(num, len=2)
-	if(!isnum(num))
-		num = 0
-	num = round(abs(num))
-	. = ""
-	var/i=0
-	while(1)
-		if(len<=0)
-			if(!num)
-				break
-		else
-			if(i>=len)
-				break
-		var/remainder = num/16
-		num = round(remainder)
-		remainder = (remainder - num) * 16
-		switch(remainder)
-			if(9,8,7,6,5,4,3,2,1)
-				. = "[remainder]" + .
-			if(10,11,12,13,14,15)
-				. = ascii2text(remainder+87) + .
-			else
-				. = "0" + .
-		i++
-	return .
-
 /proc/invertHTML(HTMLstring)
 
 	if (!( istext(HTMLstring) ))
@@ -312,9 +256,9 @@ proc/get_angle(atom/a, atom/b)
 	var/r = hex2num(textr)
 	var/g = hex2num(textg)
 	var/b = hex2num(textb)
-	textr = num2hex(255 - r)
-	textg = num2hex(255 - g)
-	textb = num2hex(255 - b)
+	textr = num2hex(255 - r, 2)
+	textg = num2hex(255 - g, 2)
+	textb = num2hex(255 - b, 2)
 	if (length(textr) < 2)
 		textr = text("0[]", textr)
 	if (length(textg) < 2)
@@ -586,6 +530,72 @@ proc/get_angle(atom/a, atom/b)
 			py+=sdy
 			. += locate(px,py,M.z)
 
+//bnlah, same thing as above except instead of a list of turfs we return the first opaque turf
+/proc/getlineopaqueblocked(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
+	var/px=M.x		//starting x
+	var/py=M.y
+	. = get_turf(N)
+	var/dx=N.x-px	//x distance
+	var/dy=N.y-py
+	var/dxabs=abs(dx)//Absolute value of x distance
+	var/dyabs=abs(dy)
+	var/sdx=sign(dx)	//Sign of x distance (+ or -)
+	var/sdy=sign(dy)
+	var/x=dxabs>>1	//Counters for steps taken, setting to distance/2
+	var/y=dyabs>>1	//Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
+	var/j			//Generic integer for counting
+	if(dxabs>=dyabs)	//x distance is greater than y
+		for(j=0;j<dxabs;j++)//It'll take dxabs steps to get there
+			y+=dyabs
+			if(y>=dxabs)	//Every dyabs steps, step once in y direction
+				y-=dxabs
+				py+=sdy
+			px+=sdx		//Step on in x direction
+			var/turf/T = locate(px,py,M.z)//Add the turf to the list
+			if(!T || T.opacity || T.opaque_atom_count)
+				return T
+	else
+		for(j=0;j<dyabs;j++)
+			x+=dxabs
+			if(x>=dyabs)
+				x-=dyabs
+				px+=sdx
+			py+=sdy
+			var/turf/T = locate(px,py,M.z)
+			if(!T || T.opacity || T.opaque_atom_count)
+				return T
+
+/proc/getstraightlinewalled(atom/M,vx,vy,include_origin = 1)//hacky fuck for l ighting
+	if (!M) return null
+	var/turf/T = null
+	var/px=M.x		//starting x
+	var/py=M.y
+	if (include_origin)
+		. = list(locate(px,py,M.z))
+	else
+		.= list()
+	if (vx)
+		var/step = vx > 0 ? 1 : -1
+		vx = abs(vx)
+		while(vx > 0)
+			px += step
+			vx -= 1
+			T = locate(px,py,M.z)
+			if (!T || T.opacity || T.opaque_atom_count > 0)
+				break
+			. += T
+	else if (vy)
+		var/step = vy > 0 ? 1 : -1
+		vy = abs(vy)
+		while(vy > 0)
+			py += step
+			vy -= 1
+			T = locate(px,py,M.z)
+			if (!T || T.opacity || T.opaque_atom_count > 0)
+				break
+			. += T
+
+
 /proc/IsGuestKey(key)
 	//Wire note: This seems like it would work just fine and is a whole bunch shorter
 	return copytext(key, 1, 7) == "Guest-"
@@ -810,10 +820,7 @@ proc/get_angle(atom/a, atom/b)
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var
 	if(src && src.mob)
-		//boutput(world, "[src] was [src.mob.machine], setting to null")
-		if(src.mob.machine && istype(src.mob.machine, /obj/machinery))
-			src.mob.machine.current_user = null
-		src.mob.machine = null
+		src.mob.remove_dialogs()
 	return
 
 /proc/get_turf_loc(var/atom/movable/M) //gets the location of the turf that the mob is on, or what the mob is in is on, etc
@@ -1717,7 +1724,7 @@ proc/countJob(rank)
 
 // Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 // Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
-/proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list())
+/proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0)
 	var/list/candidates = list()
 
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
@@ -1746,8 +1753,8 @@ proc/countJob(rank)
 
 		// Run prompts. Minds are preferable to mob references because of the confirmation delay.
 		for (var/datum/mind/M in ticker.minds)
-			if (M.current)
-				if (dead_player_list_helper(M.current) != 1)
+			if (M.current && M.current.client)
+				if (dead_player_list_helper(M.current, allow_dead_antags) != 1)
 					continue
 
 				SPAWN_DBG (0) // Don't lock up the entire proc.
@@ -1758,7 +1765,7 @@ proc/countJob(rank)
 						if (ghost_timestamp && world.time > ghost_timestamp + confirmation_spawn)
 							if (M.current) boutput(M.current, text_chat_toolate)
 							return
-						if (dead_player_list_helper(M.current) != 1)
+						if (dead_player_list_helper(M.current, allow_dead_antags) != 1)
 							if (M.current) boutput(M.current, text_chat_failed)
 							return
 
@@ -1774,7 +1781,7 @@ proc/countJob(rank)
 		// Filter list again.
 		if (candidates.len)
 			for (var/datum/mind/M2 in candidates)
-				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current) != 1)
+				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current, allow_dead_antags) != 1)
 					candidates.Remove(M2)
 					continue
 
@@ -1798,7 +1805,7 @@ proc/countJob(rank)
 	candidates = list()
 
 	for (var/mob/O in mobs)
-		if (dead_player_list_helper(O) != 1)
+		if (dead_player_list_helper(O, allow_dead_antags) != 1)
 			continue
 		if (!(O in candidates))
 			candidates.Add(O)
@@ -1837,11 +1844,9 @@ proc/countJob(rank)
 			if (TO.my_ghost && istype(TO.my_ghost, /mob/dead/observer))
 				the_ghost = TO.my_ghost
 
-		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost) || the_ghost.observe_round)
+		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost))
 			return 0
 
-	if (!G.client || G.client && G.client.suicide) // Suicided? Tough luck.
-		return 0
 	if (!allow_dead_antags && (!G.mind || G.mind && (G.mind.dnr || !isnull(G.mind.special_role) || G.mind.former_antagonist_roles.len))) // Dead antagonists have had their chance.
 		return 0
 
@@ -2062,15 +2067,11 @@ proc/copy_datum_vars(var/atom/from, var/atom/target)
 var/list/uppercase_letters = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
 var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 
+var/global/list/allowed_restricted_z_areas
 // Helper for blob, wraiths and whoever else might need them (Convair880).
 /proc/restricted_z_allowed(var/mob/M, var/T)
-	var/list/allowed = list()
-	for (var/areas in typesof(/area/shuttle/escape))
-		if (!allowed.Find(areas))
-			allowed.Add(areas)
-	for (var/areas2 in typesof(/area/shuttle_transit_space))
-		if (!allowed.Find(areas2))
-			allowed.Add(areas2)
+	if(!allowed_restricted_z_areas)
+		allowed_restricted_z_areas = typesof(/area/shuttle/escape) + typesof(/area/shuttle_transit_space)
 
 	if (M && isblob(M))
 		var/mob/living/intangible/blob_overmind/B = M
@@ -2083,7 +2084,7 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 	else if (T && isturf(T))
 		A = get_area(T)
 
-	if (A && istype(A) && (A.type in allowed))
+	if (A && istype(A) && (A.type in allowed_restricted_z_areas))
 		return 1
 	return 0
 
@@ -2237,18 +2238,6 @@ var/regex/nameRegex = regex("\\xFF.","g")
 	return text
 
 /**
-  * Returns true if given string is just space characters
-  */
-/proc/is_blank_string(var/txt)
-	if (!istext(txt))
-		return 1 // if it's not a string I guess it's kinda blank??
-	for (var/i=1, i <= length(txt), i++)
-		if (copytext(txt, i, i+1) != " ")
-			return 0 // we say NAW GURL IT'S GOT OTHER STUFF TOO,
-
-	return 1 // otherwise YEAH GURL THAT SHIT IS HELLA BLANK
-
-/**
   * Returns true if given mob/client/mind is an admin
   */
 /proc/isadmin(person)
@@ -2371,7 +2360,7 @@ proc/vector_magnitude(x,y)
   * Transforms a supplied vector x & y to a direction
   */
 proc/vector_to_dir(x,y)
-	.= angle_to_dir(atan2(y,x))
+	.= angle_to_dir(arctan(y,x))
 
 /**
   * Transforms a given angle to a cardinal/ordinal direction
@@ -2404,14 +2393,16 @@ proc/angle_to_dir(angle)
 			.= SOUTH
 
 /**
-  * Transforms a supplied vector x & y to a direction
+  * Removes non-whitelisted reagents from the reagents of TA
   * user: the mob that adds a reagent to an atom that has a reagent whitelist
   * TA: Target Atom. The thing that the user is adding the reagent to
   */
 
-proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob)
+proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/custom_message = "")
 	if (!whitelist || (!TA || !TA.reagents) || (islist(whitelist) && !whitelist.len))
 		return
+	if (!custom_message)
+		custom_message = "<span class='alert'>[TA] identifies and removes a harmful substance.</span>"
 
 	var/found = 0
 	for (var/reagent_id in TA.reagents.reagent_list)
@@ -2420,13 +2411,12 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob)
 			found = 1
 	if (found)
 		if (user)
-			user.show_text("[TA] identifies and removes a harmful substance.", "red") // haine: done -> //TODO: using usr in procs is evil shame on you
+			boutput(user, "[custom_message]") // haine: done -> //TODO: using usr in procs is evil shame on you
 		else if (ismob(TA.loc))
 			var/mob/M = TA.loc
-			M.show_text("[TA] identifies and removes a harmful substance.", "red")
+			boutput(M, "[custom_message]")
 		else
-			TA.visible_message("<span class='alert'>[TA] identifies and removes a harmful substance.</span>")
-
+			TA.visible_message("[custom_message]")
 
 /proc/in_cone_of_vision(var/atom/seer, var/atom/target)
 	/*
@@ -2494,3 +2484,24 @@ proc/time_to_text(var/time)
 	else if(time || !length(.))
 		. += "[round(time / (1 SECOND), 0.1)] seconds"
 	. = jointext(., " ")
+
+// this is dumb and bad but it makes the bicon not expand the line vertically and also centers it
+// also it assumes 32px height by default
+proc/inline_bicon(the_thing, height=32)
+	return {"<span style="display:inline-block;vertical-align:middle;height:0px;">
+	<div style="position:relative;top:-[height / 2]px">
+	[bicon(the_thing)]
+	</div>
+	</span>"}
+
+
+//fucking clients.len doesnt work, filled with null values
+proc/total_clients()
+	.= 0
+	for (var/C in clients)
+		if (C)
+			.++
+
+
+
+

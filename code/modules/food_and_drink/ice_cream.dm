@@ -67,7 +67,6 @@
 		user.TakeDamage("head", 0, 50 * icecount)
 		user.changeStatus("paralysis", icecount*10) //in case the damage isn't enough to crit
 		user.bodytemperature -= 100
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0

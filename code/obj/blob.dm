@@ -153,9 +153,10 @@ var/image/blob_icon_cache
 		if (istype(src.loc,/turf))
 			if (istype(src.loc.loc,/area))
 				src.loc.loc.Exited(src)
-		..()
 		healthbar.onDelete()
 		qdel(healthbar)
+		healthbar = null
+		..()
 		update_surrounding_blob_icons(T)
 		in_disposing = 0
 
@@ -208,14 +209,14 @@ var/image/blob_icon_cache
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		var/temp_difference = abs(temperature - src.ideal_temp)
-
+		var/tolerance = temp_tolerance
 		if (material)
 			material.triggerTemp(src, temperature)
 
 		if (src.has_upgrade(/datum/blob_upgrade/fire_resist))
-			temp_tolerance *= 3
-		if(temp_difference > temp_tolerance)
-			temp_difference = abs(temp_difference - temp_tolerance)
+			tolerance *= 3
+		if(temp_difference > tolerance)
+			temp_difference = abs(temp_difference - tolerance)
 
 			src.take_damage(temp_difference / heat_divisor, 1, "burn")
 
@@ -242,7 +243,7 @@ var/image/blob_icon_cache
 
 	attackby(var/obj/item/W, var/mob/user)
 		user.lastattacked = src
-		if(iscritter(user) && user:ghost_spawned || isghostdrone(user))
+		if(ismobcritter(user) && user:ghost_spawned || isghostdrone(user))
 			src.visible_message("<span class='combat'><b>[user.name]</b> feebly attacks [src] with [W], but is too weak to harm it!</span>")
 			return
 		if( istype(W,/obj/item/clothing/head) && overmind )
@@ -911,7 +912,7 @@ var/image/blob_icon_cache
 
 		//turrets can fire on humans, mobcritters and pods
 		for (var/mob/living/M in view(firing_range, src))
-			if ((ishuman(M) || (iscritter(M) && !M:ghost_spawned)) && !isdead(M) && !check_target_immunity(M))
+			if ((ishuman(M) || (ismobcritter(M) && !M:ghost_spawned)) && !isdead(M) && !check_target_immunity(M))
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if (H.mutantrace)

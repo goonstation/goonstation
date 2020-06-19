@@ -51,6 +51,7 @@
 	burn_output = 500
 	burn_possible = 1
 	health = 10
+	tooltip_flags = REBUILD_DIST
 	var/list/cards = list()
 	var/face_up = 0
 	var/card_name = "blank card"
@@ -75,7 +76,7 @@
 		if (!src.cards.len)
 			qdel(src)
 			return
-
+		tooltip_rebuild = 1
 		src.overlays = null
 		switch (src.cards.len)
 			if (-INFINITY to 0)
@@ -823,6 +824,7 @@
 	var/icon_open = "box-open"
 	var/icon_empty = "box-empty"
 	var/reusable = 1
+	var/box_size = 120
 
 	suit
 		name = "box of playing cards"
@@ -831,6 +833,7 @@
 		icon_closed = "box-suit"
 		icon_open = "box-suit-open"
 		icon_empty = "box-suit-empty"
+		box_size = 60
 
 		New()
 			..()
@@ -843,6 +846,7 @@
 		icon_closed = "box-tarot"
 		icon_open = "box-tarot-open"
 		icon_empty = "box-tarot-empty"
+		box_size = 80
 
 		New()
 			..()
@@ -855,6 +859,7 @@
 		icon_closed = "box-trade"
 		icon_open = "box-trade-open"
 		icon_empty = "box-trade-empty"
+		box_size = 75 // A 60 card deck plus a 15 card sideboard. Yep, it's a Magic joke.
 
 		New()
 			..()
@@ -871,6 +876,15 @@
 		New()
 			..()
 			src.Cards = new /obj/item/playing_cards/trading/booster(src)
+
+	storage
+		name = "trading card storage box"
+		desc = "A plain white box for storing a lot of playing cards."
+		icon_state = "box"
+		icon_closed = "box"
+		icon_open = "box-open"
+		icon_empty = "box-empty"
+		box_size = 400
 
 	clow
 		name = "\improper Clow Book"
@@ -904,7 +918,7 @@
 					return
 
 				if (src.Cards)
-					if (src.Cards.cards.len + C.cards.len > 120)
+					if (src.Cards.cards.len + C.cards.len > src.box_size)
 						boutput(user, "<span class='alert'>You try your best to stuff more cards into [src], but there's just not enough room!</span>")
 						return
 					else
@@ -912,7 +926,7 @@
 						src.Cards.add_cards(C)
 						return
 
-				if (C.cards.len > 60)
+				if (C.cards.len > src.box_size)
 					boutput(user, "<span class='alert'>You try your best to stuff the cards into [src], but there's just not enough room for all of them!</span>")
 					return
 

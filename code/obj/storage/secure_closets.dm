@@ -117,7 +117,7 @@
 	spawn_contents = list(/obj/item/storage/box/clothing/medical_director,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/gun/implanter,
-	/obj/item/gun/syringe/NT,
+	/obj/item/gun/reagent/syringe/NT,
 	/obj/item/gun/kinetic/dart_rifle,
 	/obj/item/ammo/bullets/tranq_darts,
 	/obj/item/ammo/bullets/tranq_darts/anti_mutant,
@@ -704,8 +704,13 @@
 /obj/storage/secure/closet/fridge/pathology
 	name = "pathology lab fridge"
 	req_access = list(access_medical_lockers)
+	//PATHOLOGY REMOVAL
+	#ifdef CREATE_PATHOGENS
 	spawn_contents = list(/obj/item/reagent_containers/glass/vial/prepared = 10,
 	/obj/item/reagent_containers/syringe/antiviral = 3)
+	#else
+	spawn_contents = list(/obj/item/reagent_containers/syringe/antiviral = 3)
+	#endif
 
 /* ================ */
 /* ----- Misc ----- */

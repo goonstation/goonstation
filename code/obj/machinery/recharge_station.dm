@@ -80,7 +80,7 @@
 			user.show_text("You must attach [src]'s floor bolts before the machine will work.", "red")
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<B>[src.name]</B> <A href='?src=\ref[src];refresh=1'>(Refresh)</A><BR><HR>"
 
@@ -142,7 +142,7 @@
 					dat += "Left Leg Unit Missing<br>"
 
 				if (!dmgalerts && occupant.health < occupant.max_health)
-					occupant.updatehealth()
+					health_update_queue |= occupant
 
 				if (dmgalerts == 0) dat += "No abnormalities detected.<br>"
 
@@ -260,7 +260,7 @@
 			return
 
 		if ((usr.contents.Find(src) || src.contents.Find(usr) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if (href_list["refresh"])
 				src.updateUsrDialog()
@@ -756,7 +756,7 @@
 			else if (ishuman(occupant) && src.conversion_chamber)
 				var/mob/living/carbon/human/H = occupant
 				if (prob(80))
-					playsound(src.loc, pick('sound/machines/mixer.ogg','sound/misc/automaton_spaz.ogg','sound/misc/automaton_ratchet.ogg','sound/effects/brrp.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/pump.ogg','sound/effects/syringeproj.ogg'), 100, 1)
+					playsound(src.loc, pick('sound/machines/mixer.ogg','sound/misc/automaton_scratch.ogg','sound/misc/automaton_ratchet.ogg','sound/effects/brrp.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/pump.ogg','sound/effects/syringeproj.ogg'), 100, 1)
 					if (prob(15)) src.visible_message("<span class='alert'>[src] [pick("whirs","grinds","rumbles","clatters","clangs")] [pick("horribly","in a grisly manner","horrifyingly","scarily")]!</span>")
 					if (prob(25))
 						SPAWN_DBG(0.3 SECONDS)

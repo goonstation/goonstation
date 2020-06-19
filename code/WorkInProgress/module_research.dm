@@ -863,7 +863,7 @@ var/global/datum/module_research_controller/module_control = new
 		show_interface(user)
 
 	proc/add_viewer(var/mob/user)
-		user.machine = src
+		src.add_dialog(user)
 		if (!(user in users))
 			users += user
 

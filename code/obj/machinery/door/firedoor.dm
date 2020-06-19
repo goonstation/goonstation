@@ -114,9 +114,8 @@
 
 /obj/machinery/door/firedoor/attackby(obj/item/C as obj, mob/user as mob)
 	src.add_fingerprint(user)
-	if ((istype(C, /obj/item/weldingtool) && !( src.operating ) && src.density))
-		var/obj/item/weldingtool/W = C
-		if(!W.try_weld(user, 1))
+	if ((isweldingtool(C) && !( src.operating ) && src.density))
+		if(!C:try_weld(user, 1))
 			return
 		if (!( src.blocked ))
 			src.blocked = 1

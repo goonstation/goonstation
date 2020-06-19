@@ -25,9 +25,9 @@ labelMappings:
     "[HELP]": help wanted
     "[INPUT WANTED]": input wanted
     "[INPUT]": input wanted
-    "[ENHANCEMENT]": enhancement
-    "[FEATURE]": enhancement
-    "[FEAT]": enhancement
+    "[ENHANCEMENT]": feature
+    "[FEATURE]": feature
+    "[FEAT]": feature
     "[ASS-JAM]": ass-jam
     "[BALANCE]": balance
     "[CLEANLINESS]": cleanliness
@@ -42,7 +42,9 @@ labelMappings:
     "[REWORK]": rework
     "[SECRET]": secret
     "[STYLE]": style
+    "[TOOLS]": tooling
     "[TOOLING]": tooling
     "[WIP]": WIP
     "[EASY]": good first issue
+    "[GFI]": good first issue
     "[GOOD FIRST ISSUE]": good first issue

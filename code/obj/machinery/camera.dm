@@ -4,6 +4,7 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "camera"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	text = ""
 
 	var/network = "SS13"
 	layer = EFFECTS_LAYER_UNDER_1
@@ -259,10 +260,10 @@
 				else
 					boutput(OAI, "Your connection to the camera has been lost.")
 		*/
-		if (istype(O.machine, /obj/machinery/computer/security))
-			var/obj/machinery/computer/security/S = O.machine
+		var/obj/machinery/computer/security/S = O.using_dialog_of_type(/obj/machinery/computer/security)
+		if (S)
 			if (S.current == src)
-				O.machine = null
+				S.remove_dialog(O)
 				S.current = null
 				O.set_eye(null)
 				boutput(O, "The screen bursts into static.")
@@ -307,12 +308,13 @@
 				boutput(O, "[user] holds a paper up to one of your cameras ...")
 				O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
 				logTheThing("station", user, O, "holds up a paper to a camera at [log_loc(src)], forcing %target% to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
-			else if (istype(O.machine, /obj/machinery/computer/security))
-				var/obj/machinery/computer/security/S = O.machine
-				if (S.current == src)
-					boutput(O, "[user] holds a paper up to one of the cameras ...")
-					O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
-					logTheThing("station", user, O, "holds up a paper to a camera at [log_loc(src)], forcing %target% to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
+			else
+				var/obj/machinery/computer/security/S = O.using_dialog_of_type(/obj/machinery/computer/security)
+				if (S)
+					if (S.current == src)
+						boutput(O, "[user] holds a paper up to one of the cameras ...")
+						O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
+						logTheThing("station", user, O, "holds up a paper to a camera at [log_loc(src)], forcing %target% to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 
 //Return a working camera that can see a given mob
 //or null if none

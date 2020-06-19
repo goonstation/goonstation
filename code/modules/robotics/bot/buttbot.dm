@@ -3,7 +3,7 @@
 /obj/machinery/bot/buttbot
 	name = "buttbot"
 	desc = "Well I... uh... huh."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "buttbot"
 	layer = 5.0 // Todo layer
 	density = 0

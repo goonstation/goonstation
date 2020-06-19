@@ -1,7 +1,7 @@
 /obj/item/plank
 	name = "wooden plank"
 	desc = "My best friend plank!"
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
+	icon = 'icons/obj/materials.dmi'
 	icon_state = "plank"
 	force = 4.0
 	//cogwerks - burn vars

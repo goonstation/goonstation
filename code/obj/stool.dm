@@ -363,7 +363,7 @@
 	unbuckle()
 		..()
 		if(src.buckled_guy && src.buckled_guy.buckled == src)
-			buckled_guy.anchored = 0
+			reset_anchored(buckled_guy)
 			buckled_guy.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
@@ -460,7 +460,7 @@
 				M.buckled = null
 				src.buckled_guy = null
 				M.lying = 0
-				M.anchored = 0
+				reset_anchored(M)
 		if (src.Sheet && src.Sheet.Bed == src)
 			src.Sheet.Bed = null
 			src.Sheet = null
@@ -701,7 +701,7 @@
 
 		if (istype(H) && H.on_chair)// == 1)
 			M.pixel_y = 0
-			M.anchored = 0
+			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
@@ -709,7 +709,7 @@
 				H.on_chair = 0
 				src.buckledIn = 0
 		else if ((M.buckled))
-			M.anchored = 0
+			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
@@ -856,7 +856,6 @@
 			M.changeStatus("stunned", 4 SECONDS)
 			H.emote("scream")
 		//M.TakeDamage("chest", 5, 0) //what???? we have 'force' var
-		//M.updatehealth()
 		playsound(src.loc, pick(sounds_punch), 100, 1)
 	..()
 
@@ -1028,6 +1027,12 @@
 		if (src.lying)
 			return
 		..()
+		if (src.buckled_guy == to_buckle)
+			APPLY_MOVEMENT_MODIFIER(to_buckle, /datum/movement_modifier/wheelchair, src.type)
+
+	unbuckle()
+		REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
+		return ..()
 
 /* ======================================================= */
 /* -------------------- Wooden Chairs -------------------- */
@@ -1291,7 +1296,7 @@
 	// Seems to be the only way to get this stuff to auto-refresh properly, sigh (Convair880).
 	proc/control_interface(mob/user as mob)
 		if (!user.hasStatus("handcuffed") && isalive(user))
-			user.machine = src
+			src.add_dialog(user)
 
 			var/dat = ""
 

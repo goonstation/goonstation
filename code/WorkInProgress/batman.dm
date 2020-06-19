@@ -190,7 +190,6 @@
 		if(tturf && isturf(tturf))
 			SPAWN_DBG(0)
 				T.throw_at(tturf, 2, 2)
-		T.updatehealth()
 
 /mob/proc/batspinkick(mob/T as mob in oview(1))
 	set category = "Batman"
@@ -212,25 +211,21 @@
 			usr.pixel_y -= 4
 			usr.dir = NORTH
 			T.TakeDamage("head", 1, 0)
-			T.updatehealth()
 			usr.visible_message("<span class='alert'><B>[usr] kicks [T] in the face!</B></span>", "<span class='alert'><B>You kick [T] in the face!</B></span>")
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 			sleep(0.1 SECONDS)
 			usr.dir = EAST
 			T.TakeDamage("head", 1, 0)
-			T.updatehealth()
 			usr.visible_message("<span class='alert'><B>[usr] kicks [T] in the face!</B></span>", "<span class='alert'><B>You kick [T] in the face!</B></span>")
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 			sleep(0.1 SECONDS)
 			usr.dir = SOUTH
 			T.TakeDamage("head", 1, 0)
-			T.updatehealth()
 			usr.visible_message("<span class='alert'><B>[usr] kicks [T] in the face!</B></span>", "<span class='alert'><B>You kick [T] in the face!</B></span>")
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 			sleep(0.1 SECONDS)
 			usr.dir = WEST
 			T.TakeDamage("head", 1, 0)
-			T.updatehealth()
 			usr.visible_message("<span class='alert'><B>[usr] kicks [T] in the face!</B></span>", "<span class='alert'><B>You kick [T] in the face!</B></span>")
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 		usr.dir = get_dir(usr, T)
@@ -251,7 +246,6 @@
 		sleep(0.1 SECONDS)
 		step_away(T,usr,15)
 		T.TakeDamage("head", 10, 0)
-		T.updatehealth()
 		for(var/i = 0, i < 5, i++)
 			usr.pixel_y += 10
 			sleep(0.1 SECONDS)
@@ -269,7 +263,6 @@
 		T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
 		T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
 		T.force_laydown_standup()
-		T.updatehealth()
 
 /mob/proc/batspin(mob/T as mob in oview(1))
 	set category = "Batman"
@@ -328,7 +321,6 @@
 				T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
 				T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
 				T.visible_message("<span class='alert'><B>[T] lands very violently with a bone-crunching sound!</B></span>", "<span class='alert'><B>You land violently with a lot of pain!</B></span>")
-				T.updatehealth()
 
 
 /mob/proc/batdropkick(mob/T as mob in oview())

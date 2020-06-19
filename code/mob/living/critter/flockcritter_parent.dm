@@ -28,7 +28,6 @@
 	// do i pay for building?
 	var/pays_to_construct = 1
 	// AI STUFF
-	var/datum/aiHolder/flock/ai = null
 	is_npc = 1
 
 /mob/living/critter/flock/setup_healths()
@@ -129,7 +128,8 @@
 	if(src.is_npc)
 		// tell the npc AI to go after the target
 		if(src.ai)
-			src.ai.rally(target)
+			var/datum/aiHolder/flock/flockai = ai
+			flockai.rally(target)
 	else
 		// tell whoever's controlling the critter to come to the flockmind, pronto
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: The flockmind requests your presence immediately.\]</b></span>")

@@ -234,7 +234,7 @@ MATERIAL
 		var/t1 = text("<HTML><HEAD></HEAD><TT>Amount Left: [] <BR>", src.amount)
 		var/counter = 1
 		var/list/L = list(  )
-		if (src.material && src.material.material_flags & MATERIAL_METAL)
+		if (src?.material.material_flags & MATERIAL_METAL)
 			if (istype(src.reinforcement))
 				L["retable"] = "Reinforced Table Parts (2 Sheets)"
 				L["remetal"] = "Remove Reinforcement"
@@ -255,11 +255,13 @@ MATERIAL
 				L["tcomputer"] = "Computer Terminal Frame (3 Sheets)"
 				L["computer"] = "Console Frame (5 Sheets)"
 				L["hcomputer"] = "Computer Frame (5 Sheets)"
-		if (src.material && src.material.material_flags & MATERIAL_CRYSTAL)
+		if (src?.material.material_flags & MATERIAL_CRYSTAL)
 			L["smallwindow"] = "Thin Window"
 			L["bigwindow"] = "Large Window (2 Sheets)"
 			if (istype(src.reinforcement))
 				L["remetal"] = "Remove Reinforcement"
+		if (src?.material.mat_id == "cardboard")
+			L["c_box"] = "Cardboard Box (2 Sheets)"
 
 		for(var/t in L)
 			counter++
@@ -403,6 +405,15 @@ MATERIAL
 					a_icon = 'icons/obj/large_storage.dmi'
 					a_icon_state = "closed"
 					a_name = "a closet"
+
+				if("c_box")
+					if (!amount_check(2,usr)) return
+					a_type = /obj/item/clothing/suit/cardboard_box
+					a_amount = 1
+					a_cost = 2
+					a_icon = 'icons/obj/clothing/overcoats/item_suit_cardboard.dmi'
+					a_icon_state = "c_box"
+					a_name = "a cardboard box"
 
 				if("pipef")
 					if (!amount_check(3,usr)) return
@@ -641,8 +652,7 @@ MATERIAL
 			..(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
+		if (isweldingtool(W))
 			if(src.amount < 2)
 				boutput(user, "<span class='alert'>You need at least two rods to make a material sheet.</span>")
 				return
@@ -652,7 +662,7 @@ MATERIAL
 				else
 					boutput(user, "<span class='alert'>You should probably put the rods down first.</span>")
 				return
-			if(!WELD.try_weld(user, 1))
+			if(!W:try_weld(user, 1))
 				return
 
 			var/weldinput = 1
@@ -667,7 +677,6 @@ MATERIAL
 			M.amount = weldinput
 			src.consume_rods(weldinput * 2)
 
-			WELD.eyecheck(user)
 			user.visible_message("<span class='alert'><B>[user]</B> welds the rods together into sheets.</span>")
 			update_icon()
 			if(src.amount < 1)	qdel(src)
@@ -795,16 +804,14 @@ MATERIAL
 			..(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
+		if (isweldingtool(W))
 			if(!src.anchored && !istype(src.loc,/turf/simulated/floor) && !istype(src.loc,/turf/unsimulated/floor))
 				boutput(user, "<span class='alert'>There's nothing to weld that to.</span>")
 				return
 
-			if(!WELD.try_weld(user, 1))
+			if(!W:try_weld(user, 1))
 				return
 
-			WELD.eyecheck(user)
 			if(!src.anchored) user.visible_message("<span class='alert'><B>[user.name] welds the [src.name] to the floor.</B></span>")
 			else user.visible_message("<span class='alert'><B>[user.name] cuts the [src.name] free from the floor.</B></span>")
 			src.anchored = !(src.anchored)
@@ -905,7 +912,6 @@ MATERIAL
 			src.update()
 			make_cleanable( /obj/decal/cleanable/blood,user.loc)
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
-			user.updatehealth()
 
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
@@ -939,6 +945,7 @@ MATERIAL
 	stamina_damage = 25
 	stamina_cost = 25
 	stamina_crit_chance = 15
+	tooltip_flags = REBUILD_DIST
 
 	New()
 		..()
@@ -973,6 +980,7 @@ MATERIAL
 				F.setMaterial(getMaterial("steel"))
 			F.amount = 1
 			src.amount--
+			tooltip_rebuild = 1
 			user.put_in_hand_or_drop(F)
 			if (src.amount < 1)
 				//SN src = null
@@ -992,12 +1000,13 @@ MATERIAL
 			return
 		else
 			var/S = T
-			if (!( istype(S, /turf/space) ))
+			if (!( istype(S, /turf/space) || istype(S, /turf/simulated/floor/metalfoam)))
 				boutput(user, "You cannot build on or repair this turf!")
 				return
 			else
 				src.build(S)
 				src.amount--
+				tooltip_rebuild = 1
 		if (src.amount < 1)
 			user.u_equip(src)
 			//SN src = null
@@ -1019,8 +1028,11 @@ MATERIAL
 		if (W.amount + src.amount > src.max_stack)
 			src.amount = W.amount + src.amount - src.max_stack
 			W.amount = src.max_stack
+			tooltip_rebuild = 1
+			W.tooltip_rebuild = 1
 		else
 			W.amount += src.amount
+			W.tooltip_rebuild = 1
 			//SN src = null
 			qdel(src)
 			return

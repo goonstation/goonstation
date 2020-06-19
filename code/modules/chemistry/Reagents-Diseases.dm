@@ -399,6 +399,19 @@ datum
 			fluid_b = 177
 			transparency = 0
 			disease = /datum/ailment/malady/heartfailure
+		#if ASS_JAM
+		disease/toomuch // High Fever
+			name = "too much" //your'e
+			id = "too much"
+			description = "bad pear, that"
+			reagent_state = LIQUID
+			fluid_r = 100
+			fluid_g = 255
+			fluid_b = 100
+			transparency = 255
+			disease = /datum/ailment/disease/high_fever
+
+		#endif
 
 		disease/heartworms // please do not give a recipe, just a thing for testing heart-related things atm
 			name = "space heartworms"
@@ -431,7 +444,7 @@ datum
 			fluid_b = 121
 			transparency = 180
 			disease = /datum/ailment/disease/avian_flu
-		
+
 		disease/mewtini
 			name = "Mewtini"
 			id = "mewtini"
@@ -444,7 +457,7 @@ datum
 			taste = "hairy"
 			thirst_value = -0.5
 			disease = /datum/ailment/disease/going_catty
-	
+
 		disease/cocktail_sheltestgrog
 			name = "sheltestgrog"
 			id = "sheltestgrog"
@@ -463,16 +476,28 @@ datum
 			id = "pathogen"
 			description = "A liquid sample of one (or multiple) pathogens."
 			reagent_state = LIQUID
-			fluid_r = 200
-			fluid_b = 0
-			fluid_g = 0
-			transparency = 255
+			fluid_r = 50
+			fluid_b = 50
+			fluid_g = 180
+			transparency = 200
+			depletion_rate = 0.8
+			smoke_spread_mod = 5
 
 			reaction_turf(var/turf/T, var/volume)
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
-				return // for now
+				// sure just fucking splash around in the stuff
+				// this is mainly so puddles from the sweating symptom can infect
+				for (var/uid in src.pathogens)
+					var/datum/pathogen/P = src.pathogens[uid]
+					logTheThing("pathology", M, null, "is splashed with [src] containing pathogen [P].")
+					if(istype(M, /mob/living/carbon/human))
+						var/mob/living/carbon/human/H = M
+						if(prob(100-H.get_disease_protection()))
+							if(H.infected(P))
+								H.show_message("Ew, some of that disgusting green stuff touched you!")
+				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				return

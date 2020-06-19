@@ -39,7 +39,7 @@
 
 /obj/item/storage/box/revolver
 	name = "revolver box"
-	icon_state = "revolver"
+	icon_state = "hard_case"
 	desc = "A box containing a syndicate revolver and ammo."
 	// cogwerks - i think the ammo boxes are dumb, giving the starting box more ammo
 	spawn_contents = list(/obj/item/gun/kinetic/revolver,\
@@ -48,7 +48,7 @@
 
 /obj/item/storage/box/detectivegun
 	name = ".38 revolver box"
-	icon_state = "revolver"
+	icon_state = "hard_case"
 	desc = "A box containing a .38 caliber revolver and ammunition."
 	// Reduced the amount of ammo. The detective had four lethal and five stun speedloaders total in his closet, perhaps a bit too much (Convair880).
 	spawn_contents = list(/obj/item/gun/kinetic/detectiverevolver,\
@@ -57,7 +57,7 @@
 
 /obj/item/storage/box/ak47 // cogwerks, terrorism update
 	name = "rifle box"
-	icon_state = "revolver"
+	icon_state = "hard_case"
 	desc = "A box containing a syndicate rifle and some ammo."
 	// this might be a terrible idea giving them so much ammo, but whatevs
 	spawn_contents = list(/obj/item/gun/kinetic/ak47,\
@@ -65,23 +65,22 @@
 
 /obj/item/storage/box/pistol
 	name = "suppressed pistol box"
-	icon_state = "revolver"
+	icon_state = "hard_case"
 	desc = "A box containing a sneaky pistol and some ammo."
 	// this might be a terrible idea giving them so much ammo, but whatevs
 	spawn_contents = list(/obj/item/gun/kinetic/silenced_22,\
-	/obj/item/ammo/bullets/bullet_22 = 2,\
-	/obj/item/ammo/bullets/bullet_22HP = 2)
+	/obj/item/ammo/bullets/bullet_22HP = 3)
 
 /obj/item/storage/box/derringer
 	name = "derringer box"
-	icon_state = "revolver"
+	icon_state = "hard_case"
 	desc = "A box containing a derringer and some ammo."
 	spawn_contents = list(/obj/item/gun/kinetic/derringer,\
 	/obj/item/ammo/bullets/derringer = 4)
 
 /obj/item/storage/box/shotgun
 	name = "shotgun box"
-	icon_state = "revolver"
+	icon_state = "hard_case"
 	desc = "A box containing a high-powered shotgun and some ammo."
 	spawn_contents = list(/obj/item/gun/kinetic/spes,\
 	/obj/item/ammo/bullets/a12 = 4)

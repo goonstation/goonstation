@@ -121,7 +121,7 @@
 	//
 	MouseDrop_T(mob/target, mob/user)
 		//jesus fucking christ
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || isAI(user) || isAI(target) || isghostcritter(user))
+		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.hasStatus(list("weakened", "paralysis", "stunned")) || isAI(user) || isAI(target) || isghostcritter(user))
 			return
 
 		if (istype(src, /obj/machinery/disposal/mail) && isliving(target))
@@ -134,7 +134,7 @@
 		var/turf/Q = target.loc
 		sleep (5)
 		//heyyyy maybe we should check distance AFTER the sleep??											//If you get stunned while *climbing* into a chute, you can still go in
-		if (target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || ((user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened")) && user != target))
+		if (target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || ((user.stat || hasStatus(list("weakened", "paralysis", "stunned"))) && user != target))
 			return
 
 		if(target == user && !user.stat)	// if drop self, then climbed in
@@ -243,7 +243,7 @@
 	proc/interacted(mob/user, var/ai=0)
 		src.add_fingerprint(user)
 		if(status & BROKEN)
-			user.machine = null
+			src.remove_dialog(user)
 			return
 
 		var/dat = "<head><title>Waste Disposal Unit</title></head><body><TT><B>Waste Disposal Unit</B><HR>"
@@ -266,12 +266,12 @@
 		if (!air_contents)
 			initair()
 
-		var/per = 100* air_contents.return_pressure() / (2*ONE_ATMOSPHERE)
+		var/per = 100* MIXTURE_PRESSURE(air_contents) / (2*ONE_ATMOSPHERE)
 
 		dat += "Pressure: [round(per, 1)]%<BR></body>"
 
 
-		user.machine = src
+		src.add_dialog(user)
 		user.Browse(dat, "window=disposal;size=360x235")
 		onclose(user, "disposal")
 
@@ -290,11 +290,11 @@
 
 		if (in_range(src, usr) && isturf(src.loc))
 			DEBUG_MESSAGE("in range of [src] and it is on a turf")
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if(href_list["close"])
 				DEBUG_MESSAGE("closed [src]")
-				usr.machine = null
+				src.remove_dialog(usr)
 				usr.Browse(null, "window=disposal")
 				return
 
@@ -329,7 +329,7 @@
 				DEBUG_MESSAGE("[src] and [usr] are too far apart: [src] [log_loc(src)], [usr] [log_loc(usr)]")
 
 			usr.Browse(null, "window=disposal")
-			usr.machine = null
+			src.remove_dialog(usr)
 			return
 
 		src.updateDialog()
@@ -414,7 +414,7 @@
 
 		src.updateDialog()
 
-		if(flush && air_contents.return_pressure() >= 2*ONE_ATMOSPHERE)	// flush can happen even without power
+		if(flush && MIXTURE_PRESSURE(air_contents) >= 2*ONE_ATMOSPHERE)	// flush can happen even without power
 			SPAWN_DBG(0) //Quit holding up the process you fucker
 				flush()
 
@@ -435,7 +435,7 @@
 		var/datum/gas_mixture/env = L.return_air()
 		if (!air_contents)
 			air_contents = unpool(/datum/gas_mixture)
-		var/pressure_delta = (ONE_ATMOSPHERE*2.1) - air_contents.return_pressure()
+		var/pressure_delta = (ONE_ATMOSPHERE*2.1) - MIXTURE_PRESSURE(air_contents)
 
 		if(env.temperature > 0)
 			var/transfer_moles = 0.1 * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
@@ -446,7 +446,7 @@
 
 
 		// if full enough, switch to ready mode
-		if(air_contents.return_pressure() >= 2*ONE_ATMOSPHERE)
+		if(MIXTURE_PRESSURE(air_contents) >= 2*ONE_ATMOSPHERE)
 			mode = 2
 			power_usage = 100
 			update()
@@ -525,7 +525,7 @@
 		playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 		if (user) //ZeWaka: Fix for null.loc
 			make_cleanable( /obj/decal/cleanable/blood,user.loc)
-			user.updatehealth()
+			health_update_queue |= user
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0

@@ -1118,7 +1118,7 @@
 "vz" = (/obj/window{desc = "A window.  For a museum exhibit."; dir = 8; name = "exhibit window"},/turf/simulated/floor/airless/stairs/quilty,/area/owlery/owllock)
 "vA" = (/obj/window{desc = "A window.  For a museum exhibit."; dir = 4; name = "exhibit window"},/turf/simulated/floor/airless/stairs/quilty,/area/owlery/owllock)
 "vB" = (/obj/decal/fakeobjects/lightbulb_broken{dir = 1},/obj/shrub{icon_state = "shrub"; dir = 1},/obj/decal/cleanable/paper,/obj/item/cable_coil/cut{color = "#DD0000"; desc = "A mangled scrap of power cable."; icon_state = "coil1"; name = "torn up cable"},/turf/unsimulated/grass,/area/owlery/owllock)
-"vC" = (/obj/table/reinforced/bar/auto{name = "table"},/obj/item/device/radio/intercom/adventure/syndcommand{pixel_y = 0},/turf/unsimulated/floor/black,/area/owlery/office)
+"vC" = (/obj/table/reinforced/bar/auto{name = "table"},/obj/item/device/radio/intercom/adventure/syndcommand{},/turf/unsimulated/floor/black,/area/owlery/office)
 "vD" = (/obj/decal/cleanable/dirt,/obj/decal/skeleton{name = "decomposed corpse"; desc = "Eugh, the stench is horrible!"; icon = 'icons/misc/hstation.dmi'; icon_state = "body3"},/obj/decal/cleanable/blood,/turf/unsimulated/floor/grime,/area/owlery/Owlmait)
 "vE" = (/obj/item/casing/shotgun_red,/turf/unsimulated/floor/greenwhite,/area/owlery/owleryhall)
 "vF" = (/obj/item/casing/small,/obj/decal/stage_edge,/turf/unsimulated/floor/white,/area/owlery/owleryhall)

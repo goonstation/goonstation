@@ -36,7 +36,7 @@
 	nodamage = 1
 	anchored = 1
 	layer = 0
-	plane = -100
+	plane = PLANE_UNDERFLOOR
 
 	var/name_override = "floor cluwne"
 	New()
@@ -54,7 +54,7 @@
 
 /mob/living/carbon/human/cluwne/floor/gimmick
 	layer = 4
-	plane = 0
+	plane = PLANE_DEFAULT
 	nodamage = 0
 
 	New()
@@ -72,7 +72,7 @@
 	nodamage = 1
 	anchored = 1
 	layer = 0
-	plane = -100
+	plane = PLANE_UNDERFLOOR
 	New()
 		..()
 		SPAWN_DBG(0)
@@ -86,7 +86,7 @@
 /mob/living/carbon/human/satan/gimmick
 	anchored = 1
 	layer = 4
-	plane = 0
+	plane = PLANE_DEFAULT
 
 	New()
 		..()
@@ -654,7 +654,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.a_intent = INTENT_HARM
-			src.ai_active = 1
+			src.ai_set_active(1)
 
 		for (var/mob/JB in johnbills)
 			var/mob/living/carbon/human/john/J = JB
@@ -662,7 +662,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 				if((!J.ai_active) || prob(25))
 					J.say("That's my brother, you [pick(JOHN_insults)]!")
 				J.target = M
-				J.ai_active = 1
+				J.ai_set_active(1)
 				J.a_intent = INTENT_HARM
 
 
@@ -910,7 +910,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.ai_threatened = world.timeofday
 		src.ai_target = M
 		src.a_intent = INTENT_HARM
-		src.ai_active = 1
+		src.ai_set_active(1)
 
 #if ASS_JAM //explodey yank
 		say("Feel My Wrath.")

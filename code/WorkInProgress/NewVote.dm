@@ -4,8 +4,11 @@ var/list/vote_log = new/list()
 var/const/max_votes_per_round = 2
 var/const/recently_time = 6000 // 10 mins
 
+//commented out for assjam modevote
+/**
 /mob/verb/vote_new()
-	set name = "Vote"
+	set name = "Initiate Vote"
+
 	//if(!config.allow_vote_restart && !config.allow_vote_mode && !src.client.holder)
 	//	boutput(src, "<span class='alert'>Player voting disabled.</span>")
 	//	return
@@ -22,6 +25,39 @@ var/const/recently_time = 6000 // 10 mins
 				boutput(src, "<span class='alert'>You may not start any more votes this round. (Maximum reached : [max_votes_per_round])</span>")
 		else
 			if(vote_manager.show_vote_selection(src.client)) vote_log[src.ckey] = 1
+*/
+
+/client/proc/viewnewvote()
+	set category = "Commands"
+	set name = "View Current Vote"
+	set desc = "Shows you the current ongoing non-map vote."
+
+	vote_manager.show_vote(src)
+
+
+/obj/newVoteLink
+	name = "<span style='color: green; text-decoration: underline;'>Vote</span>"
+
+	Click()
+		var/client/C = usr.client
+		if (!C) return
+		vote_manager.show_vote(C)
+
+	examine()
+		return list()
+
+	proc/update_name(new_name="Vote")
+		src.name = "<span style='color: green; text-decoration: underline;'>[new_name]</span>"
+
+	proc/chat_link()
+		return "<a href='?src=\ref[src]'>[src]</a>"
+
+	Topic(href, href_list)
+		. = ..()
+		Click()
+
+var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
+
 
 /datum/vote_manager
 	var/datum/vote_new/active_vote = null
@@ -49,7 +85,7 @@ var/const/recently_time = 6000 // 10 mins
 					boutput(C, "<span class='alert'>You may not start this type of vote because you recently died.</span>")
 					return
 				if(C.mob.stat && !C.holder)
-					boutput(C, "<span class='alert'>You may not start this type of vote while dying/unconcious.</span>")
+					boutput(C, "<span class='alert'>You may not start this type of vote while dying/unconscious.</span>")
 					return
 				if(active_vote) return 0
 				active_vote = new/datum/vote_new/restart()
@@ -73,7 +109,7 @@ var/const/recently_time = 6000 // 10 mins
 				boutput(world, "<span class='success'><BIG><B>Vote gamemode ([mode]) initiated by [C.ckey]</B></BIG></span>")
 				show_vote(C)
 				return 1
-			if("Player Ban")
+			/**if("Player Ban")
 				if(world.time < 6000)
 					boutput(C, "<span class='alert'>You may not start this type of vote yet.</span>")
 					return
@@ -94,7 +130,7 @@ var/const/recently_time = 6000 // 10 mins
 				boutput(world, "<span class='success'><BIG><B>Vote Ban ([player]) initiated by [C.ckey]</B></BIG></span>")
 				show_vote(C)
 				return 1
-			/*if("Player Mute")
+			if("Player Mute")
 				if(world.time < 6000)
 					boutput(C, "<span class='alert'>You may not start this type of vote yet.</span>")
 					return
@@ -139,36 +175,31 @@ var/const/recently_time = 6000 // 10 mins
 	var/vote_name = ""
 	var/vote_length = 1200 //2 Minutes
 	var/vote_started = 0
+	var/vote_abstain_weight = 0.2 //how much each non-participant counts for in votes that have a "No" result
 	var/data = null
 	var/vote_flags = 0
 	var/curr_win = ""
 	var/kill = 0 //just making sure ...
 
 	New(var/A)
-		for(var/mob/M in mobs)
-			if(!M.client) continue
-			may_vote += M.ckey
+		for(var/client/C in clients)
+			C.verbs += /client/proc/viewnewvote
+			may_vote += C.ckey
 		vote_started = world.time
 		data = A
-		process()
+		newVoteLinkStat.update_name(src.vote_name ? src.vote_name : "Vote")
+		SPAWN_DBG(vote_length)
+			end_vote()
 		..()
 
-	proc/process()
-		if(kill)
-			return
-		if(world.time - vote_started >= vote_length)
-			end_vote()
-			return
-		curr_win = get_winner()
-		SPAWN_DBG(2 SECONDS) process()
-
 	proc/show_to(var/client/C)
+		if(kill) return
 		if(C in open_votes) return
 		if(!(C.ckey in may_vote))
 			boutput(C, "<span class='alert'><BIG>You may not vote as you were not present when the vote was started.</BIG></span>")
 			return
-		if(C.ckey in voted_ckey || C.computer_id in voted_id)
-			boutput(C, "<span class='alert'><BIG>You have already voted. Current winner : [curr_win]</BIG></span>")
+		if((C.ckey in voted_ckey) || (C.computer_id in voted_id))
+			boutput(C, "<span class='alert'><BIG>You have already voted. Current winner: [get_winner()]</BIG></span>")
 			return
 		open_votes += C
 		var/choice = input(C,details,vote_name,null) in options
@@ -183,75 +214,90 @@ var/const/recently_time = 6000 // 10 mins
 		voted_id += C.computer_id
 
 	proc/get_winner()
+		if(ON_COOLDOWN(global, "new vote get_winner", 2 SECONDS))
+			return src.curr_win
 		var/winner = null
 		var/winner_num = 0
+		var/adjAbstain = 0
 		for(var/A in options)
-			if(options[A])
-				if(options[A] > winner_num)
-					winner_num = options[A]
-					winner = A
+			if(options[A] >= 0)
+				if(A == "No") // abstain = partial no, in votes that contain a no option.
+					adjAbstain = options[A]
+					for(var/client/C in clients)
+						if(!((C.ckey in voted_ckey) || (C.computer_id in voted_id)))
+							adjAbstain = adjAbstain + vote_abstain_weight
+					if(adjAbstain > winner_num)
+						winner_num = adjAbstain
+						winner = A
+				else
+					if(options[A] > winner_num)
+						winner_num = options[A]
+						winner = A
 		if(!winner) winner = "none"
-		return(winner)
+		src.curr_win = winner
+		return src.curr_win
 
 	proc/get_winner_num()
 		var/winner_num = 0
+		var/adjAbstain = 0
 		for(var/A in options)
-			if(options[A])
-				if(options[A] > winner_num)
-					winner_num = options[A]
+			if(options[A] >= 0)
+				if(A == "No")
+					adjAbstain = options[A]
+					for(var/client/C in clients)
+						if(!((C.ckey in voted_ckey) || (C.computer_id in voted_id)))
+							adjAbstain = adjAbstain + vote_abstain_weight
+					if(adjAbstain > winner_num)
+						winner_num = adjAbstain
+				else
+					if(options[A] > winner_num)
+						winner_num = options[A]
 		return(winner_num)
 
 	proc/end_vote()
 		vote_manager.active_vote = null
+		for(var/client/C in clients)
+			C.verbs -= /client/proc/viewnewvote
 		qdel(src)
-		return
+
 
 /datum/vote_new/mode
 	options = list("Yes","No")
 	details = ""
-	vote_name = "Vote gamemode"
+	vote_name = "Change gamemode"
 	vote_length = 1200 //2 Minutes
 
 	New(var/A)
-		for(var/mob/M in mobs)
-			if(!M.client) continue
-			may_vote += M.ckey
-		vote_started = world.time
-		data = A
 		details = "Change gamemode to '[A]' ?"
-		process()
+		vote_name = "Change gamemode to [A]"
+		..()
 
 	end_vote()
-		vote_manager.active_vote = null
-		boutput(world, "<span class='success'><BIG><B>Vote gamemode result: [get_winner()]</B></BIG></span>")
-		if(get_winner() == "Yes")
-			if(get_winner_num() < 3)
-				boutput(world, "<span class='success'><BIG><B>Minimum mode votes not reached (3)</B></BIG></span>")
-				qdel(src)
-				return
-			boutput(world, "<span class='success'><BIG><B>Gamemode will be changed to [data] after the next reboot.</B></BIG></span>")
+		// boutput(world, "<span class='success'><BIG><B>Vote gamemode result: [get_winner()]</B></BIG></span>")
+		if(get_winner() != "Yes")
+			boutput(world, "<span class='alert'><BIG><B>Insufficient votes, game mode not changed.</B></BIG></span>")
+		else if(current_state == GAME_STATE_PREGAME)
+			boutput(world, "<span class='success'><BIG><B>Gamemode for upcoming round has been changed to [data].</B></BIG></span>")
+			master_mode = lowertext(data)
+		else
+			boutput(world, "<span class='success'><BIG><B>Gamemode will be changed to [data] at next round start.</B></BIG></span>")
 			world.save_mode(lowertext(data))
-		qdel(src)
-		return
+		. = ..()
 
 /datum/vote_new/restart
 	options = list("Yes","No")
 	details = "Restart the server?"
 	vote_name = "Vote restart"
 	vote_length = 1200 //2 Minutes
+	vote_abstain_weight = 0.5
 
 	end_vote()
-		vote_manager.active_vote = null
 		boutput(world, "<span class='success'><BIG><B>Vote restart result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
-			if(get_winner_num() < 5)
-				boutput(world, "<span class='success'><BIG><B>Minimum restart votes not reached (5).</B></BIG></span>")
-				qdel(src)
-				return
 			Reboot_server()
-		qdel(src)
-		return
-
+		. = ..()
+/*
+//these haven't been adjusted to new weighted vote stuff yet
 /datum/vote_new/ban
 	options = list("Yes","No")
 	details = ""
@@ -262,9 +308,9 @@ var/const/recently_time = 6000 // 10 mins
 	var/backup_ip = " "
 
 	New(var/A)
-		for(var/mob/M in mobs)
-			if(!M.client) continue
-			may_vote += M.ckey
+		for(var/client/C in clients)
+			C.verbs += /client/proc/viewnewvote
+			may_vote += C.ckey
 		vote_started = world.time
 		data = A
 		details = "Ban player '[A:mob:name]' for 1 day?"
@@ -277,8 +323,8 @@ var/const/recently_time = 6000 // 10 mins
 		vote_manager.active_vote = null
 		boutput(world, "<span class='success'><BIG><B>Vote ban result: [get_winner()]</B></BIG></span>")
 		if(get_winner() == "Yes")
-			if(get_winner_num() < 5)
-				boutput(world, "<span class='success'><BIG><B>Minimum ban votes not reached (5) - Player not banned.</B></BIG></span>")
+			if(get_winner_num() < round(total_clients() * 0.7))
+				boutput(world, "<span class='success'><BIG><B>Minimum ban votes not reached (~70% of players) - Player not banned.</B></BIG></span>")
 				qdel(src)
 				return
 			if(data)
@@ -301,9 +347,9 @@ var/const/recently_time = 6000 // 10 mins
 	var/backup_ip = " "
 
 	New(var/A)
-		for(var/mob/M in mobs)
-			if(!M.client) continue
-			may_vote += M.ckey
+		for(var/client/C in clients)
+			C.verbs += /client/proc/viewnewvote
+			may_vote += C.ckey
 		vote_started = world.time
 		data = A
 		details = "Mute player '[A:mob:name]'?"
@@ -316,8 +362,8 @@ var/const/recently_time = 6000 // 10 mins
 		vote_manager.active_vote = null
 		boutput(world, "<span class='success'>Vote mute result: [get_winner()]</span>")
 		if(get_winner() == "Yes")
-			if(get_winner_num() < 3)
-				boutput(world, "<span class='success'><BIG><B>Minimum mute votes not reached (3) - Player not muted.</B></BIG></span>")
+			if(get_winner_num() < round(total_clients() * 0.5))
+				boutput(world, "<span class='success'><BIG><B>Minimum mute votes not reached (~50% of players) - Player not muted.</B></BIG></span>")
 				qdel(src)
 				return
 			if(data)
@@ -328,3 +374,4 @@ var/const/recently_time = 6000 // 10 mins
 				AddBan(backup_ckey, backup_computerid, backup_ip, "VOTE MUTE - Logged out while vote was in progress - 15 minutes", "VOTEMUTE", 1, 15)
 		qdel(src)
 		return
+*/

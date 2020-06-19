@@ -155,6 +155,21 @@
 			W.button()
 		..()
 
+/obj/ability_button/magboot_toggle
+	name = "(De)Activate Magboots"
+	icon_state = "shieldceon"
+
+	execute_ability()
+		var/obj/item/clothing/shoes/magnetic/W = the_item
+		if(W.magnetic)
+			W.deactivate()
+			boutput(the_mob, "You power off your magnetic boots")
+		else
+			W.activate()
+			boutput(the_mob, "You power on your magnetic boots")
+		the_mob.update_equipped_modifiers()
+		the_mob.update_clothing()
+		..()
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/tank_valve_toggle
@@ -241,6 +256,8 @@
 
 			SPAWN_DBG(0)
 				for(var/i=0, i<15, i++)
+					if(isnull(the_mob))
+						break
 					var/obj/effect/smoketemp/A = unpool(/obj/effect/smoketemp)
 					A.set_loc(the_mob.loc)
 					SPAWN_DBG(1 SECOND)
@@ -320,11 +337,7 @@
 
 	execute_ability()
 		var/obj/item/device/light/flashlight/J = the_item
-		if (ismob(J.loc))
-			J.light.attach(J.loc)
-		J.attack_self(the_mob)
-		if(J.on) icon_state = "off"
-		else  icon_state = "on"
+		J.toggle()
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -335,8 +348,7 @@
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/space/engineer/J = the_item
-		if (ismob(J.loc))
-			J.light.attach(J.loc)
+
 		J.flashlight_toggle(the_mob)
 		if (J.on) src.icon_state = "off"
 		else  src.icon_state = "on"
@@ -350,8 +362,7 @@
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/hardhat/J = the_item
-		if (ismob(J.loc))
-			J.light.attach(J.loc)
+
 		J.flashlight_toggle(the_mob)
 		if (J.on) src.icon_state = "off"
 		else  src.icon_state = "on"
@@ -378,6 +389,19 @@
 
 	execute_ability()
 		var/obj/item/clothing/glasses/meson/J = the_item
+		J.attack_self(the_mob)
+		if(J.on) icon_state = "meson1"
+		else  icon_state = "meson0"
+		..()
+
+////////////////////////////////////////////////////////////
+
+/obj/ability_button/nukie_meson_toggle
+	name = "Toggle Helmet Scanner"
+	icon_state = "meson0"
+
+	execute_ability()
+		var/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer/J = the_item
 		J.attack_self(the_mob)
 		if(J.on) icon_state = "meson1"
 		else  icon_state = "meson0"
@@ -675,9 +699,11 @@
 
 	proc/disposing_abilities()
 		if (!isnull(ability_buttons))
+			src.hide_buttons()
 			for (var/obj/ability_button/A in ability_buttons)
-				A.the_item = null
+				qdel(A)
 			ability_buttons.len = 0
+		src.the_mob = null
 
 	proc/clear_mob()
 		if (islist(src.ability_buttons))
@@ -701,7 +727,7 @@
 
 	proc/hide_buttons()
 		if(!the_mob || !islist(src.ability_buttons)) return
-		the_mob.item_abilities.Remove(ability_buttons)
+		the_mob.item_abilities?.Remove(ability_buttons)
 		the_mob.need_update_item_abilities = 1
 		the_mob.update_item_abilities()
 /*
@@ -780,8 +806,10 @@
 
 	disposing() //probably best to do this?
 		if (src.the_item)
+			if(length(src.the_item.ability_buttons))
+				src.the_item.ability_buttons -= src
 			src.the_item = null
-		if (src.the_mob)
+		if (src.the_mob) // TODO: remove from mob properly
 			src.the_mob = null
 		..()
 
@@ -790,7 +818,7 @@
 			return 0
 		if (!src.the_mob)
 			return 0
-		if (src.the_mob.hasStatus("paralysis") || src.the_mob.hasStatus("stunned") || src.the_mob.hasStatus("weakened")) //stun check
+		if (src.the_mob.hasStatus(list("paralysis", "stunned", "weakened"))) //stun check
 			return 0
 		if (src.the_mob && ishuman(src.the_mob)) //cuff, straightjacket, nolimb check
 			var/mob/living/carbon/human/H = the_mob

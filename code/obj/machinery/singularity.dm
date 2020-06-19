@@ -291,7 +291,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				return
 		M.take_toxin_damage(3)
 		M.changeStatus("radiation", 100)
-		M.updatehealth()
 		M.show_text("You feel odd.", "red")
 
 /obj/machinery/the_singularity/proc/Mezzer()
@@ -560,20 +559,18 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.anchored = 0
 			return
 
-	if(istype(W, /obj/item/weldingtool))
+	if(isweldingtool(W))
 
 		var/turf/T = user.loc
 
-		if(!W:try_weld(user, 1, noisy = 2))
-			return
-
 		if(state == 1)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to weld the field generator to the floor.")
 			sleep(2 SECONDS)
 
 			if ((user.loc == T && user.equipped() == W))
 				state = 3
-				W:eyecheck(user)
 				boutput(user, "You weld the field generator to the floor.")
 				src.get_link() //Set up a link, now that we're secure!
 			else if((isrobot(user) && (user.loc == T)))
@@ -583,6 +580,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 		if(state == 3)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to cut the field generator free from the floor.")
 			sleep(2 SECONDS)
 
@@ -591,7 +590,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				if(src.link) //Clear active link.
 					src.link.master = null
 					src.link = null
-				W:eyecheck(user)
 				boutput(user, "You cut the field generator free from the floor.")
 			else if((isrobot(user) && (user.loc == T)))
 				state = 1
@@ -788,7 +786,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 	user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
-	user.updatehealth()
 	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))
@@ -978,15 +975,13 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			desc = "Shoots a high power laser when active."
 			return
 
-	if(istype(W, /obj/item/weldingtool) && W:welding)
+	if(isweldingtool(W))
 
 		var/turf/T = user.loc
 
-		if(!W:try_weld(user, 1, noisy = 2))
-			return
-
 		if(state == 1)
-			W:eyecheck(user)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to weld the emitter to the floor.")
 			sleep(2 SECONDS)
 
@@ -1002,6 +997,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 		if(state == 3)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to cut the emitter free from the floor.")
 			sleep(2 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
@@ -1461,18 +1458,17 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.anchored = 0
 			return
 
-	if(istype(W, /obj/item/weldingtool) && W:welding)
+	if(isweldingtool(W))
 		if(timing)
 			boutput(user, "Stop the countdown first.")
 			return
 
 		var/turf/T = user.loc
 
-		if(!W:try_weld(user, 1, noisy = 2))
-			return
 
 		if(state == 1)
-			W:eyecheck(user)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to weld the bomb to the floor.")
 			sleep(5 SECONDS)
 
@@ -1489,6 +1485,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 		if(state == 3)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			boutput(user, "You start to cut the bomb free from the floor.")
 			sleep(5 SECONDS)
 
@@ -1517,7 +1515,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (usr.stat || usr.restrained() || usr.lying)
 		return
 	if ((in_range(src, usr) && istype(src.loc, /turf)))
-		usr.machine = src
+		src.add_dialog(usr)
 		switch(href_list["action"]) //Yeah, this is weirdly set up. Planning to expand it later.
 			if("trigger")
 				switch(href_list["spec"])
@@ -1595,7 +1593,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (user.stat || user.restrained() || user.lying)
 		return
 	if ((get_dist(src, user) <= 1 && istype(src.loc, /turf)))
-		user.machine = src
+		src.add_dialog(user)
 		/*
 		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
 		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
@@ -1604,7 +1602,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		onclose(user, "timer")
 	else
 		user.Browse(null, "window=timer")
-		user.machine = null
+		src.remove_dialog(user)
 
 	src.add_fingerprint(user)
 	return
@@ -1659,7 +1657,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			attack_hand(src.loc)
 		else
 			for(var/mob/M in viewers(1, src))
-				if (M.client && (M.machine == src))
+				if (M.using_dialog_of(src))
 					src.attack_hand(M)
 
 	return

@@ -16,14 +16,14 @@
 	lg = 0.7
 	lb = 0.74
 
-	Del()
+	disposing()
 		..()
 		window = null
 
 	//This might not be needed. I thought that the proc should be on the computer instead of the mob switching, but maybe not
 	proc/switchCamera(var/mob/living/user, var/obj/machinery/camera/C)
 		if (!C)
-			user.machine = null
+			src.remove_dialog(user)
 			user.set_eye(null)
 			return 0
 
@@ -132,7 +132,7 @@
 		if (!istype(C, /obj/machinery/camera))
 			return
 
-		if ((!isAI(usr)) && (get_dist(usr, src) > 1 || usr.machine != src || !usr.sight_check(1) || !( usr.canmove ) || !( C.camera_status )))
+		if ((!isAI(usr)) && (get_dist(usr, src) > 1 || (!usr.using_dialog_of(src)) || !usr.sight_check(1) || !( usr.canmove ) || !( C.camera_status )))
 			usr.set_eye(null)
 			winshow(usr, "camera_console", 0)
 			return

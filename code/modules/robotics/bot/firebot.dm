@@ -4,7 +4,7 @@
 /obj/machinery/bot/firebot
 	name = "Firebot"
 	desc = "A little fire-fighting robot!  He looks so darn chipper."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "firebot0"
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER | USE_CANPASS
 	layer = 5.0 //TODO LAYER
@@ -34,7 +34,7 @@
 //
 /obj/item/toolbox_arm
 	name = "toolbox/robot arm assembly"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "toolbox_arm"
 	force = 3.0
 	throwforce = 10.0
@@ -95,7 +95,7 @@
 /obj/machinery/bot/firebot/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 	src.add_fingerprint(usr)
 	if ((href_list["power"]) && (src.allowed(usr)))
 		src.toggle_power()
@@ -371,7 +371,8 @@
 
 	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 	s.set_up(3, 1, src)
-	s.start()
+	SPAWN_DBG(0)
+		s.start()
 	qdel(src)
 	return
 

@@ -24,6 +24,7 @@ var/zapLimiter = 0
 	req_access = list(access_engineering_power)
 	object_flags = CAN_REPROGRAM_ACCESS
 	netnum = -1		// set so that APCs aren't found as powernet nodes
+	text = ""
 	var/area/area
 	var/areastring = null
 	var/autoname_on_spawn = 0 // Area.name
@@ -136,23 +137,7 @@ var/zapLimiter = 0
 		flagIndex+=1
 	return apcwires
 
-/obj/machinery/power/apc/updateUsrDialog()
-	var/list/nearby = viewers(1, src)
-	if (!(status & BROKEN)) // unbroken
-		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
-				src.interacted(M)
-	if (issilicon(usr) || isAI(usr))
-		if (!(usr in nearby))
-			if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
-				src.interacted(usr)
 
-/obj/machinery/power/apc/updateDialog()
-	if(!(status & BROKEN)) // unbroken
-		for(var/client/C)
-			if (C.mob?.machine == src && get_dist(C.mob,src) <= 1)
-				src.interacted(C.mob)
-	AutoUpdateAI(src)
 
 /obj/machinery/power/apc/New()
 	..()
@@ -566,7 +551,7 @@ var/zapLimiter = 0
 
 	if ( (get_dist(src, user) > 1 ))
 		if (!issilicon(user) && !isAI(user))
-			user.machine = null
+			src.remove_dialog(user)
 			user.Browse(null, "window=apc")
 			return
 		else if ((issilicon(user) || isAI(user)) && src.aidisabled)
@@ -574,7 +559,7 @@ var/zapLimiter = 0
 			user.Browse(null, "window=apc")
 			return
 	if(wiresexposed && (!isAI(user)))
-		user.machine = src
+		src.add_dialog(user)
 		var/t1 = text("<B>Access Panel</B><br>")
 		t1 += text("An identifier is engraved above the APC's wires: <i>[net_id]</i><br><br>")
 		var/list/apcwires = list(
@@ -598,7 +583,7 @@ var/zapLimiter = 0
 		user.Browse(t1, "window=apcwires")
 		onclose(user, "apcwires")
 
-	user.machine = src
+	src.add_dialog(user)
 	var/t = "<TT><B>Area Power Controller</B> ([area.name])<HR>"
 
 	if((locked || (setup_networkapc > 1)) && (!issilicon(user) && !isAI(user)))
@@ -829,7 +814,7 @@ var/zapLimiter = 0
 
 
 /obj/machinery/power/apc/proc/cut(var/wireColor)
-	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -852,7 +837,7 @@ var/zapLimiter = 0
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
 
 /obj/machinery/power/apc/proc/bite(var/wireColor) // are you fuckin huffing or somethin
-	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -878,7 +863,7 @@ var/zapLimiter = 0
 
 
 /obj/machinery/power/apc/proc/mend(var/wireColor)
-	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -905,7 +890,7 @@ var/zapLimiter = 0
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
 
 /obj/machinery/power/apc/proc/pulse(var/wireColor)
-	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr))
+	if (usr.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
@@ -947,7 +932,7 @@ var/zapLimiter = 0
 	if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
 		return
 	if ((in_range(src, usr) && istype(src.loc, /turf))||(issilicon(usr) || isAI(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["apcwires"] && wiresexposed)
 			var/t1 = text2num(href_list["apcwires"])
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
@@ -1068,11 +1053,11 @@ var/zapLimiter = 0
 			update()
 		else if( href_list["close"] )
 			usr.Browse(null, "window=apc")
-			usr.machine = null
+			src.remove_dialog(usr)
 			return
 		else if (href_list["close2"])
 			usr.Browse(null, "window=apcwires")
-			usr.machine = null
+			src.remove_dialog(usr)
 			return
 
 		else if (href_list["overload"])
@@ -1093,7 +1078,7 @@ var/zapLimiter = 0
 
 	else
 		usr.Browse(null, "window=apc")
-		usr.machine = null
+		src.remove_dialog(usr)
 
 	return
 
@@ -1212,28 +1197,7 @@ var/zapLimiter = 0
 				environ = autoset(environ, 0)
 
 		// set channels depending on how much charge we have left
-
-		if(cell.charge <= 0)					// zero charge, turn all off
-			equipment = autoset(equipment, 0)
-			lighting = autoset(lighting, 0)
-			environ = autoset(environ, 0)
-			if (!noalerts) area.poweralert(0, src)
-		else if(cell.percent() < 15)			// <15%, turn off lighting & equipment
-			equipment = autoset(equipment, 2)
-			lighting = autoset(lighting, 2)
-			environ = autoset(environ, 1)
-			if (!noalerts) area.poweralert(0, src)
-		else if(cell.percent() < 30)			// <30%, turn off equipment
-			equipment = autoset(equipment, 1)
-			lighting = autoset(lighting, 2)
-			environ = autoset(environ, 1)
-			if (!noalerts) area.poweralert(0, src)
-		else									// otherwise all can be on
-			equipment = autoset(equipment, 1)
-			lighting = autoset(lighting, 1)
-			environ = autoset(environ, 1)
-			if(cell.percent() > 75)
-				if (!noalerts) area.poweralert(1, src)
+		check_channel_thresholds()
 
 		// now trickle-charge the cell
 
@@ -1286,10 +1250,36 @@ var/zapLimiter = 0
 
 	src.updateDialog()
 
+// set channels depending on how much charge we have left
+/obj/machinery/power/apc/proc/check_channel_thresholds()
+	if(cell.charge <= 0)					// zero charge, turn all off
+		equipment = autoset(equipment, 0)
+		lighting = autoset(lighting, 0)
+		environ = autoset(environ, 0)
+		if (!noalerts) area.poweralert(0, src)
+	else if(cell.percent() < 15)			// <15%, turn off lighting & equipment
+		equipment = autoset(equipment, 2)
+		lighting = autoset(lighting, 2)
+		environ = autoset(environ, 1)
+		if (!noalerts) area.poweralert(0, src)
+	else if(cell.percent() < 30)			// <30%, turn off equipment
+		equipment = autoset(equipment, 1)
+		lighting = autoset(lighting, 2)
+		environ = autoset(environ, 1)
+		if (!noalerts) area.poweralert(0, src)
+	else									// otherwise all can be on
+		equipment = autoset(equipment, 1)
+		lighting = autoset(lighting, 1)
+		environ = autoset(environ, 1)
+		if(cell.percent() > 75)
+			if (!noalerts) area.poweralert(1, src)
+
+
+
 // val 0=off, 1=off(auto) 2=on 3=on(auto)
 // on 0=off, 1=on, 2=autooff
-
-/proc/autoset(var/val, var/on)
+//This was global? For no reason?
+/obj/machinery/power/apc/proc/autoset(var/val, var/on)
 
 	if(on==0)
 		if(val==2)			// if on, return off

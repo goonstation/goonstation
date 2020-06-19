@@ -33,6 +33,7 @@ For hairball DynAssemblies see: jonescity.dm
 	var/usematerial = null //set to non-null if you want to use color and alpha of the materials not just iconstates (material science / workbench intergration)
 	var/oldmat = null //If you are using materials, you can material-ize(?) your product with this in afterproduct().
 	var/product = 0 //When secured, what do you want it to produce? Set in switch statement in createproduct().
+	var/secure_duration = 50 //How long it takes to secure / unsecure
 
 	attackby(obj/item/W as obj, mob/user as mob) //This is adding parts after the first run, creating is done on base objs attackby
 		if (!W)
@@ -55,11 +56,11 @@ For hairball DynAssemblies see: jonescity.dm
 				boutput(user, "You can't secure \the [src] yet!")
 			else
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 30, 1, -2)
-				actions.start(new/datum/action/bar/icon/dynassemblySecure(src, user), user)
+				actions.start(new/datum/action/bar/icon/dynassemblySecure(src, user, secure_duration), user)
 		else if (iswrenchingtool(W)) //use a wrench to deconstruct
 			if (contents)
 				playsound(src.loc, "sound/items/Wrench.ogg", 30, 1, -2)
-				actions.start(new/datum/action/bar/icon/dynassemblyUnsecure(src, user), user)
+				actions.start(new/datum/action/bar/icon/dynassemblyUnsecure(src, user, secure_duration), user)
 
 	proc/newpart(var/obj/item/M, var/obj/item/P, firstrun = 0) //1st arg is the source object (norm. the assembly), 2nd arg is the thing you are adding
 		src.partnames += P.name
@@ -128,9 +129,10 @@ For hairball DynAssemblies see: jonescity.dm
 	var/obj/item/dynassembly/assembly
 	var/mob/user
 
-	New(Assembly, User)
+	New(Assembly, User, Duration=150)
 		assembly = Assembly
 		user = User
+		duration = Duration
 		..()
 
 	onStart()
@@ -161,9 +163,10 @@ For hairball DynAssemblies see: jonescity.dm
 	var/obj/item/dynassembly/assembly
 	var/mob/user
 
-	New(Assembly, User)
+	New(Assembly, User, Duration=150)
 		assembly = Assembly
 		user = User
+		duration = Duration
 		..()
 
 	onStart()

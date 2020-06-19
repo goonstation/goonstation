@@ -1,7 +1,7 @@
 
 /client/proc/cmd_admin_playeropt(mob/M as mob in world)
 	set name = "Player Options"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 1
 	if (src.holder)
 		src.holder.playeropt(M)
@@ -309,12 +309,14 @@
 						<br>
 						<a href='[playeropt_link(M, "polymorph")]'>Edit Appearance</a> &bull;
 						<a href='[playeropt_link(M, "modifylimbs")]'>Modify Limbs/Organs</a> &bull;
-						<a href='[playeropt_link(M, "respawntarget")]'>Respawn</a>
+						<a href='[playeropt_link(M, "respawntarget")]'>Respawn</a> &bull;
+						<a href='[playeropt_link(M, "respawnas")]'>Respawn As</a>
 				"} : {"
 						Only human mobs can be transformed.
 						<br><a href='[playeropt_link(M, "humanize")]'>Humanize</a> &bull;
 						<a href='[playeropt_link(M, "makecritter")]'>Make Critter</a> &bull;
-						<a href='[playeropt_link(M, "respawntarget")]'>Respawn</a>
+						<a href='[playeropt_link(M, "respawntarget")]'>Respawn</a> &bull;
+						<a href='[playeropt_link(M, "respawnas")]'>Respawn As</a>
 				"}]
 					</div>
 				</div>
@@ -331,7 +333,7 @@
 			<div class='optionGroup' style='border-color: #FFB347;'>
 				<h2 style='background-color: #FFB347;'>High Level Problems</h2>
 				<div>
-					<div class='l'>Shit Person</div>
+					<div class='l'>Administrator</div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "possessmob")]'>[M == usr ? "Release" : "Possess"] mob</a> &bull;
 						<a href='[playeropt_link(M, "viewvars")]'>Edit Variables</a> &bull;
@@ -358,7 +360,7 @@
 			"}
 
 	var/windowHeight = "450"
-	if (src.level == LEVEL_SHITGUY)
+	if (src.level == LEVEL_ADMIN)
 		windowHeight = "550"
 	else if (src.level == LEVEL_CODER)
 		windowHeight = "600"

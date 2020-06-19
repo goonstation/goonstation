@@ -660,7 +660,6 @@
 			take_bleeding_damage(H, null, 0, DAMAGE_STAB, 0)
 			bleed(H, rand(10,30), rand(1,3))
 			H.UpdateDamageIcon()
-			H.updatehealth()
 			src.hasPrize = 0
 			new /obj/item/razor_blade( get_turf(src) )
 		..()
@@ -1137,7 +1136,6 @@
 		user.u_equip(src)
 		user.visible_message("<span class='alert'><b>[user] accidentally inhales part of a [src], blocking their windpipe!</b></span>")
 		user.take_oxygen_deprivation(123)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -1237,7 +1235,6 @@
 			H.changeStatus("weakened", 3 SECONDS)
 			affecting.take_damage(10, 0)
 			H.UpdateDamageIcon()
-			H.updatehealth()
 			src.razor_blade = 0
 			new /obj/item/razor_blade( get_turf(src) )
 		..()
@@ -1336,9 +1333,6 @@
 	food_color = "#663300"
 	real_name = "Hetz's Cup"
 	var/unwrapped = 0
-
-	disposing()
-		unwrapped = 1
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (user == M)
@@ -1797,7 +1791,7 @@
 /obj/item/reagent_containers/food/snacks/steak_h
 	name = "steak"
 	desc = "Made of people."
-	icon_state = "steak"
+	icon_state = "meat-grilled"
 	amount = 2
 	heal_amt = 3
 	var/hname = null
@@ -1810,7 +1804,7 @@
 /obj/item/reagent_containers/food/snacks/steak_m
 	name = "monkey steak"
 	desc = "You'll go bananas for it."
-	icon_state = "steak"
+	icon_state = "meat-grilled"
 	amount = 2
 	heal_amt = 3
 	food_color = "#999966"
@@ -1821,7 +1815,7 @@
 /obj/item/reagent_containers/food/snacks/steak_s
 	name = "synth-steak"
 	desc = "And they thought processed food was artificial..."
-	icon_state = "steak"
+	icon_state = "meat-plant-grilled"
 	amount = 2
 	heal_amt = 3
 	food_color = "#999966"
@@ -2159,14 +2153,59 @@
 // boy i wish byond had static members doop doop
 var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 
-//#ifdef HALLOWEEN
-/obj/item/reagent_containers/food/snacks/candy/everyflavor
-	name = "\improper Farty Snott's Every Flavour Bean"
-	desc = "A favorite halloween sweet worldwide!"
+/obj/item/reagent_containers/food/snacks/candy/jellybean/
+	name = "jelly bean"
+	desc = "YOU SHOULDN'T SEE THIS OBJECT"
 	icon_state = "bean"
 	amount = 1
 	initial_volume = 100
 	sugar_content = 0 // hacky, I know. but it's necessary for the color!
+	var/flavor
+	var/phrase
+	var/tastesbad = 0
+
+/obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor
+	name = "\improper Mabie Nott's Some Flavor Bean"
+	desc = "Fresh organic jellybeans packed with...something."
+
+	New()
+		..()
+		SPAWN_DBG(0)
+			if (src.reagents)
+				if (prob(33))
+					src.reagents.add_reagent(pick("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease", "ethanol", "chickensoup", "vanilla", "cornsyrup", "chocolate"), 10)
+					src.heal_amt = 1
+				else if (prob(33))
+					src.reagents.add_reagent(pick("bilk", "beff", "vomit", "gvomit", "porktonium", "badgrease", "yuck", "carbon", "salt", "pepper", "ketchup", "mustard"), 10)
+					src.heal_amt = 0
+
+				src.food_color = src.reagents.get_master_color()
+				src.icon += src.food_color
+
+				src.reagents.add_reagent("sugar", 50)
+				if (src.reagents.total_volume <= 60)
+					src.reagents.add_reagent("sugar", 40)
+
+			// set up flavors
+			if(prob(50))
+				flavor = pick("cardboard", "human souls", "something unspeakable", "egg", "vomit", "snot", "poo", "urine", "earwax", "wet dog", "belly-button lint", "sweat", "congealed farts", "mold", "armpits", "elbow grease", "sour milk", "WD-40", "slime", "blob", "gym sock", "pants", "brussels sprouts", "feet", "litter box", "durian fruit", "asbestos", "corpse flower", "corpse", "cow dung", "rot", "tar", "ham")
+				phrase = pick("Oh god", "Jeez", "Ugh", "Blecch", "Holy crap that's awful", "What the hell?", "*HURP*", "Phoo")
+				tastesbad = 1
+			else
+				flavor = pick("egg", "strawberry", "raspberry", "snozzberry", "happiness", "popcorn", "buttered popcorn", "cinnamon", "macaroni and cheese", "pepperoni", "cheese", "lasagna", "pina colada", "tutti frutti", "lemon", "margarita", "coconut", "pineapple", "scotch", "vodka", "root beer", "cotton candy", "Lagavulin 18", "toffee", "vanilla", "coffee", "apple pie", "neapolitan", "orange", "lime", "crotch", "mango", "apple", "grape", "Slurm")
+				phrase = pick("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
+				tastesbad = 0
+
+	heal(var/mob/M)
+		if (tastesbad)
+			boutput(M, "color = <span class='alert'>[phrase]! That tasted like [flavor]...</span>")
+		else
+			boutput(M, "color = <span class='notice'>[phrase]! That tasted like [flavor]...</span>")
+
+//#ifdef HALLOWEEN
+/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor
+	name = "\improper Farty Snott's Every Flavour Bean"
+	desc = "A favorite halloween sweet worldwide!"
 
 	New()
 		..()
@@ -2193,21 +2232,13 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 				if (src.reagents.total_volume <= 60)
 					src.reagents.add_reagent("sugar", 40)
 
-	heal(var/mob/M)
-		var/flavor
-		var/phrase
-		var/color
-
-		if(prob(50))
-			flavor = pick("egg", "vomit", "snot", "poo", "urine", "earwax", "wet dog", "belly-button lint", "sweat", "congealed farts", "mold", "armpits", "elbow grease", "sour milk", "WD-40", "slime", "blob", "gym sock", "pants", "brussels sprouts", "feet", "litter box", "durian fruit", "asbestos", "corpse flower", "corpse", "cow dung", "rot", "tar", "ham")
-			phrase = pick("Oh god", "Jeez", "Ugh", "Blecch", "Holy crap that's awful", "What the hell?", "*HURP*", "Phoo")
-			color = "<span class='alert'>"
-		else
-			flavor = pick("egg", "strawberry", "raspberry", "snozzberry", "happiness", "popcorn", "buttered popcorn", "cinnamon", "macaroni and cheese", "pepperoni", "cheese", "lasagna", "pina colada", "tutti frutti", "lemon", "margarita", "coconut", "pineapple", "scotch", "vodka", "root beer", "cotton candy", "Lagavulin 18", "toffee", "vanilla", "coffee", "apple pie", "neapolitan", "orange", "lime", "crotch", "mango", "apple", "grape", "Slurm")
-			phrase = pick("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
-			color = "<span class='notice'>"
-
-		boutput(M, "[color][phrase]! That tasted like [flavor]...</span>")
+				if(prob(50))
+					flavor = pick("egg", "vomit", "snot", "poo", "urine", "earwax", "wet dog", "belly-button lint", "sweat", "congealed farts", "mold", "armpits", "elbow grease", "sour milk", "WD-40", "slime", "blob", "gym sock", "pants", "brussels sprouts", "feet", "litter box", "durian fruit", "asbestos", "corpse flower", "corpse", "cow dung", "rot", "tar", "ham", "gooncode", "quark-gluon plasma", "bee", "heat death")
+					phrase = pick("Oh god", "Jeez", "Ugh", "Blecch", "Holy crap that's awful", "What the hell?", "*HURP*", "Phoo")
+					tastesbad = 1
+				else
+					flavor = pick("egg", "strawberry", "raspberry", "snozzberry", "happiness", "popcorn", "buttered popcorn", "cinnamon", "macaroni and cheese", "pepperoni", "cheese", "lasagna", "pina colada", "tutti frutti", "lemon", "margarita", "coconut", "pineapple", "scotch", "vodka", "root beer", "cotton candy", "Lagavulin 18", "toffee", "vanilla", "coffee", "apple pie", "neapolitan", "orange", "lime", "crotch", "mango", "apple", "grape", "Slurm", "Popecrunch")
+					phrase = pick("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
 
 /obj/item/kitchen/everyflavor_box
 	amount = 6
@@ -2223,7 +2254,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 			boutput(user, "<span class='alert'>You're out of beans. You feel strangely sad.</span>")
 			return
 		else
-			var/obj/item/reagent_containers/food/snacks/candy/everyflavor/B = new(user)
+			var/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor/B = new(user)
 			user.put_in_hand_or_drop(B)
 			src.amount--
 			if(src.amount == 0)
@@ -2697,5 +2728,5 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 		phrase = pick(src.heart_phrases)
 		return
 
-	get_desc(dist)
+	get_desc()
 		. = "<br><span class='notice'>It says: [phrase]</span>"

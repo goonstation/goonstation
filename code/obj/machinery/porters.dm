@@ -261,6 +261,27 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [get_area(M)]"] += M // Don't remove the #[number] part here.
 		return
 
+/obj/item/remote/porter/port_a_gene
+	name = "Port-A-Gene Remote"
+	icon = 'icons/obj/porters.dmi'
+	icon_state = "remote"
+	item_state = "electronic"
+	desc = "A remote that summons a Port-A-Gene."
+	machinery_name = "Port-a-Gene"
+
+	get_machinery()
+		if (!src)
+			return
+
+		for (var/obj/machinery/computer/genetics/portable/M in portable_machinery)//world)
+			LAGCHECK(LAG_LOW)
+			var/turf/M_loc = get_turf(M)
+			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
+				continue
+			if (!(M in src.machinerylist))
+				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [get_area(M)]"] += M // Don't remove the #[number] part here.
+		return
+
 /obj/item/remote/busted
 	name = "Port-A-Busted Remote"
 	icon = 'icons/obj/porters.dmi'
@@ -295,11 +316,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		portable_machinery.Add(src)
 		build_icon()
 		src.homeloc = src.loc
-
-	disposing()
-		..()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
 
 	disposing()
 		if (islist(portable_machinery))
@@ -446,7 +462,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	verb/move_eject()
 		set src in oview(1)
 		set category = "Local"
-		if (!isalive(usr) || usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("paralysis") > 0 || usr.getStatusDuration("weakened") || usr.hasStatus("handcuffed"))
+		if (!isalive(usr) || usr.hasStatus(list("stunned", "paralysis", "weakened", "handcuffed")))
 			return
 		src.go_out()
 		add_fingerprint(usr)
@@ -661,11 +677,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 						- list(/obj/critter/spider/ice/queen)
 
 	disposing()
-		..()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
-
-	disposing()
 		if (islist(portable_machinery))
 			portable_machinery.Remove(src)
 		..()
@@ -837,6 +848,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/anti_rad, 8)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/spaceacillin, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/insulin, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/synaptizine, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/calomel, 6)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mutadone, 5)
@@ -850,11 +862,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 		//Hidden
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/random, rand(1, 3), hidden=1)
-
-	disposing()
-		..()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
 
 	disposing()
 		if (islist(portable_machinery))

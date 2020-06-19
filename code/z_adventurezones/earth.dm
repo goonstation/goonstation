@@ -25,6 +25,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	sims_score = 25
 	sound_group = "centcom"
 	filler_turf = "/turf/unsimulated/nicegrass/random"
+	is_centcom = 1
 
 /area/centcom/outside
 	name = "Earth"

@@ -11,6 +11,7 @@
 	stamina_damage = 1
 	stamina_cost = 1
 	stamina_crit_chance = 1
+	tooltip_flags = REBUILD_DIST
 	var/style = "r"
 
 	New()
@@ -36,11 +37,12 @@
 				return
 			else
 				src.amount -= a_used
+				tooltip_rebuild = 1
 				user.drop_item()
 				var/obj/item/gift/G = new /obj/item/gift(src.loc)
 				G.size = W.w_class
 				G.w_class = G.size + 1
-				G.icon_state = "gift[CLAMP(G.size, 1, 3)]-[src.style]"
+				G.icon_state = "gift[clamp(G.size, 1, 3)]-[src.style]"
 				G.gift = W
 				W.set_loc(G)
 				G.add_fingerprint(user)
@@ -73,6 +75,7 @@
 			var/obj/spresent/present = new /obj/spresent (target.loc)
 			present.icon_state = "strange-[src.style]"
 			src.amount -= 2
+			tooltip_rebuild = 1
 
 			target.set_loc(present)
 		else
@@ -292,11 +295,13 @@ var/global/list/questionable_generic_gift_paths = list(/obj/item/relic,
 	/obj/item/implanter/microbomb,
 	/obj/item/old_grenade/light_gimmick,
 	/obj/item/gun/energy/bfg,
-	/obj/item/engibox,
+	/obj/item/engibox/station_locked,
 	/obj/item/gun/energy/tommy_gun,
 	/obj/item/gun/energy/glitch_gun,
 	/obj/item/instrument/trumpet/dootdoot,
 	/obj/item/instrument/fiddle/satanic,
+	/obj/item/gun/kinetic/beepsky,
+	/obj/item/gun/kinetic/gungun,
 #endif
 	/obj/item/spacecash/random/small)
 

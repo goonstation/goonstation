@@ -280,10 +280,11 @@ chui/window/security_cameras
 
 		return dat
 
-	OnTopic( href, href_list[] )
-		if (!islist(href_list))	//don't need to check for usr. that is done in chui/Topic()
-			usr.set_eye(null)
-			Unsubscribe(usr)
+	OnTopic( client/clint, href, href_list[] )
+		var/mob/user = clint.mob
+		if (!islist(href_list))	//don't need to check for user. that is done in chui/Topic()
+			user.set_eye(null)
+			Unsubscribe(clint)
 			return
 
 		else if (href_list["camera"])
@@ -293,15 +294,15 @@ chui/window/security_cameras
 
 			//maybe I should change this, could be dumb for the movement mode - Kyle
 			if (!C.camera_status)
-				boutput(usr, "<span class='alert'>BEEEEPP. Camera broken.</span>")
-				// usr.set_eye(null)
-				// if( IsSubscribed( usr.client ) )
-				// 	Unsubscribe( usr.client )
+				boutput(user, "<span class='alert'>BEEEEPP. Camera broken.</span>")
+				// user.set_eye(null)
+				// if( IsSubscribed( user.client ) )
+				// 	Unsubscribe( user.client )
 				return
 
 			else
 				owner.current = C
-				usr.set_eye(C)
+				user.set_eye(C)
 				owner.use_power(50)
 
 		else if (href_list["save"])
@@ -334,7 +335,7 @@ chui/window/security_cameras
 				else
 					return
 
-			owner.move_security_camera(direction,usr)
+			owner.move_security_camera(direction,user)
 
 	Unsubscribe( client/who )
 		..()

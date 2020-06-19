@@ -25,6 +25,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 	var/list/obj/decal/big_number/clock_num
 	var/list/obj/decal/big_number/red_num
 	var/list/obj/decal/big_number/blue_num
+	do_antag_random_spawns = 0
 
 	announce()
 		boutput(world, "<B>Welcome to the Space American Football League's Space Bowl LXXXVII!</B>")
@@ -32,8 +33,10 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 
 	pre_setup()
 		// EVERYONE IS A football player.
-		for (var/mob/new_player/player in mobs)
-			if (player.client && player.ready)
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player)) continue
+			if (player.ready)
 				if (player.mind)
 					src.init_player(player, 0, 1)
 

@@ -496,7 +496,6 @@ obj/item/gnomechompski/elf
 				affected_mob.hand = !affected_mob.hand
 				random_brute_damage(affected_mob, 5)
 				affected_mob.take_oxygen_deprivation(5)
-				affected_mob.updatehealth()
 				affected_mob.changeStatus("stunned", 10 SECONDS)
 				affected_mob.changeStatus("weakened", 10 SECONDS)
 				affected_mob.make_jittery(250)
@@ -581,7 +580,7 @@ obj/item/gnomechompski/elf
 /obj/owlerysign/owlplaque
 	desc = "Beyond here lies the Owl Habitation Wing."
 	name = "Informational Plaque"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
 	anchored = 1.0
 	opacity = 0
@@ -590,7 +589,7 @@ obj/item/gnomechompski/elf
 /obj/owlerysign/officeplaque
 	desc = "Beyond here lies the office wing."
 	name = "Informational Plaque"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
 	anchored = 1.0
 	opacity = 0
@@ -599,7 +598,7 @@ obj/item/gnomechompski/elf
 /obj/owlerysign/staffplaque
 	desc = "Beyond here lies the staff wing."
 	name = "Informational Plaque"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
 	anchored = 1.0
 	opacity = 0
@@ -699,6 +698,7 @@ obj/item/gnomechompski/elf
 	flying = 0
 	death_text = "%src% tips over, its joints seizing and locking up.  It does not move again."
 	angertext = "seems to stare at"
+	is_pet = 0
 
 	var/does_creepy_stuff = 1
 	var/typeName = "Generic"
@@ -783,6 +783,7 @@ obj/item/gnomechompski/elf
 	flying = 0
 	death_text = "%src% tips over, its joints seizing and locking up.  It does not move again."
 	angertext = "seems to stare at"
+	is_pet = 0
 
 	var/does_creepy_stuff = 1
 	var/typeName = "Generic"
@@ -797,7 +798,7 @@ obj/item/gnomechompski/elf
 			playsound(src.loc, "sound/misc/automaton_ratchet.ogg", 50, 1)
 			src.visible_message("<span class='game say'><span class='name'>[src]</span> says, \"[pick("The Owls are fine!", "Welcome to the Frontier Space Owlery, please follow the glowing signs. A tour guide will be waiting for you.", "Did you know? By 2063, it is expected that there will be more owls on Earth than human beings.", "Remember, do not touch the owls. Ddon't do it.", "By entering the 50 square kilometers surrounding the Frontier Space Owlery you agree to remove your right to file a civil lawsuit against the owlery for any reason including death.", "Please keep all pets away from Owl feed or the Owls.", "Remember to say 'HI!' to Greg, our friendly cyborg.", "The Frontier Space Owlery thanks our generous benefactors at Donk Co., LLC. The sole creators and copyright holders of Donk Pockets TM!")]\"")
 		if (prob(5))
-			playsound(src.loc, "sound/misc/automaton_spaz.ogg", 50, 1)
+			playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
 			src.dir = pick(alldirs)
 
@@ -1012,6 +1013,7 @@ obj/critter/madnessowl/switchblade
 	icon = 'icons/misc/owlzone.dmi'
 	icon_state = "owlmutant"
 	dead_state = "owlmutant-dead"
+	death_text = "%src% <b>collapses, releasing a final hoot and regurgitating a Hootonium Core. What? </b>"
 	health = 666
 	flying = 1
 	firevuln = 1
@@ -1025,21 +1027,16 @@ obj/critter/madnessowl/switchblade
 	butcherable = 1
 	can_revive = 0
 	var/boredom_countdown = 0
-	var/spazzing = 0
+	var/flailing = 0
 	var/frenzied = 0
 
 
 
 	CritterDeath()
 		if (src.alive)
+			..()
 			playsound(src.loc, "sound/voice/animal/hoot.ogg", 65, 1)
-			src.visible_message("<b> [src] collapses, releasing a final hoot and regurgitating a Hootonium Core. What? <b/>")
-			src.alive = 0
-			walk_to(src,0)
-			anchored = 0
-			set_density(0)
 			layer = initial(layer)
-			icon = "owlmutant-dead"
 			new /obj/item/plutonium_core/hootonium_core (src.loc)
 
 	seek_target()
@@ -1160,7 +1157,7 @@ obj/critter/madnessowl/switchblade
 
 
 	ChaseAttack(mob/M)
-		if(!spazzing) src.spaz()
+		if(!flailing) src.flail()
 		if(prob(10))
 			playsound(src.loc, "sound/voice/animal/hoot.ogg", 75, 1)
 			src.visible_message("<span class='alert'><b>[src] hoots!</b></span>", 1)
@@ -1241,21 +1238,21 @@ obj/critter/madnessowl/switchblade
 			src.attacking = 0
 
 
-	proc/spaz()
-		if (spazzing)
+	proc/flail()
+		if (flailing)
 			return
 
-		spazzing = 25
+		flailing = 25
 		SPAWN_DBG(0)
-			while(spazzing-- > 0)
+			while(flailing-- > 0)
 				src.pixel_x = rand(-2,2) * 2
 				src.pixel_y = rand(-2,2) * 2
 				src.dir = pick(alldirs)
 				sleep(0.4 SECONDS)
 			src.pixel_x = 0
 			src.pixel_y = 0
-			if(spazzing < 0)
-				spazzing = 0
+			if(flailing < 0)
+				flailing = 0
 
 
 	// go crazy and make a huge goddamn mess
@@ -1267,7 +1264,7 @@ obj/critter/madnessowl/switchblade
 			src.visible_message("<span class='alert'><b>[src] goes [pick("on a rampage", "into a bloodlust", "berserk", "hog wild", "feral")]!</b></span>")
 			playsound(src.loc, "sound/voice/animal/hoot.ogg", 70, 1)
 			SPAWN_DBG(1 DECI SECOND)
-				if(!spazzing) src.spaz()
+				if(!flailing) src.flail()
 			src.set_loc(M.loc)
 			src.frenzied = 20
 			while(src.target && src.frenzied && src.alive && src.loc == M.loc )

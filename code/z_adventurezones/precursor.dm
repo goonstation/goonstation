@@ -936,7 +936,6 @@
 				return
 
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
-			user.updatehealth()
 			boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
 			user.unlock_medal("HIGH VOLTAGE", 1)
 			user.Virus_ShockCure(user, 100)
@@ -985,7 +984,7 @@
 /obj/portrait_sneaky
 	name = "crooked portrait"
 	anchored = 1
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "portrait"
 	desc = "A portrait of a man wearing a ridiculous merchant hat. That must be Discount Dan."
 
@@ -1012,6 +1011,8 @@
 	name = "darkness"
 	desc = "Oh god."
 	icon_state = "shade"
+	dead_state = "shade" //doesn't have a dead icon, just fades away
+	death_text = null //has special spooky voice lines
 	health = 10
 	brutevuln = 0.5
 	firevuln = 0
@@ -1067,9 +1068,9 @@
 		return ..()
 
 	CritterDeath()
+		..()
 		speak( pick("��r...�a ina ��r-kug z�h-bi!", "�d, �d, �u...bar...", "n�-nam-nu-kal...", "lugal-me taru, lugal-me galam!", "me-li-e-a...") )
 		// sing the sacred song to the bitter end // go out, exit, release // nothing is precious // our king will return, our king will ascend // woe is me
-		src.alive = 0
 		SPAWN_DBG(1.5 SECONDS)
 			qdel(src)
 
@@ -1121,6 +1122,7 @@
 	desc = "Something is terribly wrong with them."
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_m"
+	dead_state = "body_m" //doesn't have a dead icon
 	alpha = 192
 	color = "#676767"
 	health = 100
@@ -1150,11 +1152,7 @@
 	CritterDeath()
 		if (!alive)
 			return
-		src.alive = 0
-		src.anchored = 0
-		src.set_density(0)
-		walk_to(src,0)
-		report_death()
+		..()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, get_turf(src)))
 		qdel(src)
 
@@ -1431,7 +1429,7 @@ var/global/list/scarysounds = list('sound/machines/engine_alert3.ogg',
 'sound/machines/glitch3.ogg',
 'sound/misc/automaton_tickhum.ogg',
 'sound/misc/automaton_ratchet.ogg',
-'sound/misc/automaton_spaz.ogg',
+'sound/misc/automaton_scratch.ogg',
 'sound/musical_instruments/Gong_Rumbling.ogg',
 'sound/ambience/industrial/Precursor_Drone2.ogg',
 'sound/ambience/industrial/Precursor_Choir.ogg',

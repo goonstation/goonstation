@@ -9,7 +9,7 @@
 	var/organ_holder_location = "chest"
 	var/organ_holder_required_op_stage = 4.0
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "butt_nc"
+	icon_state = "butt-nc"
 	force = 1.0
 	w_class = 1.0
 	throwforce = 1.0
@@ -191,7 +191,7 @@
 /obj/item/clothing/head/butt/cyberbutt // what the fuck am I doing with my life
 	name = "robutt"
 	desc = "This is a butt, made of metal. A futuristic butt. Okay."
-	icon_state = "cyberbutt"
+	icon_state = "butt-cyber"
 	allow_staple = 0
 	toned = 0
 	made_from = "slag"
@@ -214,4 +214,4 @@
 /obj/item/clothing/head/butt/synth
 	name = "synthetic butt"
 	desc = "Why would you even grow this. What the fuck is wrong with you?"
-	icon_state = "butt"
+	icon_state = "butt-plant"

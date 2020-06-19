@@ -112,7 +112,7 @@
 /obj/machinery/autolathe/Topic(href, href_list)
 	if(..() || !(usr in range(1)))
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 	src.add_fingerprint(usr)
 	if(href_list["make"])
 		var/list/makeable = list()

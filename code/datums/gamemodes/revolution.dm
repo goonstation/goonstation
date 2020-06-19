@@ -206,7 +206,7 @@
 
 /datum/game_mode/revolution/proc/remove_revolutionary(datum/mind/rev_mind)
 	.= 0
-	if (!rev_mind.current)
+	if (!rev_mind?.current)
 		return 0
 
 	if (rev_mind in revolutionaries)
@@ -265,17 +265,23 @@
 /datum/game_mode/revolution/proc/get_possible_revolutionaries()
 	var/list/candidates = list()
 
-	for(var/mob/new_player/player in mobs)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
 		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
+		if ((player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
 			if(player.client.preferences.be_revhead)
 				candidates += player.mind
 
 	if(candidates.len < 1)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_revhead set to yes, so we're adding players who don't want to be rev leaders to the pool.")
-		for(var/mob/new_player/player in mobs)
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player)) continue
+
 			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
+			if ((player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 
 	if(candidates.len < 1)

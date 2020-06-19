@@ -1073,6 +1073,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	flying = 0
 	death_text = "%src% tips over, its joints seizing and locking up.  It does not move again."
 	angertext = "seems to stare at"
+	is_pet = 0
 
 	var/does_creepy_stuff = 0
 	var/typeName = "Generic"
@@ -1081,7 +1082,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		src.attacking = 1
 		src.visible_message("<span class='alert'><B>[src]</B> awkwardly bashes [src.target]!</span>")
 		random_brute_damage(src.target, rand(5,15),1)
-		playsound(src.loc, "sound/misc/automaton_spaz.ogg", 50, 1)
+		playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
 		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 
@@ -1100,7 +1101,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			src.visible_message("<span class='alert'><b>[src] emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise.</span>")
 
 		if (prob(5))
-			playsound(src.loc, "sound/misc/automaton_spaz.ogg", 50, 1)
+			playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
 			src.dir = pick(alldirs)
 
@@ -1123,7 +1124,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	sleeping_icon_state = "drone_service_bot_off"
 	flying = 0
 	generic = 0
-	death_text = "%src% stops moving."
+	death_text = "%src% blows apart! But not in a way at all like surveillance equipment. More like a washing machine or something."
 
 	var/static/list/non_spy_weapons = list("something that isn't a high gain microphone", "an object distinct from a tape recorder", "object that is, in all likelihood, not a spy camera")
 
@@ -1141,9 +1142,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 	CritterDeath()
 		if (!src.alive) return
-		src.alive = 0
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> blows apart!  But not in a way at all like surveillance equipment.  More like a washing machine or something.")
+		..()
 
 		SPAWN_DBG(0)
 			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
@@ -1281,7 +1280,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 			icon_state = blinking ? "museum_control_blink" : "museum_control"
 
 	attack_hand(mob/user)
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = {"<!DOCTYPE html>
 <html>
 <head>
@@ -1556,7 +1555,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		if(program)
 			program.receive_user_command(href_list["command"])
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 	process()
 		if(!(status & NOPOWER) && program)
@@ -1567,7 +1566,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 	updateUsrDialog(var/reason)
 		var/list/nearby = viewers(1, src)
 		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
+			if (M.using_dialog_of(src))
 				if (reason || updateFlags)
 					src.dynamicUpdate(M, reason|updateFlags)
 					updateFlags = REASON_NONE
@@ -1576,7 +1575,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 
 		if (issilicon(usr))
 			if (!(usr in nearby))
-				if (usr.client && usr.machine==src)
+				if (usr.using_dialog_of(src))
 					if (reason || updateFlags)
 						src.dynamicUpdate(usr, reason|updateFlags)
 						updateFlags = REASON_NONE
@@ -1644,7 +1643,7 @@ datum/computer/file/embedded_program/maintpanel
 	disposing()
 		if (device_entries)
 			for (var/datum/entry in device_entries)
-				entry.disposing()
+				entry.dispose()
 
 			device_entries = null
 

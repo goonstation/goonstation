@@ -68,5 +68,4 @@
 		H.weakened = max(H.weakened, 5)
 		H.losebreath+=20
 		H.take_oxygen_deprivation(20)
-		H.updatehealth()
 */

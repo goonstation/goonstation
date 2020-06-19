@@ -114,7 +114,7 @@
 	if (!( data_core.security.Find(src.active2) ))
 		src.active2 = null
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr) || isAI(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["temp"])
 			src.temp = null
 		if (href_list["scan"])
@@ -367,7 +367,7 @@
 																if (href_list["new_r"])
 																	var/datum/data/record/G = new /datum/data/record(  )
 																	G.fields["name"] = "New Record"
-																	G.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
+																	G.fields["id"] = num2hex(rand(1, 1.6777215E7), 6)
 																	G.fields["rank"] = "Unassigned"
 																	G.fields["sex"] = "Male"
 																	G.fields["age"] = "Unknown"

@@ -15,7 +15,7 @@
 		if (istype(W, /obj/item/crowbar))
 			boutput(user, "There's no maintenance panel to open.")
 			return
-		if (istype(W, /obj/item/weldingtool))
+		if (isweldingtool(W))
 			boutput(user, "You can't repair this pod.")
 			return
 		..()

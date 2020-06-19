@@ -31,7 +31,6 @@
 				H.take_brain_damage(2)
 				H.changeStatus("paralysis", 100)
 				H.make_jittery(1000)
-				H.updatehealth()
 			else
 				boutput(H, "<span class='alert'>You bash your head on the ground - good thing you were wearing a helmet!</span>")
 	if (prob(1))

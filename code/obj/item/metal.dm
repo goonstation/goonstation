@@ -54,8 +54,7 @@ MATERIAL
 			..(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
+		if (isweldingtool(W))
 			if(src.amount < 2)
 				boutput(user, "<span class='alert'>You need at least two rods to make a metal sheet.</span>")
 				return
@@ -65,7 +64,7 @@ MATERIAL
 				else
 					boutput(user, "<span class='alert'>You should probably put the rods down first.</span>")
 				return
-			if(!WELD.try_weld(user, 1))
+			if(!W:try_weld(user, 1))
 				return
 
 			var/weldinput = 1
@@ -80,7 +79,6 @@ MATERIAL
 			M.amount = weldinput
 			src.amount -= weldinput * 2
 
-			WELD.eyecheck(user)
 			user.visible_message("<span class='alert'><B>[user]</B> welds the rods together into metal.</span>")
 			if(src.amount < 1)	qdel(src)
 			return

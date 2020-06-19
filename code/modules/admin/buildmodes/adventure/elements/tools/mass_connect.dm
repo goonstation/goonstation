@@ -50,7 +50,7 @@
 				var/act = acts[1]
 				var/newname = input("Set trigger action for [selected] on [typesel].", "Set action", act) in acts
 				trigger_act = acts[newname]
-				
+
 				var/add = selected.special_triggers_required()
 				if (add && islist(add))
 					for (var/actname in add)
@@ -93,6 +93,7 @@
 	disposing()
 		clear_markers()
 		pool(selection)
+		..()
 
 	proc/clear_markers()
 		if (!selected)
@@ -104,4 +105,4 @@
 		if (!selected)
 			return
 		for (var/obj/O in selected.triggered)
-			O.overlays += selection	
+			O.overlays += selection

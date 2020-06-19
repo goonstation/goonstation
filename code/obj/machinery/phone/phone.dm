@@ -240,7 +240,6 @@
 		if (ishuman(user))
 			user.visible_message("<span class='alert'><b>[user] bashes the [src] into their head repeatedly!</b></span>")
 			user.TakeDamage("head", 150, 0)
-			user.updatehealth()
 			return 1
 
 

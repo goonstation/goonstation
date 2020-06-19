@@ -27,7 +27,7 @@
 	colors = list("#FF0000", "#7F0000", "#FF6A00", "#FFD800", "#7F3300", "#7F6A00")
 	animals = list(/obj/critter/microman,
 					/obj/critter/bear,
-					/obj/critter/spider,
+					/obj/critter/spider/aggressive,
 					/obj/critter/wendigo,
 					/obj/critter/bat/buff,
 					/obj/critter/spider/ice,
@@ -128,6 +128,7 @@
 			user.put_in_hand_or_drop(S)
 			if(caps_amt != -1)
 				caps_amt--
+				tooltip_rebuild = 1
 		update_icon()
 	else
 		return ..()

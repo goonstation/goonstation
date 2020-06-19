@@ -153,7 +153,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 /obj/machinery/bot/guardbot/xmas
 	name = "Jinglebuddy"
 	desc = "Festive!"
-	icon = 'icons/misc/xmas_buddy.dmi'
+	icon = 'icons/obj/bots/xmasbuddy.dmi'
 	setup_default_tool_path = /obj/item/device/guardbot_tool/xmas
 
 	speak(var/message)
@@ -306,13 +306,8 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 
 	CritterDeath()
 		if (!src.alive) return
-		src.icon_state += "-dead"
-		src.alive = 0
-		src.anchored = 0
-		src.set_density(0)
+		..()
 		src.desc = "The lifeless corpse of [src.name], why would anyone do such a thing?"
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> dies!")
 		modify_christmas_cheer(-20)
 		src.name = "dead space seal pup"
 		for (var/obj/critter/sealpup/S in view(7,src))
@@ -442,7 +437,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 	anchored = 1
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_x = -64
-	plane = 21
+	plane = PLANE_BLACKNESS + 1
 
 	density = 1
 	var/on_fire = 0
@@ -538,6 +533,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			user.visible_message("<span class='alert'>[user] plasters the snowball over [his_or_her(user)] face.</span>",\
 			"<span class='alert'>You plaster the snowball over your face.</span>")
 			src.hit(user, 0)
+			JOB_XP(user, "Clown", 4)
 			return
 
 		src.add_fingerprint(user)
@@ -629,7 +625,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 		var/pattern = input(usr, "Type number from 0 to 4", "Enter Number", 1) as null|num
 		if (isnull(pattern))
 			return
-		pattern = CLAMP(pattern, 0, 4)
+		pattern = clamp(pattern, 0, 4)
 		src.light_pattern(pattern)
 
 // Grinch Stuff
@@ -637,7 +633,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 /obj/decal/cleanable/grinch_graffiti
 	name = "un-jolly graffiti"
 	desc = "Wow, rude."
-	icon = 'icons/effects/graffiti.dmi'
+	icon = 'icons/obj/decals/graffiti.dmi'
 	random_icon_states = list("grinch1","grinch2","grinch3","grinch4","grinch5","grinch6")
 
 	disposing()
@@ -1124,7 +1120,6 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 							src.verbs += /mob/living/carbon/human/krampus/verb/krampus_crush
 							return
 						playsound(src.loc, "sound/impact_sounds/Flesh_Tear_1.ogg", 75, 0.7)
-						H.UpdateDamage()
 						H.UpdateDamageIcon()
 						sleep(1.5 SECONDS)
 				else

@@ -112,7 +112,7 @@
 	var/master_reagent_id = 0
 
 	var/can_update = 1 //flag is set to 0 temporarily when doing a split operation
-
+	var/waitforit = 0 //prevent smoke from being inhaled during the creation process
 	var/draining = 0
 	var/queued_drains = 0 // how many tiles to drain on next update?
 	var/turf/last_drain = 0 // tile from which we should try to drain from
@@ -123,8 +123,9 @@
 		can_update = 0
 
 		for (var/fluid in src.members)
-			var/obj/fluid/M = fluid
-			M.group = 0
+			if(fluid)
+				var/obj/fluid/M = fluid
+				M.group = 0
 
 		//if (src in processing_fluid_groups)
 		//	processing_fluid_groups.Remove(src)
@@ -414,6 +415,9 @@
 		if (!(src in processing_fluid_spreads))
 			processing_fluid_spreads.Add(src)
 
+	proc/update_required_to_spread()
+		return
+
 	proc/update_once(force = 0) //this would be called every time the fluid.dm process procs.
 		if (src.qdeled || !can_update) return 1
 		if (!members || !members.len)
@@ -423,7 +427,7 @@
 		var/fluids_to_create = 0 //try to create X amount of new tiles (based on how much fluid and tiles we currently hold)
 
 		src.update_viscosity()
-
+		src.update_required_to_spread()
 		if (SPREAD_CHECK(src) || force)
 			LAGCHECK(LAG_HIGH)
 			if (src.qdeled) return 1
@@ -584,7 +588,7 @@
 		.= list() //return created fluids
 		var/created = 0
 		var/obj/fluid/F
-
+		src.waitforit = 1 //don't breathe in the gas on inital spread - causes runtimes with small volumes
 		for (var/i = 1, i <= members.len, i++)
 			LAGCHECK(LAG_HIGH)
 			if (src.qdeled) return
@@ -613,7 +617,7 @@
 					.+= C
 					created++
 
-				if ((members.len + created)<=0) //this can happen somehow
+				if ((members?.len + created)<=0) //this can happen somehow
 					continue
 
 				amt_per_tile = contained_amt / (members.len + created)
@@ -626,6 +630,7 @@
 
 			if (created >= fluids_to_create)
 				break
+			src.waitforit = 0
 
 	proc/drain(var/obj/fluid/drain_source, var/fluids_to_remove, var/atom/transfer_to = 0) //basically a reverse spread with drain_source as the center
 		if (!drain_source || drain_source.group != src) return

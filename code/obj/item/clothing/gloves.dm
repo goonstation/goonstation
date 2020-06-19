@@ -21,12 +21,14 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	var/material_prints = null
 
 	var/can_be_charged = 0 // Currently, there are provisions for icon state "yellow" only. You have to update this file and mob_procs.dm if you're wanna use other glove sprites (Convair880).
-
 	var/glove_ID = null
 
 	var/crit_override = 0 //overrides user's stamina crit chance, unless the user has some special limb attached
 	var/bonus_crit_chance = 0 //bonus stamina crit chance; used additively in melee_attack_procs if crit_override is 0, otherwise replaces existing crit chance
 	var/stamina_dmg_mult = 0 //used additively in melee_attack_procs
+
+	var/overridespecial = 0
+	var/datum/item_special/specialoverride = null
 
 	setupProperties()
 		..()
@@ -37,6 +39,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 
 	New()
 		..() // your parents miss you
+		flags |= HAS_EQUIP_CLICK
 		SPAWN_DBG(2 SECONDS)
 			src.glove_ID = src.CreateID()
 			if (glove_IDs) // fix for Cannot execute null.Add(), maybe??
@@ -96,10 +99,13 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 				user.show_text("You don't need to add more wiring to the [src.name].", "red")
 				return
 
+			var/obj/item/cable_coil/coil = W
+			if(!coil.use(1))
+				return
 			boutput(user, "<span class='notice'>You attach the wires to the [src.name].</span>")
 			src.stunready = 1
+			src.setSpecialOverride(/datum/item_special/spark, 0)
 			src.material_prints += ", electrically charged"
-			W:amount--
 			return
 
 		if (istype(W, /obj/item/cell)) // Moved from cell.dm (Convair880).
@@ -123,6 +129,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 				C.use(2500)
 				src.icon_state = "stun"
 				src.item_state = "stun"
+				src.overridespecial = 1
 				C.updateicon()
 				user.update_clothing() // Required to update the worn sprite (Convair880).
 				user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stun gloves.</span>", "<span class='notice'>The stun gloves now hold [src.uses]/[src.max_uses] charges!</span>")
@@ -165,6 +172,34 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	proc/special_attack(var/mob/target)
 		boutput(usr, "Your gloves do nothing special")
 		return
+
+	proc/setSpecialOverride(var/type = null, active = 1)
+		if(!ispath(type))
+			if(isnull(type))
+				if(src.specialoverride)
+					src.specialoverride.onRemove()
+				src.specialoverride = null
+			return null
+
+		if(src.specialoverride)
+			src.specialoverride.onRemove()
+
+		var/datum/item_special/S = new type
+		S.master = src
+		src.overridespecial = active
+		S.onAdd()
+		src.specialoverride = S
+		return S
+
+
+	equipment_click(atom/user, atom/target, params, location, control, origParams, slot)
+		if(target == user || user:a_intent == INTENT_HELP || user:a_intent == INTENT_GRAB) return 0
+		if(slot != SLOT_GLOVES || !overridespecial) return 0
+		if(ismob(user))
+			var/mob/M = user
+			specialoverride.pixelaction(target,params,M)
+			M.next_click = world.time+M.combat_click_delay
+			return 1
 
 
 /obj/item/clothing/gloves/long // adhara stuff
@@ -270,9 +305,9 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			..()
 			if(istype(src.material))
 				if(src.material.hasProperty("density"))//linear function, 10 points of disarm-block for every 25 density, starting from density==10
-					src.setProperty("disarmblock", round(max(src.material.getProperty("density")**0.5+0.2*(src.material.getProperty("density")-20),0)))
+					src.setProperty("deflection", round(max(src.material.getProperty("density")**0.5+0.2*(src.material.getProperty("density")-20),0)))
 				else
-					src.setProperty("disarmblock", 0)
+					src.setProperty("deflection", 0)
 				if(src.material.hasProperty("hard"))//Curve hits 0.5 at 30 (fibrilith), 1 at 60 (carbon fibre), 1.2 at 85 (starstone, aka maximum)
 					src.setProperty("rangedprot", round(max(0,-0.5034652-(-0.04859378/0.02534389)*(1-eulers**(-0.02534398*src.material.getProperty("hard")))),0.1)) //holy best-fit curve batman!
 				else
@@ -290,7 +325,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		..()
 		setProperty("heatprot", 10)
 		setProperty("conductivity", 0.3)
-		setProperty("disarmblock", 20)
+		setProperty("deflection", 20)
 
 /obj/item/clothing/gloves/swat/NT
 	desc = "A pair of Nanotrasen tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."
@@ -305,11 +340,15 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	material_prints = "insulative fibers, electrically charged"
 	stunready = 1
 	can_be_charged = 1
-	uses = 5
-	max_uses = 5
+	uses = 10
+	max_uses = 10
 	setupProperties()
 		..()
 		setProperty("conductivity", 0)
+	New()
+		..()
+		setSpecialOverride(/datum/item_special/spark)
+
 
 /obj/item/clothing/gloves/yellow
 	desc = "These gloves are electrically insulated."
@@ -318,7 +357,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	item_state = "ygloves"
 	material_prints = "insulative fibers"
 	can_be_charged = 1
-	max_uses = 1
+	max_uses = 4
 	permeability_coefficient = 0.5
 
 	setupProperties()
@@ -360,7 +399,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		..()
 		boutput(user, "<span class='notice'><b>You have to put the gloves on your hands first, silly!</b></span>")
 
-	get_desc(dist)
+	get_desc()
 		if (src.weighted)
 			. += "These things are pretty heavy!"
 
@@ -371,6 +410,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			return
 		boutput(user, "You slip the horseshoe inside one of the gloves.")
 		src.weighted = 1
+		tooltip_rebuild = 1
 		qdel(W)
 	else
 		return ..()
@@ -398,7 +438,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 	item_state = "ygloves"
 	material_prints = "insulative fibers and nanomachines"
 	can_be_charged = 1 // Quite pointless, but could be useful as a last resort away from powered wires? Hell, it's a traitor item and can get the buff (Convair880).
-	max_uses = 1
+	max_uses = 4
 	flags = HAS_EQUIP_CLICK
 
 	var/spam_flag = 0
@@ -415,11 +455,12 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		A.use_power(amount, ENVIRON)
 
 	equipment_click(atom/user, atom/target, params, location, control, origParams, slot)
-		if(target == user || spam_flag || user:a_intent == INTENT_HELP || user:a_intent == INTENT_GRAB) return
-		if(slot != SLOT_GLOVES) return
+		if(target == user || spam_flag || user:a_intent == INTENT_HELP || user:a_intent == INTENT_GRAB) return 0
+		if(slot != SLOT_GLOVES) return 0
 
 		var/netnum = 0
-
+		if(src.overridespecial)
+			..()
 		for(var/turf/T in range(1, user))
 			for(var/obj/cable/C in T.contents) //Needed because cables have invisibility 101. Making them disappear from most LISTS.
 				netnum = C.netnum
@@ -492,7 +533,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			for(var/d in dummies)
 				qdel(d)
 
-			return 1
+		return 1
 
 /obj/item/clothing/gloves/water_wings
 	name = "water wings"

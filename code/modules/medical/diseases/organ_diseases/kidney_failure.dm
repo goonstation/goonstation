@@ -76,4 +76,3 @@
 				H.losebreath++
 
 			H.take_toxin_damage(1)
-			H.updatehealth()

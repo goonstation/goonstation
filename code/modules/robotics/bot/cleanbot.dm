@@ -4,7 +4,7 @@
 /obj/item/bucket_sensor
 	desc = "It's a bucket. With a sensor attached."
 	name = "proxy bucket"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "bucket_proxy"
 	force = 3.0
 	throwforce = 10.0
@@ -37,7 +37,7 @@
 /obj/machinery/bot/cleanbot
 	name = "cleanbot"
 	desc = "A little cleaning robot, he looks so excited!"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "cleanbot0"
 	layer = 5
 	density = 0
@@ -181,7 +181,7 @@
 		if (!issilicon(usr) && !in_range(src, usr)) return
 
 		src.add_fingerprint(usr)
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["start"])
 			src.toggle_power(0)
@@ -190,12 +190,9 @@
 		return
 
 	attackby(obj/item/W, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WT = W
-			if (!WT.welding)
-				return
+		if (isweldingtool(W))
 			if (src.health < initial(src.health))
-				if(WT.try_weld(user, 1))
+				if(W:try_weld(user, 1))
 					src.health = initial(src.health)
 					src.visible_message("<span class='alert'><b>[user]</b> repairs the damage on [src].</span>")
 

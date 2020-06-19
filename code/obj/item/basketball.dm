@@ -24,7 +24,6 @@
 /obj/item/basketball/suicide(var/mob/user as mob)
 	user.visible_message("<span class='alert'><b>[user] fouls out, permanently.</b></span>")
 	user.TakeDamage("head", 175, 0)
-	user.updatehealth()
 	SPAWN_DBG(30 SECONDS)
 		if (user)
 			user.suiciding = 0
@@ -41,6 +40,7 @@
 				if((prob(50) && M.bioHolder.HasEffect("clumsy")) || M.equipped() || get_dir(M, src) == M.dir)
 					src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
 					M.changeStatus("stunned", 2 SECONDS)
+					JOB_XP(M, "Clown", 1)
 					return
 				// catch the ball!
 				src.attack_hand(M)
@@ -52,9 +52,9 @@
 			M.changeStatus("stunned", 2 SECONDS)
 			return
 
-/obj/item/basketball/throw_at(atom/target, range, speed)
+/obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
 	src.icon_state = "bball_spin"
-	..(target, range, speed)
+	..()
 
 /obj/item/basketball/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/plutonium_core))
@@ -116,6 +116,8 @@
 			if (user.bioHolder.HasEffect("clumsy") && prob(50)) // clowns are not good at basketball I guess
 				user.visible_message("<span class='combat'><b>[user] knocks their head into the rim of [src]!</b></span>")
 				user.changeStatus("weakened", 5 SECONDS)
+				JOB_XP(user, "Clown", 1)
+
 			if (!src.shoot(W, user))
 				SPAWN_DBG(1 SECOND)
 					src.visible_message("<span class='alert'>[user] whiffs the dunk.</span>")
@@ -234,7 +236,6 @@
 			if(affecting)
 				affecting.take_damage(0, 15)
 				H.UpdateDamageIcon()
-				H.updatehealth()
 
 
 //BLOOD BOWL BALL
@@ -287,9 +288,9 @@
 					return
 	return
 
-/obj/item/bloodbowlball/throw_at(atom/target, range, speed)
+/obj/item/bloodbowlball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
 	src.icon_state = "bloodbowlball_air"
-	..(target, range, speed)
+	..()
 
 /obj/item/bloodbowlball/attack(target as mob, mob/user as mob)
 	playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)

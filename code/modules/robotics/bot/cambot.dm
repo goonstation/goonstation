@@ -6,7 +6,7 @@
 /obj/machinery/bot/cambot
 	name = "Cambot"
 	desc = "A little camera robot! Smile!"
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "cambot0"
 	layer = 5.0 //TODO LAYER
 	density = 0
@@ -332,7 +332,7 @@
 /obj/item/camera_arm_assembly
 	name = "camera/robot arm assembly"
 	desc = "A camera with a robot arm grafted to it."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "camera_arm"
 	w_class = 3.0
 	flags = TABLEPASS

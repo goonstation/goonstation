@@ -218,7 +218,7 @@
 			for(var/obj/item/electronics/P in src.contents)
 				dat += "[P.name]: <A href='?src=\ref[src];op=\ref[P];tp=move'>Remove</A><BR>"
 
-				user.machine = src
+				src.add_dialog(user)
 				user.Browse("<HEAD><TITLE>Frame</TITLE></HEAD><TT>[dat]</TT>", "window=fkit")
 				onclose(user, "fkit")
 
@@ -254,7 +254,7 @@
 	if (usr.stat)
 		return
 	if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_range(src, usr) && istype(src.loc, /turf)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		switch(href_list["tp"])
 			if("move")
@@ -270,21 +270,22 @@
 		updateDialog()
 	else
 		usr.Browse(null, "window=fkit")
-		usr.machine = null
+		src.remove_dialog(usr)
 	return
 
-/obj/item/electronics/frame/proc/deploy()
+/obj/item/electronics/frame/proc/deploy(mob/user)
 	var/turf/T = get_turf(src)
 	var/obj/O = null
 	if (deconstructed_thing)
 		O = deconstructed_thing
 		O.set_loc(T)
-		O.was_built_from_frame(usr)
+		O.dir = src.dir
+		O.was_built_from_frame(user, 0)
 		deconstructed_thing = null
 	else
 		O = new store_type(T)
-
-	O.dir = src.dir
+		O.dir = src.dir
+		O.was_built_from_frame(user, 1)
 	//O.mats = "Built"
 	O.deconstruct_flags |= DECON_BUILT
 	qdel(src)
@@ -355,7 +356,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(owner && F)
-			F.deploy()
+			F.deploy(owner)
 
 
 /obj/item/electronics/frame/proc/parts_check()
@@ -622,7 +623,7 @@
 
 	dat += "<HR>"
 
-	user.machine = src
+	src.add_dialog(user)
 	user.Browse("<HEAD><TITLE>Ruckingenur Kit Control Panel</TITLE></HEAD><TT>[dat]</TT>", "window=rkit")
 	onclose(user, "rkit")
 
@@ -630,7 +631,7 @@
 	if (usr.stat)
 		return
 	if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		switch(href_list["tp"])
 
@@ -661,7 +662,7 @@
 		updateDialog()
 	else
 		usr.Browse(null, "window=rkit")
-		usr.machine = null
+		src.remove_dialog(usr)
 	return
 
 /obj/item/deconstructor
@@ -721,7 +722,7 @@
 				boutput(user, "<span class='alert'>[target] is under an access lock and must have its access requirements removed first.</span>")
 			return
 
-		if (!O.allowed(user) || O.is_syndicate)
+		if ((!O.allowed(user) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
 			return
 
@@ -743,13 +744,13 @@
 /obj/disposing()
 	if (src.decon_contexts)
 		for(var/datum/contextAction/C in src.decon_contexts)
-			C.disposing()
+			C.dispose()
 	..()
 
 /obj/proc/was_deconstructed_to_frame(mob/user)
 	.= 0
 
-/obj/proc/was_built_from_frame(mob/user)
+/obj/proc/was_built_from_frame(mob/user, newly_built)
 	.= 0
 
 /obj/proc/build_deconstruction_buttons()

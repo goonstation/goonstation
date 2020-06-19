@@ -49,7 +49,7 @@
 	if(params["icon-y"])
 		dy += (text2num(params["icon-y"]) - 16)
 
-	var/angle = atan2(dy,dx)
+	var/angle = arctan(dy,dx)
 	//boutput(world, "[dx] : [dy] ::: makes for [angle]")
 
 	//oh no ! i'm bad!!!!!!!!!!!
@@ -251,8 +251,8 @@
 	//Should be called before attacks begin. Make sure you call this when appropriate in your mouse procs etc.
 	//MBC : Removed Damage/Stamina modifications from preUse() and afterUse() and moved their to item.attack() to avoid race condition
 	proc/preUse(var/mob/person)
-		if(istype(person, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = person
+		if(isliving(person))
+			var/mob/living/H = person
 
 			if(STAMINA_NO_ATTACK_CAP && H.stamina > STAMINA_MIN_ATTACK)
 				var/cost = staminaCost
@@ -271,7 +271,7 @@
 	//Should be called after everything is done and all attacks are finished. Make sure you call this when appropriate in your mouse procs etc.
 	proc/afterUse(var/mob/person)
 		if(restrainDuration)
-			person.restrain_time = world.timeofday + restrainDuration
+			person.restrain_time = TIME + restrainDuration
 
 	rush
 		cooldown = 100
@@ -516,7 +516,7 @@
 					swipe_color = get_hex_color_from_blade(saber.bladecolor)
 			return
 
-		//Sampled these hex colors from each c-saber sprite.
+				//Sampled these hex colors from each c-saber sprite.
 		proc/get_hex_color_from_blade(var/C as text)
 			switch(C)
 				if("R")
@@ -906,6 +906,7 @@
 
 		var/secondhit_delay = 1
 		var/stamina_damage = 50
+		var/mult = 1
 
 
 		pixelaction(atom/target, params, mob/user, reach)
@@ -940,14 +941,26 @@
 						for(var/atom/movable/A in spark.loc)
 							if(A in attacked) continue
 							if(isTarget(A))
-								on_hit(A)
+								on_hit(A, mult)
 								attacked += A
 								hit = 1
 								break
 
 				if(master && istype(master, /obj/item/baton))
 					master:process_charges(-1, user)
+				if(master && istype(master, /obj/item/clothing/gloves) && master:uses)
+					var/obj/item/clothing/gloves/G = master
+					G.uses = max(0, G.uses - 1)
+					if (G.uses < 1)
+						G.icon_state = "yellow"
+						G.item_state = "ygloves"
+						user.update_clothing() // Was missing (Convair880).
 
+					if (G.uses <= 0)
+						user.show_text("The gloves are no longer electrically charged.", "red")
+						G.overridespecial = 0
+					else
+						user.show_text("The gloves have [G.uses]/[G.max_uses] charges left!", "red")
 				afterUse(user)
 				//if (!hit)
 				playsound(get_turf(master), 'sound/effects/sparks6.ogg', 70, 0)
@@ -1123,17 +1136,16 @@
 
 				var/flame_succ = 0
 				if (master)
-					if(istype(master,/obj/item/device/light/zippo))
+					if(istype(master,/obj/item/device/light/zippo) && master:on)
 						var/obj/item/device/light/zippo/Z = master
 						if (Z.reagents.get_reagent_amount("fuel"))
 							Z.reagents.remove_reagent("fuel", 1)
 							flame_succ = 1
 						else
 							flame_succ = 0
-					if (istype(master,/obj/item/weldingtool))
-						var/obj/item/weldingtool/WT = master
-						if (WT.reagents.get_reagent_amount("fuel"))
-							WT.reagents.remove_reagent("fuel", 1)
+					if (isweldingtool(master) && master:try_weld(user,0,-1,0,0))
+						if (master.reagents.get_reagent_amount("fuel"))
+							master.reagents.remove_reagent("fuel", 1)
 							flame_succ = 1
 						else
 							flame_succ = 0
@@ -1148,17 +1160,19 @@
 
 				if (flame_succ)
 					turf.hotspot_expose(T0C + 400, 400)
-					for(var/mob/A in turf)
-						if(isTarget(A))
-							if (iscritter(A))
-								var/obj/critter/crit = A
-								crit.blob_act(8) //REMOVE WHEN WE ADD BURNING OBJCRITTERS
-
-							if (A.getStatusDuration("burning"))
-								A.changeStatus("burning", tiny_time)
+					for(var/A in turf)
+						if(!isTarget(A))
+							continue
+						if(ismob(A))
+							var/mob/M = A
+							if (M.getStatusDuration("burning"))
+								M.changeStatus("burning", tiny_time)
 							else
-								A.changeStatus("burning", flame_succ ? time : tiny_time)
-							break
+								M.changeStatus("burning", flame_succ ? time : tiny_time)
+						else if(iscritter(A))
+							var/obj/critter/crit = A
+							crit.blob_act(8) //REMOVE WHEN WE ADD BURNING OBJCRITTERS
+						break
 
 					playsound(get_turf(master), 'sound/effects/flame.ogg', 50, 0)
 				else
@@ -1358,6 +1372,9 @@
 			return
 
 		proc/on_hit(var/mob/hit)
+			if (ishuman(hit))
+				var/mob/living/carbon/human/H = hit
+				H.do_disorient(src.stamina_damage, stunned = 10)
 			return
 
 	katana_dash/reverse
@@ -1626,6 +1643,7 @@
 		pooled()
 			..()
 			transform = null
+			color = null
 
 	barrier
 		name = "energy barrier"

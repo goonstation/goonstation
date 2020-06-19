@@ -194,7 +194,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (src.vr_check(user) != 1)
 			user.show_text("This uplink only works in virtual reality.", "red")
 		else if (src.use_default_GUI == 1)
-			user.machine = src
+			src.add_dialog(user)
 			src.generate_menu()
 		return
 
@@ -299,7 +299,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			usr.show_text("This uplink only works in virtual reality.", "red")
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["unlock"] && src.locked && !isnull(src.lock_code))
 			var/the_code = adminscrub(input(usr, "Please enter the password.", "Unlock Uplink", null))
@@ -316,7 +316,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			if (istype(src, /obj/item/uplink/integrated/radio))
 				var/obj/item/uplink/integrated/radio/RU = src
 				if (!isnull(RU.origradio) && istype(RU.origradio, /obj/item/device/radio))
-					usr.machine = null
+					src.remove_dialog(usr)
 					usr.Browse(null, "window=radio")
 					var/obj/item/device/radio/T = RU.origradio
 					RU.set_loc(T)
@@ -476,10 +476,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (!istype(src.hostpda.host_program, /datum/computer/file/pda_program/os/main_os))
 			return
 		src.hostpda.host_program:note = text
-
-		for (var/mob/M in viewers(1, src.hostpda.loc))
-			if (M.client && M.machine == src.hostpda)
-				src.hostpda.attack_self(M)
+		src.hostpda.updateSelfDialog()
 
 		return
 
@@ -996,6 +993,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 /datum/SWFuplinkspell/blink
 	name = "Blink"
 	eqtype = "Defensive"
+	vr_allowed = 0
 	desc = "This spell teleports you a short distance forwards. Useful for evasion or getting into areas."
 	assoc_spell = /datum/targetable/spell/blink
 
@@ -1084,7 +1082,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	if(!user.mind || (user.mind && user.mind.key != src.wizard_key))
 		boutput(user, "<span class='alert'><b>The spellbook is magically attuned to someone else!</b></span>")
 		return
-	user.machine = src
+	src.add_dialog(user)
 	var/html = {"
 [(user.client && !user.client.use_chui) ? "<!doctype html>\n<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\"><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"pragma\" content=\"no-cache\"><style type='text/css'>body { font-family: Tahoma, sans-serif; font-size: 10pt; }</style><title>Wizard Spellbook</title></head><body>" : ""]
 
@@ -1188,7 +1186,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	if (!( ishuman(H)))
 		return 1
 	if ((usr.contents.Find(src) || (in_range(src,usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["buyspell"])
 			var/datum/SWFuplinkspell/SP = locate(href_list["buyspell"])
@@ -1208,7 +1206,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		else if (href_list["lock"] && src.origradio)
 			// presto chango, a regular radio again! (reset the freq too...)
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=radio")
 			var/obj/item/device/radio/T = src.origradio
 			var/obj/item/SWF_uplink/R = src

@@ -163,13 +163,17 @@
 	OnAdd()
 		..()
 		if (ishuman(owner))
-			owner:set_body_icon_dirty()
-			owner.unlock_medal("Space Ham", 1)
+			var/mob/living/carbon/human/H = owner
+			H.set_body_icon_dirty()
+			H.unlock_medal("Space Ham", 1)
+			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/spaceham, src.type)
 
 	OnRemove()
 		..()
 		if (ishuman(owner))
-			owner:set_body_icon_dirty()
+			var/mob/living/carbon/human/H = owner
+			H.set_body_icon_dirty()
+			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/spaceham, src.type)
 
 	OnLife()
 		if(..()) return
@@ -858,7 +862,7 @@
 	stability_loss = 15
 	var/prob_per_tick = 15
 	var/list/emotes = list("slap","snap","hiccup","burp","fart","dance","tantrum","flipoff","flip","boggle")
-	var/list/noises = list('sound/musical_instruments/WeirdHorn_0.ogg','sound/voice/animal/cat.ogg','sound/musical_instruments/Saxophone_CarelessWhisper.ogg',
+	var/list/noises = list('sound/musical_instruments/WeirdHorn_0.ogg','sound/voice/animal/cat.ogg','sound/musical_instruments/piano/furelise.ogg',
 	'sound/machines/engine_alert3.ogg','sound/machines/fortune_riff.ogg','sound/misc/ancientbot_grump2.ogg',
 	'sound/voice/farts/diarrhea.ogg','sound/misc/sad_server_death.ogg','sound/voice/animal/werewolf_howl.ogg',
 	'sound/voice/MEruncoward.ogg','sound/voice/macho/macho_become_enraged01.ogg',

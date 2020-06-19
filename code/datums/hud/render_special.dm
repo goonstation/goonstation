@@ -2,6 +2,7 @@
 	var
 		obj/screen/center_light
 		center_light_scale = 1
+		obj/screen/lighting_darkness // makes it so stuff poking outside view() gets hidden / darkened
 
 		// hi it's cirr adding a hack to a hack
 		obj/screen/left_fill

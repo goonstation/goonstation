@@ -47,7 +47,7 @@ var/global/list/all_GPSs = list()
 	proc/show_HTML(var/mob/user)
 		if (!user)
 			return
-		user.machine = src
+		src.add_dialog(user)
 		var/HTML = {"<style type="text/css">
 		.desc {
 			background: #21272C;
@@ -137,7 +137,7 @@ var/global/list/all_GPSs = list()
 			src.show_HTML(user)
 		else
 			user.Browse(null, "window=gps_[src]")
-			user.machine = null
+			src.remove_dialog(user)
 		return
 
 	Topic(href, href_list)
@@ -145,7 +145,7 @@ var/global/list/all_GPSs = list()
 		if (usr.stat || usr.restrained() || usr.lying)
 			return
 		if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_range(src, usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 			var/turf/T = get_turf(usr)
 			if(href_list["getcords"])
 				boutput(usr, "<span class='notice'>Located at: <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
@@ -189,19 +189,10 @@ var/global/list/all_GPSs = list()
 
 
 			if (!src.master)
-				if (ismob(src.loc))
-					attack_self(src.loc)
-				else
-					for(var/mob/M in viewers(1, src))
-						if (M.client && (M.machine == src.master || M.machine == src))
-							src.attack_self(M)
+				src.updateSelfDialog()
 			else
-				if (ismob(src.master.loc))
-					src.attack_self(src.master.loc)
-				else
-					for(var/mob/M in viewers(1, src.master))
-						if (M.client && (M.machine == src.master || M.machine == src))
-							src.attack_self(M)
+				src.master.updateSelfDialog()
+
 			src.add_fingerprint(usr)
 		else
 			usr.Browse(null, "window=gps_[src]")

@@ -70,7 +70,7 @@
 /obj/machinery/computer/robotics/attack_hand(var/mob/user as mob)
 	if(..())
 		return
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "Located AI Units<BR><BR>"
 	for(var/mob/living/silicon/ai/A in AIs)
 		dat += "[A.name] |"
@@ -135,7 +135,7 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 	var/mob/living/silicon/robot/R = locate(href_list["bot"])
 	var/mob/living/silicon/ai/A = locate(href_list["ai"])

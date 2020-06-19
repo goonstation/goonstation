@@ -14,10 +14,12 @@ WET FLOOR SIGN
 	icon_state = "cleaner"
 	item_state = "cleaner"
 	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK
+	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	throwforce = 3
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 10
+	tooltip_flags = REBUILD_DIST | REBUILD_SPECTRO
 
 /obj/item/spraybottle/New()
 	var/datum/reagents/R = new/datum/reagents(100) // cogwerks - lowered from 1000 (what the hell) to 100
@@ -216,17 +218,13 @@ WET FLOOR SIGN
 
 	return
 
-/obj/item/spraybottle/get_desc()
-	..()
-	. += "<br><span class='notice'>It contains:</span>"
-	if (!reagents)
-		. += "<br><span class='notice'>Nothing.</span>"
+/obj/item/spraybottle/get_desc(dist, mob/user)
+	if (dist > 2)
 		return
-	if (reagents.reagent_list.len)
-		for (var/datum/reagent/R in reagents.reagent_list)
-			. += "<br><span class='notice'>[R.volume] units of [R.name]</span>"
-	else
-		. += "<br><span class='notice'>Nothing.</span>"
+	if (!reagents)
+		return
+	. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
+	return
 
 // MOP
 
@@ -595,7 +593,7 @@ WET FLOOR SIGN
 	name = "cheese-shaped sponge"
 	desc = "Wait a minute! This isn't cheese..."
 	icon = 'icons/obj/janitor.dmi'
-	icon_state = "cheese-sponge"
+	icon_state = "sponge-cheese"
 	item_state = "sponge"
 
 

@@ -55,44 +55,66 @@
 		if (src.donor)
 			src.create_organs()
 
-	dispose()
+	disposing()
+		src.organ_list.len = 0
+		src.organ_list = null
+
 		if (head)
 			head.donor = null
+			chest?.bones?.donor = null
+			head.holder = null
 		if (skull)
 			skull.donor = null
+			skull.holder = null
 		if (brain)
 			brain.donor = null
-			brain.owner = null
+			brain.holder = null
 		if (left_eye)
 			left_eye.donor = null
+			left_eye.holder = null
 		if (right_eye)
 			right_eye.donor = null
+			right_eye.holder = null
 		if (chest)
 			chest.donor = null
+			chest?.bones?.donor = null
+			chest.holder = null
 		if (heart)
 			heart.donor = null
+			heart.holder = null
 		if (left_lung)
 			left_lung.donor = null
+			left_lung.holder = null
 		if (right_lung)
 			right_lung.donor = null
+			right_lung.holder = null
 		if (butt)
 			butt.donor = null
+			butt.holder = null
 		if (left_kidney)
 			left_kidney.donor = null
+			left_kidney.holder = null
 		if (right_kidney)
 			right_kidney.donor = null
+			right_kidney.holder = null
 		if (liver)
 			liver.donor = null
+			liver.holder = null
 		if (stomach)
 			stomach.donor = null
+			stomach.holder = null
 		if (intestines)
 			intestines.donor = null
+			intestines.holder = null
 		if (spleen)
 			spleen.donor = null
+			spleen.holder = null
 		if (pancreas)
 			pancreas.donor = null
+			pancreas.holder = null
 		if (appendix)
 			appendix.donor = null
+			appendix.holder = null
 
 		head = null
 		skull = null
@@ -202,17 +224,17 @@
 	//organs should not perform their functions if they have 100 damage
 	proc/get_working_kidney_amt()
 		var/count = 0
-		if (left_kidney && (left_kidney.broken || left_kidney.get_damage() < left_kidney.MAX_DAMAGE))
+		if (left_kidney && (!left_kidney.broken && left_kidney.get_damage() <= left_kidney.FAIL_DAMAGE))
 			count++
-		if (right_kidney && (right_kidney.broken || right_kidney.get_damage() < right_kidney.MAX_DAMAGE))
+		if (right_kidney && (!right_kidney.broken && right_kidney.get_damage() <= right_kidney.FAIL_DAMAGE))
 			count++
 		return count
 
 	proc/get_working_lung_amt()
 		var/count = 0
-		if (left_lung && (left_lung.broken || left_lung.get_damage() < left_lung.MAX_DAMAGE))
+		if (left_lung && (!left_lung.broken && left_lung.get_damage() <= left_lung.FAIL_DAMAGE))
 			count++
-		if (right_lung && (right_lung.broken || right_lung.get_damage() < right_lung.MAX_DAMAGE))
+		if (right_lung && (!right_lung.broken && right_lung.get_damage() <= right_lung.FAIL_DAMAGE))
 			count++
 		return count
 
@@ -473,7 +495,7 @@
 				myBrain.holder = null
 				src.brain = null
 				src.organ_list["brain"] = null
-				src.head.brain = null
+				src.head?.brain = null
 				return myBrain
 
 			if ("left_eye")
@@ -1035,7 +1057,7 @@
 					return 0
 
 			//moved out of for loop and just continue past "butt". I think this is slightly more efficient.
-			var/obj/machinery/bot/buttbot/cyber/B = organ_list["butt"]
+			var/obj/item/clothing/head/butt/cyberbutt/B = organ_list["butt"]
 			//if it's not robotic we're done, return 0
 			if (istype(B))
 				return 1
@@ -1129,7 +1151,7 @@
 
 	New(var/mob/living/L, var/obj/item/organ/brain/custom_brain_type)
 		..()
-		if (!iscritter(L))
+		if (!ismobcritter(L))
 			return
 		if (istype(L))
 			src.donor = L

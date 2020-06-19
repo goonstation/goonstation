@@ -144,6 +144,21 @@ var/datum/action_controller/actions
 				pool(border)
 				border = null
 
+	disposing()
+		var/atom/movable/A = owner
+		if (owner != null && islist(A.attached_objs))
+			A.attached_objs.Remove(bar)
+			A.attached_objs.Remove(border)
+		if (bar)
+			bar.set_loc(null)
+			pool(bar)
+			bar = null
+		if (border)
+			border.set_loc(null)
+			pool(border)
+			border = null
+		..()
+
 	onEnd()
 		if (bar)
 			bar.color = "#FFFFFF"
@@ -442,13 +457,15 @@ var/datum/action_controller/actions
 	var/mob/living/carbon/human/target  //The target of the action
 	var/obj/item/item				    //The item if any. If theres no item, we tried to remove something from that slot instead of putting an item there.
 	var/slot						    //The slot number
+	var/hidden
 
 
-	New(var/Source, var/Target, var/Item, var/Slot, var/ExtraDuration = 0)
+	New(var/Source, var/Target, var/Item, var/Slot, var/ExtraDuration = 0, var/Hidden = 0)
 		source = Source
 		target = Target
 		item = Item
 		slot = Slot
+		hidden = Hidden
 
 		if(item)
 			if(item.duration_put > 0)
@@ -470,7 +487,6 @@ var/datum/action_controller/actions
 		..()
 
 	onStart()
-		..()
 
 		target.add_fingerprint(source) // Added for forensics (Convair880).
 
@@ -492,11 +508,12 @@ var/datum/action_controller/actions
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			logTheThing("combat", source, target, "tries to put \an [item] on %target% at at [log_loc(target)].")
+			icon = item.icon
+			icon_state = item.icon_state
 			for(var/mob/O in AIviewers(owner))
 				O.show_message("<span class='alert'><B>[source] tries to put [item] on [target]!</B></span>", 1)
 		else
 			var/obj/item/I = target.get_slot(slot)
-
 			if(!I)
 				boutput(source, "<span class='alert'>There's nothing in that slot.</span>")
 				interrupt(INTERRUPT_ALWAYS)
@@ -511,11 +528,17 @@ var/datum/action_controller/actions
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			*/
-
 			logTheThing("combat", source, target, "tries to remove \an [I] from %target% at [log_loc(target)].")
+			var/name = "something"
+			if (!hidden)
+				icon = I.icon
+				icon_state = I.icon_state
+				name = I.name
 
 			for(var/mob/O in AIviewers(owner))
-				O.show_message("<span class='alert'><B>[source] tries to remove something from [target]!</B></span>", 1)
+				O.show_message("<span class='alert'><B>[source] tries to remove [name] from [target]!</B></span>", 1)
+
+		..() // we call our parents here because we need to set our icon and icon_state before calling them
 
 	onEnd()
 		..()
@@ -758,8 +781,7 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
-		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span class='alert'><B>[] attempts to remove the handcuffs!</B></span>", owner), 1)
+		owner.visible_message("<span class='alert'><B>[owner] attempts to remove the handcuffs!</B></span>")
 
 	onInterrupt(var/flag)
 		..()
@@ -770,8 +792,7 @@ var/datum/action_controller/actions
 		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = owner
 			H.handcuffs.drop_handcuffs(H)
-			for(var/mob/O in AIviewers(H))
-				O.show_message("<span class='alert'><B>[H] manages to remove the handcuffs!</B></span>", 1)
+			H.visible_message("<span class='alert'><B>[H] attempts to remove the handcuffs!</B></span>")
 			boutput(H, "<span class='notice'>You successfully remove your handcuffs.</span>")
 
 /datum/action/bar/private/icon/shackles_removal // Resisting out of shackles (Convair880).
@@ -1135,7 +1156,7 @@ var/datum/action_controller/actions
 
 			M.dir = turn(M.dir,up ? -90 : 90)
 			pixely += up ? 1 : -1
-			if (pixely != CLAMP(pixely, -5,5))
+			if (pixely != clamp(pixely, -5,5))
 				up = !up
 			M.pixel_y = pixely
 

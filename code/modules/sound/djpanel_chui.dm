@@ -10,7 +10,7 @@
 client/proc/open_dj_panel()
 	set name = "DJ Panel"
 	set desc = "Get your groove on!" //"funny function names???? first you use the WRONG INDENT STYLE and now this????" --that fuckhead on the forums
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	if (!isadmin(src) && !src.non_admin_dj)
 		boutput(src, "Only administrators or those with access may use this command.")
 		return
@@ -50,11 +50,11 @@ chui/window/dj_panel //global panel
 		switch(id)
 			if("changevol")
 				var/volnum = (input(who, "Please enter a volume:", "Please enter a volume. Default: 50.", "") as num) //have to do this otherwise multiple input boxes
-				SetVar("set_volume", CLAMP(volnum, 0, 100))
+				SetVar("set_volume", clamp(volnum, 0, 100))
 				return
 			if("changefreq")
 				var/freqnum = (input(who, "Please enter a frequency. Default : 1. Use negatives to play in reverse.", "Pitch?", "") as num) //ditto
-				SetVar("set_freq", CLAMP(freqnum, -99, 99))
+				SetVar("set_freq", clamp(freqnum, -99, 99))
 				return
 			if("changefile")
 				loaded_song = (input(who, "Upload a file:", "File Uploader - No 50MB songs!", "") as sound|null)

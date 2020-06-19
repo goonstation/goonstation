@@ -133,7 +133,7 @@
 /obj/traitorifier/wraith
 	name = "Spooky Pool"
 	desc = "The void calls."
-	icon = 'icons/effects/3dimension.dmi'
+	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "fissure"
 	attachedObjective = "Make them suffer."
 

@@ -12,13 +12,13 @@
 	if (!usr.client.eye)
 		return // heh
 
-	. = ""
+	. = list()
 	if (isalive(usr))
 		. += "<br><span class='notice'>You look closely at <B>[src.name]</B>.</span>"
 		sleep(get_dist(usr.client.eye, src) + 1)
 	if (!istype(usr, /mob/dead/target_observer))
 		if (!ignore_checks && (get_dist(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
-			return "[.]<br><span class='alert'><B>[src.name]</B> is too far away to see clearly.</span>"
+			return "[jointext(., "")]<br><span class='alert'><B>[src.name]</B> is too far away to see clearly.</span>"
 
 	try
 		. = "<br>[src.bioHolder.mobAppearance.flavor_text]"
@@ -35,13 +35,13 @@
 	if (!ignore_checks && found)
 		if (!ishuman(usr))
 			. += "<br><span class='alert'>You can't focus on [t_him], it's like looking through smoked glass.</span>"
-			return
+			return jointext(., "")
 		else
 			var/mob/living/carbon/human/H = usr
 			var/datum/ailment_data/memetic_madness/MM = H.find_ailment_by_type(/datum/ailment/disability/memetic_madness)
 			if (istype(MM) && istype(MM.master,/datum/ailment/disability/memetic_madness))
 				H.contract_memetic_madness(MM.progenitor)
-				return
+				return jointext(., "")
 
 			. += "<br><span class='notice'>A servant of His Grace...</span>"
 
@@ -222,7 +222,6 @@
 				. += "<br><span class='alert'><B>[src.name] is bleeding very badly!</B></span>"
 */
 	if (!isvampire(src)) // Added a check for vampires (Convair880).
-		src.ensure_bp_list()
 		switch (src.blood_pressure["total"])
 			if (-INFINITY to 0) // welp
 				. += "<br><span class='alert'><B>[src.name] is pale as a ghost!</B></span>"
@@ -314,3 +313,8 @@
 		else if (H.organ_istype("left_eye", /obj/item/organ/eye/cyber/prodoc) && H.organ_istype("right_eye", /obj/item/organ/eye/cyber/prodoc)) // two prodoc eyes = scan upgrade because that's cool
 			. += "<br><span class='alert'>Your ProDocs analyze [src]'s vitals.</span><br>[scan_health(src, 0, 0)]"
 			update_medical_record(src)
+		else if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/medic))
+			. += "<br><span class='alert'>Your health monitor analyzes [src]'s vitals.</span><br>[scan_health(src, 0, 0)]"
+			update_medical_record(src)
+
+	return jointext(., "")

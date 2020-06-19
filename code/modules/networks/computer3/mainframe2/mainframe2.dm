@@ -165,7 +165,7 @@
 			if (usr.stat || usr.restrained())
 				return
 
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if(href_list["core"])
 

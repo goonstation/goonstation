@@ -160,12 +160,14 @@
 /obj/cabinet/pathology
 
 	New()
+		#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 		slots["1"] = new/obj/item/reagent_containers/glass/vial/prepared(src)
 		slots["2"] = new/obj/item/reagent_containers/glass/vial/prepared(src)
 		slots["3"] = new/obj/item/reagent_containers/glass/vial/prepared(src)
 		slots["4"] = new/obj/item/reagent_containers/glass/vial/prepared(src)
 		slots["5"] = new/obj/item/reagent_containers/glass/vial/prepared(src)
 		slots["6"] = new/obj/item/reagent_containers/glass/vial/prepared(src)
+		#endif
 		rebuildOverlays()
 		return ..()
 

@@ -40,7 +40,7 @@
 	if (!global.QM_CategoryList)
 		message_coders("ZeWaka/QMCategories: QMcategoryList was not found!")
 
-	user.machine = src
+	src.add_dialog(user)
 	var/dat
 	if (src.temp)
 		dat = src.temp
@@ -94,7 +94,7 @@
 		return
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 	if (href_list["order"])
 		var/datum/data/record/account = null

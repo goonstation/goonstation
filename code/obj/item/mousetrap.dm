@@ -54,6 +54,7 @@
 				if (!user.hand)
 					which_hand = "r_arm"
 				src.triggered(user, which_hand)
+				JOB_XP(user, "Clown", 1)
 				user.visible_message("<span class='alert'><B>[user] accidentally sets off the mousetrap, breaking their fingers.</B></span>",\
 				"<span class='alert'><B>You accidentally trigger the mousetrap!</B></span>")
 				return
@@ -70,6 +71,7 @@
 				if (!user.hand)
 					which_hand = "r_arm"
 				src.triggered(user, which_hand)
+				JOB_XP(user, "Clown", 1)
 				user.visible_message("<span class='alert'><B>[user] accidentally sets off the mousetrap, breaking their fingers.</B></span>",\
 				"<span class='alert'><B>You accidentally trigger the mousetrap!</B></span>")
 				return
@@ -215,7 +217,7 @@
 				H.visible_message("<span class='alert'><B>[H] accidentally steps on the mousetrap.</B></span>",\
 				"<span class='alert'><B>You accidentally step on the mousetrap!</B></span>")
 
-		else if ((iscritter(AM)) && (src.armed))
+		else if ((ismobcritter(AM)) && (src.armed))
 			var/mob/living/critter/C = AM
 			src.triggered(C)
 			C.visible_message("<span class='alert'><B>[C] accidentally triggers the mousetrap.</B></span>",\
@@ -257,9 +259,8 @@
 			if (affecting)
 				affecting.take_damage(1, 0)
 				H.UpdateDamageIcon()
-				H.updatehealth()
 
-		else if (iscritter(target))
+		else if (ismobcritter(target))
 			var/mob/living/critter/C = target
 			C.TakeDamage("All", 1)
 

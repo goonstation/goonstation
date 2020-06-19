@@ -138,7 +138,7 @@
 /obj/submachine/mixing_desk/attack_hand(mob/user as mob)
 	if(..())
 		return
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "<a href='byond://?src=\ref[src];state=1'>[src.state_name]</a>"
 	if(state)
 		dat += "<center><h4>Mixing Desk</h4></center>"
@@ -176,7 +176,7 @@
 		var/message = html_encode(input("Choose something to say:","Message","") as null|text)
 		logTheThing("say", usr, voice, "SAY: [message] (Synthesizing the voice of <b>(%target%)</b>)")
 		var/original_name = usr.real_name
-		usr.real_name = copytext(voice, 1, 32)
+		usr.real_name = copytext(voice, 1, MOB_NAME_MAX_LENGTH)
 		usr.say(message)
 		usr.real_name = original_name
 
@@ -271,7 +271,6 @@
 			logTheThing("combat", user, M, "smashes [src] over %target%'s head! ")
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
-		M.updatehealth()
 		playsound(src, "shatter", 70, 1)
 		var/obj/O = unpool (/obj/item/raw_material/shard/glass)
 		O.set_loc(get_turf(M))
@@ -591,6 +590,13 @@
 	name = "compact tape - 'Discount Dan's Quik Noodles'"
 	audio = "sound/radio_station/quik_noodles.ogg"
 	name_of_thing = "Discount Dan's Quik Noodles"
+
+/obj/item/radio_tape/advertisement/danitos_burritos
+	name = "compact tape - 'Descuento Danito's Burritos'"
+	audio = "sound/radio_station/danitos_burritos.ogg"
+	name_of_thing = "Descuento Danito's Burritos"
+	desc = {"A small audio tape. Though, it looks too big to fit in an audio log.<br>
+	The music is Requiem for a Fish by The Freak Fandango Orchestra (CC BY-NC 4.0)"}
 
 /obj/item/radio_tape/advertisement/movie
 	name = "compact tape - 'Movie Ad'"

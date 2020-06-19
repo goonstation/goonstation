@@ -134,6 +134,7 @@
 	icon_state = "remy"
 	health = 33
 	aggressive = 0
+	generic = 0
 
 /obj/critter/opossum
 	name = "space opossum"
@@ -154,6 +155,14 @@
 
 	skinresult = /obj/item/material_piece/cloth/leather
 	max_skins = 1
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	on_revive()
 		..()
@@ -227,6 +236,8 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	event_handler_flags = USE_HASENTERED | USE_PROXIMITY | USE_FLUID_ENTER
 
 	New()
+		if(src.name == "jons the catte")
+			src.is_pet = 1
 		..()
 		if (src.randomize_cat)
 			src.name = pick(cat_names)
@@ -324,11 +335,8 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 		return
 
 	CritterDeath()
-		src.alive = 0
-		set_density(0)
+		..()
 		src.icon_state = "cat[cattype]-dead"
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> dies!")
 		if(prob(5))
 			SPAWN_DBG(3 SECONDS)
 				src.visible_message("<b>[src]</b> comes back to life, good thing he has 9 lives!")
@@ -378,6 +386,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	health = 30
 	randomize_cat = 0
 	generic = 0
+	is_pet = 2
 	var/swiped = 0
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -450,6 +459,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	firevuln = 1
 	brutevuln = 1
 	angertext = "growls at"
+	death_text = null // he's just asleep
 	atk_brute_amt = 2
 	crit_brute_amt = 4
 	chase_text = "jumps on"
@@ -521,10 +531,8 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 		return
 
 	CritterDeath()
-		src.alive = 0
-		set_density(0)
+		..()
 		src.icon_state = "[src.doggy]-lying"
-		walk_to(src,0)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='combat'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!</span>")
 		SPAWN_DBG(1 MINUTE)
@@ -546,6 +554,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	name = "Blair"
 	icon_state = "pug"
 	doggy = "pug"
+	is_pet = 2
 
 var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pecan", "Daikon", "Seaweed")
 
@@ -1755,7 +1764,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		return F
 
 /obj/critter/boogiebot
-	name = "Boogiebot"
+	name = "boogiebot"
 	desc = "A robot that looks ready to get down at any moment."
 	icon_state = "boogie"
 	density = 1
@@ -1877,7 +1886,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				animate_spin(src, pick("L","R"), 1, 0)
 
 			if (prob(10))
-				src.visible_message("\The [src] [pick("wigs out","frolics","rolls about","freaks out","spazzes out","wiggles","wobbles","dooks")]!")
+				src.visible_message("\The [src] [pick("wigs out","frolics","rolls about","freaks out","goes wild","wiggles","wobbles","dooks")]!")
 
 			src.freakout--
 			if (!src.freakout)

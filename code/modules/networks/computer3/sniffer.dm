@@ -91,7 +91,7 @@
 				return
 
 			src.add_fingerprint(usr)
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if(href_list["filtid"])
 				var/t = input(usr, "Please enter new filter net id", src.name, src.filter_id) as text

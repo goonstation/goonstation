@@ -404,7 +404,7 @@ obj/machinery/embedded_controller
 
 	attack_hand(mob/user)
 		user.Browse(return_text(), "window=computer")
-		user.machine = src
+		src.add_dialog(user)
 		onclose(user, "computer")
 
 	disposing()
@@ -435,7 +435,7 @@ obj/machinery/embedded_controller
 		if(program)
 			program.receive_user_command(href_list["command"])
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 	process()
 		if(program)
@@ -659,7 +659,7 @@ obj/machinery/embedded_controller/radio/department_controller
 		if(program)
 			program.receive_user_command(href_list["command"])
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 	process()
 		if(status & NOPOWER)
@@ -692,7 +692,7 @@ obj/machinery/embedded_controller/radio/department_controller
 		if (src.status & NOPOWER)
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/state_options = null
 

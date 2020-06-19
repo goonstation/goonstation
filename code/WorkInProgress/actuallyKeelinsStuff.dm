@@ -203,7 +203,7 @@ Returns:
 	S.filters += filter(type="layer", render_source = "*hidden_game_plane")
 	S.filters += filter(type="color", color=list(0.2,0.05,0.05, 0.1,0.3,0.2, 0.1,0.1,0.4, 0,0,0)) //Alpha method preserves interaction but you can use object outside your range and alpha gets destroyed
 	S.filters += filter(type="alpha", render_source="*test")										//Going with this because i only need visibility
-	//S.plane = 9  //If we want lighting
+	//S.plane = PLANE_LIGHTING - 1  //If we want lighting
 	usr << I
 	usr.client.screen += S
 	S.appearance_flags = KEEP_TOGETHER
@@ -788,7 +788,7 @@ var/list/electiles = list()
 	opacity = 0
 
 /datum/admins/proc/camtest()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Test Cinematic camera"
 	set desc="Test Cinematic camera"
 
@@ -1607,7 +1607,7 @@ var/list/electiles = list()
 			call(procpath)(arglist(argcopy))
 
 /datum/admins/proc/pixelexplosion()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Pixel animation mode"
 	set desc="Enter pixel animation mode"
 	alert("Due to me being a lazy fuck you have to close & reopen your client to exit this mode. ITS A DEBUG THING OKAY")
@@ -1911,7 +1911,7 @@ var/list/electiles = list()
 	anchored = 1
 	density = 0
 	opacity = 0
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "pen"
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -2102,7 +2102,7 @@ var/list/electiles = list()
 
 /obj/decal/nothing
 	name = "nothing"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank"
 	anchored = 1
 	density = 0
@@ -2111,7 +2111,7 @@ var/list/electiles = list()
 
 /obj/decal/nothingplug
 	name = "nothing"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank-plug"
 	anchored = 1
 	density = 0
@@ -2120,7 +2120,7 @@ var/list/electiles = list()
 
 /obj/decal/hfireplug
 	name = "fire"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "hfireplug"
 	anchored = 1
 	density = 0
@@ -2128,7 +2128,7 @@ var/list/electiles = list()
 
 /obj/decal/hfire
 	name = "fire"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "hfire"
 	anchored = 1
 	density = 0
@@ -2136,7 +2136,7 @@ var/list/electiles = list()
 
 /obj/decal/tileswish
 	name = "nothing"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "tileswish"
 	anchored = 1
 	density = 0
@@ -2371,7 +2371,7 @@ var/list/electiles = list()
 /obj/item/beamtest
 	desc = "beamtest thingamobob"
 	name = "beamtest thingamobob"
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "pstone"
 	item_state = "injector"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -2426,7 +2426,7 @@ var/list/electiles = list()
 		return
 
 /obj/candle_light_2spoopy
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "candle"
 	name = "spooky candle"
 	desc = "It's a big candle. It's also floating."
@@ -2452,7 +2452,7 @@ var/list/electiles = list()
 
 //Really sorry about the shitty code below. I couldn't be arsed to do it properly.
 /obj/candle_light
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "candle"
 	name = "candle"
 	desc = "It's a big candle"
@@ -2771,7 +2771,7 @@ var/list/electiles = list()
 	opacity = 0
 	density = 1
 	anchored = 1
-	icon = 'icons/effects/3dimension.dmi'
+	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "fissure"
 
 	Bumped(atom/movable/AM)
@@ -2795,7 +2795,7 @@ var/list/electiles = list()
 	opacity = 0
 	density = 1
 	anchored = 1
-	icon = 'icons/effects/3dimension.dmi'
+	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "fissure"
 
 	Bumped(atom/movable/AM)
@@ -2927,7 +2927,7 @@ var/list/electiles = list()
 		return ..(hit_atom)
 
 /proc/mod_color(var/atom/A)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Modify Icon"
 	set popup_menu = 0
 	var/list/options = list("Tint", "Invert Colors", "Change Alpha")
@@ -3019,7 +3019,7 @@ var/list/electiles = list()
 				return
 
 /client/proc/create_portal()
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Create Portal"
 	set popup_menu = 0
 
@@ -3321,7 +3321,6 @@ var/list/electiles = list()
 				SPAWN_DBG(0.3 SECONDS) //give them time to land
 					if (user)
 						user.TakeDamage("head", 200, 0)
-						user.updatehealth()
 						playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 			user.pixel_y = 0
 			user.pixel_x = 0
@@ -3847,6 +3846,7 @@ var/list/lag_list = new/list()
 	var/list/modes = new/list()
 	var/datum/engibox_mode/active_mode = null
 	var/ckey_lock = null
+	var/z_level_lock = 0
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = 1.0
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -3857,6 +3857,10 @@ var/list/lag_list = new/list()
 			boutput(user, "<span class='alert'>You are too far away.</span>")
 			return
 		if(target == loc) return
+		var/turf/T = get_turf(src)
+		if(z_level_lock && T.z != z_level_lock)
+			boutput(user, "<span class='alert'>\The [src] is not authorized to be used outside official NanoTrasen stations.</span>")
+			return
 		if(active_mode)
 			active_mode.used(user, target)
 		return
@@ -3879,7 +3883,7 @@ var/list/lag_list = new/list()
 	Topic(href, href_list)
 		if(usr.stat || usr.restrained()) return
 		if(!in_range(src, usr)) return
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["set_mode"])
 			active_mode = locate(href_list["set_mode"]) in modes
 
@@ -3903,6 +3907,8 @@ var/list/lag_list = new/list()
 		for(var/D in typesof(/datum/engibox_mode) - /datum/engibox_mode)
 			modes += new D
 
+/obj/item/engibox/station_locked
+	z_level_lock = 1 // 1 = station z level
 
 /obj/signpost
 	icon = 'icons/misc/old_or_unused.dmi'

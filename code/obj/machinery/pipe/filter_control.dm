@@ -56,7 +56,7 @@
 
 	var/list/gases = list("O2", "N2", "Plasma", "CO2", "N2O")
 	var/dat
-	user.machine = src
+	src.add_dialog(user)
 
 	var/IGoodConnection = 0
 	var/IBadConnection = 0
@@ -90,7 +90,7 @@
 	if(..())
 		return
 	if ((((get_dist(src, usr) <= 1 || usr.telekinesis == 1) || isAI(usr)) && isturf(src.loc)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (src.allowed(usr) || src.emagged && !(status & BROKEN))
 			if (href_list["tg"])	//someone modified the html so I added a check here
 				// toggle gas

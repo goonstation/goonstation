@@ -11,6 +11,9 @@
 	var/seekrange = 30
 	var/sight = SEE_SELF
 	var/see_in_dark = SEE_DARK_HUMAN + 3
+	var/antisight = 0
+	var/centerlight = null
+	var/centerlight_color = "#ffffff"
 	var/see_invisible = 2
 	var/scanning = 0
 	var/atom/tracking_target = null
@@ -24,7 +27,7 @@
 	var/trackable_range = 0
 
 
-	dispose()
+	disposing()
 		stop_tracking_me()
 		..()
 
@@ -40,7 +43,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<B>[src] Console</B><BR><HR><BR>"
 		if(src.active)
@@ -65,7 +68,7 @@
 			return
 
 		if (usr.loc == ship)
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if (href_list["scan"] && !scanning)
 				scan(usr)
@@ -83,7 +86,7 @@
 
 			src.add_fingerprint(usr)
 			for(var/mob/M in ship)
-				if ((M.client && M.machine == src))
+				if (M.using_dialog_of(src))
 					src.opencomputer(M)
 		else
 			usr.Browse(null, "window=ship_sensor")
@@ -123,7 +126,6 @@
 		animate(src.ship.myhud.tracking, transform = null, time = 10, loop = 0)
 
 		src.ship.myhud.tracking.icon_state = "off"
-		src.updateDialog()
 
 	//Tracking loop
 	proc/track_target(var/gps_coord)
@@ -201,7 +203,6 @@
 		else
 			boutput(usr, "<span class='notice'>Unable to locate target.</span>")
 			src.tracking_target = null
-		src.updateDialog()
 		scanning = 0
 
 	//For use by clicking a pod to target them, instantly add them as your tracking target
@@ -212,9 +213,8 @@
 		boutput(usr, "<span class='notice'>Tracking target: [src.tracking_target.name]</span>")
 		SPAWN_DBG(0)
 			begin_tracking(0)
-		src.updateDialog()
 		for(var/mob/M in ship)
-			if ((M.client && M.machine == src))
+			if (M.using_dialog_of(src))
 				src.opencomputer(M)
 
 //Doing nothing with the Z-level value right now.
@@ -334,7 +334,6 @@
 					lifelist += "Obscure Life Sign"
 					break
 
-		src.updateDialog()
 		sleep(1 SECOND)
 		scanning = 0
 		return
@@ -405,6 +404,9 @@ proc/build_html_gps_form(var/atom/A, var/show_Z=0, var/atom/target)
 	name = "Conclave A-1984 Sensor System"
 	desc = "Advanced geological meson scanners for ships."
 	sight = SEE_TURFS
+	antisight = SEE_BLACKNESS
+	centerlight = "thermal"
+	centerlight_color = "#9bdb9b"
 	power_used = 35
 	icon_state = "sensor-y"
 

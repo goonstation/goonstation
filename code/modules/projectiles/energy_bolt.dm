@@ -219,6 +219,7 @@ toxic - poisons
 /datum/projectile/energy_bolt/aoe
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "detain-projectile"
+	sname = "detain"
 	power = 20
 	cost = 50
 	dissipation_rate = 5
@@ -227,11 +228,8 @@ toxic - poisons
 	color_green = 165
 	color_blue = 0
 	max_range = 7 //slight range boost
-	var/hit = 0				//This hit var and the on_hit on_end nonsense was to make it so that if it hits a guy, the explosion starts on them and not one tile before, but if it hits a wall, it explodes on the floor tile in front of it
-
 
 	on_hit(atom/O, angle, var/obj/projectile/P)
-
 		//lets make getting hit by the projectile a bit worse than getting the shockwave
 		//tasers have changed in production code, I'm not really sure what value is good to give it here...
 		if (isliving(O))
@@ -239,18 +237,11 @@ toxic - poisons
 			L.changeStatus("slowed", 2 SECONDS)
 			L.do_disorient(stamina_damage = 2*P.power, weakened = 0, stunned = 0, disorient = P.power, remove_stamina_below_zero = 0)
 			L.emote("twitch_v")
-
-
-		hit = 1
-
 		detonate(O, P)
 
-	//do AOE stuff. This is not on on_hit because this effect should trigger when the projectile reaches the end of its distance OR hits things.
-	on_end(var/obj/projectile/O)
-		//if we hit a mob or something, that will handle the detonation, we don't need to do it on_end
-		if (!hit)
-			detonate(O, O)
-
+	on_max_range_die(obj/projectile/O)
+		detonate(O, O)
+		
 	proc/detonate(atom/O, var/obj/projectile/P)
 		if (istype(O, /obj/projectile))
 			var/obj/projectile/proj = O
@@ -304,7 +295,24 @@ toxic - poisons
 	disruption = 8
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
+#if ASS_JAM
 
+	on_pointblank(var/obj/projectile/P, var/mob/living/M)
+		// var/dir = angle2dir(angle)
+		M.throw_at(get_edge_target_turf(M, get_dir(M, P)),7,1, throw_type = THROW_GUNIMPACT)
+		//When it hits a mob or such should anything special happen
+	on_hit(atom/hit, angle, var/obj/projectile/O)
+		// var/dir = angle2dir(angle)
+		var/dir = get_dir(hit, O.shooter)
+		var/pow = O.power
+		O.die()
+		if (ishuman(hit))
+			var/mob/living/carbon/human/H = hit
+			H.do_disorient(stamina_damage = pow*3, weakened = 0, stunned = 0, disorient = pow*4, remove_stamina_below_zero = 0)
+			H.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)
+			H.emote("twitch_v")
+			H.changeStatus("slowed", 3 SECONDS)
+#else
 	on_pointblank(var/obj/projectile/P, var/mob/living/M)
 		// var/dir = angle2dir(angle)
 		M.throw_at(get_edge_target_turf(M, get_dir(P, M)),7,1, throw_type = THROW_GUNIMPACT)
@@ -314,14 +322,15 @@ toxic - poisons
 		// var/dir = angle2dir(angle)
 		var/dir = get_dir(O.shooter, hit)
 		var/pow = O.power
-		O.die()
 		if (ishuman(hit))
+			O.die()
 			var/mob/living/carbon/human/H = hit
 			H.do_disorient(stamina_damage = pow*3, weakened = 0, stunned = 0, disorient = pow*4, remove_stamina_below_zero = 0)
 			H.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)
 			H.emote("twitch_v")
 			H.changeStatus("slowed", 3 SECONDS)
 
+#endif
 	impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)
 		return
 

@@ -54,7 +54,7 @@ var/global/the_automaton = null
 		opensdoors = 1
 
 	CritterAttack(mob/M)
-		playsound(src.loc, "sound/misc/automaton_spaz.ogg", 50, 1)
+		playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
 		..()
 
 	process()
@@ -71,7 +71,7 @@ var/global/the_automaton = null
 			if (!src.muted)
 				src.visible_message("<span class='alert'><b>[src] emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise.</span>")
 		if (prob(5))
-			playsound(src.loc, "sound/misc/automaton_spaz.ogg", 50, 1)
+			playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
 			spin()
 
 		if ((src.aggressive || prob(6)) && locate(/obj/critter/domestic_bee) in view(7,src))
@@ -168,7 +168,7 @@ var/global/the_automaton = null
 			if(K.dodgy)
 				//Oh, you've done it now.
 				src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a while, then <B>forcefully grabs [user]!</B>.</span>")
-				playsound(src.loc, "sound/misc/automaton_spaz.ogg", 60, 1)
+				playsound(src.loc, "sound/misc/automaton_scratch.ogg", 60, 1)
 				user.changeStatus("stunned", 50)
 				user.canmove = 0
 				user.anchored = 1
@@ -203,7 +203,7 @@ var/global/the_automaton = null
 				if (!got_cheget_key)
 					got_cheget_key = 1
 					src.visible_message("<span class='alert'><B>[src]</B> clacks angrily and throws \the [W] at [user]!</span>")
-					playsound(src.loc, "sound/misc/automaton_spaz.ogg", 60, 1)
+					playsound(src.loc, "sound/misc/automaton_scratch.ogg", 60, 1)
 					W.loc = src.loc
 					W.throw_at(user, 20, 2)
 				else
@@ -233,7 +233,7 @@ var/global/the_automaton = null
 					playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
 					qdel(W)
 					sleep(0.5 SECONDS)
-					playsound(src.loc, "sound/misc/automaton_spaz.ogg", 60, 1)
+					playsound(src.loc, "sound/misc/automaton_scratch.ogg", 60, 1)
 					sleep(0.8 SECONDS)
 					src.visible_message("<span class='alert'><b>[src]</b> twitches before locking into a pose of contemplation.  Its hand held before it, as if reading from a text.</span>")
 
@@ -248,7 +248,7 @@ var/global/the_automaton = null
 				playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
 				qdel(W)
 				sleep(0.5 SECONDS)
-				playsound(src.loc, "sound/misc/automaton_spaz.ogg", 60, 1)
+				playsound(src.loc, "sound/misc/automaton_scratch.ogg", 60, 1)
 				sleep(0.8 SECONDS)
 				src.visible_message("<span class='alert'><b>[src]</b> makes a curious sign in the air. Huh.</span>")
 
@@ -277,7 +277,7 @@ var/global/the_automaton = null
 				sleep(0.5 SECONDS)
 				inserted_key()
 
-				playsound(src.loc, "sound/misc/automaton_spaz.ogg", 60, 1)
+				playsound(src.loc, "sound/misc/automaton_scratch.ogg", 60, 1)
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/pie/lime) && keycount < AUTOMATON_MAX_KEYS)
 			user.visible_message("<span class='alert'>[user] hands [W] to [src]!</span>", "You hand [W] to [src].")
 
@@ -463,7 +463,7 @@ var/global/the_automaton = null
 						sleep(0.6 SECONDS)
 						for (var/obj/O in tempEffect)
 							pool(O)
-		world << sound('sound/misc/automaton_spaz.ogg')
+		world << sound('sound/misc/automaton_scratch.ogg')
 		sleep (10)
 		world << sound('sound/ambience/spooky/Void_Screaming.ogg')
 		spin()

@@ -72,8 +72,8 @@
 				src.get_fed(10)
 
 	disposing()
-		if(!particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
-			particleMaster.RemoveSystem(new /datum/particleSystem/bhole_warning(src))
+		if(particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
+			particleMaster.RemoveSystem(/datum/particleSystem/bhole_warning)
 		..()
 
 	proc/get_fed(var/feed_amount)
@@ -114,6 +114,7 @@
 
 	disposing()
 		processing_items.Remove(src)
+		..()
 
 	Bumped(atom/A)
 		if (isliving(A))

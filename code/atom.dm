@@ -83,6 +83,7 @@
 
 /atom
 	layer = TURF_LAYER
+	plane = PLANE_DEFAULT
 	var/datum/mechanics_holder/mechanics = null
 	var/level = 2
 	var/flags = FPRINT
@@ -216,6 +217,11 @@
 
 		fingerprintshidden = null
 		tag = null
+
+		if(length(src.statusEffects))
+			for(var/datum/statusEffect/effect in src.statusEffects)
+				src.delStatus(effect)
+			src.statusEffects = null
 		..()
 	///Chemistry.
 
@@ -417,7 +423,7 @@
 	var/l_spd = 0
 	var/list/attached_objs = null //List of attached objects. Objects in this list will follow this atom around as it moves. --SOMEPOTATO: THIS MAKES ME UNCOMFORTABLE
 	var/no_gravity = 0 //Continue moving until a wall or solid object is hit.
-	var/p_class = 3.0 // how much it slows you down while pulling it, changed this from w_class because that's gunna cause issues with items that shouldn't fit in backpacks but also shouldn't slow you down to pull (sorry grayshift)
+	var/p_class = 2.5 // how much it slows you down while pulling it, changed this from w_class because that's gunna cause issues with items that shouldn't fit in backpacks but also shouldn't slow you down to pull (sorry grayshift)
 
 
 //some more of these event handler flag things are handled in set_loc far below . . .
@@ -448,6 +454,9 @@
 
 	if (temp_flags & SPACE_PUSHING)
 		EndSpacePush(src)
+
+	src.attached_objs?.Cut()
+	src.attached_objs = null
 
 
 //mbc comment out becausae im pretty sure this caused issuesss!
@@ -503,6 +512,8 @@
 	//	A.glide_size = src.glide_size
 
 	if (direct & (direct - 1))
+		ignore_simple_light_updates = 1 //to avoid double-updating on diagonal steps when we are really only taking a single step
+
 		if (direct & NORTH)
 			if (direct & EAST)
 				if (step(src, NORTH))
@@ -525,6 +536,14 @@
 					step(src, WEST)
 				else if (step(src, WEST))
 					step(src, SOUTH)
+
+		ignore_simple_light_updates = 0
+
+		if(src.medium_lights)
+			update_medium_light_visibility()
+		if (src.mdir_lights)
+			update_mdir_light_visibility(direct)
+
 		return // this should in turn fire off its own slew of move calls, so don't do anything here
 
 	var/atom/A = src.loc
@@ -584,6 +603,17 @@
 	else
 		last_turf = 0
 
+	if (!ignore_simple_light_updates)
+		if(src.medium_lights)
+			update_medium_light_visibility()
+		if (src.mdir_lights)
+			update_mdir_light_visibility(direct)
+
+
+//called once per player-invoked move, regardless of diagonal etc
+//called via pulls and mob steps
+/atom/movable/proc/OnMove(source = null)
+
 /atom/movable/proc/pull()
 	//set name = "Pull"
 	//set src in oview(1)
@@ -639,8 +669,9 @@
 	return null
 
 /atom/proc/examine(mob/user)
+	RETURN_TYPE(/list)
 	if(src.hiddenFrom && hiddenFrom.Find(user.client)) //invislist
-		return
+		return list()
 
 	var/dist = get_dist(src, user)
 	if (istype(user, /mob/dead/target_observer))
@@ -914,7 +945,10 @@
 	else
 		last_turf = 0
 
-
+	if(src.medium_lights)
+		update_medium_light_visibility()
+	if (src.mdir_lights)
+		update_mdir_light_visibility(src.dir)
 
 	return src
 
@@ -1026,10 +1060,10 @@
 
 
 /atom/proc/interact(var/mob/user)
-	if (isdead(user) || (!iscarbon(user) && !iscritter(user) && !issilicon(usr)))
+	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(usr)))
 		return
 
-	if (!istype(src.loc, /turf) || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.restrained())
+	if (!istype(src.loc, /turf) || user.stat || user.hasStatus(list("paralysis", "stunned", "weakened")) || user.restrained())
 		return
 
 	if (!can_reach(user, src))

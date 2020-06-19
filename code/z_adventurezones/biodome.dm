@@ -534,7 +534,7 @@ SYNDICATE DRONE FACTORY AREAS
 		dat += "<A href='?src=\ref[src];south=1'>Touch the third rune</A><BR>"
 		dat += "<A href='?src=\ref[src];west=1'>Touch the fourth rune</A><BR>"
 
-		usr.machine = src
+		src.add_dialog(usr)
 		usr.Browse("[dat]", "window=rtab;size=400x300")
 		onclose(usr, "rtab")
 		return
@@ -625,6 +625,7 @@ SYNDICATE DRONE FACTORY AREAS
 // spookycoders are welcome to contribute to this thing
 
 /obj/item/clothing/suit/armor/ancient/equipped(var/mob/user, var/slot)
+	..()
 	boutput(user, "<span class='notice'>The armor plates creak oddly as you put on [src].</span>")
 	playsound(src.loc, 'sound/machines/ArtifactEld2.ogg', 30, 1)
 	user.reagents.add_reagent("itching", 10)
@@ -762,7 +763,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/item/alchemy/stone
 	desc = "A blood red stone. It pulses ever so slightly when you hold it."
 	name = "philosopher's stone"
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "pstone"
 	item_state = "injector"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -791,7 +792,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/item/alchemy/powder
 	desc = "A little purple pouch filled with a white powder."
 	name = "purple pouch"
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "powder"
 	item_state = "injector"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -835,7 +836,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/item/alchemy/symbol
 	name = "Symbol"
 	desc = "Some sort of alchemical Symbol on a Scroll."
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	var/info = ""
 
 /var/list/alchemy_symbols = new/list()
@@ -886,7 +887,7 @@ SYNDICATE DRONE FACTORY AREAS
 	anchored = 1
 	density = 0
 	opacity= 0
-	icon = 'icons/effects/alch.dmi'
+	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "alch_empty"
 	var/obj/item/alchemy/symbol = null
 	var/requiredType = null

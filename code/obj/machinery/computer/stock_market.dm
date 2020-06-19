@@ -20,7 +20,7 @@
 /obj/machinery/computer/stockexchange/attack_hand(var/mob/user)
 	if(..())
 		return
-	user.machine = src
+	src.add_dialog(user)
 
 	var/css={"<style>
 .company {
@@ -252,7 +252,7 @@ a.updated {
 		return 1
 
 	if (usr in range(1, src))
-		usr.machine = src
+		src.add_dialog(usr)
 
 	if (href_list["viewhistory"])
 		var/datum/stock/S = locate(href_list["viewhistory"])

@@ -175,6 +175,7 @@
 	initial_reagents = list("fartonium"=10)
 	food_effects = list("food_sweaty_big")
 	New()
+		..()
 		if(prob(10))
 			name = pick("cleveland steamed ham","very sloppy joe","buttconator","bootyburg","quarter-mooner","ass whooper","hambuttger","big crack")
 
@@ -234,8 +235,20 @@
 
 	New()
 		..()
+		#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
 		wrap_pathogen(reagents, generate_flu_pathogen(), 7)
 		wrap_pathogen(reagents, generate_cold_pathogen(), 8)
+		#endif
+
+	heal(var/mob/M)
+		#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
+		..()
+		#else
+		boutput(M, "<span class='alert'>Oof, how old was that?.</span>")
+		if(prob(66))
+			M.reagents.add_reagent("salmonella",15)
+		..()
+		#endif
 
 /obj/item/reagent_containers/food/snacks/burger/plague
 	name = "burgle"

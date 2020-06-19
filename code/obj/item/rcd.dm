@@ -88,7 +88,7 @@ Broken RCD + Effects
 	// What index into mode list we are (used for updating)
 	var/internal_mode = 1
 
-	get_desc(dist)
+	get_desc()
 		. += "<br>It holds [matter]/[max_matter] matter units. It is currently set to "
 		switch (src.mode)
 			if (RCD_MODE_FLOORSWALLS)
@@ -139,6 +139,7 @@ Broken RCD + Effects
 				src.matter += R.matter
 				R.matter = 0
 				qdel(R)
+			R.tooltip_rebuild = 1
 			src.update_icon()
 			playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
 			boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter-units.")
@@ -169,7 +170,6 @@ Broken RCD + Effects
 				boutput(user, "Changed mode to 'Pod Door Control'")
 				boutput(user, "<span class='notice'>Place a door control on a wall, then place any amount of pod doors on floors.</span>")
 				boutput(user, "<span class='notice'>You can also select an existing door control by whacking it with \the [src].</span>")
-
 		// Gonna change this so it doesn't shit sparks when mode switched
 		// Just that it does it only after actually doing something
 		//src.shitSparks()
@@ -414,6 +414,7 @@ Broken RCD + Effects
 		if (GetOverlayImage("mode"))
 			src.ClearSpecificOverlays("mode")
 		var/ammo_amt = 0
+		tooltip_rebuild = 1
 		switch (round((src.matter / src.max_matter) * 100)) //is the round() necessary? yell at me if it isnt
 			if (10 to 34)
 				ammo_amt = 1

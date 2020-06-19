@@ -69,7 +69,7 @@
 		if(angry)
 			boutput(user, "<span class='alert'>[src] is angry and won't trade with anyone right now.</span>")
 			return
-		user.machine = src
+		src.add_dialog(user)
 		lastWindowName = windowName
 
 		var/dat = updatemenu()
@@ -100,19 +100,13 @@
 		shopping_cart = null
 		..()
 
-	updateUsrDialog()
-		for(var/client/C)
-			if (C.mob?.machine == src)
-				if (get_dist(C.mob,src) <= 1)
-					src.openTrade(C.mob)
-
 
 	Topic(href, href_list)
 		if(..())
 			return
 
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			usr.machine = src
+			src.add_dialog(usr)
 		///////////////////////////////
 		///////Generate Purchase List//
 		///////////////////////////////
@@ -819,7 +813,9 @@
 				src.goods_sell += new /datum/commodity/synthmodule/parasite(src)
 				src.goods_sell += new /datum/commodity/synthmodule/gmcell(src)
 				src.goods_sell += new /datum/commodity/synthmodule/vaccine(src)
+				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 				src.goods_sell += new /datum/commodity/pathogensample(src)
+				#endif
 
 				src.goods_sell += new /datum/commodity/bodyparts/cyberheart(src)
 				src.goods_sell += new /datum/commodity/bodyparts/cyberbutt(src)
@@ -1082,7 +1078,7 @@
 /obj/npc/trader/exclown/attackby(obj/item/W as obj, mob/living/user as mob)
 	if (!src.honk && user.mind && user.mind.assigned_role == "Clown" && istype(W, /obj/item/toy/diploma))
 		src.visible_message("<span class='alert'><B>[user]</B> pokes [src] with [W]. [src] nods knowingly.</span>")
-		src.spawncrate(/obj/vehicle/clowncar)
+		src.spawncrate(/obj/item/storage/box/banana_grenade_kit)
 		src.honk = 1
 	else
 		..()

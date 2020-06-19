@@ -24,7 +24,8 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 	var/inj_amount = -1
 
 	equipped(var/mob/user, var/slot)
-		if(slot == "belt")
+		..()
+		if(slot == SLOT_BELT)
 			owner = user
 			if (container && container.reagents.total_volume && condition)
 				active = 1
@@ -43,12 +44,13 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		return
 
 	unequipped(mob/user as mob)
+		..()
 		owner = null
 		active = 0
 		return
 
 	attack_self(mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = ""
 		dat += container ? "Container: <A href='?src=\ref[src];remove_cont=1'>[container.name]</A> - [container.reagents.total_volume] / [container.reagents.maximum_volume] Units<BR><BR>" : "Please attach a beaker<BR><BR>"
 		dat += condition ? "[condition.name] - [condition.desc] <A href='?src=\ref[src];remove_cond=1'>(Remove)</A><BR><BR>" : "<A href='?src=\ref[src];sel_cond=1'>(Select Condition)</A><BR><BR>"
@@ -170,7 +172,8 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 	var/inj_amount = -1
 
 	equipped(var/mob/user, var/slot)
-		if(slot == "mask")
+		..()
+		if(slot == SLOT_WEAR_MASM)
 			owner = user
 			if (container && container.reagents.total_volume && condition)
 				active = 1
@@ -189,12 +192,13 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		return
 
 	unequipped(mob/user as mob)
+		..()
 		owner = null
 		active = 0
 		return
 
 	attack_self(mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = ""
 		dat += container ? "Container: <A href='?src=\ref[src];remove_cont=1'>[container.name]</A> - [container.reagents.total_volume] / [container.reagents.maximum_volume] Units<BR><BR>" : "Please attach a beaker<BR><BR>"
 		dat += condition ? "[condition.name] - [condition.desc] <A href='?src=\ref[src];remove_cond=1'>(Remove)</A><BR><BR>" : "<A href='?src=\ref[src];sel_cond=1'>(Select Condition)</A><BR><BR>"

@@ -50,7 +50,8 @@
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
 	var/collide_with_other_projectiles = 0 //allow us to pass canpass() function to proj_data as well as receive bullet_act events
-
+	var/list/hitlist = list() //list of atoms collided with this tick
+	var/reflectcount = 0
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
 #if ASS_JAM
 	var/projectile_paused = FALSE //for time stopping
@@ -69,7 +70,7 @@
 		yo = y
 		if (do_turn)
 			//src.transform = null
-			src.transform = turn(matrix(),(angle_override ? angle_override : atan2(y,x)))
+			src.transform = turn(matrix(),(angle_override ? angle_override : arctan(y,x)))
 		else if (angle_override)
 			src.transform = null
 			facing_dir = angle2dir(angle_override)
@@ -77,14 +78,15 @@
 	proc/launch()
 		if (proj_data)
 			proj_data.on_launch(src)
+		src.setup()
 		if (!disposed && !pooled && !qdeled)
 			SPAWN_DBG(-1)
 				if (!is_processing)
 					process()
 
 	proc/process()
-		if (!src.was_setup)
-			src.setup()
+		if(hitlist.len)
+			hitlist.len = 0
 		is_processing = 1
 		while (!disposed)
 #if ASS_JAM //dont move while in timestop
@@ -95,17 +97,25 @@
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0
 
+	proc/get_power(obj/O)
+		return src.proj_data.power - max(0,((isnull(src.orig_turf)? 0 : get_dist(src.orig_turf, get_turf(O)))-src.proj_data.dissipation_delay))*src.proj_data.dissipation_rate
+
 	proc/collide(atom/A as mob|obj|turf|area)
 		if (!A) return // you never know ok??
 		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
+		if (A in hitlist)
+			return
+		else
+			hitlist += A
 		if (A == shooter) return // never collide with the original shooter
 		if (ismob(A)) //don't doublehit
 			if (ticks_until_can_hit_mob > 0 || goes_through_mobs)
 				return
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				ticks_until_can_hit_mob = src.proj_data.ticks_between_mob_hits
-
+		src.power = src.get_power(A)
+		if(src.power <= 0 && src.proj_data.power != 0) return //we have run out of power
 		// Necessary because the check in human.dm is ineffective (Convair880).
 		var/immunity = check_target_immunity(A, source = src)
 		if (immunity)
@@ -115,6 +125,7 @@
 			//die()
 			return
 
+		var/sigreturn = SEND_SIGNAL(src, COMSIG_PROJ_COLLIDE, A)
 		// also run the atom's general bullet act
 		var/atom/B = A.bullet_act(src) //If bullet_act returns an atom, do all bad stuff to that atom instead
 		if(istype(B))
@@ -136,7 +147,7 @@
 			for (var/obj/O in A)
 				O.bullet_act(src)
 			var/turf/T = A
-			if (T.density && !goes_through_walls)
+			if (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL))
 				if (proj_data && proj_data.icon_turf_hit && istype(A, /turf/simulated/wall))
 					var/turf/simulated/wall/W = A
 					if (src.forensic_ID)
@@ -152,7 +163,6 @@
 				if (proj_data && proj_data.hit_object_sound)
 					playsound(A, proj_data.hit_object_sound, 60, 0.5)
 				die()
-
 		else if (ismob(A))
 			if(pierces_left != 0) //try to hit other targets on the tile
 				var/turf/T = get_turf(A)
@@ -173,8 +183,8 @@
 							if (D.on)
 								D.disrupt(X)
 								src.visible_message("<span class='notice'><b>[X]'s disguiser is disrupted!</b></span>")
-						if (ishuman(X))
-							var/mob/living/carbon/human/H = X
+						if (isliving(X))
+							var/mob/living/H = X
 							H.stamina_stun()
 							if (istype(X, /mob/living/carbon/human/npc/monkey))
 								var/mob/living/carbon/human/npc/monkey/M = X
@@ -206,7 +216,7 @@
 				pierces_left--
 
 		else if (isobj(A))
-			if (A.density && !goes_through_walls)
+			if (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ))
 				if (iscritter(A))
 					if (proj_data && proj_data.hit_mob_sound)
 						playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
@@ -214,7 +224,6 @@
 					if (proj_data && proj_data.hit_object_sound)
 						playsound(A.loc, proj_data.hit_object_sound, 60, 0.5)
 				die()
-
 		else
 			die()
 
@@ -248,8 +257,10 @@
 		incidence = 0
 		special_data.len = 0
 		overlays = null
+		hitlist.len = 0
 		transform = null
 		internal_speed = null
+		orig_turf = null
 		pierces_left = 0
 		goes_through_walls = 0
 		goes_through_mobs = 0
@@ -258,6 +269,7 @@
 		collide_with_other_projectiles = 0
 		is_processing = 0
 		facing_dir = 1
+		reflectcount = 0
 		..()
 
 	//just in fuck in case
@@ -300,7 +312,6 @@
 		goes_through_walls = src.proj_data.goes_through_walls
 		goes_through_mobs = src.proj_data.goes_through_mobs
 		set_icon()
-		orig_turf = get_turf(src)
 
 		var/len = sqrt(src.xo * src.xo + src.yo * src.yo)
 
@@ -352,9 +363,8 @@
 				y32 = -y32
 		var/max_t
 		if (proj_data.dissipation_rate && proj_data.max_range == 500) //500 is default maximum range
-			max_t = proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate) + 1
-		else
-			max_t = proj_data.max_range // why not
+			proj_data.max_range = proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate)
+		max_t = proj_data.max_range // why not
 		var/next_x = x32 / 2
 		var/next_y = y32 / 2
 		var/ct = 0
@@ -420,12 +430,10 @@
 		src.dissipation_ticker++
 
 		// The bullet has expired/decayed.
-		if (src.dissipation_ticker > src.proj_data.dissipation_delay || src.dissipation_ticker > src.proj_data.max_range)
-			src.power -= src.proj_data.dissipation_rate
-			if (src.power <= 0 || src.dissipation_ticker > src.proj_data.max_range)
-				proj_data.on_max_range_die(src)
-				die()
-				return
+		if (src.dissipation_ticker > src.proj_data.max_range)
+			proj_data.on_max_range_die(src)
+			die()
+			return
 		proj_data.tick(src)
 		if (disposed)
 			return
@@ -525,6 +533,7 @@
 		src.tracked_blood = null
 		return
 
+ABSTRACT_TYPE(/datum/projectile)
 datum/projectile
 	// These vars were copied from the an projectile datum. I am not sure which version, probably not 4407.
 	var
@@ -596,7 +605,7 @@ datum/projectile
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
 	var/pierces = 0
-	var/ticks_between_mob_hits = 1
+	var/ticks_between_mob_hits = 0
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
 
 
@@ -629,9 +638,9 @@ datum/projectile
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
 			if(ks_ratio == 0) //stun projectiles only
 				impact_image_effect("T", hit)
-				if (isliving(hit))
-					var/mob/living/L = hit
-					stun_bullet_hit(O,L)
+//				if (isliving(hit))
+//					var/mob/living/L = hit
+//					stun_bullet_hit(O,L)
 			return
 		tick(var/obj/projectile/O)
 			return
@@ -789,13 +798,12 @@ datum/projectile/snowball
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
-	var/turf/target = get_turf(T)
-	var/obj/projectile/Q = shoot_projectile_relay(S, DATA, target, remote_sound_source)
+	var/obj/projectile/Q = shoot_projectile_relay(S, DATA, T, remote_sound_source)
 	if (DATA.shot_number > 1)
 		SPAWN_DBG(-1)
 			for (var/i = 2, i < DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
-				shoot_projectile_relay(S, DATA, target, remote_sound_source)
+				shoot_projectile_relay(S, DATA, T, remote_sound_source)
 	return Q
 
 /proc/shoot_projectile_ST_pixel(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy)
@@ -803,13 +811,12 @@ datum/projectile/snowball
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
-	var/turf/target = get_turf(T)
-	var/obj/projectile/Q = shoot_projectile_relay_pixel(S, DATA, target, pox, poy)
+	var/obj/projectile/Q = shoot_projectile_relay_pixel(S, DATA, T, pox, poy)
 	if (DATA.shot_number > 1)
 		SPAWN_DBG(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
-				shoot_projectile_relay_pixel(S, DATA, target, pox, poy)
+				shoot_projectile_relay_pixel(S, DATA, T, pox, poy)
 	return Q
 
 /proc/shoot_projectile_ST_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle)
@@ -817,13 +824,12 @@ datum/projectile/snowball
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
-	var/turf/target = get_turf(T)
-	var/obj/projectile/Q = shoot_projectile_relay_pixel_spread(S, DATA, target, pox, poy, spread_angle)
+	var/obj/projectile/Q = shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle)
 	if (DATA.shot_number > 1)
 		SPAWN_DBG(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
-				shoot_projectile_relay_pixel_spread(S, DATA, target, pox, poy, spread_angle)
+				shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle)
 	return Q
 
 /proc/shoot_projectile_DIR(var/atom/movable/S, var/datum/projectile/DATA, var/dir, var/atom/movable/remote_sound_source)
@@ -930,6 +936,7 @@ datum/projectile/snowball
 	P.name = DATA.name
 	P.setMaterial(DATA.material)
 	P.power = DATA.power
+	P.orig_turf = S
 
 	if (DATA.implanted)
 		P.implanted = DATA.implanted
@@ -961,19 +968,24 @@ datum/projectile/snowball
 	L.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 
 
-/proc/shoot_reflected_to_sender(var/obj/projectile/P, var/obj/reflector)
+/proc/shoot_reflected_to_sender(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3)
+	if(P.reflectcount >= max_reflects)
+		return
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)
 	if (!Q)
 		return null
+	Q.reflectcount = P.reflectcount + 1
 	if (ismob(P.shooter))
 		Q.mob_shooter = P.shooter
 	Q.name = "reflected [Q.name]"
 	Q.launch()
 	return Q
 
-/proc/shoot_reflected_true(var/obj/projectile/P, var/obj/reflector)
+/proc/shoot_reflected_true(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3)
 	if (!P.incidence || !(P.incidence in cardinal))
 		return null
+	if(P.reflectcount >= max_reflects)
+		return
 
 	var/rx = 0
 	var/ry = 0
@@ -992,6 +1004,7 @@ datum/projectile/snowball
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, rx, ry, reflector)
 	if (!Q)
 		return null
+	Q.reflectcount = P.reflectcount + 1
 	if (ismob(P.shooter))
 		Q.mob_shooter = P.shooter
 	Q.name = "reflected [Q.name]"

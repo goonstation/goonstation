@@ -1,9 +1,9 @@
-/atom/var/throw_count = 0	  //Counts up for tiles traveled in throw mode. Only resets for mobs.
+/atom/var/throw_count = 0	  //Counts up for tiles traveled in throw mode. Stacks on diagonals, stacks on stacked throws.
+/atom/var/throw_traveled = 0	//same as above, however if throw_at is provided a source param it will refer to the ACTUAL distance of the throw (dist proc)
 /atom/var/throw_unlimited = 0 //Setting this to 1 before throwing will make the object behave as if in space. //If set on turf, the turf will allow infinite throwing over itself.
 /atom/var/throw_return = 0    //When 1 item will return like a boomerang.
 /atom/var/throw_spin = 1      //If the icon spins while thrown
 /atom/var/throw_pixel = 1		//1 if the pixel vars will be adjusted depending on aiming/mouse params, on impact.
-/atom/var/throw_traveled = 0
 /atom/var/last_throw_x = 0
 /atom/var/last_throw_y = 0
 /mob/var/gib_flag = 0 	      //Sorry about this.
@@ -32,7 +32,7 @@
 /atom/proc/throw_begin(atom/target)
 	return
 
-/atom/proc/throw_end() //throw ends (callback regardless of whether we impacted something)
+/atom/proc/throw_end(list/params) //throw ends (callback regardless of whether we impacted something)
 	return
 
 /atom/movable/proc/throw_impact(atom/hit_atom, list/params)
@@ -200,14 +200,15 @@
 		src.throwing = 0
 	..()
 
-/atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1)
+/atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 	if (!target) return
+	if (src.anchored && !allow_anchored) return
 	if (reagents)
 		reagents.physical_shock(14)
 	src.throwing = throw_type
 
-	if (src.throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT))
+	if (src.throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT | THROW_SLIP))
 		if (ismob(src))
 			var/mob/M = src
 			M.force_laydown_standup()
@@ -221,7 +222,7 @@
 	if(!istype(src)) return
 
 	var/matrix/transform_original = src.transform
-	if (src.throw_spin == 1)
+	if (src.throw_spin == 1 && !(throwing & THROW_SLIP))
 		animate(src, transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
@@ -345,14 +346,18 @@
 			T = src.loc
 
 	//done throwing, either because it hit something or it finished moving
-	src.throw_end()
+
+	animate(src, transform = transform_original)
+
+	src.throw_end(params)
+
 	if (!hitAThing) // Bump proc requires throwing flag to be set, so if we hit a thing, leave it on and let Bump turn it off
 		src.throwing = 0
 	else // if we hit something don't use the pixel x/y from the click params
 		params = null
 
 	src.throw_unlimited = 0
-	animate(src, transform = transform_original)
+
 
 	//Wire note: Small fix stemming from pie science. Throw a pie at yourself! Whoa!
 	//if (target == usr)
@@ -360,8 +365,14 @@
 	//	src.throwing = 0
 	//Somepotato note: this is gross. Way to make wireless killing machines!!!
 
-	throw_traveled = dist_travelled
+	throw_traveled = dist_travelled //dist traveled is super innacurrate, especially when stacking throws
+	if (thrown_from)//if we have htis param we should use it to get the REAL distance.
+		throw_traveled = get_dist(get_turf(src),get_turf(thrown_from))
+
 	if(isobj(src)) src:throw_impact(get_turf(src), params)
+
+	src.throw_traveled = 0
+	src.throw_count = 0
 
 	if(target != usr && src.throw_return) throw_at(usr, src.throw_range, src.throw_speed)
 	//testing boomrang stuff

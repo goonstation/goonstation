@@ -105,7 +105,6 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] gently pushes the end of [src] into [his_or_her(user)] nose, then leans forward until [he_or_she(user)] falls to the floor face first!</b></span>")
 		user.TakeDamage("head", 175, 0)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -277,6 +276,21 @@
 			src.color_name = hex2color_name(src.color)
 			src.name = "[src.color_name] crayon"
 
+		choose
+			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you.  You might not get it back. Spin it, go ahead, you know you want to."
+
+			on_spin_emote(var/mob/living/carbon/human/user as mob)
+				..(user)
+				src.color = random_color()
+				src.font_color = src.color
+				src.color_name = hex2color_name(src.color)
+				src.name = "[src.color_name] crayon"
+				user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
+				JOB_XP(user, "Clown", 1)
+
+
+
+
 	rainbow
 		name = "strange crayon"
 		color = "#FFFFFF"
@@ -306,7 +320,7 @@
 			user.take_brain_damage(120)
 		user.u_equip(src)
 		src.set_loc(user) // SHOULD be redundant but you never know.
-		user.updatehealth()
+		health_update_queue |= user
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -361,7 +375,7 @@
 	random
 		New()
 			..()
-			src.color = "#[num2hex(rand(0, 255))][num2hex(rand(0, 255))][num2hex(rand(0, 255))]"
+			src.color = "#[num2hex(rand(0, 255),2)][num2hex(rand(0, 255),2)][num2hex(rand(0, 255),2)]"
 			src.font_color = src.color
 			src.color_name = hex2color_name(src.color)
 			src.name = "[src.color_name] chalk"
@@ -424,7 +438,6 @@
 		SPAWN_DBG(5 DECI SECONDS) // so we get a moment to think before we die
 			user.take_oxygen_deprivation(175)
 		user.u_equip(src)
-		user.updatehealth()
 		src.set_loc(user) //yes i did this dont ask why i cant literally think of anything better to do
 		SPAWN_DBG(10 SECONDS)
 			if (user)
@@ -483,7 +496,7 @@
 	name = "hand labeler"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "labeler"
-	item_state = "flight"
+	item_state = "labeler"
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
 	var/label = null
 	var/labels_left = 10
@@ -526,6 +539,7 @@
 		if(!user.literate)
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
+		tooltip_rebuild = 1
 		var/str = copytext(html_encode(input(usr,"Label text?","Set label","") as null|text), 1, 32)
 		if(url_regex && url_regex.Find(str))
 			str = null
@@ -587,7 +601,6 @@
 		Label(user,user,1)
 
 		user.TakeDamage("chest", 300, 0) //they have to die fast or it'd make even less sense
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -634,7 +647,7 @@
 		if ((usr.stat || usr.restrained()))
 			return
 		if (usr.contents.Find(src))
-			usr.machine = src
+			src.add_dialog(usr)
 			if (href_list["pen"])
 				if (src.pen)
 					usr.put_in_hand_or_drop(src.pen)
@@ -675,12 +688,7 @@
 
 				src.add_fingerprint(usr)
 
-			if (ismob(src.loc))
-				var/mob/M = src.loc
-				if (M.machine == src)
-					SPAWN_DBG( 0 )
-						src.attack_self(M)
-						return
+			src.updateSelfDialog()
 		return
 
 	attack_hand(mob/user as mob)
@@ -747,6 +755,7 @@
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 10
+	tooltip_flags = REBUILD_DIST
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
 		if (istype(W, /obj/item/paper))
@@ -755,6 +764,7 @@
 				user.drop_item()
 				W.set_loc(src)
 				src.amount++
+				tooltip_rebuild = 1
 
 	attack_self(var/mob/user as mob)
 		show_window(user)
@@ -762,12 +772,13 @@
 	Topic(var/href, var/href_list)
 		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.hasStatus("paralysis") || usr.hasStatus("stunned") || usr.hasStatus("weakened") || usr.hasStatus("resting"))
+		if (usr.hasStatus("paralysis", "stunned", "weakened", "resting"))
 			return
 		..()
 
 		if(href_list["action"] == "retrieve")
 			usr.put_in_hand_or_drop(src.contents[text2num(href_list["id"])], usr)
+			tooltip_rebuild = 1
 			usr.visible_message("[usr] takes a piece of paper out of the folder.")
 		show_window(usr) // to refresh the window
 

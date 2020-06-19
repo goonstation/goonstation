@@ -89,7 +89,7 @@
 /obj/machinery/computer/tetris/attack_hand(mob/user as mob)
 	if(..())
 		return
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = replacetext(tetriscode, "{{HIGHSCORE}}", num2text(highscore))
 	dat = replacetext(dat, "{{TOPICURL}}", "'?src=\ref[src];highscore='+this.ScoreCur;")
 
