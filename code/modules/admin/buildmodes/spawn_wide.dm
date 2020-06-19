@@ -2,6 +2,9 @@
 	name = "Wide Area Spawn"
 	desc = {"***********************************************************<br>
 Right Mouse Button on buildmode button = Set object type<br>
+Ctrl-RMB on buildmode button = Set cinematic effect<br>
+Alt-RMB on buildmode button = Toggle deleting areas<br>
+
 Left Mouse Button on turf/mob/obj      = Mark corners of area with two clicks<br>
 Right Mouse Button                     = Delete all objects and turfs in the area marked with two clicks<br>
 <br>
