@@ -1,5 +1,9 @@
 
 (t)fri jun 19 20
+(u)AwkwardDryad
+(p)347
+(e)|
+(+)Fixed tons of clothing booth bugs :D
 (u)Kubius
 (p)1133
 (e)🗺|mapping
