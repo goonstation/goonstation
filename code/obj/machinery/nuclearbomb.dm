@@ -44,6 +44,9 @@
 		..()
 
 	disposing()
+		if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+			var/datum/game_mode/nuclear/NUKEMODE = ticker.mode
+			NUKEMODE.the_bomb = null
 		qdel(wirepanel)
 		..()
 
