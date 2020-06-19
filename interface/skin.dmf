@@ -372,6 +372,7 @@ menu "menu"
 		category = "&Window"
 		can-check = true
 		saved-params = "is-checked"
+		is-checked = true
 	elem "hide_status_bar"
 		name = "&Hide status bar"
 		command = ".winset \"hide_status_bar.is-checked=true?mainwindow.statusbar=false:mainwindow.statusbar=true\""
