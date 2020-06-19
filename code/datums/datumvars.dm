@@ -172,7 +172,7 @@
 	if (istype(D, /datum))
 		html += " &middot; <a href='byond://?src=\ref[src];AddComponent=\ref[D]'>Add Component</a>"
 	html += "<br><a href='byond://?src=\ref[src];Delete=\ref[D]'>Delete</a>"
-	html += "<br><a href='byond://?src=\ref[src];HardDelete=\ref[D]'>Hard Delete</a>"
+	html += " &middot; <a href='byond://?src=\ref[src];HardDelete=\ref[D]'>Hard Delete</a>"
 	if (istype(D, /atom) || istype(D, /image))
 		html += " &middot; <a href='byond://?src=\ref[src];Display=\ref[D]'>Display In Chat (slow!)</a>"
 
@@ -454,7 +454,7 @@
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/datum/D = locate(href_list["HardDelete"])
 			if(alert(src, "Are you sure you want to delete [D] of type [D.type]?",,"Yes","No") == "Yes")
-				Del(D)
+				del(D)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to delete something all rude-like.")
 		return
