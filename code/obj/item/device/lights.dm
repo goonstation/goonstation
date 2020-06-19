@@ -129,9 +129,16 @@
 	col_r = 0.0
 	col_g = 0.9
 	col_b = 0.1
-	brightness = 0.5
+	brightness = 0.6
 	height = 0.75
 	var/color_name = "green"
+	light_type = null
+	var/datum/component/holdertargeting/simple_light/light_c
+
+	New()
+		..()
+		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
+		light_c.update(0)
 
 	proc/burst()
 		var/turf/T = get_turf(src.loc)
@@ -142,7 +149,7 @@
 	proc/turnon()
 		on = 1
 		icon_state = "[base_state][on]"
-		light.enable()
+		light_c.update(1)
 
 	//Can be heated. Has chance to explode when heated. After heating, can explode when thrown or fussed with!
 	attackby(obj/item/W as obj, mob/user as mob)
