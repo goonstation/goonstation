@@ -262,6 +262,7 @@ a.popt {text-decoration: none;}
 .italic, .ghostdronesay.broadcast {font-style: italic;}
 
 /* OUTPUT COLORS */
+.regular { color: #000000; }
 .mhelp {color: #CC0066;}
 .success {color: green;}
 .hint {color: #0000ff;}
@@ -337,6 +338,7 @@ h1.alert, h2.alert {color: #000000;}
 
 /* bog-standard dark theme with easy, unsaturated colors */
 body.theme-dark { background-color: #23272a; color: #99AAB5; }
+body.theme-dark .regular { color: #99AAB5; }
 body.theme-dark .notice { color: #677BC4; }
 body.theme-dark .hint { color: #677BC4; }
 body.theme-dark .internal { color: #677BC4; }
