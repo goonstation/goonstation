@@ -11,7 +11,7 @@
 	var/list/connects_to = list(/turf/simulated/wall/auto,/turf/simulated/wall/false_wall)
 	var/list/connects_with_overlay = null
 	var/image/connect_image = null
-	var/connect_overlay_dir = 0
+	var/tmp/connect_overlay_dir = 0
 	var/d_state = 0
 
 	New()

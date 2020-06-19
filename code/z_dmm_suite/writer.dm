@@ -4,8 +4,7 @@
 
 dmm_suite
 	var/save_comment = 1
-	var/static/list/map_save_var_blacklist = list("flags", "luminosity", "checkingcanpass", "net_id", "processing_bucket", "netnum", "host_id", \
-		"tdir", "current_processing_tier", "connect_overlay_dir", "blog", "lastbumped")
+	var/static/list/map_save_var_blacklist = list("flags", "luminosity", "net_id", "host_id", "glide_size", "screen_loc")
 
 	/*-- write_map -----------------------------------
 	Generates DMM map text from a region represented by turfs on two opposite

@@ -1,12 +1,12 @@
-/atom/var/throw_count = 0	  //Counts up for tiles traveled in throw mode. Stacks on diagonals, stacks on stacked throws.
-/atom/var/throw_traveled = 0	//same as above, however if throw_at is provided a source param it will refer to the ACTUAL distance of the throw (dist proc)
-/atom/var/throw_unlimited = 0 //Setting this to 1 before throwing will make the object behave as if in space. //If set on turf, the turf will allow infinite throwing over itself.
-/atom/var/throw_return = 0    //When 1 item will return like a boomerang.
-/atom/var/throw_spin = 1      //If the icon spins while thrown
-/atom/var/throw_pixel = 1		//1 if the pixel vars will be adjusted depending on aiming/mouse params, on impact.
-/atom/var/last_throw_x = 0
-/atom/var/last_throw_y = 0
-/mob/var/gib_flag = 0 	      //Sorry about this.
+/atom/var/tmp/throw_count = 0	  //Counts up for tiles traveled in throw mode. Stacks on diagonals, stacks on stacked throws.
+/atom/var/tmp/throw_traveled = 0	//same as above, however if throw_at is provided a source param it will refer to the ACTUAL distance of the throw (dist proc)
+/atom/var/tmp/throw_unlimited = 0 //Setting this to 1 before throwing will make the object behave as if in space. //If set on turf, the turf will allow infinite throwing over itself.
+/atom/var/tmp/throw_return = 0    //When 1 item will return like a boomerang.
+/atom/var/tmp/throw_spin = 1      //If the icon spins while thrown
+/atom/var/tmp/throw_pixel = 1		//1 if the pixel vars will be adjusted depending on aiming/mouse params, on impact.
+/atom/var/tmp/last_throw_x = 0
+/atom/var/tmp/last_throw_y = 0
+/mob/var/tmp/gib_flag = 0 	      //Sorry about this.
 
 /atom/movable/proc/hit_check()
 	if(src.throwing)

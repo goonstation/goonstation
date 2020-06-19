@@ -76,13 +76,13 @@
 
 	var/showTooltip = 1
 	var/showTooltipDesc = 1
-	var/lastTooltipTitle = null
-	var/lastTooltipContent = null
-	var/lastTooltipName = null
-	var/lastTooltipDist = null
-	var/lastTooltipUser = null
-	var/lastTooltipSpectro = null
-	var/tooltip_rebuild = 1
+	var/tmp/lastTooltipTitle = null
+	var/tmp/lastTooltipContent = null
+	var/tmp/lastTooltipName = null
+	var/tmp/lastTooltipDist = null
+	var/tmp/lastTooltipUser = null
+	var/tmp/lastTooltipSpectro = null
+	var/tmp/tooltip_rebuild = 1
 	var/rarity = ITEM_RARITY_COMMON //Just a little thing to indicate item rarity. RPG fluff.
 
 	var/datum/item_special/special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.

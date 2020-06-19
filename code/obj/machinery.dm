@@ -19,10 +19,10 @@
 	var/power_credit = 0
 	var/wire_powered = 0
 	var/allow_stunned_dragndrop = 0
-	var/processing_bucket = 1
-	var/processing_tier = PROCESSING_EIGHTH
-	var/current_processing_tier
-	var/machine_registry_idx // List index for misc. machines registry, used in loops where machines of a specific type are needed
+	var/tmp/processing_bucket = 1
+	var/tmp/processing_tier = PROCESSING_EIGHTH
+	var/tmp/current_processing_tier
+	var/tmp/machine_registry_idx // List index for misc. machines registry, used in loops where machines of a specific type are needed
 
 	// New() and disposing() add and remove machines from the global "machines" list
 	// This list is used to call the process() proc for all machines ~1 per second during a round
