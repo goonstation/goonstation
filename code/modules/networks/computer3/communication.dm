@@ -221,7 +221,7 @@
 				generate_signal(comm_net_id, "command", "call", "shuttle_id", "emergency", "acc_code", netpass_heads, "reason", call_reason)
 				logTheThing("admin", usr, null,  "attempted to call the Emergency Shuttle via COMMaster (reason: [call_reason])")
 				logTheThing("diary", usr, null, "attempted to call the Emergency Shuttle via COMMaster (reason: [call_reason])", "admin")
-				message_admins("<span class='notice'>[key_name(usr)] attempted to call the Emergency Shuttle to the station via COMMaster</span>")
+				message_admins("<span class='internal'>[key_name(usr)] attempted to call the Emergency Shuttle to the station via COMMaster</span>")
 
 			if(MENU_TRANSMIT_TITLE)
 				src.transmit_title = copytext(html_decode(trim(strip_html(html_decode(text)))), 1, 140)
@@ -298,13 +298,13 @@
 					if("shutl_e_sen")
 						src.print_text("<b>Alert:</b> The Emergency Shuttle has been called.")
 						if(usr)
-							message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
+							message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
 							logTheThing("station", null, null, "[key_name(usr)] called the Emergency Shuttle to the station")
 
 					if("shutl_e_ret")
 						src.print_text("<b>Alert:</b> The Emergency Shuttle has been recalled.")
 						if(usr)
-							message_admins("<span class='notice'>[key_name(usr)] recalled the Emergency Shuttle</span>")
+							message_admins("<span class='internal'>[key_name(usr)] recalled the Emergency Shuttle</span>")
 							logTheThing("station", null, null, "[key_name(usr)] recalled the Emergency Shuttle")
 
 					if("transmit_e_success")

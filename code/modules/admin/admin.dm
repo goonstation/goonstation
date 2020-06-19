@@ -95,7 +95,7 @@ var/global/noir = 0
 		return
 
 	if (usr.client != src.owner)
-		message_admins("<span class='notice'>[key_name(usr)] has attempted to override the admin panel!</span>")
+		message_admins("<span class='internal'>[key_name(usr)] has attempted to override the admin panel!</span>")
 		logTheThing("admin", usr, null, "tried to use the admin panel without authorization.")
 		logTheThing("diary", usr, null, "tried to use the admin panel without authorization.", "admin")
 		return
@@ -301,7 +301,7 @@ var/global/noir = 0
 						command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 						logTheThing("admin", usr, null,  "called the Emergency Shuttle (reason: [call_reason])")
 						logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
-						message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
+						message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
 
 					if("2")
 						if ((!( ticker ) || emergency_shuttle.location || emergency_shuttle.direction == 0))
@@ -316,13 +316,13 @@ var/global/noir = 0
 								command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 								logTheThing("admin", usr, null, "called the Emergency Shuttle (reason: [call_reason])")
 								logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
-								message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
+								message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
 							if(1)
 								emergency_shuttle.recall()
 								boutput(world, "<span class='notice'><B>Alert: The shuttle is going back!</B></span>")
 								logTheThing("admin", usr, null, "sent the Emergency Shuttle back")
 								logTheThing("diary", usr, null, "sent the Emergency Shuttle back", "admin")
-								message_admins("<span class='notice'>[key_name(usr)] recalled the Emergency Shuttle</span>")
+								message_admins("<span class='internal'>[key_name(usr)] recalled the Emergency Shuttle</span>")
 			else
 				alert("You need to be at least a Secondary Administrator to do a shuttle call.")
 
@@ -334,7 +334,7 @@ var/global/noir = 0
 				emergency_shuttle.settimeleft(timeleft)
 				logTheThing("admin", usr, null, "edited the Emergency Shuttle's timeleft to [timeleft]")
 				logTheThing("diary", usr, null, "edited the Emergency Shuttle's timeleft to [timeleft]", "admin")
-				message_admins("<span class='notice'>[key_name(usr)] edited the Emergency Shuttle's timeleft to [timeleft]</span>")
+				message_admins("<span class='internal'>[key_name(usr)] edited the Emergency Shuttle's timeleft to [timeleft]</span>")
 			else
 				alert("You need to be at least a Primary Administrator to edit the shuttle timer.")
 
@@ -343,7 +343,7 @@ var/global/noir = 0
 				emergency_shuttle.disabled = !emergency_shuttle.disabled
 				logTheThing("admin", usr, null, "[emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle")
 				logTheThing("diary", usr, null, "[emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle", "admin")
-				message_admins("<span class='notice'>[key_name(usr)] [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle</span>")
+				message_admins("<span class='internal'>[key_name(usr)] [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle</span>")
 				// someone forgetting about leaving shuttle calling disabled would be bad so let's inform the Admin Crew if it happens, just in case
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.owner:key
@@ -358,7 +358,7 @@ var/global/noir = 0
 				emergency_shuttle.can_recall = !emergency_shuttle.can_recall
 				logTheThing("admin", usr, null, "[emergency_shuttle.can_recall ? "en" : "dis"]abled recalling the Emergency Shuttle")
 				logTheThing("diary", usr, null, "[emergency_shuttle.can_recall ? "en" : "dis"]abled recalling the Emergency Shuttle", "admin")
-				message_admins("<span class='notice'>[key_name(usr)] [emergency_shuttle.can_recall ? "en" : "dis"]abled recalling the Emergency Shuttle</span>")
+				message_admins("<span class='internal'>[key_name(usr)] [emergency_shuttle.can_recall ? "en" : "dis"]abled recalling the Emergency Shuttle</span>")
 			else
 				alert("You need to be at least a Primary Administrator to enable/disable shuttle recalling.")
 
@@ -395,7 +395,7 @@ var/global/noir = 0
 
 							logTheThing("admin", usr, null, "deleted note [noteId] belonging to [player].")
 							logTheThing("diary", usr, null, "deleted note [noteId] belonging to [player].", "admin")
-							message_admins("<span class='notice'>[key_name(usr)] deleted note [noteId] belonging to <A href='?src=%admin_ref%;action=notes&target=[player]'>[player]</A>.</span>")
+							message_admins("<span class='internal'>[key_name(usr)] deleted note [noteId] belonging to <A href='?src=%admin_ref%;action=notes&target=[player]'>[player]</A>.</span>")
 
 							var/ircmsg[] = new()
 							ircmsg["key"] = src.owner:key
@@ -417,7 +417,7 @@ var/global/noir = 0
 
 					logTheThing("admin", usr, null, "added a note for [player]: [the_note]")
 					logTheThing("diary", usr, null, "added a note for [player]: [the_note]", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] added a note for <A href='?src=%admin_ref%;action=notes&target=[player]'>[player]</A>: [the_note]</span>")
+					message_admins("<span class='internal'>[key_name(usr)] added a note for <A href='?src=%admin_ref%;action=notes&target=[player]'>[player]</A>: [the_note]</span>")
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = src.owner:key
@@ -572,14 +572,14 @@ var/global/noir = 0
 							return
 					logTheThing("admin", usr, M, "unbanned %target% from [job]")
 					logTheThing("diary", usr, M, "unbanned %target% from [job]", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] unbanned [key_name(M)] from [job]</span>")
+					message_admins("<span class='internal'>[key_name(usr)] unbanned [key_name(M)] from [job]</span>")
 					addPlayerNote(M.ckey, usr.ckey, "[usr.ckey] unbanned [M.ckey] from [job]")
 					jobban_unban(M, job)
 					if (announce_jobbans) boutput(M, "<span class='alert'><b>[key_name(usr)] has lifted your [job] job-ban.</b></span>")
 				else
 					logTheThing("admin", usr, M, "banned %target% from [job]")
 					logTheThing("diary", usr, M, "banned %target% from [job]", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] banned [key_name(M)] from [job]</span>")
+					message_admins("<span class='internal'>[key_name(usr)] banned [key_name(M)] from [job]</span>")
 					addPlayerNote(M.ckey, usr.ckey, "[usr.ckey] banned [M.ckey] from [job]")
 					if(job == "Everything Except Assistant")
 						if(jobban_keylist.Find(text("[M.ckey] - Engineering Department")))
@@ -618,7 +618,7 @@ var/global/noir = 0
 				if(t)
 					logTheThing("admin", usr, null, "removed [t]")
 					logTheThing("diary", usr, null, "removed [t]", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] removed [t]</span>")
+					message_admins("<span class='internal'>[key_name(usr)] removed [t]</span>")
 					jobban_remove(t)
 			else
 				alert("You need to be at least a Coder to remove job bans.")
@@ -635,7 +635,7 @@ var/global/noir = 0
 						muted = 1
 					logTheThing("admin", usr, M, "has [(muted ? "permanently muted" : "unmuted")] %target%")
 					logTheThing("diary", usr, M, "has [(muted ? "permanently muted" : "unmuted")] %target%.", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] has [(muted ? "permanently muted" : "unmuted")] [key_name(M)].</span>")
+					message_admins("<span class='internal'>[key_name(usr)] has [(muted ? "permanently muted" : "unmuted")] [key_name(M)].</span>")
 					boutput(M, "You have been [(muted ? "permanently muted" : "unmuted")].")
 			else
 				alert("You need to be at least a Moderator to mute people.")
@@ -652,7 +652,7 @@ var/global/noir = 0
 						muted = 1
 					logTheThing("admin", usr, M, "has [(muted ? "temporarily muted" : "unmuted")] %target%")
 					logTheThing("diary", usr, M, "has [(muted ? "temporarily muted" : "unmuted")] %target%.", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] has [(muted ? "temporarily muted" : "unmuted")] [key_name(M)].</span>")
+					message_admins("<span class='internal'>[key_name(usr)] has [(muted ? "temporarily muted" : "unmuted")] [key_name(M)].</span>")
 					boutput(M, "You have been [(muted ? "temporarily muted" : "unmuted")].")
 			else
 				alert("You need to be at least a Moderator to mute people.")
@@ -668,7 +668,7 @@ var/global/noir = 0
 						oocban_unban(M)
 					logTheThing("admin", usr, M, "has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] %target%")
 					logTheThing("diary", usr, M, "has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] %target%.", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] [key_name(M)].</span>")
+					message_admins("<span class='internal'>[key_name(usr)] has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] [key_name(M)].</span>")
 
 		if ("toggle_hide_mode")
 			if (src.level >= LEVEL_SA)
@@ -734,7 +734,7 @@ var/global/noir = 0
 				if (requestedMode in valid_modes)
 					logTheThing("admin", usr, null, "set the mode as [requestedMode].")
 					logTheThing("diary", usr, null, "set the mode as [requestedMode].", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] set the mode as [requestedMode].</span>")
+					message_admins("<span class='internal'>[key_name(usr)] set the mode as [requestedMode].</span>")
 					world.save_mode(requestedMode)
 					master_mode = requestedMode
 					if(master_mode == "battle_royale")
@@ -759,7 +759,7 @@ var/global/noir = 0
 				var/newmode = href_list["type"]
 				logTheThing("admin", usr, null, "set the next round's mode as [newmode].")
 				logTheThing("diary", usr, null, "set the next round's mode as [newmode].", "admin")
-				message_admins("<span class='notice'>[key_name(usr)] set the next round's mode as [newmode].</span>")
+				message_admins("<span class='internal'>[key_name(usr)] set the next round's mode as [newmode].</span>")
 				world.save_mode(newmode)
 				if (alert("Declare mode change to all players?","Mode Change","Yes","No") == "Yes")
 					boutput(world, "<span class='notice'><b>The next round's mode will be: [newmode]</b></span>")
@@ -775,7 +775,7 @@ var/global/noir = 0
 					var/mob/living/carbon/human/N = M
 					logTheThing("admin", usr, M, "attempting to monkeyize %target%")
 					logTheThing("diary", usr, M, "attempting to monkeyize %target%", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] attempting to monkeyize [key_name(M)]</span>")
+					message_admins("<span class='internal'>[key_name(usr)] attempting to monkeyize [key_name(M)]</span>")
 					N.monkeyize()
 				else
 					boutput(usr, "<span class='alert'>You can't transform that mob type into a monkey.</span>")
@@ -794,7 +794,7 @@ var/global/noir = 0
 					speech = copytext(sanitize(speech), 1, MAX_MESSAGE_LEN)
 					logTheThing("admin", usr, M, "forced %target% to say: [speech]")
 					logTheThing("diary", usr, M, "forced %target% to say: [speech]", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] forced [key_name(M)] to say: [speech]</span>")
+					message_admins("<span class='internal'>[key_name(usr)] forced [key_name(M)] to say: [speech]</span>")
 			else
 				alert("You need to be at least a Primary Administrator to force players to say things.")
 
@@ -1086,7 +1086,7 @@ var/global/noir = 0
 					if ("Cow")
 						H.set_mutantrace(/datum/mutantrace/cow)
 				if(.)
-					message_admins("<span class='notice'>[key_name(usr)] transformed [H.real_name] into a [which].</span>")
+					message_admins("<span class='internal'>[key_name(usr)] transformed [H.real_name] into a [which].</span>")
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to transform a player.")
 
@@ -1841,7 +1841,7 @@ var/global/noir = 0
 				if (tokens <= 0)
 					logTheThing("admin", usr, M, "Removed all antag tokens from %target%")
 					logTheThing("diary", usr, M, "Removed all antag tokens from %target%", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] removed all antag tokens from [key_name(M)]</span>")
+					message_admins("<span class='internal'>[key_name(usr)] removed all antag tokens from [key_name(M)]</span>")
 				else
 					logTheThing("admin", usr, M, "Set %target%'s Antag tokens  to [tokens].")
 					logTheThing("diary", usr, M, "Set %target%'s Antag tokens  to [tokens].")
@@ -1985,7 +1985,7 @@ var/global/noir = 0
 								H.set_mutantrace(/datum/mutantrace/flashy)
 							if ("Cow")
 								H.set_mutantrace(/datum/mutantrace/cow)
-						message_admins("<span class='notice'>[key_name(usr)] transformed [H.real_name] into a [which].</span>")
+						message_admins("<span class='internal'>[key_name(usr)] transformed [H.real_name] into a [which].</span>")
 						logTheThing("admin", usr, null, "transformed [H.real_name] into a [which].")
 						logTheThing("diary", usr, null, "transformed [H.real_name] into a [which].", "admin")
 
@@ -2008,14 +2008,14 @@ var/global/noir = 0
 								if("Cow")
 									H.set_mutantrace(/datum/mutantrace/cow)
 							LAGCHECK(LAG_LOW)
-						message_admins("<span class='notice'>[key_name(usr)] transformed everyone into a [which].</span>")
+						message_admins("<span class='internal'>[key_name(usr)] transformed everyone into a [which].</span>")
 						logTheThing("admin", usr, null, "transformed everyone into a [which].")
 						logTheThing("diary", usr, null, "transformed everyone into a [which].", "admin")
 					if("prisonwarp")
 						if(!ticker)
 							alert("The game hasn't started yet!", null, null, null, null, null)
 							return
-						message_admins("<span class='notice'>[key_name(usr)] teleported all players to the prison zone.</span>")
+						message_admins("<span class='internal'>[key_name(usr)] teleported all players to the prison zone.</span>")
 						logTheThing("admin", usr, null, "teleported all players to the prison zone.")
 						logTheThing("diary", usr, null, "teleported all players to the prison zone.", "admin")
 						for(var/mob/living/carbon/human/H in mobs)
@@ -2065,7 +2065,7 @@ var/global/noir = 0
 								if(checktraitor(H)) continue
 								evilize(H, which_traitor, hardmode, custom_objective, escape_objective)
 
-							message_admins("<span class='notice'>[key_name(usr)] made everyone a[hardmode ? " hard-mode" : ""] [which_traitor]. Objective is [custom_objective]</span>")
+							message_admins("<span class='internal'>[key_name(usr)] made everyone a[hardmode ? " hard-mode" : ""] [which_traitor]. Objective is [custom_objective]</span>")
 							logTheThing("admin", usr, null, "made everyone a[hardmode ? " hard-mode" : ""] [which_traitor]. Objective is [custom_objective]")
 							logTheThing("diary", usr, null, "made everyone a[hardmode ? " hard-mode" : ""] [which_traitor]. Objective is [custom_objective]", "admin")
 						else
@@ -3758,7 +3758,7 @@ var/global/noir = 0
 		current_state = GAME_STATE_SETTING_UP
 		logTheThing("admin", usr, null, "has started the game.")
 		logTheThing("diary", usr, null, "has started the game.", "admin")
-		message_admins("<span class='notice'>[usr.key] has started the game.</span>")
+		message_admins("<span class='internal'>[usr.key] has started the game.</span>")
 		return 1
 	else
 		//alert("Game has already started you fucking jerk, stop spamming up the chat :ARGH:") //no, FUCK YOU coder, for making this annoying popup
@@ -3778,12 +3778,12 @@ var/global/noir = 0
 		boutput(world, "<b>The game start has been delayed.</b>")
 		logTheThing("admin", usr, null, "delayed the game start.")
 		logTheThing("diary", usr, null, "delayed the game start.", "admin")
-		message_admins("<span class='notice>[usr.key] has delayed the game start.</span>")
+		message_admins("<span class='internal>[usr.key] has delayed the game start.</span>")
 	else
 		boutput(world, "<b>The game will start soon.</b>")
 		logTheThing("admin", usr, null, "removed the game start delay.")
 		logTheThing("diary", usr, null, "removed the game start delay.", "admin")
-		message_admins("<span class='notice>[usr.key] has removed the game start delay.</span>")
+		message_admins("<span class='internal>[usr.key] has removed the game start delay.</span>")
 
 /datum/admins/proc/delay_end()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
@@ -3793,7 +3793,7 @@ var/global/noir = 0
 	if (game_end_delayed == 2)
 		logTheThing("admin", usr, null, "removed the restart delay and triggered an immediate restart.")
 		logTheThing("diary", usr, null, "removed the restart delay and triggered an immediate restart.", "admin")
-		message_admins("<span class='notice>[usr.key] removed the restart delay and triggered an immediate restart.</span>")
+		message_admins("<span class='internal>[usr.key] removed the restart delay and triggered an immediate restart.</span>")
 		ircbot.event("roundend")
 		Reboot_server()
 
@@ -3802,7 +3802,7 @@ var/global/noir = 0
 		game_end_delayer = usr.key
 		logTheThing("admin", usr, null, "delayed the server restart.")
 		logTheThing("diary", usr, null, "delayed the server restart.", "admin")
-		message_admins("<span class='notice'>[usr.key] delayed the server restart.</span>")
+		message_admins("<span class='internal'>[usr.key] delayed the server restart.</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr && usr.client) ? usr.client.key : "NULL"
@@ -3815,7 +3815,7 @@ var/global/noir = 0
 		game_end_delayer = null
 		logTheThing("admin", usr, null, "removed the restart delay.")
 		logTheThing("diary", usr, null, "removed the restart delay.", "admin")
-		message_admins("<span class='notice'>[usr.key] removed the restart delay.</span>")
+		message_admins("<span class='internal'>[usr.key] removed the restart delay.</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr && usr.client) ? usr.client.key : "NULL"
@@ -4067,7 +4067,7 @@ var/global/noir = 0
 	if(!mass_traitor_obj)
 		logTheThing("admin", usr, M, "made %target% a[special ? " [special]" : ""] [traitor_type].")
 		logTheThing("diary", usr, M, "made %target% a[special ? " [special]" : ""] [traitor_type].", "admin")
-		message_admins("<span class='notice'>[key_name(usr)] has made [key_name(M)] a[special ? " [special]" : ""] [traitor_type].</span>")
+		message_admins("<span class='internal'>[key_name(usr)] has made [key_name(M)] a[special ? " [special]" : ""] [traitor_type].</span>")
 	return
 
 /datum/admins/proc/get_item_desc(var/target)
