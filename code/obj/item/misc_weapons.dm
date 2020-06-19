@@ -110,8 +110,9 @@
 				if (use_glowstick)
 					src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src)
 
-		if (src.loaded_glowstick) //the glowstick needs to be on!
-			src.loaded_glowstick.turnon()
+		if (!src.loaded_glowstick && use_glowstick) //the glowstick needs to be on!
+			src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src) // rainbow is basicall diffracted white light
+		src.loaded_glowstick.turnon()
 
 		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
