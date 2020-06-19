@@ -11,6 +11,7 @@ change the direction of created objects.<br>
 	icon_state = "buildmode5"
 	var/objpath = null
 	var/cinematic = "Blink"
+	var/delete_area = 0
 	var/turf/A = null
 
 	deselected()
@@ -21,6 +22,11 @@ change the direction of created objects.<br>
 		if(ctrl)
 			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "None", "Fancy and Inefficient yet Laggy Telepad")) || cinematic
 			return
+		if(alt)
+			delete_area = !delete_area
+			boutput(usr, delete_area ? "<span class='alert'>Now also deleting areas!</span>" : "<span class='alert'>Now not deleting areas!</span>")
+			return
+
 		objpath = get_one_match(input("Type path", "Type path", "/obj/closet"), /atom)
 		update_button_text(objpath)
 		A = null
@@ -156,6 +162,8 @@ change the direction of created objects.<br>
 					blink(T)
 				for (var/obj/O in T)
 					qdel (O)
+				if (delete_area)
+					new /area(T)
 				T.ReplaceWithSpaceForce()
 				LAGCHECK(LAG_LOW)
 			A = null
