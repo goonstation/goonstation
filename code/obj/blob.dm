@@ -137,7 +137,7 @@ var/image/blob_icon_cache
 			attack(pick(allowed))
 
 	disposing()
-		if (disposed || in_disposing)
+		if (qdeled || in_disposing)
 			return
 		in_disposing = 1
 		var/datum/controller/process/blob/B = get_master_blob_controller()
@@ -348,7 +348,7 @@ var/image/blob_icon_cache
 		src.health -= amount
 		src.health = max(0,min(src.health_max,src.health))
 
-		if (src.health == 0)
+		if (src.health <= 0)
 			src.onKilled()
 			if (overmind)
 				overmind.onBlobDeath(src, user)
