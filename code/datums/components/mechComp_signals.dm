@@ -35,11 +35,13 @@
 /datum/component/mechanics_holder/Initialize(var/master, var/filtered = 0)
     src.master = master
     src.filtered = filtered
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_MSG), .proc/fireInput)
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_INPUT), .proc/addInput)    //MarkNstein needs attention
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_RECEIVE_MSG), .proc/fireInput)
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_TRANSMIT_MSG), .proc/fireOutgoing)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_INCOMING), .proc/removeIncoming)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_OUTGOING), .proc/removeOutgoing)    //MarkNstein needs attention
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_OUTGOING), .proc/removeOutgoing)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_ALL_CONNECTIONS), .proc/WipeConnections)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_INCOMING), .proc/removeIncoming)
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_CONNECT), .proc/dropConnect)    //MarkNstein needs attention
 
 /datum/component/mechanics_holder/disposing()
     wipeIncoming()
@@ -142,7 +144,7 @@
 
 
 //Called when a component is dragged onto another one.
-/datum/component/mechanics_holder/proc/dropConnect(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
+/datum/component/mechanics_holder/proc/dropConnect(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)//MarkNstein needs attention
     if(!O || O == master || !O.mechanics) return //ZeWaka: Fix for null.mechanics
 
     var/typesel = input(usr, "Use [master] as:", "Connection Type") in list("Trigger", "Receiver", "*CANCEL*")

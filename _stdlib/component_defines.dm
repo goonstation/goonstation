@@ -77,14 +77,17 @@
 #define COMSIG_PROJ_COLLIDE "proj_collide_atom"
 
 // mechcomp signals
+/// Add an input chanel for a device to send into
+#define COMSIG_MECHCOMP_ADD_INPUT "mechcomp_add_input"
+/// Receiving a message from a mechcomp device for handling
+#define COMSIG_MECHCOMP_RECEIVE_MSG "mechcomp_receive_message"
 /// Passing a message to a mechcomp device for handling
-#define COMSIG_MECHCOMP_MSG "mechcomp_transmit_message"
+#define COMSIG_MECHCOMP_TRANSMIT_MSG "mechcomp_transmit_message"
 /// Remove [the caller] from the list of transmitting devices
 #define COMSIG_MECHCOMP_RM_INCOMING "mechcomp_remove_incoming"
 /// Remove [the caller] from the list of receiving devices
 #define COMSIG_MECHCOMP_RM_OUTGOING "mechcomp_remove_outgoing"
 /// Remove all connected devices
-#define COMSIG_MECHCOMP_RM_ALL_CONNECTIONS "mechcomp_remove_outgoing"      //MarkNstein needs attention
-/// Remove [the caller] from the list of receiving devices
-#define COMSIG_MECHCOMP_RM_OUTGOING "mechcomp_remove_outgoing"
-COMSIG_MECHCOMP_RM_ALL_CONNECTIONS
+#define COMSIG_MECHCOMP_RM_ALL_CONNECTIONS "mechcomp_remove_all_connections"      //MarkNstein needs attention
+/// Connect two mechcomp devices together
+#define COMSIG_MECHCOMP_CONNECT "mechcomp_connect_devices"
