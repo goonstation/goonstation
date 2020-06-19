@@ -3758,7 +3758,7 @@ var/global/noir = 0
 		current_state = GAME_STATE_SETTING_UP
 		logTheThing("admin", usr, null, "has started the game.")
 		logTheThing("diary", usr, null, "has started the game.", "admin")
-		message_admins("<font color='blue'>[usr.key] has started the game.</font>")
+		message_admins("<span class='notice'>[usr.key] has started the game.</span>")
 		return 1
 	else
 		//alert("Game has already started you fucking jerk, stop spamming up the chat :ARGH:") //no, FUCK YOU coder, for making this annoying popup
@@ -3778,12 +3778,12 @@ var/global/noir = 0
 		boutput(world, "<b>The game start has been delayed.</b>")
 		logTheThing("admin", usr, null, "delayed the game start.")
 		logTheThing("diary", usr, null, "delayed the game start.", "admin")
-		message_admins("<font color='blue'>[usr.key] has delayed the game start.</font>")
+		message_admins("<span class='notice>[usr.key] has delayed the game start.</span>")
 	else
 		boutput(world, "<b>The game will start soon.</b>")
 		logTheThing("admin", usr, null, "removed the game start delay.")
 		logTheThing("diary", usr, null, "removed the game start delay.", "admin")
-		message_admins("<font color='blue'>[usr.key] has removed the game start delay.</font>")
+		message_admins("<span class='notice>[usr.key] has removed the game start delay.</span>")
 
 /datum/admins/proc/delay_end()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
@@ -3793,7 +3793,7 @@ var/global/noir = 0
 	if (game_end_delayed == 2)
 		logTheThing("admin", usr, null, "removed the restart delay and triggered an immediate restart.")
 		logTheThing("diary", usr, null, "removed the restart delay and triggered an immediate restart.", "admin")
-		message_admins("<font color='blue'>[usr.key] removed the restart delay and triggered an immediate restart.</font>")
+		message_admins("<span class='notice>[usr.key] removed the restart delay and triggered an immediate restart.</span>")
 		ircbot.event("roundend")
 		Reboot_server()
 
@@ -3802,7 +3802,7 @@ var/global/noir = 0
 		game_end_delayer = usr.key
 		logTheThing("admin", usr, null, "delayed the server restart.")
 		logTheThing("diary", usr, null, "delayed the server restart.", "admin")
-		message_admins("<font color='blue'>[usr.key] delayed the server restart.</font>")
+		message_admins("<span class='notice>[usr.key] delayed the server restart.</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr && usr.client) ? usr.client.key : "NULL"
@@ -3815,7 +3815,7 @@ var/global/noir = 0
 		game_end_delayer = null
 		logTheThing("admin", usr, null, "removed the restart delay.")
 		logTheThing("diary", usr, null, "removed the restart delay.", "admin")
-		message_admins("<font color='blue'>[usr.key] removed the restart delay.</font>")
+		message_admins("<span class='notice>[usr.key] removed the restart delay.</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr && usr.client) ? usr.client.key : "NULL"

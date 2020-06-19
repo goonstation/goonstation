@@ -137,6 +137,10 @@ var/global
 			var/data = json_encode(list("loadAdminCode" = replacetext(replacetext(grabResource("html/adminOutput.html"), "\n", ""), "\t", "")))
 			ehjax.send(src.owner, "browseroutput", url_encode(data))
 
+		changeTheme(theme)
+			var/data = json_encode(list("changeTheme" = theme))
+			ehjax.send(src.owner, "browseroutput", url_encode(data))
+
 		//Sends client connection details to the chat to handle and save
 		sendClientData()
 			//Fix for Cannot read null.ckey (how!?)
