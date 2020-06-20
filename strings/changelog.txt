@@ -4,6 +4,7 @@
 (p)1153
 (e)|
 (+)Automenders will ramp up their healing more slowly over time (instead of 1 cycle to reach max, now it's 7 cycles and the healing amount will increase each cycle from 1 - 6).
+(+)Thrown items can cancel progress bars that were normally interrupted by only melee attacks now. This affects the mender, for example.
 (t)fri jun 20 20
 (u)UrsulaMajor
 (e)🆕|feature
