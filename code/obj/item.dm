@@ -119,7 +119,9 @@
 		. += "<hr>"
 		if(rarity >= 4)
 			. += "<div><img src='[resource("images/tooltips/rare.gif")]' alt='' class='icon' /><span>Rare item</span></div>"
-		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [src.stamina_damage ? src.stamina_damage : "0"] stam, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10))*(src.force ? src.force : "0"), 0.1)] DPS</span></div>"
+		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [src.throwforce ? src.throwforce : "0"] thrown dmg</span></div>"
+		if (src.stamina_cost)
+			. += "<div><img src='[resource("images/tooltips/stamina.png")]' alt='' class='icon' /><span>Stamina: [src.stamina_damage ? src.stamina_damage : "0"] dmg, [stamina_cost] consumed per attack</span></div>"
 
 		if(src.properties && src.properties.len)
 			for(var/datum/objectProperty/P in src.properties)
