@@ -10,8 +10,8 @@
 	burn_possible = 1
 	health = 50
 
-	stamina_damage = 40
-	stamina_cost = 40
+	stamina_damage = 50
+	stamina_cost = 25
 	stamina_crit_chance = 10
 
 	New()

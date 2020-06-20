@@ -787,7 +787,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 	stamina_damage = 15
-	stamina_cost = 15
+	stamina_cost = 8
 	stamina_crit_chance = 10
 
 /obj/effect/boommarker

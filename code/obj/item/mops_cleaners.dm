@@ -242,7 +242,7 @@ WET FLOOR SIGN
 	throw_range = 10
 	w_class = 3.0
 	flags = FPRINT | TABLEPASS
-	stamina_damage = 35
+	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 10
 
@@ -610,7 +610,7 @@ WET FLOOR SIGN
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 	stamina_damage = 15
-	stamina_cost = 15
+	stamina_cost = 4
 	stamina_crit_chance = 10
 
 	New()
