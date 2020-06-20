@@ -68,7 +68,6 @@
 
 client
 	var/list/plane_parents = list()
-	var/obj/screen/plane_parent/master_plane // But they were, all of them, deceived, for another plane was made.
 	var/list/plane_displays = list()
 	var/obj/screen/plane_display/master/game_display
 
