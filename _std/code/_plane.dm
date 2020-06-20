@@ -20,6 +20,9 @@
 #define PASS_MOUSE 1024
 #endif
 
+// uncomment when people update to 513.1526 💀
+// #define COOL_PLANE_STUFF
+
 /obj/screen/plane_parent
 	name = ""
 	icon = null
@@ -36,10 +39,14 @@
 		src.blend_mode = blend_mode
 		src.color = color
 		src.mouse_opacity = mouse_opacity
+#ifdef COOL_PLANE_STUFF
 		if(is_screen)
 			src.render_target = "[name]"
 		else
 			src.render_target = "*[name]"
+#else
+		src.render_target = "[name]"
+#endif
 		src.is_screen = is_screen
 
 	proc/add_depth_shadow()
@@ -93,6 +100,7 @@ client
 		plane_parents += new /obj/screen/plane_parent(PLANE_HUD, appearance_flags = NO_CLIENT_COLOR, name = "hud_plane", is_screen = 1)
 		plane_parents += new /obj/screen/plane_parent(PLANE_SCREEN_OVERLAYS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "screen_overlays_plane", is_screen = 1)
 
+#ifdef COOL_PLANE_STUFF
 		game_display = new
 		src.screen += game_display
 
@@ -101,6 +109,7 @@ client
 			plane_displays += display
 			if(!pl.is_screen)
 				game_display.vis_contents += display
+#endif
 
 		var/obj/screen/plane_parent/P = new /obj/screen/plane_parent(PLANE_HIDDENGAME, name = "hidden_game_plane")
 		plane_parents += P
