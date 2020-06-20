@@ -585,7 +585,7 @@
 		var/turf/T = get_turf(item_existing)
 		if (item_existing && T.z == 1)
 			var/datum/bounty_item/B = new /datum/bounty_item(src)
-			B.path = item_existing.type
+			B.path = choice
 			B.item = item_existing
 			B.name = item_existing.name
 
