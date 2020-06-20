@@ -44,7 +44,7 @@
 	var/dropped_item = new dropped_item_type(turf_to_drop_on)
 	var/dropped_items_string = "\a [dropped_item]"
 	var/items_length = length(items_to_drop)
-	for(var/i = 2, i <= items_length, i++)
+	for(var/i = 2 in 2 to items_length)
 		dropped_item_type = items_to_drop[i]
 		dropped_item = new dropped_item_type(turf_to_drop_on)
 		if(i == items_length)
