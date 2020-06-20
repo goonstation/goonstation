@@ -1,6 +1,11 @@
 
 (t)sat jun 20 20
 (u)mbc
+(p)1157
+(e)|
+(*)Rebalanced stamina damage of lots of items - fixes many cases where an item would consume more stamina than it was dealing! (subject to further adjustment pending testing)
+(*)Tooltips have more clarity about stamina consumption and throw force
+(u)mbc
 (p)1153
 (e)|
 (+)Automenders will ramp up their healing more slowly over time (instead of 1 cycle to reach max, now it's 7 cycles and the healing amount will increase each cycle from 1 - 6).
