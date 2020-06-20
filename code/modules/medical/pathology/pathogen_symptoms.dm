@@ -2105,12 +2105,16 @@ datum/pathogeneffects/malevolent/snaps/jazz
 			var/obj/item/clothing/under/misc/syndicate/T = new /obj/item/clothing/under/misc/syndicate(H)
 			T.name = "Jazzy Turtleneck"
 			if (H.w_uniform)
-				H.u_equip(H.w_uniform)
+				var/obj/item/I = H.w_uniform
+				H.u_equip(I)
+				I.set_loc(H.loc)
 			H.equip_if_possible(T, H.slot_w_uniform)
 		if (!(H.head && istype(H.head, /obj/item/clothing/head/flatcap)))
 			var/obj/item/clothing/head/flatcap/F = new /obj/item/clothing/head/flatcap(H)
 			if (H.head)
-				H.u_equip(H.head)
+				var/obj/item/I = H.head
+				H.u_equip(I)
+				I.set_loc(H.loc)
 			H.equip_if_possible(F, H.slot_head)
 
 		if (!H.find_type_in_hand(/obj/item/instrument/saxophone))
@@ -2228,3 +2232,63 @@ datum/pathogeneffects/malevolent/detonation
 		if (R == "synthflesh")
 			return "There are stray synthflesh pieces all over the dish."
 
+datum/pathogeneffects/malevolent/cat
+	name = "Mewbonyic Pwague"
+	desc = "The pathogen will cause you to develop catlike features and behaviors."
+	rarity = RARITY_RARE
+
+	may_react_to()
+		return "The pathogen's cells seem to be pouncing on one another."
+
+	disease_act(var/mob/M, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+
+		if(!M.bioHolder.HasEffect("accent_owo"))	// no need for a message, the mutation should give it
+			M.bioHolder.AddEffect("accent_owo")
+
+		if (prob(origin.stage*origin.stage))
+			M.reagents.add_reagent("catdrugs", 10)
+
+		var/mob/living/carbon/human/H = null
+		if(istype(M, /mob/living/carbon/human))
+			H = M
+
+		if (origin.stage >= 2 && H)
+			if (!(H.head && istype(H.head, /obj/item/clothing/head/nyan)))
+				var/obj/item/clothing/head/nyan/E = new /obj/item/clothing/head/nyan/random(H) // kill me
+				if (H.head)
+					var/obj/item/I = H.head
+					H.u_equip(I)
+					I.set_loc(H.loc)
+				H.equip_if_possible(E, H.slot_head)
+				H.show_message("Your ears suddenly feel a lot ... cuter")
+		// if (origin.stage >= 3)
+		//	 insert cat tail item here when it is inevitably created
+		if (origin.stage >= 4)
+			if(!M.bioHolder.HasEffect("cat"))	// no need for a message, the mutation should give it
+				M.bioHolder.AddEffect("cat")
+
+	oncured(mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		M.bioHolder.RemoveEffect("accent_owo")			// we are nothing if not merciful
+		M.bioHolder.RemoveEffect("cat")
+
+	react_to(var/R, var/zoom)
+		if (R == "catonium" || R == "catdrugs")
+			return "The pathogen cells seem highly active around the [R]."
+
+datum/pathogeneffects/malevolent/cat/unstable
+	name = "Unstable Mewbonyic Pwague"
+	desc = "The pathogen will cause you to develop catlike features and behaviors and eventually turn into a cat."
+	rarity = RARITY_VERY_RARE
+
+	disease_act(var/mob/M, var/datum/pathogen/origin)
+		..()
+		if (origin.stage >= 5)
+			for(var/i = rand(1,5), i > 0, i--)  // SPECIAL EFFECTS
+				var/obj/item/hairball/HB = new /obj/item/hairball(M.loc)
+				var/turf/T = get_edge_target_turf(M, pick(alldirs))
+				HB.throw_at(T,rand(0,3),1)
+			M.make_critter(/mob/living/critter/small_animal/cat, M.loc)      // I mean, it's better than being dead ... I guess
