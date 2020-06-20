@@ -758,6 +758,11 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 #else
 			M.changeStatus("weakened", 10 SECONDS)
 #endif
+			if(istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				for (var/uid in H.pathogens)
+					var/datum/pathogen/P = H.pathogens[uid]
+					P.onshocked(35, 500)
 
 	if ((src.master && src.wires & WIRE_SIGNAL))
 		src.master.receive_signal()
