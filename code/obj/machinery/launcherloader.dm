@@ -408,7 +408,7 @@
 	name = "Barcode Computer"
 	desc = "Used to print barcode stickers for the cargo carousel routing system."
 
-	destinations = list("North","South")
+	destinations = list("Catering","Engineering Storage","Market","Medbay","Mining","QM","Research","Robotics","Tool Storage")
 
 
 /obj/item/sticker/barcode
