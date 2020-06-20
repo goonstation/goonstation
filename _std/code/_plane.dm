@@ -15,6 +15,11 @@
 #define PLANE_HUD 30
 #define PLANE_SCREEN_OVERLAYS 40
 
+// langserver not up to date with our cutting edge technology, please delete once it's on 513.1526
+#ifndef PASS_MOUSE
+#define PASS_MOUSE 1024
+#endif
+
 /obj/screen/plane_parent
 	name = ""
 	icon = null
