@@ -7,11 +7,13 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/list/items_to_drop
 
-/datum/component/drop_loot_on_death/Initialize(...)
-	if (length(args))
-		src.items_to_drop = args.Copy()
+/datum/component/drop_loot_on_death/Initialize(loot)
+	if (islist(loot) && length(loot))
+		src.items_to_drop = loot
+	else if (ispath(loot))
+		src.items_to_drop = list(loot)
 	else
-		return COMPONENT_INCOMPATIBLE
+		return COMPONENT_INCOMPATIBLE // no items to drop were provided, no point in adding the component
 
 	if (ismob(parent))
 		RegisterSignal(parent, list(COMSIG_MOB_DEATH), .proc/drop_loot)
@@ -24,12 +26,16 @@
 	UnregisterSignal(parent, list(COMSIG_MOB_DEATH, COMSIG_OBJ_CRITTER_DEATH))
 	. = ..()
 
-/datum/component/drop_loot_on_death/InheritComponent(datum/component/drop_loot_on_death/C, i_am_original)
-	if(C)
+// if another duplicate component of this type is added, add its items to this one
+/datum/component/drop_loot_on_death/InheritComponent(datum/component/drop_loot_on_death/C, i_am_original, _items)
+	if(C && C.items_to_drop)
 		src.items_to_drop.Add(C.items_to_drop)
 	else
-		var/list/items_to_add = args.Copy(3)
-		src.items_to_drop.Add(items_to_add)
+		if (_items) // C(duplicate component) wasn't initialized, so we don't know if the raw argument _items is in proper format
+			if (islist(_items) && length(_items))
+				src.items_to_drop.Add(_items)
+			else if (ispath(_items))
+				src.items_to_drop.Add(_items)
 
 /datum/component/drop_loot_on_death/proc/drop_loot()
 	var/atom/dead_parent = parent
