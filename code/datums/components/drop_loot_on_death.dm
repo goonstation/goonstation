@@ -1,7 +1,7 @@
-// accepts any number of arguments in form of paths to items to drop
-// when component's parent dies (defined by signal being sent on death), items are spawned at their feet along with a message describing the dropped items
+// accepts a path or list of paths as arguments
+// when component's parent dies (defined by signal being sent on death), item(s) are spawned at their feet along with a message describing the dropped items
 // component removes itself after triggering and dropping the items
-// duplicate components' items are added to the old component's list
+// duplicate components' item(s) are added to the old component's list
 
 /datum/component/drop_loot_on_death
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
