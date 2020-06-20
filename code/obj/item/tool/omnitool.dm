@@ -170,7 +170,6 @@
 					src.force = 3
 					hit_type = DAMAGE_BLUNT
 					welding = 0
-
 		if (holder)
 			holder.update_inhands()
 

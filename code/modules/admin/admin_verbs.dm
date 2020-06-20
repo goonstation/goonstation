@@ -329,7 +329,6 @@ var/list/admin_verbs = list(
 
 		// /client/proc/admin_airborne_fluid,
 		// /client/proc/replace_space,
-		/client/proc/process_move_intervals,
 #ifdef IMAGE_DEL_DEBUG
 		/client/proc/debug_image_deletions,
 		/client/proc/debug_image_deletions_clear,

@@ -16,7 +16,7 @@
 	item_state = "fireextinguisher0"
 	m_amt = 90
 	desc = "A portable container with a spray nozzle that contains specially mixed fire-fighting foam. The safety is removed, the nozzle pointed at the base of the fire, and the trigger squeezed to extinguish fire."
-	stamina_damage = 15
+	stamina_damage = 25
 	stamina_cost = 20
 	stamina_crit_chance = 35
 	module_research = list("tools" = 5, "science" = 1)

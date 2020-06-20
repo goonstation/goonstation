@@ -224,7 +224,7 @@ CONTAINS:
 	var/datum/projectile/staple = new/datum/projectile/bullet/staple
 	var/ammo = 20
 	stamina_damage = 15
-	stamina_cost = 15
+	stamina_cost = 7
 	stamina_crit_chance = 15
 	module_research = list("tools" = 1, "medicine" = 1, "weapons" = 1)
 
@@ -583,8 +583,8 @@ CONTAINS:
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 5000
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 	var/in_use = 0
 	hide_attack = 2
@@ -1068,8 +1068,8 @@ CONTAINS:
 	throw_range = 6
 	m_amt = 7000
 	g_amt = 3500
-	stamina_damage = 2
-	stamina_cost = 2
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 15
 	module_research = list("tools" = 2, "medicine" = 3, "weapons" = 0.1)
 	hide_attack = 2
@@ -1470,8 +1470,9 @@ keeping this here because I want to make something else with it eventually
 	desc = "A collection of parts that can be used to make a tray."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "tray_parts"
-	stamina_damage = 15
-	stamina_cost = 15
+	force = 3
+	stamina_damage = 7
+	stamina_cost = 7
 	furniture_type = /obj/surgery_tray
 	furniture_name = "tray"
 	build_duration = 30

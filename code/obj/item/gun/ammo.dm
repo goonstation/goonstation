@@ -14,8 +14,8 @@
 	throw_range = 20
 	var/datum/projectile/ammo_type
 	var/caliber = null
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 5
 
 	proc

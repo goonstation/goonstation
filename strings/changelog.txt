@@ -1,5 +1,23 @@
 
 (t)sat jun 20 20
+(u)glassofmilk
+(p)1088
+(e)🆕|feature
+(+)Clone scans now use the computer file system instead of being a property of floppy disks.
+(u)Moonlol & F191 & RichardGere & Rybek & Enakai & Pali
+(p)517
+(e)🆕🎨|feature, sprites
+(*)Added flock gamemode and antag setting. FLOCK IS NOT IN THE SECRET ROTATION.
+(*)Flockminds now use a rift structure instead of a single egg when starting.
+(*)Flock nanite spray harm intent added.
+(+)Flockdrone ai will butcher dead drones.
+(+)Added a number of flock examinations to flock items.
+(+)Rift sprite by Enakai. Resource cube sprite by Pali.
+(u)mbc
+(p)1157
+(e)|
+(*)Rebalanced stamina damage of lots of items - fixes many cases where an item would consume more stamina than it was dealing! (subject to further adjustment pending testing)
+(*)Tooltips have more clarity about stamina consumption and throw force
 (u)mbc
 (p)1153
 (e)|

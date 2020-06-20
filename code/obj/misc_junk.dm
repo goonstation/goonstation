@@ -65,7 +65,7 @@
 	icon_state = "gnome"
 	w_class = 4.0
 	stamina_damage = 40
-	stamina_cost = 40
+	stamina_cost = 20
 	stamina_crit_chance = 5
 	var/last_laugh = 0
 
@@ -115,7 +115,7 @@
 	throw_range = 5
 	desc = "A tube made of cardboard. Extremely non-threatening."
 	w_class = 1.0
-	stamina_damage = 1
+	stamina_damage = 5
 	stamina_cost = 1
 
 	New()
@@ -147,8 +147,8 @@
 	throw_range = 5
 	desc = "A sheet of creased cardboard."
 	w_class = 1.0
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 
 	attack_self(mob/user as mob)
 		boutput(user, __blue("You deftly fold [src] into a party hat!."))
@@ -199,7 +199,7 @@
 	item_state = "rubber_chicken"
 	w_class = 2.0
 	stamina_damage = 10
-	stamina_cost = 10
+	stamina_cost = 5
 	stamina_crit_chance = 3
 
 /obj/item/module
@@ -242,11 +242,12 @@
 	icon = 'icons/misc/aprilfools.dmi'
 	icon_state = "brick"
 	item_state = "brick"
+	force = 8
 	w_class = 1
 	throwforce = 10
 	rand_pos = 1
 	stamina_damage = 40
-	stamina_cost = 35
+	stamina_cost = 20
 	stamina_crit_chance = 5
 /*
 /obj/item/saxophone
