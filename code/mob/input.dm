@@ -39,10 +39,6 @@ mob
 		if (changed & (KEY_THROW|KEY_PULL|KEY_POINT|KEY_EXAMINE|KEY_BOLT|KEY_OPEN|KEY_SHOCK)) // bleh
 			src.update_cursor()
 
-	var/last_process_move_rl
-	var/last_process_move_by
-	var/client/send_debug_to_client
-
 	process_move(keys)
 		if (src.use_movement_controller)
 			var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
@@ -54,11 +50,6 @@ mob
 
 		if (src.next_move - world.time >= world.tick_lag / 10)
 			return max(world.tick_lag, (src.next_move - world.time) - world.tick_lag / 10)
-
-		if(src.send_debug_to_client)
-			boutput(src.send_debug_to_client.mob, "[world.time - last_process_move_by], [TIME - last_process_move_rl]")
-			src.last_process_move_by = world.time
-			src.last_process_move_rl = TIME
 
 		if (src.move_dir)
 			var/running = 0
