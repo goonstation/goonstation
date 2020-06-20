@@ -1093,6 +1093,9 @@
 #undef DAMAGE
 
 /mob/proc/death(gibbed)
+	#ifdef COMSIG_MOB_DEATH
+	SEND_SIGNAL(src, COMSIG_MOB_DEATH)
+	#endif
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
 		message_admins("<span class='alert'>Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)].</span>")
