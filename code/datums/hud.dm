@@ -1,6 +1,7 @@
 /obj/screen
 	anchored = 1
 	plane = PLANE_HUD//wow WOW why won't you use /obj/screen/hud, HUD OBJECTS???
+	text = ""
 	New()
 		..()
 		appearance_flags |= NO_CLIENT_COLOR

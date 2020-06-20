@@ -199,7 +199,7 @@
 
 
 /datum/game_mode/assday/declare_completion()
-	. = ..()
+	return // don't call parent because we don't want to spam objectives of 80 traitors, thanks
 
 /datum/game_mode/assday/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs."

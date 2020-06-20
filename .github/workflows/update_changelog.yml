@@ -1,7 +1,8 @@
 name: update-changelog
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
   update-changelog:

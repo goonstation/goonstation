@@ -399,7 +399,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		..()
 		boutput(user, "<span class='notice'><b>You have to put the gloves on your hands first, silly!</b></span>")
 
-	get_desc(dist)
+	get_desc()
 		if (src.weighted)
 			. += "These things are pretty heavy!"
 
@@ -410,6 +410,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			return
 		boutput(user, "You slip the horseshoe inside one of the gloves.")
 		src.weighted = 1
+		tooltip_rebuild = 1
 		qdel(W)
 	else
 		return ..()

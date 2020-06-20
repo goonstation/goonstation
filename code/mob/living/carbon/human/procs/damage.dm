@@ -18,6 +18,20 @@
 			S.active = 0
 			S.icon_state = "shield0"
 
+
+	if (HAS_MOB_PROPERTY(src, PROP_REFLECTPROT))
+		var/obj/item/equipped = src.equipped()
+		if (equipped && istype(equipped,/obj/item/sword))
+			var/obj/item/sword/S = equipped
+			S.handle_deflect_visuals(src)
+
+		var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
+		P.die()
+		src.visible_message("<span class='alert'>[src] reflected [Q.name] with [equipped]!</span>")
+		playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
+		return
+
+
 	if(src.material) src.material.triggerOnBullet(src, src, P)
 	for (var/atom/A in src)
 		if (A.material)

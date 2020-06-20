@@ -24,7 +24,7 @@
 	layer = 101
 	see_in_dark = SEE_DARK_FULL
 	stat = 0
-	mob_flags = SEE_THRU_CAMERAS
+	mob_flags = SEE_THRU_CAMERAS | USR_DIALOG_UPDATES_RANGE
 
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0

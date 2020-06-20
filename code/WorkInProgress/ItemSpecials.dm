@@ -516,7 +516,7 @@
 					swipe_color = get_hex_color_from_blade(saber.bladecolor)
 			return
 
-		//Sampled these hex colors from each c-saber sprite.
+				//Sampled these hex colors from each c-saber sprite.
 		proc/get_hex_color_from_blade(var/C as text)
 			switch(C)
 				if("R")
@@ -1643,6 +1643,7 @@
 		pooled()
 			..()
 			transform = null
+			color = null
 
 	barrier
 		name = "energy barrier"

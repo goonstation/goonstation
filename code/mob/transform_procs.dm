@@ -626,7 +626,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		time_left_message += "[seconds] second[seconds == 1 ? "" : "s"]"
 		boutput(src, "<span class='alert'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
 	else
-		if (alert(src, "Are you sure you want to respawn as an animal? You won't be able to come back as a human or cyborg!", "Respawn as Animal", "Yes", "No") != "Yes")
+		if (alert(src, "Are you sure you want to respawn as an animal?", "Respawn as Animal", "Yes", "No") != "Yes")
 			return
 		// you can be an animal
 		// get spawnpoints

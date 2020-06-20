@@ -2,6 +2,9 @@
 	name = "Wide Area Spawn"
 	desc = {"***********************************************************<br>
 Right Mouse Button on buildmode button = Set object type<br>
+Ctrl-RMB on buildmode button = Set cinematic effect<br>
+Alt-RMB on buildmode button = Toggle deleting areas<br>
+
 Left Mouse Button on turf/mob/obj      = Mark corners of area with two clicks<br>
 Right Mouse Button                     = Delete all objects and turfs in the area marked with two clicks<br>
 <br>
@@ -11,6 +14,7 @@ change the direction of created objects.<br>
 	icon_state = "buildmode5"
 	var/objpath = null
 	var/cinematic = "Blink"
+	var/delete_area = 0
 	var/turf/A = null
 
 	deselected()
@@ -21,6 +25,11 @@ change the direction of created objects.<br>
 		if(ctrl)
 			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "None", "Fancy and Inefficient yet Laggy Telepad")) || cinematic
 			return
+		if(alt)
+			delete_area = !delete_area
+			boutput(usr, delete_area ? "<span class='alert'>Now also deleting areas!</span>" : "<span class='alert'>Now not deleting areas!</span>")
+			return
+
 		objpath = get_one_match(input("Type path", "Type path", "/obj/closet"), /atom)
 		update_button_text(objpath)
 		A = null
@@ -64,7 +73,7 @@ change the direction of created objects.<br>
 
 							var/atom/A = 0
 							if(ispath(objpath, /turf))
-								A = Q.ReplaceWith(objpath, 1, 0, 1)
+								A = Q.ReplaceWith(objpath, 0, 0, 1, force=1)
 							else
 								A = new objpath(Q)
 
@@ -98,7 +107,7 @@ change the direction of created objects.<br>
 
 								var/atom/A = 0
 								if(ispath(objpath, /turf))
-									A = Q.ReplaceWith(objpath, 1, 0, 1)
+									A = Q.ReplaceWith(objpath, 0, 0, 1, force=1)
 								else
 									A = new objpath(Q)
 
@@ -118,7 +127,7 @@ change the direction of created objects.<br>
 					if("Blink")
 						var/atom/A = 0
 						if(ispath(objpath, /turf))
-							A = Q.ReplaceWith(objpath, 1, 0, 1)
+							A = Q.ReplaceWith(objpath, 0, 0, 1, force=1)
 						else
 							A = new objpath(Q)
 
@@ -129,7 +138,7 @@ change the direction of created objects.<br>
 					else
 						var/atom/A = 0
 						if(ispath(objpath, /turf))
-							A = Q.ReplaceWith(objpath, 1, 0, 1)
+							A = Q.ReplaceWith(objpath, 0, 0, 1, force=1)
 						else
 							A = new objpath(Q)
 
@@ -156,7 +165,8 @@ change the direction of created objects.<br>
 					blink(T)
 				for (var/obj/O in T)
 					qdel (O)
-				new /area(T)
+				if (delete_area)
+					new /area(T)
 				T.ReplaceWithSpaceForce()
 				LAGCHECK(LAG_LOW)
 			A = null

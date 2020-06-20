@@ -52,14 +52,17 @@
 	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active.
 	stamina_cost = 30
 	stamina_crit_chance = 35
-	var/do_stun = 1 //controlled by itemspecial for csword. sorry.
 	var/active_force = 60
-	var/active_stamina_dmg = 150
+	var/active_stamina_dmg = 40
 	var/inactive_stamina_dmg = 35
 	var/inactive_force = 1
 	var/state_name = "sword"
 	var/off_w_class = 2
 	var/datum/component/holdertargeting/simple_light/light_c
+	var/do_stun = 0
+
+	stunner
+		do_stun = 1
 
 	New()
 		..()
@@ -107,12 +110,14 @@
 				if (use_glowstick)
 					src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src)
 
-		if (src.loaded_glowstick) //the glowstick needs to be on!
-			src.loaded_glowstick.turnon()
+		if (!src.loaded_glowstick && use_glowstick) //the glowstick needs to be on!
+			src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src) // rainbow is basicall diffracted white light
+		src.loaded_glowstick.turnon()
 
 		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
+		AddComponent(/datum/component/itemblock/saberblock)
 		BLOCK_SWORD
 
 /obj/item/sword/attack(mob/target, mob/user, def_zone, is_special = 0)
@@ -121,13 +126,8 @@
 			if (handle_parry(target, user))
 				return 1
 
-			if (!is_special)
-#ifdef USE_STAMINA_DISORIENT
-				target.do_disorient(0, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0) //we don't want disorient protection to affect stamina damage
-#else
-				target.changeStatus("stunned", 50)
-				target.changeStatus("weakened", 5 SECONDS)
-#endif
+			if (do_stun)
+				target.do_disorient(150, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0)
 
 			var/mob/living/carbon/human/U = user
 			if(U.gender == MALE) playsound(get_turf(U), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
@@ -143,6 +143,42 @@
 						target.changeStatus("weakened", 5 SECONDS)
 			else
 				..()
+
+/obj/item/sword/proc/get_hex_color_from_blade(var/C as text)
+	switch(C)
+		if("R")
+			return "#FF0000"
+		if("O")
+			return "#FF9A00"
+		if("Y")
+			return "#FFFF00"
+		if("G")
+			return "#00FF78"
+		if("C")
+			return "#00FFFF"
+		if("B")
+			return "#0081DF"
+		if("P")
+			return "#CC00FF"
+		if("Pi")
+			return "#FFCCFF"
+		if("W")
+			return "#EBE6EB"
+	return "RAND"
+
+/obj/item/sword/proc/handle_deflect_visuals(mob/user)
+	var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
+	C.setup(user.loc)
+	C.color = get_hex_color_from_blade(src.bladecolor)
+	var/matrix/m = matrix()
+	m.Turn(rand(0,360))
+	C.transform = m
+	var/matrix/m1 = C.transform
+	m1.Scale(2,2)
+	var/turf/target = get_step(user,user.dir)
+	C.pixel_x = 32*(user.x - target.x)*0.2
+	C.pixel_y = 32*(user.y - target.y)*0.2
+	animate(C,transform=m1,time=8)
 
 /obj/item/sword/proc/handle_parry(mob/target, mob/user)
 	if (target != user && ishuman(target))
@@ -193,7 +229,9 @@
 		take_bleeding_damage(user, user, 5)
 		JOB_XP(user, "Clown", 1)
 	src.active = !( src.active )
+	tooltip_rebuild = 1
 	if (src.active)
+		BLOCK_ALL
 		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
 		light_c.update(1)
 		boutput(user, "<span class='notice'>The sword is now active.</span>")
@@ -277,35 +315,38 @@
 			loaded_glowstick = W
 			user.u_equip(W)
 			W.set_loc(src)
+			var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
 			switch(src.loaded_glowstick.color_name)
 				if("red")
-					src.update_simple_light_color(255, 0, 0)
+					light_c.set_color(255, 0, 0)
 					src.bladecolor = "R"
 				if("orange")
-					src.update_simple_light_color(255, 127, 0)
+					light_c.set_color(255, 127, 0)
 					src.bladecolor = "O"
 				if("yellow")
-					src.update_simple_light_color(255, 255, 0)
+					light_c.set_color(255, 255, 0)
 					src.bladecolor = "Y"
 				if("green")
-					src.update_simple_light_color(0, 255, 0)
+					light_c.set_color(0, 255, 0)
 					src.bladecolor = "G"
 				if("cyan")
-					src.update_simple_light_color(0, 200, 255)
+					light_c.set_color(0, 200, 255)
 					src.bladecolor = "C"
 				if("blue")
-					src.update_simple_light_color(0, 0, 255)
+					light_c.set_color(0, 0, 255)
 					src.bladecolor = "B"
 				if("purple")
-					src.update_simple_light_color(153, 0, 255)
+					light_c.set_color(153, 0, 255)
 					src.bladecolor = "P"
 				if("pink")
-					src.update_simple_light_color(255, 121, 255)
+					light_c.set_color(255, 121, 255)
 					src.bladecolor = "Pi"
 				if("white")
-					src.update_simple_light_color(255, 255, 255)
+					light_c.set_color(255, 255, 255)
 					src.bladecolor = "W"
 			src.icon_state = "[state_name]-open-[bladecolor]"
+			var/datum/item_special/swipe/csaber/S = src.special
+			S.swipe_color = get_hex_color_from_blade(src.bladecolor)
 			return
 	else
 		return ..()
@@ -1023,6 +1064,7 @@
 	throwforce = 5.0
 	delimb_prob = 1
 	contraband = 4
+	tooltip_flags = REBUILD_USER
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind && user.mind.assigned_role == "Captain")
@@ -1169,6 +1211,7 @@
 	ih_sheathed_state = "scabbard-cap1"
 	ih_sheath_state = "scabbard-cap0"
 	sword_path = /obj/item/katana/captain
+	tooltip_flags = REBUILD_USER
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (W.type == /obj/item/katana)

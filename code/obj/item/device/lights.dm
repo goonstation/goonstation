@@ -23,13 +23,15 @@
 
 	pickup(mob/user)
 		..()
-		light.attach(user)
+		if (light)
+			light.attach(user)
 
 	dropped(mob/user)
 		..()
-		SPAWN_DBG(0)
-			if (src.loc != user)
-				light.attach(src)
+		if (light)
+			SPAWN_DBG(0)
+				if (src.loc != user)
+					light.attach(src)
 
 	disposing()
 		if(light)
@@ -54,8 +56,14 @@
 	col_g = 0.8
 	col_b = 0.7
 	module_research = list("science" = 1, "devices" = 1)
-	light_type = /datum/light/line
+	light_type = null
 	brightness = 4.6
+
+	var/datum/component/holdertargeting/simple_light/light_dir
+	New()
+		..()
+		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, col_r * 255, col_g * 255, col_b  * 255, 210)
+		light_dir.update(0)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
@@ -97,15 +105,15 @@
 							logTheThing("combat", user, target, "flashes %target% with an emagged flashlight.")
 				user.visible_message("<span class='alert'>The [src] in [user]'s hand bursts with a blinding flash!</span>", "<span class='alert'>The bulb in your hand explodes with a blinding flash!</span>")
 				on = 0
-				light.disable()
+				light_dir.update(0)
 				icon_state = "flightbroken"
 				name = "broken flashlight"
 				src.broken = 1
 			else
-				src.light.enable()
+				light_dir.update(1)
 		else
 			set_icon_state(src.icon_off)
-			src.light.disable()
+			light_dir.update(0)
 
 /obj/item/device/light/flashlight/abilities = list(/obj/ability_button/flashlight_toggle)
 
@@ -121,9 +129,16 @@
 	col_r = 0.0
 	col_g = 0.9
 	col_b = 0.1
-	brightness = 0.5
+	brightness = 0.6
 	height = 0.75
 	var/color_name = "green"
+	light_type = null
+	var/datum/component/holdertargeting/simple_light/light_c
+
+	New()
+		..()
+		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
+		light_c.update(0)
 
 	proc/burst()
 		var/turf/T = get_turf(src.loc)
@@ -134,7 +149,7 @@
 	proc/turnon()
 		on = 1
 		icon_state = "[base_state][on]"
-		light.enable()
+		light_c.update(1)
 
 	//Can be heated. Has chance to explode when heated. After heating, can explode when thrown or fussed with!
 	attackby(obj/item/W as obj, mob/user as mob)

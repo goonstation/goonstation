@@ -1,4 +1,7 @@
 
+(t)mon jun 15 20
+(u)pali
+(*)Toggle-Text-Mode verb to force someone into / out of ASCII mode.
 (t)tue jun 09 20
 (u)pali
 (*)Admin verbs reorganized

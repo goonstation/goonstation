@@ -56,6 +56,7 @@
 		return 1
 
 	proc/change_mode(var/new_mode, var/mob/holder)
+		tooltip_rebuild = 1
 		switch (new_mode)
 			if ("prying")
 				src.omni_mode = "prying"

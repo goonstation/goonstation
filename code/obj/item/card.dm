@@ -160,7 +160,7 @@ GAUNTLET CARDS
 		access = list()
 		..()
 
-	get_desc(dist)
+	get_desc()
 		. = {"<br>
 		Dabs performed: [dab_count]<br/>
 		Arms lost: [arm_count]<br/>

@@ -33,11 +33,9 @@
 		SPAWN_DBG(3 SECONDS)
 			if(prob(25))
 				boutput(user, "<span class='alert'><B>You fail to break free!</B></span>")
-				var/mob/dead/observer/newmob
-				if (user.client)
-					newmob = new/mob/dead/observer(user)
-					user:client:mob = newmob
-				qdel(user)
+				var/user_mob = user
+				user.ghostize()
+				qdel(user_mob)
 				sleep(3 SECONDS)
 				playsound(src.loc, "sound/voice/burp_alien.ogg", 50, 1)
 				var/obj/decal/cleanable/blood/gibs/gib =make_cleanable( /obj/decal/cleanable/blood/gibs/core, src.loc )

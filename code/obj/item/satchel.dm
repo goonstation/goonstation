@@ -136,6 +136,7 @@
 		src.satchel_updateicon()
 
 	proc/satchel_updateicon()
+		tooltip_rebuild = 1
 		var/perc
 		if (src.contents.len > 0 && src.maxitems > 0)
 			perc = (src.contents.len / src.maxitems) * 100

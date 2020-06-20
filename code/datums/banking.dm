@@ -106,6 +106,8 @@
 
 	// This returns the time left in seconds
 	proc/timeleft()
+		if(!ticker)
+			return 0
 		var/timeleft = src.time_until_payday - ticker.round_elapsed_ticks
 
 		// TODO move this into process or something, currently it gets checked in mob/Stat

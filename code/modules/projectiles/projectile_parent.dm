@@ -183,8 +183,8 @@
 							if (D.on)
 								D.disrupt(X)
 								src.visible_message("<span class='notice'><b>[X]'s disguiser is disrupted!</b></span>")
-						if (ishuman(X))
-							var/mob/living/carbon/human/H = X
+						if (isliving(X))
+							var/mob/living/H = X
 							H.stamina_stun()
 							if (istype(X, /mob/living/carbon/human/npc/monkey))
 								var/mob/living/carbon/human/npc/monkey/M = X

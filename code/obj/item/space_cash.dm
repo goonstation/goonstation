@@ -288,6 +288,7 @@
 		set_amt(amt)
 
 	proc/set_amt(var/amt = 1 as num)
+		tooltip_rebuild = 1
 		src.amount = amt
 		src.update_stack_appearance()
 

@@ -48,6 +48,7 @@ var/list/detailed_spawn_dbg = list()
 #define isVRghost(x) (istype(x, /mob/living/carbon/human/virtual) && x:isghost)
 #define issmallanimal(x) istype(x, /mob/living/critter/small_animal)
 #define isghostcritter(x) (istype(x, /mob/living/critter/small_animal) && x:ghost_spawned)
+#define ishelpermouse(x) (istype(x, /mob/living/critter/small_animal/mouse/weak/mentor))//mentor and admin mice
 
 // I'm grump that we don't already have these so I'm adding them.  will we use all of them? probably not.  but we have them. - Haine
 // Hi, Marquesas here. Eliminating all ':' would be nice. Can we do that somehow? Thanks.

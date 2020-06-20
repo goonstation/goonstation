@@ -51,7 +51,7 @@ var/image/blob_icon_cache
 		src.update_icon()
 		update_surrounding_blob_icons(get_turf(src))
 		var/datum/controller/process/blob/B = get_master_blob_controller()
-		B.blobs += src
+		B?.blobs += src
 		for (var/obj/machinery/camera/C in get_turf(src))
 			qdel(C)
 
@@ -137,7 +137,7 @@ var/image/blob_icon_cache
 			attack(pick(allowed))
 
 	disposing()
-		if (disposed || in_disposing)
+		if (qdeled || in_disposing)
 			return
 		in_disposing = 1
 		var/datum/controller/process/blob/B = get_master_blob_controller()
@@ -153,10 +153,10 @@ var/image/blob_icon_cache
 		if (istype(src.loc,/turf))
 			if (istype(src.loc.loc,/area))
 				src.loc.loc.Exited(src)
-		..()
 		healthbar.onDelete()
 		qdel(healthbar)
 		healthbar = null
+		..()
 		update_surrounding_blob_icons(T)
 		in_disposing = 0
 
@@ -348,7 +348,7 @@ var/image/blob_icon_cache
 		src.health -= amount
 		src.health = max(0,min(src.health_max,src.health))
 
-		if (src.health == 0)
+		if (src.health <= 0)
 			src.onKilled()
 			if (overmind)
 				overmind.onBlobDeath(src, user)
@@ -1324,6 +1324,8 @@ var/image/blob_icon_cache
 	return null
 
 /proc/get_master_blob_controller()
+	if(!processScheduler)
+		return null
 	for (var/datum/controller/process/blob/B in processScheduler.processes)
 		return B
 	return null

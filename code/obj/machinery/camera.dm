@@ -4,6 +4,7 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "camera"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	text = ""
 
 	var/network = "SS13"
 	layer = EFFECTS_LAYER_UNDER_1

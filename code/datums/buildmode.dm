@@ -118,7 +118,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 		mode.paused()
 
 	proc/display_help()
-		boutput(usr, "<font color='blue'>[mode.desc]</font>")
+		boutput(usr, "<span class='notice'>[mode.desc]</span>")
 
 	// You shouldn't actually interact with these anymore.
 	var/obj/screen/buildmode/builddir/button_dir

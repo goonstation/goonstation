@@ -138,11 +138,28 @@ var/datum/action_controller/actions
 			A.attached_objs.Remove(border)
 		SPAWN_DBG(0.5 SECONDS)
 			if (bar)
+				bar.set_loc(null)
 				pool(bar)
 				bar = null
 			if (border)
+				border.set_loc(null)
 				pool(border)
 				border = null
+
+	disposing()
+		var/atom/movable/A = owner
+		if (owner != null && islist(A.attached_objs))
+			A.attached_objs.Remove(bar)
+			A.attached_objs.Remove(border)
+		if (bar)
+			bar.set_loc(null)
+			pool(bar)
+			bar = null
+		if (border)
+			border.set_loc(null)
+			pool(border)
+			border = null
+		..()
 
 	onEnd()
 		if (bar)
@@ -766,8 +783,7 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
-		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span class='alert'><B>[] attempts to remove the handcuffs!</B></span>", owner), 1)
+		owner.visible_message("<span class='alert'><B>[owner] attempts to remove the handcuffs!</B></span>")
 
 	onInterrupt(var/flag)
 		..()
@@ -778,8 +794,7 @@ var/datum/action_controller/actions
 		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = owner
 			H.handcuffs.drop_handcuffs(H)
-			for(var/mob/O in AIviewers(H))
-				O.show_message("<span class='alert'><B>[H] manages to remove the handcuffs!</B></span>", 1)
+			H.visible_message("<span class='alert'><B>[H] attempts to remove the handcuffs!</B></span>")
 			boutput(H, "<span class='notice'>You successfully remove your handcuffs.</span>")
 
 /datum/action/bar/private/icon/shackles_removal // Resisting out of shackles (Convair880).

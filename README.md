@@ -4,7 +4,7 @@
 
 Master Status: [![Build Status](https://travis-ci.com/goonstation/goonstation.svg?branch=master)](https://travis-ci.com/goonstation/goonstation)
 
-Develop Status: [![Build Status](https://travis-ci.com/goonstation/goonstation.svg?branch=develop)](https://travis-ci.com/goonstation/goonstation)
+Develop Status: [![Build Status](https://travis-ci.com/goonstation/goonstation.svg?branch=develop)](https://travis-ci.com/github/goonstation/goonstation/branches)
 
 **Website:** [goonhub.com](https://goonhub.com)
 

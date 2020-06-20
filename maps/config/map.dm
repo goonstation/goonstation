@@ -76,10 +76,6 @@
 #include "standard.dm"
 #endif
 
-#if ASS_JAM
-#include "..\warwip\z7_urs_dungeon_5.dmm"
-#endif
-
 #if FOOTBALL_MODE
 #include "..\zamujasa\football2.dmm"
 #endif

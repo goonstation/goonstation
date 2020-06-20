@@ -36,7 +36,6 @@
 	var/is_npc = 0
 
 	var/move_laying = null
-	var/list/mob/dead/target_observer/observers = list()
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
 	var/static/image/sleep_bubble = image('icons/mob/mob.dmi', "sleep")
 	var/image/static_image = null
@@ -170,10 +169,6 @@
 		qdel(A)
 	stomach_process = null
 	skin_process = null
-
-	for(var/mob/dead/target_observer/TO in observers)
-		observers -= TO
-		TO.ghostize()
 
 	for(var/mob/dead/aieye/E in src.contents)
 		E.cancel_camera()
