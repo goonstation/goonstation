@@ -2142,3 +2142,24 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			return
 		SPAWN_DBG(rand(0, 10))
 			src.do_a_little_dance()
+
+obj/critter/frog
+	name = "frog"
+	desc = "Ribbit."
+	icon_state = "frog"
+	death_text = "%src% croaks."
+	butcherable = 1
+	density = 0
+	health = 20
+	aggressive = 0
+	defensive = 1
+	wanderer = 1
+	opensdoors = 0
+	atkcarbon = 1
+	atksilicon = 1
+	firevuln = 1
+	brutevuln = 1
+	generic = 1
+	atk_text = "hops into"
+	angertext = "croaks angrily at"
+	chase_text = "hops after"
