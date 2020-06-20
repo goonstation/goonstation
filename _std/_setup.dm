@@ -1125,6 +1125,13 @@ var/ZLOG_START_TIME
 #define ZEPTO *(10**-21)
 #define YOCTO *(10**-24)
 
+//table defines
+#define TABLE_DISASSEMBLE 0
+#define TABLE_WEAKEN 1
+#define TABLE_STRENGTHEN 2
+#define TABLE_ADJUST 3
+#define TABLE_LOCKPICK 4
+
 //Auditing
 //Whether or not a potentially suspicious action gets denied by the code.
 #define AUDIT_ACCESS_DENIED (0 << 1)

@@ -209,7 +209,7 @@
 	for(var/mob/living/critter/flock/drone/F in view(max_dist, holder.owner))
 		if(F == holder.owner)
 			continue
-		if(F.get_health_percentage() < 0.66)
+		if(F.get_health_percentage() < 0.66 && !isdead(F))//yeesh dont try to repair something which is dead
 			// if we can get a valid path to the target, include it for consideration
 			if(cirrAstar(get_turf(holder.owner), get_turf(F), 1, null, /proc/heuristic, 40))
 				targets += F
@@ -605,3 +605,69 @@
 						// GO AND IMPRISON THEM
 						targets += M
 	return targets
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// BUTCHER GOAL
+// targets: other dead flockdrones in the same flock
+/datum/aiTask/sequence/goalbased/butcher
+	name = "butchering"
+	weight = 3
+
+/datum/aiTask/sequence/goalbased/butcher/New(parentHolder, transTask)
+	..(parentHolder, transTask)
+	add_task(holder.get_instance(/datum/aiTask/succeedable/butcher, list(holder)))
+
+
+/datum/aiTask/sequence/goalbased/butcher/on_reset()
+	var/mob/living/critter/flock/drone/F = holder.owner
+	if(F)
+		F.active_hand = 2 // nanite spray
+		sleep(0.1 SECONDS)
+		F.a_intent = INTENT_HARM
+		F.hud?.update_intent()
+		sleep(0.1 SECONDS)
+		F.hud?.update_hands() // for observers
+
+/datum/aiTask/sequence/goalbased/butcher/get_targets()
+	var/list/targets = list()
+	for(var/mob/living/critter/flock/drone/F in view(max_dist, holder.owner))
+		if(F == holder.owner)
+			continue
+		if(isdead(F))
+			// if we can get a valid path to the target, include it for consideration
+			if(cirrAstar(get_turf(holder.owner), get_turf(F), 1, null, /proc/heuristic, 40))
+				targets += F
+	return targets
+
+////////
+
+/datum/aiTask/succeedable/butcher
+	name = "butcher subtask"
+	var/has_started = 0
+
+/datum/aiTask/succeedable/butcher/failed()
+	var/mob/living/critter/flock/drone/F = holder.owner
+	var/mob/living/critter/flock/drone/T = holder.target
+	if(!F || !T || get_dist(T, F) > 1)
+		return 1
+	if(F && !F.abilityHolder)
+		return 1
+
+/datum/aiTask/succeedable/butcher/succeeded()
+	return (!actions.hasAction(holder.owner, "butcherlivingcritter")) // for whatever reason, the required action has stopped
+
+/datum/aiTask/succeedable/butcher/on_tick()
+	if(!has_started)
+		var/mob/living/critter/flock/drone/F = holder.owner
+		var/mob/living/critter/flock/drone/T = holder.target
+		if(F && T && get_dist(holder.owner, holder.target) <= 1)
+			if(F.set_hand(2)) // nanite spray
+				sleep(0.2 SECONDS)
+				holder.owner.dir = get_dir(holder.owner, holder.target)
+				F.hand_attack(T)
+				has_started = 1
+
+/datum/aiTask/succeedable/butcher/on_reset()
+	has_started = 0
