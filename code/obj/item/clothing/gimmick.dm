@@ -1567,3 +1567,29 @@
 	desc = "a dress made for casual wear"
 	icon_state = "collardressb"
 	item_state = "collardressb"
+
+/obj/item/clothing/under/redtie
+	name = "collar shirt and red tie"
+	desc = "a pale dress shirt with a nice red tie to go with it"
+	icon_state = "red-tie"
+	item_state = "red-tie"
+
+/obj/item/clothing/suit/loosejacket
+	name = "loose jacket"
+	desc = "a loose and stylish jacket"
+	icon_state = "loose"
+	item_state = "loose"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/shoes/floppy
+	name = "floppy boots"
+	desc = "a pair of boots with very floppy design around the ankles"
+	icon_state = "floppy"
+	item_state = "floppy"
+
+/obj/item/clothing/suit/labcoatlong
+	name = "off-brand lab coat"
+	desc = "a long labcoat from some sort of supermarket"
+	icon_state = "labcoat-long"
+	item_state = "labcoat-long"
+	body_parts_covered = TORSO|LEGS|ARMS

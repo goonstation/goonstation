@@ -78,6 +78,12 @@
 	cost = 160
 	hidden = 1
 
+/datum/clothingbooth_item/offbrandlabcoat
+	name = "Off-Brand Lab Coat"
+	path = /obj/item/clothing/suit/labcoatlong
+	category = "Costumes"
+	cost = 100
+
 //Formal
 /datum/clothingbooth_item/dress
 	name = "Little Black Dress"
@@ -88,6 +94,12 @@
 /datum/clothingbooth_item/dressred
 	name = "Little Red Dress"
 	path = /obj/item/clothing/under/misc/dress/red
+	category = "Formal"
+	cost = 250
+
+/datum/clothingbooth_item/redtie
+	name = "Shirt and Red Tie"
+	path = /obj/item/clothing/under/redtie
 	category = "Formal"
 	cost = 250
 
@@ -161,6 +173,12 @@
 	category = "Jackets"
 	cost = 100
 
+/datum/clothingbooth_item/loosejacket
+	name = "Loose Jacket"
+	path = /obj/item/clothing/suit/loosejacket
+	category = "Jackets"
+	cost = 250
+
 /datum/clothingbooth_item/tuxedojacket
 	name = "Tuxedo Jacket"
 	path = /obj/item/clothing/suit/tuxedo_jacket
@@ -200,6 +218,12 @@
 	category = "Shoes"
 	cost = 130
 	hidden = 1
+
+/datum/clothingbooth_item/floppyboots
+	name = "Floppy Boots"
+	path = /obj/item/clothing/shoes/floppy
+	category = "Shoes"
+	cost = 130
 
 /datum/clothingbooth_item/blackheels
 	name = "Black Heels"
