@@ -263,6 +263,7 @@ a.popt {text-decoration: none;}
 
 /* OUTPUT COLORS */
 .regular { color: #000000; }
+.internal { color: #002fff; }
 .mhelp {color: #CC0066;}
 .success {color: green;}
 .hint {color: #0000ff;}
