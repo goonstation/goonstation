@@ -7,25 +7,6 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/list/items_to_drop
 
-/datum/component/drop_loot_on_death/proc/drop_loot()
-	var/atom/dead_parent = parent
-	var/turf_to_drop_on = get_turf(dead_parent)
-	var/dropped_item_type = items_to_drop[1]
-	var/dropped_item = new dropped_item_type(turf_to_drop_on)
-	var/dropped_items_string = "\a [dropped_item]"
-	var/items_length = length(items_to_drop)
-	for(var/i = 2, i <= items_length, i++)
-		dropped_item_type = items_to_drop[i]
-		dropped_item = new dropped_item_type(turf_to_drop_on)
-		if(i == items_length)
-			dropped_items_string += " and \a [dropped_item]"
-		else
-			dropped_items_string += ", \a [dropped_item]"
-
-	dead_parent.visible_message("<span class='notice'>As [dead_parent] falls, they leave behind [dropped_items_string].</span>")
-
-	RemoveComponent()
-
 /datum/component/drop_loot_on_death/Initialize(...)
 	if (length(args))
 		src.items_to_drop = args.Copy()
@@ -49,3 +30,22 @@
 	else
 		var/list/items_to_add = args.Copy(3)
 		src.items_to_drop.Add(items_to_add)
+
+/datum/component/drop_loot_on_death/proc/drop_loot()
+	var/atom/dead_parent = parent
+	var/turf_to_drop_on = get_turf(dead_parent)
+	var/dropped_item_type = items_to_drop[1]
+	var/dropped_item = new dropped_item_type(turf_to_drop_on)
+	var/dropped_items_string = "\a [dropped_item]"
+	var/items_length = length(items_to_drop)
+	for(var/i = 2, i <= items_length, i++)
+		dropped_item_type = items_to_drop[i]
+		dropped_item = new dropped_item_type(turf_to_drop_on)
+		if(i == items_length)
+			dropped_items_string += " and \a [dropped_item]"
+		else
+			dropped_items_string += ", \a [dropped_item]"
+
+	dead_parent.visible_message("<span class='notice'>As [dead_parent] falls, they leave behind [dropped_items_string].</span>")
+
+	RemoveComponent()
