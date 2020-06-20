@@ -1,3 +1,9 @@
+
+(t)sat jun 20 20
+(u)mbc
+(p)1153
+(e)|
+(+)Automenders will ramp up their healing more slowly over time (instead of 1 cycle to reach max, now it's 7 cycles and the healing amount will increase each cycle from 1 - 6).
 (t)fri jun 20 20
 (u)UrsulaMajor
 (e)🆕|feature
