@@ -1,5 +1,9 @@
 
 (t)sat jun 20 20
+(u)glassofmilk
+(p)1088
+(e)🆕|feature
+(+)Clone scans now use the computer file system instead of being a property of floppy disks.
 (u)Moonlol & F191 & RichardGere & Rybek & Enakai & Pali
 (p)517
 (e)🆕🎨|feature, sprites
