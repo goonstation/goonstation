@@ -621,8 +621,8 @@
 
 		//WEAKEN the first apply or use some sort of ramp-up!
 		var/multiply = 1
-		if (looped <= 0)
-			multiply = 0.2
+		if (looped <= 7)
+			multiply = min((looped+1)/8, 1)
 
 		M.apply_to(target,user, multiply, silent = (looped >= 1))
 
