@@ -76,8 +76,8 @@
 	desc = "It feels dense and like it wants to pop open. If you fumble around, maybe you can find some sort of catch or button."
 	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "flchair_parts"
-	stamina_damage = 15
-	stamina_cost = 15
+	stamina_damage = 0
+	stamina_cost = 0
 	furniture_type = /obj/stool/chair/comfy/flock
 	furniture_name = "thrumming alcove"
 

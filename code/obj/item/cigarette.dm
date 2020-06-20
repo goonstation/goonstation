@@ -600,8 +600,8 @@
 	icon_state = "cigbutt"
 	w_class = 1
 	throwforce = 1
-	stamina_damage = 3
-	stamina_cost = 3
+	stamina_damage = 0
+	stamina_cost = 0
 	rand_pos = 1
 
 /obj/item/cigarbox
@@ -761,8 +761,8 @@
 	w_class = 1
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	burn_point = 220
 	burn_output = 900
@@ -840,8 +840,8 @@
 	w_class = 1
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	burn_point = 220
 	burn_output = 600

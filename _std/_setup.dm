@@ -719,10 +719,10 @@ proc/default_frequency_color(freq)
 #define STAMINA_MAX 200        			//Default max stamina value
 #define STAMINA_REGEN 10   	   		 	//Default stamina regeneration rate.
 #define STAMINA_ITEM_DMG 20     		//Default stamina damage objects do.
-#define STAMINA_ITEM_COST 18    		//Default attack cost on user for attacking with items.
+#define STAMINA_ITEM_COST 15    		//Default attack cost on user for attacking with items.
 #define STAMINA_HTH_DMG 30      		//Default hand-to-hand (punch, kick) stamina damage.
-#define STAMINA_HTH_COST 20     		//Default hand-to-hand (punch, kick) stamina cost
-#define STAMINA_MIN_ATTACK 91   		//The minimum amount of stamina required to attack.
+#define STAMINA_HTH_COST 15     		//Default hand-to-hand (punch, kick) stamina cost
+#define STAMINA_MIN_ATTACK 50   		//The minimum amount of stamina required to attack.
 #define STAMINA_NEG_CAP -75     		//How far into the negative we can take stamina. (People will be stunned while stamina regens up to > 0 - so this can lead to long stuns if set too high)
 #define STAMINA_NEG_CAP_STUN_TIME 60   	//When we reach the neg cap, how long to paralyze?
 #define STAMINA_STUN_TIME 5     		//How long we will be stunned for, for being <= 0 stamina

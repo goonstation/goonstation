@@ -480,8 +480,8 @@
 	force = 6
 	throw_speed = 4
 	throw_range = 5
-	stamina_damage = 25
-	stamina_cost = 10
+	stamina_damage = 30
+	stamina_cost = 15
 	stamina_crit_chance = 1
 	//two_handed = 1
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")

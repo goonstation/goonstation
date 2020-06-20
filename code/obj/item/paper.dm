@@ -37,8 +37,8 @@
 	var/sizey = 0
 	var/offset = 0
 
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 
 	var/sealed = 0 //Can you write on this with a pen?
@@ -1057,8 +1057,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
-	stamina_damage = 3
-	stamina_cost = 3
+	stamina_damage = 0
+	stamina_cost = 0
 	rand_pos = 1
 	var/is_reassignable = 1
 	var/assignment = null

@@ -26,8 +26,8 @@ PIPE BOMBS + CONSTRUCTION
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | EXTRADELAY
 	is_syndicate = 0
 	mats = 6
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 	var/sound_armed = null
 	var/icon_state_armed = null

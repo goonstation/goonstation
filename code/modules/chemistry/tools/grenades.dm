@@ -20,8 +20,8 @@
 	throw_speed = 4
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | EXTRADELAY | NOSPLASH
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 
 	New()
