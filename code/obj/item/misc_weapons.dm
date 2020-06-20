@@ -315,35 +315,38 @@
 			loaded_glowstick = W
 			user.u_equip(W)
 			W.set_loc(src)
+			var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
 			switch(src.loaded_glowstick.color_name)
 				if("red")
-					src.update_simple_light_color(255, 0, 0)
+					light_c.set_color(255, 0, 0)
 					src.bladecolor = "R"
 				if("orange")
-					src.update_simple_light_color(255, 127, 0)
+					light_c.set_color(255, 127, 0)
 					src.bladecolor = "O"
 				if("yellow")
-					src.update_simple_light_color(255, 255, 0)
+					light_c.set_color(255, 255, 0)
 					src.bladecolor = "Y"
 				if("green")
-					src.update_simple_light_color(0, 255, 0)
+					light_c.set_color(0, 255, 0)
 					src.bladecolor = "G"
 				if("cyan")
-					src.update_simple_light_color(0, 200, 255)
+					light_c.set_color(0, 200, 255)
 					src.bladecolor = "C"
 				if("blue")
-					src.update_simple_light_color(0, 0, 255)
+					light_c.set_color(0, 0, 255)
 					src.bladecolor = "B"
 				if("purple")
-					src.update_simple_light_color(153, 0, 255)
+					light_c.set_color(153, 0, 255)
 					src.bladecolor = "P"
 				if("pink")
-					src.update_simple_light_color(255, 121, 255)
+					light_c.set_color(255, 121, 255)
 					src.bladecolor = "Pi"
 				if("white")
-					src.update_simple_light_color(255, 255, 255)
+					light_c.set_color(255, 255, 255)
 					src.bladecolor = "W"
 			src.icon_state = "[state_name]-open-[bladecolor]"
+			var/datum/item_special/swipe/csaber/S = src.special
+			S.swipe_color = get_hex_color_from_blade(src.bladecolor)
 			return
 	else
 		return ..()
