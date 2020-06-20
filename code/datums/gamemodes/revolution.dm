@@ -511,8 +511,8 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = EQUIPPED_WHILE_HELD
 	force = 7
-	stamina_damage = 25
-	stamina_cost = 14
+	stamina_damage = 30
+	stamina_cost = 15
 	stamina_crit_chance = 10
 	hitsound = 'sound/impact_sounds/Wood_Hit_1.ogg'
 

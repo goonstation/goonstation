@@ -26,8 +26,8 @@ Contains:
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 4
-	stamina_damage = 35
-	stamina_cost = 30
+	stamina_damage = 55
+	stamina_cost = 23
 	stamina_crit_chance = 10
 
 	New()
@@ -429,6 +429,8 @@ Contains:
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	w_class = 2.0
 	force = 3.0
+	stamina_damage = 30
+	stamina_cost = 16
 	desc = "A small tank that is labelled to contain oxygen. In emergencies, wear a mask that can be used to transfer air, such as a breath mask, turn on the release valve on the oxygen tank, and put it on your belt."
 	wear_image_icon = 'icons/mob/belt.dmi'
 	module_research = list("atmospherics" = 1)

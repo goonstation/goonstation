@@ -1,4 +1,4 @@
-datum/controller/process/ghost_notifications
+datum/controller/process/respawn //WHY IN GODS NAME WAS THIS NAMED ..../ghost_notifications. NO WONDER THEY WERE BROKEN
 
 	setup()
 		name = "Respawn Controller"

@@ -26,6 +26,7 @@ Contains:
 	w_class = 3.0
 	throw_speed = 4
 	throw_range = 10
+	force = 2
 	stamina_damage = 10
 	stamina_cost = 10
 	var/force_dud = 0

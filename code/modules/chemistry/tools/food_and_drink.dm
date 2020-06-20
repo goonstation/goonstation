@@ -849,12 +849,14 @@
 	attack(target as mob, mob/user as mob)
 		if (src.broken && !src.unbreakable)
 			force = 5.0
-			throwforce = 15.0
+			throwforce = 10.0
 			throw_range = 5
 			w_class = 2.0
 			stamina_damage = 15
 			stamina_cost = 15
 			stamina_crit_chance = 50
+			tooltip_rebuild = 1
+
 			if (src.shatter >= rand(2,12))
 				var/turf/U = user.loc
 				user.visible_message("<span class='alert'>[src] shatters completely!</span>")

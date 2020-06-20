@@ -88,8 +88,8 @@
 	w_class = 4.0
 	max_wclass = 3
 	does_not_open_in_pocket = 0
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 5
 	spawn_contents = list(/obj/item/storage/box/starter)
 
@@ -126,7 +126,7 @@
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
 	max_wclass = 2
 	does_not_open_in_pocket = 0
-	stamina_damage = 5
+	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 5
 

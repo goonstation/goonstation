@@ -15,8 +15,8 @@
 	var/obj/item/device/radio/signaler/signaler = null
 	var/obj/item/reagent_containers/food/snacks/pie/pie = null
 	var/obj/item/parts/arm = null
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 5
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 

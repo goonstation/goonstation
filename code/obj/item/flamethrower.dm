@@ -33,8 +33,8 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	var/obj/item/reagent_containers/food/drinks/fueltank/part5 = null
 	contraband = 5 //Heh
 	m_amt = 500
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 15
+	stamina_cost = 15
 	stamina_crit_chance = 1
 	move_triggered = 1
 
@@ -340,6 +340,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			icon_state = "flamethrower_oxy_fuel"
 			force = 3
 			hit_type = DAMAGE_BLUNT
+		tooltip_rebuild = 1
 	if (href_list["removeair"])
 		if(!src.part4)	return
 		var/obj/item/tank/A = src.part4

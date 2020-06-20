@@ -6,15 +6,15 @@
 	var/active = 0.0
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSHIELD
 	item_state = "electronic"
-	throwforce = 10.0
+	throwforce = 5.0
 	throw_speed = 2
 	throw_range = 10
 	w_class = 2.0
 	is_syndicate = 1
 	mats = 15
 	desc = "An illegal device that bends light around the user, rendering them invisible to regular vision."
-	stamina_damage = 10
-	stamina_cost = 10
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 15
 	contraband = 6
 
