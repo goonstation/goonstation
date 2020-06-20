@@ -118,7 +118,7 @@
 	if (!walking_matters)
 		slip_delay = 10
 	var/movement_delay_real = max(src.movement_delay(get_step(src,src.move_dir), running),world.tick_lag)
-	var/movedelay = max(movement_delay_real, world.time - src.next_move)
+	var/movedelay = max(movement_delay_real, min(world.time - src.next_move,world.time - src.last_pulled_time))
 
 	if (movedelay < slip_delay)
 		var/intensity = (-0.33)+(6.033763-(-0.33))/(1+(movement_delay_real/(0.4))-1.975308)  //y=d+(6.033763-d)/(1+(x/c)-1.975308)
@@ -563,25 +563,6 @@
 		return limbs.l_arm.limb_data
 	return null
 
-/mob/proc/process_stamina(var/cost)
-	return 1
-
-/mob/living/carbon/human/process_stamina(var/cost)
-	#if STAMINA_NO_ATTACK_CAP == 0
-	// why
-	// in what world is condition two not equivalent to condition one
-	// there are literally two outcomes to this
-	// if (true or true); and if (false or false)
-	if(src.stamina <= cost || (src.stamina - cost) <= 0)
-		boutput(src, STAMINA_EXHAUSTED_STR)
-		return 0
-	src.remove_stamina(cost)
-	#else
-	if(src.stamina > STAMINA_MIN_ATTACK)
-		cost = min(cost,src.stamina - STAMINA_MIN_ATTACK)
-		src.remove_stamina(cost)
-	#endif
-	return 1
 
 // This proc copies one mob's inventory to another. Why the separate entry? I don't wanna have to
 // rip it out of unkillable_respawn() later for unforseeable reasons (Convair880).

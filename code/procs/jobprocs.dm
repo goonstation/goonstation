@@ -53,8 +53,10 @@
 
 	var/list/unassigned = list()
 
-	for (var/mob/new_player/player in mobs)
-		if (player.client && player.ready && !player.mind.assigned_role)
+	for (var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+		if (player.ready && !player.mind.assigned_role)
 			unassigned += player
 
 	if (unassigned.len == 0)
@@ -677,7 +679,7 @@
 	return
 
 // this proc is shit, make a better one 2day
-proc/bad_traitorify(mob/living/carbon/human/H, traitor_role="hard-mode traitor")
+proc/bad_traitorify(mob/H, traitor_role="hard-mode traitor")
 	var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
 	var/num_objectives = rand(1,3)
 	var/datum/objective/new_objective = null

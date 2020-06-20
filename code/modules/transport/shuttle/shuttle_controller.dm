@@ -76,7 +76,7 @@ datum/shuttle_controller
 
 		New()
 			..()
-			for (var/obj/machinery/computer/airbr/S in airbridgeComputers)
+			for (var/obj/machinery/computer/airbr/S in by_type[/obj/machinery/computer/airbr])
 				if (S.emergency && !(S in src.airbridges))
 					src.airbridges += S
 			map_turf = map_settings.shuttle_map_turf
@@ -128,10 +128,6 @@ datum/shuttle_controller
 							SPAWN_DBG(0)
 								A.ex_act(1)
 
-						for (var/turf/P in start_location)
-							if (istype(P, centcom_turf))
-								new map_turf(P)
-
 						end_location.color = null //Remove the colored shuttle!
 
 						for (var/turf/T in end_location)
@@ -151,6 +147,8 @@ datum/shuttle_controller
 							for (var/atom/movable/AM as mob|obj in T)
 								if (isobserver(AM))
 									continue // skip ghosties
+								if (istype(AM, /obj/overlay/tile_effect))
+									continue
 								AM.set_loc(D)
 								// NOTE: Commenting this out to avoid recreating mass driver glitch
 								/*
@@ -159,16 +157,12 @@ datum/shuttle_controller
 									return
 								*/
 
-							if (istype(T, /turf/simulated))
-								T.ReplaceWithSpace()
-
 						start_location.move_contents_to(end_location, centcom_turf)
-						settimeleft(SHUTTLELEAVETIME)
+						for (var/turf/P in end_location)
+							if (istype(P, centcom_turf))
+								P.ReplaceWith(map_turf, force=1)
 
-						#ifdef UNDERWATER_MAP
-						end_location.force_fullbright = 1
-						end_location.update_fullbright()
-						#endif
+						settimeleft(SHUTTLELEAVETIME)
 
 						if (src.airbridges.len)
 							for (var/obj/machinery/computer/airbr/S in src.airbridges)
@@ -266,18 +260,9 @@ datum/shuttle_controller
 										if (!bonus_stun)
 											M.show_text("You are thrown about as the shuttle launches due to not being securely buckled in!", "red")
 
-						for (var/turf/O in start_location)
-							if (istype(O, map_turf))
-								new transit_turf(O)
-
 						var/area/shuttle_particle_spawn/particle_spawn = locate(/area/shuttle_particle_spawn) in world
 						if (particle_spawn)
 							particle_spawn.start_particles()
-
-						#ifdef UNDERWATER_MAP
-						end_location.force_fullbright = 1
-						end_location.update_fullbright()
-						#endif
 
 						SPAWN_DBG(0)
 							var/shuttle_dir = map_settings ? map_settings.escape_dir : EAST // default to cog2 direction because EH
@@ -288,6 +273,9 @@ datum/shuttle_controller
 
 							DEBUG_MESSAGE("Now moving shuttle!")
 							start_location.move_contents_to(end_location, map_turf)
+							for (var/turf/O in end_location)
+								if (istype(O, map_turf))
+									O.ReplaceWith(transit_turf, force=1)
 							DEBUG_MESSAGE("Done moving shuttle!")
 							settimeleft(SHUTTLETRANSITTIME)
 							boutput(world, "<B>The Emergency Shuttle has left for CentCom! It will arrive in [timeleft()/60] minute[s_es(timeleft()/60)]!</B>")
@@ -314,20 +302,14 @@ datum/shuttle_controller
 								D.locked = 0
 								D.update_icon()
 
-						for (var/turf/G in start_location)
-							if (istype(G, transit_turf))
-								new centcom_turf(G)
-
 						start_location.move_contents_to(end_location, transit_turf)
+						for (var/turf/G in end_location)
+							if (istype(G, transit_turf))
+								G.ReplaceWith(centcom_turf, force=1)
 						boutput(world, "<B>The Emergency Shuttle has arrived at CentCom!")
 						world << csound("sound/misc/shuttle_centcom.ogg")
 						logTheThing("station", null, null, "The emergency shuttle has arrived at Centcom.")
 						online = 0
-
-						#ifdef UNDERWATER_MAP
-						end_location.force_fullbright = 1
-						end_location.update_fullbright()
-						#endif
 
 						location = SHUTTLE_LOC_RETURNED
 						return 1
@@ -343,22 +325,14 @@ datum/shuttle_controller
 						var/area/start_location = locate(map_settings ? map_settings.escape_station : /area/shuttle/escape/station)
 						var/area/end_location = locate(map_settings ? map_settings.escape_centcom : /area/shuttle/escape/centcom)
 
-						for (var/turf/O in start_location)
-							if (istype(O, transit_turf))
-								new centcom_turf(O)
-
 						start_location.move_contents_to(end_location, map_turf)
+						for (var/turf/O in end_location)
+							if (istype(O, transit_turf))
+								O.ReplaceWith(centcom_turf, force=1)
 						boutput(world, "<B>The Emergency Shuttle has arrived at CentCom!")
 						logTheThing("station", null, null, "The emergency shuttle has arrived at Centcom.")
 						online = 0
-
-						#ifdef UNDERWATER_MAP
-						end_location.force_fullbright = 1
-						end_location.update_fullbright()
-						#endif
-
 						return 1
-
 				else
 					return 1
 #endif

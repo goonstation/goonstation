@@ -451,7 +451,7 @@ area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Hu
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.a_intent = INTENT_HARM
-			src.ai_active = 1
+			src.ai_set_active(1)
 
 		for (var/mob/SB in shittybills)
 			var/mob/living/carbon/human/biker/S = SB
@@ -459,7 +459,7 @@ area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Hu
 				if(!(S.ai_active) || (prob(25)))
 					S.say("That's my brother, you [pick(JOHN_insults)]!")
 				S.target = M
-				S.ai_active = 1
+				S.ai_set_active(1)
 				S.a_intent = INTENT_HARM
 
 
@@ -757,6 +757,7 @@ Urs' Hauntdog critter
 	desc = "A very, <i>very</i> haunted hotdog. Hopping around. Hopdog."
 	icon = 'icons/misc/hauntdog.dmi'
 	icon_state = "hauntdog"
+	death_text = null
 	health = 30
 	density = 0
 
@@ -784,6 +785,7 @@ Urs' Hauntdog critter
 
 	CritterDeath()
 		if (!src.alive) return
+		..()
 		src.visible_message("<b>[src]</b> stops moving.",2)
 		var/obj/item/reagent_containers/food/snacks/hotdog/H = new /obj/item/reagent_containers/food/snacks/hotdog(get_turf(src))
 

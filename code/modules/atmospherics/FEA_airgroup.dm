@@ -257,7 +257,7 @@
 						else
 							abort_group = 1
 							break
-				else if(isturf(enemy_tile))
+				else if(isturf(enemy_tile) && !enemy_tile.density) // optimization, if you ever need unsimmed walls to affect temperature change this
 					if(air.check_turf(enemy_tile))
 						connection_difference = air.mimic(enemy_tile)
 					else
@@ -291,7 +291,7 @@
 						abort_group = 1
 				else // faster check for actual space (modified check_turf)
 					var/moles = TOTAL_MOLES(air)
-					if(moles > MINIMUM_AIR_TO_SUSPEND)
+					if(moles <= MINIMUM_AIR_TO_SUSPEND)
 						var/turf/space/sample = air_master.space_sample
 						if (!sample || !(sample.turf_flags & CAN_BE_SPACE_SAMPLE))
 							sample = air_master.update_space_sample()
@@ -343,12 +343,11 @@
 // returns: 1 if the group is zeroed, 0 if not
 /datum/air_group/proc/space_fastpath(var/datum/controller/process/parent_controller)
 	var/minDist
-	var/dist
 	var/turf/space/sample
 	. = 0
 	sample = air_master.space_sample
 
-	if (!(sample.turf_flags & CAN_BE_SPACE_SAMPLE))
+	if (!sample || !(sample.turf_flags & CAN_BE_SPACE_SAMPLE))
 		sample = air_master.update_space_sample()
 
 	if (!sample)
@@ -357,15 +356,18 @@
 	var/totalPressure = 0
 
 	for(var/turf/simulated/member in members)
+/* // commented out temporarily, it will probably have to be reenabled later
 		minDist = null
 		// find nearest space border tile
 		for(var/turf/simulated/b in space_borders)
 			if (b == member)
 				continue
 
-			dist = get_dist(b, member)
+			var/dist = get_dist(b, member)
 			if (minDist == null || dist < minDist)
 				minDist = dist
+*/
+		minDist = member.dist_to_space
 
 		if (member.air && !isnull(minDist))
 			var/datum/gas_mixture/member_air = member.air

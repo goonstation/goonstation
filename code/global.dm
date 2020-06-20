@@ -66,6 +66,7 @@ var/global
 	list/cameras = list()
 	list/clients = list()
 	list/mobs = list()
+	list/ai_mobs = list()
 	list/AIs = list() //sorry, quicker loop through when we searching for AIs
 	list/doors = list()
 	list/allcables = list()

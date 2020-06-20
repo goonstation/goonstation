@@ -539,6 +539,7 @@
 		if(!user.literate)
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
+		tooltip_rebuild = 1
 		var/str = copytext(html_encode(input(usr,"Label text?","Set label","") as null|text), 1, 32)
 		if(url_regex && url_regex.Find(str))
 			str = null
@@ -754,6 +755,7 @@
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 10
+	tooltip_flags = REBUILD_DIST
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
 		if (istype(W, /obj/item/paper))
@@ -762,6 +764,7 @@
 				user.drop_item()
 				W.set_loc(src)
 				src.amount++
+				tooltip_rebuild = 1
 
 	attack_self(var/mob/user as mob)
 		show_window(user)
@@ -775,6 +778,7 @@
 
 		if(href_list["action"] == "retrieve")
 			usr.put_in_hand_or_drop(src.contents[text2num(href_list["id"])], usr)
+			tooltip_rebuild = 1
 			usr.visible_message("[usr] takes a piece of paper out of the folder.")
 		show_window(usr) // to refresh the window
 

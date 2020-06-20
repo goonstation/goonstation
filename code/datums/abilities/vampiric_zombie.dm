@@ -164,7 +164,7 @@
 		if (!M)
 			return 0
 
-		if (!(iscarbon(M) || iscritter(M)))
+		if (!(iscarbon(M) || ismobcritter(M)))
 			boutput(M, __red("You cannot use any powers in your current form."))
 			return 0
 

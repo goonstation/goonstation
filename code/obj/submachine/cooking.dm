@@ -1137,6 +1137,7 @@ var/list/mixer_recipes = list()
 							F.unlock_medal_when_eaten = "That tasted funny"
 				for (var/obj/item/I in to_remove)
 					qdel(I)
+				to_remove.len = 0
 
 			for (var/obj/I in src.contents)
 				I.set_loc(src.loc)

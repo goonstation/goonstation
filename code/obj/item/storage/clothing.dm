@@ -236,6 +236,18 @@
 	/obj/item/card/id/clown,
 	/obj/item/device/pda2/clown)
 
+/obj/item/storage/box/costume/clown/recycled
+	name = "recycled clown costume"
+	desc = "A box that contains a clown costume. One clumsy former owner."
+	spawn_contents = list(
+		/obj/item/clothing/mask/clown_hat,
+		/obj/item/clothing/under/misc/clown,
+		/obj/item/clothing/shoes/clown_shoes,
+		/obj/item/storage/fanny/funny/mini,
+		/obj/item/card/id/clown,
+		/obj/item/device/pda2/clown,
+	)
+
 /obj/item/storage/box/costume/robuddy
 	name = "guardbuddy costume"
 	spawn_contents = list(/obj/item/clothing/suit/robuddy)

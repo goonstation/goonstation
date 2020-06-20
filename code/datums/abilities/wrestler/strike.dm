@@ -53,16 +53,20 @@
 						M.set_loc(T)
 
 			M.visible_message("<span class='alert'><b>[M] [pick_string("wrestling_belt.txt", "strike")] [target]!</b></span>")
-			random_brute_damage(target, 15, 1)
 			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 
-			target.changeStatus("paralysis", 2 SECONDS)
-			target.force_laydown_standup()
-			target.change_misstep_chance(25)
+			if (!fake)
+				random_brute_damage(target, 15, 1)
+				target.changeStatus("paralysis", 2 SECONDS)
+				target.force_laydown_standup()
+				target.change_misstep_chance(25)
 
-			logTheThing("combat", M, target, "uses the strike wrestling move on %target% at [log_loc(M)].")
+			logTheThing("combat", M, target, "uses the [fake ? "fake " : ""]strike wrestling move on %target% at [log_loc(M)].")
 
 		else
 			boutput(M, __red("You can't wrestle the target here!"))
 
 		return 0
+
+/datum/targetable/wrestler/strike/fake
+	fake = 1

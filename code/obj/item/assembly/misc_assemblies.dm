@@ -732,11 +732,9 @@ obj/item/assembly/radio_horn/attack_self(mob/user as mob)
 	return
 
 obj/item/assembly/radio_horn/receive_signal()
-	if (part2.spam_flag == 0)
-		part2.spam_flag = 1
-		playsound(src.loc, islist(part2.sounds_instrument) ? pick(part2.sounds_instrument) : part2.sounds_instrument, part2.volume, part2.randomized_pitch)
-		SPAWN_DBG(part2.spam_timer)
-			part2.spam_flag = 0
+	if (part2.next_play >= TIME)
+		part2.next_play = TIME + part2.note_time
+		part2.play_note(rand(1,part2.sounds_instrument.len), user = null)
 	return
 
 /////////////////////////////////////////////////////// Remote signaller/timer /////////////////////////////////////

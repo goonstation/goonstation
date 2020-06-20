@@ -10,7 +10,7 @@
 	density = 0
 	layer = OBJ_LAYER + 0.9
 	mouse_opacity = 0
-	event_handler_flags = USE_HASENTERED
+	event_handler_flags = USE_HASENTERED | USE_CANPASS
 	var/foamcolor
 	var/amount = 3
 	var/expand = 1
@@ -67,7 +67,9 @@
 	//playsound(src, "sound/effects/bubbles2.ogg", 80, 1, -3)
 
 	update_icon()
-
+	if(metal)
+		if(istype(loc, /turf/space))
+			loc:ReplaceWithMetalFoam(metal)
 	SPAWN_DBG(3 + metal*3)
 		process()
 	SPAWN_DBG(12 SECONDS)
@@ -193,3 +195,8 @@
 			reagents.reaction(M, TOUCH, 5)
 
 			M.show_text("You slip on the foam!", "red")
+
+/obj/effects/foam/CanPass(atom/movable/mover, turf/target)
+	if (src.metal && !mover)
+		return 0 // completely opaque to air
+	return 1

@@ -273,7 +273,7 @@
 			boutput(user, "<span class='notice'>You remove the metal bolts.</span>")
 			steps_until_pressable--
 			return
-		if (istype(W,/obj/item/weldingtool) && steps_until_pressable == 17)
+		if (isweldingtool(W) && W:try_weld(user,0,-1,0,0) && steps_until_pressable == 17)
 			boutput(user, "<span class='notice'>You un-weld the casing.</span>")
 			steps_until_pressable--
 			return

@@ -28,10 +28,7 @@
 	src.update_lying()
 
 	// If he's wearing magnetic boots anchored = 1, otherwise anchored = 0
-	if ((src.shoes && src.shoes.magnetic) || (src.mutantrace && src.mutantrace.anchor_to_floor))
-		src.anchored = 1
-	else
-		src.anchored = 0
+	reset_anchored(src)
 	// Automatically drop anything in store / id / belt if you're not wearing a uniform.
 	if (!src.w_uniform)
 		for (var/atom in list(src.r_store, src.l_store, src.wear_id, src.belt)) //assuming things in all these slots will only ever be items

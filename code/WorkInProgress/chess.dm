@@ -35,6 +35,18 @@ turf/simulated/floor/chess
 		chessboard -= src
 		..()
 
+turf/unsimulated/floor/chess
+
+	var/obj/item/chesspiece/enpassant = null
+
+	New()
+		..()
+		chessboard += src
+
+	disposing()
+		chessboard -= src
+		..()
+
 obj/chessbutton
 	name = "Chess Reset Button"
 	desc = "A button that clears the chessboard, then re-sets the pieces. Don't press it while you're playing"

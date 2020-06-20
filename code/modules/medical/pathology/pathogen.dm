@@ -22,11 +22,11 @@
 // And for all:
 // RARITY_ABSTRACT: Used strictly for categorization. ABSTRACT symptoms will never appear.
 //                  ie. if lingual is a symptom category with multiple subsymptoms (for easy mutex), it should be abstract.
-#define RARITY_VERY_COMMON 10
-#define RARITY_COMMON 5
+#define RARITY_VERY_COMMON 1
+#define RARITY_COMMON 2
 #define RARITY_UNCOMMON 3
-#define RARITY_RARE 2
-#define RARITY_VERY_RARE 1
+#define RARITY_RARE 4
+#define RARITY_VERY_RARE 5
 #define RARITY_ABSTRACT 0
 
 datum/pathogen_cdc
@@ -119,6 +119,7 @@ datum/controller/pathogen
 			return
 		if (H in CDC.infections)
 			CDC.infections -= H
+		P.oncured()
 
 	proc/patient_zero(var/datum/pathogen_cdc/CDC, var/topic_holder)
 		if (CDC.patient_zero)
@@ -1422,16 +1423,23 @@ datum/pathogen
 		return message
 
 	// Act on emoting. Vetoing available by returning 0.
-	proc/onemote(act)
-		suppressant.onemote(infected, act, src)
+	proc/onemote(act, voluntary)
+		suppressant.onemote(infected, act, voluntary, src)
 		for (var/effect in src.effects)
-			. *= effect:onemote(infected, act, src)
+			. *= effect:onemote(infected, act, voluntary, src)
 
 	// Act when dying. Returns nothing.
 	proc/ondeath()
 		for (var/effect in src.effects)
 			effect:ondeath(infected, src)
 		suppressant.ondeath(src)
+		return
+
+	// Act when pathogen is cured. Returns nothing.
+	proc/oncured()
+		for (var/effect in src.effects)
+			effect:oncured(infected, src)
+		suppressant.oncured(src)
 		return
 
 	proc/add_new_symptom(var/list/allowed, var/allow_duplicates = 0)

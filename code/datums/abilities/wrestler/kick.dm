@@ -48,16 +48,20 @@
 			shake_camera(C, 8, 3)
 
 		M.visible_message("<span class='alert'><B>[M.name] [pick_string("wrestling_belt.txt", "kick")]-kicks [target]!</B></span>")
-		random_brute_damage(target, 15, 1)
+		if (!fake)
+			random_brute_damage(target, 15, 1)
 		playsound(M.loc, "swing_hit", 60, 1)
 
 		var/turf/T = get_edge_target_turf(M, get_dir(M, get_step_away(target, M)))
-		if (T && isturf(T))
+		if (!fake && T && isturf(T))
 			SPAWN_DBG(0)
 				target.throw_at(T, 3, 2)
 				target.changeStatus("weakened", 2 SECONDS)
 				target.changeStatus("stunned", 2 SECONDS)
 				target.force_laydown_standup()
 
-		logTheThing("combat", M, target, "uses the kick wrestling move on %target% at [log_loc(M)].")
+		logTheThing("combat", M, target, "uses the [fake ? "fake " : ""]kick wrestling move on %target% at [log_loc(M)].")
 		return 0
+
+/datum/targetable/wrestler/kick/fake
+	fake = 1

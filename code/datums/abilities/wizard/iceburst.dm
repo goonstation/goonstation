@@ -6,9 +6,9 @@
 	cooldown = 200
 	requires_robes = 1
 	offensive = 1
-	voice_grim = "sound/voice/wizard/IceburstGrim.ogg"
-	voice_fem = "sound/voice/wizard/IceburstFem.ogg"
-	voice_other = "sound/voice/wizard/IceburstLoud.ogg"
+	voice_grim = "sound/voice/wizard/IceBurstGrim.ogg"
+	voice_fem = "sound/voice/wizard/IceBurstFem.ogg"
+	voice_other = "sound/voice/wizard/IceBurstLoud.ogg"
 
 	cast()
 		if(!holder)
@@ -107,6 +107,7 @@
 				src.underlays += iced
 			boutput(iced, "<span class='alert'>You are trapped within [src]!</span>") // since this is used in at least two places to trap people in things other than ice cubes
 
+		if (iced) //apparently a blank ice cube spawns in adventure
 			iced.last_cubed = world.time
 
 		src.health *= (rand(10,20)/10)
@@ -191,5 +192,6 @@
 	ex_act(severity)
 		for(var/atom/A in src)
 			A.ex_act(severity)
-		takeDamage(20 / severity)
+		SPAWN_DBG(0)
+			takeDamage(20 / severity)
 		..()

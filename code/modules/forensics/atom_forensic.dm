@@ -45,7 +45,9 @@
 
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/list/L = params2list(src.fingerprints)
+		var/list/L = src.fingerprints
+		if(isnull(L))
+			L = list()
 
 		if (H.gloves) // Fixed: now adds distorted prints even if 'fingerprintslast == ckey'. Important for the clean_forensic proc (Convair880).
 			var/gloveprints = H.gloves.distort_prints(H.bioHolder.uid_hash, 1)
@@ -54,7 +56,7 @@
 				if (L.len >= 6) //Limit fingerprints in the list to 6
 					L.Cut(1,2)
 				L += gloveprints
-				src.fingerprints = list2params(L)
+				src.fingerprints = L
 
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += "(Wearing gloves). Real name: [H.real_name], Key: [H.key], Time: [time2text(world.timeofday, "hh:mm:ss")]"
@@ -63,7 +65,7 @@
 			return 0
 
 		if (!( src.fingerprints ))
-			src.fingerprints = "[H.bioHolder.uid_hash]"
+			src.fingerprints = list("[H.bioHolder.uid_hash]")
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += "Real name: [H.real_name], Key: [H.key], Time: [time2text(world.timeofday, "hh:mm:ss")]"
 				src.fingerprintslast = H.key
@@ -75,7 +77,7 @@
 			while(L.len >= 6) // limit the number of fingerprints to 6, previously 3
 				L -= L[1]
 			L += H.bioHolder.uid_hash
-			src.fingerprints = list2params(L)
+			src.fingerprints = L
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += "Real name: [H.real_name], Key: [H.key], Time: [time2text(world.timeofday, "hh:mm:ss")]"
 				src.fingerprintslast = H.key

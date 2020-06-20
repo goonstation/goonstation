@@ -67,8 +67,10 @@
 	disposing()
 		if (src in processing_items)
 			processing_items.Remove(src)
+		if(cell)
+			cell.dispose()
+			cell = null
 		..()
-		return
 
 	examine()
 		. = ..()

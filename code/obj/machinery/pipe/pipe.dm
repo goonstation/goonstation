@@ -392,19 +392,17 @@ var/linenums = 0
 	..()
 
 
-/obj/machinery/pipes/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/pipes/attackby(obj/item/W as obj, mob/user as mob)
 
-	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
+	if (isweldingtool(W))
 		if(!(status & BROKEN))
 			return
-		if (W:weldfuel < 2)
-			boutput(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+		if(!W:try_weld(user,2))
 			return
-		W:weldfuel -= 2
 		status &= ~BROKEN
 		update()
 		for (var/mob/M in viewers(src))
-			M.show_message("<span class='alert'>The pipe has been mended by [user.name] with the weldingtool.</span>", 3, "<span class='alert'>You hear welding.</span>", 2)
+			M.show_message("<span class='alert'>The pipe has been mended by [user.name] with [W].</span>", 3, "<span class='alert'>You hear welding.</span>", 2)
 		return
 
 /obj/machinery/pipes/ex_act(severity)

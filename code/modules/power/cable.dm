@@ -75,6 +75,7 @@
 	layer = CABLE_LAYER
 	plane = PLANE_DEFAULT
 	color = "#DD0000"
+	text = ""
 
 	var/insulator_default = "synthrubber"
 	var/condcutor_default = "copper"

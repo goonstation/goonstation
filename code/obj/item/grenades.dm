@@ -1144,10 +1144,9 @@ PIPE BOMBS + CONSTRUCTION
 				qdel(W)
 				qdel(src)
 		#endif
-		if(istype(W, /obj/item/weldingtool) && state == 1)
+		if(isweldingtool(W) && state == 1)
 			if(!W:try_weld(user, 1))
 				return
-			W:eyecheck(user)
 			boutput(user, "<span class='notice'>You hollow out the pipe.</span>")
 			src.state = 2
 			icon_state = "Pipe_Hollow"
@@ -1374,7 +1373,8 @@ PIPE BOMBS + CONSTRUCTION
 							var/yank_distance = 1
 							if (prob(50))
 								yank_distance = 2
-							M.throw_at(T, yank_distance, 2)
+							SPAWN_DBG(0)
+								M.throw_at(T, yank_distance, 2)
 				for (var/obj/O in view(1,src.loc))
 					O.throw_at(T, 2, 2)
 			if (extra_shrapnel)

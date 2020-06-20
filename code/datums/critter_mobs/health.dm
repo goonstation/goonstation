@@ -23,6 +23,10 @@
 		holder = M
 		value = maximum_value
 
+	disposing()
+		holder = null
+		..()
+
 	proc/TakeDamage(var/amt, var/bypass_multiplier = 0)
 		if (!bypass_multiplier)
 			amt *= damage_multiplier

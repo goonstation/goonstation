@@ -61,6 +61,7 @@
 	see_face = 0.0
 
 	equipped(var/mob/user)
+		..()
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/gimmick/owl))
@@ -92,6 +93,7 @@
 	compatible_species = list("human", "monkey")
 
 	equipped(var/mob/user)
+		..()
 		if (!user)
 			return 0
 		if (ishuman(user))
@@ -331,8 +333,9 @@
 	cant_other_remove = 0
 
 /obj/item/clothing/mask/cursedclown_hat/equipped(var/mob/user, var/slot)
+	..()
 	var/mob/living/carbon/human/Victim = user
-	if(istype(Victim) && slot == "mask")
+	if(istype(Victim) && slot == SLOT_WEAR_MASM)
 		boutput(user, "<span class='alert'><B> The mask grips your face!</B></span>")
 		src.desc = "This is never coming off... oh god..."
 		// Mostly for spawning a cluwne car and clothes manually.
@@ -733,7 +736,8 @@
 	cant_self_remove = 1
 	cant_other_remove = 1
 	equipped(var/mob/user, var/slot)
-		if(slot == "i_clothing" && ishuman(user))
+		..()
+		if(slot == SLOT_W_UNIFORM && ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.shoes != null)
 				var/obj/item/clothing/shoes/c = H.shoes
@@ -1085,7 +1089,7 @@
 					"You try to give [src] to [M], but [M] has no fingers to put [src] on!")
 					return
 
-				else if (iscritter(M))
+				else if (ismobcritter(M))
 					var/mob/living/critter/C = M
 					if (C.hand_count > 0) // we got hands!  hands that things can be put onto!  er, into, I guess.
 						if (C.put_in_hand(src))
@@ -1173,7 +1177,7 @@
 	material_prints = "deep scratches"
 
 	equipped(var/mob/user, var/slot)
-		if (slot == "gloves")
+		if (slot == SLOT_GLOVES)
 			if (!user.bioHolder || !user.bioHolder.HasEffect("hulk"))
 				boutput(user, "You feel your muscles swell to an immense size.")
 			APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/hulkstrong, src.type)
@@ -1313,7 +1317,7 @@
 	item_state = "lightgreen"
 
 	equipped(var/mob/user, var/slot)
-		if (slot == "i_clothing" && user.bioHolder)
+		if (slot == SLOT_W_UNIFORM && user.bioHolder)
 			user.bioHolder.AddEffect("jumpy_suit", 0, 0, 0, 1) // id, variant, time left, do stability, magical
 			SPAWN_DBG(0) // bluhhhhhhhh this doesn't work without a spawn
 				if (ishuman(user))

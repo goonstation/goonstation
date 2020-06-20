@@ -176,7 +176,9 @@
 
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 	//logit( "chat", 0, "([name])", src, message )
-	for (var/mob/M in mobs)
+	for (var/client/C)
+		if (!C.mob) continue
+		var/mob/M = C.mob
 		if (istype(M, /mob/new_player))
 			continue
 		if (M.client && M.client.deadchatoff)
@@ -238,7 +240,10 @@
 
 
 	//show message to admins (Follow rules of their deadchat toggle)
-	for (var/mob/M in mobs)
+	for (var/client/C)
+		if (!C.mob) continue
+		var/mob/M = C.mob
+
 		if (M.client && M.client.holder && M.client.deadchat && !M.client.player_mode)
 			var/thisR = rendered
 			if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
@@ -288,7 +293,9 @@
 
 
 	//show message to admins (Follow rules of their deadchat toggle)
-	for (var/mob/M in mobs)
+	for (var/client/C)
+		if (!C.mob) continue
+		var/mob/M = C.mob
 		if (M.client && M.client.holder && M.client.deadchat && !M.client.player_mode)
 			var/thisR = rendered
 			if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
@@ -330,18 +337,19 @@
 
 
 	//show message to admins (Follow rules of their deadchat toggle)
-	for (var/mob/M in mobs)
-		if (M.client && M.client.holder && M.client.deadchat && !M.client.player_mode)
+	for (var/client/C)
+		if (!C.mob) continue
+		var/mob/M = C.mob
+		if (M.client.holder && M.client.deadchat && !M.client.player_mode)
 			var/thisR = rendered
 			if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 			boutput(M, thisR)
-	//show to kudzu
-	for (var/mob/M in mobs)
-		var/thisR = rendered
-		if (M.client && src.mind && istype(M.abilityHolder, /datum/abilityHolder/kudzu))
-			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-			boutput(M, thisR)
+		else
+			if (src.mind && istype(M.abilityHolder, /datum/abilityHolder/kudzu))
+				var/thisR = rendered
+				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
+				boutput(M, thisR)
 		//////////////////////////////////
 
 /mob/proc/say_understands(var/mob/other, var/forced_language)
@@ -596,9 +604,10 @@
 			continue
 		recipients += M.client
 
-	for (var/mob/M in mobs)
-		if (!M.client)
-			continue
+	for (var/client/C)
+		if (!C.mob) continue
+		var/mob/M = C.mob
+
 		if (recipients.Find(M.client))
 			continue
 		if (M.client.holder && !M.client.only_local_looc && !M.client.player_mode)
@@ -893,17 +902,19 @@
 		rendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name' [speaker ? "data-ctx='\ref[speaker.mind]'" : ""]>[name]</span> <span class='message'>[message]</span></span>"
 		flockmindRendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name'>[flock ? "<a href='?src=\ref[flock.flockmind];origin=\ref[speaker]'>[name]</a>" : "[name]"]</span> <span class='message'>[message]</span></span>"
 
-	for (var/mob/M in mobs)
-		if(istype(M, /mob/new_player))
+	for (var/client/CC)
+		if (!CC.mob) continue
+		if(istype(CC.mob, /mob/new_player))
 			continue
+		var/mob/M = CC.mob
 
 		var/thisR = ""
-		if (M.client)
-			if((isflock(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
-				thisR = rendered
-			if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(speaker, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
-				thisR = flockmindRendered
-			if ((istype(M, /mob/dead/observer)||M.client.holder) && speaker && speaker.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
-			if(thisR != "")
-				M.show_message(thisR, 2)
+
+		if((isflock(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
+			thisR = rendered
+		if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(speaker, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
+			thisR = flockmindRendered
+		if ((istype(M, /mob/dead/observer)||M.client.holder) && speaker && speaker.mind)
+			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
+		if(thisR != "")
+			M.show_message(thisR, 2)

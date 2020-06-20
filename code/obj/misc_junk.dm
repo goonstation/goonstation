@@ -590,7 +590,7 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH
 	var/emagged = 0
 	var/last_used = 0
-	var/list/safe_smokables = list("nicotine", "THC")
+	var/list/safe_smokables = list("nicotine", "THC", "CBD")
 	var/datum/effects/system/bad_smoke_spread/smoke
 	var/range = 1
 
@@ -706,19 +706,11 @@
 	item_state = "medivape"
 	icon_state = "medivape"
 
-	var/list/medical_cannabis = list("antihol", "charcoal", "epinephrine", "insulin", "mutadone", "teporone",\
-"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "stimulants", "synaptizine", "anti_rad",\
-"oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
-"salicylic_acid", "cryoxadone", "nicotine", "THC")
-
 	New()
 		..()
-		safe_smokables = medical_cannabis
+		safe_smokables += chem_whitelist
 		src.reagents.clear_reagents()
-		src.reagents.add_reagent(pick("antihol", "charcoal", "epinephrine", "insulin", "mutadone", "teporone",\
-"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "synaptizine", "anti_rad",\
-"oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
-"salicylic_acid", "cryoxadone", "nicotine", "THC"), 50)
+		src.reagents.add_reagent(pick(safe_smokables), 50)
 
 /obj/item/reagent_containers/vape/medical/o2 //sweet oxygen
 	desc = "Smoking, now in a doctor approved form! This one comes preloaded with salbutamol."

@@ -24,9 +24,6 @@
 	pickup(mob/user)
 		return
 
-	equipped(var/mob/user, var/slot)
-		return
-
 	attack_self()
 		if(!active)
 			boutput(usr, "<span class='notice'>You activate the shield.</span>")

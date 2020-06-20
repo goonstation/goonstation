@@ -570,6 +570,7 @@ var/sound/iomoon_alarm_sound = null
 	firevuln = 0.1
 	brutevuln = 0.4
 	angertext = "grumbles at"
+	death_text = "%src% flops over dead!"
 	butcherable = 0
 
 	CritterAttack(mob/M)
@@ -587,12 +588,7 @@ var/sound/iomoon_alarm_sound = null
 		return CritterAttack(M)
 
 	CritterDeath()
-		src.alive = 0
-		set_density(0)
-		anchored = 0
-		src.icon_state = "lavacrab-dead"
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> flops over dead!")
+		..()
 
 	ai_think()
 		. = ..()
@@ -613,6 +609,7 @@ var/sound/iomoon_alarm_sound = null
 	firevuln = 0.1
 	brutevuln = 0.6
 	angertext = "beeps at"
+	death_text = "%src% blows apart!"
 	butcherable = 0
 	attack_range = 3
 	flying = 1
@@ -634,10 +631,7 @@ var/sound/iomoon_alarm_sound = null
 
 	CritterDeath()
 		if (!src.alive) return
-		src.alive = 0
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> blows apart!")
-
+		..()
 		SPAWN_DBG(0)
 			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 			s.set_up(3, 1, src)
@@ -1506,7 +1500,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 	disposing()
 		if (next)
-			next.disposing()
+			next.dispose()
 			next = null
 
 		..()

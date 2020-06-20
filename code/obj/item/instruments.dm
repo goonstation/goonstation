@@ -19,36 +19,72 @@
 	stamina_damage = 10
 	stamina_cost = 10
 	stamina_crit_chance = 5
-	var/spam_flag = 0
-	var/spam_timer = 100
+	var/next_play = 0
+	var/note_time = 100
+	var/randomized_pitch = 1
+	var/pitch_set = 1
 	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
+	var/pick_random_note = 0
 	var/desc_verb = list("plays", "lays down")
 	var/desc_sound = list("funny", "rockin'", "great", "impressive", "terrible", "awkward")
 	var/desc_music = list("riff", "jam", "bar", "tune")
 	var/volume = 50
-	var/randomized_pitch = 1
 	var/dog_bark = 1
 	var/affect_fun = 5
+	var/special_index = 0
+
 	module_research = list("audio" = 7)
 
-	proc/play(mob/user as mob)
-		if (!spam_flag)
-			spam_flag = 1
-			src.add_fingerprint(user)
-			if (src.affect_fun && ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if (H.sims)
-					H.sims.affectMotive("fun", src.affect_fun)
-			show_play_message(user)
-			playsound(get_turf(src), islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
+	New()
+		..()
+		contextLayout = new /datum/contextLayout/instrumental()
+
+		//src.contextActions = childrentypesof(/datum/contextAction/vehicle)
+
+		for(var/datum/contextAction/C in src.contextActions)
+			C.dispose()
+		src.contextActions = list()
+
+		for (var/i in 1 to sounds_instrument.len)
+			var/datum/contextAction/instrument/newcontext
+
+			if (special_index && i >= special_index)
+				newcontext = new /datum/contextAction/instrument/special
+			else
+				newcontext = new /datum/contextAction/instrument
+			newcontext.note = i
+			contextActions += newcontext
+
+	proc/play_note(var/note, var/mob/user)
+		if (note != clamp(note,1,sounds_instrument.len))
+			return 0
+		if (next_play > TIME)
+			return 0
+		next_play = TIME + note_time
+		//if drunk, play off pitch?
+		if (special_index && note >= special_index)
+			next_play = TIME + 200
+
+		var/turf/T = get_turf(src)
+		playsound(T, sounds_instrument[note], src.volume, randomized_pitch, pitch = pitch_set)
+
+
+
+		if (prob(5) || sounds_instrument.len == 1)
 			if (src.dog_bark)
 				for (var/obj/critter/dog/george/G in by_type[/obj/critter/dog/george])
-					if (DIST_CHECK(G, user, 6) && prob(60))
+					if (DIST_CHECK(G, T, 6) && prob(60))
 						G.howl()
+
 			src.post_play_effect(user)
-			SPAWN_DBG(src.spam_timer)
-				spam_flag = 0
-		return
+
+		.= 1
+
+	proc/play(var/mob/user)
+		if (pick_random_note && sounds_instrument && sounds_instrument.len)
+			play_note(rand(1,sounds_instrument.len),user)
+		if(contextActions.len)
+			user.showContextActions(contextActions, src)
 
 	proc/show_play_message(mob/user as mob)
 		if (user) return user.visible_message("<B>[user]</B> [islist(src.desc_verb) ? pick(src.desc_verb) : src.desc_verb] \a [islist(src.desc_sound) ? pick(src.desc_sound) : src.desc_sound] [islist(src.desc_music) ? pick(src.desc_music) : src.desc_music] on [his_or_her(user)] [src.name]!")
@@ -58,7 +94,9 @@
 
 	attack_self(mob/user as mob)
 		..()
+		src.add_fingerprint(user)
 		src.play(user)
+
 
 /* -------------------- Large Instruments -------------------- */
 
@@ -72,11 +110,12 @@
 	desc_sound = list("nice", "classic", "classical", "great", "impressive", "terrible", "awkward", "striking", "grand", "majestic")
 	desc_music = list("melody", "aria", "ballad", "chorus", "concerto", "fugue", "tune")
 	volume = 100
-	spam_timer = 200
+	note_time = 200
 	affect_fun = 15 // a little higher, why not?
 	module_research = list("audio" = 14) // I don't think this is even relevant without being able to pick up the thing and also the research thing isn't even enabled atm but well. why not?
 
 	attack_hand(mob/user as mob)
+		src.add_fingerprint(user)
 		src.play(user)
 
 	show_play_message(mob/user as mob)
@@ -101,11 +140,19 @@
 	desc = "Not very grand, is it?"
 	icon_state = "piano"
 	item_state = "piano"
-	sounds_instrument = list('sound/musical_instruments/piano/furelise.ogg',
-	'sound/musical_instruments/piano/gymno.ogg',
-	'sound/musical_instruments/piano/lune.ogg',
-	'sound/musical_instruments/piano/nachtmusik1.ogg',
-	'sound/musical_instruments/piano/nachtmusik2.ogg')
+	sounds_instrument = null
+	special_index = 13
+	note_time = 0.18 SECONDS
+	randomized_pitch = 0
+
+	New()
+		sounds_instrument = list()
+		for (var/i in 1 to 12)
+			sounds_instrument += "sound/musical_instruments/piano/piano_[i].ogg"
+
+		sounds_instrument += list("sound/musical_instruments/piano/furelise.ogg","sound/musical_instruments/piano/gymno.ogg","sound/musical_instruments/piano/lune.ogg","sound/musical_instruments/piano/nachtmusik1.ogg","sound/musical_instruments/piano/nachtmusik2.ogg")
+		..()
+
 
 /* -------------------- Grand Piano -------------------- */
 
@@ -126,6 +173,7 @@
 	'sound/musical_instruments/organ/bach2.ogg',
 	'sound/musical_instruments/organ/bridal1.ogg',
 	'sound/musical_instruments/organ/funeral.ogg')
+	pick_random_note = 1
 
 /* -------------------- Jukebox -------------------- */
 
@@ -140,6 +188,7 @@
 	'sound/musical_instruments/jukebox/vintage.ogg',
 	'sound/musical_instruments/jukebox/ultralounge.ogg',
 	'sound/musical_instruments/jukebox/jazzpiano.ogg')
+	pick_random_note = 1
 
 	show_play_message(mob/user as mob)
 		return
@@ -151,18 +200,26 @@
 	desc = "NEVER GONNA DANCE AGAIN, GUILTY FEET HAVE GOT NO RHYTHM"
 	icon_state = "sax"
 	item_state = "sax"
-	sounds_instrument = list('sound/musical_instruments/Saxophone_CarelessWhisper.ogg', 'sound/musical_instruments/Saxophone_RunAway.ogg', 'sound/musical_instruments/Saxophone_BakerStreet.ogg', 'sound/musical_instruments/Saxophone_ComeSunday.ogg', 'sound/musical_instruments/Saxophone_GodOnlyKnows.ogg')
 	desc_sound = list("sexy", "sensuous", "libidinous","spicy", "flirtatious", "salacious","sizzling", "carnal", "hedonistic")
 	module_research = list("audio" = 7, "metals" = 3)
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = 0
 
 	New()
+		sounds_instrument = list()
+		for (var/i in 1 to 12)
+			sounds_instrument += "sound/musical_instruments/sax/sax_[i].ogg"
 		..()
 		BLOCK_ROD
 
 /obj/item/instrument/saxophone/attack(mob/M as mob, mob/user as mob)
-	playsound(get_turf(src), pick('sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_3.ogg','sound/impact_sounds/Generic_Punch_4.ogg'), 50, 1, -1)
-	playsound(get_turf(src), pick('sound/musical_instruments/saxbonk.ogg', 'sound/musical_instruments/saxbonk2.ogg', 'sound/musical_instruments/saxbonk3.ogg'), 50, 1, -1)
-	user.visible_message("<span class='alert'><b>[user] bonks [M] with [src]!</b></span>")
+	if(ismob(M))
+		playsound(get_turf(src), pick('sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_3.ogg','sound/impact_sounds/Generic_Punch_4.ogg'), 50, 1, -1)
+		playsound(get_turf(src), pick('sound/musical_instruments/saxbonk.ogg', 'sound/musical_instruments/saxbonk2.ogg', 'sound/musical_instruments/saxbonk3.ogg'), 50, 1, -1)
+		user.visible_message("<span class='alert'><b>[user] bonks [M] with [src]!</b></span>")
+	else
+		. = ..()
 
 /* -------------------- Bagpipe -------------------- */
 
@@ -175,6 +232,7 @@
 	sounds_instrument = list('sound/musical_instruments/Bagpipes_1.ogg', 'sound/musical_instruments/Bagpipes_2.ogg','sound/musical_instruments/Bagpipes_3.ogg')
 	desc_sound = list("patriotic", "rowdy", "wee", "grand", "free", "Glaswegian", "sizzling", "carnal", "hedonistic")
 	module_research = list("audio" = 7, "metals" = 3)
+	pick_random_note = 1
 
 	New()
 		..()
@@ -193,8 +251,9 @@
 	stamina_cost = 5
 	sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
 	desc_verb = list("honks")
-	spam_timer = 8
+	note_time = 8
 	module_research = list("audio" = 8)
+	pick_random_note = 1
 
 	show_play_message(mob/user as mob)
 		return
@@ -249,7 +308,7 @@
 	sounds_instrument = list('sound/effects/dramatic.ogg')
 	volume = 100
 	randomized_pitch = 0
-	spam_timer = 30
+	note_time = 30
 	mats = 2
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -272,7 +331,8 @@
 	item_state = "airhorn"
 	sounds_instrument = list('sound/musical_instruments/Airhorn_1.ogg')
 	volume = 100
-	spam_timer = 10
+	note_time = 10
+	pick_random_note = 1
 
 /* -------------------- Harmonica -------------------- */
 
@@ -286,9 +346,10 @@
 	throwforce = 3
 	stamina_damage = 2
 	stamina_cost = 2
-	spam_timer = 20
+	note_time = 20
 	sounds_instrument = list('sound/musical_instruments/Harmonica_1.ogg', 'sound/musical_instruments/Harmonica_2.ogg', 'sound/musical_instruments/Harmonica_3.ogg')
 	desc_sound = list("delightful", "chilling", "upbeat")
+	pick_random_note = 1
 
 /* -------------------- Whistle -------------------- */
 
@@ -302,9 +363,11 @@
 	throwforce = 3
 	stamina_damage = 2
 	stamina_cost = 2
-	spam_timer = 20
+	note_time = 20
 	sounds_instrument = list('sound/musical_instruments/Whistle_Police.ogg')
 	volume = 35
+	randomized_pitch = 1
+	pick_random_note = 1
 
 	show_play_message(mob/user as mob)
 		if (user) return user.visible_message("<span style='color:red;font-weight:bold;font-size:120%'>[user] blows [src]!</span>")
@@ -341,6 +404,7 @@
 	stamina_cost = 6
 	sounds_instrument = list('sound/musical_instruments/Vuvuzela_1.ogg')
 	volume = 80
+	pick_random_note = 1
 
 	show_play_message(mob/user as mob)
 		..()
@@ -382,9 +446,18 @@
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "trumpet"
 	item_state = "trumpet"
-	sounds_instrument = list('sound/musical_instruments/Trumpet_1.ogg', 'sound/musical_instruments/Trumpet_2.ogg', 'sound/musical_instruments/Trumpet_3.ogg', 'sound/musical_instruments/Trumpet_4.ogg', 'sound/musical_instruments/Trumpet_5.ogg', 'sound/musical_instruments/Bikehorn_2.ogg')
 	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive")
 	module_research = list("audio" = 7, "metals" = 3)
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = 0
+
+	New()
+		if (sounds_instrument == null)
+			sounds_instrument = list()
+			for (var/i in 1 to 12)
+				sounds_instrument += "sound/musical_instruments/trumpet/trumpet_[i].ogg"
+		..()
 
 /* -------------------- Spooky Trumpet -------------------- */
 
@@ -399,7 +472,7 @@
 	affect_fun = 200 //because come on this shit's hilarious
 
 	play(mob/user as mob)
-		if (spam_flag)
+		if (next_play < TIME)
 			boutput(user, "<span class='alert'>\The [src] needs time to recharge its spooky strength!</span>")
 			return
 		else
@@ -447,8 +520,16 @@
 	name = "fiddle"
 	icon_state = "fiddle"
 	item_state = "fiddle"
-	sounds_instrument = list('sound/musical_instruments/Fiddle_1.ogg', 'sound/musical_instruments/Fiddle_2.ogg', 'sound/musical_instruments/Fiddle_3.ogg', 'sound/musical_instruments/Fiddle_4.ogg', 'sound/musical_instruments/Fiddle_5.ogg')
 	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive") // works just as well for fiddles as it does for trumpets I guess  :v
+	sounds_instrument = null
+	note_time = 0.18 SECONDS
+	randomized_pitch = 0
+
+	New()
+		sounds_instrument = list()
+		for (var/i in 1 to 12)
+			sounds_instrument += "sound/musical_instruments/violin/violin_[i].ogg"
+		..()
 
 /obj/item/instrument/fiddle/satanic
 	desc_sound = list("devilish", "hellish", "satanic", "enviable", "sinful", "grumpy", "lazy", "lustful", "greedy")
@@ -488,3 +569,69 @@
 
 		some_poor_fucker.throw_at(T, 1, 1)
 		some_poor_fucker.changeStatus("weakened", 2 SECONDS)
+
+
+
+/obj/item/instrument/cowbell
+	name = "cowbell"
+	icon_state = "cowbell"
+	item_state = "cowbell"
+	sounds_instrument = null
+	note_time = 0.18 SECONDS
+	randomized_pitch = 0
+	volume = 80
+
+	New()
+		sounds_instrument = list()
+		for (var/i in 1 to 3)
+			sounds_instrument += "sound/musical_instruments/cowbell/cowbell_[i].ogg"
+		..()
+
+/obj/item/instrument/triangle
+	name = "triangle"
+	icon_state = "triangle"
+	item_state = "triangle"
+	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive")
+	sounds_instrument = null
+	note_time = 0.18 SECONDS
+	randomized_pitch = 0
+	volume = 90
+
+	New()
+		sounds_instrument = list()
+		for (var/i in 1 to 2)
+			sounds_instrument += "sound/musical_instruments/triangle/triangle_[i].ogg"
+		..()
+
+/obj/item/instrument/tambourine
+	name = "tambourine"
+	icon_state = "tambourine"
+	item_state = "tambourine"
+	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive")
+	sounds_instrument = null
+	note_time = 0.18 SECONDS
+	randomized_pitch = 0
+	volume = 80
+
+	New()
+		sounds_instrument = list()
+		for (var/i in 1 to 4)
+			sounds_instrument += "sound/musical_instruments/tambourine/tambourine_[i].ogg"
+		..()
+
+
+
+/obj/storage/crate/wooden/instruments
+	name = "instruments box"
+	desc = "A wooden crate labeled to contain instruments."
+	spawn_contents = list(/obj/item/instrument/tambourine,/obj/item/instrument/triangle,/obj/item/instrument/cowbell,/obj/item/instrument/trumpet, /obj/item/instrument/saxophone, /obj/item/instrument/fiddle)
+
+/obj/storage/crate/wooden/instruments/percussion
+	name = "percussive instruments box"
+	desc = "A wooden crate labeled to contain percussive instruments."
+	spawn_contents = list(/obj/item/instrument/tambourine,/obj/item/instrument/triangle,/obj/item/instrument/cowbell)
+
+/obj/storage/crate/wooden/wind
+	name = "wind instruments box"
+	desc = "A wooden crate labeled to contain wind instruments."
+	spawn_contents = list(/obj/item/instrument/trumpet, /obj/item/instrument/saxophone)

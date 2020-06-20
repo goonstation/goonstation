@@ -12,7 +12,6 @@
 	var/obj/overlay/O1 = null
 	var/mob/occupant = null
 	var/obj/item/beaker = null
-	var/next_trans = 0
 	var/show_beaker_contents = 0
 
 	var/current_heat_capacity = 50
@@ -71,8 +70,6 @@
 				else
 					src.go_out()
 					playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-		if(next_trans < 10)
-			next_trans++
 
 		if(air_contents)
 			ARCHIVED(temperature) = air_contents.temperature
@@ -120,7 +117,7 @@
 		if (src.occupant)
 			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return 0
-		if(iscritter(target))
+		if(ismobcritter(target))
 			boutput(M, "<span class='alert'><B>The scanner doesn't support this body type.</B></span>")
 			return 0
 		if(!iscarbon(target) )
@@ -341,10 +338,9 @@
 		else
 			src.go_out()
 			return
-		if(beaker && (next_trans == 10))
-			beaker.reagents.trans_to(occupant, 1, 10)
-			beaker.reagents.reaction(occupant)
-			next_trans = 0
+		if(beaker)
+			beaker.reagents.trans_to(occupant, 0.1, 10)
+			beaker.reagents.reaction(occupant, TOUCH, 5) //1/10th of small beaker - matches old rate for default beakers, give or take
 
 	proc/heat_gas_contents()
 		if(TOTAL_MOLES(air_contents) < 1)
@@ -411,22 +407,6 @@
 		src.add_fingerprint(usr)
 		build_icon()
 		return
-
-
-
-
-
-/mob/living/carbon/human/abiotic()
-	if ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.ears || src.gloves))
-		return 1
-	else
-		return 0
-
-/mob/proc/abiotic()
-	if ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || src.back || src.wear_mask)
-		return 1
-	else
-		return 0
 
 /datum/data/function/proc/reset()
 	return

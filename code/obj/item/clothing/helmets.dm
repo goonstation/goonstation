@@ -66,38 +66,26 @@
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	see_face = 0.0
 	item_state = "s_helmet"
-	var/datum/light/light
 	var/on = 0
+
+	var/datum/component/holdertargeting/simple_light/light_dir
 
 	New()
 		..()
-		light = new /datum/light/line
-		light.set_brightness(4.5)
-		light.set_height(1.8)
-		light.set_color(0.9, 0.9, 1)
-		light.attach(src)
+		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, 0.9 * 255, 0.9 * 255, 1 * 255, 210)
+		light_dir.update(0)
 
 	attack_self(mob/user)
 		src.flashlight_toggle(user)
 		return
 
-	pickup(mob/user)
-		..()
-		light.attach(user)
-
-	dropped(mob/user)
-		..()
-		SPAWN_DBG(0)
-			if (src.loc != user)
-				light.attach(src)
-
 	proc/flashlight_toggle(var/mob/user, var/force_on = 0)
 		on = !on
 		src.icon_state = "espace[on]"
 		if (on)
-			light.enable()
+			light_dir.update(1)
 		else
-			light.disable()
+			light_dir.update(0)
 		user.update_clothing()
 		return
 
@@ -108,9 +96,9 @@
 		on = !on
 		src.icon_state = "espace[on]-alt"
 		if (on)
-			light.enable()
+			light_dir.update(1)
 		else
-			light.disable()
+			light_dir.update(0)
 		user.update_clothing()
 		return
 
@@ -127,9 +115,9 @@
 		on = !on
 		src.icon_state = "diving[on]"
 		if (on)
-			light.enable()
+			light_dir.update(1)
 		else
-			light.disable()
+			light_dir.update(0)
 		user.update_clothing()
 		return
 
@@ -141,9 +129,9 @@
 			on = !on
 			src.icon_state = "diving-sec[on]"
 			if (on)
-				light.enable()
+				light_dir.update(1)
 			else
-				light.disable()
+				light_dir.update(0)
 			user.update_clothing()
 			return
 
@@ -155,9 +143,9 @@
 			on = !on
 			src.icon_state = "diving-civ[on]"
 			if (on)
-				light.enable()
+				light_dir.update(1)
 			else
-				light.disable()
+				light_dir.update(0)
 			user.update_clothing()
 			return
 
@@ -169,9 +157,9 @@
 			on = !on
 			src.icon_state = "diving-com[on]"
 			if (on)
-				light.enable()
+				light_dir.update(1)
 			else
-				light.disable()
+				light_dir.update(0)
 			user.update_clothing()
 			return
 
@@ -183,9 +171,9 @@
 			on = !on
 			src.icon_state = "diving-eng[on]"
 			if (on)
-				light.enable()
+				light_dir.update(1)
 			else
-				light.disable()
+				light_dir.update(0)
 			user.update_clothing()
 			return
 
@@ -236,6 +224,82 @@
 			c_flags = SPACEWEAR | COVERSEYES
 			see_face = 0.0
 			protective_temperature = 1300
+			abilities = list(/obj/ability_button/nukie_meson_toggle)
+			var/on = 0
+
+			attack_self(mob/user)
+				src.toggle(user)
+
+			proc/toggle(var/mob/toggler)
+				src.on = !src.on
+				playsound(get_turf(src), "sound/items/mesonactivate.ogg", 30, 1)
+				if (ishuman(toggler))
+					var/mob/living/carbon/human/H = toggler
+					if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)) //handling of the rest is done in life.dm
+						if (src.on)
+							H.vision.set_scan(1)
+						else
+							H.vision.set_scan(0)
+
+			equipped(var/mob/living/user, var/slot)
+				..()
+				if(!isliving(user))
+					return
+				if (slot == SLOT_HEAD && on)
+					user.vision.set_scan(1)
+
+			unequipped(var/mob/living/user)
+				..()
+				if(!isliving(user))
+					return
+				user.vision.set_scan(0)
+
+		medic
+			name = "specialist health monitor"
+			icon_state = "syndie_specialist"
+			item_state = "syndie_specialist"
+			var/client/assigned = null
+
+			process()
+				if (assigned)
+					assigned.images.Remove(health_mon_icons)
+					src.addIcons()
+
+					if (loc != assigned.mob)
+						assigned.images.Remove(health_mon_icons)
+						assigned = null
+
+					//sleep(2 SECONDS)
+				else
+					processing_items.Remove(src)
+
+			proc/addIcons()
+				if (assigned)
+					for (var/image/I in health_mon_icons)
+						if (!I || !I.loc || !src)
+							continue
+						if (I.loc.invisibility && I.loc != src.loc)
+							continue
+						else
+							assigned.images.Add(I)
+
+			equipped(var/mob/user, var/slot)
+				..()
+				if (slot == SLOT_HEAD)
+					assigned = user.client
+					SPAWN_DBG(-1)
+						//updateIcons()
+						if (!(src in processing_items))
+							processing_items.Add(src)
+				return
+
+			unequipped(var/mob/user)
+				..()
+				if (assigned)
+					assigned.images.Remove(health_mon_icons)
+					assigned = null
+					processing_items.Remove(src)
+				return
 
 		sniper
 			name = "specialist combat cover"
@@ -292,8 +356,8 @@
 	c_flags = SPACEWEAR
 	item_state = "hardhat0"
 	desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
-	var/datum/light/light
 	var/on = 0
+	var/datum/component/holdertargeting/simple_light/light_dir
 
 	setupProperties()
 		..()
@@ -301,21 +365,8 @@
 
 	New()
 		..()
-		light = new /datum/light/line
-		light.set_brightness(4.5)
-		light.set_height(1.8)
-		light.set_color(1, 1, 0.9)
-		light.attach(src)
-
-	pickup(mob/user)
-		..()
-		light.attach(user)
-
-	dropped(mob/user)
-		..()
-		SPAWN_DBG(0)
-			if (src.loc != user)
-				light.attach(src)
+		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, 0.9 * 255, 0.9 * 255, 1 * 255, 210)
+		light_dir.update(0)
 
 	attack_self(mob/user)
 		src.flashlight_toggle(user)
@@ -327,9 +378,9 @@
 		src.item_state = "hardhat[on]"
 		user.update_clothing()
 		if (on)
-			light.enable()
+			light_dir.update(1)
 		else
-			light.disable()
+			light_dir.update(0)
 		return
 
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
@@ -351,9 +402,9 @@
 		on = !on
 		user.update_clothing()
 		if (on)
-			light.enable()
+			light_dir.update(1)
 		else
-			light.disable()
+			light_dir.update(0)
 		return
 
 	attack_self(mob/user as mob) //Azungar was here and added some of his own styles to this thing.
@@ -468,6 +519,7 @@
 		..()
 		setProperty("meleeprot_head", 9)
 		setProperty("disorient_resist_eye", 25)
+		setProperty("exploprot", 2)
 
 /obj/item/clothing/head/helmet/HoS
 	name = "HoS Hat"
@@ -546,6 +598,7 @@
 			weeoo_in_progress = 0
 
 	unequipped(var/mob/user)
+		..()
 		if (src.weeoo_in_progress)
 			src.weeoo_in_progress = 0
 
@@ -603,6 +656,7 @@
 	setupProperties()
 		..()
 		setProperty("radprot", 50)
+		setProperty("exploprot", 1)
 
 	syndicate
 		name = "Syndicate Command Helmet"

@@ -26,23 +26,23 @@ var/global/noir = 0
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span></span>"
-	for (var/mob/M in mobs)
-		if (M && M.client && M.client.holder && rank_to_level(M.client.holder.rank) >= LEVEL_CODER) //This is for edge cases where a coder needs a goddamn notification when it happens
-			boutput(M, replacetext(rendered, "%admin_ref%", "\ref[M.client.holder]"))
+	for (var/client/C)
+		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER) //This is for edge cases where a coder needs a goddamn notification when it happens
+			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/message_coders_vardbg(var/text, var/datum/d)
 	var/rendered
-	for (var/mob/M in mobs)
-		if (M && M.client && M.client.holder && rank_to_level(M.client.holder.rank) >= LEVEL_CODER)
-			var/dbg_html = M.client.debug_variable("", d, 0)
+	for (var/client/C)
+		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER)
+			var/dbg_html = C.debug_variable("", d, 0)
 			rendered = "<span class=\"admin\"><span class=\"prefix\">CODER LOG:</span> <span class=\"message\">[text]</span>[dbg_html]</span>"
-			boutput(M, replacetext(rendered, "%admin_ref%", "\ref[M.client.holder]"))
+			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/message_attack(var/text) //Sends a message to folks when an attack goes down
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK LOG:</span> <span class=\"message\">[text]</span></span>"
-	for (var/mob/M in mobs)
-		if (M && M.client && M.client.holder && rank_to_level(M.client.holder.rank) >= LEVEL_MOD && M.client.holder.attacktoggle && !M.client.player_mode)
-			boutput(M, replacetext(rendered, "%admin_ref%", "\ref[M.client.holder]"))
+	for (var/client/C)
+		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_MOD && C.holder.attacktoggle && !C.player_mode)
+			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/rank_to_level(var/rank)
 	var/level = 0
@@ -151,6 +151,7 @@ var/global/noir = 0
 		if ("load_admin_prefs")
 			if (src.level >= LEVEL_MOD)
 				src.load_admin_prefs()
+			src.show_pref_window(usr)
 		if ("save_admin_prefs")
 			if (src.level >= LEVEL_MOD)
 				src.save_admin_prefs()
@@ -190,6 +191,15 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				usr.client.holder.buildmode_view = !usr.client.holder.buildmode_view
 				src.show_pref_window(usr)
+		if ("toggle_category")
+			var/cat = href_list["cat"]
+			if(cat in src.hidden_categories)
+				src.owner?.show_verb_category(ADMIN_CAT_PREFIX + cat)
+				src.hidden_categories -= cat
+			else
+				src.owner?.hide_verb_category(ADMIN_CAT_PREFIX + cat)
+				src.hidden_categories |= cat
+			src.show_pref_window(usr)
 		if ("toggle_spawn_in_loc")
 			if (src.level >= LEVEL_MOD)
 				usr.client.holder.spawn_in_loc = !usr.client.holder.spawn_in_loc
@@ -1578,7 +1588,7 @@ var/global/noir = 0
 				return
 
 			//they're nothing so turn them into a traitor!
-			if(ishuman(M) || isAI(M) || isrobot(M) || iscritter(M))
+			if(ishuman(M) || isAI(M) || isrobot(M) || ismobcritter(M))
 				var/traitorize = "Cancel"
 				traitorize = alert("Is not a traitor, make Traitor?", "Traitor", "Yes", "Cancel")
 				if(traitorize == "Cancel")
@@ -1586,7 +1596,7 @@ var/global/noir = 0
 				if(traitorize == "Yes")
 					if (issilicon(M))
 						evilize(M, "traitor")
-					else if (iscritter(M))
+					else if (ismobcritter(M))
 						// The only role that works for all critters at this point is hard-mode traitor, really. The majority of existing
 						// roles don't work for them, most can't wear clothes and some don't even have arms and/or can pick things up.
 						// That said, certain roles are mostly compatible and thus selectable.
@@ -1911,16 +1921,6 @@ var/global/noir = 0
 					boutput( usr, "<span class='alert'>Failed to revoke, did they have the medal to begin with?</span>" )
 			else
 				alert("You need to be at least an SA to revoke this.")
-
-
-
-		if ("editvars")
-			if (src.level >= LEVEL_PA)
-				var/mob/M = locate(href_list["target"])
-				if (!M) return
-				usr.client.cmd_modify_object_variables(M)
-			else
-				alert("You need to be at least a Primary Administrator to edit variables.")
 
 		if ("viewvars")
 			if (src.level >= LEVEL_PA)
@@ -3309,11 +3309,11 @@ var/global/noir = 0
 
 			usr.client.lightweight_doors()
 
-		if ("lightweight_lights")
+		if ("lightweight_mobs")
 			if (src.level < LEVEL_PA)
 				return alert("You must be at least a Primary Admin to do this.")
 
-			usr.client.lightweight_lights()
+			usr.client.lightweight_mobs()
 
 		if ("slow_atmos")
 			if (src.level < LEVEL_PA)
@@ -3709,7 +3709,7 @@ var/global/noir = 0
 	return
 
 /datum/admins/proc/restart()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Restart"
 	set desc= "Restarts the world"
 
@@ -3736,7 +3736,7 @@ var/global/noir = 0
 		Reboot_server()
 
 /datum/admins/proc/announce()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Announce"
 	set desc="Announce your desires to the world"
 	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
@@ -3748,7 +3748,7 @@ var/global/noir = 0
 		logTheThing("diary", usr, null, ": [message]", "admin")
 
 /datum/admins/proc/startnow()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
 	if(!ticker)
@@ -3758,7 +3758,7 @@ var/global/noir = 0
 		current_state = GAME_STATE_SETTING_UP
 		logTheThing("admin", usr, null, "has started the game.")
 		logTheThing("diary", usr, null, "has started the game.", "admin")
-		message_admins("<font color='blue'>[usr.key] has started the game.</font>")
+		message_admins("<span class='notice'>[usr.key] has started the game.</span>")
 		return 1
 	else
 		//alert("Game has already started you fucking jerk, stop spamming up the chat :ARGH:") //no, FUCK YOU coder, for making this annoying popup
@@ -3766,7 +3766,7 @@ var/global/noir = 0
 		return 0
 
 /datum/admins/proc/delay_start()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc="Delay the game start"
 	set name="Delay Round Start"
 
@@ -3778,22 +3778,22 @@ var/global/noir = 0
 		boutput(world, "<b>The game start has been delayed.</b>")
 		logTheThing("admin", usr, null, "delayed the game start.")
 		logTheThing("diary", usr, null, "delayed the game start.", "admin")
-		message_admins("<font color='blue'>[usr.key] has delayed the game start.</font>")
+		message_admins("<span class='notice>[usr.key] has delayed the game start.</span>")
 	else
 		boutput(world, "<b>The game will start soon.</b>")
 		logTheThing("admin", usr, null, "removed the game start delay.")
 		logTheThing("diary", usr, null, "removed the game start delay.", "admin")
-		message_admins("<font color='blue'>[usr.key] has removed the game start delay.</font>")
+		message_admins("<span class='notice>[usr.key] has removed the game start delay.</span>")
 
 /datum/admins/proc/delay_end()
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc="Delay the server restart"
 	set name="Delay Round End"
 
 	if (game_end_delayed == 2)
 		logTheThing("admin", usr, null, "removed the restart delay and triggered an immediate restart.")
 		logTheThing("diary", usr, null, "removed the restart delay and triggered an immediate restart.", "admin")
-		message_admins("<font color='blue'>[usr.key] removed the restart delay and triggered an immediate restart.</font>")
+		message_admins("<span class='notice>[usr.key] removed the restart delay and triggered an immediate restart.</span>")
 		ircbot.event("roundend")
 		Reboot_server()
 
@@ -3802,7 +3802,7 @@ var/global/noir = 0
 		game_end_delayer = usr.key
 		logTheThing("admin", usr, null, "delayed the server restart.")
 		logTheThing("diary", usr, null, "delayed the server restart.", "admin")
-		message_admins("<font color='blue'>[usr.key] delayed the server restart.</font>")
+		message_admins("<span class='notice>[usr.key] delayed the server restart.</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr && usr.client) ? usr.client.key : "NULL"
@@ -3815,7 +3815,7 @@ var/global/noir = 0
 		game_end_delayer = null
 		logTheThing("admin", usr, null, "removed the restart delay.")
 		logTheThing("diary", usr, null, "removed the restart delay.", "admin")
-		message_admins("<font color='blue'>[usr.key] removed the restart delay.</font>")
+		message_admins("<span class='notice>[usr.key] removed the restart delay.</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr && usr.client) ? usr.client.key : "NULL"
@@ -3900,7 +3900,7 @@ var/global/noir = 0
 			M.mind.objectives += escape_objective
 	else
 		var/list/eligible_objectives = list()
-		if (ishuman(M) || iscritter(M))
+		if (ishuman(M) || ismobcritter(M))
 			eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/)
 		else if (issilicon(M))
 			eligible_objectives = list(/datum/objective/regular,/datum/objective/regular/assassinate,
@@ -3966,7 +3966,7 @@ var/global/noir = 0
 		R.syndicate = 1
 		R.syndicate_possible = 1
 		R.handle_robot_antagonist_status("admin", 0, usr)
-	else if (ishuman(M) || iscritter(M))
+	else if (ishuman(M) || ismobcritter(M))
 		switch(traitor_type)
 			if("traitor")
 				M.show_text("<h2><font color=red><B>You have defected and become a traitor!</B></font></h2>", "red")
@@ -4138,7 +4138,7 @@ var/global/noir = 0
 	return chosen
 
 /datum/admins/proc/spawn_atom(var/object as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set desc="(atom path) Spawn an atom"
 	set name="Spawn"
 	if(!object)
@@ -4168,7 +4168,7 @@ var/global/noir = 0
 		return
 
 /datum/admins/proc/heavenly_spawn_obj(var/obj/object as text)
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set desc="(object path) Spawn an object. But all fancy-like"
 	set name="Spawn-Heavenly"
 	if(!object)
@@ -4210,7 +4210,7 @@ var/global/noir = 0
 
 /client/proc/respawn_target(mob/M as mob in world, var/forced = 0)
 	set name = "Respawn Target"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set desc = "Respawn a mob"
 	set popup_menu = 0
 	if (!M) return
@@ -4238,7 +4238,7 @@ var/global/noir = 0
 
 /client/proc/respawn_self()
 	set name = "Respawn Self"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc = "Respawn yourself"
 
 	if(!isobserver(usr))
@@ -4295,7 +4295,7 @@ var/global/noir = 0
 	//If the overlay dissapears you lose the cloaking too, so just retype cloak-self and it should work again
 	//If you don't lay down or force yourself to update clothing via fire or whatever it should be good enough to use for the purpose of spying on shitlords I guess.
 	set name = "Cloak self"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set desc = "Make yourself invisible!"
 
 	if (!iscarbon(usr))

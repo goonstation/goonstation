@@ -302,12 +302,11 @@ datum/pathogeneffects/benevolent/brewery
 datum/pathogeneffects/benevolent/oxytocinproduction
 	name = "Oxytocin Production"
 	desc = "The pathogen produces Pure Love within the infected."
-	infect_type = INFECT_TOUCH
+	infect_type = INFECT_TOUCH // TODO: make also spread via hugs, will require reworking pure love and part of the emote call, so I'll do it in another patch
 	rarity = RARITY_COMMON
-	permeability_score = 15
 	spread = SPREAD_BODY | SPREAD_HANDS
-	infection_coefficient = 1.5
 	infect_message = "<span style=\"color:pink\">You can't help but feel loved.</span>"
+	infect_attempt_message = "Their touch is suspiciously soft..."
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -315,8 +314,6 @@ datum/pathogeneffects/benevolent/oxytocinproduction
 		var/check_amount = M.reagents.get_reagent_amount("love")
 		if (!check_amount || check_amount < 5)
 			M.reagents.add_reagent("love", origin.stage / 3)
-		if (prob(origin.stage * 2.5))
-			infect(M, origin)
 
 	may_react_to()
 		return "The pathogen's cells appear to be... hugging each other?"
@@ -349,3 +346,110 @@ datum/pathogeneffects/benevolent/neuronrestoration
 
 	may_react_to()
 		return "The pathogen appears to have a gland that may affect neural functions."
+
+datum/pathogeneffects/benevolent/sunglass
+	name = "Sunglass Glands"
+	desc = "The infected grew sunglass glands."
+	infect_type = INFECT_NONE
+	rarity = RARITY_UNCOMMON
+
+	proc/glasses(var/mob/living/carbon/human/M as mob)
+		var/obj/item/clothing/glasses/G = M.glasses
+		var/obj/item/clothing/glasses/N = new/obj/item/clothing/glasses/sunglasses()
+		M.show_message({"<span class='notice'>[pick("You feel cooler!", "You find yourself wearing sunglasses.", "A pair of sunglasses grow onto your face.")][G?" But you were already wearing glasses!":""]</span>"})
+		if (G)
+			N.loc = M.loc
+			var/turf/T = get_edge_target_turf(M, pick(alldirs))
+			N.throw_at(T,rand(0,5),1)
+		else
+			N.loc = M
+			N.layer = M.layer
+			N.master = M
+			M.glasses = N
+			M.update_clothing()
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if (!(H.glasses) || (!(istype(H.glasses, /obj/item/clothing/glasses/sunglasses)) && prob(50)))
+				switch(origin.stage)
+					if (2 to 4)
+						if (prob(15))
+							glasses(M)
+					if (5)
+						if (prob(25))
+							glasses(M)
+
+	may_react_to()
+		return "The pathogen appears to be sensitive to sudden flashes of light."
+
+	react_to(var/R, var/zoom)
+		if (R == "flashpowder")
+			if (zoom)
+				return "The individual microbodies appear to be wearing sunglasses."
+			else
+				return "The pathogen appears to have developed a resistance to the flash powder."
+
+datum/pathogeneffects/benevolent/genetictemplate
+	name = "Genetic Template"
+	desc = "Spreads a mutation from patient zero to other afflicted."
+	rarity = RARITY_VERY_RARE
+	infect_type = INFECT_NONE
+	var/list/mutationMap = list() // stores the kind of mutation with the index being the pathogen's name (which is something like "L41D9")
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic || !M.bioHolder)
+			return
+		if(mutationMap[origin.name_base] == null) // if no mutation has been picked yet, go for a random one from this person
+			var/list/filtered = new/list()
+			for(var/T in M.bioHolder.effects)
+				var/datum/bioEffect/instance = M.bioHolder.effects[T]
+				if(!instance || istype(instance, /datum/bioEffect/hidden)) continue // hopefully this catches all non-mutation bioeffects?
+				filtered.Add(instance)
+			if(!filtered.len) return // wow, this nerd has no mutations, screw this
+			mutationMap[origin.name_base] = pick(filtered)
+			boutput(M, "You somehow feel more attuned to your [mutationMap[origin.name_base]].") // So patient zero will know when the mutation has been chosen
+
+		if(origin.symptom_data["genetictemplate"] == origin.stage) // early return if we would just put the same mutation anyway
+			return
+
+		var/datum/bioEffect/BEE = mutationMap[origin.name_base] // remove old version of mutation
+		M.bioHolder.RemoveEffect(BEE.id)
+
+		var/datum/bioEffect/BE = new BEE.type
+		var/datum/dna_chromosome/chromo = new /datum/dna_chromosome/anti_mutadone() // reinforce always
+		chromo.apply(BE)
+		if (origin.stage >= 2)
+			BE.altered = 0 // this lets us apply another chromosome. yay!
+			chromo = new /datum/dna_chromosome() // stabilize after stage 2
+			chromo.apply(BE)
+		if (origin.stage >= 3)
+			BE.altered = 0
+			chromo = new /datum/dna_chromosome/safety() // synchronize starting at stage 3
+			chromo.apply(BE)
+		if (origin.stage >= 4)
+			BE.altered = 0
+			chromo = new /datum/dna_chromosome/power_enhancer() // empower starting at stage 4
+			chromo.apply(BE)
+		if (origin.stage >= 5)
+			BE.altered = 0
+			chromo = new /datum/dna_chromosome/cooldown_reducer() // reduce cooldown starting at stage 5
+			chromo.apply(BE)
+		M.bioHolder.AddEffectInstance(BE) // add updated version of mutation!
+		origin.symptom_data["genetictemplate"] = origin.stage // save the last stage that we added the mutation with
+
+	oncured(mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		var/datum/bioEffect/BE = mutationMap[origin.name_base] // cure the mutation when the pathogen is cured
+		M.bioHolder.RemoveEffect(BE.id)
+
+	react_to(var/R, var/zoom)
+		if (R == "mutadone")
+			if (zoom)
+				return "Approximately 0% of the individual microbodies appear to have returned to genetic normalcy." // it always reinforces
+
+	may_react_to()
+		return "The pathogen cells all look exactly alike."

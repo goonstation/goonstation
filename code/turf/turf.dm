@@ -24,7 +24,7 @@ var/global/client/ff_debugger = null
 	proc/debug_fireflash_here()
 		set name = "Debug Fireflash Here"
 		set popup_menu = 1
-		set category = null
+		SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 		set desc = "Debug-print the effects of all fireflashes affecting this tile."
 		ff_debug_turf = src
 		ff_debugger = usr.client
@@ -180,8 +180,9 @@ var/global/client/ff_debugger = null
 	mat_changename = 0
 	mat_changedesc = 0
 	throw_unlimited = 1
-	plane = PLANE_FLOOR
+	plane = PLANE_SPACE
 	special_volume_override = 0
+	text = ""
 
 	flags = ALWAYS_SOLID_FLUID
 	turf_flags = CAN_BE_SPACE_SAMPLE
@@ -415,12 +416,12 @@ var/global/client/ff_debugger = null
 		if(O.level == 1)
 			O.hide(src.intact)
 
-/turf/unsimulated/ReplaceWith(var/what, force = 0, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1)
+/turf/unsimulated/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1, force = 0)
 	if (can_replace_with_stuff || force)
 		return ..(what, keep_old_material = keep_old_material, handle_air = handle_air)
 	return
 
-/turf/proc/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1)
+/turf/proc/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1, force = 0)
 	var/turf/simulated/new_turf
 	var/old_dir = dir
 
@@ -669,11 +670,11 @@ var/global/client/ff_debugger = null
 	var/turf/floor
 	if (my_area)
 		if (my_area.filler_turf)
-			floor = ReplaceWith(my_area.filler_turf, 1)
+			floor = ReplaceWith(my_area.filler_turf, force=1)
 		else
-			floor = ReplaceWith("Space", 1)
+			floor = ReplaceWith("Space", force=1)
 	else
-		floor = ReplaceWith("Space", 1)
+		floor = ReplaceWith("Space", force=1)
 
 	return floor
 
@@ -715,6 +716,7 @@ var/global/client/ff_debugger = null
 	var/default_melt_cap = 30
 	can_write_on = 1
 	mat_appearances_to_ignore = list("steel")
+	text = "<font color=#aaa>."
 
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
@@ -784,6 +786,11 @@ var/global/client/ff_debugger = null
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "grimy"
 
+/turf/unsimulated/grimycarpet
+	name = "grimy carpet"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "grimy"
+
 /turf/simulated/grass
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
@@ -797,11 +804,13 @@ var/global/client/ff_debugger = null
 	nitrogen = MOLES_N2STANDARD
 	fullbright = 0 // cogwerks changed as a lazy fix for newmap- if this causes problems change back to 1
 	stops_space_move = 1
+	text = "<font color=#aaa>."
 
 /turf/unsimulated/floor
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "plating"
+	text = "<font color=#aaa>."
 	plane = PLANE_FLOOR
 
 /turf/unsimulated/wall
@@ -809,6 +818,7 @@ var/global/client/ff_debugger = null
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "riveted"
 	opacity = 1
+	text = "<font color=#aaa>#"
 	density = 1
 	pathable = 0
 	turf_flags = ALWAYS_SOLID_FLUID
@@ -1044,6 +1054,15 @@ var/global/client/ff_debugger = null
 /turf/unsimulated/floor/pool
 	name = "water"
 	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "poolwaterfloor"
+
+	New()
+		..()
+		dir = pick(NORTH,SOUTH)
+
+/turf/unsimulated/pool/no_animate
+	name = "pool floor"
+	icon = 'icons/obj/fluid.dmi'
 	icon_state = "poolwaterfloor"
 
 	New()

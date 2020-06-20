@@ -38,10 +38,10 @@
 			hitMob.stuttering = max(damMax-5, hitMob.stuttering)
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 
-	throw_at(atom/target, range, speed)
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
 		throw_unlimited = 1
 		src.icon_state = "bowling_ball_spin"
-		..(target, range, speed)
+		..()
 
 	attack_hand(mob/user as mob)
 		..()

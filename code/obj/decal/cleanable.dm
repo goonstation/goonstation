@@ -1452,14 +1452,19 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	dry_time = 1200
 	var/datum/light/light
 
-	New()
-		..()
+	unpooled()
 		light = new /datum/light/point
 		light.set_brightness(0.4)
 		light.set_height(0.5)
 		light.set_color(0.2, 1, 0.2)
 		light.attach(src)
 		light.enable()
+		..()
+
+	disposing()
+		if(light)
+			qdel(light)
+		..()
 
 	setup()
 		..()

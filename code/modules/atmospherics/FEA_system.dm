@@ -243,6 +243,16 @@ datum
 						test.processing = 0
 						active_singletons -= test
 
+						test.dist_to_space = null
+						var/dist
+						for(var/turf/simulated/b in possible_space_borders)
+							if (b == test)
+								test.dist_to_space = 1
+								break
+							dist = get_dist(b, test)
+							if (test.dist_to_space == null || dist < test.dist_to_space)
+								test.dist_to_space = dist
+
 					group.members = members
 					air_groups += group
 
@@ -377,7 +387,7 @@ datum
 			process_groups()
 				for(var/x in air_groups)
 					var/datum/air_group/AG = x
-					AG.process_group(parent_controller)
+					AG?.process_group(parent_controller)
 					LAGCHECK(LAG_HIGH)
 
 			process_singletons()

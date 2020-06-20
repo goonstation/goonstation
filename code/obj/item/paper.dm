@@ -984,6 +984,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 
 /obj/item/paper_bin/proc/update()
+	tooltip_rebuild = 1
 	src.icon_state = "paper_bin[(src.amount || locate(/obj/item/paper, src)) ? "1" : null]"
 	return
 
@@ -1028,9 +1029,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 		user.drop_item()
 		W.set_loc(src)
 	else
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/T = W
-			if ((T.welding && T.weldfuel > 0))
+		if (isweldingtool(W))
+			if ((T:try_weld(user,0,1,0,0) && T:weldfuel > 0))
 				viewers(user, null) << text("[] burns the paper with the welding tool!", user)
 				SPAWN_DBG( 0 )
 					src.burn(1800000.0)

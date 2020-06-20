@@ -64,7 +64,7 @@ change the direction of created objects.<br>
 
 							var/atom/A = 0
 							if(ispath(objpath, /turf))
-								A = Q.ReplaceWith(objpath, 1, 0, 1)
+								A = Q.ReplaceWith(objpath, 1, 0, 1, force=1)
 							else
 								A = new objpath(Q)
 
@@ -98,7 +98,7 @@ change the direction of created objects.<br>
 
 								var/atom/A = 0
 								if(ispath(objpath, /turf))
-									A = Q.ReplaceWith(objpath, 1, 0, 1)
+									A = Q.ReplaceWith(objpath, 1, 0, 1, force=1)
 								else
 									A = new objpath(Q)
 
@@ -118,7 +118,7 @@ change the direction of created objects.<br>
 					if("Blink")
 						var/atom/A = 0
 						if(ispath(objpath, /turf))
-							A = Q.ReplaceWith(objpath, 1, 0, 1)
+							A = Q.ReplaceWith(objpath, 1, 0, 1, force=1)
 						else
 							A = new objpath(Q)
 
@@ -129,7 +129,7 @@ change the direction of created objects.<br>
 					else
 						var/atom/A = 0
 						if(ispath(objpath, /turf))
-							A = Q.ReplaceWith(objpath, 1, 0, 1)
+							A = Q.ReplaceWith(objpath, 1, 0, 1, force=1)
 						else
 							A = new objpath(Q)
 

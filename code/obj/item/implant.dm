@@ -78,7 +78,7 @@ THROWING DARTS
 				crit_triggered = 0
 			if(death_triggered && isalive(H))
 				death_triggered = 0
-		else if (iscritter(src.owner))
+		else if (ismobcritter(src.owner))
 			var/mob/living/critter/C = owner
 			if (C.health < 0 && !crit_triggered && online)
 				on_crit()
@@ -266,7 +266,7 @@ THROWING DARTS
 				var/turf/T = get_turf(H)
 				if (istype(T))
 					return " at [T.x],[T.y],[T.z]"
-		else if (iscritter(src.owner))
+		else if (ismobcritter(src.owner))
 			var/mob/living/critter/C = src.owner
 			if (locate(/obj/item/implant/tracking) in C.implants)
 				var/turf/T = get_turf(C)
@@ -549,7 +549,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 				if (ishuman(owner))
 					var/mob/living/carbon/human/H = owner
 					H.implant -= src
-				else if (iscritter(owner))
+				else if (ismobcritter(owner))
 					var/mob/living/critter/C = owner
 					C.implants -= src
 
@@ -870,6 +870,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 	impcolor = "g"
 	var/uses = 8
 	var/obj/item/card/id/access = new /obj/item/card/id
+	tooltip_flags = REBUILD_DIST
 
 	get_desc(dist)
 		if (dist <= 1)
@@ -883,6 +884,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 			return 0
 		else
 			uses -= 1
+			tooltip_rebuild = 1
 		return 1
 
 	infinite
@@ -919,6 +921,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 	w_class = 2.0
 	hide_attack = 2
 	var/sneaky = 0
+	tooltip_flags = REBUILD_DIST
 
 	New()
 		..()
@@ -930,6 +933,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 			. += "It appears to contain \a [src.imp.name]."
 
 	proc/update()
+		tooltip_rebuild = 1
 		if (src.imp)
 			src.icon_state = src.imp.impcolor ? "implanter1-[imp.impcolor]" : "implanter1-g"
 		else
@@ -947,7 +951,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src.imp)
-		else if (iscritter(M))
+		else if (ismobcritter(M))
 			var/mob/living/critter/C = M
 			C.implants.Add(src.imp)
 
@@ -958,7 +962,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 		src.update()
 
 	attack(mob/M as mob, mob/user as mob)
-		if (!ishuman(M) && !iscritter(M))
+		if (!ishuman(M) && !ismobcritter(M))
 			return ..()
 
 		if (src.imp && !src.imp.can_implant(M, user))
@@ -1127,6 +1131,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 	throw_range = 5
 	w_class = 1.0
 	var/implant_type = /obj/item/implant/tracking
+	tooltip_flags = REBUILD_DIST
 
 /obj/item/implantcase/tracking
 	name = "glass case - 'Tracking'"
@@ -1209,6 +1214,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 		. += "It appears to contain \a [src.imp.name]."
 
 /obj/item/implantcase/proc/update()
+	tooltip_rebuild = 1
 	if (src.imp)
 		src.icon_state = src.imp.impcolor ? "implantcase-[imp.impcolor]" : "implantcase-g"
 	else
@@ -1227,6 +1233,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 			src.name = "glass case - '[t]'"
 		else
 			src.name = "glass case"
+		tooltip_rebuild = 1
 		return
 	else if (istype(I, /obj/item/implanter))
 		var/obj/item/implanter/Imp = I
@@ -1504,6 +1511,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 				return
 
 			my_implant = I
+			tooltip_rebuild = 1
 
 			if (istype(W, /obj/item/implant))
 				user.u_equip(W)
@@ -1548,6 +1556,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			return ..()
 		my_implant.set_loc(P)
 		my_implant = null
+		tooltip_rebuild = 1
 
 /datum/projectile/implanter
 	name = "implant bullet"
@@ -1572,7 +1581,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 				H.implant.Add(my_implant)
 			else
 				my_implant.set_loc(get_turf(H))
-		else if (iscritter(hit))
+		else if (ismobcritter(hit))
 			var/mob/living/critter/C = hit
 			if (C.can_implant && my_implant.can_implant(C, implant_master))
 				my_implant.set_loc(C)

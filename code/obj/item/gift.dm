@@ -11,6 +11,7 @@
 	stamina_damage = 1
 	stamina_cost = 1
 	stamina_crit_chance = 1
+	tooltip_flags = REBUILD_DIST
 	var/style = "r"
 
 	New()
@@ -36,6 +37,7 @@
 				return
 			else
 				src.amount -= a_used
+				tooltip_rebuild = 1
 				user.drop_item()
 				var/obj/item/gift/G = new /obj/item/gift(src.loc)
 				G.size = W.w_class
@@ -73,6 +75,7 @@
 			var/obj/spresent/present = new /obj/spresent (target.loc)
 			present.icon_state = "strange-[src.style]"
 			src.amount -= 2
+			tooltip_rebuild = 1
 
 			target.set_loc(present)
 		else

@@ -57,6 +57,9 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/card/id))
+			if (src.ID)
+				src.ID.set_loc(src.loc)
+				boutput(user, "<span class='notice'>[src.ID] is ejected from the ID scanner.</span>")
 			usr.drop_item()
 			W.set_loc(src)
 			src.ID = W

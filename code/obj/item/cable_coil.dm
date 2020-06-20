@@ -253,6 +253,13 @@
 			C.amount += src.amount
 			boutput(user, "You join the cable coils together.")
 			C.updateicon()
+			if(istype(src.loc, /obj/item/storage))
+				var/obj/item/storage/storage = src.loc
+				storage.hud.remove_object(src)
+			else if(istype(src.loc, /mob))
+				var/mob/M = src.loc
+				M.u_equip(src)
+				M.drop_item(src)
 			qdel(src)
 			return
 

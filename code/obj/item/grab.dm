@@ -393,7 +393,7 @@
 			user.u_equip(src)
 			return 0
 
-		src.affecting.lastattacker = src
+		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
 		.= src.affecting
 		user.u_equip(src)
@@ -697,7 +697,7 @@
 
 
 /obj/item/grab/block
-	c_flags = EQUIPPED_WHILE_HELD_ACTIVE
+	c_flags = EQUIPPED_WHILE_HELD
 	item_grab_overlay_state = "grab_block_small"
 	icon_state = "grab_block"
 	name = "block"
@@ -711,6 +711,7 @@
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags |= HAS_GRAB_EQUIP
+			I.tooltip_rebuild = 1
 		setProperty("I_disorient_resist", 15)
 
 	disposing()
@@ -720,6 +721,7 @@
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags &= ~HAS_GRAB_EQUIP
+			I.tooltip_rebuild = 1
 			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_END, src)
 		else
 			if (assailant)

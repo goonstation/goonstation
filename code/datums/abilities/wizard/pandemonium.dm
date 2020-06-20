@@ -156,7 +156,10 @@
 /mob/living/proc/PAND_Signaljam(var/protectuser = 1)//wtf.
 	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> emits a wave of electrical interference!</span>", src), 1)
 	playsound(src.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
-	for (var/mob/living/carbon/human/M in mobs)
+	for (var/client/C)
+		if (!ishuman(C.mob))
+			continue
+		var/mob/living/carbon/human/M = C.mob
 		if (M.ears) boutput(M, "<span class='alert'>Your headset speaker suddenly bursts into weird static!</span>")
 	signal_loss += 100
 	sleep(10 SECONDS)

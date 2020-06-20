@@ -19,6 +19,7 @@ WET FLOOR SIGN
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 10
+	tooltip_flags = REBUILD_DIST | REBUILD_SPECTRO
 
 /obj/item/spraybottle/New()
 	var/datum/reagents/R = new/datum/reagents(100) // cogwerks - lowered from 1000 (what the hell) to 100

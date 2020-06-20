@@ -220,7 +220,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		// Search for incomplete/damaged floor
 		if (src.improvefloors)
 			for (var/turf/simulated/floor/F in view(src.search_range, src))
-				if (F != src.oldtarget && (!F.intact || F.burnt || F.broken) && !(F in floorbottargets) && !should_ignore_tile(F))
+				if (F != src.oldtarget && (!F.intact || F.burnt || F.broken || istype(F, /turf/simulated/floor/metalfoam)) && !(F in floorbottargets) && !should_ignore_tile(F))
 					return F
 
 
@@ -347,7 +347,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		src.repairing = 1
 		var/new_tile = 0
 
-		if (istype(target, /turf/space/))
+		if (istype(target, /turf/space/) || istype(target, /turf/simulated/floor/metalfoam))
 			src.visible_message("<span class='notice'>[src] begins building flooring.</span>")
 			new_tile = 1
 

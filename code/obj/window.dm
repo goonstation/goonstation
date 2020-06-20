@@ -8,6 +8,7 @@
 	dir = 5 //full tile
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	text = "<font color=#aaf>#"
 	var/health = 30
 	var/health_max = 30
 	var/health_multiplier = 1
@@ -46,10 +47,15 @@
 			src.health_max = src.health_max * src.health_multiplier
 			src.health = src.health_max
 			//DEBUG ("[src.name] [log_loc(src)] has [health] health / [health_max] max health ([health_multiplier] multiplier).")
-		SPAWN_DBG(0)
-			src.set_layer_from_settings()
-			update_nearby_tiles(need_rebuild=1)
-		return
+
+		if(current_state >= GAME_STATE_WORLD_INIT)
+			SPAWN_DBG(0)
+				initialize()
+
+	initialize()
+		src.set_layer_from_settings()
+		update_nearby_tiles(need_rebuild=1)
+		..()
 
 	proc/set_layer_from_settings()
 		if (!map_settings)

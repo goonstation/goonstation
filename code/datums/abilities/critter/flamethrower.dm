@@ -7,6 +7,8 @@
 	cooldown = 150
 	targeted = 1
 	target_anything = 1
+	var/throws = 0
+
 
 	cast(atom/target)
 		if (..())
@@ -29,7 +31,7 @@
 				return 1
 		if (target == holder.owner || target == OT)
 			return 1
-		playsound(target, "sound/effects/spray.ogg", 50, 1, -1)
+		playsound(target, "sound/effects/spray.ogg", 50, 1, -1,1.5)
 		var/list/L = getline(OT, target)
 		for (var/turf/T in L)
 			if (T == OT)
@@ -40,4 +42,12 @@
 					M.TakeDamage("All", 0, 15, 0, DAMAGE_BURN)
 					M.changeStatus("stunned", 2 SECONDS)
 					M.emote("scream")
+					if (throws)
+						SPAWN_DBG(0)
+							M.throw_at(target, 10, 2)
 		return 0
+
+
+	throwing
+		desc = "Blast targets backwards with flames."
+		throws = 1

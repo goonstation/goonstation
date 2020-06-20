@@ -15,6 +15,7 @@
 	edible = 0
 	rand_pos = 0 // we wanna override it below
 	made_from = "bone"
+	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
 	MAX_DAMAGE = INFINITY
 
 	var/obj/item/organ/brain/brain = null
@@ -37,7 +38,8 @@
 		..()
 		SPAWN_DBG(0)
 			if (src.donor)
-				src.bones = new /datum/bone(src)
+				if(!src.bones)
+					src.bones = new /datum/bone(src)
 				src.bones.donor = src.donor
 				src.bones.parent_organ = src.organ_name
 				src.bones.name = "skull"

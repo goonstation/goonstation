@@ -1,9 +1,9 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items/items.dmi'
+	text = ""
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
-	var/abstract = 0.0
 	var/force = null
 	var/item_state = null
 	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
@@ -28,6 +28,7 @@
 	flags = FPRINT | TABLEPASS
 	var/tool_flags = 0
 	var/c_flags = null
+	var/tooltip_flags = null
 
 	pressure_resistance = 50
 	var/obj/item/master = null
@@ -72,8 +73,16 @@
 	var/two_handed = 0 //Requires both hands. Do not change while equipped. Use proc for that (TBI)
 	var/click_delay = DEFAULT_CLICK_DELAY //Delay before next click after using this.
 	var/combat_click_delay = COMBAT_CLICK_DELAY
+
 	var/showTooltip = 1
 	var/showTooltipDesc = 1
+	var/lastTooltipTitle = null
+	var/lastTooltipContent = null
+	var/lastTooltipName = null
+	var/lastTooltipDist = null
+	var/lastTooltipUser = null
+	var/lastTooltipSpectro = null
+	var/tooltip_rebuild = 1
 	var/rarity = ITEM_RARITY_COMMON //Just a little thing to indicate item rarity. RPG fluff.
 
 	var/datum/item_special/special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
@@ -89,6 +98,7 @@
 	var/obj/item/grab/chokehold = null
 	var/obj/item/grab/special_grab = null
 
+	var/block_vision = 0 //cannot see when worn
 
 	proc/setTwoHanded(var/twohanded = 1) //This is the safe way of changing 2-handed-ness at runtime. Use this please.
 		if(ismob(src.loc))
@@ -142,25 +152,38 @@
 			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]</div>"
 		. = jointext(., "")
 
+		lastTooltipContent = .
+
 	MouseEntered(location, control, params)
 		if (showTooltip && usr.client.tooltipHolder)
 			var/show = 1
+
+			if (!lastTooltipContent || !lastTooltipTitle || tooltip_flags & REBUILD_ALWAYS\
+			 || (HAS_MOB_PROPERTY(usr, PROP_SPECTRO) && tooltip_flags & REBUILD_SPECTRO)\
+			 || (usr != lastTooltipUser && tooltip_flags & REBUILD_USER)\
+			 || (get_dist(src, usr) != lastTooltipDist && tooltip_flags & REBUILD_DIST))
+				tooltip_rebuild = 1
 
 			//If user has tooltips to always show, and the item is in world, and alt key is NOT pressed, deny
 			if (usr.client.preferences.tooltip_option == TOOLTIP_ALWAYS && !(ismob(src.loc) || (src.loc && src.loc.loc && ismob(src.loc.loc))) && !usr.client.check_key(KEY_EXAMINE))
 				show = 0
 
-			var/title = ""
-			if(rarity >= 7)
-				title = "<span class=\"rainbow\">[capitalize(src.name)]</span>"
+			var/title
+			if (tooltip_rebuild || lastTooltipName != src.name)
+				if(rarity >= 7)
+					title = "<span class=\"rainbow\">[capitalize(src.name)]</span>"
+				else
+					title = "<span style=\"color:[RARITY_COLOR[rarity] || "#fff"]\">[capitalize(src.name)]</span>"
+				lastTooltipTitle = title
+				lastTooltipName = src.name
 			else
-				title = "<span style=\"color:[RARITY_COLOR[rarity] || "#fff"]\">[capitalize(src.name)]</span>"
+				title = lastTooltipTitle
 
 			if(show)
 				var/list/tooltipParams = list(
 					"params" = params,
 					"title" = title,
-					"content" = buildTooltipContent(),
+					"content" = tooltip_rebuild ? buildTooltipContent() : lastTooltipContent,
 					"theme" = usr.client.preferences.hud_style == "New" ? "newhud" : "item"
 				)
 
@@ -169,6 +192,8 @@
 					tooltipParams["flags"] = TOOLTIP_RIGHT
 
 				usr.client.tooltipHolder.showHover(src, tooltipParams)
+
+			tooltip_rebuild = 0
 
 	MouseExited()
 		if(showTooltip && usr.client.tooltipHolder)
@@ -285,7 +310,7 @@
 /obj/item/proc/Eat(var/mob/M as mob, var/mob/user)
 	if (!src.edible && !(src.material && src.material.edible))
 		return 0
-	if (!iscarbon(M) && !iscritter(M))
+	if (!iscarbon(M) && !ismobcritter(M))
 		return 0
 
 	if (M == user)
@@ -677,7 +702,7 @@
 	if (src.material)
 		src.material.triggerTemp(src ,1500)
 	if (src.burn_possible && src.burn_point <= 1500)
-		if ((istype(W, /obj/item/weldingtool) && W:welding) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || (istype(W, /obj/item/device/igniter)) || (istype(W, /obj/item/device/light/zippo) && W:on) || (istype(W, /obj/item/match) && (W:on > 0)) || W.burning)
+		if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || (istype(W, /obj/item/device/igniter)) || (istype(W, /obj/item/device/light/zippo) && W:on) || (istype(W, /obj/item/match) && (W:on > 0)) || W.burning)
 			src.combust()
 		else
 			..(W, user)
@@ -763,6 +788,9 @@
 	return
 
 /obj/item/proc/equipped(var/mob/user, var/slot)
+	SHOULD_CALL_PARENT(1)
+	if(src.c_flags & NOT_EQUIPPED_WHEN_WORN && slot != SLOT_L_HAND && slot != SLOT_R_HAND)
+		return
 	#ifdef COMSIG_ITEM_EQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	#endif
@@ -784,6 +812,9 @@
 		equipment_proxy.space_movement += spacemove
 
 /obj/item/proc/unequipped(var/mob/user)
+	SHOULD_CALL_PARENT(1)
+	if(src.c_flags & NOT_EQUIPPED_WHEN_WORN && src.equipped_in_slot != SLOT_L_HAND && src.equipped_in_slot != SLOT_R_HAND)
+		return
 	#ifdef COMSIG_ITEM_UNEQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_UNEQUIPPED, user)
 	#endif
@@ -886,7 +917,7 @@
 	if (world.time < M.next_click)
 		return //fuck youuuuu
 
-	if (isdead(M) || (!iscarbon(M) && !iscritter(M)))
+	if (isdead(M) || (!iscarbon(M) && !ismobcritter(M)))
 		return
 
 	if (!istype(src.loc, /turf) || !isalive(M) || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.restrained())
@@ -1005,7 +1036,7 @@
 /obj/item/proc/attack(mob/M as mob, mob/user as mob, def_zone, is_special = 0)
 	if (!M || !user) // not sure if this is the right thing...
 		return
-	if ((src.edible && (ishuman(M) || iscritter(M)) || (src.material && src.material.edible)) && src.Eat(M, user))
+	if ((src.edible && (ishuman(M) || ismobcritter(M)) || (src.material && src.material.edible)) && src.Eat(M, user))
 		return
 
 	if (surgeryCheck(M, user))		// Check for surgery-specific actions
@@ -1223,7 +1254,7 @@
 /obj/item/proc/attach(var/mob/living/carbon/human/attachee,var/mob/attacher)
 	//if (!src.arm_icon) return //ANYTHING GOES!~!
 
-	if (src.object_flags & NO_ARM_ATTACH)
+	if (src.object_flags & NO_ARM_ATTACH || src.temp_flags & IS_LIMB_ITEM)
 		boutput(attacher, "<span class='alert'>You try to attach [src] to [attachee]'s stump, but it politely declines!</span>")
 		return
 
@@ -1276,6 +1307,11 @@
 	// Clean up circular references
 	disposing_abilities()
 	setItemSpecial(null)
+
+	if(istype(src.loc, /obj/item/storage))
+		var/obj/item/storage/storage = src.loc
+		src.set_loc(get_turf(src)) // so the storage doesn't add it back >:(
+		storage.hud?.remove_item(src)
 
 	var/turf/T = loc
 	if (!istype(T))

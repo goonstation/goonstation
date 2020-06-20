@@ -993,6 +993,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 /datum/SWFuplinkspell/blink
 	name = "Blink"
 	eqtype = "Defensive"
+	vr_allowed = 0
 	desc = "This spell teleports you a short distance forwards. Useful for evasion or getting into areas."
 	assoc_spell = /datum/targetable/spell/blink
 

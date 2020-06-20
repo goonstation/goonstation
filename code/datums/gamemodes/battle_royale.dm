@@ -26,7 +26,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	var/datum/random_event/special/battlestorm/storm = null
 	var/datum/random_event/special/supplydrop/dropper = null
 	var/list/datum/mind/recently_deceased = list()
-
+	do_antag_random_spawns = 0
 
 /datum/game_mode/battle_royale/announce()
 	boutput(world, "<B>The current game mode is - Battle Royale!</B>")
@@ -34,8 +34,11 @@ var/global/list/datum/mind/battle_pass_holders = list()
 
 /datum/game_mode/battle_royale/pre_setup()
 	// EVERYONE IS A BATTLER
-	for (var/mob/new_player/player in mobs)
-		if (player.client && player.ready)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if (player.ready)
 			src.traitors.Add(player)
 			if(player.mind)
 				player.mind.assigned_role = "MODE"
@@ -130,9 +133,10 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		current_battle_spawn_name = pick(drop_locations)
 		current_battle_spawn = drop_locations[current_battle_spawn_name]
 		// oh and tell anyone on the shuttle it moved I guess
-		for(var/mob/M in mobs)
-			if(istype(get_area(M),/area/shuttle/escape/transit/battle_shuttle))
-				boutput(M, "<span class='notice'>The battle shuttle is now flying over [current_battle_spawn_name]!</span>")
+		for(var/client/C)
+			if (C.mob)
+				if(istype(get_area(C.mob),/area/shuttle/escape/transit/battle_shuttle))
+					boutput(C.mob, "<span class='notice'>The battle shuttle is now flying over [current_battle_spawn_name]!</span>")
 
 	// Is it time for a storm
 	if(src.next_storm < world.time)

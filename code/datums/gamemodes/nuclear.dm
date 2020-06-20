@@ -21,6 +21,8 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/token_players_assigned = 0
 
+	do_antag_random_spawns = 0
+
 /datum/game_mode/nuclear/announce()
 	boutput(world, "<B>The current game mode is - Nuclear Emergency!</B>")
 	boutput(world, "<B>[syndicate_name()] operatives are approaching [station_name(1)]! They intend to destroy the [station_or_ship()] with a nuclear warhead.</B>")
@@ -34,8 +36,11 @@
 		return 0
 
 	var/num_players = 0
-	for (var/mob/new_player/player in mobs)
-		if (player.client && player.ready)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if (player.ready)
 			num_players++
 #if ASS_JAM
 	var/num_synds = max(1, min(round(num_players / 3), agents_possible))
@@ -246,7 +251,7 @@
 			// Minor Syndicate Victory - crew escaped but bomb was armed and counting down
 			finished = -1
 			return 1
-		if ((!the_bomb || (the_bomb && !the_bomb.armed)))
+		if ((!the_bomb || the_bomb.disposed || (the_bomb && !the_bomb.armed)))
 			if (all_operatives_dead())
 				// Major Station Victory - bombing averted, all operatives dead/captured
 				finished = 2
@@ -259,7 +264,7 @@
 	if (no_automatic_ending)
 		return 0
 
-	if (the_bomb && the_bomb.armed && the_bomb.det_time)
+	if (the_bomb && the_bomb.armed && the_bomb.det_time && !the_bomb.disposed)
 		// don't end the game if the bomb is armed and counting, even if the ops are all dead
 		return 0
 
@@ -270,7 +275,7 @@
 
 	// Minor or major Station Victory - bombing averted in any case.
 	if (src.bomb_check_timestamp && world.time > src.bomb_check_timestamp + 300)
-		if (!src.the_bomb || !istype(src.the_bomb, /obj/machinery/nuclearbomb))
+		if (!src.the_bomb || src.the_bomb.disposed || !istype(src.the_bomb, /obj/machinery/nuclearbomb))
 			if (src.all_operatives_dead())
 				finished = 2
 			else
@@ -308,6 +313,17 @@
 #ifdef DATALOGGER
 			game_stats.Increment("traitorloss")
 #endif
+
+	if(finished > 0)
+		var/value = world.load_intra_round_value("nukie_loss")
+		if(isnull(value))
+			value = 0
+		world.save_intra_round_value("nukie_loss", value + 1)
+	else if(finished < 0)
+		var/value = world.load_intra_round_value("nukie_win")
+		if(isnull(value))
+			value = 0
+		world.save_intra_round_value("nukie_win", value + 1)
 
 	for(var/datum/mind/M in syndicates)
 		var/syndtext = ""
@@ -354,17 +370,23 @@
 /datum/game_mode/nuclear/proc/get_possible_syndicates(minimum_syndicates=1)
 	var/list/candidates = list()
 
-	for(var/mob/new_player/player in mobs)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
 		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
+		if ((player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
 			if(player.client.preferences.be_syndicate)
 				candidates += player.mind
 
 	if(candidates.len < minimum_syndicates)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_syndicate set to yes, including players who don't want to be syndicates in the pool.")
-		for(var/mob/new_player/player in mobs)
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player)) continue
 			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
+
+			if ((player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 
 				if ((minimum_syndicates > 1) && (candidates.len >= minimum_syndicates))

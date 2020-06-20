@@ -222,7 +222,7 @@ proc/build_syndi_buylist_cache()
 	name = "Syndicate Omnitool"
 	item = /obj/item/tool/omnitool/syndicate
 	cost = 2
-	desc = "A miniature set of tools that you can hide in your clothing and retrieve with the flex emote. Has a knife mode."
+	desc = "A miniature set of tools that you can hide in your clothing and retrieve with the flex emote. Has knife and weldingtool modes."
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/generic/bighat
@@ -465,6 +465,15 @@ This is basically useless for anyone but miners.
 	cost = 5
 	vr_allowed = 0
 	desc = "A funny-looking car designed for circus events. Seats 30, very roomy! Comes with an extra set of clown clothes."
+	job = list("Clown")
+	blockedmode = list(/datum/game_mode/spy)
+
+/datum/syndicate_buylist/traitor/boomboots
+	name = "Boom Boots"
+	item = /obj/item/clothing/shoes/cowboy/boom
+	cost = 12
+	vr_allowed = 0
+	desc = "These big red boots have an explosive step sound. The entire station is sure to want to show you their appreciation."
 	job = list("Clown")
 	blockedmode = list(/datum/game_mode/spy)
 

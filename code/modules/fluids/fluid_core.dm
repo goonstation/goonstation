@@ -674,8 +674,6 @@ var/mutable_appearance/fluid_ma
 			return
 	..()
 
-/mob/living/event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
-
 /mob/living/EnteredFluid(obj/fluid/F as obj, atom/oldloc)
 	//SUBMERGED OVERLAYS
 	if (src.is_submerged != F.my_depth_level)
