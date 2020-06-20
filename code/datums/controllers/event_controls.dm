@@ -120,11 +120,11 @@ var/datum/event_controller/random_events
 					dead_dnr++
 
 			if (alive <= (total_clients() - dead_dnr) * 0.65)
-				do_random_event(player_spawn_events, source = "force_spawn")
+				do_random_event(player_spawn_events, source = "spawn_player")
 				message_admins("<span class='internal'>Player spawn event success!<br> ALIVE : [alive], TOTAL COUNTED : [(total_clients() - dead_dnr)]</span>")
 
 			else if (dead_antags >= round(antags * 0.75) && !(ticker?.mode?.do_antag_random_spawns))
-				do_random_event(antag_spawn_events, source = "force_spawn")
+				do_random_event(antag_spawn_events, source = "spawn_antag")
 				message_admins("<span class='internal'>Antag spawn event success!<br>DEAD ANTAGS: [dead_antags], TOTAL ANTAGS: [antags]</span>")
 
 			else
@@ -139,7 +139,7 @@ var/datum/event_controller/random_events
 		var/list/eligible = list()
 		var/list/weights = list()
 		for (var/datum/random_event/RE in event_bank)
-			if (RE.is_event_available())
+			if (RE.is_event_available( ignore_time_lock = (source=="spawn_antag") ))
 				eligible += RE
 				weights += RE.weight
 		if (eligible.len > 0)

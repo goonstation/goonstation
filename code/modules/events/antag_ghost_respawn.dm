@@ -79,7 +79,7 @@
 
 		return
 
-	is_event_available()
+	is_event_available(var/ignore_time_lock = 0)
 		if( emergency_shuttle.online )
 			return 0
 
