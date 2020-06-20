@@ -177,7 +177,6 @@
 	color = "#550000"
 	var/target = null
 
-#if ASS_JAM
 	New()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
@@ -189,6 +188,8 @@
 	equipped(var/mob/user, var/slot)
 		..()
 		var/mob/living/carbon/human/H = user
+		if(!(user == usr))
+			return
 		if(istype(H) && slot == SLOT_GLASSES)
 			SPAWN_DBG(1 SECOND)
 				enter_urs_dungeon(user)
@@ -212,14 +213,6 @@
 			playsound(H.loc, "sound/ambience/music/VRtunes_edited.ogg", 75, 0)
 
 		return
-#else
-	equipped(var/mob/user, var/slot)
-		..()
-		user.visible_message("<span class='notice'>[user] puts on the goggles, but nothing particularly special happens!</span>")
-		user.u_equip(src)
-		src.set_loc(get_turf(user))
-		return
-#endif
 
 
 /obj/item/clothing/glasses/urs_dungeon_exit
@@ -302,14 +295,14 @@
 				return
 
 	proc/announce()
-		var/area/our_area = src.loc
+		var/area/our_area = get_area(src)
 		our_area.sound_fx_2 = src.sound //assign even if null
 		var/played = our_area.played_fx_2
 
 		for (var/mob/M in our_area)
 			if (src.sound && !played)
 				if (M.client)
-					M.client.playAmbience(src, AMBIENCE_FX_2, 30)
+					M.client.playAmbience(our_area, AMBIENCE_FX_2, 50)
 			if(src.message)
 				M.show_message("<span class='game say bold'><span class='message'><span style='color: [src.text_color]'>[message]</span></span></span>", 2)
 
