@@ -7,7 +7,6 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/list/items_to_drop
 
-	// something.AddComponent(/datum/component/drop_loot_on_death, /obj/item/sword)
 /datum/component/drop_loot_on_death/proc/drop_loot()
 	var/atom/dead_parent = parent
 	var/turf_to_drop_on = get_turf(dead_parent)
