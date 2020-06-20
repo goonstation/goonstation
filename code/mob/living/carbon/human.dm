@@ -3150,7 +3150,6 @@
 	set name = "Show Inventory"
 	set src in view(1)
 	set category = "Local"
-	set popup_menu = 0
 
 	if (usr == src)
 		src.hud.clicked("invtoggle", list()) // ha i copy the dumb thing
