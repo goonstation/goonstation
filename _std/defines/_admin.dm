@@ -1,5 +1,5 @@
 // verb categories
-#define ADMIN_CAT_PREFIX "\U01F1E6"
+#define ADMIN_CAT_PREFIX "#"
 
 #define ADMIN_CAT_PLAYERS "Players"
 #define ADMIN_CAT_SERVER "Server"
