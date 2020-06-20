@@ -15,11 +15,6 @@
 #define PLANE_HUD 30
 #define PLANE_SCREEN_OVERLAYS 40
 
-// langserver not up to date with our cutting edge technology, please delete once it's on 513.1526
-#ifndef PASS_MOUSE
-#define PASS_MOUSE 1024
-#endif
-
 /obj/screen/plane_parent
 	name = ""
 	icon = null
@@ -53,7 +48,7 @@
 		if(pl)
 			src.name = pl.name
 			src.render_source = pl.render_target
-			src.appearance_flags = pl.appearance_flags | PASS_MOUSE
+			src.appearance_flags = pl.appearance_flags | UNLINT(PASS_MOUSE)
 			src.blend_mode = pl.blend_mode
 			src.mouse_opacity = pl.mouse_opacity
 		..()
