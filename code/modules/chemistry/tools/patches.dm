@@ -581,7 +581,7 @@
 
 /datum/action/bar/icon/automender_apply
 	duration = 10
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	id = "automender_apply"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mender-active"
