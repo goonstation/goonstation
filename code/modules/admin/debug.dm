@@ -1278,6 +1278,13 @@ var/datum/flock/testflock
 		fdel(fname)
 #endif
 
+/client/proc/process_move_intervals(mob/M as mob in world)
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	if(M.send_debug_to_client)
+		M.send_debug_to_client = null
+	else
+		M.send_debug_to_client = src
+
 /proc/debugAddComponent(var/datum/target = null)
 	var/pathpart = input("Part of component path.", "Part of component path.", "") as null|text
 	if(!pathpart)
