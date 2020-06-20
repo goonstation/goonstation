@@ -51,7 +51,7 @@ var/image/blob_icon_cache
 		src.update_icon()
 		update_surrounding_blob_icons(get_turf(src))
 		var/datum/controller/process/blob/B = get_master_blob_controller()
-		B.blobs += src
+		B?.blobs += src
 		for (var/obj/machinery/camera/C in get_turf(src))
 			qdel(C)
 
@@ -1324,6 +1324,8 @@ var/image/blob_icon_cache
 	return null
 
 /proc/get_master_blob_controller()
+	if(!processScheduler)
+		return null
 	for (var/datum/controller/process/blob/B in processScheduler.processes)
 		return B
 	return null
