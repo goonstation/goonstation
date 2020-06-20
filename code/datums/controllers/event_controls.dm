@@ -123,7 +123,7 @@ var/datum/event_controller/random_events
 				do_random_event(player_spawn_events, source = "spawn_player")
 				message_admins("<span class='internal'>Player spawn event success!<br> ALIVE : [alive], TOTAL COUNTED : [(total_clients() - dead_dnr)]</span>")
 
-			else if (dead_antags >= round(antags * 0.75) && !(ticker?.mode?.do_antag_random_spawns))
+			else if (dead_antags >= round(antags * 0.75) && (ticker?.mode?.do_antag_random_spawns))
 				do_random_event(antag_spawn_events, source = "spawn_antag")
 				message_admins("<span class='internal'>Antag spawn event success!<br>DEAD ANTAGS: [dead_antags], TOTAL ANTAGS: [antags]</span>")
 

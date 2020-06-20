@@ -20,6 +20,7 @@
 	var/win_check_freq = 30 SECONDS //frequency of checks on the win conditions
 	var/round_limit = 21000 // 35 minutes (see post_setup)
 	var/endthisshit = 0
+	do_antag_random_spawns = 0
 
 /datum/game_mode/revolution/extended
 	name = "extended revolution"
