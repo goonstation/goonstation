@@ -1601,18 +1601,19 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				if(istype(A,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
 					. *= max(A.p_class, 1)
 				// else, ignore p_class*/
-				if(ismob(A))
-					var/mob/M = A
-					//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
-					if(M.lying)
-						if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
-							. *= 1		//do nothing
-						else
-							. *= max(A.p_class, 1)
-				else if(istype(A, /obj/storage))
-					// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
-					if (locate(/mob) in A.contents)
-						. *= max(A.p_class,1)
+				if(!issilicon(src))	//Bandaid until I can do this better
+					if(ismob(A))
+						var/mob/M = A
+						//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
+						if(M.lying)
+							if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
+								. *= 1		//do nothing
+							else
+								. *= max(A.p_class, 1)
+					else if(istype(A, /obj/storage))
+						// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
+						if (locate(/mob) in A.contents)
+							. *= max(A.p_class,1)
 
 
 // cogwerks - fix for soulguard and revive
