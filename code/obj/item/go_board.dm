@@ -1,8 +1,8 @@
 /obj/item/goboard
 	name = "go board"
 	desc = "it's a board for playing go!"
-	icon = 'icons/obj/clothing/dryadmiscinv.dmi'
-	icon_state = "goboard"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "go-board"
 	var/list/openwindows = list()
 	var/list/piecelist = list()
 	var/list/desync = list()
@@ -62,7 +62,7 @@
 				var color = href_list["color"]
 
 				if(!(src.GetOverlayImage("[href_list["position"]]")))
-					var/image/piecedisplay = new /image('icons/obj/clothing/dryadmiscinv.dmi',"goboardstone[color]")
+					var/image/piecedisplay = new /image('icons/obj/items/items.dmi',"go-render-stone-[color]")
 					piecedisplay.pixel_x = (-offsetx)
 					piecedisplay.pixel_y = (-offsety)
 
@@ -114,8 +114,8 @@
 /obj/item/gobowlb
 	name = "bowl of black stones"
 	desc = "a bowl of little black stones."
-	icon = 'icons/obj/clothing/dryadmiscinv.dmi'
-	icon_state = "gobowlb"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "go-bowl-b"
 
 	attack_hand(mob/user as mob)
 		user.put_in_hand_or_drop(new /obj/item/gostoneb)
@@ -149,8 +149,8 @@
 /obj/item/gobowlw
 	name = "bowl of white stones"
 	desc = "a bowl of little white stones."
-	icon = 'icons/obj/clothing/dryadmiscinv.dmi'
-	icon_state = "gobowlw"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "go-bowl-w"
 
 	attack_hand(mob/user as mob)
 		user.put_in_hand_or_drop(new /obj/item/gostonew)
@@ -184,13 +184,13 @@
 /obj/item/gostoneb
 	name = "black stone"
 	desc = "a little black stone"
-	icon = 'icons/obj/clothing/dryadmiscinv.dmi'
-	icon_state = "gostoneb"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "go-stone-b"
 	w_class = 1
 
 /obj/item/gostonew
 	name = "white stone"
 	desc = "a little white stone"
-	icon = 'icons/obj/clothing/dryadmiscinv.dmi'
-	icon_state = "gostonew"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "go-stone-w"
 	w_class = 1
