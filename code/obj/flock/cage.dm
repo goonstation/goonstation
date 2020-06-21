@@ -123,7 +123,7 @@
 				playsound(get_turf(src), "sound/weapons/nano-blade-1.ogg", 50, 1)
 				if(occupant)
 					boutput(occupant, "<span class='notice'>[src] begins to process [target].</span>")
-			else if(ishuman(occupant))
+			else if(occupant && ishuman(occupant))
 				var/mob/living/carbon/human/H = occupant
 				getHumanPiece(H)
 			else if(occupant)

@@ -678,6 +678,7 @@
 		..()
 	else
 		boutput(user, "<span class='alert'>The grip tool can't get a good grip on [target]!</span>")
+		user.lastattacked = target
 
 /datum/limb/flock_grip/harm(mob/target, var/mob/living/critter/flock/drone/user)
 	if (!user || !target)
@@ -697,8 +698,10 @@
 			var/list/specific_attack_messages = pick(attack_messages)
 			msgs.base_attack_message = "<span class='combat bold'>[user] [specific_attack_messages[1]] [target] [specific_attack_messages[2]]!</span>"
 			msgs.flush(0)
+			user.lastattacked = target
 		else
 			user.visible_message("<span class='combat bold'>[user] attempts to prod [target] but misses!</span>")
+			user.lastattacked = target
 
 /////////////////////////////////////////////////////////////////////////////////
 
