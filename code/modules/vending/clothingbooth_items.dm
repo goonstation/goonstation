@@ -211,6 +211,49 @@
 	category = "Masquerade"
 	cost = 300
 
+//Sci-Fi
+/datum/clothingbooth_item/cwhat
+	name = "Moebius-Brand Headwear"
+	path = /obj/item/clothing/head/cwhat
+	category = "Sci-Fi"
+	cost = 120
+
+/datum/clothingbooth_item/fthat
+	name = "Trader's Headwear"
+	path = /obj/item/clothing/head/fthat
+	category = "Sci-Fi"
+	cost = 75
+
+/datum/clothingbooth_item/ftscanplate
+	name = "FTX-480 Scanner Plate"
+	path = /obj/item/clothing/glasses/ftscanplate
+	category = "Sci-Fi"
+	cost = 250
+
+/datum/clothingbooth_item/cwfashion
+	name = "CW Fashionista's Outfit"
+	path = /obj/item/clothing/under/gimmick/cwfashion
+	category = "Sci-Fi"
+	cost = 250
+
+/datum/clothingbooth_item/ftuniform
+	name = "Free Trader's Outfit"
+	path = /obj/item/clothing/under/gimmick/ftuniform
+	category = "Sci-Fi"
+	cost = 150
+
+/datum/clothingbooth_item/handcomp
+	name = "Compudyne 0451 Handcomp"
+	path = /obj/item/clothing/gloves/handcomp
+	category = "Sci-Fi"
+	cost = 150
+
+/datum/clothingbooth_item/cwboots
+	name = "Macando Boots"
+	path = /obj/item/clothing/shoes/cwboots
+	category = "Sci-Fi"
+	cost = 130
+
 //Shoes
 /datum/clothingbooth_item/dress_shoes
 	name = "Dress Shoes"
