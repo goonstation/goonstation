@@ -1993,7 +1993,7 @@ datum
 							otherReagents = TRUE
 					if(!otherReagents)
 						// we ate them all, time to die
-						if(holder?.my_atom?.material.mat_id == "gnesis")
+						if(holder?.my_atom?.material?.mat_id == "gnesis") // gnesis material prevents coag. gnesis from evaporating
 							return
 						holder.remove_reagent(id, conversion_rate)
 
