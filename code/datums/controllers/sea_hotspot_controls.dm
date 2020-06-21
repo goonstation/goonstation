@@ -918,6 +918,9 @@
 		set src in oview(1)
 		set category = "Local"
 
+		if(!isliving(usr) || !isalive(usr))
+			return
+
 		mode_toggle = !mode_toggle
 
 		for (var/mob/O in hearers(src, null))
