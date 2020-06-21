@@ -1,5 +1,9 @@
 
 (t)sun jun 21 20
+(u)mbc
+(p)1160
+(e)⚖|balance
+(+)Disarming someone does a bit of stamina damage to them.
 (u)UrsulaMajor
 (p)1159
 (e)⚖|balance
