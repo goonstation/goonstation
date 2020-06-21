@@ -365,10 +365,64 @@
 			return
 	..()
 
+/obj/item/sword/red
+	New()
+		..()
+		src.bladecolor = "R"
+
+/obj/item/sword/orange
+	New()
+		..()
+		src.bladecolor = "O"
+
+/obj/item/sword/yellow
+	New()
+		..()
+		src.bladecolor = "Y"
+
+/obj/item/sword/green
+	New()
+		..()
+		src.bladecolor = "G"
+
+/obj/item/sword/cyan
+	New()
+		..()
+		src.bladecolor = "C"
+
+/obj/item/sword/blue
+	New()
+		..()
+		src.bladecolor = "B"
+
+/obj/item/sword/purple
+	New()
+		..()
+		src.bladecolor = "P"
+
+/obj/item/sword/pink
+	New()
+		..()
+		src.bladecolor = "Pi"
+
+/obj/item/sword/white
+	New()
+		..()
+		src.bladecolor = "W"
+
+/obj/item/sword/rainbow
+	New()
+		..()
+		src.bladecolor = null
+
 /obj/item/sword/vr
 	icon = 'icons/effects/VR.dmi'
 	inhand_image_icon = 'icons/effects/VR_csaber_inhand.dmi'
 	valid_colors = list("R","Y","G","C","B","P","W","Bl")
+	use_glowstick = 0
+
+/obj/item/sword/old
+	icon = 'icons/obj/items/oldsaber.dmi'
 	use_glowstick = 0
 
 /obj/item/sword/discount
