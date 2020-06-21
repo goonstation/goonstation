@@ -8,11 +8,6 @@
 	//var/list/desync = list()
 
 	proc/uisetup()
-		usr << browse_rsc(file("browserassets/css/go.css"))
-		usr << browse_rsc(file("browserassets/js/go.js"))
-		usr << browse_rsc('browserassets/images/go/goboard.png', "goboard.png")
-		usr << browse_rsc('browserassets/images/go/goblack.png', "goblack.png")
-		usr << browse_rsc('browserassets/images/go/gowhite.png', "gowhite.png")
 		usr << browse(replacetext(replacetext(grabResource("html/go.htm"), "honk", json_encode(piecelist)), "!!SRC_REF!!", "\ref[src]"), "window=go;size=595x595;border=0;can_resize=0;can_minimize=1;")
 
 	attack_hand(mob/user as mob)
