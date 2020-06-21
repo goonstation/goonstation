@@ -1189,14 +1189,14 @@
 				stam_power = src.special.overrideStaminaDamage
 
 		//reduce stamina by the same proportion that base damage was reduced
-		//min cap is stam_power/4 so we still cant ignore it entirely
+		//min cap is stam_power/2 so we still cant ignore it entirely
 		if ((power + armor_mod) == 0) //mbc lazy runtime fix
-			stam_power = stam_power / 4 //do the least
+			stam_power = stam_power / 2 //do the least
 		else
-			stam_power = max(  stam_power / 4, stam_power * ( power / (power + armor_mod) )  )
+			stam_power = max(  stam_power / 2, stam_power * ( power / (power + armor_mod) )  )
 
 		//stam_power -= armor_mod
-
+		msgs.force_stamina_target = 1
 		msgs.stamina_target -= max(stam_power, 0)
 
 	if (is_special && src.special)
