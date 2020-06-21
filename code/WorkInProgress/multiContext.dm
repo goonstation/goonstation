@@ -486,10 +486,6 @@ var/list/globalContextActions = null
 		if (ishivebot(user))
 			var/mob/living/silicon/hivebot/hivebot = user
 			hivebot.hud.remove_screen(src)
-		user = null
-		target = null
-		background = null
-		action = null
 		..()
 
 /datum/contextAction
