@@ -340,9 +340,9 @@
 		var/obj/blob/B2 = new /obj/blob(T)
 		B2.setOvermind(owner)
 
-		if (owner.blobs.len < 40)
+		if (owner.blobs.len < 100)
 			cooldown_time = max(12 - owner.spread_upgrade * 12 - owner.spread_mitigation * 0.5, 0)
-		else if (owner.blobs.len < 80)
+		else if (owner.blobs.len < 200)
 			cooldown_time = max(17 - owner.spread_upgrade * 12 - owner.spread_mitigation * 0.5, 0)
 		else
 			cooldown_time = max(27 - owner.spread_upgrade * 12 - owner.spread_mitigation * 0.5, 0)
