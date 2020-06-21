@@ -729,7 +729,7 @@ proc/default_frequency_color(freq)
 #define STAMINA_STUN_CRIT_TIME 8  		//How long we will be stunned for, for being <= NEGCAP stamina
 #define STAMINA_GRAB_COST 25    		//How much grabbing someone costs.
 #define STAMINA_DISARM_COST 5   		//How much disarming someone costs.
-#define STAMINA_DISARM_DMG 26			//Stamina damage of disarming someone with bare hands.
+#define STAMINA_DISARM_DMG 19			//Stamina damage of disarming someone with bare hands.
 #define STAMINA_FLIP_COST 25    		//How much flipping / suplexing costs.
 #define STAMINA_CRIT_CHANCE 25  		//Base chance of landing a critical hit to stamina.
 #define STAMINA_CRIT_DIVISOR 2  		//Divide stamina by how much on a crit

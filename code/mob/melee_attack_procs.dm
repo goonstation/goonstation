@@ -392,10 +392,10 @@
 			if (istext(attack_resistance))
 				msgs.show_message_target(attack_resistance)
 		msgs.damage = max(damage, 0)
-	else
+	else if ( !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)) )
 		var/armor_mod = 0
 		armor_mod = target.get_melee_protection(def_zone)
-		msgs.stamina_target -= max(STAMINA_HTH_DMG - (armor_mod*0.2), 0) //armor vs barehanded disarm only gets a litl bit of reduction
+		msgs.stamina_target -= max(STAMINA_HTH_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm doesnt get full reduction
 		msgs.force_stamina_target = 1
 
 	var/target_stamina = STAMINA_MAX //uses stamina?
