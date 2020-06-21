@@ -472,6 +472,11 @@ CONTAINS:
 
 		else
 			patient.Virus_ShockCure(100)
+
+			for (var/uid in patient.pathogens)
+				var/datum/pathogen/P = patient.pathogens[uid]
+				P.onshocked(35, 500)
+
 			var/sumdamage = patient.get_brute_damage() + patient.get_burn_damage() + patient.get_toxin_damage()
 			if (suiciding)
 
