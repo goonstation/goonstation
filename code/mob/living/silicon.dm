@@ -1,4 +1,5 @@
 /mob/living/silicon
+	mob_flags = USR_DIALOG_UPDATES_RANGE
 	gender = NEUTER
 	var/syndicate = 0 // Do we get Syndicate laws?
 	var/syndicate_possible = 0 //  Can we become a Syndie robot?
@@ -172,7 +173,7 @@
 
 	var/inrange = in_range(target, src)
 	var/obj/item/equipped = src.equipped()
-	if (src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
+	if (src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
 		..()
 	else
 		if (get_dist(src, target) > 0) // temporary fix for cyborgs turning by clicking

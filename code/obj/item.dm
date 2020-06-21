@@ -1,6 +1,7 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items/items.dmi'
+	text = ""
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
 	var/force = null
@@ -27,6 +28,7 @@
 	flags = FPRINT | TABLEPASS
 	var/tool_flags = 0
 	var/c_flags = null
+	var/tooltip_flags = null
 
 	pressure_resistance = 50
 	var/obj/item/master = null
@@ -74,9 +76,13 @@
 
 	var/showTooltip = 1
 	var/showTooltipDesc = 1
-	var/lastTooltipTitle = null
-	var/lastTooltipContent = null
-	var/tooltip_rebuild = 1
+	var/tmp/lastTooltipTitle = null
+	var/tmp/lastTooltipContent = null
+	var/tmp/lastTooltipName = null
+	var/tmp/lastTooltipDist = null
+	var/tmp/lastTooltipUser = null
+	var/tmp/lastTooltipSpectro = null
+	var/tmp/tooltip_rebuild = 1
 	var/rarity = ITEM_RARITY_COMMON //Just a little thing to indicate item rarity. RPG fluff.
 
 	var/datum/item_special/special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
@@ -113,7 +119,9 @@
 		. += "<hr>"
 		if(rarity >= 4)
 			. += "<div><img src='[resource("images/tooltips/rare.gif")]' alt='' class='icon' /><span>Rare item</span></div>"
-		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [src.stamina_damage ? src.stamina_damage : "0"] stam, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10))*(src.force ? src.force : "0"), 0.1)] DPS</span></div>"
+		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [src.throwforce ? src.throwforce : "0"] thrown dmg</span></div>"
+		if (src.stamina_cost || src.stamina_damage)
+			. += "<div><img src='[resource("images/tooltips/stamina.png")]' alt='' class='icon' /><span>Stamina: [src.stamina_damage ? src.stamina_damage : "0"] dmg, [stamina_cost] consumed per swing</span></div>"
 
 		if(src.properties && src.properties.len)
 			for(var/datum/objectProperty/P in src.properties)
@@ -152,7 +160,10 @@
 		if (showTooltip && usr.client.tooltipHolder)
 			var/show = 1
 
-			if (!lastTooltipContent || !lastTooltipTitle)
+			if (!lastTooltipContent || !lastTooltipTitle || tooltip_flags & REBUILD_ALWAYS\
+			 || (HAS_MOB_PROPERTY(usr, PROP_SPECTRO) && tooltip_flags & REBUILD_SPECTRO)\
+			 || (usr != lastTooltipUser && tooltip_flags & REBUILD_USER)\
+			 || (get_dist(src, usr) != lastTooltipDist && tooltip_flags & REBUILD_DIST))
 				tooltip_rebuild = 1
 
 			//If user has tooltips to always show, and the item is in world, and alt key is NOT pressed, deny
@@ -160,12 +171,13 @@
 				show = 0
 
 			var/title
-			if (tooltip_rebuild)
+			if (tooltip_rebuild || lastTooltipName != src.name)
 				if(rarity >= 7)
 					title = "<span class=\"rainbow\">[capitalize(src.name)]</span>"
 				else
 					title = "<span style=\"color:[RARITY_COLOR[rarity] || "#fff"]\">[capitalize(src.name)]</span>"
 				lastTooltipTitle = title
+				lastTooltipName = src.name
 			else
 				title = lastTooltipTitle
 
@@ -1177,14 +1189,14 @@
 				stam_power = src.special.overrideStaminaDamage
 
 		//reduce stamina by the same proportion that base damage was reduced
-		//min cap is stam_power/4 so we still cant ignore it entirely
+		//min cap is stam_power/2 so we still cant ignore it entirely
 		if ((power + armor_mod) == 0) //mbc lazy runtime fix
-			stam_power = stam_power / 4 //do the least
+			stam_power = stam_power / 2 //do the least
 		else
-			stam_power = max(  stam_power / 4, stam_power * ( power / (power + armor_mod) )  )
+			stam_power = max(  stam_power / 2, stam_power * ( power / (power + armor_mod) )  )
 
 		//stam_power -= armor_mod
-
+		msgs.force_stamina_target = 1
 		msgs.stamina_target -= max(stam_power, 0)
 
 	if (is_special && src.special)

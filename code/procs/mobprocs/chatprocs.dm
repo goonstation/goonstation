@@ -488,7 +488,7 @@
 	else if (!src.client.preferences.listen_ooc)
 		return
 	else if (!ooc_allowed && !src.client.holder)
-		boutput(usr, "OOC is currently disabled.")
+		boutput(usr, "OOC is currently disabled. For gameplay questions, try <a href='byond://winset?command=mentorhelp'>mentorhelp</a>.")
 		return
 	else if (!dooc_allowed && !src.client.holder && (src.client.deadchat != 0))
 		boutput(usr, "OOC for dead mobs has been turned off.")

@@ -43,8 +43,8 @@ MATERIAL
 	throw_range = 4
 	w_class = 3.0
 	max_stack = 50
-	stamina_damage = 30
-	stamina_cost = 30
+	stamina_damage = 42
+	stamina_cost = 23
 	stamina_crit_chance = 10
 	var/datum/material/reinforcement = null
 	module_research = list("metals" = 5)
@@ -593,8 +593,8 @@ MATERIAL
 	throw_range = 20
 	m_amt = 1875
 	max_stack = 50
-	stamina_damage = 10
-	stamina_cost = 15
+	stamina_damage = 20
+	stamina_cost = 16
 	stamina_crit_chance = 30
 	rand_pos = 1
 
@@ -943,8 +943,9 @@ MATERIAL
 	throwforce = 5.0
 	max_stack = 80
 	stamina_damage = 25
-	stamina_cost = 25
+	stamina_cost = 15
 	stamina_crit_chance = 15
+	tooltip_flags = REBUILD_DIST
 
 	New()
 		..()
@@ -979,6 +980,7 @@ MATERIAL
 				F.setMaterial(getMaterial("steel"))
 			F.amount = 1
 			src.amount--
+			tooltip_rebuild = 1
 			user.put_in_hand_or_drop(F)
 			if (src.amount < 1)
 				//SN src = null
@@ -1004,6 +1006,7 @@ MATERIAL
 			else
 				src.build(S)
 				src.amount--
+				tooltip_rebuild = 1
 		if (src.amount < 1)
 			user.u_equip(src)
 			//SN src = null
@@ -1025,8 +1028,11 @@ MATERIAL
 		if (W.amount + src.amount > src.max_stack)
 			src.amount = W.amount + src.amount - src.max_stack
 			W.amount = src.max_stack
+			tooltip_rebuild = 1
+			W.tooltip_rebuild = 1
 		else
 			W.amount += src.amount
+			W.tooltip_rebuild = 1
 			//SN src = null
 			qdel(src)
 			return

@@ -91,6 +91,7 @@
 		F["[profileNum]_be_gangleader"] << src.be_gangleader
 		F["[profileNum]_be_wraith"] << src.be_wraith
 		F["[profileNum]_be_blob"] << src.be_blob
+		F["[profileNum]_be_flock"] << src.be_flock
 		F["[profileNum]_be_misc"] << src.be_misc
 
 		// UI settings. Ehhhhh.
@@ -243,6 +244,7 @@
 		F["[profileNum]_be_gangleader"] >> src.be_gangleader
 		F["[profileNum]_be_wraith"] >> src.be_wraith
 		F["[profileNum]_be_blob"] >> src.be_blob
+		F["[profileNum]_be_flock"] >> src.be_flock
 		F["[profileNum]_be_misc"] >> src.be_misc
 
 		// UI settings...

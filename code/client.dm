@@ -236,7 +236,7 @@
 	if (isbanned)
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
 		logTheThing("diary", null, src, "Failed Login: %target% - Banned", "access")
-		if (announce_banlogin) message_admins("<span class='notice'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
+		if (announce_banlogin) message_admins("<span class='internal'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
 		SPAWN_DBG(0)
 			var/banstring = {"
 								<!doctype html>
@@ -272,12 +272,12 @@
 	SPAWN_DBG(rand(4,18))
 		if(proxy_check(src.address))
 			logTheThing("diary", null, src, "Failed Login: %target% - Using a Tor Proxy Exit Node", "access")
-			if (announce_banlogin) message_admins("<span class='notice'>Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
+			if (announce_banlogin) message_admins("<span class='internal'>Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
 			boutput(src, "You may not connect through TOR.")
 			SPAWN_DBG(0) del(src)
 			return
 */
-	//admins and mentors can enter a server through player caps. 
+	//admins and mentors can enter a server through player caps.
 	var/ignore_player_cap = 0
 	if (init_admin())
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
@@ -479,6 +479,20 @@
 
 	//blendmode end
 
+	// cursed darkmode stuff
+
+	src.sync_dark_mode()
+
+	if(winget(src, "menu.fullscreen", "is-checked") == "true")
+		winset(src, null, "mainwindow.titlebar=false;mainwindow.is-maximized=true")
+
+	if(winget(src, "menu.hide_status_bar", "is-checked") == "true")
+		winset(src, null, "mainwindow.statusbar=false")
+
+	if(winget(src, "menu.hide_menu", "is-checked") == "true")
+		winset(src, null, "mainwindow.menu='';menub.is-visible = true")
+
+	// cursed darkmode end
 
 	//tg controls stuff
 
@@ -817,7 +831,7 @@ var/global/curr_day = null
 					if (C.player_mode && !C.player_mode_ahelp)
 						continue
 					else
-						boutput(K, "<font color='blue'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</font>")
+						boutput(K, "<span class='internal'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</span>")
 
 		if ("priv_msg")
 			do_admin_pm(href_list["target"], usr) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
@@ -1291,3 +1305,69 @@ if([removeOnFinish])
 /world/proc/showCinematic(var/name, var/removeOnFinish = 0)
 	for(var/client/C)
 		C.showCinematic(name, removeOnFinish)
+
+#define SKIN_TEMPLATE "\
+rpane.background-color=[_SKIN_BG];\
+rpane.text-color=[_SKIN_TEXT];\
+rpanewindow.background-color=[_SKIN_BG];\
+rpanewindow.text-color=[_SKIN_TEXT];\
+textb.background-color=[_SKIN_BG];\
+textb.text-color=[_SKIN_TEXT];\
+browseb.background-color=[_SKIN_BG];\
+browseb.text-color=[_SKIN_TEXT];\
+infob.background-color=[_SKIN_BG];\
+infob.text-color=[_SKIN_TEXT];\
+menub.background-color=[_SKIN_BG];\
+menub.text-color=[_SKIN_TEXT];\
+bugreportb.background-color=[_SKIN_BG];\
+bugreportb.text-color=[_SKIN_TEXT];\
+wikib.background-color=[_SKIN_BG];\
+wikib.text-color=[_SKIN_TEXT];\
+mapb.background-color=[_SKIN_BG];\
+mapb.text-color=[_SKIN_TEXT];\
+forumb.background-color=[_SKIN_BG];\
+forumb.text-color=[_SKIN_TEXT];\
+infowindow.background-color=[_SKIN_BG];\
+infowindow.text-color=[_SKIN_TEXT];\
+info.background-color=[_SKIN_INFO_BG];\
+info.text-color=[_SKIN_TEXT];\
+mainwindow.background-color=[_SKIN_BG];\
+mainwindow.text-color=[_SKIN_TEXT];\
+mainvsplit.background-color=[_SKIN_BG];\
+falsepadding.background-color=[_SKIN_COMMAND_BG];\
+input.background-color=[_SKIN_COMMAND_BG];\
+input.text-color=[_SKIN_TEXT];\
+saybutton.background-color=[_SKIN_COMMAND_BG];\
+saybutton.text-color=[_SKIN_TEXT];\
+info.tab-background-color=[_SKIN_INFO_TAB_BG];\
+info.tab-text-color=[_SKIN_TEXT]"
+
+/client/verb/sync_dark_mode()
+	set hidden=1
+	if(winget(src, "menu.dark_mode", "is-checked") == "true")
+#define _SKIN_BG "#28292c"
+#define _SKIN_INFO_TAB_BG "#28292c"
+#define _SKIN_INFO_BG "#28292c"
+#define _SKIN_TEXT "#d3d4d5"
+#define _SKIN_COMMAND_BG "#28294c"
+		winset(src, null, SKIN_TEMPLATE)
+		chatOutput.changeTheme("theme-dark")
+#undef _SKIN_BG
+#undef _SKIN_INFO_TAB_BG
+#undef _SKIN_INFO_BG
+#undef _SKIN_TEXT
+#undef _SKIN_COMMAND_BG
+#define _SKIN_BG "none"
+#define _SKIN_INFO_TAB_BG "#f0f0f0"
+#define _SKIN_INFO_BG "#ffffff"
+#define _SKIN_TEXT "none"
+#define _SKIN_COMMAND_BG "#d3b5b5"
+	else
+		winset(src, null, SKIN_TEMPLATE)
+		chatOutput.changeTheme("theme-default")
+#undef _SKIN_BG
+#undef _SKIN_INFO_TAB_BG
+#undef _SKIN_INFO_BG
+#undef _SKIN_TEXT
+#undef _SKIN_COMMAND_BG
+#undef SKIN_TEMPLATE

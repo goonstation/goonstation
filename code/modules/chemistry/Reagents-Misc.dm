@@ -655,6 +655,8 @@ datum
 						L.changeStatus("burning", -300)
 						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
 					if (istype(L,/mob/living/critter/fire_elemental))
+						L.changeStatus("weakened",0.5 SECONDS)
+						L.force_laydown_standup()
 						L.TakeDamage("All", volume * 1.5, 0, 0, DAMAGE_BLUNT)
 						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.5)
 				return
@@ -1991,6 +1993,8 @@ datum
 							otherReagents = TRUE
 					if(!otherReagents)
 						// we ate them all, time to die
+						if(holder?.my_atom?.material?.mat_id == "gnesis") // gnesis material prevents coag. gnesis from evaporating
+							return
 						holder.remove_reagent(id, conversion_rate)
 
 			// let's put more teeth into this.

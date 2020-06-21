@@ -68,16 +68,16 @@
 
 #define TIME_DILATION_ENABLED 1
 #define MIN_TICKLAG 0.4 //min value ticklag can be
-#define OVERLOADED_WORLD_TICKLAG 0.8 //max value ticklag can be
+#define OVERLOADED_WORLD_TICKLAG 1 //max value ticklag can be
 #define TICKLAG_DILATION_INC 0.2 //how much to increase by when appropriate
 #define TICKLAG_DILATION_DEC 0.2 //how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
 #define TICKLAG_DILATION_THRESHOLD 5 //these values dont make sense to you? read the math in gameticker
-#define TICKLAG_NORMALIZATION_THRESHOLD 0.4 //these values dont make sense to you? read the math in gameticker
+#define TICKLAG_NORMALIZATION_THRESHOLD 0.3 //these values dont make sense to you? read the math in gameticker
 #define TICKLAG_DILATE_INTERVAL 20
 
 #define OVERLOAD_PLAYERCOUNT 95 //when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
 #define OSHAN_LIGHT_OVERLOAD 18 //when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
-
+#define SLOW_LIFE_PLAYERCOUNT 65 //whenn pcount is >= this number, slow Life() processing a bit
 
 #define DEFAULT_CLICK_DELAY MIN_TICKLAG //used to be 1
 #define COMBAT_CLICK_DELAY 10
@@ -257,6 +257,13 @@
 #define BLOCK_BURN					32768	//block an extra point of burn damage when used to block
 #define BLOCK_BLUNT					65536	//block an extra point of blunt damage when used to block
 
+//tooltip flags for rebuilding
+#define REBUILD_ALWAYS				1		//rebuild tooltip every single time without exception
+#define REBUILD_DIST				2		//force rebuild if dist does not match cache
+#define REBUILD_USER				4		//force rebuild if viewer has changed at all
+#define REBUILD_SPECTRO				8		//force rebuild if spectrospec status of viewer has changed
+
+
 //clothing dirty flags (not used for anything other than submerged overlay update currently. eventually merge into update_clothing)
 #define C_BACK 1
 #define C_MASK 2
@@ -329,6 +336,7 @@
 #define AT_GUNPOINT 1024 	//quick check for guns holding me at gunpoint
 #define IGNORE_SHIFT_CLICK_MODIFIER 2048 //shift+click doesn't retrigger a SHIFT keypress - use for mobs that sprint on shift and not on mobs that use shfit for bolting doors etc
 #define LIGHTWEIGHT_AI_MOB 4096		//not a part of the normal 'mobs' list so it wont show up in searches for observe admin etc, has its own slowed update rate on Life() etc
+#define USR_DIALOG_UPDATES_RANGE 8192	//updateusrdialog will consider this mob as being able to 'attack_ai' and update its ui at range
 
 //object_flags
 #define BOTS_DIRBLOCK 1	//bot considers this solid object that can be opened with a Bump() in pathfinding DirBlockedWithAccess
@@ -411,6 +419,18 @@
 #define RADIOC_CIVILIAN "#A10082"
 #define RADIOC_SYNDICATE "#962121"
 #define RADIOC_OTHER "#800080"
+
+// Radio (headset etc) css classes.
+#define RADIOCL_STANDARD "rstandard"
+#define RADIOCL_INTERCOM "rintercom"
+#define RADIOCL_COMMAND "rcommand"
+#define RADIOCL_SECURITY "rsecurity"
+#define RADIOCL_ENGINEERING "rengineering"
+#define RADIOCL_MEDICAL "rmedical"
+#define RADIOCL_RESEARCH "rresearch"
+#define RADIOCL_CIVILIAN "rcivilian"
+#define RADIOCL_SYNDICATE "rsyndicate"
+#define RADIOCL_OTHER "rother"
 
 // Frequency defines for headsets & intercoms (Convair880).
 #define R_FREQ_MINIMUM 1441		// Minimum "selectable" freq
@@ -699,16 +719,17 @@ proc/default_frequency_color(freq)
 #define STAMINA_MAX 200        			//Default max stamina value
 #define STAMINA_REGEN 10   	   		 	//Default stamina regeneration rate.
 #define STAMINA_ITEM_DMG 20     		//Default stamina damage objects do.
-#define STAMINA_ITEM_COST 18    		//Default attack cost on user for attacking with items.
+#define STAMINA_ITEM_COST 15    		//Default attack cost on user for attacking with items.
 #define STAMINA_HTH_DMG 30      		//Default hand-to-hand (punch, kick) stamina damage.
-#define STAMINA_HTH_COST 20     		//Default hand-to-hand (punch, kick) stamina cost
-#define STAMINA_MIN_ATTACK 91   		//The minimum amount of stamina required to attack.
+#define STAMINA_HTH_COST 15     		//Default hand-to-hand (punch, kick) stamina cost
+#define STAMINA_MIN_ATTACK 50   		//The minimum amount of stamina required to attack.
 #define STAMINA_NEG_CAP -75     		//How far into the negative we can take stamina. (People will be stunned while stamina regens up to > 0 - so this can lead to long stuns if set too high)
 #define STAMINA_NEG_CAP_STUN_TIME 60   	//When we reach the neg cap, how long to paralyze?
 #define STAMINA_STUN_TIME 5     		//How long we will be stunned for, for being <= 0 stamina
 #define STAMINA_STUN_CRIT_TIME 8  		//How long we will be stunned for, for being <= NEGCAP stamina
 #define STAMINA_GRAB_COST 25    		//How much grabbing someone costs.
 #define STAMINA_DISARM_COST 5   		//How much disarming someone costs.
+#define STAMINA_DISARM_DMG 19			//Stamina damage of disarming someone with bare hands.
 #define STAMINA_FLIP_COST 25    		//How much flipping / suplexing costs.
 #define STAMINA_CRIT_CHANCE 25  		//Base chance of landing a critical hit to stamina.
 #define STAMINA_CRIT_DIVISOR 2  		//Divide stamina by how much on a crit
@@ -887,6 +908,7 @@ proc/default_frequency_color(freq)
 #define INGEST 2
 #define INJECT 3
 #define MAX_TEMP_REACTION_VARIANCE 8
+#define CHEM_EPSILON 0.0001
 
 //moved from communications.dm
 #define TRANSMISSION_WIRE	0
@@ -1103,6 +1125,13 @@ var/ZLOG_START_TIME
 #define ATTO  *(10**-18)
 #define ZEPTO *(10**-21)
 #define YOCTO *(10**-24)
+
+//table defines
+#define TABLE_DISASSEMBLE 0
+#define TABLE_WEAKEN 1
+#define TABLE_STRENGTHEN 2
+#define TABLE_ADJUST 3
+#define TABLE_LOCKPICK 4
 
 //Auditing
 //Whether or not a potentially suspicious action gets denied by the code.

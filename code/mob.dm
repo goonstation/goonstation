@@ -35,6 +35,8 @@
 	var/custom_gib_handler = null
 	var/obj/decal/cleanable/custom_vomit_type = /obj/decal/cleanable/vomit
 
+	var/list/mob/dead/target_observer/observers = list()
+
 	var/emote_allowed = 1
 	var/last_emote_time = 0
 	var/last_emote_wait = 0
@@ -284,6 +286,10 @@
 		src.s_active = null
 
 /mob/disposing()
+	for(var/mob/dead/target_observer/TO in observers)
+		observers -= TO
+		TO.ghostize()
+
 	for(var/mob/m in src) //just in case...
 		m.loc = src.loc
 		m.ghostize()
@@ -406,22 +412,26 @@
 					logTheThing("admin", src, M, "has same IP address as %target%")
 					logTheThing("diary", src, M, "has same IP address as %target%", "access")
 					if (IP_alerts)
-						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name(src)] has the same IP address as [key_name(M)]</font>")
+						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)]</span>")
 			else if (M && M.lastKnownIP && M.lastKnownIP == src.client.address && M.ckey != src.ckey && M.key)
 				if(!src.client.holder && !M.client.holder)
 					logTheThing("diary", src, M, "has same IP address as %target% did (%target% is no longer logged in).", "access")
 					if (IP_alerts)
-						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name(src)] has the same IP address as [key_name(M)] did ([key_name(M)] is no longer logged in).</font>")
+						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
 			if (M && M.client && M.client.computer_id == src.client.computer_id)
 				logTheThing("admin", src, M, "has same computer ID as %target%")
 				logTheThing("diary", src, M, "has same computer ID as %target%", "access")
-				message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name(src)] has the same <font color='red'><B>computer ID</B><font color='blue'> as [key_name(M)]</font>")
-				SPAWN_DBG(0) alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font color='blue'> as [key_name(M)]</span>")
+				SPAWN_DBG(0)
+					if(M.lastKnownIP == src.client.address)
+						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 			else if (M && M.computer_id && M.computer_id == src.client.computer_id && M.ckey != src.ckey && M.key)
 				logTheThing("diary", src, M, "has same computer ID as %target% did (%target% is no longer logged in).", null, "access")
 				logTheThing("admin", M, null, "is no longer logged in.")
-				message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name(src)] has the same <font color='red'><B>computer ID</B><font color='blue'> as [key_name(M)] did ([key_name(M)] is no longer logged in).</font>")
-				SPAWN_DBG(0) alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B></span><span class='internal'> as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
+				SPAWN_DBG(0)
+					if(M.lastKnownIP == src.client.address)
+						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 /*  don't get me wrong this was awesome but it's leading to false positives now and we stopped caring about that guy
 	var/evaderCheck = copytext(lastKnownIP,1, findtext(lastKnownIP, ".", 5))
 	if (evaderCheck in list("174.50", "69.245", "71.228", "69.247", "71.203", "98.211", "68.53"))
@@ -796,7 +806,7 @@
 
 			if (length(unlocks))
 				for(var/datum/achievementReward/B in unlocks)
-					boutput(src, "<FONT FACE=Arial COLOR=gold SIZE=+1>You've unlocked a Reward : [B.title]!</FONT>")
+					boutput(src, "<span class=\"medal\"><FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT></span>")
 
 		else if (isnull(result) && ismob(src) && src.client)
 			return
@@ -1083,6 +1093,9 @@
 #undef DAMAGE
 
 /mob/proc/death(gibbed)
+	#ifdef COMSIG_MOB_DEATH
+	SEND_SIGNAL(src, COMSIG_MOB_DEATH)
+	#endif
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
 		message_admins("<span class='alert'>Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)].</span>")
@@ -1139,7 +1152,7 @@
 			if (held && !istype(held, /obj/ability_button))
 				W = held
 		if (!istype(W) || W.cant_drop) return
-		u_equip(W)
+
 		if (W && !W.qdeled)
 			if (istype(src.loc, /obj/vehicle))
 				var/obj/vehicle/V = src.loc
@@ -1156,8 +1169,10 @@
 
 			var/turf/T = get_turf(src.loc)
 			T.Entered(W)
+			u_equip(W)
 			.= 1
 		else
+			u_equip(W)
 			.= 0
 		if (origW)
 			origW.holding = null

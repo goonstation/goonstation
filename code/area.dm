@@ -16,13 +16,13 @@
 
 //
 /area
-	var/active = 0 //True if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
+	var/tmp/active = 0 //True if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
 	var/list/population = list() //Who is here (ditto)
-	var/fire = null
+	var/tmp/fire = null
 	var/atmos = 1
 	var/poweralm = 1
 	var/skip_sims = 0
-	var/sims_score = 100
+	var/tmp/sims_score = 100
 	var/virtual = 0
 	var/is_centcom = 0 // for escape checks
 	var/gencolor
@@ -38,6 +38,7 @@
 	mouse_opacity = 0
 	mat_changename = 0
 	mat_changedesc = 0
+	text = ""
 	var/lightswitch = 1
 	var/may_eat_here_in_restricted_z = 0
 
@@ -46,12 +47,12 @@
 	var/obj/machinery/power/apc/area_apc = null // okay in certain cases you may have more than one apc, but for my purposes the latest apc works just fine
 
 	var/requires_power = 1
-	var/power_equip = 1
-	var/power_light = 1
-	var/power_environ = 1
-	var/used_equip = 0
-	var/used_light = 0
-	var/used_environ = 0
+	var/tmp/power_equip = 1
+	var/tmp/power_light = 1
+	var/tmp/power_environ = 1
+	var/tmp/used_equip = 0
+	var/tmp/used_light = 0
+	var/tmp/used_environ = 0
 	var/expandable = 1
 
 	var/irradiated = 0 // space blowouts use this, should always be 0
@@ -79,8 +80,8 @@
 	var/sound_loop_vol = 50
 	var/sound_fx_1 = null
 	var/sound_fx_2 = null
-	var/played_fx_1 = 0
-	var/played_fx_2 = 0
+	var/tmp/played_fx_1 = 0
+	var/tmp/played_fx_2 = 0
 	var/sound_group = null
 	var/sound_environment = 1 //default environment for sounds - see sound datum vars documentation for the presets.
 
@@ -1200,7 +1201,7 @@
 /area/station
 	do_not_irradiate = 0
 	sound_fx_1 = 'sound/ambience/station/Station_VocalNoise1.ogg'
-	var/initial_structure_value = 0
+	var/tmp/initial_structure_value = 0
 #ifdef MOVING_SUB_MAP
 	filler_turf = "/turf/space/fluid/manta"
 

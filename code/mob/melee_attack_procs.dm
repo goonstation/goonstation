@@ -392,7 +392,11 @@
 			if (istext(attack_resistance))
 				msgs.show_message_target(attack_resistance)
 		msgs.damage = max(damage, 0)
-
+	else if ( !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)) )
+		var/armor_mod = 0
+		armor_mod = target.get_melee_protection(def_zone)
+		msgs.stamina_target -= max(STAMINA_HTH_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm doesnt get full reduction
+		msgs.force_stamina_target = 1
 
 	var/target_stamina = STAMINA_MAX //uses stamina?
 	if (isliving(target))
@@ -435,7 +439,7 @@
 	var/obj/item/I = target.equipped()
 	if (I)
 		var/disarm_item_prob = 37
-		if (target.check_block())
+		if (target.check_block() && !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)))
 			disarm_item_prob = 8
 
 		if (I.temp_flags & IS_LIMB_ITEM)
@@ -816,15 +820,17 @@
 	//grouping of combat message
 	var/msg_group = 0
 
+	var/force_stamina_target = null
+
 	New(var/mob/M)
 		owner = M
 
 	proc/clear(var/mob/M)
 		target = M
-		visible_self = list()
-		visible_target = list()
-		show_self = list()
-		show_target = list()
+		visible_self.Cut()
+		visible_target.Cut()
+		show_self.Cut()
+		show_target.Cut()
 		if (istype(src, /datum/attackResults/disarm))
 			logs = list("disarms %target%")
 		else
@@ -843,7 +849,7 @@
 		bleed_always = 0 //Will cause bleeding regardless of damage type.
 		bleed_bonus = 0 //bonus to bleed damage specifically.
 
-		after_effects = list()
+		after_effects.Cut()
 
 	proc/show_message_self(var/message)
 		show_self += message
@@ -972,9 +978,9 @@
 			target.lastattackertime = world.time
 			target.add_fingerprint(owner)
 
-		if (damage > 0 || src.disarm == 1)
+		if (damage > 0 || (src.disarm == 1 || force_stamina_target))
 
-			if (src.disarm == 1 && damage <= 0)
+			if ((src.disarm == 1 || force_stamina_target) && damage <= 0)
 				goto process_stamina
 
 			if (damage > 0 && target != owner)

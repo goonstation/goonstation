@@ -44,14 +44,14 @@ var/global/client/ff_debugger = null
 	var/blocks_air = 0
 	var/icon_old = null
 	var/name_old = null
-	var/pathweight = 1
-	var/pathable = 1
+	var/tmp/pathweight = 1
+	var/tmp/pathable = 1
 	var/can_write_on = 0
-	var/messy = 0 //value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
-	var/checkingexit = 0 //value corresponds to how many objs on this turf implement checkexit(). lets us skip a costly loop later!
-	var/checkingcanpass = 0 // "" how many implement canpass()
-	var/checkinghasentered = 0 // "" hasproximity as well as items with a mat that hasproximity
-	var/checkinghasproximity = 0
+	var/tmp/messy = 0 //value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
+	var/tmp/checkingexit = 0 //value corresponds to how many objs on this turf implement checkexit(). lets us skip a costly loop later!
+	var/tmp/checkingcanpass = 0 // "" how many implement canpass()
+	var/tmp/checkinghasentered = 0 // "" hasproximity as well as items with a mat that hasproximity
+	var/tmp/checkinghasproximity = 0
 	var/wet = 0
 	throw_unlimited = 0 //throws cannot stop on this tile if true (also makes space drift)
 
@@ -182,6 +182,7 @@ var/global/client/ff_debugger = null
 	throw_unlimited = 1
 	plane = PLANE_SPACE
 	special_volume_override = 0
+	text = ""
 
 	flags = ALWAYS_SOLID_FLUID
 	turf_flags = CAN_BE_SPACE_SAMPLE
@@ -715,6 +716,7 @@ var/global/client/ff_debugger = null
 	var/default_melt_cap = 30
 	can_write_on = 1
 	mat_appearances_to_ignore = list("steel")
+	text = "<font color=#aaa>."
 
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
@@ -802,11 +804,13 @@ var/global/client/ff_debugger = null
 	nitrogen = MOLES_N2STANDARD
 	fullbright = 0 // cogwerks changed as a lazy fix for newmap- if this causes problems change back to 1
 	stops_space_move = 1
+	text = "<font color=#aaa>."
 
 /turf/unsimulated/floor
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "plating"
+	text = "<font color=#aaa>."
 	plane = PLANE_FLOOR
 
 /turf/unsimulated/wall
@@ -814,6 +818,7 @@ var/global/client/ff_debugger = null
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "riveted"
 	opacity = 1
+	text = "<font color=#aaa>#"
 	density = 1
 	pathable = 0
 	turf_flags = ALWAYS_SOLID_FLUID

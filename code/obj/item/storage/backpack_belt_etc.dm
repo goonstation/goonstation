@@ -88,8 +88,8 @@
 	w_class = 4.0
 	max_wclass = 3
 	does_not_open_in_pocket = 0
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 5
 	spawn_contents = list(/obj/item/storage/box/starter)
 
@@ -104,6 +104,11 @@
 	item_state = "funny"
 	spawn_contents = list(/obj/item/storage/box/starter,\
 	/obj/item/storage/box/balloonbox)
+
+/obj/item/storage/fanny/funny/mini
+	name = "mini funny pack"
+	desc = "Haha, get it? Get it? 'Funny'! This one seems a little smaller, and made of even cheaper material."
+	slots = 3
 
 /obj/item/storage/fanny/syndie
 	name = "syndicate tactical espionage belt pack"
@@ -121,7 +126,7 @@
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
 	max_wclass = 2
 	does_not_open_in_pocket = 0
-	stamina_damage = 5
+	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 5
 
@@ -276,9 +281,9 @@
 		. += "There are [src.charge]/[src.maxCharge] PU left."
 
 	buildTooltipContent()
-		var/content = ..()
-		content += "<br>There are [src.charge]/[src.maxCharge] PU left."
-		return content
+		. = ..()
+		. += "<br>There are [src.charge]/[src.maxCharge] PU left."
+		lastTooltipContent = .
 
 /obj/item/storage/belt/utility/prepared
 	spawn_contents = list(/obj/item/crowbar,

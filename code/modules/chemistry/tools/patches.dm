@@ -581,7 +581,7 @@
 
 /datum/action/bar/icon/automender_apply
 	duration = 10
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	id = "automender_apply"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mender-active"
@@ -621,8 +621,8 @@
 
 		//WEAKEN the first apply or use some sort of ramp-up!
 		var/multiply = 1
-		if (looped <= 0)
-			multiply = 0.2
+		if (looped <= 7)
+			multiply = min((looped+1)/8, 1)
 
 		M.apply_to(target,user, multiply, silent = (looped >= 1))
 

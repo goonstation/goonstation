@@ -299,6 +299,7 @@ ported and crapped up by: haine
 	icon_state = "juicer"
 	amount_per_transfer_from_this = 10
 	initial_volume = 200
+	tooltip_flags = REBUILD_DIST
 
 	afterattack(obj/target, mob/user)
 		if (get_dist(user, src) > 1 || get_dist(user, target) > 1)
@@ -372,6 +373,7 @@ ported and crapped up by: haine
 	var/list/hydro_reagent_names = list() // the tank creation proc adds the names of the above reagents to this list
 	var/list/tanks = list() // what tanks we have
 	var/obj/item/reagent_containers/borghose_tank/active_tank = null // what tank is active
+	tooltip_flags = REBUILD_DIST //if anyone implements this, add some rebuilds
 
 	New() // So this goes through and adds all the reagents to the hose on creation. Pretty good for expandability.
 		..()

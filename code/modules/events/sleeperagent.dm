@@ -43,7 +43,7 @@
 				return
 		SPAWN_DBG(0)
 			src.lock = 1
-			do_event()
+			do_event(source=="spawn_antag")
 			src.lock = 0
 
 	proc/do_event(var/force_antags = 0)

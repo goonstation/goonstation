@@ -258,7 +258,7 @@
 	for (var/obj/item/device/radio/headset/R in synd_mob.contents)
 		R.set_secure_frequency("h", the_frequency)
 
-		R.secure_colors = list(RADIOC_SYNDICATE)
+		R.secure_classes = list(RADIOCL_SYNDICATE)
 		R.protected_radio = 1 // Ops can spawn with the deaf trait.
 		R.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
 

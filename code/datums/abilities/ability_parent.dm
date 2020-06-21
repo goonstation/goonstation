@@ -96,13 +96,6 @@
 				for(var/obj/screen/ability/A in src.hud)
 					src.hud -= A
 
-			if (ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				// are we viewing genetic powers instead of our item abilities and other abilities?
-				// if so, don't bother adding buttons back to hud, keep it empty
-				if (H.hud.current_ability_set == 2)
-					return
-
 			var/pos_x = start_x
 			var/pos_y = start_y
 			for(var/datum/targetable/B in src.abilities)

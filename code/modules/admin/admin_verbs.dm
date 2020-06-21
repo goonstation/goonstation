@@ -269,6 +269,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/togglesoundwaiting,
 		/client/proc/debug_variables,
 		/verb/adminCreateBlueprint,
+		/client/proc/toggle_text_mode,
 		/client/proc/cmd_mass_modify_object_variables,
 		/client/proc/cmd_debug_mutantrace,
 		/client/proc/cmd_admin_rejuvenate,
@@ -793,7 +794,7 @@ var/list/special_pa_observing_verbs = list(
 		M.Browse(rules, "window=rules;size=480x320")
 		boutput(M, "<span class='alert'><B>You have been warned by an administrator. This is the only warning you will receive.</B></span>")
 		M.client.warned = 1
-		message_admins("<span class='notice'>[src.ckey] warned [M.ckey].</span>")
+		message_admins("<span class='internal'>[src.ckey] warned [M.ckey].</span>")
 	else
 		var/addData[] = new()
 		addData["ckey"] = M.ckey
@@ -1823,18 +1824,18 @@ var/list/fun_images = list()
 
 	if (!client.holder.animtoggle)
 		if (ismob(A))
-			choice = input(usr, "What do? (Atom verbs are ON)") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"])
+			choice = input(usr, "What do? (Atom verbs are ON)", "[A]") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"])
 		else if (isturf(A))
-			choice = input(usr, "What do? (Atom verbs are ON)") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"])
+			choice = input(usr, "What do? (Atom verbs are ON)", "[A]") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"])
 		else
-			choice = input(usr, "What do? (Atom verbs are ON)") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"])
+			choice = input(usr, "What do? (Atom verbs are ON)", "[A]") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"])
 	else
 		if (ismob(A))
-			choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["mob"]
+			choice = input(usr, "What do?", "[A]") as null|anything in client.holder.admin_interact_verbs["mob"]
 		else if (isturf(A))
-			choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["turf"]
+			choice = input(usr, "What do?", "[A]") as null|anything in client.holder.admin_interact_verbs["turf"]
 		else
-			choice = input(usr, "What do?") as null|anything in client.holder.admin_interact_verbs["obj"]
+			choice = input(usr, "What do?", "[A]") as null|anything in client.holder.admin_interact_verbs["obj"]
 
 	var/client/C = src.client
 	switch(choice)

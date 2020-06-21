@@ -67,7 +67,7 @@ var/list/all_toilets = null
 
 			if (islist(all_toilets) && all_toilets.len)
 				for (var/obj/item/storage/toilet/T in all_toilets)
-					if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z))
+					if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z) || (istype(T.loc,/area) && T.loc:teleport_blocked))
 						continue
 					destinations.Add(T)
 			else

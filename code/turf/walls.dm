@@ -8,6 +8,7 @@
 	blocks_air = 1
 	pathable = 1
 	flags = ALWAYS_SOLID_FLUID
+	text = "<font color=#aaa>#"
 
 	var/health = 100
 	var/list/proj_impacts = list()

@@ -218,6 +218,8 @@
 			src.implant.Add(MB)
 			MB.implanted(src)
 
+	src.text = "<font color=#[random_hex(3)]>@"
+
 /datum/human_limbs
 	var/mob/living/carbon/human/holder = null
 
@@ -951,9 +953,9 @@
 		I = G.handle_throw(src, target)
 		if (!I) return
 
-	u_equip(I)
-
 	I.set_loc(src.loc)
+
+	u_equip(I)
 
 	if (get_dist(src, target) > 0)
 		src.dir = get_dir(src, target)

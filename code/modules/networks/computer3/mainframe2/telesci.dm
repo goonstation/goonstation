@@ -223,8 +223,6 @@ proc/is_teleportation_allowed(var/turf/T)
 						src.realx = round(  max(0, min(coords.destx, world.maxx+1)) )
 						src.realy = round(  max(0, min(coords.desty, world.maxy+1)) )
 						src.realz = round(  max(0, min(coords.destz, world.maxz+1)) )
-						signal.data_file = null
-						pool(coords)
 						message_host("command=ack")
 
 					if ("send")

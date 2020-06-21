@@ -340,7 +340,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 					return
 
 		//announce winner
-		var/msg = "<br><span style='font-size: 1.25em; color: blue;'>"
+		var/msg = "<br><span style='font-size: 1.25em;' class='internal'>"
 		msg += "The vote for next map has ended. The winning choice is '[src.voteChosenMap]'.<a href='?src=\ref[src];type=view_mapvote_report_simple;vote=[src.voteIndex]'>(View Tally)</a>"
 		if (src.voteChosenMap == src.current)
 			msg += " (No change)"

@@ -1,12 +1,12 @@
-/atom/var/throw_count = 0	  //Counts up for tiles traveled in throw mode. Stacks on diagonals, stacks on stacked throws.
-/atom/var/throw_traveled = 0	//same as above, however if throw_at is provided a source param it will refer to the ACTUAL distance of the throw (dist proc)
-/atom/var/throw_unlimited = 0 //Setting this to 1 before throwing will make the object behave as if in space. //If set on turf, the turf will allow infinite throwing over itself.
-/atom/var/throw_return = 0    //When 1 item will return like a boomerang.
-/atom/var/throw_spin = 1      //If the icon spins while thrown
-/atom/var/throw_pixel = 1		//1 if the pixel vars will be adjusted depending on aiming/mouse params, on impact.
-/atom/var/last_throw_x = 0
-/atom/var/last_throw_y = 0
-/mob/var/gib_flag = 0 	      //Sorry about this.
+/atom/var/tmp/throw_count = 0	  //Counts up for tiles traveled in throw mode. Stacks on diagonals, stacks on stacked throws.
+/atom/var/tmp/throw_traveled = 0	//same as above, however if throw_at is provided a source param it will refer to the ACTUAL distance of the throw (dist proc)
+/atom/var/tmp/throw_unlimited = 0 //Setting this to 1 before throwing will make the object behave as if in space. //If set on turf, the turf will allow infinite throwing over itself.
+/atom/var/tmp/throw_return = 0    //When 1 item will return like a boomerang.
+/atom/var/tmp/throw_spin = 1      //If the icon spins while thrown
+/atom/var/tmp/throw_pixel = 1		//1 if the pixel vars will be adjusted depending on aiming/mouse params, on impact.
+/atom/var/tmp/last_throw_x = 0
+/atom/var/tmp/last_throw_y = 0
+/mob/var/tmp/gib_flag = 0 	      //Sorry about this.
 
 /atom/movable/proc/hit_check()
 	if(src.throwing)
@@ -77,29 +77,68 @@
 	if (reagents)
 		reagents.physical_shock(20)
 
-	if (ishuman(hit_atom)) // Haine fix for undefined proc or verb /mob/living/carbon/wall/meatcube/juggling()
-		var/mob/living/carbon/human/C = hit_atom //fuck you, monkeys
+	if (isliving(hit_atom))
+		var/mob/living/L = hit_atom
+		actions.interrupt(L, INTERRUPT_ATTACKED)
+		//bleed check here
+		if (L.can_bleed && isitem(src))
+			if ((src:hit_type == DAMAGE_STAB && prob(20)) || (src:hit_type == DAMAGE_CUT && prob(40)))
+				take_bleeding_damage(L, null, src.throwforce * 0.5, src:hit_type)
+				impact_sfx = 'sound/impact_sounds/Flesh_Stab_3.ogg'
 
-		if (!ismob(src))
-			if (C.juggling())
-				if (prob(40))
-					C.visible_message("<span class='alert'><b>[C]<b> gets hit in the face by [src]!</span>")
-					if (hasvar(src, "throwforce"))
-						C.TakeDamageAccountArmor("head", src:throwforce, 0)
-				else
-					if (prob(C.juggling.len * 5)) // might drop stuff while already juggling things
-						C.drop_juggle()
+		if (ishuman(hit_atom)) // Haine fix for undefined proc or verb /mob/living/carbon/wall/meatcube/juggling()
+			var/mob/living/carbon/human/C = hit_atom //fuck you, monkeys
+
+			if (!ismob(src))
+				if (C.juggling())
+					if (prob(40))
+						C.visible_message("<span class='alert'><b>[C]<b> gets hit in the face by [src]!</span>")
+						if (hasvar(src, "throwforce"))
+							C.TakeDamageAccountArmor("head", src:throwforce, 0)
 					else
-						C.add_juggle(src)
-				return
+						if (prob(C.juggling.len * 5)) // might drop stuff while already juggling things
+							C.drop_juggle()
+						else
+							C.add_juggle(src)
+					return
 
-		if(((C.in_throw_mode && C.a_intent == "help") || (C.client && C.client.check_key(KEY_THROW))) && !C.equipped())
-			if((C.hand && (!C.limbs.l_arm)) || (!C.hand && (!C.limbs.r_arm)) || C.hasStatus("handcuffed") || (prob(60) && C.bioHolder.HasEffect("clumsy")) || ismob(src) || (throw_traveled <= 1 && last_throw_x == src.x && last_throw_y == src.y))
-				C.visible_message("<span class='alert'>[C] has been hit by [src].</span>") //you're all thumbs!!!
-				// Added log_reagents() calls for drinking glasses. Also the location (Convair880).
-				logTheThing("combat", C, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
-				if(src.vars.Find("throwforce"))
-					random_brute_damage(C, src:throwforce,1)
+			if(((C.in_throw_mode && C.a_intent == "help") || (C.client && C.client.check_key(KEY_THROW))) && !C.equipped())
+				if((C.hand && (!C.limbs.l_arm)) || (!C.hand && (!C.limbs.r_arm)) || C.hasStatus("handcuffed") || (prob(60) && C.bioHolder.HasEffect("clumsy")) || ismob(src) || (throw_traveled <= 1 && last_throw_x == src.x && last_throw_y == src.y))
+					C.visible_message("<span class='alert'>[C] has been hit by [src].</span>") //you're all thumbs!!!
+					// Added log_reagents() calls for drinking glasses. Also the location (Convair880).
+					logTheThing("combat", C, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
+					if(src.vars.Find("throwforce"))
+						random_brute_damage(C, src:throwforce,1)
+
+				#ifdef DATALOGGER
+					game_stats.Increment("violence")
+				#endif
+
+					if(src.vars.Find("throwforce") && src:throwforce >= 40)
+						C.throw_at(get_edge_target_turf(C,get_dir(src, C)), 10, 1)
+						C.changeStatus("stunned", 3 SECONDS)
+
+					if(ismob(src)) src:throw_impacted(hit_atom)
+
+				else
+					src.attack_hand(C)	// nice catch, hayes. don't ever fuckin do it again
+					C.visible_message("<span class='alert'>[C] catches the [src.name]!</span>")
+					logTheThing("combat", C, null, "catches [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
+					C.throw_mode_off()
+				#ifdef DATALOGGER
+					game_stats.Increment("catches")
+				#endif
+
+			else  //normmal thingy hit me
+				if (src.throwing & THROW_CHAIRFLIP)
+					C.visible_message("<span class='alert'>[src] slams into [C] midair!</span>")
+				else
+					C.visible_message("<span class='alert'>[C] has been hit by [src].</span>")
+					if(src.vars.Find("throwforce"))
+						random_brute_damage(C, src:throwforce,1)
+
+					logTheThing("combat", C, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
+
 
 			#ifdef DATALOGGER
 				game_stats.Increment("violence")
@@ -111,60 +150,24 @@
 
 				if(ismob(src)) src:throw_impacted(hit_atom)
 
-			else
-				src.attack_hand(C)	// nice catch, hayes. don't ever fuckin do it again
-				C.visible_message("<span class='alert'>[C] catches the [src.name]!</span>")
-				logTheThing("combat", C, null, "catches [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
-				C.throw_mode_off()
-			#ifdef DATALOGGER
-				game_stats.Increment("catches")
-			#endif
 
-		else  //normmal thingy hit me
-			if (src.throwing & THROW_CHAIRFLIP)
-				C.visible_message("<span class='alert'>[src] slams into [C] midair!</span>")
-			else
-				C.visible_message("<span class='alert'>[C] has been hit by [src].</span>")
-				if(src.vars.Find("throwforce"))
-					random_brute_damage(C, src:throwforce,1)
-
-				logTheThing("combat", C, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
-
-			//bleed check here
-			if (isitem(src))
-				if ((src:hit_type == DAMAGE_STAB && prob(20)) || (src:hit_type == DAMAGE_CUT && prob(40)))
-					take_bleeding_damage(C, null, 1, src:hit_type)
-					impact_sfx = 'sound/impact_sounds/Flesh_Stab_3.ogg'
-
+		else if(issilicon(hit_atom))
+			var/mob/living/silicon/S = hit_atom
+			S.visible_message("<span class='alert'>[S] has been hit by [src].</span>")
+			logTheThing("combat", S, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(S)].")
+			if(src.vars.Find("throwforce"))
+				random_brute_damage(S, src:throwforce,1)
 
 		#ifdef DATALOGGER
 			game_stats.Increment("violence")
 		#endif
 
 			if(src.vars.Find("throwforce") && src:throwforce >= 40)
-				C.throw_at(get_edge_target_turf(C,get_dir(src, C)), 10, 1)
-				C.changeStatus("stunned", 3 SECONDS)
+				S.throw_at(get_edge_target_turf(S,get_dir(src, S)), 10, 1)
 
 			if(ismob(src)) src:throw_impacted(hit_atom)
 
-
-	else if(issilicon(hit_atom))
-		var/mob/living/silicon/S = hit_atom
-		S.visible_message("<span class='alert'>[S] has been hit by [src].</span>")
-		logTheThing("combat", S, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(S)].")
-		if(src.vars.Find("throwforce"))
-			random_brute_damage(S, src:throwforce,1)
-
-	#ifdef DATALOGGER
-		game_stats.Increment("violence")
-	#endif
-
-		if(src.vars.Find("throwforce") && src:throwforce >= 40)
-			S.throw_at(get_edge_target_turf(S,get_dir(src, S)), 10, 1)
-
-		if(ismob(src)) src:throw_impacted(hit_atom)
-
-		impact_sfx = impact_sfx = 'sound/impact_sounds/Metal_Clang_3.ogg'
+			impact_sfx = impact_sfx = 'sound/impact_sounds/Metal_Clang_3.ogg'
 
 
 	else if(isobj(hit_atom))

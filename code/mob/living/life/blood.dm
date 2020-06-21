@@ -115,6 +115,7 @@
 		owner.blood_volume = max(0, owner.blood_volume) //clean up negative blood amounts here. Lazy fix, but easier than cleaning up every place that blood is removed
 		var/current_blood_amt = owner.blood_volume + (owner.reagents ? owner.reagents.total_volume / 4 : 0) // dropping how much reagents count so that people stop going hypertensive at the drop of a hat
 		var/cho_amt = (owner.reagents ? owner.reagents.get_reagent_amount("cholesterol") : 0)
+		var/gnesis_amt = (owner.reagents ? owner.reagents.get_reagent_amount("flockdrone_fluid") : 0)
 		if (anticoag_amt)
 			current_blood_amt -= ((anticoag_amt / 4) + anticoag_amt) * mult// set the total back to what it would be without the heparin, then remove the total of the heparin
 		if (coag_amt)
@@ -123,6 +124,9 @@
 		if (cho_amt)
 			current_blood_amt -= (cho_amt / 4) * mult // same as proconvertin above
 			current_blood_amt += cho_amt * mult
+		if (gnesis_amt)
+			current_blood_amt -= (gnesis_amt / 4) * mult
+			current_blood_amt += (gnesis_amt / 2) * mult //makes it stay somewhat constant with regular spleen and conversion so you wont feel the effects of blood loss. since gnesis is flock blood and this is human blood so it must be similar right?
 		current_blood_amt = round(current_blood_amt, 1)
 
 		var/current_systolic = round((current_blood_amt * 0.24), 1)

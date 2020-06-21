@@ -228,6 +228,9 @@
 	if(istype(D, /obj/flock_structure/egg))
 		src.units |= D
 
+	if(istype(D, /obj/flock_structure/rift))
+		src.units |= D
+
 /datum/flock/proc/removeDrone(var/atom/movable/D)
 	if(isflock(D))
 		src.units -= D

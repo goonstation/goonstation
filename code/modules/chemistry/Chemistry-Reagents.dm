@@ -186,6 +186,8 @@ datum
 
 		proc/how_many_depletions(var/mob/M)
 			var/deplRate = depletion_rate
+			if(!deplRate)
+				return
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.traitHolder.hasTrait("slowmetabolism")) //fuck

@@ -9,8 +9,8 @@ var/list/rollList = list()
 	icon_state = "d6_6"
 	throwforce = 0
 	w_class = 1.0
-	stamina_damage = 2
-	stamina_cost = 2
+	stamina_damage = 0
+	stamina_cost = 0
 	var/sides = 6
 	var/last_roll = null
 	var/last_roll_time = null
@@ -102,7 +102,7 @@ var/list/rollList = list()
 		else
 			src.last_roll = null
 			src.visible_message("[src] shows... um. Something. It hurts to look at. [pick("What the fuck?", "You should probably find the chaplain.")]")
-
+		tooltip_rebuild = 1
 		if (src.dicePals.len)
 			shuffle_list(src.dicePals) // so they don't all roll in the same order they went into the pile
 			for (var/obj/item/dice/D in src.dicePals)
@@ -508,7 +508,7 @@ var/list/rollList = list()
 		else
 			src.last_roll = null
 			src.visible_message("[src] shows... um. This isn't a number. It hurts to look at. [pick("What the fuck?", "You should probably find the chaplain.")]")
-
+		tooltip_rebuild = 1
 	attack_self(var/mob/user as mob)
 		src.roll_dat_thang()
 
@@ -612,6 +612,7 @@ var/list/rollList = list()
 		for(var/i=1, i<=dicelist.len, i++) //shuffle the overlay colors to give the illusion of dice rolling inside the cup?
 			if (src.dicelist[i].sides && isnum(src.dicelist[i].sides)) //index out of bounds
 				src.dicelist[i].last_roll = rand(1, src.dicelist[i].sides)
+				src.dicelist[i].tooltip_rebuild = 1
 				src.localRollList.Add(list(list("sides"=src.dicelist[i].sides,"roll"=src.dicelist[i].last_roll,"color"=src.dicelist[i].color))) //need a check for dice without a color
 				if(src.dicelist[i].sides == 6)
 					src.dicelist[i].icon_state = "d6_[src.dicelist[i].last_roll]"

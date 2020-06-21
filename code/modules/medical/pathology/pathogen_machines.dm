@@ -1775,7 +1775,7 @@
 		if(lowNutrients)
 			src.target.reagents.add_reagent(medium, 5)
 
-	get_desc(dist)
+	get_desc()
 		if(src.target)
 			if (src.target.reagents.has_reagent("pathogen"))
 				. += "<br>The petri dish inside contains [src.target.reagents.reagent_list["pathogen"].volume] units of pathogen."

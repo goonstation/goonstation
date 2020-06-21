@@ -27,11 +27,10 @@
 	health = 10
 
 	buildTooltipContent()
-		var/Tcontent = ..()
+		. = ..()
 		var/list/L = get_contents()
-		Tcontent += "<br>Holding [L.len]/[slots] objects"
-
-		return Tcontent
+		. += "<br>Holding [L.len]/[slots] objects"
+		lastTooltipContent = .
 
 	New()
 		hud = new(src)
@@ -315,8 +314,8 @@
 	w_class = 4.0
 	max_wclass = 3
 	desc = "A fancy synthetic leather-bound briefcase, capable of holding a number of small objects, with style."
-	stamina_damage = 35
-	stamina_cost = 30
+	stamina_damage = 40
+	stamina_cost = 17
 	stamina_crit_chance = 10
 	spawn_contents = list(/obj/item/paper = 2,/obj/item/pen)
 	// Don't use up more slots, certain job datums put items in the briefcase the player spawns with.

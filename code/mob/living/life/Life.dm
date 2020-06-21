@@ -209,12 +209,12 @@
 				src.no_gravity = 0
 				animate(src, transform = matrix(), time = 1)
 
-			for (var/obj/item/I in src)
-				if (I.no_gravity)
+			for (var/thing in src)
+				var/atom/movable/A = thing
+				if (A.no_gravity)
 					src.no_gravity = 1
-				if (!I.material)
-					continue
-				I.material.triggerOnLife(src, I)
+				if (A.material)
+					A.material.triggerOnLife(src, A)
 
 			if(src.no_gravity)
 				animate_levitate(src, -1, 10, 1)
@@ -262,30 +262,7 @@
 				if (found)
 					src.changeStatus("revspirit", 20 SECONDS)
 
-
 		if (src.abilityHolder)
-			//MBC : update countdowns on topbar screen abilities
-			var/show = 1
-			if (ishuman(src))//FUCKKK FIX THIS
-				var/mob/living/carbon/human/H = src
-				show = (H.hud.current_ability_set == 1)
-			if (show)
-				if (istype(src.abilityHolder,/datum/abilityHolder/composite))
-					var/datum/abilityHolder/composite/composite = src.abilityHolder
-					for (var/datum/abilityHolder/H in composite.holders)
-						for(var/datum/targetable/B in H.abilities)
-							if (B.display_available())
-								var/obj/screen/ability/topBar/button = B.object
-								if (istype(B))
-									button.update_on_hud(button.last_x, button.last_y)
-				else
-					for(var/datum/targetable/B in src.abilityHolder.abilities)
-						if (B.display_available())
-							var/obj/screen/ability/topBar/button = B.object
-							if (istype(B))
-								button.update_on_hud(button.last_x, button.last_y)
-
-
 			src.abilityHolder.onLife((life_time_passed / tick_spacing))
 
 	last_life_tick = TIME

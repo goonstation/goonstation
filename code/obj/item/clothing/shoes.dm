@@ -19,7 +19,7 @@
 	burn_output = 800
 	burn_possible = 1
 	health = 25
-
+	tooltip_flags = REBUILD_DIST
 	var/step_sound = "step_default"
 	var/step_priority = STEP_PRIORITY_NONE
 	var/step_lots = 0 //classic steps (used for clown shoos)
@@ -61,6 +61,7 @@
 		if (src.laces == LACES_TIED && istool(W, TOOL_CUTTING | TOOL_SNIPPING))
 			boutput(user, "You neatly cut the knot and most of the laces away. Problem solved forever!")
 			src.laces = LACES_CUT
+			tooltip_rebuild = 1
 
 /obj/item/clothing/shoes/rocket
 	name = "rocket shoes"
@@ -404,12 +405,14 @@
 	icon_state = "swatheavy"
 	step_sound = "step_heavyboots"
 	step_priority = STEP_PRIORITY_LOW
+	tooltip_flags = REBUILD_DIST | REBUILD_USER
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind && user.mind.assigned_role == "Head of Security")
 			. = "Still fit like a glove! Or a shoe."
 		else
 			. = "Looks like some big shoes to fill!"
+		. = ..()
 
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"
@@ -445,6 +448,7 @@
 	step_priority = STEP_PRIORITY_LOW
 	var/on = 1
 	var/obj/item/tank/tank = null
+	tooltip_flags = REBUILD_ALWAYS
 
 	New()
 		..()

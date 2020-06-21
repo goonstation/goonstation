@@ -4,7 +4,7 @@
 	anchored = 1.0
 	plane = PLANE_NOSHADOW_ABOVE
 	mats = 0
-	device_color = RADIOC_INTERCOM
+	chat_class = RADIOCL_INTERCOM
 	var/number = 0
 	rand_pos = 0
 	desc = "A wall-mounted radio intercom, used to communicate with the specified frequency. Usually turned off except during emergencies."
@@ -14,7 +14,7 @@
 	if(src.icon_state == "intercom") // if something overrides the icon we don't want this
 		var/image/screen_image = image(src.icon, "intercom-screen")
 		screen_image.color = src.device_color
-		if(src.device_color == RADIOC_INTERCOM) // unboringify the colour if default
+		if(src.device_color == RADIOC_INTERCOM || isnull(src.device_color)) // unboringify the colour if default
 			var/new_color = default_frequency_color(src.frequency)
 			if(new_color)
 				screen_image.color = new_color

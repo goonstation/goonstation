@@ -29,8 +29,6 @@
 	var/jetpack = 1 //fuck whoever made this
 	var/jeton = 0
 
-	var/datum/light/light
-
 	//gimmicky things
 	var/obj/item/clothing/head/hat = null
 	var/obj/item/clothing/suit/bedsheet/bedsheet = null
@@ -62,9 +60,8 @@
 		var/obj/item/cell/cerenkite/charged/CELL = new /obj/item/cell/cerenkite/charged(src)
 		src.cell = CELL
 
-		light = new /datum/light/line
-		light.set_brightness(2)
-		light.attach(src)
+		src.add_sm_light("ghostdrone\ref[src]", list(255,255,255,0.4 * 255), directional = 1)
+
 
 		src.health = src.max_health
 		src.botcard.access = list(access_maint_tunnels, access_ghostdrone, access_engineering,access_external_airlocks,
@@ -261,7 +258,7 @@
 			return 1
 		if (src.bedsheet)
 			UpdateOverlays(null, "face")
-			light.disable()
+			src.remove_sm_light("ghostdrone\ref[src]")
 			src.icon_state = "g_drone["-[type]"]"
 			return 1
 
@@ -279,9 +276,11 @@
 			colors[1] = colors[1] / 255
 			colors[2] = colors[2] / 255
 			colors[3] = colors[3] / 255
-			light.set_color(colors[1], colors[2], colors[3])
+			src.add_sm_light("ghostdrone\ref[src]", list(colors[1],colors[2],colors[3],0.4 * 255), directional = 1)
 
-		light.enable()
+
+
+		src.toggle_sm_light(1)
 		UpdateOverlays(newFace, "face")
 		return 1
 
@@ -308,7 +307,7 @@
 
 	proc/updateSprite()
 		if (isdead(src) || !src.client || src.charging || src.newDrone)
-			light.disable()
+			src.toggle_sm_light(0)
 			if (src.bedsheet)
 				//fuckin bedsheets...
 				if (isdead(src) || !src.client) //dead or no client
@@ -324,8 +323,7 @@
 				src.icon_state = "g_drone-dead"
 
 			if (!isdead(src))
-				light.set_color(0.94, 0.88, 0.12) //yellow
-				light.enable()
+				src.add_sm_light("ghostdrone\ref[src]", list(0.94*255,0.88*255,0.12*255,0.4 * 255), directional = 1)
 			UpdateOverlays(null, "face")
 			UpdateOverlays(null, "hoverDiscs")
 			animate(src) //stop bumble animation
