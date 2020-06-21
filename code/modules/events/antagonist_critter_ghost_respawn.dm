@@ -1,6 +1,9 @@
 //very similar to playable_pests.dm :)
 /datum/random_event/major/antag/antagonist_pest
 	name = "Antagonist Critter Spawn"
+	customization_available = 1
+	var/admin_override = 0
+	var/num_critters = null
 #ifdef RP_MODE
 	disabled = 1
 #endif
@@ -18,11 +21,21 @@
 		if (..())
 			return
 
-		var/input = input(usr,"Which one? Pick null for random???",src.name) as null|anything in list("fire_elemental","spider","gunbot")
-		if (!input || !istext(input))
-			return
-		event_effect(input)
+		var/input = input(usr,"Which one? Press cancel for random.",src.name) as null|anything in list("fire_elemental","spider","gunbot","custom critter path")
 
+		if (input == "custom critter path")
+			input = input("Enter a /mob/living/critter path", src.name, null) as null|text
+			input = get_one_match(input, "/mob/living/critter")
+
+		src.num_critters = input(usr, "How many critter antagonists to spawn?", src.name, 0) as num|null
+		src.admin_override = 1
+		if (!src.num_critters)
+			return
+
+		//confirmation
+
+		if (alert(usr, "You have chosen to spawn [src.num_critters] [input ? input : "random critters"]. Is this correct?", src.name, "Yes", "No") == "Yes")
+			event_effect(input)
 
 	event_effect(var/source)
 		..()
@@ -55,17 +68,25 @@
 
 			var/atom/pestlandmark = pick(EV)
 
-			var/list/select = pick(pest_invasion_critter_types)
-			if (source)
-				if (source == "fire_elemental")
+			var/list/select = null
+			switch (source)
+				if (null) //random
+					select = pick(src.pest_invasion_critter_types)
+				if ("fire_elemental")
 					select = list(/mob/living/critter/fire_elemental)
-				if (source == "spider")
+				if ("spider")
 					select = list(/mob/living/critter/spider/baby)
-				if (source == "gunbot")
+				if ("gunbot")
 					select = list(/mob/living/critter/gunbot)
+				else //custom
+					select = source
 
-			var/howmany = rand(1,min(3,candidates.len))
-			for (var/i in 0 to howmany)
+			if (!src.admin_override)
+				src.num_critters = rand(1,min(3,candidates.len))
+			else
+				src.num_critters = (min(src.num_critters, candidates.len))
+
+			for (var/i in 0 to src.num_critters)
 				if (!candidates || !candidates.len)
 					break
 
