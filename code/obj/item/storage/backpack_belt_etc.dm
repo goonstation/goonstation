@@ -364,6 +364,24 @@
 	can_hold = list(/obj/item/ammo/bullets)
 	in_list_or_max = 0
 
+/obj/item/storage/belt/revolver
+	name = "revolver belt"
+	desc = "A stylish leather belt for holstering a revolver and it's ammo."
+	icon_state = "revolver_belt"
+	item_state = "utility"
+	in_list_or_max = 0
+	can_hold = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357)
+	spawn_contents = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357 = 2)
+
+/obj/item/storage/belt/pistol
+	name = "pistol belt"
+	desc = "A rugged belt fitted with a pistol holster and some magazine pouches."
+	icon_state = "pistol_belt"
+	item_state = "utility"
+	in_list_or_max = 0
+	can_hold = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm)
+	spawn_contents = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm = 4)
+
 // fancy shoulder sling for grenades
 
 /obj/item/storage/backpack/grenade_bandolier
