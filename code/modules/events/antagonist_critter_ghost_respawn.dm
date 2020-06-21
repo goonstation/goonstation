@@ -31,6 +31,10 @@
 		src.admin_override = 1
 		if (!src.num_critters)
 			return
+		else if(src.num_critters < 1)
+			return
+		else
+			src.num_critters = round(src.num_critters)
 
 		//confirmation
 
