@@ -1,4 +1,9 @@
 
+(t)sun jun 21 20
+(u)zjdtmkhzt
+(p)1151
+(e)⚖🐛|balance, bug
+(+)Pathogens can now be cured via just keeping it suppressed in the patient. This change will be explained in more detail if pathology is ever reenabled, which it is not!
 (t)sat jun 20 20
 (u)glassofmilk
 (p)1088
