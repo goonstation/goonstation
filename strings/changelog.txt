@@ -1,5 +1,9 @@
 
 (t)sun jun 21 20
+(u)UrsulaMajor
+(p)1159
+(e)⚖|balance
+(+)Blobs no longer need to make ribosomes to mitigate the blob size spread speed slowdown.
 (u)zjdtmkhzt
 (p)1151
 (e)⚖🐛|balance, bug
