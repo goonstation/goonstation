@@ -320,7 +320,7 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 		..()
 		src.filters += filter(type="rays", size=64, density=src.ray_density, factor=1, offset=rand(1000), threshold=0, color=src.color, x=shift_x, y=shift_y)
 		var/f = src.filters[length(src.filters)]
-		animate(f, offset=f:offset + 100, time=600, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
+		animate(f, offset=f:offset + 100, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
 
 /obj/item/strange_candle
 	name = "strange candle"
