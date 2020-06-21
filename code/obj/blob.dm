@@ -1141,6 +1141,7 @@ var/image/blob_icon_cache
 		B.color = overmind.color
 		qdel(src)
 
+// TODO: REPLACE WITH SOMETHING COOLER - URS
 /obj/blob/ribosome
 	name = "ribosome"
 	state_overlay = "new_ribosome"
@@ -1164,6 +1165,7 @@ var/image/blob_icon_cache
 		if (overmind)
 			overmind.spread_mitigation -= added
 			added = 0
+
 
 /obj/blob/wall
 	name = "thick membrane"

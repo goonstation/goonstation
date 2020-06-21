@@ -95,8 +95,8 @@
 					var/obj/blob/B
 					if (prob(5))
 						B = new /obj/blob/lipid(T)
-					else if (prob(5))
-						B = new /obj/blob/ribosome(T)
+					//else if (prob(5))
+						//B = new /obj/blob/ribosome(T)
 					else if (prob(5))
 						B = new /obj/blob/mitochondria(T)
 					else if (prob(5))
@@ -236,7 +236,7 @@
 		owner.add_ability(/datum/blob_ability/repair)
 		owner.add_ability(/datum/blob_ability/absorb)
 		owner.add_ability(/datum/blob_ability/promote)
-		owner.add_ability(/datum/blob_ability/build/ribosome)
+		//owner.add_ability(/datum/blob_ability/build/ribosome)
 		owner.add_ability(/datum/blob_ability/build/lipid)
 		owner.add_ability(/datum/blob_ability/build/mitochondria)
 		owner.add_ability(/datum/blob_ability/build/wall)
@@ -340,14 +340,12 @@
 		var/obj/blob/B2 = new /obj/blob(T)
 		B2.setOvermind(owner)
 
-		if (owner.blobs.len < 40)
-			cooldown_time = max(12 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
-		else if (owner.blobs.len < 80)
-			cooldown_time = max(17 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
-		else if (owner.blobs.len < 160)
-			cooldown_time = max(27 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
+		if (owner.blobs.len < 100)
+			cooldown_time = max(12 - owner.spread_upgrade * 12 - owner.spread_mitigation * 0.5, 0)
+		else if (owner.blobs.len < 200)
+			cooldown_time = max(17 - owner.spread_upgrade * 12 - owner.spread_mitigation * 0.5, 0)
 		else
-			cooldown_time = max(27 + (owner.blobs.len - 160) * 0.08 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
+			cooldown_time = max(27 - owner.spread_upgrade * 12 - owner.spread_mitigation * 0.5, 0)
 
 		cooldown_time = max(cooldown_time, 6)
 
@@ -973,6 +971,7 @@
 	build_path = /obj/blob/lipid
 	buildname = "lipid"
 
+/* TODO: REPLACE RIBOSOMES WITH SOMETHING COOLER
 /datum/blob_ability/build/ribosome
 	name = "Build Ribosome Cell"
 	icon_state = "blob-ribosome"
@@ -980,6 +979,8 @@
 	bio_point_cost = 5
 	build_path = /obj/blob/ribosome
 	buildname = "ribosome"
+
+*/
 
 /datum/blob_ability/build/mitochondria
 	name = "Build Mitochondria Cell"
@@ -1148,8 +1149,8 @@
 	name = "Passive: Quicker Spread"
 	icon_state = "blob-quickspread"
 	desc = "Reduces the cooldown of your Spread ability by 1 second. Can be repeated. The cooldown of Spread cannot go below 1 second."
-	evo_point_cost = 3
-	scaling_cost_add = 7
+	evo_point_cost = 2
+	scaling_cost_add = 3
 	repeatable = -1
 	upgradename = "spread"
 
