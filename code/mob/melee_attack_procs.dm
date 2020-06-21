@@ -699,10 +699,11 @@
 		//reduce stamina by the same proportion that base damage was reduced
 		//min cap is stam_power/3 so we still cant ignore it entirely
 		if ((damage + armor_mod) <= 0) //mbc lazy runtime fix
-			stam_power = stam_power / 3 //do the least
+			stam_power = stam_power / 2 //do the least
 		else
-			stam_power = max(  stam_power / 3, stam_power * ( damage / (damage + armor_mod) )  )
+			stam_power = max(  stam_power / 2, stam_power * ( damage / (damage + armor_mod) )  )
 
+		msgs.force_stamina_target = 1
 		msgs.stamina_target -= max(stam_power, 0)
 
 		if (can_crit && prob(crit_chance))
