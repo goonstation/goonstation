@@ -34,6 +34,13 @@
 	icon_state = "Syndiebackpack"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+/obj/item/storage/backpack/syndie/tactical
+	name = "tactical assault pack"
+	desc = "A military backpack made of high density fabric, designed to fit a wide array of tools for comprehensive storage support."
+	icon_state = "tactical_backpack"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	slots = 10
+
 /obj/item/storage/backpack/medic
 	name = "medic's backpack"
 	icon_state = "bp_medic" //im doing inhands, im not getting baited into refactoring every icon state to use hyphens instead of underscores right now
@@ -368,7 +375,7 @@
 	name = "revolver belt"
 	desc = "A stylish leather belt for holstering a revolver and it's ammo."
 	icon_state = "revolver_belt"
-	item_state = "utility"
+	item_state = "revolver_belt"
 	in_list_or_max = 0
 	can_hold = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357)
 	spawn_contents = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357 = 2)
@@ -377,7 +384,7 @@
 	name = "pistol belt"
 	desc = "A rugged belt fitted with a pistol holster and some magazine pouches."
 	icon_state = "pistol_belt"
-	item_state = "utility"
+	item_state = "pistol_belt"
 	in_list_or_max = 0
 	can_hold = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm)
 	spawn_contents = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm = 4)

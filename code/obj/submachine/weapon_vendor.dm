@@ -2,7 +2,7 @@
 	==>	Syndicate Weapons Vendor	<==
 	Designed for use on the Syndicate Battlecruiser Cairngorm.
 	Stocked with weapons and gear for nuclear operatives to pick between, instead of using traditional uplinks.
-	Operatives recieve a token on spawn that provides them with 1 sidearm credit and one loadout credit in the vendor.
+	Operatives recieve a token on spawn that provides them with one sidearm credit and one loadout credit in the vendor.
 
 	Index:
 	- Vendor
@@ -14,7 +14,7 @@
 	name = "Syndicate Weapons Vendor"
 	icon = 'icons/obj/discountdans.dmi'
 	icon_state = "gtm"
-	desc = "An automated quartermaster service for supplying your syndicate nuclear operative team with weapons and gear."
+	desc = "An automated quartermaster service for supplying your nuclear operative team with weapons and gear."
 	density = 1
 	opacity = 0
 	anchored = 1
@@ -39,8 +39,10 @@
 		materiel_stock += new/datum/materiel/loadout/engineer
 		materiel_stock += new/datum/materiel/loadout/marksman
 
-		//materiel_stock += new/datum/materiel/ammo/
-		//materiel_stock += new/datum/materiel/misc/
+		materiel_stock += new/datum/materiel/storage/backpack
+		materiel_stock += new/datum/materiel/storage/belt
+
+		//materiel_stock += new/datum/materiel/utility/
 
 	attackby(var/obj/item/I as obj, user as mob)
 		if(istype(I, /obj/item/requisition_token))
@@ -57,7 +59,7 @@
 		if(..())
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = "<span style=\"inline-flex\">"
 		dat += "<br><b>Current balance:</b> <font color='blue'>[src.current_sidearm_credits] sidearm credit, [src.current_loadout_credits] loadout credit.</font>"
 
@@ -73,7 +75,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if(href_list["redeem"])
 			src.temp = "<br>Please select the materiel that you wish to spend your requisition tokens on:<br><br>"
@@ -137,33 +139,33 @@
 
 /datum/materiel/sidearm/pistol
 	name = "9mm pistol"
-	path = /obj/item/gun/kinetic/pistol
+	path = /obj/item/storage/belt/pistol
 	catagory = "Sidearm"
-	description = "A semi-automatic, 9mm caliber service pistol issued by the Syndicate."
+	description = "A gun-belt containing a semi-automatic, 9mm caliber service pistol and three magazines."
 
 /datum/materiel/sidearm/revolver
 	name = "Predator revolver"
-	path = /obj/item/gun/kinetic/revolver
+	path = /obj/item/storage/belt/revolver
 	catagory = "Sidearm"
-	description = "A hefty combat revolver developed by Cormorant Precision Arms. Uses .357 caliber rounds."
+	description = "A gun-belt containing a hefty combat revolver and 2 .357 caliber speedloaders."
 
 /datum/materiel/loadout/assault
 	name = "Class Crate - Assault Trooper"
 	path = /obj/storage/crate/classcrate/assault
 	catagory = "Loadout"
-	description = "A crate containing a Specialist Operative loadout. This one includes a customized assault rifle, several additional magazines as well as an assortment of breach and clear grenades."
+	description = "A crate containing an assault rifle, several standard and AP magazines as well as an assortment of breach and clear grenades."
 
 /datum/materiel/loadout/heavy
 	name = "Class Crate - Heavy Weapons Specialist"
 	path = /obj/storage/crate/classcrate/heavy
 	catagory = "Loadout"
-	description = "A crate containing a Specialist Operative loadout. This one features a light machine gun, several belts of ammunition and a couple of grenades."
+	description = "A crate containing a light machine gun, several belts of ammunition and a couple of grenades."
 
 /datum/materiel/loadout/grenadier
 	name = "Class Crate - Grenadier"
 	path = /obj/storage/crate/classcrate/demo
 	catagory = "Loadout"
-	description = "A crate containing a Specialist Operative loadout. This one features a hand-held grenade launcher, bandolier and a pile of ordnance."
+	description = "A crate containing a hand-held grenade launcher, bandolier and a pile of ordnance."
 
 /datum/materiel/loadout/infiltrator
 	name = "Class Crate - Infiltrator"
@@ -200,6 +202,18 @@
 	path = /obj/item/uplink/syndicate
 	catagory = "Loadout"
 	description = "A standard syndicate uplink loaded with 12 telecrytals, allowing you to pick and choose from an array of syndicate items."
+
+/datum/material/storage/backpack
+	name = "tactical backpack"
+	path = /obj/item/storage/backpack/syndie/tactical
+	catagory = "Storage"
+	description = ""
+
+/datum/material/storage/belt
+	name = "tactical espionage belt"
+	path = /obj/item/storage/fanny/syndie
+	catagory = "Storage"
+	description = ""
 
 // Requisition tokens
 
