@@ -378,19 +378,18 @@
 				src.cmd_ass_day_rules()
 
 
-			if (src.byond_version < 513 || src.byond_build < 1500)
-				if (alert(src, "Please update BYOND to version 513! Would you like to be taken to the download page? Make sure to download the beta and not the stable release.", "ALERT", "Yes", "No") == "Yes")
+			if (src.byond_version < 513 || src.byond_build < 1526)
+				if (alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", "Yes", "No") == "Yes")
 					src << link("http://www.byond.com/download/")
 				else
 					alert(src, "You won't be able to play without updating, sorry!")
 					del(src)
 					return
 
-
-			// if (src.byond_build == 1509)	//MBC : BAD CODE TO BANDAID A BROKEN BYOND THING. REMOVE THIS AS SOON AS LUMMOX FIXES  //ZeWaka: PART 2 BOOGALOOO
-			// 	if (alert(src, "Warning! The version of BYOND you are running (513.1509) is bugged. This is bad! Would you like a link to a .zip of the last working version?", "ALERT", "Yes", "No") == "Yes")
-			// 		src << link("http://www.byond.com/download/build/513/513.1510_byond.zip")
-
+// Let's throw it here, why not! -ZeWaka
+#if DM_BUILD < 1526 && !defined(SPACEMAN_DMM)
+#error Please update your BYOND version to the latest stable release.
+#endif
 
 		else
 			if (noir)
