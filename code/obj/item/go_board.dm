@@ -13,17 +13,15 @@
 	attack_hand(mob/user as mob)
 		if(!(user in src.openwindows) && istype(user,/mob/living/carbon/human) && !(src in user.contents))
 			src.openwindows.Add(user)
-			uisetup()
-		else
-			..()
+		uisetup()
 
 	attackby(obj/item/weapon as obj,mob/user as mob)
 		if(istype(weapon,/obj/item/gostone/b) || istype(weapon,/obj/item/gostone/w))
 			if(!(user in src.openwindows) && istype(user,/mob/living/carbon/human) && !(src in user.contents))
 				src.openwindows.Add(user)
-				uisetup()
-			else
-				..()
+			uisetup()
+		else
+			..()
 
 	Topic(href, href_list)
 		switch(href_list["command"])
