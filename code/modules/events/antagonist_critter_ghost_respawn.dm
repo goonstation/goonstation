@@ -20,11 +20,15 @@
 		if (..())
 			return
 
-		var/input = input(usr,"Which one? Press cancel for random.",src.name) as null|anything in list("fire_elemental","spider","gunbot","custom critter path")
+		var/input = alert(usr, "Choose the critter type?", src.name, "Random", "Custom")
 
-		if (input == "custom critter path")
+		if (!input)
+			return
+		else if (input == "Custom")
 			input = input("Enter a /mob/living/critter path", src.name, null) as null|text
 			input = get_one_match(input, "/mob/living/critter")
+		else //random
+			input = null
 
 		src.num_critters = input(usr, "How many critter antagonists to spawn?", src.name, 0) as num|null
 
@@ -77,17 +81,10 @@
 			var/atom/pestlandmark = pick(EV)
 
 			var/list/select = null
-			switch (source)
-				if (null) //random
-					select = pick(src.pest_invasion_critter_types)
-				if ("fire_elemental")
-					select = list(/mob/living/critter/fire_elemental)
-				if ("spider")
-					select = list(/mob/living/critter/spider/baby)
-				if ("gunbot")
-					select = list(/mob/living/critter/gunbot)
-				else //custom
-					select = source
+			if (source)
+				select = source
+			else
+				select = pick(src.pest_invasion_critter_types)
 
 			if (src.num_critters) //custom selected
 				src.num_critters = (min(src.num_critters, candidates.len))
