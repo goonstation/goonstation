@@ -55,7 +55,7 @@ createpiece = function(x,y,color,tile,type,position){
 		y = coordinates[1];
 	}
 	var piece = document.createElement("img");
-	piece.src = c == "white" ? "{{resource("images/go/gowhite.png")}}" : "{{resource("images/go/goblack.png")}}";
+	piece.src = c == "white" ? "../images/go/gowhite.png" : "../images/go/goblack.png";
 	piece.style.position = "absolute"
 	piece.style.left = x+"px";
 	piece.style.top = y+"px";
