@@ -21,7 +21,6 @@
 			return
 
 		var/input = alert(usr, "Choose the critter type?", src.name, "Random", "Custom")
-
 		if (!input)
 			return
 		else if (input == "Custom")
@@ -31,7 +30,6 @@
 			input = null
 
 		src.num_critters = input(usr, "How many critter antagonists to spawn?", src.name, 0) as num|null
-
 		if (!src.num_critters)
 			return
 		else if(src.num_critters < 1)
@@ -40,7 +38,6 @@
 			src.num_critters = round(src.num_critters)
 
 		//confirmation
-
 		if (alert(usr, "You have chosen to spawn [src.num_critters] [input ? input : "random critters"]. Is this correct?", src.name, "Yes", "No") == "Yes")
 			event_effect(input)
 
