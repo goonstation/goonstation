@@ -28,7 +28,7 @@ function byond() {
 
 removepiece = function(position){
 	var stonelist = document.getElementsByTagName("img");
-	
+
 	for(var i = 0; i<stonelist.length; i++) {
 		if((stonelist[i].dataset.loc) && (stonelist[i].dataset.loc == position)) {
 			stonelist[i].parentElement.removeChild(stonelist[i]);
@@ -55,7 +55,7 @@ createpiece = function(x,y,color,tile,type,position){
 		y = coordinates[1];
 	}
 	var piece = document.createElement("img");
-	piece.src = "go"+color+".png";
+	piece.src = c == "white" ? "{{resource("images/go/gowhite.png")}}" : "{{resource("images/go/goblack.png")}}";
 	piece.style.position = "absolute"
 	piece.style.left = x+"px";
 	piece.style.top = y+"px";
@@ -83,7 +83,7 @@ var gridclick = function(e){
 	globalx = coordinates[0];
 	globaly = coordinates[1];
 	globaltile = e.srcElement;
-	
+
 	byond("command","checkhand");
 }
 
