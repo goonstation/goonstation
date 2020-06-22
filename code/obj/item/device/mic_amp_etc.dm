@@ -14,6 +14,7 @@
 
 	attack_self(mob/user as mob)
 		src.on = !(src.on)
+		tooltip_rebuild = 1
 		user.show_text("You switch [src] [src.on ? "on" : "off"].")
 		if (src.on && prob(5))
 			if (locate(/obj/loudspeaker) in range(2, user))

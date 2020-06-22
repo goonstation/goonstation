@@ -34,12 +34,12 @@
 
 	if (client) client.last_adminhelp = world.timeofday
 
-	for (var/mob/M in mobs)
-		if (M.client && M.client.holder)
-			if (M.client.player_mode && !M.client.player_mode_ahelp)
+	for (var/client/C)
+		if (C.holder)
+			if (C.player_mode && !C.player_mode_ahelp)
 				continue
 			else
-				boutput(M, "<span class='notice'><font size='3'><b><span class='alert'>HELP: </span>[key_name(client.mob,0,0)][(client.mob.real_name ? "/"+client.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [msg]</font></span>")
+				boutput(C, "<span class='notice'><font size='3'><b><span class='alert'>HELP: </span>[key_name(client.mob,0,0)][(client.mob.real_name ? "/"+client.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [msg]</font></span>")
 
 #ifdef DATALOGGER
 	game_stats.Increment("adminhelps")
@@ -86,19 +86,20 @@
 
 	client.last_adminhelp = world.timeofday
 
-	for (var/mob/M in mobs)
-		if (M.client && M.client.holder)
-			if (M.client.player_mode && !M.client.player_mode_mhelp)
+
+	for (var/client/C)
+		if (C.holder)
+			if (C.player_mode && !C.player_mode_mhelp)
 				continue
 			else
-				var/rendered = "<span class='mhelp'><b>MENTORHELP: [key_name(client.mob,0,0,1)]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span> <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>"
-				boutput(M,  "<span class='adminHearing' data-ctx='[M.client.chatOutput.ctxFlag]'>[rendered]</span>")
-		else if (M.client && M.client.can_see_mentor_pms())
-			if(istype(M, /mob/dead/observer) || M.type == /mob/dead/target_observer || M.type == /mob/dead/target_observer/mentor_mouse_observer || istype(M, /mob/living/critter/small_animal/mouse/weak/mentor))
+				var/rendered = "<span class='mhelp'><b>MENTORHELP: [key_name(client.mob,0,0,1)]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span> <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>"
+				boutput(C,  "<span class='adminHearing' data-ctx='[C.chatOutput.ctxFlag]'>[rendered]</span>")
+		else if (C && C.can_see_mentor_pms())
+			if(istype(C.mob, /mob/dead/observer) || C.mob.type == /mob/dead/target_observer || C.mob.type == /mob/dead/target_observer/mentor_mouse_observer || istype(C.mob, /mob/living/critter/small_animal/mouse/weak/mentor))
 				var/rendered = "<span class='mhelp'><b>MENTORHELP: [key_name(client.mob,0,0,1)]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span></b>: <span class='message'>[msg]</span></span>"
-				boutput(M, "<span class='adminHearing' data-ctx='[M.client.chatOutput.ctxFlag]'>[rendered]</span>")
+				boutput(C, "<span class='adminHearing' data-ctx='[C.chatOutput.ctxFlag]'>[rendered]</span>")
 			else
-				boutput(M, "<span class='mhelp'><b>MENTORHELP: [key_name(client.mob,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
+				boutput(C, "<span class='mhelp'><b>MENTORHELP: [key_name(client.mob,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
 
 	boutput(client.mob, "<span class='mhelp'><b>MENTORHELP: You</b>: [msg]</span>")
 	logTheThing("mentor_help", client.mob, null, "MENTORHELP: [msg]")
@@ -148,8 +149,11 @@
 	logTheThing("admin_help", client.mob, null, "PRAYER: [msg]")
 	logTheThing("diary", client.mob, null, "PRAYER: [msg]", "ahelp")
 	var/audio
-	for (var/mob/M in mobs)
-		if (M.client && M.client.holder)
+
+	for (var/client/C)
+		if (!C.mob) continue
+		var/mob/M = C.mob
+		if (C.holder)
 			if (!M.client.holder.hear_prayers || (M.client.player_mode == 1 && M.client.player_mode_ahelp == 0)) //XOR for admin prayer setting and player mode w/ no ahelps
 				continue
 			else
@@ -227,9 +231,11 @@
 		ircbot.export("pm", ircmsg)
 
 		//we don't use message_admins here because the sender/receiver might get it too
-		for (var/mob/K in mobs)
-			if(K && K.client && K.client.holder && K.key != user.key && (M && K.key != M.key))
+		for (var/client/CC)
+			if (!CC.mob) continue
+			var/mob/K = CC.mob
+			if(K.client.holder && K.key != user.key && (M && K.key != M.key))
 				if (K.client.player_mode && !K.client.player_mode_ahelp)
 					continue
 				else
-					boutput(K, "<font color='blue'><b>PM: [key_name(user,0,0)][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</font>")
+					boutput(K, "<span class='internal'><b>PM: [key_name(user,0,0)][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")

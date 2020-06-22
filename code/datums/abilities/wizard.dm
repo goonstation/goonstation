@@ -207,9 +207,10 @@
 			cool *= 1.5
 		return cool
 
-	dispose()
+	disposing()
 		if (object)
 			qdel(object)
+		..()
 
 	doCooldown()
 		src.last_cast = world.time + calculate_cooldown()

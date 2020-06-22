@@ -502,23 +502,23 @@
 
 			meter_metrics["[p_tag]"][++meter_metrics["[p_tag]"].len] = m_metric
 
-		sample_air(var/datum/gas_mixture/G, var/no_archived)
+		sample_air(var/datum/gas_mixture/G, var/ARCHIVED(no))
 			var/list/ret = new/list()
 
-			if(no_archived)
+			if(ARCHIVED(no))
 				if(G.oxygen) ret["o2"] = G.oxygen
 				if(G.toxins) ret["toxins"] = G.toxins
 				if(G.carbon_dioxide) ret["co2"] = G.carbon_dioxide
 				if(G.nitrogen) ret["n2"] = G.nitrogen
 
-				ret["pressure"] = G.return_pressure()
+				ret["pressure"] = MIXTURE_PRESSURE(G)
 				ret["temp"] = G.temperature
 				ret["burnt"] = G.fuel_burnt
-				ret["heat_capacity"] = G.heat_capacity()
-				ret["thermal_energy"] = G.thermal_energy()
-				ret["moles"] = G.total_moles()
+				ret["heat_capacity"] = HEAT_CAPACITY(G)
+				ret["thermal_energy"] = THERMAL_ENERGY(G)
+				ret["moles"] = TOTAL_MOLES(G)
 
-				if(G.trace_gases && G.trace_gases.len)
+				if(length(G.trace_gases))
 					for(var/datum/gas/T in G.trace_gases)
 						if(istype(T, /datum/gas/sleeping_agent))
 							ret["n2o"] = T.moles
@@ -530,29 +530,29 @@
 							ret["rad"] = T.moles
 
 			else
-				if(G && G.oxygen_archived) ret["o2"] = G.oxygen_archived
-				if(G && G.toxins_archived) ret["toxins"] = G.toxins_archived
-				if(G && G.carbon_dioxide_archived) ret["co2"] = G.carbon_dioxide_archived
-				if(G && G.nitrogen_archived) ret["n2"] = G.nitrogen_archived
+				if(G && G.ARCHIVED(oxygen)) ret["o2"] = G.ARCHIVED(oxygen)
+				if(G && G.ARCHIVED(toxins)) ret["toxins"] = G.ARCHIVED(toxins)
+				if(G && G.ARCHIVED(carbon_dioxide)) ret["co2"] = G.ARCHIVED(carbon_dioxide)
+				if(G && G.ARCHIVED(nitrogen)) ret["n2"] = G.ARCHIVED(nitrogen)
 
 				if (G) //sorry, this was still somehow causing runtimes????
-					ret["pressure"] = G.return_pressure()
-					ret["temp"] = G.temperature_archived
+					ret["pressure"] = MIXTURE_PRESSURE(G)
+					ret["temp"] = G.ARCHIVED(temperature)
 					ret["burnt"] = G.fuel_burnt
-					ret["heat_capacity"] = G.heat_capacity_archived()
-					ret["thermal_energy"] = G.thermal_energy()
-					ret["moles"] = G.total_moles()
+					ret["heat_capacity"] = HEAT_CAPACITY_ARCHIVED(G)
+					ret["thermal_energy"] = THERMAL_ENERGY(G)
+					ret["moles"] = TOTAL_MOLES(G)
 
-				if(G && G.trace_gases && G.trace_gases.len)
+				if(G && length(G.trace_gases))
 					for(var/datum/gas/T in G.trace_gases)
 						if(istype(T, /datum/gas/sleeping_agent))
-							ret["n2o"] = T.moles_archived
+							ret["n2o"] = T.ARCHIVED(moles)
 						else if(istype(T, /datum/gas/oxygen_agent_b))
-							ret["o2_b"] = T.moles_archived
+							ret["o2_b"] = T.ARCHIVED(moles)
 						else if(istype(T, /datum/gas/volatile_fuel))
-							ret["fuel"] = T.moles_archived
+							ret["fuel"] = T.ARCHIVED(moles)
 						else
-							ret["rad"] = T.moles_archived
+							ret["rad"] = T.ARCHIVED(moles)
 
 			return ret
 
@@ -562,12 +562,12 @@
 			ret["output"] = teg.lastgen
 			ret["hot_temp_in"] = teg_hot.air1.temperature
 			ret["hot_temp_out"] = teg_hot.air2.temperature
-			ret["hot_pressure_in"] = teg_hot.air1.return_pressure()
-			ret["hot_pressure_out"] = teg_hot.air2.return_pressure()
+			ret["hot_pressure_in"] = MIXTURE_PRESSURE(teg_hot.air1)
+			ret["hot_pressure_out"] = MIXTURE_PRESSURE(teg_hot.air2)
 			ret["cold_temp_in"] = teg_cold.air1.temperature
 			ret["cold_temp_out"] = teg_cold.air2.temperature
-			ret["cold_pressure_in"] = teg_cold.air1.return_pressure()
-			ret["cold_pressure_out"] = teg_cold.air2.return_pressure()
+			ret["cold_pressure_in"] = MIXTURE_PRESSURE(teg_cold.air1)
+			ret["cold_pressure_out"] = MIXTURE_PRESSURE(teg_cold.air2)
 
 			return ret
 

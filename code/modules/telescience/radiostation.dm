@@ -595,6 +595,8 @@
 	name = "compact tape - 'Descuento Danito's Burritos'"
 	audio = "sound/radio_station/danitos_burritos.ogg"
 	name_of_thing = "Descuento Danito's Burritos"
+	desc = {"A small audio tape. Though, it looks too big to fit in an audio log.<br>
+	The music is Requiem for a Fish by The Freak Fandango Orchestra (CC BY-NC 4.0)"}
 
 /obj/item/radio_tape/advertisement/movie
 	name = "compact tape - 'Movie Ad'"
@@ -608,6 +610,26 @@
 	name = "compact tape - 'The Trial of Heisenbee'"
 	audio = "sound/radio_station/trial_of_heisenbee.ogg"
 	name_of_thing = "The Trial of Heisenbee"
+
+/obj/item/radio_tape/audio_book/commander_announcement
+	name = "Commander's Log - 'You Got A Small Arsenal'"
+	name_of_thing = "You Got A Small Arsenal"
+	audio = "sound/radio_station/commander_announcement.ogg"
+
+/obj/item/radio_tape/audio_book/commander_support
+	name = "Commander's Log - 'Customer Support Ticket #121'"
+	name_of_thing = "Customer Support Ticket #121"
+	audio = "sound/radio_station/commander_support.ogg"
+
+/obj/item/radio_tape/audio_book/commander_resignation
+	name = "Commander's Log - 'I Quit'"
+	name_of_thing = "I Quit"
+	audio = "sound/radio_station/commander_resignation.ogg"
+
+/obj/item/radio_tape/audio_book/commander_figurines
+	name = "Commander's Log - 'They're Called Collectibles'"
+	name_of_thing = "They're Called Collectibles"
+	audio = "sound/radio_station/commander_figurines.ogg"
 
 /obj/item/radio_tape/owl
 	audio_type = "???"

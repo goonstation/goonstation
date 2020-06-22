@@ -27,6 +27,20 @@
 		..()
 		obscurer = image('icons/mob/critter_ui.dmi', icon_state="hand_cooldown", layer=HUD_LAYER+2)
 
+	disposing()
+		if(screenObj)
+			screenObj.dispose()
+			screenObj = null
+		item = null
+		if(limb)
+			limb.dispose()
+			limb = null
+		if(limbholder)
+			limbholder.dispose()
+			limbholder = null
+		holder = null
+		..()
+
 	proc/spawn_dummy_holder()
 		if (!limb)
 			return

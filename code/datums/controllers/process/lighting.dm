@@ -3,7 +3,7 @@ var/datum/circular_queue/light_update_queue = new /datum/circular_queue(500) //L
 
 datum/controller/process/lighting
 
-	var/max_chunk_size = 20
+	var/max_chunk_size = 6 //20 prev
 	var/min_chunk_size = 2
 	var/count = 0
 	var/chunk_count = 0

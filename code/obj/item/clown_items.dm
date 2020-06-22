@@ -33,29 +33,23 @@ VUVUZELA
 		return
 	if (iscarbon(AM))
 		var/mob/M =	AM
-		if (!M.can_slip())
-			return
-		M.pulling = null
-		boutput(M, "<span class='notice'>You slipped on the banana peel!</span>")
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.sims)
-				H.sims.affectMotive("fun", -10)
-				if (H == last_touched)
+		if (M.slip())
+			boutput(M, "<span class='notice'>You slipped on the banana peel!</span>")
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.sims)
 					H.sims.affectMotive("fun", -10)
-		if (istype(last_touched) && (last_touched in viewers(src)) && last_touched != M)
-			if (last_touched.sims)
-				last_touched.sims.affectMotive("fun", 10)
-		playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
-		if(M.bioHolder.HasEffect("clumsy"))
-			M.changeStatus("stunned", 80)
-			M.changeStatus("weakened", 5 SECONDS)
-			JOB_XP(M, "Clown", 2)
-		else
-			M.changeStatus("weakened", 2 SECONDS)
-			if (prob(20))
-				JOB_XP(last_touched, "Clown", 1)
-		M.force_laydown_standup()
+					if (H == last_touched)
+						H.sims.affectMotive("fun", -10)
+			if (istype(last_touched) && (last_touched in viewers(src)) && last_touched != M)
+				if (last_touched.sims)
+					last_touched.sims.affectMotive("fun", 10)
+			if(M.bioHolder.HasEffect("clumsy"))
+				M.changeStatus("weakened", 5 SECONDS)
+				JOB_XP(M, "Clown", 2)
+			else
+				if (prob(20))
+					JOB_XP(last_touched, "Clown", 1)
 
 /obj/item/canned_laughter
 	name = "Canned laughter"

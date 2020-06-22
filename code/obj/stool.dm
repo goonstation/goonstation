@@ -363,7 +363,7 @@
 	unbuckle()
 		..()
 		if(src.buckled_guy && src.buckled_guy.buckled == src)
-			buckled_guy.anchored = 0
+			reset_anchored(buckled_guy)
 			buckled_guy.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
@@ -460,7 +460,7 @@
 				M.buckled = null
 				src.buckled_guy = null
 				M.lying = 0
-				M.anchored = 0
+				reset_anchored(M)
 		if (src.Sheet && src.Sheet.Bed == src)
 			src.Sheet.Bed = null
 			src.Sheet = null
@@ -701,7 +701,7 @@
 
 		if (istype(H) && H.on_chair)// == 1)
 			M.pixel_y = 0
-			M.anchored = 0
+			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
@@ -709,7 +709,7 @@
 				H.on_chair = 0
 				src.buckledIn = 0
 		else if ((M.buckled))
-			M.anchored = 0
+			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
@@ -823,7 +823,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 5
 	stamina_damage = 45
-	stamina_cost = 40
+	stamina_cost = 21
 	stamina_crit_chance = 10
 	var/c_color = null
 

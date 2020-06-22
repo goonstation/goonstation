@@ -24,7 +24,7 @@
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		if (!A)
 			return
-		if (isarea(A) || istype(A, /obj/item/item_box))
+		if (isarea(A) || istype(A, /obj/item/item_box) || istype(A, /obj/screen) || istype(A, /obj/ability_button))
 			return
 		user.tri_message("<b>[user]</b> sticks [src] to [A]!",\
 		user, "You stick [src] to [user == A ? "yourself" : "[A]"]!",\
@@ -96,14 +96,12 @@
 		attached.visible_message("<span class='alert'><b>[src]</b> un-sticks from [attached] and falls to the floor!</span>")
 		attached = 0
 
-	dispose()
+	disposing()
 		if (attached)
 			if (!dont_make_an_overlay && active)
 				attached.ClearSpecificOverlays(overlay_key)
 			attached.visible_message("<span class='alert'><b>[src]</b> is destroyed!</span>")
-
-	attack()
-		return
+		..()
 
 /obj/item/sticker/postit
 	// this used to be some paper shit, then it was a cleanable/writing, now it's a sticker
@@ -155,6 +153,7 @@
 
 			// words here, info there, result is same: SCREEAAAAAAAMMMMMMMMMMMMMMMMMMM
 			src.words += "[src.words ? "<br>" : ""]<b>\[[S.current_mode]\]</b>"
+			tooltip_rebuild = 1
 			boutput(user, "<span class='notice'>You stamp \the [src].</span>")
 			return
 
@@ -183,6 +182,7 @@
 				else
 					src.icon_state = "postit-writing"
 			src.words += "[src.words ? "<br>" : ""][t]"
+			tooltip_rebuild = 1
 			pen.in_use = 0
 			src.add_fingerprint(user)
 			return
@@ -229,7 +229,7 @@
 		src.remove_from_attached()
 		..()
 
-	dispose()
+	disposing()
 		src.remove_from_attached()
 		..()
 
@@ -432,7 +432,7 @@
 			src.camera.c_tag = src.camera_tag
 		..()
 
-	dispose()
+	disposing()
 		if ((active) && (attached != null))
 			attached.open_to_sound = 0
 		if (src.camera)
@@ -564,4 +564,4 @@
 /obj/item/device/radio/spy/sec_only
 	locked_frequency = 1
 	frequency = R_FREQ_SECURITY
-	device_color = RADIOC_SECURITY
+	chat_class = RADIOCL_SECURITY

@@ -2,7 +2,7 @@
 // Had a pipe on one end of a pump with 240 C, the other end was 20 C.
 
 obj/machinery/atmospherics/pipe
-//
+	text = ""
 	layer = PIPE_LAYER
 
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
@@ -258,11 +258,10 @@ obj/machinery/atmospherics/pipe
 			update_icon()
 
 		process()
-			if (!loc)
-				return
-
 			if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
 				..()
+			if(!parent?.air || TOTAL_MOLES(parent.air) < ATMOS_EPSILON || !loc)
+				return
 
 			if(!node1)
 				parent.mingle_with_turf(loc, volume)
@@ -278,7 +277,7 @@ obj/machinery/atmospherics/pipe
 
 			else if(ruptured)
 				var/datum/gas_mixture/gas = return_air()
-				var/pressure = min(100*ruptured,gas.return_pressure())
+				var/pressure = min(100*ruptured, MIXTURE_PRESSURE(gas))
 
 				if(pressure > 0)
 					var/datum/gas_mixture/environment = loc.return_air()
@@ -306,7 +305,7 @@ obj/machinery/atmospherics/pipe
 					parent.temperature_interact(loc, volume, src.thermal_conductivity)
 
 			var/datum/gas_mixture/gas = return_air()
-			var/pressure = gas.return_pressure()
+			var/pressure = MIXTURE_PRESSURE(gas)
 			if(!ruptured && pressure > fatigue_pressure) check_pressure(pressure)
 
 		check_pressure(pressure)
@@ -315,7 +314,7 @@ obj/machinery/atmospherics/pipe
 
 			var/datum/gas_mixture/environment = loc.return_air()
 
-			var/pressure_difference = pressure - environment.return_pressure()
+			var/pressure_difference = pressure - MIXTURE_PRESSURE(environment)
 
 			if(can_rupture && pressure_difference > fatigue_pressure)
 				var/rupture_prob = (pressure_difference - fatigue_pressure)/50000
@@ -347,18 +346,16 @@ obj/machinery/atmospherics/pipe
 
 
 		attackby(var/obj/item/W as obj, var/mob/user as mob)
-			if(istype(W, /obj/item/weldingtool) && W:welding)
+			if(isweldingtool(W))
 
 				if(!ruptured)
 					boutput(user, "<span class='alert'>That isn't damaged!</span>")
 					return
 
-				if(!W:try_weld(user, 1, noisy=0))
+				if(!W:try_weld(user, 1, noisy=2))
 					return
 
-				W:eyecheck(user)
 				boutput(user, "You start to repair the [src.name].")
-				playsound(src.loc, "sound/items/Welder2.ogg", 50, 1)
 
 				if (do_after(user, 20))
 					ruptured --

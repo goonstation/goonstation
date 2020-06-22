@@ -17,6 +17,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/food_synth,\
 	new /datum/bank_purchaseable/human_item/record,\
 	new /datum/bank_purchaseable/human_item/sparkler_box,\
+	new /datum/bank_purchaseable/human_item/dabbing_license,\
 	new /datum/bank_purchaseable/human_item/chem_hint,\
 
 	new /datum/bank_purchaseable/altjumpsuit,\
@@ -238,6 +239,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			name = "Sparkler Box"
 			cost = 1000
 			path = /obj/item/storage/sparkler_box
+
+		dabbing_license
+			name = "Dabbing License"
+			cost = 4200
+			path = /obj/item/card/id/dabbing_license
 
 		battlepass
 			name = "Battle Pass"

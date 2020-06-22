@@ -228,6 +228,9 @@
 	if(istype(D, /obj/flock_structure/egg))
 		src.units |= D
 
+	if(istype(D, /obj/flock_structure/rift))
+		src.units |= D
+
 /datum/flock/proc/removeDrone(var/atom/movable/D)
 	if(isflock(D))
 		src.units -= D
@@ -476,14 +479,13 @@
 			animate_flock_convert_complete(FL)
 	else // don't do this stuff if the turf is space, it fucks it up more
 		T.RL_Cleanup()
-		if (RL_Started) RL_UPDATE_LIGHT(T)
 		T.RL_LumR = RL_LumR
 		T.RL_LumG = RL_LumG
 		T.RL_LumB = RL_LumB
 		T.RL_AddLumR = RL_AddLumR
 		T.RL_AddLumG = RL_AddLumG
 		T.RL_AddLumB = RL_AddLumB
-		T.RL_UpdateLight()
+		if (RL_Started) RL_UPDATE_LIGHT(T)
 
 	return T
 

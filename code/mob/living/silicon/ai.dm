@@ -281,12 +281,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.dismantle_stage = 2
 		else ..()
 
-	else if (istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WELD = W
+	else if (isweldingtool(W))
 		if(src.bruteloss)
-			if(WELD.try_weld(user, 1))
+			if(W:try_weld(user, 1))
 				src.add_fingerprint(user)
-				src.bruteloss = max(0,src.bruteloss - 15)
+				src.HealDamage(null, 15, 0)
 				src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s chassis.</span>")
 		else boutput(user, "<span class='alert'>There's no structural damage on [src.name] to mend.</span>")
 
@@ -296,7 +295,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if(src.fireloss)
 			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			coil.use(1)
-			src.fireloss = max(0,src.fireloss - 15)
+			src.HealDamage(null, 0, 15)
 			src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
 		else boutput(user, "<span class='alert'>There's no burn damage on [src.name]'s wiring to mend.</span>")
 
@@ -387,6 +386,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.set_hat(W, user)
 		user.visible_message( "<span class='notice'>[user] places the [W] on the [src]!</span>" )
 		src.show_message( "<span class='notice'>[user] places the [W] on you!</span>" )
+		if(istype(W, /obj/item/clothing/head/butt))
+			var/obj/item/clothing/head/butt/butt = W
+			if(butt.donor == user)
+				user.unlock_medal("Law 1: Don't be an asshat", 1)
 		return
 
 	else ..()
@@ -405,10 +408,17 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			//	return
 	. = ..()
 
-/mob/living/silicon/ai/build_keymap(client/C)
-	var/datum/keymap/keymap = ..()
-	keymap.merge(client.get_keymap("robot"))
-	return keymap
+/mob/living/silicon/ai/build_keybind_styles(client/C)
+	..()
+	C.apply_keybind("robot")
+
+	if (!C.preferences.use_wasd)
+		C.apply_keybind("robot_arrow")
+
+	if (C.preferences.use_azerty)
+		C.apply_keybind("robot_azerty")
+	if (C.tg_controls)
+		C.apply_keybind("robot_tg")
 
 /mob/living/silicon/ai/proc/eject_brain(var/mob/user)
 	if (src.mind && src.mind.special_role)
@@ -740,8 +750,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
-	for(var/mob/M in mobs)
-		if ((M.client && !( M.stat )))
+
+	for (var/client/C)
+		if (!C.mob) continue
+		if (!( C.mob.stat ))
 			cancel = 1
 			break
 	if (!( cancel ))
@@ -1079,29 +1091,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				O.show_message("<span class='emote'>[message]</span>", m_type)
 	return
 
-/mob/living/silicon/ai/Life(datum/controller/process/mobs/parent)
-	if (..(parent))
-		return 1
 
-	if (isalive(src))
-		if (src.health < 0)
-			death()
-	else
-		//src:cameraFollow = null
-		tracker.cease_track()
-		src:current = null
-
-		if (src.health >= 0)
-			// sure keep trying to use power i guess.
-			use_power()
-
-
-	// Assign antag status if we don't have any yet (Convair880).
-	if (src.mind && (src.emagged || src.syndicate))
-		if (!src.mind.special_role)
-			src.handle_robot_antagonist_status()
-
-	// None of these vars are of any relevance to AI mobs (Convair880).
+/mob/living/silicon/ai/clamp_values()
+	..()
 	if (src.get_eye_blurry()) src.change_eye_blurry(-INFINITY)
 	if (src.get_eye_damage()) src.take_eye_damage(-INFINITY)
 	if (src.get_eye_damage(1)) src.take_eye_damage(-INFINITY, 1)
@@ -1113,37 +1105,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (src.druggy) src.druggy = 0
 	if (src.jitteriness) src.jitteriness = 0
 	if (src.sleeping) src.sleeping = 0
-
-	// Fix for permastunned AIs. Stunned and paralysis seem to be the only vars that matter in the existing code (Convair880).
-	src.clamp_values()
 	src.delStatus("weakened")
-
-	hud.update()
-	process_killswitch()
-	process_locks()
-
-	/*
-	if (src.health < 0)
-		src.setStatus("paralysis", 1 SECOND)
-		src.death_timer--
-	else
-		src.death_timer = max(0,min(src.death_timer + 5,100))
-
-	if (src.getStatusDuration("paralysis"))
-		src.set_vision(0)
-	else
-		if (src.power_mode != -1)
-			src.set_vision(1)
-	*/
-
-	if (!get_message_mob()?.client)
-		return
-
-	src.update_icons_if_needed()
-	src.antagonist_overlay_refresh(0, 0)
-
-/mob/living/silicon/ai/proc/clamp_values()
-	return
 
 /mob/living/silicon/ai/use_power()
 	..()

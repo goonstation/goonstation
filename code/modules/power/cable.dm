@@ -62,7 +62,7 @@
 /obj/cable
 	level = 1
 	anchored =1
-	var/netnum = 0
+	var/tmp/netnum = 0
 	name = "power cable"
 	desc = "A flexible power cable."
 	icon = 'icons/obj/power_cond.dmi'
@@ -75,6 +75,7 @@
 	layer = CABLE_LAYER
 	plane = PLANE_DEFAULT
 	color = "#DD0000"
+	text = ""
 
 	var/insulator_default = "synthrubber"
 	var/condcutor_default = "copper"

@@ -34,7 +34,7 @@
 		if (istype(S))
 			S.venom_bite(MT)
 		else // no venom, very sad
-			playsound(get_turf(holder.owner), "sound/weapons/handcuffs.ogg", 50, 1)
+			playsound(get_turf(holder.owner), "sound/weapons/handcuffs.ogg", 50, 1, pitch = 1.6)
 			if (issilicon(MT))
 				var/mob/living/silicon/robot/R = MT
 				R.compborg_take_critter_damage("[pick("l","r")]_[pick("arm","leg")]", rand(2,4))
@@ -80,7 +80,7 @@
 		var/mob/living/critter/spider/S = holder.owner
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] dives on [MT]!</b></span>",\
 		"<span class='combat'><b>You dive on [MT]!</b></span>")
-		playsound(get_turf(holder.owner), "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0)
+		playsound(get_turf(holder.owner), "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0, pitch = 1.6)
 		MT.TakeDamageAccountArmor("All", rand(4,10), 0, 0, DAMAGE_STAB)
 		if (!isdead(MT))
 			MT.emote("scream")
@@ -93,7 +93,6 @@
 				MT.canmove = 0
 				if (MT.loc)
 					holder.owner.set_loc(MT.loc)
-				holder.owner.changeStatus("stunned", 1 SECOND)
 				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
 					break
 				if (istype(S))
@@ -159,7 +158,7 @@
 		var/mob/living/critter/spider/S = holder.owner
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] starts draining the fluids out of [H]!</b></span>",\
 		"<span class='combat'><b>You start draining the fluids out of [H]!</b></span>")
-		playsound(get_turf(holder.owner), "sound/misc/pourdrink.ogg", 50, 0)
+		playsound(get_turf(holder.owner), "sound/misc/pourdrink.ogg", 50, 0, pitch = 0.7)
 		disabled = 1
 		SPAWN_DBG(0)
 			var/drain = rand(65, 75)
@@ -168,7 +167,6 @@
 			while (drain > 0 && H && H.stat && !H.disposed)
 				if (H.loc && holder.owner.loc != H.loc)
 					break
-				holder.owner.changeStatus("stunned", 1 SECOND)
 				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
 					break
 				holder.owner.HealDamage("All", 1, 1)

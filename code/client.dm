@@ -26,6 +26,7 @@
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
+	var/list/hidden_verbs = null
 
 	var/datum/buildmode_holder/buildmode = null
 	var/lastbuildtype = 0
@@ -75,6 +76,8 @@
 	var/datum/chatOutput/chatOutput = null
 	var/resourcesLoaded = 0 //Has this client done the mass resource downloading yet?
 	var/datum/tooltipHolder/tooltipHolder = null
+
+	var/chui/window/keybind_menu/keybind_menu = null
 
 	var/delete_state = DELETE_STOP
 
@@ -213,7 +216,7 @@
 	//src.chui = new /datum/chui(src)
 
 	//Should eliminate any local resource loading issues with chui windows
-	if (!cdn)
+	if (!cdn && !(!address || (world.address == src.address)))
 		var/list/chuiResources = list(
 			"browserassets/js/jquery.min.js",
 			"browserassets/js/jquery.nanoscroller.min.js",
@@ -233,7 +236,7 @@
 	if (isbanned)
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
 		logTheThing("diary", null, src, "Failed Login: %target% - Banned", "access")
-		if (announce_banlogin) message_admins("<span class='notice'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
+		if (announce_banlogin) message_admins("<span class='internal'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
 		SPAWN_DBG(0)
 			var/banstring = {"
 								<!doctype html>
@@ -269,18 +272,25 @@
 	SPAWN_DBG(rand(4,18))
 		if(proxy_check(src.address))
 			logTheThing("diary", null, src, "Failed Login: %target% - Using a Tor Proxy Exit Node", "access")
-			if (announce_banlogin) message_admins("<span class='notice'>Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
+			if (announce_banlogin) message_admins("<span class='internal'>Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
 			boutput(src, "You may not connect through TOR.")
 			SPAWN_DBG(0) del(src)
 			return
 */
+	//admins and mentors can enter a server through player caps.
+	var/ignore_player_cap = 0
+	if (init_admin())
+		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
+		control_freak = 0	// heh
+		ignore_player_cap = 1
+	else if (player.mentor)
+		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
+		if (!src.holder)
+			src.verbs += /client/proc/toggle_mentorhelps
+		ignore_player_cap = 1
 
-	if(player_capa)
-		var/howmany = 0
-		for(var/mob/M in mobs)
-			if(M.client)
-				howmany ++
-		if(howmany >= player_cap)
+	if(!ignore_player_cap && player_capa)
+		if(total_clients() >= player_cap)
 			if (!src.holder)
 				alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
 				del(src)
@@ -289,13 +299,6 @@
 	if (join_motd)
 		boutput(src, "<div class=\"motd\">[join_motd]</div>")
 
-	if (init_admin())
-		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
-		control_freak = 0	// heh
-	else if (player.mentor)
-		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
-		if (!src.holder)
-			src.verbs += /client/proc/toggle_mentorhelps
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
 
@@ -336,6 +339,7 @@
 		updateXpRewards()
 
 	SPAWN_DBG(3 SECONDS)
+		var/is_newbie = 0
 		// new player logic, moving some of the preferences handling procs from new_player.Login
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - 3 sec spawn stuff")
 		if (!preferences)
@@ -345,19 +349,22 @@
 
 			//Load the preferences up here instead.
 			if(!preferences.savefile_load(src))
+#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 				//preferences.randomizeLook()
 				preferences.ShowChoices(src.mob)
+				src.mob.Browse(grabResource("html/tgControls.html"),"window=tgcontrolsinfo;size=600x400;title=TG Controls Help")
 				boutput(src, "<span class='alert'>Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!</span>")
 				//hey maybe put some 'new player mini-instructional' prompt here
 				//ok :)
-
+#endif
+				is_newbie = 1
 			else if(!src.holder)
 				preferences.sanitize_name()
 
 			if (noir)
 				animate_fade_grayscale(src, 50)
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
-			if (!changes && preferences.view_changelog)
+			if (!changes && preferences.view_changelog && !is_newbie)
 				if (!cdn)
 					//src << browse_rsc(file("browserassets/images/changelog/postcardsmall.jpg"))
 					src << browse_rsc(file("browserassets/images/changelog/88x31.png"))
@@ -391,9 +398,6 @@
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
-
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - update_world")
-		src.update_world()
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()
@@ -475,6 +479,20 @@
 
 	//blendmode end
 
+	// cursed darkmode stuff
+
+	src.sync_dark_mode()
+
+	if(winget(src, "menu.fullscreen", "is-checked") == "true")
+		winset(src, null, "mainwindow.titlebar=false;mainwindow.is-maximized=true")
+
+	if(winget(src, "menu.hide_status_bar", "is-checked") == "true")
+		winset(src, null, "mainwindow.statusbar=false")
+
+	if(winget(src, "menu.hide_menu", "is-checked") == "true")
+		winset(src, null, "mainwindow.menu='';menub.is-visible = true")
+
+	// cursed darkmode end
 
 	//tg controls stuff
 
@@ -806,12 +824,14 @@ var/global/curr_day = null
 			ircbot.export("pm", ircmsg)
 
 			//we don't use message_admins here because the sender/receiver might get it too
-			for (var/mob/K in mobs)
-				if(K && K.client && K.client.holder && K.key != usr.key)
-					if (K.client.player_mode && !K.client.player_mode_ahelp)
+			for (var/client/C)
+				if (!C.mob) continue
+				var/mob/K = C.mob
+				if(C.holder && C.key != usr.key)
+					if (C.player_mode && !C.player_mode_ahelp)
 						continue
 					else
-						boutput(K, "<font color='blue'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</font>")
+						boutput(K, "<span class='internal'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</span>")
 
 		if ("priv_msg")
 			do_admin_pm(href_list["target"], usr) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
@@ -838,15 +858,15 @@ var/global/curr_day = null
 			ircbot.export("mentorpm", ircmsg)
 
 			//we don't use message_admins here because the sender/receiver might get it too
-			for (var/mob/K in mobs)
-				if (K && K.client && K.client.can_see_mentor_pms() && K.key != usr.key)
-					if (K.client.holder)
-						if (K.client.player_mode && !K.client.player_mode_mhelp)
+			for (var/client/C)
+				if (C.can_see_mentor_pms() && C.key != usr.key)
+					if (C.holder)
+						if (C.player_mode && !C.player_mode_mhelp)
 							continue
 						else //Message admins
-							boutput(K, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+							boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 					else //Message mentors
-						boutput(K, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+						boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 
 		if ("mentor_msg")
 			if (M)
@@ -886,15 +906,15 @@ var/global/curr_day = null
 				ircmsg["msg"] = html_decode(t)
 				ircbot.export("mentorpm", ircmsg)
 
-				for (var/mob/K in mobs)
-					if (K && K.client && K.client.can_see_mentor_pms() && K.key != usr.key && (M && K.key != M.key))
-						if (K.client.holder)
-							if (K.client.player_mode && !K.client.player_mode_mhelp)
+				for (var/client/C)
+					if (C.can_see_mentor_pms() && C.key != usr.key && (M && C.key != M.key))
+						if (C.holder)
+							if (C.player_mode && !C.player_mode_mhelp)
 								continue
 							else
-								boutput(K, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]/[M.real_name] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+								boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]/[M.real_name] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 						else
-							boutput(K, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+							boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
 		if ("mach_close")
 			var/window = href_list["window"]
@@ -951,7 +971,7 @@ var/global/curr_day = null
 	SPAWN_DBG(0)//I do not advocate this! So basically hide your eyes for one line of code.
 		world.Export( "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]" )//If it fails, oh well...
 //Returns some cloud data on the client
-/client/proc/cloud_get( var/key, var/value )
+/client/proc/cloud_get( var/key )
 	return clouddata ? clouddata[key] : null
 //Returns 1 if you can set or retrieve cloud data on the client
 /client/proc/cloud_available()
@@ -1090,7 +1110,7 @@ var/global/curr_day = null
 	tg_controls = tg
 	winset( src, "menu", "tg_controls.is-checked=[tg ? "true" : "false"]" )
 
-	src.mob.update_keymap()
+	src.mob.reset_keymap()
 
 /client/verb/set_tg_controls()
 	set hidden = 1
@@ -1125,7 +1145,7 @@ var/global/curr_day = null
 		H.zone_sel = new(H)
 		H.attach_hud(H.zone_sel)
 		H.stamina_bar = new(H)
-		H.hud.add_object(H.stamina_bar, HUD_LAYER+1, "EAST-1, NORTH")
+		H.hud.add_object(H.stamina_bar, initial(H.stamina_bar.layer), "EAST-1, NORTH")
 		if(H.sims)
 			H.sims.add_hud()
 
@@ -1285,3 +1305,69 @@ if([removeOnFinish])
 /world/proc/showCinematic(var/name, var/removeOnFinish = 0)
 	for(var/client/C)
 		C.showCinematic(name, removeOnFinish)
+
+#define SKIN_TEMPLATE "\
+rpane.background-color=[_SKIN_BG];\
+rpane.text-color=[_SKIN_TEXT];\
+rpanewindow.background-color=[_SKIN_BG];\
+rpanewindow.text-color=[_SKIN_TEXT];\
+textb.background-color=[_SKIN_BG];\
+textb.text-color=[_SKIN_TEXT];\
+browseb.background-color=[_SKIN_BG];\
+browseb.text-color=[_SKIN_TEXT];\
+infob.background-color=[_SKIN_BG];\
+infob.text-color=[_SKIN_TEXT];\
+menub.background-color=[_SKIN_BG];\
+menub.text-color=[_SKIN_TEXT];\
+bugreportb.background-color=[_SKIN_BG];\
+bugreportb.text-color=[_SKIN_TEXT];\
+wikib.background-color=[_SKIN_BG];\
+wikib.text-color=[_SKIN_TEXT];\
+mapb.background-color=[_SKIN_BG];\
+mapb.text-color=[_SKIN_TEXT];\
+forumb.background-color=[_SKIN_BG];\
+forumb.text-color=[_SKIN_TEXT];\
+infowindow.background-color=[_SKIN_BG];\
+infowindow.text-color=[_SKIN_TEXT];\
+info.background-color=[_SKIN_INFO_BG];\
+info.text-color=[_SKIN_TEXT];\
+mainwindow.background-color=[_SKIN_BG];\
+mainwindow.text-color=[_SKIN_TEXT];\
+mainvsplit.background-color=[_SKIN_BG];\
+falsepadding.background-color=[_SKIN_COMMAND_BG];\
+input.background-color=[_SKIN_COMMAND_BG];\
+input.text-color=[_SKIN_TEXT];\
+saybutton.background-color=[_SKIN_COMMAND_BG];\
+saybutton.text-color=[_SKIN_TEXT];\
+info.tab-background-color=[_SKIN_INFO_TAB_BG];\
+info.tab-text-color=[_SKIN_TEXT]"
+
+/client/verb/sync_dark_mode()
+	set hidden=1
+	if(winget(src, "menu.dark_mode", "is-checked") == "true")
+#define _SKIN_BG "#28292c"
+#define _SKIN_INFO_TAB_BG "#28292c"
+#define _SKIN_INFO_BG "#28292c"
+#define _SKIN_TEXT "#d3d4d5"
+#define _SKIN_COMMAND_BG "#28294c"
+		winset(src, null, SKIN_TEMPLATE)
+		chatOutput.changeTheme("theme-dark")
+#undef _SKIN_BG
+#undef _SKIN_INFO_TAB_BG
+#undef _SKIN_INFO_BG
+#undef _SKIN_TEXT
+#undef _SKIN_COMMAND_BG
+#define _SKIN_BG "none"
+#define _SKIN_INFO_TAB_BG "#f0f0f0"
+#define _SKIN_INFO_BG "#ffffff"
+#define _SKIN_TEXT "none"
+#define _SKIN_COMMAND_BG "#d3b5b5"
+	else
+		winset(src, null, SKIN_TEMPLATE)
+		chatOutput.changeTheme("theme-default")
+#undef _SKIN_BG
+#undef _SKIN_INFO_TAB_BG
+#undef _SKIN_INFO_BG
+#undef _SKIN_TEXT
+#undef _SKIN_COMMAND_BG
+#undef SKIN_TEMPLATE

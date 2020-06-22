@@ -2,6 +2,8 @@
 #define EARLY_RETURN_IF_QUIET(v) if (v < TOO_QUIET) return
 #define EARLY_CONTINUE_IF_QUIET(v) if (v < TOO_QUIET) continue
 #define MAX_SOUND_RANGE 33
+#define CLIENT_IGNORES_SOUND(C) (C && C.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
+
 
 
 // returns 0 to 1 based on air pressure in turf
@@ -19,7 +21,7 @@
 		if (T.turf_flags & IS_TYPE_SIMULATED) //danger :)
 			var/turf/simulated/sim_T = T
 			if (sim_T.air)
-				attenuate *= sim_T.air.return_pressure() / ONE_ATMOSPHERE
+				attenuate *= MIXTURE_PRESSURE(sim_T.air) / ONE_ATMOSPHERE
 				attenuate = min(1, max(0, attenuate))
 
 	return attenuate
@@ -73,7 +75,6 @@ var/global/list/falloff_cache = list()
 	if( channel == VOLUME_CHANNEL_ADMIN )
 		src.chatOutput.adjustVolumeRaw( getMasterVolume() * volume )
 
-
 /proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
 	// don't play if over the per-tick sound limit
 	if (!limiter || !limiter.canISpawn(/sound))
@@ -93,9 +94,8 @@ var/global/list/falloff_cache = list()
 	var/sound/S
 	var/turf/Mloc
 	for (var/client/C)
-		if (C.ignore_sound_flags)
-			if ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL)
-				continue
+		if (CLIENT_IGNORES_SOUND(C))
+			continue
 
 		var/mob/M = C.mob
 		//LAGCHECK(LAG_LOW)
@@ -165,8 +165,7 @@ var/global/list/falloff_cache = list()
 
 			C << S
 
-
-/mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, channel = VOLUME_CHANNEL_GAME)
+/mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
 	if(!src.client)
 		return
 
@@ -178,7 +177,27 @@ var/global/list/falloff_cache = list()
 	if (!source || !source.loc)
 		return
 
+	var/dist = max(GET_MANHATTAN_DIST(get_turf(src), get_turf(source)), 1)
+	if (dist > MAX_SOUND_RANGE + extrarange)
+		return
+
+	if (CLIENT_IGNORES_SOUND(src.client))
+		return
+
 	vol *= client.getVolume(channel) / 100
+
+	EARLY_RETURN_IF_QUIET(vol)
+
+	//Custom falloff handling, see: https://www.desmos.com/calculator/ybukxuu9l9
+	if (dist > falloff_cache.len)
+		falloff_cache.len = dist
+	var/falloffmult = falloff_cache[dist]
+	if (falloffmult == null)
+		var/scaled_dist = clamp(dist/(MAX_SOUND_RANGE+extrarange),0,1)
+		falloffmult = (1 - ((1.0542 * (0.18**-1.7)) / ((scaled_dist**-1.7) + (0.18**-1.7))))
+		falloff_cache[dist] = falloffmult
+
+	vol *= falloffmult
 
 	EARLY_RETURN_IF_QUIET(vol)
 
@@ -192,6 +211,15 @@ var/global/list/falloff_cache = list()
 			S.pan = max(-100, min(100, dx/8.0 * 100))
 
 		src << S
+
+		if (src.observers.len)
+			for (var/mob/M in src.observers)
+				if (CLIENT_IGNORES_SOUND(M.client))
+					continue
+					M.client.sound_playing[ S.channel ][1] = vol
+					M.client.sound_playing[ S.channel ][2] = channel
+
+					M << S
 
 //handles a wide variety of inputs and spits out a valid sound object
 /proc/getSound(thing)

@@ -472,7 +472,7 @@
 		if(ismob(load))
 			load.pixel_y = 0
 
-		load.anchored = 0
+		reset_anchored(load)
 
 		if(dirn)
 			step(load, dirn)

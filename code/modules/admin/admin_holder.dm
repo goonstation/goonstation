@@ -1,7 +1,7 @@
 /datum/admins
 	var/name = "admins"
 	var/rank = null
-	var/owner = null
+	var/client/owner = null
 	var/tempmin = 0 // are they a tempmin?
 	var/state = 1
 	//state = 1 for playing : default
@@ -27,8 +27,11 @@
 	var/static/list/admin_interact_verbs
 	var/static/list/admin_interact_atom_verbs
 
+	var/list/hidden_categories = null
+
 	New()
 		..()
+		src.hidden_categories = list()
 		SPAWN_DBG(1 DECI SECOND)
 			if (src.owner)
 				var/client/C = src.owner
@@ -112,13 +115,16 @@
 		HTML += "<b>Hide Popup Verbs?: <a href='?src=\ref[src];action=toggle_popup_verbs'>[(src.popuptoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Server Toggles Tab?: <a href='?src=\ref[src];action=toggle_server_toggles_tab'>[(src.servertoggles_toggle ? "Yes" : "No")]</a></b><br>"
 		if (src.owner:holder:level >= LEVEL_PA)
-			HTML += "<b>Hide Atom Verbs?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.animtoggle ? "Yes" : "No")]</a></b><br>"
+			HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.animtoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Attack Alerts?: <a href='?src=\ref[src];action=toggle_attack_messages'>[(src.attacktoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>See Prayers?: <a href='?src=\ref[src];action=toggle_hear_prayers'>[(src.hear_prayers ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Audible Prayers?: <a href='?src=\ref[src];action=toggle_audible_prayers'>[list("No", "Yes", "Dectalk")[src.audible_prayers + 1]]</a></b><br>"
 		HTML += "<b>Change view when using buildmode?: <a href='?src=\ref[src];action=toggle_buildmode_view'>[(src.buildmode_view ? "No" : "Yes")]</a></b><br>"
 		HTML += "<b>Spawn verb spawns in your loc?: <a href='?src=\ref[src];action=toggle_spawn_in_loc'>[(src.spawn_in_loc ? "Yes" : "No")]</a></b><br>"
-		HTML += "<br><b><a href='?src=\ref[src];action=load_admin_prefs'>LOAD</a></b> | <b><a href='?src=\ref[src];action=save_admin_prefs'>SAVE</a></b>"
+		HTML += "<hr>"
+		for(var/cat in toggleable_admin_verb_categories)
+			HTML += "<b>Hide [cat] verbs?: <a href='?src=\ref[src];action=toggle_category;cat=[cat]'>[(cat in src.hidden_categories) ? "Yes" : "No"]</a></b><br>"
+		HTML += "<hr><b><a href='?src=\ref[src];action=load_admin_prefs'>LOAD</a></b> | <b><a href='?src=\ref[src];action=save_admin_prefs'>SAVE</a></b>"
 		HTML += "</body></html>"
 
 		user.Browse(HTML,"window=aprefs")
@@ -221,6 +227,21 @@
 			saved_spawn_in_loc = 0
 		spawn_in_loc = saved_spawn_in_loc
 
+		src.hidden_categories = list()
+		for(var/cat in toggleable_admin_verb_categories)
+			var/cat_hidden
+			AP["[ckey]_hidden_[cat]"] >> cat_hidden
+			if(isnull(cat_hidden))
+				if(src.level >= LEVEL_CODER || cat == ADMIN_CAT_SELF || cat == ADMIN_CAT_SERVER || cat == ADMIN_CAT_PLAYERS)
+					cat_hidden = 0
+				else
+					cat_hidden = 1
+			if(cat_hidden)
+				src.owner?.hide_verb_category(ADMIN_CAT_PREFIX + cat)
+				src.hidden_categories |= cat
+			else
+				src.owner?.show_verb_category(ADMIN_CAT_PREFIX + cat)
+
 		if (usr)
 			boutput(usr, "<span class='notice'>Admin preferences loaded.</span>")
 
@@ -245,11 +266,14 @@
 		AP["[ckey]_buildmode_view"] << buildmode_view
 		AP["[ckey]_spawn_in_loc"] << spawn_in_loc
 
+		for(var/cat in toggleable_admin_verb_categories)
+			AP["[ckey]_hidden_[cat]"] << (cat in src.hidden_categories)
+
 		if (usr)
 			boutput(usr, "<span class='notice'>Admin preferences saved.</span>")
 
 /client/proc/change_admin_prefs()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Change Admin Preferences"
 	admin_only
 
@@ -267,3 +291,19 @@
 		return C.fakekey
 	else
 		return C.key
+
+/client/proc/hide_verb_category(cat)
+	if(!src.hidden_verbs)
+		src.hidden_verbs = list()
+	for(var/vrb in src.verbs)
+		if(vrb:category == cat)
+			src.verbs -= vrb
+			src.hidden_verbs |= vrb
+
+/client/proc/show_verb_category(cat)
+	if(!src.hidden_verbs)
+		return
+	for(var/vrb in src.hidden_verbs)
+		if(vrb:category == cat)
+			src.hidden_verbs -= vrb
+			src.verbs |= vrb

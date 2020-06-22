@@ -430,7 +430,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 	for(var/ID in C.bioHolder.effectPool)
 		var/datum/bioEffect/BE = C.bioHolder.GetEffectFromPool(ID)
 		var/datum/bioEffect/MUT = new BE.type(scan)
-		MUT.dnaBlocks = BE.dnaBlocks
+		MUT.dnaBlocks.blockList = BE.dnaBlocks.blockList
+		MUT.dnaBlocks.blockListCurr = BE.dnaBlocks.blockListCurr
 		scan.dna_pool += MUT
 
 	return scan

@@ -103,7 +103,7 @@
 	name_the_meat = 0
 	death_text = "%src% messily splatters into a puddle of tomato sauce!"
 	chase_text = "viciously lunges at"
-	meat_type = /obj/item/reagent_containers/food/snacks/plant/tomato/explosive
+	meat_type = /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
 	generic = 0
 
 	seek_target()

@@ -357,6 +357,7 @@ that cannot be itched
 	module_research = list("analysis" = 2, "science" = 2, "devices" = 1)
 	module_research_type = /obj/item/device/reagentscanner
 	hide_attack = 2
+	tooltip_flags = REBUILD_DIST
 
 	attack(mob/M as mob, mob/user as mob)
 		return
@@ -366,6 +367,7 @@ that cannot be itched
 		"<span class='notice'>You scan [A] with [src]!</span>")
 
 		src.scan_results = scan_reagents(A, visible = 1)
+		tooltip_rebuild = 1
 
 		if (!isnull(A.reagents))
 			if (A.reagents.reagent_list.len > 0)
@@ -545,7 +547,7 @@ that cannot be itched
 				if (M.gloves)
 					R.fields["fingerprint"] = "Unknown"
 				else
-					R.fields["fingerprint"] = md5(M.bioHolder.Uid)
+					R.fields["fingerprint"] = M.bioHolder.uid_hash
 				R.fields["p_stat"] = "Active"
 				R.fields["m_stat"] = "Stable"
 				src.active1 = R
@@ -563,7 +565,7 @@ that cannot be itched
 			if (M.gloves)
 				src.active1.fields["fingerprint"] = "Unknown"
 			else
-				src.active1.fields["fingerprint"] = md5(M.bioHolder.Uid)
+				src.active1.fields["fingerprint"] = M.bioHolder.uid_hash
 			src.active1.fields["p_stat"] = "Active"
 			src.active1.fields["m_stat"] = "Stable"
 			data_core.general += src.active1

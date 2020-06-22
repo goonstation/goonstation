@@ -14,8 +14,8 @@
 	var/icon_type = "disk"
 	mats = 4
 	desc = "An extremely advanced scanning device used to locate things. It displays this with an extremely technicalogically advanced arrow."
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 
 	attack_self()
@@ -92,6 +92,7 @@
 			active = 1
 			for(var/X in by_type[/obj/item/card/id])
 				var/obj/item/card/id/I = X
+				if(!I) continue // the ID can get deleted in the lagcheck
 				for(var/datum/objective/regular/assassinate/A in src.owner.mind.objectives)
 					if(I.registered == null) continue
 					if(ckey(I.registered) == ckey(A.targetname))

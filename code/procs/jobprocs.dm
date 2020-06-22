@@ -53,8 +53,10 @@
 
 	var/list/unassigned = list()
 
-	for (var/mob/new_player/player in mobs)
-		if (player.client && player.ready && !player.mind.assigned_role)
+	for (var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+		if (player.ready && !player.mind.assigned_role)
 			unassigned += player
 
 	if (unassigned.len == 0)
@@ -438,7 +440,7 @@
 			if(JOB.receives_disk)
 				var/obj/item/disk/data/floppy/D = new /obj/item/disk/data/floppy(src)
 				src.equip_if_possible(D, slot_in_backpack)
-				var/datum/data/record/R = new /datum/data/record(  )
+				var/datum/computer/file/clone/R = new
 				R.fields["ckey"] = ckey(src.key)
 				R.fields["name"] = src.real_name
 				R.fields["id"] = copytext(md5(src.real_name), 2, 6)
@@ -459,8 +461,8 @@
 
 				R.fields["imp"] = null
 				R.fields["mind"] = src.mind
-				D.data = R.fields
-				D.data_type = "cloning_record"
+				R.name = "CloneRecord-[ckey(src.real_name)]"
+				D.root.add_file(R)
 				D.name = "data disk - '[src.real_name]'"
 
 			if(JOB.receives_badge)
@@ -677,7 +679,7 @@
 	return
 
 // this proc is shit, make a better one 2day
-proc/bad_traitorify(mob/living/carbon/human/H, traitor_role="hard-mode traitor")
+proc/bad_traitorify(mob/H, traitor_role="hard-mode traitor")
 	var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
 	var/num_objectives = rand(1,3)
 	var/datum/objective/new_objective = null

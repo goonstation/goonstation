@@ -97,7 +97,7 @@
 	var/boss_counter = 0
 	var/boss_count = 1
 	var/list/drone_templates = list()
-	var/list/bosses = list(/obj/critter/gunbot/drone/helldrone, /obj/critter/gunbot/drone/iridium, /obj/critter/gunbot/drone/iridium/whydrone)
+	var/list/bosses = list(/obj/critter/gunbot/drone/helldrone, /obj/critter/gunbot/drone/iridium, /obj/critter/gunbot/drone/iridium/whydrone, /obj/critter/gunbot/drone/iridium/whydrone/horse)
 	var/list/current_bosses = null
 	var/list/actors = list()
 
@@ -115,14 +115,18 @@
 			boutput(M, rendered)
 		for (var/mob/M in colosseum)
 			boutput(M, rendered)
-		for (var/mob/M in mobs)//world)
-			LAGCHECK(LAG_LOW)
+
+		for (var/client/C)
+			if (!C.mob) continue
+			var/mob/M = C.mob
+
 			if (ismob(M.eye) && M.eye != M)
 				var/mob/N = M.eye
 				if (N.is_near_colosseum())
 					boutput(M, rendered)
 			else if (istype(M.eye, /obj/observable/colosseum))
 				boutput(M, rendered)
+			LAGCHECK(LAG_LOW)
 
 	proc/beginStaging()
 		if (state != 0)
@@ -1470,12 +1474,11 @@ proc/get_colosseum_message(var/name, var/message)
 			qdel(src)
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/T = W
+		if (isweldingtool(W))
 			if (health >= max_health)
 				boutput(user, "<span class='alert'>That putt is already at full health!</span>")
 				return
-			if (T.try_weld(user, 1))
+			if (W:try_weld(user, 1))
 				visible_message("<span class='notice'><b>[user]</b> repairs some dents on [src]!</span>")
 				message_pilot("<b>[user]</b> repairs some dents on [src]!")
 				repair_by(10)

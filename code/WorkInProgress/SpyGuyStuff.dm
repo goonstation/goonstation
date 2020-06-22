@@ -51,8 +51,11 @@ Fibre wire
 					priority_targets.Add(M.current)
 
 		if(!priority_targets.len) //Okay, fine. Any ghost. *sigh
-			for(var/mob/dead/observer/O in mobs)
-				if(O && O.client && O.mind && !O.mind.dnr)
+
+			for (var/client/C)
+				var/mob/dead/observer/O = C.mob
+				if (!istype(C)) continue
+				if(O.mind && !O.mind.dnr)
 					possible_targets.Add(O)
 
 

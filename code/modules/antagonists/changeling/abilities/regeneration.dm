@@ -173,7 +173,7 @@
 			return 1
 		boutput(holder.owner, __blue("Your skin begins reforming around your skeleton."))
 
-		while(C.health < 100 || !C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg)
+		while(C.health < C.max_health || !C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg)
 			if(isdead(C))
 				break
 			sleep(3 SECONDS)

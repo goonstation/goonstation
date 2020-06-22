@@ -489,6 +489,7 @@ obj/critter/bear/care
 	icon_state = "batdoctor"
 	health = 30
 	generic = 0
+	is_pet = 2
 
 	drink_blood(var/atom/target)
 		..()

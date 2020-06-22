@@ -11,7 +11,7 @@
 	var/list/connects_to = list(/turf/simulated/wall/auto,/turf/simulated/wall/false_wall)
 	var/list/connects_with_overlay = null
 	var/image/connect_image = null
-	var/connect_overlay_dir = 0
+	var/tmp/connect_overlay_dir = 0
 	var/d_state = 0
 
 	New()
@@ -146,16 +146,15 @@
 					boutput(user, "<span class='notice'>You removed the support lines.</span>")
 					return
 
-		else if (istype(W, /obj/item/weldingtool) && W:welding)
-			var/obj/item/weldingtool/Weld = W
-			Weld.eyecheck(user)
+		else if (isweldingtool(W))
 			var/turf/T = user.loc
 			if (!(istype(T, /turf)))
 				return
 
 			if (src.d_state == 2)
+				if(!W:try_weld(user,1,-1,1,1))
+					return
 				boutput(user, "<span class='notice'>Slicing metal cover.</span>")
-				playsound(src.loc, "sound/items/Welder.ogg", 100, 1)
 				sleep(2.5 SECONDS)
 				if (user.loc == T && (user.equipped() == W || isrobot(user)))
 					src.d_state = 3
@@ -163,8 +162,9 @@
 					return
 
 			else if (src.d_state == 5)
+				if(!W:try_weld(user,1,-1,1,1))
+					return
 				boutput(user, "<span class='notice'>Removing support rods.</span>")
-				playsound(src.loc, "sound/items/Welder.ogg", 100, 1)
 				sleep(2.5 SECONDS)
 				if (user.loc == T && (user.equipped() == W || isrobot(user)))
 					src.d_state = 6

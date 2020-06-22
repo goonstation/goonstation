@@ -809,21 +809,20 @@
 			boutput(user, "You [src.panelopen ? "open" : "close"] the maintenance panel.")
 			src.build_icon()
 
-		else if (istype(W,/obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
+		else if (isweldingtool(W))
 			var/do_action = 0
-			if (istype(WELD,src.base_material_class) && src.accept_loading(user))
-				if (alert(user,"What do you want to do with [WELD]?","[src.name]","Repair","Load it in") == "Load it in")
+			if (istype(W,src.base_material_class) && src.accept_loading(user))
+				if (alert(user,"What do you want to do with [W]?","[src.name]","Repair","Load it in") == "Load it in")
 					do_action = 1
 			if (do_action == 1)
-				user.visible_message("<span class='notice'>[user] loads [WELD] into the [src].</span>", "<span class='notice'>You load [WELD] into the [src].</span>")
-				src.load_item(WELD,user)
+				user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
+				src.load_item(W,user)
 			else
 				if (src.health < 50)
 					boutput(user, "<span class='alert'>It's too badly damaged. You'll need to replace the wiring first.</span>")
-				else if(WELD.try_weld(user, 1))
+				else if(W:try_weld(user, 1))
 					src.take_damage(-10)
-					user.visible_message("<b>[user]</b> uses [WELD] to repair some of [src]'s damage.")
+					user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 					if (src.health == 100)
 						boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
 
@@ -1440,7 +1439,8 @@
 					break
 				X = pick(src.contents)
 				X.set_loc(src.loc)
-				X.throw_at(pick(src.nearby_turfs), 16, 3)
+				SPAWN_DBG(0)
+					X.throw_at(pick(src.nearby_turfs), 16, 3)
 				to_throw--
 		if (src.queue.len > 1 && prob(20))
 			var/list_counter = 0
@@ -1600,7 +1600,8 @@
 			playsound(src.loc, src.sound_damaged, 50, 2)
 			if (src.health == 0)
 				src.visible_message("<span class='alert'><b>[src.name] is destroyed!</b></span>")
-				robogibs(src.loc,null)
+				SPAWN_DBG(0)
+					robogibs(src.loc,null)
 				playsound(src.loc, src.sound_destroyed, 50, 2)
 				qdel(src)
 				return
@@ -1873,7 +1874,7 @@
 	/datum/manufacture/core_frame,
 	/datum/manufacture/shell_frame,
 	/datum/manufacture/ai_interface,
-	/datum/manufacture/latejoin,
+	/datum/manufacture/latejoin_brain,
 	/datum/manufacture/shell_cell,
 	/datum/manufacture/cable,
 	/datum/manufacture/powercell,

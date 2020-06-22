@@ -163,8 +163,11 @@ mob/new_player
 		if(current_state <= GAME_STATE_PREGAME)
 			statpanel("Lobby")
 			if(client.statpanel=="Lobby" && ticker)
-				for(var/mob/new_player/player in mobs)
-					if (player.client && player.client.holder && (player.client.stealth || player.client.alt_key)) // are they an admin and in stealth mode/have a fake key?
+				for (var/client/C)
+					var/mob/new_player/player = C.mob
+					if (!istype(player)) continue
+
+					if (player.client.holder && (player.client.stealth || player.client.alt_key)) // are they an admin and in stealth mode/have a fake key?
 						if (client.holder) // are we an admin?
 							stat("[player.key] (as [player.client.fakekey])", (player.ready)?("(Playing)"):(null)) // give us the full deets
 						else // are we not an admin?
@@ -184,6 +187,7 @@ mob/new_player
 
 		if(href_list["observe"])
 			if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
+				if(!src.client) return
 				var/mob/dead/observer/observer = new()
 
 				src.spawning = 1
@@ -263,8 +267,6 @@ mob/new_player
 		if(!ticker || !ticker.mode)
 			return 0
 		if (!JOB || !istype(JOB,/datum/job/) || JOB.limit == 0)
-			return 0
-		if((ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)) && istype(JOB,/datum/job/command/))
 			return 0
 		if (!JOB.no_jobban_from_this_job && jobban_isbanned(src,JOB.name))
 			return 0
@@ -402,13 +404,16 @@ mob/new_player
 				// 0 slots, nobody in it, don't show it
 				return
 
+			//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
+			if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
+				c = limit
+
 			// probalby could be a define but dont give a shite
 			var/maxslots = 5
 			var/list/slots = list()
 			var/shown = min(max(c, (limit == -1 ? 99 : limit)), maxslots)
-
 			// if there's still an open space, show a final join link
-			if (limit == -1 || (limit > maxslots && c < J.limit))
+			if (limit == -1 || (limit > maxslots && c < limit))
 				slots += "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];' title='Join the round as [J.name].'>&#x2713;&#xFE0E;</a>"
 
 			// show slots up to the limit
@@ -418,7 +423,7 @@ mob/new_player
 
 			return {"
 				<tr><td class='latejoin-link'>
-					[(J.limit == -1 || c < J.limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' style='color: [J.linkcolor];' title='Join the round as [J.name].'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
+					[(limit == -1 || c < limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' style='color: [J.linkcolor];' title='Join the round as [J.name].'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
 					</td>
 					<td class='latejoin-cards'>[jointext(slots, " ")]</td>
 				</tr>
@@ -816,6 +821,7 @@ a.latejoin-card:hover {
 		set name = ".observe_round"
 
 		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
+			if(!src.client) return
 			var/mob/dead/observer/observer = new()
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
 				src.client.using_antag_token = 0

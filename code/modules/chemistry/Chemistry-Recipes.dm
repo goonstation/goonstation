@@ -8,9 +8,11 @@ datum
 		var/list/required_reagents = new/list()
 		var/list/inhibitors = list()
 		var/instant = 1
+#ifdef CHEM_REACTION_PRIORITIES
 		//lower priorities happen last
 		//higher priorities happen first
 		var/priority = 10
+#endif
 
 		var/min_temperature = -INFINITY		//Will not react if below this
 		var/required_temperature = -1 //Not used by default. -1 = not used. //Positive values for reaction to take place when hotter than value, negative to take place when cooler than abs(value)
@@ -32,8 +34,10 @@ datum
 		var/consume_all = 0 //If set to 1, the recipe will consume ALL of its components instead of just proportional parts.
 
 
+#ifdef CHEM_REACTION_PRIORITIES
 		proc/operator<(var/datum/chemical_reaction/reaction)
 			return priority > reaction.priority
+#endif
 
 		proc/on_reaction(var/datum/reagents/holder, var/created_volume)
 			return
@@ -580,7 +584,9 @@ datum
 			inhibitors = list("stabiliser")
 			instant = 1
 			mix_phrase = "The mixture implodes suddenly."
+#ifdef CHEM_REACTION_PRIORITY
 			priority = 20
+#endif
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				ldmatter_reaction(holder, created_volume)
 				return
@@ -1113,7 +1119,6 @@ datum
 			result = "rcola"
 			required_reagents = list("rum" = 1, "cola" = 1)
 			result_amount = 2
-			priority = 9
 			mix_phrase = "A sweet and bitter aroma fills the air."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
@@ -1340,7 +1345,7 @@ datum
 
 		cocktail_longisland_rcola
 			name = "Long Island Iced Tea"
-			id = "longisland"
+			id = "longisland_rcola"
 			result = "longisland"
 			required_reagents = list("tequila" = 1, "screwdriver" = 1, "gin" = 1, "juice_lemon" = 1, "rcola" = 1)
 			result_amount = 6
@@ -2362,7 +2367,7 @@ datum
 			required_reagents = list("triplepiss" = 1, "histamine" = 1, "methamphetamine" = 1, "water_holy" = 1, "pacid" = 1, "neurotoxin" = 1)
 			//required_reagents = list("methamphetamine" = 1, "water_holy" = 1, "pacid" = 1, "neurotoxin" = 1, "formaldehyde" = 1)
 			result_amount = 2
-			priority = 9
+			inhibitors = list("stabiliser")
 			mix_phrase = "A sweet and sugary scent drifts from the unpleasant milky substance."
 			on_reaction(var/datum/reagents/holder)
 				if(prob(90))		// high chance of not working to piss them off
@@ -2587,6 +2592,7 @@ datum
 						gathered += M.max_health - round(M.max_health / 2)
 						//M.max_health = round(M.max_health / 2)
 						M.setStatus("maxhealth-", null, -round(M.max_health / 2))
+						health_update_queue |= M
 						if(hascall(M,"add_stam_mod_max"))
 							M:add_stam_mod_max("anima_drain", -25)
 					if(gathered >= 80)
@@ -2664,7 +2670,9 @@ datum
 			// This should really require a closed container and an extreme phase change... or some other pseudo-science thing
 			mix_phrase = "A tiny point of light blooms within the material, and quickly grows to envelop the entire container. Your life flashes before your eyes."
 			required_temperature = T0C + 6344 // IMPOSSIBRUUUU
-			priority = INFINITY
+#ifdef CHEM_REACTION_PRIORITY
+			priority = INFINITY // should hopefully be handled in blacklists now
+#endif
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
@@ -2697,7 +2705,9 @@ datum
 			required_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1, "stabiliser" = 1)
 			result_amount = 3
 			mix_phrase = "The mixture sets into a greyish powder!"
+#ifdef CHEM_REACTION_PRIORITY
 			priority = 9
+#endif
 
 		smoke
 			name = "Smoke"
@@ -2709,7 +2719,9 @@ datum
 			consume_all = 1
 			result_amount = 3
 			mix_phrase = "The mixture quickly turns into a pall of smoke!"
+#ifdef CHEM_REACTION_PRIORITY
 			priority = 9
+#endif
 			on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 				if (holder)
 					holder.smoke_start(created_volume)
@@ -2721,7 +2733,9 @@ datum
 			required_reagents = list("chlorine" = 1, "sugar" = 1, "hydrogen" = 1, "platinum" = 1, "stabiliser" = 1)
 			result_amount = 3
 			mix_phrase = "The mixture becomes volatile and airborne."
+#ifdef CHEM_REACTION_PRIORITY
 			priority = 9
+#endif
 
 		unstable_propellant
 			name = "unstable propellant"
@@ -2732,7 +2746,9 @@ datum
 			special_log_handling = 1
 			consume_all = 1
 			mix_phrase = "The mixture violently sprays everywhere!"
+#ifdef CHEM_REACTION_PRIORITY
 			priority = 9
+#endif
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				classic_smoke_reaction(holder, min(round(created_volume / 5) + 1, 4), get_turf(holder.my_atom))
 
@@ -4012,7 +4028,6 @@ datum
 			result_amount = 9 //18
 			mix_phrase = "The mixture of particles settles together with so much ease that it seems like it has been waiting for this moment for a long time."
 			mix_sound = 'sound/misc/fuse.ogg'
-			priority = 14
 
 		good_cement //lime, alumina, magnesia, iron (iii) oxide, calcium sulfate
 			name = "good cement"
@@ -4022,7 +4037,7 @@ datum
 			result_amount = 5 //14
 			mix_phrase = "The mixture of particles settles together with ease."
 			mix_sound = 'sound/misc/fuse.ogg'
-			priority = 13
+			inhibitors = list("sulfur")
 
 		okay_cement //lime, alumina, magnesia, iron (iii) oxide
 			name = "okay cement"
@@ -4032,7 +4047,7 @@ datum
 			result_amount = 4 //13
 			mix_phrase = "The mixture of particles settles together complacently."
 			mix_sound = 'sound/misc/fuse.ogg'
-			priority = 12
+			inhibitors = list("gypsum")
 
 		poor_cement //lime, alumina, iron (iii) oxide
 			name = "poor cement"
@@ -4042,7 +4057,7 @@ datum
 			result_amount = 2 //
 			mix_phrase = "The mixture of particles settles together... barely."
 			mix_sound = 'sound/misc/fuse.ogg'
-			priority = 11
+			inhibitors = list("magnesium")
 
 		perfect_concrete
 			name = "perfect concrete"

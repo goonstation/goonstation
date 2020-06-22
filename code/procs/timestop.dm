@@ -152,13 +152,17 @@ proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE) // loopfr
 
 /obj/effect/timefield/proc/freeze_mob(mob/living/L)
 	L.ai_prefrozen = L.ai_active
-	L.ai_active = 0
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		H.ai_set_active(0)
 	L.paused = 1
 	if(freezeloop)
 		mobs.Remove(L)
 
 /obj/effect/timefield/proc/unfreeze_mob(mob/living/L)
-	L.ai_active = L.ai_prefrozen // makes sure the ai is the same as before
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		H.ai_set_active(L.ai_prefrozen)  // makes sure the ai is the same as before
 	L.paused = 0
 	L.TakeDamage("chest", L.pausedbrute, 0, 0, DAMAGE_BLUNT) // see below
 	L.TakeDamage("chest", 0, L.pausedburn, 0, DAMAGE_BURN) // see below

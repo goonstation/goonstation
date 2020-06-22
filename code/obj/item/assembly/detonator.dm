@@ -259,14 +259,14 @@
 	if (src.defused)
 		src.attachedTo.visible_message("<b><span class='alert'>The cut detonation wire emits a spark. The detonator signal never reached the detonator unit.</span></b>")
 		return
-	if (src.part_t.air_contents.return_pressure() < 400 || src.part_t.air_contents.toxins < (4*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C))
+	if (MIXTURE_PRESSURE(src.part_t.air_contents) < 400 || src.part_t.air_contents.toxins < (4*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C))
 		src.attachedTo.visible_message("<b><span class='alert'>A sparking noise is heard as the igniter goes off. The plasma tank fails to explode, merely burning the circuits of the detonator.</span></b>")
 		src.attachedTo.det = null
 		src.attachedTo.overlay_state = null
 		del(src)
 		return
 	src.attachedTo.visible_message("<b><span class='alert'>A sparking noise is heard as the igniter goes off. The plasma tank blows, creating a microexplosion and rupturing the canister.</span></b>")
-	if (attachedTo.air_contents.return_pressure() < 7000)
+	if (MIXTURE_PRESSURE(attachedTo.air_contents) < 7000)
 		src.attachedTo.visible_message("<b><span class='alert'>The ruptured canister, due to a serious lack of pressure, fails to explode into shreds and leaks its contents into the air.</span></b>")
 		src.attachedTo.health = 0
 		src.attachedTo.healthcheck()
@@ -288,7 +288,7 @@
 	message_admins("A canister bomb detonates at [epicenter.loc.name] ([showCoords(epicenter.x, epicenter.y, epicenter.z)])")
 	src.attachedTo.visible_message("<b><span class='alert'>The ruptured canister shatters from the pressure, and the hot gas ignites.</span></b>")
 
-	var/power = min(850 * (attachedTo.air_contents.return_pressure() + attachedTo.air_contents.temperature - 107000) / 233196469.0 + 200, 7000) //the second arg is the max explosion power
+	var/power = min(850 * (MIXTURE_PRESSURE(attachedTo.air_contents) + attachedTo.air_contents.temperature - 107000) / 233196469.0 + 200, 7000) //the second arg is the max explosion power
 	//if (power == 150000) //they reached the cap SOMEHOW? well dang they deserve a medal
 		//src.builtBy.unlock_medal("", 1) //WIRE TODO: make new medal for this
 	explosion_new(attachedTo, epicenter, power)

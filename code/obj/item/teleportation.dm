@@ -245,6 +245,11 @@ Frequency:
 			user.show_text("Error: invalid coordinates detected, please try again.", "red")
 			return
 
+		our_loc = get_turf(src)
+		if (our_loc && isrestrictedz(our_loc.z))
+			user.show_text("The [src.name] does not seem to work here!", "red")
+			return
+
 		var/obj/portal/P = unpool(/obj/portal)
 		P.set_loc(our_loc)
 		portals += P

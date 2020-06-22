@@ -1,3 +1,9 @@
+
+#define _SET_SIGNAL_GAS(GAS, _, _, ID, ...) signal.data[#ID + #GAS] = round(100*air_##ID.GAS/ID##_total_moles);
+#define _RESET_SIGNAL_GAS(GAS, _, _, ID, ...) signal.data[#ID + #GAS] = 0;
+#define SET_SIGNAL_MIXTURE(ID) APPLY_TO_GASES(_SET_SIGNAL_GAS, ID)
+#define RESET_SIGNAL_MIXTURE(ID) APPLY_TO_GASES(_RESET_SIGNAL_GAS, ID)
+
 obj/machinery/atmospherics/mixer
 	icon = 'icons/obj/atmospherics/mixer.dmi'
 	icon_state = "intact_off"
@@ -157,72 +163,54 @@ obj/machinery/atmospherics/mixer
 			else
 				signal.data["pump_status"] = "Online"
 
-			//Report gas concentration of input1
-			var/i1total_moles = air_in1.total_moles()
-			if(i1total_moles > 0)
-				signal.data["input1o2"] = round(100*air_in1.oxygen/i1total_moles)
-				signal.data["input1co2"] = round(100*air_in1.carbon_dioxide/i1total_moles)
-				signal.data["input1n2"] = round(100*air_in1.nitrogen/i1total_moles)
-				signal.data["input1p"] = round(100*air_in1.toxins/i1total_moles)
+			//Report gas concentration of in1
+			var/in1_total_moles = TOTAL_MOLES(air_in1)
+			if(in1_total_moles > 0)
+				SET_SIGNAL_MIXTURE(in1)
 				var/tgmoles = 0
-				if(air_in1.trace_gases && air_in1.trace_gases.len)
+				if(length(air_in1.trace_gases))
 					for(var/datum/gas/trace_gas in air_in1.trace_gases)
 						tgmoles += trace_gas.moles
-				signal.data["input1tg"] = round(100*tgmoles/i1total_moles)
-				signal.data["input1kpa"] = round(air_in1.return_pressure(), 0.1)
-				signal.data["input1temp"] = round(air_in1.temperature - T0C)
+				signal.data["in1tg"] = round(100*tgmoles/in1_total_moles)
+				signal.data["in1kpa"] = round(MIXTURE_PRESSURE(air_in1), 0.1)
+				signal.data["in1temp"] = round(air_in1.temperature - T0C)
 			else
-				signal.data["input1o2"] = 0
-				signal.data["input1co2"] = 0
-				signal.data["input1n2"] = 0
-				signal.data["input1p"] = 0
-				signal.data["input1tg"] = 0
+				RESET_SIGNAL_MIXTURE(in1)
+				signal.data["in1tg"] = 0
 
-			//Report gas concentration of input2
-			var/i2total_moles = air_in2.total_moles()
-			if(i2total_moles > 0)
-				signal.data["input2o2"] = round(100*air_in2.oxygen/i2total_moles)
-				signal.data["input2co2"] = round(100*air_in2.carbon_dioxide/i2total_moles)
-				signal.data["input2n2"] = round(100*air_in2.nitrogen/i2total_moles)
-				signal.data["input2p"] = round(100*air_in2.toxins/i2total_moles)
+			//Report gas concentration of in2
+			var/in2_total_moles = TOTAL_MOLES(air_in2)
+			if(in2_total_moles > 0)
+				SET_SIGNAL_MIXTURE(in2)
 				var/tgmoles = 0
-				if(air_in2.trace_gases && air_in2.trace_gases.len)
+				if(length(air_in2.trace_gases))
 					for(var/datum/gas/trace_gas in air_in2.trace_gases)
 						tgmoles += trace_gas.moles
-				signal.data["input2tg"] = round(100*tgmoles/i2total_moles)
-				signal.data["input2kpa"] = round(air_in2.return_pressure(), 0.1)
-				signal.data["input2temp"] = round(air_in2.temperature - T0C)
+				signal.data["in2tg"] = round(100*tgmoles/in2_total_moles)
+				signal.data["in2kpa"] = round(MIXTURE_PRESSURE(air_in2), 0.1)
+				signal.data["in2temp"] = round(air_in2.temperature - T0C)
 			else
-				signal.data["input2o2"] = 0
-				signal.data["input2co2"] = 0
-				signal.data["input2n2"] = 0
-				signal.data["input2p"] = 0
-				signal.data["input2tg"] = 0
+				RESET_SIGNAL_MIXTURE(in2)
+				signal.data["in2tg"] = 0
 
 			//Report transferred concentrations
 			signal.data["i1trans"] = node1_concentration*100
 			signal.data["i2trans"] = node2_concentration*100
 
-			//Report gas concentration of output
-			var/ototal_moles = air_out.total_moles()
-			if(ototal_moles > 0)
-				signal.data["outputo2"] = round(100*air_out.oxygen/ototal_moles)
-				signal.data["outputco2"] = round(100*air_out.carbon_dioxide/ototal_moles)
-				signal.data["outputn2"] = round(100*air_out.nitrogen/ototal_moles)
-				signal.data["outputp"] = round(100*air_out.toxins/ototal_moles)
+			//Report gas concentration of out
+			var/out_total_moles = TOTAL_MOLES(air_out)
+			if(out_total_moles > 0)
+				SET_SIGNAL_MIXTURE(out)
 				var/tgmoles = 0
-				if(air_out.trace_gases && air_out.trace_gases.len)
+				if(length(air_out.trace_gases))
 					for(var/datum/gas/trace_gas in air_out.trace_gases)
 						tgmoles += trace_gas.moles
-				signal.data["outputtg"] = round(100*tgmoles/ototal_moles)
-				signal.data["outputkpa"] = round(air_out.return_pressure(), 0.1)
-				signal.data["outputtemp"] = round(air_out.temperature - T0C)
+				signal.data["outtg"] = round(100*tgmoles/out_total_moles)
+				signal.data["outkpa"] = round(MIXTURE_PRESSURE(air_out), 0.1)
+				signal.data["outtemp"] = round(air_out.temperature - T0C)
 			else
-				signal.data["outputo2"] = 0
-				signal.data["outputco2"] = 0
-				signal.data["outputn2"] = 0
-				signal.data["outputp"] = 0
-				signal.data["outputtg"] = 0
+				RESET_SIGNAL_MIXTURE(out)
+				signal.data["outtg"] = 0
 
 			//boutput(world, "[id_tag] posted a signal for [master_id]!")
 			radio_connection.post_signal(src, signal)
@@ -235,7 +223,7 @@ obj/machinery/atmospherics/mixer
 		if(!on)
 			return 0
 
-		var/output_starting_pressure = air_out.return_pressure()
+		var/output_starting_pressure = MIXTURE_PRESSURE(air_out)
 
 		if(output_starting_pressure >= target_pressure)
 			//No need to mix if target is already full!
@@ -253,8 +241,8 @@ obj/machinery/atmospherics/mixer
 		if(air_in2.temperature > 0)
 			transfer_moles2 = (node2_concentration*pressure_delta)*air_out.volume/(air_in2.temperature * R_IDEAL_GAS_EQUATION)
 
-		var/air_in1_moles = air_in1.total_moles()
-		var/air_in2_moles = air_in2.total_moles()
+		var/air_in1_moles = TOTAL_MOLES(air_in1)
+		var/air_in2_moles = TOTAL_MOLES(air_in2)
 
 		if((air_in1_moles < transfer_moles1) || (air_in2_moles < transfer_moles2))
 			if(transfer_moles1 != 0 && transfer_moles2 !=0)
@@ -448,3 +436,9 @@ obj/machinery/atmospherics/mixer
 /obj/machinery/atmospherics/mixer/flipped
 	icon_state = "intact_flipped_off"
 	flipped = 1
+
+
+#undef _SET_SIGNAL_GAS
+#undef _RESET_SIGNAL_GAS
+#undef SET_SIGNAL_MIXTURE
+#undef RESET_SIGNAL_MIXTURE

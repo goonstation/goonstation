@@ -78,7 +78,7 @@
 		step(I, get_dir(I, src))
 	return
 
-/obj/rack/dispose()
+/obj/rack/disposing()
 	var/turf/OL = get_turf(src)
 	loc = null
 	if (!OL)

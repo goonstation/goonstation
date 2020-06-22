@@ -128,6 +128,7 @@ toxic - poisons
 
 /datum/projectile/bullet/revolver_38
 	name = "bullet"
+	sname = "execute"
 	power = 35
 	ks_ratio = 1.0
 	implanted = /obj/item/implant/projectile/bullet_38
@@ -268,6 +269,7 @@ toxic - poisons
 
 	//haha gannets, fuck you I stole ur shit! - kyle
 	law_giver
+		sname = "knockout"
 		caliber = 0.355
 		casing = /obj/item/casing/small
 		shot_sound = 'sound/weapons/tranq_pistol.ogg'
@@ -433,6 +435,7 @@ toxic - poisons
 
 	lawbringer
 		name = "lawbringer"
+		sname = "bigshot"
 		power = 1
 		cost = 150
 
@@ -615,6 +618,7 @@ toxic - poisons
 
 /datum/projectile/bullet/flare
 	name = "flare"
+	sname = "hotshot"
 	shot_sound = 'sound/weapons/flaregun.ogg'
 	power = 20
 	cost = 1
@@ -898,6 +902,7 @@ toxic - poisons
 
 /datum/projectile/bullet/smoke
 	name = "smoke grenade"
+	sname = "smokeshot"
 	window_pass = 0
 	icon_state = "40mmB"
 	damage_type = D_KINETIC
@@ -1208,6 +1213,7 @@ toxic - poisons
 
 /datum/projectile/bullet/clownshot
 	name = "clownshot"
+	sname = "clownshot"
 	power = 1
 	cost = 15				//This should either cost a lot or a little I don't know. On one hand if it costs nothing you can truly tormet clowns with it, but on the other hand if it costs your full charge, then the clown will know how much you hate it because of how much you sacraficed to harm it. I settled for a med amount...
 	damage_type = D_KINETIC

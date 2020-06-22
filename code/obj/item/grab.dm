@@ -18,7 +18,7 @@
 	var/can_pin = 1
 	var/dropped = 0
 
-	New(atom/loc)
+	New(atom/loc, mob/assailant = null)
 		..()
 
 		var/icon/hud_style = hud_style_selection[get_hud_style(src.assailant)]
@@ -33,6 +33,7 @@
 			ima.appearance_flags = RESET_COLOR | KEEP_APART | RESET_TRANSFORM
 
 			I.UpdateOverlays(ima, "grab", 0, 1)
+		src.assailant = assailant
 
 	proc/post_item_setup()//after grab is done being made with item
 		return
@@ -86,7 +87,7 @@
 		dropped += 1
 		if(src.assailant)
 			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
-		qdel(src)
+			qdel(src)
 
 	process(var/mult = 1)
 		if (check())
@@ -392,7 +393,7 @@
 			user.u_equip(src)
 			return 0
 
-		src.affecting.lastattacker = src
+		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
 		.= src.affecting
 		user.u_equip(src)
@@ -696,7 +697,7 @@
 
 
 /obj/item/grab/block
-	c_flags = EQUIPPED_WHILE_HELD_ACTIVE
+	c_flags = EQUIPPED_WHILE_HELD
 	item_grab_overlay_state = "grab_block_small"
 	icon_state = "grab_block"
 	name = "block"
@@ -710,12 +711,17 @@
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags |= HAS_GRAB_EQUIP
+			I.tooltip_rebuild = 1
 		setProperty("I_disorient_resist", 15)
 
 	disposing()
+		for(var/datum/objectProperty/equipment/P in src.properties)
+			P.removeFromMob(src, src.assailant)
+
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
 			I.c_flags &= ~HAS_GRAB_EQUIP
+			I.tooltip_rebuild = 1
 			SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_END, src)
 		else
 			if (assailant)
@@ -743,6 +749,16 @@
 			playsound(assailant.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0, 1.5)
 		qdel(src)
 
+	setProperty(propId, propVal)
+		var/datum/objectProperty/equipment/P = ..()
+		if(istype(P))
+			P.updateMob(src, src.assailant, propVal)
+
+	delProperty(propId)
+		var/propVal = getProperty(propId)
+		var/datum/objectProperty/equipment/P = ..()
+		if(istype(P))
+			P.removeFromMob(src, src.assailant, propVal)
 
 	proc/can_block(var/hit_type = null)
 		.= DEFAULT_BLOCK_PROTECTION_BONUS

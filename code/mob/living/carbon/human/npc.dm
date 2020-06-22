@@ -116,11 +116,17 @@
 
 //0 = Pasive, 1 = Getting angry, 2 = Attacking , 3 = Helping, 4 = Idle , 5 = Fleeing(??)
 
+/mob/living/carbon/human/proc/ai_set_active(active)
+	if (ai_active != active)
+		ai_active = active
 
-
+		if (ai_active)
+			ai_mobs.Add(src)
+		else
+			ai_mobs.Remove(src)
 
 /mob/living/carbon/human/proc/ai_init()
-	ai_active = 1
+	ai_set_active(1)
 	ai_laststep = 0
 	ai_state = AI_PASSIVE
 	ai_target = null
@@ -129,7 +135,7 @@
 	ai_attacked = 0
 
 /mob/living/carbon/human/proc/ai_stop()
-	ai_active = 0
+	ai_set_active(0)
 	ai_laststep = 0
 	ai_state = AI_PASSIVE
 	ai_target = null
@@ -146,7 +152,7 @@
 	if(hud) hud.update_resting()
 
 	if (isdead(src))
-		ai_active = 0
+		ai_set_active(0)
 		ai_target = null
 		walk_towards(src, null)
 		return
@@ -374,7 +380,7 @@
 					//	src.a_intent = INTENT_HELP
 					if(ishuman(ai_target))
 						src.r_hand:attack(ai_target, src)
-					else if(iscritter(ai_target))
+					else if(ismobcritter(ai_target))
 						var/mob/living/critter/C = ai_target
 						if (isalive(C))
 							C.attackby(src.r_hand, src)

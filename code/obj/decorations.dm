@@ -121,6 +121,7 @@
 	density = 0
 	layer = EFFECTS_LAYER_UNDER_1
 	flags = FLUID_SUBMERGE
+	text = "<font color=#5c5>s"
 	var/health = 50
 	var/destroyed = 0 // Broken shrubs are unable to vend prizes, this is also used to track a objective.
 	var/max_uses = 0 // The maximum amount of time one can try to shake this shrub for something.
@@ -600,7 +601,7 @@
 	opacity = 0
 	anchored = 2
 	density = 0
-	layer = 1.9
+	plane = PLANE_SPACE
 
 	x3
 		icon_state = "moon-green"
@@ -749,7 +750,7 @@ obj/decoration/ceilingfan
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!src.lit)
-			if (istype(W, /obj/item/weldingtool) && W:welding)
+			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				boutput(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 				src.lit = 1
 				update_icon()

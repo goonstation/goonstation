@@ -251,8 +251,8 @@
 	//Should be called before attacks begin. Make sure you call this when appropriate in your mouse procs etc.
 	//MBC : Removed Damage/Stamina modifications from preUse() and afterUse() and moved their to item.attack() to avoid race condition
 	proc/preUse(var/mob/person)
-		if(istype(person, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = person
+		if(isliving(person))
+			var/mob/living/H = person
 
 			if(STAMINA_NO_ATTACK_CAP && H.stamina > STAMINA_MIN_ATTACK)
 				var/cost = staminaCost
@@ -516,7 +516,7 @@
 					swipe_color = get_hex_color_from_blade(saber.bladecolor)
 			return
 
-		//Sampled these hex colors from each c-saber sprite.
+				//Sampled these hex colors from each c-saber sprite.
 		proc/get_hex_color_from_blade(var/C as text)
 			switch(C)
 				if("R")
@@ -1136,17 +1136,16 @@
 
 				var/flame_succ = 0
 				if (master)
-					if(istype(master,/obj/item/device/light/zippo))
+					if(istype(master,/obj/item/device/light/zippo) && master:on)
 						var/obj/item/device/light/zippo/Z = master
 						if (Z.reagents.get_reagent_amount("fuel"))
 							Z.reagents.remove_reagent("fuel", 1)
 							flame_succ = 1
 						else
 							flame_succ = 0
-					if (istype(master,/obj/item/weldingtool))
-						var/obj/item/weldingtool/WT = master
-						if (WT.reagents.get_reagent_amount("fuel"))
-							WT.reagents.remove_reagent("fuel", 1)
+					if (isweldingtool(master) && master:try_weld(user,0,-1,0,0))
+						if (master.reagents.get_reagent_amount("fuel"))
+							master.reagents.remove_reagent("fuel", 1)
 							flame_succ = 1
 						else
 							flame_succ = 0
@@ -1161,17 +1160,19 @@
 
 				if (flame_succ)
 					turf.hotspot_expose(T0C + 400, 400)
-					for(var/mob/A in turf)
-						if(isTarget(A))
-							if (iscritter(A))
-								var/obj/critter/crit = A
-								crit.blob_act(8) //REMOVE WHEN WE ADD BURNING OBJCRITTERS
-
-							if (A.getStatusDuration("burning"))
-								A.changeStatus("burning", tiny_time)
+					for(var/A in turf)
+						if(!isTarget(A))
+							continue
+						if(ismob(A))
+							var/mob/M = A
+							if (M.getStatusDuration("burning"))
+								M.changeStatus("burning", tiny_time)
 							else
-								A.changeStatus("burning", flame_succ ? time : tiny_time)
-							break
+								M.changeStatus("burning", flame_succ ? time : tiny_time)
+						else if(iscritter(A))
+							var/obj/critter/crit = A
+							crit.blob_act(8) //REMOVE WHEN WE ADD BURNING OBJCRITTERS
+						break
 
 					playsound(get_turf(master), 'sound/effects/flame.ogg', 50, 0)
 				else
@@ -1642,6 +1643,7 @@
 		pooled()
 			..()
 			transform = null
+			color = null
 
 	barrier
 		name = "energy barrier"

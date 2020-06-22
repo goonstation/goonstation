@@ -1,4 +1,4 @@
-/datum/random_event/major/sleeper_agent
+/datum/random_event/major/antag/sleeper_agent
 	name = "Awaken Sleeper Agents"
 	required_elapsed_round_time = 26.6 MINUTES
 	customization_available = 1
@@ -43,18 +43,14 @@
 				return
 		SPAWN_DBG(0)
 			src.lock = 1
-			do_event()
+			do_event(source=="spawn_antag")
 			src.lock = 0
 
-	proc/do_event()
+	proc/do_event(var/force_antags = 0)
 		gen_numbers()
 		gather_listeners()
 		if (!listeners.len)
 			return
-		SPAWN_DBG(10)
-			broadcast_sound(signal_intro)
-			play_all_numbers()
-			broadcast_sound(signal_intro)
 
 		if(!src.admin_override)
 			var/temp = rand(0,99)
@@ -63,32 +59,40 @@
 			else if (temp < 75)
 				num_agents = 2
 			else
-				num_agents = 0
+				if (force_antags)
+					num_agents = 1
+				else
+					num_agents = 0
 		if(!num_agents)
 			return
 
-		sleep(30 SECONDS) //30s to let the signal play
-		var/mob/living/carbon/human/H = null
-		num_agents = min(num_agents,candidates.len)
-		for(var/i = 0, i<num_agents,i++)
-			H = pick(candidates)
-			candidates -= H
-			if(istype(H))
-				awaken_sleeper_agent(H)
+		SPAWN_DBG(10)
+			broadcast_sound(signal_intro)
+			play_all_numbers()
+			broadcast_sound(signal_intro)
 
-		if (src.centcom_headline && src.centcom_message && random_events.announce_events)
-			SPAWN_DBG(src.message_delay)
+			sleep(30 SECONDS) //30s to let the signal play
+			var/mob/living/carbon/human/H = null
+			num_agents = min(num_agents,candidates.len)
+			for(var/i = 0, i<num_agents,i++)
+				H = pick(candidates)
+				candidates -= H
+				if(istype(H))
+					awaken_sleeper_agent(H)
+
+			if (src.centcom_headline && src.centcom_message && random_events.announce_events)
+				sleep(src.message_delay)
 				command_alert("[src.centcom_message]", "[src.centcom_headline]")
 
-		src.admin_override = initial(src.admin_override)
-#if ASS_JAM // no idea what this does or who did it
-		var/list/sleepers = list()
-		for(var/mob/listener in listeners)
-			sleepers += new/obj/machinery/sleeper(get_turf(listener))
-		sleep(3 SECONDS)
-		for(var/atom/sleeper in sleepers)
-			qdel(sleeper)
-#endif
+			src.admin_override = initial(src.admin_override)
+	#if ASS_JAM // no idea what this does or who did it
+			var/list/sleepers = list()
+			for(var/mob/listener in listeners)
+				sleepers += new/obj/machinery/sleeper(get_turf(listener))
+			sleep(3 SECONDS)
+			for(var/atom/sleeper in sleepers)
+				qdel(sleeper)
+	#endif
 		return
 
 	proc/awaken_sleeper_agent(var/mob/living/carbon/human/H)

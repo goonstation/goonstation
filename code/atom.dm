@@ -88,8 +88,8 @@
 	var/level = 2
 	var/flags = FPRINT
 	var/event_handler_flags = 0
-	var/temp_flags = 0
-	var/last_bumped = 0
+	var/tmp/temp_flags = 0
+	var/tmp/last_bumped = 0
 	var/shrunk = 0
 	var/texture_size = 0  //Override for the texture size used by setTexture.
 	var/open_to_sound = 0	//If hear_talk is triggered on this object, make my contents hear_talk as well
@@ -217,6 +217,11 @@
 
 		fingerprintshidden = null
 		tag = null
+
+		if(length(src.statusEffects))
+			for(var/datum/statusEffect/effect in src.statusEffects)
+				src.delStatus(effect)
+			src.statusEffects = null
 		..()
 	///Chemistry.
 
@@ -450,6 +455,9 @@
 	if (temp_flags & SPACE_PUSHING)
 		EndSpacePush(src)
 
+	src.attached_objs?.Cut()
+	src.attached_objs = null
+
 
 //mbc comment out becausae im pretty sure this caused issuesss!
 /*
@@ -504,6 +512,8 @@
 	//	A.glide_size = src.glide_size
 
 	if (direct & (direct - 1))
+		ignore_simple_light_updates = 1 //to avoid double-updating on diagonal steps when we are really only taking a single step
+
 		if (direct & NORTH)
 			if (direct & EAST)
 				if (step(src, NORTH))
@@ -526,6 +536,14 @@
 					step(src, WEST)
 				else if (step(src, WEST))
 					step(src, SOUTH)
+
+		ignore_simple_light_updates = 0
+
+		if(src.medium_lights)
+			update_medium_light_visibility()
+		if (src.mdir_lights)
+			update_mdir_light_visibility(direct)
+
 		return // this should in turn fire off its own slew of move calls, so don't do anything here
 
 	var/atom/A = src.loc
@@ -585,8 +603,16 @@
 	else
 		last_turf = 0
 
-	if(src.medium_lights)
-		update_medium_light_visibility()
+	if (!ignore_simple_light_updates)
+		if(src.medium_lights)
+			update_medium_light_visibility()
+		if (src.mdir_lights)
+			update_mdir_light_visibility(direct)
+
+
+//called once per player-invoked move, regardless of diagonal etc
+//called via pulls and mob steps
+/atom/movable/proc/OnMove(source = null)
 
 /atom/movable/proc/pull()
 	//set name = "Pull"
@@ -921,6 +947,8 @@
 
 	if(src.medium_lights)
 		update_medium_light_visibility()
+	if (src.mdir_lights)
+		update_mdir_light_visibility(src.dir)
 
 	return src
 
@@ -1032,7 +1060,7 @@
 
 
 /atom/proc/interact(var/mob/user)
-	if (isdead(user) || (!iscarbon(user) && !iscritter(user) && !issilicon(usr)))
+	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(usr)))
 		return
 
 	if (!istype(src.loc, /turf) || user.stat || user.hasStatus(list("paralysis", "stunned", "weakened")) || user.restrained())

@@ -67,7 +67,7 @@
 		else
 			dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (idle)<BR>"
 
-		var/per = 100* air_contents.return_pressure() / (2*ONE_ATMOSPHERE)
+		var/per = 100* MIXTURE_PRESSURE(air_contents) / (2*ONE_ATMOSPHERE)
 
 		dat += "Pressure: [round(per, 1)]%<BR></body>"
 

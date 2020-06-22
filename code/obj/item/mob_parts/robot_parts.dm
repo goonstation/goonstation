@@ -22,8 +22,9 @@
 	var/weight = 0     // for calculating speed modifiers
 	var/powerdrain = 0 // does this part consume any extra power
 
-	stamina_damage = 35
-	stamina_cost = 20
+	force = 6
+	stamina_damage = 40
+	stamina_cost = 23
 	stamina_crit_chance = 5
 
 	examine()
@@ -52,9 +53,8 @@
 		return standImage
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
-			if(!WELD.try_weld(user, 1))
+		if(isweldingtool(W))
+			if(!W:try_weld(user, 1))
 				return
 			if (src.ropart_get_damage_percentage(1) > 0)
 				src.ropart_mend_damage(20,0)
@@ -319,7 +319,7 @@
 			else
 				boutput(user, "<span class='alert'>You need at least two reinforced metal sheets to reinforce this component.</span>")
 				return
-		else if (istype(W, /obj/item/weldingtool))
+		else if (isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
 			boutput(user, "<span class='notice'>You remove the reinforcement metals from [src].</span>")
@@ -349,7 +349,7 @@
 	weight = 0.4
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
+		if (isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
 			boutput(user, "<span class='notice'>You remove the reinforcement metals from [src].</span>")
@@ -496,7 +496,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		//gonna hack this in with appearanceString
-		if ((appearanceString == "sturdy" || appearanceString == "heavy") && istype(W, /obj/item/weldingtool))
+		if ((appearanceString == "sturdy" || appearanceString == "heavy") && isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
 			boutput(user, "<span class='notice'>You remove the reinforcement metals from [src].</span>")
@@ -1165,303 +1165,6 @@
 // UPGRADES
 // Cyborg
 
-/obj/item/roboupgrade
-	name = "robot upgrade"
-	desc = "you shouldnt be able to see this!"
-	icon = 'icons/obj/robot_parts.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "electronic"
-	var/active = 0 // Is this module used like an item?
-	var/passive = 0 // Does this module always work once installed?
-	var/activated = 0 // live ingame variable
-	var/drainrate = 0 // How much charge the upgrade consumes while installed
-	var/charges = -1 // How many times a limited upgrade can be used before it is consumed (infinite if negative)
-	var/removable = 1 // Can be removed from the cyborg
-	var/borg_overlay = null // Used for cyborg update_apperance proc
-
-	attack_self(var/mob/user as mob)
-		if (!isrobot(user))
-			boutput(user, "<span class='alert'>Only cyborgs can activate this item.</span>")
-		else
-			if (!src.activated)
-				upgrade_activate()
-			else
-				upgrade_deactivate()
-
-	proc/upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (!user)
-			return 1
-		if (!src.activated)
-			src.activated = 1
-
-	proc/upgrade_deactivate(var/mob/living/silicon/robot/user as mob)
-		if (!user)
-			return 1
-		src.activated = 0
-
-/obj/item/roboupgrade/jetpack
-	name = "Propulsion Upgrade"
-	desc = "A small turbine allowing cyborgs to move freely in space."
-	icon_state = "up-jetpack"
-	drainrate = 25
-	borg_overlay = "up-jetpack"
-
-	upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (..()) return
-		user.jetpack = 1
-
-	upgrade_deactivate(var/mob/living/silicon/robot/user as mob)
-		if (..()) return
-		user.jetpack = 0
-
-/obj/item/roboupgrade/healthgoggles
-	name = "ProDoc Healthgoggles Upgrade"
-	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
-	icon_state = "up-prodoc"
-	var/client/assigned = null
-	drainrate = 5
-
-	New()
-		//updateIcons()
-		return ..()
-
-	proc/updateIcons() //I wouldve liked to avoid this but i dont want to put this inside the mobs life proc as that would be more code.
-		while (assigned)
-			assigned.images.Remove(health_mon_icons)
-			addIcons()
-
-			if(loc != assigned.mob)
-				assigned.images.Remove(health_mon_icons)
-				assigned = null
-
-			sleep(2 SECONDS)
-
-	proc/addIcons()
-		if(assigned)
-			for(var/image/I in health_mon_icons)
-				if(!I || !I.loc || !src)
-					continue
-				if(I.loc.invisibility && I.loc != src.loc)
-					continue
-				else assigned.images.Add(I)
-
-	upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (..()) return
-		assigned = user.client
-		SPAWN_DBG(-1) updateIcons()
-		return
-
-	upgrade_deactivate(var/mob/living/silicon/robot/user as mob)
-		if (..()) return
-		if(assigned)
-			assigned.images.Remove(health_mon_icons)
-			assigned = null
-		return
-
-/obj/item/roboupgrade/spectro
-	name = "Spectroscopic Scanner Upgrade"
-	desc = "Fitted with a sensor array that provides a readout of the chemical composition of substances that are examined."
-	icon_state = "up-spectro"
-	drainrate = 5
-
-/obj/item/roboupgrade/efficiency
-	name = "Efficiency Upgrade"
-	desc = "A more advanced cooling system that causes cyborgs to consume less cell charge."
-	icon_state = "up-power"
-	passive = 1
-
-/obj/item/roboupgrade/speed
-	name = "Speed Upgrade"
-	desc = "A booster unit that safely allows cyborgs to move at high speed."
-	icon_state = "up-speed"
-	drainrate = 100
-	borg_overlay = "up-speed"
-
-	upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (!user) return
-		var/mob/living/silicon/robot/R = user
-		if (!R.part_leg_r && !R.part_leg_l)
-			boutput(user, "This upgrade cannot be used when you have no legs!")
-			src.activated = 0
-		else ..()
-
-/obj/item/roboupgrade/physshield
-	name = "Force Shield Upgrade"
-	desc = "A force field generator that protects cyborgs from structural damage."
-	icon_state = "up-Pshield"
-	drainrate = 100
-	borg_overlay = "up-pshield"
-
-/obj/item/roboupgrade/fireshield
-	name = "Heat Shield Upgrade"
-	desc = "An air diffusion field that protects cyborgs from heat damage."
-	icon_state = "up-Fshield"
-	drainrate = 100
-	borg_overlay = "up-fshield"
-
-/obj/item/roboupgrade/teleport
-	name = "Teleporter Upgrade"
-	desc = "A personal teleportation device that allows a cyborg to transport itself instantly."
-	icon_state = "up-teleport"
-	active = 1
-	drainrate = 250
-
-	upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (!user || !src || src.loc != user || !issilicon(user) || !src.active)
-			return
-		if (user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") >  0 || !isalive(user))
-			user.show_text("Not when you're incapacitated.", "red")
-			return
-		if (!isturf(user.loc))
-			user.show_text("You can't teleport from inside a container.", "red")
-			return
-
-		var/list/L = list()
-		var/list/areaindex = list()
-		for(var/obj/item/device/radio/beacon/R in tracking_beacons)//world)
-			if (!istype(R, /obj/item/device/radio/beacon/jones))
-				LAGCHECK(LAG_LOW)
-				var/turf/T = find_loc(R)
-				if (!T)	continue
-
-				var/tmpname = T.loc.name
-				if(areaindex[tmpname]) tmpname = "[tmpname] ([++areaindex[tmpname]])"
-				else areaindex[tmpname] = 1
-				L[tmpname] = R
-
-		for (var/obj/item/implant/tracking/I in tracking_implants)//world)
-			LAGCHECK(LAG_LOW)
-			if (!I.implanted || !ismob(I.loc)) continue
-			else
-				var/mob/M = I.loc
-				if (isdead(M))
-					if (M.timeofdeath + 6000 < world.time) continue
-				var/tmpname = M.real_name
-				if(areaindex[tmpname]) tmpname = "[tmpname] ([++areaindex[tmpname]])"
-				else areaindex[tmpname] = 1
-				L[tmpname] = I
-
-		var/desc = input("Area to jump to","Teleportation") in L
-
-		if (!user || !src || src.loc != user || !issilicon(user))
-			if (user) user.show_text("Teleportation failed.", "red")
-			return
-		if (user.mind && user.mind.current != src.loc) // Debrained or whatever.
-			user.show_text("Teleportation failed.", "red")
-			return
-		if (user.getStatusDuration("stunned") || getStatusDuration("weakened") || user.getStatusDuration("paralysis") >  0 || !isalive(user))
-			user.show_text("Not when you're incapacitated.", "red")
-			return
-		if (!src.active)
-			user.show_text("Cannot teleport, upgrade is inactive.", "red")
-			return
-		if (!desc || !L[desc])
-			user.show_text("Invalid selection.", "red")
-			return
-		if (!isturf(user.loc))
-			user.show_text("You can't teleport from inside a container.", "red")
-			return
-
-		do_teleport(user,L[desc],0)
-		return
-
-/obj/item/roboupgrade/repair
-	name = "Self-Repair Upgrade"
-	desc = "An infusion of nanobots that allow a cyborg to automatically repair sustained damage."
-	icon_state = "up-repair"
-	drainrate = 60
-	borg_overlay = "up-repair"
-
-/obj/item/roboupgrade/aware
-	name = "Recovery Upgrade"
-	desc = "Allows a cyborg to immediatley reboot its systems if incapacitated in any way."
-	icon_state = "up-aware"
-	active = 1
-	drainrate = 3333 //Was 100. jfc
-
-	upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (!user) return
-		boutput(user, "<b>REBOOTING...</b>")
-		user.delStatus("stunned")
-		user.delStatus("weakened")
-		user.delStatus("paralysis")
-		user.blinded = 0
-		user.take_eye_damage(-INFINITY)
-		user.take_eye_damage(-INFINITY, 1)
-		user.blinded = 0
-		user.take_ear_damage(-INFINITY)
-		user.take_ear_damage(-INFINITY, 1)
-		user.change_eye_blurry(-INFINITY)
-		user.druggy = 0
-		user.change_misstep_chance(-INFINITY)
-		user.dizziness = 0
-
-		boutput(user, "<b>REBOOT COMPLETE</b>")
-
-/obj/item/roboupgrade/expand
-	name = "Expansion Upgrade"
-	desc = "A matter miniaturizer that frees up room in a cyborg for more upgrades."
-	icon_state = "up-expand"
-	active = 1
-	charges = 1
-
-	upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (!user || src.qdeled) return
-		user.max_upgrades++
-		boutput(user, "<span class='notice'>You can now hold up to [user.max_upgrades] upgrades!</span>")
-		user.upgrades.Remove(src)
-		qdel(src)
-
-/obj/item/roboupgrade/rechargepack
-	name = "Recharge Pack"
-	desc = "A single-use reserve battery that can recharge a cyborg's cell to full capacity."
-	icon_state = "up-recharge"
-	active = 1
-	charges = 1
-
-	upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (!user) return
-		if (user.cell)
-			var/obj/item/cell/C = user.cell
-			C.charge = C.maxcharge
-			boutput(user, "<span class='notice'>Cell has been recharged to [user.cell.charge]!</span>")
-		else
-			boutput(user, "<span class='alert'>You don't have a cell to recharge!</span>")
-			src.charges++
-
-/obj/item/roboupgrade/repairpack
-	name = "Repair Pack"
-	desc = "A single-use nanite infusion that can repair up to 50% of a cyborg's structure."
-	icon_state = "up-reppack"
-	active = 1
-	charges = 1
-
-	upgrade_activate(var/mob/living/silicon/robot/user as mob)
-		if (!user) return
-		for(var/obj/item/parts/robot_parts/RP in user.contents) RP.ropart_mend_damage(100,100)
-		boutput(user, "<span class='notice'>All components repaired!</span>")
-
-/obj/item/roboupgrade/opticmeson
-	name = "Optical Meson Upgrade"
-	desc = "A set of advanced lens and detectors enabling a cyborg to see into the meson spectrum."
-	icon_state = "up-opticmes"
-	drainrate = 5
-	borg_overlay = "up-meson"
-
-/obj/item/roboupgrade/visualizer
-	name = "Construction Visualizer"
-	desc = "A set of advanced lens which display 3D real time blueprints."
-	icon_state = "up-opticmes"
-	drainrate = 5
-	borg_overlay = "up-meson"
-/* doesn't really do anything atm
-/obj/item/roboupgrade/opticthermal
-	name = "Optical Thermal Upgrade"
-	desc = "A set of advanced lens and detectors enabling a cyborg to see into the thermal spectrum."
-	icon_state = "up-opticthe"
-	borg_overlay = "up-thermal"
-	drainrate = 10
-*/
 // AI Upgrades
 
 /obj/item/roboupgrade/ai

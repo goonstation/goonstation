@@ -150,19 +150,11 @@
 				return
 			if (iscarbon(AM))
 				var/mob/M = AM
-				if (!M.can_slip())
-					return
-
-				M.pulling = null
-				boutput(M, "<span class='notice'>You slipped on the PDA!</span>")
-				playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
-				if (M.bioHolder.HasEffect("clumsy"))
-					M.changeStatus("stunned", 80)
-					M.changeStatus("weakened", 5 SECONDS)
-					JOB_XP(M, "Clown", 1)
-				else
-					M.changeStatus("weakened", 2 SECONDS)
-				M.force_laydown_standup()
+				if (M.slip())
+					boutput(M, "<span class='notice'>You slipped on the PDA!</span>")
+					if (M.bioHolder.HasEffect("clumsy"))
+						M.changeStatus("weakened", 5 SECONDS)
+						JOB_XP(M, "Clown", 1)
 
 	janitor
 		icon_state = "pda-j"
@@ -259,6 +251,12 @@
 
 /obj/item/device/pda2/disposing()
 	if (src.cartridge)
+		for (var/datum/computer/file/pda_program/P in src.cartridge.root.contents)
+			if (P.name == "Packet Sniffer")
+				radio_controller.remove_object(src, "[P:scan_freq]")
+				continue
+			if (P.name == "Ping Tool")
+				radio_controller.remove_object(src, "[P:send_freq]")
 		src.cartridge.dispose()
 		src.cartridge = null
 
@@ -267,6 +265,12 @@
 	src.scan_program = null
 
 	if (src.hd)
+		for (var/datum/computer/file/pda_program/P in src.hd.root.contents)
+			if (P.name == "Packet Sniffer")
+				radio_controller.remove_object(src, "[P:scan_freq]")
+				continue
+			if (P.name == "Ping Tool")
+				radio_controller.remove_object(src, "[P:send_freq]")
 		src.hd.dispose()
 		src.hd = null
 

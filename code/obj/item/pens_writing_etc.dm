@@ -30,8 +30,8 @@
 	var/webfont = null // atm this is used to add things to paper's font list. see /obj/item/pen/fancy and /obj/item/paper/attackby()
 	var/font_color = "black"
 	var/uses_handwriting = 0
-	stamina_damage = 3
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	rand_pos = 1
 	var/in_use = 0
 	var/color_name = "black"
@@ -539,6 +539,7 @@
 		if(!user.literate)
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
+		tooltip_rebuild = 1
 		var/str = copytext(html_encode(input(usr,"Label text?","Set label","") as null|text), 1, 32)
 		if(url_regex && url_regex.Find(str))
 			str = null
@@ -614,13 +615,13 @@
 	var/obj/item/pen/pen = null
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "clipboard0"
-	throwforce = 0
+	throwforce = 1
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 10
 	desc = "You can put paper on it. Ah, technology!"
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 10
+	stamina_cost = 1
 	stamina_crit_chance = 5
 
 	New()
@@ -754,6 +755,7 @@
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 10
+	tooltip_flags = REBUILD_DIST
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
 		if (istype(W, /obj/item/paper))
@@ -762,6 +764,7 @@
 				user.drop_item()
 				W.set_loc(src)
 				src.amount++
+				tooltip_rebuild = 1
 
 	attack_self(var/mob/user as mob)
 		show_window(user)
@@ -775,6 +778,7 @@
 
 		if(href_list["action"] == "retrieve")
 			usr.put_in_hand_or_drop(src.contents[text2num(href_list["id"])], usr)
+			tooltip_rebuild = 1
 			usr.visible_message("[usr] takes a piece of paper out of the folder.")
 		show_window(usr) // to refresh the window
 

@@ -158,7 +158,7 @@
 		if (breath_request>0)
 			var/datum/gas_mixture/environment = return_air()
 			if (environment)
-				var/breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+				var/breath_moles = TOTAL_MOLES(environment)*BREATH_PERCENTAGE
 				return remove_air(breath_moles)
 			else
 				return remove_air(breath_request)
@@ -283,43 +283,6 @@
 	get_desc()
 		. += "There's [src.amount ? src.amount : "no"] towel[s_es(src.amount)] in [src]."
 
-/obj/securearea
-	desc = "A warning sign which reads 'SECURE AREA'"
-	name = "SECURE AREA"
-	icon = 'icons/obj/decals/wallsigns.dmi'
-	icon_state = "securearea"
-	anchored = 1.0
-	opacity = 0
-	density = 0
-	layer = EFFECTS_LAYER_BASE
-	plane = PLANE_NOSHADOW_BELOW
-
-/obj/joeq
-	desc = "Here lies Joe Q. Loved by all. He was a terrorist. R.I.P."
-	name = "Joe Q. Memorial Plaque"
-	icon = 'icons/obj/decals/wallsigns.dmi'
-	icon_state = "rip"
-	anchored = 1.0
-	opacity = 0
-	density = 0
-
-/obj/fudad
-	desc = "In memory of Arthur \"F. U. Dad\" Muggins, the bravest, toughest Vice Cop SS13 has ever known. Loved by all. R.I.P."
-	name = "Arthur Muggins Memorial Plaque"
-	icon = 'icons/obj/decals/wallsigns.dmi'
-	icon_state = "rip"
-	anchored = 1.0
-	opacity = 0
-	density = 0
-
-/obj/juggleplaque
-	desc = "In loving and terrified memory of those who discovered the dark secret of Jugglemancy. \"E. Shirtface, Juggles the Clown, E. Klein, A.F. McGee,  J. Flarearms.\""
-	name = "Funny-Looking Memorial Plaque"
-	icon = 'icons/obj/decals/wallsigns.dmi'
-	icon_state = "rip"
-	anchored = 1.0
-	opacity = 0
-	density = 0
 
 /obj/lattice
 	desc = "A lightweight support lattice."
@@ -331,6 +294,7 @@
 	anchored = 1.0
 	layer = LATTICE_LAYER
 	//	flags = CONDUCT
+	text = "<font color=#333>+"
 
 	blob_act(var/power)
 		if(prob(75))
@@ -366,9 +330,8 @@
 				qdel(C)
 			qdel(src)
 			return
-		if (istype(C, /obj/item/weldingtool) && C:welding)
+		if (isweldingtool(C) && C:try_weld(user,0))
 			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
-			C:eyecheck(user)
 			new /obj/item/rods/steel(src.loc)
 			qdel(src)
 		if (istype(C, /obj/item/rods))
@@ -400,11 +363,9 @@
 			return
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
-			if(WELD.welding)
+		if (isweldingtool(W))
+			if(W:try_weld(user,1))
 				boutput(user, "<span class='notice'>You disassemble the barricade.</span>")
-				WELD.eyecheck(user)
 				var/obj/item/rods/R = new /obj/item/rods/steel(src.loc)
 				R.amount = src.strength
 				qdel(src)
@@ -553,115 +514,3 @@
 	src.visible_message("<span class='alert'><b>[src]</b> emits a loud thump and rattles a bit.</span>")
 
 	animate_storage_thump(src)
-
-/obj/handcuffdispenser
-	name = "handcuff dispenser"
-	desc = "A handy dispenser for handcuffs."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "dispenser_handcuffs"
-	pixel_y = 28
-	var/amount = 3
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/handcuffs))
-			user.u_equip(W)
-			qdel(W)
-			src.amount++
-			boutput(user, "<span class='notice'>You put a pair of handcuffs in the [src]. [amount] left in the dispenser.</span>")
-			src.icon_state = "dispenser_handcuffs"
-		return
-
-	attack_hand(mob/user as mob)
-		add_fingerprint(user)
-		if (src.amount >= 1)
-			src.amount--
-			user.put_in_hand_or_drop(new/obj/item/handcuffs, user.hand)
-			boutput(user, "<span class='alert'>You take a pair of handcuffs from the [src]. [amount] left in the dispenser.</span>")
-			if (src.amount <= 0)
-				src.icon_state = "dispenser_handcuffs0"
-		else
-			boutput(user, "<span class='alert'>There's no handcuffs left in the [src]!</span>")
-
-/obj/latexglovesdispenser
-	name = "latex gloves dispenser"
-	desc = "A handy dispenser for latex gloves."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "dispenser_gloves"
-	pixel_y = 28
-	var/amount = 3
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/clothing/gloves/latex))
-			user.u_equip(W)
-			qdel(W)
-			src.amount++
-			boutput(user, "<span class='notice'>You put a pair of latex gloves in the [src]. [amount] left in the dispenser.</span>")
-			src.icon_state = "dispenser_gloves"
-		return
-
-	attack_hand(mob/user as mob)
-		add_fingerprint(user)
-		if (src.amount >= 1)
-			src.amount--
-			user.put_in_hand_or_drop(new/obj/item/clothing/gloves/latex, user.hand)
-			boutput(user, "<span class='alert'>You take a pair of latex gloves from the [src]. [amount] left in the dispenser.</span>")
-			if (src.amount <= 0)
-				src.icon_state = "dispenser_gloves0"
-		else
-			boutput(user, "<span class='alert'>There's no latex gloves left in the [src]!</span>")
-
-/obj/medicalmaskdispenser
-	name = "medical mask dispenser"
-	desc = "A handy dispenser for medical masks."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "dispenser_mask"
-	pixel_y = 28
-	var/amount = 3
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/clothing/mask/medical))
-			user.u_equip(W)
-			qdel(W)
-			src.amount++
-			boutput(user, "<span class='notice'>You put a pair of medical masks in the [src]. [amount] left in the dispenser.</span>")
-			src.icon_state = "dispenser_mask"
-		return
-
-	attack_hand(mob/user as mob)
-		add_fingerprint(user)
-		if (src.amount >= 1)
-			src.amount--
-			user.put_in_hand_or_drop(new/obj/item/clothing/mask/medical, user.hand)
-			boutput(user, "<span class='alert'>You take a pair of medical masks from the [src]. [amount] left in the dispenser.</span>")
-			if (src.amount <= 0)
-				src.icon_state = "dispenser_mask0"
-		else
-			boutput(user, "<span class='alert'>There's no medical masks left in the [src]!</span>")
-
-/obj/glassesdispenser
-	name = "prescription glass dispenser"
-	desc = "A handy dispenser for prescription glasses."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "dispenser_glasses"
-	pixel_y = 28
-	var/amount = 3
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/clothing/glasses/regular))
-			user.u_equip(W)
-			qdel(W)
-			src.amount++
-			boutput(user, "<span class='notice'>You put a pair of prescription glass in the [src]. [amount] left in the dispenser.</span>")
-			src.icon_state = "dispenser_glasses"
-		return
-
-	attack_hand(mob/user as mob)
-		add_fingerprint(user)
-		if (src.amount >= 1)
-			src.amount--
-			user.put_in_hand_or_drop(new/obj/item/clothing/glasses/regular, user.hand)
-			boutput(user, "<span class='alert'>You take a pair of prescription glass from the [src]. [amount] left in the dispenser.</span>")
-			if (src.amount <= 0)
-				src.icon_state = "dispenser_glasses0"
-		else
-			boutput(user, "<span class='alert'>There's no prescription glass left in the [src]!</span>")

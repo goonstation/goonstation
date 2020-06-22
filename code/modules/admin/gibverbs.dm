@@ -1,6 +1,6 @@
 
 /client/proc/cmd_admin_gib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Gib"
 	set popup_menu = 0
 
@@ -30,7 +30,7 @@
 
 
 /client/proc/cmd_admin_partygib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Party Gib"
 	set popup_menu = 0
 
@@ -47,7 +47,7 @@
 		SPAWN_DBG(0.5 SECONDS) M.partygib()
 
 /client/proc/cmd_admin_owlgib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Owl Gib"
 	set popup_menu = 0
 
@@ -64,7 +64,7 @@
 		SPAWN_DBG(0.5 SECONDS) M.owlgib()
 
 /client/proc/cmd_admin_firegib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Fire Gib"
 	set popup_menu = 0
 
@@ -81,7 +81,7 @@
 		SPAWN_DBG(0.5 SECONDS) M.firegib()
 
 /client/proc/cmd_admin_elecgib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Elec Gib"
 	set popup_menu = 0
 
@@ -98,7 +98,7 @@
 		SPAWN_DBG(0.5 SECONDS) M.elecgib()
 
 /client/proc/cmd_admin_icegib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Ice Gib"
 	set popup_menu = 0
 
@@ -119,7 +119,7 @@
 		SPAWN_DBG(0.5 SECONDS) M:become_ice_statue()
 
 /client/proc/cmd_admin_goldgib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Gold Gib"
 	set popup_menu = 0
 
@@ -141,7 +141,7 @@
 		SPAWN_DBG(0.5 SECONDS) M:become_gold_statue()
 
 /client/proc/cmd_admin_spidergib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Spider Gib"
 	set popup_menu = 0
 
@@ -162,7 +162,7 @@
 		SPAWN_DBG(0.5 SECONDS) M:spidergib()
 
 /client/proc/cmd_admin_implodegib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Implode Gib"
 	set popup_menu = 0
 
@@ -183,7 +183,7 @@
 		SPAWN_DBG(0.5 SECONDS) M:implode()
 
 /client/proc/cmd_admin_buttgib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Butt Gib"
 	set popup_menu = 0
 
@@ -204,7 +204,7 @@
 		SPAWN_DBG(0.5 SECONDS) M:buttgib()
 
 /client/proc/cmd_admin_cluwnegib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Cluwne Gib"
 	set desc = "Summon the fearsome floor cluwne..."
 	set popup_menu = 0
@@ -224,7 +224,7 @@
 		SPAWN_DBG(0.5 SECONDS) M.cluwnegib(duration)
 
 /client/proc/cmd_admin_admindamn(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Damn"
 	set desc = "Darn them right to heck"
 	set popup_menu = 0
@@ -242,7 +242,7 @@
 		SPAWN_DBG(0.5 SECONDS) M.damn()
 
 /client/proc/cmd_admin_adminundamn(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "UnDamn"
 	set desc = "Un-Darn them right out of heck"
 	set popup_menu = 0
@@ -260,8 +260,8 @@
 		SPAWN_DBG(0.5 SECONDS) M.un_damn()
 
 /client/proc/cmd_admin_gib_self()
-	set name = "gibself"
-	set category = "Special Verbs"
+	set name = "Gibself"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	var/turf/T = get_turf(src.mob)
 	if(T)
@@ -279,7 +279,7 @@
 	src.mob.gib()
 
 /client/proc/cmd_admin_tysonban(mob/tysontarget as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Tyson Ban"
 	set popup_menu = 0
 	var/startx = 1
@@ -336,10 +336,10 @@
 //				boutput(tysontarget, "<span class='alert'>This is a temporary ban, it will be removed in [tysonmins] minutes.</span>")
 //				logTheThing("admin", usr, tysontarget, "has tysoned %target%. Reason: [reason]. This will be removed in [tysonmins] minutes.")
 				logTheThing("diary", usr, tysontarget, "has tysoned %target%. Reason: [reason]. This will be removed in [tysonmins] minutes.", "admin")
-//				message_admins("<span class='notice'>[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
+//				message_admins("<span class='internal'>[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
 
 /client/proc/cmd_admin_tysongib(mob/tysontarget as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Tyson Gib"
 	set popup_menu = 0
 	var/startx = 1
@@ -380,7 +380,7 @@
 //				boutput(tysontarget, "<span class='alert'>This is a temporary ban, it will be removed in [tysonmins] minutes.</span>")
 //				logTheThing("admin", usr, tysontarget, "has tysoned %target%.<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.")
 //				logTheThing("diary", usr, tysontarget, "has tysoned %target%.<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.", "admin")
-//				message_admins("<span class='notice'>[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
+//				message_admins("<span class='internal'>[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
 
 
 /obj/bantyson/
@@ -458,7 +458,7 @@
 			boutput(tysontarget2, "<span class='alert'>This is a temporary tysonban, it will be removed in [tysonmins2] minutes.</span>")
 			logTheThing("admin", caller:client, tysontarget2, "has tysonbanned %target%. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.")
 			logTheThing("diary", caller:client, tysontarget2, "has tysonbanned %target%. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.", "admin")
-			message_admins("<span class='notice'>[caller?.client?.ckey] has tysonbanned [tysontarget2.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.<br>This will be removed in [tysonmins2] minutes.</span>")
+			message_admins("<span class='internal'>[caller?.client?.ckey] has tysonbanned [tysontarget2.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.<br>This will be removed in [tysonmins2] minutes.</span>")
 			del(tysontarget2.client)
 			tysontarget2.gib()
 //			if(ishuman(tysontarget2))
@@ -522,7 +522,7 @@
 			if(tysontarget2 && tysontarget2.client)
 				logTheThing("admin", caller:client, tysontarget2, "tysongibbed %target%")
 				logTheThing("diary", caller:client, tysontarget2, "tysongibbed %target%", "admin")
-				message_admins("<span class='notice'>[caller?.client?.ckey] has tysongibbed [tysontarget2.ckey].</span>")
+				message_admins("<span class='internal'>[caller?.client?.ckey] has tysongibbed [tysontarget2.ckey].</span>")
 				tysontarget2.gib()
 			sleep(0.5 SECONDS)
 			playsound(src.loc, pick('sound/misc/knockout.ogg'), 50, 0)

@@ -25,10 +25,9 @@
 
 	disposing()
 		if (button)
-			if (button.ability == src)
-				button.ability = null
-			if (button.upgrade == src)
-				button.upgrade = null
+			button.dispose()
+			button = null
+		owner = null
 		..()
 
 	proc
@@ -96,8 +95,8 @@
 					var/obj/blob/B
 					if (prob(5))
 						B = new /obj/blob/lipid(T)
-					else if (prob(5))
-						B = new /obj/blob/ribosome(T)
+					//else if (prob(5))
+						//B = new /obj/blob/ribosome(T)
 					else if (prob(5))
 						B = new /obj/blob/mitochondria(T)
 					else if (prob(5))
@@ -231,16 +230,13 @@
 		C.setOvermind(owner)
 		C.Life()
 		owner.started = 1
-		owner.remove_ability(/datum/blob_ability/plant_nucleus)
-		owner.remove_ability(/datum/blob_ability/set_color)
-		owner.remove_ability(/datum/blob_ability/tutorial)
 		owner.add_ability(/datum/blob_ability/spread)
 		owner.add_ability(/datum/blob_ability/attack)
 		owner.add_ability(/datum/blob_ability/consume)
 		owner.add_ability(/datum/blob_ability/repair)
 		owner.add_ability(/datum/blob_ability/absorb)
 		owner.add_ability(/datum/blob_ability/promote)
-		owner.add_ability(/datum/blob_ability/build/ribosome)
+		//owner.add_ability(/datum/blob_ability/build/ribosome)
 		owner.add_ability(/datum/blob_ability/build/lipid)
 		owner.add_ability(/datum/blob_ability/build/mitochondria)
 		owner.add_ability(/datum/blob_ability/build/wall)
@@ -253,6 +249,10 @@
 			//do a little "blobsplosion"
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
+
+		owner.remove_ability(/datum/blob_ability/plant_nucleus)
+		owner.remove_ability(/datum/blob_ability/set_color)
+		owner.remove_ability(/datum/blob_ability/tutorial)
 
 
 /datum/blob_ability/set_color
@@ -320,7 +320,7 @@
 
 		if (istype(T, /turf/space))
 			var/datum/blob_ability/bridge/B = owner.get_ability(/datum/blob_ability/bridge)
-			
+
 			if (B)
 				var/success = !B.onUse(T)		//Abilities return 1 on failure and 0 on success. fml
 				if (success)
@@ -340,14 +340,12 @@
 		var/obj/blob/B2 = new /obj/blob(T)
 		B2.setOvermind(owner)
 
-		if (owner.blobs.len < 40)
-			cooldown_time = max(12 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
-		else if (owner.blobs.len < 80)
-			cooldown_time = max(17 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
-		else if (owner.blobs.len < 160)
-			cooldown_time = max(27 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
+		if (owner.blobs.len < 100)
+			cooldown_time = max(12 - owner.spread_upgrade * 12 - owner.spread_mitigation * 0.5, 0)
+		else if (owner.blobs.len < 200)
+			cooldown_time = max(17 - owner.spread_upgrade * 12 - owner.spread_mitigation * 0.5, 0)
 		else
-			cooldown_time = max(27 + (owner.blobs.len - 160) * 0.08 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
+			cooldown_time = max(27 - owner.spread_upgrade * 12 - owner.spread_mitigation * 0.5, 0)
 
 		cooldown_time = max(cooldown_time, 6)
 
@@ -545,7 +543,7 @@
 				if (A:decomp_stage != 4)
 					M = A
 					break
-			if (iscritter(A))
+			if (ismobcritter(A))
 				M = A
 				break
 
@@ -603,7 +601,7 @@
 			return
 
 		//This whole first bit is all still pretty ugly cause this ability works on both critters and humans. I didn't have it in me to rewrite the whole thing - kyle
-		if (iscritter(target))
+		if (ismobcritter(target))
 			target.gib()
 			target.visible_message("<span class='alert'><b>The blob tries to absorb [target.name], but something goes horribly right!</b></span>")
 			if (blob_o && blob_o.mind) //ahem ahem AI blobs exist
@@ -973,6 +971,7 @@
 	build_path = /obj/blob/lipid
 	buildname = "lipid"
 
+/* TODO: REPLACE RIBOSOMES WITH SOMETHING COOLER
 /datum/blob_ability/build/ribosome
 	name = "Build Ribosome Cell"
 	icon_state = "blob-ribosome"
@@ -980,6 +979,8 @@
 	bio_point_cost = 5
 	build_path = /obj/blob/ribosome
 	buildname = "ribosome"
+
+*/
 
 /datum/blob_ability/build/mitochondria
 	name = "Build Mitochondria Cell"
@@ -1067,6 +1068,13 @@
 		B.desc = src.desc
 		src.button = B
 
+	disposing()
+		if(button)
+			button.dispose()
+			button = null
+		owner = null
+		..()
+
 	proc/check_requirements()
 		if (!istype(owner))
 			return 0
@@ -1141,8 +1149,8 @@
 	name = "Passive: Quicker Spread"
 	icon_state = "blob-quickspread"
 	desc = "Reduces the cooldown of your Spread ability by 1 second. Can be repeated. The cooldown of Spread cannot go below 1 second."
-	evo_point_cost = 3
-	scaling_cost_add = 7
+	evo_point_cost = 2
+	scaling_cost_add = 3
 	repeatable = -1
 	upgradename = "spread"
 

@@ -131,6 +131,17 @@
 			boutput(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Set your ringtone to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
 
+		else
+			var/obj/item/uplink/syndicate/T = new(get_turf(traitor_mob))
+			T.lock_code_autogenerate = 1
+			T.setup(traitor_mob.mind, null)
+			pda_pass = T.lock_code
+			traitor_mob.put_in_hand_or_drop(T)
+
+			boutput(traitor_mob, "The Syndicate have <s>cunningly</s> disguised a Syndicate Uplink as [T.name]. Simply enter the code \"[pda_pass]\" into the device to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Uplink password:</B> [pda_pass].")
+
+
 /proc/equip_spy_theft(mob/living/carbon/human/traitor_mob)
 	if (!(traitor_mob && ishuman(traitor_mob)))
 		return
@@ -247,7 +258,7 @@
 	for (var/obj/item/device/radio/headset/R in synd_mob.contents)
 		R.set_secure_frequency("h", the_frequency)
 
-		R.secure_colors = list(RADIOC_SYNDICATE)
+		R.secure_classes = list(RADIOCL_SYNDICATE)
 		R.protected_radio = 1 // Ops can spawn with the deaf trait.
 		R.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
 

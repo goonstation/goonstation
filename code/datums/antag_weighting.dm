@@ -7,7 +7,7 @@ var/global/datum/antagWeighter/antagWeighter
 
 /datum/antagWeighter
 	var/debug = 0 //print a shit load of debug messages or not
-	var/variance = 10 //percentage probability *per choice* to ignore weighting for a single antag role (instead picking some random dude)
+	var/variance = 100 //percentage probability *per choice* to ignore weighting for a single antag role (instead picking some random dude)
 	var/minPlayed = 5 //minimum amount of rounds participated in required for the antag weighter to consider a person a valid choice
 
 
@@ -227,8 +227,7 @@ var/global/datum/antagWeighter/antagWeighter
 
 		//Set up segmented list for variance
 		var/list/historyLookup = list()
-		if (history.len > amount)
-			historyLookup = history.Copy(amount + 1)
+		historyLookup = history.Copy()
 
 		//Build our final list of chosen people, to the max of "amount"
 		var/cCount = 0

@@ -48,16 +48,16 @@ var/list/globalPropList = null
 				if(X.id == propId)
 					X.onChange(src, src.properties[X], ((propVal != null) ? propVal : X.defaultValue))
 					src.properties[X] = propVal
-					return
+					return X
 
 			var/datum/objectProperty/P = globalPropList[propId]
 
 			src.properties.Add(P)
 			src.properties[P] = ((propVal != null) ? propVal : P.defaultValue)
 			P.onAdd(src, propVal)
+			return P
 		else
 			throw EXCEPTION("Invalid property ID passed to setProperty ([propId])")
-		return
 
 	proc/getProperty(var/propId) //Gets property value.
 		.= null
@@ -75,9 +75,9 @@ var/list/globalPropList = null
 		if(src.properties && src.properties.len)
 			for(var/datum/objectProperty/X in src.properties)
 				if(X.id == propId)
+					. = X
 					X.onRemove(src, src.properties[X])
 					src.properties.Remove(X)
-		return null
 
 	proc/hasProperty(var/propId) //Checks if property is on object.
 		.= 0
@@ -85,6 +85,14 @@ var/list/globalPropList = null
 			for(var/datum/objectProperty/X in src.properties)
 				if(X.id == propId)
 					.= 1
+
+/obj/item
+	setProperty()
+		. = ..()
+		src.tooltip_rebuild = 1
+	delProperty()
+		. = ..()
+		src.tooltip_rebuild = 1
 
 /datum/objectProperty
 	var/name = ""
@@ -206,33 +214,6 @@ var/list/globalPropList = null
 			getTooltipDesc(var/obj/propOwner, var/propVal)
 				return "[propVal] movement delay - 0 when worn in space."
 
-	radiationprot
-		name = "Resistance (Radiation)"
-		id = "radprot"
-		desc = "Protects from harmful radiation." //Value is % protection.
-		tooltipImg = "radiation.png"
-		defaultValue = 10
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal]%"
-
-	coldprot
-		name = "Resistance (Cold)"
-		id = "coldprot"
-		desc = "Protects from low temperatures." //Value is % protection.
-		tooltipImg = "cold.png"
-		defaultValue = 10
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal]%"
-
-	heatprot
-		name = "Resistance (Heat)"
-		id = "heatprot"
-		desc = "Protects from high temperatures." //Value is % protection.
-		tooltipImg = "heat.png"
-		defaultValue = 10
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal]%"
-
 	viralprot
 		name = "Resistance (Viral)"
 		id = "viralprot"
@@ -242,15 +223,6 @@ var/list/globalPropList = null
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal]%"
 
-	exploprot
-		name = "Resistance (Explosion)"
-		id = "exploprot"
-		desc = "Protects from explosions." //Value is % protection.
-		tooltipImg = "explosion.png"
-		defaultValue = 10
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal]"
-
 	conductivity
 		name = "Conductivity"
 		id = "conductivity"
@@ -259,29 +231,6 @@ var/list/globalPropList = null
 		defaultValue = 0.1
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal * 100]% [propVal <= 0.2 ? "(Safe)":""]"
-
-	meleeprot
-		name = "Resistance (Melee)"
-		id = "meleeprot"
-		desc = "Protects from melee damage." //Value is flat damage reduction.
-		tooltipImg = "melee.png"
-		defaultValue = 2
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "-[propVal] dmg"
-
-		head //ugly hack im sorry, this is used for head, mask, glasses and ear clothing
-			id = "meleeprot_head"
-		all //ugly hack but I'm not sorry, this is used for barriers
-			id = "meleeprot_all"
-
-	rangedprot
-		name = "Resistance (Ranged)"
-		id = "rangedprot"
-		desc = "Protects from ranged damage." //Value is divisor applied to bullet power on hit. For humans, the sum of all equipment is used. Base value is 1, so one item with 1 additional armor = 2, half the damage
-		tooltipImg = "bullet.png"
-		defaultValue = 0.15
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal] prot."
 
 	stammax
 		name = "Max. Stamina"
@@ -399,3 +348,184 @@ var/list/globalPropList = null
 			defaultValue = 0
 			getTooltipDesc(var/obj/propOwner, var/propVal)
 				return "Burn Damage"
+
+/*
+For properties that are on equipment and should do stuff when the item is equipped / deequipped.
+
+Note for later: it might be worth it to make an intermediate step of /datum/objectProperty/item
+for stuff that should apply when the item with the property is picked up / dropped. But it's hard
+to say if there's demand for that.
+*/
+/datum/objectProperty/equipment
+	// Called when the property changes / gets added / gets equipped
+	proc/updateMob(obj/item/owner, mob/user, value, oldValue=null)
+		return
+
+	// Called when the property gets removed or owner gets unequipped
+	proc/removeFromMob(obj/item/owner, mob/user, value)
+		return
+
+	// Called when owner gets equipped into slot `slot`
+	proc/onEquipped(obj/item/owner, mob/user, value, slot)
+		src.updateMob(owner, user, value)
+
+	// Called when owner gets unequipped
+	proc/onUnequipped(obj/item/owner, mob/user, value)
+		src.removeFromMob(owner, user, value)
+
+	onAdd(obj/item/owner, value)
+		. = ..()
+		if(istype(owner.loc, /mob) && !isnull(owner.equipped_in_slot))
+			src.updateMob(owner, owner.loc, value)
+
+	onChange(obj/item/owner, oldValue, newValue)
+		. = ..()
+		if(istype(owner.loc, /mob) && !isnull(owner.equipped_in_slot))
+			src.updateMob(owner, owner.loc, newValue, oldValue)
+
+	onRemove(obj/item/owner, value)
+		. = ..()
+		if(istype(owner.loc, /mob) && !isnull(owner.equipped_in_slot))
+			src.removeFromMob(owner, owner.loc, value)
+
+// at the moment the mob property stuff only makes sense for human mobs!!
+// Also currently the "source" of the mob property is the owner of the property (the item).
+// If you are adding other properties granting some mob property make sure to use something like "\ref[owner]-something"
+// as the source. This might be useful for blocking properties for example.
+
+/datum/objectProperty/equipment/meleeprot
+	name = "Resistance (Melee)"
+	id = "meleeprot_parent"
+	desc = "Protects from melee damage." //Value is flat damage reduction.
+	tooltipImg = "melee.png"
+	defaultValue = 2
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "-[propVal] dmg"
+
+	body
+		id = "meleeprot"
+		updateMob(obj/item/owner, mob/user, value, oldValue=null)
+			. = ..()
+			APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, owner, value)
+		removeFromMob(obj/item/owner, mob/user, value)
+			. = ..()
+			REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, owner)
+
+	head //ugly hack im sorry, this is used for head, mask, glasses and ear clothing
+		id = "meleeprot_head"
+		updateMob(obj/item/owner, mob/user, value, oldValue=null)
+			. = ..()
+			APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, owner, value)
+		removeFromMob(obj/item/owner, mob/user, value)
+			. = ..()
+			REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, owner)
+
+	all //ugly hack but I'm not sorry, this is used for barriers
+		id = "meleeprot_all"
+		updateMob(obj/item/owner, mob/user, value, oldValue=null)
+			. = ..()
+			APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, owner, value)
+			APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, owner, value)
+		removeFromMob(obj/item/owner, mob/user, value)
+			. = ..()
+			REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, owner)
+			REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, owner)
+
+/datum/objectProperty/equipment/rangedprot
+	name = "Resistance (Ranged)"
+	id = "rangedprot"
+	desc = "Protects from ranged damage." //Value is divisor applied to bullet power on hit. For humans, the sum of all equipment is used. Base value is 1, so one item with 1 additional armor = 2, half the damage
+	tooltipImg = "bullet.png"
+	defaultValue = 0.15
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal] prot."
+
+	updateMob(obj/item/owner, mob/user, value, oldValue=null)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_RANGEDPROT, owner, value)
+	removeFromMob(obj/item/owner, mob/user, value)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_RANGEDPROT, owner)
+
+/datum/objectProperty/equipment/radiationprot
+	name = "Resistance (Radiation)"
+	id = "radprot"
+	desc = "Protects from harmful radiation." //Value is % protection.
+	tooltipImg = "radiation.png"
+	defaultValue = 10
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal]%"
+
+	updateMob(obj/item/owner, mob/user, value, oldValue=null)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_RADPROT, owner, value)
+	removeFromMob(obj/item/owner, mob/user, value)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_RADPROT, owner)
+
+/datum/objectProperty/equipment/coldprot
+	name = "Resistance (Cold)"
+	id = "coldprot"
+	desc = "Protects from low temperatures." //Value is % protection.
+	tooltipImg = "cold.png"
+	defaultValue = 10
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal]%"
+
+	updateMob(obj/item/owner, mob/user, value, oldValue=null)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_COLDPROT, owner, value)
+	removeFromMob(obj/item/owner, mob/user, value)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_COLDPROT, owner)
+
+/datum/objectProperty/equipment/heatprot
+	name = "Resistance (Heat)"
+	id = "heatprot"
+	desc = "Protects from high temperatures." //Value is % protection.
+	tooltipImg = "heat.png"
+	defaultValue = 10
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal]%"
+
+	updateMob(obj/item/owner, mob/user, value, oldValue=null)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_HEATPROT, owner, value)
+	removeFromMob(obj/item/owner, mob/user, value)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_HEATPROT, owner)
+
+/datum/objectProperty/equipment/exploprot
+	name = "Resistance (Explosion)"
+	id = "exploprot"
+	desc = "Protects from explosions." //Value is % protection.
+	tooltipImg = "explosion.png"
+	defaultValue = 10
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal]"
+
+	updateMob(obj/item/owner, mob/user, value, oldValue=null)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_EXPLOPROT, owner, value)
+	removeFromMob(obj/item/owner, mob/user, value)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_EXPLOPROT, owner)
+
+
+
+/datum/objectProperty/equipment/reflection // force increases as you attack players.
+	name = "Reflection"
+	id = "reflection"
+	desc = "Reflects projectiles while held."
+	tooltipImg = "disorient_resist.png"
+	defaultValue = 0
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "Reflecting projectiles"
+
+	updateMob(obj/item/owner, mob/user, value, oldValue=null)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_REFLECTPROT, owner)
+
+	removeFromMob(obj/item/owner, mob/user, value)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_REFLECTPROT, owner)
