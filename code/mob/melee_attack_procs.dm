@@ -392,7 +392,11 @@
 			if (istext(attack_resistance))
 				msgs.show_message_target(attack_resistance)
 		msgs.damage = max(damage, 0)
-
+	else if ( !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)) )
+		var/armor_mod = 0
+		armor_mod = target.get_melee_protection(def_zone)
+		msgs.stamina_target -= max(STAMINA_HTH_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm doesnt get full reduction
+		msgs.force_stamina_target = 1
 
 	var/target_stamina = STAMINA_MAX //uses stamina?
 	if (isliving(target))
@@ -699,11 +703,10 @@
 		//reduce stamina by the same proportion that base damage was reduced
 		//min cap is stam_power/3 so we still cant ignore it entirely
 		if ((damage + armor_mod) <= 0) //mbc lazy runtime fix
-			stam_power = stam_power / 2 //do the least
+			stam_power = stam_power / 3 //do the least
 		else
-			stam_power = max(  stam_power / 2, stam_power * ( damage / (damage + armor_mod) )  )
+			stam_power = max(  stam_power / 3, stam_power * ( damage / (damage + armor_mod) )  )
 
-		msgs.force_stamina_target = 1
 		msgs.stamina_target -= max(stam_power, 0)
 
 		if (can_crit && prob(crit_chance))
