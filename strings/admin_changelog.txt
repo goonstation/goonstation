@@ -1,6 +1,6 @@
 (t)mon jun 22 20
 (u)Sovexe
-(*)TheAwaken Sleeper Agents event now allows you to override player antagonist preferences.
+(*)The Awaken Sleeper Agents event now allows you to override player antagonist preferences.
 (t)sun jun 21 20
 (u)Sovexe
 (*)The Antagonist Critter Spawn event now allows for customization in the form of critter type and quantity.
