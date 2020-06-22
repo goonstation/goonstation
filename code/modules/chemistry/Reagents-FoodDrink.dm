@@ -3827,7 +3827,7 @@ datum
 			description = "A potent cocktail of amphetamines, caffeine and corn syrup. If this doesn't kill you then I don't know what will."
 			reagent_state = LIQUID
 
-				on_mob_life(var/mob/M, var/mult = 1)
+			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(prob(10))
 					M.reagents.add_reagent("methamphetamine", rand(1,10) * mult)

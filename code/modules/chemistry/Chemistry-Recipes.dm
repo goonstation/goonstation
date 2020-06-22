@@ -1642,10 +1642,10 @@ datum
 			name = "Phil Collins"
 			id = "philcollins"
 			result = "philcollins"
-			required_reagents = list("vodka_tonic" = 1, "lemonade" = 1)
+			required_reagents = list("vtonic" = 1, "lemonade" = 1)
 			result_amount = 2
 			mix_phrase = "You can feel it coming in the air tonight. Oh lord."
-			mix_sound = 'sound/misc/tom_high.ogg'
+			mix_sound = 'sound/misc/PhilCollinsTom.ogg'
 			drinkrecipe = 1
 
 		duck_fart
@@ -1655,14 +1655,14 @@ datum
 			required_reagents = list("bourbon" = 1, "coffee" =1 , "milk" = 1)
 			result_amount = 3
 			mix_phrase = "You hear a faint quack from the solution along with a pungent stretch"
-			mix_sound = 'sound/voice/fart/fart3.ogg'
+			mix_sound = 'sound/voice/farts/fart3.ogg'
 			drinkrecipe = 1
 
 		methacola
 			name = "Methacola"
 			id = "methacola"
 			result = "methacola"
-			required_reagents = list("methamphetamine = 1", "cola" = 1)
+			required_reagents = list("methamphetamine" = 1, "cola" = 1)
 			result_amount = 2
 			mix_phrase = "You watch as the amphetamines dissolve into the dark void of the soft drink."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -1674,8 +1674,8 @@ datum
 			result = "pinklemonade"
 			required_reagents = list("grenadine" = 1,"lemonade" = 1)
 			result_amount = 2
-			mix_phrase = "You hear a faint quack from the solution along with a pungent stretch"
-			mix_sound = 'sound/voice/fart/fart3.ogg'
+			mix_phrase = "You watch the pink colour dance around the container and slowly combine with the lemonade"
+			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
 		squeeze
