@@ -14,8 +14,8 @@
 	var/frequency = 1459
 	var/sound_channel = 174
 	var/list/numbers = list(0,0,0,0,0,0)
-	var/list/listeners = list()
-	var/list/candidates = list()
+	var/list/listeners = null
+	var/list/candidates = null
 
 	admin_call(var/source)
 		if (..())
@@ -139,6 +139,10 @@
 			numbers += rand(1,99)
 
 	proc/gather_listeners()
+		//setup empty lists
+		src.listeners = list()
+		src.candidates = list()
+
 		for (var/mob/living/carbon/human/H in mobs)
 			if(!isalive(H))
 				continue
@@ -266,11 +270,11 @@
 			broadcast_sound(ogg)
 
 	proc/cleanup_event()
-		//clear lists of any mob references
-		src.listeners = list()
-		src.candidates = list()
+		//clear lists
+		src.listeners = null
+		src.candidates = null
 
-		//clean siwtches
+		//clear flags
 		src.admin_override = 0
 		src.override_player_pref = 0
 		src.lock = 0
