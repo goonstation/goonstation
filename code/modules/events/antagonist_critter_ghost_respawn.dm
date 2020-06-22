@@ -1,6 +1,8 @@
 //very similar to playable_pests.dm :)
 /datum/random_event/major/antag/antagonist_pest
 	name = "Antagonist Critter Spawn"
+	customization_available = 1
+	var/num_critters = 0
 #ifdef RP_MODE
 	disabled = 1
 #endif
@@ -18,14 +20,34 @@
 		if (..())
 			return
 
-		var/input = input(usr,"Which one? Pick null for random???",src.name) as null|anything in list("fire_elemental","spider","gunbot")
-		if (!input || !istext(input))
+		var/input = alert(usr, "Choose the critter type?", src.name, "Random", "Custom")
+		if (!input)
 			return
-		event_effect(input)
+		else if (input == "Custom")
+			input = input("Enter a /mob/living/critter path", src.name, null) as null|text
+			input = get_one_match(input, "/mob/living/critter")
+		else //random
+			input = null
 
+		src.num_critters = input(usr, "How many critter antagonists to spawn?", src.name, 0) as num|null
+		if (!src.num_critters)
+			return
+		else if(src.num_critters < 1)
+			return
+		else
+			src.num_critters = round(src.num_critters)
+
+		//confirmation
+		if (alert(usr, "You have chosen to spawn [src.num_critters] [input ? input : "random critters"]. Is this correct?", src.name, "Yes", "No") == "Yes")
+			event_effect(input)
 
 	event_effect(var/source)
 		..()
+
+		//true if you choose to run with random settings in the event controls
+		if (source == "Triggered by [key_name(usr)]") //oh god
+			source = null
+			src.num_critters = 0
 
 		// 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 		var/list/text_messages = list()
@@ -55,17 +77,18 @@
 
 			var/atom/pestlandmark = pick(EV)
 
-			var/list/select = pick(pest_invasion_critter_types)
+			var/list/select = null
 			if (source)
-				if (source == "fire_elemental")
-					select = list(/mob/living/critter/fire_elemental)
-				if (source == "spider")
-					select = list(/mob/living/critter/spider/baby)
-				if (source == "gunbot")
-					select = list(/mob/living/critter/gunbot)
+				select = source
+			else
+				select = pick(src.pest_invasion_critter_types)
 
-			var/howmany = rand(1,min(3,candidates.len))
-			for (var/i in 0 to howmany)
+			if (src.num_critters) //custom selected
+				src.num_critters = (min(src.num_critters, candidates.len))
+			else //random selected
+				src.num_critters = rand(1,min(3,candidates.len))
+
+			for (var/i in 0 to src.num_critters)
 				if (!candidates || !candidates.len)
 					break
 
@@ -76,4 +99,3 @@
 				candidates -= M
 
 			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter")
-

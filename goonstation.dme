@@ -1188,6 +1188,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\game_kit.dm"
 #include "code\obj\item\generic_box.dm"
 #include "code\obj\item\gift.dm"
+#include "code\obj\item\go_board.dm"
 #include "code\obj\item\grab.dm"
 #include "code\obj\item\grenades.dm"
 #include "code\obj\item\handcuffs.dm"

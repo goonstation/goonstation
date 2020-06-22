@@ -1,4 +1,9 @@
 
+(t)mon jun 22 20
+(u)Awkward Dryad
+(p)1169
+(e)🆕🎨|feature, sprites
+(*)Added go board to card vendors
 (t)sun jun 21 20
 (u)UrsulaMajor
 (p)1172

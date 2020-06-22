@@ -37,23 +37,24 @@
 
 	New()
 		..()
-		contextLayout = new /datum/contextLayout/instrumental()
+		if (!pick_random_note)
+			contextLayout = new /datum/contextLayout/instrumental()
 
-		//src.contextActions = childrentypesof(/datum/contextAction/vehicle)
+			//src.contextActions = childrentypesof(/datum/contextAction/vehicle)
 
-		for(var/datum/contextAction/C in src.contextActions)
-			C.dispose()
-		src.contextActions = list()
+			for(var/datum/contextAction/C in src.contextActions)
+				C.dispose()
+			src.contextActions = list()
 
-		for (var/i in 1 to sounds_instrument.len)
-			var/datum/contextAction/instrument/newcontext
+			for (var/i in 1 to sounds_instrument.len)
+				var/datum/contextAction/instrument/newcontext
 
-			if (special_index && i >= special_index)
-				newcontext = new /datum/contextAction/instrument/special
-			else
-				newcontext = new /datum/contextAction/instrument
-			newcontext.note = i
-			contextActions += newcontext
+				if (special_index && i >= special_index)
+					newcontext = new /datum/contextAction/instrument/special
+				else
+					newcontext = new /datum/contextAction/instrument
+				newcontext.note = i
+				contextActions += newcontext
 
 	proc/play_note(var/note, var/mob/user)
 		if (note != clamp(note,1,sounds_instrument.len))
@@ -83,7 +84,7 @@
 	proc/play(var/mob/user)
 		if (pick_random_note && sounds_instrument && sounds_instrument.len)
 			play_note(rand(1,sounds_instrument.len),user)
-		if(contextActions.len)
+		if(contextActions?.len)
 			user.showContextActions(contextActions, src)
 
 	proc/show_play_message(mob/user as mob)
