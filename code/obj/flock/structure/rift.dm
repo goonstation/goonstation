@@ -34,7 +34,7 @@
 			x.resources = rand(40, 50)
 			eject += x
 		for(var/i=1, i<5, i++)
-			var/obj/flock_structure/egg/e = new(src.contents)
+			var/obj/flock_structure/egg/e = new(src.contents, src.flock)
 			eject += e
 			e.flock = mainflock
 		var/list/candidate_turfs = list()
@@ -51,9 +51,9 @@
 					break
 		flockdronegibs(src.loc, null, eject)//here they are actually ejected
 		src.loc = null
-		sleep(10 SECOND) //delay so that the flockmind doesnt like die instantly
+		sleep(0.1 SECOND)
 		if(src.flock)
-			src.flock.units -= src //fuck it
+			src.flock.removeDrone(src)
 		qdel(src)
 	else
 		var/severity = round(((build_time - elapsed)/build_time) * 5)
