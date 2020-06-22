@@ -100,11 +100,13 @@
 							var/turf/Q
 							if (version < 2)
 								F["[base].TURF"] >> ttype
-								Q = new ttype(locate(cx, cy, cz))
+								Q = locate(cx, cy, cz)
+								Q.ReplaceWith(ttype, keep_old_material=0, force=1)
 								F["[base].TURF.dir"] >> Q.dir
 							else
 								F["[base].TURF.type"] >> ttype
-								Q = new ttype(locate(cx, cy, cz))
+								Q = locate(cx, cy, cz)
+								Q.ReplaceWith(ttype, keep_old_material=0, force=1)
 								Q.deserialize(F, "[base].TURF", sandbox)
 							F["[base].TURF.tag"] >> Q.tag
 							if (!Q.dir)
