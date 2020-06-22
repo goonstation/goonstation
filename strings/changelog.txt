@@ -1,5 +1,9 @@
 
 (t)sun jun 21 20
+(u)UrsulaMajor
+(p)1172
+(e)🗺|mapping
+(+)The Cairngorm now has an office for its commander, as well as a pirate radio station!
 (u)mbc
 (p)1160
 (e)⚖|balance
