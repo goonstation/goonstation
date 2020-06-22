@@ -2,8 +2,8 @@
 
 // Called in world.dm at new()
 /proc/round_start_data()
-	return
 	set background = 1
+	return
 
 	var/message[] = new()
 	message["token"] = md5(config.goonhub_parser_key)
@@ -16,8 +16,8 @@
 
 // Called in gameticker.dm at the end of the round.
 /proc/round_end_data(var/reason)
-	return
 	set background = 1
+	return
 
 	var/message[] = new()
 	message["token"] = md5(config.goonhub_parser_key)
