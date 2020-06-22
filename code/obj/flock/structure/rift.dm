@@ -51,9 +51,9 @@
 					break
 		flockdronegibs(src.loc, null, eject)//here they are actually ejected
 		src.loc = null
-		sleep(1 SECOND)
+		sleep(10 SECOND) //delay so that the flockmind doesnt like die instantly
 		if(src.flock)
-			src.flock.removeDrone(src)
+			src.flock.units -= src //fuck it
 		qdel(src)
 	else
 		var/severity = round(((build_time - elapsed)/build_time) * 5)
