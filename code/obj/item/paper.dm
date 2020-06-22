@@ -1235,7 +1235,13 @@ WHO DID THIS */
 		user.show_text("You unfold the [src] back into a sheet of paper! It looks pretty crinkled.", "blue")
 		src.name = "crinkled paper"
 		src.desc = src.old_desc
-		src.icon_state = src.old_icon_state
+		if(src.old_icon_state)
+			src.icon_state = src.old_icon_state
+		else
+			if(src.info)
+				src.icon_state = "paper"
+			else
+				src.icon_state = "paper_blank"
 		src.sealed = 0
 	else
 		..()
