@@ -219,7 +219,9 @@ var/f_color_selector_handler/F_Color_Selector
 		config = new /datum/configuration()
 		config.load("config/config.txt")
 
+		world.log << "(config.server_key) [config.server_key]"
 		serverKey = config.server_key ? config.server_key : (world.port % 1000) / 100
+		world.log << "(serverKey) [serverKey]"
 
 		if (config.server_specific_configs && world.port > 0)
 			var/specific_config = "config/config-[world.port].txt"
