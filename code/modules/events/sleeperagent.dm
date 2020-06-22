@@ -96,8 +96,6 @@
 				sleep(src.message_delay)
 				command_alert("[src.centcom_message]", "[src.centcom_headline]")
 
-			cleanup_event()
-
 	#if ASS_JAM // no idea what this does or who did it
 			var/list/sleepers = list()
 			for(var/mob/listener in listeners)
@@ -106,6 +104,8 @@
 			for(var/atom/sleeper in sleepers)
 				qdel(sleeper)
 	#endif
+
+			cleanup_event()
 		return
 
 	proc/awaken_sleeper_agent(var/mob/living/carbon/human/H)
