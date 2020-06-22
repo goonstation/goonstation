@@ -93,8 +93,8 @@
 	attackby(obj/item/W as obj, mob/user)
 		if (istype(W, /obj/item/weldingtool))
 			var/obj/item/weldingtool/WELD = W
-			if (WELD.get_fuel() == 2)
-				actions.start(new /datum/action/bar/icon/railingDeconstruct(src), user)
+			if (WELD.get_fuel() >= 2)
+				actions.start(new /datum/action/bar/icon/railingDeconstruct(src,user), user)
 			else
 				user.show_text("[WELD] doesn't have enough fuel!", "red")
 
@@ -118,7 +118,7 @@
 
 	blue
 		color = "#0026ff"
-
+/*
 	// Inner railings so you can make some weirder connections work!
 	inner
 		icon_state = "railing-inner"
@@ -163,6 +163,8 @@
 
 		blue
 			color = "#0026ff"
+*/
+
 
 /datum/action/bar/icon/railingDeconstruct
 	duration = 30
@@ -171,19 +173,25 @@
 	icon = 'icons/obj/items/tools/weldingtool.dmi'
 	icon_state = "weldingtool_on"
 	var/obj/railing/target
-	var/mob/living/user
 	var/mob/ownerMob
 	var/obj/item/weldingtool/WELD
 
 	New(Target)
-		target = Target
-		WELD = user.find_type_in_hand(/obj/item/weldingtool)
-		ownerMob = owner
 		..()
+		target = Target
+		ownerMob = owner
+		world.log << ("OWNER - [ownerMob.name]")
+		//world.log << ("OWNERPATH - [owner.path]")
+		WELD = ownerMob.find_type_in_hand(/obj/item/weldingtool)
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(WELD && (WELD.get_fuel() >= 2))
+			if(get_dist(owner, target) > 1 || target == null || owner == null)
+				interrupt(INTERRUPT_ALWAYS)
+				return
+		else
+			ownerMob.show_text("[WELD] doesn't have enough fuel!", "red")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -195,14 +203,23 @@
 		for(var/mob/O in AIviewers(owner))
 			O.show_text("[owner] begins to weld [target]!", "red")
 
-
 	onEnd()
 		..()
-		if (owner && target && get_dist(owner, target) <= 1 && (istype(ownerMob.equipped(), /obj/item/weldingtool)))
-			for(var/mob/O in AIviewers(owner))
+		//if (owner && target && (get_dist(owner, target) <= 1) && (istype(ownerMob.equipped(), /obj/item/weldingtool)))
+
+		if(owner)
+			ownerMob.show_text("OWNER", "green")
+		if(target)
+			ownerMob.show_text("TARGET","green")
+		if(get_dist(owner, target) <= 1)
+			ownerMob.show_text("DISTANCE","green")
+		if(istype(ownerMob.equipped(), /obj/item/weldingtool))
+			ownerMob.show_text("EQUIPPED","green")
+
+			/*for(var/mob/O in AIviewers(owner))
 				O.show_text("[owner] welds [target] apart.", "red")
 			var/obj/item/ammo/bullets/rod/R = new(target)
 			R.amount = 4
 			qdel(target)
 			WELD.eyecheck(user)
-			WELD.use_fuel(1)
+			WELD.use_fuel(2)*/
