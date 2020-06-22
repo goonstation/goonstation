@@ -1617,9 +1617,9 @@ datum
 			name = "Bee's knees"
 			id = "beesknees"
 			result = "beesknees"
-			required_reagents = list("gin", "honey", "juice_lemon" = 1)
+			required_reagents = list("gin" = 1, "honey" = 1, "juice_lemon" = 1)
 			result_amount = 3
-			mix_phrase = "Placeholder"
+			mix_phrase = "You hear a faint buzz from the solution and your knees faintly ache"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
@@ -1627,9 +1627,9 @@ datum
 			name = "Spiced Rum"
 			id = "spicedrum"
 			result = "spicedrum"
-			required_reagents = list("rum", "capsaicin" = 1)
+			required_reagents = list("rum" = 1, "capsaicin" = 1)
 			result_amount = 2
-			mix_phrase = "Placeholder"
+			mix_phrase = "You feel like you might have misunderstood the recipe."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
@@ -1637,7 +1637,7 @@ datum
 			name = "Phil Collins"
 			id = "philcollins"
 			result = "philcollins"
-			required_reagents = list("vodka_tonic, lemonade" = 1)
+			required_reagents = list("vodka_tonic" = 1, "lemonade" = 1)
 			result_amount = 2
 			mix_phrase = "You can feel it coming in the air tonight. Oh lord."
 			mix_sound = 'sound/misc/tom_high.ogg'
@@ -1647,19 +1647,30 @@ datum
 			name = "Duck Fart"
 			id = "duckfart"
 			result = "duckfart"
-			required_reagents = list("bourbon", "coffee", "milk" = 1)
-			result_amount =
-			mix_phrase = "Placeholder"
+			required_reagents = list("bourbon" = 1, "coffee" =1 , "milk" = 1)
+			result_amount = 3
+			mix_phrase = "You hear a faint quack from the solution along with a pungent stretch"
+			mix_sound = 'sound/voice/fart/fart3.ogg'
+			drinkrecipe = 1
+
+		methacola
+			name = "Methacola"
+			id = "methacola"
+			result = "methacola"
+			required_reagents = list("methamphetamine = 1", "cola" = 1)
+			result_amount = 2
+			mix_phrase = "You watch as the amphetamines dissolve into the dark void of the soft drink."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
-			name = ""
-			id = ""
-			result = ""
-			required_reagents = list("" = 1)
-			result_amount =
-			mix_phrase = "Placeholder"
-			mix_sound = 'sound/misc/drinkfizz.ogg'
+		pink_lemonade
+			name = "Pink lemonade"
+			id = "pinklemonade"
+			result = "pinklemonade"
+			required_reagents = list("grenadine" = 1,"lemonade" = 1)
+			result_amount = 2
+			mix_phrase = "You hear a faint quack from the solution along with a pungent stretch"
+			mix_sound = 'sound/voice/fart/fart3.ogg'
 			drinkrecipe = 1
 
 		squeeze
