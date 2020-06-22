@@ -634,7 +634,7 @@
 
 		//Auto stop healing loop if we are not tampered and the health didnt change at all
 		if (!M.tampered)
-			target.updatehealth() //I hate this
+			target.updatehealth() //I hate this, but we actually need the health on time here.
 			if (health_temp == target.health)
 				user.show_text("[M] is finished healing and powers down automatically.", "blue")
 				return
