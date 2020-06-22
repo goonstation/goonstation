@@ -215,11 +215,11 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << "========================================"
 		world.log << ""
 
-		serverKey = (world.port % 1000) / 100
-
 		Z_LOG_DEBUG("Preload", "Loading config...")
 		config = new /datum/configuration()
 		config.load("config/config.txt")
+
+		serverKey = config.server_key ? config.server_key : (world.port % 1000) / 100
 
 		if (config.server_specific_configs && world.port > 0)
 			var/specific_config = "config/config-[world.port].txt"
