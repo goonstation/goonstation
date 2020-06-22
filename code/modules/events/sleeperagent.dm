@@ -7,6 +7,7 @@
 	centcom_message = "A Syndicate radio station temporarily hijacked our communications. Be wary of individuals acting strangely."
 	message_delay = 5 SECONDS
 	var/num_agents = 0
+	var/override_player_pref = 0
 	var/lock = 0
 	var/admin_override = 0
 	var/signal_intro = 'sound/misc/sleeper_agent_hello.ogg'
@@ -20,15 +21,25 @@
 		if (..())
 			return
 
-		if (src.lock != 0)
-			message_admins("Setup of previous sleeper agents hasn't finished yet, aborting.")
+		if (src.lock)
+			message_admins("Setup of previous Awaken Sleeper Agents event hasn't finished yet, aborting.")
 			return
 
-		var/agents = input(usr, "How many sleeper agents to awaken?", "Sleeper Agents", 0) as num|null
-		if (isnull(agents))
+		src.num_agents = input(usr, "How many sleeper agents to awaken?", src.name, 0) as num|null
+		if (isnull(src.num_agents))
+			return
+		else if (src.num_agents < 1)
 			return
 		else
-			src.num_agents = agents
+			src.num_agents = round(src.num_agents)
+
+		switch (alert(usr, "Override player antagonist preferences?", src.name, "Yes", "No"))
+			if ("Yes")
+				src.override_player_pref = 1
+			if ("No")
+				src.override_player_pref = 0
+			else
+				return
 
 		src.admin_override = 1
 		src.event_effect(source)
@@ -44,12 +55,12 @@
 		SPAWN_DBG(0)
 			src.lock = 1
 			do_event(source=="spawn_antag")
-			src.lock = 0
 
 	proc/do_event(var/force_antags = 0)
 		gen_numbers()
 		gather_listeners()
 		if (!listeners.len)
+			cleanup_event()
 			return
 
 		if(!src.admin_override)
@@ -64,6 +75,7 @@
 				else
 					num_agents = 0
 		if(!num_agents)
+			cleanup_event()
 			return
 
 		SPAWN_DBG(10)
@@ -84,7 +96,8 @@
 				sleep(src.message_delay)
 				command_alert("[src.centcom_message]", "[src.centcom_headline]")
 
-			src.admin_override = initial(src.admin_override)
+			cleanup_event()
+
 	#if ASS_JAM // no idea what this does or who did it
 			var/list/sleepers = list()
 			for(var/mob/listener in listeners)
@@ -126,7 +139,6 @@
 			numbers += rand(1,99)
 
 	proc/gather_listeners()
-		listeners = list()
 		for (var/mob/living/carbon/human/H in mobs)
 			if(!isalive(H))
 				continue
@@ -134,7 +146,7 @@
 				if (Hs.frequency == frequency)
 					listeners += H
 					boutput(H, "<span class='notice'>A peculiar noise intrudes upon the radio frequency of your [Hs].</span>")
-					if(H.client && !checktraitor(H) && H.client.preferences.be_traitor && !(H.mind.assigned_role in list("Head of Security", "Security Officer")))
+					if(H.client && !checktraitor(H) && (H.client.preferences.be_traitor || src.override_player_pref) && !(H.mind.assigned_role in list("Head of Security", "Security Officer")))
 						candidates += H
 				break
 		for (var/mob/living/silicon/robot/R in mobs)
@@ -252,3 +264,13 @@
 		ogg = get_vox_by_string(sones)
 		if (ogg)
 			broadcast_sound(ogg)
+
+	proc/cleanup_event()
+		//clear lists of any mob references
+		src.listeners = list()
+		src.candidates = list()
+
+		//clean siwtches
+		src.admin_override = 0
+		src.override_player_pref = 0
+		src.lock = 0
