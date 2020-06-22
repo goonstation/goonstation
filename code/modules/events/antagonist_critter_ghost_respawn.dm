@@ -2,8 +2,7 @@
 /datum/random_event/major/antag/antagonist_pest
 	name = "Antagonist Critter Spawn"
 	customization_available = 1
-	var/admin_override = 0
-	var/num_critters = null
+	var/num_critters = 0
 #ifdef RP_MODE
 	disabled = 1
 #endif
@@ -28,7 +27,7 @@
 			input = get_one_match(input, "/mob/living/critter")
 
 		src.num_critters = input(usr, "How many critter antagonists to spawn?", src.name, 0) as num|null
-		src.admin_override = 1
+
 		if (!src.num_critters)
 			return
 		else if(src.num_critters < 1)
@@ -43,6 +42,11 @@
 
 	event_effect(var/source)
 		..()
+
+		//true if you choose to run with random settings in the event controls
+		if (source == "Triggered by [key_name(usr)]") //oh god
+			source = null
+			src.num_critters = 0
 
 		// 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 		var/list/text_messages = list()
@@ -85,10 +89,10 @@
 				else //custom
 					select = source
 
-			if (!src.admin_override)
-				src.num_critters = rand(1,min(3,candidates.len))
-			else
+			if (src.num_critters) //custom selected
 				src.num_critters = (min(src.num_critters, candidates.len))
+			else //random selected
+				src.num_critters = rand(1,min(3,candidates.len))
 
 			for (var/i in 0 to src.num_critters)
 				if (!candidates || !candidates.len)
@@ -101,4 +105,3 @@
 				candidates -= M
 
 			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter")
-
