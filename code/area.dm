@@ -1367,6 +1367,32 @@ area/station/communications
 	name = "Treatment Center"
 	icon_state = "treatment_center"
 
+// Asylum
+
+/area/station/medical/asylum
+	name = "Asylum Mini-Station"
+	icon_state = "blue"
+
+/area/station/medical/asylum/computer
+	name = "Asylum Computer Room"
+	icon_state = "green"
+
+/area/station/medical/asylum/dining
+	name = "Asylum Dining Hall"
+
+/area/station/medical/asylum/rec
+	name = "Asylum Rec Room"
+
+/area/station/medical/asylum/kitchen
+	name = "Asylum Kitchen"
+
+/area/station/medical/asylum/bathroom
+	name = "Asylum Bathrooms"
+
+/area/station/medical/asylum/maintenance
+	name = "Asylum Maintenance"
+	icon_state = "yellow"
+
 // INNER Maintenance
 
 /area/station/maintenance/outer
