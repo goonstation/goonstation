@@ -93,6 +93,8 @@
 			user.drop_item()
 			SPAWN_DBG(1 DECI SECOND)
 				O.attack_hand(user)
+		else if (isitem(O))
+			src.attackby(O, user)
 
 	attackby(obj/item/W, mob/user, params, obj/item/storage/T) // T for transfer - transferring items from one storage obj to another
 		if (W.cant_drop)
