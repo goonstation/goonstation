@@ -1,5 +1,9 @@
 
 (t)tue jun 23 20
+(u)Flaborized
+(p)1181
+(e)🎨|sprites
+(+)Resprited SKULLS.
 (u)glassofmilk
 (p)1184
 (e)🆕|feature
