@@ -3,6 +3,7 @@
 	name = "Antagonist Critter Spawn"
 	customization_available = 1
 	var/num_critters = 0
+	var/critter_type = null
 #ifdef RP_MODE
 	disabled = 1
 #endif
@@ -20,34 +21,28 @@
 		if (..())
 			return
 
-		var/input = alert(usr, "Choose the critter type?", src.name, "Random", "Custom")
-		if (!input)
-			return
-		else if (input == "Custom")
-			input = input("Enter a /mob/living/critter path", src.name, null) as null|text
-			input = get_one_match(input, "/mob/living/critter")
-		else //random
-			input = null
+		switch (alert(usr, "Choose the critter type?", src.name, "Random", "Custom"))
+			if ("Custom")
+				src.critter_type = input("Enter a /mob/living/critter path or partial name", src.name, null) as null|text
+				src.critter_type = get_one_match(src.critter_type, "/mob/living/critter")
+				if (!src.critter_type)//invalid entry
+					return
+			if ("Random") //random
+				src.critter_type = null
 
 		src.num_critters = input(usr, "How many critter antagonists to spawn?", src.name, 0) as num|null
-		if (!src.num_critters)
-			return
-		else if(src.num_critters < 1)
+		if (!src.num_critters || src.num_critters < 1)
+			cleanup_event()
 			return
 		else
 			src.num_critters = round(src.num_critters)
 
 		//confirmation
-		if (alert(usr, "You have chosen to spawn [src.num_critters] [input ? input : "random critters"]. Is this correct?", src.name, "Yes", "No") == "Yes")
-			event_effect(input)
+		if (alert(usr, "You have chosen to spawn [src.num_critters] [src.critter_type ? src.critter_type : "random critters"]. Is this correct?", src.name, "Yes", "No") == "Yes")
+			event_effect(source)
 
 	event_effect(var/source)
 		..()
-
-		//true if you choose to run with random settings in the event controls
-		if (source == "Triggered by [key_name(usr)]") //oh god
-			source = null
-			src.num_critters = 0
 
 		// 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 		var/list/text_messages = list()
@@ -73,13 +68,14 @@
 				EV += latejoin
 				if (!EV.len)
 					message_admins("Pests event couldn't find a pest landmark!")
+					cleanup_event()
 					return
 
 			var/atom/pestlandmark = pick(EV)
 
 			var/list/select = null
-			if (source)
-				select = source
+			if (src.critter_type)
+				select = src.critter_type
 			else
 				select = pick(src.pest_invasion_critter_types)
 
@@ -99,3 +95,8 @@
 				candidates -= M
 
 			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter")
+		cleanup_event()
+
+	proc/cleanup_event()
+		src.critter_type = null
+		src.num_critters = 0
