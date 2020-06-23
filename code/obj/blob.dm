@@ -1154,8 +1154,8 @@ var/image/blob_icon_cache
 
 	onAttach(var/mob/living/intangible/blob_overmind/O)
 		..()
-		O.spread_mitigation += 1
-		added = 1
+		O.gen_rate_bonus += 0.1
+		added = 0.1
 
 	update_icon()
 		return
@@ -1163,7 +1163,7 @@ var/image/blob_icon_cache
 	disposing()
 		..()
 		if (overmind)
-			overmind.spread_mitigation -= added
+			overmind.gen_rate_bonus -= added
 			added = 0
 
 
