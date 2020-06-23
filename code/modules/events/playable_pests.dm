@@ -87,6 +87,9 @@
 				src.num_pests = candidates.len
 
 			for (var/i in 1 to src.num_pests)
+				if (!candidates || !candidates.len)
+					break
+
 				var/datum/mind/M = pick(candidates)
 				if (M.current)
 					M.current.make_critter(pick(select), pestlandmark)
