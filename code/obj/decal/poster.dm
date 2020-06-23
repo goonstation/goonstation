@@ -696,6 +696,7 @@
 			icon = 'icons/effects/96x32.dmi'
 			icon_state = "fuq3"
 			bound_width  = 96
+			plane = -99
 
 ///////////////////////////////////////
 // AZUNGAR'S HEAD OF DEPARTMENT ITEMS// + FIREBARRAGE HELPED TOO BUT HE SMELLS

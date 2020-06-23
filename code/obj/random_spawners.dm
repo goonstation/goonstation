@@ -62,7 +62,12 @@
 				logTheThing("debug", src, null, "has a non-path item in its spawn list, [new_item]")
 				DEBUG_MESSAGE("[src] has a non-path item in its spawn list, [new_item]")
 				continue
-			new new_item(src.loc)
+
+			var/obj/storage/S = locate(/obj/storage) in src.loc.contents
+			if (S)
+				new new_item(S)
+			else
+				new new_item(src.loc)
 
 /obj/random_item_spawner/snacks
 	name = "random snack spawner"
