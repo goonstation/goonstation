@@ -21,6 +21,7 @@
 
 	var/current_sidearm_credits = 0
 	var/current_loadout_credits = 0
+	var/current_storage_credits = 0
 	var/temp = null
 	var/list/datum/materiel_stock = list()
 
@@ -50,6 +51,7 @@
 			boutput(user, "<span class='notice'>You insert the requisition token into the vendor.</span>")
 			src.current_sidearm_credits++
 			src.current_loadout_credits++
+			src.current_storage_credits++
 			src.updateUsrDialog()
 		else
 			src.attack_hand(user)
@@ -61,7 +63,7 @@
 
 		src.add_dialog(user)
 		var/dat = "<span style=\"inline-flex\">"
-		dat += "<br><b>Current balance:</b> <font color='blue'>[src.current_sidearm_credits] sidearm credit, [src.current_loadout_credits] loadout credit.</font>"
+		dat += "<br><b>Current balance:</b> <font color='blue'>[src.current_sidearm_credits] sidearm credit, [src.current_loadout_credits] loadout credit, [src.current_storage_credits] storage credit.</font>"
 
 		if (src.temp)
 			dat += src.temp
@@ -125,6 +127,16 @@
 					src.temp = "<br>Transaction complete."
 					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
 					new L.path(src.loc)
+			var/datum/materiel/storage/T = locate(href_list["buy"]) in materiel_stock
+			if(istype(T))
+				if(src.current_storage_credits < T.cost)
+					src.temp = "<br><font color='red'>Insufficient credits.</font><br>"
+					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
+				else
+					src.current_storage_credits -= T.cost
+					src.temp = "<br>Transaction complete."
+					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
+					new T.path(src.loc)
 
 		src.updateUsrDialog()
 
@@ -203,17 +215,17 @@
 	catagory = "Loadout"
 	description = "A standard syndicate uplink loaded with 12 telecrytals, allowing you to pick and choose from an array of syndicate items."
 
-/datum/material/storage/backpack
+/datum/materiel/storage/backpack
 	name = "tactical backpack"
 	path = /obj/item/storage/backpack/syndie/tactical
 	catagory = "Storage"
-	description = ""
+	description = "A military backpack made of high density fabric, designed to fit a wide array of tools for comprehensive storage support."
 
-/datum/material/storage/belt
+/datum/materiel/storage/belt
 	name = "tactical espionage belt"
 	path = /obj/item/storage/fanny/syndie
 	catagory = "Storage"
-	description = ""
+	description = "It's different than a fanny pack. It's tactical and action-packed!"
 
 // Requisition tokens
 

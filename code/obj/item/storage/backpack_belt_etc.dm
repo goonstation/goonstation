@@ -376,6 +376,7 @@
 	desc = "A stylish leather belt for holstering a revolver and it's ammo."
 	icon_state = "revolver_belt"
 	item_state = "revolver_belt"
+	slots = 3
 	in_list_or_max = 0
 	can_hold = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357)
 	spawn_contents = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357 = 2)
@@ -385,6 +386,7 @@
 	desc = "A rugged belt fitted with a pistol holster and some magazine pouches."
 	icon_state = "pistol_belt"
 	item_state = "pistol_belt"
+	slots = 5
 	in_list_or_max = 0
 	can_hold = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm)
 	spawn_contents = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm = 4)
