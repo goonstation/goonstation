@@ -79,7 +79,7 @@
 			if (src.pest_type)
 				select = src.pest_type
 			else
-				select = pick(pest_invasion_critter_types)
+				select = pick(src.pest_invasion_critter_types)
 
 			if (src.num_pests)
 				src.num_pests = min(src.num_pests, candidates.len)
