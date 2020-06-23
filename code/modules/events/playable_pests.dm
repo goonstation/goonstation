@@ -39,6 +39,8 @@
 		//confirmation
 		if (alert(usr, "You have chosen to spawn [src.num_pests] [src.pest_type ? src.pest_type : "random pests"]. Is this correct?", src.name, "Yes", "No") == "Yes")
 			event_effect(source)
+		else
+			cleanup_event()
 
 	event_effect(var/source)
 		..()
