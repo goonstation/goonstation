@@ -28,12 +28,15 @@
 			if ("Random") //random
 				src.critter_type = null
 			else
+				cleanup_event()
 				return
 
 		src.num_critters = input(usr, "How many critter antagonists to spawn?", src.name, 0) as num|null
 		if (!src.num_critters)
+			cleanup_event()
 			return
 		else if(src.num_critters < 1)
+			cleanup_event()
 			return
 		else
 			src.num_critters = round(src.num_critters)
