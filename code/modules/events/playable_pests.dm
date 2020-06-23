@@ -1,8 +1,8 @@
 /datum/random_event/major/player_spawn/pests
 	name = "Pests (playable)"
 	customization_available = 1
-	var/num_pests = 0
-	var/pest_type = null
+	var/num_pests = 0 //custom critter limit
+	var/pest_type = null //custom critter path
 
 	required_elapsed_round_time = 5 MINUTES
 
@@ -76,12 +76,12 @@
 			var/atom/pestlandmark = pick(EV)
 
 			var/list/select = null
-			if (src.pest_type)
+			if (src.pest_type) //customized
 				select = src.pest_type
 			else
 				select = pick(src.pest_invasion_critter_types)
 
-			if (src.num_pests)
+			if (src.num_pests) //customized
 				src.num_pests = min(src.num_pests, candidates.len)
 			else
 				src.num_pests = candidates.len
