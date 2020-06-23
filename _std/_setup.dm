@@ -2,7 +2,6 @@
 // so that it already has the defines for the later files that use them.
 */
 
-//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1 //Uncomment this to just skip everything possible and get into the game asap.
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1 // uncomment this to use atlas as the single map. will horribly break things but speeds up compile/boot times.
 
 #define SKIP_FEA_SETUP 0 //Skip atmos setup
@@ -1131,6 +1130,11 @@ var/ZLOG_START_TIME
 #define TABLE_STRENGTHEN 2
 #define TABLE_ADJUST 3
 #define TABLE_LOCKPICK 4
+
+//railing defines
+#define RAILING_DISASSEMBLE 0
+#define RAILING_UNFASTEN 1
+#define RAILING_FASTEN 2
 
 //Auditing
 //Whether or not a potentially suspicious action gets denied by the code.

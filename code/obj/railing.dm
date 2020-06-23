@@ -91,12 +91,8 @@
 		layerify()
  */
 	attackby(obj/item/W as obj, mob/user)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
-			if (WELD.get_fuel() >= 2)
-				actions.start(new /datum/action/bar/icon/railingDeconstruct(src,user), user)
-			else
-				user.show_text("[WELD] doesn't have enough fuel!", "red")
+		if (isweldingtool(W) && W:try_weld(user, 2))
+			actions.start(new /datum/action/bar/icon/railing_tool_interact(user, src, W, RAILING_DISASSEMBLE, 30), user)
 
 	orange
 		color = "#ff7b00"
@@ -166,47 +162,103 @@
 */
 
 
-/datum/action/bar/icon/railingDeconstruct
+/datum/action/bar/icon/railing_tool_interact
 	duration = 30
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "railing_deconstruct"
-	icon = 'icons/obj/items/tools/weldingtool.dmi'
-	icon_state = "weldingtool_on"
-	var/obj/railing/target
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+	var/obj/railing/the_railing
 	var/mob/ownerMob
-	var/obj/item/weldingtool/WELD
+	var/obj/item/tool
+	var/interaction = RAILING_DISASSEMBLE
 
-	New(Target)
+	New(The_Owner, The_Target, var/obj/item/The_Tool, The_Interaction, The_Duration)
 		..()
-		target = Target
-		ownerMob = owner
-		world.log << ("OWNER - [ownerMob.name]")
-		//world.log << ("OWNERPATH - [owner.path]")
-		WELD = ownerMob.find_type_in_hand(/obj/item/weldingtool)
+		if (The_Target)
+			the_railing = The_Target
+		if (The_Owner)
+			owner = The_Owner
+			ownerMob = The_Owner
+		if (The_Tool)
+			tool = The_Tool
+			icon = The_Tool.icon
+			icon_state = The_Tool.icon_state
+		if (The_Duration)
+			duration = The_Duration
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.traitHolder.hasTrait("carpenter"))
+				duration = round(duration / 2)
+		if (The_Interaction)
+			interaction = The_Interaction
+			switch (interaction)
+				if (RAILING_DISASSEMBLE)
+					The_Tool = ownerMob.find_type_in_hand(/obj/item/weldingtool)
+				if (RAILING_FASTEN)
+					The_Tool = ownerMob.find_type_in_hand(/obj/item/screwdriver)
+				if (RAILING_UNFASTEN)
+					The_Tool = ownerMob.find_type_in_hand(/obj/item/screwdriver)
+
+
 
 	onUpdate()
 		..()
-		if(WELD && (WELD.get_fuel() >= 2))
-			if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if (tool == null || the_railing == null || owner == null || get_dist(owner, the_railing) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		else if (interaction == RAILING_DISASSEMBLE)
+			if(get_dist(ownerMob, the_railing) > 1 || the_railing == null || ownerMob == null)
 				interrupt(INTERRUPT_ALWAYS)
 				return
-		else
-			ownerMob.show_text("[WELD] doesn't have enough fuel!", "red")
-			interrupt(INTERRUPT_ALWAYS)
-			return
 
 	onStart()
+		//featuring code shamelessly copypasted from table.dm because fuuuuuuuck
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if (get_dist(ownerMob, the_railing) > 1 || the_railing == null || ownerMob == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		for(var/mob/O in AIviewers(owner))
-			O.show_text("[owner] begins to weld [target]!", "red")
+		if (!tool)
+			ownerMob.show_text("Wait, what the fuck? Where's your tool?!", "red")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/verbing = "doing something to"
+		switch (interaction)
+			if (RAILING_DISASSEMBLE)
+				verbing = "to disassemble"
+				playsound(get_turf(the_railing), "sound/items/Welder.ogg", 50, 1)
+			if (RAILING_FASTEN)
+				verbing = "fastening"
+				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+			if (RAILING_UNFASTEN)
+				verbing = "unfastening"
+				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+		for(var/mob/O in AIviewers(ownerMob))
+			O.show_text("[owner] begins [verbing] [the_railing].", "red")
 
 	onEnd()
 		..()
-		//if (owner && target && (get_dist(owner, target) <= 1) && (istype(ownerMob.equipped(), /obj/item/weldingtool)))
+		var/verbens = "does something to"
+		switch (interaction)
+			if (RAILING_DISASSEMBLE)
+				verbens = "disassembles"
+				if (ownerMob && the_railing && (get_dist(ownerMob, the_railing) <= 1) && (istype(ownerMob.equipped(), /obj/item/weldingtool)))
+					var/obj/item/ammo/bullets/rod/R = new(the_railing)
+					R.amount = 4
+					qdel(the_railing)
+				playsound(get_turf(the_railing), "sound/items/Welder.ogg", 50, 1)
+			if (RAILING_FASTEN)
+				verbens = "fastens"
+				the_railing.anchored = 1
+				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+			if (RAILING_UNFASTEN)
+				verbens = "unfastens"
+				the_railing.anchored = 0
+				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+		for(var/mob/O in AIviewers(ownerMob))
+			O.show_text("[owner] [verbens] [the_railing].", "red")
 
+/*
 		if(owner)
 			ownerMob.show_text("OWNER", "green")
 		if(target)
@@ -215,11 +267,4 @@
 			ownerMob.show_text("DISTANCE","green")
 		if(istype(ownerMob.equipped(), /obj/item/weldingtool))
 			ownerMob.show_text("EQUIPPED","green")
-
-			/*for(var/mob/O in AIviewers(owner))
-				O.show_text("[owner] welds [target] apart.", "red")
-			var/obj/item/ammo/bullets/rod/R = new(target)
-			R.amount = 4
-			qdel(target)
-			WELD.eyecheck(user)
-			WELD.use_fuel(2)*/
+*/

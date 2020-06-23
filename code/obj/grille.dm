@@ -56,6 +56,7 @@
 			name = "maintenance catwalk"
 			icon_state = "catwalk_jen"
 			desc = "This looks marginally more safe than the ones outside, at least..."
+			layer = PIPE_LAYER + 0.01
 			var/turf/my_turf = null
 
 			New()
