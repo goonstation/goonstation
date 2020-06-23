@@ -31,6 +31,7 @@
 	var/obj/item/parts/robot_parts/arm/part_arm_l = null
 	var/obj/item/parts/robot_parts/leg/part_leg_r = null
 	var/obj/item/parts/robot_parts/leg/part_leg_l = null
+	var/total_weight = 0
 	var/datum/robot_cosmetic/cosmetic_mods = null
 
 	var/list/clothes = list()
@@ -1619,16 +1620,12 @@
 			. += 3.5
 			if (src.part_arm_r)
 				. -= 1
-		var/add_weight = 0
-		for (var/obj/item/parts/robot_parts/P in src.contents)
-			if (P.weight > 0)
-				add_weight += P.weight
 
-		if (add_weight > 0)
+		if (total_weight > 0)
 			if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/treads) || istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/treads))
-				. += add_weight / 3
+				. += total_weight / 3
 			else
-				. += add_weight
+				. += total_weight
 
 
 	hotkey(name)
@@ -2409,6 +2406,11 @@
 		var/update_all = part == "all"
 		var/datum/robot_cosmetic/C = null
 		if (istype(src.cosmetic_mods,/datum/robot_cosmetic/)) C = src.cosmetic_mods
+
+		total_weight = 0
+		for (var/obj/item/parts/robot_parts/P in src.contents)
+			if (P.weight > 0)
+				total_weight += P.weight
 
 		var/list/color_matrix = null
 		if(C && C.painted)
