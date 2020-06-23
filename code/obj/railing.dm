@@ -10,6 +10,7 @@
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
 	dir = SOUTH
+	custom_suicide = 1
 
 /*	This was made for the old railing sprites that just didn't work out :c
 	proc/layerify()
@@ -242,10 +243,7 @@
 		switch (interaction)
 			if (RAILING_DISASSEMBLE)
 				verbens = "disassembles"
-				if (ownerMob && the_railing && (get_dist(ownerMob, the_railing) <= 1) && (istype(ownerMob.equipped(), /obj/item/weldingtool)))
-					var/obj/item/ammo/bullets/rod/R = new(the_railing)
-					R.amount = 4
-					qdel(the_railing)
+				deconstruct()
 				playsound(get_turf(the_railing), "sound/items/Welder.ogg", 50, 1)
 			if (RAILING_FASTEN)
 				verbens = "fastens"
@@ -257,6 +255,14 @@
 				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] [verbens] [the_railing].", "red")
+
+	proc/deconstruct()
+		var/obj/item/sheet/steel/S
+		S = new (the_railing.loc)
+		if (S && the_railing.material)
+			S.setMaterial(the_railing.material)
+		qdel(the_railing)
+
 
 /*
 		if(owner)
