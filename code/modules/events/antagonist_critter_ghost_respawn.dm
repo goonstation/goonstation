@@ -23,19 +23,19 @@
 
 		switch (alert(usr, "Choose the critter type?", src.name, "Random", "Custom"))
 			if ("Custom")
-				src.critter_type = input("Enter a /mob/living/critter path", src.name, null) as null|text
+				src.critter_type = input("Enter a /mob/living/critter path or partial name", src.name, null) as null|text
 				src.critter_type = get_one_match(src.critter_type, "/mob/living/critter")
+				if (!src.critter_type)//invalid entry
+					cleanup_event()
+					return
 			if ("Random") //random
 				src.critter_type = null
-			else
+			else //closed out of prompt
 				cleanup_event()
 				return
 
 		src.num_critters = input(usr, "How many critter antagonists to spawn?", src.name, 0) as num|null
-		if (!src.num_critters)
-			cleanup_event()
-			return
-		else if(src.num_critters < 1)
+		if (!src.num_critters || src.num_critters < 1)
 			cleanup_event()
 			return
 		else
