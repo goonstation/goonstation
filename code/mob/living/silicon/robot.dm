@@ -20,6 +20,7 @@
 	// max_health = 300
 	emaggable = 1
 	syndicate_possible = 1
+	movement_delay_modifier = 2 - BASE_SPEED
 
 	var/datum/hud/robot/hud
 
@@ -89,7 +90,7 @@
 		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
 		src.internal_pda.name = "[src]'s Internal PDA Unit"
 		src.internal_pda.owner = "[src]"
-
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_base, "robot_health_slow_immunity")
 		if (starter && !(src.dependent || src.shell))
 			var/obj/item/parts/robot_parts/chest/light/PC = new /obj/item/parts/robot_parts/chest/light(src)
 			var/obj/item/cell/supercell/charged/CELL = new /obj/item/cell/supercell/charged(PC)
@@ -102,7 +103,11 @@
 			src.part_arm_l = new /obj/item/parts/robot_parts/arm/left/light(src)
 			src.part_leg_r = new /obj/item/parts/robot_parts/leg/right/light(src)
 			src.part_leg_l = new /obj/item/parts/robot_parts/leg/left/light(src)
-			for(var/obj/item/parts/robot_parts/P in src.contents) P.holder = src
+			for(var/obj/item/parts/robot_parts/P in src.contents)
+				P.holder = src
+				if(P.robot_movement_modifier)
+					APPLY_MOVEMENT_MODIFIER(src, P.robot_movement_modifier, P.type)
+
 
 			if (!src.custom)
 				SPAWN_DBG(0)
@@ -115,6 +120,8 @@
 				src.part_chest.set_loc(src)
 			for (var/obj/item/parts/robot_parts/P in src.contents)
 				P.holder = src
+				if(P.robot_movement_modifier)
+					APPLY_MOVEMENT_MODIFIER(src, P.robot_movement_modifier, P.type)
 
 		else
 			if (!frame)
@@ -137,6 +144,8 @@
 				for(var/obj/item/parts/robot_parts/P in frame.contents)
 					P.set_loc(src)
 					P.holder = src
+					if(P.robot_movement_modifier)
+						APPLY_MOVEMENT_MODIFIER(src, P.robot_movement_modifier, P.type)
 
 		if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/left/thruster) || istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/right/thruster))
 			src.flags ^= TABLEPASS
@@ -1194,16 +1203,22 @@
 			playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 1)
 			switch(action)
 				if("Remove Chest")
+					if(src.part_chest.robot_movement_modifier)
+						REMOVE_MOVEMENT_MODIFIER(src, src.part_chest.robot_movement_modifier, src.part_chest.type)
 					src.part_chest.set_loc(src.loc)
 					src.part_chest.holder = null
 					src.part_chest = null
 					update_bodypart("chest")
 				if("Remove Head")
+					if(src.part_head.robot_movement_modifier)
+						REMOVE_MOVEMENT_MODIFIER(src, src.part_head.robot_movement_modifier, src.part_head.type)
 					src.part_head.set_loc(src.loc)
 					src.part_head.holder = null
 					src.part_head = null
 					update_bodypart("head")
 				if("Remove Right Arm")
+					if(src.part_arm_r.robot_movement_modifier)
+						REMOVE_MOVEMENT_MODIFIER(src, src.part_arm_r.robot_movement_modifier, src.part_arm_r.type)
 					src.compborg_force_unequip(3)
 					src.part_arm_r.set_loc(src.loc)
 					src.part_leg_r.holder = null
@@ -1214,6 +1229,8 @@
 					src.part_arm_r = null
 					update_bodypart("r_arm")
 				if("Remove Left Arm")
+					if(src.part_arm_l.robot_movement_modifier)
+						REMOVE_MOVEMENT_MODIFIER(src, src.part_arm_l.robot_movement_modifier, src.part_arm_l.type)
 					src.compborg_force_unequip(1)
 					src.part_arm_l.set_loc(src.loc)
 					src.part_leg_l.holder = null
@@ -1224,6 +1241,8 @@
 					src.part_arm_l = null
 					update_bodypart("l_arm")
 				if("Remove Right Leg")
+					if(src.part_leg_r.robot_movement_modifier)
+						REMOVE_MOVEMENT_MODIFIER(src, src.part_leg_r.robot_movement_modifier, src.part_leg_r.type)
 					src.part_leg_r.holder = null
 					src.part_leg_r.set_loc(src.loc)
 					if (src.part_leg_r.slot == "leg_both")
@@ -1232,6 +1251,8 @@
 					src.part_leg_r = null
 					update_bodypart("r_leg")
 				if("Remove Left Leg")
+					if(src.part_leg_l.robot_movement_modifier)
+						REMOVE_MOVEMENT_MODIFIER(src, src.part_leg_l.robot_movement_modifier, src.part_leg_l.type)
 					src.part_leg_l.holder = null
 					src.part_leg_l.set_loc(src.loc)
 					if (src.part_leg_l.slot == "leg_both")
@@ -1301,6 +1322,8 @@
 
 			user.drop_item()
 			RP.set_loc(src)
+			if(RP.robot_movement_modifier)
+				APPLY_MOVEMENT_MODIFIER(src, RP.robot_movement_modifier, RP.type)
 			playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 			boutput(user, "<span class='notice'>You successfully attach the piece to [src.name].</span>")
 			src.update_bodypart(RP.slot)
@@ -1586,13 +1609,8 @@
 			return
 		return ..()
 
-	movement_delay(var/atom/move_target = 0)
-
-		. = 2 + movement_delay_modifier
-
-		if (src.oil)
-			. -= 0.5
-
+	special_movedelay_mod(delay,space_movement,aquatic_movement)
+		. = delay
 		if (!src.part_leg_l)
 			. += 3.5
 			if (src.part_arm_l)
@@ -1601,13 +1619,10 @@
 			. += 3.5
 			if (src.part_arm_r)
 				. -= 1
-
 		var/add_weight = 0
 		for (var/obj/item/parts/robot_parts/P in src.contents)
 			if (P.weight > 0)
 				add_weight += P.weight
-			if (P.speedbonus)
-				. -= P.speedbonus
 
 		if (add_weight > 0)
 			if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/treads) || istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/treads))
@@ -1615,19 +1630,6 @@
 			else
 				. += add_weight
 
-		for (var/obj/item/roboupgrade/R in src.upgrades)
-			if (istype(R, /obj/item/roboupgrade/speed) && R.activated)
-				if (src.part_leg_r)
-					. *= 0.75
-				if (src.part_leg_l)
-					. *= 0.75
-
-		//This is how it's done in humans, but since borg max health is a bunch of nonsense, I'm not going to add it.
-		// var/health_deficiency = (src.max_health - src.health)
-		// if (health_deficiency >= 90) tally += (health_deficiency / 25)
-
-		if (src.pulling)
-			. *= pull_speed_modifier(move_target)
 
 	hotkey(name)
 		switch (name)
@@ -2307,6 +2309,7 @@
 	proc/add_oil(var/amt)
 		if (oil <= 0)
 			src.add_stun_resist_mod("robot_oil", 25)
+			APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_oil, "oil")
 		src.oil += amt
 
 	proc/process_oil()
@@ -2314,6 +2317,7 @@
 		if (oil <= 0)
 			oil = 0
 			src.remove_stun_resist_mod("robot_oil", 25)
+			REMOVE_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_oil, "oil")
 
 	proc/borg_death_alert(modifier = ROBOT_DEATH_MOD_NONE)
 		var/message = null
@@ -2799,6 +2803,8 @@
 				src.visible_message("<b>[src]'s</b> right leg breaks off!")
 				src.part_leg_r = null
 		//var/loseslot = part.slot //ZeWaka: Fix for null.slot
+		if(part.robot_movement_modifier)
+			REMOVE_MOVEMENT_MODIFIER(src, part.robot_movement_modifier, part.type)
 		src.update_bodypart()
 		//src.update_bodypart(loseslot)
 		qdel(part)
