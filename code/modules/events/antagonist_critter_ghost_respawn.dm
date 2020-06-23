@@ -88,7 +88,7 @@
 			else //random selected
 				src.num_critters = rand(1,min(3,candidates.len))
 
-			for (var/i in 0 to src.num_critters)
+			for (var/i in 1 to src.num_critters)
 				if (!candidates || !candidates.len)
 					break
 
