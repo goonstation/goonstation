@@ -1,4 +1,9 @@
 
+(t)tue jun 23 20
+(u)glassofmilk
+(p)1184
+(e)🆕|feature
+(+)Nav beacons now respond to wireless pings.
 (t)mon jun 22 20
 (u)Flaborized
 (p)1161
