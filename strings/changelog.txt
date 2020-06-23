@@ -7,7 +7,7 @@
 (u)UrsulaMajor
 (p)1187
 (e)|
-(*)Blob Riobosomes now produce biopoints for the blob, making them much more important for the crew to target.
+(*)Blob Ribosomes now produce biopoints for the blob, making them much more important for the crew to target.
 (u)Awkward Dryad
 (p)1169
 (e)🆕🎨|feature, sprites
