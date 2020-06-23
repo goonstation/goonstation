@@ -435,7 +435,7 @@
 		if(src.decal)
 			pool(src.decal)
 		var/mob/living/critter/flock/F = owner
-		if(F)
+		if(F && target && in_range(owner, target))
 			var/obj/icecube/flockdrone/cage = new /obj/icecube/flockdrone(target.loc, target, F.flock)
 			cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
 			F.pay_resources(15)
