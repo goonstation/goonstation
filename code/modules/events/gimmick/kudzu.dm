@@ -1,3 +1,4 @@
+#define KUDZU_TO_SPREAD_INITIAL 40
 /obj/item/kudzuseed//TODO: Move all this to respective files everything works right.
 	name = "kudzu seed"
 	desc = "So this is where Kudzu went. Plant on a floor to grow.<br/>The disclaimer seems faded out, though."
@@ -21,9 +22,9 @@
 			//var/obj/spacevine/kudzu = new( A )
 			//kudzu.Life()
 			if (prob(1))
-				new /obj/spacevine/alien/living(A)
+				new /obj/spacevine/alien/living(location=A,to_spread=KUDZU_TO_SPREAD_INITIAL)
 			else
-				new /obj/spacevine/living(A)
+				new /obj/spacevine/living(location=A, to_spread = KUDZU_TO_SPREAD_INITIAL)
 			boutput( user, "You plant the [src] on the [A]." )
 			logTheThing( "combat", user, null, "plants [src] (kudzu) at [log_loc(src)]." )
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
@@ -57,10 +58,10 @@
 			return
 		var/kudzloc = isturf(startturf) ? startturf : pick(kudzustart)
 		if (prob(1) || aggressive)
-			var/obj/spacevine/alien/living/L = new /obj/spacevine/alien/living(kudzloc)
+			var/obj/spacevine/alien/living/L = new /obj/spacevine/alien/living(location=kudzloc, to_spread = KUDZU_TO_SPREAD_INITIAL)
 			L.set_loc(kudzloc)
 		else
-			var/obj/spacevine/living/L = new /obj/spacevine/living(kudzloc)
+			var/obj/spacevine/living/L = new /obj/spacevine/living(location=kudzloc, to_spread = KUDZU_TO_SPREAD_INITIAL)
 			L.set_loc(kudzloc)
 
 	admin_call(var/source)
@@ -109,6 +110,16 @@
 	var/vinepath = /obj/spacevine/living
 	var/current_stage = 0
 	var/aggressive = 0
+	var/to_spread = 10				//bascially the radius of child kudzu plants that any given kudzu object can create.
+
+	get_desc()
+		var/flavor
+		switch (to_spread)
+			if (-INFINITY to 0)	flavor = "dormant"
+			if (1 to 10) 		flavor = "lethargic"
+			if (11 to 20)		flavor = "lively"
+			if (21 to INFINITY) flavor = "vivacious"
+		return "[..()] It looks [flavor]."
 
 	CanPass(atom/A, turf/T)
 		//kudzumen can pass through dense kudzu
@@ -120,7 +131,8 @@
 		if (ismob(A)) return 1
 		else return 0
 
-	New(turf/location)
+	New(turf/location, var/to_spread)
+		src.to_spread = to_spread
 		var/turf/T = get_turf(location)
 		if (istype(T, /turf/space))
 			qdel(src)
@@ -207,7 +219,7 @@
 			src.set_density(1)
 
 /obj/spacevine/proc/Life()
-	if (!src)
+	if (!src || to_spread <= 0)
 		return
 	if (!ispath(src.vinepath))
 		var/datum/controller/process/kudzu/K = get_master_kudzu_controller()
@@ -244,7 +256,7 @@
 				dogrowth = 0
 
 	if (dogrowth == 1)
-		var/obj/V = new src.vinepath(Vspread)
+		var/obj/V = new src.vinepath(location=Vspread, to_spread=to_spread-1)
 		V.set_loc(Vspread)
 	if (src.growth < 20)
 		src.growth++
@@ -412,3 +424,4 @@
 	//destroy if attacked by wirecutters or something
 
 
+#undef KUDZU_TO_SPREAD_INITIAL
