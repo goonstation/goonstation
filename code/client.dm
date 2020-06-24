@@ -278,19 +278,15 @@
 			return
 */
 	//admins and mentors can enter a server through player caps.
-	var/ignore_player_cap = 0
 	if (init_admin())
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
 		control_freak = 0	// heh
-		ignore_player_cap = 1
 	else if (player.mentor)
 		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
 		if (!src.holder)
 			src.verbs += /client/proc/toggle_mentorhelps
-		ignore_player_cap = 1
 	else if (player_capa && total_clients() >= player_cap && (src.ckey in bypassCapCkeys))
 		boutput(src, "<span class='ooc mentorooc'>The server is full, but you are allowed to bypass the player cap!</span>")
-		ignore_player_cap = 1
 	else if(player_capa && total_clients() >= player_cap && !src.holder)
 		alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
 		del(src)
