@@ -1,5 +1,9 @@
 
 (t)wed jun 24 20
+(u)Sovexe
+(p)1210
+(e)🐛|bug
+(+)The Oshan carousel now correctly routes packages to the north and south delivery zones.
 (u)kyle
 (p)1190
 (e)🆕|feature
