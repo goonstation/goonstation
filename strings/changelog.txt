@@ -1,5 +1,22 @@
 
+(t)tue jun 23 20
+(u)Flaborized
+(p)1181
+(e)🎨|sprites
+(+)Resprited SKULLS.
+(u)glassofmilk
+(p)1184
+(e)🆕|feature
+(+)Nav beacons now respond to wireless pings.
 (t)mon jun 22 20
+(u)Flaborized
+(p)1161
+(e)🎨|sprites
+(+)Resprited the cyalume saber.
+(u)UrsulaMajor
+(p)1187
+(e)|
+(*)Blob Ribosomes now produce biopoints for the blob, making them much more important for the crew to target.
 (u)Awkward Dryad
 (p)1169
 (e)🆕🎨|feature, sprites
