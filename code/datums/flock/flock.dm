@@ -213,8 +213,9 @@
 // UNITS
 
 /datum/flock/proc/registerUnit(var/atom/movable/D)
-	if(isflock(D))
+	if(isflock(D) || isflockstructure(D))
 		src.units |= D
+
 		if(src.panel && istype(D, /mob/living/critter/flock/drone))
 			var/mob/living/critter/flock/drone/drone = D
 
@@ -225,27 +226,20 @@
 			// ref is already provided
 			panel.PushUpdate(update)
 
-	if(istype(D, /obj/flock_structure/egg))
-		src.units |= D
-
-	if(istype(D, /obj/flock_structure/rift))
-		src.units |= D
-
 /datum/flock/proc/removeDrone(var/atom/movable/D)
-	if(isflock(D))
+	if(isflock(D) || isflockstructure(D))
 		src.units -= D
 
-		// update the flock control panel
-		var/list/update = list()
-		update["update"] = "remove"
-		update["key"] = "drones"
-		update["ref"] = "\ref[D]"
-		panel.PushUpdate(update)
+		if(src.panel && istype(D, /mob/living/critter/flock/drone))
+			// update the flock control panel
+			var/list/update = list()
+			update["update"] = "remove"
+			update["key"] = "drones"
+			update["ref"] = "\ref[D]"
+			panel.PushUpdate(update)
 
 		if(D:real_name && busy_tiles[D:real_name])
 			src.busy_tiles[D:real_name] = null
-	if(istype(D, /obj/flock_structure/egg))
-		src.units -= D
 
 /datum/flock/proc/getComplexDroneCount()
 	var/count = 0
