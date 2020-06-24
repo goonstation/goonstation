@@ -580,6 +580,7 @@
 	can_reclaim = 0
 	can_scramble = 0
 	curable_by_mutadone = 0
+	acceptable_in_mutini = 0
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -604,6 +605,7 @@
 	can_reclaim = 0
 	can_scramble = 0
 	curable_by_mutadone = 0
+	acceptable_in_mutini = 0
 
 	OnSpeak(var/message)
 		if (!istext(message))
