@@ -900,6 +900,21 @@ var/global/noir = 0
 			else
 				alert("You need to be at least a Secondary Adminstrator to jump to mobs.")
 
+		if ("observe")
+			if(src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				if (isobserver(M))
+					boutput(usr, "<span class='alert'>You can't observe a ghost.</span>")
+				else
+					if (!istype(usr, /mob/dead/observer))
+						boutput(usr, "<span class='alert'>This command only works when you are a ghost.</span>")
+						return
+					var/mob/dead/observer/ghost = usr
+					ghost.insert_observer(M)
+			else
+				alert("You need to be at least a Secondary Adminstrator to observe mobs... For some reason.")
+
 		if ("jumptocoords")
 			if(src.level >= LEVEL_SA)
 				var/list/coords = splittext(href_list["target"], ",")
