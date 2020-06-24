@@ -533,7 +533,7 @@
 				var/R = GetRedPart(lensObj.material.color) / 255
 				var/G = GetGreenPart(lensObj.material.color) / 255
 				var/B = GetBluePart(lensObj.material.color) / 255
-				newObj = new(R, G, B)
+				newObj = new(null, R, G, B)
 			else
 				newObj = new
 			if(casingObj && casingObj.material)

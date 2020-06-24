@@ -60,7 +60,7 @@
 	brightness = 4.6
 
 	var/datum/component/holdertargeting/simple_light/light_dir
-	New(R = initial(col_r), G = initial(col_g), B = initial(col_b))
+	New(loc, R = initial(col_r), G = initial(col_g), B = initial(col_b))
 		..()
 		col_r = R
 		col_g = G
