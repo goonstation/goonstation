@@ -1517,11 +1517,13 @@ obj/item/whetstone
 	icon_state = "kendo_sword"
 	name = "kendo sword"
 	desc = "A strong yet flexible practise sword used for practising the art of Kendo. Doesn't look like it will do much damage but it's definetely sturdy enough to bonk someone over the head with."
-	force = 1
+	force = 5
 	throwforce = 5.0
 	delimb_prob = 0
 	is_syndicate = 0
 	contraband = 0
+	stamina_damage = 40
+	stamina_crit_chance = 35
 	hit_type = DAMAGE_BLUNT
 	hitsound = 'sound/impact_sounds/kendo_sword_hitSWIPE.ogg'
 
