@@ -288,16 +288,13 @@
 		if (!src.holder)
 			src.verbs += /client/proc/toggle_mentorhelps
 		ignore_player_cap = 1
-	else if (!(src.ckey in bypassCapCkeys))
+	else if (player_capa && total_clients() >= player_cap && (src.ckey in bypassCapCkeys))
 		boutput(src, "<span class='ooc mentorooc'>The server is full, but you are allowed to bypass the player cap!</span>")
 		ignore_player_cap = 1
-
-	if(!ignore_player_cap && player_capa)
-		if(total_clients() >= player_cap)
-			if (!src.holder)
-				alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
-				del(src)
-				return
+	else if(player_capa && total_clients() >= player_cap && !src.holder)
+		alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
+		del(src)
+		return
 
 	if (join_motd)
 		boutput(src, "<div class=\"motd\">[join_motd]</div>")
