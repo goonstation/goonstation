@@ -14,4 +14,4 @@ jobs:
         days-before-stale: 14
         days-before-close: 7
         stale-pr-label: 'stale'
-        exempt-pr-label: 'Certified Organic'
+        exempt-pr-labels: 'Certified Organic'
