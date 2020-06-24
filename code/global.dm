@@ -535,6 +535,7 @@ var/global
 	list/admins = list(  )
 	list/onlineAdmins = list(  )
 	list/whitelistCkeys = list(  )
+	list/bypassCapCkeys = list(  )
 	list/shuttles = list(  )
 	list/reg_dna = list(  )
 //	list/traitobj = list(  )
