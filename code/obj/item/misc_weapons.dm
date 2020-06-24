@@ -1512,3 +1512,38 @@ obj/item/whetstone
 	New()
 		..()
 		BLOCK_ROD
+
+/obj/item/katana/kendo
+	icon_state = "kendo_sword"
+	name = "kendo sword"
+	desc = "A strong yet flexible practise sword used for practising the art of Kendo. Doesn't look like it will do much damage but it's definetely sturdy enough to bonk someone over the head with."
+	force = 1
+	throwforce = 5.0
+	delimb_prob = 0
+	is_syndicate = 0
+	contraband = 0
+	hit_type = DAMAGE_BLUNT
+	hitsound = 'sound/impact_sounds/kendo_sword_hitSWIPE.ogg'
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/rangestab)
+
+/obj/item/katana_sheath/kendo
+	name = "kendo sword sheath"
+	desc = "A light wooden sheath for a practise kendo sword"
+	icon_state = "kendo_sheath"
+	item_state = "kendosheathed"
+
+	sheathed_state = "kendo_sheath"
+	sheath_state = "kendo_sheath_nosword"
+	ih_sheathed_state = "kendosheathed"
+	ih_sheath_state = "kendosheathed"
+	sword_path = /obj/item/katana/kendo
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (W.type == /obj/item/katana)
+			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
+			return
+		..()
+
