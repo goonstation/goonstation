@@ -172,3 +172,13 @@
 	msgGain = "You feel like you're ready for some Cow RP."
 	msgLose = "Your udders fall off!"
 	icon_state  = "cow"
+	
+/datum/bioEffect/mutantrace/doggo
+	name = "Canine Genetics"
+	desc = "Alters the subject's physiology to take on a doglike appearance."
+	id = "doggo"
+	mutantrace_option = "doggo"
+	mutantrace_path = /datum/mutantrace/doggo
+	msgGain = "You feel like your own best friend."
+	msgLose = "Your fur falls out!"
+	icon_state  = "doggo"

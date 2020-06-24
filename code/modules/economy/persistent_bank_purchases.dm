@@ -26,6 +26,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/bp_randoseru,\
 	new /datum/bank_purchaseable/bp_anello,\
 	new /datum/bank_purchaseable/nt_backpack,\
+	new /datum/bank_purchaseable/doggo,\
 	new /datum/bank_purchaseable/lizard,\
 	new /datum/bank_purchaseable/cow,\
 	new /datum/bank_purchaseable/skeleton,\
@@ -332,6 +333,18 @@ var/global/list/persistent_bank_purchaseables =	list(\
 						return 1
 				return 0
 
+			return 0
+
+	doggo
+		name = "Canine"
+		cost = 0
+
+		Create(var/mob/living/M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.bioHolder)
+					H.bioHolder.AddEffect("doggo")
+					return 1
 			return 0
 
 	lizard

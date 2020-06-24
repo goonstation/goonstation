@@ -1050,7 +1050,7 @@ var/global/noir = 0
 					alert("This secret can only be used on human mobs.")
 					return
 				var/mob/living/carbon/human/H = M
-				var/which = input("Transform them into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman", "Kudzuman","Ghostdrone","Flubber","Cow")
+				var/which = input("Transform them into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman", "Kudzuman","Ghostdrone","Flubber","Cow","Dogman")
 				if (!which)
 					return
 				. = 0
@@ -1086,6 +1086,9 @@ var/global/noir = 0
 						H.set_mutantrace(/datum/mutantrace/flubber)
 					if ("Cow")
 						H.set_mutantrace(/datum/mutantrace/cow)
+					if ("Dogman)
+						H.set_mutantrace(/datum/mutantrace/doggo)
+						. = 1
 				if(.)
 					message_admins("<span class='internal'>[key_name(usr)] transformed [H.real_name] into a [which].</span>")
 			else

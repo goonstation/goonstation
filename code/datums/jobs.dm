@@ -1227,7 +1227,7 @@
 		if (!M)
 			return
 		if(prob(25))
-			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian)
+			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/doggo,/datum/mutantrace/doggo,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian)
 			M.set_mutantrace(morph)
 
 
@@ -1396,7 +1396,7 @@
 		..()
 		if (!M)
 			return
-		var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
+		var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/doggo,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
 		M.set_mutantrace(morph)
 
 /datum/job/special/random/testsubject
@@ -1445,7 +1445,7 @@
 			return
 
 		if(prob(33))
-			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian)
+			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/doggo,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian)
 			M.set_mutantrace(morph)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
@@ -2413,7 +2413,7 @@
 		if (!M)
 			return
 		if(prob(33))
-			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian)
+			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/doggo,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian)
 			M.set_mutantrace(morph)
 
 /datum/job/daily/saturday
