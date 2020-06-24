@@ -124,7 +124,6 @@
 					is_athletic_jump = 1
 		if (The_Railing)
 			the_railing = The_Railing
-			var/our_dist = get_dist(ownerMob, the_railing)
 			if (get_dist(ownerMob, the_railing) == 0)
 				jump_target = get_step(the_railing, the_railing.dir)
 			else
