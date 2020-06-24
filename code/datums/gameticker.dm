@@ -687,7 +687,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 			//pilot's bonus check and reward
 			var/pilot_bonus = 500 //for receipt
-			if(in_centcom(player) && !isdead(player))
+			if(!isdead(player) && in_centcom(player))
 				if (player.buckled)
 					if (istype(player.buckled,/obj/stool/chair/comfy/shuttle/pilot))
 						bank_earnings.pilot = 1
@@ -698,12 +698,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 						M = player:mainframe
 					else
 						M = player
-					for (var/i in M.loc.contents)
-						if (istype(i,/obj/stool/chair/comfy/shuttle/pilot))
-							if (!i:buckled_guy) //no double piloting
-								bank_earnings.pilot = 1
-								earnings += pilot_bonus
-							break
+					var/obj/stool/chair/comfy/shuttle/pilot/O = locate() in M.loc
+					if (O && !O.buckled_guy) //no double piloting
+						bank_earnings.pilot = 1
+						earnings += pilot_bonus
 
 			//add_to_bank and show earnings receipt
 			earnings = round(earnings)
