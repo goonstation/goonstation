@@ -705,9 +705,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 								earnings += pilot_bonus
 								break
 
-				bank_earnings.pilot = 1
-				earnings += pilot_bonus
-
 			//add_to_bank and show earnings receipt
 			earnings = round(earnings)
 			//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] spacebux calc finish: [player.mind.ckey]")
