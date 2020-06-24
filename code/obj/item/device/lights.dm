@@ -60,8 +60,11 @@
 	brightness = 4.6
 
 	var/datum/component/holdertargeting/simple_light/light_dir
-	New()
+	New(R = initial(col_r), G = initial(col_g), B = initial(col_b))
 		..()
+		col_r = R
+		col_g = G
+		col_b = B
 		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, col_r * 255, col_g * 255, col_b  * 255, 210)
 		light_dir.update(0)
 
