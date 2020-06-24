@@ -132,7 +132,7 @@
 				possible_limbs += H.limbs.r_leg
 
 			if (possible_limbs.len)
-				for (var/obj/item/parts/P in possible_limbs)
-					if (prob(limbloss_prob))
-						H.show_text("Your [P] was severed by the [magical ? "explosion" : "shockwave"]!", "red")
-						P.sever()
+				var/obj/item/parts/P = pick(possible_limbs)
+				if (prob(limbloss_prob))
+					H.show_text("Your [P] was severed by the [magical ? "explosion" : "shockwave"]!", "red")
+					P.sever()

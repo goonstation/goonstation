@@ -1349,11 +1349,11 @@ PIPE BOMBS + CONSTRUCTION
 				if (butt > 1)
 					playsound(src.loc, "sound/voice/farts/superfart.ogg", 90, 1)
 					for (var/mob/M in view(3+butt,src.loc))
-						ass_explosion(M, 0, 1)
+						ass_explosion(M, 0, 5)
 				else
 					playsound(src.loc, "sound/voice/farts/poo2.ogg", 90, 1)
 					for (var/mob/M in view(3,src.loc))
-						ass_explosion(M, 0, 1)
+						ass_explosion(M, 0, 5)
 			if (confetti)
 				if (confetti > 1)
 					particleMaster.SpawnSystem(new /datum/particleSystem/confetti_more(src.loc))
