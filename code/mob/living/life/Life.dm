@@ -277,7 +277,7 @@
 	if (..(parent))
 		return 1
 
-	var/mult = (max(tick_spacing, world.timeofday - last_human_life_tick) / tick_spacing)
+	var/mult = (max(tick_spacing, TIME - last_human_life_tick) / tick_spacing)
 
 	if (farty_party)
 		src.emote("fart")
