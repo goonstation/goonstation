@@ -445,6 +445,7 @@ var/f_color_selector_handler/F_Color_Selector
 	src.load_admins()//UGH
 	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
 	src.load_whitelist() //WHY ARE WE UGH-ING
+	src.load_whitelist("data/generated-whitelist.txt")
 
 	Z_LOG_DEBUG("World/Init", "Starting input loop")
 	start_input_loop()
