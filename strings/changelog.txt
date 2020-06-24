@@ -1,5 +1,9 @@
 
 (t)wed jun 24 20
+(u)Sovexe and UrsulaMajor
+(p)1202
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added pilot's seat to all escape shuttles. Being buckled into this seat when the round ends grants a pilot's bonus in the form of additional spacebux earnings.
 (u)Sovexe
 (p)1210
 (e)🐛|bug
