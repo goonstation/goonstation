@@ -1,3 +1,19 @@
+// this is such a dumb joke
+/obj/meme
+	name = "glorious"
+	desc = "FUCK WHAT THE JESUS IS THAT"
+	icon = 'icons/obj/160x160.dmi'
+	icon_state = "dumb-joke-left"
+	layer = 100
+	plane = 100
+	opacity = 0
+	density = 0
+	pixel_x = -64
+	pixel_y = -64
+
+	right
+		icon_state = "dumb-joke-right"
+
 /obj/railing
 	name = "railing"
 	desc = "Two sets of bars shooting onward with the sole goal of blocking you off. They can't stop you from vaulting over them though!"
@@ -113,8 +129,6 @@
 				jump_target = get_step(the_railing, the_railing.dir)
 			else
 				jump_target = get_turf(the_railing)
-			ownerMob.show_text("MY DISTANCE: [our_dist ? "[our_dist]" : "IT ZERO BOI"]", "red")
-
 
 	onUpdate()
 		..()
