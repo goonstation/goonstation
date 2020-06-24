@@ -1,9 +1,10 @@
-#define KUDZU_TO_SPREAD_INITIAL 40
+#define KUDZU_TO_SPREAD_INITIAL 35
 /obj/item/kudzuseed//TODO: Move all this to respective files everything works right.
 	name = "kudzu seed"
 	desc = "So this is where Kudzu went. Plant on a floor to grow.<br/>The disclaimer seems faded out, though."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "seeds"
+	var/to_spread = KUDZU_TO_SPREAD_INITIAL
 
 	attack(mob/M, mob/user)
 		if(ishuman( M ))
@@ -22,9 +23,9 @@
 			//var/obj/spacevine/kudzu = new( A )
 			//kudzu.Life()
 			if (prob(1))
-				new /obj/spacevine/alien/living(location=A,to_spread=KUDZU_TO_SPREAD_INITIAL)
+				new /obj/spacevine/alien/living(location=A,to_spread=src.to_spread)
 			else
-				new /obj/spacevine/living(location=A, to_spread = KUDZU_TO_SPREAD_INITIAL)
+				new /obj/spacevine/living(location=A, to_spread=src.to_spread)
 			boutput( user, "You plant the [src] on the [A]." )
 			logTheThing( "combat", user, null, "plants [src] (kudzu) at [log_loc(src)]." )
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
