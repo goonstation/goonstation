@@ -12,8 +12,8 @@
 
 /obj/submachine/weapon_vendor
 	name = "Syndicate Weapons Vendor"
-	icon = 'icons/obj/discountdans.dmi'
-	icon_state = "gtm"
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "weapon"
 	desc = "An automated quartermaster service for supplying your nuclear operative team with weapons and gear."
 	density = 1
 	opacity = 0
@@ -87,7 +87,7 @@
 				table {border-collapse: collapse;}
 				th {padding: 5px; text-align: center; background-color: #800000; color: white; height: 25px;}
 				td {padding: 5px; text-align: center;}
-				tr:hover {background-color: #c83737;}
+				tr:hover {background-color: #707070;}
 				.reward {display:block; color:white; padding: 2px 5px; margin: -5px -5px 2px -5px;
 																width: auto;
 																height: auto;
