@@ -1,4 +1,9 @@
 
+(t)wed jun 24 20
+(u)kyle
+(p)1190
+(e)🆕|feature
+(+)Clicking an item with an item storage container attempts to place it in the storage item.
 (t)tue jun 23 20
 (u)Flaborized
 (p)1181

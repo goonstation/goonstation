@@ -107,9 +107,9 @@ var/global/mob/twitch_mob = 0
 				admins[m_key] = a_lev
 				diary << ("ADMIN: [m_key] = [a_lev]")
 
-/world/proc/load_whitelist()
+/world/proc/load_whitelist(fileName = "strings/whitelist.txt")
 	set background = 1
-	var/text = file2text("strings/whitelist.txt")
+	var/text = file2text(fileName)
 	if (!text)
 		return
 	else
@@ -122,6 +122,24 @@ var/global/mob/twitch_mob = 0
 				continue
 
 			whitelistCkeys += line
+			diary << ("WHITELIST: [line]")
+
+
+/world/proc/load_playercap_bypass()
+	set background = 1
+	var/text = file2text("strings/allow_thru_cap.txt")
+	if (!text)
+		return
+	else
+		var/list/lines = splittext(text, "\n")
+		for(var/line in lines)
+			if (!line)
+				continue
+
+			if (copytext(line, 1, 2) == "#")
+				continue
+
+			bypassCapCkeys += line
 			diary << ("WHITELIST: [line]")
 
 // dsingh for faster create panel loads
@@ -445,6 +463,8 @@ var/f_color_selector_handler/F_Color_Selector
 	src.load_admins()//UGH
 	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
 	src.load_whitelist() //WHY ARE WE UGH-ING
+	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
+	src.load_playercap_bypass()
 
 	Z_LOG_DEBUG("World/Init", "Starting input loop")
 	start_input_loop()
