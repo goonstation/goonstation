@@ -551,7 +551,7 @@
 	g_amt = 3750
 	burn_type = 1
 	stamina_damage = 5
-	stamina_cost = 15
+	stamina_cost = 5
 	stamina_crit_chance = 35
 	burn_possible = 0
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER

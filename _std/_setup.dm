@@ -719,16 +719,17 @@ proc/default_frequency_color(freq)
 #define STAMINA_MAX 200        			//Default max stamina value
 #define STAMINA_REGEN 10   	   		 	//Default stamina regeneration rate.
 #define STAMINA_ITEM_DMG 20     		//Default stamina damage objects do.
-#define STAMINA_ITEM_COST 18    		//Default attack cost on user for attacking with items.
+#define STAMINA_ITEM_COST 15    		//Default attack cost on user for attacking with items.
 #define STAMINA_HTH_DMG 30      		//Default hand-to-hand (punch, kick) stamina damage.
-#define STAMINA_HTH_COST 20     		//Default hand-to-hand (punch, kick) stamina cost
-#define STAMINA_MIN_ATTACK 91   		//The minimum amount of stamina required to attack.
+#define STAMINA_HTH_COST 15     		//Default hand-to-hand (punch, kick) stamina cost
+#define STAMINA_MIN_ATTACK 50   		//The minimum amount of stamina required to attack.
 #define STAMINA_NEG_CAP -75     		//How far into the negative we can take stamina. (People will be stunned while stamina regens up to > 0 - so this can lead to long stuns if set too high)
 #define STAMINA_NEG_CAP_STUN_TIME 60   	//When we reach the neg cap, how long to paralyze?
 #define STAMINA_STUN_TIME 5     		//How long we will be stunned for, for being <= 0 stamina
 #define STAMINA_STUN_CRIT_TIME 8  		//How long we will be stunned for, for being <= NEGCAP stamina
 #define STAMINA_GRAB_COST 25    		//How much grabbing someone costs.
 #define STAMINA_DISARM_COST 5   		//How much disarming someone costs.
+#define STAMINA_DISARM_DMG 19			//Stamina damage of disarming someone with bare hands.
 #define STAMINA_FLIP_COST 25    		//How much flipping / suplexing costs.
 #define STAMINA_CRIT_CHANCE 25  		//Base chance of landing a critical hit to stamina.
 #define STAMINA_CRIT_DIVISOR 2  		//Divide stamina by how much on a crit
@@ -1124,6 +1125,13 @@ var/ZLOG_START_TIME
 #define ATTO  *(10**-18)
 #define ZEPTO *(10**-21)
 #define YOCTO *(10**-24)
+
+//table defines
+#define TABLE_DISASSEMBLE 0
+#define TABLE_WEAKEN 1
+#define TABLE_STRENGTHEN 2
+#define TABLE_ADJUST 3
+#define TABLE_LOCKPICK 4
 
 //Auditing
 //Whether or not a potentially suspicious action gets denied by the code.

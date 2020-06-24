@@ -119,7 +119,9 @@
 		. += "<hr>"
 		if(rarity >= 4)
 			. += "<div><img src='[resource("images/tooltips/rare.gif")]' alt='' class='icon' /><span>Rare item</span></div>"
-		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [src.stamina_damage ? src.stamina_damage : "0"] stam, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10))*(src.force ? src.force : "0"), 0.1)] DPS</span></div>"
+		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [src.throwforce ? src.throwforce : "0"] thrown dmg</span></div>"
+		if (src.stamina_cost || src.stamina_damage)
+			. += "<div><img src='[resource("images/tooltips/stamina.png")]' alt='' class='icon' /><span>Stamina: [src.stamina_damage ? src.stamina_damage : "0"] dmg, [stamina_cost] consumed per swing</span></div>"
 
 		if(src.properties && src.properties.len)
 			for(var/datum/objectProperty/P in src.properties)
@@ -693,11 +695,6 @@
 			//S.hud.remove_item(src)
 			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
-/obj/item/Bump(mob/M as mob)
-	SPAWN_DBG( 0 )
-		..()
-	return
-
 /obj/item/attackby(obj/item/W as obj, mob/user as mob, params)
 	if (src.material)
 		src.material.triggerTemp(src ,1500)
@@ -1187,14 +1184,14 @@
 				stam_power = src.special.overrideStaminaDamage
 
 		//reduce stamina by the same proportion that base damage was reduced
-		//min cap is stam_power/4 so we still cant ignore it entirely
+		//min cap is stam_power/2 so we still cant ignore it entirely
 		if ((power + armor_mod) == 0) //mbc lazy runtime fix
-			stam_power = stam_power / 4 //do the least
+			stam_power = stam_power / 2 //do the least
 		else
-			stam_power = max(  stam_power / 4, stam_power * ( power / (power + armor_mod) )  )
+			stam_power = max(  stam_power / 2, stam_power * ( power / (power + armor_mod) )  )
 
 		//stam_power -= armor_mod
-
+		msgs.force_stamina_target = 1
 		msgs.stamina_target -= max(stam_power, 0)
 
 	if (is_special && src.special)

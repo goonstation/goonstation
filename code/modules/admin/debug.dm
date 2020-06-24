@@ -343,7 +343,12 @@ var/global/debug_messages = 0
 				listargs += input("Enter new number:","Num", 0) as null|num
 
 			if ("type")
-				listargs += input("Enter type:","Type", null) in null|typesof(/obj,/mob,/area,/turf,/datum/component)
+				boutput(usr, "<span class='notice'>Type part of the path of the type.</span>")
+				var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
+				if (typename)
+					var/match = get_one_match(typename, /datum)
+					if (match)
+						listargs += match
 
 			if ("reference")
 				listargs += input("Select reference:","Reference", null) as null|mob|obj|turf|area in world

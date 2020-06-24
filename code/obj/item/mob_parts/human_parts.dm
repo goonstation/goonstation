@@ -6,8 +6,9 @@
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	var/skin_tone = "#FFCC99"
 	var/mob/living/original_holder = null
-	stamina_damage = 30
-	stamina_cost = 15
+	force = 6
+	stamina_damage = 40
+	stamina_cost = 23
 	stamina_crit_chance = 5
 	skintoned = 1
 	module_research = list("medicine" = 1)

@@ -473,6 +473,21 @@ var/list/globalContextActions = null
 			if (action.close_clicked)
 				user.closeContextActions()
 
+	disposing()
+		var/mob/living/carbon/human/H = user
+		if(istype(H)) H.hud.remove_screen(src)
+		var/mob/living/critter/R = user
+		if(istype(R)) R.hud.remove_screen(src)
+		var/mob/wraith/W = user
+		if(istype(W)) W.hud.remove_screen(src)
+		if (isrobot(user))
+			var/mob/living/silicon/robot/robot = user
+			robot.hud.remove_screen(src)
+		if (ishivebot(user))
+			var/mob/living/silicon/hivebot/hivebot = user
+			hivebot.hud.remove_screen(src)
+		..()
+
 /datum/contextAction
 	var/icon = 'icons/ui/context16x16.dmi'
 	var/icon_state = "eye"

@@ -22,8 +22,9 @@
 	var/weight = 0     // for calculating speed modifiers
 	var/powerdrain = 0 // does this part consume any extra power
 
-	stamina_damage = 35
-	stamina_cost = 20
+	force = 6
+	stamina_damage = 40
+	stamina_cost = 23
 	stamina_crit_chance = 5
 
 	examine()

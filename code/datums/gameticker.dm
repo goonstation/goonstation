@@ -315,6 +315,14 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 						logTheThing("debug", B, null, "<b>Late join</b>: assigned antagonist role: blob.")
 						antagWeighter.record(role = "blob", ckey = B.ckey)
 
+				else if (player.mind && player.mind.special_role == "flockmind")
+					player.close_spawn_windows()
+					var/mob/living/intangible/flock/flockmind/F = player.make_flockmind()
+					if (F)
+						F.set_loc(pick(observer_start))
+						logTheThing("debug", F, null, "<b>Late join</b>: assigned antagonist role: flockmind.")
+						antagWeighter.record(role = "flockmind", ckey = F.ckey)
+
 				else if (player.mind)
 					if (player.client.using_antag_token)
 						player.client.use_antag_token()	//Removes a token from the player
@@ -664,6 +672,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				player_dead = 0
 			//some might not actually have a wage
 			if (isnukeop(player) ||  (isblob(player) && (player.mind && player.mind.special_role == "blob")) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == "wizard")) )
+				bank_earnings.wage_base = 0 //only effects the end of round display
 				earnings = 800
 
 			if (player.mind.completed_objs > 0)
@@ -675,6 +684,24 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 			if (it_is_ass_day)
 				earnings *= 2
+
+			//pilot's bonus check and reward
+			var/pilot_bonus = 500 //for receipt
+			if(!isdead(player) && in_centcom(player))
+				if (player.buckled)
+					if (istype(player.buckled,/obj/stool/chair/comfy/shuttle/pilot))
+						bank_earnings.pilot = 1
+						earnings += pilot_bonus
+				else if (isAI(player))
+					var/mob/living/silicon/ai/M = null
+					if (isAIeye(player))
+						M = player:mainframe
+					else
+						M = player
+					var/obj/stool/chair/comfy/shuttle/pilot/O = locate() in M.loc
+					if (O && !O.buckled_guy) //no double piloting
+						bank_earnings.pilot = 1
+						earnings += pilot_bonus
 
 			//add_to_bank and show earnings receipt
 			earnings = round(earnings)
@@ -689,6 +716,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					if (player_dead)
 						player.client.set_last_purchase(0)
 
+					bank_earnings.pilot_bonus = pilot_bonus
 					bank_earnings.final_payout = earnings
 					bank_earnings.held_item = player.client.persistent_bank_item
 					bank_earnings.new_balance = player.client.persistent_bank

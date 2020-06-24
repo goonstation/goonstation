@@ -662,6 +662,7 @@ datum/chemicompiler_core/stationaryCore
 	icon_state = "chemicompiler_st_off"
 	mats = 15
 	flags = NOSPLASH
+	processing_tier = PROCESSING_FULL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/datum/chemicompiler_executor/executor
 	var/datum/light/light

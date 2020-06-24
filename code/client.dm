@@ -278,23 +278,18 @@
 			return
 */
 	//admins and mentors can enter a server through player caps.
-	var/ignore_player_cap = 0
 	if (init_admin())
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
-		control_freak = 0	// heh
-		ignore_player_cap = 1
 	else if (player.mentor)
 		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
 		if (!src.holder)
 			src.verbs += /client/proc/toggle_mentorhelps
-		ignore_player_cap = 1
-
-	if(!ignore_player_cap && player_capa)
-		if(total_clients() >= player_cap)
-			if (!src.holder)
-				alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
-				del(src)
-				return
+	else if (player_capa && (total_clients() >= player_cap) && (src.ckey in bypassCapCkeys))
+		boutput(src, "<span class='ooc mentorooc'>The server is full, but you are allowed to bypass the player cap!</span>")
+	else if(player_capa && (total_clients() >= player_cap) && !src.holder)
+		alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
+		del(src)
+		return
 
 	if (join_motd)
 		boutput(src, "<div class=\"motd\">[join_motd]</div>")
@@ -314,9 +309,7 @@
 	SPAWN_DBG(0) // to not lock up spawning process
 		if (IsGuestKey(src.key))
 			src.has_contestwinner_medal = 0
-		else if (!config)
-			src.has_contestwinner_medal = 0
-		else if (!config.medal_hub || !config.medal_password)
+		else if (!config || !config.medal_hub || !config.medal_password)
 			src.has_contestwinner_medal = 0
 		else
 			src.has_contestwinner_medal = world.GetMedal("Too Cool", src.key, config.medal_hub, config.medal_password)
@@ -378,19 +371,18 @@
 				src.cmd_ass_day_rules()
 
 
-			if (src.byond_version < 513 || src.byond_build < 1500)
-				if (alert(src, "Please update BYOND to version 513! Would you like to be taken to the download page? Make sure to download the beta and not the stable release.", "ALERT", "Yes", "No") == "Yes")
+			if (src.byond_version < 513 || src.byond_build < 1526)
+				if (alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", "Yes", "No") == "Yes")
 					src << link("http://www.byond.com/download/")
 				else
 					alert(src, "You won't be able to play without updating, sorry!")
 					del(src)
 					return
 
-
-			// if (src.byond_build == 1509)	//MBC : BAD CODE TO BANDAID A BROKEN BYOND THING. REMOVE THIS AS SOON AS LUMMOX FIXES  //ZeWaka: PART 2 BOOGALOOO
-			// 	if (alert(src, "Warning! The version of BYOND you are running (513.1509) is bugged. This is bad! Would you like a link to a .zip of the last working version?", "ALERT", "Yes", "No") == "Yes")
-			// 		src << link("http://www.byond.com/download/build/513/513.1510_byond.zip")
-
+// Let's throw it here, why not! -ZeWaka
+#if DM_BUILD < 1526 && !defined(SPACEMAN_DMM)
+#error Please update your BYOND version to the latest stable release.
+#endif
 
 		else
 			if (noir)
@@ -522,6 +514,8 @@
 
 	src.reputations = new(src)
 
+	if(src.holder && src.holder.level >= LEVEL_CODER)
+		src.control_freak = 0
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
 
@@ -540,8 +534,6 @@
 		onlineAdmins |= (src)
 		if (!NT.Find(src.ckey))
 			NT.Add(src.ckey)
-		if(src.holder.rank in list("Host", "Coder"))
-			control_freak = 0
 		return 1
 
 	return 0

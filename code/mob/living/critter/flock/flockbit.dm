@@ -11,7 +11,7 @@
 	flags = TABLEPASS
 
 /mob/living/critter/flock/bit/New(var/datum/flock/F=null)
-	..(F)
+	..(src, F)
 
 	src.ai = new /datum/aiHolder/flock/bit(src)
 

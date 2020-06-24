@@ -1,6 +1,9 @@
 //very similar to playable_pests.dm :)
 /datum/random_event/major/antag/antagonist_pest
 	name = "Antagonist Critter Spawn"
+	customization_available = 1
+	var/num_critters = 0
+	var/critter_type = null
 #ifdef RP_MODE
 	disabled = 1
 #endif
@@ -18,11 +21,25 @@
 		if (..())
 			return
 
-		var/input = input(usr,"Which one? Pick null for random???",src.name) as null|anything in list("fire_elemental","spider","gunbot")
-		if (!input || !istext(input))
-			return
-		event_effect(input)
+		switch (alert(usr, "Choose the critter type?", src.name, "Random", "Custom"))
+			if ("Custom")
+				src.critter_type = input("Enter a /mob/living/critter path or partial name", src.name, null) as null|text
+				src.critter_type = get_one_match(src.critter_type, "/mob/living/critter")
+				if (!src.critter_type)//invalid entry
+					return
+			if ("Random") //random
+				src.critter_type = null
 
+		src.num_critters = input(usr, "How many critter antagonists to spawn?", src.name, 0) as num|null
+		if (!src.num_critters || src.num_critters < 1)
+			cleanup_event()
+			return
+		else
+			src.num_critters = round(src.num_critters)
+
+		//confirmation
+		if (alert(usr, "You have chosen to spawn [src.num_critters] [src.critter_type ? src.critter_type : "random critters"]. Is this correct?", src.name, "Yes", "No") == "Yes")
+			event_effect(source)
 
 	event_effect(var/source)
 		..()
@@ -51,21 +68,23 @@
 				EV += latejoin
 				if (!EV.len)
 					message_admins("Pests event couldn't find a pest landmark!")
+					cleanup_event()
 					return
 
 			var/atom/pestlandmark = pick(EV)
 
-			var/list/select = pick(pest_invasion_critter_types)
-			if (source)
-				if (source == "fire_elemental")
-					select = list(/mob/living/critter/fire_elemental)
-				if (source == "spider")
-					select = list(/mob/living/critter/spider/baby)
-				if (source == "gunbot")
-					select = list(/mob/living/critter/gunbot)
+			var/list/select = null
+			if (src.critter_type)
+				select = src.critter_type
+			else
+				select = pick(src.pest_invasion_critter_types)
 
-			var/howmany = rand(1,min(3,candidates.len))
-			for (var/i in 0 to howmany)
+			if (src.num_critters) //custom selected
+				src.num_critters = (min(src.num_critters, candidates.len))
+			else //random selected
+				src.num_critters = rand(1,min(3,candidates.len))
+
+			for (var/i in 1 to src.num_critters)
 				if (!candidates || !candidates.len)
 					break
 
@@ -76,4 +95,8 @@
 				candidates -= M
 
 			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter")
+		cleanup_event()
 
+	proc/cleanup_event()
+		src.critter_type = null
+		src.num_critters = 0

@@ -412,9 +412,9 @@
 	w_class = 4.0
 	throwforce = 10
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 5
-	stamina_damage = 35
-	stamina_cost = 30
+	force = 9
+	stamina_damage = 30
+	stamina_cost = 20
 	stamina_crit_chance = 6
 	var/c_color = null
 	mats = 7

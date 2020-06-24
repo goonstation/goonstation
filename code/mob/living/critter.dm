@@ -688,6 +688,7 @@
 		empty_hands()
 		drop_equipment()
 		hud.update_health()
+		return ..(gibbed)
 
 	proc/get_health_holder(var/assoc)
 		if (assoc in healthlist)

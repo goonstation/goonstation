@@ -823,7 +823,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 5
 	stamina_damage = 45
-	stamina_cost = 40
+	stamina_cost = 21
 	stamina_crit_chance = 10
 	var/c_color = null
 
@@ -958,6 +958,13 @@
 		icon_state = "shuttle_chair-brown"
 	green
 		icon_state = "shuttle_chair-green"
+
+/obj/stool/chair/comfy/shuttle/pilot
+	name = "pilot's seat"
+	desc = "Only the most important crew member gets to sit here. Everyone is super envious of whoever sits in this chair."
+	icon_state = "shuttle_chair-pilot"
+	arm_icon_state = "shuttle_chair-pilot-arm"
+	comfort_value = 7
 
 /* ===================================================== */
 /* -------------------- Wheelchairs -------------------- */

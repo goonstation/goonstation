@@ -755,7 +755,7 @@
 			throw EXCEPTION("Could not find reagent for id:[allergen]")
 
 	onLife(var/mob/owner)
-		if (owner.reagents.has_reagent(allergen))
+		if (owner?.reagents?.has_reagent(allergen))
 			owner.reagents.add_reagent("histamine", 1.4) //1.4 units of histamine per life cycle? is that too much?
 
 /obj/trait/random_allergy/medical_allergy

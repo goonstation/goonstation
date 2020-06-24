@@ -79,7 +79,7 @@
 
 		return
 
-	is_event_available()
+	is_event_available(var/ignore_time_lock = 0)
 		if( emergency_shuttle.online )
 			return 0
 
@@ -189,6 +189,15 @@
 							B.real_name = newname
 							B.name = newname
 
+				else
+					failed = 1
+
+			if ("Flockmind")
+				var/mob/living/intangible/flock/flockmind/F = M3.make_flockmind()
+				if (F && istype(F))
+					M3 = F
+					role = "flockmind"
+					//objective_path = /datum/objective_set/blob
 				else
 					failed = 1
 

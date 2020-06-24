@@ -345,17 +345,24 @@
 	else if (href_list["disk"]) //Load or eject.
 		switch(href_list["disk"])
 			if("load")
-				if (src.diskette.data_type == "cloning_record")
-					var/datum/data/record/R = new /datum/data/record(  )
-					R.fields = src.diskette.data
-					src.records += R
-					src.temp = "Load successful, data transferred."
-					src.diskette.data_type = "corrupt"
-					src.diskette.data = ""
+				if (src.diskette.read_only)
+					// The file needs to be deleted from the disk after loading the record
+					src.temp = "Load error - cannot transfer clone records from a disk in read only mode."
 					src.updateUsrDialog()
 					return
 
-				else
+				var/loaded = 0
+
+				for(var/datum/computer/file/clone/cloneRecord in src.diskette.root.contents)
+					if (!find_record(cloneRecord.fields["ckey"]))
+						var/datum/data/record/R = new
+						R.fields = cloneRecord.fields
+						src.records += R
+						loaded++
+						src.temp = "Load successful, [loaded] [loaded > 1 ? "records" : "record"] transferred."
+						src.diskette.root.remove_file(cloneRecord)
+
+				if(!loaded)
 					src.temp = "Load error."
 					src.updateUsrDialog()
 					return
@@ -372,17 +379,16 @@
 			src.updateUsrDialog()
 			return
 
-		else if (src.diskette.data_type == "corrupt")
-			src.temp = "Save error. Disk corruption."
-			src.updateUsrDialog()
-			return
+		for (var/datum/computer/file/clone/R in src.diskette.root.contents)
+			if (R.fields["ckey"] == src.active_record.fields["ckey"])
+				src.temp = "Record already exists on disk."
+				src.updateUsrDialog()
+				return
 
-		src.diskette.data = src.active_record.fields
-		src.diskette.ue = 1
-		src.diskette.data_type = "cloning_record"
-		src.diskette.owner = src.active_record.fields["name"]
-		src.diskette.name = "data disk - '[src.diskette.owner]'"
-		src.temp = "Save successful."
+		var/datum/computer/file/clone/cloneFile = new
+		cloneFile.name = "CloneRecord-[ckey(src.active_record.fields["name"])]"
+		cloneFile.fields = src.active_record.fields
+		src.temp = src.diskette.root.add_file(cloneFile) ? "Save successful." : "Save error."
 
 	else if (href_list["refresh"])
 		src.updateUsrDialog()
@@ -559,25 +565,6 @@
 			SPAWN_DBG(rand(0, 15))
 				src.icon_state = "c_unpowered"
 				status |= NOPOWER
-
-
-//New loading/storing records is a todo while I determine how it should work.
-/obj/machinery/computer/cloning/proc
-	load_record()
-		if (!src.diskette || !src.diskette.root)
-			return -1
-
-
-		return 0
-
-	save_record()
-		if (!src.diskette || !src.diskette.root)
-			return -1
-
-
-
-		return 0
-
 
 //Find a dead mob with a brain and client.
 /proc/find_dead_player(var/find_key, needbrain=0)
