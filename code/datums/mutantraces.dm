@@ -541,7 +541,7 @@
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
 		mob.see_invisible = 1
 		
-	burnvuln = 3000
+	firevuln = 3000
 
 	say_filter(var/message)
 		return replacetext(message, "r", stutter("rr"))

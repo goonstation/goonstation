@@ -1086,7 +1086,7 @@ var/global/noir = 0
 						H.set_mutantrace(/datum/mutantrace/flubber)
 					if ("Cow")
 						H.set_mutantrace(/datum/mutantrace/cow)
-					if ("Dogman)
+					if ("Dogman")
 						H.set_mutantrace(/datum/mutantrace/doggo)
 						. = 1
 				if(.)
