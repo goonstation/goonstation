@@ -247,5 +247,10 @@
 				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, pitch = 0.9)
 				icon_state = "figurinecase"
 
-
-
+/obj/item/satchel/figurines/full
+	New()
+		. = ..()
+		for(var/i = 0, i < maxitems, i++)
+			var/obj/item/toy/figure/F = new()
+			F.set_loc(src)
+			src.satchel_updateicon()

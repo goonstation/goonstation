@@ -1,4 +1,43 @@
 
+(t)tue jun 23 20
+(u)Flaborized
+(p)1181
+(e)🎨|sprites
+(+)Resprited SKULLS.
+(u)glassofmilk
+(p)1184
+(e)🆕|feature
+(+)Nav beacons now respond to wireless pings.
+(t)mon jun 22 20
+(u)Flaborized
+(p)1161
+(e)🎨|sprites
+(+)Resprited the cyalume saber.
+(u)UrsulaMajor
+(p)1187
+(e)|
+(*)Blob Ribosomes now produce biopoints for the blob, making them much more important for the crew to target.
+(u)Awkward Dryad
+(p)1169
+(e)🆕🎨|feature, sprites
+(*)Added go board to card vendors
+(t)sun jun 21 20
+(u)UrsulaMajor
+(p)1172
+(e)🗺|mapping
+(+)The Cairngorm now has an office for its commander, as well as a pirate radio station!
+(u)mbc
+(p)1160
+(e)⚖|balance
+(+)Disarming someone does a bit of stamina damage to them.
+(u)UrsulaMajor
+(p)1159
+(e)⚖|balance
+(+)Blobs no longer need to make ribosomes to mitigate the blob size spread speed slowdown.
+(u)zjdtmkhzt
+(p)1151
+(e)⚖🐛|balance, bug
+(+)Pathogens can now be cured via just keeping it suppressed in the patient. This change will be explained in more detail if pathology is ever reenabled, which it is not!
 (t)sat jun 20 20
 (u)glassofmilk
 (p)1088

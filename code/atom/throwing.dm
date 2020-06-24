@@ -203,6 +203,14 @@
 		src.throwing = 0
 	..()
 
+/obj/item/Bump(mob/M as mob)
+	if (src.throwing)
+		var/lt = src.throwing
+		SPAWN_DBG( 0 ) //responsible for race conditions in throw code that this ugly fix exists for! i'm very afraid to remove this!!!
+			src.throwing = lt //throw_at has long since set throwing back to 0 at the end, so lets do this so that our parent can use throwing pproperly ugh
+			..()
+	return
+
 /atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 	if (!target) return
@@ -354,11 +362,10 @@
 
 	src.throw_end(params)
 
-	if (!hitAThing) // Bump proc requires throwing flag to be set, so if we hit a thing, leave it on and let Bump turn it off
-		src.throwing = 0
-	else // if we hit something don't use the pixel x/y from the click params
-		params = null
+	if (hitAThing)
+		params = null// if we hit something don't use the pixel x/y from the click params
 
+	src.throwing = 0
 	src.throw_unlimited = 0
 
 

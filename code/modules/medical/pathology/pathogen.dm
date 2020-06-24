@@ -918,7 +918,7 @@ datum/pathogen
 
 	var/in_remission = 0							// Pathogens in remission are being cured by the body. Set by the curing reagent.
 	var/forced_microbody = null						// If not null, this pathogen will be generated with a specific microbody.
-	var/curable_by_suppression = 0 					// If not 0, represents a probability of becoming regressive through suppression. If negative, randomly generated.
+	var/curable_by_suppression = 10	// If not 0, represents a probability of becoming regressive through suppression. If negative, randomly generated.
 	var/rads = 0 									// The pathogen may mutate inside someone according to rads.
 	var/rad_mutate_cooldown = 0 					// The amount of ticks to wait before we can mutate again due to radiation.
 	var/ticked = 0

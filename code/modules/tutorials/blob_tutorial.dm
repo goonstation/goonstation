@@ -384,9 +384,9 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 		MayAdvance()
 			return 0
 
-	ribosomes
+		ribosomes
 		name = "Ribosomes"
-		instructions = "Your most valuable assets are the ribosomes. As your size grows, so does the amount of time it takes for your spread ability to cool down. Ribosomes generate valuable structural materials for the blob, allowing it to mitigate this cooldown penalty. Place a ribosome on the marked blob tile to proceed."
+		instructions = "Your most valuable assets are the ribosomes. Ribosomes increase your biopoint generation, allowing you do do more things, faster. Place a ribosome on the marked blob tile to proceed."
 		var/turf/target
 		finished = 0
 
@@ -440,7 +440,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 	hotkeys
 		name = "Repair and Hotkeying"
-		instructions = "In hot situations, you will be unable to move around quickly and perform actions at the same time. This is where hotkeying comes in. You may assign up to three abilities to three different hotkey: CTRL+Click, ALT+Click and SHIFT+Click. This lets you perform stuff on the tile you click on! To assign a hotkey, CTRL/ALT/SHIFT-click an ability. Let's try this: assign a hotkey to the repair ability, and repair your damaged ribosome without moving."
+		instructions = "In hot situations, you will be unable to move around quickly and perform actions at the same time. This is where hotkeying comes in. You may assign up to three abilities to three different hotkey: CTRL+Click, ALT+Click and SHIFT+Click. This lets you perform stuff on the tile you click on! To assign a hotkey, CTRL/ALT/SHIFT-click an ability. Let's try this: assign a hotkey to the repair ability, and repair your damaged cells without moving."
 		var/turf/target
 
 		SetUp()
@@ -728,7 +728,6 @@ proc/AddBlobSteps(var/datum/tutorial/blob/T)
 	T.AddStep(new /datum/tutorialStep/blob/cutscene)
 	T.AddStep(new /datum/tutorialStep/blob/firewall)
 	T.AddStep(new /datum/tutorialStep/blob/cutscene2)
-	T.AddStep(new /datum/tutorialStep/blob/ribosomes)
 	T.AddStep(new /datum/tutorialStep/blob/clickmove)
 	T.AddStep(new /datum/tutorialStep/blob/hotkeys)
 	T.AddStep(new /datum/tutorialStep/blob/upgrades)

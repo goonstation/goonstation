@@ -12,32 +12,26 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
-			src.link_elements()
-			sleep(1 SECOND)
-			qdel(src)
+		if(current_state > GAME_STATE_PREGAME)
+			SPAWN_DBG(1)
+				src.initialize()
+
+	initialize()
+		src.link_elements()
+		..()
+		qdel(src)
 
 	proc/link_elements()
 
 		if(src.triggerer_id == src.triggerable_id)
 			return // I literally just said NOT to break this, you PROMISED.
 
-		for(var/obj/adventurepuzzle/A)
 
-			if(A.id == src.triggerer_id)
-				src.triggerers += A
+		if(length(adventure_elements_by_id[src.triggerer_id]))
+			src.triggerers = adventure_elements_by_id[src.triggerer_id]
 
-			if(A.id == src.triggerable_id)
-				src.triggerables += A
-
-
-		for(var/obj/item/adventurepuzzle/A)
-
-			if(A.id == src.triggerer_id)
-				src.triggerers += A
-
-			if(A.id == src.triggerable_id)
-				src.triggerables += A
+		if(length(adventure_elements_by_id[src.triggerable_id]))
+			src.triggerables = adventure_elements_by_id[src.triggerable_id]
 
 		if((src.triggerers.len > 0) && (src.triggerables.len > 0))
 

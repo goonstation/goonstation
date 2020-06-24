@@ -215,8 +215,6 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << "========================================"
 		world.log << ""
 
-		serverKey = (world.port % 1000) / 100
-
 		Z_LOG_DEBUG("Preload", "Loading config...")
 		config = new /datum/configuration()
 		config.load("config/config.txt")
@@ -225,6 +223,8 @@ var/f_color_selector_handler/F_Color_Selector
 			var/specific_config = "config/config-[world.port].txt"
 			if (fexists(specific_config))
 				config.load(specific_config)
+
+		serverKey = config.server_key ? config.server_key : (world.port % 1000) / 100
 
 		if (config.allowRotatingFullLogs)
 			roundLog << "========================================<br>"
@@ -652,7 +652,7 @@ var/f_color_selector_handler/F_Color_Selector
 		for (var/client/C)
 			if (C.mob)
 				if (prob(40))
-					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg'))
+					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/TimeForANewRound.ogg'))
 				else
 					C.mob << sound('sound/misc/NewRound.ogg')
 

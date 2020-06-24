@@ -155,11 +155,10 @@
 	qdel(chat_text)
 	chat_text = null
 
-
-	for (var/datum/hud/thishud in huds)
-		thishud.remove_object(stamina_bar)
-
-	stamina_bar = null
+	if(stamina_bar)
+		for (var/datum/hud/thishud in huds)
+			thishud.remove_object(stamina_bar)
+		stamina_bar = null
 
 	for (var/atom in stomach_process)
 		var/atom/A = atom

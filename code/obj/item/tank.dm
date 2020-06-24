@@ -303,6 +303,8 @@ Contains:
 	item_state = "jetpack_mag"
 	mats = 16
 	force = 8
+	stamina_damage = 55
+	stamina_cost = 30
 	desc = "A jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
 	module_research = list("atmospherics" = 4)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
