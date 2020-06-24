@@ -703,7 +703,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 							if (!i:buckled_guy) //no double piloting
 								bank_earnings.pilot = 1
 								earnings += pilot_bonus
-								break
+							break
 
 			//add_to_bank and show earnings receipt
 			earnings = round(earnings)
