@@ -531,8 +531,8 @@
 	proc/fix_colors(var/hex)
 		var/list/L = hex_to_rgb_list(hex)
 		for (var/i in L)
-			L[i] = min(L[i], 190)
-			L[i] = max(L[i], 50)
+			L[i] = min(L[i], 250)
+			L[i] = max(L[i], 5)
 		if (L.len == 3)
 			return rgb(L["r"], L["g"], L["b"])
 		return rgb(22, 210, 22)
@@ -541,10 +541,12 @@
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
 		mob.see_invisible = 1
 		
-	firevuln = 3000
+	firevuln = 1.1
 
 	say_filter(var/message)
 		return replacetext(message, "r", stutter("rr"))
+	
+	
 
 /datum/mutantrace/zombie
 	name = "zombie"
