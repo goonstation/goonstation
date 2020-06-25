@@ -1,5 +1,21 @@
 
 (t)wed jun 24 20
+(u)Comradef191
+(p)728
+(e)🆕🗺|feature, mapping
+(*)Added some additional items to the Cog1 armory; an EOD suit, a N2O canister, a tranq crate, and a box of stinger grenades.
+(u)zjdtmkhzt
+(p)1192
+(e)⚖|balance
+(*)Changed the Rathen's Secret wizard spell to only delimb if you have no arse. It also now always removes exactly one randomly chosen limb in that case.
+(u)Sovexe and UrsulaMajor
+(p)1202
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added pilot's seat to all escape shuttles. Being buckled into this seat when the round ends grants a pilot's bonus in the form of additional spacebux earnings.
+(u)Sovexe
+(p)1210
+(e)🐛|bug
+(+)The Oshan carousel now correctly routes packages to the north and south delivery zones.
 (u)kyle
 (p)1190
 (e)🆕|feature

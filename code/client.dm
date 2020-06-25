@@ -280,7 +280,6 @@
 	//admins and mentors can enter a server through player caps.
 	if (init_admin())
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
-		control_freak = 0	// heh
 	else if (player.mentor)
 		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
 		if (!src.holder)
@@ -515,6 +514,8 @@
 
 	src.reputations = new(src)
 
+	if(src.holder && src.holder.level >= LEVEL_CODER)
+		src.control_freak = 0
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
 
@@ -533,8 +534,6 @@
 		onlineAdmins |= (src)
 		if (!NT.Find(src.ckey))
 			NT.Add(src.ckey)
-		if(src.holder.rank in list("Host", "Coder"))
-			control_freak = 0
 		return 1
 
 	return 0
