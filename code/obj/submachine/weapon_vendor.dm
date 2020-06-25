@@ -19,6 +19,7 @@
 	opacity = 0
 	anchored = 1
 
+	var/sound_vend = 'sound/machines/capsulebuy.ogg'
 	var/current_sidearm_credits = 0
 	var/current_loadout_credits = 0
 	var/current_storage_credits = 0
@@ -54,6 +55,7 @@
 			src.current_loadout_credits++
 			src.current_storage_credits++
 			src.updateUsrDialog()
+			playsound(src.loc, sound_vend, 80, 1)
 		else
 			src.attack_hand(user)
 		return
