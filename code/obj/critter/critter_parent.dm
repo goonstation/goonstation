@@ -709,6 +709,7 @@
 							walk_to(src, current_target,1,4)
 							if ((get_dist(src, current_target)) >= (olddist))
 								src.frustration++
+								step_towards(src, current_target, 4)
 							else
 								src.frustration = 0
 						else
