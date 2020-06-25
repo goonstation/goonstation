@@ -545,7 +545,71 @@
 
 	say_filter(var/message)
 		return replacetext(message, "r", stutter("rr"))
-	
+		
+	emote(var/act)
+		var/message = null
+		switch(act)
+			if("scream")
+				if(mob.emote_allowed)
+					if (narrator_mode)
+						mob.emote_allowed = 0
+						switch(rand(1, 11))
+							if (1) 
+								message = "<B>[mob]</B> sniffs."
+								playsound(get_turf(mob), "sound/voice/animal/gabe1.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+							if (2) 
+								message = "<B>[mob]</B> barks?"
+								playsound(get_turf(mob), "sound/voice/animal/gabe2.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+							if (3) 
+								message = "<B>[mob]</B> borks."
+								playsound(get_turf(mob), "sound/voice/animal/gabe3.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+							if (4) 
+								message = "<B>[mob]</B> brorks."
+								playsound(get_turf(mob), "sound/voice/animal/gabe4.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+							if (5) 
+								message = "<B>[mob]</B> hecks."
+								playsound(get_turf(mob), "sound/voice/animal/gabe5.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+							if (6) 
+								message = "<B>[mob]</B> borfs."
+								playsound(get_turf(mob), "sound/voice/animal/gabe6.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+							if (7) 
+								message = "<B>[mob]</B> bars?"
+								playsound(get_turf(mob), "sound/voice/animal/gabe7.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+							if (8) 
+								message = "<B>[mob]</B> bjorks."
+								playsound(get_turf(mob), "sound/voice/animal/gabe8.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+							if (9) 
+								message = "<B>[mob]</B> barks."
+								playsound(get_turf(mob), "sound/voice/animal/gabe9.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+							if (10) 
+								message = "<B>[mob]</B> boos."
+								playsound(get_turf(mob), "sound/voice/animal/gabe10.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+							if (11) 
+								message = "<B>[mob]</B> brehs."
+								playsound(get_turf(mob), "sound/voice/animal/gabe11.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+						SPAWN_DBG(3 SECONDS)
+							mob.emote_allowed = 1
+				else
+					mob.emote_allowed = 0
+					message = "<B>[mob]</B> [pick("barks","yaps","woofs","borks","burfs","arfs","woffs","wuffs")]!"
+					playsound(get_turf(mob), "sound/voice/animal/dogbark.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+					SPAWN_DBG(3 SECONDS)
+						mob.emote_allowed = 1
+			if("howl")
+				if(mob.emote_allowed)
+					mob.emote_allowed = 0
+					if (prob(1))
+						message = "<B>[mob] rears back and [pick("rips","belts out","throws [his_or_her(mob)] whole ass into")]  [pick("a haunting","an ominous","an obnoxious")] howl!</B>"
+						playsound(get_turf(mob), "sound/voice/animal/werewolf_howl.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+						mob.changeStatus("weakened", 2 SECONDS)
+						SPAWN_DBG(3 SECONDS)
+							mob.emote_allowed = 1
+					else
+						message = "<B>[mob] [pick("howls","whines","yowls")]!</B>"
+						playsound(get_turf(mob), "sound/voice/animal/howl[pick("1","2","3","4","5","6")].ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+						SPAWN_DBG(5 SECONDS)
+							mob.emote_allowed = 1
+		return message
 	
 
 /datum/mutantrace/zombie
