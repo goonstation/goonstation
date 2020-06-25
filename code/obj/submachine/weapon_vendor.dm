@@ -19,7 +19,8 @@
 	opacity = 0
 	anchored = 1
 
-	var/sound_vend = 'sound/machines/capsulebuy.ogg'
+	var/sound_token = 'sound/machines/capsulebuy.ogg'
+	var/sound_buy = 'sound/machines/spend.ogg'
 	var/current_sidearm_credits = 0
 	var/current_loadout_credits = 0
 	var/current_storage_credits = 0
@@ -55,7 +56,7 @@
 			src.current_loadout_credits++
 			src.current_storage_credits++
 			src.updateUsrDialog()
-			playsound(src.loc, sound_vend, 80, 1)
+			playsound(src.loc, sound_token, 80, 1)
 		else
 			src.attack_hand(user)
 		return
@@ -120,6 +121,7 @@
 					src.temp = "<br>Transaction complete."
 					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
 					new S.path(src.loc)
+					playsound(src.loc, sound_buy, 80, 1)
 			var/datum/materiel/loadout/L = locate(href_list["buy"]) in materiel_stock
 			if(istype(L))
 				if(src.current_loadout_credits < L.cost)
@@ -130,6 +132,7 @@
 					src.temp = "<br>Transaction complete."
 					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
 					new L.path(src.loc)
+					playsound(src.loc, sound_buy, 80, 1)
 			var/datum/materiel/storage/T = locate(href_list["buy"]) in materiel_stock
 			if(istype(T))
 				if(src.current_storage_credits < T.cost)
@@ -140,6 +143,7 @@
 					src.temp = "<br>Transaction complete."
 					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
 					new T.path(src.loc)
+					playsound(src.loc, sound_buy, 80, 1)
 
 		src.updateUsrDialog()
 
