@@ -42,6 +42,7 @@
 
 		materiel_stock += new/datum/materiel/storage/backpack
 		materiel_stock += new/datum/materiel/storage/belt
+		materiel_stock += new/datum/materiel/storage/satchel
 
 		//materiel_stock += new/datum/materiel/utility/
 
@@ -219,13 +220,19 @@
 	name = "tactical backpack"
 	path = /obj/item/storage/backpack/syndie/tactical
 	catagory = "Storage"
-	description = "A military backpack made of high density fabric, designed to fit a wide array of tools for comprehensive storage support."
+	description = "A 10 slot military backpack made of high density fabric, designed to fit a wide array of tools for comprehensive storage support."
 
 /datum/materiel/storage/belt
 	name = "tactical espionage belt"
 	path = /obj/item/storage/fanny/syndie
 	catagory = "Storage"
 	description = "It's different than a fanny pack. It's tactical and action-packed!"
+
+/datum/materiel/storage/satchel
+	name = "syndicate satchel"
+	path = /obj/item/storage/backpack/satchel/syndie
+	catagory = "Storage"
+	description = "An ordinary messenger bag in menacing red and black."
 
 // Requisition tokens
 
