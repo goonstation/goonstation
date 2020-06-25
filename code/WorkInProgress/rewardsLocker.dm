@@ -824,10 +824,16 @@
 		if(L?.traitHolder?.hasTrait("hemophilia"))
 			blood_mult = blood_mult + 3
 		T.fluid_react_single(blood_id,blood_mult * blood_amount)
+		var/result = world.ClearMedal("Original Sin", activator)
+		logTheThing("combat", activator, null, "Activated the blood flood gib reward thing (Original Sin)")
+		if(result)
+			boutput(activator, "<span class='alert'>You feel your soul cleansed of sin.</span>")
+			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, 1 )
 		activator.gib()
+		/* This is dumb we just gibbed the mob
 		SPAWN_DBG(20 SECONDS)
 			if(activator && !isdead(activator))
-				activator.suiciding = 0
+				activator.suiciding = 0*/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Management stuff below.
 /chui/window/contributorrewards
 	name = "Contributor Rewards"
