@@ -582,7 +582,7 @@
 					M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
 				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
 				SPAWN_DBG(2.5 SECONDS)
-					if(M.health < 0) 
+					if(M.health > 0) 
 						vehicular_manslaughter = 0 //we now check if person was sent into crit after hit, if they did we get the achievement
 					if(vehicular_manslaughter && ishuman(M))
 						src.pilot.unlock_medal("Vehicular Manslaughter", 1)
