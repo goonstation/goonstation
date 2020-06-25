@@ -40524,6 +40524,7 @@
 /area/afterlife/heaven/hydroponics)
 "bTQ" = (
 /turf/unsimulated/wall/titlecard{
+	icon_state = "hehe";
 	tag = "the_ss13_screen"
 	},
 /area/titlescreen)
@@ -83457,6 +83458,12 @@
 	},
 /turf/unsimulated/wall/other,
 /area/afterlife/bar)
+"dVu" = (
+/obj/machinery/door/airlock/pyro/glass/command,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/donut3)
 "dXN" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/light/lamp,
@@ -83475,115 +83482,38 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
-"eah" = (
-/obj/stool/chair/comfy/shuttle/green{
-	dir = 8
-	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor6"
-	},
-/area/shuttle/escape/centcom/donut3)
-"ede" = (
-/obj/decal/fakeobjects/teleport_pad,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/diner_centcom)
-"ekN" = (
-/obj/machinery/door/airlock/pyro/glass,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor6"
-	},
-/area/shuttle/escape/centcom/donut3)
-"emP" = (
-/obj/wingrille_spawn/auto,
+"dZe" = (
+/obj/stool/chair/comfy/shuttle/brown,
 /turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/donut3)
+"eig" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/engine,
+/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"evG" = (
+/obj/stool/chair/comfy,
+/obj/npc/trader/random{
+	trader_area = "/area/shuttle/merchant_shuttle/right_station"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"eGa" = (
-/obj/item/storage/wall/medical{
-	dir = 4;
-	pixel_x = -32;
-	pixel_z = -1
-	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/shuttle/escape/centcom/donut3)
-"eHC" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/john/owlery)
-"eNm" = (
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/diner_centcom)
-"ePF" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1
-	},
-/turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/donut3)
-"eZa" = (
-/obj/machinery/light/small/floor,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/shuttle/escape/centcom/cogmap)
-"fdY" = (
-/obj/storage/crate,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/lounge)
-"ffp" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans";
-	dir = 8
-	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"fhy" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A photo of Sov and his spacemen friends!";
-	icon = 'icons/misc/lunar.dmi';
-	icon_state = "photo";
-	name = "crew photo";
-	pixel_y = 28
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/sovexe)
-"fir" = (
-/obj/machinery/sleeper/compact{
-	dir = 4
-	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/shuttle/escape/centcom/donut3)
-"fnB" = (
-/obj/decal/fakeobjects/teleport_pad,
-/obj/marker/supplymarker,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"frA" = (
+"evU" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/merchant_shuttle/diner_centcom)
-"fuw" = (
+/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"eBD" = (
+/obj/table/wood/round/auto,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/lounge)
+"eBU" = (
 /obj/decal/tile_edge/line/green{
 	dir = 1;
 	icon_state = "line1"
@@ -83596,37 +83526,54 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
-"fLS" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 7
+"eHC" = (
+/obj/machinery/light{
+	dir = 4
 	},
-/obj/item/device/radio{
-	pixel_x = -6;
-	pixel_y = 5
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
 	},
+/area/shuttle/john/owlery)
+"eZa" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/cogmap)
+"fcN" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/donut3)
+"fhy" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A photo of Sov and his spacemen friends!";
+	icon = 'icons/misc/lunar.dmi';
+	icon_state = "photo";
+	name = "crew photo";
+	pixel_y = 28
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/sovexe)
+"fti" = (
+/obj/meme/right,
+/turf/space,
+/area/titlescreen)
+"fzC" = (
+/obj/storage/crate/xmas,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/diner_centcom)
+"fOk" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor6"
 	},
 /area/shuttle/escape/centcom/donut3)
-"fMt" = (
-/obj/table/wood/round/auto,
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/item/kitchen/food_box/donut_box,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/lounge)
-"fNt" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon_state = "wall3_trans"
-	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+"fPS" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/engine,
 /area/shuttle/merchant_shuttle/diner_centcom)
 "fQS" = (
 /obj/stool/chair/comfy/shuttle,
@@ -83637,15 +83584,39 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/destiny)
-"gcs" = (
-/turf/unsimulated/outdoors/grass,
-/area)
-"ggj" = (
+"fXe" = (
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/lounge)
+"fYE" = (
+/obj/decal/fakeobjects/teleport_pad,
+/obj/marker/supplymarker,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/diner_centcom)
+"gaH" = (
 /obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans"
+	icon_state = "wall3_trans";
+	dir = 8
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/right_centcom/donut2)
+/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"gbJ" = (
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor6"
+	},
+/area/shuttle/escape/centcom/donut3)
 "gjY" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
@@ -83655,64 +83626,67 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/donut2)
-"gxE" = (
-/obj/wingrille_spawn/auto,
+"glR" = (
+/obj/table/reinforced/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
+/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"gru" = (
+/obj/table/reinforced/auto,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/diner_centcom)
+"gLd" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "4"
+	},
 /area/shuttle/escape/centcom/donut3)
-"gFr" = (
-/obj/machinery/vending/cola/blue,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/lounge)
-"gFH" = (
-/turf/unsimulated/floor/stairs{
-	dir = 8;
-	icon_state = "Stairs_wide"
-	},
-/area/centcom)
-"gKa" = (
-/obj/machinery/vending/snack,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/lounge)
-"gOe" = (
-/obj/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating,
-/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"gQR" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans";
-	dir = 8
-	},
-/turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"gVx" = (
-/obj/machinery/sleeper/compact{
+"gPr" = (
+/obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/diner_centcom)
+"hcK" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"hcN" = (
+/obj/machinery/sleeper/compact{
+	dir = 4
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/donut3)
-"har" = (
-/obj/machinery/door/airlock/external,
+"hjp" = (
+/obj/stool/chair/comfy/shuttle,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"hvf" = (
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "8"
-	},
 /area/shuttle/escape/centcom/donut3)
+"hjM" = (
+/obj/table/wood/round/auto,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/kitchen/food_box/donut_box,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/lounge)
 "hwJ" = (
 /obj/stool/chair/comfy/shuttle,
 /obj/machinery/light{
@@ -83722,13 +83696,39 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/destiny)
-"hNK" = (
+"hzX" = (
 /obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans";
-	dir = 8
+	dir = 4
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+/area/shuttle/escape/centcom/donut3)
+"hAV" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "alt_propulsion"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"hLm" = (
+/obj/decal/fakeobjects/teleport_pad,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/diner_centcom)
+"hLH" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"hPL" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/diner_centcom)
 "hQa" = (
 /obj/table/wood/auto/desk,
 /obj/item/paper{
@@ -83750,79 +83750,35 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
-"hYP" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans";
-	dir = 8
-	},
-/turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/diner_centcom)
 "hZt" = (
 /obj/machinery/light,
 /obj/table/wood/auto/desk,
 /obj/item/paper/postcard/mushroom,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
-"hZV" = (
+"itG" = (
+/obj/item/storage/wall/medical{
+	dir = 4;
+	pixel_x = -32;
+	pixel_z = -1
+	},
 /turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
+	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/donut3)
-"ick" = (
-/obj/item/storage/wall/emergency{
-	pixel_y = 32
+"iwc" = (
+/turf/unsimulated/floor/stairs{
+	dir = 8;
+	icon_state = "Stairs_wide"
 	},
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
-"ink" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8
-	},
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
-"irL" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3dir"
-	},
-/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"isF" = (
+/area/centcom)
+"iAi" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
-"izO" = (
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "13"
-	},
-/area/shuttle/escape/centcom/donut3)
-"iAc" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans";
-	dir = 1
-	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"iAS" = (
-/obj/wingrille_spawn/auto,
-/turf/unsimulated/floor/engine,
-/area/shuttle/merchant_shuttle/diner_centcom)
 "iBT" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
-"iCI" = (
-/obj/machinery/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "alt_propulsion"
-	},
-/turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/diner_centcom)
-"iDX" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans"
-	},
-/turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/right_centcom/destiny)
 "iOQ" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
@@ -83835,31 +83791,47 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/donut2)
-"iRf" = (
+"iWj" = (
 /obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon_state = "wall3_trans"
+	icon_state = "wall3_trans";
+	dir = 8
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"jqh" = (
-/obj/machinery/door/airlock/gannets/glass,
+/area/shuttle/merchant_shuttle/diner_centcom)
+"jgL" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 7
+	},
+/obj/item/device/radio{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/donut3)
+"joS" = (
 /obj/decal/tile_edge/line/green{
-	dir = 4;
+	dir = 6;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/green{
+	dir = 5;
 	icon_state = "line1"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
-"jvx" = (
-/obj/indestructible/shuttle_corner{
-	dir = 0
+"jsf" = (
+/obj/decal/fakeobjects/teleport_pad,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
 	},
-/turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/merchant_shuttle/right_centcom/donut2)
 "jCe" = (
 /obj/stool/chair/comfy/shuttle,
 /obj/machinery/light{
@@ -83869,30 +83841,31 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/cogmap)
-"jDV" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3dir"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"jLQ" = (
-/obj/stool/chair/comfy/shuttle/brown{
+"jCj" = (
+/obj/stool/chair/yellow{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
-"jVM" = (
+/area/centcom/lounge)
+"jGG" = (
 /obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon_state = "wall3_trans"
+	icon_state = "wall3_trans";
+	dir = 1
 	},
-/turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/right_centcom/destiny)
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"jIu" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/donut3)
 "jYh" = (
 /obj/decal/garland{
 	pixel_y = 32
@@ -83947,59 +83920,23 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hokie)
-"kao" = (
-/obj/machinery/door/airlock/gannets/glass,
-/obj/decal/tile_edge/line/green{
-	dir = 8;
-	icon_state = "line1"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/lounge)
-"kmt" = (
-/obj/item/storage/wall/fire{
-	pixel_y = 32;
-	pixel_z = -4
-	},
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
-"kmE" = (
-/obj/decal/fakeobjects/cargopad,
-/obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/lounge)
-"kpT" = (
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "14"
-	},
-/area/shuttle/escape/centcom/donut3)
-"kwk" = (
+"jYR" = (
 /obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans"
+	icon_state = "wall3_trans";
+	dir = 1
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/diner_centcom)
-"kLI" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon_state = "wall3_trans"
+/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"jZL" = (
+/obj/npc/trader/random{
+	trader_area = "/area/shuttle/merchant_shuttle/left_station"
 	},
+/obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
-"kMf" = (
-/obj/stool/chair/comfy/shuttle/red{
-	dir = 1
-	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/shuttle/escape/centcom/donut3)
-"kPJ" = (
+"kij" = (
 /obj/machinery/computer/ordercomp{
 	dir = 8
 	},
@@ -84007,67 +83944,143 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
-"kWF" = (
+"kiP" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans";
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"kuQ" = (
+/obj/machinery/computer/shuttle,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/donut3)
+"kvS" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans";
+	dir = 8
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/merchant_shuttle/diner_centcom)
+"kyO" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 1;
+	icon_state = "alt_heater"
+	},
 /turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"kGq" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/emergency,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/donut3)
+"kHZ" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/donut3)
+"kMI" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"kQx" = (
+/obj/machinery/door/airlock/gannets/glass/engineering/alt,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/lounge)
+"kRx" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
 	icon_state = "wall3dir"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
-"lcl" = (
-/obj/machinery/door/airlock/pyro/security,
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
-"lhs" = (
-/obj/machinery/door/airlock/external{
-	icon_state = "door_locked";
-	locked = 1
-	},
-/turf/unsimulated/floor/delivery,
-/area/centcom)
-"lhV" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans";
-	dir = 1
-	},
-/turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"lle" = (
+"leL" = (
 /obj/machinery/shuttle/engine/propulsion{
-	dir = 4;
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"lFl" = (
-/obj/stool,
-/turf/unsimulated/floor/carpet{
-	icon_state = "fpurple2"
+/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"loa" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
 	},
-/area/centcom/lounge)
-"lGx" = (
-/obj/stool/chair/comfy/shuttle,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"loW" = (
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/diner_centcom)
+"lpV" = (
+/obj/table/auto,
+/obj/item/kitchen/food_box/donut_box,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor6"
+	},
+/area/shuttle/escape/centcom/donut3)
+"lrk" = (
+/obj/item/storage/wall/fire{
+	pixel_y = 32;
+	pixel_z = -4
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/donut3)
+"lrK" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "14"
+	},
+/area/shuttle/escape/centcom/donut3)
+"lve" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/donut3)
+"lwu" = (
+/turf/unsimulated/floor/stairs{
+	dir = 8;
+	icon_state = "Stairs2_wide"
+	},
+/area/centcom)
+"lFg" = (
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/donut3)
+"lIh" = (
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
 	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/donut3)
+"lIs" = (
+/obj/item/reagent_containers/food/snacks/donut/frosted,
+/obj/reagent_dispensers/ants,
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
+"lMJ" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
-"lLc" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans";
-	dir = 1
-	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/diner_centcom)
-"lNQ" = (
-/obj/storage/crate/xmas,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/diner_centcom)
 "lNZ" = (
 /obj/critter/frog{
 	dead_state = "frog-space-dead";
@@ -84077,15 +84090,33 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
-"lPh" = (
-/obj/machinery/shuttle/engine/heater{
-	dir = 8;
-	icon_state = "alt_heater"
+"lVz" = (
+/obj/machinery/door/airlock/gannets/glass,
+/obj/decal/tile_edge/line/green{
+	dir = 4;
+	icon_state = "line1"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
-/area/shuttle/merchant_shuttle/diner_centcom)
+/area/centcom/lounge)
+"lVV" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "13"
+	},
+/area/shuttle/escape/centcom/donut3)
+"mbW" = (
+/obj/machinery/sleeper/compact{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/donut3)
 "mej" = (
 /obj/item/clothing/shoes/red{
 	desc = "Aren't these the HoS's? You feel like he can probably live without these.";
@@ -84093,141 +84124,95 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
-"mfR" = (
-/obj/item/reagent_containers/food/snacks/donut/frosted,
-/obj/reagent_dispensers/ants,
+"mge" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3dir"
+	},
+/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"mgI" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
+	},
 /turf/unsimulated/outdoors/grass,
-/area/centcom/outside)
-"mow" = (
-/obj/wingrille_spawn/auto,
+/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"mvg" = (
+/obj/decal/fakeobjects/teleport_pad,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"mwp" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/shuttle/merchant_shuttle/diner_centcom)
+/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "mAe" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/cogmap)
-"mBm" = (
-/obj/table/wood/round/auto,
-/obj/item/paper_bin,
-/obj/item/stamp,
-/obj/item/pen,
-/turf/unsimulated/floor{
-	icon_state = "floor"
+"mIN" = (
+/turf/unsimulated/outdoors/grass,
+/area)
+"mPG" = (
+/obj/stool,
+/turf/unsimulated/floor/carpet{
+	icon_state = "fpurple2"
 	},
 /area/centcom/lounge)
-"mCl" = (
-/obj/stool/chair/yellow{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/lounge)
-"mOj" = (
-/turf/unsimulated/floor/stairs{
-	dir = 8;
-	icon_state = "Stairs2_wide"
-	},
-/area/centcom)
 "mUE" = (
 /obj/stool/chair/comfy/red{
 	dir = 8
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
-"ndP" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans";
-	dir = 1
-	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"ntj" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
-"nuv" = (
-/obj/indestructible/shuttle_corner{
-	dir = 0
-	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor3"
+"mWn" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "8"
 	},
 /area/shuttle/escape/centcom/donut3)
-"nAo" = (
+"ndO" = (
 /obj/indestructible/shuttle_corner{
+	dir = 4;
 	icon_state = "wall3_trans"
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"nAR" = (
+/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"npH" = (
 /obj/indestructible/shuttle_corner{
-	dir = 8
+	dir = 4
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
-"nLu" = (
-/obj/stool/chair/couch/green{
-	dir = 6;
-	tag = "icon-chair_couch-green (SOUTHEAST)"
+"nsU" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
 	},
-/turf/unsimulated/floor/carpet{
-	icon_state = "fpurple1";
-	tag = "icon-fpurple1"
+/obj/machinery/light,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
 	},
-/area/centcom/lounge)
-"nQi" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater"
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"nSD" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3dir"
-	},
-/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"oeZ" = (
-/obj/machinery/shuttle/engine/heater{
-	dir = 8;
-	icon_state = "alt_heater"
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"ond" = (
-/obj/machinery/door/airlock/gannets/glass/engineering/alt,
+/area/shuttle/escape/centcom/donut3)
+"nzY" = (
+/obj/machinery/vending/cola/blue,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
-"ooh" = (
-/obj/decal/fakeobjects/teleport_pad,
-/obj/marker/supplymarker,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
+"nUk" = (
+/obj/machinery/door/airlock/gannets/glass,
+/obj/decal/tile_edge/line/green{
+	dir = 8;
+	icon_state = "line1"
 	},
-/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"opd" = (
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/lounge)
+"nVh" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/donut3)
+"nVX" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans";
 	dir = 8
@@ -84236,6 +84221,33 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"oae" = (
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor6"
+	},
+/area/shuttle/escape/centcom/donut3)
+"oeD" = (
+/obj/decal/fakeobjects/teleport_pad,
+/obj/marker/supplymarker,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"ojY" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/orangeblack/side{
+	dir = 10
+	},
+/area/centcom)
+"owT" = (
+/obj/storage/crate,
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/lounge)
 "oyA" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -84248,87 +84260,62 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/cogmap2)
-"oEa" = (
-/obj/table/wood/round/auto,
-/turf/unsimulated/floor{
-	icon_state = "floor"
+"oCK" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater"
 	},
-/area/centcom/lounge)
-"oTM" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon_state = "wall3_trans"
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
 	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"psa" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"oIS" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/diner_centcom)
-"ptd" = (
-/obj/machinery/light/small/floor,
+"oLe" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans";
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"oQk" = (
+/obj/machinery/door/airlock/pyro/medical/alt,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
-"ptJ" = (
+"pkN" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans";
 	dir = 8
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
-"pHW" = (
-/obj/decal/fakeobjects/teleport_pad,
+"pAw" = (
+/obj/machinery/door/airlock/external,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"pNr" = (
+/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"pSI" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
 	icon_state = "wall3_trans"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"pOM" = (
-/obj/machinery/door/airlock/external,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
-"pPw" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/unsimulated/floor/orangeblack/side{
-	dir = 10
-	},
-/area/centcom)
-"pRE" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans";
-	dir = 8
-	},
+"pWK" = (
+/obj/machinery/computer/announcement,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/diner_centcom)
-"pUa" = (
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor6"
 	},
 /area/shuttle/escape/centcom/donut3)
-"qhy" = (
-/obj/table/reinforced/auto,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"pYM" = (
+/obj/meme,
+/turf/space,
+/area/titlescreen)
 "qiR" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 1
@@ -84353,84 +84340,86 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
-"qkH" = (
-/obj/stool/chair/couch/green{
-	dir = 5;
-	tag = "icon-chair_couch-green (NORTHEAST)"
-	},
-/turf/unsimulated/floor/carpet{
-	icon_state = "fpurple1";
-	tag = "icon-fpurple1"
-	},
-/area/centcom/lounge)
-"qnl" = (
-/obj/machinery/shuttle/engine/heater{
-	dir = 1;
-	icon_state = "alt_heater"
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"qnH" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3dir"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"qnZ" = (
-/obj/machinery/door/airlock/pyro/medical/alt,
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
-"qwN" = (
+"qkV" = (
 /obj/decal/fakeobjects/teleport_pad,
+/obj/marker/supplymarker,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"qoM" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"qyt" = (
+"qtY" = (
 /obj/indestructible/shuttle_corner{
-	dir = 4
+	dir = 0
 	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/outdoors/grass,
 /area/shuttle/escape/centcom/donut3)
-"qHY" = (
-/turf/unsimulated/wall{
-	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
-	},
-/area/centcom)
-"qJu" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans";
-	dir = 1
-	},
+"quS" = (
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
-"qWs" = (
-/obj/machinery/computer/shuttle,
+"qwp" = (
+/obj/machinery/door/airlock/external,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
+/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"qJf" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
+"qJz" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans";
+	dir = 8
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "qZX" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
 /area/shuttle/escape/centcom/destiny)
-"rga" = (
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
+"rew" = (
+/obj/table/auto,
+/obj/table/auto,
+/obj/item/storage/firstaid/fire{
+	pixel_x = -6
 	},
-/obj/machinery/light,
+/obj/item/storage/firstaid/brute{
+	pixel_x = 7
+	},
+/obj/item/storage/firstaid/oxygen{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/donut3)
+"ria" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/donut3)
+"rpA" = (
+/obj/machinery/vending/snack,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -84444,55 +84433,33 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/cogmap)
-"rBK" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/emergency,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
+"rEX" = (
+/obj/stool/chair/couch/green{
+	dir = 9;
+	tag = "icon-chair_couch-green (NORTHWEST)"
 	},
-/area/shuttle/escape/centcom/donut3)
-"rGK" = (
-/obj/machinery/light,
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
-"sfK" = (
-/obj/table/wood/round/auto,
-/obj/machinery/light/lamp,
-/turf/unsimulated/floor{
-	icon_state = "floor"
+/turf/unsimulated/floor/carpet{
+	icon_state = "fpurple1";
+	tag = "icon-fpurple1"
 	},
 /area/centcom/lounge)
-"sgM" = (
-/obj/stool/chair/comfy/shuttle/red{
-	dir = 1
+"rLx" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
 	},
-/obj/machinery/light,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/shuttle/escape/centcom/donut3)
-"slv" = (
-/obj/table/auto,
-/obj/item/kitchen/food_box/donut_box,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor6"
-	},
-/area/shuttle/escape/centcom/donut3)
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/merchant_shuttle/diner_centcom)
 "sna" = (
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 1
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/manta)
-"snI" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans";
-	dir = 8
+"srB" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
 	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/right_centcom/donut2)
+/area/shuttle/merchant_shuttle/left_centcom/destiny)
 "srV" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 1
@@ -84519,12 +84486,16 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/destiny)
-"szn" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans"
+"sEl" = (
+/obj/storage/crate,
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
-/turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+/area/centcom/lounge)
+"sIT" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "sLc" = (
 /obj/admin_plaque{
 	name = "Vaughn Moon's Office";
@@ -84536,84 +84507,174 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"sMx" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4
+"sLG" = (
+/obj/item/storage/wall/emergency{
+	pixel_y = 32
 	},
-/turf/unsimulated/outdoors/grass,
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
-"tpR" = (
+"sMX" = (
 /obj/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-R"
+	},
+/turf/space,
+/area/shuttle/escape/centcom/donut3)
+"sUP" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans";
+	dir = 1
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/merchant_shuttle/left_centcom/destiny)
+/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"sWA" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/donut3)
+"tbi" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3dir"
+	},
+/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"tde" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/donut3)
+"tso" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/shuttle/merchant_shuttle/diner_centcom)
 "ttX" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
 /area/shuttle/escape/centcom/cogmap2)
-"tyZ" = (
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion"
+"tvC" = (
+/obj/stool/chair/comfy,
+/obj/npc/trader/random{
+	trader_area = "/area/shuttle/merchant_shuttle/right_station"
 	},
-/turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/diner_centcom)
 "tAi" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3dir"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"tHV" = (
+/obj/decal/fakeobjects/teleport_pad,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"tJa" = (
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/lounge)
+"tNZ" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall3dir"
+	},
+/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"tOp" = (
+/turf/unsimulated/wall{
+	dir = 1;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwall"
+	},
+/area/centcom)
+"tSz" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans";
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/diner_centcom)
 "tXu" = (
 /obj/stool/chair/comfy/purple{
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
-"uaD" = (
-/obj/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating,
-/area/shuttle/merchant_shuttle/diner_centcom)
 "ubr" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
-"ubL" = (
-/obj/stool/chair/comfy/shuttle/brown,
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+"ugd" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans";
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"uhd" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/right_centcom/destiny)
 "ulB" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
+"umT" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3dir"
+	},
+/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"uqx" = (
+/obj/stool/chair/couch/green{
+	dir = 5;
+	tag = "icon-chair_couch-green (NORTHEAST)"
+	},
+/turf/unsimulated/floor/carpet{
+	icon_state = "fpurple1";
+	tag = "icon-fpurple1"
+	},
+/area/centcom/lounge)
 "uvf" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/destiny)
-"uvr" = (
-/obj/stool/chair/comfy/shuttle/brown{
-	dir = 8
+"uwy" = (
+/obj/table/wood/round/auto,
+/obj/item/paper_bin,
+/obj/item/stamp,
+/obj/item/pen,
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/centcom/lounge)
 "uzz" = (
 /obj/table/wood/auto/desk,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
-"uEg" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"uGp" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4
-	},
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
 "uKE" = (
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 8
@@ -84623,7 +84684,7 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/sealab)
-"uLD" = (
+"uNa" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
 	icon_state = "wall3_trans"
@@ -84631,33 +84692,18 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"uSM" = (
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor3"
+/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"uRK" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
 	},
-/area/shuttle/escape/centcom/donut3)
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/merchant_shuttle/right_centcom/donut2)
 "uTj" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/computer3/generic/personal,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
-"uUX" = (
-/obj/wingrille_spawn/auto,
-/turf/unsimulated/floor/engine,
-/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"uYC" = (
-/obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/lounge)
-"vcT" = (
-/obj/table/reinforced/auto,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/diner_centcom)
 "vdV" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -84667,20 +84713,12 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/cogmap2)
-"vqN" = (
+"vqT" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"vtR" = (
-/obj/machinery/computer/announcement,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/escape/centcom/donut3)
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/merchant_shuttle/right_centcom/destiny)
 "vwU" = (
 /obj/machinery/door/airlock/gannets/glass,
 /obj/decal/tile_edge/line/green{
@@ -84690,7 +84728,28 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
-"vMk" = (
+"vHG" = (
+/obj/machinery/door/airlock/external{
+	icon_state = "door_locked";
+	locked = 1
+	},
+/turf/unsimulated/floor/delivery,
+/area/centcom)
+"vOq" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/donut3)
+"vQn" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/donut3)
+"wok" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
 	icon_state = "wall3_trans"
@@ -84698,47 +84757,7 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"vSF" = (
-/obj/stool/chair/comfy/shuttle/brown{
-	dir = 4
-	},
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
-"vVC" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall3dir"
-	},
-/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"wbW" = (
-/obj/decal/fakeobjects/teleport_pad,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"whl" = (
-/obj/storage/crate,
-/obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/lounge)
-"whu" = (
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/left_station"
-	},
-/obj/stool/chair/comfy,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"wmU" = (
-/obj/machinery/door/airlock/pyro/glass/command,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "woz" = (
 /obj/machinery/light{
 	dir = 4;
@@ -84750,9 +84769,28 @@
 	},
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
+"wsE" = (
+/obj/stool/chair/couch/green{
+	dir = 6;
+	tag = "icon-chair_couch-green (SOUTHEAST)"
+	},
+/turf/unsimulated/floor/carpet{
+	icon_state = "fpurple1";
+	tag = "icon-fpurple1"
+	},
+/area/centcom/lounge)
 "wvy" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
+"wzY" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/diner_centcom)
 "wBu" = (
 /obj/item/reagent_containers/vending/bag/larger{
 	desc = "You're considering stuffing your face in this, but you do have that lawsuit to file...";
@@ -84778,6 +84816,13 @@
 	icon_state = "floor6"
 	},
 /area/centcom/offices/pali)
+"wMv" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "alt_propulsion"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/merchant_shuttle/diner_centcom)
 "wNg" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -84787,46 +84832,22 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/cogmap2)
-"wVb" = (
-/obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
+"wQU" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater"
 	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
-"wXX" = (
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "4"
+"xfN" = (
+/obj/table/wood/round/auto,
+/obj/machinery/light/lamp,
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
-/area/shuttle/escape/centcom/donut3)
-"xcw" = (
-/obj/table/auto,
-/obj/table/auto,
-/obj/item/storage/firstaid/fire{
-	pixel_x = -6
-	},
-/obj/item/storage/firstaid/brute{
-	pixel_x = 7
-	},
-/obj/item/storage/firstaid/oxygen{
-	pixel_x = 1;
-	pixel_y = 10
-	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/shuttle/escape/centcom/donut3)
-"xnD" = (
-/obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+/area/centcom/lounge)
 "xoF" = (
 /obj/machinery/light{
 	dir = 1
@@ -84838,17 +84859,16 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
-"xoT" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R"
-	},
-/turf/space,
-/area/shuttle/escape/centcom/donut3)
 "xqY" = (
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
+"xua" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/left_centcom/destiny)
 "xuW" = (
 /obj/item/strange_candle{
 	pixel_x = -6;
@@ -84859,50 +84879,39 @@
 	icon_state = "floor6"
 	},
 /area/centcom/offices/pali)
-"xwP" = (
-/obj/stool/chair/couch/green{
-	dir = 9;
-	tag = "icon-chair_couch-green (NORTHWEST)"
+"xFB" = (
+/obj/machinery/door/airlock/pyro/security,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/donut3)
+"xHZ" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall3dir"
 	},
-/turf/unsimulated/floor/carpet{
-	icon_state = "fpurple1";
-	tag = "icon-fpurple1"
+/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"xIz" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"xTc" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 8
 	},
-/area/centcom/lounge)
-"xzR" = (
-/obj/decal/tile_edge/line/green{
-	dir = 6;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/green{
-	dir = 5;
-	icon_state = "line1"
-	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/donut3)
+"xTf" = (
+/obj/decal/fakeobjects/cargopad,
+/obj/machinery/light,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
-"xGb" = (
-/obj/wingrille_spawn/auto,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"xQc" = (
-/obj/stool/chair/comfy/shuttle/pilot{
+"xUy" = (
+/obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/outdoors/grass,
 /area/shuttle/escape/centcom/donut3)
-"xYQ" = (
-/obj/decal/fakeobjects/teleport_pad,
-/obj/marker/supplymarker,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/diner_centcom)
 "ycl" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
@@ -123939,10 +123948,10 @@ aES
 dsj
 dsn
 dsz
-pOM
-nSD
+qwp
+mge
 dsx
-iDX
+vqT
 aES
 aES
 aES
@@ -124546,7 +124555,7 @@ dsq
 dsq
 dsq
 dsv
-xGb
+uhd
 aES
 aES
 aES
@@ -125147,10 +125156,10 @@ aES
 dsj
 dsn
 dsz
-pOM
-nSD
+qwp
+mge
 dsx
-jVM
+pSI
 aES
 aES
 aES
@@ -126056,13 +126065,13 @@ dsd
 drJ
 djp
 aES
-hNK
+qJz
 tAi
 dtF
-emP
+xIz
 dtu
-nQi
-tyZ
+hcK
+leL
 aES
 aES
 dFc
@@ -126359,11 +126368,11 @@ dpz
 dnL
 dnZ
 dtu
-oTM
-pHW
-xnD
-pHW
-ndP
+wok
+tHV
+evG
+tHV
+ugd
 dtu
 aES
 aES
@@ -126658,7 +126667,7 @@ dkX
 dny
 dny
 dmu
-lhs
+vHG
 doa
 duo
 dui
@@ -127267,10 +127276,10 @@ aES
 dtv
 tAi
 dtF
-emP
+xIz
 dtu
-nQi
-tyZ
+hcK
+leL
 aES
 aES
 dFc
@@ -127869,9 +127878,9 @@ dmu
 djp
 aES
 dtw
-qnl
-mow
-ggj
+kyO
+quS
+uRK
 aES
 aES
 aES
@@ -128171,11 +128180,11 @@ dnT
 dnL
 dnZ
 dug
-uLD
-fnB
-qJu
+ndO
+oeD
+sUP
 dug
-ggj
+uRK
 aES
 aES
 aES
@@ -128470,14 +128479,14 @@ dkX
 dny
 dny
 dmu
-lhs
+vHG
 dpb
 dty
 dtY
 dtY
 dtY
-qhy
-mow
+glR
+quS
 aES
 aES
 aES
@@ -128772,14 +128781,14 @@ dkX
 dny
 dny
 dmu
-lhs
+vHG
 dpd
 dty
 dtY
 dtY
 dtZ
-qhy
-mow
+glR
+quS
 aES
 aES
 aES
@@ -129078,8 +129087,8 @@ dnL
 dnZ
 dug
 dtJ
-wbW
-snI
+jsf
+oLe
 dug
 dua
 aES
@@ -129379,18 +129388,18 @@ dmu
 djp
 aES
 dtw
-qnl
-mow
+kyO
+quS
 dua
 aES
 aES
 aES
 aES
 aES
-hYP
-iAS
-iAS
-kwk
+kvS
+fPS
+fPS
+rLx
 aES
 aES
 aES
@@ -129689,17 +129698,17 @@ aES
 aES
 aES
 aES
-mwp
-vcT
-vcT
-mwp
+tso
+gru
+gru
+tso
 aES
-gcs
-ptJ
-kWF
+mIN
+pkN
+umT
 aDC
-har
-uEg
+pAw
+srB
 aEX
 aEi
 aES
@@ -129986,24 +129995,24 @@ dtC
 suO
 dtB
 duc
-irL
-vVC
-szn
+tbi
+xHZ
+hLH
 aES
-hYP
-fNt
-wVb
-lNQ
-lLc
-kwk
-gcs
-uEg
-kLI
+kvS
+wzY
+tvC
+fzC
+tSz
+rLx
+mIN
+srB
+uNa
 aEB
 aEB
 aCG
 aEV
-qnH
+kRx
 aES
 aES
 aES
@@ -130285,22 +130294,22 @@ dnT
 dts
 dnZ
 dtB
-iRf
+loa
 dul
-ooh
+qkV
 dul
-iAc
+jGG
 dtB
 aES
-uaD
-ede
-eNm
-eNm
-xYQ
-uaD
-gcs
-tpR
-whu
+oIS
+hLm
+loW
+loW
+fYE
+oIS
+mIN
+xua
+jZL
 aEB
 aEB
 aEB
@@ -130584,7 +130593,7 @@ dnt
 dkX
 dny
 dmu
-lhs
+vHG
 doa
 dup
 dul
@@ -130594,20 +130603,20 @@ dul
 dul
 dup
 aES
-lPh
-frA
-eNm
-eNm
-pRE
-lPh
-gcs
-uEg
-vqN
+wQU
+hPL
+loW
+loW
+iWj
+wQU
+mIN
+srB
+evU
 aEB
 aEB
 aCG
-ffp
-jDV
+kiP
+tNZ
 aES
 aES
 aES
@@ -130896,18 +130905,18 @@ dtN
 dum
 dtB
 aES
-iCI
-mwp
-psa
-psa
-mwp
-iCI
-gcs
-lhV
-kWF
+wMv
+tso
+gPr
+gPr
+tso
+wMv
+mIN
+jYR
+umT
 aDC
-har
-uEg
+pAw
+srB
 aEX
 aEi
 aES
@@ -131194,14 +131203,14 @@ dtC
 suO
 dtB
 duc
-irL
-vVC
-pNr
+tbi
+xHZ
+mgI
 aES
 aES
 djp
-mOj
-gFH
+lwu
+iwc
 djp
 aES
 aES
@@ -131813,7 +131822,7 @@ dms
 dms
 dms
 dms
-pPw
+ojY
 dmy
 aES
 aES
@@ -133006,13 +133015,13 @@ aES
 aES
 aES
 aES
-jvx
-isF
-isF
+qtY
+iAi
+iAi
 dpC
 dpC
-isF
-isF
+iAi
+iAi
 duN
 aBA
 duN
@@ -133307,21 +133316,21 @@ dqg
 dqA
 dqA
 dsB
-jvx
-ink
-jLQ
-vSF
+qtY
+kHZ
+tde
+lve
 dpB
 dpB
-vSF
-jLQ
-vSF
+lve
+tde
+lve
 aDi
 aBD
 aBX
 aDe
 aBA
-sMx
+hzX
 aES
 aES
 aES
@@ -133610,15 +133619,15 @@ aES
 aES
 aES
 aDi
-ubL
+dZe
 dpB
 dpB
 dpB
 dpB
 dpB
-vSF
-vSF
-hvf
+lve
+lve
+mWn
 aCt
 aCt
 aBX
@@ -133909,18 +133918,18 @@ dmu
 djp
 dqg
 dsB
-jvx
-gxE
-izO
-ubL
+qtY
+vOq
+lVV
+dZe
 dpB
-ptd
-dpB
-dpB
-ptd
+nVh
 dpB
 dpB
-lcl
+nVh
+dpB
+dpB
+xFB
 aCt
 aCt
 aCt
@@ -134210,19 +134219,19 @@ dny
 dmu
 djp
 dqf
-jvx
-nAR
-rBK
-hvf
-ubL
+qtY
+jIu
+kGq
+mWn
+dZe
 dpB
-uvr
-uvr
-uvr
-uvr
+xTc
+xTc
+xTc
+xTc
 dpB
 dpB
-wXX
+gLd
 aCt
 aCt
 aCt
@@ -134512,19 +134521,19 @@ dny
 dmu
 dmy
 dqf
-gxE
-lGx
-hZV
-wmU
+vOq
+hjp
+lMJ
+dVu
 dpB
-rGK
-isF
-isF
-isF
-isF
-ntj
+fcN
+iAi
+iAi
+iAi
+iAi
+lIh
 dpB
-kpT
+lrK
 duN
 duN
 duN
@@ -134814,21 +134823,21 @@ dny
 dmu
 dmy
 dse
-gxE
-vtR
-xQc
-wXX
-kmt
+vOq
+pWK
+sWA
+gLd
+lrk
 dpB
-isF
-mfR
+iAi
+lIs
 aES
-isF
+iAi
 dpB
 dpB
-ekN
-pUa
-pUa
+fOk
+oae
+oae
 aCI
 aDi
 aES
@@ -135116,22 +135125,22 @@ dny
 dmu
 dmy
 dse
-gxE
-qWs
-xQc
-hvf
-ick
+vOq
+kuQ
+sWA
+mWn
+sLG
 dpB
-isF
+iAi
 aES
 aES
-isF
+iAi
 dpB
 dpB
-ekN
-eah
-eah
-slv
+fOk
+gbJ
+gbJ
+lpV
 aDi
 aES
 aES
@@ -135418,24 +135427,24 @@ dny
 dmu
 dmy
 dqf
-gxE
-lGx
-hZV
-wmU
+vOq
+hjp
+lMJ
+dVu
 dpB
-rGK
-isF
-isF
-isF
-isF
-ntj
+fcN
+iAi
+iAi
+iAi
+iAi
+lIh
 dpB
-kpT
+lrK
 duN
 duN
 duN
 duR
-sMx
+hzX
 aES
 aES
 aES
@@ -135720,23 +135729,23 @@ dny
 dnT
 djp
 dqf
-ePF
-qyt
-fLS
-wXX
-ubL
+xUy
+npH
+jgL
+gLd
+dZe
 dpB
-vSF
-vSF
-vSF
-vSF
+lve
+lve
+lve
+lve
 dpB
 dpB
-hvf
-xcw
-eGa
-uSM
-sgM
+mWn
+rew
+itG
+lFg
+nsU
 aDH
 duK
 aES
@@ -136023,22 +136032,22 @@ dmu
 djp
 dqg
 dsB
-ePF
-gxE
-izO
-ubL
+xUy
+vOq
+lVV
+dZe
 dpB
-ptd
-dpB
-dpB
-ptd
+nVh
 dpB
 dpB
-qnZ
-uSM
-uSM
-uSM
-kMf
+nVh
+dpB
+dpB
+oQk
+lFg
+lFg
+lFg
+vQn
 aDI
 duK
 aES
@@ -136328,20 +136337,20 @@ aES
 aES
 aES
 aDi
-ubL
+dZe
 dpB
 dpB
 dpB
 dpB
 dpB
-uvr
-uvr
-wXX
-uSM
-uSM
-fir
-nuv
-xoT
+xTc
+xTc
+gLd
+lFg
+lFg
+hcN
+ria
+sMX
 duK
 aES
 aES
@@ -136629,27 +136638,27 @@ dqg
 dqA
 dqA
 dsB
-ePF
-uGp
+xUy
+qJf
 dpI
-uvr
+xTc
 dpB
 dpB
-uvr
+xTc
 dpI
-uvr
+xTc
 aDi
-gVx
-fir
-nuv
+mbW
+hcN
+ria
 duR
 aDK
 aES
 aES
 aES
-gQR
-uUX
-uUX
+gaH
+eig
+eig
 dvm
 aES
 aES
@@ -136932,13 +136941,13 @@ aES
 aES
 aES
 aES
-ePF
-isF
-isF
+xUy
+iAi
+iAi
 dpC
 dpC
-isF
-isF
+iAi
+iAi
 duN
 duR
 duN
@@ -137250,8 +137259,8 @@ aES
 aES
 aES
 aES
-gQR
-vMk
+gaH
+qoM
 dve
 dvl
 dvo
@@ -137552,12 +137561,12 @@ aES
 aES
 aES
 aES
-gOe
-qwN
+sIT
+mvg
 dvl
 dvl
 dvp
-gOe
+sIT
 aES
 aES
 dFc
@@ -137854,12 +137863,12 @@ aES
 aES
 aES
 aES
-oeZ
-nAo
+oCK
+kMI
 dvl
 dvl
-opd
-oeZ
+nVX
+oCK
 aES
 aES
 dFc
@@ -138156,12 +138165,12 @@ aES
 aES
 dFl
 aES
-lle
+hAV
 dvq
 dvh
 dvh
 dvq
-lle
+hAV
 aES
 aES
 dFc
@@ -138460,8 +138469,8 @@ aES
 aES
 dFc
 djp
-mOj
-gFH
+lwu
+iwc
 djp
 aES
 aES
@@ -138752,20 +138761,20 @@ dny
 dny
 dnT
 dkJ
-qHY
-qHY
-qHY
-qHY
-qHY
-qHY
-qHY
-qHY
+tOp
+tOp
+tOp
+tOp
+tOp
+tOp
+tOp
+tOp
 dkK
 dsd
 drJ
 drJ
 djp
-qHY
+tOp
 dnt
 aES
 dFc
@@ -149898,7 +149907,7 @@ dmx
 dnU
 dnY
 dnY
-whl
+owT
 dmx
 aES
 aES
@@ -150197,10 +150206,10 @@ dnY
 dnY
 dGS
 dGl
-oEa
+eBD
 dnY
 dnY
-fdY
+sEl
 dmx
 aES
 aES
@@ -150499,8 +150508,8 @@ dnY
 dnY
 dGT
 dGl
-sfK
-mCl
+xfN
+jCj
 dnY
 dnY
 dmx
@@ -150801,10 +150810,10 @@ dnY
 dnY
 dGU
 dmx
-fMt
-mBm
-kPJ
-kmE
+hjM
+uwy
+kij
+xTf
 dmx
 aES
 aES
@@ -151104,8 +151113,8 @@ dGA
 dnS
 dHt
 dnS
-ond
-ond
+kQx
+kQx
 dnS
 dGy
 aES
@@ -151710,7 +151719,7 @@ dpA
 dGn
 dGn
 dGu
-gKa
+rpA
 dmx
 aES
 aES
@@ -152012,7 +152021,7 @@ dRv
 dGo
 dGo
 dGv
-gFr
+nzY
 dmx
 aES
 aES
@@ -152314,7 +152323,7 @@ dRE
 dGo
 dGo
 dGv
-rga
+fXe
 dmx
 aES
 aES
@@ -153217,7 +153226,7 @@ dGo
 dGo
 dGo
 dGo
-xwP
+rEX
 dGo
 dGv
 dnY
@@ -153519,10 +153528,10 @@ dGG
 dGH
 dGo
 dGz
-nLu
+wsE
 dGo
 dGv
-uYC
+tJa
 dmx
 aES
 aES
@@ -153821,9 +153830,9 @@ dGH
 dGG
 dGW
 dGo
-nLu
+wsE
 dGo
-lFl
+mPG
 dGh
 dGR
 aES
@@ -154123,7 +154132,7 @@ dGo
 dGo
 dGo
 dGo
-qkH
+uqx
 dGo
 dGv
 dnY
@@ -155335,7 +155344,7 @@ dGX
 dGX
 dGX
 dGX
-kao
+nUk
 dHr
 dHr
 dHr
@@ -155934,12 +155943,12 @@ dFI
 dFI
 dFI
 dFI
-xzR
+joS
 dFI
 dFI
 dFI
 dGk
-jqh
+lVz
 dnY
 dnY
 dnY
@@ -156236,7 +156245,7 @@ dnS
 dGI
 dnS
 dFO
-fuw
+eBU
 dmv
 dnS
 dnS
@@ -169451,7 +169460,7 @@ daz
 daz
 daz
 daz
-daz
+pYM
 daz
 daz
 ajg
@@ -174283,7 +174292,7 @@ daz
 daz
 daz
 daz
-daz
+fti
 daz
 daz
 ajg
