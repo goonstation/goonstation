@@ -1,6 +1,7 @@
 /datum/mechanicsMessage
 	var/signal = "1"
 	var/list/nodes = list()
+	var/datum/computer/file/data_file
 
 	proc/addNode(var/datum/mechanics_holder/H)
 		nodes.Add(H)
@@ -101,14 +102,15 @@
 
 //Used to copy a message because we don't want to pass a single message to multiple components which might end up modifying it both at the same time.
 /datum/component/mechanics_holder/proc/cloneMessage(var/datum/mechanicsMessage/msg)
-	var/datum/mechanicsMessage/msg2 = newSignal(msg.signal)
+	var/datum/mechanicsMessage/msg2 = newSignal(msg.signal, msg.data_file?.copy_file())
 	msg2.nodes = msg.nodes.Copy()
 	return msg2
 
 //ALWAYS use this to create new messages!!!
-/datum/component/mechanics_holder/proc/newSignal(var/sig)
+/datum/component/mechanics_holder/proc/newSignal(var/sig, var/datum/computer/file/data_file=null)
 	var/datum/mechanicsMessage/ret = new/datum/mechanicsMessage
 	ret.signal = sig
+	ret.data_file = data_file
 	return ret
 
 //Delete all incoming connections
