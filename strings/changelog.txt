@@ -1,5 +1,9 @@
 
 (t)wed jun 24 20
+(u)Comradef191
+(p)728
+(e)🆕🗺|feature, mapping
+(*)Added some additional items to the Cog1 armory; an EOD suit, a N2O canister, a tranq crate, and a box of stinger grenades.
 (u)zjdtmkhzt
 (p)1192
 (e)⚖|balance
