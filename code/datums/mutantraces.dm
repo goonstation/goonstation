@@ -550,8 +550,8 @@
 		var/message = null
 		switch(act)
 			if("scream")
-				if(mob.emote_allowed)
-					if (narrator_mode)
+				if (narrator_mode)
+					if(mob.emote_allowed)
 						mob.emote_allowed = 0
 						switch(rand(1, 11))
 							if (1) 
@@ -590,24 +590,24 @@
 						SPAWN_DBG(3 SECONDS)
 							mob.emote_allowed = 1
 				else
-					mob.emote_allowed = 0
-					message = "<B>[mob]</B> [pick("barks","yaps","woofs","borks","burfs","arfs","woffs","wuffs")]!"
-					playsound(get_turf(mob), "sound/voice/animal/dogbark.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
-					SPAWN_DBG(3 SECONDS)
-						mob.emote_allowed = 1
+					if(mob.emote_allowed)
+						mob.emote_allowed = 0
+						message = "<B>[mob]</B> [pick("barks","yaps","woofs","borks","burfs","arfs","woffs","wuffs")]!"
+						playsound(get_turf(mob), "sound/voice/animal/dogbark.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+						SPAWN_DBG(3 SECONDS)
+							mob.emote_allowed = 1
 			if("howl")
 				if(mob.emote_allowed)
 					mob.emote_allowed = 0
 					if (prob(1))
-						message = "<B>[mob] rears back and [pick("rips","belts out","throws [his_or_her(mob)] whole ass into")]  [pick("a haunting","an ominous","an obnoxious")] howl!</B>"
+						message = "<span class='alert'><B>[mob] howls!</B></span>"
 						playsound(get_turf(mob), "sound/voice/animal/werewolf_howl.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
-						mob.changeStatus("weakened", 2 SECONDS)
 						SPAWN_DBG(3 SECONDS)
 							mob.emote_allowed = 1
 					else
-						message = "<B>[mob] [pick("howls","whines","yowls")]!</B>"
+						message = "<B>[mob]</B> howls!"
 						playsound(get_turf(mob), "sound/voice/animal/howl[pick("1","2","3","4","5","6")].ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
-						SPAWN_DBG(5 SECONDS)
+						SPAWN_DBG(3 SECONDS)
 							mob.emote_allowed = 1
 		return message
 	
