@@ -555,6 +555,11 @@
 				if(3)
 					end_location = locate(/area/shuttle/asylum/pathology)
 
+			for(var/mob/living/M in end_location)
+				M.gib(1)
+			for(var/obj/storage/S in end_location)
+				qdel(S)
+
 			start_location.move_contents_to(end_location)
 
 			for(var/obj/machinery/computer/asylum_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])

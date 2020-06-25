@@ -32,7 +32,7 @@
 				if (isnum(guaranteed[new_item]))
 					amt = abs(guaranteed[new_item])
 				for (amt, amt>0, amt--)
-					new new_item(src.loc)
+					closet_check_spawn(new_item)
 
 		if (!islist(src.items2spawn) || !src.items2spawn.len)
 			logTheThing("debug", src, null, "has an invalid items2spawn list")
@@ -63,12 +63,14 @@
 				DEBUG_MESSAGE("[src] has a non-path item in its spawn list, [new_item]")
 				continue
 
-			var/obj/storage/S = locate(/obj/storage) in src.loc.contents
-			if (S)
-				new new_item(S)
-			else
-				new new_item(src.loc)
+			closet_check_spawn(new_item)
 
+	proc/closet_check_spawn(var/obj/item/new_item)
+		var/obj/storage/S = locate(/obj/storage) in src.loc.contents
+		if (S)
+			new new_item(S)
+		else
+			new new_item(src.loc)
 /obj/random_item_spawner/snacks
 	name = "random snack spawner"
 	icon_state = "rand_snacks"
@@ -1789,3 +1791,29 @@
 	few
 		min_amt2spawn = 1
 		max_amt2spawn = 3
+
+/obj/random_item_spawner/chompskey //fringe case
+	name = "chompskey spawner"
+	desc = "Modify where_to_spawn by adding lists with elements that coorespond to coordinate pairs: i.e. add list(120,31)"
+	var/list/where_to_spawn = list()
+
+	spawn_items() //since this is a fringe case spawner, this is an override to the standard spawn rules
+		if(where_to_spawn.len)
+			var/reference = pick(1,where_to_spawn.len)
+			var/new_x = where_to_spawn[reference][1]
+			var/new_y = where_to_spawn[reference][2]
+			closet_check_spawn(new_x,new_y)
+		else
+			closet_check_spawn()
+
+	closet_check_spawn(var/new_x,var/new_y)
+		var/obj/item/K = new /obj/item/device/key/chompskey
+
+		if(new_x && new_y)
+			K.set_loc(locate(new_x,new_y,src.z))
+		else
+			K.set_loc(src.loc)
+
+		var/obj/storage/S = locate(/obj/storage) in K.loc.contents
+		if (S)
+			K.set_loc(S)

@@ -27,6 +27,7 @@
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
 	dir = SOUTH
 	custom_suicide = 1
+	var/broken = 0
 
 	proc/layerify()
 		SPAWN_DBG(1 DECI SECOND) // why are you like this why is this necessary
@@ -34,6 +35,57 @@
 			layer = MOB_LAYER + 0.1
 		else
 			layer = OBJ_LAYER - 0.1
+
+	proc/railing_is_broken(obj/railing/The_Railing)
+		if(The_Railing.broken)
+			return 1
+		else
+			return 0
+
+	proc/railing_break(obj/railing/The_Railing)
+		if(!(railing_is_broken(The_Railing)))
+			The_Railing.broken = 1
+			The_Railing.density = 0
+			The_Railing.icon_state = "railing-broken"
+
+	proc/railing_fix(obj/railing/The_Railing)
+		if(railing_is_broken(The_Railing))
+			The_Railing.density = 1
+			The_Railing.broken = 0
+
+
+	//break it apart into the sheets that made it up!
+	proc/railing_deconstruct()
+		var/obj/item/sheet/steel/S
+		S = new (src.loc)
+		if (S && src.material)
+			S.setMaterial(src.material)
+		qdel(src)
+
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
+				qdel(src)
+				return
+			if(2.0)
+				if (prob(50))
+					railing_deconstruct(src)
+					return
+			if(3.0)
+				if (prob(25))
+					railing_break(src)
+					return
+			else
+				return
+
+	blob_act(var/power)
+		if(prob(power * 2.5))
+			railing_deconstruct(src)
+			return
+		else if(prob(power * 2.5))
+			railing_break(src)
+			return
+
 
 	New()
 		..()
@@ -49,9 +101,9 @@
 			return 0
 		if (!src.density || (O.flags & TABLEPASS) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
 			return 1
-		if(air_group || (height==0))
+		if (air_group || (height==0))
 			return 1
-		if(get_dir(loc, O) == dir)
+		if (get_dir(loc, O) == dir)
 			return !density
 		else
 			return 1
@@ -68,15 +120,21 @@
 
 	attackby(obj/item/W as obj, mob/user)
 		if (isweldingtool(W))
-			actions.start(new /datum/action/bar/icon/railing_tool_interact(user, src, W, RAILING_DISASSEMBLE, 3 SECONDS), user)
-		if (isscrewingtool(W))
+			if(W:try_weld(user, 1))
+				actions.start(new /datum/action/bar/icon/railing_tool_interact(user, src, W, RAILING_DISASSEMBLE, 3 SECONDS), user)
+		else if (railing_is_broken(src))
+			user.show_text("[src] is broken! All you can really do is break it down...", "red")
+		else if (isscrewingtool(W))
 			if (anchored)
 				actions.start(new /datum/action/bar/icon/railing_tool_interact(user, src, W, RAILING_UNFASTEN, 2 SECONDS), user)
 			else
 				actions.start(new /datum/action/bar/icon/railing_tool_interact(user, src, W, RAILING_FASTEN, 2 SECONDS), user)
 
 	attack_hand(mob/user)
-		actions.start(new /datum/action/bar/icon/railing_jump(user, src), user)
+		if (railing_is_broken(src))
+			user.show_text("[src] is broken! All you can really do is break it down...", "red")
+		else
+			actions.start(new /datum/action/bar/icon/railing_jump(user, src), user)
 
 	orange
 		color = "#ff7b00"
@@ -253,7 +311,7 @@
 			if (RAILING_DISASSEMBLE)
 				verbens = "disassembles"
 				tool:try_weld(ownerMob, 2)
-				deconstruct()
+				the_railing.railing_deconstruct()
 				playsound(get_turf(the_railing), "sound/items/Welder.ogg", 50, 1)
 			if (RAILING_FASTEN)
 				verbens = "fastens"
@@ -267,9 +325,3 @@
 			O.show_text("[owner] [verbens] [the_railing].", "red")
 			logTheThing("station", ownerMob, the_railing, "[verbens] %the_railing%.")
 
-	proc/deconstruct()
-		var/obj/item/sheet/steel/S
-		S = new (the_railing.loc)
-		if (S && the_railing.material)
-			S.setMaterial(the_railing.material)
-		qdel(the_railing)
