@@ -70,6 +70,12 @@
 		icon_state = "ammopouch-double"
 		spawn_contents = list(/obj/item/ammo/bullets/a357=5)
 
+	grenade_round
+		name = "grenade round pouch"
+		slots = 4
+		spawn_contents = list(/obj/item/ammo/bullets/grenade_round/explosive = 2,
+		/obj/item/ammo/bullets/grenade_round/high_explosive = 2)
+
 /obj/item/storage/grenade_pouch
 	name = "grenade pouch"
 	icon_state = "ammopouch"
@@ -98,6 +104,17 @@
 	smoke
 		name = "smoke grenade pouch"
 		spawn_contents = list(/obj/item/old_grenade/smoke = 6)
+
+	mixed_standard
+		name = "mixed grenade pouch"
+		spawn_contents = list(/obj/item/chem_grenade/flashbang = 2,
+		/obj/item/old_grenade/stinger/frag = 2,
+		/obj/item/old_grenade/stinger = 2)
+
+	mixed_explosive
+		name = "mixed grenade pouch"
+		spawn_contents = list(/obj/item/old_grenade/stinger/frag = 3,
+		/obj/item/old_grenade/stinger = 3)
 
 // dumb idiot gannets shouldn't have called these "ammo_pouches" if he was gonna make pouches for non-ammo things. wow.
 
