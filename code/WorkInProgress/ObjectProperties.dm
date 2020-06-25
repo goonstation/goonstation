@@ -86,6 +86,14 @@ var/list/globalPropList = null
 				if(X.id == propId)
 					.= 1
 
+/obj/item
+	setProperty()
+		. = ..()
+		src.tooltip_rebuild = 1
+	delProperty()
+		. = ..()
+		src.tooltip_rebuild = 1
+
 /datum/objectProperty
 	var/name = ""
 	var/id = ""
@@ -214,15 +222,6 @@ var/list/globalPropList = null
 		defaultValue = 10
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal]%"
-
-	exploprot
-		name = "Resistance (Explosion)"
-		id = "exploprot"
-		desc = "Protects from explosions." //Value is % protection.
-		tooltipImg = "explosion.png"
-		defaultValue = 10
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal]"
 
 	conductivity
 		name = "Conductivity"
@@ -495,3 +494,38 @@ to say if there's demand for that.
 	removeFromMob(obj/item/owner, mob/user, value)
 		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_HEATPROT, owner)
+
+/datum/objectProperty/equipment/exploprot
+	name = "Resistance (Explosion)"
+	id = "exploprot"
+	desc = "Protects from explosions." //Value is % protection.
+	tooltipImg = "explosion.png"
+	defaultValue = 10
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal]"
+
+	updateMob(obj/item/owner, mob/user, value, oldValue=null)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_EXPLOPROT, owner, value)
+	removeFromMob(obj/item/owner, mob/user, value)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_EXPLOPROT, owner)
+
+
+
+/datum/objectProperty/equipment/reflection // force increases as you attack players.
+	name = "Reflection"
+	id = "reflection"
+	desc = "Reflects projectiles while held."
+	tooltipImg = "disorient_resist.png"
+	defaultValue = 0
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "Reflecting projectiles"
+
+	updateMob(obj/item/owner, mob/user, value, oldValue=null)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_REFLECTPROT, owner)
+
+	removeFromMob(obj/item/owner, mob/user, value)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_REFLECTPROT, owner)

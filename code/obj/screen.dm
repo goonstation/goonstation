@@ -17,12 +17,12 @@
 /obj/screen/disposing()
 	if (clients)
 		for(var/client/C in clients)
-			if (C.mob && ishuman(C.mob))
-				var/mob/living/carbon/human/H = C.mob
-				if (H.hud)
-					H.hud.inventory_bg -= src
-					H.hud.inventory_items -= src
-
+			if (C.mob)
+				if(ishuman(C.mob))
+					var/mob/living/carbon/human/H = C.mob
+					if (H.hud)
+						H.hud.inventory_bg -= src
+						H.hud.inventory_items -= src
 			C.screen -= src
 		clients.len = 0
 	clients = null
@@ -40,6 +40,18 @@
 	name = "stamina"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "stamina"
+
+
+/mob/living/proc/update_stamina_desc(var/newDesc)
+	.= 0
+
+/mob/living/carbon/human/update_stamina_desc(var/newDesc)
+	if (src.hud && src.hud.stamina)
+		src.hud.stamina.desc = newDesc
+
+/mob/living/critter/update_stamina_desc(var/newDesc)
+	if (src.hud && src.hud.stamina)
+		src.hud.stamina.desc = newDesc
 
 /obj/screen/stamina_bar
 	name = "Stamina"
@@ -60,12 +72,10 @@
 				if (isicon(hud_style))
 					src.icon = hud_style
 
-	proc/getDesc(var/mob/living/carbon/C)
+	proc/getDesc(var/mob/living/C)
 		return "[C.stamina] / [C.stamina_max] Stamina. Regeneration rate : [(C.stamina_regen + C.get_stam_mod_regen())]"
 
-	proc/update_value(var/mob/living/carbon/C)
-		if(!istype(C)) return
-
+	proc/update_value(var/mob/living/C)
 		if(C.stamina == last_val) return //No need to change anything
 		else last_val = C.stamina
 
@@ -91,8 +101,7 @@
 
 		var/newDesc = src.getDesc(C)
 		src.desc = newDesc
-		if (C:hud && C:hud:stamina) //grossssss
-			C:hud:stamina:desc = newDesc
+		C.update_stamina_desc(newDesc)
 		return
 
 	//WIRE TOOLTIPS

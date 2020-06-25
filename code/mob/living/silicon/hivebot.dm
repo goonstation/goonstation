@@ -555,13 +555,43 @@
 		return ..()
 
 /mob/living/silicon/hivebot/attack_hand(mob/user)
-	..()
-	if(user.a_intent == INTENT_GRAB && src.beebot == 1)
-		var/obj/item/clothing/suit/bee/B = new /obj/item/clothing/suit/bee(src.loc)
-		boutput(user, "You pull [B] off of [src]!")
-		src.beebot = 0
-		src.updateicon()
-	return
+	user.lastattacked = src
+	if(!user.stat)
+		actions.interrupt(src, INTERRUPT_ATTACKED)
+		switch(user.a_intent)
+			if(INTENT_HELP) //Friend person
+				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
+				user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
+			if(INTENT_DISARM) //Shove
+				SPAWN_DBG(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
+				user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
+			if(INTENT_GRAB) //Shake
+				if(src.beebot == 1)
+					var/obj/item/clothing/suit/bee/B = new /obj/item/clothing/suit/bee(src.loc)
+					boutput(user, "You pull [B] off of [src]!")
+					src.beebot = 0
+					src.updateicon()
+				else
+					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1, -2)
+					user.visible_message("<span class='alert'>[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!</span>")
+			if(INTENT_HARM) //Dumbo
+				if (user.is_hulk())
+					src.TakeDamage("All", 5, 0)
+					if (prob(40))
+						var/turf/T = get_edge_target_turf(user, user.dir)
+						if (isturf(T))
+							src.visible_message("<span class='alert'><B>[user] savagely punches [src], sending them flying!</B></span>")
+							SPAWN_DBG (0)
+								src.throw_at(T, 10, 2)
+				/*if (user.glove_weaponcheck())
+					user.energyclaws_attack(src)*/
+				else
+					user.visible_message("<span class='alert'><B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!</span>", "<span class='alert'><B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B></span>")
+					random_brute_damage(user, rand(2,5))
+					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
+					if(prob(10)) user.show_text("Your hand hurts...", "red")
+
+		add_fingerprint(user)
 
 /mob/living/silicon/hivebot/allowed(mob/M)
 	//check if it doesn't require any access at all
@@ -720,28 +750,24 @@ Frequency:
 		boutput(src, "<span class='alert'>You lack a dedicated mainframe!</span>")
 		return
 
-/mob/living/silicon/hivebot/Life(datum/controller/process/mobs/parent)
-	if (..(parent))
-		return 1
-
-	clamp_values()
-
-	update_icons_if_needed()
-	src.antagonist_overlay_refresh(0, 0)
-
-	handle_regular_status_updates()
-
-	if(client)
-		src.shell = 0
-		handle_regular_hud_updates()
-		if(dependent)
-			mainframe_check()
-
 /mob/living/silicon/hivebot
-	proc/clamp_values()
+	clamp_values()
+		..()
 		sleeping = max(min(sleeping, 1), 0)
 		bruteloss = max(bruteloss, 0)
 		fireloss = max(fireloss, 0)
+		if (src.stuttering)
+			src.stuttering = 0
+
+		src.lying = 0
+		src.set_density(1)
+
+		if (src.get_eye_blurry())
+			src.change_eye_blurry(-1)
+
+		if (src.druggy > 0)
+			src.druggy--
+			src.druggy = max(0, src.druggy)
 
 	use_power()
 		..()
@@ -772,73 +798,6 @@ Frequency:
 				sleep(0)
 				src.lastgasp() // calling lastgasp() here because we just ran out of power
 			setunconscious(src)
-
-
-	proc/handle_regular_status_updates()
-		hud.update_charge()
-		health = src.max_health - (fireloss + bruteloss)
-
-		if(health <= 0)
-			gib(1)
-
-		if (!isdead(src)) //Alive.
-
-			if (src.getStatusDuration("paralysis") || src.getStatusDuration("stunned") || src.getStatusDuration("weakened")) //Stunned etc.
-				var/setStat = src.stat
-				if (src.getStatusDuration("stunned") > 0)
-					setStat = 0
-				if (src.getStatusDuration("weakened"))
-					src.lying = 1
-					setStat = 0
-				if (src.getStatusDuration("paralysis"))
-					src.lying = 1
-					setStat = 1
-				if (isalive(src) && setStat == 1)
-					sleep(0)
-					src.lastgasp() // calling lastgasp() here because we just got knocked out
-				src.stat = setStat
-			else	//Not stunned.
-				src.lying = 0
-				setalive(src)
-
-		else //Dead.
-			setdead(src)
-
-		if (src.stuttering)
-			src.stuttering = 0
-
-		src.lying = 0
-		src.set_density(1)
-
-		if (src.get_eye_blurry())
-			src.change_eye_blurry(-1)
-
-		if (src.druggy > 0)
-			src.druggy--
-			src.druggy = max(0, src.druggy)
-
-		return 1
-
-	proc/handle_regular_hud_updates()
-
-		if (isdead(src) || src.bioHolder.HasEffect("xray"))
-			src.sight |= SEE_TURFS
-			src.sight |= SEE_MOBS
-			src.sight |= SEE_OBJS
-			src.see_in_dark = SEE_DARK_FULL
-			src.see_invisible = 2
-		else if (!isdead(src))
-			src.sight &= ~SEE_MOBS
-			src.sight &= ~SEE_TURFS
-			src.sight &= ~SEE_OBJS
-			src.see_in_dark = SEE_DARK_FULL
-			src.see_invisible = 2
-
-		if (!src.sight_check(1) && !isdead(src))
-			vision.set_color_mod("#000000")
-		else
-			vision.set_color_mod("#ffffff")
-		return 1
 
 	proc/mainframe_check()
 		if (mainframe)
@@ -1100,15 +1059,6 @@ Frequency:
 			src.mainframe.return_to(src)
 		else
 			return ..()
-
-	handle_regular_hud_updates()
-		..()
-		if (!ticker)
-			return
-		if (!ticker.mode)
-			return
-		if (ticker.mode && istype(ticker.mode, /datum/game_mode/construction))
-			see_invisible = 9
 
 /*-----Shell-Creation---------------------------------------*/
 

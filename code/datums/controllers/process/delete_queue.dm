@@ -1,3 +1,5 @@
+#define HARD_DELETIONS_DISABLED
+
 #define QUEUE_WAIT_TIME 300
 
 // hi i fucked up this file p bad. if it ends up being as bad as
@@ -15,12 +17,25 @@ datum/controller/process/delete_queue
 #if defined(LOG_HARD_DELETE_REFERENCES) || defined(AUTO_REFERENCE_TRACKING_ON_HARD_DEL) || defined(LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO)
 	var/log_hard_deletions = 2
 #else
+
+	#ifdef HARD_DELETIONS_DISABLED
+	var/log_hard_deletions = 1
+	#else
 	var/log_hard_deletions = 0 // 1 = log them, 2 =  attempt to find references (requires LOG_HARD_DELETE_REFERENCES)
+	#endif
+
 #endif
 
 	setup()
 		name = "DeleteQueue"
+
+#ifdef HARD_DELETIONS_DISABLED
+		schedule_interval = 10 //ha ha whatever
+#else
 		schedule_interval = 5
+#endif
+
+
 		tick_allowance = 25
 
 	doWork()
@@ -81,9 +96,12 @@ datum/controller/process/delete_queue
 			delcount++
 #ifndef AUTO_REFERENCE_TRACKING_ON_HARD_DEL
 			D.qdeled = 0
-			del(D)
-#endif
 
+	#ifndef HARD_DELETIONS_DISABLED
+			del(D)
+	#endif
+
+#endif
 		//if (t_gccount != gccount || t_delcount != delcount)
 		//	boutput(world, "Delqueue update: buf [delqueue_pos]/[DELQUEUE_SIZE] ... [gccount - t_gccount] gc, [delcount - t_delcount] del")
 		global.delete_queue_2[global.delqueue_pos].len = 0

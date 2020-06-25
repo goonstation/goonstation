@@ -196,6 +196,7 @@
 	desc = "An underfloor disposal pipe."
 	anchored = 1
 	density = 0
+	text = ""
 
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
@@ -341,7 +342,6 @@
 				SPAWN_DBG(1 DECI SECOND)
 					if(AM)
 						AM.throw_at(target, 5, 1)
-				LAGCHECK(LAG_REALTIME)
 
 			H.vent_gas(T)	// all gas vent to turf
 			pool(H)
@@ -885,6 +885,9 @@
 
 			if(doSuperLoaf)
 				for (var/atom/movable/O2 in H)
+					if(ismob(O2))
+						var/mob/M = O2
+						M.ghostize()
 					qdel(O2)
 					H.contents -= O2
 					O2 = null
@@ -980,7 +983,7 @@
 							poorSoul:emote("scream")
 						sleep(0.5 SECONDS)
 						poorSoul.death()
-						if ((poorSoul.mind || poorSoul.client) && !istype(poorSoul, /mob/living/carbon/human/npc))
+						if (poorSoul.mind || poorSoul.client)
 							poorSoul.ghostize()
 					else if (isitem(newIngredient))
 						var/obj/item/I = newIngredient
@@ -1847,7 +1850,6 @@
 			AM.pipe_eject(dir)
 			SPAWN_DBG(1 DECI SECOND)
 				AM.throw_at(target, src.throw_range, 1)
-			LAGCHECK(LAG_REALTIME)
 		H.vent_gas(src.loc)
 		pool(H)
 
@@ -1928,7 +1930,6 @@
 			AM.pipe_eject(dir)
 			SPAWN_DBG(1 DECI SECOND)
 				AM.throw_at(target, 10, 10) //This is literally the only thing that was changed in this, otherwise it booted them way too close.
-			LAGCHECK(LAG_REALTIME)
 		H.vent_gas(src.loc)
 		pool(H)
 

@@ -190,19 +190,16 @@
 	CritterDeath()
 		if (!src.alive)
 			return
-		//src.icon_state += "-dead"
-		src.alive = 0
-		src.anchored = 0
-		src.set_density(0)
+		..()
 		loot_table.drop()
 		if (dead_change_icon)
 			icon = dead_icon
 			icon_state = dead_icon_state
-		tokenized_message(death_text, null)
+		else // ughh, admins and their custom critters
+			src.icon_state = replacetext(src.icon_state, "-dead", "") //can't assume it's going to have a dead state...
 		play_optional_sound(death_sound)
 		if (on_death)
 			on_death.doOnDeath()
-		walk_to(src,0)
 
 	clone()
 		var/obj/critter/custom/C = ..()
@@ -2110,7 +2107,7 @@ td.title { font-size: 1.4em; font-weight: bold; text-align: center; }
 
 /client/proc/critter_creator_debug()
 	set name = "Critter Creator (WIP)"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set hidden = 0
 
 	var/datum/critterCreator/CR = critter_creator_controller.getCreator(src.mob)

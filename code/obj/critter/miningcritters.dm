@@ -15,6 +15,7 @@
 	firevuln = 0.1
 	brutevuln = 1
 	angertext = "hisses at"
+	death_text = null //has custom death message logic
 	butcherable = 1
 	var/eaten = 0
 
@@ -51,12 +52,9 @@
 
 	CritterDeath()
 		if (!alive) return
-		src.alive = 0
+		..()
 		src.target = null
 		src.task = "dead"
-		set_density(0)
-		src.icon_state = "rockworm-dead"
-		walk_to(src,0)
 		if (eaten >= 10)
 			src.visible_message("<b>[src]</b> vomits something up and dies!")
 		else

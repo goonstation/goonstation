@@ -283,6 +283,7 @@
 		icon_closed = "woodencrate[n]"
 		..()
 
+
 /obj/storage/crate/loot_crate
 	name = "Loot Crate"
 	desc = "A small, cuboid object with a hinged top and loot filled interior."

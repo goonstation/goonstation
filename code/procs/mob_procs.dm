@@ -162,12 +162,13 @@
 	if (hearing_check && !src.hearing_check(1))
 		return
 
+	var/class = ""
 	switch (color)
-		if ("red") color = "#FF0000"
-		if ("blue") color = "#0000FF"
-		if ("green") color = "#008800" // we dont want FF for this because it's fucking unreadable against white
+		if ("red") class = "alert"
+		if ("blue") class = "notify"
+		if ("green") class = "success"
 
-	boutput(src, "<span style='color: [color]'>[message]</span>", group)
+	boutput(src, "<span class='[class]'>[message]</span>", group)
 
 /mob/proc/sight_check(var/consciousness_check = 0)
 	return 1
@@ -563,25 +564,6 @@
 		return limbs.l_arm.limb_data
 	return null
 
-/mob/proc/process_stamina(var/cost)
-	return 1
-
-/mob/living/carbon/human/process_stamina(var/cost)
-	#if STAMINA_NO_ATTACK_CAP == 0
-	// why
-	// in what world is condition two not equivalent to condition one
-	// there are literally two outcomes to this
-	// if (true or true); and if (false or false)
-	if(src.stamina <= cost || (src.stamina - cost) <= 0)
-		boutput(src, STAMINA_EXHAUSTED_STR)
-		return 0
-	src.remove_stamina(cost)
-	#else
-	if(src.stamina > STAMINA_MIN_ATTACK)
-		cost = min(cost,src.stamina - STAMINA_MIN_ATTACK)
-		src.remove_stamina(cost)
-	#endif
-	return 1
 
 // This proc copies one mob's inventory to another. Why the separate entry? I don't wanna have to
 // rip it out of unkillable_respawn() later for unforseeable reasons (Convair880).

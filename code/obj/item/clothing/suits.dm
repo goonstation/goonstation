@@ -536,6 +536,7 @@
 	burn_possible = 1
 	health = 20
 	rand_pos = 0
+	block_vision = 1
 
 	setupProperties()
 		..()
@@ -651,6 +652,7 @@
 			src.Bed.untuck_sheet()
 		src.Bed = null
 		src.eyeholes = 1
+		block_vision = 0
 		src.update_icon()
 		desc = "It's a bedsheet with eye holes cut in it."
 
@@ -661,6 +663,7 @@
 			src.Bed.untuck_sheet()
 		src.Bed = null
 		src.cape = 1
+		block_vision = 0
 		src.update_icon()
 		desc = "It's a bedsheet that's been tied into a cape."
 
@@ -671,6 +674,7 @@
 			src.Bed.untuck_sheet()
 		src.Bed = null
 		src.cape = 0
+		block_vision = !src.eyeholes
 		src.update_icon()
 		desc = "A linen sheet used to cover yourself while you sleep. Preferably on a bed."
 

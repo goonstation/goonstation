@@ -33,5 +33,5 @@
 		command_announcement(replacetext(command_report, "\n", "<br>"), "Emergency Broadcast Received", sound_to_play, do_sanitize=0);
 		return
 
-	is_event_available()
+	is_event_available(var/ignore_time_lock = 0)
 		return 0

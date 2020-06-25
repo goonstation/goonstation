@@ -1011,6 +1011,8 @@
 	name = "darkness"
 	desc = "Oh god."
 	icon_state = "shade"
+	dead_state = "shade" //doesn't have a dead icon, just fades away
+	death_text = null //has special spooky voice lines
 	health = 10
 	brutevuln = 0.5
 	firevuln = 0
@@ -1066,9 +1068,9 @@
 		return ..()
 
 	CritterDeath()
+		..()
 		speak( pick("��r...�a ina ��r-kug z�h-bi!", "�d, �d, �u...bar...", "n�-nam-nu-kal...", "lugal-me taru, lugal-me galam!", "me-li-e-a...") )
 		// sing the sacred song to the bitter end // go out, exit, release // nothing is precious // our king will return, our king will ascend // woe is me
-		src.alive = 0
 		SPAWN_DBG(1.5 SECONDS)
 			qdel(src)
 
@@ -1120,6 +1122,7 @@
 	desc = "Something is terribly wrong with them."
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_m"
+	dead_state = "body_m" //doesn't have a dead icon
 	alpha = 192
 	color = "#676767"
 	health = 100
@@ -1149,11 +1152,7 @@
 	CritterDeath()
 		if (!alive)
 			return
-		src.alive = 0
-		src.anchored = 0
-		src.set_density(0)
-		walk_to(src,0)
-		report_death()
+		..()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, get_turf(src)))
 		qdel(src)
 

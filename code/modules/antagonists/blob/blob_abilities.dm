@@ -230,9 +230,6 @@
 		C.setOvermind(owner)
 		C.Life()
 		owner.started = 1
-		owner.remove_ability(/datum/blob_ability/plant_nucleus)
-		owner.remove_ability(/datum/blob_ability/set_color)
-		owner.remove_ability(/datum/blob_ability/tutorial)
 		owner.add_ability(/datum/blob_ability/spread)
 		owner.add_ability(/datum/blob_ability/attack)
 		owner.add_ability(/datum/blob_ability/consume)
@@ -252,6 +249,10 @@
 			//do a little "blobsplosion"
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
+
+		owner.remove_ability(/datum/blob_ability/plant_nucleus)
+		owner.remove_ability(/datum/blob_ability/set_color)
+		owner.remove_ability(/datum/blob_ability/tutorial)
 
 
 /datum/blob_ability/set_color
@@ -339,14 +340,12 @@
 		var/obj/blob/B2 = new /obj/blob(T)
 		B2.setOvermind(owner)
 
-		if (owner.blobs.len < 40)
-			cooldown_time = max(12 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
-		else if (owner.blobs.len < 80)
-			cooldown_time = max(17 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
-		else if (owner.blobs.len < 160)
-			cooldown_time = max(27 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
+		if (owner.blobs.len < 100)
+			cooldown_time = max(15 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
+		else if (owner.blobs.len < 200)
+			cooldown_time = max(20 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
 		else
-			cooldown_time = max(27 + (owner.blobs.len - 160) * 0.08 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
+			cooldown_time = max(25 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
 
 		cooldown_time = max(cooldown_time, 6)
 
@@ -544,7 +543,7 @@
 				if (A:decomp_stage != 4)
 					M = A
 					break
-			if (iscritter(A))
+			if (ismobcritter(A))
 				M = A
 				break
 
@@ -602,7 +601,7 @@
 			return
 
 		//This whole first bit is all still pretty ugly cause this ability works on both critters and humans. I didn't have it in me to rewrite the whole thing - kyle
-		if (iscritter(target))
+		if (ismobcritter(target))
 			target.gib()
 			target.visible_message("<span class='alert'><b>The blob tries to absorb [target.name], but something goes horribly right!</b></span>")
 			if (blob_o && blob_o.mind) //ahem ahem AI blobs exist
@@ -975,8 +974,8 @@
 /datum/blob_ability/build/ribosome
 	name = "Build Ribosome Cell"
 	icon_state = "blob-ribosome"
-	desc = "This will convert a blob tile into a Ribosome. Ribosomes reduce the penalty on spread cooldown induced by the size of the blob."
-	bio_point_cost = 5
+	desc = "This will convert a blob tile into a Ribosome. Ribosomes increase your generation of biopoints, allowing you to do more things."
+	bio_point_cost = 15
 	build_path = /obj/blob/ribosome
 	buildname = "ribosome"
 
@@ -1147,8 +1146,8 @@
 	name = "Passive: Quicker Spread"
 	icon_state = "blob-quickspread"
 	desc = "Reduces the cooldown of your Spread ability by 1 second. Can be repeated. The cooldown of Spread cannot go below 1 second."
-	evo_point_cost = 3
-	scaling_cost_add = 7
+	evo_point_cost = 2
+	scaling_cost_add = 3
 	repeatable = -1
 	upgradename = "spread"
 

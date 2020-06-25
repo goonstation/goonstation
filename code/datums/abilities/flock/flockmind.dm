@@ -49,8 +49,8 @@
 /////////////////////////////////////////
 
 /datum/targetable/flockmindAbility/spawnEgg
-	name = "Spawn Egg"
-	desc = "Spawn an egg where you are, and from there, begin."
+	name = "Spawn Rift"
+	desc = "Spawn an rift where you are, and from there, begin."
 	icon_state = "spawn_egg"
 	targeted = 0
 	cooldown = 0
@@ -217,7 +217,7 @@
 		if(R && R.listening)
 			// your headset's on, you're fair game!!
 			targets += M
-	if(targets.len > 1)
+	if(targets.len >= 1)
 		playsound(get_turf(holder.owner), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
 		boutput(holder.owner, "<span class='notice'>You transmit the worst static you can weave into the headsets around you.</span>")
 		for(var/mob/living/M in targets)

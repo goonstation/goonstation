@@ -757,6 +757,7 @@ Urs' Hauntdog critter
 	desc = "A very, <i>very</i> haunted hotdog. Hopping around. Hopdog."
 	icon = 'icons/misc/hauntdog.dmi'
 	icon_state = "hauntdog"
+	death_text = null
 	health = 30
 	density = 0
 
@@ -784,6 +785,7 @@ Urs' Hauntdog critter
 
 	CritterDeath()
 		if (!src.alive) return
+		..()
 		src.visible_message("<b>[src]</b> stops moving.",2)
 		var/obj/item/reagent_containers/food/snacks/hotdog/H = new /obj/item/reagent_containers/food/snacks/hotdog(get_turf(src))
 

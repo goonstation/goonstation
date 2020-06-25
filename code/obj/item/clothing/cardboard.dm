@@ -15,6 +15,7 @@
 	var/eyeholes = FALSE
 	var/accessory = FALSE
 	var/face = null
+	block_vision = 1
 
 	New()
 		..()
@@ -47,6 +48,7 @@
 					user.show_text("You were interrupted!", "red")
 					return
 				src.eyeholes = TRUE
+				block_vision = 0
 				src.UpdateOverlays(image(src.icon, "eyeholes"), "eyeholes")
 				src.wear_image.overlays += image(src.wear_image_icon, "eyeholes")
 				playsound(get_turf(src), "sound/items/Scissor.ogg", 100, 1)

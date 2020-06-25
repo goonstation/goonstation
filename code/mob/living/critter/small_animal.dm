@@ -48,6 +48,7 @@ todo: add more small animals!
 	density = 0
 	custom_gib_handler = /proc/gibs
 	hand_count = 1
+	can_help = 1
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
@@ -62,6 +63,24 @@ todo: add more small animals!
 
 	var/fur_color = 0
 	var/eye_color = 0
+
+	var/is_pet = null // null = autodetect
+
+	New(loc)
+		if(isnull(src.is_pet))
+			src.is_pet = (copytext(src.name, 1, 2) in uppercase_letters)
+		if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
+			src.is_pet = 0
+		if(src.is_pet)
+			pets += src
+		..()
+		
+		src.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
+		
+	disposing()
+		if(src.is_pet)
+			pets -= src
+		..()
 
 	setup_healths()
 		add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)
@@ -1020,6 +1039,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						make_cleanable( /obj/decal/cleanable/greenpuke,T)
 
 				new /obj/item/power_stones/Owl(src.loc)
+		else
+			. = ..()
 
 
 /* -------------------- Large Owl -------------------- */

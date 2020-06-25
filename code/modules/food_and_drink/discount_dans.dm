@@ -368,8 +368,8 @@
 	var/full = 1
 	var/traytype = 0
 	flags = ONBELT | TABLEPASS | FPRINT
-	stamina_damage = 3
-	stamina_cost = 3
+	stamina_damage = 0
+	stamina_cost = 0
 	rand_pos = 1
 
 	New()

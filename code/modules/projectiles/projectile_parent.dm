@@ -115,6 +115,7 @@
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				ticks_until_can_hit_mob = src.proj_data.ticks_between_mob_hits
 		src.power = src.get_power(A)
+		if(src.power <= 0 && src.proj_data.power != 0) return //we have run out of power
 		// Necessary because the check in human.dm is ineffective (Convair880).
 		var/immunity = check_target_immunity(A, source = src)
 		if (immunity)
@@ -182,8 +183,8 @@
 							if (D.on)
 								D.disrupt(X)
 								src.visible_message("<span class='notice'><b>[X]'s disguiser is disrupted!</b></span>")
-						if (ishuman(X))
-							var/mob/living/carbon/human/H = X
+						if (isliving(X))
+							var/mob/living/H = X
 							H.stamina_stun()
 							if (istype(X, /mob/living/carbon/human/npc/monkey))
 								var/mob/living/carbon/human/npc/monkey/M = X
@@ -362,7 +363,7 @@
 				y32 = -y32
 		var/max_t
 		if (proj_data.dissipation_rate && proj_data.max_range == 500) //500 is default maximum range
-			proj_data.max_range = proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate) + 1
+			proj_data.max_range = proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate)
 		max_t = proj_data.max_range // why not
 		var/next_x = x32 / 2
 		var/next_y = y32 / 2

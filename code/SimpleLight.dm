@@ -1,3 +1,5 @@
+/atom/var/ignore_simple_light_updates = 0 //to avoid double-updating on diagonal steps when we are really only taking a single step
+
 /obj/overlay/simple_light
 	event_handler_flags = IMMUNE_SINGULARITY
 	anchored = 2
@@ -10,6 +12,7 @@
 	appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
 	pixel_x = -32
 	pixel_y = -32
+	text = ""
 
 /atom/var/list/simple_light_rgbas = null
 /atom/var/obj/overlay/simple_light/simple_light = null
@@ -64,6 +67,8 @@
 	simple_light.color = rgb(avg_r, avg_g, avg_b, sum_a)
 
 /atom/proc/show_simple_light()
+	if(!length(simple_light_rgbas))
+		return
 	if (!simple_light)
 		simple_light = new()
 		// guess what, vis_contents is defined for /turf + /atom/movable
@@ -74,7 +79,8 @@
 	src.simple_light.invisibility = 0
 
 /atom/proc/hide_simple_light()
-	src.simple_light.invisibility = 101
+	if (src.simple_light)
+		src.simple_light.invisibility = 101
 
 /atom/proc/destroy_simple_light()
 	if (simple_light_rgbas && simple_light_rgbas.len)
@@ -172,6 +178,8 @@
 			medium_light.color = rgb(avg_r, avg_g, avg_b, min(255, sum_a / 2))
 
 /atom/proc/show_medium_light()
+	if(!length(medium_light_rgbas))
+		return
 	if (!medium_lights)
 		medium_lights = list()
 		for(var/light_dir in src.medium_light_dirs)
@@ -203,7 +211,7 @@
 /atom/proc/update_medium_light_visibility()
 	if(src.medium_lights[1].invisibility == 101) // toggled off
 		return
-	if(!istype(src.loc, /turf))
+	if(!isturf(src.loc))
 		for(var/x in src.medium_lights)
 			var/obj/overlay/simple_light/medium/light = x
 			src:vis_contents -= light
@@ -219,14 +227,168 @@
 		else
 			src:vis_contents += light
 
-/atom/proc/add_sm_light(id, list/rgba, medium=null)
+
+
+
+
+/obj/overlay/simple_light/medium/directional
+	icon_state = "medium_dir"
+	var/dist = 0
+
+
+/atom/var/list/mdir_light_rgbas = null
+/atom/var/list/obj/overlay/simple_light/medium/directional/mdir_lights
+/atom/var/static/list/mdir_light_dists = list(0, 2.5, 5)
+
+// for medium lights the light intensity keeps increasing as you increase alpha past 255
+// the upper limit is 510 but some stuff will look a bit weird
+/atom/proc/add_mdir_light(var/id, var/list/rgba)
+	if (!mdir_light_rgbas)
+		mdir_light_rgbas = list()
+
+	mdir_light_rgbas[id] = rgba
+
+	show_mdir_light()
+
+	if (mdir_light_rgbas.len == 1) //dont loop/average if list only contains 1 thing
+		for(var/obj/overlay/simple_light/medium/directional/mdir_light in src.mdir_lights)
+			if(mdir_light.dist == mdir_light_dists[mdir_light_dists.len])
+				mdir_light.color = rgb(rgba[1], rgba[2], rgba[3], min(255, rgba[4]))
+			else
+				// divided by two because the directional sprites are brighter
+				mdir_light.color = rgb(rgba[1], rgba[2], rgba[3], min(255, rgba[4] * 0.4))
+	else
+		update_mdir_light_color()
+
+
+/atom/proc/remove_mdir_light(var/id)
+	if (!mdir_light_rgbas)
+		return
+
+	if (id)
+		if (id in mdir_light_rgbas)
+			//medium_light_rgbas -= medium_light_rgbas[id]
+			mdir_light_rgbas.Remove(id)
+	else
+		mdir_light_rgbas.len = 0
+
+	if (mdir_light_rgbas.len <= 0)
+		hide_mdir_light()
+	else
+		update_mdir_light_color()
+
+/atom/proc/update_mdir_light_color()
+	var/avg_r = 0
+	var/avg_g = 0
+	var/avg_b = 0
+	var/sum_a = 0
+
+	for (var/id in mdir_light_rgbas)
+		avg_r += mdir_light_rgbas[id][1]
+		avg_g += mdir_light_rgbas[id][2]
+		avg_b += mdir_light_rgbas[id][3]
+		sum_a += mdir_light_rgbas[id][4]
+
+	avg_r /= mdir_light_rgbas.len
+	avg_g /= mdir_light_rgbas.len
+	avg_b /= mdir_light_rgbas.len
+
+	for(var/obj/overlay/simple_light/medium/directional/mdir_light in src.mdir_lights)
+		if(mdir_light.dist == mdir_light_dists[mdir_light_dists.len])
+			mdir_light.color = rgb(avg_r, avg_g, avg_b, min(255, sum_a))
+		else
+			// divided by two because the directional sprites are brighter
+			mdir_light.color = rgb(avg_r, avg_g, avg_b, min(255, sum_a  * 0.4))
+
+/atom/proc/show_mdir_light()
+	if(!length(mdir_light_rgbas))
+		return
+	if (!mdir_lights)
+		mdir_lights = list()
+		for(var/light_dist in src.mdir_light_dists)
+			var/obj/overlay/simple_light/medium/directional/light = new(null, null)
+			light.dist = light_dist
+			src:vis_contents += light
+			src.mdir_lights += light
+	for(var/obj/overlay/simple_light/medium/directional/light in src.mdir_lights)
+		light.invisibility = 0
+	update_mdir_light_visibility(src.dir)
+
+/atom/proc/hide_mdir_light()
+	for(var/obj/overlay/simple_light/medium/directional/light in src.mdir_lights)
+		light.invisibility = 101
+
+/atom/proc/destroy_mdir_light()
+	if (mdir_light_rgbas && mdir_light_rgbas.len)
+		hide_mdir_light()
+	for(var/obj/overlay/simple_light/medium/directional/light in src.mdir_lights)
+		src:vis_contents -= light
+		qdel(light)
+	mdir_light_rgbas = null
+	src.mdir_lights = null
+
+/atom/disposing()
+	..()
+	if (src.mdir_lights)
+		destroy_mdir_light()
+
+/atom/proc/update_mdir_light_visibility(direct)
+	if(!length(src.mdir_lights) || src.mdir_lights[1].invisibility == 101) // toggled off
+		return
+	if(!isturf(src.loc))
+		for(var/x in src.mdir_lights)
+			var/obj/overlay/simple_light/medium/directional/light = x
+			src:vis_contents -= light
+		return
+
+	if (!direct)
+		return
+
+	//optimize
+	var/vx = 0
+	var/vy = 0
+	if (direct & NORTH)
+		vy = 1
+	if (direct & SOUTH)
+		vy = -1
+	if (direct & WEST)
+		vx = -1
+	if (direct & EAST)
+		vx = 1
+
+	var/turf/T = get_steps(src, src.dir, 5)
+	var/turf/TT = getlineopaqueblocked(src,T)
+	var/dist = get_dist(src,TT)-1
+	var/mag = vector_magnitude(vx, vy) //normalize vec
+	if (mag)
+		vx /= mag
+		vy /= mag
+
+	for(var/x in src.mdir_lights)
+		var/obj/overlay/simple_light/medium/directional/light = x
+		if(light.icon_state == "medium_center" && light.dist == 0)
+			src:vis_contents += light
+			continue
+
+		////light.pixel_x = (vx * min(dist,light.dist) * 32) - 32
+		//light.pixel_y = (vy * min(dist,light.dist) * 32) - 32
+
+		animate(light,pixel_x = ((vx * min(dist,light.dist) * 32) - 32), pixel_y = ((vy * min(dist,light.dist) * 32) - 32), time = 1, easing = EASE_IN)
+
+		src:vis_contents += light
+
+
+/atom/proc/add_sm_light(id, list/rgba, medium=null, directional=null)
 	if(isnull(medium)) // medium = choose automatically whether to use simple or medium
 		// this is a completely arbitrary untested placeholder, please replace this with a proper code
 		medium = 0
 		if(rgba[4] > 140)
 			rgba[4] -= 70
 			medium = 1
-	if(medium)
+
+	if (directional)
+		src.add_mdir_light(id, rgba)
+	else if(medium)
 		src.add_medium_light(id, rgba)
 	else
 		src.add_simple_light(id, rgba)
@@ -234,14 +396,17 @@
 /atom/proc/remove_sm_light(id)
 	src.remove_simple_light(id)
 	src.remove_medium_light(id)
+	src.remove_mdir_light(id)
 
 /atom/proc/toggle_sm_light(turn_on)
 	if(turn_on)
 		src.show_medium_light()
 		src.show_simple_light()
+		src.show_mdir_light()
 	else
 		src.hide_medium_light()
 		src.hide_simple_light()
+		src.hide_mdir_light()
 
 // update_medium_light_visibility() is called in /atom/Move and /atom/set_loc
 // see atom.dm for details

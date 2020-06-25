@@ -4,7 +4,7 @@
 	anchored = 1.0
 	machine_registry_idx = MACHINES_POWER
 	var/datum/powernet/powernet = null
-	var/netnum = 0
+	var/tmp/netnum = 0
 	var/use_datanet = 0		// If set to 1, communicate with other devices over cable network.
 	var/directwired = 1		// by default, power machines are connected by a cable in a neighbouring turf
 							// if set to 0, requires a 0-X cable on this turf
@@ -130,7 +130,7 @@ var/makingpowernetssince = 0
 	makingpowernets = 0
 
 /client/proc/fix_powernets()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc = "Attempts for fix the powernets."
 	set name = "Fix powernets"
 	unfuck_makepowernets()

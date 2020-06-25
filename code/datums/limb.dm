@@ -39,7 +39,7 @@
 
 		target.attack_hand(user, params, location, control)
 
-	proc/harm(mob/living/carbon/human/target, var/mob/living/user)
+	proc/harm(mob/living/target, var/mob/living/user)
 		if (special_next)
 			if(!user || !target)
 				return 0
@@ -55,12 +55,13 @@
 			special_next = 0
 		else
 			user.melee_attack_normal(target, 0, 0, DAMAGE_BLUNT)
+		user.lastattacked = target
 
-	proc/help(mob/living/carbon/human/target, var/mob/living/user)
+	proc/help(mob/living/target, var/mob/living/user)
 		user.do_help(target)
 		user.lastattacked = target
 
-	proc/disarm(mob/living/carbon/human/target, var/mob/living/user)
+	proc/disarm(mob/living/target, var/mob/living/user)
 		if (special_next)
 			src.shove(target,user)
 			special_next = 0
@@ -68,7 +69,7 @@
 			user.disarm(target)
 		user.lastattacked = target
 
-	proc/grab(mob/living/carbon/human/target, var/mob/living/user)
+	proc/grab(mob/living/target, var/mob/living/user)
 		if (issilicon(target))
 			return
 		user.grab_other(target)
@@ -100,7 +101,7 @@
 		return 0
 
 	//alt version of disarm that shoves the target away from the user instead of trying to slap item out of hand
-	proc/shove(mob/living/carbon/human/target, var/mob/living/user)
+	proc/shove(mob/living/target, var/mob/living/user)
 		user.disarm(target,0,0,DAMAGE_BLUNT,1)
 		special_next = 0
 
@@ -385,7 +386,7 @@
 	stam_damage_mult = 0.3
 
 	harm(mob/target, var/mob/user)
-		if (isghostcritter(user) && ishuman(target) && target.health < 80)
+		if (isghostcritter(user) && ishuman(target) && target.health < target.max_health * 0.8)
 			boutput(user, "Your spectral conscience refuses to damage this human any further.")
 			return 0
 		..()
@@ -1177,7 +1178,8 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/machinery/vending,\
 	/obj/machinery/nuclearbomb,\
 	/obj/item/gun/kinetic/airzooka,\
-	/obj/machinery/computer/genetics) //Items that ghostcritters simply cannot interact, regardless of w_class
+	/obj/machinery/computer,\
+	/obj/machinery/power/smes) //Items that ghostcritters simply cannot interact, regardless of w_class
 	. = list()
 	for (var/blocked_type in blocked_types)
 		for (var/subtype in typesof(blocked_type))
@@ -1225,6 +1227,17 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 
 		..()
 		return
+
+	help(mob/target, var/mob/living/user)
+		if (issmallanimal(usr) && iscarbon(target))
+			user.lastattacked = target
+			var/mob/living/critter/small_animal/C = usr
+			if (C.ghost_spawned)
+				if (max_wclass < 3)
+					user.visible_message("<span class='alert'><b>[user] tries to help [target], but they're worse than useless!</b></span>", "<span class='alert'><b>You try to help [target], but your spectral will can only manage a poke!</b></span>")
+					playsound(user.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 25, 1, -1)
+					return
+		..()
 
 	//yeah they're not ACTUALLY biting them but let's just assume that they are because i don't want a mouse or a dog to KO someone with a brutal right hook
 	// changed to scratching, small mouths will take care of biting

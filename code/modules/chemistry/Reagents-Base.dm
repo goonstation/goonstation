@@ -152,8 +152,9 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
+
+				if (isliving(M))
+					var/mob/living/H = M
 					var/liver_damage = 0
 					if (!isalcoholresistant(H))
 						if (holder.get_reagent_amount(src.id) >= 15)
@@ -194,13 +195,15 @@ datum
 							if(prob(6)) H.drowsyness += 5
 							if(prob(5)) H.take_toxin_damage(rand(1,2) * mult)
 
-					if (H.organHolder && H.organHolder.liver)			//Hax here, lazy. currently only organ is liver. fix when adding others. -kyle
-						if (H.organHolder.liver.robotic)
-							H.organHolder.heal_organ(1*mult, 1*mult, 2*mult, "liver")
-							M.take_toxin_damage(-1.5 * mult)
-						else
-							H.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
-				..()
+					if (ishuman(M))
+						var/mob/living/carbon/human/HH = M
+						if (HH.organHolder && HH.organHolder.liver)			//Hax here, lazy. currently only organ is liver. fix when adding others. -kyle
+							if (HH.organHolder.liver.robotic)
+								HH.organHolder.heal_organ(1*mult, 1*mult, 2*mult, "liver")
+								M.take_toxin_damage(-1.5 * mult)
+							else
+								HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
+					..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				//Maybe add a bit that gives you a stamina buff if OD-ing on ethanol and you have a cyberliver.
@@ -254,9 +257,9 @@ datum
 			overdose = 20
 			pathogen_nutrition = list("iron")
 
-			on_mob_life(var/mob/living/carbon/human/H, var/mult = 1)
+			on_mob_life(var/mob/living/H, var/mult = 1)
 				..()
-				if (istype(H))
+				if (H.can_bleed)
 					H.blood_volume += 0.5 * mult
 					if(prob(10))
 						H.take_oxygen_deprivation(-1 * mult)
@@ -521,7 +524,7 @@ datum
 			pathogen_nutrition = list("sugar")
 			taste = "sweet"
 			var/remove_buff = 0
-			stun_resist = 5
+			stun_resist = 6
 
 			pooled()
 				..()
@@ -613,27 +616,19 @@ datum
 			transparency = 155
 			data = null
 
-			on_add(var/mob/M)
-				if(!M && holder) M = holder.my_atom
-				if(M != /mob/living/carbon/human)
-					return
-				if(M.bioHolder && M.bioHolder.HasEffect("quiet_voice")) data = 1
-				else data = 0
-				if(data == 1)
-					return
-				else
-					M.bioHolder.AddEffect("quiet_voice")
-				return
+			on_add()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					if(M.bioHolder && !M.bioHolder.HasEffect("quiet_voice"))
+						M.bioHolder.AddEffect("quiet_voice")
+				..()
 
-			on_remove(var/mob/M)
-				if(!M) M = holder.my_atom
-				if(M != /mob/living/carbon/human)
-					return
-				if(M.bioHolder && M.bioHolder.HasEffect("quiet_voice") && data == 1)
-					return
-				else
-					M.bioHolder.RemoveEffect("quiet_voice")
-				return
+			on_remove()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					if(M?.bioHolder.HasEffect("quiet_voice"))
+						M.bioHolder.RemoveEffect("quiet_voice")
+				..()
 
 		radium
 			name = "radium"
@@ -728,12 +723,13 @@ datum
 			description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 #endif
 
-			on_mob_life(var/mob/living/carbon/human/H, var/mult = 1)
+			on_mob_life(var/mob/living/L, var/mult = 1)
 				..()
-				if (istype(H))
+				if (ishuman(L))
+					var/mob/living/carbon/human/H = L
 					if (H.organHolder)
 						H.organHolder.heal_organs(1*mult, 0, 1*mult, target_organs, 10)
-					H.nutrition += 1  * mult
+				L.nutrition += 1  * mult
 
 			reaction_temperature(exposed_temperature, exposed_volume) //Just an example.
 				if(exposed_temperature < T0C)
@@ -781,7 +777,7 @@ datum
 			reaction_obj(var/obj/item/O, var/volume)
 				src = null
 				if(istype(O))
-					if(O.burning && prob(40))
+					if(O.burning && prob(80))
 						O.burning = 0
 					else if(istype(O, /obj/item/toy/sponge_capsule))
 						var/obj/item/toy/sponge_capsule/S = O
@@ -797,6 +793,7 @@ datum
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -10 * volume)
+						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
 				return 1
 
 		water/water_holy
@@ -810,7 +807,7 @@ datum
 			reaction_mob(var/mob/target, var/method=TOUCH, var/volume)
 				..()
 				var/reacted = 0
-				var/mob/living/carbon/human/M = target
+				var/mob/living/M = target
 				if(istype(M))
 					if(by_type[/obj/machinery/playerzoldorf] && by_type[/obj/machinery/playerzoldorf].len)
 						var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]

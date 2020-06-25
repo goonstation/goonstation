@@ -42,6 +42,7 @@ var/list/action_names = list(
 	"whisper" = "Whisper",
 	"ooc" = "OOC",
 	"looc" = "LOOC",
+	"emote" = "Custom Emote",
 
 	"screenshot" = "Screenshot",
 	"autoscreenshot" = "Auto Screenshot",
@@ -64,6 +65,7 @@ var/list/action_names = list(
 	"unequip" = "Unequip (Silicon)",
 	"pickup" = "Pick Up",
 	"drop" = "Drop",
+	"stop_pull" = "Stop Pulling",
 
 	"fire" = "Fire",
 	"fire_secondary" = "Fire Secondary",

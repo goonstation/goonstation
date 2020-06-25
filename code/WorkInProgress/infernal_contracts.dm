@@ -342,7 +342,7 @@
 		else
 			return list("A strange piece of old crinkled paper, covered in mysterious gibberish legalese.")
 
-	get_desc(dist)
+	get_desc()
 		if (src.limiteduse == 0)
 			. += "Somehow, it seems like an endless number of signatures could fit on this thing."
 		else if (src.contractlines - src.used == 1)
@@ -432,6 +432,7 @@ obj/item/contract/satan
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -451,6 +452,7 @@ obj/item/contract/macho
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -482,6 +484,7 @@ obj/item/contract/wrestle
 			ticker.mode.Agimmicks.Add(user)
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -501,6 +504,7 @@ obj/item/contract/yeti
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -531,6 +535,7 @@ obj/item/contract/genetic
 						ticker.mode.Agimmicks.Add(user)
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -577,6 +582,7 @@ obj/item/contract/horse
 			ticker.mode.Agimmicks.Add(user)
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -606,6 +612,7 @@ obj/item/contract/mummy
 				L.organHolder.drop_organ("all")
 		if (src.limiteduse == 1)
 			src.used++
+			tooltip_rebuild = 1
 			SPAWN_DBG(0)
 				if (src.used >= src.contractlines)
 					src.vanish(user, badguy)
@@ -629,6 +636,7 @@ obj/item/contract/vampire
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -646,6 +654,7 @@ obj/item/contract/juggle
 			user.bioHolder.AddEffect("juggler", 0, 0, 1)
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -663,6 +672,7 @@ obj/item/contract/fart
 			user.bioHolder.AddEffect("linkedfart", 0, 0, 1)
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -680,6 +690,7 @@ obj/item/contract/bee
 			user.bioHolder.AddEffect("drunk_bee", 0, 0, 1)
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -699,6 +710,7 @@ obj/item/contract/rested
 			user.bioHolder.AddEffect("narcolepsy_super", 0, 0, 1) //basically, the signer's very vulnerable but exceptionally difficult to actually kill.
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -720,6 +732,7 @@ obj/item/contract/reversal
 			boutput(user, "<span class='notice'>You feel like you could take a shotgun blast to the face without getting a scratch on you!</span>")
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -737,6 +750,7 @@ obj/item/contract/chemical
 			user.bioHolder.AddEffect("drunk_random", 0, 0, 1)
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -760,6 +774,7 @@ obj/item/contract/hair
 					H.bioHolder.mobAppearance.customization_first = "None"
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)
@@ -798,6 +813,7 @@ obj/item/contract/greed
 					H.become_gold_statue(1)
 			if (src.limiteduse == 1)
 				src.used++
+				tooltip_rebuild = 1
 				SPAWN_DBG(0)
 					if (src.used >= src.contractlines)
 						src.vanish(user, badguy)

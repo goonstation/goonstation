@@ -234,10 +234,8 @@
 			fryholder.amount = 5
 		else
 			fryholder.amount = src.fryitem.w_class
-		fryholder.reagents = src.fryitem.reagents
-		if(src.cooktime >= 60)
-			fryholder.reagents.maximum_volume += 25
-			fryholder.reagents.add_reagent("friedessence",25)
+		fryholder.reagents.maximum_volume += src.fryitem.reagents.total_volume
+		src.fryitem.reagents.trans_to(fryholder, src.fryitem.reagents.total_volume)
 		fryholder.reagents.my_atom = fryholder
 
 		src.fryitem.set_loc(fryholder)

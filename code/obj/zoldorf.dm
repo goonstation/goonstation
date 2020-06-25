@@ -18,8 +18,6 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		zoldorf_items_raw += list(zoldorf_items[pathname].raw_list)
 
 /obj/machinery/playerzoldorf/proc/uisetup() //general proc for sending resources to the client and loading the zoldorf ui
-	usr << browse_rsc(file("browserassets/css/zoldorf.css"))
-	usr << browse_rsc(file("browserassets/js/zoldorf.js"))
 	usr << browse(replacetext(replacetext(replacetext(grabResource("html/zoldorf.htm"), "!!ITEMS!!", json_encode(zoldorf_items_raw)), "!!CREDITS!!", src.credits), "!!SRC_REF!!", "\ref[src]"), "window=Zoldorf;size=700x600;can_resize=1;can_minimize=1;")
 
 /obj/machinery/playerzoldorf/proc/updateui(var/mob/exclude,var/item_path) //opening a zoldorf ui adds a player to a list (they are removed on close). this proc references

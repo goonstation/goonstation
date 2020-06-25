@@ -755,7 +755,7 @@
 			throw EXCEPTION("Could not find reagent for id:[allergen]")
 
 	onLife(var/mob/owner)
-		if (owner.reagents.has_reagent(allergen))
+		if (owner?.reagents?.has_reagent(allergen))
 			owner.reagents.add_reagent("histamine", 1.4) //1.4 units of histamine per life cycle? is that too much?
 
 /obj/trait/random_allergy/medical_allergy
@@ -784,13 +784,13 @@
 		. = ..()
 
 	onAdd(var/mob/owner)
-		if(ishuman(owner))
+		if(isliving(owner))
 			addAddiction(owner)
 		return
 
 	onLife(var/mob/owner) //Just to be safe.
-		if(ishuman(owner) && prob(1))
-			var/mob/living/carbon/human/M = owner
+		if(isliving(owner) && prob(1))
+			var/mob/living/M = owner
 			for(var/datum/ailment_data/addiction/A in M.ailments)
 				if(istype(A, /datum/ailment_data/addiction))
 					if(A.associated_reagent == selected_reagent) return
@@ -798,7 +798,7 @@
 		return
 
 	proc/addAddiction(var/mob/owner)
-		var/mob/living/carbon/human/M = owner
+		var/mob/living/M = owner
 		var/datum/ailment_data/addiction/AD = new
 		AD.associated_reagent = selected_reagent
 		AD.last_reagent_dose = world.timeofday

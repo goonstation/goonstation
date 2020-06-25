@@ -44,7 +44,7 @@
 		teleport_jammers -= src
 		..()
 
-	examine(mob/user)
+	get_desc(dist, mob/user)
 		. = ..()
 		if(user.client)
 			var/charge_percentage = 0

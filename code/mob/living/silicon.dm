@@ -1,4 +1,5 @@
 /mob/living/silicon
+	mob_flags = USR_DIALOG_UPDATES_RANGE
 	gender = NEUTER
 	var/syndicate = 0 // Do we get Syndicate laws?
 	var/syndicate_possible = 0 //  Can we become a Syndie robot?
@@ -20,7 +21,13 @@
 
 	var/obj/item/cell/cell = null
 
+	can_bleed = 0
+	blood_id = "oil"
+	use_stamina = 0
+	can_lie = 0
+
 	dna_to_absorb = 0 //robots dont have DNA for fuck sake
+
 
 	//voice_type = "robo"
 
@@ -32,35 +39,9 @@
 	req_access = null
 	return ..()
 
-/mob/living/silicon/Life(datum/controller/process/mobs/parent)
-	set invisibility = 0
-
-	if (..(parent))
-		return 1
-
-	if (src.transforming)
-		return
-
-	if (isdead(src))
-		return
-
-	update_canmove()
-
-	use_power()
-
-/mob/living/silicon/force_laydown_standup()
-	if (processScheduler.hasProcess("Mob"))
-		src.update_canmove()
-
-		if (src.client)
-			updateOverlaysClient(src.client)
-		if (src.observers.len)
-			for (var/mob/x in src.observers)
-				if (x.client)
-					src.updateOverlaysClient(x.client)
-
-/mob/living/silicon/proc/update_canmove()
-	canmove = !(src.hasStatus(list("weakened", "paralysis", "stunned")) || buckled)
+///mob/living/silicon/proc/update_canmove()
+//	..()
+	//canmove = !(src.hasStatus(list("weakened", "paralysis", "stunned")) || buckled)
 
 /mob/living/silicon/proc/use_power()
 	return
@@ -192,7 +173,7 @@
 
 	var/inrange = in_range(target, src)
 	var/obj/item/equipped = src.equipped()
-	if (src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
+	if (src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
 		..()
 	else
 		if (get_dist(src, target) > 0) // temporary fix for cyborgs turning by clicking
@@ -444,7 +425,7 @@ var/global/list/module_editors = list()
 /client/proc/edit_module(var/mob/living/silicon/robot/M as mob in list_robots())
 	set name = "Edit Module"
 	set desc = "Module editor! Woo!"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
 	admin_only
 

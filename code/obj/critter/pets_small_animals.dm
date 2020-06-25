@@ -134,14 +134,7 @@
 	icon_state = "remy"
 	health = 33
 	aggressive = 0
-
-	New()
-		pets += src
-		..()
-
-	disposing()
-		pets -= src
-		..()
+	generic = 0
 
 /obj/critter/opossum
 	name = "space opossum"
@@ -202,14 +195,6 @@
 	name = "Morty"
 	generic = 0
 
-	New()
-		pets += src
-		..()
-
-	disposing()
-		pets -= src
-		..()
-
 var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "Litterbox",
 "Reginald", "Poosycat", "Dr. Purrsworthy", "Lt. Scratches", "Michael Catson",
 "Fluffy", "Mr. Purrfect", "Lord Furstooth", "Lion-O", "Johnathan", "Gary Catglitter",
@@ -251,6 +236,8 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	event_handler_flags = USE_HASENTERED | USE_PROXIMITY | USE_FLUID_ENTER
 
 	New()
+		if(src.name == "jons the catte")
+			src.is_pet = 1
 		..()
 		if (src.randomize_cat)
 			src.name = pick(cat_names)
@@ -348,11 +335,8 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 		return
 
 	CritterDeath()
-		src.alive = 0
-		set_density(0)
+		..()
 		src.icon_state = "cat[cattype]-dead"
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> dies!")
 		if(prob(5))
 			SPAWN_DBG(3 SECONDS)
 				src.visible_message("<b>[src]</b> comes back to life, good thing he has 9 lives!")
@@ -402,15 +386,8 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	health = 30
 	randomize_cat = 0
 	generic = 0
+	is_pet = 2
 	var/swiped = 0
-
-	New()
-		pets += src
-		..()
-
-	disposing()
-		pets -= src
-		..()
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.alive || cattype == "-emagged")
@@ -482,6 +459,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	firevuln = 1
 	brutevuln = 1
 	angertext = "growls at"
+	death_text = null // he's just asleep
 	atk_brute_amt = 2
 	crit_brute_amt = 4
 	chase_text = "jumps on"
@@ -490,13 +468,10 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 
 	New()
 		. = ..()
-		if (!isrestrictedz(src.loc.z)) //I don't want the other centcom dogs thanks
-			pets += src
 		START_TRACKING
 
 	disposing()
 		. = ..()
-		pets -= src
 		STOP_TRACKING
 /*
 	seek_target()
@@ -556,10 +531,8 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 		return
 
 	CritterDeath()
-		src.alive = 0
-		set_density(0)
+		..()
 		src.icon_state = "[src.doggy]-lying"
-		walk_to(src,0)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='combat'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!</span>")
 		SPAWN_DBG(1 MINUTE)
@@ -581,6 +554,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	name = "Blair"
 	icon_state = "pug"
 	doggy = "pug"
+	is_pet = 2
 
 var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pecan", "Daikon", "Seaweed")
 
@@ -1790,7 +1764,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		return F
 
 /obj/critter/boogiebot
-	name = "Boogiebot"
+	name = "boogiebot"
 	desc = "A robot that looks ready to get down at any moment."
 	icon_state = "boogie"
 	density = 1
@@ -1976,15 +1950,6 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	generic = 0 // no let's not have "vile Piggy" or "busted Piggy" tia
 	lock_color = 1
 
-	New()
-		if (!isrestrictedz(src.loc.z)) //don't want the centcom ferrets
-			pets += src
-		..()
-
-	disposing()
-		pets -= src
-		..()
-
 //Wire: Another special ferret based on my OTHER now dead IRL ferret. Has similar paradox naming.
 /obj/critter/meatslinky/monkey
 	name = "Monkey"
@@ -1992,15 +1957,6 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	health = 50
 	generic = 0
 	lock_color = 1
-
-	New()
-		if (!isrestrictedz(src.loc.z)) //don't want the centcom ferrets
-			pets += src
-		..()
-
-	disposing()
-		pets -= src
-		..()
 
 /obj/critter/raccoon
 	name = "space raccoon"
@@ -2186,3 +2142,24 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			return
 		SPAWN_DBG(rand(0, 10))
 			src.do_a_little_dance()
+
+obj/critter/frog
+	name = "frog"
+	desc = "Ribbit."
+	icon_state = "frog"
+	death_text = "%src% croaks."
+	butcherable = 1
+	density = 0
+	health = 20
+	aggressive = 0
+	defensive = 1
+	wanderer = 1
+	opensdoors = 0
+	atkcarbon = 1
+	atksilicon = 1
+	firevuln = 1
+	brutevuln = 1
+	generic = 1
+	atk_text = "hops into"
+	angertext = "croaks angrily at"
+	chase_text = "hops after"

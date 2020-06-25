@@ -4,9 +4,15 @@
 /// Arguments given here are packaged in a list and given to _SendSignal
 #define SEND_SIGNAL(target, sigtype, arguments...) ( !target.comp_lookup || !target.comp_lookup[sigtype] ? 0 : target._SendSignal(sigtype, list(target, ##arguments)) )
 
+/// `target` to use for signals that are global and not tied to a single datum.
+/// Note that this does NOT work with SEND_SIGNAL because of preprocessor weirdness.
+/// Use SEND_GLOBAL_SIGNAL instead.
+#define GLOBAL_SIGNAL preMapLoad // guaranteed to exist and that's all that matters
+#define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( !preMapLoad.comp_lookup || !preMapLoad.comp_lookup[sigtype] ? 0 : preMapLoad._SendSignal(sigtype, list(preMapLoad, ##arguments)) )
+
+
 /// A wrapper for _AddComponent that allows us to pretend we're using normal named arguments
 #define AddComponent(arguments...) _AddComponent(list(##arguments))
-
 
 /// Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type.
 /// `parent` must not be modified if this is to be returned.
@@ -27,6 +33,9 @@
 /// each component of the same type is consulted as to whether the duplicate should be allowed
 #define COMPONENT_DUPE_SELECTIVE		5
 
+
+// global signals
+#define COMSIG_GLOBAL_REBOOT "global_reboot"
 
 // /datum signals
 /// when a component is added to a datum: (/datum/component)
@@ -70,8 +79,14 @@
 // mob signals
 ///At the beginning of when an attackresults datum is being set up
 #define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
+//When a mob dies
+#define COMSIG_MOB_DEATH "mob_death"
 
 
 // projectile signals
 /// After a projectile makes a valid hit on an atom (after immunity/other early returns, before other effects)
 #define COMSIG_PROJ_COLLIDE "proj_collide_atom"
+
+// obj/critter signals
+// When an obj/critter dies
+#define COMSIG_OBJ_CRITTER_DEATH "obj_critter_death"

@@ -61,6 +61,7 @@
 	see_face = 0.0
 
 	equipped(var/mob/user)
+		..()
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/gimmick/owl))
@@ -92,6 +93,7 @@
 	compatible_species = list("human", "monkey")
 
 	equipped(var/mob/user)
+		..()
 		if (!user)
 			return 0
 		if (ishuman(user))
@@ -331,8 +333,9 @@
 	cant_other_remove = 0
 
 /obj/item/clothing/mask/cursedclown_hat/equipped(var/mob/user, var/slot)
+	..()
 	var/mob/living/carbon/human/Victim = user
-	if(istype(Victim) && slot == "mask")
+	if(istype(Victim) && slot == SLOT_WEAR_MASM)
 		boutput(user, "<span class='alert'><B> The mask grips your face!</B></span>")
 		src.desc = "This is never coming off... oh god..."
 		// Mostly for spawning a cluwne car and clothes manually.
@@ -733,7 +736,8 @@
 	cant_self_remove = 1
 	cant_other_remove = 1
 	equipped(var/mob/user, var/slot)
-		if(slot == "i_clothing" && ishuman(user))
+		..()
+		if(slot == SLOT_W_UNIFORM && ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.shoes != null)
 				var/obj/item/clothing/shoes/c = H.shoes
@@ -1085,7 +1089,7 @@
 					"You try to give [src] to [M], but [M] has no fingers to put [src] on!")
 					return
 
-				else if (iscritter(M))
+				else if (ismobcritter(M))
 					var/mob/living/critter/C = M
 					if (C.hand_count > 0) // we got hands!  hands that things can be put onto!  er, into, I guess.
 						if (C.put_in_hand(src))
@@ -1173,7 +1177,7 @@
 	material_prints = "deep scratches"
 
 	equipped(var/mob/user, var/slot)
-		if (slot == "gloves")
+		if (slot == SLOT_GLOVES)
 			if (!user.bioHolder || !user.bioHolder.HasEffect("hulk"))
 				boutput(user, "You feel your muscles swell to an immense size.")
 			APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/hulkstrong, src.type)
@@ -1313,7 +1317,7 @@
 	item_state = "lightgreen"
 
 	equipped(var/mob/user, var/slot)
-		if (slot == "i_clothing" && user.bioHolder)
+		if (slot == SLOT_W_UNIFORM && user.bioHolder)
 			user.bioHolder.AddEffect("jumpy_suit", 0, 0, 0, 1) // id, variant, time left, do stability, magical
 			SPAWN_DBG(0) // bluhhhhhhhh this doesn't work without a spawn
 				if (ishuman(user))
@@ -1508,16 +1512,18 @@
 	desc = "This hat looks patently ridiculous. Is this what passes for fashionable in the Commonwealth of Free Worlds?"
 	icon_state = "cwhat"
 	item_state = "cwhat"
+	seal_hair = 1
 
 /obj/item/clothing/head/fthat
 	name = "trader's headwear"
 	desc = "Why in the name of space would anyone trade with someone who wears a hat that looks this dumb? Yuck."
 	icon_state = "fthat"
 	item_state = "fthat"
+	seal_hair = 1
 
 /obj/item/clothing/gloves/handcomp
-	desc = "This is some sort of hand-mounted computer. Or it would be if it wasn't made out of cheap plastic and LEDs."
 	name = "Compudyne 0451 Handcomp"
+	desc = "This is some sort of hand-mounted computer. Or it would be if it wasn't made out of cheap plastic and LEDs."
 	icon_state = "handcomp"
 	item_state = "handcomp"
 	hide_prints = 0
@@ -1563,3 +1569,29 @@
 	desc = "a dress made for casual wear"
 	icon_state = "collardressb"
 	item_state = "collardressb"
+
+/obj/item/clothing/under/redtie
+	name = "collar shirt and red tie"
+	desc = "a pale dress shirt with a nice red tie to go with it"
+	icon_state = "red-tie"
+	item_state = "red-tie"
+
+/obj/item/clothing/suit/loosejacket
+	name = "loose jacket"
+	desc = "a loose and stylish jacket"
+	icon_state = "loose"
+	item_state = "loose"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/shoes/floppy
+	name = "floppy boots"
+	desc = "a pair of boots with very floppy design around the ankles"
+	icon_state = "floppy"
+	item_state = "floppy"
+
+/obj/item/clothing/suit/labcoatlong
+	name = "off-brand lab coat"
+	desc = "a long labcoat from some sort of supermarket"
+	icon_state = "labcoat-long"
+	item_state = "labcoat-long"
+	body_parts_covered = TORSO|LEGS|ARMS

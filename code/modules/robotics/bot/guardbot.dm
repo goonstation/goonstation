@@ -711,7 +711,8 @@
 			throwparts += new /obj/item/guardbot_frame(T)
 			for(var/obj/O in throwparts) //This is why it is called "throwparts"
 				var/edge = get_edge_target_turf(src, pick(alldirs))
-				O.throw_at(edge, 100, 4)
+				SPAWN_DBG(0)
+					O.throw_at(edge, 100, 4)
 
 			SPAWN_DBG(0) //Delete the overlay when finished with it.
 				src.on = 0
@@ -1677,6 +1678,7 @@
 		var/tmp/last_cute_action = 0
 
 		var/weapon_access = access_carrypermit //These guys can use guns, ok!
+		var/contraband_access = access_contrabandpermit
 		var/lethal = 0 //Do we use lethal force (if possible) ?
 		var/panic = 0 //Martial law! Arrest all kinds!!
 		var/no_patrol = 1 //Don't patrol.
@@ -2146,24 +2148,52 @@
 				if (!istype(perp_id))
 					perp_id = perp.wear_id
 
-				if(perp_id)
+				var/has_carry_permit = 0
+				var/has_contraband_permit = 0
+
+				if(perp_id) //Checking for targets and permits
 					if(ckey(perp_id.registered) in target_names)
 						return 7
-
 					if(weapon_access in perp_id.access)
-						return 0
+						has_carry_permit = 1
+					if(contraband_access in perp_id.access)
+						has_contraband_permit = 1
 
 				if (istype(perp.l_hand))
-					. += perp.l_hand.contraband
+					if (istype(perp.l_hand, /obj/item/gun/)) // perp is carrying a gun
+						if(!has_carry_permit)
+							. += perp.l_hand.contraband
+					else // not carrying a gun, but potential contraband?
+						if(!has_contraband_permit)
+							. += perp.l_hand.contraband
 
 				if (istype(perp.r_hand))
-					. += perp.r_hand.contraband
-				if(ishuman(perp))
-					if (istype(perp.belt))
-						. += perp.belt.contraband * 0.5
+					if (istype(perp.r_hand, /obj/item/gun/)) // perp is carrying a gun
+						if(!has_carry_permit)
+							. += perp.r_hand.contraband
+					else // not carrying a gun, but potential contraband?
+						if(!has_contraband_permit)
+							. += perp.r_hand.contraband
 
-					if (istype(perp.wear_suit))
+				if (istype(perp.belt))
+					if (istype(perp.belt, /obj/item/gun/))
+						if (!has_carry_permit)
+							. += perp.belt.contraband * 0.5
+					else
+						if (!has_contraband_permit)
+							. += perp.belt.contraband * 0.5
+
+				if (istype(perp.wear_suit))
+					if (!has_contraband_permit)
 						. += perp.wear_suit.contraband
+
+				if (istype(perp.back))
+					if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
+						if (!has_carry_permit)
+							. += perp.back.contraband * 0.5
+					else // at moment of doing this we don't have other contraband back items, but maybe that'll change
+						if (!has_contraband_permit)
+							. += perp.back.contraband * 0.5
 
 				if(perp.mutantrace && perp.mutantrace.jerk)
 //					if(istype(perp.mutantrace, /datum/mutantrace/zombie))

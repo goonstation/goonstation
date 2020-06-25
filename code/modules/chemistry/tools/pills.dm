@@ -45,7 +45,7 @@
 			user.show_text("[src] doesn't contain any reagents.", "red")
 			return
 
-		if (iscarbon(user) || iscritter(user))
+		if (iscarbon(user) || ismobcritter(user))
 			user.visible_message("[user] swallows [src].",\
 			"<span class='notice'>You swallow [src].</span>")
 			logTheThing("combat", user, null, "swallows a pill [log_reagents(src)] at [log_loc(user)].")
@@ -62,7 +62,7 @@
 			user.show_text("[src] doesn't contain any reagents.", "red")
 			return
 
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
 				//boutput(M, "<span class='notice'>You swallow [src].</span>")
 				user.visible_message("[user] swallows [src].",\

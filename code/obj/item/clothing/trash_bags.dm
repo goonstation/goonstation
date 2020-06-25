@@ -11,6 +11,7 @@
 	w_class = 1.0
 	rand_pos = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
+	tooltip_flags = REBUILD_DIST
 	body_parts_covered = TORSO
 	var/base_state = "trashbag"
 	var/max_stuff = 12 // can't hold more than this many stuff
@@ -28,6 +29,7 @@
 				. += "It's [get_fullness(current_stuff / max_stuff * 100)]."
 
 	equipped(var/mob/user)
+		..()
 		if (src.contents.len)
 			for (var/i=src.contents.len, i>0, i--)
 				if (prob(66))
@@ -98,6 +100,7 @@
 		for (var/obj/item/I in src.contents)
 			src.w_class = max(I.w_class, src.w_class) // as it turns out there are some w_class things above 5 so fuck it this is just a max() now
 			src.current_stuff += I.w_class
+			tooltip_rebuild = 1
 		if (src.contents.len == 1)
 			src.icon_state = src.base_state
 			src.item_state = src.base_state

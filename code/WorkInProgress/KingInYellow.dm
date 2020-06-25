@@ -87,6 +87,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	layer = OBJ_LAYER
+	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 
 	var/list/readers = new/list()
 	var/atom/curr_phantom = null

@@ -68,6 +68,9 @@ datum/mind
 	// Capture when they die. Used in the round-end credits
 	//var/icon/death_icon = null
 
+	//avoid some otherwise frequent istype checks
+	var/stealth_objective = 0
+
 	New(mob/M)
 		..()
 		if (M)

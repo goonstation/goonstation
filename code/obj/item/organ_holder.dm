@@ -495,7 +495,7 @@
 				myBrain.holder = null
 				src.brain = null
 				src.organ_list["brain"] = null
-				src.head.brain = null
+				src.head?.brain = null
 				return myBrain
 
 			if ("left_eye")
@@ -1151,7 +1151,7 @@
 
 	New(var/mob/living/L, var/obj/item/organ/brain/custom_brain_type)
 		..()
-		if (!iscritter(L))
+		if (!ismobcritter(L))
 			return
 		if (istype(L))
 			src.donor = L

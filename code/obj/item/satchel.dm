@@ -136,6 +136,7 @@
 		src.satchel_updateicon()
 
 	proc/satchel_updateicon()
+		tooltip_rebuild = 1
 		var/perc
 		if (src.contents.len > 0 && src.maxitems > 0)
 			perc = (src.contents.len / src.maxitems) * 100
@@ -246,5 +247,10 @@
 				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, pitch = 0.9)
 				icon_state = "figurinecase"
 
-
-
+/obj/item/satchel/figurines/full
+	New()
+		. = ..()
+		for(var/i = 0, i < maxitems, i++)
+			var/obj/item/toy/figure/F = new()
+			F.set_loc(src)
+			src.satchel_updateicon()

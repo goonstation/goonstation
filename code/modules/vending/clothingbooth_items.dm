@@ -78,6 +78,12 @@
 	cost = 160
 	hidden = 1
 
+/datum/clothingbooth_item/offbrandlabcoat
+	name = "Off-Brand Lab Coat"
+	path = /obj/item/clothing/suit/labcoatlong
+	category = "Costumes"
+	cost = 100
+
 //Formal
 /datum/clothingbooth_item/dress
 	name = "Little Black Dress"
@@ -88,6 +94,12 @@
 /datum/clothingbooth_item/dressred
 	name = "Little Red Dress"
 	path = /obj/item/clothing/under/misc/dress/red
+	category = "Formal"
+	cost = 250
+
+/datum/clothingbooth_item/redtie
+	name = "Shirt and Red Tie"
+	path = /obj/item/clothing/under/redtie
 	category = "Formal"
 	cost = 250
 
@@ -161,6 +173,12 @@
 	category = "Jackets"
 	cost = 100
 
+/datum/clothingbooth_item/loosejacket
+	name = "Loose Jacket"
+	path = /obj/item/clothing/suit/loosejacket
+	category = "Jackets"
+	cost = 250
+
 /datum/clothingbooth_item/tuxedojacket
 	name = "Tuxedo Jacket"
 	path = /obj/item/clothing/suit/tuxedo_jacket
@@ -193,6 +211,49 @@
 	category = "Masquerade"
 	cost = 300
 
+//Sci-Fi
+/datum/clothingbooth_item/cwhat
+	name = "Moebius-Brand Headwear"
+	path = /obj/item/clothing/head/cwhat
+	category = "Sci-Fi"
+	cost = 120
+
+/datum/clothingbooth_item/fthat
+	name = "Trader's Headwear"
+	path = /obj/item/clothing/head/fthat
+	category = "Sci-Fi"
+	cost = 75
+
+/datum/clothingbooth_item/ftscanplate
+	name = "FTX-480 Scanner Plate"
+	path = /obj/item/clothing/glasses/ftscanplate
+	category = "Sci-Fi"
+	cost = 250
+
+/datum/clothingbooth_item/cwfashion
+	name = "CW Fashionista's Outfit"
+	path = /obj/item/clothing/under/gimmick/cwfashion
+	category = "Sci-Fi"
+	cost = 250
+
+/datum/clothingbooth_item/ftuniform
+	name = "Free Trader's Outfit"
+	path = /obj/item/clothing/under/gimmick/ftuniform
+	category = "Sci-Fi"
+	cost = 150
+
+/datum/clothingbooth_item/handcomp
+	name = "Compudyne 0451 Handcomp"
+	path = /obj/item/clothing/gloves/handcomp
+	category = "Sci-Fi"
+	cost = 150
+
+/datum/clothingbooth_item/cwboots
+	name = "Macando Boots"
+	path = /obj/item/clothing/shoes/cwboots
+	category = "Sci-Fi"
+	cost = 130
+
 //Shoes
 /datum/clothingbooth_item/dress_shoes
 	name = "Dress Shoes"
@@ -200,6 +261,12 @@
 	category = "Shoes"
 	cost = 130
 	hidden = 1
+
+/datum/clothingbooth_item/floppyboots
+	name = "Floppy Boots"
+	path = /obj/item/clothing/shoes/floppy
+	category = "Shoes"
+	cost = 130
 
 /datum/clothingbooth_item/blackheels
 	name = "Black Heels"

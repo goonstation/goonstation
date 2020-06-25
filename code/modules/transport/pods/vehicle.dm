@@ -926,7 +926,7 @@
 		boutput(boarder, "<span class='alert'>You can't squeeze your wide cube body through the access door!</span>")
 		return
 
-	if(iscritter(boarder) && boarder:ghost_spawned)
+	if(ismobcritter(boarder) && boarder:ghost_spawned)
 		boutput(boarder, "<span class='alert'>You have no idea how to work this.</span>")
 		return
 

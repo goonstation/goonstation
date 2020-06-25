@@ -13,7 +13,7 @@ proc/debug_color_of(var/thing)
 
 /client/proc
 	map_debug_panel()
-		set category = "Debug"
+		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 		var/area_txt = "<B>APC LOCATION REPORT</B><HR>"
 		var/apc_count = 0
@@ -36,7 +36,7 @@ proc/debug_color_of(var/thing)
 
 
 	general_report()
-		set category = "Debug"
+		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 		if(!processScheduler)
 			usr << alert("Process Scheduler not found.")
@@ -56,7 +56,7 @@ proc/debug_color_of(var/thing)
 		usr.Browse(output,"window=generalreport")
 
 	air_report()
-		set category = "Debug"
+		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 		if(!processScheduler || !air_master)
 			alert(usr,"processScheduler or air_master not found.","Air Report")
@@ -129,7 +129,7 @@ proc/debug_color_of(var/thing)
 		return html
 
 	air_status(turf/target as turf)
-		set category = "Debug"
+		SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 		set name = "Air Status"
 		set popup_menu = 0
 
@@ -151,7 +151,7 @@ proc/debug_color_of(var/thing)
 				boutput(usr, "[trace_gas.type]: [trace_gas.moles]")
 
 	fix_next_move()
-		set category = "Debug"
+		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 		set name = "Press this if everybody freezes up"
 		var/largest_click_time = 0
 		var/mob/largest_click_mob = null
@@ -176,7 +176,7 @@ proc/debug_color_of(var/thing)
 		return
 
 	debug_profiler()
-		set category = "Debug"
+		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 		set name = "Open Profiler"
 
 		admin_only
@@ -723,7 +723,7 @@ proc/debug_color_of(var/thing)
 
 /client/proc/SetInfoOverlay( )
 	set name = "Debug Overlay"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 	var/name = input("Choose an overlay") in (childrentypesof( /datum/infooverlay ) + "Remove")
 	if(activeOverlay)

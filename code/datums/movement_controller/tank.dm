@@ -1,7 +1,7 @@
 /datum/movement_controller/tank
 	var/obj/machinery/vehicle/owner
 	var/velocity_dir = SOUTH
-	var/velocity = 0
+	var/velocity_magnitude = 0
 
 	var/input_x = 0
 	var/input_y = 0
@@ -70,22 +70,23 @@
 				rot = input_x * turn_delay
 
 		if (!can_turn_while_parked)
-			if (velocity == 0)
+			if (velocity_magnitude == 0)
 				rot = 0
 			else
-				rot = (rot*0.5) + ((velocity_max/velocity) * (rot*0.5)) //you turn a little faster when you're going fast with tires. is this too weird?
+				rot = (rot*0.5) + ((velocity_max/velocity_magnitude) * (rot*0.5)) //you turn a little faster when you're going fast with tires. is this too weird?
 
 		if (next_rot <= world.time && rot)
 			owner.dir = turn(owner.dir,45 * (rot > 0 ? -1 : 1)  * ((reverse_gear && !can_turn_while_parked) ? -1 : 1))
 			owner.facing = owner.dir
 			owner.flying = owner.dir
 			next_rot = world.time + abs(rot)
+			owner.update_mdir_light_visibility(owner.dir)
 
-		if (!can_turn_while_parked && velocity_dir != owner.dir && (velocity + accel) > velocity_max)
-			if (velocity >= velocity_max) //we are at max speed
-				velocity -= accel_pow * 1.5
+		if (!can_turn_while_parked && velocity_dir != owner.dir && (velocity_magnitude + accel) > velocity_max)
+			if (velocity_magnitude >= velocity_max) //we are at max speed
+				velocity_magnitude -= accel_pow * 1.5
 			else						  //we are at max speed AND the user is holding on the gas.
-				velocity -= accel_pow * 2
+				velocity_magnitude -= accel_pow * 2
 
 			squeal_sfx = 1
 
@@ -96,34 +97,34 @@
 
 		var/delay
 		if (accel)
-			if (velocity == 0)
+			if (velocity_magnitude == 0)
 				accel_sfx = 1
 
 			if (accel > 0)
-				if (velocity < 1)
-					velocity = 1
-				velocity += accel
-				delay = delay_divisor / velocity
+				if (velocity_magnitude < 1)
+					velocity_magnitude = 1
+				velocity_magnitude += accel
+				delay = delay_divisor / velocity_magnitude
 			else
-				velocity -= brake_pow
-				if (velocity <= 2)
-					if (velocity <= 0)
+				velocity_magnitude -= brake_pow
+				if (velocity_magnitude <= 2)
+					if (velocity_magnitude <= 0)
 						reverse_gear = !reverse_gear
 						delay = 10
-						velocity = 0
+						velocity_magnitude = 0
 						return 10
-					velocity = 0
+					velocity_magnitude = 0
 				else
-					delay = delay_divisor / velocity
+					delay = delay_divisor / velocity_magnitude
 
-		else if (velocity)
-			delay = delay_divisor / velocity
+		else if (velocity_magnitude)
+			delay = delay_divisor / velocity_magnitude
 
 		if (owner.dir & (owner.dir-1))
 			delay *= DIAG_MOVE_DELAY_MULT
 
 		if (delay)
-			velocity = min(velocity + accel * delay/delay_divisor, velocity_max)
+			velocity_magnitude = min(velocity_magnitude + accel * delay/delay_divisor, velocity_max)
 
 			var/target_turf = get_step(owner,(reverse_gear ? turn(velocity_dir,180) : velocity_dir))
 			owner.glide_size = (32 / delay) * world.tick_lag// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
@@ -135,7 +136,7 @@
 			owner.glide_size = (32 / delay) * world.tick_lag// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
 			owner.dir = owner.facing
 			if (owner.loc != target_turf)
-				velocity = 0
+				velocity_magnitude = 0
 				//boutput(world,"[src.owner] crashed?")
 
 			for(var/mob/M in owner) //hey maybe move this somewhere better later. idk man its all chill thou, its all cool, dont worry about it buddy

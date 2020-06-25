@@ -104,8 +104,10 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_DENSITY
 //#define MAP_OVERRIDE_KONDARU
 //#define MAP_OVERRIDE_FLEET
+//#define MAP_OVERRIDE_ICARUS
 //#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
 //#define MAP_OVERRIDE_PAMGOC			// Pamgoc
+//#define MAP_OVERRIDE_WRESTLEMAP		// Wrestlemap by Overtone
 
 
 //////////// HOLIDAYS AND OTHER SUCH TOGGLES

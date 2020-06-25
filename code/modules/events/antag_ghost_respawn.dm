@@ -55,7 +55,7 @@
 
 		src.message_delay = src.message_delay + src.ghost_confirmation_delay
 
-		message_admins("<span class='notice'>Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]</span>")
+		message_admins("<span class='internal'>Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]</span>")
 		logTheThing("admin", null, null, "Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]")
 
 		// No need for a fancy setup here.
@@ -79,7 +79,7 @@
 
 		return
 
-	is_event_available()
+	is_event_available(var/ignore_time_lock = 0)
 		if( emergency_shuttle.online )
 			return 0
 
@@ -192,6 +192,15 @@
 				else
 					failed = 1
 
+			if ("Flockmind")
+				var/mob/living/intangible/flock/flockmind/F = M3.make_flockmind()
+				if (F && istype(F))
+					M3 = F
+					role = "flockmind"
+					//objective_path = /datum/objective_set/blob
+				else
+					failed = 1
+
 			if ("Wraith")
 				var/mob/wraith/W = M3.make_wraith()
 				if (W && istype(W))
@@ -245,12 +254,13 @@
 				var/mob/living/R2 = M3.humanize()
 				if (R2 && istype(R2))
 					M3 = R2
-					R2.make_wrestler()
+					R2.make_wrestler(1)
 					role = "wrestler"
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 
+					var/antag_type = src.antagonist_type
 					SPAWN_DBG (0)
-						R2.choose_name(3, src.antagonist_type, R2.real_name + " the " + src.antagonist_type)
+						R2.choose_name(3, antag_type, R2.real_name + " the " + antag_type)
 				else
 					failed = 1
 
@@ -258,12 +268,13 @@
 				var/mob/living/critter/C = M3.critterize(/mob/living/critter/small_animal/bird/timberdoodle/strong)
 				if (C && istype(C))
 					M3 = C
-					C.make_wrestler()
+					C.make_wrestler(1)
 					role = "wrestler"
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 
+					var/antag_type = src.antagonist_type
 					SPAWN_DBG (0)
-						C.choose_name(3, src.antagonist_type, C.real_name + " the " + src.antagonist_type)
+						C.choose_name(3, antag_type, C.real_name + " the " + antag_type)
 				else
 					failed = 1
 

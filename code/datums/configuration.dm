@@ -1,4 +1,7 @@
 /datum/configuration
+	var/server_key = null				// unique numeric identifier (e.g. 1, 2, 3) used by some backend services. NOT REQUIRED.
+										//	if set, the global serverKey will be set to this, if not, it will be based on the world.port number
+
 	var/server_id = "local"				// unique server identifier (e.g. main, rp, dev) used primarily by backend services
 	var/server_name = null				// server name (for world name / status)
 	var/server_suffix = 0				// generate numeric suffix based on server port
@@ -208,6 +211,9 @@
 
 			if ("norespawn")
 				config.respawn = 0
+
+			if ("serverkey")
+				config.server_key = text2num(value)
 
 			if ("serverid")
 				config.server_id = trim(value)

@@ -121,10 +121,10 @@ datum
 				src = null
 				if (!volume_passed)
 					return
-				if (!ishuman(M))
+				if (!isliving(M))
 					return
 				if (method == TOUCH)
-					var/mob/living/carbon/human/H = M
+					var/mob/living/H = M
 					var/cauterised
 					if (volume_passed >= 10)
 						// reduce bleeding
@@ -531,13 +531,13 @@ datum
 				if (!volume_passed)
 					return
 				var/mob/living/M = target
-				if (!iscarbon(M) && !iscritter(M))
+				if (!iscarbon(M) && !ismobcritter(M))
 					return
 				if ((method == INGEST || (method == TOUCH && prob(25))) && (isdead(M) || istype(get_area(M),/area/afterlife/bar)))
 					var/came_back_wrong = 0
 					if (M.get_brute_damage() + M.get_burn_damage() >= 150)
 						came_back_wrong = 1
-					if (iscritter(M))
+					if (ismobcritter(M))
 						M.full_heal() // same as with objcritters basically
 					else
 						M.take_oxygen_deprivation(-INFINITY)
@@ -642,7 +642,7 @@ datum
 
 			reaction_obj(var/obj/item/O, var/volume)
 				src = null
-				if (istype(O) && prob(40))
+				if (istype(O) && prob(80))
 					if (O.burning)
 						O.burning = 0
 				return
@@ -653,6 +653,12 @@ datum
 					var/mob/living/L = M
 					if (istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -300)
+						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
+					if (istype(L,/mob/living/critter/fire_elemental))
+						L.changeStatus("weakened",0.5 SECONDS)
+						L.force_laydown_standup()
+						L.TakeDamage("All", volume * 1.5, 0, 0, DAMAGE_BLUNT)
+						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.5)
 				return
 
 		silicate
@@ -1066,7 +1072,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				T.clean_forensic()
 
-			reaction_mob(var/mob/living/carbon/human/M, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				..()
 				M.clean_forensic()
 
@@ -1536,10 +1542,9 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
-				if (ishuman(M))
-					boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
-					M.emote("scream")
-					random_brute_damage(M, 4)
+				boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
+				M.emote("scream")
+				random_brute_damage(M, 4)
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1721,7 +1726,7 @@ datum
 
 			reaction_mob(var/mob/M, var/method = TOUCH, var/volume)
 				if (method == INGEST)
-					if (ishuman(M))
+					if (isliving(M))
 						M:blood_color = "#[num2hex(rand(0, 255),2)][num2hex(rand(0, 255), 2)][num2hex(rand(0, 255), 2)]"
 				return
 
@@ -1824,11 +1829,11 @@ datum
 				src = null
 				if(!volume_passed)
 					return
-				if(!ishuman(M))
+				if(!isliving(M))
 					return
 
 				if(method == INGEST)
-					var/mob/living/carbon/human/H = M
+					var/mob/living/H = M
 					if (H.bioHolder && H.bioHolder.HasEffect("bee"))
 						boutput(M, "<span class='notice'>That tasted amazing!</span>")
 					else
@@ -1988,6 +1993,8 @@ datum
 							otherReagents = TRUE
 					if(!otherReagents)
 						// we ate them all, time to die
+						if(holder?.my_atom?.material?.mat_id == "gnesis") // gnesis material prevents coag. gnesis from evaporating
+							return
 						holder.remove_reagent(id, conversion_rate)
 
 			// let's put more teeth into this.
@@ -2401,7 +2408,7 @@ datum
 				..()
 				effect_length = 0
 
-			on_mob_life(var/mob/living/carbon/human/M, var/mult = 1) // humans only! invisible critters would be awful...
+			on_mob_life(var/mob/living/M, var/mult = 1) // humans only! invisible critters would be awful...
 				if(!M)
 					holder.remove_reagent("transparium")
 					return
@@ -2410,7 +2417,7 @@ datum
 					effect_length+= 1 * mult
 				..()
 
-			on_mob_life_complete(var/mob/living/carbon/human/M)
+			on_mob_life_complete(var/mob/living/M)
 				if(M)
 					boutput(M, "<span class='alert'>You feel yourself fading away.</span>")
 					M.alpha = 0
@@ -2421,7 +2428,7 @@ datum
 							boutput(M, "<span class='notice'>You feel yourself returning back to normal. Phew!</span>")
 							M.alpha = 255
 
-			do_overdose(var/severity, var/mob/living/carbon/human/M, var/mult = 1)
+			do_overdose(var/severity, var/mob/living/M, var/mult = 1)
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if(effect <= 4)
@@ -2461,7 +2468,7 @@ datum
 
 				..()
 
-			on_mob_life_complete(var/mob/living/carbon/human/M)
+			on_mob_life_complete(var/mob/living/M)
 				if(M)
 					boutput(M, "<span class='alert'>You feel yourself fading.</span>")
 					M.alpha = rand(80,200)
@@ -2965,6 +2972,7 @@ datum
 			hygiene_value = -2
 			hunger_value = 0.068
 			viscosity = 0.4
+			depletion_rate = 0
 
 			pooled()
 				..()
@@ -3028,6 +3036,7 @@ datum
 						var/datum/pathogen/P = src.pathogens[uid]
 						logTheThing("pathology", M, null, "metabolizing [src] containing pathogen [P].")
 						M.infected(P)
+				..()
 
 /* this begs the question how bloodbags worked at all if this was a thing
 				if (holder.has_reagent("dna_mutagen")) //If there's stable mutagen in the mix and it doesn't have data we gotta give it a chance to get some
@@ -3066,15 +3075,17 @@ datum
 			minimum_reaction_temperature = T0C + 50
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if (holder.my_atom)
-					for (var/mob/O in AIviewers(get_turf(holder.my_atom), null))
-						boutput(O, "<span class='alert'>The blood tries to climb out of [holder.my_atom] before sizzling away!</span>")
-				else
-					var/list/covered = holder.covered_turf()
-					for(var/turf/t in covered)
-						for (var/mob/O in AIviewers(t, null))
-							boutput(O, "<span class='alert'>The blood reacts, attempting to escape the heat before sizzling away!</span>")
 				holder.del_reagent(id)
+				var/list/covered = holder.covered_turf()
+
+				if(length(covered) < 9 || prob(2)) // no spam pls
+					if (holder.my_atom)
+						for (var/mob/O in AIviewers(get_turf(holder.my_atom), null))
+							boutput(O, "<span class='alert'>The blood tries to climb out of [holder.my_atom] before sizzling away!</span>")
+					else
+						for(var/turf/t in covered)
+							for (var/mob/O in AIviewers(t, null))
+								boutput(O, "<span class='alert'>The blood reacts, attempting to escape the heat before sizzling away!</span>")
 
 
 		vomit
@@ -3301,9 +3312,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				src = null
-				if(!ishuman(M))
-					return
-
 				M.bioHolder.AddEffect("reversed_speech", timeleft = 180)
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3651,7 +3659,7 @@ datum
 				if (!M)
 					M = holder.my_atom
 				var/our_amt = holder.get_reagent_amount(src.id)
-				if(ishuman(M) && prob(3))
+				if(prob(3) && ishuman(M))
 					M.say("Hm!")
 				if(M && our_amt > 20)
 					if(M.bioHolder && !M.bioHolder.HasEffect("fat"))

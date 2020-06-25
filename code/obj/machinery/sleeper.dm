@@ -69,9 +69,9 @@
 			if (O.sleeping)
 				O.sleeping = 3
 				if (prob(5)) // Heh.
-					boutput(O, "<font color='green'> [bicon(src)] Wake up, Neo...</font>")
+					boutput(O, "<span class='success'> [bicon(src)] Wake up, Neo...</span>")
 				else
-					boutput(O, "<font color='blue'> [bicon(src)] *beep* *beep*</font>")
+					boutput(O, "<span class='notice'> [bicon(src)] *beep* *beep*</span>")
 			src.visible_message("<span class='notice'>The [src.name]'s occupant alarm clock dings!</span>")
 			playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
 		return

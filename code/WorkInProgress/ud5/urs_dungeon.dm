@@ -12,32 +12,26 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
-			src.link_elements()
-			sleep(1 SECOND)
-			qdel(src)
+		if(current_state > GAME_STATE_PREGAME)
+			SPAWN_DBG(1)
+				src.initialize()
+
+	initialize()
+		src.link_elements()
+		..()
+		qdel(src)
 
 	proc/link_elements()
 
 		if(src.triggerer_id == src.triggerable_id)
 			return // I literally just said NOT to break this, you PROMISED.
 
-		for(var/obj/adventurepuzzle/A)
 
-			if(A.id == src.triggerer_id)
-				src.triggerers += A
+		if(length(adventure_elements_by_id[src.triggerer_id]))
+			src.triggerers = adventure_elements_by_id[src.triggerer_id]
 
-			if(A.id == src.triggerable_id)
-				src.triggerables += A
-
-
-		for(var/obj/item/adventurepuzzle/A)
-
-			if(A.id == src.triggerer_id)
-				src.triggerers += A
-
-			if(A.id == src.triggerable_id)
-				src.triggerables += A
+		if(length(adventure_elements_by_id[src.triggerable_id]))
+			src.triggerables = adventure_elements_by_id[src.triggerable_id]
 
 		if((src.triggerers.len > 0) && (src.triggerables.len > 0))
 
@@ -177,7 +171,6 @@
 	color = "#550000"
 	var/target = null
 
-#if ASS_JAM
 	New()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
@@ -187,8 +180,11 @@
 
 
 	equipped(var/mob/user, var/slot)
+		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == "eyes")
+		if(!(user == usr))
+			return
+		if(istype(H) && slot == SLOT_GLASSES)
 			SPAWN_DBG(1 SECOND)
 				enter_urs_dungeon(user)
 		return
@@ -211,13 +207,6 @@
 			playsound(H.loc, "sound/ambience/music/VRtunes_edited.ogg", 75, 0)
 
 		return
-#else
-	equipped(var/mob/user, var/slot)
-		user.visible_message("<span class='notice'>[user] puts on the goggles, but nothing particularly special happens!</span>")
-		user.u_equip(src)
-		src.set_loc(get_turf(user))
-		return
-#endif
 
 
 /obj/item/clothing/glasses/urs_dungeon_exit
@@ -231,8 +220,9 @@
 		..()
 
 	equipped(var/mob/user, var/slot)
+		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == "eyes")
+		if(istype(H) && slot == SLOT_GLASSES)
 			SPAWN_DBG(1 SECOND)
 				exit_urs_dungeon(user)
 		return
@@ -299,14 +289,14 @@
 				return
 
 	proc/announce()
-		var/area/our_area = src.loc
+		var/area/our_area = get_area(src)
 		our_area.sound_fx_2 = src.sound //assign even if null
 		var/played = our_area.played_fx_2
 
 		for (var/mob/M in our_area)
 			if (src.sound && !played)
 				if (M.client)
-					M.client.playAmbience(src, AMBIENCE_FX_2, 30)
+					M.client.playAmbience(our_area, AMBIENCE_FX_2, 50)
 			if(src.message)
 				M.show_message("<span class='game say bold'><span class='message'><span style='color: [src.text_color]'>[message]</span></span></span>", 2)
 

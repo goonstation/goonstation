@@ -1,4 +1,20 @@
-
+(t)tue jun 23 20
+(u)Sovexe
+(*)The Pests (playable) event now allows for customization in the form of critter type and quantity.
+(t)mon jun 22 20
+(u)Sovexe
+(*)The Awaken Sleeper Agents event now allows you to override player antagonist preferences.
+(t)sun jun 21 20
+(u)Sovexe
+(*)The Antagonist Critter Spawn event now allows for customization in the form of critter type and quantity.
+(t)mon jun 15 20
+(u)pali
+(*)Toggle-Text-Mode verb to force someone into / out of ASCII mode.
+(t)tue jun 09 20
+(u)pali
+(*)Admin verbs reorganized
+(*)Toggle which verb categories you see using the Change Admin Preferences verb
+(*)silisay verb for talking to silicons
 (t)fri may 22 20
 (u)pali
 (*)Added the <i>legs</i> component for when you want an object to have AI legs
