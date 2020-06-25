@@ -162,12 +162,13 @@
 	if (hearing_check && !src.hearing_check(1))
 		return
 
+	var/class = ""
 	switch (color)
-		if ("red") color = "#FF0000"
-		if ("blue") color = "#0000FF"
-		if ("green") color = "#008800" // we dont want FF for this because it's fucking unreadable against white
+		if ("red") class = "alert"
+		if ("blue") class = "notify"
+		if ("green") class = "success"
 
-	boutput(src, "<span style='color: [color]'>[message]</span>", group)
+	boutput(src, "<span class='[class]'>[message]</span>", group)
 
 /mob/proc/sight_check(var/consciousness_check = 0)
 	return 1

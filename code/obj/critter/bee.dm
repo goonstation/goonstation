@@ -58,7 +58,7 @@
 	var/is_dancing = 0 // we're already dancin'!
 	var/dance_chance = 10 // fuck it I gotta test this stuff so this gets to be a var now (how likely the bee is to dance in response to a dance)
 
-	var/blog = "adult bub log|"
+	var/tmp/blog = "adult bub log|"
 
 	var/shorn = 0
 	var/shorn_time = 0
@@ -1400,7 +1400,7 @@
 	var/beeMomCkey = null
 	var/scolded = 0
 
-	var/blog = "larvalog|"
+	var/tmp/blog = "larvalog|"
 
 	bonnet
 		desc = "A domestic space bee larva, but with a little bonnet.  Where did that even come from?"
@@ -1576,7 +1576,7 @@
 	var/larva_type = null
 	rand_pos = 1
 
-	var/blog = "egg blog|"
+	var/tmp/blog = "egg blog|"
 
 	New()
 		..()

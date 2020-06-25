@@ -185,7 +185,7 @@ mob
 						var/do_step = 1 //robust grab : don't even bother if we are in a chokehold. Assailant gets moved below. Makes the tile glide better without having a chain of step(src)->step(assailant)->step(me)
 						for(var/grab in src.grabbed_by)
 							var/obj/item/grab/G = grab
-							if (G.state < GRAB_NECK) continue
+							if (G?.state < GRAB_NECK) continue
 							do_step = 0
 							break
 

@@ -314,6 +314,9 @@
 		qdel(src)
 		return
 
+	if(!power)
+		power = 8-severity*2
+
 	var/shielded = 0
 	var/spellshielded = 0
 	for (var/obj/item/device/shield/S in src)

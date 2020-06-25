@@ -392,7 +392,11 @@
 			if (istext(attack_resistance))
 				msgs.show_message_target(attack_resistance)
 		msgs.damage = max(damage, 0)
-
+	else if ( !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)) )
+		var/armor_mod = 0
+		armor_mod = target.get_melee_protection(def_zone)
+		msgs.stamina_target -= max(STAMINA_HTH_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm doesnt get full reduction
+		msgs.force_stamina_target = 1
 
 	var/target_stamina = STAMINA_MAX //uses stamina?
 	if (isliving(target))
@@ -816,6 +820,8 @@
 	//grouping of combat message
 	var/msg_group = 0
 
+	var/force_stamina_target = null
+
 	New(var/mob/M)
 		owner = M
 
@@ -972,9 +978,9 @@
 			target.lastattackertime = world.time
 			target.add_fingerprint(owner)
 
-		if (damage > 0 || src.disarm == 1)
+		if (damage > 0 || (src.disarm == 1 || force_stamina_target))
 
-			if (src.disarm == 1 && damage <= 0)
+			if ((src.disarm == 1 || force_stamina_target) && damage <= 0)
 				goto process_stamina
 
 			if (damage > 0 && target != owner)

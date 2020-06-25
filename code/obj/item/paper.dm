@@ -37,8 +37,8 @@
 	var/sizey = 0
 	var/offset = 0
 
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 
 	var/sealed = 0 //Can you write on this with a pen?
@@ -1057,8 +1057,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
-	stamina_damage = 3
-	stamina_cost = 3
+	stamina_damage = 0
+	stamina_cost = 0
 	rand_pos = 1
 	var/is_reassignable = 1
 	var/assignment = null
@@ -1235,7 +1235,13 @@ WHO DID THIS */
 		user.show_text("You unfold the [src] back into a sheet of paper! It looks pretty crinkled.", "blue")
 		src.name = "crinkled paper"
 		src.desc = src.old_desc
-		src.icon_state = src.old_icon_state
+		if(src.old_icon_state)
+			src.icon_state = src.old_icon_state
+		else
+			if(src.info)
+				src.icon_state = "paper"
+			else
+				src.icon_state = "paper_blank"
 		src.sealed = 0
 	else
 		..()

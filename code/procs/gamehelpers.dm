@@ -558,10 +558,6 @@ var/obj/item/dummy/click_dummy = new
 		T.appearance = S.appearance
 		T.density = S.density
 		T.dir = S.dir
-		if(turftoleave)
-			S.ReplaceWith(turftoleave, force=1)
-		else
-			S.ReplaceWithSpaceForce()
 
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
@@ -570,6 +566,10 @@ var/obj/item/dummy/click_dummy = new
 			if (istype(AM, /obj/forcefield) || istype(AM, /obj/overlay/tile_effect)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
 			AM.set_loc(T)
+		if(turftoleave)
+			S.ReplaceWith(turftoleave, force=1)
+		else
+			S.ReplaceWithSpaceForce()
 
 
 

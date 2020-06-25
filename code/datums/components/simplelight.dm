@@ -34,6 +34,12 @@
 /datum/component/holdertargeting/simple_light/UnregisterFromParent()
 	src.update(0)
 
+/datum/component/holdertargeting/simple_light/proc/set_color(var/r, var/g, var/b)
+	src.r = r
+	src.g = g
+	src.b = b
+	src.update(0)
+
 /datum/component/holdertargeting/simple_light/on_pickup(datum/source, mob/user)
 	. = ..()
 	if(!src.enabled)

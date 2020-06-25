@@ -201,6 +201,7 @@
 					</div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "jumpto")]'>Jump to</A> &bull;
+						<a href='[playeropt_link(M, "observe")]'>Observe</A> &bull;
 						<a href='[playeropt_link(M, "getmob")]'>Get</a> &bull;
 						<a href='[playeropt_link(M, "sendmob")]'>Send to...</a>
 						<br>Currently in [A]

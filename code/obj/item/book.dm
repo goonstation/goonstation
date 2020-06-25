@@ -12,6 +12,7 @@
 	burn_possible = 1
 	health = 30
 	//
+
 	stamina_damage = 2
 	stamina_cost = 2
 	stamina_crit_chance = 0

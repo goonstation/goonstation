@@ -2105,12 +2105,16 @@ datum/pathogeneffects/malevolent/snaps/jazz
 			var/obj/item/clothing/under/misc/syndicate/T = new /obj/item/clothing/under/misc/syndicate(H)
 			T.name = "Jazzy Turtleneck"
 			if (H.w_uniform)
-				H.u_equip(H.w_uniform)
+				var/obj/item/I = H.w_uniform
+				H.u_equip(I)
+				I.set_loc(H.loc)
 			H.equip_if_possible(T, H.slot_w_uniform)
 		if (!(H.head && istype(H.head, /obj/item/clothing/head/flatcap)))
 			var/obj/item/clothing/head/flatcap/F = new /obj/item/clothing/head/flatcap(H)
 			if (H.head)
-				H.u_equip(H.head)
+				var/obj/item/I = H.head
+				H.u_equip(I)
+				I.set_loc(H.loc)
 			H.equip_if_possible(F, H.slot_head)
 
 		if (!H.find_type_in_hand(/obj/item/instrument/saxophone))

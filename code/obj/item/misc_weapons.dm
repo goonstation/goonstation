@@ -50,12 +50,14 @@
 	contraband = 5
 	desc = "An illegal weapon that, when activated, uses cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
 	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active.
-	stamina_cost = 30
+	stamina_cost = 5
 	stamina_crit_chance = 35
 	var/active_force = 60
 	var/active_stamina_dmg = 40
+	var/active_stamina_cost = 40
 	var/inactive_stamina_dmg = 35
 	var/inactive_force = 1
+	var/inactive_stamina_cost = 5
 	var/state_name = "sword"
 	var/off_w_class = 2
 	var/datum/component/holdertargeting/simple_light/light_c
@@ -110,8 +112,9 @@
 				if (use_glowstick)
 					src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src)
 
-		if (src.loaded_glowstick) //the glowstick needs to be on!
-			src.loaded_glowstick.turnon()
+		if (!src.loaded_glowstick && use_glowstick) //the glowstick needs to be on!
+			src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src) // rainbow is basicall diffracted white light
+		src.loaded_glowstick.turnon()
 
 		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
@@ -241,6 +244,7 @@
 			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordstart.ogg", 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
 			else playsound(get_turf(U),"sound/weapons/female_cswordturnon.ogg" , 100, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
 		src.force = active_force
+		src.stamina_cost = active_stamina_cost
 		if (src.bladecolor)
 			if (!(src.bladecolor in src.valid_colors))
 				src.bladecolor = null
@@ -259,6 +263,7 @@
 			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordturnoff.ogg", 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
 			else playsound(get_turf(U),"sound/weapons/female_cswordturnoff.ogg", 100, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
 		src.force = inactive_force
+		src.stamina_cost = inactive_stamina_cost
 		src.icon_state = "[state_name]0"
 		src.item_state = "[state_name]0"
 		src.w_class = off_w_class
@@ -314,35 +319,38 @@
 			loaded_glowstick = W
 			user.u_equip(W)
 			W.set_loc(src)
+			var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
 			switch(src.loaded_glowstick.color_name)
 				if("red")
-					src.update_simple_light_color(255, 0, 0)
+					light_c.set_color(255, 0, 0)
 					src.bladecolor = "R"
 				if("orange")
-					src.update_simple_light_color(255, 127, 0)
+					light_c.set_color(255, 127, 0)
 					src.bladecolor = "O"
 				if("yellow")
-					src.update_simple_light_color(255, 255, 0)
+					light_c.set_color(255, 255, 0)
 					src.bladecolor = "Y"
 				if("green")
-					src.update_simple_light_color(0, 255, 0)
+					light_c.set_color(0, 255, 0)
 					src.bladecolor = "G"
 				if("cyan")
-					src.update_simple_light_color(0, 200, 255)
+					light_c.set_color(0, 200, 255)
 					src.bladecolor = "C"
 				if("blue")
-					src.update_simple_light_color(0, 0, 255)
+					light_c.set_color(0, 0, 255)
 					src.bladecolor = "B"
 				if("purple")
-					src.update_simple_light_color(153, 0, 255)
+					light_c.set_color(153, 0, 255)
 					src.bladecolor = "P"
 				if("pink")
-					src.update_simple_light_color(255, 121, 255)
+					light_c.set_color(255, 121, 255)
 					src.bladecolor = "Pi"
 				if("white")
-					src.update_simple_light_color(255, 255, 255)
+					light_c.set_color(255, 255, 255)
 					src.bladecolor = "W"
 			src.icon_state = "[state_name]-open-[bladecolor]"
+			var/datum/item_special/swipe/csaber/S = src.special
+			S.swipe_color = get_hex_color_from_blade(src.bladecolor)
 			return
 	else
 		return ..()
@@ -357,10 +365,64 @@
 			return
 	..()
 
+/obj/item/sword/red
+	New()
+		..()
+		src.bladecolor = "R"
+
+/obj/item/sword/orange
+	New()
+		..()
+		src.bladecolor = "O"
+
+/obj/item/sword/yellow
+	New()
+		..()
+		src.bladecolor = "Y"
+
+/obj/item/sword/green
+	New()
+		..()
+		src.bladecolor = "G"
+
+/obj/item/sword/cyan
+	New()
+		..()
+		src.bladecolor = "C"
+
+/obj/item/sword/blue
+	New()
+		..()
+		src.bladecolor = "B"
+
+/obj/item/sword/purple
+	New()
+		..()
+		src.bladecolor = "P"
+
+/obj/item/sword/pink
+	New()
+		..()
+		src.bladecolor = "Pi"
+
+/obj/item/sword/white
+	New()
+		..()
+		src.bladecolor = "W"
+
+/obj/item/sword/rainbow
+	New()
+		..()
+		src.bladecolor = null
+
 /obj/item/sword/vr
 	icon = 'icons/effects/VR.dmi'
 	inhand_image_icon = 'icons/effects/VR_csaber_inhand.dmi'
 	valid_colors = list("R","Y","G","C","B","P","W","Bl")
+	use_glowstick = 0
+
+/obj/item/sword/old
+	icon = 'icons/obj/items/oldsaber.dmi'
 	use_glowstick = 0
 
 /obj/item/sword/discount
@@ -427,7 +489,7 @@
 	desc = "Gets the blood to run out juuuuuust right. Looks like this could be nasty when thrown."
 	burn_type = 1
 	stamina_damage = 15
-	stamina_cost = 15
+	stamina_cost = 5
 	stamina_crit_chance = 50
 	pickup_sfx = "sound/items/blade_pull.ogg"
 
@@ -555,7 +617,7 @@
 	desc = "An ancient and questionably effective weapon."
 	burn_type = 0
 	stamina_damage = 45
-	stamina_cost = 25
+	stamina_cost = 20
 	stamina_crit_chance = 60
 	// pickup_sfx = "sound/items/blade_pull.ogg"
 
@@ -580,7 +642,7 @@
 	c_flags = EQUIPPED_WHILE_HELD
 	desc = "An ancient and effective weapon. It's not just a stick alright!"
 	stamina_damage = 65
-	stamina_cost = 35
+	stamina_cost = 22
 	stamina_crit_chance = 60
 	// pickup_sfx = "sound/items/blade_pull.ogg"
 	// can_disarm = 1
@@ -805,8 +867,8 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 4
-	stamina_damage = 10
-	stamina_cost = 15
+	stamina_damage = 30
+	stamina_cost = 20
 	stamina_crit_chance = 2
 
 	proc/set_values()
@@ -816,8 +878,8 @@
 			throwforce = 20
 			throw_speed = 4
 			throw_range = 8
-			stamina_damage = 30
-			stamina_cost = 20
+			stamina_damage = 40
+			stamina_cost = 27
 			stamina_crit_chance = 5
 		else
 			src.click_delay = 10
@@ -825,9 +887,10 @@
 			throwforce = 5
 			throw_speed = 2
 			throw_range = 4
-			stamina_damage = 10
-			stamina_cost = 15
+			stamina_damage = 30
+			stamina_cost = 20
 			stamina_crit_chance = 2
+		tooltip_rebuild = 1
 		return
 
 	attack_self(mob/user as mob)
@@ -1384,7 +1447,7 @@ obj/item/whetstone
 	force = 50 // almost as good as a csaber before it builds charge
 	throwforce = 25
 	stamina_damage = 25
-	stamina_cost = 25
+	stamina_cost = 30
 	stamina_crit_chance = 15
 	pickup_sfx = "sound/items/blade_pull.ogg" // could use a cool lasery sfx
 
@@ -1443,8 +1506,8 @@ obj/item/whetstone
 	click_delay = 30
 
 	force = 25 //this number is multiplied by 4 when attacking doors.
-	stamina_damage = 10
-	stamina_cost = 20
+	stamina_damage = 60
+	stamina_cost = 30
 
 	New()
 		..()

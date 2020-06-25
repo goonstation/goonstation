@@ -88,8 +88,8 @@
 	var/level = 2
 	var/flags = FPRINT
 	var/event_handler_flags = 0
-	var/temp_flags = 0
-	var/last_bumped = 0
+	var/tmp/temp_flags = 0
+	var/tmp/last_bumped = 0
 	var/shrunk = 0
 	var/texture_size = 0  //Override for the texture size used by setTexture.
 	var/open_to_sound = 0	//If hear_talk is triggered on this object, make my contents hear_talk as well

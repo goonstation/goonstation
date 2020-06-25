@@ -262,6 +262,8 @@ a.popt {text-decoration: none;}
 .italic, .ghostdronesay.broadcast {font-style: italic;}
 
 /* OUTPUT COLORS */
+.regular { color: #000000; }
+.internal { color: #002fff; }
 .mhelp {color: #CC0066;}
 .success {color: green;}
 .hint {color: #0000ff;}
@@ -336,17 +338,19 @@ h1.alert, h2.alert {color: #000000;}
 }
 
 /* bog-standard dark theme with easy, unsaturated colors */
-body.theme-dark { background-color: #23272a; color: #99AAB5; }
-body.theme-dark .notice { color: #677BC4; }
-body.theme-dark .hint { color: #677BC4; }
-body.theme-dark .internal { color: #677BC4; }
+body.theme-dark { background-color: #23272a; color: #dfdfcf; }
+body.theme-dark .regular { color: #dfdfcf; }
+body.theme-dark .mhelp {color: #e75ae0;}
+body.theme-dark .notice { color: #7996ff; }
+body.theme-dark .hint { color: #7996ff; }
+body.theme-dark .internal { color: #92b4ff; }
 body.theme-dark .alert { color: #FF6D6D; }
 body.theme-dark .system { color: #FF6D6D; }
 body.theme-dark .success { color: #92E592; }
 body.theme-dark .emote { color: #888888; }
 body.theme-dark .subtle { color: #7A7471; }
-body.theme-dark .ooc {color: #466ad6;}
-body.theme-dark .looc {color: #6784dd;}
+body.theme-dark .ooc {color: #688eff;}
+body.theme-dark .looc {color: #92a9ee;}
 body.theme-dark .adminooc {color: #be6e53;}
 body.theme-dark .adminlooc {color: #ce8c76;}
 body.theme-dark .mentorooc {color: #a653ff;}
@@ -393,7 +397,7 @@ body.theme-dark .adminMsgWrap {color: #cb79d4;}
 body.theme-dark .gfartooc {color: #60c4e6;}
 body.theme-dark .gfartlooc {color: #92cbdf;}
 body.theme-dark .gfartadmin {color: #c2953c;}
-body.theme-dark .combat {color: #ff0000;}
+body.theme-dark .combat {color: #e20000;}
 body.theme-dark .blobsay {color: #4ec44e;}
 body.theme-dark .deadsay {color: #b27eff;}
 body.theme-dark .hivesay {color: #e2a059;}
@@ -422,7 +426,7 @@ body.theme-dark .rintercom {color: #4dc1c9;}
 body.theme-dark .rcommand {color: #7ca6d6;}
 body.theme-dark .rsecurity {color: #e43535;}
 body.theme-dark .rengineering {color: #dda448;}
-body.theme-dark .rmedical {color: #8652ca;}
+body.theme-dark .rmedical {color: #ac83e2;}
 body.theme-dark .rresearch {color: #3f69ac;}
 body.theme-dark .rcivilian {color: #ce45b2;}
 body.theme-dark .rsyndicate {color: #cf5757;}

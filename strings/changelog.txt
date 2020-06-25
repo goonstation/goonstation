@@ -1,9 +1,113 @@
 
+(t)wed jun 24 20
+(u)Comradef191
+(p)728
+(e)🆕🗺|feature, mapping
+(*)Added some additional items to the Cog1 armory; an EOD suit, a N2O canister, a tranq crate, and a box of stinger grenades.
+(u)zjdtmkhzt
+(p)1192
+(e)⚖|balance
+(*)Changed the Rathen's Secret wizard spell to only delimb if you have no arse. It also now always removes exactly one randomly chosen limb in that case.
+(u)Sovexe and UrsulaMajor
+(p)1202
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added pilot's seat to all escape shuttles. Being buckled into this seat when the round ends grants a pilot's bonus in the form of additional spacebux earnings.
+(u)Sovexe
+(p)1210
+(e)🐛|bug
+(+)The Oshan carousel now correctly routes packages to the north and south delivery zones.
+(u)kyle
+(p)1190
+(e)🆕|feature
+(+)Clicking an item with an item storage container attempts to place it in the storage item.
+(t)tue jun 23 20
+(u)Flaborized
+(p)1181
+(e)🎨|sprites
+(+)Resprited SKULLS.
+(u)glassofmilk
+(p)1184
+(e)🆕|feature
+(+)Nav beacons now respond to wireless pings.
+(t)mon jun 22 20
+(u)Flaborized
+(p)1161
+(e)🎨|sprites
+(+)Resprited the cyalume saber.
+(u)UrsulaMajor
+(p)1187
+(e)|
+(*)Blob Ribosomes now produce biopoints for the blob, making them much more important for the crew to target.
+(u)Awkward Dryad
+(p)1169
+(e)🆕🎨|feature, sprites
+(*)Added go board to card vendors
+(t)sun jun 21 20
+(u)UrsulaMajor
+(p)1172
+(e)🗺|mapping
+(+)The Cairngorm now has an office for its commander, as well as a pirate radio station!
+(u)mbc
+(p)1160
+(e)⚖|balance
+(+)Disarming someone does a bit of stamina damage to them.
+(u)UrsulaMajor
+(p)1159
+(e)⚖|balance
+(+)Blobs no longer need to make ribosomes to mitigate the blob size spread speed slowdown.
+(u)zjdtmkhzt
+(p)1151
+(e)⚖🐛|balance, bug
+(+)Pathogens can now be cured via just keeping it suppressed in the patient. This change will be explained in more detail if pathology is ever reenabled, which it is not!
+(t)sat jun 20 20
+(u)glassofmilk
+(p)1088
+(e)🆕|feature
+(+)Clone scans now use the computer file system instead of being a property of floppy disks.
+(u)Moonlol & F191 & RichardGere & Rybek & Enakai & Pali
+(p)517
+(e)🆕🎨|feature, sprites
+(*)Added flock gamemode and antag setting. FLOCK IS NOT IN THE SECRET ROTATION.
+(*)Flockminds now use a rift structure instead of a single egg when starting.
+(*)Flock nanite spray harm intent added.
+(+)Flockdrone ai will butcher dead drones.
+(+)Added a number of flock examinations to flock items.
+(+)Rift sprite by Enakai. Resource cube sprite by Pali.
+(u)mbc
+(p)1157
+(e)|
+(*)Rebalanced stamina damage of lots of items - fixes many cases where an item would consume more stamina than it was dealing! (subject to further adjustment pending testing)
+(*)Tooltips have more clarity about stamina consumption and throw force
+(u)mbc
+(p)1153
+(e)|
+(+)Automenders will ramp up their healing more slowly over time (instead of 1 cycle to reach max, now it's 7 cycles and the healing amount will increase each cycle from 1 - 6).
+(+)Thrown items can cancel progress bars that were normally interrupted by only melee attacks now. This affects the mender, for example.
+(t)fri jun 20 20
+(u)UrsulaMajor
+(e)🆕|feature
+(*)Thank you for participating in Urs Dungeon 5: Shitty Bill Is Missing! The dungeon is now available to the public outside of ass jam, but its prize has been removed.
 (t)fri jun 19 20
+(u)Kubius
+(p)1122
+(e)🗺|mapping
+(+)Adjustments to the southern region of Oshan Laboratory, primarily centered around Security by the maintenance side.
+(u)Mordent
+(p)1132
+(e)🆕|feature
+(*)OOC channel disabled mid-round on RP server
+(u)AwkwardDryad
+(p)347
+(e)|
+(+)Fixed tons of clothing booth bugs :D
+(u)Kubius
+(p)1133
+(e)🗺|mapping
+(+)Kondaru tweaks, including a rockbox and a cleaner AI perimeter.
 (u)pali
 (p)1130
 (e)🆕|feature
-(*)Added full dark mode and other related options. Check Game->Window in the top bar. For the true dark mode experience turn on all the buttons and also CHUI and custom CHUI frames if they don't break the game for you.
+(*)Added full dark mode and other related options. Check Display->Window in the top bar. For the true dark mode experience turn on all the buttons and also CHUI and custom CHUI frames if they don't break the game for you.
 (t)thu jun 18 20
 (u)mbc
 (*)BYOND 513 is no longer in beta. Please upgrade to the latest STABLE version - includes some fixes like eliminating the right-click lag again.

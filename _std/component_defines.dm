@@ -79,6 +79,8 @@
 // mob signals
 ///At the beginning of when an attackresults datum is being set up
 #define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
+//When a mob dies
+#define COMSIG_MOB_DEATH "mob_death"
 
 
 // projectile signals

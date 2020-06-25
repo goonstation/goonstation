@@ -787,7 +787,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 	stamina_damage = 15
-	stamina_cost = 15
+	stamina_cost = 8
 	stamina_crit_chance = 10
 
 /obj/effect/boommarker
@@ -1315,7 +1315,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (random_events.announce_events)
 				command_alert("Communication link has been established with Oshan Laboratory through backkup channel. Communications should be restored to normal aboard NSS Manta.", "Communications Restored")
 			else
-				message_admins("<span class='notice'>Manta Comms event ceasing.</span>")
+				message_admins("<span class='internal'>Manta Comms event ceasing.</span>")
 
 
 /datum/random_event/major/electricmalfunction

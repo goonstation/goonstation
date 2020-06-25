@@ -236,7 +236,7 @@
 	if (isbanned)
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
 		logTheThing("diary", null, src, "Failed Login: %target% - Banned", "access")
-		if (announce_banlogin) message_admins("<span class='notice'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
+		if (announce_banlogin) message_admins("<span class='internal'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
 		SPAWN_DBG(0)
 			var/banstring = {"
 								<!doctype html>
@@ -272,29 +272,24 @@
 	SPAWN_DBG(rand(4,18))
 		if(proxy_check(src.address))
 			logTheThing("diary", null, src, "Failed Login: %target% - Using a Tor Proxy Exit Node", "access")
-			if (announce_banlogin) message_admins("<span class='notice'>Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
+			if (announce_banlogin) message_admins("<span class='internal'>Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
 			boutput(src, "You may not connect through TOR.")
 			SPAWN_DBG(0) del(src)
 			return
 */
 	//admins and mentors can enter a server through player caps.
-	var/ignore_player_cap = 0
 	if (init_admin())
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
-		control_freak = 0	// heh
-		ignore_player_cap = 1
 	else if (player.mentor)
 		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
 		if (!src.holder)
 			src.verbs += /client/proc/toggle_mentorhelps
-		ignore_player_cap = 1
-
-	if(!ignore_player_cap && player_capa)
-		if(total_clients() >= player_cap)
-			if (!src.holder)
-				alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
-				del(src)
-				return
+	else if (player_capa && (total_clients() >= player_cap) && (src.ckey in bypassCapCkeys))
+		boutput(src, "<span class='ooc mentorooc'>The server is full, but you are allowed to bypass the player cap!</span>")
+	else if(player_capa && (total_clients() >= player_cap) && !src.holder)
+		alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
+		del(src)
+		return
 
 	if (join_motd)
 		boutput(src, "<div class=\"motd\">[join_motd]</div>")
@@ -314,9 +309,7 @@
 	SPAWN_DBG(0) // to not lock up spawning process
 		if (IsGuestKey(src.key))
 			src.has_contestwinner_medal = 0
-		else if (!config)
-			src.has_contestwinner_medal = 0
-		else if (!config.medal_hub || !config.medal_password)
+		else if (!config || !config.medal_hub || !config.medal_password)
 			src.has_contestwinner_medal = 0
 		else
 			src.has_contestwinner_medal = world.GetMedal("Too Cool", src.key, config.medal_hub, config.medal_password)
@@ -378,19 +371,18 @@
 				src.cmd_ass_day_rules()
 
 
-			if (src.byond_version < 513 || src.byond_build < 1500)
-				if (alert(src, "Please update BYOND to version 513! Would you like to be taken to the download page? Make sure to download the beta and not the stable release.", "ALERT", "Yes", "No") == "Yes")
+			if (src.byond_version < 513 || src.byond_build < 1526)
+				if (alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", "Yes", "No") == "Yes")
 					src << link("http://www.byond.com/download/")
 				else
 					alert(src, "You won't be able to play without updating, sorry!")
 					del(src)
 					return
 
-
-			// if (src.byond_build == 1509)	//MBC : BAD CODE TO BANDAID A BROKEN BYOND THING. REMOVE THIS AS SOON AS LUMMOX FIXES  //ZeWaka: PART 2 BOOGALOOO
-			// 	if (alert(src, "Warning! The version of BYOND you are running (513.1509) is bugged. This is bad! Would you like a link to a .zip of the last working version?", "ALERT", "Yes", "No") == "Yes")
-			// 		src << link("http://www.byond.com/download/build/513/513.1510_byond.zip")
-
+// Let's throw it here, why not! -ZeWaka
+#if DM_BUILD < 1526 && !defined(SPACEMAN_DMM)
+#error Please update your BYOND version to the latest stable release.
+#endif
 
 		else
 			if (noir)
@@ -522,6 +514,8 @@
 
 	src.reputations = new(src)
 
+	if(src.holder && src.holder.level >= LEVEL_CODER)
+		src.control_freak = 0
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
 
@@ -540,8 +534,6 @@
 		onlineAdmins |= (src)
 		if (!NT.Find(src.ckey))
 			NT.Add(src.ckey)
-		if(src.holder.rank in list("Host", "Coder"))
-			control_freak = 0
 		return 1
 
 	return 0
@@ -831,7 +823,7 @@ var/global/curr_day = null
 					if (C.player_mode && !C.player_mode_ahelp)
 						continue
 					else
-						boutput(K, "<font color='blue'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</font>")
+						boutput(K, "<span class='internal'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</span>")
 
 		if ("priv_msg")
 			do_admin_pm(href_list["target"], usr) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.

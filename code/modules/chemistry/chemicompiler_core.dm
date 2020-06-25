@@ -281,7 +281,7 @@
 		return
 	if(running)
 		var/loopUsed
-		for (loopUsed = 0, loopUsed < 100, loopUsed++)
+		for (loopUsed = 0, loopUsed < 30, loopUsed++)
 			if(ip > currentProg.len)
 				running = 0
 				break
@@ -346,16 +346,12 @@
 				if("'")
 					ax = data[dp + 1]
 				if("$") //heat
-					loopUsed = 100
+					loopUsed = 30
 					var/heatTo = (273 - tx) + ax
 					heatReagents(sx, heatTo)
 				if("@") //transfer
-					loopUsed = min(100,loopUsed+(100/maxExpensiveOperations)-1)
-					var/sxt = sx // storing these by value for queued actions
-					var/txt = tx
-					var/axt = ax
-					SPAWN_DBG(loopUsed/5)
-						transferReagents(sxt, txt, axt)
+					loopUsed = 30
+					transferReagents(sx, tx, ax)
 				/*if("?") //compare *ptr to sx, using operation tx, store result in ax
 					switch(tx)
 						if(0) // =
@@ -373,13 +369,8 @@
 						else
 							ax = 0*/
 				if("#") //move individual reagent from container
-					loopUsed = min(100,loopUsed+(100/maxExpensiveOperations)-1)
-					var/sxt = sx
-					var/txt = tx
-					var/axt = ax
-					var/datat = data[dp+1]
-					SPAWN_DBG(loopUsed/5)
-						isolateReagent(sxt, txt, axt, datat)
+					loopUsed = 30
+					isolateReagent(sx, tx, ax, data[dp+1])
 				else
 
 			if(data.len < dp + 1)

@@ -107,9 +107,9 @@ var/global/mob/twitch_mob = 0
 				admins[m_key] = a_lev
 				diary << ("ADMIN: [m_key] = [a_lev]")
 
-/world/proc/load_whitelist()
+/world/proc/load_whitelist(fileName = "strings/whitelist.txt")
 	set background = 1
-	var/text = file2text("strings/whitelist.txt")
+	var/text = file2text(fileName)
 	if (!text)
 		return
 	else
@@ -122,6 +122,24 @@ var/global/mob/twitch_mob = 0
 				continue
 
 			whitelistCkeys += line
+			diary << ("WHITELIST: [line]")
+
+
+/world/proc/load_playercap_bypass()
+	set background = 1
+	var/text = file2text("strings/allow_thru_cap.txt")
+	if (!text)
+		return
+	else
+		var/list/lines = splittext(text, "\n")
+		for(var/line in lines)
+			if (!line)
+				continue
+
+			if (copytext(line, 1, 2) == "#")
+				continue
+
+			bypassCapCkeys += line
 			diary << ("WHITELIST: [line]")
 
 // dsingh for faster create panel loads
@@ -215,8 +233,6 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << "========================================"
 		world.log << ""
 
-		serverKey = (world.port % 1000) / 100
-
 		Z_LOG_DEBUG("Preload", "Loading config...")
 		config = new /datum/configuration()
 		config.load("config/config.txt")
@@ -225,6 +241,8 @@ var/f_color_selector_handler/F_Color_Selector
 			var/specific_config = "config/config-[world.port].txt"
 			if (fexists(specific_config))
 				config.load(specific_config)
+
+		serverKey = config.server_key ? config.server_key : (world.port % 1000) / 100
 
 		if (config.allowRotatingFullLogs)
 			roundLog << "========================================<br>"
@@ -445,6 +463,8 @@ var/f_color_selector_handler/F_Color_Selector
 	src.load_admins()//UGH
 	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
 	src.load_whitelist() //WHY ARE WE UGH-ING
+	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
+	src.load_playercap_bypass()
 
 	Z_LOG_DEBUG("World/Init", "Starting input loop")
 	start_input_loop()
@@ -652,7 +672,7 @@ var/f_color_selector_handler/F_Color_Selector
 		for (var/client/C)
 			if (C.mob)
 				if (prob(40))
-					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg'))
+					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/TimeForANewRound.ogg'))
 				else
 					C.mob << sound('sound/misc/NewRound.ogg')
 
@@ -1483,7 +1503,7 @@ var/f_color_selector_handler/F_Color_Selector
 					game_end_delayer = plist["nick"]
 					logTheThing("admin", null, null, "[game_end_delayer] delayed the server restart from Discord.")
 					logTheThing("diary", null, null, "[game_end_delayer] delayed the server restart from Discord.", "admin")
-					message_admins("<span class='notice>[game_end_delayer] delayed the server restart from Discord.</span>")
+					message_admins("<span class='internal>[game_end_delayer] delayed the server restart from Discord.</span>")
 					ircmsg["msg"] = "Server restart delayed. Use undelay to cancel this."
 				else
 					ircmsg["msg"] = "The server restart is already delayed, use undelay to cancel this."
@@ -1502,7 +1522,7 @@ var/f_color_selector_handler/F_Color_Selector
 					game_end_delayer = plist["nick"]
 					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from Discord.")
 					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from Discord.", "admin")
-					message_admins("<span class='notice>[game_end_delayer] removed the restart delay from Discord.</span>")
+					message_admins("<span class='internal>[game_end_delayer] removed the restart delay from Discord.</span>")
 					game_end_delayer = null
 					ircmsg["msg"] = "Removed the restart delay."
 					return ircbot.response(ircmsg)
@@ -1511,7 +1531,7 @@ var/f_color_selector_handler/F_Color_Selector
 					game_end_delayer = plist["nick"]
 					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.")
 					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.", "admin")
-					message_admins("<span class='notice>[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.</span>")
+					message_admins("<span class='internal>[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.</span>")
 					ircmsg["msg"] = "Removed the restart delay."
 
 					SPAWN_DBG(1 DECI SECOND)
