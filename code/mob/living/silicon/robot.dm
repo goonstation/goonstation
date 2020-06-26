@@ -2428,6 +2428,11 @@
 					eyesovl.Blend(rgb(C.fx[1], C.fx[2], C.fx[3]), ICON_ADD)
 					i_head.overlays += image("icon" = eyesovl, "layer" = FLOAT_LAYER)
 
+					var/image/eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
+					eye_light.color = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5)
+					eye_light.plane = PLANE_LIGHTING
+					src.UpdateOverlays(eye_light, "eye_light")
+
 		if(part == "chest" || update_all)
 			if (src.part_chest && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				src.icon_state = "body-" + src.part_chest.appearanceString

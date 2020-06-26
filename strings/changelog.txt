@@ -1,5 +1,9 @@
 
 (t)fri jun 26 20
+(u)pali
+(p)1235
+(e)🆕|feature
+(*)Cyborg eyes now glow in the dark.
 (u)Carbadox
 (p)1176
 (e)🆕|feature
