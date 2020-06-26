@@ -8,36 +8,6 @@ git:
 jobs:
   include:
 
-    - name: "Run Linters"
-      addons:
-        apt:
-          packages:
-            - rustc
-            - cargo
-      cache:
-        directories:
-          - $HOME/SpacemanDMM
-      install:
-        - tools/ci/install_spaceman_dmm.sh dreamchecker
-        - touch +secret/__secret.dme
-      script:
-        - ~/dreamchecker
-
-    - name: "Compile"
-      addons:
-        apt:
-          packages:
-            - libstdc++6:i386
-      cache:
-        directories:
-          - $HOME/BYOND
-      install:
-        - tools/ci/install_byond.sh
-        - source $HOME/BYOND/byond/bin/byondsetup
-        - touch +secret/__secret.dme
-      script:
-        - tools/ci/dm.sh -DTRAVISBUILDING goonstation.dme
-
     - name: "Compile for Ass Jam"
       addons:
         apt:
