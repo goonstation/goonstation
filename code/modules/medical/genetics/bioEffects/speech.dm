@@ -631,7 +631,7 @@
 
 /datum/bioEffect/speech/scoob
 	name = "Frontal Gyrus Alteration Type-SD"
-	desc = "Forces the language center of the subject's brain to bark out sentances like a dog."
+	desc = "Forces the language center of the subject's brain to bark out sentences like a dog."
 	id = "accent_scoob"
 	effectType = effectTypeDisability
 	isBad = 1

@@ -523,6 +523,13 @@
 			mob.update_body()
 			mob.update_clothing()
 
+//			M.bioHolder.AddEffect("accent_scoob")
+//			
+//	disposing()
+//		if(ishuman(mob))
+//			mob.bioHolder.RemoveEffect("accent_scoob")
+//		..()
+
 	proc/fix_colors(var/hex)
 		var/list/L = hex_to_rgb_list(hex)
 		for (var/i in L)

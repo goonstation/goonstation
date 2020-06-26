@@ -2065,11 +2065,11 @@ var/list/zalgo_mid = list(
 				used = 4
 
 		if("b")
-				new_string = "brh"	// brhutt
-				used = 3
+			new_string = "brh"	// brhutt
+			used = 3
 		if("B")
-				new_string = "Brh"	// Brhutt
-				used = 3
+			new_string = "Brh"	// Brhutt
+			used = 3
 
 		if("c")
 			if(R.next_char == "e" || R.next_char == "i" || R.next_char == "y" ) // Soft "C"
@@ -2138,11 +2138,11 @@ var/list/zalgo_mid = list(
 				used = 3
 
 		if("j")
-				new_string = "rrhr"
-				used = 4
+			new_string = "rrhr"
+			used = 4
 		if("J")
-				new_string = "Rrhr"
-				used = 4
+			new_string = "Rrhr"
+			used = 4
 
 		if("k")
 			if(R.prev_char == "")	// First "k" in a word
@@ -2167,7 +2167,7 @@ var/list/zalgo_mid = list(
 			if(lowertext(R.next_char) == "l")		// "ll" - hello = herghlo
 				new_string = "rghl"
 				used = 4
-			else if(R.prev_char) == "")				// first "l" of a word - lightly = wrightly
+			else if(R.prev_char == "")				// first "l" of a word - lightly = wrightly
 				new_string = "wr"
 				used = 2
 			else
@@ -2177,7 +2177,7 @@ var/list/zalgo_mid = list(
 			if(lowertext(R.next_char) == "l")		// "ll" - hello = herghlo
 				new_string = "Rghl"
 				used = 4
-			else if(R.prev_char) == "")				// first "l" of a word - lightly = wrightly
+			else if(R.prev_char == "")				// first "l" of a word - lightly = wrightly
 				new_string = "Wr"
 				used = 2
 			else
@@ -2305,11 +2305,11 @@ var/list/zalgo_mid = list(
 				used = 1
 
 		if("w")
-				new_string = "wr"		// w = wr
-				used = 2
+			new_string = "wr"		// w = wr
+			used = 2
 		if("W")
-				new_string = "Wr"		// w = wr
-				used = 2
+			new_string = "Wr"		// w = wr
+			used = 2
 
 		if("z")
 			if(R.prev_char == "")		// First "z" of a word
