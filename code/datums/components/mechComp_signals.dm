@@ -57,14 +57,14 @@
 
 //Adds an input "slot" to the holder /w a proc mapping.
 /datum/component/mechanics_holder/proc/addInput(var/name, var/toCall)
-	if(inputs.Find(name)) inputs.Remove(name)
+	if(name in inputs) inputs.Remove(name)
 	inputs.Add(name)
 	inputs[name] = toCall
 	return
 
 //Fire given input by names with the message as argument.
 /datum/component/mechanics_holder/proc/fireInput(var/name, var/datum/mechanicsMessage/msg)
-	if(!inputs.Find(name)) return
+	if(!(name in inputs)) return
 	var/path = inputs[name]
 	SPAWN_DBG(1 DECI SECOND) call(master, path)(msg)
 	return
@@ -80,11 +80,11 @@
 
 	var/fired = 0
 	for(var/atom/M in connected_outgoing)
-		// if(M.mechanics)
-		//     if (filtered && outgoing_filters[M] && !allowFiltered(msg.signal, outgoing_filters[M]))
-		//         continue
-		//     M.mechanics.fireInput(connected_outgoing[M], cloneMessage(msg))
-		//     fired = 1
+		//	if(M.mechanics)
+		//		if (filtered && outgoing_filters[M] && !allowFiltered(msg.signal, outgoing_filters[M]))
+		//			continue
+		//		M.mechanics.fireInput(connected_outgoing[M], cloneMessage(msg))
+		//		fired = 1
 		if (filtered && outgoing_filters[M] && !allowFiltered(msg.signal, outgoing_filters[M]))
 			continue
 		SEND_SIGNAL(M, COMSIG_MECHCOMP_RECEIVE_MSG, cloneMessage(msg))
@@ -143,66 +143,54 @@
 	outgoing_filters.Remove(M)
 	return
 
-
 //Called when a component is dragged onto another one.
 /datum/component/mechanics_holder/proc/dropConnect(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)//MarkNstein needs attention
-	if(!O || O == master || !O.mechanics) return //ZeWaka: Fix for null.mechanics
+	if(!O || O == master || !O.mechanics) return //ZeWaka: Fix for null.mechanics //MarkNstein needs attention
 
 	var/typesel = input(usr, "Use [master] as:", "Connection Type") in list("Trigger", "Receiver", "*CANCEL*")
-	if(typesel == "*CANCEL*") return
 	switch(typesel)
-
 		if("Trigger")
-			if(O.mechanics.connected_outgoing.Find(master))
-				boutput(usr, "<span class='alert'>Can not create a direct loop between 2 components.</span>")
-				return
-
-			if(O.mechanics.inputs.len)
-				var/selected_input = input(usr, "Select \"[O]\" Input", "Input Selection") in O.mechanics.inputs + "*CANCEL*"
-				if(selected_input == "*CANCEL*") return
-				connected_outgoing.Add(O)
-				connected_outgoing[O] = selected_input
-				O.mechanics.connected_incoming.Add(master)
-				boutput(usr, "<span class='success'>You connect the [master.name] to the [O.name].</span>")
-				logTheThing("station", usr, null, "connects a <b>[master.name]</b> to a <b>[O.name]</b> at [log_loc(src_location)].")
-				if (filtered)
-					var/filter = input(usr, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
-					if (length(filter))
-						if (!outgoing_filters[O]) outgoing_filters[O] = list()
-						outgoing_filters.Add(O)
-						outgoing_filters[O] = splittext(filter, ",")
-						boutput(usr, "<span class='success'>Only passing messages that [exact_match ? "match" : "contain"] [filter] to the [O.name]</span>")
-					else
-						boutput(usr, "<span class='success'>Passing all messages to the [O.name]</span>")
-			else
-				boutput(usr, "<span class='alert'>[O] has no input slots. Can not connect [master] as Trigger.</span>")
-
+			SEND_SIGNAL(O, COMSIG_MECHCOMP_LINK, parent) //MarkNstein needs attention
 		if("Receiver")
-			if(O.mechanics.connected_incoming.Find(master))
-				boutput(usr, "<span class='alert'>Can not create a direct loop between 2 components.</span>")
-				return
-
-			if(inputs.len)
-				var/selected_input = input(usr, "Select \"[master]\" Input", "Input Selection") in inputs + "*CANCEL*"
-				if(selected_input == "*CANCEL*") return
-				O.mechanics.connected_outgoing.Add(master)
-				O.mechanics.connected_outgoing[master] = selected_input
-				connected_incoming.Add(O)
-				boutput(usr, "<span class='success'>You connect the [master.name] to the [O.name].</span>")
-				logTheThing("station", usr, null, "connects a <b>[master.name]</b> to a <b>[O.name]</b> at [log_loc(src_location)].")
-				if (O.mechanics.filtered)
-					var/filter = input(usr, "Add filters for this connection?(Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
-					if(length(filter))
-						if(!O.mechanics.outgoing_filters[master]) O.mechanics.outgoing_filters[master] = list()
-						O.mechanics.outgoing_filters.Add(master)
-						O.mechanics.outgoing_filters[master] = splittext(filter, ",")
-						boutput(usr, "<span class='success'>Only passing messages that [O.mechanics.exact_match ? "match" : "contain"] [filter] to the [master.name]</span>")
-					else
-						boutput(usr, "<span class='success'>Passing all messages to the [O.name]</span>")
-			else
-				boutput(usr, "<span class='alert'>[master] has no input slots. Can not connect [O] as Trigger.</span>")
-
+			link(O) //What do you want, an invitation? No signal needed!
 		if("*CANCEL*")
 			return
+	return
+
+//We are in the scope of the receiver-component, our argument is the trigger
+//This feels weird/backwards, but it results in fewer SEND_SIGNALS & var/lists
+/datum/component/mechanics_holder/proc/link(obj/trigger)
+	var/obj/receiver = parent
+	if(trigger in connected_outgoing)
+		boutput(usr, "<span class='alert'>Can not create a direct loop between 2 components.</span>")
+		return
+	if(!inputs.len)
+		boutput(usr, "<span class='alert'>[receiver.name] has no input slots. Can not connect [trigger.name] as Trigger.</span>")
+		return
+	
+	var/list/trg_outgoing
+	SEND_SIGNAL(trigger, COMSIG_MECHCOMP_GET_OUTGOING, trg_outgoing) //MarkNstein needs attention
+	var/selected_input = input(usr, "Select \"[receiver.name]\" Input", "Input Selection") in inputs + "*CANCEL*"
+	if(selected_input == "*CANCEL*") return
+
+	trg_outgoing.Add(receiver)
+	trg_outgoing[receiver] = selected_input
+	connected_incoming.Add(trigger)
+	boutput(usr, "<span class='success'>You connect the [trigger.name] to the [receiver.name].</span>")
+	logTheThing("station", usr, null, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
+	SEND_SIGNAL(trigger, COMSIG_MECHCOMP_SET_FILTERS, receiver) //MarkNstein needs attention
+	return
+
+//We are in the scope of the trigger-component
+/datum/component/mechanics_holder/proc/set_filters(obj/receiver)
+	if (filtered)
+		var/filter = input(usr, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
+		if (length(filter))
+			if (!outgoing_filters[receiver]) outgoing_filters[receiver] = list()
+			outgoing_filters.Add(receiver)
+			outgoing_filters[receiver] = splittext(filter, ",")
+			boutput(usr, "<span class='success'>Only passing messages that [exact_match ? "match" : "contain"] [filter] to the [receiver.name]</span>")
+		else
+			boutput(usr, "<span class='success'>Passing all messages to the [receiver.name]</span>")
 	return
 
