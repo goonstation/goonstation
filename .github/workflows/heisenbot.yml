@@ -1,7 +1,7 @@
-# Heisenbee, Goonstation's replacement for a CI handler like Travis
+# Heisenbot, Goonstation's replacement for a CI handler like Travis
 # Based on Turdis by Yogstation
 
-name: Heisenbee
+name: Heisenbot
 
 on:
   pull_request:
@@ -10,10 +10,6 @@ on:
     branches:
       - master
       - feature/ci-using-githubactions
-
-env:
-  GIT_EMAIL: "67447363+Heisenbee-Goonstation@users.noreply.github.com"
-  GIT_NAME: "Heisenbee"
 
 jobs:
   lint:
@@ -56,6 +52,7 @@ jobs:
           linter_output_path: 'output-annotations.txt'
           commit_sha: ${{ github.event.pull_request.head.sha }}
           regex: '(?<filename>.*?), line (?<lineNumber>\d+), column (?<columnNumber>\d+):\n(?<errorCode>\w+): (?<errorDesc>.*)'
+        if: always()
 
   compile:
     name: Compile
