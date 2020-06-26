@@ -284,7 +284,7 @@
 
 /turf/simulated/wall/auto/jen
 	icon = 'icons/turf/walls_jen.dmi'
-	light_mod = "wall-"
+	light_mod = "wall-jen-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
 	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
@@ -324,7 +324,7 @@
 
 /turf/simulated/wall/auto/reinforced/jen
 	icon = 'icons/turf/walls_jen.dmi'
-	light_mod = "wall-"
+	light_mod = "wall-jen-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
 	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
