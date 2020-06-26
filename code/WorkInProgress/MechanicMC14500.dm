@@ -99,7 +99,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 
 		SPAWN_DBG(0)
 			for (var/i = INSTRUCTIONS_PER_PROCESS, i > 0, i--)
-				if (!running || !level)
+				if (!running || !level || disposed)
 					break
 
 				program_counter %= .

@@ -17706,7 +17706,7 @@
 	},
 /obj/table/reinforced/chemistry/auto,
 /obj/decal/poster/wallsign/poster_ptoe{
-	step_y = 32
+	pixel_y = 32
 	},
 /obj/item/device/reagentscanner,
 /obj/item/device/reagentscanner,
@@ -32388,7 +32388,7 @@
 	},
 /obj/machinery/chem_master,
 /obj/decal/poster/wallsign/poster_ptoe{
-	step_y = 32
+	pixel_y = 32
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 5
@@ -48746,7 +48746,7 @@
 	dir = 4
 	},
 /obj/decal/poster/wallsign/hazard_exheat{
-	step_y = 32
+	pixel_y = 32
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{

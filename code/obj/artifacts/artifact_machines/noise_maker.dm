@@ -36,7 +36,7 @@
 		src.sound_pitch /= 10
 		if(prob(10))
 			src.sound_pitch /= 10
-		src.volume = pick(prob(10);10, prob(20);30, prob(40);80, prob(20); 100, prob(10);200)
+		src.volume = pick(prob(25);20, prob(50);30, 40, prob(25);50)
 		src.extrarange = (200 - volume)/2 + rand(-20, 20)
 		if(prob(40))
 			src.extrarange = -10

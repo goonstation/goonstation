@@ -15584,10 +15584,7 @@
 /obj/storage/crate,
 /obj/item/storage/box/beakerbox,
 /obj/item/device/reagentscanner,
-/obj/item/clothing/glasses/spectro{
-	step_x = 0;
-	step_y = 0
-	},
+/obj/item/clothing/glasses/spectro,
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/machinery/light/small{
 	dir = 8;

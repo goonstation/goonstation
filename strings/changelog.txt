@@ -1,5 +1,12 @@
 
+(t)fri jun 26 20
+(u)Sovexe
+(p)1223
+(e)🔄|rework
+(+)Significantly reduced the loudness of noise maker artifacts.
 (t)wed jun 24 20
+(u)mbc
+(+)Improved performance of the APC search function (stops an AI in the trench or other large areas from lagging the game).
 (u)Comradef191
 (p)728
 (e)🆕🗺|feature, mapping

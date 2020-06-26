@@ -641,7 +641,7 @@ var/list/electiles = list()
 
 	outer:
 		for(var/area/A as area in world) //Might want to do this manually instead.
-			if(A.type == /area)
+			if(area_space_nopower(A))
 				continue
 
 			for(var/X in ignoreAreas)
