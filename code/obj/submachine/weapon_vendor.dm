@@ -8,6 +8,9 @@
 	- Vendor
 	- Materiel
 	- Requisition tokens
+
+	Coder note: This is all stolen/based upon the Discount Dan's GTM, so my code crimes are really the fault of whoever made those. Thanks and god bless.
+
 */
 
 /obj/submachine/weapon_vendor
@@ -42,7 +45,7 @@
 		materiel_stock += new/datum/materiel/loadout/engineer
 		materiel_stock += new/datum/materiel/loadout/marksman
 
-		materiel_stock += new/datum/materiel/storage/backpack
+		materiel_stock += new/datum/materiel/storage/rucksack
 		materiel_stock += new/datum/materiel/storage/belt
 		materiel_stock += new/datum/materiel/storage/satchel
 
@@ -67,7 +70,7 @@
 
 		src.add_dialog(user)
 		var/dat = "<span style=\"inline-flex\">"
-		dat += "<br><b>Current balance:</b> <font color='blue'>[src.current_sidearm_credits] sidearm credit, [src.current_loadout_credits] loadout credit, [src.current_storage_credits] storage credit.</font>"
+		dat += "<br><b>Balance remaining:</b> <font color='blue'>[src.current_sidearm_credits] sidearm credit, [src.current_loadout_credits] loadout credit, [src.current_storage_credits] storage credit.</font>"
 
 		if (src.temp)
 			dat += src.temp
@@ -84,7 +87,7 @@
 		src.add_dialog(usr)
 
 		if(href_list["redeem"])
-			src.temp = "<br>Please select the materiel that you wish to spend your requisition tokens on:<br><br>"
+			src.temp = "<br>Please select the materiel that you wish to spend your credits on:<br><br>"
 
 			src.temp += {"
 			<style>
@@ -166,7 +169,7 @@
 	name = "Predator Revolver"
 	path = /obj/item/storage/belt/revolver
 	catagory = "Sidearm"
-	description = "A gun-belt containing a hefty combat revolver and 2 .357 caliber speedloaders."
+	description = "A gun-belt containing a hefty combat revolver and two .357 caliber speedloaders."
 
 /datum/materiel/loadout/assault
 	name = "Assault Trooper"
@@ -243,8 +246,8 @@
 // Requisition tokens
 
 /obj/item/requisition_token
-	name = "Requisition token"
-	desc = "It's a ticket."
+	name = "requisition token"
+	desc = "A Syndicate credit card charged with currency compatible with the Syndicate Weapons Vendor."
 	icon = 'icons/obj/discountdans.dmi'
 	icon_state = "golden"
 	w_class = 1.0
