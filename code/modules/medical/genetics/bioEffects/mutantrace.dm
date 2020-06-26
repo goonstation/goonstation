@@ -180,5 +180,5 @@
 	mutantrace_option = "doggo"
 	mutantrace_path = /datum/mutantrace/doggo
 	msgGain = "You feel like your own best friend."
-	msgLose = "Your fur falls out!"
+	msgLose = "Your fur falls out."
 	icon_state  = "doggo"
