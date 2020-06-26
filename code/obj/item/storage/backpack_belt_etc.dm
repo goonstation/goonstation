@@ -139,23 +139,26 @@
 		if (!ismob(loc))
 			return 0
 
+
+
 	MouseDrop(obj/over_object as obj, src_location, over_location)
 		var/mob/M = usr
-		if (!istype(over_object, /obj/screen))
+		if (istype(over_object,/obj/item) || istype(over_object,/mob/)) // covers pretty much all the situations we're trying to prevent; namely transferring storage and opening while on ground
 			if(!can_use())
-				boutput(M, "<span class='alert'>I need to wear [src] for that.</span>")
+				boutput(M, "<span class='alert'>You need to wear [src] for that.</span>")
 				return
 		return ..()
 
+
 	attack_hand(mob/user as mob)
 		if (src.loc == user && !can_use())
-			boutput(user, "<span class='alert'>I need to wear [src] for that.</span>")
+			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
 			return
 		return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(!can_use())
-			boutput(user, "<span class='alert'>I need to wear [src] for that.</span>")
+			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
 			return
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
