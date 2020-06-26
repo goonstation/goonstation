@@ -688,7 +688,7 @@ world/proc/updateCameraVisibility()
 		ma.layer = 100
 		ma.color = "#777777"
 		ma.dir = pick(alldirs)
-		ma.appearance_flags = TILE_BOUND | KEEP_APART
+		ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
 		ma.name = " "
 		for(var/turf/t in world)//ugh
 			if( t.z != 1 ) continue

@@ -157,7 +157,7 @@
 	PROTECTED_PROC(TRUE)
 
 	if(!C || !C.cloud_available())
-		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to fetch custom keybinds for [C.ckey] but failed.")
+		//logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to fetch custom keybinds for [C.ckey] but failed.")
 		return
 
 	var/fetched_keylist = C.cloud_get("custom_keybind_data")

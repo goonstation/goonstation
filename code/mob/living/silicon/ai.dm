@@ -435,12 +435,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.death()
 	if (src.mind)
 		var/mob/dead/observer/newmob = src.ghostize()
-		if (!newmob || !istype(newmob, /mob/dead/observer))
-			return
-		newmob.corpse = null //Otherwise they could return to a brainless body.  And that is weird.
-		newmob.mind.brain = src.brain
-		src.brain.owner = newmob.mind
-
+		if (newmob && istype(newmob, /mob/dead/observer))
+			newmob.corpse = null //Otherwise they could return to a brainless body.  And that is weird.
+			newmob.mind.brain = src.brain
+			src.brain.owner = newmob.mind
 	if (user)
 		user.put_in_hand_or_drop(src.brain)
 	else
@@ -472,12 +470,15 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 
 /mob/living/silicon/ai/proc/turn_it_back_on()
-	if (src.health >= 50 && isdead(src))
+	if (src.health >= 50 && isdead(src) && src.brain)
 		setalive(src)
-		if (src.ghost && src.ghost.mind)
-			src.ghost.show_text("<span class='alert'><B>You feel your self being pulled back from whatever afterlife AIs have!</B></span>")
-			src.ghost.mind.transfer_to(src)
-			qdel(src.ghost)
+		if (src.brain.owner && src.brain.owner.current)
+			if (!isobserver(src.brain.owner.current))
+				return
+			var/mob/ghost = src.brain.owner.current
+			ghost.show_text("<span class='alert'><B>You feel your self being pulled back from the afterlife!</B></span>")
+			ghost.mind.transfer_to(src)
+			qdel(ghost)
 		return 1
 	return 0
 
