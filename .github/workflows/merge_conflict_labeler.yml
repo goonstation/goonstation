@@ -1,4 +1,4 @@
-name: label-merge-conflicts
+name: "Label Merge Conflicts"
 on:
   push:
     branches:
@@ -12,5 +12,5 @@ jobs:
         with:
           CONFLICT_LABEL_NAME: "merge conflict"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MAX_RETRIES: 10
-          WAIT_MS: 8000
+          MAX_RETRIES: 12
+          WAIT_MS: 8008

@@ -40,6 +40,8 @@
 		//confirmation
 		if (alert(usr, "You have chosen to spawn [src.num_critters] [src.critter_type ? src.critter_type : "random critters"]. Is this correct?", src.name, "Yes", "No") == "Yes")
 			event_effect(source)
+		else
+			cleanup_event()
 
 	event_effect(var/source)
 		..()

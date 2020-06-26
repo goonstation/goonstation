@@ -12,6 +12,10 @@
 *.dmb	binary
 *.dmm	binary
 
+# merger hooks, run tools/hooks/install.bat or install.sh to set up
+*.dmm merge=dmm
+*.dmi merge=dmi
+
 # Other text stuff
 *.txt	text
 *.md	text
@@ -52,4 +56,4 @@
 # make git recognize that yes, some of these dumb byond things really are text
 # ...or binary
 # plus the browserassets maps weren't treated that way so oops(?)
-# By Zamujasa
+# By Zamujasa & /tg/station
