@@ -157,64 +157,64 @@
 	var/description = "If you see me, gannets is an idiot."
 
 /datum/materiel/sidearm/pistol
-	name = "9mm pistol"
+	name = "M1992 Pistol"
 	path = /obj/item/storage/belt/pistol
 	catagory = "Sidearm"
 	description = "A gun-belt containing a semi-automatic, 9mm caliber service pistol and three magazines."
 
 /datum/materiel/sidearm/revolver
-	name = "Predator revolver"
+	name = "Predator Revolver"
 	path = /obj/item/storage/belt/revolver
 	catagory = "Sidearm"
 	description = "A gun-belt containing a hefty combat revolver and 2 .357 caliber speedloaders."
 
 /datum/materiel/loadout/assault
-	name = "Class Crate - Assault Trooper"
+	name = "Assault Trooper"
 	path = /obj/storage/crate/classcrate/assault
 	catagory = "Loadout"
-	description = "A crate containing an assault rifle, several standard and AP magazines as well as an assortment of breach and clear grenades."
+	description = "Bullpup assault rifle with single shot and burst fire modes, mag pouch containing standard and AP magazines, mixed grenade pouch and breaching charges."
 
 /datum/materiel/loadout/heavy
-	name = "Class Crate - Heavy Weapons Specialist"
+	name = "Heavy Weapons Specialist"
 	path = /obj/storage/crate/classcrate/heavy
 	catagory = "Loadout"
-	description = "A crate containing a light machine gun, several belts of ammunition and a couple of grenades."
+	description = "Light machine gun, three boxes of ammunition and a pouch of high explosive grenades."
 
 /datum/materiel/loadout/grenadier
-	name = "Class Crate - Grenadier"
+	name = "Grenadier"
 	path = /obj/storage/crate/classcrate/demo
 	catagory = "Loadout"
-	description = "A crate containing a hand-held grenade launcher, bandolier and a pile of ordnance."
+	description = "Grenade launcher, two pouches containing 40mm grenade rounds and mixed explosive grenades."
 
 /datum/materiel/loadout/infiltrator
-	name = "Class Crate - Infiltrator"
+	name = "Infiltrator"
 	path = /obj/storage/crate/classcrate/agent_rework
 	catagory = "Loadout"
-	description = "A crate containing a Specialist Operative loadout."
+	description = "Tranquilizer pistol with a pouch of dart magazines, combat knife which increases run speed when held, five use cloaking device, electromagnetic card and night-vision goggles."
 
 /datum/materiel/loadout/medic
-	name = "Class Crate - Combat Medic"
+	name = "Combat Medic"
 	path = /obj/storage/crate/classcrate/medic
 	catagory = "Loadout"
-	description = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies, along with a syringe gun delivery system."
+	description = "Comprehensive medical supplies in a satchel, belt and pouch, including donk pockets and an experimental Juggernaut injector."
 
 /datum/materiel/loadout/firebrand
-	name = "Class Crate - Firebrand"
+	name = "Firebrand"
 	path = /obj/storage/crate/classcrate/pyro
 	catagory = "Loadout"
-	description = "A crate containing a Specialist Operative loadout. This one contains a flamethrower and a hefty fire-axe that can be two-handed."
+	description = "Napalm flamethrower, incendiery grenade pouch and a door-breaching fire-axe that can be two-handed to increase damage to both foes and airlocks."
 
 /datum/materiel/loadout/engineer
-	name = "Class Crate - Combat Engineer"
+	name = "Combat Engineer"
 	path = /obj/storage/crate/classcrate/engineer
 	catagory = "Loadout"
-	description = "A crate containing a Specialist Operative loadout. This one contains a deployable automated gun turret, high-capacity welder and a combat wrench."
+	description = "Automated gun turret with an important guide on how to deploy it, full toolbelt with high-capacity welder and a combat shotgun."
 
 /datum/materiel/loadout/marksman
-	name = "Class Crate - Marksman"
+	name = "Marksman"
 	path = /obj/storage/crate/classcrate/sniper
 	catagory = "Loadout"
-	description = "A crate containing a Specialist Operative loadout. This one includes a high-powered sniper rifle, some smoke grenades and a chameleon generator."
+	description = "High-powered sniper rifle that can fire through two solid walls,optical thermal scanner and a pouch of smoke grenades"
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
@@ -222,23 +222,23 @@
 	catagory = "Loadout"
 	description = "A standard syndicate uplink loaded with 12 telecrytals, allowing you to pick and choose from an array of syndicate items."
 
-/datum/materiel/storage/backpack
-	name = "tactical backpack"
+/datum/materiel/storage/rucksack
+	name = "Assault Rucksack"
 	path = /obj/item/storage/backpack/syndie/tactical
 	catagory = "Storage"
-	description = "A 10 slot military backpack made of high density fabric, designed to fit a wide array of tools for comprehensive storage support."
+	description = "A large 10 slot military backpack, designed to fit a wide array of tools for comprehensive storage support."
 
 /datum/materiel/storage/belt
-	name = "tactical espionage belt"
+	name = "Tactical Espionage Belt"
 	path = /obj/item/storage/fanny/syndie
 	catagory = "Storage"
-	description = "It's different than a fanny pack. It's tactical and action-packed!"
+	description = "The classic 6 slot syndicate belt pack. Has no relation to the fanny pack."
 
 /datum/materiel/storage/satchel
-	name = "syndicate satchel"
+	name = "Syndicate Satchel"
 	path = /obj/item/storage/backpack/satchel/syndie
 	catagory = "Storage"
-	description = "An ordinary messenger bag in menacing red and black."
+	description = "An ordinary 6 slot messenger bag in menacing red and black."
 
 // Requisition tokens
 

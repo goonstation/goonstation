@@ -35,7 +35,7 @@
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 /obj/item/storage/backpack/syndie/tactical
-	name = "tactical assault pack"
+	name = "tactical assault rucksack"
 	desc = "A military backpack made of high density fabric, designed to fit a wide array of tools for comprehensive storage support."
 	icon_state = "tactical_backpack"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
