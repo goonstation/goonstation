@@ -6,7 +6,7 @@ name: Beepsky
 on:
   pull_request:
     branches: master
-  push: '*'
+  push:
 
 jobs:
   lint:
