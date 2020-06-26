@@ -1,15 +1,12 @@
-# Heisenbot, Goonstation's replacement for a CI handler like Travis
+# Beepsky, Goonstation's replacement for a CI service like Travis, utilizing GitHub Actions
 # Based on Turdis by Yogstation
 
-name: Heisenbot
+name: Beepsky
 
 on:
   pull_request:
     branches: master
-  push:
-    branches:
-      - master
-      - feature/ci-using-githubactions
+  push: '**'
 
 jobs:
   lint:
