@@ -189,6 +189,7 @@
 
 	onUpdate()
 		..()
+		// you gotta hold still to jump!
 		if (get_dist(ownerMob, the_railing) > 1)
 			interrupt(INTERRUPT_ALWAYS)
 			ownerMob.show_text("Your jump was interrupted!", "red")
@@ -203,26 +204,31 @@
 			O.show_text("[ownerMob] begins to pull [himself_or_herself(ownerMob)] over [the_railing].", "red")
 
 	onEnd()
-		var/bunp //bunp'd thing's name
+		var/bunp //the name of the thing we have bunp'd into when trying to jump the railing
 		if (jump_target.density)
 			bunp = jump_target.name
 			no_no_zone = 1
 		else
 			for(var/obj/o in jump_target.contents)
-				if(istype(o,/obj/railing))
+				// if it's an exception to the bunp rule...
+				if(istype (o,/obj/railing) || istype(o, /obj/decal/stage_edge))
 					continue
+
+				// otherwise, if it's a dense thing...
 				if(o.density)
 					bunp = o.name
 					no_no_zone = 1
 					break
 
 		if(no_no_zone)
+			// if they are a living mob, make them TASTE THE PAIN
 			if (istype(ownerMob, /mob/living))
 				if (!ownerMob.hasStatus("weakened"))
 					ownerMob.changeStatus("weakened", 4 SECONDS)
 					playsound(the_railing, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1, -1)
 					for(var/mob/O in AIviewers(ownerMob))
 						O.show_text("[ownerMob] tries to climb straight into \the [bunp]. What a goof!!", "red")
+				// HE HE U BUNPED YOUR HEAD
 				if (prob(25))
 					ownerMob.changeStatus("weakened", 4 SECONDS)
 					ownerMob.TakeDamage("head", 0, 10)
@@ -251,7 +257,7 @@
 	icon_state = "working"
 	var/obj/railing/the_railing
 	var/mob/ownerMob
-	var/obj/item/tool
+	var/obj/item/tool // the tool the owner is using on the railing
 	var/interaction = RAILING_DISASSEMBLE
 
 	New(The_Owner, The_Railing, var/obj/item/The_Tool, The_Interaction, The_Duration)
@@ -268,6 +274,7 @@
 		if (The_Duration)
 			duration = The_Duration
 		if (ishuman(owner))
+			//carpenter people can fiddle with railings faster!
 			var/mob/living/carbon/human/H = owner
 			if (H.traitHolder.hasTrait("carpenter"))
 				duration = round(duration / 2)

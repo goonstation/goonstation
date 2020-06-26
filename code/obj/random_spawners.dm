@@ -1799,7 +1799,7 @@
 
 	spawn_items() //since this is a fringe case spawner, this is an override to the standard spawn rules
 		if(where_to_spawn.len)
-			var/reference = pick(1,where_to_spawn.len)
+			var/reference = rand(1,where_to_spawn.len)
 			var/new_x = where_to_spawn[reference][1]
 			var/new_y = where_to_spawn[reference][2]
 			closet_check_spawn(new_x,new_y)

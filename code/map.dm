@@ -138,6 +138,11 @@ var/global/list/mapNames = list(
 	escape_dir = NORTH
 	auto_windows = 1
 
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
+
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"
 	escape_centcom = /area/shuttle/escape/centcom/cogmap
