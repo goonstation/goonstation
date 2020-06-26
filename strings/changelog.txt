@@ -1,5 +1,9 @@
 
 (t)fri jun 26 20
+(u)RichardGere
+(p)1233
+(e)🐛|bug
+(+)Fixed a number of AI related bugs.
 (u)Sovexe
 (p)1223
 (e)🔄|rework
