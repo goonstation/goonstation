@@ -3,8 +3,9 @@
 // Called in world.dm at new()
 /proc/round_start_data()
 	set background = 1
-	return
+	return //nightshade
 
+/*
 	var/message[] = new()
 	message["token"] = md5(config.goonhub_parser_key)
 	message["round_name"] = url_encode(station_name())
@@ -13,12 +14,13 @@
 	message["round_status"] = "start"
 
 	world.Export("[config.goonhub_parser_url][list2params(message)]")
-
+*/
 // Called in gameticker.dm at the end of the round.
 /proc/round_end_data(var/reason)
 	set background = 1
-	return
+	return //nightshade
 
+/*
 	var/message[] = new()
 	message["token"] = md5(config.goonhub_parser_key)
 	message["round_name"] = url_encode(station_name())
@@ -29,3 +31,4 @@
 	message["game_type"] = ticker && ticker.mode ? ticker.mode.name : "pre"
 
 	world.Export("[config.goonhub_parser_url][list2params(message)]")
+*/
