@@ -3,13 +3,13 @@
 	var/list/nodes = list()
 	var/datum/computer/file/data_file
 
-	proc/addNode(var/datum/mechanics_holder/H)
+	proc/addNode(/datum/component/mechanics_holder/H)
 		nodes.Add(H)
 
-	proc/removeNode(var/datum/mechanics_holder/H)
+	proc/removeNode(/datum/component/mechanics_holder/H)
 		nodes.Remove(H)
 
-	proc/hasNode(var/datum/mechanics_holder/H)
+	proc/hasNode(/datum/component/mechanics_holder/H)
 		return nodes.Find(H)
 
 	proc/isTrue() //Thanks for not having bools , byond.
