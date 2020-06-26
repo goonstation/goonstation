@@ -629,3 +629,23 @@
 		message = yorkify(message)
 		return message
 
+/datum/bioEffect/speech/scoob
+	name = "Frontal Gyrus Alteration Type-SD"
+	desc = "Forces the language center of the subject's brain to bark out sentances like a dog."
+	id = "accent_scoob"
+	effectType = effectTypeDisability
+	isBad = 1
+	msgGain = "You feel like you've got some work to do now."
+	msgLose = "You feel like you've found yourself."
+	reclaim_fail = 10
+	lockProb = 25
+	lockedGaps = 2
+	lockedDiff = 2
+	lockedChars = list("G","C")
+	lockedTries = 3
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = scoobify(message)
+		return message
