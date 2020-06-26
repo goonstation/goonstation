@@ -709,7 +709,6 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 		if (process_timer-- < 1)
 			UnsubscribeProcess()
 			update_icon(1)
-			src.occupant = null
 			DEBUG_MESSAGE("[src].reagents.total_volume on completion of cycle: [src.reagents.total_volume]")
 
 			if (islist(src.pods) && pods.len && src.reagents.total_volume)
