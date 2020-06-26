@@ -2315,6 +2315,11 @@ var/list/zalgo_mid = list(
 			if(R.prev_char == "")		// First "z" of a word
 				new_string = "zhr"		// zebra = zhrebra
 				used = 3
+		
+
+	if(new_string == "")
+		new_string = R.curr_char
+		used = 1
 
 	var/datum/parse_result/P = new/datum/parse_result
 	P.string = new_string
