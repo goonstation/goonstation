@@ -214,6 +214,11 @@ var/list/mechanics_telepads = new/list()
 			processing_items.Add(src)
 		return ..()
 
+	disposing()
+		// mechanics disposed in /atom
+		processing_items.Remove(src)
+		..()
+
 	proc/cutParticles()
 		if(particles.len)
 			for(var/datum/particleSystem/mechanic/M in particles)

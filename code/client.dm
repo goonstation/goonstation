@@ -278,23 +278,18 @@
 			return
 */
 	//admins and mentors can enter a server through player caps.
-	var/ignore_player_cap = 0
 	if (init_admin())
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
-		control_freak = 0	// heh
-		ignore_player_cap = 1
 	else if (player.mentor)
 		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
 		if (!src.holder)
 			src.verbs += /client/proc/toggle_mentorhelps
-		ignore_player_cap = 1
-
-	if(!ignore_player_cap && player_capa)
-		if(total_clients() >= player_cap)
-			if (!src.holder)
-				alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
-				del(src)
-				return
+	else if (player_capa && (total_clients() >= player_cap) && (src.ckey in bypassCapCkeys))
+		boutput(src, "<span class='ooc mentorooc'>The server is full, but you are allowed to bypass the player cap!</span>")
+	else if(player_capa && (total_clients() >= player_cap) && !src.holder)
+		alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
+		del(src)
+		return
 
 	if (join_motd)
 		boutput(src, "<div class=\"motd\">[join_motd]</div>")
@@ -314,9 +309,7 @@
 	SPAWN_DBG(0) // to not lock up spawning process
 		if (IsGuestKey(src.key))
 			src.has_contestwinner_medal = 0
-		else if (!config)
-			src.has_contestwinner_medal = 0
-		else if (!config.medal_hub || !config.medal_password)
+		else if (!config || !config.medal_hub || !config.medal_password)
 			src.has_contestwinner_medal = 0
 		else
 			src.has_contestwinner_medal = world.GetMedal("Too Cool", src.key, config.medal_hub, config.medal_password)
@@ -521,6 +514,8 @@
 
 	src.reputations = new(src)
 
+	if(src.holder && src.holder.level >= LEVEL_CODER)
+		src.control_freak = 0
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
 
@@ -539,8 +534,6 @@
 		onlineAdmins |= (src)
 		if (!NT.Find(src.ckey))
 			NT.Add(src.ckey)
-		if(src.holder.rank in list("Host", "Coder"))
-			control_freak = 0
 		return 1
 
 	return 0

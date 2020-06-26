@@ -324,6 +324,7 @@ proc/build_syndi_buylist_cache()
 	name = "Microbomb Implant"
 	item = /obj/item/implanter/uplink_microbomb
 	cost = 1
+	vr_allowed = 0
 	desc = "This miniaturized explosive packs a decent punch and will detonate upon the unintentional death of the host. Do not swallow and keep out of reach of children."
 	blockedmode = list(/datum/game_mode/revolution)
 
@@ -331,6 +332,7 @@ proc/build_syndi_buylist_cache()
 	name = "Macrobomb Implant"
 	item = /obj/item/implanter/uplink_macrobomb
 	cost = 12
+	vr_allowed = 0
 	desc = "Like the microbomb, but much more powerful. Macrobombs for macrofun!"
 	blockedmode = list(/datum/game_mode/revolution)
 

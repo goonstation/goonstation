@@ -709,6 +709,7 @@
 							walk_to(src, current_target,1,4)
 							if ((get_dist(src, current_target)) >= (olddist))
 								src.frustration++
+								step_towards(src, current_target, 4)
 							else
 								src.frustration = 0
 						else
@@ -1119,7 +1120,8 @@
 		src.warm_count = max(src.warm_count, 0)
 		src.hatch_check(0, user)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		//..() <- Fuck off mom, I'm 25 and I do what I want =I
 		src.hatch_check(1, null, T)
 

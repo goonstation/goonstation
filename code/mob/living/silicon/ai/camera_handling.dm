@@ -6,7 +6,7 @@
 	//try to find the closest working camera in the same area, switch to it
 
 	var/area/A = get_area(src)
-	if (A && A.type == /area) return //lol @ dumping you at the mining magnet every fucking time. (or interrupting a track, wow rude)
+	if (A && area_space_nopower(A)) return //lol @ dumping you at the mining magnet every fucking time. (or interrupting a track, wow rude)
 	if(istype(usr, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/anAI = usr
 		if(anAI.tracker.tracking)
