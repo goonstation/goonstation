@@ -1654,6 +1654,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\z_dmm_suite\reader.dm"
 #include "code\z_dmm_suite\writer.dm"
 #include "interface\skin.dmf"
+#include "maps\z2.dmm"
 #include "maps\config\map.dm"
 // END_INCLUDE
 
