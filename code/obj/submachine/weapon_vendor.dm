@@ -249,5 +249,5 @@
 	name = "requisition token"
 	desc = "A Syndicate credit card charged with currency compatible with the Syndicate Weapons Vendor."
 	icon = 'icons/obj/items/items.dmi'
-	icon_state = "req_token"
+	icon_state = "req-token"
 	w_class = 1.0
