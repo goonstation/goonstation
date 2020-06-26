@@ -26672,7 +26672,6 @@
 /area/drone)
 "blT" = (
 /obj/indestructible/shuttle_corner{
-	dir = 2;
 	icon_state = "wall3_trans"
 	},
 /turf/unsimulated/floor{
@@ -30993,7 +30992,6 @@
 "bwb" = (
 /obj/machinery/light{
 	dir = 4;
-	icon_state = "tube1";
 	layer = 9.1;
 	pixel_x = 10
 	},
@@ -43577,7 +43575,6 @@
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	name = "Commander's Quarters";
-	opacity = 1;
 	req_access = null
 	},
 /turf/unsimulated/floor/black,
@@ -66070,7 +66067,6 @@
 /area/afterlife/bar/sanctuary)
 "dba" = (
 /obj/stool/chair/comfy{
-	icon_state = "chair_comfy";
 	dir = 4
 	},
 /turf/unsimulated/floor/wood,
@@ -66893,7 +66889,6 @@
 /area/afterlife/bar/sanctuary)
 "dcS" = (
 /obj/disposalpipe/loafer/horizontal{
-	icon_state = "pipe-loaf0";
 	dir = 1
 	},
 /turf/unsimulated/floor/grey,
@@ -66906,7 +66901,6 @@
 /area/afterlife/bar)
 "dcU" = (
 /obj/submachine/foodprocessor{
-	icon_state = "processor-off";
 	dir = 8
 	},
 /obj/map/light/brighterwhite,
@@ -77313,8 +77307,7 @@
 	icon_state = "paper";
 	name = "paper-'THE SUN'";
 	pixel_x = 10;
-	pixel_y = -8;
-	text = ""
+	pixel_y = -8
 	},
 /turf/unsimulated/floor/wood/three,
 /area/centcom/offices/zamujasa)
@@ -82761,8 +82754,7 @@
 /obj/item/paper{
 	icon_state = "paper";
 	info = "<i>indecipherable squiggles</i>";
-	name = "paper-'arrest quota'";
-	text = ""
+	name = "paper-'arrest quota'"
 	},
 /obj/item/pen,
 /turf/unsimulated/floor/black,
@@ -83292,16 +83284,14 @@
 	info = "<p>It's covered in angry scrawls and scratched-out notes.</p>";
 	name = "paper-'Powernet research'";
 	pixel_x = 2;
-	pixel_y = -4;
-	text = ""
+	pixel_y = -4
 	},
 /obj/item/paper{
 	icon_state = "paper";
 	info = "<p>The paper is covered in incomprehensible runes.</p>";
 	name = "paper-'UI designs'";
 	pixel_x = 7;
-	pixel_y = 2;
-	text = ""
+	pixel_y = 2
 	},
 /obj/storage/crate/bin,
 /obj/machinery/light,
@@ -83399,7 +83389,6 @@
 "dSh" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south{
-	icon_state = "pipe-t";
 	dir = 4
 	},
 /obj/map/light/white,
@@ -83552,7 +83541,6 @@
 /area/afterlife/bar)
 "dSE" = (
 /obj/stool/chair/comfy{
-	icon_state = "chair_comfy";
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
@@ -83705,7 +83693,6 @@
 /obj/table/wood/round/auto,
 /obj/item/instrument/bikehorn,
 /turf/unsimulated/floor/carpet{
-	dir = 2;
 	icon_state = "fgreen2"
 	},
 /area/afterlife/bar)
@@ -83992,6 +83979,23 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"dYf" = (
+/turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor3{
+	desc = "It's over Enakai";
+	name = "the high ground"
+	},
+/area/centcom/offices/enakai)
+"eCq" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/adventure_gannets.dmi';
+	icon_state = "sand";
+	name = "sand"
+	},
+/area/centcom/offices/enakai)
 "eHC" = (
 /obj/machinery/light{
 	dir = 4
@@ -84086,6 +84090,12 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/donut2)
+"iPz" = (
+/turf/unsimulated/floor/setpieces/Azarak/cavefloor{
+	desc = "It's over Enakai";
+	name = "the high ground"
+	},
+/area/centcom/offices/enakai)
 "jCe" = (
 /obj/stool/chair/comfy/shuttle,
 /obj/machinery/light{
@@ -84095,6 +84105,17 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/cogmap)
+"jSc" = (
+/obj/decal/stage_edge{
+	layer = 2.8;
+	mouse_opacity = 0
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/adventure_gannets.dmi';
+	icon_state = "sand";
+	name = "sand"
+	},
+/area/centcom/offices/enakai)
 "jYh" = (
 /obj/decal/garland{
 	pixel_y = 32
@@ -84165,6 +84186,14 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"mmF" = (
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/adventure_gannets.dmi';
+	icon_state = "sand";
+	name = "sand"
+	},
+/area/centcom/offices/enakai)
 "mAe" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle,
@@ -84175,6 +84204,15 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"njo" = (
+/turf/unsimulated/floor/stairs/dark,
+/area/centcom/offices/enakai)
+"nte" = (
+/turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor2{
+	desc = "It's over Enakai";
+	name = "the high ground"
+	},
+/area/centcom/offices/enakai)
 "oyA" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -84316,6 +84354,13 @@
 /obj/machinery/computer3/generic/personal,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
+"vbL" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/adventure_gannets.dmi';
+	icon_state = "sand";
+	name = "sand"
+	},
+/area/centcom/offices/enakai)
 "vdV" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -84331,6 +84376,36 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"vEe" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/sword/red{
+	active = 1;
+	desc = "You were the chosen one! You were supposed to destroy the greytiders, not join them!";
+	icon_state = "sword1-R";
+	item_state = "sword1-R";
+	name = "Enakai's red cyalume saber"
+	},
+/obj/window/crystal/reinforced/south,
+/obj/window/crystal/reinforced/west,
+/obj/window/crystal/reinforced/east,
+/turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor2{
+	desc = "It's over Enakai";
+	name = "the high ground"
+	},
+/area/centcom/offices/enakai)
+"vJb" = (
+/obj/admin_plaque{
+	name = "Enakai's Office"
+	},
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwall"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "woz" = (
 /obj/machinery/light{
 	dir = 4;
@@ -84345,6 +84420,23 @@
 "wvy" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
+"wAT" = (
+/obj/critter/cat{
+	generic = 0;
+	icon_state = "cat2";
+	name = "Moo";
+	randomize_cat = 0
+	},
+/obj/decal/stage_edge{
+	layer = 2.8;
+	mouse_opacity = 0
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/adventure_gannets.dmi';
+	icon_state = "sand";
+	name = "sand"
+	},
+/area/centcom/offices/enakai)
 "wBu" = (
 /obj/item/reagent_containers/vending/bag/larger{
 	desc = "You're considering stuffing your face in this, but you do have that lawsuit to file...";
@@ -155817,9 +155909,9 @@ dXU
 qkF
 hZt
 dvw
-dvW
-dvW
-dwZ
+nte
+njo
+mmF
 dvw
 dvW
 dvW
@@ -156119,9 +156211,9 @@ iBT
 mUE
 iBT
 dvw
-dvW
-dvW
-dvW
+dYf
+jSc
+vbL
 dvw
 dvW
 dvW
@@ -156421,9 +156513,9 @@ ubr
 wBu
 iBT
 dvw
-dvX
-dvW
-dvW
+vEe
+wAT
+vbL
 dvw
 dvX
 dvW
@@ -156723,9 +156815,9 @@ iBT
 iBT
 mej
 dvw
-dvW
-dvW
-dvW
+iPz
+jSc
+vbL
 dvw
 dvW
 dvW
@@ -157025,8 +157117,8 @@ dDP
 dwA
 dDP
 dvP
-dvV
-dwA
+vJb
+eCq
 dDP
 dvP
 dvV
