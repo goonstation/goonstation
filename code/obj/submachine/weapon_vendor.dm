@@ -248,6 +248,6 @@
 /obj/item/requisition_token
 	name = "requisition token"
 	desc = "A Syndicate credit card charged with currency compatible with the Syndicate Weapons Vendor."
-	icon = 'icons/obj/discountdans.dmi'
-	icon_state = "golden"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "req_token"
 	w_class = 1.0
