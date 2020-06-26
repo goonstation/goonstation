@@ -21,8 +21,6 @@
 	skip_sims = 1
 	sims_score = 30
 
-#error test fun error sad :(((((((
-
 ///////////////////////////////////// Beach Stuff
 
 /area/greek/beach
