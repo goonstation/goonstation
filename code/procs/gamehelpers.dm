@@ -59,8 +59,11 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 		// dont search space for an apc
 		return null
 
+	if (A.area_apc)
+		return A.area_apc
+
 	for (var/obj/machinery/power/apc/APC in machine_registry[MACHINES_POWER])
-		if (get_area(APC) == A)
+		if (get_area(APC) != A)
 			continue
 		if (!(APC.status & BROKEN))
 			return APC
