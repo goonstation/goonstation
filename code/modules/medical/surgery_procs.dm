@@ -634,8 +634,10 @@ limbs are their own thing not included here.
 				// This is kinda important (Convair880).
 				if (istype(I, /obj/item/implant/mindslave))
 					if (patient.mind && (patient.mind.special_role == "mindslave"))
+						if(surgeon == patient) continue
 						remove_mindslave_status(patient, "mslave", "surgery")
 					else if (patient.mind && patient.mind.master)
+						if(surgeon == patient) continue
 						remove_mindslave_status(patient, "otherslave", "surgery")
 
 				patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts out an implant from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
