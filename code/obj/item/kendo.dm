@@ -61,17 +61,44 @@
 
     w_class = 4.0
     two_handed = 1
+    throwforce = 4.0
+    throw_range = 4
+    stamina_crit_chance = 2
 
-    force = 13.0 //DEV - temp
-    throwforce = 6.0 //DEV - temp
-    throw_range = 5 //DEV - temp
-    stamina_damage = 65 //DEV - temp
-    stamina_cost = 22 //DEV - temp
-    stamina_crit_chance = 60 //DEV - temp
+    //these combat variables will change depending on the guard
+    force = 6.0
+    stamina_damage = 10
+    stamina_cost = 5.0
+
     hit_type = DAMAGE_BLUNT
     flags = FPRINT | TABLEPASS | USEDELAY
     c_flags = EQUIPPED_WHILE_HELD
     //DEV - needs block profile
+
+    proc/change_guard(var/guard)
+        switch(guard)
+            if("help")
+                force = 6.0
+                stamina_damage = 10
+                stamina_cost = 5.0
+            if("disarm")
+                force = 7.0
+                stamina_damage = 10
+                stamina_cost = 8.0
+            if("grab")
+                force = 8.0
+                stamina_damage = 15
+                stamina_cost = 10.0
+            if("harm")
+                force = 10.0
+                stamina_damage = 25
+                stamina_cost = 30.0
+
+    dropped(mob/user as mob)
+        ..()
+        force = 6.0
+        stamina_damage = 10
+        stamina_cost = 5.0
 
 //==========
 //Shinai Bag
