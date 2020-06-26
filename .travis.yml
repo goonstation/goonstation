@@ -7,23 +7,7 @@ git:
 
 jobs:
   include:
-
-    - name: "Compile for Ass Jam"
-      addons:
-        apt:
-          packages:
-            - libstdc++6:i386
-      cache:
-        directories:
-          - $HOME/BYOND
-      install:
-        - tools/ci/install_byond.sh
-        - source $HOME/BYOND/byond/bin/byondsetup
-        - touch +secret/__secret.dme
-        - sed -i 's/BUILD_TIME_DAY 01/BUILD_TIME_DAY 13/' _std/__build.dm # Ass Jam occurs on the 13th of the month.
-      script:
-        - tools/ci/dm.sh -DTRAVISBUILDING -DTRAVIS_ASSJAM goonstation.dme
-
+  
     - name: "Compile & Lint with submodule"
       # https://docs.travis-ci.com/user/pull-requests/#pull-requests-and-security-restrictions
       if: |

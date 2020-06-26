@@ -1,4 +1,21 @@
 
+(t)fri jun 26 20
+(u)Carbadox
+(p)1176
+(e)🆕|feature
+(+)Added new cocktails namely, Bee's Knees, Duck Fart, Phil Collins, Spiced Rum, Methacola, Pink Lemonade and the cocktail syrup, grenadine.
+(u)UrsulaMajor
+(p)1230
+(e)|
+(+)Mentor mice now have a bible fart interaction
+(u)RichardGere
+(p)1233
+(e)🐛|bug
+(+)Fixed a number of AI related bugs.
+(u)Sovexe
+(p)1223
+(e)🔄|rework
+(+)Significantly reduced the loudness of noise maker artifacts.
 (t)wed jun 24 20
 (u)mbc
 (+)Improved performance of the APC search function (stops an AI in the trench or other large areas from lagging the game).
