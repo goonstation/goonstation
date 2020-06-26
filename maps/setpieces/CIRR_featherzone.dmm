@@ -80,7 +80,6 @@
 /area)
 "s" = (
 /obj/decal/cleanable/flockdrone_debris{
-	step_x = -7;
 	pixel_x = -6;
 	pixel_y = -5
 	},

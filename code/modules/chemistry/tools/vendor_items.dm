@@ -56,7 +56,8 @@
 
 		qdel(src)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)
 
@@ -98,7 +99,8 @@
 		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		qdel(src)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)
 

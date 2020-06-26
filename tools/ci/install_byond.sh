@@ -19,3 +19,4 @@ else
   echo "$BYOND_MAJOR_VERSION.$BYOND_MINOR_VERSION" > "$HOME/BYOND/version.txt"
   cd ~/
 fi
+
