@@ -99,3 +99,42 @@ jobs:
         with:
           name: DMB + RSC
           path: ${{github.workspace}}/artifacts
+          
+
+  compile_ass:
+    name: "Compile for Ass Day"
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          curl https://raw.githubusercontent.com/goonstation/goonstation/master/tools/ci/sources.list | sudo tee /etc/apt/sources.list
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          sudo apt install libstdc++6:i386
+
+      - name: Cache BYOND
+        uses: actions/cache@v1
+        with:
+          path: ~/BYOND
+          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
+          restore-keys: ${{ runner.os }}-byond
+        
+      # Ass Jam occurs on the 13th of the month.
+      - name: Setup BYOND
+        run: |
+          tools/ci/install_byond.sh
+          cd $GITHUB_WORKSPACE
+          printenv
+          echo "::set-env name=BYOND_SYSTEM::/home/runner/BYOND/byond"
+          echo "::set-env name=PATH::/home/runner/BYOND/byond/bin:$PATH"
+          echo "::set-env name=LD_LIBRARY_PATH::/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH"
+          echo "::set-env name=MANPATH::/home/runner/BYOND/byond/man:$MANPATH"
+          touch +secret/__secret.dme
+          sed -i 's/BUILD_TIME_DAY 01/BUILD_TIME_DAY 13/' _std/__build.dm 
+
+
+      - name: Compile
+        run: |
+          tools/ci/dm.sh -DTRAVISBUILDING -DTRAVIS_ASSJAM goonstation.dme
