@@ -7,7 +7,9 @@ on:
   pull_request:
     branches: master
   push:
-    branches: master
+    branches:
+      - master
+      - feature/ci-using-githubactions
 
 env:
   GIT_EMAIL: "67447363+Heisenbee-Goonstation@users.noreply.github.com"
