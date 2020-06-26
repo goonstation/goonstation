@@ -423,6 +423,8 @@ var/f_color_selector_handler/F_Color_Selector
 	diary << "---------------------"
 	diary << ""
 
+	pregameHTML = "<meta http-equiv='X-UA-Compatible' content='IE=edge'><style>body{margin:0;padding:0;background:url([resource("images/nightshade_titlecard.png")]) black;background-size:100%;background-repeat:no-repeat;overflow:hidden;}</style>"
+
 	//This is used by bans for checking, so we want it very available
 	apiHandler = new()
 
