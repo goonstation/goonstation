@@ -30227,6 +30227,7 @@
 /obj/item/clipboard,
 /obj/item/paper_bin,
 /obj/item/pen,
+/obj/item/katana/kendo,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "btj" = (
@@ -42309,7 +42310,6 @@
 /area/station/ai_monitored/armory)
 "bWG" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	dir = 2;
 	name = "Armory";
 	req_access_txt = "37"
 	},

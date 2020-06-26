@@ -8214,7 +8214,6 @@
 /area/mantaSpace)
 "atV" = (
 /obj/machinery/door/airlock/pyro/security{
-	dir = 2;
 	name = "Armory"
 	},
 /obj/firedoor_spawn,
@@ -8575,9 +8574,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/breakroom)
 "auL" = (
-/obj/item/device/radio/intercom/loudspeaker/speaker/west{
-	dir = 8
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/west,
 /obj/machinery/light/small/cool,
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/restroom)
@@ -8644,9 +8641,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/loudspeaker/speaker/east{
-	dir = 4
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/east,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -8985,9 +8980,7 @@
 /area/station/engine/storage)
 "avE" = (
 /obj/machinery/dispenser,
-/obj/item/device/radio/intercom/loudspeaker/speaker/west{
-	dir = 8
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/west,
 /turf/simulated/floor/bot,
 /area/station/engine/storage)
 "avF" = (
@@ -10140,9 +10133,7 @@
 /turf/simulated/floor,
 /area/station/hangar/security)
 "axT" = (
-/obj/item/device/radio/intercom/loudspeaker/speaker/east{
-	dir = 4
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/east,
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
@@ -10177,9 +10168,7 @@
 	},
 /obj/decoration/decorativeplant/plant6,
 /obj/machinery/light/incandescent/netural,
-/obj/item/device/radio/intercom/loudspeaker/speaker/east{
-	dir = 4
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/east,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowblackcorner"
@@ -10701,7 +10690,6 @@
 	},
 /obj/machinery/computer/riotgear{
 	dir = 4;
-	icon_state = "drawbr0";
 	pixel_x = -28
 	},
 /turf/simulated/floor/redblack{
@@ -16412,6 +16400,7 @@
 /obj/item/clothing/under/gimmick/macho,
 /obj/storage/closet/dresser,
 /obj/disposalpipe/segment,
+/obj/item/katana/kendo,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aLk" = (
@@ -44434,9 +44423,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/item/device/radio/intercom/loudspeaker/speaker/west{
-	dir = 8
-	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/west,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellowblack"

@@ -2136,7 +2136,6 @@
 	icon_state = "1-2"
 	},
 /obj/stool/chair/wooden{
-	icon_state = "chair_wooden";
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/chapel{
@@ -6454,6 +6453,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/item/katana/kendo,
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/utility)
 "aoY" = (
@@ -9069,7 +9069,6 @@
 /area/station/hallway/primary/north)
 "avd" = (
 /obj/stool/chair/boxingrope_corner{
-	icon_state = "ringrope";
 	dir = 10
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -9084,7 +9083,6 @@
 /area/station/crew_quarters/fitness)
 "avg" = (
 /obj/stool/chair/boxingrope_corner{
-	icon_state = "ringrope";
 	dir = 6
 	},
 /turf/simulated/floor/specialroom/gym,
@@ -19925,7 +19923,6 @@
 	},
 /obj/machinery/computer/riotgear{
 	dir = 4;
-	icon_state = "drawbr0";
 	pixel_x = -28
 	},
 /turf/simulated/floor/engine,

@@ -4807,6 +4807,7 @@
 /obj/item/clothing/under/gimmick/macho,
 /obj/item/clothing/under/gimmick/macho,
 /obj/storage/closet/dresser,
+/obj/item/katana/kendo,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "akV" = (

@@ -24328,7 +24328,6 @@
 "bej" = (
 /obj/disposalpipe/segment/brig,
 /obj/machinery/door/airlock/pyro/command/alt{
-	dir = 2;
 	name = "Armory"
 	},
 /obj/access_spawn/hos,
@@ -24410,7 +24409,6 @@
 /obj/disposalpipe/segment/brig,
 /obj/machinery/computer/riotgear{
 	dir = 8;
-	icon_state = "drawbr0";
 	pixel_x = 28
 	},
 /turf/simulated/floor/red/side,
@@ -26410,6 +26408,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west,
+/obj/item/katana/kendo,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
 "bhZ" = (
