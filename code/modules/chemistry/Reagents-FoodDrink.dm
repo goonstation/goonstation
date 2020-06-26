@@ -3833,4 +3833,4 @@ datum
 				M.drowsyness = max(M.drowsyness-5, 0)
 				if(prob(8))
 					M.reagents.add_reagent("methamphetamine", 1.2 * mult)
-				return
+				..()

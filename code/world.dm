@@ -1585,6 +1585,24 @@ var/f_color_selector_handler/F_Color_Selector
 
 				return ircbot.response(ircmsg)
 
+			if ("whitelistChange")
+				if (!plist["wlType"] || !plist["ckey"])
+					return 0
+
+				var/type = plist["wlType"]
+				var/ckey = plist["ckey"]
+				var/msg
+
+				if (type == "add")
+					whitelistCkeys += ckey
+					msg = "Entry '[ckey]' added to whitelist"
+				else if (type == "remove")
+					whitelistCkeys -= ckey
+					msg = "Entry '[ckey]' removed from whitelist"
+
+				logTheThing("admin", null, null, msg)
+				logTheThing("diary", null, null, msg, "admin")
+				return 1
 
 
 /// EXPERIMENTAL STUFF
