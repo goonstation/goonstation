@@ -3760,7 +3760,7 @@ datum
 			description = "A warm, late night drink, usually enjoyed during long winter nights."
 			reagent_state = LIQUID
 
-		fooddrink/alcoholic/grenadine
+		fooddrink/grenadine
 			name = "Grenadine"
 			id = "grenadine"
 			fluid_r = 234
@@ -3769,7 +3769,7 @@ datum
 			description = "A sticky, sweet and tart non-alcoholic bar syrup, used in cocktails for it's distinct bright red colour."
 			reagent_state = LIQUID
 
-		fooddrink/pinklemonade
+		fooddrink/lemonade/pinklemonade
 			name = "Pink lemonade"
 			id = "pinklemonade"
 			fluid_r = 253
@@ -3829,7 +3829,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(prob(10))
-					M.reagents.add_reagent("methamphetamine", rand(1,10) * mult)
-				..()
+				M.make_jittery(2)
+				M.drowsyness = max(M.drowsyness-5, 0)
+				if(prob(8))
+					M.reagents.add_reagent("methamphetamine", 1.2 * mult)
 				return
