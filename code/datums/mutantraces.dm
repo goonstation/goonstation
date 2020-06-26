@@ -496,7 +496,6 @@
 		
 /datum/mutantrace/doggo
 	name = "doggo"
-	// icon_state = "doggo"
 	icon_state = "doggo"
 	icon_override_static = 1
 	allow_fat = 1
@@ -520,10 +519,6 @@
 			detail_3.color = fix_colors(aH.customization_third_color)
 			detail_over_suit.color = fix_colors(aH.customization_first_color)
 
-			// detail_1.color = aH.customization_first_color
-			// detail_2.color = aH.customization_second_color
-			// detail_3.color = aH.customization_third_color
-
 			mob.update_face()
 			mob.update_body()
 			mob.update_clothing()
@@ -539,7 +534,7 @@
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
-		mob.see_invisible = 1
+		mob.see_invisible = 0
 		
 	firevuln = 1.1
 
