@@ -142,7 +142,8 @@ jobs:
   compile_full:
     name: "Compile and Lint with Secret Submodule"
     runs-on: ubuntu-18.04
-    if: github.repository == 'goonstation/goonstation'
+    if: |
+      (github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')
     steps:
       - uses: actions/checkout@v2
 
