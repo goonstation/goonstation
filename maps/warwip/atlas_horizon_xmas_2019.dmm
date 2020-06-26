@@ -11293,8 +11293,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/shipalert{
-	pixel_y = 28;
-	step_y = 0
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2";

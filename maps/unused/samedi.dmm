@@ -14610,7 +14610,7 @@
 "aGa" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -32364,10 +32364,7 @@
 /obj/item/device/reagentscanner,
 /obj/item/reagent_containers/glass/bottle/weedkiller,
 /obj/item/reagent_containers/glass/bottle/weedkiller,
-/obj/item/clothing/glasses/spectro{
-	step_x = 0;
-	step_y = 0
-	},
+/obj/item/clothing/glasses/spectro,
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	frequency = 1446;
@@ -42688,7 +42685,7 @@
 	pixel_y = 1
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -43230,7 +43227,7 @@
 	pixel_y = 21
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
@@ -44996,7 +44993,7 @@
 /area/research_outpost/hangar)
 "bUk" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
@@ -45048,7 +45045,7 @@
 /area/research_outpost)
 "bUp" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -45289,10 +45286,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/hand_labeler,
-/obj/item/clothing/glasses/spectro{
-	step_x = 0;
-	step_y = 0
-	},
+/obj/item/clothing/glasses/spectro,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -46394,7 +46388,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/tools,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
