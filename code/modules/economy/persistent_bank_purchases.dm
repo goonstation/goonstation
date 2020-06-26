@@ -337,7 +337,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 	doggo
 		name = "Canine"
-		cost = 0
+		cost = 4000
 
 		Create(var/mob/living/M)
 			if (ishuman(M))
