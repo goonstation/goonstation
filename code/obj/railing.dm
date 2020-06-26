@@ -21,7 +21,7 @@
 	density = 1
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "railing"
-	layer = OBJ_LAYER - 0.1
+	layer = OBJ_LAYER
 	color = "#ffffff"
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
@@ -30,11 +30,11 @@
 	var/broken = 0
 
 	proc/layerify()
-		SPAWN_DBG(1 DECI SECOND) // why are you like this why is this necessary
+		SPAWN_DBG(3 DECI SECONDS)
 		if (dir == SOUTH)
 			layer = MOB_LAYER + 0.1
 		else
-			layer = OBJ_LAYER - 0.1
+			layer = OBJ_LAYER
 
 	proc/railing_is_broken(obj/railing/The_Railing)
 		if(The_Railing.broken)
@@ -46,7 +46,8 @@
 		if(!(railing_is_broken(The_Railing)))
 			The_Railing.broken = 1
 			The_Railing.density = 0
-			The_Railing.icon_state = "railing-broken"
+			var/random_sprite = rand(1, 4)
+			The_Railing.icon_state = "railing-broken-" + "[random_sprite]"
 
 	proc/railing_fix(obj/railing/The_Railing)
 		if(railing_is_broken(The_Railing))
@@ -204,6 +205,7 @@
 			O.show_text("[ownerMob] begins to pull [himself_or_herself(ownerMob)] over [the_railing].", "red")
 
 	onEnd()
+		..()
 		var/bunp //the name of the thing we have bunp'd into when trying to jump the railing
 		if (jump_target.density)
 			bunp = jump_target.name

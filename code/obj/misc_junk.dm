@@ -934,4 +934,4 @@
 					g.name = "Ikspmohc-Emong"
 		user.put_in_hand_or_drop(g)
 		user.visible_message("<span style=\"color:red\">[user.name] unwraps [g]!</span>")
-		qdel(src) 
+		qdel(src)
