@@ -501,7 +501,7 @@
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "doggo"
-
+	
 	New(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(mob))
@@ -522,13 +522,21 @@
 			mob.update_face()
 			mob.update_body()
 			mob.update_clothing()
-
+			
+		var/list/dogVisionColorMatrix = list(\
+			0.55,0.45,0.000,
+			0.55,0.45,0.000,
+			0.000,0.25,1.0,
+			0.0, 0.0, 0.0)	// Values obtained from https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
+		if(mob.client)
+			mob.client.color = dogVisionColorMatrix
 //			M.bioHolder.AddEffect("accent_scoob")
 //			
-//	disposing()
-//		if(ishuman(mob))
+	disposing()
+		if(ishuman(mob))
+			mob.client.color = null
 //			mob.bioHolder.RemoveEffect("accent_scoob")
-//		..()
+		..()
 
 	proc/fix_colors(var/hex)
 		var/list/L = hex_to_rgb_list(hex)
