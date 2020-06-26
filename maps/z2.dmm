@@ -353,15 +353,15 @@
 "abm" = (
 /turf/space/no_replace,
 /turf/unsimulated/wall{
+	dir = 8;
 	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "diagonalWall";
-	dir = 8
+	icon_state = "diagonalWall"
 	},
 /turf/unsimulated/floor/void/channel,
 /turf/unsimulated/wall{
+	dir = 8;
 	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "diagonalWall";
-	dir = 8
+	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
 "abn" = (
@@ -373,15 +373,15 @@
 "abo" = (
 /turf/space/no_replace,
 /turf/unsimulated/wall{
+	dir = 6;
 	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "diagonalWall";
-	dir = 6
+	icon_state = "diagonalWall"
 	},
 /turf/unsimulated/floor/void/channel,
 /turf/unsimulated/wall{
+	dir = 6;
 	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "diagonalWall";
-	dir = 6
+	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
 "abp" = (
@@ -1600,8 +1600,8 @@
 /area/hospital/samostrel)
 "aek" = (
 /obj/stool/chair/comfy/purple{
-	tag = "icon-chair_comfy-purple (EAST)";
-	dir = 4
+	dir = 4;
+	tag = "icon-chair_comfy-purple (EAST)"
 	},
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
@@ -1648,8 +1648,8 @@
 /area/hospital)
 "aes" = (
 /obj/submachine/chef_sink/chem_sink{
-	tag = "icon-sink (NORTH)";
-	dir = 1
+	dir = 1;
+	tag = "icon-sink (NORTH)"
 	},
 /turf/unsimulated/floor/white,
 /area/hospital)
@@ -1676,9 +1676,9 @@
 	icon_state = "floor3"
 	},
 /turf/unsimulated/wall{
+	dir = 6;
 	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "diagonalWall";
-	dir = 6
+	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
 "aex" = (
@@ -1712,9 +1712,9 @@
 	icon_state = "floor3"
 	},
 /turf/unsimulated/wall{
+	dir = 8;
 	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "diagonalWall";
-	dir = 8
+	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
 "aeA" = (
@@ -2735,8 +2735,8 @@
 "agO" = (
 /obj/map/light/green,
 /obj/decal/fakeobjects/pipe{
-	tag = "icon-intact (NORTHEAST)";
-	dir = 5
+	dir = 5;
+	tag = "icon-intact (NORTHEAST)"
 	},
 /obj/structure/girder/reinforced,
 /turf/unsimulated/floor/concrete/cat{
@@ -2966,9 +2966,9 @@
 /obj/map/light/green,
 /obj/item/device/radio/signaler,
 /obj/decal/fakeobjects{
-	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "1-6"
+	icon_state = "1-6";
+	name = "power cable"
 	},
 /turf/unsimulated/floor/concrete,
 /area/jones/radiation)
@@ -3293,9 +3293,9 @@
 /obj/item/clothing/ears/earmuffs/earplugs,
 /obj/decal/cleanable/paper,
 /obj/decal/fakeobjects{
-	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "9-10"
+	icon_state = "9-10";
+	name = "power cable"
 	},
 /turf/unsimulated/floor/concrete,
 /area/jones/radiation)
@@ -3814,9 +3814,9 @@
 	icon_state = "floor"
 	},
 /turf/unsimulated/wall{
+	dir = 8;
 	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "diagonalWall";
-	dir = 8
+	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
 "ajB" = (
@@ -3950,8 +3950,8 @@
 /area/hospital)
 "ajT" = (
 /obj/stool/chair/comfy/purple{
-	tag = "icon-chair_comfy-purple (EAST)";
-	dir = 4
+	dir = 4;
+	tag = "icon-chair_comfy-purple (EAST)"
 	},
 /turf/unsimulated/floor/carpet/arcade,
 /area/hospital)
@@ -5174,13 +5174,13 @@
 /area/hospital/samostrel)
 "amW" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 1;
 	layer = 2.5;
-	anchored = 1
+	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -5485,8 +5485,8 @@
 /area/hospital)
 "anD" = (
 /obj/decal/fakeobjects/pipe{
-	tag = "icon-intact (NORTHEAST)";
-	dir = 5
+	dir = 5;
+	tag = "icon-intact (NORTHEAST)"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -5561,13 +5561,13 @@
 /area/hospital/samostrel)
 "anO" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 1;
 	layer = 2.5;
-	anchored = 1
+	name = "power conduit"
 	},
 /turf/unsimulated/floor/caution/west,
 /area/hospital/samostrel)
@@ -5975,24 +5975,24 @@
 /area/hospital/samostrel)
 "aoI" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 5;
-	anchored = 1
+	name = "power conduit"
 	},
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "aoJ" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 1;
 	layer = 2.5;
-	anchored = 1
+	name = "power conduit"
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 4
@@ -6372,13 +6372,13 @@
 /area/hospital/samostrel)
 "apy" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 1;
 	layer = 2.5;
-	anchored = 1
+	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
 	tag = "icon-conduit (NORTHEAST)";
@@ -7473,13 +7473,13 @@
 /area/hospital/samostrel)
 "asf" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 1;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 1;
 	layer = 2.5;
-	anchored = 1
+	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -7873,14 +7873,14 @@
 /area/jones/council)
 "asT" = (
 /obj/decal/fakeobjects{
-	tag = "icon-offbroken (NORTH)";
-	name = "broken computer";
+	anchored = 1;
+	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
+	dir = 1;
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "offbroken";
-	dir = 1;
-	density = 1;
-	anchored = 1
+	name = "broken computer";
+	tag = "icon-offbroken (NORTH)"
 	},
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
@@ -8366,9 +8366,9 @@
 "atP" = (
 /turf/unsimulated/floor/caution/south,
 /turf/unsimulated/wall{
+	dir = 6;
 	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "diagonalWall";
-	dir = 6
+	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
 "atQ" = (
@@ -8387,9 +8387,9 @@
 "atR" = (
 /turf/unsimulated/floor/caution/south,
 /turf/unsimulated/wall{
+	dir = 8;
 	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "diagonalWall";
-	dir = 8
+	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
 "atS" = (
@@ -10185,14 +10185,14 @@
 /area/hospital)
 "axC" = (
 /obj/decal/fakeobjects{
-	tag = "icon-offbroken (NORTH)";
-	name = "broken computer";
+	anchored = 1;
+	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
+	dir = 1;
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "offbroken";
-	dir = 1;
-	density = 1;
-	anchored = 1
+	name = "broken computer";
+	tag = "icon-offbroken (NORTH)"
 	},
 /turf/unsimulated/floor/white,
 /area/hospital)
@@ -10654,13 +10654,13 @@
 /area/hospital/samostrel)
 "ayC" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 6;
 	layer = 2.5;
-	anchored = 1
+	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -10680,13 +10680,13 @@
 /area/hospital/samostrel)
 "ayD" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 6;
 	layer = 2.5;
-	anchored = 1
+	name = "power conduit"
 	},
 /turf/unsimulated/floor/engine/caution/north,
 /area/hospital/samostrel)
@@ -11556,8 +11556,8 @@
 /area/jones/alley)
 "aAx" = (
 /obj/decal/fakeobjects/pipe{
-	tag = "icon-intact (NORTHEAST)";
-	dir = 5
+	dir = 5;
+	tag = "icon-intact (NORTHEAST)"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -12523,9 +12523,9 @@
 /area/jones/complex)
 "aCV" = (
 /obj/decal/fakeobjects{
-	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "1-10"
+	icon_state = "1-10";
+	name = "power cable"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -13393,6 +13393,7 @@
 "aEW" = (
 /obj/decal/fakeobjects/teleport_pad,
 /obj/marker/supplymarker,
+/obj/machinery/light,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -13814,12 +13815,12 @@
 /area/jones)
 "aGb" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 6;
-	anchored = 1
+	name = "power conduit"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
@@ -13856,9 +13857,9 @@
 /area/jones/alley)
 "aGf" = (
 /obj/decal/fakeobjects{
-	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "1-6"
+	icon_state = "1-6";
+	name = "power cable"
 	},
 /obj/decal/cleanable/ash,
 /turf/unsimulated/floor{
@@ -13930,8 +13931,8 @@
 /area/jones)
 "aGp" = (
 /obj/decal/fakeobjects/pipe{
-	tag = "icon-intact (NORTHEAST)";
-	dir = 5
+	dir = 5;
+	tag = "icon-intact (NORTHEAST)"
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor{
@@ -14658,8 +14659,8 @@
 	anchored = 1
 	},
 /obj/decal/fakeobjects/pipe{
-	tag = "icon-intact (NORTHEAST)";
-	dir = 5
+	dir = 5;
+	tag = "icon-intact (NORTHEAST)"
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor{
@@ -14736,8 +14737,8 @@
 /area/jones)
 "aHK" = (
 /obj/decal/fakeobjects/pipe{
-	tag = "icon-intact (NORTHEAST)";
-	dir = 5
+	dir = 5;
+	tag = "icon-intact (NORTHEAST)"
 	},
 /turf/unsimulated/aprilfools/grass,
 /area/jones)
@@ -15731,12 +15732,12 @@
 /area/marsoutpost)
 "aKv" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 5;
-	anchored = 1
+	name = "power conduit"
 	},
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty1"
@@ -19578,9 +19579,9 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "1-6"
+	icon_state = "1-6";
+	name = "power cable"
 	},
 /obj/decal/fakeobjects{
 	name = "power cable";
@@ -21482,9 +21483,9 @@
 /area/marsoutpost)
 "aZH" = (
 /obj/decal/fakeobjects{
-	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "1-10"
+	icon_state = "1-10";
+	name = "power cable"
 	},
 /obj/lattice{
 	icon_state = "lattice-dir-b";
@@ -22402,9 +22403,9 @@
 /area/crater/cave)
 "bca" = (
 /obj/decal/fakeobjects{
-	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "5-6"
+	icon_state = "5-6";
+	name = "power cable"
 	},
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
@@ -22508,9 +22509,9 @@
 /area/marsoutpost/duststorm)
 "bcr" = (
 /obj/decal/fakeobjects{
-	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "9-10"
+	icon_state = "9-10";
+	name = "power cable"
 	},
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
@@ -22543,10 +22544,10 @@
 	name = "solar panel"
 	},
 /obj/decal/fakeobjects{
-	name = "solar panel";
 	desc = "It's probably broken.";
 	icon = 'icons/obj/power.dmi';
-	icon_state = "solar_panel-b"
+	icon_state = "solar_panel-b";
+	name = "solar panel"
 	},
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -22765,9 +22766,9 @@
 /area/marsoutpost/duststorm)
 "bcR" = (
 /obj/decal/fakeobjects{
-	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "1-6"
+	icon_state = "1-6";
+	name = "power cable"
 	},
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty2"
@@ -22780,9 +22781,9 @@
 	icon_state = "2-10"
 	},
 /obj/decal/fakeobjects{
-	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "1-10"
+	icon_state = "1-10";
+	name = "power cable"
 	},
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty2"
@@ -22790,9 +22791,9 @@
 /area/marsoutpost/duststorm)
 "bcT" = (
 /obj/decal/fakeobjects{
-	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "1-10"
+	icon_state = "1-10";
+	name = "power cable"
 	},
 /obj/decal/fakeobjects{
 	name = "power cable";
@@ -22948,10 +22949,10 @@
 	name = "solar panel"
 	},
 /obj/decal/fakeobjects{
-	name = "solar panel";
 	desc = "It's probably broken.";
 	icon = 'icons/obj/power.dmi';
-	icon_state = "solar_panel-b"
+	icon_state = "solar_panel-b";
+	name = "solar panel"
 	},
 /obj/lattice{
 	icon_state = "lattice-dir-b";
@@ -23393,9 +23394,9 @@
 /area/crater/cave)
 "bea" = (
 /obj/decal/fakeobjects{
-	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "1-6"
+	icon_state = "1-6";
+	name = "power cable"
 	},
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
@@ -23413,12 +23414,12 @@
 /area/marsoutpost)
 "bed" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 6;
-	anchored = 1
+	name = "power conduit"
 	},
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty3"
@@ -23704,12 +23705,12 @@
 /area/marsoutpost)
 "beT" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 6;
-	anchored = 1
+	name = "power conduit"
 	},
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty1"
@@ -24995,12 +24996,12 @@
 	dir = 6
 	},
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 5;
-	anchored = 1
+	name = "power conduit"
 	},
 /obj/item/tile/steel,
 /turf/unsimulated/floor{
@@ -25423,9 +25424,9 @@
 "bjq" = (
 /obj/item/tile/steel,
 /obj/decal/fakeobjects{
-	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "5-6"
+	icon_state = "5-6";
+	name = "power cable"
 	},
 /obj/reagent_dispensers/watertank,
 /turf/unsimulated/floor{
@@ -25628,23 +25629,23 @@
 	anchored = 1
 	},
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 5;
-	anchored = 1
+	name = "power conduit"
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/drone/engineering)
 "bjS" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 6;
-	anchored = 1
+	name = "power conduit"
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/drone/engineering)
@@ -26905,9 +26906,9 @@
 /area/marsoutpost)
 "bne" = (
 /obj/decal/fakeobjects{
-	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "1-6"
+	icon_state = "1-6";
+	name = "power cable"
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 1
@@ -26938,12 +26939,12 @@
 /area/marsoutpost)
 "bnh" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 5;
-	anchored = 1
+	name = "power conduit"
 	},
 /obj/decal/fakeobjects/oldcanister/plasma,
 /obj/decal/cleanable/dirt,
@@ -27129,9 +27130,9 @@
 	icon_state = "2-10"
 	},
 /obj/decal/fakeobjects{
-	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "1-10"
+	icon_state = "1-10";
+	name = "power cable"
 	},
 /obj/decal/fakeobjects{
 	name = "power cable";
@@ -30567,12 +30568,12 @@
 /obj/item/hemostat,
 /obj/item/surgical_spoon,
 /obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	dir = 6
+	dir = 6;
+	icon_state = "bot2"
 	},
 /obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	dir = 6
+	dir = 6;
+	icon_state = "bot2"
 	},
 /obj/item/suture,
 /obj/item/scissors/surgical_scissors,
@@ -30771,8 +30772,8 @@
 /obj/item/hemostat,
 /obj/item/surgical_spoon,
 /obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	dir = 6
+	dir = 6;
+	icon_state = "bot2"
 	},
 /obj/item/suture,
 /obj/item/scissors/surgical_scissors,
@@ -32242,12 +32243,12 @@
 /area/iomoon/base/underground)
 "bzy" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 6;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 6;
-	anchored = 1
+	name = "power conduit"
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
@@ -37679,13 +37680,13 @@
 	reinf = 1
 	},
 /obj/window{
-	icon_state = "rwindow";
 	dir = 1;
+	icon_state = "rwindow";
 	reinf = 1
 	},
 /obj/window{
-	icon_state = "rwindow";
 	dir = 8;
+	icon_state = "rwindow";
 	reinf = 1
 	},
 /turf/unsimulated/floor/plating,
@@ -37697,8 +37698,8 @@
 	reinf = 1
 	},
 /obj/window{
-	icon_state = "rwindow";
 	dir = 1;
+	icon_state = "rwindow";
 	reinf = 1
 	},
 /turf/unsimulated/floor/plating,
@@ -37710,13 +37711,13 @@
 	reinf = 1
 	},
 /obj/window{
-	icon_state = "rwindow";
 	dir = 1;
+	icon_state = "rwindow";
 	reinf = 1
 	},
 /obj/window{
-	icon_state = "rwindow";
 	dir = 4;
+	icon_state = "rwindow";
 	reinf = 1
 	},
 /turf/unsimulated/floor/plating,
@@ -40558,8 +40559,8 @@
 "bTT" = (
 /turf/unsimulated/floor/void,
 /turf/simulated/martian/wall{
-	icon_state = "diagonalWall";
-	dir = 8
+	dir = 8;
+	icon_state = "diagonalWall"
 	},
 /area/crunch)
 "bTU" = (
@@ -40572,8 +40573,8 @@
 "bTW" = (
 /turf/unsimulated/floor/void,
 /turf/simulated/martian/wall{
-	icon_state = "diagonalWall";
-	dir = 6
+	dir = 6;
+	icon_state = "diagonalWall"
 	},
 /area/crunch)
 "bTX" = (
@@ -40755,8 +40756,8 @@
 "bUu" = (
 /turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
-	icon_state = "diagonalWall";
-	dir = 4
+	dir = 4;
+	icon_state = "diagonalWall"
 	},
 /area/crunch)
 "bUv" = (
@@ -40765,8 +40766,8 @@
 "bUw" = (
 /turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
-	icon_state = "diagonalWall";
-	dir = 5
+	dir = 5;
+	icon_state = "diagonalWall"
 	},
 /area/crunch)
 "bUx" = (
@@ -40881,12 +40882,12 @@
 /area/gauntlet/staging)
 "bUO" = (
 /obj/overlay{
-	name = "organic wall";
+	anchored = 1;
 	desc = "Gross.";
+	dir = 4;
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
-	dir = 4;
-	anchored = 1
+	name = "organic wall"
 	},
 /turf/simulated/martian/floor,
 /area/crunch)
@@ -40996,8 +40997,8 @@
 "bVg" = (
 /turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
-	icon_state = "diagonalWall";
-	dir = 1
+	dir = 1;
+	icon_state = "diagonalWall"
 	},
 /area/crunch)
 "bVh" = (
@@ -41044,12 +41045,12 @@
 /area/gauntlet/viewing)
 "bVp" = (
 /obj/overlay{
-	name = "organic wall";
+	anchored = 1;
 	desc = "Gross.";
+	dir = 1;
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
-	dir = 1;
-	anchored = 1
+	name = "organic wall"
 	},
 /turf/simulated/martian/floor,
 /area/crunch)
@@ -41060,12 +41061,12 @@
 	pixel_x = 30
 	},
 /obj/overlay{
-	name = "organic wall";
+	anchored = 1;
 	desc = "Gross.";
+	dir = 1;
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
-	dir = 1;
-	anchored = 1
+	name = "organic wall"
 	},
 /turf/simulated/martian/floor,
 /area/crunch)
@@ -41085,12 +41086,12 @@
 	name = "martian machine"
 	},
 /obj/overlay{
-	name = "organic wall";
+	anchored = 1;
 	desc = "Gross.";
+	dir = 8;
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
-	dir = 8;
-	anchored = 1
+	name = "organic wall"
 	},
 /turf/simulated/martian/floor,
 /area/crunch)
@@ -41189,12 +41190,12 @@
 /area/gauntlet/viewing)
 "bVI" = (
 /obj/overlay{
-	name = "organic wall";
+	anchored = 1;
 	desc = "Gross.";
+	dir = 8;
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
-	dir = 8;
-	anchored = 1
+	name = "organic wall"
 	},
 /turf/simulated/martian/floor,
 /area/crunch)
@@ -41313,8 +41314,8 @@
 "bVY" = (
 /turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
-	icon_state = "diagonalWall";
-	dir = 8
+	dir = 8;
+	icon_state = "diagonalWall"
 	},
 /area/crunch)
 "bVZ" = (
@@ -41342,8 +41343,8 @@
 "bWc" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
-	icon_state = "floattiles2";
-	dir = 4
+	dir = 4;
+	icon_state = "floattiles2"
 	},
 /obj/decal/cleanable/writing{
 	words = "I'm so sorry. The nuggets wouldn't stop, the fridges just wouldn't stop making them. You couldn't move, couldn't think, for all the nuggets filling the station. It's all my fault."
@@ -42251,8 +42252,8 @@
 	reinf = 1
 	},
 /obj/window{
-	icon_state = "rwindow";
 	dir = 1;
+	icon_state = "rwindow";
 	reinf = 1
 	},
 /obj/cable{
@@ -42354,28 +42355,28 @@
 /area/meat_derelict/guts)
 "bYO" = (
 /obj/overlay{
-	name = "organic wall";
+	anchored = 1;
 	desc = "Gross.";
+	dir = 4;
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
-	dir = 4;
-	anchored = 1
+	name = "organic wall"
 	},
 /obj/overlay{
-	name = "organic wall";
+	anchored = 1;
 	desc = "Gross.";
+	dir = 1;
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
-	dir = 1;
-	anchored = 1
+	name = "organic wall"
 	},
 /turf/simulated/martian/floor,
 /area/crunch)
 "bYP" = (
 /turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
-	icon_state = "diagonalWall";
-	dir = 6
+	dir = 6;
+	icon_state = "diagonalWall"
 	},
 /area/crunch)
 "bYQ" = (
@@ -42747,12 +42748,12 @@
 "bZH" = (
 /obj/map/light/dimred,
 /obj/overlay{
-	name = "organic wall";
+	anchored = 1;
 	desc = "Gross.";
+	dir = 4;
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
-	dir = 4;
-	anchored = 1
+	name = "organic wall"
 	},
 /turf/simulated/martian/floor,
 /area/crunch)
@@ -42763,12 +42764,12 @@
 	pixel_x = 30
 	},
 /obj/overlay{
-	name = "organic wall";
+	anchored = 1;
 	desc = "Gross.";
+	dir = 8;
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "sideWall";
-	dir = 8;
-	anchored = 1
+	name = "organic wall"
 	},
 /turf/simulated/martian/floor,
 /area/crunch)
@@ -43109,8 +43110,8 @@
 "caD" = (
 /turf/unsimulated/floor/plating,
 /turf/simulated/martian/wall{
-	icon_state = "diagonalWall";
-	dir = 5
+	dir = 5;
+	icon_state = "diagonalWall"
 	},
 /area/crunch)
 "caE" = (
@@ -43121,8 +43122,8 @@
 "caF" = (
 /turf/unsimulated/floor/plating,
 /turf/simulated/martian/wall{
-	icon_state = "diagonalWall";
-	dir = 4
+	dir = 4;
+	icon_state = "diagonalWall"
 	},
 /area/crunch)
 "caG" = (
@@ -45252,12 +45253,12 @@
 /area/meat_derelict/entry)
 "cgy" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 5;
-	anchored = 1
+	name = "power conduit"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -46670,8 +46671,8 @@
 /area/blob/tutorial_zone_2)
 "cjY" = (
 /obj/decal/floatingtiles{
-	icon_state = "floattiles2";
-	dir = 4
+	dir = 4;
+	icon_state = "floattiles2"
 	},
 /turf/unsimulated/floor/void,
 /area/crunch)
@@ -47349,9 +47350,9 @@
 	icon_state = "floor"
 	},
 /turf/unsimulated/wall{
+	dir = 6;
 	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "diagonalWall";
-	dir = 6
+	icon_state = "diagonalWall"
 	},
 /area/meat_derelict/soviet)
 "clw" = (
@@ -47691,10 +47692,10 @@
 /area/meat_derelict/guts)
 "cmn" = (
 /obj/decal/fakeobjects{
-	name = "solar panel";
 	desc = "It's probably broken.";
 	icon = 'icons/obj/power.dmi';
-	icon_state = "solar_panel-b"
+	icon_state = "solar_panel-b";
+	name = "solar panel"
 	},
 /turf/unsimulated/floor/airless{
 	icon_state = "solarbase";
@@ -47829,9 +47830,9 @@
 	icon_state = "floor3"
 	},
 /turf/unsimulated/wall{
+	dir = 8;
 	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "diagonalWall";
-	dir = 8
+	icon_state = "diagonalWall"
 	},
 /area/meat_derelict/soviet)
 "cmF" = (
@@ -49928,8 +49929,8 @@
 /area/crunch/wtc)
 "csP" = (
 /obj/decal/floatingtiles{
-	icon_state = "floattiles3";
-	dir = 1
+	dir = 1;
+	icon_state = "floattiles3"
 	},
 /turf/unsimulated/floor/void,
 /area/crunch/wtc)
@@ -50023,8 +50024,8 @@
 /area/crunch)
 "ctf" = (
 /obj/decal/floatingtiles{
-	icon_state = "floattiles3";
-	dir = 1
+	dir = 1;
+	icon_state = "floattiles3"
 	},
 /obj/lattice,
 /turf/unsimulated/floor/void,
@@ -52657,8 +52658,8 @@
 /area/owlery/staffhall)
 "cyL" = (
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line1";
-	dir = 4
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
@@ -53579,8 +53580,8 @@
 "cAV" = (
 /obj/machinery/vending/cigarette,
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line1";
-	dir = 4
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
@@ -53912,8 +53913,8 @@
 /area/owlery/staffhall)
 "cBP" = (
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line1";
-	dir = 4
+	dir = 4;
+	icon_state = "line1"
 	},
 /obj/decal/cleanable/blood{
 	icon_state = "armorblood"
@@ -54332,10 +54333,10 @@
 /area/owlery/lab)
 "cCF" = (
 /obj/decal/skeleton{
-	name = "decomposed corpse";
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1"
+	icon_state = "body1";
+	name = "decomposed corpse"
 	},
 /obj/item/paper/cleanerorder,
 /obj/item/clothing/under/misc/syndicate,
@@ -58508,8 +58509,8 @@
 /area/owlery/owleryhall)
 "cMD" = (
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line1";
-	dir = 4
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/unsimulated/floor/green/checker,
 /area/owlery/owleryhall)
@@ -59407,10 +59408,10 @@
 	icon_state = "bedsheet-yellow"
 	},
 /obj/decal/skeleton{
-	name = "decomposed corpse";
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3"
+	icon_state = "body3";
+	name = "decomposed corpse"
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -59907,8 +59908,8 @@
 	icon_state = "gibarm"
 	},
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line1";
-	dir = 4
+	dir = 4;
+	icon_state = "line1"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -60482,10 +60483,10 @@
 /area/owlery/owleryhall)
 "cQT" = (
 /obj/decal/skeleton{
-	name = "decomposed corpse";
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3"
+	icon_state = "body3";
+	name = "decomposed corpse"
 	},
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "gibdown1"
@@ -62092,10 +62093,10 @@
 /area/owlery/owllock)
 "cUf" = (
 /obj/decal/skeleton{
-	name = "decomposed corpse";
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1"
+	icon_state = "body1";
+	name = "decomposed corpse"
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -62404,8 +62405,8 @@
 /area/owlery/Owlmait)
 "cUM" = (
 /obj/decal/tile_edge/line/grey{
-	icon_state = "line1";
-	dir = 4
+	dir = 4;
+	icon_state = "line1"
 	},
 /obj/machinery/light/emergency,
 /turf/unsimulated/floor/green/checker,
@@ -62475,8 +62476,8 @@
 /area/owlery/owleryhall)
 "cUT" = (
 /obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	dir = 6
+	dir = 6;
+	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
@@ -64358,10 +64359,10 @@
 /obj/item/raw_material/shard/glass,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
 /obj/decal/skeleton{
-	name = "decomposed corpse";
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3"
+	icon_state = "body3";
+	name = "decomposed corpse"
 	},
 /turf/unsimulated/pool/no_animate,
 /area/owlery/Owlmait2)
@@ -66856,8 +66857,8 @@
 /obj/machinery/vehicle/pod_smooth/syndicate,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	dir = 6
+	dir = 6;
+	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
@@ -66909,8 +66910,8 @@
 "ddB" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	dir = 6
+	dir = 6;
+	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
@@ -67583,8 +67584,8 @@
 /area/afterlife/heaven)
 "dfa" = (
 /obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	dir = 6
+	dir = 6;
+	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/firing_range)
@@ -68026,12 +68027,12 @@
 /area/meat_derelict/entry)
 "dfL" = (
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 5;
-	anchored = 1
+	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -68068,12 +68069,12 @@
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
-	name = "power conduit";
+	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
+	dir = 5;
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
-	dir = 5;
-	anchored = 1
+	name = "power conduit"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -68097,8 +68098,8 @@
 /area/syndicate_station/battlecruiser)
 "dfQ" = (
 /obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	dir = 6
+	dir = 6;
+	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
@@ -68235,8 +68236,8 @@
 /area/syndicate_station/battlecruiser)
 "dgi" = (
 /obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	dir = 6
+	dir = 6;
+	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
@@ -68681,8 +68682,8 @@
 "dhm" = (
 /obj/machinery/vending/coffee,
 /obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	dir = 6
+	dir = 6;
+	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
@@ -68695,8 +68696,8 @@
 "dho" = (
 /obj/machinery/vending/cola/blue,
 /obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	dir = 6
+	dir = 6;
+	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
@@ -68744,16 +68745,16 @@
 "dht" = (
 /obj/machinery/vending/cigarette,
 /obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	dir = 6
+	dir = 6;
+	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dhu" = (
 /obj/machinery/vending/snack,
 /obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	dir = 6
+	dir = 6;
+	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
@@ -69036,15 +69037,15 @@
 "dic" = (
 /obj/machinery/sleep_console,
 /obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	dir = 6
+	dir = 6;
+	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "did" = (
 /obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	dir = 6
+	dir = 6;
+	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/white,
 /area/syndicate_station/battlecruiser)
@@ -69093,8 +69094,8 @@
 "dik" = (
 /obj/machinery/sleeper,
 /obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	dir = 6
+	dir = 6;
+	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
@@ -69335,8 +69336,8 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/shuttlebay,
 /turf/simulated/shuttle/wall{
-	icon_state = "wall3";
-	dir = 6
+	dir = 6;
+	icon_state = "wall3"
 	},
 /area/diner/tug)
 "diM" = (
@@ -69363,8 +69364,8 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /turf/simulated/shuttle/wall{
-	icon_state = "wall3";
-	dir = 6
+	dir = 6;
+	icon_state = "wall3"
 	},
 /area/diner/tug)
 "diO" = (
@@ -71711,8 +71712,8 @@
 	pixel_y = -10
 	},
 /obj/decal/fakeobjects/pipe{
-	tag = "icon-intact (NORTHEAST)";
-	dir = 5
+	dir = 5;
+	tag = "icon-intact (NORTHEAST)"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -72626,6 +72627,10 @@
 "dsl" = (
 /obj/decal/fakeobjects/teleport_pad,
 /obj/marker/supplymarker,
+/obj/machinery/light{
+	dir = 1;
+	pixel_x = -1
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -72703,6 +72708,7 @@
 /obj/npc/trader/random{
 	trader_area = "/area/shuttle/merchant_shuttle/right_station"
 	},
+/obj/machinery/light,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -83690,6 +83696,10 @@
 	trader_area = "/area/shuttle/merchant_shuttle/left_station"
 	},
 /obj/stool/chair/comfy,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -83965,8 +83975,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "lVC" = (
 /obj/item/storage/wall/fire{
-	pixel_y = 32;
-	pixel_z = -4
+	pixel_y = 32
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
@@ -84511,6 +84520,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"sME" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/donut3)
 "sRp" = (
 /obj/stool/chair/comfy,
 /obj/npc/trader/random{
@@ -134233,7 +134248,7 @@ puO
 puO
 puO
 dpB
-dpB
+sME
 fQN
 aCt
 aCt
@@ -134535,7 +134550,7 @@ lhK
 lhK
 lhK
 prV
-dpB
+sME
 tOV
 duN
 duN
@@ -134831,7 +134846,7 @@ mtt
 efF
 fQN
 lVC
-dpB
+sME
 lhK
 jOh
 aES
@@ -135133,7 +135148,7 @@ vyO
 efF
 ubq
 xrs
-dpB
+sME
 lhK
 aES
 aES
@@ -135441,7 +135456,7 @@ lhK
 lhK
 lhK
 prV
-dpB
+sME
 tOV
 duN
 duN
@@ -135743,7 +135758,7 @@ iKf
 iKf
 iKf
 dpB
-dpB
+sME
 ubq
 heG
 eQE
