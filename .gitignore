@@ -47,3 +47,6 @@ Desktop.ini
 
 # Dedicated unversioned folder
 /unversioned/**/*
+
+config/admins.txt
+code/__secret_public.dme
