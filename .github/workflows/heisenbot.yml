@@ -53,6 +53,8 @@ jobs:
           commit_sha: ${{ github.event.pull_request.head.sha }}
           regex: '(?<filename>.*?), line (?<lineNumber>\d+), column (?<columnNumber>\d+):\n(?<errorCode>\w+): (?<errorDesc>.*)'
         if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   compile:
     name: Compile
