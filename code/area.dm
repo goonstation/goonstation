@@ -232,7 +232,7 @@
 		return R
 
 	proc/build_sims_score()
-		if (name == "Space" || src.name == "Ocean" || type == /area || skip_sims)
+		if (name == "Space" || src.name == "Ocean" || area_space_nopower(src) || skip_sims)
 			return
 		sims_score = 100
 		for (var/turf/T in src)
@@ -345,7 +345,7 @@
 		if (light_manager)
 			light_manager.lights -= L
 	New()
-		if( type == /area )
+		if(area_space_nopower(src))
 			power_equip = power_light = power_environ = 0
 //////////////////////////// zewaka - adventure/technical/admin areas below
 

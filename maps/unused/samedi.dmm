@@ -32364,10 +32364,7 @@
 /obj/item/device/reagentscanner,
 /obj/item/reagent_containers/glass/bottle/weedkiller,
 /obj/item/reagent_containers/glass/bottle/weedkiller,
-/obj/item/clothing/glasses/spectro{
-	step_x = 0;
-	step_y = 0
-	},
+/obj/item/clothing/glasses/spectro,
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	frequency = 1446;
@@ -45289,10 +45286,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/hand_labeler,
-/obj/item/clothing/glasses/spectro{
-	step_x = 0;
-	step_y = 0
-	},
+/obj/item/clothing/glasses/spectro,
 /obj/cable{
 	icon_state = "4-8"
 	},

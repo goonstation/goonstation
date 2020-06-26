@@ -7768,9 +7768,7 @@
 /obj/item/plate{
 	name = "donation plate";
 	pixel_x = -2;
-	pixel_y = 4;
-	step_x = 0;
-	step_y = 0
+	pixel_y = 4
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1

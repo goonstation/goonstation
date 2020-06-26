@@ -1235,7 +1235,8 @@
 			src.wedge = null
 		qdel(src)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)
 
@@ -1525,7 +1526,8 @@
 			G.set_loc(T)
 		qdel(src)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)
 
