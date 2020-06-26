@@ -781,8 +781,10 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 			if (src.occupant.mind)
 				src.occupant.ghostize()
 				qdel(src.occupant)
+				src.occupant = null
 			else
 				qdel(src.occupant)
+				src.occupant = null
 
 			var/mult = src.upgraded ? rand(2,4) : rand(4,8)
 			src.process_timer = (humanOccupant ? 2 : 1)// * (rand(4,8) - (2 * decomp))
