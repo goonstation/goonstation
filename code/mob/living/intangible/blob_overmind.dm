@@ -9,6 +9,7 @@
 	canmove = 1
 	blinded = 0
 	anchored = 1
+	use_stamina = 0
 	mob_flags = SPEECH_BLOB
 
 	var/datum/tutorial/blob/tutorial
