@@ -1418,9 +1418,8 @@
 	d1 = 2;
 	d2 = 4
 	},
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
+/obj/grille/catwalk/cross{
+	dir = 9
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
@@ -1498,9 +1497,8 @@
 	d1 = 2;
 	d2 = 8
 	},
-/obj/grille/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
+/obj/grille/catwalk/cross{
+	dir = 5
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
@@ -1592,9 +1590,7 @@
 	},
 /area/station/solar/west)
 "aco" = (
-/obj/grille/catwalk{
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk/cross,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -1627,9 +1623,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk{
-	dir = 5
-	},
+/obj/grille/catwalk/cross,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -1640,9 +1634,7 @@
 	},
 /area/station/solar/west)
 "acq" = (
-/obj/grille/catwalk{
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk/cross,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -1686,9 +1678,8 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/grille/catwalk{
-	dir = 10;
-	icon_state = "catwalk_cross"
+/obj/grille/catwalk/cross{
+	dir = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
@@ -1718,9 +1709,8 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
+/obj/grille/catwalk/cross{
+	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
@@ -1781,6 +1771,7 @@
 	dir = 8
 	},
 /obj/decal/cleanable/dirt/jen,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "aee" = (
@@ -21757,7 +21748,7 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/communications_dish,
 /turf/simulated/floor/plating/airless,
-/area/listeningpost)
+/area)
 "gMu" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -24461,6 +24452,9 @@
 /obj/reagent_dispensers/watertank/fountain,
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/north{
+	pixel_y = -10
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/breakroom)
@@ -35744,7 +35738,7 @@
 /area/station/hallway)
 "lBi" = (
 /obj/grille/catwalk{
-	icon_state = "catwalk_cross"
+	dir = 4
 	},
 /obj/cable{
 	d2 = 2;
@@ -42648,12 +42642,16 @@
 	},
 /area/station/hallway/primary/east)
 "nNk" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
 	},
-/turf/space,
-/area/listeningpost)
+/obj/item/storage/wall/random{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 1
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/elect)
 "nNm" = (
 /obj/decal/poster/wallsign/poster_nt{
 	pixel_y = 31
@@ -44450,7 +44448,7 @@
 /area/station/engine/engineering)
 "opj" = (
 /obj/grille/catwalk{
-	icon_state = "catwalk_cross"
+	dir = 4
 	},
 /obj/cable{
 	d2 = 2;
@@ -47618,11 +47616,6 @@
 /turf/simulated/floor/delivery,
 /area/station/security/brig/south_side)
 "pqY" = (
-/obj/item/storage/wall/random{
-	dir = 4;
-	pixel_x = -32;
-	pixel_y = 1
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -49079,7 +49072,9 @@
 "pNs" = (
 /obj/table/auto,
 /obj/machinery/microwave,
-/obj/item/device/radio/intercom/loudspeaker/speaker/south,
+/obj/item/device/radio/intercom/loudspeaker/speaker/south{
+	pixel_y = 24
+	},
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 9
 	},
@@ -49270,9 +49265,6 @@
 /turf/simulated/floor/plating,
 /area/station/engine/ptl)
 "pRN" = (
-/obj/item/device/radio/intercom/loudspeaker/speaker/east{
-	pixel_x = -22
-	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/breakroom)
 "pRS" = (
@@ -53996,15 +53988,16 @@
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "rlv" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname - SS13";
-	tag = ""
+/obj/cable{
+	icon_state = "2-5"
 	},
-/turf/simulated/floor/blue/side{
-	dir = 1
+/obj/grille/catwalk/jen/side{
+	dir = 8
 	},
-/area/station/hallway/primary/south)
+/obj/decal/cleanable/dirt/jen,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/se)
 "rlw" = (
 /obj/decal/boxingrope{
 	dir = 4
@@ -62050,8 +62043,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/map/light/white,
 /turf/space,
-/area/listeningpost)
+/area)
 "tUR" = (
 /obj/railing/orange{
 	dir = 8
@@ -63015,9 +63009,15 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "unc" = (
-/obj/map/light/white,
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/space,
-/area/station/engine/singcore)
+/area)
 "unp" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/wood/seven,
@@ -73450,11 +73450,6 @@
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/black,
 /area/station/security/equipment)
-"xDu" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/yellow,
-/turf/simulated/floor/yellow,
-/area/station/engine/engineering/private)
 "xDv" = (
 /obj/cable{
 	d2 = 8;
@@ -73713,9 +73708,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"xGG" = (
-/turf/space,
-/area/listeningpost)
 "xHe" = (
 /obj/machinery/light/small/sticky/harsh,
 /turf/simulated/floor/white,
@@ -74291,12 +74283,6 @@
 /obj/stool,
 /turf/simulated/floor/plating/jen,
 /area/station/storage/tech)
-"xRn" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/listeningpost)
 "xRv" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 4;
@@ -110334,7 +110320,7 @@ qYA
 bmP
 bMs
 nlU
-rlv
+tuV
 pyL
 kMC
 kze
@@ -131757,7 +131743,7 @@ elM
 elM
 ids
 wVY
-aaC
+rlv
 adY
 eck
 vco
@@ -134734,7 +134720,7 @@ rKX
 aee
 tat
 uJX
-bTa
+nNk
 pqY
 tat
 jkl
@@ -135352,15 +135338,15 @@ xVe
 aSs
 aSs
 aSs
-unc
-unc
-unc
+usx
+usx
+usx
 aax
 qOs
 abN
-unc
-unc
-unc
+usx
+usx
+usx
 aSs
 aSs
 aSs
@@ -135652,19 +135638,19 @@ pqD
 ocE
 ocE
 aSs
-unc
-unc
-unc
-tBW
-unc
+usx
+usx
+usx
+rdj
+usx
 fmH
 qOs
 gDW
-unc
-tBW
-unc
-unc
-unc
+usx
+rdj
+usx
+usx
+usx
 aSs
 tQn
 eYU
@@ -135954,19 +135940,19 @@ pqD
 ocE
 oWs
 aSs
-unc
-unc
-unc
-unc
-unc
+usx
+usx
+usx
+usx
+usx
 aaF
 qOs
 abQ
-unc
-unc
-unc
-unc
-unc
+usx
+usx
+usx
+usx
+usx
 aSs
 oWs
 ocE
@@ -136255,9 +136241,9 @@ gsR
 pqD
 ocE
 aSs
-unc
-unc
-unc
+usx
+usx
+usx
 rYX
 rYX
 rYX
@@ -136267,9 +136253,9 @@ rYX
 rYX
 rYX
 rYX
-unc
-unc
-unc
+usx
+usx
+usx
 aSs
 eCq
 xvh
@@ -136540,7 +136526,7 @@ usx
 usx
 usx
 usx
-rdj
+usx
 jOz
 jOz
 cXw
@@ -136557,9 +136543,9 @@ xPj
 pqD
 xVe
 aSs
-unc
-tBW
-unc
+usx
+rdj
+usx
 rYX
 lIK
 xus
@@ -136569,9 +136555,9 @@ xus
 xus
 sYJ
 rYX
-unc
-tBW
-unc
+usx
+rdj
+usx
 aSs
 ptN
 xvh
@@ -136859,9 +136845,9 @@ xPj
 pqD
 ocE
 aSs
-unc
-unc
-unc
+usx
+usx
+usx
 rYX
 wsM
 egm
@@ -136871,9 +136857,9 @@ tBW
 egm
 iBp
 rYX
-unc
-tBW
-unc
+usx
+rdj
+usx
 aSs
 hzK
 xvh
@@ -137173,9 +137159,9 @@ tBW
 tBW
 iBp
 rYX
-unc
-tBW
-unc
+usx
+rdj
+usx
 aSs
 eCq
 xvh
@@ -137475,9 +137461,9 @@ qna
 qna
 iBp
 rYX
-unc
-tBW
-unc
+usx
+rdj
+usx
 aSs
 oLe
 hLH
@@ -137777,9 +137763,9 @@ tBW
 tBW
 iBp
 rYX
-unc
-tBW
-unc
+usx
+rdj
+usx
 aSs
 eCq
 skB
@@ -138067,9 +138053,9 @@ sEg
 ocE
 ocE
 aSs
-unc
-unc
-unc
+usx
+usx
+usx
 rYX
 wsM
 egm
@@ -138079,9 +138065,9 @@ tBW
 egm
 iBp
 rYX
-unc
-tBW
-unc
+usx
+rdj
+usx
 aSs
 hzK
 skB
@@ -138369,9 +138355,9 @@ xPj
 ocE
 xVe
 aSs
-unc
-tBW
-unc
+usx
+rdj
+usx
 rYX
 wAg
 vmC
@@ -138381,9 +138367,9 @@ vmC
 vmC
 iyp
 rYX
-unc
-tBW
-unc
+usx
+rdj
+usx
 aSs
 ptN
 skB
@@ -138671,9 +138657,9 @@ dqW
 ocE
 ocE
 aSs
-unc
-unc
-unc
+usx
+usx
+usx
 rYX
 rYX
 rYX
@@ -138683,9 +138669,9 @@ rYX
 rYX
 rYX
 rYX
-unc
-unc
-unc
+usx
+usx
+usx
 aSs
 eCq
 skB
@@ -138974,19 +138960,19 @@ ocE
 ocE
 oWs
 aSs
-unc
-unc
-unc
-unc
-unc
+usx
+usx
+usx
+usx
+usx
 aax
 qOs
 abN
-unc
-unc
-unc
-unc
-unc
+usx
+usx
+usx
+usx
+usx
 aSs
 oWs
 ocE
@@ -139276,19 +139262,19 @@ ocE
 ocE
 ocE
 aSs
-unc
-unc
-unc
-tBW
-unc
+usx
+usx
+usx
+rdj
+usx
 fmH
 qOs
 gDW
-unc
-tBW
-unc
-unc
-unc
+usx
+rdj
+usx
+usx
+usx
 aSs
 tQn
 fax
@@ -139580,15 +139566,15 @@ xVe
 aSs
 aSs
 aSs
-unc
-unc
-unc
+usx
+usx
+usx
 aaF
 qOs
 abQ
-unc
-unc
-unc
+usx
+usx
+usx
 aSs
 aSs
 aSs
@@ -143822,7 +143808,7 @@ kTR
 usx
 usx
 atQ
-xDu
+tvU
 xnx
 tvU
 cnm
@@ -156588,9 +156574,9 @@ vLQ
 wLK
 spW
 spW
-xGG
+usx
 tUL
-xGG
+usx
 spW
 spW
 sxd
@@ -156889,11 +156875,11 @@ utC
 rHh
 gnA
 spW
-xGG
-xGG
-tUL
-xGG
-xGG
+usx
+usx
+unc
+usx
+usx
 spW
 sxd
 sxd
@@ -157191,11 +157177,11 @@ sYL
 dWL
 nFB
 spW
-xRn
-xRn
+xdW
+cNV
 gMq
-xRn
-xRn
+cNV
+xdW
 spW
 vGb
 sxd
@@ -157493,11 +157479,11 @@ utC
 mQM
 nYs
 spW
-xGG
-xGG
-nNk
-xGG
-xGG
+usx
+usx
+vVp
+usx
+usx
 spW
 mYL
 sxd
@@ -157796,9 +157782,9 @@ oWJ
 hMR
 spW
 spW
-xGG
-nNk
-xGG
+usx
+qEa
+usx
 spW
 spW
 kRy
