@@ -145,6 +145,12 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 		else
 			return ..()
 
+
+	blob_act(var/power)
+		if(prob(75))
+			pool(src)
+			return
+
 	proc/Dry(var/time = rand(600,1000))
 		if (!src.can_dry || src.dry)
 			return 0
