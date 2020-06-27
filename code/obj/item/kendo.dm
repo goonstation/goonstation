@@ -73,26 +73,44 @@
     hit_type = DAMAGE_BLUNT
     flags = FPRINT | TABLEPASS | USEDELAY
     c_flags = EQUIPPED_WHILE_HELD
+    item_function_flags = USE_INTENT_SWITCH_TRIGGER
     //DEV - needs block profile
 
-    proc/change_guard(var/guard)
+    var/guard
+
+    proc/change_guard(var/mob/user,var/intent)
+        guard = intent
         switch(guard)
             if("help")
                 force = 6.0
                 stamina_damage = 10
                 stamina_cost = 5.0
+                item_state = "shinai-lunge"
             if("disarm")
                 force = 7.0
                 stamina_damage = 10
                 stamina_cost = 8.0
+                item_state = "shinai-sweep"
             if("grab")
                 force = 8.0
                 stamina_damage = 15
                 stamina_cost = 10.0
+                item_state = "shinai-thrust"
             if("harm")
                 force = 10.0
                 stamina_damage = 25
                 stamina_cost = 30.0
+                item_state = "shinai-overhead"
+        user.update_inhands()
+
+    intent_switch_trigger(mob/user as mob)
+        if(guard != user.a_intent)
+            change_guard(user,user.a_intent)
+
+    attack_hand(mob/user as mob)
+        if(src.loc != user)
+            change_guard(user,user.a_intent)
+        ..()
 
     dropped(mob/user as mob)
         ..()
@@ -129,9 +147,12 @@
 
     proc/draw_shinai(var/mob/user)
         if(shinai)
-            user.put_in_hand_or_drop(new /obj/item/shinai)
+            var/obj/item/shinai/S = new /obj/item/shinai
+            user.put_in_hand_or_drop(S)
+            S.change_guard(user,user.a_intent)
             shinai--
             update_spront(user)
+
         else
             user.show_text("The [src] is empty!","red")
 
