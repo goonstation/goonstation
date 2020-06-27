@@ -916,8 +916,10 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/supplycomp{
-	dir = 4
+/obj/machinery/computer/announcement{
+	dir = 4;
+	name = "AI Announcement Computer";
+	req_access_txt = "19"
 	},
 /turf/simulated/floor/bot,
 /area/station/turret_protected/ai)
