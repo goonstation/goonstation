@@ -1,5 +1,9 @@
 
 (t)sat jun 27 20
+(u)Flaborized
+(p)1137
+(e)🎨|sprites
+(*)Resprited ID cards, emags and dabbing licences.
 (u)Comrade f191
 (p)1237
 (e)🗺|mapping
