@@ -1,5 +1,11 @@
 
 (t)sat jun 27 20
+(u)Gannets
+(p)1236
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Nuclear Operatives now use a weapon vendor on the Cairngorm to select their equipment.
+(*)Insert your requisition token in to the vendors in the armory to select gear from the sidearm, loadout and storage catagories. Build your own custom loadout!
+(*)Many elements of class crates and spawning equipment have been altered to enable this.
 (u)Flaborized
 (p)1137
 (e)🎨|sprites
