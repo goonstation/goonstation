@@ -827,7 +827,7 @@
 	name = "Botanist"
 	limit = 5
 	#ifdef MAP_OVERRIDE_DONUT3
-		limit = 7
+	limit = 7
 	#endif
 	wages = 100
 	slot_belt = /obj/item/device/pda2/botanist
