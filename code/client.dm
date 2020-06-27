@@ -143,63 +143,6 @@
 		del(src)
 		return
 
-	if (IsGuestKey(src.key))
-		if(!src.address || src.address == world.host)
-			world.log << ("Hello host or developer person! You're not logged into BYOND. Fix this so you can test your feature turned bug!")
-		SPAWN_DBG(0)//so, the below will only show if they're ingame so the spawn isn't a guarantee; for dev purposes shove an alert to solve some confusion. hence the above
-			var/gueststring = {"
-							<!doctype html>
-							<html>
-								<head>
-									<title>No guest logins allowed!</title>
-									<style>
-										h1, .banreason {
-											font-color:#F00;
-										}
-
-									</style>
-								</head>
-								<body>
-									<h1>No guest logins.</h1>
-									Don't forget to log in to your byond account prior to connecting to this server.
-								</body>
-							</html>
-						"}
-			src.Browse(gueststring, "window=getout")
-			if (src)
-				del(src)
-			return
-
-
-
-	//We're limiting connected players to a whitelist of ckeys (but let active admins in)
-	if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
-		//Key not in whitelist, show them a vaguely sassy message and boot them
-		if (!(src.ckey in whitelistCkeys))
-			SPAWN_DBG(0)
-				var/whitelistString = {"
-								<!doctype html>
-								<html>
-									<head>
-										<title>Server Whitelist Enabled</title>
-										<style>
-											h1, .banreason {
-												font-color:#F00;
-											}
-
-										</style>
-									</head>
-									<body>
-										<h1>Server whitelist enabled</h1>
-										This server is currently limiting connections to specific players, and you aren't one of them. Goodbye!
-									</body>
-								</html>
-							"}
-				src.Browse(whitelistString, "window=whiteout")
-				if (src)
-					del(src)
-				return
-
 	logTheThing("admin", src, null, " has connected.")
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Connected")
@@ -230,6 +173,64 @@
 		)
 		src.loadResourcesFromList(chuiResources)
 
+
+	if (IsGuestKey(src.key))
+		if(!src.address || src.address == world.host)
+			world.log << ("Hello host or developer person! You're not logged into BYOND. Fix this so you can test your feature turned bug!")
+		SPAWN_DBG(0)//so, the below will only show if they're ingame so the spawn isn't a guarantee; for dev purposes shove an alert to solve some confusion. hence the above
+			var/gueststring = {"
+							<!doctype html>
+							<html>
+								<head>
+									<title>No guest logins allowed!</title>
+									<style>
+										h1, .banreason {
+											font-color:#F00;
+										}
+
+									</style>
+								</head>
+								<body>
+									<h1>No guest logins.</h1>
+									Don't forget to log in to your byond account prior to connecting to this server.
+								</body>
+							</html>
+						"}
+			src.mob.Browse(gueststring, "window=getout")
+			if (src)
+				del(src)
+			return
+
+
+
+	//We're limiting connected players to a whitelist of ckeys (but let active admins in)
+	if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
+		//Key not in whitelist, show them a vaguely sassy message and boot them
+		if (!(src.ckey in whitelistCkeys))
+			SPAWN_DBG(0)
+				var/whitelistString = {"
+								<!doctype html>
+								<html>
+									<head>
+										<title>Server Whitelist Enabled</title>
+										<style>
+											h1, .banreason {
+												font-color:#F00;
+											}
+
+										</style>
+									</head>
+									<body>
+										<h1>Server whitelist enabled</h1>
+										This server is currently limiting connections to specific players, and you aren't one of them. Goodbye!
+									</body>
+								</html>
+							"}
+				src.mob.Browse(whitelistString, "window=whiteout")
+				if (src)
+					del(src)
+				return
+
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
 	var/isbanned = checkBan(src.ckey, src.computer_id, src.address, record = 1)
 
@@ -258,7 +259,6 @@
 								</html>
 							"}
 			src.mob.Browse(banstring, "window=ripyou")
-
 			if (src)
 				del(src)
 			return
@@ -277,6 +277,14 @@
 			SPAWN_DBG(0) del(src)
 			return
 */
+
+	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
+
+	..()
+
+	if (join_motd)
+		boutput(src, "<div class=\"motd\">[join_motd]</div>")
+
 	//admins and mentors can enter a server through player caps.
 	if (init_admin())
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
@@ -287,17 +295,10 @@
 	else if (player_capa && (total_clients() >= player_cap) && (src.ckey in bypassCapCkeys))
 		boutput(src, "<span class='ooc mentorooc'>The server is full, but you are allowed to bypass the player cap!</span>")
 	else if(player_capa && (total_clients() >= player_cap) && !src.holder)
-		alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
+		alert(src.mob,"I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL")
 		del(src)
 		return
 
-	if (join_motd)
-		boutput(src, "<div class=\"motd\">[join_motd]</div>")
-
-
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
-
-	..()
 	// moved preferences from new_player so it's accessible in the client scope
 	if (!preferences)
 		preferences = new
