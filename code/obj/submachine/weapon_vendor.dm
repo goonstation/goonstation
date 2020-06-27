@@ -69,7 +69,7 @@
 			return
 
 		src.add_dialog(user)
-		var/dat = "<span style=\"inline-flex\">"
+		var/list/dat = list("<span style=\"inline-flex\">")
 		dat += "<br><b>Balance remaining:</b> <font color='blue'>[src.current_sidearm_credits] sidearm credit, [src.current_loadout_credits] loadout credit, [src.current_storage_credits] storage credit.</font>"
 
 		if (src.temp)
@@ -78,7 +78,7 @@
 			dat += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits</a>"
 
 		dat += "<br><a href='?action=mach_close&window=swv'>Close</a></span>"
-		user.Browse(dat, "window=swv;size=600x500;title=Syndicate Weapons Vendor")
+		user.Browse(dat.Join(), "window=swv;size=600x500;title=Syndicate Weapons Vendor")
 		onclose(user, "swv")
 
 	Topic(href, href_list)
@@ -87,7 +87,7 @@
 		src.add_dialog(usr)
 
 		if(href_list["redeem"])
-			src.temp = "<br>Please select the materiel that you wish to spend your credits on:<br><br>"
+			src.temp = list("<br>Please select the materiel that you wish to spend your credits on:<br><br>")
 
 			src.temp += {"
 			<style>
@@ -112,6 +112,7 @@
 				src.temp += "<tr><td><a href='?src=\ref[src];buy=\ref[M]'><b><u>[M.name]</u></b></a></td><td>[M.catagory]</td><td>[M.description]</td></tr>"
 
 			src.temp += "</table></div>"
+			src.temp = jointext(src.temp)
 
 		if (href_list["buy"])
 			var/datum/materiel/sidearm/S = locate(href_list["buy"]) in materiel_stock
