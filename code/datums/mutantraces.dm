@@ -527,16 +527,82 @@
 			0.55,0.45,0.000,
 			0.55,0.45,0.000,
 			0.000,0.25,1.0,
-			0.0, 0.0, 0.0)	// Values obtained from https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
+			0.0, 0.0, 0.0)	// Values modified from those obtained from https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
 		if(mob.client)
 			mob.client.color = dogVisionColorMatrix
-//			M.bioHolder.AddEffect("accent_scoob")
-//			
+			mob.bioHolder.AddEffect("accent_scoob")
+			
 	disposing()
 		if(ishuman(mob))
 			mob.client.color = null
-//			mob.bioHolder.RemoveEffect("accent_scoob")
+			mob.bioHolder.RemoveEffect("accent_scoob")
 		..()
+
+	onLife()
+		if(mob.reagents && mob.reagents.get_reagent_amount("chocolate") > 10) 			// Chocolate bad for dogs!
+			mob.take_toxin_damage(mob.reagents.get_reagent_amount("chocolate") / 5)
+			if (prob(mob.reagents.get_reagent_amount("chocolate") * 0.1))
+				mob.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)	// Can cause heart problems
+			if (prob(5))
+				mob.emote(pick("faint", "collapse", "cry","moan","gasp","shudder","shiver"))
+			if (prob(3))
+				mob.changeStatus("paralysis", 1 SECONDS)
+			if (prob(10))
+				mob.visible_message("<span class='alert'>[mob] pukes!</span>")
+				mob.vomit()
+			if (prob(1) && prob (1))
+				mob.visible_message("<span class='alert'>[mob] pukes all over \himself!</span>")
+				mob.vomit()
+				mob.reagents.del_reagent("chocolate")
+				
+		if(mob.reagents && mob.reagents.get_reagent_amount("water_holy") > 1) 			// Holy water comes from garlic...
+			mob.blood_volume -= 2														// ...which causes doggo anemia
+			if (prob(mob.reagents.get_reagent_amount("water_holy") * 1))
+				mob.contract_disease(/datum/ailment/malady/shock,null,null,1)
+			if (prob(5))
+				mob.emote(pick("faint", "collapse", "cry","moan","gasp","shudder","shiver"))
+			if (prob(3))
+				mob.changeStatus("paralysis", 1 SECONDS)
+
+		if(mob.reagents && mob.reagents.get_reagent_amount("guacamole") > 1) 			// Avocado is toxic to dogs
+			mob.take_toxin_damage(mob.reagents.get_reagent_amount("guacamole") / 5)
+			if (prob(mob.reagents.get_reagent_amount("water_holy") * 5))				// Messes up their guts
+				switch(rand(1,2))
+					if(1)
+						mob.organHolder.damage_organ(1, 0, 0, "stomach")
+					if(2)
+						mob.organHolder.damage_organ(1, 0, 0, "intestines")
+			if (prob(5))
+				mob.emote(pick("faint", "collapse", "cry","moan","gasp","shudder","shiver"))
+			if (prob(3))
+				mob.changeStatus("paralysis", 1 SECONDS)
+
+		if(mob.reagents && mob.reagents.get_reagent_amount("wine") > 10) 				// Wine is also toxic to dogs
+			mob.take_toxin_damage(mob.reagents.get_reagent_amount("wine") / 5)
+			if (prob(mob.reagents.get_reagent_amount("wine") * 5))						// Messes up their kidneys!
+				switch(rand(1,2))
+					if(1)
+						mob.organHolder.damage_organ(1, 0, 0, "left kidney")
+					if(2)
+						mob.organHolder.damage_organ(1, 0, 0, "right kidney")
+			if (prob(5))
+				mob.emote(pick("faint", "collapse", "cry","moan","gasp","shudder","shiver"))
+			if (prob(3))
+				mob.changeStatus("paralysis", 1 SECONDS)
+				
+		if(mob.reagents && mob.reagents.get_reagent_amount("milk") > 10) 				// While milk isnt exactly toxic to dogs...
+			if (prob(mob.reagents.get_reagent_amount("milk")))
+				mob.emote(pick("fart", "groan", "moan", "cry", "shudder"))				// Its not good for em.
+			if (prob(5) & mob.reagents.get_reagent_amount("milk") > 50)
+				mob.visible_message("<span class='alert'>[mob] pukes all over \himself!</span>")
+				mob.vomit()
+				mob.reagents.del_reagent("milk")
+
+		..()
+
+
+	firevuln = 1.1
+	
 
 	proc/fix_colors(var/hex)
 		var/list/L = hex_to_rgb_list(hex)
@@ -550,8 +616,6 @@
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
 		mob.see_invisible = 0
-		
-	firevuln = 1.1
 
 	say_filter(var/message)
 		return replacetext(message, "r", stutter("rr"))
