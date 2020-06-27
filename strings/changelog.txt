@@ -1,4 +1,9 @@
 
+(t)sat jun 27 20
+(u)Comrade f191
+(p)1237
+(e)🗺|mapping
+(*)Moved Arrivals on Manta to QM rather than Escape.
 (t)fri jun 26 20
 (u)Avatharian
 (p)1238
