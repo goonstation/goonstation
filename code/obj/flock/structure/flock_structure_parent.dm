@@ -21,6 +21,7 @@
 	..()
 	health_max = health
 	time_started = world.timeofday
+	message_admins("[src] is src, and was added to processing items")
 	processing_items |= src
 	if(F)
 		src.flock = F
@@ -36,7 +37,7 @@
 		special_desc += "<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]"
 		special_desc += "<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%"
 		var/info = building_specific_info()
-		if(info != "")
+		if(!isnull(info))
 			special_desc += "<br>[info]"
 		special_desc += "<br><span class='bold'>###=-</span></span>"
 		return special_desc

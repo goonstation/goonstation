@@ -1159,6 +1159,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\flock\goods.dm"
 #include "code\obj\flock\trader.dm"
 #include "code\obj\flock\structure\egg.dm"
+#include "code\obj\flock\structure\flock_structure_ghost.dm"
 #include "code\obj\flock\structure\flock_structure_parent.dm"
 #include "code\obj\flock\structure\relay.dm"
 #include "code\obj\flock\structure\rift.dm"

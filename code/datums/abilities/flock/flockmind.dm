@@ -305,3 +305,28 @@
 		return 1
 	panel.Subscribe(user)
 
+////////////////////////////////
+
+/datum/targetable/flockmindAbility/createStructure
+	name = "Fabricate Structure"
+	desc = "Create a structure tealprint for your drones to construct onto."
+//	icon_state = "talk"
+	cooldown = 4
+	targeted = 0
+
+/datum/targetable/flockmindAbility/createStructure/cast()
+	var/resourcecost = null
+	var/structurewantedtype = null
+	var/structurewanted = input("Select which structure you would like to create", "Tealprint Selection", "cancel") in list("Egg", "Rift", "cancel")
+	switch(structurewanted)
+		if("cancel")
+			return
+		if("Egg")
+			structurewantedtype = /obj/flock_structure/egg
+			resourcecost = 25
+		if("Rift")
+			structurewantedtype = /obj/flock_structure/rift
+			resourcecost = 200
+	if(structurewantedtype)
+		var/mob/living/intangible/flock/flockmind/F = holder.owner
+		F.createstructure(structurewantedtype, resourcecost)

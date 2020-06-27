@@ -80,6 +80,7 @@
 	src.addAbility(/datum/targetable/flockmindAbility/doorsOpen)
 	src.addAbility(/datum/targetable/flockmindAbility/radioStun)
 	src.addAbility(/datum/targetable/flockmindAbility/directSay)
+	src.addAbility(/datum/targetable/flockmindAbility/createStructure)
 
 /mob/living/intangible/flock/flockmind/proc/addAbility(var/abilityType)
 	src.abilityHolder.addAbility(abilityType)
@@ -148,3 +149,7 @@
 	// send out a request to ghosts
 	ghost_notifier.send_notification(src, src, /datum/ghost_notification/respawn/flockdrone)
 	boutput(src, "<span class='notice'>Partitioning initiated. Stand by.</span>")
+
+/mob/living/intangible/flock/flockmind/proc/createstructure(var/T, var/resources = 0)
+	//todo check for flocktile underneath flockmind cheers
+	new/obj/flock_structure/ghost(src.loc, T, src.flock, resources)
