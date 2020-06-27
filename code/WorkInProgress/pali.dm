@@ -109,6 +109,7 @@
 	health_burn = 50
 	add_abilities = list(/datum/targetable/critter/peck,
 						/datum/targetable/critter/tackle)
+	blood_id = "crime"
 
 	setup_hands()
 		..()

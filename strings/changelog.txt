@@ -1,5 +1,25 @@
 
 (t)fri jun 26 20
+(u)Avatharian
+(p)1238
+(e)🐛|bug
+(+)Produce satchels now update their icon when removing items by hand.
+(u)pali
+(p)1235
+(e)🆕|feature
+(*)Cyborg eyes now glow in the dark.
+(u)Carbadox
+(p)1176
+(e)🆕|feature
+(+)Added new cocktails namely, Bee's Knees, Duck Fart, Phil Collins, Spiced Rum, Methacola, Pink Lemonade and the cocktail syrup, grenadine.
+(u)UrsulaMajor
+(p)1230
+(e)|
+(+)Mentor mice now have a bible fart interaction
+(u)RichardGere
+(p)1233
+(e)🐛|bug
+(+)Fixed a number of AI related bugs.
 (u)Sovexe
 (p)1223
 (e)🔄|rework

@@ -2869,9 +2869,6 @@ var/list/electiles = list()
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "boomerang"
 
-	density = 0
-	opacity = 0
-	anchored = 1
 	contraband = 4
 
 	icon = 'icons/obj/items/weapons.dmi'
