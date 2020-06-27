@@ -2495,7 +2495,7 @@
 /turf/simulated/floor/grime{
 	dir = 8
 	},
-/area)
+/area/station/science)
 "aqf" = (
 /obj/disposalpipe/switch_junction/right/south,
 /obj/cable{
@@ -3412,7 +3412,7 @@
 /turf/simulated/floor/grime{
 	dir = 8
 	},
-/area)
+/area/station/science)
 "aGq" = (
 /obj/table/glass/auto,
 /obj/random_item_spawner/hat/one_or_zero,
@@ -9868,7 +9868,7 @@
 /turf/simulated/floor/grime{
 	dir = 8
 	},
-/area)
+/area/station/science)
 "cPC" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 1
@@ -10130,7 +10130,7 @@
 	},
 /obj/map/light/white,
 /turf/space,
-/area/station/science)
+/area)
 "cUi" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
@@ -16122,12 +16122,10 @@
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "eRl" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/obj/map/light/white,
-/turf/space,
+/obj/item/clothing/under/gimmick/mario/waluigi,
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/plating/jen,
 /area/station/science)
 "eRv" = (
 /turf/simulated/floor/carpet/blue/decal{
@@ -21260,7 +21258,6 @@
 	name = "Emergency Ejection Button";
 	pixel_x = 23
 	},
-/obj/access_spawn/research,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
 "gCI" = (
@@ -49397,7 +49394,7 @@
 "pTV" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/mainpod2_horizontal/vertical{
 	dir = 2;
-	id = "hangar_bubsross"
+	id = "hangar_bubsruss"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -53727,7 +53724,7 @@
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/mainpod2_horizontal/vertical{
 	dir = 2;
 	icon_state = "bdoorright1";
-	id = "hangar_bubsross"
+	id = "hangar_bubsruss"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -58240,10 +58237,10 @@
 /area/station/medical/dome)
 "sGh" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/access_spawn/maint,
+/obj/access_spawn/research,
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/plating,
-/area)
+/area/station/science)
 "sGi" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -60313,8 +60310,8 @@
 "ttM" = (
 /obj/random_item_spawner/junk/maybe_few,
 /obj/machinery/door_control{
-	id = "hangar_bubsross";
-	name = "Secure Hangar Door Control";
+	id = "hangar_bubsruss";
+	name = "Bubs Russ' Pod Paintjobs Hangar Door Control";
 	pixel_x = 23
 	},
 /turf/simulated/floor/plating/jen,
@@ -60493,6 +60490,8 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "tvC" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/science)
 "tvD" = (
@@ -60848,7 +60847,7 @@
 /area/station/maintenance/outer/nw)
 "tBP" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/access_spawn/maint,
+/obj/access_spawn/research,
 /obj/firedoor_spawn,
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/plating/jen,
@@ -68772,15 +68771,6 @@
 /obj/disposalpipe/junction/right/west,
 /turf/simulated/floor/black,
 /area/station/bridge)
-"wcQ" = (
-/obj/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 2.5;
-	name = "VACUUM AREA"
-	},
-/turf/simulated/wall/auto/reinforced/jen/purple,
-/area)
 "wdi" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -70214,7 +70204,7 @@
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/mainpod2_horizontal/vertical{
 	dir = 2;
 	icon_state = "bdoorleft1";
-	id = "hangar_bubsross"
+	id = "hangar_bubsruss"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -117906,7 +117896,7 @@ hAg
 hAg
 bPo
 dRf
-eRl
+xtS
 cTE
 dRf
 qva
@@ -118208,13 +118198,13 @@ hAg
 hAg
 hAg
 dRf
-eRl
+xtS
 cTE
 dRf
 qva
 aGD
 xJS
-tvC
+eRl
 rOT
 rOT
 rOT
@@ -118510,7 +118500,7 @@ laI
 hAg
 oHu
 dRf
-eRl
+xtS
 cTE
 dRf
 vRh
@@ -118812,7 +118802,7 @@ onh
 hAg
 hAg
 dRf
-eRl
+xtS
 cTE
 dRf
 qva
@@ -119114,7 +119104,7 @@ onh
 hAg
 hAg
 dRf
-eRl
+xtS
 cTE
 dRf
 qva
@@ -119416,7 +119406,7 @@ wvd
 hAg
 hAg
 dRf
-eRl
+xtS
 cTE
 dRf
 qva
@@ -119718,7 +119708,7 @@ wSo
 hAg
 oHu
 dRf
-eRl
+xtS
 cTE
 dRf
 vRh
@@ -120020,7 +120010,7 @@ wSo
 hAg
 hAg
 dRf
-eRl
+xtS
 cTE
 dRf
 qva
@@ -120322,7 +120312,7 @@ tOe
 hAg
 bPo
 dRf
-eRl
+xtS
 cTE
 dRf
 qva
@@ -121840,7 +121830,7 @@ oni
 qTU
 aFX
 apT
-wcQ
+qTU
 rdj
 rdj
 rdj
@@ -122140,9 +122130,9 @@ vEX
 hQi
 stV
 oPf
-vre
-vre
-vre
+oPf
+oPf
+oPf
 rdj
 rdj
 rdj
