@@ -1474,6 +1474,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\submachine\seed.dm"
 #include "code\obj\submachine\slots.dm"
 #include "code\obj\submachine\syndicate_teleporter.dm"
+#include "code\obj\submachine\weapon_vendor.dm"
 #include "code\obj\ToSplit\barber_shop.dm"
 #include "code\procs\accents.dm"
 #include "code\procs\access.dm"
