@@ -215,7 +215,7 @@
 						</html>
 					"}
 		src.mob.Browse(gueststring, "window=getout")
-		alert(src.mob)
+		sleep(10)
 		if (src)
 			del(src)
 		return
@@ -243,7 +243,7 @@
 							</html>
 						"}
 			src.mob.Browse(whitelistString, "window=whiteout")
-			alert(src.mob)
+			sleep(10)
 			if (src)
 				del(src)
 			return
@@ -275,7 +275,7 @@
 							</html>
 						"}
 		src.mob.Browse(banstring, "window=ripyou")
-		alert(src.mob)
+		sleep(10)
 		if (src)
 			del(src)
 		return
