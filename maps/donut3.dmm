@@ -19559,7 +19559,8 @@
 /area/station/turret_protected/armory_outside)
 "fZX" = (
 /obj/stool/chair/comfy/blue{
-	dir = 8
+	dir = 8;
+	name = "the other best seat in the house"
 	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
@@ -38767,6 +38768,7 @@
 /obj/item/device/multitool{
 	pixel_x = 7
 	},
+/obj/item/reagent_containers/food/snacks/popcorn,
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
 "mwv" = (
