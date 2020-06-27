@@ -1,5 +1,9 @@
 
 (t)fri jun 26 20
+(u)Avatharian
+(p)1238
+(e)🐛|bug
+(+)Produce satchels now update their icon when removing items by hand.
 (u)pali
 (p)1235
 (e)🆕|feature
