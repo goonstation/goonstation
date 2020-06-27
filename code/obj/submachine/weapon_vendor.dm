@@ -112,7 +112,7 @@
 				src.temp += "<tr><td><a href='?src=\ref[src];buy=\ref[M]'><b><u>[M.name]</u></b></a></td><td>[M.catagory]</td><td>[M.description]</td></tr>"
 
 			src.temp += "</table></div>"
-			src.temp = jointext(src.temp)
+			src.temp = jointext(src.temp, "")
 
 		if (href_list["buy"])
 			var/datum/materiel/sidearm/S = locate(href_list["buy"]) in materiel_stock
