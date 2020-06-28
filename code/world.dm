@@ -1595,15 +1595,17 @@ var/f_color_selector_handler/F_Color_Selector
 				var/ckey = plist["ckey"]
 				var/msg
 
-				if (type == "add")
+				if (type == "add" && !(ckey in whitelistCkeys))
 					whitelistCkeys += ckey
 					msg = "Entry '[ckey]' added to whitelist"
-				else if (type == "remove")
+				else if (type == "remove" && (ckey in whitelistCkeys))
 					whitelistCkeys -= ckey
 					msg = "Entry '[ckey]' removed from whitelist"
 
-				logTheThing("admin", null, null, msg)
-				logTheThing("diary", null, null, msg, "admin")
+				if (msg)
+					logTheThing("admin", null, null, msg)
+					logTheThing("diary", null, null, msg, "admin")
+
 				return 1
 
 
