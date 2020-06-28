@@ -453,6 +453,9 @@
 					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
+		kendo_light
+			staminaCost = 5
+
 		kendo_overhead
 			staminaCost = 30
 
@@ -501,6 +504,10 @@
 
 		kendo_thrust
 			staminaCost = 8
+			damageMult = 1
+
+			onAdd()
+				return
 	swipe
 		cooldown = 0 //30
 		staminaCost = 5
@@ -577,6 +584,16 @@
 						if(isTarget(A))
 							A.attackby(master, user, params, 1)
 							attacked += A
+							if(prob(20) && istype(master,/obj/item/shinai) && ishuman(A))
+								var/mob/living/carbon/human/H = A
+								if(H.equipped())
+									var/obj/item/I = H.equipped()
+									H.u_equip(I)
+									I.set_loc(H.loc)
+									var/target_turf = get_offset_target_turf(I.loc,rand(5)-rand(5),rand(5)-rand(5))
+									SPAWN_DBG(1 DECI SECOND)
+										I.throw_at(target_turf,3,1)
+										//DEV - chat feedback
 							hit = 1
 
 				afterUse(user)
@@ -611,6 +628,7 @@
 			staminaCost = 15
 			swipe_color = "#a3774d"
 			damageMult = 0.8
+
 			onAdd()
 				if(master)
 					overrideStaminaDamage = master.stamina_damage * 0.8
@@ -1401,9 +1419,6 @@
 			if (ishuman(hit))
 				var/mob/living/carbon/human/H = hit
 				H.do_disorient(src.stamina_damage, stunned = 10)
-
-	katana_dash/kendo_lunge //DEV - make something like the jumpy leap
-		staminaCost = 30
 
 	nunchucks
 		cooldown = 30

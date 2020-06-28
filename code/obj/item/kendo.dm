@@ -57,7 +57,7 @@
     icon = 'icons/obj/items/weapons.dmi'
     inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
     icon_state = "shinai"
-    item_state = "shinai-lunge"
+    item_state = "shinai-light"
 
     w_class = 4.0
     two_handed = 1
@@ -85,8 +85,8 @@
                 force = 6.0
                 stamina_damage = 10
                 stamina_cost = 5.0
-                item_state = "shinai-lunge"
-                src.setItemSpecial(/datum/item_special/katana_dash/kendo_lunge)
+                item_state = "shinai-light"
+                src.setItemSpecial(/datum/item_special/simple/kendo_light)
             if("disarm")
                 force = 7.0
                 stamina_damage = 10
@@ -122,8 +122,8 @@
         force = 6.0
         stamina_damage = 10
         stamina_cost = 5.0
-        item_state = "shinai-lunge"
-        src.setItemSpecial(/datum/item_special/katana_dash/kendo_lunge)
+        item_state = "shinai-light"
+        src.setItemSpecial(/datum/item_special/simple/kendo_light)
 
 //==========
 //Shinai Bag
