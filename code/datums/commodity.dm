@@ -1893,6 +1893,14 @@
 	upperfluc = 100
 	lowerfluc = -100
 
+/datum/commodity/medical/firstaidC
+	comname = "First Aid Kit - Critical"
+	comtype = /obj/item/storage/firstaid/crit
+	price = 2000
+	baseprice = 2000
+	upperfluc = 500
+	lowerfluc = -700
+
 /datum/commodity/medical/ether
 	comname = "Ether"
 	comtype = /obj/item/reagent_containers/glass/bottle/ether

@@ -807,6 +807,7 @@
 				src.goods_sell += new /datum/commodity/medical/firstaidT(src)
 				src.goods_sell += new /datum/commodity/medical/firstaidO(src)
 				src.goods_sell += new /datum/commodity/medical/firstaidN(src)
+				src.goods_sell += new /datum/commodity/medical/firstaidC(src)
 				src.goods_sell += new /datum/commodity/synthmodule/bacteria(src)
 				src.goods_sell += new /datum/commodity/synthmodule/virii(src)
 				src.goods_sell += new /datum/commodity/synthmodule/fungi(src)
