@@ -55,7 +55,7 @@
 
 /datum/ai_laws/proc/set_zeroth_law(var/law)
 	src.zeroth = law
-	statlog_ailaws(1, law, (usr ? usr : "Ion Storm"))
+	//statlog_ailaws(1, law, (usr ? usr : "Ion Storm"))
 
 /datum/ai_laws/proc/add_default_law(var/law)
 	if (!(law in src.default))
@@ -84,7 +84,7 @@
 		src.supplied += ""
 
 	src.supplied[number + 1] = law
-	statlog_ailaws(1, law, (usr ? usr : "Ion Storm"))
+	//statlog_ailaws(1, law, (usr ? usr : "Ion Storm"))
 
 /datum/ai_laws/proc/clear_supplied_laws()
 	src.supplied = list()

@@ -285,7 +285,7 @@
 				C.add_centcom_report("[command_name()] Update", command_report)
 
 			command_alert(command_report, "Critter Gauntlet match finished")
-		statlog_gauntlet(moblist_names, score, current_level)
+		//statlog_gauntlet(moblist_names, score, current_level)
 
 		SPAWN_DBG(0)
 			for (var/obj/item/I in staging)

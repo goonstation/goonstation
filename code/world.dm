@@ -555,7 +555,7 @@ var/f_color_selector_handler/F_Color_Selector
 	world.log << "Map: [getMapNameFromID(map_setting)]"
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
-	round_start_data() //Tell the hub site a round is starting
+	//round_start_data() //Tell the hub site a round is starting
 	if (time2text(world.realtime,"DDD") == "Fri")
 		NT |= mentors
 

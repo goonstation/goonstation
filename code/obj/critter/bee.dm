@@ -833,7 +833,7 @@
 		reagents = R
 		R.my_atom = src
 
-		statlog_bees(src)
+		//statlog_bees(src)
 
 		//SPAWN_DBG(1 SECOND)
 		src.pixel_x = rand(-max_offset,max_offset)

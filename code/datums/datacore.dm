@@ -226,9 +226,9 @@
 	var/target_byond_key = null
 	var/issuer_byond_key = null
 
-	New()
-		SPAWN_DBG(1 SECOND)
-			statlog_ticket(src, usr)
+	//New()
+	//	SPAWN_DBG(1 SECOND)
+	//		statlog_ticket(src, usr)
 
 /datum/fine
 	var/ID = null
@@ -255,7 +255,7 @@
 					bank_record = B
 					break
 			if(!bank_record) qdel(src)
-			statlog_fine(src, usr)
+			//statlog_fine(src, usr)
 
 /datum/fine/proc/approve(var/approved_by,var/their_job)
 	if(approver || paid) return

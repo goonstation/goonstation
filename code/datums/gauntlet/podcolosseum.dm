@@ -328,7 +328,7 @@
 				C.add_centcom_report("[command_name()] Update", command_report)
 
 			command_alert(command_report, "Pod Colosseum match finished")
-		statlog_gauntlet(moblist_names, score, 0)
+		//statlog_gauntlet(moblist_names, score, 0)
 
 		SPAWN_DBG(0)
 			for (var/obj/machinery/colosseum_putt/P in staging)

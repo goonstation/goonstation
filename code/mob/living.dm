@@ -183,7 +183,7 @@
 
 /mob/living/death(gibbed)
 	src.remove_ailments()
-	if (src.key) statlog_death(src,gibbed)
+	//if (src.key) statlog_death(src,gibbed)
 	if (src.client && (ticker.round_elapsed_ticks >= 12000))
 		var/num_players = 0
 		for(var/client/C)

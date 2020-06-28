@@ -463,11 +463,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//End of round statistic collection for goonhub
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] statlog_traitors")
-	statlog_traitors()
+	//statlog_traitors()
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] statlog_ailaws")
-	statlog_ailaws(0)
+	//statlog_ailaws(0)
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] round_end_data")
-	round_end_data(1) //Export round end packet (normal completion)
+	//round_end_data(1) //Export round end packet (normal completion)
 
 	var/pets_rescued = 0
 	for(var/pet in pets)
