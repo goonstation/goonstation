@@ -214,6 +214,7 @@
 
 //Item function flags
 #define USE_INTENT_SWITCH_TRIGGER 1 //apply to an item's flags to use the item's intent_switch_trigger() proc. This will be called when intent is switched while this item is in hand.
+#define USE_SPECIALS_ON_ALL_INTENTS 2 //allows special attacks to be performed on help and grab intent with this item
 
 // human equipment slots
 #define SLOT_BACK 1
