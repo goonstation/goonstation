@@ -42,16 +42,16 @@ jobs:
         run: |
           ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
 
-      - name: Annotate Errors
-        uses: yogstation13/add-annotations-github-action@master
-        with:
-          check_name: "Run Linters"
-          linter_output_path: 'output-annotations.txt'
-          commit_sha: ${{ github.sha }}
-          regex: '(?<filename>.*?), line (?<lineNumber>\d+), column (?<columnNumber>\d+):\n(?<errorCode>\w+): (?<errorDesc>.*)'
-        if: always()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Annotate Errors
+#         uses: yogstation13/add-annotations-github-action@master
+#         with:
+#           check_name: "Run Linters"
+#           linter_output_path: 'output-annotations.txt'
+#           commit_sha: ${{ github.sha }}
+#           regex: '(?<filename>.*?), line (?<lineNumber>\d+), column (?<columnNumber>\d+):\n(?<errorCode>\w+): (?<errorDesc>.*)'
+#         if: always()
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   compile:
     name: Compile

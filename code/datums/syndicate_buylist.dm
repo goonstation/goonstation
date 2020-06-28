@@ -400,7 +400,7 @@ This is basically useless for anyone but miners.
 		tracker.owner = owner
 		return
 
-// Gannets Nuke Ops Class Crates
+// Gannets Nuke Ops Class Crates - now found under weapon_vendor.dm
 
 /datum/syndicate_buylist/traitor/classcrate
 	name = "Class Crate - Generic"
@@ -409,7 +409,7 @@ This is basically useless for anyone but miners.
 	desc = "A crate containing a Nuke Ops Class Loadout, this one is generic and you shouldn't see it."
 	objective = /datum/objective/specialist/nuclear
 	not_in_crates = 1
-
+/*
 	demo
 		name = "Class Crate - Grenadier"
 		item = /obj/storage/crate/classcrate/demo
@@ -457,7 +457,7 @@ This is basically useless for anyone but miners.
 		item = /obj/storage/crate/classcrate/sniper
 		cost = 12
 		desc = "A crate containing a Specialist Operative loadout. This one includes a high-powered sniper rifle, some smoke grenades and a chameleon generator."
-
+*/
 
 //////////////////////////////////////////////// Job-specific items  ////////////////////////////////////////////////////
 
