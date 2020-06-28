@@ -238,7 +238,8 @@
 			return 0
 
 		if(user.a_intent == "help" || user.a_intent == "grab")
-			return 0
+			if(!(user.equipped() && (user.equipped().item_function_flags & USE_SPECIALS_ON_ALL_INTENTS)))
+				return 0
 
 		if (user.check_block())
 			return 0
@@ -452,6 +453,9 @@
 					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
+		kendo_overhead
+			staminaCost = 30
+
 	rangestab
 		cooldown = 0 //10
 		staminaCost = 5
@@ -495,6 +499,8 @@
 					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
+		kendo_thrust
+			staminaCost = 8
 	swipe
 		cooldown = 0 //30
 		staminaCost = 5
@@ -578,7 +584,6 @@
 					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
-
 		csaber //no stun and less damage than normal csaber hit ( see sword/attack() )
 
 			damageMult = 0.54
@@ -598,6 +603,17 @@
 			damageMult = 1
 
 			onAdd()
+				return
+
+		kendo_sweep
+			name = "Kendo Sweep"
+			//cooldown = 0 //30
+			staminaCost = 15
+			swipe_color = "#a3774d"
+			damageMult = 0.8
+			onAdd()
+				if(master)
+					overrideStaminaDamage = master.stamina_damage * 0.8
 				return
 
 	slam
@@ -1386,7 +1402,8 @@
 				var/mob/living/carbon/human/H = hit
 				H.do_disorient(src.stamina_damage, stunned = 10)
 
-
+	katana_dash/kendo_lunge //DEV - make something like the jumpy leap
+		staminaCost = 30
 
 	nunchucks
 		cooldown = 30

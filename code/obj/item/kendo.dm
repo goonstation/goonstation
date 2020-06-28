@@ -73,7 +73,7 @@
     hit_type = DAMAGE_BLUNT
     flags = FPRINT | TABLEPASS | USEDELAY
     c_flags = EQUIPPED_WHILE_HELD
-    item_function_flags = USE_INTENT_SWITCH_TRIGGER
+    item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
     //DEV - needs block profile
 
     var/guard
@@ -86,22 +86,27 @@
                 stamina_damage = 10
                 stamina_cost = 5.0
                 item_state = "shinai-lunge"
+                src.setItemSpecial(/datum/item_special/katana_dash/kendo_lunge)
             if("disarm")
                 force = 7.0
                 stamina_damage = 10
                 stamina_cost = 8.0
                 item_state = "shinai-sweep"
+                src.setItemSpecial(/datum/item_special/swipe/kendo_sweep)
             if("grab")
                 force = 8.0
                 stamina_damage = 15
                 stamina_cost = 10.0
                 item_state = "shinai-thrust"
+                src.setItemSpecial(/datum/item_special/rangestab/kendo_thrust)
             if("harm")
                 force = 10.0
                 stamina_damage = 25
                 stamina_cost = 30.0
                 item_state = "shinai-overhead"
+                src.setItemSpecial(/datum/item_special/simple/kendo_overhead)
         user.update_inhands()
+        src.buildTooltipContent()
 
     intent_switch_trigger(mob/user as mob)
         if(guard != user.a_intent)
@@ -117,6 +122,8 @@
         force = 6.0
         stamina_damage = 10
         stamina_cost = 5.0
+        item_state = "shinai-lunge"
+        src.setItemSpecial(/datum/item_special/katana_dash/kendo_lunge)
 
 //==========
 //Shinai Bag
