@@ -75,7 +75,11 @@
 				boutput(owner, "<span class='alert'>Your head [pick("feels like shit","hurts like fuck","pounds horribly","twinges with an awful pain")].</span>")
 				owner.losebreath+=10
 				owner.changeStatus("weakened", 3 SECONDS)
-		if (owner.health <= -100)
+		if (owner.health <= -100 && owner.reagents.has_reagent("morphine")) // Reduces deathchance if you have morphine
+			var/deathchance = min(99, ((owner.get_brain_damage() * -5) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.001)
+			if (prob(deathchance))
+				owner.death()
+		else if (owner.health <= -100)
 			var/deathchance = min(99, ((owner.get_brain_damage() * -5) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.01)
 			if (prob(deathchance))
 				owner.death()
