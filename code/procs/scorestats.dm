@@ -29,6 +29,7 @@ var/datum/score_tracker/score_tracker
 	var/beepsky_alive = null
 	var/clown_beatings = null
 	var/list/pets_escaped = null
+	var/list/command_pets_escaped = null
 
 
 	proc/calculate_score()
@@ -193,10 +194,10 @@ var/datum/score_tracker/score_tracker
 		boutput(world, "<b>Final Rating: <font size='4'>[final_score_all]%</font></b>")
 		boutput(world, "<b>Grade: <font size='4'>[grade]</font></b>")
 
-		for(var/mob/E in mobs)
-			if(E.client)
-				if (E.client.preferences.view_score)
-					E.scorestats()
+		for (var/client/C)
+			var/mob/M = C.mob
+			if (M && C.preferences.view_score)
+				M.scorestats()
 
 		return
 
@@ -208,8 +209,7 @@ var/datum/score_tracker/score_tracker
 		richest_total = 0
 		//search mobs in centcom
 		for (var/mob/M in mobs)
-			var/area/A = get_area(M)
-			if (istype(A, /area/shuttle/escape/centcom))// || istype(A, /area/centcom))
+			if(in_centcom(M))
 				if (!most_damaged_escapee)
 					most_damaged_escapee = M
 				else if (M.get_damage() < most_damaged_escapee.get_damage())
@@ -220,40 +220,28 @@ var/datum/score_tracker/score_tracker
 					richest_total = cash_total
 					richest_escapee = M
 
+		command_pets_escaped = list()
 		pets_escaped = list()
 
-		//This is shit, I know, but what else can I do? Take solace in the fact that this only ever runs once.
-		var/list/escape_contents = get_area_all_atoms(map_settings.escape_centcom)
-		for (var/obj/critter/C in escape_contents)
-			//Dr. Acula
-			if (istype(C, /obj/critter/bat/doctor))
-				var/obj/critter/bat/doctor/P = C
-				if (P.alive)
-					pets_escaped += P
-					acula_blood = P.blood_volume
+		for (var/pet in pets)
+			if(iscritter(pet))
+				var/obj/critter/P = pet
+				if (in_centcom(P) && P.alive)
+					if(P.is_pet == 2)
+						command_pets_escaped += P
+					else if(P.is_pet)
+						pets_escaped += P
+					if (istype(P, /obj/critter/bat/doctor))
+						acula_blood = P:blood_volume //this only gets populated if Dr. Acula escapes
+			else if(ismobcritter(pet))
+				var/mob/living/critter/P = pet
+				if (in_centcom(pet) && isalive(P))
+					if(pet:is_pet == 2)
+						command_pets_escaped += pet
+					else if(pet:is_pet)
+						pets_escaped += pet
 
-			//Sylvester
-			else if (istype(C, /obj/critter/turtle/sylvester))
-				if (C.alive)
-					pets_escaped += C
-
-			//Jones
-			else if (istype(C, /obj/critter/cat/jones))
-				if (C.alive)
-					pets_escaped += C
-
-			//George
-			else if (istype(C, /obj/critter/dog/george))
-				if (C.alive)
-					pets_escaped += C
-
-			//Heisenbee
-			else if (istype(C, /obj/critter/domestic_bee/heisenbee))
-				if (C.alive)
-					pets_escaped += C
-			//Don't really need to check for the mob variants. But maybe if we switch eventually??
-
-		if (locate(/obj/machinery/bot/secbot/beepsky) in world)
+		if (length(by_type[/obj/machinery/bot/secbot/beepsky]))
 			beepsky_alive = 1
 
 		return
@@ -270,20 +258,70 @@ var/datum/score_tracker/score_tracker
 				var/obj/item/card/id/ID = I
 				. += ID.amount
 
+	proc/heisenhat_stats()
+		. = list()
+		. += "<B>Heisenbee's hat:</B> "
+		var/found_hb = 0
+		var/tier = world.load_intra_round_value("heisenbee_tier")
+		for(var/obj/critter/domestic_bee/heisenbee/HB in pets)
+			var/obj/item/hat = locate(HB.original_hat_ref)
+			if(hat)
+				if(hat.loc != HB)
+					var/atom/movable/L = hat.loc
+					while(istype(L) && !istype(L, /mob))
+						L = L.loc
+					. += "[hat][inline_bicon(getFlatIcon(hat, no_anim=TRUE))](tier [HB.original_tier])"
+					if(istype(L, /mob))
+						. += " \[STOLEN BY [L]\]"
+					else
+						. += " \[STOLEN!\]"
+					if(HB.hat)
+						var/dead = HB.alive ? "" : "(dead) "
+						. += "<BR>Also someone put [HB.hat] on [dead][HB][inline_bicon(getFlatIcon(HB, no_anim=TRUE))]but that doesn't count."
+				else if(!HB.alive)
+					. += "[hat][inline_bicon(getFlatIcon(HB, no_anim=TRUE))](tier [HB.original_tier])"
+					. += " \[🐝 MURDERED!\]"
+				else
+					. += "[hat][inline_bicon(getFlatIcon(HB, no_anim=TRUE))](tier [HB.original_tier])"
+			else if(HB.alive)
+				if(HB.original_tier)
+					. += "\[DESTROYED!\]"
+				else
+					. += "No hat yet."
+			else if(HB.original_tier)
+				. += "\[DESTROYED!\] \[🐝 MURDERED!\]"
+			else
+				. += "No hat yet. \[🐝 MURDERED!\]"
+			found_hb = 1
+			break
+		if(!found_hb)
+			if(tier)
+				. += "Heisenbee is missing but the hat is safe at tier [tier]."
+			else
+				. += "Heisenbee is missing and has no hat."
+		. += "<BR>"
+		return jointext(., "")
+
 	proc/escapee_facts()
-		. = ""
+		. = list()
 		//Richest Escapee | Most Damaged Escapee | Dr. Acula Blood Total | Clown Beatings
 		if (richest_escapee)		. += "<B>Richest Escapee:</B> [richest_escapee.real_name] : $[richest_total]<BR>"
 		if (most_damaged_escapee) 	. += "<B>Most Damaged Escapee:</B> [most_damaged_escapee.real_name] : [most_damaged_escapee.get_damage()]%<BR>"		//it'll be kinda different from when it's calculated, but whatever.
-		if (islist(pets_escaped) && pets_escaped.len)		//The reason I don't just use the pets_escaped list is because that list will send the info to goonhub, and I don't wanna send the bicons too.
+		if (length(command_pets_escaped))
+			var/list/who_escaped = list()
+			for (var/atom/A in command_pets_escaped)
+				who_escaped += "[A.name] [bicon(A)]"
+			. += "<B>Command Pets Escaped:</B> [who_escaped.Join(" ")]<BR><BR>"
+		if (length(pets_escaped))
 			var/list/who_escaped = list()
 			for (var/atom/A in pets_escaped)
 				who_escaped += "[A.name] [bicon(A)]"
-			. += "<B>Pets Escaped:</B> [who_escaped.Join(" ")]<BR><BR>"
+			. += "<B>Other Pets Escaped:</B> [who_escaped.Join(" ")]<BR><BR>"
 
 		if (acula_blood) 			. += "<B>Dr. Acula Blood Total:</B> [acula_blood]p<BR>"
 		if (beepsky_alive) 			. += "<B>Beepsky?:</B> Yes<BR>"
-		return .
+
+		return jointext(., "")
 
 
 /mob/proc/scorestats()
@@ -294,7 +332,7 @@ var/datum/score_tracker/score_tracker
 		score_tracker.score_text = {"<B>Round Statistics and Score</B><BR><HR>"}
 		score_tracker.score_text += "<B><U>TOTAL SCORE: [round(score_tracker.final_score_all)]%</U></B>"
 		if(round(score_tracker.final_score_all) == 69)
-			score_tracker.score_text += " <b>nice<b>"
+			score_tracker.score_text += " <b>nice</b>"
 		score_tracker.score_text += "<BR>"
 		score_tracker.score_text += "<B><U>GRADE: [score_tracker.grade]</U></B><BR>"
 		score_tracker.score_text += "<BR>"
@@ -325,6 +363,7 @@ var/datum/score_tracker/score_tracker
 		*/
 		score_tracker.score_text += "<B><U>STATISTICS</U></B><BR>"
 		score_tracker.score_text += score_tracker.escapee_facts()
+		score_tracker.score_text += score_tracker.heisenhat_stats()
 
 		score_tracker.score_text += "<HR>"
 

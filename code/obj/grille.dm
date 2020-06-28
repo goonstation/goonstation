@@ -13,6 +13,7 @@
 	var/corrode_resist = 0
 	var/temp_resist = 0
 	var/shock_when_entered = 1
+	text = "<font color=#aaa>+"
 	anchored = 1
 	flags = FPRINT | CONDUCT | USEDELAY
 	pressure_resistance = 5*ONE_ATMOSPHERE
@@ -202,7 +203,7 @@
 		else if (isobj(AM))
 			var/obj/O = AM
 			if (O.throwforce)
-				damage_blunt(max(0.5, O.throwforce / blunt_resist)) // we don't want people screaming right through these and you can still get through them by kicking/cutting/etc
+				damage_blunt(blunt_resist ? max(0.5, O.throwforce / blunt_resist) : 0.5) // we don't want people screaming right through these and you can still get through them by kicking/cutting/etc
 		return
 
 	attack_hand(mob/user)

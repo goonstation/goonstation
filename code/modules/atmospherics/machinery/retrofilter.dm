@@ -1,5 +1,7 @@
 //Ye olde filter of yore (Pre-dev adjustable filter)
 
+//TODO: Make this more modular and use APPLY_TO_GASES
+
 //TODO: Hacking.
 obj/machinery/atmospherics/retrofilter
 	icon = 'icons/obj/atmospherics/retro_filter.dmi'
@@ -150,8 +152,8 @@ obj/machinery/atmospherics/retrofilter
 			else
 				dat += "[gases[i]]: <a href='?src=\ref[src];toggle_gas=[1 << (i - 1)]'>[(src.filter_mode & (1 << (i - 1))) ? "Releasing" : "Passing"]</a><br>"
 
-		var/pressure = air_in.return_pressure()
-		var/total_moles = air_in.total_moles()
+		var/pressure = MIXTURE_PRESSURE(air_in)
+		var/total_moles = TOTAL_MOLES(air_in)
 
 		dat += "<hr>Gas Levels: <br>Gas Pressure: [round(pressure,0.1)] kPa<br><br>"
 
@@ -241,7 +243,7 @@ obj/machinery/atmospherics/retrofilter
 		if (!air_out2)
 			return
 
-		var/output_starting_pressure = air_out1.return_pressure()
+		var/output_starting_pressure = MIXTURE_PRESSURE(air_out1)
 
 		if(output_starting_pressure >= target_pressure)
 			//No need to mix if target is already full!
@@ -284,7 +286,7 @@ obj/machinery/atmospherics/retrofilter
 					filtered_out.carbon_dioxide = removed.carbon_dioxide
 					removed.carbon_dioxide = 0
 			if (filter_mode & MODE_TRACE)
-				if(removed && removed.trace_gases && removed.trace_gases.len)
+				if(removed && length(removed.trace_gases))
 					for(var/datum/gas/trace_gas in removed.trace_gases)
 						if(trace_gas)
 							removed.trace_gases -= trace_gas

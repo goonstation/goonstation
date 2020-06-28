@@ -418,7 +418,7 @@ lua
 var/global/lua/L = new
 /client/proc/RunLuaString(var/code as message)
 	set name = "Run Lua Code"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 	admin_only
 	if( !IsSecureAuthorized() )

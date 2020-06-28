@@ -13,7 +13,7 @@ proc/debug_color_of(var/thing)
 
 /client/proc
 	map_debug_panel()
-		set category = "Debug"
+		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 		var/area_txt = "<B>APC LOCATION REPORT</B><HR>"
 		var/apc_count = 0
@@ -36,14 +36,12 @@ proc/debug_color_of(var/thing)
 
 
 	general_report()
-		set category = "Debug"
+		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 		if(!processScheduler)
 			usr << alert("Process Scheduler not found.")
 
-		var/mobs = 0
-		for(var/mob/M in mobs)
-			mobs++
+		var/mobs = global.mobs.len
 
 
 		var/output = {"<B>GENERAL SYSTEMS REPORT</B><HR>
@@ -58,7 +56,7 @@ proc/debug_color_of(var/thing)
 		usr.Browse(output,"window=generalreport")
 
 	air_report()
-		set category = "Debug"
+		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 		if(!processScheduler || !air_master)
 			alert(usr,"processScheduler or air_master not found.","Air Report")
@@ -111,13 +109,13 @@ proc/debug_color_of(var/thing)
 		for(var/datum/air_group/g in air_master.air_groups)
 			if (g.group_processing)
 				for(var/turf/simulated/member in g.members)
-					p = round(max(-1, member.air.return_pressure()), 10)/10 + 1
+					p = round(max(-1, MIXTURE_PRESSURE(member.air)), 10)/10 + 1
 					if (p > ghistogram.len)
 						ghistogram.len = p
 					ghistogram[p]++
 			else
 				for(var/turf/simulated/member in g.members)
-					p = round(max(-1, member.air.return_pressure()), 10)/10 + 1
+					p = round(max(-1, MIXTURE_PRESSURE(member.air)), 10)/10 + 1
 					if (p > ughistogram.len)
 						ughistogram.len = p
 					ughistogram[p]++
@@ -131,7 +129,7 @@ proc/debug_color_of(var/thing)
 		return html
 
 	air_status(turf/target as turf)
-		set category = "Debug"
+		SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 		set name = "Air Status"
 		set popup_menu = 0
 
@@ -146,20 +144,21 @@ proc/debug_color_of(var/thing)
 			if(T.active_hotspot)
 				burning = 1
 
-		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] t:[GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
+		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
 
 		if(GM.trace_gases)
 			for(var/datum/gas/trace_gas in GM.trace_gases)
 				boutput(usr, "[trace_gas.type]: [trace_gas.moles]")
 
 	fix_next_move()
-		set category = "Debug"
+		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 		set name = "Press this if everybody freezes up"
 		var/largest_click_time = 0
 		var/mob/largest_click_mob = null
 		if (disable_next_click)
 			boutput(usr, "<span class='alert'>next_click is disabled and therefore so is this command!</span>")
 			return
+
 		for(var/mob/M in mobs)
 			if(!M.client)
 				continue
@@ -177,7 +176,7 @@ proc/debug_color_of(var/thing)
 		return
 
 	debug_profiler()
-		set category = "Debug"
+		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 		set name = "Open Profiler"
 
 		admin_only
@@ -239,7 +238,7 @@ proc/debug_color_of(var/thing)
 					if(!group.gencolor)
 						group.gencolor = rgb( rand(1,255),rand(1,255),rand(1,255) )
 					img.app.color = group.gencolor
-					img.app.desc = "Group \ref[group]<br>O2=[group.air.oxygen]<br/>Nitrogen=[group.air.nitrogen]<br/>CO2=[group.air.carbon_dioxide]<br/>Plasma=[group.air.toxins]<br/>Temperature=[group.air.temperature]<br/>Spaced=[group.spaced]"
+					img.app.desc = "Group \ref[group]<br>[MOLES_REPORT(group.air)]Temperature=[group.air.temperature]<br/>Spaced=[group.spaced]"
 					if (group.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
 					/*
 					var/list/borders_space = list()
@@ -307,7 +306,7 @@ proc/debug_color_of(var/thing)
 						img.app.overlays += mark
 				else
 					img.app.color = "#ffffff"
-					img.app.desc = "No Atmos Group<br/>O2=[sim.oxygen]<br/>Nitrogen=[sim.nitrogen]<br/>CO2=[sim.carbon_dioxide]<br/>Plasma=[sim.toxins]<br/>Temperature=[sim.temperature]"
+					img.app.desc = "No Atmos Group<br/>[MOLES_REPORT(sim)]Temperature=[sim.temperature]"
 			else
 				img.app.desc = "-unsimulated-"
 				img.app.color = "#202020"
@@ -346,13 +345,13 @@ proc/debug_color_of(var/thing)
 					img.app.desc = "no air mix"
 				else
 
-					var/pressure = air.return_pressure()
+					var/pressure = MIXTURE_PRESSURE(air)
 					img.app.desc = ""
 
 
-					var/breath_pressure = ((air.total_moles() * R_IDEAL_GAS_EQUATION * air.temperature) * BREATH_PERCENTAGE) / BREATH_VOLUME
+					var/breath_pressure = ((TOTAL_MOLES(air) * R_IDEAL_GAS_EQUATION * air.temperature) * BREATH_PERCENTAGE) / BREATH_VOLUME
 					//Partial pressure of the O2 in our breath
-					var/O2_pp = (air.total_moles()) && (air.oxygen / air.total_moles()) * breath_pressure
+					var/O2_pp = (TOTAL_MOLES(air)) && (air.oxygen / TOTAL_MOLES(air)) * breath_pressure
 					var/O2_color
 					var/T_color
 					switch (O2_pp)
@@ -383,7 +382,7 @@ proc/debug_color_of(var/thing)
 
 					T_color = "#ffffff"
 
-					//mt.maptext = "<span class='pixel r' style='color: white; -dm-text-outline: 1px black;'>[round(air.total_moles(), 0.1)]\n[round(pressure, 1)]\n[round(air.temperature - T0C, 1)]</span>"
+					//mt.maptext = "<span class='pixel r' style='color: white; -dm-text-outline: 1px black;'>[round(TOTAL_MOLES(air), 0.1)]\n[round(pressure, 1)]\n[round(air.temperature - T0C, 1)]</span>"
 					img.app.overlays = null
 
 					if (is_group)
@@ -502,10 +501,10 @@ proc/debug_color_of(var/thing)
 						pipe_image.color = debug_color_of(pipe.parent)
 					var/datum/gas_mixture/air = pipe.return_air()
 					if(show_numbers)
-						if(air.total_moles() > 0.01)
-							pipe_image.maptext = "<span class='pixel r ol'>[round(air.temperature, 0.1)]<br>[round(air.total_moles(), 0.1)]<br>[round(air.return_pressure(), 0.1)]</span>"
+						if(TOTAL_MOLES(air) > ATMOS_EPSILON)
+							pipe_image.maptext = "<span class='pixel r ol'>[round(air.temperature, 0.1)]<br>[round(TOTAL_MOLES(air), 0.1)]<br>[round(MIXTURE_PRESSURE(air), 0.1)]</span>"
 							pipe_image.maptext_x = -3
-						else if(air.total_moles() > 0)
+						else if(TOTAL_MOLES(air) > 0)
 							pipe_image.maptext = "<span class='pixel r ol'>&gt;0</span>"
 							pipe_image.maptext_x = -3
 				img.app.overlays += pipe_image
@@ -724,7 +723,7 @@ proc/debug_color_of(var/thing)
 
 /client/proc/SetInfoOverlay( )
 	set name = "Debug Overlay"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 	var/name = input("Choose an overlay") in (childrentypesof( /datum/infooverlay ) + "Remove")
 	if(activeOverlay)
@@ -734,6 +733,7 @@ proc/debug_color_of(var/thing)
 			for(var/img in infoOverlayImages)
 				img = infoOverlayImages[img]//shhh
 				screen -= img
+				images -= img
 				img:loc = null
 				qdel(img)
 			infoOverlayImages = list()

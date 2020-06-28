@@ -253,10 +253,12 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				src.take_damage(400)
+				SPAWN_DBG(0)
+					src.take_damage(400)
 				return
 			if(2.0)
-				src.take_damage(150)
+				SPAWN_DBG(0)
+					src.take_damage(150)
 				return
 
 	blob_act(var/power)
@@ -610,7 +612,7 @@
 	desc = "A soda fountain that definitely does not have a suspicious similarity to the alcohol and chemical dispensers. No sir."
 	dispensable_reagents = list("cola", "juice_lime", "juice_lemon", "juice_orange", \
 								"juice_cran", "juice_cherry", "juice_pineapple", "juice_tomato", \
-								"coconut_milk", "sugar", "water", "vanilla", "tea")
+								"coconut_milk", "sugar", "water", "vanilla", "tea", "grenandine")
 	icon_state = "alc_dispenser"
 	icon_base = "alc_dispenser"
 	glass_path = /obj/item/reagent_containers/food/drinks

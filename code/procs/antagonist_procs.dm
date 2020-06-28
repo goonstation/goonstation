@@ -229,16 +229,18 @@
 	synd_mob.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(synd_mob), synd_mob.slot_w_uniform)
 	synd_mob.equip_if_possible(new /obj/item/clothing/shoes/swat(synd_mob), synd_mob.slot_shoes)
 	synd_mob.equip_if_possible(new /obj/item/clothing/gloves/swat(synd_mob), synd_mob.slot_gloves)
-	synd_mob.equip_if_possible(new /obj/item/storage/backpack/satchel/syndie(synd_mob), synd_mob.slot_back)
-	synd_mob.equip_if_possible(new /obj/item/ammo/bullets/a357(synd_mob), synd_mob.slot_in_backpack)
+	//synd_mob.equip_if_possible(new /obj/item/storage/backpack/satchel/syndie(synd_mob), synd_mob.slot_back)
+	//synd_mob.equip_if_possible(new /obj/item/ammo/bullets/a357(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/reagent_containers/pill/tox(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/remote/syndicate_teleporter(synd_mob), synd_mob.slot_l_store)
-	synd_mob.equip_if_possible(new /obj/item/gun/kinetic/revolver(synd_mob), synd_mob.slot_belt)
-
+	//synd_mob.equip_if_possible(new /obj/item/gun/kinetic/revolver(synd_mob), synd_mob.slot_belt)
+	synd_mob.equip_if_possible(new /obj/item/requisition_token(synd_mob), synd_mob.slot_r_store)
+/*
 	var/obj/item/uplink/syndicate/U = new /obj/item/uplink/syndicate/alternate(synd_mob)
 	if (synd_mob.mind && istype(synd_mob.mind))
 		U.setup(synd_mob.mind)
 	synd_mob.equip_if_possible(U, synd_mob.slot_r_store)
+*/
 
 	var/obj/item/card/id/syndicate/I = new /obj/item/card/id/syndicate(synd_mob) // for whatever reason, this is neccessary
 	I.icon_state = "id"
@@ -258,7 +260,7 @@
 	for (var/obj/item/device/radio/headset/R in synd_mob.contents)
 		R.set_secure_frequency("h", the_frequency)
 
-		R.secure_colors = list(RADIOC_SYNDICATE)
+		R.secure_classes = list(RADIOCL_SYNDICATE)
 		R.protected_radio = 1 // Ops can spawn with the deaf trait.
 		R.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
 

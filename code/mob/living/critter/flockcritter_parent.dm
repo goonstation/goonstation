@@ -28,8 +28,11 @@
 	// do i pay for building?
 	var/pays_to_construct = 1
 	// AI STUFF
-	var/datum/aiHolder/flock/ai = null
 	is_npc = 1
+
+	use_stamina = 0 //haha no
+
+	can_lie = 0 // no rotate when dead
 
 /mob/living/critter/flock/setup_healths()
 	add_hh_robot(-(src.health_brute), src.health_brute, src.health_brute_vuln)
@@ -129,7 +132,8 @@
 	if(src.is_npc)
 		// tell the npc AI to go after the target
 		if(src.ai)
-			src.ai.rally(target)
+			var/datum/aiHolder/flock/flockai = ai
+			flockai.rally(target)
 	else
 		// tell whoever's controlling the critter to come to the flockmind, pronto
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: The flockmind requests your presence immediately.\]</b></span>")
@@ -322,7 +326,7 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 10
 
-	var/mob/living/critter/flock/drone/target
+	var/atom/target
 
 	New(var/mob/living/critter/flock/drone/ntarg, var/duration_i)
 		..()
@@ -342,20 +346,41 @@
 		..()
 		if(target)
 			var/mob/living/critter/flock/F = owner
+			var/T = target
+			var/mob/living/critter/flock/C
+			if(istype(T, /mob/living/critter/flock))
+				C = T
 			if(F)
-				F.tri_message("<span class='notice'>[owner] begins spraying glowing fibres onto [target].</span>",
-					F, "<span class='hint'>You begin repairing [target.real_name]. You will both need to stay still for this to work.</span>",
-					target, "<span class='hint'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
-					"You hear hissing and spraying.")
-				playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
-				if(target.is_npc)
-					target.ai.wait()
+				if(C)
+					F.tri_message("<span class='notice'>[owner] begins spraying glowing fibres onto [C].</span>",
+						F, "<span class='notice'>You begin repairing [C.real_name]. You will both need to stay still for this to work.</span>",
+						T, "<span class='notice'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
+						"You hear hissing and spraying.")
+				else
+					F.tri_message("<span class='notice'>[owner] begins spraying glowing fibres onto [T].</span>",
+						F, "<span class='notice'>You begin repairing [T]. You will both need to stay still for this to work.</span>",
+						T, "<span class='notice'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
+						"You hear hissing and spraying.")
+				playsound(T, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
+				if(C?.is_npc)
+					C.ai.wait()
 
 	onEnd()
 		..()
 		var/mob/living/critter/flock/F = owner
+		var/mob/living/critter/flock/T
+		if(istype(target, /mob/living/critter/flock))
+			T = target
 		if(F)
-			target.HealDamage("All", target.health_brute / 3, target.health_burn / 3)
+			if(istype(target, /obj/machinery/door/feather))
+//				dothin
+				var/obj/machinery/door/feather/D = target
+				D.health  = min(20, D.health_max - D.health) + D.health
+				if(D.broken && D.health_max/2 < D.health)
+					D.broken = 0 //fix the damn thing
+					D.icon_state = "door1"//make it not look broke
+			else
+				T.HealDamage("All", T.health_brute / 3, T.health_burn / 3)
 			F.pay_resources(10)
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -410,8 +435,70 @@
 		if(src.decal)
 			pool(src.decal)
 		var/mob/living/critter/flock/F = owner
-		if(F)
+		if(F && target && in_range(owner, target))
 			var/obj/icecube/flockdrone/cage = new /obj/icecube/flockdrone(target.loc, target, F.flock)
-			cage.visible_message("<span class='alert'>[src] forms around [target], entombing them completely!</span>")
+			cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
 			F.pay_resources(15)
 			playsound(get_turf(target), "sound/misc/flockmind/flockdrone_build_complete.ogg", 70, 1)
+
+///
+//decon action
+///
+/datum/action/bar/flock_decon
+	id = "flock_decon"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 60
+
+	var/atom/target
+
+	New(var/mob/living/ntarg, var/duration_i)
+		..()
+		if (ntarg)
+			target = ntarg
+		if (duration_i)
+			duration = duration_i
+
+	onUpdate()
+		..()
+		if (target == null || owner == null || get_dist(owner, target) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		owner.visible_message("<span style='color:blue'>[owner] begins deconstructing [target].</span>")
+
+	onInterrupt()
+		..()
+
+	onEnd()
+		..()
+		switch(target.type)
+			if(/obj/storage/closet/flock)
+				var/turf/T = get_turf(target)
+				var/obj/storage/closet/flock/c = target
+				playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
+				var/obj/item/raw_material/shard/S = unpool(/obj/item/raw_material/shard)
+				S.set_loc(T)
+				S.setMaterial(getMaterial("gnesisglass"))
+				c.dump_contents()
+				qdel(target)
+				target = null
+			if(/turf/simulated/wall/auto/feather)
+				var/turf/simulated/wall/auto/feather/f = target
+				f.dismantle_wall()
+			if(/obj/machinery/door/feather)
+				var/turf/T = get_turf(target)
+				playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
+				var/obj/item/raw_material/shard/S = unpool(/obj/item/raw_material/shard)
+				S.set_loc(T)
+				S.setMaterial(getMaterial("gnesisglass"))
+				S = unpool(/obj/item/raw_material/shard)
+				S.set_loc(T)
+				S.setMaterial(getMaterial("gnesis"))
+				qdel(target)
+				target = null
+			if(/obj/table/flock, /obj/table/flock/auto)
+				var/obj/table/flock/f = target
+				playsound(get_turf(f), "sound/items/Deconstruct.ogg", 50, 1)
+				f.deconstruct()

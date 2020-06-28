@@ -80,7 +80,7 @@
 			C.buckled_guy = 0
 		M.pixel_y = 0
 		M.buckled = null
-		M.anchored = 0
+		reset_anchored(M)
 
 		M.targeting_ability = null
 		M.update_cursor()
@@ -150,7 +150,12 @@
 					src.changeStatus("weakened", 3 SECONDS * effect_mult)
 				src.force_laydown_standup()
 
-/mob/throw_end()
+/mob/throw_end(list/params)
 	if (src.throwing & THROW_CHAIRFLIP)
-		src.changeStatus("weakened", 1.7 SECONDS)
+		src.changeStatus("weakened", 2.8 SECONDS)
 		src.force_laydown_standup()
+
+	if (length(params) && params["stun"])
+		if (src.getStatusDuration("weakened") < params["stun"])
+			src.setStatus("weakened", params["stun"])
+			src.force_laydown_standup()

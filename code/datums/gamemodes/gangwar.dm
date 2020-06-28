@@ -50,8 +50,10 @@
 
 /datum/game_mode/gang/pre_setup()
 	var/num_players = 0
-	for(var/mob/new_player/player in mobs)
-		if(player.client && player.ready) num_players++
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+		if(player.ready) num_players++
 
 	var/num_teams = max(setup_min_teams, min(round((num_players) / 9), setup_max_teams)) //1 gang per 9 players
 
@@ -153,7 +155,7 @@
 	if(leader.ears != null && istype(leader.ears,/obj/item/device/radio/headset))
 		var/obj/item/device/radio/headset/H = leader.ears
 		H.set_secure_frequency("g",leader.mind.gang.gang_frequency)
-		H.secure_colors["g"] = RADIOC_SYNDICATE
+		H.secure_classes["g"] = RADIOCL_SYNDICATE
 		boutput(leader, "Your headset has been tuned to your gang's frequency. Prefix a message with :g to communicate on this channel.")
 
 	return
@@ -188,17 +190,23 @@
 /datum/game_mode/gang/proc/get_possible_leaders(minimum_leaders=1)
 	var/list/candidates = list()
 
-	for(var/mob/new_player/player in mobs)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
 		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in leaders) && !(player.mind in token_players) && !candidates.Find(player.mind))
+
+		if ((player.ready) && !(player.mind in leaders) && !(player.mind in token_players) && !candidates.Find(player.mind))
 			if(player.client.preferences.be_gangleader)
 				candidates += player.mind
 
 	if(candidates.len < minimum_leaders)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_gangleader set to yes, including players who don't want to be misc enemies in the pool for Gang Leader selection.")
-		for(var/mob/new_player/player in mobs)
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player)) continue
+
 			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in leaders) && !(player.mind in token_players) && !candidates.Find(player.mind))
+			if ((player.ready) && !(player.mind in leaders) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 
 				if (candidates.len >= minimum_leaders)
@@ -1057,19 +1065,17 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
+		if (isweldingtool(W))
 			user.lastattacked = src
 
 			if(health == max_health)
 				boutput(user, "<span class='notice'>The locker isn't damaged!</span>")
 				return
 
-			var/obj/item/weldingtool/welder = W
-			if(welder.welding)
-				if(welder.try_weld(user, 4))
-					repair_damage(20)
-					user.visible_message("<span class='notice'>[user] repairs the [src] with [welder]!</span>")
-					return
+			if(W:try_weld(user, 4))
+				repair_damage(20)
+				user.visible_message("<span class='notice'>[user] repairs the [src] with [W]!</span>")
+				return
 
 		if (health <= 0)
 			boutput(user, "<span class='alert'>The locker is broken, it needs to be repaired first!</span>")
@@ -1280,7 +1286,7 @@
 		if(target.ears != null && istype(target.ears,/obj/item/device/radio/headset))
 			var/obj/item/device/radio/headset/H = target.ears
 			H.set_secure_frequency("g",src.gang.gang_frequency)
-			H.secure_colors["g"] = RADIOC_SYNDICATE
+			H.secure_classes["g"] = RADIOCL_SYNDICATE
 			boutput(target, "Your headset has been tuned to your gang's frequency. Prefix a message with :g to communicate on this channel.")
 
 //		update_max_members()
@@ -1339,34 +1345,30 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 				haspaint = 1
 			else if(istype(I,/obj/item/device/radio/headset/gang) && I:secure_frequencies && I:secure_frequencies["g"] == user.mind.gang.gang_frequency)
 				hasheadset = 1
-		if(hasitem1 && hasitem2 && hasheadset)
-			if(!haspaint)
-				new /obj/item/spray_paint(user.loc)
-		else
-			if(!hasitem1)
-				var/obj/item/clothing/C = new user.mind.gang.item1(user.loc)
-				if (user.w_uniform)
-					user.drop_from_slot(user.w_uniform)
-				user.force_equip(C, user.w_uniform)
+		if(!hasitem1)
+			var/obj/item/clothing/C = new user.mind.gang.item1(user.loc)
+			// if (user.w_uniform)
+			// 	user.drop_from_slot(user.w_uniform)
+			user.equip_if_possible(C, user.slot_w_uniform)
 
-			if(!hasitem2)
-				var/obj/item/clothing/C = new user.mind.gang.item2(user.loc)
-				if (istype(C, /obj/item/clothing/head))
-					user.drop_from_slot(user.head)
-					user.force_equip(C, user.head)
-				else if (istype(C, /obj/item/clothing/mask))
-					user.drop_from_slot(user.wear_mask)
-					user.force_equip(C, user.wear_mask)
+		if(!hasitem2)
+			var/obj/item/clothing/C = new user.mind.gang.item2(user.loc)
+			if (istype(C, /obj/item/clothing/head))
+				user.drop_from_slot(user.head)
+				user.equip_if_possible(C, user.slot_head)
+			else if (istype(C, /obj/item/clothing/mask))
+				user.drop_from_slot(user.wear_mask)
+				user.equip_if_possible(C, user.slot_wear_mask)
 
-			if(!hasheadset)
-				var/obj/item/device/radio/headset/gang/headset = new /obj/item/device/radio/headset/gang(user.loc)
-				headset.set_secure_frequency("g",user.mind.gang.gang_frequency)
-				if (user.ears)
-					user.drop_from_slot(user.ears)
-				user.force_equip(headset, user.ears)
+		if(!hasheadset)
+			var/obj/item/device/radio/headset/gang/headset = new /obj/item/device/radio/headset/gang(user.loc)
+			headset.set_secure_frequency("g",user.mind.gang.gang_frequency)
+			if (user.ears)
+				user.drop_from_slot(user.ears)
+			user.equip_if_possible(headset, user.slot_ears)
 
-			if(!haspaint)
-				user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
+		if(!haspaint)
+			user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
 
 		if(user.mind.special_role == "gang_leader")
 			var/obj/item/storage/box/gang_flyers/case = new /obj/item/storage/box/gang_flyers(user.loc)

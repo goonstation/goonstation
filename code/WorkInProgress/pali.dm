@@ -1,5 +1,11 @@
 // im pali
 
+/obj/item/reagent_containers/pill/sheltestgrog
+	name = "pill"
+	New()
+		. = ..()
+		src.reagents.add_reagent("sheltestgrog", 100)
+
 /obj/item/ammo/bullets/beepsky
 	sname = "Beepsky"
 	name = "beepsky box"
@@ -54,7 +60,11 @@
 		else
 			..()
 
-
+/obj/item/gun/kinetic/beepsky/one_bullet
+	New()
+		. = ..()
+		src.ammo.amount_left = 1
+		src.ammo.max_amount = 1
 
 
 
@@ -99,6 +109,7 @@
 	health_burn = 50
 	add_abilities = list(/datum/targetable/critter/peck,
 						/datum/targetable/critter/tackle)
+	blood_id = "crime"
 
 	setup_hands()
 		..()
@@ -143,6 +154,12 @@
 		for(var/image/chat_maptext/I in src.lines)
 			pool(I)
 		src.lines = null
+		for(var/A in src.vis_locs)
+			if(isliving(A))
+				var/mob/living/L = A
+				if(L.chat_text == src)
+					L.chat_text = null
+			A:vis_contents -= src
 		..()
 
 /image/chat_maptext
@@ -286,3 +303,168 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 	animate(src, transform = matrix() * 0, time = 1 SECOND, easing = SINE_EASING)
 	sleep(1 SECOND)
 	qdel(src)
+
+
+// ray filter experiments
+
+/obj/effect/ray_light_source
+	mouse_opacity = 0
+	plane = PLANE_LIGHTING
+	layer = LIGHTING_LAYER_BASE
+	blend_mode = BLEND_ADD
+	appearance_flags = RESET_ALPHA | RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART | RESET_TRANSFORM
+	var/ray_density = 3
+	var/shift_x = 0
+	var/shift_y = 0
+
+	New()
+		..()
+		src.filters += filter(type="rays", size=64, density=src.ray_density, factor=1, offset=rand(1000), threshold=0, color=src.color, x=shift_x, y=shift_y)
+		var/f = src.filters[length(src.filters)]
+		animate(f, offset=f:offset + 100, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
+
+/obj/item/strange_candle
+	name = "strange candle"
+	desc = "It's a strange candle."
+	icon = 'icons/obj/items/alchemy.dmi'
+	icon_state = "candle"
+	var/obj/effect/ray_light_source/light
+
+	New()
+		. = ..()
+		light = new/obj/effect/ray_light_source{color="#ffcc77"; shift_y=6; shift_x=2}(src)
+		src.vis_contents += light
+
+	set_loc(newloc)
+		var/oldloc = src.loc
+		. = ..()
+		if(istype(src.loc, /turf) && !istype(oldloc, /turf))
+			var/turf/T = oldloc
+			T.vis_contents -= light
+			src.vis_contents += light
+		else if(istype(src.loc, /mob))
+			var/mob/M = src.loc
+			M.vis_contents += light
+			src.vis_contents -= light
+
+	disposing()
+		if(istype(src.loc, /mob))
+			var/mob/M = src.loc
+			M.vis_contents -= light
+		src.vis_contents -= light
+		light.dispose()
+		..()
+
+/mob/living/critter/katamari
+	name = "space thing"
+	desc = "Some kinda thing, from space. In space. A space thing."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "thing"
+	custom_gib_handler = /proc/gibs // TODO
+	density = 0
+	hand_count = 0
+	can_throw = 0
+	can_grab = 0
+	can_disarm = 0
+	speechverb_say = "rattles"
+	speechverb_exclaim = "rattles"
+	speechverb_ask = "rattles"
+	flags = TABLEPASS
+	fits_under_table = 1
+	blood_id = "iron"
+	metabolizes = 0
+	var/size = 0
+	var/obj/item/implant/access/access
+	var/obj/item/last_item_bump
+
+	New()
+		. = ..()
+		access = new /obj/item/implant/access(src)
+		access.owner = src
+		access.uses = -1
+		access.implanted = 1
+
+	Bump(atom/movable/AM, yes)
+		. = ..()
+		if(src.contents && !istype(AM, /obj/table) && !ON_COOLDOWN(src, "bump_attack", 0.5 SECONDS))
+			var/obj/item/I = pick(src.contents)
+			if(istype(I))
+				src.last_item_bump = I
+				src.weapon_attack(AM, I, 1)
+
+	death(gibbed)
+		src.vis_contents = null
+		var/list/turf/targets = list()
+		for(var/turf/T in view(8, src))
+			targets += T
+		for(var/atom/movable/AM in src)
+			if(istype(AM, /obj/screen))
+				continue
+			AM.transform = null
+			AM.set_loc(get_turf(src))
+			SPAWN_DBG(0)
+				var/orig_anchored = AM.anchored
+				var/orig_density = AM.density
+				AM.anchored = 0
+				AM.density = 0
+				AM.throw_at(pick(targets), rand(1, 10), rand(1, 15))
+				AM.anchored = orig_anchored
+				sleep(0.5 SECONDS)
+				AM.density = orig_density
+		. = ..()
+		SPAWN_DBG(1 SECOND)
+			src.transforming = 1
+			src.canmove = 0
+			src.icon = null
+			src.invisibility = 101
+			if (src.mind || src.client)
+				src.ghostize()
+			qdel(src)
+
+	equipped()
+		return src.last_item_bump
+
+	Move(NewLoc, direct)
+		var/turf/new_turf = NewLoc
+		var/turf/old_turf = src.loc
+		var/matrix/M = src.transform
+		if(istype(new_turf) && istype(old_turf) && (old_turf.x < new_turf.x || old_turf.x == new_turf.x && old_turf.y > new_turf.y))
+			M.Turn(90)
+		else
+			M.Turn(-90)
+		animate(src, transform=M, time=src.base_move_delay)
+		if(size > 70 && istype(new_turf, /turf/simulated/floor))
+			var/turf/simulated/floor/floor = new_turf
+			floor.pry_tile(src.equipped(), src)
+		var/found = 0
+		for(var/obj/O in new_turf)
+			if(istype(O, /obj/overlay))
+				continue
+			if(O.invisibility > 10)
+				continue
+			var/obj/item/I = O
+			if(size < 40 && (!istype(O, /obj/item) || I.w_class > size / 10 + 1))
+				continue
+			if(size < 60 && O.anchored)
+				continue
+			if(istype(I, /obj/item/card/id))
+				var/obj/item/card/id/id = I
+				src.access.access.access |= id.access // access
+			O.set_loc(src)
+			src.vis_contents += O
+			O.pixel_x = 0
+			O.pixel_y = 0
+			var/matrix/tr = new
+			tr.Turn(rand(360))
+			tr.Translate(sqrt(size) * 3 / 2, sqrt(size) * 3)
+			tr.Turn(rand(360))
+			O.transform = tr
+			size += 0.3
+			found = 1
+			break
+		if(size > 80 && !found && new_turf.density && !isrestrictedz(new_turf.z) && prob(20))
+			new_turf.ex_act(prob(1) ? 1 : 2)
+		. = ..()
+
+	setup_healths()
+		add_hh_robot(-150, 150, 1.15)

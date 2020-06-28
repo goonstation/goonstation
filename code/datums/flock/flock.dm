@@ -213,8 +213,9 @@
 // UNITS
 
 /datum/flock/proc/registerUnit(var/atom/movable/D)
-	if(isflock(D))
+	if(isflock(D) || isflockstructure(D))
 		src.units |= D
+
 		if(src.panel && istype(D, /mob/living/critter/flock/drone))
 			var/mob/living/critter/flock/drone/drone = D
 
@@ -225,24 +226,20 @@
 			// ref is already provided
 			panel.PushUpdate(update)
 
-	if(istype(D, /obj/flock_structure/egg))
-		src.units |= D
-
 /datum/flock/proc/removeDrone(var/atom/movable/D)
-	if(isflock(D))
+	if(isflock(D) || isflockstructure(D))
 		src.units -= D
 
-		// update the flock control panel
-		var/list/update = list()
-		update["update"] = "remove"
-		update["key"] = "drones"
-		update["ref"] = "\ref[D]"
-		panel.PushUpdate(update)
+		if(src.panel && istype(D, /mob/living/critter/flock/drone))
+			// update the flock control panel
+			var/list/update = list()
+			update["update"] = "remove"
+			update["key"] = "drones"
+			update["ref"] = "\ref[D]"
+			panel.PushUpdate(update)
 
 		if(D:real_name && busy_tiles[D:real_name])
 			src.busy_tiles[D:real_name] = null
-	if(istype(D, /obj/flock_structure/egg))
-		src.units -= D
 
 /datum/flock/proc/getComplexDroneCount()
 	var/count = 0
@@ -476,14 +473,13 @@
 			animate_flock_convert_complete(FL)
 	else // don't do this stuff if the turf is space, it fucks it up more
 		T.RL_Cleanup()
-		if (RL_Started) RL_UPDATE_LIGHT(T)
 		T.RL_LumR = RL_LumR
 		T.RL_LumG = RL_LumG
 		T.RL_LumB = RL_LumB
 		T.RL_AddLumR = RL_AddLumR
 		T.RL_AddLumG = RL_AddLumG
 		T.RL_AddLumB = RL_AddLumB
-		T.RL_UpdateLight()
+		if (RL_Started) RL_UPDATE_LIGHT(T)
 
 	return T
 

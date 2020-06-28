@@ -182,11 +182,10 @@ mob
 						//else
 						src.pushing = 0
 
-
 						var/do_step = 1 //robust grab : don't even bother if we are in a chokehold. Assailant gets moved below. Makes the tile glide better without having a chain of step(src)->step(assailant)->step(me)
 						for(var/grab in src.grabbed_by)
 							var/obj/item/grab/G = grab
-							if (G.state < GRAB_NECK) continue
+							if (G?.state < GRAB_NECK) continue
 							do_step = 0
 							break
 
@@ -206,6 +205,7 @@ mob
 
 							for(var/grab in src.grabbed_by)
 								var/obj/item/grab/G = grab
+								if (G.assailant == pushing || G.affecting == pushing) continue
 								if (G.state < GRAB_NECK) continue
 								if (!G.assailant || !isturf(G.assailant.loc) || G.assailant.anchored)
 									return
@@ -222,17 +222,18 @@ mob
 
 							var/list/pulling = list()
 							if (src.pulling)
-								if (get_dist(old_loc, src.pulling) > 1 || src.pulling == src) // fucks sake
+								if ((get_dist(old_loc, src.pulling) > 1 && get_dist(src, src.pulling) > 1)|| src.pulling == src) // fucks sake
 									src.pulling = null
 									//hud.update_pulling() // FIXME
 								else
 									pulling += src.pulling
 							for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-								if (G.affecting == src) continue
 								pulling += G.affecting
 
 							for (var/atom/movable/A in pulling)
 								if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+									continue
+								if (A == src || A == pushing)
 									continue
 								if (!isturf(A.loc) || A.anchored)
 									return // whoops
@@ -240,6 +241,7 @@ mob
 								A.glide_size = glide
 								step(A, get_dir(A, old_loc))
 								A.glide_size = glide
+								A.OnMove(src)
 				else
 					if (src.loc) //ZeWaka: Fix for null.relaymove
 						delay = src.loc.relaymove(src, move_dir, delay) //relaymove returns 1 if we dont want to override delay

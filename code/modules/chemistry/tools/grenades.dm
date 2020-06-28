@@ -5,24 +5,28 @@
 
 /obj/item/chem_grenade
 	name = "metal casing"
-	icon_state = "chemg1"
-	icon = 'icons/obj/chemical.dmi'
+	icon_state = "grenade-chem1"
+	icon = 'icons/obj/items/grenade.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "flashbang"
 	w_class = 2.0
 	force = 2.0
 	var/stage = 0
 	var/state = 0
-	var/icon_state_armed = "chemg4"
+	var/icon_state_armed = "grenade-chem-armed"
 	var/list/beakers = new/list()
+	var/image/fluid_image1 //its 01:34 and im tired im sorry for this
+	var/image/fluid_image2
 	throw_speed = 4
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | EXTRADELAY | NOSPLASH
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 
 	New()
+		fluid_image1 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid1", -1)
+		fluid_image2 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid2", -1)
 		var/datum/reagents/R = new/datum/reagents(150000)
 		reagents = R
 		R.my_atom = src
@@ -32,7 +36,7 @@
 			boutput(user, "<span class='notice'>You add [W] to the metal casing.</span>")
 			playsound(get_turf(src), "sound/items/Screwdriver2.ogg", 25, -3)
 			qdel(W) //Okay so we're not really adding anything here. cheating.
-			icon_state = "chemg2"
+			icon_state = "grenade-chem2"
 			name = "unsecured grenade"
 			stage = 1
 		else if (isscrewingtool(W) && stage == 1)
@@ -40,7 +44,7 @@
 				boutput(user, "<span class='notice'>You lock the assembly.</span>")
 				playsound(get_turf(src), "sound/items/Screwdriver.ogg", 25, -3)
 				name = "grenade"
-				icon_state = "chemg3"
+				icon_state = "grenade-chem3"
 				stage = 2
 			else
 				boutput(user, "<span class='alert'>You need to add at least one beaker before locking the assembly.</span>")
@@ -58,6 +62,13 @@
 					user.drop_item()
 					G.set_loc(src)
 					beakers += G
+					switch (beakers.len)
+						if (1)
+							src.fluid_image1.color = G.reagents.get_average_color().to_rgba()
+							src.UpdateOverlays(src.fluid_image1, "fluid1")
+						if (2)
+							src.fluid_image2.color = G.reagents.get_average_color().to_rgba()
+							src.UpdateOverlays(src.fluid_image2, "fluid2")
 				else
 					boutput(user, "<span class='alert'>\The [G] is empty.</span>")
 		else if (stage == 2 && (istype(W, /obj/item/assembly/rad_ignite) || istype(W, /obj/item/assembly/prox_ignite) || istype(W, /obj/item/assembly/time_ignite)))
@@ -192,8 +203,8 @@
 /obj/item/grenade_fuse
 	name = "grenade fuse"
 	desc = "A fuse mechanism with a safety lever."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "grenade_fuse"
+	icon = 'icons/obj/items/grenade.dmi'
+	icon_state = "grenade-fuse"
 	item_state = "pen"
 	force = 0
 	w_class = 1
@@ -426,7 +437,7 @@
 		beakers += B1
 		beakers += B2
 		beakers += B3
-		
+
 /obj/item/chem_grenade/pepper
 	name = "crowd dispersal grenade"
 	desc = "An non-lethal grenade for use against protests, riots, vagrancy and loitering. Not to be used as a food additive."

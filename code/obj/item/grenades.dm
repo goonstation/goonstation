@@ -26,8 +26,8 @@ PIPE BOMBS + CONSTRUCTION
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | EXTRADELAY
 	is_syndicate = 0
 	mats = 6
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 	var/sound_armed = null
 	var/icon_state_armed = null
@@ -1144,10 +1144,9 @@ PIPE BOMBS + CONSTRUCTION
 				qdel(W)
 				qdel(src)
 		#endif
-		if(istype(W, /obj/item/weldingtool) && state == 1)
+		if(isweldingtool(W) && state == 1)
 			if(!W:try_weld(user, 1))
 				return
-			W:eyecheck(user)
 			boutput(user, "<span class='notice'>You hollow out the pipe.</span>")
 			src.state = 2
 			icon_state = "Pipe_Hollow"
@@ -1350,11 +1349,11 @@ PIPE BOMBS + CONSTRUCTION
 				if (butt > 1)
 					playsound(src.loc, "sound/voice/farts/superfart.ogg", 90, 1)
 					for (var/mob/M in view(3+butt,src.loc))
-						ass_explosion(M, 0, 1)
+						ass_explosion(M, 0, 5)
 				else
 					playsound(src.loc, "sound/voice/farts/poo2.ogg", 90, 1)
 					for (var/mob/M in view(3,src.loc))
-						ass_explosion(M, 0, 1)
+						ass_explosion(M, 0, 5)
 			if (confetti)
 				if (confetti > 1)
 					particleMaster.SpawnSystem(new /datum/particleSystem/confetti_more(src.loc))
@@ -1374,7 +1373,8 @@ PIPE BOMBS + CONSTRUCTION
 							var/yank_distance = 1
 							if (prob(50))
 								yank_distance = 2
-							M.throw_at(T, yank_distance, 2)
+							SPAWN_DBG(0)
+								M.throw_at(T, yank_distance, 2)
 				for (var/obj/O in view(1,src.loc))
 					O.throw_at(T, 2, 2)
 			if (extra_shrapnel)

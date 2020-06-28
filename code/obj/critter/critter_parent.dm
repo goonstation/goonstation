@@ -60,6 +60,7 @@
 	var/attacker = null // used for defensive tracking
 	var/angertext = "charges at" // comes between critter name and target name
 	var/pet_text = "pets"
+	var/post_pet_text = null
 	var/death_text = "%src% dies!"
 	var/atk_text = "bites"
 	var/chase_text = "leaps on"
@@ -81,6 +82,7 @@
 	var/generic = 1 // if yes, critter can be randomized a bit
 	var/max_quality = 100
 	var/min_quality = -100
+	var/is_pet = null // if null gets determined based on capitalization, 0 = not pet, 1 = pet, 2 = command pet
 
 	var/can_revive = 1 // resurrectable with strange reagent
 
@@ -406,7 +408,8 @@
 				on_grump()
 		else
 			var/pet_verb = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
-			src.visible_message("<span class='notice'><b>[user]</b> [pet_verb] [src]!</span>", 1)
+			var/post_pet_verb = islist(src.post_pet_text) ? pick(src.post_pet_text) : src.post_pet_text
+			src.visible_message("<span class='notice'><b>[user]</b> [pet_verb] [src]![post_pet_verb]</span>", 1)
 			on_pet()
 
 	proc/patrol_step()
@@ -706,6 +709,7 @@
 							walk_to(src, current_target,1,4)
 							if ((get_dist(src, current_target)) >= (olddist))
 								src.frustration++
+								step_towards(src, current_target, 4)
 							else
 								src.frustration = 0
 						else
@@ -848,11 +852,17 @@
 		return 1
 
 
-	New()
+	New(loc)
 		if(!src.reagents) src.create_reagents(100)
 		wander_check = rand(5,20)
 		critters += src
 		report_spawn()
+		if(isnull(src.is_pet))
+			src.is_pet = !generic && (copytext(src.name, 1, 2) in uppercase_letters)
+		if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
+			src.is_pet = 0
+		if(src.is_pet)
+			pets += src
 		if(generic)
 			src.quality = rand(min_quality,max_quality)
 			var/nickname = getCritterQuality(src.quality)
@@ -865,6 +875,8 @@
 		critters -= src
 		if(registered_area)
 			registered_area.registered_critters -= src
+		if(src.is_pet)
+			pets -= src
 		..()
 
 	proc/seek_target()
@@ -937,7 +949,13 @@
 		return 1
 
 	proc/CritterDeath()
+		SHOULD_CALL_PARENT(TRUE)
 		if (!src.alive) return
+
+		#ifdef COMSIG_OBJ_CRITTER_DEATH
+		SEND_SIGNAL(src, COMSIG_OBJ_CRITTER_DEATH)
+		#endif
+
 		if (!dead_state)
 			src.icon_state = "[initial(src.icon_state)]-dead"
 		else
@@ -945,7 +963,7 @@
 		src.alive = 0
 		src.anchored = 0
 		src.set_density(0)
-		walk_to(src,0)
+		walk_to(src,0) //halt walking
 		report_death()
 		src.tokenized_message(death_text)
 
@@ -1084,7 +1102,7 @@
 
 			src.critter_name = t
 
-		else if ((istype(W, /obj/item/weldingtool) && W:welding) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on) || W.burning || W.hit_type == DAMAGE_BURN) // jesus motherfucking christ
+		else if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on) || W.burning || W.hit_type == DAMAGE_BURN) // jesus motherfucking christ
 			user.visible_message("<span class='alert'><b>[user]</b> warms [src] with [W].</span>",\
 			"<span class='alert'>You warm [src] with [W].</span>")
 			src.warm_count -= 2
@@ -1102,7 +1120,8 @@
 		src.warm_count = max(src.warm_count, 0)
 		src.hatch_check(0, user)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		//..() <- Fuck off mom, I'm 25 and I do what I want =I
 		src.hatch_check(1, null, T)
 

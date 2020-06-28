@@ -33,8 +33,6 @@
 	var/can_grab = 0
 	var/can_disarm = 0
 
-	var/metabolizes = 1
-
 	var/reagent_capacity = 50
 	max_health = 0
 	health = 0
@@ -71,6 +69,10 @@
 	var/original_name = null
 
 	var/yeet_chance = 1 //yeet
+
+	var/last_life_process = 0
+
+	blood_id = "blood"
 
 	New()
 //		if (ispath(default_task))
@@ -109,6 +111,10 @@
 		src.attach_hud(hud)
 		src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
 
+		if (src.stamina_bar)
+			hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
+
+
 		health_update_queue |= src
 
 		src.abilityHolder = new /datum/abilityHolder/critter(src)
@@ -120,6 +126,40 @@
 		SPAWN_DBG(0.5 SECONDS) //mbc what the fuck. i dont know why but if i don't spawn, no abilities even show up
 			if (abilityHolder)
 				abilityHolder.updateButtons()
+
+	disposing()
+		if(organHolder)
+			organHolder.dispose()
+			organHolder = null
+
+		if(hud)
+			if(src.stamina_bar)
+				hud.remove_object(stamina_bar)
+
+			hud.dispose()
+			hud = null
+
+		for(var/datum/handHolder/hh in hands)
+			hh.dispose()
+		hands.len = 0
+		hands = null
+
+		for(var/datum/equipmentHolder/eh in equipment)
+			eh.dispose()
+		equipment.len = 0
+		equipment = null
+
+		for(var/obj/item/I in implants)
+			I.dispose()
+		implants.len = 0
+		implants = null
+
+		for(var/damage_type in healthlist)
+			var/datum/healthHolder/hh = healthlist[damage_type]
+			hh.dispose()
+		healthlist.len = 0
+		healthlist = null
+		..()
 
 	proc/setup_healths()
 		// add_health_holder(/datum/healthHolder/flesh)
@@ -362,11 +402,15 @@
 			return
 		return ..()
 
-	movement_delay()
+	//just adjust by whatever the critter var says the movedelay should be
+	special_movedelay_mod(delay,space_movement,aquatic_movement)
+		.= delay
 		if (src.m_intent == "walk")
-			return src.base_walk_delay + movement_delay_modifier
+			. += src.base_walk_delay - (BASE_SPEED + WALK_DELAY_ADD)
 		else
-			return src.base_move_delay + movement_delay_modifier
+			. += src.base_move_delay - (BASE_SPEED)
+		if (src.lying)
+			. += 14
 
 	Move(var/turf/NewLoc, direct)
 		if (!src.lying && isturf(NewLoc) && NewLoc.turf_flags & MOB_STEP)
@@ -518,15 +562,6 @@
 		else
 			boutput(src, "<span class='alert'>You cannot attack with your [HH.name]!</span>")
 
-	proc/melee_attack_human(var/mob/living/carbon/human/M, var/extra_damage) // non-special limb attack
-		if (check_target_immunity(src, 0, M))
-			visible_message("<b><span class='alert'>[src]'s attack bounces uselessly off [M]!</span></b>")
-			playsound_local(M, "punch", 50, 0)
-			return
-		src.visible_message("<b><span class='alert'>[src] punches [M]!</span></b>")
-		playsound_local(M, "punch", 50, 0)
-		M.TakeDamageAccountArmor(zone_sel.selecting, rand(3,6), 0, 0, DAMAGE_BLUNT)
-
 	can_strip(mob/M, showInv = 0)
 		var/datum/handHolder/HH = get_active_hand()
 		if(!showInv && check_target_immunity(src, 0, M))
@@ -537,34 +572,6 @@
 			return 1
 		else
 			boutput(src, "<span class='alert'>You cannot strip other people with your [HH.name].</span>")
-
-	attack_hand(var/mob/living/M)
-		M.lastattacked = src
-		attack_particle(M,src)
-		switch (M.a_intent)
-			if (INTENT_HELP)
-				src.on_pet(M)
-			if (INTENT_DISARM)
-				actions.interrupt(src, INTERRUPT_ATTACKED)
-				if (src.hands.len)
-					M.disarm(src)
-			if (INTENT_HARM)
-				if(check_target_immunity(src, 0, M))
-					visible_message("<b><span class='alert'>[M]'s attack bounces off [src] uselessly!</span></b>")
-					return
-				actions.interrupt(src, INTERRUPT_ATTACKED)
-				src.TakeDamageAccountArmor(M.zone_sel.selecting, rand(1,3), 0)
-				playsound(src.loc, "punch", 50, 1)
-				visible_message("<b><span class='alert'>[M] punches [src]!</span></b>")
-			if (INTENT_GRAB)
-				if (M == src)
-					M.grab_self()
-					return
-				var/datum/limb/L = M.equipped_limb()
-				if (!L)
-					return
-				L.grab(src, M)
-				message_admin_on_attack(M, "grabs")
 
 	proc/on_pet(mob/user)
 		if (!user)
@@ -629,6 +636,8 @@
 		if (clothing)
 			update_clothing()
 
+		I.dropped(src)
+
 	put_in_hand(obj/item/I, t_hand)
 		if (!hands.len)
 			return 0
@@ -653,103 +662,6 @@
 			I.pickup(src) // attempted fix for flashlights not working - cirr
 			return 1
 		return 0
-
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
-
-		if (getStatusDuration("burning"))
-			if (isturf(src.loc))
-				var/turf/location = src.loc
-				location.hotspot_expose(T0C + 400, 400)
-			var/damage = 1
-			if (getStatusDuration("burning") > 400)
-				damage = 3
-			else if (getStatusDuration("burning") > 200)
-				damage = 2
-			TakeDamage("All", 0, damage)
-			update_burning(-2)
-
-		if (isdead(src))
-			return 0
-
-		src.handle_digestion()
-
-		if (src.get_eye_blurry())
-			src.change_eye_blurry(-1)
-
-		if (src.drowsyness)
-			src.drowsyness = max(0, src.drowsyness - 1)
-			if (src.drowsyness >= tranquilizer_resistance)
-				src.change_eye_blurry(2)
-				if (prob(5 + src.drowsyness - tranquilizer_resistance))
-					src.sleeping = 2
-					src.setStatus("paralysis", 70)
-
-		handle_hud_overlays()
-		src.antagonist_overlay_refresh(0, 0)
-
-		if (src.hasStatus(list("weakened", "paralysis", "stunned", "dormant")))
-			canmove = 0
-		else
-			canmove = 1
-
-		update_stunned_icon(canmove)
-
-		if (sleeping)
-			sleeping = max(0, sleeping - 1)
-			setStatus("paralysis", 2 SECONDS)
-			if (!sleeping)
-				src.on_wake()
-
-		var/may_deliver_recovery_warning = (src.hasStatus(list("weakened", "paralysis", "stunned")))
-
-		if (may_deliver_recovery_warning)
-			empty_hands()
-			actions.interrupt(src, INTERRUPT_STUNNED)
-
-		if (getStatusDuration("paralysis"))
-			if (isalive(src))
-				setunconscious(src)
-		else if (isunconscious(src))
-			setalive(src)
-
-		if (stuttering)
-			stuttering = max(0, stuttering-2)
-
-		if (misstep_chance > 0)
-			change_misstep_chance(-1)
-
-		if (reagents && metabolizes)
-			reagents.metabolize(src)
-
-		for (var/T in healthlist)
-			var/datum/healthHolder/HH = healthlist[T]
-			HH.Life()
-
-		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-			G.process()
-
-		if (stat)
-			return 0
-
-//		if (!client && istype(current_task))
-
-	proc/handle_hud_overlays()
-		var/color_mod_r = 255
-		var/color_mod_g = 255
-		var/color_mod_b = 255
-		if (src.druggy)
-			vision.animate_color_mod(rgb(rand(0, 255), rand(0, 255), rand(0, 255)), 15)
-		else
-			vision.set_color_mod(rgb(color_mod_r, color_mod_g, color_mod_b))
-
-		if (isunconscious(src) || (!src.sight_check(1) && !isdead(src)))
-			src.addOverlayComposition(/datum/overlayComposition/blinded) //ov1
-		else
-			src.removeOverlayComposition(/datum/overlayComposition/blinded) //ov1
-		vision.animate_dither_alpha(src.get_eye_blurry() / 10 * 255, 15)
-		return 1
 
 	death(var/gibbed)
 		if (src.organHolder)
@@ -776,6 +688,7 @@
 		empty_hands()
 		drop_equipment()
 		hud.update_health()
+		return ..(gibbed)
 
 	proc/get_health_holder(var/assoc)
 		if (assoc in healthlist)
@@ -926,7 +839,7 @@
 				I.layer = initial(I.layer)
 				u_equip(I)
 
-	proc/empty_hands()
+	empty_hands()
 		for (var/datum/handHolder/HH in hands)
 			if (HH.item)
 				if (istype(HH.item, /obj/item/grab))
@@ -1093,6 +1006,10 @@
 			burning_image.icon_state = "fire3_[burning_suffix]"
 		UpdateOverlays(burning_image, "burning")
 
+	force_laydown_standup()
+		..()
+		update_stunned_icon()
+
 	proc/update_stunned_icon(var/canmove)
 		if(canmove != src.old_canmove)
 			src.old_canmove = canmove
@@ -1138,6 +1055,7 @@
 		icon_state = icon_state_alive ? icon_state_alive : initial(icon_state)
 		density = initial(density)
 		src.can_implant = initial(src.can_implant)
+		blood_volume = initial(blood_volume)
 
 	does_it_metabolize()
 		return metabolizes
@@ -1165,10 +1083,12 @@
 			severity++
 		switch(severity)
 			if (1)
-				gib()
+				SPAWN_DBG(0)
+					gib()
 			if (2)
 				if (health < max_health * 0.35 && prob(50))
-					gib()
+					SPAWN_DBG(0)
+						gib()
 				else
 					TakeDamage("All", rand(10, 30), rand(10, 30))
 			if (3)
@@ -1236,10 +1156,19 @@
 		else
 			return ..()
 
-/mob/living/critter/build_keymap(client/C)
-	var/datum/keymap/keymap = ..()
-	keymap.merge(client.get_keymap("human"))
-	return keymap
+/mob/living/critter/build_keybind_styles(client/C)
+	..()
+	C.apply_keybind("human")
+
+	if (!C.preferences.use_wasd)
+		C.apply_keybind("human_arrow")
+
+	if (C.preferences.use_azerty)
+		C.apply_keybind("human_azerty")
+	if (C.tg_controls)
+		C.apply_keybind("human_tg")
+		if (C.preferences.use_azerty)
+			C.apply_keybind("human_tg_azerty")
 
 /mob/living/critter/proc/tokenized_message(var/message, var/target, var/mcolor)
 	if (!message || !length(message))

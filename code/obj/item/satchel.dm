@@ -70,7 +70,7 @@
 					user.visible_message("<span class='notice'><b>[usr]</b> takes \a [getItem.name] out of \the [src].</span>",\
 					"<span class='notice'>You take \a [getItem.name] from [src].</span>")
 					user.put_in_hand_or_drop(getItem)
-
+					src.satchel_updateicon()
 		return ..(user)
 
 	proc/search_through(mob/user as mob)
@@ -136,6 +136,7 @@
 		src.satchel_updateicon()
 
 	proc/satchel_updateicon()
+		tooltip_rebuild = 1
 		var/perc
 		if (src.contents.len > 0 && src.maxitems > 0)
 			perc = (src.contents.len / src.maxitems) * 100
@@ -246,5 +247,10 @@
 				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, pitch = 0.9)
 				icon_state = "figurinecase"
 
-
-
+/obj/item/satchel/figurines/full
+	New()
+		. = ..()
+		for(var/i = 0, i < maxitems, i++)
+			var/obj/item/toy/figure/F = new()
+			F.set_loc(src)
+			src.satchel_updateicon()

@@ -139,7 +139,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.on == 0)
-			if (istype(W, /obj/item/weldingtool) && W:welding)
+			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 				return
 			else if (istype(W, /obj/item/sword) && W:active)
@@ -473,7 +473,7 @@
 		"cryoxadone","cryostylane","omnizine","jenkem","vomit","carpet","charcoal","blood","cheese","bilk","atropine",
 		"lexorin","teporone","mannitol","spaceacillin","saltpetre","anti_rad","insulin","gvomit","milk","colors","diluted_fliptonium",
 		"something","honey_tea","tea","coffee","chocolate","guacamole","juice_pickle","vanilla","enriched_msg","egg","aranesp",
-		"paper","bread","green_goop","black_goop", "mint_tea", "juice_peach", "ageinium")
+		"paper","bread","green_goop","black_goop", "mint_tea", "juice_peach", "ageinium", "synaptizine", "plasma", "morphine","oculine","CBD")
 		src.name = "[reagent_id_to_name(src.flavor)]-laced cigarette"
 		..()
 
@@ -600,8 +600,8 @@
 	icon_state = "cigbutt"
 	w_class = 1
 	throwforce = 1
-	stamina_damage = 3
-	stamina_cost = 3
+	stamina_damage = 0
+	stamina_cost = 0
 	rand_pos = 1
 
 /obj/item/cigarbox
@@ -761,8 +761,8 @@
 	w_class = 1
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	burn_point = 220
 	burn_output = 900
@@ -771,7 +771,7 @@
 	var/match_amt = 6 // -1 for infinite
 	rand_pos = 1
 
-	get_desc(dist)
+	get_desc()
 		if (src.match_amt == -1)
 			. += "There's a whole lot of matches left."
 		else if (src.match_amt >= 1)
@@ -789,6 +789,7 @@
 				user.put_in_hand_or_drop(W)
 				if (src.match_amt != -1)
 					src.match_amt --
+					tooltip_rebuild = 1
 			src.update_icon()
 		else
 			return ..()
@@ -839,8 +840,8 @@
 	w_class = 1
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	burn_point = 220
 	burn_output = 600

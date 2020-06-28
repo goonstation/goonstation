@@ -48,7 +48,7 @@
 	OnClick( var/client/who, var/id )
 		// no op
 
-	OnTopic(href, href_list[])
+	OnTopic(usr, href, href_list[])
 		switch(href_list["action"])
 			if("update")
 				src.PushUpdate(src.associated.describe_state())

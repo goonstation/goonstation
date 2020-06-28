@@ -641,7 +641,7 @@ var/list/electiles = list()
 
 	outer:
 		for(var/area/A as area in world) //Might want to do this manually instead.
-			if(A.type == /area)
+			if(area_space_nopower(A))
 				continue
 
 			for(var/X in ignoreAreas)
@@ -788,7 +788,7 @@ var/list/electiles = list()
 	opacity = 0
 
 /datum/admins/proc/camtest()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Test Cinematic camera"
 	set desc="Test Cinematic camera"
 
@@ -1607,7 +1607,7 @@ var/list/electiles = list()
 			call(procpath)(arglist(argcopy))
 
 /datum/admins/proc/pixelexplosion()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Pixel animation mode"
 	set desc="Enter pixel animation mode"
 	alert("Due to me being a lazy fuck you have to close & reopen your client to exit this mode. ITS A DEBUG THING OKAY")
@@ -2869,9 +2869,6 @@ var/list/electiles = list()
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "boomerang"
 
-	density = 0
-	opacity = 0
-	anchored = 1
 	contraband = 4
 
 	icon = 'icons/obj/items/weapons.dmi'
@@ -2927,7 +2924,7 @@ var/list/electiles = list()
 		return ..(hit_atom)
 
 /proc/mod_color(var/atom/A)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Modify Icon"
 	set popup_menu = 0
 	var/list/options = list("Tint", "Invert Colors", "Change Alpha")
@@ -3019,7 +3016,7 @@ var/list/electiles = list()
 				return
 
 /client/proc/create_portal()
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Create Portal"
 	set popup_menu = 0
 

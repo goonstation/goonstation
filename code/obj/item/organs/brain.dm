@@ -16,6 +16,7 @@
 	module_research_type = /obj/item/organ/brain
 	FAIL_DAMAGE = 120
 	MAX_DAMAGE = 120
+	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
 
 	disposing()
 		if (owner && owner.brain == src)
@@ -91,10 +92,10 @@
 		src.icon_state = pick("plant_brain", "plant_brain_bloom")
 
 /obj/item/organ/brain/latejoin
-	name = "Intelligence Formation Chip"
+	name = "Spontaneous Intelligence Creation Core"
 	icon_state = "late_brain"
 	item_state = "late_brain"
-	desc = "A mess of wires and sillicon that can spontaniously create artifical intelligence."
+	desc = "A brain sized pyramid constructed out of silicon and LED lights. It employs complex quantum loopholes to create a consciousness within a decade or less."
 	created_decal = /obj/decal/cleanable/oil
 	var/activated = 0
 
@@ -136,3 +137,12 @@
 				"sound/effects/radio_sweep1.ogg", "sound/effects/radio_sweep2.ogg", "sound/effects/radio_sweep3.ogg", "sound/effects/radio_sweep4.ogg", "sound/effects/radio_sweep5.ogg")
 			M.playsound_local(get_turf(M), pick(sounds), 20, 1)
 			boutput(M, "<span class='flocksay italics'><i>... [pick_string("flockmind.txt", "brain")] ...</i></span>")
+
+/obj/item/organ/brain/flockdrone/special_desc(dist, mob/user)
+	if(isflock(user))
+		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
+		special_desc += "<br><span class='bold'>ID:</span> Computational core"
+		special_desc += "<br><span class='bold'>###=-</span></span>"
+		return special_desc
+	else
+		return null // give the standard description

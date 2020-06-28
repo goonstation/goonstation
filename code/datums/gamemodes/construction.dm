@@ -19,6 +19,7 @@
 
 	var/g_smx
 	var/g_smy
+	do_antag_random_spawns = 0
 
 /datum/generation_marker
 	var/x
@@ -33,9 +34,13 @@
 
 /datum/game_mode/construction/pre_setup()
 	in_setup = 1
-	for (var/mob/new_player/M in mobs)
-		if (M.ready)
-			M.close_spawn_windows()
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if (player.ready)
+			player.close_spawn_windows()
+
 	var/datum/job/special/station_builder/C = new /datum/job/special/station_builder()
 	C.limit = -1
 	enabled_jobs += C

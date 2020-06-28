@@ -565,7 +565,7 @@
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/slam)
 		abilityHolder.updateButtons()
-		src.flags ^= TABLEPASS
+		src.flags ^= TABLEPASS | DOORPASS
 
 	setup_healths()
 		add_hh_flesh(-40, 40, 1)

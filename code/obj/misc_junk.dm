@@ -65,7 +65,7 @@
 	icon_state = "gnome"
 	w_class = 4.0
 	stamina_damage = 40
-	stamina_cost = 40
+	stamina_cost = 20
 	stamina_crit_chance = 5
 	var/last_laugh = 0
 
@@ -115,7 +115,7 @@
 	throw_range = 5
 	desc = "A tube made of cardboard. Extremely non-threatening."
 	w_class = 1.0
-	stamina_damage = 1
+	stamina_damage = 5
 	stamina_cost = 1
 
 	New()
@@ -147,8 +147,8 @@
 	throw_range = 5
 	desc = "A sheet of creased cardboard."
 	w_class = 1.0
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 
 	attack_self(mob/user as mob)
 		boutput(user, __blue("You deftly fold [src] into a party hat!."))
@@ -199,7 +199,7 @@
 	item_state = "rubber_chicken"
 	w_class = 2.0
 	stamina_damage = 10
-	stamina_cost = 10
+	stamina_cost = 5
 	stamina_crit_chance = 3
 
 /obj/item/module
@@ -242,11 +242,12 @@
 	icon = 'icons/misc/aprilfools.dmi'
 	icon_state = "brick"
 	item_state = "brick"
+	force = 8
 	w_class = 1
 	throwforce = 10
 	rand_pos = 1
 	stamina_damage = 40
-	stamina_cost = 35
+	stamina_cost = 20
 	stamina_crit_chance = 5
 /*
 /obj/item/saxophone
@@ -590,7 +591,7 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH
 	var/emagged = 0
 	var/last_used = 0
-	var/list/safe_smokables = list("nicotine", "THC")
+	var/list/safe_smokables = list("nicotine", "THC", "CBD")
 	var/datum/effects/system/bad_smoke_spread/smoke
 	var/range = 1
 
@@ -706,19 +707,11 @@
 	item_state = "medivape"
 	icon_state = "medivape"
 
-	var/list/medical_cannabis = list("antihol", "charcoal", "epinephrine", "insulin", "mutadone", "teporone",\
-"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "stimulants", "synaptizine", "anti_rad",\
-"oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
-"salicylic_acid", "cryoxadone", "nicotine", "THC")
-
 	New()
 		..()
-		safe_smokables = medical_cannabis
+		safe_smokables += chem_whitelist
 		src.reagents.clear_reagents()
-		src.reagents.add_reagent(pick("antihol", "charcoal", "epinephrine", "insulin", "mutadone", "teporone",\
-"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "synaptizine", "anti_rad",\
-"oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
-"salicylic_acid", "cryoxadone", "nicotine", "THC"), 50)
+		src.reagents.add_reagent(pick(safe_smokables), 50)
 
 /obj/item/reagent_containers/vape/medical/o2 //sweet oxygen
 	desc = "Smoking, now in a doctor approved form! This one comes preloaded with salbutamol."

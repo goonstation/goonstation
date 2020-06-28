@@ -188,7 +188,7 @@
 			user.u_equip(src)
 			qdel(src)
 			return 0
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
 				if (!bypass_utensils)
 					if (src.needfork && !user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
@@ -477,7 +477,7 @@
 			boutput(user, "<span class='alert'>Nothing left in [src], oh no!</span>")
 			return 0
 
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
 				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>")
 			else if (M.mob_flags & IS_RELIQUARY)
@@ -849,12 +849,14 @@
 	attack(target as mob, mob/user as mob)
 		if (src.broken && !src.unbreakable)
 			force = 5.0
-			throwforce = 15.0
+			throwforce = 10.0
 			throw_range = 5
 			w_class = 2.0
 			stamina_damage = 15
 			stamina_cost = 15
 			stamina_crit_chance = 50
+			tooltip_rebuild = 1
+
 			if (src.shatter >= rand(2,12))
 				var/turf/U = user.loc
 				user.visible_message("<span class='alert'>[src] shatters completely!</span>")
@@ -1233,7 +1235,8 @@
 			src.wedge = null
 		qdel(src)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)
 
@@ -1523,7 +1526,8 @@
 			G.set_loc(T)
 		qdel(src)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)
 

@@ -48,6 +48,7 @@ todo: add more small animals!
 	density = 0
 	custom_gib_handler = /proc/gibs
 	hand_count = 1
+	can_help = 1
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
@@ -62,6 +63,24 @@ todo: add more small animals!
 
 	var/fur_color = 0
 	var/eye_color = 0
+
+	var/is_pet = null // null = autodetect
+
+	New(loc)
+		if(isnull(src.is_pet))
+			src.is_pet = (copytext(src.name, 1, 2) in uppercase_letters)
+		if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
+			src.is_pet = 0
+		if(src.is_pet)
+			pets += src
+		..()
+		
+		src.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
+		
+	disposing()
+		if(src.is_pet)
+			pets -= src
+		..()
 
 	setup_healths()
 		add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)
@@ -361,6 +380,11 @@ todo: add more small animals!
 			src.visible_message("[src] purrs!",\
 			"You purr!")
 
+/mob/living/critter/small_animal/cat/weak
+	add_abilities = list()
+	health_brute = 10
+	health_burn = 10
+
 /* -------------------- Jones -------------------- */
 
 /mob/living/critter/small_animal/cat/jones
@@ -436,7 +460,7 @@ todo: add more small animals!
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/small_critter/med
+		HH.limb = new /datum/limb/small_critter
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
@@ -494,6 +518,13 @@ todo: add more small animals!
 					src.delStatus("weakened")
 					src.icon_state = src.dogtype
 
+
+	pug
+		weak
+			add_abilities = list()
+			health_brute = 10
+			health_burn = 10
+
 /* -------------------- Reverse Pug -------------------- */
 // the people demanded it
 /mob/living/critter/small_animal/dog/reverse
@@ -545,6 +576,11 @@ todo: add more small animals!
 	icon_state = "corgi"
 	icon_state_dead = "corgi-lying"
 	dogtype = "corgi"
+
+	weak
+		add_abilities = list()
+		health_brute = 10
+		health_burn = 10
 
 /* -------------------- George -------------------- */
 
@@ -638,6 +674,11 @@ todo: add more small animals!
 		if (src.randomize_shiba)
 			src.name = pick(shiba_names)
 			src.real_name = src.name
+
+	weak
+		add_abilities = list()
+		health_brute = 10
+		health_burn = 10
 
 /* -------------------- Illegal -------------------- */
 
@@ -998,6 +1039,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						make_cleanable( /obj/decal/cleanable/greenpuke,T)
 
 				new /obj/item/power_stones/Owl(src.loc)
+		else
+			. = ..()
 
 
 /* -------------------- Large Owl -------------------- */
@@ -1344,6 +1387,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	pull_w_class = 3
 	meat_type = /obj/item/reagent_containers/food/snacks/burger/roburger
 
+	base_move_delay = 1.6
+	base_walk_delay = 2.1
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -1355,6 +1401,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	setup_overlays()
 		return
+
+
+	weak
+		health_brute = 5
+		health_burn = 5
 
 /* ================================================ */
 /* -------------------- Ferret -------------------- */
@@ -1475,6 +1526,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.limb_name = "mouth"
 		HH.can_hold_items = 0
 
+
+	weak
+		health_brute = 10
+		health_burn = 10
 
 /* ================================================ */
 /* -------------------- Possum -------------------- */
@@ -1660,6 +1715,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (prob(10))
 			src.visible_message("[src] purrs![prob(20) ? " Wait, what?" : null]",\
 			"You purr!")
+
 
 /* ============================================= */
 /* -------------------- Bat -------------------- */
@@ -2501,6 +2557,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3)
+					var/obj/item/storage/bible/B = locate(/obj/item/storage/bible) in get_turf(src)
+					if(B)
+						SPAWN_DBG(1) // so that this message happens second
+							playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4)
+							B.visible_message("<span class='notice'>[B] toots back [pick("grumpily","complaintively","indignantly","sadly","annoyedly","gruffly","quietly","crossly")].</span>")
 					return "<span class='emote'><b>[src]</b> toots helpfully!</span>"
 		return ..()
 

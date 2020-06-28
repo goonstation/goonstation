@@ -33,8 +33,8 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	var/obj/item/reagent_containers/food/drinks/fueltank/part5 = null
 	contraband = 5 //Heh
 	m_amt = 500
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 15
+	stamina_cost = 15
 	stamina_crit_chance = 1
 	move_triggered = 1
 
@@ -340,6 +340,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			icon_state = "flamethrower_oxy_fuel"
 			force = 3
 			hit_type = DAMAGE_BLUNT
+		tooltip_rebuild = 1
 	if (href_list["removeair"])
 		if(!src.part4)	return
 		var/obj/item/tank/A = src.part4
@@ -389,7 +390,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	else
 		dat += text("</B><BR>")
 	if (src.part4)
-		dat += text("<br>Air Tank Pressure: [src.part4.air_contents.return_pressure()] (<A HREF='?src=\ref[src];removeair=1'>Remove Air Tank</A>)<BR>")
+		dat += text("<br>Air Tank Pressure: [MIXTURE_PRESSURE(src.part4.air_contents)] (<A HREF='?src=\ref[src];removeair=1'>Remove Air Tank</A>)<BR>")
 	else
 		dat += text("<br>No Air Tank Attached!<BR>")
 	if(src.part5)
@@ -477,7 +478,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		//Too little pressure to spray
 		var/datum/gas_mixture/environment = currentturf.return_air()
 		if(!part4 ||!part4.air_contents || !environment) break
-		if(environment.return_pressure() > part4.air_contents.return_pressure())
+		if(MIXTURE_PRESSURE(environment) > MIXTURE_PRESSURE(part4.air_contents))
 			if(!previousturf && length(turflist)>1)
 				break
 			reagentperturf = reagentlefttotransfer

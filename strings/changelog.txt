@@ -1,5 +1,460 @@
 
+(t)sat jun 27 20
+(u)Gannets
+(p)1236
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Nuclear Operatives now use a weapon vendor on the Cairngorm to select their equipment.
+(*)Insert your requisition token in to the vendors in the armory to select gear from the sidearm, loadout and storage catagories. Build your own custom loadout!
+(*)Many elements of class crates and spawning equipment have been altered to enable this.
+(u)Flaborized
+(p)1137
+(e)🎨|sprites
+(*)Resprited ID cards, emags and dabbing licences.
+(u)Comrade f191
+(p)1237
+(e)🗺|mapping
+(*)Moved Arrivals on Manta to QM rather than Escape.
+(t)fri jun 26 20
+(u)Avatharian
+(p)1238
+(e)🐛|bug
+(+)Produce satchels now update their icon when removing items by hand.
+(u)pali
+(p)1235
+(e)🆕|feature
+(*)Cyborg eyes now glow in the dark.
+(u)Carbadox
+(p)1176
+(e)🆕|feature
+(+)Added new cocktails namely, Bee's Knees, Duck Fart, Phil Collins, Spiced Rum, Methacola, Pink Lemonade and the cocktail syrup, grenadine.
+(u)UrsulaMajor
+(p)1230
+(e)|
+(+)Mentor mice now have a bible fart interaction
+(u)RichardGere
+(p)1233
+(e)🐛|bug
+(+)Fixed a number of AI related bugs.
+(u)Sovexe
+(p)1223
+(e)🔄|rework
+(+)Significantly reduced the loudness of noise maker artifacts.
+(t)wed jun 24 20
+(u)mbc
+(+)Improved performance of the APC search function (stops an AI in the trench or other large areas from lagging the game).
+(u)Comradef191
+(p)728
+(e)🆕🗺|feature, mapping
+(*)Added some additional items to the Cog1 armory; an EOD suit, a N2O canister, a tranq crate, and a box of stinger grenades.
+(u)zjdtmkhzt
+(p)1192
+(e)⚖|balance
+(*)Changed the Rathen's Secret wizard spell to only delimb if you have no arse. It also now always removes exactly one randomly chosen limb in that case.
+(u)Sovexe and UrsulaMajor
+(p)1202
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added pilot's seat to all escape shuttles. Being buckled into this seat when the round ends grants a pilot's bonus in the form of additional spacebux earnings.
+(u)Sovexe
+(p)1210
+(e)🐛|bug
+(+)The Oshan carousel now correctly routes packages to the north and south delivery zones.
+(u)kyle
+(p)1190
+(e)🆕|feature
+(+)Clicking an item with an item storage container attempts to place it in the storage item.
+(t)tue jun 23 20
+(u)Flaborized
+(p)1181
+(e)🎨|sprites
+(+)Resprited SKULLS.
+(u)glassofmilk
+(p)1184
+(e)🆕|feature
+(+)Nav beacons now respond to wireless pings.
+(t)mon jun 22 20
+(u)Flaborized
+(p)1161
+(e)🎨|sprites
+(+)Resprited the cyalume saber.
+(u)UrsulaMajor
+(p)1187
+(e)|
+(*)Blob Ribosomes now produce biopoints for the blob, making them much more important for the crew to target.
+(u)Awkward Dryad
+(p)1169
+(e)🆕🎨|feature, sprites
+(*)Added go board to card vendors
+(t)sun jun 21 20
+(u)UrsulaMajor
+(p)1172
+(e)🗺|mapping
+(+)The Cairngorm now has an office for its commander, as well as a pirate radio station!
+(u)mbc
+(p)1160
+(e)⚖|balance
+(+)Disarming someone does a bit of stamina damage to them.
+(u)UrsulaMajor
+(p)1159
+(e)⚖|balance
+(+)Blobs no longer need to make ribosomes to mitigate the blob size spread speed slowdown.
+(u)zjdtmkhzt
+(p)1151
+(e)⚖🐛|balance, bug
+(+)Pathogens can now be cured via just keeping it suppressed in the patient. This change will be explained in more detail if pathology is ever reenabled, which it is not!
+(t)sat jun 20 20
+(u)glassofmilk
+(p)1088
+(e)🆕|feature
+(+)Clone scans now use the computer file system instead of being a property of floppy disks.
+(u)Moonlol & F191 & RichardGere & Rybek & Enakai & Pali
+(p)517
+(e)🆕🎨|feature, sprites
+(*)Added flock gamemode and antag setting. FLOCK IS NOT IN THE SECRET ROTATION.
+(*)Flockminds now use a rift structure instead of a single egg when starting.
+(*)Flock nanite spray harm intent added.
+(+)Flockdrone ai will butcher dead drones.
+(+)Added a number of flock examinations to flock items.
+(+)Rift sprite by Enakai. Resource cube sprite by Pali.
+(u)mbc
+(p)1157
+(e)|
+(*)Rebalanced stamina damage of lots of items - fixes many cases where an item would consume more stamina than it was dealing! (subject to further adjustment pending testing)
+(*)Tooltips have more clarity about stamina consumption and throw force
+(u)mbc
+(p)1153
+(e)|
+(+)Automenders will ramp up their healing more slowly over time (instead of 1 cycle to reach max, now it's 7 cycles and the healing amount will increase each cycle from 1 - 6).
+(+)Thrown items can cancel progress bars that were normally interrupted by only melee attacks now. This affects the mender, for example.
+(t)fri jun 20 20
+(u)UrsulaMajor
+(e)🆕|feature
+(*)Thank you for participating in Urs Dungeon 5: Shitty Bill Is Missing! The dungeon is now available to the public outside of ass jam, but its prize has been removed.
+(t)fri jun 19 20
+(u)Kubius
+(p)1122
+(e)🗺|mapping
+(+)Adjustments to the southern region of Oshan Laboratory, primarily centered around Security by the maintenance side.
+(u)Mordent
+(p)1132
+(e)🆕|feature
+(*)OOC channel disabled mid-round on RP server
+(u)AwkwardDryad
+(p)347
+(e)|
+(+)Fixed tons of clothing booth bugs :D
+(u)Kubius
+(p)1133
+(e)🗺|mapping
+(+)Kondaru tweaks, including a rockbox and a cleaner AI perimeter.
+(u)pali
+(p)1130
+(e)🆕|feature
+(*)Added full dark mode and other related options. Check Display->Window in the top bar. For the true dark mode experience turn on all the buttons and also CHUI and custom CHUI frames if they don't break the game for you.
+(t)thu jun 18 20
+(u)mbc
+(*)BYOND 513 is no longer in beta. Please upgrade to the latest STABLE version - includes some fixes like eliminating the right-click lag again.
+(u)Mordent
+(p)1123
+(e)⚖|balance
+(+)Added variant "mini funny pack" that replaces the regular version found in comedy equipment crates that cargo can order.
+(u)mbc
+(p)1128
+(*)When someone in a secure channel you can hear speaks on the radio, you will get a short chat sound indicating this.
+(u)Mordent
+(p)1127
+(e)🗺|mapping
+(+)Destiny: fix HoP's office wiring.
+(t)wed jun 17 20
+(u)Sovexe
+(p)1121
+(e)🔄|rework
+(+)Drones are now capable of shooting projectiles properly again. Don't get shot.
+(t)mon jun 15 20
+(u)mbc
+(*)New and improved directional lights (optimized + smoother)
+(u)pali
+(+)Cairngorm now has a plaque tracking nukie wins / losses
+(u)glassofmilk
+(p)830
+(e)🆕🎨|feature, sprites
+(*)Added a new File Component to the MechComp Dispenser that allows saving and re-sending computer files
+(+)Wifi and Powernet-networking Components now also transmit any files attached to packets they receive
+(u)pali
+(+)Create Viewport HUD button for AIs.
+(u)Sovexe
+(p)1105
+(e)🐛🆕|bug, feature
+(+)Borgs can now pickup and carry mentor mice.
+(t)sun jun 14 20
+(u)mbc + Flaborized
+(p)1103
+(e)🎨|sprites
+(*)Added triangle, tambourine, and cowbell instruments. You can order these through the QM.
+(u)zjdtmkhzt
+(p)1077
+(e)⚖🆕|balance, feature
+(+)Changed the way spreading pathogen symptoms work to hopefully make it more obvious how to avoid being infected. (Pathology is still disabled.)
+(u)mbc
+(p)1092
+(e)|
+(*)The cyalume saber is now an excellent blocking weapon that provides very high disorient resistance as well as reflecting all incoming projectiles while in block mode.
+(*)Removed the cyalume saber's ability to stun.
+(u)UrsulaMajor
+(p)1099
+(e)🆕🔄|feature, rework
+(*)You can now vote for multiple maps
+(u)zjdtmkhzt
+(p)1037
+(e)🆕|feature
+(+)Added incubator to grow your pathogen samples. It can also fill vials by clicking it.  (Pathology is still disabled.)
+(t)sat jun 13 20
+(u)mbc
+(p)1089
+(e)🆕🎨|feature, sprites
+(*)Added a new way to play the sax, trumpet, fiddle, and piano.
+(u)Tarmunora
+(p)1025
+(e)🐛|bug
+(+)Corpses in body bags and welded lockers/etc will no longer produce miasma
+(u)kyle
+(p)1072
+(e)🆕|feature
+(*)Added fake wrestling belts so you can wrestle to your heart's content without actually hurting your opponent! Just like "real" wrestling!
+(t)fri jun 12 20
+(u)UrsulaMajor
+(p)1069
+(e)|
+(+)On Ass Jam, YEET! explosions are real
+(u)pali & kubius
+(p)1047
+(e)🗺🔄🎨|mapping, rework, sprites
+(*)Nicer shuttle floors and shuttle lighting. Cog1 and Cog2 arrivals refurbished.
+(u)Tarmunora
+(p)1050
+(e)⛔|removal
+(+)Lights will no longer break from being toggled off and on.
+(t)thu jun 11 20
+(u)Erinexx
+(p)805
+(e)🎨|sprites
+(+)New chemgrenade sprites, now with visible coloured reagents!
+(u)kyle
+(p)1038
+(e)|
+(+)Mapvoting for the succeeding round will now begin ~30 seconds into the pre-game lobby.
+(u)pali
+(*)Ghosts' Toggle Lighting now has a thrid state which removes the pseudo-night vision.
+(u)Gerhazo
+(p)968
+(e)⚖🔄|balance, rework
+(*)Added a "handling of contraband permit" access level present on appropriate jobs' ID cards and identification computers. Firearm permit now only permits you to carry firearms, other kinds of contraband apply under this new permit, which scanners and bots will take into account.
+(*)Security sechud glasses, securitrons, guardbuddies and security scanners now prioritise a person's real identity rather than just the ID card they're holding, if the target's face is not concealed.
+(u)pali
+(p)1010
+(e)🔄🎨|rework, sprites
+(*)New airbridge visuals and other minor improvements.
+(t)wed jun 10 20
+(u)pali
+(p)972
+(e)|
+(+)Internal explosion changes that will hopefully make it harder to run away from them
+(u)pali
+(p)1035
+(e)🆕🗺|feature, mapping
+(*)Added Noah's Shuttle medal for rescuing 6 station pets on the shuttle.
+(u)Tarmunora
+(p)1007
+(e)🔄|rework
+(+)Changed cryotubes to give a constant drip of reagents. Total transfer rate unaffected
+(t)tue jun 09 20
+(u)Tarmunora
+(p)1008
+(e)⚖|balance
+(+)Added nukie grenade launcher to the pool of items ineligible for arm surgery
+(u)mbc
+(p)1029
+(e)|
+(+)Fixed regression where pushing a dense item you were pulling would break the pull.
+(u)Sovexe
+(p)1013
+(e)🆕🔄|feature, rework
+(+)Items on surgical trays now appear in the right-click context menu. Additionally items won't appear under the tray, and will now glide smoothly with the tray.
+(u)glassofmilk
+(p)656
+(e)🆕|feature
+(+)Added Toggle Allow Duplicate Entries setting to the Selection Component.
+(t)mon jun 08 20
+(u)mbc
+(p)1015
+(e)|
+(+)Morphine is a little more effective at ignoring damage slows and a little less punishing on your stamina.
+(u)mbc
+(p)1009
+(e)|
+(*)Add Synaptizine to medical vendors + buffed the stun resist effect on synaptizine a bit
+(u)Tarmunora
+(p)1006
+(e)🐛|bug
+(+)Fixed issue where you could unanchor a shambler and throw them
+(u)pali
+(p)986
+(e)🆕|feature
+(*)Heisenbee gets better hats the more rounds she's alive. Killing Heisenbee resets this but drops the hat!
+(u)Tarmunora
+(p)995
+(e)🐛|bug
+(+)Fixes moveslow on nukie LMG and sniper - now slows in-hand, but not on back
+(u)Sovexe
+(p)982
+(e)🐛|bug
+(+)Credits "sold" via QM crate are now refunded as profit instead of lost.
+(u)Tarmunora
+(p)957
+(e)⚖|balance
+(*)Tweaked explosion power scaling over range, and changed how the human body responds to being caught in explosions.
+(+)Added small amount of explosion resistance to sturdy-limbs foodEffect
+(t)sun jun 07 20
+(u)Tarmunora
+(p)947
+(e)🆕|feature
+(+)Taught critters how to dual-wield
+(u)UrsulaMajor
+(p)979
+(e)|
+(*)New Clown Traitor Item by Dr. Floorpills: Boom Boots. They make a boom sound with every step.
+(u)UrsulaMajor
+(p)984
+(e)⚖🐛|balance, bug
+(+)You can now deconstruct everything a mechanic constructs (again)
+(u)mbc
+(p)981
+(e)⚖🆕🔄|balance, feature, rework
+(*)Certain kinds of random events will be preferred when many players are dead or all the antagonists are dead.
+(*)Added two new random events : one that spawns dead players as random ghost critter pests (different from normal ghost critters) and another that spawns 1-3 dead players as an antagonistic critter
+(u)Sovexe
+(p)978
+(e)|
+(+)Monkeys will now drop all equipped items when meat spiked
+(u)UrsulaMajor
+(p)969
+(e)⚖|balance
+(*)Biomagnetic Fields now use charge to produce their effects. Charge builds up when you take tight turns.
+(u)UrsulaMajor
+(p)977
+(e)🐛|bug
+(+)Fixed bug where critters could attack really fast
+(u)Tarmunroa
+(p)692
+(e)⚖🔄|balance, rework
+(+)Globally enabled experimental smoke spread
+(u)MarkNstein
+(p)971
+(e)|
+(+)Command jobs now displayed as filled when late-joining during Rev-mode.
+(t)sat jun 06 20
+(u)ZeWaka
+(p)141
+(e)🆕|feature
+(*)Added a basic custom keybinding system to the game. 😸
+(*)Change your keybinds by going to the interface menu in the top left.
+(u)mbc
+(p)966
+(e)|
+(+)Fixed a few pushing related bugs relating to grabbing and stamina consumption while sprinting.
+(t)thu jun 04 20
+(u)mbc
+(p)955
+(e)|
+(*)Fixed bug where you couldn't push/pull someone else into a slip. Also fixed a bug where a stacked slip might gib you.
+(u)TrustworthyFella
+(p)823
+(e)⚖|balance
+(*)Made seething tomatoes into incendiaries rather than explosives. They now do a sizable chunk of burn damage on impact, and a fireflash. Potency affects the burn damage done, and how long you're on fire. The burn damage is affected by the targets clothing(heat resistance).
+(+)Seething tomatoes now contain welding fuel
+(t)wed jun 03 20
+(u)zjdtmkhzt
+(p)953
+(e)⚖🆕|balance, feature
+(+)Rebalanced microbody types and added a cap for amount of symptoms a pathogen can have. Pathology is still disabled.
+(u)UrsulaMajor
+(p)952
+(e)⚖🐛|balance, bug
+(*)Nukie Snipers now get a pair of traitor thermals. Enjoy!
+(u)zjdtmkhzt
+(p)942
+(e)⚖🆕|balance, feature
+(+)Fart pathogen symptoms can now be actively triggered by farting (with a cooldown). Pathology is still disabled!
+(u)MarkNstein
+(p)872
+(e)🗺🎨|mapping, sprites
+(+)New Z5 asteroid field prefab: Sequestered Cloner. Contains lore, a puzzle, and loots!
+(u)Tarmunora
+(p)929
+(e)🆕|feature
+(+)Made metal foam a little better to use for sealing breaches
+(u)Erinexx
+(p)818
+(e)🆕🗺|feature, mapping
+(*)Added jellybean plants that grow jellybeans
+(u)zjdtmkhzt
+(p)920
+(e)🆕|feature
+(+)Only mining tools will now be automatically used when bumping into asteroid tiles. (This prevents things like emptying ore holders on accident.)
+(+)Borgs can now also automatically use their mining tools without having to click.
+(u)HydroFloric
+(e)🎨|sprites
+(*)The Intelligence Formation Chip has a new sprite (and name).
+(t)tue jun 02 20
+(u)zjdtmkhzt
+(p)464
+(e)🆕|feature
+(+)Added a new mutation-based pathology symptom that can be used for benevolent or nefarious purposes.
+(u)UrsulaMajor
+(p)935
+(e)|
+(+)Nukie Engineer Class Crate now has welding-safe helmet w/ built in mesons
+(+)Nukie Medic Class Crate now has ProDocs built into their helmet
+(u)UrsulaMajor
+(p)934
+(e)🗺|mapping
+(+)Added a Syndicate Omnitool to the Cairngorm
+(u)UrsulaMajor
+(p)933
+(e)🎨|sprites
+(*)Syndicate Omnitool traitor item now has a weldingtool mode
+(t)mon jun 01 20
+(u)UrsulaMajor
+(p)932
+(e)|
+(*)Refactored how welding tools work. Please report any bugs with the bug report button at the top right of the status pane.
+(t)sun may 31 20
+(u)Chickenish
+(p)863
+(e)⚖🐛🆕|balance, bug, feature
+(+)Cyberlungs now have improved resistance to hot air, reducing damage even past the temperature threshold.
+(+)Singular lungs now have more intuitive interactions with hot air.
+(u)Sovexe
+(p)921
+(e)🆕|feature
+(+)Remy, Morty, Monkey, Piggy, and Blair can now escape with you to centcom. Can you save all of the pets?
+(u)tloy-x
+(p)834
+(e)🆕|feature
+(*)Added option in character setup for auto-capitalization of sent chat messages
+(+)Added "cancel" button to input box when using the radio hotkey
+(u)MarkNstein
+(p)895
+(e)🗺|mapping
+(+)All TEG maps now have two TTVs in the engineering department.
 (t)sat may 30 20
+(u)mbc
+(p)908
+(e)|
+(*)Slips can also be avoided by manually slowing your movement (tap keys slower instead of holding)
+(u)mbc
+(p)906
+(e)⚖|balance
+(*)Slipping protection no longer checks for "walk" intent and instead is based off actual speed
 (u)Sovexe
 (p)894
 (e)🆕|feature

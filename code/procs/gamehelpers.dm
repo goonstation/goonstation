@@ -55,11 +55,16 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 		return null
 	var/area/A = T.loc
 
-	if (A.type == /area)
+	if (area_space_nopower(A))
 		// dont search space for an apc
 		return null
 
-	for (var/obj/machinery/power/apc/APC in A.contents)
+	if (A.area_apc)
+		return A.area_apc
+
+	for (var/obj/machinery/power/apc/APC in machine_registry[MACHINES_POWER])
+		if (get_area(APC) != A)
+			continue
 		if (!(APC.status & BROKEN))
 			return APC
 
@@ -368,23 +373,20 @@ var/obj/item/dummy/click_dummy = new
 	if(src.l_hand)
 		if (src.l_hand.c_flags & EQUIPPED_WHILE_HELD)
 			. += src.l_hand
-		else if (src.l_hand.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 1)
-			. += src.l_hand
+
 
 		if (src.l_hand.c_flags & HAS_GRAB_EQUIP)
 			for(var/obj/item/grab/G in src.l_hand)
-				if (G.c_flags & EQUIPPED_WHILE_HELD || (G.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 1))
+				if (G.c_flags & EQUIPPED_WHILE_HELD)
 					. += G
 
 	if(src.r_hand)
 		if (src.r_hand.c_flags & EQUIPPED_WHILE_HELD)
 			. += src.r_hand
-		else if (src.r_hand.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 0)
-			. += src.r_hand
 
 		if (src.r_hand.c_flags & HAS_GRAB_EQUIP)
 			for(var/obj/item/grab/G in src.r_hand)
-				if (G.c_flags & EQUIPPED_WHILE_HELD || (G.c_flags & EQUIPPED_WHILE_HELD_ACTIVE && src.hand == 0))
+				if (G.c_flags & EQUIPPED_WHILE_HELD)
 					. += G
 
 
@@ -526,19 +528,11 @@ var/obj/item/dummy/click_dummy = new
 
 
 /area/proc/move_contents_to(var/area/A, var/turftoleave=null, var/ignore_fluid = 0)
-	set waitfor = 0
-
 	//Takes: Area. Optional: turf type to leave behind.
 	//Returns: Nothing.
 	//Notes: Attempts to move the contents of one area to another area.
 	//       Movement based on lower left corner. Tiles that do not fit
 	//		 into the new area will not be moved.
-
-	var/testmove = 0
-
-
-//	if(prob(5)) testmove = 1
-
 	if(!A || !src) return 0
 
 	var/list/turfs_src = get_area_turfs(src.type)
@@ -546,102 +540,41 @@ var/obj/item/dummy/click_dummy = new
 
 	var/src_min_x = 0
 	var/src_min_y = 0
-	for (var/turf/T in turfs_src)
+	for (var/x in turfs_src)
+		var/turf/T = x
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
-
 	DEBUG_MESSAGE("src_min_x = [src_min_x], src_min_y = [src_min_y]")
+
 	var/trg_min_x = 0
 	var/trg_min_y = 0
-	for (var/turf/T in turfs_trg)
+	var/trg_z = 0
+	for (var/x in turfs_trg)
+		var/turf/T = x
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
-
+		trg_z = T.z
 	DEBUG_MESSAGE("trg_min_x = [src_min_x], trg_min_y = [src_min_y]")
 
-	var/list/refined_src = new/list()
-	for(var/turf/T in turfs_src)
-		refined_src += T
-		refined_src[T] = new/datum/coords
-		var/datum/coords/C = refined_src[T]
-		C.x_pos = (T.x - src_min_x)
-		C.y_pos = (T.y - src_min_y)
+	for (var/turf/S in turfs_src)
+		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
+		if(T.loc != A) continue
+		T.ReplaceWith(S.type, force=1)
+		T.appearance = S.appearance
+		T.density = S.density
+		T.dir = S.dir
 
-	var/list/refined_trg = new/list()
-	for(var/turf/T in turfs_trg)
-		refined_trg += T
-		refined_trg[T] = new/datum/coords
-		var/datum/coords/C = refined_trg[T]
-		C.x_pos = (T.x - trg_min_x)
-		C.y_pos = (T.y - trg_min_y)
-
-	var/list/fromupdate = new/list()
-	var/list/toupdate = new/list()
-
-	moving:
-		for (var/turf/T in refined_src)
-			var/datum/coords/C_src = refined_src[T]
-			for (var/turf/B in refined_trg)
-				var/datum/coords/C_trg = refined_trg[B]
-				if(C_src.x_pos == C_trg.x_pos && C_src.y_pos == C_trg.y_pos)
-
-					var/old_app = T.appearance
-					var/olddir = T.dir
-					//var/old_icon_state1 = T.icon_state
-
-					var/turf/X
-					if(testmove) X = new T.type(get_step(B,pick(cardinal))) //remove this
-					else X = new T.type (B)
-					X.appearance = old_app
-					X.dir = olddir
-					X.RL_Init()
-					//X.icon_state = old_icon_state1
-
-					for(var/obj/O in T)
-						if (!istype(O, /obj) || istype(O, /obj/forcefield) || istype(O, /obj/overlay/tile_effect)) continue
-						if (!ignore_fluid && istype(O, /obj/fluid)) continue
-						O.set_loc(X)
-					for(var/mob/M in T)
-						DEBUG_MESSAGE("Moving mob [M] from [T] to [X].")
-						if(!ismob(M)) continue
-						M.set_loc(X)
-
-					toupdate += X
-
-					if(turftoleave)
-						var/turf/ttl = new turftoleave(T)
-
-						fromupdate += ttl
-
-					else
-						T.ReplaceWithSpace()
-
-					refined_src -= T
-					refined_trg -= B
-					continue moving
-
-	var/list/doors = new/list()
-
-	if(toupdate.len)
-		for(var/turf/simulated/T1 in toupdate)
-			for(var/obj/machinery/door/D2 in T1)
-				doors += D2
-			if(T1.parent)
-				air_master.queue_update_group(T1.parent)
-			else
-				air_master.queue_update_tile(T1)
-
-	if(fromupdate.len)
-		for(var/turf/simulated/T2 in fromupdate)
-			for(var/obj/machinery/door/D2 in T2)
-				doors += D2
-			if(T2.parent)
-				air_master.queue_update_group(T2.parent)
-			else
-				air_master.queue_update_tile(T2)
-
-	for(var/obj/O in doors)
-		O:update_nearby_tiles(1)
+	for (var/turf/S in turfs_src)
+		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
+		for(var/x in S)
+			var/atom/movable/AM = x
+			if (istype(AM, /obj/forcefield) || istype(AM, /obj/overlay/tile_effect)) continue
+			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
+			AM.set_loc(T)
+		if(turftoleave)
+			S.ReplaceWith(turftoleave, force=1)
+		else
+			S.ReplaceWithSpaceForce()
 
 
 

@@ -3,7 +3,7 @@ var/global/debug_messages = 0
 /client/proc/debug_messages()
 	set desc = "Toggle debug messages."
 	set name = "HDM" // debug ur haines
-	set hidden = 1
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 
 	debug_messages = !(debug_messages)
@@ -12,7 +12,7 @@ var/global/debug_messages = 0
 	message_admins("[key_name(usr)] toggled debug messages [debug_messages ? "on" : "off"]")
 
 /client/proc/Debug2()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug-Game"
 	admin_only
 	if(src.holder.rank == "Coder")
@@ -32,7 +32,7 @@ var/global/debug_messages = 0
 		return
 
 /client/proc/debug_deletions()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Deletions"
 	admin_only
 	var/deletedJson = "\[{path:null,count:0}"
@@ -83,13 +83,13 @@ var/global/debug_messages = 0
 
 #ifdef IMAGE_DEL_DEBUG
 /client/proc/debug_image_deletions_clear()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Clear Image Deletion Log"
 	admin_only
 	deletedImageData = new
 
 /client/proc/debug_image_deletions()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Image Deletions"
 	admin_only
 	#ifdef IMAGE_DEL_DEBUG
@@ -128,7 +128,7 @@ var/global/debug_messages = 0
 #endif
 
 /client/proc/debug_pools()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Object Pools"
 	admin_only
 
@@ -202,14 +202,14 @@ var/global/debug_messages = 0
 /client/proc/call_proc_atom(atom/target as null|area|obj|mob|turf in world)
 	set name = "Call Proc"
 	set desc = "Calls a proc associated with the targeted atom"
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	admin_only
 	if (!target)
 		return
 	doCallProc(target)
 
 /client/proc/call_proc_all(var/typename as null|text)
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Call Proc All"
 	set desc = "Call proc on all instances of a type, will probably slow shit down"
 
@@ -284,7 +284,7 @@ var/global/debug_messages = 0
 
 
 /client/proc/call_proc()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Advanced ProcCall"
 	admin_only
 	var/target = null
@@ -343,7 +343,12 @@ var/global/debug_messages = 0
 				listargs += input("Enter new number:","Num", 0) as null|num
 
 			if ("type")
-				listargs += input("Enter type:","Type", null) in null|typesof(/obj,/mob,/area,/turf,/datum/component)
+				boutput(usr, "<span class='notice'>Type part of the path of the type.</span>")
+				var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
+				if (typename)
+					var/match = get_one_match(typename, /datum)
+					if (match)
+						listargs += match
 
 			if ("reference")
 				listargs += input("Select reference:","Reference", null) as null|mob|obj|turf|area in world
@@ -392,7 +397,7 @@ var/global/debug_messages = 0
 	return listargs
 
 /client/proc/cmd_admin_mobileAIize(var/mob/M in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Mobile AIize"
 	set popup_menu = 0
 	if(!ticker)
@@ -408,7 +413,7 @@ var/global/debug_messages = 0
 		alert("Invalid mob")
 
 /client/proc/cmd_admin_makeai(var/mob/M in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Make AI"
 	set popup_menu = 0
 	if(!ticker)
@@ -431,7 +436,7 @@ var/global/debug_messages = 0
 		return M.AIize()
 
 /client/proc/cmd_admin_makecyborg(var/mob/M in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Make Cyborg"
 	set popup_menu = 0
 	if(!ticker)
@@ -445,7 +450,7 @@ var/global/debug_messages = 0
 		alert("This only works on human mobs.")
 
 /client/proc/cmd_admin_makeghostdrone(var/mob/M in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Make Ghostdrone"
 	set popup_menu = 0
 	if(!ticker)
@@ -460,7 +465,7 @@ var/global/debug_messages = 0
 
 /* Just use the set traitor dialog thing
 /client/proc/cmd_admin_changelinginize(var/mob/M in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Make Changeling"
 	set popup_menu = 0
 	if(!ticker)
@@ -477,7 +482,7 @@ var/global/debug_messages = 0
 */
 
 /client/proc/cmd_debug_del_all()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Del-All"
 
 	// to prevent REALLY stupid deletions
@@ -521,14 +526,14 @@ var/global/debug_messages = 0
 
 // cancels your del_all in process, if one is running
 /client/proc/cmd_debug_del_all_cancel()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Del-All Cancel"
 
 	src.delete_state = DELETE_STOP
 
 // makes del_all print how much is currently deleted
 /client/proc/cmd_debug_del_all_check()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Del-All Progress"
 
 	src.delete_state = DELETE_CHECK
@@ -553,7 +558,7 @@ var/global/debug_messages = 0
 	return
 /*
 /client/proc/cmd_ultimategrife()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "ULTIMATE GRIFE"
 
 	switch(alert("Holy shit are you sure?! (also the server will lag for a few seconds)",,"Yes","No"))
@@ -576,8 +581,8 @@ var/global/debug_messages = 0
 			alert("Thank god for that.")
 */
 /client/proc/cmd_debug_mutantrace(var/mob/mob in world)
-	set name = "Mutant Race Debug"
-	set category = "Debug"
+	set name = "Change Mutant Race"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set popup_menu = 0
 	if(!ishuman(mob))
 		alert("[mob] is not a human mob!")
@@ -598,7 +603,7 @@ var/global/debug_messages = 0
 	H.update_clothing()
 
 /client/proc/view_save_data(var/mob/mob in world)
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "View Save Data"
 	set desc = "Displays the save data for any mob with an associated client."
 
@@ -646,7 +651,7 @@ body
 	usr.Browse(html, "window=variables\ref[prefs]")
 
 /client/proc/check_gang_scores()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Check Gang Scores"
 
 	if(!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/gang)))
@@ -659,7 +664,7 @@ body
 		boutput(usr, "[G.gang_name]: [G.gang_score()] ([G.num_areas_controlled()] areas)")
 
 /client/proc/scenario()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Profiling Scenario"
 
 	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail")
@@ -696,7 +701,7 @@ body
 					gibs(T)
 /*
 /client/proc/icon_print_test()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Icon printing test"
 	set desc = "Tests printing all the objects around you with or without icons to test 507"
 
@@ -711,7 +716,7 @@ body
 */
 
 /client/proc/debug_reaction_list()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Reaction Structure"
 	set desc = "Checks the current reaction structure."
 
@@ -725,7 +730,7 @@ body
 	usr.Browse(T, "window=browse_reactions")
 
 /client/proc/debug_reagents_cache()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Reagents Cache"
 	set desc = "Check which things are in the reaction cache."
 
@@ -737,7 +742,7 @@ body
 	usr.Browse(T, "window=browse_reagents;size=800x400")
 
 /atom/proc/debug_check_possible_reactions()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Check Possible Reactions"
 	set desc = "Checks which things could possibly be made from reagents in this thing."
 
@@ -775,7 +780,7 @@ body
 		boutput(usr, "<span class='notice'>[theinstance][in_text] at [showMyCoords(T.x, T.y, T.z)]</span>")
 
 /client/proc/find_one_of(var/typename as text)
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set name = "Find One"
 	set desc = "Show the location of one instance of type."
 
@@ -792,7 +797,7 @@ body
 		return
 
 /client/proc/find_all_of(var/typename as text)
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set name = "Find All"
 	set desc = "Show the location of all instances of a type. Performance warning!!"
 
@@ -812,7 +817,7 @@ body
 		return
 
 /client/proc/find_thing(var/atom/A as null|anything in world)
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set name = "Find Thing"
 	set desc = "Show the location of an atom by name."
 	set popup_menu = 0
@@ -824,7 +829,7 @@ body
 	print_instance(A)
 
 /client/proc/count_all_of(var/typename as text)
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set name = "Count All"
 	set desc = "Returns the number of all instances of a type that exist."
 
@@ -842,7 +847,7 @@ body
 		return
 
 /client/proc/set_admin_level()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Change Admin Level"
 	set desc = "Allows you to change your admin level at will for testing. Does not change your available verbs."
 	set popup_menu = 0
@@ -873,7 +878,7 @@ body
 var/global/debug_camera_paths = 0
 /client/proc/show_camera_paths()
 	set name = "Toggle camera connections"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 
 	if (!debug_camera_paths && alert(src, "DO YOU REALLY WANT TO TURN THIS ON? THE SERVER WILL SHIT ITSELF AND DIE DO NOT DO IT ON THE LIVE SERVERS THANKS", "Confirmation", "Yes", "No") == "No")
@@ -906,7 +911,7 @@ proc/display_camera_paths()
 /*
 /client/proc/remove_camera_paths_verb()
 	set name = "Hide camera connections"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 	remove_camera_paths()
 */
@@ -919,7 +924,7 @@ proc/display_camera_paths()
 /client/proc/toggle_camera_network_reciprocity()
 	set name = "Toggle Camnet Reciprocity"
 	set desc = "Toggle AI camera connection behaviour, off to select each node based on the individual camera, on to force cameras to reciprocate the connection"
-	set category = "Toggles (Server)"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	admin_only
 
 	camera_network_reciprocity = !camera_network_reciprocity
@@ -939,7 +944,7 @@ proc/display_camera_paths()
 /client/proc/show_runtime_window()
 	set name = "Show Runtime Window"
 	set desc = "Shows the runtime window for yourself"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 	winshow(src, "runtimes", 1)
 */
@@ -947,7 +952,7 @@ proc/display_camera_paths()
 /client/proc/cmd_randomize_look()
 	set name = "Randomize Appearance"
 	set desc = "Randomizes how you look (if you are a human)"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 	admin_only
 	if (!ishuman(src.mob))
@@ -959,7 +964,7 @@ proc/display_camera_paths()
 /client/proc/cmd_randomize_handwriting()
 	set name = "Randomize Handwriting"
 	set desc = "Randomizes how you write on paper."
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 	admin_only
 	if (src.mob && src.mob.mind)
@@ -972,7 +977,7 @@ proc/display_camera_paths()
 /client/proc/cmd_display_detailed_machine_stats()
 	set name = "Machine stats"
 	set desc = "Displays the statistics for how machines are processed."
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 
 	var/output = ""
@@ -1027,7 +1032,7 @@ proc/display_camera_paths()
 /client/proc/cmd_display_queue_stats()
 	set name = "Queue stats"
 	set desc = "Displays the statistics for how queue stuff is processed."
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 
 	var/output = ""
@@ -1081,7 +1086,7 @@ proc/display_camera_paths()
 /client/proc/upload_custom_hud()
 	set name = "Upload Custom HUD Style"
 	set desc = "Adds a dmi to the global list of available huds, for every player to use."
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 
 	var/icon/new_style = input("Please choose a new icon file to upload", "Upload Icon") as null|icon
@@ -1101,7 +1106,7 @@ proc/display_camera_paths()
 /client/proc/random_color_matrix()
 	set name = "Random Color Matrix Test"
 	set desc = "Animates the client to a randomised color matrix"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 
 	if(!islist(usr.client.color))
@@ -1132,7 +1137,7 @@ proc/display_camera_paths()
 /client/proc/test_mass_flock_convert()
 	set name = "Test Mass Flock Convert"
 	set desc = "Don't fucking use this EVER"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 
 	if(alert("This will IRREVERSIBLY FUCK UP THE STATION and might be laggy, do not use this live. Are you sure?","Misclick Prevention","Yes","No") == "Yes")
@@ -1144,7 +1149,7 @@ proc/display_camera_paths()
 var/datum/flock/testflock
 /client/proc/test_flock_panel()
 	set name = "Test Flock Panel"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 
 	if(isnull(testflock))
@@ -1156,7 +1161,7 @@ var/datum/flock/testflock
 /client/proc/clear_string_cache()
 	set name = "Clear String Cache"
 	set desc = "Invalidates/clears the string cache to allow for files to be reloaded."
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 
 	if(alert("Really clear the string cache?","Invalidate String Cache","OK","Cancel") == "OK")
@@ -1169,7 +1174,7 @@ var/datum/flock/testflock
 /client/proc/edit_color_matrix()
 	set name = "Edit Color Matrix"
 	set desc = "A little more control over the VFX"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 
 	if(!istype(thething))
@@ -1180,7 +1185,7 @@ var/datum/flock/testflock
 /client/proc/temporary_deadmin_self()
 	set name = "Temp. Deadmin Self"
 	set desc = "Deadmin you're own self. Temporarily."
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 
 	if(src.holder)
@@ -1242,7 +1247,7 @@ var/datum/flock/testflock
 
 #ifdef ENABLE_SPAWN_DEBUG
 /client/proc/spawn_dbg()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Spawn"
 	set desc = "Displays all the spawns that've happened so far or dies trying"
 	if(src.holder)
@@ -1263,7 +1268,7 @@ var/datum/flock/testflock
 		usr.Browse(text, "window=spawndbg;size=800x600")
 #elif defined(ENABLE_SPAWN_DEBUG_2)
 /client/proc/spawn_dbg()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Spawn"
 	set desc = "Displays all the spawns that've happened so far or dies trying"
 	if(src.holder)

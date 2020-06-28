@@ -76,8 +76,9 @@
 	desc = "It feels dense and like it wants to pop open. If you fumble around, maybe you can find some sort of catch or button."
 	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "flchair_parts"
-	stamina_damage = 15
-	stamina_cost = 15
+	force = 3
+	stamina_damage = 20
+	stamina_cost = 10
 	furniture_type = /obj/stool/chair/comfy/flock
 	furniture_name = "thrumming alcove"
 
@@ -123,9 +124,8 @@
 	else if (istype(W, /obj/item/satchel/))
 		boutput(user, "<span class='alert'>It isn't really clear how to make this work.</span>")
 		return
-	else if (!src.open && istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/welder = W
-		if (welder.welding)
+	else if (!src.open && isweldingtool(W))
+		if (W:try_weld(user,0,-1,0,0))
 			boutput(user, "<span class='alert'>It doesn't matter what you try, it doesn't seem to keep welded shut.</span>")
 		return
 	// smack the damn thing if it's closed
@@ -238,7 +238,7 @@
 			user.u_equip(C)
 			qdel(C)
 		qdel(src)
-	if (istype(C, /obj/item/weldingtool) && C:welding)
+	if (isweldingtool(C) && C:try_weld(user,0,-1,0,0))
 		boutput(user, "<span class='notice'>The fibres burn away in the same way glass doesn't. Huh.</span>")
 		qdel(src)
 

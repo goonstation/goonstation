@@ -107,9 +107,9 @@ var/global/mob/twitch_mob = 0
 				admins[m_key] = a_lev
 				diary << ("ADMIN: [m_key] = [a_lev]")
 
-/world/proc/load_whitelist()
+/world/proc/load_whitelist(fileName = "strings/whitelist.txt")
 	set background = 1
-	var/text = file2text("strings/whitelist.txt")
+	var/text = file2text(fileName)
 	if (!text)
 		return
 	else
@@ -122,6 +122,24 @@ var/global/mob/twitch_mob = 0
 				continue
 
 			whitelistCkeys += line
+			diary << ("WHITELIST: [line]")
+
+
+/world/proc/load_playercap_bypass()
+	set background = 1
+	var/text = file2text("strings/allow_thru_cap.txt")
+	if (!text)
+		return
+	else
+		var/list/lines = splittext(text, "\n")
+		for(var/line in lines)
+			if (!line)
+				continue
+
+			if (copytext(line, 1, 2) == "#")
+				continue
+
+			bypassCapCkeys += line
 			diary << ("WHITELIST: [line]")
 
 // dsingh for faster create panel loads
@@ -194,6 +212,9 @@ var/f_color_selector_handler/F_Color_Selector
 /datum/preMapLoad
 	New()
 		enable_extools_debugger()
+#ifdef REFERENCE_TRACKING
+		enable_reference_tracking()
+#endif
 
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))
 #warn Profiler enabled at start of init
@@ -212,8 +233,6 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << "========================================"
 		world.log << ""
 
-		serverKey = (world.port % 1000) / 100
-
 		Z_LOG_DEBUG("Preload", "Loading config...")
 		config = new /datum/configuration()
 		config.load("config/config.txt")
@@ -222,6 +241,8 @@ var/f_color_selector_handler/F_Color_Selector
 			var/specific_config = "config/config-[world.port].txt"
 			if (fexists(specific_config))
 				config.load(specific_config)
+
+		serverKey = config.server_key ? config.server_key : (world.port % 1000) / 100
 
 		if (config.allowRotatingFullLogs)
 			roundLog << "========================================<br>"
@@ -390,6 +411,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 /world/New()
 	Z_LOG_DEBUG("World/New", "World New()")
+	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
 
@@ -441,6 +463,8 @@ var/f_color_selector_handler/F_Color_Selector
 	src.load_admins()//UGH
 	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
 	src.load_whitelist() //WHY ARE WE UGH-ING
+	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
+	src.load_playercap_bypass()
 
 	Z_LOG_DEBUG("World/Init", "Starting input loop")
 	start_input_loop()
@@ -594,6 +618,7 @@ var/f_color_selector_handler/F_Color_Selector
 #endif
 
 	Z_LOG_DEBUG("World/Init", "Init() complete")
+	TgsInitializationComplete()
 	//sleep_offline = 1
 
 
@@ -637,18 +662,19 @@ var/f_color_selector_handler/F_Color_Selector
 
 	lagcheck_enabled = 0
 	processScheduler.stop()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
 
 	SPAWN_DBG(world.tick_lag)
-		for (var/mob/M in mobs)
-			if (M.client)
+		for (var/client/C)
+			if (C.mob)
 				if (prob(40))
-					M << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg'))
+					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/TimeForANewRound.ogg'))
 				else
-					M << sound('sound/misc/NewRound.ogg')
+					C.mob << sound('sound/misc/NewRound.ogg')
 
 #ifdef DATALOGGER
 	SPAWN_DBG(world.tick_lag*2)
@@ -687,6 +713,10 @@ var/f_color_selector_handler/F_Color_Selector
 
 		world.Reboot()
 
+/world/Reboot()
+	TgsReboot()
+	return ..()
+
 /world/proc/update_status()
 	Z_LOG_DEBUG("World/Status", "Updating status")
 
@@ -722,9 +752,8 @@ var/f_color_selector_handler/F_Color_Selector
 	//	features += "AI"
 
 	var/n = 0
-	for (var/mob/M in mobs)
-		if (M.client)
-			n++
+	for (var/client/C)
+		n++
 
 	if (n > 1)
 		features += "~[n] players"
@@ -763,28 +792,28 @@ var/f_color_selector_handler/F_Color_Selector
 
 
 /world/Topic(T, addr, master, key)
+	TGS_TOPIC	// logging for these is done in TGS
 	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 	Z_LOG_DEBUG("World", "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
 	if (T == "ping")
 		var/x = 1
-		for (var/client/C in clients)
+		for (var/client/C)
 			x++
 		return x
 
 	else if(T == "players")
 		var/n = 0
-		for(var/mob/M in mobs)
-			if(M.client)
-				n++
+		for(var/client/C)
+			n++
 		return n
 
 	else if (T == "admins")
 		var/list/s = list()
 		var/n = 0
-		for(var/mob/M in mobs)
-			if(M && M.client && M.client.holder)
-				s["admin[n]"] = (M.client.stealth ? "~" : "") + M.client.key
+		for(var/client/C)
+			if(C.holder)
+				s["admin[n]"] = (C.stealth ? "~" : "") + C.key
 				n++
 		s["admins"] = n
 		return list2params(s)
@@ -792,9 +821,9 @@ var/f_color_selector_handler/F_Color_Selector
 	else if (T == "mentors")
 		var/list/s = list()
 		var/n = 0
-		for(var/mob/M in mobs)
-			if(M && M.client && !M.client.holder && M.client.is_mentor())
-				s["mentor[n]"] = M.client.key
+		for(var/client/C)
+			if(!C.holder && C.is_mentor())
+				s["mentor[n]"] = C.key
 				n++
 		s["mentors"] = n
 		return list2params(s)
@@ -823,10 +852,9 @@ var/f_color_selector_handler/F_Color_Selector
 		else elapsed = "welp"
 		s["elapsed"] = elapsed
 		var/n = 0
-		for(var/mob/M in mobs)
-			if(M.client)
-				s["player[n]"] = "[(M.client.stealth || M.client.alt_key) ? M.client.fakekey : M.client.key]"
-				n++
+		for(var/client/C)
+			s["player[n]"] = "[(C.stealth || C.alt_key) ? C.fakekey : C.key]"
+			n++
 		s["players"] = n
 		s["map_name"] = getMapNameFromID(map_setting)
 		return list2params(s)
@@ -1198,9 +1226,9 @@ var/f_color_selector_handler/F_Color_Selector
 				logTheThing("diary", null, null, "[server_name] PM: [nick]: [msg]", "admin")
 				var/rendered = "<span class=\"admin\"><span class=\"prefix\">[server_name] PM:</span> <span class=\"name\">[nick]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
 
-				for (var/mob/M in mobs)
-					if (M.client && M.client.holder)
-						boutput(M, rendered)
+				for (var/client/C)
+					if (C.holder)
+						boutput(C.mob, rendered)
 
 				var/ircmsg[] = new()
 				ircmsg["key"] = nick
@@ -1236,12 +1264,12 @@ var/f_color_selector_handler/F_Color_Selector
 					M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 					logTheThing("admin_help", null, M, "Discord: [nick] PM'd %target%: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] PM'd %target%: [msg]", "ahelp")
-					for (var/mob/K in mobs)
-						if (K && K.client && K.client.holder && K.key != M.key)
-							if (K.client.player_mode && !K.client.player_mode_ahelp)
+					for (var/client/C)
+						if (C.holder && C.key != M.key)
+							if (C.player_mode && !C.player_mode_ahelp)
 								continue
 							else
-								boutput(K, "<font color='blue'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [msg]</font>")
+								boutput(C, "<span class='notice'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [msg]</span>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -1264,15 +1292,15 @@ var/f_color_selector_handler/F_Color_Selector
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[msg]</span></span>")
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd %target%: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd %target%: [msg]", "admin")
-					for (var/mob/K in mobs)
-						if (K && K.client && K.client.can_see_mentor_pms() && K.key != M.key)
-							if(K.client.holder)
-								if (K.client.player_mode && !K.client.player_mode_mhelp)
+					for (var/client/C)
+						if (C.can_see_mentor_pms() && C.key != M.key)
+							if(C.holder)
+								if (C.player_mode && !C.player_mode_mhelp)
 									continue
 								else
-									boutput(K, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>")
+									boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>")
 							else
-								boutput(K, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
+								boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -1411,9 +1439,9 @@ var/f_color_selector_handler/F_Color_Selector
 				msg += "It is running [mode]<br>"
 				msg += "<a href='[address]'>Click here to join it</a><br>"
 				msg += "---------------------</div><br>"
-				for (var/mob/M in mobs)
-					if (isdead(M))
-						boutput(M, msg)
+				for (var/client/C)
+					if (isdead(C.mob))
+						boutput(C.mob, msg)
 
 				return 1
 
@@ -1475,7 +1503,7 @@ var/f_color_selector_handler/F_Color_Selector
 					game_end_delayer = plist["nick"]
 					logTheThing("admin", null, null, "[game_end_delayer] delayed the server restart from Discord.")
 					logTheThing("diary", null, null, "[game_end_delayer] delayed the server restart from Discord.", "admin")
-					message_admins("<font color='blue'>[game_end_delayer] delayed the server restart from Discord.</font>")
+					message_admins("<span class='internal>[game_end_delayer] delayed the server restart from Discord.</span>")
 					ircmsg["msg"] = "Server restart delayed. Use undelay to cancel this."
 				else
 					ircmsg["msg"] = "The server restart is already delayed, use undelay to cancel this."
@@ -1494,7 +1522,7 @@ var/f_color_selector_handler/F_Color_Selector
 					game_end_delayer = plist["nick"]
 					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from Discord.")
 					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from Discord.", "admin")
-					message_admins("<font color='blue'>[game_end_delayer] removed the restart delay from Discord.</font>")
+					message_admins("<span class='internal>[game_end_delayer] removed the restart delay from Discord.</span>")
 					game_end_delayer = null
 					ircmsg["msg"] = "Removed the restart delay."
 					return ircbot.response(ircmsg)
@@ -1503,7 +1531,7 @@ var/f_color_selector_handler/F_Color_Selector
 					game_end_delayer = plist["nick"]
 					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.")
 					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.", "admin")
-					message_admins("<font color='blue'>[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.</font>")
+					message_admins("<span class='internal>[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.</span>")
 					ircmsg["msg"] = "Removed the restart delay."
 
 					SPAWN_DBG(1 DECI SECOND)
@@ -1557,6 +1585,26 @@ var/f_color_selector_handler/F_Color_Selector
 
 				return ircbot.response(ircmsg)
 
+			if ("whitelistChange")
+				if (!plist["wlType"] || !plist["ckey"])
+					return 0
+
+				var/type = plist["wlType"]
+				var/ckey = plist["ckey"]
+				var/msg
+
+				if (type == "add" && !(ckey in whitelistCkeys))
+					whitelistCkeys += ckey
+					msg = "Entry '[ckey]' added to whitelist"
+				else if (type == "remove" && (ckey in whitelistCkeys))
+					whitelistCkeys -= ckey
+					msg = "Entry '[ckey]' removed from whitelist"
+
+				if (msg)
+					logTheThing("admin", null, null, msg)
+					logTheThing("diary", null, null, msg, "admin")
+
+				return 1
 
 
 /// EXPERIMENTAL STUFF

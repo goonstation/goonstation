@@ -11,11 +11,9 @@
 	flags = TABLEPASS
 
 /mob/living/critter/flock/bit/New(var/datum/flock/F=null)
-	..(F)
+	..(src, F)
 
-	// ai setup
-	src.ai = new /datum/aiHolder/flock/bit()
-	src.ai.owner = src
+	src.ai = new /datum/aiHolder/flock/bit(src)
 
 	SPAWN_DBG(1 SECOND) // aaaaaaa
 		animate_bumble(src)

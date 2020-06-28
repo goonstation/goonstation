@@ -13,9 +13,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 /obj/item/uplink
 	name = "uplink"
-	stamina_damage = 25
-	stamina_cost = 25
-	stamina_crit_chance = 10
+	stamina_damage = 0
+	stamina_cost = 0
+	stamina_crit_chance = 0
 
 	var/uses = 12 // Amount of telecrystals.
 	var/list/datum/syndicate_buylist/items_general = list() // See setup().
@@ -993,6 +993,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 /datum/SWFuplinkspell/blink
 	name = "Blink"
 	eqtype = "Defensive"
+	vr_allowed = 0
 	desc = "This spell teleports you a short distance forwards. Useful for evasion or getting into areas."
 	assoc_spell = /datum/targetable/spell/blink
 

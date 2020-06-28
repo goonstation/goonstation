@@ -283,6 +283,7 @@
 		icon_closed = "woodencrate[n]"
 		..()
 
+
 /obj/storage/crate/loot_crate
 	name = "Loot Crate"
 	desc = "A small, cuboid object with a hinged top and loot filled interior."
@@ -300,14 +301,10 @@
 
 	demo
 		name = "Class Crate - Grenadier"
-		desc = "A crate containing a Specialist Operative loadout. This one features a hand-held grenade launcher, bandolier and a pile of ordnance."
+		desc = "A crate containing a Specialist Operative loadout. This one features a hand-held grenade launcher and a pile of ordnance."
 		spawn_contents = list(/obj/item/gun/kinetic/grenade_launcher,
-		/obj/item/storage/backpack/grenade_bandolier,
-		/obj/item/ammo/bullets/grenade_round/explosive = 2,
-		/obj/item/ammo/bullets/grenade_round/high_explosive,
-		/obj/item/storage/grenade_pouch/frag,
-		/obj/item/storage/grenade_pouch/stinger,
-		/obj/item/breaching_charge = 2,
+		/obj/item/storage/pouch/grenade_round,
+		/obj/item/storage/grenade_pouch/mixed_explosive,
 		/obj/item/clothing/suit/space/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
@@ -325,14 +322,12 @@
 		desc = "A crate containing a Specialist Operative loadout. This one includes a customized assault rifle, several additional magazines as well as an assortment of breach and clear grenades."
 		spawn_contents = list(/obj/item/gun/kinetic/assault_rifle,
 		/obj/item/storage/pouch/assault_rifle/mixed,
-		/obj/item/chem_grenade/flashbang = 2,
-		/obj/item/old_grenade/stinger/frag,
-		/obj/item/old_grenade/stinger,
+		/obj/item/storage/grenade_pouch/mixed_standard,
 		/obj/item/breaching_charge = 2,
 		/obj/item/clothing/suit/space/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
-	agent
+	agent // not avaliable for purchase
 		name = "Class Crate - Infiltrator"
 		desc = "A crate containing a Specialist Operative loadout. This one includes a pair of semi-automatic pistols, a combat knife, an electromagnetic card (EMAG) and a cloaking device."
 		spawn_contents = list(/obj/item/gun/kinetic/pistol = 2,
@@ -352,7 +347,6 @@
 		/obj/item/storage/pouch/tranq_pistol_dart,
 		/obj/item/clothing/glasses/nightvision,
 		/obj/item/cloaking_device/limited,
-		/obj/item/old_grenade/smoke = 2,
 		/obj/item/dagger/syndicate/specialist,
 		/obj/item/card/emag,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
@@ -371,7 +365,7 @@
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
 		/obj/item/clothing/suit/space/syndicate/specialist/medic,
-		/obj/item/clothing/head/helmet/space/syndicate/specialist)
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/medic)
 
 	engineer
 		name = "Class Crate - Combat Engineer"
@@ -383,8 +377,9 @@
 		/obj/item/storage/pouch/shotgun,
 		/obj/item/weldingtool/high_cap,
 		/obj/item/storage/belt/utility/prepared,
+		/obj/item/clothing/glasses/meson,
 		/obj/item/clothing/suit/space/syndicate/specialist/engineer,
-		/obj/item/clothing/head/helmet/space/syndicate/specialist)
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)
 
 	pyro
 		name = "Class Crate - Firebrand"
@@ -401,12 +396,12 @@
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/gun/kinetic/sniper,
 		/obj/item/storage/pouch/sniper,
-		///obj/item/device/chameleon,
 		/obj/item/storage/grenade_pouch/smoke,
+		/obj/item/clothing/glasses/thermal/traitor,
 		/obj/item/clothing/suit/space/syndicate/specialist/sniper,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/sniper)
 
-	melee
+	melee //wip, not ready for use
 		name = "Class Crate - Templar"
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/heavy_power_sword,

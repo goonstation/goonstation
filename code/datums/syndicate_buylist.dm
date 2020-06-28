@@ -222,7 +222,7 @@ proc/build_syndi_buylist_cache()
 	name = "Syndicate Omnitool"
 	item = /obj/item/tool/omnitool/syndicate
 	cost = 2
-	desc = "A miniature set of tools that you can hide in your clothing and retrieve with the flex emote. Has a knife mode."
+	desc = "A miniature set of tools that you can hide in your clothing and retrieve with the flex emote. Has knife and weldingtool modes."
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/generic/bighat
@@ -324,6 +324,7 @@ proc/build_syndi_buylist_cache()
 	name = "Microbomb Implant"
 	item = /obj/item/implanter/uplink_microbomb
 	cost = 1
+	vr_allowed = 0
 	desc = "This miniaturized explosive packs a decent punch and will detonate upon the unintentional death of the host. Do not swallow and keep out of reach of children."
 	blockedmode = list(/datum/game_mode/revolution)
 
@@ -331,6 +332,7 @@ proc/build_syndi_buylist_cache()
 	name = "Macrobomb Implant"
 	item = /obj/item/implanter/uplink_macrobomb
 	cost = 12
+	vr_allowed = 0
 	desc = "Like the microbomb, but much more powerful. Macrobombs for macrofun!"
 	blockedmode = list(/datum/game_mode/revolution)
 
@@ -398,7 +400,7 @@ This is basically useless for anyone but miners.
 		tracker.owner = owner
 		return
 
-// Gannets Nuke Ops Class Crates
+// Gannets Nuke Ops Class Crates - now found under weapon_vendor.dm
 
 /datum/syndicate_buylist/traitor/classcrate
 	name = "Class Crate - Generic"
@@ -407,7 +409,7 @@ This is basically useless for anyone but miners.
 	desc = "A crate containing a Nuke Ops Class Loadout, this one is generic and you shouldn't see it."
 	objective = /datum/objective/specialist/nuclear
 	not_in_crates = 1
-
+/*
 	demo
 		name = "Class Crate - Grenadier"
 		item = /obj/storage/crate/classcrate/demo
@@ -455,7 +457,7 @@ This is basically useless for anyone but miners.
 		item = /obj/storage/crate/classcrate/sniper
 		cost = 12
 		desc = "A crate containing a Specialist Operative loadout. This one includes a high-powered sniper rifle, some smoke grenades and a chameleon generator."
-
+*/
 
 //////////////////////////////////////////////// Job-specific items  ////////////////////////////////////////////////////
 
@@ -465,6 +467,15 @@ This is basically useless for anyone but miners.
 	cost = 5
 	vr_allowed = 0
 	desc = "A funny-looking car designed for circus events. Seats 30, very roomy! Comes with an extra set of clown clothes."
+	job = list("Clown")
+	blockedmode = list(/datum/game_mode/spy)
+
+/datum/syndicate_buylist/traitor/boomboots
+	name = "Boom Boots"
+	item = /obj/item/clothing/shoes/cowboy/boom
+	cost = 12
+	vr_allowed = 0
+	desc = "These big red boots have an explosive step sound. The entire station is sure to want to show you their appreciation."
 	job = list("Clown")
 	blockedmode = list(/datum/game_mode/spy)
 

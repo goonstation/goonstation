@@ -149,8 +149,8 @@
 	if (!H.canmove)
 		return
 
-	if (ishuman(H))
-		var/mob/living/carbon/human/owner = H
+	if (isliving(H))
+		var/mob/living/owner = H
 		if (owner.stamina < STAMINA_SPRINT)
 			return
 
@@ -158,12 +158,32 @@
 	//usecloak == check abilityholder
 	new /obj/dummy/spell_batpoof( get_turf(H), H , cloak)
 
+/proc/spell_firepoof(var/mob/H)
+	if (!H || !ismob(H))
+		return
+	if (!isturf(H.loc))
+		H.show_text("You can't seem to transform in here.", "red")
+		return
+	if (isdead(H))
+		return
+	if (!H.canmove)
+		return
+
+	if (isliving(H))
+		var/mob/living/owner = H
+		if (owner.stamina < STAMINA_SPRINT)
+			return
+
+	new /obj/dummy/spell_batpoof/firepoof( get_turf(H), H , 0)
+
 /obj/dummy/spell_batpoof
 	name = "bat"
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "vampbat"
 	density = 0
 	flags = TABLEPASS | DOORPASS
+
+	var/stamina_mult = 0.88
 
 	var/mob/living/carbon/owner = 0
 	var/datum/abilityHolder/vampire/vampholder = 0
@@ -276,7 +296,7 @@
 
 		user.glide_size = glide
 
-		owner.remove_stamina(round(STAMINA_COST_SPRINT*0.88))
+		owner.remove_stamina(round(STAMINA_COST_SPRINT*stamina_mult))
 
 		update_cloak_status()
 
@@ -316,3 +336,23 @@
 	attack_hand(mob/M)
 		dispel(1)
 		if(owner) owner.attackby(M)
+
+
+	firepoof
+		icon_state = "fireball"
+		icon = 'icons/obj/wizard.dmi'
+		flags = TABLEPASS
+		stamina_mult = 1.1
+
+		New()
+			..()
+			playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 15, 1, pitch = 1.8)
+
+		relaymove()
+			..()
+			tfireflash(get_turf(owner), 0, 100)
+
+
+		dispel()
+			playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 15, 1, pitch = 2)
+			..()

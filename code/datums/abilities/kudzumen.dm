@@ -138,7 +138,7 @@
 		if (!M)
 			return 0
 
-		if (!(iscarbon(M) || iscritter(M)))
+		if (!(iscarbon(M) || ismobcritter(M)))
 			boutput(M, __red("You cannot use any powers in your current form."))
 			return 0
 
@@ -281,7 +281,7 @@
 			boutput(holder.owner, "<span class='alert'>You can't heal yourself with your own vines this way!</span>")
 			return 1
 
-		var/mob/living/carbon/C = target
+		var/mob/living/C = target
 		if (istype(C))
 			C.visible_message("<span class='alert'><b>[holder.owner] touches [C], enveloping them soft glowing vines!</b></span>")
 			boutput(C, "<span class='notice'>You feel your pain fading away.</span>")

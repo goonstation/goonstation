@@ -80,6 +80,12 @@
 	disposing()
 		radio_controller.remove_object(src, "[pdafrequency]")
 		genResearch.clonepods.Remove(src) //Bye bye
+		connected.pod1 = null
+		connected?.scanner?.pods -= src
+		connected = null
+		if(occupant)
+			occupant.set_loc(src.loc)
+		occupant = null
 		..()
 
 	proc/send_pda_message(var/msg)
@@ -776,6 +782,7 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 				qdel(src.occupant)
 			else
 				qdel(src.occupant)
+			src.occupant = null
 
 			var/mult = src.upgraded ? rand(2,4) : rand(4,8)
 			src.process_timer = (humanOccupant ? 2 : 1)// * (rand(4,8) - (2 * decomp))

@@ -4,7 +4,7 @@
 
 
 /client/proc/debug_global_variable(var/S as text)
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "View Global Variable"
 
 	if( !src.holder || src.holder.level < LEVEL_CODER )
@@ -65,8 +65,8 @@
 		html += " &middot; <a href='byond://?src=\ref[src];CallProc=\ref[V]'>Call Proc</a>"
 	usr << browse(html, "window=variables\ref[V];size=600x400")
 
-/client/proc/debug_variables(datum/D in world)
-	set category = "Debug"
+/client/proc/debug_variables(datum/D in world) // causes GC to lock up for a few minutes, the other option is to use atom/D but that doesn't autocomplete in the command bar
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "View Variables"
 	set popup_menu = 1
 
@@ -96,7 +96,7 @@
 		src.audit(AUDIT_VIEW_VARIABLES, "is viewing global variables")
 
 	var/title = ""
-	var/body = ""
+	var/list/body = new
 
 	if (istype(D, /atom))
 		var/atom/A = D
@@ -145,7 +145,7 @@
 
 	body += "</tbody></table>"
 
-	var/html = {"
+	var/list/html = list({"
 <html>
 <head>
 	<title>[title]</title>
@@ -157,10 +157,12 @@
 	<strong>[title]</strong>
 	<hr>
 	<a href='byond://?src=\ref[src];Refresh=\ref[D]'>Refresh</a>
-"}
+"})
 
 	if (src.holder.level >= LEVEL_CODER && D != "GLOB")
 		html += " &middot; <a href='byond://?src=\ref[src];CallProc=\ref[D]'>Call Proc</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];ViewReferences=\ref[D]'>View References</a>"
+
 	if (istype(D, /atom))
 		html += " &middot; <a href='byond://?src=\ref[src];JumpToThing=\ref[D]'>Jump To</a>"
 		if (ismob(D) || isobj(D))
@@ -170,6 +172,7 @@
 	if (istype(D, /datum))
 		html += " &middot; <a href='byond://?src=\ref[src];AddComponent=\ref[D]'>Add Component</a>"
 	html += "<br><a href='byond://?src=\ref[src];Delete=\ref[D]'>Delete</a>"
+	html += " &middot; <a href='byond://?src=\ref[src];HardDelete=\ref[D]'>Hard Delete</a>"
 	if (istype(D, /atom) || istype(D, /image))
 		html += " &middot; <a href='byond://?src=\ref[src];Display=\ref[D]'>Display In Chat (slow!)</a>"
 
@@ -199,12 +202,12 @@
 		<a href='byond://?src=\ref[src];SetDirection=\ref[D];DirectionToSet=R45'>45&deg; &gt;</a> &middot;
 		<a href='byond://?src=\ref[src];SetDirection=\ref[D];DirectionToSet=R90'>90&deg; &gt;</a>
 		<hr>
-		[body]
+		[body.Join()]
 	</body>
 </html>
 "}
 
-	usr << browse(html, "window=variables\ref[D];size=600x400")
+	usr << browse(html.Join(), "window=variables\ref[D];size=600x400")
 
 	return
 
@@ -446,6 +449,15 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to delete something all rude-like.")
 		return
+	if (href_list["HardDelete"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/datum/D = locate(href_list["HardDelete"])
+			if(alert(src, "Are you sure you want to delete [D] of type [D.type]?",,"Yes","No") == "Yes")
+				del(D)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to delete something all rude-like.")
+		return
 	if (href_list["Display"])
 		usr_admin_only
 		if(holder && src.holder.level >= LEVEL_PA)
@@ -463,6 +475,14 @@
 			O.replace_with_explosive()
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
+		return
+	if (href_list["ViewReferences"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_CODER)
+			var/datum/D = locate(href_list["ViewReferences"])
+			usr.client.view_references(D, href_list["window_name"])
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to view references.")
 		return
 	if (href_list["AddPathogen"])
 		usr_admin_only

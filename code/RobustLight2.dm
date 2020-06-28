@@ -693,43 +693,7 @@ turf
 				counter = new(src)
 			counter.tick(update = 1, generation = RL_Generation)
 #endif
-			var/area/A = loc
-			if (fullbright || A.force_fullbright)
-				return //MBC : see comment above. we still want these sitcking around.
-/*
-				if (fullbright == 0.5) //do not clear, just dont compute updates. this is a dumb MBC test.
-					return
-				if (src.RL_MulOverlay)
-					pool(src.RL_MulOverlay)
-					src.RL_MulOverlay.set_loc(null)
-					src.RL_MulOverlay = null
-				if (src.RL_AddOverlay)
-					pool(src.RL_AddOverlay)
-					src.RL_AddOverlay.set_loc(null)
-					src.RL_AddOverlay = null
-				return
-*/
-			var/turf/E = get_step(src, EAST) || src
-			var/turf/N = get_step(src, NORTH) || src
-			var/turf/NE = get_step(src, NORTHEAST) || src
-
-			src.RL_MulOverlay.color = list(
-				src.RL_LumR, src.RL_LumG, src.RL_LumB, 0,
-				E.RL_LumR, E.RL_LumG, E.RL_LumB, 0,
-				N.RL_LumR, N.RL_LumG, N.RL_LumB, 0,
-				NE.RL_LumR, NE.RL_LumG, NE.RL_LumB, 0,
-				DLL, DLL, DLL, 1
-				)
-
-			if (src.RL_NeedsAdditive || E.RL_NeedsAdditive || N.RL_NeedsAdditive || NE.RL_NeedsAdditive)
-				src.RL_AddOverlay.color = list(
-					src.RL_AddLumR, src.RL_AddLumG, src.RL_AddLumB, 0,
-					E.RL_AddLumR, E.RL_AddLumG, E.RL_AddLumB, 0,
-					N.RL_AddLumR, N.RL_AddLumG, N.RL_AddLumB, 0,
-					NE.RL_AddLumR, NE.RL_AddLumG, NE.RL_AddLumB, 0,
-					0, 0, 0, 1)
-			else
-				src.RL_AddOverlay.color = "#000000"
+			RL_UPDATE_LIGHT(src)
 
 		RL_SetSprite(state)
 			if (src.RL_MulOverlay)
@@ -879,11 +843,14 @@ atom
 				// Detach the light from its holder so that it gets cleaned up right if
 				// needed.
 				attached.detach()
+			src.RL_Attached:len = 0
+			src.RL_Attached = null
 		if (opacity)
 			RL_SetOpacity(0)
 
 	proc
 		RL_SetOpacity(new_opacity)
+			if(src.disposed) return
 			if (src.opacity == new_opacity)
 				return
 
@@ -896,8 +863,10 @@ atom
 			for (var/datum/light/light in lights)
 				if (light.enabled)
 					affected |= light.strip(++RL_Generation)
-			var/turf/L = src.loc
-			if(istype(L)) L.opaque_atom_count += new_opacity ? 1 : -1
+
+			var/turf/L = get_turf(src)
+			if(src.loc == L) L.opaque_atom_count += new_opacity ? 1 : -1
+
 			src.opacity = new_opacity
 			for (var/datum/light/light in lights)
 				if (light.enabled)

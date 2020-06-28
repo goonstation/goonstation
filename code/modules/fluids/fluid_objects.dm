@@ -70,28 +70,25 @@
 
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		if (istype(I, /obj/item/weldingtool))
-			var/obj/item/weldingtool/W = I
-			if(W.welding)
-				if(!W.try_weld(user, 2))
-					return
-				W.eyecheck(user)
-
-				if (!src.welded)
-					src.welded = 1
-					logTheThing("station", user, null, "welded [name] shut at [log_loc(user)].")
-					user.show_text("You weld the drain shut.")
-				else
-					logTheThing("station", user, null, "un-welded [name] at [log_loc(user)].")
-					src.welded = 0
-					user.show_text("You unseal the drain with your welder.")
-
-				if (src.clogged)
-					src.clogged = 0
-					user.show_text("The drain clog melts away.")
-
-				src.update_icon()
+		if (isweldingtool(I))
+			if(!I:try_weld(user, 2))
 				return
+
+			if (!src.welded)
+				src.welded = 1
+				logTheThing("station", user, null, "welded [name] shut at [log_loc(user)].")
+				user.show_text("You weld the drain shut.")
+			else
+				logTheThing("station", user, null, "un-welded [name] at [log_loc(user)].")
+				src.welded = 0
+				user.show_text("You unseal the drain with your welder.")
+
+			if (src.clogged)
+				src.clogged = 0
+				user.show_text("The drain clog melts away.")
+
+			src.update_icon()
+			return
 		if (istype(I,/obj/item/material_piece/cloth))
 			var/obj/item/material_piece/cloth/C = I
 			src.clogged += (20 * C.amount) //One piece of cloth clogs for about 1 minute. (cause the machine loop updates ~3 second interval)
@@ -415,9 +412,9 @@
 	w_class = 4.0
 	throwforce = 10
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 5
-	stamina_damage = 35
-	stamina_cost = 30
+	force = 9
+	stamina_damage = 30
+	stamina_cost = 20
 	stamina_crit_chance = 6
 	var/c_color = null
 	mats = 7

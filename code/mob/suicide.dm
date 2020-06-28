@@ -137,7 +137,7 @@
 				if (src && !isdead(src))
 					src.suiciding = 0
 			src.pixel_y = 0
-			src.anchored = 0
+			reset_anchored(src)
 			src.on_chair = 0
 			src.buckled = null
 			return

@@ -1,9 +1,9 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items/items.dmi'
+	text = ""
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
-	var/abstract = 0.0
 	var/force = null
 	var/item_state = null
 	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
@@ -28,6 +28,7 @@
 	flags = FPRINT | TABLEPASS
 	var/tool_flags = 0
 	var/c_flags = null
+	var/tooltip_flags = null
 
 	pressure_resistance = 50
 	var/obj/item/master = null
@@ -44,6 +45,8 @@
 	var/wear_image_icon = 'icons/mob/belt.dmi'
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+
+	var/equipped_in_slot = null // null if not equipped, otherwise contains the slot in which it is
 
 	var/arm_icon = "" //set to an icon state in human.dmi minus _s/_l and l_arm_/r_arm_ to allow use as an arm
 	var/over_clothes = 0 //draw over clothes when used as a limb
@@ -70,8 +73,16 @@
 	var/two_handed = 0 //Requires both hands. Do not change while equipped. Use proc for that (TBI)
 	var/click_delay = DEFAULT_CLICK_DELAY //Delay before next click after using this.
 	var/combat_click_delay = COMBAT_CLICK_DELAY
+
 	var/showTooltip = 1
 	var/showTooltipDesc = 1
+	var/tmp/lastTooltipTitle = null
+	var/tmp/lastTooltipContent = null
+	var/tmp/lastTooltipName = null
+	var/tmp/lastTooltipDist = null
+	var/tmp/lastTooltipUser = null
+	var/tmp/lastTooltipSpectro = null
+	var/tmp/tooltip_rebuild = 1
 	var/rarity = ITEM_RARITY_COMMON //Just a little thing to indicate item rarity. RPG fluff.
 
 	var/datum/item_special/special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
@@ -87,6 +98,7 @@
 	var/obj/item/grab/chokehold = null
 	var/obj/item/grab/special_grab = null
 
+	var/block_vision = 0 //cannot see when worn
 
 	proc/setTwoHanded(var/twohanded = 1) //This is the safe way of changing 2-handed-ness at runtime. Use this please.
 		if(ismob(src.loc))
@@ -107,7 +119,9 @@
 		. += "<hr>"
 		if(rarity >= 4)
 			. += "<div><img src='[resource("images/tooltips/rare.gif")]' alt='' class='icon' /><span>Rare item</span></div>"
-		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [src.stamina_damage ? src.stamina_damage : "0"] stam, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [round((1 / (max(src.click_delay,src.combat_click_delay) / 10))*(src.force ? src.force : "0"), 0.1)] DPS</span></div>"
+		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [src.throwforce ? src.throwforce : "0"] thrown dmg</span></div>"
+		if (src.stamina_cost || src.stamina_damage)
+			. += "<div><img src='[resource("images/tooltips/stamina.png")]' alt='' class='icon' /><span>Stamina: [src.stamina_damage ? src.stamina_damage : "0"] dmg, [stamina_cost] consumed per swing</span></div>"
 
 		if(src.properties && src.properties.len)
 			for(var/datum/objectProperty/P in src.properties)
@@ -140,25 +154,38 @@
 			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]</div>"
 		. = jointext(., "")
 
+		lastTooltipContent = .
+
 	MouseEntered(location, control, params)
 		if (showTooltip && usr.client.tooltipHolder)
 			var/show = 1
+
+			if (!lastTooltipContent || !lastTooltipTitle || tooltip_flags & REBUILD_ALWAYS\
+			 || (HAS_MOB_PROPERTY(usr, PROP_SPECTRO) && tooltip_flags & REBUILD_SPECTRO)\
+			 || (usr != lastTooltipUser && tooltip_flags & REBUILD_USER)\
+			 || (get_dist(src, usr) != lastTooltipDist && tooltip_flags & REBUILD_DIST))
+				tooltip_rebuild = 1
 
 			//If user has tooltips to always show, and the item is in world, and alt key is NOT pressed, deny
 			if (usr.client.preferences.tooltip_option == TOOLTIP_ALWAYS && !(ismob(src.loc) || (src.loc && src.loc.loc && ismob(src.loc.loc))) && !usr.client.check_key(KEY_EXAMINE))
 				show = 0
 
-			var/title = ""
-			if(rarity >= 7)
-				title = "<span class=\"rainbow\">[capitalize(src.name)]</span>"
+			var/title
+			if (tooltip_rebuild || lastTooltipName != src.name)
+				if(rarity >= 7)
+					title = "<span class=\"rainbow\">[capitalize(src.name)]</span>"
+				else
+					title = "<span style=\"color:[RARITY_COLOR[rarity] || "#fff"]\">[capitalize(src.name)]</span>"
+				lastTooltipTitle = title
+				lastTooltipName = src.name
 			else
-				title = "<span style=\"color:[RARITY_COLOR[rarity] || "#fff"]\">[capitalize(src.name)]</span>"
+				title = lastTooltipTitle
 
 			if(show)
 				var/list/tooltipParams = list(
 					"params" = params,
 					"title" = title,
-					"content" = buildTooltipContent(),
+					"content" = tooltip_rebuild ? buildTooltipContent() : lastTooltipContent,
 					"theme" = usr.client.preferences.hud_style == "New" ? "newhud" : "item"
 				)
 
@@ -167,6 +194,8 @@
 					tooltipParams["flags"] = TOOLTIP_RIGHT
 
 				usr.client.tooltipHolder.showHover(src, tooltipParams)
+
+			tooltip_rebuild = 0
 
 	MouseExited()
 		if(showTooltip && usr.client.tooltipHolder)
@@ -283,7 +312,7 @@
 /obj/item/proc/Eat(var/mob/M as mob, var/mob/user)
 	if (!src.edible && !(src.material && src.material.edible))
 		return 0
-	if (!iscarbon(M) && !iscritter(M))
+	if (!iscarbon(M) && !ismobcritter(M))
 		return 0
 
 	if (M == user)
@@ -666,16 +695,11 @@
 			//S.hud.remove_item(src)
 			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
-/obj/item/Bump(mob/M as mob)
-	SPAWN_DBG( 0 )
-		..()
-	return
-
 /obj/item/attackby(obj/item/W as obj, mob/user as mob, params)
 	if (src.material)
 		src.material.triggerTemp(src ,1500)
 	if (src.burn_possible && src.burn_point <= 1500)
-		if ((istype(W, /obj/item/weldingtool) && W:welding) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || (istype(W, /obj/item/device/igniter)) || (istype(W, /obj/item/device/light/zippo) && W:on) || (istype(W, /obj/item/match) && (W:on > 0)) || W.burning)
+		if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || (istype(W, /obj/item/device/igniter)) || (istype(W, /obj/item/device/light/zippo) && W:on) || (istype(W, /obj/item/match) && (W:on > 0)) || W.burning)
 			src.combust()
 		else
 			..(W, user)
@@ -761,9 +785,15 @@
 	return
 
 /obj/item/proc/equipped(var/mob/user, var/slot)
+	SHOULD_CALL_PARENT(1)
+	if(src.c_flags & NOT_EQUIPPED_WHEN_WORN && slot != SLOT_L_HAND && slot != SLOT_R_HAND)
+		return
 	#ifdef COMSIG_ITEM_EQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	#endif
+	src.equipped_in_slot = slot
+	for(var/datum/objectProperty/equipment/prop in src.properties)
+		prop.onEquipped(src, user, src.properties[prop])
 	var/datum/movement_modifier/equipment/equipment_proxy = locate() in user.movement_modifiers
 	if (!equipment_proxy)
 		equipment_proxy = new
@@ -778,28 +808,16 @@
 		equipment_proxy.additive_slowdown += spacemove // compatibility hack for old code treating space & fluid movement capability as a slowdown
 		equipment_proxy.space_movement += spacemove
 
-	if (!ishuman(user)) //!!currently!! we only want to humans check for these stats, so just abort early if user isnt human, saves us time
-		return
-	if (src.hasProperty("meleeprot"))
-		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src, src.getProperty("meleeprot"))
-	if (src.hasProperty("meleeprot_head"))
-		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src, src.getProperty("meleeprot_head"))
-	if (src.hasProperty("meleeprot_all"))
-		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src, src.getProperty("meleeprot_all"))
-		APPLY_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src, src.getProperty("meleeprot_all"))
-	if (src.hasProperty("rangedprot"))
-		APPLY_MOB_PROPERTY(user, PROP_RANGEDPROT, src, src.getProperty("rangedprot"))
-	if (src.hasProperty("radprot"))
-		APPLY_MOB_PROPERTY(user, PROP_RADPROT, src, src.getProperty("radprot"))
-	if (src.hasProperty("heatprot"))
-		APPLY_MOB_PROPERTY(user, PROP_HEATPROT, src, src.getProperty("heatprot"))
-	if (src.hasProperty("coldprot"))
-		APPLY_MOB_PROPERTY(user, PROP_COLDPROT, src, src.getProperty("coldprot"))
-
 /obj/item/proc/unequipped(var/mob/user)
+	SHOULD_CALL_PARENT(1)
+	if(src.c_flags & NOT_EQUIPPED_WHEN_WORN && src.equipped_in_slot != SLOT_L_HAND && src.equipped_in_slot != SLOT_R_HAND)
+		return
 	#ifdef COMSIG_ITEM_UNEQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_UNEQUIPPED, user)
 	#endif
+	for(var/datum/objectProperty/equipment/prop in src.properties)
+		prop.onUnequipped(src, user, src.properties[prop])
+	src.equipped_in_slot = null
 	var/datum/movement_modifier/equipment/equipment_proxy = locate() in user.movement_modifiers
 	if (!equipment_proxy)
 		equipment_proxy = new
@@ -813,24 +831,6 @@
 	if (spacemove)
 		equipment_proxy.additive_slowdown -= spacemove
 		equipment_proxy.space_movement -= spacemove
-
-	if (!ishuman(user)) //!!currently!! we only want to humans check for these stats, so just abort early if user isnt human, saves us time
-		return
-	if (src.hasProperty("meleeprot"))
-		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src)
-	if (src.hasProperty("meleeprot_head"))
-		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src)
-	if (src.hasProperty("meleeprot_all"))
-		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_BODY, src)
-		REMOVE_MOB_PROPERTY(user, PROP_MELEEPROT_HEAD, src)
-	if (src.hasProperty("rangedprot"))
-		REMOVE_MOB_PROPERTY(user, PROP_RANGEDPROT, src)
-	if (src.hasProperty("radprot"))
-		REMOVE_MOB_PROPERTY(user, PROP_RADPROT, src)
-	if (src.hasProperty("heatprot"))
-		REMOVE_MOB_PROPERTY(user, PROP_HEATPROT, src)
-	if (src.hasProperty("coldprot"))
-		REMOVE_MOB_PROPERTY(user, PROP_COLDPROT, src)
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
 	return
@@ -914,7 +914,7 @@
 	if (world.time < M.next_click)
 		return //fuck youuuuu
 
-	if (isdead(M) || (!iscarbon(M) && !iscritter(M)))
+	if (isdead(M) || (!iscarbon(M) && !ismobcritter(M)))
 		return
 
 	if (!istype(src.loc, /turf) || !isalive(M) || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.restrained())
@@ -1033,7 +1033,7 @@
 /obj/item/proc/attack(mob/M as mob, mob/user as mob, def_zone, is_special = 0)
 	if (!M || !user) // not sure if this is the right thing...
 		return
-	if ((src.edible && (ishuman(M) || iscritter(M)) || (src.material && src.material.edible)) && src.Eat(M, user))
+	if ((src.edible && (ishuman(M) || ismobcritter(M)) || (src.material && src.material.edible)) && src.Eat(M, user))
 		return
 
 	if (surgeryCheck(M, user))		// Check for surgery-specific actions
@@ -1184,14 +1184,14 @@
 				stam_power = src.special.overrideStaminaDamage
 
 		//reduce stamina by the same proportion that base damage was reduced
-		//min cap is stam_power/4 so we still cant ignore it entirely
+		//min cap is stam_power/2 so we still cant ignore it entirely
 		if ((power + armor_mod) == 0) //mbc lazy runtime fix
-			stam_power = stam_power / 4 //do the least
+			stam_power = stam_power / 2 //do the least
 		else
-			stam_power = max(  stam_power / 4, stam_power * ( power / (power + armor_mod) )  )
+			stam_power = max(  stam_power / 2, stam_power * ( power / (power + armor_mod) )  )
 
 		//stam_power -= armor_mod
-
+		msgs.force_stamina_target = 1
 		msgs.stamina_target -= max(stam_power, 0)
 
 	if (is_special && src.special)
@@ -1251,7 +1251,7 @@
 /obj/item/proc/attach(var/mob/living/carbon/human/attachee,var/mob/attacher)
 	//if (!src.arm_icon) return //ANYTHING GOES!~!
 
-	if (src.object_flags & NO_ARM_ATTACH)
+	if (src.object_flags & NO_ARM_ATTACH || src.temp_flags & IS_LIMB_ITEM)
 		boutput(attacher, "<span class='alert'>You try to attach [src] to [attachee]'s stump, but it politely declines!</span>")
 		return
 
@@ -1304,6 +1304,11 @@
 	// Clean up circular references
 	disposing_abilities()
 	setItemSpecial(null)
+
+	if(istype(src.loc, /obj/item/storage))
+		var/obj/item/storage/storage = src.loc
+		src.set_loc(get_turf(src)) // so the storage doesn't add it back >:(
+		storage.hud?.remove_item(src)
 
 	var/turf/T = loc
 	if (!istype(T))

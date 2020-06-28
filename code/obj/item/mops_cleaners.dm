@@ -19,6 +19,7 @@ WET FLOOR SIGN
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 10
+	tooltip_flags = REBUILD_DIST | REBUILD_SPECTRO
 
 /obj/item/spraybottle/New()
 	var/datum/reagents/R = new/datum/reagents(100) // cogwerks - lowered from 1000 (what the hell) to 100
@@ -241,7 +242,7 @@ WET FLOOR SIGN
 	throw_range = 10
 	w_class = 3.0
 	flags = FPRINT | TABLEPASS
-	stamina_damage = 35
+	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 10
 
@@ -609,7 +610,7 @@ WET FLOOR SIGN
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 	stamina_damage = 15
-	stamina_cost = 15
+	stamina_cost = 4
 	stamina_crit_chance = 10
 
 	New()

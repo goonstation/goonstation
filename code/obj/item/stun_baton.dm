@@ -24,7 +24,7 @@
 	mats = 8
 	contraband = 4
 	stamina_damage = 15
-	stamina_cost = 10
+	stamina_cost = 21
 	stamina_crit_chance = 5
 
 	var/icon_on = "stunbaton_active"
@@ -67,8 +67,10 @@
 	disposing()
 		if (src in processing_items)
 			processing_items.Remove(src)
+		if(cell)
+			cell.dispose()
+			cell = null
 		..()
-		return
 
 	examine()
 		. = ..()
@@ -596,7 +598,7 @@
 	throwforce = 6
 	w_class = 2
 	mats = 8
-	stamina_damage = 10
+	stamina_damage = 25
 	stamina_cost = 10
 	stamina_crit_chance = 0
 	hitsound = 0
@@ -707,7 +709,7 @@
 	force = 2
 	throwforce = 6
 	w_class = 2
-	stamina_damage = 10
+	stamina_damage = 30
 	stamina_cost = 10
 	stamina_crit_chance = 0
 	hitsound = 0

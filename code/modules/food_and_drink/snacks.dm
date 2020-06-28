@@ -2153,14 +2153,59 @@
 // boy i wish byond had static members doop doop
 var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 
-//#ifdef HALLOWEEN
-/obj/item/reagent_containers/food/snacks/candy/everyflavor
-	name = "\improper Farty Snott's Every Flavour Bean"
-	desc = "A favorite halloween sweet worldwide!"
+/obj/item/reagent_containers/food/snacks/candy/jellybean/
+	name = "jelly bean"
+	desc = "YOU SHOULDN'T SEE THIS OBJECT"
 	icon_state = "bean"
 	amount = 1
 	initial_volume = 100
 	sugar_content = 0 // hacky, I know. but it's necessary for the color!
+	var/flavor
+	var/phrase
+	var/tastesbad = 0
+
+/obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor
+	name = "\improper Mabie Nott's Some Flavor Bean"
+	desc = "Fresh organic jellybeans packed with...something."
+
+	New()
+		..()
+		SPAWN_DBG(0)
+			if (src.reagents)
+				if (prob(33))
+					src.reagents.add_reagent(pick("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease", "ethanol", "chickensoup", "vanilla", "cornsyrup", "chocolate"), 10)
+					src.heal_amt = 1
+				else if (prob(33))
+					src.reagents.add_reagent(pick("bilk", "beff", "vomit", "gvomit", "porktonium", "badgrease", "yuck", "carbon", "salt", "pepper", "ketchup", "mustard"), 10)
+					src.heal_amt = 0
+
+				src.food_color = src.reagents.get_master_color()
+				src.icon += src.food_color
+
+				src.reagents.add_reagent("sugar", 50)
+				if (src.reagents.total_volume <= 60)
+					src.reagents.add_reagent("sugar", 40)
+
+			// set up flavors
+			if(prob(50))
+				flavor = pick("cardboard", "human souls", "something unspeakable", "egg", "vomit", "snot", "poo", "urine", "earwax", "wet dog", "belly-button lint", "sweat", "congealed farts", "mold", "armpits", "elbow grease", "sour milk", "WD-40", "slime", "blob", "gym sock", "pants", "brussels sprouts", "feet", "litter box", "durian fruit", "asbestos", "corpse flower", "corpse", "cow dung", "rot", "tar", "ham")
+				phrase = pick("Oh god", "Jeez", "Ugh", "Blecch", "Holy crap that's awful", "What the hell?", "*HURP*", "Phoo")
+				tastesbad = 1
+			else
+				flavor = pick("egg", "strawberry", "raspberry", "snozzberry", "happiness", "popcorn", "buttered popcorn", "cinnamon", "macaroni and cheese", "pepperoni", "cheese", "lasagna", "pina colada", "tutti frutti", "lemon", "margarita", "coconut", "pineapple", "scotch", "vodka", "root beer", "cotton candy", "Lagavulin 18", "toffee", "vanilla", "coffee", "apple pie", "neapolitan", "orange", "lime", "crotch", "mango", "apple", "grape", "Slurm")
+				phrase = pick("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
+				tastesbad = 0
+
+	heal(var/mob/M)
+		if (tastesbad)
+			boutput(M, "<span class='alert'>[phrase]! That tasted like [flavor]...</span>")
+		else
+			boutput(M, "<span class='notice'>[phrase]! That tasted like [flavor]...</span>")
+
+//#ifdef HALLOWEEN
+/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor
+	name = "\improper Farty Snott's Every Flavour Bean"
+	desc = "A favorite halloween sweet worldwide!"
 
 	New()
 		..()
@@ -2187,21 +2232,13 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 				if (src.reagents.total_volume <= 60)
 					src.reagents.add_reagent("sugar", 40)
 
-	heal(var/mob/M)
-		var/flavor
-		var/phrase
-		var/color
-
-		if(prob(50))
-			flavor = pick("egg", "vomit", "snot", "poo", "urine", "earwax", "wet dog", "belly-button lint", "sweat", "congealed farts", "mold", "armpits", "elbow grease", "sour milk", "WD-40", "slime", "blob", "gym sock", "pants", "brussels sprouts", "feet", "litter box", "durian fruit", "asbestos", "corpse flower", "corpse", "cow dung", "rot", "tar", "ham")
-			phrase = pick("Oh god", "Jeez", "Ugh", "Blecch", "Holy crap that's awful", "What the hell?", "*HURP*", "Phoo")
-			color = "<span class='alert'>"
-		else
-			flavor = pick("egg", "strawberry", "raspberry", "snozzberry", "happiness", "popcorn", "buttered popcorn", "cinnamon", "macaroni and cheese", "pepperoni", "cheese", "lasagna", "pina colada", "tutti frutti", "lemon", "margarita", "coconut", "pineapple", "scotch", "vodka", "root beer", "cotton candy", "Lagavulin 18", "toffee", "vanilla", "coffee", "apple pie", "neapolitan", "orange", "lime", "crotch", "mango", "apple", "grape", "Slurm")
-			phrase = pick("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
-			color = "<span class='notice'>"
-
-		boutput(M, "[color][phrase]! That tasted like [flavor]...</span>")
+				if(prob(50))
+					flavor = pick("egg", "vomit", "snot", "poo", "urine", "earwax", "wet dog", "belly-button lint", "sweat", "congealed farts", "mold", "armpits", "elbow grease", "sour milk", "WD-40", "slime", "blob", "gym sock", "pants", "brussels sprouts", "feet", "litter box", "durian fruit", "asbestos", "corpse flower", "corpse", "cow dung", "rot", "tar", "ham", "gooncode", "quark-gluon plasma", "bee", "heat death")
+					phrase = pick("Oh god", "Jeez", "Ugh", "Blecch", "Holy crap that's awful", "What the hell?", "*HURP*", "Phoo")
+					tastesbad = 1
+				else
+					flavor = pick("egg", "strawberry", "raspberry", "snozzberry", "happiness", "popcorn", "buttered popcorn", "cinnamon", "macaroni and cheese", "pepperoni", "cheese", "lasagna", "pina colada", "tutti frutti", "lemon", "margarita", "coconut", "pineapple", "scotch", "vodka", "root beer", "cotton candy", "Lagavulin 18", "toffee", "vanilla", "coffee", "apple pie", "neapolitan", "orange", "lime", "crotch", "mango", "apple", "grape", "Slurm", "Popecrunch")
+					phrase = pick("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
 
 /obj/item/kitchen/everyflavor_box
 	amount = 6
@@ -2217,7 +2254,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 			boutput(user, "<span class='alert'>You're out of beans. You feel strangely sad.</span>")
 			return
 		else
-			var/obj/item/reagent_containers/food/snacks/candy/everyflavor/B = new(user)
+			var/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor/B = new(user)
 			user.put_in_hand_or_drop(B)
 			src.amount--
 			if(src.amount == 0)
@@ -2691,5 +2728,5 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 		phrase = pick(src.heart_phrases)
 		return
 
-	get_desc(dist)
+	get_desc()
 		. = "<br><span class='notice'>It says: [phrase]</span>"

@@ -27,9 +27,11 @@
 	corpse = null
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 		src.abilityHolder:remove_all_abilities()
-		src.abilityHolder.owner = null
+		src.abilityHolder.dispose()
+		src.abilityHolder = null
 	if (hud)
-		hud.disposing()
+		hud.dispose()
+		hud = null
 
 	..()
 
@@ -300,10 +302,9 @@
 	else
 		return 0.75 + movement_delay_modifier
 
-/mob/dead/observer/build_keymap(client/C)
-	var/datum/keymap/keymap = ..()
-	keymap.merge(client.get_keymap("human"))
-	return keymap
+/mob/dead/observer/build_keybind_styles(client/C)
+	..()
+	C.apply_keybind("human")
 
 /mob/dead/observer/is_spacefaring()
 	return 1
@@ -551,7 +552,15 @@
 
 	var/atom/plane = client.get_plane(PLANE_LIGHTING)
 	if (plane)
-		plane.alpha = plane.alpha ? 0 : 255
+		switch(plane.alpha)
+			if(255)
+				render_special.set_centerlight_icon("")
+				plane.alpha = 254 // I'm sorry
+			if(254)
+				plane.alpha = 0
+			if(0)
+				plane.alpha = 255
+				render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 	else
 		boutput( usr, "Well, I want to, but you don't have any lights to fix!" )
 

@@ -1,5 +1,5 @@
-/datum/random_event/major/antagonist
-	name = "Alien Invasion"
+/datum/random_event/major/antag/antagonist
+	name = "Antagonist Spawn"
 	required_elapsed_round_time = 26.6 MINUTES
 	customization_available = 1
 	announce_to_admins = 0 // Doing it manually.
@@ -19,10 +19,10 @@
 			return
 
 		if (src.respawn_lock != 0)
-			message_admins("Setup of previous alien invasion hasn't finished yet, aborting.")
+			message_admins("Setup of previous Antagonist Spawn hasn't finished yet, aborting.")
 			return
 
-		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler")
+		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Headspider")
 		if (!type)
 			return
 		else
@@ -34,32 +34,16 @@
 
 	event_effect(var/source)
 		if (src.respawn_lock != 0)
-			message_admins("Setup of previous alien invasion hasn't finished yet, aborting.")
+			message_admins("Setup of previous Antagonist Spawn hasn't finished yet, aborting.")
 			return
 
 		// Admin-configured respawns seem to work out fine, so let's give automatic role selection a try.
 		if (src.admin_override != 1)
 			if (!source && (!ticker.mode || ticker.mode.latejoin_antag_compatible == 0 || late_traitors == 0))
-				message_admins("Alien invasion (non-admin) is disabled in this game mode, aborting.")
+				message_admins("Antagonist Spawn (non-admin) is disabled in this game mode, aborting.")
 				return
 
-			switch (rand(1, 100))
-				if (1 to 3)
-					src.antagonist_type = "Werewolf"
-				if (4 to 6)
-					src.antagonist_type = "Hunter"
-				if (7 to 20)
-					src.antagonist_type = "Wizard"
-				if (21 to 34)
-					src.antagonist_type = "Wraith"
-				if (35 to 65)
-					src.antagonist_type = "Wrestler"
-				if (66 to 98)
-					src.antagonist_type = "Blob"
-				if (99 to 100)
-					src.antagonist_type = "Blob (AI)"
-				else
-					src.antagonist_type = "Blob"
+			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling"))
 
 		switch (src.antagonist_type)
 			if ("Blob", "Blob (AI)")
@@ -67,19 +51,20 @@
 				src.centcom_message = initial(src.centcom_message)
 			else
 				src.centcom_headline = "Intruder Alert"
-				src.centcom_message = "Our [pick("probes", "sensors", "listening devices", "wiretaps", "informants", "well-informed sources")] indicate the presence of a hostile intruder aboard the [station_or_ship()]. Security level elevated."
+				src.centcom_message = "Our [pick("probes", "sensors", "listening devices", "wiretaps", "informants", "well-informed sources")] indicate the presence of a hostile intruder in the vicinity of [station_or_ship()]."
+
 		src.message_delay = src.message_delay + src.ghost_confirmation_delay
 
-		message_admins("<span class='notice'>Setting up alien invasion event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]</span>")
-		logTheThing("admin", null, null, "Setting up alien invasion event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]")
+		message_admins("<span class='internal'>Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]</span>")
+		logTheThing("admin", null, null, "Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]")
 
 		// No need for a fancy setup here.
 		if (src.antagonist_type == "Blob (AI)")
 			var/BS = blobstart.len ? pick(blobstart) : null
 			if (BS)
 				new /mob/living/intangible/blob_overmind/ai(BS)
-				message_admins("Alien invasion spawned an AI blob at [log_loc(BS)].")
-				logTheThing("admin", null, null, "Alien invasion spawned an AI blob at [log_loc(BS)]. Source: [source ? "[source]" : "random"]")
+				message_admins("Antagonist Spawn spawned an AI blob at [log_loc(BS)].")
+				logTheThing("admin", null, null, "Antagonist Spawn spawned an AI blob at [log_loc(BS)]. Source: [source ? "[source]" : "random"]")
 				..() // Report spawn().
 				src.post_event()
 				return
@@ -94,14 +79,14 @@
 
 		return
 
-	is_event_available()
+	is_event_available(var/ignore_time_lock = 0)
 		if( emergency_shuttle.online )
 			return 0
 
 		return ..()
 
 	proc/do_event(var/source)
-		if (!src || !istype(src, /datum/random_event/major/antagonist))
+		if (!src || !istype(src, /datum/random_event/major/antag/antagonist))
 			return
 
 		src.respawn_lock = 1
@@ -114,11 +99,11 @@
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
 		message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
-		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
+		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 
 		if (!islist(candidates) || candidates.len <= 0)
-			message_admins("Couldn't set up alien invasion ([src.antagonist_type]); no ghosts responded. Source: [source ? "[source]" : "random"]")
-			logTheThing("admin", null, null, "Couldn't set up alien invasion ([src.antagonist_type]); no ghosts responded. Source: [source ? "[source]" : "random"]")
+			message_admins("Couldn't set up Antagonist Spawn ([src.antagonist_type]); no ghosts responded. Source: [source ? "[source]" : "random"]")
+			logTheThing("admin", null, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); no ghosts responded. Source: [source ? "[source]" : "random"]")
 			src.post_event()
 			return
 
@@ -156,8 +141,8 @@
 			*/
 
 		if (!(lucky_dude && istype(lucky_dude) && lucky_dude.current))
-			message_admins("Couldn't set up alien invasion ([src.antagonist_type]); candidate selection failed (had [candidates.len] candidate(s)). Source: [source ? "[source]" : "random"]")
-			logTheThing("admin", null, null, "Couldn't set up alien invasion ([src.antagonist_type]); candidate selection failed (had [candidates.len] candidate(s)). Source: [source ? "[source]" : "random"]")
+			message_admins("Couldn't set up Antagonist Spawn ([src.antagonist_type]); candidate selection failed (had [candidates.len] candidate(s)). Source: [source ? "[source]" : "random"]")
+			logTheThing("admin", null, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); candidate selection failed (had [candidates.len] candidate(s)). Source: [source ? "[source]" : "random"]")
 			src.post_event()
 			return
 
@@ -204,6 +189,15 @@
 							B.real_name = newname
 							B.name = newname
 
+				else
+					failed = 1
+
+			if ("Flockmind")
+				var/mob/living/intangible/flock/flockmind/F = M3.make_flockmind()
+				if (F && istype(F))
+					M3 = F
+					role = "flockmind"
+					//objective_path = /datum/objective_set/blob
 				else
 					failed = 1
 
@@ -257,18 +251,64 @@
 					failed = 1
 
 			if ("Wrestler")
-				// Wrestling timberdoodles are a Thing
-				var/mob/living/critter/C = M3.critterize(/mob/living/critter/small_animal/bird/timberdoodle/strong)
-				if (C && istype(C))
-					M3 = C
-					C.make_wrestler()
+				var/mob/living/R2 = M3.humanize()
+				if (R2 && istype(R2))
+					M3 = R2
+					R2.make_wrestler(1)
 					role = "wrestler"
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 
+					var/antag_type = src.antagonist_type
 					SPAWN_DBG (0)
-						C.choose_name(3, src.antagonist_type, C.real_name + " the " + src.antagonist_type)
+						R2.choose_name(3, antag_type, R2.real_name + " the " + antag_type)
 				else
 					failed = 1
+
+			if ("Wrestler_Doodle")
+				var/mob/living/critter/C = M3.critterize(/mob/living/critter/small_animal/bird/timberdoodle/strong)
+				if (C && istype(C))
+					M3 = C
+					C.make_wrestler(1)
+					role = "wrestler"
+					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
+
+					var/antag_type = src.antagonist_type
+					SPAWN_DBG (0)
+						C.choose_name(3, antag_type, C.real_name + " the " + antag_type)
+				else
+					failed = 1
+
+			if ("Vampire")
+				var/mob/living/R2 = M3.humanize()
+				if (R2 && istype(R2))
+					M3 = R2
+					R2.make_vampire()
+					role = "vampire"
+					objective_path = /datum/objective_set/vampire
+				else
+					failed = 1
+
+			if ("Changeling")
+				var/mob/living/R2 = M3.humanize()
+				if (R2 && istype(R2))
+					M3 = R2
+					R2.make_changeling()
+					role = "changeling"
+					objective_path = /datum/objective_set/changeling
+				else
+					failed = 1
+
+			if ("Headspider")
+				var/mob/living/critter/C = M3.critterize(/mob/living/critter/changeling/headspider)
+				if (C && istype(C))
+					M3 = C
+					C.make_changeling()
+					role = "changeling"
+					objective_path = /datum/objective_set/changeling
+					C.remove_ability_holder(/datum/abilityHolder/changeling/)
+				else
+					failed = 1
+
 			else
 				failed = 1
 
@@ -276,8 +316,8 @@
 			failed = 1
 
 		if (failed != 0)
-			message_admins("Couldn't set up alien invasion ([src.antagonist_type]); respawn failed. Source: [source ? "[source]" : "random"]")
-			logTheThing("admin", null, null, "Couldn't set up alien invasion ([src.antagonist_type]); respawn failed. Source: [source ? "[source]" : "random"]")
+			message_admins("Couldn't set up Antagonist Spawn ([src.antagonist_type]); respawn failed. Source: [source ? "[source]" : "random"]")
+			logTheThing("admin", null, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); respawn failed. Source: [source ? "[source]" : "random"]")
 			src.post_event()
 			return
 
@@ -311,9 +351,12 @@
 				else
 					M3.set_loc(WSLoc)
 
+		//nah
+		/*
 		if (src.centcom_headline && src.centcom_message && random_events.announce_events)
 			SPAWN_DBG (src.message_delay)
 				command_alert("[src.centcom_message]", "[src.centcom_headline]")
+		*/
 
 		if (lucky_dude.current)
 			lucky_dude.current.show_text("<h3>You have been respawned as a random event [src.antagonist_type].</h3>", "blue")
@@ -324,7 +367,7 @@
 
 	// Restore defaults.
 	proc/post_event()
-		if (!src || !istype(src, /datum/random_event/major/antagonist))
+		if (!src || !istype(src, /datum/random_event/major/antag/antagonist))
 			return
 
 		src.antagonist_type = initial(src.antagonist_type)

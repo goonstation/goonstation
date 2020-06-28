@@ -66,6 +66,7 @@ var/global
 	list/cameras = list()
 	list/clients = list()
 	list/mobs = list()
+	list/ai_mobs = list()
 	list/AIs = list() //sorry, quicker loop through when we searching for AIs
 	list/doors = list()
 	list/allcables = list()
@@ -83,6 +84,7 @@ var/global
 
 	//list/total_deletes = list() //List of things totally deleted
 	list/critters = list()
+	list/pets = list() //station pets
 	list/ghost_drones = list()
 	list/muted_keys = list()
 
@@ -533,6 +535,7 @@ var/global
 	list/admins = list(  )
 	list/onlineAdmins = list(  )
 	list/whitelistCkeys = list(  )
+	list/bypassCapCkeys = list(  )
 	list/shuttles = list(  )
 	list/reg_dna = list(  )
 //	list/traitobj = list(  )

@@ -8,10 +8,9 @@ obj
 		New()
 			..()
 
-			air.oxygen = oxygen
-			air.carbon_dioxide = carbon_dioxide
-			air.nitrogen = nitrogen
-			air.toxins = toxins
+			#define _MOVABLE_TILE_COPY_AIR(GAS, ...) air.GAS = GAS;
+			APPLY_TO_GASES(_MOVABLE_TILE_COPY_AIR)
+			#undef _MOVABLE_TILE_COPY_AIR
 
 			air.temperature = temperature
 

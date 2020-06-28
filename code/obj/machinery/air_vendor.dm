@@ -119,7 +119,7 @@ obj/machinery/air_vendor
 			html += "<b>Current ID:</b> None<br>"
 		if(src.holding)
 			html += "<font color = 'blue'>Current tank:</font> <a href='?src=\ref[src];eject=1'>[holding]</a><br />"
-			html += "<font color = 'red'>Pressure:</font> [holding.air_contents.return_pressure()] kPa<br />"
+			html += "<font color = 'red'>Pressure:</font> [MIXTURE_PRESSURE(holding.air_contents)] kPa<br />"
 		else
 			html += "<font color = 'blue'>Current tank:</font> none<br />"
 

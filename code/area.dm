@@ -16,13 +16,13 @@
 
 //
 /area
-	var/active = 0 //True if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
+	var/tmp/active = 0 //True if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
 	var/list/population = list() //Who is here (ditto)
-	var/fire = null
+	var/tmp/fire = null
 	var/atmos = 1
 	var/poweralm = 1
 	var/skip_sims = 0
-	var/sims_score = 100
+	var/tmp/sims_score = 100
 	var/virtual = 0
 	var/is_centcom = 0 // for escape checks
 	var/gencolor
@@ -38,6 +38,7 @@
 	mouse_opacity = 0
 	mat_changename = 0
 	mat_changedesc = 0
+	text = ""
 	var/lightswitch = 1
 	var/may_eat_here_in_restricted_z = 0
 
@@ -46,12 +47,12 @@
 	var/obj/machinery/power/apc/area_apc = null // okay in certain cases you may have more than one apc, but for my purposes the latest apc works just fine
 
 	var/requires_power = 1
-	var/power_equip = 1
-	var/power_light = 1
-	var/power_environ = 1
-	var/used_equip = 0
-	var/used_light = 0
-	var/used_environ = 0
+	var/tmp/power_equip = 1
+	var/tmp/power_light = 1
+	var/tmp/power_environ = 1
+	var/tmp/used_equip = 0
+	var/tmp/used_light = 0
+	var/tmp/used_environ = 0
 	var/expandable = 1
 
 	var/irradiated = 0 // space blowouts use this, should always be 0
@@ -79,8 +80,8 @@
 	var/sound_loop_vol = 50
 	var/sound_fx_1 = null
 	var/sound_fx_2 = null
-	var/played_fx_1 = 0
-	var/played_fx_2 = 0
+	var/tmp/played_fx_1 = 0
+	var/tmp/played_fx_2 = 0
 	var/sound_group = null
 	var/sound_environment = 1 //default environment for sounds - see sound datum vars documentation for the presets.
 
@@ -110,7 +111,7 @@
 	Entered(var/atom/movable/A, atom/oldloc)
 		if (ismob(A))
 			var/mob/M = A
-			if (M.client)
+			if (M?.client)
 				#define AMBIENCE_ENTER_PROB 6
 
 				//Handle ambient sound
@@ -168,11 +169,11 @@
 	Exited(var/atom/movable/A)
 		if (ismob(A))
 			var/mob/M = A
-			if (M.client)
+			if (M?.client)
 				if (sound_loop)
 					SPAWN_DBG(1 DECI SECOND)
 						var/area/mobarea = get_area(M)
-						if (M && (mobarea.sound_group != src.sound_group))
+						if (M?.client && (mobarea?.sound_group != src?.sound_group) && !mobarea.sound_loop)
 							M.client.playAmbience(src, AMBIENCE_LOOPING, 0) //pass 0 to cancel
 
 		if ((isliving(A) || iswraith(A)) || locate(/mob) in A)
@@ -231,7 +232,7 @@
 		return R
 
 	proc/build_sims_score()
-		if (name == "Space" || src.name == "Ocean" || type == /area || skip_sims)
+		if (name == "Space" || src.name == "Ocean" || area_space_nopower(src) || skip_sims)
 			return
 		sims_score = 100
 		for (var/turf/T in src)
@@ -344,7 +345,7 @@
 		if (light_manager)
 			light_manager.lights -= L
 	New()
-		if( type == /area )
+		if(area_space_nopower(src))
 			power_equip = power_light = power_environ = 0
 //////////////////////////// zewaka - adventure/technical/admin areas below
 
@@ -474,7 +475,7 @@
 #else
 	requires_power = 0
 	luminosity = 1
-	force_fullbright = 1
+	force_fullbright = 0
 #endif
 	sound_environment = 2
 	expandable = 0
@@ -694,7 +695,7 @@
 /area/someplace
 	name = "some place"
 	icon_state = "purple"
-	filler_turf = "/turf/simulated/floor/void"
+	filler_turf = "/turf/unsimulated/floor/void"
 	requires_power = 0
 	luminosity = 1
 	force_fullbright = 1
@@ -707,7 +708,7 @@
 /area/someplacehot
 	name = "some place"
 	icon_state = "atmos"
-	filler_turf = "/turf/simulated/floor/void"
+	filler_turf = "/turf/unsimulated/floor/void"
 	requires_power = 0
 	luminosity = 1
 	force_fullbright = 1
@@ -1200,7 +1201,7 @@
 /area/station
 	do_not_irradiate = 0
 	sound_fx_1 = 'sound/ambience/station/Station_VocalNoise1.ogg'
-	var/initial_structure_value = 0
+	var/tmp/initial_structure_value = 0
 #ifdef MOVING_SUB_MAP
 	filler_turf = "/turf/space/fluid/manta"
 
@@ -3139,7 +3140,7 @@ area/station/security/visitation
 		for (var/obj/machinery/camera/C in orange(source, 7))
 			cameras += C
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/aiPlayer in mobs)
+		for (var/mob/living/silicon/aiPlayer in AIs)
 			if (state == 1)
 				aiPlayer.cancelAlarm("Power", src, source)
 			else

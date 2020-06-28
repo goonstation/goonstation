@@ -24,17 +24,15 @@ var/global/client/ff_debugger = null
 	proc/debug_fireflash_here()
 		set name = "Debug Fireflash Here"
 		set popup_menu = 1
-		set category = null
+		SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 		set desc = "Debug-print the effects of all fireflashes affecting this tile."
 		ff_debug_turf = src
 		ff_debugger = usr.client
 
 		//Properties for open tiles (/floor)
-	var/oxygen = 0
-	var/carbon_dioxide = 0
-	var/nitrogen = 0
-	var/toxins = 0
-	//var/water = 0
+	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
+	APPLY_TO_GASES(_UNSIM_TURF_GAS_DEF)
+	#undef _UNSIM_TURF_GAS_DEF
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
@@ -46,14 +44,14 @@ var/global/client/ff_debugger = null
 	var/blocks_air = 0
 	var/icon_old = null
 	var/name_old = null
-	var/pathweight = 1
-	var/pathable = 1
+	var/tmp/pathweight = 1
+	var/tmp/pathable = 1
 	var/can_write_on = 0
-	var/messy = 0 //value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
-	var/checkingexit = 0 //value corresponds to how many objs on this turf implement checkexit(). lets us skip a costly loop later!
-	var/checkingcanpass = 0 // "" how many implement canpass()
-	var/checkinghasentered = 0 // "" hasproximity as well as items with a mat that hasproximity
-	var/checkinghasproximity = 0
+	var/tmp/messy = 0 //value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
+	var/tmp/checkingexit = 0 //value corresponds to how many objs on this turf implement checkexit(). lets us skip a costly loop later!
+	var/tmp/checkingcanpass = 0 // "" how many implement canpass()
+	var/tmp/checkinghasentered = 0 // "" hasproximity as well as items with a mat that hasproximity
+	var/tmp/checkinghasproximity = 0
 	var/wet = 0
 	throw_unlimited = 0 //throws cannot stop on this tile if true (also makes space drift)
 
@@ -182,8 +180,9 @@ var/global/client/ff_debugger = null
 	mat_changename = 0
 	mat_changedesc = 0
 	throw_unlimited = 1
-	plane = PLANE_FLOOR
+	plane = PLANE_SPACE
 	special_volume_override = 0
+	text = ""
 
 	flags = ALWAYS_SOLID_FLUID
 	turf_flags = CAN_BE_SPACE_SAMPLE
@@ -417,12 +416,12 @@ var/global/client/ff_debugger = null
 		if(O.level == 1)
 			O.hide(src.intact)
 
-/turf/unsimulated/ReplaceWith(var/what, force = 0, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1)
+/turf/unsimulated/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1, force = 0)
 	if (can_replace_with_stuff || force)
 		return ..(what, keep_old_material = keep_old_material, handle_air = handle_air)
 	return
 
-/turf/proc/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1)
+/turf/proc/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1, force = 0)
 	var/turf/simulated/new_turf
 	var/old_dir = dir
 
@@ -432,11 +431,10 @@ var/global/client/ff_debugger = null
 	var/datum/air_group/oldparent = null //Ditto.
 
 	//For unsimulated static air tiles such as ice moon surface.
-	var/oxyold = null
-	var/co2old = null
-	var/nitold = null
-	var/toxold = null
-	var/tempold = null
+	var/temp_old = null
+	#define _OLD_GAS_VAR_DEF(GAS, ...) var/GAS ## _old = null;
+	APPLY_TO_GASES(_OLD_GAS_VAR_DEF)
+	#undef _OLD_GAS_VAR_DEF
 
 	if (handle_air)
 		if (istype(src, /turf/simulated)) //Setting oldair & oldparent if simulated.
@@ -445,11 +443,10 @@ var/global/client/ff_debugger = null
 			oldparent = S.parent
 
 		else if (istype(src, /turf/unsimulated)) //Apparently unsimulated turfs can have static air as well!
-			oxyold = src.oxygen
-			co2old = src.carbon_dioxide
-			nitold = src.nitrogen
-			toxold = src.toxins
-			tempold = src.temperature
+			#define _OLD_GAS_VAR_ASSIGN(GAS, ...) GAS ## _old = src.GAS;
+			APPLY_TO_GASES(_OLD_GAS_VAR_ASSIGN)
+			#undef _OLD_GAS_VAR_ASSIGN
+			temp_old = src.temperature
 
 
 	if (istype(src, /turf/simulated/floor))
@@ -576,13 +573,14 @@ var/global/client/ff_debugger = null
 			else if(istype(N.air)) //Unsimulated tile (likely space) - > Simulated tile  // fix runtime: Cannot execute null.zero()
 				N.air.zero()
 
-			if (N.air && (oxyold || co2old || nitold || toxold)) //Unsimulated tile w/ static atmos -> simulated floor handling
-				N.air.oxygen += oxyold
-				N.air.carbon_dioxide += co2old
-				N.air.nitrogen += nitold
-				N.air.toxins += toxold
+			#define _OLD_GAS_VAR_NOT_NULL(GAS, ...) GAS ## _old ||
+			if (N.air && (APPLY_TO_GASES(_OLD_GAS_VAR_NOT_NULL) 0)) //Unsimulated tile w/ static atmos -> simulated floor handling
+				#define _OLD_GAS_VAR_RESTORE(GAS, ...) N.air.GAS += GAS ## _old;
+				APPLY_TO_GASES(_OLD_GAS_VAR_RESTORE)
+				#undef _OLD_GAS_VAR_RESTORE
 				if (!N.air.temperature)
-					N.air.temperature = tempold
+					N.air.temperature = temp_old
+			#undef _OLD_GAS_VAR_NOT_NULL
 
 			// tell atmos to update this tile's air settings
 			if (air_master)
@@ -672,11 +670,11 @@ var/global/client/ff_debugger = null
 	var/turf/floor
 	if (my_area)
 		if (my_area.filler_turf)
-			floor = ReplaceWith(my_area.filler_turf, 1)
+			floor = ReplaceWith(my_area.filler_turf, force=1)
 		else
-			floor = ReplaceWith("Space", 1)
+			floor = ReplaceWith("Space", force=1)
 	else
-		floor = ReplaceWith("Space", 1)
+		floor = ReplaceWith("Space", force=1)
 
 	return floor
 
@@ -718,6 +716,7 @@ var/global/client/ff_debugger = null
 	var/default_melt_cap = 30
 	can_write_on = 1
 	mat_appearances_to_ignore = list("steel")
+	text = "<font color=#aaa>."
 
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
@@ -787,6 +786,11 @@ var/global/client/ff_debugger = null
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "grimy"
 
+/turf/unsimulated/grimycarpet
+	name = "grimy carpet"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "grimy"
+
 /turf/simulated/grass
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
@@ -800,11 +804,13 @@ var/global/client/ff_debugger = null
 	nitrogen = MOLES_N2STANDARD
 	fullbright = 0 // cogwerks changed as a lazy fix for newmap- if this causes problems change back to 1
 	stops_space_move = 1
+	text = "<font color=#aaa>."
 
 /turf/unsimulated/floor
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "plating"
+	text = "<font color=#aaa>."
 	plane = PLANE_FLOOR
 
 /turf/unsimulated/wall
@@ -812,6 +818,7 @@ var/global/client/ff_debugger = null
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "riveted"
 	opacity = 1
+	text = "<font color=#aaa>#"
 	density = 1
 	pathable = 0
 	turf_flags = ALWAYS_SOLID_FLUID
@@ -1047,6 +1054,15 @@ var/global/client/ff_debugger = null
 /turf/unsimulated/floor/pool
 	name = "water"
 	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "poolwaterfloor"
+
+	New()
+		..()
+		dir = pick(NORTH,SOUTH)
+
+/turf/unsimulated/pool/no_animate
+	name = "pool floor"
+	icon = 'icons/obj/fluid.dmi'
 	icon_state = "poolwaterfloor"
 
 	New()

@@ -86,12 +86,14 @@
 		var/rendered_admin = "<span class='game say[more_class]'><span class='name' data-ctx='\ref[src.mind]'>[src.name] ([src.ckey])</span> whispers, <span class='message'>\"[message]\"</span></span>"
 
 		//show message to admins
-		for (var/mob/M in mobs)
+		for (var/client/C)
+			if (!C.mob) continue
+			var/mob/M = C.mob
 			if(M == src || M == src.the_guy)
 				continue
-			if (M.client && M.client.holder && !M.client.player_mode)
+			if (C.holder && !C.player_mode)
 				var/thisR = rendered
-				if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
+				if ((istype(M, /mob/dead/observer)||C.holder) && src.mind)
 					thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered_admin]</span>"
 				boutput(M, thisR)
 

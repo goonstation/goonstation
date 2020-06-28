@@ -894,7 +894,7 @@ About the new airlock wires panel:
 	else
 		shock_damage = min(rand(20,45),rand(20,45))*prot
 
-//		message_admins("<span class='notice'><B>ADMIN: </B>DEBUG: shock_damage = [shock_damage] PN.avail = [PN.avail] user = [user] netnum = [netnum]</span>")
+//		message_admins("<span class='internal'><B>ADMIN: </B>DEBUG: shock_damage = [shock_damage] PN.avail = [PN.avail] user = [user] netnum = [netnum]</span>")
 
 	if (user.bioHolder.HasEffect("resist_electric") == 2)
 		var/healing = 0
@@ -1457,9 +1457,8 @@ About the new airlock wires panel:
 		..()
 		return
 
-	if ((istype(C, /obj/item/weldingtool) && !( src.operating ) && src.density))
-		var/obj/item/weldingtool/W = C
-		if(!W.try_weld(user, 1, burn_eyes = 1))
+	if ((isweldingtool(C) && !( src.operating ) && src.density))
+		if(!C:try_weld(user, 1, burn_eyes = 1))
 			return
 		if (!src.welded)
 			src.welded = 1

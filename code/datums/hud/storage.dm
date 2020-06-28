@@ -15,6 +15,7 @@
 		src.master = null
 		src.boxes.dispose()
 		src.close.dispose()
+		src.obj_locs.len = 0
 		src.obj_locs = null
 		..()
 
@@ -145,6 +146,9 @@
 			I.screen_loc = final_loc
 			src.obj_locs[obj_loc] = I
 			i++
+		if(isitem(master))
+			var/obj/item/I = master
+			I.tooltip_rebuild = 1
 		master.update_icon()
 
 	proc/add_item(obj/item/I)

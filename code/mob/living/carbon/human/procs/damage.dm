@@ -18,6 +18,20 @@
 			S.active = 0
 			S.icon_state = "shield0"
 
+
+	if (HAS_MOB_PROPERTY(src, PROP_REFLECTPROT))
+		var/obj/item/equipped = src.equipped()
+		if (equipped && istype(equipped,/obj/item/sword))
+			var/obj/item/sword/S = equipped
+			S.handle_deflect_visuals(src)
+
+		var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
+		P.die()
+		src.visible_message("<span class='alert'>[src] reflected [Q.name] with [equipped]!</span>")
+		playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
+		return
+
+
 	if(src.material) src.material.triggerOnBullet(src, src, P)
 	for (var/atom/A in src)
 		if (A.material)
@@ -274,7 +288,7 @@
 	return
 
 
-/mob/living/carbon/human/ex_act(severity)
+/mob/living/carbon/human/ex_act(severity, lasttouched, power)
 	..() // Logs.
 	if (src.nodamage) return
 	// there used to be mining radiation check here which increases severity by one
@@ -294,10 +308,14 @@
 		if (src.bioHolder && src.bioHolder.Uid && src.bioHolder.bloodType) //ZeWaka: Fix for null.bioHolder
 			bdna = src.bioHolder.Uid
 			btype = src.bioHolder.bloodType
-		gibs(src.loc, virus, null, bdna, btype)
+		SPAWN_DBG(0)
+			gibs(src.loc, virus, null, bdna, btype)
 
 		qdel(src)
 		return
+
+	if(!power)
+		power = 8-severity*2
 
 	var/shielded = 0
 	var/spellshielded = 0
@@ -312,86 +330,52 @@
 		reduction += 30
 		spellshielded = 1
 		boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some blast!</b></span>")
-	var/in_severity = severity
-	if (src.wear_suit && istype(src.wear_suit, /obj/item/clothing/suit/armor/EOD))
-		reduction += rand(10,40)
-		severity++ // let's make this function like mining armor
-		boutput(src, "<span class='alert'><b>Your armor absorbs some of the blast!</span>")
-		if (src.head && istype(src.head, /obj/item/clothing/head/helmet/EOD))
-			reduction += rand(5,20) // buffed a bit - cogwerks
-			severity++
-		if (client && client.hellbanned)
-			reduction = 0
-			severity = in_severity
-	else if (src.wear_suit && src.wear_suit.getProperty("exploprot"))
-		var/sevmod = max(0,round(src.wear_suit.getProperty("exploprot") / 4))
-		severity += sevmod
-		reduction = rand(src.wear_suit.getProperty("exploprot"), src.wear_suit.getProperty("exploprot") * 4)
-		if (client && client.hellbanned)
-			reduction = 0
-			severity = in_severity
-		boutput(src, "<span class='alert'><b>Your armor absorbs some of the blast!</span>")
-	else if (src.w_uniform && src.w_uniform.getProperty("exploprot"))
-		var/sevmod = max(0,round(src.w_uniform.getProperty("exploprot") / 4))
-		severity += sevmod
-		reduction = rand(src.w_uniform.getProperty("exploprot"), src.w_uniform.getProperty("exploprot") * 4)
-		if (client && client.hellbanned)
-			reduction = 0
-			severity = in_severity
-		boutput(src, "<span class='alert'><b>Your jumpsuit absorbs some of the blast!</span>")
 
-	var/b_loss = null
+	var/exploprot = GET_MOB_PROPERTY(src, PROP_EXPLOPROT)
+	reduction += rand(exploprot, exploprot * 5)
+	severity += round(exploprot/4)
+	var/b_loss = min(120, power*15)/(1+exploprot/8) - reduction
 	var/f_loss = null
+
+	var/delib_chance = b_loss - 30
+	if(src.bioHolder && src.bioHolder.HasEffect("shoot_limb"))
+		delib_chance += 20
+
+	if (src.traitHolder && src.traitHolder.hasTrait("explolimbs") || src.getStatusDuration("food_explosion_resist"))
+		delib_chance = round(delib_chance / 2)
 
 	if (spellshielded)
 		severity++
 
 	switch (severity)
-		if (1.0)
+		if (1.0) //gib
 			b_loss += max(500 - reduction, 0)
 			SPAWN_DBG(1 DECI SECOND)
 				src.gib(1)
 			return
 
-		if (2.0)
-			if (!shielded)
-				b_loss += max(60 - reduction, 0)
+		if (2.0) //60-120 damage, maybe multiple delimbs
+			if(!shielded)
+				b_loss *= 0.66
+				f_loss = b_loss
+			src.apply_sonic_stun(0, 0, 0, 0, 0, 30, 30, 2*b_loss)
+			while(delib_chance > 0)
+				if (prob(delib_chance))
+					src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg")))
+				delib_chance -= 35 // let's not get too crazy
 
-			f_loss += max(60 - reduction, 0)
-			src.apply_sonic_stun(0, 0, 0, 0, 0, 30, 30)
-
-			var/curprob = 30
-			if(src.bioHolder && src.bioHolder.HasEffect("shoot_limb"))
-				curprob += 20
-
-			if (src.traitHolder && src.traitHolder.hasTrait("explolimbs"))
-				curprob = round(curprob / 2)
-
-			for (var/limb in list("l_arm","r_arm","l_leg","r_leg"))
-				if (prob(curprob))
-					src.sever_limb(limb)
-					curprob -= 20 // let's not get too crazy
-
-		if (3.0)
-			b_loss += max(30 - reduction, 0)
-			if (prob(50) && !shielded && !reduction)
-				src.changeStatus("paralysis", 9 SECONDS)
-
-			src.apply_sonic_stun(0, 0, 0, 0, 0, 15, 15)
-			var/curprob = 10
-			if(src.bioHolder && src.bioHolder.HasEffect("shoot_limb"))
-				curprob += 20
-
-			if ((src.traitHolder && src.traitHolder.hasTrait("explolimbs")) || src.getStatusDuration("food_explosion_resist"))
-				curprob = round(curprob / 2)
-
-			for (var/limb in list("l_arm","r_arm","l_leg","r_leg"))
-				if (prob(curprob))
-					src.sever_limb(limb)
-					curprob -= 10 // let's not get too crazy
+		if (3.0) //15-45 damage, maybe 1 delimb
+			src.apply_sonic_stun(0, 0, 0, 0, 0, 15, 15, 2*b_loss)
+			if (prob(delib_chance))
+				src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg"))) //max one delimb on ex_act(3)
 
 		if (4.0 to INFINITY)
+			b_loss = 0
 			boutput(src, "<span class='alert'><b>Your armor shields you from the blast!</b></span>")
+
+	if (prob(b_loss) && !shielded && !reduction)
+		src.changeStatus("paralysis", b_loss DECI SECONDS)
+		src.force_laydown_standup()
 
 	TakeDamage(zone="All", brute=b_loss, burn=f_loss, tox=0, damage_type=0, disallow_limb_loss=1)
 

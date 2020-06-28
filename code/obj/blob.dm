@@ -51,7 +51,7 @@ var/image/blob_icon_cache
 		src.update_icon()
 		update_surrounding_blob_icons(get_turf(src))
 		var/datum/controller/process/blob/B = get_master_blob_controller()
-		B.blobs += src
+		B?.blobs += src
 		for (var/obj/machinery/camera/C in get_turf(src))
 			qdel(C)
 
@@ -137,7 +137,7 @@ var/image/blob_icon_cache
 			attack(pick(allowed))
 
 	disposing()
-		if (disposed || in_disposing)
+		if (qdeled || in_disposing)
 			return
 		in_disposing = 1
 		var/datum/controller/process/blob/B = get_master_blob_controller()
@@ -153,9 +153,10 @@ var/image/blob_icon_cache
 		if (istype(src.loc,/turf))
 			if (istype(src.loc.loc,/area))
 				src.loc.loc.Exited(src)
-		..()
 		healthbar.onDelete()
 		qdel(healthbar)
+		healthbar = null
+		..()
 		update_surrounding_blob_icons(T)
 		in_disposing = 0
 
@@ -242,7 +243,7 @@ var/image/blob_icon_cache
 
 	attackby(var/obj/item/W, var/mob/user)
 		user.lastattacked = src
-		if(iscritter(user) && user:ghost_spawned || isghostdrone(user))
+		if(ismobcritter(user) && user:ghost_spawned || isghostdrone(user))
 			src.visible_message("<span class='combat'><b>[user.name]</b> feebly attacks [src] with [W], but is too weak to harm it!</span>")
 			return
 		if( istype(W,/obj/item/clothing/head) && overmind )
@@ -347,7 +348,7 @@ var/image/blob_icon_cache
 		src.health -= amount
 		src.health = max(0,min(src.health_max,src.health))
 
-		if (src.health == 0)
+		if (src.health <= 0)
 			src.onKilled()
 			if (overmind)
 				overmind.onBlobDeath(src, user)
@@ -911,7 +912,7 @@ var/image/blob_icon_cache
 
 		//turrets can fire on humans, mobcritters and pods
 		for (var/mob/living/M in view(firing_range, src))
-			if ((ishuman(M) || (iscritter(M) && !M:ghost_spawned)) && !isdead(M) && !check_target_immunity(M))
+			if ((ishuman(M) || (ismobcritter(M) && !M:ghost_spawned)) && !isdead(M) && !check_target_immunity(M))
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if (H.mutantrace)
@@ -1140,6 +1141,7 @@ var/image/blob_icon_cache
 		B.color = overmind.color
 		qdel(src)
 
+// TODO: REPLACE WITH SOMETHING COOLER - URS
 /obj/blob/ribosome
 	name = "ribosome"
 	state_overlay = "new_ribosome"
@@ -1152,8 +1154,8 @@ var/image/blob_icon_cache
 
 	onAttach(var/mob/living/intangible/blob_overmind/O)
 		..()
-		O.spread_mitigation += 1
-		added = 1
+		O.gen_rate_bonus += 0.1
+		added = 0.1
 
 	update_icon()
 		return
@@ -1161,8 +1163,9 @@ var/image/blob_icon_cache
 	disposing()
 		..()
 		if (overmind)
-			overmind.spread_mitigation -= added
+			overmind.gen_rate_bonus -= added
 			added = 0
+
 
 /obj/blob/wall
 	name = "thick membrane"
@@ -1323,6 +1326,8 @@ var/image/blob_icon_cache
 	return null
 
 /proc/get_master_blob_controller()
+	if(!processScheduler)
+		return null
 	for (var/datum/controller/process/blob/B in processScheduler.processes)
 		return B
 	return null

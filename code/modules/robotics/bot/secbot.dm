@@ -15,6 +15,7 @@
 //	weight = 1.0E7
 	req_access = list(access_security)
 	var/weapon_access = access_carrypermit
+	var/contraband_access = access_contrabandpermit
 	var/obj/item/baton/secbot/our_baton // Our baton
 
 	on = 1
@@ -71,7 +72,16 @@
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
 
 	disposing()
+		if(mover)
+			mover.dispose()
+			mover = null
+		if(our_baton)
+			our_baton.dispose()
+			our_baton = null
+		target = null
 		radio_controller.remove_object(src, "1149")
+		radio_controller.remove_object(src, "[control_freq]")
+		radio_controller.remove_object(src, "[beacon_freq]")
 		..()
 
 /obj/machinery/bot/secbot/autopatrol
@@ -84,6 +94,14 @@
 	auto_patrol = 1
 	report_arrests = 1
 	hat = "nt"
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 /obj/machinery/bot/secbot/warden
 	name = "Warden Jack"
@@ -171,7 +189,7 @@ Behaviour controls are [src.locked ? "locked" : "unlocked"]"}
 
 		if(!src.locked)
 			dat += {"<hr>
-Check for Weapon Authorization: <A href='?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A><BR>
+Check for Unauthorised Equipment: <A href='?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A><BR>
 Check Security Records: <A href='?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A><BR>
 Operating Mode: <A href='?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A><BR>
 Auto Patrol: <A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A><BR>
@@ -845,14 +863,21 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 		if(src.emagged) return 10 //Everyone is a criminal!
 
-		if((src.idcheck) || (isnull(perp:wear_id)) || (istype(perp:wear_id, /obj/item/card/id/syndicate)))
+		if((src.idcheck)) // bot is set to actively search for contraband
 			var/obj/item/card/id/perp_id = perp.equipped()
 			if (!istype(perp_id))
 				perp_id = perp.wear_id
 
-			if(perp_id && (weapon_access in perp_id.access)) //Corrupt cops cannot exist, beep boop
-				return 0
-/*
+			var/has_carry_permit = 0
+			var/has_contraband_permit = 0
+
+			if(perp_id) //Checking for permits
+				if(weapon_access in perp_id.access)
+					has_carry_permit = 1
+				if(contraband_access in perp_id.access)
+					has_contraband_permit = 1
+
+			/*
 			if(istype(perp.l_hand, /obj/item/gun) || istype(perp.l_hand, /obj/item/baton) || istype(perp.l_hand, /obj/item/sword))
 				threatcount += 4
 
@@ -864,36 +889,75 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 			if(istype(perp:wear_suit, /obj/item/clothing/suit/wizrobe))
 				threatcount += 4
-*/
+			*/
 			if (istype(perp.l_hand))
-				threatcount += perp.l_hand.contraband
+				if (istype(perp.l_hand, /obj/item/gun/)) // perp is carrying a gun
+					if(!has_carry_permit)
+						threatcount += perp.l_hand.contraband
+				else // not carrying a gun, but potential contraband?
+					if(!has_contraband_permit)
+						threatcount += perp.l_hand.contraband
 
 			if (istype(perp.r_hand))
-				threatcount += perp.r_hand.contraband
+				if (istype(perp.r_hand, /obj/item/gun/)) // perp is carrying a gun
+					if(!has_carry_permit)
+						threatcount += perp.r_hand.contraband
+				else // not carrying a gun, but potential contraband?
+					if(!has_contraband_permit)
+						threatcount += perp.r_hand.contraband
 
 			if (istype(perp.belt))
-				threatcount += perp.belt.contraband * 0.5
+				if (istype(perp.belt, /obj/item/gun/))
+					if (!has_carry_permit)
+						threatcount += perp.belt.contraband * 0.5
+				else
+					if (!has_contraband_permit)
+						threatcount += perp.belt.contraband * 0.5
 
 			if (istype(perp.wear_suit))
-				threatcount += perp.wear_suit.contraband
+				if (!has_contraband_permit)
+					threatcount += perp.wear_suit.contraband
 
-			if(istype(perp.mutantrace, /datum/mutantrace/abomination))
-				threatcount += 5
+			if (istype(perp.back))
+				if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
+					if (!has_carry_permit)
+						threatcount += perp.back.contraband * 0.5
+				else // at moment of doing this we don't have other contraband back items, but maybe that'll change
+					if (!has_contraband_permit)
+						threatcount += perp.back.contraband * 0.5
 
-	//Agent cards lower threatlevel when normal idchecking is off.
-			if((istype(perp.wear_id, /obj/item/card/id/syndicate)) && src.idcheck)
-				threatcount -= 2
 
-		if (src.check_records)
-			for (var/datum/data/record/E in data_core.general)
-				var/perpname = perp.name
-				if (perp:wear_id && perp:wear_id:registered)
-					perpname = perp.wear_id:registered
+		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
+			threatcount += 5
+
+		//Agent cards lower threat level
+		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))
+			threatcount -= 2
+
+		// we have grounds to make an arrest, don't bother with further analysis
+		if(threatcount >= 4)
+			return threatcount
+
+		if (src.check_records) // bot is set to actively compare security records
+			var/see_face = 1
+			if (istype(perp.wear_mask) && !perp.wear_mask.see_face)
+				see_face = 0
+			else if (istype(perp.head) && !perp.head.see_face)
+				see_face = 0
+			else if (istype(perp.wear_suit) && !perp.wear_suit.see_face)
+				see_face = 0
+
+			var/perpname = see_face ? perp.real_name : perp.name
+
+			for (var/i in data_core.general)
+				var/datum/data/record/E = i
 				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.security)
+					for (var/j in data_core.security)
+						var/datum/data/record/R = j
 						if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
 							threatcount = 4
 							break
+					break
 
 		return threatcount
 
@@ -991,6 +1055,12 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			src.master = newmaster
 		return
 
+	disposing()
+		if(master.mover == src)
+			master.mover = null
+		src.master = null
+		..()
+
 	proc/master_move(var/atom/the_target as obj|mob, var/current_movepath,var/adjacent=0)
 		if(!master || !isturf(master.loc))
 			src.master = null
@@ -1063,7 +1133,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 
 /obj/item/secbot_assembly/attackby(obj/item/W as obj, mob/user as mob)
-	if ((istype(W, /obj/item/weldingtool)) && (!src.build_step))
+	if ((isweldingtool(W)) && (!src.build_step))
 		if(W:try_weld(user, 1))
 			src.build_step++
 			src.overlays += image('icons/obj/bots/aibots.dmi', "hs_hole")

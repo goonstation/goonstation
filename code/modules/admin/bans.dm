@@ -347,7 +347,7 @@ var/global/list/playersSeen = list()
 
 //Admin verb to add bans
 /client/proc/cmd_admin_addban ()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Add Ban"
 	set popup_menu = 0
 
@@ -380,7 +380,7 @@ var/global/list/playersSeen = list()
 
 		logTheThing("admin", adminC, target, "edited %target%'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]")
 		logTheThing("diary", adminC, target, "edited %target%'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]", "admin")
-		message_admins("<span class='notice'>[key_name(adminC)] edited [target]'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]</span>")
+		message_admins("<span class='internal'>[key_name(adminC)] edited [target]'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
@@ -505,11 +505,11 @@ var/global/list/playersSeen = list()
 		if (expired)
 			logTheThing("admin", null, null, "[row["ckey"]]'s ban expired.")
 			logTheThing("diary", null, null, "[row["ckey"]]'s ban expired.", "admin")
-			message_admins("<span class='notice'>Ban expired for [target]</span>")
+			message_admins("<span class='internal'>Ban expired for [target]</span>")
 		else
 			logTheThing("admin", adminC, null, "unbanned [row["ckey"]]")
 			logTheThing("diary", adminC, null, "unbanned [row["ckey"]]", "admin")
-			message_admins("<span class='notice'>[key_name(adminC)] unbanned [target]</span>")
+			message_admins("<span class='internal'>[key_name(adminC)] unbanned [target]</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
@@ -576,11 +576,11 @@ var/global/list/playersSeen = list()
 		if (expired)
 			logTheThing("admin", null, null, "[row["ckey"]]'s ban expired.")
 			logTheThing("diary", null, null, "[row["ckey"]]'s ban expired.", "admin")
-			message_admins("<span class='notice'>Ban expired for [target]</span>")
+			message_admins("<span class='internal'>Ban expired for [target]</span>")
 		else
 			logTheThing("admin", adminC, null, "unbanned [row["ckey"]]")
 			logTheThing("diary", adminC, null, "unbanned [row["ckey"]]", "admin")
-			message_admins("<span class='notice'>[key_name(adminC)] unbanned [target]</span>")
+			message_admins("<span class='internal'>[key_name(adminC)] unbanned [target]</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
@@ -618,6 +618,7 @@ var/global/list/playersSeen = list()
 	bansHtml = replacetext(bansHtml, "null /* window_name */", "'[windowName]'")
 	bansHtml = replacetext(bansHtml, "null /* ref_src */", "'\ref[src]'")
 	bansHtml = replacetext(bansHtml, "null /* cminutes */", "[CMinutes]")
+	bansHtml = replacetext(bansHtml, "null /* api_data_params */", "'data_server=[serverKey]&data_id=[config.server_id]&data_version=[config.goonhub_api_version]'")
 	if (centralConn)
 		bansHtml = replacetext(bansHtml, "null /* api_key */", "'[md5(config.goonhub_api_web_token)]'")
 	usr << browse(bansHtml,"window=[windowName];size=1080x500")
@@ -625,7 +626,7 @@ var/global/list/playersSeen = list()
 
 /client/proc/openBanPanel()
 	set name = "Ban Panel"
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	if (src.holder && !src.holder.tempmin)
 		src.holder.banPanel()
 	else
@@ -731,7 +732,7 @@ var/global/list/playersSeen = list()
 			logTheThing("debug", null, null, "<b>Local API Error</b> - Callback failed in <b>[type]BanApiFallback</b> with message: <b>[returnData["error"]]</b>")
 			logTheThing("diary", null, null, "<b>Local API Error</b> - Callback failed in [type]BanApiFallback with message: [returnData["error"]]", "debug")
 			if (returnData["showAdmins"])
-				message_admins("<span class='notice'><b>Failed for route [type]BanApiFallback</b>: [returnData["error"]]</span>")
+				message_admins("<span class='internal'><b>Failed for route [type]BanApiFallback</b>: [returnData["error"]]</span>")
 
 			return 0
 
@@ -757,7 +758,7 @@ var/global/list/playersSeen = list()
 			logTheThing("debug", null, null, "<b>Local API Error</b> - Callback failed in <b>[type]BanApiFallback</b> with message: <b>[returnData["error"]]</b>")
 			logTheThing("diary", null, null, "<b>Local API Error</b> - Callback failed in [type]BanApiFallback with message: [returnData["error"]]", "debug")
 			if (returnData["showAdmins"])
-				message_admins("<span class='notice'><b>Failed for route [type]BanApiFallback</b>: [returnData[</span>"error"]]")
+				message_admins("<span class='internal'><b>Failed for route [type]BanApiFallback</b>: [returnData[</span>"error"]]")
 
 			return 0
 	*/

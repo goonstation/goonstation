@@ -36,11 +36,10 @@
 
 
 /mob/living/critter/flock/drone/New(var/atom/location, var/datum/flock/F=null)
-	..()
-
 	// ai setup
-	src.ai = new /datum/aiHolder/flock/drone()
-	src.ai.owner = src
+	src.ai = new /datum/aiHolder/flock/drone(src)
+
+	..()
 
 	SPAWN_DBG(3 SECONDS) // aaaaaaa
 		src.zone_sel.change_hud_style('icons/mob/flock_ui.dmi')
@@ -312,7 +311,6 @@
 		playsound(get_turf(src), "sound/effects/sparks[rand(1,6)].ogg", 50, 1)
 		if(I && I.health <= 0) // fix runtime Cannot read null.health
 			playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
-			boutput(src, "<span class='notice'>You finish converting [I] into resources (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]).</span>")
 			I.dropped(src)
 			if(I.contents.len > 0)
 				var/anything_tumbled = 0
@@ -327,11 +325,19 @@
 						"<span class='alert'>The contents of [I] tumble out of you.</span>",
 						"<span class='alert'>You hear things fall onto the floor.</span")
 			src.resources += src.absorb_completion
+			boutput(src, "<span class='notice'>You finish converting [I] into resources (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]).</span>")
 			if(istype(I, /obj/item/organ/heart/flock))
 				var/obj/item/organ/heart/flock/F = I
-				boutput(src, "<span class='notice'>You assimilate [F]'s resource cache, adding <span class='bold'>[F.resources]</span> resources to your own (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]).</span>")
 				src.resources += F.resources
-			qdel(I)
+				boutput(src, "<span class='notice'>You assimilate [F]'s resource cache, adding <span class='bold'>[F.resources]</span> resources to your own (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]).</span>")
+			else if(istype(I, /obj/item/flockcache))
+				var/obj/item/flockcache/C = I
+				src.resources += C.resources
+				boutput(src, "<span class='notice'>You break down the resource cache, adding <span class='bold'>[C.resources]</span> resources to your own (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]). </span>")
+			if(istype(I, /obj/item/raw_material))
+				pool(I) //gotta pool stuff bruh
+			else
+				qdel(I)
 	// AI ticks are handled in mob_ai.dm, as they ought to be
 
 /mob/living/critter/flock/drone/process_move(keys)
@@ -672,6 +678,7 @@
 		..()
 	else
 		boutput(user, "<span class='alert'>The grip tool can't get a good grip on [target]!</span>")
+		user.lastattacked = target
 
 /datum/limb/flock_grip/harm(mob/target, var/mob/living/critter/flock/drone/user)
 	if (!user || !target)
@@ -691,8 +698,10 @@
 			var/list/specific_attack_messages = pick(attack_messages)
 			msgs.base_attack_message = "<span class='combat bold'>[user] [specific_attack_messages[1]] [target] [specific_attack_messages[2]]!</span>"
 			msgs.flush(0)
+			user.lastattacked = target
 		else
 			user.visible_message("<span class='combat bold'>[user] attempts to prod [target] but misses!</span>")
+			user.lastattacked = target
 
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -708,23 +717,15 @@
 	if (user.floorrunning)
 		return // you'll need to be out of the floor to do anything
 	// CONVERT TURF
-	if(!isturf(target))
+	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock) || istype(target, /obj/structure/girder) || istype(target, /obj/machinery/door/feather)))
 		target = get_turf(target)
 
-	if(!istype(target, /turf/simulated) && !istype(target, /turf/space))
+	if(istype(target, /turf) && !istype(target, /turf/simulated) && !istype(target, /turf/space))
 		boutput(user, "<span class='alert'>Something about this structure prevents it from being assimilated.</span>")
 	else if(isfeathertile(target))
 		if(istype(target, /turf/simulated/floor/feather))
 			var/turf/simulated/floor/feather/flocktarget = target
-			var/anything_needs_repair = flocktarget.broken
-			for(var/obj/machinery/door/feather/D in flocktarget)
-				anything_needs_repair = anything_needs_repair || D.broken
-			if(anything_needs_repair)
-				if(user.resources < 10)
-					boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
-				else
-					actions.start(new/datum/action/bar/flock_convert(target, 10), user)
-			else if(user.a_intent == INTENT_DISARM)
+			if(user.a_intent == INTENT_DISARM)
 				if(!locate(/obj/grille/flock) in flocktarget)
 					if(user.resources < 25)
 						boutput(user, "<span class='alert'>Not enough resources to construct a barricade (you need 25).</span>")
@@ -736,10 +737,42 @@
 				boutput(user, "<span class='notice'>It's already been repurposed. Can't improve on perfection. (Use the disarm intent to construct a barricade.)</span>")
 		else
 			boutput(user, "<span class='notice'>It's already been repurposed. Can't improve on perfection.</span>")
-	else if(user.resources < 20)
+	else if(user.resources < 20 && istype(target, /turf))
 		boutput(user, "<span class='alert'>Not enough resources to convert (you need 20).</span>")
 	else
-		actions.start(new/datum/action/bar/flock_convert(target), user)
+		if(istype(target, /turf))
+			actions.start(new/datum/action/bar/flock_convert(target), user)
+	if(user.a_intent == INTENT_HARM)
+		switch (target.type)
+			if(/obj/table/flock, /obj/table/flock/auto)
+				actions.start(new /datum/action/bar/flock_decon(target), user)
+			if(/obj/storage/closet/flock)
+				//soap
+				actions.start(new /datum/action/bar/flock_decon(target), user)
+			if(/turf/simulated/wall/auto/feather)
+				actions.start(new /datum/action/bar/flock_decon(target), user)
+			if(/obj/structure/girder)
+				if(target?.material.mat_id == "gnesis")
+					var/atom/A = new /obj/item/sheet(get_turf(target))
+					if (target.material)
+						A.setMaterial(target.material)
+						qdel(target)
+				else
+					return
+			if(/obj/machinery/door/feather)
+				actions.start(new /datum/action/bar/flock_decon(target), user)
+			else
+				..()
+//help intent actions
+	else if(user.a_intent == INTENT_HELP)
+		if(istype(target, /obj/machinery/door/feather))
+			var/obj/machinery/door/feather/F = target
+			if(F.broken || (F.health > F.health_max))
+				if(user.resources < 10)
+					boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
+				else
+					actions.start(new/datum/action/bar/flock_repair(F), user)
+
 
 /datum/limb/flock_converter/help(mob/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)
@@ -751,6 +784,7 @@
 	if(isflock(F))
 		if(F.get_health_percentage() >= 1.0)
 			boutput(user, "<span class='alert'>They don't need to be repaired, they're in perfect condition.</span>")
+			return
 		if(user.resources < 10)
 			boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
 		else
@@ -778,6 +812,21 @@
 		boutput(user, "<span class='alert'>They're already imprisoned, you can't double-imprison them!</span>")
 	else
 		actions.start(new/datum/action/bar/flock_entomb(target), user)
+
+ //FUCK - moonlol
+/datum/limb/flock_converter/harm(atom/target, var/mob/living/critter/flock/drone/user)
+	if(!target || !user)
+		return
+	if(user.floorrunning)
+		return
+	if(istype(target, /mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/f = target
+		if(isdead(f))
+			actions.start(new/datum/action/bar/icon/butcher_living_critter(f), user)
+		else
+			boutput(user, "<span class='alert'>You can't butcher a living flockdrone!</span>")
+	else
+		..()
 
 /////////////////////////////////////////////////////////////////////////////////
 

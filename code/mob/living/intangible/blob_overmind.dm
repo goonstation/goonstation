@@ -9,6 +9,7 @@
 	canmove = 1
 	blinded = 0
 	anchored = 1
+	use_stamina = 0
 	mob_flags = SPEECH_BLOB
 
 	var/datum/tutorial/blob/tutorial
@@ -606,6 +607,15 @@
 		cooldown_overlay.pixel_y = 4
 		cooldown_overlay.maptext_y = 1
 		cooldown_overlay.maptext_x = 1
+
+	disposing()
+		if(ability)
+			ability.button = null
+			ability = null
+		if(upgrade)
+			upgrade.button = null
+			upgrade = null
+		..()
 
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)

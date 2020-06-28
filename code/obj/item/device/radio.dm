@@ -4,12 +4,14 @@
 	suffix = "\[3\]"
 	icon_state = "walkietalkie"
 	item_state = "radio"
-	var/device_color = RADIOC_STANDARD
+	var/device_color = null
+	var/chat_class = RADIOCL_STANDARD // respects dark mode, gets overriden by device_color
 	var/last_transmission
 	var/frequency = R_FREQ_DEFAULT
 	var/locked_frequency = 0 // can't change the frequency from default: enables radios to be outside the default range as well
 	var/list/secure_frequencies = null
-	var/list/secure_colors = list("#E00000")
+	var/list/secure_colors = list()
+	var/list/secure_classes = list(RADIOCL_STANDARD) // respects dark mode, gets overriden by secure_colors
 	var/protected_radio = 0 // Cannot be picked up by radio_brain bioeffect.
 	var/traitor_frequency = 0.0
 	var/obj/item/device/radio/patch_link = null
@@ -327,9 +329,19 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 
 			if (R.accept_rad(src, messages, connection))
 				R.speech_bubble()
-				for (var/i in R.send_hear())
-					if (!(i in receive))
-						receive += i
+				if (secure)
+					for (var/i in R.send_hear())
+						if (!(i in receive))
+							receive += i
+
+							//mbc : i dont like doing this here but its the easiest place to fit it in since this is a point where we have access to both the receiving mob and the radio they are receiving through
+							var/mob/rmob = i
+							rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+
+				else
+					for (var/i in R.send_hear())
+						if (!(i in receive))
+							receive += i
 
 		else if (istype(I, /obj/item/mechanics/radioscanner)) //MechComp radio scanner
 			var/obj/item/mechanics/radioscanner/R = I
@@ -360,8 +372,11 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 							if(D)
 								heard_flock |= D
 
-	for (var/mob/dead/D in mobs)
-		if (D.client && (istype(D, /mob/dead/observer) || (iswraith(D) && !D.density)) || ((!isturf(src.loc) && src.loc == D.loc) && !istype(D, /mob/dead/target_observer)))
+	for (var/client/C)
+		if (!C.mob) continue
+		var/mob/dead/D = C.mob
+
+		if ((istype(D, /mob/dead/observer) || (iswraith(D) && !D.density)) || ((!isturf(src.loc) && src.loc == D.loc) && !istype(D, /mob/dead/target_observer)))
 			if (!(D in receive))
 				receive += D
 
@@ -391,20 +406,27 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	var/rendered
 
 	if (length(heard_masked) || length(heard_normal) || length(heard_voice) || length(heard_garbled) || length(heard_flock))
-		var/textColor = null
+		var/textColor = secure ? null : src.device_color
+		var/classes = ""
+		if(src.chat_class)
+			classes = " [src.chat_class]"
 		if (secure)
+			if(secure in secure_classes)
+				classes = " [secure_classes["[secure]"]]"
+			else
+				classes = " [secure_classes[1]]"
 			textColor = secure_colors["[secure]"]
 			if (!textColor)
 				if (secure_colors.len)
 					textColor = secure_colors[1]
-				else
-					textColor = "#E00000"
-
+		var/css_style = ""
+		if(textColor)
+			css_style = " style='color: [textColor]'"
 		var/part_a
 		if (ismob(M) && M.mind)
-			part_a = "[radio_bicon(M)] <span class='radio' style='color: [secure ? textColor : src.device_color]'><span class='name' data-ctx='\ref[M.mind]'>"
+			part_a = "[radio_bicon(M)]<span class='radio[classes]'[css_style]><span class='name' data-ctx='\ref[M.mind]'>"
 		else
-			part_a = "[radio_bicon(M)]<span class='radio' style='color: [secure ? textColor : src.device_color]'><span class='name'>"
+			part_a = "[radio_bicon(M)]<span class='radio[classes]'[css_style]><span class='name'>"
 		var/part_b = "</span><b> \[[format_frequency(display_freq)]\]</b> <span class='message'>"
 		var/part_c = "</span></span>"
 
@@ -736,6 +758,11 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 #else
 			M.changeStatus("weakened", 10 SECONDS)
 #endif
+			if(istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				for (var/uid in H.pathogens)
+					var/datum/pathogen/P = H.pathogens[uid]
+					P.onshocked(35, 500)
 
 	if ((src.master && src.wires & WIRE_SIGNAL))
 		src.master.receive_signal()
@@ -990,7 +1017,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	anchored = 1.0
 	speaker_range = 0
 	mats = 0
-	device_color = RADIOC_INTERCOM
+	chat_class = RADIOCL_INTERCOM
 	//Best I can figure, you need broadcasting and listening to both be TRUE for it to make a signal and send the words spoken next to it. Why? Fuck whoever named these, that's why.
 	broadcasting = 0
 	listening = 0		//maybe this doesn't need to be on. It shouldn't be relaying signals.
@@ -1038,7 +1065,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	mats = 0
 	broadcasting = 1
 	listening = 1
-	device_color = RADIOC_INTERCOM
+	chat_class = RADIOCL_INTERCOM
 	frequency = R_FREQ_LOUDSPEAKERS
 	rand_pos = 0
 	density = 0

@@ -58,7 +58,7 @@
 	var/is_dancing = 0 // we're already dancin'!
 	var/dance_chance = 10 // fuck it I gotta test this stuff so this gets to be a var now (how likely the bee is to dance in response to a dance)
 
-	var/blog = "adult bub log|"
+	var/tmp/blog = "adult bub log|"
 
 	var/shorn = 0
 	var/shorn_time = 0
@@ -238,6 +238,99 @@
 		generic = 0
 		var/jittered = 0
 		honey_color = rgb(0, 255, 255)
+		is_pet = 2
+		var/tier = 0
+		var/original_tier = 0
+		var/original_hat_ref = ""
+		var/static/hat_tier_list = list(
+			///obj/item/clothing/head/butt,
+			/obj/item/clothing/head/paper_hat,
+			/obj/item/clothing/head/plunger,
+			/obj/item/clothing/head/helmet/bucket/hat,
+			/obj/item/clothing/head/cakehat,
+			/obj/item/clothing/head/chefhat,
+			/obj/item/clothing/head/mailcap,
+			/obj/item/clothing/head/helmet/hardhat,
+			/obj/item/clothing/head/det_hat,
+			/obj/item/clothing/head/mj_hat,
+			/obj/item/clothing/head/that,
+			/obj/item/clothing/head/NTberet,
+			/obj/item/clothing/head/helmet/HoS,
+			/obj/item/clothing/head/hosberet,
+			/obj/item/clothing/head/caphat,
+			/obj/item/clothing/head/fancy/captain,
+			/obj/item/clothing/head/apprentice,
+			/obj/item/clothing/head/wizard,
+			/obj/item/clothing/head/wizard/red,
+			/obj/item/clothing/head/helmet/viking,
+			/obj/item/clothing/head/void_crown
+		)
+
+		New()
+			src.tier = world.load_intra_round_value("heisenbee_tier")
+			src.original_tier = src.tier
+			src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT, .proc/save_upgraded_tier)
+			heisentier_hat()
+			..()
+
+		disposing()
+			UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT)
+			..()
+
+		proc/save_upgraded_tier()
+			if(src.alive)
+				world.save_intra_round_value("heisenbee_tier", src.tier + 1)
+
+		proc/heisentier_hat()
+			if(src.tier <= 0)
+				return
+			var/hat_type = src.hat_tier_list[(src.tier - 1) % length(src.hat_tier_list) + 1]
+			var/obj/item/clothing/head/hat = new hat_type(src)
+			var/ubertier = round((src.tier - 1) / length(src.hat_tier_list))
+			switch(ubertier)
+				if(0)
+					; // regular hat
+				if(1)
+					hat.setMaterial(getMaterial("gold"))
+				if(2)
+					hat.setMaterial(getMaterial("miracle"))
+				if(3)
+					hat.setMaterial(getMaterial("telecrystal"))
+				if(4)
+					hat.setMaterial(getMaterial("negativematter"))
+				if(5 to INFINITY)
+					hat.setMaterial(getMaterial("starstone"))
+					var/matrix/trans = new
+					trans.Scale((ubertier - 4) / 3) // mmm, large hat
+					hat.transform = trans
+			hat.name = "[src]'s [hat.name]"
+			src.original_hat_ref = ref(hat)
+			src.hat_that_bee(hat)
+			src.update_icon()
+
+		CritterDeath()
+			if(!src.alive)
+				return
+			world.save_intra_round_value("heisenbee_tier", 0)
+			if(src.hat)
+				src.hat.set_loc(src.loc)
+				src.hat = null
+				src.update_icon()
+			src.tier = 0 // No free hat with SR...
+			. = ..()
+
+		attackby(obj/item/W, mob/living/user)
+			if(!src.hat && ref(W) == src.original_hat_ref) // ...unless you return the hat!
+				if(src.alive)
+					boutput(user, "<span class='emote'>[src] bubmles happily at the sight of [W]!</span>")
+				src.tier = src.original_tier
+			. = ..()
+
+		get_desc(dist)
+			. = ..()
+			if(src.hat)
+				. += "Huh, is that \a [src.hat] on [src]? How did it even get there?"
+
 #ifdef HALLOWEEN
 		var/masked = 1
 
@@ -712,6 +805,24 @@
 		icon_state = "sonicbee-wings"
 		sleeping_icon_state = "sonicbee-sleep"
 
+	ascbee
+		name = "ASCBee"
+		desc = "This bee looks rather... old school."
+		icon_body = "ascbee"
+		icon_state = "ascbee-wings"
+		sleeping_icon_state = "ascbee-sleep"
+		angertext = "beeps aggressively at"
+		honey_color = rgb(0, 255, 0)
+
+		attack_hand(mob/user as mob)
+			if(src.alive && user.a_intent=="help")
+				src.visible_message("<span class='emote'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				if(prob(15))
+					for(var/mob/O in hearers(src, null))
+						O.show_message("<span class='emote'><b>[src]</b> beeps[prob(50) ? " in a comforted manner, and gives [user] the ASCII" : ""].</span>",2)
+				return
+			else
+				..()
 /* -------------------- END -------------------- */
 
 /* -------------------- BASE BEE STUFF -------------------- */
@@ -1289,7 +1400,7 @@
 	var/beeMomCkey = null
 	var/scolded = 0
 
-	var/blog = "larvalog|"
+	var/tmp/blog = "larvalog|"
 
 	bonnet
 		desc = "A domestic space bee larva, but with a little bonnet.  Where did that even come from?"
@@ -1442,11 +1553,7 @@
 			..()
 
 	CritterDeath()
-		src.alive = 0
-		set_density(0)
-		src.icon_state = "[initial(src.icon_state)]-dead"
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> dies!")
+		..()
 
 		modify_christmas_cheer(-5)
 		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src))
@@ -1469,7 +1576,7 @@
 	var/larva_type = null
 	rand_pos = 1
 
-	var/blog = "egg blog|"
+	var/tmp/blog = "egg blog|"
 
 	New()
 		..()
@@ -1537,7 +1644,8 @@
 
 			qdel(src)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		if (hatched || 0)//todo: re-enable this when people stop abusing bees!!!
 			return
 		hatched = 1
@@ -1624,7 +1732,8 @@
 				R.add_reagent("wolfsbane", 10)
 				qdel (src)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		if (hatched || 0)//replace me too!!!
 			return
 

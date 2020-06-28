@@ -34,8 +34,9 @@
 	proc/onshocked(var/datum/shockparam/param, var/datum/pathogen/P)
 	proc/onsay(message, var/datum/pathogen/P)
 	proc/onadd(var/datum/pathogen/P)
-	proc/onemote(var/mob/target, message, var/datum/pathogen/P)
+	proc/onemote(var/mob/M as mob, message, voluntary, var/datum/pathogen/P)
 	proc/ondeath(var/datum/pathogen/P)
+	proc/oncured(var/datum/pathogen/P)
 
 	// While doing pathogen research, the suppression method may define how the pathogen reacts to certain reagents.
 	// Returns null if the pathogen does not react to the reagent.
@@ -215,6 +216,8 @@
 				P.infected.show_message("<span class='notice'>You feel better.</span>")
 		if (P.suppressed == 0)
 			P.suppressed = 1
+		if(P.curable_by_suppression && prob(param.amt>100?100:param.amt))      // just to make this a little more likely to actually cure, or else it's too hard
+			P.remission()
 
 	may_react_to()
 		return "Membrane patterns of the pathogen indicate it might be <b style='font-size:20px;color:red'>suppressed</b> by a reagent affecting neural activity."

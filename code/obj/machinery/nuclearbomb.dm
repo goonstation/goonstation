@@ -44,6 +44,9 @@
 		..()
 
 	disposing()
+		if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+			var/datum/game_mode/nuclear/NUKEMODE = ticker.mode
+			NUKEMODE.the_bomb = null
 		qdel(wirepanel)
 		..()
 
@@ -219,7 +222,7 @@
 					boutput(user, "<span class='alert'>Why would you want to damage the nuclear bomb?</span>")
 					return
 
-			if (src.armed && src.anchored)
+			if (src.armed && src.anchored && !(user.mind in NUKEMODE.syndicates))
 				if (isscrewingtool(W))
 					actions.start(new /datum/action/bar/icon/unanchorNuke(src), user)
 					return

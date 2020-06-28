@@ -24,6 +24,8 @@ var/zapLimiter = 0
 	req_access = list(access_engineering_power)
 	object_flags = CAN_REPROGRAM_ACCESS
 	netnum = -1		// set so that APCs aren't found as powernet nodes
+	text = ""
+	machine_registry_idx = MACHINES_POWER
 	var/area/area
 	var/areastring = null
 	var/autoname_on_spawn = 0 // Area.name
@@ -45,7 +47,7 @@ var/zapLimiter = 0
 	var/coverlocked = 1
 	var/aidisabled = 0
 	var/noalerts = 0
-	var/tdir = null
+	var/tmp/tdir = null
 	var/obj/machinery/power/terminal/terminal = null
 	var/lastused_light = 0
 	var/lastused_equip = 0
@@ -1196,28 +1198,7 @@ var/zapLimiter = 0
 				environ = autoset(environ, 0)
 
 		// set channels depending on how much charge we have left
-
-		if(cell.charge <= 0)					// zero charge, turn all off
-			equipment = autoset(equipment, 0)
-			lighting = autoset(lighting, 0)
-			environ = autoset(environ, 0)
-			if (!noalerts) area.poweralert(0, src)
-		else if(cell.percent() < 15)			// <15%, turn off lighting & equipment
-			equipment = autoset(equipment, 2)
-			lighting = autoset(lighting, 2)
-			environ = autoset(environ, 1)
-			if (!noalerts) area.poweralert(0, src)
-		else if(cell.percent() < 30)			// <30%, turn off equipment
-			equipment = autoset(equipment, 1)
-			lighting = autoset(lighting, 2)
-			environ = autoset(environ, 1)
-			if (!noalerts) area.poweralert(0, src)
-		else									// otherwise all can be on
-			equipment = autoset(equipment, 1)
-			lighting = autoset(lighting, 1)
-			environ = autoset(environ, 1)
-			if(cell.percent() > 75)
-				if (!noalerts) area.poweralert(1, src)
+		check_channel_thresholds()
 
 		// now trickle-charge the cell
 
@@ -1270,10 +1251,36 @@ var/zapLimiter = 0
 
 	src.updateDialog()
 
+// set channels depending on how much charge we have left
+/obj/machinery/power/apc/proc/check_channel_thresholds()
+	if(cell.charge <= 0)					// zero charge, turn all off
+		equipment = autoset(equipment, 0)
+		lighting = autoset(lighting, 0)
+		environ = autoset(environ, 0)
+		if (!noalerts) area.poweralert(0, src)
+	else if(cell.percent() < 15)			// <15%, turn off lighting & equipment
+		equipment = autoset(equipment, 2)
+		lighting = autoset(lighting, 2)
+		environ = autoset(environ, 1)
+		if (!noalerts) area.poweralert(0, src)
+	else if(cell.percent() < 30)			// <30%, turn off equipment
+		equipment = autoset(equipment, 1)
+		lighting = autoset(lighting, 2)
+		environ = autoset(environ, 1)
+		if (!noalerts) area.poweralert(0, src)
+	else									// otherwise all can be on
+		equipment = autoset(equipment, 1)
+		lighting = autoset(lighting, 1)
+		environ = autoset(environ, 1)
+		if(cell.percent() > 75)
+			if (!noalerts) area.poweralert(1, src)
+
+
+
 // val 0=off, 1=off(auto) 2=on 3=on(auto)
 // on 0=off, 1=on, 2=autooff
-
-/proc/autoset(var/val, var/on)
+//This was global? For no reason?
+/obj/machinery/power/apc/proc/autoset(var/val, var/on)
 
 	if(on==0)
 		if(val==2)			// if on, return off

@@ -6,7 +6,7 @@
 	//try to find the closest working camera in the same area, switch to it
 
 	var/area/A = get_area(src)
-	if (A && A.type == /area) return //lol @ dumping you at the mining magnet every fucking time. (or interrupting a track, wow rude)
+	if (A && area_space_nopower(A)) return //lol @ dumping you at the mining magnet every fucking time. (or interrupting a track, wow rude)
 	if(istype(usr, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/anAI = usr
 		if(anAI.tracker.tracking)
@@ -290,7 +290,7 @@
 		//Target is not on station level
 		return (target.loc.z == 1) \
 				&& ((issilicon(target) && istype(target.loc, /turf) ) \
-				|| (iscritter(target) && istype(target.loc, /turf) ) \
+				|| (ismobcritter(target) && istype(target.loc, /turf) ) \
 				|| !((ishuman(target) \
 				&& istype(target:wear_id, /obj/item/card/id/syndicate)) \
 				|| (target:wear_id && istype(target:wear_id, /obj/item/device/pda2) && target:wear_id:ID_card && istype(target:wear_id:ID_card, /obj/item/card/id/syndicate)) \

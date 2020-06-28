@@ -33,7 +33,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		mantaBubbles.Add(src)
 		return ..()
 
-	Del()
+	disposing()
 		mantaBubbles.Remove(src)
 		return ..()
 
@@ -206,7 +206,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		on = 1
 		return .
 
-	Del()
+	disposing()
 		mantaPropellers.Remove(src)
 		return ..()
 
@@ -287,7 +287,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				if (istype(I, /obj/item/cable_coil))
 					actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 60), user)
 			if(5)
-				if (istype(I, /obj/item/weldingtool) && I:welding)
+				if (isweldingtool(I) && I:try_weld(user,0,-1,0,0))
 					actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 50), user)
 			if(6)
 				if (istool(I, TOOL_WRENCHING))
@@ -301,7 +301,7 @@ var/obj/manta_speed_lever/mantaLever = null
 					if (S.amount >= 5)
 						actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 50), user)
 			if(9)
-				if (istype(I, /obj/item/weldingtool) && I:welding)
+				if (isweldingtool(I) && I:try_weld(user,0,-1,0,0))
 					actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 50), user)
 
 
@@ -443,7 +443,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		. = ..()
 		update_icon()
 
-	Del()
+	disposing()
 		mantaJunctionbox.Remove(src)
 		return ..()
 
@@ -787,7 +787,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 	stamina_damage = 15
-	stamina_cost = 15
+	stamina_cost = 8
 	stamina_crit_chance = 10
 
 /obj/effect/boommarker
@@ -833,7 +833,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			qdel(src)
 		..()
 
-	Del()
+	disposing()
 		mantaPlants.Remove(src)
 		return ..()
 
@@ -936,7 +936,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		on = 1
 		return .
 
-	Del()
+	disposing()
 		mantaTiles.Remove(src)
 		return ..()
 
@@ -1315,7 +1315,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (random_events.announce_events)
 				command_alert("Communication link has been established with Oshan Laboratory through backkup channel. Communications should be restored to normal aboard NSS Manta.", "Communications Restored")
 			else
-				message_admins("<span class='notice'>Manta Comms event ceasing.</span>")
+				message_admins("<span class='internal'>Manta Comms event ceasing.</span>")
 
 
 /datum/random_event/major/electricmalfunction

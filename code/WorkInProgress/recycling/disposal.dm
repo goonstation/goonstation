@@ -196,6 +196,7 @@
 	desc = "An underfloor disposal pipe."
 	anchored = 1
 	density = 0
+	text = ""
 
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
@@ -341,7 +342,6 @@
 				SPAWN_DBG(1 DECI SECOND)
 					if(AM)
 						AM.throw_at(target, 5, 1)
-				LAGCHECK(LAG_REALTIME)
 
 			H.vent_gas(T)	// all gas vent to turf
 			pool(H)
@@ -439,16 +439,14 @@
 		if (T.intact)
 			return		// prevent interaction with T-scanner revealed pipes
 
-		if (istype(I, /obj/item/weldingtool))
-			var/obj/item/weldingtool/W = I
-
-			if (W.try_weld(user, 3, noisy = 2))
+		if (isweldingtool(I))
+			if (I:try_weld(user, 3, noisy = 2))
 				// check if anything changed over 2 seconds
 				var/turf/uloc = user.loc
-				var/atom/wloc = W.loc
+				var/atom/wloc = I.loc
 				boutput(user, "You begin slicing [src].")
 				sleep(0.1 SECONDS)
-				if (user.loc == uloc && wloc == W.loc)
+				if (user.loc == uloc && wloc == I.loc)
 					welded(user)
 				else
 					boutput(user, "You must stay still while welding the pipe.")
@@ -887,6 +885,9 @@
 
 			if(doSuperLoaf)
 				for (var/atom/movable/O2 in H)
+					if(ismob(O2))
+						var/mob/M = O2
+						M.ghostize()
 					qdel(O2)
 					H.contents -= O2
 					O2 = null
@@ -899,6 +900,8 @@
 				var/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/current_nugget
 				var/list/new_nuggets = list()
 				for (var/atom/movable/newIngredient in H)
+					if(istype(newIngredient, /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget))
+						continue
 					if (!current_nugget)
 						current_nugget = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget(src)
 						new_nuggets += current_nugget
@@ -939,9 +942,9 @@
 					newIngredient = null
 					LAGCHECK(LAG_MED)
 
-					for (var/obj/O in new_nuggets)
-						O.set_loc(H)
-						LAGCHECK(LAG_MED)
+				for (var/obj/O in new_nuggets)
+					O.set_loc(H)
+					LAGCHECK(LAG_MED)
 
 			else
 				var/obj/item/reagent_containers/food/snacks/prison_loaf/newLoaf = new /obj/item/reagent_containers/food/snacks/prison_loaf(src)
@@ -980,7 +983,7 @@
 							poorSoul:emote("scream")
 						sleep(0.5 SECONDS)
 						poorSoul.death()
-						if ((poorSoul.mind || poorSoul.client) && !istype(poorSoul, /mob/living/carbon/human/npc))
+						if (poorSoul.mind || poorSoul.client)
 							poorSoul.ghostize()
 					else if (isitem(newIngredient))
 						var/obj/item/I = newIngredient
@@ -1847,7 +1850,6 @@
 			AM.pipe_eject(dir)
 			SPAWN_DBG(1 DECI SECOND)
 				AM.throw_at(target, src.throw_range, 1)
-			LAGCHECK(LAG_REALTIME)
 		H.vent_gas(src.loc)
 		pool(H)
 
@@ -1928,7 +1930,6 @@
 			AM.pipe_eject(dir)
 			SPAWN_DBG(1 DECI SECOND)
 				AM.throw_at(target, 10, 10) //This is literally the only thing that was changed in this, otherwise it booted them way too close.
-			LAGCHECK(LAG_REALTIME)
 		H.vent_gas(src.loc)
 		pool(H)
 

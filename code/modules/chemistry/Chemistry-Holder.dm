@@ -419,7 +419,7 @@ datum
 						//end my copy+paste
 
 
-						if(amount >= B_required_volume) //This will mean you can have < 1 stuff not react. This is fine.
+						if(round(amount, CHEM_EPSILON) >= B_required_volume) //This will mean you can have < 1 stuff not react. This is fine.
 							total_matching_reagents++
 							created_volume = min(created_volume, amount * (C.result_amount ? C.result_amount : 1) / B_required_volume)
 						else
@@ -564,7 +564,9 @@ datum
 						del_reagent(current_id)
 					else
 						total_volume += current_reagent.volume
-
+			if(isitem(my_atom))
+				var/obj/item/I = my_atom
+				I.tooltip_rebuild = 1
 			return 0
 
 		proc/clear_reagents()
@@ -808,6 +810,16 @@ datum
 					dispersal = R.dispersal
 			return dispersal
 
+		proc/get_smoke_spread_mod()
+			if (!total_volume)
+				return 0
+			var/smoke_spread_mod = 9999
+			for (var/id in reagent_list)
+				var/datum/reagent/R = reagent_list[id]
+				if (R.smoke_spread_mod < smoke_spread_mod)
+					smoke_spread_mod = R.smoke_spread_mod
+			return smoke_spread_mod
+
 
 		// redirect my_atom.on_reagent_change() through this function
 		proc/reagents_changed(var/add = 0) // add will be 1 if reagents were just added
@@ -849,23 +861,7 @@ datum
 
 			// check to see if user wearing the spectoscopic glasses (or similar)
 			// if so give exact readout on what reagents are present
-			var/spectro = 0
-			if (ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if (istype(H.glasses, /obj/item/clothing/glasses/spectro))
-					spectro = 1
-				else if (H.eye_istype(/obj/item/organ/eye/cyber/spectro))
-					spectro = 1
-			else if (isrobot(user))
-				// check if they have an activated spectroscopic upgrade
-				var/mob/living/silicon/robot/R = user
-				for (var/obj/item/roboupgrade/U in R.upgrades)
-					if (istype(U, /obj/item/roboupgrade/spectro))
-						if (U.activated)
-							spectro = 1
-							break
-
-			if (spectro)
+			if (HAS_MOB_PROPERTY(user, PROP_SPECTRO))
 				if("cloak_juice" in reagent_list)
 					var/datum/reagent/cloaker = reagent_list["cloak_juice"]
 					if(cloaker.volume >= 5)
@@ -1050,11 +1046,8 @@ datum
 			if (classic)
 				classic_smoke_reaction(src, 4, location = my_atom ? get_turf(my_atom) : 0)
 			else
-#if ASS_JAM
-				smoke_reaction(src, 0, location = my_atom ? get_turf(my_atom) : 0)
-#else
-				smoke_reaction(src, 5, location = my_atom ? get_turf(my_atom) : 0)
-#endif
+				smoke_reaction(src, round(min(5, volume/10)), location = my_atom ? get_turf(my_atom) : 0)
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 

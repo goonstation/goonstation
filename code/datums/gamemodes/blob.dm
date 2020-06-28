@@ -17,8 +17,12 @@
 /datum/game_mode/blob/pre_setup()
 	..()
 	var/num_players = 0
-	for(var/mob/new_player/player in mobs)
-		if(player.client && player.ready) num_players++
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if(player.ready)
+			num_players++
 
 	var/i = rand(-5, 0)
 	var/num_blobs = max(2, min(round((num_players + i) / 20), blobs_possible))
@@ -138,17 +142,23 @@
 /datum/game_mode/blob/proc/get_possible_blobs(num_blobs=1)
 	var/list/candidates = list()
 
-	for(var/mob/new_player/player in mobs)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
 		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
+		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 			if(player.client.preferences.be_blob)
 				candidates += player.mind
 
 	if(candidates.len < num_blobs)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_blob set to yes were ready. We need [num_blobs], so including players who don't want to be blobstart in the pool.")
-		for(var/mob/new_player/player in mobs)
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player)) continue
+
 			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
+			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 
 	if(candidates.len < 1)

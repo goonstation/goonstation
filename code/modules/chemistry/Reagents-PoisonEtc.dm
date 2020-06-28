@@ -196,7 +196,7 @@ datum
 
 				..()
 
-			on_mob_life_complete(var/mob/living/carbon/human/M)
+			on_mob_life_complete(var/mob/living/M)
 				if(M)
 					M.take_toxin_damage(damage_counter + (rand(2,3)))
 
@@ -1168,6 +1168,7 @@ datum
 			fluid_b = 110
 			depletion_rate = 1
 			var/counter = 1
+			var/fainted = 0
 			blob_damage = 1
 			value = 4 // 3c + heat
 
@@ -1190,8 +1191,9 @@ datum
 						M.make_dizzy(1 * mult)
 						M.change_misstep_chance(20 * mult)
 						if (prob(35)) M.emote("drool")
-					if (18)
-						M.emote("faint")
+					if (18 to INFINITY)
+						if (!fainted)
+							M.emote("faint")
 					if (19 to INFINITY)
 						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 100 * mult))
 						M.drowsyness  = max(M.drowsyness, 20)

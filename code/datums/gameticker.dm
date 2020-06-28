@@ -61,8 +61,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #endif
 #endif
 
-	pregame_timeleft = 150 // raised from 120 to 180 to accomodate the v500 ads, then raised back down to 150 after Z5 was introduced.
-	boutput(world, "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>")
+	pregame_timeleft = PREGAME_LOBBY_TICKS
+	boutput(world, "<B><FONT style='notice'>Welcome to the pre-game lobby!</FONT></B>")
 	boutput(world, "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds")
 	#if ASS_JAM
 	vote_manager.active_vote = new/datum/vote_new/mode("assday")
@@ -81,6 +81,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		C.ready = 1
 	pregame_timeleft = 0
 	#endif
+
+	handle_mapvote()
 
 	while(current_state <= GAME_STATE_PREGAME)
 		sleep(1 SECOND)
@@ -141,11 +143,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #ifdef RP_MODE
 	looc_allowed = 1
 	boutput(world, "<B>LOOC has been automatically enabled.</B>")
+	ooc_allowed = 0
+	boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #else
 	if (it_is_ass_day || istype(src.mode, /datum/game_mode/construction))
 		looc_allowed = 1
 		boutput(world, "<B>LOOC has been automatically enabled.</B>")
-
 	else
 		ooc_allowed = 0
 		boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
@@ -153,8 +156,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	Z_LOG_DEBUG("Game Start", "Animating client colors to black now")
 	var/list/animateclients = list()
-	for (var/mob/new_player/P in mobs)
-		if (P.ready && P.client)
+	for (var/client/C)
+		if (!istype(C.mob,/mob/new_player))
+			continue
+		var/mob/new_player/P = C.mob
+		if (P.ready)
 			Z_LOG_DEBUG("Game Start/Ani", "Animating [P.client]")
 			animateclients += P.client
 			animate(P.client, color = "#000000", time = 5, easing = QUAD_EASING | EASE_IN)
@@ -185,9 +191,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	for (var/client/C in animateclients)
 		if (C)
 			Z_LOG_DEBUG("Game Start/A", "Animating client [C]")
+			var/target_color = "#FFFFFF"
+			if(C.color != "#000000")
+				target_color = C.color
 			animate(C, color = "#000000", time = 0, flags = ANIMATION_END_NOW)
 			animate(color = "#000000", time = 10, easing = QUAD_EASING | EASE_IN)
-			animate(color = "#FFFFFF", time = 10, easing = QUAD_EASING | EASE_IN)
+			animate(color = target_color, time = 10, easing = QUAD_EASING | EASE_IN)
 
 
 	current_state = GAME_STATE_PLAYING
@@ -197,25 +206,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		ircbot.event("roundstart")
 		mode.post_setup()
 
-		//Cleanup some stuff
-		for(var/obj/landmark/start/S in landmarks)//world)
-			//Deleting Startpoints but we need the ai point to AI-ize people later
-			if (S.name != "AI")
-				S.dispose()
+		cleanup_landmarks()
 
 		event_wormhole_buildturflist()
 
 		mode.post_post_setup()
-
-		if (istype(random_events,/datum/event_controller/))
-			SPAWN_DBG(random_events.minor_events_begin)
-				message_admins("<span class='notice'>Minor Event cycle has been started.</span>")
-				random_events.minor_event_cycle()
-			SPAWN_DBG(random_events.events_begin)
-				message_admins("<span class='notice'>Random Event cycle has been started.</span>")
-				random_events.event_cycle()
-			random_events.next_event = random_events.events_begin
-			random_events.next_minor_event = random_events.minor_events_begin
 
 		for(var/obj/landmark/artifact/A in landmarks)
 			LAGCHECK(LAG_LOW)
@@ -242,7 +237,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		shippingmarket.get_market_timeleft()
 
 		logTheThing("ooc", null, null, "<b>Current round begins</b>")
-		boutput(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
+		boutput(world, "<FONT class='notice'><B>Enjoy the game!</B></FONT>")
 		boutput(world, "<span class='notice'><b>Tip:</b> [pick(tips)]</span>")
 
 		//Setup the hub site logging
@@ -256,6 +251,21 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
 
+	SPAWN_DBG (6000) // 10 minutes in
+		for(var/obj/machinery/power/generatorTemp/E in machine_registry[MACHINES_POWER])
+			LAGCHECK(LAG_LOW)
+			if (E.lastgen <= 0)
+				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning")
+			break
+
+	processScheduler.start()
+
+	if (total_clients() >= OVERLOAD_PLAYERCOUNT)
+		world.tick_lag = OVERLOADED_WORLD_TICKLAG
+
+//Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min).
+//The voting will happen 30 seconds into the pre-game lobby. This is probably fine to leave. But if someone changes that var then it might start before the lobby timer ends.
+/datum/controller/gameticker/proc/handle_mapvote()
 	var/bustedMapSwitcher = isMapSwitcherBusted()
 	if (!bustedMapSwitcher)
 		SPAWN_DBG (mapSwitcher.autoVoteDelay)
@@ -266,19 +276,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				logTheThing("admin", usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]")
 				logTheThing("diary", usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]", "admin")
 				message_admins("[key_name(usr ? usr : src)] the automated map switch vote couldn't run because: [e.name]")
-
-	SPAWN_DBG (6000) // 10 minutes in
-		for(var/obj/machinery/power/generatorTemp/E in machine_registry[MACHINES_POWER])
-			LAGCHECK(LAG_LOW)
-			if (E.lastgen <= 0)
-				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning")
-			break
-
-	processScheduler.start()
-
-	if (clients.len >= OVERLOAD_PLAYERCOUNT)
-		world.tick_lag = OVERLOADED_WORLD_TICKLAG
-
 
 /datum/controller/gameticker
 	proc/distribute_jobs()
@@ -317,6 +314,14 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 						B.set_loc(pick(observer_start))
 						logTheThing("debug", B, null, "<b>Late join</b>: assigned antagonist role: blob.")
 						antagWeighter.record(role = "blob", ckey = B.ckey)
+
+				else if (player.mind && player.mind.special_role == "flockmind")
+					player.close_spawn_windows()
+					var/mob/living/intangible/flock/flockmind/F = player.make_flockmind()
+					if (F)
+						F.set_loc(pick(observer_start))
+						logTheThing("debug", F, null, "<b>Late join</b>: assigned antagonist role: flockmind.")
+						antagWeighter.record(role = "flockmind", ckey = F.ckey)
 
 				else if (player.mind)
 					if (player.client.using_antag_token)
@@ -431,7 +436,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] one minute delay, game should restart now")
 
 				if (game_end_delayed == 1)
-					message_admins("<font color='blue'>Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]. Remove the delay for an immediate restart.</font>")
+					message_admins("<span class='internal>Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]. Remove the delay for an immediate restart.</span>")
 					game_end_delayed = 2
 					var/ircmsg[] = new()
 					ircmsg["msg"] = "Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]."
@@ -464,12 +469,23 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] round_end_data")
 	round_end_data(1) //Export round end packet (normal completion)
 
+	var/pets_rescued = 0
+	for(var/pet in pets)
+		if(iscritter(pet))
+			var/obj/critter/P = pet
+			if(P.alive && in_centcom(P)) pets_rescued++
+		else if(ismobcritter(pet))
+			var/mob/living/critter/P = pet
+			if(isalive(P) && in_centcom(P)) pets_rescued++
+
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] Processing end-of-round generic medals")
 	for(var/mob/living/player in mobs)
 		if (player.client)
 			if (!isdead(player))
 				if (in_centcom(player))
 					player.unlock_medal("100M dash", 1)
+					if (pets_rescued >= 6)
+						player.unlock_medal("Noah's Shuttle", 1)
 				player.unlock_medal("Survivor", 1)
 
 				if (player.check_contents_for(/obj/item/gnomechompski))
@@ -532,7 +548,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		final_score = 100
 
 	boutput(world, score_tracker.escapee_facts())
-
+	boutput(world, score_tracker.heisenhat_stats())
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] ai law display")
 	for (var/mob/living/silicon/ai/aiPlayer in AIs)
@@ -656,6 +672,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				player_dead = 0
 			//some might not actually have a wage
 			if (isnukeop(player) ||  (isblob(player) && (player.mind && player.mind.special_role == "blob")) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == "wizard")) )
+				bank_earnings.wage_base = 0 //only effects the end of round display
 				earnings = 800
 
 			if (player.mind.completed_objs > 0)
@@ -667,6 +684,24 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 			if (it_is_ass_day)
 				earnings *= 2
+
+			//pilot's bonus check and reward
+			var/pilot_bonus = 500 //for receipt
+			if(!isdead(player) && in_centcom(player))
+				if (player.buckled)
+					if (istype(player.buckled,/obj/stool/chair/comfy/shuttle/pilot))
+						bank_earnings.pilot = 1
+						earnings += pilot_bonus
+				else if (isAI(player))
+					var/mob/living/silicon/ai/M = null
+					if (isAIeye(player))
+						M = player:mainframe
+					else
+						M = player
+					var/obj/stool/chair/comfy/shuttle/pilot/O = locate() in M.loc
+					if (O && !O.buckled_guy) //no double piloting
+						bank_earnings.pilot = 1
+						earnings += pilot_bonus
 
 			//add_to_bank and show earnings receipt
 			earnings = round(earnings)
@@ -681,6 +716,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					if (player_dead)
 						player.client.set_last_purchase(0)
 
+					bank_earnings.pilot_bonus = pilot_bonus
 					bank_earnings.final_payout = earnings
 					bank_earnings.held_item = player.client.persistent_bank_item
 					bank_earnings.new_balance = player.client.persistent_bank
@@ -780,3 +816,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			return
 //Anything else, like sandbox, return.
 */
+
+/datum/controller/gameticker/proc/cleanup_landmarks()
+	for(var/obj/landmark/start/S in landmarks)
+		//Deleting Startpoints but we need the ai point to AI-ize people later
+		if (S.name != "AI")
+			S.dispose()

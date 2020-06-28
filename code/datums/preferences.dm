@@ -31,6 +31,7 @@ datum/preferences
 	var/be_gangleader = 0
 	var/be_wraith = 0
 	var/be_blob = 0
+	var/be_flock = 0
 	var/be_misc = 0
 
 	var/be_random_name = 0
@@ -45,9 +46,9 @@ datum/preferences
 	var/listen_ooc = 1
 	var/listen_looc = 1
 	var/flying_chat_hidden = 0
+	var/auto_capitalization = 0
 	var/use_wasd = 1
 	var/use_azerty = 0 // do they have an AZERTY keyboard?
-	//var/use_tg = 0 //Are they animals and want to use TG's keybinds? // mbc moved to dropdowns
 	var/spessman_direction = SOUTH
 
 	var/job_favorite = null
@@ -208,6 +209,12 @@ datum/preferences
 		underwear_s = null
 		eyes_s = null
 
+	var/list/profile_cache
+	var/rebuild_profile
+
+	var/list/rebuild_data
+	var/list/data_cache
+
 	proc/ShowChoices(mob/user)
 		LAGCHECK(LAG_HIGH)
 
@@ -217,54 +224,31 @@ datum/preferences
 		if (!AH)
 			boutput(usr, "Your settings are missing an AppearanceHolder. This is a good time to tell a coder.")
 
+		if (!data_cache)
+			data_cache = list("script" = null,"css" = null,"profile_name" = null,"character_name" = null,"gender" = null,"age_blood" = null,\
+								"bank" = null,"flavortext" = null,"security_note" = null,"medical_note" = null,"occupation" = null,"traits" = null,\
+								"fartsound" = null,"screamsound" = null,"chatsound" = null,"skintone" = null,"eyecolor" = null,"hair_top" = null,"hair_mid" = null,"hair_bottom" = null,\
+								"underwear" = null,"randomize" = null,"font_size" = null,"messages" = null,"hud" = null,"tooltips" = null,"popups" = null,"controls" = null,"map"=null)
+			rebuild_data = list("script" = 1,"css" = 1,"profile_name" = 1,"character_name" = 1,"gender" = 1,"age_blood" = 1,\
+								"bank" = 1,"flavortext" = 1,"security_note" = 1,"medical_note" = 1,"occupation" = 1,"traits" = 1,\
+								"fartsound" = 1,"screamsound" = 1,"chatsound" = 1,"skintone" = 1,"eyecolor" = 1,"hair_top" = 1,"hair_mid" = 1,"hair_bottom" = 1,\
+								"underwear" = 1,"randomize" = 1,"font_size" = 1,"messages" = 1,"hud" = 1,"tooltips" = 1,"popups" = 1,"controls" = 1,"map"=1)
+		if (!profile_cache)
+			profile_cache = list()
+			rebuild_profile = 1
+
 		sanitize_null_values()
 		update_preview_icon()
+		LAGCHECK(LAG_HIGH)
 		user << browse_rsc(preview_icon, "previewicon.png")
 		user << browse_rsc(icon(cursors_selection[target_cursor]), "tcursor.png")
 		user << browse_rsc(icon(hud_style_selection[hud_style], "preview"), "hud_preview.png")
-
+		LAGCHECK(LAG_HIGH)
 		var/display_gender = (src.gender == MALE ? "Male" : "Female") + " " + (!AH.pronouns ? (src.gender == MALE ? "(he/him)" : "(she/her)") : "(they/them)")
 
 		var/favoriteJob = src.job_favorite ? find_job_in_controller_by_string(src.job_favorite) : ""
 		//mbc is sorry
 		var/chui_toggle_script_jqery_thing = (user && user.client && !user.client.use_chui) ? "<script type='text/javascript' src='[resource("js/jquery.min.js")]'></script>" : ""
-		var/script = {"
-				[chui_toggle_script_jqery_thing]
-				<script type='text/javascript'>
-				$(function() {
-					function SwitchPic(picID) {
-						var pic = document.getElementById(picID);
-						var d = new Date();
-						var image='previewicon.png?'+d.getMilliseconds();
-						setTimeout(function(){
-							pic.src = image;
-
-							}, 500)
-					}
-					//stole this debounce function from Kfir Zuberi at https://medium.com/walkme-engineering/debounce-and-throttle-in-real-life-scenarios-1cc7e2e38c68
-					function debounce (func, interval) {
-						var timeout;
-						return function () {
-							var context = this, args = arguments;
-							var later = function () {
-								timeout = null;
-								func.apply(context, args);
-							};
-							clearTimeout(timeout);
-							timeout = setTimeout(later, interval || 200);
-						}
-					}
-					 var update_image = debounce(function(){
-							var id = $(this).attr('id')
-						var r = $("#" + id + " option:selected" ).text();
-						window.location='byond://?src=\ref[src];preferences=1;id='+id+';style='+encodeURIComponent(r);
-						SwitchPic("sprite_preview");
-					}, 250);
-					$(function() {
-						$('select').change(update_image)
-					})
-				});
-				</script>"}
 
 		LAGCHECK(LAG_HIGH)
 		//mbc is sorry
@@ -272,34 +256,81 @@ datum/preferences
 		//var/pref_link = "byond://?src=\ref[src];preferences=1;"
 		var/pref_link = "byond://?src=\ref[src];preferences=1;"
 
-		var/profile_menu[]
+		//var/profile_menu[]
 
 		if (user && !IsGuestKey(user.key)) //ZeWaka: Fix for null.key
-			profile_menu += "<div id='cloudsaves'><strong>Cloud Saves</strong><hr>"
-			var/client/wtf = ismob( user ) ? user.client : user
-			for( var/name in wtf.cloudsaves )
-				profile_menu += "<a href='[pref_link]cloudload=[url_encode(name)]'>[html_encode(name)]</a> (<a href='[pref_link]cloudsave=[url_encode(name)]'>Save</a> - <a href='[pref_link]clouddelete=[url_encode(name)]'>Delete</a>)<br>"
-				LAGCHECK(LAG_REALTIME)
-			profile_menu += "<a href='[pref_link]cloudnew=1'>Create new save</a></div>"
+			if (rebuild_profile)
+				rebuild_profile = 0
+				profile_cache.len = 0
+				profile_cache += "<div id='cloudsaves'><strong>Cloud Saves</strong><hr>"
+				var/client/wtf = ismob( user ) ? user.client : user
+				for( var/name in wtf.cloudsaves )
+					profile_cache += "<a href='[pref_link]cloudload=[url_encode(name)]'>[html_encode(name)]</a> (<a href='[pref_link]cloudsave=[url_encode(name)]'>Save</a> - <a href='[pref_link]clouddelete=[url_encode(name)]'>Delete</a>)<br>"
+					LAGCHECK(LAG_REALTIME)
+				profile_cache += "<a href='[pref_link]cloudnew=1'>Create new save</a></div>"
 
-			profile_menu += {"
-<div id="profiles">
-"}
-			for (var/i = 1, i <= SAVEFILE_PROFILES_MAX, i++)
-				profile_menu += {"
-	<div[i == src.profile_number ? " id='profiles-active'" : ""]><a href='[pref_link]load=[i]'>Profile [i]</a>
-	<br><strong>[savefile_get_profile_name(user, i) || "<em>(empty)</em>"]</strong>
-	<br><a href='[pref_link]save=[i]'>Save</a> &middot; <a href='[pref_link]load=[i]'>Load</a></div>
-				"}
+				profile_cache += {"
+	<div id="profiles">
+	"}
+				for (var/i = 1, i <= SAVEFILE_PROFILES_MAX, i++)
+					profile_cache += {"
+		<div[i == src.profile_number ? " id='profiles-active'" : ""]><a href='[pref_link]load=[i]'>Profile [i]</a>
+		<br><strong>[savefile_get_profile_name(user, i) || "<em>(empty)</em>"]</strong>
+		<br><a href='[pref_link]save=[i]'>Save</a> &middot; <a href='[pref_link]load=[i]'>Load</a></div>
+					"}
+					LAGCHECK(LAG_REALTIME)
 
-			profile_menu += "</div>"
+				profile_cache += "</div>"
 
 		var/unsaved_changes_warning = ""
 		if (src.profile_modified)
 			unsaved_changes_warning = {"<div id="unsaved-warning"><strong>You may have unsaved changes.</strong><br>Any unsaved changes will take effect for this round only.</div> "}
+		//var/list/dat = list()
+		LAGCHECK(LAG_MED)
 
-		var/dat = {"
-[script]
+		data_cache["script"] = {"
+[chui_toggle_script_jqery_thing]
+<script type='text/javascript'>
+$(function() {
+	function SwitchPic(picID) {
+		var pic = document.getElementById(picID);
+		var d = new Date();
+		var image='previewicon.png?'+d.getMilliseconds();
+		setTimeout(function(){
+			pic.src = image;
+
+			}, 500)
+	}
+	//stole this debounce function from Kfir Zuberi at https://medium.com/walkme-engineering/debounce-and-throttle-in-real-life-scenarios-1cc7e2e38c68
+	function debounce (func, interval) {
+		var timeout;
+		return function () {
+			var context = this, args = arguments;
+			var later = function () {
+				timeout = null;
+				func.apply(context, args);
+			};
+			clearTimeout(timeout);
+			timeout = setTimeout(later, interval || 200);
+		}
+	}
+	 var update_image = debounce(function(){
+			var id = $(this).attr('id')
+		var r = $("#" + id + " option:selected" ).text();
+		window.location='byond://?src=\ref[src];preferences=1;id='+id+';style='+encodeURIComponent(r);
+		SwitchPic("sprite_preview");
+	}, 250);
+	$(function() {
+		$('select').change(update_image)
+	})
+});
+</script>"}
+
+		LAGCHECK(LAG_HIGH)
+
+		if (rebuild_data["css"])
+			rebuild_data["css"] = 0
+			data_cache["css"] = {"
 <style type="text/css">
 	a:link {
 		text-decoration: none;
@@ -399,9 +430,13 @@ datum/preferences
 		top: -1px;
 		cursor: help;
 		}
-</style>
+</style>"}
+		LAGCHECK(80)
+		if (rebuild_data["profile_name"])
+			rebuild_data["profile_name"] = 0
+			data_cache["profile_name"] = {"
 <title>Character Setup</title>
-[jointext(profile_menu, "")]
+[jointext(profile_cache, "")]
 <div style="clear: both; margin: 0.5em;"></div>
 [unsaved_changes_warning]
 <table id="prefs">
@@ -413,7 +448,11 @@ datum/preferences
 		<td colspan="2">
 			<a href="[pref_link]profile_name=input">[src.profile_name ? src.profile_name : "Unnamed"]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["character_name"])
+			rebuild_data["character_name"] = 0
+			data_cache["character_name"] = {"
 	<tr>
 		<th>Name<span class="info-thing" title="Your character's name.">?</span></th>
 		<td colspan="2">
@@ -422,7 +461,11 @@ datum/preferences
 			<a href="[pref_link]last_name=input">[length(src.name_last) ? src.name_last : "_"]</a>
 			<br><a href="[pref_link]b_random_name=1" class="toggle">[crap_checkbox(src.be_random_name)] Use a random name instead</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["gender"])
+			rebuild_data["gender"] = 0
+			data_cache["gender"] = {"
 	<tr>
 		<th>
 			Gender<span class="info-thing" title="Your character's gender and pronouns.">?</span>
@@ -430,7 +473,11 @@ datum/preferences
 		<td colspan="2">
 			<a href="[pref_link]gender=input">[display_gender]</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["age_blood"])
+			rebuild_data["age_blood"] = 0
+			data_cache["age_blood"] = {"
 	<tr>
 		<th>
 			Age<span class="info-thing" title="Your character's age. Determines the pitch of your screams and farts (lower is deeper) but otherwise has no effect.">?</span>
@@ -444,7 +491,11 @@ datum/preferences
 		<td colspan="2">
 			<a href='[pref_link]blType=input'>[src.random_blood ? "Random" : src.blType]</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["bank"])
+			rebuild_data["bank"] = 0
+			data_cache["bank"] = {"
 	<tr>
 		<th>
 			Bank PIN<span class="info-thing" title="The PIN you use when using your ID card at an ATM or vending machine. You can check what your PIN is at any time by using the 'Notes' command, under the Commands tab in the top right.">?</span>
@@ -452,7 +503,11 @@ datum/preferences
 		<td colspan="2">
 			<a href="[pref_link]pin=random" class="toggle">[crap_checkbox(!(src.pin))] Random</a> &middot; <a href='[pref_link]pin=input' class="toggle">[src.pin ? (crap_checkbox(1) + " Set: [src.pin]") : (crap_checkbox(0) + " Set")]</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["flavortext"])
+			rebuild_data["flavortext"] = 0
+			data_cache["flavortext"] = {"
 	<tr>
 		<th>
 			Flavor Text<span class="info-thing" title="This text is shown when examining your character.">?</span>
@@ -461,7 +516,11 @@ datum/preferences
 			<a href='[pref_link]flavor_text=input' style="float: left; margin: 0.2em;">&#9998;</a>
 			[length(src.flavor_text) ? src.flavor_text : "<em>None</em>"]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["security_note"])
+			rebuild_data["security_note"] = 0
+			data_cache["security_note"] = {"
 	<tr>
 		<th>
 			Security Note<span class="info-thing" title="This text is added to your Security Record. It has no other effects.">?</span>
@@ -470,7 +529,11 @@ datum/preferences
 			<a href='[pref_link]security_flavor_text=input' style="float: left; margin: 0.2em;">&#9998;</a>
 			[length(src.security_note) ? src.security_note : "<em>None</em>"]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["medical_note"])
+			rebuild_data["medical_note"] = 0
+			data_cache["medical_note"] = {"
 	<tr>
 		<th>
 			Medical Note<span class="info-thing" title="This text is added to your Medical Record. It has no other effects.">?</span>
@@ -479,7 +542,11 @@ datum/preferences
 			<a href='[pref_link]medical_flavor_text=input' style="float: left; margin: 0.2em;">&#9998;</a>
 			[length(src.medical_note) ? src.medical_note : "<em>None</em>"]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["occupation"])
+			rebuild_data["occupation"] = 1 //always rebuild egh
+			data_cache["occupation"] = {"
 	<tr>
 		<th>
 			Occupation<span class="info-thing" title="These are your occupation / job preferences. This only affects your job if you join when a round starts.">?</span>
@@ -487,7 +554,11 @@ datum/preferences
 		<td colspan="2">
 			<a href="[pref_link]jobswindow=1">Change occupation preferences...</a><br><em>Favorite job: [favoriteJob ? "<strong>[favoriteJob]</strong>" : "(unset)"]</em>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["traits"])
+			rebuild_data["traits"] = 1 //always rebuild egh
+			data_cache["traits"] = {"
 	<tr>
 		<th>
 			Traits<span class="info-thing" title="Traits are quirks and oddities you can give your character. They can affect things from giving your character accents or robot arms.">?</span>
@@ -495,7 +566,11 @@ datum/preferences
 		<td colspan="2">
 			<a href="[pref_link]traitswindow=1">Choose traits...</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["fartsound"])
+			rebuild_data["fartsound"] = 0
+			data_cache["fartsound"] = {"
 	<tr>
 		<th>
 			Fart Sound<span class="info-thing" title="This is the sound your character makes when they fart. You will hear it a lot, so pick a good one.">?</span>
@@ -503,7 +578,11 @@ datum/preferences
 		<td colspan="2">
 			<a href='[pref_link]fartsound=input'>[AH.fartsound]</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["screamsound"])
+			rebuild_data["screamsound"] = 0
+			data_cache["screamsound"] = {"
 	<tr>
 		<th>
 			Scream Sound<span class="info-thing" title="This is the sound your character makes when they scream.">?</span>
@@ -511,7 +590,11 @@ datum/preferences
 		<td colspan="2">
 			<a href='[pref_link]screamsound=input'>[AH.screamsound]</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["chatsound"])
+			rebuild_data["chatsound"] = 0
+			data_cache["chatsound"] = {"
 	<tr>
 		<th>
 			Chat Sound<span class="info-thing" title="This sound will play when your character says something. It's very quiet, though.">?</span>
@@ -519,8 +602,11 @@ datum/preferences
 		<td colspan="2">
 			<a href='[pref_link]voicetype=input'>[AH.voicetype]</a>
 		</td>
-	</tr>
-
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["skintone"])
+			rebuild_data["skintone"] = 0
+			data_cache["skintone"] = {"
 	<tr>
 		<th colspan="3">
 			Character Appearance
@@ -540,7 +626,11 @@ datum/preferences
 			<a href="[pref_link]rotate_counter_clockwise=1">&#x27f2;</a>
 			<a href="[pref_link]rotate_clockwise=1">&#x27f3;</a>
 		</th>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["eyecolor"])
+			rebuild_data["eyecolor"] = 0
+			data_cache["eyecolor"] = {"
 	<tr>
 		<th>
 			Eye Color<span class="info-thing" title="Your character's eye color. You can use one of the detail slots for heterochromia.">?</span>
@@ -549,7 +639,11 @@ datum/preferences
 			<a href='[pref_link]eyes=input'>&#9998;</a>
 			<span class='colorbit' style="background-color: [AH.e_color];">[AH.e_color]</span>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["hair_top"])
+			rebuild_data["hair_top"] = 0
+			data_cache["hair_top"] = {"
 	<tr>
 		<th>
 			Top Detail<span class="info-thing" title="Hair or other features. This one is appied above the other ones.">?</span>
@@ -559,7 +653,11 @@ datum/preferences
 			<span class='colorbit' style="background-color: [AH.customization_third_color];">[AH.customization_third_color]</span>
 			[generate_select_table("custom_third", AH.customization_third, customization_styles)]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["hair_mid"])
+			rebuild_data["hair_mid"] = 0
+			data_cache["hair_mid"] = {"
 	<tr>
 		<th>
 			Mid Detail<span class="info-thing" title="Hair or other features. This one is placed between the top and bottom detail.">?</span>
@@ -569,7 +667,11 @@ datum/preferences
 			<span class='colorbit' style="background-color: [AH.customization_second_color];">[AH.customization_second_color]</span>
 			[generate_select_table("custom_second", AH.customization_second, customization_styles)]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["hair_bottom"])
+			rebuild_data["hair_bottom"] = 0
+			data_cache["hair_bottom"] = {"
 	<tr>
 		<th>
 			Bottom Detail<span class="info-thing" title="Hair or other features. This one is placed at under the others, making it the best choice for things like beards.">?</span>
@@ -579,7 +681,11 @@ datum/preferences
 			<span class='colorbit' style="background-color: [AH.customization_first_color];">[AH.customization_first_color]</span>
 			[generate_select_table("custom_first", AH.customization_first, customization_styles)]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["underwear"])
+			rebuild_data["underwear"] = 0
+			data_cache["underwear"] = {"
 	<tr>
 		<th>
 			Underwear<span class="info-thing" title="These are the clothes that your character will wear under their jumpsuit/uniform, and when freshly cloned.">?</span>
@@ -589,7 +695,11 @@ datum/preferences
 			<span class='colorbit' style="background-color: [AH.u_color];">[AH.u_color]</span>
 			[generate_select_table("underwear", AH.underwear, underwear_styles)]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["randomize"])
+			rebuild_data["randomize"] = 0
+			data_cache["randomize"] = {"
 	<tr>
 		<th>
 			Randomization<span class="info-thing" title="You can let the game randomly make an appearance for you here. Note that the randomizer has even less of a sense of style than you do, so it might look weird.">?</span>
@@ -597,7 +707,11 @@ datum/preferences
 		<td colspan="2">
 			<a href="[pref_link]b_random_look=1" class="toggle">[crap_checkbox(src.be_random_look)] Always use a randomized appearance</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["font_size"])
+			rebuild_data["font_size"] = 0
+			data_cache["font_size"] = {"
 
 
 	<tr>
@@ -607,12 +721,16 @@ datum/preferences
 	</tr>
 	<tr>
 		<th>
-			Popup Font Size<span class="info-thing" title="Changes the font size used in popup windows. Only works when CHUI is disabled at the moment. CHUI support coming soon&trade;.">?</span>
+			Popup Font Size<span class="info-thing" title="Changes the font size used in popup windows. Only works when CHUI is disabled at the moment. CHUI support coming soon™.">?</span>
 		</th>
 		<td colspan="2">
 			<a href="[pref_link]font_size=input">[src.font_size ? "[src.font_size]%" : "Default"]
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["messages"])
+			rebuild_data["messages"] = 0
+			data_cache["messages"] = {"
 	<tr>
 		<th>
 			Messages<span class="info-thing" title="Toggles if certain messages are shown in the chat window by default. You can change these mid-round by using the Toggle OOC/LOOC commands under the Commands tab in the top right.">?</span>
@@ -621,9 +739,14 @@ datum/preferences
 			[((user && ismob(user)) && user.client && user.client.is_mentor()) ? "<a href=\"[pref_link]toggle_mentorhelp=1\" class=\"toggle\">[crap_checkbox(src.see_mentor_pms)] Display Mentorhelps</a><span class=\"info-thing\" title=\"[pick("how to forgot swedish?", "how i collect urine", "why do i exploded", "I'm just punching myself with food.", "no im a wizard and i ate a bean and it said 'Oh yeah! This tastes like Pina colada' and I was erased.")]\">?</span><br>" : ""]
 			<a href="[pref_link]listen_ooc=1" class="toggle">[crap_checkbox(src.listen_ooc)] Display <abbr title="Out-of-Character">OOC</abbr> chat</a><span class="info-thing" title="Out-of-Character chat. This mostly just shows up on the RP server and at the end of rounds.">?</span><br>
 			<a href="[pref_link]listen_looc=1" class="toggle">[crap_checkbox(src.listen_looc)] Display <abbr title="Local Out-of-Character">LOOC</abbr> chat</a><span class="info-thing" title="Local Out-of-Character is OOC chat, but only appears for nearby players. This is basically only used on the RP server.">?</span><br>
-			<a href="[pref_link]flying_chat_hidden=1" class="toggle">[crap_checkbox(!src.flying_chat_hidden)] See chat above people's heads </a><span class="info-thing" title="Chat messages will appear over characters as they're talking.">?</span>
+			<a href="[pref_link]flying_chat_hidden=1" class="toggle">[crap_checkbox(!src.flying_chat_hidden)] See chat above people's heads</a><span class="info-thing" title="Chat messages will appear over characters as they're talking.">?</span><br>
+			<a href="[pref_link]auto_capitalization=1" class="toggle">[crap_checkbox(src.auto_capitalization)] Auto-capitalize your messages</a><span class="info-thing" title="Chat messages you send will be automatically capitalized.">?</span>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["hud"])
+			rebuild_data["hud"] = 0
+			data_cache["hud"] = {"
 	<tr>
 		<th>
 			HUD/UI<span class="info-thing" title="These affect the HUD that shows up in-game, as well as the cursor used when you have to target something.">?</span>
@@ -640,7 +763,11 @@ datum/preferences
 				<br><a href="[pref_link]tcursor=1">Change</a>
 			</div>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["tooltips"])
+			rebuild_data["tooltips"] = 0
+			data_cache["tooltips"] = {"
 	<tr>
 		<th>
 			Tooltips<span class="info-thing" title="Tooltips can appear when hovering over items. These tooltips can provide bits of information about the item, such as attack strength, special moves, etc...">?</span>
@@ -650,7 +777,11 @@ datum/preferences
 			<br><a href="[pref_link]tooltip=2" class="toggle">[crap_checkbox(src.tooltip_option == TOOLTIP_ALT)] Show When ALT is held</a>
 			<br><a href="[pref_link]tooltip=3" class="toggle">[crap_checkbox(src.tooltip_option == TOOLTIP_NEVER)] Never Show</a>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["popups"])
+			rebuild_data["popups"] = 0
+			data_cache["popups"] = {"
 	<tr>
 		<th>
 			Popups<span class="info-thing" title="These options toggle the popups that appear when logging in and at the end of a round.">?</span>
@@ -660,7 +791,11 @@ datum/preferences
 			<br><a href="[pref_link]scores=1" class="toggle">[crap_checkbox(src.view_score)] Auto-open end-of-round score</a><span class="info-thing" title="The end-of-round scoring shows various stats on how the round went. If this option is off, you won't be able to see it.">?</span>
 			<br><a href="[pref_link]tickets=1" class="toggle">[crap_checkbox(src.view_tickets)] Auto-open end-of-round ticket summary</a><span class="info-thing" title="The end-of-round ticketing summary shows the various tickets and fines that were handed out. If this option is off, you can still see them on Goonhub (goonhub.com).">?</span>
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["controls"])
+			rebuild_data["controls"] = 0
+			data_cache["controls"] = {"
 	<tr>
 		<th>
 			Controls<span class="info-thing" title="Various options for how you control your character and the game.">?</span>
@@ -671,7 +806,11 @@ datum/preferences
 			<br><a href="[pref_link]use_azerty=1" class="toggle">[crap_checkbox(src.use_azerty)] Use AZERTY Keyboard Layout</a><span class="info-thing" title="If you have an AZERTY keyboard, enable this. Yep. This sure is a tooltip.">?</span>
 			<br>Familiar with /tg/station controls? You can enable/disable them under the Game/Interface menu in the top left.
 		</td>
-	</tr>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["map"])
+			rebuild_data["map"] = 0
+			data_cache["map"] = {"
 	<tr>
 		<th>
 			Preferred Map<span class="info-thing" title="During a map vote, you will automatically vote for this map if you don't otherwise vote. Note that automatic votes are given much less weight!">?</span>
@@ -689,9 +828,13 @@ datum/preferences
 
 		LAGCHECK(LAG_MED)
 		traitPreferences.updateTraits(user)
-		LAGCHECK(LAG_REALTIME)
+		LAGCHECK(LAG_MED)
 
-		user.Browse(dat,"window=preferences;size=666x750;title=Character Setup")
+		var/list/dat = list()
+		for (var/x in data_cache)
+			dat += data_cache[x]
+
+		user.Browse(dat.Join(),"window=preferences;size=666x750;title=Character Setup")
 
 
 	//id, The name of the Select table ID to be used.
@@ -706,6 +849,7 @@ datum/preferences
 				select += "<option value='[style_list[i]]' selected='selected'>[i]</option>"
 			else
 				select += "<option value='[style_list[i]]'>[i]</option>"
+			LAGCHECK(LAG_REALTIME)
 		select += "</select>"
 		return select.Join()
 
@@ -715,19 +859,23 @@ datum/preferences
 		var/changed = 0
 		if (table_id)
 			if (table_id == "underwear")
+				rebuild_data["underwear"] = 1
 				if (AH.underwear != href_list["style"])
 					AH.underwear = href_list["style"]
 					changed = 1
 			else if (table_id == "custom_first")
+				rebuild_data["hair_bottom"] = 1
 				if (AH.customization_first != href_list["style"])
 					AH.customization_first = href_list["style"]
 					changed = 1
 
 			else if (table_id == "custom_second")
+				rebuild_data["hair_mid"] = 1
 				if (AH.customization_second != href_list["style"])
 					AH.customization_second = href_list["style"]
 					changed = 1
 			else if (table_id == "custom_third")
+				rebuild_data["hair_top"] = 1
 				if (AH.customization_third != href_list["style"])
 					AH.customization_third = href_list["style"]
 					changed = 1
@@ -982,6 +1130,7 @@ datum/preferences
 			src.be_gangleader = 0
 			src.be_wraith = 0
 			src.be_blob = 0
+			src.be_flock = 0
 		else
 
 			HTML += {"
@@ -996,6 +1145,7 @@ datum/preferences
 			<a href="byond://?src=\ref[src];preferences=1;b_vampire=1" class="[src.be_vampire ? "yup" : "nope"]">[crap_checkbox(src.be_vampire)] Vampire</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_wraith=1" class="[src.be_wraith ? "yup" : "nope"]">[crap_checkbox(src.be_wraith)] Wraith</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_blob=1" class="[src.be_blob ? "yup" : "nope"]">[crap_checkbox(src.be_blob)] Blob</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_flock=1" class="[src.be_flock ? "yup" : "nope"]">[crap_checkbox(src.be_flock)] Flockmind</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_misc=1" class="[src.be_misc ? "yup" : "nope"]">[crap_checkbox(src.be_misc)] Other Foes</a>
 		"}
 
@@ -1157,6 +1307,7 @@ datum/preferences
 			return
 
 		if (link_tags["profile_name"])
+			rebuild_data["profile_name"] = 1
 			var/new_profile_name
 
 			new_profile_name = input(user, "Please select a name:", "Character Generation")  as null|text
@@ -1211,6 +1362,8 @@ datum/preferences
 */
 // -------------------------------------------
 		if (link_tags["first_name"])
+			rebuild_data["character_name"] = 1
+
 			var/new_name
 			switch(link_tags["first_name"])
 				if ("input")
@@ -1243,6 +1396,7 @@ datum/preferences
 				src.real_name = src.name_first + " " + src.name_last
 // -------------------------------------------
 		if (link_tags["middle_name"])
+			rebuild_data["character_name"] = 1
 			var/new_name
 			switch(link_tags["middle_name"])
 				if ("input")
@@ -1266,6 +1420,7 @@ datum/preferences
 			src.name_middle = new_name // don't need to check if there is one in case someone wants no middle name I guess
 // -------------------------------------------
 		if (link_tags["last_name"])
+			rebuild_data["character_name"] = 1
 			var/new_name
 			switch(link_tags["last_name"])
 				if ("input")
@@ -1295,6 +1450,7 @@ datum/preferences
 				src.real_name = src.name_first + " " + src.name_last
 // -------------------------------------------
 		if (link_tags["flavor_text"])
+			rebuild_data["flavortext"] = 1
 			var/new_text = input(user, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text) as null|text
 			if (isnull(new_text))
 				return
@@ -1305,6 +1461,7 @@ datum/preferences
 			src.flavor_text = new_text
 
 		if (link_tags["security_flavor_text"])
+			rebuild_data["security_note"] = 1
 			var/new_text = input(user, "Please enter new security note (appears as important note in Secmate):", "Character Generation", src.security_note) as null|text
 			if (isnull(new_text))
 				return
@@ -1315,6 +1472,7 @@ datum/preferences
 			src.security_note = new_text
 
 		if (link_tags["medical_flavor_text"])
+			rebuild_data["medical_note"] = 1
 			var/new_text = input(user, "Please enter new medical note (appears as important note in Medtrak):", "Character Generation", src.medical_note) as null|text
 			if (isnull(new_text))
 				return
@@ -1327,22 +1485,26 @@ datum/preferences
 // -------------------------------------------
 
 		if (link_tags["font_size"])
+			rebuild_data["font_size"] = 1
 			var/new_font_size = input(user, "Desired font size (in percent):", "Font setting", (src.font_size ? src.font_size : 100)) as null|num
 			src.font_size = new_font_size
 
 		if (link_tags["hud_style"])
+			rebuild_data["hud"] = 1
 			var/new_hud = input(user, "Please select HUD style:", "New") as null|anything in hud_style_selection
 
 			if (new_hud)
 				src.hud_style = new_hud
 
 		if (link_tags["tcursor"])
+			rebuild_data["hud"] = 1
 			var/new_cursor = input(user, "Please select cursor:", "Cursor") as null|anything in cursors_selection
 
 			if (new_cursor)
 				src.target_cursor = new_cursor
 
 		if (link_tags["age"])
+			rebuild_data["age_blood"] = 1
 			var/new_age = input(user, "Please select type in age: 20-80", "Character Generation")  as null|num
 
 			if (new_age)
@@ -1350,6 +1512,7 @@ datum/preferences
 
 
 		if (link_tags["pin"])
+			rebuild_data["bank"] = 1
 			if (link_tags["pin"] == "input")
 				var/new_pin = input(user, "Please select a PIN between 1000 and 9999", "Character Generation")  as null|num
 				if (new_pin)
@@ -1359,6 +1522,7 @@ datum/preferences
 
 
 		if (link_tags["blType"])
+			rebuild_data["age_blood"] = 1
 			var/blTypeNew = input(user, "Please select a blood type:", "Character Generation")  as null|anything in list("Random", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
 
 			if (blTypeNew)
@@ -1369,26 +1533,31 @@ datum/preferences
 					blType = blTypeNew
 
 		if (link_tags["hair"])
+			rebuild_data["hair_bottom"] = 1
 			var/new_hair = input(user, "Please select hair color.", "Character Generation") as null|color
 			if (new_hair)
 				AH.customization_first_color = new_hair
 
 		if (link_tags["facial"])
+			rebuild_data["hair_mid"] = 1
 			var/new_facial = input(user, "Please select detail 1 color.", "Character Generation") as null|color
 			if (new_facial)
 				AH.customization_second_color = new_facial
 
 		if (link_tags["detail"])
+			rebuild_data["hair_top"] = 1
 			var/new_detail = input(user, "Please select detail 2 color.", "Character Generation") as null|color
 			if (new_detail)
 				AH.customization_third_color = new_detail
 
 		if (link_tags["eyes"])
+			rebuild_data["eyecolor"] = 1
 			var/new_eyes = input(user, "Please select eye color.", "Character Generation") as null|color
 			if (new_eyes)
 				AH.e_color = new_eyes
 
 		if (link_tags["s_tone"])
+			rebuild_data["skintone"] = 1
 			var/new_tone = "#FEFEFE"
 			if (usr.has_medal("Contributor"))
 				switch(alert(user, "Goonstation contributors get to pick any colour for their skin tone!", "Thanks, pal!", "Paint me like a posh fence!", "Use Standard tone.", "Cancel"))
@@ -1407,11 +1576,13 @@ datum/preferences
 					AH.s_tone = new_tone
 
 		if (link_tags["underwear_color"])
+			rebuild_data["underwear"] = 1
 			var/new_ucolor = input(user, "Please select underwear color.", "Character Generation") as null|color
 			if (new_ucolor)
 				AH.u_color = new_ucolor
 
 		if (link_tags["gender"])
+			rebuild_data["gender"] = 1
 			if (!AH.pronouns)
 				if (src.gender == MALE)
 					src.gender = FEMALE
@@ -1430,21 +1601,30 @@ datum/preferences
 					AH.pronouns = 0
 
 		if (link_tags["changelog"])
+			rebuild_data["popups"] = 1
 			src.view_changelog = !(src.view_changelog)
 
 		if (link_tags["toggle_mentorhelp"])
+			rebuild_data["messages"] = 1
 			if (user && user.client && user.client.is_mentor())
 				src.see_mentor_pms = !(src.see_mentor_pms)
 				user.client.set_mentorhelp_visibility(src.see_mentor_pms)
 
 		if (link_tags["listen_ooc"])
+			rebuild_data["messages"] = 1
 			src.listen_ooc = !(src.listen_ooc)
 
 		if (link_tags["listen_looc"])
+			rebuild_data["messages"] = 1
 			src.listen_looc = !(src.listen_looc)
 
 		if (link_tags["flying_chat_hidden"])
+			rebuild_data["messages"] = 1
 			src.flying_chat_hidden = !(src.flying_chat_hidden)
+
+		if (link_tags["auto_capitalization"])
+			rebuild_data["messages"] = 1
+			src.auto_capitalization = !(src.auto_capitalization)
 
 		if (link_tags["volume"])
 			src.admin_music_volume = input("Goes from 0 to 100.","Admin Music Volume", src.admin_music_volume) as num
@@ -1455,19 +1635,25 @@ datum/preferences
 			src.radio_music_volume = max(0,min(src.radio_music_volume,100))
 
 		if (link_tags["clickbuffer"])
+			rebuild_data["controls"] = 1
 			src.use_click_buffer = !(src.use_click_buffer)
 
 		if (link_tags["use_wasd"])
+			rebuild_data["controls"] = 1
 			src.use_wasd = !src.use_wasd
-			src.wasd_updated(user.client)
+			src.keybind_prefs_updated(user.client)
 
 		if (link_tags["use_azerty"])
+			rebuild_data["controls"] = 1
 			src.use_azerty = !src.use_azerty
+			src.keybind_prefs_updated(user.client)
 
 		if (link_tags["preferred_map"])
+			rebuild_data["map"] = 1
 			src.preferred_map = mapSwitcher.clientSelectMap(usr.client)
 
 		if (link_tags["tooltip"])
+			rebuild_data["tooltips"] = 1
 			switch(link_tags["tooltip"])
 				if("1")
 					src.tooltip_option = TOOLTIP_ALWAYS
@@ -1478,9 +1664,11 @@ datum/preferences
 				else src.tooltip_option = TOOLTIP_ALWAYS
 
 		if (link_tags["scores"])
+			rebuild_data["popups"] = 1
 			src.view_score = !(src.view_score)
 
 		if (link_tags["tickets"])
+			rebuild_data["popups"] = 1
 			src.view_tickets = !(src.view_tickets)
 
 		if (link_tags["b_changeling"])
@@ -1537,6 +1725,10 @@ datum/preferences
 			src.be_blob = !( src.be_blob)
 			src.SetChoices(user)
 			return
+		if (link_tags["b_flock"])
+			src.be_flock = !( src.be_flock)
+			src.SetChoices(user)
+			return
 
 		if (link_tags["b_misc"])
 			src.be_misc = !src.be_misc
@@ -1544,12 +1736,14 @@ datum/preferences
 			return
 
 		if (link_tags["b_random_name"])
+			rebuild_data["character_name"] = 1
 			if (!force_random_names)
 				src.be_random_name = !src.be_random_name
 			else
 				src.be_random_name = 1
 
 		if (link_tags["b_random_look"])
+			rebuild_data["randomize"] = 1
 			if (!force_random_looks)
 				src.be_random_look = !src.be_random_look
 			else
@@ -1562,18 +1756,21 @@ datum/preferences
 			src.spessman_direction = turn(spessman_direction, -90)
 
 		else if (link_tags["fartsound"])
+			rebuild_data["fartsound"] = 1
 			var/list/soundlist = list()//this is a horror of code
 			for(var/k in AH.fartsounds)
 				soundlist[++soundlist.len] = k
 			AH.fartsound = (input( "What fartsound do you want?" ) in soundlist) || "default"
 			usr << sound( AH.fartsounds[AH.fartsound] )
 		else if (link_tags["screamsound"])
+			rebuild_data["screamsound"] = 1
 			var/list/soundlist = list()//this is a horror of code v2
 			for(var/k in AH.screamsounds)
 				soundlist[++soundlist.len] = k
 			AH.screamsound = (input( "What screamsound do you want?" ) in soundlist) || "default"
 			usr << sound( AH.screamsounds[AH.screamsound] )
 		else if (link_tags["voicetype"])
+			rebuild_data["chatsound"] = 1
 			var/list/soundlist = list()//this is a horror of code v2
 			for(var/k in AH.voicetypes)
 				soundlist[++soundlist.len] = k
@@ -1596,12 +1793,14 @@ datum/preferences
 
 		if (!isnull(user) && !IsGuestKey(user.key))
 			if (link_tags["cloudsave"] && user.client.cloudsaves[ link_tags["cloudsave"] ])
+				rebuild_profile = 1
 				var/ret = src.cloudsave_save( user.client, link_tags["cloudsave"] )
 				if( istext( ret ) )
 					boutput( user, "<span class='alert'>Failed to save savefile: [ret]</span>" )
 				else
 					boutput( user, "<span class='notice'>Savefile saved!</span>" )
 			else if (link_tags["cloudnew"])
+				rebuild_profile = 1
 				if( user.client.cloudsaves.len >= SAVEFILE_PROFILES_MAX )
 					alert( user, "You have hit your cloud save limit. Please write over an existing save." )
 				else
@@ -1615,12 +1814,16 @@ datum/preferences
 						else
 							boutput( user, "<span class='notice'>Savefile saved!</span>" )
 			else if( link_tags["clouddelete"] && user.client.cloudsaves[ link_tags["clouddelete"] ] && alert( user, "Are you sure you want to delete [link_tags["clouddelete"]]?", "Uhm!", "Yes", "No" ) == "Yes" )
+				rebuild_profile = 1
 				var/ret = src.cloudsave_delete( user.client, link_tags["clouddelete"] )
 				if( istext( ret ) )
 					boutput( user, "<span class='alert'>Failed to delete savefile: [ret]</span>" )
 				else
 					boutput( user, "<span class='notice'>Savefile deleted!</span>" )
 			else if (link_tags["cloudload"] && user.client.cloudsaves[ link_tags["cloudload"] ])
+				for (var/x in rebuild_data)
+					rebuild_data[x] = 1
+				rebuild_profile = 1
 				var/ret = src.cloudsave_load( user.client, link_tags["cloudload"] )
 				if( istext( ret ) )
 					boutput( user, "<span class='alert'>Failed to load savefile: [ret]</span>" )
@@ -1628,9 +1831,14 @@ datum/preferences
 					boutput( user, "<span class='notice'>Savefile loaded!</span>" )
 
 			else if (link_tags["save"])
+				rebuild_profile = 1
 				src.savefile_save(user, (isnum(text2num(link_tags["save"])) ? text2num(link_tags["save"]) : 1))
 				boutput(user, "<span class='notice'><b>Character saved to Slot [text2num(link_tags["save"])].</b></span>")
 			else if (link_tags["load"])
+				for (var/x in rebuild_data)
+					rebuild_data[x] = 1
+
+				rebuild_profile = 1
 				if (!src.savefile_load(user.client, (isnum(text2num(link_tags["load"])) ? text2num(link_tags["load"]) : 1)))
 					alert(user, "You do not have a savefile.")
 				else if (!user.client.holder)
@@ -1663,6 +1871,7 @@ datum/preferences
 			flavor_text = null
 			src.ResetAllPrefsToLow(user)
 			flying_chat_hidden = 0
+			auto_capitalization = 0
 			listen_ooc = 1
 			view_changelog = 1
 			view_score = 1
@@ -1676,6 +1885,7 @@ datum/preferences
 			be_wizard = 0
 			be_wraith = 0
 			be_blob = 0
+			be_flock = 0
 			be_misc = 0
 			be_traitor = 0
 			be_werewolf = 0
@@ -1771,7 +1981,7 @@ datum/preferences
 		if (AH.s_tone == null || AH.s_tone == "#FFFFFF" || AH.s_tone == "#ffffff")
 			AH.s_tone = "#FEFEFE"
 
-	proc/wasd_updated(var/client/C)
+	proc/keybind_prefs_updated(var/client/C)
 		if (!isclient(C))
 			var/mob/M = C
 			if (ismob(M) && M.client)
@@ -1783,6 +1993,7 @@ datum/preferences
 			winset( C, "menu.wasd_controls", "is-checked=true" )
 		else
 			winset( C, "menu.wasd_controls", "is-checked=false" )
+		C.mob.reset_keymap()
 
 /* ---------------------- RANDOMIZER PROC STUFF */
 

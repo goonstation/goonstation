@@ -105,7 +105,7 @@
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return
 
-		if (iscarbon(user) || iscritter(user))
+		if (iscarbon(user) || ismobcritter(user))
 			src.in_use = 1
 			user.visible_message("[user] applies [src] to [his_or_her(user)]self.",\
 			"<span class='notice'>You apply [src] to yourself.</span>")
@@ -116,7 +116,7 @@
 
 	throw_impact(mob/M as mob)
 		..()
-		if (src.medical && !borg && !src.in_use && (iscarbon(M) || iscritter(M)))
+		if (src.medical && !borg && !src.in_use && (iscarbon(M) || ismobcritter(M)))
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
 				M.visible_message("<span class='alert'>[src] lands on [M] sticky side down!</span>")
@@ -135,7 +135,7 @@
 
 		// No src.reagents check here because empty patches can be used to counteract bleeding.
 
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			src.in_use = 1
 			if (M == user)
 				//M.show_text("You put [src] on your arm.", "blue")
@@ -431,11 +431,11 @@
 				patches += target
 				update_overlay()
 				boutput(user, "<span class='notice'>You add [target] to the stack.</span>")
-		else if (ishuman(target))
+		else if (isliving(target))
 			if (patches.len)
 				var/obj/item/reagent_containers/patch/P = patches[patches.len]
 				patches -= P
-				var/mob/living/carbon/human/H = target
+				var/mob/living/H = target
 				P.attack(H, user, user.zone_sel && user.zone_sel.selecting ? user.zone_sel.selecting : null)
 
 				update_overlay()
@@ -444,14 +444,6 @@
 
 
 //mender
-
-var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine", "insulin", "mutadone", "teporone",\
-"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "stimulants", "synaptizine", "anti_rad",\
-"oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
-"salicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh",\
-"menthol", "cold_medicine", "antihistamine", "ipecac",\
-"booster_enzyme", "anti_fart", "goodnanites")
-
 /obj/item/reagent_containers/mender
 	name = "auto-mender"
 	desc = "A small electronic device designed to topically apply healing chemicals."
@@ -474,8 +466,8 @@ var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine
 
 	New()
 		..()
-		if (!tampered && islist(mender_chem_whitelist) && mender_chem_whitelist.len)
-			src.whitelist = mender_chem_whitelist
+		if (!tampered && islist(chem_whitelist) && chem_whitelist.len)
+			src.whitelist = chem_whitelist
 		if (src.reagents)
 			src.reagents.temperature_cap = 330
 			src.reagents.temperature_min = 270
@@ -493,7 +485,7 @@ var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine
 			. = ..()
 
 	proc/can_operate_on(atom/A)
-		.= (iscarbon(A) || iscritter(A))
+		.= (iscarbon(A) || ismobcritter(A))
 
 	proc/update_icon()
 		src.overlays = null
@@ -589,7 +581,7 @@ var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine
 
 /datum/action/bar/icon/automender_apply
 	duration = 10
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	id = "automender_apply"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mender-active"
@@ -629,8 +621,8 @@ var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine
 
 		//WEAKEN the first apply or use some sort of ramp-up!
 		var/multiply = 1
-		if (looped <= 0)
-			multiply = 0.2
+		if (looped <= 7)
+			multiply = min((looped+1)/8, 1)
 
 		M.apply_to(target,user, multiply, silent = (looped >= 1))
 
@@ -642,6 +634,7 @@ var/global/list/mender_chem_whitelist = list("antihol", "charcoal", "epinephrine
 
 		//Auto stop healing loop if we are not tampered and the health didnt change at all
 		if (!M.tampered)
+			target.updatehealth() //I hate this, but we actually need the health on time here.
 			if (health_temp == target.health)
 				user.show_text("[M] is finished healing and powers down automatically.", "blue")
 				return

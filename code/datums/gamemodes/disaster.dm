@@ -12,10 +12,13 @@
 
 /datum/game_mode/disaster/pre_setup()
 	var/list/candidates = list()
-	for(var/mob/new_player/player in mobs)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
 		if (ishellbanned(player))
 			continue
-		if (player.client && player.ready && !candidates.Find(player.mind) && player.client.preferences.be_wraith)
+		if (player.ready && !candidates.Find(player.mind) && player.client.preferences.be_wraith)
 			candidates += player.mind
 	if (candidates.len == 0)
 		return 0
@@ -133,14 +136,16 @@
 /datum/game_mode/disaster/declare_completion()
 	var/list/survivors = list()
 
-	for(var/mob/living/player in mobs)
-		if (player.client)
-			if (!isdead(player))
-				if (in_centcom(player))
-					survivors[player.real_name] = "shuttle"
-					player.unlock_medal("Icarus", 1)
-				else
-					survivors[player.real_name] = "alive"
+	for(var/client/C)
+		var/mob/living/player = C.mob
+		if (!istype(player)) continue
+
+		if (!isdead(player))
+			if (in_centcom(player))
+				survivors[player.real_name] = "shuttle"
+				player.unlock_medal("Icarus", 1)
+			else
+				survivors[player.real_name] = "alive"
 
 	if (survivors.len)
 		boutput(world, "<span class='notice'><B>The following survived the [disaster_name] event!</B></span>")

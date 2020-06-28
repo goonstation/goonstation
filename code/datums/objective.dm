@@ -730,6 +730,7 @@ proc/create_fluff(var/datum/mind/target)
 			if (player.client) num_players++
 		min_score = min(500, num_players * 10) + (rand(-5,5) * 10)
 		explanation_text = "Remain out of sight and accumulate [min_score] points."
+		owner.stealth_objective = 1
 
 	check_completion()
 		if(score >= min_score)

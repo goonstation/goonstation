@@ -207,45 +207,6 @@
 		if (prob(50))
 			src.sound_scream = "sound/voice/screams/Robot_Scream_2.ogg"
 
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
-
-		src.mainframe_check()
-
-		for (var/obj/item/I in src)
-			if (!I.material)
-				continue
-			I.material.triggerOnLife(src, I)
-
-		//Status updates, death etc.
-		clamp_values()
-		handle_regular_status_updates()
-
-		if (client)
-			handle_regular_hud_updates()
-			src.antagonist_overlay_refresh(0, 0)
-
-		process_killswitch()
-		process_locks()
-		process_oil()
-
-		if (src.client) //ov1
-			// overlays
-			src.updateOverlaysClient(src.client)
-
-		if (src.observers.len)
-			for (var/mob/x in src.observers)
-				if (x.client)
-					src.updateOverlaysClient(x.client)
-
-		if (!can_act(M=src,include_cuffs=0)) actions.interrupt(src, INTERRUPT_STUNNED)
-
-		if (metalman_skin && prob(1))
-			var/msg = pick("can't see...","feels bad...","leave me...", "you're cold...", "unwelcome...")
-			src.show_text(voidSpeak(msg))
-			src.emagged = 1
-
 	set_pulling(atom/movable/A)
 		. = ..()
 		hud.update_pulling()
@@ -278,8 +239,10 @@
 
 #ifdef RESTART_WHEN_ALL_DEAD
 		var/cancel
-		for(var/mob/M in mobs)
-			if ((M.client && !( M.stat )))
+
+		for (var/client/C)
+			if (!C.mob) continue
+			if (!( C.mob.stat ))
 				cancel = 1
 				break
 		if (!( cancel ))
@@ -789,8 +752,10 @@
 			if(2.0) damage = 40
 			if(3.0) damage = 20
 
-		for (var/obj/item/parts/robot_parts/RP in src.contents)
-			if (RP.ropart_take_damage(damage,damage) == 1) src.compborg_lose_limb(RP)
+		SPAWN_DBG(0)
+			for (var/obj/item/parts/robot_parts/RP in src.contents)
+				if (RP.ropart_take_damage(damage,damage) == 1)
+					src.compborg_lose_limb(RP)
 
 		if (istype(cell,/obj/item/cell/erebite) && fire_protect != 1)
 			src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
@@ -973,6 +938,9 @@
 						return
 			src.now_pushing = 0
 			//..()
+			if(AM)
+				AM.last_bumped = world.timeofday
+				AM.Bumped(src)
 			if (!istype(AM, /atom/movable))
 				return
 			if (!src.now_pushing)
@@ -981,9 +949,6 @@
 					var/t = get_dir(src, AM)
 					step(AM, t)
 				src.now_pushing = null
-			if(AM)
-				AM.last_bumped = world.timeofday
-				AM.Bumped(src)
 			return
 		return
 
@@ -1029,9 +994,8 @@
 		return !cleared
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
-			if(WELD.try_weld(user, 1))
+		if (isweldingtool(W))
+			if(W:try_weld(user, 1))
 				src.add_fingerprint(user)
 				var/repaired = HealDamage("All", 120, 0)
 				if(repaired || health < max_health)
@@ -1365,7 +1329,7 @@
 
 	hand_attack(atom/target, params, location, control, origParams)
 		// Only allow it if the target is outside our contents or it is the equipped tool
-		if(!src.contents.Find(target) || target==src.equipped())
+		if(!src.contents.Find(target) || target==src.equipped() || ishelpermouse(target))
 			..()
 
 	attack_hand(mob/user)
@@ -1692,10 +1656,19 @@
 			else
 				return ..()
 
-	build_keymap(client/C)
-		var/datum/keymap/keymap = ..()
-		keymap.merge(client.get_keymap("robot"))
-		return keymap
+	build_keybind_styles(client/C)
+		..()
+		C.apply_keybind("robot")
+
+		if (!C.preferences.use_wasd)
+			C.apply_keybind("robot_arrow")
+
+		if (C.preferences.use_azerty)
+			C.apply_keybind("robot_azerty")
+		if (C.tg_controls)
+			C.apply_keybind("robot_tg")
+			if (C.preferences.use_azerty)
+				C.apply_keybind("robot_tg_azerty")
 
 	say_understands(var/other)
 		if (isAI(other)) return 1
@@ -1830,20 +1803,20 @@
 			if (upgrade.charges > 0)
 				upgrade.charges--
 			if (upgrade.charges == 0)
-				boutput(src, "[upgrade] activated. It has been used up.")
+				boutput(src, "[upgrade] has been activated. It has been used up.")
 				src.upgrades.Remove(upgrade)
 				qdel(upgrade)
 			else
 				if (upgrade.charges < 0)
-					boutput(src, "[upgrade] activated.")
+					boutput(src, "[upgrade] has been activated.")
 				else
-					boutput(src, "[upgrade] activated. [upgrade.charges] uses left.")
+					boutput(src, "[upgrade] has been activated. [upgrade.charges] uses left.")
 		else
 			if (upgrade.activated)
 				upgrade.upgrade_deactivate(src)
 			else
 				upgrade.upgrade_activate(src)
-				boutput(src, "[upgrade] [upgrade.activated ? "activated" : "deactivated"].")
+				boutput(src, "[upgrade] has been [upgrade.activated ? "activated" : "deactivated"].")
 		hud.update_upgrades()
 
 	proc/set_module(var/obj/item/robot_module/RM)
@@ -2227,8 +2200,17 @@
 			return power_use_tally
 		else return 0
 
-	proc/clamp_values()
+	clamp_values()
+		..()
 		sleeping = max(min(sleeping, 5), 0)
+		if (src.get_eye_blurry()) src.change_eye_blurry(-INFINITY)
+		if (src.get_eye_damage()) src.take_eye_damage(-INFINITY)
+		if (src.get_eye_damage(1)) src.take_eye_damage(-INFINITY, 1)
+		if (src.get_ear_damage()) src.take_ear_damage(-INFINITY)
+		if (src.get_ear_damage(1)) src.take_ear_damage(-INFINITY, 1)
+		src.lying = 0
+		src.set_density(1)
+		if(src.stat) src.camera.camera_status = 0.0
 
 	use_power()
 		..()
@@ -2365,191 +2347,6 @@
 			radio_connection.post_signal(src, newsignal)
 			radio_controller.remove_object(src, "[frequency]")
 
-	proc/handle_regular_status_updates()
-		if(src.stat) src.camera.camera_status = 0.0
-
-		if(src.sleeping)
-			src.changeStatus("paralysis", 30)
-			src.sleeping--
-
-		if(src.hasStatus("resting")) src.changeStatus("weakened", 5 SECONDS)
-
-		if (!isdead(src)) //Alive.
-
-			// AI-controlled cyborgs always use the global lawset, so none of this applies to them (Convair880).
-			if ((src.emagged || src.syndicate) && src.mind && !src.dependent)
-				if (!src.mind.special_role)
-					src.handle_robot_antagonist_status()
-
-		else //Dead.
-			setdead(src)
-
-		if (src.stuttering)
-			src.stuttering--
-			src.stuttering = max(0, src.stuttering)
-
-		// It's a cyborg. Logically, they shouldn't have to worry about the maladies of human organs.
-		if (src.get_eye_blurry()) src.change_eye_blurry(-INFINITY)
-		if (src.get_eye_damage()) src.take_eye_damage(-INFINITY)
-		if (src.get_eye_damage(1)) src.take_eye_damage(-INFINITY, 1)
-		if (src.get_ear_damage()) src.take_ear_damage(-INFINITY)
-		if (src.get_ear_damage(1)) src.take_ear_damage(-INFINITY, 1)
-
-		src.lying = 0
-		src.set_density(1)
-
-		if(!src.part_chest)
-			// this doesn't even make any sense unless you're rayman or some shit
-
-			if (src.mind && src.mind.special_role)
-				src.handle_robot_antagonist_status("death", 1) // Mindslave or rogue (Convair880).
-
-			src.visible_message("<b>[src]</b> falls apart with no chest to keep it together!")
-			logTheThing("combat", src, null, "was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
-
-			if (src.part_arm_l)
-				if (src.part_arm_l.slot == "arm_both")
-					src.part_arm_l.set_loc(src.loc)
-					src.part_arm_l = null
-					src.part_arm_r = null
-				else
-					src.part_arm_l.set_loc(src.loc)
-					src.part_arm_l = null
-			if (src.part_arm_r)
-				if (src.part_arm_r.slot == "arm_both")
-					src.part_arm_r.set_loc(src.loc)
-					src.part_arm_l = null
-					src.part_arm_r = null
-				else
-					src.part_arm_r.set_loc(src.loc)
-					src.part_arm_r = null
-
-			if (src.part_leg_l)
-				if (src.part_leg_l.slot == "leg_both")
-					src.part_leg_l.set_loc(src.loc)
-					src.part_leg_l = null
-					src.part_leg_r = null
-				else
-					src.part_leg_l.set_loc(src.loc)
-					src.part_leg_l = null
-			if (src.part_leg_r)
-				if (src.part_leg_r.slot == "leg_both")
-					src.part_leg_r.set_loc(src.loc)
-					src.part_leg_r = null
-					src.part_leg_l = null
-				else
-					src.part_leg_r.set_loc(src.loc)
-					src.part_leg_r = null
-
-			if (src.part_head)
-				src.part_head.set_loc(src.loc)
-				src.part_head = null
-				//no chest means you are dead. Placed here to avoid duplicate alert in event that head was already destroyed and you then destroy torso
-				borg_death_alert()
-
-			if (src.client)
-				var/mob/dead/observer/newmob = ghostize()
-				if (newmob)
-					newmob.corpse = null
-
-			qdel(src)
-			return
-
-		if (!src.part_head && src.client)
-			// no head means no brain!!
-
-			if (src.mind && src.mind.special_role)
-				src.handle_robot_antagonist_status("death", 1) // Mindslave or rogue (Convair880).
-
-			src.visible_message("<b>[src]</b> completely stops moving and shuts down...")
-			borg_death_alert()
-			logTheThing("combat", src, null, "was destroyed at [log_loc(src)].") // Ditto (Convair880).
-
-			var/mob/dead/observer/newmob = ghostize()
-			if (newmob)
-				newmob.corpse = null
-			return
-
-		return 1
-
-	proc/handle_regular_hud_updates()
-
-		if (src.client) //Ported from Life - ZeWaka
-			render_special.set_centerlight_icon("default")
-
-		// Dead or x-ray vision.
-		var/turf/T = src.eye ? get_turf(src.eye) : get_turf(src) //They might be in a closet or something idk
-		if ((isdead(src) ||( src.bioHolder && src.bioHolder.HasEffect("xray"))) && (T && !isrestrictedz(T.z)))
-			src.sight |= SEE_TURFS
-			src.sight |= SEE_MOBS
-			src.sight |= SEE_OBJS
-			src.see_in_dark = SEE_DARK_FULL
-			if (client && client.adventure_view)
-				src.see_invisible = 21
-			else
-				src.see_invisible = 2
-
-		else
-			// Use vehicle sensors if we're in a pod.
-			if (istype(src.loc, /obj/machinery/vehicle))
-				var/obj/machinery/vehicle/ship = src.loc
-				if (ship.sensors)
-					if (ship.sensors.active)
-						src.sight |= ship.sensors.sight
-						src.see_in_dark = ship.sensors.see_in_dark
-						if (client && client.adventure_view)
-							src.see_invisible = 21
-						else
-							src.see_invisible = ship.sensors.see_invisible
-
-			else
-				//var/sight_therm = 0 //todo fix this
-				var/sight_meson = 0
-				var/sight_constr = 0
-				for (var/obj/item/roboupgrade/R in src.upgrades)
-					if (R && istype(R, /obj/item/roboupgrade/visualizer) && R.activated)
-						sight_constr = 1
-					if (R && istype(R, /obj/item/roboupgrade/opticmeson) && R.activated)
-						sight_meson = 1
-					//if (R && istype(R, /obj/item/roboupgrade/opticthermal) && R.activated)
-					//	sight_therm = 1
-
-				if (sight_meson)
-					src.sight |= SEE_TURFS
-					render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
-					vision.set_scan(1)
-					client.color = "#c2ffc2"
-				else
-					src.sight &= ~SEE_TURFS
-					client.color = null
-					vision.set_scan(0)
-				//if (sight_therm)
-				//	src.sight |= SEE_MOBS //todo make borg thermals have a purpose again
-				//else
-				//	src.sight &= ~SEE_MOBS
-
-				if (client && client.adventure_view)
-					src.see_invisible = 21
-				else if (sight_constr)
-					src.see_invisible = 9
-				else
-					src.see_invisible = 2
-
-				src.sight &= ~SEE_OBJS
-				src.see_in_dark = SEE_DARK_FULL
-
-		hud.update_health()
-		hud.update_charge()
-		hud.update_pulling()
-		hud.update_environment()
-
-		if (!src.sight_check(1) && !isdead(src))
-			src.addOverlayComposition(/datum/overlayComposition/blinded) //ov1
-		else
-			src.removeOverlayComposition(/datum/overlayComposition/blinded) //ov1
-
-		return 1
-
 	proc/mainframe_check()
 		if (!src.dependent) // shells are available for use, dependent borgs are already in use by an AI.  do not kill empty shells!!
 			return
@@ -2630,6 +2427,11 @@
 					var/icon/eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
 					eyesovl.Blend(rgb(C.fx[1], C.fx[2], C.fx[3]), ICON_ADD)
 					i_head.overlays += image("icon" = eyesovl, "layer" = FLOAT_LAYER)
+
+					var/image/eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
+					eye_light.color = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5)
+					eye_light.plane = PLANE_LIGHTING
+					src.UpdateOverlays(eye_light, "eye_light")
 
 		if(part == "chest" || update_all)
 			if (src.part_chest && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)

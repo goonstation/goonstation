@@ -13,8 +13,8 @@ GAUNTLET CARDS
 	wear_image_icon = 'icons/mob/mob.dmi'
 	w_class = 1.0
 	burn_type = 1
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	var/list/files = list("tools" = 1)
 	module_research_type = /obj/item/card
 
@@ -101,8 +101,8 @@ GAUNTLET CARDS
 	START_TRACKING
 
 /obj/item/card/id/disposing()
-	. = ..()
 	STOP_TRACKING
+	. = ..()
 
 /obj/item/card/id/command
 	icon_state = "id_com"
@@ -160,7 +160,7 @@ GAUNTLET CARDS
 		access = list()
 		..()
 
-	get_desc(dist)
+	get_desc()
 		. = {"<br>
 		Dabs performed: [dab_count]<br/>
 		Arms lost: [arm_count]<br/>

@@ -1,5 +1,5 @@
 /client/proc/sharkban(mob/sharktarget as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Shark Ban"
 	set popup_menu = 0
 	var/startx = 1
@@ -34,7 +34,7 @@
 
 
 /client/proc/sharkgib(mob/sharktarget as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Shark Gib"
 	set popup_menu = 0
 	var/startx = 1
@@ -76,7 +76,7 @@
 //				boutput(sharktarget, "<span class='alert'>This is a temporary ban, it will be removed in [sharkmins] minutes.</span>")
 //				logTheThing("admin", usr, sharktarget, "has sharked %target%.<br>Reason: [reason]<br>This will be removed in [sharkmins] minutes.")
 //				logTheThing("diary", usr, sharktarget, "has sharked %target%.<br>Reason: [reason]<br>This will be removed in [sharkmins] minutes.", "admin")
-//				message_admins("<span class='notice'>[usr.client.ckey] has banned [sharktarget.ckey].<br>Reason: [reason]<br>This will be removed in [sharkmins] minutes.</span>")
+//				message_admins("<span class='internal'>[usr.client.ckey] has banned [sharktarget.ckey].<br>Reason: [reason]<br>This will be removed in [sharkmins] minutes.</span>")
 
 
 /obj/banshark/
@@ -118,7 +118,7 @@
 				src.z = sharktarget2.z
 				banproc()
 				return
-			else if (get_dist(src, src.sharktarget2) <= 1)
+			else if (DIST_CHECK(src, src.sharktarget2, 1))
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> bites [sharktarget2]!</span>", 1)
 				sharktarget2.changeStatus("weakened", 1 SECOND)
@@ -140,11 +140,11 @@
 			sharktarget2.gib()
 			boutput(sharktarget2, "<span class='alert'><BIG><B>You have been eaten by the banshark!</B></BIG></span>")
 			logTheThing("admin", caller:client, sharktarget2, "has been eaten by the banshark!")
-			message_admins("<span class='notice'>[sharktarget2.ckey] has been eaten by the banshark!</span>")
+			message_admins("<span class='internal'>[sharktarget2.ckey] has been eaten by the banshark!</span>")
 		else
 			boutput(sharktarget2, "<span class='alert'><BIG><B>You can escape the banshark, but not the ban!</B></BIG></span>")
 			logTheThing("admin", caller:client, data["ckey"], "has evaded the shark by ceasing to exist!  Banning them anyway.")
-			message_admins("<span class='notice'>data["ckey"] has evaded the shark by ceasing to exist!  Banning them anyway.</span>")
+			message_admins("<span class='internal'>data["ckey"] has evaded the shark by ceasing to exist!  Banning them anyway.</span>")
 		addBan(data)
 		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 		qdel(src)
@@ -176,7 +176,7 @@
 
 	proc/process()
 		while (!disposed)
-			if (get_dist(src, src.sharktarget2) <= 1)
+			if (DIST_CHECK(src, src.sharktarget2, 1))
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> bites [sharktarget2]!</span>", 1)
 				sharktarget2.changeStatus("weakened", 1 SECOND)
@@ -191,14 +191,14 @@
 	proc/gibproc()
 		// drsingh for various cannot read null.
 		sleep(1.5 SECONDS)
-		if (get_dist(src, src.sharktarget2) <= 1)
+		if (DIST_CHECK(src, src.sharktarget2, 1))
 			for(var/mob/O in AIviewers(src, null))
 				O.show_message("<span class='alert'><B>[src]</B> gibs [sharktarget2] in one bite!</span>", 1)
 			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 			if(sharktarget2 && sharktarget2.client)
 				logTheThing("admin", caller:client, sharktarget2, "sharkgibbed %target%")
 				logTheThing("diary", caller:client, sharktarget2, "sharkgibbed %target%", "admin")
-				message_admins("<span class='notice'>[caller?.client?.ckey] has sharkgibbed [sharktarget2.ckey].</span>")
+				message_admins("<span class='internal'>[caller?.client?.ckey] has sharkgibbed [sharktarget2.ckey].</span>")
 				sharktarget2.gib()
 			sleep(0.5 SECONDS)
 			playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)

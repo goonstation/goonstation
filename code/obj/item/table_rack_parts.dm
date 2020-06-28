@@ -14,7 +14,7 @@ RACK PARTS
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	flags = FPRINT | TABLEPASS | CONDUCT
 	stamina_damage = 35
-	stamina_cost = 35
+	stamina_cost = 22
 	stamina_crit_chance = 10
 	var/furniture_type = /obj/table/auto
 	var/furniture_name = "table"
@@ -85,7 +85,7 @@ RACK PARTS
 	attack_self(mob/user as mob)
 		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration), user)
 
-	dispose()
+	disposing()
 		if (src.contained_storage && src.contained_storage.contents.len)
 			var/turf/T = get_turf(src)
 			for (var/atom/movable/A in src.contained_storage)
@@ -191,7 +191,7 @@ RACK PARTS
 	icon = 'icons/obj/furniture/table_reinforced.dmi'
 	reinforced = 1
 	stamina_damage = 40
-	stamina_cost = 40
+	stamina_cost = 22
 	stamina_crit_chance = 15
 	furniture_type = /obj/table/reinforced/auto
 	furniture_name = "reinforced table"
@@ -230,7 +230,7 @@ RACK PARTS
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "rack_parts"
 	stamina_damage = 25
-	stamina_cost = 25
+	stamina_cost = 22
 	stamina_crit_chance = 15
 	furniture_type = /obj/rack
 	furniture_name = "rack"

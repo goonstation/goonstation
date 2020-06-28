@@ -34,6 +34,13 @@
 	icon_state = "Syndiebackpack"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+/obj/item/storage/backpack/syndie/tactical
+	name = "tactical assault rucksack"
+	desc = "A military backpack made of high density fabric, designed to fit a wide array of tools for comprehensive storage support."
+	icon_state = "tactical_backpack"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	slots = 10
+
 /obj/item/storage/backpack/medic
 	name = "medic's backpack"
 	icon_state = "bp_medic" //im doing inhands, im not getting baited into refactoring every icon state to use hyphens instead of underscores right now
@@ -88,8 +95,8 @@
 	w_class = 4.0
 	max_wclass = 3
 	does_not_open_in_pocket = 0
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 5
 	spawn_contents = list(/obj/item/storage/box/starter)
 
@@ -104,6 +111,11 @@
 	item_state = "funny"
 	spawn_contents = list(/obj/item/storage/box/starter,\
 	/obj/item/storage/box/balloonbox)
+
+/obj/item/storage/fanny/funny/mini
+	name = "mini funny pack"
+	desc = "Haha, get it? Get it? 'Funny'! This one seems a little smaller, and made of even cheaper material."
+	slots = 3
 
 /obj/item/storage/fanny/syndie
 	name = "syndicate tactical espionage belt pack"
@@ -121,7 +133,7 @@
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
 	max_wclass = 2
 	does_not_open_in_pocket = 0
-	stamina_damage = 5
+	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 5
 
@@ -134,23 +146,26 @@
 		if (!ismob(loc))
 			return 0
 
+
+
 	MouseDrop(obj/over_object as obj, src_location, over_location)
 		var/mob/M = usr
-		if (!istype(over_object, /obj/screen))
+		if (istype(over_object,/obj/item) || istype(over_object,/mob/)) // covers pretty much all the situations we're trying to prevent; namely transferring storage and opening while on ground
 			if(!can_use())
-				boutput(M, "<span class='alert'>I need to wear [src] for that.</span>")
+				boutput(M, "<span class='alert'>You need to wear [src] for that.</span>")
 				return
 		return ..()
 
+
 	attack_hand(mob/user as mob)
 		if (src.loc == user && !can_use())
-			boutput(user, "<span class='alert'>I need to wear [src] for that.</span>")
+			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
 			return
 		return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(!can_use())
-			boutput(user, "<span class='alert'>I need to wear [src] for that.</span>")
+			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
 			return
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
@@ -276,9 +291,9 @@
 		. += "There are [src.charge]/[src.maxCharge] PU left."
 
 	buildTooltipContent()
-		var/content = ..()
-		content += "<br>There are [src.charge]/[src.maxCharge] PU left."
-		return content
+		. = ..()
+		. += "<br>There are [src.charge]/[src.maxCharge] PU left."
+		lastTooltipContent = .
 
 /obj/item/storage/belt/utility/prepared
 	spawn_contents = list(/obj/item/crowbar,
@@ -359,6 +374,26 @@
 	can_hold = list(/obj/item/ammo/bullets)
 	in_list_or_max = 0
 
+/obj/item/storage/belt/revolver
+	name = "revolver belt"
+	desc = "A stylish leather belt for holstering a revolver and it's ammo."
+	icon_state = "revolver_belt"
+	item_state = "revolver_belt"
+	slots = 3
+	in_list_or_max = 0
+	can_hold = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357)
+	spawn_contents = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357 = 2)
+
+/obj/item/storage/belt/pistol
+	name = "pistol belt"
+	desc = "A rugged belt fitted with a pistol holster and some magazine pouches."
+	icon_state = "pistol_belt"
+	item_state = "pistol_belt"
+	slots = 5
+	in_list_or_max = 0
+	can_hold = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm)
+	spawn_contents = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm = 4)
+
 // fancy shoulder sling for grenades
 
 /obj/item/storage/backpack/grenade_bandolier
@@ -411,12 +446,22 @@
 	contraband = 8
 	is_syndicate = 1
 	mats = 18 //SPACE IS THE PLACE FOR WRESTLESTATION 13
+	var/fake = 0		//So the moves are all fake.
 
 	equipped(var/mob/user)
-		user.make_wrestler(0, 1, 0)
+		..()
+		user.make_wrestler(0, 1, 0, fake)
 
 	unequipped(var/mob/user)
-		user.make_wrestler(0, 1, 1)
+		..()
+		user.make_wrestler(0, 1, 1, fake)
+
+/obj/item/storage/belt/wrestling/fake
+	name = "fake wrestling belt"
+	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
+	contraband = 0
+	is_syndicate = 0
+	fake = 1
 
 // I dunno where else to put these vOv
 /obj/item/inner_tube

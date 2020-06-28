@@ -88,10 +88,12 @@
 					if (O)
 						O.hear_talk(src, messages, src.get_heard_name())
 
-			for (var/mob/M in mobs)
-				if (istype(M, /mob/new_player))
+			for (var/client/C)
+				if (!C.mob) continue
+				if (istype(C.mob, /mob/new_player))
 					continue
-				if (M.client && (istype(M, /mob/dead/observer) || (iswraith(M) && !M.density) || (istype(M, /mob/living/intangible/brainmob)) && (get_turf(M) in hearers(src))) || ((!isturf(src.loc) && src.loc == M.loc) && !(M in listening) && !istype(M, /mob/dead/target_observer)))
+				var/mob/M = C.mob
+				if ((istype(M, /mob/dead/observer) || (iswraith(M) && !M.density) || (istype(M, /mob/living/intangible/brainmob)) && (get_turf(M) in hearers(src))) || ((!isturf(src.loc) && src.loc == M.loc) && !(M in listening) && !istype(M, /mob/dead/target_observer)))
 					var/thisR = rendered
 					if ((istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
 						thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"

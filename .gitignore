@@ -27,6 +27,34 @@ Build System.dm
 !/.vscode/extensions.json
 *.idea/*
 
+### https://raw.github.com/github/gitignore/cc542de017c606138a87ee4880e5f06b3a306def/Python.gitignore
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+#*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
 # Local Map Backups
 /maps/**/backup/
 
