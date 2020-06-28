@@ -44,6 +44,7 @@
 		materiel_stock += new/datum/materiel/loadout/firebrand
 		materiel_stock += new/datum/materiel/loadout/engineer
 		materiel_stock += new/datum/materiel/loadout/marksman
+		materiel_stock += new/datum/materiel/loadout/custom
 
 		materiel_stock += new/datum/materiel/storage/rucksack
 		materiel_stock += new/datum/materiel/storage/belt
