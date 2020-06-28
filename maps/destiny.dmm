@@ -1371,8 +1371,8 @@
 /obj/item/device/radio/headset/civilian,
 /obj/item/device/radio/headset/civilian,
 /obj/item/device/radio/intercom/bridge{
-	dir = 8;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 8
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -9132,8 +9132,8 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom/AI{
-	dir = 8;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 8
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -16021,8 +16021,8 @@
 	icon_state = "line4"
 	},
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 4
 	},
 /turf/simulated/floor/green/side{
 	dir = 9
@@ -17888,8 +17888,8 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom/AI{
-	dir = 4;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 4
 	},
 /turf/simulated/floor/green/side{
 	dir = 10
@@ -23660,8 +23660,8 @@
 	icon_state = "1-4"
 	},
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 4
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering/ce)
@@ -34231,7 +34231,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/oreaccumulator,
+/obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor,
 /area/station/mining)
 "bhS" = (
@@ -34602,8 +34602,8 @@
 /obj/machinery/port_a_brig,
 /obj/window/crystal/reinforced/south,
 /obj/item/device/radio/intercom/brig{
-	dir = 4;
-	broadcasting = 1
+	broadcasting = 1;
+	dir = 4
 	},
 /turf/simulated/floor/red,
 /area/station/security/brig)
@@ -37312,6 +37312,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/oreaccumulator,
 /turf/simulated/floor,
 /area/station/mining)
 "bnd" = (
@@ -41985,8 +41986,8 @@
 "bvi" = (
 /obj/storage/secure/closet/command/hos,
 /obj/item/device/radio/intercom/bridge{
-	dir = 1;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 1
 	},
 /obj/machinery/light,
 /turf/simulated/floor/white/checker{
@@ -42690,8 +42691,8 @@
 /obj/item/chem_grenade/firefighting,
 /obj/machinery/phone,
 /obj/item/device/transfer_valve{
-	pixel_y = 4;
-	pixel_x = 14
+	pixel_x = 14;
+	pixel_y = 4
 	},
 /obj/item/device/transfer_valve{
 	pixel_x = -12;
@@ -44741,8 +44742,8 @@
 /area/listeningpost)
 "bAE" = (
 /obj/item/device/radio/intercom{
-	dir = 8;
 	broadcasting = 0;
+	dir = 8;
 	frequency = 1485;
 	name = "Security Intercom"
 	},
@@ -44812,8 +44813,8 @@
 /area/listeningpost)
 "bAL" = (
 /obj/item/device/radio/intercom{
-	dir = 8;
 	broadcasting = 1;
+	dir = 8;
 	frequency = 1489;
 	name = "Brig Intercom"
 	},
@@ -45327,8 +45328,8 @@
 	icon_state = "1-2"
 	},
 /obj/item/device/radio/intercom/AI{
-	dir = 8;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 8
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
