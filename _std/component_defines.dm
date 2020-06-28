@@ -115,6 +115,10 @@
 #define COMSIG_MECHCOMP_GET_OUTGOING "mechcomp_get_outgoing_connections"
 /// Connect two mechcomp devices together
 #define COMSIG_MECHCOMP_LINK "mechcomp_connect_devices"
+/// Connect two mechcomp devices together
+#define COMSIG_MECHCOMP_ADD_CONFIG "mechcomp_add_config"
+/// Connect two mechcomp devices together
+#define COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL "mechcomp_allow_manual_sigset"
 
 // obj/critter signals
 // When an obj/critter dies

@@ -30,7 +30,6 @@ var/list/mechanics_telepads = new/list()
 	var/under_floor = 0
 	var/can_rotate = 0
 	var/list/particles = new/list()
-	var/list/configs = list()
 
 	New()
 		AddComponent(/datum/component/mechanics_holder)
@@ -67,36 +66,6 @@ var/list/mechanics_telepads = new/list()
 		return src.attack_hand(user)
 	proc/secure()
 	proc/loosen()
-	proc/append_default_configs(var/modifier) //no modifier adds all, 1 = add "Set Send-Signal", 2 = add "Disconnect All"
-		if(modifier == 1)
-			configs.Add(list("Set Send-Signal"))
-		else if(modifier == 2)
-			configs.Add(list("Disconnect All"))
-		else
-			configs.Add(list("Set Send-Signal","Disconnect All"))
-	proc/modify_configs()
-		if(!isliving(usr))
-			return
-		if(usr.stat)
-			return
-		if(src.configs.len)
-			var/input = input("Select a config to modify!", "Config", null) as null|anything in src.configs
-			if(input && (usr in range(1,src)))
-				switch(input)
-					if("Set Send-Signal")
-						var/inp = input(usr,"Please enter Signal:","Signal setting","1") as text
-						inp = trim(adminscrub(inp), 1)
-						if(length(inp))
-							mechanics.outputSignal = inp
-							boutput(usr, "Signal set to [inp]")
-						return 0
-					if("Disconnect All")
-						SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
-						boutput(usr, "<span class='notice'>You disconnect [src].</span>")
-						return 0
-				return input
-			else
-				return 0
 
 	proc/rotate()
 		src.dir = turn(src.dir, -90)
@@ -135,8 +104,7 @@ var/list/mechanics_telepads = new/list()
 
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 			return 1
-		SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user) //Maybe this should return a bitflag for being handled. //MarkNstein Needs attention
-		return 0
+		return SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user)
 
 	pickup()
 		if(level == 1) return
@@ -1107,17 +1075,6 @@ var/list/mechanics_telepads = new/list()
 		mechanics.addInput("dispatch", "dispatch")
 		configs.Add("Toggle Exact Match")
 		src.append_default_configs(2)
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(..(W, user)) return
-		else if(ispulsingtool(W))
-			switch(src.modify_configs())
-				if(0)
-					return
-				if("Toggle Exact Match") //MarkNstein Needs attention
-					mechanics.exact_match = !mechanics.exact_match
-					boutput(user, "Exact match mode now [mechanics.exact_match ? "on" : "off"]")
-					tooltip_rebuild = 1
 
 	proc/dispatch(var/datum/mechanicsMessage/input)
 		if (level == 2) return
