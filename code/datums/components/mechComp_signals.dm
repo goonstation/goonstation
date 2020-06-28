@@ -3,14 +3,11 @@
 	var/list/nodes = list()
 	var/datum/computer/file/data_file
 
-	proc/addNode(/datum/component/mechanics_holder/H)
-		nodes.Add(H)
+	proc/addNode(/obj/O)
+		nodes.Add(O)
 
-	proc/removeNode(/datum/component/mechanics_holder/H)
-		nodes.Remove(H)
-
-	proc/hasNode(/datum/component/mechanics_holder/H)
-		return nodes.Find(H)
+	proc/hasNode(/obj/O)
+		return nodes.Find(O)
 
 	proc/isTrue() //Thanks for not having bools , byond.
 		if(istext(signal))
@@ -20,42 +17,83 @@
 		return 0
 
 /datum/component/mechanics_holder
-	var/atom/master = null
 	var/list/connected_outgoing = list()
 	var/list/connected_incoming = list()
 	var/list/inputs = list()
 
-	var/outputSignal = "1"
+	var/outputSignal = "1" //MarkNstein needs attention: candidate for removal? check how deafult singals are set
 	var/triggerSignal = "1"
 
 	var/filtered = 0
 	var/list/outgoing_filters = list()
 	var/exact_match = 0
 
-/datum/component/mechanics_holder/Initialize(var/master, var/filtered = 0)
-	src.master = master
-	src.filtered = filtered
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_INPUT), .proc/addInput)    //MarkNstein needs attention
+/datum/component/mechanics_holder/Initialize()
+	..()    //MarkNstein needs attention: make use of this for non-MechComp things. Like settings configs? Inputs?
+
+/datum/component/mechanics_holder/RegisterWithParent()
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_INPUT), .proc/addInput)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RECEIVE_MSG), .proc/fireInput)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_TRANSMIT_MSG), .proc/fireOutgoing)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_INCOMING), .proc/removeIncoming)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_OUTGOING), .proc/removeOutgoing)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_ALL_CONNECTIONS), .proc/WipeConnections)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_CONNECT), .proc/dropConnect)    //MarkNstein needs attention
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_SET_FILTER_TRUE), .proc/setFilterTrue)
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_SET_FILTERS), .proc/set_filters)    //MarkNstein needs attention
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_GET_OUTGOING), .proc/getOutgoing)
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_LINK), .proc/link)
+	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/attackby)    //MarkNstein needs attention
+	return  //No need to ..()
 
-/datum/component/mechanics_holder/disposing()
-	wipeIncoming()
-	wipeOutgoing()
-	master = null
-	..()
+/datum/component/mechanics_holder/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_MECHCOMP_ADD_INPUT)
+	UnregisterSignal(parent, COMSIG_MECHCOMP_RECEIVE_MSG)
+	UnregisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_MSG)
+	UnregisterSignal(parent, COMSIG_MECHCOMP_RM_INCOMING)
+	UnregisterSignal(parent, COMSIG_MECHCOMP_RM_OUTGOING)
+	UnregisterSignal(parent, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
+	UnregisterSignal(parent, COMSIG_MECHCOMP_SET_FILTER_TRUE)
+	UnregisterSignal(parent, COMSIG_MECHCOMP_SET_FILTERS)
+	UnregisterSignal(parent, COMSIG_MECHCOMP_GET_OUTGOING)
+	UnregisterSignal(parent, COMSIG_MECHCOMP_LINK)
+	UnregisterSignal(parent, COMSIG_ATTACKBY)    
+	WipeConnections()
+	inputs.Cut()
+	return  //No need to ..()
 
-//Delete all connections. (Often caused by "Disconnect All" user command.)
+//Delete all connections. (Often caused by "Disconnect All" user command, and unwrenching MechComp devices.)
 /datum/component/mechanics_holder/proc/WipeConnections()
-	wipeIncoming()
-	wipeOutgoing()
+	for(var/obj/O in connected_incoming)
+		SEND_SIGNAL(O, COMSIG_MECHCOMP_RM_OUTGOING, parent)
+	for(var/obj/O in connected_outgoing)
+		SEND_SIGNAL(O, COMSIG_MECHCOMP_RM_INCOMING, parent)
+	connected_incoming.Cut()
+	connected_outgoing.Cut()
+	outgoing_filters.Cut()
 	return
 
-//Adds an input "slot" to the holder /w a proc mapping.
+//Remove a device from our list of transitting devices.
+/datum/component/mechanics_holder/proc/removeIncoming(var/obj/O)
+	connected_incoming.Remove(O)
+	return
+
+//Remove a device from our list of receiving devices.
+/datum/component/mechanics_holder/proc/removeOutgoing(var/obj/O)
+	connected_outgoing.Remove(O)
+	outgoing_filters.Remove(O)
+	return
+
+//Give the caller a copied list of our outgoing connections.
+/datum/component/mechanics_holder/proc/getOutgoing(var/list/outout)
+	outout = connected_outgoing.Copy()
+	return
+
+//Well well well, look at you; you can filter your outputs — how special.
+/datum/component/mechanics_holder/proc/setFilterTrue()
+	filtered = 1
+	return
+
+//Adds an input "slot" to the holder w/ a proc mapping.
 /datum/component/mechanics_holder/proc/addInput(var/name, var/toCall)
 	if(name in inputs) inputs.Remove(name)
 	inputs.Add(name)
@@ -66,28 +104,23 @@
 /datum/component/mechanics_holder/proc/fireInput(var/name, var/datum/mechanicsMessage/msg)
 	if(!(name in inputs)) return
 	var/path = inputs[name]
-	SPAWN_DBG(1 DECI SECOND) call(master, path)(msg)
+	SPAWN_DBG(1 DECI SECOND) call(parent, path)(msg)
 	return
 
 //Fire an outgoing connection with given value. Try to re-use incoming messages for outgoing signals whenever possible!
 //This reduces load AND preserves the node list which prevents infinite loops.
 /datum/component/mechanics_holder/proc/fireOutgoing(var/datum/mechanicsMessage/msg)
 	//If we're already in the node list we will not send the signal on.
-	if(!msg.hasNode(src))
-		msg.addNode(src)
+	if(!msg.hasNode(parent)) //MarkNstein Needs attentin: src
+		msg.addNode(parent)
 	else
 		return 0
 
 	var/fired = 0
-	for(var/atom/M in connected_outgoing)
-		//	if(M.mechanics)
-		//		if (filtered && outgoing_filters[M] && !allowFiltered(msg.signal, outgoing_filters[M]))
-		//			continue
-		//		M.mechanics.fireInput(connected_outgoing[M], cloneMessage(msg))
-		//		fired = 1
-		if (filtered && outgoing_filters[M] && !allowFiltered(msg.signal, outgoing_filters[M]))
-			continue
-		SEND_SIGNAL(M, COMSIG_MECHCOMP_RECEIVE_MSG, cloneMessage(msg))
+	for(var/obj/O in connected_outgoing)
+		if (filtered && outgoing_filters[O] && !allowFiltered(msg.signal, outgoing_filters[O]))
+			continue  //MarkNstein Needs attentin: this just seems wrong???
+		SEND_SIGNAL(O, COMSIG_MECHCOMP_RECEIVE_MSG, cloneMessage(msg))
 		fired = 1
 	return fired
 
@@ -113,41 +146,11 @@
 	ret.data_file = data_file
 	return ret
 
-//Delete all incoming connections
-/datum/component/mechanics_holder/proc/wipeIncoming()
-	for(var/atom/M in connected_incoming)
-		// if(M.mechanics)
-		//     M.mechanics.connected_outgoing.Remove(master)
-		//     if (M.mechanics.outgoing_filters.Find(master)) M.mechanics.outgoing_filters.Remove(master)
-		SEND_SIGNAL(M, COMSIG_MECHCOMP_RM_OUTGOING, master)
-		connected_incoming.Remove(M)
-	return
-
-//Delete all outgoing connections.
-/datum/component/mechanics_holder/proc/wipeOutgoing()
-	for(var/atom/M in connected_outgoing)
-		// if(M.mechanics) M.mechanics.connected_incoming.Remove(master)
-		SEND_SIGNAL(M, COMSIG_MECHCOMP_RM_INCOMING, master)
-		connected_outgoing.Remove(M)
-	outgoing_filters.Cut()
-	return
-
-//Remove a device from our list of transitting devices.
-/datum/component/mechanics_holder/proc/removeIncoming(var/atom/M)
-	connected_incoming.Remove(M)
-	return
-
-//Remove a device from our list of receiving devices.
-/datum/component/mechanics_holder/proc/removeOutgoing(var/atom/M)
-	connected_outgoing.Remove(M)
-	outgoing_filters.Remove(M)
-	return
-
 //Called when a component is dragged onto another one.
 /datum/component/mechanics_holder/proc/dropConnect(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)//MarkNstein needs attention
-	if(!O || O == master || !O.mechanics) return //ZeWaka: Fix for null.mechanics //MarkNstein needs attention
+	if(!O || O == parent || !O.mechanics) return //ZeWaka: Fix for null.mechanics //MarkNstein needs attention
 
-	var/typesel = input(usr, "Use [master] as:", "Connection Type") in list("Trigger", "Receiver", "*CANCEL*")
+	var/typesel = input(usr, "Use [parent] as:", "Connection Type") in list("Trigger", "Receiver", "*CANCEL*")
 	switch(typesel)
 		if("Trigger")
 			SEND_SIGNAL(O, COMSIG_MECHCOMP_LINK, parent) //MarkNstein needs attention

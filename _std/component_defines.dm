@@ -82,6 +82,13 @@
 //When a mob dies
 #define COMSIG_MOB_DEATH "mob_death"
 
+//attack_X signals
+/// Attacking wiht an item in-hand
+#define COMSIG_ATTACKBY "attackby"
+/// Bitflag return of an attackby proc successfuly reacting (based on it's own conditions)
+/// I dunno, feel free to improve this; make global bitflag returns for all components.
+#define COMSIG_ATTACKBY_COMPLETE 1
+
 
 // projectile signals
 /// After a projectile makes a valid hit on an atom (after immunity/other early returns, before other effects)
@@ -100,8 +107,14 @@
 #define COMSIG_MECHCOMP_RM_OUTGOING "mechcomp_remove_outgoing"
 /// Remove all connected devices
 #define COMSIG_MECHCOMP_RM_ALL_CONNECTIONS "mechcomp_remove_all_connections"      //MarkNstein needs attention
+/// Set the filter flag to true
+#define COMSIG_MECHCOMP_SET_FILTER_TRUE "mechcomp_set_filter_true"
+/// Set the filters applied to a connection
+#define COMSIG_MECHCOMP_SET_FILTERS "mechcomp_set_filters"
+/// Return the component's outgoing connections
+#define COMSIG_MECHCOMP_GET_OUTGOING "mechcomp_get_outgoing_connections"
 /// Connect two mechcomp devices together
-#define COMSIG_MECHCOMP_CONNECT "mechcomp_connect_devices"
+#define COMSIG_MECHCOMP_LINK "mechcomp_connect_devices"
 
 // obj/critter signals
 // When an obj/critter dies

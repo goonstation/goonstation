@@ -33,8 +33,7 @@ var/list/mechanics_telepads = new/list()
 	var/list/configs = list()
 
 	New()
-		mechanics = new(src)
-		mechanics.master = src
+		AddComponent(/datum/component/mechanics_holder)
 		if (!(src in processing_items))
 			processing_items.Add(src)
 		return ..()
@@ -50,10 +49,11 @@ var/list/mechanics_telepads = new/list()
 		if(level == 2 || under_floor)
 			cutParticles()
 			return
-
-		if(mechanics && particles.len != mechanics.connected_outgoing.len)
+		var/list/connected_outgoing
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_GET_OUTGOING, connected_outgoing) //MarkNstein needs attention
+		if(particles.len != connected_outgoing.len)
 			cutParticles()
-			for(var/atom/X in mechanics.connected_outgoing)
+			for(var/obj/X in connected_outgoing)
 				particles.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(src.loc, X.loc)))
 
 		return
@@ -91,8 +91,7 @@ var/list/mechanics_telepads = new/list()
 							boutput(usr, "Signal set to [inp]")
 						return 0
 					if("Disconnect All")
-						mechanics.wipeIncoming()
-						mechanics.wipeOutgoing()
+						SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 						boutput(usr, "<span class='notice'>You disconnect [src].</span>")
 						return 0
 				return input
@@ -122,18 +121,6 @@ var/list/mechanics_telepads = new/list()
 					if(!isturf(src.loc))
 						boutput(usr, "<span class='alert'>[src] needs to be on the ground for that to work.</span>")
 						return 0
-					//var/turf/T = src.loc
-					//var/can_deploy = 1
-					/*if (T.density) // a wall or something
-						can_deploy = 0
-					else if (T.z == 2)
-						for (var/obj/O in T)
-							if (O.density)
-								can_deploy = 0
-								break
-					if (!can_deploy)
-						boutput(usr, "<span class='alert'>There's something in the way of [src], it can't be attached here!</span>")
-						return 0*///why. why.
 					boutput(user, "You attach the [src] to the underfloor and activate it.")
 					logTheThing("station", usr, null, "attaches a <b>[src]</b> to the underfloor  at [log_loc(src)].")
 					level = 1
@@ -146,20 +133,18 @@ var/list/mechanics_telepads = new/list()
 			else
 				hide()
 
-			mechanics.wipeIncoming()
-			mechanics.wipeOutgoing()
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 			return 1
+		SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user) //Maybe this should return a bitflag for being handled. //MarkNstein Needs attention
 		return 0
 
 	pickup()
 		if(level == 1) return
-		mechanics.wipeIncoming()
-		mechanics.wipeOutgoing()
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		return ..()
 
 	dropped()
-		mechanics.wipeIncoming()
-		mechanics.wipeOutgoing()
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		return ..()
 
 	MouseDrop(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)

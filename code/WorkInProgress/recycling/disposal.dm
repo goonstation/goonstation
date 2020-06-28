@@ -1288,11 +1288,7 @@
 		C.ptype = 11
 		C.dir = dir
 		C.update()
-
-		if (src.mechanics)
-			src.mechanics.wipeIncoming()
-			src.mechanics.wipeOutgoing()
-
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		qdel(src)
 
 //<Jewel>:
