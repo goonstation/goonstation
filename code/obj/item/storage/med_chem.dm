@@ -71,10 +71,10 @@
 	name = "toxin first aid"
 	icon_state = "toxin1"
 	item_state = "toxin1"
-	desc = "A medical kit designed to counter radiation and poisoning by common toxins. Contains two pills each of anti-toxin and anti-radiation medicine, an auto-injector of a powerful chelating agent, and a health analyzer to determine the health of the patient."
+	desc = "A medical kit designed to counter radiation and poisoning by common toxins. Contains two pills each of anti-toxin and anti-radiation medicine, a syringe of a powerful purgative, and a health analyzer to determine the health of the patient."
 	kit_styles = list("toxin1", "toxin2", "toxin3", "toxin4")
 	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/epinephrine,\
-	/obj/item/reagent_containers/emergency_injector/pentetic_acid,\
+	/obj/item/reagent_containers/syringe/calomel,\
 	/obj/item/reagent_containers/pill/antirad = 2,\
 	/obj/item/reagent_containers/pill/antitox = 2,\
 	/obj/item/device/analyzer/healthanalyzer)
@@ -109,8 +109,9 @@
 	kit_styles = list("berserk1", "berserk2", "berserk3")
 	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/atropine = 1,\
 	/obj/item/reagent_containers/emergency_injector/perf = 1,\
+	/obj/item/reagent_containers/emergency_injector/pentetic_acid,\
 	/obj/item/reagent_containers/emergency_injector/mannitol = 2,\
-	/obj/item/reagent_containers/emergency_injector/epinephrine = 2,\
+	/obj/item/reagent_containers/emergency_injector/epinephrine = 1,\
 	/obj/item/device/analyzer/healthanalyzer/borg)
 
 // Medkit filled with old crud for shady QM merchants (Convair880).
