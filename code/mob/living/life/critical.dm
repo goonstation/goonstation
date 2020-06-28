@@ -75,11 +75,7 @@
 				boutput(owner, "<span class='alert'>Your head [pick("feels like shit","hurts like fuck","pounds horribly","twinges with an awful pain")].</span>")
 				owner.losebreath+=10
 				owner.changeStatus("weakened", 3 SECONDS)
-<<<<<<< HEAD
-		if (owner.health <= -100 && owner.reagents.has_reagent("synaptizine") && owner.reagents.has_reagent("atropine")) // Axes deathchance if you have synaptizine and atropine
-=======
 		if (owner.health <= -100 && owner.reagents.has_reagent("synaptizine") && owner.reagents.has_reagent("atropine")) // Axes deathchance if you have synaptizine & atropine
->>>>>>> medical-chems
 			var/deathchance = 0
 			if (prob(deathchance))
 				owner.death()
