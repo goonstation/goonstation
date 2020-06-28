@@ -679,7 +679,7 @@ CONTAINS:
 				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(2,5), "bandag"), user)
 				src.in_use = 1
 			else if (H.bleeding)
-				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 15, zone, 0, rand(3,5), "bandag"), user)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 1, zone, 0, rand(4,6), "bandag"), user)
 				src.in_use = 1
 			else
 				user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to bandage!", "red")

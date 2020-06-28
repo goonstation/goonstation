@@ -428,7 +428,7 @@ datum
 			fluid_g = 0
 			fluid_b = 255
 			transparency = 175
-			overdose = 40
+			overdose = 20
 			var/remove_buff = 0
 			value = 7
 			stun_resist = 31
