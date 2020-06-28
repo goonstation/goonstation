@@ -5,7 +5,7 @@ Here's just the basic conduct we require.
 
 Guidelines:
 1. You must enable 2 factor authentication on your github account and have a unique password.
-2. Do not close active, open, or non-stale pr's without consulting with a dev.
+2. Only close a PR if it violates Goonstation rules, or GitHub policies/terms of service.
 3. Do not create milestones without consulting with a dev.
 
 Relevant info:
