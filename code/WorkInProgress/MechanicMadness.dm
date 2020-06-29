@@ -121,7 +121,7 @@
 				if (M.loc==src)
 					continue
 				if(M.mechanics)
-					M.mechanics.connected_outgoing.-=comp
+					M.mechanics.connected_outgoing-=comp
 				comp.mechanics.connected_outgoing-=M
 				discons++
 			for(var/atom/M in comp.mechanics.connected_incoming)
