@@ -1019,6 +1019,10 @@
 	name = "Chemical Storage"
 	icon_state = "orange"
 
+/area/diner/arcade
+	name = "Bill E Bheezes"
+	icon_state = "red"
+
 /area/tech_outpost
 	name = "Tech Outpost"
 	icon_state = "storage"
