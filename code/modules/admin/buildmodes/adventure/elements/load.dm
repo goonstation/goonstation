@@ -141,8 +141,7 @@
 								var/obj/O
 								F["[base].OBJ.[objid].type"] >> objt
 								if (ispath(objt))
-									O = new objt()
-									O.set_loc(Q)
+									O = new objt(Q)
 									O.flags |= ISADVENTURE
 									var/result = O:deserialize(F, "[base].OBJ.[objid]", sandbox)
 									if (!istype(O, /obj/critter))
