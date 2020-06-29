@@ -597,3 +597,19 @@
 			O.show_message(text("<span class='alert'>[M] ate the [content ? content : "empty canister"]!</span>"), 1)
 		src.injest(M)
 */
+
+var/johnbill_ursdungeon_code = 0420
+
+/area/diner/arcade/New()
+		..()
+		var/list/insults = strings("johnbill.txt", "insults")
+		johnbill_ursdungeon_code = random_hex(4)
+		john_talk = "Eh [pick(insults)], so we got a couple a import sets in the wall there, uh... just don't let my bro at 'em. Again. [johnbill_ursdungeon_code] oughta do'er."
+
+/obj/item/storage/secure/ssafe/diner_arcade
+	configure_mode = 0
+	random_code = 0
+	spawn_contents = list(/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/spacecash/random/small,/obj/item/spacecash/random/small)
+	New()
+		..()
+		src.code = johnbill_ursdungeon_code
