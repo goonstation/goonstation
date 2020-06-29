@@ -19,6 +19,7 @@
 	metabolizes = 0
 
 	death(var/gibbed)
+		..(gibbed, 0)
 		if (!gibbed)
 			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
@@ -27,7 +28,6 @@
 		else
 			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
-			..()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
