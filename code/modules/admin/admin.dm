@@ -1229,6 +1229,18 @@ var/global/noir = 0
 			else
 				alert("You need to be at least a Secondary Administrator to modify the bioeffects of a player.")
 
+		if ("checkbioeffect_add")
+			if(src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				var/input = input(usr, "Enter a /datum/bioEffect path or partial name.", "Add a Bioeffect", null) as null|text
+				input = get_one_match(input, "/datum/bioEffect")
+				var/datum/bioEffect/be_to_add = text2path("[input]")
+				if (be_to_add)
+					M.bioHolder.AddEffect(initial(be_to_add.id))
+					usr.client.cmd_admin_checkbioeffect(M)
+			else
+				alert("You need to be at least a Secondary Administrator to add bioeffects to a player.")
+
 		if ("checkbioeffect_refresh")
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
@@ -4398,17 +4410,20 @@ var/global/noir = 0
 		}
 
 		.right {
-    	text-align: right;
-    	float: right;
+			text-align: right;
+			float: right;
 		}
 		</style>
 		</head>
 		<body>
 		<h3><B>Bioeffects of [M.name]
 		<div class="right">
-        <a href='?src=\ref[src.holder];action=checkbioeffect_refresh;target=\ref[M];origin=bioeffect_check'>&#8635;</a></B></h3>
+			<a href='?src=\ref[src.holder];action=checkbioeffect_refresh;target=\ref[M];origin=bioeffect_check'>&#8635;</a></B></h3>
     </div>
-		<h4>(Stability: [M.bioHolder.genetic_stability])</h4>
+		<h4>(Stability: [M.bioHolder.genetic_stability])
+		<div class="right">
+			<a href='?src=\ref[src.holder];action=checkbioeffect_add;target=\ref[M];origin=bioeffect_check'>+</a></B></h4>
+    </div>
 		<table>
 			<tr>
 				<th>Remove</th>
