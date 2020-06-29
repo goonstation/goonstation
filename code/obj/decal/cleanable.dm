@@ -742,11 +742,12 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	random_icon_states = null
 	plane = PLANE_NOSHADOW_BELOW
 
+	// This is a big sprite that covers up most of the turf, so here's a way to interact with turfs without bludgeoning the rust
 	attack_hand(obj/M, mob/user)
 		return 0
 
 	attackby(obj/item/W, mob/user)
-		if (issnippingtool(W))
+		if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop))
 			..()
 		else
 			src.loc.attackby(user.equipped(), user)
@@ -1193,11 +1194,12 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		icon_state = "dirt_jen"
 		plane = PLANE_NOSHADOW_BELOW
 
+		// This is a big sprite that covers up most of the turf, so here's a way to interact with turfs without bludgeoning the dirt
 		attack_hand(obj/M, mob/user)
 			return 0
 
 		attackby(obj/item/W, mob/user)
-			if (issnippingtool(W))
+			if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop))
 				..()
 			else
 				src.loc.attackby(user.equipped(), user)
