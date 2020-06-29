@@ -128,8 +128,8 @@
         return 0
 
     proc/stat_reset()
-        if(force != 6)
-            force = 6
+        if(force != 5)
+            force = 5
         else
             return
         stamina_damage = 10
