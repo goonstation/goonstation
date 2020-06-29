@@ -454,10 +454,16 @@
 			return
 
 		kendo_light
+			name = "Light Attack"
+			desc = "A weak, but fast and economic attack."
 			staminaCost = 5
 
-		kendo_overhead
+		kendo_heavy
+			name = "Heavy Attack"
+			desc = "A powerful, but slow and draining attack."
 			staminaCost = 30
+			moveDelay = 5
+			moveDelayDuration = 5
 
 	rangestab
 		cooldown = 0 //10
@@ -503,6 +509,8 @@
 			return
 
 		kendo_thrust
+			name = "Thrust"
+			desc = "A powerful ranged stab."
 			staminaCost = 8
 			damageMult = 1
 
@@ -623,7 +631,8 @@
 				return
 
 		kendo_sweep
-			name = "Kendo Sweep"
+			name = "Sweep"
+			desc = "An AoE attack with a chance to disarm."
 			//cooldown = 0 //30
 			staminaCost = 15
 			swipe_color = "#a3774d"

@@ -4,7 +4,7 @@
 
 /obj/item/clothing/head/helmet/men
     name = "men (面)"
-    desc = ""
+    desc = "A light padded helmet with a grilled faceplate to protect the user in a kendo match."
     icon_state = "men"
     item_state = "men"
     seal_hair = 1
@@ -17,7 +17,7 @@
 
 /obj/item/clothing/suit/armor/douandtare
     name = "dou and tare (胴と垂れ)"
-    desc = ""
+    desc = "A breastplate and padded skirt used primarily in kendo."
     icon_state = "dou-tare"
     item_state = "dou-tare"
     body_parts_covered = TORSO | LEGS
@@ -34,7 +34,7 @@
 
 /obj/item/clothing/gloves/kote
     name = "kote (小手)"
-    desc = ""
+    desc = "Big poofy gloves to cover the hands in kendo sparring."
     icon_state = "kote"
     item_state = "kote"
     material_prints = "navy blue, synthetic leather fibers"
@@ -53,7 +53,7 @@
 
 /obj/item/shinai
     name = "shinai (竹刀)"
-    desc = ""
+    desc = "A sword-like weapon made of slats of bamboo. Shinai are made to reflect the weight of a katana, but disperse impact on hit to minimize damage."
     icon = 'icons/obj/items/weapons.dmi'
     inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
     icon_state = "shinai"
@@ -103,14 +103,40 @@
                 force = 10.0
                 stamina_damage = 25
                 stamina_cost = 30.0
-                item_state = "shinai-overhead"
-                src.setItemSpecial(/datum/item_special/simple/kendo_overhead)
+                item_state = "shinai-heavy"
+                item_state = "shinai-heavy"
+                src.setItemSpecial(/datum/item_special/simple/kendo_heavy)
         user.update_inhands()
         src.buildTooltipContent()
+
+    proc/parry_block_check(var/mob/living/carbon/human/attacker,var/mob/living/carbon/human/defender)
+        if((attacker.a_intent == defender.a_intent) && !defender.hasStatus("disorient"))
+            //visuals
+            //sound
+
+            //stagger opponent
+            attacker.do_disorient()
+            SPAWN_DBG(1 SECOND)
+                attacker.delStatus("disorient")
+            return 1
+
+        //check for blocking after parrying
+
+        return 0
 
     intent_switch_trigger(mob/user as mob)
         if(guard != user.a_intent)
             change_guard(user,user.a_intent)
+
+    attack(mob/living/carbon/human/defender as mob, mob/living/carbon/human/attacker as mob)
+        if(ishuman(defender))
+            //var/mob/living/carbon/human/D = defender
+            if(defender.equipped() && istype(defender.equipped(),/obj/item/shinai))
+                var/obj/item/shinai/S = defender.equipped()
+                var/parry_block = S.parry_block_check(attacker,defender)
+                if((parry_block == 1) || (parry_block == 2))
+                    return
+        ..()
 
     attack_hand(mob/user as mob)
         if(src.loc != user)
