@@ -63,11 +63,44 @@
 	required_elapsed_round_time = 5 MINUTES
 
 	var/ghost_confirmation_delay = 1 MINUTES // time to acknowledge or deny respawn offer.
-	var/list/pest_invasion_critter_types = list(\
-	list(/mob/living/critter/spider/baby),\
-	list(/mob/living/critter/fire_elemental),\
-	list(/mob/living/critter/gunbot),)
 
+	var/list/pest_invasion_critter_datums = list(
+		list(new /datum/eventSpawnedCritter(
+			critter_types = list(/mob/living/critter/spider/baby),
+			drop_tables = list(
+				new /datum/event_item_drop_table(  // several baby spiders crawl out of the corpse like those horror short videos oh no
+					potential_drop_items = list(/obj/critter/spider/baby),
+					number_of_rolls = 6
+					),
+				new /datum/event_item_drop_table(  // but on the bright side it drops an egg!
+					potential_drop_items = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
+																			/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/parrot,
+																			/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/skeleton, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/goose),
+					)
+				)
+			)
+		),
+		list(new /datum/eventSpawnedCritter(
+			critter_types = list(/mob/living/critter/fire_elemental),
+			drop_tables = list(
+				new /datum/event_item_drop_table(
+					potential_drop_items = list(/obj/item/mutation_orb/fire_orb, /obj/item/rejuvenation_feather, /obj/item/property_setter/fire_jewel)
+					)
+				)
+			)
+		),
+		list(new /datum/eventSpawnedCritter(
+			critter_types = list(/mob/living/critter/gunbot),
+			drop_tables = list(
+				new /datum/event_item_drop_table(
+					potential_drop_items = list(/obj/item/property_setter/reinforce, /obj/item/property_setter/thermal, /obj/item/property_setter/speedy),
+					remove_dropped_items = 1, number_of_rolls = 3, percent_droprate = 50, pity_drop_atleast_one = 1
+					)
+				)
+			)
+		),
+
+	)
 
 	admin_call(var/source)
 		if (..())
@@ -131,7 +164,7 @@
 			if (src.critter_type)
 				select = src.critter_type
 			else
-				select = pick(src.pest_invasion_critter_types)
+				select = pick(src.pest_invasion_critter_datums)
 
 			if (src.num_critters) //custom selected
 				src.num_critters = (min(src.num_critters, candidates.len))
@@ -144,7 +177,15 @@
 
 				var/datum/mind/M = pick(candidates)
 				if (M.current)
-					M.current.make_critter(pick(select), pestlandmark)
+					var/picked_critter = pick(select)
+					if (istype(picked_critter, /datum/eventSpawnedCritter)) // datum provided
+						var/datum/eventSpawnedCritter/picked_critter_datum = picked_critter
+						M.current.make_critter(pick(picked_critter_datum.critter_types), pestlandmark)
+						var/list/items_to_drop = picked_critter_datum.roll_for_items()
+						if (items_to_drop && length(items_to_drop))
+							M.current._AddComponent(list(/datum/component/drop_loot_on_death, items_to_drop))
+					else // only path provided
+						M.current.make_critter(picked_critter, pestlandmark)
 					bad_traitorify(M.current)
 				candidates -= M
 
