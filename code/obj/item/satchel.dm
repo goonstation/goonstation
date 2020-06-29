@@ -70,7 +70,7 @@
 					user.visible_message("<span class='notice'><b>[usr]</b> takes \a [getItem.name] out of \the [src].</span>",\
 					"<span class='notice'>You take \a [getItem.name] from [src].</span>")
 					user.put_in_hand_or_drop(getItem)
-
+					src.satchel_updateicon()
 		return ..(user)
 
 	proc/search_through(mob/user as mob)

@@ -1,5 +1,31 @@
 
+(t)sun jun 28 20
+(u)UrsulaMajor
+(+)There's a new arcade at the diner! I hear they have an "experimental" VR game there? Maybe Bill knows more about it.
+(t)sat jun 27 20
+(u)Gannets
+(p)1236
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Nuclear Operatives now use a weapon vendor on the Cairngorm to select their equipment.
+(*)Insert your requisition token in to the vendors in the armory to select gear from the sidearm, loadout and storage catagories. Build your own custom loadout!
+(*)Many elements of class crates and spawning equipment have been altered to enable this.
+(u)Flaborized
+(p)1137
+(e)🎨|sprites
+(*)Resprited ID cards, emags and dabbing licences.
+(u)Comrade f191
+(p)1237
+(e)🗺|mapping
+(*)Moved Arrivals on Manta to QM rather than Escape.
 (t)fri jun 26 20
+(u)Avatharian
+(p)1238
+(e)🐛|bug
+(+)Produce satchels now update their icon when removing items by hand.
+(u)pali
+(p)1235
+(e)🆕|feature
+(*)Cyborg eyes now glow in the dark.
 (u)Carbadox
 (p)1176
 (e)🆕|feature
