@@ -13,7 +13,7 @@
         ..()
         setProperty("coldprot", 10)
         setProperty("heatprot", 5)
-        setProperty("meleeprot_head", 4)
+        setProperty("meleeprot_head", 2)
 
 /obj/item/clothing/suit/armor/douandtare
     name = "dou and tare (胴と垂れ)"
@@ -27,9 +27,9 @@
     setupProperties()
         ..()
         setProperty("coldprot", 10)
-        setProperty("meleeprot", 10)
+        setProperty("meleeprot", 6)
         setProperty("rangedprot", 1)
-        setProperty("pierceprot", 5)
+        setProperty("pierceprot", 1)
         setProperty("movespeed", 1)
 
 /obj/item/clothing/gloves/kote
@@ -82,25 +82,25 @@
         guard = intent
         switch(guard)
             if("help")
-                force = 6.0
+                force = 5
                 stamina_damage = 10
                 stamina_cost = 5
                 item_state = "shinai-light"
                 src.setItemSpecial(/datum/item_special/simple/kendo_light)
             if("disarm")
-                force = 7.0
+                force = 6
                 stamina_damage = 10
                 stamina_cost = 8
                 item_state = "shinai-sweep"
                 src.setItemSpecial(/datum/item_special/swipe/kendo_sweep)
             if("grab")
-                force = 8
+                force = 7
                 stamina_damage = 15
                 stamina_cost = 10
                 item_state = "shinai-thrust"
                 src.setItemSpecial(/datum/item_special/rangestab/kendo_thrust)
             if("harm")
-                force = 9.0
+                force = 8
                 stamina_damage = 30
                 stamina_cost = 35
                 item_state = "shinai-heavy"
@@ -114,18 +114,29 @@
             return
 
         if((attacker.a_intent == defender.a_intent) && !defender.hasStatus("disorient"))
-            playsound(user, "sound/impact_sounds/kendo_parry_[pick(1,2,3)].ogg", 50, 1)
+            playsound(defender, "sound/impact_sounds/kendo_parry_[pick(1,2,3)].ogg", 50, 1)
             attacker.do_disorient()
             SPAWN_DBG(1 SECOND)
                 attacker.delStatus("disorient")
             return 1
 
         else if(defender.hasStatus("blocking"))
-            playsound(user, "sound/impact_sounds/kendo_block_[pick(1,2)].ogg", 50, 1)
+            playsound(defender, "sound/impact_sounds/kendo_block_[pick(1,2)].ogg", 50, 1)
             if(attacker.equipped())
-                defender.do_disorient((attacker.equipped().stamina_damage*3),0,0,0,0,1,null)
+                defender.do_disorient((attacker.equipped().stamina_cost*1.5),0,0,0,0,1,null)
             return 2
         return 0
+
+    proc/stat_reset()
+        if(force != 6)
+            force = 6
+        else
+            return
+        stamina_damage = 10
+        stamina_cost = 5
+        item_state = "shinai-light"
+        src.setItemSpecial(/datum/item_special/simple/kendo_light)
+        src.buildTooltipContent()
 
     intent_switch_trigger(mob/user as mob)
         if(guard != user.a_intent)
@@ -137,7 +148,19 @@
                 var/obj/item/shinai/S = defender.equipped()
                 var/parry_block = S.parry_block_check(attacker,defender)
                 if((parry_block == 1) || (parry_block == 2))
+                    attacker.do_disorient((attacker.equipped().stamina_damage),0,0,0,0,1,null)
                     return
+                else
+                    if((attacker.a_intent=="disarm") && prob(20))
+                        if(defender.equipped())
+                            var/obj/item/I = defender.equipped()
+                            defender.u_equip(I)
+                            I.set_loc(defender.loc)
+                            var/target_turf = get_offset_target_turf(I.loc,rand(5)-rand(5),rand(5)-rand(5))
+                            SPAWN_DBG(1 DECI SECOND)
+                                I.throw_at(target_turf,3,1)
+                                defender.show_text("<b>[attacker] knocks the [I] right out of your hands!</b>","red")
+                                attacker.show_text("<b>You knock the [I] right out of [defender]'s hands!</b>","green")
         ..()
 
     attack_hand(mob/user as mob)
@@ -145,13 +168,13 @@
             change_guard(user,user.a_intent)
         ..()
 
+    /*throw_begin(atom/target)
+        stat_reset()
+        ..()*/
+
     dropped(mob/user as mob)
         ..()
-        force = 6.0
-        stamina_damage = 10
-        stamina_cost = 5.0
-        item_state = "shinai-light"
-        src.setItemSpecial(/datum/item_special/simple/kendo_light)
+        stat_reset()
 
 //==========
 //Shinai Bag
@@ -215,3 +238,15 @@
             update_spront(user)
         else
             ..()
+
+/obj/item/storage/box/kendo_box
+	name = "kendo box"
+	desc = "A box full of kendo gear!"
+	icon_state = "sushibox"
+	spawn_contents = list(/obj/item/clothing/head/helmet/men=2,/obj/item/clothing/suit/armor/douandtare=2,/obj/item/clothing/gloves/kote=2,/obj/item/shinai_bag=1)
+
+/obj/item/storage/box/kendo_box/hakama
+    name = "hakama box"
+    desc = "A box full of hakama!"
+    icon_state = "box"
+    spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random=7)

@@ -601,17 +601,6 @@
 						if(isTarget(A))
 							A.attackby(master, user, params, 1)
 							attacked += A
-							if(prob(20) && istype(master,/obj/item/shinai) && ishuman(A))
-								var/mob/living/carbon/human/H = A
-								if(H.equipped())
-									var/obj/item/I = H.equipped()
-									H.u_equip(I)
-									I.set_loc(H.loc)
-									var/target_turf = get_offset_target_turf(I.loc,rand(5)-rand(5),rand(5)-rand(5))
-									SPAWN_DBG(1 DECI SECOND)
-										I.throw_at(target_turf,3,1)
-										H.show_text("<b>[user] knocks the [I] right out of your hands!</b>","red")
-										user.show_text("<b>You knock the [I] right out of [H]'s hands!</b>","green")
 							hit = 1
 
 				afterUse(user)
