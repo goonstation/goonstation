@@ -1127,7 +1127,6 @@ var/global/noir = 0
 					alert("You may only use this secret on human mobs.")
 					return
 				M.bioHolder.RemoveEffect(href_list["bioeffect"])
-				//message_admins("[key_name(usr)] removed the [href_list["bioeffect"]] bio-effect from [M.real_name].")
 				usr.client.cmd_admin_checkbioeffect(M)
 
 				message_admins("[key_name(usr)] removed the [href_list["bioeffect"]] bio-effect from [key_name(M)].")
@@ -1136,6 +1135,69 @@ var/global/noir = 0
 			else
 				alert("You need to be at least a Secondary Administrator to remove the bioeffects of a player.")
 				return
+
+		if ("checkbioeffect_chromosome")
+			if(src.level >= LEVEL_SA)
+				var/list/applicable_chromosomes = null
+				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
+				message_admins(BE)
+				if (istype(BE, /datum/bioEffect/power)) //powers
+					applicable_chromosomes = list("Stabilizer", "Reinforcer", "Weakener", "Camouflager", "Power Booster", "Energy Booster", "Synchronizer", "REMOVE CHROMOSOME")
+				else if (istype(BE, /datum/bioEffect)) //nonpowers
+					applicable_chromosomes = list("Stabilizer", "Reinforcer", "Weakener", "Camouflager", "REMOVE CHROMOSOME")
+				else
+					return
+
+				//ask the user what they want to add
+				switch (input(usr, "Select a chromosome", "Check Bioeffects") as null|anything in applicable_chromosomes)
+					if ("Stabilizer")
+						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						BE.holder.genetic_stability += BE.stability_loss //update mob stability
+						BE.stability_loss = 0
+						BE.name = "Stabilized " + BE.name
+						BE.altered = 1
+					if ("Reinforcer")
+						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						BE.curable_by_mutadone = 0
+						BE.name = "Reinforced " + BE.name
+						BE.altered = 1
+					if ("Weakener")
+						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						BE.reclaim_fail = 0
+						BE.reclaim_mats *= 2
+						BE.name = "Weakened " + BE.name
+						BE.altered = 1
+					if ("Camouflager")
+						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						BE.msgGain = ""
+						BE.msgLose = ""
+						BE.name = "Camouflaged " + BE.name
+						BE.altered = 1
+					if ("Power Booster")
+						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						BE:power = 1
+						BE.name = "Empowered " + BE.name
+						BE.altered = 1
+					if ("Energy Booster")
+						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						if(BE.cooldown != 0)
+							BE.cooldown /= 2
+						BE.name = "Energized " + BE.name
+						BE.altered = 1
+					if ("Synchronizer")
+						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						BE:safety = 1
+						BE.name = "Synchronized " + BE.name
+						BE.altered = 1
+					if ("REMOVE CHROMOSOME")
+						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+					else //user cancelled do nothing
+						return
+				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+				return
+
+			else
+				alert("You need to be at least a Secondary Administrator to modify the bioeffects of a player.")
 
 		if ("checkbioeffect_refresh")
 			if(src.level >= LEVEL_SA)
@@ -4262,6 +4324,23 @@ var/global/noir = 0
 
 	usr.Browse(built, "window=chatban;size=500x100")
 
+/datum/admins/proc/checkbioeffect_chromosome_clean(var/datum/bioEffect/BE)
+//cleanse a bioeffect
+	BE.altered = 0
+	BE.name = BE.global_instance.name
+	if (!BE.stability_loss) //reapply stability changes
+		BE.stability_loss = BE.global_instance.stability_loss
+		BE.holder.genetic_stability -= BE.stability_loss
+	BE.curable_by_mutadone = BE.global_instance.curable_by_mutadone
+	BE.reclaim_fail = BE.global_instance.reclaim_fail
+	BE.reclaim_mats = BE.global_instance.reclaim_mats
+	BE.msgGain = BE.global_instance.msgGain
+	BE.msgLose = BE.global_instance.msgLose
+	if (istype(BE, /datum/bioEffect/power)) //powers
+		BE:power = BE.global_instance:power
+		BE:cooldown = BE.global_instance:cooldown
+		BE:safety = BE.global_instance:safety
+
 /client/proc/cmd_admin_checkbioeffect(var/mob/M)
 	var/list/dat = list()
 	dat += {"
@@ -4304,6 +4383,7 @@ var/global/noir = 0
 				<th>Remove</th>
 				<th>ID</th>
 				<th>Name</th>
+				<th>Splice</th>
 			</tr>
 		"}
 
@@ -4314,6 +4394,7 @@ var/global/noir = 0
 				<td><a href='?src=\ref[src.holder];action=checkbioeffect_remove;target=\ref[M];bioeffect=[B.id];origin=bioeffect_check'>remove</a></td>
 				<td>[B.id]</td>
 				<td>[B.name]</td>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_chromosome;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>Splice</a></td>
 			</tr>"}
 	dat += "</table></body></html>"
 	usr.Browse(dat.Join(),"window=bioeffect_check;size=600x400")
