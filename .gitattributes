@@ -6,8 +6,9 @@
 *.dme	text
 *.dms	text
 *.dmf	text
+*.dmm text
 
-# BYOND Images, bytecode, maps
+# BYOND Images & bytecode
 *.dmi	binary
 *.dmb	binary
 
