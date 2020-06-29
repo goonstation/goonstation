@@ -1214,7 +1214,7 @@ var/global/noir = 0
 								if ("Yes")
 									BE:power = 1
 
-							var/cd = input(usr, "Cooldown? (Default is prefilled)", "Check Bioeffects", BE:cooldown)
+							var/cd = input(usr, "Enter a cooldown in deciseconds (Default is prefilled).", "Check Bioeffects", BE:cooldown)
 							if (cd)
 								BE:cooldown = cd
 					if ("REMOVE CHROMOSOME")
