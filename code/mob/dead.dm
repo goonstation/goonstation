@@ -146,25 +146,17 @@
 				var/dabbedfluff = pick("confused", "queasy", "disappointed", "strange")
 				var/dab_on_other = 0
 				for (var/mob/living/M in src.loc)
-					if (prob(1))
-						message = "<B>[src]</B> dabs so hard it sends them straight to hell!"
-						src.damn()
+					message = "<B>[src]</B> [dabfluff] dabs on [M]!"
+					dab_on_other = 1
+					ghostdabinate(src)
+					if (prob(95))
+						break
 					else
-						message = "<B>[src]</B> [dabfluff] dabs on [M]!"
-						dab_on_other = 1
-						ghostdabinate(src)
-						if (prob(95))
-							break
-						else
-							M.show_text("<i>You have \an [dabbedfluff] feeling for a moment, but it passes.</i>")
-							break
+						M.show_text("<i>You have \an [dabbedfluff] feeling for a moment, but it passes.</i>")
+						break
 				if (!dab_on_other)
-					if (prob(1))
-						message = "<B>[src]</B> dabs so hard it sends them straight to hell!"
-						src.damn()
-					else
-						ghostdabinate(src)
-						message = "<B>[src]</B> dabs [dabfluff]!"
+					ghostdabinate(src)
+					message = "<B>[src]</B> dabs [dabfluff]!"
 		else
 			src.show_text("Unusable emote '[act]'.", "blue")
 			return
