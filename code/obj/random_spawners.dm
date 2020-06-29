@@ -66,7 +66,7 @@
 			closet_check_spawn(new_item)
 
 	proc/closet_check_spawn(var/obj/item/new_item)
-		var/obj/storage/S = locate(/obj/storage) in src.loc.contents
+		var/obj/storage/S = locate(/obj/storage) in src.loc
 		if (S)
 			new new_item(S)
 		else
