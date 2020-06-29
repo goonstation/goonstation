@@ -79,6 +79,7 @@
     var/guard
 
     proc/change_guard(var/mob/user,var/intent)
+        user.do_disorient(10,0,0,0,0,0,null)
         guard = intent
         switch(guard)
             if("help")

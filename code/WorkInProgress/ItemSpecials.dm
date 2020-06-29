@@ -186,6 +186,8 @@
 
 	var/damageMult = 1
 
+	var/animation_color
+
 	var/manualTriggerOnly = 0 //If 1, the special will not trigger from normal "out of melee range" clicks but has to be triggered manually from somewhere.
 							  //This means none of the mouse procs or pixelaction will be called.
 
@@ -223,6 +225,8 @@
 		if(name == null || master == null) return
 		if(!user) user = usr
 		var/obj/itemspecialeffect/E = unpool(/obj/itemspecialeffect)
+		if(src.animation_color)
+			E.color = src.animation_color
 		E.setup(get_turf(user))
 		E.dir = direction
 		E.icon_state = name
@@ -438,6 +442,8 @@
 				var/turf/turf = get_step(master, direction)
 
 				var/obj/itemspecialeffect/simple/S = unpool(/obj/itemspecialeffect/simple)
+				if(src.animation_color)
+					S.color = src.animation_color
 				S.setup(turf)
 
 				var/hit = 0
@@ -457,6 +463,7 @@
 			name = "Light Attack"
 			desc = "A weak, but fast and economic attack."
 			staminaCost = 5
+			animation_color = "#a3774d"
 
 		kendo_heavy
 			name = "Heavy Attack"
@@ -464,6 +471,7 @@
 			staminaCost = 35
 			moveDelay = 5
 			moveDelayDuration = 5
+			animation_color = "#a3774d"
 
 	rangestab
 		cooldown = 0 //10
@@ -513,6 +521,7 @@
 			desc = "A powerful ranged stab."
 			staminaCost = 8
 			damageMult = 1
+			animation_color = "#a3774d"
 
 			onAdd()
 				return
