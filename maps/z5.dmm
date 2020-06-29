@@ -4201,6 +4201,11 @@
 /obj/table/reinforced/auto,
 /obj/decal/cleanable/dirt,
 /obj/machinery/cashreg,
+/obj/item/paper/tug/diner_arcade_invoice{
+	icon_state = "paper";
+	pixel_x = 6;
+	pixel_y = 3
+	},
 /turf/simulated/floor/arrival,
 /area/diner/hallway)
 "kI" = (

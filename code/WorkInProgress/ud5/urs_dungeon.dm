@@ -613,3 +613,14 @@ var/johnbill_ursdungeon_code = 0420
 	New()
 		..()
 		src.code = johnbill_ursdungeon_code
+
+/obj/item/paper/tug/diner_arcade_invoice
+    name = "Big Yank's Space Tugs, Limited."
+    desc = "Looks like a bill of sale."
+    info = {"<b>Client:</b> Bill, John
+            <br><b>Date:</b> TBD
+            <br><b>Articles:</b> Structure, Static. Pressurized. Duplex.
+            <br><b>Destination:</b> \"jes' hook it up anywhere it fits\"\[sic\]
+            <br>
+            <br><b>Total Charge:</b> 9,233 paid in full with bootleg cigarillos.
+            <br>Big Yank's Cheap Tug"}

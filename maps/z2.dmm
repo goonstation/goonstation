@@ -84487,10 +84487,6 @@
 	icon_state = "floor6"
 	},
 /area/centcom/offices/pali)
-"xUG" = (
-/obj/item/storage/secure/ssafe/diner_arcade,
-/turf/space/no_replace,
-/area)
 "ycl" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
@@ -88471,7 +88467,7 @@ aab
 aab
 cnw
 cnw
-xUG
+cnw
 cnw
 cnw
 cnw

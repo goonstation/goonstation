@@ -1,4 +1,7 @@
-
+(t)sun jun 28 20
+(u)UrsulaMajor
+(e)|
+(+)There's a new arcade at the diner! I hear they have an "experimental" VR game there? Maybe Bill knows more about it.
 (t)sat jun 27 20
 (u)Gannets
 (p)1236
