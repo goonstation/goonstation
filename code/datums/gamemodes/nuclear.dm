@@ -72,6 +72,18 @@
 			"the artifact lab" = list(/area/station/science/artifact),
 			"the genetics lab" = list(/area/station/medical/research))
 
+		else if (ismap("DONUT3"))
+			target_locations = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
+			"inner engineering (surrounding the singularity, not in it)" = list(/area/station/engine/inner),
+			"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
+			"the inner hall of the medbay" = list(/area/station/medical/medbay),
+			"the main hallway in research" = list(/area/station/science),
+			"the chapel" = list(/area/station/chapel/main),
+			"anywhere in escape (including the donut hole of the escape shuttle)" = list(/area/station/hallway/secondary/exit)m
+			"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+			"the Research Director's office" = list(/area/station/crew_quarters/hor),
+			"the Chief Engineer's office" = list(/area/station/engine/engineering/ce))
+
 		else if (ismap("DESTINY") || ismap("CLARION"))
 			target_locations = list("the main security room" = list(/area/station/security/main),
 			"the central research sector hub" = list(/area/station/science),
