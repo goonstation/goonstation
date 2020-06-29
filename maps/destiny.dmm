@@ -35010,6 +35010,7 @@
 	dir = 4;
 	icon_state = "pipe-j2"
 	},
+/obj/machinery/bot/duckbot,
 /turf/simulated/floor,
 /area/station/mining)
 "bjm" = (
