@@ -2631,12 +2631,6 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "gnome_containment";
-	name = "CONTAINMENT SHUTTERS"
-	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "atu" = (
@@ -47319,10 +47313,6 @@
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/machinery/door_control{
-	name = "CONTAINMENT SHUTTERS";
-	pixel_x = -23
-	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "oNo" = (
