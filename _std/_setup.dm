@@ -2,6 +2,7 @@
 // so that it already has the defines for the later files that use them.
 */
 
+//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1 //Uncomment this to just skip everything possible and get into the game asap.
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1 // uncomment this to use atlas as the single map. will horribly break things but speeds up compile/boot times.
 
 #define SKIP_FEA_SETUP 0 //Skip atmos setup

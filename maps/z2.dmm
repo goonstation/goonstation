@@ -40531,7 +40531,6 @@
 /area/afterlife/heaven/hydroponics)
 "bTQ" = (
 /turf/unsimulated/wall/titlecard{
-	icon_state = "hehe";
 	tag = "the_ss13_screen"
 	},
 /area/titlescreen)
@@ -83574,10 +83573,6 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/cogmap)
-"fgw" = (
-/obj/meme/right,
-/turf/space,
-/area/titlescreen)
 "fhy" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -83738,10 +83733,6 @@
 	icon_state = "13"
 	},
 /area/shuttle/escape/centcom/donut3)
-"ikZ" = (
-/obj/meme,
-/turf/space,
-/area/titlescreen)
 "iqT" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "14"
@@ -169590,7 +169581,7 @@ daz
 daz
 daz
 daz
-ikZ
+daz
 daz
 daz
 ajg
@@ -174422,7 +174413,7 @@ daz
 daz
 daz
 daz
-fgw
+daz
 daz
 daz
 ajg
