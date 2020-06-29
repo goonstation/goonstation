@@ -74,7 +74,6 @@
     flags = FPRINT | TABLEPASS | USEDELAY
     c_flags = EQUIPPED_WHILE_HELD
     item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
-    //DEV - needs block profile
 
     var/guard
 
@@ -115,16 +114,14 @@
             return
 
         if((attacker.a_intent == defender.a_intent) && !defender.hasStatus("disorient"))
-            //visuals
-            //sound
-
-            //stagger opponent
+            playsound(user, "sound/impact_sounds/kendo_parry_[pick(1,2,3)].ogg", 50, 1)
             attacker.do_disorient()
             SPAWN_DBG(1 SECOND)
                 attacker.delStatus("disorient")
             return 1
 
         else if(defender.hasStatus("blocking"))
+            playsound(user, "sound/impact_sounds/kendo_block_[pick(1,2)].ogg", 50, 1)
             if(attacker.equipped())
                 defender.do_disorient((attacker.equipped().stamina_damage*3),0,0,0,0,1,null)
             return 2

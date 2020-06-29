@@ -2192,6 +2192,8 @@
 	else
 		src.hand = !src.hand
 	hud.update_hands()
+	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER) && !src.equipped().two_handed)
+		src.equipped().intent_switch_trigger(src)
 
 /mob/living/carbon/human/emp_act()
 	boutput(src, "<span class='alert'><B>Your equipment malfunctions.</B></span>")

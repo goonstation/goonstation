@@ -610,7 +610,8 @@
 									var/target_turf = get_offset_target_turf(I.loc,rand(5)-rand(5),rand(5)-rand(5))
 									SPAWN_DBG(1 DECI SECOND)
 										I.throw_at(target_turf,3,1)
-										//DEV - chat feedback
+										H.show_text("<b>[user] knocks the [I] right out of your hands!</b>","red")
+										user.show_text("<b>You knock the [I] right out of [H]'s hands!</b>","green")
 							hit = 1
 
 				afterUse(user)
