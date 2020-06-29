@@ -129,8 +129,7 @@
 				animate_door_squeeze(A)
 				return 1
 			return 0
-		if (ismob(A)) return 1
-		else return 0
+		return 1
 
 	New(turf/location, var/to_spread)
 		src.to_spread = to_spread
