@@ -131,7 +131,6 @@
 					M.mechanics.connected_incoming-=comp
 				comp.mechanics.connected_incoming-=M
 				discons++
-		//src.visible_message("[src] DEBUG: broke [discons] connections </3")
 		return discons
 	disposing()
 		..()
@@ -184,10 +183,7 @@
 					qdel(src) // delet
 					return 0
 			return 1
-/*		afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-			if(src.get_trigger())
-				src.the_trigger.attack_hand(user) // pretend like the user manually clicked the button
-			return*/
+
 		MouseDrop(user)
 			if(src.open)
 				return ..()
@@ -1560,6 +1556,7 @@ var/list/mechanics_telepads = new/list()
 				if("Toggle Exact Match")
 					mechanics.exact_match = !mechanics.exact_match
 					boutput(user, "Exact match mode now [mechanics.exact_match ? "on" : "off"]")
+					tooltip_rebuild = 1
 
 	proc/dispatch(var/datum/mechanicsMessage/input)
 		if (level == 2) return
@@ -1629,6 +1626,7 @@ var/list/mechanics_telepads = new/list()
 	proc/addstr(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		buffer = "[buffer][input.signal]"
+		tooltip_rebuild = 1
 		return
 
 	proc/addstrsend(var/datum/mechanicsMessage/input)
@@ -2179,6 +2177,7 @@ var/list/mechanics_telepads = new/list()
 		if(level == 2) return
 		on = !on
 		input.signal = (on ? signal_on : signal_off)
+		tooltip_rebuild = 1
 		updateIcon()
 		SPAWN_DBG(0)
 			mechanics.fireOutgoing(input)
@@ -2796,8 +2795,8 @@ var/list/mechanics_telepads = new/list()
 		if (E.cell)
 			if (E.cell.charge(15) != 1) // Same as other recharger.
 				src.charging = 0
+				tooltip_rebuild = 1
 				src.updateIcon()
-
 		E.update_icon()
 		return
 
@@ -2805,6 +2804,7 @@ var/list/mechanics_telepads = new/list()
 		if(charging || !Gun || level == 2) return
 		if(!istype(Gun, /obj/item/gun/energy)) return
 		charging = 1
+		tooltip_rebuild = 1
 		updateIcon()
 		return
 
@@ -2948,11 +2948,11 @@ var/list/mechanics_telepads = new/list()
 	proc/setA(var/datum/mechanicsMessage/input)
 		if (!isnull(text2num(input.signal)))
 			A = text2num(input.signal)
-
+			tooltip_rebuild = 1
 	proc/setB(var/datum/mechanicsMessage/input)
 		if (!isnull(text2num(input.signal)))
 			B = text2num(input.signal)
-
+			tooltip_rebuild = 1
 	proc/evaluate()
 		switch(mode)
 			if("add")
