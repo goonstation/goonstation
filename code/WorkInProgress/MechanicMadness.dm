@@ -70,7 +70,7 @@
 			playsound(src.loc,'sound/items/screwdriver.ogg',50)
 			boutput(user,"<span class='notice'>You [src.open ? "unsecure" : "secure"] the [src]'s cover</span>")
 			src.updateIcon()
-			return
+			return 1
 		else if (iswrenchingtool(W))
 			if(!src.can_be_anchored)
 				boutput(user,"<span class='alert'>[src] cannot be anchored to the ground.</span>")
@@ -86,7 +86,7 @@
 			boutput(user,"<span class='notice'>You [src.anchored ? "anchor the [src] to" : "unsecure the [src] from"] the ground</span>")
 			if (!src.anchored)
 				src.destroy_outside_connections() //burn those bridges
-			return
+			return 1
 		else if (isweldingtool(W))
 			if (!src.can_be_welded)
 				boutput(user,"<span class='alert'>[src]'s cover cannot be welded shut.</span>")
@@ -98,10 +98,10 @@
 				src.welded=!src.welded
 				boutput(user,"<span class='notice'>You [src.welded ? "" : "un"]weld the [src]'s cover</span>")
 				src.updateIcon()
-				return
+				return 1
 		else
 			..()
-		return
+		return 1
 	proc/updateIcon()
 		if(src.welded)
 			src.icon_state=initial(src.icon_state)+"_w"
