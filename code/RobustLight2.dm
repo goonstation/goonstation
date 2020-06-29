@@ -865,7 +865,7 @@ atom
 					affected |= light.strip(++RL_Generation)
 
 			var/turf/L = get_turf(src)
-			if(src.loc == L) L.opaque_atom_count += new_opacity ? 1 : -1
+			if(src.loc == L && L) L.opaque_atom_count += new_opacity ? 1 : -1
 
 			src.opacity = new_opacity
 			for (var/datum/light/light in lights)
