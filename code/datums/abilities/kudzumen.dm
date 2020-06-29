@@ -321,6 +321,86 @@
 
 		return 0
 
+/datum/targetable/kudzu/seed
+	name = "Stealth"
+	desc = "Create a !"
+	icon_state = "seec"
+	targeted = 0
+	cooldown = 1 MINUTES
+	pointCost = 40
+
+	//This is basically all stolen from the seedplanter item.
+	cast(atom/T)
+		var/datum/controller/process/kudzu/K = get_master_kudzu_controller()
+		var/power = 1
+		if (istype(K))
+			var/count = K.detailed_count?.len
+			//The seeds available are based on the size of the kudzu. Doing a switch in case I want to add more levels later, idk. Could get whacky with it.
+			switch (count)
+				if (-INFINITY to 100)
+					power = 1
+				if (101 to 250)
+					power = 2
+				if (250 to INFINITY)
+					power = 3
+			DEBUG_MESSAGE("[holder.owner] used make seed when kudzu was [count].")
+
+		//lifted from the portable seed fab
+		var/list/usable = list()
+		for(var/datum/plant/A in hydro_controls.plant_species)
+			if (istype(A, /datum/plant/maneater))
+				//No maneaters for now, I'm afraid.
+				continue
+
+			//Yeah, I know this can look better. But I'm thinking I might throw these numbers and values out and set up a new thing for it so I'm doing this for now.
+			if (A.vending == 0 && power == 3)
+				usable += A
+			else if (A.vending == 1 && power >= 1)
+				usable += A
+			else if (A.vending == 2 && power >= 2)
+				usable += A
+
+		var/datum/plant/pick = input(usr, "Which seed do you want?", "Portable Seed Fabricator", null) in usable
+
+		if (pick)
+			var/obj/item/seed/S
+			if (pick.unique_seed)
+				S = new pick.unique_seed(holder.owner.loc)
+			else
+				S = new /obj/item/seed(holder.owner.loc,0)
+			S.generic_seed_setup(pick)
+			holder.owner.put_in_hand_or_drop(S)
+
+		return 0
+
+/datum/targetable/kudzu/growth
+	name = "Growth"
+	desc = "Encourage rapid growth of kudzu!"
+	icon_state = "seec"
+	targeted = 1
+	target_anything = 1
+	cooldown = 15 SECONDS
+	pointCost = 40
+	max_range = 2
+
+	cast(atom/target)
+		var/turf/T = get_turf(target)
+		if (isturf(T))
+			if (T.density)
+				boutput(holder.owner, "<span class='alert'>The kudzu can't seem to find purchase on this turf!</span>")
+				return 1
+
+			var/obj/spacevine/kudzu_tile = locate(/obj/spacevine) in T.contents
+			//If used on a current tile, call update_self() and give em more to_spread
+			if (istype(kudzu_tile))
+				kudzu_tile.growth += 10
+				kudzu_tile.to_spread += 5
+				kudzu_tile.update_self()
+				boutput(holder.owner, "<span class='notice'>You spray some nutrients on [kudzu_tile] to help it grow.</span>")
+			else
+				new/obj/spacevine/living(location=T, to_spread=4)
+				boutput(holder.owner, "<span class='notice'>Some of the kudzu attached to your body detaches and finds a new home on [T].</span>")
+
 /obj/screen/kudzu/meter
 	icon = 'icons/misc/32x64.dmi'
 	icon_state = "viney-0"
