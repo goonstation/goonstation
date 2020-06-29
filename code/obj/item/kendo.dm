@@ -136,7 +136,6 @@
 
     attack(mob/living/carbon/human/defender as mob, mob/living/carbon/human/attacker as mob)
         if(ishuman(defender))
-            //var/mob/living/carbon/human/D = defender
             if(defender.equipped() && istype(defender.equipped(),/obj/item/shinai))
                 var/obj/item/shinai/S = defender.equipped()
                 var/parry_block = S.parry_block_check(attacker,defender)
