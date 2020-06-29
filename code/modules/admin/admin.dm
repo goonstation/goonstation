@@ -1139,12 +1139,14 @@ var/global/noir = 0
 		if ("checkbioeffect_chromosome")
 			if(src.level >= LEVEL_SA)
 				var/list/applicable_chromosomes = null
+				var/is_power = 0 //for custom chromosome
 				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
 				message_admins(BE)
 				if (istype(BE, /datum/bioEffect/power)) //powers
-					applicable_chromosomes = list("Stabilizer", "Reinforcer", "Weakener", "Camouflager", "Power Booster", "Energy Booster", "Synchronizer", "REMOVE CHROMOSOME")
+					applicable_chromosomes = list("Stabilizer", "Reinforcer", "Weakener", "Camouflager", "Power Booster", "Energy Booster", "Synchronizer", "Custom", "REMOVE CHROMOSOME")
+					is_power = 1
 				else if (istype(BE, /datum/bioEffect)) //nonpowers
-					applicable_chromosomes = list("Stabilizer", "Reinforcer", "Weakener", "Camouflager", "REMOVE CHROMOSOME")
+					applicable_chromosomes = list("Stabilizer", "Reinforcer", "Weakener", "Camouflager", "Custom", "REMOVE CHROMOSOME")
 				else
 					return
 
@@ -1189,6 +1191,34 @@ var/global/noir = 0
 						BE:safety = 1
 						BE.name = "Synchronized " + BE.name
 						BE.altered = 1
+					if ("Custom") //build your own chromosome!
+						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						BE.altered = 1
+						var/prefix = input(usr, "Optional: Enter a custom name for your chromosome", "Check Bioeffects")
+						if (prefix)
+							BE.name = "[prefix] " + BE.name
+
+						switch (alert(usr, "Stabilized?", "Check Bioeffects", "Yes", "No"))
+							if ("Yes")
+								BE.holder.genetic_stability += BE.stability_loss //update mob stability
+								BE.stability_loss = 0
+
+						switch (alert(usr, "Reinforced?", "Check Bioeffects", "Yes", "No"))
+							if ("Yes")
+								BE.curable_by_mutadone = 0
+
+						if (is_power)
+							switch (alert(usr, "Synchronized?", "Check Bioeffects", "Yes", "No"))
+								if ("Yes")
+									BE:safety = 1
+
+							switch (alert(usr, "Power Boosted?", "Check Bioeffects", "Yes", "No"))
+								if ("Yes")
+									BE:power = 1
+
+							var/cd = input(usr, "Cooldown? (Default is prefilled)", "Check Bioeffects", BE:cooldown)
+							if (cd)
+								BE:cooldown = cd
 					if ("REMOVE CHROMOSOME")
 						if (BE.altered) checkbioeffect_chromosome_clean(BE)
 					else //user cancelled do nothing
