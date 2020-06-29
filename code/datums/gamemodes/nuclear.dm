@@ -79,8 +79,7 @@
 			"the inner hall of the medbay" = list(/area/station/medical/medbay),
 			"the main hallway in research" = list(/area/station/science),
 			"the chapel" = list(/area/station/chapel/main),
-			"anywhere in escape (including the donut hole of the escape shuttle)" = list(/area/station/hallway/secondary/exit)m
-			"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+			"the escape hallway" = list(/area/station/hallway/secondary/exit),
 			"the Research Director's office" = list(/area/station/crew_quarters/hor),
 			"the Chief Engineer's office" = list(/area/station/engine/engineering/ce))
 
