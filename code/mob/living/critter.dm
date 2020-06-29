@@ -663,7 +663,7 @@
 			return 1
 		return 0
 
-	death(var/gibbed)
+	death(var/gibbed, var/do_drop_equipment = 1)
 		if (src.organHolder)
 			// believe me i hate this as much as you do
 			// There is some sort of behavior on living critters that ejects all of their contents at the moment of death. We want to avoid that - brain should stay inside. HOWEVER I can't find where the ejection happens for the life of me!
@@ -686,7 +686,8 @@
 			setdead(src)
 			icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead"
 		empty_hands()
-		drop_equipment()
+		if (do_drop_equipment)
+			drop_equipment()
 		hud.update_health()
 		return ..(gibbed)
 
