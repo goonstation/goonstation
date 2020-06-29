@@ -15,6 +15,239 @@
 
 #define MECHFAILSTRING "You must be holding a Multitool to change Connections or Options."
 
+
+
+
+#define IN_CABINET (istype(src.loc,/obj/item/storage/mechanics))
+// mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
+//
+/obj/item/storage/mechanics // generic
+	name="Generic MechComp Housing"
+	desc="You should not bee seeing this! Call 1-800-CODER or just crusher it"
+	icon='icons/misc/mechanicsExpansion.dmi'
+	can_hold=list(/obj/item/mechanics)
+	deconstruct_flags = 0 //nope, so much nope.
+	slots=1
+	var/open=1
+	var/welded=0
+	var/can_be_welded=0
+	var/can_be_anchored=0
+	custom_suicide=1
+	ex_act(severity)
+		switch(severity)
+			if (1.0)
+				src.dispose() // disposing upon being blown up unlike all those decorative rocks on cog2
+				return
+			if (2.0)
+				//tbd, maybe unbolt/open?
+				return
+			if (3.0)
+				//??????
+				return
+		return
+	suicide(var/mob/user as mob) // lel
+		if (!src.user_can_suicide(user))
+			return 0
+		user.visible_message("<span class='alert'><b>[user] stares into the [src], trying to make sense of its function!</b></span>")
+		SPAWN_DBG(3 SECONDS)
+			user.visible_message("<span class='alert'><b>[user]'s brain melts!</b></span>")
+			playsound(get_turf(user), "sound/weapons/phaseroverload.ogg", 100)
+			user.take_brain_damage(69*420)
+		SPAWN_DBG(20 SECONDS)
+			if (user && !isdead(user))
+				user.suiciding = 0
+		return
+
+
+	attackby(obj/item/W as obj, mob/user as mob)
+
+		if (isscrewingtool(W))
+			if(src.welded)
+				boutput(user,"<span class='alert'>The [src] is welded shut.</span>")
+				return
+			src.does_not_open_in_pocket=src.open
+			src.open=!src.open
+			playsound(src.loc,'sound/items/screwdriver.ogg',50)
+			boutput(user,"<span class='notice'>You [src.open ? "unsecure" : "secure"] the [src]'s cover</span>")
+			src.updateIcon()
+			return
+		else if (iswrenchingtool(W))
+			if(!src.can_be_anchored)
+				boutput(user,"<span class='alert'>[src] cannot be anchored to the ground.</span>")
+				return
+			if(!src.open || src.welded)
+				boutput(user,"<span class='alert'>You are unable to access the [src]'s bolts as they are on the inside.</span>")
+				return
+			if(!isturf(src.loc) && !src.anchored)
+				boutput(user,"<span class='alert'>You cannot anchor a component housing inside something else.</span>")
+				return
+			src.anchored=!src.anchored
+			playsound(src.loc,'sound/items/Ratchet.ogg',50)
+			boutput(user,"<span class='notice'>You [src.anchored ? "anchor the [src] to" : "unsecure the [src] from"] the ground</span>")
+			if (!src.anchored)
+				src.destroy_outside_connections() //burn those bridges
+			return
+		else if (isweldingtool(W))
+			if (!src.can_be_welded)
+				boutput(user,"<span class='alert'>[src]'s cover cannot be welded shut.</span>")
+				return
+			if (src.open)
+				boutput(user,"Why would you want to weld something <i>open?</i>")
+				return
+			if(W:try_weld(user, 1))
+				src.welded=!src.welded
+				boutput(user,"<span class='notice'>You [src.welded ? "" : "un"]weld the [src]'s cover</span>")
+				src.updateIcon()
+				return
+		else
+			..()
+		return
+	proc/updateIcon()
+		if(src.welded)
+			src.icon_state=initial(src.icon_state)+"_w"
+			return
+		if(src.open)
+			src.icon_state=initial(src.icon_state)+"_open"
+		else
+			src.icon_state=initial(src.icon_state)+"_closed"
+		return
+	proc/destroy_outside_connections()
+		//called when the cabinet is unanchored
+		var/discons=0
+		for (var/atom/comp in src.contents)
+			if(!istype(comp.mechanics))
+				continue
+			for(var/atom/M in comp.mechanics.connected_outgoing)
+				if (M.loc==src)
+					continue
+				if(M.mechanics)
+					M.mechanics.connected_outgoing.-=comp
+				comp.mechanics.connected_outgoing-=M
+				discons++
+			for(var/atom/M in comp.mechanics.connected_incoming)
+				if (M.loc==src)
+					continue
+				if(M.mechanics)
+					M.mechanics.connected_incoming-=comp
+				comp.mechanics.connected_incoming-=M
+				discons++
+		//src.visible_message("[src] DEBUG: broke [discons] connections </3")
+		return discons
+	disposing()
+		..()
+		src.contents=null
+		return
+	get_desc()
+		if (src.welded)
+			.+=" It is welded shut."
+		else if (src.open)
+			.+=" Its cover has been opened."
+		if(src.anchored)
+			.+=" It is [src.open || src.welded ? "also" : ""] anchored to the ground."
+	housing_large // chonker
+		can_be_welded=1
+		can_be_anchored=1
+		slots=23 // wew, dont use this in-hand or equipped!
+		name="Component Cabinet"
+		desc="A rather chunky cabinet for storing up to 23 active mechanic components at once.<br>It can only be connected to external components when bolted to the floor.<br>"
+		w_class = 4.0 //all the weight
+		density=1
+		anchored=0
+		icon_state="housing_cabinet"
+		flags = FPRINT | EXTRADELAY | CONDUCT
+		attack_hand(mob/user as mob)
+			if(src.loc==user)
+				user.drop_item()
+				src.set_loc(get_turf(src))
+				return
+			if(src.open)
+				return MouseDrop(user) // no picking up
+			return
+	housing_handheld
+		var/obj/item/mechanics/trigger/trigger/the_trigger
+		slots=7
+		name="Device Frame"
+		desc="A massively shrunken component cabinet fitted with a handle and an external button. Due to the average mechanic's low arm strength, it only holds 6 components."
+		w_class = 3.0 // fits in backpacks but not pockets. no quickdraw honk boxess
+		density=0
+		anchored=0
+		icon_state="housing_handheld"
+		flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | ONBELT
+
+		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
+		proc/get_trigger()
+			if (!istype(src.the_trigger))
+				src.the_trigger = (locate(/obj/item/mechanics/trigger/trigger) in src.contents)
+				if (!istype(src.the_trigger)) //no trigger?
+					for(var/obj/item in src.contents)
+						item.loc=get_turf(src) // kick out any mechcomp
+					qdel(src) // delet
+					return 0
+			return 1
+/*		afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+			if(src.get_trigger())
+				src.the_trigger.attack_hand(user) // pretend like the user manually clicked the button
+			return*/
+		MouseDrop(user)
+			if(src.open)
+				return ..()
+			return
+		attack_hand(mob/user as mob)
+			if(src.get_trigger() && !src.open && src.loc==user)
+				src.the_trigger.attack_hand(user)
+				return
+			if(src.loc!=user)
+				return ..()
+			else if(src.open)
+				return MouseDrop(user)
+			return
+/obj/item/mechanics/trigger/trigger // stolen code from the Button
+	name = "Device Trigger"
+	desc = "This component is the integral button of a device frame. It cannot be removed from the device. Can be used by clicking on the device when the device's cover is closed"
+	icon_state = "comp_button"
+	var/icon_up = "comp_button"
+	var/icon_down = "comp_button1"
+	density = 1
+	anchored= 1
+	level=1
+	w_class = 4
+	New()
+		..()
+		src.append_default_configs()
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(ispulsingtool(W))
+			src.modify_configs()
+			return
+		attack_hand(user)
+
+	get_desc()
+		. += "<br><span class='notice'>Current Signal: [html_encode(sanitize(mechanics.outputSignal))].</span>"
+	attack_hand(mob/user as mob)
+		..()
+		if (!istype(src.loc,/obj/item/storage/mechanics/housing_handheld))
+			qdel(src) //if outside the gun, delet
+			return
+		if(level == 1)
+			src.icon_state=icon_down
+			SPAWN_DBG(1 SECOND)
+				src.updateIcon()
+			mechanics.fireOutgoing(mechanics.newSignal(mechanics.outputSignal))
+			playsound(get_turf(src),'sound/machines/keypress.ogg',30)
+		else
+			qdel(src) // it's somehow been unanchored or something, kill it
+		return
+	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+		qdel(src)// never should be outside of the gun (in someone's hands), so kill it
+		return
+	updateIcon()
+		icon_state = icon_up
+		return
+
+
+
+
+
+
 //Global list of telepads so we don't have to loop through the entire world aaaahhh.
 var/list/mechanics_telepads = new/list()
 
@@ -135,6 +368,18 @@ var/list/mechanics_telepads = new/list()
 	proc/dropConnect(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
 		if(!O || O == master || !O.mechanics) return //ZeWaka: Fix for null.mechanics
 
+		//check for connections out of unsecured cabinets
+		if((O.loc!=master.loc)&&(istype(master.loc,/obj/item/storage/mechanics) || istype(O.loc,/obj/item/storage/mechanics)))
+			if(istype(master.loc,/obj/item/storage/mechanics))
+				var/tmp/obj/item/storage/mechanics/cabinet=master.loc
+				if(!(cabinet).anchored)
+					boutput(usr,"<span class='alert'>Cannot create connection out of unsecured component housing</span>")
+					return
+			if(istype(O.loc,/obj/item/storage/mechanics))
+				var/tmp/obj/item/storage/mechanics/cabinet=master.loc //why this works is BYOND me
+				if(!cabinet.anchored)
+					boutput(usr,"<span class='alert'>Cannot create connection out of unsecured component housing</span>")
+					return
 		var/typesel = input(usr, "Use [master] as:", "Connection Type") in list("Trigger", "Receiver", "*CANCEL*")
 		if(typesel == "*CANCEL*") return
 		switch(typesel)
@@ -202,6 +447,7 @@ var/list/mechanics_telepads = new/list()
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = 1.0
 	level = 2
+	var/cabinet_banned = 0 // 1=cannot be attached to a housing/cabinet
 	var/under_floor = 0
 	var/can_rotate = 0
 	var/list/particles = new/list()
@@ -213,11 +459,6 @@ var/list/mechanics_telepads = new/list()
 		if (!(src in processing_items))
 			processing_items.Add(src)
 		return ..()
-
-	disposing()
-		// mechanics disposed in /atom
-		processing_items.Remove(src)
-		..()
 
 	proc/cutParticles()
 		if(particles.len)
@@ -244,7 +485,7 @@ var/list/mechanics_telepads = new/list()
 		else return ..(user)
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.attack_hand(user) // WHY
 	proc/secure()
 	proc/loosen()
 	proc/append_default_configs(var/modifier) //no modifier adds all, 1 = add "Set Send-Signal", 2 = add "Disconnect All"
@@ -261,7 +502,7 @@ var/list/mechanics_telepads = new/list()
 			return
 		if(src.configs.len)
 			var/input = input("Select a config to modify!", "Config", null) as null|anything in src.configs
-			if(input && (usr in range(1,src)))
+			if(input && ((usr in range(1,src)) || (usr in range(1,src.loc)) || (usr in range(1,src.loc.loc)) || (src.loc.loc==usr) || (src.loc.loc.loc==usr)))
 				switch(input)
 					if("Set Send-Signal")
 						var/inp = input(usr,"Please enter Signal:","Signal setting","1") as text
@@ -299,9 +540,12 @@ var/list/mechanics_telepads = new/list()
 					anchored = 0
 					loosen()
 				if(2) //Level 2 = loose
-					if(!isturf(src.loc))
-						boutput(usr, "<span class='alert'>[src] needs to be on the ground for that to work.</span>")
+					if(!isturf(src.loc) && !(IN_CABINET)) // allow items to be deployed inside housings, but not in other stuff like toolboxes
+						boutput(usr, "<span class='alert'>[src] needs to be on the ground  [src.cabinet_banned ? "" : "or in a component housing"] for that to work.</span>")
 						return 0
+					if(IN_CABINET && src.cabinet_banned)
+						boutput(usr,"<span class='alert'>[src] is not allowed in component housings.</span>")
+						return
 					//var/turf/T = src.loc
 					//var/can_deploy = 1
 					/*if (T.density) // a wall or something
@@ -314,8 +558,8 @@ var/list/mechanics_telepads = new/list()
 					if (!can_deploy)
 						boutput(usr, "<span class='alert'>There's something in the way of [src], it can't be attached here!</span>")
 						return 0*///why. why.
-					boutput(user, "You attach the [src] to the underfloor and activate it.")
-					logTheThing("station", usr, null, "attaches a <b>[src]</b> to the underfloor  at [log_loc(src)].")
+					boutput(user, "You attach the [src] to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
+					logTheThing("station", usr, null, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
 					anchored = 1
 					secure()
@@ -428,7 +672,6 @@ var/list/mechanics_telepads = new/list()
 							inp = 1000000
 							user.show_text("[src] is not designed to handle such large transactions. Input has been set to the allowable limit.", "red")
 						price = inp
-						tooltip_rebuild = 1
 						boutput(user, "Price set to [inp]")
 				if ("Set Code")
 					if (code)
@@ -464,7 +707,6 @@ var/list/mechanics_telepads = new/list()
 					user.put_in_hand_or_drop(C)
 
 				collected += price
-				tooltip_rebuild = 1
 				current_buffer = 0
 
 				usr.drop_item()
@@ -483,14 +725,13 @@ var/list/mechanics_telepads = new/list()
 			var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
 			S.setup(get_turf(src), collected)
 			collected = 0
-			tooltip_rebuild = 1
 		return
 
 /obj/item/mechanics/flushcomp
 	name = "Flusher component"
 	desc = ""
 	icon_state = "comp_flush"
-
+	cabinet_banned = 1
 	var/ready = 1
 	var/obj/disposalpipe/trunk/trunk = null
 	var/datum/gas_mixture/air_contents
@@ -689,6 +930,7 @@ var/list/mechanics_telepads = new/list()
 	icon = 'icons/obj/networked.dmi'
 	icon_state = "secdetector0"
 	can_rotate = 1
+	cabinet_banned = 1 // abusable. B&
 	var/range = 5
 	var/list/beamobjs = new/list(5)//just to avoid someone doing something dumb and making it impossible for us to clear out the beams
 	var/active = 0
@@ -805,6 +1047,7 @@ var/list/mechanics_telepads = new/list()
 	desc = ""
 	icon_state = "comp_accel"
 	can_rotate = 1
+	cabinet_banned = 1 // non-functional
 	var/active = 0
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
@@ -892,7 +1135,6 @@ var/list/mechanics_telepads = new/list()
 					inp = max(inp, 10)
 					if(inp)
 						delay = inp
-						tooltip_rebuild = 1
 						boutput(user, "Set delay to [inp]")
 				if("Toggle Signal Changing")
 					changesig = !changesig
@@ -947,7 +1189,6 @@ var/list/mechanics_telepads = new/list()
 					var/inp = input(user, "Enter Time Frame in 10ths of a second:", "Set Time Frame", timeframe) as num
 					if(inp)
 						timeframe = inp
-						tooltip_rebuild = 1
 						boutput(user, "Set Time Frame to [inp]")
 
 	proc/fire1(var/datum/mechanicsMessage/input)
@@ -1059,7 +1300,6 @@ var/list/mechanics_telepads = new/list()
 					if(length(inp))
 						inp = strip_html(html_decode(inp))
 						mechanics.triggerSignal = inp
-						tooltip_rebuild = 1
 						boutput(user, "Trigger Field set to [inp]")
 
 	proc/split(var/datum/mechanicsMessage/input)
@@ -1135,7 +1375,6 @@ var/list/mechanics_telepads = new/list()
 					if(length(inp))
 						expressionrepl = inp
 						boutput(user, "Replacement set to [html_encode(inp)]")
-			tooltip_rebuild = 1
 
 	proc/checkstr(var/datum/mechanicsMessage/input)
 		if(level == 2 || !length(expressionpatt)) return
@@ -1153,11 +1392,9 @@ var/list/mechanics_telepads = new/list()
 		return
 	proc/setregex(var/datum/mechanicsMessage/input)
 		expression = input.signal
-		tooltip_rebuild = 1
 
 	proc/setregexreplace(var/datum/mechanicsMessage/input)
 		expressionrepl = input.signal
-		tooltip_rebuild = 1
 
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_regrep"
@@ -1206,11 +1443,9 @@ var/list/mechanics_telepads = new/list()
 				if("Toggle Signal replacing")
 					replacesignal = !replacesignal
 					boutput(user, "[replacesignal ? "Now forwarding own Signal":"Now forwarding found String"]")
-			tooltip_rebuild = 1
 
 	proc/setregex(var/datum/mechanicsMessage/input)
 		expression = input.signal
-		tooltip_rebuild = 1
 	proc/checkstr(var/datum/mechanicsMessage/input)
 		if(level == 2 || !length(expression)) return
 		var/regex/R = new(expressionpatt, expressionflag)
@@ -1267,7 +1502,7 @@ var/list/mechanics_telepads = new/list()
 				if("Toggle Replace Signal")
 					changesig = !changesig
 					boutput(user, "Signal changing now [changesig ? "on":"off"]")
-			tooltip_rebuild = 1
+
 	proc/checkstr(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		if(findtext(input.signal, mechanics.triggerSignal))
@@ -1282,7 +1517,6 @@ var/list/mechanics_telepads = new/list()
 
 	proc/settrigger(var/datum/mechanicsMessage/input)
 		mechanics.triggerSignal = input.signal
-		tooltip_rebuild = 1
 
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_check"
@@ -1312,7 +1546,6 @@ var/list/mechanics_telepads = new/list()
 				if("Toggle Exact Match")
 					mechanics.exact_match = !mechanics.exact_match
 					boutput(user, "Exact match mode now [mechanics.exact_match ? "on" : "off"]")
-					tooltip_rebuild = 1
 
 	proc/dispatch(var/datum/mechanicsMessage/input)
 		if (level == 2) return
@@ -1362,11 +1595,10 @@ var/list/mechanics_telepads = new/list()
 					inp = strip_html(inp)
 					astr = inp
 					boutput(user, "String set to [inp]")
-			tooltip_rebuild = 1
+
 	proc/clrbff(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		buffer = ""
-		tooltip_rebuild = 1
 		return
 
 	proc/sendstr(var/datum/mechanicsMessage/input)
@@ -1376,19 +1608,16 @@ var/list/mechanics_telepads = new/list()
 		input.signal = finished
 		mechanics.fireOutgoing(input)
 		buffer = ""
-		tooltip_rebuild = 1
 		return
 
 	proc/addstr(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		buffer = "[buffer][input.signal]"
-		tooltip_rebuild = 1
 		return
 
 	proc/addstrsend(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		buffer = "[buffer][input.signal]"
-		tooltip_rebuild = 1
 		sendstr(input)
 		return
 
@@ -1421,7 +1650,6 @@ var/list/mechanics_telepads = new/list()
 				if("Toggle Signal Changing")
 					changesig = !changesig
 					boutput(user, "Signal changing now [changesig ? "on":"off"]")
-			tooltip_rebuild = 1
 
 	proc/relay(var/datum/mechanicsMessage/input)
 		if(level == 2 || !ready) return
@@ -1476,13 +1704,11 @@ var/list/mechanics_telepads = new/list()
 	proc/storefile(var/datum/mechanicsMessage/input)
 		if (level == 2 || !input.data_file) return
 		src.stored_file = input.data_file.copy_file()
-		tooltip_rebuild = 1
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/deletefile(var/datum/mechanicsMessage/input)
 		if (level == 2 || !src.stored_file) return
 		src.stored_file = null
-		tooltip_rebuild = 1
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	updateIcon()
@@ -1545,7 +1771,7 @@ var/list/mechanics_telepads = new/list()
 				if("Toggle Forward All")
 					send_full = !send_full
 					boutput(user, "[send_full ? "Now forwarding all Radio Messages as they are.":"Now processing only sendmsg and normal PDA messages."]")
-			tooltip_rebuild = 1
+
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		var/newfreq = text2num(input.signal)
 		if(!newfreq) return
@@ -1622,7 +1848,6 @@ var/list/mechanics_telepads = new/list()
 
 	proc/set_frequency(new_frequency)
 		if(!radio_controller) return
-		tooltip_rebuild = 1
 		new_frequency = max(1000, min(new_frequency, 1500))
 		radio_controller.remove_object(src, "[frequency]")
 		frequency = new_frequency
@@ -1724,14 +1949,12 @@ var/list/mechanics_telepads = new/list()
 				if("Toggle Allow Duplicate Entries")
 					allowDuplicates = !allowDuplicates
 					boutput(user, "[allowDuplicates ? "Allowing addition of duplicate items." : "Not allowing addition of duplicate items."]")
-			tooltip_rebuild = 1
 
 	proc/selitem(var/datum/mechanicsMessage/input)
 		if(!input) return
 
 		if(signals.Find(input.signal))
 			current_index = signals.Find(input.signal)
-			tooltip_rebuild = 1
 
 		if(announce)
 			componentSay("Current Selection : [signals[current_index]]")
@@ -1742,7 +1965,6 @@ var/list/mechanics_telepads = new/list()
 
 		if(signals.Find(input.signal))
 			current_index = signals.Find(input.signal)
-			tooltip_rebuild = 1
 		else
 			return // Don't send out a signal if not found
 
@@ -1759,7 +1981,6 @@ var/list/mechanics_telepads = new/list()
 
 		if(signals.Find(input.signal))
 			signals.Remove(input.signal)
-			tooltip_rebuild = 1
 			if(announce)
 				componentSay("Removed : [input.signal]")
 
@@ -1770,7 +1991,6 @@ var/list/mechanics_telepads = new/list()
 
 		for(var/s in signals)
 			signals.Remove(s)
-		tooltip_rebuild = 1
 
 		if(announce)
 			componentSay("Removed all signals.")
@@ -1783,14 +2003,12 @@ var/list/mechanics_telepads = new/list()
 		if(allowDuplicates)
 			signals.Add(input.signal)
 			signals[input.signal] = 1
-			tooltip_rebuild = 1
 			if(announce)
 				componentSay("Added: [input.signal]")
 
 		else
 			if(!signals[input.signal])
 				signals[input.signal] = 1
-				tooltip_rebuild = 1
 				if(announce)
 					componentSay("Added: [input.signal]")
 			else if(announce)
@@ -1823,7 +2041,6 @@ var/list/mechanics_telepads = new/list()
 			current_index = 1
 		else
 			current_index++
-		tooltip_rebuild = 1
 
 		if(announce)
 			componentSay("Current Selection : [signals[current_index]]")
@@ -1836,7 +2053,6 @@ var/list/mechanics_telepads = new/list()
 			current_index = 1
 		else
 			current_index++
-		tooltip_rebuild = 1
 
 		if(announce)
 			componentSay("Current Selection : [signals[current_index]]")
@@ -1851,7 +2067,6 @@ var/list/mechanics_telepads = new/list()
 			current_index = signals.len
 		else
 			current_index--
-		tooltip_rebuild = 1
 
 		if(announce)
 			componentSay("Current Selection : [signals[current_index]]")
@@ -1864,7 +2079,6 @@ var/list/mechanics_telepads = new/list()
 			current_index = signals.len
 		else
 			current_index--
-		tooltip_rebuild = 1
 
 		if(announce)
 			componentSay("Current Selection : [signals[current_index]]")
@@ -1916,13 +2130,11 @@ var/list/mechanics_telepads = new/list()
 						inp = adminscrub(inp)
 						signal_off = inp
 						boutput(user, "Off-Signal set to [inp]")
-			tooltip_rebuild = 1
 
 	proc/activate(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		on = 1
 		input.signal = signal_on
-		tooltip_rebuild = 1
 		updateIcon()
 		SPAWN_DBG(0)
 			mechanics.fireOutgoing(input)
@@ -1932,7 +2144,6 @@ var/list/mechanics_telepads = new/list()
 		if(level == 2) return
 		on = 0
 		input.signal = signal_off
-		tooltip_rebuild = 1
 		updateIcon()
 		SPAWN_DBG(0)
 			mechanics.fireOutgoing(input)
@@ -1942,7 +2153,6 @@ var/list/mechanics_telepads = new/list()
 		if(level == 2) return
 		on = !on
 		input.signal = (on ? signal_on : signal_off)
-		tooltip_rebuild = 1
 		updateIcon()
 		SPAWN_DBG(0)
 			mechanics.fireOutgoing(input)
@@ -1963,6 +2173,7 @@ var/list/mechanics_telepads = new/list()
 	name = "Teleport Component"
 	desc = ""
 	icon_state = "comp_tele"
+	cabinet_banned = 1 // highly abusable in housings/cabinets
 	var/ready = 1
 	var/teleID = "tele1"
 	var/send_only = 0
@@ -1998,13 +2209,11 @@ var/list/mechanics_telepads = new/list()
 					else
 						src.overlays.Cut()
 					boutput(user, "Send-only Mode now [send_only ? "on":"off"]")
-			tooltip_rebuild = 1
 
 	proc/setidmsg(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		if(input.signal)
 			teleID = input.signal
-			tooltip_rebuild = 1
  		componentSay("ID Changed to : [input.signal]")
 		return
 
@@ -2093,7 +2302,7 @@ var/list/mechanics_telepads = new/list()
 					blue = min(blue, 1.0)
 
 					selcolor = rgb(red * 255, green * 255, blue * 255)
-					tooltip_rebuild = 1
+
 					light.set_color(red, green, blue)
 				if("Set Range")
 					var/inp = input(user,"Please enter Range(1 - 7):","Range setting", light_level) as num
@@ -2120,7 +2329,6 @@ var/list/mechanics_telepads = new/list()
 			if(active)
 				color = input.signal
 			selcolor = input.signal
-			tooltip_rebuild = 1
 			SPAWN_DBG(0) light.set_color(GetRedPart(selcolor) / 255, GetGreenPart(selcolor) / 255, GetBluePart(selcolor) / 255)
 
 	proc/turnon(var/datum/mechanicsMessage/input)
@@ -2239,7 +2447,6 @@ var/list/mechanics_telepads = new/list()
 		radio_controller.remove_object(src, "[frequency]")
 		frequency = new_frequency
 		radio_connection = radio_controller.add_object(src, "[frequency]")
-		tooltip_rebuild = 1
 
 	proc/hear_radio(mob/M as mob, msg, lang_id)
 		if (level == 2) return
@@ -2334,7 +2541,6 @@ var/list/mechanics_telepads = new/list()
 		if(..(W, user)) return
 		else if(ispulsingtool(W))
 			src.modify_configs()
-			tooltip_rebuild = 1
 			return
 		attack_hand(user)
 
@@ -2409,7 +2615,6 @@ var/list/mechanics_telepads = new/list()
 						if(!to_remove || to_remove == "*CANCEL*") return
 						src.active_buttons.Remove(to_remove)
 						boutput(user, "Removed button labeled [to_remove]")
-			tooltip_rebuild = 1
 
 	get_desc()
 		. += "<br><span class='notice'>Buttons:</span>"
@@ -2448,7 +2653,7 @@ var/list/mechanics_telepads = new/list()
 	can_rotate = 1
 	var/obj/item/gun/Gun = null
 	var/compatible_guns = /obj/item/gun/kinetic
-
+	cabinet_banned=1 // non-functional thankfully
 	get_desc()
 		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot() ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
 
@@ -2469,7 +2674,6 @@ var/list/mechanics_telepads = new/list()
 						logTheThing("station", user, null, "removes [Gun] from [src] at [log_loc(src)].")
 						Gun.loc = get_turf(src)
 						Gun = null
-						tooltip_flags &= ~REBUILD_ALWAYS
 					else
 						boutput(user, "<span class='alert'>There is no gun inside this component.</span>")
 		else if(istype(W, src.compatible_guns))
@@ -2479,7 +2683,6 @@ var/list/mechanics_telepads = new/list()
 				usr.drop_item()
 				Gun = W
 				Gun.loc = src
-				tooltip_flags |= REBUILD_ALWAYS
 			else
 				boutput(usr, "There is already a [Gun] inside the [src]")
 		else
@@ -2535,14 +2738,11 @@ var/list/mechanics_telepads = new/list()
 	process()
 		..()
 		if(level == 2)
-			if(charging)
-				charging = 0
-				tooltip_rebuild = 1
+			if(charging) charging = 0
 			return
 
 		if(!Gun && charging)
 			charging = 0
-			tooltip_rebuild = 1
 			updateIcon()
 
 		if(!istype(Gun, /obj/item/gun/energy) || !charging)
@@ -2555,14 +2755,12 @@ var/list/mechanics_telepads = new/list()
 			src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"This gun cannot be recharged manually.\"</span>")
 			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
 			charging = 0
-			tooltip_rebuild = 1
 			updateIcon()
 			return
 
 		if (E.cell)
 			if (E.cell.charge(15) != 1) // Same as other recharger.
 				src.charging = 0
-				tooltip_rebuild = 1
 				src.updateIcon()
 
 		E.update_icon()
@@ -2572,7 +2770,6 @@ var/list/mechanics_telepads = new/list()
 		if(charging || !Gun || level == 2) return
 		if(!istype(Gun, /obj/item/gun/energy)) return
 		charging = 1
-		tooltip_rebuild = 1
 		updateIcon()
 		return
 
@@ -2635,7 +2832,6 @@ var/list/mechanics_telepads = new/list()
 						logTheThing("station", user, null, "removes [instrument] from [src] at [log_loc(src)].")
 						instrument.loc = get_turf(src)
 						instrument = null
-						tooltip_rebuild = 1
 					else
 						boutput(user, "<span class='alert'>There is no instrument inside this component.</span>")
 			return
@@ -2672,7 +2868,6 @@ var/list/mechanics_telepads = new/list()
 			logTheThing("station", usr, null, "adds [W] to [src] at [log_loc(src)].")
 			usr.drop_item()
 			instrument.loc = src
-			tooltip_rebuild = 1
 
 /obj/item/mechanics/math
 	name = "Arithmetic Component"
@@ -2713,17 +2908,14 @@ var/list/mechanics_telepads = new/list()
 						B = input
 				if("Set Mode")
 					mode = input("Set the math mode to what?", "Mode Selector", mode) in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte")
-			tooltip_rebuild = 1
 
 	proc/setA(var/datum/mechanicsMessage/input)
 		if (!isnull(text2num(input.signal)))
 			A = text2num(input.signal)
-			tooltip_rebuild = 1
 
 	proc/setB(var/datum/mechanicsMessage/input)
 		if (!isnull(text2num(input.signal)))
 			B = text2num(input.signal)
-			tooltip_rebuild = 1
 
 	proc/evaluate()
 		switch(mode)
@@ -2765,3 +2957,4 @@ var/list/mechanics_telepads = new/list()
 	name = ""
 	icon = 'icons/misc/mechanicsExpansion.dmi'
 	icon_state = "connectionArrow"
+#undef IN_CABINET
