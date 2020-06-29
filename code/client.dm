@@ -173,98 +173,6 @@
 		)
 		src.loadResourcesFromList(chuiResources)
 
-
-	if (IsGuestKey(src.key))
-		if(!src.address || src.address == world.host)
-			world.log << ("Hello host or developer person! You're not logged into BYOND. Fix this so you can test your feature turned bug!")
-		SPAWN_DBG(0)//so, the below will only show if they're ingame so the spawn isn't a guarantee; for dev purposes shove an alert to solve some confusion. hence the above
-			var/gueststring = {"
-							<!doctype html>
-							<html>
-								<head>
-									<title>No guest logins allowed!</title>
-									<style>
-										h1, .banreason {
-											font-color:#F00;
-										}
-
-									</style>
-								</head>
-								<body>
-									<h1>No guest logins.</h1>
-									Don't forget to log in to your byond account prior to connecting to this server.
-								</body>
-							</html>
-						"}
-			src.mob.Browse(gueststring, "window=getout")
-			if (src)
-				del(src)
-			return
-
-
-
-	//We're limiting connected players to a whitelist of ckeys (but let active admins in)
-	if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
-		//Key not in whitelist, show them a vaguely sassy message and boot them
-		if (!(src.ckey in whitelistCkeys))
-			SPAWN_DBG(0)
-				var/whitelistString = {"
-								<!doctype html>
-								<html>
-									<head>
-										<title>Server Whitelist Enabled</title>
-										<style>
-											h1, .banreason {
-												font-color:#F00;
-											}
-
-										</style>
-									</head>
-									<body>
-										<h1>Server whitelist enabled</h1>
-										This server is currently limiting connections to specific players, and you aren't one of them. Goodbye!
-									</body>
-								</html>
-							"}
-				src.mob.Browse(whitelistString, "window=whiteout")
-				if (src)
-					del(src)
-				return
-
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
-	var/isbanned = checkBan(src.ckey, src.computer_id, src.address, record = 1)
-
-	if (isbanned)
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
-		logTheThing("diary", null, src, "Failed Login: %target% - Banned", "access")
-		if (announce_banlogin) message_admins("<span class='internal'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
-		SPAWN_DBG(0)
-			var/banstring = {"
-								<!doctype html>
-								<html>
-									<head>
-										<title>BANNED!</title>
-										<style>
-											h1, .banreason {
-												font-color:#F00;
-											}
-
-										</style>
-									</head>
-									<body>
-										<h1>You have been banned.</h1>
-										<span class='banreason'>Reason: [isbanned].</span><br>
-										If you believe you were unjustly banned, head to <a href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
-									</body>
-								</html>
-							"}
-			src.mob.Browse(banstring, "window=ripyou")
-			if (src)
-				del(src)
-			return
-
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
-
 	if (!istype(src.mob, /mob/new_player))
 		src.loadResources()
 
@@ -284,6 +192,95 @@
 
 	if (join_motd)
 		boutput(src, "<div class=\"motd\">[join_motd]</div>")
+
+	if (IsGuestKey(src.key))
+		if(!src.address || src.address == world.host)
+			world.log << ("Hello host or developer person! You're not logged into BYOND. Fix this so you can test your feature turned bug!")
+		var/gueststring = {"
+						<!doctype html>
+						<html>
+							<head>
+								<title>No guest logins allowed!</title>
+								<style>
+									h1, .banreason {
+										font-color:#F00;
+									}
+
+								</style>
+							</head>
+							<body>
+								<h1>Guest Login Denied</h1>
+								Don't forget to log in to your byond account prior to connecting to this server.
+							</body>
+						</html>
+					"}
+		src.mob.Browse(gueststring, "window=getout")
+		sleep(10)
+		if (src)
+			del(src)
+		return
+
+	//We're limiting connected players to a whitelist of ckeys (but let active admins in)
+	if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
+		//Key not in whitelist, show them a vaguely sassy message and boot them
+		if (!(src.ckey in whitelistCkeys))
+			var/whitelistString = {"
+							<!doctype html>
+							<html>
+								<head>
+									<title>Server Whitelist Enabled</title>
+									<style>
+										h1, .banreason {
+											font-color:#F00;
+										}
+
+									</style>
+								</head>
+								<body>
+									<h1>Server whitelist enabled</h1>
+									This server has a player whitelist ON. You are not on the whitelist and will now be forcibly disconnected.
+								</body>
+							</html>
+						"}
+			src.mob.Browse(whitelistString, "window=whiteout")
+			sleep(10)
+			if (src)
+				del(src)
+			return
+
+	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
+	var/isbanned = checkBan(src.ckey, src.computer_id, src.address, record = 1)
+
+	if (isbanned)
+		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
+		logTheThing("diary", null, src, "Failed Login: %target% - Banned", "access")
+		if (announce_banlogin) message_admins("<span class='internal'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
+		var/banstring = {"
+							<!doctype html>
+							<html>
+								<head>
+									<title>BANNED!</title>
+									<style>
+										h1, .banreason {
+											font-color:#F00;
+										}
+
+									</style>
+								</head>
+								<body>
+									<h1>You have been banned.</h1>
+									<span class='banreason'>Reason: [isbanned].</span><br>
+									If you believe you were unjustly banned, head to <a href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
+								</body>
+							</html>
+						"}
+		src.mob.Browse(banstring, "window=ripyou")
+		sleep(10)
+		if (src)
+			del(src)
+		return
+
+	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
 
 	//admins and mentors can enter a server through player caps.
 	if (init_admin())

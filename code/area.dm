@@ -988,8 +988,12 @@
 	icon_state = "showers"
 
 /area/diner/hallway
-	name = "Diner Hallway"
+	name = "Hallway"
 	icon_state = "blue"
+
+/area/diner/hallway/docking
+	name = "East Shuttle Docks"
+	icon_state = "purple"
 
 /area/diner/backroom
 	name = "Diner Backroom"
