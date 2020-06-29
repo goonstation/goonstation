@@ -2846,10 +2846,10 @@ var/list/mechanics_telepads = new/list()
 		var/signum = text2num(input.signal)
 		if (signum &&((signum >= 0.4 && signum <= 2) ||(signum <= -0.4 && signum >= -2) || pitchUnlocked))
 			flick("comp_instrument1", src)
-			playsound(src.loc, sounds, volume, 0, 0, signum)
+			playsound(get_turf(src), sounds, volume, 0, 0, signum)
 		else
 			flick("comp_instrument1", src)
-			playsound(src.loc, sounds, volume, 1)
+			playsound(get_turf(src), sounds, volume, 1)
 			return
 
 	updateIcon()
