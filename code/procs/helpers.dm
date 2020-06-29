@@ -1996,7 +1996,7 @@ proc/countJob(rank)
 /proc/whois_ckey_to_mob_reference(target as text, exact=1)
 	if (!target || isnull(target))
 		return 0
-	target = lowertext(target)
+	target = ckey(target)
 	var/mob/our_mob
 	for (var/mob/M in mobs)
 		if (!isnull(M.ckey) && !isnull(target) && (M.ckey == target || (!exact && findtext(M.ckey, target))))
