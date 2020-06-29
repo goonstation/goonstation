@@ -4267,7 +4267,7 @@ var/global/noir = 0
 	dat += {"
 		<html>
 		<head>
-		<title>Check Bioeffect</title>
+		<title>Check Bioeffects</title>
 		<style>
 		table {
 			border:1px solid #4CAF50;
