@@ -137,7 +137,7 @@
 		src.contents=null
 		return
 	get_desc()
-			.+="[src.welded ? " It is welded shut." : ""][src.open ? " Its cover has been opened." : ""][src.anchored ? "It is [src.open || src.welded ? "also" : ""] anchored to the ground." : ""]"
+		.+="[src.welded ? " It is welded shut." : ""][src.open ? " Its cover has been opened." : ""][src.anchored ? "It is [src.open || src.welded ? "also" : ""] anchored to the ground." : ""]"
 	housing_large // chonker
 		can_be_welded=1
 		can_be_anchored=1
