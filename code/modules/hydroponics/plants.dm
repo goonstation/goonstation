@@ -39,8 +39,6 @@ ABSTRACT_TYPE(/datum/plant)
 	var/harvest_tool_message // An output message for plants with unique harvest messages (string)
 	var/harvest_tool_fail_message // A helpful output message to players when they attempt to harvest a plant by hand
 	var/no_extract // Stops the extraction of seeds in the PlantMaster
-	var/action_bar_icon // icon file path for use with action bars
-	var/action_bar_icon_state // icon_state for use with action bars
 	var/list/required_reagents // reagents required for the plant to grow - formated like: list(list(id="poo",amount=100),list(id="thing",amount=number))
 
 	var/special_proc = 0 // Does this plant do something special when it's in the pot?
@@ -253,15 +251,7 @@ ABSTRACT_TYPE(/datum/plant)
 			duration = duration2
 		if(plant_pot.current.harvest_tools && (source.equipped() != null))
 			var/obj/item/I = source.equipped()
-			icon = I.icon
-			icon_state = I.icon_state
 			toolcheck = I
-		else
-			if(plant_pot.current.action_bar_icon)
-				icon = plant_pot.current.action_bar_icon
-			if(plant_pot.current.action_bar_icon_state)
-				icon_state = plant_pot.current.action_bar_icon_state
-
 		..()
 
 	onUpdate()
