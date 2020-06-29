@@ -1130,8 +1130,6 @@ var/global/noir = 0
 				usr.client.cmd_admin_checkbioeffect(M)
 
 				message_admins("[key_name(usr)] removed the [href_list["bioeffect"]] bio-effect from [key_name(M)].")
-				logTheThing("admin", usr, null, "removed the [href_list["bioeffect"]] bio-effect from [key_name(M)].")
-				logTheThing("diary", usr, null, "removed the [href_list["bioeffect"]] bio-effect from [key_name(M)].", "admin")
 			else
 				alert("You need to be at least a Secondary Administrator to remove the bioeffects of a player.")
 				return
@@ -1238,6 +1236,7 @@ var/global/noir = 0
 				if (be_to_add)
 					M.bioHolder.AddEffect(initial(be_to_add.id))
 					usr.client.cmd_admin_checkbioeffect(M)
+					message_admins("[key_name(usr)] added the [initial(be_to_add.id)] bio-effect from [key_name(M)].")
 			else
 				alert("You need to be at least a Secondary Administrator to add bioeffects to a player.")
 
