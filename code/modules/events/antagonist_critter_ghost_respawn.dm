@@ -1,3 +1,55 @@
+//defines an item drop table
+/datum/event_item_drop_table
+	var/list/potential_drop_items
+	var/remove_dropped_items
+	var/number_of_rolls
+	var/percent_droprate
+	var/pity_drop_atleast_one //if no item(s) at all dropped after rolling, just drop a single random one from the list
+
+	proc/roll_for_items()
+		var/list/dropped_items = list()
+		var/list/potential_drops = potential_drop_items.Copy()
+		for (var/i = 1 to number_of_rolls)
+			if (potential_drops && length(potential_drops))
+				if (prob(src.percent_droprate))
+					var/item_to_drop = pick(potential_drops)
+					if (remove_dropped_items)
+						potential_drops -= item_to_drop
+					dropped_items += item_to_drop
+
+		if (pity_drop_atleast_one)
+			if (!length(dropped_items)) //dropped_items is empty, aka we didn't drop any item, initiate pity drop
+				dropped_items = list(pick(potential_drops))
+		return dropped_items
+
+	New(potential_drop_items, remove_dropped_items = 0, number_of_rolls = 1, percent_droprate = 100, pity_drop_atleast_one = 0)
+		src.potential_drop_items = potential_drop_items
+		src.remove_dropped_items = remove_dropped_items
+		src.number_of_rolls = number_of_rolls
+		src.percent_droprate = percent_droprate
+		src.pity_drop_atleast_one = pity_drop_atleast_one
+
+
+//defines an event critter as well as any possible drop tables
+/datum/eventSpawnedCritter
+	var/list/critter_types // can be a list of just one, if multiple are present then one is picked at random, so similar mobs can be grouped together
+	var/list/datum/event_item_drop_table/drop_tables
+
+	proc/roll_for_items()
+		var/list/items_to_drop = list()
+		var/datum/event_item_drop_table/drop_table
+		for (drop_table in src.drop_tables)
+			var/drop_table_dropped_items = drop_table.roll_for_items()
+			if (drop_table_dropped_items)
+				items_to_drop.Add(drop_table.roll_for_items())
+
+		return items_to_drop
+
+	New(critter_types, drop_tables)
+		src.critter_types = critter_types
+		src.drop_tables = drop_tables
+
+
 //very similar to playable_pests.dm :)
 /datum/random_event/major/antag/antagonist_pest
 	name = "Antagonist Critter Spawn"
