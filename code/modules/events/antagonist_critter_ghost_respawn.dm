@@ -19,7 +19,7 @@
 
 		if (pity_drop_atleast_one)
 			if (!length(dropped_items)) //dropped_items is empty, aka we didn't drop any item, initiate pity drop
-				dropped_items = list(pick(potential_drops))
+				dropped_items += pick(potential_drops)
 		return dropped_items
 
 	New(potential_drop_items, remove_dropped_items = 0, number_of_rolls = 1, percent_droprate = 100, pity_drop_atleast_one = 0)
@@ -40,7 +40,7 @@
 		var/datum/event_item_drop_table/drop_table
 		for (drop_table in src.drop_tables)
 			var/drop_table_dropped_items = drop_table.roll_for_items()
-			if (drop_table_dropped_items)
+			if (drop_table_dropped_items && length(drop_table_dropped_items))
 				items_to_drop.Add(drop_table.roll_for_items())
 
 		return items_to_drop
@@ -73,7 +73,7 @@
 					number_of_rolls = 6
 					),
 				new /datum/event_item_drop_table(  // but on the bright side it drops an egg!
-					potential_drop_items = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
+					potential_drop_items = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/cluwne,
 																			/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/parrot,
 																			/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/skeleton, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/goose),
 					)
