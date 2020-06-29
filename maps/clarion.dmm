@@ -18252,10 +18252,29 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aIp" = (
+/obj/item/clothing/gloves/boxing{
+	pixel_x = -4
+	},
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/under/shorts/blue{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_x = 6
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/clothing/under/shorts/black{
+	pixel_x = -7;
+	pixel_y = -5
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aIq" = (
@@ -18878,10 +18897,30 @@
 /area/station/crew_quarters/fitness)
 "aJC" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/black,
-/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/head/helmet/men{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/clothing/head/helmet/men{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/clothing/suit/armor/douandtare{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/clothing/suit/armor/douandtare{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/clothing/gloves/kote{
+	pixel_x = -1
+	},
+/obj/item/clothing/gloves/kote{
+	pixel_x = -1
+	},
+/obj/item/shinai_bag,
+/obj/item/storage/box/kendo_box/hakama,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aJD" = (
@@ -23462,8 +23501,8 @@
 /obj/item/device/radio/headset/medical,
 /obj/item/device/radio/headset/medical,
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -23920,8 +23959,8 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
 	broadcasting = 0;
+	dir = 4;
 	layer = 6.02
 	},
 /obj/item_dispenser/idcarddispenser{
@@ -28394,8 +28433,8 @@
 	},
 /obj/item/paper/book/space_law,
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
 	broadcasting = 0;
+	dir = 4;
 	layer = 6.02
 	},
 /turf/simulated/floor/carpet{
@@ -33686,8 +33725,8 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
 	broadcasting = 0;
+	dir = 4;
 	layer = 6.02
 	},
 /turf/simulated/floor/escape{
@@ -40847,8 +40886,8 @@
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 4
 	},
 /obj/item/device/radio/intercom/bridge{
 	dir = 4

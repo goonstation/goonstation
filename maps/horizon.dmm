@@ -3438,8 +3438,8 @@
 /area/station/crew_quarters/quarters_east)
 "ait" = (
 /obj/decal/floatingtiles{
-	icon_state = "floattiles4";
-	dir = 4
+	dir = 4;
+	icon_state = "floattiles4"
 	},
 /turf/space,
 /area)
@@ -4491,8 +4491,8 @@
 	},
 /obj/lattice,
 /obj/decal/floatingtiles{
-	icon_state = "floattiles3";
-	dir = 8
+	dir = 8;
+	icon_state = "floattiles3"
 	},
 /turf/space,
 /area/station/engine/substation/pylon)
@@ -4709,8 +4709,8 @@
 	},
 /obj/lattice,
 /obj/decal/floatingtiles{
-	icon_state = "floattiles4";
-	dir = 4
+	dir = 4;
+	icon_state = "floattiles4"
 	},
 /turf/space,
 /area/station/engine/substation/pylon)
@@ -20917,8 +20917,8 @@
 	name = "Medical Doctor"
 	},
 /obj/item/device/radio/intercom/medical{
-	dir = 8;
-	broadcasting = 1
+	broadcasting = 1;
+	dir = 8
 	},
 /obj/stool/bed/moveable,
 /turf/simulated/floor/bluewhite{
@@ -42184,6 +42184,18 @@
 /area/station/crew_quarters/fitness)
 "bRV" = (
 /obj/machinery/atmospherics/pipe/manifold/south,
+/obj/storage/closet/dresser{
+	anchored = 1;
+	name = "costume dresser"
+	},
+/obj/item/clothing/head/helmet/men,
+/obj/item/clothing/head/helmet/men,
+/obj/item/clothing/suit/armor/douandtare,
+/obj/item/clothing/suit/armor/douandtare,
+/obj/item/clothing/gloves/kote,
+/obj/item/clothing/gloves/kote,
+/obj/item/shinai_bag,
+/obj/item/storage/box/kendo_box/hakama,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/fitness)
 "bRW" = (
