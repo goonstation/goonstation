@@ -207,20 +207,27 @@
 	onEnd()
 		..()
 		var/bunp //the name of the thing we have bunp'd into when trying to jump the railing
+		var/list/bunp_whitelist = list(/obj/railing, /obj/decal/stage_edge) // things that we cannot bunp into
 		if (jump_target.density)
 			bunp = jump_target.name
 			no_no_zone = 1
 		else
-			for(var/obj/o in jump_target.contents)
-				// if it's an exception to the bunp rule...
-				if(istype (o,/obj/railing) || istype(o, /obj/decal/stage_edge))
-					continue
+			for (var/obj/o in jump_target.contents)
+				for (var/i=1, i<=bunp_whitelist.len+1, i++) //+1 so we can actually go past the whitelist len check
+					if (!(i > bunp_whitelist.len))
+						// if it's an exception to the bunp rule...
+						if (istype (o, bunp_whitelist[i]))
+							break
 
-				// otherwise, if it's a dense thing...
-				if(o.density)
-					bunp = o.name
-					no_no_zone = 1
-					break
+					// don't proceed just yet if we aren't done going through the whitelist!
+					else if (i <= bunp_whitelist.len)
+						continue
+
+					// otherwise, if it's a dense thing...
+					else if (o.density)
+						bunp = o.name
+						no_no_zone = 1
+						break
 
 		if(no_no_zone)
 			// if they are a living mob, make them TASTE THE PAIN
@@ -240,10 +247,11 @@
 
 			return
 
+		// otherwise, the user jumps over without issue!
 		ownerMob.set_loc(jump_target)
 		for(var/mob/O in AIviewers(ownerMob))
 			var/the_text = null
-			if (is_athletic_jump)
+			if (is_athletic_jump) // athletic jumps are more athletic!!
 				the_text = "[ownerMob] swooces right over [the_railing]!"
 			else
 				the_text = "[ownerMob] pulls [himself_or_herself(ownerMob)] over [the_railing]."
