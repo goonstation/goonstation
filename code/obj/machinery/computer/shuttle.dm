@@ -559,7 +559,7 @@
 				if(isliving(x))
 					var/mob/living/M = x
 					M.gib(1)
-				if(istype(x, /obj/storage)
+				if(istype(x, /obj/storage))
 					var/obj/storage/S = x
 					qdel(S)
 
