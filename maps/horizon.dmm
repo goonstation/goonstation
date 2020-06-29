@@ -57885,6 +57885,10 @@
 	icon_state = "floorscorched1"
 	},
 /area)
+"hge" = (
+/obj/item/rubberduck,
+/turf/simulated/floor/engine,
+/area/station/mining/refinery)
 "jPI" = (
 /obj/submachine/cargopad{
 	name = "Mining Smeltery Teleport Pad"
@@ -77090,7 +77094,7 @@ aaa
 aaa
 aSN
 aVH
-aYO
+hge
 bbR
 beN
 bhO

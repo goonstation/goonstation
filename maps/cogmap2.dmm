@@ -78749,6 +78749,10 @@
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/plating,
 /area/station/mining)
+"mxy" = (
+/obj/item/rubberduck,
+/turf/simulated/floor/caution/west,
+/area/station/mining)
 "pTS" = (
 /obj/item/storage/wall/random,
 /obj/machinery/vending/janitor,
@@ -137853,7 +137857,7 @@ cKn
 cLO
 cLO
 cLO
-cLO
+mxy
 cRM
 cTh
 cUH

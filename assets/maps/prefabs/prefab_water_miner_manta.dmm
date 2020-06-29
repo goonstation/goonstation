@@ -343,6 +343,10 @@
 	},
 /turf/simulated/floor/damaged2,
 /area/sea_mining)
+"hm" = (
+/obj/item/rubberduck,
+/turf/simulated/floor/shuttlebay,
+/area/sea_mining)
 "td" = (
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/shuttlebay,
@@ -611,7 +615,7 @@ ae
 aa
 aw
 aB
-al
+hm
 aH
 aS
 ax

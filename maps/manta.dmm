@@ -45490,6 +45490,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
+"kxF" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/item/rubberduck,
+/turf/simulated/floor/industrial,
+/area/station/mining)
 "kIf" = (
 /obj/cable,
 /obj/wingrille_spawn/auto,
@@ -125661,7 +125666,7 @@ bOm
 bOp
 bxa
 bxa
-bAe
+kxF
 bBG
 bPp
 bRn

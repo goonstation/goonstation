@@ -3808,6 +3808,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"kg" = (
+/obj/item/rubberduck,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/mining)
 "kh" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -57731,7 +57737,7 @@ cM
 dp
 mw
 eE
-fp
+kg
 ga
 gJ
 gJ

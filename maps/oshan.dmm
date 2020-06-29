@@ -33834,6 +33834,7 @@
 /area/station/mining)
 "bBT" = (
 /obj/disposalpipe/segment/mineral,
+/obj/item/rubberduck,
 /turf/simulated/floor/caution/corner/misc{
 	dir = 10
 	},
