@@ -1279,7 +1279,9 @@
 		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicebox, 5, cost=150)
 		product_list += new/datum/data/vending_product(/obj/item/storage/dicepouch, 5, cost=100)
 		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicecup, 5, cost=10)
-
+		product_list += new/datum/data/vending_product(/obj/item/goboard, 1, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/gobowl/b, 1, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/gobowl/w, 1, cost=50)
 /obj/machinery/vending/clothing
 	name = "FancyPantsCo Sew-O-Matic"
 	desc = "A clothing vendor."
