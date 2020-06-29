@@ -43015,7 +43015,6 @@
 /obj/item/reagent_containers/food/snacks/ingredient/pepperoni,
 /obj/item/cigbutt,
 /obj/item/cigbutt,
-/obj/item/clothing/glasses/urs_dungeon_entry,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -44781,7 +44780,6 @@
 /obj/table/auto,
 /obj/item/shaker/salt,
 /obj/item/kitchen/utensil/knife,
-/obj/item/clothing/glasses/urs_dungeon_entry,
 /turf/simulated/floor/white,
 /area/shuttle/john/owlery)
 "cfy" = (
