@@ -84,25 +84,25 @@
             if("help")
                 force = 6.0
                 stamina_damage = 10
-                stamina_cost = 5.0
+                stamina_cost = 5
                 item_state = "shinai-light"
                 src.setItemSpecial(/datum/item_special/simple/kendo_light)
             if("disarm")
                 force = 7.0
                 stamina_damage = 10
-                stamina_cost = 8.0
+                stamina_cost = 8
                 item_state = "shinai-sweep"
                 src.setItemSpecial(/datum/item_special/swipe/kendo_sweep)
             if("grab")
-                force = 8.0
+                force = 8
                 stamina_damage = 15
-                stamina_cost = 10.0
+                stamina_cost = 10
                 item_state = "shinai-thrust"
                 src.setItemSpecial(/datum/item_special/rangestab/kendo_thrust)
             if("harm")
-                force = 10.0
-                stamina_damage = 25
-                stamina_cost = 30.0
+                force = 9.0
+                stamina_damage = 30
+                stamina_cost = 35
                 item_state = "shinai-heavy"
                 item_state = "shinai-heavy"
                 src.setItemSpecial(/datum/item_special/simple/kendo_heavy)
@@ -110,6 +110,9 @@
         src.buildTooltipContent()
 
     proc/parry_block_check(var/mob/living/carbon/human/attacker,var/mob/living/carbon/human/defender)
+        if(attacker == defender)
+            return
+
         if((attacker.a_intent == defender.a_intent) && !defender.hasStatus("disorient"))
             //visuals
             //sound
@@ -120,8 +123,10 @@
                 attacker.delStatus("disorient")
             return 1
 
-        //check for blocking after parrying
-
+        else if(defender.hasStatus("blocking"))
+            if(attacker.equipped())
+                defender.do_disorient((attacker.equipped().stamina_damage*3),0,0,0,0,1,null)
+            return 2
         return 0
 
     intent_switch_trigger(mob/user as mob)

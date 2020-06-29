@@ -461,7 +461,7 @@
 		kendo_heavy
 			name = "Heavy Attack"
 			desc = "A powerful, but slow and draining attack."
-			staminaCost = 30
+			staminaCost = 35
 			moveDelay = 5
 			moveDelayDuration = 5
 
