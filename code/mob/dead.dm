@@ -140,7 +140,31 @@
 		if ("wave","salute","nod")
 			if (src.emote_check(voluntary, 10, 1, 0))
 				message = "<B>[src]</B> [act]s."
-
+		if ("dab")
+			if (src.emote_check(voluntary, 25, 1, 0))
+				var/dabfluff = pick("spookily", "eerily", "horrifyingly", "frighteningly", "shamefully", "ghoulishly", "hauntingly", "morbidly")
+				var/dabbedfluff = pick("confused", "queasy", "disappointed", "strange")
+				var/dab_on_other = 0
+				for (var/mob/living/M in src.loc)
+					if (prob(1))
+						message = "<B>[src]</B> dabs so hard it sends them straight to hell!"
+						src.damn()
+					else
+						message = "<B>[src]</B> [dabfluff] dabs on [M]!"
+						dab_on_other = 1
+						ghostdabinate(src)
+						if (prob(95))
+							break
+						else
+							M.show_text("<i>You have \an [dabbedfluff] feeling for a moment, but it passes.</i>")
+							break
+				if (!dab_on_other)
+					if (prob(1))
+						message = "<B>[src]</B> dabs so hard it sends them straight to hell!"
+						src.damn()
+					else
+						ghostdabinate(src)
+						message = "<B>[src]</B> dabs [dabfluff]!"
 		else
 			src.show_text("Unusable emote '[act]'.", "blue")
 			return
@@ -166,3 +190,48 @@
 	src.visible_message("<span class='alert'>Ectoplasm splats onto the ground from nowhere!</span>",
 		"<span class='alert'>Even dead, you're nauseated enough to vomit![pick("", "Oh god!")]</span>",
 		"<span class='alert'>You hear something strangely insubstantial land on the floor with a wet splat!</span>")
+
+/mob/dead/proc/ghostdabinate(var/mob/dead/src)	// Cribbed entirely from emote.dm
+	src.render_target = "*\ref[src]"
+	var/image/left_arm = image(null, src)
+	left_arm.render_source = src.render_target
+	left_arm.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "r_arm"))
+	left_arm.appearance_flags = KEEP_APART
+	var/image/right_arm = image(null, src)
+	right_arm.render_source = src.render_target
+	right_arm.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "l_arm"))
+	right_arm.appearance_flags = KEEP_APART
+	var/image/torso = image(null, src)
+	torso.render_source = src.render_target
+	torso.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
+	torso.appearance_flags = KEEP_APART
+	APPLY_MOB_PROPERTY(src, PROP_CANTMOVE, "ghostdabinate")
+	src.canmove = 0
+	src.dir = SOUTH
+	src.dir_locked = TRUE
+	sleep(0.1) //so the direction setting actually takes place
+	world << torso
+	world << right_arm
+	world << left_arm
+	torso.plane = PLANE_DEFAULT
+	right_arm.plane = PLANE_DEFAULT
+	left_arm.plane = PLANE_DEFAULT
+	/*torso.loc = get_turf(O)
+	right_arm.loc = get_turf(O)
+	left_arm.loc = get_turf(O)*/
+	animate(left_arm, transform = turn(left_arm.transform, -110), pixel_y = 10, pixel_x = -1, 5, 1, CIRCULAR_EASING)
+	animate(right_arm, transform = turn(right_arm.transform, -95), pixel_y = 1, pixel_x = 10, 5, 1, CIRCULAR_EASING)
+	SPAWN_DBG(10)
+		animate(left_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
+		animate(right_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
+		sleep(0.5 SECONDS)
+		torso.loc = null
+		qdel(torso)
+		right_arm.loc = null
+		qdel(right_arm)
+		left_arm.loc = null
+		qdel(left_arm)
+		REMOVE_MOB_PROPERTY(src, PROP_CANTMOVE, "ghostdabinate")
+		src.canmove = 1
+		src.dir_locked = FALSE
+		src.render_target = "\ref[src]"
