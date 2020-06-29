@@ -555,10 +555,13 @@
 				if(3)
 					end_location = locate(/area/shuttle/asylum/pathology)
 
-			for(var/mob/living/M in end_location)
-				M.gib(1)
-			for(var/obj/storage/S in end_location)
-				qdel(S)
+			for(var/x in end_location)
+				if(isliving(x))
+					var/mob/living/M = x
+					M.gib(1)
+				if(istype(x, /obj/storage)
+					var/obj/storage/S = x
+					qdel(S)
 
 			start_location.move_contents_to(end_location)
 
