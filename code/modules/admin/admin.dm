@@ -4378,6 +4378,7 @@ var/global/noir = 0
 		<div class="right">
         <a href='?src=\ref[src.holder];action=checkbioeffect_refresh;target=\ref[M];origin=bioeffect_check'>&#8635;</a></B></h3>
     </div>
+		<h4>(Stability: [M.bioHolder.genetic_stability])</h4>
 		<table>
 			<tr>
 				<th>Remove</th>
