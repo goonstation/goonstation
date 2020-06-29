@@ -1814,6 +1814,6 @@
 		else
 			K.set_loc(src.loc)
 
-		var/obj/storage/S = locate(/obj/storage) in K.loc.contents
+		var/obj/storage/S = locate(/obj/storage) in K.loc
 		if (S)
 			K.set_loc(S)
