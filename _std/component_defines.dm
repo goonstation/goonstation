@@ -87,7 +87,7 @@
 #define COMSIG_ATTACKBY "attackby"
 /// Bitflag return of an attackby proc successfuly reacting (based on it's own conditions)
 /// I dunno, feel free to improve this; make global bitflag returns for all components.
-#define COMSIG_ATTACKBY_COMPLETE 1
+#define COMSIGBIT_ATTACKBY_COMPLETE 1
 
 
 // projectile signals
@@ -99,7 +99,11 @@
 #define COMSIG_MECHCOMP_ADD_INPUT "mechcomp_add_input"
 /// Receiving a message from a mechcomp device for handling
 #define COMSIG_MECHCOMP_RECEIVE_MSG "mechcomp_receive_message"
-/// Passing a message to a mechcomp device for handling
+/// Passing the stored message to all connected mechcomp devices for handling
+#define COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG "mechcomp_transmit_message"
+/// Passing the signal of a message to all connected mechcomp devices for handling (message will be instatiated by the component)
+#define COMSIG_MECHCOMP_TRANSMIT_SIGNAL "mechcomp_transmit_signal"
+/// Passing a message to all connected mechcomp devices for handling
 #define COMSIG_MECHCOMP_TRANSMIT_MSG "mechcomp_transmit_message"
 /// Remove [the caller] from the list of transmitting devices
 #define COMSIG_MECHCOMP_RM_INCOMING "mechcomp_remove_incoming"

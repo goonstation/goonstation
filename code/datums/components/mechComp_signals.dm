@@ -21,8 +21,7 @@
 	var/list/connected_incoming = list()
 	var/list/inputs = list()
 
-	var/outputSignal = "1" //MarkNstein needs attention: candidate for removal? check how deafult singals are set
-	var/triggerSignal = "1"
+	var/defaultSignal = "1" //MarkNstein needs attention: candidate for removal? check how deafult singals are set
 
 	var/filtered = 0
 	var/list/outgoing_filters = list()
@@ -39,33 +38,39 @@
 /datum/component/mechanics_holder/RegisterWithParent()
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_INPUT), .proc/addInput)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RECEIVE_MSG), .proc/fireInput)
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_TRANSMIT_SIGNAL), .proc/fireOutSignal)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_TRANSMIT_MSG), .proc/fireOutgoing)
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG), .proc/fireDefault) //Only use this when also using COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_INCOMING), .proc/removeIncoming)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_OUTGOING), .proc/removeOutgoing)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_ALL_CONNECTIONS), .proc/WipeConnections)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_SET_FILTER_TRUE), .proc/setFilterTrue)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_SET_FILTERS), .proc/set_filters)    //MarkNstein needs attention
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_GET_OUTGOING), .proc/getOutgoing)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_LINK), .proc/link)
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_LINK), .proc/dropConnect)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_CONFIG), .proc/addConfig)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL), .proc/allow_manual_singal_setting)
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL), .proc/allow_manual_singal_setting) //Only use this when also using COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG
 	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/attackby)    //MarkNstein needs attention
 	return  //No need to ..()
 
 /datum/component/mechanics_holder/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MECHCOMP_ADD_INPUT)
-	UnregisterSignal(parent, COMSIG_MECHCOMP_RECEIVE_MSG)
-	UnregisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_MSG)
-	UnregisterSignal(parent, COMSIG_MECHCOMP_RM_INCOMING)
-	UnregisterSignal(parent, COMSIG_MECHCOMP_RM_OUTGOING)
-	UnregisterSignal(parent, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
-	UnregisterSignal(parent, COMSIG_MECHCOMP_SET_FILTER_TRUE)
-	UnregisterSignal(parent, COMSIG_MECHCOMP_SET_FILTERS)
-	UnregisterSignal(parent, COMSIG_MECHCOMP_GET_OUTGOING)
-	UnregisterSignal(parent, COMSIG_MECHCOMP_LINK)
-	UnregisterSignal(parent, COMSIG_MECHCOMP_ADD_CONFIG)
-	UnregisterSignal(parent, COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-	UnregisterSignal(parent, COMSIG_ATTACKBY)    
+	var/list/signals = list(\
+	COMSIG_MECHCOMP_ADD_INPUT,\
+	COMSIG_MECHCOMP_RECEIVE_MSG,\
+	COMSIG_MECHCOMP_TRANSMIT_SIGNAL,\
+	COMSIG_MECHCOMP_TRANSMIT_MSG,\
+	COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,\
+	COMSIG_MECHCOMP_RM_INCOMING,\
+	COMSIG_MECHCOMP_RM_OUTGOING,\
+	COMSIG_MECHCOMP_RM_ALL_CONNECTIONS,\
+	COMSIG_MECHCOMP_SET_FILTER_TRUE,\
+	COMSIG_MECHCOMP_SET_FILTERS,\
+	COMSIG_MECHCOMP_GET_OUTGOING,\
+	COMSIG_MECHCOMP_LINK,\
+	COMSIG_MECHCOMP_ADD_CONFIG,\
+	COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL,\
+	COMSIG_ATTACKBY)
+	UnregisterSignal(parent, signals)
 	WipeConnections()
 	configs.Cut()
 	inputs.Cut()
@@ -103,6 +108,20 @@
 	filtered = 1
 	return
 
+//Fire the stored default signal.
+/datum/component/mechanics_holder/proc/fireDefault(var/datum/mechanicsMessage/msg = null)
+	if(isnull(msg))
+		msg = newSignal(defaultSignal, null)
+	else
+		msg.signal = defaultSignal
+	fireOutgoing(msg)
+	return
+
+//Fire a message with a simple signal (no file). Expected to be called from signal "sources" (first nodes)
+/datum/component/mechanics_holder/proc/fireOutSignal(var/signal)
+	fireOutgoing(newSignal(signal, null))
+	return
+
 //Adds an input "slot" to the holder w/ a proc mapping.
 /datum/component/mechanics_holder/proc/addInput(var/name, var/toCall)
 	if(name in inputs) inputs.Remove(name)
@@ -121,10 +140,9 @@
 //This reduces load AND preserves the node list which prevents infinite loops.
 /datum/component/mechanics_holder/proc/fireOutgoing(var/datum/mechanicsMessage/msg)
 	//If we're already in the node list we will not send the signal on.
-	if(!msg.hasNode(parent)) //MarkNstein Needs attentin: src
-		msg.addNode(parent)
-	else
+	if(msg.hasNode(parent))
 		return 0
+	msg.addNode(parent)
 
 	var/fired = 0
 	for(var/obj/O in connected_outgoing)
@@ -158,7 +176,12 @@
 
 //Called when a component is dragged onto another one.
 /datum/component/mechanics_holder/proc/dropConnect(obj/O, mob/user)//MarkNstein needs attention
-	if(!O || O == parent || !O.mechanics) return //ZeWaka: Fix for null.mechanics //MarkNstein needs attention
+	if(!O || O == parent || !O.mechanics || usr.stat || !isliving(usr))  //ZeWaka: Fix for null.mechanics //MarkNstein needs attention
+		return
+
+	if (!usr.find_tool_in_hand(TOOL_PULSING))
+		boutput(usr, "<span class='alert'>[MECHFAILSTRING]</span>")
+		return
 
 	var/typesel = input(user, "Use [parent] as:", "Connection Type") in list("Trigger", "Receiver", "*CANCEL*")
 	switch(typesel)
@@ -231,26 +254,26 @@
 					var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
 					inp = trim(adminscrub(inp), 1)
 					if(length(inp))
-						outputSignal = inp
+						defaultSignal = inp
 						boutput(user, "Signal set to [inp]")
 						if(istype(parent,/obj/item))
 							var/obj/item/I = parent
 							I.tooltip_rebuild = 1
-					return COMSIG_ATTACKBY_COMPLETE
+					return COMSIGBIT_ATTACKBY_COMPLETE
 				if("Disconnect All")
 					WipeConnections()
 					boutput(user, "<span class='notice'>You disconnect [src].</span>")
-					return COMSIG_ATTACKBY_COMPLETE
+					return COMSIGBIT_ATTACKBY_COMPLETE
 				if("Toggle Exact Match")
 					exact_match = !exact_match
 					boutput(user, "Exact match mode now [exact_match ? "on" : "off"]")
 					if(istype(parent,/obj/item))
 						var/obj/item/I = parent
 						I.tooltip_rebuild = 1
-					return COMSIG_ATTACKBY_COMPLETE
+					return COMSIGBIT_ATTACKBY_COMPLETE
 			//must be a custom config specific to the device
 			var/path = configs[selected_config]
-			SPAWN_DBG(1 DECI SECOND) call(parent, path)()
+			SPAWN_DBG(1 DECI SECOND) call(parent, path)(W, user)
 	return 0
 
 
