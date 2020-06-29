@@ -1106,6 +1106,44 @@ var/global/noir = 0
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to transform a player.")
 
+		if ("checkbioeffect")
+			if(src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+
+				if (!ishuman(M))
+					alert("You may only use this secret on human mobs.")
+					return
+
+				usr.client.cmd_admin_checkbioeffect(M)
+
+			else
+				alert("You need to be at least a Secondary Administrator to check the bioeffects of a player.")
+
+		if ("checkbioeffect_remove")
+			if(src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+
+				if (!ishuman(M))
+					alert("You may only use this secret on human mobs.")
+					return
+				M.bioHolder.RemoveEffect(href_list["bioeffect"])
+				//message_admins("[key_name(usr)] removed the [href_list["bioeffect"]] bio-effect from [M.real_name].")
+				usr.client.cmd_admin_checkbioeffect(M)
+
+				message_admins("[key_name(usr)] removed the [href_list["bioeffect"]] bio-effect from [key_name(M)].")
+				logTheThing("admin", usr, null, "removed the [href_list["bioeffect"]] bio-effect from [key_name(M)].")
+				logTheThing("diary", usr, null, "removed the [href_list["bioeffect"]] bio-effect from [key_name(M)].", "admin")
+			else
+				alert("You need to be at least a Secondary Administrator to remove the bioeffects of a player.")
+				return
+
+		if ("checkbioeffect_refresh")
+			if(src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				usr.client.cmd_admin_checkbioeffect(M)
+			else
+				alert("You need to be at least a Secondary Administrator to check the bioeffects of a player.")
+
 		if ("addbioeffect")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
@@ -4223,6 +4261,62 @@ var/global/noir = 0
 		logTheThing("admin", src, C, "muted %target% from mentorhelping.")
 
 	usr.Browse(built, "window=chatban;size=500x100")
+
+/client/proc/cmd_admin_checkbioeffect(var/mob/M)
+	var/list/dat = list()
+	dat += {"
+		<html>
+		<head>
+		<title>Check Bioeffect</title>
+		<style>
+		table {
+			border:1px solid #4CAF50;
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		th, td {
+			text-align: left;
+			padding: 8px;
+		}
+
+		tr:nth-child(odd) {background-color: #f2f2f2;}
+		tr:hover {background-color: #e2e2e2;}
+
+		th {
+			background-color: #4CAF50;
+			color: white;
+		}
+
+		.right {
+    	text-align: right;
+    	float: right;
+		}
+		</style>
+		</head>
+		<body>
+		<h3><B>Bioeffects of [M.name]
+		<div class="right">
+        <a href='?src=\ref[src.holder];action=checkbioeffect_refresh;target=\ref[M];origin=bioeffect_check'>&#8635;</a></B></h3>
+    </div>
+		<table>
+			<tr>
+				<th>Remove</th>
+				<th>ID</th>
+				<th>Name</th>
+			</tr>
+		"}
+
+	for(var/ID in M.bioHolder.effects)
+		var/datum/bioEffect/B = M.bioHolder.effects[ID]
+		dat += {"
+			<tr>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_remove;target=\ref[M];bioeffect=[B.id];origin=bioeffect_check'>remove</a></td>
+				<td>[B.id]</td>
+				<td>[B.name]</td>
+			</tr>"}
+	dat += "</table></body></html>"
+	usr.Browse(dat.Join(),"window=bioeffect_check;size=600x400")
 
 /client/proc/respawn_target(mob/M as mob in world, var/forced = 0)
 	set name = "Respawn Target"
