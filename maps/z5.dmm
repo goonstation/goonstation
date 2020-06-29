@@ -5537,13 +5537,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/arcade)
-"qg" = (
-/obj/machinery/door/airlock/classic,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/grime,
-/area/diner/arcade)
 "qB" = (
 /turf/simulated/wall/r_wall{
 	icon = 'icons/misc/evilreaverstation.dmi';
@@ -5714,7 +5707,9 @@
 /turf/space,
 /area/noGenerate)
 "NB" = (
-/obj/machinery/vending/pizza,
+/obj/machinery/vending/pizza{
+	anchored = 1
+	},
 /turf/simulated/floor/yellow/checker,
 /area/diner/arcade)
 "NJ" = (
@@ -5798,7 +5793,9 @@
 /turf/simulated/floor/yellow/checker,
 /area/diner/arcade)
 "Zk" = (
-/obj/machinery/door/airlock/classic,
+/obj/machinery/door/airlock/gannets/toxins/alt{
+	req_access = null
+	},
 /turf/simulated/floor/grime,
 /area/diner/arcade)
 
@@ -66654,7 +66651,7 @@ DD
 HY
 Za
 Za
-qg
+Zk
 Lh
 MQ
 lP
