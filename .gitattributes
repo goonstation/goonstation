@@ -6,11 +6,11 @@
 *.dme	text
 *.dms	text
 *.dmf	text
+*.dmm text
 
-# BYOND Images, bytecode, maps
+# BYOND Images & bytecode
 *.dmi	binary
 *.dmb	binary
-*.dmm	binary
 
 # merger hooks, run tools/hooks/install.bat or install.sh to set up
 *.dmm merge=dmm
