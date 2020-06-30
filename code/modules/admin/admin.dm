@@ -4492,11 +4492,11 @@ var/global/noir = 0
 		<body>
 		<h3><B>Bioeffects of [M.name]
 		<div class="right">
-			<a href='?src=\ref[src.holder];action=checkbioeffect_refresh;target=\ref[M];origin=bioeffect_check'>&#8635;</a></B></h3>
+			<a href='?src=\ref[src.holder];action=checkbioeffect_refresh;target=\ref[M];origin=bioeffect_check'>&#x1F504;</a></B></h3>
 		</div>
 		<h4>(Stability: [M.bioHolder.genetic_stability])
 		<div class="right">
-			<a href='?src=\ref[src.holder];action=checkbioeffect_add;target=\ref[M];origin=bioeffect_check'>+</a></B></h4>
+			<a href='?src=\ref[src.holder];action=checkbioeffect_add;target=\ref[M];origin=bioeffect_check'>&#x2795;</a></B></h4>
 		</div>
 		<table>
 			<tr>
