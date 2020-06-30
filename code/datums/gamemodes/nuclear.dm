@@ -81,7 +81,8 @@
 			"the chapel" = list(/area/station/chapel/main),
 			"the escape hallway" = list(/area/station/hallway/secondary/exit),
 			"the Research Director's office" = list(/area/station/crew_quarters/hor),
-			"the Chief Engineer's office" = list(/area/station/engine/engineering/ce))
+			"the Chief Engineer's office" = list(/area/station/engine/engineering/ce),
+			"the kitchen" = list(/area/station/crew_quarters/kitchen))
 
 		else if (ismap("DESTINY") || ismap("CLARION"))
 			target_locations = list("the main security room" = list(/area/station/security/main),
