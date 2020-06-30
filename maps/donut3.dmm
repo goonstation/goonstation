@@ -9861,6 +9861,12 @@
 	dir = 5
 	},
 /area/station/hallway/primary/west)
+"cLc" = (
+/obj/landmark{
+	name = "monkeyspawn_albert"
+	},
+/turf/simulated/floor/white,
+/area/station/science/teleporter)
 "cLf" = (
 /obj/cable{
 	d1 = 1;
@@ -10186,6 +10192,11 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
+"cPF" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "cPO" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/grime,
@@ -10570,16 +10581,6 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/sw)
-"cWi" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/security/quarters)
 "cWk" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10;
@@ -13681,14 +13682,10 @@
 	},
 /area/station/hallway/primary/west)
 "dUb" = (
-/obj/cable,
 /obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
+	d1 = 1;
 	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -14969,10 +14966,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
-"erS" = (
-/obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "erY" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer3/generic/personal,
@@ -24933,12 +24926,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/AIsat)
-"hzT" = (
-/obj/railing/orange,
-/obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/rust/jen,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "hAc" = (
 /obj/stool/chair/comfy/blue{
 	dir = 8
@@ -50866,12 +50853,6 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
-"pTr" = (
-/obj/landmark{
-	name = "monkeyspawn_albert"
-	},
-/turf/simulated/floor/white,
-/area/station/science/teleporter)
 "pTE" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -51417,11 +51398,6 @@
 /obj/bookshelf/long,
 /turf/simulated/floor/wood/six,
 /area/station/library)
-"qbZ" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/rust/jen,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "qce" = (
 /obj/cable{
 	d1 = 1;
@@ -52941,6 +52917,12 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
+"qvC" = (
+/obj/railing/orange,
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "qvK" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools/some,
@@ -53147,20 +53129,19 @@
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "qyw" = (
+/obj/cable,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	d1 = 2;
 	d2 = 4;
-	icon_state = "2-4"
+	icon_state = "0-4"
 	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/northeast,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/white,
 /area/station/security/quarters)
 "qyH" = (
@@ -67206,6 +67187,10 @@
 	},
 /turf/simulated/floor,
 /area/station/medical/medbay/pharmacy)
+"uUU" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "uUY" = (
 /obj/machinery/vending/snack,
 /turf/simulated/grimycarpet,
@@ -101176,7 +101161,7 @@ mTo
 agB
 xsZ
 bZk
-cWi
+dUb
 lJM
 lJM
 lJM
@@ -104519,7 +104504,7 @@ fiH
 wZJ
 hcW
 hsj
-erS
+uUU
 uOO
 pFp
 kif
@@ -104814,15 +104799,15 @@ hsj
 mQf
 gBM
 lGw
-qbZ
+cPF
 mLB
-erS
+uUU
 mQf
 gBM
 wje
 hsj
-erS
-erS
+uUU
+uUU
 uOO
 uOO
 cWf
@@ -105120,7 +105105,7 @@ bzU
 bpL
 cwh
 nKE
-hzT
+qvC
 hcW
 pBV
 kpy
@@ -125976,7 +125961,7 @@ mZl
 sTE
 qkQ
 jcK
-pTr
+cLc
 oKC
 xJS
 onh
