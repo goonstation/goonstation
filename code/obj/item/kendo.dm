@@ -4,7 +4,7 @@
 
 /obj/item/clothing/head/helmet/men
     name = "men"
-    desc = "A light padded helmet with a grilled faceplate to protect the user in a kendo match."
+    desc = "面 : A light padded helmet with a grilled faceplate to protect the user in a kendo match."
     icon_state = "men"
     item_state = "men"
     seal_hair = 1
@@ -17,7 +17,7 @@
 
 /obj/item/clothing/suit/armor/douandtare
     name = "dou and tare"
-    desc = "A breastplate and padded skirt used primarily in kendo."
+    desc = "胴と垂れ : A breastplate and padded skirt used primarily in kendo."
     icon_state = "dou-tare"
     item_state = "dou-tare"
     body_parts_covered = TORSO | LEGS
@@ -34,7 +34,7 @@
 
 /obj/item/clothing/gloves/kote
     name = "kote"
-    desc = "Big poofy gloves to cover the hands in kendo sparring."
+    desc = "小手 : Big poofy gloves to cover the hands in kendo sparring."
     icon_state = "kote"
     item_state = "kote"
     material_prints = "navy blue, synthetic leather fibers"
@@ -53,7 +53,7 @@
 
 /obj/item/shinai
     name = "shinai"
-    desc = "A sword-like weapon made of slats of bamboo. Shinai are made to reflect the weight of a katana, but disperse impact on hit to minimize damage."
+    desc = "竹刀 : A sword-like weapon made of slats of bamboo. Shinai are made to reflect the weight of a katana, but disperse impact on hit to minimize damage."
     icon = 'icons/obj/items/weapons.dmi'
     inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
     icon_state = "shinai"
@@ -180,7 +180,7 @@
 
 /obj/item/shinai_bag
     name = "shinai bag"
-    desc = ""
+    desc = "竹刀袋 : a tube-like back for holding two shinai."
     wear_image_icon = 'icons/mob/back.dmi'
     icon_state = "shinaibag-closed"
     item_state = "shinaibag-closed"
