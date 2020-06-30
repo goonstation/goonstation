@@ -1134,12 +1134,83 @@ var/global/noir = 0
 				alert("You need to be at least a Secondary Administrator to remove the bioeffects of a player.")
 				return
 
+		if("checkbioeffect_alter_stable")
+			if(src.level >= LEVEL_SA)
+				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
+				BE.altered = 1
+				if (BE.stability_loss == 0)
+					BE.stability_loss = BE.global_instance.stability_loss
+					BE.holder.genetic_stability -= BE.stability_loss //update mob stability
+				else
+					BE.holder.genetic_stability += BE.stability_loss //update mob stability
+					BE.stability_loss = 0
+
+				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+			else
+				return
+
+		if("checkbioeffect_alter_reinforce")
+			if(src.level >= LEVEL_SA)
+				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
+				if (BE.curable_by_mutadone)
+					BE.curable_by_mutadone = 0
+				else
+					BE.curable_by_mutadone = 1
+
+				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+			else
+				return
+
+		if("checkbioeffect_alter_power_boost")
+			if(src.level >= LEVEL_SA)
+				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
+				if(istype(BE, /datum/bioEffect/power)) //powers only
+					if (BE.power)
+						BE.power = 0
+					else
+						BE.power = 1
+				else
+					return
+
+				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+			else
+				return
+
+		if("checkbioeffect_alter_sync")
+			if(src.level >= LEVEL_SA)
+				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
+				if(istype(BE, /datum/bioEffect/power)) //powers only
+					if (BE.safety)
+						BE.safety = 0
+					else
+						BE.safety = 1
+				else
+					return
+
+				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+			else
+				return
+		if("checkbioeffect_alter_cooldown")
+			if(src.level >= LEVEL_SA)
+				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
+				if(istype(BE, /datum/bioEffect/power)) //powers only
+					var/input = input(usr, "Enter a cooldown in deciseconds", "Alter Cooldown", BE.cooldown) as num|null
+					if(input >= 0)
+						BE.cooldown = round(input)
+					else
+						return
+				else
+					return
+
+				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+			else
+				return
+
 		if ("checkbioeffect_chromosome")
 			if(src.level >= LEVEL_SA)
 				var/list/applicable_chromosomes = null
 				var/is_power = 0 //for custom chromosome
 				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
-				message_admins(BE)
 				if (istype(BE, /datum/bioEffect/power)) //powers
 					applicable_chromosomes = list("Stabilizer", "Reinforcer", "Weakener", "Camouflager", "Power Booster", "Energy Booster", "Synchronizer", "Custom", "REMOVE CHROMOSOME")
 					is_power = 1
@@ -4395,18 +4466,22 @@ var/global/noir = 0
 			width: 100%;
 		}
 
-		th, td {
-			text-align: left;
+		td {
 			padding: 8px;
+			text-align: center;
 		}
 
-		tr:nth-child(odd) {background-color: #f2f2f2;}
-		tr:hover {background-color: #e2e2e2;}
+		th:nth-child(n+2):nth-child(-n+3), td:nth-child(n+2):nth-child(-n+3) {text-align: left;}
 
 		th {
 			background-color: #4CAF50;
 			color: white;
+			padding: 8px;
+			text-align: center;
 		}
+
+		tr:nth-child(odd) {background-color: #f2f2f2;}
+		tr:hover {background-color: #e2e2e2;}
 
 		.right {
 			text-align: right;
@@ -4418,31 +4493,62 @@ var/global/noir = 0
 		<h3><B>Bioeffects of [M.name]
 		<div class="right">
 			<a href='?src=\ref[src.holder];action=checkbioeffect_refresh;target=\ref[M];origin=bioeffect_check'>&#8635;</a></B></h3>
-    </div>
+		</div>
 		<h4>(Stability: [M.bioHolder.genetic_stability])
 		<div class="right">
 			<a href='?src=\ref[src.holder];action=checkbioeffect_add;target=\ref[M];origin=bioeffect_check'>+</a></B></h4>
-    </div>
+		</div>
 		<table>
 			<tr>
 				<th>Remove</th>
 				<th>ID</th>
 				<th>Name</th>
+				<th>Stable</th>
+				<th>Reinforced</th>
+				<th>Power Boosted</th>
+				<th>Synced</th>
+				<th>Cooldown</th>
 				<th>Splice</th>
 			</tr>
 		"}
 
 	for(var/ID in M.bioHolder.effects)
 		var/datum/bioEffect/B = M.bioHolder.effects[ID]
+		var/is_stable = 0
+		var/is_reinforced = 0
+		var/is_power_boosted = null //powers only
+		var/is_synced = null //powers only
+		var/cooldown = null //0 cooldown is a thing, also powers only
+
+		if (!B.stability_loss)
+			is_stable = 1
+		if (!B.curable_by_mutadone)
+			is_reinforced = 1
+		if (istype(B, /datum/bioEffect/power))//powers only
+			if (B:power)
+				is_power_boosted = 1
+			else
+				is_power_boosted = 0
+			if (B:safety)
+				is_synced = 1
+			else
+				is_synced = 0
+			cooldown = B:cooldown
+
 		dat += {"
 			<tr>
 				<td><a href='?src=\ref[src.holder];action=checkbioeffect_remove;target=\ref[M];bioeffect=[B.id];origin=bioeffect_check'>remove</a></td>
 				<td>[B.id]</td>
 				<td>[B.name]</td>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_stable;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[is_stable ? "&#x2705;" : "&#x274C;"]</a></td>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_reinforce;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[is_reinforced ? "&#x2705;" : "&#x274C;"]</a></td>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_power_boost;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[isnull(is_power_boosted) ? "&#x26D4;" : (is_power_boosted ? "&#x2705;" : "&#x274C;")]</a></td>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_sync;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[isnull(is_synced) ? "&#x26D4;" : (is_synced ? "&#x2705;" : "&#x274C;")]</a></td>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_cooldown;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[isnull(cooldown) ? "&#x26D4;" : cooldown]</a></td>
 				<td><a href='?src=\ref[src.holder];action=checkbioeffect_chromosome;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>Splice</a></td>
 			</tr>"}
 	dat += "</table></body></html>"
-	usr.Browse(dat.Join(),"window=bioeffect_check;size=600x400")
+	usr.Browse(dat.Join(),"window=bioeffect_check;size=900x400")
 
 /client/proc/respawn_target(mob/M as mob in world, var/forced = 0)
 	set name = "Respawn Target"
