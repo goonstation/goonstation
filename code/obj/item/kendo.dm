@@ -28,7 +28,7 @@
         ..()
         setProperty("coldprot", 10)
         setProperty("meleeprot", 4)
-        setProperty("rangedprot", 1)
+        setProperty("rangedprot", 0.4)
         setProperty("pierceprot", 1)
         setProperty("movespeed", 1)
 
