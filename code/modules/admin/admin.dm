@@ -1213,11 +1213,9 @@ var/global/noir = 0
 		if ("checkbioeffect_chromosome")
 			if(src.level >= LEVEL_SA)
 				var/list/applicable_chromosomes = null
-				var/is_power = 0 //for custom chromosome
 				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
 				if (istype(BE, /datum/bioEffect/power)) //powers
 					applicable_chromosomes = list("Stabilizer", "Reinforcer", "Weakener", "Camouflager", "Power Booster", "Energy Booster", "Synchronizer", "Custom", "REMOVE CHROMOSOME")
-					is_power = 1
 				else if (istype(BE, /datum/bioEffect)) //nonpowers
 					applicable_chromosomes = list("Stabilizer", "Reinforcer", "Weakener", "Camouflager", "Custom", "REMOVE CHROMOSOME")
 				else
