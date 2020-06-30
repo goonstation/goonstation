@@ -27,7 +27,7 @@
     setupProperties()
         ..()
         setProperty("coldprot", 10)
-        setProperty("meleeprot", 6)
+        setProperty("meleeprot", 4)
         setProperty("rangedprot", 1)
         setProperty("pierceprot", 1)
         setProperty("movespeed", 1)
@@ -115,9 +115,7 @@
 
         if((attacker.a_intent == defender.a_intent) && !defender.hasStatus("disorient"))
             playsound(defender, "sound/impact_sounds/kendo_parry_[pick(1,2,3)].ogg", 50, 1)
-            attacker.do_disorient()
-            SPAWN_DBG(1 SECOND)
-                attacker.delStatus("disorient")
+            attacker.do_disorient(0,0,0,0,10,1)
             return 1
 
         else if(defender.hasStatus("blocking"))
