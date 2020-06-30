@@ -4526,10 +4526,10 @@ var/global/noir = 0
 				<td><a href='?src=\ref[src.holder];action=checkbioeffect_remove;target=\ref[M];bioeffect=[B.id];origin=bioeffect_check'>remove</a></td>
 				<td>[B.id]</td>
 				<td>[B.name]</td>
-				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_stable;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[is_stable ? "&#x2705;" : "&#x274C;"]</a></td>
-				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_reinforce;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[is_reinforced ? "&#x2705;" : "&#x274C;"]</a></td>
-				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_power_boost;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[isnull(is_power_boosted) ? "&#x26D4;" : (is_power_boosted ? "&#x2705;" : "&#x274C;")]</a></td>
-				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_sync;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[isnull(is_synced) ? "&#x26D4;" : (is_synced ? "&#x2705;" : "&#x274C;")]</a></td>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_stable;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[is_stable ? "&#x2714;" : "&#x274C;"]</a></td>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_reinforce;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[is_reinforced ? "&#x2714;" : "&#x274C;"]</a></td>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_power_boost;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[isnull(is_power_boosted) ? "&#x26D4;" : (is_power_boosted ? "&#x2714;" : "&#x274C;")]</a></td>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_sync;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[isnull(is_synced) ? "&#x26D4;" : (is_synced ? "&#x2714;" : "&#x274C;")]</a></td>
 				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_cooldown;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[isnull(cooldown) ? "&#x26D4;" : cooldown]</a></td>
 				<td><a href='?src=\ref[src.holder];action=checkbioeffect_chromosome;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>Splice</a></td>
 			</tr>"}
