@@ -14922,6 +14922,10 @@
 	dir = 1
 	},
 /obj/table/auto,
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/black,
 /area/station/crewquarters/fuq3)
 "eps" = (
@@ -37873,10 +37877,6 @@
 	pixel_y = 24;
 	text = "NF"
 	},
-/obj/machinery/light/emergency{
-	dir = 1;
-	pixel_y = 16
-	},
 /turf/simulated/floor/black,
 /area/station/crewquarters/fuq3)
 "lOS" = (
@@ -49807,6 +49807,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/light/emergency,
 /turf/simulated/floor/black,
 /area/station/crewquarters/fuq3)
 "pBV" = (
