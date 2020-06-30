@@ -136,6 +136,7 @@
 	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 5
+	w_class = 4.0
 
 	New()
 		..()
