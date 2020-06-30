@@ -1120,6 +1120,13 @@
 		icon_state = "donut3"
 		heal_amt = 3
 
+	robust
+		name = "robust donut"
+		desc = "It's like an energy bar, but in donut form! Contains some chemicals known for partial stun time reduction."
+		icon_state = "donut4"
+		initial_volume = 30
+		initial_reagents = list("sugar"=10,"synaptizine"=10,"epinephrine"=10)
+
 	random
 		New()
 			if(rand(1,3) == 1)

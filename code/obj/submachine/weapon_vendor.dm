@@ -14,10 +14,10 @@
 */
 
 /obj/submachine/weapon_vendor
-	name = "Syndicate Weapons Vendor"
+	name = "Weapons Vendor"
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "weapon"
-	desc = "An automated quartermaster service for supplying your nuclear operative team with weapons and gear."
+	desc = "dont see this"
 	density = 1
 	opacity = 0
 	anchored = 1
@@ -29,41 +29,20 @@
 	var/current_storage_credits = 0
 	var/temp = null
 	var/list/datum/materiel_stock = list()
+	var/token_accepted = /obj/item/requisition_token
 
-	New()
-		..()
-		// List of avaliable objects for purchase
-		materiel_stock += new/datum/materiel/sidearm/pistol
-		materiel_stock += new/datum/materiel/sidearm/revolver
-
-		materiel_stock += new/datum/materiel/loadout/assault
-		materiel_stock += new/datum/materiel/loadout/heavy
-		materiel_stock += new/datum/materiel/loadout/grenadier
-		materiel_stock += new/datum/materiel/loadout/infiltrator
-		materiel_stock += new/datum/materiel/loadout/medic
-		materiel_stock += new/datum/materiel/loadout/firebrand
-		materiel_stock += new/datum/materiel/loadout/engineer
-		materiel_stock += new/datum/materiel/loadout/marksman
-		materiel_stock += new/datum/materiel/loadout/custom
-
-		materiel_stock += new/datum/materiel/storage/rucksack
-		materiel_stock += new/datum/materiel/storage/belt
-		materiel_stock += new/datum/materiel/storage/satchel
-
-		//materiel_stock += new/datum/materiel/utility/
-
-	attackby(var/obj/item/I as obj, user as mob)
-		if(istype(I, /obj/item/requisition_token))
+	attackby(var/obj/item/I, var/mob/user)
+		if(istype(I, token_accepted))
+			user.drop_item(I)
 			qdel(I)
-			boutput(user, "<span class='notice'>You insert the requisition token into the vendor.</span>")
-			src.current_sidearm_credits++
-			src.current_loadout_credits++
-			src.current_storage_credits++
-			src.updateUsrDialog()
-			playsound(src.loc, sound_token, 80, 1)
+			accepted_token()
 		else
-			src.attack_hand(user)
-		return
+			..()
+
+	proc/accepted_token(var/mob/user)
+		src.updateUsrDialog()
+		playsound(src.loc, sound_token, 80, 1)
+		boutput(user, "<span class='notice'>You insert the requisition token into [src].</span>")
 
 	attack_hand(var/mob/user as mob)
 		if(..())
@@ -152,6 +131,63 @@
 
 		src.updateUsrDialog()
 
+
+/obj/submachine/weapon_vendor/security
+	name = "Security Weapons Vendor"
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "weapon-sec"
+	desc = "An automated quartermaster service for supplying your security team with weapons and gear."
+	token_accepted = /obj/item/requisition_token/security
+	New()
+		..()
+		// List of avaliable objects for purchase
+		materiel_stock += new/datum/materiel/sidearm/barrier
+		materiel_stock += new/datum/materiel/sidearm/EOD
+		materiel_stock += new/datum/materiel/sidearm/flaregun
+
+		materiel_stock += new/datum/materiel/loadout/standard
+		materiel_stock += new/datum/materiel/loadout/offense
+		materiel_stock += new/datum/materiel/loadout/support
+		materiel_stock += new/datum/materiel/loadout/control
+
+	accepted_token()
+		src.current_sidearm_credits++
+		src.current_loadout_credits++
+		..()
+
+/obj/submachine/weapon_vendor/syndicate
+	name = "Syndicate Weapons Vendor"
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "weapon"
+	desc = "An automated quartermaster service for supplying your nuclear operative team with weapons and gear."
+	token_accepted = /obj/item/requisition_token/syndicate
+	New()
+		..()
+		// List of avaliable objects for purchase
+		materiel_stock += new/datum/materiel/sidearm/pistol
+		materiel_stock += new/datum/materiel/sidearm/revolver
+
+		materiel_stock += new/datum/materiel/loadout/assault
+		materiel_stock += new/datum/materiel/loadout/heavy
+		materiel_stock += new/datum/materiel/loadout/grenadier
+		materiel_stock += new/datum/materiel/loadout/infiltrator
+		materiel_stock += new/datum/materiel/loadout/medic
+		materiel_stock += new/datum/materiel/loadout/firebrand
+		materiel_stock += new/datum/materiel/loadout/engineer
+		materiel_stock += new/datum/materiel/loadout/marksman
+		materiel_stock += new/datum/materiel/loadout/custom
+
+		materiel_stock += new/datum/materiel/storage/rucksack
+		materiel_stock += new/datum/materiel/storage/belt
+		materiel_stock += new/datum/materiel/storage/satchel
+
+		//materiel_stock += new/datum/materiel/utility/
+
+	accepted_token()
+		src.current_sidearm_credits++
+		src.current_loadout_credits++
+		src.current_storage_credits++
+		..()
 // Materiel avaliable for purchase:
 
 /datum/materiel
@@ -160,6 +196,54 @@
 	var/catagory = null
 	var/path = null
 	var/description = "If you see me, gannets is an idiot."
+
+
+//SECURITY
+
+/datum/materiel/sidearm/barrier
+	name = "Security Barrier"
+	path = /obj/item/barrier
+	catagory = "Sidearm"
+	description = "A barrier that grants great protection while held and can deploy shields that reflect projectiles."
+
+/datum/materiel/sidearm/EOD
+	name = "EOD Suit"
+	path = /obj/item/clothing/suit/armor/EOD
+	catagory = "Sidearm"
+	description = "Protective armor with high explosion resistance."
+
+/datum/materiel/sidearm/flaregun
+	name = "Flare Gun"
+	path = /obj/item/storage/box/flaregun
+	catagory = "Sidearm"
+	description = "Ignite one target. Must be reloaded after each use."
+
+/datum/materiel/loadout/standard
+	name = "Standard"
+	path = /obj/item/storage/belt/security/standard
+	catagory = "Loadout"
+	description = "One belt containing a taser and a baton. Classic!"
+
+/datum/materiel/loadout/offense
+	name = "Offense"
+	path = /obj/item/storage/belt/security/offense
+	catagory = "Loadout"
+	description = "One belt containing a phaser and a baton."
+
+/datum/materiel/loadout/support
+	name = "Support"
+	path = /obj/item/storage/belt/security/support
+	catagory = "Loadout"
+	description = "One belt containing stun gloves, two robust donuts, and a wavegun."
+
+/datum/materiel/loadout/control
+	name = "Control"
+	path = /obj/item/storage/belt/security/control
+	catagory = "Loadout"
+	description = "One belt containing a taser shotgun, extra powercell, and fog grenades."
+
+
+//SYNDIE
 
 /datum/materiel/sidearm/pistol
 	name = "M1992 Pistol"
@@ -253,3 +337,15 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "req-token"
 	w_class = 1.0
+
+
+	syndicate
+		desc = "A Syndicate credit card charged with currency compatible with the Syndicate Weapons Vendor."
+		icon_state = "req-token"
+
+	security
+		desc = "An NT-provided token compatible with the Security Weapons Vendor."
+		icon_state = "req-token-sec"
+
+
+
