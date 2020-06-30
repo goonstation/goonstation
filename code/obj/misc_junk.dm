@@ -881,8 +881,8 @@
 	attack_hand(mob/user as mob)
 		if(src.icon_state == "sarc_key")
 			src.icon_state = "opening"
-			sleep(23)
-			src.icon_state = "sarc_1"
+			animate(src, time = 2.3 SECONDS)
+			animate(icon_state = "sarc_1")
 		else if(src.icon_state == "sarc_1")
 			if(src.gnome)
 				src.icon_state = "sarc_2"
