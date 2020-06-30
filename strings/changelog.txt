@@ -1,5 +1,9 @@
 
 (t)mon jun 29 20
+(u)RichardGere
+(p)1242
+(e)🐛|bug
+(+)Fixed drinking glasses not applying their reagents to mobs
 (u)MarkNstein
 (p)1256
 (e)🗺|mapping
