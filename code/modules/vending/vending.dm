@@ -578,7 +578,6 @@
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/mechanicbook, 30)
-		//product_list += new/datum/data/vending_product(/obj/item/storage/mechanics/housing_small,10)
 		product_list += new/datum/data/vending_product(/obj/item/storage/mechanics/housing_large,6)
 		product_list += new/datum/data/vending_product(/obj/item/storage/mechanics/housing_handheld,4)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/andcomp, 30)
