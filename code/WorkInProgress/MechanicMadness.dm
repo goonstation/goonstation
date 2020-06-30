@@ -360,7 +360,7 @@ var/list/mechanics_telepads = new/list()
 		if(!O || O == master || !O.mechanics) return //ZeWaka: Fix for null.mechanics
 
 		//check for connections out of unsecured cabinets
-		if((O.loc!=master.loc)&&(istype(master.loc,/obj/item/storage/mechanics) || istype(O.loc,/obj/item/storage/mechanics)))
+		if(O.loc!=master.loc)
 			if(istype(master.loc,/obj/item/storage/mechanics))
 				var/tmp/obj/item/storage/mechanics/cabinet=master.loc
 				if(!cabinet.anchored)
