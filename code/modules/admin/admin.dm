@@ -4464,6 +4464,8 @@ var/global/noir = 0
 		<head>
 		<title>Check Bioeffects</title>
 		<style>
+		a {text-decoration: none;}
+
 		table {
 			border:1px solid #4CAF50;
 			border-collapse: collapse;
@@ -4491,17 +4493,26 @@ var/global/noir = 0
 			text-align: right;
 			float: right;
 		}
+
+		.button {
+			padding: 6px 12px;
+			text-align: center;
+			float: right;
+			display: inline-block;
+			font-size: 12px;
+			margin: 0px 2px;
+			cursor: pointer;
+			color: white;
+			border: 2px solid #008CBA;
+			background-color: #008CBA;
+		}
 		</style>
 		</head>
 		<body>
-		<h3><B>Bioeffects of [M.name]
-		<div class="right">
-			<a href='?src=\ref[src.holder];action=checkbioeffect_refresh;target=\ref[M];origin=bioeffect_check'>&#x1F504;</a></B></h3>
-		</div>
+		<h3>Bioeffects of [M.name]
+		<a href='?src=\ref[src.holder];action=checkbioeffect_refresh;target=\ref[M];origin=bioeffect_check' class="button">&#x1F504;</a></h3>
 		<h4>(Stability: [M.bioHolder.genetic_stability])
-		<div class="right">
-			<a href='?src=\ref[src.holder];action=checkbioeffect_add;target=\ref[M];origin=bioeffect_check'>&#x2795;</a></B></h4>
-		</div>
+		<a href='?src=\ref[src.holder];action=checkbioeffect_add;target=\ref[M];origin=bioeffect_check' class="button">&#x2795;</a></h4>
 		<table>
 			<tr>
 				<th>Remove</th>
