@@ -1,4 +1,9 @@
 
+(t)tue jun 30 20
+(u)mbc
+(p)1260
+(e)⚖|balance
+(*)Belts will no longer fit inside backpacks
 (t)mon jun 29 20
 (u)RichardGere
 (p)1242
