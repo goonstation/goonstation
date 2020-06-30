@@ -1224,7 +1224,7 @@ var/global/noir = 0
 					return
 
 				//ask the user what they want to add
-				switch (input(usr, "Select a chromosome", "Check Bioeffects") as null|anything in applicable_chromosomes)
+				switch (input(usr, "Select a chromosome", "Check Bioeffects Splice") as null|anything in applicable_chromosomes)
 					if ("Stabilizer")
 						if (BE.altered) checkbioeffect_chromosome_clean(BE)
 						BE.holder.genetic_stability += BE.stability_loss //update mob stability
@@ -1267,31 +1267,9 @@ var/global/noir = 0
 					if ("Custom") //build your own chromosome!
 						if (BE.altered) checkbioeffect_chromosome_clean(BE)
 						BE.altered = 1
-						var/prefix = input(usr, "Optional: Enter a custom name for your chromosome", "Check Bioeffects")
+						var/prefix = input(usr, "Enter a custom name for your chromosome", "Check Bioeffects Splice")
 						if (prefix)
 							BE.name = "[prefix] " + BE.name
-
-						switch (alert(usr, "Stabilized?", "Check Bioeffects", "Yes", "No"))
-							if ("Yes")
-								BE.holder.genetic_stability += BE.stability_loss //update mob stability
-								BE.stability_loss = 0
-
-						switch (alert(usr, "Reinforced?", "Check Bioeffects", "Yes", "No"))
-							if ("Yes")
-								BE.curable_by_mutadone = 0
-
-						if (is_power)
-							switch (alert(usr, "Synchronized?", "Check Bioeffects", "Yes", "No"))
-								if ("Yes")
-									BE:safety = 1
-
-							switch (alert(usr, "Power Boosted?", "Check Bioeffects", "Yes", "No"))
-								if ("Yes")
-									BE:power = 1
-
-							var/cd = input(usr, "Enter a cooldown in deciseconds (Default is prefilled).", "Check Bioeffects", BE:cooldown)
-							if (cd)
-								BE:cooldown = cd
 					if ("REMOVE CHROMOSOME")
 						if (BE.altered) checkbioeffect_chromosome_clean(BE)
 					else //user cancelled do nothing
