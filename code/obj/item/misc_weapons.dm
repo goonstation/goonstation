@@ -132,8 +132,8 @@
 				target.do_disorient(150, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0)
 
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(get_turf(U), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-			else playsound(get_turf(U), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
+			if(U.gender == MALE) playsound(get_turf(U), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
+			else playsound(get_turf(U), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
 			..()
 		else
 			if (user.a_intent == INTENT_HELP)
@@ -190,8 +190,8 @@
 			S = H.find_type_in_hand(/obj/item/sword, "left")
 		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus("stunned", "weakened", "paralysis")))
 			var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
-			if(target.gender == MALE) playsound(get_turf(target), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
-			else playsound(get_turf(target), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
+			if(target.gender == MALE) playsound(get_turf(target), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
+			else playsound(get_turf(target), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
 			C.setup(H.loc)
 			var/matrix/m = matrix()
 			m.Turn(rand(0,360))
@@ -241,8 +241,8 @@
 		stamina_damage = active_stamina_dmg
 		if(ishuman(user))
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordstart.ogg", 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-			else playsound(get_turf(U),"sound/weapons/female_cswordturnon.ogg" , 100, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
+			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordstart.ogg", 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
+			else playsound(get_turf(U),"sound/weapons/female_cswordturnon.ogg" , 100, 0, 5, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
 		src.force = active_force
 		src.stamina_cost = active_stamina_cost
 		if (src.bladecolor)
@@ -260,8 +260,8 @@
 		stamina_damage = inactive_stamina_dmg
 		if(ishuman(user))
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordturnoff.ogg", 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-			else playsound(get_turf(U),"sound/weapons/female_cswordturnoff.ogg", 100, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
+			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordturnoff.ogg", 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
+			else playsound(get_turf(U),"sound/weapons/female_cswordturnoff.ogg", 100, 0, 5, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
 		src.force = inactive_force
 		src.stamina_cost = inactive_stamina_cost
 		src.icon_state = "[state_name]0"

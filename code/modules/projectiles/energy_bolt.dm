@@ -17,6 +17,8 @@
 	sname = "stun"
 //file location for the sound you want it to play
 	shot_sound = 'sound/weapons/Taser.ogg'
+//should the sound have extra range?
+	shot_sound_extrarange = 5
 //How many projectiles should be fired, each will cost the full cost
 	shot_number = 1
 //What is our damage type
@@ -241,7 +243,7 @@ toxic - poisons
 
 	on_max_range_die(obj/projectile/O)
 		detonate(O, O)
-		
+
 	proc/detonate(atom/O, var/obj/projectile/P)
 		if (istype(O, /obj/projectile))
 			var/obj/projectile/proj = O
