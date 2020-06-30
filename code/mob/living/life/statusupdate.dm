@@ -173,7 +173,7 @@
 					if (newmob)
 						newmob.corpse = null
 				
-				new /obj/item/parts/robot_parts/robot_frame(get_truf(robot_owner))
+				new /obj/item/parts/robot_parts/robot_frame(robot_owner.get_turf())
 
 				qdel(robot_owner)
 
