@@ -197,7 +197,7 @@
 			no_no_zone = 1
 		else
 			for (var/obj/o in jump_target.contents)
-				for (var/i=1, i<=bunp_whitelist.len+1, i++) //+1 so we can actually go past the whitelist len check
+				for (var/i=1, i <= bunp_whitelist.len + 1, i++) //+1 so we can actually go past the whitelist len check
 					if (!(i > bunp_whitelist.len))
 						// if it's an exception to the bunp rule...
 						if (istype (o, bunp_whitelist[i]))

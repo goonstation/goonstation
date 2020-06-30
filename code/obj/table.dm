@@ -498,13 +498,8 @@
 	New()
 		..()
 		desc += " This one holds beakers in it! Wow!!"
-
-		for (var/B=0, B<8, B++)
-			stuff += /obj/item/reagent_containers/glass/beaker
-
-		for (var/thing in src.stuff)
-			new thing(src.desk_drawer)
-
+		for (var/B=0, B<=7, B++)
+			new /obj/item/reagent_containers/glass/beaker(src.desk_drawer)
 
 /obj/table/reinforced/industrial
 	name = "industrial table"
