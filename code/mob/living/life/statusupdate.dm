@@ -172,6 +172,8 @@
 					var/mob/dead/observer/newmob = robot_owner.ghostize()
 					if (newmob)
 						newmob.corpse = null
+				
+				new obj/item/parts/robot_parts/robot_frame(robot_owner.loc)
 
 				qdel(robot_owner)
 
