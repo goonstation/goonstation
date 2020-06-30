@@ -363,7 +363,7 @@ var/list/mechanics_telepads = new/list()
 		if((O.loc!=master.loc)&&(istype(master.loc,/obj/item/storage/mechanics) || istype(O.loc,/obj/item/storage/mechanics)))
 			if(istype(master.loc,/obj/item/storage/mechanics))
 				var/tmp/obj/item/storage/mechanics/cabinet=master.loc
-				if(!(cabinet).anchored)
+				if(!cabinet.anchored)
 					boutput(usr,"<span class='alert'>Cannot create connection out of unsecured component housing</span>")
 					return
 			if(istype(O.loc,/obj/item/storage/mechanics))
