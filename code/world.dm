@@ -766,9 +766,7 @@ var/f_color_selector_handler/F_Color_Selector
 		s += ": [jointext(features, ", ")]"
 
 	s += " (<a href=\"https://ss13.co\">Website</a>)"
-
-	//Temporary while we rebrand
-	s += " (Previously LLJK)"
+	s += " \[WHITELISTED]"
 
 	/* does this help? I do not know */
 	if (src.status != s)
