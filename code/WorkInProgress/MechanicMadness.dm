@@ -166,7 +166,7 @@
 		density=0
 		anchored=0
 		icon_state="housing_handheld"
-		flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | ONBELT
+		flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 
 		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
 		proc/get_trigger()
