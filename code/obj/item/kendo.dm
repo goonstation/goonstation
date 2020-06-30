@@ -3,7 +3,7 @@
 //=====
 
 /obj/item/clothing/head/helmet/men
-    name = "men (面)"
+    name = "men"
     desc = "A light padded helmet with a grilled faceplate to protect the user in a kendo match."
     icon_state = "men"
     item_state = "men"
@@ -16,7 +16,7 @@
         setProperty("meleeprot_head", 2)
 
 /obj/item/clothing/suit/armor/douandtare
-    name = "dou and tare (胴と垂れ)"
+    name = "dou and tare"
     desc = "A breastplate and padded skirt used primarily in kendo."
     icon_state = "dou-tare"
     item_state = "dou-tare"
@@ -33,7 +33,7 @@
         setProperty("movespeed", 1)
 
 /obj/item/clothing/gloves/kote
-    name = "kote (小手)"
+    name = "kote"
     desc = "Big poofy gloves to cover the hands in kendo sparring."
     icon_state = "kote"
     item_state = "kote"
@@ -52,7 +52,7 @@
 //======
 
 /obj/item/shinai
-    name = "shinai (竹刀)"
+    name = "shinai"
     desc = "A sword-like weapon made of slats of bamboo. Shinai are made to reflect the weight of a katana, but disperse impact on hit to minimize damage."
     icon = 'icons/obj/items/weapons.dmi'
     inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
@@ -179,7 +179,7 @@
 //==========
 
 /obj/item/shinai_bag
-    name = "shinai bag (竹刀袋)"
+    name = "shinai bag"
     desc = ""
     wear_image_icon = 'icons/mob/back.dmi'
     icon_state = "shinaibag-closed"
