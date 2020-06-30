@@ -290,7 +290,7 @@
 		var/floorturf = get_turf(usr)
 		var/floormod1 = rand(0, 32)
 		var/floormod2 = rand(0, 32)
-		if(usr.plane == -100)
+		if(usr.plane == PLANE_UNDERFLOOR)
 			usr.plane = PLANE_DEFAULT
 			usr.layer = 4
 			animate_slide(floorturf, floormod1, floormod2, 5)
