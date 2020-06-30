@@ -1152,6 +1152,7 @@ var/global/noir = 0
 		if("checkbioeffect_alter_reinforce")
 			if(src.level >= LEVEL_SA)
 				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
+				BE.altered = 1
 				if (BE.curable_by_mutadone)
 					BE.curable_by_mutadone = 0
 				else
@@ -1164,6 +1165,7 @@ var/global/noir = 0
 		if("checkbioeffect_alter_power_boost")
 			if(src.level >= LEVEL_SA)
 				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
+				BE.altered = 1
 				if(istype(BE, /datum/bioEffect/power)) //powers only
 					if (BE.power)
 						BE.power = 0
@@ -1179,6 +1181,7 @@ var/global/noir = 0
 		if("checkbioeffect_alter_sync")
 			if(src.level >= LEVEL_SA)
 				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
+				BE.altered = 1
 				if(istype(BE, /datum/bioEffect/power)) //powers only
 					if (BE.safety)
 						BE.safety = 0
@@ -1193,6 +1196,7 @@ var/global/noir = 0
 		if("checkbioeffect_alter_cooldown")
 			if(src.level >= LEVEL_SA)
 				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
+				BE.altered = 1
 				if(istype(BE, /datum/bioEffect/power)) //powers only
 					var/input = input(usr, "Enter a cooldown in deciseconds", "Alter Cooldown", BE.cooldown) as num|null
 					if(input >= 0)
