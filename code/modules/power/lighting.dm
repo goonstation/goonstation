@@ -168,7 +168,6 @@
 	light_name = "light bulb"
 	brightness = 1.4
 	var/state
-	var/lampshaded = 1
 	icon_state = "blamp1-off"
 	wallmounted = 0
 
