@@ -1440,10 +1440,9 @@
 
 	setupProperties()
 		..()
-		setProperty("coldprot", 15)
-		setProperty("heatprot", 15)
-		setProperty("meleeprot", 0.5)
-		setProperty("rangedprot", 0.5)
+		setProperty("coldprot", 5)
+		setProperty("heatprot", 5)
+		setProperty("meleeprot", 2)
 
 /obj/item/clothing/suit/nursedress
 	name = "nurse dress"
