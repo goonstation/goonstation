@@ -4489,11 +4489,6 @@ var/global/noir = 0
 		tr:nth-child(odd) {background-color: #f2f2f2;}
 		tr:hover {background-color: #e2e2e2;}
 
-		.right {
-			text-align: right;
-			float: right;
-		}
-
 		.button {
 			padding: 6px 12px;
 			text-align: center;
