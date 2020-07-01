@@ -78,19 +78,23 @@ ABSTRACT_TYPE(/datum/plant)
 	// or not to continue
 	proc/HYPaction_bar(var/obj/machinery/plantpot/POT,var/mob/user,var/duration,var/datum/action/bar/icon/ACTION = /datum/action/bar/icon/harvest_plant)
 		actions.start(new ACTION(POT,user,duration),user)
+	#define POT_ACTIONNONE 0
+	#define POT_ACTIONPASSED 1
+	#define POT_ACTIONFAILED 2
+	//defines for action bar harvesting yay :D 0 = no action, 1 = action passed, 2 = action cancelled
 		while(!POT.actionpassed)
 			sleep(10)
-			if(POT.actionpassed == 2)
-				POT.actionpassed = 0
+			if(POT.actionpassed == POT_ACTIONFAILED)
+				POT.actionpassed = POT_ACTIONNONE
 				return 1
-			else if(POT.actionpassed == 1)
+			else if(POT.actionpassed == POT_ACTIONPASSED)
 				break
 		if(!POT.actionpassed)
 			return 1
-		if(POT.actionpassed == 2)
-			POT.actionpassed = 0
+		if(POT.actionpassed == POT_ACTIONFAILED)
+			POT.actionpassed = POT_ACTIONNONE
 			return 1
-		POT.actionpassed = 0
+		POT.actionpassed = POT_ACTIONNONE
 
 	proc/HYPspecial_proc(var/obj/machinery/plantpot/POT)
 		lasterr = 0
@@ -257,27 +261,27 @@ ABSTRACT_TYPE(/datum/plant)
 	onUpdate()
 		if(plant_pot == null || source == null || (get_dist(source, plant_pot) > 1))
 			interrupt(INTERRUPT_ALWAYS)
-			plant_pot.actionpassed = 2
+			plant_pot.actionpassed = POT_ACTIONFAILED
 			reset()
 			return
 		if(source && (source.equipped() != toolcheck))
 			interrupt(INTERRUPT_ALWAYS)
-			plant_pot.actionpassed = 2
+			plant_pot.actionpassed = POT_ACTIONFAILED
 			reset()
 			return
 		if(!plant_pot.current)
 			interrupt(INTERRUPT_ALWAYS)
-			plant_pot.actionpassed = 2
+			plant_pot.actionpassed = POT_ACTIONFAILED
 			reset()
 			return
 		if(plant_pot.dead == 1)
 			interrupt(INTERRUPT_ALWAYS)
-			plant_pot.actionpassed = 2
+			plant_pot.actionpassed = POT_ACTIONFAILED
 			reset()
 			return
 		..()
 
 	onEnd()
 		..()
-		plant_pot.actionpassed = 1
+		plant_pot.actionpassed = POT_ACTIONPASSED
 		reset()
