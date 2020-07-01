@@ -163,7 +163,6 @@ var/list/mechanics_telepads = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Eject Money","checkEjectMoney")
 
 	proc/emoney(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		if(input)
 			if(input.signal == code)
 				ejectmoney()
@@ -289,7 +288,6 @@ var/list/mechanics_telepads = new/list()
 				trunk = null
 
 	proc/flushp(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		if(input && input.signal && ready && trunk)
 			ready = 0
 			for(var/atom/movable/M in src.loc)
@@ -563,7 +561,6 @@ var/list/mechanics_telepads = new/list()
 			if(world.tick_usage > 100) return //fuck it, failsafe
 
 	proc/activateproc(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		if(input)
 			if(active) return
 			particleMaster.SpawnSystem(new /datum/particleSystem/gravaccel(src.loc, src.dir))
@@ -627,7 +624,6 @@ var/list/mechanics_telepads = new/list()
 		boutput(user, "Signal changing now [changesig ? "on":"off"]")
 
 	proc/delayproc(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		if(input)
 			if(active) return
 			SPAWN_DBG(0)
@@ -673,7 +669,6 @@ var/list/mechanics_telepads = new/list()
 			boutput(user, "Set Time Frame to [inp]")
 
 	proc/fire1(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		if(inp1) return
 
 		inp1 = 1
@@ -690,7 +685,6 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/fire2(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		if(inp2) return
 
 		inp2 = 1
@@ -769,7 +763,6 @@ var/list/mechanics_telepads = new/list()
 			boutput(user, "Signal set to [inp]")
 
 	proc/split(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		var/list/converted = params2list(input.signal)
 		if(converted.len)
 			if(triggerSignal in converted)
@@ -974,7 +967,6 @@ var/list/mechanics_telepads = new/list()
 		tooltip_rebuild = 1
 
 	proc/checkstr(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
 		if(findtext(input.signal, triggerSignal))
 			if(!not)
@@ -1062,20 +1054,17 @@ var/list/mechanics_telepads = new/list()
 		tooltip_rebuild = 1
 
 	proc/addstr(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		buffer = "[buffer][input.signal]"
 		tooltip_rebuild = 1
 		return
 
 	proc/addstrsend(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		buffer = "[buffer][input.signal]"
 		tooltip_rebuild = 1
 		sendstr(input)
 		return
 
 	proc/sendstr(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		var/finished = "[bstr][buffer][astr]"
 		finished = strip_html(sanitize(finished))
 		input.signal = finished
@@ -1085,7 +1074,6 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/clrbff(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		buffer = ""
 		tooltip_rebuild = 1
 		return
@@ -1243,7 +1231,6 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/send(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		var/list/converted = params2list(input.signal)
 		if(!converted.len || !ready) return
 
@@ -1507,7 +1494,6 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/next(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		if(!signals.len) return
 		if((current_index + 1) > signals.len)
 			current_index = 1
@@ -1520,7 +1506,6 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/nextplus(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		if(!signals.len) return
 		if((current_index + 1) > signals.len)
 			current_index = 1
@@ -1535,7 +1520,6 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/previous(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		if(!signals.len) return
 		if((current_index - 1) < 1)
 			current_index = signals.len
@@ -1548,7 +1532,6 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/previousplus(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		if(!signals.len) return
 		if((current_index - 1) < 1)
 			current_index = signals.len
@@ -1609,7 +1592,6 @@ var/list/mechanics_telepads = new/list()
 			tooltip_rebuild = 1
 
 	proc/activate(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		on = 1
 		input.signal = signal_on
 		tooltip_rebuild = 1
@@ -1619,7 +1601,6 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/deactivate(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		on = 0
 		input.signal = signal_off
 		tooltip_rebuild = 1
@@ -1629,7 +1610,6 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/toggle(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		on = !on
 		input.signal = (on ? signal_on : signal_off)
 		tooltip_rebuild = 1
@@ -1639,7 +1619,6 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/state(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		input.signal = (on ? signal_on : signal_off)
 		SPAWN_DBG(0)
 			mechanics.fireOutgoing(input)
@@ -1691,7 +1670,6 @@ var/list/mechanics_telepads = new/list()
 			tooltip_rebuild = 1
 
 	proc/setidmsg(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		if(input.signal)
 			teleID = input.signal
 			tooltip_rebuild = 1
@@ -1814,7 +1792,6 @@ var/list/mechanics_telepads = new/list()
 			SPAWN_DBG(0) light.set_color(GetRedPart(selcolor) / 255, GetGreenPart(selcolor) / 255, GetBluePart(selcolor) / 255)
 
 	proc/turnon(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		if (usr && usr.stat)
 			return
 		active = 1
@@ -1823,7 +1800,6 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/turnoff(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		if (usr && usr.stat)
 			return
 		active = 0
@@ -1832,7 +1808,6 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/toggle(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		if (usr && usr.stat)
 			return
 		if(active)
@@ -2185,7 +2160,6 @@ var/list/mechanics_telepads = new/list()
 		return get_edge_target_turf(src, src.dir)
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if(level == 2) return
 		if(input && Gun)
 			if(Gun.canshoot())
 				var/atom/target = getTarget()
