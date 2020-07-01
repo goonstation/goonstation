@@ -37220,6 +37220,7 @@
 "lEk" = (
 /obj/table/wood/auto,
 /obj/bedsheetbin,
+/obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/carpet/red/fancy/narrow{
 	dir = 6
 	},
