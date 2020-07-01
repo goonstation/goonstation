@@ -67602,9 +67602,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "uYT" = (
-/obj/grille/catwalk/jen,
-/obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/plating/jen,
+/turf/simulated/wall/auto/reinforced/jen,
 /area/station/maintenance/outer/east)
 "uZc" = (
 /obj/machinery/vehicle/pod_smooth/industrial{
@@ -73797,6 +73795,14 @@
 	},
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/AIsat)
+"wUu" = (
+/obj/machinery/vehicle/tank/car/red,
+/obj/item/paper{
+	info = "are you fucking serious<br><br><br><br>yes<br>kachow";
+	pixel_x = -9
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/east)
 "wUv" = (
 /obj/disposalpipe/junction/right/west{
 	mail_tag = "detective"
@@ -138474,7 +138480,7 @@ hbA
 hbA
 tSd
 agU
-aVk
+cZi
 sUd
 ewP
 iOX
@@ -138775,9 +138781,9 @@ pwz
 pwz
 kaF
 onZ
-jOz
-cZi
-uYT
+stM
+stM
+aVk
 fpD
 auW
 pzF
@@ -139076,9 +139082,9 @@ rdj
 rdj
 rdj
 rdj
-rdj
-jOz
-jOz
+uYT
+wUu
+stM
 cXw
 cXw
 fuB
@@ -139378,9 +139384,9 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-hZp
+uYT
+uYT
+uYT
 rJD
 eUt
 ugv
@@ -140286,7 +140292,7 @@ rdj
 rdj
 rdj
 rdj
-jOz
+hZp
 ruL
 sdN
 eUt
