@@ -72,7 +72,7 @@ toxic - poisons
 	on_hit(atom/H, angle, var/obj/projectile/P)
 		var/turf/T = get_turf(H)
 		if(P.power != 0) //avoid AoE on pointblank... but if you just shoot the guy beside you you're going to get EMPed
-			for(var/turf/tile in range(1,T))
+			for(var/turf/tile in range(1, T))
 				for(var/atom/movable/O in tile.contents)
 					if(!istype(O, /obj/machinery/nuclearbomb)) //AoE emp does not affect nuke
 						O.emp_act()
