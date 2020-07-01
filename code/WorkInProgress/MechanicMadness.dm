@@ -1068,7 +1068,7 @@ var/list/mechanics_telepads = new/list()
 		var/finished = "[bstr][buffer][astr]"
 		finished = strip_html(sanitize(finished))
 		input.signal = finished
-		mechanics.fireOutgoing(input)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		buffer = ""
 		tooltip_rebuild = 1
 		return
@@ -1133,32 +1133,26 @@ var/list/mechanics_telepads = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"delete file", "deletefile")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(..(W, user)) return
-		else if(ispulsingtool(W))
-			src.modify_configs()
-
 	proc/sendfile(var/datum/mechanicsMessage/input)
-		if (level == 2 || !src.stored_file) return
-		input.signal = mechanics.outputSignal
+		if (!src.stored_file) return
 		input.data_file = src.stored_file.copy_file()
-		mechanics.fireOutgoing(input)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,input)
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/addandsendfile(var/datum/mechanicsMessage/input)
-		if (level == 2 || !src.stored_file) return
+		if (!src.stored_file) return
 		input.data_file = src.stored_file.copy_file()
-		mechanics.fireOutgoing(input)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/storefile(var/datum/mechanicsMessage/input)
-		if (level == 2 || !input.data_file) return
+		if (!input.data_file) return
 		src.stored_file = input.data_file.copy_file()
 		tooltip_rebuild = 1
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/deletefile(var/datum/mechanicsMessage/input)
-		if (level == 2 || !src.stored_file) return
+		if (!src.stored_file) return
 		src.stored_file = null
 		tooltip_rebuild = 1
 		animate_flash_color_fill(src,"#00FF00",2, 2)
@@ -1178,7 +1172,7 @@ var/list/mechanics_telepads = new/list()
 	desc = ""
 	icon_state = "comp_radiosig"
 	var/ready = 1
-	var/send_full = 0
+	var/forward_all = 0
 	var/only_directed = 1
 
 	var/net_id = null //What is our ID on the network?
@@ -1189,7 +1183,7 @@ var/list/mechanics_telepads = new/list()
 	var/datum/radio_frequency/radio_connection
 
 	get_desc()
-		. += {"<br><span class='notice'>[send_full ? "Sending full unprocessed Signals.":"Sending only processed sendmsg and pda Message Signals."]<br>
+		. += {"<br><span class='notice'>[forward_all ? "Sending full unprocessed Signals.":"Sending only processed sendmsg and pda Message Signals."]<br>
 		[only_directed ? "Only reacting to Messages directed at this Component.":"Reacting to ALL Messages received."]<br>
 		Current Frequency: [frequency]<br>
 		Current NetID: [net_id]</span>"}
@@ -1198,32 +1192,32 @@ var/list/mechanics_telepads = new/list()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send radio message", "send")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", "setfreq")
-		//MARKMARKMARK//SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,list("Set Frequency","Toggle NetID Filtering","Toggle Forward All"))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency","setFreqManually")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle NetID Filtering","toggleAddressFiltering")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Forward All","toggleForwardAll")
 
 		if(radio_controller)
 			set_frequency(frequency)
 
 		src.net_id = format_net_id("\ref[src]")
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(..(W, user)) return
-		else if(ispulsingtool(W))
-			switch(src.modify_configs())
-				if(0)
-					return
-				if("Set Frequency")
-					var/inp = input(user,"Please enter Frequency:","Frequency setting", frequency) as num
-					if(inp)
-						set_frequency(inp)
-						boutput(user, "Frequency set to [inp]")
-				if("Toggle NetID Filtering")
-					only_directed = !only_directed
-					boutput(user, "[only_directed ? "Now only reacting to Messages directed at this Component":"Now reacting to ALL Messages."]")
-				if("Toggle Forward All")
-					send_full = !send_full
-					boutput(user, "[send_full ? "Now forwarding all Radio Messages as they are.":"Now processing only sendmsg and normal PDA messages."]")
+	proc/setFreqManually(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user,"Please enter Frequency:","Frequency setting", frequency) as num
+		if(inp)
+			set_frequency(inp)
+			boutput(user, "Frequency set to [inp]")
 			tooltip_rebuild = 1
+
+	proc/toggleAddressFiltering(obj/item/W as obj, mob/user as mob)
+		only_directed = !only_directed
+		boutput(user, "[only_directed ? "Now only reacting to Messages directed at this Component":"Now reacting to ALL Messages."]")
+		tooltip_rebuild = 1
+
+	proc/toggleForwardAll(obj/item/W as obj, mob/user as mob)
+		forward_all = !forward_all
+		boutput(user, "[forward_all ? "Now forwarding all Radio Messages as they are.":"Now processing only sendmsg and normal PDA messages."]")
+		tooltip_rebuild = 1
+
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		var/newfreq = text2num(input.signal)
 		if(!newfreq) return
@@ -1260,12 +1254,6 @@ var/list/mechanics_telepads = new/list()
 
 		if((only_directed && signal.data["address_1"] == src.net_id) || !only_directed || (signal.data["address_1"] == "ping"))
 
-			if(send_full)
-				var/datum/mechanicsMessage/msg = mechanics.newSignal(html_decode(list2params_noencode(signal.data)), signal.data_file?.copy_file())
-				mechanics.fireOutgoing(msg)
-				animate_flash_color_fill(src,"#00FF00",2, 2)
-				return
-
 			if((signal.data["address_1"] == "ping") && signal.data["sender"])
 				var/datum/signal/pingsignal = get_free_signal()
 				pingsignal.source = src
@@ -1279,14 +1267,17 @@ var/list/mechanics_telepads = new/list()
 				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 					src.radio_connection.post_signal(src, pingsignal, src.range)
 
+			if(forward_all)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(list2params_noencode(signal.data)), signal.data_file?.copy_file())
+				animate_flash_color_fill(src,"#00FF00",2, 2)
+				return
+
 			else if(signal.data["command"] == "sendmsg" && signal.data["data"])
-				var/datum/mechanicsMessage/msg = mechanics.newSignal(html_decode(signal.data["data"]), signal.data_file?.copy_file())
-				mechanics.fireOutgoing(msg)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(signal.data["data"]), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "text_message" && signal.data["message"])
-				var/datum/mechanicsMessage/msg = mechanics.newSignal(html_decode(signal.data["message"]))
-				mechanics.fireOutgoing(msg)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(signal.data["message"]), null)
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "setfreq" && signal.data["data"])
@@ -1344,64 +1335,66 @@ var/list/mechanics_telepads = new/list()
 		//MARKMARKMARK//SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,list("Set Signal List","Set Signal List(Delimeted)","Toggle Announcements","Toggle Random","Toggle Allow Duplicate Entries"))
 		
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(..(W, user)) return
-		else if(ispulsingtool(W))
-			switch(src.modify_configs())
-				if(0)
+	proc/MarkNstein(obj/item/W as obj, mob/user as mob)
+		var/numsig = input(user,"How many Signals would you like to define?","# Signals:", 3) as num
+		numsig = round(numsig)
+		if(numsig > 10) //Needs a limit because nerds are nerds
+			boutput(user, "<span class='alert'>This component can't handle more than 10 signals!</span>")
+			return
+		if(numsig)
+			signals.Cut()
+			boutput(user, "Defining [numsig] Signals ...")
+			for(var/i=0, i<numsig, i++)
+				var/signew = input(user,"Content of Signal #[i]","Content:", "signal[i]") as text
+				signew = adminscrub(signew) //SANITIZE THAT SHIT! FUCK!!!!
+				if(length(signew))
+					signals.Add(signew)
+				else
+					signals.Cut()
 					return
-				if("Set Signal List")
-					var/numsig = input(user,"How many Signals would you like to define?","# Signals:", 3) as num
-					numsig = round(numsig)
-					if(numsig > 10) //Needs a limit because nerds are nerds
-						boutput(user, "<span class='alert'>This component can't handle more than 10 signals!</span>")
-						return
-					if(numsig)
-						signals.Cut()
-						boutput(user, "Defining [numsig] Signals ...")
-						for(var/i=0, i<numsig, i++)
-							var/signew = input(user,"Content of Signal #[i]","Content:", "signal[i]") as text
-							signew = adminscrub(signew) //SANITIZE THAT SHIT! FUCK!!!!
-							if(length(signew))
-								signals.Add(signew)
-							else
-								signals.Cut()
-								return
-						boutput(user, "Set [numsig] Signals!")
-						for(var/a in signals)
-							boutput(user, a)
-				if("Set Signal List(Delimeted)")
-					var/newsigs = ""
-					while(1)
-						newsigs = input(user, "Enter a string delimited by ; for every item you want in the list.", "Enter a thing. Max length is 2048 characters", newsigs)
-						if(!newsigs)
-							boutput(user, "<span class='notice'>Signals remain unchanged!</span>")
-							break
-						if(length(newsigs) >= 2048)
-							alert(user, "That's far too long. Trim it down some!")
-							continue
-						var/list/built = splittext(newsigs, ";")
-						var/done = 1
-						for(var/i = 1, i <= built.len, i++)
-							if(!built[i])
-								done = 0
-								alert(user, "You have an empty signal in there, try again!(todo, just remove these)")
-								break
-						if(done)
-							signals = built
-							current_index = 1
-							boutput(user, "<span class='notice'>There are now [signals.len] signals in the list.</span>")
-							break
-				if("Toggle Announcements")
-					announce = !announce
-					boutput(user, "Announcements now [announce ? "on":"off"]")
-				if("Toggle Random")
-					random = !random
-					boutput(user, "[random ? "Now picking Items at random.":"Now using selected Items."]")
-				if("Toggle Allow Duplicate Entries")
-					allowDuplicates = !allowDuplicates
-					boutput(user, "[allowDuplicates ? "Allowing addition of duplicate items." : "Not allowing addition of duplicate items."]")
-			tooltip_rebuild = 1
+			boutput(user, "Set [numsig] Signals!")
+			for(var/a in signals)
+				boutput(user, a)
+		tooltip_rebuild = 1
+
+	proc/MarkNstein(obj/item/W as obj, mob/user as mob)
+		var/newsigs = ""
+		while(1)
+			newsigs = input(user, "Enter a string delimited by ; for every item you want in the list.", "Enter a thing. Max length is 2048 characters", newsigs)
+			if(!newsigs)
+				boutput(user, "<span class='notice'>Signals remain unchanged!</span>")
+				break
+			if(length(newsigs) >= 2048)
+				alert(user, "That's far too long. Trim it down some!")
+				continue
+			var/list/built = splittext(newsigs, ";")
+			var/done = 1
+			for(var/i = 1, i <= built.len, i++)
+				if(!built[i])
+					done = 0
+					alert(user, "You have an empty signal in there, try again!(todo, just remove these)")
+					break
+			if(done)
+				signals = built
+				current_index = 1
+				boutput(user, "<span class='notice'>There are now [signals.len] signals in the list.</span>")
+				break
+		tooltip_rebuild = 1
+
+	proc/MarkNstein(obj/item/W as obj, mob/user as mob)
+		announce = !announce
+		boutput(user, "Announcements now [announce ? "on":"off"]")
+		tooltip_rebuild = 1
+
+	proc/MarkNstein(obj/item/W as obj, mob/user as mob)
+		random = !random
+		boutput(user, "[random ? "Now picking Items at random.":"Now using selected Items."]")
+		tooltip_rebuild = 1
+
+	proc/MarkNstein(obj/item/W as obj, mob/user as mob)
+		allowDuplicates = !allowDuplicates
+		boutput(user, "[allowDuplicates ? "Allowing addition of duplicate items." : "Not allowing addition of duplicate items."]")
+		tooltip_rebuild = 1
 
 	proc/selitem(var/datum/mechanicsMessage/input)
 		if(!input) return

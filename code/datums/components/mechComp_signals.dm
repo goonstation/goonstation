@@ -127,8 +127,8 @@
 	return
 
 //Fire a message with a simple signal (no file). Expected to be called from signal "sources" (first nodes)
-/datum/component/mechanics_holder/proc/fireOutSignal(var/signal)
-	fireOutgoing(newSignal(signal, null))
+/datum/component/mechanics_holder/proc/fireOutSigna(var/signal, var/datum/computer/file/data_file=null)
+	fireOutgoing(newSignal(signal, data_file))
 	return
 
 //Adds an input "slot" to the holder w/ a proc mapping.
