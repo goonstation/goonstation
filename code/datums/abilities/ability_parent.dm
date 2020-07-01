@@ -1134,7 +1134,7 @@
 
 		if (src.topBarRendered)
 			src.updateText(0, x_occupied, y_occupied)
-			src.abilitystat?.update_on_hud(x_occupied+1,x_occupied)
+			src.abilitystat?.update_on_hud(x_occupied,y_occupied)
 
 	updateText(var/called_by_owner = 0)
 		if (!abilitystat)
