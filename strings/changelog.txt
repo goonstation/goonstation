@@ -1,6 +1,49 @@
+
+(t)wed jul 01 20
+(u)mbc
+(p)1290
+(e)|
+(+)Walk-slipping a bit more forgiving, and banana peel slips are a bit more suitable for pranks again.
+(u)Ryumi
+(p)1287
+(e)🗺|mapping
+(+)Donut3 floor flushers should stop misbehaving... maybe.
+(u)Tarmunora
+(p)1281
+(e)⚖|balance
+(+)Nuclear bombs strongly resist wavegun EMP attacks.
+(t)tue jun 30 20
+(u)Ryumi
+(p)1253
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added a new map, Donut3! This is a med to highpop map designed to work well on both S2 and RP! It features an all new style of colored walls, a new style of maintenance designed to be grungy, spooky and trashy, a library, a huge indoor escape shuttle bay, a new home for the gnome, and more!
+(*)Added railings, which you can build with one sheet of metal. They block you walking through them in their direction like thindows. Click a railing with an empty hand to vault over them after a delay (athletic trait users do this faster!) You can fasten/unfasten them with a screwdriver, and disassemble them with a welding tool.
+(+)Added a sarcophagus. Appears naturally in Donut3.
+(+)Added indoor catwalks. They only naturally appear on Donut3, and you can't build them, but they look nice! Clicking them with anything that isn't a snipping tool will redirect that click to the floor they're on.
+(u)mbc
+(p)1278
+(e)|
+(*)Moved antagonist points display (changeling DNA etc) to onscreen text instead of the stat panel.
+(u)Tarmunora
+(p)1269
+(e)⚖🐛|balance, bug
+(+)Fixed issue making detain projectiles more powerful than intended.
+(u)mbc
+(p)1260
+(e)⚖|balance
+(*)Belts will no longer fit inside backpacks
+(t)mon jun 29 20
+(u)RichardGere
+(p)1242
+(e)🐛|bug
+(+)Fixed drinking glasses not applying their reagents to mobs
+(u)MarkNstein
+(p)1256
+(e)🗺|mapping
+(*)Every map in rotation now has a RockBox on station.
+(+)Cog2 AI Core: Announcement Console swapped for QM
 (t)sun jun 28 20
 (u)UrsulaMajor
-(e)|
 (+)There's a new arcade at the diner! I hear they have an "experimental" VR game there? Maybe Bill knows more about it.
 (t)sat jun 27 20
 (u)Gannets
