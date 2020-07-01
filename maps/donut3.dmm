@@ -10122,6 +10122,14 @@
 "cPl" = (
 /obj/table/wood/round/auto,
 /obj/random_item_spawner/med_kit/one,
+/obj/item/paper_bin{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/pen{
+	pixel_x = 10;
+	pixel_y = 9
+	},
 /turf/simulated/floor/wood/five,
 /area/station/medical/asylum)
 "cPq" = (
@@ -11627,8 +11635,8 @@
 /area/listeningpost)
 "dlK" = (
 /obj/machinery/power/apc/autoname_north,
-/obj/machinery/light/small{
-	dir = 4
+/obj/machinery/light/incandescent/cool{
+	dir = 1
 	},
 /obj/cable{
 	d2 = 8;
@@ -15725,6 +15733,13 @@
 /obj/machinery/vending/pda,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/storage/tech)
@@ -21288,6 +21303,13 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "gqe" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -28153,7 +28175,6 @@
 /area/station/medical/asylum/computer)
 "iDb" = (
 /obj/decal/mule/dropoff,
-/obj/access_spawn/medlab,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -28163,6 +28184,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access = null
 	},
+/obj/access_spawn/robotics,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/inner/east)
 "iDf" = (
@@ -28318,13 +28340,9 @@
 /area/station/maintenance/outer/sw)
 "iGr" = (
 /obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable,
-/obj/cable{
+	d1 = 4;
 	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 4
@@ -30307,7 +30325,6 @@
 	name = "industrial loading chute - cargo"
 	},
 /obj/disposalpipe/trunk,
-/obj/machinery/launcher_loader/south,
 /turf/simulated/floor/black/grime,
 /area/station/routingdepot)
 "jqe" = (
@@ -30943,11 +30960,23 @@
 	},
 /area/station/hallway/primary/south)
 "jBR" = (
-/obj/machinery/launcher_loader/east{
-	name = "Outbound"
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
+/obj/disposalpipe/segment/transport,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor/arrival{
+	dir = 4
+	},
+/area/station/hangar/arrivals)
 "jBX" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/grime{
@@ -32673,7 +32702,7 @@
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
-/obj/machinery/light/small{
+/obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
 /obj/machinery/camera{
@@ -34528,8 +34557,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "kMl" = (
-/obj/machinery/launcher_loader/south{
-	name = "Outbound"
+/obj/machinery/conveyor/north{
+	id = "qm_out"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
@@ -37195,6 +37224,7 @@
 "lEk" = (
 /obj/table/wood/auto,
 /obj/bedsheetbin,
+/obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/carpet/red/fancy/narrow{
 	dir = 6
 	},
@@ -41628,7 +41658,6 @@
 "mXM" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment,
-/obj/machinery/launcher_loader/east,
 /turf/simulated/floor/black/grime,
 /area/station/routingdepot)
 "mXZ" = (
@@ -45468,7 +45497,7 @@
 /obj/shrub{
 	dir = 8
 	},
-/obj/machinery/light/small{
+/obj/machinery/light/incandescent/cool{
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -50586,6 +50615,13 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/item/storage/belt/utility{
+	pixel_x = -4
+	},
+/obj/item/sheet/steel/fullstack{
+	pixel_x = 7;
+	pixel_y = -4
+	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/robotics)
 "pMH" = (
@@ -50854,9 +50890,6 @@
 	},
 /obj/disposalpipe/trunk{
 	dir = 4
-	},
-/obj/machinery/launcher_loader/west{
-	name = "Outbound"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
@@ -54991,15 +55024,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/stairs/wide/other,
 /area/station/hallway/primary/west)
-"raa" = (
-/obj/machinery/door_control{
-	id = "hangar_bridge";
-	name = "Secure Hangar Door Control";
-	pixel_x = -7;
-	pixel_y = -34
-	},
-/turf/simulated/floor/redwhite,
-/area/station/hangar/sec)
 "raj" = (
 /obj/rack,
 /obj/machinery/camera{
@@ -58048,11 +58072,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/science)
 "rWD" = (
-/obj/machinery/computer/bank_data,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
+/obj/table/round/auto,
+/obj/random_item_spawner/desk_stuff/few,
 /turf/simulated/floor/carpet/red/fancy/narrow/north,
 /area/station/quartermaster/office)
 "rWM" = (
@@ -60786,8 +60807,8 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
 "sTt" = (
-/obj/machinery/launcher_loader/east{
-	name = "Inbound"
+/obj/machinery/conveyor/east{
+	id = "qm_in"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
@@ -63469,11 +63490,6 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "tLC" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/carpet/red/fancy/junction{
 	dir = 5
 	},
@@ -68665,8 +68681,8 @@
 	name = "Buy Outlet"
 	},
 /obj/disposalpipe/trunk,
-/obj/machinery/launcher_loader/east{
-	name = "Inbound"
+/obj/machinery/conveyor/east{
+	id = "qm_in"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
@@ -74583,7 +74599,6 @@
 /area/station/crew_quarters/quarters)
 "xfW" = (
 /obj/decal/mule/dropoff,
-/obj/access_spawn/medlab,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -74593,6 +74608,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access = null
 	},
+/obj/access_spawn/robotics,
 /turf/simulated/floor/black/grime,
 /area/station/medical/robotics)
 "xfZ" = (
@@ -100443,7 +100459,7 @@ kKy
 mog
 dxI
 uLk
-raa
+hhH
 tHe
 naA
 uFx
@@ -107651,7 +107667,7 @@ rgh
 pll
 oSI
 psY
-psY
+jBR
 vDV
 uOI
 qoP
@@ -128539,8 +128555,8 @@ xDF
 xDF
 yaF
 vYX
-kMl
-jBR
+oYJ
+oYJ
 oYJ
 vsH
 bAt
@@ -128842,7 +128858,7 @@ ocq
 bRv
 vYX
 pRj
-rFE
+kMl
 rFE
 sTt
 fCA
@@ -147876,7 +147892,7 @@ rdj
 rdj
 bBD
 rNW
-uhu
+qNg
 qNg
 eiH
 qNg
