@@ -737,6 +737,21 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_reagent = "iron"
 	sample_verb = "scrape"
 
+/obj/decal/cleanable/rust/jen
+	icon_state = "rust_jen"
+	random_icon_states = null
+	plane = PLANE_NOSHADOW_BELOW
+
+	// This is a big sprite that covers up most of the turf, so here's a way to interact with turfs without bludgeoning the rust
+	attack_hand(obj/M, mob/user)
+		return 0
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop))
+			..()
+		else
+			src.loc.attackby(user.equipped(), user)
+
 /obj/decal/cleanable/balloon
 	name = "balloon"
 	desc = "The remains of a balloon."
@@ -1175,6 +1190,19 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	dirt5
 		icon_state = "dirt5"
 
+	jen
+		icon_state = "dirt_jen"
+		plane = PLANE_NOSHADOW_BELOW
+
+		// This is a big sprite that covers up most of the turf, so here's a way to interact with turfs without bludgeoning the dirt
+		attack_hand(obj/M, mob/user)
+			return 0
+
+		attackby(obj/item/W, mob/user)
+			if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop))
+				..()
+			else
+				src.loc.attackby(user.equipped(), user)
 
 /obj/decal/cleanable/cobweb
 	name = "cobweb"
