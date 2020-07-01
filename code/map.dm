@@ -127,7 +127,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/donut3
 	name = "DONUT3"
-	goonhub_map = "https://cdn.discordapp.com/attachments/469379618168897538/725462942853890097/donut3-28.png"
+	goonhub_map = "https://cdn.discordapp.com/attachments/469379618168897538/727936626147459192/donut3-30-FINAL2-lol.png"
 	airlock_style = "pyro"
 	walls = /turf/simulated/wall/auto/jen
 	rwalls = /turf/simulated/wall/auto/reinforced/jen
@@ -136,6 +136,17 @@ var/global/list/mapNames = list(
 	escape_transit = /area/shuttle/escape/transit/donut3
 	escape_station = /area/shuttle/escape/station/donut3
 	escape_dir = NORTH
+	auto_windows = 1
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
 	auto_windows = 1
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
