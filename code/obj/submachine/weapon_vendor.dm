@@ -228,19 +228,19 @@
 	name = "Offense"
 	path = /obj/item/storage/belt/security/offense
 	catagory = "Loadout"
-	description = "One belt containing a phaser and a baton."
+	description = "One belt containing a wavegun and a baton."
 
 /datum/materiel/loadout/support
 	name = "Support"
 	path = /obj/item/storage/belt/security/support
 	catagory = "Loadout"
-	description = "One belt containing stun gloves, two robust donuts, and a wavegun."
+	description = "One belt containing a baton, two robust donuts, and some morphine auto-injectors."
 
 /datum/materiel/loadout/control
 	name = "Control"
 	path = /obj/item/storage/belt/security/control
 	catagory = "Loadout"
-	description = "One belt containing a taser shotgun, extra powercell, and fog grenades."
+	description = "One belt containing a taser shotgun, crowd dispersal grenades, and a baton."
 
 
 //SYNDIE
