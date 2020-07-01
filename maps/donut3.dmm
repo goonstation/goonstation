@@ -2165,12 +2165,6 @@
 /obj/floorpillstatue,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
-"akN" = (
-/obj/machinery/launcher_loader/east{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "alB" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -6168,13 +6162,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
-"bAn" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/light/emergency,
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
 "bAq" = (
 /obj/machinery/disposal/small{
 	dir = 1;
@@ -8682,6 +8669,15 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
+"coY" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1
+	},
+/turf/simulated/wall/auto/reinforced/jen/yellow{
+	icon_state = "6"
+	},
+/area/station/quartermaster/office)
 "cpa" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -9471,6 +9467,13 @@
 	dir = 4
 	},
 /area/station/chapel/main)
+"cCg" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/light/emergency,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "cCh" = (
 /obj/railing/orange,
 /obj/decal/cleanable/dirt/jen,
@@ -13288,6 +13291,12 @@
 /obj/disposalpipe/segment{
 	dir = 4;
 	level = -1
+	},
+/obj/machinery/door_control{
+	id = "qm_tohall_shutter";
+	name = "QM Shutter Control";
+	pixel_x = 23;
+	pixel_y = 11
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -23784,12 +23793,6 @@
 	dir = 9
 	},
 /area/station/medical/head)
-"hgz" = (
-/obj/machinery/launcher_loader/south{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "hgC" = (
 /obj/table/reinforced/chemistry/auto{
 	desc = "A black countertop table for storing kitchen-y objects.";
@@ -30414,15 +30417,6 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/stairs/wide,
 /area/station/hallway/primary/west)
-"jrI" = (
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/security/quarters)
 "jrK" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -30734,6 +30728,15 @@
 	dir = 4
 	},
 /area/station/turret_protected/AIsat)
+"jvZ" = (
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/security/quarters)
 "jwc" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -34203,6 +34206,12 @@
 	dir = 8
 	},
 /area/station/hallway/primary/south)
+"kDI" = (
+/obj/machinery/launcher_loader/south{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "kDJ" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 5;
@@ -37758,7 +37767,7 @@
 	},
 /obj/machinery/door/poddoor/pyro{
 	dir = 8;
-	id = "qm_tohall";
+	id = "qm_tohall_shutter";
 	layer = 3.1;
 	name = "QM Shutter"
 	},
@@ -59880,6 +59889,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/gas)
+"sAs" = (
+/obj/machinery/launcher_loader/east{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "sAz" = (
 /obj/cable{
 	d1 = 2;
@@ -61445,15 +61460,6 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
-"tdT" = (
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 4
-	},
-/area/station/security/quarters)
 "tdW" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen/one,
@@ -75667,6 +75673,15 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/westsolar)
+"xxq" = (
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 4
+	},
+/area/station/security/quarters)
 "xxr" = (
 /obj/cable{
 	d1 = 2;
@@ -101188,7 +101203,7 @@ pPd
 uxN
 yfE
 nfO
-jrI
+jvZ
 qRP
 lJM
 lJM
@@ -101485,7 +101500,7 @@ vUK
 deh
 bDy
 nbm
-tdT
+xxq
 wyW
 mTo
 agB
@@ -106612,7 +106627,7 @@ eXl
 pse
 fNH
 ovT
-bAn
+cCg
 iHj
 cNV
 qfT
@@ -128662,8 +128677,8 @@ xDF
 xDF
 yaF
 vYX
-hgz
-akN
+kDI
+sAs
 oYJ
 vsH
 bAt
@@ -132592,7 +132607,7 @@ nHQ
 jyF
 ucZ
 aYq
-jnN
+coY
 ffz
 ffz
 eIU
