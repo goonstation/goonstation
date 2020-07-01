@@ -1304,12 +1304,12 @@ var/global/noir = 0
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 				var/input = input(usr, "Enter a new genetic stability for the target", "Alter Genetic Stability", M.bioHolder.genetic_stability) as null|num
+				if (isnull(input))
+					return
 				if (input < 0)
 					M.bioHolder.genetic_stability = 0
-				else if (input >= 0)
-					M.bioHolder.genetic_stability = round(input)
 				else
-					return
+					M.bioHolder.genetic_stability = round(input)
 				usr.client.cmd_admin_checkbioeffect(M)
 			else
 				alert("You need to be at least a Secondary Administrator to modify the genetic stability of a player.")
