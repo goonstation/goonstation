@@ -72,12 +72,14 @@ toxic - poisons
 	on_hit(atom/H, angle, var/obj/projectile/P)
 		var/turf/T = get_turf(H)
 		if(P.power != 0) //avoid AoE on pointblank... but if you just shoot the guy beside you you're going to get EMPed
-			for(var/turf/tile in range(1,T))
+			for(var/turf/tile in range(1, T))
 				for(var/atom/movable/O in tile.contents)
-					O.emp_act()
-		if(prob(P.power*1.25)) //chance to EMP main target again - better odds the further it travels. Has a meaningful effect on borgs/pods/doors
+					if(!istype(O, /obj/machinery/nuclearbomb)) //AoE emp does not affect nuke
+						O.emp_act()
+		if(prob(P.power * 1.25)) //chance to EMP main target again - better odds the further it travels. Has a meaningful effect on borgs/pods/doors
 			for(var/atom/movable/O in T.contents)
-				O.emp_act()
+				if(!istype(O, /obj/machinery/nuclearbomb) || prob(P.power * 0.5)) //Direct hit has a low chance to affect the nuke - 
+					O.emp_act()
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(5, 0, T)
 		s.start()
