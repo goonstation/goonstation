@@ -4807,6 +4807,10 @@
 /area/station/security/hos)
 "beu" = (
 /obj/machinery/light_switch/north,
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 24
+	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -16767,6 +16771,7 @@
 /area/station/medical/asylum)
 "eTk" = (
 /obj/machinery/manufacturer/uniform,
+/obj/machinery/light/emergency,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/customs)
 "eTx" = (
@@ -42865,6 +42870,10 @@
 /obj/item/storage/box/PDAbox{
 	pixel_x = -7;
 	pixel_y = 4
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
