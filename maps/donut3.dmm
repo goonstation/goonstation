@@ -10122,6 +10122,14 @@
 "cPl" = (
 /obj/table/wood/round/auto,
 /obj/random_item_spawner/med_kit/one,
+/obj/item/paper_bin{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/pen{
+	pixel_x = 10;
+	pixel_y = 9
+	},
 /turf/simulated/floor/wood/five,
 /area/station/medical/asylum)
 "cPq" = (
@@ -28332,13 +28340,9 @@
 /area/station/maintenance/outer/sw)
 "iGr" = (
 /obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable,
-/obj/cable{
+	d1 = 4;
 	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 4
@@ -58068,11 +58072,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/science)
 "rWD" = (
-/obj/machinery/computer/bank_data,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
+/obj/table/round/auto,
+/obj/random_item_spawner/desk_stuff/few,
 /turf/simulated/floor/carpet/red/fancy/narrow/north,
 /area/station/quartermaster/office)
 "rWM" = (
@@ -63489,11 +63490,6 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "tLC" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/carpet/red/fancy/junction{
 	dir = 5
 	},
