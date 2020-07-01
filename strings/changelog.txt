@@ -1,4 +1,9 @@
 
+(t)wed jul 01 20
+(u)Tarmunora
+(p)1281
+(e)⚖|balance
+(+)Nuclear bombs strongly resist wavegun EMP attacks.
 (t)tue jun 30 20
 (u)Ryumi
 (p)1253
