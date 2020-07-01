@@ -15726,6 +15726,13 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/storage/tech)
 "eEs" = (
@@ -21288,6 +21295,13 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "gqe" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -30943,11 +30957,23 @@
 	},
 /area/station/hallway/primary/south)
 "jBR" = (
-/obj/machinery/launcher_loader/east{
-	name = "Outbound"
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
+/obj/disposalpipe/segment/transport,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor/arrival{
+	dir = 4
+	},
+/area/station/hangar/arrivals)
 "jBX" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/grime{
@@ -34528,8 +34554,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "kMl" = (
-/obj/machinery/launcher_loader/south{
-	name = "Outbound"
+/obj/machinery/conveyor/north{
+	id = "qm_out"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
@@ -50855,9 +50881,6 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/launcher_loader/west{
-	name = "Outbound"
-	},
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
 "pRH" = (
@@ -60786,8 +60809,8 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
 "sTt" = (
-/obj/machinery/launcher_loader/east{
-	name = "Inbound"
+/obj/machinery/conveyor/east{
+	id = "qm_in"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
@@ -68665,8 +68688,8 @@
 	name = "Buy Outlet"
 	},
 /obj/disposalpipe/trunk,
-/obj/machinery/launcher_loader/east{
-	name = "Inbound"
+/obj/machinery/conveyor/east{
+	id = "qm_in"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
@@ -107651,7 +107674,7 @@ rgh
 pll
 oSI
 psY
-psY
+jBR
 vDV
 uOI
 qoP
@@ -128539,8 +128562,8 @@ xDF
 xDF
 yaF
 vYX
-kMl
-jBR
+oYJ
+oYJ
 oYJ
 vsH
 bAt
@@ -128842,7 +128865,7 @@ ocq
 bRv
 vYX
 pRj
-rFE
+kMl
 rFE
 sTt
 fCA
