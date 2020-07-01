@@ -72,6 +72,20 @@
 	var/mob/vamp_isbiting = null
 	var/datum/abilityHolder/vampire/master = 0
 
+	var/last_blood_points = 0
+
+	onLife(var/mult = 1) //failsafe for UI not doing its update correctly elsewhere
+		.= 0
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (istype(H.mutantrace, /datum/mutantrace/vamp_zombie))
+				var/datum/mutantrace/vamp_zombie/V = H.mutantrace
+
+				if (last_blood_points != V.blood_points)
+					last_blood_points = V.blood_points
+					src.updateText(0, src.x_occupied, src.y_occupied)
+
+
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
 		.= list()
