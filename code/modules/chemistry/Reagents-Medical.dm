@@ -635,7 +635,7 @@ datum
 				if(holder.has_reagent("capulettium"))
 					holder.remove_reagent("capulettium", 3 * mult)
 				if(holder.has_reagent("sulfonal"))
-					holder.remove_reagent("solfonal", 3 * mult)
+					holder.remove_reagent("sulfonal", 3 * mult)
 				if(holder.has_reagent("ketamine"))
 					holder.remove_reagent("ketamine", 3 * mult)
 				if(holder.has_reagent("sodium_thiopental"))
