@@ -1019,7 +1019,9 @@
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "abB" = (
-/turf/space,
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -3620,13 +3622,6 @@
 	dir = 1
 	},
 /area/station/chapel/main)
-"aIX" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/light/emergency,
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
 "aJo" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/railing/orange{
@@ -13364,6 +13359,15 @@
 	},
 /turf/space,
 /area/station/solar/small_backup1)
+"dPW" = (
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 4
+	},
+/area/station/security/quarters)
 "dPY" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency{
@@ -24530,6 +24534,15 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/station/security/main)
+"hsA" = (
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/security/quarters)
 "hsP" = (
 /obj/table/auto,
 /obj/decal/tile_edge/line/grey{
@@ -25165,6 +25178,12 @@
 "hBL" = (
 /turf/simulated/wall/auto/jen/blue,
 /area/station/crew_quarters/courtroom)
+"hBV" = (
+/obj/machinery/launcher_loader/east{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "hBW" = (
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -28655,15 +28674,6 @@
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/inner)
-"iKx" = (
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 4
-	},
-/area/station/security/quarters)
 "iKP" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/railing/orange{
@@ -29003,6 +29013,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
+"iRV" = (
+/obj/machinery/launcher_loader/south{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "iRX" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1;
@@ -45239,15 +45255,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/engineering)
-"oeT" = (
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/security/quarters)
 "oeU" = (
 /obj/cable{
 	d1 = 2;
@@ -54853,6 +54860,13 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
+"qWW" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/light/emergency,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "qXj" = (
 /obj/cable{
 	d1 = 1;
@@ -60322,12 +60336,6 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
-"sIM" = (
-/obj/machinery/launcher_loader/south{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "sIO" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -68225,12 +68233,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
-"viu" = (
-/obj/machinery/launcher_loader/east{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "viz" = (
 /obj/storage/cart/trash,
 /obj/decal/cleanable/dirt/jen,
@@ -101186,7 +101188,7 @@ pPd
 uxN
 yfE
 nfO
-oeT
+hsA
 qRP
 lJM
 lJM
@@ -101483,7 +101485,7 @@ vUK
 deh
 bDy
 nbm
-iKx
+dPW
 wyW
 mTo
 agB
@@ -106610,7 +106612,7 @@ eXl
 pse
 fNH
 ovT
-aIX
+qWW
 iHj
 cNV
 qfT
@@ -128660,8 +128662,8 @@ xDF
 xDF
 yaF
 vYX
-sIM
-viu
+iRV
+hBV
 oYJ
 vsH
 bAt
