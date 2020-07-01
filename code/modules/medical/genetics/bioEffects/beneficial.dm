@@ -484,7 +484,7 @@ var/list/radio_brains = list()
 	lockedGaps = 1
 	lockedDiff = 3
 	lockedTries = 8
-	stability_loss = -5
+	stability_loss = 5
 	icon_state  = "strong"
 
 	OnAdd()

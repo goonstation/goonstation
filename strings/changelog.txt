@@ -1,4 +1,30 @@
 
+(t)tue jun 30 20
+(u)mbc
+(p)1278
+(e)|
+(*)Moved antagonist points display (changeling DNA etc) to onscreen text instead of the stat panel.
+(u)Tarmunora
+(p)1269
+(e)⚖🐛|balance, bug
+(+)Fixed issue making detain projectiles more powerful than intended.
+(u)mbc
+(p)1260
+(e)⚖|balance
+(*)Belts will no longer fit inside backpacks
+(t)mon jun 29 20
+(u)RichardGere
+(p)1242
+(e)🐛|bug
+(+)Fixed drinking glasses not applying their reagents to mobs
+(u)MarkNstein
+(p)1256
+(e)🗺|mapping
+(*)Every map in rotation now has a RockBox on station.
+(+)Cog2 AI Core: Announcement Console swapped for QM
+(t)sun jun 28 20
+(u)UrsulaMajor
+(+)There's a new arcade at the diner! I hear they have an "experimental" VR game there? Maybe Bill knows more about it.
 (t)sat jun 27 20
 (u)Gannets
 (p)1236

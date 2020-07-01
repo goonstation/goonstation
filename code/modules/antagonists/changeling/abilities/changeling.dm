@@ -272,10 +272,10 @@
 
 	onAbilityStat()
 		..()
+		.= list()
 		//On Changeling tab
-		stat("Absorbed DNA:", absorbtions)
-		stat("DNA Points:", points)
-
+		.["DNA:"] = points
+		.["Total:"] = absorbtions
 
 	onAbilityHolderInstanceAdd()
 		..()

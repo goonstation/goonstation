@@ -716,7 +716,7 @@
 /obj/item/mutation_orb/fire_orb
 	name = "essence of fire"
 	desc = "Embers of flame, all seemingly drawn to a single spot."
-	icon = 'icons/turf/adventure.dmi'
+	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "orb_fire"
 
 	envelop_message = "fiery embers"
@@ -736,9 +736,9 @@
 
 /obj/item/rejuvenation_feather
 	name = "fiery feather"
-	desc = "With the surface resembling that of a flame, this doesn't look like a normal feather. Occasional embers crackle from within, as if to remind of its unexplained nature."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "feather"
+	desc = "With the surface resembling that of a flame, this doesn't look like a normal feather. Occasional embers crackle from within, as if to remind of its unexplained nature. Merely holding it soothes your hand, indicative of its regenerative properties."
+	icon = 'icons/misc/GerhazoStuff.dmi'
+	icon_state = "feather_fire"
 	color = "#ff8902"
 	hide_attack = 2
 
@@ -798,8 +798,8 @@
 /obj/item/property_setter
 	name = "property setter"
 	desc = "You shouldn't see this."
-	icon = 'icons/obj/materials.dmi'
-	icon_state = "carbonfibre"
+	icon = 'icons/misc/GerhazoStuff.dmi'
+	icon_state = "fabric"
 	hide_attack = 2
 	var/list/datum/property_setter_property/properties_to_set
 	var/prefix_to_set = ""
@@ -844,7 +844,7 @@
 			if (did_something) // some property got changed, display a message and delete src
 				var/turf/T = get_turf(target)
 				playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-				T.visible_message("<span class='notice'>As [user] brings \the [src] towards \the [target], \the [src] shines and starts to meld with \the [target]!</span>")
+				T.visible_message("<span class='notice'>As [user] brings \the [src] towards \the [target], \the [src] begins to smoothly meld into \the [target]!</span>")
 				if (length(src.prefix_to_set))
 					target.name_prefix(prefix_to_set)
 					target.UpdateName()
@@ -868,8 +868,8 @@
 /obj/item/property_setter/fire_jewel
 	name = "fire jewel"
 	desc = "A sparkling red jewel. It sounds cliche, but something draws you towards inserting this into a clothing article."
-	icon = 'icons/obj/materials.dmi'
-	icon_state = "gem"
+	icon = 'icons/misc/GerhazoStuff.dmi'
+	icon_state = "gem_fire"
 	color = "#ff8902"
 	prefix_to_set = "fire-imbued"
 	color_to_set = "#ff8902"
@@ -912,8 +912,8 @@
 
 	New()
 		. = ..()
-		properties_to_set = list(new /datum/property_setter_property(incrementative = 1, cap = -0.3, property_name = "movespeed", property_value = -0.1, inverse = 1),
-		new /datum/property_setter_property(incrementative = 1, cap = -0.3, property_name = "space_movespeed", property_value = -0.1, inverse = 1))
+		properties_to_set = list(new /datum/property_setter_property(incrementative = 1, cap = -0.3, property_name = "movespeed", property_value = -0.15, inverse = 1),
+		new /datum/property_setter_property(incrementative = 1, cap = -0.3, property_name = "space_movespeed", property_value = -0.15, inverse = 1))
 
 
 ////////////////////////////////////////////////// Clothing properties stuff ///////////////////////////////////////////////

@@ -988,8 +988,12 @@
 	icon_state = "showers"
 
 /area/diner/hallway
-	name = "Diner Hallway"
+	name = "Hallway"
 	icon_state = "blue"
+
+/area/diner/hallway/docking
+	name = "East Shuttle Docks"
+	icon_state = "purple"
 
 /area/diner/backroom
 	name = "Diner Backroom"
@@ -1014,6 +1018,10 @@
 /area/diner/motel/chemstorage
 	name = "Chemical Storage"
 	icon_state = "orange"
+
+/area/diner/arcade
+	name = "Bill E Bheezes"
+	icon_state = "red"
 
 /area/tech_outpost
 	name = "Tech Outpost"

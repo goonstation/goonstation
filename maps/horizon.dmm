@@ -3438,8 +3438,8 @@
 /area/station/crew_quarters/quarters_east)
 "ait" = (
 /obj/decal/floatingtiles{
-	icon_state = "floattiles4";
-	dir = 4
+	dir = 4;
+	icon_state = "floattiles4"
 	},
 /turf/space,
 /area)
@@ -4491,8 +4491,8 @@
 	},
 /obj/lattice,
 /obj/decal/floatingtiles{
-	icon_state = "floattiles3";
-	dir = 8
+	dir = 8;
+	icon_state = "floattiles3"
 	},
 /turf/space,
 /area/station/engine/substation/pylon)
@@ -4709,8 +4709,8 @@
 	},
 /obj/lattice,
 /obj/decal/floatingtiles{
-	icon_state = "floattiles4";
-	dir = 4
+	dir = 4;
+	icon_state = "floattiles4"
 	},
 /turf/space,
 /area/station/engine/substation/pylon)
@@ -20102,24 +20102,12 @@
 /area/station/mining)
 "aVG" = (
 /obj/table/reinforced/auto,
-/obj/item/device/matanalyzer,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
+/obj/item/paper/book/materials,
+/obj/machinery/cell_charger,
 /turf/simulated/floor/engine,
 /area/station/mining/refinery)
 "aVH" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/materials,
-/obj/machinery/cell_charger,
+/obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/engine,
 /area/station/mining/refinery)
 "aVI" = (
@@ -20917,8 +20905,8 @@
 	name = "Medical Doctor"
 	},
 /obj/item/device/radio/intercom/medical{
-	dir = 8;
-	broadcasting = 1
+	broadcasting = 1;
+	dir = 8
 	},
 /obj/stool/bed/moveable,
 /turf/simulated/floor/bluewhite{
@@ -24586,6 +24574,8 @@
 	pixel_x = -12
 	},
 /obj/item/storage/toolbox/emergency,
+/obj/table/reinforced/auto,
+/obj/item/device/matanalyzer,
 /turf/simulated/floor/engine,
 /area/station/mining/refinery)
 "beN" = (
@@ -57895,6 +57885,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science)
+"oXt" = (
+/obj/submachine/cargopad{
+	name = "Mining Smeltery Pad"
+	},
+/turf/simulated/floor/engine,
+/area/station/mining/refinery)
 "plf" = (
 /obj/table/reinforced/auto,
 /obj/item/device/transfer_valve{
@@ -77692,7 +77688,7 @@ aaa
 aSN
 aVI
 aVI
-aYO
+oXt
 bbR
 bhO
 aDc
