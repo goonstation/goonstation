@@ -1140,9 +1140,9 @@ var/global/noir = 0
 				BE.altered = 1
 				if (BE.stability_loss == 0)
 					BE.stability_loss = BE.global_instance.stability_loss
-					BE.holder.genetic_stability -= BE.stability_loss //update mob stability
+					BE.holder.genetic_stability = max(0, BE.holder.genetic_stability -= BE.stability_loss) //update mob stability
 				else
-					BE.holder.genetic_stability += BE.stability_loss //update mob stability
+					BE.holder.genetic_stability = max(0, BE.holder.genetic_stability += BE.stability_loss) //update mob stability
 					BE.stability_loss = 0
 
 				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
@@ -1225,7 +1225,7 @@ var/global/noir = 0
 				switch (input(usr, "Select a chromosome", "Check Bioeffects Splice") as null|anything in applicable_chromosomes)
 					if ("Stabilizer")
 						if (BE.altered) checkbioeffect_chromosome_clean(BE)
-						BE.holder.genetic_stability += BE.stability_loss //update mob stability
+						BE.holder.genetic_stability = max(0, BE.holder.genetic_stability += BE.stability_loss) //update mob stability
 						BE.stability_loss = 0
 						BE.name = "Stabilized " + BE.name
 						BE.altered = 1
@@ -1297,6 +1297,20 @@ var/global/noir = 0
 				usr.client.cmd_admin_checkbioeffect(M)
 			else
 				alert("You need to be at least a Secondary Administrator to check the bioeffects of a player.")
+
+		if ("checkbioeffect_alter_genetic_stability")
+			if(src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				var/input = input(usr, "Enter a new genetic stability for the target", "Alter Genetic Stability", M.bioHolder.genetic_stability) as null|num
+				if (input < 0)
+					M.bioHolder.genetic_stability = 0
+				else if (input >= 0)
+					M.bioHolder.genetic_stability = round(input)
+				else
+					return
+				usr.client.cmd_admin_checkbioeffect(M)
+			else
+				alert("You need to be at least a Secondary Administrator to modify the genetic stability of a player.")
 
 		if ("addbioeffect")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
@@ -4422,7 +4436,7 @@ var/global/noir = 0
 	BE.name = BE.global_instance.name
 	if (!BE.stability_loss) //reapply stability changes
 		BE.stability_loss = BE.global_instance.stability_loss
-		BE.holder.genetic_stability -= BE.stability_loss
+		BE.holder.genetic_stability = max(0, BE.holder.genetic_stability -= BE.stability_loss)
 	BE.curable_by_mutadone = BE.global_instance.curable_by_mutadone
 	BE.reclaim_fail = BE.global_instance.reclaim_fail
 	BE.reclaim_mats = BE.global_instance.reclaim_mats
@@ -4440,8 +4454,6 @@ var/global/noir = 0
 		<head>
 		<title>Check Bioeffects</title>
 		<style>
-		a {text-decoration: none;}
-
 		table {
 			border:1px solid #4CAF50;
 			border-collapse: collapse;
@@ -4476,13 +4488,14 @@ var/global/noir = 0
 			color: white;
 			border: 2px solid #008CBA;
 			background-color: #008CBA;
+			text-decoration: none;
 		}
 		</style>
 		</head>
 		<body>
 		<h3>Bioeffects of [M.name]
 		<a href='?src=\ref[src.holder];action=checkbioeffect_refresh;target=\ref[M];origin=bioeffect_check' class="button">&#x1F504;</a></h3>
-		<h4>(Stability: [M.bioHolder.genetic_stability])
+		<h4>(Stability: <a href='?src=\ref[src.holder];action=checkbioeffect_alter_genetic_stability;target=\ref[M];origin=bioeffect_check'>[M.bioHolder.genetic_stability]</a>)
 		<a href='?src=\ref[src.holder];action=checkbioeffect_add;target=\ref[M];origin=bioeffect_check' class="button">&#x2795;</a></h4>
 		<table>
 			<tr>
