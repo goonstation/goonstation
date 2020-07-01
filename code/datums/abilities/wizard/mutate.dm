@@ -20,9 +20,9 @@
 		holder.owner.visible_message("<span class='alert'>[holder.owner] glows with a POWERFUL aura!</span>")
 
 		if (!holder.owner.bioHolder.HasEffect("hulk"))
-			holder.owner.bioHolder.AddEffect("hulk", 0, 0, 1)
+			holder.owner.bioHolder.AddEffect("hulk", 0, 0, 0, 1)
 		if (!holder.owner.bioHolder.HasEffect("telekinesis") && holder.owner.wizard_spellpower())
-			holder.owner.bioHolder.AddEffect("telekinesis", 0, 0, 1)
+			holder.owner.bioHolder.AddEffect("telekinesis", 0, 0, 0, 1)
 		var/SPtime = 150
 		if (holder.owner.wizard_spellpower())
 			SPtime = 300
