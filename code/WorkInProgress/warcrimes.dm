@@ -864,15 +864,15 @@ Urs' Hauntdog critter
 	New()
 		AIname = pick("Keyway","C0RE","Delta","Vertex")
 
-	continuous = 0
-	audiolog_messages = list("*static hiss, engine droning*",
-													"Engine A output four two one zero kilowatts. Engine B output two two nine one kilowatts.",
-													"Thank you [AIname]. Helm, ahead 500 kph. Attention all hands, brace for channel entry.",
-													"*echoing rumble*"
-													)
-	audiolog_speakers = list("???",
-													"Robotic Voice",
-													"Female Voice",
-													"???",
+		continuous = 0
+		audiolog_messages = list("*static hiss, engine droning*",
+														"Engine A output four two one zero kilowatts. Engine B output two two nine one kilowatts.",
+														"Thank you [AIname]. Helm, ahead 500 kph. Attention all hands, brace for channel entry.",
+														"*echoing rumble*"
+														)
+		audiolog_speakers = list("???",
+														"Robotic Voice",
+														"Female Voice",
+														"???",
 
-													)
+														)
