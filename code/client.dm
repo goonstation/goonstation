@@ -700,7 +700,7 @@ var/global/curr_day = null
 		deliver_warning = 1
 	if (deliver_warning)
 		var/msg = "(IP: [address], ID: [computer_id]) has a recent join date of [jd]."
-		message_admins("[key_name(src)] [msg]")
+		//message_admins("[key_name(src)] [msg]") //disabled for nightshade :)
 		var/addr = address
 		var/ck = ckey
 		var/cid = computer_id
