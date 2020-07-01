@@ -123,7 +123,7 @@
 				if (ispath(abil))
 					abilityHolder.addAbility(abil)
 
-		SPAWN_DBG(0.5 SECONDS) //mbc what the fuck. i dont know why but if i don't spawn, no abilities even show up
+		SPAWN_DBG(0.5 SECONDS) //if i don't spawn, no abilities even show up
 			if (abilityHolder)
 				abilityHolder.updateButtons()
 

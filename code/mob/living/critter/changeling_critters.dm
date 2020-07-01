@@ -109,7 +109,8 @@
 /datum/abilityHolder/critter/handspider
 	onAbilityStat()
 		..()
-		stat("Collected DNA Points:", owner:absorbed_dna)
+		.= list()
+		.["DNA Collected:"] = owner:absorbed_dna
 
 
 /mob/living/critter/changeling/handspider
@@ -258,9 +259,10 @@
 /datum/abilityHolder/critter/eyespider
 	onAbilityStat()
 		..()
+		.= list()
 		var/mob/T = owner:marked_target
 		if(istype(T))
-			stat("Mark:", T)
+			.["Mark:"] = T
 			// let's stop eyespiders from helping their masters game the adventure zone (taken from clairvoyance)
 			var/atom/target_loc = T.loc
 			var/locName = ""
@@ -278,9 +280,9 @@
 					locName = "No longer confined to this world we understand"
 			else
 				locName = "In [target_loc.loc]"
-			stat("Location:", locName)
+			.["Location:"] = locName
 		else
-			stat("No Marked Target")
+			.["Mark:"] = "None"
 
 /mob/living/critter/changeling/eyespider
 	name = "eyespider"
