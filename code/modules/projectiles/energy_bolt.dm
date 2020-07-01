@@ -228,6 +228,7 @@ toxic - poisons
 	color_green = 165
 	color_blue = 0
 	max_range = 7 //slight range boost
+	damage_type = D_SPECIAL
 
 	on_hit(atom/O, angle, var/obj/projectile/P)
 		//lets make getting hit by the projectile a bit worse than getting the shockwave

@@ -868,7 +868,7 @@ var/global/client/ff_debugger = null
 		lobby_titlecard = src
 
 	proc/educate()
-		maptext = "hello!! Please excuse the lag, we have lots of players right now.<br>use T to talk<br>use Y to talk on radio<br>use F3 to ask questions about how to play<br>We have Wiki + Map links on the top-right of the game window"
+		maptext = "<span class='ol c ps2p'>Hello! Press F3 to ask for help. You can change game settings using the file menu on the top left, and see our wiki + maps by clicking the buttons on the top right.</span>"
 		maptext_width = 300
 		maptext_height = 300
 

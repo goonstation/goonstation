@@ -19566,6 +19566,7 @@
 /area/station/science/storage)
 "aSH" = (
 /obj/disposalpipe/segment,
+/obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},

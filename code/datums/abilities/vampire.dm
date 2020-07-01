@@ -219,11 +219,13 @@
 
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
-		stat("Blood:", src.vamp_blood)
-		stat("Blood remaining:", src.points)
+		.= list()
+		.["Blood:"] = src.points
+		.["Total:"] = src.vamp_blood
 		return
 
 	onLife(var/mult = 1)
+		..()
 		if (traveling_to_coffin && isturf(owner.loc) && istype(traveling_to_coffin,/obj/storage/closet/coffin))
 			owner.set_loc(traveling_to_coffin)
 

@@ -41877,6 +41877,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/industrial,
 /area/station/mining)
 "bOc" = (

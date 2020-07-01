@@ -31,6 +31,34 @@
 		dir = WEST
 		pixel_x = -25
 
+/obj/machinery/computer/asylum_shuttle
+	name = "Asylum Shuttle"
+	icon_state = "shuttle"
+	machine_registry_idx = MACHINES_SHUTTLECOMPS
+	var/active = 0
+	var/shuttle_loc = 2 //1 = asylum, 2 = medbay, 3 = pathology
+
+/obj/machinery/computer/asylum_shuttle/embedded
+	icon_state = "shuttle-embed"
+	density = 0
+	layer = EFFECTS_LAYER_1 // Must appear over cockpit shuttle wall thingy.
+
+	north
+		dir = NORTH
+		pixel_y = 25
+
+	east
+		dir = EAST
+		pixel_x = 25
+
+	south
+		dir = SOUTH
+		pixel_y = -25
+
+	west
+		dir = WEST
+		pixel_x = -25
+
 /obj/machinery/computer/prison_shuttle
 	name = "Prison Shuttle"
 	icon_state = "shuttle"
@@ -442,6 +470,106 @@
 
 	return
 
+/obj/machinery/computer/asylum_shuttle/attack_hand(mob/user as mob)
+	if(..())
+		return
+
+	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
+
+	switch(shuttle_loc)
+		if(1)
+			dat += "Shuttle Location: Asylum"
+		if(2)
+			dat += "Shuttle Location: Medbay"
+		if(3)
+			dat += "Shuttle Location: Pathology Research"
+	dat += "<BR><BR>"
+
+	if(active)
+		dat += "Moving"
+	else
+		for(var/i=1,i<=3,i++)
+			if(i == shuttle_loc)
+				continue
+			switch(i)
+				if(1)
+					dat += "<a href='byond://?src=\ref[src];asylum=1'>Asylum</a><BR>"
+				if(2)
+					dat += "<a href='byond://?src=\ref[src];medbay=1'>Medbay</a><BR>"
+				if(3)
+					dat += "<a href='byond://?src=\ref[src];pathology=1'>Pathology Research</a><BR>"
+
+	user.Browse(dat, "window=shuttle")
+	onclose(user, "shuttle")
+	return
+
+/obj/machinery/computer/asylum_shuttle/Topic(href, href_list)
+	if(..())
+		return
+	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		src.add_dialog(usr)
+
+		if(href_list["asylum"])
+			src.call_shuttle(1)
+		else if(href_list["medbay"])
+			src.call_shuttle(2)
+		else if(href_list["pathology"])
+			src.call_shuttle(3)
+		else if (href_list["close"])
+			src.remove_dialog(usr)
+			usr.Browse(null, "window=shuttle")
+
+	src.add_fingerprint(usr)
+	src.updateUsrDialog()
+	usr.Browse(null, "window=shuttle")
+	return
+
+/obj/machinery/computer/asylum_shuttle/proc/call_shuttle(var/target_loc)
+	if(!active)
+		for(var/obj/machinery/computer/asylum_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
+			C.active = 1
+			var/message_string
+			switch(target_loc)
+				if(1)
+					message_string = "the Asylum"
+				if(2)
+					message_string = "Medbay"
+				if(3)
+					message_string = "Pathology Research"
+			C.visible_message("<span class='alert'>The Asylum Shuttle has been sent to [message_string]!</span>")
+		SPAWN_DBG(10 SECONDS)
+			var/area/start_location
+			var/area/end_location
+			switch(shuttle_loc)
+				if(1)
+					start_location = locate(/area/shuttle/asylum/observation)
+				if(2)
+					start_location = locate(/area/shuttle/asylum/medbay)
+				if(3)
+					start_location = locate(/area/shuttle/asylum/pathology)
+			switch(target_loc)
+				if(1)
+					end_location = locate(/area/shuttle/asylum/observation)
+				if(2)
+					end_location = locate(/area/shuttle/asylum/medbay)
+				if(3)
+					end_location = locate(/area/shuttle/asylum/pathology)
+
+			for(var/x in end_location)
+				if(isliving(x))
+					var/mob/living/M = x
+					M.gib(1)
+				if(istype(x, /obj/storage))
+					var/obj/storage/S = x
+					qdel(S)
+
+			start_location.move_contents_to(end_location)
+
+			for(var/obj/machinery/computer/asylum_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
+				C.active = 0
+				C.shuttle_loc = target_loc
+				C.visible_message("<span class='alert'>The Asylum Shuttle has Moved!</span>")
+			return
 
 
 /obj/machinery/computer/icebase_elevator/attack_hand(mob/user as mob)

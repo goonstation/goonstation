@@ -121,6 +121,9 @@
 	icon_state = "plating"
 	intact = 0
 
+/turf/simulated/floor/plating/jen
+	icon_state = "plating_jen"
+
 /turf/simulated/floor/plating/scorched
 	icon_state = "panelscorched"
 
@@ -824,6 +827,9 @@
 /turf/simulated/floor/stairs/wide/green
 	icon_state = "Stairs_wide_green"
 
+/turf/simulated/floor/stairs/wide/green/other
+	icon_state = "Stairs_wide_green_other"
+
 /turf/simulated/floor/stairs/wide/middle
 	icon_state = "stairs_middle"
 
@@ -861,6 +867,8 @@
 /turf/simulated/floor/stairs/wood2/wide
 	icon_state = "wood2_stairs2"
 
+/turf/simulated/floor/stairs/wood2/middle
+	icon_state = "wood2_stairs2_middle"
 
 /turf/simulated/floor/stairs/wood3
 	icon_state = "wood3_stairs"

@@ -825,7 +825,11 @@
 
 /datum/job/civilian/botanist
 	name = "Botanist"
+	#ifdef MAP_OVERRIDE_DONUT3
+	limit = 7
+	#else
 	limit = 5
+	#endif
 	wages = 100
 	slot_belt = /obj/item/device/pda2/botanist
 	slot_jump = /obj/item/clothing/under/rank/hydroponics

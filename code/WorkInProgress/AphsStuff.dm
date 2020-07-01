@@ -377,7 +377,7 @@
 	icon_state = "l_leg-servo"
 	appearanceString = "servo"
 	max_health = 40
-	speedbonus = 0.1
+	robot_movement_modifier = /datum/movement_modifier/robotleg_left
 
 /obj/item/parts/robot_parts/leg/right/servotron
 	name = "servotron right leg"
@@ -385,7 +385,7 @@
 	icon_state = "r_leg-servo"
 	appearanceString = "servo"
 	max_health = 40
-	speedbonus = 0.1
+	robot_movement_modifier = /datum/movement_modifier/robotleg_right
 
 
 /obj/item/parts/robot_parts/arm/right/servotron
@@ -394,8 +394,8 @@
 	icon_state = "r_arm-servo"
 	appearanceString = "servo"
 	max_health = 40
-	speedbonus = 0.1
 	handlistPart = "armR-light"
+	robot_movement_modifier = /datum/movement_modifier/robot_part/head
 
 /obj/item/parts/robot_parts/arm/left/servotron
 	name = "servotron left arm"
@@ -403,8 +403,8 @@
 	icon_state = "l_arm-servo"
 	appearanceString = "servo"
 	max_health = 40
-	speedbonus = 0.1
 	handlistPart = "armL-light"
+	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_left
 
 /obj/item/parts/robot_parts/head/servotron
 	name = "servotron head"
@@ -412,7 +412,7 @@
 	icon_state = "head-servo"
 	appearanceString = "servo"
 	max_health = 87
-	speedbonus = 0.1
+	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_right
 
 /obj/item/parts/robot_parts/chest/servotron
 	name = "servotron chest"

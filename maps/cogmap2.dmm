@@ -916,10 +916,8 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "AI Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/supplycomp{
+	dir = 4
 	},
 /turf/simulated/floor/bot,
 /area/station/turret_protected/ai)
@@ -67684,6 +67682,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "Stairs2_wide"
@@ -67697,13 +67696,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/machinery/light_switch/north,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
 	},
 /turf/simulated/floor/delivery,
 /area/station/mining)
@@ -78748,6 +78740,18 @@
 /obj/item/paper/telecrystal_update,
 /turf/simulated/floor/yellow/side,
 /area/listeningpost)
+"dJs" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	pixel_y = -20;
+	tag = ""
+	},
+/obj/machinery/ore_cloud_storage_container,
+/turf/simulated/floor/plating,
+/area/station/mining)
 "hRi" = (
 /turf/space,
 /area/shuttle/arrival/station)
@@ -137553,7 +137557,7 @@ cKm
 cLN
 cNj
 cOD
-cIG
+dJs
 cRL
 cTg
 cUH

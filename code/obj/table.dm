@@ -491,6 +491,16 @@
 	auto
 		auto = 1
 
+/obj/table/reinforced/chemistry/beakers //starts with 7 :B:eakers inside it, wow!!
+	var/list/stuff = list()
+	name = "beaker storage"
+
+	New()
+		..()
+		desc += " This one holds beakers in it! Wow!!"
+		for (var/B=0, B<=7, B++)
+			new /obj/item/reagent_containers/glass/beaker(src.desk_drawer)
+
 /obj/table/reinforced/industrial
 	name = "industrial table"
 	desc = "An industrial table that looks like it has been made out of a scaffolding."
