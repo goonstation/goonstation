@@ -1122,10 +1122,11 @@
 
 	robust
 		name = "robust donut"
-		desc = "It's like an energy bar, but in donut form! Contains some chemicals known for partial stun time reduction."
+		desc = "It's like an energy bar, but in donut form! Contains some chemicals known for partial stun time reduction and boosted stamina regeneration."
 		icon_state = "donut4"
-		initial_volume = 30
-		initial_reagents = list("sugar"=10,"synaptizine"=10,"epinephrine"=10)
+		amount = 6
+		initial_volume = 36
+		initial_reagents = list("sugar"=12,"synaptizine"=12,"epinephrine"=12)
 
 	random
 		New()
