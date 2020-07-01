@@ -1,5 +1,9 @@
 
 (t)wed jul 01 20
+(u)mbc
+(p)1290
+(e)|
+(+)Walk-slipping a bit more forgiving, and banana peel slips are a bit more suitable for pranks again.
 (u)Ryumi
 (p)1287
 (e)🗺|mapping
