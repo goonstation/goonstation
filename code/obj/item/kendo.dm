@@ -198,16 +198,15 @@
             user.update_inhands()
 
     proc/draw_shinai(var/mob/user)
-        if(shinai)
-            if(src.contents.len)
-                user.put_in_hand_or_drop(src.contents[1])
-            else
-                var/obj/item/shinai/S = new /obj/item/shinai
-                user.put_in_hand_or_drop(S)
-                S.change_guard(user,user.a_intent)
-                shinai--
+        if(src.contents.len)
+            user.put_in_hand_or_drop(src.contents[1])
             update_sprite(user)
-
+        else if(shinai)
+            var/obj/item/shinai/S = new /obj/item/shinai
+            user.put_in_hand_or_drop(S)
+            S.change_guard(user,user.a_intent)
+            shinai--
+            update_sprite(user)
         else
             user.show_text("The [src] is empty!","red")
 
