@@ -94,7 +94,7 @@
                 item_state = "shinai-sweep"
                 src.setItemSpecial(/datum/item_special/swipe/kendo_sweep)
             if("grab")
-                force = 7
+                force = 6
                 stamina_damage = 15
                 stamina_cost = 10
                 item_state = "shinai-thrust"
@@ -166,10 +166,6 @@
             change_guard(user,user.a_intent)
         ..()
 
-    /*throw_begin(atom/target)
-        stat_reset()
-        ..()*/
-
     dropped(mob/user as mob)
         ..()
         stat_reset()
@@ -189,13 +185,13 @@
     var/open = 0
     var/shinai = 2
 
-    proc/update_spront(var/mob/user)
+    proc/update_sprite(var/mob/user)
         if(!open)
             src.icon_state = "shinaibag-closed"
             src.item_state = "shinaibag-closed"
         else
-            src.icon_state = "shinaibag-[shinai]"
-            src.item_state = "shinaibag-[shinai]"
+            src.icon_state = "shinaibag-[shinai+src.contents.len]"
+            src.item_state = "shinaibag-[shinai+src.contents.len]"
 
         if(src.loc == user)
             user.update_clothing()
@@ -203,18 +199,21 @@
 
     proc/draw_shinai(var/mob/user)
         if(shinai)
-            var/obj/item/shinai/S = new /obj/item/shinai
-            user.put_in_hand_or_drop(S)
-            S.change_guard(user,user.a_intent)
-            shinai--
-            update_spront(user)
+            if(src.contents.len)
+                user.put_in_hand_or_drop(src.contents[1])
+            else
+                var/obj/item/shinai/S = new /obj/item/shinai
+                user.put_in_hand_or_drop(S)
+                S.change_guard(user,user.a_intent)
+                shinai--
+            update_sprite(user)
 
         else
             user.show_text("The [src] is empty!","red")
 
     attack_self(mob/user as mob)
         open = !open
-        update_spront(user)
+        update_sprite(user)
 
     attack_hand(mob/user as mob)
         if(src.loc == user)
@@ -222,18 +221,17 @@
                 draw_shinai(user)
             else
                 open = !open
-                update_spront(user)
+                update_sprite(user)
         else if((user.a_intent == "grab") && open)
             draw_shinai(user)
         else
             ..()
 
     attackby(obj/item/W as obj, mob/user as mob)
-        if(istype(W,/obj/item/shinai) && open && (shinai<2))
+        if(istype(W,/obj/item/shinai) && open && ((shinai+src.contents.len)<2))
             user.u_equip(W)
-            qdel(W)
-            shinai++
-            update_spront(user)
+            W.set_loc(src)
+            update_sprite(user)
         else
             ..()
 
