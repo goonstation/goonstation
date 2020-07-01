@@ -8002,6 +8002,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science)
+"cdA" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light/emergency,
+/turf/simulated/floor/escape,
+/area/station/hallway/secondary/exit)
 "cdH" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -10996,6 +11001,12 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
+"dbx" = (
+/obj/machinery/launcher_loader/south{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "dbP" = (
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/engine/inner)
@@ -12230,15 +12241,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/chapel/main)
-"duZ" = (
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/security/quarters)
 "dvk" = (
 /obj/stool/chair,
 /obj/machinery/light/small/warm{
@@ -13315,15 +13317,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/west)
-"dPd" = (
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 4
-	},
-/area/station/security/quarters)
 "dPp" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
@@ -13947,7 +13940,6 @@
 /area/station/hallway/primary/east)
 "dYm" = (
 /obj/railing/orange{
-	dir = 6;
 	layer = 4
 	},
 /obj/decal/cleanable/dirt/jen,
@@ -14514,12 +14506,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
 /area/station/medical/head)
-"ehD" = (
-/obj/machinery/launcher_loader/east{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "ehR" = (
 /obj/machinery/dispenser,
 /obj/machinery/light/incandescent/warm{
@@ -16320,12 +16306,6 @@
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
-"eMI" = (
-/obj/machinery/launcher_loader/south{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "eML" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/airless/plating/jen,
@@ -22487,6 +22467,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
+"gKY" = (
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/security/quarters)
 "gLe" = (
 /obj/machinery/light/small,
 /obj/decal/cleanable/dirt/jen,
@@ -23202,6 +23191,9 @@
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
 	icon_state = "line1"
+	},
+/obj/item/cargotele{
+	pixel_x = -3
 	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
@@ -33487,11 +33479,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
-"ktm" = (
-/obj/stool/bench/blue/auto,
-/obj/machinery/light/emergency,
-/turf/simulated/floor/escape,
-/area/station/hallway/secondary/exit)
 "ktA" = (
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 5
@@ -35714,13 +35701,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/east)
-"lfp" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/light/emergency,
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
 "lfx" = (
 /obj/table/wood/auto,
 /obj/item/plate{
@@ -37767,6 +37747,12 @@
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/door/poddoor/pyro{
+	dir = 8;
+	id = "qm_tohall";
+	layer = 3.1;
+	name = "QM Shutter"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
@@ -42249,7 +42235,7 @@
 /area/station/chemistry)
 "nhf" = (
 /obj/disposalpipe/junction/right/north{
-	mail_tag = "cargo";
+	mail_tag = null;
 	name = "undeliverable mail router"
 	},
 /turf/simulated/floor,
@@ -43213,7 +43199,6 @@
 /area/station/science)
 "nxh" = (
 /obj/railing/orange{
-	dir = 10;
 	layer = 4
 	},
 /obj/decal/cleanable/dirt/jen,
@@ -51879,6 +51864,13 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
+"qfl" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/light/emergency,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "qfm" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -57474,6 +57466,15 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
+"rJI" = (
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 4
+	},
+/area/station/security/quarters)
 "rJM" = (
 /obj/machinery/dispenser{
 	pltanks = 0
@@ -73607,6 +73608,12 @@
 	},
 /turf/simulated/floor/wood/six,
 /area/station/library/reading1)
+"wPz" = (
+/obj/machinery/launcher_loader/east{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "wPC" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher{
@@ -101184,7 +101191,7 @@ pPd
 uxN
 yfE
 nfO
-duZ
+gKY
 qRP
 lJM
 lJM
@@ -101481,7 +101488,7 @@ vUK
 deh
 bDy
 nbm
-dPd
+rJI
 wyW
 mTo
 agB
@@ -106608,7 +106615,7 @@ eXl
 pse
 fNH
 ovT
-lfp
+qfl
 iHj
 cNV
 qfT
@@ -128658,8 +128665,8 @@ xDF
 xDF
 yaF
 vYX
-eMI
-ehD
+dbx
+wPz
 oYJ
 vsH
 bAt
@@ -134962,7 +134969,7 @@ lCL
 qQq
 pUj
 mxH
-ktm
+cdA
 tSd
 lAM
 aDc
@@ -135566,7 +135573,7 @@ xTu
 etV
 kRW
 mxH
-ktm
+cdA
 tSd
 aab
 aDc
