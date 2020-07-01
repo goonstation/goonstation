@@ -4974,7 +4974,9 @@
 	req_access_txt = "31"
 	},
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 24
 	},
 /obj/cable{
 	d2 = 4;
@@ -8669,15 +8671,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
-"coY" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	level = -1
-	},
-/turf/simulated/wall/auto/reinforced/jen/yellow{
-	icon_state = "6"
-	},
-/area/station/quartermaster/office)
 "cpa" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -9467,13 +9460,6 @@
 	dir = 4
 	},
 /area/station/chapel/main)
-"cCg" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/light/emergency,
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
 "cCh" = (
 /obj/railing/orange,
 /obj/decal/cleanable/dirt/jen,
@@ -23645,6 +23631,15 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
+"hej" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1
+	},
+/turf/simulated/wall/auto/reinforced/jen/yellow{
+	icon_state = "6"
+	},
+/area/station/quartermaster/office)
 "hek" = (
 /obj/cable{
 	d2 = 8;
@@ -30728,15 +30723,6 @@
 	dir = 4
 	},
 /area/station/turret_protected/AIsat)
-"jvZ" = (
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/security/quarters)
 "jwc" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -34206,12 +34192,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/south)
-"kDI" = (
-/obj/machinery/launcher_loader/south{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "kDJ" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 5;
@@ -47453,6 +47433,15 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"oMI" = (
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 4
+	},
+/area/station/security/quarters)
 "oML" = (
 /obj/decal/tile_edge/line/red{
 	dir = 5;
@@ -59889,12 +59878,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/gas)
-"sAs" = (
-/obj/machinery/launcher_loader/east{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "sAz" = (
 /obj/cable{
 	d1 = 2;
@@ -64720,6 +64703,12 @@
 /obj/railing/orange,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"ueO" = (
+/obj/machinery/launcher_loader/south{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "ueX" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -65292,6 +65281,12 @@
 	},
 /turf/simulated/floor/purpleblack,
 /area/station/science)
+"upS" = (
+/obj/machinery/launcher_loader/east{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "upW" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen/side{
@@ -65312,6 +65307,13 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
+"uqb" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/light/emergency,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "uqe" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 4;
@@ -75673,15 +75675,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/westsolar)
-"xxq" = (
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 4
-	},
-/area/station/security/quarters)
 "xxr" = (
 /obj/cable{
 	d1 = 2;
@@ -76298,6 +76291,15 @@
 	icon_state = "catwalk_cross"
 	},
 /area)
+"xGi" = (
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/security/quarters)
 "xGu" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/plating/jen,
@@ -101203,7 +101205,7 @@ pPd
 uxN
 yfE
 nfO
-jvZ
+xGi
 qRP
 lJM
 lJM
@@ -101500,7 +101502,7 @@ vUK
 deh
 bDy
 nbm
-xxq
+oMI
 wyW
 mTo
 agB
@@ -106627,7 +106629,7 @@ eXl
 pse
 fNH
 ovT
-cCg
+uqb
 iHj
 cNV
 qfT
@@ -128677,8 +128679,8 @@ xDF
 xDF
 yaF
 vYX
-kDI
-sAs
+ueO
+upS
 oYJ
 vsH
 bAt
@@ -132607,7 +132609,7 @@ nHQ
 jyF
 ucZ
 aYq
-coY
+hej
 ffz
 ffz
 eIU
