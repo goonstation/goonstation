@@ -74,12 +74,13 @@
 
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
+		.= list()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if (istype(H.mutantrace, /datum/mutantrace/vamp_zombie))
 				var/datum/mutantrace/vamp_zombie/V = H.mutantrace
-				stat("Blood Points:", V.blood_points)
-				stat("Max Health (based on blood):", H.max_health)
+				.["Blood:"] = V.blood_points
+				.["Max Health:"] = H.max_health
 
 	proc/msg_to_master(var/msg)
 		if (master)

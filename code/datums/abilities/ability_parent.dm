@@ -33,11 +33,22 @@
 
 	var/next_update = 0
 
+	var/obj/screen/abilitystat/abilitystat = null
+
+	var/points_last = 0
+
+
 	New(var/mob/M)
 		owner = M
 		hud = new()
 		if(owner)
 			owner.attach_hud(hud)
+			if (ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.hud?.update_ability_hotbar()
+//			else if (iscritter(owner))
+//				var/mob/living/critter/C = owner
+//				C.hud?.update_ability_hotbar()
 
 	disposing()
 		for (var/obj/screen/S in hud.objects)
@@ -51,10 +62,18 @@
 		if (owner)
 			owner.huds -= hud
 			owner = null
+
+		if (abilitystat)
+			qdel(abilitystat)
+			abilitystat = null
+
 		..()
 
-	proc/onLife(var/mult = 1)
+	proc/onLife(var/mult = 1) //failsafe for UI not doing its update correctly elsewhere
 		.= 0
+		if (points_last != points)
+			points_last = points
+			src.updateText(0, src.x_occupied, src.y_occupied)
 
 	proc/updateCounters()
 		// this is probably dogshit but w/e
@@ -117,11 +136,11 @@
 
 			x_occupied = pos_x
 			y_occupied = pos_y
+
+			src.updateText(0, x_occupied, y_occupied)
+			src.abilitystat?.update_on_hud(x_occupied,y_occupied)
 			return
 
-		// legacy stat panel button rendering
-		// hopefully one day we can just axe this completely
-		// wouldn't that be a fuckin' dream come true
 		if(src.rendered)
 			if(!src.owner || !src.owner.client)
 				return
@@ -130,6 +149,23 @@
 				if(istype(B.object, /obj/screen/ability) && !istype(B.object, /obj/screen/ability/topBar))
 					B.object.updateIcon()
 			return
+
+	proc/updateText(var/called_by_owner = 0)
+		if (composite_owner && !called_by_owner)
+			composite_owner.updateText()
+			return
+
+		if (!abilitystat)
+			abilitystat = new
+			abilitystat.owner = src
+
+		var/msg = ""
+		var/style = "font-size: 7px;"
+		var/list/stats = onAbilityStat()
+		for (var/x in stats)
+			msg += "[x] [stats[x]]<br>"
+
+		abilitystat.maptext = "<span class='ps2p l vt ol' style=\"[style]\">[msg] </span>"
 
 	proc/deepCopy()
 		var/datum/abilityHolder/copy = new src.type
@@ -171,13 +207,13 @@
 		if (!rendered)
 			return
 
-		if (topBarRendered) //Topbar shows abilities, just display the toplevel info in Status
-			statpanel("Status")
-			onAbilityStat()
-			stat(null, " ")
-		else
+		if (!topBarRendered) //Topbar shows abilities, just display the toplevel info in Status
 			statpanel(src.tabName)
-			onAbilityStat()
+
+			var/list/stats = onAbilityStat()
+			for (var/x in stats)
+				stat(x, stats[x])
+
 			for (var/datum/targetable/spell in src.abilities)
 				spell.Stat()
 
@@ -446,6 +482,41 @@
 	MouseExited()
 		if (usr.client.tooltipHolder)
 			usr.client.tooltipHolder.hideHover()
+
+/obj/screen/abilitystat
+	maptext_x = 6
+	maptext_y = -274
+	maptext_width = 160
+	maptext_height = 300
+	name = "Abilities Text"
+
+	var/datum/abilityHolder/owner = null
+
+	New()
+		..()
+		SPAWN_DBG(10) //sorry, some race condition i couldt figure out
+			if (ishuman(owner?.owner))
+				var/mob/living/carbon/human/H = owner?.owner
+				H.hud?.update_ability_hotbar()
+
+	disposing()
+		if(owner && owner.hud)
+			owner.hud.remove_object(src)
+		..()
+
+	proc/get_controlling_mob()
+		var/mob/M = owner.owner
+		if (!istype(M) || !M.client)
+			return null
+		return M
+
+	proc/update_on_hud(var/pos_x = 0,var/pos_y = 0)
+		src.screen_loc = "NORTH-[pos_y],[pos_x]"
+
+		if(owner && owner.hud)
+			owner.hud.remove_object(src)
+			owner.hud.add_object(src, HUD_LAYER, src.screen_loc)
+
 
 /obj/screen/ability/topBar
 	var/static/image/ctrl_highlight = image('icons/mob/spell_buttons.dmi',"ctrl")
@@ -979,6 +1050,10 @@
 		holders[holders.len].composite_owner = src
 		updateButtons()
 
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.hud?.update_ability_hotbar()
+
 	proc/addHolderInstance(var/datum/abilityHolder/N)
 		for (var/datum/abilityHolder/H in holders)
 			if (H == N)
@@ -989,12 +1064,20 @@
 		N.onAbilityHolderInstanceAdd()
 		updateButtons()
 
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.hud?.update_ability_hotbar()
+
 	proc/removeHolder(holderType)
 		for (var/datum/abilityHolder/H in holders)
 			if (H.type == holderType)
 				H.composite_owner = 0
 				holders -= H
 		updateButtons()
+
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.hud?.update_ability_hotbar()
 
 	proc/getHolder(holderType)
 		for (var/datum/abilityHolder/H in holders)
@@ -1047,6 +1130,28 @@
 				x_occupied = H.x_occupied
 				y_occupied = H.y_occupied
 				any_abilities_displayed = any_abilities_displayed || H.any_abilities_displayed
+
+
+		if (src.topBarRendered)
+			src.updateText(0, x_occupied, y_occupied)
+			src.abilitystat?.update_on_hud(x_occupied+1,x_occupied)
+
+	updateText(var/called_by_owner = 0)
+		if (!abilitystat)
+			abilitystat = new
+			abilitystat.owner = src
+
+		var/msg = ""
+		var/style = "font-size: 7px;"
+
+
+		for (var/datum/abilityHolder/H in holders)
+			if (H.topBarRendered && H.rendered)
+				var/list/stats = H.onAbilityStat()
+				for (var/x in stats)
+					msg += "[x] [stats[x]]<br>"
+
+		abilitystat.maptext = "<span class='ps2p l vt ol' style=\"[style]\">[msg] </span>"
 
 	click(atom/target, params)
 		// ok, this is not ideal since each ability holder has its own keybinds. That sucks and should be reworked
