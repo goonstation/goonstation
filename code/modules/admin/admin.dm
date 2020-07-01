@@ -4517,6 +4517,7 @@ var/global/noir = 0
 
 	for(var/ID in M.bioHolder.effects)
 		var/datum/bioEffect/B = M.bioHolder.effects[ID]
+		var/datum/bioEffect/power/P = null
 		var/is_stable = 0
 		var/is_reinforced = 0
 		var/is_power_boosted = null //powers only
@@ -4528,15 +4529,16 @@ var/global/noir = 0
 		if (!B.curable_by_mutadone)
 			is_reinforced = 1
 		if (istype(B, /datum/bioEffect/power))//powers only
-			if (B:power)
+			P = B
+			if (P.power)
 				is_power_boosted = 1
 			else
 				is_power_boosted = 0
-			if (B:safety)
+			if (P.safety)
 				is_synced = 1
 			else
 				is_synced = 0
-			cooldown = B:cooldown
+			cooldown = P.cooldown
 
 		dat += {"
 			<tr>
