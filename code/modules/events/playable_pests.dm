@@ -19,7 +19,6 @@
 		if (..())
 			return
 
-		var/input = null
 		switch (alert(usr, "Choose the pest type?", src.name, "Random", "Custom"))
 			if ("Custom")
 				src.pest_type = input("Enter a /mob/living/critter path or partial name.", src.name, null) as null|text
