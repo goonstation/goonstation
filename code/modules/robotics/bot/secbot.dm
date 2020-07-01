@@ -71,6 +71,9 @@
 	var/nearest_beacon			// the nearest beacon's tag
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
 
+	var/last_attack = 0
+	var/attack_per_step = 0
+
 	disposing()
 		if(mover)
 			mover.dispose()
@@ -94,6 +97,7 @@
 	auto_patrol = 1
 	report_arrests = 1
 	hat = "nt"
+	attack_per_step = 1
 
 	New()
 		. = ..()
@@ -102,6 +106,18 @@
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+	explode()
+		//////PDA NOTIFY/////
+		var/bot_location = get_area(src)
+		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
+		var/datum/signal/pdaSignal = get_free_signal()
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"="security", "sender"="00000000", "message"="Notification: [src] destroyed in [bot_location]! Officer down!")
+		pdaSignal.transmission_method = TRANSMISSION_RADIO
+		if(transmit_connection != null)
+			transmit_connection.post_signal(src, pdaSignal)
+
+		..()
 
 /obj/machinery/bot/secbot/warden
 	name = "Warden Jack"
@@ -361,6 +377,54 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 		return 0
 
+	proc/baton_attack(var/mob/living/carbon/M)
+		src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
+		var/maxstuns = 4
+		var/stuncount = (src.emagged >= 2) ? rand(5,10) : 1
+
+		last_attack = world.time
+
+		while (stuncount > 0 && src.target)
+			// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
+			if (src.our_baton && istype(src.our_baton))
+				if (src.our_baton.uses_electricity == 0)
+					src.our_baton.uses_electricity = 1
+				if (src.our_baton.uses_charges != 0)
+					src.our_baton.uses_charges = 0
+			else
+				src.our_baton = new our_baton_type(src)
+
+			stuncount--
+			src.our_baton.do_stun(src, M, src.stun_type, 2)
+			if (!stuncount && maxstuns-- <= 0)
+				target = null
+			if (stuncount > 0)
+				sleep(0.3 SECONDS)
+
+		SPAWN_DBG(0.2 SECONDS)
+			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
+		if (src.target.getStatusDuration("weakened"))
+			mode = SECBOT_PREP_ARREST
+			src.anchored = 1
+			src.target_lastloc = M.loc
+			moving = 0
+
+			//qdel(src.mover)
+			if (src.mover)
+				src.mover.master = null
+				src.mover = null
+			src.frustration = 0
+		return
+
+	Move(var/turf/NewLoc, direct)
+		var/oldloc = src.loc
+		..()
+		if (src.attack_per_step && prob(75))
+			if (oldloc != NewLoc && world.time != last_attack)
+				if (mode == SECBOT_HUNT && target)
+					if (get_dist(src, src.target) <= 1)
+						src.baton_attack(src.target)
+
 	process()
 		if (!src.on)
 			return
@@ -393,43 +457,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 				if (target)		// make sure target exists
 					if (get_dist(src, src.target) <= 1)		// if right next to perp
-						src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
-						var/mob/living/carbon/M = src.target
-						var/maxstuns = 4
-						var/stuncount = (src.emagged >= 2) ? rand(5,10) : 1
-
-						while (stuncount > 0 && src.target)
-							// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
-							if (src.our_baton && istype(src.our_baton))
-								if (src.our_baton.uses_electricity == 0)
-									src.our_baton.uses_electricity = 1
-								if (src.our_baton.uses_charges != 0)
-									src.our_baton.uses_charges = 0
-							else
-								src.our_baton = new our_baton_type(src)
-
-							stuncount--
-							src.our_baton.do_stun(src, M, src.stun_type, 2)
-							if (!stuncount && maxstuns-- <= 0)
-								target = null
-							if (stuncount > 0)
-								sleep(0.3 SECONDS)
-
-						SPAWN_DBG(0.2 SECONDS)
-							src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
-						if (src.target.getStatusDuration("weakened"))
-							mode = SECBOT_PREP_ARREST
-							src.anchored = 1
-							src.target_lastloc = M.loc
-							moving = 0
-
-							//qdel(src.mover)
-							if (src.mover)
-								src.mover.master = null
-								src.mover = null
-							src.frustration = 0
-						return
-
+						src.baton_attack(src.target)
 					else								// not next to perp
 						if(!(src.target in view(7,src)) || !moving)
 							//qdel(src.mover)
@@ -1016,7 +1044,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		return
 
 	explode()
-
 		walk_to(src,0)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
