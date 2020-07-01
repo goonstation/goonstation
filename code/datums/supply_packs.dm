@@ -263,7 +263,8 @@
 					/obj/item/storage/firstaid/fire = 2,
 					/obj/item/storage/firstaid/toxin = 2,
 					/obj/item/storage/firstaid/oxygen,
-					/obj/item/storage/firstaid/brain)
+					/obj/item/storage/firstaid/brain,
+					/obj/item/storage/firstaid/crit)
 	cost = 1000
 	containertype = /obj/storage/crate/medical
 	containername = "Medical: First Aid Crate"
@@ -703,7 +704,7 @@
 					/obj/item/reagent_containers/glass/bottle/pentetic,
 					/obj/item/reagent_containers/glass/bottle/haloperidol,
 					/obj/item/reagent_containers/glass/bottle/ether,
-					/obj/item/storage/firstaid/crit)
+					/obj/item/reagent_containers/emergency_injector/pentetic_acid = 2)
 	cost = 6000
 	containertype = /obj/storage/secure/crate
 	containername = "Restricted Medicine Shipment (Cardlocked \[Medical])"
