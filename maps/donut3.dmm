@@ -1019,13 +1019,10 @@
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "abB" = (
-/obj/machinery/light/incandescent/warm{
-	dir = 8
-	},
+/turf/space,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
-/turf/space,
 /area/station/security/quarters)
 "abC" = (
 /obj/machinery/recharger/wall/sticky{
@@ -3623,6 +3620,13 @@
 	dir = 1
 	},
 /area/station/chapel/main)
+"aIX" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/light/emergency,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "aJo" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/railing/orange{
@@ -17114,12 +17118,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
-"eYG" = (
-/obj/machinery/launcher_loader/south{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "eYN" = (
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 4
@@ -21120,15 +21118,6 @@
 	},
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/crew_quarters/stockex)
-"gnl" = (
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/security/quarters)
 "gnt" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -28666,6 +28655,15 @@
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/inner)
+"iKx" = (
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 4
+	},
+/area/station/security/quarters)
 "iKP" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/railing/orange{
@@ -32576,13 +32574,6 @@
 /obj/disposalpipe/trunk/food,
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/brig/north_side)
-"kcL" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/light/emergency,
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
 "kcP" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -37861,15 +37852,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"lMU" = (
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 4
-	},
-/area/station/security/quarters)
 "lMW" = (
 /obj/machinery/vending/monkey,
 /turf/simulated/floor/plating/jen,
@@ -45257,6 +45239,15 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/engineering)
+"oeT" = (
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/security/quarters)
 "oeU" = (
 /obj/cable{
 	d1 = 2;
@@ -58266,12 +58257,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
-"rZm" = (
-/obj/machinery/launcher_loader/east{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "rZv" = (
 /obj/access_spawn/maint,
 /obj/decal/mule/dropoff,
@@ -60337,6 +60322,12 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
+"sIM" = (
+/obj/machinery/launcher_loader/south{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "sIO" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -60426,7 +60417,9 @@
 /area/station/maintenance/outer/nw)
 "sKf" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_x = 10;
+	pixel_y = 16
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -68232,6 +68225,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
+"viu" = (
+/obj/machinery/launcher_loader/east{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "viz" = (
 /obj/storage/cart/trash,
 /obj/decal/cleanable/dirt/jen,
@@ -101187,7 +101186,7 @@ pPd
 uxN
 yfE
 nfO
-gnl
+oeT
 qRP
 lJM
 lJM
@@ -101484,7 +101483,7 @@ vUK
 deh
 bDy
 nbm
-lMU
+iKx
 wyW
 mTo
 agB
@@ -106611,7 +106610,7 @@ eXl
 pse
 fNH
 ovT
-kcL
+aIX
 iHj
 cNV
 qfT
@@ -128661,8 +128660,8 @@ xDF
 xDF
 yaF
 vYX
-eYG
-rZm
+sIM
+viu
 oYJ
 vsH
 bAt
