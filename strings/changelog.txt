@@ -1,5 +1,12 @@
 
 (t)tue jun 30 20
+(u)Ryumi
+(p)1253
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added a new map, Donut3! This is a med to highpop map designed to work well on both S2 and RP! It features an all new style of colored walls, a new style of maintenance designed to be grungy, spooky and trashy, a library, a huge indoor escape shuttle bay, a new home for the gnome, and more!
+(*)Added railings, which you can build with one sheet of metal. They block you walking through them in their direction like thindows. Click a railing with an empty hand to vault over them after a delay (athletic trait users do this faster!) You can fasten/unfasten them with a screwdriver, and disassemble them with a welding tool.
+(+)Added a sarcophagus. Appears naturally in Donut3.
+(+)Added indoor catwalks. They only naturally appear on Donut3, and you can't build them, but they look nice! Clicking them with anything that isn't a snipping tool will redirect that click to the floor they're on.
 (u)mbc
 (p)1278
 (e)|
