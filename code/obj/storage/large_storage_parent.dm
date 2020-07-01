@@ -465,10 +465,13 @@
 			qdel(src)
 
 	meteorhit(obj/O as obj)
-		if (O && O.icon_state == "flaming")
+		if(istype(O,/obj/newmeteor/))
+			if(O.icon_state == "flaming")
+				src.dump_contents()
+				qdel(src)
+		else
 			src.dump_contents()
 			qdel(src)
-			return
 		return
 
 	proc/is_acceptable_content(var/atom/A)

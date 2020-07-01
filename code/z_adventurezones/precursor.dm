@@ -1195,7 +1195,11 @@
 		var/temp_effect_limiter = 10
 		for (var/turf/T in view(range, src))
 			var/T_dist = get_dist(T, src)
-			var/T_effect_prob = 100 * (1 - (max(T_dist-1,1) / range))
+			var/T_effect_prob = 0
+			if(T_dist == 2)
+				T_effect_prob = 100
+			else
+				T_effect_prob = 100 * (1 - (max(T_dist-1,1) / range))
 			if (prob(8) && limiter.canISpawn(/obj/effects/sparks))
 				var/obj/sparks = unpool(/obj/effects/sparks)
 				sparks.set_loc(T)
@@ -1246,11 +1250,11 @@
 							if (istype(T, /turf/simulated/wall))
 								T.ex_act(1)
 							else
-								qdel(T)
+								T.ReplaceWithSpaceForce()
 						else
-							T.ex_act( max(1, T_dist) )
+							T.ex_act(clamp(T_dist-2,1,3))
 							for (var/atom/A in T)
-								A.ex_act(max(1, T_dist))
+								A.ex_act(clamp(T_dist-2,1,3))
 
 						sleep(0.6 SECONDS)
 						for (var/obj/O in tempEffect)

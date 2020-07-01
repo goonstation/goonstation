@@ -1644,7 +1644,8 @@
 
 			qdel(src)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		if (hatched || 0)//todo: re-enable this when people stop abusing bees!!!
 			return
 		hatched = 1
@@ -1731,7 +1732,8 @@
 				R.add_reagent("wolfsbane", 10)
 				qdel (src)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		if (hatched || 0)//replace me too!!!
 			return
 

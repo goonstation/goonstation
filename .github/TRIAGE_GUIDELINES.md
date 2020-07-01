@@ -2,9 +2,10 @@ Here's just the basic conduct we require.
 1. Be courteous and polite on Github.(or anywhere your role in triage is visible)
 2. Use your best judgement when applying labels, closing issues, and requesting reviewers. 
 3. Offer constructive criticism where appropriate.
+
 Guidelines:
-1. You must enable 2 factor authentication on your github account.
-2. Do not close active, open, or non-stale pr's without consulting with a dev.
+1. You must enable 2 factor authentication on your github account and have a unique password.
+2. Only close a PR if it violates Goonstation rules, or GitHub policies/terms of service.
 3. Do not create milestones without consulting with a dev.
 
 Relevant info:

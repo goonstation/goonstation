@@ -3759,3 +3759,78 @@ datum
 			alch_strength = 0.4
 			description = "A warm, late night drink, usually enjoyed during long winter nights."
 			reagent_state = LIQUID
+
+		fooddrink/grenadine
+			name = "Grenadine"
+			id = "grenadine"
+			fluid_r = 234
+			fluid_g = 19
+			fluid_b = 19
+			description = "A sticky, sweet and tart non-alcoholic bar syrup, used in cocktails for it's distinct bright red colour."
+			reagent_state = LIQUID
+
+		fooddrink/lemonade/pinklemonade
+			name = "Pink lemonade"
+			id = "pinklemonade"
+			fluid_r = 253
+			fluid_g = 230
+			fluid_b = 237
+			description = "A popular twist on cloudy lemonade, this soft drink has been dyed pink. How colourful."
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/duckfart
+			name = "Duck Fart"
+			id = "duckfart"
+			fluid_r = 253
+			fluid_g = 245
+			fluid_b = 230
+			alch_strength = 0.6
+			description = "An eccentric 'trio cocktail', in which the 3 ingredients have been layed on top on another."
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/philcollins
+			name = "Phil Collins"
+			id = "philcollins"
+			fluid_r = 240
+			fluid_g = 248
+			fluid_b = 255
+			alch_strength = 0.3
+			description = "A variation on a well known drink, paying tribute to a well known drummer."
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/spicedrum
+			name = "Spiced rum"
+			id = "spicedrum"
+			fluid_r = 205
+			fluid_g = 149
+			fluid_b = 12
+			alch_strength = 0.6
+			description = "An egregious and disgusting misinterpretation of some perfectly good rum."
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/beesknees
+			name = "Bee's Knees"
+			id = "beesknees"
+			fluid_r = 255
+			fluid_g = 236
+			fluid_b = 139
+			alch_strength = 0.3
+			description = "A cocktail from the prohibition era, named after a popular expression."
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/methacola
+			name = "Methacola"
+			id = "methacola"
+			fluid_r = 173
+			fluid_g = 124
+			fluid_b = 76
+			description = "A potent cocktail of amphetamines, caffeine and corn syrup. If this doesn't kill you then I don't know what will."
+			reagent_state = LIQUID
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				M.make_jittery(2)
+				M.drowsyness = max(M.drowsyness-5, 0)
+				if(prob(8))
+					M.reagents.add_reagent("methamphetamine", 1.2 * mult)
+				..()

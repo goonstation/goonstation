@@ -219,8 +219,9 @@
 
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
-		stat("Blood:", src.vamp_blood)
-		stat("Blood remaining:", src.points)
+		.= list()
+		.["Blood:"] = src.points
+		.["Total:"] = src.vamp_blood
 		return
 
 	onLife(var/mult = 1)

@@ -28,7 +28,7 @@
 					return
 
 				if (isnull(C.abilityHolder)) // But they do have a critter AH by default...or should.
-					var/datum/abilityHolder/wrestler/A2 
+					var/datum/abilityHolder/wrestler/A2
 					if (fake_wrestler)
 						A2 = C.add_ability_holder(/datum/abilityHolder/wrestler/fake)
 					else

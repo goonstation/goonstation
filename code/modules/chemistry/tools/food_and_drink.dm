@@ -1209,35 +1209,36 @@
 	ex_act(severity)
 		src.smash()
 
-	proc/smash(var/turf/T)
+	proc/smash(var/atom/A)
 		if (src.smashed)
 			return
 		src.smashed = 1
+
+		var/turf/T = get_turf(A)
 		if (!T)
 			T = get_turf(src)
 		if (!T)
 			qdel(src)
 			return
 		if (src.reagents) // haine fix for cannot execute null.reaction()
-			src.reagents.reaction(T)
+			src.reagents.reaction(A)
 
 		T.visible_message("<span class='alert'>[src] shatters!</span>")
-		var/turf/actually_turf = get_turf(T)
 		playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		for (var/i=src.shard_amt, i > 0, i--)
 			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-			G.set_loc(actually_turf)
+			G.set_loc(T)
 		if (src.in_glass)
-			src.in_glass.set_loc(actually_turf)
+			src.in_glass.set_loc(T)
 			src.in_glass = null
 		if (src.wedge)
-			src.wedge.set_loc(actually_turf)
+			src.wedge.set_loc(T)
 			src.wedge = null
 		qdel(src)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
 		..()
-		src.smash(T)
+		src.smash(A)
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
@@ -1525,7 +1526,8 @@
 			G.set_loc(T)
 		qdel(src)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)
 
