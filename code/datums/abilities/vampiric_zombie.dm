@@ -80,7 +80,7 @@
 			if (istype(H.mutantrace, /datum/mutantrace/vamp_zombie))
 				var/datum/mutantrace/vamp_zombie/V = H.mutantrace
 				.["Blood:"] = V.blood_points
-				.["Max Health:"] = H.max_health
+				.["Max HP:"] = H.max_health
 
 	proc/msg_to_master(var/msg)
 		if (master)
