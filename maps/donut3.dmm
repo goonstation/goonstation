@@ -1019,13 +1019,12 @@
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "abB" = (
-/obj/machinery/light/incandescent/warm{
+/turf/simulated/floor/redwhite{
 	dir = 8
 	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
-/turf/space,
 /area/station/security/quarters)
 "abC" = (
 /obj/machinery/recharger/wall/sticky{
@@ -4975,7 +4974,9 @@
 	req_access_txt = "31"
 	},
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 24
 	},
 /obj/cable{
 	d2 = 4;
@@ -12230,15 +12231,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/chapel/main)
-"duZ" = (
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/security/quarters)
 "dvk" = (
 /obj/stool/chair,
 /obj/machinery/light/small/warm{
@@ -13286,6 +13278,12 @@
 	dir = 4;
 	level = -1
 	},
+/obj/machinery/door_control{
+	id = "qm_tohall_shutter";
+	name = "QM Shutter Control";
+	pixel_x = 23;
+	pixel_y = 11
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "dOB" = (
@@ -13315,15 +13313,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/west)
-"dPd" = (
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 4
-	},
-/area/station/security/quarters)
 "dPp" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
@@ -13947,7 +13936,6 @@
 /area/station/hallway/primary/east)
 "dYm" = (
 /obj/railing/orange{
-	dir = 6;
 	layer = 4
 	},
 /obj/decal/cleanable/dirt/jen,
@@ -14169,6 +14157,10 @@
 /obj/machinery/disposal/mail/small/autoname/public/escape/south,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/simulated/floor/escape{
 	dir = 10
@@ -14514,12 +14506,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
 /area/station/medical/head)
-"ehD" = (
-/obj/machinery/launcher_loader/east{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "ehR" = (
 /obj/machinery/dispenser,
 /obj/machinery/light/incandescent/warm{
@@ -14924,9 +14910,6 @@
 	color = "#ffccff";
 	dir = 5;
 	icon_state = "line2"
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 1
 	},
 /obj/table/auto,
 /obj/machinery/light/emergency{
@@ -16320,12 +16303,6 @@
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
-"eMI" = (
-/obj/machinery/launcher_loader/south{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "eML" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/airless/plating/jen,
@@ -23203,6 +23180,9 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/item/cargotele{
+	pixel_x = -3
+	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
 "gXg" = (
@@ -23651,6 +23631,15 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
+"hej" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1
+	},
+/turf/simulated/wall/auto/reinforced/jen/yellow{
+	icon_state = "6"
+	},
+/area/station/quartermaster/office)
 "hek" = (
 /obj/cable{
 	d2 = 8;
@@ -33487,11 +33476,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
-"ktm" = (
-/obj/stool/bench/blue/auto,
-/obj/machinery/light/emergency,
-/turf/simulated/floor/escape,
-/area/station/hallway/secondary/exit)
 "ktA" = (
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 5
@@ -35714,13 +35698,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/east)
-"lfp" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/light/emergency,
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
 "lfx" = (
 /obj/table/wood/auto,
 /obj/item/plate{
@@ -37767,6 +37744,12 @@
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/door/poddoor/pyro{
+	dir = 8;
+	id = "qm_tohall_shutter";
+	layer = 3.1;
+	name = "QM Shutter"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
@@ -42249,7 +42232,7 @@
 /area/station/chemistry)
 "nhf" = (
 /obj/disposalpipe/junction/right/north{
-	mail_tag = "cargo";
+	mail_tag = null;
 	name = "undeliverable mail router"
 	},
 /turf/simulated/floor,
@@ -43213,7 +43196,6 @@
 /area/station/science)
 "nxh" = (
 /obj/railing/orange{
-	dir = 10;
 	layer = 4
 	},
 /obj/decal/cleanable/dirt/jen,
@@ -45911,7 +45893,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/access_spawn/maint,
+/obj/access_spawn/cargo,
 /turf/simulated/floor/plating/jen,
 /area/station/routingdepot)
 "ope" = (
@@ -47451,6 +47433,15 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"oMI" = (
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 4
+	},
+/area/station/security/quarters)
 "oML" = (
 /obj/decal/tile_edge/line/red{
 	dir = 5;
@@ -49930,7 +49921,9 @@
 /area/station/maintenance/outer/se)
 "pAD" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_x = 10;
+	pixel_y = 16
 	},
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools/one,
@@ -57571,7 +57564,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "rLN" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -60421,7 +60414,9 @@
 /area/station/maintenance/outer/nw)
 "sKf" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_x = 10;
+	pixel_y = 16
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -64708,6 +64703,12 @@
 /obj/railing/orange,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"ueO" = (
+/obj/machinery/launcher_loader/south{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "ueX" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -65280,6 +65281,12 @@
 	},
 /turf/simulated/floor/purpleblack,
 /area/station/science)
+"upS" = (
+/obj/machinery/launcher_loader/east{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "upW" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen/side{
@@ -65300,6 +65307,13 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
+"uqb" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/light/emergency,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "uqe" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 4;
@@ -73881,7 +73895,8 @@
 	},
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 24;
+	pixel_y = 9
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -75210,10 +75225,7 @@
 /area/station/engine/monitoring)
 "xqb" = (
 /obj/stool/bench/blue/auto,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/light/emergency,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "xqn" = (
@@ -76279,6 +76291,15 @@
 	icon_state = "catwalk_cross"
 	},
 /area)
+"xGi" = (
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/security/quarters)
 "xGu" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/plating/jen,
@@ -101184,7 +101205,7 @@ pPd
 uxN
 yfE
 nfO
-duZ
+xGi
 qRP
 lJM
 lJM
@@ -101481,7 +101502,7 @@ vUK
 deh
 bDy
 nbm
-dPd
+oMI
 wyW
 mTo
 agB
@@ -106608,7 +106629,7 @@ eXl
 pse
 fNH
 ovT
-lfp
+uqb
 iHj
 cNV
 qfT
@@ -128658,8 +128679,8 @@ xDF
 xDF
 yaF
 vYX
-eMI
-ehD
+ueO
+upS
 oYJ
 vsH
 bAt
@@ -132588,7 +132609,7 @@ nHQ
 jyF
 ucZ
 aYq
-jnN
+hej
 ffz
 ffz
 eIU
@@ -134962,7 +134983,7 @@ lCL
 qQq
 pUj
 mxH
-ktm
+xqb
 tSd
 lAM
 aDc
@@ -135264,7 +135285,7 @@ etV
 etV
 aeQ
 mxH
-xqb
+fXb
 tSd
 aaa
 aDc
@@ -135566,7 +135587,7 @@ xTu
 etV
 kRW
 mxH
-ktm
+xqb
 tSd
 aab
 aDc
