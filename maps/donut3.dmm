@@ -2165,6 +2165,12 @@
 /obj/floorpillstatue,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"akN" = (
+/obj/machinery/launcher_loader/east{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "alB" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -6162,6 +6168,13 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
+"bAn" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/light/emergency,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "bAq" = (
 /obj/machinery/disposal/small{
 	dir = 1;
@@ -13359,15 +13372,6 @@
 	},
 /turf/space,
 /area/station/solar/small_backup1)
-"dPW" = (
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 4
-	},
-/area/station/security/quarters)
 "dPY" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency{
@@ -23780,6 +23784,12 @@
 	dir = 9
 	},
 /area/station/medical/head)
+"hgz" = (
+/obj/machinery/launcher_loader/south{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "hgC" = (
 /obj/table/reinforced/chemistry/auto{
 	desc = "A black countertop table for storing kitchen-y objects.";
@@ -24534,15 +24544,6 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/station/security/main)
-"hsA" = (
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/security/quarters)
 "hsP" = (
 /obj/table/auto,
 /obj/decal/tile_edge/line/grey{
@@ -25178,12 +25179,6 @@
 "hBL" = (
 /turf/simulated/wall/auto/jen/blue,
 /area/station/crew_quarters/courtroom)
-"hBV" = (
-/obj/machinery/launcher_loader/east{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "hBW" = (
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -29013,12 +29008,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
-"iRV" = (
-/obj/machinery/launcher_loader/south{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "iRX" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1;
@@ -30425,6 +30414,15 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/stairs/wide,
 /area/station/hallway/primary/west)
+"jrI" = (
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/security/quarters)
 "jrK" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -45906,7 +45904,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/access_spawn/maint,
+/obj/access_spawn/cargo,
 /turf/simulated/floor/plating/jen,
 /area/station/routingdepot)
 "ope" = (
@@ -54860,13 +54858,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
-"qWW" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/light/emergency,
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
 "qXj" = (
 /obj/cable{
 	d1 = 1;
@@ -61454,6 +61445,15 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"tdT" = (
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 4
+	},
+/area/station/security/quarters)
 "tdW" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen/one,
@@ -101188,7 +101188,7 @@ pPd
 uxN
 yfE
 nfO
-hsA
+jrI
 qRP
 lJM
 lJM
@@ -101485,7 +101485,7 @@ vUK
 deh
 bDy
 nbm
-dPW
+tdT
 wyW
 mTo
 agB
@@ -106612,7 +106612,7 @@ eXl
 pse
 fNH
 ovT
-qWW
+bAn
 iHj
 cNV
 qfT
@@ -128662,8 +128662,8 @@ xDF
 xDF
 yaF
 vYX
-iRV
-hBV
+hgz
+akN
 oYJ
 vsH
 bAt
