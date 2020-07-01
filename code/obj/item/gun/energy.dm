@@ -400,6 +400,7 @@
 	New()
 		cell = new/obj/item/ammo/power_cell/high_power
 		current_projectile = new/datum/projectile/special/spreader/tasershotgunspread
+		projectiles = list(current_projectile,new/datum/projectile/energy_bolt)
 		..()
 
 	update_icon()
@@ -408,6 +409,13 @@
 			ratio = round(ratio, 0.25) * 100
 			set_icon_state("tasers[ratio]")
 			return
+
+	attack_self()
+		..()
+		if(istype(current_projectile, /datum/projectile/energy_bolt))
+			shoot_delay = 4
+		else
+			shoot_delay = 6
 
 
 ////////////////////////////////////VUVUV
