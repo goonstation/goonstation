@@ -171,6 +171,7 @@
 		return
 
 	OnLife()
+		..()
 		if (!src.wraith)
 			return
 		if (ghoulTouchActive)
