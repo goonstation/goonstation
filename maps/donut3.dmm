@@ -8002,11 +8002,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science)
-"cdA" = (
-/obj/stool/bench/blue/auto,
-/obj/machinery/light/emergency,
-/turf/simulated/floor/escape,
-/area/station/hallway/secondary/exit)
 "cdH" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -11001,12 +10996,6 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
-"dbx" = (
-/obj/machinery/launcher_loader/south{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "dbP" = (
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/engine/inner)
@@ -14162,6 +14151,10 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/escape{
 	dir = 10
 	},
@@ -14910,9 +14903,6 @@
 	color = "#ffccff";
 	dir = 5;
 	icon_state = "line2"
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 1
 	},
 /obj/table/auto,
 /obj/machinery/light/emergency{
@@ -22467,15 +22457,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
-"gKY" = (
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/security/quarters)
 "gLe" = (
 /obj/machinery/light/small,
 /obj/decal/cleanable/dirt/jen,
@@ -32631,6 +32612,15 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
+"kem" = (
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/security/quarters)
 "kev" = (
 /obj/cable{
 	d1 = 4;
@@ -34261,6 +34251,12 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
+"kEX" = (
+/obj/machinery/launcher_loader/south{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "kFd" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -51017,6 +51013,13 @@
 	dir = 1
 	},
 /area/station/crew_quarters/cafeteria)
+"pSt" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/light/emergency,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "pSH" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -51864,13 +51867,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
-"qfl" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/light/emergency,
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
 "qfm" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -56355,6 +56351,12 @@
 "rtr" = (
 /turf/simulated/wall/auto/jen/purple,
 /area/station/science/teleporter)
+"rty" = (
+/obj/machinery/launcher_loader/east{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "rtB" = (
 /obj/cable{
 	d2 = 4;
@@ -57466,15 +57468,6 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
-"rJI" = (
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 4
-	},
-/area/station/security/quarters)
 "rJM" = (
 /obj/machinery/dispenser{
 	pltanks = 0
@@ -57572,7 +57565,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "rLN" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -62835,6 +62828,15 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
+"tzO" = (
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 4
+	},
+/area/station/security/quarters)
 "tzS" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 1;
@@ -73608,12 +73610,6 @@
 	},
 /turf/simulated/floor/wood/six,
 /area/station/library/reading1)
-"wPz" = (
-/obj/machinery/launcher_loader/east{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "wPC" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher{
@@ -75217,10 +75213,7 @@
 /area/station/engine/monitoring)
 "xqb" = (
 /obj/stool/bench/blue/auto,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/light/emergency,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "xqn" = (
@@ -101191,7 +101184,7 @@ pPd
 uxN
 yfE
 nfO
-gKY
+kem
 qRP
 lJM
 lJM
@@ -101488,7 +101481,7 @@ vUK
 deh
 bDy
 nbm
-rJI
+tzO
 wyW
 mTo
 agB
@@ -106615,7 +106608,7 @@ eXl
 pse
 fNH
 ovT
-qfl
+pSt
 iHj
 cNV
 qfT
@@ -128665,8 +128658,8 @@ xDF
 xDF
 yaF
 vYX
-dbx
-wPz
+kEX
+rty
 oYJ
 vsH
 bAt
@@ -134969,7 +134962,7 @@ lCL
 qQq
 pUj
 mxH
-cdA
+xqb
 tSd
 lAM
 aDc
@@ -135271,7 +135264,7 @@ etV
 etV
 aeQ
 mxH
-xqb
+fXb
 tSd
 aaa
 aDc
@@ -135573,7 +135566,7 @@ xTu
 etV
 kRW
 mxH
-cdA
+xqb
 tSd
 aab
 aDc
