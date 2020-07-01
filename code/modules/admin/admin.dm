@@ -1214,8 +1214,10 @@ var/global/noir = 0
 			if(src.level >= LEVEL_SA)
 				var/list/applicable_chromosomes = null
 				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
+				var/datum/bioEffect/power/P = null
 				if (istype(BE, /datum/bioEffect/power)) //powers
 					applicable_chromosomes = list("Stabilizer", "Reinforcer", "Weakener", "Camouflager", "Power Booster", "Energy Booster", "Synchronizer", "Custom", "REMOVE CHROMOSOME")
+					P = BE
 				else if (istype(BE, /datum/bioEffect)) //nonpowers
 					applicable_chromosomes = list("Stabilizer", "Reinforcer", "Weakener", "Camouflager", "Custom", "REMOVE CHROMOSOME")
 				else
@@ -1247,21 +1249,21 @@ var/global/noir = 0
 						BE.name = "Camouflaged " + BE.name
 						BE.altered = 1
 					if ("Power Booster")
-						if (BE.altered) checkbioeffect_chromosome_clean(BE)
-						BE:power = 1
-						BE.name = "Empowered " + BE.name
-						BE.altered = 1
+						if (P.altered) checkbioeffect_chromosome_clean(P)
+						P.power = 1
+						P.name = "Empowered " + P.name
+						P.altered = 1
 					if ("Energy Booster")
-						if (BE.altered) checkbioeffect_chromosome_clean(BE)
-						if(BE.cooldown != 0)
-							BE.cooldown /= 2
-						BE.name = "Energized " + BE.name
-						BE.altered = 1
+						if (P.altered) checkbioeffect_chromosome_clean(P)
+						if(P.cooldown != 0)
+							P.cooldown /= 2
+						P.name = "Energized " + P.name
+						P.altered = 1
 					if ("Synchronizer")
-						if (BE.altered) checkbioeffect_chromosome_clean(BE)
-						BE:safety = 1
-						BE.name = "Synchronized " + BE.name
-						BE.altered = 1
+						if (P.altered) checkbioeffect_chromosome_clean(P)
+						P.safety = 1
+						P.name = "Synchronized " + P.name
+						P.altered = 1
 					if ("Custom") //build your own chromosome!
 						if (BE.altered) checkbioeffect_chromosome_clean(BE)
 						BE.altered = 1
@@ -4432,6 +4434,7 @@ var/global/noir = 0
 
 /datum/admins/proc/checkbioeffect_chromosome_clean(var/datum/bioEffect/BE)
 //cleanse a bioeffect
+	var/datum/bioEffect/power/P = null
 	BE.altered = 0
 	BE.name = BE.global_instance.name
 	if (!BE.stability_loss) //reapply stability changes
@@ -4443,9 +4446,10 @@ var/global/noir = 0
 	BE.msgGain = BE.global_instance.msgGain
 	BE.msgLose = BE.global_instance.msgLose
 	if (istype(BE, /datum/bioEffect/power)) //powers
-		BE:power = BE.global_instance:power
-		BE:cooldown = BE.global_instance:cooldown
-		BE:safety = BE.global_instance:safety
+		P = BE
+		P.power = P.global_instance_power.power
+		P.cooldown = P.global_instance_power.cooldown
+		P.safety = P.global_instance_power.safety
 
 /client/proc/cmd_admin_checkbioeffect(var/mob/M)
 	var/list/dat = list()
