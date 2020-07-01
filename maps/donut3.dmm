@@ -3042,22 +3042,12 @@
 	},
 /area/station/engine/singcore)
 "aAW" = (
-/obj/table/auto,
-/obj/item/device/light/lava_lamp{
-	pixel_x = -6;
-	pixel_y = 16
-	},
-/obj/item/cargotele{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/obj/item/hand_labeler{
-	pixel_x = -2;
-	pixel_y = -1
-	},
 /obj/decal/tile_edge/line/green{
 	dir = 6;
 	icon_state = "line2"
+	},
+/obj/machinery/chem_master{
+	dir = 8
 	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics)
@@ -11016,6 +11006,12 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/door_control{
+	id = "treatment_exit";
+	name = "Treatment Exit Door Control";
+	pixel_x = 24;
+	pixel_y = 8
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "dcz" = (
@@ -22804,7 +22800,8 @@
 "gQx" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 8
+	dir = 8;
+	id = "scanning_exit"
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -40667,7 +40664,8 @@
 "mGr" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+	dir = 4;
+	id = "treatment_exit"
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -49327,7 +49325,14 @@
 /obj/disposalpipe/segment/mail,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -24;
+	pixel_y = 6
+	},
+/obj/machinery/door_control{
+	id = "scanning_exit";
+	name = "Clone-Scanning Exit Door Control";
+	pixel_x = -24;
+	pixel_y = -6
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
@@ -50344,7 +50349,19 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/netural,
-/obj/decorative_pot,
+/obj/table/auto,
+/obj/item/hand_labeler{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/cargotele{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/device/light/lava_lamp{
+	pixel_x = -6;
+	pixel_y = 16
+	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics)
 "pGt" = (
@@ -56480,7 +56497,9 @@
 /area/station/chapel/main)
 "ruY" = (
 /obj/machinery/light/incandescent/warm{
-	dir = 1
+	dir = 1;
+	pixel_x = 10;
+	pixel_y = 20
 	},
 /obj/landmark{
 	name = "monkeyspawn_normal"
@@ -57435,7 +57454,7 @@
 /turf/simulated/floor/green/corner,
 /area/station/hydroponics)
 "rIG" = (
-/obj/submachine/robomoduler{
+/obj/machinery/computer/robot_module_rewriter{
 	dir = 8
 	},
 /obj/machinery/light/incandescent/cool/very{
@@ -69527,7 +69546,8 @@
 "vDd" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+	dir = 4;
+	id = "treatment_exit"
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -71918,7 +71938,8 @@
 "wpE" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 8
+	dir = 8;
+	id = "scanning_exit"
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
