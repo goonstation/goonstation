@@ -23,7 +23,7 @@
 		switch (alert(usr, "Choose the pest type?", src.name, "Random", "Custom"))
 			if ("Custom")
 				src.pest_type = input("Enter a /mob/living/critter path or partial name.", src.name, null) as null|text
-				src.pest_type = get_one_match(input, "/mob/living/critter")
+				src.pest_type = get_one_match(src.pest_type, "/mob/living/critter")
 				if (!src.pest_type)
 					return
 			if ("Random")
