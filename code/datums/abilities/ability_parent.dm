@@ -46,9 +46,6 @@
 			if (ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				H.hud?.update_ability_hotbar()
-//			else if (iscritter(owner))
-//				var/mob/living/critter/C = owner
-//				C.hud?.update_ability_hotbar()
 
 	disposing()
 		for (var/obj/screen/S in hud.objects)
