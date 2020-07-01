@@ -11627,8 +11627,8 @@
 /area/listeningpost)
 "dlK" = (
 /obj/machinery/power/apc/autoname_north,
-/obj/machinery/light/small{
-	dir = 4
+/obj/machinery/light/incandescent/cool{
+	dir = 1
 	},
 /obj/cable{
 	d2 = 8;
@@ -28167,7 +28167,6 @@
 /area/station/medical/asylum/computer)
 "iDb" = (
 /obj/decal/mule/dropoff,
-/obj/access_spawn/medlab,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -28177,6 +28176,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access = null
 	},
+/obj/access_spawn/robotics,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/inner/east)
 "iDf" = (
@@ -30321,7 +30321,6 @@
 	name = "industrial loading chute - cargo"
 	},
 /obj/disposalpipe/trunk,
-/obj/machinery/launcher_loader/south,
 /turf/simulated/floor/black/grime,
 /area/station/routingdepot)
 "jqe" = (
@@ -32699,7 +32698,7 @@
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
-/obj/machinery/light/small{
+/obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
 /obj/machinery/camera{
@@ -41654,7 +41653,6 @@
 "mXM" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment,
-/obj/machinery/launcher_loader/east,
 /turf/simulated/floor/black/grime,
 /area/station/routingdepot)
 "mXZ" = (
@@ -45494,7 +45492,7 @@
 /obj/shrub{
 	dir = 8
 	},
-/obj/machinery/light/small{
+/obj/machinery/light/incandescent/cool{
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -50612,6 +50610,13 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/item/storage/belt/utility{
+	pixel_x = -4
+	},
+/obj/item/sheet/steel/fullstack{
+	pixel_x = 7;
+	pixel_y = -4
+	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/robotics)
 "pMH" = (
@@ -55014,15 +55019,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/stairs/wide/other,
 /area/station/hallway/primary/west)
-"raa" = (
-/obj/machinery/door_control{
-	id = "hangar_bridge";
-	name = "Secure Hangar Door Control";
-	pixel_x = -7;
-	pixel_y = -34
-	},
-/turf/simulated/floor/redwhite,
-/area/station/hangar/sec)
 "raj" = (
 /obj/rack,
 /obj/machinery/camera{
@@ -74606,7 +74602,6 @@
 /area/station/crew_quarters/quarters)
 "xfW" = (
 /obj/decal/mule/dropoff,
-/obj/access_spawn/medlab,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -74616,6 +74611,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access = null
 	},
+/obj/access_spawn/robotics,
 /turf/simulated/floor/black/grime,
 /area/station/medical/robotics)
 "xfZ" = (
@@ -100466,7 +100462,7 @@ kKy
 mog
 dxI
 uLk
-raa
+hhH
 tHe
 naA
 uFx
@@ -147899,7 +147895,7 @@ rdj
 rdj
 bBD
 rNW
-uhu
+qNg
 qNg
 eiH
 qNg
