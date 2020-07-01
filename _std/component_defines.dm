@@ -99,28 +99,24 @@
 #define COMSIG_MECHCOMP_ADD_INPUT "mechcomp_add_input"
 /// Receiving a message from a mechcomp device for handling
 #define COMSIG_MECHCOMP_RECEIVE_MSG "mechcomp_receive_message"
-/// Passing the stored message to all connected mechcomp devices for handling
-#define COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG "mechcomp_transmit_message"
 /// Passing the signal of a message to all connected mechcomp devices for handling (message will be instatiated by the component)
 #define COMSIG_MECHCOMP_TRANSMIT_SIGNAL "mechcomp_transmit_signal"
 /// Passing a message to all connected mechcomp devices for handling
 #define COMSIG_MECHCOMP_TRANSMIT_MSG "mechcomp_transmit_message"
+/// Passing the stored message to all connected mechcomp devices for handling
+#define COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG "mechcomp_transmit_default_message"
 /// Remove [the caller] from the list of transmitting devices
 #define COMSIG_MECHCOMP_RM_INCOMING "mechcomp_remove_incoming"
 /// Remove [the caller] from the list of receiving devices
 #define COMSIG_MECHCOMP_RM_OUTGOING "mechcomp_remove_outgoing"
-/// Remove all connected devices
-#define COMSIG_MECHCOMP_RM_ALL_CONNECTIONS "mechcomp_remove_all_connections"      //MarkNstein needs attention
-/// Set the filter flag to true
-#define COMSIG_MECHCOMP_SET_FILTER_TRUE "mechcomp_set_filter_true"
-/// Set the filters applied to a connection
-#define COMSIG_MECHCOMP_SET_FILTERS "mechcomp_set_filters"
+/// Remove all connected devices     //MarkNstein needs attention
+#define COMSIG_MECHCOMP_RM_ALL_CONNECTIONS "mechcomp_remove_all_connections"      
 /// Return the component's outgoing connections
 #define COMSIG_MECHCOMP_GET_OUTGOING "mechcomp_get_outgoing_connections"
 /// Connect two mechcomp devices together
 #define COMSIG_MECHCOMP_LINK "mechcomp_connect_devices"
-/// Connect two mechcomp devices together
-#define COMSIG_MECHCOMP_GET_EXACT_MATCHING "mechcomp_get_exact_matching"
+/// Allow the parent to do some special filtering on outbound signals. See top of mechComp_signals.dm
+#define COMSIG_MECHCOMP_ENABLE_SPECIAL_FILTERING "mechcomp_enable_special_filtering"
 /// Connect two mechcomp devices together
 #define COMSIG_MECHCOMP_ADD_CONFIG "mechcomp_add_config"
 /// Connect two mechcomp devices together

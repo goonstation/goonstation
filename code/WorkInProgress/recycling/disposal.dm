@@ -1288,7 +1288,6 @@
 		C.ptype = 11
 		C.dir = dir
 		C.update()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		qdel(src)
 
 //<Jewel>:

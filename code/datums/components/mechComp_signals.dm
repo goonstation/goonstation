@@ -3,6 +3,13 @@
 #define TOGGLE_MATCH "Toggle Exact Match"
 #define MECHFAILSTRING "You must be holding a Multitool to change Connections or Options."
 
+//Closest thing I can think of that emulates an "interface"
+//COMSIG_MECHCOMP_ENABLE_SPECIAL_FILTERING relies on the parent implementing these functions
+//See  /obj/item/mechanics/dispatchcomp  for an example
+#define MECHCOMP_SET_FILTER_FUNC mechComp_set_filter
+#define MECHCOMP_RM_FILTER_FUNC mechComp_remove_filter
+#define MECHCOMP_RUN_FILTER_FUNC mechComp_check_filter
+
 /datum/mechanicsMessage
 	var/signal = "1"
 	var/list/nodes = list()
@@ -26,13 +33,11 @@
 	var/list/connected_incoming = list()
 	var/list/inputs = list()
 
-	var/defaultSignal = "1"
-
-	var/filtered = 0
-	var/list/outgoing_filters = list()
-	var/exact_match = 0
-	
 	var/list/configs = list()
+
+	var/defaultSignal = "1"
+	
+	var/specialFiltering = 0
 
 /datum/component/mechanics_holder/Initialize(can_manualy_set_signal = 0)
 	configs.Add(list(DC_ALL))
@@ -49,11 +54,9 @@
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_INCOMING), .proc/removeIncoming)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_OUTGOING), .proc/removeOutgoing)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_ALL_CONNECTIONS), .proc/WipeConnections)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_SET_FILTER_TRUE), .proc/setFilterTrue)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_SET_FILTERS), .proc/set_filters)    //MarkNstein needs attention
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_GET_OUTGOING), .proc/getOutgoing)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_LINK), .proc/dropConnect)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_GET_EXACT_MATCHING), .proc/getExactMatching)
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_ENABLE_SPECIAL_FILTERING), .proc/enableSpecialFiltering) //See defines at the top of the document
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_CONFIG), .proc/addConfig)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL), .proc/allow_manual_singal_setting) //Only use this when also using COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG
 	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/attackby)    //MarkNstein needs attention
@@ -69,11 +72,9 @@
 	COMSIG_MECHCOMP_RM_INCOMING,\
 	COMSIG_MECHCOMP_RM_OUTGOING,\
 	COMSIG_MECHCOMP_RM_ALL_CONNECTIONS,\
-	COMSIG_MECHCOMP_SET_FILTER_TRUE,\
-	COMSIG_MECHCOMP_SET_FILTERS,\
 	COMSIG_MECHCOMP_GET_OUTGOING,\
 	COMSIG_MECHCOMP_LINK,\
-	COMSIG_MECHCOMP_GET_EXACT_MATCHING,\
+	COMSIG_MECHCOMP_ENABLE_SPECIAL_FILTERING,\
 	COMSIG_MECHCOMP_ADD_CONFIG,\
 	COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL,\
 	COMSIG_ATTACKBY)
@@ -91,7 +92,6 @@
 		SEND_SIGNAL(O, COMSIG_MECHCOMP_RM_INCOMING, parent)
 	connected_incoming.Cut()
 	connected_outgoing.Cut()
-	outgoing_filters.Cut()
 	return
 
 //Remove a device from our list of transitting devices.
@@ -102,7 +102,8 @@
 //Remove a device from our list of receiving devices.
 /datum/component/mechanics_holder/proc/removeOutgoing(var/obj/O)
 	connected_outgoing.Remove(O)
-	outgoing_filters.Remove(O)
+	if(specialFiltering)
+		call(parent, "MECHCOMP_RM_FILTER_FUNC" )(O)
 	return
 
 //Give the caller a copied list of our outgoing connections.
@@ -110,11 +111,10 @@
 	outout = connected_outgoing.Copy()
 	return
 
-//Well well well, look at you; you can filter your outputs — how special.
-/datum/component/mechanics_holder/proc/setFilterTrue()
-	filtered = 1
-	if(!(list(TOGGLE_MATCH) in configs))
-		configs.Add(list(TOGGLE_MATCH))
+//Allow special filtering to happen on ourgoing transmissions - potentially setup with each new linkage.
+/datum/component/mechanics_holder/proc/enableSpecialFiltering(var/list/outout)
+	//Well well well, look at you; you can filter your outputs — how special.
+	specialFiltering = 1
 	return
 
 //Fire the stored default signal.
@@ -127,7 +127,7 @@
 	return
 
 //Fire a message with a simple signal (no file). Expected to be called from signal "sources" (first nodes)
-/datum/component/mechanics_holder/proc/fireOutSigna(var/signal, var/datum/computer/file/data_file=null)
+/datum/component/mechanics_holder/proc/fireOutSignal(var/signal, var/datum/computer/file/data_file=null)
 	fireOutgoing(newSignal(signal, data_file))
 	return
 
@@ -155,20 +155,12 @@
 
 	var/fired = 0
 	for(var/obj/O in connected_outgoing)
-		if (filtered && outgoing_filters[O] && !allowFiltered(msg.signal, outgoing_filters[O]))
-			continue  //MarkNstein Needs attentin: this just seems wrong???
+		if(specialFiltering)
+			if(!call(parent, "MECHCOMP_RUN_FILTER_FUNC")(msg.signal))
+				continue 
 		SEND_SIGNAL(O, COMSIG_MECHCOMP_RECEIVE_MSG, cloneMessage(msg))
 		fired = 1
 	return fired
-
-/datum/component/mechanics_holder/proc/allowFiltered(var/signal, var/list/filters)
-	for (var/filter in filters)
-		var/text_found = findtext(signal, filter)
-		if (exact_match)
-			text_found = text_found && (length(signal) == length(filter))
-		if (text_found)
-			return 1
-	return 0
 
 //Used to copy a message because we don't want to pass a single message to multiple components which might end up modifying it both at the same time.
 /datum/component/mechanics_holder/proc/cloneMessage(var/datum/mechanicsMessage/msg)
@@ -223,24 +215,9 @@
 	connected_incoming.Add(trigger)
 	boutput(user, "<span class='success'>You connect the [trigger.name] to the [receiver.name].</span>")
 	logTheThing("station", user, null, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
-	SEND_SIGNAL(trigger, COMSIG_MECHCOMP_SET_FILTERS, receiver, user) //MarkNstein needs attention
+	if(specialFiltering)
+		call(parent, "MECHCOMP_SET_FILTER_FUNC")(receiver, user)
 	return
-
-//We are in the scope of the trigger-component
-/datum/component/mechanics_holder/proc/set_filters(obj/receiver, mob/user)
-	if (filtered)
-		var/filter = input(user, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
-		if (length(filter))
-			if (!outgoing_filters[receiver]) outgoing_filters[receiver] = list()
-			outgoing_filters.Add(receiver)
-			outgoing_filters[receiver] = splittext(filter, ",")
-			boutput(user, "<span class='success'>Only passing messages that [exact_match ? "match" : "contain"] [filter] to the [receiver.name]</span>")
-		else
-			boutput(user, "<span class='success'>Passing all messages to the [receiver.name]</span>")
-	return
-
-/datum/component/mechanics_holder/proc/getExactMatching()
-	return exact_match
 
 //Adds a config to the holder w/ a proc mapping.
 /datum/component/mechanics_holder/proc/addConfig(var/name, var/toCall)
@@ -272,10 +249,6 @@
 				if(DC_ALL)
 					WipeConnections()
 					boutput(user, "<span class='notice'>You disconnect [src].</span>")
-					return COMSIGBIT_ATTACKBY_COMPLETE
-				if(TOGGLE_MATCH)
-					exact_match = !exact_match
-					boutput(user, "Exact match mode now [exact_match ? "on" : "off"]")
 					return COMSIGBIT_ATTACKBY_COMPLETE
 			//must be a custom config specific to the device, so let the device handle it
 			var/path = configs[selected_config]

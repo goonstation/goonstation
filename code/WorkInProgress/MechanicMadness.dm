@@ -119,7 +119,7 @@ var/list/mechanics_telepads = new/list()
 		if(level == 2 || (istype(O, /obj/item/mechanics) && O.level == 2))
 			boutput(usr, "<span class='alert'>Both components need to be secured into place before they can be connected.</span>")
 			return
-			
+
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_LINK,O,usr)
 		return ..()
 
@@ -784,11 +784,11 @@ var/list/mechanics_telepads = new/list()
 	var/expressionflag = "g"
 
 	get_desc()
-		. += "<span class='notice'>Current Expression: [html_encode(expression)]</span><br/>
+		. += {"<span class='notice'>Current Expression: [html_encode(expression)]</span><br/>
 		<span class='notice'>Current Replacement: [html_encode(expressionrepl)]</span><br/>
 		Your replacement string can contain $0-$9 to insert that matched group(things between parenthesis)<br/>
 		$` will be replaced with the text that came before the match, and $' will be replaced by the text after the match.<br/>
-		$0 or $& will be the entire matched string."
+		$0 or $& will be the entire matched string."}
 
 	New()
 		..()
@@ -971,7 +971,7 @@ var/list/mechanics_telepads = new/list()
 		if(findtext(input.signal, triggerSignal))
 			if(!not)
 				SEND_SIGNAL(src,transmissionStyle,input)
-		else 
+		else
 			if(not)
 				SEND_SIGNAL(src,transmissionStyle,input)
 		return
@@ -988,30 +988,61 @@ var/list/mechanics_telepads = new/list()
 	name = "Dispatch Component"
 	desc = ""
 	icon_state = "comp_disp"
-	var/COMP_exact_match = 0 //The component will drive this value
+	var/exact_match = 0
+
+	//This stores all the relevant filters per output
+	//Notably, this list doesn't remove entries when an output is removed.
+	//So it will bloat over time...
+	var/list/outgoing_filters = list()
 
 	get_desc()
-		. += "<br><span class='notice'>Exact match mode: [COMP_exact_match ? "on" : "off"]</span>"
+		. += "<br><span class='notice'>Exact match mode: [exact_match ? "on" : "off"]</span>"
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_SET_FILTER_TRUE)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ENABLE_SPECIAL_FILTERING)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", "dispatch")
-		
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching","toggleExactMatching")
+
+	disposing()
+		outgoing_filters.Cut()
+		..()
+
+	proc/toggleExactMatching(obj/item/W as obj, mob/user as mob)
+		exact_match = !exact_match
+		boutput(user, "Exact match mode now [exact_match ? "on" : "off"]")
+		tooltip_rebuild = 1
 
 	proc/dispatch(var/datum/mechanicsMessage/input)
 		var/sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		if(sent) animate_flash_color_fill(src,"#00FF00",2, 2)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		..()
-		var/COMP_exact_match_old = SEND_SIGNAL(src,COMSIG_MECHCOMP_GET_EXACT_MATCHING)
-		//Check if we can avoid causing a rebuild
-		if(COMP_exact_match != COMP_exact_match_old)
-			COMP_exact_match = COMP_exact_match_old
-			tooltip_rebuild = 1
+	//This will get called from the component-datum when a device is being linked
+	proc/MECHCOMP_SET_FILTER_FUNC(obj/receiver, mob/user)
+		var/filter = input(user, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
+		if (length(filter))
+			if (!outgoing_filters[receiver]) outgoing_filters[receiver] = list()
+			outgoing_filters.Add(receiver)
+			outgoing_filters[receiver] = splittext(filter, ",")
+			boutput(user, "<span class='success'>Only passing messages that [exact_match ? "match" : "contain"] [filter] to the [receiver.name]</span>")
+		else
+			boutput(user, "<span class='success'>Passing all messages to the [receiver.name]</span>")
 		return
+
+	//This will get called from the component-datum when a device is being unlinked
+	proc/MECHCOMP_RM_FILTER_FUNC(obj/receiver)
+		outgoing_filters.Remove(receiver)
+
+	//Called when mechanics_holder tries to fire out signals
+	proc/MECHCOMP_RUN_FILTER_FUNC(var/signal)
+		for (var/filter in outgoing_filters)
+			var/text_found = findtext(signal, filter)
+			if (exact_match)
+				text_found = text_found && (length(signal) == length(filter))
+			if (text_found)
+				return 1
+		return 0
 
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_disp"
@@ -1039,14 +1070,14 @@ var/list/mechanics_telepads = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set starting String","setStartingString")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set ending String","setEndingString")
 
-	proc/setStartingString(var/datum/mechanicsMessage/input)
+	proc/setStartingString(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting", bstr) as text
 		inp = strip_html(inp)
 		bstr = inp
 		boutput(user, "String set to [inp]")
 		tooltip_rebuild = 1
 
-	proc/setEndingString(var/datum/mechanicsMessage/input)
+	proc/setEndingString(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting", astr) as text
 		inp = strip_html(inp)
 		astr = inp
@@ -1333,7 +1364,7 @@ var/list/mechanics_telepads = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected", "sendCurrent")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send random", "sendRand")
 		//MARKMARKMARK//SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,list("Set Signal List","Set Signal List(Delimeted)","Toggle Announcements","Toggle Random","Toggle Allow Duplicate Entries"))
-		
+
 
 	proc/MarkNstein(obj/item/W as obj, mob/user as mob)
 		var/numsig = input(user,"How many Signals would you like to define?","# Signals:", 3) as num
@@ -1562,7 +1593,7 @@ var/list/mechanics_telepads = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggle")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"output state", "state")
 		//MARKMARKMARK//SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,list("Set On-Signal","Set Off-Signal"))
-		
+
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return
@@ -1730,7 +1761,7 @@ var/list/mechanics_telepads = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate", "turnoff")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set rgb", "setrgb")
 		//MARKMARKMARK//SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,list("Set Color","Set Range"))
-		
+
 		light = new /datum/light/point
 		light.attach(src)
 
@@ -1867,7 +1898,7 @@ var/list/mechanics_telepads = new/list()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", "setfreq")
 		//MARKMARKMARK//SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency")
-		
+
 
 		if(radio_controller)
 			set_frequency(frequency)
@@ -1926,7 +1957,7 @@ var/list/mechanics_telepads = new/list()
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input", "fire")
-		
+
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return
@@ -2351,7 +2382,7 @@ var/list/mechanics_telepads = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set B", "setB")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Evaluate", "evaluate")
 		//MARKMARKMARK//SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,list("Set A","Set B","Set Mode"))
-		
+
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return
