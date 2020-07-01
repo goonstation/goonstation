@@ -797,6 +797,7 @@
 /obj/item/shipcomponent/secondary_system/crash/proc/dispense()
 	for (var/mob/living/B in ship.contents)
 		boutput(B, "<span class='alert'>You eject!</span>")
+		ship.eject(B)
 		ship.visible_message("<span class='alert'>[B] launches out of the [ship]!</span>")
 		step(B,ship.dir,0)
 		step(B,ship.dir,0)
