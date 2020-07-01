@@ -1,3 +1,8 @@
+#define DC_ALL "Disconnect All"
+#define SET_SEND "Set Send-Signal"
+#define TOGGLE_MATCH "Toggle Exact Match"
+#define MECHFAILSTRING "You must be holding a Multitool to change Connections or Options."
+
 /datum/mechanicsMessage
 	var/signal = "1"
 	var/list/nodes = list()
@@ -21,7 +26,7 @@
 	var/list/connected_incoming = list()
 	var/list/inputs = list()
 
-	var/defaultSignal = "1" //MarkNstein needs attention: candidate for removal? check how deafult singals are set
+	var/defaultSignal = "1"
 
 	var/filtered = 0
 	var/list/outgoing_filters = list()
@@ -30,9 +35,9 @@
 	var/list/configs = list()
 
 /datum/component/mechanics_holder/Initialize(can_manualy_set_signal = 0)
-	configs.Add(list("Disconnect All"))
+	configs.Add(list(DC_ALL))
 	if(can_manualy_set_signal)
-		configs.Add(list("Set Send-Signal"))
+		configs.Add(list(SET_SEND))
 	..()    //MarkNstein needs attention: make use of this for non-MechComp things. Like settings configs? Inputs?
 
 /datum/component/mechanics_holder/RegisterWithParent()
@@ -48,6 +53,7 @@
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_SET_FILTERS), .proc/set_filters)    //MarkNstein needs attention
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_GET_OUTGOING), .proc/getOutgoing)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_LINK), .proc/dropConnect)
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_GET_EXACT_MATCHING), .proc/getExactMatching)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_CONFIG), .proc/addConfig)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL), .proc/allow_manual_singal_setting) //Only use this when also using COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG
 	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/attackby)    //MarkNstein needs attention
@@ -67,6 +73,7 @@
 	COMSIG_MECHCOMP_SET_FILTERS,\
 	COMSIG_MECHCOMP_GET_OUTGOING,\
 	COMSIG_MECHCOMP_LINK,\
+	COMSIG_MECHCOMP_GET_EXACT_MATCHING,\
 	COMSIG_MECHCOMP_ADD_CONFIG,\
 	COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL,\
 	COMSIG_ATTACKBY)
@@ -76,7 +83,7 @@
 	inputs.Cut()
 	return  //No need to ..()
 
-//Delete all connections. (Often caused by "Disconnect All" user command, and unwrenching MechComp devices.)
+//Delete all connections. (Often caused by DC_ALL user command, and unwrenching MechComp devices.)
 /datum/component/mechanics_holder/proc/WipeConnections()
 	for(var/obj/O in connected_incoming)
 		SEND_SIGNAL(O, COMSIG_MECHCOMP_RM_OUTGOING, parent)
@@ -106,6 +113,8 @@
 //Well well well, look at you; you can filter your outputs — how special.
 /datum/component/mechanics_holder/proc/setFilterTrue()
 	filtered = 1
+	if(!(list(TOGGLE_MATCH) in configs))
+		configs.Add(list(TOGGLE_MATCH))
 	return
 
 //Fire the stored default signal.
@@ -230,6 +239,9 @@
 			boutput(user, "<span class='success'>Passing all messages to the [receiver.name]</span>")
 	return
 
+/datum/component/mechanics_holder/proc/getExactMatching()
+	return exact_match
+
 //Adds a config to the holder w/ a proc mapping.
 /datum/component/mechanics_holder/proc/addConfig(var/name, var/toCall)
 	if(name in configs) configs.Remove(name)
@@ -238,8 +250,8 @@
 	return
 
 /datum/component/mechanics_holder/proc/allow_manual_singal_setting() 
-	if(!(list("Set Send-Signal") in configs))
-		configs.Add(list("Set Send-Signal"))
+	if(!(list(SET_SEND) in configs))
+		configs.Add(list(SET_SEND))
 	return
 	
 //If it's a multi-tool, let the user configure the device.
@@ -250,31 +262,28 @@
 		var/selected_config = input("Select a config to modify!", "Config", null) as null|anything in configs
 		if(selected_config && (user in range(1,parent)))
 			switch(selected_config)
-				if("Set Send-Signal")
+				if(SET_SEND)
 					var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
 					inp = trim(adminscrub(inp), 1)
 					if(length(inp))
 						defaultSignal = inp
 						boutput(user, "Signal set to [inp]")
-						if(istype(parent,/obj/item))
-							var/obj/item/I = parent
-							I.tooltip_rebuild = 1
 					return COMSIGBIT_ATTACKBY_COMPLETE
-				if("Disconnect All")
+				if(DC_ALL)
 					WipeConnections()
 					boutput(user, "<span class='notice'>You disconnect [src].</span>")
 					return COMSIGBIT_ATTACKBY_COMPLETE
-				if("Toggle Exact Match")
+				if(TOGGLE_MATCH)
 					exact_match = !exact_match
 					boutput(user, "Exact match mode now [exact_match ? "on" : "off"]")
-					if(istype(parent,/obj/item))
-						var/obj/item/I = parent
-						I.tooltip_rebuild = 1
 					return COMSIGBIT_ATTACKBY_COMPLETE
-			//must be a custom config specific to the device
+			//must be a custom config specific to the device, so let the device handle it
 			var/path = configs[selected_config]
-			SPAWN_DBG(1 DECI SECOND) call(parent, path)(W, user)
+			return call(parent, path)(W, user)
 	return 0
 
 
 
+#undef DC_ALL
+#undef SET_SEND
+#undef TOGGLE_MATCH

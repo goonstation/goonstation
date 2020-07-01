@@ -13,11 +13,11 @@
 //(People can probably still create infinite loops somehow. They always manage)
 //Always use the newSignal proc of the mechanics holder of the sending object when creating a new message.
 
-#define MECHFAILSTRING "You must be holding a Multitool to change Connections or Options."
 
 //Global list of telepads so we don't have to loop through the entire world aaaahhh.
 var/list/mechanics_telepads = new/list()
 
+//MarkNstein - Review each Config overried - is it returning 1 or 0?
 
 /obj/item/mechanics
 	name = "testhing"
@@ -696,8 +696,7 @@ var/list/mechanics_telepads = new/list()
 		inp2 = 1
 
 		if(inp1)
-			input.signal = mechanics.outputSignal
-			mechanics.fireOutgoing(input)
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,input)
 			inp1 = 0
 			inp2 = 0
 			return
@@ -997,21 +996,29 @@ var/list/mechanics_telepads = new/list()
 	name = "Dispatch Component"
 	desc = ""
 	icon_state = "comp_disp"
+	var/COMP_exact_match = 0 //The component will drive this value
 
 	get_desc()
-		. += "<br><span class='notice'>Exact match mode: [mechanics.exact_match ? "on" : "off"]</span>"
+		. += "<br><span class='notice'>Exact match mode: [COMP_exact_match ? "on" : "off"]</span>"
 
 	New()
 		..()
-		//mechanics.filtered = 1								//MarkNstein Needs Clean-up
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_SET_FILTER_TRUE)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", "dispatch")
-		//MARKMARKMARK//SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Exact Match")
 		
 
 	proc/dispatch(var/datum/mechanicsMessage/input)
-		if (level == 2) return
-		var/sent = mechanics.fireOutgoing(input) //Filtering is handled by mechanics_holder based on filtered flag
+		var/sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		if(sent) animate_flash_color_fill(src,"#00FF00",2, 2)
+		return
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		..()
+		var/COMP_exact_match_old = SEND_SIGNAL(src,COMSIG_MECHCOMP_GET_EXACT_MATCHING)
+		//Check if we can avoid causing a rebuild
+		if(COMP_exact_match != COMP_exact_match_old)
+			COMP_exact_match = COMP_exact_match_old
+			tooltip_rebuild = 1
 		return
 
 	updateIcon()
@@ -1037,41 +1044,22 @@ var/list/mechanics_telepads = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add to string + send", "addstrsend")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", "sendstr")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"clear buffer", "clrbff")
-		//MARKMARKMARK//SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,list("Set starting String","Set ending String"))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set starting String","setStartingString")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set ending String","setEndingString")
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(..(W, user)) return
-		else if(ispulsingtool(W))
-			switch(src.modify_configs())
-				if(0)
-					return
-				if("Set starting String")
-					var/inp = input(user,"Please enter String:","String setting", bstr) as text
-					inp = strip_html(inp)
-					bstr = inp
-					boutput(user, "String set to [inp]")
-				if("Set ending String")
-					var/inp = input(user,"Please enter String:","String setting", astr)
-					inp = strip_html(inp)
-					astr = inp
-					boutput(user, "String set to [inp]")
-			tooltip_rebuild = 1
-	proc/clrbff(var/datum/mechanicsMessage/input)
-		if(level == 2) return
-		buffer = ""
+	proc/setStartingString(var/datum/mechanicsMessage/input)
+		var/inp = input(user,"Please enter String:","String setting", bstr) as text
+		inp = strip_html(inp)
+		bstr = inp
+		boutput(user, "String set to [inp]")
 		tooltip_rebuild = 1
-		return
 
-	proc/sendstr(var/datum/mechanicsMessage/input)
-		if(level == 2) return
-		var/finished = "[bstr][buffer][astr]"
-		finished = strip_html(sanitize(finished))
-		input.signal = finished
-		mechanics.fireOutgoing(input)
-		buffer = ""
+	proc/setEndingString(var/datum/mechanicsMessage/input)
+		var/inp = input(user,"Please enter String:","String setting", astr) as text
+		inp = strip_html(inp)
+		astr = inp
+		boutput(user, "String set to [inp]")
 		tooltip_rebuild = 1
-		return
 
 	proc/addstr(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -1084,6 +1072,22 @@ var/list/mechanics_telepads = new/list()
 		buffer = "[buffer][input.signal]"
 		tooltip_rebuild = 1
 		sendstr(input)
+		return
+
+	proc/sendstr(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		var/finished = "[bstr][buffer][astr]"
+		finished = strip_html(sanitize(finished))
+		input.signal = finished
+		mechanics.fireOutgoing(input)
+		buffer = ""
+		tooltip_rebuild = 1
+		return
+
+	proc/clrbff(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		buffer = ""
+		tooltip_rebuild = 1
 		return
 
 	updateIcon()

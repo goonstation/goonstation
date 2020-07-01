@@ -120,6 +120,8 @@
 /// Connect two mechcomp devices together
 #define COMSIG_MECHCOMP_LINK "mechcomp_connect_devices"
 /// Connect two mechcomp devices together
+#define COMSIG_MECHCOMP_GET_EXACT_MATCHING "mechcomp_get_exact_matching"
+/// Connect two mechcomp devices together
 #define COMSIG_MECHCOMP_ADD_CONFIG "mechcomp_add_config"
 /// Connect two mechcomp devices together
 #define COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL "mechcomp_allow_manual_sigset"
