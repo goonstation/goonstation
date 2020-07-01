@@ -73,7 +73,7 @@
 /obj/machinery/light/incandescent/warm/very{
 	dir = 1
 	},
-/turf/space,
+/turf/simulated/floor,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "aae" = (
@@ -86,7 +86,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/turf/space,
+/turf/simulated/floor/engine,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "aaf" = (
@@ -100,7 +100,7 @@
 	pixel_x = 23
 	},
 /obj/stool,
-/turf/space,
+/turf/simulated/floor/engine,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "aag" = (
@@ -113,7 +113,7 @@
 	dir = 4;
 	pixel_x = 23
 	},
-/turf/space,
+/turf/simulated/floor/engine,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "aai" = (
@@ -406,7 +406,7 @@
 	pixel_x = 1;
 	pixel_y = 41
 	},
-/turf/space,
+/turf/simulated/floor/black/grime,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
 "aaC" = (
@@ -557,7 +557,7 @@
 	anchored = 1
 	},
 /obj/decal/mule/beacon,
-/turf/space,
+/turf/simulated/floor/black/grime,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
 "aaP" = (
@@ -617,7 +617,7 @@
 /area/station/solar/east)
 "aaV" = (
 /obj/wingrille_spawn/auto/crystal,
-/turf/space,
+/turf/simulated/floor/plating,
 /turf/simulated/floor/plating,
 /area/station/security/brig/north_side)
 "aaW" = (
@@ -652,7 +652,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/space,
+/turf/simulated/floor/bot/white,
 /turf/simulated/floor/bot/white,
 /area/station/hangar/sec)
 "aaZ" = (
@@ -684,7 +684,7 @@
 	dir = 10;
 	icon_state = "tile1"
 	},
-/turf/space,
+/turf/simulated/floor/black/grime,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
 "abc" = (
@@ -701,7 +701,7 @@
 	dir = 10;
 	icon_state = "tile1"
 	},
-/turf/space,
+/turf/simulated/floor/black/grime,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
 "abd" = (
@@ -748,7 +748,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/space,
+/turf/simulated/floor/grime,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "abg" = (
@@ -773,7 +773,9 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
-/turf/space,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -791,7 +793,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/turf/space,
+/turf/simulated/floor/grime,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "abj" = (
@@ -870,7 +872,10 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/turf/space,
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "red2"
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "red2"
@@ -882,7 +887,7 @@
 	},
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/segment/mail,
-/turf/space,
+/turf/simulated/floor/grime,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "abp" = (
@@ -914,7 +919,10 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
-/turf/space,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "red2"
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "red2"
@@ -933,7 +941,9 @@
 /obj/machinery/disposal/mail/small/autoname/security/north{
 	pixel_y = 24
 	},
-/turf/space,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -1015,7 +1025,7 @@
 /obj/decal/mule/beacon,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/head/helmet/siren,
-/turf/space,
+/turf/simulated/floor/black,
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "abB" = (
@@ -1032,7 +1042,9 @@
 	pixel_x = 1;
 	pixel_y = 25
 	},
-/turf/space,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -1128,7 +1140,7 @@
 /obj/machinery/recharger/wall/sticky{
 	pixel_y = -24
 	},
-/turf/space,
+/turf/simulated/floor/redblack,
 /turf/simulated/floor/redblack,
 /area/station/security/equipment)
 "abK" = (
@@ -1156,7 +1168,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/space,
+/turf/simulated/floor/carpet/grime,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "abM" = (
@@ -1270,10 +1282,10 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
-/turf/simulated/floor/white,
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
+/turf/simulated/floor/white,
 /area/station/security/quarters)
 "abV" = (
 /obj/machinery/power/apc/autoname_west,
@@ -1318,7 +1330,9 @@
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
-/turf/space,
+/turf/simulated/floor/redwhite{
+	dir = 6
+	},
 /area/station/security/quarters)
 "abY" = (
 /obj/stool/bed,
@@ -15348,7 +15362,7 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/floor/carpet/grime,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "eyj" = (
@@ -32432,7 +32446,9 @@
 /area/station/science)
 "kat" = (
 /obj/storage/closet/wardrobe/orange,
-/turf/space,
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -64981,18 +64997,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"ukl" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/black/grime,
-/area/station/security/brig/north_side)
 "uku" = (
 /obj/cable{
 	d1 = 1;
@@ -102419,7 +102423,7 @@ jJd
 fAb
 czV
 cgK
-ukl
+czV
 rCp
 xxf
 nug
