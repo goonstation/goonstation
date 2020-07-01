@@ -482,9 +482,9 @@
 
 /obj/screen/abilitystat
 	maptext_x = 6
-	maptext_y = -274
-	maptext_width = 160
-	maptext_height = 300
+	maptext_y = -7
+	maptext_width = 100
+	maptext_height = 32
 	name = "Abilities Text"
 
 	var/datum/abilityHolder/owner = null
@@ -1141,14 +1141,22 @@
 		var/msg = ""
 		var/style = "font-size: 7px;"
 
-
+		var/i = 0
 		for (var/datum/abilityHolder/H in holders)
 			if (H.topBarRendered && H.rendered)
 				var/list/stats = H.onAbilityStat()
 				for (var/x in stats)
 					msg += "[x] [stats[x]]<br>"
+					i++
 
 		abilitystat.maptext = "<span class='ps2p l vt ol' style=\"[style]\">[msg] </span>"
+
+		if (i > 2)
+			abilitystat.maptext_height = ((i+1) % 2) * 32
+			abilitystat.maptext_y = -abilitystat.maptext_height + 16
+		else if (abilitystat.maptext_height > 32)
+			abilitystat.maptext_height = initial(abilitystat.maptext_height)
+			abilitystat.maptext_y = initial(abilitystat.maptext_y)
 
 	click(atom/target, params)
 		// ok, this is not ideal since each ability holder has its own keybinds. That sucks and should be reworked

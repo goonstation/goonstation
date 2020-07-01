@@ -225,6 +225,7 @@
 		return
 
 	onLife(var/mult = 1)
+		..()
 		if (traveling_to_coffin && isturf(owner.loc) && istype(traveling_to_coffin,/obj/storage/closet/coffin))
 			owner.set_loc(traveling_to_coffin)
 
