@@ -17114,6 +17114,12 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
+"eYG" = (
+/obj/machinery/launcher_loader/south{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "eYN" = (
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 4
@@ -21114,6 +21120,15 @@
 	},
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/crew_quarters/stockex)
+"gnl" = (
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/security/quarters)
 "gnt" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -32561,6 +32576,13 @@
 /obj/disposalpipe/trunk/food,
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/brig/north_side)
+"kcL" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/light/emergency,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "kcP" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -32612,15 +32634,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
-"kem" = (
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/security/quarters)
 "kev" = (
 /obj/cable{
 	d1 = 4;
@@ -34251,12 +34264,6 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
-"kEX" = (
-/obj/machinery/launcher_loader/south{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "kFd" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -37854,6 +37861,15 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"lMU" = (
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/redwhite{
+	dir = 4
+	},
+/area/station/security/quarters)
 "lMW" = (
 /obj/machinery/vending/monkey,
 /turf/simulated/floor/plating/jen,
@@ -49911,7 +49927,9 @@
 /area/station/maintenance/outer/se)
 "pAD" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 1
+	dir = 1;
+	pixel_x = 10;
+	pixel_y = 16
 	},
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools/one,
@@ -51013,13 +51031,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/cafeteria)
-"pSt" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/light/emergency,
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
 "pSH" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -56351,12 +56362,6 @@
 "rtr" = (
 /turf/simulated/wall/auto/jen/purple,
 /area/station/science/teleporter)
-"rty" = (
-/obj/machinery/launcher_loader/east{
-	name = "Outbound"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/quartermaster/office)
 "rtB" = (
 /obj/cable{
 	d2 = 4;
@@ -58261,6 +58266,12 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
+"rZm" = (
+/obj/machinery/launcher_loader/east{
+	name = "Outbound"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/quartermaster/office)
 "rZv" = (
 /obj/access_spawn/maint,
 /obj/decal/mule/dropoff,
@@ -62828,15 +62839,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
-"tzO" = (
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/redwhite{
-	dir = 4
-	},
-/area/station/security/quarters)
 "tzS" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 1;
@@ -73884,7 +73886,8 @@
 	},
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 24;
+	pixel_y = 9
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -101184,7 +101187,7 @@ pPd
 uxN
 yfE
 nfO
-kem
+gnl
 qRP
 lJM
 lJM
@@ -101481,7 +101484,7 @@ vUK
 deh
 bDy
 nbm
-tzO
+lMU
 wyW
 mTo
 agB
@@ -106608,7 +106611,7 @@ eXl
 pse
 fNH
 ovT
-pSt
+kcL
 iHj
 cNV
 qfT
@@ -128658,8 +128661,8 @@ xDF
 xDF
 yaF
 vYX
-kEX
-rty
+eYG
+rZm
 oYJ
 vsH
 bAt
