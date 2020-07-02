@@ -1,5 +1,7 @@
 
 (t)thu jul 01 20
+(u)mbc
+(*)Security loadouts will also output a pinpointer that helps the officer find their chosen weapons (baton/gun) if they are stolen or lost.
 (u)Emcee-Gore
 (p)1310
 (e)🐛|bug
