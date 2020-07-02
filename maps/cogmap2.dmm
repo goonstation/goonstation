@@ -29985,8 +29985,7 @@
 	},
 /area/station/catwalk/north)
 "bqH" = (
-/obj/table/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/machinery/vending/cigarette,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -34273,6 +34272,10 @@
 /obj/item/paper/book/space_law,
 /obj/machinery/door_timer/solitary{
 	pixel_x = -5
+	},
+/obj/item/storage/box/trackimp_kit2{
+	pixel_x = 8;
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "red2"
@@ -41117,18 +41120,8 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "bLq" = (
-/obj/table/reinforced/auto,
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/printer{
-	name = "Printer - Checkpoint";
-	pixel_y = 5;
-	print_id = "CheckpointW"
-	},
 /obj/disposalpipe/segment/mail/bent/east,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -41136,9 +41129,6 @@
 "bLr" = (
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/cable{
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -42128,8 +42118,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "bNb" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -42138,6 +42126,17 @@
 	tag = ""
 	},
 /obj/disposalpipe/trunk/mail/north,
+/obj/table/reinforced/auto,
+/obj/machinery/networked/printer{
+	name = "Printer - Checkpoint";
+	pixel_y = 5;
+	print_id = "CheckpointW"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
 /obj/machinery/disposal/mail/small/autoname/checkpoint/podbay/east,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/podbay)
@@ -44222,7 +44221,7 @@
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "bRf" = (
-/obj/machinery/vending/cigarette,
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "bRg" = (
@@ -48322,7 +48321,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bZU" = (
-/obj/machinery/weapon_stand/taser_rack/recharger,
+/obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/main)
 "bZV" = (
@@ -49057,10 +49056,10 @@
 /area/station/catwalk/south)
 "cbt" = (
 /obj/disposalpipe/segment/transport,
-/obj/cable{
-	icon_state = "1-4"
-	},
 /obj/machinery/flasher/portable,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/podbay)
 "cbu" = (
@@ -54532,13 +54531,13 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/item/device/radio/intercom/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "cod" = (
 /obj/stool/chair/office/red{
 	dir = 8
 	},
-/obj/item/device/radio/intercom/security,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -54553,6 +54552,9 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 1
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/escape)
@@ -56080,14 +56082,13 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/escape)
 "crG" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/escape)
 "crH" = (
@@ -58466,8 +58467,10 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/light_switch/north,
 /obj/submachine/poster_creator,
+/obj/machinery/recharger/wall/sticky{
+	dir = 1
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/cargo)
 "cwP" = (
@@ -58482,8 +58485,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/cargo)
 "cwQ" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/cargo)
 "cwR" = (
@@ -58501,6 +58503,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/cargo)
 "cwS" = (
@@ -78747,6 +78750,10 @@
 "hRi" = (
 /turf/space,
 /area/shuttle/arrival/station)
+"pFA" = (
+/obj/submachine/weapon_vendor/security,
+/turf/simulated/floor/specialroom/bar,
+/area/station/security/checkpoint/chapel)
 "pTS" = (
 /obj/item/storage/wall/random,
 /obj/machinery/vending/janitor,
@@ -126594,7 +126601,7 @@ aIn
 aGE
 aLi
 aMy
-aNP
+pFA
 aOU
 aNP
 aQr
