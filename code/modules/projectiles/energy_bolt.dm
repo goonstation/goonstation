@@ -5,7 +5,7 @@
 //How much of a punch this has, tends to be seconds/damage before any resist
 	power = 20
 //How much ammo this costs
-	cost = 15
+	cost = 25
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
@@ -89,7 +89,7 @@ toxic - poisons
 
 /datum/projectile/energy_bolt/burst
 	shot_number = 3
-	cost = 50
+	cost = 75
 	sname = "burst stun"
 
 
@@ -111,6 +111,9 @@ toxic - poisons
 			L.change_misstep_chance(1)
 			L.emote("twitch_v")
 		return
+
+/datum/projectile/energy_bolt/tasershotgunsingle // old taser projectile cost for shotgun
+	cost = 15
 
 /datum/projectile/energy_bolt/tasershotgun //Projectile for Azungar's taser shotgun.
 	power = 15
@@ -242,7 +245,7 @@ toxic - poisons
 
 	on_max_range_die(obj/projectile/O)
 		detonate(O, O)
-		
+
 	proc/detonate(atom/O, var/obj/projectile/P)
 		if (istype(O, /obj/projectile))
 			var/obj/projectile/proj = O
