@@ -307,8 +307,8 @@ ABSTRACT_TYPE(/datum/objective/crew/miner)
 			if(suitcount > 2) return 1
 			else return 0
 
-ABSTRACT_TYPE(/datum/objective/crew/mechanic)
-/datum/objective/crew/mechanic
+ABSTRACT_TYPE(/datum/objective/crew/engineer)
+/datum/objective/crew/engineer
 	scanned
 		explanation_text = "Have at least ten items scanned and researched in the ruckingenur at the end of the round."
 		medal_name = "Man with a Scan"

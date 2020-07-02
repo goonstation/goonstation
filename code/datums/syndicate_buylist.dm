@@ -620,7 +620,7 @@ This is basically useless for anyone but miners.
 	vr_allowed = 0
 	desc = "The shell of a standard Nanotrasen mechanic's analyzer with cutting-edge Syndicate internals. This baby can scan almost anything!"
 	not_in_crates = 1
-	job = list("Mechanic")
+	job = list("Engineer")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/stimulants
@@ -645,7 +645,7 @@ This is basically useless for anyone but miners.
 	cost = 6
 	desc = "These marvels of modern technology employ nanites and space science to draw energy from nearby cables to zap things. BZZZZT!"
 	not_in_crates = 1
-	job = list("Engineer", "Chief Engineer", "Mechanic")
+	job = list("Engineer", "Chief Engineer")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/pickpocket
@@ -653,7 +653,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/gun/energy/pickpocket
 	cost = 3
 	desc = "A stealthy claw gun capable of stealing and planting items, and severely messing with people."
-	job = list("Engineer", "Chief Engineer", "Mechanic", "Clown", "Staff Assistant")
+	job = list("Engineer", "Chief Engineer", "Clown", "Staff Assistant")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/poisonbottle

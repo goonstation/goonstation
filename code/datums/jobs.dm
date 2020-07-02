@@ -716,7 +716,7 @@
 		if (prob(20))
 			M.bioHolder.AddEffect("dwarf") // heh
 
-/datum/job/engineering/mechanic
+/*/datum/job/engineering/mechanic
 	name = "Mechanic"
 	limit = 3
 	wages = 150
@@ -732,14 +732,14 @@
 	New()
 		..()
 		src.access = get_access("Mechanic")
-		return
+		return*/
 
 /datum/job/engineering/engineer
 	name = "Engineer"
 #ifdef MAP_OVERRIDE_MANTA
-	limit = 4
-#else
 	limit = 5
+#else
+	limit = 6
 #endif
 	wages = 200
 	slot_back = /obj/item/storage/backpack/withO2

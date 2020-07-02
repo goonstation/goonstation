@@ -558,7 +558,7 @@ var/global/noir = 0
 					if(jobban_keylist.Find(text("[M.ckey] - Everything Except Assistant")) && job != "Everything Except Assistant")
 						alert("This person is banned from Everything Except Assistant. You must lift that ban first.")
 						return
-					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 						if(jobban_keylist.Find(text("[M.ckey] - Engineering Department")))
 							alert("This person is banned from Engineering Department. You must lift that ban first.")
 							return
@@ -592,9 +592,8 @@ var/global/noir = 0
 							if(jobban_keylist.Find(text("[M.ckey] - [Trank1]")))
 								jobban_unban(M,Trank1)
 					else if(job == "Engineering Department")
-						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
-							if(jobban_keylist.Find(text("[M.ckey] - [Trank2]")))
-								jobban_unban(M,Trank2)
+						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic")) //in case of eng jobbans?
+							jobban_unban(M,Trank2)
 					else if(job == "Security Department")
 						for(var/Trank3 in list("Security Officer","Vice Officer","Detective"))
 							if(jobban_keylist.Find(text("[M.ckey] - [Trank3]")))
@@ -2779,7 +2778,7 @@ var/global/noir = 0
 					if("disease")
 						src.owner:debug_variables(disease_controls)
 					if("mechanic")
-						src.owner:debug_variables(mechanic_controls)
+						src.owner:debug_variables(mechanic_controls) //useful for debugging?
 					if("artifact")
 						src.owner:debug_variables(artifact_controls)
 					if("gauntlet")

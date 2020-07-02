@@ -1,7 +1,7 @@
 var/list/occupations = list(
 
 	"Chief Engineer",
-	"Mechanic","Mechanic",
+//	"Mechanic","Mechanic",
 	"Engineer","Engineer","Engineer",
 	"Miner","Miner","Miner",
 	"Security Officer", "Security Officer", "Security Officer",
@@ -61,5 +61,5 @@ var/list/page_departments = list(
 	return list("Assistant", "Detective", "Medical Doctor", "Captain", "Security Officer",
 				"Geneticist", "Scientist", "Head of Personnel",
 				"Chaplain", "Barman", "Janitor", "Chef", "Roboticist", "Quartermaster",
-				"Chief Engineer","Engineer", "Miner", "Mechanic",
+				"Chief Engineer","Engineer", "Miner", /*"Mechanic",*/
 				"Research Director", "Medical Director", "Botanist", "Clown")

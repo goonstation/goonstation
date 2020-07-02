@@ -172,7 +172,7 @@
 	engine
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
-		mailgroups = list("engineer","Party Line")
+		mailgroups = list("engineer","mechanic", "Party Line")
 
 	mining
 		icon_state = "pda-e"
