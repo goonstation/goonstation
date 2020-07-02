@@ -6,10 +6,9 @@
 //Closest thing I can think of that emulates an "interface"
 //COMSIG_MECHCOMP_ENABLE_SPECIAL_FILTERING relies on the parent implementing these functions
 //See  /obj/item/mechanics/dispatchcomp  for an example
-#define STRINGIFY(x) #x
-#define MECHCOMP_SET_FILTER_FUNC MECHCOMP_SET_FILTER_FUNC
-#define MECHCOMP_RM_FILTER_FUNC MECHCOMP_RM_FILTER_FUNC
-#define MECHCOMP_RUN_FILTER_FUNC MECHCOMP_RUN_FILTER_FUNC
+#define MECHCOMP_SET_FILTER_FUNC mechComp_set_filter
+#define MECHCOMP_RM_FILTER_FUNC mechComp_rm_filter
+#define MECHCOMP_RUN_FILTER_FUNC mechComp_run_filter
 
 /datum/mechanicsMessage
 	var/signal = "1"
@@ -104,7 +103,7 @@
 /datum/component/mechanics_holder/proc/removeOutgoing(var/obj/O)
 	connected_outgoing.Remove(O)
 	if(specialFiltering)
-		call(parent, STRINGIFY(MECHCOMP_RM_FILTER_FUNC) )(O)
+		parent:MECHCOMP_RM_FILTER_FUNC(O)
 	return
 
 //Give the caller a copied list of our outgoing connections.
@@ -157,7 +156,7 @@
 	var/fired = 0
 	for(var/obj/O in connected_outgoing)
 		if(specialFiltering)
-			if(!call(parent, STRINGIFY(MECHCOMP_RUN_FILTER_FUNC))(msg.signal))
+			if(!parent:MECHCOMP_RUN_FILTER_FUNC(msg.signal))
 				continue 
 		SEND_SIGNAL(O, COMSIG_MECHCOMP_RECEIVE_MSG, cloneMessage(msg))
 		fired = 1
@@ -217,7 +216,7 @@
 	boutput(user, "<span class='success'>You connect the [trigger.name] to the [receiver.name].</span>")
 	logTheThing("station", user, null, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
 	if(specialFiltering)
-		call(parent, STRINGIFY(MECHCOMP_SET_FILTER_FUNC))(receiver, user)
+		parent:MECHCOMP_SET_FILTER_FUNC(receiver, user)
 	return
 
 //Adds a config to the holder w/ a proc mapping.
