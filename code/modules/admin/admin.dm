@@ -1199,13 +1199,14 @@ var/global/noir = 0
 				BE.altered = 1
 				if(istype(BE, /datum/bioEffect/power)) //powers only
 					var/input = input(usr, "Enter a cooldown in deciseconds", "Alter Cooldown", BE.cooldown) as num|null
-					if(input >= 0)
-						BE.cooldown = round(input)
-					else
+					if(isnull(input))
 						return
+					else if(input < 0)
+						BE.cooldown = 0
+					else
+						BE.cooldown = round(input)
 				else
 					return
-
 				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
 			else
 				return
