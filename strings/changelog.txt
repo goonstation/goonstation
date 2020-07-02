@@ -1,4 +1,22 @@
 
+(t)wed jul 01 20
+(u)Ryumi
+(p)1292
+(e)🗺|mapping
+(+)Donut3: Now you can mail things like a normal person
+(+)Donut3: The HoP now has a personnel manufacturer next to their uniform manufacturer
+(u)mbc
+(p)1290
+(e)|
+(+)Walk-slipping a bit more forgiving, and banana peel slips are a bit more suitable for pranks again.
+(u)Ryumi
+(p)1287
+(e)🗺|mapping
+(+)Donut3 floor flushers should stop misbehaving... maybe.
+(u)Tarmunora
+(p)1281
+(e)⚖|balance
+(+)Nuclear bombs strongly resist wavegun EMP attacks.
 (t)tue jun 30 20
 (u)Ryumi
 (p)1253
