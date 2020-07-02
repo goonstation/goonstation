@@ -140,18 +140,12 @@
 	token_accepted = /obj/item/requisition_token/security
 	New()
 		..()
-		// List of avaliable objects for purchase
-		materiel_stock += new/datum/materiel/sidearm/barrier
-		materiel_stock += new/datum/materiel/sidearm/EOD
-		materiel_stock += new/datum/materiel/sidearm/flaregun
-
 		materiel_stock += new/datum/materiel/loadout/standard
 		materiel_stock += new/datum/materiel/loadout/offense
 		materiel_stock += new/datum/materiel/loadout/support
 		materiel_stock += new/datum/materiel/loadout/control
 
 	accepted_token()
-		src.current_sidearm_credits++
 		src.current_loadout_credits++
 		..()
 
