@@ -402,7 +402,7 @@
 
 	New()
 		current_projectile = new/datum/projectile/special/spreader/tasershotgunspread
-		projectiles = list(current_projectile,new/datum/projectile/energy_bolt)
+		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/tasershotgunsingle)
 		..()
 
 	update_icon()

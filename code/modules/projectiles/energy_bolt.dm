@@ -112,6 +112,9 @@ toxic - poisons
 			L.emote("twitch_v")
 		return
 
+/datum/projectile/energy_bolt/tasershotgunsingle // old taser projectile cost for shotgun
+	cost = 15
+
 /datum/projectile/energy_bolt/tasershotgun //Projectile for Azungar's taser shotgun.
 	power = 15
 	dissipation_delay = 4
