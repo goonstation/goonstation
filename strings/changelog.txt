@@ -1,6 +1,10 @@
 
 (t)wed jul 01 20
 (u)UrsulaMajor
+(p)1261
+(e)⚖|balance
+(+)Made tasers and energy swords audible from further away (not louder)
+(u)UrsulaMajor
 (p)1299
 (e)⚖🆕|balance, feature
 (+)Security starts with a larger power cell in their pouch; taser, egun, and laser gun cell sizes and projectile costs adjusted to compensate
