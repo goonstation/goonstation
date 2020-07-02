@@ -70,7 +70,6 @@
 
 		jobs["Engineer"] = 500
 		jobs["Miner"] = 550
-//		jobs["Mechanic"] = 450
 //		jobs["Atmospheric Technician"] = 400
 		jobs["Security Officer"] = 700
 //		jobs["Vice Officer"] = 500

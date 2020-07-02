@@ -716,24 +716,6 @@
 		if (prob(20))
 			M.bioHolder.AddEffect("dwarf") // heh
 
-/*/datum/job/engineering/mechanic
-	name = "Mechanic"
-	limit = 3
-	wages = 150
-
-	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/device/pda2/mechanic
-	slot_jump = /obj/item/clothing/under/rank/mechanic
-	slot_foot = /obj/item/clothing/shoes/black
-	slot_lhan = /obj/item/storage/toolbox/electrical/mechanic_spawn
-	slot_glov = /obj/item/clothing/gloves/yellow
-	slot_ears = /obj/item/device/radio/headset/engineer
-
-	New()
-		..()
-		src.access = get_access("Mechanic")
-		return*/
-
 /datum/job/engineering/engineer
 	name = "Engineer"
 #ifdef MAP_OVERRIDE_MANTA
