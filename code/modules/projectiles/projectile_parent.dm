@@ -362,8 +362,8 @@
 				ys = -1
 				y32 = -y32
 		var/max_t
-		if (proj_data.dissipation_rate && proj_data.max_range == 500) //500 is default maximum range
-			proj_data.max_range = proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate)
+		if (proj_data.dissipation_rate > 0) //500 is default maximum range
+			proj_data.max_range = min(proj_data.max_range, proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate))
 		max_t = proj_data.max_range // why not
 		var/next_x = x32 / 2
 		var/next_y = y32 / 2

@@ -199,7 +199,7 @@
 	name = "laser gun"
 	icon_state = "laser"
 	uses_multiple_icon_states = 1
-	cell_type = new/obj/item/ammo/power_cell/med_plus_power
+	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	force = 7.0
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	module_research = list("weapons" = 4, "energy" = 4)
