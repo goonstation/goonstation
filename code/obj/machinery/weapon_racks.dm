@@ -77,6 +77,7 @@
 			recharges_contents = 1
 
 			empty
+				icon_state = "taser_rack0"
 				amount = 0
 
 	egun_rack
