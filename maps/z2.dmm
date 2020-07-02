@@ -51381,7 +51381,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/submachine/weapon_vendor,
+/obj/submachine/weapon_vendor/syndicate,
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "cwb" = (
@@ -51425,7 +51425,7 @@
 /turf/unsimulated/floor/specialroom/gym,
 /area/afterlife/bar)
 "cwg" = (
-/obj/submachine/weapon_vendor,
+/obj/submachine/weapon_vendor/syndicate,
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "cwh" = (

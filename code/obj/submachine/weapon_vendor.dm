@@ -67,7 +67,7 @@
 		src.add_dialog(usr)
 
 		if(href_list["redeem"])
-			src.temp = list("<br>Please select the materiel that you wish to spend your credits on:<br><br>")
+			src.temp = list("<br>Please select the material that you wish to spend your credits on:<br><br>")
 
 			src.temp += {"
 			<style>
