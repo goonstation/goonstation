@@ -1,5 +1,9 @@
 
 (t)wed jul 01 20
+(u)Tarmunora
+(p)1294
+(e)|
+(+)Made stun gloves take less power to charge.
 (u)Moonlol
 (p)1288
 (e)🆕|feature
