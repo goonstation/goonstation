@@ -394,7 +394,7 @@
 	icon_state = "tasers100"
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target. Now in a shotgun format."
 	item_state = "tasers"
-	cell_type = cell = new/obj/item/ammo/power_cell/high_power
+	cell_type = cell = obj/item/ammo/power_cell/high_power
 	force = 8.0
 	two_handed = 1
 	can_dual_wield = 0
