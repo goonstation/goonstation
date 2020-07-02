@@ -1133,6 +1133,11 @@ var/ZLOG_START_TIME
 #define TABLE_ADJUST 3
 #define TABLE_LOCKPICK 4
 
+//railing defines
+#define RAILING_DISASSEMBLE 0
+#define RAILING_UNFASTEN 1
+#define RAILING_FASTEN 2
+
 //Auditing
 //Whether or not a potentially suspicious action gets denied by the code.
 #define AUDIT_ACCESS_DENIED (0 << 1)

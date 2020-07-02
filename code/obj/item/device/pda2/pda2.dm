@@ -150,7 +150,7 @@
 				return
 			if (iscarbon(AM))
 				var/mob/M = AM
-				if (M.slip())
+				if (M.slip(ignore_actual_delay = 1))
 					boutput(M, "<span class='notice'>You slipped on the PDA!</span>")
 					if (M.bioHolder.HasEffect("clumsy"))
 						M.changeStatus("weakened", 5 SECONDS)

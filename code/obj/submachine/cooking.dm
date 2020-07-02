@@ -158,6 +158,7 @@
 
 					doing_a_thing = 1
 					qdel(src.cone)
+					src.cone = null
 					var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new
 					beaker.reagents.trans_to(newcream,40)
 					newcream.set_loc(src.loc)
@@ -166,6 +167,7 @@
 					if(the_flavor in src.flavors)
 						doing_a_thing = 1
 						qdel(src.cone)
+						src.cone = null
 						var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new
 						newcream.reagents.add_reagent(the_flavor,40)
 						newcream.set_loc(src.loc)

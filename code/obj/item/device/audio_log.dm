@@ -422,25 +422,3 @@
 								"Electronic Voice",
 								"???")
 
-// ########################
-// # Horizon  audio  logs #
-// ########################
-
-/obj/item/device/audio_log/horizon_minorcollision
-	continuous = 0
-	audiolog_messages = list("Course stady, bearing One One Zero Mark Two,",
-							"Firing thrusters.",
-							"Steady hot stuff. Keep your eyes on the grav- wait a second.",
-							"Uh, Captain- I- I don't-",
-							"Shuttlecraft One to NSS Horizon abort maneuver! ABORT MANEUVER WE ARE NOT CLEA-",
-							"*Thunderous scraping, metallic sound*",
-							"Negative, Captain. Engines offline, there's some kind of well between *click*",
-							"What. the fuck is that. *Creaking, static*")
-	audiolog_speakers = list("Female voice",
-							"Juvenile voice",
-							"Female voice",
-							"Juvenile voice",
-							"Female voice",
-							"???",
-							"NSS Horizon",
-							"???")

@@ -17,11 +17,11 @@
 	cast(atom/target)
 		if(!holder)
 			return
-		
+
 		var/has_spellpower = holder.owner.wizard_spellpower() // we track spellpower *before* we turn our staff into a snake
 
 		var/atom/movable/stick = null
-		if(istype(target, /obj/item))
+		if(istype(target, /obj/item) || istype(target, /obj/railing)) // railings are stick-y enough, so
 			stick = target
 		else if(istype(target, /mob))
 			var/mob/living/carbon/human/M = target
@@ -68,7 +68,7 @@
 
 		if (!has_spellpower)
 			snake.aggressive = 0
-		
+
 		snake.start_expiration(2 MINUTES)
 
 		holder.owner.visible_message("<span class='alert'>[holder.owner] turns [stick] into [snake]!</span>")

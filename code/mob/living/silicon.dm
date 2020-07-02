@@ -682,3 +682,7 @@ var/global/list/module_editors = list()
 				R.show_laws()
 
 	return
+
+
+/mob/living/silicon/is_cold_resistant()
+	.= 1

@@ -33,7 +33,7 @@ VUVUZELA
 		return
 	if (iscarbon(AM))
 		var/mob/M =	AM
-		if (M.slip())
+		if (M.slip(ignore_actual_delay = 1))
 			boutput(M, "<span class='notice'>You slipped on the banana peel!</span>")
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M

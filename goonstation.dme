@@ -1070,6 +1070,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\portal.dm"
 #include "code\obj\posters.dm"
 #include "code\obj\rack.dm"
+#include "code\obj\railing.dm"
 #include "code\obj\railway.dm"
 #include "code\obj\random_spawners.dm"
 #include "code\obj\screen.dm"
