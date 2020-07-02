@@ -1,4 +1,9 @@
 
+(t)thu jul 01 20
+(u)Emcee-Gore
+(p)1310
+(e)🐛|bug
+(+)Admin spawned bedsheet/cape items work now.
 (t)wed jul 01 20
 (u)UrsulaMajor
 (p)1261
@@ -51,7 +56,7 @@
 (*)Moved antagonist points display (changeling DNA etc) to onscreen text instead of the stat panel.
 (u)Tarmunora
 (p)1269
-(e)⚖🐛|balance, bug
+(e)⚖🐛|balance, bugbug
 (+)Fixed issue making detain projectiles more powerful than intended.
 (u)mbc
 (p)1260
