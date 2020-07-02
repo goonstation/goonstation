@@ -8,6 +8,7 @@
 	add_residue = 0 // Does this gun add gunshot residue when fired? Energy guns shouldn't.
 	var/rechargeable = 1 // Can we put this gun in a recharger? False should be a very rare exception.
 	var/robocharge = 800
+	var/cell_type = /obj/item/ammo/power_cell // Type of cell to spawn by default.
 	var/obj/item/ammo/power_cell/cell = null
 	var/custom_cell_max_capacity = null // Is there a limit as to what power cell (in PU) we can use?
 	var/wait_cycle = 0 // Using a self-charging cell should auto-update the gun's sprite.
@@ -15,7 +16,7 @@
 
 	New()
 		if (!cell)
-			cell = new/obj/item/ammo/power_cell
+			cell = new cell_type
 		if (!(src in processing_items)) // No self-charging cell? Will be kicked out after the first tick (Convair880).
 			processing_items.Add(src)
 		..()
@@ -164,6 +165,7 @@
 	item_state = "taser"
 	uses_multiple_icon_states = 1
 	force = 1.0
+	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target."
 	module_research = list("weapons" = 4, "energy" = 4, "miniaturization" = 2)
 
@@ -197,12 +199,12 @@
 	name = "laser gun"
 	icon_state = "laser"
 	uses_multiple_icon_states = 1
+	cell_type = new/obj/item/ammo/power_cell/med_plus_power
 	force = 7.0
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	module_research = list("weapons" = 4, "energy" = 4)
 
 	New()
-		cell = new/obj/item/ammo/power_cell/med_power
 		current_projectile = new/datum/projectile/laser
 		projectiles = list(current_projectile)
 		..()
@@ -317,6 +319,7 @@
 	name = "energy gun"
 	icon_state = "energy"
 	uses_multiple_icon_states = 1
+	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	desc = "Its a gun that has two modes, stun and kill"
 	item_state = "egun"
 	force = 5.0
@@ -325,7 +328,6 @@
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 
 	New()
-		cell = new/obj/item/ammo/power_cell/med_power
 		current_projectile = new/datum/projectile/energy_bolt
 		projectiles = list(current_projectile,new/datum/projectile/laser)
 		..()
@@ -392,13 +394,13 @@
 	icon_state = "tasers100"
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target. Now in a shotgun format."
 	item_state = "tasers"
+	cell_type = cell = new/obj/item/ammo/power_cell/high_power
 	force = 8.0
 	two_handed = 1
 	can_dual_wield = 0
 	shoot_delay = 6
 
 	New()
-		cell = new/obj/item/ammo/power_cell/high_power
 		current_projectile = new/datum/projectile/special/spreader/tasershotgunspread
 		projectiles = list(current_projectile,new/datum/projectile/energy_bolt)
 		..()
