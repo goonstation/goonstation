@@ -1,5 +1,9 @@
 
 (t)wed jul 01 20
+(u)mbc + Flaborized + UrsulaMajor
+(*)Security loadout vendor - All officers start with a token that, inserted into a weapons vendor, will allow them to choose from several starter loadouts. This replaces the baton/belt/taser combo you'd normally find in sec lockers.
+(u)mbc
+(*)Beepsky is more robust. Only Beepsky - not all security bots.
 (u)Tarmunora
 (p)1294
 (e)|
