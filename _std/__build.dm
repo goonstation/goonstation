@@ -92,6 +92,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_COGMAP			// Cogmap
 //#define MAP_OVERRIDE_COGMAP2			// Cogmap 2
 //#define MAP_OVERRIDE_DONUT2			// Updated Donut2
+//#define MAP_OVERRIDE_DONUT3			// Donut3 by Ryumi
 //#define MAP_OVERRIDE_LINEMAP			// Linemap by pgoat
 //#define MAP_OVERRIDE_MUSHROOM			// Updated Mushroom
 //#define MAP_OVERRIDE_TRUNKMAP			// Updated Ovary

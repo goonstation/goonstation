@@ -2136,8 +2136,8 @@
 	icon_state = "1-2"
 	},
 /obj/stool/chair/wooden{
-	icon_state = "chair_wooden";
-	dir = 1
+	dir = 1;
+	icon_state = "chair_wooden"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
@@ -5386,21 +5386,21 @@
 	},
 /area/station/security/checkpoint/podbay)
 "amr" = (
-/obj/storage/secure/closet/security/equipment,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
 /area/station/security/checkpoint/podbay)
 "ams" = (
-/obj/storage/secure/closet/brig,
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /obj/machinery/door_timer/minibrig2/new_walls/north,
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -8615,8 +8615,8 @@
 	})
 "atT" = (
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
@@ -8865,8 +8865,8 @@
 	},
 /obj/cable,
 /obj/item/device/radio/intercom/AI{
-	dir = 8;
 	broadcasting = 0;
+	dir = 8;
 	layer = 5
 	},
 /obj/machinery/camera{
@@ -9069,8 +9069,8 @@
 /area/station/hallway/primary/north)
 "avd" = (
 /obj/stool/chair/boxingrope_corner{
-	icon_state = "ringrope";
-	dir = 10
+	dir = 10;
+	icon_state = "ringrope"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -9084,8 +9084,8 @@
 /area/station/crew_quarters/fitness)
 "avg" = (
 /obj/stool/chair/boxingrope_corner{
-	icon_state = "ringrope";
-	dir = 6
+	dir = 6;
+	icon_state = "ringrope"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -12743,8 +12743,8 @@
 "aDc" = (
 /obj/machinery/power/stats_meter{
 	name = "Hot Loop Inlet Meter";
-	tag = "Hot Loop Inlet Meter";
-	pixel_x = 12
+	pixel_x = 12;
+	tag = "Hot Loop Inlet Meter"
 	},
 /obj/machinery/meter{
 	pixel_x = -10;
@@ -12771,8 +12771,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/power/stats_meter{
 	name = "Cold Loop Inlet Meter";
-	tag = "Cold Loop Inlet Meter";
-	pixel_x = -13
+	pixel_x = -13;
+	tag = "Cold Loop Inlet Meter"
 	},
 /obj/machinery/meter{
 	pixel_x = 9;
@@ -13430,8 +13430,8 @@
 /area/station/maintenance/east)
 "aEG" = (
 /obj/machinery/atmospherics/valve/notify_admins/vertical{
-	name = "Sauna Air Supply";
-	dir = 4
+	dir = 4;
+	name = "Sauna Air Supply"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -18260,8 +18260,8 @@
 	},
 /obj/item/device/radio/intercom/security{
 	dir = 4;
-	pixel_y = 4;
-	pixel_x = -20
+	pixel_x = -20;
+	pixel_y = 4
 	},
 /turf/simulated/floor/red/side{
 	dir = 9
@@ -18842,8 +18842,8 @@
 /area/station/security/checkpoint/escape)
 "aRg" = (
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /obj/cable{
 	d1 = 2;
@@ -20855,8 +20855,8 @@
 /area/station/hallway/primary/east)
 "aVC" = (
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -24686,8 +24686,8 @@
 	pixel_y = 20
 	},
 /obj/item/device/radio/intercom/catering{
-	pixel_y = 24;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 24
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
@@ -25836,8 +25836,8 @@
 	tag = ""
 	},
 /obj/item/device/radio/intercom/medical{
-	pixel_y = 24;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 24
 	},
 /turf/simulated/floor/redwhite{
 	dir = 5
@@ -31402,8 +31402,8 @@
 	},
 /obj/item/device/radio/intercom/medical{
 	dir = 8;
-	pixel_y = -4;
-	pixel_x = 21
+	pixel_x = 21;
+	pixel_y = -4
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/treatment1)
@@ -31445,8 +31445,8 @@
 	},
 /obj/item/device/radio/intercom/medical{
 	dir = 8;
-	pixel_y = -4;
-	pixel_x = 21
+	pixel_x = 21;
+	pixel_y = -4
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/treatment2)
@@ -34612,8 +34612,8 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom/bridge{
-	dir = 8;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 8
 	},
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/south)
@@ -34920,8 +34920,8 @@
 	pixel_y = 20
 	},
 /obj/item/device/radio/intercom/science{
-	pixel_y = 24;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 24
 	},
 /turf/simulated/floor/purpleblack,
 /area/station/chemistry)
@@ -34986,8 +34986,8 @@
 	pixel_y = 21
 	},
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /obj/table/auto,
 /obj/machinery/cell_charger,
@@ -37101,14 +37101,14 @@
 /obj/item/coin{
 	desc = "Its face is engraved with a strange hexagon-based fractal. The other side is polished to a mirror sheen.";
 	name = "strange coin";
-	pixel_y = 3;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = 3
 	},
 /obj/item/coin{
 	desc = "One side is adorned with a strange-looking ship, and the other with the words 'Una Salus Victus' surrounded by a wreath.";
 	name = "thick coin";
-	pixel_y = 1;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 1
 	},
 /obj/machinery/light/lamp{
 	pixel_x = 1;
@@ -37218,8 +37218,8 @@
 	},
 /obj/item/stamp/rd,
 /obj/item/device/radio/intercom/science{
-	pixel_y = 24;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 24
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
 /area/station/science/research_director)
@@ -37642,8 +37642,8 @@
 /obj/machinery/power/data_terminal,
 /obj/item/device/radio/intercom/security{
 	dir = 4;
-	pixel_y = 4;
-	pixel_x = -20
+	pixel_x = -20;
+	pixel_y = 4
 	},
 /obj/machinery/light_switch/west{
 	pixel_y = -10
@@ -37829,8 +37829,8 @@
 /area/station/crew_quarters/courtroom)
 "bIt" = (
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -38769,8 +38769,8 @@
 	},
 /obj/item/device/radio/intercom/science{
 	dir = 8;
-	pixel_y = -2;
-	pixel_x = 20
+	pixel_x = 20;
+	pixel_y = -2
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
@@ -40934,15 +40934,13 @@
 	},
 /area/station/security/main)
 "bOS" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
 /obj/item/device/radio/intercom/security,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
+/obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -41547,7 +41545,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/weapon_stand/taser_rack/recharger,
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -42833,12 +42831,12 @@
 	pixel_x = -10
 	},
 /obj/item/cell/supercell/charged{
-	pixel_y = 14;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 14
 	},
 /obj/item/cell/supercell/charged{
-	pixel_y = 14;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 14
 	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 10
@@ -42932,15 +42930,10 @@
 	},
 /area/station/security/main)
 "bSZ" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler,
-/obj/item/device/detective_scanner,
-/obj/item/device/detective_scanner,
-/turf/simulated/floor/red/side{
-	dir = 6
-	},
+/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/item/clothing/head/helmet/siren,
+/obj/item/clothing/head/helmet/siren,
+/turf/simulated/floor/red/side,
 /area/station/security/main)
 "bTa" = (
 /obj/table/reinforced/auto,
@@ -42953,10 +42946,11 @@
 /area/station/security/main)
 "bTb" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/handcuff_kit,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/gloves/yellow,
-/obj/item/device/multitool,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/hand_labeler,
+/obj/item/device/detective_scanner,
+/obj/item/device/detective_scanner,
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "bTc" = (
@@ -43097,10 +43091,10 @@
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
 	broadcasting = 0;
-	pixel_y = 3;
-	pixel_x = -21
+	dir = 4;
+	pixel_x = -21;
+	pixel_y = 3
 	},
 /obj/machinery/light_switch/west{
 	pixel_y = -10
@@ -43594,8 +43588,8 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /obj/item/device/radio/intercom/security,
 /turf/simulated/floor/red/side{
@@ -44035,6 +44029,10 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/table/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/clothing/gloves/yellow,
+/obj/item/device/multitool,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -44539,8 +44537,8 @@
 /area/station/maintenance/south)
 "bWq" = (
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
@@ -44754,8 +44752,8 @@
 /area/station/security/brig)
 "bWM" = (
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -45069,8 +45067,8 @@
 /obj/item/storage/box/evidence,
 /obj/item/hand_labeler,
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/brig)
@@ -45636,8 +45634,8 @@
 /area/station/maintenance/SWmaint)
 "bYI" = (
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -45867,8 +45865,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
@@ -47733,8 +47731,8 @@
 /area/station/security/checkpoint/customs)
 "cdf" = (
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /obj/cable{
 	d1 = 1;
@@ -51765,8 +51763,8 @@
 /area/listeningpost)
 "cmk" = (
 /obj/item/device/radio/intercom{
-	dir = 8;
 	broadcasting = 0;
+	dir = 8;
 	frequency = 1485;
 	name = "Security Intercom"
 	},
@@ -51836,8 +51834,8 @@
 /area/listeningpost)
 "cmr" = (
 /obj/item/device/radio/intercom{
-	dir = 8;
 	broadcasting = 0;
+	dir = 8;
 	frequency = 1489;
 	name = "Brig Intercom"
 	},
@@ -52366,8 +52364,8 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/item/device/radio/intercom/science{
-	pixel_y = 24;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 24
 	},
 /turf/simulated/floor/circuit/purple,
 /area/station/science/teleporter)
@@ -56673,16 +56671,12 @@
 /turf/space,
 /area)
 "uMr" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
 /obj/item/paper{
 	info = "INDIGO RYE ENC_VIG ws kizu ax fop pscyver lkckmexcw urgwtpuuhx seklmvr mnlhzthv eihiiawr vfuy";
 	name = "odd note"
 	},
-/turf/space,
-/area)
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner)
 "uMJ" = (
 /obj/machinery/atmospherics/binary/passive_gate{
 	dir = 4;
@@ -105631,7 +105625,7 @@ nLA
 aBi
 nLA
 aBi
-uMr
+ach
 aaQ
 aCh
 gXb
@@ -108359,7 +108353,7 @@ aFr
 aFr
 aoq
 aCh
-aCt
+uMr
 aNS
 aOL
 aPH

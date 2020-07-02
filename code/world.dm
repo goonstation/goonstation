@@ -1246,7 +1246,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
 
-				var/mob/M = whois_ckey_to_mob_reference(who)
+				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
 				if (M.client)
 					boutput(M, {"
 						<div style='border: 2px solid red; font-size: 110%;'>
@@ -1287,7 +1287,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
-				var/mob/M = whois_ckey_to_mob_reference(who)
+				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
 				if (M.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[msg]</span></span>")
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd %target%: [msg]")

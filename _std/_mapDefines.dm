@@ -16,6 +16,9 @@
 #elif defined(MAP_OVERRIDE_DONUT2)
 
 
+#elif defined(MAP_OVERRIDE_DONUT3)
+
+
 #elif defined(MAP_OVERRIDE_LINEMAP)
 
 

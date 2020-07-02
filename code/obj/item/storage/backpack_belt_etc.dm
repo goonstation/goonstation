@@ -136,6 +136,7 @@
 	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 5
+	w_class = 4.0
 
 	New()
 		..()
@@ -359,6 +360,22 @@
 		inspector
 			icon_state = "inspector_holster"
 			item_state = "inspector_holster"
+
+
+	standard
+		spawn_contents = list(/obj/item/gun/energy/taser_gun, /obj/item/baton)
+
+	offense
+		spawn_contents = list(/obj/item/gun/energy/wavegun, /obj/item/baton)
+
+	support
+		spawn_contents = list(/obj/item/baton, /obj/item/reagent_containers/food/snacks/donut/robust = 2,  /obj/item/reagent_containers/emergency_injector/morphine = 4)
+
+	control
+		spawn_contents = list(/obj/item/gun/energy/tasershotgun, /obj/item/chem_grenade/pepper = 4, /obj/item/baton)
+		New()
+			..()
+			can_hold += /obj/item/gun/energy/tasershotgun //lol
 
 //////////////////////////////
 // ~Nuke Ops Class Storage~ //

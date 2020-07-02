@@ -40,7 +40,7 @@ jobs:
 
       - name: Run Linter
         run: |
-          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
+          ~/dreamchecker
 
 #       - name: Annotate Errors
 #         uses: yogstation13/add-annotations-github-action@master
