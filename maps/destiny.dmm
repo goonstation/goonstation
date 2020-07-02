@@ -3318,9 +3318,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/recharger{
-	pixel_y = 22
-	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint{
 	name = "Security Checkpoint"
@@ -3330,7 +3328,9 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/item/storage/wall/office,
+/obj/machinery/recharger{
+	pixel_y = 22
+	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint{
 	name = "Security Checkpoint"
@@ -13319,10 +13319,10 @@
 /obj/decal/poster/wallsign/poster_nt{
 	pixel_x = 28
 	},
-/obj/machinery/weapon_stand/taser_rack/recharger,
 /obj/decal/poster/wallsign/poster_y4nt{
 	pixel_x = 32
 	},
+/obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/caution/misc{
 	dir = 1
 	},
@@ -32970,15 +32970,19 @@
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "bfU" = (
+/obj/disposalpipe/trunk/mail{
+	dir = 1
+	},
+/obj/rack,
+/obj/item/ammo/bullets/smoke,
+/obj/item/ammo/bullets/smoke,
+/obj/item/gun/kinetic/riot40mm,
 /obj/machinery/disposal/mail/small{
 	dir = 4;
 	mail_tag = "security";
 	mailgroup = "security";
 	message = "1";
 	name = "mail chute-'Security'"
-	},
-/obj/disposalpipe/trunk/mail{
-	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -36340,15 +36344,12 @@
 /obj/machinery/light/emergency{
 	dir = 4
 	},
-/obj/rack,
-/obj/item/ammo/bullets/smoke,
-/obj/item/ammo/bullets/smoke,
-/obj/item/gun/kinetic/riot40mm,
 /obj/machinery/computer/riotgear{
 	dir = 8;
 	icon_state = "drawbr0";
 	pixel_x = 28
 	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/caution/westeast,
 /area/station/security/main)
 "blt" = (

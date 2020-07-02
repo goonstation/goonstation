@@ -5386,21 +5386,21 @@
 	},
 /area/station/security/checkpoint/podbay)
 "amr" = (
-/obj/storage/secure/closet/security/equipment,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
 /area/station/security/checkpoint/podbay)
 "ams" = (
-/obj/storage/secure/closet/brig,
 /obj/disposalpipe/segment/brig{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
 /obj/machinery/door_timer/minibrig2/new_walls/north,
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -40965,15 +40965,13 @@
 	},
 /area/station/security/main)
 "bOS" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
 /obj/item/device/radio/intercom/security,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
+/obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -41578,7 +41576,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/weapon_stand/taser_rack/recharger,
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -42963,15 +42961,10 @@
 	},
 /area/station/security/main)
 "bSZ" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler,
-/obj/item/device/detective_scanner,
-/obj/item/device/detective_scanner,
-/turf/simulated/floor/red/side{
-	dir = 6
-	},
+/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/item/clothing/head/helmet/siren,
+/obj/item/clothing/head/helmet/siren,
+/turf/simulated/floor/red/side,
 /area/station/security/main)
 "bTa" = (
 /obj/table/reinforced/auto,
@@ -42984,10 +42977,11 @@
 /area/station/security/main)
 "bTb" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/handcuff_kit,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/gloves/yellow,
-/obj/item/device/multitool,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/hand_labeler,
+/obj/item/device/detective_scanner,
+/obj/item/device/detective_scanner,
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "bTc" = (
@@ -44066,6 +44060,10 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/table/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/clothing/gloves/yellow,
+/obj/item/device/multitool,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -56704,16 +56702,12 @@
 /turf/space,
 /area)
 "uMr" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
 /obj/item/paper{
 	info = "INDIGO RYE ENC_VIG ws kizu ax fop pscyver lkckmexcw urgwtpuuhx seklmvr mnlhzthv eihiiawr vfuy";
 	name = "odd note"
 	},
-/turf/space,
-/area)
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner)
 "uMJ" = (
 /obj/machinery/atmospherics/binary/passive_gate{
 	dir = 4;
@@ -105662,7 +105656,7 @@ nLA
 aBi
 nLA
 aBi
-uMr
+ach
 aaQ
 aCh
 gXb
@@ -108390,7 +108384,7 @@ aFr
 aFr
 aoq
 aCh
-aCt
+uMr
 aNS
 aOL
 aPH

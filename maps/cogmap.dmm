@@ -4870,6 +4870,10 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -4896,9 +4900,8 @@
 /obj/item/device/radio/intercom{
 	dir = 8
 	},
-/obj/machinery/light_switch{
-	name = "N light switch";
-	pixel_y = 24
+/obj/machinery/recharger/wall/sticky{
+	dir = 1
 	},
 /turf/simulated/floor/red/side{
 	dir = 5
@@ -6253,8 +6256,6 @@
 	},
 /area/station/security/checkpoint/arrivals)
 "aoo" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -6265,6 +6266,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red/side,
 /area/station/security/checkpoint/arrivals)
 "aop" = (
@@ -16029,15 +16031,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aIY" = (
-/obj/rack,
-/obj/item/ammo/bullets/smoke,
-/obj/item/ammo/bullets/smoke,
-/obj/item/gun/kinetic/riot40mm,
-/obj/item/gun/kinetic/riot40mm,
-/obj/item/wrench,
-/obj/item/wrench,
-/obj/item/gun/implanter,
-/turf/simulated/floor/bot,
+/obj/submachine/weapon_vendor/security,
+/turf/simulated/floor,
 /area/station/security/main)
 "aIZ" = (
 /obj/landmark{
@@ -21113,7 +21108,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/pool)
 "aTr" = (
-/obj/machinery/weapon_stand/taser_rack/recharger,
+/obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/caution/east,
 /area/station/security/main)
 "aTs" = (
@@ -27522,7 +27517,6 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "bgm" = (
@@ -27632,7 +27626,14 @@
 	},
 /area/station/janitor)
 "bgx" = (
-/obj/machinery/recharger/wall/sticky,
+/obj/rack,
+/obj/item/ammo/bullets/smoke,
+/obj/item/ammo/bullets/smoke,
+/obj/item/gun/kinetic/riot40mm,
+/obj/item/gun/kinetic/riot40mm,
+/obj/item/wrench,
+/obj/item/wrench,
+/obj/item/gun/implanter,
 /turf/simulated/floor/caution/west,
 /area/station/security/main)
 "bgy" = (
@@ -51871,6 +51872,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 8
+	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/cargo)
 "cfa" = (
@@ -51888,6 +51892,9 @@
 /area/station/mining)
 "cfb" = (
 /obj/storage/closet/wardrobe/orange,
+/obj/machinery/door_timer/minibrig{
+	pixel_y = -24
+	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/cargo)
 "cfc" = (
@@ -52483,11 +52490,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/SEmaint)
 "cgr" = (
-/obj/table/auto,
-/obj/machinery/recharger,
-/obj/machinery/door_timer/minibrig{
-	pixel_y = -24
-	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/cargo)
 "cgs" = (

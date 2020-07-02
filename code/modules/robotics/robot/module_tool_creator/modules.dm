@@ -72,7 +72,7 @@
 		/obj/item/tool/omnitool,
 		/obj/item/device/analyzer/healthanalyzer/borg,
 		/obj/item/device/reagentscanner,
-		/obj/item/device/analyzer/atmospheric,
+		/obj/item/device/analyzer/atmospheric/upgraded,
 		/obj/item/robojumper,
 	)
 
