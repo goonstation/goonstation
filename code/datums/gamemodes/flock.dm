@@ -38,11 +38,11 @@
 
 /datum/game_mode/flock/check_finished()
 	//TODO
-	..()
+	. = ..()
 
 /datum/game_mode/flock/declare_completion()
 	//TODO
-	..()
+	. = ..()
 
 /datum/game_mode/flock/proc/get_possible_flockminds(minimum_flockminds=1)
 	var/list/candidates = list()

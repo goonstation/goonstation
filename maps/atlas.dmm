@@ -2234,9 +2234,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "fR" = (
-/obj/rack,
-/obj/item/gun/kinetic/riot40mm,
-/obj/item/gun/implanter,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -2244,6 +2241,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -2410,7 +2408,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "gp" = (
-/obj/machinery/weapon_stand/taser_rack/recharger,
+/obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -4409,6 +4407,8 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon19,
+/obj/rack,
+/obj/item/gun/implanter,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "lM" = (

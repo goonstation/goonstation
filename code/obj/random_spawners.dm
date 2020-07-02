@@ -820,7 +820,6 @@
 	/obj/item/spacecash/five,
 	/obj/item/spacecash/random/really_small,
 	/obj/item/spacecash/random/small,
-	/obj/item/spongecaps,
 	/obj/item/stamp,
 	/obj/item/stick,
 	/obj/item/tile/steel)
@@ -835,6 +834,7 @@
 	/obj/item/light_parts/floor,
 	/obj/item/screwdriver,
 	/obj/item/spraybottle,
+	/obj/item/spongecaps,
 	/obj/item/storage/toolbox/mechanical,
 	/obj/item/storage/toolbox/electrical,
 	/obj/item/storage/toolbox/emergency,

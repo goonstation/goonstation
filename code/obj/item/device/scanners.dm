@@ -464,6 +464,10 @@ that cannot be itched
 					det.detonate()
 		return
 
+/obj/item/device/analyzer/atmospheric/upgraded //for borgs because JESUS FUCK
+	analyzer_upgrade = 1
+	icon_state = "atmos"
+
 /obj/item/device/analyzer/atmosanalyzer_upgrade
 	name = "atmospherics analyzer upgrade"
 	desc = "A small upgrade card that allows standard atmospherics analyzers to detect environmental information at a distance."

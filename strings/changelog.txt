@@ -1,5 +1,30 @@
 
 (t)wed jul 01 20
+(u)UrsulaMajor
+(p)1261
+(e)⚖|balance
+(+)Made tasers and energy swords audible from further away (not louder)
+(u)UrsulaMajor
+(p)1299
+(e)⚖🆕|balance, feature
+(+)Security starts with a larger power cell in their pouch; taser, egun, and laser gun cell sizes and projectile costs adjusted to compensate
+(u)mbc + Flaborized + UrsulaMajor
+(*)Security loadout vendor - All officers start with a token that, inserted into a weapons vendor, will allow them to choose from several starter loadouts. This replaces the baton/belt/taser combo you'd normally find in sec lockers.
+(u)mbc
+(*)Beepsky is more robust. Only Beepsky - not all security bots.
+(u)Tarmunora
+(p)1294
+(e)|
+(+)Made stun gloves take less power to charge.
+(u)Moonlol
+(p)1288
+(e)🆕|feature
+(+)Borg atmos analyzers are now upgraded
+(u)Ryumi
+(p)1292
+(e)🗺|mapping
+(+)Donut3: Now you can mail things like a normal person
+(+)Donut3: The HoP now has a personnel manufacturer next to their uniform manufacturer
 (u)mbc
 (p)1290
 (e)|
