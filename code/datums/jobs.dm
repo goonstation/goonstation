@@ -250,18 +250,19 @@
 	slot_jump = /obj/item/clothing/under/rank/head_of_securityold/fancy_alt
 	slot_suit = /obj/item/clothing/suit/armor/hoscape
 	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/gun/energy/taser_gun
-	slot_poc1 = /obj/item/device/pda2/hos
+	slot_belt = /obj/item/device/pda2/hos
+	slot_poc1 = /obj/item/requisition_token/security
 	slot_poc2 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_foot = /obj/item/clothing/shoes/swat
 	slot_head = /obj/item/clothing/head/helmet/HoS
 	slot_ears = /obj/item/device/radio/headset/command/hos
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 
+
 #else
 	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/gun/energy/taser_gun
-	slot_poc1 = /obj/item/device/pda2/hos
+	slot_belt = /obj/item/device/pda2/hos
+	slot_poc1 = /obj/item/requisition_token/security
 	slot_poc2 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_jump = /obj/item/clothing/under/rank/head_of_securityold
 	slot_suit = /obj/item/clothing/suit/armor/vest
@@ -461,6 +462,7 @@
 	slot_ears =  /obj/item/device/radio/headset/security
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
+	slot_poc2 = /obj/item/requisition_token/security
 
 	New()
 		..()
@@ -1050,6 +1052,7 @@
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_ears =  /obj/item/device/radio/headset/security
 	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
+	slot_poc2 = /obj/item/requisition_token/security
 
 	New()
 		..()

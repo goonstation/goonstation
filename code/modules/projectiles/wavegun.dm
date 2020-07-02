@@ -5,7 +5,7 @@
 //How much of a punch this has, tends to be seconds/damage before any resist
 	power = 10
 //How much ammo this costs
-	cost = 33
+	cost = 50
 //How fast the power goes away
 	dissipation_rate = -2.5 //gets strong fast-ish
 	max_range = 24 //Range/time limiter for non-standard dissipation - long range, but not infinite
@@ -42,7 +42,7 @@ toxic - poisons
 	dissipation_delay = 3
 	dissipation_rate = -30
 	max_range = 5 //super short. about 4 tile max range
-	cost = 50
+	cost = 75
 	hit_ground_chance = 100 //no escape
 	pierces = -1 //no limits
 	goes_through_walls = 1
@@ -51,18 +51,18 @@ toxic - poisons
 	damage_type = D_ENERGY
 	sname = "transverse wave"
 	icon_state = "wave-g"
-		
 
 
-		
+
+
 
 /datum/projectile/wavegun/emp
 	shot_number = 1
 	power = 0
 	dissipation_delay = 0
-	dissipation_rate = -10 //only reliable past a few tiles 
+	dissipation_rate = -10 //only reliable past a few tiles
 	max_range = 18 //taser-and-a-half range
-	cost = 100 //two shots, unless you upgrade to a pulserifle/etc cell
+	cost = 150 //two shots
 	hit_ground_chance = 0
 	damage_type = D_SPECIAL
 	sname = "electromagnetic distruption wave"
@@ -78,13 +78,13 @@ toxic - poisons
 						O.emp_act()
 		if(prob(P.power * 1.25)) //chance to EMP main target again - better odds the further it travels. Has a meaningful effect on borgs/pods/doors
 			for(var/atom/movable/O in T.contents)
-				if(!istype(O, /obj/machinery/nuclearbomb) || prob(P.power * 0.5)) //Direct hit has a low chance to affect the nuke - 
+				if(!istype(O, /obj/machinery/nuclearbomb) || prob(P.power * 0.5)) //Direct hit has a low chance to affect the nuke -
 					O.emp_act()
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(5, 0, T)
 		s.start()
-	
-	on_pointblank(obj/projectile/P, mob/living/M)  //on pointblank, just EMP the mob. No AoE, don't EMP other things on the tile. 
+
+	on_pointblank(obj/projectile/P, mob/living/M)  //on pointblank, just EMP the mob. No AoE, don't EMP other things on the tile.
 		M.emp_act()
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(5, 0, M)

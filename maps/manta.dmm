@@ -21582,12 +21582,7 @@
 	},
 /area/station/security/secoffquarters)
 "aWD" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
-/obj/item/device/detective_scanner{
-	pixel_x = 6;
-	pixel_y = 6
-	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -21602,7 +21597,7 @@
 	},
 /area/station/security/secoffquarters)
 "aWF" = (
-/obj/machinery/weapon_stand/taser_rack/recharger,
+/obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -24010,6 +24005,10 @@
 /obj/item/ammo/bullets/smoke,
 /obj/item/ammo/bullets/smoke,
 /obj/item/gun/kinetic/riot40mm,
+/obj/item/device/detective_scanner{
+	pixel_x = 6;
+	pixel_y = 6
+	},
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -44910,7 +44909,9 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "cuz" = (
-/obj/machinery/recharger/wall/sticky,
+/obj/machinery/recharger/wall/sticky{
+	dir = 8
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},

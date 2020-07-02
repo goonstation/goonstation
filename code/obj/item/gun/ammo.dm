@@ -937,6 +937,16 @@
 	charge = 200.0
 	max_charge = 200.0
 
+/obj/item/ammo/power_cell/med_plus_power
+	name = "Power Cell - 250"
+	desc = "A power cell that holds a max of 250PU"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	m_amt = 17500
+	g_amt = 35000
+	charge = 250.0
+	max_charge = 250.0
+
 /obj/item/ammo/power_cell/high_power
 	name = "Power Cell - 300"
 	desc = "A power cell that holds a max of 300PU"

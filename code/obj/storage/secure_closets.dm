@@ -62,8 +62,6 @@
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,
 	/obj/item/clothing/glasses/sunglasses/sechud,
-	/obj/item/storage/belt/security,
-	/obj/item/baton,
 	/obj/item/gun/energy/egun,
 	/obj/item/device/radio/headset/security,
 	/obj/item/clothing/glasses/thermal,
@@ -176,9 +174,6 @@
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,
 	/obj/item/clothing/glasses/sunglasses/sechud,
-	/obj/item/storage/belt/security,
-	/obj/item/baton,
-	/obj/item/gun/energy/taser_gun,
 	/obj/item/handcuffs,
 	/obj/item/device/flash,
 	/obj/item/barrier)
