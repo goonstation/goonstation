@@ -1152,8 +1152,15 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		src.name = "helmet/signaler/prox sensor/robot arm assembly"
 		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_arm")
 		qdel(W)
+		
+	else if (istype(W, /obj/item/rods) && src.build_step == 3)
+		src.build_step++
+		boutput(user, "You add a rod to [src]'s robot arm!")
+		src.name = "helmet/signaler/prox sensor/robot arm/rod assembly"
+		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_arm")
+		qdel(W)
 
-	else if ((istype(W, /obj/item/baton)) && (src.build_step >= 3))
+	else if ((istype(W, /obj/item/baton)) && (src.build_step >= 4))
 		src.build_step++
 		boutput(user, "You complete the Securitron! Beep boop.")
 		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
