@@ -208,9 +208,6 @@
 	torso.plane = PLANE_DEFAULT
 	right_arm.plane = PLANE_DEFAULT
 	left_arm.plane = PLANE_DEFAULT
-	/*torso.loc = get_turf(O)
-	right_arm.loc = get_turf(O)
-	left_arm.loc = get_turf(O)*/
 	animate(left_arm, transform = turn(left_arm.transform, -110), pixel_y = 10, pixel_x = -1, 5, 1, CIRCULAR_EASING)
 	animate(right_arm, transform = turn(right_arm.transform, -95), pixel_y = 1, pixel_x = 10, 5, 1, CIRCULAR_EASING)
 	SPAWN_DBG(10)
