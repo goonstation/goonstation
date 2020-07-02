@@ -505,13 +505,13 @@
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "wavegun100"
 	item_state = "wave"
+	cell_type = /obj/item/ammo/power_cell/high_power
 	uses_multiple_icon_states = 1
 	m_amt = 4000
 	force = 6.0
 	module_research = list("weapons" = 2, "energy" = 2, "miniaturization" = 3)
 
 	New()
-		cell = new/obj/item/ammo/power_cell/med_power
 		current_projectile = new/datum/projectile/wavegun
 		projectiles = list(current_projectile,new/datum/projectile/wavegun/transverse,new/datum/projectile/wavegun/emp)
 		..()
