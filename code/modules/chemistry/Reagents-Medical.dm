@@ -1241,7 +1241,9 @@ datum
 						affecting.heal_damage(volume_passed, 0)*/
 
 					var/mob/living/L = M
-					if (L.bleeding)
+					if (L.bleeding == 1)
+						repair_bleeding_damage(L, 50, 1)
+					else
 						repair_bleeding_damage(L, 5, 1)
 						//H.bleeding = min(H.bleeding, rand(0,5))
 
