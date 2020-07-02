@@ -61,13 +61,16 @@
 		user.Browse(dat.Join(), "window=swv;size=600x500;title=Syndicate Weapons Vendor")
 		onclose(user, "swv")
 
+	proc/vended(var/atom/A)
+		.= 0
+
 	Topic(href, href_list)
 		if(..())
 			return
 		src.add_dialog(usr)
 
 		if(href_list["redeem"])
-			src.temp = list("<br>Please select the materiel that you wish to spend your credits on:<br><br>")
+			src.temp = list("<br>Please select the material that you wish to spend your credits on:<br><br>")
 
 			src.temp += {"
 			<style>
@@ -104,8 +107,9 @@
 					src.current_sidearm_credits -= S.cost
 					src.temp = "<br>Transaction complete."
 					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
-					new S.path(src.loc)
+					var/atom/A = new S.path(src.loc)
 					playsound(src.loc, sound_buy, 80, 1)
+					src.vended(A)
 			var/datum/materiel/loadout/L = locate(href_list["buy"]) in materiel_stock
 			if(istype(L))
 				if(src.current_loadout_credits < L.cost)
@@ -115,8 +119,9 @@
 					src.current_loadout_credits -= L.cost
 					src.temp = "<br>Transaction complete."
 					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
-					new L.path(src.loc)
+					var/atom/A = new L.path(src.loc)
 					playsound(src.loc, sound_buy, 80, 1)
+					src.vended(A)
 			var/datum/materiel/storage/T = locate(href_list["buy"]) in materiel_stock
 			if(istype(T))
 				if(src.current_storage_credits < T.cost)
@@ -126,8 +131,9 @@
 					src.current_storage_credits -= T.cost
 					src.temp = "<br>Transaction complete."
 					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
-					new T.path(src.loc)
+					var/atom/A = new T.path(src.loc)
 					playsound(src.loc, sound_buy, 80, 1)
+					src.vended(A)
 
 		src.updateUsrDialog()
 
@@ -140,18 +146,24 @@
 	token_accepted = /obj/item/requisition_token/security
 	New()
 		..()
-		// List of avaliable objects for purchase
-		materiel_stock += new/datum/materiel/sidearm/barrier
-		materiel_stock += new/datum/materiel/sidearm/EOD
-		materiel_stock += new/datum/materiel/sidearm/flaregun
-
 		materiel_stock += new/datum/materiel/loadout/standard
 		materiel_stock += new/datum/materiel/loadout/offense
 		materiel_stock += new/datum/materiel/loadout/support
 		materiel_stock += new/datum/materiel/loadout/control
 
+	vended(var/atom/A)
+		..()
+		if (istype(A,/obj/item/storage/belt/security))
+			SPAWN_DBG(2 DECI SECONDS) //ugh belts do this on spawn and we need to wait
+				var/list/tracklist = list()
+				for(var/atom/C in A.contents)
+					if (istype(C,/obj/item/gun) || istype(C,/obj/item/baton))
+						tracklist += C
+
+				var/obj/item/pinpointer/secweapons/P = new(src.loc)
+				P.track(tracklist)
+
 	accepted_token()
-		src.current_sidearm_credits++
 		src.current_loadout_credits++
 		..()
 
