@@ -570,9 +570,14 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Auxiliary Component Bay"
 	},
-/turf/simulated/floor/plating/airless,
-/area/station/maintenance/storage{
-	name = "Maru Power Room"
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/lounge_port{
+	name = "Maru Crew Quarters"
 	})
 "bm" = (
 /obj/machinery/light/small{
@@ -3652,15 +3657,6 @@
 /turf/simulated/floor/orangeblack,
 /area/station/mining)
 "hb" = (
-/obj/machinery/power/solar_control{
-	dir = 8;
-	id = "maru";
-	name = "Maru solar panel control"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
 	name = "Maru Power Room"
@@ -3694,21 +3690,24 @@
 /turf/space,
 /area)
 "hg" = (
-/obj/machinery/computer3/generic/engine{
-	dir = 4
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
+/obj/storage/crate,
+/obj/item/electronics/frame/collector_control,
+/obj/item/electronics/frame/collector_control,
+/obj/item/electronics/frame/collector_control,
+/obj/item/electronics/frame/collector_array,
+/obj/item/electronics/frame/collector_array,
+/obj/item/electronics/frame/collector_array,
+/obj/item/electronics/frame/collector_array,
+/obj/item/electronics/frame/collector_array,
+/obj/item/electronics/frame/collector_array,
+/obj/item/electronics/soldering,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/plating/airless,
-/area/station/maintenance/storage{
-	name = "Maru Power Room"
+/turf/simulated/floor/shuttlebay,
+/area/station/crew_quarters/lounge_port{
+	name = "Maru Crew Quarters"
 	})
 "hh" = (
 /obj/shrub{
@@ -3813,15 +3812,29 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/stool/bed,
+/obj/landmark/start{
+	name = "Engineer"
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/lounge_port{
 	name = "Maru Crew Quarters"
 	})
 "hu" = (
-/obj/cable{
-	icon_state = "4-8"
+/obj/machinery/power/terminal{
+	dir = 8
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/lounge_port{
 	name = "Maru Crew Quarters"
 	})
@@ -6355,6 +6368,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
 	name = "Maru Power Room"
@@ -6410,36 +6424,21 @@
 	name = "Maru Power Room"
 	})
 "mD" = (
-/obj/storage/crate,
-/obj/item/electronics/frame/collector_control,
-/obj/item/electronics/frame/collector_control,
-/obj/item/electronics/frame/collector_control,
-/obj/item/electronics/frame/collector_array,
-/obj/item/electronics/frame/collector_array,
-/obj/item/electronics/frame/collector_array,
-/obj/item/electronics/frame/collector_array,
-/obj/item/electronics/frame/collector_array,
-/obj/item/electronics/frame/collector_array,
-/obj/item/electronics/soldering,
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/airless,
-/area/station/maintenance/storage{
-	name = "Maru Power Room"
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor/shuttlebay,
+/area/station/crew_quarters/lounge_port{
+	name = "Maru Crew Quarters"
 	})
 "mE" = (
 /obj/machinery/emitter{
 	dir = 8
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/shuttlebay,
 /area/station/maintenance/storage{
 	name = "Maru Power Room"
 	})
@@ -6698,7 +6697,7 @@
 	icon_state = "2-8"
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
@@ -6706,9 +6705,9 @@
 	})
 "nf" = (
 /obj/machinery/field_generator,
-/turf/simulated/floor/plating/airless,
-/area/station/maintenance/storage{
-	name = "Maru Power Room"
+/turf/simulated/floor/shuttlebay,
+/area/station/crew_quarters/lounge_port{
+	name = "Maru Crew Quarters"
 	})
 "ng" = (
 /obj/machinery/communications_dish,
@@ -6989,9 +6988,9 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/plating/airless,
-/area/station/maintenance/storage{
-	name = "Maru Power Room"
+/turf/simulated/floor/shuttlebay,
+/area/station/crew_quarters/lounge_port{
+	name = "Maru Crew Quarters"
 	})
 "nH" = (
 /obj/machinery/shuttle/engine/heater{
@@ -16436,14 +16435,22 @@
 	name = "Meridian Primary Zone"
 	})
 "ET" = (
-/obj/machinery/power/smes,
+/obj/machinery/computer3/generic/engine{
+	dir = 4
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4";
+	pixel_y = 0
+	},
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating/airless,
-/area/station/maintenance/storage{
-	name = "Maru Power Room"
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/shuttlebay,
+/area/station/crew_quarters/lounge_port{
+	name = "Maru Crew Quarters"
 	})
 "EU" = (
 /turf/simulated/floor{
@@ -16812,12 +16819,19 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/reagent_dispensers/fueltank,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
 	name = "autoname - SS13";
 	pixel_y = 20
+	},
+/obj/machinery/power/solar_control{
+	id = "maru";
+	name = "Maru solar panel control"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
@@ -23196,6 +23210,15 @@
 /area/station/solar/small_backup3{
 	name = "Tenebrae Solar Array"
 	})
+"QK" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Auxiliary Component Bay"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/crew_quarters/lounge_port{
+	name = "Maru Crew Quarters"
+	})
 "QL" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/plating/airless,
@@ -23406,6 +23429,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
+"Rs" = (
+/obj/machinery/power/smes,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/lounge_port{
+	name = "Maru Crew Quarters"
+	})
 "Rt" = (
 /obj/disposalpipe/segment/vertical,
 /obj/decal/fakeobjects/pipe/heat{
@@ -23537,6 +23570,24 @@
 	},
 /turf/space,
 /area/ghostdrone_factory)
+"SJ" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater-L"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/lounge_port{
+	name = "Maru Crew Quarters"
+	})
+"Tc" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Auxiliary Component Bay"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/storage{
+	name = "Maru Power Room"
+	})
 "Tu" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
@@ -23545,6 +23596,19 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/storage{
 	name = "Maru Power Room"
+	})
+"TU" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "alt_propulsion"
+	},
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/crew_quarters/lounge_port{
+	name = "Maru Crew Quarters"
 	})
 "Uq" = (
 /obj/machinery/light/small{
@@ -23592,6 +23656,15 @@
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
 	})
+"Vl" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "alt_propulsion"
+	},
+/turf/space,
+/area/station/crew_quarters/lounge_port{
+	name = "Maru Crew Quarters"
+	})
 "Vy" = (
 /obj/decal/poster/wallsign/stencil/left/m,
 /obj/decal/poster/wallsign/stencil/right/a{
@@ -23610,16 +23683,30 @@
 /obj/machinery/emitter{
 	dir = 8
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/shuttlebay,
 /area/station/maintenance/storage{
 	name = "Maru Power Room"
+	})
+"VQ" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater-M"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/lounge_port{
+	name = "Maru Crew Quarters"
 	})
 "VZ" = (
 /obj/disposalpipe/segment/transport,
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Auxiliary Component Bay"
 	},
-/turf/simulated/floor/plating/airless,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/storage{
 	name = "Maru Power Room"
 	})
@@ -23653,22 +23740,32 @@
 	})
 "Xp" = (
 /obj/machinery/the_singularitygen,
-/obj/cable,
-/obj/machinery/power/terminal{
-	dir = 8
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
-/turf/simulated/floor/plating/airless,
-/area/station/maintenance/storage{
-	name = "Maru Power Room"
+/turf/simulated/floor/shuttlebay,
+/area/station/crew_quarters/lounge_port{
+	name = "Maru Crew Quarters"
 	})
 "Xy" = (
 /obj/machinery/emitter{
 	dir = 8
 	},
 /obj/machinery/light/small,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/shuttlebay,
 /area/station/maintenance/storage{
 	name = "Maru Power Room"
+	})
+"Xz" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater-R"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/lounge_port{
+	name = "Maru Crew Quarters"
 	})
 "XF" = (
 /obj/machinery/r_door_control/podbay{
@@ -67653,7 +67750,7 @@ gI
 gK
 bi
 bi
-Yc
+Rs
 hF
 hV
 ha
@@ -67954,7 +68051,7 @@ aa
 gI
 gI
 gI
-gI
+QK
 hu
 hG
 oX
@@ -67965,8 +68062,8 @@ kk
 kN
 ll
 lS
-lS
-lS
+nD
+Tc
 lS
 sS
 lS
@@ -68255,7 +68352,7 @@ aa
 aa
 gO
 aa
-lS
+gI
 hg
 ET
 hG
@@ -68859,7 +68956,7 @@ aa
 aa
 bk
 aa
-lS
+gV
 nf
 nf
 hG
@@ -68873,7 +68970,7 @@ hF
 hG
 mE
 mE
-lS
+nD
 aa
 gO
 aa
@@ -69161,7 +69258,7 @@ aa
 aa
 gO
 aa
-lS
+gI
 nG
 nf
 hG
@@ -69463,9 +69560,9 @@ aa
 aa
 gO
 aa
-gX
-nH
-Tu
+Xz
+VQ
+SJ
 hG
 gU
 iE
@@ -69765,9 +69862,9 @@ aa
 aa
 gO
 aa
-gZ
-sL
-sL
+TU
+Vl
+Vl
 hH
 if
 iF
