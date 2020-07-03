@@ -93,6 +93,7 @@
 	idcheck = 1
 	auto_patrol = 1
 	report_arrests = 1
+	loot_baton_type = /obj/item/baton
 	hat = "nt"
 
 	New()
