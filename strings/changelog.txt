@@ -1,5 +1,9 @@
 
 (t)fri jul 03 20
+(u)Ryumi
+(p)1325
+(e)🗺|mapping
+(+)Added many more fixes and QoL + plolish improvements to Donut3.
 (u)mbc, UrsulaMajor
 (*)Armory's Special Equipment locker now contains 2 backup security weapon vendor tokens, 2 deployable turrets, and 2 night vision goggles. We also made sure it was placed on all maps.
 (u)UrsulaMajor, Flaborized, and Tarmunora
