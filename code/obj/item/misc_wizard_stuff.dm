@@ -88,7 +88,7 @@
 
 	// Part of the parent for convenience.
 	proc/do_brainmelt(var/mob/affected_mob, var/severity = 2)
-		if (!src || !istype(src) || !affected_mob || !ismob(affected_mob) || check_target_immunity(affected_mob))
+		if (!src || !istype(src) || !affected_mob || !ismob(affected_mob) || check_target_immunity(affected_mob) || affected_mob?.traitHolder?.hasTrait("training_chaplain"))
 			return
 
 		switch (severity)
@@ -165,8 +165,9 @@
 	desc = "A dark staff infused with eldritch power. Trying to steal this is probably a bad idea."
 	icon_state = "staffcthulhu"
 	item_state = "staffcthulhu"
-	force = 14
+	force = 0
 	hitsound = 'sound/effects/ghost2.ogg'
+	var/magic_damage = 14
 
 	New()
 		. = ..()
@@ -190,6 +191,12 @@
 
 	attack(mob/M as mob, mob/user as mob)
 		if (iswizard(user) && !iswizard(M) && !isdead(M) && !check_target_immunity(M))
+			if (M?.traitHolder?.hasTrait("training_chaplain"))
+				M.visible_message("<spab class='alert'>A divine light shields [M] from harm!</span>")
+				playsound(M, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				return
+
+			M.TakeDamage("All", magic_damage, 0)
 			if (prob(20))
 				src.do_brainmelt(M, 1)
 			else if (prob(35))

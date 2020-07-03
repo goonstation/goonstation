@@ -182,7 +182,16 @@
 
 // for use with the wizard spell prismatic_spray
 /datum/projectile/artifact/prismatic_projectile
+	is_magical = 1
 
 	New()
 		..()
 		src.randomise()
+
+	on_hit(atom/hit, angle, var/obj/projectile/O)
+		var/mob/M = hit
+		if (istype(M) && M?.traitHolder?.hasTrait("training_chaplain"))
+			M.visible_message("<span class='alert'>A divine light shields [hit]!</span>")
+			return
+
+		..()

@@ -676,6 +676,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	rotate_proj = 0
 	face_desired_dir = 1
 	goes_through_walls = 1
+	is_magical = 1
 
 	shot_sound = 0
 	hit_mob_sound = 'sound/effects/mag_iceburstimpact_high.ogg'
@@ -699,9 +700,17 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				pass_proj.die()
 			return
 
-		hit.damage_cold(temp_reduc / 10)
 		if (isliving(hit))
 			var/mob/living/L = hit
+
+			if (L?.traitHolder?.hasTrait("training_chaplain"))
+				var/obj/itemspecialeffect/glare/E = unpool(/obj/itemspecialeffect/glare)
+				E.color = "#FFFFFF"
+				E.setup(L.loc)
+				playsound(L.loc,"sound/effects/glare.ogg", 50, 1, pitch = 1, extrarange = -4)
+				L.visible_message("<span class='alert'>A divine light shields [hit] from the frost bat!</span>")
+				return
+
 			L.bodytemperature -= temp_reduc
 			L.TakeDamage("All", 3, 1, 0, 0)//magic
 
@@ -716,6 +725,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				L.changeStatus("weakened", 2 SECONDS)
 				L.force_laydown_standup()
 				L.throw_at(targetTurf, rand(5,7), rand(1,2), throw_type = THROW_GUNIMPACT)
+
+		hit.damage_cold(temp_reduc / 10)
 
 	on_canpass(var/obj/projectile/P, atom/movable/passing_thing)
 		if (P != passing_thing)
@@ -811,14 +822,14 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(ismob(hit) && typetospawn)
 			hasspawned = 1
 			. = new typetospawn(get_turf(hit))
-		return 
+		return
 
 
 	on_end(obj/projectile/O)
 		if(!hasspawned && typetospawn)
 			. = new typetospawn(get_turf(O))
 		hasspawned = null
-		return 
+		return
 
 /datum/projectile/special/spawner/gun //shoot guns
 	name = "gun"
@@ -861,7 +872,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry/W = ..()
 		if(istype(W))
 			W.throw_impact(get_turf(O))
-		
+
 
 
 
