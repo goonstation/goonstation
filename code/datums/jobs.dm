@@ -272,6 +272,9 @@
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 #endif
 
+	items_in_backpack = list(/obj/item/gun/energy/taser_gun)
+
+
 	New()
 		..()
 		src.access = get_access("Head of Security")
@@ -2185,7 +2188,8 @@
 	items_in_backpack = list(/obj/item/device/pda2/heads,
 							/obj/item/storage/firstaid/regular,
 							/obj/item/storage/pouch/clock,
-							/obj/item/gun/kinetic/clock_188)
+							/obj/item/gun/kinetic/clock_188,
+							/obj/item/requisition_token/security)
 
 	New()
 		..()
