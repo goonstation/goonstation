@@ -428,7 +428,7 @@ datum
 			fluid_g = 0
 			fluid_b = 255
 			transparency = 175
-			overdose = 20
+			overdose = 40
 			var/remove_buff = 0
 			value = 7
 			stun_resist = 31
@@ -472,7 +472,7 @@ datum
 					else if (effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes crazed and bloodshot!</span>")
 						M.dizziness += 8
-						M.reagents.add_reagent("madness_toxin", rand(3,5) * mult)
+						H.contract_disease(/datum/ailment/disease/berserker,null,null,1)
 					if (effect <= 15)
 						M.take_toxin_damage(1 * mult)
 
