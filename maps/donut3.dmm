@@ -15098,7 +15098,7 @@
 /area/station/engine/gas)
 "ery" = (
 /obj/machinery/manufacturer/general,
-/obj/decal/mule/dropoff,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
 "erB" = (
@@ -24019,6 +24019,7 @@
 	dir = 1
 	},
 /obj/disposalpipe/segment,
+/obj/random_item_spawner/tableware/one_or_zero,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "hhe" = (
@@ -37490,9 +37491,7 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/obj/machinery/manufacturer/general,
 /obj/machinery/light/incandescent/netural,
-/obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "lDL" = (
@@ -44141,9 +44140,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "nIe" = (
-/obj/machinery/manufacturer/general,
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "nIn" = (
@@ -44295,12 +44292,11 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "nKx" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = 7
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
+/obj/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/plating,
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
 "nKE" = (
 /obj/machinery/light/small/sticky{
 	dir = 8
@@ -59759,7 +59755,7 @@
 /area/station/maintenance/outer/ne)
 "sqA" = (
 /obj/table/auto,
-/obj/random_item_spawner/tools/one_or_zero,
+/obj/random_item_spawner/tools/one,
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
 	icon_state = "line1"
@@ -64919,7 +64915,7 @@
 /area/station/medical/morgue)
 "tZv" = (
 /obj/table/round/auto,
-/obj/random_item_spawner/tableware/few,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -134944,7 +134940,7 @@ tYb
 qlw
 nEO
 bTK
-elM
+nKx
 vSl
 gLG
 uqq
@@ -135234,7 +135230,7 @@ oVh
 xPd
 xPd
 vBf
-nKx
+dpW
 hoj
 xPd
 xPd
@@ -135246,7 +135242,7 @@ ckD
 tZv
 qHC
 ltT
-elM
+nKx
 uQw
 nxd
 nxd
