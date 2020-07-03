@@ -6,8 +6,9 @@
 /obj/item/clothing/head/bald_cap
 	name = "bald cap"
 	desc = "You can't tell the difference, Honest!"
-	icon_state= "baldcap"
-	item_state= "baldcap"
+	icon_state = "baldcap"
+	item_state = "baldcap"
+	seal_hair = 1
 
 /obj/item/scissors
 	name = "scissors"
