@@ -16763,6 +16763,12 @@
 	},
 /turf/simulated/floor,
 /area/station/medical/robotics)
+"eQS" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/reagent_dispensers/fueltank,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/outer/sw)
 "eRl" = (
 /obj/item/clothing/under/gimmick/mario/waluigi,
 /obj/decal/cleanable/dirt/jen,
@@ -20285,6 +20291,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"fYj" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/reagent_dispensers/fueltank,
+/obj/decal/cleanable/rust/jen,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/se)
 "fYk" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -67272,6 +67285,13 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
+"uMU" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/reagent_dispensers/fueltank,
+/obj/decal/cleanable/rust/jen,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/nw)
 "uNc" = (
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/hallway/primary/west)
@@ -78400,6 +78420,13 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
+"yeU" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/reagent_dispensers/fueltank,
+/obj/decal/cleanable/rust/jen,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/turf/simulated/floor/plating/jen,
+/area/station/science/gen_storage)
 "yff" = (
 /obj/storage/closet/wardrobe/pride,
 /turf/unsimulated/floor/shuttle,
@@ -105063,7 +105090,7 @@ qgG
 jKY
 jDb
 uOO
-uOO
+eQS
 pFp
 ltH
 nrz
@@ -113436,7 +113463,7 @@ gdE
 vRz
 uuV
 mpU
-fOn
+uMU
 aVN
 hpO
 hpO
@@ -117466,7 +117493,7 @@ dpO
 bld
 qgC
 afo
-roJ
+yeU
 vce
 jdI
 rGo
@@ -130724,7 +130751,7 @@ dWC
 dWC
 kOp
 bCH
-mCz
+fYj
 jIk
 rtD
 ulW
