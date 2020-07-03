@@ -1556,63 +1556,65 @@ var/list/mechanics_telepads = new/list()
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activate")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate and send", "activateplus")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate", "deactivate")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate and send", "deactivateplus")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggle")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"output state", "state")
-		//MARKMARKMARK//SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,list("Set On-Signal","Set Off-Signal"))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle and send", "toggleplus")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", "send")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set On-Signal","setOnSignal")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Off-Signal","setOffSignal")
 
+	proc/setOnSignal(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user,"Please enter Signal:","Signal setting",signal_on) as text
+		if(length(inp))
+			inp = adminscrub(inp)
+			signal_on = inp
+			boutput(user, "On-Signal set to [inp]")
+			tooltip_rebuild = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(..(W, user)) return
-		else if(ispulsingtool(W))
-			switch(src.modify_configs())
-				if(0)
-					return
-				if("Set On-Signal")
-					var/inp = input(user,"Please enter Signal:","Signal setting",signal_on) as text
-					if(length(inp))
-						inp = adminscrub(inp)
-						signal_on = inp
-						boutput(user, "On-Signal set to [inp]")
-				if("Set Off-Signal")
-					var/inp = input(user,"Please enter Signal:","Signal setting",signal_off) as text
-					if(length(inp))
-						inp = adminscrub(inp)
-						signal_off = inp
-						boutput(user, "Off-Signal set to [inp]")
+	proc/setOffSignal(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user,"Please enter Signal:","Signal setting",signal_off) as text
+		if(length(inp))
+			inp = adminscrub(inp)
+			signal_off = inp
+			boutput(user, "Off-Signal set to [inp]")
 			tooltip_rebuild = 1
 
 	proc/activate(var/datum/mechanicsMessage/input)
 		on = 1
-		input.signal = signal_on
 		tooltip_rebuild = 1
-		updateIcon()
-		SPAWN_DBG(0)
-			mechanics.fireOutgoing(input)
+		return
+
+	proc/activateplus(var/datum/mechanicsMessage/input)
+		activate()
+		send(input)
 		return
 
 	proc/deactivate(var/datum/mechanicsMessage/input)
 		on = 0
-		input.signal = signal_off
 		tooltip_rebuild = 1
-		updateIcon()
-		SPAWN_DBG(0)
-			mechanics.fireOutgoing(input)
+		return
+
+	proc/deactivateplus(var/datum/mechanicsMessage/input)
+		deactivate()
+		send(input)
 		return
 
 	proc/toggle(var/datum/mechanicsMessage/input)
 		on = !on
-		input.signal = (on ? signal_on : signal_off)
 		tooltip_rebuild = 1
-		updateIcon()
-		SPAWN_DBG(0)
-			mechanics.fireOutgoing(input)
 		return
 
-	proc/state(var/datum/mechanicsMessage/input)
+	proc/toggleplus(var/datum/mechanicsMessage/input)
+		toggle()
+		send(input)
+		return
+
+	proc/send(var/datum/mechanicsMessage/input)
 		input.signal = (on ? signal_on : signal_off)
 		SPAWN_DBG(0)
-			mechanics.fireOutgoing(input)
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		return
 
 	updateIcon()
