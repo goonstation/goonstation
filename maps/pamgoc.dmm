@@ -63520,6 +63520,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/science/lab)
 "ctl" = (
+/obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/caution/west,
 /area/station/security/armory)
 "ctm" = (

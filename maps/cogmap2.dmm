@@ -38502,6 +38502,7 @@
 /obj/machinery/atmospherics/valve/notify_admins/vertical{
 	name = "Riot Control Gas"
 	},
+/obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bGW" = (

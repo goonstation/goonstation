@@ -2147,6 +2147,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/caution/south,
 /area/station/security/armory)
 "fF" = (
