@@ -2511,6 +2511,7 @@ proc/total_clients()
 proc/total_clients_for_cap()
 	.= 0
 	for (var/C in clients)
-		if (C && !C.holder)
-			.++
-
+		if (C)
+			var/client/CC = C
+			if (!CC.holder)
+				.++
