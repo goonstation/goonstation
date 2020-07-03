@@ -342,6 +342,17 @@
 
 ////////////////////////////////////////////////////////////
 
+/obj/ability_button/saw_toggle
+	name = "Toggle Saw"
+	icon_state = "saw"
+
+	execute_ability()
+		var/obj/item/saw/S = the_item
+		S.attack_self(usr)
+		..()
+
+////////////////////////////////////////////////////////////
+
 /obj/ability_button/flashlight_engiehelm
 	name = "Toggle Helmet Light"
 	icon_state = "on"

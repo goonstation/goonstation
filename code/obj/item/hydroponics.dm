@@ -45,6 +45,8 @@
 	cyborg
 		takes_damage = 0
 
+	/obj/item/saw/abilities = list(/obj/ability_button/saw_toggle)
+
 	New()
 		..()
 		SPAWN_DBG (5)
