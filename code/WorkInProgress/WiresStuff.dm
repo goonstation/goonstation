@@ -6,6 +6,7 @@
 	admin_only
 
 	//mapWorldNew(src)
+	//boop
 
 
 /proc/mapWorldNew(client/C)
