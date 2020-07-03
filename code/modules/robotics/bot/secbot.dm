@@ -1157,21 +1157,27 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		qdel(W)
 		
 	else if (istype(W, /obj/item/rods) && src.build_step == 3)
-		src.build_step++
-		boutput(user, "You add a rod to [src]'s robot arm!")
-		src.name = "helmet/signaler/prox sensor/robot arm/rod assembly"
-		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_rod")
-		qdel(W)
+		if (W.amount < 1)
+			boutput(user, "You need a non-zero amount of rods. How did you even do that?")
+		else
+			src.build_step++
+			boutput(user, "You add a rod to [src]'s robot arm!")
+			src.name = "helmet/signaler/prox sensor/robot arm/rod assembly"
+			src.overlays += image('icons/obj/bots/aibots.dmi', "hs_rod")
+			W.amount -= 1
 
 	else if (istype(W, /obj/item/cable_coil) && src.build_step >= 4)
-		src.build_step++
-		boutput(user, "You add the wires to the rod, completing the Securitron! Beep boop.")
-		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
-		S.beacon_freq = src.beacon_freq
-		S.hat = src.hat
-		S.name = src.created_name
-		qdel(W)
-		qdel(src)
+		if (W.amount <= 4)
+			boutput(user, "You need a longer length of cable! A length of five should be enough.")
+		else
+			src.build_step++
+			boutput(user, "You add the wires to the rod, completing the Securitron! Beep boop.")
+			var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
+			S.beacon_freq = src.beacon_freq
+			S.hat = src.hat
+			S.name = src.created_name
+			W.amount -= 5
+			qdel(src)
 
 	else if (istype(W, /obj/item/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
