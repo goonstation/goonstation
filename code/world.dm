@@ -433,6 +433,7 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/New", "Loading admins...")
 	src.load_admins()//UGH
 	Z_LOG_DEBUG("World/New", "Loading whitelist...")
+	src.load_whitelist("+secret/strings/whitelist.txt")
 	src.load_whitelist("data/generated-whitelist.txt")
 	Z_LOG_DEBUG("World/New", "Loading playercap bypass keys...")
 	src.load_playercap_bypass()
