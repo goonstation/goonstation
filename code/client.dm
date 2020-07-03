@@ -289,9 +289,9 @@
 		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
 		if (!src.holder)
 			src.verbs += /client/proc/toggle_mentorhelps
-	else if (player_capa && (total_clients() >= player_cap) && (src.ckey in bypassCapCkeys))
+	else if (player_capa && (total_clients_for_cap() >= player_cap) && (src.ckey in bypassCapCkeys))
 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you are allowed to bypass the player cap!</span>")
-	else if(player_capa && (total_clients() >= player_cap) && !src.holder)
+	else if(player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
 		boutput(src, "<span class='ooc adminooc'>I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
 		alert(src.mob,"I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL")
 		del(src)
