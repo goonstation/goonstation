@@ -927,6 +927,13 @@
 			else
 				return 0
 
+/obj/item/ammo/power_cell/minpower
+	name = "Power Cell - 75"
+	desc = "A power cell that holds a max of 75PU"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	max_charge = 75.0
+
 /obj/item/ammo/power_cell/med_power
 	name = "Power Cell - 200"
 	desc = "A power cell that holds a max of 200PU"

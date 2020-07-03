@@ -35,7 +35,7 @@
 	var/botcard_access = "Head of Security" //Job access for doors.
 	var/hat = null //Add an overlay from aibots.dmi with this state.  hats.
 	var/our_baton_type = /obj/item/baton/secbot
-	var/loot_baton_type = /obj/item/baton
+	var/loot_baton_type = /obj/item/baton/secbotdropped
 	var/stun_type = "stun"
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
@@ -80,6 +80,7 @@
 /obj/machinery/bot/secbot/beepsky
 	name = "Officer Beepsky"
 	desc = "It's Officer Beepsky! He's a loose cannon but he gets the job done."
+	loot_baton_type = /obj/item/baton
 	idcheck = 1
 	auto_patrol = 1
 	report_arrests = 1

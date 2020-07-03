@@ -413,6 +413,11 @@
 	icon_off = "stuncane"
 	cell_type = /obj/item/ammo/power_cell
 
+/obj/item/baton/secbotdropped
+	desc = "A low capacity security baton for use by securitrons. Its battery is firmly stuck in place, and can't be removed."
+	cell_type= /obj/item/ammo/power_cell/minpower
+	can_swap_cell = 0
+
 /obj/item/baton/classic
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."
