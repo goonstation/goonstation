@@ -12,7 +12,7 @@
 
 /obj/item/saw
 	name = "chainsaw"
-	desc = "A chainsaw used to chop up harmful plants. Despite its appearance, it's not extremely dangerous to humans."
+	desc = "A chainsaw used to chop up harmful plants."
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_off"
@@ -21,7 +21,7 @@
 	var/active = 0.0
 	hit_type = DAMAGE_CUT
 	force = 3.0
-	var/active_force = 10.0
+	var/active_force = 12.0
 	var/off_force = 3.0
 	var/how_dangerous_is_this_thing = 1
 	var/takes_damage = 1

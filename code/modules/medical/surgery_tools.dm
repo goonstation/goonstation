@@ -95,8 +95,8 @@ CONTAINS:
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_SAWING
 	hit_type = DAMAGE_CUT
-	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
-	force = 5
+	hitsound = 'sound/impact_sounds/circsaw.ogg'
+	force = 8
 	w_class = 1.0
 	throwforce = 3.0
 	throw_speed = 3
