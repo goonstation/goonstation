@@ -1218,7 +1218,7 @@
 	msgs.flush()
 	src.add_fingerprint(user)
 	#ifdef COMSIG_ITEM_ATTACK_POST
-	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_POST, M, user, power, armor_mod)
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_POST, M, user, power)
 	#endif
 	return
 

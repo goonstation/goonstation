@@ -147,14 +147,13 @@
 	/obj/item/clothing/glasses/meson,
 	/obj/item/clothing/suit/fire,
 	/obj/item/clothing/mask/gas,
-	/obj/item/storage/belt/utility/ceshielded,
+	/obj/item/storage/belt/utility/prepared/ceshielded,
 	/obj/item/clothing/head/helmet/welding,
 	/obj/item/clothing/head/helmet/hardhat,
 	/obj/item/device/multitool,
 	/obj/item/device/flash,
 	/obj/item/stamp/ce,
-	/obj/item/device/radio/headset/command/ce,
-	/obj/item/deconstructor)
+	/obj/item/device/radio/headset/command/ce)
 
 /* ==================== */
 /* ----- Security ----- */
@@ -528,9 +527,7 @@
 	/obj/item/clothing/head/helmet/hardhat,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,
-	/obj/item/clothing/head/helmet/welding,
-	/obj/item/storage/belt/utility,
-	/obj/item/deconstructor)
+	/obj/item/clothing/head/helmet/welding)
 
 /obj/storage/secure/closet/engineering/mining
 	name = "\improper Miner's locker"

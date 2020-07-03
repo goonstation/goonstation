@@ -272,6 +272,9 @@
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 #endif
 
+	items_in_backpack = list(/obj/item/gun/energy/taser_gun)
+
+
 	New()
 		..()
 		src.access = get_access("Head of Security")
@@ -722,11 +725,12 @@
 	wages = 150
 
 	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/device/pda2/mechanic
+	slot_belt = /obj/item/storage/belt/utility/prepared
 	slot_jump = /obj/item/clothing/under/rank/mechanic
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_lhan = /obj/item/storage/toolbox/electrical/mechanic_spawn
 	slot_glov = /obj/item/clothing/gloves/yellow
+	slot_poc1 = /obj/item/device/pda2/mechanic
 	slot_ears = /obj/item/device/radio/headset/engineer
 
 	New()
@@ -743,13 +747,14 @@
 #endif
 	wages = 200
 	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/device/pda2/engine
+	slot_belt = /obj/item/storage/belt/utility/prepared
 	slot_jump = /obj/item/clothing/under/rank/engineer
 	slot_foot = /obj/item/clothing/shoes/orange
-	slot_lhan = /obj/item/storage/toolbox/mechanical
+	slot_lhan = /obj/item/device/t_scanner
 	slot_glov = /obj/item/clothing/gloves/yellow
-	slot_poc1 = /obj/item/device/t_scanner
+	slot_poc1 = /obj/item/device/pda2/engine
 	slot_ears = /obj/item/device/radio/headset/engineer
+	items_in_backpack = list(/obj/item/electronics/soldering)
 
 	New()
 		..()
@@ -2184,7 +2189,8 @@
 	items_in_backpack = list(/obj/item/device/pda2/heads,
 							/obj/item/storage/firstaid/regular,
 							/obj/item/storage/pouch/clock,
-							/obj/item/gun/kinetic/clock_188)
+							/obj/item/gun/kinetic/clock_188,
+							/obj/item/requisition_token/security)
 
 	New()
 		..()
