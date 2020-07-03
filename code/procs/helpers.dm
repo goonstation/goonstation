@@ -2507,5 +2507,10 @@ proc/total_clients()
 			.++
 
 
-
+//total clients used for player cap (which pretends admins don't exist)
+proc/total_clients_for_cap()
+	.= 0
+	for (var/C in clients)
+		if (C && !C.holder)
+			.++
 
