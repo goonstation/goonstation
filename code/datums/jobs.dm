@@ -754,6 +754,7 @@
 	slot_glov = /obj/item/clothing/gloves/yellow
 	slot_poc1 = /obj/item/device/pda2/engine
 	slot_ears = /obj/item/device/radio/headset/engineer
+	items_in_backpack = list(/obj/item/electronics/soldering)
 
 	New()
 		..()
