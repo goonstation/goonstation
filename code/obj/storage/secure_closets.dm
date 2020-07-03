@@ -196,7 +196,7 @@
 /obj/storage/secure/closet/security/armory
 	name = "\improper Special Equipment locker"
 	req_access_txt = "37"
-	spawn_contents = list(/obj/item/requisition_token = 2,
+	spawn_contents = list(/obj/item/requisition_token/security = 2,
 	/obj/item/turret_deployer/riot = 2,
 	/obj/item/clothing/glasses/nightvision = 2,
 	/obj/item/clothing/glasses/sunglasses,
