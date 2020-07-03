@@ -1,4 +1,11 @@
 
+(t)fri jul 03 20
+(u)UrsulaMajor, Flaborized, and Tarmunora
+(p)1314
+(e)⚖🆕🎨|balance, feature, sprites
+(+)Combat Buffs for Circular Saw, Botany Saw, and Deconstruction Device
+(+)New sprites for Deconstruction Device
+(+)Adjusted surgical tool poisoning and armor-piercing statistics
 (t)thu jul 01 20
 (u)mbc
 (*)Security loadouts will also output a pinpointer that helps the officer find their chosen weapons (baton/gun) if they are stolen or lost.
