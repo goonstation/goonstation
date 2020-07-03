@@ -127,7 +127,7 @@ var/global/mob/twitch_mob = 0
 
 /world/proc/load_playercap_bypass()
 	set background = 1
-	var/text = file2text("strings/allow_thru_cap.txt")
+	var/text = file2text("+secret/strings/allow_thru_cap.txt")
 	if (!text)
 		return
 	else

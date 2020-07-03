@@ -2015,6 +2015,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/northsolar)
 "aeV" = (
+/obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/caution/east,
 /area/station/security/armory)
 "aeW" = (

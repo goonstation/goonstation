@@ -669,13 +669,20 @@
 	name = "deconstruction device"
 	desc = "A device meant to facilitate the deconstruction of scannable machines."
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "deconstruction"
+	icon_state = "deconstruction-saw"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "deconstruction-saw"
+	force = 10
+	throwforce = 4
+	hitsound = 'sound/machines/chainsaw_green.ogg'
+	hit_type = DAMAGE_CUT
 	w_class = 3.0
 	var/datum/effects/system/spark_spread/spark_system
 	module_research = list("electronics" = 3, "engineering" = 1)
 
 	New()
 		..()
+		tool_flags |= TOOL_SAWING
 		src.spark_system = unpool(/datum/effects/system/spark_spread)
 		spark_system.set_up(5, 0, src)
 		spark_system.attach(src)
