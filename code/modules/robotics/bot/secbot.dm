@@ -1168,7 +1168,8 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			W.amount -= 1
 
 	else if (istype(W, /obj/item/cable_coil) && src.build_step >= 4)
-		if (W.amount <= 4)
+		var/obj/item/cable_coil/C = W
+		if (!C.use(5))
 			boutput(user, "You need a longer length of cable! A length of five should be enough.")
 		else
 			src.build_step++
@@ -1177,7 +1178,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			S.beacon_freq = src.beacon_freq
 			S.hat = src.hat
 			S.name = src.created_name
-			W.amount -= 5
 			qdel(src)
 
 	else if (istype(W, /obj/item/pen))
