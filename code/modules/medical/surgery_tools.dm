@@ -115,7 +115,6 @@ CONTAINS:
 			icon_state = pick("saw1", "saw2", "saw3")
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
-		setProperty("piercing", 33)
 		BLOCK_LARGE
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
