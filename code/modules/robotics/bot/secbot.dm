@@ -1155,6 +1155,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		boutput(user, "You add the robot arm to [src]!")
 		src.name = "helmet/signaler/prox sensor/robot arm assembly"
 		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_arm")
+		user.u_equip(W)
 		qdel(W)
 		
 	else if (istype(W, /obj/item/rods) && src.build_step == 3)
@@ -1166,6 +1167,9 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			src.name = "helmet/signaler/prox sensor/robot arm/rod assembly"
 			src.overlays += image('icons/obj/bots/aibots.dmi', "hs_rod")
 			W.amount -= 1
+			if (W.amount < 1)
+				user.u_equip(W)
+				qdel(W)
 
 	else if (istype(W, /obj/item/cable_coil) && src.build_step >= 4)
 		var/obj/item/cable_coil/C = W
