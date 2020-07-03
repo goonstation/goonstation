@@ -39,10 +39,12 @@
 	
 	var/specialFiltering = 0
 
-/datum/component/mechanics_holder/Initialize(can_manualy_set_signal = 0)
+/datum/component/mechanics_holder/Initialize(can_manualy_set_signal = 0, specially_filters_outputs = 0)
 	configs.Add(list(DC_ALL))
 	if(can_manualy_set_signal)
-		configs.Add(list(SET_SEND))
+		allowManualSingalSetting()
+	if(specially_filters_outputs)
+		enableSpecialFiltering()
 	..()    //MarkNstein needs attention: make use of this for non-MechComp things. Like settings configs? Inputs?
 
 /datum/component/mechanics_holder/RegisterWithParent()
@@ -58,7 +60,7 @@
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_LINK), .proc/dropConnect)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ENABLE_SPECIAL_FILTERING), .proc/enableSpecialFiltering) //See defines at the top of the document
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_CONFIG), .proc/addConfig)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL), .proc/allow_manual_singal_setting) //Only use this when also using COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL), .proc/allowManualSingalSetting) //Only use this when also using COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG
 	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/attackby)    //MarkNstein needs attention
 	return  //No need to ..()
 
@@ -226,7 +228,7 @@
 	configs[name] = toCall
 	return
 
-/datum/component/mechanics_holder/proc/allow_manual_singal_setting() 
+/datum/component/mechanics_holder/proc/allowManualSingalSetting() 
 	if(!(list(SET_SEND) in configs))
 		configs.Add(list(SET_SEND))
 	return

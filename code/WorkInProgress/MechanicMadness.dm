@@ -38,7 +38,7 @@ var/list/mechanics_telepads = new/list()
 		return ..()
 
 	proc/cutParticles()
-		if(particles.len)
+		if(length(particles))
 			for(var/datum/particleSystem/mechanic/M in particles)
 				M.Die()
 			particles.Cut()
@@ -50,7 +50,7 @@ var/list/mechanics_telepads = new/list()
 			return
 		var/list/connected_outgoing
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_GET_OUTGOING, connected_outgoing) //MarkNstein needs attention
-		if(particles.len != connected_outgoing.len)
+		if(length(pparticles) != length(pconnected_outgoing))
 			cutParticles()
 			for(var/obj/X in connected_outgoing)
 				particles.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(src.loc, X.loc)))
@@ -498,7 +498,7 @@ var/list/mechanics_telepads = new/list()
 				break
 			var/obj/mechbeam/newbeam = new(lastturf, src)
 			newbeam.dir = src.dir
-			beamobjs[++beamobjs.len] = newbeam
+			beamobjs[length(++beamobjs)] = newbeam
 			lastturf = get_step(lastturf, dir)
 
 /obj/item/mechanics/hscan
@@ -764,7 +764,7 @@ var/list/mechanics_telepads = new/list()
 
 	proc/split(var/datum/mechanicsMessage/input)
 		var/list/converted = params2list(input.signal)
-		if(converted.len)
+		if(length(converted))
 			if(triggerSignal in converted)
 				input.signal = converted[triggerSignal]
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG, input)
@@ -1164,6 +1164,11 @@ var/list/mechanics_telepads = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"delete file", "deletefile")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 
+	disposing()
+		if (src.stored_file)
+			stored_file.dispose()
+		..()
+
 	proc/sendfile(var/datum/mechanicsMessage/input)
 		if (!src.stored_file) return
 		input.data_file = src.stored_file.copy_file()
@@ -1191,11 +1196,6 @@ var/list/mechanics_telepads = new/list()
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_file"
 		return
-
-	disposing()
-		if (src.stored_file)
-			stored_file.dispose()
-		..()
 
 
 /obj/item/mechanics/wificomp
@@ -1257,7 +1257,7 @@ var/list/mechanics_telepads = new/list()
 
 	proc/send(var/datum/mechanicsMessage/input)
 		var/list/converted = params2list(input.signal)
-		if(!converted.len || !ready) return
+		if(!length(converted) || !ready) return
 
 		ready = 0
 		SPAWN_DBG(3 SECONDS) ready = 1
@@ -1346,8 +1346,8 @@ var/list/mechanics_telepads = new/list()
 		. += {"<br><span class='notice'>[random ? "Sending random Signals.":"Sending selected Signals."]<br>
 		[announce ? "Announcing Changes.":"Not announcing Changes."]<br>
 		[allowDuplicates ? "Duplicate entries allowed." : "Duplicate entries not allowed."]<br>
-		Current Selection: [(!current_index || current_index > signals.len ||!signals.len) ? "Empty":"[current_index] -> [signals[current_index]]"]<br>
-		Currently contains [signals.len] Items:<br></span>
+		Current Selection: [(!current_index || current_index > length(signals) ||!length(signals)) ? "Empty":"[current_index] -> [signals[current_index]]"]<br>
+		Currently contains [length(signals)] Items:<br></span>
 		[signals.Join("<br>")]"}
 
 	New()
@@ -1363,10 +1363,14 @@ var/list/mechanics_telepads = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"previous + send", "previousplus")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected", "sendCurrent")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send random", "sendRand")
-		//MARKMARKMARK//SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,list("Set Signal List","Set Signal List(Delimeted)","Toggle Announcements","Toggle Random","Toggle Allow Duplicate Entries"))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Signal List","setSignalList")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Signal List(Delimeted)","setDelimetedList")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Announcements","toggleAnnouncements")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Random","toggleRandom")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Allow Duplicate Entries","toggleAllowDuplicates")
 
 
-	proc/MarkNstein(obj/item/W as obj, mob/user as mob)
+	proc/setSignalList(obj/item/W as obj, mob/user as mob)
 		var/numsig = input(user,"How many Signals would you like to define?","# Signals:", 3) as num
 		numsig = round(numsig)
 		if(numsig > 10) //Needs a limit because nerds are nerds
@@ -1374,108 +1378,89 @@ var/list/mechanics_telepads = new/list()
 			return
 		if(numsig)
 			signals.Cut()
+			current_index = 1
 			boutput(user, "Defining [numsig] Signals ...")
 			for(var/i=0, i<numsig, i++)
 				var/signew = input(user,"Content of Signal #[i]","Content:", "signal[i]") as text
 				signew = adminscrub(signew) //SANITIZE THAT SHIT! FUCK!!!!
 				if(length(signew))
 					signals.Add(signew)
-				else
-					signals.Cut()
-					return
 			boutput(user, "Set [numsig] Signals!")
 			for(var/a in signals)
 				boutput(user, a)
-		tooltip_rebuild = 1
+			tooltip_rebuild = 1
 
-	proc/MarkNstein(obj/item/W as obj, mob/user as mob)
+	proc/setDelimetedList(obj/item/W as obj, mob/user as mob)
 		var/newsigs = ""
-		while(1)
-			newsigs = input(user, "Enter a string delimited by ; for every item you want in the list.", "Enter a thing. Max length is 2048 characters", newsigs)
-			if(!newsigs)
-				boutput(user, "<span class='notice'>Signals remain unchanged!</span>")
-				break
-			if(length(newsigs) >= 2048)
-				alert(user, "That's far too long. Trim it down some!")
-				continue
-			var/list/built = splittext(newsigs, ";")
-			var/done = 1
-			for(var/i = 1, i <= built.len, i++)
-				if(!built[i])
-					done = 0
-					alert(user, "You have an empty signal in there, try again!(todo, just remove these)")
-					break
-			if(done)
-				signals = built
-				current_index = 1
-				boutput(user, "<span class='notice'>There are now [signals.len] signals in the list.</span>")
-				break
+		newsigs = input(user, "Enter a string delimited by ; for every item you want in the list.", "Enter a thing. Max length is 2048 characters", newsigs)
+		if(!newsigs)
+			boutput(user, "<span class='notice'>Signals remain unchanged!</span>")
+			return
+		if(length(newsigs) >= 2048)
+			alert(user, "That's far too long. Trim it down some!")
+			return
+		var/list/built = splittext(newsigs, ";")
+		for(var/i = 1, i <= length(built), i++)
+			if(!built[i])
+				built.Remove(built[i])
+				i--
+		signals = built
+		current_index = 1
+		boutput(user, "<span class='notice'>There are now [length(signals)] signals in the list.</span>")
 		tooltip_rebuild = 1
 
-	proc/MarkNstein(obj/item/W as obj, mob/user as mob)
+	proc/toggleAnnouncements(obj/item/W as obj, mob/user as mob)
 		announce = !announce
 		boutput(user, "Announcements now [announce ? "on":"off"]")
 		tooltip_rebuild = 1
 
-	proc/MarkNstein(obj/item/W as obj, mob/user as mob)
+	proc/toggleRandom(obj/item/W as obj, mob/user as mob)
 		random = !random
 		boutput(user, "[random ? "Now picking Items at random.":"Now using selected Items."]")
 		tooltip_rebuild = 1
 
-	proc/MarkNstein(obj/item/W as obj, mob/user as mob)
+	proc/toggleAllowDuplicates(obj/item/W as obj, mob/user as mob)
 		allowDuplicates = !allowDuplicates
 		boutput(user, "[allowDuplicates ? "Allowing addition of duplicate items." : "Not allowing addition of duplicate items."]")
 		tooltip_rebuild = 1
 
 	proc/selitem(var/datum/mechanicsMessage/input)
-		if(!input) return
-
-		if(signals.Find(input.signal))
-			current_index = signals.Find(input.signal)
+		if(!input) return 0
+		var/found_index = signals.Find(input.signal)
+		if(found_index)
+			current_index = found_index
 			tooltip_rebuild = 1
 
 		if(announce)
 			componentSay("Current Selection : [signals[current_index]]")
-		return
+		return 1
 
 	proc/selitemplus(var/datum/mechanicsMessage/input)
-		if(!input) return
-
-		if(signals.Find(input.signal))
-			current_index = signals.Find(input.signal)
-			tooltip_rebuild = 1
-		else
-			return // Don't send out a signal if not found
-
-		if(announce)
-			componentSay("Current Selection : [signals[current_index]]")
-
-		input.signal = signals[current_index]
-		SPAWN_DBG(0)
-			mechanics.fireOutgoing(input)
+		if(selitem(input))
+			sendCurrent(input)
 		return
 
 	proc/remitem(var/datum/mechanicsMessage/input)
 		if(!input) return
 
-		if(signals.Find(input.signal))
+		if(input.signal in signals)
 			signals.Remove(input.signal)
+			if(current_index > length(signals))
+				current_index = length(signals)
 			tooltip_rebuild = 1
 			if(announce)
 				componentSay("Removed : [input.signal]")
-
 		return
 
 	proc/remallitem(var/datum/mechanicsMessage/input)
 		if(!input) return
 
-		for(var/s in signals)
-			signals.Remove(s)
+		signals.Cut()
+		current_index = 1
 		tooltip_rebuild = 1
 
 		if(announce)
 			componentSay("Removed all signals.")
-
 		return
 
 	proc/additem(var/datum/mechanicsMessage/input)
@@ -1490,6 +1475,7 @@ var/list/mechanics_telepads = new/list()
 
 		else
 			if(!signals[input.signal])
+				signals.Add(input.signal)
 				signals[input.signal] = 1
 				tooltip_rebuild = 1
 				if(announce)
@@ -1499,7 +1485,6 @@ var/list/mechanics_telepads = new/list()
 
 	proc/sendRand(var/datum/mechanicsMessage/input)
 		if(!input) return
-		//I feel bad for doing this.
 		var/orig = random
 		random = 1
 		sendCurrent(input)
@@ -1508,65 +1493,47 @@ var/list/mechanics_telepads = new/list()
 
 	proc/sendCurrent(var/datum/mechanicsMessage/input)
 		if(!input) return
-		if(!current_index || current_index > signals.len ||!signals.len) return
 
-		if(random) input.signal = pick(signals)
-		else input.signal = signals[current_index]
+		if(random)
+			input.signal = pick(signals)
+		else if(!current_index || current_index > length(signals) || !length(signals)) 
+			return
+		else 
+			input.signal = signals[current_index]
 
 		SPAWN_DBG(0)
-			mechanics.fireOutgoing(input)
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		return
 
 	proc/next(var/datum/mechanicsMessage/input)
-		if(!signals.len) return
-		if((current_index + 1) > signals.len)
+		if(!length(signals)) return 0
+
+		if(++current_index > length(signals))
 			current_index = 1
-		else
-			current_index++
 		tooltip_rebuild = 1
 
 		if(announce)
 			componentSay("Current Selection : [signals[current_index]]")
-		return
+		return 1
 
 	proc/nextplus(var/datum/mechanicsMessage/input)
-		if(!signals.len) return
-		if((current_index + 1) > signals.len)
-			current_index = 1
-		else
-			current_index++
-		tooltip_rebuild = 1
-
-		if(announce)
-			componentSay("Current Selection : [signals[current_index]]")
-
-		sendCurrent(input)
+		if(next(input))
+			sendCurrent(input)
 		return
 
 	proc/previous(var/datum/mechanicsMessage/input)
-		if(!signals.len) return
-		if((current_index - 1) < 1)
-			current_index = signals.len
-		else
-			current_index--
+		if(!length(signals)) return 0
+		if(--current_index < 1)
+			current_index = length(signals)
 		tooltip_rebuild = 1
 
 		if(announce)
 			componentSay("Current Selection : [signals[current_index]]")
-		return
+		return 1
 
 	proc/previousplus(var/datum/mechanicsMessage/input)
-		if(!signals.len) return
-		if((current_index - 1) < 1)
-			current_index = signals.len
-		else
-			current_index--
-		tooltip_rebuild = 1
-
-		if(announce)
-			componentSay("Current Selection : [signals[current_index]]")
-
-		sendCurrent(input)
+		if(previous(input))
+			sendCurrent(input)
 		return
 
 	updateIcon()
@@ -1722,7 +1689,7 @@ var/list/mechanics_telepads = new/list()
 			if (T.teleID == src.teleID)
 				destinations.Add(T)
 
-		if(destinations.len)
+		if(length(destinations))
 			var/atom/picked = pick(destinations)
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(picked.loc)))
 			for(var/atom/movable/M in src.loc)
@@ -2074,7 +2041,7 @@ var/list/mechanics_telepads = new/list()
 				if(0)
 					return
 				if("Add Button")
-					if(src.active_buttons.len >= 10)
+					if(length(src.active_buttons) >= 10)
 						boutput(user, "<span class='alert'>There's no room to add another button - the panel is full</span>")
 						return
 
@@ -2090,7 +2057,7 @@ var/list/mechanics_telepads = new/list()
 						src.active_buttons[new_label] = new_signal
 						boutput(user, "Added button with label: [new_label] and value: [new_signal]")
 				if("Remove Button")
-					if(!src.active_buttons.len)
+					if(!length(src.active_buttons))
 						boutput(user, "<span class='alert'>[src] has no active buttons - there's nothing to remove!</span>")
 					else
 						var/to_remove = input(user, "Choose button to remove", "Button Panel") in src.active_buttons + "*CANCEL*"
@@ -2106,7 +2073,7 @@ var/list/mechanics_telepads = new/list()
 
 	attack_hand(mob/user as mob)
 		if (level == 1)
-			if (src.active_buttons.len)
+			if (length(src.active_buttons))
 				var/selected_button = input(usr, "Press a button", "Button Panel") in src.active_buttons + "*CANCEL*"
 				if (!selected_button || selected_button == "*CANCEL*" || !in_range(src, usr)) return
 				flick(icon_down, src)
