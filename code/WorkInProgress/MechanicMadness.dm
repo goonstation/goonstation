@@ -50,7 +50,7 @@ var/list/mechanics_telepads = new/list()
 			return
 		var/list/connected_outgoing
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_GET_OUTGOING, connected_outgoing) //MarkNstein needs attention
-		if(length(pparticles) != length(pconnected_outgoing))
+		if(length(particles) != length(connected_outgoing))
 			cutParticles()
 			for(var/obj/X in connected_outgoing)
 				particles.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(src.loc, X.loc)))
@@ -498,7 +498,7 @@ var/list/mechanics_telepads = new/list()
 				break
 			var/obj/mechbeam/newbeam = new(lastturf, src)
 			newbeam.dir = src.dir
-			beamobjs[length(++beamobjs)] = newbeam
+			beamobjs[++beamobjs.len] = newbeam
 			lastturf = get_step(lastturf, dir)
 
 /obj/item/mechanics/hscan
