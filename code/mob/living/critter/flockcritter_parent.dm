@@ -502,3 +502,38 @@
 				var/obj/table/flock/f = target
 				playsound(get_turf(f), "sound/items/Deconstruct.ogg", 50, 1)
 				f.deconstruct()
+//
+//deposit action
+//
+
+/datum/action/bar/flock_deposit
+	id = "flock_repair"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 10
+
+	var/obj/flock_structure/ghost/target
+
+	New(var/mob/living/critter/flock/drone/ntarg, var/duration_i)
+		..()
+		if (ntarg)
+			target = ntarg
+		if (duration_i)
+			duration = duration_i
+
+	onUpdate()
+		..()
+		if (target == null || owner == null || get_dist(owner, target) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
+
+	onEnd()
+		..()
+		owner.visible_message("<span class='alert'>[owner] deposits materials to the [target]!</span>", "<span class='notice'>You deposit materials to the tealprint</span>")
+		var/mob/living/critter/flock/drone/F = owner
+		var/amounttopay = F.resources < 10 ? F.resources : 10
+		F.pay_resources(amounttopay)
+		target.currentmats = amounttopay + target.currentmats

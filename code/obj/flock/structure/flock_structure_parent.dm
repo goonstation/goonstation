@@ -21,7 +21,6 @@
 	..()
 	health_max = health
 	time_started = world.timeofday
-	message_admins("[src] is src, and was added to processing items")
 	processing_items |= src
 	if(F)
 		src.flock = F

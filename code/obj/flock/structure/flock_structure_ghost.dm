@@ -20,6 +20,8 @@
 		var/atom/b = building
 		icon = initial(b.icon)
 		icon_state = initial(b.icon_state)
+		src.color = flockVisionColorMatrix
+		src.alpha = 104
 		src.goal = goal //???? wuh
 		src.building = building
 	else
@@ -34,12 +36,14 @@
 		src.completebuild()
 	else if(currentmats == goal)
 		src.completebuild()
-
 		//not enough resources = do nothin
+	updatealpha()
+
+/obj/flock_structure/ghost/proc/updatealpha()
+	alpha = lerp(104, 255, currentmats / goal)
 
 /obj/flock_structure/ghost/proc/completebuild()
 	if(src.building)
-//		building = text2path(building)
 		new building(get_turf(src), src.flock)
 		qdel(src)
 	else
