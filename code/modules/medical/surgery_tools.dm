@@ -48,7 +48,7 @@ CONTAINS:
 			icon_state = pick("scalpel1", "scalpel2")
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
-		setProperty("piercing", 33)
+		setProperty("piercing", 80)
 		BLOCK_KNIFE
 
 
@@ -111,6 +111,7 @@ CONTAINS:
 
 	New()
 		..()
+		src.setItemSpecial(/datum/item_special/double)
 		if (src.icon_state == "saw1")
 			icon_state = pick("saw1", "saw2", "saw3")
 		src.create_reagents(5)
@@ -176,7 +177,7 @@ CONTAINS:
 		..()
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
-		setProperty("piercing", 33)
+		setProperty("piercing", 80)
 
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)

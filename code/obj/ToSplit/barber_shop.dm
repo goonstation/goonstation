@@ -17,7 +17,7 @@
 	icon_state = "scissors"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SNIPPING
-	force = 6.0
+	force = 8.0
 	w_class = 1.0
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
