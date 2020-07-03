@@ -36,7 +36,6 @@
 		src.visible_message("<span class='alert'>A divine shield absorbs the magical projectile!</span>")
 		return
 
-
 	if(src.material) src.material.triggerOnBullet(src, src, P)
 	for (var/atom/A in src)
 		if (A.material)
