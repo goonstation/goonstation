@@ -1397,22 +1397,28 @@
 
 	New(var/mob/living/carbon/human/H)
 		..()
-		H.max_health -= 50
-		H.add_stam_mod_max("kudzu", -100)
-		H.add_stam_mod_regen("kudzu", -5)
-		if(ishuman(mob))
-			H.abilityHolder = new /datum/abilityHolder/kudzu(H)
-			H.abilityHolder.owner = H
-			H.abilityHolder.addAbility(/datum/targetable/kudzu/guide)
-			H.abilityHolder.addAbility(/datum/targetable/kudzu/heal_other)
-			H.abilityHolder.addAbility(/datum/targetable/kudzu/stealth)
-			H.abilityHolder.addAbility(/datum/targetable/kudzu/kudzusay)
+		SPAWN_DBG(0)	//ugh
+			H.max_health -= 50
+			H.health = max(H.max_health, H.health)
+			H.add_stam_mod_max("kudzu", -100)
+			H.add_stam_mod_regen("kudzu", -5)
+			if(ishuman(mob))
+				H.abilityHolder = new /datum/abilityHolder/kudzu(H)
+				H.abilityHolder.owner = H
+				H.abilityHolder.addAbility(/datum/targetable/kudzu/guide)
+				H.abilityHolder.addAbility(/datum/targetable/kudzu/growth)
+				H.abilityHolder.addAbility(/datum/targetable/kudzu/seed)
+				H.abilityHolder.addAbility(/datum/targetable/kudzu/heal_other)
+				H.abilityHolder.addAbility(/datum/targetable/kudzu/stealth)
+				H.abilityHolder.addAbility(/datum/targetable/kudzu/kudzusay)
 
 
 	disposing()
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			H.abilityHolder.removeAbility(/datum/targetable/kudzu/guide)
+			H.abilityHolder.removeAbility(/datum/targetable/kudzu/growth)
+			H.abilityHolder.addAbility(/datum/targetable/kudzu/seed)
 			H.abilityHolder.removeAbility(/datum/targetable/kudzu/heal_other)
 			H.abilityHolder.removeAbility(/datum/targetable/kudzu/stealth)
 			H.abilityHolder.addAbility(/datum/targetable/kudzu/kudzusay)

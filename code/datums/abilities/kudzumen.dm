@@ -48,15 +48,22 @@
 	pointName = "nutrients"
 	var/stealthed = 0
 	var/obj/screen/kudzu/meter/nutrients_meter = null
+	var/obj/screen/kudzu/growth_amount/growth_amt = null
+
 	var/const/MAX_POINTS = 100
+
 	New()
 		..()
 		if (owner.client)
 			nutrients_meter = new/obj/screen/kudzu/meter(src)
 			nutrients_meter.add_to_client(owner.client)
 
+			growth_amt = new/obj/screen/kudzu/growth_amount(get_master_kudzu_controller())
+			growth_amt.add_to_client(owner.client)
+
 	disposing()
 		qdel(nutrients_meter)
+		qdel(growth_amt)
 		..()
 
 	onAbilityStat()
@@ -67,6 +74,8 @@
 		if(..()) return
 		if (nutrients_meter)
 			nutrients_meter.update()
+		if (growth_amt)
+			growth_amt.update()
 		if (points <= 0)
 			points = 0
 			//unstealth
@@ -322,8 +331,8 @@
 		return 0
 
 /datum/targetable/kudzu/seed
-	name = "Stealth"
-	desc = "Create a !"
+	name = "Manipulate Seed"
+	desc = "Create or manipulate a plant seed by using the resources available to the kudzu!"
 	icon_state = "seec"
 	targeted = 0
 	cooldown = 1 MINUTES
@@ -334,7 +343,7 @@
 		var/datum/controller/process/kudzu/K = get_master_kudzu_controller()
 		var/power = 1
 		if (istype(K))
-			var/count = K.detailed_count?.len
+			var/count = length(K.kudzu)
 			//The seeds available are based on the size of the kudzu. Doing a switch in case I want to add more levels later, idk. Could get whacky with it.
 			switch (count)
 				if (-INFINITY to 100)
@@ -345,6 +354,48 @@
 					power = 3
 			DEBUG_MESSAGE("[holder.owner] used make seed when kudzu was [count].")
 
+		var/obj/item/seed/S = holder.owner.equipped()
+		if (istype(S))
+			return manipulate(S, power, holder.owner)
+		else
+			return create(power)
+
+	proc/manipulate(var/obj/item/seed/S, var/power as num, var/mob/user)
+		if (!istype(S)) return //Should never happen but byond has ruined me.
+		
+		var/datum/plantgenes/DNA = S.plantgenes
+
+		var/amount = 5 + (power - 1)*5			//if power is 1, amount is 5| if power is 2, amount is 10| if power is 3, amount is 15
+		var/max_gene_amt = 25 * power			//75 at max
+		var/choice = input("What do you want to do with this seed.", "Seed Manipulation", "Potency") in list("Mend Seed", "Maturation Rate", "Production Rate", "Lifespan", "Yield", "Potency", "Endurance")
+
+		if (isnull(choice))
+			return 1
+
+		if (choice == "Mend Seed")
+			S.seeddamage = max(S.seeddamage - amount*2, 0)
+			boutput(user, "<span class='notice'>You heal the cute little [S] in your hand.</span>")
+			return
+
+		//Can't raise the value past the max_gene_amt which is 25, 50, 75; based on size of the kudzu growth
+		switch (choice)
+			if ("Maturation Rate")
+				DNA.growtime += min(DNA.growtime + amount, max_gene_amt)
+			if ("Production Rate")
+				DNA.harvtime += min(DNA.harvtime + amount, max_gene_amt)
+			if ("Lifespan")
+				DNA.harvests += min(DNA.harvests + amount, max_gene_amt)
+			if ("Yield")
+				DNA.cropsize += min(DNA.cropsize + amount, max_gene_amt)
+			if ("Potency")
+				DNA.potency += min(DNA.potency + amount, max_gene_amt)
+			if ("Endurance")
+				DNA.endurance += min(DNA.endurance + amount, max_gene_amt)
+
+		boutput(user, "<span class='notice'>You try to manipulate [S]'s [choice] gene on a molecular level.</span>")
+		return 0
+
+	proc/create(var/power as num)
 		//lifted from the portable seed fab
 		var/list/usable = list()
 		for(var/datum/plant/A in hydro_controls.plant_species)
@@ -360,7 +411,7 @@
 			else if (A.vending == 2 && power >= 2)
 				usable += A
 
-		var/datum/plant/pick = input(usr, "Which seed do you want?", "Portable Seed Fabricator", null) in usable
+		var/datum/plant/pick = input(holder.owner, "Which seed do you want?", "Portable Seed Fabricator", null) in usable
 
 		if (pick)
 			var/obj/item/seed/S
@@ -375,7 +426,7 @@
 
 /datum/targetable/kudzu/growth
 	name = "Growth"
-	desc = "Encourage rapid growth of kudzu!"
+	desc = "Encourage rapid growth of plant life! Use on the ground to make kudzu and on plant pots to add nutrients!"
 	icon_state = "seec"
 	targeted = 1
 	target_anything = 1
@@ -384,6 +435,15 @@
 	max_range = 2
 
 	cast(atom/target)
+		//For giving nutrients to plantpots
+		if (istype(target, /obj/machinery/plantpot) && target.reagents)
+			//replace with kudzu_nutrients when I make it. should be a good thing for plants, maybe kinda good for man.
+			target.reagents.add_reagent("poo", 60)
+			target.reagents.add_reagent("water", 60)
+			boutput(holder.owner, "<span class='notice'>You release some nutrients into [target].</span>")
+			return 0
+
+		//For spreading kudzu growth
 		var/turf/T = get_turf(target)
 		if (isturf(T))
 			if (T.density)
@@ -396,10 +456,16 @@
 				kudzu_tile.growth += 10
 				kudzu_tile.to_spread += 5
 				kudzu_tile.update_self()
-				boutput(holder.owner, "<span class='notice'>You spray some nutrients on [kudzu_tile] to help it grow.</span>")
+
+				for (var/obj/spacevine/other_kudzu in oview(T, 1))
+					other_kudzu.growth += 5
+					other_kudzu.to_spread += 2
+					other_kudzu.update_self()
+
+				boutput(holder.owner, "<span class='notice'>You mentally redirect some nutrients towards [kudzu_tile] to help it and the surrounding kudzu grow.</span>")
 			else
 				new/obj/spacevine/living(location=T, to_spread=4)
-				boutput(holder.owner, "<span class='notice'>Some of the kudzu attached to your body detaches and finds a new home on [T].</span>")
+				boutput(holder.owner, "<span class='notice'>Some of the kudzu soaked in nutrients attached to your body detaches and finds a new home on [T].</span>")
 
 /obj/screen/kudzu/meter
 	icon = 'icons/misc/32x64.dmi'
@@ -430,9 +496,59 @@
 		if (usr.client.tooltipHolder)
 			usr.client.tooltipHolder.hideHover()
 
-	proc/update()
-		cur_meter_location = round((max(holder.points,0)/holder.MAX_POINTS)*11)	//length of meter
+	proc/update()		//getting weird numbers in here
+		cur_meter_location = clamp(round((max(holder.points,0)/holder.MAX_POINTS)*11), 0, 11)	//length of meter
 		if (cur_meter_location != last_meter_location)
 			src.icon_state ="viney-[cur_meter_location]"
 
 		last_meter_location = cur_meter_location
+
+/obj/screen/kudzu/growth_amount
+	icon = 'icons/misc/kudzu_plus.dmi'
+	icon_state = "kudzu-template"
+	name = "Kudzu Growth"
+	screen_loc = "WEST,CENTER+4"
+	var/theme = null // for wire's tooltips, it's about time this got varized
+	var/datum/controller/process/kudzu/kudzu_controller
+	var/amount = 0
+
+	New(var/datum/controller/process/kudzu/K)
+		if (istype(K))
+			kudzu_controller = K
+			amount = length(K.kudzu)
+		else
+			boutput(usr, "messed up kudzu controller call 1-800-CODER")
+			logTheThing("debug", null, null, "Messed up kudzu controller for kudzuman")
+
+	disposing()
+		kudzu_controller = null
+		..()
+
+	//WIRE TOOLTIPS
+	MouseEntered(location, control, params)
+		if (usr.client.tooltipHolder && control == "mapwindow.map")
+			var/theme = src.theme
+
+			usr.client.tooltipHolder.showHover(src, list(
+				"params" = params,
+				"title" = "Size of Kudzu Growth",
+				"content" = "[amount] tiles",
+				"theme" = theme
+			))
+
+	MouseExited()
+		if (usr.client.tooltipHolder)
+			usr.client.tooltipHolder.hideHover()
+
+	proc/update()
+		amount = length(kudzu_controller.kudzu)
+
+		if (amount > 9999)
+			src.maptext = "<div style='font-size:20px; color:maroon;text-align:center;'>+</div>"
+			src.maptext_y = 2
+		else if (amount > 999)
+			src.maptext = "<div style='font-size:10px; color:maroon;text-align:center;'>[amount]</div>"
+			src.maptext_y = 8
+		else
+			src.maptext = "<div style='font-size:7px; color:maroon;text-align:center;'>[amount]</div>"
+			src.maptext_y = 10

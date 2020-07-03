@@ -131,7 +131,7 @@
 			return 0
 		return 1
 
-	New(turf/location, var/to_spread)
+	New(turf/location, var/to_spread = KUDZU_TO_SPREAD_INITIAL)
 		src.to_spread = to_spread
 		var/turf/T = get_turf(location)
 		if (istype(T, /turf/space))
