@@ -428,6 +428,15 @@ var/f_color_selector_handler/F_Color_Selector
 	//This is used by bans for checking, so we want it very available
 	apiHandler = new()
 
+	Z_LOG_DEBUG("World/New", "Loading MOTD...")
+	src.load_motd()//GUH
+	Z_LOG_DEBUG("World/New", "Loading admins...")
+	src.load_admins()//UGH
+	Z_LOG_DEBUG("World/New", "Loading whitelist...")
+	src.load_whitelist("data/generated-whitelist.txt")
+	Z_LOG_DEBUG("World/New", "Loading playercap bypass keys...")
+	src.load_playercap_bypass()
+
 	//This is also used pretty early
 	Z_LOG_DEBUG("World/New", "Setting up powernets...")
 	makepowernets()
@@ -458,15 +467,6 @@ var/f_color_selector_handler/F_Color_Selector
 	set background = 1
 	Z_LOG_DEBUG("World/Init", "init() - Lagcheck enabled")
 	lagcheck_enabled = 1
-
-	Z_LOG_DEBUG("World/Init", "Loading MOTD...")
-	src.load_motd()//GUH
-	Z_LOG_DEBUG("World/Init", "Loading admins...")
-	src.load_admins()//UGH
-	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
-	src.load_whitelist("data/generated-whitelist.txt")
-	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
-	src.load_playercap_bypass()
 
 	Z_LOG_DEBUG("World/Init", "Starting input loop")
 	start_input_loop()
