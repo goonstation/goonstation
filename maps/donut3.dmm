@@ -3246,6 +3246,9 @@
 	pixel_x = 6;
 	pixel_y = 12
 	},
+/obj/item/surgical_spoon{
+	pixel_y = 7
+	},
 /turf/simulated/floor/blackwhite/side{
 	dir = 4
 	},
@@ -74765,6 +74768,9 @@
 /obj/item/staple_gun{
 	pixel_x = 6;
 	pixel_y = 12
+	},
+/obj/item/surgical_spoon{
+	pixel_y = 7
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
