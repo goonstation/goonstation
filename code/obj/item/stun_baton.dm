@@ -414,7 +414,7 @@
 	cell_type = /obj/item/ammo/power_cell
 
 /obj/item/baton/secbotdropped
-	desc = "A low capacity security baton for use by securitrons. Its battery is firmly stuck in place, and can't be removed."
+	desc = "A low capacity security baton for use by securitrons. Its battery is fixed firmly in place, and can't be removed."
 	cell_type= /obj/item/ammo/power_cell/minpower
 	can_swap_cell = 0
 
