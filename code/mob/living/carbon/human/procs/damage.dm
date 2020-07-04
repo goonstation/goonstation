@@ -32,8 +32,9 @@
 		return
 
 	if (P?.proj_data?.is_magical  && src?.traitHolder?.hasTrait("training_chaplain"))
+		src.visible_message("<span class='alert'>A divine light absorbs the magical projectile!</span>")
+		playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 		P.die()
-		src.visible_message("<span class='alert'>A divine shield absorbs the magical projectile!</span>")
 		return
 
 	if(src.material) src.material.triggerOnBullet(src, src, P)
