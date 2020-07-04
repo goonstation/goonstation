@@ -124,7 +124,7 @@
 /obj/machinery/bot/secbot/gun
 	name = "Shoot Gunsky"
 	desc = "That robot has a gun!"
-	heath = 4200
+	health = 4200
 	auto_patrol = 0
 	beacon_freq = 1444
 	hat = "helm"
@@ -183,6 +183,36 @@
 	var/beacon_freq = 1445 //If it's running on another beacon circuit I guess
 	var/hat = null
 
+// MOVE ELSEWHERE -V
+
+/obj/item/device/secbotgun/taser
+	name = "Taser tool module"
+	desc = "A taser module for PR-6S Guardbuddies."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "tool_taser"
+	mats = 6
+	w_class = 2.0
+	var/tool_id = "TASER" 	//Identification ID.
+	var/add_loot = null 	// Get our weapon back!
+	var/give_thing = null 	// The thing we give the bot to have the thing
+	var/current_projectile = new/datum/projectile/energy_bolt/robust
+
+	shootem(null, null, current_projectile, 10)
+
+		if (src.last_attack && (world.time < (src.last_attack + 1)))
+			return
+
+		else 
+			shoot_projectile_ST_pixel(src, current_projectile, M)
+			if (!M)
+				return
+
+			user.visible_message("<span class='alert'><b>[src] fires the taser at [src.target]!</b></span>")
+
+		src.last_attack = world.time
+		return
+			
+// End Tazer
 
 /obj/machinery/bot/secbot
 	New()
@@ -364,12 +394,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				src.mode = SECBOT_HUNT
 			..()
 
-	proc/shootsec(var/atom/target as mob|obj)
-		if(src.botgun)
-			var/is_ranged = get_dist(src, target) > 1
-			src.botgun.shootsec(target, src, is_ranged)
-		return
-
 	proc/navigate_to(atom/the_target,var/move_delay=3,var/adjacent=0)
 		if(src.moving) return 1
 		src.moving = 1
@@ -432,65 +456,31 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				src.mover = null
 			src.frustration = 0
 		return
+		
+	proc/shootgun_attack(var/mob/living/carbon/M)
+		src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
+		var/shootcount = (src.emagged >= 2) ? rand(5,10) : 1
 
-// MOVE ELSEWHERE -V
+		last_attack = world.time
 
-/obj/item/device/secbotgun
-	name = "Testgun for Shootbot"
-	desc = "A securitron gun. oh my."
-	icon = 'icons/obj/module.dmi'
-	icon_state = "tool_generic"
-	mats = 6
-	w_class = 2.0
-	var/tool_id = "GENERIC" //Identification ID.
-	var/is_gun = 0 		// 1 Is ranged, 0 is melee.
-	var/last_use = 0 	// If we want a use delay.
-	var/add_loot = null // Get our weapon back!
-	var/give_thing = null 	// The thing we give the bot to have the thing
+		while (shootcount > 0 && src.target)
+			shootcount--
+			src.botgun.shootem(src, M)
 
-	proc
-		shootsec(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=1)
-			if(!user || !user.on || user.getStatusDuration("stunned") || user.idle)
-				return 1
+		SPAWN_DBG(0.2 SECONDS)
+			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
+		if (src.target.getStatusDuration("weakened"))
+			mode = SECBOT_PREP_ARREST
+			src.anchored = 1
+			src.target_lastloc = M.loc
+			moving = 0
 
-			return 0
-
-	//Taser tool
-	taser
-		name = "Taser tool module"
-		desc = "A taser module for PR-6S Guardbuddies."
-		icon_state = "tool_taser"
-		tool_id = "TASER"
-		is_gun = 1
-		var/datum/projectile/current_projectile = new/datum/projectile/energy_bolt/robust
-
-		// Updated for new projectile code (Convair880).
-		shootsec(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
-			if (..()) return
-
-			if (src.last_use && world.time < src.last_use + 1)
-				return
-
-			if (ranged)
-				var/obj/projectile/P = shoot_projectile_ST_pixel(master, current_projectile, target)
-				if (!P)
-					return
-
-				user.visible_message("<span class='alert'><b>[master] fires the taser at [target]!</b></span>")
-
-			else
-				var/obj/projectile/P = initialize_projectile_ST(master, current_projectile, target)
-				if (!P)
-					return
-
-				user.visible_message("<span class='alert'><b>[master] shoots [target] point-blank with the taser!</b></span>")
-				P.was_pointblank = 1
-				hit_with_existing_projectile(P, target)
-
-			src.last_use = world.time
-			return
-			
-// End Tazer
+			//qdel(src.mover)
+			if (src.mover)
+				src.mover.master = null
+				src.mover = null
+			src.frustration = 0
+		return
 
 	Move(var/turf/NewLoc, direct)
 		var/oldloc = src.loc
@@ -1219,8 +1209,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			return
 
 		return
-
-
 
 //Secbot Construction
 
