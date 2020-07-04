@@ -1993,16 +1993,20 @@ proc/countJob(rank)
 /**
   * A universal ckey -> mob reference lookup proc, adapted from whois() (Convair880).
   */
-/proc/whois_ckey_to_mob_reference(target as text)
-	if (!target || isnull(target))
+/proc/whois_ckey_to_mob_reference(target as text, exact=1)
+	if (isnull(target))
 		return 0
-	target = lowertext(target)
+	target = ckey(target)
 	var/mob/our_mob
 	for (var/mob/M in mobs)
-		if ((!isnull(M.ckey) && !isnull(target)) && findtext(M.ckey, target))
-			//DEBUG_MESSAGE("Whois: match found for [target], it's [M].")
+		if (!isnull(M.ckey) && M.ckey == target)
 			our_mob = M
 			break
+	if(!our_mob && !exact)
+		for (var/mob/M in mobs)
+			if (!isnull(M.ckey) && findtext(M.ckey, target))
+				our_mob = M
+				break
 	if (our_mob) return our_mob
 	else return 0
 
@@ -2503,5 +2507,11 @@ proc/total_clients()
 			.++
 
 
-
-
+//total clients used for player cap (which pretends admins don't exist)
+proc/total_clients_for_cap()
+	.= 0
+	for (var/C in clients)
+		if (C)
+			var/client/CC = C
+			if (!CC.holder)
+				.++

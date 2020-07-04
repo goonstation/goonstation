@@ -136,6 +136,7 @@
 	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 5
+	w_class = 4.0
 
 	New()
 		..()
@@ -181,8 +182,10 @@
 	desc = "Can hold various small objects."
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	can_hold = list(/obj/item/deconstructor)
+	in_list_or_max = 1
 
-/obj/item/storage/belt/utility/ceshielded
+/obj/item/storage/belt/utility/prepared/ceshielded
 	name = "aurora MKII utility belt"
 	desc = "An utility belt for usage in high-risk salvage operations. Contains a personal shield generator. Can be activated to overcharge the shields temporarily."
 	icon_state = "cebelt"
@@ -302,7 +305,7 @@
 	/obj/item/screwdriver,
 	/obj/item/wrench,
 	/obj/item/device/multitool,
-	/obj/item/cable_coil)
+	/obj/item/deconstructor)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
@@ -359,6 +362,22 @@
 		inspector
 			icon_state = "inspector_holster"
 			item_state = "inspector_holster"
+
+
+	standard
+		spawn_contents = list(/obj/item/gun/energy/taser_gun, /obj/item/baton)
+
+	offense
+		spawn_contents = list(/obj/item/gun/energy/wavegun, /obj/item/baton)
+
+	support
+		spawn_contents = list(/obj/item/baton, /obj/item/reagent_containers/food/snacks/donut/robust = 2,  /obj/item/reagent_containers/emergency_injector/morphine = 4)
+
+	control
+		spawn_contents = list(/obj/item/gun/energy/tasershotgun, /obj/item/chem_grenade/pepper = 4, /obj/item/baton)
+		New()
+			..()
+			can_hold += /obj/item/gun/energy/tasershotgun //lol
 
 //////////////////////////////
 // ~Nuke Ops Class Storage~ //

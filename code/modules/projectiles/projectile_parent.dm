@@ -362,8 +362,8 @@
 				ys = -1
 				y32 = -y32
 		var/max_t
-		if (proj_data.dissipation_rate && proj_data.max_range == 500) //500 is default maximum range
-			proj_data.max_range = proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate)
+		if (proj_data.dissipation_rate > 0) //500 is default maximum range
+			proj_data.max_range = min(proj_data.max_range, proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate))
 		max_t = proj_data.max_range // why not
 		var/next_x = x32 / 2
 		var/next_y = y32 / 2
@@ -559,6 +559,7 @@ datum/projectile
 
 		sname = "stun"           // name of the projectile setting, used when you change a guns setting
 		shot_sound = 'sound/weapons/Taser.ogg' // file location for the sound you want it to play
+		shot_sound_extrarange = 0 //should the sound have extra range?
 		shot_volume = 100		 // How loud the sound plays (thank you mining drills for making this a needed thing)
 		shot_number = 0          // How many projectiles should be fired, each will cost the full cost
 		shot_delay = 1          // Time between shots in a burst.
@@ -947,7 +948,7 @@ datum/projectile/snowball
 	if (narrator_mode)
 		playsound(S, 'sound/vox/shoot.ogg', 50, 1)
 	else if(DATA.shot_sound && DATA.shot_volume && shooter)
-		playsound(S, DATA.shot_sound, DATA.shot_volume, 1)
+		playsound(S, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange)
 		if (isobj(shooter))
 			for (var/mob/M in shooter)
 				M << sound(DATA.shot_sound, volume=DATA.shot_volume)

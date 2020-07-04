@@ -37259,6 +37259,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 4
+	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/cargo)
 "brv" = (
@@ -37778,6 +37781,10 @@
 	dir = 2;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
 	},
 /turf/simulated/floor/red/side{
 	dir = 5
@@ -39592,9 +39599,8 @@
 /obj/item/device/radio/intercom{
 	dir = 4
 	},
-/obj/machinery/light_switch{
-	name = "N light switch";
-	pixel_y = 24
+/obj/machinery/recharger/wall/sticky{
+	dir = 1
 	},
 /turf/simulated/floor/red/side{
 	dir = 9
@@ -51906,7 +51912,7 @@
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "bUq" = (
-/obj/machinery/weapon_stand/taser_rack/recharger,
+/obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/caution/west,
 /area/station/security/main)
 "bUr" = (
@@ -52257,14 +52263,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "bVb" = (
-/obj/rack,
-/obj/item/ammo/bullets/smoke,
-/obj/item/ammo/bullets/smoke,
-/obj/item/gun/kinetic/riot40mm,
-/obj/item/gun/kinetic/riot40mm,
-/obj/item/wrench,
-/obj/item/wrench,
-/obj/item/gun/implanter,
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "bVc" = (
@@ -56446,6 +56445,9 @@
 /area/station/crew_quarters/locker)
 "cei" = (
 /obj/storage/closet/wardrobe/orange,
+/obj/machinery/door_timer/minibrig{
+	pixel_y = -24
+	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/cargo)
 "cej" = (
@@ -59941,11 +59943,7 @@
 	},
 /area/station/security/brig)
 "ckM" = (
-/obj/table/auto,
-/obj/machinery/recharger,
-/obj/machinery/door_timer/minibrig{
-	pixel_y = -24
-	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/cargo)
 "ckN" = (
@@ -60871,8 +60869,6 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "cmC" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -60883,6 +60879,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red/side,
 /area/station/security/checkpoint/arrivals)
 "cmD" = (
@@ -63523,6 +63520,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/science/lab)
 "ctl" = (
+/obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/caution/west,
 /area/station/security/armory)
 "ctm" = (
@@ -65494,6 +65492,17 @@
 	icon_state = "aplaceholder"
 	},
 /area)
+"gwu" = (
+/obj/rack,
+/obj/item/ammo/bullets/smoke,
+/obj/item/ammo/bullets/smoke,
+/obj/item/gun/kinetic/riot40mm,
+/obj/item/gun/kinetic/riot40mm,
+/obj/item/wrench,
+/obj/item/wrench,
+/obj/item/gun/implanter,
+/turf/simulated/floor/caution/east,
+/area/station/security/main)
 
 (1,1,1) = {"
 cCO
@@ -127826,7 +127835,7 @@ bSh
 ctU
 beZ
 ctU
-ctU
+gwu
 aAA
 bqL
 beW

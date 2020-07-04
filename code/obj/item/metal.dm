@@ -223,6 +223,7 @@ MATERIAL
 		L["light"] = "Light Fixture Parts (Needs 2 Sheets)<BR>"
 		L["stool"] = "stool"
 		L["chair"] = "chair"
+		L["railing"] = "railing"
 		L["bed"] = "Bed (Needs 2 Sheets)"
 		L["closet"] = "Closet (Needs 2 Sheets)<BR>"
 		L["construct"] = "Wall Girders (Needs 2 Sheets)"
@@ -290,6 +291,11 @@ MATERIAL
 					C.dir = usr.dir
 					if (C.dir == NORTH)
 						C.layer = 5 // TODO layer
+				if("railing")
+					src.amount--
+					var/obj/railing/R = new /obj/railing( usr.loc )
+					C.setMaterial(src.material)
+					C.dir = usr.dir
 				if("rack")
 					src.amount--
 					var/atom/A = new /obj/item/furniture_parts/rack_parts( usr.loc )

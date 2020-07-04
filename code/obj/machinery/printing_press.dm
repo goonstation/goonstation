@@ -2,7 +2,7 @@
 	name = "printing press"
 	desc = "Some machinery that's supposed to be able to write on a lot of pages super quickly. It looks pretty old."
 	icon = 'icons/obj/64x32.dmi' //lets immortalise =atamusvaleo= in the code forever, i miss him
-	icon_state = "" //proper icon is set in update_icon
+	icon_state = "printing_press" //proper icon is set in update_icon
 	anchored = 1
 	density = 1
 	bound_width = 64 //the game just handles xtra wide objects already halleluiah

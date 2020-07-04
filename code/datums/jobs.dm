@@ -250,18 +250,19 @@
 	slot_jump = /obj/item/clothing/under/rank/head_of_securityold/fancy_alt
 	slot_suit = /obj/item/clothing/suit/armor/hoscape
 	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/gun/energy/taser_gun
-	slot_poc1 = /obj/item/device/pda2/hos
+	slot_belt = /obj/item/device/pda2/hos
+	slot_poc1 = /obj/item/requisition_token/security
 	slot_poc2 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_foot = /obj/item/clothing/shoes/swat
 	slot_head = /obj/item/clothing/head/helmet/HoS
 	slot_ears = /obj/item/device/radio/headset/command/hos
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 
+
 #else
 	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/gun/energy/taser_gun
-	slot_poc1 = /obj/item/device/pda2/hos
+	slot_belt = /obj/item/device/pda2/hos
+	slot_poc1 = /obj/item/requisition_token/security
 	slot_poc2 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_jump = /obj/item/clothing/under/rank/head_of_securityold
 	slot_suit = /obj/item/clothing/suit/armor/vest
@@ -270,6 +271,9 @@
 	slot_ears = /obj/item/device/radio/headset/command/hos
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 #endif
+
+	items_in_backpack = list(/obj/item/gun/energy/taser_gun)
+
 
 	New()
 		..()
@@ -461,6 +465,7 @@
 	slot_ears =  /obj/item/device/radio/headset/security
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
+	slot_poc2 = /obj/item/requisition_token/security
 
 	New()
 		..()
@@ -720,11 +725,12 @@
 	wages = 150
 
 	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/device/pda2/mechanic
+	slot_belt = /obj/item/storage/belt/utility/prepared
 	slot_jump = /obj/item/clothing/under/rank/mechanic
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_lhan = /obj/item/storage/toolbox/electrical/mechanic_spawn
 	slot_glov = /obj/item/clothing/gloves/yellow
+	slot_poc1 = /obj/item/device/pda2/mechanic
 	slot_ears = /obj/item/device/radio/headset/engineer
 
 	New()
@@ -741,13 +747,14 @@
 #endif
 	wages = 200
 	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/device/pda2/engine
+	slot_belt = /obj/item/storage/belt/utility/prepared
 	slot_jump = /obj/item/clothing/under/rank/engineer
 	slot_foot = /obj/item/clothing/shoes/orange
-	slot_lhan = /obj/item/storage/toolbox/mechanical
+	slot_lhan = /obj/item/device/t_scanner
 	slot_glov = /obj/item/clothing/gloves/yellow
-	slot_poc1 = /obj/item/device/t_scanner
+	slot_poc1 = /obj/item/device/pda2/engine
 	slot_ears = /obj/item/device/radio/headset/engineer
+	items_in_backpack = list(/obj/item/electronics/soldering)
 
 	New()
 		..()
@@ -825,7 +832,11 @@
 
 /datum/job/civilian/botanist
 	name = "Botanist"
+	#ifdef MAP_OVERRIDE_DONUT3
+	limit = 7
+	#else
 	limit = 5
+	#endif
 	wages = 100
 	slot_belt = /obj/item/device/pda2/botanist
 	slot_jump = /obj/item/clothing/under/rank/hydroponics
@@ -860,6 +871,7 @@
 	slot_belt = /obj/item/device/pda2/chaplain
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_ears = /obj/item/device/radio/headset/civilian
+	slot_lhan = /obj/item/storage/bible/loaded
 
 	New()
 		..()
@@ -1046,6 +1058,7 @@
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_ears =  /obj/item/device/radio/headset/security
 	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
+	slot_poc2 = /obj/item/requisition_token/security
 
 	New()
 		..()
@@ -2177,7 +2190,8 @@
 	items_in_backpack = list(/obj/item/device/pda2/heads,
 							/obj/item/storage/firstaid/regular,
 							/obj/item/storage/pouch/clock,
-							/obj/item/gun/kinetic/clock_188)
+							/obj/item/gun/kinetic/clock_188,
+							/obj/item/requisition_token/security)
 
 	New()
 		..()

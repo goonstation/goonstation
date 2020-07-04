@@ -59,10 +59,6 @@
 		qdel(nutrients_meter)
 		..()
 
-	onAbilityStat()
-		..()
-		return
-
 	onLife(var/mult = 1)
 		if(..()) return
 		if (nutrients_meter)
