@@ -1,4 +1,9 @@
 
+(t)sat jul 04 20
+(u)UrsulaMajor and makkipakki
+(p)1335
+(e)⚖🆕🎨|balance, feature, sprites
+(*)The chaplain now starts with a four shot .22 Beretta in their personal bible. Sprites by makkipakki
 (t)fri jul 03 20
 (u)Superlagg
 (p)1244
