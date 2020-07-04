@@ -11,7 +11,7 @@ proc/get_telearea(var/name)
 
 proc/generate_teleareas()
 	var/area/a
-	LAGCHECK(LAG_HIGH)
+	sleep(LAG_HIGH)
 	teleareas = list()
 	for (var/turf/T in bounds(1, 1, world.maxx * world.icon_size, world.maxy * world.icon_size, 1))
 		a = T.loc

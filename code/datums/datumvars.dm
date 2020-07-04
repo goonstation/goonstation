@@ -585,7 +585,7 @@
 		for(var/x in world)
 			if(!istype(x, D.type)) continue
 			x:vars[variable] = var_value
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 
 /client/proc/modify_variable(datum/D, variable, set_global = 0)
 	if(D != "GLOB" && (!variable || !D || !(variable in D.vars)))
@@ -705,7 +705,7 @@
 				for(var/x in world)
 					if(!istype(x, D.type)) continue
 					x:vars[variable] = null
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 			else
 				if(D == "GLOB")
 					global.vars[variable] = null
@@ -727,7 +727,7 @@
 					for(var/x in world)
 						if(!istype(x, D.type)) continue
 						x:vars[variable] = thing
-						LAGCHECK(LAG_LOW)
+						sleep(LAG_LOW)
 				else
 					if(D == "GLOB")
 						global.vars[variable] = thing
@@ -746,7 +746,7 @@
 				for(var/x in world)
 					if(!istype(x, D.type)) continue
 					x:vars[variable] = initial(x:vars[variable])
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 			else
 				if(D == "GLOB")
 					global.vars[variable] = initial(global.vars[variable])
@@ -764,7 +764,7 @@
 				for(var/x in world)
 					if(!istype(x, D.type)) continue
 					x:vars[variable] = list()
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 			else
 				if(D == "GLOB")
 					global.vars[variable] = list()
@@ -778,12 +778,12 @@
 				if(isclient(D))
 					for(var/client/x)
 						x:vars[variable] = theInput
-						LAGCHECK(LAG_LOW)
+						sleep(LAG_LOW)
 				else
 					for(var/x in world)
 						if(!istype(x, D.type)) continue
 						x:vars[variable] = theInput
-						LAGCHECK(LAG_LOW)
+						sleep(LAG_LOW)
 			else
 				if(D == "GLOB")
 					global.vars[variable] = theInput
@@ -797,7 +797,7 @@
 				for(var/x in world)
 					if(!istype(x, D.type)) continue
 					x:vars[variable] = theInput
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 			else
 				if(D == "GLOB")
 					global.vars[variable] = theInput
@@ -812,7 +812,7 @@
 				if (match)
 					if (set_global)
 						for (var/datum/x in world)
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 							if (!istype(x, D.type)) continue
 							x.vars[variable] = match
 					else
@@ -828,7 +828,7 @@
 				for(var/x in world)
 					if(!istype(x, D.type)) continue
 					x:vars[variable] = theInput
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 			else
 				if(D == "GLOB")
 					global.vars[variable] = theInput
@@ -842,7 +842,7 @@
 				for(var/x in world)
 					if(!istype(x, D.type)) continue
 					x:vars[variable] = theInput
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 			else
 				if(D == "GLOB")
 					global.vars[variable] = theInput
@@ -856,7 +856,7 @@
 				for(var/x in world)
 					if(!istype(x, D.type)) continue
 					x:vars[variable] = theInput
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 			else
 				if(D == "GLOB")
 					global.vars[variable] = theInput
@@ -870,7 +870,7 @@
 				for(var/x in world)
 					if(!istype(x, D.type)) continue
 					x:vars[variable] = theInput
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 			else
 				if(D == "GLOB")
 					global.vars[variable] = theInput
@@ -884,12 +884,12 @@
 				if(isclient(D))
 					for(var/client/x)
 						x:vars[variable] = theInput
-						LAGCHECK(LAG_LOW)
+						sleep(LAG_LOW)
 				else
 					for(var/x in world)
 						if(!istype(x, D.type)) continue
 						x:vars[variable] = theInput
-						LAGCHECK(LAG_LOW)
+						sleep(LAG_LOW)
 			else
 				if(D == "GLOB")
 					global.vars[variable] = theInput
@@ -904,7 +904,7 @@
 			if (istype(T))
 				if (set_global)
 					for (var/datum/q in world)
-						LAGCHECK(LAG_LOW)
+						sleep(LAG_LOW)
 						if (!istype(q, D.type)) continue
 						q.vars[variable] = T
 				else
@@ -942,7 +942,7 @@
 				if (match)
 					if (set_global)
 						for (var/datum/x in world)
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 							if (!istype(x, D.type)) continue
 							x.vars[variable] = new match(x)
 					else

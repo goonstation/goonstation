@@ -566,14 +566,14 @@ proc
 		RL_Started = 1
 		/*
 		for (var/turf/T in world)
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 			T.RL_Init()
 		*/
 		for (var/datum/light/light)
 			if (light.enabled)
 				light.apply()
 		for (var/turf/T in world)
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 			RL_UPDATE_LIGHT(T)
 
 	RL_Suspend()

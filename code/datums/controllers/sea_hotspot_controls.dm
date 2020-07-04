@@ -177,7 +177,7 @@
 			if (S.drift_count >= S.drift_speed)
 				S.drift_count = 0
 				S.move_center_to(get_step(S.center.turf(), S.drift_dir))
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
 
 	proc/get_hotspot(var/turf/T)
@@ -186,21 +186,21 @@
 			if(S.get_tile_heat(T))
 				.= S
 				break
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
 	proc/get_hotspots_list(var/turf/T)
 		.= list()
 		for (var/datum/sea_hotspot/S in hotspot_groups)
 			if(S.get_tile_heat(T))
 				.+= S
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
 	proc/get_hotspots_amount(var/turf/T)
 		.= 0
 		for (var/datum/sea_hotspot/S in hotspot_groups)
 			if(S.get_tile_heat(T))
 				.+= 1
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
 	proc/probe_turf(var/turf/T)
 		.= 0
@@ -209,7 +209,7 @@
 				.+= (S.get_tile_heat(T) / S.vent_capture_amt) * (2 - (1 / (S.vent_capture_amt - 1))) //lessen individual output of multiple capture units on the same hotspot, but with a small boost to overall output
 			else
 				.+= S.get_tile_heat(T)
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
 		var/amt = hotspot_controller.get_hotspots_amount(T)
 		var/mult = ( (amt > 1) ? (1 + (amt / 2.3)) : (1) ) //stack bonus (2.3 is the magic number that contorls the bonus scaling)
@@ -225,7 +225,7 @@
 			if (heat)
 				S.bonus_heat += S.per_activity
 			tally += heat
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
 		if (tally)
 			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
@@ -249,7 +249,7 @@
 
 				S.move_center_to(get_step(S.center.turf(), S.drift_dir))
 
-			LAGCHECK(LAG_MED)
+			sleep(LAG_MED)
 
 	proc/colorping_at_turf(var/turf/T)
 		for (var/datum/sea_hotspot/S in hotspot_groups)
@@ -326,7 +326,7 @@
 					dowsers += H
 
 
-				LAGCHECK(LAG_HIGH)
+				sleep(LAG_HIGH)
 
 			for (var/thing in dowsers)
 				var/obj/item/heat_dowsing/H = thing
@@ -366,7 +366,7 @@
 				phenomena_flags |= PH_FIRE
 
 		var/found = 0
-		LAGCHECK(LAG_REALTIME)
+		sleep(LAG_REALTIME)
 		for (var/mob/living/M in range(6, C))
 			found = 1
 			if (phenomena_flags & PH_QUAKE_WEAK)
@@ -379,7 +379,7 @@
 				M.changeStatus("weakened", 1 SECOND)
 				M.show_text("<span class='alert'><b>The ground quakes and rumbles violently!</b></span>")
 
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
 		if (phenomena_flags & PH_FIRE_WEAK)
 			fireflash(phenomena_point,0)
@@ -405,7 +405,7 @@
 				logTheThing("diary", null, null, logmsg, "game")
 
 			SPAWN_DBG(5 SECONDS)
-				LAGCHECK(LAG_HIGH)
+				sleep(LAG_HIGH)
 				src.do_phenomena( recursion++, heat - (9000 + (9000 * recursion)) )
 		else
 			var/areaname = get_area_name(phenomena_point)
@@ -421,7 +421,7 @@
 		for (var/turf/space/fluid/T in range(radius,center))
 			if (T.captured)
 				vent_capture_amt += 1
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
 	proc/get_tile_heat(var/turf/T)
 
@@ -440,7 +440,7 @@
 				var/lastcolor = T.color
 				T.color = setcolor
 				animate(T, color = lastcolor, time = 3 SECONDS, easing = SINE_EASING)
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 
 			last_colorping = world.time
 

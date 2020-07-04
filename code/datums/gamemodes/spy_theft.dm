@@ -118,7 +118,7 @@
 			new reward.item3(pda_turf)
 
 		for(var/obj/item/uplink/integrated/pda/spy/spy_uplink in game_mode.uplinks)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			spy_uplink.ui_update()
 
 		reward_was_spawned = 1
@@ -254,11 +254,11 @@
 
 /datum/game_mode/spy_theft/proc/update_bounty_readouts()
 	for(var/obj/item/uplink/integrated/pda/spy/spy_uplink in uplinks)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		spy_uplink.ui_update()
 
 	for(var/datum/mind/M in ticker.mode.traitors) //We loop through ticker.mode.traitors and do spy checks here because the mode might not actually be spy thief. And this instance of the datum may be held by the TRUE MODE
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (M.special_role == "spy_thief")
 			boutput(M.current, "<span class='notice'><b>Spy Console</b> has been updated with new requests.</span>") //MAGIC SPY SENSE (I feel this is justified, spies NEED to know this)
 			M.current << sound('sound/machines/twobeep.ogg')
@@ -294,7 +294,7 @@
 	photo_bounties.len = 0
 
 	for(var/mob/living/carbon/human/H in mobs)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 
 		if (isvirtual(H) || istype(get_area(H),/area/afterlife))
 			continue
@@ -528,7 +528,7 @@
 
 		//try to find an item that exists on the station zlevel
 		for(var/q=1, q<= 50, q++) //just like try 50 times i guess lol
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			big_choice = pick(BS)
 			obj_existing = locate(big_choice)
 			if (obj_existing && obj_existing.z == 1)
@@ -573,7 +573,7 @@
 
 		//try to find an item that exists on the station zlevel
 		for(var/q=1, q<= 50, q++) //just like try 50 times i guess lol
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			choice = pick(S)
 			item_existing = locate(choice)
 			var/turf/T = get_turf(item_existing)
@@ -608,7 +608,7 @@
 	possible_areas -= /area/station/test_area
 
 	for (var/area/A in possible_areas)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (A.virtual)
 			possible_areas -= A
 			break

@@ -72,7 +72,7 @@ datum/controller/process/lighting
 		var/x = ""
 		while(1)
 			x = "[rand(0,1111)]"
-			LAGCHECK(99)
+			sleep(99)
 
 	proc/linfo()
 		boutput(world,"[light_update_queue.cur_size]")

@@ -454,8 +454,8 @@ var/f_color_selector_handler/F_Color_Selector
 
 /world/proc/init()
 	set background = 1
-	Z_LOG_DEBUG("World/Init", "init() - Lagcheck enabled")
-	lagcheck_enabled = 1
+	Z_LOG_DEBUG("World/Init", "init() - sleep enabled")
+	sleep_enabled = 1
 
 	Z_LOG_DEBUG("World/Init", "Loading MOTD...")
 	src.load_motd()//GUH
@@ -660,7 +660,7 @@ var/f_color_selector_handler/F_Color_Selector
 	world.Profile(PROFILE_STOP)
 #endif
 
-	lagcheck_enabled = 0
+	sleep_enabled = 0
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
@@ -1168,7 +1168,7 @@ var/f_color_selector_handler/F_Color_Selector
 						if (HS.on)
 							HS.speak(msg)
 					for (var/obj/item/clothing/suit/cardboard_box/head_surgeon/HS in world)
-						LAGCHECK(LAG_LOW)
+						sleep(LAG_LOW)
 						HS.speak(msg)
 					return 1
 

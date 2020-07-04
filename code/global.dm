@@ -24,7 +24,7 @@ var/global
 
 	serverKey = 0
 
-	lagcheck_enabled = 0
+	sleep_enabled = 0
 
 	datum/datacore/data_core = null
 	obj/overlay/plmaster = null

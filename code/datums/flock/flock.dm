@@ -498,12 +498,12 @@
 	var/radius = 1
 	while(radius <= max_radius)
 		var/list/turfs = circular_range(T, radius)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		for(var/turf/tile in turfs)
 			if(istype(tile, /turf/simulated) && !isfeathertile(tile))
 				flock_convert_turf(tile)
 				sleep(0.5)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		radius++
 		sleep(radius * 10)
 		if(isnull(source))
@@ -527,7 +527,7 @@
 			// do stuff to turf
 			flock_convert_turf(T)
 			sleep(0.2 SECONDS)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		// figure out where next turf is
 		if (x == y || (x < 0 && x == -y) || (x > 0 && x == 1-y))
 			temp = dx

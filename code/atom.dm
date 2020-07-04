@@ -1026,7 +1026,7 @@
 	message_admins("[key_name(usr)] scaled every goddamn atom by X:[scalex] Y:[scaley]")
 	for(var/atom/A in world)
 		A.Scale(scalex,scaley)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 	return
 
 /proc/rotateatomall()
@@ -1036,7 +1036,7 @@
 	message_admins("[key_name(usr)] rotated every goddamn atom by [rot] degrees")
 	for(var/atom/A in world)
 		A.Turn(rot)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 	return
 
 /proc/scaleatom()

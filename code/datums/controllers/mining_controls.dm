@@ -90,7 +90,7 @@ var/turf_spawn_edge_limit = 5
 			var/turf/T
 			var/spawn_amount = amt ? amt : src.mining_z_asteroids_max
 			for (var/i=spawn_amount, i>0, i--)
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				T = locate(rand(8,(world.maxy - 8)),rand(8,(world.maxy - 8)),the_mining_z)
 				if (istype(T))
 					T.GenerateAsteroid(rand(4,15))

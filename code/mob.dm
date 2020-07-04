@@ -606,7 +606,7 @@
 						else
 							break
 						M.throw_at(source, 20, 3)
-						LAGCHECK(LAG_MED)
+						sleep(LAG_MED)
 					sleep(5 SECONDS)
 					src.now_pushing = 0
 
@@ -813,7 +813,7 @@
 //			boutput(src, "<span class='alert'>You would have earned the [title] medal, but there was an error communicating with the BYOND hub.</span>")
 
 /mob/proc/has_medal(var/medal) //This is not spawned because of return values. Make sure the proc that uses it uses spawn or you lock up everything.
-	LAGCHECK(LAG_HIGH)
+	sleep(LAG_HIGH)
 
 	if (IsGuestKey(src.key))
 		return null

@@ -10,11 +10,11 @@ datum/controller/process/fluid_turfs
 	var/add_reagent_amount = 500
 	var/do_light_gen = 1
 
-	proc/handle_light_generating_turfs(var/lagcheck_at = LAG_REALTIME)
+	proc/handle_light_generating_turfs(var/sleep_at = LAG_REALTIME)
 		if (do_light_gen)
 			for (var/turf/space/fluid/F in light_generating_fluid_turfs)
 				F.make_light()
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 
 			light_generating_fluid_turfs.len = 0
 
@@ -30,7 +30,7 @@ datum/controller/process/fluid_turfs
 					bordering = 1
 			if (bordering && !F.light)
 				F.make_light()
-			LAGCHECK(LAG_REALTIME)
+			sleep(LAG_REALTIME)
 		light_generating_fluid_turfs.len = 0*/
 
 	setup()
@@ -58,7 +58,7 @@ datum/controller/process/fluid_turfs
 			adjacent_block = 0
 			for (var/dir in cardinal)
 
-				LAGCHECK(LAG_HIGH)
+				sleep(LAG_HIGH)
 
 				t = get_step(T,dir)
 

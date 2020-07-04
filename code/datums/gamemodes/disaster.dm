@@ -57,7 +57,7 @@
 			for(var/obj/landmark/S in landmarks)//world)
 				if (S.name == "peststart")
 					CORPSES.Add(S.loc)
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 			if(CORPSES.len)
 				for(var/turf/T in CORPSES)
 					var/obj/decal/skeleton/S = new/obj/decal/skeleton(T)
@@ -194,7 +194,7 @@
 				P.name = disaster_name
 				if(prob(6) && scarysounds && scarysounds.len)
 					world << sound(pick(scarysounds))
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 
 	return
 

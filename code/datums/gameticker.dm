@@ -213,7 +213,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		mode.post_post_setup()
 
 		for(var/obj/landmark/artifact/A in landmarks)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (prob(A.spawnchance))
 				if (A.spawnpath)
 					new A.spawnpath(A.loc)
@@ -224,11 +224,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		for(var/obj/landmark/S in landmarks)//world)
 			if (S.name == "Loot spawn")
 				lootspawn.Add(S.loc)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 		if(lootspawn.len)
 			var/lootamt = rand(5,15)
 			while(lootamt > 0)
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				var/lootloc = lootspawn.len ? pick(lootspawn) : null
 				if (lootloc && prob(75))
 					new/obj/storage/crate/loot(lootloc)
@@ -253,7 +253,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	SPAWN_DBG (6000) // 10 minutes in
 		for(var/obj/machinery/power/generatorTemp/E in machine_registry[MACHINES_POWER])
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (E.lastgen <= 0)
 				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning")
 			break

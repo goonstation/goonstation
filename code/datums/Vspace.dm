@@ -84,7 +84,7 @@ datum/v_space
 
 		var/obj/landmark/B = null
 		for (var/obj/landmark/A in landmarks)//world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (A.name == network)
 				B = A
 				break

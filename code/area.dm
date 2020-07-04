@@ -3316,7 +3316,7 @@ area/station/security/visitation
 		var/list/cameras = list()
 		for (var/obj/machinery/camera/C in orange(source, 7))
 			cameras += C
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 		for (var/mob/living/silicon/aiPlayer in AIs)
 			if (state == 1)
 				aiPlayer.cancelAlarm("Power", src, source)
@@ -3335,16 +3335,16 @@ area/station/security/visitation
 		var/list/cameras = list()
 		for (var/obj/machinery/firealarm/F in src)
 			F.icon_state = "fire1"
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 		for (var/mob/living/silicon/ai/aiPlayer in AIs)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 		for (var/obj/machinery/computer/atmosphere/alerts/a in machine_registry[MACHINES_ATMOSALERTS])
 			a.triggerAlarm("Fire", src, cameras, src)
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 	return
 
 /area/proc/firereset()
@@ -3355,13 +3355,13 @@ area/station/security/visitation
 
 		for (var/obj/machinery/firealarm/F in src)
 			F.icon_state = "fire0"
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 		for (var/mob/living/silicon/ai/aiPlayer in AIs)
 			aiPlayer.cancelAlarm("Fire", src, src)
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 		for (var/obj/machinery/computer/atmosphere/alerts/a in machine_registry[MACHINES_ATMOSALERTS])
 			a.cancelAlarm("Fire", src, src)
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 	return
 
 /area/proc/updateicon()

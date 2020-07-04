@@ -327,7 +327,7 @@ datum/controller/process/proc/copyStateFrom(var/datum/controller/process/target)
 datum/controller/process/proc/onKill()
 
 datum/controller/process/proc/onStart()
-	LAGCHECK(LAG_HIGH)
+	sleep(LAG_HIGH)
 
 datum/controller/process/proc/onFinish()
 

@@ -57,7 +57,7 @@ var/datum/explosion_controller/explosions
 				for (var/mob/M in T)
 					M.ex_act(3, last_touched, p)
 
-		LAGCHECK(LAG_HIGH)
+		sleep(LAG_HIGH)
 
 		for (var/y in queued_turfs)
 			var/turf/T = y
@@ -84,7 +84,7 @@ var/datum/explosion_controller/explosions
 						continue
 					O.ex_act(3, last_touched, p)
 
-		LAGCHECK(LAG_HIGH)
+		sleep(LAG_HIGH)
 
 		// BEFORE that ordeal (which may sleep quite a few times), fuck the turfs up all at once to prevent lag
 		for (var/x in queued_turfs)
@@ -103,7 +103,7 @@ var/datum/explosion_controller/explosions
 			else
 				T.ex_act(3, last_touched)
 
-		LAGCHECK(LAG_HIGH)
+		sleep(LAG_HIGH)
 
 		queued_turfs.len = 0
 		queued_turfs_blame.len = 0

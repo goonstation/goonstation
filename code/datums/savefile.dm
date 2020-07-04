@@ -336,7 +336,7 @@
 		if (IsGuestKey(user.key))
 			return 0
 
-		LAGCHECK(LAG_REALTIME)
+		sleep(LAG_REALTIME)
 
 		var/path = savefile_path(user)
 

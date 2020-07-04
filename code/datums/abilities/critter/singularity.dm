@@ -61,7 +61,7 @@
   // default material cached
   var/datum/material/defaultMaterial = getMaterial("steel")
   for (var/turf/T in orange(range,holder.owner))
-    LAGCHECK(LAG_LOW)
+    sleep(LAG_LOW)
     if (prob(70))
       continue
     if (T && !istype(T, /turf/space))

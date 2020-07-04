@@ -123,7 +123,7 @@ datum/radio_frequency
 					else
 						device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
 
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 
 			if (!reusable_signals || reusable_signals.len > 10)
 				signal.dispose()
@@ -131,7 +131,7 @@ datum/radio_frequency
 				signal.wipe()
 				if (!(signal in reusable_signals))
 					reusable_signals += signal
-			LAGCHECK(LAG_MED)
+			sleep(LAG_MED)
 
 		check_for_jammer(obj/source)
 			.= 0

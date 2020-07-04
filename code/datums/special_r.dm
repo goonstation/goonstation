@@ -35,7 +35,7 @@ datum/special_respawn
 						qdel(player)
 
 		for (var/obj/landmark/A in landmarks)//world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (A.name == "Syndicate-Gear-Closet")
 				new /obj/storage/closet/syndicate/personal(A.loc)
 				A.dispose()

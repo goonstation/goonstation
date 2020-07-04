@@ -180,7 +180,7 @@
 					T.winner = lotteryJackpot
 					T.name = "Winning Ticket"
 
-		//LAGCHECK(LAG_LOW)
+		//sleep(LAG_LOW)
 		command_alert("Lottery round [lotteryRound]. I wish you all the best of luck. For an amazing prize of [lotteryJackpot] credits the lottery numbers are: [dat]. If you have these numbers get to an ATM to claim your prize now!", "Lottery")
 		// We're in the next round!
 		lotteryRound += 1

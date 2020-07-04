@@ -118,7 +118,7 @@ datum/controller/process/delete_queue
 		var/t
 		#endif
 		for(var/r in toDeleteRefs)
-			LAGCHECK(LAG_REALTIME)
+			sleep(LAG_REALTIME)
 			var/datum/D = locate(r)
 
 			scheck()

@@ -216,7 +216,7 @@ datum/preferences
 	var/list/data_cache
 
 	proc/ShowChoices(mob/user)
-		LAGCHECK(LAG_HIGH)
+		sleep(LAG_HIGH)
 
 		if(!user)
 			return
@@ -239,18 +239,18 @@ datum/preferences
 
 		sanitize_null_values()
 		update_preview_icon()
-		LAGCHECK(LAG_HIGH)
+		sleep(LAG_HIGH)
 		user << browse_rsc(preview_icon, "previewicon.png")
 		user << browse_rsc(icon(cursors_selection[target_cursor]), "tcursor.png")
 		user << browse_rsc(icon(hud_style_selection[hud_style], "preview"), "hud_preview.png")
-		LAGCHECK(LAG_HIGH)
+		sleep(LAG_HIGH)
 		var/display_gender = (src.gender == MALE ? "Male" : "Female") + " " + (!AH.pronouns ? (src.gender == MALE ? "(he/him)" : "(she/her)") : "(they/them)")
 
 		var/favoriteJob = src.job_favorite ? find_job_in_controller_by_string(src.job_favorite) : ""
 		//mbc is sorry
 		var/chui_toggle_script_jqery_thing = (user && user.client && !user.client.use_chui) ? "<script type='text/javascript' src='[resource("js/jquery.min.js")]'></script>" : ""
 
-		LAGCHECK(LAG_HIGH)
+		sleep(LAG_HIGH)
 		//mbc is sorry
 		//var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? "<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\"><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"pragma\" content=\"no-cache\"><style type='text/css'>body { font-family: Tahoma, sans-serif; font-size: 10pt; }</style></head><body>" : ""
 		//var/pref_link = "byond://?src=\ref[src];preferences=1;"
@@ -266,7 +266,7 @@ datum/preferences
 				var/client/wtf = ismob( user ) ? user.client : user
 				for( var/name in wtf.cloudsaves )
 					profile_cache += "<a href='[pref_link]cloudload=[url_encode(name)]'>[html_encode(name)]</a> (<a href='[pref_link]cloudsave=[url_encode(name)]'>Save</a> - <a href='[pref_link]clouddelete=[url_encode(name)]'>Delete</a>)<br>"
-					LAGCHECK(LAG_REALTIME)
+					sleep(LAG_REALTIME)
 				profile_cache += "<a href='[pref_link]cloudnew=1'>Create new save</a></div>"
 
 				profile_cache += {"
@@ -278,7 +278,7 @@ datum/preferences
 		<br><strong>[savefile_get_profile_name(user, i) || "<em>(empty)</em>"]</strong>
 		<br><a href='[pref_link]save=[i]'>Save</a> &middot; <a href='[pref_link]load=[i]'>Load</a></div>
 					"}
-					LAGCHECK(LAG_REALTIME)
+					sleep(LAG_REALTIME)
 
 				profile_cache += "</div>"
 
@@ -286,7 +286,7 @@ datum/preferences
 		if (src.profile_modified)
 			unsaved_changes_warning = {"<div id="unsaved-warning"><strong>You may have unsaved changes.</strong><br>Any unsaved changes will take effect for this round only.</div> "}
 		//var/list/dat = list()
-		LAGCHECK(LAG_MED)
+		sleep(LAG_MED)
 
 		data_cache["script"] = {"
 [chui_toggle_script_jqery_thing]
@@ -326,7 +326,7 @@ $(function() {
 });
 </script>"}
 
-		LAGCHECK(LAG_HIGH)
+		sleep(LAG_HIGH)
 
 		if (rebuild_data["css"])
 			rebuild_data["css"] = 0
@@ -431,7 +431,7 @@ $(function() {
 		cursor: help;
 		}
 </style>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["profile_name"])
 			rebuild_data["profile_name"] = 0
 			data_cache["profile_name"] = {"
@@ -449,7 +449,7 @@ $(function() {
 			<a href="[pref_link]profile_name=input">[src.profile_name ? src.profile_name : "Unnamed"]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["character_name"])
 			rebuild_data["character_name"] = 0
 			data_cache["character_name"] = {"
@@ -462,7 +462,7 @@ $(function() {
 			<br><a href="[pref_link]b_random_name=1" class="toggle">[crap_checkbox(src.be_random_name)] Use a random name instead</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["gender"])
 			rebuild_data["gender"] = 0
 			data_cache["gender"] = {"
@@ -474,7 +474,7 @@ $(function() {
 			<a href="[pref_link]gender=input">[display_gender]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["age_blood"])
 			rebuild_data["age_blood"] = 0
 			data_cache["age_blood"] = {"
@@ -492,7 +492,7 @@ $(function() {
 			<a href='[pref_link]blType=input'>[src.random_blood ? "Random" : src.blType]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["bank"])
 			rebuild_data["bank"] = 0
 			data_cache["bank"] = {"
@@ -504,7 +504,7 @@ $(function() {
 			<a href="[pref_link]pin=random" class="toggle">[crap_checkbox(!(src.pin))] Random</a> &middot; <a href='[pref_link]pin=input' class="toggle">[src.pin ? (crap_checkbox(1) + " Set: [src.pin]") : (crap_checkbox(0) + " Set")]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["flavortext"])
 			rebuild_data["flavortext"] = 0
 			data_cache["flavortext"] = {"
@@ -517,7 +517,7 @@ $(function() {
 			[length(src.flavor_text) ? src.flavor_text : "<em>None</em>"]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["security_note"])
 			rebuild_data["security_note"] = 0
 			data_cache["security_note"] = {"
@@ -530,7 +530,7 @@ $(function() {
 			[length(src.security_note) ? src.security_note : "<em>None</em>"]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["medical_note"])
 			rebuild_data["medical_note"] = 0
 			data_cache["medical_note"] = {"
@@ -543,7 +543,7 @@ $(function() {
 			[length(src.medical_note) ? src.medical_note : "<em>None</em>"]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["occupation"])
 			rebuild_data["occupation"] = 1 //always rebuild egh
 			data_cache["occupation"] = {"
@@ -555,7 +555,7 @@ $(function() {
 			<a href="[pref_link]jobswindow=1">Change occupation preferences...</a><br><em>Favorite job: [favoriteJob ? "<strong>[favoriteJob]</strong>" : "(unset)"]</em>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["traits"])
 			rebuild_data["traits"] = 1 //always rebuild egh
 			data_cache["traits"] = {"
@@ -567,7 +567,7 @@ $(function() {
 			<a href="[pref_link]traitswindow=1">Choose traits...</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["fartsound"])
 			rebuild_data["fartsound"] = 0
 			data_cache["fartsound"] = {"
@@ -579,7 +579,7 @@ $(function() {
 			<a href='[pref_link]fartsound=input'>[AH.fartsound]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["screamsound"])
 			rebuild_data["screamsound"] = 0
 			data_cache["screamsound"] = {"
@@ -591,7 +591,7 @@ $(function() {
 			<a href='[pref_link]screamsound=input'>[AH.screamsound]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["chatsound"])
 			rebuild_data["chatsound"] = 0
 			data_cache["chatsound"] = {"
@@ -603,7 +603,7 @@ $(function() {
 			<a href='[pref_link]voicetype=input'>[AH.voicetype]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["skintone"])
 			rebuild_data["skintone"] = 0
 			data_cache["skintone"] = {"
@@ -627,7 +627,7 @@ $(function() {
 			<a href="[pref_link]rotate_clockwise=1">&#x27f3;</a>
 		</th>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["eyecolor"])
 			rebuild_data["eyecolor"] = 0
 			data_cache["eyecolor"] = {"
@@ -640,7 +640,7 @@ $(function() {
 			<span class='colorbit' style="background-color: [AH.e_color];">[AH.e_color]</span>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["hair_top"])
 			rebuild_data["hair_top"] = 0
 			data_cache["hair_top"] = {"
@@ -654,7 +654,7 @@ $(function() {
 			[generate_select_table("custom_third", AH.customization_third, customization_styles)]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["hair_mid"])
 			rebuild_data["hair_mid"] = 0
 			data_cache["hair_mid"] = {"
@@ -668,7 +668,7 @@ $(function() {
 			[generate_select_table("custom_second", AH.customization_second, customization_styles)]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["hair_bottom"])
 			rebuild_data["hair_bottom"] = 0
 			data_cache["hair_bottom"] = {"
@@ -682,7 +682,7 @@ $(function() {
 			[generate_select_table("custom_first", AH.customization_first, customization_styles)]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["underwear"])
 			rebuild_data["underwear"] = 0
 			data_cache["underwear"] = {"
@@ -696,7 +696,7 @@ $(function() {
 			[generate_select_table("underwear", AH.underwear, underwear_styles)]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["randomize"])
 			rebuild_data["randomize"] = 0
 			data_cache["randomize"] = {"
@@ -708,7 +708,7 @@ $(function() {
 			<a href="[pref_link]b_random_look=1" class="toggle">[crap_checkbox(src.be_random_look)] Always use a randomized appearance</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["font_size"])
 			rebuild_data["font_size"] = 0
 			data_cache["font_size"] = {"
@@ -727,7 +727,7 @@ $(function() {
 			<a href="[pref_link]font_size=input">[src.font_size ? "[src.font_size]%" : "Default"]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["messages"])
 			rebuild_data["messages"] = 0
 			data_cache["messages"] = {"
@@ -743,7 +743,7 @@ $(function() {
 			<a href="[pref_link]auto_capitalization=1" class="toggle">[crap_checkbox(src.auto_capitalization)] Auto-capitalize your messages</a><span class="info-thing" title="Chat messages you send will be automatically capitalized.">?</span>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["hud"])
 			rebuild_data["hud"] = 0
 			data_cache["hud"] = {"
@@ -764,7 +764,7 @@ $(function() {
 			</div>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["tooltips"])
 			rebuild_data["tooltips"] = 0
 			data_cache["tooltips"] = {"
@@ -778,7 +778,7 @@ $(function() {
 			<br><a href="[pref_link]tooltip=3" class="toggle">[crap_checkbox(src.tooltip_option == TOOLTIP_NEVER)] Never Show</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["popups"])
 			rebuild_data["popups"] = 0
 			data_cache["popups"] = {"
@@ -792,7 +792,7 @@ $(function() {
 			<br><a href="[pref_link]tickets=1" class="toggle">[crap_checkbox(src.view_tickets)] Auto-open end-of-round ticket summary</a><span class="info-thing" title="The end-of-round ticketing summary shows the various tickets and fines that were handed out. If this option is off, you can still see them on Goonhub (goonhub.com).">?</span>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["controls"])
 			rebuild_data["controls"] = 0
 			data_cache["controls"] = {"
@@ -807,7 +807,7 @@ $(function() {
 			<br>Familiar with /tg/station controls? You can enable/disable them under the Game/Interface menu in the top left.
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+		sleep(80)
 		if (rebuild_data["map"])
 			rebuild_data["map"] = 0
 			data_cache["map"] = {"
@@ -826,9 +826,9 @@ $(function() {
 
 "}
 
-		LAGCHECK(LAG_MED)
+		sleep(LAG_MED)
 		traitPreferences.updateTraits(user)
-		LAGCHECK(LAG_MED)
+		sleep(LAG_MED)
 
 		var/list/dat = list()
 		for (var/x in data_cache)
@@ -849,7 +849,7 @@ $(function() {
 				select += "<option value='[style_list[i]]' selected='selected'>[i]</option>"
 			else
 				select += "<option value='[style_list[i]]'>[i]</option>"
-			LAGCHECK(LAG_REALTIME)
+			sleep(LAG_REALTIME)
 		select += "</select>"
 		return select.Join()
 

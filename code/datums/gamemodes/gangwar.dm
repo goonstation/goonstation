@@ -564,7 +564,7 @@
 				areacount ++
 				counted_areas += A
 
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 		return areacount
 
 	proc/gang_score()

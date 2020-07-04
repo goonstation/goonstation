@@ -18,7 +18,7 @@
 
 		var/list/mob/targets = list()
 		for (var/mob/living/carbon/human/H in mobs)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			targets += H
 
 		if (targets.len > 1)
