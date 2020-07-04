@@ -1362,7 +1362,7 @@ var/list/mechanics_telepads = new/list()
 	proc/set_frequency(new_frequency)
 		if(!radio_controller) return
 		tooltip_rebuild = 1
-		new_frequency = max(1000, min(new_frequency, 1500))
+		new_frequency = clamp(new_frequency, 1000, 1500)
 		radio_controller.remove_object(src, "[frequency]")
 		frequency = new_frequency
 		radio_connection = radio_controller.add_object(src, "[frequency]")
@@ -1790,18 +1790,15 @@ var/list/mechanics_telepads = new/list()
 					return
 				if("Set Color")
 					var/red = input(user,"Red Color(0.0 - 1.0):","Color setting", 1.0) as num
-					red = max(red, 0.0)
-					red = min(red, 1.0)
+					red = clamp(red, 0.0, 1.0)
 
 					var/green = input(user,"Green Color(0.0 - 1.0):","Color setting", 1.0) as num
-					green = max(green, 0.0)
-					green = min(green, 1.0)
+					green = clamp(green, 0.0, 1.0)
 
 					var/blue = input(user,"Blue Color(0.0 - 1.0):","Color setting", 1.0) as num
 					if(!in_range(src, user) || user.stat)
 						return
-					blue = max(blue, 0.0)
-					blue = min(blue, 1.0)
+					blue = clamp(blue, 0.0, 1.0)
 
 					selcolor = rgb(red * 255, green * 255, blue * 255)
 					tooltip_rebuild = 1
@@ -1811,9 +1808,7 @@ var/list/mechanics_telepads = new/list()
 					if(!in_range(src, user) || user.stat)
 						return
 
-					inp = round(inp)
-					inp = max(inp, 1)
-					inp = min(inp, 7)
+					inp = clamp(round(inp), 1, 7)
 
 					boutput(user, "Range set to [inp]")
 
