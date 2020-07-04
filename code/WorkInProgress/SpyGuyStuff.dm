@@ -967,6 +967,9 @@ proc/Create_Tommyname()
 	..()
 	set_readiness(0)
 
+/obj/item/garrote/throw_impact(atom/hit_atom)
+	..(hit_atom)
+	set_readiness(0)
 
 /obj/item/garrote/disposing()
 	drop_grab()
