@@ -341,6 +341,7 @@ var/list/clients_move_scheduled = list()
 	dirty_keystates.len = 0
 
 /proc/start_input_loop()
+	SHOULD_NOT_SLEEP(TRUE)
 	SPAWN_DBG(0)
 		var/start_time
 		while (1)
