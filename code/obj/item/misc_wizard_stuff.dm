@@ -88,7 +88,7 @@
 
 	// Part of the parent for convenience.
 	proc/do_brainmelt(var/mob/affected_mob, var/severity = 2)
-		if (!src || !istype(src) || !affected_mob || !ismob(affected_mob) || check_target_immunity(affected_mob) || affected_mob?.traitHolder?.hasTrait("training_chaplain"))
+		if (!src || !istype(src) || !affected_mob || !ismob(affected_mob) || check_target_immunity(affected_mob))
 			return
 
 		switch (severity)
