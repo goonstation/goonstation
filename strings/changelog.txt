@@ -1,5 +1,9 @@
 
 (t)fri jul 03 20
+(u)Superlagg
+(p)1315
+(e)⚖🎨|balance, sprites
+(*)Securitrons no longer drop stun batons. Beepsky isn't any ordinary securitron, though!
 (u)Ryumi
 (p)1325
 (e)🗺|mapping
