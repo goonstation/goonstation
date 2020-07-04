@@ -607,7 +607,7 @@
 
 	shoot()
 		if(ammo && ammo.amount_left && current_projectile && current_projectile.caliber && current_projectile.power)
-			failure_chance = max(10,min(33,round(current_projectile.caliber * (current_projectile.power/2))))
+			failure_chance = max(0,min(33,round(current_projectile.power/2 - 9)))
 		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
 			var/turf/T = get_turf(src)
 			explosion(src, T,-1,-1,1,2)
