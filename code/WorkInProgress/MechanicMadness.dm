@@ -1665,7 +1665,7 @@ var/list/mechanics_telepads = new/list()
 		if(level == 2 && input.signal)
 			teleID = input.signal
 			tooltip_rebuild = 1
- 			componentSay("ID Changed to : [input.signal]")
+			componentSay("ID Changed to : [input.signal]")
 		return
 
 	proc/activate(var/datum/mechanicsMessage/input)
@@ -1701,7 +1701,7 @@ var/list/mechanics_telepads = new/list()
 			input.signal = count_sent
 			SPAWN_DBG(0)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
-				SEND_SIGNAL(M,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
+				SEND_SIGNAL(picked,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		return
 
 	updateIcon()
