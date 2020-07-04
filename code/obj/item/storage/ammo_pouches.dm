@@ -79,7 +79,7 @@
 	rpg
 		name = "MPRT rocket pouch"
 		slots = 4
-		spawn_contents = list(/obj/item/ammo/bullets/rpg = 4)
+		spawn_contents = list(/obj/item/ammo/bullets/rpg = 2)
 
 /obj/item/storage/grenade_pouch
 	name = "grenade pouch"
