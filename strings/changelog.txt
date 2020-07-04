@@ -1,5 +1,11 @@
 
 (t)fri jul 03 20
+(u)Superlagg
+(p)1244
+(e)⚖🆕|balance, feature
+(*)Patches and styptic powder are now less effective at stopping bleeding.
+(*)However, bandages are now quicker to apply and a bit more effective!
+(*)Changed how several medical chems work.
 (u)MarkNstein
 (p)1264
 (e)🐛|bug
