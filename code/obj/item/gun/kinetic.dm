@@ -342,6 +342,28 @@
 		current_projectile = new/datum/projectile/bullet/derringer
 		..()
 
+/obj/item/gun/kinetic/faith
+	name = "Faith"
+	desc = "'Cause ya gotta have Faith."
+	icon_state = "faith"
+	force = 5.0
+	caliber = 0.22
+	max_ammo_capacity = 4
+	w_class = 2
+	muzzle_flash = 0
+
+	New()
+		ammo = new/obj/item/ammo/bullets/bullet_22/faith
+		current_projectile = new/datum/projectile/bullet/bullet_22
+		..()
+
+	update_icon()
+		if (src.ammo.amount_left < 1)
+			src.icon_state = "faith-empty"
+		else
+			src.icon_state = "faith"
+		return
+
 /obj/item/gun/kinetic/detectiverevolver
 	name = "CPA Detective Special"
 	desc = "A snubnosed police-issue revolver developed by Cormorant Precision Arms. Uses .38-Special rounds."
