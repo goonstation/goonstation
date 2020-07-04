@@ -36,7 +36,7 @@
 	var/botcard_access = "Head of Security" //Job access for doors.
 	var/hat = null //Add an overlay from bots/aibots.dmi with this state.  hats.
 	var/our_baton_type = /obj/item/baton/secbot
-	var/loot_baton_type = /obj/item/baton
+	var/loot_baton_type = /obj/item/scrap
 	var/stun_type = "stun"
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
@@ -96,6 +96,7 @@
 	idcheck = 1
 	auto_patrol = 1
 	report_arrests = 1
+	loot_baton_type = /obj/item/baton
 	hat = "nt"
 	attack_per_step = 1
 
@@ -1058,9 +1059,12 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		new /obj/item/device/prox_sensor(Tsec)
 
 		// Not charged when dropped (ran on Beepsky's internal battery or whatever).
-		var/obj/item/baton/B = new loot_baton_type(Tsec)
-		B.status = 0
-		B.process_charges(-INFINITY)
+		if (loot_baton_type == /obj/item/baton)
+			var/obj/item/baton/B = new loot_baton_type(Tsec)
+			B.status = 0
+			B.process_charges(-INFINITY)
+		else
+			new loot_baton_type
 
 		if (prob(50))
 			new /obj/item/parts/robot_parts/arm/left(Tsec)
@@ -1166,7 +1170,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			src.overlays += image('icons/obj/bots/aibots.dmi', "hs_hole")
 			boutput(user, "You weld a hole in [src]!")
 
-	else if ((istype(W, /obj/item/device/prox_sensor)) && (src.build_step == 1))
+	else if (istype(W, /obj/item/device/prox_sensor) && src.build_step == 1)
 		src.build_step++
 		boutput(user, "You add the prox sensor to [src]!")
 		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_eye")
@@ -1178,17 +1182,34 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		boutput(user, "You add the robot arm to [src]!")
 		src.name = "helmet/signaler/prox sensor/robot arm assembly"
 		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_arm")
+		user.u_equip(W)
 		qdel(W)
+		
+	else if (istype(W, /obj/item/rods) && src.build_step == 3)
+		if (W.amount < 1)
+			boutput(user, "You need a non-zero amount of rods. How did you even do that?")
+		else
+			src.build_step++
+			boutput(user, "You add a rod to [src]'s robot arm!")
+			src.name = "helmet/signaler/prox sensor/robot arm/rod assembly"
+			src.overlays += image('icons/obj/bots/aibots.dmi', "hs_rod")
+			W.amount -= 1
+			if (W.amount < 1)
+				user.u_equip(W)
+				qdel(W)
 
-	else if ((istype(W, /obj/item/baton)) && (src.build_step >= 3))
-		src.build_step++
-		boutput(user, "You complete the Securitron! Beep boop.")
-		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
-		S.beacon_freq = src.beacon_freq
-		S.hat = src.hat
-		S.name = src.created_name
-		qdel(W)
-		qdel(src)
+	else if (istype(W, /obj/item/cable_coil) && src.build_step >= 4)
+		var/obj/item/cable_coil/C = W
+		if (!C.use(5))
+			boutput(user, "You need a longer length of cable! A length of five should be enough.")
+		else
+			src.build_step++
+			boutput(user, "You add the wires to the rod, completing the Securitron! Beep boop.")
+			var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
+			S.beacon_freq = src.beacon_freq
+			S.hat = src.hat
+			S.name = src.created_name
+			qdel(src)
 
 	else if (istype(W, /obj/item/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
