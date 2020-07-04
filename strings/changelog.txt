@@ -1,4 +1,38 @@
 
+(t)fri jul 03 20
+(u)Superlagg
+(p)1244
+(e)⚖🆕|balance, feature
+(*)Patches and styptic powder are now less effective at stopping bleeding.
+(*)However, bandages are now quicker to apply and a bit more effective!
+(*)Changed how several medical chems work.
+(u)MarkNstein
+(p)1264
+(e)🐛|bug
+(+)Cyborg frames no longer disappear after fully disassembling a borg.
+(u)Superlagg
+(p)1315
+(e)⚖🎨|balance, sprites
+(*)Securitrons no longer drop stun batons. Beepsky isn't any ordinary securitron, though!
+(u)Ryumi
+(p)1325
+(e)🗺|mapping
+(+)Added many more fixes and QoL + plolish improvements to Donut3.
+(u)mbc, UrsulaMajor
+(*)Armory's Special Equipment locker now contains 2 backup security weapon vendor tokens, 2 deployable turrets, and 2 night vision goggles. We also made sure it was placed on all maps.
+(u)UrsulaMajor, Flaborized, and Tarmunora
+(p)1314
+(e)⚖🆕🎨|balance, feature, sprites
+(+)Combat Buffs for Circular Saw, Botany Saw, and Deconstruction Device
+(+)New sprites for Deconstruction Device
+(+)Adjusted surgical tool poisoning and armor-piercing statistics
+(t)thu jul 01 20
+(u)mbc
+(*)Security loadouts will also output a pinpointer that helps the officer find their chosen weapons (baton/gun) if they are stolen or lost.
+(u)Emcee-Gore
+(p)1310
+(e)🐛|bug
+(+)Admin spawned bedsheet/cape items work now.
 (t)wed jul 01 20
 (u)UrsulaMajor
 (p)1261
@@ -51,7 +85,7 @@
 (*)Moved antagonist points display (changeling DNA etc) to onscreen text instead of the stat panel.
 (u)Tarmunora
 (p)1269
-(e)⚖🐛|balance, bug
+(e)⚖🐛|balance, bugbug
 (+)Fixed issue making detain projectiles more powerful than intended.
 (u)mbc
 (p)1260

@@ -307,6 +307,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antirad, 3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/saline, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/atropine, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/synaptizine, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/eyedrops, 2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/antiviral, 6)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/insulin, 6)

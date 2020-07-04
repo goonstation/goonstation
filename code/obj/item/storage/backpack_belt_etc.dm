@@ -182,8 +182,10 @@
 	desc = "Can hold various small objects."
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	can_hold = list(/obj/item/deconstructor)
+	in_list_or_max = 1
 
-/obj/item/storage/belt/utility/ceshielded
+/obj/item/storage/belt/utility/prepared/ceshielded
 	name = "aurora MKII utility belt"
 	desc = "An utility belt for usage in high-risk salvage operations. Contains a personal shield generator. Can be activated to overcharge the shields temporarily."
 	icon_state = "cebelt"
@@ -303,7 +305,7 @@
 	/obj/item/screwdriver,
 	/obj/item/wrench,
 	/obj/item/device/multitool,
-	/obj/item/cable_coil)
+	/obj/item/deconstructor)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"

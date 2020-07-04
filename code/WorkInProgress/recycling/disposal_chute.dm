@@ -678,6 +678,8 @@
 		return
 
 	MouseDrop_T(mob/target, mob/user)
+		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.hasStatus(list("weakened", "paralysis", "stunned")) || isAI(user) || isAI(target) || isghostcritter(user))
+			return 
 		..()
 		flush = 1
 

@@ -483,7 +483,7 @@
 /obj/screen/abilitystat
 	maptext_x = 6
 	maptext_y = -7
-	maptext_width = 100
+	maptext_width = 120
 	maptext_height = 32
 	name = "Abilities Text"
 

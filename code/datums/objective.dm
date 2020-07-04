@@ -196,7 +196,7 @@ proc/create_fluff(var/datum/mind/target)
 			if("yellow cake")
 				steal_target = /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake
 			if("aurora MKII utility belt")
-				steal_target = /obj/item/storage/belt/utility/ceshielded
+				steal_target = /obj/item/storage/belt/utility/prepared/ceshielded
 			if("much coveted Gooncode")
 				steal_target = /obj/item/toy/gooncode
 #endif

@@ -18977,6 +18977,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "aRp" = (

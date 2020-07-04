@@ -199,7 +199,7 @@
 	name = "laser gun"
 	icon_state = "laser"
 	uses_multiple_icon_states = 1
-	cell_type = new/obj/item/ammo/power_cell/med_plus_power
+	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	force = 7.0
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	module_research = list("weapons" = 4, "energy" = 4)
@@ -1298,12 +1298,8 @@
 				if ("pulse")
 					current_projectile = projectiles["pulse"]
 					item_state = "lawg-pulse"
-#if ASS_JAM
-					playsound(M, "sound/vox/pull.ogg", 50)
-#else
 					playsound(M, "sound/vox/push.ogg", 50)
 
-#endif
 					/datum/projectile/energy_bolt/pulse
 		else		//if you're not the owner and try to change it, then fuck you
 			switch(text)
@@ -1433,11 +1429,7 @@
 // An energy gun that uses the lawbringer's Pulse setting, to beef up the current armory.
 
 /obj/item/gun/energy/pulse_rifle
-#if ASS_JAM
-	name = "pullse rifle"
-#else
 	name = "pulse rifle"
-#endif
 	desc = "todo"
 	icon_state = "pulse_rifle"
 	uses_multiple_icon_states = 1
