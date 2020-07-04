@@ -37,6 +37,7 @@
 	var/hat = null //Add an overlay from bots/aibots.dmi with this state.  hats.
 	var/our_baton_type = /obj/item/baton/secbot
 	var/loot_baton_type = /obj/item/scrap
+	var/botgun = null
 	var/stun_type = "stun"
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
@@ -119,6 +120,15 @@
 			transmit_connection.post_signal(src, pdaSignal)
 
 		..()
+
+/obj/machinery/bot/secbot/gun
+	name = "Shoot Gunsky"
+	desc = "That robot has a gun!"
+	heath = 4200
+	auto_patrol = 0
+	beacon_freq = 1444
+	hat = "helm"
+	botgun = /obj/item/device/secbotgun/taser
 
 /obj/machinery/bot/secbot/warden
 	name = "Warden Jack"
@@ -354,6 +364,12 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				src.mode = SECBOT_HUNT
 			..()
 
+	proc/shootsec(var/atom/target as mob|obj)
+		if(src.botgun)
+			var/is_ranged = get_dist(src, target) > 1
+			src.botgun.shootsec(target, src, is_ranged)
+		return
+
 	proc/navigate_to(atom/the_target,var/move_delay=3,var/adjacent=0)
 		if(src.moving) return 1
 		src.moving = 1
@@ -417,6 +433,65 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			src.frustration = 0
 		return
 
+// MOVE ELSEWHERE -V
+
+/obj/item/device/secbotgun
+	name = "Testgun for Shootbot"
+	desc = "A securitron gun. oh my."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "tool_generic"
+	mats = 6
+	w_class = 2.0
+	var/tool_id = "GENERIC" //Identification ID.
+	var/is_gun = 0 		// 1 Is ranged, 0 is melee.
+	var/last_use = 0 	// If we want a use delay.
+	var/add_loot = null // Get our weapon back!
+	var/give_thing = null 	// The thing we give the bot to have the thing
+
+	proc
+		shootsec(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=1)
+			if(!user || !user.on || user.getStatusDuration("stunned") || user.idle)
+				return 1
+
+			return 0
+
+	//Taser tool
+	taser
+		name = "Taser tool module"
+		desc = "A taser module for PR-6S Guardbuddies."
+		icon_state = "tool_taser"
+		tool_id = "TASER"
+		is_gun = 1
+		var/datum/projectile/current_projectile = new/datum/projectile/energy_bolt/robust
+
+		// Updated for new projectile code (Convair880).
+		shootsec(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
+			if (..()) return
+
+			if (src.last_use && world.time < src.last_use + 1)
+				return
+
+			if (ranged)
+				var/obj/projectile/P = shoot_projectile_ST_pixel(master, current_projectile, target)
+				if (!P)
+					return
+
+				user.visible_message("<span class='alert'><b>[master] fires the taser at [target]!</b></span>")
+
+			else
+				var/obj/projectile/P = initialize_projectile_ST(master, current_projectile, target)
+				if (!P)
+					return
+
+				user.visible_message("<span class='alert'><b>[master] shoots [target] point-blank with the taser!</b></span>")
+				P.was_pointblank = 1
+				hit_with_existing_projectile(P, target)
+
+			src.last_use = world.time
+			return
+			
+// End Tazer
+
 	Move(var/turf/NewLoc, direct)
 		var/oldloc = src.loc
 		..()
@@ -458,9 +533,11 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 				if (target)		// make sure target exists
 					if (get_dist(src, src.target) <= 1)		// if right next to perp
+						src.shootsec(src.target)			//And shoot em too
 						src.baton_attack(src.target)
 					else								// not next to perp
 						if(!(src.target in view(7,src)) || !moving)
+							src.shootsec(src.target)	// Take a shot
 							//qdel(src.mover)
 							if (src.mover)
 								src.mover.master = null
