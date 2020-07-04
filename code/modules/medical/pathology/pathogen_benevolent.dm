@@ -227,8 +227,8 @@ datum/pathogeneffects/benevolent/resurrection
 			origin.symptom_data["resurrect_cd"] = TIME
 			// range from 65 to 45. This is applied to both brute and burn, so the total max damage after resurrection is 130 to 90.
 			var/cap =	95 - origin.stage*10
-			var/brute = M.get_brute_damage()>45?45:M.get_brute_damage()
-			var/burn = M.get_burn_damage()>45?45:M.get_burn_damage()
+			var/brute = M.get_brute_damage()>cap?cap:M.get_brute_damage()
+			var/burn = M.get_burn_damage()>cap?cap:M.get_burn_damage()
 
 			// let's heal them before we put some of the damage back
 			// but they don't get back organs/limbs/whatever, so I don't use full_heal
