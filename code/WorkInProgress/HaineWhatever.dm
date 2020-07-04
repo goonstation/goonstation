@@ -721,7 +721,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		var/is_low = result < 19 ? 1 : 0
 		var/is_snake = nums_snake.Find("[result]") ? 1 : 0
 		for (var/bet in src.bets)
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 			if (!islist(bet))
 				src.bets.Remove(bet)
 				continue

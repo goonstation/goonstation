@@ -349,7 +349,7 @@
 	for(var/area/A in world)
 		A.eject = 1
 		A.updateicon()
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 	for(var/mob/N in mobs)
 		SPAWN_DBG(0)
 			shake_camera(N, 120, 2)
@@ -379,7 +379,7 @@
 	explosion_new(src, get_turf(M), 1500, 22.78)
 
 	for(var/area/A in world)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		A.eject = 0
 		A.updateicon()
 

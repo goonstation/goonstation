@@ -153,7 +153,7 @@
 				counted += objt
 				counted[objt] = 0
 			for (var/atom/movable/O in world)
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				if (O.type in counted)
 					counted[O.type]++
 			for (var/objt in required)
@@ -291,14 +291,14 @@
 				return
 		var/pod_score = 0
 		for (var/obj/machinery/vehicle/pod_smooth/P in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			var/score = 0
 			var/multiplier = P.armor_score_multiplier
 			if (P.m_w_system)
 				score += P.m_w_system.weapon_score
 			pod_score += score * multiplier
 		for (var/obj/machinery/vehicle/miniputt/P in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			var/score = 0
 			var/multiplier = P.armor_score_multiplier
 			if (P.m_w_system)

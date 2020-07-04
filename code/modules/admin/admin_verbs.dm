@@ -997,7 +997,7 @@ var/list/fun_images = list()
 		for (var/mob/living/M in mobs)
 			for (var/obj/item/parts/P in M)
 				P.sever()
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 
 			M.update_body()
 	else
@@ -1073,7 +1073,7 @@ var/list/fun_images = list()
 	if (confirm4 == "Yes")
 		//Make every space tile bright pink (for further processing via local image manipulation)
 		for (var/turf/space/S in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (S.contents.len == 0 && S.overlays.len <= 1)//== 0) //Doesnt pinkify tiles with crap on top of them (transparant overlays fuck with the image processing later)
 				S.icon = 'icons/effects/ULIcons.dmi'
 				S.icon_state = "etc"
@@ -1419,7 +1419,7 @@ var/list/fun_images = list()
 			CritterPet.atkcarbon = 0
 			CritterPet.atksilicon = 0
 
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 
 	logTheThing("admin", usr ? usr : src, null, "gave everyone a pet [pet_path]!")
 	logTheThing("diary", usr ? usr : src, null, "gave everyone a pet [pet_path]!", "admin")

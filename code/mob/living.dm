@@ -191,7 +191,7 @@
 			var/mob/players = C.mob
 			if (!isdead(players) && !isVRghost(players) && !isghostcritter(players) && !inafterlife(players))
 				num_players++
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
 		if (num_players <= 5 && master_mode != "battle_royale")
 			if (!emergency_shuttle.online && current_state != GAME_STATE_FINISHED && ticker.mode.crew_shortage_enabled)

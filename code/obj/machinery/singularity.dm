@@ -143,7 +143,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/proc/eat()
 	for (var/X in orange(grav_pull,get_turf(src)))
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (!X)
 			continue
 		var/atom/A = X
@@ -306,7 +306,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/proc/BHolerip()
 	for (var/turf/T in orange(6,get_turf(src)))
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (prob(70))
 			continue
 		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (get_dist(src,T) == 4 || get_dist(src,T) == 5)) // I'm very tired and this is the least dumb thing I can make of what was here for now

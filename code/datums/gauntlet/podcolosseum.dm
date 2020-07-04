@@ -126,7 +126,7 @@
 					boutput(M, rendered)
 			else if (istype(M.eye, /obj/observable/colosseum))
 				boutput(M, rendered)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 
 	proc/beginStaging()
 		if (state != 0)
@@ -379,7 +379,7 @@
 			viewing = locate() in world
 			staging = locate() in world
 			for (var/area/G in world)
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				if (G.type == /area/colosseum)
 					colosseum = G
 					break

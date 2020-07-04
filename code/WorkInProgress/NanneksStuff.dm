@@ -24,7 +24,7 @@
 	New()
 		..()
 		for(var/area/projection/P in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if(P.id == src.id)
 				src.proj = P
 				P.pointer = src
@@ -216,7 +216,7 @@ This works
 
 	New()
 		for(var/obj/projection/P in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if(P.id == src.id)
 				src.proj = P
 				P.pointer = src

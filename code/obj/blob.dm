@@ -623,7 +623,7 @@ var/image/blob_icon_cache
 
 		//destroy blob tiles near the destroyed nucleus
 		for (var/obj/blob/B in orange(1, src))
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
 			//dont insta-kill nearby nuclei tho...
 			if (!istype(B, /obj/blob/nucleus))

@@ -213,7 +213,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 					C.add_stain(src.stain)
 					return
 			else
-				SPAWN_DBG(0) //sorry. i want to lagcheck this. DO SOMETHING BETTER LATER ARUUGh
+				SPAWN_DBG(0) //sorry. i want to sleep this. DO SOMETHING BETTER LATER ARUUGh
 					for (var/mob/living/carbon/human/H in src.loc)
 						if (H.lying)
 							if (H.wear_suit)
@@ -223,11 +223,11 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 						//else
 							//if (H.shoes)
 								//H.shoes.add_stain(src.stain)
-						LAGCHECK(LAG_REALTIME)
-					LAGCHECK(LAG_HIGH)
+						sleep(LAG_REALTIME)
+					sleep(LAG_HIGH)
 					for (var/obj/item/clothing/C in src.loc)
 						C.add_stain(src.stain)
-						LAGCHECK(LAG_REALTIME)
+						sleep(LAG_REALTIME)
 
 #define DRY_BLOOD 1
 #define FRESH_BLOOD -1
@@ -293,7 +293,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 		SPAWN_DBG(0)
 			if (!src.pooled)
 				for (var/obj/O in src.loc)
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 					if (O && (!src.pooled) && prob(max(src?.reagents.total_volume*5, 10)))
 						O.add_blood(src)
 
@@ -399,7 +399,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 		SPAWN_DBG (0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
-				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
+				sleep(LAG_LOW)//sleep(0.3 SECONDS)
 				if (i > 0)
 					var/obj/decal/cleanable/blood/b = make_cleanable( /obj/decal/cleanable/blood/splatter/extra,get_turf(src))
 					if (!b) continue //ZeWaka: fix for null.diseases
@@ -1305,7 +1305,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		SPAWN_DBG (0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
-				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
+				sleep(LAG_LOW)//sleep(0.3 SECONDS)
 				if (i > 0)
 					if (prob(40))
 						/*var/obj/decal/cleanable/oil/o =*/
@@ -1342,7 +1342,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		SPAWN_DBG (0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
-				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
+				sleep(LAG_LOW)//sleep(0.3 SECONDS)
 				if (i > 0)
 					make_cleanable( /obj/decal/cleanable/flockdrone_debris/fluid,src.loc)
 				if (step_to(src, get_step(src, direction), 0))
@@ -1369,7 +1369,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		SPAWN_DBG (0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
-				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
+				sleep(LAG_LOW)//sleep(0.3 SECONDS)
 				if (i > 0)
 					if (prob(10))
 						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
@@ -1428,7 +1428,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		SPAWN_DBG (0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
-				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
+				sleep(LAG_LOW)//sleep(0.3 SECONDS)
 				if (i > 0)
 					if (prob(40))
 						/*var/obj/decal/cleanable/oil/o =*/
@@ -1811,7 +1811,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		SPAWN_DBG (0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
-				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
+				sleep(LAG_LOW)//sleep(0.3 SECONDS)
 				if (i > 0)
 					if (prob(40))
 						/*var/obj/decal/cleanable/oil/o =*/

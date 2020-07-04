@@ -54,7 +54,7 @@ mob/new_player
 			if(landmark.tag == "landmark*new_player")
 				watch_locations += landmark.loc
 
-			LAGCHECK(LAG_REALTIME)
+			sleep(LAG_REALTIME)
 
 		if(watch_locations.len>0)
 			loc = pick(watch_locations)

@@ -512,7 +512,7 @@
 		returndir = dir
 		if(returnpoint)
 			for (var/obj/landmark/A in landmarks)//world)
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				if (A.name == returnpoint)
 					returnloc = A.loc
 					return

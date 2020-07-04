@@ -61,7 +61,7 @@ var/global/atom_emergency_stop = 0
 		var/transmute_total = 0
 
 		for (var/atom/A in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "type transmute command terminated due to an emergency stop.")
 				logTheThing("diary", usr, null, "type transmute command terminated due to an emergency stop.", "admin")
@@ -107,7 +107,7 @@ var/global/atom_emergency_stop = 0
 		var/emagged_total = 0
 
 		for (var/atom/A in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "emagging command terminated due to an emergency stop.")
 				logTheThing("diary", usr, null, "emagging command terminated due to an emergency stop.", "admin")
@@ -158,7 +158,7 @@ var/global/atom_emergency_stop = 0
 		var/emagged_total = 0
 
 		for (var/atom/A in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "type emagging command terminated due to an emergency stop.")
 				logTheThing("diary", usr, null, "type emagging command terminated due to an emergency stop.", "admin")
@@ -233,7 +233,7 @@ var/global/atom_emergency_stop = 0
 		var/scaled_total = 0
 
 		for (var/atom/A in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "scaling command terminated due to an emergency stop.")
 				logTheThing("diary", usr, null, "scaling command terminated due to an emergency stop.", "admin")
@@ -290,7 +290,7 @@ var/global/atom_emergency_stop = 0
 		var/scaled_total = 0
 
 		for (var/atom/A in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "type scaling command terminated due to an emergency stop.")
 				logTheThing("diary", usr, null, "type scaling command terminated due to an emergency stop.", "admin")
@@ -366,7 +366,7 @@ var/global/atom_emergency_stop = 0
 		var/rotated_total = 0
 
 		for (var/atom/A in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "rotating command terminated due to an emergency stop.")
 				logTheThing("diary", usr, null, "rotating command terminated due to an emergency stop.", "admin")
@@ -420,7 +420,7 @@ var/global/atom_emergency_stop = 0
 		var/rotated_total = 0
 
 		for (var/atom/A in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "type rotating command terminated due to an emergency stop.")
 				logTheThing("diary", usr, null, "type rotating command terminated due to an emergency stop.", "admin")
@@ -504,7 +504,7 @@ var/global/atom_emergency_stop = 0
 		var/spun_total = 0
 
 		for (var/atom/A in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "spinning command terminated due to an emergency stop.")
 				logTheThing("diary", usr, null, "spinning command terminated due to an emergency stop.", "admin")
@@ -570,7 +570,7 @@ var/global/atom_emergency_stop = 0
 		var/spun_total = 0
 
 		for (var/atom/A in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "type spinning command terminated due to an emergency stop.")
 				logTheThing("diary", usr, null, "type spinning command terminated due to an emergency stop.", "admin")
@@ -651,7 +651,7 @@ var/global/atom_emergency_stop = 0
 		var/gotten_total = 0
 
 		for (var/atom/A in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "teleport command terminated due to an emergency stop.")
 				logTheThing("diary", usr, null, "teleport command terminated due to an emergency stop.", "admin")
@@ -707,7 +707,7 @@ var/global/atom_emergency_stop = 0
 		var/gotten_total = 0
 
 		for (var/atom/A in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (atom_emergency_stop)
 				logTheThing("admin", usr, null, "teleport command terminated due to an emergency stop.")
 				logTheThing("diary", usr, null, "teleport command terminated due to an emergency stop.", "admin")

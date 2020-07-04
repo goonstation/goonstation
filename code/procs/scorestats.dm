@@ -96,7 +96,7 @@ var/datum/score_tracker/score_tracker
 			for (var/obj/item/cell/C in A.contents)
 				if (get_percentage_of_fraction_and_whole(C.charge,C.maxcharge) >= 85)
 					apcs_powered++
-			//LAGCHECK(LAG_LOW)
+			//sleep(LAG_LOW)
 
 		//checking mess
 		for(var/area/station/AR in world)
@@ -108,7 +108,7 @@ var/datum/score_tracker/score_tracker
 				undamaged_areas++
 			if (cleanliness >= 80)
 				clean_areas++
-			//LAGCHECK(LAG_LOW)
+			//sleep(LAG_LOW)
 
 		score_power_outages = get_percentage_of_fraction_and_whole(apcs_powered,apc_count)
 		score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,station_areas)

@@ -950,7 +950,7 @@
 		return 1
 
 	for (var/obj/machinery/networked/mainframe/aMainframe in machine_registry[MACHINES_MAINFRAMES])
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (aMainframe.z != 1)
 			continue
 

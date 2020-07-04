@@ -443,7 +443,7 @@
 		handleCast(var/atom/selected)
 			boutput(usr, "<span class='notice'>Set [target]/var/[varname] to [selected] on all entities of the same type.</span>")
 			for (var/datum/V in world)
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				if (istype(V, target.type))
 					V.vars[varname] = selected
 			logTheThing("admin", src, null, "modified [target]'s [varname] to [target.vars[varname]] on all entities of the same type")

@@ -974,7 +974,7 @@
 		if(halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 			var/list/obj/closet/closets = list()
 			for(var/obj/closet/O in world)
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				if(O.z != src.z || O.opened || !O.can_open())
 					continue
 				closets.Add(O)

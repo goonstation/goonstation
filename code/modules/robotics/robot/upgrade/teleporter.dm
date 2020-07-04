@@ -20,7 +20,7 @@
 
 	for (var/obj/item/device/radio/beacon/R in tracking_beacons)
 		if (!istype(R, /obj/item/device/radio/beacon/jones))
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			var/turf/T = find_loc(R)
 			if (!T)
 				continue
@@ -32,7 +32,7 @@
 			L[tmpname] = R
 
 	for (var/obj/item/implant/tracking/I in tracking_implants)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (!I.implanted || !ismob(I.loc))
 			continue
 		else

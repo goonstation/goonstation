@@ -59,7 +59,7 @@ var/maniac_previous_victim = "Unknown"
 				sleep(0)
 				var/mob/dead/observer/ghost = new/mob/dead/observer
 				for (var/obj/landmark/A in landmarks)//world)
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 					if (A.name == "evilchef_corpse")
 						ghost.set_loc(A.loc)
 						var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(A.loc)

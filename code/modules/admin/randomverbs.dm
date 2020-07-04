@@ -606,7 +606,7 @@
 			if(T.air.trace_gases)
 				T.air.trace_gases = null
 			T.air.temperature = T20C
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 
 /client/proc/flip_view()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -1572,7 +1572,7 @@
 		new /obj/vehicle/cat(S.loc)
 		qdel(S)
 		catcounter++
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 
 	usr.show_text("You replaced every single segway with a rideable cat. Good job!", "blue")
 	logTheThing("admin", usr, null, "replaced every segway with a cat, total: [catcounter].")
@@ -1590,7 +1590,7 @@
 
 	var/revived = 0
 	for (var/obj/critter/domestic_bee/Bee in world)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (!Bee.alive)
 			Bee.health = initial(Bee.health)
 			Bee.alive = 1
@@ -1601,7 +1601,7 @@
 			Bee.visible_message("<span class='alert'>[Bee] seems to rise from the dead!</span>")
 			revived ++
 	for (var/obj/critter/domestic_bee_larva/Larva in world)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (!Larva.alive)
 			Larva.health = initial(Larva.health)
 			Larva.alive = 1
@@ -1620,7 +1620,7 @@
 
 	var/revived = 0
 	for (var/obj/critter/cat/Cat in world)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (!Cat.alive)
 			Cat.health = initial(Cat.health)
 			Cat.alive = 1
@@ -1639,7 +1639,7 @@
 
 	var/revived = 0
 	for (var/obj/critter/parrot/Bird in world)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (!Bird.alive)
 			Bird.health = initial(Bird.health)
 			Bird.alive = 1
@@ -2455,7 +2455,7 @@ var/global/night_mode_enabled = 0
 	medals = params2list(medals)
 	var/mob/M
 	for (var/client/C in clients)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (C.key == target_key	)
 			M = C.mob
 	if (isnull(M))
@@ -2516,7 +2516,7 @@ var/global/night_mode_enabled = 0
 		return
 	medals = params2list(medals)
 	for (var/client/C in clients)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (C.key == new_key)
 			M = C.mob
 	if (M.key == old_key)

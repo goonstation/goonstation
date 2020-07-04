@@ -615,7 +615,7 @@
 
 	proc/post_signal(datum/signal/signal,var/newfreq)
 		SPAWN_DBG(0)
-			LAGCHECK(LAG_REALTIME)
+			sleep(LAG_REALTIME)
 			if(!signal)
 				return
 			var/freq = newfreq

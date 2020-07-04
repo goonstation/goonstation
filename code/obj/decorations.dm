@@ -522,7 +522,7 @@
 			var/area/blind_area = get_area(blind)
 			if(blind_area != A)
 				continue
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (!(blind in src.myBlinds))
 				src.myBlinds += blind
 				blind.mySwitch = src

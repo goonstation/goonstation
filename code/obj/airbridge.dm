@@ -52,7 +52,7 @@
 
 	proc/get_link()
 		for(var/obj/airbridge_controller/C in by_type[/obj/airbridge_controller])
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if(C.z == src.z && C.id == src.id && C != src)
 				linked = C
 				break
@@ -93,7 +93,7 @@
 				T.air.fuel_burnt = 0
 				T.air.trace_gases = null
 				T.air.temperature = T20C
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 
 			working = 0
 			updateComps()

@@ -37,7 +37,7 @@
 			command_alert("Our [pick("sensors","scientists","monitors","fluidity regulators","janitor consultants")] have [pick("detected","found","discovered","noted","warned us that")] \a [pick("strange gathering of fluid","overabundance of moisture","large amount of moist material","spillage of janitorial supplies")] [pick("has built up in","has inundated","has been introduced into","has flooded")] the air distribution network.", "Anomaly Alert")
 
 		for (var/obj/machinery/atmospherics/unary/outlet_injector/I in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if(!I.reagents)
 				I.reagents = new(totalReagents)
 				I.reagents.my_atom = I

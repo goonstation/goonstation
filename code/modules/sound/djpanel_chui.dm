@@ -76,7 +76,7 @@ chui/window/dj_panel //global panel
 				move_admin_sound_channel(opposite=1)
 				SPAWN_DBG(0)
 					for (var/client/C in clients)
-						LAGCHECK(LAG_LOW)
+						sleep(LAG_LOW)
 						var/sound/stopsound = sound(null,wait = 0,channel=admin_sound_channel)
 						stopsound.channel = admin_sound_channel
 						C <<  stopsound
@@ -84,7 +84,7 @@ chui/window/dj_panel //global panel
 			if ("stopradio")
 				SPAWN_DBG(0)
 					for (var/client/C in clients)
-						LAGCHECK(LAG_LOW)
+						sleep(LAG_LOW)
 						var/mute_channel = 1013
 						var/sound/stopsound = sound(null,wait = 0,channel=mute_channel)
 						stopsound.channel = mute_channel

@@ -54,7 +54,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	SPAWN_DBG(0)
 		var/admin_key = admin_key(src)
 		for (var/client/C in clients)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			var/client_vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 
 			if (src.djmode || src.non_admin_dj)
@@ -85,7 +85,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 
 	SPAWN_DBG(0)
 		for (var/client/C in clients)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			C.verbs += /client/verb/stop_the_radio
 			var/client_vol = C.getVolume(VOLUME_CHANNEL_RADIO)
 
@@ -117,7 +117,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 
 	SPAWN_DBG(0)
 		for (var/client/C in clients)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			C.verbs += /client/verb/stop_the_music
 			var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 

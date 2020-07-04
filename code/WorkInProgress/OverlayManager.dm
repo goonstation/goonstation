@@ -151,7 +151,7 @@
 /proc/removerlays()
 	for(var/obj/screen/screenoverlay/F in world)
 		del(F)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 
 	return
 

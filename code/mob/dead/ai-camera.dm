@@ -505,7 +505,7 @@
 				if (O.aiImage)
 					O.aiImage.loc = O
 
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 			//copy paste end!
 
 	for(var/atom in (new_tiles - prev_tiles))
@@ -548,7 +548,7 @@
 		else if( t.cameras == null )
 			t.aiImage.loc = t
 
-		LAGCHECK(LAG_HIGH)
+		sleep(LAG_HIGH)
 		//copy paste end!
 
 	return
@@ -558,7 +558,7 @@
 	/*
 	if(coveredTiles != null && coveredTiles.len)
 		for(var/turf/O in coveredTiles.Copy())
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
 			//O.removeCameraCoverage(src)
 			//removeCameraCoverage copy+paste begin!
@@ -582,7 +582,7 @@
 
 
 	for(var/turf/t in view(CAM_RANGE, get_turf(src)))
-		LAGCHECK(LAG_HIGH)
+		sleep(LAG_HIGH)
 
 		//t.addCameraCoverage(src)
 		//add camera coverage copy+paste begin!
@@ -648,14 +648,14 @@ var/list/camImages = list()
 	//for(var/turf/t in range(CAM_RANGE, src))
 	//	t.cameraTotal = 0
 
-	SPAWN_DBG(0) //maybe bad, maybe good... this is a test by MBC, please remove if its shit. (There's just a lot of things that call RL_SetOpacity that we don't really want to be stalled by lagcheck!)
+	SPAWN_DBG(0) //maybe bad, maybe good... this is a test by MBC, please remove if its shit. (There's just a lot of things that call RL_SetOpacity that we don't really want to be stalled by sleep!)
 		if (isturf(src.loc))
 			var/turf/T = src.loc
 			for(var/obj/machinery/camera/C in T.cameras)
 				//if( get_dist(C.loc, src) <= CAM_RANGE )
 				//var/list/inview = view(CAM_RANGE,C)
 				for(var/turf/t in range(CAM_RANGE, C))
-					LAGCHECK(LAG_MED)
+					sleep(LAG_MED)
 					if( !t.aiImage ) continue
 					//var/camTotal = 0
 
@@ -673,7 +673,7 @@ var/list/camImages = list()
 						t.aiImage.override = 1
 				if (C.unsubscribe_grace_counter == -1) //we are not a processing camera. Do manual update call!
 					C.updateCoverage()
-			LAGCHECK(LAG_REALTIME)
+			sleep(LAG_REALTIME)
 */
 
 //---MISC---//
@@ -700,12 +700,12 @@ world/proc/updateCameraVisibility()
 
 			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]")
 
-			LAGCHECK(100)
+			sleep(100)
 
 		aiDirty = 1
 	for(var/obj/machinery/camera/C in cameras)
 		for(var/turf/t in view(CAM_RANGE, get_turf(C)))
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 			if (!t.aiImage) continue
 			//var/dist = get_dist(t, C)
 			if (t.cameras && t.cameras.len)
@@ -717,7 +717,7 @@ world/proc/updateCameraVisibility()
 /obj/machinery/camera/proc/remove_from_turfs() //check if turf cameras is 0 . Maybe loop through each affected turf's cameras, and update static on them here instead of going thru updateCameraVisibility()?
 	//world << "Camera deleted! @ [src.loc]"
 	for(var/turf/t in view(CAM_RANGE,get_turf(src)))
-		LAGCHECK(LAG_HIGH)
+		sleep(LAG_HIGH)
 		if(t.aiImage)
 			t.aiImage.loc = t
 	aiDirty = 1

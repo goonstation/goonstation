@@ -634,7 +634,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		for(var/obj/landmark/L in landmarks)
 			if (L.name == "peststart")
 				spawns.Add(L.loc)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 		var/turf/spawnpoint = get_turf(src)
 		if(spawns.len >= 1)
 			spawnpoint = pick(spawns)

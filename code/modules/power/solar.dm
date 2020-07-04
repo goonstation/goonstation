@@ -54,7 +54,7 @@
 		for (var/obj/machinery/power/solar_control/C in powernet.nodes)
 			if (!isnull(src.id) && src.id == C.id)
 				C.tracker_update(angle)
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
 	// override power change to do nothing since we don't care about area power
 	// (and it would be pointless anyway given that solar panels and the associated tracker are usually on a separate powernet)
@@ -405,7 +405,7 @@
 		if(S.id != id) continue
 		S.control = src
 		S.ndir = cdir
-		LAGCHECK(LAG_HIGH)
+		sleep(LAG_HIGH)
 
 /obj/machinery/power/solar_control/power_change()
 	if(powered())

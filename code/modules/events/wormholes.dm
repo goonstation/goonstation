@@ -26,4 +26,4 @@
 		if(T.z == 1 && istype(T,/turf/simulated/floor))
 			wormholeturfs += T
 
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)

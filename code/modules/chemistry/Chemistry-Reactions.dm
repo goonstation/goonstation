@@ -34,7 +34,7 @@
 		for(var/atom/movable/M in view(3 + (created_volume > 30 ? 1:0), source))
 			if(M.anchored || M == source || M.throwing) continue
 			M.throw_at(source, 20 + round(created_volume * 2), 1 + round(created_volume / 10))
-			LAGCHECK(LAG_MED)
+			sleep(LAG_MED)
 	if (holder)
 		holder.del_reagent(id)
 

@@ -577,7 +577,7 @@
 	creatures.Add(SORT)
 
 	for (var/client/C in clients)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		// not sure how this could happen, but be safe about it
 		if (!C.mob)
 			continue
@@ -649,7 +649,7 @@
 
 	for (var/X in by_type[/obj/observable])
 		var/obj/observable/O = X
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		var/name = O.name
 		if (name in names)
 			namecounts[name]++
@@ -661,7 +661,7 @@
 
 	for (var/X in by_type[/obj/item/ghostboard])
 		var/obj/item/ghostboard/GB = X
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		var/name = "Ouija board"
 		if (name in names)
 			namecounts[name]++
@@ -707,7 +707,7 @@
 		creatures[name] = L
 
 	for (var/obj/machinery/bot/B in machine_registry[MACHINES_BOTS])
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (isghostrestrictedz(B.z)) continue
 		var/name = "*[B.name]"
 		if (name in names)

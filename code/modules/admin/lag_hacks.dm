@@ -38,7 +38,7 @@ client/proc/lightweight_doors()
 	SPAWN_DBG(0)
 		for(var/obj/machinery/door/D in doors)
 			D.ignore_light_or_cam_opacity = 1
-			LAGCHECK(LAG_REALTIME)
+			sleep(LAG_REALTIME)
 		message_admins("[key_name(src)] removed light/camera interactions from doors with Lag Reduction panel.")
 
 

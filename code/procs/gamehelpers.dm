@@ -81,7 +81,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 /proc/get_area_name(N) //get area by it's name
 
 	for(var/area/A in world)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if(A.name == N)
 			return A
 	return 0
@@ -91,7 +91,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 		return null
 
 	for (var/area/A in world)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (A.type == type_path)
 			return A
 
@@ -431,7 +431,7 @@ var/obj/item/dummy/click_dummy = new
 	. = new/list()
 
 	for(var/area/R in world)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if(istype(R, areatype))
 			. += R
 
@@ -448,7 +448,7 @@ var/obj/item/dummy/click_dummy = new
 	. = new/list()
 
 	for(var/area/R in world)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if(istype(R, areatype))
 			for (var/turf/T in R)
 				. += R

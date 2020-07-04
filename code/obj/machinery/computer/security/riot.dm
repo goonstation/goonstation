@@ -38,7 +38,7 @@
 			if (D.has_access(access_maxsec))
 				D.req_access = list(access_security)
 				//D.no_access = 0
-			LAGCHECK(LAG_REALTIME)
+			sleep(LAG_REALTIME)
 
 		if (armory_area)
 			for(var/obj/O in armory_area)
@@ -47,7 +47,7 @@
 				else if (istype(O,/obj/machinery/vending))
 					O.req_access = list(access_security)
 
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 
 
 	proc/print_auth_needed(var/mob/author)

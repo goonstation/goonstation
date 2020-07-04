@@ -19,7 +19,7 @@
 		command_alert("Extreme levels of radiation detected approaching the [station_or_ship()]. All personnel have [timetoreach].[timetoreachsec] seconds to enter a maintenance tunnel or radiation safezone. Maintenance doors have temporarily had their access requirements removed. This is not a test.", "Anomaly Alert")
 
 		for (var/obj/machinery/door/airlock/A in doors)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (A.z != 1)
 				break
 			if (!(istype(A, /obj/machinery/door/airlock/maintenance) || istype(A, /obj/machinery/door/airlock/pyro/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/glass/maintenance)))
@@ -29,7 +29,7 @@
 		sleep(actualtime)
 
 		for (var/area/A in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (A.z != 1)
 				break
 			if (A.do_not_irradiate)
@@ -52,7 +52,7 @@
 
 #ifndef UNDERWATER_MAP
 		for (var/turf/space/S in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (S.z == 1)
 				S.color = src.space_color
 			else
@@ -82,7 +82,7 @@
 		sleep(rand(25 SECONDS,50 SECONDS)) // drsingh lowered these by popular request
 
 		for (var/area/A in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (A.z != 1)
 				break
 			if (!A.permarads)
@@ -93,7 +93,7 @@
 
 #ifndef UNDERWATER_MAP
 		for (var/turf/space/S in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (S.z == 1)
 				S.color = null
 			else

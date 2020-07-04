@@ -523,7 +523,7 @@ var/reverse_mode = 0
 		return
 
 	for(var/datum/A in world)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (!istype(A,type)) continue
 		oldVal = A.vars[varname]
 		if (minrnd != null || maxrnd != null)

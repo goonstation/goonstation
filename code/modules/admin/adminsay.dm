@@ -105,7 +105,7 @@
 		return
 
 	for (var/obj/item/clothing/suit/cardboard_box/head_surgeon/maybeHS in world)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		maybeHS.speak(msg)
 		logTheThing("admin", usr, null, "forced HeadSurgeon to beep: [msg]")
 		logTheThing("diary", usr, null, "forced HeadSurgeon: [msg]", "admin")

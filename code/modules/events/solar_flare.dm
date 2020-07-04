@@ -13,7 +13,7 @@
 
 #ifndef UNDERWATER_MAP
 		for (var/turf/space/S in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (S.z == 1)
 				S.color = src.space_color
 			else
@@ -24,7 +24,7 @@
 
 #ifndef UNDERWATER_MAP
 		for (var/turf/space/S in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (S.z == 1)
 				S.color = null
 			else

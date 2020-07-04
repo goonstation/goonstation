@@ -868,7 +868,7 @@ datum
 							var/mob/living/carbon/human/H = M
 							var/list/gear_to_bloody = list(H.r_hand, H.l_hand, H.head, H.wear_mask, H.w_uniform, H.wear_suit, H.belt, H.gloves, H.glasses, H.shoes, H.wear_id, H.back)
 							for (var/obj/item/check in gear_to_bloody)
-								LAGCHECK(LAG_LOW)
+								sleep(LAG_LOW)
 								if (prob(40))
 									check.add_blood(H)
 							H.set_clothing_icon_dirty()

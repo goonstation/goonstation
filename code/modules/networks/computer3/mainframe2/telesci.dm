@@ -724,7 +724,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				var/list/turfs = new
 				var/turf/target = null
 				for(var/turf/T in world)
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 					if(T.x>world.maxx-4 || T.x<4)	continue
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
@@ -785,7 +785,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			if("getrandom")
 				var/turfs = list()
 				for(var/turf/T in world)
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 					if(!contents) continue
 					if(isrestrictedz(T.z)) continue
 					turfs += T

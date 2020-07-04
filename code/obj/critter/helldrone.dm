@@ -71,7 +71,7 @@ var/sound/helldrone_wakeup_sound = null
 		return
 
 	for (var/area/helldrone/drone_zone in world)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		helldrone_awake = 2
 		for (var/mob/M in drone_zone)
 			M << helldrone_wakeup_sound

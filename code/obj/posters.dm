@@ -53,7 +53,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	if (alert(usr, "Confirm poster creation", "Confirmation", "OK", "Cancel") == "OK")
 		if (print_or_place == "Print")
 			for (var/obj/machinery/networked/printer/P in world)
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				if (P.status & (NOPOWER|BROKEN))
 					continue
 				flick("printer-printing",P)
@@ -157,7 +157,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	if (alert(usr, "Confirm poster creation", "Confirmation", "OK", "Cancel") == "OK")
 		if (print_or_place == "Print")
 			for (var/obj/machinery/networked/printer/P in world)
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				if (P.status & (NOPOWER|BROKEN))
 					continue
 				flick("printer-printing",P)

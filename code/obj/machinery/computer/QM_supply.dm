@@ -512,7 +512,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 								</tr>
 								"}
 							rownum++
-						LAGCHECK(LAG_LOW)
+						sleep(LAG_LOW)
 
 					ordershit += "</tbody></table>"
 

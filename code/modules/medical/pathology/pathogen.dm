@@ -137,7 +137,7 @@ datum/controller/pathogen
 				var/datum/pathogen_cdc/CDC = pathogen_trees[strain]
 				var/count = 0
 				for (var/mob/living/carbon/human/H in mobs)
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 					if (CDC.uid in H.pathogens)
 						H.cured(H.pathogens[CDC.uid])
 						count++
@@ -309,7 +309,7 @@ datum/controller/pathogen
 					if ("cure")
 						var/count = 0
 						for (var/mob/living/carbon/human/H in mobs)
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 							if (CDC.uid in H.pathogens)
 								var/datum/pathogen/P = H.pathogens[CDC.uid]
 								if (P.name == name)
@@ -488,7 +488,7 @@ datum/controller/pathogen
 						var/infections = 0
 						var/immunities = 0
 						for (var/mob/living/carbon/human/M in mobs)
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 							if (CDC.uid in M.pathogens)
 								infections++
 							else if (CDC.uid in M.immunities)

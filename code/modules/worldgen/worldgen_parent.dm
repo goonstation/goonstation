@@ -8,4 +8,4 @@
 	for(var/turf/U in worldgenCandidates)
 		if (U) //may be deleted lol
 			U.generate_worldgen()
-			LAGCHECK(LAG_REALTIME)
+			sleep(LAG_REALTIME)

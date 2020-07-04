@@ -186,7 +186,7 @@
 							self_tile_borders = list()
 						self_tile_borders += border_tile
 
-			LAGCHECK(LAG_REALTIME)
+			sleep(LAG_REALTIME)
 
 		var/abort_group = 0
 
@@ -232,7 +232,7 @@
 
 					border_index++
 
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 
 		// Process connections to adjacent tiles
 		border_index = 1
@@ -273,7 +273,7 @@
 							enemy_turf = enemy_tile.loc
 						enemy_turf.consider_pressure_difference(-connection_difference, get_dir(enemy_tile,enemy_turf))
 
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 
 		// Process connections to space
 		border_index = 1
@@ -310,7 +310,7 @@
 				for(var/turf/simulated/member in members)
 					member.update_visuals(air)
 
-					LAGCHECK(LAG_REALTIME)
+					sleep(LAG_REALTIME)
 
 
 	// This logic is not inverted because group processing may have been
@@ -325,14 +325,14 @@
 		for(var/turf/simulated/member in members)
 			member.process_cell()
 
-			LAGCHECK(LAG_REALTIME)
+			sleep(LAG_REALTIME)
 	else
 		if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			for(var/turf/simulated/member in members)
 				member.hotspot_expose(air.temperature, CELL_VOLUME)
 				member.consider_superconductivity(starting=1)
 
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 
 		air.react()
 
@@ -376,7 +376,7 @@
 			member_air.mimic(sample, clamp(length_space_border / (2 * max(1, minDist)), 0.1, 1))
 			ADD_MIXTURE_PRESSURE(member_air, totalPressure) // Build your own atmos disaster
 
-		LAGCHECK(LAG_REALTIME)
+		sleep(LAG_REALTIME)
 
 	//mbc : bringing this silly fix back in for now
 	if (map_currently_underwater)

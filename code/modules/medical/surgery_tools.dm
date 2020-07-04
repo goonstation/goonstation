@@ -1384,7 +1384,7 @@ keeping this here because I want to make something else with it eventually
 			if (islist(bring_this_stuff) && bring_this_stuff.len)
 				var/stuff_moved = 0
 				for (var/obj/item/I in bring_this_stuff)
-					LAGCHECK(LAG_HIGH)
+					sleep(LAG_HIGH)
 					if (I.anchored || I.layer < src.layer)
 						continue
 					stuff_moved++

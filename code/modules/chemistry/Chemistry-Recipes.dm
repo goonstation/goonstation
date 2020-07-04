@@ -559,7 +559,7 @@ datum
 					for(var/atom/movable/M in view(2+ (created_volume > 30 ? 1:0), source))
 						if(M.anchored || M == source || M.throwing) continue
 						M.throw_at(get_edge_cheap(source, get_dir(source, M)),  20 + round(created_volume * 2), 1 + round(created_volume / 10))
-						LAGCHECK(LAG_MED)
+						sleep(LAG_MED)
 				else
 					var/limit_count = 0
 					var/turf/location = 0
@@ -573,7 +573,7 @@ datum
 							limit_count++
 							M.throw_at(get_edge_cheap(location, pick(cardinal)),  (20 + round(created_volume * 2)/holder.covered_cache.len), (1 + round(created_volume / 10))/holder.covered_cache.len)
 							if (limit_count > 5) break
-							LAGCHECK(LAG_MED)
+							sleep(LAG_MED)
 
 				return
 

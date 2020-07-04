@@ -36,7 +36,7 @@
 /datum/game_mode/waldo/post_setup()
 	var/num_waldos = waldos.len
 	for (var/obj/landmark/A in landmarks)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (A.name == "Teleport-Scroll")
 			var/scrollcount
 			for (scrollcount = num_waldos, scrollcount > 0, scrollcount--)

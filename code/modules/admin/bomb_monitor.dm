@@ -38,7 +38,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 				ST_time += I
 			else if (istype(I, /obj/item/assembly/radio_bomb/))
 				ST_radio += I
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 
 		lists_built = 1
 

@@ -86,18 +86,18 @@ var/makingpowernetssince = 0
 
 	for(var/obj/cable/PC in allcables)
 		PC.netnum = 0
-	LAGCHECK(LAG_MED)
+	sleep(LAG_MED)
 
 	for(var/obj/machinery/power/M in machine_registry[MACHINES_POWER])
 		if(M.netnum >=0)
 			M.netnum = 0
-	LAGCHECK(LAG_MED)
+	sleep(LAG_MED)
 
 	for(var/obj/cable/PC in allcables)
 		if(!PC.netnum)
 			if(Debug) world.log << "Starting mpn at [PC.x],[PC.y] ([PC.d1]/[PC.d2]) #[netcount]"
 			powernet_nextlink(PC, ++netcount)
-		LAGCHECK(LAG_MED)
+		sleep(LAG_MED)
 
 	if(Debug) world.log << "[netcount] powernets found"
 
@@ -111,7 +111,7 @@ var/makingpowernetssince = 0
 		if(!C.netnum) continue
 		var/datum/powernet/PN = powernets[C.netnum]
 		PN.cables += C
-		LAGCHECK(LAG_MED)
+		sleep(LAG_MED)
 
 	for(var/obj/machinery/power/M in machine_registry[MACHINES_POWER])
 		if(M.netnum<=0)		// APCs have netnum=-1 so they don't count as network nodes directly
@@ -121,7 +121,7 @@ var/makingpowernetssince = 0
 		M.powernet.nodes += M
 		if(M.use_datanet)
 			M.powernet.data_nodes += M
-		LAGCHECK(LAG_MED)
+		sleep(LAG_MED)
 
 	makingpowernets = 0
 	DEBUG_MESSAGE("rebuilding powernets end")
@@ -350,7 +350,7 @@ var/makingpowernetssince = 0
 				OC.netnum = PN.number
 				cables -= OC
 				PN.cables += OC		// remove from old network & add to new one
-			LAGCHECK(LAG_MED)
+			sleep(LAG_MED)
 
 		for(var/obj/machinery/power/OM in nodes)
 			if(!OM.netnum)
@@ -361,7 +361,7 @@ var/makingpowernetssince = 0
 				if (OM.use_datanet)	//Don't forget data_nodes! (If relevant)
 					data_nodes -= OM
 					PN.data_nodes += OM
-			LAGCHECK(LAG_MED)
+			sleep(LAG_MED)
 
 		if(Debug)
 			world.log << "Old PN#[number] : ([cables.len];[nodes.len])"

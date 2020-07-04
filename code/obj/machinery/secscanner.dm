@@ -307,7 +307,7 @@
 							threatcount = max(4,threatcount)
 							break
 					break
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 
 		return threatcount
 

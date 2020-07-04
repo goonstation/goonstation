@@ -67,7 +67,7 @@
 				src.add_partner(possible_partner)
 		else
 			for (var/obj/health_scanner/floor/possible_partner in by_type[/obj/health_scanner])
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				if (possible_partner.id == src.id)
 					src.add_partner(possible_partner)
 
@@ -89,7 +89,7 @@
 				possible_partner.add_partner(src)
 		else
 			for (var/obj/health_scanner/wall/possible_partner in by_type[/obj/health_scanner])
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				if (possible_partner.id == src.id)
 					possible_partner.add_partner(src)
 

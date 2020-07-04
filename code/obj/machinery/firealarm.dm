@@ -169,7 +169,7 @@
 /obj/machinery/firealarm/proc/post_alert(var/alarm, var/specific_target)
 //	var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 
 	if(!frequency) return
 

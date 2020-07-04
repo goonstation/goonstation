@@ -64,7 +64,7 @@
 		traverse += 1
 		if(traverse > maxtraverse)
 			return null // it's taking too long, abandon
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 	return null // if we reach this part, there's no more nodes left to explore
 
 

@@ -98,7 +98,7 @@ var/global/list/falloff_cache = list()
 			continue
 
 		var/mob/M = C.mob
-		//LAGCHECK(LAG_LOW)
+		//sleep(LAG_LOW)
 
 		Mloc = get_turf(M)
 
@@ -458,7 +458,7 @@ var/global/list/falloff_cache = list()
 
 sound
 	disposing()
-		//LAGCHECK(LAG_LOW)
+		//sleep(LAG_LOW)
 		..()
 /*
 sound

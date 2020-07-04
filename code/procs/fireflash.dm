@@ -29,7 +29,7 @@
 			for(var/mob/living/L in T)
 				L.set_burning(33-radius)
 				L.bodytemperature = max(temp/3, L.bodytemperature)
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 			for(var/obj/critter/C in T)
 				if(istype(C, "/obj/critter/zombie")) C.health -= 15
 				C.health -= (30 * C.firevuln)
@@ -58,16 +58,16 @@
 					if(C)
 						C.health -= (2 * C.firevuln)
 						C.check_health()
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 
-		LAGCHECK(LAG_REALTIME)
+		sleep(LAG_REALTIME)
 
 	SPAWN_DBG(3 SECONDS)
 		for(var/atom in hotspots)
 			var/obj/hotspot/A = atom
 			if (!A.pooled)
 				pool(A)
-			//LAGCHECK(LAG_REALTIME)  //MBC : maybe caused lighting bug?
+			//sleep(LAG_REALTIME)  //MBC : maybe caused lighting bug?
 		hotspots.len = 0
 
 /proc/fireflash_s(atom/center, radius, temp, falloff)
@@ -131,7 +131,7 @@
 			for (var/obj/critter/C in T)
 				C.health -= (30 * C.firevuln)
 				C.check_health()
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 
 		if (T.density)
 			continue
@@ -155,7 +155,7 @@
 				else
 					open[link] = target_dist
 
-		LAGCHECK(LAG_REALTIME)
+		sleep(LAG_REALTIME)
 
 	SPAWN_DBG(1 DECI SECOND) // dumb lighting hotfix
 		for(var/obj/hotspot/A in hotspots)
@@ -165,7 +165,7 @@
 		for(var/obj/hotspot/A in hotspots)
 			if (!A.pooled)
 				pool(A)
-			//LAGCHECK(LAG_REALTIME)  //MBC : maybe caused lighting bug?
+			//sleep(LAG_REALTIME)  //MBC : maybe caused lighting bug?
 		hotspots.len = 0
 
 	return affected
@@ -187,6 +187,6 @@
 				if (prob(chance) || bypass_RNG) // The bypass is for thermite (Convair880).
 					//T.visible_message("<span class='alert'>[T] melts!</span>")
 					T.burn_down()
-		LAGCHECK(LAG_REALTIME)
+		sleep(LAG_REALTIME)
 
 	return affected

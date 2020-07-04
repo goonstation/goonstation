@@ -940,18 +940,18 @@
 					qdel(newIngredient)
 					H.contents -= newIngredient
 					newIngredient = null
-					LAGCHECK(LAG_MED)
+					sleep(LAG_MED)
 
 				for (var/obj/O in new_nuggets)
 					O.set_loc(H)
-					LAGCHECK(LAG_MED)
+					sleep(LAG_MED)
 
 			else
 				var/obj/item/reagent_containers/food/snacks/prison_loaf/newLoaf = new /obj/item/reagent_containers/food/snacks/prison_loaf(src)
 
 				for (var/atom/movable/newIngredient in H)
 
-					LAGCHECK(LAG_MED)
+					sleep(LAG_MED)
 
 
 
@@ -996,7 +996,7 @@
 					newIngredient.loc = null
 					newIngredient = null
 
-					//LAGCHECK(LAG_MED)
+					//sleep(LAG_MED)
 					qdel(newIngredient)
 
 				newLoaf.update()

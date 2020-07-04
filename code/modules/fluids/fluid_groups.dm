@@ -186,7 +186,7 @@
 			if (!F) continue
 			if (F.pooled) continue
 			src.remove(F,0,1,1)
-			LAGCHECK(LAG_MED)
+			sleep(LAG_MED)
 
 		if (!src.pooled)
 			qdel(src)
@@ -313,12 +313,12 @@
 		return R
 
 	proc/displace(var/obj/fluid/F) //fluid has been displaced from its tile - delete this object and try to move my contents to adjacent tiles
-		LAGCHECK(LAG_HIGH)
+		sleep(LAG_HIGH)
 		if (!members || !F) return
 		if (members.len == 1)
 			var/turf/T
 			for( var/dir in cardinal )
-				LAGCHECK(LAG_MED)
+				sleep(LAG_MED)
 				T = get_step( F, dir )
 				if (! (istype(T,/turf/simulated/floor) || istype (T,/turf/unsimulated/floor)) ) continue
 				if (T.canpass())
@@ -332,7 +332,7 @@
 		else
 			var/turf/T
 			for( var/dir in cardinal )
-				LAGCHECK(LAG_MED)
+				sleep(LAG_MED)
 				T = get_step( F, dir )
 				if (T.active_liquid && T.active_liquid.group == src)
 					spread_member = T.active_liquid
@@ -342,7 +342,7 @@
 
 	proc/displace_channel(var/spread_dir, var/obj/fluid/F, var/obj/channel/channel) // use this to fake height levels. Result can either block a spread or 'jump' the channel by carrying over some fluid
 		if (!(channel && F)) return 0
-		LAGCHECK(LAG_HIGH)
+		sleep(LAG_HIGH)
 		var/turf/jump_turf = 0
 		var/amt_per_tile_added = (members && members.len) ? (contained_amt+1) / members.len : 0
 
@@ -358,7 +358,7 @@
 
 		if (!istype(jump_turf)) return 0
 
-		LAGCHECK(LAG_MED)
+		sleep(LAG_MED)
 		var/loss = amt_per_tile_added - channel.required_to_pass
 		if (jump_turf.active_liquid)
 			if (!jump_turf.active_liquid.group)
@@ -391,7 +391,7 @@
 
 			avg += current_reagent.viscosity
 			reagents++
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
 		if (reagents && avg)
 			avg = avg / reagents
@@ -429,7 +429,7 @@
 		src.update_viscosity()
 		src.update_required_to_spread()
 		if (SPREAD_CHECK(src) || force)
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 			if (src.qdeled) return 1
 			src.updating = 1
 
@@ -452,7 +452,7 @@
 				src.members += created
 				return
 
-		LAGCHECK(LAG_HIGH)
+		sleep(LAG_HIGH)
 
 		if (src.last_contained_amt == src.contained_amt && src.members.len == src.last_members_amt && !force)
 			src.updating = 0
@@ -464,7 +464,7 @@
 			if (amt_per_tile > x)
 				my_depth_level++
 
-		LAGCHECK(LAG_MED)
+		sleep(LAG_MED)
 
 		var/datum/color/last_color = src.average_color
 		src.average_color = src.reagents.get_average_color()
@@ -479,7 +479,7 @@
 			src.updating = 0
 			return 1
 
-		LAGCHECK(LAG_MED)
+		sleep(LAG_MED)
 
 		var/targetalpha = max(25, (src.average_color.a / 255) * src.max_alpha)
 		var/targetcolor = rgb(src.average_color.r, src.average_color.g, src.average_color.b)
@@ -494,7 +494,7 @@
 
 		for(var/fluid in src.members)
 			var/obj/fluid/F = fluid
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 			if (!F || F.pooled || src.qdeled) continue
 
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -513,7 +513,7 @@
 			if (F.last_depth_level != my_depth_level)
 				F.last_depth_level = my_depth_level
 				for(var/obj/O in F.loc)
-					LAGCHECK(LAG_MED)
+					sleep(LAG_MED)
 					if (O && O.submerged_images)
 						F.HasEntered(O,O.loc)
 
@@ -590,7 +590,7 @@
 		var/obj/fluid/F
 		src.waitforit = 1 //don't breathe in the gas on inital spread - causes runtimes with small volumes
 		for (var/i = 1, i <= members.len, i++)
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 			if (src.qdeled) return
 			if (i > members.len) continue
 			F = members[i]
@@ -601,7 +601,7 @@
 
 				for(var/fluid in F.update())
 					var/obj/fluid/C = fluid
-					LAGCHECK(LAG_HIGH)
+					sleep(LAG_HIGH)
 					if (!C || C.pooled) continue
 					var/turf/T = C.loc
 					if (istype(T) && drains_floor)
@@ -658,7 +658,7 @@
 		var/fluids_removed_avg_viscosity = 0
 
 		for (var/i = members.len, i > 0, i--)
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 			if (src.qdeled) return
 			if (i > members.len) continue
 			if (!members[i]) continue
@@ -673,7 +673,7 @@
 
 		var/removed_len = fluids_removed.len
 
-		LAGCHECK(LAG_MED)
+		sleep(LAG_MED)
 		if (transfer_to && transfer_to.reagents && src.reagents)
 			src.reagents.skip_next_update = 1
 			src.reagents.trans_to_direct(transfer_to.reagents,src.amt_per_tile * removed_len)
@@ -686,7 +686,7 @@
 		for (var/fluid in fluids_removed)
 			var/obj/fluid/F = fluid
 			src.remove(F,0,src.updating)
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
 		//fluids_removed_avg_viscosity = fluids_removed ? (fluids_removed_avg_viscosity / fluids_removed) : 1
 		return src.avg_viscosity
@@ -699,7 +699,7 @@
 
 		for (var/fluid in join_with.members)
 			var/obj/fluid/F = fluid
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 			if (!F) continue
 			F.group = src
 			src.members += F
@@ -753,7 +753,7 @@
 			FG.members += F
 			F.group = FG
 			F.last_spread_was_blocked = 0
-			LAGCHECK(LAG_REALTIME)
+			sleep(LAG_REALTIME)
 		src.members -= FG.members
 
 		if (FG)

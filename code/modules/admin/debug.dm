@@ -270,7 +270,7 @@ var/global/debug_messages = 0
 			else
 				call(theinstance,procname)()
 
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 
 		boutput(usr, "<span class='notice'>'[procname]' called on [counter] instances of '[typename]'</span>")
 		message_admins("<span class='alert'>Admin [key_name(src)] called '[procname]' on all instances of '[typename]'</span>")
@@ -506,9 +506,9 @@ var/global/debug_messages = 0
 				del(O)
 				numdeleted++
 				if(background == "Yes (Low)")
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 				else if(background == "Yes (High)")
-					LAGCHECK(LAG_REALTIME)
+					sleep(LAG_REALTIME)
 			if (src.delete_state == DELETE_STOP)
 				break
 			else if (src.delete_state == DELETE_CHECK)
@@ -677,14 +677,14 @@ body
 				gas.temperature = 10000
 				T.assume_air(gas)
 			for (var/obj/machinery/door/airlock/maintenance/door in doors)
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				qdel(door)
 			for (var/obj/machinery/door/firedoor/door in doors)
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				qdel(door)
 		if ("Chemist's Delight")
 			for (var/turf/simulated/floor/T in world)
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				if ((T.x*T.y) % 50 == 0)
 					T.reagents = new(300)
 					T.reagents.my_atom = T
@@ -696,7 +696,7 @@ body
 					T.reagents.handle_reactions()
 		if ("Viscera Cleanup Detail")
 			for (var/turf/simulated/floor/T in world)
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				if ((T.x*T.y) % 10 == 0)
 					gibs(T)
 /*
@@ -806,7 +806,7 @@ body
 		var/counter = 0
 		boutput(usr, "<span class='notice'><b>All instances of [thetype]: </b></span>")
 		for (var/atom/theinstance in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (!istype(theinstance, thetype))
 				continue
 			counter++
@@ -837,7 +837,7 @@ body
 	if (thetype)
 		var/counter = 0
 		for (var/atom/theinstance in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (!istype(theinstance, thetype))
 				continue
 			counter++

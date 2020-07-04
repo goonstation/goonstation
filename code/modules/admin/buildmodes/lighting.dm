@@ -36,7 +36,7 @@ Right Mouse Button                     = Attempt to fix Lighting on selected til
 			for(T in A) // T & A hehE HEHE SNARF SNARF FUCKING LOL
 				RL_UPDATE_LIGHT(T) //rl_reset didnt even exist lol
 				blink(T) // Might be shit. Remove if shit.
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 
 		in_progress = 0
 		update_button_text("")

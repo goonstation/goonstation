@@ -60,7 +60,7 @@
 			for(var/obj/landmark/S in landmarks)
 				if (S.name == "peststart")
 					EV.Add(S.loc)
-				LAGCHECK(LAG_HIGH)
+				sleep(LAG_HIGH)
 
 
 			EV += (clownstart + monkeystart + blobstart + kudzustart)

@@ -250,7 +250,7 @@
 			for(var/area/A in world)
 				A.eject = 1
 				A.updateicon()
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 
 			sleep(30 SECONDS)
 
@@ -259,7 +259,7 @@
 			siren.channel = 5
 			world << siren
 			for(var/area/A in world)
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				A.eject = 0
 				A.updateicon()
 

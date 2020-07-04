@@ -133,7 +133,7 @@ var/global/derelict_mode = 0
 			if (the_sun)
 				qdel(the_sun)
 			for (var/turf/space/space in world)
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 				space.icon_state = "howlingsun"
 				space.icon = 'icons/misc/worlds.dmi'
 			world << sound('sound/machines/lavamoon_plantalarm.ogg')
@@ -172,7 +172,7 @@ proc/voidify_world()
 		the_ss13_screen.pixel_x = 0*/
 	SPAWN_DBG(3 SECONDS)
 		for (var/turf/space/space in world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if(was_eaten)
 				if (space.icon_state != "acid_floor")
 					space.icon_state = "acid_floor"

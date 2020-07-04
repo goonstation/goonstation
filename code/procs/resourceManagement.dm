@@ -136,14 +136,14 @@
 			if (i == "unused/" || i == "html/" || i == "node_modules/" || i == "build/")
 				continue
 			else
-				LAGCHECK(LAG_HIGH)
+				sleep(LAG_HIGH)
 				recursiveFileLoader(dir + i)
 		else //Is file
 			if (dir == "browserassets/") //skip files in base dir (hardcoding dir name here because im lazy ok)
 				continue
 			else
 				localResources["[dir][i]"] = file("[dir][i]")
-				LAGCHECK(LAG_HIGH)
+				sleep(LAG_HIGH)
 
 
 //#LongProcNames #yolo

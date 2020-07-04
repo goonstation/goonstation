@@ -103,7 +103,7 @@ var/global/list/all_GPSs = list()
 
 		HTML += "<div class='gps group'><b>GPS Units</b></div>"
 		for (var/obj/item/device/gps/G in all_GPSs)//world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (G.allowtrack == 1)
 				var/turf/T = get_turf(G.loc)
 				if (!T)
@@ -114,7 +114,7 @@ var/global/list/all_GPSs = list()
 
 		HTML += "<div class='gps group'><b>Tracking Implants</b></div>"
 		for (var/obj/item/implant/tracking/imp in tracking_implants)//world)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (isliving(imp.loc))
 				var/turf/T = get_turf(imp.loc)
 				if (!T)

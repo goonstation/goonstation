@@ -15,7 +15,7 @@
 		var/list/L = list()
 		for (var/obj/machinery/camera/C in cameras)
 			L.Add(C)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 
 		L = camera_sort(L)
 
@@ -24,7 +24,7 @@
 		for (var/obj/machinery/camera/C in L)
 			if (C.network == src.network)
 				D[text("[][]", C.c_tag, (C.camera_status ? null : " (Deactivated)"))] = C
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 
 		var/t = input(user, "Which camera should you change to?") as null|anything in D
 

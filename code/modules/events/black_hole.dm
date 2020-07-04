@@ -187,7 +187,7 @@
 				if (prob(shred_prob))
 					shred_terrain(T)
 
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 
 		if(prob(move_prob))
 			step(src,pick(cardinal))

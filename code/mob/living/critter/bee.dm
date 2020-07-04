@@ -131,7 +131,7 @@
 		if (!gibbed)
 			animate(src)
 		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src)) // once mobcritters have AI we can change this to the mob version of bees, but for now we do this
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 			if (fellow_bee && fellow_bee.alive)
 				fellow_bee.aggressive = 1
 				SPAWN_DBG(0.7 SECONDS)

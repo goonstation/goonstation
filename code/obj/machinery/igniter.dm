@@ -135,14 +135,14 @@
 		if (M.id == src.id)
 			SPAWN_DBG( 0 )
 				M.ignite()
-		LAGCHECK(LAG_MED)
+		sleep(LAG_MED)
 
 	for(var/obj/machinery/igniter/M in machine_registry[MACHINES_SPARKERS])
 		if(M.id == src.id)
 			use_power(50)
 			M.on = !( M.on )
 			M.icon_state = text("igniter[]", M.on)
-		LAGCHECK(LAG_MED)
+		sleep(LAG_MED)
 
 	sleep(5 SECONDS)
 

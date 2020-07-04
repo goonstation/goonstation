@@ -814,7 +814,7 @@
 				triggered = 1
 				for(var/area/marsoutpost/vault/V in world)
 					V.overlays += image(icon = 'icons/effects/alert.dmi', icon_state = "blue", layer = EFFECTS_LAYER_1)
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 				for(var/X in by_type[/obj/machinery/door/poddoor])
 					var/obj/machinery/door/poddoor/P = X
 					if (P.id == "mars_vault")

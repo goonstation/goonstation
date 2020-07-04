@@ -5,7 +5,7 @@
 
 	playsound(location, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// NORTH
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	if (prob(30))
@@ -16,7 +16,7 @@
 	gib.blood_type = blood_type
 	gibs.Add(gib)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// SOUTH
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	if (prob(30))
@@ -27,7 +27,7 @@
 	gib.blood_type = blood_type
 	gibs.Add(gib)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// WEST
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	gib.streak(list(WEST, NORTHWEST, SOUTHWEST))
@@ -36,7 +36,7 @@
 	gib.blood_type = blood_type
 	gibs.Add(gib)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// EAST
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	gib.streak(list(EAST, NORTHEAST, SOUTHEAST))
@@ -45,7 +45,7 @@
 	gib.blood_type = blood_type
 	gibs.Add(gib)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// RANDOM BODY
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs/body,location)
 	gib.streak(alldirs)
@@ -54,7 +54,7 @@
 	gib.blood_type = blood_type
 	gibs.Add(gib)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// CORE
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs/core,location)
 	gib.diseases += diseases
@@ -62,7 +62,7 @@
 	gib.blood_type = blood_type
 	gibs.Add(gib)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	handle_ejectables(location, ejectables)
 
 	. = gibs
@@ -100,13 +100,13 @@
 
 	playsound(location, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// RUH ROH
 	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 	s.set_up(2, 1, location)
 	s.start()
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// NORTH
 	gib = make_cleanable( /obj/decal/cleanable/robot_debris,location)
 	if (prob(25))
@@ -114,7 +114,7 @@
 	gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
 	gibs.Add(gib)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// SOUTH
 	gib = make_cleanable( /obj/decal/cleanable/robot_debris,location)
 	if (prob(25))
@@ -122,25 +122,25 @@
 	gib.streak(list(SOUTH, SOUTHEAST, SOUTHWEST))
 	gibs.Add(gib)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// WEST
 	gib = make_cleanable( /obj/decal/cleanable/robot_debris,location)
 	gib.streak(list(WEST, NORTHWEST, SOUTHWEST))
 	gibs.Add(gib)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// EAST
 	gib = make_cleanable( /obj/decal/cleanable/robot_debris,location)
 	gib.streak(list(EAST, NORTHEAST, SOUTHEAST))
 	gibs.Add(gib)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// RANDOM
 	gib = make_cleanable( /obj/decal/cleanable/robot_debris,location)
 	gib.streak(alldirs)
 	gibs.Add(gib)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// RANDOM LIMBS
 	for (var/i = 0, i < pick(0, 1, 2), i++)
 		gib = make_cleanable( /obj/decal/cleanable/robot_debris/limb,location)
@@ -154,7 +154,7 @@
 	var/list/party_colors = list(rgb(0,0,255),rgb(204,0,102),rgb(255,255,0),rgb(51,153,0))
 	var/obj/decal/cleanable/blood/gibs/gib = null
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// NORTH
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	if (prob(30))
@@ -165,7 +165,7 @@
 	gib.color = pick(party_colors)
 	gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// SOUTH
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	if (prob(30))
@@ -176,7 +176,7 @@
 	gib.color = pick(party_colors)
 	gib.streak(list(SOUTH, SOUTHEAST, SOUTHWEST))
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// WEST
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	gib.diseases += diseases
@@ -186,7 +186,7 @@
 	gib.streak(list(WEST, NORTHWEST, SOUTHWEST))
 
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// EAST
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	gib.diseases += diseases
@@ -196,7 +196,7 @@
 	gib.streak(list(EAST, NORTHEAST, SOUTHEAST))
 
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// RANDOM BODY
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs/body,location)
 	gib.diseases += diseases
@@ -206,7 +206,7 @@
 	gib.streak(alldirs)
 
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// RANDOM LIMBS
 	for (var/i = 0, i < pick(0, 1, 2), i++)
 		var/limb_type = pick(/obj/item/parts/human_parts/arm/left, /obj/item/parts/human_parts/arm/right, /obj/item/parts/human_parts/leg/left, /obj/item/parts/human_parts/leg/right)
@@ -214,7 +214,7 @@
 		gib.throw_at(get_edge_target_turf(location, pick(alldirs)), 4, 3)
 		gib.color = pick(party_colors)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// CORE
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs/core,location)
 	gib.diseases += diseases
@@ -227,34 +227,34 @@
 	if(!location) return
 	var/obj/decal/cleanable/martian_viscera/gib = null
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// NORTH
 	gib = make_cleanable(/obj/decal/cleanable/martian_viscera,location)
 	gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// SOUTH
 	gib = make_cleanable(/obj/decal/cleanable/martian_viscera,location)
 	gib.streak(list(SOUTH, SOUTHEAST, SOUTHWEST))
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// WEST
 	gib = make_cleanable(/obj/decal/cleanable/martian_viscera,location)
 	gib.streak(list(WEST, NORTHWEST, SOUTHWEST))
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// EAST
 	gib = make_cleanable(/obj/decal/cleanable/martian_viscera,location)
 	gib.streak(list(EAST, NORTHEAST, SOUTHEAST))
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// RANDOM
 	gib = make_cleanable( /obj/decal/cleanable/martian_viscera,location)
 	gib.streak(alldirs)
 
 	// TODO: random martian organs?
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// CORE SPLAT
 	gib = make_cleanable( /obj/decal/cleanable/martian_viscera/fluid,location)
 
@@ -264,35 +264,35 @@
 	// WHO LIKES COPY PASTED CODE? I DO I LOVE IT DELICIOUS YUM YUM
 	var/obj/decal/cleanable/flockdrone_debris/gib = null
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// NORTH
 	gib = make_cleanable( /obj/decal/cleanable/flockdrone_debris,location)
 	gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// SOUTH
 	gib = make_cleanable( /obj/decal/cleanable/flockdrone_debris,location)
 	gib.streak(list(SOUTH, SOUTHEAST, SOUTHWEST))
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// WEST
 	gib = make_cleanable( /obj/decal/cleanable/flockdrone_debris,location)
 	gib.streak(list(WEST, NORTHWEST, SOUTHWEST))
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// EAST
 	gib = make_cleanable( /obj/decal/cleanable/flockdrone_debris,location)
 	gib.streak(list(EAST, NORTHEAST, SOUTHEAST))
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// RANDOM
 	gib = make_cleanable( /obj/decal/cleanable/flockdrone_debris,location)
 	gib.streak(alldirs)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	handle_ejectables(location, ejectables)
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// CORE SPLAT
 	gib = make_cleanable( /obj/decal/cleanable/flockdrone_debris/fluid,location)
 
@@ -302,40 +302,40 @@
 	if(!location) return
 	var/obj/decal/cleanable/reliquary_debris/gib = null
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// RUH ROH
 	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 	s.set_up(2, 1, location)
 	s.start()
 	boutput(world, "Sparks went off.")
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// NORTH
 	gib = make_cleanable( /obj/decal/cleanable/reliquary_debris,location)
 	gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
 	boutput(world, "1st gib")
 
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// SOUTH
 	gib = make_cleanable( /obj/decal/cleanable/reliquary_debris,location)
 	gib.streak(list(SOUTH, SOUTHEAST, SOUTHWEST))
 	boutput(world, "2st gib")
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// WEST
 	gib = make_cleanable( /obj/decal/cleanable/reliquary_debris,location)
 	gib.streak(list(WEST, NORTHWEST, SOUTHWEST))
 	boutput(world, "3st gib")
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// EAST
 	gib = make_cleanable( /obj/decal/cleanable/reliquary_debris,location)
 	gib.streak(list(EAST, NORTHEAST, SOUTHEAST))
 	boutput(world, "4st gib")
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// RANDOM
 	gib = make_cleanable( /obj/decal/cleanable/reliquary_debris,location)
 	gib.streak(alldirs)
 	boutput(world, "5st gib")
-	LAGCHECK(LAG_LOW)
+	sleep(LAG_LOW)
 	// RANDOM LIMBS
 	for (var/i = 0, i < pick(0, 1, 2), i++)
 		gib = make_cleanable( /obj/decal/cleanable/reliquary_debris,location)

@@ -336,7 +336,7 @@
 							break
 			else
 				for (var/obj/landmark/start/sloc in landmarks)//world)
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 					if (sloc.name != JOB.name)
 						continue
 					if (locate(/mob) in sloc.loc)

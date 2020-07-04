@@ -98,7 +98,7 @@
 /mob/living/critter/singularity/proc/suck()
   // it's a weak babby singularity, so it won't eat turfs or pull in anchored objects
   for (var/atom/movable/M in orange(grav_pull,src))
-    LAGCHECK(LAG_LOW)
+    sleep(LAG_LOW)
     if (!M)
       continue
     if(ismob(M) && !src.affects_mobs)

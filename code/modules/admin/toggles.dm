@@ -762,7 +762,7 @@ var/global/IP_alerts = 1
 	global_sims_mode = !global_sims_mode
 	message_admins("<span class='internal'>[key_name(usr)] toggled sims mode. [global_sims_mode ? "Oh, the humanity!" : "Phew, it's over."]</span>")
 	for (var/mob/M in mobs)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		boutput(M, "<b>Motives have been globally [global_sims_mode ? "enabled" : "disabled"].</b>")
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M

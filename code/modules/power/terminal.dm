@@ -136,7 +136,7 @@
 
 				if (iterations/100 > 1)
 					iterations = 0
-					LAGCHECK(LAG_REALTIME)
+					sleep(LAG_REALTIME)
 
 				iterations++
 

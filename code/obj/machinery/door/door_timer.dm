@@ -207,7 +207,7 @@
 
 	//	MBC : wow this proc is suuuuper fucking costly
 	//loop through range(30) three times. sure. whatever.
-	//FIX LATER, putting it in a spawn and lagchecking for now.
+	//FIX LATER, putting it in a spawn and sleeping for now.
 
 	SPAWN_DBG(0)
 		for (var/obj/machinery/door/window/brigdoor/M in range(30, src))
@@ -222,17 +222,17 @@
 				*/
 				SPAWN_DBG (0)
 					if (M) M.close()
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 
 		for (var/obj/machinery/floorflusher/FF in range(30, src))
 			if (FF.id == src.id)
 				if (FF.open != 1)
 					FF.openup()
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 
 		for (var/obj/storage/secure/closet/brig/automatic/B in range(30, src))
 			if (B.id == src.id && B.our_timer == src)
@@ -240,7 +240,7 @@
 					B.locked = 0
 					B.update_icon()
 					B.visible_message("<span class='notice'>[B.name] unlocks automatically.</span>")
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 
 	src.updateUsrDialog()
 	src.update_icon()

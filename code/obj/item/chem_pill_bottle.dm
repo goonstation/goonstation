@@ -46,7 +46,7 @@
 
 		// otherwise create a new one from the reagent holder
 		else if (pcount)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (src)
 				if (src.reagents_internal.total_volume < src.pvol)
 					src.pcount = 0

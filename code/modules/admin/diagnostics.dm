@@ -30,7 +30,7 @@ proc/debug_color_of(var/thing)
 				area_txt += "[area.name] [area.type] has [apc_count] APCs.<br>"
 			apcs.len = 0
 
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 
 		usr.Browse(area_txt,"window=mapdebugpanel")
 
@@ -75,7 +75,7 @@ proc/debug_color_of(var/thing)
 		var/hotspots = 0
 		for(var/obj/hotspot/hotspot in world)
 			hotspots++
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 
 		var/output = {"<B>AIR SYSTEMS REPORT</B><HR>
 <B>General Processing Data</B><BR>

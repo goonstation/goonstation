@@ -35,7 +35,7 @@
 /*	for(var/mob/M in world)
 		if(M.client)
 			mob_list+=M
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 */
 	var/client/rand_client_single = pick(clients)
 	var/mob/rand_mob_single

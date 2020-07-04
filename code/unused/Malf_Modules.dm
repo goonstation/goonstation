@@ -61,7 +61,7 @@ rcd light flash thingy on matter drain
 	set category = "AI Modules"
 	set name = "Disable RCDs"
 	for(var/obj/item/weapon/rcd/rcd in world)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		rcd = new /obj/item/weapon/rcd_fake(rcd)
 	usr.verbs -= /client/proc/disable_rcd
 
@@ -136,7 +136,7 @@ rcd light flash thingy on matter drain
 
 /client/proc/attack_shuttle()
 	for (var/obj/landmark/A in landmarks)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (A.name == "AIgunbotshuttle")
 			new /obj/critter/gunbot(A.loc)
 			A.dispose()

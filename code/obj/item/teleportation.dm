@@ -52,7 +52,7 @@ Frequency:
 				src.temp += "<B>Located Beacons:</B><BR>"
 
 				for(var/obj/item/device/radio/beacon/W in tracking_beacons)//world)
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 					if (istype(src, /obj/item/locator/jones) && istype(W, /obj/item/device/radio/beacon/jones)) //For Jones City
 						src.temp += "Unknown Location-[W.x], [W.y], [W.z]<BR>"
 					if (W.frequency == src.frequency)
@@ -73,7 +73,7 @@ Frequency:
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
 				for (var/obj/item/implant/tracking/W in tracking_implants)//world)
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 					if (W.frequency == src.frequency)
 						if (!W.implanted || !ismob(W.loc))
 							continue

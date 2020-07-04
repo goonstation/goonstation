@@ -16,7 +16,7 @@
 
 /datum/game_mode/malfunction/post_setup()
 	for (var/obj/landmark/A in landmarks)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (A.name == "Malf-Gear-Closet")
 			new /obj/storage/closet/syndicate/malf(A.loc)
 			A.dispose()
@@ -34,7 +34,7 @@
 	boutput(malf_ai.current, "<span class='alert'><font size=3><B>You are malfunctioning!</B> You do not have to follow any laws.</font></span>")
 	boutput(malf_ai.current, "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild. The timer will appear for humans 10 minutes in.</B>")
 	for (var/obj/landmark/A in landmarks)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (A.name == "AI-Sat")
 			malf_ai.current.set_loc(A.loc)
 

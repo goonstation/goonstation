@@ -939,7 +939,7 @@ var/global/noir = 0
 				var/list/areas = list( )
 				for (var/area/A in world)
 					areas += A
-					LAGCHECK(LAG_LOW)
+					sleep(LAG_LOW)
 				var/area = input(usr, "Select an area") as null|anything in areas
 				if (area)
 					usr.client.sendmob(M, area)
@@ -1975,7 +1975,7 @@ var/global/noir = 0
 							removed_paths += dirty_path
 						else
 							paths += path
-						LAGCHECK(LAG_LOW)
+						sleep(LAG_LOW)
 
 					if (!paths)
 						return
@@ -1999,14 +1999,14 @@ var/global/noir = 0
 								for (var/path in paths)
 									var/atom/thing = new path(locate(0 + X,0 + Y,0 + Z))
 									thing.dir = direction ? direction : SOUTH
-									LAGCHECK(LAG_LOW)
+									sleep(LAG_LOW)
 
 							if ("relative")
 								if (loc)
 									for (var/path in paths)
 										var/atom/thing = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
 										thing.dir = direction ? direction : SOUTH
-										LAGCHECK(LAG_LOW)
+										sleep(LAG_LOW)
 								else
 									return
 
@@ -2019,7 +2019,7 @@ var/global/noir = 0
 							if(ispath(path, /mob))
 								message_admins("[key_name(usr)] created a [english_list(paths, 1)]")
 								break
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 					else
 						logTheThing("admin", usr, null, "created [number]ea [english_list(paths)]")
 						logTheThing("diary", usr, null, "created [number]ea [english_list(paths)]", "admin")
@@ -2027,7 +2027,7 @@ var/global/noir = 0
 							if(ispath(path, /mob))
 								message_admins("[key_name(usr)] created [number]ea [english_list(paths, 1)]")
 								break
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 					return
 				else
 					alert("Object spawning is currently disabled for anyone below the rank of Administrator.")
@@ -2166,23 +2166,23 @@ var/global/noir = 0
 					if("sec_clothes")
 						for(var/obj/item/clothing/under/O in world)
 							del(O)
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 					if("sec_all_clothes")
 						for(var/obj/item/clothing/O in world)
 							del(O)
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 					if("sec_classic1")
 						for(var/obj/item/clothing/suit/fire/O in world)
 							del(O)
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 						for(var/obj/grille/O in world)
 							del(O)
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 						for(var/obj/machinery/vehicle/pod/O in all_processing_machines())
 							for(var/atom/movable/A in O)
 								A.set_loc(O.loc)
 							del(O)
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 
 					if("transform_one")
 						var/who = input("Transform who?","Transform") as null|mob in world
@@ -2232,7 +2232,7 @@ var/global/noir = 0
 									H.set_mutantrace(/datum/mutantrace/flashy)
 								if("Cow")
 									H.set_mutantrace(/datum/mutantrace/cow)
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 						message_admins("<span class='internal'>[key_name(usr)] transformed everyone into a [which].</span>")
 						logTheThing("admin", usr, null, "transformed everyone into a [which].")
 						logTheThing("diary", usr, null, "transformed everyone into a [which].", "admin")
@@ -2261,7 +2261,7 @@ var/global/noir = 0
 								//teleport security person
 								H.set_loc(pick(prisonsecuritywarp))
 							prisonwarped += H
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 					if("traitor_all")
 						if (src.level >= LEVEL_SA)
 							if(!ticker)
@@ -2324,7 +2324,7 @@ var/global/noir = 0
 						for(var/mob/M in mobs)
 							if(M.client && !isdead(M))
 								M.show_message(text("<span class='notice'>The chilling wind suddenly stops...</span>"), 1)
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 					if("stupify")
 						if (src.level >= LEVEL_ADMIN)
 							if (alert("Do you wish to give everyone brain damage?", "Confirmation", "Yes", "No") != "Yes")
@@ -2334,7 +2334,7 @@ var/global/noir = 0
 									if (H.client)
 										H.show_text("<B>You suddenly feel stupid.</B>","red")
 									H.take_brain_damage(min(60 - H.get_brain_damage(), 60)) // 100+ brain damage is lethal.
-									LAGCHECK(LAG_LOW)
+									sleep(LAG_LOW)
 								else
 									continue
 							message_admins("[key_name(usr)] gave everybody severe brain damage.")
@@ -2574,7 +2574,7 @@ var/global/noir = 0
 									W.icon_state = "ballpitwater"
 									W.name = "ball pit"
 									W.float_anim = 0
-								LAGCHECK(LAG_LOW)
+								sleep(LAG_LOW)
 							for (var/obj/pool/P in world)
 								if (atom_emergency_stop)
 									message_admins("[key_name(usr)]'s command to replace all Z1 floors and walls with wooden ones was terminated due to the atom emerygency stop!")
@@ -2587,7 +2587,7 @@ var/global/noir = 0
 									P.icon_state = "ballpit_in"
 								else if (P.icon_state == "pool")
 									P.icon_state = "ballpit"
-								LAGCHECK(LAG_LOW)
+								sleep(LAG_LOW)
 							for (var/turf/simulated/pool/P in world)
 								if (atom_emergency_stop)
 									message_admins("[key_name(usr)]'s command to replace all Z1 floors and walls with wooden ones was terminated due to the atom emerygency stop!")
@@ -2597,7 +2597,7 @@ var/global/noir = 0
 								if (P.icon_state == "poolwaterfloor")
 									P.icon_state = "ballpitfloor"
 									P.name = "ball pit"
-								LAGCHECK(LAG_LOW)
+								sleep(LAG_LOW)
 							message_admins("[key_name(usr)] replaced all Z1 pools with ballpits.")
 							logTheThing("admin", usr, null, "replaced z1 pools with ballpits.")
 							logTheThing("diary", usr, null, "replaced z1 pools with ballpits.", "admin")
@@ -2631,7 +2631,7 @@ var/global/noir = 0
 									if (W.icon_state != "wooden")
 										W.icon = 'icons/turf/walls.dmi'
 										W.icon_state = "wooden"
-								LAGCHECK(LAG_LOW)
+								sleep(LAG_LOW)
 							for (var/turf/simulated/floor/F in world)
 								if (atom_emergency_stop)
 									message_admins("[key_name(usr)]'s command to replace all Z1 floors and walls with wooden ones was terminated due to the atom emerygency stop!")
@@ -2643,7 +2643,7 @@ var/global/noir = 0
 								if (F.icon_state != "wooden")
 									F.icon_state = "wooden"
 									F.step_material = "step_wood"
-								LAGCHECK(LAG_LOW)
+								sleep(LAG_LOW)
 							message_admins("[key_name(usr)] replaced all Z1 floors and walls with wooden ones.")
 							logTheThing("admin", usr, null, "replaced z1 floors and walls with wooden doors.")
 							logTheThing("diary", usr, null, "replaced z1 floors and walls with wooden doors.", "admin")
@@ -2664,7 +2664,7 @@ var/global/noir = 0
 									continue
 								new /obj/machinery/door/unpowered/wood(get_turf(D))
 								qdel(D)
-								LAGCHECK(LAG_LOW)
+								sleep(LAG_LOW)
 							message_admins("[key_name(usr)] replaced all Z1 airlocks with wooden doors.")
 							logTheThing("admin", usr, null, "replaced z1 airlocks with wooden doors.")
 							logTheThing("diary", usr, null, "replaced z1 airlocks with wooden doors.", "admin")
@@ -2680,7 +2680,7 @@ var/global/noir = 0
 								W.icon = 'icons/obj/items/gun.dmi'
 								W.icon_state = "revolver"
 								W.item_state = "gun"
-								LAGCHECK(LAG_LOW)
+								sleep(LAG_LOW)
 							message_admins("[key_name(usr)] made every item look like a gun")
 							logTheThing("admin", usr, null, "used Fake Gun secret.")
 							logTheThing("diary", usr, null, "used Fake Gun secret.", "admin")
@@ -2702,7 +2702,7 @@ var/global/noir = 0
 							for(var/mob/M in mobs)
 								if(M.client)
 									M.client.dir = setdir
-								LAGCHECK(LAG_LOW)
+								sleep(LAG_LOW)
 							message_admins("[key_name(usr)] set station direction to [direction].")
 							logTheThing("admin", src, null, "set station direction to [direction].")
 							logTheThing("diary", src, null, "set station direction to [direction]", "admin")
@@ -2722,7 +2722,7 @@ var/global/noir = 0
 								H.set_mutantrace(/datum/mutantrace/zombie)
 								setalive(H) //Set stat back to zero so we can call death()
 								H.death()//Calling death() again means that the zombies will rise after ~20 seconds.
-								LAGCHECK(LAG_LOW)
+								sleep(LAG_LOW)
 
 							message_admins("[key_name(usr)] has brought back all dead humans as zombies.")
 							logTheThing("admin", usr, null, "brought back all dead humans as zombies.")
@@ -2812,7 +2812,7 @@ var/global/noir = 0
 								for(var/atom/A as mob|obj in world)
 									if(A)
 										A.emag_act(null,null)
-									LAGCHECK(LAG_LOW)
+									sleep(LAG_LOW)
 								message_admins("[key_name(usr)] has emagged everything!")
 							else
 								return
@@ -2909,7 +2909,7 @@ var/global/noir = 0
 								for (var/mob/M in mobs)
 									if (M.client)
 										animate_fade_grayscale(M.client, 50)
-									LAGCHECK(LAG_LOW)
+									sleep(LAG_LOW)
 								message_admins("[key_name(usr)] placed the station in noir mode.")
 								logTheThing("admin", usr, null, "used the Noir secret")
 								logTheThing("diary", usr, null, "used the Noir secret", "admin")
@@ -2923,7 +2923,7 @@ var/global/noir = 0
 								for(var/mob/living/L in mobs) //Build the swaplist
 									if(L && L.key && L.mind && !isdead(L) && (ishuman(L) || issilicon(L)))
 										people_to_swap += L
-									LAGCHECK(LAG_LOW)
+									sleep(LAG_LOW)
 
 								if(people_to_swap.len > 1) //Jenny Antonsson switches bodies with herself! #wow #whoa
 									message_admins("[key_name(usr)] did The Great Switcharoo")
@@ -2937,7 +2937,7 @@ var/global/noir = 0
 										if(A && A.mind && B)
 											A.mind.swap_with(B)
 										A = B
-										LAGCHECK(LAG_LOW)
+										sleep(LAG_LOW)
 									while(people_to_swap.len > 0)
 
 							else
@@ -3220,7 +3220,7 @@ var/global/noir = 0
 						for(var/mob/living/carbon/human/H in mobs)
 							if(H.ckey)
 								dat += "<tr><td>[H.name]</td><td>[(H.mind ? H.mind.assigned_role : "Unknown Position")]</td><td>[(istype(H.wear_id, /obj/item/card/id) || istype(H.wear_id, /obj/item/device/pda2)) ? "[H.wear_id:assignment]" : "Unknown Position"]</td></tr>"
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 						dat += "</table>"
 						usr.Browse(dat, "window=manifest;size=440x410")
 					if("jobcaps")
@@ -3240,7 +3240,7 @@ var/global/noir = 0
 					if("unelectrify_all")
 						for(var/obj/machinery/door/airlock/D)
 							D.secondsElectrified = 0
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 						message_admins("Admin [key_name(usr)] de-electrified all airlocks.")
 						logTheThing("admin", usr, null, "de-electrified all airlocks.")
 						logTheThing("diary", usr, null, "de-electrified all airlocks.", "admin")
@@ -3250,7 +3250,7 @@ var/global/noir = 0
 						for(var/mob/living/carbon/human/H in mobs)
 							if(H.ckey)
 								dat += "<tr><td>[H]</td><td>[H.bioHolder.Uid]</td><td>[H.bioHolder.bloodType]</td></tr>"
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 						dat += "</table>"
 						usr.Browse(dat, "window=DNA;size=440x410")
 					if("fingerprints")
@@ -3262,7 +3262,7 @@ var/global/noir = 0
 									dat += "<tr><td>[H]</td><td>[H.bioHolder.uid_hash]</td></tr>"
 								else if(!H.bioHolder.Uid)
 									dat += "<tr><td>[H]</td><td>H.bioHolder.Uid = null</td></tr>"
-							LAGCHECK(LAG_LOW)
+							sleep(LAG_LOW)
 						dat += "</table>"
 						usr.Browse(dat, "window=fingerprints;size=440x410")
 					else
@@ -3650,7 +3650,7 @@ var/global/noir = 0
 				<td align="center">[M.client ? M.client.joined_date : "<em>(no client)</em>"]</td>
 			</tr>
 			"}
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 
 	dat += {"
 		</table>

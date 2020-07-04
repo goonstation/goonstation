@@ -313,28 +313,28 @@ datum
 				current_cycle++
 				if(groups_to_rebuild.len > 0)
 					process_rebuild_select_groups()
-				LAGCHECK(LAG_HIGH)
+				sleep(LAG_HIGH)
 
 				if(tiles_to_update.len > 0)
 					process_update_tiles()
-				LAGCHECK(LAG_HIGH)
+				sleep(LAG_HIGH)
 
 				process_groups()
-				LAGCHECK(LAG_HIGH)
+				sleep(LAG_HIGH)
 
 				process_singletons()
-				LAGCHECK(LAG_HIGH)
+				sleep(LAG_HIGH)
 
 				process_super_conductivity()
-				LAGCHECK(LAG_HIGH)
+				sleep(LAG_HIGH)
 
 				process_high_pressure_delta()
-				LAGCHECK(LAG_HIGH)
+				sleep(LAG_HIGH)
 
 				if(current_cycle%10==5) //Check for groups of tiles to resume group processing every 10 cycles
 					for(var/datum/air_group/AG in air_groups)
 						AG.check_regroup()
-						LAGCHECK(LAG_HIGH)
+						sleep(LAG_HIGH)
 
 				return 1
 
@@ -356,16 +356,16 @@ datum
 						turfs += T
 					air_master.air_groups -= turf_AG
 					turf_AG.members.len = 0
-				LAGCHECK(LAG_HIGH)
+				sleep(LAG_HIGH)
 
 				for(var/turf/simulated/S in turfs) //Have old members try to form new groups
 					if(!S.parent)
 						assemble_group_turf(S)
-				LAGCHECK(LAG_HIGH)
+				sleep(LAG_HIGH)
 
 				for(var/turf/simulated/S in turfs)
 					S.update_air_properties()
-				LAGCHECK(LAG_HIGH)
+				sleep(LAG_HIGH)
 
 //				var/obj/movable/list/movable_objects = list()
 /*
@@ -388,21 +388,21 @@ datum
 				for(var/x in air_groups)
 					var/datum/air_group/AG = x
 					AG?.process_group(parent_controller)
-					LAGCHECK(LAG_HIGH)
+					sleep(LAG_HIGH)
 
 			process_singletons()
 				for(var/item in active_singletons)
 					item:process_cell()
-					LAGCHECK(LAG_HIGH)
+					sleep(LAG_HIGH)
 
 			process_super_conductivity()
 				for(var/turf/simulated/hot_potato in active_super_conductivity)
 					hot_potato.super_conduct()
-					LAGCHECK(LAG_HIGH)
+					sleep(LAG_HIGH)
 
 			process_high_pressure_delta()
 				for(var/turf/pressurized in high_pressure_delta)
 					pressurized.high_pressure_movements()
-					LAGCHECK(LAG_HIGH)
+					sleep(LAG_HIGH)
 
 				high_pressure_delta.len = 0

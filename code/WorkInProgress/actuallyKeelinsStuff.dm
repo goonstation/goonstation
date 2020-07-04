@@ -2754,7 +2754,7 @@ var/list/electiles = list()
 					active_spread[newspawn] = num_gens
 			sleep(10 * num_delay)
 			if(num_spread > 0) num_spread--
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 
 
 /proc/is_free(var/atom/A)

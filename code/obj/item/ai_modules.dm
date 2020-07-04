@@ -250,7 +250,7 @@ AI MODULES
 		ticker.centralized_ai_laws.set_zeroth_law("")
 		ticker.centralized_ai_laws.clear_supplied_laws()
 		for (var/mob/living/silicon/S in mobs)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (isAI(S) && isdead(S))
 				setalive(S)
 				if (S.ghost && S.ghost.mind)
@@ -299,7 +299,7 @@ AI MODULES
 		var/list/namecounts = list()
 		var/list/ais = list()
 		for (var/mob/living/silicon/ai/AI in AIs)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			var/name = AI.name
 			if (name in names)
 				namecounts[name]++

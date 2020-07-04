@@ -260,14 +260,14 @@ Nanotrasen, Inc.<br>
 	proc/gather_listeners()
 		listeners = list()
 		for (var/mob/living/carbon/human/H in mobs)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			for (var/obj/item/device/radio/Hs in H)
 				if (Hs.frequency == frequency)
 					listeners += H
 					boutput(H, "<span class='notice'>A peculiar noise intrudes upon the radio frequency of your [Hs].</span>")
 				break
 		for (var/mob/living/silicon/robot/R in mobs)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 			if (istype(R.radio, /obj/item/device/radio))
 				var/obj/item/device/radio/Hs = R.radio
 				if (Hs.frequency == frequency)

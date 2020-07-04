@@ -126,7 +126,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 			for(var/x=1,x<=world.maxx,x++)
 				for(var/y=1,y<=world.maxy,y++)
 					mapnew[x][y] = CAGetSolid(map, x, y, i)
-					LAGCHECK(LAG_REALTIME)
+					sleep(LAG_REALTIME)
 			map = mapnew
 
 		for(var/x=1,x<=world.maxx,x++)
@@ -138,7 +138,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 					generated.Add(N)
 				if(T.loc.type == /area || istype(T.loc, /area/allowGenerate))
 					new/area/allowGenerate/trench(T)
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 
 		var/list/used = list()
 		for(var/s=0, s<20, s++)
@@ -191,7 +191,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		for(var/turf/T in border)
 			new/turf/unsimulated/wall/trench(T)
 			new/area/cordon/dark(T)
-			LAGCHECK(LAG_REALTIME)
+			sleep(LAG_REALTIME)
 
 		return miningZ
 
@@ -204,7 +204,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 			while(!istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area && !istype(X.loc , /area/allowGenerate)))
 				X = pick(miningZ)
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 
 			var/list/solidTiles = list()
 			var/list/edgeTiles = list(X)
@@ -235,7 +235,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 				if(decideSolid(west, X, sizeMod))
 					solidTiles.Add(west)
 					edgeTiles.Add(west)
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 
 			var/list/placed = list()
 			for(var/turf/T in solidTiles)
@@ -243,7 +243,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 					var/turf/simulated/wall/asteroid/AST = new/turf/simulated/wall/asteroid(T)
 					placed.Add(AST)
 					AST.quality = quality
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 
 			if(prob(15))
 				Turfspawn_Asteroid_SeedOre(placed, rand(2,6), rand(0,40))

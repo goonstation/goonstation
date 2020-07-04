@@ -501,7 +501,7 @@
 	if(vspace == 0)	return
 
 	for (var/obj/landmark/A in landmarks)//world)
-		LAGCHECK(LAG_LOW)
+		sleep(LAG_LOW)
 		if (A.name == "[network]_critter_spawn")//ex (area1_critter_spawn)
 			switch(program)
 				if("zombies")

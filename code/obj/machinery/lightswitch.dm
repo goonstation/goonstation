@@ -82,7 +82,7 @@
 	for(var/obj/machinery/light_switch/L in area)
 		L.on = on
 		L.updateicon()
-		LAGCHECK(LAG_MED)
+		sleep(LAG_MED)
 
 	if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("[on ? "lightOn":"lightOff"]"))
 

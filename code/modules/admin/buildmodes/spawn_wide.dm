@@ -168,5 +168,5 @@ change the direction of created objects.<br>
 				if (delete_area)
 					new /area(T)
 				T.ReplaceWithSpaceForce()
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 			A = null

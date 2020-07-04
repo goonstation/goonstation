@@ -132,7 +132,7 @@
 				if(S.syndicate || S.hidden) continue
 				if (S.category == foundCategory)
 					src.temp += "<tr><td><a href='?src=\ref[src];doorder=\ref[S]'><b><u>[S.name]</u></b></a></td><td>[S.cost]</td><td>[S.desc]</td></tr>"
-				LAGCHECK(LAG_LOW)
+				sleep(LAG_LOW)
 
 			src.temp+="</table></div>"
 

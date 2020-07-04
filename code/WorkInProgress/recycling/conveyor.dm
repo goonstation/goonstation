@@ -479,7 +479,7 @@
 		if(S.id == src.id)
 			S.position = position
 			S.update()
-		LAGCHECK(LAG_MED)
+		sleep(LAG_MED)
 
 	if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("switchTriggered"))
 

@@ -92,7 +92,7 @@ Doing this because FindTurfs() isn't even used
 	if(Debug)
 		for(var/obj/mark/O in world)
 			del(O)
-			LAGCHECK(LAG_LOW)
+			sleep(LAG_LOW)
 	else
 		alert("Debugging off")
 		return

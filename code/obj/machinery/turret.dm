@@ -114,7 +114,7 @@
 	.= list()
 
 	for(var/mob/living/C in mobs)
-		LAGCHECK(LAG_HIGH)
+		sleep(LAG_HIGH)
 		if (!C)
 			continue
 		if (!iscarbon(C) && !ismobcritter(C))
@@ -131,7 +131,7 @@
 		var/area/station/turret_protected/T = A
 		if (T.blob_list.len)
 			for(var/obj/blob/B in T.blob_list)
-				LAGCHECK(LAG_HIGH)
+				sleep(LAG_HIGH)
 				if (!B)
 					continue
 				if (!istype(B.loc,/turf))

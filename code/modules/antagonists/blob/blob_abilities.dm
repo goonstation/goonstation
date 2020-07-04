@@ -85,7 +85,7 @@
 				outerArea -= innerArea
 
 			for (var/turf/T in outerArea)
-				//LAGCHECK(LAG_HIGH)
+				//sleep(LAG_HIGH)
 
 				//reached max amount of blob tiles to place
 				if (currentTurfs > maxTurfs)

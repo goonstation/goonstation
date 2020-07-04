@@ -52,7 +52,7 @@ client/proc/special_fullbright()
 		for(var/turf/space/fluid/F in world)
 			if (F.z == 1)
 				F.fullbright = 0.5
-			LAGCHECK(LAG_REALTIME)
+			sleep(LAG_REALTIME)
 		message_admins("Sea Lights are now Static.")
 
 client/proc/replace_space()
@@ -91,7 +91,7 @@ client/proc/replace_space()
 		qdel(R)
 
 		for(var/turf/space/S in world)
-			LAGCHECK(LAG_HIGH)
+			sleep(LAG_HIGH)
 			new /turf/space/fluid( locate(S.x, S.y, S.z) )
 		message_admins("Finished space replace!")
 		map_currently_underwater = 1
@@ -136,7 +136,7 @@ client/proc/replace_space_exclusive()
 		for(var/turf/space/S in world)
 			if (S.z != 1) continue
 			new /turf/space/fluid( locate(S.x, S.y, S.z) )
-			LAGCHECK(LAG_REALTIME)
+			sleep(LAG_REALTIME)
 #endif
 		message_admins("Finished space replace!")
 		map_currently_underwater = 1
@@ -147,7 +147,7 @@ client/proc/update_ocean_lighting()
 	SPAWN_DBG(0)
 		for(var/turf/space/fluid/S in world)
 			S.update_light()
-			LAGCHECK(LAG_REALTIME)
+			sleep(LAG_REALTIME)
 		message_admins("Finished space light update!!!")
 
 
@@ -169,11 +169,11 @@ client/proc/dereplace_space()
 			for(var/turf/space/fluid/F in world)
 				if (F.z == 1)
 					new /turf/space( locate(F.x, F.y, F.z) )
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 		else
 			for(var/turf/space/fluid/F in world)
 				new /turf/space( locate(F.x, F.y, F.z) )
-				LAGCHECK(LAG_REALTIME)
+				sleep(LAG_REALTIME)
 
 		message_admins("Finished space dereplace!")
 		map_currently_underwater = 0
