@@ -28,6 +28,11 @@
 	// 1.57 - 40mm shell
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 
+	New()
+		if(silenced)
+			current_projectile.shot_sound = 'sound/machines/click.ogg'
+		..()
+
 	examine()
 		. = ..()
 		if (src.ammo && (src.ammo.amount_left > 0))

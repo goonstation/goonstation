@@ -175,6 +175,8 @@
 			ammoGun.set_loc(K)
 			K.ammo = ammoGun
 			K.current_projectile = ammoGun.ammo_type
+			if(K.silenced)
+				K.current_projectile.shot_sound = 'sound/machines/click.ogg'
 			K.update_icon()
 
 			return 1
@@ -224,6 +226,9 @@
 				ammoGun.set_loc(K)
 				K.ammo = ammoGun
 				K.current_projectile = A.ammo_type
+				if(K.silenced)
+					K.current_projectile.shot_sound = 'sound/machines/click.ogg'
+
 				//DEBUG_MESSAGE("Equalized [K]'s ammo type to [A.type]")
 
 			var/move_amount = min(A.amount_left, K.max_ammo_capacity - K.ammo.amount_left)
