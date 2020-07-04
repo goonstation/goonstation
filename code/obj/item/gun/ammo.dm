@@ -328,13 +328,7 @@
 	caliber = 0.22
 
 /obj/item/ammo/bullets/bullet_22/faith
-	sname = ".22 LR"
-	name = ".22 magazine"
-	icon_state = "pistol_magazine"
 	amount_left = 4.0
-	max_amount = 10.0
-	ammo_type = new/datum/projectile/bullet/bullet_22
-	caliber = 0.22
 
 /obj/item/ammo/bullets/bullet_22HP
 	sname = ".22 Hollow Point"
