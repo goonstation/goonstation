@@ -307,6 +307,7 @@ var/list/clients_move_scheduled = list()
 
 	// returns 1 if it schedules a move
 	proc/internal_process_move(keys)
+		SHOULD_NOT_SLEEP(TRUE)
 		var/delay = src.process_move(keys)
 		if (isnull(delay))
 			return
