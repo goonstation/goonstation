@@ -1,5 +1,9 @@
 
 (t)sat jul 04 20
+(u)adharainspace
+(p)1246
+(e)🆕|feature
+(+)GPS tracking no longer broken while inside pods/subs.
 (u)UrsulaMajor and makkipakki
 (p)1335
 (e)⚖🆕🎨|balance, feature, sprites
