@@ -1638,35 +1638,34 @@ var/list/mechanics_telepads = new/list()
 		mechanics_telepads.Add(src)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activate")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"setID", "setidmsg")
-		//MARKMARKMARK//SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,list("Set Teleporter ID","Toggle Send-only Mode"))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Teleporter ID","setID")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Send-only Mode","toggleSendOnly")
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(..(W, user)) return
-		else if(ispulsingtool(W))
-			switch(src.modify_configs())
-				if(0)
-					return
-				if("Set Teleporter ID")
-					var/inp = input(user,"Please enter ID:","ID setting",teleID) as text
-					if(length(inp))
-						inp = adminscrub(inp)
-						teleID = inp
-						boutput(user, "ID set to [inp]")
-				if("Toggle Send-only Mode")
-					send_only = !send_only
-					if(send_only)
-						src.overlays += image('icons/misc/mechanicsExpansion.dmi', icon_state = "comp_teleoverlay")
-					else
-						src.overlays.Cut()
-					boutput(user, "Send-only Mode now [send_only ? "on":"off"]")
-			tooltip_rebuild = 1
+	disposing()
+		mechanics_telepads.Remove(src)
+		return ..()
+
+	proc/setID(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user,"Please enter ID:","ID setting",teleID) as text
+		if(length(inp))
+			inp = adminscrub(inp)
+			teleID = inp
+			boutput(user, "ID set to [inp]")
+
+	proc/toggleSendOnly(obj/item/W as obj, mob/user as mob)
+		send_only = !send_only
+		if(send_only)
+			src.overlays += image('icons/misc/mechanicsExpansion.dmi', icon_state = "comp_teleoverlay")
+		else
+			src.overlays.Cut()
+		boutput(user, "Send-only Mode now [send_only ? "on":"off"]")
+		tooltip_rebuild = 1
 
 	proc/setidmsg(var/datum/mechanicsMessage/input)
-		if(input.signal)
+		if(level == 2 && input.signal)
 			teleID = input.signal
 			tooltip_rebuild = 1
- 		componentSay("ID Changed to : [input.signal]")
+ 			componentSay("ID Changed to : [input.signal]")
 		return
 
 	proc/activate(var/datum/mechanicsMessage/input)
@@ -1693,18 +1692,17 @@ var/list/mechanics_telepads = new/list()
 
 		if(length(destinations))
 			var/atom/picked = pick(destinations)
+			var/count_sent = 0
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(picked.loc)))
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.invisibility || M.anchored) continue
 				M.set_loc(get_turf(picked.loc))
-
-		SPAWN_DBG(0)
-			mechanics.fireOutgoing(input)
+				count_sent++
+			input.signal = count_sent
+			SPAWN_DBG(0)
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
+				SEND_SIGNAL(M,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		return
-
-	disposing()
-		mechanics_telepads.Remove(src)
-		return ..()
 
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_tele"
