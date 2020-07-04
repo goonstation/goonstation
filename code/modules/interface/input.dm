@@ -290,7 +290,6 @@ var/list/clients_move_scheduled = list()
 	var/move_scheduled_ticks = 0
 
 	proc/keys_changed(keys, changed)
-		set waitfor = 0
 		SHOULD_NOT_SLEEP(TRUE) // prevent shitty code from locking up the main input loop - commenting out for now because out of scope
 		// stub
 
