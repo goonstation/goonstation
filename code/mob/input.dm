@@ -1,3 +1,4 @@
+
 mob
 	var
 		move_dir = 0
@@ -199,9 +200,9 @@ mob
 						//robust grab : Assailant gets moved here (do_step shit). this is messy, i'm sorry, blame MBC
 						if (!do_step || src.loc != old_loc)
 
-							if (mob_flags & AT_GUNPOINT) //we do this check here because if we DID take a step, we aren't tight-grabbed and the gunpoint shot will be triggered by Mob/Move(). messy i know, fix later
-								for(var/obj/item/grab/gunpoint/G in grabbed_by)
-									G.shoot()
+							//if (mob_flags & AT_GUNPOINT) //we do this check here because if we DID take a step, we aren't tight-grabbed and the gunpoint shot will be triggered by Mob/Move(). messy i know, fix later
+							//	for(var/obj/item/grab/gunpoint/G in grabbed_by)
+							//		G.shoot()
 
 							for(var/grab in src.grabbed_by)
 								var/obj/item/grab/G = grab
