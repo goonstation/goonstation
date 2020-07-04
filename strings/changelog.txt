@@ -1,5 +1,23 @@
 
 (t)fri jul 03 20
+(u)Superlagg
+(p)1244
+(e)⚖🆕|balance, feature
+(*)Patches and styptic powder are now less effective at stopping bleeding.
+(*)However, bandages are now quicker to apply and a bit more effective!
+(*)Changed how several medical chems work.
+(u)MarkNstein
+(p)1264
+(e)🐛|bug
+(+)Cyborg frames no longer disappear after fully disassembling a borg.
+(u)Superlagg
+(p)1315
+(e)⚖🎨|balance, sprites
+(*)Securitrons no longer drop stun batons. Beepsky isn't any ordinary securitron, though!
+(u)Ryumi
+(p)1325
+(e)🗺|mapping
+(+)Added many more fixes and QoL + plolish improvements to Donut3.
 (u)mbc, UrsulaMajor
 (*)Armory's Special Equipment locker now contains 2 backup security weapon vendor tokens, 2 deployable turrets, and 2 night vision goggles. We also made sure it was placed on all maps.
 (u)UrsulaMajor, Flaborized, and Tarmunora
