@@ -219,8 +219,10 @@ var/global/list/all_GPSs = list()
 			if (!x || !y)
 				boutput(usr, "<span class='alert'>Bad Topc call, if you see this something has gone wrong. And it's probably YOUR FAULT!</span>")
 				return
+			// This is to get a turf with the specified coordinates on the same Z as the device
 			var/turf/T = get_turf(src) //bugfix for this not working when src was in containers
 			var/z = T.z
+
 
 			T = locate(x,y,z)
 			//Set located turf to be the tracking_target
