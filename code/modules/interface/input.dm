@@ -295,6 +295,7 @@ var/list/clients_move_scheduled = list()
 		// stub
 
 	proc/process_move(keys)
+		SHOULD_NOT_SLEEP(TRUE)
 		// stub
 
 	proc/attempt_move()

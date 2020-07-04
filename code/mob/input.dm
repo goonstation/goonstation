@@ -12,7 +12,6 @@ mob
 		return ..()
 
 	keys_changed(keys, changed)
-		SHOULD_NOT_SLEEP(TRUE)
 		if (src.use_movement_controller)
 			var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
 			if (controller)
@@ -42,7 +41,6 @@ mob
 			src.update_cursor()
 
 	process_move(keys)
-		SHOULD_NOT_SLEEP(TRUE)
 		if (src.use_movement_controller)
 			var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
 			if (controller)
