@@ -175,7 +175,9 @@ var/list/mechanics_telepads = new/list()
 				boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
 				return
 		var/inp = input(user,"Enter new price:","Price setting", price) as num
-		if (inp)
+		if(!in_range(src, user) || user.stat)
+			return
+		if(!isnull(inp))
 			if (inp < 0)
 				user.show_text("You cannot set a negative price.", "red") // Infinite credits exploit.
 				return
@@ -197,7 +199,9 @@ var/list/mechanics_telepads = new/list()
 				boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
 				return
 		var/inp = adminscrub(input(user,"Please enter new code:","Code setting","dosh") as text)
-		if (length(inp))
+		if(!in_range(src, user) || user.stat)
+			return
+		if(!isnull(inp))
 			code = inp
 			boutput(user, "Code set to [inp]")
 		return
@@ -209,6 +213,8 @@ var/list/mechanics_telepads = new/list()
 	proc/checkEjectMoney(obj/item/W as obj, mob/user as mob)
 		if(code)
 			var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
+			if(!in_range(src, user) || user.stat)
+				return
 			if (codecheck != code)
 				boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
 				return
@@ -354,6 +360,8 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setPrice(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter name:","name setting", paper_name) as text
+		if(!in_range(src, user) || user.stat)
+			return
 		paper_name = adminscrub(inp)
 		boutput(user, "String set to [paper_name]")
 
@@ -453,6 +461,8 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setRange(obj/item/W as obj, mob/user as mob)
 		var/rng = input("Range is limited between 1-5.", "Enter a new range", range) as num
+		if(!in_range(src, user) || user.stat)
+			return
 		range = clamp(rng, 1, 5)
 		boutput(user, "<span class='notice'>Range set to [range]!</span>")
 		if(level == 1)
@@ -613,8 +623,10 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setDelay(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user, "Enter delay in 10ths of a second:", "Set delay", 10) as num
+		if(!in_range(src, user) || user.stat)
+			return
 		inp = max(inp, 10)
-		if(inp)
+		if(!isnull(inp))
 			delay = inp
 			tooltip_rebuild = 1
 			boutput(user, "Set delay to [inp]")
@@ -663,7 +675,9 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setTime(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user, "Enter Time Frame in 10ths of a second:", "Set Time Frame", timeframe) as num
-		if(inp)
+		if(!in_range(src, user) || user.stat)
+			return
+		if(!isnull(inp))
 			timeframe = inp
 			tooltip_rebuild = 1
 			boutput(user, "Set Time Frame to [inp]")
@@ -727,7 +741,9 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
-		if(length(inp))
+		if(!in_range(src, user) || user.stat)
+			return
+		if(!isnull(inp))
 			inp = strip_html(html_decode(inp))
 			triggerSignal = inp
 			boutput(user, "Signal set to [inp]")
@@ -757,7 +773,9 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
-		if(length(inp))
+		if(!in_range(src, user) || user.stat)
+			return
+		if(!isnull(inp))
 			inp = strip_html(html_decode(inp))
 			triggerSignal = inp
 			boutput(user, "Signal set to [inp]")
@@ -802,7 +820,9 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setPattern(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Expression Pattern:","Expression setting", expressionpatt) as text
-		if(inp != null)
+		if(!in_range(src, user) || user.stat)
+			return
+		if(!isnull(inp))
 			expressionpatt = inp
 			inp = sanitize(html_encode(inp))
 			expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
@@ -811,7 +831,9 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setReplacement(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Expression Replacement:","Expression setting", expressionrepl) as text
-		if(inp != null)
+		if(!in_range(src, user) || user.stat)
+			return
+		if(!isnull(inp))
 			expressionrepl = inp
 			inp = sanitize(html_encode(inp))
 			expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
@@ -820,7 +842,9 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setFlags(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Expression Flags:","Expression setting", expressionflag) as text
-		if(inp != null)
+		if(!in_range(src, user) || user.stat)
+			return
+		if(!isnull(inp))
 			expressionflag = inp
 			inp = sanitize(html_encode(inp))
 			expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
@@ -829,7 +853,9 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setRegexReplacement(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Replacement:","Replacement setting", expressionrepl) as text
-		if(length(inp))
+		if(!in_range(src, user) || user.stat)
+			return
+		if(!isnull(inp))
 			expressionrepl = inp
 			boutput(user, "Replacement set to [html_encode(inp)]")
 			tooltip_rebuild = 1
@@ -884,7 +910,9 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setRegex(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Expression Pattern:","Expression setting", expressionpatt) as text
-		if(inp != null)
+		if(!in_range(src, user) || user.stat)
+			return
+		if(!isnull(inp))
 			expressionpatt = inp
 			expression =("[expressionpatt]/[expressionflag]")
 			inp = sanitize(html_encode(inp))
@@ -893,7 +921,9 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setFlags(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Expression Flags:","Expression setting", expressionflag) as text
-		if(inp != null)
+		if(!in_range(src, user) || user.stat)
+			return
+		if(!isnull(inp))
 			expressionflag = inp
 			expression =("[expressionpatt]/[expressionflag]")
 			inp = sanitize(html_encode(inp))
@@ -950,7 +980,9 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting","1") as text
-		if(length(inp))
+		if(!in_range(src, user) || user.stat)
+			return
+		if(!isnull(inp))
 			inp = adminscrub(inp)
 			triggerSignal = inp
 			boutput(user, "String set to [inp]")
@@ -1021,7 +1053,9 @@ var/list/mechanics_telepads = new/list()
 	//This will get called from the component-datum when a device is being linked
 	proc/MECHCOMP_SET_FILTER_FUNC(obj/receiver, mob/user)
 		var/filter = input(user, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
-		if (length(filter))
+		if(!in_range(src, user) || user.stat)
+			return
+		if (!isnull(filter))
 			if (!outgoing_filters[receiver]) outgoing_filters[receiver] = list()
 			outgoing_filters.Add(receiver)
 			outgoing_filters[receiver] = splittext(filter, ",")
@@ -1072,6 +1106,8 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setStartingString(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting", bstr) as text
+		if(!in_range(src, user) || user.stat)
+			return
 		inp = strip_html(inp)
 		bstr = inp
 		boutput(user, "String set to [inp]")
@@ -1079,6 +1115,8 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setEndingString(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting", astr) as text
+		if(!in_range(src, user) || user.stat)
+			return
 		inp = strip_html(inp)
 		astr = inp
 		boutput(user, "String set to [inp]")
@@ -1234,7 +1272,9 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setFreqManually(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Frequency:","Frequency setting", frequency) as num
-		if(inp)
+		if(!in_range(src, user) || user.stat)
+			return
+		if(!isnull(inp))
 			set_frequency(inp)
 			boutput(user, "Frequency set to [inp]")
 			tooltip_rebuild = 1
@@ -1372,6 +1412,8 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setSignalList(obj/item/W as obj, mob/user as mob)
 		var/numsig = input(user,"How many Signals would you like to define?","# Signals:", 3) as num
+		if(!in_range(src, user) || user.stat)
+			return
 		numsig = round(numsig)
 		if(numsig > 10) //Needs a limit because nerds are nerds
 			boutput(user, "<span class='alert'>This component can't handle more than 10 signals!</span>")
@@ -1393,6 +1435,8 @@ var/list/mechanics_telepads = new/list()
 	proc/setDelimetedList(obj/item/W as obj, mob/user as mob)
 		var/newsigs = ""
 		newsigs = input(user, "Enter a string delimited by ; for every item you want in the list.", "Enter a thing. Max length is 2048 characters", newsigs)
+		if(!in_range(src, user) || user.stat)
+			return
 		if(!newsigs)
 			boutput(user, "<span class='notice'>Signals remain unchanged!</span>")
 			return
@@ -1567,7 +1611,9 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setOnSignal(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting",signal_on) as text
-		if(length(inp))
+		if(!in_range(src, user) || user.stat)
+			return
+		if(!isnull(inp))
 			inp = adminscrub(inp)
 			signal_on = inp
 			boutput(user, "On-Signal set to [inp]")
@@ -1575,7 +1621,9 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setOffSignal(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting",signal_off) as text
-		if(length(inp))
+		if(!in_range(src, user) || user.stat)
+			return
+		if(!isnull(inp))
 			inp = adminscrub(inp)
 			signal_off = inp
 			boutput(user, "Off-Signal set to [inp]")
@@ -1647,7 +1695,9 @@ var/list/mechanics_telepads = new/list()
 
 	proc/setID(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter ID:","ID setting",teleID) as text
-		if(length(inp))
+		if(!in_range(src, user) || user.stat)
+			return
+		if(!isnull(inp))
 			inp = adminscrub(inp)
 			teleID = inp
 			boutput(user, "ID set to [inp]")
@@ -1748,6 +1798,8 @@ var/list/mechanics_telepads = new/list()
 					green = min(green, 1.0)
 
 					var/blue = input(user,"Blue Color(0.0 - 1.0):","Color setting", 1.0) as num
+					if(!in_range(src, user) || user.stat)
+						return
 					blue = max(blue, 0.0)
 					blue = min(blue, 1.0)
 
@@ -1756,7 +1808,7 @@ var/list/mechanics_telepads = new/list()
 					light.set_color(red, green, blue)
 				if("Set Range")
 					var/inp = input(user,"Please enter Range(1 - 7):","Range setting", light_level) as num
-					if(get_dist(user, src) > 1 || user.stat)
+					if(!in_range(src, user) || user.stat)
 						return
 
 					inp = round(inp)
@@ -1878,7 +1930,9 @@ var/list/mechanics_telepads = new/list()
 					return
 				if ("Set Frequency")
 					var/inp = input(user, "New frequency ([R_FREQ_MINIMUM] - [R_FREQ_MAXIMUM]):", "Enter new frequency", frequency) as num
-					if (inp)
+					if(!in_range(src, user) || user.stat)
+						return
+					if(!isnull(inp))
 						set_frequency(inp)
 						boutput(user, "Frequency set to [frequency]")
 
@@ -2047,6 +2101,8 @@ var/list/mechanics_telepads = new/list()
 
 					var/new_label = input(user, "Button label", "Button Panel") as text
 					var/new_signal = input(user, "Button signal", "Button Panel") as text
+					if(!in_range(src, user) || user.stat)
+						return
 					if(length(new_label) && length(new_signal))
 						new_label = adminscrub(new_label)
 						new_signal = adminscrub(new_signal)
@@ -2061,6 +2117,8 @@ var/list/mechanics_telepads = new/list()
 						boutput(user, "<span class='alert'>[src] has no active buttons - there's nothing to remove!</span>")
 					else
 						var/to_remove = input(user, "Choose button to remove", "Button Panel") in src.active_buttons + "*CANCEL*"
+						if(!in_range(src, user) || user.stat)
+							return
 						if(!to_remove || to_remove == "*CANCEL*") return
 						src.active_buttons.Remove(to_remove)
 						boutput(user, "Removed button labeled [to_remove]")
@@ -2359,10 +2417,14 @@ var/list/mechanics_telepads = new/list()
 					return
 				if("Set A")
 					var/input = input("Set A to what?", "A", A) as num
+					if(!in_range(src, user) || user.stat)
+						return
 					if(!isnull(input))
 						A = input
 				if("Set B")
 					var/input = input("Set B to what?", "B", B) as num
+					if(!in_range(src, user) || user.stat)
+						return
 					if(!isnull(input))
 						B = input
 				if("Set Mode")
