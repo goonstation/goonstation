@@ -1,3 +1,6 @@
+(t)mon jun 29 20
+(u)Sovexe
+(*)New Check Bioeffects admin tool available in player options and tilde menu.
 (t)tue jun 23 20
 (u)Sovexe
 (*)The Pests (playable) event now allows for customization in the form of critter type and quantity.
