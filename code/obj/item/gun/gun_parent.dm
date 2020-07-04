@@ -316,28 +316,29 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		spread += 5 * how_drunk
 	spread = max(spread, spread_angle)
 
-	for (var/i = 0; i < current_projectile.shot_number; i++)
-		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, M, 0, 0, spread)
-		if (!P)
-			return
-		if (user == M)
-			P.shooter = null
-			P.mob_shooter = user
+	SPAWN_DBG(-1)
+		for (var/i = 0; i < current_projectile.shot_number; i++)
+			var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, M, 0, 0, spread)
+			if (!P)
+				return
+			if (user == M)
+				P.shooter = null
+				P.mob_shooter = user
 
-		alter_projectile(P)
-		P.forensic_ID = src.forensic_ID // Was missing (Convair880).
-		if(get_dist(user,M) <= 1)
-			hit_with_existing_projectile(P, M) // Includes log entry.
-			P.was_pointblank = 1
-		else
-			P.launch()
+			alter_projectile(P)
+			P.forensic_ID = src.forensic_ID // Was missing (Convair880).
+			if(get_dist(user,M) <= 1)
+				hit_with_existing_projectile(P, M) // Includes log entry.
+				P.was_pointblank = 1
+			else
+				P.launch()
 
-		var/mob/living/L = M
-		if (M && isalive(M))
-			L.lastgasp()
-		M.set_clothing_icon_dirty()
-		src.update_icon()
-		sleep(current_projectile.shot_delay)
+			var/mob/living/L = M
+			if (M && isalive(M))
+				L.lastgasp()
+			M.set_clothing_icon_dirty()
+			src.update_icon()
+			sleep(current_projectile.shot_delay)
 
 /obj/item/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	src.add_fingerprint(user)
