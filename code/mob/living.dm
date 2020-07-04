@@ -1445,6 +1445,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (sustained_moves >= SUSTAINED_RUN_REQ)
 		base_speed = BASE_SPEED_SUSTAINED
 
+	LAGCHECK(50)
+
 	. += base_speed
 	. += movement_delay_modifier
 
