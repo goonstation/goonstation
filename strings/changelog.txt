@@ -1,5 +1,9 @@
 
 (t)fri jul 03 20
+(u)MarkNstein
+(p)1264
+(e)🐛|bug
+(+)Cyborg frames no longer disappear after fully disassembling a borg.
 (u)Superlagg
 (p)1315
 (e)⚖🎨|balance, sprites
