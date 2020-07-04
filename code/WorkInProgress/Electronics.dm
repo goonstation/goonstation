@@ -676,7 +676,7 @@
 	throwforce = 4
 	hitsound = 'sound/machines/chainsaw_green.ogg'
 	hit_type = DAMAGE_CUT
-	w_class = 2.0
+	w_class = 3.0
 	var/datum/effects/system/spark_spread/spark_system
 	module_research = list("electronics" = 3, "engineering" = 1)
 
