@@ -1272,6 +1272,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/card_box/booster, 20, cost=20)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/suit, 10, cost=15)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/tarot, 5, cost=25)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/hanafuda, 5, cost=298)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/storage, 5, cost=10)
 		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicebox, 5, cost=150)
 		product_list += new/datum/data/vending_product(/obj/item/storage/dicepouch, 5, cost=100)
