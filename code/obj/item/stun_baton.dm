@@ -623,7 +623,7 @@
 
 	proc/update_icon()
 		SHOULD_NOT_SLEEP(TRUE)
-		LAGCHECK(50)
+		sleep(50)
 		icon_state = status ? "barrier_1" : "barrier_0"
 		item_state = status ? "barrier1" : "barrier0"
 
