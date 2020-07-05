@@ -551,7 +551,8 @@ CONTAINS:
 				user.visible_message("<span class='alert'><b>[user]</b> shocks [user == patient ? "[him_or_her(user)]self" : patient] with [src]!</span>",\
 				"<span class='alert'>You shock [user == patient ? "yourself" : patient] with [src]!</span>")
 				logTheThing("combat", patient, user, "was defibrillated by %target% with [src] when they didn't need it at [log_loc(patient)]")
-				patient.changeStatus("weakened", 0.4 SECONDS)
+				patient.changeStatus("weakened", 0.6 SECONDS)
+				patient.force_laydown_standup()
 
 		return 0
 
@@ -635,9 +636,9 @@ CONTAINS:
 			user.move_laying += src
 		else
 			if (user.move_laying)
-				user.move_laying = list(user.move_laying, src)
+				user.move_laying = list(user.move_laying, src.defib)
 			else
-				user.move_laying = list(src)
+				user.move_laying = list(src.defib)
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (W == src.defib)
@@ -649,7 +650,7 @@ CONTAINS:
 			src.defib.loc = src
 			src.defib.parent = null
 		if (islist(M.move_laying))
-			M.move_laying -= src
+			M.move_laying -= src.defib
 		else
 			M.move_laying = null
 
