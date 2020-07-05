@@ -1,5 +1,8 @@
 
 (t)sun jul 05 20
+(u)mbc
+(e)🆕|feature
+(*)Added a radio chat sfx when the AI speaks.
 (u)Tarmunora
 (p)1333
 (e)⚖|balance
