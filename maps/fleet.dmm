@@ -552,32 +552,16 @@
 	name = "Tenebrae Solar Array"
 	})
 "bk" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "8-10"
-	},
-/turf/space,
+/obj/item/seed/alien,
+/turf/simulated/floor/plating/airless/asteroid,
 /area)
 "bl" = (
-/obj/cable{
-	icon_state = "1-2"
+/obj/machinery/chem_master{
+	dir = 8
 	},
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Auxiliary Component Bay"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/lounge_port{
-	name = "Maru Crew Quarters"
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost{
+	name = "Indigo Rye"
 	})
 "bm" = (
 /obj/machinery/light/small{
@@ -681,11 +665,11 @@
 /area/station/owlery)
 "bx" = (
 /obj/item/raw_material/shard/glass,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
 /turf/simulated/floor/airless/plating{
 	icon_state = "platingdmg2"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
 	},
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -1041,10 +1025,10 @@
 	name = "Tenebrae Crew Quarters"
 	})
 "cf" = (
-/obj/decal/cleanable/oil,
-/turf/simulated/floor/plating,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/item/clothing/glasses/blindfold,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost{
+	name = "Indigo Rye"
 	})
 "cg" = (
 /obj/machinery/chem_heater,
@@ -1142,16 +1126,17 @@
 	name = "Meridian Primary Zone"
 	})
 "cq" = (
-/obj/storage/cart,
-/obj/machinery/light/small/warm{
-	dir = 1;
-	pixel_y = 21
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/item/reagent_containers/ampoule/smelling_salts,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/atmospherics/pipe/simple{
+	level = 2
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost{
+	name = "Indigo Rye"
 	})
 "cr" = (
 /obj/machinery/shuttle/engine/heater{
@@ -1177,10 +1162,12 @@
 	},
 /area/station/science/teleporter)
 "ct" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/caution/east,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/caution/corner/misc{
+	dir = 6
+	},
+/area/research_outpost{
+	name = "Indigo Rye"
 	})
 "cu" = (
 /obj/submachine/chem_extractor{
@@ -1747,6 +1734,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/darkblue/checker,
 /area/station/science/artifact)
 "dA" = (
@@ -1761,6 +1752,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor/darkblue/checker,
 /area/station/science/artifact)
 "dB" = (
@@ -1772,16 +1767,28 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/science/artifact)
 "dC" = (
 /obj/reagent_dispensers/fueltank,
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor,
 /area/station/science{
 	name = "Tenebrae Primary Zone"
 	})
 "dD" = (
 /obj/machinery/vehicle/pod_smooth/light,
+/obj/disposalpipe/segment/transport{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/science{
 	name = "Tenebrae Primary Zone"
@@ -1950,15 +1957,15 @@
 	name = "Tenebrae Primary Zone"
 	})
 "dS" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "meribelt";
-	name = "Meridian disposal belt";
-	operating = 1
+/obj/machinery/light_switch/east,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
 	},
-/turf/simulated/floor/grey,
-/area/station/maintenance/west{
-	name = "Meridian Maintenance"
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/research_outpost{
+	name = "Indigo Rye"
 	})
 "dT" = (
 /obj/machinery/networked/test_apparatus/xraymachine,
@@ -1979,6 +1986,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/darkblue/checker,
 /area/station/science/artifact)
 "dV" = (
@@ -1995,35 +2003,46 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/science/artifact)
 "dX" = (
-/obj/machinery/light/small/warm{
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/item/storage/wall{
+	pixel_y = 32
+	},
+/turf/simulated/floor/black,
+/area/research_outpost{
+	name = "Indigo Rye"
 	})
 "dY" = (
-/obj/machinery/door/airlock/pyro/classic{
-	dir = 4
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater-R"
 	},
-/obj/decal/cleanable/oil,
-/turf/simulated/floor/plating,
-/area/station/wreckage{
-	name = "Calamarain"
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/lounge_port{
+	name = "Maru Crew Quarters"
 	})
 "dZ" = (
-/obj/machinery/conveyor{
-	dir = 2;
-	id = "meribelt";
-	name = "Meridian disposal belt";
-	operating = 1
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "alt_propulsion"
 	},
-/turf/simulated/floor/grey,
-/area/station/maintenance/west{
-	name = "Meridian Maintenance"
-	})
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area)
 "ea" = (
 /turf/simulated/floor/black,
 /area/station/science/research_director{
@@ -2186,6 +2205,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/darkblue/checker,
 /area/station/science/artifact)
 "ep" = (
@@ -2513,6 +2533,7 @@
 	icon_state = "1-2"
 	},
 /obj/access_spawn/research,
+/obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
 /area/station/science/artifact)
 "eV" = (
@@ -2615,6 +2636,10 @@
 "fg" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/white,
 /area/station/science{
@@ -3637,15 +3662,11 @@
 	name = "Tenebrae Primary Zone"
 	})
 "gZ" = (
-/obj/machinery/shuttle/engine/propulsion{
+/obj/machinery/shuttle/engine/heater{
 	dir = 4;
-	icon_state = "alt_propulsion"
+	icon_state = "alt_heater-L"
 	},
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
+/turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/storage{
 	name = "Maru Power Room"
 	})
@@ -3657,13 +3678,17 @@
 /turf/simulated/floor/orangeblack,
 /area/station/mining)
 "hb" = (
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
 	name = "Maru Power Room"
 	})
 "hc" = (
-/obj/machinery/vending/medical_public,
-/turf/simulated/floor/orangeblack/side,
+/obj/machinery/disposal/transport{
+	name = "Erebus transportation unit"
+	},
+/obj/disposalpipe/trunk/south,
+/turf/simulated/floor/delivery/caution,
 /area/station/engine/engineering{
 	name = "Maru Primary Zone"
 	})
@@ -3689,26 +3714,6 @@
 /obj/disposalpipe/segment/transport,
 /turf/space,
 /area)
-"hg" = (
-/obj/storage/crate,
-/obj/item/electronics/frame/collector_control,
-/obj/item/electronics/frame/collector_control,
-/obj/item/electronics/frame/collector_control,
-/obj/item/electronics/frame/collector_array,
-/obj/item/electronics/frame/collector_array,
-/obj/item/electronics/frame/collector_array,
-/obj/item/electronics/frame/collector_array,
-/obj/item/electronics/frame/collector_array,
-/obj/item/electronics/frame/collector_array,
-/obj/item/electronics/soldering,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/crew_quarters/lounge_port{
-	name = "Maru Crew Quarters"
-	})
 "hh" = (
 /obj/shrub{
 	dir = 8;
@@ -3809,32 +3814,16 @@
 	})
 "ht" = (
 /obj/machinery/light/small,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/stool/bed,
-/obj/landmark/start{
-	name = "Engineer"
-	},
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
-	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/lounge_port{
 	name = "Maru Crew Quarters"
 	})
 "hu" = (
-/obj/machinery/power/terminal{
-	dir = 8
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater-L"
 	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
+/turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/lounge_port{
 	name = "Maru Crew Quarters"
 	})
@@ -4652,15 +4641,16 @@
 /turf/simulated/floor/orangeblack,
 /area/station/mining)
 "ji" = (
-/obj/machinery/light/small/warm{
-	dir = 1;
-	pixel_y = 21
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "alt_propulsion"
 	},
-/obj/machinery/manufacturer/gas,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area)
 "jj" = (
 /obj/submachine/cargopad/magnet,
 /turf/simulated/floor/plating/airless,
@@ -5766,7 +5756,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/storage/closet/welding_supply,
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/orangeblack/side,
 /area/station/engine/engineering{
 	name = "Maru Primary Zone"
@@ -5775,7 +5765,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/portable_atmospherics/canister/air/large,
+/obj/machinery/vending/medical_public,
 /turf/simulated/floor/orangeblack/side,
 /area/station/engine/engineering{
 	name = "Maru Primary Zone"
@@ -5786,7 +5776,9 @@
 	pixel_x = 32
 	},
 /obj/disposalpipe/trunk/south,
-/obj/machinery/disposal/transport,
+/obj/machinery/disposal/transport{
+	name = "Meridian transportation unit"
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 6
 	},
@@ -6077,8 +6069,8 @@
 "lU" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/storage{
-	name = "Maru Power Room"
+/area/station/engine/engineering{
+	name = "Maru Primary Zone"
 	})
 "lV" = (
 /obj/lattice{
@@ -6368,7 +6360,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
 	name = "Maru Power Room"
@@ -6424,24 +6415,27 @@
 	name = "Maru Power Room"
 	})
 "mD" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
 	},
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/simulated/floor/shuttlebay,
-/area/station/crew_quarters/lounge_port{
-	name = "Maru Crew Quarters"
-	})
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/space,
+/area)
 "mE" = (
-/obj/machinery/emitter{
-	dir = 8
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/shuttlebay,
-/area/station/maintenance/storage{
-	name = "Maru Power Room"
-	})
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "alt_propulsion"
+	},
+/turf/space,
+/area)
 "mF" = (
 /obj/lattice{
 	dir = 2;
@@ -6704,11 +6698,16 @@
 	name = "Maru Power Room"
 	})
 "nf" = (
-/obj/machinery/field_generator,
-/turf/simulated/floor/shuttlebay,
-/area/station/crew_quarters/lounge_port{
-	name = "Maru Crew Quarters"
-	})
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/space,
+/area)
 "ng" = (
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
@@ -6983,23 +6982,14 @@
 	name = "Maru Power Room"
 	})
 "nG" = (
-/obj/machinery/field_generator,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
 	},
-/turf/simulated/floor/shuttlebay,
-/area/station/crew_quarters/lounge_port{
-	name = "Maru Crew Quarters"
-	})
-"nH" = (
-/obj/machinery/shuttle/engine/heater{
-	dir = 4;
-	icon_state = "alt_heater-M"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/storage{
-	name = "Maru Power Room"
+/obj/disposalpipe/segment/transport,
+/turf/space,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
 	})
 "nI" = (
 /obj/lattice{
@@ -8469,11 +8459,11 @@
 	name = "Indigo Rye"
 	})
 "qu" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
 /turf/simulated/floor/airless/plating{
 	icon_state = "platingdmg2"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
 	},
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -8647,6 +8637,7 @@
 	pixel_x = 10;
 	status = "LIGHT_BROKEN"
 	},
+/obj/item/reagent_containers/dropper,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -8956,6 +8947,7 @@
 	name = "Dionysus Solar Array"
 	})
 "rm" = (
+/obj/machinery/chem_heater,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -9103,6 +9095,11 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/unary/outlet_injector{
+	icon_state = "on";
+	level = 2;
+	on = 1
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost{
@@ -9707,13 +9704,21 @@
 	name = "Hammer Primary Concourse"
 	})
 "sL" = (
-/obj/machinery/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "alt_propulsion"
+/obj/grille/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
 	},
-/turf/space,
-/area/station/maintenance/storage{
-	name = "Maru Power Room"
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9;
+	layer = 2
+	},
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
 	})
 "sM" = (
 /obj/machinery/manufacturer/uniform,
@@ -13809,6 +13814,9 @@
 	icon_state = "1-2"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/atmospherics/pipe/simple{
+	level = 2
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -13981,7 +13989,9 @@
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	id = "ppap"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/shuttlebay{
+	icon_state = "engine_caution_north"
+	},
 /area/research_outpost{
 	name = "Indigo Rye"
 	})
@@ -14897,17 +14907,17 @@
 	name = "Dionysus Solar Array"
 	})
 "Ch" = (
-/obj/reagent_dispensers/fueltank,
+/obj/storage/crate/furnacefuel,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/caution/south,
 /area/research_outpost{
 	name = "Indigo Rye"
 	})
 "Ci" = (
-/obj/reagent_dispensers/foamtank,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/caution/south,
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -14915,11 +14925,8 @@
 "Cj" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
-	density = 1;
-	icon_state = "pdoor1";
 	id = "test_chamber2";
-	name = "Test Chamber Shield";
-	opacity = 1
+	name = "Test Chamber Shield"
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost{
@@ -15176,13 +15183,15 @@
 "CG" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
 	icon_state = "research2_locked";
-	locked = 1;
-	req_access = null
+	locked = 1
 	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	level = 2
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_ns"
@@ -16415,6 +16424,7 @@
 	pixel_x = 0;
 	tag = ""
 	},
+/obj/storage/closet/welding_supply,
 /turf/simulated/floor/orangeblack/side,
 /area/station/engine/engineering{
 	name = "Maru Primary Zone"
@@ -16433,24 +16443,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/crew_quarters/captain{
 	name = "Meridian Primary Zone"
-	})
-"ET" = (
-/obj/machinery/computer3/generic/engine{
-	dir = 4
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/shuttlebay,
-/area/station/crew_quarters/lounge_port{
-	name = "Maru Crew Quarters"
 	})
 "EU" = (
 /turf/simulated/floor{
@@ -16783,7 +16775,7 @@
 	})
 "Fy" = (
 /obj/machinery/manufacturer/general,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/caution/south,
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
 	})
@@ -16801,7 +16793,7 @@
 	pixel_y = 21
 	},
 /obj/item/extinguisher,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/caution/south,
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
 	})
@@ -16810,7 +16802,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/caution/south,
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
 	})
@@ -16839,7 +16831,7 @@
 	})
 "FC" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/caution/south,
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
 	})
@@ -17042,11 +17034,6 @@
 	})
 "FY" = (
 /obj/machinery/portable_reclaimer,
-/obj/machinery/door_control{
-	id = "meri_crusher";
-	name = "Meridian Crusher Door";
-	pixel_x = -24
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
@@ -17338,7 +17325,7 @@
 	name = "Meridian Solar Array"
 	})
 "Gy" = (
-/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/engine,
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -17355,63 +17342,63 @@
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
 	})
-"GB" = (
-/obj/machinery/light/small,
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "meribelt";
-	name = "Meridian disposal belt";
-	operating = 1
-	},
-/turf/simulated/floor/grey,
-/area/station/maintenance/west{
-	name = "Meridian Maintenance"
-	})
 "GC" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "meribelt";
-	name = "Meridian disposal belt";
-	operating = 1
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/door/poddoor/pyro{
-	autoclose = 1;
-	dir = 4;
-	id = "meri_crusher";
-	name = "Meridian Crusher Door"
+/obj/grille/catwalk{
+	dir = 4
 	},
-/turf/simulated/floor/grey,
-/area/station/maintenance/west{
-	name = "Meridian Maintenance"
+/obj/disposalpipe/segment/transport,
+/turf/space,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
 	})
 "GD" = (
-/obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "meribelt";
-	name = "Meridian disposal belt";
-	operating = 1
+/obj/grille/catwalk{
+	dir = 4
 	},
-/turf/simulated/floor/grey,
-/area/station/maintenance/west{
-	name = "Meridian Maintenance"
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable,
+/turf/space,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
 	})
 "GE" = (
 /obj/machinery/light/small,
-/obj/machinery/launcher_loader/east,
-/turf/simulated/floor/grey,
+/obj/machinery/vending/paint/broken,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
 	})
 "GF" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "meri_trash";
-	name = "Meridian Waste Driver"
+/obj/grille/catwalk{
+	dir = 4
 	},
-/turf/simulated/floor/grey,
-/area/station/maintenance/west{
-	name = "Meridian Maintenance"
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/space,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
 	})
 "GG" = (
 /obj/grille/catwalk{
@@ -17490,10 +17477,6 @@
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
 	},
 /obj/machinery/power/furnace,
 /turf/simulated/floor/caution/east,
@@ -17622,6 +17605,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /turf/space,
 /area/station/solar/west{
 	name = "Meridian Solar Array"
@@ -17695,13 +17681,21 @@
 	name = "Demeter Primary Zone"
 	})
 "Hk" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
+/obj/cable,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/turf/space,
-/area/station/solar/west{
-	name = "Meridian Solar Array"
+/obj/grille/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross";
+	layer = 2
+	},
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
 	})
 "Hl" = (
 /obj/machinery/light/small{
@@ -17983,8 +17977,7 @@
 	})
 "HN" = (
 /obj/stool/chair/office{
-	dir = 1;
-	icon_state = "office_chair"
+	dir = 1
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -18009,6 +18002,10 @@
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 5;
+	level = 2
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -18016,6 +18013,9 @@
 	name = "Indigo Rye"
 	})
 "HQ" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -18048,11 +18048,11 @@
 /turf/space,
 /area)
 "HU" = (
-/obj/rack,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/submachine/cargopad/researchoutpost,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
 	icon_state = "engine_caution_south"
@@ -18071,7 +18071,6 @@
 "HW" = (
 /obj/machinery/light{
 	dir = 8;
-	icon_state = "tube1";
 	layer = 9.1;
 	pixel_x = -10
 	},
@@ -18082,7 +18081,6 @@
 "HX" = (
 /obj/machinery/light{
 	dir = 4;
-	icon_state = "tube1";
 	layer = 9.1;
 	pixel_x = 10
 	},
@@ -18170,10 +18168,11 @@
 	},
 /obj/cable{
 	d2 = 8;
-	icon_state = "0-4";
-	pixel_y = 0
+	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west/nopoweralert{
+	req_access = null;
+	req_access_txt = "24";
 	start_charge = 0
 	},
 /turf/simulated/floor/caution/east,
@@ -18368,6 +18367,10 @@
 /obj/grille/catwalk{
 	dir = 5
 	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
@@ -18415,14 +18418,18 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/storage/secure/closet/research/uniform,
 /turf/simulated/floor/purplewhite,
 /area/station/science{
 	name = "Tenebrae Primary Zone"
 	})
 "Iy" = (
-/obj/storage/secure/closet/research/uniform,
 /obj/machinery/light,
-/turf/simulated/floor/purplewhite,
+/obj/machinery/disposal/transport{
+	name = "Erebus transportation unit"
+	},
+/obj/disposalpipe/trunk/north,
+/turf/simulated/floor/delivery/caution,
 /area/station/science{
 	name = "Tenebrae Primary Zone"
 	})
@@ -18432,7 +18439,9 @@
 	pixel_x = 32
 	},
 /obj/disposalpipe/trunk/north,
-/obj/machinery/disposal/transport,
+/obj/machinery/disposal/transport{
+	name = "Meridian transportation unit"
+	},
 /turf/simulated/floor/purplewhite,
 /area/station/science{
 	name = "Tenebrae Primary Zone"
@@ -18488,16 +18497,12 @@
 	})
 "IF" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 4;
-	req_access = null
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/purpleblack{
-	dir = 4;
-	icon_state = "purpleblack"
-	},
+/turf/simulated/floor/caution/westeast,
 /area/research_outpost{
 	name = "Indigo Rye"
 	})
@@ -18523,6 +18528,7 @@
 	name = "Indigo Rye"
 	})
 "II" = (
+/obj/item/cigbutt,
 /turf/simulated/floor/white,
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -18532,11 +18538,16 @@
 /turf/space,
 /area)
 "IK" = (
-/obj/wingrille_spawn/auto/tuff,
-/turf/simulated/floor/plating,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/space,
+/area)
 "IL" = (
 /obj/lattice{
 	dir = 1;
@@ -18553,13 +18564,32 @@
 /turf/simulated/wall/asteroid,
 /area)
 "IO" = (
-/obj/machinery/shuttle/engine/heater{
-	dir = 4;
-	icon_state = "alt_heater-R"
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/grille/catwalk{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross";
+	layer = 2
+	},
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
 	})
 "IP" = (
 /obj/cable{
@@ -19455,8 +19485,7 @@
 	})
 "KS" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 4;
-	req_access = null
+	dir = 4
 	},
 /turf/simulated/floor/caution/westeast,
 /area/research_outpost{
@@ -19513,7 +19542,6 @@
 "KZ" = (
 /obj/machinery/light{
 	dir = 8;
-	icon_state = "tube1";
 	layer = 9.1;
 	pixel_x = -10
 	},
@@ -19530,7 +19558,6 @@
 /obj/machinery/door_control{
 	id = "test_chamber2";
 	name = "Test Chamber Shutter Control";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/item/storage/firstaid/fire,
@@ -19556,6 +19583,11 @@
 	})
 "Ld" = (
 /obj/machinery/vending/cigarette,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
 /turf/simulated/floor/purplewhite,
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -19572,25 +19604,20 @@
 	name = "Indigo Rye"
 	})
 "Lf" = (
-/obj/machinery/door/airlock/pyro/medical/alt{
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/medical/alt,
 /turf/simulated/floor/plating,
 /area/research_outpost{
 	name = "Indigo Rye"
 	})
 "Lg" = (
-/obj/machinery/door/airlock/pyro/medical/alt{
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/medical/alt,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/purpleblack{
-	dir = 1;
-	icon_state = "purpleblack"
+	dir = 1
 	},
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -19615,7 +19642,6 @@
 "Lj" = (
 /obj/machinery/shower{
 	dir = 1;
-	icon_state = "showerhead";
 	pixel_y = 20
 	},
 /turf/simulated/floor/sanitary,
@@ -19656,13 +19682,11 @@
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
-/obj/item/storage/wall{
-	pixel_y = 32
-	},
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/item/storage/wall/random,
 /turf/simulated/floor/black,
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -19693,8 +19717,7 @@
 	})
 "Ls" = (
 /obj/stool/chair/office{
-	dir = 4;
-	icon_state = "office_chair"
+	dir = 4
 	},
 /turf/simulated/floor/purpleblack,
 /area/research_outpost{
@@ -19704,11 +19727,22 @@
 /obj/table/round/auto,
 /obj/item/decoration/ashtray{
 	butts = 5;
-	icon_state = "ashtray";
 	name = "grubby old ashtray"
 	},
-/obj/item/cigpacket,
-/obj/item/matchbook,
+/obj/item/cigpacket{
+	pixel_x = -4;
+	pixel_y = 2;
+	rand_pos = 0
+	},
+/obj/item/matchbook{
+	pixel_x = 3;
+	pixel_y = 6;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = 12;
+	pixel_y = 4
+	},
 /turf/simulated/floor/purpleblack,
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -19739,8 +19773,7 @@
 "Lw" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/purpleblack/corner{
-	dir = 4;
-	icon_state = "purpleblackcorner"
+	dir = 4
 	},
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -19756,8 +19789,7 @@
 	})
 "Ly" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 4;
-	req_access = null
+	dir = 4
 	},
 /turf/simulated/floor/sanitary,
 /area/research_outpost{
@@ -19773,7 +19805,6 @@
 "LA" = (
 /obj/machinery/shower{
 	dir = 4;
-	icon_state = "showerhead";
 	pixel_x = 8;
 	pixel_y = 8
 	},
@@ -19788,8 +19819,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/purpleblack{
-	dir = 4;
-	icon_state = "purpleblack"
+	dir = 4
 	},
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -19809,14 +19839,16 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark{
+	name = "monkeyspawn_horse"
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/research_outpost{
 	name = "Indigo Rye"
 	})
 "LE" = (
 /obj/stool/chair/office{
-	dir = 1;
-	icon_state = "office_chair"
+	dir = 1
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -19827,8 +19859,7 @@
 	})
 "LF" = (
 /obj/stool/chair/office{
-	dir = 1;
-	icon_state = "office_chair"
+	dir = 1
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -19856,12 +19887,10 @@
 	})
 "LI" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 4;
-	req_access = null
+	dir = 4
 	},
 /turf/simulated/floor/blackwhite{
-	dir = 8;
-	icon_state = "darkwhite"
+	dir = 8
 	},
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -19875,6 +19904,12 @@
 "LK" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
+	},
+/obj/item/storage/wall{
+	dir = 8;
+	name = "bath cabinet";
+	pixel_x = 32;
+	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
 	},
 /turf/simulated/floor/sanitary,
 /area/research_outpost{
@@ -19893,8 +19928,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/purpleblack/corner{
-	dir = 8;
-	icon_state = "purpleblackcorner"
+	dir = 8
 	},
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -19904,8 +19938,7 @@
 	anchored = 1
 	},
 /turf/simulated/floor/purpleblack{
-	dir = 1;
-	icon_state = "purpleblack"
+	dir = 1
 	},
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -19913,8 +19946,7 @@
 "LO" = (
 /obj/machinery/light,
 /turf/simulated/floor/purpleblack{
-	dir = 1;
-	icon_state = "purpleblack"
+	dir = 1
 	},
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -19922,8 +19954,7 @@
 "LP" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/purpleblack{
-	dir = 1;
-	icon_state = "purpleblack"
+	dir = 1
 	},
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -19933,16 +19964,14 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/purpleblack{
-	dir = 1;
-	icon_state = "purpleblack"
+	dir = 1
 	},
 /area/research_outpost{
 	name = "Indigo Rye"
 	})
 "LR" = (
 /turf/simulated/floor/purpleblack{
-	dir = 1;
-	icon_state = "purpleblack"
+	dir = 1
 	},
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -19950,8 +19979,7 @@
 "LS" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/purpleblack/corner{
-	dir = 1;
-	icon_state = "purpleblackcorner"
+	dir = 1
 	},
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -19993,10 +20021,6 @@
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
-/obj/item/storage/wall{
-	dir = 8;
-	pixel_x = 32
-	},
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -20005,6 +20029,11 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
+	},
+/obj/item/storage/wall/random{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = 0
 	},
 /turf/simulated/floor/black,
 /area/research_outpost{
@@ -20019,12 +20048,10 @@
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
-	density = 0;
 	desc = "There's a ring of dots blinking on and off intermittently. You're not sure what this represents, but it looks cool.";
 	dir = 1;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "mars_status_comp";
-	layer = 3;
 	name = "mysterious computer";
 	pixel_y = 30
 	},
@@ -20056,6 +20083,7 @@
 	pixel_x = 12
 	},
 /obj/item/device/multitool,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -20111,12 +20139,10 @@
 	})
 "Mg" = (
 /obj/shrub{
-	dir = 2;
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant";
 	level = 1.9
 	},
-/obj/item/item_box/medical_patches/mini_synthflesh,
 /turf/simulated/floor/carpet/purple/fancy/edge/sw,
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -20193,128 +20219,215 @@
 	name = "Indigo Rye"
 	})
 "Mp" = (
-/obj/machinery/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "alt_propulsion"
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
-/turf/space,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	intact = 0
+	},
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
 	})
 "Mq" = (
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/turf/space,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
 	})
 "Mr" = (
-/obj/machinery/shuttle/engine/heater{
-	dir = 4;
-	icon_state = "alt_heater-M"
+/obj/cable,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/grille/catwalk{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross";
+	layer = 2
+	},
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
 	})
 "Ms" = (
-/obj/machinery/shuttle/engine/heater{
-	dir = 4;
-	icon_state = "alt_heater-L"
+/obj/lattice,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10
 	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/disposalpipe/segment/transport,
+/turf/space,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
 	})
 "Mt" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/wingrille_spawn/auto,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/power{
+	name = "Erebus Power Room"
 	})
 "Mu" = (
-/obj/machinery/door/airlock/pyro/classic,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/engine/power{
+	name = "Erebus Power Room"
 	})
 "Mv" = (
-/turf/simulated/floor/plating,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
+/obj/machinery/atmospherics/pipe/simple/junction,
+/turf/space,
+/area)
 "Mw" = (
-/obj/machinery/door/airlock/pyro/classic{
-	dir = 4
+/obj/cable,
+/obj/machinery/power/solar{
+	id = "erebus";
+	name = "Erebus solar panel"
 	},
-/turf/simulated/floor/plating,
-/area/station/wreckage{
-	name = "Calamarain"
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
 	})
 "Mx" = (
-/obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/grey,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
 	})
 "My" = (
-/obj/machinery/door/airlock/pyro/external{
+/obj/lattice,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/space,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
+	})
+"Mz" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power{
+	name = "Erebus Power Room"
+	})
+"MA" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/machinery/the_singularitygen,
+/obj/disposalpipe/segment/transport{
 	dir = 4
 	},
 /turf/simulated/floor/grey,
-/area/station/wreckage{
-	name = "Calamarain"
+/area/station/engine/power{
+	name = "Erebus Power Room"
 	})
-"Mz" = (
-/turf/simulated/floor/grey,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"MA" = (
-/obj/machinery/light/small/warm{
+"MB" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/plating,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"MB" = (
-/obj/machinery/door_control/podbay{
-	id = "calamarain";
-	pixel_y = 24
+/obj/machinery/field_generator,
+/obj/disposalpipe/segment/transport{
+	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
 	})
 "MC" = (
-/turf/simulated/floor/caution/east,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/field_generator,
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
 	})
 "MD" = (
-/turf/simulated/floor/shuttlebay,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/emitter{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
 	})
 "ME" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
-	dir = 4;
-	id = "calamarain"
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
 	},
-/turf/simulated/floor/shuttlebay,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/item/storage/wall/emergency{
+	dir = 8;
+	pixel_x = 32
+	},
+/obj/machinery/emitter{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
 	})
 "MF" = (
-/obj/machinery/door/airlock/pyro/glass,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 1
+	},
+/turf/space,
+/area)
 "MG" = (
-/obj/table/reinforced/bar/auto,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "MH" = (
 /obj/grille/catwalk{
@@ -20340,181 +20453,248 @@
 	name = "Dionysus Solar Array"
 	})
 "MI" = (
-/obj/machinery/light/small/warm{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/machinery/disposal_pipedispenser,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"MJ" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"MK" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 8
-	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"ML" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 4
-	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"MM" = (
-/obj/machinery/light/small/warm{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"MN" = (
-/obj/item/furniture_parts/table,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"MO" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/storage/belt/utility,
-/obj/machinery/light/small/warm,
-/turf/simulated/floor/grey,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"MP" = (
-/obj/decal/cleanable/paper,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"MQ" = (
-/obj/item/storage/wall/random,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"MR" = (
-/obj/machinery/light/small/warm{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"MS" = (
-/obj/machinery/light/small/warm{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"MT" = (
-/obj/machinery/light/small/warm{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"MU" = (
 /obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_east/noaicontrol{
-	start_charge = 0
-	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"MV" = (
-/obj/item/c_tube,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"MW" = (
-/obj/computer3frame{
-	anchored = 1;
-	dir = 4;
-	state = 1
+	d2 = 4;
+	icon_state = "0-4";
+	pixel_y = 0
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/atmosphere/pumpcontrol{
+	dir = 4
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
+	})
+"MJ" = (
+/obj/machinery/power/reactor_stats,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
+	})
+"MK" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/field_generator,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
+	})
+"ML" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater-R"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/power{
+	name = "Erebus Power Room"
+	})
+"MM" = (
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "tox_vent";
+	layer = 8;
+	name = "Chamber Exhaust"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"MN" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"MO" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/obj/machinery/networked/test_apparatus/gas_sensor{
+	setup_tag = "TOXCHMB"
+	},
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
-"MX" = (
-/obj/cable{
-	icon_state = "2-8"
+"MP" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Core Access";
+	req_access = null
 	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"MY" = (
+/obj/access_spawn/engineering_engine,
+/obj/access_spawn/research,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
-"MZ" = (
-/obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+"MQ" = (
+/obj/machinery/atmospherics/binary/passive_gate{
+	on = 1;
+	target_pressure = 1e+031
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
-"Na" = (
-/obj/item/tile/steel,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+"MR" = (
+/obj/machinery/computer3/generic/engine{
+	dir = 4
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
 	})
-"Nb" = (
+"MS" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
-	icon_state = "4-6"
+	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/stool/chair/office{
+	dir = 8;
+	icon_state = "office_chair"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
+	})
+"MT" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
+	})
+"MU" = (
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
+	})
+"MV" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater-M"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/power{
+	name = "Erebus Power Room"
+	})
+"MW" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
+/turf/space,
+/area)
+"MX" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/turf/space,
+/area)
+"MY" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
+/turf/space,
+/area)
+"MZ" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Na" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank/south,
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Nb" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
+/obj/machinery/atmospherics/unary/outlet_injector{
+	dir = 4;
+	icon_state = "on";
+	level = 2;
+	on = 1
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "Nc" = (
-/obj/decal/cleanable/cobweb2,
-/obj/reagent_dispensers/foamtank,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
+	},
+/obj/machinery/sparker{
+	id = "eng_ignition";
+	layer = 7;
+	name = "Mounted Igniter";
+	pixel_x = 24;
+	pixel_y = 8
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "Nd" = (
 /obj/cable,
@@ -20544,369 +20724,547 @@
 	name = "Dionysus Solar Array"
 	})
 "Ne" = (
-/obj/computer3frame{
-	anchored = 1;
-	dir = 4;
-	state = 1
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 10
 	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/wreckage{
-	name = "Calamarain"
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "Nf" = (
-/obj/cable{
-	icon_state = "4-8"
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
 	},
-/obj/cable{
-	icon_state = "1-4"
+/obj/machinery/meter,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = 10
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "Ng" = (
+/obj/machinery/light/small,
+/obj/machinery/power/data_terminal,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 4;
+	icon_state = "0-4";
+	pixel_y = 0
 	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/computer3/terminal/zeta{
+	dir = 4;
+	setup_os_string = "ZETA_MAINFRAME"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
 	})
 "Nh" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1;
+	pixel_y = 0
 	},
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "1-8"
 	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
 	})
 "Ni" = (
-/obj/machinery/door/airlock/pyro/classic{
-	dir = 4
-	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/stairs{
+	dir = 1
+	},
+/area/station/engine/power{
+	name = "Erebus Power Room"
 	})
 "Nj" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "8-9"
-	},
-/turf/simulated/floor/plating,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/storage/crate,
+/obj/item/electronics/frame/collector_control,
+/obj/item/electronics/frame/collector_control,
+/obj/item/electronics/frame/collector_control,
+/obj/item/electronics/frame/collector_array,
+/obj/item/electronics/frame/collector_array,
+/obj/item/electronics/frame/collector_array,
+/obj/item/electronics/frame/collector_array,
+/obj/item/electronics/frame/collector_array,
+/obj/item/electronics/frame/collector_array,
+/obj/item/electronics/soldering,
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
 	})
 "Nk" = (
-/obj/item/crowbar,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/light/small,
+/obj/machinery/emitter{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
 	})
 "Nl" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater-L"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/power{
+	name = "Erebus Power Room"
+	})
+"Nm" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"Nm" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+/obj/machinery/communications_dish{
+	tag = "MAIN_DISH_SS13"
 	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
+/turf/simulated/floor/plating/airless,
+/area)
 "Nn" = (
-/obj/machinery/light/small/warm,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 1
+	},
+/obj/machinery/atmospherics/binary/pump{
+	dir = 8;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Toxin Chamber Outlet";
+	on = 1;
+	target_pressure = 1000
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "No" = (
-/obj/item/tile/steel,
-/obj/machinery/light/small/warm,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 9
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "Np" = (
-/obj/item/storage/box/cablesbox,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 5
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "Nq" = (
-/obj/item/wrench,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "Nr" = (
-/obj/machinery/portable_reclaimer,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	name = "Bicameral Chamber";
+	req_access = null
+	},
+/obj/access_spawn/engineering_engine,
+/obj/access_spawn/research,
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor,
+/area/station/engine/power{
+	name = "Erebus Power Room"
 	})
 "Ns" = (
-/obj/machinery/portable_atmospherics/canister/air/large,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/atmospherics/valve,
+/turf/simulated/floor/darkpurple,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "Nt" = (
-/obj/machinery/light/small/warm,
-/turf/simulated/floor/shuttlebay,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"Nu" = (
-/obj/item/storage/toolbox/electrical,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"Nv" = (
-/obj/item/storage/wall/fire{
-	dir = 4;
-	pixel_x = -32
-	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"Nw" = (
-/obj/machinery/light/small/warm,
-/turf/simulated/floor/plating,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"Nx" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"Ny" = (
-/obj/decal/cleanable/dirt,
-/obj/machinery/light/small/warm,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"Nz" = (
-/obj/item/storage/wall/office,
-/obj/item/chair/folded,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"NA" = (
-/obj/decal/cleanable/cobweb2,
-/turf/simulated/floor/plating,
-/area/station/wreckage{
-	name = "Calamarain"
-	})
-"NB" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/storage/belt/utility,
-/obj/machinery/light/small/warm{
+/obj/machinery/light{
 	dir = 1;
+	icon_state = "tube1";
+	layer = 9.1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/grey,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/atmospherics/valve,
+/turf/simulated/floor/darkpurple,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Nu" = (
+/obj/lattice,
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/space,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Nv" = (
+/obj/lattice,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 6
+	},
+/turf/space,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Nw" = (
+/obj/lattice,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/space,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Nx" = (
+/obj/machinery/power/stats_meter{
+	name = "Hot Loop Combustion Chamber Meter";
+	tag = "Hot Loop Combustion Chamber Meter"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Ny" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	name = "Core Access";
+	req_access = null
+	},
+/obj/access_spawn/engineering_engine,
+/obj/access_spawn/research,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Nz" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 1
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"NA" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"NB" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/caution/west,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "NC" = (
-/obj/decal/cleanable/paper,
-/turf/simulated/floor/plating,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/item/storage/wall/fire{
+	pixel_y = 32
+	},
+/turf/simulated/floor/orange/corner{
+	dir = 4
+	},
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "ND" = (
-/obj/decal/poster/wallsign/stencil/right/a,
-/obj/decal/poster/wallsign/stencil/left/c,
-/turf/simulated/wall/auto/supernorn,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/table/reinforced/auto,
+/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/head/helmet/welding,
+/obj/item/clothing/head/helmet/welding,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "NE" = (
-/obj/decal/poster/wallsign/stencil/right/a,
-/obj/decal/poster/wallsign/stencil/left/l,
-/turf/simulated/wall/auto/supernorn,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/table/reinforced/auto,
+/obj/item/device/transfer_valve,
+/obj/item/device/transfer_valve,
+/obj/item/device/transfer_valve,
+/obj/item/device/transfer_valve,
+/obj/item/device/transfer_valve,
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "NF" = (
-/obj/decal/poster/wallsign/stencil/right/a,
-/obj/decal/poster/wallsign/stencil/left/m,
-/turf/simulated/wall/auto/supernorn,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/table/reinforced/auto,
+/obj/item/device/analyzer/atmospheric,
+/obj/item/device/analyzer/atmospheric,
+/obj/item/device/analyzer/atmospheric,
+/obj/item/device/igniter,
+/obj/item/device/igniter,
+/obj/item/device/igniter,
+/obj/item/device/timer,
+/obj/item/device/timer,
+/obj/item/device/timer,
+/obj/item/device/analyzer/atmosanalyzer_upgrade,
+/obj/item/device/analyzer/atmosanalyzer_upgrade,
+/obj/item/device/analyzer/atmosanalyzer_upgrade,
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "NG" = (
-/obj/decal/poster/wallsign/stencil/right/a{
-	pixel_x = 7
+/obj/table/reinforced/auto,
+/obj/item/extinguisher,
+/obj/item/extinguisher,
+/obj/item/device/prox_sensor{
+	pixel_x = 2;
+	pixel_y = -8
 	},
-/obj/decal/poster/wallsign/stencil/left/r{
-	pixel_x = -6
+/obj/item/device/prox_sensor{
+	pixel_x = 2;
+	pixel_y = -8
 	},
-/obj/decal/poster/wallsign/stencil/right/i{
-	pixel_x = 18
+/obj/item/device/prox_sensor{
+	pixel_x = 2;
+	pixel_y = -8
 	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/item/clothing/glasses/vr{
+	desc = "A pair of VR goggles connected to a virtual bomb test chamber.  How fancy!";
+	network = "bombtest";
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/vr{
+	desc = "A pair of VR goggles connected to a virtual bomb test chamber.  How fancy!";
+	network = "bombtest";
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/turf/simulated/floor/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "NH" = (
-/obj/decal/poster/wallsign/stencil/left/n,
-/turf/simulated/wall/auto/supernorn,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/table/auto,
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/sheet/glass/reinforced{
+	amount = 50
+	},
+/obj/item/storage/toolbox/electrical,
+/obj/item/wrench,
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "NI" = (
-/obj/item/storage/wall/emergency{
-	dir = 8;
-	pixel_x = 32
-	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/turf/simulated/floor/caution/east,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "NJ" = (
-/obj/item/storage/backpack,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/turf/simulated/floor/shuttlebay,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "NK" = (
-/obj/item/storage/wall{
-	pixel_y = 32
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_y = 21
 	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/turf/simulated/floor/shuttlebay,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "NL" = (
-/obj/machinery/space_heater,
-/obj/item/storage/wall/emergency{
-	dir = 8;
-	pixel_x = 32
-	},
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "NM" = (
-/obj/item/furniture_parts/table/round,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "NN" = (
-/obj/machinery/r_door_control/podbay{
-	id = "calamarain"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "NO" = (
-/obj/item/horseshoe,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/decal/tile_edge/line/red,
+/turf/simulated/floor/darkpurple,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "NP" = (
-/obj/item/furniture_parts/table,
-/obj/item/chair/folded,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/atmospherics/binary/passive_gate{
+	on = 1;
+	pixel_y = 1;
+	target_pressure = 1e+031
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "NQ" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/shuttlebay,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "NR" = (
-/obj/item/chair/folded,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 8;
+	level = 2
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "NS" = (
-/obj/item/furniture_parts/stool/bar,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "NT" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/drinks/drinkingglass/oldf,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "NU" = (
-/obj/bedsheetbin,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/wingrille_spawn/auto,
+/obj/machinery/atmospherics/binary/pump{
+	dir = 8;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Cold Loop Gas Supply 1";
+	on = 1;
+	target_pressure = 1000
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "NV" = (
-/obj/item/furniture_parts/bed,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/caution/west,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "NW" = (
-/obj/item/furniture_parts/comfy_chair/blue,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/obj/decal/poster/wallsign/stencil/right/one{
+	layer = 2;
+	pixel_x = 15;
+	pixel_y = 12
+	},
+/turf/simulated/floor/blue/side{
+	dir = 4
+	},
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "NX" = (
-/obj/item/storage/wall{
-	pixel_y = 32
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/toxin{
+	pixel_x = 4
 	},
-/obj/item/furniture_parts/bed,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/item/storage/firstaid/fire{
+	pixel_x = -4
+	},
+/turf/simulated/floor/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "NY" = (
 /obj/grille/steel,
@@ -20931,27 +21289,29 @@
 /turf/simulated/floor/airless/plating,
 /area/listeningpost)
 "Ob" = (
-/obj/item/furniture_parts/rack,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/bot/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "Oc" = (
-/obj/machinery/light/small/warm,
-/obj/item/furniture_parts/bed,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/turf/simulated/floor/bot/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "Od" = (
-/obj/storage/crate,
-/obj/item/furniture_parts/bench/blue,
-/obj/item/furniture_parts/bench/blue,
-/obj/item/furniture_parts/bench/blue,
-/obj/item/furniture_parts/bench/blue,
-/turf/simulated/floor/grime,
-/area/station/wreckage{
-	name = "Calamarain"
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/wrench,
+/obj/item/wrench,
+/obj/item/chem_grenade/firefighting,
+/obj/item/chem_grenade/firefighting,
+/turf/simulated/floor/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "Oe" = (
 /obj/cable{
@@ -21843,17 +22203,18 @@
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "Pf" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
 /obj/cable{
-	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
-/obj/cable{
-	icon_state = "2-4"
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
 	},
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/lounge_port{
-	name = "Maru Crew Quarters"
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "Pg" = (
 /obj/machinery/camera{
@@ -22052,12 +22413,8 @@
 	name = "autoname - SS13";
 	pixel_y = 20
 	},
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/emergency_oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator"
-	},
-/turf/simulated/floor/plating,
+/obj/storage/closet/office,
+/turf/simulated/floor/caution/south,
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
 	})
@@ -22390,6 +22747,10 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/greenblack{
 	dir = 8;
 	icon_state = "greenblack"
@@ -22530,6 +22891,9 @@
 /obj/grille/catwalk{
 	dir = 5
 	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
@@ -22667,24 +23031,15 @@
 	name = "Demeter Primary Zone"
 	})
 "Qg" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "meri_trash";
-	name = "Meridian Waste Driver"
-	},
+/obj/window/auto/reinforced,
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
-	id = "meri_trash";
-	name = "Meridian Waste Door"
+	id = "PTLDOOR";
+	name = "Laser Confinement Door"
 	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/grey,
-/area/station/maintenance/west{
-	name = "Meridian Maintenance"
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "Qh" = (
 /obj/machinery/recharge_station,
@@ -23211,11 +23566,11 @@
 	name = "Tenebrae Solar Array"
 	})
 "QK" = (
-/obj/machinery/door/airlock/pyro/engineering{
+/obj/machinery/shuttle/engine/heater{
 	dir = 4;
-	name = "Auxiliary Component Bay"
+	icon_state = "alt_heater-M"
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/lounge_port{
 	name = "Maru Crew Quarters"
 	})
@@ -23414,6 +23769,12 @@
 /area/station/science/construction{
 	name = "Tenebrae Maintenance"
 	})
+"Ro" = (
+/obj/machinery/dispenser,
+/turf/simulated/floor/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
 "Rp" = (
 /obj/decal/fakeobjects/pipe/heat{
 	dir = 5;
@@ -23430,10 +23791,13 @@
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "Rs" = (
-/obj/machinery/power/smes,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/stool/bed,
+/obj/landmark/start{
+	name = "Engineer"
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/lounge_port{
@@ -23570,45 +23934,693 @@
 	},
 /turf/space,
 /area/ghostdrone_factory)
-"SJ" = (
+"RL" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
-	icon_state = "alt_heater-L"
+	icon_state = "alt_heater-R"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/lounge_port{
-	name = "Maru Crew Quarters"
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
 	})
-"Tc" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Auxiliary Component Bay"
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/maintenance/storage{
-	name = "Maru Power Room"
-	})
-"Tu" = (
-/obj/machinery/shuttle/engine/heater{
-	dir = 4;
-	icon_state = "alt_heater-L"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/storage{
-	name = "Maru Power Room"
-	})
-"TU" = (
+"RR" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
 	icon_state = "alt_propulsion"
 	},
-/obj/lattice{
+/turf/space,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"RU" = (
+/obj/machinery/computer3/terminal/zeta{
 	dir = 4;
-	icon_state = "lattice-dir"
+	setup_os_string = "ZETA_MAINFRAME"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"RV" = (
+/obj/decal/poster/wallsign/stencil/right/two{
+	layer = 2;
+	pixel_x = 17;
+	pixel_y = 12
+	},
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"RX" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/access_spawn/engineering_engine,
+/obj/access_spawn/research,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Sd" = (
+/obj/machinery/shower{
+	dir = 4;
+	icon_state = "showerhead";
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/sanitary/white,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Se" = (
+/obj/machinery/crusher,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "erebusbelt";
+	name = "Erebus disposal belt";
+	operating = 1
+	},
+/turf/simulated/floor/grey,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"Sf" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 6
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Sh" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Si" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater-M"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"Sl" = (
+/obj/machinery/portable_reclaimer,
+/obj/machinery/door_control{
+	id = "erebus_crusher";
+	name = "Erebus Crusher Door";
+	pixel_x = -24
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"So" = (
+/obj/machinery/atmospherics/binary/volume_pump{
+	on = 1;
+	transfer_rate = 1000
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Sq" = (
+/obj/wingrille_spawn/auto,
+/obj/cable{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"St" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/station/crew_quarters/lounge_port{
-	name = "Maru Crew Quarters"
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
+	})
+"Su" = (
+/obj/lattice,
+/turf/space,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
+	})
+"Sv" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 1
+	},
+/turf/space,
+/area)
+"Sw" = (
+/turf/simulated/floor/sanitary/white,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Sy" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"SA" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	id = "erebus_trash";
+	name = "Erebus Waste Driver"
+	},
+/turf/simulated/floor/grey,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"SB" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 10
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power{
+	name = "Erebus Power Room"
+	})
+"SF" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"SH" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"SI" = (
+/obj/wingrille_spawn/auto,
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/artifact)
+"SJ" = (
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"SK" = (
+/obj/grille/catwalk{
+	dir = 2;
+	icon_state = "catwalk_cross"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/machinery/power/tracker{
+	id = "erebus";
+	name = "Erebus solar tracker"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross";
+	layer = 2
+	},
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
+	})
+"SM" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-9"
+	},
+/turf/space,
+/area)
+"SO" = (
+/obj/machinery/atmospherics/binary/circulatorTemp,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"SP" = (
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 16
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"SQ" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"SS" = (
+/obj/machinery/atmospherics/binary/passive_gate{
+	dir = 4;
+	on = 1;
+	pixel_y = 1;
+	target_pressure = 1e+031
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "6-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"ST" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 9
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"SV" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"SX" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"Tc" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater-M"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/storage{
+	name = "Maru Power Room"
+	})
+"Td" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/machinery/atmospherics/binary/volume_pump{
+	dir = 1;
+	on = 1;
+	transfer_rate = 1000
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Te" = (
+/obj/machinery/light,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/empty,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Tf" = (
+/obj/disposaloutlet/east,
+/obj/disposalpipe/trunk/east,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "erebusbelt";
+	name = "Erebus disposal belt";
+	operating = 1
+	},
+/turf/simulated/floor/grey,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"Tg" = (
+/obj/machinery/light/small,
+/obj/machinery/launcher_loader/east,
+/turf/simulated/floor/grey,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"Tj" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/obj/machinery/meter,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Tm" = (
+/obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"Tn" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"To" = (
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "erebusbay";
+	name = "Erebus pod bay door"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"Tp" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/turf/space,
+/area)
+"Tq" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/turf/space,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
+	})
+"Ts" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"Tt" = (
+/obj/disposalpipe/segment/transport{
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/purplewhite/corner{
+	dir = 8
+	},
+/area/station/science{
+	name = "Tenebrae Primary Zone"
+	})
+"Tu" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Tx" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4;
+	level = 2
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Ty" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
+	})
+"Tz" = (
+/obj/table/auto,
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/sheet/glass{
+	amount = 50
+	},
+/obj/item/storage/box/cablesbox,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/item/extinguisher,
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"TC" = (
+/obj/machinery/power/smes{
+	charge = 1e+006;
+	chargelevel = 15000;
+	output = 10000
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"TG" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"TH" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 1;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Hot Loop Gas Supply 1";
+	on = 1;
+	target_pressure = 1000
+	},
+/turf/simulated/floor/engine/caution/south,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"TK" = (
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 1
+	},
+/turf/space,
+/area)
+"TL" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/meter,
+/obj/cable{
+	icon_state = "6-10"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"TS" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/orange/corner{
+	dir = 4
+	},
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"TT" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"TU" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 6
+	},
+/obj/cable{
+	icon_state = "6-8"
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"TX" = (
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"TZ" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Uc" = (
+/obj/wingrille_spawn/auto,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Ud" = (
+/obj/machinery/atmospherics/binary/circulatorTemp/right,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Ug" = (
+/obj/rack,
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/sheet/glass{
+	amount = 50
+	},
+/obj/item/sheet/glass{
+	amount = 50
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/west{
+	name = "Meridian Maintenance"
+	})
+"Uh" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "Uq" = (
 /obj/machinery/light/small{
@@ -23626,9 +24638,233 @@
 /area/station/aviary{
 	name = "Demeter Primary Zone"
 	})
+"Ur" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/obj/machinery/atmospherics/valve,
+/obj/cable{
+	icon_state = "5-9"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
 "Ut" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge/hos)
+"Uu" = (
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/grille/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross";
+	layer = 2
+	},
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
+	})
+"Uv" = (
+/obj/machinery/manufacturer/gas,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Uw" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"UB" = (
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution/west,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"UC" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"UF" = (
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west{
+	name = "Meridian Maintenance"
+	})
+"UG" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 1;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Hot Loop Gas Supply 2";
+	on = 1;
+	target_pressure = 1000
+	},
+/turf/simulated/floor/engine/caution/south,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"UH" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/stairs,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"UI" = (
+/turf/simulated/floor/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"UJ" = (
+/obj/machinery/door/poddoor/pyro{
+	autoclose = 1;
+	dir = 4;
+	id = "erebus_crusher";
+	name = "Erebus Crusher Door"
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "erebusbelt";
+	name = "Erebus disposal belt";
+	operating = 1
+	},
+/turf/simulated/floor/grey,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"UK" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"UN" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"UT" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/space,
+/area/station/solar/west{
+	name = "Meridian Solar Array"
+	})
+"UU" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/binary/volume_pump{
+	on = 1;
+	transfer_rate = 1000
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"UW" = (
+/obj/lattice,
+/obj/machinery/macrofab/emergency_pod,
+/turf/space,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
+	})
+"UX" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9
+	},
+/obj/machinery/meter,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"UY" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Vc" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Vd" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/bot/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
 "Ve" = (
 /obj/machinery/macrofab{
 	createdObject = /obj/item/tank/emergency_oxygen;
@@ -23640,6 +24876,46 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/lounge_starboard{
 	name = "Tenebrae Crew Quarters"
+	})
+"Vf" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4;
+	level = 2
+	},
+/obj/machinery/power/stats_meter{
+	name = "Hot Loop Outlet Meter";
+	tag = "Hot Loop Outlet Meter"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Vh" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/machinery/meter,
+/obj/cable{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Vi" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-10"
+	},
+/turf/simulated/floor/orange/corner{
+	dir = 4
+	},
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "Vj" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
@@ -23656,14 +24932,78 @@
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
 	})
+"Vk" = (
+/obj/disposalpipe/loafer/horizontal,
+/obj/machinery/abcu,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west{
+	name = "Meridian Maintenance"
+	})
 "Vl" = (
-/obj/machinery/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "alt_propulsion"
+/obj/machinery/atmospherics/valve{
+	dir = 4
 	},
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 9
+	},
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Vm" = (
+/obj/disposalpipe/segment/bent/west,
+/obj/machinery/conveyor{
+	id = "erebusbelt";
+	name = "Erebus disposal belt";
+	operating = 1
+	},
+/turf/simulated/floor/grey,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"Vn" = (
+/obj/machinery/atmospherics/binary/passive_gate{
+	dir = 8;
+	on = 1;
+	pixel_y = 1;
+	target_pressure = 1e+031
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Vp" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Vr" = (
+/obj/machinery/light,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"Vt" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/space,
-/area/station/crew_quarters/lounge_port{
-	name = "Maru Crew Quarters"
+/area)
+"Vx" = (
+/obj/machinery/disposal_pipedispenser,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west{
+	name = "Meridian Maintenance"
 	})
 "Vy" = (
 /obj/decal/poster/wallsign/stencil/left/m,
@@ -23674,42 +25014,425 @@
 /area/station/maintenance/storage{
 	name = "Maru Power Room"
 	})
+"Vz" = (
+/obj/machinery/r_door_control/podbay{
+	id = "erebusbay";
+	name = "Erebus pod bay door control"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"VA" = (
+/obj/machinery/atmospherics/portables_connector,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"VB" = (
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/grille/catwalk{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross";
+	layer = 2
+	},
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
+	})
+"VH" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
 "VI" = (
 /obj/machinery/oreaccumulator,
 /turf/simulated/floor/plating/airless,
 /area/station/mining)
+"VJ" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
 "VK" = (
 /obj/disposalpipe/segment/transport,
-/obj/machinery/emitter{
-	dir = 8
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-s"
 	},
-/turf/simulated/floor/shuttlebay,
-/area/station/maintenance/storage{
-	name = "Maru Power Room"
+/turf/space,
+/area)
+"VM" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 "VQ" = (
-/obj/machinery/shuttle/engine/heater{
-	dir = 4;
-	icon_state = "alt_heater-M"
+/obj/machinery/door_control{
+	id = "tox_vent";
+	name = "Chamber Exhaust";
+	pixel_x = -7;
+	pixel_y = 28
 	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/lounge_port{
-	name = "Maru Crew Quarters"
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
+	},
+/obj/machinery/ignition_switch{
+	id = "eng_ignition";
+	name = "Burn Chamber Ignition";
+	pixel_x = 7;
+	pixel_y = 28
+	},
+/obj/cable{
+	icon_state = "6-10"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"VS" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 8;
+	level = 2
+	},
+/obj/machinery/power/stats_meter{
+	name = "Cold Loop Outlet Meter";
+	tag = "Cold Loop Outlet Meter"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-10"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"VX" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/space,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
 	})
 "VZ" = (
-/obj/disposalpipe/segment/transport,
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Auxiliary Component Bay"
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9
 	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Wf" = (
+/obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"Wg" = (
+/obj/machinery/power/solar_control{
+	dir = 8;
+	id = "erebus";
+	name = "HM-17 solar panel control"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/storage{
-	name = "Maru Power Room"
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
 	})
+"Wn" = (
+/obj/grille/catwalk{
+	dir = 10;
+	icon_state = "catwalk_cross"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10;
+	layer = 2
+	},
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
+	})
+"Wp" = (
+/obj/disposalpipe/segment/transport,
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/floor/caution/east,
+/area/station/science{
+	name = "Tenebrae Primary Zone"
+	})
+"Wq" = (
+/obj/machinery/door/airlock/pyro{
+	name = "Vessel Restroom"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Wt" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "6-10"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Wu" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/caution/west,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"Ww" = (
+/obj/machinery/light,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/decal/poster/wallsign/stencil/right/two{
+	layer = 2;
+	pixel_x = 17;
+	pixel_y = 12
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Wx" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/turf/space,
+/area)
+"Wz" = (
+/obj/machinery/atmospherics/valve,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"WA" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"WB" = (
+/obj/machinery/vending/standard,
+/turf/simulated/floor/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"WE" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/machinery/door/airlock/pyro{
+	name = "Vessel Power Room"
+	},
+/turf/simulated/floor,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"WF" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/orange/corner{
+	dir = 4
+	},
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"WH" = (
+/obj/machinery/power/pt_laser,
+/turf/simulated/floor/caution/east,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"WJ" = (
+/obj/machinery/macrofab/emergency_pod{
+	color = "#DDDDDD";
+	createdObject = /obj/machinery/vehicle/miniputt/armed;
+	desc = "A sophisticated machine that fabricates compact transit pods from a nearby reserve of supplies.";
+	dir = 1;
+	fabTime = 150;
+	name = "MiniPutt Fabricator";
+	override_dir = 4
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"WK" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
+/obj/disposalpipe/segment/transport,
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/caution/west,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"WN" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"WO" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"WP" = (
+/obj/machinery/atmospherics/pipe/tank{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"WS" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	name = "Core Access";
+	req_access = null
+	},
+/obj/access_spawn/engineering_engine,
+/obj/access_spawn/research,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"WW" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "5-9"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"WY" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/floor/grey,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"WZ" = (
+/obj/machinery/light/small,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "erebusbelt";
+	name = "Erebus disposal belt";
+	operating = 1
+	},
+/turf/simulated/floor/grey,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"Xa" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/space,
+/area)
 "Xb" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -23726,12 +25449,76 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/mining)
+"Xd" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"Xf" = (
+/obj/item/storage/wall/emergency{
+	dir = 8;
+	pixel_x = 32
+	},
+/obj/disposalpipe/trunk/north,
+/obj/machinery/disposal/transport{
+	name = "Tenebrae transportation unit"
+	},
+/obj/decal/tile_edge/line/purple,
+/turf/simulated/floor/grey,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"Xg" = (
+/obj/machinery/atmospherics/pipe/tank{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Xi" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power{
+	name = "Erebus Power Room"
+	})
+"Xj" = (
+/obj/item/storage/toilet{
+	dir = 4;
+	icon_state = "toilet";
+	tag = ""
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Xk" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/space,
+/area)
 "Xl" = (
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
 /area/station/security/secwing)
+"Xm" = (
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
 "Xn" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/grey,
@@ -23739,33 +25526,106 @@
 	name = "Dionysus Cryocore"
 	})
 "Xp" = (
-/obj/machinery/the_singularitygen,
+/obj/machinery/atmospherics/valve,
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	icon_state = "6-10"
 	},
-/turf/simulated/floor/shuttlebay,
-/area/station/crew_quarters/lounge_port{
-	name = "Maru Crew Quarters"
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
-"Xy" = (
-/obj/machinery/emitter{
+"Xr" = (
+/obj/decal/poster/wallsign/stencil/right/one{
+	layer = 2;
+	pixel_x = 15;
+	pixel_y = 12
+	},
+/obj/machinery/atmospherics/portables_connector{
 	dir = 8
 	},
-/obj/machinery/light/small,
-/turf/simulated/floor/shuttlebay,
-/area/station/maintenance/storage{
-	name = "Maru Power Room"
-	})
-"Xz" = (
-/obj/machinery/shuttle/engine/heater{
-	dir = 4;
-	icon_state = "alt_heater-R"
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
 	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/lounge_port{
-	name = "Maru Crew Quarters"
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"Xs" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 1
+	},
+/turf/space,
+/area)
+"Xu" = (
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/shuttlebay,
+/area/station/science{
+	name = "Tenebrae Primary Zone"
+	})
+"Xx" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
+	})
+"Xy" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "alt_propulsion"
+	},
+/turf/space,
+/area)
+"Xz" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6
+	},
+/obj/machinery/meter,
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"XB" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/turf/simulated/floor/grey,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"XD" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "1-5"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"XE" = (
+/obj/storage/crate,
+/obj/item/device/light/glowstick,
+/obj/item/clothing/under/gimmick/chav,
+/obj/item/clothing/head/chav,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/machinery/light/small,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west{
+	name = "Meridian Maintenance"
 	})
 "XF" = (
 /obj/machinery/r_door_control/podbay{
@@ -23779,21 +25639,274 @@
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
 	})
-"Yc" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
+"XH" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
 	},
-/obj/landmark/start{
-	name = "Engineer"
-	},
+/obj/machinery/meter,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"XI" = (
 /obj/cable{
-	icon_state = "4-8"
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar{
+	id = "erebus";
+	name = "Erebus solar panel"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
+	})
+"XJ" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"XK" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4;
+	level = 2
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"XL" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"XM" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/storage/belt/utility,
+/obj/item/storage/toolbox/mechanical,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
 	},
 /turf/simulated/floor/grey,
-/area/station/crew_quarters/lounge_port{
-	name = "Maru Crew Quarters"
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"XT" = (
+/obj/wingrille_spawn/auto,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/research_director{
+	name = "Tenebrae Command Center"
+	})
+"XX" = (
+/obj/decal/poster/wallsign/stencil/right/e{
+	pixel_x = 13
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"XY" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/space,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
+	})
+"XZ" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/grille/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross";
+	layer = 2
+	},
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
+	})
+"Yb" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/floor/grey,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Yc" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "6-10"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Yf" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Yg" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
+/obj/machinery/light,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Yj" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Yk" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"Yl" = (
+/obj/decal/poster/wallsign/stencil/left/r{
+	pixel_x = -6
+	},
+/obj/decal/poster/wallsign/stencil/right/e{
+	pixel_x = 6
+	},
+/obj/decal/poster/wallsign/stencil/right/b{
+	pixel_x = 18
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Ym" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "5-8"
+	},
+/obj/machinery/vending/medical_public,
+/turf/simulated/floor,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"Yn" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"Yq" = (
+/obj/disposalpipe/trunk/west,
+/obj/machinery/disposal/transport{
+	name = "Maru transportation unit"
+	},
+/obj/decal/tile_edge/line/yellow,
+/turf/simulated/floor/grey,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"Yr" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/atmospherics/binary/pump{
+	dir = 8;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Cold Loop Gas Supply 2";
+	on = 1;
+	target_pressure = 1000
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Yw" = (
+/obj/machinery/light,
+/turf/simulated/floor/shuttlebay,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"Yx" = (
+/obj/machinery/manufacturer/general,
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"YB" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Engine Gas Storage";
+	req_access = null
+	},
+/obj/access_spawn/engineering_engine,
+/obj/access_spawn/research,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "YC" = (
 /obj/decal/poster/wallsign/stencil/left/r{
@@ -23805,6 +25918,434 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/storage{
 	name = "Maru Power Room"
+	})
+"YE" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "1-6"
+	},
+/turf/space,
+/area)
+"YG" = (
+/obj/machinery/drainage,
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"YK" = (
+/obj/decal/tile_edge/line/blue,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/turf/simulated/floor/darkpurple,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"YM" = (
+/obj/machinery/power/stats_meter{
+	name = "Hot Loop Inlet Meter";
+	tag = "Hot Loop Inlet Meter"
+	},
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
+	},
+/obj/cable{
+	icon_state = "5-9"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"YN" = (
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"YO" = (
+/obj/machinery/door_control{
+	id = "PTLDOOR";
+	name = "Transmission Laser Confinement";
+	pixel_x = 24
+	},
+/obj/machinery/vehicle/miniputt/armed,
+/turf/simulated/floor/shuttlebay,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"YP" = (
+/obj/machinery/atmospherics/mixer{
+	dir = 1;
+	frequency = 1225;
+	id_tag = "engine_combust";
+	master_id = "engine_combust_control";
+	name = "Gas Mixer (Combustion Chamber)"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"YQ" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 8;
+	level = 2
+	},
+/obj/machinery/power/stats_meter{
+	name = "Cold Loop Inlet Meter";
+	tag = "Cold Loop Inlet Meter"
+	},
+/obj/cable{
+	icon_state = "5-9"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"YR" = (
+/obj/lattice,
+/turf/space,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"YT" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/grille/catwalk,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
+	})
+"YU" = (
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"YV" = (
+/obj/disposalpipe/segment/transport{
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/orange/corner{
+	dir = 4
+	},
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"YX" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"YY" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/solar/small_backup1{
+	name = "Erebus Solar Array"
+	})
+"YZ" = (
+/obj/rack,
+/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/fire,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/mask/gas/emergency,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution/north,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Zb" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 6
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Zf" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Zg" = (
+/obj/decal/poster/wallsign/stencil/left/u{
+	pixel_x = -2
+	},
+/obj/decal/poster/wallsign/stencil/right/s,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Zi" = (
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"Zj" = (
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 1
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Zl" = (
+/obj/machinery/door_control/podbay{
+	id = "erebusbay";
+	name = "Erebus pod bay door control";
+	pixel_x = -24
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"Zs" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"Zt" = (
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/obj/decal/poster/wallsign/stencil/right/two{
+	layer = 2;
+	pixel_x = 17;
+	pixel_y = 12
+	},
+/turf/simulated/floor/blue/side{
+	dir = 4
+	},
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"Zu" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/transport,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/access_spawn/engineering_engine,
+/obj/access_spawn/research,
+/turf/simulated/floor/grey,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Zx" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Hardware Chamber"
+	},
+/obj/access_spawn/engineering_engine,
+/obj/access_spawn/research,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"Zy" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Zz" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater-L"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"ZA" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/orange/corner{
+	dir = 4
+	},
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"ZC" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power{
+	name = "Erebus Power Room"
+	})
+"ZH" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"ZI" = (
+/obj/machinery/power/generatorTemp,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"ZJ" = (
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 5
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"ZM" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"ZO" = (
+/obj/machinery/networked/storage/bomb_tester{
+	bank_id = "Mixer"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"ZP" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 5
+	},
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 10
+	},
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"ZT" = (
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "erebus_trash";
+	name = "Erebus Waste Door"
+	},
+/turf/simulated/floor/grey,
+/area/station/maintenance/SWmaint{
+	name = "Erebus Maintenance Room"
+	})
+"ZU" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/decal/poster/wallsign/stencil/right/one{
+	layer = 2;
+	pixel_x = 15;
+	pixel_y = 12
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"ZW" = (
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
+"ZX" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
 	})
 
 (1,1,1) = {"
@@ -32603,17 +35144,17 @@ aa
 aa
 aa
 aa
-IK
-IK
-IK
-IK
-IK
-IK
-IK
-IK
-IK
-IK
-IK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -32904,19 +35445,19 @@ aa
 aa
 aa
 aa
-IK
-IK
-Mv
-Nx
-cf
-Mv
-dX
-Mv
-Mv
-Nx
-Mv
-IK
-IK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -33206,19 +35747,19 @@ aa
 aa
 aa
 aa
-IK
-MA
-Mv
-IK
-IK
-IK
-IK
-IK
-IK
-IK
-Mv
-Nw
-IK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -33508,19 +36049,19 @@ aa
 aa
 aa
 aa
-Mt
-Nx
-IK
-IK
-MT
-MW
-Ne
-Nl
-MT
-IK
-IK
-Nx
-Mt
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -33810,19 +36351,19 @@ aa
 aa
 aa
 aa
-Mt
-Mw
-Mt
-Mq
-Mq
-MX
-Nf
-Nm
-Mq
-Mq
-Mt
-Mw
-Mt
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -34112,19 +36653,19 @@ aa
 aa
 aa
 aa
-IK
-Mv
-Mt
-Mq
-Mq
-Mv
-Ng
-Mq
-Nq
-Nr
-Mt
-Mv
-IK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -34413,21 +36954,21 @@ aa
 aa
 aa
 aa
-IK
-IK
-Mv
-Mt
-MM
-MU
-MY
-Nh
-Mv
-NW
-Nn
-Mt
-Mv
-IK
-IK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -34714,23 +37255,23 @@ aa
 aa
 aa
 aa
-IK
-IK
-Nx
-Mv
-Mt
-Mt
-Mt
-Mt
-Ni
-Mt
-Mt
-Mt
-Mt
-Nx
-Mv
-IK
-IK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -35016,23 +37557,23 @@ aa
 aa
 aa
 aa
-IK
-Mv
-Mv
-Mv
-Mv
-Nx
-Mu
-Mq
-Ng
-Mq
-Mu
-Mv
-Mv
-Mv
-Mv
-NC
-IK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -35316,27 +37857,27 @@ aa
 aa
 aa
 aa
-IK
-IK
-Mt
-MA
-Mt
-Mt
-Mt
-Mt
-Mt
-Mq
-Ng
-Nn
-Mt
-Mt
-Mt
-Mt
-Mt
-Nw
-Mt
-IK
-IK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -35617,29 +38158,29 @@ aa
 aa
 aa
 aa
-IK
-IK
-Mq
-Mt
-cf
-Mt
-MI
-NM
-Mq
-IK
-MZ
-Ng
-Mq
-IK
-Mq
-Ob
-Ny
-Mt
-Mv
-Mt
-Mq
-IK
-IK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -35919,29 +38460,29 @@ aa
 aa
 aa
 aa
-IK
-Mq
-Mq
-Mu
-Mv
-Mu
-Mq
-NO
-Mq
-IK
-MM
-Ng
-Mq
-IK
-Mq
-Nu
-Mq
-Mu
-Mv
-Mu
-Mq
-Mq
-IK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -36221,29 +38762,29 @@ aa
 aa
 aa
 aa
-IK
-Mq
-Nn
-Mt
-Mv
-Mt
-Mq
-MP
-NR
-IK
-Mq
-Ng
-Mq
-IK
-Mq
-Mq
-Mq
-Mt
-Mv
-Mt
-MM
-Mq
-IK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -36523,29 +39064,29 @@ aa
 aa
 aa
 aa
-IK
-Mq
-Mq
-Mt
-Mv
-Mt
-MN
-Mq
-Mq
-MF
-Na
-Ng
-Mq
-MF
-Mq
-Mq
-NR
-Mt
-Mv
-Mt
-Mq
-Mq
-IK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -36825,29 +39366,29 @@ aa
 aa
 aa
 aa
-IO
-Mr
-Ms
-Mt
-Mv
-Mt
-Nz
-NJ
-Mq
-IK
-Nb
-Ng
-No
-IK
-MP
-Mq
-Od
-Mt
-Mv
-Mt
-IO
-Mr
-Ms
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -37127,29 +39668,29 @@ aa
 aa
 aa
 aa
-Mp
-Mp
-Mp
-Mt
-Mv
-Mt
-ji
-NP
-Mq
-IK
-Mv
-Nj
-Mq
-IK
-Mq
-NR
-Nn
-Mt
-Mv
-Mt
-Mp
-Mp
-Mp
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -37432,23 +39973,23 @@ aa
 aa
 aa
 aa
-Mt
-Mw
-Mt
-Mt
-Mt
-Mt
-Mt
-MM
-Mq
-Np
-Mt
-Mt
-Mt
-Mt
-Mt
-dY
-Mt
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -37734,23 +40275,23 @@ aa
 aa
 aa
 aa
-Mt
-Mv
-Mt
-MQ
-Nv
-Mq
-IK
-Mq
-Nk
-Mq
-Mt
-NX
-Mt
-NK
-Mt
-Mv
-ND
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -38036,23 +40577,23 @@ aa
 aa
 aa
 aa
-Mt
-Mv
-Mt
-MM
-Mq
-Mq
-MF
-Mq
-Mq
-Nn
-Mt
-MK
-Mt
-MK
-Mt
-Mv
-NE
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -38338,23 +40879,23 @@ aa
 aa
 aa
 aa
-Mt
-Nx
-Mt
-Nc
-NI
-Mq
-IK
-NU
-Na
-Mq
-MF
-Mq
-NV
-Nn
-Mt
-Nx
-NF
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -38640,23 +41181,23 @@ aa
 aa
 aa
 aa
-Mt
-Mv
-Mt
-Mt
-Mt
-Mt
-Mt
-Mt
-Mq
-NV
-Mt
-ML
-Mt
-ML
-Mt
-Mv
-NG
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -38942,23 +41483,23 @@ aa
 aa
 aa
 aa
-Mt
-Mv
-Mv
-Mt
-Mq
-Mq
-NS
-IK
-MM
-Mq
-Mt
-NK
-Mt
-NK
-Mt
-Mv
-NH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -39244,23 +41785,23 @@ aa
 aa
 aa
 aa
-Mt
-Mv
-Mv
-Mt
-MM
-Mq
-MV
-MF
-Mq
-Mq
-Mt
-Mt
-Mt
-Mt
-Mt
-Mv
-Mt
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -39546,23 +42087,23 @@ aa
 aa
 aa
 aa
-Mt
-cq
-Mv
-Mt
-MQ
-Mq
-Mq
-IK
-Mq
-Mq
-Mq
-Mq
-Oc
-Mt
-Nx
-Nw
-Mt
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -39848,23 +42389,23 @@ aa
 aa
 aa
 aa
-Mt
-Mt
-Mv
-Mu
-Mq
-NS
-Mq
-NT
-Mq
-Mq
-Mq
-Mq
-Mq
-Mu
-Mv
-Mt
-Mt
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -40151,21 +42692,21 @@ aa
 aa
 aa
 aa
-Mt
-Mv
-Mt
-NQ
-MR
-NS
-MG
-Mq
-Mq
-Mq
-Mq
-NL
-Mt
-Mv
-Mt
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -40453,21 +42994,21 @@ aa
 aa
 aa
 aa
-Mt
-Mv
-Mt
-Mt
-Mt
-Mt
-Mt
-IK
-IK
-MJ
-IK
-Mt
-Mt
-Mv
-Mt
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -40755,21 +43296,21 @@ aa
 aa
 aa
 aa
-Mt
-Mv
-Nx
-Mt
-MB
-Mq
-MT
-Mq
-Mq
-Mq
-Ns
-Mt
-Mv
-Mv
-Mt
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -41057,21 +43598,21 @@ aa
 aa
 aa
 aa
-Mt
-Mv
-Mv
-Mu
-ct
-MC
-MC
-MC
-MC
-MC
-MC
-Mt
-NA
-Mv
-Mt
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -41359,21 +43900,21 @@ aa
 aa
 aa
 aa
-Mt
-My
-Mt
-Mt
-MS
-MD
-MD
-MD
-MD
-MD
-Nt
-Mt
-Mt
-My
-Mt
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -41661,21 +44202,21 @@ aa
 aa
 aa
 aa
-Mx
-Mz
-MO
-Mt
-MD
-MD
-MD
-MD
-MD
-MD
-MD
-Mt
-NB
-Mz
-Mx
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -41963,21 +44504,21 @@ aa
 aa
 aa
 aa
-IO
-Mr
-Ms
-Mt
-ME
-ME
-ME
-ME
-ME
-ME
-ME
-NN
-IO
-Mr
-Ms
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -42265,9 +44806,6 @@ aa
 aa
 aa
 aa
-Mp
-Mp
-Mp
 aa
 aa
 aa
@@ -42277,9 +44815,12 @@ aa
 aa
 aa
 aa
-Mp
-Mp
-Mp
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -44974,7 +47515,7 @@ aa
 aa
 aa
 aa
-qv
+aa
 aa
 aa
 aa
@@ -54845,7 +57386,7 @@ aa
 aa
 cN
 cN
-cN
+XT
 cN
 cN
 aa
@@ -58142,7 +60683,7 @@ aa
 aa
 aa
 aX
-fw
+Nm
 aT
 aa
 aa
@@ -62095,7 +64636,7 @@ dA
 dV
 et
 cZ
-fa
+Tt
 Iy
 ge
 fT
@@ -62695,7 +65236,7 @@ aa
 aa
 cK
 cZ
-cZ
+SI
 cZ
 cZ
 cK
@@ -63104,6 +65645,7 @@ aa
 aa
 aa
 aa
+ab
 aa
 aa
 aa
@@ -63111,8 +65653,7 @@ aa
 aa
 aa
 aa
-aa
-aa
+db
 db
 db
 db
@@ -63299,7 +65840,7 @@ hf
 hf
 eG
 eH
-eH
+Wp
 eH
 eH
 eH
@@ -63415,7 +65956,7 @@ db
 db
 db
 db
-db
+iJ
 iJ
 iJ
 iJ
@@ -63588,19 +66129,19 @@ FX
 Aq
 Gz
 Ac
-Ae
-Hk
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-cM
-dg
+UT
+er
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+eG
+Xu
 dD
 dg
 eI
@@ -63718,7 +66259,7 @@ db
 db
 db
 iJ
-iJ
+ct
 GO
 Ie
 KW
@@ -64012,7 +66553,7 @@ aa
 aa
 aa
 aa
-ab
+aa
 aa
 aa
 qt
@@ -64189,7 +66730,7 @@ cp
 AW
 Fy
 FY
-dS
+Vx
 GA
 GA
 Hb
@@ -64491,8 +67032,8 @@ cm
 AW
 Fz
 dI
-dZ
-GB
+dI
+GE
 GA
 Hb
 Aw
@@ -64631,7 +67172,7 @@ HM
 HM
 Lo
 HM
-Lo
+dX
 LL
 db
 db
@@ -64793,8 +67334,8 @@ Pk
 AW
 FA
 dO
-Gi
-GC
+dI
+Ug
 GA
 Hb
 Aw
@@ -64924,7 +67465,7 @@ fJ
 fN
 fR
 rz
-rm
+cf
 zS
 Cj
 HN
@@ -65095,8 +67636,8 @@ EM
 cx
 cD
 dP
-Gi
-GD
+dI
+Vk
 Gi
 Hb
 Aw
@@ -65126,7 +67667,7 @@ aa
 aa
 aa
 aa
-gf
+aa
 gf
 aa
 aa
@@ -65398,7 +67939,7 @@ AW
 Pu
 FZ
 Gj
-GE
+XE
 Gi
 Hb
 Aw
@@ -65427,8 +67968,8 @@ aa
 aa
 aa
 aa
-gf
-gf
+aa
+aa
 aa
 aa
 aa
@@ -65528,7 +68069,7 @@ fJ
 fN
 qH
 rA
-rA
+cq
 zZ
 CG
 HP
@@ -65700,7 +68241,7 @@ AW
 FC
 Ga
 Gk
-GF
+UF
 GA
 PV
 Aw
@@ -65728,8 +68269,8 @@ aa
 aa
 aa
 aa
-gf
-gf
+aa
+aa
 aa
 aa
 aa
@@ -66002,9 +68543,9 @@ Aq
 FD
 Gb
 Gl
-Qg
 GA
-aa
+GA
+Xa
 aa
 Hs
 Hs
@@ -66029,8 +68570,8 @@ aa
 aa
 aa
 aa
-gf
-gf
+aa
+aa
 aa
 aa
 aa
@@ -66135,7 +68676,7 @@ yM
 zk
 Ad
 Cj
-HO
+dS
 KR
 Ld
 HM
@@ -66306,7 +68847,7 @@ FE
 FE
 aa
 aa
-aa
+Xa
 aa
 Hs
 Hs
@@ -66329,9 +68870,9 @@ aa
 aa
 aa
 aa
-gf
-gf
-gf
+aa
+aa
+aa
 aa
 aa
 aa
@@ -66433,7 +68974,7 @@ iH
 gp
 qA
 qK
-rm
+bl
 zv
 iJ
 iJ
@@ -66608,7 +69149,7 @@ aa
 aa
 aa
 aa
-aa
+Xa
 aa
 aa
 Hs
@@ -66631,7 +69172,7 @@ aa
 aa
 aa
 aa
-gf
+aa
 aa
 aa
 aa
@@ -66844,7 +69385,7 @@ gR
 aO
 bf
 eF
-Pf
+eF
 hE
 nV
 hj
@@ -66910,7 +69451,7 @@ aa
 aa
 aa
 aa
-aa
+Xa
 aa
 aa
 Hs
@@ -66932,8 +69473,8 @@ aa
 aa
 aa
 aa
-gf
-gf
+aa
+aa
 aa
 aa
 aa
@@ -67146,7 +69687,7 @@ gV
 aP
 aP
 aS
-Yc
+bi
 hF
 hH
 hH
@@ -67212,7 +69753,7 @@ aa
 aa
 aa
 aa
-aa
+Xa
 aa
 aa
 Hs
@@ -67233,8 +69774,8 @@ aa
 aa
 aa
 aa
-gf
-gf
+aa
+aa
 aa
 aa
 aa
@@ -67514,7 +70055,7 @@ aa
 aa
 aa
 aa
-aa
+Xa
 aa
 Ht
 Hs
@@ -67534,8 +70075,8 @@ aa
 aa
 aa
 aa
-gf
-gf
+aa
+aa
 aa
 aa
 aa
@@ -67816,7 +70357,7 @@ aa
 aa
 aa
 aa
-aa
+Xa
 aa
 aa
 Hs
@@ -67836,7 +70377,7 @@ aa
 aa
 aa
 aa
-gf
+aa
 aa
 aa
 aa
@@ -68050,7 +70591,7 @@ aa
 aa
 gI
 gI
-gI
+dY
 QK
 hu
 hG
@@ -68062,9 +70603,9 @@ kk
 kN
 ll
 lS
-nD
+gX
 Tc
-lS
+gZ
 sS
 lS
 aG
@@ -68118,7 +70659,7 @@ aa
 aa
 aa
 aa
-aa
+Xa
 aa
 aa
 Hs
@@ -68137,8 +70678,8 @@ aa
 aa
 aa
 aa
-gf
-gf
+aa
+aa
 aa
 aa
 aa
@@ -68352,9 +70893,9 @@ aa
 aa
 gO
 aa
-gI
-hg
-ET
+dZ
+Xy
+Xy
 hG
 ic
 iB
@@ -68363,10 +70904,10 @@ jI
 hH
 kM
 hc
-lS
+lU
 mE
 Xy
-lS
+ji
 aa
 gO
 aH
@@ -68420,7 +70961,7 @@ aa
 aa
 aa
 aa
-aa
+Xa
 aa
 aa
 Hs
@@ -68438,8 +70979,8 @@ aa
 aa
 aa
 aa
-gf
-gf
+aa
+aa
 aa
 aa
 aa
@@ -68653,10 +71194,10 @@ aa
 aa
 aa
 gO
-eC
-bl
-mD
-Xp
+aa
+gO
+aa
+aa
 hG
 id
 iB
@@ -68667,8 +71208,8 @@ kO
 lm
 lU
 VK
-VK
-VZ
+hf
+nI
 hf
 nI
 hf
@@ -68722,25 +71263,25 @@ aa
 aa
 aa
 aa
+Xa
+aa
+aa
+Hs
+Hs
+Hs
+Hs
+Hs
+Hs
+Hs
+Hs
+Hs
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
 aa
 aa
-aa
-gf
-gf
 aa
 aa
 aa
@@ -68954,11 +71495,11 @@ aa
 aa
 aa
 aa
-bk
+gO
 aa
-gV
-nf
-nf
+gO
+aa
+aa
 hG
 hH
 iC
@@ -68968,9 +71509,9 @@ hF
 kP
 hF
 hG
-mE
-mE
-nD
+pO
+aa
+gO
 aa
 gO
 aa
@@ -69024,24 +71565,24 @@ aa
 aa
 aa
 aa
+Xa
+aa
+aa
+Hs
+Hs
+Hs
+Hs
+Hs
+Hs
+Hs
+Hs
+Hs
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
 aa
-aa
-aa
-gf
 aa
 aa
 aa
@@ -69258,9 +71799,9 @@ aa
 aa
 gO
 aa
-gI
-nG
-nf
+gO
+aa
+aa
 hG
 ie
 iD
@@ -69270,9 +71811,9 @@ km
 iD
 ln
 hG
-mE
-Xy
-lS
+pO
+aa
+gO
 aa
 gO
 aa
@@ -69326,24 +71867,24 @@ aa
 aa
 aa
 aa
+Xa
+aa
+aa
+Hs
+Hs
+Hs
+Hs
+Hs
+Hs
+Hs
+Hs
+Hs
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
 aa
-aa
-aa
-gf
 aa
 aa
 aa
@@ -69560,10 +72101,10 @@ aa
 aa
 gO
 aa
-Xz
-VQ
-SJ
-hG
+gO
+aa
+aa
+hH
 gU
 iE
 iE
@@ -69571,10 +72112,10 @@ iE
 iE
 iE
 iE
-hG
-gX
-nH
-Tu
+hH
+pO
+aa
+gO
 aa
 gO
 aa
@@ -69628,7 +72169,7 @@ aa
 aa
 aa
 aa
-aa
+Xa
 aa
 aa
 aa
@@ -69644,8 +72185,8 @@ aa
 aa
 aa
 aa
-gf
-gf
+aa
+aa
 aa
 aa
 aa
@@ -69862,9 +72403,9 @@ aa
 aa
 gO
 aa
-TU
-Vl
-Vl
+gO
+aa
+aa
 hH
 if
 iF
@@ -69874,9 +72415,9 @@ if
 if
 lo
 hH
-sL
-sL
-gZ
+pO
+aa
+gO
 aa
 gO
 aa
@@ -69930,7 +72471,7 @@ aa
 aa
 aa
 aa
-aa
+Xa
 aa
 aa
 aa
@@ -69945,8 +72486,8 @@ aa
 aa
 aa
 aa
-gf
-gf
+aa
+aa
 aa
 aa
 aa
@@ -70167,7 +72708,7 @@ aa
 gO
 aa
 aa
-hH
+hG
 ig
 if
 if
@@ -70175,8 +72716,8 @@ if
 if
 if
 lp
-hH
-aa
+hG
+pO
 aa
 gO
 aa
@@ -70232,7 +72773,7 @@ aa
 aa
 aa
 aa
-aa
+Xa
 aa
 aa
 aa
@@ -70247,7 +72788,7 @@ aa
 aa
 aa
 aa
-gf
+aa
 aa
 aa
 aa
@@ -70478,7 +73019,7 @@ lK
 lK
 lK
 hG
-aa
+pO
 aa
 gO
 aa
@@ -70534,7 +73075,7 @@ aa
 aa
 aa
 aa
-aa
+Xa
 aa
 aa
 aa
@@ -70549,7 +73090,7 @@ aa
 aa
 aa
 aa
-gf
+aa
 aa
 aa
 aa
@@ -70780,7 +73321,7 @@ aa
 kK
 aa
 gO
-aa
+pO
 aa
 gO
 aa
@@ -70836,7 +73377,7 @@ aa
 aa
 aa
 aa
-aa
+Xa
 aa
 aa
 aa
@@ -70850,8 +73391,8 @@ aa
 aa
 aa
 aa
-gf
-gf
+aa
+aa
 aa
 aa
 aa
@@ -71082,7 +73623,7 @@ hl
 kK
 aa
 gO
-aa
+pO
 aa
 gO
 aa
@@ -71138,6 +73679,7 @@ aa
 aa
 aa
 aa
+Xa
 aa
 aa
 aa
@@ -71151,8 +73693,7 @@ aa
 aa
 aa
 aa
-gf
-gf
+aa
 aa
 aa
 aa
@@ -71384,7 +73925,7 @@ kn
 kK
 ii
 lV
-aa
+pO
 aa
 gO
 aa
@@ -71431,6 +73972,16 @@ aa
 aa
 aa
 aa
+MW
+MF
+MF
+MF
+MF
+MF
+Tp
+aa
+aa
+Xa
 aa
 aa
 aa
@@ -71444,16 +73995,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-gf
-gf
 aa
 aa
 aa
@@ -71686,7 +74227,7 @@ ko
 kK
 aa
 gO
-aa
+pO
 aa
 gO
 aa
@@ -71718,12 +74259,9 @@ yb
 yD
 Ow
 yO
-aa
-aa
-pO
-aa
-aa
-aa
+aH
+Xk
+YE
 aa
 aa
 aa
@@ -71735,6 +74273,17 @@ aa
 aa
 aa
 aa
+MW
+MY
+Yf
+Yf
+Yf
+Yf
+Yf
+Wx
+Tp
+aa
+Xa
 aa
 aa
 aa
@@ -71747,14 +74296,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-gf
-gf
-gf
-gf
 aa
 aa
 aa
@@ -71988,10 +74529,10 @@ VI
 kK
 aa
 gO
-aa
-aa
-gO
-aX
+pP
+hf
+nI
+mD
 oo
 aa
 aa
@@ -72021,8 +74562,9 @@ xA
 aa
 aa
 aa
-aa
+Ii
 pO
+Ib
 aa
 aa
 aa
@@ -72033,6 +74575,17 @@ aa
 aa
 aa
 aa
+MX
+Yf
+Yf
+NL
+WA
+WA
+Yf
+Yf
+MX
+aa
+Xa
 aa
 aa
 aa
@@ -72042,18 +74595,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-gf
-gf
 aa
 aa
 aa
@@ -72293,7 +74834,7 @@ gv
 gv
 gv
 mB
-oo
+nf
 aa
 aa
 aa
@@ -72326,6 +74867,7 @@ hf
 hf
 zQ
 aa
+Ib
 aa
 aa
 aa
@@ -72335,6 +74877,17 @@ aa
 aa
 aa
 aa
+MX
+Yf
+NL
+NL
+NL
+WA
+WA
+Yf
+MX
+aa
+Xa
 aa
 aa
 aa
@@ -72343,18 +74896,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-gf
-gf
 aa
 aa
 aa
@@ -72464,7 +75005,7 @@ aa
 IN
 IN
 KP
-KP
+bk
 IN
 IN
 aa
@@ -72595,7 +75136,7 @@ hi
 hi
 hi
 od
-aa
+pO
 aa
 aa
 aa
@@ -72629,6 +75170,8 @@ aa
 aa
 aa
 aa
+SM
+aM
 aa
 aa
 aa
@@ -72636,6 +75179,17 @@ aa
 aa
 aa
 aa
+MX
+Yf
+NM
+SJ
+VA
+Wz
+Te
+Yf
+MX
+aa
+Xa
 aa
 aa
 aa
@@ -72643,19 +75197,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-gf
-gf
 aa
 aa
 aa
@@ -72897,7 +75438,7 @@ hi
 hi
 hi
 od
-aa
+pO
 aa
 aa
 aa
@@ -72933,30 +75474,30 @@ aa
 aa
 aa
 aa
+Ib
+aa
+aa
+MW
+Vt
+Tp
+MW
+MY
+Yf
+NN
+SJ
+Xm
+Xm
+Uv
+Yf
+Wx
+Tp
+Xa
 aa
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-gf
-gf
 aa
 aa
 aa
@@ -73199,7 +75740,7 @@ hi
 hi
 hi
 od
-aa
+pO
 aa
 aa
 aa
@@ -73236,28 +75777,28 @@ aa
 aa
 aa
 aa
+Ib
+aa
+MX
+aa
+Wx
+Sv
+ZJ
+Yf
+Yf
+Yf
+Yf
+YB
+Yf
+Yf
+Yf
+MX
+Xa
 aa
 aa
+SK
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-gf
-gf
-gf
 aa
 aa
 aa
@@ -73501,7 +76042,7 @@ hi
 hi
 hi
 od
-aa
+pO
 aa
 aa
 aa
@@ -73539,25 +76080,25 @@ aa
 aa
 aa
 aa
+Am
+Wx
+Vt
+Vt
+Sv
+Tx
+Ns
+YK
+Tu
+WP
+Zb
+TH
+ZU
+UN
+MX
+Xa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-gf
-gf
+XY
 aa
 aa
 aa
@@ -73803,7 +76344,7 @@ hi
 hi
 hi
 od
-aa
+pO
 aa
 aa
 aa
@@ -73841,25 +76382,25 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-gf
-gf
-aa
+IK
+Mv
+MF
+MF
+MY
+Sf
+Nt
+NO
+TU
+Td
+XK
+UG
+Ww
+UN
+Wx
+Xs
+MF
+TK
+Tq
 aa
 aa
 aa
@@ -74105,7 +76646,7 @@ hi
 hi
 hi
 od
-aa
+pO
 aa
 aa
 aa
@@ -74142,27 +76683,27 @@ aa
 aa
 aa
 aa
+XI
+IO
+Mw
 aa
 aa
 aa
+XH
+Yf
+Yf
+Vl
+WW
+Zb
+ZP
+VH
+UN
+pQ
+zQ
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-gf
-gf
-aa
-aa
-aa
+XI
+Uu
+Mw
 aa
 aa
 aa
@@ -74407,7 +76948,7 @@ hi
 hi
 hi
 od
-aa
+pO
 aa
 aa
 aa
@@ -74444,27 +76985,27 @@ aa
 aa
 aa
 aa
+XI
+Mp
+Mw
+Yf
+MM
+MM
+Vc
+YR
+Yf
+VQ
+Vp
+VZ
+Vn
+Zf
+Yf
+Uh
+Yf
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-gf
-gf
-aa
-aa
-aa
-aa
+XI
+Mp
+Mw
 aa
 aa
 aa
@@ -74709,6 +77250,7 @@ hi
 hi
 hi
 od
+pO
 aa
 aa
 aa
@@ -74745,28 +77287,27 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-gf
-gf
-gf
-aa
-aa
-aa
-aa
-aa
+XI
+Mp
+Mw
+Yf
+MN
+MZ
+Nn
+Nu
+Nz
+VZ
+YM
+SO
+Vf
+UX
+Yf
+Xj
+Yf
+Yf
+XI
+Mp
+Mw
 aa
 aa
 aa
@@ -75011,6 +77552,7 @@ hi
 hi
 hi
 od
+pO
 aa
 aa
 aa
@@ -75047,28 +77589,27 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-gf
-gf
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+XI
+Mp
+Mw
+Tn
+MO
+Na
+No
+Nv
+NP
+Xp
+TX
+ZI
+SV
+XD
+Wq
+YG
+Sw
+XX
+XI
+Mp
+Mw
 aa
 aa
 aa
@@ -75313,6 +77854,7 @@ hi
 hi
 hi
 od
+pO
 aa
 aa
 aa
@@ -75349,28 +77891,27 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-gf
-gf
-gf
-gf
-gf
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+XI
+Mp
+Mw
+Tn
+Sy
+Nb
+Tn
+Nw
+NQ
+Xz
+YQ
+Ud
+VS
+Tj
+Yf
+SP
+Sd
+Yl
+XI
+Mp
+Mw
 aa
 aa
 aa
@@ -75615,6 +78156,7 @@ hi
 hi
 hi
 od
+pO
 aa
 aa
 aa
@@ -75650,30 +78192,29 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-gf
-gf
-gf
-gf
-gf
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Ty
+Su
+Mq
+Su
+WS
+UY
+Nc
+Zj
+Nx
+NQ
+Yc
+Zy
+XJ
+SS
+Yg
+Yf
+Uw
+WO
+Zg
+Su
+Mq
+Su
+St
 aa
 aa
 aa
@@ -75917,6 +78458,7 @@ hi
 hi
 hi
 od
+pO
 aa
 aa
 aa
@@ -75952,30 +78494,29 @@ aa
 aa
 aa
 aa
-aa
-aa
-gf
-gf
-gf
-gf
-gf
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Xx
+sL
+Mr
+Mx
+Yf
+MP
+Ne
+Np
+Yf
+Yf
+Xg
+TG
+TC
+ZH
+Ur
+Zu
+WY
+UU
+Yb
+YT
+VB
+Wn
+YY
 aa
 aa
 aa
@@ -76219,65 +78760,65 @@ hi
 hi
 hi
 od
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-gf
-gf
-gf
-gf
-gf
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+pP
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+hf
+nG
+GC
+Ms
+My
+MG
+MQ
+Nf
+Nq
+Ny
+NR
+So
+ST
+TZ
+Wt
+Yj
+UN
+XB
+XM
+Yf
+UW
+Su
+XY
+YY
 aa
 aa
 aa
@@ -76552,34 +79093,34 @@ aa
 aa
 aa
 aa
-gf
-gf
-gf
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+XI
+GD
+Su
+Mz
+Xi
+ZC
+Xi
+SB
+Nz
+NS
+TL
+YP
+WN
+RX
+Sq
+Yk
+UK
+UK
+Yk
+Yk
+Su
+VX
+Mw
 aa
 aa
 aa
@@ -76851,10 +79392,6 @@ aa
 aa
 aa
 aa
-gf
-gf
-gf
-gf
 aa
 aa
 aa
@@ -76863,25 +79400,29 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+XI
+GD
+Xi
+Mz
+MI
+MR
+Ng
+Xi
+NA
+NT
+Tj
+Vh
+SF
+Sh
+YZ
+Yk
+Yx
+Sl
+Tf
+Yk
+Yk
+VX
+Mw
 aa
 aa
 aa
@@ -77152,8 +79693,6 @@ aa
 aa
 aa
 aa
-gf
-gf
 aa
 aa
 aa
@@ -77163,27 +79702,29 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+XI
+GD
+Xi
+MA
+MJ
+MS
+Nh
+Xi
+UN
+NU
+Yr
+SF
+SF
+RX
+Uc
+Yk
+Tz
+Zi
+Vm
+WZ
+Yk
+VX
+Mw
 aa
 aa
 aa
@@ -77453,8 +79994,6 @@ aa
 aa
 aa
 aa
-gf
-gf
 aa
 aa
 aa
@@ -77465,27 +80004,29 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+XI
+GF
+Mt
+MB
+MK
+MT
+Ni
+Nr
+NB
+NV
+NV
+WK
+NV
+Wu
+UB
+UK
+TT
+ZM
+UC
+UJ
+Yk
+VX
+Mw
 aa
 aa
 aa
@@ -77753,9 +80294,6 @@ aa
 aa
 aa
 aa
-gf
-gf
-gf
 aa
 aa
 aa
@@ -77768,26 +80306,29 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+XI
+GD
+Mu
+MC
+MC
+MU
+Nj
+Xi
+NC
+NW
+Zt
+Xr
+RV
+TS
+Ts
+WE
+UH
+Yn
+UC
+Se
+UC
+VX
+Mw
 aa
 aa
 aa
@@ -78053,9 +80594,6 @@ aa
 aa
 aa
 aa
-gf
-gf
-gf
 aa
 aa
 aa
@@ -78070,26 +80608,29 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+XI
+GD
+Mu
+MD
+MD
+MD
+Nk
+Xi
+XL
+XL
+XL
+XL
+XL
+WF
+VJ
+UK
+SX
+Xd
+YU
+Tg
+UC
+VX
+Mw
 aa
 aa
 aa
@@ -78352,10 +80893,6 @@ aa
 aa
 aa
 aa
-gf
-gf
-gf
-gf
 aa
 aa
 aa
@@ -78373,25 +80910,29 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+XI
+Hk
+Xi
+ME
+MD
+MD
+MD
+Xi
+ND
+NX
+ZO
+RU
+XL
+WF
+Vr
+UK
+YN
+Wg
+Wf
+SA
+Yk
+XZ
+Mw
 aa
 aa
 aa
@@ -78649,12 +81190,6 @@ aa
 aa
 aa
 aa
-gf
-gf
-gf
-gf
-gf
-gf
 aa
 aa
 aa
@@ -78679,19 +81214,25 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Xi
+Xi
+ML
+MV
+Nl
+Xi
+NE
+Ob
+Vd
+YX
+Zx
+ZA
+Ym
+Yk
+RL
+Si
+Zz
+ZT
+Yk
 aa
 aa
 aa
@@ -78950,8 +81491,6 @@ gf
 gf
 gf
 gf
-gf
-gf
 aa
 aa
 aa
@@ -78979,19 +81518,21 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Xy
+Xy
+Xy
+VM
+NF
+Oc
+Oc
+UI
+XL
+Vi
+Yq
+VM
+RR
+RR
+RR
 aa
 aa
 aa
@@ -79282,15 +81823,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+VM
+NG
+Od
+WB
+Ro
+XL
+YV
+Xf
+VM
 aa
 aa
 aa
@@ -79584,15 +82125,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+VM
+XL
+XL
+XL
+XL
+SH
+Zs
+SH
+VM
 aa
 aa
 aa
@@ -79886,15 +82427,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+XL
+NH
+Pf
+ZX
+ZW
+Zl
+SQ
+Tm
+XL
 aa
 aa
 aa
@@ -80188,15 +82729,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+XL
+NI
+NI
+WH
+NI
+NI
+NI
+NI
+XL
 aa
 aa
 aa
@@ -80490,15 +83031,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+XL
+NJ
+NJ
+NJ
+NJ
+NJ
+NJ
+WJ
+XL
 aa
 aa
 aa
@@ -80792,15 +83333,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+VM
+NK
+NJ
+NJ
+YO
+NJ
+NJ
+Yw
+VM
 aa
 aa
 aa
@@ -81094,15 +83635,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+VM
+VM
+Qg
+VM
+VM
+To
+To
+To
+Vz
 aa
 aa
 aa
