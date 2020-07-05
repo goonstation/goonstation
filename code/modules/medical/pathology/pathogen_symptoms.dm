@@ -84,7 +84,7 @@ datum/pathogeneffects
 	// OVERRIDE: Generally, you do not need to override this.
 	proc/infect_direct(var/mob/target as mob, var/datum/pathogen/origin, contact_type = "touch")
 		if (infect_attempt_message)
-			target.show_message(infect_attempt_message)
+			target.show_message("<span class='alert'><B>[infect_attempt_message]</B></span>")
 		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = target
 			if(prob(100-H.get_disease_protection()))
