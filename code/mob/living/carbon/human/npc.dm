@@ -293,7 +293,7 @@
 
 			src.a_intent = INTENT_HARM
 
-			if(!ai_target || ai_target == src && !ai_suicidal)
+			if(!ai_target || ai_target == src && !ai_suicidal || ai_target.z != src.z)
 				ai_frustration = 0
 				ai_target = null
 				ai_state = AI_PASSIVE
@@ -358,11 +358,7 @@
 				if((prob(33) || ai_throw) && distance > 1 && ai_validpath() && src.r_hand && !(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot()))
 					//I can attack someone! =D
 					ai_target_old.Cut()
-					var/obj/item/temp = src.r_hand
-					temp.set_loc(src.loc)
-					src.u_equip(temp)
-					src.visible_message("<span class='alert'>[src] throws [temp].</span>")
-					temp.throw_at(carbon_target, 7, 1)
+					src.throw_item(ai_target, list("npc_throw"))
 
 			if(distance <= 1 && (world.timeofday - ai_attacked) > 100 && !ai_incapacitated() && ai_meleecheck())
 				//I can attack someone! =D
@@ -426,6 +422,9 @@
 				step_towards(src, ai_target) //Take a step and hit the shite (but only if you won't push them out of the way by doing so)
 
 /mob/living/carbon/human/proc/ai_pickupweapon()
+
+	if(src.r_hand?.cant_drop)
+		return
 
 	if(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot())
 		return

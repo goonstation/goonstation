@@ -935,7 +935,7 @@
 /mob/living/carbon/human/proc/throw_item(atom/target, list/params)
 	var/turf/thrown_from = get_turf(src)
 	src.throw_mode_off()
-	if (usr.stat)
+	if (src.stat)
 		return
 #if ASS_JAM //no throwing while in timestop
 	if (paused)
@@ -947,6 +947,8 @@
 	//	return
 
 	var/obj/item/I = src.equipped()
+	if("npc_throw" in params)
+		I = src.r_hand
 
 	if (!I || !isitem(I) || I.cant_drop) return
 
