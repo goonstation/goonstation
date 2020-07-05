@@ -190,6 +190,11 @@
 
 	attack(mob/M as mob, mob/user as mob)
 		if (iswizard(user) && !iswizard(M) && !isdead(M) && !check_target_immunity(M))
+			if (M?.traitHolder?.hasTrait("training_chaplain"))
+				M.visible_message("<spab class='alert'>A divine light shields [M] from harm!</span>")
+				playsound(M, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				return
+
 			if (prob(20))
 				src.do_brainmelt(M, 1)
 			else if (prob(35))

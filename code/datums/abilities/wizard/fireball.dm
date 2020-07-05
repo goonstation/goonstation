@@ -4,6 +4,8 @@
 	icon = 'icons/obj/wizard.dmi'
 	shot_sound = 'sound/effects/mag_fireballlaunch.ogg'
 
+	is_magical = 1
+
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
 		var/turf/T = get_turf(hit)
 		if (projectile.mob_shooter && projectile.mob_shooter:wizard_spellpower())
