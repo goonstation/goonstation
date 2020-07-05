@@ -1,5 +1,12 @@
 
 (t)sun jul 05 20
+(u)Gannets
+(p)1346
+(e)⚖🆕|balance, feature
+(*)Rebalanced some aspects of the Syndicate Weapon Vendor.
+(+)Removed storage catagory.
+(+)Added utility catagory containing belt-pack, combat knife and MPRT ammo pouch.
+(+)Operatives spawn with rucksack.
 (u)Kubius
 (p)1365
 (e)🗺|mapping
