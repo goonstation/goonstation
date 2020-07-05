@@ -120,6 +120,7 @@
 
 /datum/robot/module_tool_creator/recursive/module/medical
 	definitions = list(
+		/obj/item/extinguisher,
 		/obj/item/robodefibrillator,
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
