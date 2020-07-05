@@ -1,4 +1,9 @@
 
+(t)sun jul 05 20
+(u)UrsulaMajor
+(p)1358
+(e)🆕|feature
+(+)Added a nonlethal deconstruction device to the engineering borg module
 (t)sat jul 04 20
 (u)UrsulaMajor
 (p)1338
