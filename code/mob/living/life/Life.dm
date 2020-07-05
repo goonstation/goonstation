@@ -609,8 +609,6 @@
 				for (var/uid in src.pathogens)
 					var/datum/pathogen/P = src.pathogens[uid]
 					P.disease_act_dead()
-					if (prob(5))
-						src.cured(P)
 			return
 		for (var/uid in src.pathogens)
 			var/datum/pathogen/P = src.pathogens[uid]

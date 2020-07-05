@@ -66,6 +66,7 @@
 			"Check Health",\
 			"Heal",\
 
+			"Check Bioeffects",\
 			"Add Reagents",\
 			"Check Reagents",\
 			"View Variables",\

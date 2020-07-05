@@ -182,6 +182,8 @@
 	desc = "Can hold various small objects."
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	can_hold = list(/obj/item/deconstructor)
+	in_list_or_max = 1
 
 /obj/item/storage/belt/utility/prepared/ceshielded
 	name = "aurora MKII utility belt"

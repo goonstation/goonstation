@@ -208,27 +208,27 @@ datum/pathogeneffects/benevolent/resurrection
 	name = "Necrotic Resurrection"
 	desc = "The pathogen will resurrect you if it procs while you are dead."
 	rarity = RARITY_VERY_RARE
+	var/cooldown = 20 MINUTES
 
 	may_react_to()
 		return "Some of the pathogen's dead cells seem to remain active."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
-			return
-		if (origin.stage < 5)
-			return
-		if(prob(5))
-			M.show_message("<span class='alert'>You feel a sudden craving for ... brains??</span>")
-
 	disease_act_dead(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
-		if (origin.stage < 5)
+		if (origin.stage < 3)
+			return
+		if(!origin.symptom_data["resurrect_cd"]) // if not yet set, initialize it so that it is off cooldown
+			origin.symptom_data["resurrect_cd"] = -cooldown
+		if(TIME-origin.symptom_data["resurrect_cd"] < cooldown)
 			return
 		// Shamelessly stolen from Strange Reagent
 		if (isdead(M) || istype(get_area(M),/area/afterlife/bar))
-			var/brute = M.get_brute_damage()>45?45:M.get_brute_damage()
-			var/burn = M.get_burn_damage()>45?45:M.get_burn_damage()
+			origin.symptom_data["resurrect_cd"] = TIME
+			// range from 65 to 45. This is applied to both brute and burn, so the total max damage after resurrection is 130 to 90.
+			var/cap =	95 - origin.stage * 10
+			var/brute = min(cap, M.get_brute_damage())
+			var/burn = min(cap, M.get_burn_damage())
 
 			// let's heal them before we put some of the damage back
 			// but they don't get back organs/limbs/whatever, so I don't use full_heal
@@ -238,8 +238,9 @@ datum/pathogeneffects/benevolent/resurrection
 				H.blood_volume = 500 					// let's not have people immediately suffocate from being exsanguinated
 				H.take_toxin_damage(-INFINITY)
 				H.take_oxygen_deprivation(-INFINITY)
+				H.take_brain_damage(-INFINITY)
 
-			M.TakeDamage("chest", brute, burn)			// this makes it so our burn and brute are between 0-45, so at worst we will have 10% hp
+			M.TakeDamage("chest", brute, burn)
 			M.take_brain_damage(70)						// and a lot of brain damage
 			setalive(M)
 			M.changeStatus("paralysis", 150) 			// paralyze the person for a while, because coming back to life is hard work
@@ -252,8 +253,6 @@ datum/pathogeneffects/benevolent/resurrection
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.contract_disease(/datum/ailment/disease/tissue_necrosis, null, null, 1) // this disease will make the person more and more rotten even while alive
-				H.remission(origin)			// set the pathogen into remission, so it will be gone soon. Unlikely for a person to revive twice like this!
-				H.immunity(origin)
 				H.visible_message("<span class='alert'>[H] suddenly starts moving again!</span>","<span class='alert'>You feel the pathogen weakening as you rise from the dead.</span>")
 
 	react_to(var/R, var/zoom)
