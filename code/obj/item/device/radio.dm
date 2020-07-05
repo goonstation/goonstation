@@ -290,6 +290,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 //	if (last_transmission && world.time < (last_transmission + TRANSMISSION_DELAY))
 //		return
 
+	var/ai_sender = 0
 	var/eqjobname
 
 	if (iscarbon(M))
@@ -300,6 +301,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 				eqjobname = "No ID"
 	else if (isAI(M))
 		eqjobname = "AI"
+		ai_sender = 1
 	else if (isrobot(M))
 		eqjobname = "Cyborg"
 	else if (istype(M, /obj/machinery/computer)) // :v
@@ -336,12 +338,20 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 
 							//mbc : i dont like doing this here but its the easiest place to fit it in since this is a point where we have access to both the receiving mob and the radio they are receiving through
 							var/mob/rmob = i
-							rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+
+							if (!ai_sender)
+								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+							else
+								rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
 
 				else
 					for (var/i in R.send_hear())
 						if (!(i in receive))
 							receive += i
+
+							if (ai_sender)
+								var/mob/rmob = i
+								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
 
 		else if (istype(I, /obj/item/mechanics/radioscanner)) //MechComp radio scanner
 			var/obj/item/mechanics/radioscanner/R = I

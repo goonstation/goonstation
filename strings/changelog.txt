@@ -1,4 +1,27 @@
 
+(t)sun jul 05 20
+(u)mbc
+(e)🐛|bug
+(+)Fixed bug where vampiric zombies could not blood steal.
+(u)mbc
+(e)🆕|feature
+(*)Added a radio chat sfx when the AI speaks.
+(u)Tarmunora
+(p)1333
+(e)⚖|balance
+(*)Changed recipes for perfluorodecalin and salbutamol. (switched oil and salicyclic acid as ingredients between the two)
+(u)Tarmunora
+(p)1311
+(e)⚖🐛|balance, bug
+(*)Borgs will now pull mobs at slightly less than full speed
+(u)Tarmunora
+(p)1356
+(e)⚖🐛|balance, bug
+(+)Changed rajaijah to properly make you buff again
+(u)UrsulaMajor
+(p)1358
+(e)🆕|feature
+(+)Added a nonlethal deconstruction device to the engineering borg module
 (t)sat jul 04 20
 (u)UrsulaMajor
 (p)1338
