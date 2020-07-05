@@ -1,5 +1,9 @@
 
 (t)sat jul 04 20
+(u)RichardGere
+(p)1272
+(e)🆕|feature
+(+)Added witchfinder outfit to religious supply lockers.
 (u)UrsulaMajor
 (p)1337
 (e)⚖|balance
