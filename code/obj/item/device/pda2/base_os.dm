@@ -842,7 +842,7 @@
 
 			. = ""
 			if(src.mode)
-				. += {" | <a href='byond://?src=\ref[src];mode=0'>Main Menu</a>"
+				. += {" | <a href='byond://?src=\ref[src];mode=0'>Main Menu</a>
 				 | <a href='byond://?src=\ref[src.master];refresh=1'>Refresh</a>"}
 
 			else
