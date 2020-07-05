@@ -1,4 +1,21 @@
 
+(t)sat jul 04 20
+(u)RichardGere
+(p)1272
+(e)🆕|feature
+(+)Added witchfinder outfit to religious supply lockers.
+(u)UrsulaMajor
+(p)1337
+(e)⚖|balance
+(*)Significantly lowered zip gun failure chances for low caliber rounds
+(u)adharainspace
+(p)1246
+(e)🆕|feature
+(+)GPS tracking no longer broken while inside pods/subs.
+(u)UrsulaMajor and makkipakki
+(p)1335
+(e)⚖🆕🎨|balance, feature, sprites
+(*)The chaplain now starts with a four shot .22 Beretta in their personal bible. Sprites by makkipakki
 (t)fri jul 03 20
 (u)Superlagg
 (p)1244
