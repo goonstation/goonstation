@@ -1,6 +1,10 @@
 
 (t)sun jul 05 20
 (u)Tarmunora
+(p)1333
+(e)⚖|balance
+(*)Changed recipes for perfluorodecalin and salbutamol. (switched oil and salicyclic acid as ingredients between the two)
+(u)Tarmunora
 (p)1311
 (e)⚖🐛|balance, bug
 (*)Borgs will now pull mobs at slightly less than full speed
