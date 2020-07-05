@@ -78751,6 +78751,10 @@
 "hRi" = (
 /turf/space,
 /area/shuttle/arrival/station)
+"nKf" = (
+/obj/machinery/incubator,
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "pFA" = (
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/specialroom/bar,
@@ -116724,7 +116728,7 @@ cQR
 cNU
 cTY
 cVz
-cVx
+nKf
 cXZ
 cZc
 cZV
