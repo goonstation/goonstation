@@ -22,7 +22,7 @@
 	var/card_tappable = 1 // tap 2 islands for mana
 	var/card_tapped = 0 // summon Fog Bank, laugh
 	var/card_spooky = 0
-	var/solitaire_offset = 3 //DEV - change later
+	var/solitaire_offset = 3
 
 	New(cardname, carddesc, cardback, cardface, cardfoil, carddata, cardreversible, cardreversed, cardtappable, cardtapped, cardspooky, cardsolitaire)
 		if (cardname) src.card_name = cardname
