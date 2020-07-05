@@ -1,5 +1,9 @@
 
 (t)sun jul 05 20
+(u)Fikou
+(p)1171
+(e)🆕|feature
+(*)New medal, Vehicular Manslaughter, obtainable by... you probably already know how.
 (u)Ryumi
 (p)1366
 (e)🗺|mapping
