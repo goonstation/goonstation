@@ -875,6 +875,7 @@ var/global/list/soundCache = list(
  	"sound/misc/talk/lizard.ogg" = 'sound/misc/talk/lizard.ogg',\
  	"sound/misc/talk/lizard_ask.ogg" = 'sound/misc/talk/lizard_ask.ogg',\
  	"sound/misc/talk/lizard_exclaim.ogg" = 'sound/misc/talk/lizard_exclaim.ogg',\
+ 	"sound/misc/talk/radio_ai.ogg" = 'sound/misc/talk/radio_ai.ogg',\
  	"sound/misc/talk/radio.ogg" = 'sound/misc/talk/radio.ogg',\
  	"sound/misc/talk/radio2.ogg" = 'sound/misc/talk/radio2.ogg',\
  	"sound/misc/talk/skelly.ogg" = 'sound/misc/talk/skelly.ogg',\
