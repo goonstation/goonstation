@@ -20848,7 +20848,6 @@
 	frequency = 1225;
 	icon_state = "intact_on";
 	id = "Toxin Chamber Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -24095,38 +24094,12 @@
 /area/station/maintenance/SWmaint{
 	name = "Erebus Maintenance Room"
 	})
-"Sm" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 5
-	},
-/obj/machinery/meter,
-/obj/machinery/light,
-/obj/decal/tile_edge/line/purple{
-	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "5-9"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core{
-	name = "Erebus Plasmitics Zone"
-	})
 "So" = (
 /obj/machinery/atmospherics/binary/volume_pump{
 	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core{
-	name = "Erebus Plasmitics Zone"
-	})
-"Sp" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
@@ -24257,6 +24230,21 @@
 	},
 /turf/space,
 /area)
+"SN" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
 "SO" = (
 /obj/machinery/atmospherics/binary/circulatorTemp,
 /turf/simulated/floor/darkpurple,
@@ -24940,6 +24928,18 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"UZ" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
 "Vc" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -25088,6 +25088,22 @@
 /obj/decal/tile_edge/line/purple{
 	dir = 5;
 	icon_state = "line1"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Vo" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/obj/machinery/meter,
+/obj/machinery/light,
+/obj/decal/tile_edge/line/purple{
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "5-9"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core{
@@ -25333,6 +25349,16 @@
 /area/station/maintenance/SWmaint{
 	name = "Erebus Maintenance Room"
 	})
+"Wh" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
 "Wn" = (
 /obj/grille/catwalk{
 	dir = 10;
@@ -25445,18 +25471,6 @@
 /turf/simulated/floor/darkpurple,
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
-	})
-"WD" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 9
-	},
-/obj/decal/tile_edge/line/yellow{
-	dir = 4;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core{
-	name = "Erebus Plasmitics Zone"
 	})
 "WE" = (
 /obj/cable{
@@ -26067,21 +26081,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/SWmaint{
 	name = "Erebus Maintenance Room"
-	})
-"Yz" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 4
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/core{
-	name = "Erebus Plasmitics Zone"
 	})
 "YB" = (
 /obj/machinery/door/airlock/pyro/engineering{
@@ -77216,7 +77215,7 @@ YR
 Yf
 VQ
 Vp
-WD
+UZ
 Vn
 Zf
 Yf
@@ -78124,7 +78123,7 @@ Xz
 YQ
 Ud
 VS
-Sm
+Vo
 Yf
 SP
 Sd
@@ -78722,7 +78721,7 @@ Yf
 MP
 Ne
 Np
-Sp
+Wh
 Yf
 Xg
 TG
@@ -79933,7 +79932,7 @@ Xi
 UN
 NU
 Yr
-Yz
+SN
 SF
 RX
 Uc
