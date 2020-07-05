@@ -1,3 +1,5 @@
+#define MGD_STATIONREPAIR "stationrepair"
+
 var/list/occupations = list(
 
 	"Chief Engineer",
@@ -40,6 +42,10 @@ var/list/job_mailgroup_list = list(
 	"Head of Security" = "command",
 	"Medical Director" = "command",
 	"Quartermaster" = "cargo",
+	"Chief Engineer" = MGD_STATIONREPAIR,
+	"Mechanic" = MGD_STATIONREPAIR,
+	"Engineer" = MGD_STATIONREPAIR,
+	"Janitor" = MGD_STATIONREPAIR,
 	"Botanist" = "botany",
 	"Medical Director" = "medresearch",
 	"Roboticist" = "medresearch",
@@ -53,6 +59,7 @@ var/list/page_departments = list(
 	"Medbay" = "medbay",
 	"Med Research" = "medresearch",
 	"Research" = "science",
+	"Station Repair" = MGD_STATIONREPAIR,
 	"Cargo" = "cargo",
 	"Botany" = "botany",
 	"Bar / Kitchen" = "kitchen")
