@@ -1,6 +1,9 @@
 
 (t)sun jul 05 20
 (u)mbc
+(e)🐛|bug
+(+)Fixed bug where vampiric zombies could not blood steal.
+(u)mbc
 (e)🆕|feature
 (*)Added a radio chat sfx when the AI speaks.
 (u)Tarmunora
