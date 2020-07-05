@@ -153,8 +153,7 @@ THROWING DARTS
 	var/healthstring = ""
 
 	var/message = null
-	var/mailgroup = "medbay"
-	var/mailgroup2 = "medresearch"
+	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
 	var/net_id = null
 	var/frequency = 1149
 	var/datum/radio_frequency/radio_connection

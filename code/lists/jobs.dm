@@ -1,3 +1,5 @@
+#define MGD_SPIRITUALAFFAIRS "spiritualaffairs"
+
 var/list/occupations = list(
 
 	"Chief Engineer",
@@ -41,6 +43,7 @@ var/list/job_mailgroup_list = list(
 	"Medical Director" = "command",
 	"Quartermaster" = "cargo",
 	"Botanist" = "botany",
+	"Chaplain" = MGD_SPIRITUALAFFAIRS,
 	"Medical Director" = "medresearch",
 	"Roboticist" = "medresearch",
 	"Geneticist" = "medresearch",
@@ -55,7 +58,8 @@ var/list/page_departments = list(
 	"Research" = "science",
 	"Cargo" = "cargo",
 	"Botany" = "botany",
-	"Bar / Kitchen" = "kitchen")
+	"Bar / Kitchen" = "kitchen",
+	"Spiritual Affairs" = MGD_SPIRITUALAFFAIRS)
 
 /proc/get_all_jobs()
 	return list("Assistant", "Detective", "Medical Doctor", "Captain", "Security Officer",
