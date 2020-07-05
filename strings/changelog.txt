@@ -1,5 +1,13 @@
 
 (t)sun jul 05 20
+(u)Ryumi
+(p)1366
+(e)🗺|mapping
+(+)Donut3: Added more tanks of welder fuel and firefighting foam. There should be one weldtank in each maintenance area.
+(+)Donut3: Moved player critter spawns into public maint halls.
+(+)Donut3: Even MORE trash spawners in maint! You'll only notice a little bit more junk though.
+(+)Donut3: Moved a pipe cart next to the loafer, and added another next to the crusher. You know what to do.
+(+)Donut3: Added cleaner grenades to the janitor closets. Oops.
 (u)mbc
 (e)🐛|bug
 (+)Fixed bug where vampiric zombies could not blood steal.
