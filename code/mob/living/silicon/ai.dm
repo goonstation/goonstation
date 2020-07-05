@@ -241,6 +241,12 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.eyecam.show_text(message, color, 0, sight_check, allow_corruption, group)
 	return
 
+
+
+///mob/living/silicon/ai/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
+//sound.dm
+
+
 /mob/living/silicon/ai/attackby(obj/item/W as obj, mob/user as mob)
 	if (isscrewingtool(W))
 		src.anchored = !src.anchored

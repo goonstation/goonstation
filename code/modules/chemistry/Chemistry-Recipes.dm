@@ -2227,7 +2227,7 @@ datum
 			name = "Salbutamol"
 			id = "salbutamol"
 			result = "salbutamol"
-			required_reagents = list("salicylic_acid" = 1, "lithium" = 1, "ammonia" = 1, "aluminium" = 1, "bromine" = 1)
+			required_reagents = list("oil" = 1, "lithium" = 1, "ammonia" = 1, "aluminium" = 1, "bromine" = 1)
 			result_amount = 5
 			mix_phrase = "The solution bubbles freely, creating a head of bluish foam."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -2236,7 +2236,7 @@ datum
 			name = "Perfluorodecalin"
 			id = "perfluorodecalin"
 			result = "perfluorodecalin"
-			required_reagents = list("hydrogen" = 1, "fluorine" = 1, "oil" = 1)
+			required_reagents = list("hydrogen" = 1, "fluorine" = 1, "salicylic_acid" = 1)
 			required_temperature = T0C + 100
 			// hydrogenate napthalene, then fluorinate
 			result_amount = 2 // lowered because the recipe is very easy

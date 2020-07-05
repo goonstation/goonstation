@@ -871,6 +871,7 @@
 	slot_belt = /obj/item/device/pda2/chaplain
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_ears = /obj/item/device/radio/headset/civilian
+	slot_lhan = /obj/item/storage/bible/loaded
 
 	New()
 		..()

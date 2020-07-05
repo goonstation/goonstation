@@ -1,5 +1,60 @@
 
+(t)sun jul 05 20
+(u)mbc
+(e)🆕|feature
+(*)Added a radio chat sfx when the AI speaks.
+(u)Tarmunora
+(p)1333
+(e)⚖|balance
+(*)Changed recipes for perfluorodecalin and salbutamol. (switched oil and salicyclic acid as ingredients between the two)
+(u)Tarmunora
+(p)1311
+(e)⚖🐛|balance, bug
+(*)Borgs will now pull mobs at slightly less than full speed
+(u)Tarmunora
+(p)1356
+(e)⚖🐛|balance, bug
+(+)Changed rajaijah to properly make you buff again
+(u)UrsulaMajor
+(p)1358
+(e)🆕|feature
+(+)Added a nonlethal deconstruction device to the engineering borg module
+(t)sat jul 04 20
+(u)UrsulaMajor
+(p)1338
+(e)⚖⛔|balance, removal
+(+)Removed 0.38 Stun Rounds from the General Manufacturer
+(u)RichardGere
+(p)1272
+(e)🆕|feature
+(+)Added witchfinder outfit to religious supply lockers.
+(u)UrsulaMajor
+(p)1337
+(e)⚖|balance
+(*)Significantly lowered zip gun failure chances for low caliber rounds
+(u)adharainspace
+(p)1246
+(e)🆕|feature
+(+)GPS tracking no longer broken while inside pods/subs.
+(u)UrsulaMajor and makkipakki
+(p)1335
+(e)⚖🆕🎨|balance, feature, sprites
+(*)The chaplain now starts with a four shot .22 Beretta in their personal bible. Sprites by makkipakki
 (t)fri jul 03 20
+(u)Superlagg
+(p)1244
+(e)⚖🆕|balance, feature
+(*)Patches and styptic powder are now less effective at stopping bleeding.
+(*)However, bandages are now quicker to apply and a bit more effective!
+(*)Changed how several medical chems work.
+(u)MarkNstein
+(p)1264
+(e)🐛|bug
+(+)Cyborg frames no longer disappear after fully disassembling a borg.
+(u)Superlagg
+(p)1315
+(e)⚖🎨|balance, sprites
+(*)Securitrons no longer drop stun batons. Beepsky isn't any ordinary securitron, though!
 (u)Ryumi
 (p)1325
 (e)🗺|mapping

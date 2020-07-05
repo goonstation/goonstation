@@ -1830,7 +1830,6 @@
 		/datum/manufacture/vuvuzela,
 		/datum/manufacture/harmonica,
 		/datum/manufacture/bikehorn,
-		/datum/manufacture/stunrounds,
 		/datum/manufacture/bullet_22,
 		/datum/manufacture/bullet_smoke,
 #if ASS_JAM

@@ -1455,6 +1455,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/pushpull_multiplier = 1
 	var/aquatic_movement = 0
 	var/space_movement = 0
+	var/mob_pull_multiplier = 1
 
 	var/datum/movement_modifier/modifier
 	for(var/type_or_instance in src.movement_modifiers)
@@ -1475,6 +1476,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		pushpull_multiplier *= modifier.pushpull_multiplier
 		aquatic_movement += modifier.aquatic_movement
 		space_movement += modifier.space_movement
+		mob_pull_multiplier *= modifier.mob_pull_multiplier
 
 		if (modifier.maximum_slowdown < maximum_slowdown)
 			maximum_slowdown = modifier.maximum_slowdown
@@ -1502,10 +1504,33 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (pushpull_multiplier != 0) // if we're not completely ignoring pushing/pulling
 		if (src.pulling)
-			. *= (pull_speed_modifier(move_target) * pushpull_multiplier)
+			if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
+				var/atom/movable/A = src.pulling
+				// hi grayshift sorry grayshift
+				if (get_dist(src,A) > 0 && get_dist(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
+					if(pull_slowing)
+						. *= max(A.p_class, 1)
+					else
+						if(istype(A,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
+							. *= max(A.p_class, 1)
+						// else, ignore p_class*/
+						else if(ismob(A))
+							var/mob/M = A
+							//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
+							if(M.lying)
+								if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
+									. *= 1		//do nothing
+								else
+									. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier) 
+						else if(istype(A, /obj/storage))
+							// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
+							if (locate(/mob) in A.contents)
+								. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
+			. = lerp(1, . , pushpull_multiplier)
+
 
 		if (src.pushing && (src.pulling != src.pushing))
-			. *= (max(src.pushing.p_class, 1) * pushpull_multiplier)
+			. *= lerp(1, max(src.pushing.p_class, 1), pushpull_multiplier)
 
 		for (var/obj/item/grab/G in list(src.r_hand, src.l_hand))
 			var/mob/M = G.affecting
@@ -1515,9 +1540,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (G.state == 0)
 				if (get_dist(src,M) > 0 && get_dist(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
 					if(ismob(M) && M.lying)
-						. *= (max(M.p_class, 1) * pushpull_multiplier)
+						. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)
 			else
-				. *= (max(M.p_class, 1) * pushpull_multiplier)
+				. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)
 
 	. *= multiplier
 
@@ -1583,32 +1608,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				if (src.loc != last || force_puff) //ugly check to prevent stationary sprint weirds
 					sprint_particle(src, last)
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 25, 1)
-
-/mob/living/proc/pull_speed_modifier(var/atom/move_target = 0)
-	. = 1
-	if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
-		var/atom/movable/A = src.pulling
-		// hi grayshift sorry grayshift
-		if (get_dist(src,A) > 0 && get_dist(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
-			if(pull_slowing)
-				. *= max(A.p_class, 1)
-			else
-				if(istype(A,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
-					. *= max(A.p_class, 1)
-				// else, ignore p_class*/
-				if(ismob(A))
-					var/mob/M = A
-					//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
-					if(M.lying)
-						if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
-							. *= 1		//do nothing
-						else
-							. *= max(A.p_class, 1)
-				else if(istype(A, /obj/storage))
-					// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
-					if (locate(/mob) in A.contents)
-						. *= max(A.p_class,1)
-
 
 // cogwerks - fix for soulguard and revive
 /mob/living/proc/remove_ailments()

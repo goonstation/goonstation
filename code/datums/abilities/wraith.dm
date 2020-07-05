@@ -694,7 +694,7 @@
 		lucky_dude.transfer_to(P)
 		//P.ckey = lucky_dude.ckey
 		P.antagonist_overlay_refresh(1, 0)
-		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder].")
+		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
 		logTheThing("admin", lucky_dude.current, null, "respawned as a poltergeist for [src.holder.owner].")
 
 		boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
