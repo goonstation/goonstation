@@ -551,8 +551,9 @@ CONTAINS:
 				user.visible_message("<span class='alert'><b>[user]</b> shocks [user == patient ? "[him_or_her(user)]self" : patient] with [src]!</span>",\
 				"<span class='alert'>You shock [user == patient ? "yourself" : patient] with [src]!</span>")
 				logTheThing("combat", patient, user, "was defibrillated by %target% with [src] when they didn't need it at [log_loc(patient)]")
-				patient.changeStatus("weakened", 0.6 SECONDS)
+				patient.changeStatus("weakened", 0.7 SECONDS)
 				patient.force_laydown_standup()
+				patient.remove_stamina(45)
 
 		return 0
 
@@ -622,6 +623,7 @@ CONTAINS:
 			icon_state = "defib0"
 
 	attack_hand(mob/living/user as mob)
+		user.lastattacked = src
 		..()
 		if (!defib)
 			src.defib = new /obj/item/robodefibrillator/mounted(src)
@@ -641,6 +643,7 @@ CONTAINS:
 				user.move_laying = list(src.defib)
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
+		user.lastattacked = src
 		if (W == src.defib)
 			src.defib.move_callback(user,get_turf(user),get_turf(src))
 
