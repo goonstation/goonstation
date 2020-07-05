@@ -99,7 +99,7 @@
 				boutput(user,"<span class='notice'>You [src.welded ? "" : "un"]weld the [src]'s cover</span>")
 				src.updateIcon()
 				return 1
-		else if (src.open)
+		else if (src.open || !istype(W,/obj/item/mechanics))
 			..()
 		return 1
 	proc/updateIcon()
