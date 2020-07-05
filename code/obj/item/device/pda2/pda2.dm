@@ -48,7 +48,7 @@
 	var/setup_scanner_on = 1 //Do we search the cart for a scanprog to start loaded?
 	var/setup_default_module = /obj/item/device/pda_module/flashlight //Module to have installed on spawn.
 	var/mailgroups = list("staff","Party Line") //What default mail groups the PDA is part of.
-	var/reserved_mailgroups = list("command","security","science","ai","sillicon","medresearch","medbay","cargo","janitor","chaplain","engineer","mining","kitchen","mechanic","botany") //Job-specific mailgroups that cannot be joined or left
+	var/reserved_mailgroups = list("command","security","science","ai","sillicon","medresearch","medbay","cargo","janitor","chaplain","engineer","mining","kitchen","mechanic","botany",MGD_SPIRITUALAFFAIRS) //Job-specific mailgroups that cannot be joined or left
 	var/bombproof = 0 // can't be destroyed with detomatix
 	var/exploding = 0
 
