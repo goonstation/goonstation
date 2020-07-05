@@ -37,6 +37,7 @@ var/global/mob/twitch_mob = 0
 
 /world/proc/load_mode()
 	set background = 1
+	visibility = 0
 	var/text = file2text("data/mode.txt")
 	if (text)
 		var/list/lines = splittext(text, "\n")
