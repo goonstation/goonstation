@@ -1,5 +1,9 @@
 
 (t)sat jul 04 20
+(u)UrsulaMajor
+(p)1338
+(e)⚖⛔|balance, removal
+(+)Removed 0.38 Stun Rounds from the General Manufacturer
 (u)RichardGere
 (p)1272
 (e)🆕|feature
