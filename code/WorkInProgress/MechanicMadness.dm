@@ -60,7 +60,6 @@
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
-
 		if (isscrewingtool(W))
 			if(src.welded)
 				boutput(user,"<span class='alert'>The [src] is welded shut.</span>")
@@ -70,6 +69,7 @@
 			playsound(src.loc,'sound/items/screwdriver.ogg',50)
 			boutput(user,"<span class='notice'>You [src.open ? "unsecure" : "secure"] the [src]'s cover</span>")
 			src.updateIcon()
+			if(!src.open) src.close_storage_menus()
 			return 1
 		else if (iswrenchingtool(W))
 			if(!src.can_be_anchored)
@@ -111,6 +111,14 @@
 		else
 			src.icon_state=initial(src.icon_state)+"_closed"
 		return
+	proc/close_storage_menus() // look for nerds who still have the container UI open and close it for them 
+		for (var/mob/chump in range(get_turf(src),1)) 
+			for(var/datum/hud/storage/hud in chump.huds)
+				if(hud.master==src) hud.close.clicked()
+		for (var/obj/storage/storage in range(get_turf(src),1)) // this amount of for() loops cannot be healthy, but oh well
+			for (var/mob/chump in storage.contents)
+				for(var/datum/hud/storage/hud in chump.huds)
+					if(hud.master==src) hud.close.clicked()
 	proc/destroy_outside_connections()
 		//called when the cabinet is unanchored
 		var/discons=0
@@ -136,6 +144,14 @@
 		..()
 		src.contents=null
 		return
+	MouseDrop(atom/target)
+		if(!istype(usr))
+			return
+		if(src.open && target == usr)
+			return ..()
+		if(!src.anchored && target != usr)
+			return ..()
+		return
 	get_desc()
 		.+="[src.welded ? " It is welded shut." : ""][src.open ? " Its cover has been opened." : ""][src.anchored ? "It is [src.open || src.welded ? "also" : ""] anchored to the ground." : ""]"
 	housing_large // chonker
@@ -151,12 +167,21 @@
 		flags = FPRINT | EXTRADELAY | CONDUCT
 		attack_hand(mob/user as mob)
 			if(src.loc==user)
-				user.drop_item()
 				src.set_loc(get_turf(src))
+				user.drop_item()
 				return
-			if(src.open)
-				return MouseDrop(user) // no picking up
+			return MouseDrop(user)
+		attack_self(mob/user as mob)
+			src.set_loc(get_turf(user))
+			user.drop_item()
 			return
+		MouseDrop(atom/target)
+		// thanks, whoever hardcoded that pick-up action into obj/item/MouseDrop()!
+			if(istype(target,/obj/screen/hud))
+				return
+			if(target.loc!=get_turf(target) && !isturf(target)) //return if dragged onto an item in another object (i.e backpacks on players)
+				return // you used to be able to pick up cabinets by dragging them to your backpack
+			return ..()
 	housing_handheld
 		var/obj/item/mechanics/trigger/trigger/the_trigger
 		slots=7
@@ -166,7 +191,7 @@
 		density=0
 		anchored=0
 		icon_state="housing_handheld"
-		flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+		flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | ONBELT
 
 		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
 		proc/get_trigger()
@@ -178,19 +203,18 @@
 					qdel(src) // delet
 					return 0
 			return 1
-
-		MouseDrop(user)
+		attack_self(mob/user as mob)
 			if(src.open)
-				return ..()
+				return ..() // you can just use the trigger manually from the UI
+			if(src.get_trigger() && !src.open && src.loc==user)
+				return src.the_trigger.attack_hand(user)
 			return
 		attack_hand(mob/user as mob)
-			if(src.get_trigger() && !src.open && src.loc==user)
-				src.the_trigger.attack_hand(user)
-				return
-			if(src.loc!=user)
-				return ..()
-			else if(src.open)
-				return MouseDrop(user)
+			var/mob/living/carbon/human/humun = user
+			if((istype(humun) && humun.belt==src) || istype(src.loc,/obj/item/storage)) // is it in a backpack or on your belt?
+				return ..() //defer to /obj/item/storage/attack_hand() to pick it up
+			if(src.open)
+				return ..() //defer to /obj/item/storage/attack_hand() to open it
 			return
 /obj/item/mechanics/trigger/trigger // stolen code from the Button
 	name = "Device Trigger"
@@ -362,12 +386,12 @@ var/list/mechanics_telepads = new/list()
 		//check for connections out of unsecured cabinets
 		if(O.loc!=master.loc)
 			if(istype(master.loc,/obj/item/storage/mechanics))
-				var/tmp/obj/item/storage/mechanics/cabinet=master.loc
+				var/obj/item/storage/mechanics/cabinet=master.loc
 				if(!cabinet.anchored)
 					boutput(usr,"<span class='alert'>Cannot create connection out of unsecured component housing</span>")
 					return
 			if(istype(O.loc,/obj/item/storage/mechanics))
-				var/tmp/obj/item/storage/mechanics/cabinet=master.loc //why this works is BYOND me
+				var/obj/item/storage/mechanics/cabinet=master.loc //why this works is BYOND me
 				if(!cabinet.anchored)
 					boutput(usr,"<span class='alert'>Cannot create connection out of unsecured component housing</span>")
 					return
@@ -443,7 +467,7 @@ var/list/mechanics_telepads = new/list()
 	var/can_rotate = 0
 	var/list/particles = new/list()
 	var/list/configs = list()
-	
+
 	New()
 		mechanics = new(src)
 		mechanics.master = src
@@ -451,7 +475,7 @@ var/list/mechanics_telepads = new/list()
 			processing_items.Add(src)
 		return ..()
 
-	
+
 	disposing()
 		// mechanics disposed in /atom
 		processing_items.Remove(src)
@@ -2455,7 +2479,7 @@ var/list/mechanics_telepads = new/list()
 					if (inp)
 						set_frequency(inp)
 						boutput(user, "Frequency set to [frequency]")
-			
+
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		var/newfreq = text2num(input.signal)
 		if (!newfreq) return
@@ -2763,7 +2787,7 @@ var/list/mechanics_telepads = new/list()
 	process()
 		..()
 		if(level == 2)
-			if(charging) 
+			if(charging)
 				charging = 0
 				tooltip_rebuild = 1
 			return
