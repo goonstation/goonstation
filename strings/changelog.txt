@@ -1,5 +1,9 @@
 
 (t)sat jul 04 20
+(u)UrsulaMajor
+(p)1337
+(e)⚖|balance
+(*)Significantly lowered zip gun failure chances for low caliber rounds
 (u)adharainspace
 (p)1246
 (e)🆕|feature
