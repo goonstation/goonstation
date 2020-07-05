@@ -423,8 +423,6 @@
 
 /mob/living/carbon/human/proc/ai_pickupweapon()
 
-	if(src.r_hand?.cant_drop)
-		return
 
 	if(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot())
 		return
@@ -441,19 +439,12 @@
 				BB.dropped(src)
 				BB.layer = initial(BB.layer)
 			return
-		if(!GN:canshoot())
-			src.drop_item()
-			if(src.w_uniform && !src.belt)
-				GN:set_loc(src)
-				src.belt = GN
-				GN:layer = HUD_LAYER
-			else if(src.back && istype(src.back,/obj/item/storage/backpack))
-				var/obj/item/storage/backpack/B = src.back
-				if(B.contents.len < 7)
-					B.attackby(GN,src)
 
-	if(istype(src.r_hand, /obj/item/gun/energy) && !src.r_hand:canshoot())
-		var/obj/item/gun/energy/GN = src.r_hand
+	if(src.r_hand?.cant_drop)
+		return
+
+	if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot())
+		var/obj/item/gun/GN = src.r_hand
 		src.drop_item()
 		if(src.w_uniform && !src.belt)
 			GN:set_loc(src)
