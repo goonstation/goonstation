@@ -52300,6 +52300,8 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/machinery/disposal/mail/small/autoname/research/telescience/east,
+/obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/caution/corner/nw,
 /area/station/science/teleporter)
 "cjy" = (
@@ -52982,6 +52984,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/caution/west,
 /area/station/science/teleporter)
 "ckX" = (
@@ -54734,8 +54737,7 @@
 /area/station/science/teleporter)
 "cot" = (
 /obj/stool/bench/auto,
-/obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/small/autoname/research/telescience/east,
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/caution/west,
 /area/station/science/teleporter)
 "cou" = (
@@ -78774,6 +78776,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/caution/west,
 /area/station/science/teleporter)
 "nKf" = (
