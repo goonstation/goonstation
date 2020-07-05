@@ -1,3 +1,15 @@
+//Mail Groups by Department
+#define MGD_PARTY "Party Line" //Is the clown the head of the Party department?
+#define MGD_COMMAND "command"
+#define MGD_SECURITY "security"
+#define MGD_MEDBAY "medbay"
+#define MGD_MEDRESEACH "medresearch"
+#define MGD_SCIENCE "science"
+#define MGD_CARGO "cargo"
+#define MGD_BOTANY "botany"
+#define MGD_KITCHEN "kitchen"
+
+
 var/list/occupations = list(
 
 	"Chief Engineer",
@@ -35,27 +47,30 @@ var/list/assistant_occupations = list(
 //	"Atmospheric Technician","Atmospheric Technician","Atmospheric Technician",
 
 var/list/job_mailgroup_list = list(
-	"Captain" = "command",
-	"Head of Personnel" = "command",
-	"Head of Security" = "command",
-	"Medical Director" = "command",
-	"Quartermaster" = "cargo",
-	"Botanist" = "botany",
-	"Medical Director" = "medresearch",
-	"Roboticist" = "medresearch",
-	"Geneticist" = "medresearch",
-	"Medical Doctor" = "medbay")
+	"Captain" = MGD_COMMAND,
+	"Head of Personnel" = MGD_COMMAND,
+	"Head of Security" = MGD_COMMAND,
+	"Medical Director" = MGD_COMMAND,
+	"Research Director" = MGD_COMMAND,
+	"Chief Engineer" = MGD_COMMAND,
+	"Quartermaster" = MGD_CARGO,
+	"Botanist" = MGD_BOTANY,
+	"Medical Director" = MGD_MEDRESEACH,
+	"Roboticist" = MGD_MEDRESEACH,
+	"Geneticist" = MGD_MEDRESEACH,
+	"Medical Doctor" = MGD_MEDBAY)
 
 //Used for PDA department paging.
 var/list/page_departments = list(
-	"Command" = "command",
-	"Security" = "security",
-	"Medbay" = "medbay",
-	"Med Research" = "medresearch",
-	"Research" = "science",
-	"Cargo" = "cargo",
-	"Botany" = "botany",
-	"Bar / Kitchen" = "kitchen")
+	"Command" = MGD_COMMAND,
+	"Security" = MGD_SECURITY,
+	"Medbay" = MGD_MEDBAY,
+	"Med Research" = MGD_MEDRESEACH,
+	"Research" = MGD_SCIENCE,
+	"Cargo" = MGD_CARGO,
+	"Botany" = MGD_BOTANY,
+	"Bar / Kitchen" = MGD_KITCHEN,
+	"Spiritual Affairs" = MGD_SPIRITUALAFFAIRS)
 
 /proc/get_all_jobs()
 	return list("Assistant", "Detective", "Medical Doctor", "Captain", "Security Officer",

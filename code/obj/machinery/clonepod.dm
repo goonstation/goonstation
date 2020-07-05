@@ -46,8 +46,7 @@
 	var/failed_tick_counter = 0 // goes up while someone is stuck in there and there's not enough meat to clone them, after so many ticks they'll get dumped out
 
 	var/message = null
-	var/mailgroup = "medbay"
-	var/mailgroup2 = "medresearch"
+	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
 	var/net_id = null
 	var/pdafrequency = 1149
 	var/datum/radio_frequency/pda_connection
@@ -78,6 +77,7 @@
 				src.net_id = generate_net_id(src)
 
 	disposing()
+		mailgroups.Cut()
 		radio_controller.remove_object(src, "[pdafrequency]")
 		genResearch.clonepods.Remove(src) //Bye bye
 		connected.pod1 = null
@@ -93,8 +93,10 @@
 			msg = src.message
 		else if (!msg)
 			return
+		if(!pda_connection)
+			return
 
-		if (msg && mailgroup && pda_connection)
+		for(var/mailgroup in mailgroups)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.transmission_method = TRANSMISSION_RADIO
@@ -108,19 +110,6 @@
 
 			pda_connection.post_signal(src, newsignal)
 
-		if (msg && mailgroup2 && pda_connection)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CLONEPOD-MAILBOT"
-			newsignal.data["message"] = "[msg]"
-
-			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup2
-			newsignal.data["sender"] = src.net_id
-
-			pda_connection.post_signal(src, newsignal)
 
 /obj/machinery/clonepod/attack_ai(mob/user as mob)
 	return attack_hand(user)
