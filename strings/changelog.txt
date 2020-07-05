@@ -1,5 +1,8 @@
 
 (t)sun jul 05 20
+(u)mbc
+(e)⚖|balance
+(+)Medbots will begin healing their target more quickly on approach (same fix that beepsky recently got)
 (u)Gannets
 (p)1346
 (e)⚖🆕|balance, feature
