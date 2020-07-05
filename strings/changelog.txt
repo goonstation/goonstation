@@ -1,5 +1,9 @@
 
 (t)sun jul 05 20
+(u)Tarmunora
+(p)1356
+(e)⚖🐛|balance, bug
+(+)Changed rajaijah to properly make you buff again
 (u)UrsulaMajor
 (p)1358
 (e)🆕|feature
