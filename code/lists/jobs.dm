@@ -69,8 +69,7 @@ var/list/page_departments = list(
 	"Research" = MGD_SCIENCE,
 	"Cargo" = MGD_CARGO,
 	"Botany" = MGD_BOTANY,
-	"Bar / Kitchen" = MGD_KITCHEN,
-	"Spiritual Affairs" = MGD_SPIRITUALAFFAIRS)
+	"Bar / Kitchen" = MGD_KITCHEN)
 
 /proc/get_all_jobs()
 	return list("Assistant", "Detective", "Medical Doctor", "Captain", "Security Officer",
