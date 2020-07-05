@@ -1704,9 +1704,7 @@ datum
 						if (hugTarget == M)
 							continue
 						if (!hugTarget.stat)
-
-							M.visible_message("<span class='alert'>[M] [prob(5) ? "awkwardly side-" : ""]hugs [hugTarget]!</span>")
-
+							M.emote(prob(5)?"sidehug [hugTarget]":"hug [hugTarget]")
 							break
 
 				..()
