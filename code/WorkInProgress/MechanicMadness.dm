@@ -99,7 +99,7 @@
 				boutput(user,"<span class='notice'>You [src.welded ? "" : "un"]weld the [src]'s cover</span>")
 				src.updateIcon()
 				return 1
-		else
+		else if (src.open)
 			..()
 		return 1
 	proc/updateIcon()
@@ -111,8 +111,8 @@
 		else
 			src.icon_state=initial(src.icon_state)+"_closed"
 		return
-	proc/close_storage_menus() // look for nerds who still have the container UI open and close it for them 
-		for (var/mob/chump in range(get_turf(src),1)) 
+	proc/close_storage_menus() // look for nerds who still have the container UI open and close it for them
+		for (var/mob/chump in range(get_turf(src),1))
 			for(var/datum/hud/storage/hud in chump.huds)
 				if(hud.master==src) hud.close.clicked()
 		for (var/obj/storage/storage in range(get_turf(src),1)) // this amount of for() loops cannot be healthy, but oh well
