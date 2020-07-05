@@ -601,11 +601,19 @@ CONTAINS:
 				var/zone = user.zone_sel.selecting
 				var/surgery_status = H.get_surgery_status(zone)
 				if (surgery_status && H.organHolder)
-					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(1,2), "sutur"), user)
-					src.in_use = 1
+					if (!surgeryCheck(H, user))
+						actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(1,2), "sutur"), user)
+						src.in_use = 1
+					else
+						actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 2, zone, surgery_status, rand(1,2), "sutur"), user)
+						src.in_use = 1
 				else if (H.bleeding)
-					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 15, 0, 0, 5, "sutur"), user)
-					src.in_use = 1
+					if (!surgeryCheck(H, user))
+						actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, 0, 0, 5, "sutur"), user)
+						src.in_use = 1
+					else
+						actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, 0, 0, 5, "sutur"), user)
+						src.in_use = 1
 				else
 					user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to close!", "red")
 					H.organHolder.chest.op_stage = 0.0
@@ -728,9 +736,9 @@ CONTAINS:
 		repair_amount = Repair
 		vrb = Vrb
 		if (zone && surgery_status)
-			duration = clamp((duration * surgery_status), 5, 50)
+			duration = clamp((duration * surgery_status), 5, 15)
 		else if (ishuman(target))
-			duration = clamp((duration * target.bleeding), 5, 50)
+			duration = clamp((duration * target.bleeding), 5, 15)
 		if (tool)
 			icon = tool.icon
 			icon_state = tool.icon_state
