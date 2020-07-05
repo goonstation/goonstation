@@ -165,9 +165,8 @@
 	desc = "A dark staff infused with eldritch power. Trying to steal this is probably a bad idea."
 	icon_state = "staffcthulhu"
 	item_state = "staffcthulhu"
-	force = 0
+	force = 14
 	hitsound = 'sound/effects/ghost2.ogg'
-	var/magic_damage = 14
 
 	New()
 		. = ..()
@@ -196,7 +195,6 @@
 				playsound(M, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 				return
 
-			M.TakeDamage("All", magic_damage, 0)
 			if (prob(20))
 				src.do_brainmelt(M, 1)
 			else if (prob(35))
