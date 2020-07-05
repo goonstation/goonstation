@@ -340,9 +340,9 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 							var/mob/rmob = i
 
 							if (!ai_sender)
-								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 50, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
 							else
-								rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 35, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+								rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
 
 				else
 					for (var/i in R.send_hear())
@@ -351,7 +351,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 
 							if (ai_sender)
 								var/mob/rmob = i
-								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 50, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
 
 		else if (istype(I, /obj/item/mechanics/radioscanner)) //MechComp radio scanner
 			var/obj/item/mechanics/radioscanner/R = I
