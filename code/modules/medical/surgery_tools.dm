@@ -585,6 +585,7 @@ CONTAINS:
 
 /obj/item/robodefibrillator/mounted
 	var/obj/machinery/defib_mount/parent = null	//temp set while not attached
+	w_class = 4
 
 	move_callback(var/mob/living/M, var/turf/source, var/turf/target)
 		if (parent)
@@ -621,6 +622,13 @@ CONTAINS:
 			icon_state = "defib1"
 		else
 			icon_state = "defib0"
+
+	process()
+		if (src.defib && src.defib.loc != src)
+			if (get_dist(get_turf(src.defib), get_turf(src)) > 1)
+				if (isliving(src.defib.loc)
+					put_back_defib(src.defib.loc)
+		..()
 
 	attack_hand(mob/living/user as mob)
 		user.lastattacked = src

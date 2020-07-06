@@ -26461,13 +26461,16 @@
 /area/station/medical/medbay/surgery)
 "biv" = (
 /obj/table/auto,
-/obj/item/paper/book/medical_surgery_guide,
-/obj/item/robodefibrillator,
-/obj/item/robodefibrillator,
+/obj/item/paper/book/medical_surgery_guide{
+	pixel_y = 14
+	},
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
+	},
+/obj/machinery/defib_mount{
+	pixel_y = -4
 	},
 /turf/simulated/floor/redwhite{
 	dir = 5
@@ -55521,6 +55524,10 @@
 /area/station/hallway/primary/east)
 "mCe" = (
 /obj/machinery/optable,
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_y = -1;
+	rand_pos = 0
+	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "mEW" = (
@@ -55980,12 +55987,11 @@
 /area/station/crewquarters/cryotron)
 "pry" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/medical_surgery_guide,
-/obj/item/robodefibrillator,
-/obj/item/robodefibrillator,
-/obj/item/device/analyzer/healthanalyzer{
-	pixel_y = 6;
-	rand_pos = 0
+/obj/item/paper/book/medical_surgery_guide{
+	pixel_x = 9
+	},
+/obj/machinery/defib_mount{
+	pixel_x = -6
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)

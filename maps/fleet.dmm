@@ -10181,16 +10181,19 @@
 /obj/table/auto,
 /obj/item/scalpel,
 /obj/item/scalpel,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
+/obj/item/suture,
+/obj/item/suture,
+/obj/machinery/defib_mount{
+	pixel_y = 7
 	},
 /obj/item/circular_saw{
 	pixel_x = 3;
-	pixel_y = 12
+	pixel_y = -6
 	},
-/obj/item/suture,
-/obj/item/suture,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = -6
+	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},

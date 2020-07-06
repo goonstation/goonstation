@@ -31448,7 +31448,7 @@
 /area/station/medical/medbay/surgery)
 "bga" = (
 /obj/table/reinforced/auto,
-/obj/item/robodefibrillator,
+/obj/machinery/defib_mount,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bgb" = (
