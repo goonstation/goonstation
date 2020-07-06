@@ -908,7 +908,7 @@ var/list/globalContextActions = null
 
 		checkRequirements(var/atom/target, var/mob/user)
 			.= 0
-			for (var/obj/item/deconstructor/D in user.equipped_list())
+			if(user.find_type_in_hand(/obj/item/deconstructor/))
 				return 1
 
 		wrench

@@ -2452,15 +2452,9 @@
 	boutput(src, "<span class='alert'><B>You feel a [wattage > 7500 ? "powerful" : "slight"] shock course through your body!</B></span>")
 	src.unlock_medal("HIGH VOLTAGE", 1)
 	src.Virus_ShockCure(min(wattage / 500, 100))
-	sleep(0.1 SECONDS)
 
-#ifdef USE_STAMINA_DISORIENT
 	var/stun = (min((shock_damage/5), 12) * stun_multiplier)* 10
 	src.do_disorient(100 + stun, weakened = stun, stunned = stun, disorient = stun + 40, remove_stamina_below_zero = 1)
-#else
-	src.changeStatus("stunned", (min((shock_damage/5), 12) * stun_multiplier)* 10)
-	src.changeStatus("weakened", (min((shock_damage/5), 12) * stun_multiplier)* 10)
-#endif
 
 	return shock_damage
 

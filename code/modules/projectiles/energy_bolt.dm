@@ -301,24 +301,7 @@ toxic - poisons
 	disruption = 8
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
-#if ASS_JAM
 
-	on_pointblank(var/obj/projectile/P, var/mob/living/M)
-		// var/dir = angle2dir(angle)
-		M.throw_at(get_edge_target_turf(M, get_dir(M, P)),7,1, throw_type = THROW_GUNIMPACT)
-		//When it hits a mob or such should anything special happen
-	on_hit(atom/hit, angle, var/obj/projectile/O)
-		// var/dir = angle2dir(angle)
-		var/dir = get_dir(hit, O.shooter)
-		var/pow = O.power
-		O.die()
-		if (ishuman(hit))
-			var/mob/living/carbon/human/H = hit
-			H.do_disorient(stamina_damage = pow*3, weakened = 0, stunned = 0, disorient = pow*4, remove_stamina_below_zero = 0)
-			H.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)
-			H.emote("twitch_v")
-			H.changeStatus("slowed", 3 SECONDS)
-#else
 	on_pointblank(var/obj/projectile/P, var/mob/living/M)
 		// var/dir = angle2dir(angle)
 		M.throw_at(get_edge_target_turf(M, get_dir(P, M)),7,1, throw_type = THROW_GUNIMPACT)
@@ -336,7 +319,6 @@ toxic - poisons
 			H.emote("twitch_v")
 			H.changeStatus("slowed", 3 SECONDS)
 
-#endif
 	impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)
 		return
 

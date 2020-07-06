@@ -18977,6 +18977,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "aRp" = (
@@ -23418,6 +23419,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/med_tool,
 /obj/machinery/light/incandescent/netural,
+/obj/random_item_spawner/medicine,
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},
@@ -25954,8 +25956,8 @@
 /area/station/medical/medbay/lobby)
 "bfF" = (
 /obj/table/auto,
-/obj/random_item_spawner/medicine,
 /obj/disposalpipe/segment/mail,
+/obj/machinery/defib_mount,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
 "bfG" = (

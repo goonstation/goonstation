@@ -3706,6 +3706,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/item/hand_labeler,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery/storage)
 "ahQ" = (
@@ -5745,8 +5746,13 @@
 /obj/machinery/optable,
 /obj/disposalpipe/segment/mail,
 /obj/machinery/drainage/big,
-/obj/item/hand_labeler,
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/medical_surgery_guide{
+	pixel_x = 9
+	},
+/obj/machinery/defib_mount{
+	pixel_x = -7;
+	pixel_y = 4
+	},
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "ams" = (
@@ -15785,7 +15791,9 @@
 /obj/item/storage/box/health_upgrade_kit{
 	pixel_y = 13
 	},
-/obj/item/robodefibrillator,
+/obj/machinery/defib_mount{
+	pixel_y = -5
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},

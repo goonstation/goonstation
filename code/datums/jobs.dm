@@ -396,7 +396,7 @@
 	slot_suit = /obj/item/clothing/suit/labcoat
 	slot_ears = /obj/item/device/radio/headset/command/md
 	slot_eyes = /obj/item/clothing/glasses/healthgoggles/upgraded
-	items_in_backpack = list(/obj/item/device/flash)
+	items_in_backpack = list(/obj/item/device/flash, /obj/item/robodefibrillator)
 
 	New()
 		..()
@@ -605,7 +605,7 @@
 	slot_ears = /obj/item/device/radio/headset/medical
 	slot_eyes = /obj/item/clothing/glasses/healthgoggles
 	slot_poc1 = /obj/item/paper/book/pocketguide/medical
-	items_in_backpack = list(/obj/item/crowbar) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
+	items_in_backpack = list(/obj/item/crowbar, /obj/item/robodefibrillator) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
 	// 2018: guaranteed air tanks now spawn in boxes (depending on backpack type) to save room
 
 	New()
@@ -871,6 +871,7 @@
 	slot_belt = /obj/item/device/pda2/chaplain
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_ears = /obj/item/device/radio/headset/civilian
+	slot_lhan = /obj/item/storage/bible/loaded
 
 	New()
 		..()
@@ -1015,6 +1016,7 @@
 	slot_suit = /obj/item/clothing/suit/labcoat
 	slot_ears = /obj/item/device/radio/headset/command/md
 	slot_rhan = /obj/item/storage/firstaid/docbag
+
 	New()
 		..()
 		src.access = get_access("Head Surgeon")

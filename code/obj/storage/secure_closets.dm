@@ -196,13 +196,13 @@
 /obj/storage/secure/closet/security/armory
 	name = "\improper Special Equipment locker"
 	req_access_txt = "37"
-	spawn_contents = list(/obj/item/device/flash,
-	/obj/item/storage/box/flashbang_kit,
+	spawn_contents = list(/obj/item/requisition_token/security = 2,
+	/obj/item/turret_deployer/riot = 2,
+	/obj/item/clothing/glasses/nightvision = 2,
 	/obj/item/clothing/glasses/sunglasses,
-	/obj/item/clothing/suit/armor/EOD,
-	/obj/item/clothing/head/helmet/EOD,
+	/obj/item/clothing/glasses/sunglasses,
 	/obj/item/ammo/bullets/abg,
-	/obj/item/gun/kinetic/riotgun)
+	/obj/item/ammo/bullets/abg,)
 
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items locker"
@@ -607,7 +607,8 @@
 /obj/storage/secure/closet/civilian/chaplain
 	name = "\improper Religious supplies locker"
 	req_access = list(access_chapel_office)
-	spawn_contents = list(/obj/item/storage/box/clothing/chaplain,\
+	spawn_contents = list(/obj/item/storage/box/clothing/witchfinder,\
+	/obj/item/storage/box/clothing/chaplain,\
 	/obj/item/clothing/under/misc/chaplain/atheist,\
 	/obj/item/clothing/under/misc/chaplain,\
 	/obj/item/clothing/under/misc/chaplain/rabbi,\
