@@ -852,15 +852,19 @@
 		if ("help")
 			src.a_intent = INTENT_HELP
 			hud.update_intent()
+			check_for_intent_trigger()
 		if ("disarm")
 			src.a_intent = INTENT_DISARM
 			hud.update_intent()
+			check_for_intent_trigger()
 		if ("grab")
 			src.a_intent = INTENT_GRAB
 			hud.update_intent()
+			check_for_intent_trigger()
 		if ("harm")
 			src.a_intent = INTENT_HARM
 			hud.update_intent()
+			check_for_intent_trigger()
 		if ("drop")
 			src.drop_item()
 		if ("swaphand")
@@ -2188,6 +2192,8 @@
 	else
 		src.hand = !src.hand
 	hud.update_hands()
+	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER) && !src.equipped().two_handed)
+		src.equipped().intent_switch_trigger(src)
 
 /mob/living/carbon/human/emp_act()
 	boutput(src, "<span class='alert'><B>Your equipment malfunctions.</B></span>")
@@ -2446,15 +2452,9 @@
 	boutput(src, "<span class='alert'><B>You feel a [wattage > 7500 ? "powerful" : "slight"] shock course through your body!</B></span>")
 	src.unlock_medal("HIGH VOLTAGE", 1)
 	src.Virus_ShockCure(min(wattage / 500, 100))
-	sleep(0.1 SECONDS)
 
-#ifdef USE_STAMINA_DISORIENT
 	var/stun = (min((shock_damage/5), 12) * stun_multiplier)* 10
 	src.do_disorient(100 + stun, weakened = stun, stunned = stun, disorient = stun + 40, remove_stamina_below_zero = 1)
-#else
-	src.changeStatus("stunned", (min((shock_damage/5), 12) * stun_multiplier)* 10)
-	src.changeStatus("weakened", (min((shock_damage/5), 12) * stun_multiplier)* 10)
-#endif
 
 	return shock_damage
 
@@ -3335,3 +3335,7 @@
 					. += T.active_liquid.movement_speed_mod
 				else if (istype(T,/turf/space/fluid))
 					. += 3
+
+/mob/living/carbon/human/proc/check_for_intent_trigger()
+	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER))
+		src.equipped().intent_switch_trigger(src)

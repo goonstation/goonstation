@@ -6025,10 +6025,7 @@
 /obj/item/storage/box/beakerbox,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/hand_labeler,
-/obj/item/clothing/glasses/spectro{
-	step_x = 0;
-	step_y = 0
-	},
+/obj/item/clothing/glasses/spectro,
 /obj/machinery/light,
 /turf/simulated/floor/purplewhite{
 	dir = 6

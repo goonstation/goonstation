@@ -16,6 +16,6 @@
 
 # ZeWaka
 *.md @ZeWaka
-/maps/ @ZeWaka # Until everyone's on TGM format.
+# /maps/ @ZeWaka
 
 # Multiple Owners

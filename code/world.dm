@@ -127,7 +127,7 @@ var/global/mob/twitch_mob = 0
 
 /world/proc/load_playercap_bypass()
 	set background = 1
-	var/text = file2text("strings/allow_thru_cap.txt")
+	var/text = file2text("+secret/strings/allow_thru_cap.txt")
 	if (!text)
 		return
 	else
@@ -1246,7 +1246,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
 
-				var/mob/M = whois_ckey_to_mob_reference(who)
+				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
 				if (M.client)
 					boutput(M, {"
 						<div style='border: 2px solid red; font-size: 110%;'>
@@ -1287,7 +1287,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
-				var/mob/M = whois_ckey_to_mob_reference(who)
+				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
 				if (M.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[msg]</span></span>")
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd %target%: [msg]")
@@ -1585,6 +1585,26 @@ var/f_color_selector_handler/F_Color_Selector
 
 				return ircbot.response(ircmsg)
 
+			if ("whitelistChange")
+				if (!plist["wlType"] || !plist["ckey"])
+					return 0
+
+				var/type = plist["wlType"]
+				var/ckey = plist["ckey"]
+				var/msg
+
+				if (type == "add" && !(ckey in whitelistCkeys))
+					whitelistCkeys += ckey
+					msg = "Entry '[ckey]' added to whitelist"
+				else if (type == "remove" && (ckey in whitelistCkeys))
+					whitelistCkeys -= ckey
+					msg = "Entry '[ckey]' removed from whitelist"
+
+				if (msg)
+					logTheThing("admin", null, null, msg)
+					logTheThing("diary", null, null, msg, "admin")
+
+				return 1
 
 
 /// EXPERIMENTAL STUFF

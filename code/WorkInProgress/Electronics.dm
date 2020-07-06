@@ -669,7 +669,14 @@
 	name = "deconstruction device"
 	desc = "A device meant to facilitate the deconstruction of scannable machines."
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "deconstruction"
+	icon_state = "deconstruction-saw"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "deconstruction-saw"
+	force = 10
+	throwforce = 4
+	hitsound = 'sound/machines/chainsaw_green.ogg'
+	hit_type = DAMAGE_CUT
+	tool_flags = TOOL_SAWING
 	w_class = 3.0
 	var/datum/effects/system/spark_spread/spark_system
 	module_research = list("electronics" = 3, "engineering" = 1)
@@ -832,3 +839,15 @@
 		if (O && owner)
 			boutput(owner, "<span class='alert'>Deconstruction of [O] interrupted!</span>")
 		..()
+
+/obj/item/deconstructor/borg
+	name = "deconstruction device"
+	desc = "A device meant to facilitate the deconstruction of scannable machines. This one has been modified for safe use by borgs."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "deconstruction"
+	force = 0
+	throwforce = 0
+	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+	hit_type = DAMAGE_BLUNT
+	tool_flags = null
+	w_class = 3.0

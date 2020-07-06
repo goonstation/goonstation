@@ -23,8 +23,8 @@
 "aae" = (
 /obj/machinery/cell_charger,
 /obj/item/device/radio/intercom{
-	dir = 8;
 	broadcasting = 0;
+	dir = 8;
 	frequency = 1485;
 	name = "Security Intercom"
 	},
@@ -3706,6 +3706,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/item/hand_labeler,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery/storage)
 "ahQ" = (
@@ -4145,8 +4146,8 @@
 /area/research_outpost)
 "aiW" = (
 /obj/item/device/radio/intercom/medical{
-	dir = 4;
-	broadcasting = 1
+	broadcasting = 1;
+	dir = 4
 	},
 /obj/monkeyplant,
 /obj/disposalpipe/segment/mail{
@@ -4420,7 +4421,7 @@
 /area/station/crew_quarters/kitchen)
 "ajz" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/weapon_stand/taser_rack/recharger,
+/obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -4573,8 +4574,8 @@
 /obj/table/glass/reinforced/auto,
 /obj/item/decoration/flower_vase,
 /obj/item/device/radio/intercom/medical{
-	dir = 8;
-	broadcasting = 1
+	broadcasting = 1;
+	dir = 8
 	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery/storage)
@@ -5728,8 +5729,8 @@
 /area/station/medical/dome)
 "amp" = (
 /obj/item/device/radio/intercom/medical{
-	dir = 4;
-	broadcasting = 1
+	broadcasting = 1;
+	dir = 4
 	},
 /obj/decal/tile_edge/line/red{
 	dir = 8;
@@ -5745,8 +5746,13 @@
 /obj/machinery/optable,
 /obj/disposalpipe/segment/mail,
 /obj/machinery/drainage/big,
-/obj/item/hand_labeler,
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/medical_surgery_guide{
+	pixel_x = 9
+	},
+/obj/machinery/defib_mount{
+	pixel_x = -7;
+	pixel_y = 4
+	},
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "ams" = (
@@ -7136,8 +7142,8 @@
 	icon_state = "0-8"
 	},
 /obj/item/device/radio/intercom/medical{
-	dir = 8;
-	broadcasting = 1
+	broadcasting = 1;
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -7398,8 +7404,8 @@
 "aqb" = (
 /obj/storage/secure/closet/command/medical_director,
 /obj/item/device/radio/intercom/bridge{
-	dir = 8;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -8821,8 +8827,8 @@
 /area/station/medical/medbay/cloner)
 "atB" = (
 /obj/item/device/radio/intercom/medical{
-	dir = 4;
-	broadcasting = 1
+	broadcasting = 1;
+	dir = 4
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -8949,9 +8955,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/head)
 "atP" = (
-/obj/table/auto,
-/obj/machinery/recharger,
-/obj/machinery/light_switch/auto,
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/medical)
 "atQ" = (
@@ -9623,6 +9627,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/light_switch/auto,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/medical)
 "avp" = (
@@ -10057,6 +10062,9 @@
 /obj/disposalpipe/segment/brig,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 4
 	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/medical)
@@ -11030,8 +11038,8 @@
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk/west,
 /obj/item/device/radio/intercom/medical{
-	dir = 4;
-	broadcasting = 1
+	broadcasting = 1;
+	dir = 4
 	},
 /turf/simulated/floor/purple/checker,
 /area/station/chemistry)
@@ -14774,8 +14782,8 @@
 /area/station/science/bot_storage)
 "aHn" = (
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /obj/cable{
 	d1 = 2;
@@ -15783,7 +15791,9 @@
 /obj/item/storage/box/health_upgrade_kit{
 	pixel_y = 13
 	},
-/obj/item/robodefibrillator,
+/obj/machinery/defib_mount{
+	pixel_y = -5
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -16267,6 +16277,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/recharger/wall/sticky{
+	dir = 8
+	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/west)
 "aKG" = (
@@ -16276,9 +16289,7 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/west)
 "aKH" = (
-/obj/table/auto,
-/obj/machinery/recharger,
-/obj/item/storage/wall/office,
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/west)
 "aKI" = (
@@ -17866,8 +17877,8 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
-	dir = 8;
 	broadcasting = 0;
+	dir = 8;
 	frequency = 1441;
 	name = "Engineering Intercom"
 	},
@@ -18246,8 +18257,8 @@
 	pixel_y = 3
 	},
 /obj/item/device/radio/intercom{
-	dir = 8;
 	broadcasting = 1;
+	dir = 8;
 	frequency = 1489;
 	name = "Brig Intercom"
 	},
@@ -19332,8 +19343,8 @@
 /area/station/hallway/primary/west)
 "aSe" = (
 /obj/item/device/radio/intercom{
-	dir = 4;
 	broadcasting = 0;
+	dir = 4;
 	frequency = 1485;
 	name = "Security Intercom"
 	},
@@ -19566,6 +19577,7 @@
 /area/station/science/storage)
 "aSH" = (
 /obj/disposalpipe/segment,
+/obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -19744,6 +19756,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/storage/closet/wardrobe/red/security_gimmick,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aTa" = (
@@ -20626,8 +20639,8 @@
 /area)
 "aVz" = (
 /obj/decal/floatingtiles{
-	icon_state = "floattiles4";
-	dir = 4
+	dir = 4;
+	icon_state = "floattiles4"
 	},
 /turf/space/fluid,
 /area)
@@ -20647,8 +20660,8 @@
 /area/iss)
 "aVD" = (
 /obj/decal/floatingtiles{
-	icon_state = "floattiles3";
-	dir = 8
+	dir = 8;
+	icon_state = "floattiles3"
 	},
 /turf/space/fluid,
 /area)
@@ -28480,8 +28493,8 @@
 	pixel_y = 11
 	},
 /obj/item/device/radio/intercom{
-	dir = 4;
 	broadcasting = 0;
+	dir = 4;
 	frequency = 1489;
 	name = "Brig Intercom"
 	},
@@ -29997,9 +30010,29 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "bsE" = (
+/obj/item/clothing/gloves/boxing{
+	pixel_x = -4
+	},
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/under/shorts/blue{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_x = 6
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/clothing/under/shorts/black{
+	pixel_x = -7;
+	pixel_y = -5
+	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "bsF" = (
@@ -30252,8 +30285,30 @@
 /area/station/crew_quarters/fitness)
 "btl" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/head/helmet/men{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/clothing/head/helmet/men{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/clothing/suit/armor/douandtare{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/clothing/suit/armor/douandtare{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/clothing/gloves/kote{
+	pixel_x = -1
+	},
+/obj/item/clothing/gloves/kote{
+	pixel_x = -1
+	},
+/obj/item/shinai_bag,
+/obj/item/storage/box/kendo_box/hakama,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "btm" = (
@@ -31331,6 +31386,7 @@
 	tag = ""
 	},
 /obj/machinery/light_switch/auto,
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "bvY" = (
@@ -33003,8 +33059,8 @@
 /area/station/crew_quarters/market)
 "bzX" = (
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -34282,8 +34338,8 @@
 	})
 "bCZ" = (
 /obj/item/device/radio/intercom{
-	dir = 8;
 	broadcasting = 0;
+	dir = 8;
 	frequency = 1455;
 	name = "Supply Intercom"
 	},
@@ -35496,8 +35552,8 @@
 /area/station/crew_quarters/info)
 "bFO" = (
 /obj/item/device/radio/intercom{
-	dir = 1;
 	broadcasting = 0;
+	dir = 1;
 	frequency = 1445;
 	name = "Medical Intercom"
 	},
@@ -35507,8 +35563,8 @@
 /area/station/crew_quarters/info)
 "bFP" = (
 /obj/item/device/radio/intercom{
-	dir = 1;
 	broadcasting = 0;
+	dir = 1;
 	frequency = 1485;
 	name = "Security Intercom"
 	},
@@ -35517,8 +35573,8 @@
 /area/station/crew_quarters/info)
 "bFQ" = (
 /obj/item/device/radio/intercom{
-	dir = 1;
 	broadcasting = 0;
+	dir = 1;
 	frequency = 1441;
 	name = "Engineering Intercom"
 	},
@@ -36904,8 +36960,8 @@
 /area/station/hallway/primary/south)
 "bIW" = (
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -38522,7 +38578,7 @@
 /turf/simulated/floor/grime,
 /area)
 "bNx" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -46070,8 +46126,8 @@
 /area/station/crew_quarters/lounge_port)
 "chR" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	name = "Escape Hallway Security Checkpoint";
 	dir = 8;
+	name = "Escape Hallway Security Checkpoint";
 	req_access_txt = "1"
 	},
 /obj/access_spawn/security,

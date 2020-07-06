@@ -5,7 +5,7 @@
 //How much of a punch this has, tends to be seconds/damage before any resist
 	power = 20
 //How much ammo this costs
-	cost = 15
+	cost = 25
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
@@ -17,6 +17,8 @@
 	sname = "stun"
 //file location for the sound you want it to play
 	shot_sound = 'sound/weapons/Taser.ogg'
+//should the sound have extra range?
+	shot_sound_extrarange = 5
 //How many projectiles should be fired, each will cost the full cost
 	shot_number = 1
 //What is our damage type
@@ -89,7 +91,7 @@ toxic - poisons
 
 /datum/projectile/energy_bolt/burst
 	shot_number = 3
-	cost = 50
+	cost = 75
 	sname = "burst stun"
 
 
@@ -111,6 +113,9 @@ toxic - poisons
 			L.change_misstep_chance(1)
 			L.emote("twitch_v")
 		return
+
+/datum/projectile/energy_bolt/tasershotgunsingle // old taser projectile cost for shotgun
+	cost = 15
 
 /datum/projectile/energy_bolt/tasershotgun //Projectile for Azungar's taser shotgun.
 	power = 15
@@ -228,6 +233,7 @@ toxic - poisons
 	color_green = 165
 	color_blue = 0
 	max_range = 7 //slight range boost
+	damage_type = D_SPECIAL
 
 	on_hit(atom/O, angle, var/obj/projectile/P)
 		//lets make getting hit by the projectile a bit worse than getting the shockwave
@@ -241,7 +247,7 @@ toxic - poisons
 
 	on_max_range_die(obj/projectile/O)
 		detonate(O, O)
-		
+
 	proc/detonate(atom/O, var/obj/projectile/P)
 		if (istype(O, /obj/projectile))
 			var/obj/projectile/proj = O
@@ -295,24 +301,7 @@ toxic - poisons
 	disruption = 8
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
-#if ASS_JAM
 
-	on_pointblank(var/obj/projectile/P, var/mob/living/M)
-		// var/dir = angle2dir(angle)
-		M.throw_at(get_edge_target_turf(M, get_dir(M, P)),7,1, throw_type = THROW_GUNIMPACT)
-		//When it hits a mob or such should anything special happen
-	on_hit(atom/hit, angle, var/obj/projectile/O)
-		// var/dir = angle2dir(angle)
-		var/dir = get_dir(hit, O.shooter)
-		var/pow = O.power
-		O.die()
-		if (ishuman(hit))
-			var/mob/living/carbon/human/H = hit
-			H.do_disorient(stamina_damage = pow*3, weakened = 0, stunned = 0, disorient = pow*4, remove_stamina_below_zero = 0)
-			H.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)
-			H.emote("twitch_v")
-			H.changeStatus("slowed", 3 SECONDS)
-#else
 	on_pointblank(var/obj/projectile/P, var/mob/living/M)
 		// var/dir = angle2dir(angle)
 		M.throw_at(get_edge_target_turf(M, get_dir(P, M)),7,1, throw_type = THROW_GUNIMPACT)
@@ -330,7 +319,6 @@ toxic - poisons
 			H.emote("twitch_v")
 			H.changeStatus("slowed", 3 SECONDS)
 
-#endif
 	impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)
 		return
 

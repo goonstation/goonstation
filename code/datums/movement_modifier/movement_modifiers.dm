@@ -13,6 +13,7 @@
 	var/pushpull_multiplier = 1 // multiplier for pushing/pulling speed
 	var/space_movement = 0
 	var/aquatic_movement = 0
+	var/mob_pull_multiplier = 1
 	var/ask_proc = 0
 
 /datum/movement_modifier/proc/modifiers(mob/user, turf/move_target, running)
@@ -76,6 +77,45 @@
 /datum/movement_modifier/robottread_left
 	additive_slowdown = -0.25
 
+// robot modifiers
+/datum/movement_modifier/robot_base
+	health_deficiency_adjustment = -INFINITY
+	mob_pull_multiplier = 0.2 //make borgs pull mobs slightly slower than full speed (roundstart light borg will pull a corpse at ~1.3 delay, as opposed to ~1 when unencumbered)
+
+/datum/movement_modifier/robot_oil
+	additive_slowdown = -0.5
+
+
+/datum/movement_modifier/robot_speed_upgrade
+	ask_proc = 1
+/datum/movement_modifier/robot_speed_upgrade/modifiers(mob/living/silicon/robot/user, move_target, running)
+	. = 1
+	if(user.part_leg_l)
+		. *= 0.75
+	if(user.part_leg_r)
+		. *= 0.75
+	return list(0, .)
+
+/datum/movement_modifier/robot_part/head
+	additive_slowdown = -0.2
+
+/datum/movement_modifier/robot_part/arm_left
+	additive_slowdown = -0.2
+
+/datum/movement_modifier/robot_part/arm_right
+	additive_slowdown = -0.2
+
+/datum/movement_modifier/robot_part/tread_left
+	additive_slowdown = -0.25
+
+/datum/movement_modifier/robot_part/tread_right
+	additive_slowdown = -0.25
+
+/datum/movement_modifier/robot_part/thruster_left
+	additive_slowdown = -0.3
+
+/datum/movement_modifier/robot_part/thruster_right
+	additive_slowdown = -0.3
 
 // bioeffects
 

@@ -184,8 +184,8 @@
 	icon_state = "1-2"
 	},
 /obj/grille/catwalk{
-	icon_state = "catwalk";
-	dir = 5
+	dir = 5;
+	icon_state = "catwalk"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
@@ -287,8 +287,8 @@
 /area/shuttle/merchant_shuttle/right_station/cogmap)
 "aF" = (
 /obj/grille/catwalk{
-	icon_state = "catwalk";
-	dir = 8
+	dir = 8;
+	icon_state = "catwalk"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
@@ -352,8 +352,8 @@
 /area/station/maintenance/maintcentral)
 "aO" = (
 /obj/grille/catwalk{
-	icon_state = "catwalk";
-	dir = 8
+	dir = 8;
+	icon_state = "catwalk"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -599,8 +599,8 @@
 /area/station/engine/substation/west)
 "by" = (
 /obj/grille/catwalk{
-	icon_state = "catwalk";
-	dir = 5
+	dir = 5;
+	icon_state = "catwalk"
 	},
 /obj/cable{
 	d1 = 1;
@@ -756,8 +756,8 @@
 /area/station/engine/substation/west)
 "bU" = (
 /obj/grille/catwalk{
-	icon_state = "catwalk";
-	dir = 5
+	dir = 5;
+	icon_state = "catwalk"
 	},
 /obj/cable{
 	icon_state = "2-8"
@@ -1022,8 +1022,8 @@
 /area/station/maintenance/west)
 "cF" = (
 /turf/simulated/floor/arrival{
-	icon_state = "arrival";
-	dir = 10
+	dir = 10;
+	icon_state = "arrival"
 	},
 /area/station/hangar/science)
 "cG" = (
@@ -1806,10 +1806,10 @@
 /area/station/mining)
 "eB" = (
 /obj/disposalpipe/segment{
-	name = "river pipe";
 	desc = "An underfloor transport pipe.";
+	dir = 8;
 	icon_state = "pipe-s";
-	dir = 8
+	name = "river pipe"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -2147,6 +2147,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/caution/south,
 /area/station/security/armory)
 "fF" = (
@@ -2234,9 +2235,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "fR" = (
-/obj/rack,
-/obj/item/gun/kinetic/riot40mm,
-/obj/item/gun/implanter,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -2244,6 +2242,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -2278,6 +2277,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/stairs/wide{
 	dir = 4
 	},
@@ -2351,6 +2351,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
@@ -2408,7 +2409,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "gp" = (
-/obj/machinery/weapon_stand/taser_rack/recharger,
+/obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -2764,6 +2765,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "ht" = (
@@ -3117,6 +3119,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "is" = (
@@ -3423,6 +3426,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering_mechanic,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "jk" = (
@@ -3770,8 +3774,8 @@
 /area/station/maintenance/SWmaint)
 "kc" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Cargo";
-	dir = 4
+	dir = 4;
+	name = "Cargo"
 	},
 /obj/access_spawn/cargo,
 /obj/firedoor_spawn,
@@ -4013,8 +4017,8 @@
 /area/station/engine/hotloop)
 "kP" = (
 /obj/lattice{
-	icon_state = "lattice-dir";
-	dir = 2
+	dir = 2;
+	icon_state = "lattice-dir"
 	},
 /turf/space,
 /area)
@@ -4082,8 +4086,8 @@
 /area/station/crew_quarters/cafeteria)
 "kZ" = (
 /turf/simulated/floor/stairs/wide/middle{
-	icon_state = "stairs_middle";
-	dir = 8
+	dir = 8;
+	icon_state = "stairs_middle"
 	},
 /area/station/hallway/primary/south)
 "la" = (
@@ -4186,8 +4190,8 @@
 /area/station/hallway)
 "lo" = (
 /obj/disposalpipe/trunk/ejection{
-	icon_state = "pipe-t";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-t"
 	},
 /obj/machinery/floorflusher/solitary,
 /turf/simulated/floor/red/side{
@@ -4404,6 +4408,8 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon19,
+/obj/rack,
+/obj/item/gun/implanter,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "lM" = (
@@ -4423,8 +4429,8 @@
 "lO" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge";
-	dir = 1
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/cable{
 	d1 = 4;
@@ -4708,10 +4714,7 @@
 /area/station/medical/medbay/surgery)
 "mJ" = (
 /obj/table/auto,
-/obj/item/clothing/under/scrub/blue,
-/obj/item/clothing/mask/surgical_shield,
-/obj/item/clothing/mask/surgical,
-/obj/item/clothing/gloves/latex,
+/obj/machinery/defib_mount,
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
 "mK" = (
@@ -5124,8 +5127,8 @@
 /area/station/hallway)
 "nR" = (
 /obj/disposalpipe/segment/brig{
-	icon_state = "pipe-c";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/red/corner,
 /area/station/security/main)
@@ -5835,8 +5838,8 @@
 /area/station/bridge/captain)
 "pH" = (
 /obj/grille/catwalk{
-	icon_state = "catwalk";
-	dir = 8
+	dir = 8;
+	icon_state = "catwalk"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -8770,12 +8773,12 @@
 /obj/item/storage/firstaid/fire,
 /obj/item/extinguisher,
 /obj/item/device/transfer_valve{
-	pixel_y = 14;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 14
 	},
 /obj/item/device/transfer_valve{
-	pixel_y = 18;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 18
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
@@ -8940,6 +8943,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -8982,8 +8989,8 @@
 /area/station/medical/medbay/surgery)
 "wX" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line2";
-	dir = 1
+	dir = 1;
+	icon_state = "line2"
 	},
 /obj/landmark/start{
 	name = "Medical Doctor"
@@ -9001,7 +9008,9 @@
 /obj/machinery/disposal/small{
 	dir = 8
 	},
-/obj/disposalpipe/trunk,
+/obj/disposalpipe/trunk{
+	dir = 8
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -9054,6 +9063,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "xf" = (
@@ -9064,8 +9074,8 @@
 /area/station/engine/elect)
 "xg" = (
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge";
-	dir = 5
+	dir = 5;
+	icon_state = "bigstripe-edge"
 	},
 /turf/simulated/floor/engine,
 /area/station/mining)
@@ -9170,6 +9180,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "xu" = (
@@ -9910,7 +9921,6 @@
 /area/station/medical/medbay/surgery)
 "zh" = (
 /obj/machinery/optable,
-/obj/item/robodefibrillator,
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
@@ -10462,8 +10472,8 @@
 /area/station/medical/medbay)
 "AL" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line2";
-	dir = 2
+	dir = 2;
+	icon_state = "line2"
 	},
 /obj/cable{
 	icon_state = "2-4"
@@ -10696,6 +10706,11 @@
 	},
 /area/station/medical/medbay)
 "BA" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/clothing/under/scrub/blue,
+/obj/item/clothing/mask/surgical_shield,
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
@@ -10703,8 +10718,8 @@
 "BB" = (
 /obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/bluewhite{
-	icon_state = "bluewhite";
-	dir = 9
+	dir = 9;
+	icon_state = "bluewhite"
 	},
 /area/station/medical/medbay)
 "BC" = (
@@ -10809,8 +10824,8 @@
 /area/station/hallway/primary/east)
 "BZ" = (
 /turf/simulated/floor/bluewhite/corner{
-	icon_state = "bluewhitecorner";
-	dir = 8
+	dir = 8;
+	icon_state = "bluewhitecorner"
 	},
 /area/station/medical/medbay)
 "Ca" = (
@@ -12763,8 +12778,8 @@
 /area/station/medical/robotics)
 "Hc" = (
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge";
-	dir = 4
+	dir = 4;
+	icon_state = "bigstripe-edge"
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -13081,8 +13096,8 @@
 /area/station/hangar/science)
 "HP" = (
 /turf/simulated/floor/arrival/corner{
-	icon_state = "arrivalcorner";
-	dir = 1
+	dir = 1;
+	icon_state = "arrivalcorner"
 	},
 /area/station/hangar/science)
 "HQ" = (
@@ -13832,8 +13847,8 @@
 /area/station/engine/substation/east)
 "JP" = (
 /obj/grille/catwalk{
-	icon_state = "catwalk";
-	dir = 8
+	dir = 8;
+	icon_state = "catwalk"
 	},
 /obj/cable{
 	d1 = 4;
@@ -13846,8 +13861,8 @@
 /area/station/solar/south)
 "JQ" = (
 /obj/grille/catwalk{
-	icon_state = "catwalk";
-	dir = 5
+	dir = 5;
+	icon_state = "catwalk"
 	},
 /obj/cable{
 	icon_state = "2-8"
@@ -15848,8 +15863,8 @@
 /area/station/hallway)
 "Pc" = (
 /obj/stool/chair{
-	icon_state = "chair";
-	dir = 8
+	dir = 8;
+	icon_state = "chair"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
@@ -15919,15 +15934,15 @@
 "Pm" = (
 /obj/machinery/vehicle/pod_smooth/industrial,
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge";
-	dir = 10
+	dir = 10;
+	icon_state = "bigstripe-edge"
 	},
 /turf/simulated/floor/engine,
 /area/station/mining)
 "Pn" = (
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge";
-	dir = 6
+	dir = 6;
+	icon_state = "bigstripe-edge"
 	},
 /turf/simulated/floor/engine,
 /area/station/mining)
@@ -15939,23 +15954,23 @@
 /area/station/hangar/science)
 "Pp" = (
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge";
-	dir = 5
+	dir = 5;
+	icon_state = "bigstripe-edge"
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/science)
 "Pq" = (
 /obj/machinery/vehicle/pod_smooth,
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge";
-	dir = 10
+	dir = 10;
+	icon_state = "bigstripe-edge"
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/science)
 "Pr" = (
 /obj/decal/tile_edge/stripe/big{
-	icon_state = "bigstripe-edge";
-	dir = 6
+	dir = 6;
+	icon_state = "bigstripe-edge"
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/science)
@@ -16112,8 +16127,8 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/bluewhite/corner{
-	icon_state = "bluewhitecorner";
-	dir = 8
+	dir = 8;
+	icon_state = "bluewhitecorner"
 	},
 /area/station/medical/medbay)
 "PK" = (
@@ -16984,8 +16999,8 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/bluewhite{
-	icon_state = "bluewhite";
-	dir = 9
+	dir = 9;
+	icon_state = "bluewhite"
 	},
 /area/station/medical/medbay)
 "Uh" = (
@@ -17267,8 +17282,8 @@
 "VM" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge";
-	dir = 1
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/cable{
 	d1 = 4;
@@ -17447,6 +17462,13 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
+"WF" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "WG" = (
 /obj/cable{
 	d1 = 4;
@@ -17950,6 +17972,10 @@
 "YD" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
+"YE" = (
+/obj/disposalpipe/junction/right/east,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "YI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -59215,9 +59241,9 @@ xe
 hs
 ir
 jj
-xo
+WF
 xt
-xw
+YE
 mL
 na
 pw

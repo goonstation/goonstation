@@ -221,6 +221,15 @@ var/global/list/falloff_cache = list()
 
 					M << S
 
+
+
+/mob/living/silicon/ai/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
+	..()
+	if (deployed_to_eyecam && src.eyecam)
+		src.eyecam.playsound_local(source, soundin, vol, vary, extrarange, pitch, ignore_flag, channel)
+	return
+
+
 //handles a wide variety of inputs and spits out a valid sound object
 /proc/getSound(thing)
 	var/sound/S

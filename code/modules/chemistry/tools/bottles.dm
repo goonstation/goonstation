@@ -151,6 +151,13 @@
 	bottle_style = "4"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "sulfonal"
+	
+/obj/item/reagent_containers/glass/bottle/synaptizine
+	name = "synaptizine bottle"
+	desc = "A small bottle."
+	bottle_style = "3"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "synaptizine"
 
 /obj/item/reagent_containers/glass/bottle/pancuronium
 	name = "pancuronium bottle"

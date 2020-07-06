@@ -29,6 +29,7 @@
 	var/tool_flags = 0
 	var/c_flags = null
 	var/tooltip_flags = null
+	var/item_function_flags = null
 
 	pressure_resistance = 50
 	var/obj/item/master = null
@@ -1217,7 +1218,7 @@
 	msgs.flush()
 	src.add_fingerprint(user)
 	#ifdef COMSIG_ITEM_ATTACK_POST
-	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_POST, M, user, power, armor_mod)
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_POST, M, user, power)
 	#endif
 	return
 
@@ -1408,3 +1409,6 @@
 	show_buttons()
 	if (src.c_flags & EQUIPPED_WHILE_HELD)
 		src.equipped(user, user.get_slot_from_item(src))
+
+/obj/item/proc/intent_switch_trigger(mob/user)
+	return

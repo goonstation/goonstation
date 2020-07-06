@@ -124,8 +124,7 @@
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	step_y = 0
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
@@ -133,8 +132,7 @@
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	step_y = 0
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
@@ -158,8 +156,7 @@
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	step_y = 0
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
@@ -199,8 +196,7 @@
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	step_y = 0
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
@@ -382,8 +378,7 @@
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	step_y = 0
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
@@ -574,14 +569,12 @@
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
-	icon_state = "1-8";
-	step_y = 0
+	icon_state = "1-8"
 	},
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	step_y = 0
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)

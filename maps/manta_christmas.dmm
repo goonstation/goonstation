@@ -16923,10 +16923,7 @@
 /obj/storage/crate,
 /obj/item/storage/box/beakerbox,
 /obj/item/device/reagentscanner,
-/obj/item/clothing/glasses/spectro{
-	step_x = 0;
-	step_y = 0
-	},
+/obj/item/clothing/glasses/spectro,
 /obj/item/reagent_containers/dropper/mechanical,
 /turf/simulated/floor,
 /area/station/hydroponics)
@@ -24427,8 +24424,9 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aZy" = (
+/obj/machinery/manufacturer/robotics)
+"aZz" = (
 /obj/machinery/manufacturer/robotics,
-/obj/"aZz" = (/obj/machinery/manufacturer/robotics,
 /obj/item_dispenser/latex_gloves,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
