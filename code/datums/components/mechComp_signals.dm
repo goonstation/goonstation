@@ -62,6 +62,7 @@
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_CONFIG), .proc/addConfig)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL), .proc/allowManualSingalSetting) //Only use this when also using COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG
 	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/attackby)    //MarkNstein needs attention
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_COMPATIBLE), .proc/compatible)//Better that checking GetComponent()?
 	return  //No need to ..()
 
 /datum/component/mechanics_holder/UnregisterFromParent()
@@ -179,7 +180,7 @@
 
 //Called when a component is dragged onto another one.
 /datum/component/mechanics_holder/proc/dropConnect(obj/O, mob/user)//MarkNstein needs attention
-	if(!O || O == parent || !O.mechanics || usr.stat || !isliving(usr))  //ZeWaka: Fix for null.mechanics //MarkNstein needs attention
+	if(!O || O == parent || usr.stat || !isliving(usr) || (SEND_SIGNAL(O,COMSIG_MECHCOMP_COMPATIBLE) != 1))  //ZeWaka: Fix for null.mechanics //MarkNstein needs attention
 		return
 
 	if (!usr.find_tool_in_hand(TOOL_PULSING))
@@ -257,6 +258,9 @@
 			return call(parent, path)(W, user)
 	return 0
 
+//If it's a multi-tool, let the user configure the device.
+/datum/component/mechanics_holder/proc/compatible()
+	return 1
 
 
 #undef DC_ALL
