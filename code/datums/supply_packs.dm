@@ -703,8 +703,7 @@
 					/obj/item/reagent_containers/glass/bottle/pfd = 2,
 					/obj/item/reagent_containers/glass/bottle/pentetic,
 					/obj/item/reagent_containers/glass/bottle/haloperidol,
-					/obj/item/reagent_containers/glass/bottle/ether,
-					/obj/item/reagent_containers/emergency_injector/pentetic_acid = 2)
+					/obj/item/reagent_containers/glass/bottle/ether)
 	cost = 6000
 	containertype = /obj/storage/secure/crate
 	containername = "Restricted Medicine Shipment (Cardlocked \[Medical])"

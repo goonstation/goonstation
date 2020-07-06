@@ -107,10 +107,11 @@
 	item_state = "berserk1"
 	desc = "An all-in-one emergency crash-kit designed to bring a critically wounded patient back from the brink of death. Contains cardiac stimulants, cerebral anti-edemics, and blood-oxygenation agents, all in convenient auto-injector form. Also contains an upgraded health analyzer to determine the health of the patient."
 	kit_styles = list("berserk1", "berserk2", "berserk3")
-	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/atropine = 1,\
-	/obj/item/reagent_containers/emergency_injector/perf = 1,\
+	spawn_contents = list(/obj/item/reagent_containers/mender/brute,\
+	/obj/item/reagent_containers/mender/burn,\
+	/obj/item/reagent_containers/emergency_injector/atropine = 1,\
 	/obj/item/reagent_containers/emergency_injector/saline,\
-	/obj/item/reagent_containers/emergency_injector/mannitol = 2,\
+	/obj/item/reagent_containers/emergency_injector/synaptizine = 1,\
 	/obj/item/reagent_containers/emergency_injector/epinephrine = 1,\
 	/obj/item/device/analyzer/healthanalyzer/borg)
 
