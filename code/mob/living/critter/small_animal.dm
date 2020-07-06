@@ -2747,7 +2747,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	death(var/gibbed)
 		playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1, pitch = 0.75)
-		new /obj/item/reagent_containers/food/snacks/antirad-goo(get_turf(src))
+		new /obj/item/reagent_containers/food/snacks/antiradgoo(get_turf(src))
 
 		..()
 

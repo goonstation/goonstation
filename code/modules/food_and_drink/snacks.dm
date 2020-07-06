@@ -2740,7 +2740,8 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 		. = "<br><span class='notice'>It says: [phrase]</span>"
 
 
-/obj/item/reagent_containers/food/snacks/antirad-goo
+
+/obj/item/reagent_containers/food/snacks/antiradgoo
 	name = "weird goo"
 	desc = "This goo, harvested from an alien hallucigenia, is known for its beneficial anti-radiation and healing properties."
 	icon_state = "antirad-goo"
@@ -2748,7 +2749,6 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 	heal_amt = 2
 	amount = 5
 	initial_volume = 21
-	initial_reagents = "synaptizine"
 	food_effects = list("food_rad_resist")
 
 	New()
