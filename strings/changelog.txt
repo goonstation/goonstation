@@ -1,5 +1,9 @@
 
 (t)sun jul 05 20
+(u)Flaborized
+(p)1371
+(e)🎨|sprites
+(*)Resprited small gas tanks, jetpacks and fuel tanks.
 (u)mbc + Flaborized
 (p)1372
 (e)🗺🎨|mapping, sprites
