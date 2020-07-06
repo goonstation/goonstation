@@ -1,5 +1,13 @@
 
 (t)sun jul 05 20
+(u)mbc + Flaborized
+(p)1372
+(e)🗺🎨|mapping, sprites
+(*)Added new table mounted defibrillator.
+(u)mbc
+(p)1372
+(e)🗺🎨|mapping, sprites
+(*)Defibrillators can apply a Very short stun on targets who aren't in critical condition. Also, doctors spawn with defibrillators in their backpacks.
 (u)RichardGere
 (p)1341
 (e)⚖🔄|balance, rework
