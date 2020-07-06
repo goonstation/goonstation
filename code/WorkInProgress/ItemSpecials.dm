@@ -1508,31 +1508,29 @@
 				var/obj/itemspecialeffect/katana_dash/mid/mid2 = new
 				var/obj/itemspecialeffect/conc/end = new
 
+				start.do_flick = 1
+				mid1.do_flick = 1
+				mid2.do_flick = 1
+				end.do_flick = 1
+
 				//Draws the effects // I did this backwards maybe, but won't fix it -kyle
 				start.setup(T1)
 				start.dir = direction
-				flick(start.icon_state, start)
 				if (T4)
 					mid1.setup(T2)
 					mid1.dir = direction
-					flick(mid1.icon_state, mid1)
 					mid2.setup(T2)
 					mid2.dir = direction
-					flick(mid2.icon_state, mid2)
 					end.setup(T4)
 					end.dir = direction
-					flick(end.icon_state, end)
 				else if (T3)
 					mid1.setup(T2)
 					mid1.dir = direction
-					flick(mid1.icon_state, mid1)
 					end.setup(T3)
 					end.dir = direction
-					flick(end.icon_state, end)
 				else if (T2)
 					end.setup(T2)
 					end.dir = direction
-					flick(end.icon_state, end)
 
 				for(var/atom/movable/A in get_step(user, direction))
 					if(A in attacked) continue

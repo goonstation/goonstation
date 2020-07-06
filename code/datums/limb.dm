@@ -334,6 +334,13 @@
 			else
 				reloaded_at = ticker.round_elapsed_ticks + reload_time
 
+	spike
+		proj = new/datum/projectile/special/spreader/uniform_burst/spikes
+		shots = 1
+		current_shots = 1
+		cooldown = 1 SECOND
+		reload_time = 1 SECOND
+
 /datum/limb/mouth
 	var/sound_attack = "sound/weapons/werewolf_attack1.ogg"
 	var/dam_low = 3
@@ -1322,19 +1329,19 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if(check_target_immunity( target ))
 			return 0
+		if (istype(target,/mob/living/critter/small_animal/trilobite/ai_controlled))
+			return 0
 		var/quality = src.holder.quality
 		if (no_logs != 1)
 			logTheThing("combat", user, target, "slashes %target% with dash arms at [log_loc(user)].")
-
-		if (isliving(target))
-			var/mob/living/L = target
-			L.do_disorient(30, 1 SECOND, 0, 0, 0.5 SECONDS)
+		//	var/mob/living/L = target
+		//	L.do_disorient(24, 1 SECOND, 0, 0, 0.5 SECONDS)
 
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 1, 4, rand(0,1) * quality)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 1, 5, rand(0,2) * quality)
 		user.attack_effects(target, affecting)
 		var/action = pick("cut", "rip", "claw", "slashe")
-		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target]!</span></b>"
 		msgs.played_sound = "sound/impact_sounds/Flesh_Tear_3.ogg"
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)

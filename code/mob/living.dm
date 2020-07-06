@@ -1314,6 +1314,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	attack_particle(M,src)
 
 	if (M.a_intent != INTENT_HELP)
+		src.was_harmed(M)
+
 		if (M.mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in M.grabbed_by)
 				G.shoot()
@@ -1521,7 +1523,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 								if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
 									. *= 1		//do nothing
 								else
-									. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier) 
+									. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
 						else if(istype(A, /obj/storage))
 							// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
 							if (locate(/mob) in A.contents)
@@ -1617,3 +1619,29 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		for (var/datum/ailment_data/malady/M in src.ailments)
 			src.cure_disease(M)
 
+
+/mob/living/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	.= 0
+
+//left this here to standardize into living later
+/mob/living/critter/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	if (src.ai)
+		src.ai.was_harmed(weapon,M)
+	..()
+
+/mob/living/bullet_act(var/obj/projectile/P)
+	if (P.mob_shooter)
+		src.was_harmed(P.mob_shooter)
+	..()
+
+/mob/living/attackby(obj/item/W, mob/M)
+	var/oldbloss = get_brute_damage()
+	var/oldfloss = get_burn_damage()
+	..()
+	var/newbloss = get_brute_damage()
+	var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
+	if (reagents)
+		reagents.physical_shock((newbloss - oldbloss) * 0.15)
+
+	if ((damage > 0) || W.force)
+		src.was_harmed(M, W)
