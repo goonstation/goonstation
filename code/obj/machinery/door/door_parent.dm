@@ -354,7 +354,7 @@
 
 	return ..(I,user)
 
-/obj/machinery/door/proc/bumpopen(atom/movable/AM as mob|obj, yes)
+/obj/machinery/door/proc/bumpopen(atom/movable/AM as mob|obj)
 	if (src.operating)
 		return 0
 	if(world.time-last_used <= 10)
