@@ -184,7 +184,7 @@
 			return ..()
 	housing_handheld
 		var/obj/item/mechanics/trigger/trigger/the_trigger
-		slots=7
+		slots=7 // One slot used by the permanent button
 		name="Device Frame"
 		desc="A massively shrunken component cabinet fitted with a handle and an external button. Due to the average mechanic's low arm strength, it only holds 6 components."
 		w_class = 3.0 // fits in backpacks but not pockets. no quickdraw honk boxess
