@@ -4,7 +4,7 @@
 
 /obj/item/clothing/head/helmet/men
     name = "men"
-    desc = "面 : A light padded helmet with a grilled faceplate to protect the user in a kendo match."
+    desc = "\improper 面 : A light padded helmet with a grilled faceplate to protect the user in a kendo match."
     icon_state = "men"
     item_state = "men"
     seal_hair = 1
@@ -17,7 +17,7 @@
 
 /obj/item/clothing/suit/armor/douandtare
     name = "dou and tare"
-    desc = "胴と垂れ : A breastplate and padded skirt used primarily in kendo."
+    desc = "\improper 胴と垂れ : A breastplate and padded skirt used primarily in kendo."
     icon_state = "dou-tare"
     item_state = "dou-tare"
     body_parts_covered = TORSO | LEGS
@@ -53,7 +53,7 @@
 
 /obj/item/shinai
     name = "shinai"
-    desc = "竹刀 : A sword-like weapon made of slats of bamboo. Shinai are made to reflect the weight of a katana, but disperse impact on hit to minimize damage."
+    desc = "\improper 竹刀 : A sword-like weapon made of slats of bamboo. Shinai are made to reflect the weight of a katana, but disperse impact on hit to minimize damage."
     icon = 'icons/obj/items/weapons.dmi'
     inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
     icon_state = "shinai"
@@ -76,6 +76,10 @@
     item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
 
     var/guard
+
+    New()
+        ..()
+        BLOCK_SWORD
 
     proc/change_guard(var/mob/user,var/intent)
         user.do_disorient(10,0,0,0,0,0,null)
@@ -147,16 +151,17 @@
                 var/parry_block = S.parry_block_check(attacker,defender)
                 if((parry_block == 1) || (parry_block == 2))
                     attacker.do_disorient((attacker.equipped().stamina_damage),0,0,0,0,1,null)
-                    return
-                else if((attacker.a_intent=="disarm") && prob(20) && defender.equipped())
-                    var/obj/item/I = defender.equipped()
-                    defender.u_equip(I)
-                    I.set_loc(defender.loc)
-                    var/target_turf = get_offset_target_turf(I.loc,rand(5)-rand(5),rand(5)-rand(5))
-                    SPAWN_DBG(1 DECI SECOND)
-                    I.throw_at(target_turf,3,1)
-                    defender.show_text("<b>[attacker] knocks the [I] right out of your hands!</b>","red")
-                    attacker.show_text("<b>You knock the [I] right out of [defender]'s hands!</b>","green")
+                    return //stops damage if parried or blocked, if not, itll check for a disarm
+
+            if((attacker.a_intent=="disarm") && prob(20) && defender.equipped())
+                var/obj/item/I = defender.equipped()
+                defender.u_equip(I)
+                I.set_loc(defender.loc)
+                var/target_turf = get_offset_target_turf(I.loc,rand(5)-rand(5),rand(5)-rand(5))
+                SPAWN_DBG(1 DECI SECOND)
+                I.throw_at(target_turf,3,1)
+                defender.show_text("<b>[attacker] knocks the [I] right out of your hands!</b>","red")
+                attacker.show_text("<b>You knock the [I] right out of [defender]'s hands!</b>","green")
         ..()
 
     attack_hand(mob/user as mob)
@@ -174,7 +179,7 @@
 
 /obj/item/shinai_bag
     name = "shinai bag"
-    desc = "竹刀袋 : a tube-like back for holding two shinai."
+    desc = "\improper 竹刀袋 : A tube-like back for holding two shinai."
     wear_image_icon = 'icons/mob/back.dmi'
     icon_state = "shinaibag-closed"
     item_state = "shinaibag-closed"
@@ -196,17 +201,21 @@
             user.update_inhands()
 
     proc/draw_shinai(var/mob/user)
-        if(src.contents.len)
-            user.put_in_hand_or_drop(src.contents[1])
-            update_sprite(user)
-        else if(shinai)
-            var/obj/item/shinai/S = new /obj/item/shinai
-            user.put_in_hand_or_drop(S)
-            S.change_guard(user,user.a_intent)
-            shinai--
-            update_sprite(user)
-        else
+        if(!src.contents.len && !shinai)
             user.show_text("The [src] is empty!","red")
+            return
+
+        var/obj/item/shinai/S
+        if(src.contents.len)
+            S = src.contents[1]
+        else if(shinai)
+            S = new /obj/item/shinai
+            shinai--
+
+        update_sprite(user)
+        user.put_in_hand_or_drop(S)
+        S.change_guard(user,user.a_intent)
+        update_sprite(user)
 
     attack_self(mob/user as mob)
         open = !open
