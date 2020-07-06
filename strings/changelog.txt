@@ -1,4 +1,10 @@
 
+(t)mon jul 06 20
+(u)Gannets & Roselace
+(p)1383
+(e)⚖🎨|balance, sprites
+(*)New sprites for the MPRT7 rocket launcher by Roselace and Gannets.
+(*)It is now a two-handed weapon that can be worn on the backpack slot.
 (t)sun jul 05 20
 (u)AwkwardDryad
 (p)1258
