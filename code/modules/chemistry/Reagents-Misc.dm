@@ -3075,9 +3075,7 @@ datum
 			minimum_reaction_temperature = T0C + 50
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				holder.del_reagent(id)
 				var/list/covered = holder.covered_turf()
-
 				if(length(covered) < 9 || prob(2)) // no spam pls
 					if (holder.my_atom)
 						for (var/mob/O in AIviewers(get_turf(holder.my_atom), null))
@@ -3086,6 +3084,8 @@ datum
 						for(var/turf/t in covered)
 							for (var/mob/O in AIviewers(t, null))
 								boutput(O, "<span class='alert'>The blood reacts, attempting to escape the heat before sizzling away!</span>")
+
+				holder.del_reagent(id)
 
 
 		vomit
