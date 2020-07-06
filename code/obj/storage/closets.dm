@@ -179,7 +179,9 @@
 	/obj/item/knife/butcher/predspear = 2,
 	/obj/item/gun/energy/laser_gun/pred = 2,
 	/obj/item/stimpack = 2,
-	/obj/item/storage/belt/wrestling = 2)
+	/obj/item/storage/belt/wrestling = 2,
+	/obj/item/storage/box/kendo_box = 1,
+	/obj/item/storage/box/kendo_box/hakama = 1)
 
 /obj/storage/closet/thunderdome/green
 	icon_state = "syndicate1"
@@ -191,7 +193,9 @@
 	/obj/item/knife/butcher/predspear = 2,
 	/obj/item/gun/energy/laser_gun/pred = 2,
 	/obj/item/stimpack = 2,
-	/obj/item/storage/belt/wrestling = 2)
+	/obj/item/storage/belt/wrestling = 2,
+	/obj/item/storage/box/kendo_box = 1,
+	/obj/item/storage/box/kendo_box/hakama = 1)
 
 /obj/storage/closet/electrical_supply
 	name = "electrical supplies closet"

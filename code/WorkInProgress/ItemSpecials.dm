@@ -186,6 +186,8 @@
 
 	var/damageMult = 1
 
+	var/animation_color
+
 	var/manualTriggerOnly = 0 //If 1, the special will not trigger from normal "out of melee range" clicks but has to be triggered manually from somewhere.
 							  //This means none of the mouse procs or pixelaction will be called.
 
@@ -223,6 +225,8 @@
 		if(name == null || master == null) return
 		if(!user) user = usr
 		var/obj/itemspecialeffect/E = unpool(/obj/itemspecialeffect)
+		if(src.animation_color)
+			E.color = src.animation_color
 		E.setup(get_turf(user))
 		E.dir = direction
 		E.icon_state = name
@@ -238,7 +242,8 @@
 			return 0
 
 		if(user.a_intent == "help" || user.a_intent == "grab")
-			return 0
+			if(!(user.equipped() && (user.equipped().item_function_flags & USE_SPECIALS_ON_ALL_INTENTS)))
+				return 0
 
 		if (user.check_block())
 			return 0
@@ -437,6 +442,8 @@
 				var/turf/turf = get_step(master, direction)
 
 				var/obj/itemspecialeffect/simple/S = unpool(/obj/itemspecialeffect/simple)
+				if(src.animation_color)
+					S.color = src.animation_color
 				S.setup(turf)
 
 				var/hit = 0
@@ -451,6 +458,20 @@
 				if (!hit)
 					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
 			return
+
+		kendo_light
+			name = "Light Attack"
+			desc = "A weak, but fast and economic attack."
+			staminaCost = 5
+			animation_color = "#a3774d"
+
+		kendo_heavy
+			name = "Heavy Attack"
+			desc = "A powerful, but slow and draining attack."
+			staminaCost = 35
+			moveDelay = 5
+			moveDelayDuration = 5
+			animation_color = "#a3774d"
 
 	rangestab
 		cooldown = 0 //10
@@ -495,6 +516,15 @@
 					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
+		kendo_thrust
+			name = "Thrust"
+			desc = "A powerful ranged stab."
+			staminaCost = 8
+			damageMult = 1
+			animation_color = "#a3774d"
+
+			onAdd()
+				return
 	swipe
 		cooldown = 0 //30
 		staminaCost = 5
@@ -578,7 +608,6 @@
 					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
-
 		csaber //no stun and less damage than normal csaber hit ( see sword/attack() )
 
 			damageMult = 0.54
@@ -598,6 +627,19 @@
 			damageMult = 1
 
 			onAdd()
+				return
+
+		kendo_sweep
+			name = "Sweep"
+			desc = "An AoE attack with a chance to disarm."
+			//cooldown = 0 //30
+			staminaCost = 15
+			swipe_color = "#a3774d"
+			damageMult = 0.8
+
+			onAdd()
+				if(master)
+					overrideStaminaDamage = master.stamina_damage * 0.8
 				return
 
 	slam
@@ -1385,8 +1427,6 @@
 			if (ishuman(hit))
 				var/mob/living/carbon/human/H = hit
 				H.do_disorient(src.stamina_damage, stunned = 10)
-
-
 
 	nunchucks
 		cooldown = 30
