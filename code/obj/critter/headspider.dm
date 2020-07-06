@@ -7,7 +7,7 @@
 	aggressive = 1
 	atkcarbon = 1
 	atksilicon = 0
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	health = 80
 
 	var/datum/abilityHolder/changeling/changeling = null
