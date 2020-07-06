@@ -1284,13 +1284,16 @@ var/global/noir = 0
 		if ("checkbioeffect_add")
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
+				if (!ishuman(M))
+					alert("You may only use this secret on human mobs.")
+					return
 				var/input = input(usr, "Enter a /datum/bioEffect path or partial name.", "Add a Bioeffect", null) as null|text
 				input = get_one_match(input, "/datum/bioEffect")
-				var/datum/bioEffect/be_to_add = text2path("[input]")
-				if (be_to_add)
-					M.bioHolder.AddEffect(initial(be_to_add.id))
+				var/datum/bioEffect/BE = text2path("[input]")
+				if (BE)
+					M.bioHolder.AddEffect(initial(BE.id))
 					usr.client.cmd_admin_checkbioeffect(M)
-					message_admins("[key_name(usr)] added the [initial(be_to_add.id)] bio-effect to [key_name(M)].")
+					message_admins("[key_name(usr)] added the [initial(BE.id)] bio-effect to [key_name(M)].")
 			else
 				alert("You need to be at least a Secondary Administrator to add bioeffects to a player.")
 

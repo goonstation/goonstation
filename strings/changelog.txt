@@ -1,5 +1,17 @@
 
 (t)sun jul 05 20
+(u)mbc + Flaborized
+(p)1372
+(e)🗺🎨|mapping, sprites
+(*)Added new table mounted defibrillator.
+(u)mbc
+(p)1372
+(e)🗺🎨|mapping, sprites
+(*)Defibrillators can apply a Very short stun on targets who aren't in critical condition. Also, doctors spawn with defibrillators in their backpacks.
+(u)RichardGere
+(p)1341
+(e)⚖🔄|balance, rework
+(+)Fixed chaplain immunity inconsistencies. For a full list of covered abilities, please see the PR.
 (u)mbc
 (e)⚖|balance
 (+)Medbots will begin healing their target more quickly on approach (same fix that beepsky recently got)

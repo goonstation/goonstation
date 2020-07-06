@@ -46549,14 +46549,6 @@
 	pixel_x = -8;
 	pixel_y = -4
 	},
-/obj/item/wrench{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/paper/cryo{
-	pixel_x = 7;
-	pixel_y = 1
-	},
 /obj/machinery/light/incandescent/cool{
 	dir = 8
 	},
@@ -46565,9 +46557,17 @@
 	pixel_x = -26;
 	pixel_y = -1
 	},
-/obj/item/robodefibrillator{
-	pixel_x = 5;
-	pixel_y = -6
+/obj/machinery/defib_mount{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/wrench{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/paper/cryo{
+	pixel_x = 7;
+	pixel_y = -3
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)

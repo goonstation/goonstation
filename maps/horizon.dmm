@@ -22753,10 +22753,22 @@
 /area/station/medical/medbay/surgery)
 "bbb" = (
 /obj/table/auto,
-/obj/item/storage/box/iv_box,
-/obj/item/storage/box/lglo_kit,
-/obj/item/device/reagentscanner,
-/obj/item/reagent_containers/glass/beaker/large/epinephrine,
+/obj/item/storage/box/lglo_kit{
+	pixel_x = -7
+	},
+/obj/item/storage/box/iv_box{
+	pixel_x = -7
+	},
+/obj/machinery/defib_mount{
+	pixel_x = 8;
+	pixel_y = 1
+	},
+/obj/item/device/reagentscanner{
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/glass/beaker/large/epinephrine{
+	pixel_x = -8
+	},
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/redwhite{
 	dir = 8

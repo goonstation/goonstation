@@ -344,6 +344,7 @@ CONTAINS:
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "defib-on"
 	item_state = "defib"
+	pickup_sfx = "sound/items/pickup_defib.ogg"
 	var/icon_base = "defib"
 	var/charged = 1
 	var/charge_time = 100
@@ -379,7 +380,7 @@ CONTAINS:
 		return 1
 
 	attack(mob/living/M as mob, mob/user as mob)
-		if (!ishuman(M))
+		if (!isliving(M) || issilicon(M))
 			return ..()
 		if (src.defibrillate(M, user, src.emagged, src.makeshift, src.cell))
 			JOB_XP(user, "Medical Doctor", 5)
@@ -390,13 +391,13 @@ CONTAINS:
 			SPAWN_DBG(src.charge_time)
 				src.charged = 1
 				set_icon_state("[src.icon_base]-on")
-				playsound(user.loc, "sound/weapons/flash.ogg", 75, 1)
+				playsound(user.loc, "sound/weapons/flash.ogg", 75, 1, pitch = 0.88)
 
 	proc/do_the_shocky_thing(mob/user as mob)
 		if (src.charged == 0)
 			user.show_text("[src] is still charging!", "red")
 			return 0
-		playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 75, 1)
+		playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 75, 1, pitch = 0.92)
 		src.charged = 0
 		set_icon_state("[src.icon_base]-shock")
 		SPAWN_DBG(1 SECOND)
@@ -404,7 +405,7 @@ CONTAINS:
 		SPAWN_DBG(src.charge_time)
 			src.charged = 1
 			set_icon_state("[src.icon_base]-on")
-			playsound(src.loc, "sound/weapons/flash.ogg", 75, 1)
+			playsound(src.loc, "sound/weapons/flash.ogg", 75, 1, pitch = 0.88)
 		return 1
 
 	disposing()
@@ -433,8 +434,8 @@ CONTAINS:
 			user.suiciding = 0
 		return 1
 
-/obj/item/robodefibrillator/proc/defibrillate(var/mob/living/carbon/human/patient as mob, var/mob/living/user as mob, var/emagged = 0, var/faulty = 0, var/obj/item/cell/cell = null, var/suiciding = 0)
-	if (!ishuman(patient))
+/obj/item/robodefibrillator/proc/defibrillate(var/mob/living/patient as mob, var/mob/living/user as mob, var/emagged = 0, var/faulty = 0, var/obj/item/cell/cell = null, var/suiciding = 0)
+	if (!isliving(patient))
 		return 0
 
 	if (cell && cell.percent() <= 0)
@@ -473,23 +474,25 @@ CONTAINS:
 		else
 			patient.Virus_ShockCure(100)
 
-			for (var/uid in patient.pathogens)
-				var/datum/pathogen/P = patient.pathogens[uid]
-				P.onshocked(35, 500)
+			if (ishuman(patient)) //remove later when we give nonhumans pathogen / organ response?
+				var/mob/living/carbon/human/H = patient
+				for (var/uid in H.pathogens)
+					var/datum/pathogen/P = H.pathogens[uid]
+					P.onshocked(35, 500)
 
-			var/sumdamage = patient.get_brute_damage() + patient.get_burn_damage() + patient.get_toxin_damage()
-			if (suiciding)
+				var/sumdamage = patient.get_brute_damage() + patient.get_burn_damage() + patient.get_toxin_damage()
+				if (suiciding)
 
-			else if (patient.health < 0)
-				if (sumdamage >= 90)
-					user.show_text("<b>[patient]</b> looks horribly injured. Resuscitation alone may not help revive them.", "red")
-				if (prob(66))
-					patient.visible_message("<span class='notice'><b>[patient]</b> inhales deeply!</span>")
-					patient.take_oxygen_deprivation(-50)
-					if (patient.organHolder && patient.organHolder.heart)
-						patient.get_organ("heart").heal_damage(10,10,10)
-				else
-					patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond!</span>")
+				else if (patient.health < 0)
+					if (sumdamage >= 90)
+						user.show_text("<b>[patient]</b> looks horribly injured. Resuscitation alone may not help revive them.", "red")
+					if (prob(66))
+						patient.visible_message("<span class='notice'><b>[patient]</b> inhales deeply!</span>")
+						patient.take_oxygen_deprivation(-50)
+						if (H.organHolder && H.organHolder.heart)
+							H.get_organ("heart").heal_damage(10,10,10)
+					else
+						patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond!</span>")
 
 			if (cell)
 				var/adjust = cell.charge
@@ -541,8 +544,17 @@ CONTAINS:
 			return 1
 
 	else
-		user.visible_message("Nothing happens!",\
-		faulty ? "<span class='alert'>[src] doesn't discharge!</span>" : "<span class='alert'>[src]'s on board medical scanner indicates that no shock is required!</span>")
+		if (faulty)
+			user.visible_message("Nothing happens!", "<span class='alert'>[src] doesn't discharge!</span>")
+		else
+			if (do_the_shocky_thing(user))
+				user.visible_message("<span class='alert'><b>[user]</b> shocks [user == patient ? "[him_or_her(user)]self" : patient] with [src]!</span>",\
+				"<span class='alert'>You shock [user == patient ? "yourself" : patient] with [src]!</span>")
+				logTheThing("combat", patient, user, "was defibrillated by %target% with [src] when they didn't need it at [log_loc(patient)]")
+				patient.changeStatus("weakened", 0.7 SECONDS)
+				patient.force_laydown_standup()
+				patient.remove_stamina(45)
+
 		return 0
 
 /obj/item/robodefibrillator/emagged
@@ -567,6 +579,95 @@ CONTAINS:
 			newcell = new /obj/item/cell/charged(src)
 		src.cell = newcell
 		newcell.set_loc(src)
+
+
+
+
+/obj/item/robodefibrillator/mounted
+	var/obj/machinery/defib_mount/parent = null	//temp set while not attached
+	w_class = 4
+
+	move_callback(var/mob/living/M, var/turf/source, var/turf/target)
+		if (parent)
+			parent.put_back_defib(M)
+		else
+			qdel(src)
+
+	disposing()
+		parent = null
+		..()
+
+/obj/machinery/defib_mount
+	name = "mounted defibrillator"
+	icon = 'icons/obj/compact_machines.dmi'
+	desc = "Used to resuscitate critical patients."
+	icon_state = "defib1"
+	anchored = 1
+	density = 0
+	mats = 25
+	var/obj/item/robodefibrillator/mounted/defib = null
+
+	emag_act()
+		..()
+		defib.emag_act()
+
+	disposing()
+		if (defib)
+			qdel(defib)
+			defib = null
+		..()
+
+	proc/update_icon()
+		if (defib && defib.loc == src)
+			icon_state = "defib1"
+		else
+			icon_state = "defib0"
+
+	process()
+		if (src.defib && src.defib.loc != src)
+			if (get_dist(get_turf(src.defib), get_turf(src)) > 1)
+				if (isliving(src.defib.loc))
+					put_back_defib(src.defib.loc)
+		..()
+
+	attack_hand(mob/living/user as mob)
+		user.lastattacked = src
+		..()
+		if (!defib)
+			src.defib = new /obj/item/robodefibrillator/mounted(src)
+		user.put_in_hand_or_drop(src.defib)
+		src.defib.parent = src
+		playsound(get_turf(src), "sound/items/pickup_defib.ogg", 65, vary=0.2)
+
+		update_icon()
+
+		//set move callback (when user moves, defib go back)
+		if (islist(user.move_laying))
+			user.move_laying += src
+		else
+			if (user.move_laying)
+				user.move_laying = list(user.move_laying, src.defib)
+			else
+				user.move_laying = list(src.defib)
+
+	attackby(obj/item/W as obj, mob/living/user as mob)
+		user.lastattacked = src
+		if (W == src.defib)
+			src.defib.move_callback(user,get_turf(user),get_turf(src))
+
+	proc/put_back_defib(var/mob/living/M)
+		if (src.defib)
+			M.drop_item(defib)
+			src.defib.loc = src
+			src.defib.parent = null
+		if (islist(M.move_laying))
+			M.move_laying -= src.defib
+		else
+			M.move_laying = null
+
+		playsound(get_turf(src), "sound/items/putback_defib.ogg", 65, vary=0.2)
+		update_icon()
+
 
 /* ================================================ */
 /* -------------------- Suture -------------------- */
