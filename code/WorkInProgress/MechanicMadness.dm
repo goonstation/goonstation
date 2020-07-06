@@ -48,7 +48,7 @@ var/list/mechanics_telepads = new/list()
 		if(level == 2 || under_floor)
 			cutParticles()
 			return
-		var/list/connected_outgoing
+		var/list/connected_outgoing = list()
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_GET_OUTGOING, connected_outgoing) //MarkNstein needs attention
 		if(length(particles) != length(connected_outgoing))
 			cutParticles()

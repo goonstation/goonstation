@@ -15,10 +15,10 @@
 	var/list/nodes = list()
 	var/datum/computer/file/data_file
 
-/datum/mechanicsMessage/proc/addNode(/obj/O)
+/datum/mechanicsMessage/proc/addNode(var/obj/O)
 	nodes.Add(O)
 
-/datum/mechanicsMessage/proc/hasNode(/obj/O)
+/datum/mechanicsMessage/proc/hasNode(var/obj/O)
 	return nodes.Find(O)
 
 /datum/mechanicsMessage/proc/isTrue() //Thanks for not having bools , byond.
@@ -111,10 +111,10 @@
 
 //Give the caller a copied list of our outgoing connections.
 /datum/component/mechanics_holder/proc/getOutgoing(var/list/outout)
-	outout = connected_outgoing.Copy()
+	outout = connected_outgoing
 	return
 
-//Allow special filtering to happen on ourgoing transmissions - potentially setup with each new linkage.
+//Allow special filtering to happen on ourgoing transmissions - potentially setup with each new link_devicesage.
 /datum/component/mechanics_holder/proc/enableSpecialFiltering(var/list/outout)
 	//Well well well, look at you; you can filter your outputs — how special.
 	specialFiltering = 1
@@ -180,26 +180,26 @@
 
 //Called when a component is dragged onto another one.
 /datum/component/mechanics_holder/proc/dropConnect(obj/O, mob/user)//MarkNstein needs attention
-	if(!O || O == parent || usr.stat || !isliving(usr) || (SEND_SIGNAL(O,COMSIG_MECHCOMP_COMPATIBLE) != 1))  //ZeWaka: Fix for null.mechanics //MarkNstein needs attention
+	if(!O || O == parent || user.stat || !isliving(user) || (SEND_SIGNAL(O,COMSIG_MECHCOMP_COMPATIBLE) != 1))  //ZeWaka: Fix for null.mechanics //MarkNstein needs attention
 		return
 
-	if (!usr.find_tool_in_hand(TOOL_PULSING))
-		boutput(usr, "<span class='alert'>[MECHFAILSTRING]</span>")
+	if (!user.find_tool_in_hand(TOOL_PULSING))
+		boutput(user, "<span class='alert'>[MECHFAILSTRING]</span>")
 		return
 
 	var/typesel = input(user, "Use [parent] as:", "Connection Type") in list("Trigger", "Receiver", "*CANCEL*")
 	switch(typesel)
 		if("Trigger")
-			SEND_SIGNAL(O, COMSIG_MECHCOMP_LINK, parent) //MarkNstein needs attention
+			SEND_SIGNAL(O, COMSIG_MECHCOMP_LINK, parent, user) //MarkNstein needs attention
 		if("Receiver")
-			link(O) //What do you want, an invitation? No signal needed!
+			link_devices(O, user) //What do you want, an invitation? No signal needed!
 		if("*CANCEL*")
 			return
 	return
 
 //We are in the scope of the receiver-component, our argument is the trigger
 //This feels weird/backwards, but it results in fewer SEND_SIGNALS & var/lists
-/datum/component/mechanics_holder/proc/link(obj/trigger, mob/user)
+/datum/component/mechanics_holder/proc/link_devices(obj/trigger, mob/user)
 	var/obj/receiver = parent
 	if(trigger in connected_outgoing)
 		boutput(user, "<span class='alert'>Can not create a direct loop between 2 components.</span>")
@@ -208,7 +208,7 @@
 		boutput(user, "<span class='alert'>[receiver.name] has no input slots. Can not connect [trigger.name] as Trigger.</span>")
 		return
 	
-	var/list/trg_outgoing
+	var/list/trg_outgoing = list()
 	SEND_SIGNAL(trigger, COMSIG_MECHCOMP_GET_OUTGOING, trg_outgoing) //MarkNstein needs attention
 	var/selected_input = input(user, "Select \"[receiver.name]\" Input", "Input Selection") in inputs + "*CANCEL*"
 	if(selected_input == "*CANCEL*") return
