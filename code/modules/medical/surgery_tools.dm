@@ -626,7 +626,7 @@ CONTAINS:
 	process()
 		if (src.defib && src.defib.loc != src)
 			if (get_dist(get_turf(src.defib), get_turf(src)) > 1)
-				if (isliving(src.defib.loc)
+				if (isliving(src.defib.loc))
 					put_back_defib(src.defib.loc)
 		..()
 
