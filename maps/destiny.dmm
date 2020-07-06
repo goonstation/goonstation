@@ -24350,7 +24350,6 @@
 	icon_state = "bigstripe"
 	},
 /obj/item/clothing/under/patient_gown,
-/obj/item/robodefibrillator,
 /obj/item/paper/book/medical_surgery_guide,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
@@ -45260,9 +45259,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/stool/chair/comfy/wheelchair{
-	dir = 4
-	},
+/obj/table/reinforced/auto,
+/obj/machinery/defib_mount,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bBP" = (

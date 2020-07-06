@@ -12309,6 +12309,9 @@
 	dir = 8;
 	level = 2
 	},
+/obj/cable{
+	icon_state = "6-10"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aBY" = (
@@ -12753,21 +12756,28 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
 	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aDd" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	icon_state = "2-5"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aDe" = (
-/obj/cable{
-	icon_state = "6-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/power/stats_meter{
 	name = "Cold Loop Inlet Meter";
@@ -12778,6 +12788,11 @@
 	pixel_x = 9;
 	pixel_y = -8
 	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aDf" = (
@@ -13247,11 +13262,22 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aEh" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -13272,10 +13298,10 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aEl" = (
-/obj/cable{
-	icon_state = "4-9"
-	},
 /obj/machinery/atmospherics/valve,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aEm" = (
@@ -13638,10 +13664,22 @@
 	name = "Hot Loop Outlet Meter";
 	tag = "Hot Loop Outlet Meter"
 	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aFh" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aFi" = (
@@ -13651,6 +13689,14 @@
 /obj/machinery/power/stats_meter{
 	name = "Cold Loop Outlet Meter";
 	tag = "Cold Loop Outlet Meter"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -26415,13 +26461,16 @@
 /area/station/medical/medbay/surgery)
 "biv" = (
 /obj/table/auto,
-/obj/item/paper/book/medical_surgery_guide,
-/obj/item/robodefibrillator,
-/obj/item/robodefibrillator,
+/obj/item/paper/book/medical_surgery_guide{
+	pixel_y = 14
+	},
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
+	},
+/obj/machinery/defib_mount{
+	pixel_y = -4
 	},
 /turf/simulated/floor/redwhite{
 	dir = 5
@@ -54139,6 +54188,17 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"dTh" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "dVP" = (
 /obj/decal/poster/wallsign/security,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -54355,6 +54415,17 @@
 	dir = 8
 	},
 /area/station/hallway/primary/east)
+"foi" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-9"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "fqj" = (
 /obj/machinery/recharge_station,
 /obj/machinery/light/small{
@@ -54461,6 +54532,13 @@
 	},
 /turf/space,
 /area/station/ai_monitored/armory)
+"fWk" = (
+/obj/machinery/atmospherics/valve,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core)
 "fYL" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -54543,6 +54621,8 @@
 	name = "Hot Loop Combustion Chamber Meter";
 	tag = "Hot Loop Combustion Chamber Meter"
 	},
+/obj/machinery/power/data_terminal,
+/obj/cable,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
 "gNp" = (
@@ -55189,6 +55269,16 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics)
+"kTo" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	level = 2
+	},
+/obj/machinery/meter,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "kTp" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -55287,6 +55377,16 @@
 /obj/machinery/light,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"lrq" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "lvb" = (
 /obj/grille/steel,
 /obj/disposalpipe/segment/transport,
@@ -55424,6 +55524,10 @@
 /area/station/hallway/primary/east)
 "mCe" = (
 /obj/machinery/optable,
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_y = -1;
+	rand_pos = 0
+	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "mEW" = (
@@ -55883,12 +55987,11 @@
 /area/station/crewquarters/cryotron)
 "pry" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/medical_surgery_guide,
-/obj/item/robodefibrillator,
-/obj/item/robodefibrillator,
-/obj/item/device/analyzer/healthanalyzer{
-	pixel_y = 6;
-	rand_pos = 0
+/obj/item/paper/book/medical_surgery_guide{
+	pixel_x = 9
+	},
+/obj/machinery/defib_mount{
+	pixel_x = -6
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
@@ -56684,6 +56787,9 @@
 	on = 1;
 	pixel_y = 1;
 	target_pressure = 1e+031
+	},
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -100796,7 +100902,7 @@ auL
 aAX
 aBV
 aDf
-aDf
+dTh
 aBY
 aGp
 auL
@@ -101099,7 +101205,7 @@ aAY
 aBV
 uMJ
 aEh
-aGr
+kTo
 aDb
 aHu
 aIt
@@ -102006,8 +102112,8 @@ aBX
 aDe
 aEk
 aFi
-aDb
-aHu
+lrq
+fWk
 gMO
 aJt
 aKB
@@ -102305,7 +102411,7 @@ ayY
 azW
 aBb
 aBY
-aBa
+foi
 aEl
 aGr
 cIl
