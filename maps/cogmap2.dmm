@@ -17373,6 +17373,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/random_item_spawner/med_tool,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -17842,9 +17843,16 @@
 	icon_state = "pipe-c"
 	},
 /obj/table/reinforced/auto,
-/obj/random_item_spawner/med_tool,
-/obj/item/bandage,
-/obj/item/bandage,
+/obj/item/bandage{
+	pixel_x = 2;
+	pixel_y = 14
+	},
+/obj/item/bandage{
+	pixel_y = 14
+	},
+/obj/machinery/defib_mount{
+	pixel_y = -4
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -70581,7 +70589,8 @@
 "cXO" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/atmospherics/unary/vent_pump/west,
-/obj/item/clothing/suit/cardboard_box/head_surgeon,
+/obj/table/auto,
+/obj/machinery/defib_mount,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "cXP" = (
@@ -75082,6 +75091,7 @@
 "dhB" = (
 /obj/disposalpipe/segment/morgue,
 /obj/machinery/drainage,
+/obj/item/clothing/suit/cardboard_box/head_surgeon,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "dhC" = (

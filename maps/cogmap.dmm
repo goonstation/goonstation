@@ -18799,6 +18799,8 @@
 	dir = 8;
 	pixel_x = 6
 	},
+/obj/table/auto,
+/obj/machinery/defib_mount,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -59004,7 +59006,6 @@
 /area/station/crew_quarters/info)
 "ctz" = (
 /obj/machinery/optable,
-/obj/item/robodefibrillator,
 /turf/simulated/floor/bot,
 /area/station/medical/medbay/surgery)
 "ctA" = (
@@ -59333,11 +59334,7 @@
 /area/station/medical/medbay/surgery)
 "cum" = (
 /obj/table/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/mask/surgical_shield,
-/obj/item/surgical_spoon,
+/obj/machinery/defib_mount,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -59840,9 +59837,9 @@
 /area/station/crew_quarters/info)
 "cvh" = (
 /obj/table/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
 /obj/item/device/analyzer/healthanalyzer,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/clothing/mask/surgical_shield,
 /obj/item/clothing/mask/surgical_shield,
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -60640,6 +60637,7 @@
 /obj/item/device/reagentscanner,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/dropper,
+/obj/item/clothing/mask/surgical,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
 "cwQ" = (

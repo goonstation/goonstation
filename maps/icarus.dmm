@@ -18702,8 +18702,12 @@
 /area/station/medical/medbay/surgery)
 "aOk" = (
 /obj/table/auto,
-/obj/item/scalpel,
-/obj/item/scalpel,
+/obj/item/scalpel{
+	pixel_y = 6
+	},
+/obj/item/scalpel{
+	pixel_y = 6
+	},
 /obj/item/circular_saw{
 	pixel_x = 3;
 	pixel_y = 12
@@ -18714,6 +18718,9 @@
 	},
 /obj/item/suture,
 /obj/item/suture,
+/obj/machinery/defib_mount{
+	pixel_y = -6
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "aOl" = (
