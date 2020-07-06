@@ -1428,6 +1428,125 @@
 				var/mob/living/carbon/human/H = hit
 				H.do_disorient(src.stamina_damage, stunned = 10)
 
+
+	katana_dash/limb
+		cooldown = 0
+		moveDelay = 0
+		moveDelayDuration = 0
+		staminaCost = 30		//Stamina cost of attack
+		requiresStaminaToFire = 1
+		staminaReqAmt = 0
+
+		image = "katana"
+		name = "Dash"
+		desc = "Instantly dash to a location while attacking."
+
+		secondhit_delay = 1
+		reversed = 0
+
+		var/datum/limb/L
+
+		preUse(var/mob/person)
+			..()
+			L = person.equipped_limb()
+			if (!L)
+				return
+			L.special_next = 1
+
+		afterUse(var/mob/person)
+			..()
+			if (L)
+				L.special_next = 0
+
+		pixelaction(atom/target, params, mob/user, reach)
+			if(!isturf(target.loc) && !isturf(target)) return
+			if(!usable(user)) return
+
+			if(params["left"] && params["ai"] || get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+				preUse(user)
+				var/direction = get_dir_pixel(user, target, params)
+				if (reversed)
+					direction = turn(direction, 180)
+				var/list/attacked = list()
+
+				var/turf/T1 = get_turf(user)
+				var/turf/T2 = null
+				var/turf/T3 = null
+				var/turf/T4 = null
+
+				//This steps the user to his destination and gets the turfs needed for drawing the effects and where the attack hits
+				var/stopped = 0
+				var/prev_loc = get_turf(user)
+				step(user, direction)
+				if (get_turf(user) != prev_loc)
+					T2 = get_turf(user)
+				else
+					stopped = 1
+
+				sleep(world.tick_lag)
+
+				prev_loc = get_turf(user)
+				step(user, direction)
+				if (!stopped && get_turf(user) != prev_loc)
+					T3 = get_turf(user)
+				else
+					stopped = 2
+
+				sleep(world.tick_lag)
+
+				prev_loc = get_turf(user)
+				step(user, direction)
+				if (!stopped && get_turf(user) != prev_loc)
+					T4 = get_turf(user)
+				else
+					stopped = 3
+
+				sleep(world.tick_lag)
+
+				var/obj/itemspecialeffect/conc/start = new
+				var/obj/itemspecialeffect/katana_dash/mid/mid1 = new
+				var/obj/itemspecialeffect/katana_dash/mid/mid2 = new
+				var/obj/itemspecialeffect/conc/end = new
+
+				//Draws the effects // I did this backwards maybe, but won't fix it -kyle
+				start.setup(T1)
+				start.dir = direction
+				flick(start.icon_state, start)
+				if (T4)
+					mid1.setup(T2)
+					mid1.dir = direction
+					flick(mid1.icon_state, mid1)
+					mid2.setup(T2)
+					mid2.dir = direction
+					flick(mid2.icon_state, mid2)
+					end.setup(T4)
+					end.dir = direction
+					flick(end.icon_state, end)
+				else if (T3)
+					mid1.setup(T2)
+					mid1.dir = direction
+					flick(mid1.icon_state, mid1)
+					end.setup(T3)
+					end.dir = direction
+					flick(end.icon_state, end)
+				else if (T2)
+					end.setup(T2)
+					end.dir = direction
+					flick(end.icon_state, end)
+
+				for(var/atom/movable/A in get_step(user, direction))
+					if(A in attacked) continue
+					if(isTarget(A))
+						attacked += A
+						A.attack_hand(user,params)
+						// hit = 1
+						break
+
+				afterUse(user)
+				//if (!hit)
+				playsound(get_turf(user), 'sound/effects/swoosh.ogg', 40, 1, pitch = 2.3)
+			return
+
 	nunchucks
 		cooldown = 30
 		staminaCost = 40

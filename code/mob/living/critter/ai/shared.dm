@@ -7,7 +7,7 @@
 // responsible for: selecting a target (and reporting back the evaluation score based on its value)
 // and moving through the following two tasks:
 // moving to a selected target, performing a /datum/action on the selected target
-/datum/aiTask/sequence/goalbased/	
+/datum/aiTask/sequence/goalbased/
 	name = "goal parent"
 	var/weight = 1 // for weighting the importance of the goal this sequence is in charge of
 	var/max_dist = 5 // the maximum tile distance that we look for targets
@@ -50,7 +50,7 @@
 	// by default, return the score of the best target
 	return precondition() * score_target(get_best_target(get_targets()))
 
-/datum/aiTask/sequence/goalbased/on_tick()	
+/datum/aiTask/sequence/goalbased/on_tick()
 	..()
 	if(!holder.target)
 		holder.target = get_best_target(get_targets())
@@ -108,7 +108,7 @@
 
 // vvv OVERRIDE THE PROCS BELOW AS REQUIRED vvv
 
-/datum/aiTask/timed/targeted/proc/get_targets()	
+/datum/aiTask/timed/targeted/proc/get_targets()
 	return list()
 
 /datum/aiTask/timed/targeted/proc/score_target(var/atom/target)
@@ -130,7 +130,7 @@
 	if(!move_target)
 		fails++
 		return
-	src.found_path = cirrAstar(get_turf(holder.owner), get_turf(move_target), 0, null, /proc/heuristic, 60)	
+	src.found_path = cirrAstar(get_turf(holder.owner), get_turf(move_target), 0, null, /proc/heuristic, 60)
 	if(!src.found_path) // no path :C
 		fails++
 
@@ -140,22 +140,22 @@
 
 /datum/aiTask/succeedable/move/on_tick()
 	walk(holder.owner, 0)
-	if(src.found_path)		
+	if(src.found_path)
 		if(src.found_path.len > 0)
-			// follow the path			
+			// follow the path
 			src.found_path.Cut(1, 2)
-			var/turf/next 
+			var/turf/next
 			if(src.found_path.len >= 1)
 				next = src.found_path[1]
 			else
 				next = move_target
-			walk_to(holder.owner, next, 0, 4)									
-			if(get_dist(get_turf(holder.owner), next) <= 1)								
+			walk_to(holder.owner, next, 0, 4)
+			if(get_dist(get_turf(holder.owner), next) <= 1)
 				fails = 0
 			else
 				// we aren't where we ought to be
 				fails++
-				get_path()				
+				get_path()
 	else
 		// get a path
 		get_path()
@@ -172,4 +172,67 @@
 	name = "waiting"
 	minimum_task_ticks = 10
 	maximum_task_ticks = 10
+
+
+
+
+
+//specials
+
+/datum/aiTask/timed/targeted/special_attack
+	name = "attack"
+	minimum_task_ticks = 10
+	maximum_task_ticks = 25
+	var/weight = 15
+	target_range = 8
+	var/last_seek = 0
+
+/datum/aiTask/timed/targeted/special_attack/proc/precondition()
+	. = 1
+
+/datum/aiTask/timed/targeted/special_attack/evaluate()
+	return precondition() * weight * score_target(get_best_target(get_targets()))
+
+/datum/aiTask/timed/targeted/special_attack/on_tick()
+	walk_to(holder.owner, 0)
+	if (HAS_MOB_PROPERTY(holder.owner, PROP_CANTMOVE))
+		return
+
+	if(!holder.target)
+		if (world.time > last_seek + 4 SECONDS)
+			last_seek = world.time
+			holder.target = pick(get_targets())
+	if(holder.target)
+		var/mob/living/M = holder.target
+		if(!isalive(M))
+			holder.target = get_best_target(get_targets())
+			if(!holder.target)
+				return // try again next tick
+
+		var/dist = get_dist(holder.owner, M)
+		if (dist > 2)
+			walk_to(holder.owner, M, 1, 3.2, (32 / 3.2) * world.tick_lag)
+		else
+			walk_away(holder.owner, M, 1, 10, (32 / 10) * world.tick_lag)
+
+		if (M.equipped())
+			holder.owner.a_intent = prob(66) ? INTENT_DISARM : INTENT_HARM
+		else
+			holder.owner.a_intent = INTENT_HARM
+
+		holder.owner.hud.update_intent()
+		holder.owner.dir = get_dir(holder.owner, M)
+
+		var/list/params = list()
+		params["left"] = 1
+		params["ai"] = 1
+		holder.owner.hand_range_attack(M, params)
+
+/datum/aiTask/timed/targeted/special_attack/get_targets()
+	var/list/targets = list()
+	if(holder.owner)
+		for(var/mob/living/M in view(target_range, holder.owner))
+			if(isalive(M) && !ismobcritter(M))
+				targets += M
+	return targets
 

@@ -74,9 +74,9 @@ todo: add more small animals!
 		if(src.is_pet)
 			pets += src
 		..()
-		
+
 		src.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
-		
+
 	disposing()
 		if(src.is_pet)
 			pets -= src
@@ -2624,3 +2624,80 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.icon_state = "beak"
 		HH.name = "right claw"
 		HH.limb_name = "claw"
+
+
+
+/mob/living/critter/small_animal/trilobite
+	name = "trilobite"
+	real_name = "trilobite"
+	desc = "This is an alien trilobite."
+	icon_state = "trilobite"
+	icon_state_dead = "trilobite-dead"
+	speechverb_say = "clicks"
+	speechverb_exclaim = "screeches"
+	speechverb_ask = "chitters"
+	health_brute = 15
+	health_burn = 10
+	flags = TABLEPASS | DOORPASS
+	fits_under_table = 1
+
+	density = 1
+
+//	var/mob/living/target = null
+
+	New()
+		..()
+		src.remove_stam_mod_max("small_animal")
+		src.add_stam_mod_max("trilobite", -(STAMINA_MAX-10))
+		SPAWN_DBG(1 SECOND)
+			animate_bumble(src)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter/med/dash
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "mouth"
+		HH.limb_name = "mouth"
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream","chitter")
+				if (src.emote_check(voluntary, 50))
+					playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1, pitch = 1.3)
+					return "<span class='emote'><b>[src]</b> chitters!</span>"
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream","chitter")
+				return 2
+		return ..()
+
+	death(var/gibbed)
+		playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1, pitch = 1.7)
+		..()
+
+	ai_controlled
+		is_npc = 1
+		New()
+			..()
+			src.ai = new /datum/aiHolder/trilobite(src)
+
+
+		death(var/gibbed)
+			walk(src, 0)
+			qdel(src.ai)
+			src.ai = null
+			..()
+
+
+/datum/aiHolder/trilobite
+	exclude_from_mobs_list = 1
+
+/datum/aiHolder/trilobite/New()
+	..()
+	default_task = get_instance(/datum/aiTask/timed/targeted/special_attack, list(src))
+
+
