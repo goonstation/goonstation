@@ -1,5 +1,9 @@
 
 (t)sun jul 05 20
+(u)AwkwardDryad
+(p)1258
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added kendo! Gear can be found in VR and in any gym on station!
 (u)MarkNstein
 (p)1347
 (e)🆕|feature
