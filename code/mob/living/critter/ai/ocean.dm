@@ -306,9 +306,9 @@
 				holder.target = pick(possible)
 	if(holder.target)
 		var/dist = get_dist(holder.owner, holder.target)
-		if (dist > 1)
+		if (dist >= 1)
 			if (prob(80))
-				holder.move_to(holder.target)
+				holder.move_to(holder.target,0)
 			else
 				holder.move_circ(holder.target)
 		else
@@ -341,6 +341,7 @@
 							G.attack_self(holder.owner)
 						else
 							holder.owner.emote("flip")
+							holder.move_away(holder.target,1)
 					else
 						holder.owner.drop_item()
 		else
