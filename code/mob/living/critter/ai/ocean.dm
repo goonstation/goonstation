@@ -269,10 +269,10 @@
 /datum/aiTask/timed/targeted/pikaia
 	name = "attack"
 	minimum_task_ticks = 7
-	maximum_task_ticks = 20
+	maximum_task_ticks = 26
 	var/weight = 15
 	target_range = 8
-	frustration_threshold = 3
+	frustration_threshold = 5
 	var/last_seek = 0
 
 
