@@ -11,7 +11,7 @@
 		return 1
 
 	var/turf/T = get_turf(holder.owner)
-	if(istype(T))
+	if(T == holder.owner.loc)
 		playsound(T, 'sound/effects/shovel1.ogg', 50, 1, 0.3)
 		holder.owner.visible_message("<span class='notice'><b>[holder.owner]</b> buries themselves!</span>",
 		                             "<span class='notice'>You bury yourself.</span>")

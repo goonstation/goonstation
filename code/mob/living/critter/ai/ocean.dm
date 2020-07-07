@@ -19,9 +19,10 @@
 
 	tick()
 		..()
-		if (holder.owner.abilityHolder)
+		if (holder.owner.abilityHolder && !holder.owner.equipped())
 			var/datum/targetable/critter/bury_hide/BH = holder.owner.abilityHolder.getAbility(/datum/targetable/critter/bury_hide)
-			BH.cast(get_turf(holder.owner))
+			if (BH)
+				BH.cast(get_turf(holder.owner))
 
 /datum/aiTask/timed/targeted/trilobite
 	name = "attack"
@@ -333,10 +334,15 @@
 				else
 					var/obj/item/grab/G = holder.owner.equipped()
 					if (istype(G))
+						if (G.affecting == null || G.assailant == null || G.disposed) //ugly safety
+							holder.owner.drop_item()
+
 						if (G.state <= GRAB_PASSIVE)
 							G.attack_self(holder.owner)
 						else
 							holder.owner.emote("flip")
+					else
+						holder.owner.drop_item()
 		else
 			holder.move_circ(holder.target,target_range+8)
 
