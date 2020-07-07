@@ -551,7 +551,7 @@ CONTAINS:
 				user.visible_message("<span class='alert'><b>[user]</b> shocks [user == patient ? "[him_or_her(user)]self" : patient] with [src]!</span>",\
 				"<span class='alert'>You shock [user == patient ? "yourself" : patient] with [src]!</span>")
 				logTheThing("combat", patient, user, "was defibrillated by %target% with [src] when they didn't need it at [log_loc(patient)]")
-				patient.changeStatus("weakened", 0.7 SECONDS)
+				patient.changeStatus("weakened", 0.1 SECONDS)
 				patient.force_laydown_standup()
 				patient.remove_stamina(45)
 
