@@ -74,9 +74,9 @@ todo: add more small animals!
 		if(src.is_pet)
 			pets += src
 		..()
-		
+
 		src.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
-		
+
 	disposing()
 		if(src.is_pet)
 			pets -= src
@@ -2624,3 +2624,146 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.icon_state = "beak"
 		HH.name = "right claw"
 		HH.limb_name = "claw"
+
+
+
+/mob/living/critter/small_animal/trilobite
+	name = "trilobite"
+	real_name = "trilobite"
+	desc = "This is an alien trilobite."
+	icon_state = "trilobite"
+	icon_state_dead = "trilobite-dead"
+	speechverb_say = "clicks"
+	speechverb_exclaim = "screeches"
+	speechverb_ask = "chitters"
+	health_brute = 6
+	health_burn = 4
+	flags = TABLEPASS | DOORPASS
+	fits_under_table = 1
+
+	density = 1
+
+	base_move_delay = 4
+	base_walk_delay = 5
+
+//	var/mob/living/target = null
+
+	New()
+		..()
+		src.remove_stam_mod_max("small_animal")
+		src.add_stam_mod_max("trilobite", -(STAMINA_MAX-10))
+		abilityHolder.addAbility(/datum/targetable/critter/bury_hide)
+		SPAWN_DBG(1 SECOND)
+			animate_bumble(src)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter/med/dash
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "mouth"
+		HH.limb_name = "mouth"
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream","chitter")
+				if (src.emote_check(voluntary, 50))
+					playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1, pitch = 1.3)
+					return "<span class='emote'><b>[src]</b> chitters!</span>"
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream","chitter")
+				return 2
+		return ..()
+
+	death(var/gibbed)
+		playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1, pitch = 1.7)
+		new /obj/item/raw_material/claretine(src.loc)
+		new /obj/item/raw_material/chitin(src.loc)
+		if (prob(70))
+			new /obj/item/raw_material/claretine(src.loc)
+			new /obj/item/raw_material/chitin(src.loc)
+		..()
+
+	ai_controlled
+		is_npc = 1
+		New()
+			..()
+			src.ai = new /datum/aiHolder/trilobite(src)
+
+		death(var/gibbed)
+			qdel(src.ai)
+			src.ai = null
+			..()
+
+
+
+/mob/living/critter/small_animal/hallucigenia
+	name = "hallucigenia"
+	real_name = "hallucigenia"
+	desc = "This is an alien hallucigenia."
+	icon_state = "hallucigenia"
+	icon_state_dead = "hallucigenia-dead"
+	speechverb_say = "clicks"
+	speechverb_exclaim = "screeches"
+	speechverb_ask = "chitters"
+	health_brute = 10
+	health_burn = 7
+	flags = TABLEPASS | DOORPASS
+	fits_under_table = 1
+
+	density = 1
+
+	base_move_delay = 13
+	base_walk_delay = 15
+
+//	var/mob/living/target = null
+
+	New()
+		..()
+		src.remove_stam_mod_max("small_animal")
+		src.add_stam_mod_max("hallucigenia", -(STAMINA_MAX-100))
+		src.add_sm_light("hallucigenia\ref[src]", list(255,100,100,0.8 * 255))
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/spike
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handzap"
+		HH.name = "spikes"
+		HH.limb_name = "spikes"
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream","chitter")
+				if (src.emote_check(voluntary, 50))
+					playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1, pitch = 0.7)
+					return "<span class='emote'><b>[src]</b> chitters!</span>"
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream","chitter")
+				return 2
+		return ..()
+
+	death(var/gibbed)
+		playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1, pitch = 0.6)
+		new /obj/item/reagent_containers/food/snacks/healgoo(get_turf(src))
+
+		..()
+
+	ai_controlled
+		is_npc = 1
+		New()
+			..()
+			src.ai = new /datum/aiHolder/spike(src)
+
+		death(var/gibbed)
+			qdel(src.ai)
+			src.ai = null
+			..()
