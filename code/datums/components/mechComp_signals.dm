@@ -57,7 +57,8 @@
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_OUTGOING), .proc/removeOutgoing)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_ALL_CONNECTIONS), .proc/WipeConnections)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_GET_OUTGOING), .proc/getOutgoing)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_LINK), .proc/dropConnect)
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_DROPCONNECT), .proc/dropConnect)
+	RegisterSignal(parent, list(COMSIG_MECHCOMP_LINK), .proc/link_devices)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ENABLE_SPECIAL_FILTERING), .proc/enableSpecialFiltering) //See defines at the top of the document
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_CONFIG), .proc/addConfig)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL), .proc/allowManualSingalSetting) //Only use this when also using COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG
@@ -76,6 +77,7 @@
 	COMSIG_MECHCOMP_RM_OUTGOING,\
 	COMSIG_MECHCOMP_RM_ALL_CONNECTIONS,\
 	COMSIG_MECHCOMP_GET_OUTGOING,\
+	COMSIG_MECHCOMP_DROPCONNECT,\
 	COMSIG_MECHCOMP_LINK,\
 	COMSIG_MECHCOMP_ENABLE_SPECIAL_FILTERING,\
 	COMSIG_MECHCOMP_ADD_CONFIG,\
@@ -98,51 +100,51 @@
 	return
 
 //Remove a device from our list of transitting devices.
-/datum/component/mechanics_holder/proc/removeIncoming(var/obj/O)
+/datum/component/mechanics_holder/proc/removeIncoming(var/comsig_target, var/obj/O)
 	connected_incoming.Remove(O)
 	return
 
 //Remove a device from our list of receiving devices.
-/datum/component/mechanics_holder/proc/removeOutgoing(var/obj/O)
+/datum/component/mechanics_holder/proc/removeOutgoing(var/comsig_target, var/obj/O)
 	connected_outgoing.Remove(O)
 	if(specialFiltering)
 		parent:MECHCOMP_RM_FILTER_FUNC(O)
 	return
 
 //Give the caller a copied list of our outgoing connections.
-/datum/component/mechanics_holder/proc/getOutgoing(var/list/outout)
+/datum/component/mechanics_holder/proc/getOutgoing(var/comsig_target, var/list/outout)
 	outout = connected_outgoing
 	return
 
 //Allow special filtering to happen on ourgoing transmissions - potentially setup with each new link_devicesage.
-/datum/component/mechanics_holder/proc/enableSpecialFiltering(var/list/outout)
+/datum/component/mechanics_holder/proc/enableSpecialFiltering()
 	//Well well well, look at you; you can filter your outputs — how special.
 	specialFiltering = 1
 	return
 
 //Fire the stored default signal.
-/datum/component/mechanics_holder/proc/fireDefault(var/datum/mechanicsMessage/msg = null)
+/datum/component/mechanics_holder/proc/fireDefault(var/comsig_target, var/datum/mechanicsMessage/msg = null)
 	if(isnull(msg))
 		msg = newSignal(defaultSignal, null)
 	else
 		msg.signal = defaultSignal
-	fireOutgoing(msg)
+	fireOutgoing(null, msg)
 	return
 
 //Fire a message with a simple signal (no file). Expected to be called from signal "sources" (first nodes)
-/datum/component/mechanics_holder/proc/fireOutSignal(var/signal, var/datum/computer/file/data_file=null)
-	fireOutgoing(newSignal(signal, data_file))
+/datum/component/mechanics_holder/proc/fireOutSignal(var/comsig_target, var/signal, var/datum/computer/file/data_file=null)
+	fireOutgoing(null, newSignal(signal, data_file))
 	return
 
 //Adds an input "slot" to the holder w/ a proc mapping.
-/datum/component/mechanics_holder/proc/addInput(var/name, var/toCall)
+/datum/component/mechanics_holder/proc/addInput(var/comsig_target, var/name, var/toCall)
 	if(name in inputs) inputs.Remove(name)
 	inputs.Add(name)
 	inputs[name] = toCall
 	return
 
 //Fire given input by names with the message as argument.
-/datum/component/mechanics_holder/proc/fireInput(var/name, var/datum/mechanicsMessage/msg)
+/datum/component/mechanics_holder/proc/fireInput(var/comsig_target, var/name, var/datum/mechanicsMessage/msg)
 	if(!(name in inputs)) return
 	var/path = inputs[name]
 	SPAWN_DBG(1 DECI SECOND) call(parent, path)(msg)
@@ -150,7 +152,7 @@
 
 //Fire an outgoing connection with given value. Try to re-use incoming messages for outgoing signals whenever possible!
 //This reduces load AND preserves the node list which prevents infinite loops.
-/datum/component/mechanics_holder/proc/fireOutgoing(var/datum/mechanicsMessage/msg)
+/datum/component/mechanics_holder/proc/fireOutgoing(var/comsig_target, var/datum/mechanicsMessage/msg)
 	//If we're already in the node list we will not send the signal on.
 	if(msg.hasNode(parent))
 		return 0
@@ -179,7 +181,7 @@
 	return ret
 
 //Called when a component is dragged onto another one.
-/datum/component/mechanics_holder/proc/dropConnect(obj/O, mob/user)//MarkNstein needs attention
+/datum/component/mechanics_holder/proc/dropConnect(var/comsig_target, obj/O, mob/user)//MarkNstein needs attention
 	if(!O || O == parent || user.stat || !isliving(user) || (SEND_SIGNAL(O,COMSIG_MECHCOMP_COMPATIBLE) != 1))  //ZeWaka: Fix for null.mechanics //MarkNstein needs attention
 		return
 
@@ -192,14 +194,14 @@
 		if("Trigger")
 			SEND_SIGNAL(O, COMSIG_MECHCOMP_LINK, parent, user) //MarkNstein needs attention
 		if("Receiver")
-			link_devices(O, user) //What do you want, an invitation? No signal needed!
+			link_devices(null, O, user) //What do you want, an invitation? No signal needed!
 		if("*CANCEL*")
 			return
 	return
 
 //We are in the scope of the receiver-component, our argument is the trigger
 //This feels weird/backwards, but it results in fewer SEND_SIGNALS & var/lists
-/datum/component/mechanics_holder/proc/link_devices(obj/trigger, mob/user)
+/datum/component/mechanics_holder/proc/link_devices(var/comsig_target, obj/trigger, mob/user)
 	var/obj/receiver = parent
 	if(trigger in connected_outgoing)
 		boutput(user, "<span class='alert'>Can not create a direct loop between 2 components.</span>")
@@ -223,7 +225,7 @@
 	return
 
 //Adds a config to the holder w/ a proc mapping.
-/datum/component/mechanics_holder/proc/addConfig(var/name, var/toCall)
+/datum/component/mechanics_holder/proc/addConfig(var/comsig_target, var/name, var/toCall)
 	if(name in configs) configs.Remove(name)
 	configs.Add(name)
 	configs[name] = toCall
@@ -235,15 +237,17 @@
 	return
 	
 //If it's a multi-tool, let the user configure the device.
-/datum/component/mechanics_holder/proc/attackby(obj/item/W as obj, mob/user)
+/datum/component/mechanics_holder/proc/attackby(var/comsig_target, obj/item/W as obj, mob/user)
 	if(!ispulsingtool(W) || !isliving(user) || user.stat)
 		return 0
-	if(configs.len)
+	if(length(configs))	
 		var/selected_config = input("Select a config to modify!", "Config", null) as null|anything in configs
-		if(selected_config && (user in range(1,parent)))
+		if(selected_config && in_range(parent, user))
 			switch(selected_config)
 				if(SET_SEND)
 					var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
+					if(!in_range(parent, user) || user.stat)
+						return 0
 					inp = trim(adminscrub(inp), 1)
 					if(length(inp))
 						defaultSignal = inp
@@ -253,9 +257,10 @@
 					WipeConnections()
 					boutput(user, "<span class='notice'>You disconnect [src].</span>")
 					return COMSIGBIT_ATTACKBY_COMPLETE
-			//must be a custom config specific to the device, so let the device handle it
-			var/path = configs[selected_config]
-			return call(parent, path)(W, user)
+				else
+					//must be a custom config specific to the device, so let the device handle it
+					var/path = configs[selected_config]
+					return call(parent, path)(W, user)
 	return 0
 
 //If it's a multi-tool, let the user configure the device.

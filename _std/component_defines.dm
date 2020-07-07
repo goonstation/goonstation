@@ -113,8 +113,10 @@
 #define COMSIG_MECHCOMP_RM_ALL_CONNECTIONS "mechcomp_remove_all_connections"      
 /// Return the component's outgoing connections
 #define COMSIG_MECHCOMP_GET_OUTGOING "mechcomp_get_outgoing_connections"
-/// Connect two mechcomp devices together
-#define COMSIG_MECHCOMP_LINK "mechcomp_connect_devices"
+/// Begin to connect two mechcomp devices together
+#define COMSIG_MECHCOMP_DROPCONNECT "mechcomp_drop_connect"
+/// Connect one MechComp compatible device as a receiver to a trigger. (This is meant to be a private method)
+#define COMSIG_MECHCOMP_LINK "mechcomp_link_devices"
 /// Allow the parent to do some special filtering on outbound signals. See top of mechComp_signals.dm
 #define COMSIG_MECHCOMP_ENABLE_SPECIAL_FILTERING "mechcomp_enable_special_filtering"
 /// Connect two mechcomp devices together
