@@ -3706,6 +3706,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/item/hand_labeler,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery/storage)
 "ahQ" = (
@@ -5745,8 +5746,13 @@
 /obj/machinery/optable,
 /obj/disposalpipe/segment/mail,
 /obj/machinery/drainage/big,
-/obj/item/hand_labeler,
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/medical_surgery_guide{
+	pixel_x = 9
+	},
+/obj/machinery/defib_mount{
+	pixel_x = -7;
+	pixel_y = 4
+	},
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "ams" = (
@@ -15785,7 +15791,9 @@
 /obj/item/storage/box/health_upgrade_kit{
 	pixel_y = 13
 	},
-/obj/item/robodefibrillator,
+/obj/machinery/defib_mount{
+	pixel_y = -5
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -30002,9 +30010,29 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "bsE" = (
+/obj/item/clothing/gloves/boxing{
+	pixel_x = -4
+	},
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/under/shorts/blue{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_x = 6
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/clothing/under/shorts/black{
+	pixel_x = -7;
+	pixel_y = -5
+	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "bsF" = (
@@ -30257,8 +30285,30 @@
 /area/station/crew_quarters/fitness)
 "btl" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/head/helmet/men{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/clothing/head/helmet/men{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/clothing/suit/armor/douandtare{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/clothing/suit/armor/douandtare{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/clothing/gloves/kote{
+	pixel_x = -1
+	},
+/obj/item/clothing/gloves/kote{
+	pixel_x = -1
+	},
+/obj/item/shinai_bag,
+/obj/item/storage/box/kendo_box/hakama,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "btm" = (

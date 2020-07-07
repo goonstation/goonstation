@@ -8664,6 +8664,14 @@
 /obj/item/clothing/under/shorts/luchador/green,
 /obj/item/clothing/under/shorts/luchador/red,
 /obj/item/clothing/under/shorts/trashsinglet,
+/obj/item/clothing/head/helmet/men,
+/obj/item/clothing/head/helmet/men,
+/obj/item/clothing/suit/armor/douandtare,
+/obj/item/clothing/suit/armor/douandtare,
+/obj/item/clothing/gloves/kote,
+/obj/item/clothing/gloves/kote,
+/obj/item/shinai_bag,
+/obj/item/storage/box/kendo_box/hakama,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "atG" = (
@@ -17373,6 +17381,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/random_item_spawner/med_tool,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -17842,9 +17851,16 @@
 	icon_state = "pipe-c"
 	},
 /obj/table/reinforced/auto,
-/obj/random_item_spawner/med_tool,
-/obj/item/bandage,
-/obj/item/bandage,
+/obj/item/bandage{
+	pixel_x = 2;
+	pixel_y = 14
+	},
+/obj/item/bandage{
+	pixel_y = 14
+	},
+/obj/machinery/defib_mount{
+	pixel_y = -4
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -70581,7 +70597,8 @@
 "cXO" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/atmospherics/unary/vent_pump/west,
-/obj/item/clothing/suit/cardboard_box/head_surgeon,
+/obj/table/auto,
+/obj/machinery/defib_mount,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "cXP" = (
@@ -75082,6 +75099,7 @@
 "dhB" = (
 /obj/disposalpipe/segment/morgue,
 /obj/machinery/drainage,
+/obj/item/clothing/suit/cardboard_box/head_surgeon,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "dhC" = (
@@ -78751,6 +78769,10 @@
 "hRi" = (
 /turf/space,
 /area/shuttle/arrival/station)
+"nKf" = (
+/obj/machinery/incubator,
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "pFA" = (
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/specialroom/bar,
@@ -116724,7 +116746,7 @@ cQR
 cNU
 cTY
 cVz
-cVx
+nKf
 cXZ
 cZc
 cZV

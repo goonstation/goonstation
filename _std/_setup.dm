@@ -212,6 +212,10 @@
 #define ALWAYS_SOLID_FLUID 262144	//specifically note this object as solid
 #define HAS_EQUIP_CLICK 524288 //Calls equipment_click from hand_range_attack on items worn with this flag set.
 
+//Item function flags
+#define USE_INTENT_SWITCH_TRIGGER 1 //apply to an item's flags to use the item's intent_switch_trigger() proc. This will be called when intent is switched while this item is in hand.
+#define USE_SPECIALS_ON_ALL_INTENTS 2 //allows special attacks to be performed on help and grab intent with this item
+
 // human equipment slots
 #define SLOT_BACK 1
 #define SLOT_WEAR_MASM 2

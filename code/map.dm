@@ -127,7 +127,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/donut3
 	name = "DONUT3"
-	goonhub_map = "https://cdn.discordapp.com/attachments/469379618168897538/727936626147459192/donut3-30-FINAL2-lol.png"
+	goonhub_map = "https://cdn.discordapp.com/attachments/469379618168897538/729407450737934376/donut3-30-FINAL3-it-never-ends.png"
 	airlock_style = "pyro"
 	walls = /turf/simulated/wall/auto/jen
 	rwalls = /turf/simulated/wall/auto/reinforced/jen
