@@ -1269,11 +1269,11 @@ toxic - poisons
 			explosion_new(null, T, 300, 1)
 		return
 
-/datum/projectile/bullet/spike // buckshot pellets generates by shotguns
+/datum/projectile/bullet/spike
 	name = "spike"
 	sname = "spike"
 	icon_state = "spike"
-	power = 8
+	power = 7.2
 	dissipation_rate = 1
 	dissipation_delay = 45
 	damage_type = D_KINETIC

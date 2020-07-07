@@ -2711,7 +2711,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "chitters"
 	health_brute = 10
-	health_burn = 10
+	health_burn = 7
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 
@@ -2726,6 +2726,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		src.remove_stam_mod_max("small_animal")
 		src.add_stam_mod_max("hallucigenia", -(STAMINA_MAX-100))
+		src.add_sm_light("hallucigenia\ref[src]", list(255,100,100,0.8 * 255))
 
 	setup_hands()
 		..()
