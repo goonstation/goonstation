@@ -53,8 +53,9 @@ var/list/mechanics_telepads = new/list()
 		if(level == 2 || under_floor)
 			cutParticles()
 			return
-		var/list/connected_outgoing = list()
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_GET_OUTGOING, connected_outgoing) //MarkNstein needs attention
+		var/outgoing_wrapper[1] //A list of size 1, to store the address of the list we want
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_GET_OUTGOING, outgoing_wrapper) //MarkNstein needs attention
+		var/list/connected_outgoing = outgoing_wrapper[1]
 		if(length(particles) != length(connected_outgoing))
 			cutParticles()
 			for(var/obj/X in connected_outgoing)

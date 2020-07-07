@@ -29,18 +29,22 @@
 	return 0
 
 /datum/component/mechanics_holder
-	var/list/connected_outgoing = list()
-	var/list/connected_incoming = list()
-	var/list/inputs = list()
-
-	var/list/configs = list()
+	var/list/connected_outgoing
+	var/list/connected_incoming
+	var/list/inputs
+	var/list/configs
 
 	var/defaultSignal = "1"
 	
 	var/specialFiltering = 0
 
 /datum/component/mechanics_holder/Initialize(can_manualy_set_signal = 0, specially_filters_outputs = 0)
-	configs.Add(list(DC_ALL))
+	src.connected_outgoing = list()
+	src.connected_incoming = list()
+	src.inputs = list()
+	src.configs = list()
+
+	src.configs.Add(list(DC_ALL))
 	if(can_manualy_set_signal)
 		allowManualSingalSetting()
 	if(specially_filters_outputs)
@@ -85,35 +89,35 @@
 	COMSIG_ATTACKBY)
 	UnregisterSignal(parent, signals)
 	WipeConnections()
-	configs.Cut()
-	inputs.Cut()
+	src.configs.Cut()
+	src.inputs.Cut()
 	return  //No need to ..()
 
 //Delete all connections. (Often caused by DC_ALL user command, and unwrenching MechComp devices.)
 /datum/component/mechanics_holder/proc/WipeConnections()
-	for(var/obj/O in connected_incoming)
+	for(var/obj/O in src.connected_incoming)
 		SEND_SIGNAL(O, COMSIG_MECHCOMP_RM_OUTGOING, parent)
-	for(var/obj/O in connected_outgoing)
+	for(var/obj/O in src.connected_outgoing)
 		SEND_SIGNAL(O, COMSIG_MECHCOMP_RM_INCOMING, parent)
-	connected_incoming.Cut()
-	connected_outgoing.Cut()
+	src.connected_incoming.Cut()
+	src.connected_outgoing.Cut()
 	return
 
 //Remove a device from our list of transitting devices.
 /datum/component/mechanics_holder/proc/removeIncoming(var/comsig_target, var/obj/O)
-	connected_incoming.Remove(O)
+	src.connected_incoming.Remove(O)
 	return
 
 //Remove a device from our list of receiving devices.
 /datum/component/mechanics_holder/proc/removeOutgoing(var/comsig_target, var/obj/O)
-	connected_outgoing.Remove(O)
+	src.connected_outgoing.Remove(O)
 	if(specialFiltering)
 		parent:MECHCOMP_RM_FILTER_FUNC(O)
 	return
 
 //Give the caller a copied list of our outgoing connections.
 /datum/component/mechanics_holder/proc/getOutgoing(var/comsig_target, var/list/outout)
-	outout = connected_outgoing
+	outout[1] = src.connected_outgoing
 	return
 
 //Allow special filtering to happen on ourgoing transmissions - potentially setup with each new link_devicesage.
@@ -138,15 +142,15 @@
 
 //Adds an input "slot" to the holder w/ a proc mapping.
 /datum/component/mechanics_holder/proc/addInput(var/comsig_target, var/name, var/toCall)
-	if(name in inputs) inputs.Remove(name)
-	inputs.Add(name)
-	inputs[name] = toCall
+	if(name in src.inputs) src.inputs.Remove(name)
+	src.inputs.Add(name)
+	src.inputs[name] = toCall
 	return
 
 //Fire given input by names with the message as argument.
 /datum/component/mechanics_holder/proc/fireInput(var/comsig_target, var/name, var/datum/mechanicsMessage/msg)
-	if(!(name in inputs)) return
-	var/path = inputs[name]
+	if(!(name in src.inputs)) return
+	var/path = src.inputs[name]
 	SPAWN_DBG(1 DECI SECOND) call(parent, path)(msg)
 	return
 
@@ -159,11 +163,11 @@
 	msg.addNode(parent)
 
 	var/fired = 0
-	for(var/obj/O in connected_outgoing)
+	for(var/obj/O in src.connected_outgoing)
 		if(specialFiltering)
 			if(!parent:MECHCOMP_RUN_FILTER_FUNC(msg.signal))
 				continue 
-		SEND_SIGNAL(O, COMSIG_MECHCOMP_RECEIVE_MSG, cloneMessage(msg))
+		SEND_SIGNAL(O, COMSIG_MECHCOMP_RECEIVE_MSG, src.connected_outgoing[O], cloneMessage(msg))
 		fired = 1
 	return fired
 
@@ -203,21 +207,22 @@
 //This feels weird/backwards, but it results in fewer SEND_SIGNALS & var/lists
 /datum/component/mechanics_holder/proc/link_devices(var/comsig_target, obj/trigger, mob/user)
 	var/obj/receiver = parent
-	if(trigger in connected_outgoing)
+	if(trigger in src.connected_outgoing)
 		boutput(user, "<span class='alert'>Can not create a direct loop between 2 components.</span>")
 		return
-	if(!inputs.len)
+	if(!src.inputs.len)
 		boutput(user, "<span class='alert'>[receiver.name] has no input slots. Can not connect [trigger.name] as Trigger.</span>")
 		return
 	
-	var/list/trg_outgoing = list()
-	SEND_SIGNAL(trigger, COMSIG_MECHCOMP_GET_OUTGOING, trg_outgoing) //MarkNstein needs attention
+	var/outgoing_wrapper[1] //A list of size 1, to store the address of the list we want
+	SEND_SIGNAL(trigger, COMSIG_MECHCOMP_GET_OUTGOING, outgoing_wrapper) //MarkNstein needs attention
+	var/list/trg_outgoing = outgoing_wrapper[1]
 	var/selected_input = input(user, "Select \"[receiver.name]\" Input", "Input Selection") in inputs + "*CANCEL*"
 	if(selected_input == "*CANCEL*") return
 
 	trg_outgoing.Add(receiver)
 	trg_outgoing[receiver] = selected_input
-	connected_incoming.Add(trigger)
+	src.connected_incoming.Add(trigger)
 	boutput(user, "<span class='success'>You connect the [trigger.name] to the [receiver.name].</span>")
 	logTheThing("station", user, null, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
 	if(specialFiltering)
@@ -226,22 +231,22 @@
 
 //Adds a config to the holder w/ a proc mapping.
 /datum/component/mechanics_holder/proc/addConfig(var/comsig_target, var/name, var/toCall)
-	if(name in configs) configs.Remove(name)
-	configs.Add(name)
-	configs[name] = toCall
+	if(name in src.configs) src.configs.Remove(name)
+	src.configs.Add(name)
+	src.configs[name] = toCall
 	return
 
 /datum/component/mechanics_holder/proc/allowManualSingalSetting() 
-	if(!(list(SET_SEND) in configs))
-		configs.Add(list(SET_SEND))
+	if(!(list(SET_SEND) in src.configs))
+		src.configs.Add(list(SET_SEND))
 	return
 	
 //If it's a multi-tool, let the user configure the device.
 /datum/component/mechanics_holder/proc/attackby(var/comsig_target, obj/item/W as obj, mob/user)
 	if(!ispulsingtool(W) || !isliving(user) || user.stat)
 		return 0
-	if(length(configs))	
-		var/selected_config = input("Select a config to modify!", "Config", null) as null|anything in configs
+	if(length(src.configs))	
+		var/selected_config = input("Select a config to modify!", "Config", null) as null|anything in src.configs
 		if(selected_config && in_range(parent, user))
 			switch(selected_config)
 				if(SET_SEND)
@@ -259,7 +264,7 @@
 					return COMSIGBIT_ATTACKBY_COMPLETE
 				else
 					//must be a custom config specific to the device, so let the device handle it
-					var/path = configs[selected_config]
+					var/path = src.configs[selected_config]
 					return call(parent, path)(W, user)
 	return 0
 
