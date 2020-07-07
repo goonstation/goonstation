@@ -207,7 +207,7 @@ var/list/mechanics_telepads = new/list()
 		var/inp = adminscrub(input(user,"Please enter new code:","Code setting","dosh") as text)
 		if(!in_range(src, user) || user.stat)
 			return
-		if(!isnull(inp))
+		if(length(inp))
 			code = inp
 			boutput(user, "Code set to [inp]")
 		return
@@ -749,7 +749,7 @@ var/list/mechanics_telepads = new/list()
 		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
 		if(!in_range(src, user) || user.stat)
 			return
-		if(!isnull(inp))
+		if(length(inp))
 			inp = strip_html(html_decode(inp))
 			triggerSignal = inp
 			boutput(user, "Signal set to [inp]")
@@ -781,7 +781,7 @@ var/list/mechanics_telepads = new/list()
 		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
 		if(!in_range(src, user) || user.stat)
 			return
-		if(!isnull(inp))
+		if(length(inp))
 			inp = strip_html(html_decode(inp))
 			triggerSignal = inp
 			boutput(user, "Signal set to [inp]")
@@ -828,7 +828,7 @@ var/list/mechanics_telepads = new/list()
 		var/inp = input(user,"Please enter Expression Pattern:","Expression setting", expressionpatt) as text
 		if(!in_range(src, user) || user.stat)
 			return
-		if(!isnull(inp))
+		if(length(inp))
 			expressionpatt = inp
 			inp = sanitize(html_encode(inp))
 			expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
@@ -839,7 +839,7 @@ var/list/mechanics_telepads = new/list()
 		var/inp = input(user,"Please enter Expression Replacement:","Expression setting", expressionrepl) as text
 		if(!in_range(src, user) || user.stat)
 			return
-		if(!isnull(inp))
+		if(length(inp))
 			expressionrepl = inp
 			inp = sanitize(html_encode(inp))
 			expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
@@ -850,7 +850,7 @@ var/list/mechanics_telepads = new/list()
 		var/inp = input(user,"Please enter Expression Flags:","Expression setting", expressionflag) as text
 		if(!in_range(src, user) || user.stat)
 			return
-		if(!isnull(inp))
+		if(length(inp))
 			expressionflag = inp
 			inp = sanitize(html_encode(inp))
 			expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
@@ -861,7 +861,7 @@ var/list/mechanics_telepads = new/list()
 		var/inp = input(user,"Please enter Replacement:","Replacement setting", expressionrepl) as text
 		if(!in_range(src, user) || user.stat)
 			return
-		if(!isnull(inp))
+		if(length(inp))
 			expressionrepl = inp
 			boutput(user, "Replacement set to [html_encode(inp)]")
 			tooltip_rebuild = 1
@@ -918,7 +918,7 @@ var/list/mechanics_telepads = new/list()
 		var/inp = input(user,"Please enter Expression Pattern:","Expression setting", expressionpatt) as text
 		if(!in_range(src, user) || user.stat)
 			return
-		if(!isnull(inp))
+		if(length(inp))
 			expressionpatt = inp
 			expression =("[expressionpatt]/[expressionflag]")
 			inp = sanitize(html_encode(inp))
@@ -929,7 +929,7 @@ var/list/mechanics_telepads = new/list()
 		var/inp = input(user,"Please enter Expression Flags:","Expression setting", expressionflag) as text
 		if(!in_range(src, user) || user.stat)
 			return
-		if(!isnull(inp))
+		if(length(inp))
 			expressionflag = inp
 			expression =("[expressionpatt]/[expressionflag]")
 			inp = sanitize(html_encode(inp))
@@ -988,7 +988,7 @@ var/list/mechanics_telepads = new/list()
 		var/inp = input(user,"Please enter String:","String setting","1") as text
 		if(!in_range(src, user) || user.stat)
 			return
-		if(!isnull(inp))
+		if(length(inp))
 			inp = adminscrub(inp)
 			triggerSignal = inp
 			boutput(user, "String set to [inp]")
@@ -1632,7 +1632,7 @@ var/list/mechanics_telepads = new/list()
 		var/inp = input(user,"Please enter Signal:","Signal setting",signal_on) as text
 		if(!in_range(src, user) || user.stat)
 			return
-		if(!isnull(inp))
+		if(length(inp))
 			inp = adminscrub(inp)
 			signal_on = inp
 			boutput(user, "On-Signal set to [inp]")
@@ -1642,7 +1642,7 @@ var/list/mechanics_telepads = new/list()
 		var/inp = input(user,"Please enter Signal:","Signal setting",signal_off) as text
 		if(!in_range(src, user) || user.stat)
 			return
-		if(!isnull(inp))
+		if(length(inp))
 			inp = adminscrub(inp)
 			signal_off = inp
 			boutput(user, "Off-Signal set to [inp]")
@@ -1716,7 +1716,7 @@ var/list/mechanics_telepads = new/list()
 		var/inp = input(user,"Please enter ID:","ID setting",teleID) as text
 		if(!in_range(src, user) || user.stat)
 			return
-		if(!isnull(inp))
+		if(length(inp))
 			inp = adminscrub(inp)
 			teleID = inp
 			boutput(user, "ID set to [inp]")
