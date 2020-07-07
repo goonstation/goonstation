@@ -19,9 +19,10 @@
 
 	tick()
 		..()
-		if (holder.owner.abilityHolder)
+		if (holder.owner.abilityHolder && !holder.owner.equipped())
 			var/datum/targetable/critter/bury_hide/BH = holder.owner.abilityHolder.getAbility(/datum/targetable/critter/bury_hide)
-			BH.cast(get_turf(holder.owner))
+			if (BH)
+				BH.cast(get_turf(holder.owner))
 
 /datum/aiTask/timed/targeted/trilobite
 	name = "attack"
@@ -233,4 +234,129 @@
 			if(isalive(M) && !ismobcritter(M))
 				targets += M
 
+	return targets
+
+
+
+
+
+
+
+
+
+/datum/aiHolder/pikaia
+	exclude_from_mobs_list = 1
+
+/datum/aiHolder/pikaia/New()
+	..()
+	var/datum/aiTask/timed/targeted/trilobite/D = get_instance(/datum/aiTask/timed/targeted/pikaia, list(src))
+	var/datum/aiTask/timed/B = get_instance(/datum/aiTask/timed/bury_ability, list(src))
+	D.transition_task = B
+	B.transition_task = D
+	default_task = D
+
+/datum/aiTask/timed/bury_ability
+	name = "bury"
+	minimum_task_ticks = 1
+	maximum_task_ticks = 1
+
+	tick()
+		..()
+		if (holder.owner.abilityHolder)
+			var/datum/targetable/critter/bury_hide/BH = holder.owner.abilityHolder.getAbility(/datum/targetable/critter/bury_hide)
+			BH.cast(get_turf(holder.owner))
+
+/datum/aiTask/timed/targeted/pikaia
+	name = "attack"
+	minimum_task_ticks = 7
+	maximum_task_ticks = 20
+	var/weight = 15
+	target_range = 8
+	frustration_threshold = 3
+	var/last_seek = 0
+
+
+/datum/aiTask/timed/targeted/pikaia/proc/precondition()
+	. = 1
+
+/datum/aiTask/timed/targeted/pikaia/frustration_check()
+	.= 0
+	var/dist = get_dist(holder.owner, holder.target)
+	if (dist > target_range)
+		return 1
+
+	if (ismob(holder.target))
+		var/mob/M = holder.target
+		. = !(holder.target && isalive(M))
+	else
+		. = !(holder.target)
+
+/datum/aiTask/timed/targeted/pikaia/evaluate()
+	return precondition() * weight * score_target(get_best_target(get_targets()))
+
+/datum/aiTask/timed/targeted/pikaia/on_tick()
+	if (HAS_MOB_PROPERTY(holder.owner, PROP_CANTMOVE) || !isalive(holder.owner))
+		return
+
+	if(!holder.target)
+		if (world.time > last_seek + 4 SECONDS)
+			last_seek = world.time
+			var/list/possible = get_targets()
+			if (possible.len)
+				holder.target = pick(possible)
+	if(holder.target)
+		var/dist = get_dist(holder.owner, holder.target)
+		if (dist > 1)
+			if (prob(80))
+				holder.move_to(holder.target)
+			else
+				holder.move_circ(holder.target)
+		else
+			holder.stop_move()
+
+		if (ismob(holder.target))
+			var/mob/living/M = holder.target
+			if(!isalive(M))
+				holder.target = null
+				holder.target = get_best_target(get_targets())
+				if(!holder.target)
+					return ..() // try again next tick
+			if (dist <= 1)
+				holder.owner.a_intent = INTENT_GRAB
+				holder.owner.hud.update_intent()
+				holder.owner.dir = get_dir(holder.owner, M)
+
+				var/list/params = list()
+				params["left"] = 1
+
+				if (!holder.owner.equipped())
+					holder.owner.hand_attack(M, params)
+				else
+					var/obj/item/grab/G = holder.owner.equipped()
+					if (istype(G))
+						if (G.affecting == null || G.assailant == null || G.disposed) //ugly safety
+							holder.owner.drop_item()
+
+						if (G.state <= GRAB_PASSIVE)
+							G.attack_self(holder.owner)
+						else
+							holder.owner.emote("flip")
+					else
+						holder.owner.drop_item()
+		else
+			holder.move_circ(holder.target,target_range+8)
+
+	..()
+
+/datum/aiTask/timed/targeted/pikaia/get_targets()
+	var/list/targets = list()
+	if(holder.owner)
+		for (var/atom in pods_and_cruisers)
+			var/atom/A = atom
+			if (A && holder.owner.z == A.z && get_dist(holder.owner,A) <= 6)
+				targets += A
+
+		for(var/mob/living/M in view(target_range, holder.owner))
+			if(isalive(M) && !ismobcritter(M))
+				targets += M
 	return targets

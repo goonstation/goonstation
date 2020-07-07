@@ -831,11 +831,11 @@
 		if(hand_to_empty > 0 && hand_to_empty <= hands.len)
 			var/datum/handHolder/HH = hands[hand_to_empty]
 			if (HH.item)
-				if (istype(HH.item, /obj/item/grab))
+				if (!HH.item.qdeled && !HH.item.disposed && istype(HH.item, /obj/item/grab))
 					qdel(HH.item)
 					return
 				var/obj/item/I = HH.item
-				I.loc = src.loc
+				I.set_loc(src.loc)
 				I.master = null
 				I.layer = initial(I.layer)
 				u_equip(I)
@@ -843,11 +843,11 @@
 	empty_hands()
 		for (var/datum/handHolder/HH in hands)
 			if (HH.item)
-				if (istype(HH.item, /obj/item/grab))
+				if (!HH.item.qdeled && !HH.item.disposed && istype(HH.item, /obj/item/grab))
 					qdel(HH.item)
 					continue
 				var/obj/item/I = HH.item
-				I.loc = src.loc
+				I.set_loc(src.loc)
 				I.master = null
 				I.layer = initial(I.layer)
 				u_equip(I)

@@ -1280,4 +1280,4 @@ toxic - poisons
 	hit_type = DAMAGE_STAB
 	shot_sound = null
 	projectile_speed = 8
-
+	implanted = null

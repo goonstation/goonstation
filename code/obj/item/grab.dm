@@ -83,7 +83,11 @@
 		assailant = null
 		..()
 
+		if (src.disposed)
+			src.set_loc(null)
+
 	dropped()
+		..()
 		dropped += 1
 		if(src.assailant)
 			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
