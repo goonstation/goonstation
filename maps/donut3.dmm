@@ -38835,6 +38835,8 @@
 /obj/item/clothing/glasses/blindfold{
 	name = "For Krimpus"
 	},
+/obj/item/bee_egg_carton,
+/obj/item/bee_egg_carton,
 /turf/simulated/floor,
 /area/station/hydroponics)
 "lFQ" = (
@@ -56921,10 +56923,6 @@
 	icon_state = "blue2"
 	},
 /area/station/crew_quarters/quartersB)
-"qXu" = (
-/obj/item/bee_egg_carton,
-/turf/simulated/floor/grass/random,
-/area/station/hydroponics)
 "qXC" = (
 /obj/machinery/recharge_station,
 /obj/decal/mule/dropoff,
@@ -128586,7 +128584,7 @@ mwk
 iba
 kHx
 mke
-qXu
+mke
 mke
 xNi
 txZ
