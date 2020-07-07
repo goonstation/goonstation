@@ -179,11 +179,11 @@
 					O.initialize()
 
 		if(spawningFlags & SPAWN_TRILOBITE)
-			if (prob(10))
+			if (prob(20))
 				new /mob/living/critter/small_animal/trilobite/ai_controlled(src)
 
 		if(spawningFlags & SPAWN_HALLU)
-			if (prob(1) && prob(28))
+			if (prob(1) && prob(30))
 				new /mob/living/critter/small_animal/hallucigenia/ai_controlled(src)
 
 
