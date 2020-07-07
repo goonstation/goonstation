@@ -2785,7 +2785,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	density = 1
 
-	base_move_delay = 3
+	base_move_delay = 2.3
 	base_walk_delay = 4
 
 //	var/mob/living/target = null
