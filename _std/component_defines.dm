@@ -117,14 +117,20 @@
 #define COMSIG_MECHCOMP_DROPCONNECT "mechcomp_drop_connect"
 /// Connect one MechComp compatible device as a receiver to a trigger. (This is meant to be a private method)
 #define COMSIG_MECHCOMP_LINK "mechcomp_link_devices"
-/// Allow the parent to do some special filtering on outbound signals. See top of mechComp_signals.dm
-#define COMSIG_MECHCOMP_ENABLE_SPECIAL_FILTERING "mechcomp_enable_special_filtering"
 /// Connect two mechcomp devices together
 #define COMSIG_MECHCOMP_ADD_CONFIG "mechcomp_add_config"
 /// Connect two mechcomp devices together
 #define COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL "mechcomp_allow_manual_sigset"
 /// Connect two mechcomp devices together
 #define COMSIG_MECHCOMP_COMPATIBLE "mechcomp_check_compatibility"
+//Dispatch signals
+/// Add a filtered connection, getting user input on the filter
+#define COMSIG_MECHCOMP_DISPATCH_ADD_FILTER "mechcomp_dispatch_add_filter"
+/// Remove a filtered connection
+#define COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING "mechcomp_dispatch_remove_filter"
+/// Test a signal to be sent to a connection
+#define COMSIG_MECHCOMP_DISPATCH_VALIDATE "mechcomp_dispatch_run_filter"
+
 
 // obj/critter signals
 // When an obj/critter dies

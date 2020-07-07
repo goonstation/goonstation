@@ -3,13 +3,6 @@
 #define TOGGLE_MATCH "Toggle Exact Match"
 #define MECHFAILSTRING "You must be holding a Multitool to change Connections or Options."
 
-//Closest thing I can think of that emulates an "interface"
-//COMSIG_MECHCOMP_ENABLE_SPECIAL_FILTERING relies on the parent implementing these functions
-//See  /obj/item/mechanics/dispatchcomp  for an example
-#define MECHCOMP_SET_FILTER_FUNC mechComp_set_filter
-#define MECHCOMP_RM_FILTER_FUNC mechComp_rm_filter
-#define MECHCOMP_RUN_FILTER_FUNC mechComp_run_filter
-
 /datum/mechanicsMessage
 	var/signal = "1"
 	var/list/nodes = list()
@@ -35,10 +28,8 @@
 	var/list/configs
 
 	var/defaultSignal = "1"
-	
-	var/specialFiltering = 0
 
-/datum/component/mechanics_holder/Initialize(can_manualy_set_signal = 0, specially_filters_outputs = 0)
+/datum/component/mechanics_holder/Initialize(can_manualy_set_signal = 0)
 	src.connected_outgoing = list()
 	src.connected_incoming = list()
 	src.inputs = list()
@@ -47,8 +38,6 @@
 	src.configs.Add(list(DC_ALL))
 	if(can_manualy_set_signal)
 		allowManualSingalSetting()
-	if(specially_filters_outputs)
-		enableSpecialFiltering()
 	..()    //MarkNstein needs attention: make use of this for non-MechComp things. Like settings configs? Inputs?
 
 /datum/component/mechanics_holder/RegisterWithParent()
@@ -63,7 +52,6 @@
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_GET_OUTGOING), .proc/getOutgoing)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_DROPCONNECT), .proc/dropConnect)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_LINK), .proc/link_devices)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_ENABLE_SPECIAL_FILTERING), .proc/enableSpecialFiltering) //See defines at the top of the document
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_CONFIG), .proc/addConfig)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL), .proc/allowManualSingalSetting) //Only use this when also using COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG
 	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/attackby)    //MarkNstein needs attention
@@ -83,7 +71,6 @@
 	COMSIG_MECHCOMP_GET_OUTGOING,\
 	COMSIG_MECHCOMP_DROPCONNECT,\
 	COMSIG_MECHCOMP_LINK,\
-	COMSIG_MECHCOMP_ENABLE_SPECIAL_FILTERING,\
 	COMSIG_MECHCOMP_ADD_CONFIG,\
 	COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL,\
 	COMSIG_ATTACKBY)
@@ -111,19 +98,12 @@
 //Remove a device from our list of receiving devices.
 /datum/component/mechanics_holder/proc/removeOutgoing(var/comsig_target, var/obj/O)
 	src.connected_outgoing.Remove(O)
-	if(specialFiltering)
-		parent:MECHCOMP_RM_FILTER_FUNC(O)
+	SEND_SIGNAL(parent,COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING, O)
 	return
 
 //Give the caller a copied list of our outgoing connections.
 /datum/component/mechanics_holder/proc/getOutgoing(var/comsig_target, var/list/outout)
 	outout[1] = src.connected_outgoing
-	return
-
-//Allow special filtering to happen on ourgoing transmissions - potentially setup with each new link_devicesage.
-/datum/component/mechanics_holder/proc/enableSpecialFiltering()
-	//Well well well, look at you; you can filter your outputs — how special.
-	specialFiltering = 1
 	return
 
 //Fire the stored default signal.
@@ -164,9 +144,9 @@
 
 	var/fired = 0
 	for(var/obj/O in src.connected_outgoing)
-		if(specialFiltering)
-			if(!parent:MECHCOMP_RUN_FILTER_FUNC(msg.signal))
-				continue 
+		//Note: a target not handling a signal returns 0.
+		if(SEND_SIGNAL(parent,COMSIG_MECHCOMP_DISPATCH_VALIDATE, O, msg.signal) != 0)
+			continue 
 		SEND_SIGNAL(O, COMSIG_MECHCOMP_RECEIVE_MSG, src.connected_outgoing[O], cloneMessage(msg))
 		fired = 1
 	return fired
@@ -225,8 +205,7 @@
 	src.connected_incoming.Add(trigger)
 	boutput(user, "<span class='success'>You connect the [trigger.name] to the [receiver.name].</span>")
 	logTheThing("station", user, null, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
-	if(specialFiltering)
-		parent:MECHCOMP_SET_FILTER_FUNC(receiver, user)
+	SEND_SIGNAL(trigger,COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, receiver, user)
 	return
 
 //Adds a config to the holder w/ a proc mapping.

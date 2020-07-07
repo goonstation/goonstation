@@ -1031,21 +1031,32 @@ var/list/mechanics_telepads = new/list()
 	//This stores all the relevant filters per output
 	//Notably, this list doesn't remove entries when an output is removed.
 	//So it will bloat over time...
-	var/list/outgoing_filters = list()
+	var/list/outgoing_filters
 
 	get_desc()
 		. += "<br><span class='notice'>Exact match mode: [exact_match ? "on" : "off"]</span>"
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ENABLE_SPECIAL_FILTERING)
+		src.outgoing_filters = list()
+		RegisterSignal(src, list(COMSIG_MECHCOMP_DISPATCH_ADD_FILTER), .proc/addFilter)
+		RegisterSignal(src, list(COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING), .proc/removeFilter)
+		RegisterSignal(src, list(COMSIG_MECHCOMP_DISPATCH_VALIDATE), .proc/runFilter)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", "dispatch")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching","toggleExactMatching")
 
 	disposing()
-		outgoing_filters.Cut()
+		var/list/signals = list(\
+		COMSIG_MECHCOMP_DISPATCH_ADD_FILTER,\
+		COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING,\
+		COMSIG_MECHCOMP_DISPATCH_VALIDATE)
+		UnregisterSignal(src, signals)
+		src.outgoing_filters.Cut()
 		..()
 
+	loosen()
+		src.outgoing_filters.Cut()
+	
 	proc/toggleExactMatching(obj/item/W as obj, mob/user as mob)
 		exact_match = !exact_match
 		boutput(user, "Exact match mode now [exact_match ? "on" : "off"]")
@@ -1057,32 +1068,34 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	//This will get called from the component-datum when a device is being linked
-	proc/MECHCOMP_SET_FILTER_FUNC(obj/receiver, mob/user)
+	proc/addFilter(var/comsig_target, obj/receiver, mob/user)
 		var/filter = input(user, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
 		if(!in_range(src, user) || user.stat)
 			return
-		if (!isnull(filter))
-			if (!outgoing_filters[receiver]) outgoing_filters[receiver] = list()
-			outgoing_filters.Add(receiver)
-			outgoing_filters[receiver] = splittext(filter, ",")
+		if (length(filter))
+			if (!src.outgoing_filters[receiver]) src.outgoing_filters[receiver] = list()
+			src.outgoing_filters.Add(receiver)
+			src.outgoing_filters[receiver] = splittext(filter, ",")
 			boutput(user, "<span class='success'>Only passing messages that [exact_match ? "match" : "contain"] [filter] to the [receiver.name]</span>")
 		else
 			boutput(user, "<span class='success'>Passing all messages to the [receiver.name]</span>")
 		return
 
 	//This will get called from the component-datum when a device is being unlinked
-	proc/MECHCOMP_RM_FILTER_FUNC(obj/receiver)
-		outgoing_filters.Remove(receiver)
+	proc/removeFilter(var/comsig_target, obj/receiver)
+		src.outgoing_filters.Remove(receiver)
 
 	//Called when mechanics_holder tries to fire out signals
-	proc/MECHCOMP_RUN_FILTER_FUNC(var/signal)
-		for (var/filter in outgoing_filters)
+	proc/runFilter(var/comsig_target, obj/receiver, var/signal)
+		if(!(receiver in src.outgoing_filters))
+			return 0 //Not filtering this output, let anything pass
+		for (var/filter in src.outgoing_filters[receiver])
 			var/text_found = findtext(signal, filter)
 			if (exact_match)
 				text_found = text_found && (length(signal) == length(filter))
 			if (text_found)
-				return 1
-		return 0
+				return 0 //Signal validated, let it pass
+		return 1 //Signal invalid, halt it
 
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_disp"
