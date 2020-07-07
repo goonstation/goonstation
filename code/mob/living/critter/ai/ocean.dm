@@ -269,10 +269,10 @@
 /datum/aiTask/timed/targeted/pikaia
 	name = "attack"
 	minimum_task_ticks = 7
-	maximum_task_ticks = 20
+	maximum_task_ticks = 26
 	var/weight = 15
 	target_range = 8
-	frustration_threshold = 3
+	frustration_threshold = 5
 	var/last_seek = 0
 
 
@@ -306,9 +306,9 @@
 				holder.target = pick(possible)
 	if(holder.target)
 		var/dist = get_dist(holder.owner, holder.target)
-		if (dist > 1)
+		if (dist >= 1)
 			if (prob(80))
-				holder.move_to(holder.target)
+				holder.move_to(holder.target,0)
 			else
 				holder.move_circ(holder.target)
 		else
@@ -341,6 +341,7 @@
 							G.attack_self(holder.owner)
 						else
 							holder.owner.emote("flip")
+							holder.move_away(holder.target,1)
 					else
 						holder.owner.drop_item()
 		else

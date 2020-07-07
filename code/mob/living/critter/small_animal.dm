@@ -2785,7 +2785,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	density = 1
 
-	base_move_delay = 3
+	base_move_delay = 2.3
 	base_walk_delay = 4
 
 //	var/mob/living/target = null
@@ -2797,6 +2797,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		abilityHolder.addAbility(/datum/targetable/critter/bury_hide)
 		SPAWN_DBG(1 SECOND)
 			animate_bumble(src)
+
+	is_hulk()
+		.= 1
 
 	setup_hands()
 		..()
@@ -2832,7 +2835,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					logTheThing("combat", src, G.affecting, "crunches %target% [log_loc(src)]")
 					M.lastattacker = src
 					M.lastattackertime = world.time
-					G.affecting.TakeDamage("head", rand(2,6), 0, 0, DAMAGE_BLUNT)
+					G.affecting.TakeDamage("head", rand(2,7), 0, 0, DAMAGE_BLUNT)
 					playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1, pitch = 1.3)
 					src.visible_message("<span class='alert'><B>[src] crunches [G.affecting]!</B></span>")
 		return ..()
