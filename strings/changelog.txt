@@ -1,5 +1,9 @@
 
 (t)tue jul 07 20
+(u)MarkNstein
+(p)1394
+(e)🗺|mapping
+(+)Cog2: TTV VR now properly connected and functioning.
 (u)mbc + LovelyMimic
 (*)Added a third new trench enemy. Note that all the trench enemies drop a unique item on death.
 (u)Ryumi
