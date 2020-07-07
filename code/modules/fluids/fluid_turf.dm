@@ -183,7 +183,7 @@
 				new /mob/living/critter/small_animal/trilobite/ai_controlled(src)
 
 		if(spawningFlags & SPAWN_HALLU)
-			if (prob(1) && prob(16))
+			if (prob(1) && prob(28))
 				new /mob/living/critter/small_animal/hallucigenia/ai_controlled(src)
 
 

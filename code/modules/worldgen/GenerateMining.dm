@@ -193,9 +193,9 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 			new/area/cordon/dark(T)
 			LAGCHECK(LAG_REALTIME)
 
-		for (var/i=0, i<35, i++)
+		for (var/i=0, i<40, i++)
 			var/turf/T = locate(rand(1,world.maxx),rand(1,world.maxy),AST_ZLEVEL)
-			for (var/turf/space/fluid/TT in range(rand(2,4),T))
+			for (var/turf/space/fluid/TT in range(rand(3,6),T))
 				TT.spawningFlags |= SPAWN_TRILOBITE
 
 		return miningZ
