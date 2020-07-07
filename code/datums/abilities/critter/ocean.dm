@@ -30,7 +30,9 @@
 	event_handler_flags = USE_PROXIMITY
 
 	HasProximity(atom/movable/AM)
-		src.relaymove(AM,pick(cardinal))
+		..()
+		if (isliving(AM))
+			src.relaymove(AM,pick(cardinal))
 
 	relaymove(var/mob/user, direction)
 		playsound(get_turf(src), 'sound/effects/shovel1.ogg', 50, 1, 0.3)

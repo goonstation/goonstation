@@ -2741,14 +2741,14 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 
 
 
-/obj/item/reagent_containers/food/snacks/antiradgoo
+/obj/item/reagent_containers/food/snacks/healgoo
 	name = "weird goo"
-	desc = "This goo, harvested from an alien hallucigenia, is known for its beneficial anti-radiation and healing properties."
-	icon_state = "antirad-goo"
-	needfork = 1
+	desc = "This goop, harvested from an alien hallucigenia, is known for its beneficial anti-radiation and healing properties."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "healgoo"
 	heal_amt = 2
-	amount = 5
-	initial_volume = 21
+	amount = 3
+	initial_volume = 28
 	food_effects = list("food_rad_resist")
 
 	New()
@@ -2756,3 +2756,4 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 		reagents.add_reagent("saline",7)
 		reagents.add_reagent("charcoal",7)
 		reagents.add_reagent("anti_rad",7)
+		reagents.add_reagent("omnnizine",7)

@@ -6,6 +6,9 @@
 #define SPAWN_FISH 4
 #define SPAWN_LOOT 8
 #define SPAWN_PLANTSMANTA 16
+#define SPAWN_TRILOBITE 32
+#define SPAWN_HALLU 64
+
 
 /turf/proc/make_light() //dummyproc so we can inherit
 	.=0
@@ -175,6 +178,15 @@
 				if (O)
 					O.initialize()
 
+		if(spawningFlags & SPAWN_TRILOBITE)
+			if (prob(10))
+				new /mob/living/critter/small_animal/trilobite/ai_controlled(src)
+
+		if(spawningFlags & SPAWN_HALLU)
+			if (prob(1) && prob(16))
+				new /mob/living/critter/small_animal/hallucigenia/ai_controlled(src)
+
+
 		if (spawningFlags & SPAWN_LOOT)
 			if (prob(1) && prob(9))
 				var/obj/storage/crate/trench_loot/C = pick(childrentypesof(/obj/storage/crate/trench_loot))
@@ -309,7 +321,7 @@
 	fullbright = 0
 	luminosity = 1
 	generateLight = 0
-	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT
+	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT | SPAWN_HALLU
 
 /turf/space/fluid/nospawn
 	spawningFlags = null

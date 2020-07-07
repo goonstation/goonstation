@@ -2681,6 +2681,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	death(var/gibbed)
 		playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1, pitch = 1.7)
+		new /obj/item/raw_material/bohrum(src.loc)
+		if (prob(70))
+			new /obj/item/raw_material/bohrum(src.loc)
 		..()
 
 	ai_controlled
@@ -2746,8 +2749,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		return ..()
 
 	death(var/gibbed)
-		playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1, pitch = 0.75)
-		new /obj/item/reagent_containers/food/snacks/antiradgoo(get_turf(src))
+		playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1, pitch = 0.6)
+		new /obj/item/reagent_containers/food/snacks/healgoo(get_turf(src))
 
 		..()
 
