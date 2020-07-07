@@ -7,7 +7,7 @@
 //How much ammo this costs
 	cost = 30
 //How fast the power goes away
-	dissipation_rate = -1 //gains power at the same rate that a taser loses power
+	dissipation_rate = -1 //gains power at the same rate that a taser loses power - equal at 6 tiles
 	max_range = 24 //Range/time limiter for non-standard dissipation - long range, but not infinite
 //How many tiles till it starts to lose power (gain, in this case)
 	dissipation_delay = 0
@@ -82,10 +82,3 @@ toxic - poisons
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(5, 0, T)
 		s.start()
-
-	on_pointblank(obj/projectile/P, mob/living/M)  //on pointblank, just EMP the mob. No AoE, don't EMP other things on the tile.
-		M.emp_act()
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(5, 0, M)
-		s.start()
-		P.die()
