@@ -4808,6 +4808,14 @@
 /obj/item/clothing/under/gimmick/macho,
 /obj/item/clothing/under/gimmick/macho,
 /obj/storage/closet/dresser,
+/obj/item/clothing/head/helmet/men,
+/obj/item/clothing/head/helmet/men,
+/obj/item/clothing/suit/armor/douandtare,
+/obj/item/clothing/suit/armor/douandtare,
+/obj/item/clothing/gloves/kote,
+/obj/item/clothing/gloves/kote,
+/obj/item/shinai_bag,
+/obj/item/storage/box/kendo_box/hakama,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "akV" = (

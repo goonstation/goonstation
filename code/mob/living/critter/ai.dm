@@ -1,9 +1,14 @@
+var/list/ai_move_scheduled = list()
+
 /datum/aiHolder
 	var/mob/living/critter/owner = null
 	var/atom/target = null // the simplest blackboard ever
 	var/datum/aiTask/current_task = null  // what the critter is currently doing
 	var/datum/aiTask/default_task = null  // what behavior the critter will fall back on
 	var/list/task_cache = list()
+	var/move_target = null
+	var/move_dist = 0
+	var/move_reverse = 0
 
 	var/enabled = 1
 
@@ -19,6 +24,7 @@
 
 	disposing()
 		..()
+		stop_move()
 		if (owner)
 			if (owner.mob_flags & LIGHTWEIGHT_AI_MOB)
 				owner.mob_flags &= ~LIGHTWEIGHT_AI_MOB
@@ -74,8 +80,48 @@
 
 	proc/die()
 		src.enabled = 0
-		walk(owner, 0)
+		stop_move()
 		current_task = null
+
+	proc/move_to(var/A, var/dist = 1)
+		if (!move_target)
+			ai_move_scheduled += src
+		move_target = A
+		move_dist = dist
+		move_reverse = 0
+
+	proc/move_away(var/A, var/dist = 6)
+		if (!move_target)
+			ai_move_scheduled += src
+		move_target = A
+		move_dist = dist
+		move_reverse = 1
+
+	proc/stop_move()
+		move_target = null
+		ai_move_scheduled -= src
+		walk(src,0)
+
+	proc/move_step()
+		if (src.move_reverse)
+			if (get_dist(src.owner,get_turf(src.move_target)) < src.move_dist)
+				var/turn = 180
+				switch(rand(1,4)) //fudge walk away behavior
+					if (1)
+						turn -= 45
+					if (2)
+						turn += 45
+
+				src.owner.move_dir = turn(get_dir(src.owner,get_turf(src.move_target)),turn)
+				src.owner.process_move()
+		else
+			if (get_dist(src.owner,get_turf(src.move_target)) > src.move_dist)
+				src.owner.move_dir = get_dir(src.owner,get_turf(src.move_target))
+				src.owner.process_move()
+
+
+	proc/was_harmed(obj/item/W, mob/M)
+		.=0
 
 /datum/aiTask
 	var/name = "task"

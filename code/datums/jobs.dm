@@ -750,11 +750,10 @@
 	slot_belt = /obj/item/storage/belt/utility/prepared
 	slot_jump = /obj/item/clothing/under/rank/engineer
 	slot_foot = /obj/item/clothing/shoes/orange
-	slot_lhan = /obj/item/device/t_scanner
+	slot_lhan = /obj/item/storage/toolbox/mechanical/engineer_spawn
 	slot_glov = /obj/item/clothing/gloves/yellow
 	slot_poc1 = /obj/item/device/pda2/engine
 	slot_ears = /obj/item/device/radio/headset/engineer
-	items_in_backpack = list(/obj/item/electronics/soldering)
 
 	New()
 		..()

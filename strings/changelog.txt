@@ -1,5 +1,27 @@
 
+(t)mon jul 06 20
+(u)mbc + LovelyMimic
+(p)1389
+(e)|
+(*)Added two new friends to the trench!
+(u)Gannets & Roselace
+(p)1383
+(e)⚖🎨|balance, sprites
+(*)New sprites for the MPRT7 rocket launcher by Roselace and Gannets.
+(*)It is now a two-handed weapon that can be worn on the backpack slot.
 (t)sun jul 05 20
+(u)AwkwardDryad
+(p)1258
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added kendo! Gear can be found in VR and in any gym on station!
+(u)MarkNstein
+(p)1347
+(e)🆕|feature
+(+)PNetComp now displays it's address and settings when observed.
+(u)Flaborized
+(p)1371
+(e)🎨|sprites
+(*)Resprited small gas tanks, jetpacks and fuel tanks.
 (u)mbc + Flaborized
 (p)1372
 (e)🗺🎨|mapping, sprites
