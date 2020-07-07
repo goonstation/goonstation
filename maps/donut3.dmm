@@ -38835,6 +38835,8 @@
 /obj/item/clothing/glasses/blindfold{
 	name = "For Krimpus"
 	},
+/obj/item/bee_egg_carton,
+/obj/item/bee_egg_carton,
 /turf/simulated/floor,
 /area/station/hydroponics)
 "lFQ" = (
