@@ -313,11 +313,11 @@
 #endif
 		switch(damage_type)
 			if("fire")
-				src.health -= attack_force * (src.firevuln + W.getProperty("piercing")) //Extremely half assed piercing for critters
+				src.health -= attack_force * max(1,(src.firevuln + W.getProperty("piercing")/100)) //Extremely half assed piercing for critters
 			if("brute")
-				src.health -= attack_force * (src.brutevuln + W.getProperty("piercing"))
+				src.health -= attack_force * max(1,(src.brutevuln + W.getProperty("piercing")/100))
 			else
-				src.health -= attack_force * (src.miscvuln + W.getProperty("piercing"))
+				src.health -= attack_force * max(1,(src.miscvuln + W.getProperty("piercing")/100))
 
 		if (src.alive && src.health <= 0) src.CritterDeath()
 

@@ -7,8 +7,10 @@ var/list/ai_move_scheduled = list()
 	var/datum/aiTask/default_task = null  // what behavior the critter will fall back on
 	var/list/task_cache = list()
 	var/move_target = null
+
 	var/move_dist = 0
 	var/move_reverse = 0
+	var/move_side = 0 //merge with reverse later ok messy
 
 	var/enabled = 1
 
@@ -89,6 +91,7 @@ var/list/ai_move_scheduled = list()
 		move_target = A
 		move_dist = dist
 		move_reverse = 0
+		move_side = 0
 
 	proc/move_away(var/A, var/dist = 6)
 		if (!move_target)
@@ -96,6 +99,15 @@ var/list/ai_move_scheduled = list()
 		move_target = A
 		move_dist = dist
 		move_reverse = 1
+		move_side = 0
+
+	proc/move_circ(var/A, var/dist = 1)
+		if (!move_target)
+			ai_move_scheduled += src
+		move_target = A
+		move_dist = dist
+		move_reverse = prob(50)?0:1
+		move_side = 1
 
 	proc/stop_move()
 		move_target = null
@@ -103,7 +115,12 @@ var/list/ai_move_scheduled = list()
 		walk(src,0)
 
 	proc/move_step()
-		if (src.move_reverse)
+		if (src.move_side)
+			if (get_dist(src.owner,get_turf(src.move_target)) > src.move_dist)
+				var/turn = src.move_reverse?90:-90
+				src.owner.move_dir = turn( get_dir(src.owner,get_turf(src.move_target)),turn )
+				src.owner.process_move()
+		else if (src.move_reverse)
 			if (get_dist(src.owner,get_turf(src.move_target)) < src.move_dist)
 				var/turn = 180
 				switch(rand(1,4)) //fudge walk away behavior

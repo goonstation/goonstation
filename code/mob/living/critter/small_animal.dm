@@ -2767,3 +2767,92 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			qdel(src.ai)
 			src.ai = null
 			..()
+
+
+/mob/living/critter/small_animal/pikaia
+	name = "pikaia"
+	real_name = "pikaia"
+	desc = "This is an alien pikaia."
+	icon_state = "pikaia"
+	icon_state_dead = "pikaia-dead"
+	speechverb_say = "bloops"
+	speechverb_exclaim = "blips"
+	speechverb_ask = "blups"
+	health_brute = 17
+	health_burn = 13
+	flags = TABLEPASS | DOORPASS
+	fits_under_table = 1
+
+	density = 1
+
+	base_move_delay = 2.3
+	base_walk_delay = 4
+
+//	var/mob/living/target = null
+
+	New()
+		..()
+		src.remove_stam_mod_max("small_animal")
+		src.add_stam_mod_max("pikaia", -(STAMINA_MAX-140))
+		abilityHolder.addAbility(/datum/targetable/critter/bury_hide)
+		SPAWN_DBG(1 SECOND)
+			animate_bumble(src)
+
+	is_hulk()
+		.= 1
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter/med
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "body"
+		HH.limb_name = "body"
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream","chitter")
+				if (src.emote_check(voluntary, 50))
+					playsound(get_turf(src), 'sound/misc/talk/buwoo_exclaim.ogg', 90, 1, pitch = 0.8)
+					return "<span class='emote'><b>[src]</b> squeals!</span>"
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream","chitter")
+				return 2
+		if (act == "flip")
+			for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
+				var/mob/living/M = G.affecting
+				if (M == src)
+					continue
+				if (!G.affecting)
+					continue
+				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+				if (G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc))
+					src.emote("scream")
+					logTheThing("combat", src, G.affecting, "crunches %target% [log_loc(src)]")
+					M.lastattacker = src
+					M.lastattackertime = world.time
+					G.affecting.TakeDamage("head", rand(2,7), 0, 0, DAMAGE_BLUNT)
+					playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1, pitch = 1.3)
+					src.visible_message("<span class='alert'><B>[src] crunches [G.affecting]!</B></span>")
+		return ..()
+
+	death(var/gibbed)
+		playsound(get_turf(src), 'sound/misc/talk/blub.ogg', 80, 1, pitch = 0.6)
+		new /obj/item/reagent_containers/food/snacks/greengoo(get_turf(src))
+
+		..()
+
+	ai_controlled
+		is_npc = 1
+		New()
+			..()
+			src.ai = new /datum/aiHolder/pikaia(src)
+
+		death(var/gibbed)
+			qdel(src.ai)
+			src.ai = null
+			..()

@@ -1,4 +1,18 @@
 
+(t)tue jul 07 20
+(u)mbc
+(+)Fixed issue where screen color modifiers weren't displaying (sunglasses, lsd, etc)
+(u)MarkNstein
+(p)1394
+(e)🗺|mapping
+(+)Cog2: TTV VR now properly connected and functioning.
+(u)mbc + LovelyMimic
+(*)Added a third new trench enemy. Note that all the trench enemies drop a unique item on death.
+(u)Ryumi
+(p)1395
+(e)🗺|mapping
+(*)Added three security checkpoints and a medical checkpoint to Donut3. The sec checkpoints are next to: Arrivals, the hangar, and in Escape. The Medical checkpoint is in the Public Market, next to Escape.
+(+)Added an owlrey and pool to Donut3! You'll find them both in an asteroid that is located in the northwestern corner of the station z-level!
 (t)mon jul 06 20
 (u)mbc + LovelyMimic
 (p)1389
