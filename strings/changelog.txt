@@ -1,5 +1,7 @@
 
 (t)tue jul 07 20
+(u)mbc
+(+)Fixed issue where screen color modifiers weren't displaying (sunglasses, lsd, etc)
 (u)MarkNstein
 (p)1394
 (e)🗺|mapping
