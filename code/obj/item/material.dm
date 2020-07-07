@@ -610,6 +610,18 @@
 			var/datum/material/M = getMaterial("plasmaglass")
 			src.setMaterial(M, appearance = 1, setname = 1)
 
+/obj/item/raw_material/chitin
+	name = "chitin chunk"
+	desc = "A chunk of chitin."
+	icon_state = "chitin"
+	material_name = "Chitin"
+	metal = 3
+	dense = 1
+
+	setup_material()
+		src.setMaterial(getMaterial("chitin"), appearance = 0, setname = 0)
+		return ..()
+
 // bars, tied into the new material system
 
 /obj/item/material_piece/mauxite

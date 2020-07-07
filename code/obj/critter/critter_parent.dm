@@ -973,8 +973,8 @@
 			return
 #endif
 		src.visible_message("<span class='combat'><B>[src]</B> [src.chase_text] [src.target]!</span>")
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		//playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 
@@ -986,8 +986,8 @@
 			src.visible_message("<span class='combat'><B>[src]</B> [src.atk_text] [src.target]!</span>")
 			random_brute_damage(src.target, src.atk_brute_amt,1)
 			random_burn_damage(src.target, src.atk_burn_amt)
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		SPAWN_DBG(src.atk_delay)
 			src.attacking = 0
