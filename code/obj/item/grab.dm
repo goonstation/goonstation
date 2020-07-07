@@ -80,6 +80,9 @@
 				affecting.grabbed_by -= src
 			affecting = null
 
+		if (src.disposed)
+			src.set_loc(null)
+
 		assailant = null
 		..()
 
@@ -88,6 +91,8 @@
 		if(src.assailant)
 			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
 			qdel(src)
+		if (src.disposed)
+			src.set_loc(null)
 
 	process(var/mult = 1)
 		if (check())
