@@ -9,6 +9,11 @@ Example out of game log call:
 */
 
 //We save this as html because the non-diary logging currently has html tags in place
+
+
+#define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
+#define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
+
 var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-DD-hh-mm")].html")
 
 /proc/logTheThing(type, source, target, text, diaryType)
@@ -28,26 +33,26 @@ var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-D
 	switch(type)
 		//These are things we log in-game (accessible via the Secrets menu)
 		if ("audit")
-			logs["audit"] += ingameLog
+			WRITE_LOG(logs["audit"], ingameLog)
 			diaryLogging = 1
 			diaryType = "audit"
-		if ("admin") logs["admin"] += ingameLog
-		if ("admin_help") logs["admin_help"] += ingameLog
-		if ("mentor_help") logs["mentor_help"] += ingameLog
-		if ("say") logs["speech"] += ingameLog
-		if ("ooc") logs["ooc"] += ingameLog
-		if ("whisper") logs["speech"] += ingameLog
-		if ("station") logs["station"] += ingameLog
-		if ("combat") logs["combat"] += ingameLog
-		if ("telepathy") logs["telepathy"] += ingameLog
-		if ("debug") logs["debug"] += ingameLog
-		if ("pdamsg") logs["pdamsg"] += ingameLog
-		if ("signalers") logs["signalers"] += ingameLog
-		if ("bombing") logs["bombing"] += ingameLog
-		if ("atmos") logs["atmos"] += ingameLog
-		if ("pathology") logs["pathology"] += ingameLog
-		if ("deleted") logs["deleted"] += ingameLog
-		if ("vehicle") logs["vehicle"] += ingameLog
+		if ("admin") WRITE_LOG(logs["admin"], ingameLog)
+		if ("admin_help") WRITE_LOG(logs["admin_help"], ingameLog)
+		if ("mentor_help") WRITE_LOG(logs["mentor_help"], ingameLog)
+		if ("say") WRITE_LOG(logs["speech"], ingameLog)
+		if ("ooc") WRITE_LOG(logs["ooc"], ingameLog)
+		if ("whisper") WRITE_LOG(logs["speech"], ingameLog)
+		if ("station") WRITE_LOG(logs["station"], ingameLog)
+		if ("combat") WRITE_LOG(logs["combat"], ingameLog)
+		if ("telepathy") WRITE_LOG(logs["telepathy"], ingameLog)
+		if ("debug") WRITE_LOG(logs["debug"], ingameLog)
+		if ("pdamsg") WRITE_LOG(logs["pdamsg"], ingameLog)
+		if ("signalers") WRITE_LOG(logs["signalers"], ingameLog)
+		if ("bombing") WRITE_LOG(logs["bombing"], ingameLog)
+		if ("atmos") WRITE_LOG(logs["atmos"], ingameLog)
+		if ("pathology") WRITE_LOG(logs["pathology"], ingameLog)
+		if ("deleted") WRITE_LOG(logs["deleted"], ingameLog)
+		if ("vehicle") WRITE_LOG(logs["vehicle"], ingameLog)
 		if ("diary")
 			switch (diaryType)
 				//These are things we log in the out of game logs (the diary)
@@ -72,7 +77,6 @@ var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-D
 	//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
 	if (!diaryLogging && config.allowRotatingFullLogs)
 		roundLog << "[time2text(world.timeofday, "\[hh:mm:ss\]")] \[[uppertext(type)]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>"
-
 	return
 
 /proc/constructName(ref, type)
