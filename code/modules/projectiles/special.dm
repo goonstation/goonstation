@@ -237,7 +237,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "spike wave"
 	spread_angle = 65
 	cost = 200
-	pellets_to_fire = 7
+	pellets_to_fire = 5
 	spread_projectile_type = /datum/projectile/bullet/spike
 	shot_sound = 'sound/weapons/radxbow.ogg'
 
