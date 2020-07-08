@@ -173,8 +173,8 @@
 		boutput(user, "<span class='alert'>[MECHFAILSTRING]</span>")
 		return
 	
-	if(!in_range(parent, O, 7))
-		boutput(user, "<span class='alert'>Components need to be within a range of 7 meters to connect.</span>")
+	if(get_dist(parent, O) > 14)
+		boutput(user, "<span class='alert'>Components need to be within a range of 14 meters to connect.</span>")
 		return
 
 	var/typesel = input(user, "Use [parent] as:", "Connection Type") in list("Trigger", "Receiver", "*CANCEL*")
