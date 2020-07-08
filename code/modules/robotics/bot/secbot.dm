@@ -39,6 +39,13 @@
 	var/loot_baton_type = /obj/item/scrap
 	var/botgun = null
 	var/stun_type = "stun"
+	var/spread = 0
+	var/refire = 0 SECONDS
+	var/proj = null
+	var/shotcount = 0
+	var/burst = 0
+	var/gun = null
+	var/add_loot = null
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
 #define SECBOT_HUNT 		1		// found target, hunting
@@ -128,7 +135,7 @@
 	auto_patrol = 0
 	beacon_freq = 1444
 	hat = "helm"
-	botgun = /obj/item/device/secbotgun/taser
+	botgun = "taser"
 
 /obj/machinery/bot/secbot/warden
 	name = "Warden Jack"
@@ -183,37 +190,6 @@
 	var/beacon_freq = 1445 //If it's running on another beacon circuit I guess
 	var/hat = null
 
-// MOVE ELSEWHERE -V
-
-/obj/item/device/secbotgun/taser
-	name = "Taser tool module"
-	desc = "A taser module for PR-6S Guardbuddies."
-	icon = 'icons/obj/module.dmi'
-	icon_state = "tool_taser"
-	mats = 6
-	w_class = 2.0
-	var/tool_id = "TASER" 	//Identification ID.
-	var/add_loot = null 	// Get our weapon back!
-	var/give_thing = null 	// The thing we give the bot to have the thing
-	var/current_projectile = new/datum/projectile/energy_bolt/robust
-
-	shootem(null, null, current_projectile, 10)
-
-		if (src.last_attack && (world.time < (src.last_attack + 1)))
-			return
-
-		else 
-			shoot_projectile_ST_pixel(src, current_projectile, M)
-			if (!M)
-				return
-
-			user.visible_message("<span class='alert'><b>[src] fires the taser at [src.target]!</b></span>")
-
-		src.last_attack = world.time
-		return
-			
-// End Tazer
-
 /obj/machinery/bot/secbot
 	New()
 		..()
@@ -235,6 +211,20 @@
 				radio_controller.add_object(src, "[beacon_freq]")
 			if(src.hat)
 				src.overlays += image('icons/obj/bots/aibots.dmi', "hat-[src.hat]")
+			if (src.botgun == "taser")
+				add_loot = /obj/item/gun/kinetic/light_machine_gun
+				proj = new/datum/projectile/energy_bolt/robust
+				spread = 20
+				burst = 10
+				refire = 10
+				gun = "taser"
+			else
+				add_loot = null 
+				proj = null
+				spread = 0
+				burst = 0
+				refire = 5
+				gun = null
 
 	attack_hand(mob/user as mob, params)
 		var/dat
@@ -314,7 +304,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		if (src.emagged < emag_stages)
 			if (emagged)
 				if (user)
-					boutput(user, "<span class='alert'>You short out [src]'s system clock inhibition circuis.</span>")
+					boutput(user, "<span class='alert'>You short out [src]'s system clock inhibition circuits.</span>")
 				src.overlays.len = 0
 			else if (user)
 				boutput(user, "<span class='alert'>You short out [src]'s target assessment circuits.</span>")
@@ -459,13 +449,19 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		
 	proc/shootgun_attack(var/mob/living/carbon/M)
 		src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
-		var/shootcount = (src.emagged >= 2) ? rand(5,10) : 1
-
+		if (src.emagged >= 2)
+			shotcount = burst * rand(2,3)
+		else
+			shotcount = burst
 		last_attack = world.time
 
-		while (shootcount > 0 && src.target)
-			shootcount--
-			src.botgun.shootem(src, M)
+		while (shotcount > 0 && src.target)
+			shoot_projectile_ST_pixel_spread(src, proj, src.target, 0, 0 , spread)
+			shotcount--
+			src.visible_message("<span class='alert'><b>[src] is going to fire its [gun] at [shotcount] more times!</b></span>")
+			sleep(refire)
+			
+		src.visible_message("<span class='alert'><b>[src] fires the [gun] at [src.target]!</b></span>")
 
 		SPAWN_DBG(0.2 SECONDS)
 			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
@@ -523,11 +519,11 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 				if (target)		// make sure target exists
 					if (get_dist(src, src.target) <= 1)		// if right next to perp
-						src.shootsec(src.target)			//And shoot em too
+						src.shootgun_attack(src.target)			//And shoot em too
 						src.baton_attack(src.target)
 					else								// not next to perp
 						if(!(src.target in view(7,src)) || !moving)
-							src.shootsec(src.target)	// Take a shot
+							src.shootgun_attack(src.target)	// Take a shot
 							//qdel(src.mover)
 							if (src.mover)
 								src.mover.master = null
@@ -1131,7 +1127,10 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			B.status = 0
 			B.process_charges(-INFINITY)
 		else
-			new loot_baton_type
+			new loot_baton_type(Tsec)
+			
+		if (add_loot)
+			new add_loot(Tsec)
 
 		if (prob(50))
 			new /obj/item/parts/robot_parts/arm/left(Tsec)
@@ -1250,6 +1249,16 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		user.u_equip(W)
 		qdel(W)
 		
+	else if (istype(W, /obj/item/gun/energy/taser_gun) && src.build_step == 3)
+		src.build_step++
+		boutput(user, "Yuo give beepsly a gun. oh no")
+		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
+		S.beacon_freq = src.beacon_freq
+		S.hat = src.hat
+		S.name = src.created_name
+		S.botgun = "taser"
+		qdel(src)
+		
 	else if (istype(W, /obj/item/rods) && src.build_step == 3)
 		if (W.amount < 1)
 			boutput(user, "You need a non-zero amount of rods. How did you even do that?")
@@ -1286,3 +1295,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			return
 
 		src.created_name = t
+		
+// defines the shoot
+
