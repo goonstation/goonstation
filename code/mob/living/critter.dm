@@ -71,6 +71,8 @@
 	var/yeet_chance = 1 //yeet
 
 	var/last_life_process = 0
+	var/use_stunned_icon = 1
+
 
 	blood_id = "blood"
 
@@ -689,6 +691,7 @@
 		if (do_drop_equipment)
 			drop_equipment()
 		hud.update_health()
+		update_stunned_icon(canmove=1)//force it to go away
 		return ..(gibbed)
 
 	proc/get_health_holder(var/assoc)
@@ -1009,18 +1012,19 @@
 
 	force_laydown_standup()
 		..()
-		update_stunned_icon()
+		update_stunned_icon(canmove)
 
 	proc/update_stunned_icon(var/canmove)
-		if(canmove != src.old_canmove)
-			src.old_canmove = canmove
-			if (canmove)
-				src.UpdateOverlays(null, "dizzy")
-				return
-			else
-				var/image/dizzyStars = src.SafeGetOverlayImage("dizzy", src.icon, "dizzy", MOB_OVERLAY_BASE+20) // why such a big boost? because the critter could have a bunch of overlays, that's why
-				if (dizzyStars)
-					src.UpdateOverlays(dizzyStars, "dizzy")
+		if (use_stunned_icon)
+			if(canmove != src.old_canmove)
+				src.old_canmove = canmove
+				if (canmove || isdead(src))
+					src.UpdateOverlays(null, "dizzy")
+					return
+				else
+					var/image/dizzyStars = src.SafeGetOverlayImage("dizzy", src.icon, "dizzy", MOB_OVERLAY_BASE+20) // why such a big boost? because the critter could have a bunch of overlays, that's why
+					if (dizzyStars)
+						src.UpdateOverlays(dizzyStars, "dizzy")
 
 	proc/get_head_armor_modifier()
 		var/armor_mod = 0
