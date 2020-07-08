@@ -1760,7 +1760,7 @@ datum
 			fluid_r = 255
 			fluid_g = 0
 			fluid_b = 0
-			transparency = 20
+			transparency = 77
 			taste = "hot"
 			addiction_prob = 1 // heh
 			addiction_prob2 = 10

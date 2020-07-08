@@ -204,8 +204,8 @@
 
 	CritterAttack(mob/M)
 		src.attacking = 1
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		if (prob(95))
 			if (prob(10))
