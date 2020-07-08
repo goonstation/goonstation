@@ -234,7 +234,7 @@
 	high_priority_job = 1
 	change_name_on_spawn = 1
 #else
-	requires_whitelist = 0
+	requires_whitelist = 1
 #endif
 	recieves_miranda = 1
 	allow_traitors = 0
