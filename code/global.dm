@@ -441,6 +441,7 @@ var/global
 	soundpref_override = 0
 
 	diary = null
+	diary_name = null
 	hublog = null
 	game_version = "Goon Station 13 (r" + vcs_revision + ")"
 

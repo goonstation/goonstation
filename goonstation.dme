@@ -45,6 +45,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\player.dm"
 #include "code\pooling.dm"
 #include "code\RobustLight2.dm"
+#include "code\rust_g.dm"
 #include "code\SimpleLight.dm"
 #include "code\world.dm"
 #include "code\style.dms"
