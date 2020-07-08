@@ -417,6 +417,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 
 	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
+	diary_name = "data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log"
 	diary << ""
 	diary << ""
 	diary << "Starting up. [time2text(world.timeofday, "hh:mm.ss")]"
@@ -715,6 +716,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 /world/Reboot()
 	TgsReboot()
+	shutdown_logging()
 	return ..()
 
 /world/proc/update_status()
