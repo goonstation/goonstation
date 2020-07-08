@@ -80,6 +80,9 @@ var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-D
 		WRITE_LOG(roundLog_name, "\[[uppertext(type)]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
 	return
 
+/proc/logDiary(text)
+	WRITE_LOG(diary_name, "text")
+
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
 /proc/shutdown_logging()
 	rustg_log_close_all()
