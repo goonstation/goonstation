@@ -22,7 +22,7 @@
 
 	var/register = 1 // Whether or not to automagically send command=register&data=MECHNET to connecting devices
 
-	var/ready = 1
+	cooldown_time = 4 DECI SECONDS
 
 	get_desc()
 		. += {"<br><span class='notice'>[self_only ? "Only receiving signals addressed to [net_id]":"Receiving all signals regardless of address_1."]<br>
@@ -69,9 +69,8 @@
 			src.link = null
 
 	proc/spacket(var/datum/mechanicsMessage/input)
-		if(!ready) return
-		ready = 0
-		SPAWN_DBG(0.4 SECONDS) ready = 1
+		if(!isReady()) return
+		unReady()
 		post_raw(input.signal, input.data_file?.copy_file())
 		return
 

@@ -29,6 +29,8 @@ var/list/mechanics_telepads = new/list()
 	level = 2
 	var/under_floor = 0
 	var/can_rotate = 0
+	var/cooldown_time = 3 SECONDS
+	var/when_next_ready = 0
 	var/list/particles = new/list()
 
 	New()
@@ -138,6 +140,15 @@ var/list/mechanics_telepads = new/list()
 		under_floor = (intact && level==1)
 		updateIcon()
 		return
+	
+	proc/isReady()
+		return src.when_next_ready <= world.time
+	
+	proc/unReady(var/unReadyTime = null)
+		if(isnull(unReadyTime))
+			unReadyTime = src.cooldown_time 
+		src.when_next_ready = world.time + unReadyTime
+		return
 
 	proc/updateIcon()
 		return
@@ -151,7 +162,6 @@ var/list/mechanics_telepads = new/list()
 	var/code = null
 	var/collected = 0
 	var/current_buffer = 0
-	var/ready = 1
 
 	var/thank_string = ""
 
@@ -228,8 +238,8 @@ var/list/mechanics_telepads = new/list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return
-		if (istype(W, /obj/item/spacecash) && ready)
-			ready = 0
+		if (istype(W, /obj/item/spacecash) && isReady())
+			unReady()
 			current_buffer += W.amount
 			if (src.price <= 0)
 				src.price = initial(src.price)
@@ -252,7 +262,7 @@ var/list/mechanics_telepads = new/list()
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
 				flick("comp_money1", src)
 
-				ready = 1
+				unReady(0)//Make it ready now.
 		return
 
 
@@ -268,8 +278,8 @@ var/list/mechanics_telepads = new/list()
 	name = "Flusher component"
 	desc = ""
 	icon_state = "comp_flush"
+	cooldown_time = 2 SECONDS
 
-	var/ready = 1
 	var/obj/disposalpipe/trunk/trunk = null
 	var/datum/gas_mixture/air_contents
 
@@ -301,13 +311,12 @@ var/list/mechanics_telepads = new/list()
 
 	proc/flushp(var/datum/mechanicsMessage/input)
 		if(level == 2) return
-		if(input && input.signal && ready && trunk)
-			ready = 0
+		if(input && input.signal && isReady() && trunk)
+			unReady()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.anchored || isAI(M)) continue
 				M.set_loc(src)
 			flushit()
-			SPAWN_DBG(2 SECONDS) ready = 1
 		return
 
 	proc/flushit()
@@ -345,7 +354,7 @@ var/list/mechanics_telepads = new/list()
 	name = "Thermal printer"
 	desc = ""
 	icon_state = "comp_tprint"
-	var/ready = 1
+	cooldown_time = 5 SECONDS
 	var/paper_name = "thermal paper"
 
 	New()
@@ -354,10 +363,9 @@ var/list/mechanics_telepads = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Paper Name","setPaperName")
 
 	proc/print(var/datum/mechanicsMessage/input)
-		if(level == 2 || !ready) return
+		if(level == 2 || !isReady()) return
 		if(input)
-			ready = 0
-			SPAWN_DBG(5 SECONDS) ready = 1
+			unReady()
 			flick("comp_tprint1",src)
 			playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
 			var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
@@ -385,7 +393,6 @@ var/list/mechanics_telepads = new/list()
 	icon_state = "comp_pscan"
 	var/del_paper = 1
 	var/thermal_only = 1
-	var/ready = 1
 
 	New()
 		..()
@@ -408,12 +415,11 @@ var/list/mechanics_telepads = new/list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return
-		else if (istype(W, /obj/item/paper) && ready)
+		else if (istype(W, /obj/item/paper) && isReady())
 			if(thermal_only && !istype(W, /obj/item/paper/thermal))
 				boutput(user, "<span class='alert'>This scanner only accepts thermal paper.</span>")
 				return
-			ready = 0
-			SPAWN_DBG(3 SECONDS) ready = 1
+			unReady()
 			flick("comp_pscan1",src)
 			playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
 			var/obj/item/paper/P = W
@@ -523,7 +529,6 @@ var/list/mechanics_telepads = new/list()
 	desc = ""
 	icon_state = "comp_hscan"
 	var/send_name = 0
-	var/ready = 1
 
 	New()
 		..()
@@ -534,10 +539,9 @@ var/list/mechanics_telepads = new/list()
 		boutput(user, "[send_name ? "Now sending user NAME":"Now sending user FINGERPRINT"]")
 
 	attack_hand(mob/user as mob)
-		if(level != 2 && ready)
+		if(level != 2 && isReady())
 			if(ishuman(user) && user.bioHolder)
-				ready = 0
-				SPAWN_DBG(3 SECONDS) ready = 1
+				unReady()
 				flick("comp_hscan1",src)
 				playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
 				var/sendstr = (send_name ? user.real_name : user.bioHolder.uid_hash)
@@ -1190,7 +1194,6 @@ var/list/mechanics_telepads = new/list()
 	name = "Relay Component"
 	desc = ""
 	icon_state = "comp_relay"
-	var/ready = 1
 	var/changesig = 0
 
 	get_desc()
@@ -1208,9 +1211,8 @@ var/list/mechanics_telepads = new/list()
 		tooltip_rebuild = 1
 
 	proc/relay(var/datum/mechanicsMessage/input)
-		if(level == 2 || !ready) return
-		ready = 0
-		SPAWN_DBG(3 SECONDS) ready = 1
+		if(level == 2 || !isReady()) return
+		unReady()
 		flick("[under_floor ? "u":""]comp_relay1", src)
 		var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
 		SPAWN_DBG(0) SEND_SIGNAL(src,transmissionStyle,input)
@@ -1275,7 +1277,6 @@ var/list/mechanics_telepads = new/list()
 	name = "Wifi Component"
 	desc = ""
 	icon_state = "comp_radiosig"
-	var/ready = 1
 	var/forward_all = 0
 	var/only_directed = 1
 
@@ -1334,10 +1335,9 @@ var/list/mechanics_telepads = new/list()
 	proc/send(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		var/list/converted = params2list(input.signal)
-		if(!length(converted) || !ready) return
+		if(!length(converted) || !isReady()) return
 
-		ready = 0
-		SPAWN_DBG(3 SECONDS) ready = 1
+		unReady()
 
 		var/datum/signal/sendsig = get_free_signal()
 
@@ -1720,7 +1720,6 @@ var/list/mechanics_telepads = new/list()
 	name = "Teleport Component"
 	desc = ""
 	icon_state = "comp_tele"
-	var/ready = 1
 	var/teleID = "tele1"
 	var/send_only = 0
 
@@ -1766,9 +1765,8 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/activate(var/datum/mechanicsMessage/input)
-		if(level == 2 || !ready) return
-		ready = 0
-		SPAWN_DBG(3 SECONDS) ready = 1
+		if(level == 2 || !isReady()) return
+		unReady()
 		flick("[under_floor ? "u":""]comp_tele1", src)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc)))
 		playsound(src.loc, "sound/mksounds/boost.ogg", 50, 1)
@@ -1988,16 +1986,15 @@ var/list/mechanics_telepads = new/list()
 	name = "Sound Synthesizer"
 	desc = ""
 	icon_state = "comp_synth"
-	var/ready = 1
+	cooldown_time = 2 SECONDS
 
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input", "fire")
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if(level == 2 || !ready || !input) return
-		ready = 0
-		SPAWN_DBG(2 SECONDS) ready = 1
+		if(level == 2 || !isReady() || !input) return
+		unReady()
 		componentSay("[input.signal]")
 		return
 
@@ -2223,7 +2220,6 @@ var/list/mechanics_telepads = new/list()
 	density = 0
 	compatible_guns = /obj/item/gun/energy
 	var/charging = 0
-	var/ready = 1
 
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
@@ -2278,9 +2274,8 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	fire(var/datum/mechanicsMessage/input)
-		if(charging || !ready || level == 2) return
-		ready = 0
-		SPAWN_DBG(3 SECONDS) ready = 1
+		if(charging || !isReady() || level == 2) return
+		unReady()
 		return ..()
 
 	updateIcon()
@@ -2294,7 +2289,6 @@ var/list/mechanics_telepads = new/list()
 	density = 0
 	var/obj/item/instrument = null
 	var/pitchUnlocked = 0 // varedit this to 1 to permit really goofy pitch values!
-	var/ready = 1
 	var/delay = 10
 	var/sounds = null
 	var/volume = 50
@@ -2354,9 +2348,8 @@ var/list/mechanics_telepads = new/list()
 			tooltip_rebuild = 1
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if (level == 2 || !ready || !instrument) return
-		ready = 0
-		SPAWN_DBG(delay) ready = 1
+		if (level == 2 || !isReady() || !instrument) return
+		unReady(delay)
 		var/signum = text2num(input.signal)
 		if (signum &&((signum >= 0.4 && signum <= 2) ||(signum <= -0.4 && signum >= -2) || pitchUnlocked))
 			flick("comp_instrument1", src)
