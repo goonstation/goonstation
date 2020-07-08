@@ -1444,13 +1444,12 @@
 										if (prob(50))
 											M.ex_act(3) // this is hilariously overpowered, but WHATEVER!!!
 										else
-											G.affecting.changeStatus("stunned", 50)
 											G.affecting.changeStatus("weakened", 5 SECONDS)
 											G.affecting.force_laydown_standup()
 											G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 										playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 									else
-										src.changeStatus("weakened", 3.5 SECONDS)
+										src.changeStatus("weakened", 3.9 SECONDS)
 
 										if (client && client.hellbanned)
 											src.changeStatus("weakened", 4 SECONDS)
@@ -1471,12 +1470,11 @@
 												if ((prob(g_tabl.reinforced ? 60 : 80)) || (src.bioHolder.HasEffect("clumsy") && (!g_tabl.reinforced || prob(90))) || ((src.bioHolder.HasEffect("fat") || G.affecting.bioHolder.HasEffect("fat")) && (!g_tabl.reinforced || prob(90))))
 													SPAWN_DBG(0)
 														g_tabl.smash()
-														src.changeStatus("stunned", 7 SECONDS)
-														src.changeStatus("weakened", 6 SECONDS)
+														src.changeStatus("weakened", 7 SECONDS)
 														random_brute_damage(src, rand(20,40))
 														take_bleeding_damage(src, src, rand(20,40))
 
-														G.affecting.changeStatus("stunned", 2 SECONDS)
+
 														G.affecting.changeStatus("weakened", 4 SECONDS)
 														random_brute_damage(G.affecting, rand(20,40))
 														take_bleeding_damage(G.affecting, src, rand(20,40))
