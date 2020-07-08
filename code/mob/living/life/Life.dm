@@ -49,6 +49,9 @@
 	var/last_stam_change = 0
 	var/life_context = "begin"
 
+
+	var/last_no_gravity = 0
+
 	proc/add_lifeprocess(type)
 		var/datum/lifeprocess/L = new type(src)
 		lifeprocesses[type] = L
@@ -205,19 +208,20 @@
 			//do on_life things for components?
 			SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, (life_time_passed / tick_spacing))
 
-			if(src.no_gravity)
-				src.no_gravity = 0
-				animate(src, transform = matrix(), time = 1)
+			if (last_no_gravity != src.no_gravity)
+				if(src.no_gravity)
+					animate_levitate(src, -1, 10, 1)
+				else
+					src.no_gravity = 0
+					animate(src, transform = matrix(), time = 1)
+				last_no_gravity = src.no_gravity
 
-			for (var/thing in src)
+/*
+			for (var/thing in src) //not worth the CPU, nothing even uses this stuff
 				var/atom/movable/A = thing
-				if (A.no_gravity)
-					src.no_gravity = 1
 				if (A.material)
 					A.material.triggerOnLife(src, A)
-
-			if(src.no_gravity)
-				animate_levitate(src, -1, 10, 1)
+*/
 
 		clamp_values()
 

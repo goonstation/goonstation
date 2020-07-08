@@ -231,6 +231,18 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_projectile_type = /datum/projectile/laser/blaster/blast
 	shot_sound = 'sound/weapons/laser_f.ogg'
 
+
+/datum/projectile/special/spreader/uniform_burst/spikes
+	name = "spike wave"
+	sname = "spike wave"
+	spread_angle = 65
+	cost = 200
+	pellets_to_fire = 7
+	spread_projectile_type = /datum/projectile/bullet/spike
+	shot_sound = 'sound/weapons/radxbow.ogg'
+
+
+
 // Really crazy shit
 
 /datum/projectile/special/shock_orb

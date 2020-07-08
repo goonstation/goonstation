@@ -2738,3 +2738,38 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 
 	get_desc()
 		. = "<br><span class='notice'>It says: [phrase]</span>"
+
+
+
+/obj/item/reagent_containers/food/snacks/healgoo
+	name = "weird goo"
+	desc = "This goop is released from a dead hallucigenia. It is known for its beneficial anti-radiation and healing properties."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "healgoo"
+	heal_amt = 2
+	amount = 3
+	initial_volume = 28
+	food_effects = list("food_rad_resist")
+
+	New()
+		..()
+		reagents.add_reagent("saline",7)
+		reagents.add_reagent("charcoal",7)
+		reagents.add_reagent("anti_rad",7)
+		reagents.add_reagent("omnnizine",7)
+
+
+/obj/item/reagent_containers/food/snacks/greengoo
+	name = "green goo"
+	desc = "This goop is released from a dead pikaia. It acts as a mild stimulant."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "greengoo"
+	heal_amt = 1
+	amount = 2
+	initial_volume = 16
+	food_effects = list("food_energized_big")
+
+	New()
+		..()
+		reagents.add_reagent("epinephrine",8)
+		reagents.add_reagent("synaptizine",8)

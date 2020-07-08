@@ -2862,36 +2862,18 @@
 			return 0
 	.=..()
 
-/mob/living/carbon/human/bullet_act(var/obj/projectile/P)
-	if (P.mob_shooter)
-		src.was_harmed(P.mob_shooter)
-	..()
-
-/mob/living/carbon/human/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
-	return
-
 /mob/living/carbon/human/attack_hand(mob/M)
 	..()
 	if (!surgeryCheck(src, M))
 		src.activate_chest_item_on_attack(M)
-	if (M.a_intent in list(INTENT_HARM,INTENT_DISARM,INTENT_GRAB))
-		src.was_harmed(M)
 
 /mob/living/carbon/human/attackby(obj/item/W, mob/M)
 	if (isghostcritter(M) && src.health < 80) //there's another one of these in attack_hand(). Same file. see, the quality of my code doens't matter as long as i leave a very helpful comment!!!
 		boutput(M, "Your spectral conscience refuses to damage this human any further.")
 		return
-	var/oldbloss = get_brute_damage()
-	var/oldfloss = get_burn_damage()
 	..()
-	var/newbloss = get_brute_damage()
-	var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
-	if (reagents)
-		reagents.physical_shock((newbloss - oldbloss) * 0.15)
 	if (!surgeryCheck(src, M))
 		src.activate_chest_item_on_attack(M)
-	if ((damage > 0) || W.force)
-		src.was_harmed(M, W)
 
 /mob/living/carbon/human/understands_language(var/langname)
 	if (mutantrace)

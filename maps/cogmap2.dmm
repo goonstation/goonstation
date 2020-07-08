@@ -65018,6 +65018,11 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/science/lab)
 "cMb" = (
@@ -65567,11 +65572,21 @@
 /turf/simulated/floor/red,
 /area/station/science/lab)
 "cNu" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/caution/east,
 /area/station/science/lab)
 "cNv" = (
 /obj/machinery/networked/storage/bomb_tester{
 	bank_id = "Mixer"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/bot,
 /area/station/science/lab)

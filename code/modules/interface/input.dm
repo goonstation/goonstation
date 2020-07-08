@@ -352,4 +352,11 @@ var/list/clients_move_scheduled = list()
 							!C.mob.internal_process_move(C.key_state)) /* deschedule only if internal_process_move tells us to */
 					clients_move_scheduled -= C
 
+			for(var/X in ai_move_scheduled)
+				if (X)
+					var/datum/aiHolder/ai = X
+					if (ai.move_target)
+						ai.move_step()
+
+
 			sleep(world.tick_lag - (world.time - start_time))

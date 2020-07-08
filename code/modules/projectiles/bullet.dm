@@ -225,7 +225,7 @@ toxic - poisons
 	icon_turf_hit = "bhole-small"
 	on_launch(obj/projectile/O)
 		O.AddComponent(/datum/component/sniper_wallpierce, 2) //pierces 2 walls/lockers/doors/etc. Does not function on restriced Z, rwalls and blast doors use both pierces
-				
+
 	on_hit(atom/hit, dirflag, obj/projectile/P)
 		if(ishuman(hit))
 			var/mob/living/carbon/human/M = hit
@@ -241,7 +241,7 @@ toxic - poisons
 				SPAWN_DBG(0)
 					M.throw_at(target, 3, 3, throw_type = THROW_GUNIMPACT)
 		..()
-	
+
 /datum/projectile/bullet/tranq_dart
 	name = "dart"
 	power = 10
@@ -1269,3 +1269,15 @@ toxic - poisons
 			explosion_new(null, T, 300, 1)
 		return
 
+/datum/projectile/bullet/spike
+	name = "spike"
+	sname = "spike"
+	icon_state = "spike"
+	power = 7.2
+	dissipation_rate = 1
+	dissipation_delay = 45
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_STAB
+	shot_sound = null
+	projectile_speed = 8
+	implanted = null
