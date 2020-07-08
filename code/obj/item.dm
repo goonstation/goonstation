@@ -599,7 +599,7 @@
 	else
 
 		if (isturf(over_object))
-			if (on_turf && in_range(over_object,src)) //drag from floor to floor == slide
+			if (on_turf && in_range(over_object,src) && !src.anchored) //drag from floor to floor == slide
 				if (istype(over_object,/turf/simulated/floor) || istype(over_object,/turf/unsimulated/floor))
 					step_to(src,over_object)
 					//this would be cool ha ha h
@@ -1252,7 +1252,7 @@
 /obj/item/proc/attach(var/mob/living/carbon/human/attachee,var/mob/attacher)
 	//if (!src.arm_icon) return //ANYTHING GOES!~!
 
-	if (src.object_flags & NO_ARM_ATTACH || src.temp_flags & IS_LIMB_ITEM)
+	if (src.object_flags & NO_ARM_ATTACH || src.cant_drop)
 		boutput(attacher, "<span class='alert'>You try to attach [src] to [attachee]'s stump, but it politely declines!</span>")
 		return
 

@@ -59,10 +59,11 @@
 	proc/remove_lifeprocess(type)
 		for (var/thing in lifeprocesses)
 			if (thing)
-				var/datum/lifeprocess/L = thing
-				if (L.type == type)
-					lifeprocesses -= L
-				qdel(L)
+				if (thing == type)
+					var/datum/lifeprocess/L = lifeprocesses[thing]
+					lifeprocesses -= thing
+					qdel(L)
+					L = null
 
 	proc/get_heat_protection()
 		.= 0
@@ -90,7 +91,7 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/blood)
 	//add_lifeprocess(/datum/lifeprocess/bodytemp) //maybe enable per-critter
-	add_lifeprocess(/datum/lifeprocess/breath)
+	//add_lifeprocess(/datum/lifeprocess/breath) //most of them cant even wear internals
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
 	add_lifeprocess(/datum/lifeprocess/disability)

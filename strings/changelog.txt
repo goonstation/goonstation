@@ -1,4 +1,17 @@
 
+(t)wed jul 08 20
+(u)MarkNstein
+(p)1312
+(e)🔄|rework
+(+)On the RP server: Cogmap 1 can only be voted for when at least 14 players are connected.
+(u)Tarmunroa
+(p)1402
+(e)⚖|balance
+(+)Tweaked taser shotgun singlefire + falloff
+(u)Tarmunora
+(p)1404
+(e)⚖|balance
+(+)Adjusted wavegun energy costs and effects - EMP AoE is now range-dependant
 (t)tue jul 07 20
 (u)mbc
 (+)Fixed issue where screen color modifiers weren't displaying (sunglasses, lsd, etc)
