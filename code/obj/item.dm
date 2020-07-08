@@ -598,7 +598,7 @@
 		//		user.give_to(over_object)
 	else
 
-		if (isturf(over_object))
+		if (isturf(over_object) && !src.anchored)
 			if (on_turf && in_range(over_object,src)) //drag from floor to floor == slide
 				if (istype(over_object,/turf/simulated/floor) || istype(over_object,/turf/unsimulated/floor))
 					step_to(src,over_object)
