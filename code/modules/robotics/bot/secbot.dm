@@ -459,7 +459,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			shoot_projectile_ST_pixel_spread(src, proj, src.target, 0, 0 , spread)
 			shotcount--
 			src.visible_message("<span class='alert'><b>[src] is going to fire its [gun] at [shotcount] more times!</b></span>")
-			sleep(refire)
+			SPAWN_DBG(refire)
 			
 		src.visible_message("<span class='alert'><b>[src] fires the [gun] at [src.target]!</b></span>")
 
