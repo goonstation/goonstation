@@ -181,11 +181,13 @@
 		if(spawningFlags & SPAWN_TRILOBITE)
 			if (prob(17))
 				new /mob/living/critter/small_animal/trilobite/ai_controlled(src)
+			if (prob(2))
+				new /mob/living/critter/small_animal/pikaia/ai_controlled(src)
 
 		if(spawningFlags & SPAWN_HALLU)
 			if (prob(1) && prob(22))
 				new /mob/living/critter/small_animal/hallucigenia/ai_controlled(src)
-			else if (prob(1) && prob(15))
+			else if (prob(1) && prob(18)
 				new /mob/living/critter/small_animal/pikaia/ai_controlled(src)
 
 		if (spawningFlags & SPAWN_LOOT)
