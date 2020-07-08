@@ -172,6 +172,10 @@
 	if (!user.find_tool_in_hand(TOOL_PULSING))
 		boutput(user, "<span class='alert'>[MECHFAILSTRING]</span>")
 		return
+	
+	if(!in_range(parent, O, 7))
+		boutput(user, "<span class='alert'>Components need to be within a range of 7 meters to connect.</span>")
+		return
 
 	var/typesel = input(user, "Use [parent] as:", "Connection Type") in list("Trigger", "Receiver", "*CANCEL*")
 	switch(typesel)
