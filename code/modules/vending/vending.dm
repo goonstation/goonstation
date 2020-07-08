@@ -112,10 +112,9 @@
 
 	New()
 		src.create_products()
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("vend radnom", "vendinput")
-		mechanics.addInput("vend by name", "vendname")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"vend radnom", "vendinput")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"vend by name", "vendname")
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.6)
@@ -1790,8 +1789,7 @@
 
 				src.postvend_effect()
 
-				if (mechanics)
-					mechanics.fireOutgoing(mechanics.newSignal("productDispensed"))
+				SEND_SIGNAL(O,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
 
 			if (src.paying_for)
 				src.paying_for = null
@@ -1985,6 +1983,7 @@
 
 /obj/machinery/vending/proc/throw_item_act(var/datum/data/vending_product/R, var/mob/living/target)
 	var/obj/throw_item = null
+	//Big if/else trying to create the object properly
 	if (ispath(R.product_path))
 		var/dump_path = R.product_path
 		throw_item = new dump_path(src.loc)
@@ -2017,8 +2016,7 @@
 		use_power(10)
 		if (src.icon_vend) //Show the vending animation if needed
 			flick(src.icon_vend,src)
-		if (mechanics)
-			mechanics.fireOutgoing(mechanics.newSignal("productDispensed"))
+		SEND_SIGNAL(O,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
 		src.generate_HTML(1)
 		SPAWN_DBG(0)
 			throw_item.throw_at(target, 16, 3)
