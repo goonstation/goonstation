@@ -1,5 +1,9 @@
 
 (t)wed jul 08 20
+(u)Tarmunroa
+(p)1402
+(e)⚖|balance
+(+)Tweaked taser shotgun singlefire + falloff
 (u)Tarmunora
 (p)1404
 (e)⚖|balance
