@@ -81,7 +81,7 @@ var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-D
 	return
 
 /proc/logDiary(text)
-	WRITE_LOG(diary_name, "text")
+	WRITE_LOG(diary_name, "[text]")
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
 /proc/shutdown_logging()
