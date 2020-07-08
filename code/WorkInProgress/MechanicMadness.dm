@@ -1,17 +1,7 @@
 //TODO:
-// - Stun and ghost checks for the verbs
-// - Buttons can be picked up with the hands full. Woops.
 // - Message Datum pooling and recycling.
 // - Check if something is already connected and prevent from double connecting.
 
-//Important Notes:
-//
-//Please try to always re-use incoming signals for your outgoing signals.
-//Just modify the message of the incoming signal and send it along.
-//This is important because each message keeps track of which nodes it traveled trough.
-//It's through that list that we can prevent infinite loops. Or at least try to.
-//(People can probably still create infinite loops somehow. They always manage)
-//Always use the newSignal proc of the mechanics holder of the sending object when creating a new message.
 
 
 //Global list of telepads so we don't have to loop through the entire world aaaahhh.
@@ -55,9 +45,9 @@ var/list/mechanics_telepads = new/list()
 		if(level == 2 || under_floor)
 			cutParticles()
 			return
-		var/outgoing_wrapper[1] //A list of size 1, to store the address of the list we want
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_GET_OUTGOING, outgoing_wrapper) //MarkNstein needs attention
-		var/list/connected_outgoing = outgoing_wrapper[1]
+		var/pointer_container[1] //A list of size 1, to store the address of the list we want
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_GET_OUTGOING, pointer_container) //MarkNstein needs attention
+		var/list/connected_outgoing = pointer_container[1]
 		if(length(particles) != length(connected_outgoing))
 			cutParticles()
 			for(var/obj/X in connected_outgoing)

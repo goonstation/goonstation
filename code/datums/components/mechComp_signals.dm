@@ -20,6 +20,50 @@
 	else if (isnum(signal))
 		if(signal == 1) return 1
 	return 0
+/*
+* Component for handling MechComp-signals
+* Add this component to any object if you'd like it to send and or receive MechComp-messages (often called signals)
+* There are are three "setup" COMSIGs you may want, and a few transmission COMSIGs.
+*
+*      ------  SETUP COMSIGS  ------
+* COMSIG_MECHCOMP_ADD_INPUT, display_name, proc_name
+*    Registers a custom input for your device. When connecting devices, the user can select "display_name" as an input.
+*    Your device will need an associated proc/proc_name that handles receiving messages.
+*    If your device is purely a sensor, it does not need any inputs.
+*
+* COMSIG_MECHCOMP_ADD_CONFIG, display_name, proc_name
+*    Registers a custom configuration for your device. It is similar to  COMSIG_MECHCOMP_ADD_INPUT.
+* 
+* COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL
+*    Adds the "Set Send-Signal" config-option to your device.
+*    Use this with COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG detailed below
+*
+* COMSIG_MECHCOMP_RM_ALL_CONNECTIONS
+*    Removes all MechComp connections to and from the device. 
+*    This is the "Disconnect All" config-option, but you may want to call it after certain events,
+*    such as unwelding a sensor-pipe in a loafer, or deconstructing a vending machine.
+*    As a game-balance rule: devices should break connections when they move / are picked up.
+* 
+* 
+*      ------  TRANSMISSION COMSIGS  ------
+* A note on MechComp messages:
+//Please try to always re-use incoming signals for your outgoing signals.
+//Just modify the message of the incoming signal and send it along.
+//This is important because each message keeps track of which nodes it traveled trough.
+//It's through that list that we can prevent infinite loops. Or at least try to.
+//(People can probably still create infinite loops somehow. They always manage)
+*
+* COMSIG_MECHCOMP_TRANSMIT_SIGNAL, signal_data, file
+*    Creates a new message containing the signal_data and optional file. Fires this message to all connected outputs.
+*    Use this for sensors and other devices that can create messages without having received one.
+*
+* COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, reusable_msg
+*    Transmits the stored signal from COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL.
+*    If a reusable_msg is passed in, it will be reused, otherwise a fresh message will be created.
+*
+* COMSIG_MECHCOMP_TRANSMIT_MSG, msg
+*    Transmits the msg to all connected outputs. Does not modify the signal of msg.
+*/
 
 /datum/component/mechanics_holder
 	var/list/connected_outgoing
@@ -198,9 +242,9 @@
 		boutput(user, "<span class='alert'>[receiver.name] has no input slots. Can not connect [trigger.name] as Trigger.</span>")
 		return
 	
-	var/outgoing_wrapper[1] //A list of size 1, to store the address of the list we want
-	SEND_SIGNAL(trigger, COMSIG_MECHCOMP_GET_OUTGOING, outgoing_wrapper) //MarkNstein needs attention
-	var/list/trg_outgoing = outgoing_wrapper[1]
+	var/pointer_container[1] //A list of size 1, to store the address of the list we want
+	SEND_SIGNAL(trigger, COMSIG_MECHCOMP_GET_OUTGOING, pointer_container) //MarkNstein needs attention
+	var/list/trg_outgoing = pointer_container[1]
 	var/selected_input = input(user, "Select \"[receiver.name]\" Input", "Input Selection") in inputs + "*CANCEL*"
 	if(selected_input == "*CANCEL*") return
 
