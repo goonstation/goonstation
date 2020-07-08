@@ -169,9 +169,9 @@ var/list/mechanics_telepads = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Eject Money","checkEjectMoney")
 
 	proc/emoney(var/datum/mechanicsMessage/input)
-		if(input)
-			if(input.signal == code)
-				ejectmoney()
+		if(level == 2 || !input) return
+		if(input.signal == code)
+			ejectmoney()
 		return
 
 	proc/setPrice(obj/item/W as obj, mob/user as mob)
@@ -300,6 +300,7 @@ var/list/mechanics_telepads = new/list()
 				trunk = null
 
 	proc/flushp(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		if(input && input.signal && ready && trunk)
 			ready = 0
 			for(var/atom/movable/M in src.loc)
@@ -577,6 +578,7 @@ var/list/mechanics_telepads = new/list()
 			if(world.tick_usage > 100) return //fuck it, failsafe
 
 	proc/activateproc(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		if(input)
 			if(active) return
 			particleMaster.SpawnSystem(new /datum/particleSystem/gravaccel(src.loc, src.dir))
@@ -642,6 +644,7 @@ var/list/mechanics_telepads = new/list()
 		boutput(user, "Signal changing now [changesig ? "on":"off"]")
 
 	proc/delayproc(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		if(input)
 			if(active) return
 			SPAWN_DBG(0)
@@ -689,6 +692,7 @@ var/list/mechanics_telepads = new/list()
 			boutput(user, "Set Time Frame to [inp]")
 
 	proc/fire1(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		if(inp1) return
 
 		inp1 = 1
@@ -705,6 +709,7 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/fire2(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		if(inp2) return
 
 		inp2 = 1
@@ -787,6 +792,7 @@ var/list/mechanics_telepads = new/list()
 			boutput(user, "Signal set to [inp]")
 
 	proc/split(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		var/list/converted = params2list(input.signal)
 		if(length(converted))
 			if(triggerSignal in converted)
@@ -881,10 +887,12 @@ var/list/mechanics_telepads = new/list()
 
 		return
 	proc/setregex(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		expression = input.signal
 		tooltip_rebuild = 1
 
 	proc/setregexreplace(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		expressionrepl = input.signal
 		tooltip_rebuild = 1
 
@@ -942,6 +950,7 @@ var/list/mechanics_telepads = new/list()
 		tooltip_rebuild = 1
 
 	proc/setregex(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		expression = input.signal
 		tooltip_rebuild = 1
 	proc/checkstr(var/datum/mechanicsMessage/input)
@@ -1005,6 +1014,7 @@ var/list/mechanics_telepads = new/list()
 		tooltip_rebuild = 1
 
 	proc/checkstr(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
 		if(findtext(input.signal, triggerSignal))
 			if(!not)
@@ -1015,6 +1025,7 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/settrigger(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		triggerSignal = input.signal
 		tooltip_rebuild = 1
 
@@ -1063,6 +1074,7 @@ var/list/mechanics_telepads = new/list()
 		tooltip_rebuild = 1
 
 	proc/dispatch(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		var/sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		if(sent) animate_flash_color_fill(src,"#00FF00",2, 2)
 		return
@@ -1142,17 +1154,20 @@ var/list/mechanics_telepads = new/list()
 		tooltip_rebuild = 1
 
 	proc/addstr(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		buffer = "[buffer][input.signal]"
 		tooltip_rebuild = 1
 		return
 
 	proc/addstrsend(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		buffer = "[buffer][input.signal]"
 		tooltip_rebuild = 1
 		sendstr(input)
 		return
 
 	proc/sendstr(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		var/finished = "[bstr][buffer][astr]"
 		finished = strip_html(sanitize(finished))
 		input.signal = finished
@@ -1162,6 +1177,7 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/clrbff(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		buffer = ""
 		tooltip_rebuild = 1
 		return
@@ -1227,25 +1243,25 @@ var/list/mechanics_telepads = new/list()
 		..()
 
 	proc/sendfile(var/datum/mechanicsMessage/input)
-		if (!src.stored_file) return
+		if (level == 2 || !src.stored_file) return
 		input.data_file = src.stored_file.copy_file()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,input)
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/addandsendfile(var/datum/mechanicsMessage/input)
-		if (!src.stored_file) return
+		if (level == 2 || !src.stored_file) return
 		input.data_file = src.stored_file.copy_file()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/storefile(var/datum/mechanicsMessage/input)
-		if (!input.data_file) return
+		if (level == 2 || !input.data_file) return
 		src.stored_file = input.data_file.copy_file()
 		tooltip_rebuild = 1
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/deletefile(var/datum/mechanicsMessage/input)
-		if (!src.stored_file) return
+		if (level == 2 || !src.stored_file) return
 		src.stored_file = null
 		tooltip_rebuild = 1
 		animate_flash_color_fill(src,"#00FF00",2, 2)
@@ -1309,12 +1325,14 @@ var/list/mechanics_telepads = new/list()
 		tooltip_rebuild = 1
 
 	proc/setfreq(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		var/newfreq = text2num(input.signal)
 		if(!newfreq) return
 		set_frequency(newfreq)
 		return
 
 	proc/send(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		var/list/converted = params2list(input.signal)
 		if(!length(converted) || !ready) return
 
@@ -1488,7 +1506,7 @@ var/list/mechanics_telepads = new/list()
 		tooltip_rebuild = 1
 
 	proc/selitem(var/datum/mechanicsMessage/input)
-		if(!input) return 0
+		if(level == 2 || !input) return
 		var/found_index = signals.Find(input.signal)
 		if(found_index)
 			current_index = found_index
@@ -1499,12 +1517,13 @@ var/list/mechanics_telepads = new/list()
 		return 1
 
 	proc/selitemplus(var/datum/mechanicsMessage/input)
+		if(level == 2 || !input) return
 		if(selitem(input))
 			sendCurrent(input)
 		return
 
 	proc/remitem(var/datum/mechanicsMessage/input)
-		if(!input) return
+		if(level == 2 || !input) return
 
 		if(input.signal in signals)
 			signals.Remove(input.signal)
@@ -1516,7 +1535,7 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/remallitem(var/datum/mechanicsMessage/input)
-		if(!input) return
+		if(level == 2 || !input) return
 
 		signals.Cut()
 		current_index = 1
@@ -1527,7 +1546,7 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/additem(var/datum/mechanicsMessage/input)
-		if(!input) return
+		if(level == 2 || !input) return
 
 		if(allowDuplicates)
 			signals.Add(input.signal)
@@ -1547,7 +1566,7 @@ var/list/mechanics_telepads = new/list()
 				componentSay("Duplicate entry - rejected: [input.signal]")
 
 	proc/sendRand(var/datum/mechanicsMessage/input)
-		if(!input) return
+		if(level == 2 || !input) return
 		var/orig = random
 		random = 1
 		sendCurrent(input)
@@ -1555,7 +1574,7 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/sendCurrent(var/datum/mechanicsMessage/input)
-		if(!input) return
+		if(level == 2 || !input) return 0
 
 		if(random)
 			input.signal = pick(signals)
@@ -1569,8 +1588,7 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	proc/next(var/datum/mechanicsMessage/input)
-		if(!length(signals)) return 0
-
+		if(level == 2 || !length(signals)) return 0
 		if(++current_index > length(signals))
 			current_index = 1
 		tooltip_rebuild = 1
@@ -1580,12 +1598,13 @@ var/list/mechanics_telepads = new/list()
 		return 1
 
 	proc/nextplus(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		if(next(input))
 			sendCurrent(input)
 		return
 
 	proc/previous(var/datum/mechanicsMessage/input)
-		if(!length(signals)) return 0
+		if(level == 2 || !length(signals)) return 0
 		if(--current_index < 1)
 			current_index = length(signals)
 		tooltip_rebuild = 1
@@ -1595,6 +1614,7 @@ var/list/mechanics_telepads = new/list()
 		return 1
 
 	proc/previousplus(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		if(previous(input))
 			sendCurrent(input)
 		return
@@ -1649,36 +1669,44 @@ var/list/mechanics_telepads = new/list()
 			tooltip_rebuild = 1
 
 	proc/activate(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		on = 1
 		tooltip_rebuild = 1
 		return
 
 	proc/activateplus(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		activate()
 		send(input)
 		return
 
 	proc/deactivate(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		on = 0
 		tooltip_rebuild = 1
 		return
 
 	proc/deactivateplus(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		if(level == 2) return
 		deactivate()
 		send(input)
 		return
 
 	proc/toggle(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		on = !on
 		tooltip_rebuild = 1
 		return
 
 	proc/toggleplus(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		toggle()
 		send(input)
 		return
 
 	proc/send(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		input.signal = (on ? signal_on : signal_off)
 		SPAWN_DBG(0)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
@@ -1830,7 +1858,7 @@ var/list/mechanics_telepads = new/list()
 		return ..()
 
 	proc/setrgb(var/datum/mechanicsMessage/input)
-
+		if(level == 2) return
 		if(length(input.signal) == 7 && copytext(input.signal, 1, 2) == "#")
 			if(active)
 				color = input.signal
@@ -1839,24 +1867,21 @@ var/list/mechanics_telepads = new/list()
 			SPAWN_DBG(0) light.set_color(GetRedPart(selcolor) / 255, GetGreenPart(selcolor) / 255, GetBluePart(selcolor) / 255)
 
 	proc/turnon(var/datum/mechanicsMessage/input)
-		if (usr && usr.stat)
-			return
+		if(level == 2) return
 		active = 1
 		light.enable()
 		src.color = selcolor
 		return
 
 	proc/turnoff(var/datum/mechanicsMessage/input)
-		if (usr && usr.stat)
-			return
+		if(level == 2) return
 		active = 0
 		light.disable()
 		src.color = "#AAAAAA"
 		return
 
 	proc/toggle(var/datum/mechanicsMessage/input)
-		if (usr && usr.stat)
-			return
+		if(level == 2) return
 		if(active)
 			turnoff(input)
 		else
@@ -1927,6 +1952,7 @@ var/list/mechanics_telepads = new/list()
 			boutput(user, "Frequency set to [frequency]")
 
 	proc/setfreq(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		var/newfreq = text2num(input.signal)
 		if (!newfreq) return
 		set_frequency(newfreq)
@@ -2171,6 +2197,7 @@ var/list/mechanics_telepads = new/list()
 		return get_edge_target_turf(src, src.dir)
 
 	proc/fire(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		if(input && Gun)
 			if(Gun.canshoot())
 				var/atom/target = getTarget()
@@ -2251,7 +2278,7 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	fire(var/datum/mechanicsMessage/input)
-		if(charging || !ready) return
+		if(charging || !ready || level == 2) return
 		ready = 0
 		SPAWN_DBG(3 SECONDS) ready = 1
 		return ..()
@@ -2386,11 +2413,13 @@ var/list/mechanics_telepads = new/list()
 		tooltip_rebuild = 1
 
 	proc/setA(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		if (!isnull(text2num(input.signal)))
 			A = text2num(input.signal)
 			tooltip_rebuild = 1
 
 	proc/setB(var/datum/mechanicsMessage/input)
+		if(level == 2) return
 		if (!isnull(text2num(input.signal)))
 			B = text2num(input.signal)
 			tooltip_rebuild = 1
