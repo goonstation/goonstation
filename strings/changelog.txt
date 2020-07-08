@@ -1,4 +1,9 @@
 
+(t)wed jul 08 20
+(u)Tarmunora
+(p)1404
+(e)⚖|balance
+(+)Adjusted wavegun energy costs and effects - EMP AoE is now range-dependant
 (t)tue jul 07 20
 (u)mbc
 (+)Fixed issue where screen color modifiers weren't displaying (sunglasses, lsd, etc)
