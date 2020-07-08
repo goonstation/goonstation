@@ -42,7 +42,7 @@ var/global/mob/twitch_mob = 0
 		var/list/lines = splittext(text, "\n")
 		if (lines[1])
 			master_mode = lines[1]
-			diary << "Saved mode is '[master_mode]'"
+			logDiary("Saved mode is '[master_mode]'")
 
 /world/proc/save_mode(var/the_mode)
 	var/F = file("data/mode.txt")
@@ -90,7 +90,7 @@ var/global/mob/twitch_mob = 0
 	set background = 1
 	var/text = file2text("config/admins.txt")
 	if (!text)
-		diary << "Failed to load config/admins.txt\n"
+		logDiary("Failed to load config/admins.txt\n")
 	else
 		var/list/lines = splittext(text, "\n")
 		for(var/line in lines)
@@ -105,7 +105,7 @@ var/global/mob/twitch_mob = 0
 				var/m_key = copytext(line, 1, pos)
 				var/a_lev = copytext(line, pos + 3, length(line) + 1)
 				admins[m_key] = a_lev
-				diary << ("ADMIN: [m_key] = [a_lev]")
+				logDiary("ADMIN: [m_key] = [a_lev]")
 
 /world/proc/load_whitelist(fileName = "strings/whitelist.txt")
 	set background = 1
@@ -122,7 +122,7 @@ var/global/mob/twitch_mob = 0
 				continue
 
 			whitelistCkeys += line
-			diary << ("WHITELIST: [line]")
+			logDiary("WHITELIST: [line]")
 
 
 /world/proc/load_playercap_bypass()
@@ -140,7 +140,7 @@ var/global/mob/twitch_mob = 0
 				continue
 
 			bypassCapCkeys += line
-			diary << ("WHITELIST: [line]")
+			logDiary("WHITELIST: [line]")
 
 // dsingh for faster create panel loads
 /world/proc/precache_create_txt()
@@ -417,11 +417,12 @@ var/f_color_selector_handler/F_Color_Selector
 
 
 	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
-	diary << ""
-	diary << ""
-	diary << "Starting up. [time2text(world.timeofday, "hh:mm.ss")]"
-	diary << "---------------------"
-	diary << ""
+	diary_name = "data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log"
+	logDiary("")
+	logDiary("")
+	logDiary("Starting up. [time2text(world.timeofday, "hh:mm.ss")]")
+	logDiary("---------------------")
+	logDiary("")
 
 	//This is used by bans for checking, so we want it very available
 	apiHandler = new()
@@ -715,6 +716,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 /world/Reboot()
 	TgsReboot()
+	shutdown_logging()
 	return ..()
 
 /world/proc/update_status()
@@ -793,7 +795,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC	// logging for these is done in TGS
-	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
+	logDiary("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 	Z_LOG_DEBUG("World", "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
 	if (T == "ping")
