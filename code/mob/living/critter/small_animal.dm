@@ -66,6 +66,8 @@ todo: add more small animals!
 
 	var/is_pet = null // null = autodetect
 
+
+
 	New(loc)
 		if(isnull(src.is_pet))
 			src.is_pet = (copytext(src.name, 1, 2) in uppercase_letters)
@@ -115,6 +117,18 @@ todo: add more small animals!
 
 	canRideMailchutes()
 		return src.fits_under_table
+
+	proc/reduce_lifeprocess_on_death() //used for AI mobs we dont give a dang about them after theyre dead
+		remove_lifeprocess(/datum/lifeprocess/blood)
+		remove_lifeprocess(/datum/lifeprocess/canmove)
+		remove_lifeprocess(/datum/lifeprocess/disability)
+		remove_lifeprocess(/datum/lifeprocess/fire)
+		remove_lifeprocess(/datum/lifeprocess/hud)
+		remove_lifeprocess(/datum/lifeprocess/mutations)
+		remove_lifeprocess(/datum/lifeprocess/organs)
+		remove_lifeprocess(/datum/lifeprocess/sight)
+		remove_lifeprocess(/datum/lifeprocess/skin)
+		remove_lifeprocess(/datum/lifeprocess/statusupdate)
 
 /* =============================================== */
 /* -------------------- Mouse -------------------- */
@@ -2693,10 +2707,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		New()
 			..()
 			src.ai = new /datum/aiHolder/trilobite(src)
+			//todo later : move this lifeprocess stuff to a component
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
 
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
+			reduce_lifeprocess_on_death()
 			..()
 
 
@@ -2762,10 +2780,13 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		New()
 			..()
 			src.ai = new /datum/aiHolder/spike(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
 
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
+			reduce_lifeprocess_on_death()
 			..()
 
 
@@ -2785,7 +2806,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	density = 1
 
-	base_move_delay = 3
+	base_move_delay = 2.3
 	base_walk_delay = 4
 
 //	var/mob/living/target = null
@@ -2851,8 +2872,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		New()
 			..()
 			src.ai = new /datum/aiHolder/pikaia(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
 
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
+			reduce_lifeprocess_on_death()
 			..()
