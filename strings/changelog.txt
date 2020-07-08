@@ -1,5 +1,9 @@
 
 (t)wed jul 08 20
+(u)Sovexe
+(p)1410
+(e)🐛🗺|bug, mapping
+(+)The Long Range Teleporter in Manta's Sea Turtle mining ship is once again functional.
 (u)MarkNstein
 (p)1312
 (e)🔄|rework
