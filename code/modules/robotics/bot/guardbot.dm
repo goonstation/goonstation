@@ -145,7 +145,6 @@
 	var/net_id = null
 	var/last_comm = 0 //World time of last transmission
 	var/reply_wait = 0
-	var/exploding = 0 //So we don't die like five times at once.
 
 	var/botcard_access = "Captain" //Job access for doors.
 									//It's not like they can be pushed into airlocks anymore

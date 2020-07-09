@@ -103,6 +103,8 @@
 	if (!src)
 		return
 
+	if(src.exploding) return
+	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 
