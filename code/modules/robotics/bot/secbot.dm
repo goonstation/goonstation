@@ -52,7 +52,7 @@
 	var/add_loot = null		// Our robot's loot! Should be roughly what they used...
 	var/gunhat = null 		// Our gun is technically a hat
 	var/armended = 0		// Does our robot have its second armendment? Can they use two-handed guns?
-	var/canshoot = 1		// Keeps our bot from magdumping if they can rootytootyscoot'n'shooty
+	var/bullethell = 0		// Enables unrestrained magdumping of deadly weaponry
 	
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
@@ -144,6 +144,8 @@
 	hat = "hos"
 	hatplus = "riot"
 	botgun = "ak"
+	attack_per_step = 1
+	bullethell = 1
 	
 /obj/machinery/bot/secbot/swat
 	name = "Lt. Swatsky"
@@ -154,6 +156,8 @@
 	hat = "nt"
 	hatplus = "riot"
 	botgun = "tshotty"
+	attack_per_step = 1
+	bullethell = 1
 	
 /obj/machinery/bot/secbot/budgie
 	name = "Officer Secsky"
@@ -262,7 +266,7 @@
 				add_loot = /obj/item/gun/energy/egun
 				proj = new/datum/projectile/laser
 				spread = 1
-				burst = 2
+				burst = 1
 				refire = 5
 				gun = "energy gun"
 				gunhat = "energykill100"
@@ -471,7 +475,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		else if (istype(W, /obj/item/gun/energy/taser_gun) && !src.botgun)
 			botgun = "taser"
 			add_loot = /obj/item/gun/energy/taser_gun
-			proj = new/datum/projectile/energy_bolt/robust
+			proj = new/datum/projectile/energy_bolt
 			spread = 0
 			burst = 3
 			refire = 2
@@ -486,8 +490,8 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			botgun = "egun"
 			add_loot = /obj/item/gun/energy/egun
 			proj = new/datum/projectile/laser
-			spread = 0
-			burst = 2
+			spread = 1
+			burst = 1
 			refire = 5
 			gun = "energy gun"
 			gunhat = "energykill100"
@@ -691,7 +695,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				if (mode == SECBOT_HUNT && target)
 					if (get_dist(src, src.target) <= 1)
 						src.baton_attack(src.target)
-					if (src.botgun && (src.shotcount <= 0) && (src.canshoot == 1))	
+					if (src.botgun && (src.shotcount <= 0) && (src.canshoot == 1) && (src.bullethell == 1))	
 						src.shootgun_attack(src.target)		// rooty tooty scoot n shooty
 						canshoot = 0
 						SPAWN_DBG(1 SECOND)					// But only if you're not mid-shooty
