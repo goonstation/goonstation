@@ -156,9 +156,9 @@
 							if(expand_departments_list)
 								for (var/department_id in page_departments)
 									. += "<li><a href='byond://?src=\ref[src];input=message;target=[page_departments[department_id]];department=1'>DEPT-[department_id]</a></li>"
-								. += "<br><a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>Collapse DEPT list</a>"
+								. += "<br><a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>*Collapse DEPT list*</a>"
 							else
-								. += "<a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>Expand DEPT list</a>"
+								. += "<a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>*Expand DEPT list*</a>"
 
 							var/pdaOwnerNames = list()
 							for (var/P_id in src.detected_pdas)
