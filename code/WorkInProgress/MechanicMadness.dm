@@ -2,6 +2,10 @@
 // - Message Datum pooling and recycling.
 // - Check if something is already connected and prevent from double connecting.
 
+//MarkNstein TODO:
+//Check other MarkNstein comments
+//Doublecheck the "already connected" note above (var edit in-game)
+// Move list() into new() (if new() is overriden)
 
 
 //Global list of telepads so we don't have to loop through the entire world aaaahhh.
@@ -50,7 +54,7 @@ var/list/mechanics_telepads = new/list()
 		var/list/connected_outgoing = pointer_container[1]
 		if(length(particles) != length(connected_outgoing))
 			cutParticles()
-			for(var/obj/X in connected_outgoing)
+			for(var/atom/X in connected_outgoing)
 				particles.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(src.loc, X.loc)))
 
 		return
@@ -1074,7 +1078,7 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	//This will get called from the component-datum when a device is being linked
-	proc/addFilter(var/comsig_target, obj/receiver, mob/user)
+	proc/addFilter(var/comsig_target, atom/receiver, mob/user)
 		var/filter = input(user, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
 		if(!in_range(src, user) || user.stat)
 			return
@@ -1088,11 +1092,11 @@ var/list/mechanics_telepads = new/list()
 		return
 
 	//This will get called from the component-datum when a device is being unlinked
-	proc/removeFilter(var/comsig_target, obj/receiver)
+	proc/removeFilter(var/comsig_target, atom/receiver)
 		src.outgoing_filters.Remove(receiver)
 
 	//Called when mechanics_holder tries to fire out signals
-	proc/runFilter(var/comsig_target, obj/receiver, var/signal)
+	proc/runFilter(var/comsig_target, atom/receiver, var/signal)
 		if(!(receiver in src.outgoing_filters))
 			return 0 //Not filtering this output, let anything pass
 		for (var/filter in src.outgoing_filters[receiver])

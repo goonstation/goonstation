@@ -8,11 +8,11 @@
 	var/list/nodes = list()
 	var/datum/computer/file/data_file
 
-/datum/mechanicsMessage/proc/addNode(var/obj/O)
-	nodes.Add(O)
+/datum/mechanicsMessage/proc/addNode(var/atom/A)
+	nodes.Add(A)
 
-/datum/mechanicsMessage/proc/hasNode(var/obj/O)
-	return nodes.Find(O)
+/datum/mechanicsMessage/proc/hasNode(var/atom/A)
+	return nodes.Find(A)
 
 /datum/mechanicsMessage/proc/isTrue() //Thanks for not having bools , byond.
 	if(istext(signal))
@@ -126,23 +126,23 @@
 
 //Delete all connections. (Often caused by DC_ALL user command, and unwrenching MechComp devices.)
 /datum/component/mechanics_holder/proc/WipeConnections()
-	for(var/obj/O in src.connected_incoming)
-		SEND_SIGNAL(O, COMSIG_MECHCOMP_RM_OUTGOING, parent)
-	for(var/obj/O in src.connected_outgoing)
-		SEND_SIGNAL(O, COMSIG_MECHCOMP_RM_INCOMING, parent)
+	for(var/atom/A in src.connected_incoming)
+		SEND_SIGNAL(A, COMSIG_MECHCOMP_RM_OUTGOING, parent)
+	for(var/atom/A in src.connected_outgoing)
+		SEND_SIGNAL(A, COMSIG_MECHCOMP_RM_INCOMING, parent)
 	src.connected_incoming.Cut()
 	src.connected_outgoing.Cut()
 	return
 
 //Remove a device from our list of transitting devices.
-/datum/component/mechanics_holder/proc/removeIncoming(var/comsig_target, var/obj/O)
-	src.connected_incoming.Remove(O)
+/datum/component/mechanics_holder/proc/removeIncoming(var/comsig_target, var/atom/A)
+	src.connected_incoming.Remove(A)
 	return
 
 //Remove a device from our list of receiving devices.
-/datum/component/mechanics_holder/proc/removeOutgoing(var/comsig_target, var/obj/O)
-	src.connected_outgoing.Remove(O)
-	SEND_SIGNAL(parent,COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING, O)
+/datum/component/mechanics_holder/proc/removeOutgoing(var/comsig_target, var/atom/A)
+	src.connected_outgoing.Remove(A)
+	SEND_SIGNAL(parent,COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING, A)
 	return
 
 //Give the caller a copied list of our outgoing connections.
@@ -187,11 +187,11 @@
 	msg.addNode(parent)
 
 	var/fired = 0
-	for(var/obj/O in src.connected_outgoing)
+	for(var/atom/A in src.connected_outgoing)
 		//Note: a target not handling a signal returns 0.
-		if(SEND_SIGNAL(parent,COMSIG_MECHCOMP_DISPATCH_VALIDATE, O, msg.signal) != 0)
+		if(SEND_SIGNAL(parent,COMSIG_MECHCOMP_DISPATCH_VALIDATE, A, msg.signal) != 0)
 			continue 
-		SEND_SIGNAL(O, COMSIG_MECHCOMP_RECEIVE_MSG, src.connected_outgoing[O], cloneMessage(msg))
+		SEND_SIGNAL(A, COMSIG_MECHCOMP_RECEIVE_MSG, src.connected_outgoing[A], cloneMessage(msg))
 		fired = 1
 	return fired
 
@@ -209,32 +209,32 @@
 	return ret
 
 //Called when a component is dragged onto another one.
-/datum/component/mechanics_holder/proc/dropConnect(var/comsig_target, obj/O, mob/user)//MarkNstein needs attention
-	if(!O || O == parent || user.stat || !isliving(user) || (SEND_SIGNAL(O,COMSIG_MECHCOMP_COMPATIBLE) != 1))  //ZeWaka: Fix for null.mechanics //MarkNstein needs attention
+/datum/component/mechanics_holder/proc/dropConnect(var/comsig_target, atom/A, mob/user)//MarkNstein needs attention
+	if(!A || A == parent || user.stat || !isliving(user) || (SEND_SIGNAL(A,COMSIG_MECHCOMP_COMPATIBLE) != 1))  //ZeWaka: Fix for null.mechanics //MarkNstein needs attention
 		return
 
 	if (!user.find_tool_in_hand(TOOL_PULSING))
 		boutput(user, "<span class='alert'>[MECHFAILSTRING]</span>")
 		return
 	
-	if(get_dist(parent, O) > 14)
+	if(get_dist(parent, A) > 14)
 		boutput(user, "<span class='alert'>Components need to be within a range of 14 meters to connect.</span>")
 		return
 
 	var/typesel = input(user, "Use [parent] as:", "Connection Type") in list("Trigger", "Receiver", "*CANCEL*")
 	switch(typesel)
 		if("Trigger")
-			SEND_SIGNAL(O, COMSIG_MECHCOMP_LINK, parent, user) //MarkNstein needs attention
+			SEND_SIGNAL(A, COMSIG_MECHCOMP_LINK, parent, user) //MarkNstein needs attention
 		if("Receiver")
-			link_devices(null, O, user) //What do you want, an invitation? No signal needed!
+			link_devices(null, A, user) //What do you want, an invitation? No signal needed!
 		if("*CANCEL*")
 			return
 	return
 
 //We are in the scope of the receiver-component, our argument is the trigger
 //This feels weird/backwards, but it results in fewer SEND_SIGNALS & var/lists
-/datum/component/mechanics_holder/proc/link_devices(var/comsig_target, obj/trigger, mob/user)
-	var/obj/receiver = parent
+/datum/component/mechanics_holder/proc/link_devices(var/comsig_target, atom/trigger, mob/user)
+	var/atom/receiver = parent
 	if(trigger in src.connected_outgoing)
 		boutput(user, "<span class='alert'>Can not create a direct loop between 2 components.</span>")
 		return
