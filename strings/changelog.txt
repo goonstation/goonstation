@@ -1,5 +1,9 @@
 
 (t)thu jul 09 20
+(u)Flaborized
+(p)1415
+(e)🎨|sprites
+(*)Resprited most of the bottled drinks.
 (u)AwkwardDryad
 (p)1380
 (e)🐛🗺|bug, mapping
