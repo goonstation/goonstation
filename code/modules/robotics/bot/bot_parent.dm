@@ -11,6 +11,7 @@
 	var/locked = null
 	var/on = 1
 	var/health = 25
+	var/exploding = 0 //So we don't die like five times at once.
 	var/muted = 0 // shut up omg shut up.
 	var/no_camera = 0
 	var/setup_camera_network = "Robots"
