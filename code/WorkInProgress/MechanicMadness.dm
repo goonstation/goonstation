@@ -1,10 +1,8 @@
 //TODO:
 // - Message Datum pooling and recycling.
-// - Check if something is already connected and prevent from double connecting.
 
 //MarkNstein TODO:
 //Check other MarkNstein comments
-//Doublecheck the "already connected" note above (var edit in-game)
 // Move list() into new() (if new() is overriden)
 
 

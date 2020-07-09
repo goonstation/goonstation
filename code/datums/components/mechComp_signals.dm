@@ -248,9 +248,11 @@
 	var/selected_input = input(user, "Select \"[receiver.name]\" Input", "Input Selection") in inputs + "*CANCEL*"
 	if(selected_input == "*CANCEL*") return
 
-	trg_outgoing.Add(receiver)
+	if(!(receiver in trg_outgoing)) //Let's not allow making many of the same connection.
+		trg_outgoing.Add(receiver)
 	trg_outgoing[receiver] = selected_input
-	src.connected_incoming.Add(trigger)
+	if(!(trigger in src.connected_incoming)) //Let's not allow making many of the same connection.
+		src.connected_incoming.Add(trigger)
 	boutput(user, "<span class='success'>You connect the [trigger.name] to the [receiver.name].</span>")
 	logTheThing("station", user, null, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
 	SEND_SIGNAL(trigger,COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, receiver, user)
