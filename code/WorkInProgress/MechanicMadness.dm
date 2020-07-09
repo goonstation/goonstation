@@ -102,7 +102,7 @@ var/list/mechanics_telepads = new/list()
 
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 			return 1
-		return SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user) | COMSIGBIT_ATTACKBY_COMPLETE ? 1 : 0
+		return SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user) & COMSIGBIT_ATTACKBY_COMPLETE ? 1 : 0
 
 	pickup()
 		if(level == 1) return
