@@ -678,10 +678,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			shotcount = burst
 		last_attack = world.time
 
-		while (shotcount > 0 && src.target)
-			shoot_projectile_ST_pixel_spread(src, proj, src.target, 0, 0 , spread)
-			shotcount--
-			sleep(refire)
+		shoot_projectile_ST_pixel_spread(src, proj, get_turf(src.target), 0, 0 , spread)
 			
 		src.visible_message("<span class='alert'><b>[src] fires its [gun] at [src.target]!</b></span>")
 		SPAWN_DBG(0.2 SECONDS)
