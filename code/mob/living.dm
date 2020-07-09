@@ -414,8 +414,11 @@
 			if (src.in_point_mode)
 				src.toggle_point_mode()
 			return
-
+	#if ASS_JAM
+	if (src.restrained() && !src.hands_front())
+	#else
 	if (src.restrained())
+	#endif
 		if (src.hasStatus("handcuffed"))
 			boutput(src, "<span class='alert'>You are handcuffed! Use Resist to attempt removal.</span>")
 		return

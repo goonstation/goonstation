@@ -1380,11 +1380,18 @@
 
 					if ((!istype(src.loc, /turf/space)) && (!src.on_chair))
 						if (!src.lying)
+						#if ASS_JAM
+						#else
 							if ((src.restrained()) || (src.reagents && src.reagents.get_reagent_amount("ethanol") > 30) || (src.bioHolder.HasEffect("clumsy")))
 								message = pick("<B>[src]</B> tries to flip, but stumbles!", "<B>[src]</B> slips!")
 								src.changeStatus("weakened", 4 SECONDS)
 								src.TakeDamage("head", 8, 0, 0, DAMAGE_BLUNT)
 								JOB_XP(src, "Clown", 1)
+						#endif
+							#if ASS_JAM
+							if (src.hasStatus("handcuffed") && !src.hasStatus("hands_in_front"))
+								actions.start(new/datum/action/bar/private/icon/handcuffMoval(10), src)
+							#endif
 
 							if (src.bioHolder.HasEffect("fat"))
 								message = pick("<B>[src]</B> tries to flip, but stumbles!", "<B>[src]</B> collapses under [his_or_her(src)] own weight!")

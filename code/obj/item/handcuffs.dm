@@ -120,6 +120,9 @@
 /obj/item/handcuffs/proc/drop_handcuffs(mob/user)
 	user.handcuffs = null
 	user.delStatus("handcuffed")
+	#if ASS_JAM
+	user.delStatus("hands_in_front")
+	#endif
 	user.drop_item(src)
 	user.update_clothing()
 	if (src.strength == 1) // weak cuffs break

@@ -1115,7 +1115,11 @@
 /mob/proc/restrained()
 	if (src.hasStatus("handcuffed"))
 		return 1
-
+#if ASS_JAM
+/mob/proc/hands_front()
+	if (src.hasStatus("hands_in_front"))
+		return 1
+#endif
 /mob/proc/drop_from_slot(obj/item/item, turf/T)
 	if (!item)
 		return

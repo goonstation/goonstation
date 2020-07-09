@@ -767,6 +767,16 @@ var/datum/action_controller/actions
 		if(owner && target && target.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = target
 			H.handcuffs.drop_handcuffs(H)
+			#if ASS_JAM
+			if (H.l_hand && istype(H.l_hand,/obj/item/garrote/handcuffs)){
+				H.u_equip(H.l_hand)
+				qdel(H.l_hand)
+			}
+			if (H.r_hand && istype(H.r_hand,/obj/item/garrote/handcuffs)){
+				H.u_equip(H.r_hand)
+				qdel(H.r_hand)
+			}
+			#endif
 			for(var/mob/O in AIviewers(H))
 				O.show_message("<span class='alert'><B>[owner] manages to remove [target]'s handcuffs!</B></span>", 1)
 
@@ -794,6 +804,16 @@ var/datum/action_controller/actions
 		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = owner
 			H.handcuffs.drop_handcuffs(H)
+			#if ASS_JAM
+			if (H.l_hand && istype(H.l_hand,/obj/item/garrote/handcuffs)){
+				H.u_equip(H.l_hand)
+				qdel(H.l_hand)
+			}
+			if (H.r_hand && istype(H.r_hand,/obj/item/garrote/handcuffs)){
+				H.u_equip(H.r_hand)
+				qdel(H.r_hand)
+			}
+			#endif
 			H.visible_message("<span class='alert'><B>[H] attempts to remove the handcuffs!</B></span>")
 			boutput(H, "<span class='notice'>You successfully remove your handcuffs.</span>")
 
@@ -832,7 +852,38 @@ var/datum/action_controller/actions
 					O.show_message("<span class='alert'><B>[H] manages to remove the shackles!</B></span>", 1)
 				H.show_text("You successfully remove the shackles.", "blue")
 
+#if ASS_JAM
+/datum/action/bar/private/icon/handcuffMoval//funny name
+	duration = 800
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "handcuffs"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "handcuff"
 
+	New(var/dur)
+		duration = dur
+		..()
+
+	onStart()
+		..()
+		owner.visible_message("<span class='alert'><B>[owner] attempts to move the handcuffs to the front!</B></span>")
+
+	onInterrupt(var/flag)
+		..()
+		boutput(owner, "<span class='alert'>Your attempt to move your handcuffs was interrupted!</span>")
+
+	onEnd()
+		..()
+		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
+			var/mob/living/carbon/human/H = owner
+			H.setStatus("hands_in_front", duration = INFINITE_STATUS)
+			var/obj/item/garrote/handcuffs/G = new(H.loc)
+			H.put_in_hand(G)
+			G.set_readiness(1)
+			H.visible_message("<span class='alert'><B>[H] attempts to move the handcuffs!</B></span>")
+			boutput(H, "<span class='notice'>You successfully move your hands to the front.</span>")
+
+#endif
 //CLASSES & OBJS
 
 /obj/actions //These objects are mostly used for the attached_objs var on mobs to attach progressbars to mobs.

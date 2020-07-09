@@ -871,9 +871,49 @@ proc/Create_Tommyname()
 		..()
 		BLOCK_ROPE
 
+#if ASS_JAM
+/obj/item/garrote/handcuffs
+	cant_drop = 1
+	w_class = 4.0
+	name = "handcuffs"
+	desc = "strangle someone with them or something."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "handcuff"
 
+/obj/item/garrote/handcuffs/update_state()
+	if(src.chokehold)
+		var/obj/item/grab/garrote_grab/GG = src.chokehold
+		if(!GG.extra_deadly)
+			icon_state = "handcuff"
+			//We're choking someone out - apply a hefty slowdown
+			src.setProperty("movespeed", 6)
+		else
+			icon_state = "handcuff"
+			// We're really putting our back into it now - apply a heftier slowdown
+			src.setProperty("movespeed", 12)
+	else
+		icon_state = "handcuff"
+		//Slow us down slightly when we have the thing readied to encourage late-readying
+		src.setProperty("movespeed", 1 * wire_readied)
+
+	var/mob/M = the_mob // inc terminally stupid code
+	if (!ismob(M) && src.chokehold && ismob(src.chokehold.assailant))
+		M = src.chokehold.assailant
+	else if (ismob(src.loc))
+		M = src.loc
+	else if (ismob(usr)) // we've tried nothing and we're all out of ideas
+		M = usr
+	M.update_equipped_modifiers() // Call the bruteforce movement modifier proc because we changed movespeed while (maybe!) equipped
+
+
+#endif
 /obj/item/garrote/proc/toggle_wire_readiness()
+#if ASS_JAM
+	if(!istype(src, /obj/item/garrote/handcuffs))
+		set_readiness(!wire_readied)
+#else
 	set_readiness(!wire_readied)
+#endif
 
 
 /obj/item/garrote/proc/set_readiness(new_readiness)
@@ -883,13 +923,22 @@ proc/Create_Tommyname()
 		wire_readied = 0
 		return
 
-
+#if ASS_JAM
+	if(wire_readied || src.name == "handcuffs")
+		playsound(usr, 'sound/items/garrote_twang.ogg', 25,5)
+		w_class = 4
+	else
+		drop_grab()
+		w_class = 1
+#else
 	if(wire_readied)
 		playsound(usr, 'sound/items/garrote_twang.ogg', 25,5)
 		w_class = 4
 	else
 		drop_grab()
 		w_class = 1
+#endif
+
 
 	update_state()
 

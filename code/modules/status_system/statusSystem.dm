@@ -1096,7 +1096,29 @@ var/list/statusGroupLimits = list("Food"=4)
 
 		clicked(list/params)
 			H.resist()
+#if ASS_JAM
+	hands_in_front
+		id = "hands_in_front"
+		name = "Hands in front"
+		desc = "You have managed to put your hands in the front.<br>You can use your hands, and strangle people. Click this status effect to resist."
+		icon_state = "handcuffed"
+		unique = 1
+		duration = INFINITE_STATUS
+		maxDuration = null
+		var/mob/living/carbon/human/H
 
+		onAdd(var/optional=null)
+			if (ishuman(owner))
+				H = owner
+			else
+				if (ismob(owner))
+					var/mob/M = owner
+					if (M.handcuffs) M.handcuffs.drop_handcuffs(M) //Some kind of invalid mob??
+				owner.delStatus("hands_in_front")
+
+		clicked(list/params)
+			H.resist()
+#endif
 	buckled
 		id = "buckled"
 		name = "Buckled"
