@@ -23,9 +23,10 @@ var/list/mechanics_telepads = new/list()
 	var/can_rotate = 0
 	var/cooldown_time = 3 SECONDS
 	var/when_next_ready = 0
-	var/list/particles = new/list()
+	var/list/particles
 
 	New()
+		particles = new/list()
 		AddComponent(/datum/component/mechanics_holder)
 		if (!(src in processing_items))
 			processing_items.Add(src)
@@ -1405,7 +1406,7 @@ var/list/mechanics_telepads = new/list()
 	name = "Selection Component"
 	desc = ""
 	icon_state = "comp_selector"
-	var/list/signals = new/list()
+	var/list/signals
 	var/current_index = 1
 	var/announce = 0
 	var/random = 0
@@ -1421,6 +1422,7 @@ var/list/mechanics_telepads = new/list()
 
 	New()
 		..()
+		signals = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add item", "additem")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"remove item", "remitem")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"remove all items", "remallitem")
@@ -2065,7 +2067,7 @@ var/list/mechanics_telepads = new/list()
 	icon_state = "comp_buttpanel"
 	var/icon_up = "comp_buttpanel"
 	var/icon_down = "comp_buttpanel1"
-	var/list/active_buttons = list()
+	var/list/active_buttons
 
 	get_desc()
 		. += "<br><span class='notice'>Buttons:</span>"
@@ -2074,6 +2076,7 @@ var/list/mechanics_telepads = new/list()
 
 	New()
 		..()
+		active_buttons = list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Add Button","addButton")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Button","removeButton")
 
