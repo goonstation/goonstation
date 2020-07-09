@@ -294,7 +294,9 @@
 				else
 					//must be a custom config specific to the device, so let the device handle it
 					var/path = src.configs[selected_config]
-					return call(parent, path)(W, user)
+					var/ret = call(parent, path)(W, user)
+					if(ret) ret = COMSIGBIT_ATTACKBY_COMPLETE
+					return ret
 	return 0
 
 //If it's a multi-tool, let the user configure the device.

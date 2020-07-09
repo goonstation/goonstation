@@ -3,13 +3,10 @@
 
 //MarkNstein TODO:
 //Check other MarkNstein comments
-// Move list() into new() (if new() is overriden)
 
 
 //Global list of telepads so we don't have to loop through the entire world aaaahhh.
 var/list/mechanics_telepads = new/list()
-
-//MarkNstein - Review each Config overried - is it returning 1 or 0?
 
 /obj/item/mechanics
 	name = "testhing"
@@ -182,55 +179,57 @@ var/list/mechanics_telepads = new/list()
 			var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
 			if (codecheck != code)
 				boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
-				return
+				return 0
 		var/inp = input(user,"Enter new price:","Price setting", price) as num
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(!isnull(inp))
 			if (inp < 0)
 				user.show_text("You cannot set a negative price.", "red") // Infinite credits exploit.
-				return
+				return 0
 			if (inp == 0)
 				user.show_text("Please set a price higher than zero.", "red")
-				return
+				return 0
 			if (inp > 1000000) // ...and just to be on the safe side. Should be plenty.
 				inp = 1000000
 				user.show_text("[src] is not designed to handle such large transactions. Input has been set to the allowable limit.", "red")
 			price = inp
 			tooltip_rebuild = 1
 			boutput(user, "Price set to [inp]")
-		return
+			return 1
+		return 0
 
 	proc/setCode(obj/item/W as obj, mob/user as mob)
 		if (code)
 			var/codecheck = adminscrub(input(user,"Please enter current code:","Code check","") as text)
 			if (codecheck != code)
 				boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
-				return
+				return 0
 		var/inp = adminscrub(input(user,"Please enter new code:","Code setting","dosh") as text)
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(length(inp))
 			code = inp
 			boutput(user, "Code set to [inp]")
-		return
+			return 1
+		return 0
 
 	proc/setThank(obj/item/W as obj, mob/user as mob)
 		thank_string = adminscrub(input(user,"Please enter string:","string","Thanks for using this mechcomp service!") as text)
-		return
+		return 1
 
 	proc/checkEjectMoney(obj/item/W as obj, mob/user as mob)
 		if(code)
 			var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
 			if(!in_range(src, user) || user.stat)
-				return
+				return 0
 			if (codecheck != code)
 				boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
-				return
+				return 0
 		ejectmoney()
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(..(W, user)) return
+		if(..(W, user)) return 1
 		if (istype(W, /obj/item/spacecash) && isReady())
 			unReady()
 			current_buffer += W.amount
@@ -256,7 +255,8 @@ var/list/mechanics_telepads = new/list()
 				flick("comp_money1", src)
 
 				unReady(0)//Make it ready now.
-		return
+				return 1
+		return 0
 
 
 	proc/ejectmoney()
@@ -301,6 +301,8 @@ var/list/mechanics_telepads = new/list()
 					pool(air_contents)
 				air_contents = null
 				trunk = null
+			return 1
+		return 0
 
 	proc/flushp(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -369,9 +371,10 @@ var/list/mechanics_telepads = new/list()
 	proc/setPrice(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter name:","name setting", paper_name) as text
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		paper_name = adminscrub(inp)
 		boutput(user, "String set to [paper_name]")
+		return 1
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(level == 2 && get_dist(src, target) == 1)
@@ -402,16 +405,18 @@ var/list/mechanics_telepads = new/list()
 	proc/toggleConsume(obj/item/W as obj, mob/user as mob)
 		del_paper = !del_paper
 		boutput(user, "[del_paper ? "Now consuming paper":"Now NOT consuming paper"]")
+		return 1
 	proc/toggleThermal(obj/item/W as obj, mob/user as mob)
 		thermal_only = !thermal_only
 		boutput(user, "[thermal_only ? "Now accepting only thermal paper":"Now accepting any paper"]")
+		return 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(..(W, user)) return
+		if(..(W, user)) return 1
 		else if (istype(W, /obj/item/paper) && isReady())
 			if(thermal_only && !istype(W, /obj/item/paper/thermal))
 				boutput(user, "<span class='alert'>This scanner only accepts thermal paper.</span>")
-				return
+				return 0
 			unReady()
 			flick("comp_pscan1",src)
 			playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
@@ -420,6 +425,8 @@ var/list/mechanics_telepads = new/list()
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,saniStr)
 			if(del_paper)
 				del(W)
+			return 1
+		return 0
 
 //todo: merge with the secscanner?
 /obj/mechbeam
@@ -468,11 +475,12 @@ var/list/mechanics_telepads = new/list()
 	proc/setRange(obj/item/W as obj, mob/user as mob)
 		var/rng = input("Range is limited between 1-5.", "Enter a new range", range) as num
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		range = clamp(rng, 1, 5)
 		boutput(user, "<span class='notice'>Range set to [range]!</span>")
 		if(level == 1)
 			rebeam()
+		return 1
 
 	proc/toggle()
 		if(active)
@@ -530,6 +538,7 @@ var/list/mechanics_telepads = new/list()
 	proc/toggleSig(obj/item/W as obj, mob/user as mob)
 		send_name = !send_name
 		boutput(user, "[send_name ? "Now sending user NAME":"Now sending user FINGERPRINT"]")
+		return 1
 
 	attack_hand(mob/user as mob)
 		if(level != 2 && isReady())
@@ -629,16 +638,19 @@ var/list/mechanics_telepads = new/list()
 	proc/setDelay(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user, "Enter delay in 10ths of a second:", "Set delay", 10) as num
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		inp = max(inp, 10)
 		if(!isnull(inp))
 			delay = inp
 			tooltip_rebuild = 1
 			boutput(user, "Set delay to [inp]")
+			return 1
+		return 0
 
 	proc/toggleDefault(obj/item/W as obj, mob/user as mob)
 		changesig = !changesig
 		boutput(user, "Signal changing now [changesig ? "on":"off"]")
+		return 1
 
 	proc/delayproc(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -682,11 +694,13 @@ var/list/mechanics_telepads = new/list()
 	proc/setTime(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user, "Enter Time Frame in 10ths of a second:", "Set Time Frame", timeframe) as num
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(!isnull(inp))
 			timeframe = inp
 			tooltip_rebuild = 1
 			boutput(user, "Set Time Frame to [inp]")
+			return 1
+		return 0
 
 	proc/fire1(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -750,11 +764,13 @@ var/list/mechanics_telepads = new/list()
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(length(inp))
 			inp = strip_html(html_decode(inp))
 			triggerSignal = inp
 			boutput(user, "Signal set to [inp]")
+			return 1
+		return 0
 
 	proc/fire(var/datum/mechanicsMessage/input)
 		if(level != 2 && input.signal == triggerSignal)
@@ -782,11 +798,13 @@ var/list/mechanics_telepads = new/list()
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(length(inp))
 			inp = strip_html(html_decode(inp))
 			triggerSignal = inp
 			boutput(user, "Signal set to [inp]")
+			return 1
+		return 0
 
 	proc/split(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -830,44 +848,52 @@ var/list/mechanics_telepads = new/list()
 	proc/setPattern(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Expression Pattern:","Expression setting", expressionpatt) as text
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(length(inp))
 			expressionpatt = inp
 			inp = sanitize(html_encode(inp))
 			expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
 			boutput(user, "Expression Pattern set to [inp], Current Expression: [sanitize(html_encode(expression))]")
 			tooltip_rebuild = 1
+			return 1
+		return 0
 
 	proc/setReplacement(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Expression Replacement:","Expression setting", expressionrepl) as text
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(length(inp))
 			expressionrepl = inp
 			inp = sanitize(html_encode(inp))
 			expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
 			boutput(user, "Expression Replacement set to [inp], Current Expression: [sanitize(html_encode(expression))]")
 			tooltip_rebuild = 1
+			return 1
+		return 0
 
 	proc/setFlags(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Expression Flags:","Expression setting", expressionflag) as text
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(length(inp))
 			expressionflag = inp
 			inp = sanitize(html_encode(inp))
 			expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
 			boutput(user, "Expression Flags set to [inp], Current Expression: [sanitize(html_encode(expression))]")
 			tooltip_rebuild = 1
+			return 1
+		return 0
 
 	proc/setRegexReplacement(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Replacement:","Replacement setting", expressionrepl) as text
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(length(inp))
 			expressionrepl = inp
 			boutput(user, "Replacement set to [html_encode(inp)]")
 			tooltip_rebuild = 1
+			return 1
+		return 0
 
 	proc/checkstr(var/datum/mechanicsMessage/input)
 		if(level == 2 || !length(expressionpatt)) return
@@ -922,29 +948,34 @@ var/list/mechanics_telepads = new/list()
 	proc/setRegex(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Expression Pattern:","Expression setting", expressionpatt) as text
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(length(inp))
 			expressionpatt = inp
 			expression =("[expressionpatt]/[expressionflag]")
 			inp = sanitize(html_encode(inp))
 			boutput(user, "Expression Pattern set to [inp], Current Expression: [sanitize(html_encode(expression))]")
 			tooltip_rebuild = 1
+			return 1
+		return 0
 
 	proc/setFlags(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Expression Flags:","Expression setting", expressionflag) as text
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(length(inp))
 			expressionflag = inp
 			expression =("[expressionpatt]/[expressionflag]")
 			inp = sanitize(html_encode(inp))
 			boutput(user, "Expression Flags set to [inp], Current Expression: [sanitize(html_encode(expression))]")
 			tooltip_rebuild = 1
+			return 1
+		return 0
 
 	proc/toggleReplaceing(obj/item/W as obj, mob/user as mob)
 		replacesignal = !replacesignal
 		boutput(user, "[replacesignal ? "Now forwarding own Signal":"Now forwarding found String"]")
 		tooltip_rebuild = 1
+		return 1
 
 	proc/setregex(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -993,22 +1024,26 @@ var/list/mechanics_telepads = new/list()
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting","1") as text
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(length(inp))
 			inp = adminscrub(inp)
 			triggerSignal = inp
 			boutput(user, "String set to [inp]")
 			tooltip_rebuild = 1
+			return 1
+		return 0
 
 	proc/invertTrigger(obj/item/W as obj, mob/user as mob)
 		not = !not
 		boutput(user, "[not ? "Component will now trigger when the String is NOT found.":"Component will now trigger when the String IS found."]")
 		tooltip_rebuild = 1
+		return 1
 
 	proc/toggleReplace(obj/item/W as obj, mob/user as mob)
 		changesig = !changesig
 		boutput(user, "Signal changing now [changesig ? "on":"off"]")
 		tooltip_rebuild = 1
+		return 1
 
 	proc/checkstr(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -1069,6 +1104,7 @@ var/list/mechanics_telepads = new/list()
 		exact_match = !exact_match
 		boutput(user, "Exact match mode now [exact_match ? "on" : "off"]")
 		tooltip_rebuild = 1
+		return 1
 
 	proc/dispatch(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -1135,20 +1171,22 @@ var/list/mechanics_telepads = new/list()
 	proc/setStartingString(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting", bstr) as text
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		inp = strip_html(inp)
 		bstr = inp
 		boutput(user, "String set to [inp]")
 		tooltip_rebuild = 1
+		return 1
 
 	proc/setEndingString(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting", astr) as text
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		inp = strip_html(inp)
 		astr = inp
 		boutput(user, "String set to [inp]")
 		tooltip_rebuild = 1
+		return 1
 
 	proc/addstr(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -1202,6 +1240,7 @@ var/list/mechanics_telepads = new/list()
 		changesig = !changesig
 		boutput(user, "Signal changing now [changesig ? "on":"off"]")
 		tooltip_rebuild = 1
+		return 1
 
 	proc/relay(var/datum/mechanicsMessage/input)
 		if(level == 2 || !isReady()) return
@@ -1302,21 +1341,25 @@ var/list/mechanics_telepads = new/list()
 	proc/setFreqManually(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Frequency:","Frequency setting", frequency) as num
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(!isnull(inp))
 			set_frequency(inp)
 			boutput(user, "Frequency set to [inp]")
 			tooltip_rebuild = 1
+			return 1
+		return 0
 
 	proc/toggleAddressFiltering(obj/item/W as obj, mob/user as mob)
 		only_directed = !only_directed
 		boutput(user, "[only_directed ? "Now only reacting to Messages directed at this Component":"Now reacting to ALL Messages."]")
 		tooltip_rebuild = 1
+		return 1
 
 	proc/toggleForwardAll(obj/item/W as obj, mob/user as mob)
 		forward_all = !forward_all
 		boutput(user, "[forward_all ? "Now forwarding all Radio Messages as they are.":"Now processing only sendmsg and normal PDA messages."]")
 		tooltip_rebuild = 1
+		return 1
 
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -1444,11 +1487,11 @@ var/list/mechanics_telepads = new/list()
 	proc/setSignalList(obj/item/W as obj, mob/user as mob)
 		var/numsig = input(user,"How many Signals would you like to define?","# Signals:", 3) as num
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		numsig = round(numsig)
 		if(numsig > 10) //Needs a limit because nerds are nerds
 			boutput(user, "<span class='alert'>This component can't handle more than 10 signals!</span>")
-			return
+			return 0
 		if(numsig)
 			signals.Cut()
 			current_index = 1
@@ -1462,18 +1505,20 @@ var/list/mechanics_telepads = new/list()
 			for(var/a in signals)
 				boutput(user, a)
 			tooltip_rebuild = 1
+			return 1
+		return 0
 
 	proc/setDelimetedList(obj/item/W as obj, mob/user as mob)
 		var/newsigs = ""
 		newsigs = input(user, "Enter a string delimited by ; for every item you want in the list.", "Enter a thing. Max length is 2048 characters", newsigs)
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(!newsigs)
 			boutput(user, "<span class='notice'>Signals remain unchanged!</span>")
-			return
+			return 0
 		if(length(newsigs) >= 2048)
 			alert(user, "That's far too long. Trim it down some!")
-			return
+			return 0
 		var/list/built = splittext(newsigs, ";")
 		for(var/i = 1, i <= length(built), i++)
 			if(!built[i])
@@ -1483,21 +1528,25 @@ var/list/mechanics_telepads = new/list()
 		current_index = 1
 		boutput(user, "<span class='notice'>There are now [length(signals)] signals in the list.</span>")
 		tooltip_rebuild = 1
+		return 1
 
 	proc/toggleAnnouncements(obj/item/W as obj, mob/user as mob)
 		announce = !announce
 		boutput(user, "Announcements now [announce ? "on":"off"]")
 		tooltip_rebuild = 1
+		return 1
 
 	proc/toggleRandom(obj/item/W as obj, mob/user as mob)
 		random = !random
 		boutput(user, "[random ? "Now picking Items at random.":"Now using selected Items."]")
 		tooltip_rebuild = 1
+		return 1
 
 	proc/toggleAllowDuplicates(obj/item/W as obj, mob/user as mob)
 		allowDuplicates = !allowDuplicates
 		boutput(user, "[allowDuplicates ? "Allowing addition of duplicate items." : "Not allowing addition of duplicate items."]")
 		tooltip_rebuild = 1
+		return 1
 
 	proc/selitem(var/datum/mechanicsMessage/input)
 		if(level == 2 || !input) return
@@ -1645,22 +1694,26 @@ var/list/mechanics_telepads = new/list()
 	proc/setOnSignal(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting",signal_on) as text
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(length(inp))
 			inp = adminscrub(inp)
 			signal_on = inp
 			boutput(user, "On-Signal set to [inp]")
 			tooltip_rebuild = 1
+			return 1
+		return 0
 
 	proc/setOffSignal(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting",signal_off) as text
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(length(inp))
 			inp = adminscrub(inp)
 			signal_off = inp
 			boutput(user, "Off-Signal set to [inp]")
 			tooltip_rebuild = 1
+			return 1
+		return 0
 
 	proc/activate(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -1736,11 +1789,13 @@ var/list/mechanics_telepads = new/list()
 	proc/setID(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter ID:","ID setting",teleID) as text
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(length(inp))
 			inp = adminscrub(inp)
 			teleID = inp
 			boutput(user, "ID set to [inp]")
+			return 1
+		return 0
 
 	proc/toggleSendOnly(obj/item/W as obj, mob/user as mob)
 		send_only = !send_only
@@ -1750,6 +1805,7 @@ var/list/mechanics_telepads = new/list()
 			src.overlays.Cut()
 		boutput(user, "Send-only Mode now [send_only ? "on":"off"]")
 		tooltip_rebuild = 1
+		return 1
 
 	proc/setidmsg(var/datum/mechanicsMessage/input)
 		if(level == 2 && input.signal)
@@ -1827,21 +1883,23 @@ var/list/mechanics_telepads = new/list()
 		var/green = input(user,"Green Color(0.0 - 1.0):","Color setting", 1.0) as num
 		var/blue = input(user,"Blue Color(0.0 - 1.0):","Color setting", 1.0) as num
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		red = clamp(red, 0.0, 1.0)
 		green = clamp(green, 0.0, 1.0)
 		blue = clamp(blue, 0.0, 1.0)
 		selcolor = rgb(red * 255, green * 255, blue * 255)
 		tooltip_rebuild = 1
 		light.set_color(red, green, blue)
+		return 1
 
 	proc/setRange(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Range(1 - 7):","Range setting", light_level) as num
 		if(!in_range(src, user) || user.stat)
-			return
+			return0
 		inp = clamp(round(inp), 1, 7)
 		light.set_brightness(inp / 7)
 		boutput(user, "Range set to [inp]")
+		return 1
 
 	pickup()
 		active = 0
@@ -1897,6 +1955,7 @@ var/list/mechanics_telepads = new/list()
 	proc/toggleSender(obj/item/W as obj, mob/user as mob)
 		add_sender = !add_sender
 		boutput(user, "Show-Source now [add_sender ? "on":"off"]")
+		return 1
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
 		if(level == 2) return
@@ -1938,10 +1997,12 @@ var/list/mechanics_telepads = new/list()
 	proc/setFreqMan(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user, "New frequency ([R_FREQ_MINIMUM] - [R_FREQ_MAXIMUM]):", "Enter new frequency", frequency) as num
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(!isnull(inp))
 			set_frequency(inp)
 			boutput(user, "Frequency set to [frequency]")
+			return 1
+		return 0
 
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -2033,16 +2094,15 @@ var/list/mechanics_telepads = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(..(W, user)) return
-		attack_hand(user)
+		if(..(W, user)) return 1
+		return attack_hand(user)
 
 	attack_hand(mob/user as mob)
 		if(level == 1)
 			flick(icon_down, src)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
-		else
-			..(user)
-		return
+			return 1
+		return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(level == 2 && get_dist(src, target) == 1)
@@ -2083,22 +2143,24 @@ var/list/mechanics_telepads = new/list()
 	proc/addButton(obj/item/W as obj, mob/user as mob)
 		if(length(src.active_buttons) >= 10)
 			boutput(user, "<span class='alert'>There's no room to add another button - the panel is full</span>")
-			return
+			return 0
 
 		var/new_label = input(user, "Button label", "Button Panel") as text
 		var/new_signal = input(user, "Button signal", "Button Panel") as text
 		if(!in_range(src, user) || user.stat)
-			return
+			return 0
 		if(length(new_label) && length(new_signal))
 			new_label = adminscrub(new_label)
 			new_signal = adminscrub(new_signal)
 			if(new_label in src.active_buttons)
 				boutput(user, "There's already a button with that label.")
-				return
+				return 0
 			src.active_buttons.Add(new_label)
 			src.active_buttons[new_label] = new_signal
 			boutput(user, "Added button with label: [new_label] and value: [new_signal]")
 			tooltip_rebuild = 1
+			return 1
+		return 0
 
 	proc/removeButton(obj/item/W as obj, mob/user as mob)
 		if(!length(src.active_buttons))
@@ -2106,12 +2168,14 @@ var/list/mechanics_telepads = new/list()
 		else
 			var/to_remove = input(user, "Choose button to remove", "Button Panel") in src.active_buttons + "*CANCEL*"
 			if(!in_range(src, user) || user.stat)
-				return
+				return 0
 			if(!to_remove || to_remove == "*CANCEL*")
-				return
+				return 0
 			src.active_buttons.Remove(to_remove)
 			boutput(user, "Removed button labeled [to_remove]")
 			tooltip_rebuild = 1
+			return 1
+		return 0
 
 	attack_hand(mob/user as mob)
 		if (level == 1)
@@ -2120,6 +2184,7 @@ var/list/mechanics_telepads = new/list()
 				if (!selected_button || selected_button == "*CANCEL*" || !in_range(src, usr)) return
 				flick(icon_down, src)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, src.active_buttons[selected_button])
+				return 1
 			else
 				boutput(usr, "<span class='alert'>[src] has no active buttons - there's nothing to press!</span>")
 		else return ..(user)
@@ -2160,11 +2225,12 @@ var/list/mechanics_telepads = new/list()
 			Gun.loc = get_turf(src)
 			Gun = null
 			tooltip_flags &= ~REBUILD_ALWAYS
-		else
-			boutput(user, "<span class='alert'>There is no gun inside this component.</span>")
+			return 1
+		boutput(user, "<span class='alert'>There is no gun inside this component.</span>")
+		return 0
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(..(W, user)) return
+		if(..(W, user)) return 1
 		else if(istype(W, src.compatible_guns))
 			if(!Gun)
 				boutput(usr, "You put the [W] inside the [src].")
@@ -2173,10 +2239,12 @@ var/list/mechanics_telepads = new/list()
 				Gun = W
 				Gun.loc = src
 				tooltip_flags |= REBUILD_ALWAYS
+				return 1
 			else
 				boutput(usr, "There is already a [Gun] inside the [src]")
 		else
 			user.show_text("The [W.name] isn't compatible with this component.", "red")
+		return 0
 
 	proc/getTarget()
 		var/atom/trg = get_turf(src)
@@ -2302,14 +2370,16 @@ var/list/mechanics_telepads = new/list()
 			instrument.loc = get_turf(src)
 			instrument = null
 			tooltip_rebuild = 1
+			return 1
 		else
 			boutput(user, "<span class='alert'>There is no instrument inside this component.</span>")
+		return 0
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (..(W, user)) return 
+		if (..(W, user)) return 1
 		else if (instrument) // Already got one, chief!
 			boutput(usr, "There is already \a [instrument] inside the [src].")
-			return
+			return 0
 		else if (istype(W, /obj/item/instrument)) //BLUH these aren't consolidated under any combined type hello elseif chain // i fix - haine
 			var/obj/item/instrument/I = W
 			instrument = I
@@ -2341,6 +2411,8 @@ var/list/mechanics_telepads = new/list()
 			usr.drop_item()
 			instrument.loc = src
 			tooltip_rebuild = 1
+			return 1
+		return 0
 
 	proc/fire(var/datum/mechanicsMessage/input)
 		if (level == 2 || !isReady() || !instrument) return
@@ -2385,20 +2457,23 @@ var/list/mechanics_telepads = new/list()
 	proc/setAManually(obj/item/W as obj, mob/user as mob)
 		var/input = input("Set A to what?", "A", A) as num
 		if(!in_range(src, user) || user.stat || isnull(input))
-			return
+			return 0
 		A = input
 		tooltip_rebuild = 1
+		return 1
 
 	proc/setBManually(obj/item/W as obj, mob/user as mob)
 		var/input = input("Set B to what?", "B", B) as num
 		if(!in_range(src, user) || user.stat || isnull(input))
-			return
+			return 0
 		B = input
 		tooltip_rebuild = 1
+		return 1
 
 	proc/setMode(obj/item/W as obj, mob/user as mob)
 		mode = input("Set the math mode to what?", "Mode Selector", mode) in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte")
 		tooltip_rebuild = 1
+		return 1
 
 	proc/setA(var/datum/mechanicsMessage/input)
 		if(level == 2) return
