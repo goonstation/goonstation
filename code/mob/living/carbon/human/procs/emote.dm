@@ -1390,7 +1390,7 @@
 						#endif
 							#if ASS_JAM
 							if (src.hasStatus("handcuffed") && !src.hasStatus("hands_in_front"))
-								actions.start(new/datum/action/bar/private/icon/handcuffMoval(10), src)
+								actions.start(new/datum/action/bar/private/icon/handcuffMoval(200), src)
 							#endif
 
 							if (src.bioHolder.HasEffect("fat"))
