@@ -52,6 +52,7 @@
 	var/add_loot = null		// Our robot's loot! Should be roughly what they used...
 	var/gunhat = null 		// Our gun is technically a hat
 	var/armended = 0		// Does our robot have its second armendment? Can they use two-handed guns?
+	var/canshoot = 1		// Keeps our bot from magdumping if they can rootytootyscoot'n'shooty
 	
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
@@ -690,9 +691,11 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				if (mode == SECBOT_HUNT && target)
 					if (get_dist(src, src.target) <= 1)
 						src.baton_attack(src.target)
-					if (src.botgun && (src.shotcount <= 0))	// rooty tooty scoot n shooty
-						src.shootgun_attack(src.target)		// But only if you're not mid-shooty
-
+					if (src.botgun && (src.shotcount <= 0) && (src.canshoot == 1))	
+						src.shootgun_attack(src.target)		// rooty tooty scoot n shooty
+						canshoot = 0
+						SPAWN_DBG(1 SECOND)					// But only if you're not mid-shooty
+							canshoot = 1
 
 	process()
 		if (!src.on)
