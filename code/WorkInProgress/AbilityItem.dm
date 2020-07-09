@@ -353,6 +353,17 @@
 
 ////////////////////////////////////////////////////////////
 
+/obj/ability_button/cable_toggle
+	name = "Toggle Saw"
+	icon_state = "saw"
+
+	execute_ability()
+		var/obj/item/cable_coil/C = the_item
+		C.attack_self(usr)
+		..()
+
+////////////////////////////////////////////////////////////
+
 /obj/ability_button/flashlight_engiehelm
 	name = "Toggle Helmet Light"
 	icon_state = "on"
