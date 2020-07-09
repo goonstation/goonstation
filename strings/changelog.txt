@@ -1,4 +1,11 @@
 
+(t)thu jul 09 20
+(u)AwkwardDryad
+(p)1380
+(e)🐛🗺|bug, mapping
+(+)Shinai can now be used to mitigate damage from other weapons while blocking
+(+)Additional kendo gear is available from QM
+(+)Kendo gear now spawns in the hidden workshop
 (t)wed jul 08 20
 (u)Ryumi
 (p)1411
