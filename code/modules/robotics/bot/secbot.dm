@@ -52,6 +52,7 @@
 	var/add_loot = null		// Our robot's loot! Should be roughly what they used...
 	var/gunhat = null 		// Our gun is technically a hat
 	var/armended = 0		// Does our robot have its second armendment? Can they use two-handed guns?
+	var/canshoot = 1
 	var/bullethell = 0		// Enables unrestrained magdumping of deadly weaponry
 	
 	var/mode = 0
