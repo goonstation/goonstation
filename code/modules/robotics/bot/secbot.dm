@@ -78,7 +78,7 @@
 	var/moving = 0 			//Are we currently ON THE MOVE?
 	var/current_movepath = 0
 	var/datum/secbot_mover/mover = null
-	var/arrest_move_delay = 1
+	var/arrest_move_delay = 2.5
 	var/emag_stages = 2 	//number of times we can emag this thing
 
 	var/blockcount = 0		//number of times retried a blocked path
@@ -607,7 +607,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				src.mode = SECBOT_HUNT
 			..()
 
-	proc/navigate_to(atom/the_target,var/move_delay=1,var/adjacent=0)
+	proc/navigate_to(atom/the_target,var/move_delay=3,var/adjacent=0)
 		if(src.moving) return 1
 		src.moving = 1
 		src.frustration = 0
