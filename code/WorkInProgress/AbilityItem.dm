@@ -354,8 +354,8 @@
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/cable_toggle
-	name = "Toggle Saw"
-	icon_state = "saw"
+	name = "Toggle auto-laying mode"
+	icon_state = "coil"
 
 	execute_ability()
 		var/obj/item/cable_coil/C = the_item
