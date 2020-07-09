@@ -1,5 +1,10 @@
 
 (t)wed jul 08 20
+(u)Ryumi
+(p)1411
+(e)🗺|mapping
+(+)Donut3: Expanded and added more fluff to the Medbay.
+(+)Donut3: Added all the necessary chemistry equipment to Chemistry
 (u)Sovexe
 (p)1410
 (e)🐛🗺|bug, mapping
