@@ -1,9 +1,7 @@
+//See mechComp_signals.dm  for  mechanics_holder - How Messages get passed around.
+
 //TODO:
 // - Message Datum pooling and recycling.
-
-//MarkNstein TODO:
-//Check other MarkNstein comments
-
 
 //Global list of telepads so we don't have to loop through the entire world aaaahhh.
 var/list/mechanics_telepads = new/list()
@@ -30,7 +28,6 @@ var/list/mechanics_telepads = new/list()
 		return ..()
 
 	disposing()
-		// mechanics disposed in /atom
 		processing_items.Remove(src)
 		..()
 
@@ -46,7 +43,7 @@ var/list/mechanics_telepads = new/list()
 			cutParticles()
 			return
 		var/pointer_container[1] //A list of size 1, to store the address of the list we want
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_GET_OUTGOING, pointer_container) //MarkNstein needs attention
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_GET_OUTGOING, pointer_container)
 		var/list/connected_outgoing = pointer_container[1]
 		if(length(particles) != length(connected_outgoing))
 			cutParticles()
@@ -1895,7 +1892,7 @@ var/list/mechanics_telepads = new/list()
 	proc/setRange(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Range(1 - 7):","Range setting", light_level) as num
 		if(!in_range(src, user) || user.stat)
-			return0
+			return 0
 		inp = clamp(round(inp), 1, 7)
 		light.set_brightness(inp / 7)
 		boutput(user, "Range set to [inp]")

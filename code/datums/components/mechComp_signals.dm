@@ -82,7 +82,7 @@
 	src.configs.Add(list(DC_ALL))
 	if(can_manualy_set_signal)
 		allowManualSingalSetting()
-	..()    //MarkNstein needs attention: make use of this for non-MechComp things. Like settings configs? Inputs?
+	..()
 
 /datum/component/mechanics_holder/RegisterWithParent()
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_INPUT), .proc/addInput)
@@ -98,7 +98,7 @@
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_LINK), .proc/link_devices)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_CONFIG), .proc/addConfig)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL), .proc/allowManualSingalSetting) //Only use this when also using COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG
-	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/attackby)    //MarkNstein needs attention
+	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/attackby)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_COMPATIBLE), .proc/compatible)//Better that checking GetComponent()?
 	return  //No need to ..()
 
@@ -209,8 +209,8 @@
 	return ret
 
 //Called when a component is dragged onto another one.
-/datum/component/mechanics_holder/proc/dropConnect(var/comsig_target, atom/A, mob/user)//MarkNstein needs attention
-	if(!A || A == parent || user.stat || !isliving(user) || (SEND_SIGNAL(A,COMSIG_MECHCOMP_COMPATIBLE) != 1))  //ZeWaka: Fix for null.mechanics //MarkNstein needs attention
+/datum/component/mechanics_holder/proc/dropConnect(var/comsig_target, atom/A, mob/user)
+	if(!A || A == parent || user.stat || !isliving(user) || (SEND_SIGNAL(A,COMSIG_MECHCOMP_COMPATIBLE) != 1))  //ZeWaka: Fix for null.mechanics
 		return
 
 	if (!user.find_tool_in_hand(TOOL_PULSING))
@@ -224,7 +224,7 @@
 	var/typesel = input(user, "Use [parent] as:", "Connection Type") in list("Trigger", "Receiver", "*CANCEL*")
 	switch(typesel)
 		if("Trigger")
-			SEND_SIGNAL(A, COMSIG_MECHCOMP_LINK, parent, user) //MarkNstein needs attention
+			SEND_SIGNAL(A, COMSIG_MECHCOMP_LINK, parent, user)
 		if("Receiver")
 			link_devices(null, A, user) //What do you want, an invitation? No signal needed!
 		if("*CANCEL*")
@@ -243,7 +243,7 @@
 		return
 	
 	var/pointer_container[1] //A list of size 1, to store the address of the list we want
-	SEND_SIGNAL(trigger, COMSIG_MECHCOMP_GET_OUTGOING, pointer_container) //MarkNstein needs attention
+	SEND_SIGNAL(trigger, COMSIG_MECHCOMP_GET_OUTGOING, pointer_container)
 	var/list/trg_outgoing = pointer_container[1]
 	var/selected_input = input(user, "Select \"[receiver.name]\" Input", "Input Selection") in inputs + "*CANCEL*"
 	if(selected_input == "*CANCEL*") return
