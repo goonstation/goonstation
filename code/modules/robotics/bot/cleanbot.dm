@@ -421,6 +421,8 @@
 		if (!src)
 			return
 
+		if(src.exploding) return
+		src.exploding = 1
 		src.on = 0
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)

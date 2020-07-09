@@ -2651,7 +2651,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "chitters"
 	health_brute = 6
-	health_burn = 4
+	health_burn = 6
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 
@@ -2728,8 +2728,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_say = "clicks"
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "chitters"
-	health_brute = 10
-	health_burn = 7
+	health_brute = 4
+	health_burn = 4
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 
@@ -2800,7 +2800,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_exclaim = "blips"
 	speechverb_ask = "blups"
 	health_brute = 24
-	health_burn = 18
+	health_burn = 24
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 
@@ -2856,7 +2856,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					logTheThing("combat", src, G.affecting, "crunches %target% [log_loc(src)]")
 					M.lastattacker = src
 					M.lastattackertime = world.time
-					G.affecting.TakeDamage("head", rand(2,7), 0, 0, DAMAGE_BLUNT)
+					G.affecting.TakeDamage("head", rand(2,8), 0, 0, DAMAGE_BLUNT)
 					playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1, pitch = 1.3)
 					src.visible_message("<span class='alert'><B>[src] crunches [G.affecting]!</B></span>")
 		return ..()
