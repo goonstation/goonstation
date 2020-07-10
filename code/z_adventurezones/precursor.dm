@@ -559,9 +559,7 @@
 					src.visible_message("<span class='alert'><b>[src]</b> fires a bolt of energy!</span>")
 
 					if(prob(35))
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(5, 1, src)
-						s.start()
+						elecflash(src)
 
 				if("electrical")
 					if (!linked_object)
@@ -918,9 +916,7 @@
 
 	proc/shock(var/mob/living/user as mob)
 		if(user)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, user.loc)
-			s.start()
+			elecflash(user,power=2)
 			var/shock_damage = rand(10,15)
 
 			if (user.bioHolder.HasEffect("resist_electric") == 2)

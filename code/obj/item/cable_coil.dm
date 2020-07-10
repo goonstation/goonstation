@@ -1,5 +1,7 @@
 // the cable coil object, used for laying cable
 
+obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
+
 #define MAXCOIL 120
 #define STARTCOIL 30 //base type starting coil amt
 /obj/item/cable_coil

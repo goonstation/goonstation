@@ -1179,10 +1179,7 @@
 									src.dir = turn(src.dir, 90)
 									sleep(0.2 SECONDS)
 
-							var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-							s.set_up(3, 1, src)
-							s.start()
-
+							elecflash(src,power = 2)
 						else
 							//glowsticks
 							var/left_glowstick = istype (l_hand, /obj/item/device/light/glowstick)
@@ -1525,9 +1522,7 @@
 						for (var/mob/O in viewers(src, null))
 							O.show_message("<B>[src]</B> burps.")
 						for (var/mob/M in oview(1))
-							var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-							s.set_up(3, 1, src)
-							s.start()
+							elecflash(src,power = 2)
 							boutput(M, "<span class='notice'>BZZZZZZZZZZZT!</span>")
 							M.TakeDamage("chest", 0, 20, 0, DAMAGE_BURN)
 							src.charges -= 1

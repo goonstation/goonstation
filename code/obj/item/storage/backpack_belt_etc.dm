@@ -253,6 +253,9 @@
 		delProperty("heatprot")
 
 		if(overlay)
+			if(ishuman(src.loc))
+				var/mob/living/carbon/human/H = src.loc
+				H.attached_objs.Remove(overlay)
 			qdel(overlay)
 			overlay = null
 

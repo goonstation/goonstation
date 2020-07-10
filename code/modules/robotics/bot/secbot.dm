@@ -1045,6 +1045,8 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		return
 
 	explode()
+		if(src.exploding) return
+		src.exploding = 1
 		walk_to(src,0)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
@@ -1069,9 +1071,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		if (prob(50))
 			new /obj/item/parts/robot_parts/arm/left(Tsec)
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(3, 1, src)
-		s.start()
+		elecflash(src, power=2)
 		qdel(src)
 
 
@@ -1184,7 +1184,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_arm")
 		user.u_equip(W)
 		qdel(W)
-		
+
 	else if (istype(W, /obj/item/rods) && src.build_step == 3)
 		if (W.amount < 1)
 			boutput(user, "You need a non-zero amount of rods. How did you even do that?")

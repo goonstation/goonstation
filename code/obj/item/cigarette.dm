@@ -313,9 +313,7 @@
 		if (tlocation)
 			explosion(src, tlocation, 0, 1, 1, 2)
 		else
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, src)
-			s.start()
+			elecflash(src,power = 2)
 			playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
 		src.visible_message("<span class='alert'>The [src] explodes!</span>")
 

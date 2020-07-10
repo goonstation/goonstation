@@ -79,6 +79,4 @@ toxic - poisons
 				for(var/atom/movable/O in tile.contents)
 					if(!istype(O, /obj/machinery/nuclearbomb)) //AoE emp does not affect nuke
 						O.emp_act()
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(5, 0, T)
-		s.start()
+		elecflash(T)

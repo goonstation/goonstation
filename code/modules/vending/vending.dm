@@ -2085,9 +2085,7 @@
 	if (powernets && powernets.len >= netnum)
 		PN = powernets[netnum]
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(5, 1, src)
-	s.start()
+	elecflash(src)
 
 	if (!PN) //Wire note: Fix for Cannot read null.avail
 		return 0

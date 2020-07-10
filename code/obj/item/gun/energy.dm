@@ -1306,9 +1306,7 @@
 				if ("detain","execute","knockout","hotshot","bigshot","highexplosive","he","clownshot", "pulse")
 					random_burn_damage(M, 50)
 					M.changeStatus("weakened", 4 SECONDS)
-					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-					s.set_up(2, 1, (get_turf(src)))
-					s.start()
+					elecflash(src,power=2)
 					M.visible_message("<span class='alert'>[M] tries to fire [src]! The gun initiates its failsafe mode.</span>")
 					return
 

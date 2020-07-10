@@ -1,5 +1,34 @@
 
+(t)fri jul 10 20
+(u)MarkNstein
+(p)1374
+(e)🆕|feature
+(+)PDA mail groups can be individually muted in the Groups page.
+(u)mbc
+(p)1425
+(e)|
+(*)Reworked sparks + added electric flashes (think zappy fireflash)
+(t)thu jul 09 20
+(u)Flaborized
+(p)1415
+(e)🎨|sprites
+(*)Resprited most of the bottled drinks.
+(u)AwkwardDryad
+(p)1380
+(e)🐛🗺|bug, mapping
+(+)Shinai can now be used to mitigate damage from other weapons while blocking
+(+)Additional kendo gear is available from QM
+(+)Kendo gear now spawns in the hidden workshop
 (t)wed jul 08 20
+(u)Ryumi
+(p)1411
+(e)🗺|mapping
+(+)Donut3: Expanded and added more fluff to the Medbay.
+(+)Donut3: Added all the necessary chemistry equipment to Chemistry
+(u)Sovexe
+(p)1410
+(e)🐛🗺|bug, mapping
+(+)The Long Range Teleporter in Manta's Sea Turtle mining ship is once again functional.
 (u)MarkNstein
 (p)1312
 (e)🔄|rework

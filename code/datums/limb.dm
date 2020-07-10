@@ -124,10 +124,7 @@
 				user.visible_message("<span class='alert'>The shot misses!</span>")
 			else
 				MT.TakeDamageAccountArmor(user.zone_sel ? user.zone_sel.selecting : "All", brute, burn, 0, burn ? DAMAGE_BURN : DAMAGE_BLUNT)
-		SPAWN_DBG(0)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, target)
-			s.start()
+		elecflash(target.loc,power = 2)
 
 	is_on_cooldown()
 		if (ticker.round_elapsed_ticks < next_shot_at)
