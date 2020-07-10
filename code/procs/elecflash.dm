@@ -96,5 +96,5 @@ var/global/mutable_appearance/elecflash_ma = null
 
 /mob/living/electric_expose(var/power = 1)
 	if (power > 1) // pretty light damage and stam damage :)
-		src.do_disorient(stamina_damage = 15 + power * 3, weakened = 1 SECONDS + (power * (0.1 SECONDS)), stunned = 0, paralysis = 0, disorient = 1 SECONDS + (power * (0.2 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
+		src.do_disorient(stamina_damage = 15 + power * 7, weakened = 1 SECONDS + (power * (0.1 SECONDS)), stunned = 0, paralysis = 0, disorient = 1 SECONDS + (power * (0.2 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
 		src.TakeDamage("chest", 0, rand(0,1.00) * power * 0.1, damage_type=DAMAGE_BURN)
