@@ -678,15 +678,7 @@
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
 	w_class = 3.0
-	var/datum/effects/system/spark_spread/spark_system
 	module_research = list("electronics" = 3, "engineering" = 1)
-
-	New()
-		..()
-		src.spark_system = unpool(/datum/effects/system/spark_spread)
-		spark_system.set_up(5, 0, src)
-		spark_system.attach(src)
-		return
 
 	proc/finish_decon(atom/target,mob/user)
 		if (!isobj(target))
@@ -706,8 +698,7 @@
 		F.icon_state = "dbox_big"
 		F.w_class = 4
 
-		spark_system.set_up(5, 0, src)
-		spark_system.start()
+		elecflash(src,power=2)
 
 		O.was_deconstructed_to_frame(user)
 

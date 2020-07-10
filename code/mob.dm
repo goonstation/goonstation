@@ -1825,9 +1825,7 @@
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(2, 1, src.loc)
-	s.start()
+	elecflash(src.loc,exclude_center = 0)
 
 	if (animation)
 		animation.delaydispose()

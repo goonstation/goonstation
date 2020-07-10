@@ -134,9 +134,7 @@
 			if(!selection) return
 			selection:set_loc(user.loc)
 			selection:contained = 0
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, user)
-			s.start()
+			elecflash(user)
 
 /obj/item/robot_chemaster
 	name = "Mini-ChemMaster"

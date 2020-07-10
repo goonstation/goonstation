@@ -234,9 +234,7 @@
 							var/obj/storage/closet/port_a_sci/PS = P4
 							PS.on_teleport()
 
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(5, 1, P4)
-						s.start()
+						elecflash(P4)
 
 			if ("return")
 				var/obj/P5 = src.active
@@ -282,9 +280,7 @@
 							var/obj/storage/closet/port_a_sci/PS2 = P5
 							PS2.on_teleport()
 
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(5, 1, P5)
-						s.start()
+						elecflash(P5)
 
 		PDA.updateSelfDialog()
 		return

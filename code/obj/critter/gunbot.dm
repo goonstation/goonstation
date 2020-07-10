@@ -91,7 +91,5 @@
 			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
 
 		SPAWN_DBG(0)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
+			elecflash(src,2)
 			qdel(src)

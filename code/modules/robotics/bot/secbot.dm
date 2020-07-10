@@ -1071,9 +1071,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		if (prob(50))
 			new /obj/item/parts/robot_parts/arm/left(Tsec)
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(3, 1, src)
-		s.start()
+		elecflash(src, power=2)
 		qdel(src)
 
 
