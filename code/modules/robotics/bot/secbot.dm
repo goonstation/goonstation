@@ -18,6 +18,12 @@
 	var/contraband_access = access_contrabandpermit
 	var/obj/item/baton/secbot/our_baton // Our baton
 
+	var/global/list/botgun_whitelist = list(/obj/item/gun/energy/tasershotgun,\
+											/obj/item/gun/energy/taser_gun,\
+											/obj/item/gun/energy/vuvuzela_gun,\
+											/obj/item/gun/energy/wavegun,\
+											/obj/item/gun/energy/lawbringer) 
+
 	on = 1
 	locked = 1 //Behavior Controls lock
 	var/mob/living/carbon/target
@@ -40,20 +46,19 @@
 
 	var/our_baton_type = /obj/item/baton/secbot
 	var/loot_baton_type = /obj/item/scrap
-	var/botgun = null		// Which gun does our robot wield?
 	var/stun_type = "stun"	
-							// The following get defined by botgun!
-	var/spread = 0			// How inaccurate is our robot?
-	var/refire = 0 SECONDS	// How quickly should our bot fire each shot in a burst?
-	var/proj = null			// What's our bot shooting? Defined by botgun!
-	var/shotcount = 0		// Set by burst, modded by emag state
-	var/burst = 0			// How many shots does our robot shoot in a burst?
+
+	// The following get defined by botgun!
+	var/shotcount = 0		// Number of times it shoots when it should, modded by emag state
 	var/gun = null			// What's the name of our robot's gun? Used in the chat window!
-	var/add_loot = null		// Our robot's loot! Should be roughly what they used...
-	var/gunhat = null 		// Our gun is technically a hat
-	var/armended = 0		// Does our robot have its second armendment? Can they use two-handed guns?
-	var/canshoot = 1
+	var/canshoot = 1		// Limits their rate of fire
 	var/bullethell = 0		// Enables unrestrained magdumping of deadly weaponry
+	var/obeygunlaw = 1		// Does our bot follow the gun whitelist?
+	var/infiniteammo = 0	// Our bot can have infinite ammo, just fyi
+	
+	var/obj/item/gun/botgun = null	// the gun, actually important
+	
+	var/hasgun = 0				// So our robot only gets one gun
 	
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
@@ -144,9 +149,10 @@
 	beacon_freq = 1444
 	hat = "hos"
 	hatplus = "riot"
-	botgun = "ak"
+	botgun = /obj/item/gun/kinetic/ak47
 	attack_per_step = 1
 	bullethell = 1
+	infiniteammo = 1
 	
 /obj/machinery/bot/secbot/swat
 	name = "Lt. Swatsky"
@@ -156,9 +162,10 @@
 	beacon_freq = 1444
 	hat = "nt"
 	hatplus = "riot"
-	botgun = "tshotty"
+	botgun = /obj/item/gun/energy/tasershotgun
 	attack_per_step = 1
 	bullethell = 1
+	infiniteammo = 1
 	
 /obj/machinery/bot/secbot/budgie
 	name = "Officer Secsky"
@@ -239,81 +246,18 @@
 			if(radio_controller)
 				radio_controller.add_object(src, "[control_freq]")
 				radio_controller.add_object(src, "[beacon_freq]")
-			if (src.botgun == "taser")
-				add_loot = /obj/item/gun/energy/taser_gun
-				proj = new/datum/projectile/energy_bolt/robust
-				spread = 0
-				burst = 3
-				refire = 2
-				gun = "taser"
-				gunhat = "taserburst100"
-			else if (src.botgun == "tshotty")
-				add_loot = /obj/item/gun/energy/tasershotgun
-				proj = new/datum/projectile/energy_bolt/tasershotgun
-				spread = 3
-				burst = 6
-				refire = 0
-				gun = "taser shotgun"
-				gunhat = "tasers"
-			else if (src.botgun == "pulse")
-				add_loot = /obj/item/gun/energy/pulse_rifle
-				proj = new/datum/projectile/energy_bolt/pulse
-				spread = 0
-				burst = 2
-				refire = 5
-				gun = "pulse rifle"
-				gunhat = "pulse_rifle"
-			else if (src.botgun == "egun")
-				add_loot = /obj/item/gun/energy/egun
-				proj = new/datum/projectile/laser
-				spread = 1
-				burst = 1
-				refire = 5
-				gun = "energy gun"
-				gunhat = "energykill100"
-			else if (src.botgun == "phaser")
-				add_loot = /obj/item/gun/energy/phaser_gun
-				proj = new/datum/projectile/laser/light
-				spread = 1
-				burst = 3
-				refire = 5
-				gun = "phaser gun"
-				gunhat = "phaser-new"
-			else if (src.botgun == "laser")
-				add_loot = /obj/item/gun/energy/laser_gun
-				proj = new/datum/projectile/laser
-				spread = 1
-				burst = 1
-				refire = 5
-				gun = "laser gun"
-				gunhat = "laser"
-			else if (src.botgun == "ak")
-				add_loot = /obj/item/gun/kinetic/ak47
-				proj = new/datum/projectile/bullet/ak47
-				spread = 1
-				burst = 2
-				refire = 5
-				gun = "AK-744"
-				gunhat = "ak47"
-			else
-				add_loot = null 
-				proj = null
-				spread = 0
-				burst = 0
-				refire = 5
-				gun = null
+			if(botgun)
+				botgun = new botgun
+				hasgun = 1
+				gun = botgun.name
+				src.overlays += image(botgun.icon, botgun.icon_state, layer = 6)
 			if(src.hat)
 				src.overlays += image('icons/obj/bots/aibots.dmi', "hat-[src.hat]")
-			if(src.hatplus)
-				src.overlays += image('icons/obj/clothing/item_hats.dmi', "[src.hatplus]")
-			if(src.gunhat)
-				src.overlays += image('icons/obj/items/gun.dmi', "[src.gunhat]")
-			if(src.armended == 1)
-				src.desc += (" He appears to be sporting more arms than usual!")
 			if(src.hatplus)
 				if(src.hatplus == "riot")
 					src.health += 50
 					src.hatloot = /obj/item/clothing/head/helmet/riot
+					src.overlays += image('icons/obj/clothing/item_hats.dmi', "riot", layer = 5.5)
 
 	attack_hand(mob/user as mob, params)
 		var/dat
@@ -394,6 +338,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			if (emagged)
 				if (user)
 					boutput(user, "<span class='alert'>You short out [src]'s system clock inhibition circuits.</span>")
+					src.obeygunlaw = 0	// Good luck giving em a gun, though
 				src.overlays.len = 0
 			else if (user)
 				boutput(user, "<span class='alert'>You short out [src]'s target assessment circuits.</span>")
@@ -444,6 +389,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		else
 			src.explode()
 		return
+		
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
@@ -460,127 +406,38 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			if (src.health < initial(health))
 				src.health = initial(health)
 				src.visible_message("<span class='alert'>[user] repairs [src]!</span>", "<span class='alert'>You repair [src].</span>")
-
-		// Enables the bot to use a two-hander
-		else if (istype(W, /obj/item/parts/robot_parts/arm/))
-			if (src.armended == 0)
-				src.armended = 1
-				src.visible_message("<span class='alert'>[user] attaches a second robotic arm to [src]'s frame. It tucks the new arm away inside its frame, nice and safe.</span>", "<span class='alert'>As you try to swing the taser gun at [src], it snatches the weapon from your grip!</span>")
-				user.u_equip(W)
-				qdel(W)
-			else
-				boutput(user, "It can't bear any more arms!")
-
-		// These let you give an unarmed secbot a one-handed gun -V
 		
-		else if (istype(W, /obj/item/gun/energy/taser_gun) && !src.botgun)
-			botgun = "taser"
-			add_loot = /obj/item/gun/energy/taser_gun
-			proj = new/datum/projectile/energy_bolt
-			spread = 0
-			burst = 3
-			refire = 2
-			gun = "taser"
-			gunhat = "taserburst100"
-			src.visible_message("<span class='alert'>[capitalize(src.name)] snatches the taser gun from [user], wielding it in its cold, dead hand!</span>", "<span class='alert'>[capitalize(src.name)] snatches the weapon from your grip!</span>")
-			src.overlays += image('icons/obj/items/gun.dmi', "taserburst100", layer = 6)
-			user.u_equip(W)
-			qdel(W)
+		else if (istype(W, /obj/item/gun) && !src.botgun)
+			var/legalweapon = 0
+			if (W.type in src.botgun_whitelist)
+				legalweapon = 1
+			if (!legalweapon && obeygunlaw)
+				src.visible_message("<span class='alert'>[name] refuses to wield an unauthorized weapon!</span>", "<span class='alert'>[name] refuses your [gun], as spacelaw prohibits security robots from wielding [gun]s while on duty.</span>")
+			else if (legalweapon && obeygunlaw)					
+				W.set_loc(src)
+				botgun = W
+				hasgun = 1
+				gun = botgun.name
+				src.visible_message("<span class='alert'>[user] gives [name] [his_or_her(user)] [gun]!</span>", "<span class='alert'>You give your [gun] to [name]!</span>")
+				src.overlays += image(botgun.icon, botgun.icon_state, layer = 6)
+				user.u_equip(W)
+			else 
+				W.set_loc(src)
+				botgun = W
+				hasgun = 1
+				gun = botgun.name
+				src.visible_message("<span class='alert'>[capitalize(src.name)] snatches the [gun] from [user], wielding it in its cold, dead hand!</span>", "<span class='alert'>[capitalize(src.name)] snatches the [gun] from your grip!</span>")
+				src.overlays += image(botgun.icon, botgun.icon_state, layer = 6)
+				user.u_equip(W)
 
-		else if (istype(W, /obj/item/gun/energy/egun) && !src.botgun)
-			botgun = "egun"
-			add_loot = /obj/item/gun/energy/egun
-			proj = new/datum/projectile/laser
-			spread = 1
-			burst = 1
-			refire = 5
-			gun = "energy gun"
-			gunhat = "energykill100"
-			src.visible_message("<span class='alert'>[capitalize(src.name)] snatches the energy gun from [user], wielding it in its cold, dead hand!</span>", "<span class='alert'>[capitalize(src.name)] snatches the weapon from your grip!</span>")
-			src.overlays += image('icons/obj/items/gun.dmi', "energykill100", layer = 6)
-			user.u_equip(W)
-			qdel(W)
-
-		else if (istype(W, /obj/item/gun/energy/phaser_gun) && !src.botgun)
-			botgun = "phaser"
-			add_loot = /obj/item/gun/energy/phaser_gun
-			proj = new/datum/projectile/laser/light
-			spread = 1
-			burst = 3
-			refire = 5
-			gun = "phaser gun"
-			gunhat = "phaser-new"
-			src.visible_message("<span class='alert'>[capitalize(src.name)] snatches the phaser gun from [user], wielding it in its cold, dead hand!</span>", "<span class='alert'>[capitalize(src.name)] snatches the weapon from your grip!</span>")
-			src.overlays += image('icons/obj/items/gun.dmi', "phaser-new", layer = 6)
-			user.u_equip(W)
-			qdel(W)
-			
-		else if (istype(W, /obj/item/gun/energy/laser_gun) && !src.botgun)
-			botgun = "laser"
-			add_loot = /obj/item/gun/energy/laser_gun
-			proj = new/datum/projectile/laser
-			spread = 1
-			burst = 1
-			refire = 5
-			gun = "laser gun"
-			gunhat = "laser"
-			src.visible_message("<span class='alert'>[capitalize(src.name)] snatches the laser gun from [user], wielding it in its cold, dead hand!</span>", "<span class='alert'>[capitalize(src.name)] snatches the weapon from your grip!</span>")
-			src.overlays += image('icons/obj/items/gun.dmi', "laser", layer = 6)
-			user.u_equip(W)
-			qdel(W)
-			
-		// These let you give an unarmed secbot a two-handed gun -V
-				
-		else if (istype(W, /obj/item/gun/energy/tasershotgun) && !src.botgun)
-			if (src.armended == 0)
-				boutput(user, "[capitalize(src.name)] doesn't have enough hands to hold that!")
-			else
-				botgun = "tshotty"
-				add_loot = /obj/item/gun/energy/tasershotgun
-				proj = new/datum/projectile/energy_bolt/tasershotgun
-				spread = 3
-				burst = 6
-				refire = 0
-				gun = "taser shotgun"
-				gunhat = "tasers"
-				src.visible_message("<span class='alert'>[capitalize(src.name)] snatches the taser shotgun from [user], wielding it in its cold, dead hands!</span>", "<span class='alert'>[capitalize(src.name)] snatches the weapon from your grip!</span>")
-				src.overlays += image('icons/obj/items/gun.dmi', "tasers", layer = 6)
-				user.u_equip(W)
-				qdel(W)
-		
-		else if (istype(W, /obj/item/gun/energy/pulse_rifle) && !src.botgun)
-			if (src.armended == 0)
-				boutput(user, "[capitalize(src.name)] doesn't have enough hands to hold that!")
-			else
-				botgun = "pulse"
-				add_loot = /obj/item/gun/energy/pulse_rifle
-				proj = new/datum/projectile/energy_bolt/pulse
-				spread = 0
-				burst = 2
-				refire = 5
-				gun = "pulse rifle"
-				gunhat = "pulse_rifle"
-				src.visible_message("<span class='alert'>[capitalize(src.name)] snatches the pulse rifle from [user], wielding it in its cold, dead hands!</span>", "<span class='alert'>[capitalize(src.name)] snatches the weapon from your grip!</span>")
-				src.overlays += image('icons/obj/items/gun.dmi', "pulse_rifle", layer = 6)
-				user.u_equip(W)
-				qdel(W)
-					
-		else if (istype(W, /obj/item/gun/kinetic/ak47) && !src.botgun)
-			if (src.armended == 0)
-				boutput(user, "[capitalize(src.name)] doesn't have enough hands to hold that!")
-			else
-				botgun = "ak"
-				add_loot = /obj/item/gun/kinetic/ak47
-				proj = new/datum/projectile/bullet/ak47
-				spread = 1
-				burst = 1
-				refire = 5
-				gun = "AK-744"
-				gunhat = "ak47"
-				src.visible_message("<span class='alert'>[capitalize(src.name)] snatches the AK-744 from [user], wielding it in its cold, dead hands!</span>", "<span class='alert'>[capitalize(src.name)] snatches the weapon from your grip!</span>")
-				src.overlays += image('icons/obj/items/gun.dmi', "ak47", layer = 6)
-				user.u_equip(W)
-				qdel(W)
+		else if (ispryingtool(W) && src.botgun)
+			var/turf/Tdurg = get_turf(src)
+			botgun.set_loc(Tdurg)
+			src.visible_message("<span class='alert'>[user] pries the [gun] from [name]'s cold, metal hand!</span>", "<span class='alert'>You pry the [gun] from [name]'s cold, metal hand.</span>")
+			src.overlays -= image(botgun.icon, botgun.icon_state, layer = 6)
+			src.botgun = null
+			hasgun = 0
+			gun = null
 
 		// This lets you give an unhelmeted secbot a helmet -V
 
@@ -672,15 +529,27 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		
 	proc/shootgun_attack(var/mob/living/carbon/M)
 		src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
-		if (src.emagged >= 2)
-			shotcount = burst * rand(2,3)
-		else
-			shotcount = burst
+		shotcount = (1 + src.emagged)		// Each swipe of the emag gives it another shot per shot
 		last_attack = world.time
-
-		shoot_projectile_ST_pixel_spread(src, proj, get_turf(src.target), 0, 0 , spread)
-			
+		while(shotcount > 0 && src.target)
+			botgun.shoot(get_turf(M), get_turf(src), src)
+			shotcount--
+		
+		if (infiniteammo == 1)	// Thanks Adhara! =3
+			if (istype(src.botgun, /obj/item/gun/kinetic))
+				var/obj/item/gun/kinetic/shootgun = src.botgun
+				if (shootgun.ammo && (shootgun.ammo.amount_left < shootgun.ammo.max_amount))
+					shootgun.ammo.amount_left = shootgun.ammo.max_amount
+			else if (istype(src.botgun, /obj/item/gun/energy))
+				var/obj/item/gun/energy/pewgun = src.botgun
+				if (pewgun.cell && (pewgun.cell.charge < pewgun.cell.max_charge))
+					pewgun.cell.charge = pewgun.cell.max_charge
+		
 		src.visible_message("<span class='alert'><b>[src] fires its [gun] at [src.target]!</b></span>")
+
+		src.overlays -= image(botgun.icon, botgun.icon_state, layer = 6)
+		src.overlays += image(botgun.icon, botgun.icon_state, layer = 6)	// Update the held gun sprite
+
 		SPAWN_DBG(0.2 SECONDS)
 			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 		return
@@ -738,7 +607,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 						if(!(src.target in view(7,src)) || !moving)
 							//qdel(src.mover)
 							if (src.botgun)
-								src.shootgun_attack(src.target)			//And shoot em too
+								src.shootgun_attack(src.target)
 							if (src.mover)
 								src.mover.master = null
 								src.mover = null
@@ -1336,31 +1205,25 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		new /obj/item/device/prox_sensor(Tsec)
 
 		// Not charged when dropped (ran on Beepsky's internal battery or whatever).
-		if (loot_baton_type == /obj/item/baton)
-			var/obj/item/baton/B = new loot_baton_type(Tsec)
-			B.status = 0
-			B.process_charges(-INFINITY)
-		else
-			new loot_baton_type(Tsec)
-			
-		if (add_loot)	// If our gun isnt energy, null its bullets
-			if (add_loot == /obj/item/gun/kinetic/ak47)	
-				var/obj/item/gun/kinetic/ak47/K = new add_loot(Tsec)
-				K.ammo = null
+		if (loot_baton_type)
+			if (loot_baton_type == /obj/item/baton)
+				var/obj/item/baton/B = new loot_baton_type(Tsec)
+				B.status = 0
+				B.process_charges(-INFINITY)
+				loot_baton_type = null	// Stop dropping batons if you've already dropped one!
 			else
-				var/obj/item/gun/energy/Z = new add_loot(Tsec)
-				Z.emp_act(Tsec)
-				
+				new loot_baton_type(Tsec)
+				loot_baton_type = null
+			
+		if (botgun)		// Thanks again, Adhara! =4 also gerhazo
+			botgun.set_loc(Tsec)
+
 		if (hatloot)
 			new hatloot(Tsec)
+			hatloot = null
 
 		if (prob(50))
 			new /obj/item/parts/robot_parts/arm/left(Tsec)
-		
-		if (src.armended == 1)
-			if (prob(50))
-				new /obj/item/parts/robot_parts/arm/left(Tsec)
-
 
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(3, 1, src)
@@ -1515,93 +1378,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		user.u_equip(W)
 		qdel(W)
 
-	else if (istype(W, /obj/item/gun/energy/taser_gun) && src.build_step >= 5)
-		src.build_step++
-		boutput(user, "You place the taser gun into the Securitron's robotic hand, activating it! Beep boop.")
-		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
-		S.beacon_freq = src.beacon_freq
-		S.hat = src.hat
-		S.name = src.created_name
-		S.botgun = "taser"
-		S.gunhat = "taser"
-		qdel(W)
-		qdel(src)
-		
-	else if (istype(W, /obj/item/gun/energy/egun) && src.build_step >= 5)
-		src.build_step++
-		boutput(user, "You place the energy gun into the Securitron's robotic hand, activating it! Beep boop.")
-		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
-		S.beacon_freq = src.beacon_freq
-		S.hat = src.hat
-		S.name = src.created_name
-		S.botgun = "egun"
-		S.gunhat = "energykill100"
-		qdel(W)
-		qdel(src)
-		
-	else if (istype(W, /obj/item/gun/energy/phaser_gun) && src.build_step >= 5)
-		src.build_step++
-		boutput(user, "You place the phaser gun into the Securitron's robotic hand, activating it! Beep boop.")
-		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
-		S.beacon_freq = src.beacon_freq
-		S.hat = src.hat
-		S.name = src.created_name
-		S.botgun = "phaser"
-		S.gunhat = "phaser-new"
-		qdel(W)
-		qdel(src)
-		
-	else if (istype(W, /obj/item/gun/energy/laser_gun) && src.build_step >= 5)
-		src.build_step++
-		boutput(user, "You place the laser gun into the Securitron's robotic hand, activating it! Beep boop.")
-		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
-		S.beacon_freq = src.beacon_freq
-		S.hat = src.hat
-		S.name = src.created_name
-		S.botgun = "laser"
-		S.gunhat = "laser"
-		qdel(W)
-		qdel(src)
-		
-	else if (istype(W, /obj/item/gun/energy/tasershotgun) && src.build_step >= 6)
-		src.build_step++
-		boutput(user, "You place the taser shotgun into the Securitron's robotic hands, activating it! Beep boop.")
-		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
-		S.beacon_freq = src.beacon_freq
-		S.hat = src.hat
-		S.name = src.created_name
-		S.botgun = "tshotty"
-		S.gunhat = "tasers"
-		S.armended = 1
-		qdel(W)
-		qdel(src)
-
-	else if (istype(W, /obj/item/gun/energy/pulse_rifle) && src.build_step >= 6)
-		src.build_step++
-		boutput(user, "You place the pulse rifle into the Securitron's robotic hands, activating it! Beep boop.")
-		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
-		S.beacon_freq = src.beacon_freq
-		S.hat = src.hat
-		S.name = src.created_name
-		S.botgun = "pulse"
-		S.gunhat = "pulse_rifle"
-		S.armended = 1
-		qdel(W)
-		qdel(src)
-		
-	else if (istype(W, /obj/item/gun/kinetic/ak47) && src.build_step >= 6)
-		src.build_step++
-		boutput(user, "You place the assault rifle into the Securitron's robotic hands, activating it! Yikes.")
-		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
-		S.beacon_freq = src.beacon_freq
-		S.hat = src.hat
-		S.name = src.created_name
-		S.botgun = "ak"
-		S.gunhat = "ak47"
-		S.armended = 1
-		qdel(W)
-		qdel(src)
-
 	else if (isscrewingtool(W) && src.build_step >= 5)
 		src.build_step++
 		boutput(user, "You poke the Securitron with your screwdriver, activating it! Beep boop.")
@@ -1609,7 +1385,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		S.beacon_freq = src.beacon_freq
 		S.hat = src.hat
 		S.name = src.created_name
-		S.armended = 0
 		qdel(src)
 
 	else if (istype(W, /obj/item/pen))
