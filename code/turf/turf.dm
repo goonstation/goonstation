@@ -967,7 +967,8 @@ var/global/client/ff_debugger = null
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.build(src)
 			if(T.material) src.setMaterial(T.material)
-		else if (!issilicon(user))
+
+		if (T.amount < 1 && !issilicon(user))
 			user.u_equip(T)
 			qdel(T)
 			return
