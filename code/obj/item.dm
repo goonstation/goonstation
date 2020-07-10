@@ -716,9 +716,7 @@
 			T.hotspot_expose((src.burn_output + rand(1,200)),5)
 
 		if (prob(7))
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(2, 1, (get_turf(src)))
-			s.start()
+			elecflash(src)
 		if (prob(7))
 			var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 			smoke.set_up(1, 0, src.loc)

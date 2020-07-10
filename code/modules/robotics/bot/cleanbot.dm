@@ -427,9 +427,7 @@
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(3, 1, src)
-		s.start()
+		elecflash(src, power=2)
 
 		var/turf/T = get_turf(src)
 		if (T && isturf(T))

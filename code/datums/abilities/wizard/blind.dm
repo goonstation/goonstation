@@ -17,9 +17,7 @@
 		holder.owner.say("YSTIGG MITAZIM")
 		..()
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(4, 1, target)
-		s.start()
+		elecflash(target)
 
 		if (target.traitHolder.hasTrait("training_chaplain"))
 			boutput(holder.owner, "<span class='alert'>[target] has divine protection from magic.</span>")

@@ -371,10 +371,7 @@
 	for(var/obj/item/I in emptybox.contents) //Empty the toolbox so we don't have infinite crowbars or whatever
 		qdel(I)
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(3, 1, src)
-	SPAWN_DBG(0)
-		s.start()
+	elecflash(src, power=2)
 	qdel(src)
 	return
 

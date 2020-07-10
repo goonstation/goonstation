@@ -2105,9 +2105,7 @@
 
 				src.update_icon()
 
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(3, 1, src)
-				s.start()
+				elecflash(src,power = 3)
 				if(src.host_id) //welp, we're broken.
 					src.post_status(src.host_id,"command","term_message","data","command=status&status=thermalert")
 				return 1
