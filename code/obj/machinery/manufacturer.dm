@@ -737,7 +737,7 @@
 								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"="mining", "sender"="00000000", "message"="Notification: [divisible_amount] credits earned from Rockbox™ sale, deposited to your account.")
 							else
 								leftovers = subtotal
-								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"="mining", "sender"="00000000", "message"="Notification: [leftovers] credits earned from Rockbox™ sale, deposited to the shipping budget.")
+								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"="mining", "sender"="00000000", "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox™ sale, deposited to the shipping budget.")
 							wagesystem.shipping_budget += (leftovers + sum_taxes)
 							transmit_connection.post_signal(src, minerSignal)
 
