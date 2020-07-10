@@ -1,4 +1,9 @@
 
+(t)fri jul 10 20
+(u)mbc
+(p)1425
+(e)|
+(*)Reworked sparks + added electric flashes (think zappy fireflash)
 (t)thu jul 09 20
 (u)Flaborized
 (p)1415
