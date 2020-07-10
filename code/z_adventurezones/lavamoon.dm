@@ -775,7 +775,7 @@ var/sound/iomoon_alarm_sound = null
 			boutput(user, "<i><b><font face = Tempus Sans ITC>EI NATH</font></b></i>")
 
 			//EI NATH!!
-			elecflash(user,range = 2, power = 6)
+			elecflash(user,radius = 2, power = 6)
 
 			H.unkillable = 1
 			H.gib(1)

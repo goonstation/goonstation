@@ -233,7 +233,7 @@
 
 	M.set_loc(tmploc)
 	if (sparks)
-		elecflash(src, power=3)
+		elecflash(M, power=3)
 	return
 
 // /mob/living/carbon/human/list_ejectables() looked pretty similar to what I wanted, but this doesn't have organs that you need to live
