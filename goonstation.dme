@@ -15,16 +15,8 @@ var/datum/preMapLoad/preMapLoad = new
 #define DEBUG
 // END_PREFERENCES
 
-//Standard Library Inclusions
-#include "_std\__std.dme"
-
-//Secret Code Handling
-#ifndef FASTDMM
-#include "+secret\__secret.dme"
-#endif
-#include "code\__secret_public.dme"
-
 // BEGIN_INCLUDE
+#include "_options.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\base_lighting.dm"
