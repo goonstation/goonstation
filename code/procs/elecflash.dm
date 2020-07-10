@@ -39,7 +39,7 @@ var/global/mutable_appearance/elecflash_ma = null
 			if (T.active_liquid?.group && radius + power > 1)
 				if (!(T.active_liquid.group in fluid_groups_touched))
 					fluid_groups_touched += T.active_liquid.group
-					chain_to |= T.active_liquid.get_connected_fluid_members(power * 9.5 * (1-T.active_liquid.group.avg_viscosity))
+					chain_to |= T.active_liquid.get_connected_fluid_members(power * 9.5 * (1-(T.active_liquid.group.avg_viscosity/T.active_liquid.group.max_viscosity)))
 					playsound(T, sound, 50, 1)
 			else
 				chain_to += T
@@ -48,7 +48,7 @@ var/global/mutable_appearance/elecflash_ma = null
 			if (T.active_liquid?.group && radius + power > 1)
 				if (!(T.active_liquid.group in fluid_groups_touched))
 					fluid_groups_touched += T.active_liquid.group
-					chain_to |= T.active_liquid.get_connected_fluid_members(power * 6 * (1-T.active_liquid.group.avg_viscosity))
+					chain_to |= T.active_liquid.get_connected_fluid_members(power * 9.5 * (1-(T.active_liquid.group.avg_viscosity/T.active_liquid.group.max_viscosity)))
 					playsound(T, sound, 50, 1)
 			else
 				chain_to += T
@@ -60,7 +60,7 @@ var/global/mutable_appearance/elecflash_ma = null
 				if (T.active_liquid?.group && radius + power > 1)
 					if (!(T.active_liquid.group in fluid_groups_touched))
 						fluid_groups_touched += T.active_liquid.group
-						chain_to |= T.active_liquid.get_connected_fluid_members(power * 9.5 * (1-T.active_liquid.group.avg_viscosity))
+						chain_to |= T.active_liquid.get_connected_fluid_members(power * 9.5 * (1-(T.active_liquid.group.avg_viscosity/T.active_liquid.group.max_viscosity)))
 						playsound(T, sound, 50, 1)
 				else
 					chain_to += T
