@@ -56,9 +56,16 @@ var/global/mutable_appearance/elecflash_ma = null
 	if (radius <= 0)
 		for (var/turf/T in oview(1,center_turf))
 			if (prob(25))
-				chain_to += T
+				//copy paste
+				if (T.active_liquid?.group && radius + power > 1)
+					if (!(T.active_liquid.group in fluid_groups_touched))
+						fluid_groups_touched += T.active_liquid.group
+						chain_to |= T.active_liquid.get_connected_fluid_members(power * 9.5 * (1-T.active_liquid.group.avg_viscosity))
+						playsound(T, sound, 50, 1)
+				else
+					chain_to += T
 		if (chain_to.len < 2)
-			chain_to += get_step(center_turf,pick(alldirs))
+			chain_to += get_step(center_turf,pick(alldirs)) //consider this an extra layer of randomness for when we dont jump to fluid
 
 
 	var/turf/T = null
