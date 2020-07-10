@@ -40,11 +40,14 @@
 
 	update_icon()
 		return 0
-
-	emp_act()
+		
+	proc/drain_cell()
 		if (src.cell && istype(src.cell))
 			src.cell.use(INFINITY)
 			src.update_icon()
+
+	emp_act()
+		drain_cell()
 		return
 
 	process()
