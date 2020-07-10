@@ -201,9 +201,12 @@
 
 						for (var/mailgroup in src.master.mailgroups)
 							if (mailgroup in src.master.reserved_mailgroups)
-								myReservedGroups += "<a href='byond://?src=\ref[src];input=message;target=[mailgroup];department=1'>[mailgroup]</a><br>"
+								myReservedGroups += {"<a href='byond://?src=\ref[src];input=message;target=[mailgroup];department=1'>[mailgroup]</a>
+								 (<a href='byond://?src=\ref[src];message_func=mute_group;groupname=[mailgroup]'>*[(mailgroup in src.master.muted_mailgroups) ? "Unmute" : "Mute"]*</a>)<br>"}
 							else
-								myCustomGroups += "<a href='byond://?src=\ref[src];input=message;target=[mailgroup];department=1'>[mailgroup]</a> (<a href='byond://?src=\ref[src];message_func=leave_group;groupname=[mailgroup]'>*Leave Group*</a>)<br>"
+								myCustomGroups += {"<a href='byond://?src=\ref[src];input=message;target=[mailgroup];department=1'>[mailgroup]</a>
+								 (<a href='byond://?src=\ref[src];message_func=leave_group;groupname=[mailgroup]'>*Leave Group*</a>)
+								 (<a href='byond://?src=\ref[src];message_func=mute_group;groupname=[mailgroup]'>*[(mailgroup in src.master.muted_mailgroups) ? "Unmute" : "Mute"]*</a>)<br>"}
 
 						. += myReservedGroups
 						. += myCustomGroups
@@ -516,6 +519,12 @@
 						var/groupname = href_list["groupname"]
 						if (groupname)
 							src.master.mailgroups -= groupname
+					if("mute_group")
+						var/groupname = href_list["groupname"]
+						if (groupname in src.master.muted_mailgroups)
+							src.master.muted_mailgroups -= groupname
+						else
+							src.master.muted_mailgroups += groupname
 
 
 			else if(href_list["note_func"]) //Note program specific topic junk
@@ -658,7 +667,7 @@
 
 					var/groupAddress = signal.data["group"]
 					if(groupAddress) //Check to see if we have this ~mailgroup~
-						if(!(groupAddress in src.master.mailgroups) && groupAddress != "ai")
+						if((!(groupAddress in src.master.mailgroups) && groupAddress != "ai") || (groupAddress in src.master.muted_mailgroups))
 							return
 
 					var/sender = signal.data["sender_name"]
