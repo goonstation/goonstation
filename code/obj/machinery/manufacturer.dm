@@ -723,6 +723,9 @@
 									accounts += t
 
 
+							var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
+							var/datum/signal/minerSignal = get_free_signal()
+							minerSignal.transmission_method = TRANSMISSION_RADIO
 							//any non-divisible amounts go to the shipping budget
 							var/leftovers = 0
 							if(accounts.len)
@@ -731,9 +734,12 @@
 								if(divisible_amount)
 									for(var/datum/data/record/t in accounts)
 										t.fields["current_money"] += divisible_amount/accounts.len
+								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"="mining", "sender"="00000000", "message"="Notification: [divisible_amount] credits earned from Rockbox™ sale, deposited to your account.")
 							else
 								leftovers = subtotal
+								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"="mining", "sender"="00000000", "message"="Notification: [leftovers] credits earned from Rockbox™ sale, deposited to the shipping budget.")
 							wagesystem.shipping_budget += (leftovers + sum_taxes)
+							transmit_connection.post_signal(src, minerSignal)
 
 							src.temp = {"Enjoy your purchase!<BR>"}
 						else
