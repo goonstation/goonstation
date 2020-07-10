@@ -87,6 +87,9 @@ var/global/mutable_appearance/elecflash_ma = null
 			var/atom/A = atom
 			qdel(A)
 
+		elecs = null
+	chain_to = null
+	fluid_groups_touched = null
 //disorient + LIGHT burn
 
 /atom/proc/electric_expose(var/power = 1)
