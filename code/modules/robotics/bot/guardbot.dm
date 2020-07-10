@@ -736,9 +736,7 @@
 			core.created_default_task = src.setup_default_startup_task
 			core.created_model_task = src.model_task
 
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
+			elecflash(src, power=2)
 			qdel(src)
 
 		return

@@ -2752,9 +2752,7 @@ datum
 			on_mob_life(mob/M, var/mult = 1)
 
 				if (prob(10))
-					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-					s.set_up(5, 1, get_turf(M))
-					s.start()
+					elecflash(M)
 				..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)

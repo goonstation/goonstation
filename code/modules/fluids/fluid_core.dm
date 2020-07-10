@@ -477,6 +477,51 @@ var/mutable_appearance/fluid_ma
 
 			LAGCHECK(LAG_HIGH)
 
+	//sorry for copy paste, this ones a bit diff. return turfs of members nearby, stop at a number
+	proc/get_connected_fluid_members(var/stop_at = 0)
+		.= list()
+		if (!src.group) return list(src)
+
+		var/list/queue = list(src)
+		var/list/visited = list()
+		var/turf/t
+
+		var/obj/fluid/current_fluid = 0
+		var/visited_changed = 0
+		while(queue.len)
+			LAGCHECK(LAG_HIGH)
+			current_fluid = queue[1]
+			queue.Cut(1, 2)
+
+			for( var/dir in cardinal )
+				LAGCHECK(LAG_HIGH)
+				t = get_step( current_fluid, dir )
+				if (!VALID_FLUID_CONNECTION(current_fluid, t)) continue
+				if (t.active_liquid.group != src.group)
+					continue
+
+				LAGCHECK(LAG_HIGH)
+
+				//Old method : search through 'visited' for 't.active_liquid'. Probably slow when you have big groups!!
+				//if(t.active_liquid in visited) continue
+				//visited += t.active_liquid
+
+				//New method : Add the liquid at a specific index. To check whether the node has already been visited, just compare the len of the visited group from before + after the index has been set.
+				//Probably slower for small groups and much faster for large groups.
+				visited_changed = visited.len
+				visited["[t.active_liquid.x]_[t.active_liquid.y]_[t.active_liquid.z]"] = t.active_liquid
+				visited_changed = (visited.len != visited_changed)
+
+				if (visited_changed)
+					queue += t.active_liquid
+					.+= t
+
+					if (stop_at > 0 && length(.) >= stop_at)
+						return .
+
+			LAGCHECK(LAG_HIGH)
+
+
 	proc/try_connect_to_adjacent()
 		var/turf/t
 		for( var/dir in cardinal )

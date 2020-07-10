@@ -78,9 +78,7 @@
 		src.exploding = 1
 		src.on = 0
 		src.visible_message("<span class='combat'><B>[src] blows apart!</B></span>")
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(3, 1, src)
-		s.start()
+		elecflash(src, power=2)
 		qdel(src)
 		return
 

@@ -1953,9 +1953,7 @@ obj/item/clothing/gloves/concussive
 					logTheThing("station", user, M, "uses a cargo transporter to send [T.name][is_locked ? " (locked)" : ""][is_welded ? " (welded)" : ""] with %target% inside to [log_loc(src.target)].")
 
 			T.set_loc(src.target)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, src)
-			s.start()
+			elecflash(src)
 			if (isrobot(user))
 				var/mob/living/silicon/robot/R = user
 				R.cell.charge -= src.robocharge
@@ -2003,9 +2001,7 @@ obj/item/clothing/gloves/concussive
 
 			T.set_loc(src.target)
 			if(hasvar(T, "welded")) T:welded = 1
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, src)
-			s.start()
+			elecflash(src)
 			src.charges -= 1
 			if (src.charges < 0)
 				src.charges = 0

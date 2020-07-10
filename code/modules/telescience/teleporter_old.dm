@@ -62,9 +62,7 @@
 				return
 			do_teleport(M, linked_computer.locked, 0) //dead-on precision
 		else
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, src)
-			s.start()
+			elecflash(src, power=3)
 
 	proc/find_links()
 		linked_computer = null
@@ -235,9 +233,7 @@
 
 	M.set_loc(tmploc)
 	if (sparks)
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(5, 1, M)
-		s.start()
+		elecflash(src, power=3)
 	return
 
 // /mob/living/carbon/human/list_ejectables() looked pretty similar to what I wanted, but this doesn't have organs that you need to live
