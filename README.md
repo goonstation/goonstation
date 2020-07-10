@@ -9,9 +9,7 @@
 <td><img valign="sub" src="https://github.com/goonstation/goonstation/workflows/Beepsky/badge.svg?branch=develop"/></td></tr>
 </table>
 
-
-
-**Website:** [goonhub.com](https://goonhub.com) <img src="https://github.com/goonstation/goonstation/workflows/Beepsky/badge.svg?branch=develop"/>
+**Website:** [goonhub.com](https://goonhub.com)
 
 **Forums:** [forums.ss13.co](https://forums.ss13.co)
 
