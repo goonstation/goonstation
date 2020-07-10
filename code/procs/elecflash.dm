@@ -39,7 +39,7 @@ var/global/mutable_appearance/elecflash_ma = null
 			if (T.active_liquid?.group && radius + power > 1)
 				if (!(T.active_liquid.group in fluid_groups_touched))
 					fluid_groups_touched += T.active_liquid.group
-					chain_to |= T.active_liquid.get_connected_fluid_members(power * 10)
+					chain_to |= T.active_liquid.get_connected_fluid_members(power * 6 * (1-T.active_liquid.group.avg_viscosity))
 					playsound(T, sound, 50, 1)
 			else
 				chain_to += T
@@ -48,7 +48,7 @@ var/global/mutable_appearance/elecflash_ma = null
 			if (T.active_liquid?.group && radius + power > 1)
 				if (!(T.active_liquid.group in fluid_groups_touched))
 					fluid_groups_touched += T.active_liquid.group
-					chain_to |= T.active_liquid.get_connected_fluid_members(power * 5)
+					chain_to |= T.active_liquid.get_connected_fluid_members(power * 6 * (1-T.active_liquid.group.avg_viscosity))
 					playsound(T, sound, 50, 1)
 			else
 				chain_to += T
@@ -94,4 +94,4 @@ var/global/mutable_appearance/elecflash_ma = null
 /mob/living/electric_expose(var/power = 1)
 	if (power > 1) // pretty light damage and stam damage :)
 		src.do_disorient(stamina_damage = 10 + power * 20, weakened = 1 SECONDS + (power * (0.1 SECONDS)), stunned = 0, paralysis = 0, disorient = 1 SECONDS + (power * (0.2 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
-		src.TakeDamage("chest", 0, rand(0.00,1.00) * power * 0.3, DAMAGE_BURN)
+		src.TakeDamage("chest", 0, rand(0,1.00) * power * 0.1, DAMAGE_BURN)
