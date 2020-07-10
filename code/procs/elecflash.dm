@@ -14,7 +14,7 @@ var/global/mutable_appearance/elecflash_ma = null
 		elecflash_ma.alpha = 255
 		elecflash_ma.invisibility = 0
 		elecflash_ma.layer = TURF_LAYER
-		elecflash_ma.plane = PLANE_FLOOR
+		elecflash_ma.plane = PLANE_OVERLAY_EFFECTS
 		elecflash_ma.mouse_opacity = 0
 
 	elecflash_ma.icon_state = "[power][pick("a","b","c")]"
@@ -55,14 +55,14 @@ var/global/mutable_appearance/elecflash_ma = null
 
 	if (radius <= 0)
 		for (var/turf/T in oview(1,center_turf))
-			if (prob(21))
+			if (prob(25))
 				chain_to += T
 
 	var/turf/T = null
 
 
 	var/matrix/M = matrix()
-	M.Scale(0.25, 0.25)
+	M.Scale(0,0)
 
 	var/list/elecs = list()
 	for (var/x in chain_to)
@@ -74,7 +74,7 @@ var/global/mutable_appearance/elecflash_ma = null
 		if (radius <= 0 && chain_to.len < 8)
 			E.pixel_x = (center_turf.x - E.x) * 32
 			E.pixel_y = (center_turf.y - E.y) * 32
-			animate(E, alpha = 0, transform = M, pixel_x = rand(-18,18), pixel_y = rand(-18,18), time = (0.9 SECONDS) + (power * (0.12 SECONDS)), easing = EASE_IN)
+			animate(E, transform = M, pixel_x = rand(-32,32), pixel_y = rand(-32,32), time = (0.66 SECONDS) + (power * (0.12 SECONDS)), easing = CUBIC_EASING | EASE_OUT)
 		else
 			animate(E, alpha = 0, time = (0.6 SECONDS) + (power * (0.12 SECONDS)), easing = BOUNCE_EASING | EASE_IN)
 
@@ -92,6 +92,6 @@ var/global/mutable_appearance/elecflash_ma = null
 /atom/proc/electric_expose(var/power = 1)
 
 /mob/living/electric_expose(var/power = 1)
-	if (power > 1)
-		src.do_disorient(stamina_damage = 10 + power * 20, weakened = 1 SECONDS + (power * (0.2 SECONDS)), stunned = 0, paralysis = 0, disorient = 1 SECONDS + (power * (0.2 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
-		src.TakeDamage("chest", 0, rand(0.00,1.00) * power * 1.2, DAMAGE_BURN) // pretty light damage :)
+	if (power > 1) // pretty light damage and stam damage :)
+		src.do_disorient(stamina_damage = 10 + power * 20, weakened = 1 SECONDS + (power * (0.1 SECONDS)), stunned = 0, paralysis = 0, disorient = 1 SECONDS + (power * (0.2 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
+		src.TakeDamage("chest", 0, rand(0.00,1.00) * power * 0.3, DAMAGE_BURN)
