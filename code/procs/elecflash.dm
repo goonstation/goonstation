@@ -14,7 +14,8 @@ var/global/mutable_appearance/elecflash_ma = null
 		elecflash_ma.alpha = 255
 		elecflash_ma.invisibility = 0
 		elecflash_ma.layer = TURF_LAYER
-		elecflash_ma.plane = PLANE_DEFAULT
+		elecflash_ma.plane = PLANE_FLOOR
+		elecflash_ma.mouse_opacity = 0
 
 	elecflash_ma.icon_state = "[power][pick("a","b","c")]"
 
@@ -35,7 +36,7 @@ var/global/mutable_appearance/elecflash_ma = null
 
 	if (exclude_center) // copy paste its a little faster ok!
 		for (var/turf/T in oview(radius,center_turf))
-			if (T.active_liquid?.group)
+			if (T.active_liquid?.group && radius + power > 1)
 				if (!(T.active_liquid.group in fluid_groups_touched))
 					fluid_groups_touched += T.active_liquid.group
 					chain_to |= T.active_liquid.get_connected_fluid_members(power * 10)
@@ -44,10 +45,10 @@ var/global/mutable_appearance/elecflash_ma = null
 				chain_to += T
 	else	// copy paste also!
 		for (var/turf/T in view(radius,center_turf))
-			if (T.active_liquid?.group)
+			if (T.active_liquid?.group && radius + power > 1)
 				if (!(T.active_liquid.group in fluid_groups_touched))
 					fluid_groups_touched += T.active_liquid.group
-					chain_to |= T.active_liquid.get_connected_fluid_members(power * 10)
+					chain_to |= T.active_liquid.get_connected_fluid_members(power * 5)
 					playsound(T, sound, 50, 1)
 			else
 				chain_to += T
@@ -59,14 +60,24 @@ var/global/mutable_appearance/elecflash_ma = null
 
 	var/turf/T = null
 
+
+	var/matrix/M = matrix()
+	M.Scale(0.25, 0.25)
+
 	var/list/elecs = list()
 	for (var/x in chain_to)
 		T = x
 		E = new/obj/overlay/tile_effect(T)
 		E.appearance = elecflash_ma
-		animate(E,alpha = 0, time = 0.6 SECONDS + (power * (1.4 SECONDS)), easing = BOUNCE_EASING | EASE_IN)
 		T.hotspot_expose(1000,100,usr, electric = power)
 		elecs += E
+		if (radius <= 0 && chain_to.len < 8)
+			E.pixel_x = (center_turf.x - E.x) * 32
+			E.pixel_y = (center_turf.y - E.y) * 32
+			animate(E, alpha = 0, transform = M, pixel_x = rand(-18,18), pixel_y = rand(-18,18), time = (0.9 SECONDS) + (power * (0.12 SECONDS)), easing = EASE_IN)
+		else
+			animate(E, alpha = 0, time = (0.6 SECONDS) + (power * (0.12 SECONDS)), easing = BOUNCE_EASING | EASE_IN)
+
 
 
 	playsound(center_turf, sound, 50, 1)

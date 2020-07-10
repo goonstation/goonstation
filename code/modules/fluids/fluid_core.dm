@@ -154,7 +154,7 @@ var/mutable_appearance/fluid_ma
 		src.floated_atoms.len = 0*/
 
 		if (isturf(src.loc))
-			src.loc:active_liquid = 0
+			src.loc:active_liquid = null
 
 		name = "fluid"
 		fluid_ma.icon_state = "15"
@@ -192,7 +192,7 @@ var/mutable_appearance/fluid_ma
 
 		if (isturf(src.loc))
 			var/turf/T = src.loc
-			T.active_liquid = 0
+			T.active_liquid = null
 		..()
 
 	get_desc(dist, mob/user)
@@ -489,18 +489,14 @@ var/mutable_appearance/fluid_ma
 		var/obj/fluid/current_fluid = 0
 		var/visited_changed = 0
 		while(queue.len)
-			LAGCHECK(LAG_HIGH)
 			current_fluid = queue[1]
 			queue.Cut(1, 2)
 
 			for( var/dir in cardinal )
-				LAGCHECK(LAG_HIGH)
 				t = get_step( current_fluid, dir )
 				if (!VALID_FLUID_CONNECTION(current_fluid, t)) continue
 				if (t.active_liquid.group != src.group)
 					continue
-
-				LAGCHECK(LAG_HIGH)
 
 				//Old method : search through 'visited' for 't.active_liquid'. Probably slow when you have big groups!!
 				//if(t.active_liquid in visited) continue
@@ -518,8 +514,6 @@ var/mutable_appearance/fluid_ma
 
 					if (stop_at > 0 && length(.) >= stop_at)
 						return .
-
-			LAGCHECK(LAG_HIGH)
 
 
 	proc/try_connect_to_adjacent()
