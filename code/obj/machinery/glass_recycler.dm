@@ -74,6 +74,11 @@
 					<A href='?src=\ref[src];type=flute'>Champagne Flute</A><br>
 					<A href='?src=\ref[src];type=cocktail'>Cocktail Glass</A><br>
 					<A href='?src=\ref[src];type=drinkbottle'>Drink Bottle</A><br>
+					<A href='?src=\ref[src];type=tallbottle'>Tall Bottle</A><br>
+					<A href='?src=\ref[src];type=longbottle'>Long Bottle</A><br>
+					<A href='?src=\ref[src];type=rectangularbottle'>Rectangular Bottle</A><br>
+					<A href='?src=\ref[src];type=squarebottle'>Square Bottle</A><br>
+					<A href='?src=\ref[src];type=masculinebottle'>Masculine Bottle</A><br>
 					<A href='?src=\ref[src];type=drinking'>Drinking Glass</A><br>
 					<A href='?src=\ref[src];type=oldf'>Old Fashioned Glass</A><br>
 					<A href='?src=\ref[src];type=pitcher'>Pitcher</A><br>
@@ -132,6 +137,21 @@
 				src.glass_amt -= 1
 			if("drinkbottle")
 				G = new /obj/item/reagent_containers/food/drinks/bottle(get_turf(src))
+				src.glass_amt -= 1
+			if("longbottle")
+				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/long(get_turf(src))
+				src.glass_amt -= 1
+			if("tallbottle")
+				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/tall(get_turf(src))
+				src.glass_amt -= 1
+			if("rectangularbottle")
+				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/rectangular(get_turf(src))
+				src.glass_amt -= 1
+			if("squarebottle")
+				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/square(get_turf(src))
+				src.glass_amt -= 1
+			if("masculinebottle")
+				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/masculine(get_turf(src))
 				src.glass_amt -= 1
 			if("plate")
 				G = new /obj/item/plate(get_turf(src))
