@@ -12,7 +12,11 @@ var/global/datum/map_settings/map_settings = null
 //playerPickable defines whether the map can be chosen by players when voting on a new map. Setting to ASS_JAM should allow it on the 13th only, and not on RP.
 var/global/list/mapNames = list(
 	"Clarion" = 		list("id" = "CLARION", 		"settings" = "destiny/clarion", "playerPickable" = 1),
+#ifdef RP_MODE
+	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = 1, 	"MinPlayersAllowed" = 14),
+#else
 	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = 1),
+#endif
 	//"Construction" = list("id" = "CONSTRUCTION", "settings" = "construction"),
 	"Cogmap 1 (Old)" = 	list("id" = "COGMAP_OLD", 	"settings" = "cogmap_old"),
 	"Cogmap 2" = 		list("id" = "COGMAP2", 		"settings" = "cogmap2", 		"playerPickable" = 1, 	"MinPlayersAllowed" = 40),
@@ -127,7 +131,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/donut3
 	name = "DONUT3"
-	goonhub_map = "https://cdn.discordapp.com/attachments/469379618168897538/727936626147459192/donut3-30-FINAL2-lol.png"
+	goonhub_map = "https://cdn.discordapp.com/attachments/469379618168897538/729919886524153916/donut3-30-FINAL4-the-unlucky-number.png"
 	airlock_style = "pyro"
 	walls = /turf/simulated/wall/auto/jen
 	rwalls = /turf/simulated/wall/auto/reinforced/jen

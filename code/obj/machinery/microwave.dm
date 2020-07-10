@@ -233,9 +233,7 @@ Please clean it before use!</TT><BR>
 					src.humanmeat_name = ""
 					src.humanmeat_job = ""
 					sleep(6 SECONDS)
-					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-					s.set_up(2, 1, src)
-					s.start()
+					elecflash(src,power=2)
 					icon_state = "mwb"
 					src.visible_message("<span class='alert'>The microwave breaks!</span>")
 					src.broken = 2
@@ -322,9 +320,7 @@ Please clean it before use!</TT><BR>
 						sleep(6 SECONDS) // Wait a while
 						if(isnull(src)) // if object even still exists, who knows what that damn chef has done to that microwave
 							return
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(2, 1, src)
-						s.start()
+						elecflash(src,power=2)
 						icon_state = "mwb" // Make it look all busted up and shit
 						src.visible_message("<span class='alert'>The microwave breaks!</span>") //Let them know they're stupid
 						src.broken = 2 // Make it broken so it can't be used util fixed

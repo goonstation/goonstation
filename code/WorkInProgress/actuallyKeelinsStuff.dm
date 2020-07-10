@@ -266,17 +266,6 @@ Returns:
 
 	return
 
-var/list/electiles = list()
-
-/proc/electile(numb as num)
-	for(var/X in electiles)
-		del(X)
-	for(var/turf/T in view())
-		var/obj/overlay/O = new(T)
-		O.icon = icon('icons/effects/electile.dmi')
-		O.icon_state = "v[numb][pick("a","b","c")]"
-		electiles.Add(O)
-
 /proc/testburning()
 	for(var/i=0, i<5, i++)
 		var/atom/A = null

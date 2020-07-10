@@ -141,7 +141,7 @@
 		target.vamp_beingbitten = 1
 		ownerMob.show_message("<span class='notice'>We must hold still...</span>", 1)
 
-		if (ishuman(target))
+		if (isliving(target))
 			target:was_harmed(owner, special = "ling")
 
 	onEnd()

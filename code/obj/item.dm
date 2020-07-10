@@ -29,6 +29,7 @@
 	var/tool_flags = 0
 	var/c_flags = null
 	var/tooltip_flags = null
+	var/item_function_flags = null
 
 	pressure_resistance = 50
 	var/obj/item/master = null
@@ -598,7 +599,7 @@
 	else
 
 		if (isturf(over_object))
-			if (on_turf && in_range(over_object,src)) //drag from floor to floor == slide
+			if (on_turf && in_range(over_object,src) && !src.anchored) //drag from floor to floor == slide
 				if (istype(over_object,/turf/simulated/floor) || istype(over_object,/turf/unsimulated/floor))
 					step_to(src,over_object)
 					//this would be cool ha ha h
@@ -715,9 +716,7 @@
 			T.hotspot_expose((src.burn_output + rand(1,200)),5)
 
 		if (prob(7))
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(2, 1, (get_turf(src)))
-			s.start()
+			elecflash(src)
 		if (prob(7))
 			var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 			smoke.set_up(1, 0, src.loc)
@@ -1251,7 +1250,7 @@
 /obj/item/proc/attach(var/mob/living/carbon/human/attachee,var/mob/attacher)
 	//if (!src.arm_icon) return //ANYTHING GOES!~!
 
-	if (src.object_flags & NO_ARM_ATTACH || src.temp_flags & IS_LIMB_ITEM)
+	if (src.object_flags & NO_ARM_ATTACH || src.cant_drop)
 		boutput(attacher, "<span class='alert'>You try to attach [src] to [attachee]'s stump, but it politely declines!</span>")
 		return
 
@@ -1408,3 +1407,6 @@
 	show_buttons()
 	if (src.c_flags & EQUIPPED_WHILE_HELD)
 		src.equipped(user, user.get_slot_from_item(src))
+
+/obj/item/proc/intent_switch_trigger(mob/user)
+	return

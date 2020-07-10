@@ -540,7 +540,7 @@
 							else if (src.r_hand)
 								thing = src.r_hand
 						if (thing)
-							thing.on_spin_emote(src)
+							message = thing.on_spin_emote(src)
 							animate(thing, transform = turn(matrix(), 120), time = 0.7, loop = 3)
 							animate(transform = turn(matrix(), 240), time = 0.7)
 							animate(transform = null, time = 0.7)
@@ -1179,10 +1179,7 @@
 									src.dir = turn(src.dir, 90)
 									sleep(0.2 SECONDS)
 
-							var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-							s.set_up(3, 1, src)
-							s.start()
-
+							elecflash(src,power = 2)
 						else
 							//glowsticks
 							var/left_glowstick = istype (l_hand, /obj/item/device/light/glowstick)
@@ -1444,13 +1441,12 @@
 										if (prob(50))
 											M.ex_act(3) // this is hilariously overpowered, but WHATEVER!!!
 										else
-											G.affecting.changeStatus("stunned", 50)
 											G.affecting.changeStatus("weakened", 5 SECONDS)
 											G.affecting.force_laydown_standup()
 											G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 										playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 									else
-										src.changeStatus("weakened", 3.5 SECONDS)
+										src.changeStatus("weakened", 3.9 SECONDS)
 
 										if (client && client.hellbanned)
 											src.changeStatus("weakened", 4 SECONDS)
@@ -1471,12 +1467,11 @@
 												if ((prob(g_tabl.reinforced ? 60 : 80)) || (src.bioHolder.HasEffect("clumsy") && (!g_tabl.reinforced || prob(90))) || ((src.bioHolder.HasEffect("fat") || G.affecting.bioHolder.HasEffect("fat")) && (!g_tabl.reinforced || prob(90))))
 													SPAWN_DBG(0)
 														g_tabl.smash()
-														src.changeStatus("stunned", 7 SECONDS)
-														src.changeStatus("weakened", 6 SECONDS)
+														src.changeStatus("weakened", 7 SECONDS)
 														random_brute_damage(src, rand(20,40))
 														take_bleeding_damage(src, src, rand(20,40))
 
-														G.affecting.changeStatus("stunned", 2 SECONDS)
+
 														G.affecting.changeStatus("weakened", 4 SECONDS)
 														random_brute_damage(G.affecting, rand(20,40))
 														take_bleeding_damage(G.affecting, src, rand(20,40))
@@ -1527,9 +1522,7 @@
 						for (var/mob/O in viewers(src, null))
 							O.show_message("<B>[src]</B> burps.")
 						for (var/mob/M in oview(1))
-							var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-							s.set_up(3, 1, src)
-							s.start()
+							elecflash(src,power = 2)
 							boutput(M, "<span class='notice'>BZZZZZZZZZZZT!</span>")
 							M.TakeDamage("chest", 0, 20, 0, DAMAGE_BURN)
 							src.charges -= 1

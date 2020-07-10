@@ -9,6 +9,12 @@ Example out of game log call:
 */
 
 //We save this as html because the non-diary logging currently has html tags in place
+
+
+#define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
+#define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
+
+var/global/roundLog_name = "data/logs/full/[time2text(world.realtime, "YYYY-MM-DD-hh-mm")].html"
 var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-DD-hh-mm")].html")
 
 /proc/logTheThing(type, source, target, text, diaryType)
@@ -67,13 +73,19 @@ var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-D
 
 
 	if (diaryLogging)
-		diary << "[time2text(world.timeofday, "\[hh:mm:ss\]")] [uppertext(diaryType)]: [source ? "[source] ": ""][text]"
+		WRITE_LOG(diary_name, "[uppertext(diaryType)]: [source ? "[source] ": ""][text]")
 
 	//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
 	if (!diaryLogging && config.allowRotatingFullLogs)
-		roundLog << "[time2text(world.timeofday, "\[hh:mm:ss\]")] \[[uppertext(type)]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>"
-
+		WRITE_LOG(roundLog_name, "\[[uppertext(type)]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
 	return
+
+/proc/logDiary(text)
+	WRITE_LOG(diary_name, "[text]")
+
+/* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
+/proc/shutdown_logging()
+	rustg_log_close_all()
 
 /proc/constructName(ref, type)
 	var/name

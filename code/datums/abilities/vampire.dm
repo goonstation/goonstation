@@ -70,7 +70,7 @@
 		return 0
 
 /mob/proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
-	if (!isvampire(src))
+	if (!isvampire(src) && !isvampiriczombie(src))
 		return
 
 	var/datum/abilityHolder/vampire/AH = src.get_ability_holder(/datum/abilityHolder/vampire)

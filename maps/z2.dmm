@@ -84561,6 +84561,19 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/destiny)
+"sGw" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/hakama/random,
+/obj/item/clothing/head/bandana/random_color,
+/obj/item/clothing/head/helmet/men,
+/obj/item/clothing/head/helmet/men,
+/obj/item/clothing/suit/armor/douandtare,
+/obj/item/clothing/suit/armor/douandtare,
+/obj/item/clothing/gloves/kote,
+/obj/item/clothing/gloves/kote,
+/obj/item/shinai_bag,
+/turf/unsimulated/floor/wood/two,
+/area/dojo)
 "sJF" = (
 /turf/unsimulated/floor/stairs{
 	dir = 8;
@@ -102209,8 +102222,8 @@ cos
 coR
 cpq
 cop
-cpu
-cpu
+sGw
+sGw
 cpq
 aaa
 cbu

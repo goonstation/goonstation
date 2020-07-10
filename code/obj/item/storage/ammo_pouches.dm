@@ -76,6 +76,11 @@
 		spawn_contents = list(/obj/item/ammo/bullets/grenade_round/explosive = 2,
 		/obj/item/ammo/bullets/grenade_round/high_explosive = 2)
 
+	rpg
+		name = "MPRT rocket pouch"
+		slots = 4
+		spawn_contents = list(/obj/item/ammo/bullets/rpg = 2)
+
 /obj/item/storage/grenade_pouch
 	name = "grenade pouch"
 	icon_state = "ammopouch"

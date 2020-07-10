@@ -16,6 +16,6 @@
 
 # ZeWaka
 *.md @ZeWaka
-/maps/ @ZeWaka
+# /maps/ @ZeWaka
 
 # Multiple Owners

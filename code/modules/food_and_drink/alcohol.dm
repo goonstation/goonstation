@@ -60,11 +60,11 @@
 /obj/item/reagent_containers/food/drinks/bottle/wine
 	name = "Wine"
 	desc = "Not to be confused with pubbie tears."
-	icon_state = "bottle-purple"
+	icon_state = "bottle-wine"
 	heal_amt = 1
 	g_amt = 40
-	bottle_style = "purple"
-	label = "alcohol2"
+	bottle_style = "wine"
+	label = "wine"
 	initial_volume = 50
 	initial_reagents = list("wine"=30)
 	module_research = list("vice" = 5)
@@ -321,7 +321,7 @@
 	icon_state = "bottle-whiskey"
 	bottle_style = "whiskey"
 	fluid_style = "whiskey"
-	label = "spicedrum" // the whiskey label fits the spicedrum bottle and vice versa like this, this combo probably looks closest to the old sprite  :v
+	label = "whiskey"
 	alt_filled_state = 1
 	heal_amt = 1
 	g_amt = 40
