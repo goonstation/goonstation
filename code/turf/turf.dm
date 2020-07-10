@@ -960,15 +960,16 @@ var/global/client/ff_debugger = null
 
 	if (istype(C, /obj/item/tile))
 		//var/obj/lattice/L = locate(/obj/lattice, src)
-		for(var/obj/lattice/L in src)
-			qdel(L)
-		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
-		C:build(src)
-		C:amount--
-		if(C.material) src.setMaterial(C.material)
-		if (C:amount < 1)
-			user.u_equip(C)
-			qdel(C)
+		var/obj/item/tile/T = C
+		if (T.amount >= 1)
+			for(var/obj/lattice/L in src)
+				qdel(L)
+			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			T.build(src)
+			if(T.material) src.setMaterial(T.material)
+		else if (!issilicon(user))
+			user.u_equip(T)
+			qdel(T)
 			return
 		return
 	return
