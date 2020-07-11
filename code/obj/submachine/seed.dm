@@ -334,6 +334,8 @@
 					give = 0
 				if (HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless))
 					give = 0
+				if(stored.no_extract)
+					give = 0
 				if (!give)
 					boutput(usr, "<span class='alert'>No viable seeds found in [I].</span>")
 				else

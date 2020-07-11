@@ -2,9 +2,12 @@
 
 ![contains technical debt](https://forthebadge.com/images/badges/contains-technical-debt.svg)![made with crayons](https://forthebadge.com/images/badges/made-with-crayons.svg)![made in byond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)
 
-Master Status: ![Build Status](https://github.com/goonstation/goonstation/workflows/Beepsky/badge.svg?branch=master)
-
-Develop Status: ![Build Status](https://github.com/goonstation/goonstation/workflows/Beepsky/badge.svg?branch=develop)
+<table>
+<tr><td align="right" >Master Status: </td>
+<td><img valign="sub" src="https://github.com/goonstation/goonstation/workflows/Beepsky/badge.svg?branch=master"/></td></tr>
+<tr><td align="right">Develop Status: </td>
+<td><img valign="sub" src="https://github.com/goonstation/goonstation/workflows/Beepsky/badge.svg?branch=develop"/></td></tr>
+</table>
 
 **Website:** [goonhub.com](https://goonhub.com)
 

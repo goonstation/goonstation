@@ -27,6 +27,7 @@
 	var/current_sidearm_credits = 0
 	var/current_loadout_credits = 0
 	var/current_storage_credits = 0
+	var/current_utility_credits = 0
 	var/temp = null
 	var/list/datum/materiel_stock = list()
 	var/token_accepted = /obj/item/requisition_token
@@ -50,7 +51,7 @@
 
 		src.add_dialog(user)
 		var/list/dat = list("<span style=\"inline-flex\">")
-		dat += "<br><b>Balance remaining:</b> <font color='blue'>[src.current_sidearm_credits] sidearm credit, [src.current_loadout_credits] loadout credit, [src.current_storage_credits] storage credit.</font>"
+		dat += "<br><b>Balance remaining:</b> <font color='blue'>[src.current_sidearm_credits] sidearm credit, [src.current_loadout_credits] loadout credit, [src.current_utility_credits] utility credit.</font>"
 
 		if (src.temp)
 			dat += src.temp
@@ -122,16 +123,16 @@
 					var/atom/A = new L.path(src.loc)
 					playsound(src.loc, sound_buy, 80, 1)
 					src.vended(A)
-			var/datum/materiel/storage/T = locate(href_list["buy"]) in materiel_stock
-			if(istype(T))
-				if(src.current_storage_credits < T.cost)
+			var/datum/materiel/utility/U = locate(href_list["buy"]) in materiel_stock
+			if(istype(U))
+				if(src.current_utility_credits < U.cost)
 					src.temp = "<br><font color='red'>Insufficient credits.</font><br>"
 					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
 				else
-					src.current_storage_credits -= T.cost
+					src.current_utility_credits -= U.cost
 					src.temp = "<br>Transaction complete."
 					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
-					var/atom/A = new T.path(src.loc)
+					var/atom/A = new U.path(src.loc)
 					playsound(src.loc, sound_buy, 80, 1)
 					src.vended(A)
 
@@ -188,17 +189,19 @@
 		materiel_stock += new/datum/materiel/loadout/engineer
 		materiel_stock += new/datum/materiel/loadout/marksman
 		materiel_stock += new/datum/materiel/loadout/custom
-
+/*
 		materiel_stock += new/datum/materiel/storage/rucksack
 		materiel_stock += new/datum/materiel/storage/belt
 		materiel_stock += new/datum/materiel/storage/satchel
-
-		//materiel_stock += new/datum/materiel/utility/
+*/
+		materiel_stock += new/datum/materiel/utility/belt
+		materiel_stock += new/datum/materiel/utility/knife
+		materiel_stock += new/datum/materiel/utility/rpg_ammo
 
 	accepted_token()
 		src.current_sidearm_credits++
 		src.current_loadout_credits++
-		src.current_storage_credits++
+		src.current_utility_credits++
 		..()
 // Materiel avaliable for purchase:
 
@@ -322,7 +325,7 @@
 	path = /obj/item/uplink/syndicate
 	catagory = "Loadout"
 	description = "A standard syndicate uplink loaded with 12 telecrytals, allowing you to pick and choose from an array of syndicate items."
-
+/*
 /datum/materiel/storage/rucksack
 	name = "Assault Rucksack"
 	path = /obj/item/storage/backpack/syndie/tactical
@@ -333,13 +336,31 @@
 	name = "Tactical Espionage Belt"
 	path = /obj/item/storage/fanny/syndie
 	catagory = "Storage"
-	description = "The classic 6 slot syndicate belt pack. Has no relation to the fanny pack."
+	description = "The classic 7 slot syndicate belt pack. Has no relation to the fanny pack."
 
 /datum/materiel/storage/satchel
 	name = "Syndicate Satchel"
 	path = /obj/item/storage/backpack/satchel/syndie
 	catagory = "Storage"
 	description = "An ordinary 6 slot messenger bag in menacing red and black."
+*/
+/datum/materiel/utility/belt
+	name = "Tactical Espionage Belt"
+	path = /obj/item/storage/fanny/syndie
+	catagory = "Utility"
+	description = "The classic 7 slot syndicate belt pack. Has no relation to the fanny pack."
+
+/datum/materiel/utility/knife
+	name = "Combat Knife"
+	path = /obj/item/dagger/syndicate/specialist
+	catagory = "Utility"
+	description = "A field-tested 10 inch combat knife, helps you move faster when held."
+
+/datum/materiel/utility/rpg_ammo
+	name = "MPRT Rocket Ammunition"
+	path = /obj/item/storage/pouch/rpg
+	catagory = "Utility"
+	description = "An additional four MPRT rockets."
 
 // Requisition tokens
 

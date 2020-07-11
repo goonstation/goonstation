@@ -171,9 +171,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 					var/obj/storage/closet/port_a_sci/PS = P
 					PS.on_teleport()
 
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, P)
-				s.start()
+				elecflash(P)
 
 		return
 

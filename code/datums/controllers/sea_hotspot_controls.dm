@@ -228,9 +228,7 @@
 			LAGCHECK(LAG_HIGH)
 
 		if (tally)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(4, 1, T)
-			s.start()
+			elecflash(T)
 
 	proc/stomp_turf(var/turf/T) //Move hotspot 1 tile and set its dir to the difference between stomp loc and hotspot center
 		.= 0

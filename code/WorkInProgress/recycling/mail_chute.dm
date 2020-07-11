@@ -273,17 +273,17 @@
 	kitchen
 		name = "Kitchen"
 		mail_tag = "kitchen"
-		mailgroup = "kitchen"
+		mailgroup = MGD_KITCHEN
 		message = 1
 	hydroponics
 		name = "Hydroponics"
 		mail_tag = "hydroponics"
-		mailgroup = "botany"
+		mailgroup = MGD_BOTANY
 		message = 1
 	security
 		name = "Security"
 		mail_tag = "security"
-		mailgroup = "security"
+		mailgroup = MGD_SECURITY
 		message = 1
 
 		brig
@@ -299,7 +299,7 @@
 	bridge
 		name = "Bridge"
 		mail_tag = "bridge"
-		mailgroup = "command"
+		mailgroup = MGD_COMMAND
 		message = 1
 	chapel
 		name = "Chapel"
@@ -324,7 +324,7 @@
 	qm
 		name = "QM"
 		mail_tag = "QM"
-		mailgroup = "cargo"
+		mailgroup = MGD_CARGO
 		message = 1
 
 		refinery
@@ -334,7 +334,7 @@
 	research
 		name = "Research"
 		mail_tag = "research"
-		mailgroup = "science"
+		mailgroup = MGD_SCIENCE
 		message = 1
 
 		telescience
@@ -350,19 +350,19 @@
 	medbay
 		name = "Medbay"
 		mail_tag = "medbay"
-		mailgroup = "medbay"
-		mailgroup2 = "medresearch"
+		mailgroup = MGD_MEDBAY
+		mailgroup2 = MGD_MEDRESEACH
 		message = 1
 
 		robotics
 			name = "Robotics"
 			mail_tag = "robotics"
-			mailgroup = "medresearch"
+			mailgroup = MGD_MEDRESEACH
 			mailgroup2 = null
 		genetics
 			name = "Genetics"
 			mail_tag = "genetics"
-			mailgroup = "medresearch"
+			mailgroup = MGD_MEDRESEACH
 			mailgroup2 = null
 		pathology
 			name = "Pathology"
@@ -376,8 +376,8 @@
 
 	checkpoint
 		name = "Don't spawn me"
-		mailgroup = "security"
-		mailgroup2 = "command"
+		mailgroup = MGD_SECURITY
+		mailgroup2 = MGD_COMMAND
 		message = 1
 
 		arrivals
@@ -476,7 +476,7 @@
 	kitchen
 		name = "Kitchen"
 		mail_tag = "kitchen"
-		mailgroup = "kitchen"
+		mailgroup = MGD_KITCHEN
 		message = 1
 
 		north
@@ -492,7 +492,7 @@
 	hydroponics
 		name = "Hydroponics"
 		mail_tag = "hydroponics"
-		mailgroup = "botany"
+		mailgroup = MGD_BOTANY
 		message = 1
 
 		north
@@ -508,7 +508,7 @@
 	security
 		name = "Security"
 		mail_tag = "security"
-		mailgroup = "security"
+		mailgroup = MGD_SECURITY
 		message = 1
 
 		north
@@ -552,7 +552,7 @@
 	bridge
 		name = "Bridge"
 		mail_tag = "bridge"
-		mailgroup = "command"
+		mailgroup = MGD_COMMAND
 		message = 1
 
 		north
@@ -632,7 +632,7 @@
 	qm
 		name = "QM"
 		mail_tag = "QM"
-		mailgroup = "cargo"
+		mailgroup = MGD_CARGO
 		message = 1
 
 		north
@@ -662,7 +662,7 @@
 	research
 		name = "Research"
 		mail_tag = "research"
-		mailgroup = "science"
+		mailgroup = MGD_SCIENCE
 		message = 1
 
 		north
@@ -720,8 +720,8 @@
 	medbay
 		name = "Medbay"
 		mail_tag = "medbay"
-		mailgroup = "medbay"
-		mailgroup2 = "medresearch"
+		mailgroup = MGD_MEDBAY
+		mailgroup2 = MGD_MEDRESEACH
 		message = 1
 
 		north
@@ -737,7 +737,7 @@
 		robotics
 			name = "Robotics"
 			mail_tag = "robotics"
-			mailgroup = "medresearch"
+			mailgroup = MGD_MEDRESEACH
 			mailgroup2 = null
 
 			north
@@ -753,7 +753,7 @@
 		genetics
 			name = "Genetics"
 			mail_tag = "genetics"
-			mailgroup = "medresearch"
+			mailgroup = MGD_MEDRESEACH
 			mailgroup2 = null
 
 			north
@@ -810,8 +810,8 @@
 
 	checkpoint
 		name = "Don't spawn me"
-		mailgroup = "security"
-		mailgroup2 = "command"
+		mailgroup = MGD_SECURITY
+		mailgroup2 = MGD_COMMAND
 		message = 1
 
 		arrivals

@@ -347,7 +347,6 @@
 		/obj/item/storage/pouch/tranq_pistol_dart,
 		/obj/item/clothing/glasses/nightvision,
 		/obj/item/cloaking_device/limited,
-		/obj/item/dagger/syndicate/specialist,
 		/obj/item/card/emag,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)

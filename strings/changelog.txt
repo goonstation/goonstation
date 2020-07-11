@@ -1,5 +1,125 @@
 
+(t)fri jul 10 20
+(u)Gerhazo
+(p)1249
+(e)🆕|feature
+(*)Random event antagonist critters now drop various loot after being slain.
+(u)MarkNstein
+(p)1374
+(e)🆕|feature
+(+)PDA mail groups can be individually muted in the Groups page.
+(u)mbc
+(p)1425
+(e)|
+(*)Reworked sparks + added electric flashes (think zappy fireflash)
+(t)thu jul 09 20
+(u)Flaborized
+(p)1415
+(e)🎨|sprites
+(*)Resprited most of the bottled drinks.
+(u)AwkwardDryad
+(p)1380
+(e)🐛🗺|bug, mapping
+(+)Shinai can now be used to mitigate damage from other weapons while blocking
+(+)Additional kendo gear is available from QM
+(+)Kendo gear now spawns in the hidden workshop
+(t)wed jul 08 20
+(u)Ryumi
+(p)1411
+(e)🗺|mapping
+(+)Donut3: Expanded and added more fluff to the Medbay.
+(+)Donut3: Added all the necessary chemistry equipment to Chemistry
+(u)Sovexe
+(p)1410
+(e)🐛🗺|bug, mapping
+(+)The Long Range Teleporter in Manta's Sea Turtle mining ship is once again functional.
+(u)MarkNstein
+(p)1312
+(e)🔄|rework
+(+)On the RP server: Cogmap 1 can only be voted for when at least 14 players are connected.
+(u)Tarmunroa
+(p)1402
+(e)⚖|balance
+(+)Tweaked taser shotgun singlefire + falloff
+(u)Tarmunora
+(p)1404
+(e)⚖|balance
+(+)Adjusted wavegun energy costs and effects - EMP AoE is now range-dependant
+(t)tue jul 07 20
+(u)mbc
+(+)Fixed issue where screen color modifiers weren't displaying (sunglasses, lsd, etc)
+(u)MarkNstein
+(p)1394
+(e)🗺|mapping
+(+)Cog2: TTV VR now properly connected and functioning.
+(u)mbc + LovelyMimic
+(*)Added a third new trench enemy. Note that all the trench enemies drop a unique item on death.
+(u)Ryumi
+(p)1395
+(e)🗺|mapping
+(*)Added three security checkpoints and a medical checkpoint to Donut3. The sec checkpoints are next to: Arrivals, the hangar, and in Escape. The Medical checkpoint is in the Public Market, next to Escape.
+(+)Added an owlrey and pool to Donut3! You'll find them both in an asteroid that is located in the northwestern corner of the station z-level!
+(t)mon jul 06 20
+(u)mbc + LovelyMimic
+(p)1389
+(e)|
+(*)Added two new friends to the trench!
+(u)Gannets & Roselace
+(p)1383
+(e)⚖🎨|balance, sprites
+(*)New sprites for the MPRT7 rocket launcher by Roselace and Gannets.
+(*)It is now a two-handed weapon that can be worn on the backpack slot.
 (t)sun jul 05 20
+(u)AwkwardDryad
+(p)1258
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added kendo! Gear can be found in VR and in any gym on station!
+(u)MarkNstein
+(p)1347
+(e)🆕|feature
+(+)PNetComp now displays it's address and settings when observed.
+(u)Flaborized
+(p)1371
+(e)🎨|sprites
+(*)Resprited small gas tanks, jetpacks and fuel tanks.
+(u)mbc + Flaborized
+(p)1372
+(e)🗺🎨|mapping, sprites
+(*)Added new table mounted defibrillator.
+(u)mbc
+(p)1372
+(e)🗺🎨|mapping, sprites
+(*)Defibrillators can apply a Very short stun on targets who aren't in critical condition. Also, doctors spawn with defibrillators in their backpacks.
+(u)RichardGere
+(p)1341
+(e)⚖🔄|balance, rework
+(+)Fixed chaplain immunity inconsistencies. For a full list of covered abilities, please see the PR.
+(u)mbc
+(e)⚖|balance
+(+)Medbots will begin healing their target more quickly on approach (same fix that beepsky recently got)
+(u)Gannets
+(p)1346
+(e)⚖🆕|balance, feature
+(*)Rebalanced some aspects of the Syndicate Weapon Vendor.
+(+)Removed storage catagory.
+(+)Added utility catagory containing belt-pack, combat knife and MPRT ammo pouch.
+(+)Operatives spawn with rucksack.
+(u)Kubius
+(p)1365
+(e)🗺|mapping
+(+)Kondaru's reactor computer works properly now.
+(u)Fikou
+(p)1171
+(e)🆕|feature
+(*)New medal, Vehicular Manslaughter, obtainable by... you probably already know how.
+(u)Ryumi
+(p)1366
+(e)🗺|mapping
+(+)Donut3: Added more tanks of welder fuel and firefighting foam. There should be one weldtank in each maintenance area.
+(+)Donut3: Moved player critter spawns into public maint halls.
+(+)Donut3: Even MORE trash spawners in maint! You'll only notice a little bit more junk though.
+(+)Donut3: Moved a pipe cart next to the loafer, and added another next to the crusher. You know what to do.
+(+)Donut3: Added cleaner grenades to the janitor closets. Oops.
 (u)mbc
 (e)🐛|bug
 (+)Fixed bug where vampiric zombies could not blood steal.

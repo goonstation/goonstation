@@ -448,6 +448,7 @@
 		doants = src.reagents && src.reagents.total_volume > 0
 
 	on_spin_emote(var/mob/living/carbon/human/user as mob)
+		. = ..()
 		if (src.reagents && src.reagents.total_volume > 0)
 			user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
 			logTheThing("combat", user, null, "spills the contents of [src] [log_reagents(src)] all over [him_or_her(user)]self at [log_loc(user)].")

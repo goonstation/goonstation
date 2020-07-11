@@ -42,9 +42,7 @@
 			return
 
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(4, 1, target)
-		s.start()
+		elecflash(target)
 		var/list/randomturfs = new/list()
 		for(var/turf/T in orange(target, telerange))
 			if(istype(T, /turf/space) || T.density) continue

@@ -146,14 +146,11 @@
 				L += T3
 
 	if (effect)
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(5, 1, src.loc)
-
 		if (perform_check == 3)
 			src.set_loc(pick(L))
-			s.start() // Effect second because we had sound effects etc at the old loc.
+			elecflash(src) // Effect second because we had sound effects etc at the old loc.
 		else
-			s.start()
+			elecflash(src)
 			src.set_loc(pick(L))
 
 	else

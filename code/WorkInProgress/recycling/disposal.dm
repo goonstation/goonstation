@@ -1763,7 +1763,7 @@
 
 	var/message = null
 	var/mailgroup = null
-	var/mailgroup2 = null
+	var/mailgroup2 = null //Do not refactor into a list, maps override these properties
 	var/net_id = null
 	var/frequency = 1149
 	var/datum/radio_frequency/radio_connection
