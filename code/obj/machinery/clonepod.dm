@@ -77,7 +77,7 @@
 				src.net_id = generate_net_id(src)
 
 	disposing()
-		mailgroups.Cut()
+		mailgroups.len = 0
 		radio_controller.remove_object(src, "[pdafrequency]")
 		genResearch.clonepods.Remove(src) //Bye bye
 		connected.pod1 = null
