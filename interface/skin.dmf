@@ -190,6 +190,7 @@ menu "menu"
 		name = "&Distort"
 		command = ".winset \"mapwindow.map.zoom-mode=distort\""
 		category = "&Stretch Mode"
+		is-checked = true
 		can-check = true
 		group = "zoom"
 		saved-params = "is-checked"

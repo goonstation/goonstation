@@ -84,7 +84,7 @@ datum/pathogeneffects
 	// OVERRIDE: Generally, you do not need to override this.
 	proc/infect_direct(var/mob/target as mob, var/datum/pathogen/origin, contact_type = "touch")
 		if (infect_attempt_message)
-			target.show_message(infect_attempt_message)
+			target.show_message("<span class='alert'><B>[infect_attempt_message]</B></span>")
 		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = target
 			if(prob(100-H.get_disease_protection()))
@@ -138,9 +138,9 @@ datum/pathogeneffects
 	proc/onsay(var/mob/M as mob, message, var/datum/pathogen/origin)
 		return message
 
-	// onemote(mob, string, number, datum/pathogen) : string
+	// onemote(mob, string, number, string, datum/pathogen) : string
 	// OVERRIDE: Overriding this is situational.
-	proc/onemote(var/mob/M as mob, act, voluntary, var/datum/pathogen/P)
+	proc/onemote(var/mob/M as mob, act, voluntary, param, var/datum/pathogen/P)
 		return 1
 
 	// ondeath(mob, datum/pathogen) : void
@@ -1686,7 +1686,7 @@ datum/pathogeneffects/malevolent/farts
 		if(voluntary)
 			origin.symptom_data[name] = TIME
 
-	onemote(mob/M as mob, act, voluntary, datum/pathogen/P)
+	onemote(mob/M as mob, act, voluntary, param, datum/pathogen/P)
 		// involuntary farts are free, but the others use the cooldown
 		if(voluntary && TIME-P.symptom_data[name] < cooldown)
 			return

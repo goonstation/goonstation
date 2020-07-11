@@ -785,7 +785,7 @@
 	if(!nospark)
 		if(on)
 			logTheThing("station", null, null, "Light '[name]' was on and has been broken, spewing sparks everywhere ([showCoords(src.x, src.y, src.z)])")
-			elecflash(src,2)
+			elecflash(src,radius = 1, power = 2)
 	light_status = LIGHT_BROKEN
 	SPAWN_DBG(0)
 		update()
