@@ -21,6 +21,7 @@
 	var/datum/light/light
 	var/brightness = 0.5
 	var/on = 0
+	var/connected = 0 //used for collector
 
 /turf/simulated/floor/feather/New()
 	..()
@@ -90,7 +91,7 @@
 	..()
 	if(!istype(F) || !newloc)
 		return
-	if(on)
+	if(on && !connected)
 		off()
 	if(F.floorrunning)
 		if(istype(newloc, /turf/simulated/floor/feather))
