@@ -64,6 +64,9 @@
 	var/list/text_bad_output_adjective = list("janky","crooked","warped","shoddy","shabby","lousy","crappy","shitty")
 	var/obj/item/card/id/scan = null
 	var/temp = null
+	var/frequency = 1149
+	var/datum/radio_frequency/transmit_connection = null
+	var/net_id = null
 
 #define WIRE_EXTEND 1
 #define WIRE_POWER 2
@@ -74,6 +77,8 @@
 		START_TRACKING
 		..()
 		src.area_name = src.loc.loc.name
+		src.transmit_connection = radio_controller.add_object(src,"[frequency]")
+		src.net_id = generate_net_id(src)
 
 		if (istype(manuf_controls,/datum/manufacturing_controller))
 			src.set_up_schematics()
@@ -116,6 +121,8 @@
 		src.sound_beginwork = null
 		src.sound_damaged = null
 		src.sound_destroyed = null
+		radio_controller.remove_object(src,"[frequency]")
+		src.transmit_connection = null
 
 		for (var/obj/O in src.contents)
 			O.loc = src.loc
