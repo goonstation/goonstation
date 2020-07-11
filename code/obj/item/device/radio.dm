@@ -1081,6 +1081,22 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	density = 0
 	desc = "A Loudspeaker."
 
+	New()
+		//..()
+		pixel_place()
+
+	pixel_place()
+		if(src.pixel_x == 0 && src.pixel_y == 0)
+			switch(src.dir)
+				if(NORTH)
+					pixel_y = -14
+				if(SOUTH)
+					pixel_y = 32
+				if(EAST)
+					pixel_x = -21
+				if(WEST)
+					pixel_x = 21
+
 	north
 		dir = NORTH
 	south
