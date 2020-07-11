@@ -786,7 +786,7 @@ var/list/statusGroupLimits = list("Food"=4)
 			desc = "You are stunned.<br>Unable to take any actions."
 			icon_state = "stunned"
 			unique = 1
-			maxDuration = 30 SECONDS
+			maxDuration = 20 SECONDS
 
 			onAdd(var/optional=null)
 				. = ..()
@@ -806,7 +806,7 @@ var/list/statusGroupLimits = list("Food"=4)
 			desc = "You are knocked-down.<br>Unable to take any actions, prone."
 			icon_state = "weakened"
 			unique = 1
-			maxDuration = 30 SECONDS
+			maxDuration = 20 SECONDS
 
 			onAdd(var/optional=null)
 				. = ..()
@@ -863,7 +863,7 @@ var/list/statusGroupLimits = list("Food"=4)
 			desc = "You are unconscious.<br>Unable to take any actions, blinded."
 			icon_state = "paralysis"
 			unique = 1
-			maxDuration = 30 SECONDS
+			maxDuration = 20 SECONDS
 
 			onAdd(var/optional=null)
 				. = ..()
