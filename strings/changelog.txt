@@ -1,5 +1,9 @@
 
 (t)sat jul 11 20
+(u)Flaborized
+(p)1434
+(e)🎨|sprites
+(+)Resprited the Colt SAA.
 (u)AwkwardDryad
 (p)1328
 (e)🆕🎨|feature, sprites
