@@ -366,7 +366,7 @@
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.botcard_access)
 
-			if(setup_default_tool_path && !src.tool)
+			if(setup_default_tool_path && !src.tool && !src.setup_gun)
 				src.tool = new setup_default_tool_path
 				src.tool.set_loc(src)
 				src.tool.master = src
@@ -428,10 +428,10 @@
 		if (istype(W, /obj/item/card/id))
 			if (src.allowed(user))
 				src.locked = !src.locked
-				boutput(user, "Tool mount and controls are now [src.locked ? "locked." : "unlocked."]")
-				if (src.budgun && src.gunlocklock == 1)
+				boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+				if (src.gunlocklock == 1)
 					boutput(user, "The weapon mount doesn't budge!")
-				else if (src.budgun)
+				else
 					src.gunlock = !src.gunlock
 					boutput(user, "The weapon mount [src.locked ? "locks the gun into place." : "unlocks."]")
 			else
@@ -509,11 +509,13 @@
 			else if (!src.tool)
 				user.visible_message("<b>[user]</b> inserts the [W] into [src].","You insert the [W] into [src].")
 				src.tool = W
+				src.tool.master = src
 				W.set_loc(src)
 				user.u_equip(W)
 			else
 				user.visible_message("<b>[user]</b> inserts the [W] into [src], swapping out the old [tool].","You insert the [W] into [src], swapping out the old [tool].")
 				src.tool = W
+				src.tool.master = src
 				W.set_loc(src)
 				user.u_equip(W)
 		
@@ -527,19 +529,21 @@
 				src.visible_message("<span class='alert'>[src] refuses to wield an unauthorized weapon!</span>", "<span class='alert'>[src] graciously refuses your [W].</span>")
 			else if (legalweapon && obeygunlaw)					
 				W.set_loc(src)
-				budgun = W
+				src.budgun = W
+				src.budgun.master = src
 				hasgun = 1
 				gun = budgun.name
 				src.visible_message("<span class='alert'>[user] gives [src] [his_or_her(user)] [gun]!</span>", "<span class='alert'>You give your [gun] to [src]!</span>")
-				src.overlays += image(budgun.icon, budgun.icon_state, layer = 6)
+				src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)
 				user.u_equip(W)
 			else 
 				W.set_loc(src)
-				budgun = W
+				src.budgun = W
+				src.budgun.master = src
 				hasgun = 1
 				gun = budgun.name
 				src.visible_message("<span class='alert'>[src] snatches the [gun] from [user], wielding it in its cold, dead weapon mount!</span>", "<span class='alert'>[src] snatches the [gun] from your grip and plugs it into its weapon mount!</span>")
-				src.overlays += image(budgun.icon, budgun.icon_state, layer = 6)
+				src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)
 				user.u_equip(W)
 				
 		else if (ispryingtool(W) && (src.budgun || src.tool))
@@ -550,7 +554,7 @@
 				else
 					budgun.set_loc(Tdurg)
 					src.visible_message("<span class='alert'>[user] pries the [gun] from [name]'s cold, metal hand!</span>", "<span class='alert'>You pry the [gun] from [name]'s cold, metal hand.</span>")
-					src.overlays -= image(budgun.icon, budgun.icon_state, layer = 6)
+					src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)
 					src.budgun = null
 					hasgun = 0
 					gun = null
@@ -559,7 +563,7 @@
 					user.visible_message("<b>[user]</b> tries to pry the tool out of [src], but it's locked firmly in place!","You try to pry the gun off of [src]'s gun mount, but it's locked firmly in place!")
 				else
 					src.tool.set_loc(Tdurg)
-					src.visible_message("<span class='alert'>[user] pries the [gun] from [name]'s cold, metal hand!</span>", "<span class='alert'>You pry the [gun] from [name]'s cold, metal hand.</span>")
+					src.visible_message("<span class='alert'>[user] pries the [tool] from [name]'s cold, metal hand!</span>", "<span class='alert'>You pry the [tool] from [name]'s cold, metal hand.</span>")
 					src.tool = null
 
 		else
@@ -651,7 +655,23 @@
 				src.wakeup()
 
 			return
-
+		
+		////// GUN HANDLER THING
+		
+		if (src.budgun)
+			src.tool.is_gun = 1
+			src.tool.is_stun = 1
+			src.tool.is_lethal = 1
+		
+		////// END OF GUN HANDLER THING
+		
+		////// TOOL CHANGE HANDLER THING
+		
+		// if (src.tool == null)
+			
+		
+		////// THE END OF THAT THING
+		
 		if(src.reply_wait)
 			src.reply_wait--
 
@@ -804,7 +824,10 @@
 			Ov.icon = 'icons/effects/214x246.dmi'
 			Ov.icon_state = "explosion"
 
-			src.tool.set_loc(get_turf(src))
+			if(src.tool)
+				src.tool.set_loc(T)
+			if(src.budgun)
+				src.budgun.set_loc(T)
 
 			var/obj/item/guardbot_core/core = new /obj/item/guardbot_core(T)
 			core.created_name = src.name
@@ -814,7 +837,10 @@
 			var/list/throwparts = list()
 			throwparts += new /obj/item/parts/robot_parts/arm/left(T)
 			throwparts += core
-			throwparts += src.tool
+			if(src.tool)
+				throwparts += src.tool
+			if(src.budgun)
+				throwparts += src.budgun
 			if(src.hat)
 				throwparts += src.hat
 				src.hat.set_loc(T)
@@ -1001,8 +1027,8 @@
 				
 				src.visible_message("<span class='alert'><b>[src] fires its [gun] at [target]!</b></span>")
 
-				src.overlays -= image(budgun.icon, budgun.icon_state, layer = 6)
-				src.overlays += image(budgun.icon, budgun.icon_state, layer = 6)	// Update the held gun sprite
+				src.overlays -= image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)
+				src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)	// Update the held gun sprite
 			return
 
 		post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
@@ -1116,6 +1142,11 @@
 			dat += "Current Tool: [src.tool ? src.tool.tool_id : "NONE"]<br>"
 
 			dat += "Current Gun: [src.budgun ? src.budgun.name : "NONE"]<br>"
+			
+			if(src.gunlocklock)
+				dat += "Gun Mount: <font color=red>JAMMED!</font><br>"
+			else
+				dat += "Gun Mount: [src.gunlock ? "LOCKED" : "UNLOCKED"]<br>"
 
 			if(src.locked)
 
@@ -1156,6 +1187,9 @@
 				hat_image.pixel_y = hat_y_offset
 				src.underlays = list(hat_image)
 				src.hat_shown = 1
+				
+			if (src.budgun)
+				src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)
 
 			src.icon_needs_update = 0
 			return
@@ -1940,7 +1974,7 @@
 
 						else
 							var/targdist = get_dist(master, arrest_target)
-							if((targdist <= 1) || (master.tool && master.tool.is_gun))
+							if((targdist <= 1) || (master.tool && master.tool.is_gun) || master.budgun)	// If you have a gun, USE IT AAA
 								if (!isliving(arrest_target) || isdead(arrest_target))
 									mode = 0
 									drop_arrest_target()
@@ -3277,7 +3311,7 @@
 		return
 
 
-	//Frame -> Add cell -> Add tool -> Add core -> Add arm -> Done
+	//Frame -> Add cell -> Add core -> Add arm -> Done. Then add tool. Or gun.
 	attackby(obj/item/W as obj, mob/user as mob)
 		if ((istype(W, /obj/item/guardbot_core)))
 			if(W:buddy_model != src.buddy_model)
@@ -3286,9 +3320,9 @@
 			if(!created_cell || stage != 2)
 				boutput(user, "<span class='alert'>You need to add a power cell first!</span>")
 				return
-			if(!created_module)
-				boutput(user, "<span class='alert'>You need to add a tool module first!</span>")
-				return
+//			if(!created_module)
+//				boutput(user, "<span class='alert'>You need to add a tool module first!</span>")
+//				return
 			src.stage = 3
 			src.icon_state = "robuddy_frame-[buddy_model]-3"
 			if(W:created_name)
@@ -3309,12 +3343,12 @@
 			src.icon_state = "robuddy_frame-[buddy_model]-2"
 			boutput(user, "You add the power cell to [src]!")
 
-		else if((istype(W, /obj/item/device/guardbot_tool)) && stage == 2 && !created_module)
-			user.drop_item()
-
-			W.set_loc(src)
-			src.created_module = W
-			boutput(user, "You add the [W.name] to [src]!")
+//		else if((istype(W, /obj/item/device/guardbot_tool)) && stage == 2 && !created_module)
+//			user.drop_item()
+//
+//			W.set_loc(src)
+//			src.created_module = W
+//			boutput(user, "You add the [W.name] to [src]!")
 
 		else if (istype(W, /obj/item/parts/robot_parts/arm/) && src.stage == 3)
 			src.stage++
@@ -3331,10 +3365,10 @@
 			if(src.created_default_task)
 				newbot.setup_default_startup_task = src.created_default_task
 
-			if(src.created_module)
-				newbot.tool = src.created_module
-				newbot.tool.set_loc(newbot)
-				newbot.tool.master = newbot
+//			if(src.created_module)
+//				newbot.tool = src.created_module
+//				newbot.tool.set_loc(newbot)
+//				newbot.tool.master = newbot
 
 			if(src.created_model_task)
 				newbot.model_task = src.created_model_task
@@ -3940,6 +3974,13 @@
 
 		dat += "Current Tool: [src.tool ? src.tool.tool_id : "NONE"]<br>"
 
+		dat += "Current Gun: [src.budgun ? src.budgun.name : "NONE"]<br>"
+		
+		if(src.gunlocklock)
+			dat += "Gun Mount: <font color=red>JAMMED!</font><br>"
+		else
+			dat += "Gun Mount: [src.gunlock ? "LOCKED" : "UNLOCKED"]<br>"
+
 		if(src.locked)
 
 			dat += "Status: [src.on ? "On" : "Off"]<br>"
@@ -3975,7 +4016,10 @@
 		Ov.icon = 'icons/effects/214x246.dmi'
 		Ov.icon_state = "explosion"
 
-		src.tool.set_loc(get_turf(src))
+		if(src.tool)
+			src.tool.set_loc(T)
+		if(src.budgun)
+			src.budgun.set_loc(T)
 
 		var/obj/item/guardbot_core/old/core = new /obj/item/guardbot_core/old(T)
 		core.created_name = src.name
@@ -3986,7 +4030,10 @@
 		throwparts += new /obj/item/parts/robot_parts/arm/left(T)
 		throwparts += new /obj/item/device/flash(T)
 		throwparts += core
-		throwparts += src.tool
+		if(src.tool)
+			throwparts += src.tool
+		if(src.budgun)
+			throwparts += src.budgun
 		if(src.hat)
 			throwparts += src.hat
 			src.hat.set_loc(T)
@@ -4038,9 +4085,9 @@
 			if(!created_cell || stage != 2)
 				boutput(user, "<span class='alert'>You need to add a power cell first!</span>")
 				return
-			if(!created_module)
-				boutput(user, "<span class='alert'>You need to add a tool module first!</span>")
-				return
+//			if(!created_module)
+//				boutput(user, "<span class='alert'>You need to add a tool module first!</span>")
+//				return
 			src.stage = 3
 			src.icon_state = "goldbuddy_frame-[buddy_model]-3"
 			if(W:created_name)
@@ -4057,16 +4104,16 @@
 
 			W.set_loc(src)
 			src.created_cell = W
-			src.stage = 2
+			src.stage = 3
 			src.icon_state = "goldbuddy_frame-[buddy_model]-2"
 			boutput(user, "You add the power cell to [src]!")
 
-		else if((istype(W, /obj/item/device/guardbot_tool)) && stage == 2 && !created_module)
-			user.drop_item()
-
-			W.set_loc(src)
-			src.created_module = W
-			boutput(user, "You add the [W.name] to [src]!")
+//		else if((istype(W, /obj/item/device/guardbot_tool)) && stage == 2 && !created_module)
+//			user.drop_item()
+//
+//			W.set_loc(src)
+//			src.created_module = W
+//			boutput(user, "You add the [W.name] to [src]!")
 
 		else if (istype(W, /obj/item/parts/robot_parts/arm/) && src.stage == 3)
 			src.stage++
@@ -4083,10 +4130,10 @@
 			if(src.created_default_task)
 				newbot.setup_default_startup_task = src.created_default_task
 
-			if(src.created_module)
-				newbot.tool = src.created_module
-				newbot.tool.set_loc(newbot)
-				newbot.tool.master = newbot
+//			if(src.created_module)
+//				newbot.tool = src.created_module
+//				newbot.tool.set_loc(newbot)
+//				newbot.tool.master = newbot
 
 			if(src.created_model_task)
 				newbot.model_task = src.created_model_task
