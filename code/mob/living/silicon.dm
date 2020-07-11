@@ -686,3 +686,6 @@ var/global/list/module_editors = list()
 
 /mob/living/silicon/is_cold_resistant()
 	.= 1
+
+/mob/living/silicon/shock(var/atom/origin, var/wattage, var/zone, var/stun_multiplier = 1, var/ignore_gloves = 0)
+	return 0
