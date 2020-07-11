@@ -1,5 +1,11 @@
 
 (t)sat jul 11 20
+(u)AwkwardDryad
+(p)1328
+(e)🆕🎨|feature, sprites
+(*)Added hanafuda! You can purchase it at a card vendor for 298 credits
+(+)You can now place cards on floor tiles in the same manner as on a table
+(+)Cards have new solitaire stacking functionality. Check playing cards tips and tricks for more information
 (u)Tarmunora
 (p)1354
 (e)🐛|bug
