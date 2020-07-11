@@ -6,5 +6,6 @@
 #define MGD_MEDRESEACH "medresearch"
 #define MGD_SCIENCE "science"
 #define MGD_CARGO "cargo"
+#define MGD_STATIONREPAIR "stationrepair"
 #define MGD_BOTANY "botany"
 #define MGD_KITCHEN "kitchen"
