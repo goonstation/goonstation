@@ -151,6 +151,7 @@
 			elecflash(src) // Effect second because we had sound effects etc at the old loc.
 		else
 			elecflash(src)
+			src.set_loc(pick(L))
 
 	else
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
