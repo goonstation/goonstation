@@ -2446,6 +2446,7 @@
 	dir = 8;
 	icon_base = "sec";
 	icon_state = "sec_closed";
+	lockdownbyai = 1;
 	name = "Explosives Storage"
 	},
 /obj/firedoor_spawn,
@@ -8221,6 +8222,7 @@
 /obj/machinery/door/airlock/pyro{
 	icon_base = "sec";
 	icon_state = "sec_closed";
+	lockdownbyai = 1;
 	name = "Armory"
 	},
 /obj/firedoor_spawn,
