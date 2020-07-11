@@ -264,7 +264,7 @@
 			if ("salute","bow","hug","wave", "blowkiss","sidehug")
 				// visible targeted emotes
 				if (!src.restrained())
-					var/M = null
+					var/mob/M = null
 					if (param)
 						var/range = 8
 						if (act == "hug" || act == "sidehug")
