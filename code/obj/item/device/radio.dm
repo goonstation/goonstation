@@ -1083,9 +1083,6 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 
 	New()
 		//..()
-		pixel_place()
-
-	pixel_place()
 		if(src.pixel_x == 0 && src.pixel_y == 0)
 			switch(src.dir)
 				if(NORTH)

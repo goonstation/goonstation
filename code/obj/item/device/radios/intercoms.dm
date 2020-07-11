@@ -20,19 +20,16 @@
 				screen_image.color = new_color
 		screen_image.alpha = 180
 		src.UpdateOverlays(screen_image, "screen")
-		pixel_place()
-
-/obj/item/device/radio/intercom/proc/pixel_place()
-	if(src.pixel_x == 0 && src.pixel_y == 0)
-		switch(src.dir)
-			if(NORTH)
-				pixel_y = -21
-			if(SOUTH)
-				pixel_y = 24
-			if(EAST)
-				pixel_x = -21
-			if(WEST)
-				pixel_x = 21
+		if(src.pixel_x == 0 && src.pixel_y == 0)
+			switch(src.dir)
+				if(NORTH)
+					pixel_y = -21
+				if(SOUTH)
+					pixel_y = 24
+				if(EAST)
+					pixel_x = -21
+				if(WEST)
+					pixel_x = 21
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)
