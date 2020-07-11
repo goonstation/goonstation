@@ -438,6 +438,7 @@
 	desc = "A reliable weapon used the world over... 50 years ago. Uses 9mm NATO rounds."
 	name = "Clock 188"
 	icon_state = "clock-188-beige"
+	item_state = "clock-188-beige"
 	shoot_delay = 2
 	w_class = 2.0
 	force = 7.0
