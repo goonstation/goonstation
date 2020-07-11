@@ -8,3 +8,4 @@
 #define MGD_CARGO "cargo"
 #define MGD_BOTANY "botany"
 #define MGD_KITCHEN "kitchen"
+#define MGD_SPIRITUALAFFAIRS "spiritualaffairs"
