@@ -218,9 +218,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (T)
 			if (T && isrestrictedz(T.z) || T.loc:sanctuary)
 				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, T)
-				s.start()
+				elecflash(src,power = 4)
 				qdel(src)
 				return
 			for (var/atom/X in orange(9, T))
@@ -417,9 +415,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (T)
 			if (isrestrictedz(T.z) && !restricted_z_allowed(usr, T))
 				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, T)
-				s.start()
+				elecflash(T)
 				qdel(src)
 				return
 
@@ -844,9 +840,7 @@ PIPE BOMBS + CONSTRUCTION
 			if(prob(10))
 				explosion(src, location, 0, 0, 1, 1)
 			else
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, src)
-				s.start()
+				elecflash(src,power = 2)
 				playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
 		src.visible_message("<span class='alert'>\The [src] explodes!</span>")
 
@@ -936,9 +930,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (location && istype(location) && !location.loc:sanctuary)
 			if (isrestrictedz(location.z))
 				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, location)
-				s.start()
+				elecflash(location)
 				qdel(src)
 				return
 
@@ -1021,9 +1013,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (location && istype(location))
 			if (isrestrictedz(location.z))
 				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, location)
-				s.start()
+				elecflash(location)
 				qdel(src)
 				return
 

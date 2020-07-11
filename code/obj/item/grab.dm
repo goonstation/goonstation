@@ -83,7 +83,16 @@
 		assailant = null
 		..()
 
+		if (src.disposed)
+			src.set_loc(null)
+
+	set_loc() //never ever ever ever!!!
+		..()
+		if (src.loc && src.loc == get_turf(src.loc))
+			set_loc(null)
+
 	dropped()
+		..()
 		dropped += 1
 		if(src.assailant)
 			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
@@ -268,7 +277,7 @@
 			var/mob/living/carbon/human/H = src.affecting
 			H.set_stamina(min(0, H.stamina))
 
-		if (ishuman(src.affecting))
+		if (isliving(src.affecting))
 			src.affecting:was_harmed(src.assailant)
 
 	proc/upgrade_to_pin(var/turf/T)
@@ -298,7 +307,7 @@
 			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src.type)
 			H.update_canmove()
 
-		if (ishuman(src.affecting))
+		if (isliving(src.affecting))
 			src.affecting:was_harmed(src.assailant)
 
 	proc/stunned_targets_can_break()
@@ -540,7 +549,7 @@
 	if (!G.can_pin)
 		return 0
 
-	if (ishuman(G.affecting))
+	if (isliving(G.affecting))
 		G.affecting:was_harmed(G.assailant)
 
 	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
@@ -558,7 +567,7 @@
 	if (!G.can_pin)
 		return 0
 
-	if (ishuman(G.affecting))
+	if (isliving(G.affecting))
 		G.affecting:was_harmed(G.assailant)
 
 	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
