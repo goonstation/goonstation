@@ -17,13 +17,14 @@
 	var/weapon_access = access_carrypermit
 	var/contraband_access = access_contrabandpermit
 	var/obj/item/baton/secbot/our_baton // Our baton
+#if ASS_JAM
 
 	var/global/list/botgun_whitelist = list(/obj/item/gun/energy/tasershotgun,\
 											/obj/item/gun/energy/taser_gun,\
 											/obj/item/gun/energy/vuvuzela_gun,\
 											/obj/item/gun/energy/wavegun,\
 											/obj/item/gun/energy/lawbringer) 
-
+#endif
 	on = 1
 	locked = 1 //Behavior Controls lock
 	var/mob/living/carbon/target
@@ -41,13 +42,16 @@
 
 	var/botcard_access = "Head of Security" //Job access for doors.
 	var/hat = null 			// Add an overlay from bots/aibots.dmi with this state.  hats.
+#if ASS_JAM
 	var/hatplus = null		// Add an overlay from clothing/item_hats.dmi with this state. more hats.
 	var/hatloot = null		// Give back that hatplus on death
+#endif
 
 	var/our_baton_type = /obj/item/baton/secbot
 	var/loot_baton_type = /obj/item/scrap
 	var/stun_type = "stun"	
 
+#if ASS_JAM
 	// The following get defined by botgun!
 	var/shotcount = 0		// Number of times it shoots when it should, modded by emag state
 	var/gun = null			// What's the name of our robot's gun? Used in the chat window!
@@ -59,7 +63,7 @@
 	var/obj/item/gun/botgun = null	// the gun, actually important
 	
 	var/hasgun = 0				// So our robot only gets one gun
-	
+#endif	
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
 #define SECBOT_HUNT 		1		// found target, hunting
@@ -140,7 +144,7 @@
 			transmit_connection.post_signal(src, pdaSignal)
 
 		..()
-
+#if ASS_JAM
 /obj/machinery/bot/secbot/gun
 	name = "Shoot Gunsky"
 	desc = "That robot has a gun!"
@@ -166,7 +170,7 @@
 	attack_per_step = 1
 	bullethell = 1
 	infiniteammo = 1
-	
+#endif
 /obj/machinery/bot/secbot/budgie
 	name = "Officer Secsky"
 	desc = "Deep undercover in an Austalian bird smuggling ring. He looks even less thrilled than usual."
@@ -246,18 +250,22 @@
 			if(radio_controller)
 				radio_controller.add_object(src, "[control_freq]")
 				radio_controller.add_object(src, "[beacon_freq]")
+			if(src.hat)
+				src.overlays += image('icons/obj/bots/aibots.dmi', "hat-[src.hat]")
+			#if ASS_JAM
 			if(botgun)
 				botgun = new botgun
 				hasgun = 1
 				gun = botgun.name
 				src.overlays += image(botgun.icon, botgun.icon_state, layer = 6)
-			if(src.hat)
-				src.overlays += image('icons/obj/bots/aibots.dmi', "hat-[src.hat]")
+
 			if(src.hatplus)
 				if(src.hatplus == "riot")
 					src.health += 50
 					src.hatloot = /obj/item/clothing/head/helmet/riot
 					src.overlays += image('icons/obj/clothing/item_hats.dmi', "riot", layer = 5.5)
+			#endif
+
 
 	attack_hand(mob/user as mob, params)
 		var/dat
@@ -338,7 +346,9 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			if (emagged)
 				if (user)
 					boutput(user, "<span class='alert'>You short out [src]'s system clock inhibition circuits.</span>")
+#if ASS_JAM
 					src.obeygunlaw = 0	// Good luck giving em a gun, though
+#endif
 				src.overlays.len = 0
 			else if (user)
 				boutput(user, "<span class='alert'>You short out [src]'s target assessment circuits.</span>")
@@ -406,6 +416,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			if (src.health < initial(health))
 				src.health = initial(health)
 				src.visible_message("<span class='alert'>[user] repairs [src]!</span>", "<span class='alert'>You repair [src].</span>")
+		#if ASS_JAM
 		
 		else if (istype(W, /obj/item/gun) && !src.botgun)
 			var/legalweapon = 0
@@ -450,7 +461,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			src.overlays += image('icons/obj/clothing/item_hats.dmi', "riot", layer = 5.5)
 			user.u_equip(W)
 			qdel(W)
-
+		#endif
 		else
 			switch(W.hit_type)
 				if (DAMAGE_BURN)
@@ -526,7 +537,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				src.mover = null
 			src.frustration = 0
 		return
-		
+	#if ASS_JAM
 	proc/shootgun_attack(var/mob/living/carbon/M)
 		src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
 		shotcount = (1 + src.emagged)		// Each swipe of the emag gives it another shot per shot
@@ -553,7 +564,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		SPAWN_DBG(0.2 SECONDS)
 			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 		return
-
+	#endif
 	Move(var/turf/NewLoc, direct)
 		var/oldloc = src.loc
 		..()
@@ -562,12 +573,13 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				if (mode == SECBOT_HUNT && target)
 					if (get_dist(src, src.target) <= 1)
 						src.baton_attack(src.target)
+					#if ASS_JAM
 					if (src.botgun && (src.shotcount <= 0) && (src.canshoot == 1) && (src.bullethell == 1))	
 						src.shootgun_attack(src.target)		// rooty tooty scoot n shooty
 						canshoot = 0
 						SPAWN_DBG(1 SECOND)					// But only if you're not mid-shooty
 							canshoot = 1
-
+					#endif
 	process()
 		if (!src.on)
 			return
@@ -600,14 +612,18 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 				if (target)		// make sure target exists
 					if (get_dist(src, src.target) <= 1)		// if right next to perp
+					#if ASS_JAM
 						if (src.botgun)
 							src.shootgun_attack(src.target)			//And shoot em too
+					#endif
 						src.baton_attack(src.target)
 					else								// not next to perp
 						if(!(src.target in view(7,src)) || !moving)
 							//qdel(src.mover)
+							#if ASS_JAM
 							if (src.botgun)
 								src.shootgun_attack(src.target)
+							#endif
 							if (src.mover)
 								src.mover.master = null
 								src.mover = null
@@ -1214,14 +1230,14 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			else
 				new loot_baton_type(Tsec)
 				loot_baton_type = null
-			
+#if ASS_JAM
 		if (botgun)		// Thanks again, Adhara! =4 also gerhazo
 			botgun.set_loc(Tsec)
 
 		if (hatloot)
 			new hatloot(Tsec)
 			hatloot = null
-
+#endif	
 		if (prob(50))
 			new /obj/item/parts/robot_parts/arm/left(Tsec)
 
