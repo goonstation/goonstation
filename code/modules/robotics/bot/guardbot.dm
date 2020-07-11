@@ -101,7 +101,7 @@
 	on = 1
 	var/idle = 0 //Sleeping on the job??
 	var/stunned = 0 //Are we stunned?
-	locked = 1 //Behavior Controls lock
+	locked = 1 //Behavior Controls and Tool lock
 
 	var/list/path = null
 	var/frustration = 0
@@ -137,6 +137,32 @@
 	var/flashlight_red = 0.1
 	var/flashlight_green = 0.4
 	var/flashlight_blue = 0.1
+	
+	////////////////////// GUN STUFF -V
+	// Lifted from secbot!
+	var/global/list/budgun_whitelist = list(/obj/item/gun/energy/tasershotgun,\
+											/obj/item/gun/energy/taser_gun,\
+											/obj/item/gun/energy/vuvuzela_gun,\
+											/obj/item/gun/energy/wavegun,\
+											/obj/item/gun/energy/lawbringer) 
+
+	var/shotcount = 0		// Number of times it shoots when it should, modded by emag state
+	var/gun = null			// What's the name of our robot's gun? Used in the chat window!
+	var/canshoot = 1		// Limits their rate of fire
+	var/bullethell = 0		// Enables unrestrained magdumping of deadly weaponry
+	var/obeygunlaw = 1		// Does our bot follow the gun whitelist?
+	var/infiniteammo = 0	// Our bot can have infinite ammo, just fyi
+	var/obj/item/gun/budgun = null	// the gun, actually important
+	var/hasgun = 0			// So our robot only gets one gun
+	var/gunlock = 1			// Gotta unlock the gun mount with an ID
+	var/gunlocklock = 0		// Traitor mods prevent guntheft
+	var/ammofab = 0			// Is the Ammofabricator installed?
+	var/fastgun = 0			// Is the Rapidfire module installed?
+	var/boosthp = 0			// Are both installed, granting extra HP?
+	var/infinateammo = 0	// Just straight up infinite ammo
+	var/obj/item/gun/setup_gun = null	// Lets spawn with a gun
+	//
+	////////////////////// GUN STUFF -^
 
 	var/datum/radio_frequency/radio_connection
 	var/datum/radio_frequency/beacon_connection
@@ -187,6 +213,20 @@
 			..()
 			src.hat = new /obj/item/clothing/head/mj_hat(src)
 			src.hat.name = "Eldritch shape-shifting hat."
+			src.update_icon()
+
+	assgun
+		name = "Assaultbuddy"
+		desc = "What happens when you put an assault rifle in the microwave."
+		setup_charge_maximum = 4500
+		setup_charge_percentage = 100
+		setup_gun = /obj/item/gun/kinetic/ak47
+		infiniteammo = 1
+
+		New()
+			..()
+			src.hat = new /obj/item/clothing/head/helmet/riot
+			src.hat.name = "Killbot Pro Turbovisor"
 			src.update_icon()
 
 	safety
@@ -330,6 +370,11 @@
 				src.tool = new setup_default_tool_path
 				src.tool.set_loc(src)
 				src.tool.master = src
+				
+			if(setup_gun && !src.budgun)
+				src.budgun = new setup_gun
+				src.budgun.set_loc(src)
+				src.budgun.master = src
 
 			if(radio_controller)
 				radio_connection = radio_controller.add_object(src, "[control_freq]")
@@ -383,7 +428,12 @@
 		if (istype(W, /obj/item/card/id))
 			if (src.allowed(user))
 				src.locked = !src.locked
-				boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+				boutput(user, "Tool mount and controls are now [src.locked ? "locked." : "unlocked."]")
+				if (src.budgun && src.gunlocklock == 1)
+					boutput(user, "The weapon mount doesn't budge!")
+				else if (src.budgun)
+					src.gunlock = !src.gunlock
+					boutput(user, "The weapon mount [src.locked ? "locks the gun into place." : "unlocks."]")
 			else
 				boutput(user, "<span class='alert'>Access denied.</span>")
 		/*
@@ -451,6 +501,66 @@
 			if (src.task)
 				src.task.task_input("treated")
 			return
+		
+		// Hotswap tools on the fly!
+		else if (istype(W, /obj/item/device/guardbot_tool) && !src.budgun)
+			if (locked)
+				boutput(user, "<span class='alert'>The tool port is locked!</span>")
+			else if (!src.tool)
+				user.visible_message("<b>[user]</b> inserts the [W] into [src].","You insert the [W] into [src].")
+				src.tool = W
+				W.set_loc(src)
+				user.u_equip(W)
+			else
+				user.visible_message("<b>[user]</b> inserts the [W] into [src], swapping out the old [tool].","You insert the [W] into [src], swapping out the old [tool].")
+				src.tool = W
+				W.set_loc(src)
+				user.u_equip(W)
+		
+		//Give em a gun, if they don't already have one
+		//Not a hotswap, only if there's no gun and no tool
+		else if (istype(W, /obj/item/gun) && !src.budgun && !src.tool)
+			var/legalweapon = 0
+			if (W.type in src.budgun_whitelist)
+				legalweapon = 1
+			if (!legalweapon && obeygunlaw)
+				src.visible_message("<span class='alert'>[src] refuses to wield an unauthorized weapon!</span>", "<span class='alert'>[src] graciously refuses your [W].</span>")
+			else if (legalweapon && obeygunlaw)					
+				W.set_loc(src)
+				budgun = W
+				hasgun = 1
+				gun = budgun.name
+				src.visible_message("<span class='alert'>[user] gives [src] [his_or_her(user)] [gun]!</span>", "<span class='alert'>You give your [gun] to [src]!</span>")
+				src.overlays += image(budgun.icon, budgun.icon_state, layer = 6)
+				user.u_equip(W)
+			else 
+				W.set_loc(src)
+				budgun = W
+				hasgun = 1
+				gun = budgun.name
+				src.visible_message("<span class='alert'>[src] snatches the [gun] from [user], wielding it in its cold, dead weapon mount!</span>", "<span class='alert'>[src] snatches the [gun] from your grip and plugs it into its weapon mount!</span>")
+				src.overlays += image(budgun.icon, budgun.icon_state, layer = 6)
+				user.u_equip(W)
+				
+		else if (ispryingtool(W) && (src.budgun || src.tool))
+			var/turf/Tdurg = get_turf(src)
+			if (src.budgun)
+				if (src.gunlock || src.gunlocklock)
+					user.visible_message("<b>[user]</b> tries to pry the gun off of [src]'s gun mount, but it's locked firmly in place!","You try to pry the gun off of [src]'s gun mount, but it's locked firmly in place!")
+				else
+					budgun.set_loc(Tdurg)
+					src.visible_message("<span class='alert'>[user] pries the [gun] from [name]'s cold, metal hand!</span>", "<span class='alert'>You pry the [gun] from [name]'s cold, metal hand.</span>")
+					src.overlays -= image(budgun.icon, budgun.icon_state, layer = 6)
+					src.budgun = null
+					hasgun = 0
+					gun = null
+			else if (src.tool)
+				if (src.locked)
+					user.visible_message("<b>[user]</b> tries to pry the tool out of [src], but it's locked firmly in place!","You try to pry the gun off of [src]'s gun mount, but it's locked firmly in place!")
+				else
+					src.tool.set_loc(Tdurg)
+					src.visible_message("<span class='alert'>[user] pries the [gun] from [name]'s cold, metal hand!</span>", "<span class='alert'>You pry the [gun] from [name]'s cold, metal hand.</span>")
+					src.tool = null
 
 		else
 			switch(W.hit_type)
@@ -869,6 +979,30 @@
 			if(src.tool)
 				var/is_ranged = get_dist(src, target) > 1
 				src.tool.bot_attack(target, src, is_ranged, lethal)
+			if(src.budgun)
+				shotcount = (1 + src.fastgun)	// Fastgun module makes it shoot more
+				while(shotcount > 0 && target)
+					budgun.shoot(get_turf(target), get_turf(src), src)
+					shotcount--
+				
+				if (istype(src.budgun, /obj/item/gun/kinetic))
+					var/obj/item/gun/kinetic/shootgun = src.budgun
+					if (ammofab)	// Can we build our own ammo?
+						if (shootgun.ammo && (shootgun.ammo.amount_left < shootgun.ammo.max_amount))
+							if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL))
+								cell.charge -= ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio))
+								shootgun.ammo.amount_left = shootgun.ammo.max_amount
+				else if (istype(src.budgun, /obj/item/gun/energy))
+					var/obj/item/gun/energy/pewgun = src.budgun
+					if (pewgun.cell && (pewgun.cell.charge < pewgun.cell.max_charge))
+						if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL)) 
+							cell.charge -= (pewgun.cell.max_charge - pewgun.cell.charge)
+							pewgun.cell.charge = pewgun.cell.max_charge
+				
+				src.visible_message("<span class='alert'><b>[src] fires its [gun] at [target]!</b></span>")
+
+				src.overlays -= image(budgun.icon, budgun.icon_state, layer = 6)
+				src.overlays += image(budgun.icon, budgun.icon_state, layer = 6)	// Update the held gun sprite
 			return
 
 		post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
@@ -980,6 +1114,8 @@
 					<tr><td><font color=white>[power_readout]</font></td></tr></table><br>"}
 
 			dat += "Current Tool: [src.tool ? src.tool.tool_id : "NONE"]<br>"
+
+			dat += "Current Gun: [src.budgun ? src.budgun.name : "NONE"]<br>"
 
 			if(src.locked)
 
