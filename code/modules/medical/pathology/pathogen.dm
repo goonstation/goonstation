@@ -1427,10 +1427,10 @@ datum/pathogen
 		return message
 
 	// Act on emoting. Vetoing available by returning 0.
-	proc/onemote(act, voluntary)
-		suppressant.onemote(infected, act, voluntary, src)
+	proc/onemote(act, voluntary, param)
+		suppressant.onemote(infected, act, voluntary, param, src)
 		for (var/effect in src.effects)
-			. *= effect:onemote(infected, act, voluntary, src)
+			. *= effect:onemote(infected, act, voluntary, param, src)
 
 	// Act when dying. Returns nothing.
 	proc/ondeath()
