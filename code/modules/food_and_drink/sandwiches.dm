@@ -188,7 +188,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("pure love", 15)
+		reagents.add_reagent("love", 15)
 
 /obj/item/reagent_containers/food/snacks/burger/brainburger
 	name = "brainburger"
