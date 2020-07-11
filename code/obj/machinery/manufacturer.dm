@@ -730,7 +730,6 @@
 									accounts += t
 
 
-							var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 							var/datum/signal/minerSignal = get_free_signal()
 							minerSignal.source = src
 							minerSignal.transmission_method = TRANSMISSION_RADIO
