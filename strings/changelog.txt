@@ -1,5 +1,9 @@
 
 (t)fri jul 10 20
+(u)Gerhazo
+(p)1249
+(e)🆕|feature
+(*)Random event antagonist critters now drop various loot after being slain.
 (u)MarkNstein
 (p)1374
 (e)🆕|feature

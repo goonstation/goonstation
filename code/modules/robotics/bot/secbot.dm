@@ -113,7 +113,7 @@
 		var/bot_location = get_area(src)
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"="security", "sender"="00000000", "message"="Notification: [src] destroyed in [bot_location]! Officer down!")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="Notification: [src] destroyed in [bot_location]! Officer down!")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
 			transmit_connection.post_signal(src, pdaSignal)
@@ -533,7 +533,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 									//////PDA NOTIFY/////
 								var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 								var/datum/signal/pdaSignal = get_free_signal()
-								pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"="security", "sender"="00000000", "message"="Notification: [last_target] detained by [src] in [bot_location].")
+								pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="Notification: [last_target] detained by [src] in [bot_location].")
 								pdaSignal.transmission_method = TRANSMISSION_RADIO
 								if(transmit_connection != null)
 									transmit_connection.post_signal(src, pdaSignal)
