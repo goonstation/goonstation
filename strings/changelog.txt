@@ -1,5 +1,7 @@
 
 (t)fri jul 10 20
+(u)mbc
+(+)Gunshark bullets no longer embed implants.
 (u)Gerhazo
 (p)1249
 (e)🆕|feature
