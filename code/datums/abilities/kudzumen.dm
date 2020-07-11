@@ -54,12 +54,13 @@
 
 	New()
 		..()
-		if (owner.client)
+		if (hud)
 			nutrients_meter = new/obj/screen/kudzu/meter(src)
-			nutrients_meter.add_to_client(owner.client)
+			hud.add_object(nutrients_meter)
 
-			growth_amt = new/obj/screen/kudzu/growth_amount(get_master_kudzu_controller())
-			growth_amt.add_to_client(owner.client)
+			growth_amt = new/obj/screen/kudzu/growth_amount(src, get_master_kudzu_controller())
+			hud.add_object(growth_amt)
+
 
 	disposing()
 		qdel(nutrients_meter)
@@ -85,6 +86,9 @@
 				animate(owner, alpha=255, time=3 SECONDS)
 
 				boutput(owner, "You no invisible.")
+		else if (points > MAX_POINTS)
+			points = MAX_POINTS
+
 
 		if (src.stealthed)
 			points -= round(2*mult)
@@ -303,7 +307,7 @@
 			var/mob/living/carbon/human/H = target
 			if (istype(H) && istype(H.mutantrace, /datum/mutantrace/kudzu) && istype(H.abilityHolder, /datum/abilityHolder/kudzu))
 				var/datum/abilityHolder/kudzu/KAH = H.abilityHolder
-				H.abilityHolder.points = max(KAH.MAX_POINTS, KAH.points + 20)
+				H.abilityHolder.points = min(KAH.MAX_POINTS, KAH.points + 20)
 				H.changeStatus("weakened", -3 SECONDS)
 		return
 
@@ -333,7 +337,7 @@
 /datum/targetable/kudzu/seed
 	name = "Manipulate Seed"
 	desc = "Create or manipulate a plant seed by using the resources available to the kudzu!"
-	icon_state = "seec"
+	icon_state = "seed"
 	targeted = 0
 	cooldown = 1 MINUTES
 	pointCost = 40
@@ -362,7 +366,7 @@
 
 	proc/manipulate(var/obj/item/seed/S, var/power as num, var/mob/user)
 		if (!istype(S)) return //Should never happen but byond has ruined me.
-		
+
 		var/datum/plantgenes/DNA = S.plantgenes
 
 		var/amount = 5 + (power - 1)*5			//if power is 1, amount is 5| if power is 2, amount is 10| if power is 3, amount is 15
@@ -427,12 +431,12 @@
 /datum/targetable/kudzu/growth
 	name = "Growth"
 	desc = "Encourage rapid growth of plant life! Use on the ground to make kudzu and on plant pots to add nutrients!"
-	icon_state = "seec"
+	icon_state = "growth"
 	targeted = 1
 	target_anything = 1
 	cooldown = 15 SECONDS
 	pointCost = 40
-	max_range = 2
+	max_range = 1
 
 	cast(atom/target)
 		//For giving nutrients to plantpots
@@ -449,6 +453,12 @@
 			if (T.density)
 				boutput(holder.owner, "<span class='alert'>The kudzu can't seem to find purchase on this turf!</span>")
 				return 1
+			//all the objects that kudzu can't grow on. Sans other kudzu turfs, cause we have a special interaction for that.
+			for (var/obj/O in T.contents)
+				if (istype(O, /obj/window) || istype(O, /obj/forcefield) || istype(O, /obj/blob)|| istype(O, /obj/kudzu_marker))
+					boutput(holder.owner, "<span class='alert'>The kudzu can't seem to find purchase on this turf!</span>")
+					return 1
+
 
 			var/obj/spacevine/kudzu_tile = locate(/obj/spacevine) in T.contents
 			//If used on a current tile, call update_self() and give em more to_spread
@@ -464,8 +474,91 @@
 
 				boutput(holder.owner, "<span class='notice'>You mentally redirect some nutrients towards [kudzu_tile] to help it and the surrounding kudzu grow.</span>")
 			else
-				new/obj/spacevine/living(location=T, to_spread=4)
+				new/obj/spacevine/living(loc=T, to_spread=4)
 				boutput(holder.owner, "<span class='notice'>Some of the kudzu soaked in nutrients attached to your body detaches and finds a new home on [T].</span>")
+
+
+/datum/targetable/kudzu/vine_appendage
+	name = "Use-Vine"
+	desc = "Manipulate your surroundings with a vine!"
+	icon_state = "vine-0"		//	and "vine-1"
+	targeted = 0
+	cooldown = 0
+	pointCost = 0
+	check_range = 0
+	special_screen_loc = "WEST,CENTER+3"
+	var/obj/item/kudzu/kudzumen_vine/vine = null
+	var/active = 0
+
+	New(var/datum/abilityHolder/kudzu/holder)
+		..(holder)
+
+		vine = new/obj/item/kudzu/kudzumen_vine(holder?.owner)		//make the vine item in
+
+	cast()
+		var/mob/owner = holder?.owner
+		if (!istype(owner))
+			logTheThing("debug", "no owner for this kudzu ability. [src]")
+			return 1
+		//turn on
+		if (!active)
+			//if you can't drop the item in the active hand, just gotta show em an error.
+			var/obj/item/I = owner.equipped()
+			if (I?.cant_drop)
+				boutput(owner, "<span class='alert'>You're holding [I] in your hand, but you can't drop it, it's preventing you from controlling your vine.</span>")
+				return 1
+
+			//Try to put the vine in their hand. If it fails, try to drop the item and put it in their hand after. If that fails, you're fucked.
+			var/success = owner.put_in_hand(vine)
+			if (success)
+				active = 1
+				icon_state = "vine-1"
+				return 0
+			else
+				owner.drop_item()
+				var/success2 = owner.put_in_hand(vine)
+				if (success2)
+					active = 1
+					icon_state = "vine-1"
+					return 0	//we're done successfully
+				else
+					boutput(owner, "Something weird happened, you tried to pick up [vine], but no. Call 1-800-CODER.")
+					return 1
+
+		//turn off
+		else
+			if (holder?.owner.is_in_hands(vine))
+				return attempt_vine_drop(vine, owner)
+			else
+				//if it's not in their hands, where it should be, check if it's in their contents, if not fail.
+				var/obj/item/kudzu/kudzumen_vine/V = locate(/obj/item/kudzu/kudzumen_vine) in holder?.owner.contents
+				if (istype(V))
+					return attempt_vine_drop(V, owner)
+
+				else
+					boutput(owner, "Can't find your vine to put away. Call 1-800-CODER.")
+					return 1
+
+
+	//I know. success = 0 and failure = 1. Ask whoever wrote ability casts.
+	proc/attempt_vine_drop(var/obj/item/kudzu/kudzumen_vine/V, var/mob/owner)
+		//Total hack. Must think of a better way to do this one day. But not today.
+		V.cant_drop = 0
+		var/success = owner.drop_item(V)
+		V.cant_drop = 1
+		if (success)
+			active = 0
+			icon_state = "vine-0"
+			return 0
+		else
+			return 1
+
+/obj/screen/kudzu
+	var/datum/abilityHolder/kudzu/holder
+
+	New(var/datum/abilityHolder/kudzu/holder)
+		..()
+		src.holder = holder
 
 /obj/screen/kudzu/meter
 	icon = 'icons/misc/32x64.dmi'
@@ -475,10 +568,6 @@
 	var/theme = null // for wire's tooltips, it's about time this got varized
 	var/cur_meter_location = 0
 	var/last_meter_location = 0			//the amount of points at the last update. Used for deciding when to redraw the sprite to have less progress
-	var/datum/abilityHolder/kudzu/holder
-
-	New(var/datum/abilityHolder/kudzu/holder)
-		src.holder = holder
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
@@ -497,7 +586,7 @@
 			usr.client.tooltipHolder.hideHover()
 
 	proc/update()		//getting weird numbers in here
-		cur_meter_location = clamp(round((max(holder.points,0)/holder.MAX_POINTS)*11), 0, 11)	//length of meter
+		cur_meter_location = clamp(round((max(holder?.points,0)/holder?.MAX_POINTS)*11), 0, 11)	//length of meter
 		if (cur_meter_location != last_meter_location)
 			src.icon_state ="viney-[cur_meter_location]"
 
@@ -505,14 +594,15 @@
 
 /obj/screen/kudzu/growth_amount
 	icon = 'icons/misc/kudzu_plus.dmi'
-	icon_state = "kudzu-template"
+	icon_state = "kudzu-indicator"
 	name = "Kudzu Growth"
 	screen_loc = "WEST,CENTER+4"
 	var/theme = null // for wire's tooltips, it's about time this got varized
 	var/datum/controller/process/kudzu/kudzu_controller
 	var/amount = 0
 
-	New(var/datum/controller/process/kudzu/K)
+	New(var/datum/abilityHolder/kudzu/holder, var/datum/controller/process/kudzu/K)
+		..(holder)
 		if (istype(K))
 			kudzu_controller = K
 			amount = length(K.kudzu)
@@ -552,3 +642,52 @@
 		else
 			src.maptext = "<div style='font-size:7px; color:maroon;text-align:center;'>[amount]</div>"
 			src.maptext_y = 10
+
+//This will be the hud element that contains a vine thingy which covers up the left and right hand hud ui elements
+/obj/screen/kudzu/vine_hands_cover
+	icon = 'icons/misc/kudzu_plus.dmi'		//probably 64x32 later
+	icon_state = "kudzu-template"
+	name = "Kudzu Growth"
+	screen_loc = "WEST,CENTER+4"
+	var/theme = null // for wire's tooltips, it's about time this got varized
+	var/amount = 0
+
+
+/obj/item/kudzu/kudzumen_vine
+	name = "vine"
+	desc = "It's a vine attached to a kudzuperson."
+	icon = 'icons/misc/kudzu_plus.dmi'
+	icon_state = "vine-item"
+	// inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	// item_state = "knife"
+	force = 5.0
+	throwforce = 5.0
+	throw_range = 5
+	hit_type = DAMAGE_BLUNT
+	burn_type = 1
+	stamina_damage = 30
+	stamina_cost = 15
+	stamina_crit_chance = 50
+	cant_self_remove = 1
+	cant_other_remove = 1
+	cant_drop = 1		//if they drop it, we'll just try to find the ability holder, otherwise, destroy itself. Non-kudzumen shouldn't see this item.
+
+	dropped(mob/user)
+		..()
+		if (iskudzuman(user))
+			src.set_loc(user)
+			boutput(user, "<span class='notice'>[src] wraps back around your body, giving you a snuggly hug.</span>")
+
+			//This isn't supposed to be dropped. We'll try to cast the ability to sync it if it does though.
+			// //find abilityholder and cast ability to put it back in the guy.
+			// var/datum/abilityHolder/kudzu/KH = user.get_ability_holder(/datum/abilityHolder/kudzu)
+			// if (istype(KH))
+			// 	var/datum/targetable/kudzu/vine_appendage/VA = KH.getAbility(/datum/targetable/kudzu/vine_appendage)
+			// 	VA.cast()
+		else
+			boutput(user, "<span class='alert'>[src] breaks apart in your hands.</span>")
+			qdel(src)
+
+	attack(mob/M as mob, mob/user as mob, def_zone, is_special = 0)
+		..()
+

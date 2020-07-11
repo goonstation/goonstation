@@ -23,9 +23,9 @@
 			//var/obj/spacevine/kudzu = new( A )
 			//kudzu.Life()
 			if (prob(1))
-				new /obj/spacevine/alien/living(location=A,to_spread=src.to_spread)
+				new /obj/spacevine/alien/living(loc=A,to_spread=src.to_spread)
 			else
-				new /obj/spacevine/living(location=A, to_spread=src.to_spread)
+				new /obj/spacevine/living(loc=A, to_spread=src.to_spread)
 			boutput( user, "You plant the [src] on the [A]." )
 			logTheThing( "combat", user, null, "plants [src] (kudzu) at [log_loc(src)]." )
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
@@ -59,10 +59,10 @@
 			return
 		var/kudzloc = isturf(startturf) ? startturf : pick(kudzustart)
 		if (prob(1) || aggressive)
-			var/obj/spacevine/alien/living/L = new /obj/spacevine/alien/living(location=kudzloc, to_spread = KUDZU_TO_SPREAD_INITIAL)
+			var/obj/spacevine/alien/living/L = new /obj/spacevine/alien/living(loc=kudzloc, to_spread = KUDZU_TO_SPREAD_INITIAL)
 			L.set_loc(kudzloc)
 		else
-			var/obj/spacevine/living/L = new /obj/spacevine/living(location=kudzloc, to_spread = KUDZU_TO_SPREAD_INITIAL)
+			var/obj/spacevine/living/L = new /obj/spacevine/living(loc=kudzloc, to_spread = KUDZU_TO_SPREAD_INITIAL)
 			L.set_loc(kudzloc)
 
 	admin_call(var/source)
@@ -131,9 +131,9 @@
 			return 0
 		return 1
 
-	New(turf/location, var/to_spread = KUDZU_TO_SPREAD_INITIAL)
+	New(turf/loc, var/to_spread = KUDZU_TO_SPREAD_INITIAL)
 		src.to_spread = to_spread
-		var/turf/T = get_turf(location)
+		var/turf/T = get_turf(loc)
 		if (istype(T, /turf/space))
 			qdel(src)
 			return 1
@@ -241,9 +241,13 @@
 			return
 
 		if (istype(O, /obj/machinery/door))
+			var/obj/machinery/door/door = O
+			if(!density)
+				dogrowth = 1
+				continue
 			if (door_open_prob())
 				//force open doors too and keep it open
-				var/obj/machinery/door/door = O
+				door.interrupt_autoclose = 1
 				// var/temp_op = door.operating
 				// door.operating = 1
 				// door.locked = 0
@@ -256,7 +260,7 @@
 				dogrowth = 0
 
 	if (dogrowth == 1)
-		var/obj/V = new src.vinepath(location=Vspread, to_spread=to_spread-1)
+		var/obj/V = new src.vinepath(loc=Vspread, to_spread=to_spread-1)
 		V.set_loc(Vspread)
 	if (src.growth < 20)
 		src.growth++
