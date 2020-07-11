@@ -14,7 +14,6 @@
 	density = 1
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
-	req_access = list(access_medlab) //For premature unlocking.
 	object_flags = CAN_REPROGRAM_ACCESS
 	mats = 15
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
@@ -46,7 +45,7 @@
 	var/failed_tick_counter = 0 // goes up while someone is stuck in there and there's not enough meat to clone them, after so many ticks they'll get dumped out
 
 	var/message = null
-	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
+	var/list/mailgroups
 	var/net_id = null
 	var/pdafrequency = 1149
 	var/datum/radio_frequency/pda_connection
@@ -57,6 +56,9 @@
 
 	New()
 		..()
+		req_access = list(access_medlab) //For premature unlocking.
+		mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
+
 		var/datum/reagents/R = new/datum/reagents(100)
 		reagents = R
 		R.my_atom = src
