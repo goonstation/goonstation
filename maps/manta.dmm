@@ -3320,7 +3320,7 @@
 /area/ghostdrone_factory)
 "aiS" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/space,
+/turf/simulated/floor/grime,
 /area/ghostdrone_factory)
 "aiT" = (
 /obj/machinery/camera{
