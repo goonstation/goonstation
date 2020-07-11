@@ -78,7 +78,7 @@
 					<A href='?src=\ref[src];type=longbottle'>Long Bottle</A><br>
 					<A href='?src=\ref[src];type=rectangularbottle'>Rectangular Bottle</A><br>
 					<A href='?src=\ref[src];type=squarebottle'>Square Bottle</A><br>
-					<A href='?src=\ref[src];type=masculinebottle'>Masculine Bottle</A><br>
+					<A href='?src=\ref[src];type=masculinebottle'>Wide Bottle</A><br>
 					<A href='?src=\ref[src];type=drinking'>Drinking Glass</A><br>
 					<A href='?src=\ref[src];type=oldf'>Old Fashioned Glass</A><br>
 					<A href='?src=\ref[src];type=pitcher'>Pitcher</A><br>
