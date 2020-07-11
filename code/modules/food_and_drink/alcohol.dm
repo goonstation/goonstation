@@ -456,7 +456,7 @@
 	initial_volume = 50
 
 /obj/item/reagent_containers/food/drinks/bottle/empty/masculine
-	name = "masculine bottle"
+	name = "wide bottle"
 	desc = "A bottle shaped like the ones used to hold tequila."
 	icon_state = "bottle-tequila"
 	bottle_style = "tequila"
