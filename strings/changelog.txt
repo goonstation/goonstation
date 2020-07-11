@@ -1,4 +1,9 @@
 
+(t)sat jul 11 20
+(u)MarkNstein
+(p)1435
+(e)🐛🗺|bug, mapping
+(+)Manta: Armory access fixed, requirements match other maps.
 (t)fri jul 10 20
 (u)mbc
 (+)Gunshark bullets no longer embed implants.
