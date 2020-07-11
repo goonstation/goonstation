@@ -1,5 +1,9 @@
 
 (t)sat jul 11 20
+(u)Tarmunora
+(p)1354
+(e)🐛|bug
+(+)Fix monkeys incorrectly astral projecting melee attacks.
 (u)MarkNstein
 (p)1435
 (e)🐛🗺|bug, mapping
