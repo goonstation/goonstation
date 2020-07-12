@@ -1,4 +1,9 @@
 
+(t)sun jul 12 20
+(u)Tarmunora
+(p)1447
+(e)⚖🐛|balance, bug
+(+)Fix elecflashes shocking electricity-immune mobs
 (t)sat jul 11 20
 (u)Flaborized
 (p)1434
