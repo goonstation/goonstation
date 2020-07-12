@@ -3758,8 +3758,8 @@ datum
 			description = "A warm, late night drink, usually enjoyed during long winter nights."
 			reagent_state = LIQUID
 
-		fooddrink/grenandine
-			name = "grenandine"
+		fooddrink/grenadine
+			name = "grenadine"
 			id = "grenadine"
 			fluid_r = 234
 			fluid_g = 19
