@@ -504,15 +504,17 @@
 		
 		// Hotswap tools on the fly!
 		else if (istype(W, /obj/item/device/guardbot_tool) && !src.budgun)
+			var/turf/Tdurg = get_turf(src)
 			if (locked)
 				boutput(user, "<span class='alert'>The tool port is locked!</span>")
-			else if (!src.tool)
+			else if (src.tool == /obj/item/device/guardbot_tool/gun)
 				user.visible_message("<b>[user]</b> inserts the [W] into [src].","You insert the [W] into [src].")
 				src.tool = W
 				src.tool.master = src
 				W.set_loc(src)
 				user.u_equip(W)
 			else
+				src.tool.set_loc(Tdurg)
 				user.visible_message("<b>[user]</b> inserts the [W] into [src], swapping out the old [tool].","You insert the [W] into [src], swapping out the old [tool].")
 				src.tool = W
 				src.tool.master = src
@@ -521,7 +523,7 @@
 		
 		//Give em a gun, if they don't already have one
 		//Not a hotswap, only if there's no gun and no tool
-		else if (istype(W, /obj/item/gun) && !src.budgun && !src.tool)
+		else if (istype(W, /obj/item/gun) && !src.budgun && (src.tool == /obj/item/device/guardbot_tool/gun))
 			var/legalweapon = 0
 			if (W.type in src.budgun_whitelist)
 				legalweapon = 1
@@ -558,13 +560,16 @@
 					src.budgun = null
 					hasgun = 0
 					gun = null
-			else if (src.tool)
+			else if (src.tool && (src.tool != /obj/item/device/guardbot_tool/gun))
 				if (src.locked)
 					user.visible_message("<b>[user]</b> tries to pry the tool out of [src], but it's locked firmly in place!","You try to pry the gun off of [src]'s gun mount, but it's locked firmly in place!")
 				else
 					src.tool.set_loc(Tdurg)
-					src.visible_message("<span class='alert'>[user] pries the [tool] from [name]'s cold, metal hand!</span>", "<span class='alert'>You pry the [tool] from [name]'s cold, metal hand.</span>")
-					src.tool = null
+					src.visible_message("<span class='alert'>[user] pries the [tool] out of [name]'s tool port!</span>", "<span class='alert'>You pry the [tool] out of [name]'s tool port!</span>")
+					src.tool = /obj/item/device/guardbot_tool/gun
+			else if (src.tool && (src.tool == /obj/item/device/guardbot_tool/gun))
+				boutput(user, "<span class='alert'>There's no tool to remove!</span>")
+
 
 		else
 			switch(W.hit_type)
@@ -625,6 +630,9 @@
 		return
 
 	process()
+
+		src.visible_message("<span class='alert'>I procced!!!</span>", "<span class='alert'>I procced!!!</span>")
+
 		if (icon_needs_update)
 			src.update_icon()
 
@@ -655,22 +663,6 @@
 				src.wakeup()
 
 			return
-		
-		////// GUN HANDLER THING
-		
-		if (src.budgun)
-			src.tool.is_gun = 1
-			src.tool.is_stun = 1
-			src.tool.is_lethal = 1
-		
-		////// END OF GUN HANDLER THING
-		
-		////// TOOL CHANGE HANDLER THING
-		
-		// if (src.tool == null)
-			
-		
-		////// THE END OF THAT THING
 		
 		if(src.reply_wait)
 			src.reply_wait--
@@ -824,7 +816,7 @@
 			Ov.icon = 'icons/effects/214x246.dmi'
 			Ov.icon_state = "explosion"
 
-			if(src.tool)
+			if(src.tool && src.tool != /obj/item/device/guardbot_tool/gun)
 				src.tool.set_loc(T)
 			if(src.budgun)
 				src.budgun.set_loc(T)
@@ -837,7 +829,7 @@
 			var/list/throwparts = list()
 			throwparts += new /obj/item/parts/robot_parts/arm/left(T)
 			throwparts += core
-			if(src.tool)
+			if(src.tool && src.tool != /obj/item/device/guardbot_tool/gun)
 				throwparts += src.tool
 			if(src.budgun)
 				throwparts += src.budgun
@@ -1002,9 +994,6 @@
 			return 0
 
 		bot_attack(var/atom/target as mob|obj, lethal=0)
-			if(src.tool)
-				var/is_ranged = get_dist(src, target) > 1
-				src.tool.bot_attack(target, src, is_ranged, lethal)
 			if(src.budgun)
 				shotcount = (1 + src.fastgun)	// Fastgun module makes it shoot more
 				while(shotcount > 0 && target)
@@ -1014,9 +1003,9 @@
 				if (istype(src.budgun, /obj/item/gun/kinetic))
 					var/obj/item/gun/kinetic/shootgun = src.budgun
 					if (ammofab)	// Can we build our own ammo?
-						if (shootgun.ammo && (shootgun.ammo.amount_left < shootgun.ammo.max_amount))
+						if (shootgun.ammo && shootgun.ammo.max_amount && (shootgun.ammo.amount_left <= 1))
 							if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL))
-								cell.charge -= ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio))
+								cell.charge -= ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 2))
 								shootgun.ammo.amount_left = shootgun.ammo.max_amount
 				else if (istype(src.budgun, /obj/item/gun/energy))
 					var/obj/item/gun/energy/pewgun = src.budgun
@@ -1029,6 +1018,9 @@
 
 				src.overlays -= image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)
 				src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)	// Update the held gun sprite
+			else if(src.tool && (src.tool != /obj/item/device/guardbot_tool/gun))
+				var/is_ranged = get_dist(src, target) > 1
+				src.tool.bot_attack(target, src, is_ranged, lethal)
 			return
 
 		post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
@@ -1228,6 +1220,20 @@
 				return 1
 
 			return 0
+			
+	//phantom Gun tool
+	gun
+		name = "Gun"
+		desc = "You shouldn't see this 3="
+		icon_state = "tool_generic"
+		tool_id = "GUN"
+		is_gun = 1
+		is_stun = 1
+		is_lethal = 1
+
+		// Updated for new projectile code (Convair880).
+		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
+			if (..()) return
 
 	//A syringe gun module. Mercy sakes.
 	medicator
@@ -1974,7 +1980,7 @@
 
 						else
 							var/targdist = get_dist(master, arrest_target)
-							if((targdist <= 1) || (master.tool && master.tool.is_gun) || master.budgun)	// If you have a gun, USE IT AAA
+							if((targdist <= 1) || master.budgun || (master.tool == /obj/item/device/guardbot_tool/gun))	// If you have a gun, USE IT AAA
 								if (!isliving(arrest_target) || isdead(arrest_target))
 									mode = 0
 									drop_arrest_target()
@@ -4016,7 +4022,7 @@
 		Ov.icon = 'icons/effects/214x246.dmi'
 		Ov.icon_state = "explosion"
 
-		if(src.tool)
+		if(src.tool && src.tool != /obj/item/device/guardbot_tool/gun)
 			src.tool.set_loc(T)
 		if(src.budgun)
 			src.budgun.set_loc(T)
