@@ -1,5 +1,9 @@
 
 (t)sun jul 12 20
+(u)AwkwardDryad
+(p)1369
+(e)🗺|mapping
+(*)Cogmap 1, Cogmap 2, and Destiny research now have a quantum telescope computer!
 (u)Tarmunora
 (p)1447
 (e)⚖🐛|balance, bug
