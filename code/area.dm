@@ -2823,14 +2823,14 @@ area/station/security/visitation
 	..()
 	if (istype(O,/obj/blob))
 		blob_list += O
-	return 1
 
 	if (!isliving(O) || issilicon(O) || isintangible(O))
-		return
+		return 1
 
 	if (motioncamera)
 		motioncamera.newTarget(O)
 	popUpTurrets()
+	return 1
 
 /area/station/turret_protected/Exited(O)
 	..()
