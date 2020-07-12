@@ -1,6 +1,10 @@
 
 (t)sun jul 12 20
 (u)MarkNstein
+(p)1363
+(e)🆕|feature
+(+)PDA DEPT list is now collapsible.
+(u)MarkNstein
 (p)1362
 (e)🆕|feature
 (+)New mail group: Station Repair. Engineers, mechanics, and janitors.
