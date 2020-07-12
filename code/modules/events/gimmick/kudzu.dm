@@ -181,6 +181,9 @@
 			dmg = 3
 		else if (W.hit_type == DAMAGE_STAB)
 			dmg = 2
+		else if (W.hit_type == DAMAGE_BLUNT && istype(W, /obj/item/kudzu/kudzumen_vine))
+			return
+
 		dmg *= isnum(W.force) ? min((W.force / 2), 5) : 1
 		DEBUG_MESSAGE("[user] damaging [src] with [W] [log_loc(src)]: dmg is [dmg]")
 		src.growth -= dmg
@@ -242,7 +245,7 @@
 
 		if (istype(O, /obj/machinery/door))
 			var/obj/machinery/door/door = O
-			if(!density)
+			if(!door.density)
 				dogrowth = 1
 				continue
 			if (door_open_prob())

@@ -56,6 +56,25 @@
 		..()
 		update_maptext()
 
+/obj/machinery/plantpot/kudzu
+	name = "hydroponics tray"
+	desc = "A tray filled with nutrient solution capable of sustaining plantlife... Made of plants."
+	icon_state = "kudzutray"
+
+	attackby(var/obj/item/W as obj, var/mob/user as mob)
+		//Can only attempt to destroy the plant pot if the plant in it is dead or empty.
+		if(!src.current || src.dead)
+			if (destroys_kudzu_object(src, W, user))
+				if (prob(40))
+					user.visible_message("<span class='alert'>[user] savagely attacks [src] with [W]!</span>")
+				else
+					user.visible_message("<span class='alert'>[user] savagely attacks [src] with [W], destroying it!</span>")
+					qdel(src)
+					return
+			else
+				return ..()
+		..()
+
 /obj/machinery/plantpot
 	// The central object for Hydroponics. All plant growing and most of everything goes on in
 	// this object - that said you don't want to have too many of them on the map because they

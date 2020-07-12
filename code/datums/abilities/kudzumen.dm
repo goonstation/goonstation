@@ -435,7 +435,7 @@
 	targeted = 1
 	target_anything = 1
 	cooldown = 15 SECONDS
-	pointCost = 40
+	pointCost = 30
 	max_range = 1
 
 	cast(atom/target)
@@ -672,6 +672,10 @@
 	cant_other_remove = 1
 	cant_drop = 1		//if they drop it, we'll just try to find the ability holder, otherwise, destroy itself. Non-kudzumen shouldn't see this item.
 
+	New()
+		..()
+		src.build_buttons()
+
 	dropped(mob/user)
 		..()
 		if (iskudzuman(user))
@@ -690,4 +694,87 @@
 
 	attack(mob/M as mob, mob/user as mob, def_zone, is_special = 0)
 		..()
+
+		if (prob(20))
+			var/turf/target = get_edge_target_turf(user, get_dir(user, M))
+			user.visible_message("<span class='alert'>[user] sends [M] flying with mighty oak-like strength!</span>")
+			SPAWN_DBG(0)
+				M.throw_at(target, 5, 1)
+
+/obj/item/kudzu/kudzumen_vine/proc/build_buttons()
+	if (src.contextActions != null)	//dont need rebuild
+		return
+	src.contextActions = list() //empty list would mean we are ready for deconstruction. otherwise you need to clear contexts by tool usage
+	contextActions += new/datum/contextAction/kudzu/plantpot()
+	contextActions += new/datum/contextAction/kudzu/plantmaster()
+	return 1
+
+
+/datum/action/bar/icon/kudzu_shaping
+	duration = 5 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "kudzu_shaping"
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "kudzu_shaping"
+	var/obj/item/kudzu/kudzumen_vine/vine_arm
+	var/obj/spacevine/kudzu
+	var/creation_path
+
+	New(var/obj/spacevine/kudzu, var/obj/item/kudzu/kudzumen_vine/vine_arm, var/creation_path, var/extra_time as num)
+		src.kudzu = kudzu
+		src.vine_arm = vine_arm
+		src.creation_path = creation_path
+		if (!ispath(creation_path))
+			boutput(owner, "Invalid creation object path. Call 1-800-CODER")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		duration += extra_time
+
+		..()
+
+	onUpdate()
+		..()
+		if(get_dist(owner, kudzu) > 1 || kudzu == null || kudzu.growth < 20 || owner == null)	//20 growth is currently the lowest for dense kudzu. Should be a constant.
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(get_dist(owner, kudzu) > 1 ||  kudzu == null || kudzu.growth < 20 || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		if(get_dist(owner, kudzu) > 1 || kudzu == null || kudzu.growth < 20 || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (!iskudzuman(owner))
+			boutput(owner, "You're not a kudzuman, you can't bend the kudzu to your will!")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		kudzu.growth = 1
+		new creation_path(get_turf(kudzu))
+
+
+	onInterrupt()
+		if (kudzu && owner)
+			boutput(owner, "<span class='alert'>Your kudzu shaping was interrupted!</span>")
+		..()
+
+
+//O is obj to be destroyed, W is obj used to destroy.
+//This is total shit too, but I'm in a hurry again. I'll be back, -Kyle
+/proc/destroys_kudzu_object(var/obj/O, var/obj/item/W as obj, var/mob/user)
+		var/destroyed = 0
+		if (istool(W, TOOL_CUTTING | TOOL_SAWING | TOOL_SCREWING | TOOL_SNIPPING | TOOL_WELDING)) destroyed = 1
+		else if (istype(W, /obj/item/axe)) destroyed = 1
+		else if (istype(W, /obj/item/circular_saw)) destroyed = 1
+		else if (istype(W, /obj/item/kitchen/utensil/knife)) destroyed = 1
+		else if (istype(W, /obj/item/scalpel)) destroyed = 1
+		else if (istype(W, /obj/item/sword)) destroyed = 1
+		else if (istype(W, /obj/item/saw)) destroyed = 1
+
+		return destroyed
 
