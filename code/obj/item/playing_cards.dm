@@ -168,6 +168,8 @@
 			if (target)
 				if (ismob(target))
 					target:put_in_hand_or_drop(CardStack)
+				else if (isturf(target))
+					CardStack.set_loc(target)
 				else
 					CardStack.set_loc(target.loc)
 		if (!Card || !istype(Card, /datum/playing_card))
@@ -296,9 +298,9 @@
 				usr, "<span class='notice'>You draw [other_stupid_var] from [src][usr == target ? "." : " and deal it to [target]."]</span>", \
 				target, "<span class='notice'>[target == usr ? "You draw" : "<b>[usr]</b> draws"] a card from [src][target == usr ? "." : " and deals it to you."]</span>")
 				src.draw_card(null, target, deal_face_up, Card)
-			else if (istype(target, /obj/table))
+			else if (istype(target, /obj/table) || istype(target, /turf/simulated/floor) || istype(target,/turf/unsimulated/floor))
 				usr.visible_message("<span class='notice'><b>[usr]</b> draws [other_stupid_var] from [src] and places it on [target].</span>",\
-				"<span class='notice'>You draw [other_stupid_var] from [src] and place it on [target].[other_stupid_var]</span>")
+				"<span class='notice'>You draw [other_stupid_var] from [src] and place it on [target]. [other_stupid_var]</span>")
 				src.draw_card(null, target, deal_face_up, Card)
 			else if (istype(target, /obj/item/playing_cards))
 				usr.visible_message("<span class='notice'><b>[usr]</b> draws [other_stupid_var] from [src] and adds it to [target].</span>",\
