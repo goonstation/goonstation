@@ -1022,15 +1022,16 @@ proc/default_frequency_color(freq)
 // Enables RP mode (normally set by build process, but you can enable it locally here! wow!)
 // #define RP_MODE
 
-
+// Ass Jam disabled for Nightshade servers
+#define ASS_JAM 0
 //Ass Jam! enables a bunch of wacky and not-good features. BUILD LOCALLY!!!
-#ifdef RP_MODE
-#define ASS_JAM 0
-#elif BUILD_TIME_DAY == 13
-#define ASS_JAM 1
-#else
-#define ASS_JAM 0
-#endif
+//#ifdef RP_MODE
+//#define ASS_JAM 0
+//#elif BUILD_TIME_DAY == 13
+//#define ASS_JAM 1
+//#else
+//#define ASS_JAM 0
+//#endif
 
 // time for johns madden
 #define FOOTBALL_MODE 0
