@@ -1648,16 +1648,6 @@ datum
 			mix_sound = 'sound/voice/farts/fart3.ogg'
 			drinkrecipe = 1
 
-		methacola
-			name = "Methacola"
-			id = "methacola"
-			result = "methacola"
-			required_reagents = list("methamphetamine" = 1, "cola" = 1)
-			result_amount = 2
-			mix_phrase = "You watch as the amphetamines dissolve into the dark void of the soft drink."
-			mix_sound = 'sound/misc/drinkfizz.ogg'
-			drinkrecipe = 1
-
 		pink_lemonade
 			name = "Pink lemonade"
 			id = "pinklemonade"
