@@ -571,9 +571,9 @@
 						boutput(usr, "<span class='notice'>$[t1] added to [R.fields["name"]]'s account from station budget.</span>")
 					else boutput(usr, "<span class='alert'>Error selecting withdraw/deposit mode.</span>")
 				else if(href_list["payroll"])
-					if(world.time >= src.payroll_rate_limit_time) //slow the fuck down cowboy
+					if(world.time >= src.payroll_rate_limit_time)
 						src.payroll_rate_limit_time = world.time + (10 SECONDS)
-					else
+					else //slow the fuck down cowboy
 						boutput(usr, "<span class='alert'>Nanotrasen policy forbids the modification station payroll status more than once every ten seconds!</span>")
 						return
 					if (wagesystem.pay_active)
