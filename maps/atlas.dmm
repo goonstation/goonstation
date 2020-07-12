@@ -3145,7 +3145,7 @@
 	name = "Cargo Shutter Control";
 	pixel_x = 25
 	},
-/obj/table/auto,
+/obj/machinery/manufacturer/qm,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster)
 "iw" = (

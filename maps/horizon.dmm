@@ -27462,6 +27462,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/machinery/manufacturer/qm,
 /turf/simulated/floor/black,
 /area/station/quartermaster)
 "bko" = (
