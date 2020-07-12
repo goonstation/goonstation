@@ -2821,13 +2821,14 @@ area/station/security/visitation
 
 /area/station/turret_protected/Entered(O)
 	..()
-	if (isliving(O))
-		if(!issilicon(O))
-			if (motioncamera)
-				motioncamera.newTarget(O)
-			popUpTurrets()
 	if (istype(O,/obj/blob))
 		blob_list += O
+
+	if (!isliving(O) || issilicon(O) || isintangible(O))
+		return 1
+
+	motioncamera?.newTarget(O)
+	popUpTurrets()
 	return 1
 
 /area/station/turret_protected/Exited(O)

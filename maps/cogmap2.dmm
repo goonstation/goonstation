@@ -52316,8 +52316,8 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/disposalpipe/trunk/mail/south,
 /obj/machinery/disposal/mail/small/autoname/research/telescience/east,
+/obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/caution/corner/nw,
 /area/station/science/teleporter)
 "cjy" = (
@@ -52992,6 +52992,14 @@
 /turf/simulated/floor/circuit/green,
 /area/station/science/teleporter)
 "ckW" = (
+/obj/machinery/computer/telescope{
+	dir = 4
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/caution/west,
 /area/station/science/teleporter)
@@ -53818,6 +53826,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/caution/east{
 	dir = 8
@@ -78781,9 +78792,26 @@
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/plating,
 /area/station/mining)
+"dOs" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/science/teleporter)
 "hRi" = (
 /turf/space,
 /area/shuttle/arrival/station)
+"iFq" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/caution/west,
+/area/station/science/teleporter)
 "nKf" = (
 /obj/machinery/incubator,
 /turf/simulated/floor/white,
@@ -109791,7 +109819,7 @@ chf
 cik
 cjx
 ckW
-ckW
+iFq
 cot
 cqh
 crU
@@ -110093,7 +110121,7 @@ chf
 cil
 cjy
 ckX
-cmJ
+dOs
 cmJ
 cqi
 crV

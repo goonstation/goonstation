@@ -1,4 +1,28 @@
 
+(t)sun jul 12 20
+(u)mbc
+(*)Using the equip hotkey or button, you can now stow items into any worn storage. You must have the HUD of the storage (your backpack or whatever) opened for this to work. If no storage is found, the game  will also try to put things in your pockets.
+(u)Genessee
+(p)1427
+(e)🆕|feature
+(+)Five new types of bottle can now be printed at a Glass Recycler.
+(u)MarkNstein
+(p)1361
+(e)🆕|feature
+(+)The chaplain has their own PDA mail group: Spiritual Affairs.
+(+)The chaplain gets health-implant notifications.
+(u)Flaborized
+(p)1448
+(e)🎨|sprites
+(+)Resprited the taser shotgun and added/modified some gun in-hand sprites.
+(u)AwkwardDryad
+(p)1369
+(e)🗺|mapping
+(*)Cogmap 1, Cogmap 2, and Destiny research now have a quantum telescope computer!
+(u)Tarmunora
+(p)1447
+(e)⚖🐛|balance, bug
+(+)Fix elecflashes shocking electricity-immune mobs
 (t)sat jul 11 20
 (u)Flaborized
 (p)1434
