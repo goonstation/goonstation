@@ -297,6 +297,15 @@
 
 	..()
 
+/obj/item/device/pda2/attack_hand(mob/user as mob)
+	if(ishuman(user) || ismonkey(user))
+		var/mob/living/carbon/human/U = user
+		var/slot = U.get_slot_from_item(src)
+		if((slot == U.slot_wear_id) || (slot == U.slot_belt))
+			attack_self(user)
+			return
+	..()
+
 /obj/item/device/pda2/attack_self(mob/user as mob)
 	if(!user.literate)
 		boutput(user, "<span class='alert'>You don't know how to read, the screen is meaningless to you.</span>")
