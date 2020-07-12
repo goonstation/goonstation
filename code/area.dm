@@ -2827,8 +2827,7 @@ area/station/security/visitation
 	if (!isliving(O) || issilicon(O) || isintangible(O))
 		return 1
 
-	if (motioncamera)
-		motioncamera.newTarget(O)
+	motioncamera?.newTarget(O)
 	popUpTurrets()
 	return 1
 
