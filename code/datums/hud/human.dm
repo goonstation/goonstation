@@ -308,7 +308,16 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_belt, belt)
 					autoequip_slot(slot_back, back)
+
+
+					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
+						S.master.attackby(I, user, params)
+						return
+
+					autoequip_slot(slot_l_store, l_store)
+					autoequip_slot(slot_r_store, r_store)
 					#undef autoequip_slot
+
 					return
 
 				show_inventory = !show_inventory
@@ -351,6 +360,13 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_belt, belt)
 					autoequip_slot(slot_back, back)
+
+					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
+						S.master.attackby(I, user, params)
+						return
+
+					autoequip_slot(slot_l_store, l_store)
+					autoequip_slot(slot_r_store, r_store)
 					#undef autoequip_slot
 					return
 
