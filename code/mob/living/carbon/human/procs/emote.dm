@@ -1677,9 +1677,13 @@
 					else if (istype(src.r_hand, /obj/item/grab))
 						G = src.r_hand
 					if (G && ishuman(G.affecting))
-						src.say_verb("I'll stare the bastard in the face as [he_or_she(G.affecting)] screams to God, and I'll laugh harder when [he_or_she(G.affecting)] whimpers like a baby.")
+						var/mob/M = G.affecting
+						src.say_verb("I'll stare the bastard in the face as [he_or_she(M)] screams to God, and I'll laugh harder when [he_or_she(M)] whimpers like a baby.")
 						sleep(0.7 SECONDS)
-						src.say_verb("And when [G.affecting]'s eyes go dead, the hell I send him [him_or_her(G.affecting)] will seem like heaven after what I've done to [him_or_her(G.affecting)].")
+						if(G && G.affecting == M)
+							src.say_verb("And when [M]'s eyes go dead, the hell I send [him_or_her(M)] to will seem like heaven after what I've done to [him_or_her(M)].")
+						else
+							src.emote("laugh")
 					else if (istype(src.loc.loc, /area/station/security/detectives_office))
 						src.say_verb("As I looked out the door of my office, I realised it was a night when you didn't know your friends but strangers looked familiar.")
 						sleep(1 SECONDS)
