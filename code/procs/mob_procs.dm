@@ -445,6 +445,18 @@
 	src.mind.violated_hippocratic_oath = 1
 	return 1
 
+/proc/man_or_woman(var/mob/subject)
+	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
+		return "person"
+
+	switch (subject.gender)
+		if ("male")
+			return "man"
+		if ("female")
+			return "woman"
+		else
+			return "person"
+
 /proc/his_or_her(var/mob/subject)
 	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
 		return "their"
@@ -480,6 +492,18 @@
 			return "she"
 		else
 			return "they"
+
+/proc/hes_or_shes(var/mob/subject)
+	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
+		return "they're"
+
+	switch (subject.gender)
+		if ("male")
+			return "he's"
+		if ("female")
+			return "she's"
+		else
+			return "they're"
 
 /proc/himself_or_herself(var/mob/subject)
 	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
