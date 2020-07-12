@@ -15,7 +15,7 @@
 
 **Wiki:** [wiki.ss13.co](https://wiki.ss13.co)
 
-**Goonstation Discord:** [0117EEzASKYV2vtek](https://discord.gg/0117EEzASKYV2vtek)
+**Goonstation Discord:** [zd8t6pY](https://discord.gg/zd8t6pY)
 
 This is the codebase for the Goonstation branch of [Space Station 13](https://spacestation13.com/).
 

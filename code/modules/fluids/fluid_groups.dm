@@ -572,7 +572,7 @@
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			//air specific (messy)
-			UNLINT(fluid_ma.opacity = master_opacity) //TODO: ZeWaka: Stop unlinting this when DreamChecker +1.4 comes out
+			fluid_ma.opacity = master_opacity
 
 			F.appearance = fluid_ma
 

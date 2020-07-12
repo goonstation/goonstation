@@ -46,7 +46,8 @@ var/list/job_mailgroup_list = list(
 	"Medical Director" = MGD_MEDRESEACH,
 	"Roboticist" = MGD_MEDRESEACH,
 	"Geneticist" = MGD_MEDRESEACH,
-	"Medical Doctor" = MGD_MEDBAY)
+	"Medical Doctor" = MGD_MEDBAY,
+	"Chaplain" = MGD_SPIRITUALAFFAIRS)
 
 //Used for PDA department paging.
 var/list/page_departments = list(
@@ -57,7 +58,8 @@ var/list/page_departments = list(
 	"Research" = MGD_SCIENCE,
 	"Cargo" = MGD_CARGO,
 	"Botany" = MGD_BOTANY,
-	"Bar / Kitchen" = MGD_KITCHEN)
+	"Bar / Kitchen" = MGD_KITCHEN,
+	"Spiritual Affairs" = MGD_SPIRITUALAFFAIRS)
 
 /proc/get_all_jobs()
 	return list("Assistant", "Detective", "Medical Doctor", "Captain", "Security Officer",

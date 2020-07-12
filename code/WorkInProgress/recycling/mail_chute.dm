@@ -304,7 +304,7 @@
 	chapel
 		name = "Chapel"
 		mail_tag = "chapel"
-		mailgroup = "chaplain"
+		mailgroup = MGD_SPIRITUALAFFAIRS
 		message = 1
 	engineering
 		name = "Engineering"
@@ -568,7 +568,7 @@
 	chapel
 		name = "Chapel"
 		mail_tag = "chapel"
-		mailgroup = "chaplain"
+		mailgroup = MGD_SPIRITUALAFFAIRS
 		message = 1
 
 		north

@@ -913,13 +913,15 @@ var/datum/action_controller/actions
 			picker.working = 1
 			playsound(picker.loc, "sound/machines/whistlebeep.ogg", 50, 1)
 			out(owner, "<span class='notice'>\The [picker.name] starts to pick up \the [target].</span>")
-			if (picker.highpower && owner:cell)
+			if (picker.highpower && isghostdrone(owner))
+				var/mob/living/silicon/ghostdrone/our_drone = owner
+				if (!our_drone.cell) return
 				var/hpm_cost = 25 * (target.w_class * 2 + 1)
 				// Buff HPM by making it pick things up faster, at the expense of cell charge
 				// only allow it if more than double that power remains to keep it from bottoming out
-				if (UNLINT(owner:cell.charge >= hpm_cost * 2)) // i dont have the sanity to fix this
+				if (our_drone.cell.charge >= hpm_cost * 2)
 					duration /= 3
-					UNLINT(owner:cell.use(hpm_cost))
+					our_drone.cell.use(hpm_cost)
 
 	onInterrupt(var/flag) //They did something else while picking it up. I guess you dont have to do anything here unless you want to.
 		..()
