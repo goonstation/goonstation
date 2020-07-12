@@ -1,5 +1,7 @@
 
 (t)sun jul 12 20
+(u)mbc
+(*)Using the equip hotkey or button, you can now stow items into any worn storage. You must have the HUD of the storage (your backpack or whatever) opened for this to work. If no storage is found, the game  will also try to put things in your pockets.
 (u)Genessee
 (p)1427
 (e)🆕|feature
