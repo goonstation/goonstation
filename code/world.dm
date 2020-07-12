@@ -418,7 +418,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
 	diary_name = "data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log"
-	logDiary("\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------\n")
+	logDiary("\n----------------------\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n----------------------\n")
 
 	//This is used by bans for checking, so we want it very available
 	apiHandler = new()
