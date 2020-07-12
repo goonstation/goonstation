@@ -154,7 +154,7 @@
 
 						if (src.message_on)
 							if(expand_departments_list)
-								. += "<br><a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>*Collapse DEPT list*</a>"
+								. += "<a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>*Collapse DEPT list*</a>"
 								for (var/department_id in page_departments)
 									. += "<li><a href='byond://?src=\ref[src];input=message;target=[page_departments[department_id]];department=1'>DEPT-[department_id]</a></li>"
 							else
