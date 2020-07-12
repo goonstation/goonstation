@@ -1,5 +1,9 @@
 
 (t)sun jul 12 20
+(u)Flaborized
+(p)1448
+(e)🎨|sprites
+(+)Resprited the taser shotgun and added/modified some gun in-hand sprites.
 (u)AwkwardDryad
 (p)1369
 (e)🗺|mapping
