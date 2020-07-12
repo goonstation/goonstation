@@ -158,6 +158,17 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
 
+	valid_nuke_targets = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
+		"inner engineering (surrounding the singularity, not in it)" = list(/area/station/engine/inner),
+		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
+		"the inner hall of the medbay" = list(/area/station/medical/medbay),
+		"the main hallway in research" = list(/area/station/science),
+		"the chapel" = list(/area/station/chapel/main),
+		"the escape hallway" = list(/area/station/hallway/secondary/exit),
+		"the Research Director's office" = list(/area/station/crew_quarters/hor),
+		"the Chief Engineer's office" = list(/area/station/engine/engineering/ce),
+		"the kitchen" = list(/area/station/crew_quarters/kitchen))
+
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"
 	escape_centcom = /area/shuttle/escape/centcom/cogmap
