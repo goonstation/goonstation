@@ -1,5 +1,5 @@
-* {
-	font-family:Consolas,monospace;
+*{
+	font-family:'Comic Sans MS',Consolas,monospace;
 	color: rgb(25, 201, 133);
 }
 
@@ -261,12 +261,12 @@ div {
 	cursor:default;
 }
 
-.transGood {
+#transTypesGood {
 	background-color: #090;
 	color: black;
 }
 
-.transBad {
+#transTypesBad {
 	background-color: #E00;
 	color: black;
 }
@@ -305,11 +305,11 @@ div {
 
 
 .a-green {
-	color:#050;
-	background-color:#010;
+	color:rgb(0, 0, 0);
+	background-color:rgb(185, 197, 185);
 }
 .a-green-on {
-	color:#090;
+	color:rgb(0, 0, 0);
 	background-color:#0E0;
 }
 
@@ -340,6 +340,7 @@ div {
 }
 
 /*buttons*/
+/* this is the fucking fuck zone that is not vertically aligned */
 .button {
 	display:inline-block;
 	text-align:center;

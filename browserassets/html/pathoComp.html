@@ -67,8 +67,8 @@
 								<div class="annunciator a-red helpTextItem" id="annTransNo">NO</div>
 								<hr>
 								<span class="label helpTextItem">Types:</span>
-								<div class="text-field tf-med-narrow transGood helpTextItem" id="transTypesGood"></div>
-								<div class="text-field tf-med-narrow transBad helpTextItem" id="transTypesBad"></div>
+								<div class="text-field tf-med-narrow helpTextItem" id="transTypesGood"></div>
+								<div class="text-field tf-med-narrow helpTextItem" id="transTypesBad"></div>
 								<div class="text-field tf-med-long helpTextItem" id="stableType"></div>
 							</div>
 						</div>
@@ -78,13 +78,6 @@
 							<div class="button btn-med helpTextItem" id="btnAnalysisDoTest">Test DNA</div>
 							<br/>
 							<div class="button btn-med btn-xlong display-known helpTextItem" id="knownAnalyzer">Known Sequences</div>
-						</div>
-					</div>
-				</div>
-				<div class="dataPage" id="dpSplice1">
-					<h1>Select splice target</h1>
-					<div class='noborder splice-selection'>
-						<div class='noborder slot-holder' id='spliceSlots'>
 						</div>
 					</div>
 				</div>
@@ -197,9 +190,8 @@
 					This device is capable of the following:</span>
 					<ul class="bigfont">
 						<li><b>Manipulate</b><br/> Adjust the stats of the current pathogen</li>
-						<li><b>Splice</b><br/> Splice additional segments onto the current pathogen from another pathogen in order to add more symptoms - or remove them</li>
 						<li><b>Analyze</b><br/> Analyze sequences of DNA segments to discover symptoms of a higher tier</li>
-						<li><b>Samples</b><br/> Change which pathogen sample is currently selected or eject your samples</li>
+						<li><b>Samples</b><br/> Change which pathogen sample is currently selected or eject your samples.<br/>You can also splice new segments onto a pathogen or remove them to add or remove symptoms.</li>
 					</ul>
 				</div>
 
@@ -209,7 +201,6 @@
 			<div id="mainMenu">
 				<div class="button" id="btnRetMain">Main Screen</div>
 				<div class="button" id="btnManip">Manipulate</div>
-				<div class="button" id="btnSplice">Splice</div>
 				<div class="button" id="btnTester">Analyze</div>
 				<div class="button" id="btnLoadSave">Samples</div>
 			</div>

@@ -748,6 +748,11 @@
 				id: 'btnDnaEject' + i,
 				'class':'button btn-small',
 			}).appendTo(tempObj).text("EJECT");
+
+			$("<div>", {
+				id: 'btnSpliceSource' + i,
+				'class':'button btn-small',
+			}).appendTo(tempObj).text("SPLICE");
 			//new tempObj for the next row
 			tempObj = $("<div></div>", {
 									'class':'noborder'
@@ -1068,11 +1073,12 @@
 				'class':'noborder'
 			}).appendTo(finalObj);
 			//Splice button
+			/*
 			$("<div></div>", {
 				id:'btnSpliceSource' + i,
 				'class':'button btn-small'
 			}).appendTo(tempObj).text("SPLICE");
-
+			*/
 		}
 		//Bind listeners
 		$("#spliceSlots .button").click(function() {handlePushButtonClick(this, handleSpliceSelectionClick);});
@@ -1305,7 +1311,7 @@
 		//Clear source slot
 		dnaDetails[selectedSpliceSource - 1] = new dnaSlotInfo();
 		selectedSpliceSource = 0;
-		setActivePage(3); //Go back to splice selection page when finished
+		setActivePage(1); //Go back to splice selection page when finished
 		updateLoadedDependents();
 		updateMainMenuButtons();
 
@@ -1442,7 +1448,6 @@
 
 		if (data.hasOwnProperty("analysis")) {
 			var a = data.analysis;
-			// { "curr":"ABCDEF..." "prev":{analysisCallback(see below)}, "buttons":'ABCDEF'}
 			if(a.hasOwnProperty("curr")) {
 				clearAnalysisBuffer(true);
 				for(var i = 0; i < a.curr.length && i < 15; i+=3) {
@@ -1455,13 +1460,6 @@
 			if(a.hasOwnProperty("buttons"))
 				updateAnalysisButtonsFromString(a.buttons);
 			if(a.hasOwnProperty("prev")) {
-				/*
-				{valid:true/false,
-					stable:1,0,-1,
-					trans,1,0,-1,
-					seqs:["123", "456" ...]
-					conf:[25, 100 ...]}
-				*/
 				a.prev.noclear = true;
 				handleAnalysisTestCallback(a.prev);
 
@@ -1476,29 +1474,19 @@
 		if(bSuppressXmit || !typeof(data) == 'object' ) {
 			return;
 		}
-		/*
-		if(callbackHandler) {
-			data.callbackHandler = callbackHandler;
-			setTimeout(function () {receiveData(callbackHandler, debug_getCallbackDummyData(callbackHandler)) }, Math.random() * 4000);
-			setAnnunciator("#annSynch", true);
-		}
-		*/
 		var params = [];
 		for(var k in data) {
 			params.push(encodeURI(k) + "=" + encodeURI(data[k]));
 		}
 
 		var target = "?src=" + src + ";" + params.join(";");
-		//console.log(target);
 		window.location = target;
-		//alert(target);
 	}
 
 	/* DATA RECEIPT */
 
 	function receiveData(handler, data) {
 		setAnnunciator("#annSynch", false);
-		//alert("Received data: " + data + "\nProcessing with: " + handler);
 		if(remoteHandlers[handler]) {
 				data = JSON.parse(data);
 				remoteHandlers[handler](data);
@@ -1531,10 +1519,6 @@
 		if($("#" + id).hasClass("button-disabled")) {return;}
 
 		if(!isSplicing()) {	//Not splicing, everything's fine + dandy with the world.
-		/*
-			$("#mainMenu > .button").removeClass("button-selected");
-			$("#" + id).addClass("button-selected");
-			*/
 			switch(id) {
 				case "btnManip":
 					setActivePage(2);
@@ -1695,17 +1679,6 @@
 			}
 		};
 		setUIState(dataObject);
-		//new (seq, pathogenName, pathogenType, exposed, isSplicing)
-		/*
-		dnaDetails.push(new dnaSlotInfo("00020006FFFDFFF60000FFF53142E||FCB055|6A86A8|0F4CC6CC6", "ABC1", "virus", false));
-		dnaDetails.push(new dnaSlotInfo("00020006000500000000FFFB3142E||055", "ABC2", "bacteria", false));
-		dnaDetails.push(new dnaSlotInfo("00040003FFED0005FFF3FFEF51B8E||FCB", "ABC3", "parasite", false));
-		updateLoadedSection();
-		for(var i = 1; i <= 3; i++){
-			updateDnaSlot(i);
-		}
-		doExposeSlot(0);
-		*/
 	}
 
 	function debug_createDNAbuttons() {

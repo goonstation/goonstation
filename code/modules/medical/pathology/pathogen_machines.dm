@@ -870,7 +870,7 @@
 			sendSpliceInfo(1)
 
 		if (href_list["beginsplice"])
-			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICE && src.manip.loaded && src.manip.splicesource && src.manip.slots[src.manip.splicesource])
+			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_LOADER && src.manip.loaded && src.manip.splicesource && src.manip.slots[src.manip.splicesource])
 				src.manip.cache_target = src.manip.loaded.explode()
 				var/datum/pathogendna/P = src.manip.slots[src.manip.splicesource]
 				src.manip.cache_source = P.explode()
