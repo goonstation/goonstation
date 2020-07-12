@@ -198,6 +198,7 @@
 /obj/item/gun/energy/laser_gun
 	name = "laser gun"
 	icon_state = "laser"
+	item_state = "laser"
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	force = 7.0
@@ -1006,6 +1007,7 @@
 	name = "laser rifle"
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
 	icon_state = "bullpup"
+	item_state = "bullpup"
 	uses_multiple_icon_states = 1
 	force = 5.0
 
