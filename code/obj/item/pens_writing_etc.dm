@@ -30,8 +30,8 @@
 	var/webfont = null // atm this is used to add things to paper's font list. see /obj/item/pen/fancy and /obj/item/paper/attackby()
 	var/font_color = "black"
 	var/uses_handwriting = 0
-	stamina_damage = 3
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	rand_pos = 1
 	var/in_use = 0
 	var/color_name = "black"
@@ -615,13 +615,13 @@
 	var/obj/item/pen/pen = null
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "clipboard0"
-	throwforce = 0
+	throwforce = 1
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 10
 	desc = "You can put paper on it. Ah, technology!"
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 10
+	stamina_cost = 1
 	stamina_crit_chance = 5
 
 	New()

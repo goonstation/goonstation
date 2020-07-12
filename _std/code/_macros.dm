@@ -104,6 +104,7 @@ var/list/detailed_spawn_dbg = list()
 // hi here's some flockdrone BS - cirr
 #define isfeathertile(x) (istype(x, /turf/simulated/floor/feather) || istype(x, /turf/simulated/wall/auto/feather))
 #define isflock(x) (istype(x, /mob/living/intangible/flock) || istype(x, /mob/living/critter/flock))
+#define isflockstructure(x) (istype(x, /obj/flock_structure))
 
 // pick strings from cache-- code/procs/string_cache.dm
 #define pick_string(filename, key) pick(strings(filename, key))
@@ -205,3 +206,8 @@ if(istype(M, /mob/living/carbon/human)){\
 else{\
 	M.anchored = 0;}}\
 while(FALSE)
+
+
+#define area_space_nopower(x) (x.type == /area || x.type == /area/allowGenerate || x.type == /area/allowGenerate/trench) //areas where we will skip searching for shit like APCs and that do not have innate power
+												 //blahhh i think faster than istypes
+

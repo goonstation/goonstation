@@ -5,11 +5,6 @@
 /mob/living/carbon/human/emote(var/act, var/voluntary = 0)
 	var/param = null
 
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		if (P.onemote(act, voluntary))
-			return
-
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
 
 	if (src.bioHolder.HasEffect("revenant"))
@@ -20,6 +15,11 @@
 		var/t1 = findtext(act, " ", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
+
+	for (var/uid in src.pathogens)
+		var/datum/pathogen/P = src.pathogens[uid]
+		if (P.onemote(act, voluntary, param))
+			return
 
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
 	var/m_type = 1 //1 is visible, 2 is audible
@@ -261,12 +261,15 @@
 					G.throw_at(target,5,1)
 					src.visible_message("<b>[src]</B> farts out a...glowstick?")
 
-			if ("salute","bow","hug","wave", "blowkiss")
+			if ("salute","bow","hug","wave", "blowkiss","sidehug")
 				// visible targeted emotes
 				if (!src.restrained())
-					var/M = null
+					var/mob/M = null
 					if (param)
-						for (var/mob/A in view(null, null))
+						var/range = 8
+						if (act == "hug" || act == "sidehug")
+							range = 1
+						for (var/mob/A in view(range, src))
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
@@ -278,6 +281,8 @@
 						switch(act)
 							if ("bow","wave")
 								message = "<B>[src]</B> [act]s to [param]."
+							if ("sidehug")
+								message = "<B>[src]</B> awkwardly side-hugs [param]."
 							if ("blowkiss")
 								message = "<B>[src]</B> blows a kiss to [param]."
 								//var/atom/U = get_turf(param)
@@ -286,7 +291,7 @@
 								message = "<B>[src]</B> [act]s [param]."
 					else
 						switch(act)
-							if ("hug")
+							if ("hug", "sidehug")
 								message = "<B>[src]</b> [act]s [himself_or_herself(src)]."
 							if ("blowkiss")
 								message = "<B>[src]</b> blows a kiss to... [himself_or_herself(src)]?"
@@ -540,7 +545,7 @@
 							else if (src.r_hand)
 								thing = src.r_hand
 						if (thing)
-							thing.on_spin_emote(src)
+							message = thing.on_spin_emote(src)
 							animate(thing, transform = turn(matrix(), 120), time = 0.7, loop = 3)
 							animate(transform = turn(matrix(), 240), time = 0.7)
 							animate(transform = null, time = 0.7)
@@ -1088,9 +1093,9 @@
 				if (!voluntary || src.emote_check(voluntary,50))
 					if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown"))
 						src.deathConfetti()
-					if (prob(15) && !ischangeling(src) && !isdead(src)) message = "<span style=\"color:black\"><B>[src]</B> seizes up and falls limp, peeking out of one eye sneakily.</span>"
+					if (prob(15) && !ischangeling(src) && !isdead(src)) message = "<span class='regular'><B>[src]</B> seizes up and falls limp, peeking out of one eye sneakily.</span>"
 					else
-						message = "<span style=\"color:black\"><B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...</span>"
+						message = "<span class='regular'><B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...</span>"
 						playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, src.get_age_pitch())
 					m_type = 1
 
@@ -1179,10 +1184,7 @@
 									src.dir = turn(src.dir, 90)
 									sleep(0.2 SECONDS)
 
-							var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-							s.set_up(3, 1, src)
-							s.start()
-
+							elecflash(src,power = 2)
 						else
 							//glowsticks
 							var/left_glowstick = istype (l_hand, /obj/item/device/light/glowstick)
@@ -1444,13 +1446,12 @@
 										if (prob(50))
 											M.ex_act(3) // this is hilariously overpowered, but WHATEVER!!!
 										else
-											G.affecting.changeStatus("stunned", 50)
 											G.affecting.changeStatus("weakened", 5 SECONDS)
 											G.affecting.force_laydown_standup()
 											G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 										playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 									else
-										src.changeStatus("weakened", 3.5 SECONDS)
+										src.changeStatus("weakened", 3.9 SECONDS)
 
 										if (client && client.hellbanned)
 											src.changeStatus("weakened", 4 SECONDS)
@@ -1471,12 +1472,11 @@
 												if ((prob(g_tabl.reinforced ? 60 : 80)) || (src.bioHolder.HasEffect("clumsy") && (!g_tabl.reinforced || prob(90))) || ((src.bioHolder.HasEffect("fat") || G.affecting.bioHolder.HasEffect("fat")) && (!g_tabl.reinforced || prob(90))))
 													SPAWN_DBG(0)
 														g_tabl.smash()
-														src.changeStatus("stunned", 7 SECONDS)
-														src.changeStatus("weakened", 6 SECONDS)
+														src.changeStatus("weakened", 7 SECONDS)
 														random_brute_damage(src, rand(20,40))
 														take_bleeding_damage(src, src, rand(20,40))
 
-														G.affecting.changeStatus("stunned", 2 SECONDS)
+
 														G.affecting.changeStatus("weakened", 4 SECONDS)
 														random_brute_damage(G.affecting, rand(20,40))
 														take_bleeding_damage(G.affecting, src, rand(20,40))
@@ -1527,9 +1527,7 @@
 						for (var/mob/O in viewers(src, null))
 							O.show_message("<B>[src]</B> burps.")
 						for (var/mob/M in oview(1))
-							var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-							s.set_up(3, 1, src)
-							s.start()
+							elecflash(src,power = 2)
 							boutput(M, "<span class='notice'>BZZZZZZZZZZZT!</span>")
 							M.TakeDamage("chest", 0, 20, 0, DAMAGE_BURN)
 							src.charges -= 1

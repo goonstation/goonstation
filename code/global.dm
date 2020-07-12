@@ -441,6 +441,7 @@ var/global
 	soundpref_override = 0
 
 	diary = null
+	diary_name = null
 	hublog = null
 	game_version = "Goon Station 13 (r" + vcs_revision + ")"
 
@@ -535,6 +536,7 @@ var/global
 	list/admins = list(  )
 	list/onlineAdmins = list(  )
 	list/whitelistCkeys = list(  )
+	list/bypassCapCkeys = list(  )
 	list/shuttles = list(  )
 	list/reg_dna = list(  )
 //	list/traitobj = list(  )

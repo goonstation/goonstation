@@ -17,6 +17,9 @@
 #elif defined(MAP_OVERRIDE_DONUT2)
 #include "donut2.dm"
 
+#elif defined(MAP_OVERRIDE_DONUT3)
+#include "donut3.dm"
+
 #elif defined(MAP_OVERRIDE_LINEMAP)
 #include "linemap.dm"
 
@@ -71,10 +74,6 @@
 //Entry below is the "default" map
 #else
 #include "standard.dm"
-#endif
-
-#if ASS_JAM
-#include "..\warwip\z7_urs_dungeon_5.dmm"
 #endif
 
 #if FOOTBALL_MODE

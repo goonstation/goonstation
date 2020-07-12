@@ -42,7 +42,7 @@ var/global/mob/twitch_mob = 0
 		var/list/lines = splittext(text, "\n")
 		if (lines[1])
 			master_mode = lines[1]
-			diary << "Saved mode is '[master_mode]'"
+			logDiary("Saved mode is '[master_mode]'")
 
 /world/proc/save_mode(var/the_mode)
 	var/F = file("data/mode.txt")
@@ -90,7 +90,7 @@ var/global/mob/twitch_mob = 0
 	set background = 1
 	var/text = file2text("config/admins.txt")
 	if (!text)
-		diary << "Failed to load config/admins.txt\n"
+		logDiary("Failed to load config/admins.txt\n")
 	else
 		var/list/lines = splittext(text, "\n")
 		for(var/line in lines)
@@ -105,11 +105,11 @@ var/global/mob/twitch_mob = 0
 				var/m_key = copytext(line, 1, pos)
 				var/a_lev = copytext(line, pos + 3, length(line) + 1)
 				admins[m_key] = a_lev
-				diary << ("ADMIN: [m_key] = [a_lev]")
+				logDiary("ADMIN: [m_key] = [a_lev]")
 
-/world/proc/load_whitelist()
+/world/proc/load_whitelist(fileName = "strings/whitelist.txt")
 	set background = 1
-	var/text = file2text("strings/whitelist.txt")
+	var/text = file2text(fileName)
 	if (!text)
 		return
 	else
@@ -122,7 +122,25 @@ var/global/mob/twitch_mob = 0
 				continue
 
 			whitelistCkeys += line
-			diary << ("WHITELIST: [line]")
+			logDiary("WHITELIST: [line]")
+
+
+/world/proc/load_playercap_bypass()
+	set background = 1
+	var/text = file2text("+secret/strings/allow_thru_cap.txt")
+	if (!text)
+		return
+	else
+		var/list/lines = splittext(text, "\n")
+		for(var/line in lines)
+			if (!line)
+				continue
+
+			if (copytext(line, 1, 2) == "#")
+				continue
+
+			bypassCapCkeys += line
+			logDiary("WHITELIST: [line]")
 
 // dsingh for faster create panel loads
 /world/proc/precache_create_txt()
@@ -215,8 +233,6 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << "========================================"
 		world.log << ""
 
-		serverKey = (world.port % 1000) / 100
-
 		Z_LOG_DEBUG("Preload", "Loading config...")
 		config = new /datum/configuration()
 		config.load("config/config.txt")
@@ -225,6 +241,8 @@ var/f_color_selector_handler/F_Color_Selector
 			var/specific_config = "config/config-[world.port].txt"
 			if (fexists(specific_config))
 				config.load(specific_config)
+
+		serverKey = config.server_key ? config.server_key : (world.port % 1000) / 100
 
 		if (config.allowRotatingFullLogs)
 			roundLog << "========================================<br>"
@@ -399,11 +417,8 @@ var/f_color_selector_handler/F_Color_Selector
 
 
 	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
-	diary << ""
-	diary << ""
-	diary << "Starting up. [time2text(world.timeofday, "hh:mm.ss")]"
-	diary << "---------------------"
-	diary << ""
+	diary_name = "data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log"
+	logDiary("\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------\n")
 
 	//This is used by bans for checking, so we want it very available
 	apiHandler = new()
@@ -445,6 +460,8 @@ var/f_color_selector_handler/F_Color_Selector
 	src.load_admins()//UGH
 	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
 	src.load_whitelist() //WHY ARE WE UGH-ING
+	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
+	src.load_playercap_bypass()
 
 	Z_LOG_DEBUG("World/Init", "Starting input loop")
 	start_input_loop()
@@ -652,7 +669,7 @@ var/f_color_selector_handler/F_Color_Selector
 		for (var/client/C)
 			if (C.mob)
 				if (prob(40))
-					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg'))
+					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/TimeForANewRound.ogg'))
 				else
 					C.mob << sound('sound/misc/NewRound.ogg')
 
@@ -695,6 +712,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 /world/Reboot()
 	TgsReboot()
+	shutdown_logging()
 	return ..()
 
 /world/proc/update_status()
@@ -773,7 +791,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC	// logging for these is done in TGS
-	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
+	logDiary("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 	Z_LOG_DEBUG("World", "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
 	if (T == "ping")
@@ -1226,7 +1244,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
 
-				var/mob/M = whois_ckey_to_mob_reference(who)
+				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
 				if (M.client)
 					boutput(M, {"
 						<div style='border: 2px solid red; font-size: 110%;'>
@@ -1249,7 +1267,7 @@ var/f_color_selector_handler/F_Color_Selector
 							if (C.player_mode && !C.player_mode_ahelp)
 								continue
 							else
-								boutput(C, "<font color='blue'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [msg]</font>")
+								boutput(C, "<span class='notice'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [msg]</span>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -1267,7 +1285,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
-				var/mob/M = whois_ckey_to_mob_reference(who)
+				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
 				if (M.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[msg]</span></span>")
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd %target%: [msg]")
@@ -1483,7 +1501,7 @@ var/f_color_selector_handler/F_Color_Selector
 					game_end_delayer = plist["nick"]
 					logTheThing("admin", null, null, "[game_end_delayer] delayed the server restart from Discord.")
 					logTheThing("diary", null, null, "[game_end_delayer] delayed the server restart from Discord.", "admin")
-					message_admins("<font color='blue'>[game_end_delayer] delayed the server restart from Discord.</font>")
+					message_admins("<span class='internal>[game_end_delayer] delayed the server restart from Discord.</span>")
 					ircmsg["msg"] = "Server restart delayed. Use undelay to cancel this."
 				else
 					ircmsg["msg"] = "The server restart is already delayed, use undelay to cancel this."
@@ -1502,7 +1520,7 @@ var/f_color_selector_handler/F_Color_Selector
 					game_end_delayer = plist["nick"]
 					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from Discord.")
 					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from Discord.", "admin")
-					message_admins("<font color='blue'>[game_end_delayer] removed the restart delay from Discord.</font>")
+					message_admins("<span class='internal>[game_end_delayer] removed the restart delay from Discord.</span>")
 					game_end_delayer = null
 					ircmsg["msg"] = "Removed the restart delay."
 					return ircbot.response(ircmsg)
@@ -1511,7 +1529,7 @@ var/f_color_selector_handler/F_Color_Selector
 					game_end_delayer = plist["nick"]
 					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.")
 					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.", "admin")
-					message_admins("<font color='blue'>[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.</font>")
+					message_admins("<span class='internal>[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.</span>")
 					ircmsg["msg"] = "Removed the restart delay."
 
 					SPAWN_DBG(1 DECI SECOND)
@@ -1565,6 +1583,26 @@ var/f_color_selector_handler/F_Color_Selector
 
 				return ircbot.response(ircmsg)
 
+			if ("whitelistChange")
+				if (!plist["wlType"] || !plist["ckey"])
+					return 0
+
+				var/type = plist["wlType"]
+				var/ckey = plist["ckey"]
+				var/msg
+
+				if (type == "add" && !(ckey in whitelistCkeys))
+					whitelistCkeys += ckey
+					msg = "Entry '[ckey]' added to whitelist"
+				else if (type == "remove" && (ckey in whitelistCkeys))
+					whitelistCkeys -= ckey
+					msg = "Entry '[ckey]' removed from whitelist"
+
+				if (msg)
+					logTheThing("admin", null, null, msg)
+					logTheThing("diary", null, null, msg, "admin")
+
+				return 1
 
 
 /// EXPERIMENTAL STUFF

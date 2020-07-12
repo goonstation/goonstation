@@ -9,8 +9,8 @@ var/list/rollList = list()
 	icon_state = "d6_6"
 	throwforce = 0
 	w_class = 1.0
-	stamina_damage = 2
-	stamina_cost = 2
+	stamina_damage = 0
+	stamina_cost = 0
 	var/sides = 6
 	var/last_roll = null
 	var/last_roll_time = null
@@ -89,7 +89,10 @@ var/list/rollList = list()
 #ifdef HALLOWEEN
 			if (last_roll == 13 && prob(5))
 				var/turf/T = get_turf(src)
-				for (var/obj/machinery/power/apc/apc in get_area(T))
+				var/area/tarea = get_area(T)
+				for (var/obj/machinery/power/apc/apc in machine_registry[MACHINES_POWER])
+					if (get_area(apc) != tarea)
+						continue
 					apc.overload_lighting()
 
 				playsound(T, 'sound/effects/ghost.ogg', 75, 0)
@@ -450,7 +453,10 @@ var/list/rollList = list()
 #ifdef HALLOWEEN
 			if (last_roll == 13 && prob(5))
 				var/turf/T = get_turf(src)
-				for (var/obj/machinery/power/apc/apc in get_area(T))
+				var/area/tarea = get_area(T)
+				for (var/obj/machinery/power/apc/apc in machine_registry[MACHINES_POWER])
+					if (get_area(apc) != tarea)
+						continue
 					apc.overload_lighting()
 
 				playsound(T, 'sound/effects/ghost.ogg', 75, 0)

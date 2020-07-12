@@ -22,7 +22,7 @@
 	m_amt = 30
 	g_amt = 30
 	stamina_damage = 30
-	stamina_cost = 30
+	stamina_cost = 18
 	stamina_crit_chance = 5
 	module_research = list("tools" = 4, "metals" = 1, "fuels" = 5)
 	rand_pos = 1

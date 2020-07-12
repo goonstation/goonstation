@@ -88,19 +88,18 @@
 
 	New(loc, datum/organHolder/nholder)
 		..()
-		SPAWN_DBG(0)
-			if (istype(nholder) && nholder.donor)
-				src.holder = nholder
-				src.donor = nholder.donor
-			if (src.donor)
-				if (src.donor.real_name)
-					src.donor_name = src.donor.real_name
-					src.name = "[src.donor_name]'s [initial(src.name)]"
-				else if (src.donor.name)
-					src.donor_name = src.donor.name
-					src.name = "[src.donor_name]'s [initial(src.name)]"
-				src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
-			src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
+		if (istype(nholder) && nholder.donor)
+			src.holder = nholder
+			src.donor = nholder.donor
+		if (src.donor)
+			if (src.donor.real_name)
+				src.donor_name = src.donor.real_name
+				src.name = "[src.donor_name]'s [initial(src.name)]"
+			else if (src.donor.name)
+				src.donor_name = src.donor.name
+				src.name = "[src.donor_name]'s [initial(src.name)]"
+			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
+		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
 
 	disposing()
 		if (src.holder)
@@ -109,8 +108,8 @@
 					continue
 				if(holder.organ_list[thing] == src)
 					holder.organ_list[thing] = null
-					if(thing in holder.vars) // organ holders suck, refactor when they no longer suck
-						holder.vars[thing] = null
+				if(thing in holder.vars && holder.vars[thing] == src) // organ holders suck, refactor when they no longer suck
+					holder.vars[thing] = null
 
 
 		if (donor && donor.organs) //not all mobs have organs/organholders (fish)
@@ -123,7 +122,8 @@
 		holder = null
 		..()
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A) //
 		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
 		if (T && !src.decal_done && ispath(src.created_decal))
 			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)

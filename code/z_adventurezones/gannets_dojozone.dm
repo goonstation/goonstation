@@ -583,3 +583,24 @@ Contents:
 
 /turf/unsimulated/floor/dojo/sand/circle
 	icon_state = "sand_circ"
+
+// Simulated variants of turfs
+
+/turf/simulated/floor/dojo/sand
+	name = "zen garden"
+	icon = 'icons/turf/dojo.dmi'
+	icon_state = "sand"
+
+	horizontal
+		icon_state = "sand_horiz"
+
+	vertical
+		icon_state = "sand_vert"
+
+	circle
+		icon_state = "sand_circ"
+
+/turf/simulated/floor/dojo/stone
+	name = "stone"
+	icon = 'icons/turf/dojo.dmi'
+	icon_state = "stone"

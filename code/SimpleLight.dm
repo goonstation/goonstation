@@ -67,6 +67,8 @@
 	simple_light.color = rgb(avg_r, avg_g, avg_b, sum_a)
 
 /atom/proc/show_simple_light()
+	if(!length(simple_light_rgbas))
+		return
 	if (!simple_light)
 		simple_light = new()
 		// guess what, vis_contents is defined for /turf + /atom/movable
@@ -176,6 +178,8 @@
 			medium_light.color = rgb(avg_r, avg_g, avg_b, min(255, sum_a / 2))
 
 /atom/proc/show_medium_light()
+	if(!length(medium_light_rgbas))
+		return
 	if (!medium_lights)
 		medium_lights = list()
 		for(var/light_dir in src.medium_light_dirs)
@@ -297,6 +301,8 @@
 			mdir_light.color = rgb(avg_r, avg_g, avg_b, min(255, sum_a  * 0.4))
 
 /atom/proc/show_mdir_light()
+	if(!length(mdir_light_rgbas))
+		return
 	if (!mdir_lights)
 		mdir_lights = list()
 		for(var/light_dist in src.mdir_light_dists)
@@ -327,7 +333,7 @@
 		destroy_mdir_light()
 
 /atom/proc/update_mdir_light_visibility(direct)
-	if(src.mdir_lights[1].invisibility == 101) // toggled off
+	if(!length(src.mdir_lights) || src.mdir_lights[1].invisibility == 101) // toggled off
 		return
 	if(!isturf(src.loc))
 		for(var/x in src.mdir_lights)
@@ -396,7 +402,7 @@
 	if(turn_on)
 		src.show_medium_light()
 		src.show_simple_light()
-		src.hide_mdir_light()
+		src.show_mdir_light()
 	else
 		src.hide_medium_light()
 		src.hide_simple_light()

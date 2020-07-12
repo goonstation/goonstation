@@ -95,7 +95,7 @@ var/global/noir = 0
 		return
 
 	if (usr.client != src.owner)
-		message_admins("<span class='notice'>[key_name(usr)] has attempted to override the admin panel!</span>")
+		message_admins("<span class='internal'>[key_name(usr)] has attempted to override the admin panel!</span>")
 		logTheThing("admin", usr, null, "tried to use the admin panel without authorization.")
 		logTheThing("diary", usr, null, "tried to use the admin panel without authorization.", "admin")
 		return
@@ -301,7 +301,7 @@ var/global/noir = 0
 						command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 						logTheThing("admin", usr, null,  "called the Emergency Shuttle (reason: [call_reason])")
 						logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
-						message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
+						message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
 
 					if("2")
 						if ((!( ticker ) || emergency_shuttle.location || emergency_shuttle.direction == 0))
@@ -316,13 +316,13 @@ var/global/noir = 0
 								command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 								logTheThing("admin", usr, null, "called the Emergency Shuttle (reason: [call_reason])")
 								logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
-								message_admins("<span class='notice'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
+								message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
 							if(1)
 								emergency_shuttle.recall()
 								boutput(world, "<span class='notice'><B>Alert: The shuttle is going back!</B></span>")
 								logTheThing("admin", usr, null, "sent the Emergency Shuttle back")
 								logTheThing("diary", usr, null, "sent the Emergency Shuttle back", "admin")
-								message_admins("<span class='notice'>[key_name(usr)] recalled the Emergency Shuttle</span>")
+								message_admins("<span class='internal'>[key_name(usr)] recalled the Emergency Shuttle</span>")
 			else
 				alert("You need to be at least a Secondary Administrator to do a shuttle call.")
 
@@ -334,7 +334,7 @@ var/global/noir = 0
 				emergency_shuttle.settimeleft(timeleft)
 				logTheThing("admin", usr, null, "edited the Emergency Shuttle's timeleft to [timeleft]")
 				logTheThing("diary", usr, null, "edited the Emergency Shuttle's timeleft to [timeleft]", "admin")
-				message_admins("<span class='notice'>[key_name(usr)] edited the Emergency Shuttle's timeleft to [timeleft]</span>")
+				message_admins("<span class='internal'>[key_name(usr)] edited the Emergency Shuttle's timeleft to [timeleft]</span>")
 			else
 				alert("You need to be at least a Primary Administrator to edit the shuttle timer.")
 
@@ -343,7 +343,7 @@ var/global/noir = 0
 				emergency_shuttle.disabled = !emergency_shuttle.disabled
 				logTheThing("admin", usr, null, "[emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle")
 				logTheThing("diary", usr, null, "[emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle", "admin")
-				message_admins("<span class='notice'>[key_name(usr)] [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle</span>")
+				message_admins("<span class='internal'>[key_name(usr)] [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle</span>")
 				// someone forgetting about leaving shuttle calling disabled would be bad so let's inform the Admin Crew if it happens, just in case
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.owner:key
@@ -358,7 +358,7 @@ var/global/noir = 0
 				emergency_shuttle.can_recall = !emergency_shuttle.can_recall
 				logTheThing("admin", usr, null, "[emergency_shuttle.can_recall ? "en" : "dis"]abled recalling the Emergency Shuttle")
 				logTheThing("diary", usr, null, "[emergency_shuttle.can_recall ? "en" : "dis"]abled recalling the Emergency Shuttle", "admin")
-				message_admins("<span class='notice'>[key_name(usr)] [emergency_shuttle.can_recall ? "en" : "dis"]abled recalling the Emergency Shuttle</span>")
+				message_admins("<span class='internal'>[key_name(usr)] [emergency_shuttle.can_recall ? "en" : "dis"]abled recalling the Emergency Shuttle</span>")
 			else
 				alert("You need to be at least a Primary Administrator to enable/disable shuttle recalling.")
 
@@ -395,7 +395,7 @@ var/global/noir = 0
 
 							logTheThing("admin", usr, null, "deleted note [noteId] belonging to [player].")
 							logTheThing("diary", usr, null, "deleted note [noteId] belonging to [player].", "admin")
-							message_admins("<span class='notice'>[key_name(usr)] deleted note [noteId] belonging to <A href='?src=%admin_ref%;action=notes&target=[player]'>[player]</A>.</span>")
+							message_admins("<span class='internal'>[key_name(usr)] deleted note [noteId] belonging to <A href='?src=%admin_ref%;action=notes&target=[player]'>[player]</A>.</span>")
 
 							var/ircmsg[] = new()
 							ircmsg["key"] = src.owner:key
@@ -417,7 +417,7 @@ var/global/noir = 0
 
 					logTheThing("admin", usr, null, "added a note for [player]: [the_note]")
 					logTheThing("diary", usr, null, "added a note for [player]: [the_note]", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] added a note for <A href='?src=%admin_ref%;action=notes&target=[player]'>[player]</A>: [the_note]</span>")
+					message_admins("<span class='internal'>[key_name(usr)] added a note for <A href='?src=%admin_ref%;action=notes&target=[player]'>[player]</A>: [the_note]</span>")
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = src.owner:key
@@ -572,14 +572,14 @@ var/global/noir = 0
 							return
 					logTheThing("admin", usr, M, "unbanned %target% from [job]")
 					logTheThing("diary", usr, M, "unbanned %target% from [job]", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] unbanned [key_name(M)] from [job]</span>")
+					message_admins("<span class='internal'>[key_name(usr)] unbanned [key_name(M)] from [job]</span>")
 					addPlayerNote(M.ckey, usr.ckey, "[usr.ckey] unbanned [M.ckey] from [job]")
 					jobban_unban(M, job)
 					if (announce_jobbans) boutput(M, "<span class='alert'><b>[key_name(usr)] has lifted your [job] job-ban.</b></span>")
 				else
 					logTheThing("admin", usr, M, "banned %target% from [job]")
 					logTheThing("diary", usr, M, "banned %target% from [job]", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] banned [key_name(M)] from [job]</span>")
+					message_admins("<span class='internal'>[key_name(usr)] banned [key_name(M)] from [job]</span>")
 					addPlayerNote(M.ckey, usr.ckey, "[usr.ckey] banned [M.ckey] from [job]")
 					if(job == "Everything Except Assistant")
 						if(jobban_keylist.Find(text("[M.ckey] - Engineering Department")))
@@ -618,7 +618,7 @@ var/global/noir = 0
 				if(t)
 					logTheThing("admin", usr, null, "removed [t]")
 					logTheThing("diary", usr, null, "removed [t]", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] removed [t]</span>")
+					message_admins("<span class='internal'>[key_name(usr)] removed [t]</span>")
 					jobban_remove(t)
 			else
 				alert("You need to be at least a Coder to remove job bans.")
@@ -635,7 +635,7 @@ var/global/noir = 0
 						muted = 1
 					logTheThing("admin", usr, M, "has [(muted ? "permanently muted" : "unmuted")] %target%")
 					logTheThing("diary", usr, M, "has [(muted ? "permanently muted" : "unmuted")] %target%.", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] has [(muted ? "permanently muted" : "unmuted")] [key_name(M)].</span>")
+					message_admins("<span class='internal'>[key_name(usr)] has [(muted ? "permanently muted" : "unmuted")] [key_name(M)].</span>")
 					boutput(M, "You have been [(muted ? "permanently muted" : "unmuted")].")
 			else
 				alert("You need to be at least a Moderator to mute people.")
@@ -652,7 +652,7 @@ var/global/noir = 0
 						muted = 1
 					logTheThing("admin", usr, M, "has [(muted ? "temporarily muted" : "unmuted")] %target%")
 					logTheThing("diary", usr, M, "has [(muted ? "temporarily muted" : "unmuted")] %target%.", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] has [(muted ? "temporarily muted" : "unmuted")] [key_name(M)].</span>")
+					message_admins("<span class='internal'>[key_name(usr)] has [(muted ? "temporarily muted" : "unmuted")] [key_name(M)].</span>")
 					boutput(M, "You have been [(muted ? "temporarily muted" : "unmuted")].")
 			else
 				alert("You need to be at least a Moderator to mute people.")
@@ -668,7 +668,7 @@ var/global/noir = 0
 						oocban_unban(M)
 					logTheThing("admin", usr, M, "has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] %target%")
 					logTheThing("diary", usr, M, "has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] %target%.", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] [key_name(M)].</span>")
+					message_admins("<span class='internal'>[key_name(usr)] has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] [key_name(M)].</span>")
 
 		if ("toggle_hide_mode")
 			if (src.level >= LEVEL_SA)
@@ -706,6 +706,7 @@ var/global/noir = 0
 							<A href='?src=\ref[src];action=[cmd];type=spy_theft'>Spy Theft</A><br>
 							<b>Other Modes</b><br>
 							<A href='?src=\ref[src];action=[cmd];type=extended'>Extended</A><br>
+							<A href='?src=\ref[src];action=[cmd];type=flock'>Flock(probably wont work. Press at own risk)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=disaster'>Disaster (Beta)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=spy'>Spy</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=revolution'>Revolution</A><br>
@@ -728,13 +729,13 @@ var/global/noir = 0
 
 				var/list/valid_modes = list("secret","action","intrigue","random","traitor","meteor","extended","monkey",
 				"nuclear","blob","restructuring","wizard","revolution", "revolution_extended","malfunction",
-				"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft","battle_royale", "vampire","assday", "football")
+				"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft","battle_royale", "vampire","assday", "football", "flock")
 
 				var/requestedMode = href_list["type"]
 				if (requestedMode in valid_modes)
 					logTheThing("admin", usr, null, "set the mode as [requestedMode].")
 					logTheThing("diary", usr, null, "set the mode as [requestedMode].", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] set the mode as [requestedMode].</span>")
+					message_admins("<span class='internal'>[key_name(usr)] set the mode as [requestedMode].</span>")
 					world.save_mode(requestedMode)
 					master_mode = requestedMode
 					if(master_mode == "battle_royale")
@@ -759,7 +760,7 @@ var/global/noir = 0
 				var/newmode = href_list["type"]
 				logTheThing("admin", usr, null, "set the next round's mode as [newmode].")
 				logTheThing("diary", usr, null, "set the next round's mode as [newmode].", "admin")
-				message_admins("<span class='notice'>[key_name(usr)] set the next round's mode as [newmode].</span>")
+				message_admins("<span class='internal'>[key_name(usr)] set the next round's mode as [newmode].</span>")
 				world.save_mode(newmode)
 				if (alert("Declare mode change to all players?","Mode Change","Yes","No") == "Yes")
 					boutput(world, "<span class='notice'><b>The next round's mode will be: [newmode]</b></span>")
@@ -775,7 +776,7 @@ var/global/noir = 0
 					var/mob/living/carbon/human/N = M
 					logTheThing("admin", usr, M, "attempting to monkeyize %target%")
 					logTheThing("diary", usr, M, "attempting to monkeyize %target%", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] attempting to monkeyize [key_name(M)]</span>")
+					message_admins("<span class='internal'>[key_name(usr)] attempting to monkeyize [key_name(M)]</span>")
 					N.monkeyize()
 				else
 					boutput(usr, "<span class='alert'>You can't transform that mob type into a monkey.</span>")
@@ -794,7 +795,7 @@ var/global/noir = 0
 					speech = copytext(sanitize(speech), 1, MAX_MESSAGE_LEN)
 					logTheThing("admin", usr, M, "forced %target% to say: [speech]")
 					logTheThing("diary", usr, M, "forced %target% to say: [speech]", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] forced [key_name(M)] to say: [speech]</span>")
+					message_admins("<span class='internal'>[key_name(usr)] forced [key_name(M)] to say: [speech]</span>")
 			else
 				alert("You need to be at least a Primary Administrator to force players to say things.")
 
@@ -899,6 +900,21 @@ var/global/noir = 0
 						usr.client.jumptoturf(get_turf(jumptarget))
 			else
 				alert("You need to be at least a Secondary Adminstrator to jump to mobs.")
+
+		if ("observe")
+			if(src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				if (isobserver(M))
+					boutput(usr, "<span class='alert'>You can't observe a ghost.</span>")
+				else
+					if (!istype(usr, /mob/dead/observer))
+						boutput(usr, "<span class='alert'>This command only works when you are a ghost.</span>")
+						return
+					var/mob/dead/observer/ghost = usr
+					ghost.insert_observer(M)
+			else
+				alert("You need to be at least a Secondary Adminstrator to observe mobs... For some reason.")
 
 		if ("jumptocoords")
 			if(src.level >= LEVEL_SA)
@@ -1086,9 +1102,221 @@ var/global/noir = 0
 					if ("Cow")
 						H.set_mutantrace(/datum/mutantrace/cow)
 				if(.)
-					message_admins("<span class='notice'>[key_name(usr)] transformed [H.real_name] into a [which].</span>")
+					message_admins("<span class='internal'>[key_name(usr)] transformed [H.real_name] into a [which].</span>")
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to transform a player.")
+
+		if ("checkbioeffect")
+			if(src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+
+				if (!ishuman(M))
+					alert("You may only use this secret on human mobs.")
+					return
+
+				usr.client.cmd_admin_checkbioeffect(M)
+
+			else
+				alert("You need to be at least a Secondary Administrator to check the bioeffects of a player.")
+
+		if ("checkbioeffect_remove")
+			if(src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+
+				if (!ishuman(M))
+					alert("You may only use this secret on human mobs.")
+					return
+				M.bioHolder.RemoveEffect(href_list["bioeffect"])
+				usr.client.cmd_admin_checkbioeffect(M)
+
+				message_admins("[key_name(usr)] removed the [href_list["bioeffect"]] bio-effect from [key_name(M)].")
+			else
+				alert("You need to be at least a Secondary Administrator to remove the bioeffects of a player.")
+				return
+
+		if("checkbioeffect_alter_stable")
+			if(src.level >= LEVEL_SA)
+				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
+				BE.altered = 1
+				if (BE.stability_loss == 0)
+					BE.stability_loss = BE.global_instance.stability_loss
+					BE.holder.genetic_stability = max(0, BE.holder.genetic_stability -= BE.stability_loss) //update mob stability
+				else
+					BE.holder.genetic_stability = max(0, BE.holder.genetic_stability += BE.stability_loss) //update mob stability
+					BE.stability_loss = 0
+
+				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+			else
+				return
+
+		if("checkbioeffect_alter_reinforce")
+			if(src.level >= LEVEL_SA)
+				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
+				BE.altered = 1
+				if (BE.curable_by_mutadone)
+					BE.curable_by_mutadone = 0
+				else
+					BE.curable_by_mutadone = 1
+
+				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+			else
+				return
+
+		if("checkbioeffect_alter_power_boost")
+			if(src.level >= LEVEL_SA)
+				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
+				BE.altered = 1
+				if(istype(BE, /datum/bioEffect/power)) //powers only
+					if (BE.power)
+						BE.power = 0
+					else
+						BE.power = 1
+				else
+					return
+
+				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+			else
+				return
+
+		if("checkbioeffect_alter_sync")
+			if(src.level >= LEVEL_SA)
+				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
+				BE.altered = 1
+				if(istype(BE, /datum/bioEffect/power)) //powers only
+					if (BE.safety)
+						BE.safety = 0
+					else
+						BE.safety = 1
+				else
+					return
+
+				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+			else
+				return
+		if("checkbioeffect_alter_cooldown")
+			if(src.level >= LEVEL_SA)
+				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
+				BE.altered = 1
+				if(istype(BE, /datum/bioEffect/power)) //powers only
+					var/input = input(usr, "Enter a cooldown in deciseconds", "Alter Cooldown", BE.cooldown) as num|null
+					if(isnull(input))
+						return
+					else if(input < 0)
+						BE.cooldown = 0
+					else
+						BE.cooldown = round(input)
+				else
+					return
+				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+			else
+				return
+
+		if ("checkbioeffect_chromosome")
+			if(src.level >= LEVEL_SA)
+				var/list/applicable_chromosomes = null
+				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
+				var/datum/bioEffect/power/P = null
+				if (istype(BE, /datum/bioEffect/power)) //powers
+					applicable_chromosomes = list("Stabilizer", "Reinforcer", "Weakener", "Camouflager", "Power Booster", "Energy Booster", "Synchronizer", "Custom", "REMOVE CHROMOSOME")
+					P = BE
+				else if (istype(BE, /datum/bioEffect)) //nonpowers
+					applicable_chromosomes = list("Stabilizer", "Reinforcer", "Weakener", "Camouflager", "Custom", "REMOVE CHROMOSOME")
+				else
+					return
+
+				//ask the user what they want to add
+				switch (input(usr, "Select a chromosome", "Check Bioeffects Splice") as null|anything in applicable_chromosomes)
+					if ("Stabilizer")
+						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						BE.holder.genetic_stability = max(0, BE.holder.genetic_stability += BE.stability_loss) //update mob stability
+						BE.stability_loss = 0
+						BE.name = "Stabilized " + BE.name
+						BE.altered = 1
+					if ("Reinforcer")
+						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						BE.curable_by_mutadone = 0
+						BE.name = "Reinforced " + BE.name
+						BE.altered = 1
+					if ("Weakener")
+						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						BE.reclaim_fail = 0
+						BE.reclaim_mats *= 2
+						BE.name = "Weakened " + BE.name
+						BE.altered = 1
+					if ("Camouflager")
+						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						BE.msgGain = ""
+						BE.msgLose = ""
+						BE.name = "Camouflaged " + BE.name
+						BE.altered = 1
+					if ("Power Booster")
+						if (P.altered) checkbioeffect_chromosome_clean(P)
+						P.power = 1
+						P.name = "Empowered " + P.name
+						P.altered = 1
+					if ("Energy Booster")
+						if (P.altered) checkbioeffect_chromosome_clean(P)
+						if(P.cooldown != 0)
+							P.cooldown /= 2
+						P.name = "Energized " + P.name
+						P.altered = 1
+					if ("Synchronizer")
+						if (P.altered) checkbioeffect_chromosome_clean(P)
+						P.safety = 1
+						P.name = "Synchronized " + P.name
+						P.altered = 1
+					if ("Custom") //build your own chromosome!
+						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						BE.altered = 1
+						var/prefix = input(usr, "Enter a custom name for your chromosome", "Check Bioeffects Splice")
+						if (prefix)
+							BE.name = "[prefix] " + BE.name
+					if ("REMOVE CHROMOSOME")
+						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+					else //user cancelled do nothing
+						return
+				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+				return
+
+			else
+				alert("You need to be at least a Secondary Administrator to modify the bioeffects of a player.")
+
+		if ("checkbioeffect_add")
+			if(src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				if (!ishuman(M))
+					alert("You may only use this secret on human mobs.")
+					return
+				var/input = input(usr, "Enter a /datum/bioEffect path or partial name.", "Add a Bioeffect", null) as null|text
+				input = get_one_match(input, "/datum/bioEffect")
+				var/datum/bioEffect/BE = text2path("[input]")
+				if (BE)
+					M.bioHolder.AddEffect(initial(BE.id))
+					usr.client.cmd_admin_checkbioeffect(M)
+					message_admins("[key_name(usr)] added the [initial(BE.id)] bio-effect to [key_name(M)].")
+			else
+				alert("You need to be at least a Secondary Administrator to add bioeffects to a player.")
+
+		if ("checkbioeffect_refresh")
+			if(src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				usr.client.cmd_admin_checkbioeffect(M)
+			else
+				alert("You need to be at least a Secondary Administrator to check the bioeffects of a player.")
+
+		if ("checkbioeffect_alter_genetic_stability")
+			if(src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				var/input = input(usr, "Enter a new genetic stability for the target", "Alter Genetic Stability", M.bioHolder.genetic_stability) as null|num
+				if (isnull(input))
+					return
+				if (input < 0)
+					M.bioHolder.genetic_stability = 0
+				else
+					M.bioHolder.genetic_stability = round(input)
+				usr.client.cmd_admin_checkbioeffect(M)
+			else
+				alert("You need to be at least a Secondary Administrator to modify the genetic stability of a player.")
 
 		if ("addbioeffect")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
@@ -1841,7 +2069,7 @@ var/global/noir = 0
 				if (tokens <= 0)
 					logTheThing("admin", usr, M, "Removed all antag tokens from %target%")
 					logTheThing("diary", usr, M, "Removed all antag tokens from %target%", "admin")
-					message_admins("<span class='notice'>[key_name(usr)] removed all antag tokens from [key_name(M)]</span>")
+					message_admins("<span class='internal'>[key_name(usr)] removed all antag tokens from [key_name(M)]</span>")
 				else
 					logTheThing("admin", usr, M, "Set %target%'s Antag tokens  to [tokens].")
 					logTheThing("diary", usr, M, "Set %target%'s Antag tokens  to [tokens].")
@@ -1985,7 +2213,7 @@ var/global/noir = 0
 								H.set_mutantrace(/datum/mutantrace/flashy)
 							if ("Cow")
 								H.set_mutantrace(/datum/mutantrace/cow)
-						message_admins("<span class='notice'>[key_name(usr)] transformed [H.real_name] into a [which].</span>")
+						message_admins("<span class='internal'>[key_name(usr)] transformed [H.real_name] into a [which].</span>")
 						logTheThing("admin", usr, null, "transformed [H.real_name] into a [which].")
 						logTheThing("diary", usr, null, "transformed [H.real_name] into a [which].", "admin")
 
@@ -2008,14 +2236,14 @@ var/global/noir = 0
 								if("Cow")
 									H.set_mutantrace(/datum/mutantrace/cow)
 							LAGCHECK(LAG_LOW)
-						message_admins("<span class='notice'>[key_name(usr)] transformed everyone into a [which].</span>")
+						message_admins("<span class='internal'>[key_name(usr)] transformed everyone into a [which].</span>")
 						logTheThing("admin", usr, null, "transformed everyone into a [which].")
 						logTheThing("diary", usr, null, "transformed everyone into a [which].", "admin")
 					if("prisonwarp")
 						if(!ticker)
 							alert("The game hasn't started yet!", null, null, null, null, null)
 							return
-						message_admins("<span class='notice'>[key_name(usr)] teleported all players to the prison zone.</span>")
+						message_admins("<span class='internal'>[key_name(usr)] teleported all players to the prison zone.</span>")
 						logTheThing("admin", usr, null, "teleported all players to the prison zone.")
 						logTheThing("diary", usr, null, "teleported all players to the prison zone.", "admin")
 						for(var/mob/living/carbon/human/H in mobs)
@@ -2065,7 +2293,7 @@ var/global/noir = 0
 								if(checktraitor(H)) continue
 								evilize(H, which_traitor, hardmode, custom_objective, escape_objective)
 
-							message_admins("<span class='notice'>[key_name(usr)] made everyone a[hardmode ? " hard-mode" : ""] [which_traitor]. Objective is [custom_objective]</span>")
+							message_admins("<span class='internal'>[key_name(usr)] made everyone a[hardmode ? " hard-mode" : ""] [which_traitor]. Objective is [custom_objective]</span>")
 							logTheThing("admin", usr, null, "made everyone a[hardmode ? " hard-mode" : ""] [which_traitor]. Objective is [custom_objective]")
 							logTheThing("diary", usr, null, "made everyone a[hardmode ? " hard-mode" : ""] [which_traitor]. Objective is [custom_objective]", "admin")
 						else
@@ -3758,7 +3986,7 @@ var/global/noir = 0
 		current_state = GAME_STATE_SETTING_UP
 		logTheThing("admin", usr, null, "has started the game.")
 		logTheThing("diary", usr, null, "has started the game.", "admin")
-		message_admins("<font color='blue'>[usr.key] has started the game.</font>")
+		message_admins("<span class='internal'>[usr.key] has started the game.</span>")
 		return 1
 	else
 		//alert("Game has already started you fucking jerk, stop spamming up the chat :ARGH:") //no, FUCK YOU coder, for making this annoying popup
@@ -3778,12 +4006,12 @@ var/global/noir = 0
 		boutput(world, "<b>The game start has been delayed.</b>")
 		logTheThing("admin", usr, null, "delayed the game start.")
 		logTheThing("diary", usr, null, "delayed the game start.", "admin")
-		message_admins("<font color='blue'>[usr.key] has delayed the game start.</font>")
+		message_admins("<span class='internal>[usr.key] has delayed the game start.</span>")
 	else
 		boutput(world, "<b>The game will start soon.</b>")
 		logTheThing("admin", usr, null, "removed the game start delay.")
 		logTheThing("diary", usr, null, "removed the game start delay.", "admin")
-		message_admins("<font color='blue'>[usr.key] has removed the game start delay.</font>")
+		message_admins("<span class='internal>[usr.key] has removed the game start delay.</span>")
 
 /datum/admins/proc/delay_end()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
@@ -3793,7 +4021,7 @@ var/global/noir = 0
 	if (game_end_delayed == 2)
 		logTheThing("admin", usr, null, "removed the restart delay and triggered an immediate restart.")
 		logTheThing("diary", usr, null, "removed the restart delay and triggered an immediate restart.", "admin")
-		message_admins("<font color='blue'>[usr.key] removed the restart delay and triggered an immediate restart.</font>")
+		message_admins("<span class='internal>[usr.key] removed the restart delay and triggered an immediate restart.</span>")
 		ircbot.event("roundend")
 		Reboot_server()
 
@@ -3802,7 +4030,7 @@ var/global/noir = 0
 		game_end_delayer = usr.key
 		logTheThing("admin", usr, null, "delayed the server restart.")
 		logTheThing("diary", usr, null, "delayed the server restart.", "admin")
-		message_admins("<font color='blue'>[usr.key] delayed the server restart.</font>")
+		message_admins("<span class='internal'>[usr.key] delayed the server restart.</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr && usr.client) ? usr.client.key : "NULL"
@@ -3815,7 +4043,7 @@ var/global/noir = 0
 		game_end_delayer = null
 		logTheThing("admin", usr, null, "removed the restart delay.")
 		logTheThing("diary", usr, null, "removed the restart delay.", "admin")
-		message_admins("<font color='blue'>[usr.key] removed the restart delay.</font>")
+		message_admins("<span class='internal'>[usr.key] removed the restart delay.</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr && usr.client) ? usr.client.key : "NULL"
@@ -4067,7 +4295,7 @@ var/global/noir = 0
 	if(!mass_traitor_obj)
 		logTheThing("admin", usr, M, "made %target% a[special ? " [special]" : ""] [traitor_type].")
 		logTheThing("diary", usr, M, "made %target% a[special ? " [special]" : ""] [traitor_type].", "admin")
-		message_admins("<span class='notice'>[key_name(usr)] has made [key_name(M)] a[special ? " [special]" : ""] [traitor_type].</span>")
+		message_admins("<span class='internal'>[key_name(usr)] has made [key_name(M)] a[special ? " [special]" : ""] [traitor_type].</span>")
 	return
 
 /datum/admins/proc/get_item_desc(var/target)
@@ -4207,6 +4435,129 @@ var/global/noir = 0
 		logTheThing("admin", src, C, "muted %target% from mentorhelping.")
 
 	usr.Browse(built, "window=chatban;size=500x100")
+
+/datum/admins/proc/checkbioeffect_chromosome_clean(var/datum/bioEffect/BE)
+//cleanse a bioeffect
+	var/datum/bioEffect/power/P = null
+	BE.altered = 0
+	BE.name = BE.global_instance.name
+	if (!BE.stability_loss) //reapply stability changes
+		BE.stability_loss = BE.global_instance.stability_loss
+		BE.holder.genetic_stability = max(0, BE.holder.genetic_stability -= BE.stability_loss)
+	BE.curable_by_mutadone = BE.global_instance.curable_by_mutadone
+	BE.reclaim_fail = BE.global_instance.reclaim_fail
+	BE.reclaim_mats = BE.global_instance.reclaim_mats
+	BE.msgGain = BE.global_instance.msgGain
+	BE.msgLose = BE.global_instance.msgLose
+	if (istype(BE, /datum/bioEffect/power)) //powers
+		P = BE
+		P.power = P.global_instance_power.power
+		P.cooldown = P.global_instance_power.cooldown
+		P.safety = P.global_instance_power.safety
+
+/client/proc/cmd_admin_checkbioeffect(var/mob/M)
+	var/list/dat = list()
+	dat += {"
+		<html>
+		<head>
+		<title>Check Bioeffects</title>
+		<style>
+		table {
+			border:1px solid #4CAF50;
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		td {
+			padding: 8px;
+			text-align: center;
+		}
+
+		th:nth-child(n+2):nth-child(-n+3), td:nth-child(n+2):nth-child(-n+3) {text-align: left;}
+
+		th {
+			background-color: #4CAF50;
+			color: white;
+			padding: 8px;
+			text-align: center;
+		}
+
+		tr:nth-child(odd) {background-color: #f2f2f2;}
+		tr:hover {background-color: #e2e2e2;}
+
+		.button {
+			padding: 6px 12px;
+			text-align: center;
+			float: right;
+			display: inline-block;
+			font-size: 12px;
+			margin: 0px 2px;
+			cursor: pointer;
+			color: white;
+			border: 2px solid #008CBA;
+			background-color: #008CBA;
+			text-decoration: none;
+		}
+		</style>
+		</head>
+		<body>
+		<h3>Bioeffects of [M.name]
+		<a href='?src=\ref[src.holder];action=checkbioeffect_refresh;target=\ref[M];origin=bioeffect_check' class="button">&#x1F504;</a></h3>
+		<h4>(Stability: <a href='?src=\ref[src.holder];action=checkbioeffect_alter_genetic_stability;target=\ref[M];origin=bioeffect_check'>[M.bioHolder.genetic_stability]</a>)
+		<a href='?src=\ref[src.holder];action=checkbioeffect_add;target=\ref[M];origin=bioeffect_check' class="button">&#x2795;</a></h4>
+		<table>
+			<tr>
+				<th>Remove</th>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Stable</th>
+				<th>Reinforced</th>
+				<th>Power Boosted</th>
+				<th>Synced</th>
+				<th>Cooldown</th>
+				<th>Splice</th>
+			</tr>
+		"}
+
+	for(var/ID in M.bioHolder.effects)
+		var/datum/bioEffect/B = M.bioHolder.effects[ID]
+		var/datum/bioEffect/power/P = null
+		var/is_stable = 0
+		var/is_reinforced = 0
+		var/is_power_boosted = null //powers only
+		var/is_synced = null //powers only
+		var/cooldown = null //0 cooldown is a thing, also powers only
+
+		if (!B.stability_loss)
+			is_stable = 1
+		if (!B.curable_by_mutadone)
+			is_reinforced = 1
+		if (istype(B, /datum/bioEffect/power))//powers only
+			P = B
+			if (P.power)
+				is_power_boosted = 1
+			else
+				is_power_boosted = 0
+			if (P.safety)
+				is_synced = 1
+			else
+				is_synced = 0
+			cooldown = P.cooldown
+
+		dat += {"
+			<tr>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_remove;target=\ref[M];bioeffect=[B.id];origin=bioeffect_check'>remove</a></td>
+				<td>[B.id]</td>
+				<td>[B.name]</td>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_stable;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[is_stable ? "&#x2714;" : "&#x274C;"]</a></td>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_reinforce;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[is_reinforced ? "&#x2714;" : "&#x274C;"]</a></td>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_power_boost;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[isnull(is_power_boosted) ? "&#x26D4;" : (is_power_boosted ? "&#x2714;" : "&#x274C;")]</a></td>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_sync;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[isnull(is_synced) ? "&#x26D4;" : (is_synced ? "&#x2714;" : "&#x274C;")]</a></td>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_cooldown;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[isnull(cooldown) ? "&#x26D4;" : cooldown]</a></td>
+				<td><a href='?src=\ref[src.holder];action=checkbioeffect_chromosome;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>Splice</a></td>
+			</tr>"}
+	dat += "</table></body></html>"
+	usr.Browse(dat.Join(),"window=bioeffect_check;size=900x400")
 
 /client/proc/respawn_target(mob/M as mob in world, var/forced = 0)
 	set name = "Respawn Target"

@@ -1,4 +1,15 @@
-
+(t)mon jun 29 20
+(u)Sovexe
+(*)New Check Bioeffects admin tool available in player options and tilde menu.
+(t)tue jun 23 20
+(u)Sovexe
+(*)The Pests (playable) event now allows for customization in the form of critter type and quantity.
+(t)mon jun 22 20
+(u)Sovexe
+(*)The Awaken Sleeper Agents event now allows you to override player antagonist preferences.
+(t)sun jun 21 20
+(u)Sovexe
+(*)The Antagonist Critter Spawn event now allows for customization in the form of critter type and quantity.
 (t)mon jun 15 20
 (u)pali
 (*)Toggle-Text-Mode verb to force someone into / out of ASCII mode.

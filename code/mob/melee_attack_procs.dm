@@ -91,9 +91,7 @@
 					var/obj/item/clothing/head/sunhat/hat = X.head
 					if(istype(hat) && hat.uses)
 						src.visible_message("<span class='alert'>[src] tries to pat [target] on the head, but gets shocked by [target]'s hat!</span>")
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(5, 1, target.loc)
-						s.start()
+						elecflash(target)
 
 						hat.uses = max(0, hat.uses - 1)
 						if (hat.uses < 1)
@@ -392,7 +390,11 @@
 			if (istext(attack_resistance))
 				msgs.show_message_target(attack_resistance)
 		msgs.damage = max(damage, 0)
-
+	else if ( !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)) )
+		var/armor_mod = 0
+		armor_mod = target.get_melee_protection(def_zone)
+		msgs.stamina_target -= max(STAMINA_HTH_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm doesnt get full reduction
+		msgs.force_stamina_target = 1
 
 	var/target_stamina = STAMINA_MAX //uses stamina?
 	if (isliving(target))
@@ -557,9 +559,7 @@
 		target.add_fingerprint(src) // Some as the other 'empty hand' melee attacks (Convair880).
 		src.unlock_medal("High Five!", 1)
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(5, 1, target.loc)
-		s.start()
+		elecflash(target)
 
 		src.gloves.uses = max(0, src.gloves.uses - 1)
 		if (src.gloves.uses < 1)
@@ -816,6 +816,8 @@
 	//grouping of combat message
 	var/msg_group = 0
 
+	var/force_stamina_target = null
+
 	New(var/mob/M)
 		owner = M
 
@@ -972,9 +974,9 @@
 			target.lastattackertime = world.time
 			target.add_fingerprint(owner)
 
-		if (damage > 0 || src.disarm == 1)
+		if (damage > 0 || (src.disarm == 1 || force_stamina_target))
 
-			if (src.disarm == 1 && damage <= 0)
+			if ((src.disarm == 1 || force_stamina_target) && damage <= 0)
 				goto process_stamina
 
 			if (damage > 0 && target != owner)

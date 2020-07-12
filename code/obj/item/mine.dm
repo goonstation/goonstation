@@ -148,9 +148,7 @@
 			return
 		src.used_up = 1
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(3, 1, src)
-		s.start()
+		elecflash(src)
 
 		src.custom_stuff(M)
 		src.log_me(M)

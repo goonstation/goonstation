@@ -360,8 +360,9 @@
 	desc = "A collection of parts that can be used to make an IV stand."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "IVstand_parts"
+	force = 2
 	stamina_damage = 10
-	stamina_cost = 10
+	stamina_cost = 8
 	furniture_type = /obj/iv_stand
 	furniture_name = "\improper IV stand"
 	build_duration = 25

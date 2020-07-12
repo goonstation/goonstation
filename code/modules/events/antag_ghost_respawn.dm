@@ -55,7 +55,7 @@
 
 		src.message_delay = src.message_delay + src.ghost_confirmation_delay
 
-		message_admins("<span class='notice'>Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]</span>")
+		message_admins("<span class='internal'>Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]</span>")
 		logTheThing("admin", null, null, "Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]")
 
 		// No need for a fancy setup here.
@@ -79,7 +79,7 @@
 
 		return
 
-	is_event_available()
+	is_event_available(var/ignore_time_lock = 0)
 		if( emergency_shuttle.online )
 			return 0
 
@@ -189,6 +189,15 @@
 							B.real_name = newname
 							B.name = newname
 
+				else
+					failed = 1
+
+			if ("Flockmind")
+				var/mob/living/intangible/flock/flockmind/F = M3.make_flockmind()
+				if (F && istype(F))
+					M3 = F
+					role = "flockmind"
+					//objective_path = /datum/objective_set/blob
 				else
 					failed = 1
 

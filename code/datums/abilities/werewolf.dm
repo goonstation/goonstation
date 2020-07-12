@@ -358,13 +358,13 @@
 
 	onAbilityStat() // In the 'Werewolf' tab.
 		..()
-
+		.= list()
 		if (src.owner && src.owner.mind && src.owner.mind.special_role == "werewolf")
 			for (var/datum/objective/specialist/werewolf/feed/O in src.owner.mind.objectives)
 				src.feed_objective = O
 
 			if (src.feed_objective && istype(src.feed_objective))
-				stat("No. of victims:", src.feed_objective.feed_count)
+				.["Feedings:"] = src.feed_objective.feed_count
 
 		return
 

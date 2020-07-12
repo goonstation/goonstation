@@ -35,7 +35,8 @@
 		else
 			. += "<span class='alert'>This brain has gone cold.</span>"
 
-/obj/item/brain/throw_impact(var/turf/T)
+/obj/item/brain/throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 	playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 	if (T)
 		new /obj/decal/cleanable/blood(T)

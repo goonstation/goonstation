@@ -58,8 +58,8 @@ turf
 		return GM
 
 turf
-	var/pressure_difference = 0
-	var/pressure_direction = 0
+	var/tmp/pressure_difference = 0
+	var/tmp/pressure_direction = 0
 	var/tmp/obj/hotspot/active_hotspot
 
 	proc
@@ -97,8 +97,8 @@ turf
 turf
 	simulated
 
-		var/dist_to_space = null
-		var/current_graphic = null
+		var/tmp/dist_to_space = null
+		var/tmp/current_graphic = null
 
 		var/tmp
 			datum/gas_mixture/air

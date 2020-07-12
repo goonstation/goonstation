@@ -551,7 +551,7 @@
 	g_amt = 3750
 	burn_type = 1
 	stamina_damage = 5
-	stamina_cost = 15
+	stamina_cost = 5
 	stamina_crit_chance = 35
 	burn_possible = 0
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
@@ -609,6 +609,18 @@
 			..()
 			var/datum/material/M = getMaterial("plasmaglass")
 			src.setMaterial(M, appearance = 1, setname = 1)
+
+/obj/item/raw_material/chitin
+	name = "chitin chunk"
+	desc = "A chunk of chitin."
+	icon_state = "chitin"
+	material_name = "Chitin"
+	metal = 3
+	dense = 1
+
+	setup_material()
+		src.setMaterial(getMaterial("chitin"), appearance = 0, setname = 0)
+		return ..()
 
 // bars, tied into the new material system
 

@@ -794,7 +794,7 @@ var/list/special_pa_observing_verbs = list(
 		M.Browse(rules, "window=rules;size=480x320")
 		boutput(M, "<span class='alert'><B>You have been warned by an administrator. This is the only warning you will receive.</B></span>")
 		M.client.warned = 1
-		message_admins("<span class='notice'>[src.ckey] warned [M.ckey].</span>")
+		message_admins("<span class='internal'>[src.ckey] warned [M.ckey].</span>")
 	else
 		var/addData[] = new()
 		addData["ckey"] = M.ckey
@@ -1843,6 +1843,8 @@ var/list/fun_images = list()
 			C.cmd_admin_get_mobject(A)
 		if("Follow Thing")
 			C.admin_follow_mobject(A)
+		if("Check Bioeffects")
+			C.cmd_admin_checkbioeffect(A)
 		if("Add Reagents")
 			C.addreagents(A)
 		if("Check Reagents")

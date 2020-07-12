@@ -26,8 +26,8 @@ PIPE BOMBS + CONSTRUCTION
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | EXTRADELAY
 	is_syndicate = 0
 	mats = 6
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 	var/sound_armed = null
 	var/icon_state_armed = null
@@ -218,9 +218,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (T)
 			if (T && isrestrictedz(T.z) || T.loc:sanctuary)
 				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, T)
-				s.start()
+				elecflash(src,power = 4)
 				qdel(src)
 				return
 			for (var/atom/X in orange(9, T))
@@ -417,9 +415,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (T)
 			if (isrestrictedz(T.z) && !restricted_z_allowed(usr, T))
 				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, T)
-				s.start()
+				elecflash(T)
 				qdel(src)
 				return
 
@@ -844,9 +840,7 @@ PIPE BOMBS + CONSTRUCTION
 			if(prob(10))
 				explosion(src, location, 0, 0, 1, 1)
 			else
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, src)
-				s.start()
+				elecflash(src,power = 2)
 				playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
 		src.visible_message("<span class='alert'>\The [src] explodes!</span>")
 
@@ -936,9 +930,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (location && istype(location) && !location.loc:sanctuary)
 			if (isrestrictedz(location.z))
 				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, location)
-				s.start()
+				elecflash(location)
 				qdel(src)
 				return
 
@@ -1021,9 +1013,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (location && istype(location))
 			if (isrestrictedz(location.z))
 				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(5, 1, location)
-				s.start()
+				elecflash(location)
 				qdel(src)
 				return
 
@@ -1349,11 +1339,11 @@ PIPE BOMBS + CONSTRUCTION
 				if (butt > 1)
 					playsound(src.loc, "sound/voice/farts/superfart.ogg", 90, 1)
 					for (var/mob/M in view(3+butt,src.loc))
-						ass_explosion(M, 0, 1)
+						ass_explosion(M, 0, 5)
 				else
 					playsound(src.loc, "sound/voice/farts/poo2.ogg", 90, 1)
 					for (var/mob/M in view(3,src.loc))
-						ass_explosion(M, 0, 1)
+						ass_explosion(M, 0, 5)
 			if (confetti)
 				if (confetti > 1)
 					particleMaster.SpawnSystem(new /datum/particleSystem/confetti_more(src.loc))

@@ -124,10 +124,7 @@
 				user.visible_message("<span class='alert'>The shot misses!</span>")
 			else
 				MT.TakeDamageAccountArmor(user.zone_sel ? user.zone_sel.selecting : "All", brute, burn, 0, burn ? DAMAGE_BURN : DAMAGE_BLUNT)
-		SPAWN_DBG(0)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, target)
-			s.start()
+		elecflash(target.loc,power = 2)
 
 	is_on_cooldown()
 		if (ticker.round_elapsed_ticks < next_shot_at)
@@ -333,6 +330,13 @@
 					reloaded_at = ticker.round_elapsed_ticks + reload_time
 			else
 				reloaded_at = ticker.round_elapsed_ticks + reload_time
+
+	spike
+		proj = new/datum/projectile/special/spreader/uniform_burst/spikes
+		shots = 1
+		current_shots = 1
+		cooldown = 1 SECOND
+		reload_time = 1 SECOND
 
 /datum/limb/mouth
 	var/sound_attack = "sound/weapons/werewolf_attack1.ogg"
@@ -1178,7 +1182,8 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/machinery/vending,\
 	/obj/machinery/nuclearbomb,\
 	/obj/item/gun/kinetic/airzooka,\
-	/obj/machinery/computer/genetics) //Items that ghostcritters simply cannot interact, regardless of w_class
+	/obj/machinery/computer,\
+	/obj/machinery/power/smes) //Items that ghostcritters simply cannot interact, regardless of w_class
 	. = list()
 	for (var/blocked_type in blocked_types)
 		for (var/subtype in typesof(blocked_type))
@@ -1298,6 +1303,47 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 /datum/limb/small_critter/possum
 	dam_low = 0
 	dam_high = 0
+
+/datum/limb/small_critter/med/dash
+	New(var/obj/item/parts/holder)
+		..()
+		src.setDisarmSpecial (/datum/item_special/katana_dash/limb)
+		src.setHarmSpecial (/datum/item_special/katana_dash/limb)
+
+
+	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
+		if (!holder)
+			return
+		if(check_target_immunity( target ))
+			return
+		//var/quality = src.holder.quality
+
+		if (!istype(user))
+			target.attack_hand(user, params, location, control)
+			return
+		..()
+
+	harm(mob/target, var/mob/living/user, var/no_logs = 0)
+		if(check_target_immunity( target ))
+			return 0
+		if (istype(target,/mob/living/critter/small_animal/trilobite/ai_controlled))
+			return 0
+		var/quality = src.holder.quality
+		if (no_logs != 1)
+			logTheThing("combat", user, target, "slashes %target% with dash arms at [log_loc(user)].")
+		//	var/mob/living/L = target
+		//	L.do_disorient(24, 1 SECOND, 0, 0, 0.5 SECONDS)
+
+		var/obj/item/affecting = target.get_affecting(user)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 1, 5, rand(0,2) * quality)
+		user.attack_effects(target, affecting)
+		var/action = pick("cut", "rip", "claw", "slashe")
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target]!</span></b>"
+		msgs.played_sound = "sound/impact_sounds/Flesh_Tear_3.ogg"
+		msgs.damage_type = DAMAGE_CUT
+		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
+
 
 //test for crab attack thing
 /datum/limb/swipe_quake

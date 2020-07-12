@@ -313,9 +313,7 @@
 		if (tlocation)
 			explosion(src, tlocation, 0, 1, 1, 2)
 		else
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, src)
-			s.start()
+			elecflash(src,power = 2)
 			playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
 		src.visible_message("<span class='alert'>The [src] explodes!</span>")
 
@@ -600,8 +598,8 @@
 	icon_state = "cigbutt"
 	w_class = 1
 	throwforce = 1
-	stamina_damage = 3
-	stamina_cost = 3
+	stamina_damage = 0
+	stamina_cost = 0
 	rand_pos = 1
 
 /obj/item/cigarbox
@@ -761,8 +759,8 @@
 	w_class = 1
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	burn_point = 220
 	burn_output = 900
@@ -840,8 +838,8 @@
 	w_class = 1
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	burn_point = 220
 	burn_output = 600

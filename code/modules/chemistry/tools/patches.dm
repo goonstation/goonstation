@@ -183,7 +183,7 @@
 		return 0
 
 	proc/apply_to(mob/M as mob, mob/user as mob)
-		repair_bleeding_damage(M, 66, 1)
+		repair_bleeding_damage(M, 25, 1)
 		active = 1
 
 		if (reagents && reagents.total_volume)
@@ -581,7 +581,7 @@
 
 /datum/action/bar/icon/automender_apply
 	duration = 10
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	id = "automender_apply"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mender-active"
@@ -621,8 +621,8 @@
 
 		//WEAKEN the first apply or use some sort of ramp-up!
 		var/multiply = 1
-		if (looped <= 0)
-			multiply = 0.2
+		if (looped <= 7)
+			multiply = min((looped+1)/8, 1)
 
 		M.apply_to(target,user, multiply, silent = (looped >= 1))
 
@@ -634,6 +634,7 @@
 
 		//Auto stop healing loop if we are not tampered and the health didnt change at all
 		if (!M.tampered)
+			target.updatehealth() //I hate this, but we actually need the health on time here.
 			if (health_temp == target.health)
 				user.show_text("[M] is finished healing and powers down automatically.", "blue")
 				return

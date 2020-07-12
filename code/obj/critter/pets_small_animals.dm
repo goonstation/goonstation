@@ -307,8 +307,8 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 						C.CritterDeath()
 						src.attacking = 0
 				sleep(0.2 SECONDS)
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		SPAWN_DBG(1 SECOND)
 		src.attacking = 0
@@ -1115,8 +1115,8 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				src.visible_message("<span class='combat'><B>[src]</B> bites [M]!</span>")
 				playsound(src.loc, "swing_hit", 30, 0)
 				random_brute_damage(M, 3,1)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if (isliving(M))
+				var/mob/living/H = M
 				H.was_harmed(src)
 		else if (isrobot(M))
 			if (prob(10))
@@ -1718,8 +1718,8 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 						E = H.drop_organ(chosen_eye)
 						playsound(get_turf(M), "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 						E.set_loc(src.loc)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if (isliving(M))
+				var/mob/living/H = M
 				H.was_harmed(src)
 			else
 				src.visible_message("<span class='combat'><B>[src]</B> bites [M]!</span>")
@@ -2142,3 +2142,24 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			return
 		SPAWN_DBG(rand(0, 10))
 			src.do_a_little_dance()
+
+obj/critter/frog
+	name = "frog"
+	desc = "Ribbit."
+	icon_state = "frog"
+	death_text = "%src% croaks."
+	butcherable = 1
+	density = 0
+	health = 20
+	aggressive = 0
+	defensive = 1
+	wanderer = 1
+	opensdoors = 0
+	atkcarbon = 1
+	atksilicon = 1
+	firevuln = 1
+	brutevuln = 1
+	generic = 1
+	atk_text = "hops into"
+	angertext = "croaks angrily at"
+	chase_text = "hops after"

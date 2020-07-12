@@ -179,10 +179,7 @@
 	proc/disrupt()
 		if (active)
 			active = 0
-			var/datum/effects/system/spark_spread/spark_system = unpool(/datum/effects/system/spark_spread)
-			spark_system.set_up(5, 0, src)
-			spark_system.attach(src)
-			spark_system.start()
+			elecflash(src)
 			for (var/atom/movable/A in cham)
 				A.set_loc(get_turf(cham))
 			cham.loc = src
@@ -276,8 +273,5 @@
 
 	disrupt()
 		if (active)
-			var/datum/effects/system/spark_spread/spark_system = unpool(/datum/effects/system/spark_spread)
-			spark_system.set_up(5, 0, src)
-			spark_system.attach(src)
-			spark_system.start()
+			elecflash(src)
 			src.blowthefuckup(src.strength)

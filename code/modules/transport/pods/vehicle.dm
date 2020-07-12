@@ -570,6 +570,9 @@
 				SPAWN_DBG(0.5 SECONDS)
 					hitmob = 0
 				var/mob/M = target
+				var/vehicular_manslaughter
+				if(M.health > 0)
+					vehicular_manslaughter = 1 //we first check if the person is not in crit before hit, if yes we qualify for vehicular manslaughter achievement
 				//M.changeStatus("stunned", 1 SECOND)
 				//M.changeStatus("weakened", 1 SECOND)
 				M.TakeDamageAccountArmor("chest", power * 1.3, 0, 0, DAMAGE_BLUNT)
@@ -578,6 +581,12 @@
 				SPAWN_DBG(0)
 					M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
 				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+				SPAWN_DBG(2.5 SECONDS)
+					if(M.health > 0) 
+						vehicular_manslaughter = 0 //we now check if person was sent into crit after hit, if they did we get the achievement
+					if(vehicular_manslaughter && ishuman(M))
+						src.pilot.unlock_medal("Vehicular Manslaughter", 1)
+				
 			else if(isturf(target) && power > 20)
 				if(istype(target, /turf/simulated/wall/r_wall || istype(target, /turf/simulated/wall/auto/reinforced)) && prob(power / 2))
 					return

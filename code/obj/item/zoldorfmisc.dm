@@ -355,9 +355,7 @@
 		if(src.fateseffect)
 			user.u_equip(src)
 			user.set_loc(fateseffect)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, user)
-			s.start()
+			elecflash(user)
 			qdel(src)
 
 /obj/item/zspellscroll //speeeeells //there arent that many so i pretty much just packed it into a single item type
@@ -435,9 +433,7 @@
 				if(randomturfs.len > 0)
 					boutput(user, "<span class='alert'>You are suddenly zapped away elsewhere!</span>")
 					user.set_loc(pick(randomturfs))
-					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-					s.set_up(5, 1, user)
-					s.start()
+					elecflash(user)
 			if("hat")
 				boutput(user,"<span class='success'>You must strike a tiny-normal item with the scroll!</span>")
 

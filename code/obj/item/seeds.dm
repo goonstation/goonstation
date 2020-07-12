@@ -12,8 +12,8 @@
 	var/seeddamage = 0 // This is used mostly for infusions. How likely a seed is to be destroyed.
 	var/isstrange = 0  // Seeds cannot be gene scanned if they're strange seeds.
 	var/generation = 0 // Keeps track of how many times a plant has been bred from the initial seed.
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	module_research = list("hydroponics" = 1, "efficiency" = 1)
 	module_research_type = /obj/item/seed
 	rand_pos = 1

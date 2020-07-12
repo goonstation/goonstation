@@ -266,17 +266,6 @@ Returns:
 
 	return
 
-var/list/electiles = list()
-
-/proc/electile(numb as num)
-	for(var/X in electiles)
-		del(X)
-	for(var/turf/T in view())
-		var/obj/overlay/O = new(T)
-		O.icon = icon('icons/effects/electile.dmi')
-		O.icon_state = "v[numb][pick("a","b","c")]"
-		electiles.Add(O)
-
 /proc/testburning()
 	for(var/i=0, i<5, i++)
 		var/atom/A = null
@@ -641,7 +630,7 @@ var/list/electiles = list()
 
 	outer:
 		for(var/area/A as area in world) //Might want to do this manually instead.
-			if(A.type == /area)
+			if(area_space_nopower(A))
 				continue
 
 			for(var/X in ignoreAreas)
@@ -2869,9 +2858,6 @@ var/list/electiles = list()
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "boomerang"
 
-	density = 0
-	opacity = 0
-	anchored = 1
 	contraband = 4
 
 	icon = 'icons/obj/items/weapons.dmi'

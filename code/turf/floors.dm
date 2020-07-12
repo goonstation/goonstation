@@ -121,6 +121,9 @@
 	icon_state = "plating"
 	intact = 0
 
+/turf/simulated/floor/plating/jen
+	icon_state = "plating_jen"
+
 /turf/simulated/floor/plating/scorched
 	icon_state = "panelscorched"
 
@@ -824,6 +827,9 @@
 /turf/simulated/floor/stairs/wide/green
 	icon_state = "Stairs_wide_green"
 
+/turf/simulated/floor/stairs/wide/green/other
+	icon_state = "Stairs_wide_green_other"
+
 /turf/simulated/floor/stairs/wide/middle
 	icon_state = "stairs_middle"
 
@@ -861,6 +867,8 @@
 /turf/simulated/floor/stairs/wood2/wide
 	icon_state = "wood2_stairs2"
 
+/turf/simulated/floor/stairs/wood2/middle
+	icon_state = "wood2_stairs2_middle"
 
 /turf/simulated/floor/stairs/wood3
 	icon_state = "wood3_stairs"
@@ -1121,13 +1129,15 @@
 	if(!C || !user)
 		return 0
 	if (istype(C, /obj/item/tile))
-		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
-		C:build(src)
-		C:amount--
-		if(C.material) src.setMaterial(C.material)
-		if (C:amount < 1)
-			user.u_equip(C)
-			qdel(C)
+		var/obj/item/tile/T = C
+		if (T.amount >= 1)
+			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			T.build(src)
+			if(T.material) src.setMaterial(T.material)
+
+		if (T.amount < 1 && !issilicon(user))
+			user.u_equip(T)
+			qdel(T)
 			return
 		return
 
@@ -1434,6 +1444,11 @@
 
 	if(istype(C, /obj/item/tile))
 		var/obj/item/tile/T = C
+		if (T.amount < 1)
+			if(!issilicon(user))
+				user.u_equip(T)
+				qdel(T)
+			return
 		if (!intact)
 			restore_tile()
 			src.plate_mat = src.material

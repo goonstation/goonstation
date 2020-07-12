@@ -212,6 +212,10 @@
 #define ALWAYS_SOLID_FLUID 262144	//specifically note this object as solid
 #define HAS_EQUIP_CLICK 524288 //Calls equipment_click from hand_range_attack on items worn with this flag set.
 
+//Item function flags
+#define USE_INTENT_SWITCH_TRIGGER 1 //apply to an item's flags to use the item's intent_switch_trigger() proc. This will be called when intent is switched while this item is in hand.
+#define USE_SPECIALS_ON_ALL_INTENTS 2 //allows special attacks to be performed on help and grab intent with this item
+
 // human equipment slots
 #define SLOT_BACK 1
 #define SLOT_WEAR_MASM 2
@@ -419,6 +423,18 @@
 #define RADIOC_CIVILIAN "#A10082"
 #define RADIOC_SYNDICATE "#962121"
 #define RADIOC_OTHER "#800080"
+
+// Radio (headset etc) css classes.
+#define RADIOCL_STANDARD "rstandard"
+#define RADIOCL_INTERCOM "rintercom"
+#define RADIOCL_COMMAND "rcommand"
+#define RADIOCL_SECURITY "rsecurity"
+#define RADIOCL_ENGINEERING "rengineering"
+#define RADIOCL_MEDICAL "rmedical"
+#define RADIOCL_RESEARCH "rresearch"
+#define RADIOCL_CIVILIAN "rcivilian"
+#define RADIOCL_SYNDICATE "rsyndicate"
+#define RADIOCL_OTHER "rother"
 
 // Frequency defines for headsets & intercoms (Convair880).
 #define R_FREQ_MINIMUM 1441		// Minimum "selectable" freq
@@ -707,16 +723,17 @@ proc/default_frequency_color(freq)
 #define STAMINA_MAX 200        			//Default max stamina value
 #define STAMINA_REGEN 10   	   		 	//Default stamina regeneration rate.
 #define STAMINA_ITEM_DMG 20     		//Default stamina damage objects do.
-#define STAMINA_ITEM_COST 18    		//Default attack cost on user for attacking with items.
+#define STAMINA_ITEM_COST 15    		//Default attack cost on user for attacking with items.
 #define STAMINA_HTH_DMG 30      		//Default hand-to-hand (punch, kick) stamina damage.
-#define STAMINA_HTH_COST 20     		//Default hand-to-hand (punch, kick) stamina cost
-#define STAMINA_MIN_ATTACK 91   		//The minimum amount of stamina required to attack.
+#define STAMINA_HTH_COST 15     		//Default hand-to-hand (punch, kick) stamina cost
+#define STAMINA_MIN_ATTACK 50   		//The minimum amount of stamina required to attack.
 #define STAMINA_NEG_CAP -75     		//How far into the negative we can take stamina. (People will be stunned while stamina regens up to > 0 - so this can lead to long stuns if set too high)
 #define STAMINA_NEG_CAP_STUN_TIME 60   	//When we reach the neg cap, how long to paralyze?
 #define STAMINA_STUN_TIME 5     		//How long we will be stunned for, for being <= 0 stamina
 #define STAMINA_STUN_CRIT_TIME 8  		//How long we will be stunned for, for being <= NEGCAP stamina
 #define STAMINA_GRAB_COST 25    		//How much grabbing someone costs.
 #define STAMINA_DISARM_COST 5   		//How much disarming someone costs.
+#define STAMINA_DISARM_DMG 19			//Stamina damage of disarming someone with bare hands.
 #define STAMINA_FLIP_COST 25    		//How much flipping / suplexing costs.
 #define STAMINA_CRIT_CHANCE 25  		//Base chance of landing a critical hit to stamina.
 #define STAMINA_CRIT_DIVISOR 2  		//Divide stamina by how much on a crit
@@ -1112,6 +1129,18 @@ var/ZLOG_START_TIME
 #define ATTO  *(10**-18)
 #define ZEPTO *(10**-21)
 #define YOCTO *(10**-24)
+
+//table defines
+#define TABLE_DISASSEMBLE 0
+#define TABLE_WEAKEN 1
+#define TABLE_STRENGTHEN 2
+#define TABLE_ADJUST 3
+#define TABLE_LOCKPICK 4
+
+//railing defines
+#define RAILING_DISASSEMBLE 0
+#define RAILING_UNFASTEN 1
+#define RAILING_FASTEN 2
 
 //Auditing
 //Whether or not a potentially suspicious action gets denied by the code.

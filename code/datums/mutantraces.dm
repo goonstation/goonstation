@@ -566,6 +566,7 @@
 					mob.take_eye_damage(-INFINITY, 1)
 					mob.take_ear_damage(-INFINITY)
 					mob.take_ear_damage(-INFINITY, 1)
+					mob?.organHolder?.brain?.broken = 0
 					mob.take_brain_damage(-120)
 					mob.health = mob.max_health
 					if (mob.stat > 1)

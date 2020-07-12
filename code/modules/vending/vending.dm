@@ -307,6 +307,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antirad, 3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/saline, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/atropine, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/synaptizine, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/eyedrops, 2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/antiviral, 6)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/insulin, 6)
@@ -1272,10 +1273,14 @@
 		product_list += new/datum/data/vending_product(/obj/item/card_box/booster, 20, cost=20)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/suit, 10, cost=15)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/tarot, 5, cost=25)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/hanafuda, 5, cost=298)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/storage, 5, cost=10)
 		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicebox, 5, cost=150)
 		product_list += new/datum/data/vending_product(/obj/item/storage/dicepouch, 5, cost=100)
 		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicecup, 5, cost=10)
+		product_list += new/datum/data/vending_product(/obj/item/goboard, 1, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/gobowl/b, 1, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/gobowl/w, 1, cost=50)
 
 /obj/machinery/vending/clothing
 	name = "FancyPantsCo Sew-O-Matic"
@@ -2081,9 +2086,7 @@
 	if (powernets && powernets.len >= netnum)
 		PN = powernets[netnum]
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(5, 1, src)
-	s.start()
+	elecflash(src)
 
 	if (!PN) //Wire note: Fix for Cannot read null.avail
 		return 0
