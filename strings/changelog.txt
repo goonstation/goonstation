@@ -1,5 +1,10 @@
 
 (t)sun jul 12 20
+(u)MarkNstein
+(p)1361
+(e)🆕|feature
+(+)The chaplain has their own PDA mail group: Spiritual Affairs.
+(+)The chaplain gets health-implant notifications.
 (u)Flaborized
 (p)1448
 (e)🎨|sprites
