@@ -4714,10 +4714,7 @@
 /area/station/medical/medbay/surgery)
 "mJ" = (
 /obj/table/auto,
-/obj/item/clothing/under/scrub/blue,
-/obj/item/clothing/mask/surgical_shield,
-/obj/item/clothing/mask/surgical,
-/obj/item/clothing/gloves/latex,
+/obj/machinery/defib_mount,
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
 "mK" = (
@@ -9924,7 +9921,6 @@
 /area/station/medical/medbay/surgery)
 "zh" = (
 /obj/machinery/optable,
-/obj/item/robodefibrillator,
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
@@ -10710,6 +10706,11 @@
 	},
 /area/station/medical/medbay)
 "BA" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/clothing/under/scrub/blue,
+/obj/item/clothing/mask/surgical_shield,
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},

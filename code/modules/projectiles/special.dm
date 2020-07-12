@@ -231,6 +231,18 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_projectile_type = /datum/projectile/laser/blaster/blast
 	shot_sound = 'sound/weapons/laser_f.ogg'
 
+
+/datum/projectile/special/spreader/uniform_burst/spikes
+	name = "spike wave"
+	sname = "spike wave"
+	spread_angle = 65
+	cost = 200
+	pellets_to_fire = 7
+	spread_projectile_type = /datum/projectile/bullet/spike
+	shot_sound = 'sound/weapons/radxbow.ogg'
+
+
+
 // Really crazy shit
 
 /datum/projectile/special/shock_orb
@@ -676,6 +688,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	rotate_proj = 0
 	face_desired_dir = 1
 	goes_through_walls = 1
+	is_magical = 1
 
 	shot_sound = 0
 	hit_mob_sound = 'sound/effects/mag_iceburstimpact_high.ogg'
@@ -811,14 +824,14 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(ismob(hit) && typetospawn)
 			hasspawned = 1
 			. = new typetospawn(get_turf(hit))
-		return 
+		return
 
 
 	on_end(obj/projectile/O)
 		if(!hasspawned && typetospawn)
 			. = new typetospawn(get_turf(O))
 		hasspawned = null
-		return 
+		return
 
 /datum/projectile/special/spawner/gun //shoot guns
 	name = "gun"
@@ -861,7 +874,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry/W = ..()
 		if(istype(W))
 			W.throw_impact(get_turf(O))
-		
+
 
 
 

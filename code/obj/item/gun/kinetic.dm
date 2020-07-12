@@ -438,6 +438,7 @@
 	desc = "A reliable weapon used the world over... 50 years ago. Uses 9mm NATO rounds."
 	name = "Clock 188"
 	icon_state = "clock-188-beige"
+	item_state = "clock-188-beige"
 	shoot_delay = 2
 	w_class = 2.0
 	force = 7.0
@@ -740,11 +741,13 @@
 /obj/item/gun/kinetic/rpg7
 	desc = "A rocket-propelled grenade launcher licensed by the Space Irish Republican Army."
 	name = "MPRT-7"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "rpg7_empty"
 	uses_multiple_icon_states = 1
 	item_state = "rpg7_empty"
+	wear_image_icon = 'icons/mob/back.dmi'
+	flags = ONBACK
 	w_class = 4
 	throw_speed = 2
 	throw_range = 4
@@ -753,6 +756,7 @@
 	caliber = 1.58
 	max_ammo_capacity = 1
 	can_dual_wield = 0
+	two_handed = 1
 	muzzle_flash = 0 //rocket launcher
 
 	New()

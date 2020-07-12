@@ -8,10 +8,10 @@
 #define PLANE_HIDDENGAME -98
 #define PLANE_LIGHTING -90
 #define PLANE_SELFILLUM -80
+#define PLANE_OVERLAY_EFFECTS -25
 #define PLANE_BLACKNESS 0 // black tiles outisde of your vision render here
 #define PLANE_MASTER_GAME 10
 #define PLANE_FLOCKVISION 22
-#define PLANE_OVERLAY_EFFECTS 25
 #define PLANE_HUD 30
 #define PLANE_SCREEN_OVERLAYS 40
 
@@ -52,7 +52,7 @@
 		if(pl)
 			src.name = pl.name
 			src.render_source = pl.render_target
-			src.appearance_flags = pl.appearance_flags | UNLINT(PASS_MOUSE)
+			src.appearance_flags = pl.appearance_flags | PASS_MOUSE
 			src.blend_mode = pl.blend_mode
 			src.mouse_opacity = pl.mouse_opacity
 		..()
