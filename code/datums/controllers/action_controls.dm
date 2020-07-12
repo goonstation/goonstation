@@ -877,6 +877,7 @@ var/datum/action_controller/actions
 		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = owner
 			H.setStatus("hands_in_front", duration = INFINITE_STATUS)
+			H.update_clothing()
 			var/obj/item/garrote/handcuffs/G = new(H.loc)
 			H.put_in_hand(G)
 			G.set_readiness(1)

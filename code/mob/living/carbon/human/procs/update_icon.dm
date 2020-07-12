@@ -608,7 +608,24 @@
 
 	if (src.r_store)
 		src.r_store.screen_loc = hud.layouts[hud.layout_style]["storage2"]
-
+	#if ASS_JAM
+	if (src.hasStatus("handcuffed"))
+		handcuff_img.icon = 'icons/mob/newcuffs.dmi'
+		src.pulling = null
+		if (src.hasStatus("hands_in_front"))
+			handcuff_img.icon_state = "handcuff2"
+			handcuff_img.pixel_x = 0
+			handcuff_img.pixel_y = hand_offset
+			handcuff_img.layer = MOB_HANDCUFF_LAYER
+		else
+			handcuff_img.icon_state = "handcuff1"
+			handcuff_img.pixel_x = 0
+			handcuff_img.pixel_y = hand_offset
+			handcuff_img.layer = MOB_HANDCUFF_LAYER
+		UpdateOverlays(handcuff_img, "handcuffs")
+	else
+		UpdateOverlays(null, "handcuffs")
+	#else
 	if (src.hasStatus("handcuffed"))
 		src.pulling = null
 		handcuff_img.icon_state = "handcuff1"
@@ -618,7 +635,7 @@
 		UpdateOverlays(handcuff_img, "handcuffs")
 	else
 		UpdateOverlays(null, "handcuffs")
-
+	#endif
 	var/shielded = 0
 
 	for (var/atom in src)
