@@ -1,5 +1,9 @@
 
 (t)sun jul 12 20
+(u)Sovexe
+(p)1455
+(e)🆕|feature
+(+)There is now a 10 second rate limit on changing the station payroll status.
 (u)Ryumi
 (p)1454
 (e)🐛|bug
