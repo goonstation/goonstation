@@ -1,6 +1,5 @@
 *{
 	font-family:'Comic Sans MS',Consolas,monospace;
-	color: rgb(25, 201, 133);
 }
 
 li {
@@ -10,6 +9,7 @@ li {
 body {
 	background-color:#222;
 	overflow:hidden;
+	color: rgb(25, 201, 133);
 }
 
 div {
@@ -263,12 +263,10 @@ div {
 
 #transTypesGood {
 	background-color: #090;
-	color: black;
 }
 
 #transTypesBad {
 	background-color: #E00;
-	color: black;
 }
 
 .tf-med {
@@ -314,22 +312,22 @@ div {
 }
 
 .a-red {
-	color:#500;
+	color:rgb(0, 0, 0);
 	background-color:#100;
 }
 .a-red-on{
-	color:#900;
+	color:rgb(0, 0, 0);
 	background-color:#E00;
 }
 
 .a-yellow {
 	background-color:#252205;
-	color:151203;
+	color:rgb(0, 0, 0);
 }
 
 .a-yellow-on {
 	background-color:#FAF320;
-	color:#737012;
+	color:rgb(0, 0, 0);
 }
 
 #annSynch {
@@ -370,7 +368,7 @@ div {
 	width:150px;
 }
 .btn-xlong {
-	width:225px;
+	width:220px;
 }
 .btn-med {
 	height:25px;
