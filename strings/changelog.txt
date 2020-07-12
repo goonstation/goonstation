@@ -1,5 +1,48 @@
 
+(t)sun jul 12 20
+(u)Genessee
+(p)1427
+(e)🆕|feature
+(+)Five new types of bottle can now be printed at a Glass Recycler.
+(u)MarkNstein
+(p)1361
+(e)🆕|feature
+(+)The chaplain has their own PDA mail group: Spiritual Affairs.
+(+)The chaplain gets health-implant notifications.
+(u)Flaborized
+(p)1448
+(e)🎨|sprites
+(+)Resprited the taser shotgun and added/modified some gun in-hand sprites.
+(u)AwkwardDryad
+(p)1369
+(e)🗺|mapping
+(*)Cogmap 1, Cogmap 2, and Destiny research now have a quantum telescope computer!
+(u)Tarmunora
+(p)1447
+(e)⚖🐛|balance, bug
+(+)Fix elecflashes shocking electricity-immune mobs
+(t)sat jul 11 20
+(u)Flaborized
+(p)1434
+(e)🎨|sprites
+(+)Resprited the Colt SAA.
+(u)AwkwardDryad
+(p)1328
+(e)🆕🎨|feature, sprites
+(*)Added hanafuda! You can purchase it at a card vendor for 298 credits
+(+)You can now place cards on floor tiles in the same manner as on a table
+(+)Cards have new solitaire stacking functionality. Check playing cards tips and tricks for more information
+(u)Tarmunora
+(p)1354
+(e)🐛|bug
+(+)Fix monkeys incorrectly astral projecting melee attacks.
+(u)MarkNstein
+(p)1435
+(e)🐛🗺|bug, mapping
+(+)Manta: Armory access fixed, requirements match other maps.
 (t)fri jul 10 20
+(u)mbc
+(+)Gunshark bullets no longer embed implants.
 (u)Gerhazo
 (p)1249
 (e)🆕|feature

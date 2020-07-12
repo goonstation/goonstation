@@ -82,7 +82,7 @@
 
 	CanPass(atom/movable/O as mob|obj, turf/target, height=0, air_group=0)
 		if (O == null)
-			logTheThing("debug", src, O, "Target is null! CanPass failed.")
+			//logTheThing("debug", src, O, "Target is null! CanPass failed.")
 			return 0
 		if (!src.density || (O.flags & TABLEPASS) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
 			return 1

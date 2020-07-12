@@ -26363,6 +26363,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/computer/telescope{
+	dir = 4
+	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 10
 	},

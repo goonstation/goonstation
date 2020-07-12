@@ -9,3 +9,4 @@
 #define MGD_STATIONREPAIR "stationrepair"
 #define MGD_BOTANY "botany"
 #define MGD_KITCHEN "kitchen"
+#define MGD_SPIRITUALAFFAIRS "spiritualaffairs"

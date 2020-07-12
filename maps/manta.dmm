@@ -2442,11 +2442,12 @@
 /turf/space/fluid/manta,
 /area/abandonedmedicalship/robot_trader)
 "agq" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
+/obj/machinery/door/airlock/pyro{
+	dir = 8;
+	icon_base = "sec";
+	icon_state = "sec_closed";
 	lockdownbyai = 1;
-	name = "Explosives Storage";
-	req_access_txt = "37"
+	name = "Explosives Storage"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/hos,
@@ -3320,7 +3321,7 @@
 /area/ghostdrone_factory)
 "aiS" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/space,
+/turf/simulated/floor/grime,
 /area/ghostdrone_factory)
 "aiT" = (
 /obj/machinery/camera{
@@ -8218,7 +8219,10 @@
 /turf/space/fluid/manta/nospawn,
 /area/mantaSpace)
 "atV" = (
-/obj/machinery/door/airlock/pyro/security{
+/obj/machinery/door/airlock/pyro{
+	icon_base = "sec";
+	icon_state = "sec_closed";
+	lockdownbyai = 1;
 	name = "Armory"
 	},
 /obj/firedoor_spawn,
@@ -19197,12 +19201,13 @@
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications)
 "aRG" = (
-/obj/machinery/door/airlock/pyro/security{
-	name = "Head of Security's Personal Quarters";
-	req_access_txt = "37"
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro{
+	icon_base = "sec";
+	icon_state = "sec_closed";
+	name = "HoS'ffice"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/hos,
@@ -45499,18 +45504,19 @@
 /turf/simulated/floor/black,
 /area/station/chemistry)
 "kfj" = (
-/obj/machinery/door/airlock/pyro/security{
-	name = "Head of Security's Office";
-	req_access_txt = "37"
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro{
+	icon_base = "sec";
+	icon_state = "sec_closed";
+	name = "HoS'ffice"
+	},
 /obj/firedoor_spawn,
-/obj/access_spawn/hos,
 /obj/disposalpipe/segment,
+/obj/access_spawn/hos,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

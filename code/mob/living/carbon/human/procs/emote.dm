@@ -5,11 +5,6 @@
 /mob/living/carbon/human/emote(var/act, var/voluntary = 0)
 	var/param = null
 
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		if (P.onemote(act, voluntary))
-			return
-
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
 
 	if (src.bioHolder.HasEffect("revenant"))
@@ -20,6 +15,11 @@
 		var/t1 = findtext(act, " ", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
+
+	for (var/uid in src.pathogens)
+		var/datum/pathogen/P = src.pathogens[uid]
+		if (P.onemote(act, voluntary, param))
+			return
 
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
 	var/m_type = 1 //1 is visible, 2 is audible
@@ -261,12 +261,15 @@
 					G.throw_at(target,5,1)
 					src.visible_message("<b>[src]</B> farts out a...glowstick?")
 
-			if ("salute","bow","hug","wave", "blowkiss")
+			if ("salute","bow","hug","wave", "blowkiss","sidehug")
 				// visible targeted emotes
 				if (!src.restrained())
-					var/M = null
+					var/mob/M = null
 					if (param)
-						for (var/mob/A in view(null, null))
+						var/range = 8
+						if (act == "hug" || act == "sidehug")
+							range = 1
+						for (var/mob/A in view(range, src))
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
@@ -278,6 +281,8 @@
 						switch(act)
 							if ("bow","wave")
 								message = "<B>[src]</B> [act]s to [param]."
+							if ("sidehug")
+								message = "<B>[src]</B> awkwardly side-hugs [param]."
 							if ("blowkiss")
 								message = "<B>[src]</B> blows a kiss to [param]."
 								//var/atom/U = get_turf(param)
@@ -286,7 +291,7 @@
 								message = "<B>[src]</B> [act]s [param]."
 					else
 						switch(act)
-							if ("hug")
+							if ("hug", "sidehug")
 								message = "<B>[src]</b> [act]s [himself_or_herself(src)]."
 							if ("blowkiss")
 								message = "<B>[src]</b> blows a kiss to... [himself_or_herself(src)]?"
