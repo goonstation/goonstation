@@ -1671,50 +1671,127 @@
 			if ("monologue")
 				m_type = 2
 				if (src.mind && src.mind.assigned_role == "Detective")
+					var/obj/item/grab/G
 					if (istype(src.l_hand, /obj/item/grab))
-						var/obj/item/grab/G = src.l_hand
-						if (ishuman(G.affecting))
-							message = "<span style=\"color:black\"><B>[src]</B> says, \"I'll stare the bastard in the face as he screams to God, and I'll laugh harder when he whimpers like a baby. And when [src.l_hand:affecting]'s eyes go dead, the hell I send him to will seem like heaven after what I've done to him.\"</span>"
+						G = src.l_hand
 					else if (istype(src.r_hand, /obj/item/grab))
-						var/obj/item/grab/G = src.r_hand
-						if (ishuman(G.affecting))
-							message = "<span style=\"color:black\"><B>[src]</B> says, \"I'll stare the bastard in the face as he screams to God, and I'll laugh harder when he whimpers like a baby. And when [src.r_hand:affecting]'s eyes go dead, the hell I send him to will seem like heaven after what I've done to him.\"</span>"
+						G = src.r_hand
+					if (G && ishuman(G.affecting))
+						var/mob/M = G.affecting
+						src.say_verb("I'll stare the bastard in the face as [he_or_she(M)] screams to God, and I'll laugh harder when [he_or_she(M)] whimpers like a baby.")
+						sleep(0.7 SECONDS)
+						if(G && G.affecting == M)
+							src.say_verb("And when [M]'s eyes go dead, the hell I send [him_or_her(M)] to will seem like heaven after what I've done to [him_or_her(M)].")
+						else
+							src.emote("laugh")
 					else if (istype(src.loc.loc, /area/station/security/detectives_office))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"As I looked out the door of my office, I realised it was a night when you didn't know your friends but strangers looked familiar. A night like this, the smartest thing to do is nothing: stay home. It was like the wind carried people along with it. But I had to get out there.\"</span>"
+						src.say_verb("As I looked out the door of my office, I realised it was a night when you didn't know your friends but strangers looked familiar.")
+						sleep(1 SECONDS)
+						src.say_verb("A night like this, the smartest thing to do is nothing: stay home.")
+						sleep(0.5 SECONDS)
+						src.say_verb("It was like the wind carried people along with it.")
+						sleep(0.8 SECONDS)
+						src.say_verb("But I had to get out there.")
 					else if (istype(src.loc.loc, /area/station/maintenance))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"The dark maintenance corridoors of this place were always the same, home to the most shady characters you could ever imagine. Walk down the right back alley in [station_name(1)], and you can find anything.\"</span>"
+						src.say_verb("The dark maintenance corridoors of this place were always the same, home to the most shady characters you could ever imagine.")
+						sleep(1 SECONDS)
+						src.say_verb("Walk down the right back alley in [station_name(1)], and you can find anything.")
 					else if (istype(src.loc.loc, /area/station/hydroponics))
-						message = "<span style=\"color:black\"><B>[src]</b> says, \"A gang of space farmers growing psilocybin mushrooms, cannabis, and of course those goddamned george melons. A shady bunch, whose wiles had earned them the trust of many. The Chef. The Barman. But not me. No, their charms don't work on a man of values and principles.\"</span>"
+						src.say_verb("A gang of space farmers growing psilocybin mushrooms, cannabis, and of course those goddamned george melons.")
+						sleep(1 SECONDS)
+						src.say_verb("A shady bunch, whose wiles had earned them the trust of many.")
+						sleep(0.8 SECONDS)
+						src.say_verb("The Chef.")
+						sleep(0.8 SECONDS)
+						src.say_verb("The Barman.")
+						sleep(0.8 SECONDS)
+						src.say_verb("But not me.")
+						sleep(0.5 SECONDS)
+						src.emote("frown")
+						sleep(0.5 SECONDS)
+						src.say_verb("No, their charms don't work on a [man_or_woman(src)] of values and principles.")
 					else if (istype(src.loc.loc, /area/station/mailroom))
-						message = "<span style=\"color:black\"><B>[src]</b> says, \"The post office, an unused room habited by a brainless monkey, a cynical postman, and now, me. I've never trusted postal workers, with their crisp blue suits and their peaked caps. There's never any mail sent, excepting the ticking packages I gotta defuse up in the bridge.\"</span>"
+						src.say_verb("The post office, an unused room habited by a brainless monkey, a cynical postman, and now, me.")
+						sleep(1 SECONDS)
+						src.say_verb("I've never trusted postal workers, with their crisp blue suits and their peaked caps.")
+						sleep(0.5 SECONDS)
+						src.say_verb("There's never any mail sent, excepting the ticking packages I gotta defuse up in the bridge.")
 					else if (istype(src.loc.loc, /area/centcom))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"Central Command. I was tired as hell but I could afford to be tired now... I needed it to be morning. I wanted to hear doors opening, cars start, and human voices talking about the Space Olympics. I wanted to make sure there were still folks out there facing life with nothing up their sleeves but their arms. They didn't know it yet, but they had a better shot at happiness and a fair shake than they did yesterday.\"</span>"
+						src.say_verb("Central Command.")
+						sleep(1 SECONDS)
+						src.say_verb("I was tired as hell but I could afford to be tired now...")
+						sleep(1 SECONDS)
+						src.say_verb("I needed it to be morning.")
+						sleep(0.7 SECONDS)
+						src.say_verb("I wanted to hear doors opening, cars start, and human voices talking about the Space Olympics.")
+						sleep(0.7 SECONDS)
+						src.say_verb("I wanted to make sure there were still folks out there facing life with nothing up their sleeves but their arms.")
+						sleep(1 SECONDS)
+						src.say_verb("They didn't know it yet, but they had a better shot at happiness and a fair shake than they did yesterday.")
 					else if (istype(src.loc.loc, /area/station/chapel))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"The self-pontificating bastard who calls himself our chaplain conducts worship here. If you can call the summoning of an angry god who pelts us with toolboxes, bolts of lightning, and occasionally rips our bodies in twain 'worship'.\"</span>"
+						src.say_verb("The self-pontificating bastard who calls himself our chaplain conducts worship here.")
+						sleep(0.5 SECONDS)
+						src.say_verb("If you can call the summoning of an angry god who pelts us with toolboxes, bolts of lightning, and occasionally rips our bodies in twain 'worship'.")
 					else if (istype(src.loc.loc, /area/station/bridge))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"The bridge. The home of the Captain and Head of Personnel. I tried to tell myself I was the sturdy leg in our little triangle. I was worried it was true.\"</span>"
+						src.say_verb("The bridge.")
+						sleep(1 SECONDS)
+						src.say_verb("The home of the Captain and Head of Personnel.")
+						sleep(0.6 SECONDS)
+						src.say_verb("I tried to tell myself I was the sturdy leg in our little triangle.")
+						sleep(1 SECONDS)
+						src.say_verb("I was worried it was true.")
 					else if (istype(src.loc.loc, /area/station/security/main))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"I had dreams of being security before I got into the detective game. I wanted to meet stimulating and interesting people of an ancient space culture, and kill them. I wanted to be the first kid on my ship to get a confirmed kill.\"</span>"
+						src.say_verb("I had dreams of being security before I got into the detective game.")
+						sleep(1 SECONDS)
+						src.say_verb("I wanted to meet stimulating and interesting people of an ancient space culture, and kill them.")
+						sleep(0.7 SECONDS)
+						src.say_verb("I wanted to be the first kid on my ship to get a confirmed kill.")
 					else if (istype(src.loc.loc, /area/station/crew_quarters/bar))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"The station bar, full of the best examples of lowlifes and drunks I'll ever find. I need a drink though, and there are no better places to find a beer than here.\"</span>"
+						src.say_verb("The station bar, full of the best examples of lowlifes and drunks I'll ever find.")
+						sleep(0.7 SECONDS)
+						src.say_verb("I need a drink though, and there are no better places to find a beer than here.")
 					else if (istype(src.loc.loc, /area/station/medical))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"Medical. In truth it's full of the biggest bunch of cut throats on the station, most would rather cut you up than sow you up, but if I've got a slug in my ass, I don't have much choice.\"</span>"
+						src.say_verb("Medical.")
+						sleep(0.8 SECONDS)
+						src.say_verb("In truth it's full of the biggest bunch of cut throats on the station, most would rather cut you up than sow you up, but if I've got a slug in my ass, I don't have much choice.")
 					else if (istype(src.loc.loc, /area/station/hallway/primary/))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"The halls of the station assault my nostrils like a week old meal left festering in the sink. A thug around every corner, and reason enough themselves to keep my gun in my hand.\"</span>"
+						src.say_verb("The halls of the station assault my nostrils like a week old meal left festering in the sink.")
+						sleep(0.8 SECONDS)
+						src.say_verb("A thug around every corner, and reason enough themselves to keep my gun in my hand.")
 					else if (istype(src.loc.loc, /area/station/hallway/secondary/exit))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"The only way off this hellhole and it's the one place I don't want to be, but sometimes you have to show your friends that you're worth a damn. Sometimes that means dying, sometimes it means killing a whole lot of people to escape alive.\"</span>"
+						src.say_verb("The only way off this hellhole and it's the one place I don't want to be, but sometimes you have to show your friends that you're worth a damn.")
+						sleep(0.8 SECONDS)
+						src.say_verb("Sometimes that means dying, sometimes it means killing a whole lot of people to escape alive.")
 					else if (istype(src.loc.loc, /area/station/hallway/secondary/entry))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"The entrance to [station_name(1)]. You will never find a more wretched hive of scum and villainy. I must be cautious.\"</span>"
+						src.say_verb("The entrance to [station_name(1)].")
+						sleep(0.6 SECONDS)
+						src.say_verb("You will never find a more wretched hive of scum and villainy.")
+						sleep(0.7 SECONDS)
+						src.say_verb("I must be cautious.")
 					else if (istype(src.loc.loc, /area/station/engine/))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"The churning, hellish heart of the station that just can't help missing the beat. Full of the dregs of society, and not the right place to be caught unwanted. I better watch my back.\"</span>"
+						src.say_verb("The churning, hellish heart of the station that just can't help missing the beat.")
+						sleep(0.7 SECONDS)
+						src.say_verb("Full of the dregs of society, and not the right place to be caught unwanted.")
+						sleep(0.5 SECONDS)
+						src.say_verb("I better watch my back.")
 					else if (istype(src.loc.loc, /area/station/maintenance/disposal))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"Disposal. Usually bloodied, full of grey-suited corpses and broken windows. Down here, you can hear the quiet moaning of the station itself. It's like it's mourning. Mourning better days long gone, like assistants through these pipes.\"</span>"
+						src.say_verb("Disposal.")
+						sleep(1 SECONDS)
+						src.say_verb("Usually bloodied, full of grey-suited corpses and broken windows.")
+						sleep(0.6 SECONDS)
+						src.say_verb("Down here, you can hear the quiet moaning of the station itself.")
+						sleep(1 SECONDS)
+						src.say_verb("It's like it's mourning.")
+						sleep(0.6 SECONDS)
+						src.say_verb("Mourning better days long gone, like assistants through these pipes.")
 					else if (istype(src.loc.loc, /area/station/crew_quarters/cafeteria))
-						message = "<span style=\"color:black\"><B>[src]</B> says, \"A place to eat, but not an appealing one. I've heard rumours about this place, and if there's one thing I know, it's that it's not normal to eat people.\"</span>"
+						src.say_verb("A place to eat, but not an appealing one.")
+						sleep(0.6 SECONDS)
+						src.say_verb("I've heard rumours about this place, and if there's one thing I know, it's that it's not normal to eat people.")
 					else if (istype(src.wear_mask, /obj/item/clothing/mask/cigarette))
 						message = "<B>[src]</B> takes a drag on [his_or_her(src)] cigarette, surveying the scene around them carefullly."
 					else
-						message = "<B>[src]</B> looks uneasy, like [src.gender == MALE ? "" : "s"]he's missing a vital part of h[src.gender == MALE ? "im" : "er"]self. [src.gender == MALE ? "H" : "Sh"]e needs a smoke badly."
+						message = "<B>[src]</B> looks uneasy, like [hes_or_shes(src)] missing a vital part of [himself_or_herself(src)]. [capitalize(he_or_she(src))] needs a smoke badly."
 
 				else
 					message = "<B>[src]</B> tries to say something clever, but just can't pull it off looking like that."

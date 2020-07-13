@@ -10551,8 +10551,7 @@
 /area/station/crew_quarters/bar)
 "axZ" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10;
-	icon_state = "ringrope"
+	dir = 10
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -10562,8 +10561,7 @@
 /area/station/crew_quarters/fitness)
 "ayb" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6;
-	icon_state = "ringrope"
+	dir = 6
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -41778,7 +41776,6 @@
 /obj/vehicle/segway,
 /obj/machinery/computer/riotgear{
 	dir = 4;
-	icon_state = "drawbr0";
 	pixel_x = -28
 	},
 /turf/simulated/floor/bot,
@@ -45961,10 +45958,6 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/teleporter)
-"bUE" = (
-/obj/effects/background_objects,
-/turf/space,
-/area)
 "bUF" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor/bot,
@@ -69212,10 +69205,6 @@
 	icon_state = "fpurple2"
 	},
 /area/station/science)
-"cUT" = (
-/obj/effects/background_objects/x0,
-/turf/space,
-/area)
 "cUU" = (
 /obj/machinery/dispenser{
 	o2tanks = 5;
@@ -100418,7 +100407,7 @@ aaa
 aaa
 aaa
 aaa
-bUE
+aaa
 aaa
 aaa
 aaa
@@ -146065,7 +146054,7 @@ aao
 aaa
 arQ
 aaa
-cUT
+aaa
 aaa
 cxj
 cxj
