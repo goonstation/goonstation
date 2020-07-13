@@ -640,7 +640,7 @@
 		return
 
 	if (isghostcritter(usr))
-		var/mob/living/critter/small_animal/C = usr
+		var/mob/living/critter/C = usr
 		if (!C.can_pull(src))
 			boutput(usr,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
 			return
