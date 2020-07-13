@@ -297,6 +297,8 @@
 
 	..()
 
+/obj/item/device/pda2/abilities = list(/obj/ability_button/pda_open)
+
 /obj/item/device/pda2/attack_self(mob/user as mob)
 	if(!user.literate)
 		boutput(user, "<span class='alert'>You don't know how to read, the screen is meaningless to you.</span>")

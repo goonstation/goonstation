@@ -342,6 +342,17 @@
 
 ////////////////////////////////////////////////////////////
 
+/obj/ability_button/pda_open
+	name = "Open The PDA Interface"
+	icon_state = "pda1"
+
+	execute_ability()
+		var/obj/item/device/pda2/P = the_item
+		P.attack_self(usr)
+		..()
+
+////////////////////////////////////////////////////////////
+
 /obj/ability_button/saw_toggle
 	name = "Toggle Saw"
 	icon_state = "saw"
