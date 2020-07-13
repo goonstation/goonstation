@@ -83,6 +83,7 @@
 		steam.start()
 		H.canmove = 0
 		H.restrain_time = TIME + 40
+		holder.canmove = 0
 		sleep(2 SECONDS)
 		flick("reappear",animation)
 		sleep(0.5 SECONDS)
@@ -100,12 +101,14 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	invisibility = 101
-	var/canmove = 1
+	var/canmove = 1 // can be used to completely stop movement
+	var/movecd = 0 // used in relaymove, so people don't move too quickly
 	density = 0
 	anchored = 1
 
 /obj/dummy/spell_invis/relaymove(var/mob/user, direction, delay)
-	if (!src.canmove) return
+	if (!src.canmove || src.movecd)
+		return
 	switch(direction)
 		if(NORTH)
 			src.y++
@@ -127,8 +130,8 @@
 		if(SOUTHWEST)
 			src.y--
 			src.x--
-	src.canmove = 0
-	SPAWN_DBG(0.2 SECONDS) src.canmove = 1
+	src.movecd = 1
+	SPAWN_DBG(0.2 SECONDS) src.movecd = 0
 
 /obj/dummy/spell_invis/ex_act(blah)
 	return
