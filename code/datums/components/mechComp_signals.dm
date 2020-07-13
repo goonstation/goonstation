@@ -86,35 +86,35 @@
 
 /datum/component/mechanics_holder/RegisterWithParent()
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_INPUT), .proc/addInput)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_RECEIVE_MSG), .proc/fireInput)
+	RegisterSignal(parent, list(_COMSIG_MECHCOMP_RECEIVE_MSG), .proc/fireInput)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_TRANSMIT_SIGNAL), .proc/fireOutSignal)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_TRANSMIT_MSG), .proc/fireOutgoing)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG), .proc/fireDefault) //Only use this when also using COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_INCOMING), .proc/removeIncoming)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_OUTGOING), .proc/removeOutgoing)
+	RegisterSignal(parent, list(_COMSIG_MECHCOMP_RM_INCOMING), .proc/removeIncoming)
+	RegisterSignal(parent, list(_COMSIG_MECHCOMP_RM_OUTGOING), .proc/removeOutgoing)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_ALL_CONNECTIONS), .proc/WipeConnections)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_GET_OUTGOING), .proc/getOutgoing)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_DROPCONNECT), .proc/dropConnect)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_LINK), .proc/link_devices)
+	RegisterSignal(parent, list(_COMSIG_MECHCOMP_GET_OUTGOING), .proc/getOutgoing)
+	RegisterSignal(parent, list(_COMSIG_MECHCOMP_DROPCONNECT), .proc/dropConnect)
+	RegisterSignal(parent, list(_COMSIG_MECHCOMP_LINK), .proc/link_devices)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_CONFIG), .proc/addConfig)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL), .proc/allowManualSingalSetting) //Only use this when also using COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG
 	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/attackby)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_COMPATIBLE), .proc/compatible)//Better that checking GetComponent()?
+	RegisterSignal(parent, list(_COMSIG_MECHCOMP_COMPATIBLE), .proc/compatible)//Better that checking GetComponent()?
 	return  //No need to ..()
 
 /datum/component/mechanics_holder/UnregisterFromParent()
 	var/list/signals = list(\
 	COMSIG_MECHCOMP_ADD_INPUT,\
-	COMSIG_MECHCOMP_RECEIVE_MSG,\
+	_COMSIG_MECHCOMP_RECEIVE_MSG,\
 	COMSIG_MECHCOMP_TRANSMIT_SIGNAL,\
 	COMSIG_MECHCOMP_TRANSMIT_MSG,\
 	COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,\
-	COMSIG_MECHCOMP_RM_INCOMING,\
-	COMSIG_MECHCOMP_RM_OUTGOING,\
+	_COMSIG_MECHCOMP_RM_INCOMING,\
+	_COMSIG_MECHCOMP_RM_OUTGOING,\
 	COMSIG_MECHCOMP_RM_ALL_CONNECTIONS,\
-	COMSIG_MECHCOMP_GET_OUTGOING,\
-	COMSIG_MECHCOMP_DROPCONNECT,\
-	COMSIG_MECHCOMP_LINK,\
+	_COMSIG_MECHCOMP_GET_OUTGOING,\
+	_COMSIG_MECHCOMP_DROPCONNECT,\
+	_COMSIG_MECHCOMP_LINK,\
 	COMSIG_MECHCOMP_ADD_CONFIG,\
 	COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL,\
 	COMSIG_ATTACKBY)
@@ -127,9 +127,9 @@
 //Delete all connections. (Often caused by DC_ALL user command, and unwrenching MechComp devices.)
 /datum/component/mechanics_holder/proc/WipeConnections()
 	for(var/atom/A in src.connected_incoming)
-		SEND_SIGNAL(A, COMSIG_MECHCOMP_RM_OUTGOING, parent)
+		SEND_SIGNAL(A, _COMSIG_MECHCOMP_RM_OUTGOING, parent)
 	for(var/atom/A in src.connected_outgoing)
-		SEND_SIGNAL(A, COMSIG_MECHCOMP_RM_INCOMING, parent)
+		SEND_SIGNAL(A, _COMSIG_MECHCOMP_RM_INCOMING, parent)
 	src.connected_incoming.Cut()
 	src.connected_outgoing.Cut()
 	return
@@ -142,7 +142,7 @@
 //Remove a device from our list of receiving devices.
 /datum/component/mechanics_holder/proc/removeOutgoing(var/comsig_target, var/atom/A)
 	src.connected_outgoing.Remove(A)
-	SEND_SIGNAL(parent,COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING, A)
+	SEND_SIGNAL(parent,_COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING, A)
 	return
 
 //Give the caller a copied list of our outgoing connections.
@@ -189,9 +189,9 @@
 	var/fired = 0
 	for(var/atom/A in src.connected_outgoing)
 		//Note: a target not handling a signal returns 0.
-		if(SEND_SIGNAL(parent,COMSIG_MECHCOMP_DISPATCH_VALIDATE, A, msg.signal) != 0)
+		if(SEND_SIGNAL(parent,_COMSIG_MECHCOMP_DISPATCH_VALIDATE, A, msg.signal) != 0)
 			continue 
-		SEND_SIGNAL(A, COMSIG_MECHCOMP_RECEIVE_MSG, src.connected_outgoing[A], cloneMessage(msg))
+		SEND_SIGNAL(A, _COMSIG_MECHCOMP_RECEIVE_MSG, src.connected_outgoing[A], cloneMessage(msg))
 		fired = 1
 	return fired
 
@@ -210,7 +210,7 @@
 
 //Called when a component is dragged onto another one.
 /datum/component/mechanics_holder/proc/dropConnect(var/comsig_target, atom/A, mob/user)
-	if(!A || A == parent || user.stat || !isliving(user) || (SEND_SIGNAL(A,COMSIG_MECHCOMP_COMPATIBLE) != 1))  //ZeWaka: Fix for null.mechanics
+	if(!A || A == parent || user.stat || !isliving(user) || (SEND_SIGNAL(A,_COMSIG_MECHCOMP_COMPATIBLE) != 1))  //ZeWaka: Fix for null.mechanics
 		return
 
 	if (!user.find_tool_in_hand(TOOL_PULSING))
@@ -224,7 +224,7 @@
 	var/typesel = input(user, "Use [parent] as:", "Connection Type") in list("Trigger", "Receiver", "*CANCEL*")
 	switch(typesel)
 		if("Trigger")
-			SEND_SIGNAL(A, COMSIG_MECHCOMP_LINK, parent, user)
+			SEND_SIGNAL(A, _COMSIG_MECHCOMP_LINK, parent, user)
 		if("Receiver")
 			link_devices(null, A, user) //What do you want, an invitation? No signal needed!
 		if("*CANCEL*")
@@ -243,7 +243,7 @@
 		return
 	
 	var/pointer_container[1] //A list of size 1, to store the address of the list we want
-	SEND_SIGNAL(trigger, COMSIG_MECHCOMP_GET_OUTGOING, pointer_container)
+	SEND_SIGNAL(trigger, _COMSIG_MECHCOMP_GET_OUTGOING, pointer_container)
 	var/list/trg_outgoing = pointer_container[1]
 	var/selected_input = input(user, "Select \"[receiver.name]\" Input", "Input Selection") in inputs + "*CANCEL*"
 	if(selected_input == "*CANCEL*") return
@@ -255,7 +255,7 @@
 		src.connected_incoming.Add(trigger)
 	boutput(user, "<span class='success'>You connect the [trigger.name] to the [receiver.name].</span>")
 	logTheThing("station", user, null, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
-	SEND_SIGNAL(trigger,COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, receiver, user)
+	SEND_SIGNAL(trigger,_COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, receiver, user)
 	return
 
 //Adds a config to the holder w/ a proc mapping.

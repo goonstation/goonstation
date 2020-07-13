@@ -94,6 +94,7 @@
 /// After a projectile makes a valid hit on an atom (after immunity/other early returns, before other effects)
 #define COMSIG_PROJ_COLLIDE "proj_collide_atom"
 
+
 // MechComp signals - Content signals - Use these in you MechComp compatible devices
 /// Add an input chanel for a device to send into
 #define COMSIG_MECHCOMP_ADD_INPUT "mechcomp_add_input"
@@ -112,26 +113,26 @@
 
 // MechComp signals - Internal signals - Do not use these
 /// Receiving a message from a mechcomp device for handling
-#define COMSIG_MECHCOMP_RECEIVE_MSG "mechcomp_receive_message"
+#define _COMSIG_MECHCOMP_RECEIVE_MSG "_mechcomp_receive_message"
 /// Remove [the caller] from the list of transmitting devices
-#define COMSIG_MECHCOMP_RM_INCOMING "mechcomp_remove_incoming"
+#define _COMSIG_MECHCOMP_RM_INCOMING "_mechcomp_remove_incoming"
 /// Remove [the caller] from the list of receiving devices
-#define COMSIG_MECHCOMP_RM_OUTGOING "mechcomp_remove_outgoing"     
+#define _COMSIG_MECHCOMP_RM_OUTGOING "_mechcomp_remove_outgoing"     
 /// Return the component's outgoing connections
-#define COMSIG_MECHCOMP_GET_OUTGOING "mechcomp_get_outgoing_connections"
+#define _COMSIG_MECHCOMP_GET_OUTGOING "_mechcomp_get_outgoing_connections"
 /// Begin to connect two mechcomp devices together
-#define COMSIG_MECHCOMP_DROPCONNECT "mechcomp_drop_connect"
+#define _COMSIG_MECHCOMP_DROPCONNECT "_mechcomp_drop_connect"
 /// Connect one MechComp compatible device as a receiver to a trigger. (This is meant to be a private method)
-#define COMSIG_MECHCOMP_LINK "mechcomp_link_devices"
+#define _COMSIG_MECHCOMP_LINK "_mechcomp_link_devices"
 /// Returns 1
-#define COMSIG_MECHCOMP_COMPATIBLE "mechcomp_check_compatibility"
+#define _COMSIG_MECHCOMP_COMPATIBLE "_mechcomp_check_compatibility"
 //MechComp Dispatch signals - Niche signals - You probably don't want to use thses.
 /// Add a filtered connection, getting user input on the filter
-#define COMSIG_MECHCOMP_DISPATCH_ADD_FILTER "mechcomp_dispatch_add_filter"
+#define _COMSIG_MECHCOMP_DISPATCH_ADD_FILTER "_mechcomp_dispatch_add_filter"
 /// Remove a filtered connection
-#define COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING "mechcomp_dispatch_remove_filter"
+#define _COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING "_mechcomp_dispatch_remove_filter"
 /// Test a signal to be sent to a connection
-#define COMSIG_MECHCOMP_DISPATCH_VALIDATE "mechcomp_dispatch_run_filter"
+#define _COMSIG_MECHCOMP_DISPATCH_VALIDATE "_mechcomp_dispatch_run_filter"
 
 
 // obj/critter signals

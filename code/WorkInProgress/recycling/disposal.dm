@@ -1555,7 +1555,7 @@
 			boutput(usr, "<span class='alert'>[MECHFAILSTRING]</span>")
 			return
 
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_DROPCONNECT,O,usr)
+		SEND_SIGNAL(src,_COMSIG_MECHCOMP_DROPCONNECT,O,usr)
 		return ..()
 
 	transfer(var/obj/disposalholder/H)

@@ -43,7 +43,7 @@ var/list/mechanics_telepads = new/list()
 			cutParticles()
 			return
 		var/pointer_container[1] //A list of size 1, to store the address of the list we want
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_GET_OUTGOING, pointer_container)
+		SEND_SIGNAL(src, _COMSIG_MECHCOMP_GET_OUTGOING, pointer_container)
 		var/list/connected_outgoing = pointer_container[1]
 		if(length(particles) != length(connected_outgoing))
 			cutParticles()
@@ -115,7 +115,7 @@ var/list/mechanics_telepads = new/list()
 			boutput(usr, "<span class='alert'>Both components need to be secured into place before they can be connected.</span>")
 			return
 
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_DROPCONNECT,O,usr)
+		SEND_SIGNAL(src,_COMSIG_MECHCOMP_DROPCONNECT,O,usr)
 		return ..()
 
 	proc/componentSay(var/string)
@@ -1079,17 +1079,17 @@ var/list/mechanics_telepads = new/list()
 	New()
 		..()
 		src.outgoing_filters = list()
-		RegisterSignal(src, list(COMSIG_MECHCOMP_DISPATCH_ADD_FILTER), .proc/addFilter)
-		RegisterSignal(src, list(COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING), .proc/removeFilter)
-		RegisterSignal(src, list(COMSIG_MECHCOMP_DISPATCH_VALIDATE), .proc/runFilter)
+		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_ADD_FILTER), .proc/addFilter)
+		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING), .proc/removeFilter)
+		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_VALIDATE), .proc/runFilter)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", "dispatch")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching","toggleExactMatching")
 
 	disposing()
 		var/list/signals = list(\
-		COMSIG_MECHCOMP_DISPATCH_ADD_FILTER,\
-		COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING,\
-		COMSIG_MECHCOMP_DISPATCH_VALIDATE)
+		_COMSIG_MECHCOMP_DISPATCH_ADD_FILTER,\
+		_COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING,\
+		_COMSIG_MECHCOMP_DISPATCH_VALIDATE)
 		UnregisterSignal(src, signals)
 		src.outgoing_filters.Cut()
 		..()
