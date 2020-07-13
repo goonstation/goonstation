@@ -101,7 +101,7 @@
 #define COMSIG_MECHCOMP_ADD_CONFIG "mechcomp_add_config"
 /// Connect two mechcomp devices together
 #define COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL "mechcomp_allow_manual_sigset"
-/// Remove all connected devices     //MarkNstein needs attention
+/// Remove all connected devices
 #define COMSIG_MECHCOMP_RM_ALL_CONNECTIONS "mechcomp_remove_all_connections" 
 /// Passing the signal of a message to all connected mechcomp devices for handling (message will be instatiated by the component)
 #define COMSIG_MECHCOMP_TRANSMIT_SIGNAL "mechcomp_transmit_signal"
