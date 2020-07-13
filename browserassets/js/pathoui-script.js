@@ -689,6 +689,21 @@
 				doExposeSlot(0);
 	}
 
+	function loadHelp(slot) {
+		var dna = dnaDetails[slot -1].seq;
+			if(loadedDna && dna) {
+				doExchangeDna(slot);
+			}
+			else if(loadedDna)
+			{
+				doSaveDna(slot);
+			}
+			else if(dna)
+			{
+				doLoadDna(slot);
+			}
+	}
+
 	function doClearDna(slot) {
 		xmit({remove:slot});
 		dnaDetails[slot-1] = new dnaSlotInfo();
@@ -803,20 +818,11 @@
 
 		var detClick = id.slice(0, id.length - slot.toString().length);
 		switch(detClick) {
-			case "btnDnaLoad":
-				doLoadDna(slot);
-				break;
-			case "btnDnaSave":
-				doSaveDna(slot);
-				break;
 			case "btnDnaXchg":
-				doExchangeDna(slot);
+				loadHelp(slot);
 				break;
 			case "btnDnaClear":
 				doClearDna(slot);
-				break;
-			case "btnDnaSlotExpose":
-				doExposeSlot(slot);
 				break;
 			case "btnDnaEject":
 				doExposeSlot(slot);
@@ -878,19 +884,7 @@
 			setButtonEnabled("#btnDnaClear" + slot, true);
 		}
 
-		if(loadedDna || dna.seq === null) {
-			setButtonEnabled("#btnDnaLoad" + slot, false);
-		} else {
-			setButtonEnabled("#btnDnaLoad" + slot, true);
-		}
-
-		if(loadedDna && dna.seq === null && !loadedDna.isSplicing){
-			setButtonEnabled("#btnDnaSave" + slot, true);
-		} else {
-			setButtonEnabled("#btnDnaSave" + slot, false);
-		}
-
-		if( loadedDna && dna.seq !== null && !loadedDna.isSplicing) {
+		if( dna.seq !== null || (loadedDna && !loadedDna.isSplicing)) {
 			setButtonEnabled("#btnDnaXchg" + slot, true);
 		} else {
 			setButtonEnabled("#btnDnaXchg" + slot, false);
