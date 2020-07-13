@@ -6,7 +6,7 @@ datum/controller/process/kudzu
 
 	setup()
 		name = "Kudzu"
-		schedule_interval = 5 SECONDS
+		schedule_interval = 3 SECONDS
 
 		detailed_count = new
 
