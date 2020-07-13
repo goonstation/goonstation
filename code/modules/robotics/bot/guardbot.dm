@@ -85,7 +85,7 @@
 				src.master = null
 			//dispose()
 			return 0
-
+		
 		return 0
 
 //The Robot.
@@ -148,19 +148,16 @@
 
 	var/shotcount = 0		// Number of times it shoots when it should, modded by emag state
 	var/gun = null			// What's the name of our robot's gun? Used in the chat window!
-	var/canshoot = 1		// Limits their rate of fire
-	var/bullethell = 0		// Enables unrestrained magdumping of deadly weaponry
 	var/obeygunlaw = 1		// Does our bot follow the gun whitelist?
-	var/infiniteammo = 0	// Our bot can have infinite ammo, just fyi
 	var/obj/item/gun/budgun = null	// the gun, actually important
 	var/hasgun = 0			// So our robot only gets one gun
-	var/gunlock = 1			// Gotta unlock the gun mount with an ID
+	var/toollock = 1		// Gotta unlock the tool port to swap it	
 	var/gunlocklock = 0		// Traitor mods prevent guntheft
 	var/ammofab = 0			// Is the Ammofabricator installed?
-	var/fastgun = 0			// Is the Rapidfire module installed?
-	var/boosthp = 0			// Are both installed, granting extra HP?
-	var/infinateammo = 0	// Just straight up infinite ammo
 	var/obj/item/gun/setup_gun = null	// Lets spawn with a gun
+	var/gunt = new /obj/item/device/guardbot_tool/gun	// We give this to Buddies lacking a module so they don't get self-conscious about lacking a module
+	var/arrest_target = null	// uhh
+	var/lethal = 0				// uhhh
 	//
 	////////////////////// GUN STUFF -^
 
@@ -221,7 +218,8 @@
 		setup_charge_maximum = 4500
 		setup_charge_percentage = 100
 		setup_gun = /obj/item/gun/kinetic/ak47
-		infiniteammo = 1
+		ammofab = 1
+		setup_default_tool_path = /obj/item/device/guardbot_tool/gun
 
 		New()
 			..()
@@ -420,6 +418,10 @@
 					boutput(user, "Or the president. The president of space.")
 			else
 				boutput(user, "You show \the [E] to [src]! They are very impressed.")
+		if (obeygunlaw)
+			src.obeygunlaw = 0
+			boutput(user, "[src] looks confused for a moment.")
+			src.set_emotion("look")
 		return 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -428,12 +430,7 @@
 		if (istype(W, /obj/item/card/id))
 			if (src.allowed(user))
 				src.locked = !src.locked
-				boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
-				if (src.gunlocklock == 1)
-					boutput(user, "The weapon mount doesn't budge!")
-				else
-					src.gunlock = !src.gunlock
-					boutput(user, "The weapon mount [src.locked ? "locks the gun into place." : "unlocks."]")
+				boutput(user, "Controls and tools are now [src.locked ? "locked." : "unlocked."]")
 			else
 				boutput(user, "<span class='alert'>Access denied.</span>")
 		/*
@@ -502,13 +499,31 @@
 				src.task.task_input("treated")
 			return
 		
+		// Hacky traitor modules
+		// The Ammofab
+		else if (istype(W, /obj/item/device/guardbot_module/ammofab))
+			if (ammofab)
+				boutput(user, "<span class='alert'>There's already one of those blocking the spot where that goes!</span>")
+			else
+				qdel(W)
+				user.u_equip(W)
+				boutput(user, "You attach the [W] to [src]'s frame.")
+				boutput(user, "It welds itself into the backside of [src], hiding itself from view!")
+				src.ammofab = 1
+				if (src.budgun)
+					boutput(user, "<span class='alert'>The BulletBuddy snakes a metallic tendril up [src]'s arm, tightening itself around their hand!</span>")
+					boutput(user, "<span class='alert'>The tendril extends into the magazine port of [src]'s gun, welding itself in place!</span>")
+					src.gunlocklock = 1
+		
 		// Hotswap tools on the fly!
 		else if (istype(W, /obj/item/device/guardbot_tool) && !src.budgun)
 			var/turf/Tdurg = get_turf(src)
 			if (locked)
 				boutput(user, "<span class='alert'>The tool port is locked!</span>")
-			else if (src.tool == /obj/item/device/guardbot_tool/gun)
+			// Set tool to be W, delete guntool so we dont end up with a zillion of em
+			else if (src.tool.tool_id == "GUN")	
 				user.visible_message("<b>[user]</b> inserts the [W] into [src].","You insert the [W] into [src].")
+				qdel(src.tool)
 				src.tool = W
 				src.tool.master = src
 				W.set_loc(src)
@@ -523,7 +538,7 @@
 		
 		//Give em a gun, if they don't already have one
 		//Not a hotswap, only if there's no gun and no tool
-		else if (istype(W, /obj/item/gun) && !src.budgun && (src.tool == /obj/item/device/guardbot_tool/gun))
+		else if (istype(W, /obj/item/gun) && !src.budgun && (src.tool.tool_id == "GUN"))
 			var/legalweapon = 0
 			if (W.type in src.budgun_whitelist)
 				legalweapon = 1
@@ -550,8 +565,8 @@
 				
 		else if (ispryingtool(W) && (src.budgun || src.tool))
 			var/turf/Tdurg = get_turf(src)
-			if (src.budgun)
-				if (src.gunlock || src.gunlocklock)
+			if (src.budgun && (src.tool.tool_id == "GUN"))
+				if (src.locked || src.gunlocklock)
 					user.visible_message("<b>[user]</b> tries to pry the gun off of [src]'s gun mount, but it's locked firmly in place!","You try to pry the gun off of [src]'s gun mount, but it's locked firmly in place!")
 				else
 					budgun.set_loc(Tdurg)
@@ -560,16 +575,18 @@
 					src.budgun = null
 					hasgun = 0
 					gun = null
-			else if (src.tool && (src.tool != /obj/item/device/guardbot_tool/gun))
+			if (src.tool && (src.tool.tool_id != "GUN"))
 				if (src.locked)
 					user.visible_message("<b>[user]</b> tries to pry the tool out of [src], but it's locked firmly in place!","You try to pry the gun off of [src]'s gun mount, but it's locked firmly in place!")
 				else
 					src.tool.set_loc(Tdurg)
 					src.visible_message("<span class='alert'>[user] pries the [tool] out of [name]'s tool port!</span>", "<span class='alert'>You pry the [tool] out of [name]'s tool port!</span>")
-					src.tool = /obj/item/device/guardbot_tool/gun
-			else if (src.tool && (src.tool == /obj/item/device/guardbot_tool/gun))
+					src.tool = src.gunt
+			else if (src.tool && (src.tool.tool_id == "GUN"))
 				boutput(user, "<span class='alert'>There's no tool to remove!</span>")
-
+		
+		else if (istype(W, /obj/item/device/guardbot_tool/gun))
+			boutput(user, "You try to insert the metaphysical representation of a nonexistant tool that is used as a phantom talisman to comfort Guardbuddies and prevent them from falling into deep existential ennui when they find themselves lacking a proper tool into [name], but they seem to already have one. This prompts you to wonder, briefly, how you even got this thing.")
 
 		else
 			switch(W.hit_type)
@@ -629,54 +646,7 @@
 		src.updateUsrDialog()
 		return
 
-	process()
-
-		src.visible_message("<span class='alert'>I procced!!!</span>", "<span class='alert'>I procced!!!</span>")
-
-		if (icon_needs_update)
-			src.update_icon()
-
-		if(!src.on)
-			return
-		if(src.stunned)
-			src.stunned--
-			if(src.stunned <= 0)
-				src.wakeup()
-			return
-
-		if( src.manage_power() ) //Returns true if we need to halt process
-			return				//(ie we are now off or idle)
-
-		if(idle) //Are we idling?
-			if(src.wakeup_timer) //Are we waiting to exit the idle state?
-				src.wakeup_timer--
-				if(src.wakeup_timer <= 0)
-					src.wakeup() //Exit idle state.
-			return
-
-		if(src.charge_dock)
-			if(charge_dock.loc == src.loc)
-				if(!src.idle)
-					src.snooze()
-			else
-				src.charge_dock = null
-				src.wakeup()
-
-			return
-		
-		if(src.reply_wait)
-			src.reply_wait--
-
-		if(!src.tasks.len && (src.model_task || setup_default_startup_task))
-			if(!src.model_task)
-				src.model_task = new setup_default_startup_task
-
-			src.add_task(src.model_task.copy_file(),1)
-
-		if(istype(src.task))
-			src.task.task_act()
-
-		return
+	///////////////////////PROCESS WAS HERE
 
 	receive_signal(datum/signal/signal, receive_method, receive_param)
 		if(!src.on || src.stunned)
@@ -792,6 +762,9 @@
 				src.charge_dock.eject_robot()
 			else
 				src.wakeup()
+		if (obeygunlaw)
+			src.obeygunlaw = 0
+			src.set_emotion("look")
 		return
 
 	explode(var/allow_big_explosion=1)
@@ -816,7 +789,9 @@
 			Ov.icon = 'icons/effects/214x246.dmi'
 			Ov.icon_state = "explosion"
 
-			if(src.tool && src.tool != /obj/item/device/guardbot_tool/gun)
+			if(src.tool.tool_id == "GUN")
+				qdel(src.tool)	// This isn't supposed to be a thing, so stop dropping it!
+			if(src.tool && (src.tool.tool_id != "GUN"))
 				src.tool.set_loc(T)
 			if(src.budgun)
 				src.budgun.set_loc(T)
@@ -829,10 +804,13 @@
 			var/list/throwparts = list()
 			throwparts += new /obj/item/parts/robot_parts/arm/left(T)
 			throwparts += core
-			if(src.tool && src.tool != /obj/item/device/guardbot_tool/gun)
+			if(src.tool.tool_id == "GUN")
+				qdel(src.tool)	// Throw your phantom gun in the trash, not on the ground!
+			if(src.tool && (src.tool.tool_id != "GUN"))
 				throwparts += src.tool
 			if(src.budgun)
 				throwparts += src.budgun
+				src.budgun.set_loc(T)
 			if(src.hat)
 				throwparts += src.hat
 				src.hat.set_loc(T)
@@ -994,31 +972,59 @@
 			return 0
 
 		bot_attack(var/atom/target as mob|obj, lethal=0)
-			if(src.budgun)
-				shotcount = (1 + src.fastgun)	// Fastgun module makes it shoot more
-				while(shotcount > 0 && target)
-					budgun.shoot(get_turf(target), get_turf(src), src)
-					shotcount--
-				
-				if (istype(src.budgun, /obj/item/gun/kinetic))
-					var/obj/item/gun/kinetic/shootgun = src.budgun
-					if (ammofab)	// Can we build our own ammo?
-						if (shootgun.ammo && shootgun.ammo.max_amount && (shootgun.ammo.amount_left <= 1))
-							if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL))
-								cell.charge -= ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 2))
-								shootgun.ammo.amount_left = shootgun.ammo.max_amount
-				else if (istype(src.budgun, /obj/item/gun/energy))
-					var/obj/item/gun/energy/pewgun = src.budgun
-					if (pewgun.cell && (pewgun.cell.charge < pewgun.cell.max_charge))
-						if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL)) 
-							cell.charge -= (pewgun.cell.max_charge - pewgun.cell.charge)
-							pewgun.cell.charge = pewgun.cell.max_charge
-				
-				src.visible_message("<span class='alert'><b>[src] fires its [gun] at [target]!</b></span>")
+			if(src.tool && (src.tool.tool_id == "GUN"))
+				if(src.budgun)
+					shotcount = 1	// TODO: Make rapidfire exist, then work.
+					while(shotcount > 0 && target)
+						budgun.shoot(get_turf(target), get_turf(src), src)
+						shotcount--
+					
+					if (istype(src.budgun, /obj/item/gun/kinetic))
+						var/obj/item/gun/kinetic/shootgun = src.budgun
+						if (ammofab)	// Can we build our own ammo?
+							if (shootgun.ammo && shootgun.ammo.max_amount && (shootgun.ammo.amount_left <= 1))
+								if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL) && ((cell.charge - ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 2))) > (0.2 *GUARDBOT_LOWPOWER_ALERT_LEVEL)))	// *scream
+									cell.charge -= ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 2))
+									shootgun.ammo.amount_left = shootgun.ammo.max_amount
+					else if (istype(src.budgun, /obj/item/gun/energy))
+						var/obj/item/gun/energy/pewgun = src.budgun
+						if (pewgun.cell && (pewgun.cell.charge < pewgun.cell.max_charge))
+							if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL)) 
+								cell.charge -= (pewgun.cell.max_charge - pewgun.cell.charge)
+								pewgun.cell.charge = pewgun.cell.max_charge
+					
+					src.visible_message("<span class='alert'><b>[src] fires its [gun] at [target]!</b></span>")
 
-				src.overlays -= image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)
-				src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)	// Update the held gun sprite
-			else if(src.tool && (src.tool != /obj/item/device/guardbot_tool/gun))
+					src.overlays -= image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)
+					src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)	// Update the held gun sprite
+				if(!src.budgun)
+					var/r = rand(1,9)
+					switch(r)
+						if(1)
+							src.visible_message("[src] glowers at [target] dubiously!")
+						if(2)
+							src.visible_message("[src] shakes its robotic fist at [target]!")
+						if(3)
+							src.visible_message("You hear a [pick("peeved","rowdy","faint","sad","disappointed","mild")] buzz come from [src]'s tool port!")
+						if(4)
+							src.visible_message("You hear an [pick("annoyed","aggressive","angry","impotent","aggrieved","antsy")] buzz come from [src]'s tool port!")
+						if(5)
+							src.visible_message("[src] makes a disappointed gesture at [target]'s life decisions!")
+						if(6)
+							src.visible_message("[src] looks more disappointed than angry.")
+						if(7)
+							src.speak("Uhm, when you get a moment, would you please ask the superuser to outfit me with a tool module?")
+						if(8)
+							src.speak("ERROR: Defensive weapon system not found!")
+						if(9)
+							src.speak("ERROR: Unable to prosecute beatdown.arrest_target!")
+					src.set_emotion("screaming")	// *scream
+					src.remove_current_task()		// welp
+					src.update_icon()				// Update now, we're kind of on a deadline
+					SPAWN_DBG(3 SECONDS)
+						src.set_emotion("sad")		// Still kinda sad that someone would bully a defenseless little rectangle.
+						src.update_icon()				
+			else if(src.tool && (src.tool.tool_id != "GUN"))
 				var/is_ranged = get_dist(src, target) > 1
 				src.tool.bot_attack(target, src, is_ranged, lethal)
 			return
@@ -1131,14 +1137,14 @@
 			dat += {"Power: <table border='1' style='background-color:[readout_color]'>
 					<tr><td><font color=white>[power_readout]</font></td></tr></table><br>"}
 
-			dat += "Current Tool: [src.tool ? src.tool.tool_id : "NONE"]<br>"
-
+			dat += "Current Tool: [src.tool.tool_id == "GUN" ? "NONE" : src.tool.tool_id]<br>"
+			
 			dat += "Current Gun: [src.budgun ? src.budgun.name : "NONE"]<br>"
 			
 			if(src.gunlocklock)
 				dat += "Gun Mount: <font color=red>JAMMED!</font><br>"
 			else
-				dat += "Gun Mount: [src.gunlock ? "LOCKED" : "UNLOCKED"]<br>"
+				dat += "Gun Mount: [src.locked ? "LOCKED" : "UNLOCKED"]<br>"
 
 			if(src.locked)
 
@@ -1200,6 +1206,53 @@
 			src.control_freq = newfreq
 			src.radio_connection = radio_controller.add_object(src, "[src.control_freq]")
 
+	process()
+
+		if (icon_needs_update)
+			src.update_icon()
+
+		if(!src.on)
+			return
+		if(src.stunned)
+			src.stunned--
+			if(src.stunned <= 0)
+				src.wakeup()
+			return
+
+		if( src.manage_power() ) //Returns true if we need to halt process
+			return				//(ie we are now off or idle)
+
+		if(idle) //Are we idling?
+			if(src.wakeup_timer) //Are we waiting to exit the idle state?
+				src.wakeup_timer--
+				if(src.wakeup_timer <= 0)
+					src.wakeup() //Exit idle state.
+			return
+
+		if(src.charge_dock)
+			if(charge_dock.loc == src.loc)
+				if(!src.idle)
+					src.snooze()
+			else
+				src.charge_dock = null
+				src.wakeup()
+
+			return
+		
+		if(src.reply_wait)
+			src.reply_wait--
+
+		if(!src.tasks.len && (src.model_task || setup_default_startup_task))
+			if(!src.model_task)
+				src.model_task = new setup_default_startup_task
+
+			src.add_task(src.model_task.copy_file(),1)
+
+		if(istype(src.task))
+			src.task.task_act()
+
+		return
+
 //Robot tools.  Flash boards, batons, etc
 /obj/item/device/guardbot_tool
 	name = "Tool module"
@@ -1223,8 +1276,8 @@
 			
 	//phantom Gun tool
 	gun
-		name = "Gun"
-		desc = "You shouldn't see this 3="
+		name = "Weapon handling chipset"
+		desc = "A ROM unit containing firearm drivers that allow a PR-6S Guardbuddy to wield a gun, typically pre-soldered to their mainboard. The fact it isn't attached to anything indicates that it is damaged beyond use."
 		icon_state = "tool_generic"
 		tool_id = "GUN"
 		is_gun = 1
@@ -1464,6 +1517,22 @@
 			return
 
 	//xmas -- See spacemas.dm
+
+/obj/item/device/guardbot_module
+	name = "Add-on module"
+	desc = "A generic expansion pack for a PR-6S Guardbuddy."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "tool_generic"
+	mats = 6
+	w_class = 2.0
+	var/tool_id = "MOD"
+	is_syndicate = 1
+
+	ammofab
+		name = "BulletBuddy ammo fabrication kit"
+		desc = "A miniature fabricator designed to fit inside a PR-6S Guardbuddy and provide for it an inexhaustible supply of kinetic ammunition, at the expense of the bot's built-in battery charge. When attaches, this device welds itself to the bot, and if it detects a weapon in the bot's grip, it'll weld itself to that as well."
+		icon_state = "press_forbidden"
+		tool_id = "AMMOFAB - if you see this, please tell Superlagg their thing broke =0"
 
 //Task Datums
 /datum/computer/file/guardbot_task //Computer datum so it can be transmitted over radio
@@ -1980,7 +2049,7 @@
 
 						else
 							var/targdist = get_dist(master, arrest_target)
-							if((targdist <= 1) || master.budgun || (master.tool == /obj/item/device/guardbot_tool/gun))	// If you have a gun, USE IT AAA
+							if((targdist <= 1) || master.tool && master.tool.is_gun || master.budgun || (master.tool == /obj/item/device/guardbot_tool/gun))	// If you have a gun, USE IT AAA
 								if (!isliving(arrest_target) || isdead(arrest_target))
 									mode = 0
 									drop_arrest_target()
@@ -3371,10 +3440,10 @@
 			if(src.created_default_task)
 				newbot.setup_default_startup_task = src.created_default_task
 
-//			if(src.created_module)
-//				newbot.tool = src.created_module
-//				newbot.tool.set_loc(newbot)
-//				newbot.tool.master = newbot
+			// Everyone gets a new gunt
+			newbot.tool = new /obj/item/device/guardbot_tool/gun
+			newbot.tool.set_loc(newbot)
+			newbot.tool.master = newbot
 
 			if(src.created_model_task)
 				newbot.model_task = src.created_model_task
@@ -3768,7 +3837,6 @@
 					src.timeout_alert = 1
 					src.post_wire_status(src.host_id, "command","term_ping","data","reply")
 
-
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -3985,7 +4053,7 @@
 		if(src.gunlocklock)
 			dat += "Gun Mount: <font color=red>JAMMED!</font><br>"
 		else
-			dat += "Gun Mount: [src.gunlock ? "LOCKED" : "UNLOCKED"]<br>"
+			dat += "Gun Mount: [src.locked ? "LOCKED" : "UNLOCKED"]<br>"
 
 		if(src.locked)
 
@@ -4022,7 +4090,9 @@
 		Ov.icon = 'icons/effects/214x246.dmi'
 		Ov.icon_state = "explosion"
 
-		if(src.tool && src.tool != /obj/item/device/guardbot_tool/gun)
+		if(src.tool.tool_id == "GUN")
+			qdel(src.tool)	// Quit dropping things that shouldn't exist!
+		if(src.tool && (src.tool.tool_id != "GUN"))
 			src.tool.set_loc(T)
 		if(src.budgun)
 			src.budgun.set_loc(T)
@@ -4036,10 +4106,13 @@
 		throwparts += new /obj/item/parts/robot_parts/arm/left(T)
 		throwparts += new /obj/item/device/flash(T)
 		throwparts += core
-		if(src.tool)
+		if(src.tool.tool_id == "GUN")
+			qdel(src.tool)	// Quit dropping things that shouldn't exist!
+		if(src.tool && (src.tool.tool_id != "GUN"))
 			throwparts += src.tool
 		if(src.budgun)
 			throwparts += src.budgun
+			src.budgun.set_loc(T)
 		if(src.hat)
 			throwparts += src.hat
 			src.hat.set_loc(T)
@@ -4136,10 +4209,10 @@
 			if(src.created_default_task)
 				newbot.setup_default_startup_task = src.created_default_task
 
-//			if(src.created_module)
-//				newbot.tool = src.created_module
-//				newbot.tool.set_loc(newbot)
-//				newbot.tool.master = newbot
+			// Everyone gets a new gunt
+			newbot.tool = new /obj/item/device/guardbot_tool/gun
+			newbot.tool.set_loc(newbot)
+			newbot.tool.master = newbot
 
 			if(src.created_model_task)
 				newbot.model_task = src.created_model_task
