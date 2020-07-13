@@ -371,7 +371,7 @@
 	for(var/obj/item/I in emptybox.contents) //Empty the toolbox so we don't have infinite crowbars or whatever
 		qdel(I)
 
-	elecflash(src, power=2)
+	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
 	return
 

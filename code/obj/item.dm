@@ -907,7 +907,10 @@
 */
 
 /obj/item/interact(mob/user)
-	src.pick_up_by(user)
+	if (user.equipped() == src)
+		src.attack_self(user)
+	else
+		src.pick_up_by(user)
 
 /obj/item/proc/pick_up_by(var/mob/M)
 	if (world.time < M.next_click)

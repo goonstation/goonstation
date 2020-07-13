@@ -457,6 +457,7 @@ var/global
 	dooc_allowed = 1
 	player_capa = 0
 	player_cap = 55
+	player_cap_grace = list()
 	traitor_scaling = 1
 	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
