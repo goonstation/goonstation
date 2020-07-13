@@ -2551,6 +2551,6 @@ proc/total_clients_for_cap()
 
 proc/client_has_cap_grace(var/client/C)
 	if (C.ckey in player_cap_grace)
-		.= (player_cap_grace[C.ckey] <= TIME)
+		.= (player_cap_grace[C.ckey] > TIME)
 
 
