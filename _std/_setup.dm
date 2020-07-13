@@ -1029,7 +1029,7 @@ proc/default_frequency_color(freq)
 #elif BUILD_TIME_DAY == 13
 #define ASS_JAM 1
 #else
-#define ASS_JAM 1
+#define ASS_JAM 0
 #endif
 
 // time for johns madden
