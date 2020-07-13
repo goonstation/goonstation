@@ -242,7 +242,7 @@ MATERIAL
 				L["fl_tiles"] = "x4 Floor Tile"
 				L["rods"] = "x2 Rods"
 				L["rack"] = "Rack Parts"
-//				L["railing"] = "Railing"
+				L["railing"] = "Railing"
 				L["stool"] = "stool"
 				L["chair"] = "chair"
 				L["table"] = "Table Parts (2 Sheets)"
@@ -382,13 +382,13 @@ MATERIAL
 					a_icon_state = "stool"
 					a_name = "a stool"
 
-//				if("railing")
-//					a_type = /obj/railing
-//					a_amount = 1
-//					a_cost = 1
-//					a_icon = 'icons/obj/objects.dmi'
-//					a_icon_state = "railing"
-//					a_name = "a railing"
+				if("railing")
+					a_type = /obj/railing
+					a_amount = 1
+					a_cost = 1
+					a_icon = 'icons/obj/objects.dmi'
+					a_icon_state = "railing"
+					a_name = "a railing"
 
 				if("chair")
 					a_type = /obj/stool/chair
