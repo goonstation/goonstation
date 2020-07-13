@@ -73,6 +73,7 @@
 	var/last_life_process = 0
 	var/use_stunned_icon = 1
 
+	var/pull_w_class = 2
 
 	blood_id = "blood"
 
@@ -391,6 +392,19 @@
 			I.throw_at(target, I.throw_range, I.throw_speed, params)
 
 			playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
+
+	proc/can_pull(atom/A)
+		if (!src.ghost_spawned) //if its an admin or wizard made critter, just let them pull everythang
+			return 1
+		if (ismob(A))
+			return (src.pull_w_class >= 3)
+		else if (isobj(A))
+			if (istype(A,/obj/item))
+				var/obj/item/I = A
+				return (pull_w_class >= I.w_class)
+			else
+				return (src.pull_w_class >= 4)
+		return 0
 
 	click(atom/target, list/params)
 		if (((src.client && src.client.check_key(KEY_THROW)) || src.in_throw_mode) && src.can_throw)
