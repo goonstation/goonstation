@@ -1364,11 +1364,15 @@
 		if (!P.active)
 			P.active = 1
 			P.last_loc = owner.loc
+			owner.canmove = 0
+			owner.restrain_time = TIME + 0.7 SECONDS
 			owner.visible_message("<span class='alert'><b>[owner] vanishes in a burst of blue light!</b></span>")
 			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
 			animate(owner, color = "#0000FF", time = 5, easing = LINEAR_EASING)
 			animate(alpha = 0, time = 5, easing = LINEAR_EASING)
 			SPAWN_DBG(0.7 SECONDS)
+				owner.canmove = 1
+				owner.restrain_time = 0
 				var/obj/dummy/spell_invis/invis_object = new /obj/dummy/spell_invis(get_turf(owner))
 				invis_object.canmove = 0
 				owner.set_loc(invis_object)
