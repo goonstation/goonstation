@@ -1,5 +1,9 @@
 
 (t)sun jul 12 20
+(u)Sovexe
+(p)1462
+(e)🐛🆕🔄|bug, feature, rework
+(*)Playable pests are now treated as ghost critters and as such are subject to a number of additional restrictions.
 (u)MarkNstein
 (p)1363
 (e)🆕|feature
