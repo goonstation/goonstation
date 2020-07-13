@@ -33363,10 +33363,6 @@
 /obj/lattice,
 /turf/space,
 /area)
-"bsu" = (
-/obj/effects/background_objects/x0,
-/turf/space,
-/area)
 "bsv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
@@ -34981,10 +34977,6 @@
 "bvM" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/main)
-"bvN" = (
-/obj/effects/background_objects,
-/turf/space,
-/area)
 "bvO" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -79861,7 +79853,7 @@ aaa
 aaa
 aaa
 aaa
-bsu
+aaa
 aaa
 aaa
 aaa
@@ -123928,7 +123920,7 @@ aaa
 aaa
 aaa
 aaa
-bvN
+aaa
 aaa
 aaa
 aaa

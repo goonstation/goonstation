@@ -49,7 +49,7 @@
 	var/setup_default_module = /obj/item/device/pda_module/flashlight //Module to have installed on spawn.
 	var/mailgroups = list("staff",MGD_PARTY) //What default mail groups the PDA is part of.
 	var/muted_mailgroups = list() //What mail groups should the PDA ignore?
-	var/reserved_mailgroups = list(MGD_COMMAND,MGD_SECURITY,MGD_SCIENCE,"ai","sillicon",MGD_MEDRESEACH,MGD_MEDBAY ,MGD_CARGO,"janitor",MGD_SPIRITUALAFFAIRS,"engineer","mining",MGD_KITCHEN,"mechanic",MGD_BOTANY) //Job-specific mailgroups that cannot be joined or left
+	var/reserved_mailgroups = list(MGD_COMMAND,MGD_SECURITY,MGD_SCIENCE,"ai","sillicon",MGD_MEDRESEACH,MGD_MEDBAY ,MGD_CARGO,"janitor",MGD_SPIRITUALAFFAIRS,"engineer","mining",MGD_KITCHEN,"mechanic",MGD_BOTANY,MGD_STATIONREPAIR) //Job-specific mailgroups that cannot be joined or left
 	var/bombproof = 0 // can't be destroyed with detomatix
 	var/exploding = 0
 
@@ -160,7 +160,7 @@
 	janitor
 		icon_state = "pda-j"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/janitor
-		mailgroups = list("janitor",MGD_PARTY)
+		mailgroups = list("janitor",MGD_STATIONREPAIR,MGD_PARTY)
 
 	chaplain
 		icon_state = "pda-holy"
@@ -173,7 +173,7 @@
 	engine
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
-		mailgroups = list("engineer",MGD_PARTY)
+		mailgroups = list("engineer",MGD_STATIONREPAIR,MGD_PARTY)
 
 	mining
 		icon_state = "pda-e"
@@ -189,7 +189,7 @@
 		icon_state = "pda-a"
 		setup_default_module = /obj/item/device/pda_module/tray
 		setup_default_cartridge = /obj/item/disk/data/cartridge/mechanic
-		mailgroups = list("mechanic",MGD_PARTY)
+		mailgroups = list("mechanic",MGD_STATIONREPAIR,MGD_PARTY)
 
 	botanist
 		icon_state = "pda-hydro"
@@ -703,7 +703,7 @@
 */
 	proc/display_alert(var/alert_message) //Add alert overlay and beep
 		if (alert_message)
-			playsound(get_turf(src), "sound/machines/twobeep.ogg", 50, 1)
+			playsound(get_turf(src), "sound/machines/twobeep.ogg", 35, 1)
 
 			for (var/atom in mobs)
 				if (!atom) break
@@ -825,7 +825,7 @@
 		return ..()
 	var/mob/living/silicon/ai/ai = loc
 	if (ai.deployed_to_eyecam)
-		ai.eyecam << sound('sound/machines/twobeep.ogg', volume=50)
+		ai.eyecam << sound('sound/machines/twobeep.ogg', volume=35)
 		ai.eyecam.show_message(message)
 	if (ismob(ai.deployed_shell))
 		var/mob/M = ai.deployed_shell
