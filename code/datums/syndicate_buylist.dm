@@ -850,6 +850,15 @@ This is basically useless for anyone but miners.
 	desc = "A Deluxe Mindslave Cloning Kit. Contains a mindslave cloning module and a cloning lab in a box!"
 	job = list("Geneticist", "Medical Doctor", "Medical Director")
 	blockedmode = list(/datum/game_mode/revolution)
+	
+/datum/syndicate_buylist/traitor/buddy_ammofab
+	name = "Guardbuddy Ammo Replicator"
+	item = /obj/item/gun/energy/teleport
+	cost = 4
+	vr_allowed = 0
+	desc = "A device that allows PR-6S Guardbuddy units to use their internal charge to replenish kinetic ammunition."
+	job = list("Research Director")
+	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/wiretap
 	name = "Wiretap Radio Upgrade"
