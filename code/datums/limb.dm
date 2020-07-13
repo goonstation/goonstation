@@ -1132,7 +1132,15 @@
 			return
 
 		if (isobj(target))
+			user.lastattacked = target
 			user.smash_through(target, list("grille"))
+			var/obj/O = target
+			if (isitem(O) && !O.anchored)
+				playsound(user,'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, pitch = 1.7)
+				var/turf/throw_to = get_edge_target_turf(user, get_dir(user,target))
+				SPAWN_DBG(0)
+					O.throw_at(throw_to, 8, 2)
+
 		..()
 		return
 
