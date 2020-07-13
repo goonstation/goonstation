@@ -1,4 +1,4 @@
-#define KUDZU_TO_SPREAD_INITIAL 35
+#define KUDZU_TO_SPREAD_INITIAL 50
 /obj/item/kudzuseed//TODO: Move all this to respective files everything works right.
 	name = "kudzu seed"
 	desc = "So this is where Kudzu went. Plant on a floor to grow.<br/>The disclaimer seems faded out, though."
@@ -23,9 +23,9 @@
 			//var/obj/spacevine/kudzu = new( A )
 			//kudzu.Life()
 			if (prob(1))
-				new /obj/spacevine/alien/living(loc=A,to_spread=src.to_spread)
+				new /obj/spacevine/alien/living(A, src.to_spread)
 			else
-				new /obj/spacevine/living(loc=A, to_spread=src.to_spread)
+				new /obj/spacevine/living(A, src.to_spread)
 			boutput( user, "You plant the [src] on the [A]." )
 			logTheThing( "combat", user, null, "plants [src] (kudzu) at [log_loc(src)]." )
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
@@ -59,10 +59,10 @@
 			return
 		var/kudzloc = isturf(startturf) ? startturf : pick(kudzustart)
 		if (prob(1) || aggressive)
-			var/obj/spacevine/alien/living/L = new /obj/spacevine/alien/living(loc=kudzloc, to_spread = KUDZU_TO_SPREAD_INITIAL)
+			var/obj/spacevine/alien/living/L = new /obj/spacevine/alien/living(kudzloc, KUDZU_TO_SPREAD_INITIAL)
 			L.set_loc(kudzloc)
 		else
-			var/obj/spacevine/living/L = new /obj/spacevine/living(loc=kudzloc, to_spread = KUDZU_TO_SPREAD_INITIAL)
+			var/obj/spacevine/living/L = new /obj/spacevine/living(kudzloc, KUDZU_TO_SPREAD_INITIAL)
 			L.set_loc(kudzloc)
 
 	admin_call(var/source)
