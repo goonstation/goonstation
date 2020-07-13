@@ -1,5 +1,23 @@
 
 (t)sun jul 12 20
+(u)MarkNstein
+(p)1363
+(e)🆕|feature
+(+)PDA DEPT list is now collapsible.
+(u)MarkNstein
+(p)1362
+(e)🆕|feature
+(+)New mail group: Station Repair. Engineers, mechanics, and janitors.
+(u)Sovexe
+(p)1455
+(e)🆕|feature
+(+)There is now a 10 second rate limit on changing the station payroll status.
+(u)Ryumi
+(p)1454
+(e)🐛|bug
+(*)Fixed a major bug where nukies would be given a Donut3 nuke target that doesn't exist... w h a t
+(u)mbc
+(*)Using the equip hotkey or button, you can now stow items into any worn storage. You must have the HUD of the storage (your backpack or whatever) opened for this to work. If no storage is found, the game  will also try to put things in your pockets.
 (u)Genessee
 (p)1427
 (e)🆕|feature
