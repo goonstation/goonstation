@@ -908,7 +908,7 @@
 
 /obj/item/interact(mob/user)
 	if (user.equipped() == src)
-		src.attack_hand(user)
+		src.attack_self(user)
 	else
 		src.pick_up_by(user)
 
