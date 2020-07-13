@@ -63,6 +63,8 @@
 
 	var/list/datum/compid_info_list = list()
 
+	var/login_success = 0
+
 	perspective = EYE_PERSPECTIVE
 	// please ignore this for now thanks in advance - drsingh
 #ifdef PROC_LOGGING
@@ -116,6 +118,9 @@
 	return
 
 /client/Del()
+	if (player_capa && src.login_success)
+		player_cap_grace[src.ckey] = TIME + 2 MINUTES
+
 	if (current_state < GAME_STATE_FINISHED)
 		ircbot.event("logout", src.key)
 
@@ -136,6 +141,8 @@
 /client/New()
 	Z_LOG_DEBUG("Client/New", "New connection from [src.ckey] from [src.address] via [src.connection]")
 	logTheThing("diary", null, src, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]", "access")
+
+	login_success = 0
 
 	if(findtext(src.key, "Telnet @"))
 		boutput(src, "Sorry, this game does not support Telnet.")
@@ -291,6 +298,8 @@
 			src.verbs += /client/proc/toggle_mentorhelps
 	else if (player_capa && (total_clients_for_cap() >= player_cap) && (src.ckey in bypassCapCkeys))
 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you are allowed to bypass the player cap!</span>")
+	else if (player_capa && (total_clients_for_cap() >= player_cap) && client_has_cap_grace(src))
+		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you were recently disconnected and were caught by the grace period!</span>")
 	else if(player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
 		boutput(src, "<span class='ooc adminooc'>I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
 		alert(src.mob,"I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL")
@@ -521,7 +530,7 @@
 		src.control_freak = 0
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
-
+	login_success = 1
 /*
 /client/proc/write_gauntlet_matches()
 	return
