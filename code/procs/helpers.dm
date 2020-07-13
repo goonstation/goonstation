@@ -2543,3 +2543,14 @@ proc/total_clients_for_cap()
 			var/client/CC = C
 			if (!CC.holder)
 				.++
+
+	for (var/C in player_cap_grace)
+		if (player_cap_grace[C] <= TIME)
+			.++
+
+
+proc/client_has_cap_grace(var/client/C)
+	if (C.ckey in player_cap_grace)
+		.= (player_cap_grace[C.ckey] > TIME)
+
+
