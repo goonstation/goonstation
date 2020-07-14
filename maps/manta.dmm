@@ -4691,7 +4691,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/networked/mainframe/zeta{
-	tag = "ZETA_MAINFRAME"
+	tag = "OTHER_MAINFRAME"
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/redblack,
@@ -17470,7 +17470,9 @@
 /area/station/security/brig/cell1)
 "aNF" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer3/terminal/zeta,
+/obj/machinery/computer3/terminal/zeta{
+	setup_os_string = "ZETA_MAINFRAME"
+	},
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -39656,7 +39658,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer3/terminal/zeta,
+/obj/machinery/computer3/terminal/zeta{
+	setup_os_string = "ZETA_MAINFRAME"
+	},
 /turf/simulated/floor,
 /area/station/science/artifact)
 "bJd" = (
