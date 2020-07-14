@@ -103,6 +103,6 @@
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>")
-	elecflash(src, power=2)
+	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
 	return

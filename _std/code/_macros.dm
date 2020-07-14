@@ -47,7 +47,7 @@ var/list/detailed_spawn_dbg = list()
 #define isvirtual(x) istype(x, /mob/living/carbon/human/virtual)
 #define isVRghost(x) (istype(x, /mob/living/carbon/human/virtual) && x:isghost)
 #define issmallanimal(x) istype(x, /mob/living/critter/small_animal)
-#define isghostcritter(x) (istype(x, /mob/living/critter/small_animal) && x:ghost_spawned)
+#define isghostcritter(x) (istype(x, /mob/living/critter) && x:ghost_spawned)
 #define ishelpermouse(x) (istype(x, /mob/living/critter/small_animal/mouse/weak/mentor))//mentor and admin mice
 
 // I'm grump that we don't already have these so I'm adding them.  will we use all of them? probably not.  but we have them. - Haine
@@ -75,6 +75,7 @@ var/list/detailed_spawn_dbg = list()
 #define iswelder(x) istype(x, /mob/living/carbon/human/welder)
 #define ismartian(x) (istype(x, /mob/living/critter/martian) || (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/martian)))
 #define isprematureclone(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/premature_clone))
+#define iskudzuman(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/kudzu))
 
 #define ishellbanned(x) x?.client?.hellbanned
 

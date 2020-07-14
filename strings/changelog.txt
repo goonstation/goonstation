@@ -1,5 +1,19 @@
 
+(t)mon jul 13 20
+(u)Kyle
+(p)1451
+(e)🆕🎨|feature, sprites
+(*)Kudzu growth speed upped 40% and kudzuseeds have a max radius they spread on their own without kudzumen helping. ~50 tile radius. (both numbers are subject to change)
+(*)Gives kudzumen a couple more abilities based around making them exceptional botanists. Sprites from Flaborized and AwkwardDryad.
+(u)Flaborized
+(p)1467
+(e)🎨|sprites
+(+)Resprited the butcher knife, syndicate dagger, monkey barrel, powersink, stimulants and cloaking device.
 (t)sun jul 12 20
+(u)Sovexe
+(p)1462
+(e)🐛🆕🔄|bug, feature, rework
+(*)Playable pests are now treated as ghost critters and as such are subject to a number of additional restrictions.
 (u)MarkNstein
 (p)1363
 (e)🆕|feature

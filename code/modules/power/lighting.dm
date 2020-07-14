@@ -526,7 +526,7 @@
 				icon_state = "[base_state]-burned"
 				on = 0
 				light.disable()
-				elecflash(src)
+				elecflash(src,radius = 1, power = 2, exclude_center = 0)
 				logTheThing("station", null, null, "Light '[name]' burnt out (breakprob: [breakprob]) at ([showCoords(src.x, src.y, src.z)])")
 
 
@@ -685,9 +685,9 @@
 
 		boutput(user, "You stick \the [W.name] into the light socket!")
 		if(has_power() && (W.flags & CONDUCT))
-			elecflash(user)
 			if(!user.bioHolder.HasEffect("resist_electric"))
 				src.electrocute(user, 75, null, 20000)
+				elecflash(src,radius = 1, power = 2, exclude_center = 1)
 
 
 // returns whether this light has power
@@ -785,7 +785,7 @@
 	if(!nospark)
 		if(on)
 			logTheThing("station", null, null, "Light '[name]' was on and has been broken, spewing sparks everywhere ([showCoords(src.x, src.y, src.z)])")
-			elecflash(src,radius = 1, power = 2)
+			elecflash(src,radius = 1, power = 2, exclude_center = 0)
 	light_status = LIGHT_BROKEN
 	SPAWN_DBG(0)
 		update()

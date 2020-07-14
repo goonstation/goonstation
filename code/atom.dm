@@ -639,8 +639,8 @@
 	else if (isghostdrone(usr) && ismob(src) && !isghostdrone(src))
 		return
 
-	if (issmallanimal(usr))
-		var/mob/living/critter/small_animal/C = usr
+	if (isghostcritter(usr))
+		var/mob/living/critter/C = usr
 		if (!C.can_pull(src))
 			boutput(usr,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
 			return
