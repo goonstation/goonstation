@@ -4691,7 +4691,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/networked/mainframe/zeta{
-	tag = "ZETA_MAINFRAME"
+	tag = "OTHER_MAINFRAME"
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/redblack,
