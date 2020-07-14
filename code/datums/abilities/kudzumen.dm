@@ -431,7 +431,7 @@
 	targeted = 1
 	target_anything = 1
 	cooldown = 15 SECONDS
-	pointCost = 30
+	pointCost = 25
 	max_range = 1
 
 	cast(atom/target)
@@ -460,17 +460,17 @@
 			//If used on a current tile, call update_self() and give em more to_spread
 			if (istype(kudzu_tile))
 				kudzu_tile.growth += 10
-				kudzu_tile.to_spread += 5
+				kudzu_tile.to_spread += 8
 				kudzu_tile.update_self()
 
 				for (var/obj/spacevine/other_kudzu in oview(T, 1))
 					other_kudzu.growth += 5
-					other_kudzu.to_spread += 2
+					other_kudzu.to_spread += 5
 					other_kudzu.update_self()
 
 				boutput(holder.owner, "<span class='notice'>You mentally redirect some nutrients towards [kudzu_tile] to help it and the surrounding kudzu grow.</span>")
 			else
-				new/obj/spacevine/living(loc=T, to_spread=4)
+				new/obj/spacevine/living(loc=T, to_spread=5)
 				boutput(holder.owner, "<span class='notice'>Some of the kudzu soaked in nutrients attached to your body detaches and finds a new home on [T].</span>")
 
 
@@ -630,13 +630,13 @@
 		amount = length(kudzu_controller.kudzu)
 
 		if (amount > 9999)
-			src.maptext = "<div style='font-size:20px; color:maroon;text-align:center;'>+</div>"
+			src.maptext = "<div style='font-size:8px; color:maroon;text-align:center;'>+</div>"
 			src.maptext_y = 2
 		else if (amount > 999)
 			src.maptext = "<div style='font-size:10px; color:maroon;text-align:center;'>[amount]</div>"
 			src.maptext_y = 8
 		else
-			src.maptext = "<div style='font-size:7px; color:maroon;text-align:center;'>[amount]</div>"
+			src.maptext = "<div style='font-size:14px; color:maroon;text-align:center;'>[amount]</div>"
 			src.maptext_y = 10
 
 //This will be the hud element that contains a vine thingy which covers up the left and right hand hud ui elements

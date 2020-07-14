@@ -1,4 +1,11 @@
 
+(t)tue jul 14 20
+(u)mbc
+(+)Click+drag can be used to hit one item with another item now. This is mostly a QoL / learning thing.
+(u)Flaborized
+(p)1472
+(e)🎨|sprites
+(*)Resprited genetics activators and injectors.
 (t)mon jul 13 20
 (u)Kyle
 (p)1451
