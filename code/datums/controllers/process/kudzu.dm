@@ -27,7 +27,7 @@ datum/controller/process/kudzu
 
 
 /mob/living/carbon/human/proc/infect_kudzu()
-	if (src.mutantrace && istype(src.mutantrace, /datum/mutantrace/kudzu))
+	if (src.mutantrace)
 		return
 
 	var/obj/icecube/kudzu/cube = new /obj/icecube/kudzu(get_turf(src), src)
