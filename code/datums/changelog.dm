@@ -206,14 +206,7 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 	html += "<a id='ass_changelog' href='#' style='color:#ffffff; text-align:center; display:block' onclick='$(\".nano\").nanoScroller({ scrollTo: $(\"#main_changelog\") });'>Jump to regular changelog</a>"
 	html += changelog_parse(file2text("strings/ass_changelog.txt"), "Ass Jam Changelog", " ass")
 	html += "<a id='main_changelog' href='#' style='color:#ffffff; text-align:center; display:block' onclick='$(\".nano\").nanoScroller({ scrollTo: $(\"#ass_changelog\") });'>Jump to ass jam changelog</a>"
-#else
-	#if BUILD_TIME_DAY == 13
-		html += "<a href='byond://goon3.goonhub.com:26300'>Looking to experience our monthly event, ASS JAM? Click here to join Goon 3 - Overflow!</a>"
-	#endif
 #endif
-
-
-
 	html += changelog_parse(file2text("strings/changelog.txt"), "Changelog")
 	html += {"
 <h3>GoonStation 13 Development Team</h3>

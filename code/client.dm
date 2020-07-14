@@ -377,10 +377,6 @@
 			if (it_is_ass_day)
 				src.verbs += /client/proc/cmd_ass_day_rules
 				src.cmd_ass_day_rules()
-#if BUILD_TIME_DAY == 13
-			else
-				boutput(src, "<B><a href='byond://goon3.goonhub.com:26300'>Looking to experience our monthly event, ASS JAM? Click here to join Goon 3 - Overflow!</a></B>")
-#endif
 
 
 			if (src.byond_version < 513 || src.byond_build < 1526)
