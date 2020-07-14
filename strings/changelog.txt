@@ -1,5 +1,17 @@
 
+(t)tue jul 14 20
+(u)mbc
+(+)Click+drag can be used to hit one item with another item now. This is mostly a QoL / learning thing.
+(u)Flaborized
+(p)1472
+(e)🎨|sprites
+(*)Resprited genetics activators and injectors.
 (t)mon jul 13 20
+(u)Kyle
+(p)1451
+(e)🆕🎨|feature, sprites
+(*)Kudzu growth speed upped 40% and kudzuseeds have a max radius they spread on their own without kudzumen helping. ~50 tile radius. (both numbers are subject to change)
+(*)Gives kudzumen a couple more abilities based around making them exceptional botanists. Sprites from Flaborized and AwkwardDryad.
 (u)Flaborized
 (p)1467
 (e)🎨|sprites

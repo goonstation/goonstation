@@ -61,12 +61,20 @@
 		animate_color_mod(color, duration)
 			if(color_mod.color == color)
 				return
+
+			if (color == "#000000")
+				remove_screen(color_mod)
+			else
+				add_screen(color_mod)
+				color_mod.plane = PLANE_OVERLAY_EFFECTS-1 //otherwise it doesnt draw. i dont know why.
+
 			animate(color_mod, color = color, time = duration)
 			SPAWN_DBG(duration + 1)
 				if (color == "#000000")
 					remove_screen(color_mod)
 				else
 					add_screen(color_mod)
+					color_mod.plane = PLANE_OVERLAY_EFFECTS-1 //otherwise it doesnt draw. i dont know why.
 
 		set_dither_alpha(alpha)
 			if (alpha > 0)
