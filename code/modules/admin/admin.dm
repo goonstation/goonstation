@@ -3710,14 +3710,14 @@ var/global/noir = 0
 		<html><head><title>Respawn Panel</title>
 			<style>
 				table {
-					border:1px solid #4CAF50;
+					border:1px solid #FF6961;
 					border-collapse: collapse;
 					width: 100%;
 					empty-cells: show;
 				}
 
 				th {
-					background-color: #4CAF50;
+					background-color: #FF6961;
 					color: white;
 					padding: 8px;
 					text-align: center;
