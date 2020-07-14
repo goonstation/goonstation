@@ -18,7 +18,7 @@ client/proc/show_admin_lag_hacks()
 	HTML += "<b><a href='?src=\ref[src];action=special_sea_fullbright'>Stop Sea Light processing on Z1</a></b> (Safe, makes the Z1 ocean a little ugly)<br><br>"
 	HTML += "<b><a href='?src=\ref[src];action=slow_ticklag'>Adjust ticklag bounds</a></b> (Manually adjust ticklag dilation upper and lower bounds! Compensate for lag, or go super smooth at lowpop!)<br><br>"
 	HTML += "<b><a href='?src=\ref[src];action=disable_deletions'>Disable Deletion Queue</a></b> (Garbage Collection will still run, but this stops hard deletions from happening.)<br><br>"
-	HTML += "<b><a href='?src=\ref[src];action=disable_deletions'>Disable Ingame Logs</a></b> (Reduce the shitty logthething() lag! Make the admins angry! You can still access logs fine using the web version etc)<br><br>"
+	HTML += "<b><a href='?src=\ref[src];action=disable_ingame_logs'>Disable Ingame Logs</a></b> (Reduce the shitty logthething() lag! Make the admins angry! You can still access logs fine using the web version etc)<br><br>"
 
 	HTML += "</body></html>"
 
