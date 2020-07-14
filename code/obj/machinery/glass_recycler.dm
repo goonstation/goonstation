@@ -36,7 +36,11 @@
 			qdel(W)
 			return 1
 		else if (istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
-			if (istype(W,/obj/item/reagent_containers/food/drinks/bottle))
+			if (istype(W,/obj/item/reagent_containers/food/drinks))
+				var/obj/item/reagent_containers/food/drinks/bottle/D = W
+				if (!D.can_recycle)
+					boutput(user, "<span class='alert'>[src] only accepts glass shards or glassware!</span>")
+					return
 				var/obj/item/reagent_containers/food/drinks/bottle/B = W
 				if (!B.broken) glass_amt += 1
 			else
