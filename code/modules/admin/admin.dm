@@ -3746,7 +3746,7 @@ var/global/noir = 0
 				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_syndies'>Spawn a Syndicate attack force</A></td></tr>
 				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_custom'>Spawn a custom mob type</A></td></tr>
 			</table>
-		</body>
+		</body></html>
 		"}
 	usr.Browse(dat, "window=SRespawn")
 
