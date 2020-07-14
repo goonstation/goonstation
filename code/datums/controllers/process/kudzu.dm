@@ -27,9 +27,6 @@ datum/controller/process/kudzu
 
 
 /mob/living/carbon/human/proc/infect_kudzu()
-	if (src.mutantrace)
-		return
-
 	var/obj/icecube/kudzu/cube = new /obj/icecube/kudzu(get_turf(src), src)
 	src.set_loc(cube)
 	cube.visible_message("<span class='alert'><B>[src] is covered by the vines!</span>")
