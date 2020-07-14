@@ -3444,6 +3444,8 @@
 			newbot.tool = new /obj/item/device/guardbot_tool/gun
 			newbot.tool.set_loc(newbot)
 			newbot.tool.master = newbot
+			
+			newbot.locked = 0
 
 			if(src.created_model_task)
 				newbot.model_task = src.created_model_task
@@ -4213,6 +4215,7 @@
 			newbot.tool = new /obj/item/device/guardbot_tool/gun
 			newbot.tool.set_loc(newbot)
 			newbot.tool.master = newbot
+			newbot.locked = 0
 
 			if(src.created_model_task)
 				newbot.model_task = src.created_model_task
