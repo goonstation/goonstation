@@ -3573,6 +3573,12 @@ var/global/noir = 0
 
 			usr.client.disable_deletions()
 
+		if ("disable_ingame_logs")
+			if (src.level < LEVEL_PA)
+				return alert("You must be at least a Primary Admin to do this.")
+
+			usr.client.disable_ingame_logs()
+
 		////////////
 
 		if ("toggle_dj")
