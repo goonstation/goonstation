@@ -4781,17 +4781,15 @@
 	New()
 		..()
 
-		mechanics = new(src)
-		mechanics.master = src
-
-		mechanics.addInput("input 0", "fire0")
-		mechanics.addInput("input 1", "fire1")
-		mechanics.addInput("input 2", "fire2")
-		mechanics.addInput("input 3", "fire3")
-		mechanics.addInput("input 4", "fire4")
-		mechanics.addInput("input 5", "fire5")
-		mechanics.addInput("input 6", "fire6")
-		mechanics.addInput("input 7", "fire7")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", "fire0")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", "fire1")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", "fire2")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", "fire3")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", "fire4")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", "fire5")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", "fire6")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", "fire7")
 
 	return_html_interface()
 		. = {"<b>INPUT STATUS</b>
@@ -4901,11 +4899,11 @@
 
 			if (lastSignal)
 				lastSignal.signal = "[output_word]"
-				mechanics.fireOutgoing(lastSignal)
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,lastSignal)
 				lastSignal = null
 
 			else
-				mechanics.fireOutgoing(mechanics.newSignal("[output_word]"))
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[output_word]")
 
 
 			if (pulses)
