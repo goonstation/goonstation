@@ -1,5 +1,9 @@
 
 (t)tue jul 14 20
+(u)glassofmilk
+(p)1422
+(e)🆕|feature
+(+)Reduced the cooldown on the wifi component to be in line with the cooldown on the PNET component.
 (u)mbc
 (+)Click+drag can be used to hit one item with another item now. This is mostly a QoL / learning thing.
 (u)Flaborized
