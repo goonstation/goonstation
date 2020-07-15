@@ -1,6 +1,9 @@
-(t)mon jul 13 20
+(t)tue jul 14 20
 (u)Sovexe
 (*)Updated Respawn-Panel to handle spawning antagonist players, plus minor UI improvements.
+(t)tue jul 14 20
+(u)Sovexe
+(*)Oceanify is now compatible with underwater maps and includes Manta compatibility. Additionally ocean is now auto colored to match reagent color.
 (t)mon jun 29 20
 (u)Sovexe
 (*)New Check Bioeffects admin tool available in player options and tilde menu.

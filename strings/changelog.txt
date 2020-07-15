@@ -1,5 +1,46 @@
 
+(t)tue jul 14 20
+(u)mbc
+(p)1270
+(e)🗺⛔|mapping, removal
+(+)Galoshes will no longer spawn in janitor lockers.
+(u)Dabir
+(p)1391
+(e)|
+(+)Fixed implanted hand teles queueing up way too many copies of their input UI if you got clicked on a bunch, like if you were being healed. You will now only be asked to select a teleporter once at a time.
+(u)glassofmilk
+(p)1422
+(e)🆕|feature
+(+)Reduced the cooldown on the wifi component to be in line with the cooldown on the PNET component.
+(u)mbc
+(+)Click+drag can be used to hit one item with another item now. This is mostly a QoL / learning thing.
+(u)Flaborized
+(p)1472
+(e)🎨|sprites
+(*)Resprited genetics activators and injectors.
+(t)mon jul 13 20
+(u)Kyle
+(p)1451
+(e)🆕🎨|feature, sprites
+(*)Kudzu growth speed upped 40% and kudzuseeds have a max radius they spread on their own without kudzumen helping. ~50 tile radius. (both numbers are subject to change)
+(*)Gives kudzumen a couple more abilities based around making them exceptional botanists. Sprites from Flaborized and AwkwardDryad.
+(u)Flaborized
+(p)1467
+(e)🎨|sprites
+(+)Resprited the butcher knife, syndicate dagger, monkey barrel, powersink, stimulants and cloaking device.
 (t)sun jul 12 20
+(u)Sovexe
+(p)1462
+(e)🐛🆕🔄|bug, feature, rework
+(*)Playable pests are now treated as ghost critters and as such are subject to a number of additional restrictions.
+(u)MarkNstein
+(p)1363
+(e)🆕|feature
+(+)PDA DEPT list is now collapsible.
+(u)MarkNstein
+(p)1362
+(e)🆕|feature
+(+)New mail group: Station Repair. Engineers, mechanics, and janitors.
 (u)Sovexe
 (p)1455
 (e)🆕|feature

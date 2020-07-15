@@ -736,7 +736,7 @@
 			core.created_default_task = src.setup_default_startup_task
 			core.created_model_task = src.model_task
 
-			elecflash(src, power=2)
+			elecflash(src, radius=1, power=3, exclude_center = 0)
 			qdel(src)
 
 		return
