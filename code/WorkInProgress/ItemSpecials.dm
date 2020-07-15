@@ -1223,6 +1223,39 @@
 
 				afterUse(user)
 			return
+
+	elecflash
+		cooldown = 0
+		moveDelay = 5
+		moveDelayDuration = 2
+
+		damageMult = 0.8
+
+
+		image = "pulse"
+		name = "Pulse"
+		desc = "Pulse 1 tile away from you in any direction. The pulse will emit a mild shock that spreads in a random direction."
+
+		onAdd()
+			if(master)
+				staminaCost = master.stamina_cost * 0.4 //Inherits from the item.
+				overrideStaminaDamage = master.stamina_damage * 0.8
+			return
+
+		pixelaction(atom/target, params, mob/user, reach)
+			if(!isturf(target.loc) && !isturf(target)) return
+			if(!usable(user)) return
+			if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+				preUse(user)
+				var/direction = get_dir_pixel(user, target, params)
+				var/turf/turf = get_step(master, direction)
+
+				var/obj/itemspecialeffect/conc/C = unpool(/obj/itemspecialeffect/conc)
+				C.setup(turf)
+				elecflash(turf,0, power=2, exclude_center = 0)
+				afterUse(user)
+			return
+
 ///////////////////////////////////
 	spark/ntso
 		cooldown = 0
