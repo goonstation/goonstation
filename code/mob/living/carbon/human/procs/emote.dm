@@ -804,7 +804,7 @@
 
 			if ("pale")
 				message = "<B>[src]</B> goes pale for a second."
-				maptext_out = "<I>goes pale for a second</I>"
+				maptext_out = "<I>goes pale...</I>"
 				m_type = 1
 
 			if ("flipout")
