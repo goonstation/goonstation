@@ -331,6 +331,10 @@ var/list/mechanics_telepads = new/list()
 			return 1
 		return 0
 
+	pick_up_by(var/mob/M)
+		if(level != 1) return ..()
+		//If it's anchored, it can't be picked up!
+
 	pickup()
 		if(level == 1) return
 		mechanics.wipeIncoming()
@@ -356,10 +360,10 @@ var/list/mechanics_telepads = new/list()
 
 		if (!usr.find_tool_in_hand(TOOL_PULSING))
 			boutput(usr, "<span class='alert'>[MECHFAILSTRING]</span>")
-			return
+			return ..()
 
 		mechanics.dropConnect(O, null, src_location, control_orig, control_new, params)
-		return ..()
+		return
 
 	proc/componentSay(var/string)
 		string = trim(sanitize(html_encode(string)), 1)
