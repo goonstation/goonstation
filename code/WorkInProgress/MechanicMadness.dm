@@ -1306,6 +1306,7 @@ var/list/mechanics_telepads = new/list()
 	name = "Wifi Component"
 	desc = ""
 	icon_state = "comp_radiosig"
+	cooldown_time = 0.4 SECONDS
 	var/forward_all = 0
 	var/only_directed = 1
 
