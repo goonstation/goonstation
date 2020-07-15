@@ -763,7 +763,7 @@
 
 			if (C && C.points)
 				if (last_drain + 30 <= world.time)
-					C.points = max(0, C.points - 1*mult)
+					C.points = max(0, C.points - (1 * mult))
 
 				switch (C.points)
 					if (-INFINITY to 0)
