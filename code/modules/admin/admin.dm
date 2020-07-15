@@ -1665,11 +1665,21 @@ var/global/noir = 0
 				return
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
-			if (alert("Make [M] a critter?", "Make Critter", "Yes", "No") == "Yes")
-				var/CT = input("What kind of critter?", "Make Critter", null) as null|anything in (childrentypesof(/mob/living/critter) - /mob/living/critter/small_animal - /mob/living/critter/aquatic)
-				if (CT != null)
-					if(M)
-						M.critterize(CT)
+
+			var/CT = input("Enter a /mob/living/critter path or partial name.", "Make Critter", null) as null|text
+
+			var/list/matches = get_matches(CT, "/mob/living/critter")
+			matches -= list(/mob/living/critter, /mob/living/critter/small_animal, /mob/living/critter/aquatic) //blacklist
+			if (matches.len == 0)
+				return
+			if (matches.len == 1)
+				CT = matches[1]
+			else
+				CT = input("Select a match", "matches for pattern", null) as null|anything in matches
+
+			if (CT && M)
+				M.critterize(CT)
+			return
 
 		if ("makecube")
 			if( src.level < LEVEL_PA )
