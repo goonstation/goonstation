@@ -193,7 +193,7 @@
 				if (prob(src.get_brain_damage() * 0.5))
 					src.emote(pick("faint", "collapse"))
 					src.visible_message("<span class='alert'><b>[src.name]</b> suddenly falls limp!</span>")
-					boutput(src, "<span class='alert'><b>You sieze up and fall limp, the pain in your head fading along with your consciousness.</b></span>")
+					boutput(src, "<span class='alert'><b>You seize up and fall limp, the pain in your head fading along with your consciousness.</b></span>")
 					src.setStatus("paralysis", max(src.getStatusDuration("paralysis"), 15))
 					src.contract_disease(/datum/ailment/malady/coma,null,null,1)
 				else
