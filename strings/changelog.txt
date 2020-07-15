@@ -1,4 +1,144 @@
 
+(t)tue jul 14 20
+(u)mbc
+(p)1270
+(e)🗺⛔|mapping, removal
+(+)Galoshes will no longer spawn in janitor lockers.
+(u)Dabir
+(p)1391
+(e)|
+(+)Fixed implanted hand teles queueing up way too many copies of their input UI if you got clicked on a bunch, like if you were being healed. You will now only be asked to select a teleporter once at a time.
+(u)glassofmilk
+(p)1422
+(e)🆕|feature
+(+)Reduced the cooldown on the wifi component to be in line with the cooldown on the PNET component.
+(u)mbc
+(+)Click+drag can be used to hit one item with another item now. This is mostly a QoL / learning thing.
+(u)Flaborized
+(p)1472
+(e)🎨|sprites
+(*)Resprited genetics activators and injectors.
+(t)mon jul 13 20
+(u)Kyle
+(p)1451
+(e)🆕🎨|feature, sprites
+(*)Kudzu growth speed upped 40% and kudzuseeds have a max radius they spread on their own without kudzumen helping. ~50 tile radius. (both numbers are subject to change)
+(*)Gives kudzumen a couple more abilities based around making them exceptional botanists. Sprites from Flaborized and AwkwardDryad.
+(u)Flaborized
+(p)1467
+(e)🎨|sprites
+(+)Resprited the butcher knife, syndicate dagger, monkey barrel, powersink, stimulants and cloaking device.
+(t)sun jul 12 20
+(u)Sovexe
+(p)1462
+(e)🐛🆕🔄|bug, feature, rework
+(*)Playable pests are now treated as ghost critters and as such are subject to a number of additional restrictions.
+(u)MarkNstein
+(p)1363
+(e)🆕|feature
+(+)PDA DEPT list is now collapsible.
+(u)MarkNstein
+(p)1362
+(e)🆕|feature
+(+)New mail group: Station Repair. Engineers, mechanics, and janitors.
+(u)Sovexe
+(p)1455
+(e)🆕|feature
+(+)There is now a 10 second rate limit on changing the station payroll status.
+(u)Ryumi
+(p)1454
+(e)🐛|bug
+(*)Fixed a major bug where nukies would be given a Donut3 nuke target that doesn't exist... w h a t
+(u)mbc
+(*)Using the equip hotkey or button, you can now stow items into any worn storage. You must have the HUD of the storage (your backpack or whatever) opened for this to work. If no storage is found, the game  will also try to put things in your pockets.
+(u)Genessee
+(p)1427
+(e)🆕|feature
+(+)Five new types of bottle can now be printed at a Glass Recycler.
+(u)MarkNstein
+(p)1361
+(e)🆕|feature
+(+)The chaplain has their own PDA mail group: Spiritual Affairs.
+(+)The chaplain gets health-implant notifications.
+(u)Flaborized
+(p)1448
+(e)🎨|sprites
+(+)Resprited the taser shotgun and added/modified some gun in-hand sprites.
+(u)AwkwardDryad
+(p)1369
+(e)🗺|mapping
+(*)Cogmap 1, Cogmap 2, and Destiny research now have a quantum telescope computer!
+(u)Tarmunora
+(p)1447
+(e)⚖🐛|balance, bug
+(+)Fix elecflashes shocking electricity-immune mobs
+(t)sat jul 11 20
+(u)Flaborized
+(p)1434
+(e)🎨|sprites
+(+)Resprited the Colt SAA.
+(u)AwkwardDryad
+(p)1328
+(e)🆕🎨|feature, sprites
+(*)Added hanafuda! You can purchase it at a card vendor for 298 credits
+(+)You can now place cards on floor tiles in the same manner as on a table
+(+)Cards have new solitaire stacking functionality. Check playing cards tips and tricks for more information
+(u)Tarmunora
+(p)1354
+(e)🐛|bug
+(+)Fix monkeys incorrectly astral projecting melee attacks.
+(u)MarkNstein
+(p)1435
+(e)🐛🗺|bug, mapping
+(+)Manta: Armory access fixed, requirements match other maps.
+(t)fri jul 10 20
+(u)mbc
+(+)Gunshark bullets no longer embed implants.
+(u)Gerhazo
+(p)1249
+(e)🆕|feature
+(*)Random event antagonist critters now drop various loot after being slain.
+(u)MarkNstein
+(p)1374
+(e)🆕|feature
+(+)PDA mail groups can be individually muted in the Groups page.
+(u)mbc
+(p)1425
+(e)|
+(*)Reworked sparks + added electric flashes (think zappy fireflash)
+(t)thu jul 09 20
+(u)Flaborized
+(p)1415
+(e)🎨|sprites
+(*)Resprited most of the bottled drinks.
+(u)AwkwardDryad
+(p)1380
+(e)🐛🗺|bug, mapping
+(+)Shinai can now be used to mitigate damage from other weapons while blocking
+(+)Additional kendo gear is available from QM
+(+)Kendo gear now spawns in the hidden workshop
+(t)wed jul 08 20
+(u)Ryumi
+(p)1411
+(e)🗺|mapping
+(+)Donut3: Expanded and added more fluff to the Medbay.
+(+)Donut3: Added all the necessary chemistry equipment to Chemistry
+(u)Sovexe
+(p)1410
+(e)🐛🗺|bug, mapping
+(+)The Long Range Teleporter in Manta's Sea Turtle mining ship is once again functional.
+(u)MarkNstein
+(p)1312
+(e)🔄|rework
+(+)On the RP server: Cogmap 1 can only be voted for when at least 14 players are connected.
+(u)Tarmunroa
+(p)1402
+(e)⚖|balance
+(+)Tweaked taser shotgun singlefire + falloff
+(u)Tarmunora
+(p)1404
+(e)⚖|balance
+(+)Adjusted wavegun energy costs and effects - EMP AoE is now range-dependant
 (t)tue jul 07 20
 (u)mbc
 (+)Fixed issue where screen color modifiers weren't displaying (sunglasses, lsd, etc)

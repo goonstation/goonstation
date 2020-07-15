@@ -101,6 +101,10 @@ var/list/mechanics_telepads = new/list()
 			return 1
 		return SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user) & COMSIGBIT_ATTACKBY_COMPLETE ? 1 : 0
 
+	pick_up_by(var/mob/M)
+		if(level != 1) return ..()
+		//If it's anchored, it can't be picked up!
+
 	pickup()
 		if(level == 1) return
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
@@ -113,10 +117,10 @@ var/list/mechanics_telepads = new/list()
 	MouseDrop(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
 		if(level == 2 || (istype(O, /obj/item/mechanics) && O.level == 2))
 			boutput(usr, "<span class='alert'>Both components need to be secured into place before they can be connected.</span>")
-			return
+			return ..()
 
 		SEND_SIGNAL(src,_COMSIG_MECHCOMP_DROPCONNECT,O,usr)
-		return ..()
+		return
 
 	proc/componentSay(var/string)
 		string = trim(sanitize(html_encode(string)), 1)

@@ -91,9 +91,7 @@
 					var/obj/item/clothing/head/sunhat/hat = X.head
 					if(istype(hat) && hat.uses)
 						src.visible_message("<span class='alert'>[src] tries to pat [target] on the head, but gets shocked by [target]'s hat!</span>")
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(5, 1, target.loc)
-						s.start()
+						elecflash(target)
 
 						hat.uses = max(0, hat.uses - 1)
 						if (hat.uses < 1)
@@ -561,9 +559,7 @@
 		target.add_fingerprint(src) // Some as the other 'empty hand' melee attacks (Convair880).
 		src.unlock_medal("High Five!", 1)
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(5, 1, target.loc)
-		s.start()
+		elecflash(target)
 
 		src.gloves.uses = max(0, src.gloves.uses - 1)
 		if (src.gloves.uses < 1)
@@ -1042,7 +1038,7 @@
 									if (owner in viewers(7,M.current))
 										M.current.changeStatus("mutiny", 10 SECONDS)
 
-				if(target.health < 0)
+				if(target.client && target.health < 0) //Only do rev stuff if they have a client and are low health
 					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
 						if (R.add_revolutionary(target.mind))
 							target.HealDamage("All", max(30 - target.health,0), 0)

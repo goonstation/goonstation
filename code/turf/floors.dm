@@ -1129,13 +1129,15 @@
 	if(!C || !user)
 		return 0
 	if (istype(C, /obj/item/tile))
-		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
-		C:build(src)
-		C:amount--
-		if(C.material) src.setMaterial(C.material)
-		if (C:amount < 1)
-			user.u_equip(C)
-			qdel(C)
+		var/obj/item/tile/T = C
+		if (T.amount >= 1)
+			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			T.build(src)
+			if(T.material) src.setMaterial(T.material)
+
+		if (T.amount < 1 && !issilicon(user))
+			user.u_equip(T)
+			qdel(T)
 			return
 		return
 
@@ -1442,6 +1444,11 @@
 
 	if(istype(C, /obj/item/tile))
 		var/obj/item/tile/T = C
+		if (T.amount < 1)
+			if(!issilicon(user))
+				user.u_equip(T)
+				qdel(T)
+			return
 		if (!intact)
 			restore_tile()
 			src.plate_mat = src.material

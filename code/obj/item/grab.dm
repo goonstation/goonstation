@@ -86,6 +86,11 @@
 		if (src.disposed)
 			src.set_loc(null)
 
+	set_loc() //never ever ever ever!!!
+		..()
+		if (src.loc && src.loc == get_turf(src.loc))
+			set_loc(null)
+
 	dropped()
 		..()
 		dropped += 1

@@ -578,7 +578,7 @@
 #define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
 
 
-/obj/item/MouseDrop(atom/over_object, src_location, over_location, params)
+/obj/item/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
 	..()
 
 	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
@@ -611,7 +611,7 @@
 			else if (src_exists_inside_user_or_user_storage && !istype(src,/obj/item/storage)) //sorry for the storage check, i dont wanna override their mousedrop and to do it Correcly would be a whole big rewrite
 				usr.drop_from_slot(src) //drag from inventory to floor == drop
 				step_to(src,over_object)
-
+				return
 
 		var/is_storage = istype(over_object,/obj/item/storage)
 		if (is_storage || istype(over_object, /obj/screen/hud))
@@ -622,6 +622,13 @@
 			else
 				try_equip_to_inventory_object(usr, over_object, params)
 
+		else if (isobj(over_object))
+			if (src.loc == usr || istype(src.loc,/obj/item/storage))
+				if (try_put_hand_mousedrop(usr))
+					if (can_reach(usr, over_object))
+						usr.click(over_object, params, src_location, over_control)
+			else
+				actions.start(new /datum/action/bar/private/icon/pickup/then_obj_click(src, over_object, params), usr)
 
 //equip an item, given an inventory hud object or storage item UI thing
 /obj/item/proc/try_equip_to_inventory_object(var/mob/user, var/atom/over_object, var/params)
@@ -661,9 +668,12 @@
 	var/oldloc = src.loc
 
 	if (!src.anchored)
-		if (!user.r_hand || !user.l_hand || (!user.hand && user.r_hand == src) || (user.hand && user.l_hand == src))
+		if (!user.r_hand || !user.l_hand || (user.r_hand == src) || (user.l_hand == src))
 			if (!user.hand) //big messy ugly bad if() chunk here because we want to prefer active hand
 				if (user.r_hand == src)
+					. = 1
+				else if (user.l_hand == src)
+					user.swap_hand(1)
 					. = 1
 				else if (!user.r_hand)
 					user.u_equip(src)
@@ -675,6 +685,9 @@
 			else
 				if (user.l_hand == src)
 					.= 1
+				else if (user.r_hand == src)
+					user.swap_hand(0)
+					. = 1
 				else if (!user.l_hand)
 					user.u_equip(src)
 					. = user.put_in_hand(src, 1)
@@ -716,9 +729,7 @@
 			T.hotspot_expose((src.burn_output + rand(1,200)),5)
 
 		if (prob(7))
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(2, 1, (get_turf(src)))
-			s.start()
+			elecflash(src)
 		if (prob(7))
 			var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 			smoke.set_up(1, 0, src.loc)
@@ -909,7 +920,10 @@
 */
 
 /obj/item/interact(mob/user)
-	src.pick_up_by(user)
+	if (user.equipped() == src)
+		src.attack_self(user)
+	else
+		src.pick_up_by(user)
 
 /obj/item/proc/pick_up_by(var/mob/M)
 	if (world.time < M.next_click)

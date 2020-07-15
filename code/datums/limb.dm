@@ -124,10 +124,7 @@
 				user.visible_message("<span class='alert'>The shot misses!</span>")
 			else
 				MT.TakeDamageAccountArmor(user.zone_sel ? user.zone_sel.selecting : "All", brute, burn, 0, burn ? DAMAGE_BURN : DAMAGE_BLUNT)
-		SPAWN_DBG(0)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, target)
-			s.start()
+		elecflash(target.loc,power = 2)
 
 	is_on_cooldown()
 		if (ticker.round_elapsed_ticks < next_shot_at)
@@ -1135,7 +1132,15 @@
 			return
 
 		if (isobj(target))
+			user.lastattacked = target
 			user.smash_through(target, list("grille"))
+			var/obj/O = target
+			if (isitem(O) && !O.anchored)
+				playsound(user,'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, pitch = 1.7)
+				var/turf/throw_to = get_edge_target_turf(user, get_dir(user,target))
+				SPAWN_DBG(0)
+					O.throw_at(throw_to, 8, 2)
+
 		..()
 		return
 

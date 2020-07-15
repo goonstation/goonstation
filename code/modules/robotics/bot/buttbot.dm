@@ -99,10 +99,10 @@
 	return src.explode()
 
 /obj/machinery/bot/buttbot/explode()
+	if(src.exploding) return
+	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>")
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(3, 1, src)
-	s.start()
+	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
 	return

@@ -188,7 +188,7 @@
 
 /datum/game_mode/revolution/proc/add_revolutionary(datum/mind/rev_mind)
 	.= 0
-	if (!rev_mind.current || (rev_mind.current && !rev_mind.current.client))
+	if (!rev_mind?.current || (rev_mind.current && !rev_mind.current.client))
 		return 0
 
 	var/list/uncons = src.get_unconvertables()

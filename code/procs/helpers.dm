@@ -104,6 +104,20 @@ var/global/obj/flashDummy
 
 	for(var/mob/living/M in get_turf(target))
 		M.shock(from, wattage, "chest", 1, 1)
+
+	var/elecflashpower = 0
+	if (wattage > 12000)
+		elecflashpower = 6
+	else if (wattage > 7500)
+		elecflashpower = 5
+	else if (wattage > 5000)
+		elecflashpower = 4
+	else if (wattage > 2500)
+		elecflashpower = 3
+	else if (wattage > 1200)
+		elecflashpower = 2
+
+	elecflash(target,power = elecflashpower)
 	O.loc = null
 
 /proc/arcFlash(var/atom/from, var/atom/target, var/wattage)
@@ -116,6 +130,20 @@ var/global/obj/flashDummy
 
 	if(wattage && isliving(target)) //Probably unsafe.
 		target:shock(from, wattage, "chest", 1, 1)
+
+	var/elecflashpower = 0
+	if (wattage > 12000)
+		elecflashpower = 6
+	else if (wattage > 7500)
+		elecflashpower = 5
+	else if (wattage > 5000)
+		elecflashpower = 4
+	else if (wattage > 2500)
+		elecflashpower = 3
+	else if (wattage > 1200)
+		elecflashpower = 2
+
+	elecflash(target,power = elecflashpower)
 
 proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuff. Takes some sort of bizzaro angles ?! Aahhhhh
 	var/list/crossed = list()
@@ -2515,3 +2543,14 @@ proc/total_clients_for_cap()
 			var/client/CC = C
 			if (!CC.holder)
 				.++
+
+	for (var/C in player_cap_grace)
+		if (player_cap_grace[C] > TIME)
+			.++
+
+
+proc/client_has_cap_grace(var/client/C)
+	if (C.ckey in player_cap_grace)
+		.= (player_cap_grace[C.ckey] > TIME)
+
+

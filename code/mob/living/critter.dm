@@ -73,6 +73,7 @@
 	var/last_life_process = 0
 	var/use_stunned_icon = 1
 
+	var/pull_w_class = 2
 
 	blood_id = "blood"
 
@@ -392,6 +393,19 @@
 
 			playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
 
+	proc/can_pull(atom/A)
+		if (!src.ghost_spawned) //if its an admin or wizard made critter, just let them pull everythang
+			return 1
+		if (ismob(A))
+			return (src.pull_w_class >= 3)
+		else if (isobj(A))
+			if (istype(A,/obj/item))
+				var/obj/item/I = A
+				return (pull_w_class >= I.w_class)
+			else
+				return (src.pull_w_class >= 4)
+		return 0
+
 	click(atom/target, list/params)
 		if (((src.client && src.client.check_key(KEY_THROW)) || src.in_throw_mode) && src.can_throw)
 			src.throw_item(target,params)
@@ -649,6 +663,10 @@
 			var/datum/handHolder/HH = hands[t_hand]
 			if (HH.item || !HH.can_hold_items)
 				return 0
+			if(istype(HH.limb, /datum/limb/small_critter))
+				var/datum/limb/small_critter/L = HH.limb
+				if(I.w_class > L.max_wclass)
+					return 0
 			HH.item = I
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
@@ -658,6 +676,10 @@
 			var/datum/handHolder/HH = hands[active_hand]
 			if (HH.item || !HH.can_hold_items)
 				return 0
+			if(istype(HH.limb, /datum/limb/small_critter))
+				var/datum/limb/small_critter/L = HH.limb
+				if(I.w_class > L.max_wclass)
+					return 0
 			HH.item = I
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
