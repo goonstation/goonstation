@@ -450,7 +450,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.drowsyness = max(M.drowsyness-5, 0)
 				if(M.sleeping) M.sleeping = 0
-				if (M.get_brain_damage() <= 90)
+				if (M.get_brain_damage() <= 180)
 					if (prob(50)) M.take_brain_damage(-1 * mult)
 				else M.take_brain_damage(-10 * mult) // Zine those synapses into not dying *yet*
 				..()
