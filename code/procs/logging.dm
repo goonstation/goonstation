@@ -16,6 +16,8 @@ Example out of game log call:
 
 var/global/roundLog_name = "data/logs/full/[time2text(world.realtime, "YYYY-MM-DD-hh-mm")].html"
 var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-DD-hh-mm")].html")
+var/global/disable_log_lists = 0
+
 
 /proc/logTheThing(type, source, target, text, diaryType)
 	var/diaryLogging
@@ -31,30 +33,9 @@ var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-D
 		text =  replacetext(text, "%target%", target)
 
 	var/ingameLog = "<td class='duration'>\[[round(world.time/600)]:[(world.time%600)/10]\]</td><td class='source'>[source]</td><td class='text'>[text]</td>"
-	switch(type)
-		//These are things we log in-game (accessible via the Secrets menu)
-		if ("audit")
-			logs["audit"] += ingameLog
-			diaryLogging = 1
-			diaryType = "audit"
-		if ("admin") logs["admin"] += ingameLog
-		if ("admin_help") logs["admin_help"] += ingameLog
-		if ("mentor_help") logs["mentor_help"] += ingameLog
-		if ("say") logs["speech"] += ingameLog
-		if ("ooc") logs["ooc"] += ingameLog
-		if ("whisper") logs["speech"] += ingameLog
-		if ("station") logs["station"] += ingameLog
-		if ("combat") logs["combat"] += ingameLog
-		if ("telepathy") logs["telepathy"] += ingameLog
-		if ("debug") logs["debug"] += ingameLog
-		if ("pdamsg") logs["pdamsg"] += ingameLog
-		if ("signalers") logs["signalers"] += ingameLog
-		if ("bombing") logs["bombing"] += ingameLog
-		if ("atmos") logs["atmos"] += ingameLog
-		if ("pathology") logs["pathology"] += ingameLog
-		if ("deleted") logs["deleted"] += ingameLog
-		if ("vehicle") logs["vehicle"] += ingameLog
-		if ("diary")
+
+	if (disable_log_lists) // lag reduction hack - ONLY print logs to the web versions
+		if (type == "diary")
 			switch (diaryType)
 				//These are things we log in the out of game logs (the diary)
 				if ("admin") if (config.log_admin) diaryLogging = 1
@@ -72,12 +53,62 @@ var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-D
 				if ("vehicle") if (config.log_vehicles) diaryLogging = 1
 
 
-	if (diaryLogging)
-		WRITE_LOG(diary_name, "[uppertext(diaryType)]: [source ? "[source] ": ""][text]")
+		if (diaryLogging)
+			WRITE_LOG(diary_name, "[uppertext(diaryType)]: [source ? "[source] ": ""][text]")
 
-	//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
-	if (!diaryLogging && config.allowRotatingFullLogs)
-		WRITE_LOG(roundLog_name, "\[[uppertext(type)]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
+		//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
+		if (!diaryLogging && config.allowRotatingFullLogs)
+			WRITE_LOG(roundLog_name, "\[[uppertext(type)]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
+
+	else
+
+		switch(type)
+			//These are things we log in-game (accessible via the Secrets menu)
+			if ("audit")
+				logs["audit"] += ingameLog
+				diaryLogging = 1
+				diaryType = "audit"
+			if ("admin") logs["admin"] += ingameLog
+			if ("admin_help") logs["admin_help"] += ingameLog
+			if ("mentor_help") logs["mentor_help"] += ingameLog
+			if ("say") logs["speech"] += ingameLog
+			if ("ooc") logs["ooc"] += ingameLog
+			if ("whisper") logs["speech"] += ingameLog
+			if ("station") logs["station"] += ingameLog
+			if ("combat") logs["combat"] += ingameLog
+			if ("telepathy") logs["telepathy"] += ingameLog
+			if ("debug") logs["debug"] += ingameLog
+			if ("pdamsg") logs["pdamsg"] += ingameLog
+			if ("signalers") logs["signalers"] += ingameLog
+			if ("bombing") logs["bombing"] += ingameLog
+			if ("atmos") logs["atmos"] += ingameLog
+			if ("pathology") logs["pathology"] += ingameLog
+			if ("deleted") logs["deleted"] += ingameLog
+			if ("vehicle") logs["vehicle"] += ingameLog
+			if ("diary")
+				switch (diaryType)
+					//These are things we log in the out of game logs (the diary)
+					if ("admin") if (config.log_admin) diaryLogging = 1
+					if ("ahelp") if (config.log_say) diaryLogging = 1 //log_ahelp
+					if ("mhelp") if (config.log_say) diaryLogging = 1 //log_mhelp
+					if ("game") if (config.log_game) diaryLogging = 1
+					if ("access") if (config.log_access) diaryLogging = 1
+					if ("say") if (config.log_say) diaryLogging = 1
+					if ("ooc") if (config.log_ooc) diaryLogging = 1
+					if ("whisper") if (config.log_whisper) diaryLogging = 1
+					if ("station") if (config.log_station) diaryLogging = 1
+					if ("combat") if (config.log_combat) diaryLogging = 1
+					if ("telepathy") if (config.log_telepathy) diaryLogging = 1
+					if ("debug") if (config.log_debug) diaryLogging = 1
+					if ("vehicle") if (config.log_vehicles) diaryLogging = 1
+
+
+		if (diaryLogging)
+			WRITE_LOG(diary_name, "[uppertext(diaryType)]: [source ? "[source] ": ""][text]")
+
+		//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
+		if (!diaryLogging && config.allowRotatingFullLogs)
+			WRITE_LOG(roundLog_name, "\[[uppertext(type)]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
 	return
 
 /proc/logDiary(text)

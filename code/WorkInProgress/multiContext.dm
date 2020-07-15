@@ -305,7 +305,7 @@ var/list/globalContextActions = null
 		if(W && W.contextActions && W.contextActions.len)
 			for(var/datum/contextAction/C in W.contextActions)
 				var/action = C.checkRequirements(target, src)
-				if(action) applicable.Add(action)
+				if(action) applicable.Add(C)
 
 		if(target && target.contextActions && target.contextActions.len)
 			for(var/datum/contextAction/C in target.contextActions)
@@ -329,6 +329,7 @@ var/list/globalContextActions = null
 			B.setup(C, src, target)
 			B.alpha = 0
 			buttons.Add(B)
+
 		if(target.contextLayout)
 			target.contextLayout.showButtons(buttons,target)
 		else
@@ -1163,6 +1164,48 @@ var/list/globalContextActions = null
 
 		special
 			icon_background = "key_special"
+
+	kudzu
+		icon = 'icons/ui/context16x16.dmi'
+		name = "Deconstruct with Tool"
+		desc = "You shouldn't be reading this, bug."
+		icon_state = "wrench"
+		var/creation_path = null	//object to create
+		var/extra_time = 0
+
+		execute(var/atom/target, var/mob/user)
+			playsound(user.loc, 'sound/effects/pop.ogg', 50, 1)
+			actions.start(new/datum/action/bar/icon/kudzu_shaping(target,user, creation_path, extra_time), user)
+
+		checkRequirements(var/atom/target, var/mob/user)
+			if (istype(target, /obj/spacevine))
+				var/obj/spacevine/K = target
+				if (K.growth >= 20 && istype(user.equipped(), /obj/item/kudzu/kudzumen_vine))
+					return 1
+			return 0
+
+		plantpot
+			name = "Plant pot"
+			desc = "Create a plant pot."
+			icon_state = "kudzu-plantpot"
+			creation_path = /obj/machinery/plantpot/kudzu
+
+			execute(var/atom/target, var/mob/user)
+				boutput(user, "Shaping [target] into a plantpot, please remain still...")
+				extra_time = 2 SECONDS
+				return ..()
+
+		plantmaster
+			name = "Kudzu Plantmaster"
+			desc = "Create a plantmaster."
+			icon_state = "computer"	//"kudzu-plantmaster"
+			creation_path = /obj/submachine/seed_manipulator/kudzu
+
+			execute(var/atom/target, var/mob/user)
+				boutput(user, "Shaping [target] into a plantmaster, please remain still...")
+				extra_time = 5 SECONDS
+				return ..()
+
 /*
 	offered
 		icon = null

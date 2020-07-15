@@ -75,6 +75,7 @@ var/list/detailed_spawn_dbg = list()
 #define iswelder(x) istype(x, /mob/living/carbon/human/welder)
 #define ismartian(x) (istype(x, /mob/living/critter/martian) || (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/martian)))
 #define isprematureclone(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/premature_clone))
+#define iskudzuman(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/kudzu))
 
 #define ishellbanned(x) x?.client?.hellbanned
 

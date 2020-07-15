@@ -2545,7 +2545,7 @@ proc/total_clients_for_cap()
 				.++
 
 	for (var/C in player_cap_grace)
-		if (player_cap_grace[C] <= TIME)
+		if (player_cap_grace[C] > TIME)
 			.++
 
 

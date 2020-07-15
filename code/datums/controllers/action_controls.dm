@@ -1249,3 +1249,19 @@ var/datum/action_controller/actions
 		onEnd()
 			..()
 			target.try_equip_to_inventory_object(owner, over_object, params)
+
+	then_obj_click
+
+		var/atom/over_object
+		var/params
+
+		New(Target, Over, Parameters)
+			target = Target
+			over_object = Over
+			params = Parameters
+			..()
+
+		onEnd()
+			..()
+			if (can_reach(owner,over_object))
+				over_object.attackby(target, owner, params)

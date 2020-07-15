@@ -1322,3 +1322,47 @@
 			if (WIRE_POWER)
 				if (src.working) src.working = 0
 				else src.working = 1
+
+
+/obj/submachine/seed_manipulator/kudzu
+	name = "KudzuMaster V1"
+	desc = "A strange \"machine\" that seems to function via fluids and plant fibers."
+	mats = 0
+	deconstruct_flags = null
+	icon = 'icons/misc/kudzu_plus.dmi'
+	icon_state = "seed-gene-console"
+	_health = 1
+
+	disposing()
+		var/turf/T = get_turf(src)
+		for (var/obj/O in seeds)
+			O.set_loc(T)
+		src.visible_message("<span class='alert'>All the seeds spill out of [src]!</span>")
+		..()
+	attack_ai(var/mob/user as mob)
+		return 0
+
+	attack_hand(var/mob/user as mob)
+		if (iskudzuman(user))
+			..()
+		else
+			boutput(user, "<span class='notice'>You stare at the bit that looks most like a screen, but you can't make heads or tails of what it's saying.!</span>")
+
+	//only kudzumen can understand it.
+	attackby(var/obj/item/W as obj, var/mob/user as mob)
+		if (!W) return
+		if (!user) return
+
+		if (destroys_kudzu_object(src, W, user))
+			//Takes at least 2 hits to kill.
+			if (_health)
+				_health = 0
+				return 
+
+			if (prob(40))
+				user.visible_message("<span class='alert'>[user] savagely attacks [src] with [W]!</span>")
+			else
+				user.visible_message("<span class='alert'>[user] savagely attacks [src] with [W], destroying it!</span>")
+				qdel(src)
+				return
+		..()
