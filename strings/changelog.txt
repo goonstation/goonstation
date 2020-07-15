@@ -1,5 +1,9 @@
 
 (t)tue jul 14 20
+(u)Dabir
+(p)1391
+(e)|
+(+)Fixed implanted hand teles queueing up way too many copies of their input UI if you got clicked on a bunch, like if you were being healed. You will now only be asked to select a teleporter once at a time.
 (u)glassofmilk
 (p)1422
 (e)🆕|feature
