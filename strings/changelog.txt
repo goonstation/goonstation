@@ -1,4 +1,8 @@
 
+(t)tue jul 15 20
+(u)mbc
+(*)Added overhead text for emotes. Emotes that make noise or animations will not be overhead.
+(*)Added a 'pulse' special attack for the multitool. (Remember, click a distant tile on harm/disarm intent)
 (t)tue jul 14 20
 (u)mbc
 (p)1270
