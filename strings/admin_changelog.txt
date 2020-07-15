@@ -1,6 +1,6 @@
 (t)tue jul 14 20
 (u)Sovexe
-(*)Oceanify is now compatible with underwater maps and includes Manta compatibiltiy. Additionally ocean is now auto colored to match reagent color.
+(*)Oceanify is now compatible with underwater maps and includes Manta compatibility. Additionally ocean is now auto colored to match reagent color.
 (t)mon jun 29 20
 (u)Sovexe
 (*)New Check Bioeffects admin tool available in player options and tilde menu.
