@@ -1558,7 +1558,7 @@ var/list/mechanics_telepads = new/list()
 		if(!converted.len || !ready) return
 
 		ready = 0
-		SPAWN_DBG(3 SECONDS) ready = 1
+		SPAWN_DBG(0.4 SECONDS) ready = 1
 
 		var/datum/signal/sendsig = get_free_signal()
 
