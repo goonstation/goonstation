@@ -84,7 +84,6 @@
 /atom
 	layer = TURF_LAYER
 	plane = PLANE_DEFAULT
-	var/datum/mechanics_holder/mechanics = null
 	var/level = 2
 	var/flags = FPRINT
 	var/event_handler_flags = 0
@@ -207,9 +206,6 @@
 		if (!isnull(reagents))
 			qdel(reagents)
 			reagents = null
-		if (!isnull(mechanics))
-			qdel(mechanics)
-			mechanics = null
 		if (temp_flags & (HAS_PARTICLESYSTEM | HAS_PARTICLESYSTEM_TARGET))
 			particleMaster.ClearSystemRefs(src)
 		if (temp_flags & (HAS_BAD_SMOKE))

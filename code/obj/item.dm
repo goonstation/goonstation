@@ -622,7 +622,7 @@
 			else
 				try_equip_to_inventory_object(usr, over_object, params)
 
-		else if (isobj(over_object))
+		else if (isobj(over_object) && !src.check_valid_stack(over_object))
 			if (src.loc == usr || istype(src.loc,/obj/item/storage))
 				if (try_put_hand_mousedrop(usr))
 					if (can_reach(usr, over_object))

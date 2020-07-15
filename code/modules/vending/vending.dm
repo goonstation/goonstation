@@ -112,9 +112,8 @@
 
 	New()
 		src.create_products()
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("vend", "vendinput")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"vend", "vendinput")
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.6)
@@ -1784,8 +1783,7 @@
 
 				src.postvend_effect()
 
-				if (mechanics)
-					mechanics.fireOutgoing(mechanics.newSignal("productDispensed"))
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"productDispensed")
 
 			if (src.paying_for)
 				src.paying_for = null

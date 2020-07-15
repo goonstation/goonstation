@@ -1242,11 +1242,10 @@
 	New()
 		..()
 
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("toggle", "toggleactivation")
-		mechanics.addInput("on", "activate")
-		mechanics.addInput("off", "deactivate")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleactivation")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", "activate")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", "deactivate")
 
 		SPAWN_DBG (10)
 			switch_dir = turn(dir, 90)
@@ -1288,11 +1287,6 @@
 		C.ptype = 11
 		C.dir = dir
 		C.update()
-
-		if (src.mechanics)
-			src.mechanics.wipeIncoming()
-			src.mechanics.wipeOutgoing()
-
 		qdel(src)
 
 //<Jewel>:
@@ -1518,8 +1512,7 @@
 	New()
 		..()
 
-		mechanics = new(src)
-		mechanics.master = src
+		AddComponent(/datum/component/mechanics_holder)
 
 		dpdir = dir | turn(dir, 180)
 
@@ -1562,18 +1555,18 @@
 			boutput(usr, "<span class='alert'>[MECHFAILSTRING]</span>")
 			return
 
-		mechanics.dropConnect(O, null, src_location, control_orig, control_new, params)
+		SEND_SIGNAL(src,_COMSIG_MECHCOMP_DROPCONNECT,O,usr)
 		return ..()
 
 	transfer(var/obj/disposalholder/H)
 		if (sense_mode == SENSE_TAG)
 			if (cmptext(H.mail_tag, sense_tag_filter))
-				mechanics.fireOutgoing(mechanics.newSignal(ckey(H.mail_tag)))
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,ckey(H.mail_tag))
 				flick("pipe-mechsense-detect", src)
 
 		else if (sense_mode == SENSE_OBJECT)
 			if (H.contents.len)
-				mechanics.fireOutgoing(mechanics.newSignal("1"))
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"1")
 				flick("pipe-mechsense-detect", src)
 
 		else
@@ -1585,7 +1578,7 @@
 							if (isdead(M))
 								continue
 
-						mechanics.fireOutgoing(mechanics.newSignal("1"))
+						SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"1")
 						flick("pipe-mechsense-detect", src)
 						break
 
@@ -1596,11 +1589,7 @@
 		C.ptype = 12
 		C.dir = dir
 		C.update()
-
-		if (src.mechanics)
-			src.mechanics.wipeIncoming()
-			src.mechanics.wipeOutgoing()
-
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		qdel(src)
 
 #undef SENSE_LIVING

@@ -57,8 +57,7 @@
 				owner.bleeding = 0
 
 			if (prob(surgery_increase_chance) && owner.get_surgery_status())
-				owner.bleeding += 1 * mult
-
+				owner.bleeding = clamp(owner.bleeding+(1*mult), 0, 6) //mbc : clamp at 6 even though final_bleed is clamped at 5 because overbleed is kinda cool idk
 
 			if (owner.blood_volume)
 				var/final_bleed = clamp(owner.bleeding, 0, 5) // trying this at 5 being the max
