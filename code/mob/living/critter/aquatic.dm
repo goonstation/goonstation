@@ -118,7 +118,7 @@
 				src.in_water_to_out_of_water = 1
 			src.water_need = 2
 
-/mob/living/critter/aquatic/TakeDamage(zone, brute, burn)
+/mob/living/critter/aquatic/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
 	if(prob(10 * src.in_water_buff) && !src.water_need)
 		src.HealDamage("All", in_water_buff, in_water_buff)
@@ -198,7 +198,7 @@
 		hit_twitch(src)
 		src.visible_message("<b>[src]</b> [pick("flops around desperately","gasps","shudders")].")
 
-/mob/living/critter/aquatic/TakeDamage(zone, brute, burn)
+/mob/living/critter/aquatic/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
 	if(!isdead(src))
 		animate_bumble(src)

@@ -217,12 +217,10 @@
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
 
-/*
-			for (var/thing in src) //not worth the CPU, nothing even uses this stuff
+			for (var/thing in src) //todo optimize with signals!!!!!!
 				var/atom/movable/A = thing
 				if (A.material)
 					A.material.triggerOnLife(src, A)
-*/
 
 		clamp_values()
 

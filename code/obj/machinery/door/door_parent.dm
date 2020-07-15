@@ -155,9 +155,8 @@
 	New()
 		..()
 		UnsubscribeProcess()
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("toggle", "toggleinput")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
 		update_nearby_tiles(need_rebuild=1)
 		doors.Add(src)
 		for (var/turf/simulated/wall/auto/T in orange(1))
@@ -511,7 +510,7 @@
 		update_nearby_tiles()
 		next_timeofday_opened = 0
 		sleep(src.operation_time / 2)
-		if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("doorOpened"))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorOpened")
 
 		if(operating == 1) //emag again
 			src.operating = 0
@@ -598,8 +597,7 @@
 			autoclose()
 
 /obj/machinery/door/proc/closed()
-	if(mechanics)
-		mechanics.fireOutgoing(mechanics.newSignal("doorClosed"))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorClosed")
 
 /obj/machinery/door/proc/autoclose()
 	if (!density && !operating && !locked)
