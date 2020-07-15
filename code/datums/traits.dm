@@ -655,15 +655,15 @@
 			var/mob/living/carbon/human/H = owner
 			H.max_health = 150
 			H.health = 150
-			H.brainloss = 60
+			H.take_brain_damage(60)
 		return
 
 	onLife(var/mob/owner) //Just to be safe.
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.max_health = 150
-			if(H.brainloss < 60)
-				H.brainloss = 60
+			if(H.get_brain_damage() < 60)
+				H.take_brain_damage(60)
 		return
 
 /obj/trait/athletic
