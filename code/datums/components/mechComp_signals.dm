@@ -217,7 +217,7 @@
 		boutput(user, "<span class='alert'>[MECHFAILSTRING]</span>")
 		return
 	
-	if(get_dist(parent, A) > 14)
+	if(get_dist(parent, A) > SQUARE_TILE_WIDTH)
 		boutput(user, "<span class='alert'>Components need to be within a range of 14 meters to connect.</span>")
 		return
 
