@@ -620,33 +620,33 @@
 
 		if (2)
 			if (prob(8))
-				affected_mob.emote(pick("groan", "grimace", "cry", "weep", "moan))
+				affected_mob.emote(pick("groan", "grimace", "cry", "weep", "moan"))
 			if (prob(5))
 				boutput(affected_mob, "<span class='alert'>A sudden sharp pain shoots through your head, throwing off your balance!</span>")
 				affected_mob.change_misstep_chance(1)
 			if (prob(3))
-				if (owner.stuttering <= 5)
-					owner.stuttering++
+				if (affected_mob.stuttering <= 5)
+					affected_mob.stuttering++
 			if (prob(5))
 				affected_mob.emote(pick("faint", "collapse", "groan"))
 
 		if (3)
 			affected_mob.take_oxygen_deprivation(1)
 			if (prob(8))
-				affected_mob.emote(pick("groan", "grimace", "cry", "weep", "moan))
+				affected_mob.emote(pick("groan", "grimace", "cry", "weep", "moan"))
 			if (prob(8))
 				affected_mob.emote(pick("groan", "grimace, blink_r"))
-			if (owner.get_eye_blurry() <= 5)
+			if (affected_mob.get_eye_blurry() <= 5)
 				boutput(affected_mob, "<span class='alert'>You feel a nagging pressure behind your eyes!</span>")
-				owner.change_eye_blurry(2)
+				affected_mob.change_eye_blurry(2)
 			if (prob(8))
 				boutput(affected_mob, "<span class='alert'>The pain in your head is making it hard to walk straight!</span>")
 				affected_mob.change_misstep_chance(3)
 			if (prob(5))
 				affected_mob.emote(pick("faint", "collapse", "groan"))
 			if (prob(5))
-				if (owner.stuttering <= 5)
-					owner.stuttering++
+				if (affected_mob.stuttering <= 5)
+					affected_mob.stuttering++
 
 /* -------------------- Traumatic Brain Injury -------------------- */
 /datum/ailment/malady/brainfailure
@@ -660,7 +660,7 @@
 						"saline" = 2,			// 
 						"mannitol" = 5, 		// Brain meds
 						"epinephrine" = 5, 		// 
-						"synaptizine" = 15)) 	// i like synaptizine :D
+						"synaptizine" = 15) 	// i like synaptizine :D
 	recureprob = 10
 	affected_species = list("Human","Monkey")
 	stage_prob = 5
@@ -694,8 +694,8 @@
 				boutput(affected_mob, "<span class='alert'>A clear, slippery fluid drips from your nose.</span>")
 				affected_mob.take_brain_damage(1)
 			if (prob(5))
-				boutput(affected_mob, "<span class='alert'>Your [pick("nose starts", "ears start"] bleeding.</span>")
-				affected_mob.take_bleeding_damage(affected_mob, null, 0, DAMAGE_STAB, 1)
+				boutput(affected_mob, "<span class='alert'>Your [pick("nose starts", "ears start")] bleeding.</span>")
+				take_bleeding_damage(affected_mob, null, 0, DAMAGE_STAB, 1)
 			else if(prob(12))
 				affected_mob.stuttering = max(10, affected_mob.stuttering)
 				boutput(affected_mob, "<span class='alert'>You feel [pick("numb", "confused", "dizzy", "dazed")].</span>")
@@ -715,7 +715,7 @@
 				affected_mob.take_brain_damage(1)
 			if (prob(5))
 				boutput(affected_mob, "<span class='alert'>You sneeze, spraying blood everywhere!</span>")
-				affected_mob.bleed(affected_mob, 2, 2)
+				bleed(affected_mob, 2, 2)
 			if (prob(8))
 				affected_mob.emote("gasp")
 				affected_mob.losebreath+=3
@@ -739,19 +739,19 @@
 				affected_mob.emote(pick("twitch", "gasp", "collapse", "faint"))
 			if (prob(5))
 				boutput(affected_mob, "<span class='alert'>A clear, slippery fluid seeps from your nose.</span>")
-				owner.take_brain_damage(1)
+				affected_mob.take_brain_damage(1)
 			if (prob(12))
 				boutput(affected_mob, "<span class='alert'>You feel [pick("numb", "confused", "dizzy", "dazed")].</span>")
 				affected_mob.drowsyness += 3
 			if (prob(5))
-				boutput(affected_mob, "<span class='alert'>Your [pick("nose starts", "ears start"] bleeding!</span>")
+				boutput(affected_mob, "<span class='alert'>Your [pick("nose starts", "ears start")] bleeding!</span>")
 				take_bleeding_damage(affected_mob, null, 1, DAMAGE_STAB, 1)
 			if (prob(2))
 				boutput(affected_mob, "<span class='alert'>Your head hurts!</span>")
 				affected_mob.take_brain_damage(1)
 			if (prob(5))
 				boutput(affected_mob, "<span class='alert'>You sneeze, spraying blood everywhere!</span>")
-				affected_mob.bleed(affected_mob, 2, 2)
+				bleed(affected_mob, 2, 2)
 			if (prob(8))
 				affected_mob.emote("gasp")
 				affected_mob.losebreath+=10
@@ -763,7 +763,7 @@
 				affected_mob.changeStatus("slowed", rand(60,120))
 				affected_mob.change_misstep_chance(5)
 				boutput(affected_mob, "<span class='alert'>Your legs feel very weak.</span>")
-			if (prob(1)) // down from 5
+			else if (prob(1)) // down from 5
 				affected_mob.contract_disease(/datum/ailment/malady/coma,null,null,1)
 
 /* -------------------- Coma -------------------- */
