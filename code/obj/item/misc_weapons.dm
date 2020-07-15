@@ -113,28 +113,40 @@
 		BLOCK_SWORD
 
 /obj/item/sword/attack(mob/target, mob/user, def_zone, is_special = 0)
-	if(ishuman(user))
-		if(active)
-			if (handle_parry(target, user))
-				return 1
+	if(active)
+		if (handle_parry(target, user))
+			return 1
+		if (do_stun)
+			target.do_disorient(150, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0)
 
-			if (do_stun)
-				target.do_disorient(150, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0)
+		var/sound_pitch = null
+		var/sound_in = null
+		var/age = 30 //default
 
-			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(get_turf(U), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-			else playsound(get_turf(U), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
-			..()
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			age = H.bioHolder.age
+
+		if(user.gender == MALE)
+			sound_in = pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg')
+			sound_pitch = max(0.7, min(1.2, 1.0 + (30 - age)/60))
 		else
-			if (user.a_intent == INTENT_HELP)
-				user.visible_message("<span class='combat bold'>[user] [pick_string("descriptors.txt", pick("mopey", "borg_shake"))] baps [target] on the [pick("nose", "forehead", "wrist", "chest")] with \the [src]'s handle!</span>")
-				if(prob(3))
-					SPAWN_DBG(0.2 SECONDS)
-						target.visible_message("<span class='bold'>[target.name]</span> flops over in shame!")
-						target.changeStatus("stunned", 50)
-						target.changeStatus("weakened", 5 SECONDS)
-			else
-				..()
+			sound_in = pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg')
+			sound_pitch = max(0.7, min(1.4, 1.0 + (30 - age)/50))
+
+		playsound(get_turf(user), sound_in, 70, 5, 0, sound_pitch)
+
+	else
+		..()
+	if (user.a_intent == INTENT_HELP)
+		user.visible_message("<span class='combat bold'>[user] [pick_string("descriptors.txt", pick("mopey", "borg_shake"))] baps [target] on the [pick("nose", "forehead", "wrist", "chest")] with \the [src]'s handle!</span>")
+		if(prob(3))
+			SPAWN_DBG(0.2 SECONDS)
+				target.visible_message("<span class='bold'>[target.name]</span> flops over in shame!")
+				target.changeStatus("stunned", 50)
+				target.changeStatus("weakened", 5 SECONDS)
+	else
+		..()
 
 /obj/item/sword/proc/get_hex_color_from_blade(var/C as text)
 	switch(C)
