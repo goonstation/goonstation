@@ -1,4 +1,14 @@
 
+(t)wed jul 15 20
+(u)MarkNstein
+(p)1231
+(e)🆕|feature
+(*)Major refactor of MechComp code. See Minor Changes for details. Please report any bugs!
+(+)A MechComp device can not have multiple connections to another device (only one connection per any two devices).
+(+)A connection cannot be longer than 14 tiles (one screen height).
+(+)TeleComp now sends a signal of how many objects were teleported. Both the sender and receiver pad transmit this number.
+(+)SelectionComp is more robust, and shouldn't fail to send a signal as often.
+(+)ToggleComp can now receive inputs without firing a signal.
 (t)tue jul 14 20
 (u)mbc
 (p)1270
