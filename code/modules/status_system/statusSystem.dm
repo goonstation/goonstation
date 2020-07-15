@@ -1147,6 +1147,12 @@ var/list/statusGroupLimits = list("Food"=4)
 		onAdd(var/optional=null)
 			if (isliving(owner))
 				L = owner
+				if (L.getStatusDuration("burning"))
+					if (!actions.hasAction(L, "fire_roll"))
+						L.last_resist = world.time + 25
+						actions.start(new/datum/action/fire_roll(), L)
+					else
+						return
 			else
 				owner.delStatus("resting")
 
