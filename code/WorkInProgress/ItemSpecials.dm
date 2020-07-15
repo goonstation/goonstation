@@ -1024,7 +1024,7 @@
 		staminaCost = 0
 		moveDelay = 5
 		moveDelayDuration = 5
-		damageMult = 0.33
+		damageMult = 0.5
 
 		image = "dagger"
 		name = "Slice"
@@ -1035,7 +1035,7 @@
 		onAdd()
 			if(master)
 				staminaCost = master.stamina_cost * 0.2 //Inherits from the item.
-				overrideStaminaDamage = master.stamina_damage * 0.33
+				overrideStaminaDamage = master.stamina_damage * 0.5
 			return
 
 		pixelaction(atom/target, params, mob/user, reach)
