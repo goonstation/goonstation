@@ -40,6 +40,7 @@
 	var/tox = M.get_toxin_damage()
 	var/burn = M.get_burn_damage()
 	var/brute = M.get_brute_damage()
+	var/brain = M.get_brain_damage()
 
 	// contained here in order to change them easier
 	var/oxy_font = "<span style='color:#1F75D1'>"
@@ -51,6 +52,7 @@
 	var/tox_data = "[tox > 50 ? "<span class='alert'>" : "[tox_font]"][tox]</span>"
 	var/burn_data = "[burn > 50 ? "<span class='alert'>" : "[burn_font]"][burn]</span>"
 	var/brute_data = "[brute > 50 ? "<span class='alert'>" : "[brute_font]"][brute]</span>"
+	var/brain_numb = "[brain > 50 ? "<span class='alert'>" : "[brute_font]"][brain]</span>"
 
 	var/rad_data = null
 	var/nrad_data = null
@@ -144,12 +146,28 @@
 				pathogen_data += "<br><span style='font-weight:bold'>Suggested pathogen suppression therapies: [jointext(therapy, ", ")]."
 
 			if (H.get_organ("brain"))
-				if (H.get_brain_damage() >= 100)
+				if (H.get_brain_damage() >= 215)
 					brain_data = "<span class='alert'>Subject is braindead.</span>"
-				else if (H.get_brain_damage() >= 60)
+				else if (H.get_brain_damage() >= 180)
+					brain_data = "<span class='alert'><b>Near-lethal brain damage detected!</b> Post-mortem contingency preparations recommended.</span>"
+					
+				else if (H.get_brain_damage() >= 150)
+					brain_data = "<span class='alert'><b>Extreme brain damage detected!</b> Subject unlikely to regain consciousness.</span>"
+					
+				else if (H.get_brain_damage() >= 100)
+					brain_data = "<span class='alert'><b>Profound brain damage detected!</b> Subject likely unable to maintain consciousness.</span>"
+					
+				else if (H.get_brain_damage() >= 75)
+					brain_data = "<span class='alert'>Profound brain damage detected! Subject likely unable to function well.</span>"
+					
+				else if (H.get_brain_damage() >= 50)
 					brain_data = "<span class='alert'>Severe brain damage detected. Subject likely unable to function well.</span>"
-				else if (H.get_brain_damage() >= 10)
+					
+				else if (H.get_brain_damage() >= 25)
 					brain_data = "<span class='alert'>Significant brain damage detected. Subject may have had a concussion.</span>"
+					
+				else if (H.get_brain_damage() >= 10)
+					brain_data = "<span class='alert'>Slight brain damage detected. Subject may need analgesics.</span>"
 			else
 				brain_data = "<span class='alert'>Subject has no brain.</span>"
 
@@ -227,6 +245,7 @@
 	[nrad_data ? "<br>[nrad_data]" : null]\
 	[blood_data ? "<br>[blood_data]" : null]\
 	[brain_data ? "<br>[brain_data]" : null]\
+	[brain_numb ? "<br>Brain Injury Rating: [brain_numb]" : null]\
 	[organ_data ? "<br>[organ_data]" : null]\
 	[reagent_data ? "<br>[reagent_data]" : null]\
 	[pathogen_data ? "<br>[pathogen_data]" : null]\

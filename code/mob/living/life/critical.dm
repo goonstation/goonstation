@@ -74,43 +74,13 @@
 			if (!is_chg || owner.suiciding)
 				owner.death()
 				
-		if (owner.get_brain_damage() >= 100) // Coma
-			if (!is_chg)
-				boutput(owner, "<span class='alert'>You feel [pick("oddly", "suddenly", "quite")] [pick("faint", "dizzy", "numb", "dazed")].</span>")
-				owner.change_misstep_chance(5)
-				if (!owner.find_ailment_by_type(/datum/ailment/malady/coma))
-					if (prob(owner.get_brain_damage() * -0.5  * mult))
-						owner.emote(pick("faint", "collapse"))
-						owner.visible_message("<span class='alert'><b>[owner.name]</b> suddenly falls limp!</span>")
-						boutput(owner, "<span class='alert'><b>You sieze up and fall limp, the pain in your head fading along with your consciousness.</b></span>")
-						owner.setStatus("paralysis", max(owner.getStatusDuration("paralysis"), 15 * mult))
-						owner.contract_disease(/datum/ailment/malady/coma,null,null,1)
-					else
-						owner.setStatus("paralysis", max(owner.getStatusDuration("paralysis"), 15 * mult))
-						if (prob(8))
-							owner.emote("twitch")
-		
-		if (owner.get_brain_damage() >= 50) // braincrit
-			if (!is_chg)
-				boutput(owner, "<span class='alert'>Your head [pick("feels like shit","hurts like fuck","pounds horribly","twinges with an awful pain")].</span>")
-				owner.take_brain_damage(1)
-				if (prob(owner.get_brain_damage() * -0.5  * mult))
-					boutput(owner, "<span class='alert'><b>A sudden [pick("terrible", "violent", "shooting", "sharp", "horrible", "worrying")] pain erupts inside your head, forcing you to the ground!</b></span>")
-					owner.changeStatus("weakened", 3 SECONDS)
-					owner.contract_disease(/datum/ailment/malady/brainfailure,null,null,1)
-		
-		if (owner.get_brain_damage() >= 10) // Headache
-			if (!is_chg)
-				if (prob(owner.get_brain_damage() * -1  * mult))
-					boutput(owner, "<span class='alert'>Your head hurts!</span>")
-				
-		if (owner.health <= -100)
+		if (owner.health <= -100)	// Deathchance altered to account for deeper braincrit
 			if (owner.reagents.has_reagent("synaptizine") && owner.reagents.has_reagent("atropine"))
-				var/deathchance = min(99, ((owner.get_brain_damage() * -5) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.001)
+				var/deathchance = min(99, ((owner.get_brain_damage() * -1) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.001)
 				if (prob(deathchance))
 					owner.death()
 			else
-				var/deathchance = min(99, ((owner.get_brain_damage() * -5) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.01)
+				var/deathchance = min(99, ((owner.get_brain_damage() * -1) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.01)
 				if (prob(deathchance))
 					owner.death()
 				

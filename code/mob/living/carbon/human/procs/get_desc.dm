@@ -264,8 +264,12 @@
 		if (src.stat)
 			. += "<br><span class='alert'>[src.name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep.</span>"
 		else
-			if (src.get_brain_damage() >= 60)
+			if (src.get_brain_damage() >= 100)
 				. += "<br><span class='alert'>[src.name] has a blank expression on [his_or_her(src)] face.</span>"
+			else if (src.get_brain_damage() >= 60)
+				. += "<br><span class='alert'>[src.name] has a vacant expression on [his_or_her(src)] face.</span>"
+			else if (src.get_brain_damage() >= 15)
+				. += "<br><span class='alert'>[src.name] has a dazed expression on [his_or_her(src)] face.</span>"
 
 			if (!src.client)
 				. += "<br>[src.name] seems to be staring blankly into space."

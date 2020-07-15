@@ -796,11 +796,17 @@
 			H.cure_disease(D)
 			return
 		else
-			if (H.get_brain_damage() <= 170)
+			if (H.get_brain_damage() <= 180)	// Flatline'll take us the rest of the way
 				H.take_brain_damage(1)
-			else if (prob(10))
+			else if (prob(10))					// Just in case it doesn't.
 				H.take_brain_damage(1)
 
-		H.changeStatus("weakened", 30 SECONDS)
-		H.losebreath+=5
-		H.take_oxygen_deprivation(3)
+	affected_mob.changeStatus("weakened", 30 SECONDS)
+	affected_mob.losebreath+=5
+	affected_mob.take_oxygen_deprivation(3)
+	if (prob(2))
+		boutput(affected_mob, "<span class='alert'>You feel your pulse slow!</span>")
+		affected_mob.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
+	if (prob(1) && prob(1))
+		boutput(affected_mob, "<span class='alert'>You feel your brain getting damaged!</span>")
+		affected_mob.take_brain_damage(1)

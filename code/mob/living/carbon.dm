@@ -188,7 +188,7 @@
 	if (src.get_brain_damage() >= 100) // Coma
 		if (!is_chg)
 			boutput(src, "<span class='alert'>You feel [pick("oddly", "suddenly", "quite")] [pick("faint", "dizzy", "numb", "dazed")].</span>")
-			src.change_misstep_chance(5)
+			src.change_misstep_chance(10)
 			if (!src.find_ailment_by_type(/datum/ailment/malady/coma))
 				if (prob(src.get_brain_damage() * -0.5))
 					src.emote(pick("faint", "collapse"))
