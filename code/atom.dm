@@ -961,7 +961,7 @@
 	//It is probably important that we update this as density changes immediately. I don't think it breaks anything currently if we dont, but still important for future.
 	if (src.density != newdensity)
 		if (isturf(src.loc))
-			if (!src.event_handler_flags & USE_CANPASS)
+			if (!(src.event_handler_flags & USE_CANPASS))
 				if(newdensity == 1)
 					var/turf/T = src.loc
 					if (T)
