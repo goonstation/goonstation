@@ -134,7 +134,11 @@ client/proc/replace_space_exclusive()
 		map_currently_underwater = 1
 		for(var/turf/space/S in world)
 			if (S.z != 1) continue
+			#ifdef MOVING_SUB_MAP
+			var/turf/space/fluid/manta/T = new /turf/space/fluid/manta( locate(S.x, S.y, S.z) )
+			#else
 			var/turf/space/fluid/T = new /turf/space/fluid( locate(S.x, S.y, S.z) )
+			#endif
 			T.color = ocean_color
 			LAGCHECK(LAG_REALTIME)
 
