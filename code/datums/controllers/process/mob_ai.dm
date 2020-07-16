@@ -13,7 +13,7 @@ datum/controller/process/mob_ai
 
 			if (M.mob_flags & LIGHTWEIGHT_AI_MOB) //call life() with a slowed update rate on mobs we manage that arent part of the standard mobs list
 				if( M.z == 4 && !Z4_ACTIVE ) continue
-				if ((ticks % 4) == 0)
+				if ((ticks % 5) == 0)
 					if (istype(X, /mob/living))
 						var/mob/living/L = X
 						L.Life(src)
