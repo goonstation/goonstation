@@ -173,7 +173,7 @@
 /mob/proc/critterize(var/CT)
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a critter ([CT]).")
-		logTheThing("admin", usr, src, "made %target% a critter ([CT]).")
+		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a critter ([CT]).")
 
 		return make_critter(CT, get_turf(src))
 	return 0
@@ -403,7 +403,7 @@
 /mob/proc/blobize()
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a blob.")
-		logTheThing("admin", usr, src, "made %target% a blob.")
+		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a blob.")
 
 		return make_blob()
 	return 0
@@ -412,10 +412,10 @@
 	if (src.mind || src.client)
 		if (shitty)
 			message_admins("[key_name(src)] has been made a faustian macho man.")
-			logTheThing("admin", null, src, "%target% has been made a faustian macho man.")
+			logTheThing("admin", null, src, "[constructTarget(src,"admin")] has been made a faustian macho man.")
 		else
 			message_admins("[key_name(usr)] made [key_name(src)] a macho man.")
-			logTheThing("admin", usr, src, "made %target% a macho man.")
+			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a macho man.")
 		var/mob/living/carbon/human/machoman/W = new/mob/living/carbon/human/machoman(src)
 
 		var/turf/T = get_turf(src)
@@ -487,7 +487,7 @@
 
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a cube ([CT]) with a lifetime of [life].")
-		logTheThing("admin", usr, src, "made %target% a cube ([CT]) with a lifetime of [life].")
+		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a cube ([CT]) with a lifetime of [life].")
 
 		return make_cube(CT, life)
 	return 0
@@ -900,12 +900,12 @@ var/respawn_arena_enabled = 0
 		if(flock == null)
 			// no flocks given, make flockmind
 			message_admins("[key_name(usr)] made [key_name(src)] a flockmind ([src.real_name]).")
-			logTheThing("admin", usr, src, "made %target% a flockmind ([src.real_name]).")
+			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a flockmind ([src.real_name]).")
 			return make_flockmind()
 		else
 			// make flocktrace of existing flock
 			message_admins("[key_name(usr)] made [key_name(src)] a flocktrace of flock [flock.name].")
-			logTheThing("admin", usr, src, "made %target% a flocktrace ([flock.name]).")
+			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a flocktrace ([flock.name]).")
 			return make_flocktrace(get_turf(src), flock)
 	return null
 

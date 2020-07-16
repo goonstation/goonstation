@@ -377,7 +377,7 @@
 				src.visible_message("<span class='alert'>[src] throws [I].</span>")
 			if (iscarbon(I))
 				var/mob/living/carbon/C = I
-				logTheThing("combat", src, C, "throws %target% at [log_loc(src)].")
+				logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] at [log_loc(src)].")
 				if ( ishuman(C) )
 					C.changeStatus("weakened", 1 SECOND)
 			else
@@ -1202,7 +1202,7 @@
 		return
 	var/msg = replacetext(message, "%src%", "<b>[src]</b>")
 	if (target)
-		msg = replacetext(msg, "%target%", "[target]")
+		msg = replacetext(msg, "[constructTarget(target,"combat")]", "[target]")
 	if (mcolor)
 		msg = "<span style='color:[mcolor]'>" + msg + "</span>"
 	src.visible_message(msg)

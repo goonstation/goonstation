@@ -88,7 +88,7 @@
 				return
 
 			if(ismonkey(G.affecting))
-				logTheThing("combat", user, G.affecting, "shoves %target% onto the [src] at [log_loc(src)].") // For player monkeys (Convair880).
+				logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")] onto the [src] at [log_loc(src)].") // For player monkeys (Convair880).
 				src.visible_message("<span class='alert'><b>[user] shoves [G.affecting] onto the [src]!</b></span>")
 				src.icon_state = "shittygrill_bake"
 				light.enable()
@@ -100,7 +100,7 @@
 				qdel(W)
 				return
 
-			logTheThing("combat", user, G.affecting, "shoves %target%'s face into the [src] at [log_loc(src)].")
+			logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")]'s face into the [src] at [log_loc(src)].")
 			src.visible_message("<span class='alert'><b>[user] shoves [G.affecting]'s face onto the [src]!</b></span>")
 			src.reagents.reaction(G.affecting, TOUCH)
 

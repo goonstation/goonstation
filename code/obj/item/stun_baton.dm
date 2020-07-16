@@ -240,7 +240,7 @@
 			if ("failed_stun")
 				user.visible_message("<span class='alert'><B>[victim] has been prodded with the [src.name] by [user]! Luckily it was off.</B></span>")
 				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1, -1)
-				logTheThing("combat", user, victim, "unsuccessfully tries to stun %target% with the [src.name] at [log_loc(victim)].")
+				logTheThing("combat", user, victim, "unsuccessfully tries to stun [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 
 				if (src.uses_electricity && src.status == 1 && (src.cell && istype(src.cell) && (src.cell.charge < src.cost_normal)))
 					if (user && ismob(user))
@@ -250,11 +250,11 @@
 			if ("failed_harm")
 				user.visible_message("<span class='alert'><B>[user] has attempted to beat [victim] with the [src.name] but held it wrong!</B></span>")
 				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
-				logTheThing("combat", user, victim, "unsuccessfully tries to beat %target% with the [src.name] at [log_loc(victim)].")
+				logTheThing("combat", user, victim, "unsuccessfully tries to beat [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 
 			if ("stun", "stun_classic")
 				user.visible_message("<span class='alert'><B>[victim] has been stunned with the [src.name] by [user]!</B></span>")
-				logTheThing("combat", user, victim, "stuns %target% with the [src.name] at [log_loc(victim)].")
+				logTheThing("combat", user, victim, "stuns [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 				JOB_XP(victim, "Clown", 3)
 				if (type == "stun_classic")
 					playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
@@ -265,7 +265,7 @@
 			if ("harm_classic")
 				user.visible_message("<span class='alert'><B>[victim] has been beaten with the [src.name] by [user]!</B></span>")
 				playsound(get_turf(src), "swing_hit", 50, 1, -1)
-				logTheThing("combat", user, victim, "beats %target% with the [src.name] at [log_loc(victim)].")
+				logTheThing("combat", user, victim, "beats [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 
 			else
 				logTheThing("debug", user, null, "<b>Convair880</b>: stun baton ([src.type]) do_stun() was called with an invalid argument ([type]), aborting. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")

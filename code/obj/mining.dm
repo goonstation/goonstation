@@ -1950,7 +1950,7 @@ obj/item/clothing/gloves/concussive
 
 			for (var/mob/M in T.contents)
 				if (M)
-					logTheThing("station", user, M, "uses a cargo transporter to send [T.name][is_locked ? " (locked)" : ""][is_welded ? " (welded)" : ""] with %target% inside to [log_loc(src.target)].")
+					logTheThing("station", user, M, "uses a cargo transporter to send [T.name][is_locked ? " (locked)" : ""][is_welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 
 			T.set_loc(src.target)
 			elecflash(src)
@@ -1997,7 +1997,7 @@ obj/item/clothing/gloves/concussive
 			// Logs for good measure (Convair880).
 			for (var/mob/M in T.contents)
 				if (M)
-					logTheThing("station", user, M, "uses a Syndicate cargo transporter to send [T.name] with %target% inside to [log_loc(src.target)].")
+					logTheThing("station", user, M, "uses a Syndicate cargo transporter to send [T.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 
 			T.set_loc(src.target)
 			if(hasvar(T, "welded")) T:welded = 1

@@ -564,11 +564,11 @@ var/global/list/module_editors = list()
 
 			switch (action)
 				if ("brain_removed")
-					logTheThing("combat", src, M ? M : null, "'s brain was removed, ending [role != "" ? "[role]" : "rogue robot"] status[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M ? M : null, "'s brain was removed, ending [role != "" ? "[role]" : "rogue robot"] status[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: [constructTarget(M,"combat")]" : ""]")
 				if ("death")
-					logTheThing("combat", src, M ? M : null, "was destroyed, removing [role != "" ? "[role]" : "rogue robot"] status[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M ? M : null, "was destroyed, removing [role != "" ? "[role]" : "rogue robot"] status[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: [constructTarget(M,"combat")]" : ""]")
 				else
-					logTheThing("combat", src, M ? M : null, "'s status as a [role != "" ? "[role]" : "rogue robot"] was removed[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M ? M : null, "'s status as a [role != "" ? "[role]" : "rogue robot"] was removed[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[M ? " Source: [constructTarget(M,"combat")]" : ""]")
 
 			// Shouldn't happen, but you never know.
 			if (src.mainframe && src != src.mainframe)
@@ -596,15 +596,15 @@ var/global/list/module_editors = list()
 
 			switch (action)
 				if ("emagged")
-					logTheThing("combat", src, M2 ? M2 : null, "was emagged, removing all laws.[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was emagged, removing all laws.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("brain_added")
-					logTheThing("combat", src, M2 ? M2 : null, "'s brain was stuffed into an emagged robot.[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "'s brain was stuffed into an emagged robot.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("activated")
-					logTheThing("combat", src, M2 ? M2 : null, "was activated as an emagged robot.[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was activated as an emagged robot.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("admin")
-					logTheThing("combat", src, M2 ? M2 : null, "was emagged by an admin.[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was emagged by an admin.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				else
-					logTheThing("combat", src, M2 ? M2 : null, "was made an emagged robot.[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was made an emagged robot.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 
 			if (!src.mind.special_role) // Preserve existing antag role (if any).
 				src.mind.special_role = "emagged robot"
@@ -619,13 +619,13 @@ var/global/list/module_editors = list()
 
 			switch (action)
 				if ("brain_added")
-					logTheThing("combat", src, M2 ? M2 : null, "'s brain was stuffed into a Syndicate robot at [log_loc(src)].[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "'s brain was stuffed into a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("activated")
-					logTheThing("combat", src, M2 ? M2 : null, "was activated as a Syndicate robot at [log_loc(src)].[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was activated as a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				if ("admin")
-					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot by an admin at [log_loc(src)].[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot by an admin at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 				else
-					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot at [log_loc(src)].[M2 ? " Source: %target%" : ""]")
+					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 
 			if (!src.mind.special_role) // Preserve existing antag role (if any).
 				src.mind.special_role = "syndicate robot"

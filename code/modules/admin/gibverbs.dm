@@ -9,8 +9,8 @@
 		return
 	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has gibbed %target%")
-			logTheThing("diary", usr, M, "has gibbed %target%", "admin")
+			logTheThing("admin", usr, M, "has gibbed [constructTarget(M,"admin")]")
+			logTheThing("diary", usr, M, "has gibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has gibbed [key_name(M)]")
 		M.transforming = 1
 
@@ -40,8 +40,8 @@
 
 	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has partygibbed %target%")
-			logTheThing("diary", usr, M, "has partygibbed %target%", "admin")
+			logTheThing("admin", usr, M, "has partygibbed [constructTarget(M,"admin")]")
+			logTheThing("diary", usr, M, "has partygibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has partygibbed [key_name(M)]")
 
 		SPAWN_DBG(0.5 SECONDS) M.partygib()
@@ -57,8 +57,8 @@
 
 	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has owlgibbed %target%")
-			logTheThing("diary", usr, M, "has owlgibbed %target%", "admin")
+			logTheThing("admin", usr, M, "has owlgibbed [constructTarget(M,"admin")]")
+			logTheThing("diary", usr, M, "has owlgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has owlgibbed [key_name(M)]")
 
 		SPAWN_DBG(0.5 SECONDS) M.owlgib()
@@ -74,8 +74,8 @@
 
 	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has firegibbed %target%")
-			logTheThing("diary", usr, M, "has firegibbed %target%", "admin")
+			logTheThing("admin", usr, M, "has firegibbed [constructTarget(M,"admin")]")
+			logTheThing("diary", usr, M, "has firegibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has firegibbed [key_name(M)]")
 
 		SPAWN_DBG(0.5 SECONDS) M.firegib()
@@ -91,8 +91,8 @@
 
 	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has elecgibbed %target%")
-			logTheThing("diary", usr, M, "has elecgibbed %target%", "admin")
+			logTheThing("admin", usr, M, "has elecgibbed [constructTarget(M,"admin")]")
+			logTheThing("diary", usr, M, "has elecgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has elecgibbed [key_name(M)]")
 
 		SPAWN_DBG(0.5 SECONDS) M.elecgib()
@@ -112,8 +112,8 @@
 
 	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has icegibbed %target%")
-			logTheThing("diary", usr, M, "has icegibbed %target%", "admin")
+			logTheThing("admin", usr, M, "has icegibbed [constructTarget(M,"admin")]")
+			logTheThing("diary", usr, M, "has icegibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has icegibbed [key_name(M)]")
 
 		SPAWN_DBG(0.5 SECONDS) M:become_ice_statue()
@@ -133,8 +133,8 @@
 
 	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has goldgibbed %target%")
-			logTheThing("diary", usr, M, "has goldgibbed %target%", "admin")
+			logTheThing("admin", usr, M, "has goldgibbed [constructTarget(M,"admin")]")
+			logTheThing("diary", usr, M, "has goldgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has goldgibbed [key_name(M)]")
 
 		M.desc = "A dumb looking statue. Very shiny, though."
@@ -155,8 +155,8 @@
 
 	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has spidergibbed %target%")
-			logTheThing("diary", usr, M, "has spidergibbed %target%", "admin")
+			logTheThing("admin", usr, M, "has spidergibbed [constructTarget(M,"admin")]")
+			logTheThing("diary", usr, M, "has spidergibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has spidergibbed [key_name(M)]")
 
 		SPAWN_DBG(0.5 SECONDS) M:spidergib()
@@ -176,8 +176,8 @@
 
 	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has imploded %target%")
-			logTheThing("diary", usr, M, "has imploded %target%", "admin")
+			logTheThing("admin", usr, M, "has imploded [constructTarget(M,"admin")]")
+			logTheThing("diary", usr, M, "has imploded [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has imploded [key_name(M)]")
 
 		SPAWN_DBG(0.5 SECONDS) M:implode()
@@ -197,8 +197,8 @@
 
 	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has buttgibbed %target%")
-			logTheThing("diary", usr, M, "has buttgibbed %target%", "admin")
+			logTheThing("admin", usr, M, "has buttgibbed [constructTarget(M,"admin")]")
+			logTheThing("diary", usr, M, "has buttgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has buttgibbed [key_name(M)]")
 
 		SPAWN_DBG(0.5 SECONDS) M:buttgib()
@@ -217,8 +217,8 @@
 		var/duration = input("Input duration in 1/10ths of seconds (10 - 100)", "The Honkening", 30) as num
 		if(!duration) return
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has set a floor cluwne upon %target%")
-			logTheThing("diary", usr, M, "has set a floor cluwne upon %target%", "admin")
+			logTheThing("admin", usr, M, "has set a floor cluwne upon [constructTarget(M,"admin")]")
+			logTheThing("diary", usr, M, "has set a floor cluwne upon [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has set a floor cluwne upon [key_name(M)]")
 
 		SPAWN_DBG(0.5 SECONDS) M.cluwnegib(duration)
@@ -235,8 +235,8 @@
 
 	if (alert(src, "Are you sure you want to damn [M]?", "Confirmation", "Yes", "No") == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has damned %target% to hell")
-			logTheThing("diary", usr, M, "has damned %target% to hell", "admin")
+			logTheThing("admin", usr, M, "has damned [constructTarget(M,"admin")] to hell")
+			logTheThing("diary", usr, M, "has damned [constructTarget(M,"diary")] to hell", "admin")
 			message_admins("[key_name(usr)] has damned [key_name(M)]")
 
 		SPAWN_DBG(0.5 SECONDS) M.damn()
@@ -253,8 +253,8 @@
 
 	if (alert(src, "Are you sure you want to undamn [M]?", "Confirmation", "Yes", "No") == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has undamned %target% from hell")
-			logTheThing("diary", usr, M, "has undamned %target% from hell", "admin")
+			logTheThing("admin", usr, M, "has undamned [constructTarget(M,"admin")] from hell")
+			logTheThing("diary", usr, M, "has undamned [constructTarget(M,"diary")] from hell", "admin")
 			message_admins("[key_name(usr)] has undamned [key_name(M)]")
 
 		SPAWN_DBG(0.5 SECONDS) M.un_damn()
@@ -334,8 +334,8 @@
 				Q.tysonspeed = speed
 //				boutput(tysontarget, "<span class='alert'><BIG><B>You have been banned by [usr.client.ckey].<br>Reason: [reason].</B></BIG></span>")
 //				boutput(tysontarget, "<span class='alert'>This is a temporary ban, it will be removed in [tysonmins] minutes.</span>")
-//				logTheThing("admin", usr, tysontarget, "has tysoned %target%. Reason: [reason]. This will be removed in [tysonmins] minutes.")
-				logTheThing("diary", usr, tysontarget, "has tysoned %target%. Reason: [reason]. This will be removed in [tysonmins] minutes.", "admin")
+//				logTheThing("admin", usr, tysontarget, "has tysoned [constructTarget(src,"diary")]. Reason: [reason]. This will be removed in [tysonmins] minutes.")
+				logTheThing("diary", usr, tysontarget, "has tysoned [constructTarget(tysontarget,"diary")]. Reason: [reason]. This will be removed in [tysonmins] minutes.", "admin")
 //				message_admins("<span class='internal'>[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
 
 /client/proc/cmd_admin_tysongib(mob/tysontarget as mob in world)
@@ -378,8 +378,8 @@
 	Q.tysonspeed = speed
 //				boutput(tysontarget, "<span class='alert'><BIG><B>You have been banned by [usr.client.ckey].<br>Reason: [reason].</B></BIG></span>")
 //				boutput(tysontarget, "<span class='alert'>This is a temporary ban, it will be removed in [tysonmins] minutes.</span>")
-//				logTheThing("admin", usr, tysontarget, "has tysoned %target%.<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.")
-//				logTheThing("diary", usr, tysontarget, "has tysoned %target%.<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.", "admin")
+//				logTheThing("admin", usr, tysontarget, "has tysoned [constructTarget(src,"diary")].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.")
+//				logTheThing("diary", usr, tysontarget, "has tysoned [constructTarget(src,"diary")].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.", "admin")
 //				message_admins("<span class='internal'>[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
 
 
@@ -456,8 +456,8 @@
 			addBan(addData)
 			boutput(tysontarget2, "<span class='alert'><BIG><B>You have been tysoned by [usr.client.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.</B></BIG></span>")
 			boutput(tysontarget2, "<span class='alert'>This is a temporary tysonban, it will be removed in [tysonmins2] minutes.</span>")
-			logTheThing("admin", caller:client, tysontarget2, "has tysonbanned %target%. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.")
-			logTheThing("diary", caller:client, tysontarget2, "has tysonbanned %target%. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.", "admin")
+			logTheThing("admin", caller:client, tysontarget2, "has tysonbanned [constructTarget(tysontarget2,"admin")]. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.")
+			logTheThing("diary", caller:client, tysontarget2, "has tysonbanned [constructTarget(tysontarget2,"diary")]. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.", "admin")
 			message_admins("<span class='internal'>[caller?.client?.ckey] has tysonbanned [tysontarget2.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.<br>This will be removed in [tysonmins2] minutes.</span>")
 			del(tysontarget2.client)
 			tysontarget2.gib()
@@ -520,8 +520,8 @@
 				O.show_message("<span class='alert'><B>[src]</B> KOs [tysontarget2] in one punch!</span>", 1)
 			playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 30, 1, -2)
 			if(tysontarget2 && tysontarget2.client)
-				logTheThing("admin", caller:client, tysontarget2, "tysongibbed %target%")
-				logTheThing("diary", caller:client, tysontarget2, "tysongibbed %target%", "admin")
+				logTheThing("admin", caller:client, tysontarget2, "tysongibbed [constructTarget(tysontarget2,"admin")]")
+				logTheThing("diary", caller:client, tysontarget2, "tysongibbed [constructTarget(tysontarget2,"diary")]", "admin")
 				message_admins("<span class='internal'>[caller?.client?.ckey] has tysongibbed [tysontarget2.ckey].</span>")
 				tysontarget2.gib()
 			sleep(0.5 SECONDS)

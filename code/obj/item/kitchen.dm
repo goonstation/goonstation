@@ -619,14 +619,14 @@ TRAYS
 				boutput(user, "<span class='alert'><B>You smash [src] over your own head!</b></span>")
 			else
 				M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
-				logTheThing("combat", user, M, "smashes [src] over %target%'s head! ")
+				logTheThing("combat", user, M, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
 			if(ordered_contents.len != 0)
 				src.shit_goes_everywhere()
 			unique_attack_garbage_fuck(M, user)
 		else
 			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
 			unique_tap_garbage_fluck(M,user)
-			logTheThing("combat", user, M, "taps %target% over the head with [src].")
+			logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 	attack_hand(mob/user as mob)
 		..()

@@ -448,7 +448,7 @@
 			src.camera.updateCoverage()
 		if (src.radio)
 			src.radio.invisibility = 101
-		logTheThing("combat", user, A, "places a spy sticker on %target% at [log_loc(user)].")
+		logTheThing("combat", user, A, "places a spy sticker on [constructTarget(A,"combat")] at [log_loc(user)].")
 
 		..()
 

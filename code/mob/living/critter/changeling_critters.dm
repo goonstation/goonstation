@@ -597,7 +597,7 @@
 		H.ailments += HS
 
 		if(owner)
-			logTheThing("combat", owner.current ? owner.current : owner, H, "'s headspider enters %target% at [log_loc(src)].")
+			logTheThing("combat", owner.current ? owner.current : owner, H, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
 
 		//qdel(src)
 		return

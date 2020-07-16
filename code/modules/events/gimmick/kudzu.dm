@@ -13,7 +13,7 @@
 				logTheThing( "combat", user, null, "fed themself a [src]." )
 			else
 				boutput( user, "You feed [M] the [src]. <span class='alert'>Oh god!</span>" )
-				logTheThing( "combat", user, M, "fed %target% a [src]." )
+				logTheThing( "combat", user, M, "fed [constructTarget(M,"combat")] a [src]." )
 			animate( M, color = "#0F0", time = 300 )//TODO: See below.
 			qdel( src )
 			return
