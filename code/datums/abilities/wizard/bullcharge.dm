@@ -38,12 +38,14 @@
 			for (var/atom/movable/M in T)
 				if (M.anchored || affected.Find(M) || M == holder.owner)
 					continue
-				affected += M
-				SPAWN_DBG(0) M.throw_at(get_edge_cheap(T, B.dir), 30, 1)
 				if (ismob(M))
 					var/mob/some_idiot = M
+					if(some_idiot?.traitHolder?.hasTrait("training_chaplain"))
+						continue
 					some_idiot.changeStatus("weakened", 3 SECONDS)
 					some_idiot.TakeDamage("chest", 33, 0, 0, DAMAGE_BLUNT)//it's magic. no armor 4 u
+				affected += M
+				SPAWN_DBG(0) M.throw_at(get_edge_cheap(T, B.dir), 30, 1)
 			sleep(0.1 SECONDS)
 
 		qdel(B)

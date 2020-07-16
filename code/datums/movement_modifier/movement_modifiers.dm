@@ -13,6 +13,7 @@
 	var/pushpull_multiplier = 1 // multiplier for pushing/pulling speed
 	var/space_movement = 0
 	var/aquatic_movement = 0
+	var/mob_pull_multiplier = 1
 	var/ask_proc = 0
 
 /datum/movement_modifier/proc/modifiers(mob/user, turf/move_target, running)
@@ -79,6 +80,7 @@
 // robot modifiers
 /datum/movement_modifier/robot_base
 	health_deficiency_adjustment = -INFINITY
+	mob_pull_multiplier = 0.2 //make borgs pull mobs slightly slower than full speed (roundstart light borg will pull a corpse at ~1.3 delay, as opposed to ~1 when unencumbered)
 
 /datum/movement_modifier/robot_oil
 	additive_slowdown = -0.5

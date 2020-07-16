@@ -69,8 +69,9 @@ var/global/list/objects_using_dialogs
 
 /obj/proc/updateDialog()
 	if (clients_operating && clients_operating.len)
+		var/client/C = null
 		for(var/x in clients_operating)
-			var/client/C = x
+			C = x
 			if (C?.mob)
 				if (get_dist(C.mob,src) <= 1)
 					src.attack_hand(C.mob)

@@ -34,7 +34,7 @@
 	proc/onshocked(var/datum/shockparam/param, var/datum/pathogen/P)
 	proc/onsay(message, var/datum/pathogen/P)
 	proc/onadd(var/datum/pathogen/P)
-	proc/onemote(var/mob/M as mob, message, voluntary, var/datum/pathogen/P)
+	proc/onemote(var/mob/M as mob, message, voluntary, param, var/datum/pathogen/P)
 	proc/ondeath(var/datum/pathogen/P)
 	proc/oncured(var/datum/pathogen/P)
 

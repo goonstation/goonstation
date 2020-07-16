@@ -607,6 +607,7 @@ datum/projectile
 	var/goes_through_mobs = 0
 	var/pierces = 0
 	var/ticks_between_mob_hits = 0
+	var/is_magical = 0              //magical projectiles, i.e. the chaplain is immune to these
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
 
 

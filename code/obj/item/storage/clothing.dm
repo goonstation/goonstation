@@ -218,6 +218,13 @@
 	/obj/item/clothing/under/rank/bartender/tuxedo,
 	/obj/item/clothing/shoes/dress_shoes)
 
+/obj/item/storage/box/clothing/witchfinder
+	name = "\improper Witchfinder's equipment"
+	spawn_contents = list(/obj/item/clothing/under/gimmick/witchfinder,\
+	/obj/item/clothing/suit/witchfinder,\
+	/obj/item/clothing/head/witchfinder,\
+	/obj/item/clothing/shoes/witchfinder)
+
 /* ============================== */
 /* ---------- Costumes ---------- */
 /* ============================== */

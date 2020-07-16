@@ -147,14 +147,13 @@
 	/obj/item/clothing/glasses/meson,
 	/obj/item/clothing/suit/fire,
 	/obj/item/clothing/mask/gas,
-	/obj/item/storage/belt/utility/ceshielded,
+	/obj/item/storage/belt/utility/prepared/ceshielded,
 	/obj/item/clothing/head/helmet/welding,
 	/obj/item/clothing/head/helmet/hardhat,
 	/obj/item/device/multitool,
 	/obj/item/device/flash,
 	/obj/item/stamp/ce,
-	/obj/item/device/radio/headset/command/ce,
-	/obj/item/deconstructor)
+	/obj/item/device/radio/headset/command/ce)
 
 /* ==================== */
 /* ----- Security ----- */
@@ -197,13 +196,13 @@
 /obj/storage/secure/closet/security/armory
 	name = "\improper Special Equipment locker"
 	req_access_txt = "37"
-	spawn_contents = list(/obj/item/device/flash,
-	/obj/item/storage/box/flashbang_kit,
+	spawn_contents = list(/obj/item/requisition_token/security = 2,
+	/obj/item/turret_deployer/riot = 2,
+	/obj/item/clothing/glasses/nightvision = 2,
 	/obj/item/clothing/glasses/sunglasses,
-	/obj/item/clothing/suit/armor/EOD,
-	/obj/item/clothing/head/helmet/EOD,
+	/obj/item/clothing/glasses/sunglasses,
 	/obj/item/ammo/bullets/abg,
-	/obj/item/gun/kinetic/riotgun)
+	/obj/item/ammo/bullets/abg,)
 
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items locker"
@@ -528,9 +527,7 @@
 	/obj/item/clothing/head/helmet/hardhat,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,
-	/obj/item/clothing/head/helmet/welding,
-	/obj/item/storage/belt/utility,
-	/obj/item/deconstructor)
+	/obj/item/clothing/head/helmet/welding)
 
 /obj/storage/secure/closet/engineering/mining
 	name = "\improper Miner's locker"
@@ -567,7 +564,6 @@
 	name = "\improper Custodial supplies locker"
 	req_access = list(access_janitor)
 	spawn_contents = list(/obj/item/storage/box/clothing/janitor,\
-	/obj/item/clothing/shoes/galoshes,\
 	/obj/item/reagent_containers/glass/bottle/cleaner = 2,\
 	/obj/item/reagent_containers/glass/bottle/acetone/janitors = 1,\
 	/obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1,\
@@ -610,7 +606,8 @@
 /obj/storage/secure/closet/civilian/chaplain
 	name = "\improper Religious supplies locker"
 	req_access = list(access_chapel_office)
-	spawn_contents = list(/obj/item/storage/box/clothing/chaplain,\
+	spawn_contents = list(/obj/item/storage/box/clothing/witchfinder,\
+	/obj/item/storage/box/clothing/chaplain,\
 	/obj/item/clothing/under/misc/chaplain/atheist,\
 	/obj/item/clothing/under/misc/chaplain,\
 	/obj/item/clothing/under/misc/chaplain/rabbi,\

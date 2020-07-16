@@ -3,6 +3,7 @@ var/list/bible_contents = list()
 
 /obj/item/storage/bible
 	name = "bible"
+	desc = "A holy scripture of some sort or another. Someone seems to have hollowed it out for hiding things in."
 	icon_state ="bible"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state ="bible"
@@ -77,7 +78,7 @@ var/list/bible_contents = list()
 				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 			else
 				playsound(src.loc, "punch", 25, 1, -1)
-			logTheThing("combat", user, M, "biblically smote %target%")
+			logTheThing("combat", user, M, "biblically smote [constructTarget(M,"combat")]")
 
 		else if (!isdead(M))
 			var/mob/H = M
@@ -90,12 +91,12 @@ var/list/bible_contents = list()
 					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 				else
 					playsound(src.loc, "punch", 25, 1, -1)
-				logTheThing("combat", user, M, "biblically healed %target%")
+				logTheThing("combat", user, M, "biblically healed [constructTarget(M,"combat")]")
 			else
 				if (ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
 					M.take_brain_damage(10)
 					boutput(M, "<span class='alert'>You feel dazed from the blow to the head.</span>")
-				logTheThing("combat", user, M, "biblically injured %target%")
+				logTheThing("combat", user, M, "biblically injured [constructTarget(M,"combat")]")
 				M.visible_message("<span class='alert'><B>[user] beats [M] over the head with [src]!</B></span>")
 				if (narrator_mode)
 					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
@@ -225,3 +226,32 @@ var/list/bible_contents = list()
 						if(prob( 50 )) playsound( get_turf( src ), 'sound/voice/burp.ogg', 10, 1 )
 				sleep(0.3 SECONDS)
 		return 1
+
+/obj/item/storage/bible/loaded
+	spawn_contents = list(/obj/item/gun/kinetic/faith)
+
+	New()
+		..()
+		desc += " This is the chaplain's personal copy."
+
+	get_desc()
+		. = ..()
+		if(src.contents.len > 0)
+			. += " It feels a bit heavier than it should."
+
+	attack_hand(var/mob/user as mob)
+		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
+			var/obj/item/gun/kinetic/faith/F = locate() in src.contents
+			if(F)
+				user.put_in_hand_or_drop(F)
+				return
+		..()
+
+	attackby(var/obj/item/W, var/mob/user)
+		if(istype(W,/obj/item/gun/kinetic/faith))
+			if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
+				user.u_equip(W)
+				W.set_loc(src)
+				user.show_text("You hide [W] in \the [src].", "blue")
+				return
+		..()

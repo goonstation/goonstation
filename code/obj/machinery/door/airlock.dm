@@ -874,9 +874,7 @@ About the new airlock wires panel:
 	if(powernets && powernets.len >= netnum)
 		PN = powernets[netnum]
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(5, 1, src)
-	s.start()
+	elecflash(user,power = 2)
 
 	var/shock_damage = 0
 	if(PN.avail > 750000)	//someone juiced up the grid enough, people going to die!

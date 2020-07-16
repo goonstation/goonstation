@@ -198,6 +198,7 @@
 /obj/item/gun/energy/laser_gun
 	name = "laser gun"
 	icon_state = "laser"
+	item_state = "laser"
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	force = 7.0
@@ -402,7 +403,7 @@
 
 	New()
 		current_projectile = new/datum/projectile/special/spreader/tasershotgunspread
-		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/tasershotgunsingle)
+		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/tasershotgun)
 		..()
 
 	update_icon()
@@ -1006,6 +1007,7 @@
 	name = "laser rifle"
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
 	icon_state = "bullpup"
+	item_state = "bullpup"
 	uses_multiple_icon_states = 1
 	force = 5.0
 
@@ -1298,21 +1300,15 @@
 				if ("pulse")
 					current_projectile = projectiles["pulse"]
 					item_state = "lawg-pulse"
-#if ASS_JAM
-					playsound(M, "sound/vox/pull.ogg", 50)
-#else
 					playsound(M, "sound/vox/push.ogg", 50)
 
-#endif
 					/datum/projectile/energy_bolt/pulse
 		else		//if you're not the owner and try to change it, then fuck you
 			switch(text)
 				if ("detain","execute","knockout","hotshot","bigshot","highexplosive","he","clownshot", "pulse")
 					random_burn_damage(M, 50)
 					M.changeStatus("weakened", 4 SECONDS)
-					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-					s.set_up(2, 1, (get_turf(src)))
-					s.start()
+					elecflash(src,power=2)
 					M.visible_message("<span class='alert'>[M] tries to fire [src]! The gun initiates its failsafe mode.</span>")
 					return
 
@@ -1433,11 +1429,7 @@
 // An energy gun that uses the lawbringer's Pulse setting, to beef up the current armory.
 
 /obj/item/gun/energy/pulse_rifle
-#if ASS_JAM
-	name = "pullse rifle"
-#else
 	name = "pulse rifle"
-#endif
 	desc = "todo"
 	icon_state = "pulse_rifle"
 	uses_multiple_icon_states = 1

@@ -84,14 +84,14 @@ datum/pathogeneffects
 	// OVERRIDE: Generally, you do not need to override this.
 	proc/infect_direct(var/mob/target as mob, var/datum/pathogen/origin, contact_type = "touch")
 		if (infect_attempt_message)
-			target.show_message(infect_attempt_message)
+			target.show_message("<span class='alert'><B>[infect_attempt_message]</B></span>")
 		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = target
 			if(prob(100-H.get_disease_protection()))
 				if (target.infected(origin))
 					if (infect_message)
 						target.show_message(infect_message)
-					logTheThing("pathology", origin.infected, target, "infects %target% with [origin.name] due to symptom [name] through direct contact ([contact_type]).")
+					logTheThing("pathology", origin.infected, target, "infects [constructTarget(target,"pathology")] with [origin.name] due to symptom [name] through direct contact ([contact_type]).")
 					return 1
 
 	proc/onadd(var/datum/pathogen/origin)
@@ -138,9 +138,9 @@ datum/pathogeneffects
 	proc/onsay(var/mob/M as mob, message, var/datum/pathogen/origin)
 		return message
 
-	// onemote(mob, string, number, datum/pathogen) : string
+	// onemote(mob, string, number, string, datum/pathogen) : string
 	// OVERRIDE: Overriding this is situational.
-	proc/onemote(var/mob/M as mob, act, voluntary, var/datum/pathogen/P)
+	proc/onemote(var/mob/M as mob, act, voluntary, param, var/datum/pathogen/P)
 		return 1
 
 	// ondeath(mob, datum/pathogen) : void
@@ -631,21 +631,21 @@ datum/pathogeneffects/malevolent/serious_paranoia
 	proc/backpack(var/mob/M, var/mob/living/O)
 		var/item = pick(traitor_items)
 		boutput(M, "<span class='notice'>[O] has added the [item] to the backpack!</span>")
-		logTheThing("pathology", M, O, "saw a fake message about an %target% adding [item] to their backpacks due to Serious Paranoia symptom.")
+		logTheThing("pathology", M, O, "saw a fake message about an [constructTarget(O,"pathology")] adding [item] to their backpacks due to Serious Paranoia symptom.")
 
 	proc/acidspit(var/mob/M, var/mob/living/O, var/mob/living/O2)
 		if (O2)
 			boutput(M, "<span class='alert'><B>[O] spits acid at [O2]!</B></span>")
 		else
 			boutput(M, "<span class='alert'><B>[O] spits acid at you!</B></span>")
-		logTheThing("pathology", M, O, "saw a fake message about an %target% spitting acid due to Serious Paranoia symptom.")
+		logTheThing("pathology", M, O, "saw a fake message about an [constructTarget(O,"pathology")] spitting acid due to Serious Paranoia symptom.")
 
 	proc/vampirebite(var/mob/M, var/mob/living/O, var/mob/living/O2)
 		if (O2)
 			boutput(M, "<span class='alert'><B>[O] bites [O2]!</B></span>")
 		else
 			boutput(M, "<span class='alert'><B>[O] bites you!</B></span>")
-		logTheThing("pathology", M, O, "saw a fake message about an %target% biting someone due to Serious Paranoia symptom.")
+		logTheThing("pathology", M, O, "saw a fake message about an [constructTarget(O,"pathology")] biting someone due to Serious Paranoia symptom.")
 
 	proc/floor_in_view(var/mob/M)
 		var/list/ret = list()
@@ -1031,17 +1031,13 @@ datum/pathogeneffects/malevolent/capacitor
 	proc/electrocute(var/mob/V as mob, var/shock_load)
 		V.shock(src, shock_load, "chest", 1, 0.5)
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(3, 1, V)
-		s.start()
+		elecflash(V,power = 2)
 
 	proc/discharge(var/mob/M as mob, var/datum/pathogen/origin)
 		var/load = origin.symptom_data["capacitor"]
 		if (load == 0)
 			return
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(3, 1, M)
-		s.start()
+		elecflash(M,power = 2)
 		if (load > 4e6)
 			M.visible_message("<span class='alert'>[M] releases a burst of lightning into the air!</span>", "<span class='alert'>You discharge your energy into the air. It leaves your skin burned to a fine crisp.</span>", "<span class='alert'>You hear a burst of electricity.</span>")
 			M.TakeDamage("chest", 0, 30)
@@ -1164,9 +1160,7 @@ datum/pathogeneffects/malevolent/capacitor
 					if (C)
 						PN = C.get_powernet()
 					if (C && PN.avail > 0)
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(3, 1, C)
-						s.start()
+						elecflash(C,power = 2)
 						M.visible_message("<span class='alert'>A spark jumps from the power cable at [M].</span>", "<span class='alert'>A spark jumps at you from a nearby cable.</span>", "<span class='alert'>You hear something spark.</span>")
 
 			if (2)
@@ -1176,9 +1170,7 @@ datum/pathogeneffects/malevolent/capacitor
 					if (C)
 						PN = C.get_powernet()
 					if (C && PN.avail > 0)
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(3, 1, C)
-						s.start()
+						elecflash(C,power = 2)
 						M.visible_message("<span class='alert'>A spark jumps from the power cable at [M].</span>", "<span class='alert'>A spark jumps at you from a nearby cable.</span>", "<span class='alert'>You hear something spark.</span>")
 						var/amt = max(250000, PN.avail)
 						PN.newload -= amt
@@ -1197,9 +1189,7 @@ datum/pathogeneffects/malevolent/capacitor
 					if (C)
 						PN = C.get_powernet()
 					if (C && PN.avail > 0)
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(3, 1, C)
-						s.start()
+						elecflash(C,power = 2)
 						M.visible_message("<span class='alert'>A bolt of electricity jumps at [M].</span>", "<span class='alert'>A bolt of electricity jumps at you from a nearby cable. It burns!</span>", "<span class='alert'>You hear something spark.</span>")
 						M.TakeDamage("chest", 0, 3)
 						var/amt = max(1e6, PN.avail)
@@ -1216,9 +1206,7 @@ datum/pathogeneffects/malevolent/capacitor
 				if (prob(15))
 					var/obj/machinery/power/smes/S = locate() in range(4, M)
 					if (S && S.charge > 0) // Look for active SMES first
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(3, 1, S)
-						s.start()
+						elecflash(S,power = 2)
 						M.visible_message("<span class='alert'>A burst of lightning jumps at [M] from [S].</span>", "<span class='alert'>A burst of lightning jumps at you from [S]. It burns!</span>", "<span class='alert'>You hear something spark.</span>")
 						M.TakeDamage("chest", 0, 15)
 						var/amt = S.charge
@@ -1230,9 +1218,7 @@ datum/pathogeneffects/malevolent/capacitor
 					else
 						var/obj/machinery/power/apc/A = locate() in view(4, M)
 						if (A && A.cell && A.cell.charge > 0)
-							var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-							s.set_up(3, 1, A)
-							s.start()
+							elecflash(A,power = 2)
 							M.visible_message("<span class='alert'>A burst of lightning jumps at [M] from [A].</span>", "<span class='alert'>A burst of lightning jumps at you from [A]. It burns!</span>", "<span class='alert'>You hear something spark.</span>")
 							M.TakeDamage("chest", 0, 5)
 							var/amt  = A.cell.charge / 6
@@ -1247,9 +1233,7 @@ datum/pathogeneffects/malevolent/capacitor
 							if (C)
 								PN = C.get_powernet()
 							if (C && PN.avail > 0)
-								var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-								s.set_up(3, 1, C)
-								s.start()
+								elecflash(C,power = 2)
 								M.visible_message("<span class='alert'>A burst of lightning jumps at [M].</span>", "<span class='alert'>A burst of lightning jumps at you from a nearby cable. It burns!</span>", "<span class='alert'>You hear something spark.</span>")
 								M.TakeDamage("chest", 0, 5)
 								var/amt = max(3e6, PN.avail)
@@ -1265,9 +1249,7 @@ datum/pathogeneffects/malevolent/capacitor
 				if (prob(15))
 					var/obj/machinery/power/smes/S = locate() in range(4, M)
 					if (S && S.charge > 0) // Look for active SMES first
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(3, 1, S)
-						s.start()
+						elecflash(S,power = 2)
 						M.visible_message("<span class='alert'>A burst of lightning jumps at [M] from [S].</span>", "<span class='alert'>A burst of lightning jumps at you from [S]. It burns!</span>", "<span class='alert'>You hear something spark.</span>")
 						M.TakeDamage("chest", 0, 15)
 						var/amt = S.charge
@@ -1279,9 +1261,7 @@ datum/pathogeneffects/malevolent/capacitor
 					else
 						var/obj/machinery/power/apc/A = locate() in view(4, M)
 						if (A && A.cell && A.cell.charge > 0)
-							var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-							s.set_up(3, 1, A)
-							s.start()
+							elecflash(A,power = 2)
 							M.visible_message("<span class='alert'>A burst of lightning jumps at [M] from [A].</span>", "<span class='alert'>A burst of lightning jumps at you from [A]. It burns!</span>", "<span class='alert'>You hear something spark.</span>")
 							M.TakeDamage("chest", 0, 5)
 							var/amt = A.cell.charge / 5 // apcs have a weirdly low capacity.
@@ -1296,9 +1276,7 @@ datum/pathogeneffects/malevolent/capacitor
 							if (C)
 								PN = C.get_powernet()
 							if (C && PN.avail > 0)
-								var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-								s.set_up(3, 1, C)
-								s.start()
+								elecflash(C,power = 2)
 								M.visible_message("<span class='alert'>A burst of lightning jumps at [M].</span>", "<span class='alert'>A burst of lightning jumps at you from a nearby cable. It burns!</span>", "<span class='alert'>You hear something spark.</span>")
 								M.TakeDamage("chest", 0, 5)
 								var/amt = PN.avail
@@ -1708,7 +1686,7 @@ datum/pathogeneffects/malevolent/farts
 		if(voluntary)
 			origin.symptom_data[name] = TIME
 
-	onemote(mob/M as mob, act, voluntary, datum/pathogen/P)
+	onemote(mob/M as mob, act, voluntary, param, datum/pathogen/P)
 		// involuntary farts are free, but the others use the cooldown
 		if(voluntary && TIME-P.symptom_data[name] < cooldown)
 			return

@@ -74,14 +74,14 @@
 				return
 			else
 				user.visible_message("<span class='alert'>[user] starts to shove [W:affecting] into the furnace!</span>")
-				logTheThing("combat", user, W:affecting, "attempted to force %target% into a furnace at [log_loc(src)].")
+				logTheThing("combat", user, W:affecting, "attempted to force [constructTarget(W:affecting,"combat")] into a furnace at [log_loc(src)].")
 				message_admins("[key_name(user)] is trying to force [key_name(W:affecting)] into a furnace at [log_loc(src)].")
 				src.add_fingerprint(user)
 				sleep(5 SECONDS)
 				if(W && W:affecting && src.active) //ZeWaka: Fix for null.affecting
 					user.visible_message("<span class='alert'>[user] stuffs [W:affecting] into the furnace!</span>")
 					var/mob/M = W:affecting
-					logTheThing("combat", user, M, "forced %target% into a furnace at [log_loc(src)].")
+					logTheThing("combat", user, M, "forced [constructTarget(M,"combat")] into a furnace at [log_loc(src)].")
 					message_admins("[key_name(user)] forced [key_name(M)] into a furnace at [log_loc(src)].")
 					M.death(1)
 					if (M.mind)

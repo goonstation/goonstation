@@ -149,7 +149,9 @@
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
 /datum/game_mode/gang/proc/equip_leader(mob/living/carbon/human/leader)
-	leader.verbs += /client/proc/set_gang_base
+	// leader.verbs += /client/proc/set_gang_base
+	var/datum/abilityHolder/holder = leader.add_ability_holder(/datum/abilityHolder/gang)
+	holder.addAbility(/datum/targetable/gang/set_gang_base)
 
 	//add gang channel to headset
 	if(leader.ears != null && istype(leader.ears,/obj/item/device/radio/headset))
@@ -596,6 +598,7 @@
 
 		return count
 
+// Deprecated by /datum/targetable/gang/set_gang_base
 /client/proc/set_gang_base()
 	set category = "Gang"
 	set name = "Set Gang Base"

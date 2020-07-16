@@ -212,6 +212,10 @@
 #define ALWAYS_SOLID_FLUID 262144	//specifically note this object as solid
 #define HAS_EQUIP_CLICK 524288 //Calls equipment_click from hand_range_attack on items worn with this flag set.
 
+//Item function flags
+#define USE_INTENT_SWITCH_TRIGGER 1 //apply to an item's flags to use the item's intent_switch_trigger() proc. This will be called when intent is switched while this item is in hand.
+#define USE_SPECIALS_ON_ALL_INTENTS 2 //allows special attacks to be performed on help and grab intent with this item
+
 // human equipment slots
 #define SLOT_BACK 1
 #define SLOT_WEAR_MASM 2
@@ -712,7 +716,7 @@ proc/default_frequency_color(freq)
 #define BASE_SPEED_SUSTAINED 1.5
 #define RUN_SCALING 0.12
 #define RUN_SCALING_LYING 0.2
-#define RUN_SCALING_STAGGER 0.5
+#define RUN_SCALING_STAGGER 0.64
 #define WALK_DELAY_ADD 0.8
 
 //stamina config
@@ -1023,7 +1027,7 @@ proc/default_frequency_color(freq)
 #ifdef RP_MODE
 #define ASS_JAM 0
 #elif BUILD_TIME_DAY == 13
-#define ASS_JAM 1
+#define ASS_JAM 0
 #else
 #define ASS_JAM 0
 #endif

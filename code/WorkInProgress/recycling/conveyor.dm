@@ -419,9 +419,8 @@
 				conveyors += C
 				C.owner = src
 
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("trigger", "trigger")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
 
 /obj/machinery/conveyor_switch/disposing()
 	conveyor_switches -= src
@@ -481,7 +480,7 @@
 			S.update()
 		LAGCHECK(LAG_MED)
 
-	if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("switchTriggered"))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"switchTriggered")
 
 
 //silly proc for corners that can be flippies

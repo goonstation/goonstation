@@ -17,7 +17,9 @@ client/proc/show_admin_lag_hacks()
 	HTML += "<b><a href='?src=\ref[src];action=slow_fluids'>Slow fluid processing</a></b> (Safe, just feels weird)<br><br>"
 	HTML += "<b><a href='?src=\ref[src];action=special_sea_fullbright'>Stop Sea Light processing on Z1</a></b> (Safe, makes the Z1 ocean a little ugly)<br><br>"
 	HTML += "<b><a href='?src=\ref[src];action=slow_ticklag'>Adjust ticklag bounds</a></b> (Manually adjust ticklag dilation upper and lower bounds! Compensate for lag, or go super smooth at lowpop!)<br><br>"
-	HTML += "<b><a href='?src=\ref[src];action=disable_deletions'>Disable Deletion Queue</a></b> (Garbage Collection will still run, but this stops hard deletions from happening. Might be a bit dangerous depending on memory stuff, but its usually safe and especially in late round.)<br><br>"
+	HTML += "<b><a href='?src=\ref[src];action=disable_deletions'>Disable Deletion Queue</a></b> (Garbage Collection will still run, but this stops hard deletions from happening.)<br><br>"
+	HTML += "<b><a href='?src=\ref[src];action=disable_ingame_logs'>Disable Ingame Logs</a></b> (Reduce the shitty logthething() lag! Make the admins angry! You can still access logs fine using the web version etc)<br><br>"
+
 	HTML += "</body></html>"
 
 	user.Browse(HTML,"window=alaghacks")
@@ -112,3 +114,20 @@ client/proc/disable_deletions()
 		P.disable()
 
 	message_admins("[key_name(src)] disabled delete queue with Lag Reduction panel!")
+
+
+client/proc/disable_ingame_logs()
+	set name = "Disable Ingame Logs"
+	set desc = "Reduce the shitty logthething() lag! Make the admins angry! (You can still access logs fine using the web version etc)"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set hidden = 1
+	admin_only
+
+	if (disable_log_lists)
+		disable_log_lists = 0
+		message_admins("[key_name(src)] un-disabled ingame logs with Lag Producing panel!")
+	else
+		disable_log_lists = 1
+		message_admins("[key_name(src)] disabled ingame logs with Lag Reduction panel!")
+
+

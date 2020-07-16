@@ -45,45 +45,34 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 
 	New()
 		..()
-		mechanics.addInput("input 1", "fire1")
-		mechanics.addInput("input 2", "fire2")
-		mechanics.addInput("input 3", "fire3")
-		mechanics.addInput("input 4", "fire4")
-		mechanics.addInput("input 5", "fire5")
-		mechanics.addInput("input 6", "fire6")
-		mechanics.addInput("input 7", "fire7")
-		//mechanics.addInput("input 8", "fire8")
-		configs.Add(list("Set ROM","Toggle Active"))
-		src.append_default_configs(2)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", "fire1")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", "fire2")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", "fire3")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", "fire4")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", "fire5")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", "fire6")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", "fire7")
+		//SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 8", "fire8")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set ROM","setROM")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Active","toggleActivate")
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (..(W, user)) return
-		else if (ispulsingtool(W))
-			switch (src.modify_configs())
-				if (0)
-					return
-				if ("Set ROM")
-					. = adminscrub(strip_html(input(user, "What should the ROM be set to?  This better be hexadecimal and an even number of characters!!", "Terrible debug ROM panel", src.ROM) as text))
-					if (user.stat || get_dist(user, src) > 2)
-						return
+	proc/setROM(obj/item/W as obj, mob/user as mob)
+		. = adminscrub(strip_html(input(user, "What should the ROM be set to?  This better be hexadecimal and an even number of characters!!", "Terrible debug ROM panel", src.ROM) as text))
+		if(!in_range(src, user) || user.stat)
+			return
+		. = uppertext(copytext(ckey(.), 1, 1+MAX_ROM_SIZE))
+		if (length(.)%2 || !is_hex(.))
+			boutput(user, "<span class='alert'>Invalid ROM values.  Great job, knucklehead!!</span>")
+		ROM = .
 
-					if (!user.find_tool_in_hand(TOOL_PULSING))
-						boutput(user, "<span class='alert'>[MECHFAILSTRING]</span>")
-						return
-
-					. = uppertext(copytext(ckey(.), 1, 1+MAX_ROM_SIZE))
-					if (length(.)%2 || !is_hex(.))
-						boutput(user, "<span class='alert'>Invalid ROM values.  Great job, knucklehead!!</span>")
-
-					ROM = .
-				if ("Toggle Active")
-					src.running = !src.running && src.level
-					IEN = 0
-					OEN = 0
-					RR = 0
-					program_counter = 0
-					src.ioPins = 1 //All zero except the !RR section.
-					src.icon_state = "genericsmall[src.running ? 1 : 0]"
+	proc/toggleActivate(obj/item/W as obj, mob/user as mob)
+		src.running = !src.running && src.level
+		IEN = 0
+		OEN = 0
+		RR = 0
+		program_counter = 0
+		src.ioPins = 1 //All zero except the !RR section.
+		src.icon_state = "genericsmall[src.running ? 1 : 0]"
 
 	process()
 		if (..() || !running || !level)
@@ -261,13 +250,13 @@ function update_mem_lights(mem)
 				else if (OEN)
 					if (lastSignal)
 						lastSignal.signal = "[.]:[RR ? 1 : 0]"
-						mechanics.fireOutgoing(lastSignal)
+						SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,lastSignal)
 						lastSignal = null
 						if (src.dbgmode)
 							boutput(world, "OUTe: [.]:[RR ? 1 : 0]")
 
 					else
-						mechanics.fireOutgoing(mechanics.newSignal("[.]:[RR ? 1 : 0]"))
+						SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]:[RR ? 1 : 0]")
 						if (src.dbgmode)
 							boutput(world, "OUT: [.]:[RR ? 1 : 0]")
 
@@ -284,13 +273,13 @@ function update_mem_lights(mem)
 				else if (OEN)
 					if (lastSignal)
 						lastSignal.signal = "[.]:[RR ? 0 : 1]"
-						mechanics.fireOutgoing(lastSignal)
+						SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,lastSignal)
 						lastSignal = null
 						if (src.dbgmode)
 							boutput(world, "OUTe: [.]:[RR ? 0 : 1]")
 
 					else
-						mechanics.fireOutgoing(mechanics.newSignal("[.]:[RR ? 0 : 1]"))
+						SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]:[RR ? 0 : 1]")
 						if (src.dbgmode)
 							boutput(world, "OUT: [.]:[RR ? 0 : 1]")
 
