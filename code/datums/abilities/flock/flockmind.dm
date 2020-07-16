@@ -150,7 +150,7 @@
 /datum/targetable/flockmindAbility/splitDrone
 	name = "Diffract Drone"
 	desc = "Split a drone into flockbits, mindless automata that only convert whatever they find."
-	//icon_state = "quiet_drone"
+	icon_state = "diffract"
 
 /datum/targetable/flockmindAbility/splitDrone/cast(mob/living/critter/flock/drone/target)
 	if(..())
