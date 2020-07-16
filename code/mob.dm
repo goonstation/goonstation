@@ -2855,7 +2855,7 @@
 
 
 /mob/living/verb/interact_verb(obj/A as obj in view(1))
-	set name = "Pick Up / Interact"
+	set name = "Pick Up / Left Click"
 	set category = "Local"
 	A.interact(src)
 
