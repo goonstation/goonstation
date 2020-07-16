@@ -168,7 +168,8 @@
 				tooltip_rebuild = 1
 
 			//If user has tooltips to always show, and the item is in world, and alt key is NOT pressed, deny
-			if (usr.client.preferences.tooltip_option == TOOLTIP_ALWAYS && !(ismob(src.loc) || (src.loc && src.loc.loc && ismob(src.loc.loc))) && !usr.client.check_key(KEY_EXAMINE))
+			//z == 0 seems to be a good way to check if something is inworld or not... removed some ismob checks.
+			if (usr.client.preferences.tooltip_option == TOOLTIP_ALWAYS && z != 0 && !usr.client.check_key(KEY_EXAMINE))
 				show = 0
 
 			var/title
@@ -191,7 +192,7 @@
 				)
 
 				//If we're over an item that's stored in a container the user has equipped
-				if (istype(src.loc, /obj/item/storage) && src.loc.loc == usr)
+				if (src.z == 0 && istype(src.loc, /obj/item/storage) && src.loc.loc == usr)
 					tooltipParams["flags"] = TOOLTIP_RIGHT
 
 				usr.client.tooltipHolder.showHover(src, tooltipParams)
