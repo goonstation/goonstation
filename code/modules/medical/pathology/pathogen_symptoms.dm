@@ -2108,10 +2108,10 @@ datum/pathogeneffects/malevolent/snaps/jazz
 		..()
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (H.find_type_in_hand(/obj/item/instrument/saxophone)) //bonus saxophone playing capability that doesn't count toward sax cooldown
+			if (H.find_type_in_hand(/obj/item/instrument/saxophone))
 				var/obj/item/instrument/saxophone/sax = H.find_type_in_hand(/obj/item/instrument/saxophone)
-				var/list/aud = sax.sounds_instrument
-				playsound(get_turf(H), pick(aud), 50, 1)
+				sax.play_note(rand(1,sax.sounds_instrument.len), user = H)
+
 
 	disease_act(var/mob/M, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
