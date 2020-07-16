@@ -36,7 +36,7 @@
 		..()
 		var/mob/ownerMob = owner
 		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && devour && devour.cooldowncheck())
-			logTheThing("combat", ownerMob, target, "devours %target%.")
+			logTheThing("combat", ownerMob, target, "devours [constructTarget(target,"combat")].")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] devours [target]!</B></span>", 1)
 			playsound(get_turf(ownerMob), "sound/voice/burp_alien.ogg", 50, 0)

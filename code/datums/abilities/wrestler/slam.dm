@@ -168,7 +168,7 @@
 					HH.ex_act(3)
 
 			qdel(G)
-			logTheThing("combat", M, HH, "uses the [fake ? "fake " : ""]slam wrestling move on %target% at [log_loc(M)].")
+			logTheThing("combat", M, HH, "uses the [fake ? "fake " : ""]slam wrestling move on [constructTarget(HH,"combat")] at [log_loc(M)].")
 
 		else
 			if (M)

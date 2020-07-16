@@ -37,7 +37,7 @@
 			boutput(M, __red("[target] is moving around too much."))
 			return 1
 
-		logTheThing("combat", M, target, "starts to maul %target% at [log_loc(M)].")
+		logTheThing("combat", M, target, "starts to maul [constructTarget(target,"combat")] at [log_loc(M)].")
 		actions.start(new/datum/action/bar/private/icon/werewolf_feast(target, src), M)
 		return 0
 

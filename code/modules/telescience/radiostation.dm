@@ -174,7 +174,7 @@
 		if (!voice)
 			return
 		var/message = html_encode(input("Choose something to say:","Message","") as null|text)
-		logTheThing("say", usr, voice, "SAY: [message] (Synthesizing the voice of <b>(%target%)</b>)")
+		logTheThing("say", usr, voice, "SAY: [message] (Synthesizing the voice of <b>([constructTarget(voice,"say")])</b>)")
 		var/original_name = usr.real_name
 		usr.real_name = copytext(voice, 1, MOB_NAME_MAX_LENGTH)
 		usr.say(message)
@@ -268,7 +268,7 @@
 			boutput(user, "<span class='alert'><B>You smash the record over your own head!</b></span>")
 		else
 			M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
-			logTheThing("combat", user, M, "smashes [src] over %target%'s head! ")
+			logTheThing("combat", user, M, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		playsound(src, "shatter", 70, 1)
@@ -279,7 +279,7 @@
 		qdel(src)
 	else
 		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
-		logTheThing("combat", user, M, "taps %target% over the head with [src].")
+		logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 /obj/item/record/random/adventure_1
 	name = "record - \"adventure track #1\""
