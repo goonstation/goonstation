@@ -316,7 +316,7 @@
 				boutput(usr, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 				boutput(usr, "<span class='alert'>&emsp;<b>\"[newname]</b>\"</span>")
 				return
-			logTheThing("combat", usr, R, "uses a docking station to rename %target% to [newname].")
+			logTheThing("combat", usr, R, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
 			R.name = newname
 			if (R.internal_pda)
 				R.internal_pda.name = "[R]'s Internal PDA Unit"
@@ -492,7 +492,7 @@
 			C.set_loc(src)
 			R.cell = null
 			boutput(R, "<span class='alert'>Your power cell was removed!</span>")
-			logTheThing("combat", usr, R, "removes %target%'s power cell at [log_loc(usr)].") // Renders them mute and helpless (Convair880).
+			logTheThing("combat", usr, R, "removes [constructTarget(R,"combat")]'s power cell at [log_loc(usr)].") // Renders them mute and helpless (Convair880).
 			R.hud.update_charge()
 
 		if (href_list["eject"])
@@ -718,8 +718,8 @@
 			var/delay = 0
 			if (user != H)
 				delay = 30
-				logTheThing("combat", user, H, "puts %target% into a conversion chamber at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", user, H, "puts %target% into a conversion chamber at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", user, H, "puts [constructTarget(H,"combat")] into a conversion chamber at [showCoords(src.x, src.y, src.z)]")
+				logTheThing("diary", user, H, "puts [constructTarget(H,"diary")] into a conversion chamber at [showCoords(src.x, src.y, src.z)]", "combat")
 			if (delay)
 				user.visible_message("<b>[user]</b> begins moving [H] into [src].")
 				boutput(user, "Both you and [H] will need to remain still for this action to work.")

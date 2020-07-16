@@ -576,7 +576,7 @@
 				return 1
 			else
 				var/message = html_encode(input("What would you like to whisper to [target]?", "Whisper", "") as text)
-				logTheThing("say", usr, target, "WRAITH WHISPER TO %target%: [message]")
+				logTheThing("say", usr, target, "WRAITH WHISPER TO [constructTarget(target,"say")]: [message]")
 				message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
 				boutput(usr, "<b>You whisper to [target]:</b> [message]")
 				boutput(target, "<b>A netherworldly voice whispers into your ears... </b> [message]")

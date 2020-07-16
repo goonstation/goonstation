@@ -228,8 +228,6 @@
 		if(status & BROKEN)			// nothing can happen if broken
 			return
 
-		src.updateDialog()
-
 		if(open && flush)	// flush can happen even without power, must be open first
 			flush()
 
@@ -356,8 +354,6 @@
 	process()
 		if(status & BROKEN)			// nothing can happen if broken
 			return
-
-		src.updateDialog()
 
 		if(open && flush)	// flush can happen even without power, must be open first
 			flush()

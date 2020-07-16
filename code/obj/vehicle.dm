@@ -338,10 +338,10 @@ Contains:
 			msgs.played_sound = joustingTool.hitsound
 			msgs.affecting = pick("chest", "head")
 			msgs.logs = list()
-			msgs.logc("jousts %target% with a [joustingTool]")
+			msgs.logc("jousts [constructTarget(T,"combat")] with a [joustingTool]")
 			msgs.damage_type = DAMAGE_BLUNT
 
-			//logTheThing("combat", R, T, " jousts %target% with a [joustingTool]")
+			//logTheThing("combat", R, T, " jousts [constructTarget(src,"diary")] with a [joustingTool]")
 
 			if (S) // they were on a segway, diiiiis-MOUNT!
 				S.eject_rider(2)
@@ -505,11 +505,11 @@ Contains:
 	switch (action)
 		if ("impact")
 			if (ismob(rider) && ismob(other_dude))
-				logTheThing("vehicle", rider, other_dude, "driving [src] crashes into %target%[immune_to_impact != 0 ? " (immune to impact)" : ""] at [log_loc(src)].")
+				logTheThing("vehicle", rider, other_dude, "driving [src] crashes into [constructTarget(other_dude,"vehicle")][immune_to_impact != 0 ? " (immune to impact)" : ""] at [log_loc(src)].")
 
 		if ("shoved_off")
 			if (ismob(rider) && ismob(other_dude))
-				logTheThing("vehicle", other_dude, rider, "shoves %target% off of a [src] at [log_loc(src)].")
+				logTheThing("vehicle", other_dude, rider, "shoves [constructTarget(rider,"vehicle")] off of a [src] at [log_loc(src)].")
 
 	return
 
@@ -1232,7 +1232,8 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 		if ("pax_enter", "pax_exit")
 			if (pax && ismob(pax))
-				logTheThing("vehicle", pax, rider && ismob(rider) ? rider : null, "[action == "pax_enter" ? "is stuffed into" : "is ejected from"] [src.name] ([forced_in == 1 ? "Forced by" : "Driven by"]: [rider && ismob(rider) ? "%target%" : "N/A or unknown"]) at [log_loc(src)].")
+				var/logtarget = (rider && ismob(rider) ? rider : null)
+				logTheThing("vehicle", pax, logtarget, "[action == "pax_enter" ? "is stuffed into" : "is ejected from"] [src.name] ([forced_in == 1 ? "Forced by" : "Driven by"]: [rider && ismob(rider) ? "[constructTarget(logtarget,"vehicle")]" : "N/A or unknown"]) at [log_loc(src)].")
 
 	return
 

@@ -4,8 +4,8 @@
 		return
 
 	if(src.tempmin)
-		logTheThing("admin", usr, player, "tried to access the notes of %target%")
-		logTheThing("diary", usr, player, "tried to access the notes of %target%", "admin")
+		logTheThing("admin", usr, player, "tried to access the notes of [constructTarget(player,"admin")]")
+		logTheThing("diary", usr, player, "tried to access the notes of [constructTarget(player,"diary")]", "admin")
 		alert("You need to be an actual admin to view player notes.")
 		return
 

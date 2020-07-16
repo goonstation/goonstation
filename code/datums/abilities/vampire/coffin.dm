@@ -73,7 +73,7 @@
 		V.coffin_turf = target
 		boutput(M, __blue("You plant your coffin on [target]."))
 
-		logTheThing("combat", M, target, "marks coffin on tile on %target% at [log_loc(M)].")
+		logTheThing("combat", M, target, "marks coffin on tile on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0
 
 /datum/targetable/vampire/coffin_escape

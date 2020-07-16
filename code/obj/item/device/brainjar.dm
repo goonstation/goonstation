@@ -192,7 +192,7 @@
 				B.set_loc(src)
 				B.owner.transfer_to(controller)
 				user.show_text("You install \the [B] in \the [src].", "blue")
-				logTheThing("combat", user, controller, "installs %target% into a brain assembly!")
+				logTheThing("combat", user, controller, "installs [constructTarget(controller,"combat")] into a brain assembly!")
 				update_icon()
 			else
 				user.show_text("This brain seems unfit to use in the assembly.", "red")

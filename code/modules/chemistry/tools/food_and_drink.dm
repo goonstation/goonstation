@@ -283,7 +283,7 @@
 				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
 				user, "<span class='alert'>You try to feed [M] [src]!</span>",\
 				M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
-				logTheThing("combat", user, M, "attempts to feed %target% [src] [log_reagents(src)] at [log_loc(user)].")
+				logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)] at [log_loc(user)].")
 
 				if (!do_mob(user, M))
 					if (user && ismob(user))
@@ -302,7 +302,7 @@
 				user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
 				user, "<span class='alert'>You feed [M] [src]!</span>",\
 				M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
-				logTheThing("combat", user, M, "feeds %target% [src] [log_reagents(src)] at [log_loc(user)].")
+				logTheThing("combat", user, M, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)] at [log_loc(user)].")
 
 
 				on_bite(M)
@@ -486,7 +486,7 @@
 				return 0
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
-				logTheThing("combat", user, M, "attempts to force %target% to drink from [src] [log_reagents(src)] at [log_loc(user)].")
+				logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
 
 				if (!do_mob(user, M))
 					if (user && ismob(user))
@@ -517,7 +517,7 @@
 				boutput(M, "<span class='notice'>You taste [reag_list]in this.</span>")
 */
 			if (src.reagents.total_volume)
-				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes %target% drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
+				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
 				src.reagents.reaction(M, INGEST, gulp_size)
 				SPAWN_DBG (5)
 					if (src && src.reagents && M && M.reagents)
@@ -605,7 +605,7 @@
 				if (target:flags & NOSPLASH) return
 			can_mousedrop = 0
 			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "pour all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
-			logTheThing("combat", user, target, "pours [src] onto %target% [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
+			logTheThing("combat", user, target, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 			if (reagents)
 				reagents.physical_shock(14)
 
@@ -874,7 +874,7 @@
 			else
 				src.shatter++
 				user.visible_message("<span class='alert'><b>[user]</b> [pick("shanks","stabs","attacks")] [target] with the broken [src]!</span>")
-				logTheThing("combat", user, target, "attacks %target% with a broken [src] at [log_loc(user)].")
+				logTheThing("combat", user, target, "attacks [constructTarget(target,"combat")] with a broken [src] at [log_loc(user)].")
 				playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
 				var/damage = rand(1,10)
 				random_brute_damage(target, damage)//shiv that nukie/secHoP
@@ -1538,7 +1538,7 @@
 			boutput(user, "<span class='alert'><B>You smash the [src] over your own head!</b></span>")
 		else
 			M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
-			logTheThing("combat", user, M, "smashes [src] over %target%'s head! ")
+			logTheThing("combat", user, M, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		playsound(M, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
@@ -1551,7 +1551,7 @@
 			qdel(src)
 		else
 			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
-			logTheThing("combat", user, M, "taps %target% over the head with [src].")
+			logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 /obj/item/reagent_containers/food/drinks/carafe/medbay
 	icon_state = "carafe-med"
