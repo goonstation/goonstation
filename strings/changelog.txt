@@ -1,5 +1,9 @@
 
 (t)thu jul 16 20
+(u)MarkNstein
+(p)1468
+(e)🆕|feature
+(*)RP server: Gang is added to the Intrigue gamemode picklist if >=20 players are ready at round-start.
 (u)makkipakki
 (p)1475
 (e)|
