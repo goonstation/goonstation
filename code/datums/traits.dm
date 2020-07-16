@@ -662,7 +662,7 @@
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if(H.get_brain_damage() < 60)
-				H.take_brain_damage(60)
+				H.take_brain_damage(60-H.get_brain_damage())
 		return
 
 /obj/trait/athletic
@@ -1002,5 +1002,4 @@
 	id = "allears"
 	points = 1
 	isPositive = 0
-
 
