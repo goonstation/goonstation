@@ -121,7 +121,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/vampire()
+			src.object = new /obj/screen/ability/topBar/kudzu()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)
