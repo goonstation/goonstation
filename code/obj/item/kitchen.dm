@@ -266,15 +266,15 @@ TRAYS
 				user.suiciding = 0
 		return 1
 
-/obj/item/kitchen/plasticpackage //im just gonna...put this here...
+/obj/item/kitchen/plasticpackage
 	name = "package of plastic silverware"
 	desc = "These don't look very clean..."
 	icon_state = "plasticpackage"
 	w_class = 1.0
-	var/list/messages = list("AAAAAAAAGH WHY WON'T IT OPEN!", "Oh no...The package...It'S tOo PoWeRfUl!", "Almost open! Wait...Nevermind.", "Almost there.....")
+	var/list/messages = list("The packaging decides to not open at this time. How rude.", "The plastic is just too strong for your fumbly fingers!", "Almost open! Wait...Nevermind.", "Almost there.....")
 
 	attack_self(mob/user as mob)
-		if(prob(25))
+		if(prob(40))
 			var/obj/item/kitchen/utensil/fork/plastic/f = new /obj/item/kitchen/utensil/fork/plastic
 			var/obj/item/kitchen/utensil/knife/plastic/k = new /obj/item/kitchen/utensil/knife/plastic
 			var/obj/item/kitchen/utensil/spoon/plastic/s = new /obj/item/kitchen/utensil/spoon/plastic
@@ -286,7 +286,7 @@ TRAYS
 			s.set_loc(get_turf(user))
 			user.u_equip(src)
 			src.set_loc(user)
-			if(prob(75))
+			if(prob(30))
 				user.show_text("<b>The plastic silverware go EVERYWHERE!</b>","red")
 				var/list/throw_targets = list()
 				for (var/i=1, i<=3, i++)
