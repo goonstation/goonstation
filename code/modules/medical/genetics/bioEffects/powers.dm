@@ -541,7 +541,7 @@
 		boutput(recipient, "<span style='color: #BD33D9'><b>[psyname]</b> echoes, \"<i>[msg]</i>\"</span>")
 		boutput(owner, "<span style='color: #BD33D9'>You echo \"<i>[msg]</i>\" to <b>[recipient.name]</b>.</span>")
 
-		logTheThing("telepathy", owner, recipient, "TELEPATHY to %target%: [msg]")
+		logTheThing("telepathy", owner, recipient, "TELEPATHY to [constructTarget(recipient,"telepathy")]: [msg]")
 
 		return
 
@@ -581,7 +581,7 @@
 		owner.visible_message("<span class='alert'><b>[owner]</b> puts their fingers to their temples and stares at [target] really hard.</span>")
 		owner.say(msg)
 
-		logTheThing("telepathy", owner, recipient, "TELEPATHY misfire to %target%: [msg]")
+		logTheThing("telepathy", owner, recipient, "TELEPATHY misfire to [constructTarget(recipient,"telepathy")]: [msg]")
 
 		return
 

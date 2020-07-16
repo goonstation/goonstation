@@ -141,7 +141,7 @@
 
 		var/list/the_targets = list(T,T1,T2)
 
-		logTheThing("combat", user, T, "sprays [src] at %target%, [log_reagents(src)] at [showCoords(user.x, user.y, user.z)] ([get_area(user)])")
+		logTheThing("combat", user, T, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [showCoords(user.x, user.y, user.z)] ([get_area(user)])")
 
 		user.lastattacked = target
 

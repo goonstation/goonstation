@@ -207,14 +207,14 @@ WET FLOOR SIGN
 					continue
 				D.reagents.reaction(T)
 				if (ismob(T))
-					logTheThing("combat", user, T, "'s spray hits %target% [log_reagents] at [log_loc(user)].")
+					logTheThing("combat", user, T, "'s spray hits [constructTarget(T,"combat")] [log_reagents] at [log_loc(user)].")
 				D.reagents.remove_any(1)
 			if (!D.reagents.total_volume)
 				break
 			sleep(0.3 SECONDS)
 		qdel(D)
 	var/turf/logTurf = get_turf(D)
-	logTheThing("combat", user, logTurf, "sprays [src] at %target% [log_reagents] at [log_loc(user)].")
+	logTheThing("combat", user, logTurf, "sprays [src] at [constructTarget(logTurf,"combat")] [log_reagents] at [log_loc(user)].")
 
 	return
 

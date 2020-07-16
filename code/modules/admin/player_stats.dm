@@ -42,8 +42,8 @@
 	if (!ckey)
 		return alert("You must provide a valid ckey.")
 	if(src.tempmin)
-		logTheThing("admin", usr, ckey, "tried to access the player stats of %target%")
-		logTheThing("diary", usr, ckey, "tried to access the player stats of %target%", "admin")
+		logTheThing("admin", usr, ckey, "tried to access the player stats of [constructTarget(ckey,"admin")]")
+		logTheThing("diary", usr, ckey, "tried to access the player stats of [constructTarget(ckey,"diary")]", "admin")
 		alert("You need to be an actual admin to view player stats.")
 		return
 
@@ -92,8 +92,8 @@
 	if (!ckey)
 		return alert("You must provide a valid ckey.")
 	if(src.tempmin)
-		logTheThing("admin", usr, ckey, "tried to access the player IPs of %target%")
-		logTheThing("diary", usr, ckey, "tried to access the player IPs of %target%", "admin")
+		logTheThing("admin", usr, ckey, "tried to access the player IPs of [constructTarget(ckey,"admin")]")
+		logTheThing("diary", usr, ckey, "tried to access the player IPs of [constructTarget(ckey,"diary")]", "admin")
 		alert("You need to be an actual admin to view player IPs.")
 		return
 
@@ -128,8 +128,8 @@
 	if (!ckey)
 		return alert("You must provide a valid ckey.")
 	if(src.tempmin)
-		logTheThing("admin", usr, ckey, "tried to access the player compIDs of %target%")
-		logTheThing("diary", usr, ckey, "tried to access the player compIDs of %target%", "admin")
+		logTheThing("admin", usr, ckey, "tried to access the player compIDs of [constructTarget(ckey,"admin")]")
+		logTheThing("diary", usr, ckey, "tried to access the player compIDs of [constructTarget(ckey,"diary")]", "admin")
 		alert("You need to be an actual admin to view player compIDs.")
 		return
 

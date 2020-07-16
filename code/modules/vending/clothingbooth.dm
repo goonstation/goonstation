@@ -133,7 +133,7 @@ var/list/clothingbooth_items = list()
 					user.visible_message("<span class='alert'><b>[user] stuffs [GM.name] into [src]!</b></span>","<span class='alert'><b>You stuff [GM.name] into [src]!</b></span>")
 					src.set_open(0)
 					qdel(G)
-					logTheThing("combat", user, GM, "places %target% into [src] at [log_loc(src)].")
+					logTheThing("combat", user, GM, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
 					actions.interrupt(G.affecting, INTERRUPT_MOVE)
 					actions.interrupt(user, INTERRUPT_ACT)
 

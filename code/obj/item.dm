@@ -350,7 +350,7 @@
 		user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
 		user, "<span class='alert'>You try to feed [M] [src]!</span>",\
 		M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
-		logTheThing("combat", user, M, "attempts to feed %target% [src] [log_reagents(src)]")
+		logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (!do_mob(user, M))
 			return 0
@@ -360,7 +360,7 @@
 		user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
 		user, "<span class='alert'>You feed [M] [src]!</span>",\
 		M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
-		logTheThing("combat", user, M, "feeds %target% [src] [log_reagents(src)]")
+		logTheThing("combat", user, M, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (src.material && src.material.edible)
 			src.material.triggerEat(M, src)
@@ -1056,7 +1056,7 @@
 			return
 
 	if (src.flags & SUPPRESSATTACK)
-		logTheThing("combat", user, M, "uses [src] ([type], object name: [initial(name)]) on %target%")
+		logTheThing("combat", user, M, "uses [src] ([type], object name: [initial(name)]) on [constructTarget(M,"combat")]")
 		return
 
 	if (user.mind && user.mind.special_role == "vampthrall" && isvampire(M) && user.is_mentally_dominated_by(M))
@@ -1065,7 +1065,7 @@
 
 	if(user.traitHolder && !user.traitHolder.hasTrait("glasscannon"))
 		if (!user.process_stamina(src.stamina_cost))
-			logTheThing("combat", user, M, "tries to attack %target% with [src] ([type], object name: [initial(name)]) but is out of stamina")
+			logTheThing("combat", user, M, "tries to attack [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but is out of stamina")
 			return
 
 	if (chokehold)
@@ -1092,7 +1092,7 @@
 		d_zone = affecting
 
 	if (!M.melee_attack_test(user, src, d_zone))
-		logTheThing("combat", user, M, "attacks %target% with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
+		logTheThing("combat", user, M, "attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
 		return
 
 	if(hasProperty("frenzy"))
@@ -1127,7 +1127,7 @@
 	msgs.clear(M)
 	msgs.affecting = affecting
 	msgs.logs = list()
-	msgs.logc("attacks %target% with [src] ([type], object name: [initial(name)])")
+	msgs.logc("attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)])")
 
 	SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src)
 	var/stam_crit_pow = src.stamina_crit_chance

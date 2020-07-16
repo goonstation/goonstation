@@ -46,7 +46,7 @@
 			boutput(ownerMob, "<span class='notice'>We devour [target]!</span>")
 			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] hungrily devours [target]!</B></span>"))
 			playsound(ownerMob.loc, 'sound/voice/burp_alien.ogg', 50, 1)
-			logTheThing("combat", ownerMob, target, "devours %target% as a changeling in horror form [log_loc(owner)].")
+			logTheThing("combat", ownerMob, target, "devours [constructTarget(target,"combat")] as a changeling in horror form [log_loc(owner)].")
 
 			target.ghostize()
 			qdel(target)
@@ -156,7 +156,7 @@
 				C.addDna(target)
 			boutput(ownerMob, "<span class='notice'>We have absorbed [target]!</span>")
 			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] sucks the fluids out of [target]!</B></span>"))
-			logTheThing("combat", ownerMob, target, "absorbs %target% as a changeling [log_loc(owner)].")
+			logTheThing("combat", ownerMob, target, "absorbs [constructTarget(target,"combat")] as a changeling [log_loc(owner)].")
 
 			target.dna_to_absorb = 0
 			target.death(0)
