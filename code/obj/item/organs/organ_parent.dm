@@ -281,8 +281,8 @@
 
 		// if (src.get_damage() >= MAX_DAMAGE)
 		if (brute_dam + burn_dam + tox_dam >= MAX_DAMAGE)
-			src.broken = 1
-			donor.contract_disease(failure_disease,null,null,1)
+			src.breakme()
+			donor?.contract_disease(failure_disease,null,null,1)
 		health_update_queue |= donor
 		return 1
 
@@ -341,3 +341,9 @@
 			return 1
 		else
 			return 0
+
+	proc/breakme()
+		src.broken = 1
+
+	proc/unbreakme()
+		src.broken = 0

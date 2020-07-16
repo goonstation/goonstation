@@ -858,7 +858,7 @@
 				var/obj/item/organ/heart/newHeart = I
 				if (newHeart.robotic)
 					if (src.donor.bioHolder.HasEffect("elecres"))
-						newHeart.broken = 1
+						newHeart.breakme()
 					if (newHeart.broken || src.donor.bioHolder.HasEffect("elecres"))
 						src.donor.show_text("Something is wrong with [newHeart], it fails to start beating!", "red")
 						src.donor.contract_disease(/datum/ailment/malady/flatline,null,null,1)
