@@ -231,7 +231,7 @@
 
 	// -- End mode specific stuff
 
-	logTheThing("combat", usr, src.occupant, "starts cloning %target% at [log_loc(src)].")
+	logTheThing("combat", usr, src.occupant, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
 
 	if (isobserver(ghost))
 		qdel(ghost) //Don't leave ghosts everywhere!!
@@ -756,7 +756,7 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 
 		user.visible_message("<b>[user]</b> activates [src]!", "You activate [src].")
 		if (istype(src.occupant))
-			logTheThing("combat", user, src.occupant, "activated [src.name] with %target% ([isdead(src.occupant) ? "dead" : "alive"]) inside at [log_loc(src)].")
+			logTheThing("combat", user, src.occupant, "activated [src.name] with [constructTarget(src.occupant,"combat")] ([isdead(src.occupant) ? "dead" : "alive"]) inside at [log_loc(src)].")
 			if (!isdead(src.occupant))
 				message_admins("[key_name(user)] activated [src.name] with [key_name(src.occupant, 1)] ([isdead(src.occupant) ? "dead" : "alive"]) inside at [log_loc(src)].")
 		src.start_cycle()
@@ -942,7 +942,7 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 	onEnd()
 		..()
 		owner.visible_message("<span class='alert'><b>[owner] stuffs [target] into [grinder]!</b></span>")
-		logTheThing("combat", owner, target, "forced %target% ([isdead(target) ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
+		logTheThing("combat", owner, target, "forced [constructTarget(target,"combat")] ([isdead(target) ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
 		if (!isdead(target))
 			message_admins("[key_name(owner)] forced [key_name(target, 1)] ([target == 2 ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
 		if (grinder.auto_strip && !grinder.emagged)

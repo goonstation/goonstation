@@ -121,7 +121,7 @@
 			if (prob(25))
 				M.emote("scream")
 
-			logTheThing("combat", src, M, "[src] chairflips into %target%, [showCoords(M.x, M.y, M.z)].")
+			logTheThing("combat", src, M, "[src] chairflips into [constructTarget(M,"combat")], [showCoords(M.x, M.y, M.z)].")
 			M.lastattacker = src
 			M.lastattackertime = world.time
 

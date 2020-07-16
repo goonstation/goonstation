@@ -413,7 +413,7 @@
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your left arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_arm]!</b></span>")
 				if (user)
-					logTheThing("admin", user, src.holder, "replaced %target%'s left arm with [new_type]")
+					logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s left arm with [new_type]")
 				. ++
 
 			if (target == "both_arms" || target == "r_arm")
@@ -429,7 +429,7 @@
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your right arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_arm]!</b></span>")
 				if (user)
-					logTheThing("admin", user, src.holder, "replaced %target%'s right arm with [new_type]")
+					logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s right arm with [new_type]")
 				. ++
 
 			if (target == "both_legs" || target == "l_leg")
@@ -440,7 +440,7 @@
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your left leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_leg]!</b></span>")
 					if (user)
-						logTheThing("admin", user, src.holder, "replaced %target%'s left leg with [new_type]")
+						logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s left leg with [new_type]")
 					. ++
 
 			if (target == "both_legs" || target == "r_leg")
@@ -451,7 +451,7 @@
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your right leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_leg]!</b></span>")
 					if (user)
-						logTheThing("admin", user, src.holder, "replaced %target%'s right leg with [new_type]")
+						logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s right leg with [new_type]")
 					. ++
 			if (.)
 				src.holder.set_body_icon_dirty()
@@ -989,7 +989,7 @@
 			src.visible_message("<span class='alert'>[src] throws [I].</span>")
 		if (iscarbon(I))
 			var/mob/living/carbon/C = I
-			logTheThing("combat", src, C, "throws %target% at [log_loc(src)].")
+			logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] at [log_loc(src)].")
 			if ( ishuman(C) && !C.getStatusDuration("weakened"))
 				C.changeStatus("weakened", 1 SECOND)
 		else

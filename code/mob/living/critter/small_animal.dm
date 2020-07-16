@@ -2838,7 +2838,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 				if (G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc))
 					src.emote("scream")
-					logTheThing("combat", src, G.affecting, "crunches %target% [log_loc(src)]")
+					logTheThing("combat", src, G.affecting, "crunches [constructTarget(G.affecting,"combat")] [log_loc(src)]")
 					M.lastattacker = src
 					M.lastattackertime = world.time
 					G.affecting.TakeDamage("head", rand(2,8), 0, 0, DAMAGE_BLUNT)

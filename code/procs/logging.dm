@@ -1,9 +1,9 @@
 /* Hello these are the new logs wow gosh look at this isn't it exciting
-Some placeholders exist for replacement within text:
-	%target% - Replaced by a link + traitor info for the name
+Some procs  exist for replacement within text:
+	[constructTarget(target,type)]
 
 Example in-game log call:
-		logTheThing("admin", src, M, "shot that nerd %target% at [showCoords(usr.x, usr.y, usr.z)]")
+		logTheThing("admin", src, M, "shot that nerd [constructTarget(src,"diary")] at [showCoords(usr.x, usr.y, usr.z)]")
 Example out of game log call:
 		logTheThing("diary", src, null, "gibbed everyone ever", "admin")
 */
@@ -27,12 +27,8 @@ var/global/disable_log_lists = 0
 	else
 		if (type != "diary") source = "<span class='blank'>(blank)</span>"
 
-	if (target) //If we have a target we assume the text has a %target% placeholder to shove it in
-		if (type == "diary") target = constructName(target, type)
-		else target = "<span class='target'>[constructName(target, type)]</span>"
-		text =  replacetext(text, "%target%", target)
-
-	var/ingameLog = "<td class='duration'>\[[round(world.time/600)]:[(world.time%600)/10]\]</td><td class='source'>[source]</td><td class='text'>[text]</td>"
+	//if (target) target does nothing but i cant be assed to remove its arg from every single logthething and idk regex
+	//	target = constructTarget(target,type)
 
 	if (disable_log_lists) // lag reduction hack - ONLY print logs to the web versions
 		if (type == "diary")
@@ -61,6 +57,7 @@ var/global/disable_log_lists = 0
 			WRITE_LOG(roundLog_name, "\[[uppertext(type)]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
 
 	else
+		var/ingameLog = "<td class='duration'>\[[round(world.time/600)]:[(world.time%600)/10]\]</td><td class='source'>[source]</td><td class='text'>[text]</td>"
 
 		switch(type)
 			//These are things we log in-game (accessible via the Secrets menu)
@@ -117,6 +114,10 @@ var/global/disable_log_lists = 0
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
 /proc/shutdown_logging()
 	rustg_log_close_all()
+
+/proc/constructTarget(ref,type)
+	if (type == "diary") . = constructName(ref, type)
+	else . = "<span class='target'>[constructName(ref, type)]</span>"
 
 /proc/constructName(ref, type)
 	var/name
@@ -211,7 +212,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	//Wire: Added this so I don't get a bunch of logs for fukken drones shooting pods WHO CARES
 	if (istype(P.shooter, /obj/critter/))
 		return
-	logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots %target%[P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+	logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 
 /proc/log_reagents(var/atom/A as turf|obj|mob)
 	var/log_reagents = ""

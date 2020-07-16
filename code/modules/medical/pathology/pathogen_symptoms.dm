@@ -91,7 +91,7 @@ datum/pathogeneffects
 				if (target.infected(origin))
 					if (infect_message)
 						target.show_message(infect_message)
-					logTheThing("pathology", origin.infected, target, "infects %target% with [origin.name] due to symptom [name] through direct contact ([contact_type]).")
+					logTheThing("pathology", origin.infected, target, "infects [constructTarget(target,"pathology")] with [origin.name] due to symptom [name] through direct contact ([contact_type]).")
 					return 1
 
 	proc/onadd(var/datum/pathogen/origin)
@@ -631,21 +631,21 @@ datum/pathogeneffects/malevolent/serious_paranoia
 	proc/backpack(var/mob/M, var/mob/living/O)
 		var/item = pick(traitor_items)
 		boutput(M, "<span class='notice'>[O] has added the [item] to the backpack!</span>")
-		logTheThing("pathology", M, O, "saw a fake message about an %target% adding [item] to their backpacks due to Serious Paranoia symptom.")
+		logTheThing("pathology", M, O, "saw a fake message about an [constructTarget(O,"pathology")] adding [item] to their backpacks due to Serious Paranoia symptom.")
 
 	proc/acidspit(var/mob/M, var/mob/living/O, var/mob/living/O2)
 		if (O2)
 			boutput(M, "<span class='alert'><B>[O] spits acid at [O2]!</B></span>")
 		else
 			boutput(M, "<span class='alert'><B>[O] spits acid at you!</B></span>")
-		logTheThing("pathology", M, O, "saw a fake message about an %target% spitting acid due to Serious Paranoia symptom.")
+		logTheThing("pathology", M, O, "saw a fake message about an [constructTarget(O,"pathology")] spitting acid due to Serious Paranoia symptom.")
 
 	proc/vampirebite(var/mob/M, var/mob/living/O, var/mob/living/O2)
 		if (O2)
 			boutput(M, "<span class='alert'><B>[O] bites [O2]!</B></span>")
 		else
 			boutput(M, "<span class='alert'><B>[O] bites you!</B></span>")
-		logTheThing("pathology", M, O, "saw a fake message about an %target% biting someone due to Serious Paranoia symptom.")
+		logTheThing("pathology", M, O, "saw a fake message about an [constructTarget(O,"pathology")] biting someone due to Serious Paranoia symptom.")
 
 	proc/floor_in_view(var/mob/M)
 		var/list/ret = list()
