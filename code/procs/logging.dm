@@ -50,11 +50,11 @@ var/global/disable_log_lists = 0
 
 
 		if (diaryLogging)
-			WRITE_LOG(diary_name, "[uppertext(diaryType)]: [source ? "[source] ": ""][text]")
+			WRITE_LOG(diary_name, "[diaryType]: [source ? "[source] ": ""][text]")
 
 		//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
 		if (!diaryLogging && config.allowRotatingFullLogs)
-			WRITE_LOG(roundLog_name, "\[[uppertext(type)]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
+			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
 
 	else
 		var/ingameLog = "<td class='duration'>\[[round(world.time/600)]:[(world.time%600)/10]\]</td><td class='source'>[source]</td><td class='text'>[text]</td>"
@@ -101,11 +101,11 @@ var/global/disable_log_lists = 0
 
 
 		if (diaryLogging)
-			WRITE_LOG(diary_name, "[uppertext(diaryType)]: [source ? "[source] ": ""][text]")
+			WRITE_LOG(diary_name, "[diaryType]: [source ? "[source] ": ""][text]")
 
 		//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
 		if (!diaryLogging && config.allowRotatingFullLogs)
-			WRITE_LOG(roundLog_name, "\[[uppertext(type)]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
+			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
 	return
 
 /proc/logDiary(text)
