@@ -16,13 +16,13 @@
 
 //
 /area
-	var/active = 0 //True if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
+	var/tmp/active = 0 //True if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
 	var/list/population = list() //Who is here (ditto)
-	var/fire = null
+	var/tmp/fire = null
 	var/atmos = 1
 	var/poweralm = 1
 	var/skip_sims = 0
-	var/sims_score = 100
+	var/tmp/sims_score = 100
 	var/virtual = 0
 	var/is_centcom = 0 // for escape checks
 	var/gencolor
@@ -47,12 +47,12 @@
 	var/obj/machinery/power/apc/area_apc = null // okay in certain cases you may have more than one apc, but for my purposes the latest apc works just fine
 
 	var/requires_power = 1
-	var/power_equip = 1
-	var/power_light = 1
-	var/power_environ = 1
-	var/used_equip = 0
-	var/used_light = 0
-	var/used_environ = 0
+	var/tmp/power_equip = 1
+	var/tmp/power_light = 1
+	var/tmp/power_environ = 1
+	var/tmp/used_equip = 0
+	var/tmp/used_light = 0
+	var/tmp/used_environ = 0
 	var/expandable = 1
 
 	var/irradiated = 0 // space blowouts use this, should always be 0
@@ -80,8 +80,8 @@
 	var/sound_loop_vol = 50
 	var/sound_fx_1 = null
 	var/sound_fx_2 = null
-	var/played_fx_1 = 0
-	var/played_fx_2 = 0
+	var/tmp/played_fx_1 = 0
+	var/tmp/played_fx_2 = 0
 	var/sound_group = null
 	var/sound_environment = 1 //default environment for sounds - see sound datum vars documentation for the presets.
 
@@ -232,7 +232,7 @@
 		return R
 
 	proc/build_sims_score()
-		if (name == "Space" || src.name == "Ocean" || type == /area || skip_sims)
+		if (name == "Space" || src.name == "Ocean" || area_space_nopower(src) || skip_sims)
 			return
 		sims_score = 100
 		for (var/turf/T in src)
@@ -345,7 +345,7 @@
 		if (light_manager)
 			light_manager.lights -= L
 	New()
-		if( type == /area )
+		if(area_space_nopower(src))
 			power_equip = power_light = power_environ = 0
 //////////////////////////// zewaka - adventure/technical/admin areas below
 
@@ -988,8 +988,12 @@
 	icon_state = "showers"
 
 /area/diner/hallway
-	name = "Diner Hallway"
+	name = "Hallway"
 	icon_state = "blue"
+
+/area/diner/hallway/docking
+	name = "East Shuttle Docks"
+	icon_state = "purple"
 
 /area/diner/backroom
 	name = "Diner Backroom"
@@ -1014,6 +1018,10 @@
 /area/diner/motel/chemstorage
 	name = "Chemical Storage"
 	icon_state = "orange"
+
+/area/diner/arcade
+	name = "Bill E Bheezes"
+	icon_state = "red"
 
 /area/tech_outpost
 	name = "Tech Outpost"
@@ -1201,7 +1209,7 @@
 /area/station
 	do_not_irradiate = 0
 	sound_fx_1 = 'sound/ambience/station/Station_VocalNoise1.ogg'
-	var/initial_structure_value = 0
+	var/tmp/initial_structure_value = 0
 #ifdef MOVING_SUB_MAP
 	filler_turf = "/turf/space/fluid/manta"
 
@@ -1309,6 +1317,163 @@ area/station/communications
 /area/station/maintenance/inner
 	name = "Inner Maintenance"
 	icon_state = "imaint"
+
+/////////////////////////////////////////////////// Donut 3 specific areas
+
+// Civilian
+
+/area/station/library
+	name = "Library"
+	icon_state = "library"
+
+/area/station/library/reading1
+	name = "Reading Room 1"
+	icon_state = "reading-room1"
+
+/area/station/library/reading2
+	name = "Reading Room 2"
+	icon_state = "reading-room2"
+
+// Security
+
+/area/shuttle/asylum
+	name = "Asylum Shuttle"
+	icon_state = "asylum_shuttle"
+
+	medbay
+		icon_state = "shuttle1"
+
+	pathology
+		icon_state = "shuttle2"
+
+	observation
+		icon_state = "shuttle3"
+
+/area/station/security/quarters
+	name = "Security Officer Quarters"
+	icon_state = "officer_quarters"
+
+/area/station/security/equipment
+	name = "Security Equipment Storage"
+	icon_state = "sec_equipment"
+
+/area/station/security/brig/north_side
+	name = "Brig Long-Term Cell - North Side"
+	icon_state = "brigcell_Nside"
+
+/area/station/security/brig/south_side
+	name = "Brig Long-Term Cell - South Side"
+	icon_state = "brigcell_Sside"
+
+/area/station/security/brig/solitary
+	name = "Brig - Solitary Cells"
+	icon_state = "brigcell"
+
+// Medical
+
+/area/station/medical/medbay/treatment
+	name = "Treatment Center"
+	icon_state = "treatment_center"
+
+// Asylum
+
+/area/station/medical/asylum
+	name = "Asylum Mini-Station"
+	icon_state = "blue"
+
+/area/station/medical/asylum/computer
+	name = "Asylum Computer Room"
+	icon_state = "green"
+
+/area/station/medical/asylum/dining
+	name = "Asylum Dining Hall"
+
+/area/station/medical/asylum/rec
+	name = "Asylum Rec Room"
+
+/area/station/medical/asylum/kitchen
+	name = "Asylum Kitchen"
+
+/area/station/medical/asylum/bathroom
+	name = "Asylum Bathrooms"
+
+/area/station/medical/asylum/maintenance
+	name = "Asylum Maintenance"
+	icon_state = "yellow"
+
+// INNER Maintenance
+
+/area/station/maintenance/outer
+	name = "Outer Maintenance"
+	icon_state = "OUT_maint"
+
+/area/station/maintenance/inner/north
+	name = "North Inner Maintenance"
+	icon_state = "IN_Nmaint"
+
+/area/station/maintenance/inner/ne
+	name = "Northeast Inner Maintenance"
+	icon_state = "IN_NEmaint"
+
+/area/station/maintenance/inner/east
+	name = "East Inner Maintenance"
+	icon_state = "IN_Emaint"
+
+/area/station/maintenance/inner/se
+	name = "Southeast Inner Maintenance"
+	icon_state = "IN_SEmaint"
+
+/area/station/maintenance/inner/south
+	name = "South Inner Maintenance"
+	icon_state = "IN_Smaint"
+
+/area/station/maintenance/inner/sw
+	name = "Southwest Inner Maintenance"
+	icon_state = "IN_SWmaint"
+
+/area/station/maintenance/inner/west
+	name = "West Inner Maintenance"
+	icon_state = "IN_Wmaint"
+
+/area/station/maintenance/inner/nw
+	name = "Northwest Inner Maintenance"
+	icon_state = "IN_NWmaint"
+
+// OUTER maintenance
+
+/area/station/maintenance/outer/north
+	name = "North Outer Maintenance"
+	icon_state = "OUT_Nmaint"
+
+/area/station/maintenance/outer/ne
+	name = "Northeast Outer Maintenance"
+	icon_state = "OUT_NEmaint"
+
+/area/station/maintenance/outer/east
+	name = "East Outer Maintenance"
+	icon_state = "OUT_Emaint"
+
+/area/station/maintenance/outer/se
+	name = "Southeast Outer Maintenance"
+	icon_state = "OUT_SEmaint"
+
+/area/station/maintenance/outer/south
+	name = "South Outer Maintenance"
+	icon_state = "OUT_Smaint"
+
+/area/station/maintenance/outer/sw
+	name = "Southwest Outer Maintenance"
+	icon_state = "OUT_SWmaint"
+
+/area/station/maintenance/outer/west
+	name = "West Outer Maintenance"
+	icon_state = "OUT_Wmaint"
+
+/area/station/maintenance/outer/nw
+	name = "Northwest Outer Maintenance"
+	icon_state = "OUT_NWmaint"
+
+////////////////////////////////////////////////////////// end
 
 /area/station/maintenance/storage
 	name = "Atmospherics"
@@ -1754,6 +1919,10 @@ area/station/crewquarters/garbagegarbs //It's the clothing store on Manta
 	name = "Garbage Garbs clothing store"
 	icon_state = "green"
 
+area/station/crewquarters/fuq3 // Donut 3's clothing store... be afraid
+	name = "Fuq 3 clothing store"
+	icon_state = "fuq3"
+
 area/station/crewquarters/cryotron
 	name ="Cryogenic Crew Storage"
 	icon_state = "blue"
@@ -2033,7 +2202,7 @@ area/station/crewquarters/cryotron
 
 /area/station/security/interrogation
 	name = "Interrogation Room"
-	icon_state = "red"
+	icon_state = "interrogation"
 	sound_environment = 2
 
 /area/station/security/processing
@@ -2703,11 +2872,18 @@ area/station/security/visitation
 	icon_state = "AIt"
 	sound_environment = 12
 
+/area/station/turret_protected/AIsat
+	name = "AI Satellite"
+	icon_state = "ai_chamber"
+	sound_environment = 12
+	do_not_irradiate = 1
+
 /area/station/turret_protected/AIbaseoutside
 	name = "AI Perimeter Defenses"
 	icon_state = "AIt"
 	requires_power = 0
 	sound_environment = 12
+	force_fullbright = 1
 
 /area/station/turret_protected/AIbasecore2
 	name = "AI Core 2"
@@ -2729,8 +2905,9 @@ area/station/security/visitation
 	sound_environment = 12
 	icon_state = "ai_foyer"
 
-
-
+/area/station/turret_protected/armory_outside
+	name = "Armory Outer Perimeter"
+	icon_state = "red"
 
 /////////////////////////////// OLD AREAS THAT ARE NOT USED BUT ARE IN HERE
 

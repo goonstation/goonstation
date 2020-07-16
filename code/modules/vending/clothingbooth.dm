@@ -27,16 +27,13 @@ var/list/clothingbooth_items = list()
 /obj/machinery/clothingbooth/proc/uisetup(var/mob/user)
 	if(!user.client)
 		return
-	//if(isnull(user.client.preferences.preview_icon))
+	if(!ishuman(user))
+		return
 	user << browse_rsc('browserassets/css/clothingbooth.css')
 	user << browse_rsc('browserassets/js/clothingbooth.js')
-	var/mob/living/carbon/human/H = user
-	if(istype(H) && H.flat_icon)
-		user << browse_rsc(H.flat_icon, "previewimage.png")
-	else
-		user.client.preferences.AH = user.bioHolder.mobAppearance
-		user.client.preferences.update_preview_icon()
-		user << browse_rsc(user.client.preferences.preview_icon, "previewimage.png")
+	user.client.preferences.AH = user.bioHolder.mobAppearance
+	user.client.preferences.update_preview_icon()
+	user << browse_rsc(user.client.preferences.preview_icon, "previewimage.png")
 	user << browse(replacetext(replacetext(grabResource("html/clothingbooth.html"), "!!BOOTH_LIST!!", clothingbooth_json), "!!SRC_REF!!", "\ref[src]"), "window=ClothingBooth;size=600x600;can_resize=1;can_minimize=1;")
 
 //clothing booth stuffs <3
@@ -65,6 +62,9 @@ var/list/clothingbooth_items = list()
 		if (user.stat != 0 || user.getStatusDuration("stunned"))
 			return
 		src.set_open(1)
+		sleep(2 SECONDS)
+		if(!(user in src))
+			return
 		user.set_loc(src.loc) //possible fix to the for loop bug (possibly need to clear contents of src upon dropping items)
 		for (var/obj/O in src.contents)
 			user.put_in_hand_or_drop(O)
@@ -100,14 +100,19 @@ var/list/clothingbooth_items = list()
 				usr << output("preview_overlay.png", "ClothingBooth.browser:preview")
 
 	Click()
-		if((usr in src.contents) && (src.open == 0))
+		if(!ishuman(usr))
+			boutput(usr,"<span style=\"color:red\">Human clothes don't fit you, silly :P</span>")
+			return
+		if((usr in src) && (src.open == 0))
 			if(istype(usr.equipped(),/obj/item/spacecash))
 				var/obj/item/dummycredits = usr.equipped()
 				src.money += dummycredits.amount
 				dummycredits.amount = 0
 				qdel(dummycredits)
+				return
 			else
 				uisetup(usr)
+				return
 		..()
 
 /obj/machinery/clothingbooth/attackby(obj/item/weapon as obj, mob/user as mob)
@@ -146,7 +151,10 @@ var/list/clothingbooth_items = list()
 	src.open = new_open
 
 /obj/machinery/clothingbooth/attack_hand(mob/user as mob)
-	if(!user)
+	if(!ishuman(user))
+		boutput(user,"<span style=\"color:red\">Human clothes don't fit you, silly :P</span>")
+		return
+	if(!(user in range(1,src)))
 		return
 	if((src.open == 1)&&(!user.stat))
 		user.set_loc(src.loc)

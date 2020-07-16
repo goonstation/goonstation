@@ -13,8 +13,8 @@
 
 	force = 5.0
 	throwforce = 7.0
-	stamina_damage = 33
-	stamina_cost = 25
+	stamina_damage = 35
+	stamina_cost = 12
 	stamina_crit_chance = 10
 
 	m_amt = 50

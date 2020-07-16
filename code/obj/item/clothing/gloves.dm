@@ -111,7 +111,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		if (istype(W, /obj/item/cell)) // Moved from cell.dm (Convair880).
 			var/obj/item/cell/C = W
 
-			if (C.charge < 2500)
+			if (C.charge < 1500)
 				user.show_text("[C] needs more charge before you can do that.", "red")
 				return
 			if (!src.stunready)
@@ -126,7 +126,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 				if (src.uses < 0)
 					src.uses = 0
 				src.uses = min(src.uses + 1, src.max_uses)
-				C.use(2500)
+				C.use(1500)
 				src.icon_state = "stun"
 				src.item_state = "stun"
 				src.overridespecial = 1
@@ -399,7 +399,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		..()
 		boutput(user, "<span class='notice'><b>You have to put the gloves on your hands first, silly!</b></span>")
 
-	get_desc(dist)
+	get_desc()
 		if (src.weighted)
 			. += "These things are pretty heavy!"
 
@@ -410,6 +410,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			return
 		boutput(user, "You slip the horseshoe inside one of the gloves.")
 		src.weighted = 1
+		tooltip_rebuild = 1
 		qdel(W)
 	else
 		return ..()

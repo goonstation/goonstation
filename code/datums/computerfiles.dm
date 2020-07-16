@@ -279,6 +279,17 @@
 			src.contained_files = null
 		..()
 
+/datum/computer/file/clone
+	name = "Clone Record"
+	extension = "DNA"
+	size = 8
+	var/list/fields = list()
+
+	disposing()
+		fields = null
+		. = ..()
+
+
 /datum/computer/folder/link
 	name = "symlink"
 	gen = 10

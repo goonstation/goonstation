@@ -918,7 +918,7 @@ datum/pathogen
 
 	var/in_remission = 0							// Pathogens in remission are being cured by the body. Set by the curing reagent.
 	var/forced_microbody = null						// If not null, this pathogen will be generated with a specific microbody.
-	var/curable_by_suppression = 0 					// If not 0, represents a probability of becoming regressive through suppression. If negative, randomly generated.
+	var/curable_by_suppression = 10	// If not 0, represents a probability of becoming regressive through suppression. If negative, randomly generated.
 	var/rads = 0 									// The pathogen may mutate inside someone according to rads.
 	var/rad_mutate_cooldown = 0 					// The amount of ticks to wait before we can mutate again due to radiation.
 	var/ticked = 0
@@ -1247,25 +1247,8 @@ datum/pathogen
 			rad_mutate_cooldown = 0
 		*/
 
-	// This is the real thing, wrapped by process().
-	proc/disease_act()
-		var/list/acted = list()
-		var/order = pick(0,1)
-		if (order)
-			for (var/datum/effect in src.effects)
-				if (effect.type in acted)
-					continue
-				acted += effect.type
-				if (prob(body_type.activity[stage]))
-					effect:disease_act(infected, src)
-		else
-			for (var/i = src.effects.len, i > 0, i--)
-				var/datum/effect = src.effects[i]
-				if (effect.type in acted)
-					continue
-				acted += effect.type
-				if (prob(body_type.activity[stage]))
-					effect:disease_act(infected, src)
+	// handles pathogen advancing or receding in stage and also being cured
+	proc/progress_pathogen()
 		if (!cooldown)
 			if (in_remission)
 				if (prob(abs(advance_speed)))
@@ -1298,6 +1281,27 @@ datum/pathogen
 		else
 			cooldown--
 
+	// This is the real thing, wrapped by process().
+	proc/disease_act()
+		var/list/acted = list()
+		var/order = pick(0,1)
+		if (order)
+			for (var/datum/effect in src.effects)
+				if (effect.type in acted)
+					continue
+				acted += effect.type
+				if (prob(body_type.activity[stage]))
+					effect:disease_act(infected, src)
+		else
+			for (var/i = src.effects.len, i > 0, i--)
+				var/datum/effect = src.effects[i]
+				if (effect.type in acted)
+					continue
+				acted += effect.type
+				if (prob(body_type.activity[stage]))
+					effect:disease_act(infected, src)
+		progress_pathogen()
+
 	// it's like disease_act, but for dead people!
 	proc/disease_act_dead()
 		var/list/acted = list()
@@ -1317,7 +1321,7 @@ datum/pathogen
 				acted += effect.type
 				if (prob(body_type.activity[stage]))
 					effect:disease_act_dead(infected, src)
-		// let's not bother doing all the suppression and curing type stuff for dead people, most symptoms won't do anything anyway
+		progress_pathogen()
 
 	// A safe method for advancing the pathogen's stage.
 	proc/advance()

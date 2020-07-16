@@ -262,6 +262,14 @@
 	color_b = 0.95
 	change_iris = 0
 
+	on_transplant(mob/M)
+		. = ..()
+		APPLY_MOB_PROPERTY(M, PROP_SPECTRO, src)
+
+	on_removal()
+		REMOVE_MOB_PROPERTY(donor, PROP_SPECTRO, src)
+		. = ..()
+
 /obj/item/organ/eye/cyber/prodoc
 	name = "\improper ProDoc Healthview cybereye"
 	organ_name = "\improper ProDoc Healthview cybereye"

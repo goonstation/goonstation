@@ -21,8 +21,8 @@
 	amount = 1
 	max_stack = 1000000
 	stack_type = /obj/item/spacecash // so all cash types can stack iwth each other
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	module_research = list("efficiency" = 1)
 	module_research_type = /obj/item/spacecash
@@ -288,6 +288,7 @@
 		set_amt(amt)
 
 	proc/set_amt(var/amt = 1 as num)
+		tooltip_rebuild = 1
 		src.amount = amt
 		src.update_stack_appearance()
 

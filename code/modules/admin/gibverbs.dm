@@ -336,7 +336,7 @@
 //				boutput(tysontarget, "<span class='alert'>This is a temporary ban, it will be removed in [tysonmins] minutes.</span>")
 //				logTheThing("admin", usr, tysontarget, "has tysoned %target%. Reason: [reason]. This will be removed in [tysonmins] minutes.")
 				logTheThing("diary", usr, tysontarget, "has tysoned %target%. Reason: [reason]. This will be removed in [tysonmins] minutes.", "admin")
-//				message_admins("<span class='notice'>[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
+//				message_admins("<span class='internal'>[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
 
 /client/proc/cmd_admin_tysongib(mob/tysontarget as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -380,7 +380,7 @@
 //				boutput(tysontarget, "<span class='alert'>This is a temporary ban, it will be removed in [tysonmins] minutes.</span>")
 //				logTheThing("admin", usr, tysontarget, "has tysoned %target%.<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.")
 //				logTheThing("diary", usr, tysontarget, "has tysoned %target%.<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.", "admin")
-//				message_admins("<span class='notice'>[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
+//				message_admins("<span class='internal'>[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
 
 
 /obj/bantyson/
@@ -458,7 +458,7 @@
 			boutput(tysontarget2, "<span class='alert'>This is a temporary tysonban, it will be removed in [tysonmins2] minutes.</span>")
 			logTheThing("admin", caller:client, tysontarget2, "has tysonbanned %target%. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.")
 			logTheThing("diary", caller:client, tysontarget2, "has tysonbanned %target%. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.", "admin")
-			message_admins("<span class='notice'>[caller?.client?.ckey] has tysonbanned [tysontarget2.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.<br>This will be removed in [tysonmins2] minutes.</span>")
+			message_admins("<span class='internal'>[caller?.client?.ckey] has tysonbanned [tysontarget2.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.<br>This will be removed in [tysonmins2] minutes.</span>")
 			del(tysontarget2.client)
 			tysontarget2.gib()
 //			if(ishuman(tysontarget2))
@@ -522,7 +522,7 @@
 			if(tysontarget2 && tysontarget2.client)
 				logTheThing("admin", caller:client, tysontarget2, "tysongibbed %target%")
 				logTheThing("diary", caller:client, tysontarget2, "tysongibbed %target%", "admin")
-				message_admins("<span class='notice'>[caller?.client?.ckey] has tysongibbed [tysontarget2.ckey].</span>")
+				message_admins("<span class='internal'>[caller?.client?.ckey] has tysongibbed [tysontarget2.ckey].</span>")
 				tysontarget2.gib()
 			sleep(0.5 SECONDS)
 			playsound(src.loc, pick('sound/misc/knockout.ogg'), 50, 0)

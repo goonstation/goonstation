@@ -5,8 +5,8 @@
 	icon_state = "coin"
 	item_state = "coin"
 	w_class = 1.0
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	module_research = list("vice" = 3, "efficiency" = 1)
 	module_research_type = /obj/item/coin
 

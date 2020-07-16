@@ -26,6 +26,7 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 	canmove = 1
 	blinded = 0
 	anchored = 1
+	use_stamina = 0//no puff tomfuckery
 	var/datum/flock/flock = null
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
 

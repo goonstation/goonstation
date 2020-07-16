@@ -12,7 +12,7 @@
 
 /obj/item/saw
 	name = "chainsaw"
-	desc = "A chainsaw used to chop up harmful plants. Despite its appearance, it's not extremely dangerous to humans."
+	desc = "A chainsaw used to chop up harmful plants."
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_off"
@@ -21,7 +21,7 @@
 	var/active = 0.0
 	hit_type = DAMAGE_CUT
 	force = 3.0
-	var/active_force = 10.0
+	var/active_force = 12.0
 	var/off_force = 3.0
 	var/how_dangerous_is_this_thing = 1
 	var/takes_damage = 1
@@ -38,8 +38,8 @@
 	over_clothes = 1
 	override_attack_hand = 1
 	can_hold_items = 0
-	stamina_damage = 10
-	stamina_cost = 10
+	stamina_damage = 30
+	stamina_cost = 15
 	stamina_crit_chance = 35
 
 	cyborg
@@ -161,6 +161,7 @@
 		else
 			boutput(user, "<span class='notice'>[src] is now off.</span>")
 			src.force = off_force
+		tooltip_rebuild = 1
 		src.update_icon()
 		user.update_inhands()
 		src.add_fingerprint(user)
@@ -175,6 +176,8 @@
 		src.set_loc(user.loc)
 		user.gib()
 		return 1
+
+/obj/item/saw/abilities = list(/obj/ability_button/saw_toggle)
 
 /obj/item/saw/syndie
 	name = "red chainsaw"
@@ -200,7 +203,7 @@
 	sawnoise = 'sound/machines/chainsaw_red.ogg'
 	arm_icon = "chainsaw1"
 	stamina_damage = 100
-	stamina_cost = 20
+	stamina_cost = 30
 	stamina_crit_chance = 40
 
 /obj/item/saw/syndie/attack(mob/living/carbon/human/target as mob, mob/user as mob)
@@ -323,8 +326,8 @@
 	mats = 12
 	sawnoise = 'sound/machines/chainsaw_red.ogg'
 	arm_icon = "chainsaw1"
-	stamina_damage = 20
-	stamina_cost = 20
+	stamina_damage = 40
+	stamina_cost = 40
 	stamina_crit_chance = 50
 
 ////////////////////////////////////// Plant analyzer //////////////////////////////////////

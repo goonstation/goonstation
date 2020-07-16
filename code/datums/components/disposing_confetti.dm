@@ -14,3 +14,7 @@
 	particleMaster.SpawnSystem(new /datum/particleSystem/confetti(T))
 	SPAWN_DBG(1 SECOND)
 		playsound(T, "sound/voice/yayyy.ogg", 50, 1)
+
+/datum/component/disposing_confetti/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_PARENT_PRE_DISPOSING)
+	. = ..()

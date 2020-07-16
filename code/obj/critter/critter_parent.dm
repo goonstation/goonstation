@@ -709,6 +709,7 @@
 							walk_to(src, current_target,1,4)
 							if ((get_dist(src, current_target)) >= (olddist))
 								src.frustration++
+								step_towards(src, current_target, 4)
 							else
 								src.frustration = 0
 						else
@@ -972,8 +973,8 @@
 			return
 #endif
 		src.visible_message("<span class='combat'><B>[src]</B> [src.chase_text] [src.target]!</span>")
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		//playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 
@@ -985,8 +986,8 @@
 			src.visible_message("<span class='combat'><B>[src]</B> [src.atk_text] [src.target]!</span>")
 			random_brute_damage(src.target, src.atk_brute_amt,1)
 			random_burn_damage(src.target, src.atk_burn_amt)
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		SPAWN_DBG(src.atk_delay)
 			src.attacking = 0
@@ -1119,7 +1120,8 @@
 		src.warm_count = max(src.warm_count, 0)
 		src.hatch_check(0, user)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		//..() <- Fuck off mom, I'm 25 and I do what I want =I
 		src.hatch_check(1, null, T)
 

@@ -26,8 +26,8 @@ Contains:
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 4
-	stamina_damage = 35
-	stamina_cost = 30
+	stamina_damage = 55
+	stamina_cost = 23
 	stamina_crit_chance = 10
 
 	New()
@@ -303,6 +303,8 @@ Contains:
 	item_state = "jetpack_mag"
 	mats = 16
 	force = 8
+	stamina_damage = 55
+	stamina_cost = 30
 	desc = "A jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
 	module_research = list("atmospherics" = 4)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
@@ -429,6 +431,8 @@ Contains:
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	w_class = 2.0
 	force = 3.0
+	stamina_damage = 30
+	stamina_cost = 16
 	desc = "A small tank that is labelled to contain oxygen. In emergencies, wear a mask that can be used to transfer air, such as a breath mask, turn on the release valve on the oxygen tank, and put it on your belt."
 	wear_image_icon = 'icons/mob/belt.dmi'
 	module_research = list("atmospherics" = 1)

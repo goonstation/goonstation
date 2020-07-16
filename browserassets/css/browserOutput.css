@@ -1,13 +1,3 @@
-@font-face
-{
-	font-family: 'Inhuman BB';
-	src: url('InhumanBB.eot');
-	src: url('InhumanBB.eot') format('embedded-opentype'),
-		 url('InhumanBB.ttf') format('truetype'),
-		 url('InhumanBB.woff') format('woff'),
-		 url('InhumanBB.svg') format('svg');
-}
-
 /*****************************************
 *
 * GLOBAL STYLES
@@ -272,6 +262,8 @@ a.popt {text-decoration: none;}
 .italic, .ghostdronesay.broadcast {font-style: italic;}
 
 /* OUTPUT COLORS */
+.regular { color: #000000; }
+.internal { color: #002fff; }
 .mhelp {color: #CC0066;}
 .success {color: green;}
 .hint {color: #0000ff;}
@@ -315,6 +307,17 @@ h1.alert, h2.alert {color: #000000;}
 .highlight {background: yellow;}
 .blobalert {color: #4c00ff; font-size: 1.5em; font-weight: bold;}
 
+.rstandard {color: #008000;}
+.rintercom {color: #006080;}
+.rcommand {color: #334E6D;}
+.rsecurity {color: #E00000;}
+.rengineering {color: #A86800;}
+.rmedical {color: #461B7E;}
+.rresearch {color: #153E7E;}
+.rcivilian {color: #A10082;}
+.rsyndicate {color: #962121;}
+.rother {color: #800080;}
+
 .connectionClosed, .fatalError {background: red; color: white; padding: 5px;}
 .connectionClosed.restored {background: green;}
 .internal.boldnshit {color: blue; font-weight: bold;}
@@ -335,12 +338,96 @@ h1.alert, h2.alert {color: #000000;}
 }
 
 /* bog-standard dark theme with easy, unsaturated colors */
-body.theme-dark { background-color: #23272a; color: #99AAB5; }
-body.theme-dark .notice { color: #677BC4; }
-body.theme-dark .hint { color: #677BC4; }
-body.theme-dark .internal { color: #677BC4; }
+body.theme-dark { background-color: #23272a; color: #dfdfcf; }
+body.theme-dark .regular { color: #dfdfcf; }
+body.theme-dark .mhelp {color: #e75ae0;}
+body.theme-dark .notice { color: #7996ff; }
+body.theme-dark .hint { color: #7996ff; }
+body.theme-dark .internal { color: #92b4ff; }
 body.theme-dark .alert { color: #FF6D6D; }
 body.theme-dark .system { color: #FF6D6D; }
 body.theme-dark .success { color: #92E592; }
 body.theme-dark .emote { color: #888888; }
 body.theme-dark .subtle { color: #7A7471; }
+body.theme-dark .ooc {color: #688eff;}
+body.theme-dark .looc {color: #92a9ee;}
+body.theme-dark .adminooc {color: #be6e53;}
+body.theme-dark .adminlooc {color: #ce8c76;}
+body.theme-dark .mentorooc {color: #a653ff;}
+body.theme-dark .mentorlooc {color: #be81ff;}
+body.theme-dark .medal {color: #caca20;}
+body.theme-dark .motd {color: rgb(190, 190, 190);}
+body.theme-dark .motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: rgb(255, 255, 255);}
+body.theme-dark .motd a, .motd a:link, .motd a:visited {color: rgb(100, 100, 255);}
+body.theme-dark .motd a:active, .motd a:hover {color: rgb(48, 48, 223);}
+body.theme-dark .internal.boldnshit {color: rgb(95, 95, 253);}
+body.theme-dark .green {color: #3fcc3f;}
+body.theme-dark .radio {color: #3fcc3f;}
+body.theme-dark .contextMenu {background-color: rgb(48, 48, 48);}
+body.theme-dark .contextMenu a {color: rgb(216, 216, 216);}
+body.theme-dark .contextMenu a:hover {background-color: rgb(92, 92, 92);}
+body.theme-dark a {color: #6464ff;}
+body.theme-dark a:visited {color: #ae6fff;}
+body.theme-dark h1, h2, h3, h4, h5, h6 {color: #6464ff;}
+body.theme-dark #messages .entry > .streak-counter {border: 1px solid rgb(94, 94, 94);}
+body.theme-dark #newMessages {
+	background: rgb(63, 63, 63);
+	color: rgb(221, 221, 221);
+}
+body.theme-dark #newMessages:hover {background: rgb(83, 83, 83);}
+body.theme-dark #ping {background: #34393d;}
+body.theme-dark #options a {
+	background: #34393d;
+	color: rgb(189, 189, 189);
+    border-top: 1px solid #505050;}
+body.theme-dark #options a:hover {background: #34393d;}
+body.theme-dark #options .toggle {background: #34393d;}
+body.theme-dark  {
+	scrollbar-face-color: rgb(46, 46, 46);
+	scrollbar-shadow-color: #4d4d4d;
+	scrollbar-highlight-color: #4d4d4d;
+	scrollbar-3dlight-color: rgb(46, 46, 46);
+	scrollbar-darkshadow-color: rgb(46, 46, 46);
+	scrollbar-track-color: rgb(46, 46, 46);
+	scrollbar-arrow-color: #808080;
+}
+
+body.theme-dark .admin {color: #6e93ff;}
+body.theme-dark .adminMsgWrap {color: #cb79d4;}
+body.theme-dark .gfartooc {color: #60c4e6;}
+body.theme-dark .gfartlooc {color: #92cbdf;}
+body.theme-dark .gfartadmin {color: #c2953c;}
+body.theme-dark .combat {color: #e20000;}
+body.theme-dark .blobsay {color: #4ec44e;}
+body.theme-dark .deadsay {color: #b27eff;}
+body.theme-dark .hivesay {color: #e2a059;}
+body.theme-dark .ghoulsay {color: #9347b9;}
+body.theme-dark .kudzusay {color: #4bc75e;}
+body.theme-dark .astralsay {color: #60d4cf;}
+body.theme-dark .martiansay {color: #E89235;} /* #BD33D9 is the telepathy colour, possibly more suitable? */
+body.theme-dark .martianimperial {color: #e26794;}
+body.theme-dark .flocksay {color: #6fbbac;}
+body.theme-dark .flocksay a {color: #6dc0af;}
+body.theme-dark .flocksay a:visited {color: #6ec2b1;}
+body.theme-dark .flockmindsay {color: #82dbc8;}
+body.theme-dark .flocknpc {color: #afc9c3;}
+body.theme-dark .ghostdronesay {color: #ca4ed8;}
+body.theme-dark h1.alert {color: #cfcfcf;}
+body.theme-dark h2.alert {color: #cfcfcf;}
+body.theme-dark .adminHearing .name[data-ctx] {border-bottom: 1px dotted rgb(219, 219, 219);}
+body.theme-dark .blobalert {color: #9c74fc; }
+
+body.theme-dark .connectionClosed {background: rgb(192, 0, 0); color: white;}
+body.theme-dark .fatalError {background: rgb(192, 0, 0); color: white;}
+body.theme-dark .connectionClosed.restored {background: green;}
+
+body.theme-dark .rstandard {color: #3fcc3f;}
+body.theme-dark .rintercom {color: #4dc1c9;}
+body.theme-dark .rcommand {color: #7ca6d6;}
+body.theme-dark .rsecurity {color: #e43535;}
+body.theme-dark .rengineering {color: #dda448;}
+body.theme-dark .rmedical {color: #ac83e2;}
+body.theme-dark .rresearch {color: #3f69ac;}
+body.theme-dark .rcivilian {color: #ce45b2;}
+body.theme-dark .rsyndicate {color: #cf5757;}
+body.theme-dark .rother {color: #bd46bd;}

@@ -664,11 +664,13 @@
 	name = "Comedy Equipment"
 	desc = "Entertainers burn bright but die young, outfit a new one with this crate!"
 	category = "Civilian Department"
-	contains = list(/obj/item/storage/box/costume/clown,
-					/obj/item/instrument/bikehorn,
-					/obj/item/bananapeel,
-					/obj/item/reagent_containers/food/snacks/pie/cream,
-					/obj/item/storage/box/balloonbox)
+	contains = list(
+		/obj/item/storage/box/costume/clown/recycled,
+		/obj/item/instrument/bikehorn,
+		/obj/item/bananapeel,
+		/obj/item/reagent_containers/food/snacks/pie/cream,
+		/obj/item/storage/box/balloonbox,
+	)
 	cost = 500
 	containertype = /obj/storage/crate/packing
 	containername = "Comedy Equipment"

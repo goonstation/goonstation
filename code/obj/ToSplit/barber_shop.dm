@@ -6,8 +6,9 @@
 /obj/item/clothing/head/bald_cap
 	name = "bald cap"
 	desc = "You can't tell the difference, Honest!"
-	icon_state= "baldcap"
-	item_state= "baldcap"
+	icon_state = "baldcap"
+	item_state = "baldcap"
+	seal_hair = 1
 
 /obj/item/scissors
 	name = "scissors"
@@ -16,7 +17,7 @@
 	icon_state = "scissors"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SNIPPING
-	force = 6.0
+	force = 8.0
 	w_class = 1.0
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'

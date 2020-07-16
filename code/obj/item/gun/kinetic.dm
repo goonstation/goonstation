@@ -28,6 +28,11 @@
 	// 1.57 - 40mm shell
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 
+	New()
+		if(silenced)
+			current_projectile.shot_sound = 'sound/machines/click.ogg'
+		..()
+
 	examine()
 		. = ..()
 		if (src.ammo && (src.ammo.amount_left > 0))
@@ -342,6 +347,28 @@
 		current_projectile = new/datum/projectile/bullet/derringer
 		..()
 
+/obj/item/gun/kinetic/faith
+	name = "Faith"
+	desc = "'Cause ya gotta have Faith."
+	icon_state = "faith"
+	force = 5.0
+	caliber = 0.22
+	max_ammo_capacity = 4
+	w_class = 2
+	muzzle_flash = 0
+
+	New()
+		ammo = new/obj/item/ammo/bullets/bullet_22/faith
+		current_projectile = new/datum/projectile/bullet/bullet_22
+		..()
+
+	update_icon()
+		if (src.ammo.amount_left < 1)
+			src.icon_state = "faith-empty"
+		else
+			src.icon_state = "faith"
+		return
+
 /obj/item/gun/kinetic/detectiverevolver
 	name = "CPA Detective Special"
 	desc = "A snubnosed police-issue revolver developed by Cormorant Precision Arms. Uses .38-Special rounds."
@@ -607,7 +634,7 @@
 
 	shoot()
 		if(ammo && ammo.amount_left && current_projectile && current_projectile.caliber && current_projectile.power)
-			failure_chance = max(10,min(33,round(current_projectile.caliber * (current_projectile.power/2))))
+			failure_chance = max(0,min(33,round(current_projectile.power/2 - 9)))
 		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
 			var/turf/T = get_turf(src)
 			explosion(src, T,-1,-1,1,2)
@@ -713,11 +740,13 @@
 /obj/item/gun/kinetic/rpg7
 	desc = "A rocket-propelled grenade launcher licensed by the Space Irish Republican Army."
 	name = "MPRT-7"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "rpg7_empty"
 	uses_multiple_icon_states = 1
 	item_state = "rpg7_empty"
+	wear_image_icon = 'icons/mob/back.dmi'
+	flags = ONBACK
 	w_class = 4
 	throw_speed = 2
 	throw_range = 4
@@ -726,6 +755,7 @@
 	caliber = 1.58
 	max_ammo_capacity = 1
 	can_dual_wield = 0
+	two_handed = 1
 	muzzle_flash = 0 //rocket launcher
 
 	New()

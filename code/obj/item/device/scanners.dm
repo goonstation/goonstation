@@ -357,6 +357,7 @@ that cannot be itched
 	module_research = list("analysis" = 2, "science" = 2, "devices" = 1)
 	module_research_type = /obj/item/device/reagentscanner
 	hide_attack = 2
+	tooltip_flags = REBUILD_DIST
 
 	attack(mob/M as mob, mob/user as mob)
 		return
@@ -366,6 +367,7 @@ that cannot be itched
 		"<span class='notice'>You scan [A] with [src]!</span>")
 
 		src.scan_results = scan_reagents(A, visible = 1)
+		tooltip_rebuild = 1
 
 		if (!isnull(A.reagents))
 			if (A.reagents.reagent_list.len > 0)
@@ -461,6 +463,10 @@ that cannot be itched
 				SPAWN_DBG(0)
 					det.detonate()
 		return
+
+/obj/item/device/analyzer/atmospheric/upgraded //for borgs because JESUS FUCK
+	analyzer_upgrade = 1
+	icon_state = "atmos"
 
 /obj/item/device/analyzer/atmosanalyzer_upgrade
 	name = "atmospherics analyzer upgrade"

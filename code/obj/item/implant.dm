@@ -870,6 +870,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 	impcolor = "g"
 	var/uses = 8
 	var/obj/item/card/id/access = new /obj/item/card/id
+	tooltip_flags = REBUILD_DIST
 
 	get_desc(dist)
 		if (dist <= 1)
@@ -883,6 +884,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 			return 0
 		else
 			uses -= 1
+			tooltip_rebuild = 1
 		return 1
 
 	infinite
@@ -919,6 +921,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 	w_class = 2.0
 	hide_attack = 2
 	var/sneaky = 0
+	tooltip_flags = REBUILD_DIST
 
 	New()
 		..()
@@ -930,6 +933,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 			. += "It appears to contain \a [src.imp.name]."
 
 	proc/update()
+		tooltip_rebuild = 1
 		if (src.imp)
 			src.icon_state = src.imp.impcolor ? "implanter1-[imp.impcolor]" : "implanter1-g"
 		else
@@ -1127,6 +1131,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 	throw_range = 5
 	w_class = 1.0
 	var/implant_type = /obj/item/implant/tracking
+	tooltip_flags = REBUILD_DIST
 
 /obj/item/implantcase/tracking
 	name = "glass case - 'Tracking'"
@@ -1209,6 +1214,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 		. += "It appears to contain \a [src.imp.name]."
 
 /obj/item/implantcase/proc/update()
+	tooltip_rebuild = 1
 	if (src.imp)
 		src.icon_state = src.imp.impcolor ? "implantcase-[imp.impcolor]" : "implantcase-g"
 	else
@@ -1227,6 +1233,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 			src.name = "glass case - '[t]'"
 		else
 			src.name = "glass case"
+		tooltip_rebuild = 1
 		return
 	else if (istype(I, /obj/item/implanter))
 		var/obj/item/implanter/Imp = I
@@ -1504,6 +1511,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 				return
 
 			my_implant = I
+			tooltip_rebuild = 1
 
 			if (istype(W, /obj/item/implant))
 				user.u_equip(W)
@@ -1548,6 +1556,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			return ..()
 		my_implant.set_loc(P)
 		my_implant = null
+		tooltip_rebuild = 1
 
 /datum/projectile/implanter
 	name = "implant bullet"

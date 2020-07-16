@@ -1120,6 +1120,14 @@
 		icon_state = "donut3"
 		heal_amt = 3
 
+	robust
+		name = "robust donut"
+		desc = "It's like an energy bar, but in donut form! Contains some chemicals known for partial stun time reduction and boosted stamina regeneration."
+		icon_state = "donut4"
+		amount = 6
+		initial_volume = 36
+		initial_reagents = list("sugar"=12,"synaptizine"=12,"epinephrine"=12)
+
 	random
 		New()
 			if(rand(1,3) == 1)
@@ -2198,9 +2206,9 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 
 	heal(var/mob/M)
 		if (tastesbad)
-			boutput(M, "color = <span class='alert'>[phrase]! That tasted like [flavor]...</span>")
+			boutput(M, "<span class='alert'>[phrase]! That tasted like [flavor]...</span>")
 		else
-			boutput(M, "color = <span class='notice'>[phrase]! That tasted like [flavor]...</span>")
+			boutput(M, "<span class='notice'>[phrase]! That tasted like [flavor]...</span>")
 
 //#ifdef HALLOWEEN
 /obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor
@@ -2728,5 +2736,24 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 		phrase = pick(src.heart_phrases)
 		return
 
-	get_desc(dist)
+	get_desc()
 		. = "<br><span class='notice'>It says: [phrase]</span>"
+
+
+
+/obj/item/reagent_containers/food/snacks/healgoo
+	name = "weird goo"
+	desc = "This goop, harvested from an alien hallucigenia, is known for its beneficial anti-radiation and healing properties."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "healgoo"
+	heal_amt = 2
+	amount = 3
+	initial_volume = 28
+	food_effects = list("food_rad_resist")
+
+	New()
+		..()
+		reagents.add_reagent("saline",7)
+		reagents.add_reagent("charcoal",7)
+		reagents.add_reagent("anti_rad",7)
+		reagents.add_reagent("omnnizine",7)

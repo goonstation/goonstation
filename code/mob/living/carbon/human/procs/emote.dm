@@ -540,7 +540,7 @@
 							else if (src.r_hand)
 								thing = src.r_hand
 						if (thing)
-							thing.on_spin_emote(src)
+							message = thing.on_spin_emote(src)
 							animate(thing, transform = turn(matrix(), 120), time = 0.7, loop = 3)
 							animate(transform = turn(matrix(), 240), time = 0.7)
 							animate(transform = null, time = 0.7)
@@ -1088,9 +1088,9 @@
 				if (!voluntary || src.emote_check(voluntary,50))
 					if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown"))
 						src.deathConfetti()
-					if (prob(15) && !ischangeling(src) && !isdead(src)) message = "<span style=\"color:black\"><B>[src]</B> seizes up and falls limp, peeking out of one eye sneakily.</span>"
+					if (prob(15) && !ischangeling(src) && !isdead(src)) message = "<span class='regular'><B>[src]</B> seizes up and falls limp, peeking out of one eye sneakily.</span>"
 					else
-						message = "<span style=\"color:black\"><B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...</span>"
+						message = "<span class='regular'><B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...</span>"
 						playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, src.get_age_pitch())
 					m_type = 1
 
@@ -1742,6 +1742,7 @@
 					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
 						dab_id = I
 						dab_id.dab_count++
+						dab_id.tooltip_rebuild = 1
 					karma_update(4, "SIN", src)
 					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
 						// determine the name of the perp (goes by ID if wearing one)

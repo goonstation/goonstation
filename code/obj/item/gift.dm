@@ -8,9 +8,10 @@
 	uses_multiple_icon_states = 1
 	amount = 20.0
 	desc = "Used for wrapping gifts. It's got a neat design!"
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
+	tooltip_flags = REBUILD_DIST
 	var/style = "r"
 
 	New()
@@ -36,6 +37,7 @@
 				return
 			else
 				src.amount -= a_used
+				tooltip_rebuild = 1
 				user.drop_item()
 				var/obj/item/gift/G = new /obj/item/gift(src.loc)
 				G.size = W.w_class
@@ -73,6 +75,7 @@
 			var/obj/spresent/present = new /obj/spresent (target.loc)
 			present.icon_state = "strange-[src.style]"
 			src.amount -= 2
+			tooltip_rebuild = 1
 
 			target.set_loc(present)
 		else
@@ -89,8 +92,8 @@
 	var/size = 3.0
 	var/obj/item/gift = null
 	w_class = 4.0
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 
 /obj/item/gift/attack_self(mob/user as mob)

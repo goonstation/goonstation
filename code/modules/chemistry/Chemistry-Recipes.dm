@@ -1618,6 +1618,66 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
+		bees_knees
+			name = "Bee's knees"
+			id = "beesknees"
+			result = "beesknees"
+			required_reagents = list("gin" = 1, "honey" = 1, "juice_lemon" = 1)
+			result_amount = 3
+			mix_phrase = "You hear a faint buzz from the solution and your knees faintly ache"
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		spiced_rum
+			name = "Spiced Rum"
+			id = "spicedrum"
+			result = "spicedrum"
+			required_reagents = list("rum" = 1, "capsaicin" = 1)
+			result_amount = 2
+			mix_phrase = "You feel like you might have misunderstood the recipe."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		phil_collins
+			name = "Phil Collins"
+			id = "philcollins"
+			result = "philcollins"
+			required_reagents = list("vtonic" = 1, "lemonade" = 1)
+			result_amount = 2
+			mix_phrase = "You can feel it coming in the air tonight. Oh lord."
+			mix_sound = 'sound/misc/PhilCollinsTom.ogg'
+			drinkrecipe = 1
+
+		duck_fart
+			name = "Duck Fart"
+			id = "duckfart"
+			result = "duckfart"
+			required_reagents = list("bourbon" = 1, "coffee" =1 , "milk" = 1)
+			result_amount = 3
+			mix_phrase = "You hear a faint quack from the solution along with a pungent stretch"
+			mix_sound = 'sound/voice/farts/fart3.ogg'
+			drinkrecipe = 1
+
+		methacola
+			name = "Methacola"
+			id = "methacola"
+			result = "methacola"
+			required_reagents = list("methamphetamine" = 1, "cola" = 1)
+			result_amount = 2
+			mix_phrase = "You watch as the amphetamines dissolve into the dark void of the soft drink."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		pink_lemonade
+			name = "Pink lemonade"
+			id = "pinklemonade"
+			result = "pinklemonade"
+			required_reagents = list("grenadine" = 1,"lemonade" = 1)
+			result_amount = 2
+			mix_phrase = "You watch the pink colour dance around the container and slowly combine with the lemonade"
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		squeeze
 			name = "Squeeze"
 			id = "squeeze"
@@ -2167,7 +2227,7 @@ datum
 			name = "Salbutamol"
 			id = "salbutamol"
 			result = "salbutamol"
-			required_reagents = list("salicylic_acid" = 1, "lithium" = 1, "ammonia" = 1, "aluminium" = 1, "bromine" = 1)
+			required_reagents = list("oil" = 1, "lithium" = 1, "ammonia" = 1, "aluminium" = 1, "bromine" = 1)
 			result_amount = 5
 			mix_phrase = "The solution bubbles freely, creating a head of bluish foam."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -2176,7 +2236,7 @@ datum
 			name = "Perfluorodecalin"
 			id = "perfluorodecalin"
 			result = "perfluorodecalin"
-			required_reagents = list("hydrogen" = 1, "fluorine" = 1, "oil" = 1)
+			required_reagents = list("hydrogen" = 1, "fluorine" = 1, "salicylic_acid" = 1)
 			required_temperature = T0C + 100
 			// hydrogenate napthalene, then fluorinate
 			result_amount = 2 // lowered because the recipe is very easy

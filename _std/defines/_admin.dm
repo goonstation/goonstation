@@ -11,7 +11,7 @@
 #define ADMIN_CAT_UNUSED "You Should Never See This" // note that the verb might still be used as a proc, don't delete those
 #define ADMIN_CAT_NONE null // not in the tabs
 
-#define SET_ADMIN_CAT(CAT) set category = CAT ? ADMIN_CAT_PREFIX + CAT : null
+#define SET_ADMIN_CAT(CAT) set category = CAT ? "Lummox broke verb categories" + ADMIN_CAT_PREFIX + CAT : null
 
 var/global/list/toggleable_admin_verb_categories = list(
 	ADMIN_CAT_PLAYERS,

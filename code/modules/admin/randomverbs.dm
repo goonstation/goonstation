@@ -79,7 +79,7 @@
 			M.show_text("<h2><font color=red><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></font></h2>", "red")
 			logTheThing("admin", usr, M, "sent %target% to the prison zone.")
 			logTheThing("diary", usr, M, "%target% to the prison zone.", "admin")
-			message_admins("<span class='notice'>[key_name(usr)] sent [key_name(M)] to the prison zone.</span>")
+			message_admins("<span class='internal'>[key_name(usr)] sent [key_name(M)] to the prison zone.</span>")
 
 	return
 
@@ -107,7 +107,7 @@
 	var/subtle_href = null
 	if(src.holder && M.client)
 		subtle_href = "?src=\ref[src.holder];action=subtlemsg&targetckey=[M.client.ckey]"
-	message_admins("<span class='notice'><b>SubtleMessage: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]</b></span>")
+	message_admins("<span class='internal'><b>SubtleMessage: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]</b></span>")
 
 /client/proc/cmd_admin_plain_message(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -132,7 +132,7 @@
 
 	logTheThing("admin", src.mob, Mclient.mob, "Plain Messaged %target%: [html_encode(msg)]")
 	logTheThing("diary", src.mob, Mclient.mob, ": Plain Messaged %target%: [html_encode(msg)]", "admin")
-	message_admins("<span class='notice'><b>PlainMSG: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob)] : [html_encode(msg)]</b></span>")
+	message_admins("<span class='internal'><b>PlainMSG: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob)] : [html_encode(msg)]</b></span>")
 
 /client/proc/cmd_admin_plain_message_all()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -154,7 +154,7 @@
 
 	logTheThing("admin", src.mob, null, "Plain Messaged All: [html_encode(msg)]")
 	logTheThing("diary", src.mob, null, "Plain Messaged All: [html_encode(msg)]", "admin")
-	message_admins("<span class='notice'>[key_name(src.mob)] showed a plain message to all</span>")
+	message_admins("<span class='internal'>[key_name(src.mob)] showed a plain message to all</span>")
 
 /client/proc/cmd_admin_pm(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -634,7 +634,7 @@
 
 	logTheThing("admin", selection, "set %target%'s viewport orientation to [rotation].")
 	logTheThing("diary", usr, selection, "set %target%'s viewport orientation to [rotation].", "admin")
-	message_admins("<span class='notice'>[key_name(usr)] set [key_name(selection)]'s viewport orientation to [rotation].</span>")
+	message_admins("<span class='internal'>[key_name(usr)] set [key_name(selection)]'s viewport orientation to [rotation].</span>")
 
 /client/proc/cmd_admin_clownify(mob/living/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -2248,7 +2248,7 @@ var/global/night_mode_enabled = 0
 			if (alert(usr, "Boot [M]?", "Confirmation", "Yes", "No") == "Yes")
 				logTheThing("admin", usr, M, "booted %target%.")
 				logTheThing("diary", usr, M, "booted %target%.", "admin")
-				message_admins("<span class='notice'>[key_name(usr)] booted [key_name(M)].</span>")
+				message_admins("<span class='internal'>[key_name(usr)] booted [key_name(M)].</span>")
 				del(M.client)
 	else
 		alert("You need to be at least a Moderator to kick players.")
@@ -2561,7 +2561,7 @@ var/global/night_mode_enabled = 0
 	admin_only
 
 	var/is_text = winget(C,  "mapwindow.map", "text-mode") == "true"
-	logTheThing("admin", usr, C.mob, "has toggled %target%'s nodamage to [!is_text]")
-	logTheThing("diary", usr, C.mob, "has toggled %target%'s nodamage to [!is_text]", "admin")
-	message_admins("[key_name(usr)] has toggled [key_name(C.mob)]'s nodamage to [!is_text]")
+	logTheThing("admin", usr, C.mob, "has toggled %target%'s text mode to [!is_text]")
+	logTheThing("diary", usr, C.mob, "has toggled %target%'s text mode to [!is_text]", "admin")
+	message_admins("[key_name(usr)] has toggled [key_name(C.mob)]'s text mode to [!is_text]")
 	winset(C, "mapwindow.map", "text-mode=[is_text ? "false" : "true"]" )

@@ -108,17 +108,22 @@
 	return 1
 
 
-/mob/proc/slip(walking_matters = 1, running = 0)
+/mob/proc/slip(walking_matters = 1, running = 0, ignore_actual_delay = 0)
 	.= 0
 
 	if (!src.can_slip())
 		return
 
 	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.9) //we need to fall under this movedelay value in order to slip :O
+	if (src.m_intent == "walk")
+		slip_delay = BASE_SPEED_SUSTAINED - (WALK_DELAY_ADD*0.5)
+
 	if (!walking_matters)
 		slip_delay = 10
 	var/movement_delay_real = max(src.movement_delay(get_step(src,src.move_dir), running),world.tick_lag)
 	var/movedelay = max(movement_delay_real, min(world.time - src.next_move,world.time - src.last_pulled_time))
+	if (ignore_actual_delay)
+		movedelay = movement_delay_real
 
 	if (movedelay < slip_delay)
 		var/intensity = (-0.33)+(6.033763-(-0.33))/(1+(movement_delay_real/(0.4))-1.975308)  //y=d+(6.033763-d)/(1+(x/c)-1.975308)
@@ -139,8 +144,8 @@
 			src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
 		.= 1
 
-/mob/living/carbon/human/slip(walking_matters = 1, running = 0)
-	..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT))
+/mob/living/carbon/human/slip(walking_matters = 1, running = 0, ignore_actual_delay = 0)
+	..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
 
 
 /mob/living/carbon/human/proc/skeletonize()
@@ -162,12 +167,13 @@
 	if (hearing_check && !src.hearing_check(1))
 		return
 
+	var/class = ""
 	switch (color)
-		if ("red") color = "#FF0000"
-		if ("blue") color = "#0000FF"
-		if ("green") color = "#008800" // we dont want FF for this because it's fucking unreadable against white
+		if ("red") class = "alert"
+		if ("blue") class = "notify"
+		if ("green") class = "success"
 
-	boutput(src, "<span style='color: [color]'>[message]</span>", group)
+	boutput(src, "<span class='[class]'>[message]</span>", group)
 
 /mob/proc/sight_check(var/consciousness_check = 0)
 	return 1

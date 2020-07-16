@@ -24,6 +24,11 @@
 
 	var/ready = 1
 
+	get_desc()
+		. += {"<br><span class='notice'>[self_only ? "Only receiving signals addressed to [net_id]":"Receiving all signals regardless of address_1."]<br>
+		[register ? "Registering with mainframes.":"Not registering with mainframes."]<br>
+		Current NetID: [net_id]</span>"}
+
 	New()
 		. = ..()
 		src.net_id = generate_net_id(src)
@@ -54,9 +59,11 @@
 				if("Toggle Self-Only Messages")
 					self_only = !self_only
 					boutput(usr, "[self_only ? "Now only processing messages adressed at us.":"Now processing all messages recieved."]")
+					tooltip_rebuild = 1
 				if("Toggle Mainframe Registration")
 					register = !register
 					boutput(usr, "[register ? "Now registering with mainframes.":"Now no longer registering with mainframes."]")
+					tooltip_rebuild = 1
 
 	proc/spacket(var/datum/mechanicsMessage/input)
 		if(!ready) return

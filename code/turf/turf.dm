@@ -44,14 +44,14 @@ var/global/client/ff_debugger = null
 	var/blocks_air = 0
 	var/icon_old = null
 	var/name_old = null
-	var/pathweight = 1
-	var/pathable = 1
+	var/tmp/pathweight = 1
+	var/tmp/pathable = 1
 	var/can_write_on = 0
-	var/messy = 0 //value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
-	var/checkingexit = 0 //value corresponds to how many objs on this turf implement checkexit(). lets us skip a costly loop later!
-	var/checkingcanpass = 0 // "" how many implement canpass()
-	var/checkinghasentered = 0 // "" hasproximity as well as items with a mat that hasproximity
-	var/checkinghasproximity = 0
+	var/tmp/messy = 0 //value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
+	var/tmp/checkingexit = 0 //value corresponds to how many objs on this turf implement checkexit(). lets us skip a costly loop later!
+	var/tmp/checkingcanpass = 0 // "" how many implement canpass()
+	var/tmp/checkinghasentered = 0 // "" hasproximity as well as items with a mat that hasproximity
+	var/tmp/checkinghasproximity = 0
 	var/wet = 0
 	throw_unlimited = 0 //throws cannot stop on this tile if true (also makes space drift)
 
@@ -868,7 +868,7 @@ var/global/client/ff_debugger = null
 		lobby_titlecard = src
 
 	proc/educate()
-		maptext = "hello!! Please excuse the lag, we have lots of players right now.<br>use T to talk<br>use Y to talk on radio<br>use F3 to ask questions about how to play<br>We have Wiki + Map links on the top-right of the game window"
+		maptext = "<span class='ol c ps2p'>Hello! Press F3 to ask for help. You can change game settings using the file menu on the top left, and see our wiki + maps by clicking the buttons on the top right.</span>"
 		maptext_width = 300
 		maptext_height = 300
 

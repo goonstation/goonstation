@@ -66,38 +66,26 @@
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	see_face = 0.0
 	item_state = "s_helmet"
-	var/datum/light/light
 	var/on = 0
+
+	var/datum/component/holdertargeting/simple_light/light_dir
 
 	New()
 		..()
-		light = new /datum/light/line
-		light.set_brightness(4.5)
-		light.set_height(1.8)
-		light.set_color(0.9, 0.9, 1)
-		light.attach(src)
+		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, 0.9 * 255, 0.9 * 255, 1 * 255, 210)
+		light_dir.update(0)
 
 	attack_self(mob/user)
 		src.flashlight_toggle(user)
 		return
 
-	pickup(mob/user)
-		..()
-		light.attach(user)
-
-	dropped(mob/user)
-		..()
-		SPAWN_DBG(0)
-			if (src.loc != user)
-				light.attach(src)
-
 	proc/flashlight_toggle(var/mob/user, var/force_on = 0)
 		on = !on
 		src.icon_state = "espace[on]"
 		if (on)
-			light.enable()
+			light_dir.update(1)
 		else
-			light.disable()
+			light_dir.update(0)
 		user.update_clothing()
 		return
 
@@ -108,9 +96,9 @@
 		on = !on
 		src.icon_state = "espace[on]-alt"
 		if (on)
-			light.enable()
+			light_dir.update(1)
 		else
-			light.disable()
+			light_dir.update(0)
 		user.update_clothing()
 		return
 
@@ -127,9 +115,9 @@
 		on = !on
 		src.icon_state = "diving[on]"
 		if (on)
-			light.enable()
+			light_dir.update(1)
 		else
-			light.disable()
+			light_dir.update(0)
 		user.update_clothing()
 		return
 
@@ -141,9 +129,9 @@
 			on = !on
 			src.icon_state = "diving-sec[on]"
 			if (on)
-				light.enable()
+				light_dir.update(1)
 			else
-				light.disable()
+				light_dir.update(0)
 			user.update_clothing()
 			return
 
@@ -155,9 +143,9 @@
 			on = !on
 			src.icon_state = "diving-civ[on]"
 			if (on)
-				light.enable()
+				light_dir.update(1)
 			else
-				light.disable()
+				light_dir.update(0)
 			user.update_clothing()
 			return
 
@@ -169,9 +157,9 @@
 			on = !on
 			src.icon_state = "diving-com[on]"
 			if (on)
-				light.enable()
+				light_dir.update(1)
 			else
-				light.disable()
+				light_dir.update(0)
 			user.update_clothing()
 			return
 
@@ -183,9 +171,9 @@
 			on = !on
 			src.icon_state = "diving-eng[on]"
 			if (on)
-				light.enable()
+				light_dir.update(1)
 			else
-				light.disable()
+				light_dir.update(0)
 			user.update_clothing()
 			return
 
@@ -368,8 +356,8 @@
 	c_flags = SPACEWEAR
 	item_state = "hardhat0"
 	desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
-	var/datum/light/light
 	var/on = 0
+	var/datum/component/holdertargeting/simple_light/light_dir
 
 	setupProperties()
 		..()
@@ -377,21 +365,8 @@
 
 	New()
 		..()
-		light = new /datum/light/line
-		light.set_brightness(4.5)
-		light.set_height(1.8)
-		light.set_color(1, 1, 0.9)
-		light.attach(src)
-
-	pickup(mob/user)
-		..()
-		light.attach(user)
-
-	dropped(mob/user)
-		..()
-		SPAWN_DBG(0)
-			if (src.loc != user)
-				light.attach(src)
+		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, 0.9 * 255, 0.9 * 255, 1 * 255, 210)
+		light_dir.update(0)
 
 	attack_self(mob/user)
 		src.flashlight_toggle(user)
@@ -403,9 +378,9 @@
 		src.item_state = "hardhat[on]"
 		user.update_clothing()
 		if (on)
-			light.enable()
+			light_dir.update(1)
 		else
-			light.disable()
+			light_dir.update(0)
 		return
 
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
@@ -427,9 +402,9 @@
 		on = !on
 		user.update_clothing()
 		if (on)
-			light.enable()
+			light_dir.update(1)
 		else
-			light.disable()
+			light_dir.update(0)
 		return
 
 	attack_self(mob/user as mob) //Azungar was here and added some of his own styles to this thing.

@@ -98,19 +98,32 @@
 							var/base = "[relx].[rely]"
 							var/ttype
 							var/turf/Q
+
+							var/correct_path = 1
 							if (version < 2)
 								F["[base].TURF"] >> ttype
-								Q = new ttype(locate(cx, cy, cz))
-								F["[base].TURF.dir"] >> Q.dir
+								if (ispath(ttype))
+									Q = locate(cx, cy, cz)
+									Q.ReplaceWith(ttype, keep_old_material=0, force=1)
+									F["[base].TURF.dir"] >> Q.dir
+								else
+									correct_path = 0
+									boutput(usr, "<span class='alert'>Error: Invalid turf type [F.ExportText("[base].TURF")] in [base].TURF</span>")
 							else
 								F["[base].TURF.type"] >> ttype
-								Q = new ttype(locate(cx, cy, cz))
-								Q.deserialize(F, "[base].TURF", sandbox)
-							F["[base].TURF.tag"] >> Q.tag
-							if (!Q.dir)
-								Q.dir = SOUTH
-							new /area/adventure(Q)
-							blink(Q)
+								if (ispath(ttype))
+									Q = locate(cx, cy, cz)
+									Q.ReplaceWith(ttype, keep_old_material=0, force=1)
+									Q.deserialize(F, "[base].TURF", sandbox)
+								else
+									correct_path = 0
+									boutput(usr, "<span class='alert'>Error: Invalid turf type [F.ExportText("[base].TURF.type")] in [base].TURF.type</span>")
+							if (correct_path)
+								F["[base].TURF.tag"] >> Q.tag
+								if (!Q.dir)
+									Q.dir = SOUTH
+								new /area/adventure(Q)
+								blink(Q)
 							workgroup_curr++
 							if (workgroup_curr >= workgroup_size)
 								workgroup_curr = 0
@@ -127,13 +140,15 @@
 								var/objt
 								var/obj/O
 								F["[base].OBJ.[objid].type"] >> objt
-								O = new objt()
-								O.set_loc(Q)
-								O.flags |= ISADVENTURE
-								var/result = O:deserialize(F, "[base].OBJ.[objid]", sandbox)
-								if (!istype(O, /obj/critter))
-									if (result & DESERIALIZE_NEED_POSTPROCESS)
-										PP += O
+								if (ispath(objt))
+									O = new objt(Q)
+									O.flags |= ISADVENTURE
+									var/result = O:deserialize(F, "[base].OBJ.[objid]", sandbox)
+									if (!istype(O, /obj/critter))
+										if (result & DESERIALIZE_NEED_POSTPROCESS)
+											PP += O
+								else
+									boutput(usr, "<span class='alert'>Error: Invalid object type [F.ExportText("[base].OBJ.[objid].type")] in [base].OBJ.[objid].type</span>")
 							blink(Q)
 							workgroup_curr++
 							if (workgroup_curr >= workgroup_size)

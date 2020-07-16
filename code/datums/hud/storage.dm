@@ -146,6 +146,9 @@
 			I.screen_loc = final_loc
 			src.obj_locs[obj_loc] = I
 			i++
+		if(isitem(master))
+			var/obj/item/I = master
+			I.tooltip_rebuild = 1
 		master.update_icon()
 
 	proc/add_item(obj/item/I)

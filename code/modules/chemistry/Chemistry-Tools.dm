@@ -19,6 +19,7 @@
 	w_class = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	var/rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
+	tooltip_flags = REBUILD_SPECTRO | REBUILD_DIST
 	var/amount_per_transfer_from_this = 5
 	var/initial_volume = 50
 	var/list/initial_reagents = null // can be a list, an associative list (reagent=amt), or a string.  list will add an equal chunk of each reagent, associative list will add amt of reagent, string will add initial_volume of reagent
@@ -414,6 +415,7 @@
 		qdel(src)
 
 	on_spin_emote(var/mob/living/carbon/human/user as mob)
+		. = ..()
 		if (src.is_open_container() && src.reagents && src.reagents.total_volume > 0)
 			user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
 			src.reagents.reaction(get_turf(user), TOUCH)

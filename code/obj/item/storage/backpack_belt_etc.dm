@@ -34,6 +34,13 @@
 	icon_state = "Syndiebackpack"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+/obj/item/storage/backpack/syndie/tactical
+	name = "tactical assault rucksack"
+	desc = "A military backpack made of high density fabric, designed to fit a wide array of tools for comprehensive storage support."
+	icon_state = "tactical_backpack"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	slots = 10
+
 /obj/item/storage/backpack/medic
 	name = "medic's backpack"
 	icon_state = "bp_medic" //im doing inhands, im not getting baited into refactoring every icon state to use hyphens instead of underscores right now
@@ -88,8 +95,8 @@
 	w_class = 4.0
 	max_wclass = 3
 	does_not_open_in_pocket = 0
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 5
 	spawn_contents = list(/obj/item/storage/box/starter)
 
@@ -104,6 +111,11 @@
 	item_state = "funny"
 	spawn_contents = list(/obj/item/storage/box/starter,\
 	/obj/item/storage/box/balloonbox)
+
+/obj/item/storage/fanny/funny/mini
+	name = "mini funny pack"
+	desc = "Haha, get it? Get it? 'Funny'! This one seems a little smaller, and made of even cheaper material."
+	slots = 3
 
 /obj/item/storage/fanny/syndie
 	name = "syndicate tactical espionage belt pack"
@@ -121,9 +133,10 @@
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
 	max_wclass = 2
 	does_not_open_in_pocket = 0
-	stamina_damage = 5
+	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 5
+	w_class = 4.0
 
 	New()
 		..()
@@ -134,23 +147,26 @@
 		if (!ismob(loc))
 			return 0
 
+
+
 	MouseDrop(obj/over_object as obj, src_location, over_location)
 		var/mob/M = usr
-		if (!istype(over_object, /obj/screen))
+		if (istype(over_object,/obj/item) || istype(over_object,/mob/)) // covers pretty much all the situations we're trying to prevent; namely transferring storage and opening while on ground
 			if(!can_use())
-				boutput(M, "<span class='alert'>I need to wear [src] for that.</span>")
+				boutput(M, "<span class='alert'>You need to wear [src] for that.</span>")
 				return
 		return ..()
 
+
 	attack_hand(mob/user as mob)
 		if (src.loc == user && !can_use())
-			boutput(user, "<span class='alert'>I need to wear [src] for that.</span>")
+			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
 			return
 		return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(!can_use())
-			boutput(user, "<span class='alert'>I need to wear [src] for that.</span>")
+			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
 			return
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
@@ -166,8 +182,10 @@
 	desc = "Can hold various small objects."
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	can_hold = list(/obj/item/deconstructor)
+	in_list_or_max = 1
 
-/obj/item/storage/belt/utility/ceshielded
+/obj/item/storage/belt/utility/prepared/ceshielded
 	name = "aurora MKII utility belt"
 	desc = "An utility belt for usage in high-risk salvage operations. Contains a personal shield generator. Can be activated to overcharge the shields temporarily."
 	icon_state = "cebelt"
@@ -276,9 +294,9 @@
 		. += "There are [src.charge]/[src.maxCharge] PU left."
 
 	buildTooltipContent()
-		var/content = ..()
-		content += "<br>There are [src.charge]/[src.maxCharge] PU left."
-		return content
+		. = ..()
+		. += "<br>There are [src.charge]/[src.maxCharge] PU left."
+		lastTooltipContent = .
 
 /obj/item/storage/belt/utility/prepared
 	spawn_contents = list(/obj/item/crowbar,
@@ -287,7 +305,7 @@
 	/obj/item/screwdriver,
 	/obj/item/wrench,
 	/obj/item/device/multitool,
-	/obj/item/cable_coil)
+	/obj/item/deconstructor)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
@@ -345,6 +363,22 @@
 			icon_state = "inspector_holster"
 			item_state = "inspector_holster"
 
+
+	standard
+		spawn_contents = list(/obj/item/gun/energy/taser_gun, /obj/item/baton)
+
+	offense
+		spawn_contents = list(/obj/item/gun/energy/wavegun, /obj/item/baton)
+
+	support
+		spawn_contents = list(/obj/item/baton, /obj/item/reagent_containers/food/snacks/donut/robust = 2,  /obj/item/reagent_containers/emergency_injector/morphine = 4)
+
+	control
+		spawn_contents = list(/obj/item/gun/energy/tasershotgun, /obj/item/chem_grenade/pepper = 4, /obj/item/baton)
+		New()
+			..()
+			can_hold += /obj/item/gun/energy/tasershotgun //lol
+
 //////////////////////////////
 // ~Nuke Ops Class Storage~ //
 //////////////////////////////
@@ -358,6 +392,26 @@
 	item_state = "utility"
 	can_hold = list(/obj/item/ammo/bullets)
 	in_list_or_max = 0
+
+/obj/item/storage/belt/revolver
+	name = "revolver belt"
+	desc = "A stylish leather belt for holstering a revolver and it's ammo."
+	icon_state = "revolver_belt"
+	item_state = "revolver_belt"
+	slots = 3
+	in_list_or_max = 0
+	can_hold = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357)
+	spawn_contents = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357 = 2)
+
+/obj/item/storage/belt/pistol
+	name = "pistol belt"
+	desc = "A rugged belt fitted with a pistol holster and some magazine pouches."
+	icon_state = "pistol_belt"
+	item_state = "pistol_belt"
+	slots = 5
+	in_list_or_max = 0
+	can_hold = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm)
+	spawn_contents = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm = 4)
 
 // fancy shoulder sling for grenades
 

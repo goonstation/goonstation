@@ -18,6 +18,7 @@ var/global/list/mapNames = list(
 	"Cogmap 2" = 		list("id" = "COGMAP2", 		"settings" = "cogmap2", 		"playerPickable" = 1, 	"MinPlayersAllowed" = 40),
 	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = 1),
 	"Donut 2" = 		list("id" = "DONUT2", 		"settings" = "donut2",			"playerPickable" = ASS_JAM),
+	"Donut 3" = 		list("id" = "DONUT3", 		"settings" = "donut3",			"playerPickable" = 1, 	"MinPlayersAllowed" = 40),
 	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = 1),
 	"Linemap" = 		list("id" = "LINEMAP", 		"settings" = "linemap",			"playerPickable" = ASS_JAM),
 	"Mushroom" =		list("id" = "MUSHROOM", 	"settings" = "mushroom",		"playerPickable" = ASS_JAM),
@@ -123,6 +124,35 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/donut2
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/donut2
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/donut2
+
+/datum/map_settings/donut3
+	name = "DONUT3"
+	goonhub_map = "https://cdn.discordapp.com/attachments/469379618168897538/729407450737934376/donut3-30-FINAL3-it-never-ends.png"
+	airlock_style = "pyro"
+	walls = /turf/simulated/wall/auto/jen
+	rwalls = /turf/simulated/wall/auto/reinforced/jen
+
+	escape_centcom = /area/shuttle/escape/centcom/donut3
+	escape_transit = /area/shuttle/escape/transit/donut3
+	escape_station = /area/shuttle/escape/station/donut3
+	escape_dir = NORTH
+	auto_windows = 1
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = 1
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
 
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"
@@ -737,6 +767,8 @@ var/global/list/mapNames = list(
 	icon_state = "shuttle_escape"
 	donut2
 		icon_state = "shuttle_escape-dnt2"
+	donut3
+		icon_state = "shuttle_escape-dnt3"
 	cogmap
 		icon_state = "shuttle_escape-cog1"
 	cogmap2
@@ -748,6 +780,8 @@ var/global/list/mapNames = list(
 	manta
 		icon_state = "shuttle_escape-manta"
 		filler_turf = "/turf/space/fluid/manta"
+	donut3
+		icon_state = "shuttle_escape-dnt3"
 
 /area/shuttle/escape/station
 	#ifdef UNDERWATER_MAP
@@ -756,6 +790,8 @@ var/global/list/mapNames = list(
 	icon_state = "shuttle_escape"
 	donut2
 		icon_state = "shuttle_escape-dnt2"
+	donut3
+		icon_state = "shuttle_escape-dnt3"
 	cogmap
 		icon_state = "shuttle_escape-cog1"
 	cogmap2
@@ -772,6 +808,9 @@ var/global/list/mapNames = list(
 	donut2
 		icon_state = "shuttle_escape-dnt2"
 		warp_dir = WEST
+	donut3
+		icon_state = "shuttle_escape-dnt3"
+		warp_dir = NORTH
 	cogmap
 		icon_state = "shuttle_escape-cog1"
 	cogmap2

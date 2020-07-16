@@ -193,6 +193,11 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 			new/area/cordon/dark(T)
 			LAGCHECK(LAG_REALTIME)
 
+		for (var/i=0, i<45, i++)
+			var/turf/T = locate(rand(1,world.maxx),rand(1,world.maxy),AST_ZLEVEL)
+			for (var/turf/space/fluid/TT in range(rand(3,6),T))
+				TT.spawningFlags |= SPAWN_TRILOBITE
+
 		return miningZ
 
 /datum/mapGenerator/asteroidsDistance //Generates a bunch of asteroids based on distance to seed/center. Super simple.
