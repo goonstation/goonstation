@@ -1,4 +1,9 @@
 
+(t)thu jul 16 20
+(u)makkipakki
+(p)1475
+(e)|
+(+)The chaplain's pistol Faith now functions like a semi-auto
 (t)wed jul 15 20
 (u)mbc
 (*)Added overhead text for emotes. Emotes that make noise or animations will not be overhead.
