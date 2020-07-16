@@ -57,6 +57,9 @@
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
 
+	jen
+		icon_state = "plating_jen"
+
 /turf/simulated/floor/airless/plating/scorched
 	icon_state = "panelscorched"
 

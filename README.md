@@ -2,9 +2,12 @@
 
 ![contains technical debt](https://forthebadge.com/images/badges/contains-technical-debt.svg)![made with crayons](https://forthebadge.com/images/badges/made-with-crayons.svg)![made in byond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)
 
-Master Status: [![Build Status](https://travis-ci.com/goonstation/goonstation.svg?branch=master)](https://travis-ci.com/goonstation/goonstation)
-
-Develop Status: [![Build Status](https://travis-ci.com/goonstation/goonstation.svg?branch=develop)](https://travis-ci.com/github/goonstation/goonstation/branches)
+<table>
+<tr><td align="right" >Master Status: </td>
+<td><img valign="sub" src="https://github.com/goonstation/goonstation/workflows/Beepsky/badge.svg?branch=master"/></td></tr>
+<tr><td align="right">Develop Status: </td>
+<td><img valign="sub" src="https://github.com/goonstation/goonstation/workflows/Beepsky/badge.svg?branch=develop"/></td></tr>
+</table>
 
 **Website:** [goonhub.com](https://goonhub.com)
 
@@ -12,7 +15,7 @@ Develop Status: [![Build Status](https://travis-ci.com/goonstation/goonstation.s
 
 **Wiki:** [wiki.ss13.co](https://wiki.ss13.co)
 
-**Goonstation Discord:** [0117EEzASKYV2vtek](https://discord.gg/0117EEzASKYV2vtek)
+**Goonstation Discord:** [zd8t6pY](https://discord.gg/zd8t6pY)
 
 This is the codebase for the Goonstation branch of [Space Station 13](https://spacestation13.com/).
 
@@ -26,7 +29,7 @@ Space Station 13 is a community developed, multiplayer round-based role playing 
 
 [Contributor Guidelines](https://hackmd.io/@ZeWaka/gooncontributor)
 
-[Code Guidelines](https://hackmd.io/@ZeWaka/gooncode)
+[Code Guide](https://hackmd.io/@ZeWaka/gooncode)
 
 [Spriting Guidelines](https://hackmd.io/@ZeWaka/goonsprite)
 

@@ -183,7 +183,7 @@
 		return 0
 
 	proc/apply_to(mob/M as mob, mob/user as mob)
-		repair_bleeding_damage(M, 66, 1)
+		repair_bleeding_damage(M, 25, 1)
 		active = 1
 
 		if (reagents && reagents.total_volume)
@@ -634,6 +634,7 @@
 
 		//Auto stop healing loop if we are not tampered and the health didnt change at all
 		if (!M.tampered)
+			target.updatehealth() //I hate this, but we actually need the health on time here.
 			if (health_temp == target.health)
 				user.show_text("[M] is finished healing and powers down automatically.", "blue")
 				return

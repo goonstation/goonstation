@@ -441,6 +441,7 @@ var/global
 	soundpref_override = 0
 
 	diary = null
+	diary_name = null
 	hublog = null
 	game_version = "Goon Station 13 (r" + vcs_revision + ")"
 
@@ -456,6 +457,7 @@ var/global
 	dooc_allowed = 1
 	player_capa = 0
 	player_cap = 55
+	player_cap_grace = list()
 	traitor_scaling = 1
 	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
@@ -535,6 +537,7 @@ var/global
 	list/admins = list(  )
 	list/onlineAdmins = list(  )
 	list/whitelistCkeys = list(  )
+	list/bypassCapCkeys = list(  )
 	list/shuttles = list(  )
 	list/reg_dna = list(  )
 //	list/traitobj = list(  )

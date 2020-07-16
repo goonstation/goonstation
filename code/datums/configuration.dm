@@ -110,7 +110,7 @@
 
 		if (M.config_tag)
 			if(!(M.config_tag in modes))		// ensure each mode is added only once
-				diary << "Adding game mode [M.name] ([M.config_tag]) to configuration."
+				logDiary("Adding game mode [M.name] ([M.config_tag]) to configuration.")
 				src.modes += M.config_tag
 				src.mode_names[M.config_tag] = M.name
 				src.probabilities[M.config_tag] = M.probability
@@ -122,11 +122,11 @@
 	var/text = file2text(filename)
 
 	if (!text)
-		diary << "No '[filename]' file found, setting defaults"
+		logDiary("No '[filename]' file found, setting defaults")
 		src = new /datum/configuration()
 		return
 
-	diary << "Reading configuration file '[filename]'"
+	logDiary("Reading configuration file '[filename]'")
 
 	var/list/CL = splittext(text, "\n")
 
@@ -244,9 +244,9 @@
 					if (prob_name in config.modes)
 						config.probabilities[prob_name] = text2num(prob_value)
 					else
-						diary << "Unknown game mode probability configuration definition: [prob_name]."
+						logDiary("Unknown game mode probability configuration definition: [prob_name].")
 				else
-					diary << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
+					logDiary("Incorrect probability configuration definition: [prob_name]  [prob_value].")
 
 			if ("play_antag")
 				var/rate_pos = findtext(value, " ")
@@ -258,7 +258,7 @@
 					antag_rate = copytext(value, rate_pos + 1)
 					config.play_antag_rates[antag_name] = text2num(antag_rate)
 				else
-					diary << "Incorrect antag rate configuration definition: [antag_name]  [antag_rate]."
+					logDiary("Incorrect antag rate configuration definition: [antag_name]  [antag_rate].")
 
 			if ("use_mysql")
 				config.sql_enabled = 1
@@ -360,7 +360,7 @@
 				config.player_notes_auth = trim(value)
 
 			else
-				diary << "Unknown setting in configuration: '[name]'"
+				logDiary("Unknown setting in configuration: '[name]'")
 
 	if (config.env == "dev")
 		config.cdn = ""

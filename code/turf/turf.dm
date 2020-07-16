@@ -867,8 +867,21 @@ var/global/client/ff_debugger = null
 	#endif
 		lobby_titlecard = src
 
+#ifndef RP_MODE
+		if (!player_capa)
+			encourage()
+#endif
+
+	proc/encourage()
+		var/obj/overlay/clickable = new/obj/overlay(src)
+		clickable.maptext = "<span class='ol c ps2p'>Hello! We are experiencing more load than usual. <br><a href='byond://goon3.goonhub.com:26300'>click here to join Goonstation Overflow (Server #3 - lower population).</a> </span>"
+		clickable.maptext_width = 300
+		clickable.maptext_height = 300
+		clickable.plane = 100
+		clickable.layer = src.layer + 1
+
 	proc/educate()
-		maptext = "hello!! Please excuse the lag, we have lots of players right now.<br>use T to talk<br>use Y to talk on radio<br>use F3 to ask questions about how to play<br>We have Wiki + Map links on the top-right of the game window"
+		maptext = "<span class='ol c ps2p'>Hello! Press F3 to ask for help. You can change game settings using the file menu on the top left, and see our wiki + maps by clicking the buttons on the top right.</span>"
 		maptext_width = 300
 		maptext_height = 300
 
@@ -960,15 +973,17 @@ var/global/client/ff_debugger = null
 
 	if (istype(C, /obj/item/tile))
 		//var/obj/lattice/L = locate(/obj/lattice, src)
-		for(var/obj/lattice/L in src)
-			qdel(L)
-		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
-		C:build(src)
-		C:amount--
-		if(C.material) src.setMaterial(C.material)
-		if (C:amount < 1)
-			user.u_equip(C)
-			qdel(C)
+		var/obj/item/tile/T = C
+		if (T.amount >= 1)
+			for(var/obj/lattice/L in src)
+				qdel(L)
+			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			T.build(src)
+			if(T.material) src.setMaterial(T.material)
+
+		if (T.amount < 1 && !issilicon(user))
+			user.u_equip(T)
+			qdel(T)
 			return
 		return
 	return

@@ -119,27 +119,26 @@
 		HH.can_attack = 1
 
 	Bump(atom/movable/AM)
+		if(smashes_shit)
+			if(isobj(AM))
+				if (istype(AM, /obj/critter) || istype(AM, /obj/machinery/vehicle))
+					return
+				if(istype(AM, /obj/window))
+					var/obj/window/W = AM
+					W.health = 0
+					W.smash()
+				else if(istype(AM,/obj/grille))
+					var/obj/grille/G = AM
+					G.damage_blunt(30)
+				else if(istype(AM, /obj/table))
+					AM.meteorhit()
+				else if(istype(AM, /obj/foamedmetal))
+					AM.dispose()
+				else
+					AM.meteorhit()
+				playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
+				src.visible_message("<span class='alert'><B>[src]</B> smashes through \the [AM]!</span>")
 		..()
-		if(!smashes_shit) return
-
-		if(isobj(AM))
-			if (istype(AM, /obj/critter) || istype(AM, /obj/machinery/vehicle))
-				return
-			if(istype(AM, /obj/window))
-				var/obj/window/W = AM
-				W.health = 0
-				W.smash()
-			else if(istype(AM,/obj/grille))
-				var/obj/grille/G = AM
-				G.damage_blunt(30)
-			else if(istype(AM, /obj/table))
-				AM.meteorhit()
-			else if(istype(AM, /obj/foamedmetal))
-				AM.dispose()
-			else
-				AM.meteorhit()
-			playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
-			src.visible_message("<span class='alert'><B>[src]</B> smashes through \the [AM]!</span>")
 
 	setup_healths()
 		add_hh_robot(-500, 500, 1)

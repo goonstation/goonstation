@@ -299,7 +299,7 @@
 					update_lists(T)
 					spread = locate(/datum/blob_ability/spread) in abilities
 					attack = locate(/datum/blob_ability/attack) in abilities
-					//lipid = locate(/datum/blob_ability/build/ribosome) in abilities
+					lipid = locate(/datum/blob_ability/build/ribosome) in abilities
 					mito = locate(/datum/blob_ability/build/mitochondria) in abilities
 					wall = locate(/datum/blob_ability/build/wall) in abilities
 					absorb = locate(/datum/blob_ability/absorb) in abilities

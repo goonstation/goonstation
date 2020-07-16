@@ -55,11 +55,16 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 		return null
 	var/area/A = T.loc
 
-	if (A.type == /area)
+	if (area_space_nopower(A))
 		// dont search space for an apc
 		return null
 
-	for (var/obj/machinery/power/apc/APC in A.contents)
+	if (A.area_apc)
+		return A.area_apc
+
+	for (var/obj/machinery/power/apc/APC in machine_registry[MACHINES_POWER])
+		if (get_area(APC) != A)
+			continue
 		if (!(APC.status & BROKEN))
 			return APC
 
@@ -282,12 +287,12 @@ var/obj/item/dummy/click_dummy = new
 	if (iscluwne(H))
 		message = honk(message)
 		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
-			playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 70, 0, 0, H.get_age_pitch())
+			playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
 			H.last_cluwne_noise = world.time
 	if (ishorse(H))
 		message = neigh(message)
 		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
-			playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 70, 0, 0, H.get_age_pitch())
+			playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
 			H.last_cluwne_noise = world.time
 
 	if ((H.reagents && H.reagents.get_reagent_amount("ethanol") > 30 && !isdead(H)) || H.traitHolder.hasTrait("alcoholic"))

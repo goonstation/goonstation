@@ -919,7 +919,7 @@
 			continue
 		LI += W
 
-	return LI
+	.= LI
 
 /mob/living/carbon/human/get_unequippable()
 	var/list/obj/item/LI = list()
@@ -967,18 +967,17 @@
 			continue
 
 		LI += W
-	return LI
+	.= LI
 
 /mob/proc/findname(msg)
 	for(var/mob/M in mobs)
 		if (M.real_name == text("[]", msg))
-			return M
-	return 0
+			.= M
+	.= 0
 
 /mob/proc/movement_delay(var/atom/move_target = 0)
 	.= 2 + movement_delay_modifier
-	if (src.pushing)
-		. *= max (src.pushing.p_class, 1)
+	. *= max(src?.pushing.p_class, 1)
 
 /mob/proc/Life(datum/controller/process/mobs/parent)
 	return
@@ -1825,9 +1824,7 @@
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(2, 1, src.loc)
-	s.start()
+	elecflash(src.loc,exclude_center = 0)
 
 	if (animation)
 		animation.delaydispose()
@@ -2858,7 +2855,7 @@
 
 
 /mob/living/verb/interact_verb(obj/A as obj in view(1))
-	set name = "Pick Up / Interact"
+	set name = "Pick Up / Left Click"
 	set category = "Local"
 	A.interact(src)
 

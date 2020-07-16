@@ -621,6 +621,8 @@
 			if (C.hivemind.len > 0)
 				boutput(src, "Contact with the hivemind has been lost.")
 			C.hivemind = list()
+			if(C.master != C.temp_controller)
+				C.return_control_to_master()
 
 		else
 		//Changelings' heads pop off and crawl away - but only if they're not gibbed and have some spare DNA points. Oy vey!
@@ -850,15 +852,19 @@
 		if ("help")
 			src.a_intent = INTENT_HELP
 			hud.update_intent()
+			check_for_intent_trigger()
 		if ("disarm")
 			src.a_intent = INTENT_DISARM
 			hud.update_intent()
+			check_for_intent_trigger()
 		if ("grab")
 			src.a_intent = INTENT_GRAB
 			hud.update_intent()
+			check_for_intent_trigger()
 		if ("harm")
 			src.a_intent = INTENT_HARM
 			hud.update_intent()
+			check_for_intent_trigger()
 		if ("drop")
 			src.drop_item()
 		if ("swaphand")
@@ -868,7 +874,7 @@
 			if (W)
 				src.click(W, list())
 		if ("equip")
-			src.hud.clicked("invtoggle", list()) // this is incredibly dumb, it's also just as dumb as what was here previously
+			src.hud.clicked("invtoggle", src, list()) // this is incredibly dumb, it's also just as dumb as what was here previously
 		if ("togglethrow")
 			src.toggle_throw_mode()
 		if ("walk")
@@ -933,7 +939,7 @@
 /mob/living/carbon/human/proc/throw_item(atom/target, list/params)
 	var/turf/thrown_from = get_turf(src)
 	src.throw_mode_off()
-	if (usr.stat)
+	if (src.stat)
 		return
 #if ASS_JAM //no throwing while in timestop
 	if (paused)
@@ -945,6 +951,8 @@
 	//	return
 
 	var/obj/item/I = src.equipped()
+	if("npc_throw" in params)
+		I = src.r_hand
 
 	if (!I || !isitem(I) || I.cant_drop) return
 
@@ -2186,6 +2194,8 @@
 	else
 		src.hand = !src.hand
 	hud.update_hands()
+	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER) && !src.equipped().two_handed)
+		src.equipped().intent_switch_trigger(src)
 
 /mob/living/carbon/human/emp_act()
 	boutput(src, "<span class='alert'><B>Your equipment malfunctions.</B></span>")
@@ -2357,104 +2367,6 @@
 	if (!(P.pathogen_uid in src.immunities))
 		src.immunities += P.pathogen_uid
 		logTheThing("pathology", src, null, "gains immunity to pathogen [P].")
-
-/mob/living/carbon/human/shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
-	if (!wattage)
-		return 0
-	var/prot = 1
-	var/obj/item/clothing/gloves/G = src.gloves
-	if (G && !ignore_gloves)
-		prot = (G.hasProperty("conductivity") ? G.getProperty("conductivity") : 1)
-	if (src.limbs.l_arm)
-		prot = min(prot,src.limbs.l_arm.siemens_coefficient)
-	if (src.limbs.r_arm)
-		prot = min(prot,src.limbs.r_arm.siemens_coefficient)
-	if (prot <= 0.29)
-		return 0
-
-	var/shock_damage = 0
-	if (wattage > 7500)
-		shock_damage = (max(rand(10,20), round(wattage * 0.00004)))*prot
-	else if (wattage > 5000)
-		shock_damage = 15 * prot
-	else if (wattage > 2500)
-		shock_damage = 5 * prot
-	else
-		shock_damage = 1 * prot
-
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		shock_damage = P.onshocked(shock_damage, wattage)
-		if (!shock_damage)
-			return 0
-
-	if (src.bioHolder.HasEffect("resist_electric") == 2)
-		var/healing = 0
-		healing = shock_damage / 3
-		src.HealDamage("All", healing, healing)
-		src.take_toxin_damage(0 - healing)
-		boutput(src, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
-		return 0
-	else if (src.bioHolder.HasEffect("resist_electric") == 1)
-		boutput(src, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
-		return 0
-
-	switch(shock_damage)
-		if (0 to 25)
-			playsound(src.loc, "sound/effects/electric_shock.ogg", 50, 1)
-		if (26 to 59)
-			playsound(src.loc, "sound/effects/elec_bzzz.ogg", 50, 1)
-		if (60 to 99)
-			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 50, 1)  // begin the fun arcflash
-			boutput(src, "<span class='alert'><b>[origin] discharges a violent arc of electricity!</b></span>")
-			src.apply_flash(60, 0, 10)
-			if (ishuman(src))
-				var/mob/living/carbon/human/H = src
-				H.cust_one_state = pick("xcom","bart","zapped")
-				H.set_face_icon_dirty()
-		if (100 to INFINITY)  // cogwerks - here are the big fuckin murderflashes
-			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 50, 1)
-			playsound(src.loc, "explosion", 50, 1)
-			src.flash(60)
-			if (ishuman(src))
-				var/mob/living/carbon/human/H = src
-				H.cust_one_state = pick("xcom","bart","zapped")
-				H.set_face_icon_dirty()
-
-			var/turf/T = get_turf(src)
-			if (T)
-				T.hotspot_expose(5000,125)
-				explosion(origin, T, -1,-1,1,2)
-			if (ishuman(src))
-				if (prob(20))
-					boutput(src, "<span class='alert'><b>[origin] vaporizes you with a lethal arc of electricity!</b></span>")
-					if (src.shoes)
-						src.drop_from_slot(src.shoes)
-					make_cleanable(/obj/decal/cleanable/ash,src.loc)
-					SPAWN_DBG(1 DECI SECOND)
-						src.elecgib()
-				else
-					boutput(src, "<span class='alert'><b>[origin] blasts you with an arc flash!</b></span>")
-					if (src.shoes)
-						src.drop_from_slot(src.shoes)
-					var/atom/targetTurf = get_edge_target_turf(src, get_dir(src, get_step_away(src, origin)))
-					src.throw_at(targetTurf, 200, 4)
-	shock_cyberheart(shock_damage)
-	TakeDamage(zone, 0, shock_damage, 0, DAMAGE_BURN)
-	boutput(src, "<span class='alert'><B>You feel a [wattage > 7500 ? "powerful" : "slight"] shock course through your body!</B></span>")
-	src.unlock_medal("HIGH VOLTAGE", 1)
-	src.Virus_ShockCure(min(wattage / 500, 100))
-	sleep(0.1 SECONDS)
-
-#ifdef USE_STAMINA_DISORIENT
-	var/stun = (min((shock_damage/5), 12) * stun_multiplier)* 10
-	src.do_disorient(100 + stun, weakened = stun, stunned = stun, disorient = stun + 40, remove_stamina_below_zero = 1)
-#else
-	src.changeStatus("stunned", (min((shock_damage/5), 12) * stun_multiplier)* 10)
-	src.changeStatus("weakened", (min((shock_damage/5), 12) * stun_multiplier)* 10)
-#endif
-
-	return shock_damage
 
 /mob/living/carbon/human/emag_act(mob/user, obj/item/card/emag/E)
 
@@ -2860,36 +2772,18 @@
 			return 0
 	.=..()
 
-/mob/living/carbon/human/bullet_act(var/obj/projectile/P)
-	if (P.mob_shooter)
-		src.was_harmed(P.mob_shooter)
-	..()
-
-/mob/living/carbon/human/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
-	return
-
 /mob/living/carbon/human/attack_hand(mob/M)
 	..()
 	if (!surgeryCheck(src, M))
 		src.activate_chest_item_on_attack(M)
-	if (M.a_intent in list(INTENT_HARM,INTENT_DISARM,INTENT_GRAB))
-		src.was_harmed(M)
 
 /mob/living/carbon/human/attackby(obj/item/W, mob/M)
 	if (isghostcritter(M) && src.health < 80) //there's another one of these in attack_hand(). Same file. see, the quality of my code doens't matter as long as i leave a very helpful comment!!!
 		boutput(M, "Your spectral conscience refuses to damage this human any further.")
 		return
-	var/oldbloss = get_brute_damage()
-	var/oldfloss = get_burn_damage()
 	..()
-	var/newbloss = get_brute_damage()
-	var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
-	if (reagents)
-		reagents.physical_shock((newbloss - oldbloss) * 0.15)
 	if (!surgeryCheck(src, M))
 		src.activate_chest_item_on_attack(M)
-	if ((damage > 0) || W.force)
-		src.was_harmed(M, W)
 
 /mob/living/carbon/human/understands_language(var/langname)
 	if (mutantrace)
@@ -3152,7 +3046,7 @@
 	set category = "Local"
 
 	if (usr == src)
-		src.hud.clicked("invtoggle", list()) // ha i copy the dumb thing
+		src.hud.clicked("invtoggle", src, list()) // ha i copy the dumb thing
 		return
 	if (!src.can_strip(src, 1)) return
 	if (LinkBlocked(src.loc,usr.loc)) return
@@ -3333,3 +3227,7 @@
 					. += T.active_liquid.movement_speed_mod
 				else if (istype(T,/turf/space/fluid))
 					. += 3
+
+/mob/living/carbon/human/proc/check_for_intent_trigger()
+	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER))
+		src.equipped().intent_switch_trigger(src)

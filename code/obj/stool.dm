@@ -959,6 +959,13 @@
 	green
 		icon_state = "shuttle_chair-green"
 
+/obj/stool/chair/comfy/shuttle/pilot
+	name = "pilot's seat"
+	desc = "Only the most important crew member gets to sit here. Everyone is super envious of whoever sits in this chair."
+	icon_state = "shuttle_chair-pilot"
+	arm_icon_state = "shuttle_chair-pilot-arm"
+	comfort_value = 7
+
 /* ===================================================== */
 /* -------------------- Wheelchairs -------------------- */
 /* ===================================================== */

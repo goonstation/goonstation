@@ -47,8 +47,9 @@
 	var/setup_system_os_path = /datum/computer/file/pda_program/os/main_os //Needs an operating system to...operate!!
 	var/setup_scanner_on = 1 //Do we search the cart for a scanprog to start loaded?
 	var/setup_default_module = /obj/item/device/pda_module/flashlight //Module to have installed on spawn.
-	var/mailgroups = list("staff","Party Line") //What default mail groups the PDA is part of.
-	var/reserved_mailgroups = list("command","security","science","ai","sillicon","medresearch","medbay","cargo","janitor","chaplain","engineer","mining","kitchen","mechanic","botany") //Job-specific mailgroups that cannot be joined or left
+	var/mailgroups = list("staff",MGD_PARTY) //What default mail groups the PDA is part of.
+	var/muted_mailgroups = list() //What mail groups should the PDA ignore?
+	var/reserved_mailgroups = list(MGD_COMMAND,MGD_SECURITY,MGD_SCIENCE,"ai","sillicon",MGD_MEDRESEACH,MGD_MEDBAY ,MGD_CARGO,"janitor",MGD_SPIRITUALAFFAIRS,"engineer","mining",MGD_KITCHEN,"mechanic",MGD_BOTANY,MGD_STATIONREPAIR) //Job-specific mailgroups that cannot be joined or left
 	var/bombproof = 0 // can't be destroyed with detomatix
 	var/exploding = 0
 
@@ -64,19 +65,19 @@
 		icon_state = "pda-c"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/captain
 		setup_drive_size = 32
-		mailgroups = list("command","Party Line")
+		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
 	heads
 		icon_state = "pda-h"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/head
 		setup_drive_size = 32
-		mailgroups = list("command","Party Line")
+		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
 	hos
 		icon_state = "pda-hos"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos
 		setup_drive_size = 32
-		mailgroups = list("security","command","Party Line")
+		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
 
 	ai
 		icon_state = "pda-h"
@@ -92,52 +93,52 @@
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
 		bombproof = 1
-		mailgroups = list("silicon","Party Line")
+		mailgroups = list("silicon",MGD_PARTY)
 
 	research_director
 		icon_state = "pda-rd"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/research_director
 		setup_drive_size = 32
-		mailgroups = list("science","command","Party Line")
+		mailgroups = list(MGD_SCIENCE,MGD_COMMAND,MGD_PARTY)
 
 	medical_director
 		icon_state = "pda-md"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
 		setup_drive_size = 32
-		mailgroups = list("medresearch","medbay","command","Party Line")
+		mailgroups = list(MGD_MEDRESEACH,MGD_MEDBAY ,MGD_COMMAND,MGD_PARTY)
 
 	medical
 		icon_state = "pda-m"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
-		mailgroups = list("medbay","Party Line")
+		mailgroups = list(MGD_MEDBAY ,MGD_PARTY)
 
 		robotics
-			mailgroups = list("medresearch","Party Line")
-
-	security
-		icon_state = "pda-s"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/security
-		mailgroups = list("security","Party Line")
-
-	forensic
-		icon_state = "pda-s"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
-		mailgroups = list("security","Party Line")
-
-	toxins
-		icon_state = "pda-tox"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/toxins
-		mailgroups = list("science","Party Line")
+			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
 
 	genetics
 		icon_state = "pda-gen"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
-		mailgroups = list("medresearch","Party Line")
+		mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
+
+	security
+		icon_state = "pda-s"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/security
+		mailgroups = list(MGD_SECURITY,MGD_PARTY)
+
+	forensic
+		icon_state = "pda-s"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
+		mailgroups = list(MGD_SECURITY,MGD_PARTY)
+
+	toxins
+		icon_state = "pda-tox"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/toxins
+		mailgroups = list(MGD_SCIENCE,MGD_PARTY)
 
 	quartermaster
 		icon_state = "pda-q"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/quartermaster
-		mailgroups = list("cargo","Party Line")
+		mailgroups = list(MGD_CARGO,MGD_PARTY)
 
 	clown
 		icon_state = "pda-clown"
@@ -150,7 +151,7 @@
 				return
 			if (iscarbon(AM))
 				var/mob/M = AM
-				if (M.slip())
+				if (M.slip(ignore_actual_delay = 1))
 					boutput(M, "<span class='notice'>You slipped on the PDA!</span>")
 					if (M.bioHolder.HasEffect("clumsy"))
 						M.changeStatus("weakened", 5 SECONDS)
@@ -159,11 +160,11 @@
 	janitor
 		icon_state = "pda-j"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/janitor
-		mailgroups = list("janitor","Party Line")
+		mailgroups = list("janitor",MGD_STATIONREPAIR,MGD_PARTY)
 
 	chaplain
 		icon_state = "pda-holy"
-		mailgroups = list("chaplain","Party Line")
+		mailgroups = list(MGD_SPIRITUALAFFAIRS,MGD_PARTY)
 
 	atmos
 		icon_state = "pda-a"
@@ -172,28 +173,28 @@
 	engine
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
-		mailgroups = list("engineer","Party Line")
+		mailgroups = list("engineer",MGD_STATIONREPAIR,MGD_PARTY)
 
 	mining
 		icon_state = "pda-e"
-		mailgroups = list("mining","Party Line")
+		mailgroups = list("mining",MGD_PARTY)
 
 	chef
-		mailgroups = list("kitchen","Party Line")
+		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	barman
-		mailgroups = list("kitchen","Party Line")
+		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	mechanic
 		icon_state = "pda-a"
 		setup_default_module = /obj/item/device/pda_module/tray
 		setup_default_cartridge = /obj/item/disk/data/cartridge/mechanic
-		mailgroups = list("mechanic","Party Line")
+		mailgroups = list("mechanic",MGD_STATIONREPAIR,MGD_PARTY)
 
 	botanist
 		icon_state = "pda-hydro"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/botanist
-		mailgroups = list("botany","Party Line")
+		mailgroups = list(MGD_BOTANY,MGD_PARTY)
 
 	syndicate
 		icon_state = "pda-syn"
@@ -702,7 +703,7 @@
 */
 	proc/display_alert(var/alert_message) //Add alert overlay and beep
 		if (alert_message)
-			playsound(get_turf(src), "sound/machines/twobeep.ogg", 50, 1)
+			playsound(get_turf(src), "sound/machines/twobeep.ogg", 35, 1)
 
 			for (var/atom in mobs)
 				if (!atom) break
@@ -824,7 +825,7 @@
 		return ..()
 	var/mob/living/silicon/ai/ai = loc
 	if (ai.deployed_to_eyecam)
-		ai.eyecam << sound('sound/machines/twobeep.ogg', volume=50)
+		ai.eyecam << sound('sound/machines/twobeep.ogg', volume=35)
 		ai.eyecam.show_message(message)
 	if (ismob(ai.deployed_shell))
 		var/mob/M = ai.deployed_shell

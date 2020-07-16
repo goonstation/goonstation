@@ -539,9 +539,6 @@
 	kick_bonus = 1
 	step_sound = "step_wood"
 	step_priority = STEP_PRIORITY_LOW
-	setupProperties()
-		..()
-		setProperty("meleeprot", 5)
 
 /obj/item/clothing/shoes/jester
 	name = "jester's shoes"

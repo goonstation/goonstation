@@ -384,11 +384,9 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 		MayAdvance()
 			return 0
 
-		/* TODO: REPLACE WITH COOLER RIBOSOME STUFF - URS
-
 		ribosomes
 		name = "Ribosomes"
-		instructions = "Your most valuable assets are the ribosomes. As your size grows, so does the amount of time it takes for your spread ability to cool down. Ribosomes generate valuable structural materials for the blob, allowing it to mitigate this cooldown penalty. Place a ribosome on the marked blob tile to proceed."
+		instructions = "Your most valuable assets are the ribosomes. Ribosomes increase your biopoint generation, allowing you do do more things, faster. Place a ribosome on the marked blob tile to proceed."
 		var/turf/target
 		finished = 0
 
@@ -412,8 +410,6 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		MayAdvance()
 			return finished
-
-		*/
 
 	clickmove
 		name = "Click moving"

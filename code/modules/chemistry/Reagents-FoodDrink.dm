@@ -609,9 +609,7 @@ datum
 						boutput(M, "<span class='notice'>You feel strange. Almost a sense of guilt.</span>")
 						return
 					var/telerange = 10
-					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-					s.set_up(4, 1, M)
-					s.start()
+					elecflash(M,power=2)
 					var/list/randomturfs = new/list()
 					for(var/turf/T in orange(M, telerange))
 						if(istype(T, /turf/space) || T.density) continue
@@ -1760,7 +1758,7 @@ datum
 			fluid_r = 255
 			fluid_g = 0
 			fluid_b = 0
-			transparency = 20
+			transparency = 77
 			taste = "hot"
 			addiction_prob = 1 // heh
 			addiction_prob2 = 10
@@ -3751,11 +3749,69 @@ datum
 					M.reagents.add_reagent("ethanol", (alch_counter + (rand(2,3))))
 
 		fooddrink/alcoholic/hottoddy
-			name = "Hot Toddy"
+			name = "hot Toddy"
 			id = "hottoddy"
 			fluid_r = 255
 			fluid_g = 220
 			fluid_b = 95
 			alch_strength = 0.4
 			description = "A warm, late night drink, usually enjoyed during long winter nights."
+			reagent_state = LIQUID
+
+		fooddrink/grenadine
+			name = "grenadine"
+			id = "grenadine"
+			fluid_r = 234
+			fluid_g = 19
+			fluid_b = 19
+			description = "A sticky, sweet and tart non-alcoholic bar syrup, used in cocktails for it's distinct bright red colour."
+			reagent_state = LIQUID
+
+		fooddrink/lemonade/pinklemonade
+			name = "pink lemonade"
+			id = "pinklemonade"
+			fluid_r = 253
+			fluid_g = 230
+			fluid_b = 237
+			description = "A popular twist on cloudy lemonade, this soft drink has been dyed pink. How colourful."
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/duckfart
+			name = "Duck Fart"
+			id = "duckfart"
+			fluid_r = 253
+			fluid_g = 245
+			fluid_b = 230
+			alch_strength = 0.6
+			description = "An eccentric 'trio cocktail', in which the 3 ingredients have been layed on top on another."
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/philcollins
+			name = "Phil Collins"
+			id = "philcollins"
+			fluid_r = 240
+			fluid_g = 248
+			fluid_b = 255
+			alch_strength = 0.3
+			description = "A variation on a well known drink, paying tribute to a well known drummer."
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/spicedrum
+			name = "spiced rum"
+			id = "spicedrum"
+			fluid_r = 205
+			fluid_g = 149
+			fluid_b = 12
+			alch_strength = 0.6
+			description = "An egregious and disgusting misinterpretation of some perfectly good rum."
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/beesknees
+			name = "Bee's Knees"
+			id = "beesknees"
+			fluid_r = 255
+			fluid_g = 236
+			fluid_b = 139
+			alch_strength = 0.3
+			description = "A cocktail from the prohibition era, named after a popular expression."
 			reagent_state = LIQUID

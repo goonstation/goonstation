@@ -174,6 +174,11 @@
 	initial_reagents = "synaptizine" // same as the lexorin, they both ended up with 10u in the end so I'm just gunna leave it like this idk
 	label = "orange"
 
+/obj/item/reagent_containers/emergency_injector/morphine
+	name = "emergency auto-injector (morphine)"
+	initial_reagents = "morphine"
+	label = "purple"
+
 /obj/item/reagent_containers/emergency_injector/random
 	name = "emergency auto-injector (???)"
 	label = "black"

@@ -70,7 +70,7 @@
 		return 0
 
 /mob/proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
-	if (!isvampire(src))
+	if (!isvampire(src) && !isvampiriczombie(src))
 		return
 
 	var/datum/abilityHolder/vampire/AH = src.get_ability_holder(/datum/abilityHolder/vampire)
@@ -219,11 +219,13 @@
 
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
-		stat("Blood:", src.vamp_blood)
-		stat("Blood remaining:", src.points)
+		.= list()
+		.["Blood:"] = src.points
+		.["Total:"] = src.vamp_blood
 		return
 
 	onLife(var/mult = 1)
+		..()
 		if (traveling_to_coffin && isturf(owner.loc) && istype(traveling_to_coffin,/obj/storage/closet/coffin))
 			owner.set_loc(traveling_to_coffin)
 

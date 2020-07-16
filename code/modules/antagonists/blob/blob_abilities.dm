@@ -95,8 +95,8 @@
 					var/obj/blob/B
 					if (prob(5))
 						B = new /obj/blob/lipid(T)
-					//else if (prob(5))
-						//B = new /obj/blob/ribosome(T)
+					else if (prob(5))
+						B = new /obj/blob/ribosome(T)
 					else if (prob(5))
 						B = new /obj/blob/mitochondria(T)
 					else if (prob(5))
@@ -236,7 +236,7 @@
 		owner.add_ability(/datum/blob_ability/repair)
 		owner.add_ability(/datum/blob_ability/absorb)
 		owner.add_ability(/datum/blob_ability/promote)
-		//owner.add_ability(/datum/blob_ability/build/ribosome)
+		owner.add_ability(/datum/blob_ability/build/ribosome)
 		owner.add_ability(/datum/blob_ability/build/lipid)
 		owner.add_ability(/datum/blob_ability/build/mitochondria)
 		owner.add_ability(/datum/blob_ability/build/wall)
@@ -341,11 +341,11 @@
 		B2.setOvermind(owner)
 
 		if (owner.blobs.len < 100)
-			cooldown_time = max(12 - owner.spread_upgrade * 12 - owner.spread_mitigation * 0.5, 0)
+			cooldown_time = max(15 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
 		else if (owner.blobs.len < 200)
-			cooldown_time = max(17 - owner.spread_upgrade * 12 - owner.spread_mitigation * 0.5, 0)
+			cooldown_time = max(20 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
 		else
-			cooldown_time = max(27 - owner.spread_upgrade * 12 - owner.spread_mitigation * 0.5, 0)
+			cooldown_time = max(25 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
 
 		cooldown_time = max(cooldown_time, 6)
 
@@ -971,16 +971,13 @@
 	build_path = /obj/blob/lipid
 	buildname = "lipid"
 
-/* TODO: REPLACE RIBOSOMES WITH SOMETHING COOLER
 /datum/blob_ability/build/ribosome
 	name = "Build Ribosome Cell"
 	icon_state = "blob-ribosome"
-	desc = "This will convert a blob tile into a Ribosome. Ribosomes reduce the penalty on spread cooldown induced by the size of the blob."
-	bio_point_cost = 5
+	desc = "This will convert a blob tile into a Ribosome. Ribosomes increase your generation of biopoints, allowing you to do more things."
+	bio_point_cost = 15
 	build_path = /obj/blob/ribosome
 	buildname = "ribosome"
-
-*/
 
 /datum/blob_ability/build/mitochondria
 	name = "Build Mitochondria Cell"

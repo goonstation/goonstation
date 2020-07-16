@@ -281,14 +281,14 @@
 /obj/machinery/cargo_router/oshan_north
 	trigger_when_no_match = 0
 	New()
-		destinations = list("North" = NORTH)
+		destinations = list("North" = NORTH, "South" = EAST)
 		default_direction = NORTH
 		..()
 
 /obj/machinery/cargo_router/oshan_south
 	trigger_when_no_match = 0
 	New()
-		destinations = list("South" = SOUTH)
+		destinations = list("South" = SOUTH, "North" = WEST)
 		default_direction = SOUTH
 		..()
 
@@ -410,6 +410,10 @@
 
 	destinations = list("North","South")
 
+/obj/machinery/computer/barcode/qm/donut3
+	name = "Barcode Computer"
+	desc = "Used to print barcode stickers for the off-station merchants."
+	destinations = list()
 
 /obj/item/sticker/barcode
 	name = "barcode sticker"

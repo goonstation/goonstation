@@ -609,7 +609,7 @@ TRAYS
 	proc/unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
 		playsound(get_turf(src), "sound/items/plate_tap.ogg", 30, 1)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
 		..()
 		if(ordered_contents.len == 0)
 			return
@@ -1175,7 +1175,7 @@ TRAYS
 		else
 			..()
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
 		..()
 		var/list/throw_targets = list()
 		if(platenum == 0)

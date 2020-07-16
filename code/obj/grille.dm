@@ -52,6 +52,36 @@
 			name = "catwalk surface" //Or I'll murder you since you are making things ugly on purpose.
 			icon_state = "catwalk_cross" //(Statement does not apply when you actually want to use the other ones.)
 
+		jen // ^^ no i made my own because i am epic
+			name = "maintenance catwalk"
+			icon_state = "catwalk_jen"
+			desc = "This looks marginally more safe than the ones outside, at least..."
+			layer = PIPE_LAYER + 0.01
+
+			attack_hand(obj/M, mob/user)
+				return 0
+
+			attackby(obj/item/W, mob/user)
+				if (issnippingtool(W))
+					..()
+				else
+					src.loc.attackby(user.equipped(), user)
+
+			reagent_act(var/reagent_id,var/volume)
+				..()
+
+			side
+				icon_state = "catwalk_jen_side"
+
+			inner
+				icon_state = "catwalk_jen_inner"
+
+			fourcorners
+				icon_state = "catwalk_jen_4corner"
+
+			twosides
+				icon_state = "catwalk_jen_2sides"
+
 	onMaterialChanged()
 		..()
 		if (istype(src.material))

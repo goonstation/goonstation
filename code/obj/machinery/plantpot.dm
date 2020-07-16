@@ -56,6 +56,25 @@
 		..()
 		update_maptext()
 
+/obj/machinery/plantpot/kudzu
+	name = "hydroponics tray"
+	desc = "A tray filled with nutrient solution capable of sustaining plantlife... Made of plants."
+	icon_state = "kudzutray"
+
+	attackby(var/obj/item/W as obj, var/mob/user as mob)
+		//Can only attempt to destroy the plant pot if the plant in it is dead or empty.
+		if(!src.current || src.dead)
+			if (destroys_kudzu_object(src, W, user))
+				if (prob(40))
+					user.visible_message("<span class='alert'>[user] savagely attacks [src] with [W]!</span>")
+				else
+					user.visible_message("<span class='alert'>[user] savagely attacks [src] with [W], destroying it!</span>")
+					qdel(src)
+					return
+			else
+				return ..()
+		..()
+
 /obj/machinery/plantpot
 	// The central object for Hydroponics. All plant growing and most of everything goes on in
 	// this object - that said you don't want to have too many of them on the map because they
@@ -99,7 +118,7 @@
 		// We have this here as a check for whether or not the plant needs to update its sprite.
 		// Originally plantpots updated constantly but this was found to be rather expensive, so
 		// now it only does that if it needs to.
-
+	var/actionpassed 	//holds defines for action bar harvesting yay :D
 	New()
 		..()
 		src.plantgenes = new /datum/plantgenes(src)
@@ -191,6 +210,12 @@
 		var/datum/plantgenes/DNA = src.plantgenes
 		// We obtain the current plant type in the plantpot, and the genes of the individual plant.
 		// We'll be referencing these a lot!
+
+		if(growing.required_reagents)
+			for(var/i=1,i<=growing.required_reagents.len,i++)
+				if(src.reagents.get_reagent_amount(growing.required_reagents[i]["id"]) < growing.required_reagents[i]["amount"])
+					return
+		//Checks to see if the plant requires a reagent to grow, and compares to to the reagents present in the pot.
 
 		// REAGENT PROCESSING
 		var/drink_rate = 1
@@ -410,6 +435,23 @@
 					qdel (W)
 					if(!(user in src.contributors))
 						src.contributors += user
+			if(src.current.harvest_tools)
+			//checks to see if the plant requires a specific tool to harvest, rather than an empty hand.
+				var/passed
+				for(var/i=1,i<=src.current.harvest_tools.len,i++)
+					if(ispath(src.current.harvest_tools[i]))
+						if(istype(W,src.current.harvest_tools[i]))
+							passed = 1
+							break
+					else if(istool(W,src.current.harvest_tools[i]))
+						passed = 1
+						break
+				if(passed)
+					if(src.current.harvest_tool_message)
+						boutput(user,src.current.harvest_tool_message)
+					HYPharvesting(user,null)
+					return
+
 
 		// From here on out we handle item reacions of the plantpot itself rather than specific
 		// special kinds of plant.
@@ -570,7 +612,8 @@
 			if(src.dead)
 				boutput(user, "<span class='alert'>The plant is dead and cannot be harvested!</span>")
 				return
-
+			if (src.current.harvest_tools)
+				return
 			var/datum/plant/growing = src.current
 			if(!growing.harvestable)
 				boutput(user, "<span class='alert'>You doubt this plant is going to grow anything worth harvesting...</span>")
@@ -601,7 +644,13 @@
 				return
 
 			if(HYPcheck_if_harvestable())
-				HYPharvesting(user,null)
+				if(!growing.harvest_tools) //if the plant needs a specific tool or set of tools to harvest
+					HYPharvesting(user,null)
+				else
+					if(!growing.harvest_tool_fail_message)
+						boutput(user, "<span><b>You don't have the right tool to harvest this plant!</b></span>")
+					else
+						boutput(user,growing.harvest_tool_fail_message)
 				// If the plant is ready for harvest, do that. Otherwise, check it's condition.
 			else
 				boutput(user, "You check [src.name] and the tray.")
@@ -1050,7 +1099,8 @@
 					else
 						CROP.quality = quality_score
 
-				CROP.transform = matrix() * clamp((quality_score + 100) / 100, 0.35, 2)
+				if(!growing.stop_size_scaling) //Keeps plant sprite from scaling if variable is enabled.
+					CROP.transform = matrix() * clamp((quality_score + 100) / 100, 0.35, 2)
 
 				if(istype(CROP,/obj/item/reagent_containers/food/snacks/plant/))
 					// If we've got a piece of fruit or veg that contains seeds. More often than

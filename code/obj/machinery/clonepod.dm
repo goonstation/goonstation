@@ -14,7 +14,6 @@
 	density = 1
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
-	req_access = list(access_medlab) //For premature unlocking.
 	object_flags = CAN_REPROGRAM_ACCESS
 	mats = 15
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
@@ -46,8 +45,7 @@
 	var/failed_tick_counter = 0 // goes up while someone is stuck in there and there's not enough meat to clone them, after so many ticks they'll get dumped out
 
 	var/message = null
-	var/mailgroup = "medbay"
-	var/mailgroup2 = "medresearch"
+	var/list/mailgroups
 	var/net_id = null
 	var/pdafrequency = 1149
 	var/datum/radio_frequency/pda_connection
@@ -58,6 +56,9 @@
 
 	New()
 		..()
+		req_access = list(access_medlab) //For premature unlocking.
+		mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
+
 		var/datum/reagents/R = new/datum/reagents(100)
 		reagents = R
 		R.my_atom = src
@@ -78,6 +79,7 @@
 				src.net_id = generate_net_id(src)
 
 	disposing()
+		mailgroups.len = 0
 		radio_controller.remove_object(src, "[pdafrequency]")
 		genResearch.clonepods.Remove(src) //Bye bye
 		connected.pod1 = null
@@ -93,8 +95,10 @@
 			msg = src.message
 		else if (!msg)
 			return
+		if(!pda_connection)
+			return
 
-		if (msg && mailgroup && pda_connection)
+		for(var/mailgroup in mailgroups)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.transmission_method = TRANSMISSION_RADIO
@@ -108,19 +112,6 @@
 
 			pda_connection.post_signal(src, newsignal)
 
-		if (msg && mailgroup2 && pda_connection)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CLONEPOD-MAILBOT"
-			newsignal.data["message"] = "[msg]"
-
-			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup2
-			newsignal.data["sender"] = src.net_id
-
-			pda_connection.post_signal(src, newsignal)
 
 /obj/machinery/clonepod/attack_ai(mob/user as mob)
 	return attack_hand(user)
@@ -782,6 +773,7 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 				qdel(src.occupant)
 			else
 				qdel(src.occupant)
+			src.occupant = null
 
 			var/mult = src.upgraded ? rand(2,4) : rand(4,8)
 			src.process_timer = (humanOccupant ? 2 : 1)// * (rand(4,8) - (2 * decomp))
