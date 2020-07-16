@@ -1392,3 +1392,26 @@
 		if (istype(M))
 			M.toggle()
 			src.is_on = M.on
+
+
+/datum/targetable/organAbility/kidneypurge
+	name = "PURGE"
+	desc = "Dangerously overclock your cyberkidneys to rapidly purge chemicals from your blood."
+	icon_state = "eye-meson" //TODO get sprote made
+	targeted = 0
+	cooldown = 40 SECONDS
+	var/power = 6
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		if(length(linked_organ))
+			for(var/obj/item/organ/O in linked_organ)
+				O.take_damage(15, 15) //safe-ish
+		else
+			linked_organ.take_damage(30, 30) //not safe
+		APPLY_MOB_PROPERTY(holder.owner, PROP_CHEM_PURGE, src, power)
+		holder.owner.urine += power // -.-
+		SPAWN_DBG(15 SECONDS)
+			REMOVE_MOB_PROPERTY(holder.owner, PROP_CHEM_PURGE, src)

@@ -6,6 +6,7 @@
 	organ_holder_required_op_stage = 7.0
 	icon_state = "kidneys"
 	failure_disease = /datum/ailment/disease/kidney_failure
+	var/chem_metabolism_modifier = 1
 
 	on_life(var/mult = 1)
 		if (!..())
@@ -17,6 +18,14 @@
 			if (src.holder.right_kidney && src.holder.right_kidney.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
 				donor.contract_disease(failure_disease,null,null,1)
 		return 1
+
+	on_transplant(mob/M)
+		. = ..()
+		APPLY_MOB_PROPERTY(M, PROP_METABOLIC_RATE, src, chem_metabolism_modifier)
+
+	on_removal()
+		. = ..()
+		REMOVE_MOB_PROPERTY(src.donor, PROP_METABOLIC_RATE, src)
 
 	on_broken(var/mult = 1)
 		if (!holder.get_working_kidney_amt())
@@ -101,6 +110,45 @@
 	edible = 0
 	mats = 6
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		organ_abilities = list(/datum/targetable/organAbility/kidneypurge)
+
+
+	add_ability(var/datum/abilityHolder/aholder, var/abil)
+		if (!ispath(abil, /datum/targetable/organAbility/kidneypurge) || !aholder)
+			return ..()
+		var/datum/targetable/organAbility/kidneypurge/OA = aholder.getAbility(abil)//addAbility(abil)
+		if (istype(OA)) // already has an emagged kidney. having 2 makes it safer (damage is split between kidneys) and a little stronger 
+			OA.linked_organ = list(OA.linked_organ, src)
+			OA.power = 9
+		else
+			OA = aholder.addAbility(abil)
+			OA.power = 6
+			if (istype(OA))
+				OA.linked_organ = src
+
+	remove_ability(var/datum/abilityHolder/aholder, var/abil)
+		if (!ispath(abil, /datum/targetable/organAbility/kidneypurge) || !aholder)
+			return ..()
+		var/datum/targetable/organAbility/kidneypurge/OA = aholder.getAbility(abil)
+		if (!OA) // what??
+			return
+		if (islist(OA.linked_organ)) // two emagged kidneys, just remove us :3
+			var/list/lorgans = OA.linked_organ
+			lorgans -= src // remove us from the list so only the other kidney is left and thus will be lorgans[1]
+			OA.linked_organ = lorgans[1]
+			OA.power = 3
+		else // just us!
+			aholder.removeAbility(abil)
+
+	attackby(obj/item/W, mob/user)
+		if(ispulsingtool(W)) //TODO change values, incl. for emagged
+			chem_metabolism_modifier = input(user, "Enter a percentage to clock the cyberkidney at, from 75 to 150.", "Organ clocking", "100") as num
+			chem_metabolism_modifier = clamp(chem_metabolism_modifier, 75, 150) / 100
+		else
+			. = ..()
+		
 /obj/item/organ/kidney/cyber/left
 	name = "left kidney"
 	desc = "A fancy robotic kidney to replace one that someone's lost! It's the left kidney!"
