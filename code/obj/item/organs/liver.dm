@@ -41,7 +41,7 @@
 	on_life(var/mult = 1)
 		. = ..()
 		if(overloading)
-			if(donor.reagents.get_reagent_amount("ethanol") 5 * mult)
+			if(donor.reagents.get_reagent_amount("ethanol") >= 5 * mult)
 				donor.reagents.remove_reagent("ethanol", 5 * mult)
 				donor.reagents.add_reagent("omnizine", 0.4 * mult)
 				src.take_damage(0, 0, 3 * mult)
