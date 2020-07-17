@@ -1537,16 +1537,14 @@ var/global/noir = 0
 					var/datum/abilityHolder/composite/CH = M.abilityHolder
 					if (CH.holders.len)
 						var/list/abils = list()
-						var/datum/abilityHolder/AH = null
-						for (AH in CH.holders)
+						for (var/datum/abilityHolder/AH in CH.holders)
 							abils += AH.abilities //get a list of all the different abilities in each holder
 						if(!abils.len)
 							boutput(usr, "<b><span class='alert'>[M] doesn't have any abilities!</span></b>")
 							return //nothing to remove
 						ab_to_rem = input("Which ability?", "Ability", null) as null|anything in abils
 						if (!ab_to_rem) return //user cancelled
-						AH = ab_to_rem.holder
-						AH.removeAbilityInstance(ab_to_rem)
+						ab_to_rem.holder.removeAbilityInstance(ab_to_rem)
 						M.abilityHolder.updateButtons()
 					else
 						boutput(usr, "<b><span class='alert'>[M]'s composite holder lacks any ability holders to remove from!</span></b>")
