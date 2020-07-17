@@ -1,5 +1,9 @@
 
 (t)thu jul 16 20
+(u)zjdtmkhzt
+(p)1489
+(e)⚖⛔|balance, removal
+(+)Security Officers are no longer immune to being chairflipped.
 (u)Roselace:
 (p)1501
 (e)🎨|sprites
