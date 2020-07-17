@@ -6,6 +6,9 @@
 //Admin procs
 //
 
+#define INCLUDE_ANTAGS 1
+#define STRIP_ANTAG 1
+
 var/global/noir = 0
 
 ////////////////////////////////
@@ -3337,6 +3340,22 @@ var/global/noir = 0
 						logTheThing("admin", src, null, "has spawned [amount] normal players.")
 						logTheThing("diary", src, null, "has spawned [amount] normal players.", "admin")
 
+					if("spawn_player") //includes antag players
+						var/datum/special_respawn/SR = new /datum/special_respawn/
+						var/amount = input(usr,"Amount to respawn:","Spawn Players",3) as num
+						if(!amount) return
+						SR.spawn_normal(amount, INCLUDE_ANTAGS)
+						logTheThing("admin", src, null, "has spawned [amount] players.")
+						logTheThing("diary", src, null, "has spawned [amount] players.", "admin")
+
+					if("spawn_player_strip_antag") //includes antag players but strips status
+						var/datum/special_respawn/SR = new /datum/special_respawn/
+						var/amount = input(usr,"Amount to respawn:","Spawn Players",3) as num
+						if(!amount) return
+						SR.spawn_normal(amount, INCLUDE_ANTAGS, STRIP_ANTAG)
+						logTheThing("admin", src, null, "has spawned [amount] players.")
+						logTheThing("diary", src, null, "has spawned [amount] players.", "admin")
+
 					if("spawn_job")
 						var/datum/special_respawn/SR = new /datum/special_respawn/
 						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
@@ -3347,6 +3366,28 @@ var/global/noir = 0
 						SR.spawn_as_job(amount,job)
 						logTheThing("admin", src, null, "has spawned [amount] normal players.")
 						logTheThing("diary", src, null, "has spawned [amount] normal players.", "admin")
+
+					if("spawn_player_job") //includes antag players
+						var/datum/special_respawn/SR = new /datum/special_respawn/
+						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
+						var/datum/job/job = input(usr,"Select job to spawn players as:","Respawn Panel",null) as null|anything in jobs
+						if(!job) return
+						var/amount = input(usr,"Amount to respawn:","Spawn Players",3) as num
+						if(!amount) return
+						SR.spawn_as_job(amount, job, INCLUDE_ANTAGS)
+						logTheThing("admin", src, null, "has spawned [amount] players, and kept any antag statuses.")
+						logTheThing("diary", src, null, "has spawned [amount] players, and kept any antag statuses.", "admin")
+
+					if("spawn_player_job_strip_antag") //includes antag players but strips antag status
+						var/datum/special_respawn/SR = new /datum/special_respawn/
+						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
+						var/datum/job/job = input(usr,"Select job to spawn players as:","Respawn Panel",null) as null|anything in jobs
+						if(!job) return
+						var/amount = input(usr,"Amount to respawn:","Spawn Players",3) as num
+						if(!amount) return
+						SR.spawn_as_job(amount, job, INCLUDE_ANTAGS, STRIP_ANTAG)
+						logTheThing("admin", src, null, "has spawned [amount] players, and stripped any antag statuses.")
+						logTheThing("diary", src, null, "has spawned [amount] players, and stripped any antag statuses.", "admin")
 
 	/*				if("spawn_commandos")
 						var/datum/special_respawn/SR = new /datum/special_respawn/
@@ -3681,14 +3722,48 @@ var/global/noir = 0
 
 
 /datum/admins/proc/s_respawn()
-	var/dat = "<html><head><title>Respawn Panel</title></head>"
-	dat += {"
-			<BR>
-			<A href='?src=\ref[src];action=s_rez;type=spawn_normal'>Spawn normal players</A><BR>
-			<A href='?src=\ref[src];action=s_rez;type=spawn_job'>Spawn normal players as a job</A><BR>
-			<A href='?src=\ref[src];action=s_rez;type=spawn_syndies'>Spawn a Syndicate attack force</A><BR>
-			<A href='?src=\ref[src];action=s_rez;type=spawn_custom'>Spawn a custom mob type</A><BR>
-			"}
+	var/dat = {"
+		<html><head><title>Respawn Panel</title>
+			<style>
+				table {
+					border:1px solid #FF6961;
+					border-collapse: collapse;
+					width: 100%;
+					empty-cells: show;
+				}
+
+				th {
+					background-color: #FF6961;
+					color: white;
+					padding: 8px;
+					text-align: center;
+				}
+
+				td {
+					padding: 8px;
+					text-align: left;
+				}
+
+				tr:nth-child(odd) {background-color: #f2f2f2;}
+			</style>
+		</head>
+		<body>
+			<table>
+				<th>Respawn Panel</th>
+				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_normal'>Spawn normal players</A></td></tr>
+				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_job'>Spawn normal players as a job</A></td></tr>
+				<tr><td></td></tr>
+				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_player'>Spawn players - keep antag status</A></td></tr>
+				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_player_job'>Spawn players as a job - keep antag status</A></td></tr>
+				<tr><td></td></tr>
+				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_player_strip_antag'>Spawn players - strip antag status</A></td></tr>
+				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_player_job_strip_antag'>Spawn players as a job - strip antag status</A></td></tr>
+				<tr><td></td></tr>
+				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_syndies'>Spawn a Syndicate attack force</A></td></tr>
+				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_custom'>Spawn a custom mob type</A></td></tr>
+			</table>
+		</body></html>
+		"}
 	usr.Browse(dat, "window=SRespawn")
 
 	// Someone else removed these but left the (non-functional) buttons. Move back inside the dat section and uncomment to re-add. - IM
@@ -4688,3 +4763,6 @@ var/global/noir = 0
 //*********************************************************************************************************
 //
 //
+
+#undef INCLUDE_ANTAGS
+#undef STRIP_ANTAG
