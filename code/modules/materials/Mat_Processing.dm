@@ -255,7 +255,15 @@
 	anchored = 0
 	density = 1
 
+	custom_suicide = 1
+	suicide(var/mob/user)
+		if (!src.user_can_suicide(user))
+			return 0
 
+		user.visible_message("<span class='alert'><b>[user] hops right into [src]! Jesus!</b></span>")
+		user.unequip_all()
+		user.set_loc(src)
+		user.make_cube(/mob/living/carbon/cube/meat, INFINITY, src.loc)
 /obj/machinery/neosmelter
 	name = "Nano-crucible"
 	desc = "A huge furnace-like machine used to combine materials."
