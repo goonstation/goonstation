@@ -1,5 +1,9 @@
 
 (t)thu jul 16 20
+(u)Roselace:
+(p)1501
+(e)🎨|sprites
+(+)New sprites for radiation supplies closets.
 (u)RichardGere
 (p)1490
 (e)⚖🐛|balance, bug
