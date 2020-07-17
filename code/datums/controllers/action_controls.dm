@@ -1263,5 +1263,5 @@ var/datum/action_controller/actions
 
 		onEnd()
 			..()
-			if (can_reach(owner,over_object))
+			if (can_reach(owner,over_object) && ismob(owner) && owner:equipped() == target)
 				over_object.attackby(target, owner, params)
