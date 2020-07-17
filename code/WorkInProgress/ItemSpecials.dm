@@ -1349,7 +1349,7 @@
 		requiresStaminaToFire = 1
 		staminaReqAmt = 80
 
-		image = "katana"
+		image = "rush"
 		name = "Katana Dash"
 		desc = "Instantly dash to a location like you saw in all those Japanese cartoons."
 
@@ -1470,7 +1470,7 @@
 		requiresStaminaToFire = 1
 		staminaReqAmt = 0
 
-		image = "katana"
+		image = "rush"
 		name = "Dash"
 		desc = "Instantly dash to a location while attacking."
 
@@ -1586,7 +1586,7 @@
 
 		damageMult = 0.8
 
-		image = "nunchucks"
+		image = "dagger"
 		name = "double hit"
 		desc = "Attack with two quick hits."
 
@@ -1646,7 +1646,7 @@
 		moveDelayDuration = 0
 		damageMult = 1
 
-		image = "simple"
+		image = "throw"
 		name = "Tile Fling"
 		desc = "If available, fling a floor tile from the ground in front of you. Otherwise attacks in direction. No crits."
 
