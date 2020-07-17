@@ -45,7 +45,7 @@
 			else
 				if (!M.reagents)
 					return ..()
-				logTheThing("combat", user, M, "injects %target% with [src] [log_reagents(src)]")
+				logTheThing("combat", user, M, "injects [constructTarget(M,"combat")] with [src] [log_reagents(src)]")
 				src.reagents.trans_to(M, amount_per_transfer_from_this)
 				user.visible_message("<span class='alert'>[user] injects [M == user ? "[his_or_her(user)]self" : M] with [src]!</span>",\
 				"<span class='alert'>You inject [M == user ? "yourself" : M] with [src]!</span>")

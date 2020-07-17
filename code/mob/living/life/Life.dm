@@ -4,7 +4,7 @@
 	var/last_process = 0
 
 	var/const/tick_spacing = 20 //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
-	var/const/cap_tick_spacing = 90 //highest timeofday allowance between ticks to try to play catchup with realtime thingo
+	var/const/cap_tick_spacing = 100 //highest TIME allowance between ticks to try to play catchup with realtime thingo
 
 	var/mob/living/carbon/human/human_owner = null
 	var/mob/living/silicon/hivebot/hivebot_owner = null
@@ -45,7 +45,7 @@
 	//remove these evntually cause lifeporcesses handl ethem
 	var/last_life_tick = 0 //and this ones just the whole lifetick
 	var/const/tick_spacing = 20 //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
-	var/const/cap_tick_spacing = 90 //highest timeofday allowance between ticks to try to play catchup with realtime thingo
+	var/const/cap_tick_spacing = 100 //highest TIME allowance between ticks to try to play catchup with realtime thingo
 	var/last_stam_change = 0
 	var/life_context = "begin"
 
@@ -59,10 +59,11 @@
 	proc/remove_lifeprocess(type)
 		for (var/thing in lifeprocesses)
 			if (thing)
-				var/datum/lifeprocess/L = thing
-				if (L.type == type)
-					lifeprocesses -= L
-				qdel(L)
+				if (thing == type)
+					var/datum/lifeprocess/L = lifeprocesses[thing]
+					lifeprocesses -= thing
+					qdel(L)
+					L = null
 
 	proc/get_heat_protection()
 		.= 0
@@ -90,7 +91,7 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/blood)
 	//add_lifeprocess(/datum/lifeprocess/bodytemp) //maybe enable per-critter
-	add_lifeprocess(/datum/lifeprocess/breath)
+	//add_lifeprocess(/datum/lifeprocess/breath) //most of them cant even wear internals
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
 	add_lifeprocess(/datum/lifeprocess/disability)
@@ -216,12 +217,10 @@
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
 
-/*
-			for (var/thing in src) //not worth the CPU, nothing even uses this stuff
+			for (var/thing in src) //todo optimize with signals!!!!!!
 				var/atom/movable/A = thing
 				if (A.material)
 					A.material.triggerOnLife(src, A)
-*/
 
 		clamp_values()
 

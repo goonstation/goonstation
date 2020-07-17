@@ -56,6 +56,25 @@
 		..()
 		update_maptext()
 
+/obj/machinery/plantpot/kudzu
+	name = "hydroponics tray"
+	desc = "A tray filled with nutrient solution capable of sustaining plantlife... Made of plants."
+	icon_state = "kudzutray"
+
+	attackby(var/obj/item/W as obj, var/mob/user as mob)
+		//Can only attempt to destroy the plant pot if the plant in it is dead or empty.
+		if(!src.current || src.dead)
+			if (destroys_kudzu_object(src, W, user))
+				if (prob(40))
+					user.visible_message("<span class='alert'>[user] savagely attacks [src] with [W]!</span>")
+				else
+					user.visible_message("<span class='alert'>[user] savagely attacks [src] with [W], destroying it!</span>")
+					qdel(src)
+					return
+			else
+				return ..()
+		..()
+
 /obj/machinery/plantpot
 	// The central object for Hydroponics. All plant growing and most of everything goes on in
 	// this object - that said you don't want to have too many of them on the map because they
@@ -375,7 +394,7 @@
 						// It doesn't make much sense to feed a full man to a dinky little plant.
 					var/mob/living/carbon/C = W:affecting
 					user.visible_message("<span class='alert'>[user] starts to feed [C] to the plant!</span>")
-					logTheThing("combat", user, (C), "attempts to feed %target% to a man-eater at [log_loc(src)].") // Some logging would be nice (Convair880).
+					logTheThing("combat", user, (C), "attempts to feed [constructTarget(C,"combat")] to a man-eater at [log_loc(src)].") // Some logging would be nice (Convair880).
 					message_admins("[key_name(user)] attempts to feed [key_name(C, 1)] ([isdead(C) ? "dead" : "alive"]) to a man-eater at [log_loc(src)].")
 					src.add_fingerprint(user)
 					if(!(user in src.contributors))
@@ -383,7 +402,7 @@
 					if(do_after(user, 30)) // Same as the gibber and reclaimer. Was 20 (Convair880).
 						if(src && W && W.loc == user && C)
 							user.visible_message("<span class='alert'>[src.name] grabs [C] and devours them ravenously!</span>")
-							logTheThing("combat", user, (C), "feeds %target% to a man-eater at [log_loc(src)].")
+							logTheThing("combat", user, (C), "feeds [constructTarget(C,"combat")] to a man-eater at [log_loc(src)].")
 							message_admins("[key_name(user)] feeds [key_name(C, 1)] ([isdead(C) ? "dead" : "alive"]) to a man-eater at [log_loc(src)].")
 							if(C.mind)
 								C.ghostize()

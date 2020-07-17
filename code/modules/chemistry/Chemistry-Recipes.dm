@@ -75,9 +75,7 @@ datum
 					holder.del_reagent("platinum")
 				var/location = get_turf(holder.my_atom)
 				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(2, 1, location)
-				s.start()
+				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
@@ -104,9 +102,7 @@ datum
 					holder.del_reagent("propellant")
 				var/location = get_turf(holder.my_atom)
 				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(2, 1, location)
-				s.start()
+				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
@@ -135,9 +131,7 @@ datum
 					holder.del_reagent("potassium")
 				var/location = get_turf(holder.my_atom)
 				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(2, 1, location)
-				s.start()
+				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
@@ -164,9 +158,7 @@ datum
 					holder.del_reagent("smokepowder")
 				var/location = get_turf(holder.my_atom)
 				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(2, 1, location)
-				s.start()
+				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
@@ -193,9 +185,7 @@ datum
 					holder.del_reagent("water")
 				var/location = get_turf(holder.my_atom)
 				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(2, 1, location)
-				s.start()
+				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
@@ -1658,16 +1648,6 @@ datum
 			mix_sound = 'sound/voice/farts/fart3.ogg'
 			drinkrecipe = 1
 
-		methacola
-			name = "Methacola"
-			id = "methacola"
-			result = "methacola"
-			required_reagents = list("methamphetamine" = 1, "cola" = 1)
-			result_amount = 2
-			mix_phrase = "You watch as the amphetamines dissolve into the dark void of the soft drink."
-			mix_sound = 'sound/misc/drinkfizz.ogg'
-			drinkrecipe = 1
-
 		pink_lemonade
 			name = "Pink lemonade"
 			id = "pinklemonade"
@@ -2415,9 +2395,7 @@ datum
 				var/turf/location = 0
 				if (holder.my_atom)
 					location = get_turf(holder.my_atom)
-					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-					s.set_up(2, 1, location)
-					s.start()
+					elecflash(location)
 
 					for (var/mob/living/M in all_viewers(5, location))
 						if (isintangible(M))

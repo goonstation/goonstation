@@ -4,7 +4,7 @@
 	icon = 'icons/obj/syringe.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "syringe_0"
-	icon_state = "b10"
+	icon_state = "injector_1"
 	force = 3
 	throwforce = 3
 	w_class = 2
@@ -29,12 +29,12 @@
 			return 1
 		if(!istype(target.bioHolder))
 			return 1
-		logTheThing("combat", user, target, "injects %target% with [src.name]")
+		logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with [src.name]")
 		return 0
 
 	proc/update_appearance()
 		if(src.uses < 1)
-			src.icon_state = "b0"
+			src.icon_state = "injector_2"
 			src.desc = "A [src] that has been used up. It should be recycled or disposed of."
 			src.name = "expended " + src.name
 
@@ -70,6 +70,7 @@
 		desc = "A syringe designed to safely stimulate a living organism's genes into activation."
 		var/gene_to_activate = null
 		var/expended_properly = 0
+		icon_state = "activator_1"
 
 		injected(var/mob/living/carbon/user,var/mob/living/carbon/target)
 			if (..())
@@ -88,11 +89,11 @@
 		update_appearance()
 			if(src.uses < 1)
 				if (expended_properly)
-					src.icon_state = "10"
+					src.icon_state = "activator_3"
 					src.desc = "A [src] that has been filled with useful genetic information."
 					src.name = "filled " + src.name
 				else
-					src.icon_state = "b0"
+					src.icon_state = "activator_2"
 					src.desc = "A [src] that has been used up. It should be disposed of."
 					src.name = "expended " + src.name
 
@@ -101,7 +102,7 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "genetics_injector"
 	icon = 'icons/obj/syringe.dmi'
-	icon_state = "b10"
+	icon_state = "injector_1"
 	var/mob/living/carbon/target = null
 	var/obj/item/genetics_injector/injector = null
 
@@ -180,7 +181,7 @@
 			return
 		if (payload)
 			boutput(user, "<span class='alert'>You stab [M], injecting them.</span>")
-			logTheThing("combat", user, M, "stabs %target% with the speed injector (<b>Payload:</b> [payload.name]).")
+			logTheThing("combat", user, M, "stabs [constructTarget(M,"combat")] with the speed injector (<b>Payload:</b> [payload.name]).")
 			payload.injected(user,M)
 			qdel(payload)
 			payload = null

@@ -564,7 +564,6 @@
 	name = "\improper Custodial supplies locker"
 	req_access = list(access_janitor)
 	spawn_contents = list(/obj/item/storage/box/clothing/janitor,\
-	/obj/item/clothing/shoes/galoshes,\
 	/obj/item/reagent_containers/glass/bottle/cleaner = 2,\
 	/obj/item/reagent_containers/glass/bottle/acetone/janitors = 1,\
 	/obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1,\

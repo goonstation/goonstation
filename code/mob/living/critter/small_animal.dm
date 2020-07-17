@@ -59,12 +59,13 @@ todo: add more small animals!
 	var/health_brute_vuln = 1
 	var/health_burn = 20
 	var/health_burn_vuln = 1
-	var/pull_w_class = 2
 
 	var/fur_color = 0
 	var/eye_color = 0
 
 	var/is_pet = null // null = autodetect
+
+
 
 	New(loc)
 		if(isnull(src.is_pet))
@@ -94,20 +95,6 @@ todo: add more small animals!
 		else
 			return ..()
 
-	proc/can_pull(atom/A)
-		if (!src.ghost_spawned) //if its an admin or wizard made critter, just let them pull everythang
-			return 1
-		if (ismob(A))
-			return (src.pull_w_class >= 3)
-		else if (isobj(A))
-			if (istype(A,/obj/item))
-				var/obj/item/I = A
-				return (pull_w_class >= I.w_class)
-			else
-				return (src.pull_w_class >= 4)
-		return 0
-
-
 	death(var/gibbed)
 		if (!gibbed)
 			src.unequip_all()
@@ -115,6 +102,18 @@ todo: add more small animals!
 
 	canRideMailchutes()
 		return src.fits_under_table
+
+	proc/reduce_lifeprocess_on_death() //used for AI mobs we dont give a dang about them after theyre dead
+		remove_lifeprocess(/datum/lifeprocess/blood)
+		remove_lifeprocess(/datum/lifeprocess/canmove)
+		remove_lifeprocess(/datum/lifeprocess/disability)
+		remove_lifeprocess(/datum/lifeprocess/fire)
+		remove_lifeprocess(/datum/lifeprocess/hud)
+		remove_lifeprocess(/datum/lifeprocess/mutations)
+		remove_lifeprocess(/datum/lifeprocess/organs)
+		remove_lifeprocess(/datum/lifeprocess/sight)
+		remove_lifeprocess(/datum/lifeprocess/skin)
+		remove_lifeprocess(/datum/lifeprocess/statusupdate)
 
 /* =============================================== */
 /* -------------------- Mouse -------------------- */
@@ -2637,7 +2636,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "chitters"
 	health_brute = 6
-	health_burn = 4
+	health_burn = 6
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 
@@ -2693,10 +2692,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		New()
 			..()
 			src.ai = new /datum/aiHolder/trilobite(src)
+			//todo later : move this lifeprocess stuff to a component
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
 
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
+			reduce_lifeprocess_on_death()
 			..()
 
 
@@ -2710,8 +2713,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_say = "clicks"
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "chitters"
-	health_brute = 10
-	health_burn = 7
+	health_brute = 4
+	health_burn = 4
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 
@@ -2762,10 +2765,13 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		New()
 			..()
 			src.ai = new /datum/aiHolder/spike(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
 
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
+			reduce_lifeprocess_on_death()
 			..()
 
 
@@ -2778,8 +2784,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_say = "bloops"
 	speechverb_exclaim = "blips"
 	speechverb_ask = "blups"
-	health_brute = 17
-	health_burn = 13
+	health_brute = 24
+	health_burn = 24
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 
@@ -2832,10 +2838,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 				if (G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc))
 					src.emote("scream")
-					logTheThing("combat", src, G.affecting, "crunches %target% [log_loc(src)]")
+					logTheThing("combat", src, G.affecting, "crunches [constructTarget(G.affecting,"combat")] [log_loc(src)]")
 					M.lastattacker = src
 					M.lastattackertime = world.time
-					G.affecting.TakeDamage("head", rand(2,7), 0, 0, DAMAGE_BLUNT)
+					G.affecting.TakeDamage("head", rand(2,8), 0, 0, DAMAGE_BLUNT)
 					playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1, pitch = 1.3)
 					src.visible_message("<span class='alert'><B>[src] crunches [G.affecting]!</B></span>")
 		return ..()
@@ -2851,8 +2857,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		New()
 			..()
 			src.ai = new /datum/aiHolder/pikaia(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
 
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
+			reduce_lifeprocess_on_death()
 			..()

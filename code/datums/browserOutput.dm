@@ -232,7 +232,7 @@ var/global
 					src.owner.addBanDialog(targetMob)
 				if ("gib")
 					src.owner.cmd_admin_gib(targetMob)
-					logTheThing("admin", src.owner, targetMob, "gibbed %target%.")
+					logTheThing("admin", src.owner, targetMob, "gibbed [constructTarget(targetMob,"admin")].")
 				if ("popt")
 					if(src.owner.holder)
 						src.owner.holder.playeropt(targetMob)

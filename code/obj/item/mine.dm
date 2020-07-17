@@ -148,9 +148,7 @@
 			return
 		src.used_up = 1
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(3, 1, src)
-		s.start()
+		elecflash(src)
 
 		src.custom_stuff(M)
 		src.log_me(M)
@@ -185,8 +183,8 @@
 	proc/log_me(var/atom/M, var/mob/T)
 		if (!src || !istype(src))
 			return
-
-		logTheThing("bombing", M && ismob(M) ? M : null, T && ismob(T) ? T : null, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting %target%." : "."] Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		var/logtarget = (T && ismob(T) ? T : null)
+		logTheThing("bombing", M && ismob(M) ? M : null, logtarget, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting [constructTarget(logtarget,"bombing")]." : "."] Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 		return
 
 /obj/item/mine/radiation

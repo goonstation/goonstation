@@ -340,7 +340,6 @@
 			var/obj/overlay/simple_light/medium/directional/light = x
 			src:vis_contents -= light
 		return
-
 	if (!direct)
 		return
 
@@ -357,6 +356,8 @@
 		vx = 1
 
 	var/turf/T = get_steps(src, src.dir, 5)
+	if (!src || !T)
+		return
 	var/turf/TT = getlineopaqueblocked(src,T)
 	var/dist = get_dist(src,TT)-1
 	var/mag = vector_magnitude(vx, vy) //normalize vec
