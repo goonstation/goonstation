@@ -289,7 +289,9 @@
 					return COMSIGBIT_ATTACKBY_COMPLETE
 				if(DC_ALL)
 					WipeConnections()
-					boutput(user, "<span class='notice'>You disconnect [src].</span>")
+					if(istype(parent, /atom))
+						var/atom/AP = parent
+						boutput(user, "<span class='notice'>You disconnect [AP.name].</span>")
 					return COMSIGBIT_ATTACKBY_COMPLETE
 				else
 					//must be a custom config specific to the device, so let the device handle it

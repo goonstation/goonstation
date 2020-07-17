@@ -71,11 +71,11 @@
 				affecting.force_laydown_standup()
 
 			if (state == GRAB_KILL)
-				logTheThing("combat", src.assailant, src.affecting, "releases their choke on %target% after [choke_count] cycles")
+				logTheThing("combat", src.assailant, src.affecting, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles")
 			else if (state == GRAB_PIN)
-				logTheThing("combat", src.assailant, src.affecting, "drops their pin on %target%")
+				logTheThing("combat", src.assailant, src.affecting, "drops their pin on [constructTarget(src.affecting,"combat")]")
 			else
-				logTheThing("combat", src.assailant, src.affecting, "drops their grab on %target%")
+				logTheThing("combat", src.assailant, src.affecting, "drops their grab on [constructTarget(src.affecting,"combat")]")
 			if (affecting.grabbed_by)
 				affecting.grabbed_by -= src
 			affecting = null
@@ -195,7 +195,7 @@
 					src.affecting.buckled = null
 
 				else if (user.is_hulk() || prob(75))
-					logTheThing("combat", src.assailant, src.affecting, "'s grip upped to aggressive on %target%")
+					logTheThing("combat", src.assailant, src.affecting, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 					for(var/mob/O in AIviewers(src.assailant, null))
 						O.show_message("<span class='alert'>[src.assailant] has grabbed [src.affecting] aggressively (now hands)!</span>", 1)
 					icon_state = "reinforce"
@@ -225,7 +225,7 @@
 				src.assailant.lastattacked = src.affecting
 				src.affecting.lastattacker = src.assailant
 				src.affecting.lastattackertime = world.time
-				logTheThing("combat", src.assailant, src.affecting, "'s grip upped to neck on %target%")
+				logTheThing("combat", src.assailant, src.affecting, "'s grip upped to neck on [constructTarget(src.affecting,"combat")]")
 				user.next_click = world.time + user.combat_click_delay
 				src.assailant.visible_message("<span class='alert'>[src.assailant] has reinforced [his_or_her(assailant)] grip on [src.affecting] (now neck)!</span>")
 			if (GRAB_NECK)
@@ -241,7 +241,7 @@
 				user.next_click = world.time + user.combat_click_delay
 			if (GRAB_KILL)
 				src.state = GRAB_NECK
-				logTheThing("combat", src.assailant, src.affecting, "releases their choke on %target% after [choke_count] cycles")
+				logTheThing("combat", src.assailant, src.affecting, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles")
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has loosened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
 				user.next_click = world.time + user.combat_click_delay
@@ -249,7 +249,7 @@
 
 	proc/upgrade_to_kill(var/msg_overridden = 0)
 		icon_state = "disarm/kill"
-		logTheThing("combat", src.assailant, src.affecting, "chokes %target%")
+		logTheThing("combat", src.assailant, src.affecting, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
 
 		if (!msg_overridden)
@@ -282,7 +282,7 @@
 
 	proc/upgrade_to_pin(var/turf/T)
 		icon_state = "pin"
-		logTheThing("combat", src.assailant, src.affecting, "pins %target%")
+		logTheThing("combat", src.assailant, src.affecting, "pins [constructTarget(src.affecting,"combat")]")
 
 		for (var/mob/O in AIviewers(src.assailant, null))
 			O.show_message("<span class='alert'>[src.assailant] has pinned [src.affecting] to [T]!</span>", 1)
@@ -457,7 +457,7 @@
 		target = null
 
 /datum/action/bar/icon/pin_target
-	duration = 30
+	duration = 25
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED
 	id = "pin_target"
 	icon = 'icons/ui/actions.dmi'
@@ -525,7 +525,7 @@
 		return 0
 
 	user.visible_message("<span class='alert'><B>[M] has been smashed against [src] by [user]!</B></span>")
-	logTheThing("combat", user, M, "smashes %target% against [src]")
+	logTheThing("combat", user, M, "smashes [constructTarget(M,"combat")] against [src]")
 
 	src.Bumped(M)
 	random_brute_damage(G.affecting, rand(2,3))

@@ -24,7 +24,10 @@ datum/controller/process/mobs
 
 		if (TIME > nextpopcheck)
 			nextpopcheck = TIME + 4 MINUTES
-			if (total_clients() >= SLOW_LIFE_PLAYERCOUNT)  //hacky lag saving measure
+			var/clients_num = total_clients()
+			if (clients_num >= SLOWEST_LIFE_PLAYERCOUNT)
+				schedule_interval = 80
+			else if (clients_num >= SLOW_LIFE_PLAYERCOUNT)  //hacky lag saving measure
 				schedule_interval = 65
 			else
 				schedule_interval = 40

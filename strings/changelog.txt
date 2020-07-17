@@ -1,5 +1,30 @@
 
 (t)thu jul 16 20
+(u)MarkNstein
+(p)1503
+(e)🔄|rework
+(+)The "Anti-Singularity  Pack" can be ordered by QM's on any map (no longer restricted to Manta).
+(u)Flaborized
+(p)1484
+(e)🎨|sprites
+(+)Resprited medibots.
+(u)zjdtmkhzt
+(p)1489
+(e)⚖⛔|balance, removal
+(+)Security Officers are no longer immune to being chairflipped.
+(u)Roselace:
+(p)1501
+(e)🎨|sprites
+(+)New sprites for radiation supplies closets.
+(u)RichardGere
+(p)1490
+(e)⚖🐛|balance, bug
+(+)Shambling abominations can no longer sprint.
+(+)Fixed a bug where the changeling's horror form would drain an incorrect amount of DNA points.
+(u)MarkNstein
+(p)1468
+(e)🆕|feature
+(*)RP server: Gang is added to the Intrigue gamemode picklist if >=20 players are ready at round-start.
 (u)makkipakki
 (p)1475
 (e)|

@@ -315,7 +315,7 @@
 					if (prob(10))
 						W.set_loc(L.loc)
 
-				logTheThing("combat", user, L, "cremates %target% in a crematorium at [log_loc(src)].")
+				logTheThing("combat", user, L, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
 				L.remove()
 				ashes += 1
 

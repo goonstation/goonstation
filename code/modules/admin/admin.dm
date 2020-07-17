@@ -6,6 +6,9 @@
 //Admin procs
 //
 
+#define INCLUDE_ANTAGS 1
+#define STRIP_ANTAG 1
+
 var/global/noir = 0
 
 ////////////////////////////////
@@ -429,8 +432,8 @@ var/global/noir = 0
 			var/player = href_list["targetckey"]
 
 			if(src.tempmin)
-				logTheThing("admin", usr, player, "tried to access the compIDs of %target%")
-				logTheThing("diary", usr, player, "tried to access the compIDs of %target%", "admin")
+				logTheThing("admin", usr, player, "tried to access the compIDs of [constructTarget(player,"admin")]")
+				logTheThing("diary", usr, player, "tried to access the compIDs of [constructTarget(player,"diary")]", "admin")
 				alert("You need to be an actual admin to view compIDs.")
 				return
 
@@ -570,15 +573,15 @@ var/global/noir = 0
 						if(jobban_keylist.Find(text("[M.ckey] - Heads of Staff")))
 							alert("This person is banned from Heads of Staff. You must lift that ban first.")
 							return
-					logTheThing("admin", usr, M, "unbanned %target% from [job]")
-					logTheThing("diary", usr, M, "unbanned %target% from [job]", "admin")
+					logTheThing("admin", usr, M, "unbanned [constructTarget(M,"admin")] from [job]")
+					logTheThing("diary", usr, M, "unbanned [constructTarget(M,"diary")] from [job]", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] unbanned [key_name(M)] from [job]</span>")
 					addPlayerNote(M.ckey, usr.ckey, "[usr.ckey] unbanned [M.ckey] from [job]")
 					jobban_unban(M, job)
 					if (announce_jobbans) boutput(M, "<span class='alert'><b>[key_name(usr)] has lifted your [job] job-ban.</b></span>")
 				else
-					logTheThing("admin", usr, M, "banned %target% from [job]")
-					logTheThing("diary", usr, M, "banned %target% from [job]", "admin")
+					logTheThing("admin", usr, M, "banned [constructTarget(M,"admin")] from [job]")
+					logTheThing("diary", usr, M, "banned [constructTarget(M,"diary")] from [job]", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] banned [key_name(M)] from [job]</span>")
 					addPlayerNote(M.ckey, usr.ckey, "[usr.ckey] banned [M.ckey] from [job]")
 					if(job == "Everything Except Assistant")
@@ -633,8 +636,8 @@ var/global/noir = 0
 					else
 						M.client.mute(-1)
 						muted = 1
-					logTheThing("admin", usr, M, "has [(muted ? "permanently muted" : "unmuted")] %target%")
-					logTheThing("diary", usr, M, "has [(muted ? "permanently muted" : "unmuted")] %target%.", "admin")
+					logTheThing("admin", usr, M, "has [(muted ? "permanently muted" : "unmuted")] [constructTarget(M,"admin")]")
+					logTheThing("diary", usr, M, "has [(muted ? "permanently muted" : "unmuted")] [constructTarget(M,"diary")].", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] has [(muted ? "permanently muted" : "unmuted")] [key_name(M)].</span>")
 					boutput(M, "You have been [(muted ? "permanently muted" : "unmuted")].")
 			else
@@ -650,8 +653,8 @@ var/global/noir = 0
 					else
 						M.client.mute(60)
 						muted = 1
-					logTheThing("admin", usr, M, "has [(muted ? "temporarily muted" : "unmuted")] %target%")
-					logTheThing("diary", usr, M, "has [(muted ? "temporarily muted" : "unmuted")] %target%.", "admin")
+					logTheThing("admin", usr, M, "has [(muted ? "temporarily muted" : "unmuted")] [constructTarget(M,"admin")]")
+					logTheThing("diary", usr, M, "has [(muted ? "temporarily muted" : "unmuted")] [constructTarget(M,"diary")].", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] has [(muted ? "temporarily muted" : "unmuted")] [key_name(M)].</span>")
 					boutput(M, "You have been [(muted ? "temporarily muted" : "unmuted")].")
 			else
@@ -666,8 +669,8 @@ var/global/noir = 0
 						oocbanned = 1
 					else
 						oocban_unban(M)
-					logTheThing("admin", usr, M, "has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] %target%")
-					logTheThing("diary", usr, M, "has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] %target%.", "admin")
+					logTheThing("admin", usr, M, "has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] [constructTarget(M,"admin")]")
+					logTheThing("diary", usr, M, "has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] [constructTarget(M,"diary")].", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] has [(oocbanned ? "OOC Banned" : "OOC Unbanned")] [key_name(M)].</span>")
 
 		if ("toggle_hide_mode")
@@ -774,8 +777,8 @@ var/global/noir = 0
 					return
 				if(ishuman(M))
 					var/mob/living/carbon/human/N = M
-					logTheThing("admin", usr, M, "attempting to monkeyize %target%")
-					logTheThing("diary", usr, M, "attempting to monkeyize %target%", "admin")
+					logTheThing("admin", usr, M, "attempting to monkeyize [constructTarget(M,"admin")]")
+					logTheThing("diary", usr, M, "attempting to monkeyize [constructTarget(M,"diary")]", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] attempting to monkeyize [key_name(M)]</span>")
 					N.monkeyize()
 				else
@@ -793,8 +796,8 @@ var/global/noir = 0
 						return
 					M.say(speech)
 					speech = copytext(sanitize(speech), 1, MAX_MESSAGE_LEN)
-					logTheThing("admin", usr, M, "forced %target% to say: [speech]")
-					logTheThing("diary", usr, M, "forced %target% to say: [speech]", "admin")
+					logTheThing("admin", usr, M, "forced [constructTarget(M,"admin")] to say: [speech]")
+					logTheThing("diary", usr, M, "forced [constructTarget(M,"diary")] to say: [speech]", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] forced [key_name(M)] to say: [speech]</span>")
 			else
 				alert("You need to be at least a Primary Administrator to force players to say things.")
@@ -829,8 +832,8 @@ var/global/noir = 0
 					M.set_loc(pick(tdome2))
 					team = "Team 2"
 
-				logTheThing("admin", usr, M, "sent %target% to the thunderdome. ([team])")
-				logTheThing("diary", usr, M, "sent %target% to the thunderdome. ([team])", "admin")
+				logTheThing("admin", usr, M, "sent [constructTarget(M,"admin")] to the thunderdome. ([team])")
+				logTheThing("diary", usr, M, "sent [constructTarget(M,"diary")] to the thunderdome. ([team])", "admin")
 				message_admins("[key_name(usr)] has sent [key_name(M)] to the thunderdome. ([team])")
 				boutput(M, "<span class='notice'><b>You have been sent to the Thunderdome. You are on [team].</b></span>")
 				boutput(M, "<span class='notice'><b>Prepare for combat. If you are not let out of the preparation area within a few minutes, please adminhelp. (F1 key)</b></span>")
@@ -848,8 +851,8 @@ var/global/noir = 0
 					if(config.allow_admin_rev)
 						M.revive()
 						message_admins("<span class='alert'>Admin [key_name(usr)] healed / revived [key_name(M)]!</span>")
-						logTheThing("admin", usr, M, "healed / revived %target%")
-						logTheThing("diary", usr, M, "healed / revived %target%", "admin")
+						logTheThing("admin", usr, M, "healed / revived [constructTarget(M,"admin")]")
+						logTheThing("diary", usr, M, "healed / revived [constructTarget(M,"diary")]", "admin")
 					else
 						alert("Reviving is currently disabled.")
 			else
@@ -1518,7 +1521,7 @@ var/global/noir = 0
 				M.abilityHolder.addAbility(ab_to_add)
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] added ability [ab_to_add] to [key_name(M)].")
-				logTheThing("admin", usr, M, "added ability [ab_to_add] to %target%.")
+				logTheThing("admin", usr, M, "added ability [ab_to_add] to [constructTarget(M,"admin")].")
 			else
 				alert("You must be at least a Primary Administrator to do this!")
 
@@ -1531,7 +1534,7 @@ var/global/noir = 0
 					return
 				var/ab_to_rem = input("Which ability?", "Ability", null) as anything in M.abilityHolder.abilities
 				message_admins("[key_name(usr)] removed ability [ab_to_rem] from [key_name(M)].")
-				logTheThing("admin", usr, M, "removed ability [ab_to_rem] from %target%.")
+				logTheThing("admin", usr, M, "removed ability [ab_to_rem] from [constructTarget(M,"admin")].")
 				M.abilityHolder.removeAbilityInstance(ab_to_rem)
 				M.abilityHolder.updateButtons()
 			else
@@ -1545,7 +1548,7 @@ var/global/noir = 0
 				M.add_ability_holder(ab_to_add)
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] created abilityHolder [ab_to_add] for [key_name(M)].")
-				logTheThing("admin", usr, M, "created abilityHolder [ab_to_add] for %target%.")
+				logTheThing("admin", usr, M, "created abilityHolder [ab_to_add] for [constructTarget(M,"admin")].")
 			else
 				alert("You must be at least a Primary Administrator to do this!")
 
@@ -1932,7 +1935,7 @@ var/global/noir = 0
 				if (rank == "Remove")
 					C.clear_admin_verbs()
 					C.update_admins(null)
-					logTheThing("admin", usr, C, "has removed %target%'s adminship")
+					logTheThing("admin", usr, C, "has removed [constructTarget(C,"admin")]'s adminship")
 					logTheThing("diary", usr, null, "has removed [C]'s adminship", "admin")
 					message_admins("[key_name(usr)] has removed [C]'s adminship")
 
@@ -1947,7 +1950,7 @@ var/global/noir = 0
 				else
 					C.clear_admin_verbs()
 					C.update_admins(rank)
-					logTheThing("admin", usr, C, "has made %target% a [rank]")
+					logTheThing("admin", usr, C, "has made [constructTarget(C,"admin")] a [rank]")
 					logTheThing("diary", usr, null, "has made [C] a [rank]", "admin")
 					message_admins("[key_name(usr)] has made [C] a [rank]")
 
@@ -2077,12 +2080,12 @@ var/global/noir = 0
 					return
 				M.client.set_antag_tokens( tokens )
 				if (tokens <= 0)
-					logTheThing("admin", usr, M, "Removed all antag tokens from %target%")
-					logTheThing("diary", usr, M, "Removed all antag tokens from %target%", "admin")
+					logTheThing("admin", usr, M, "Removed all antag tokens from [constructTarget(M,"admin")]")
+					logTheThing("diary", usr, M, "Removed all antag tokens from [constructTarget(M,"diary")]", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] removed all antag tokens from [key_name(M)]</span>")
 				else
-					logTheThing("admin", usr, M, "Set %target%'s Antag tokens  to [tokens].")
-					logTheThing("diary", usr, M, "Set %target%'s Antag tokens  to [tokens].")
+					logTheThing("admin", usr, M, "Set [constructTarget(M,"admin")]'s Antag tokens  to [tokens].")
+					logTheThing("diary", usr, M, "Set [constructTarget(M,"diary")]'s Antag tokens  to [tokens].")
 					message_admins( "[key_name(usr)] set [key_name(M)]'s Antag tokens to [tokens]." )
 		if("setspacebux")
 			if (src.level >= LEVEL_SA)
@@ -2096,8 +2099,8 @@ var/global/noir = 0
 				if (!spacebux)
 					return
 				M.client.set_persistent_bank( spacebux )
-				logTheThing("admin", usr, M, "Set %target%'s Persistent Bank (Spacebux) to [spacebux].")
-				logTheThing("diary", usr, M, "Set %target%'s Persistent Bank (Spacebux) to [spacebux].")
+				logTheThing("admin", usr, M, "Set [constructTarget(M,"admin")]'s Persistent Bank (Spacebux) to [spacebux].")
+				logTheThing("diary", usr, M, "Set [constructTarget(M,"diary")]'s Persistent Bank (Spacebux) to [spacebux].")
 				message_admins( "[key_name(usr)] set [key_name(M)]'s Persistent Bank (Spacebux) to [spacebux]." )
 		if ("viewsave")
 			if (src.level >= LEVEL_ADMIN)
@@ -2112,8 +2115,8 @@ var/global/noir = 0
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				M.unlock_medal( "Contributor", 1 )
-				logTheThing("admin", usr, M, "gave %target% contributor status.")
-				logTheThing("diary", usr, M, "gave %target% contributor status.")
+				logTheThing("admin", usr, M, "gave [constructTarget(M,"admin")] contributor status.")
+				logTheThing("diary", usr, M, "gave [constructTarget(M,"diary")] contributor status.")
 				message_admins( "[key_name(usr)] gave [key_name(M)] contributor status." )
 			else
 				alert("You need to be at least a Coder to grant the medal.")
@@ -2126,8 +2129,8 @@ var/global/noir = 0
 					boutput( usr, "<span class='alert'>Revoke failed, couldn't contact hub!</span>" )
 				else if(suc)
 					boutput( usr, "<span class='alert'>Contributor medal revoked.</span>" )
-					logTheThing("admin", usr, M, "revoked %target%'s contributor status.")
-					logTheThing("diary", usr, M, "revoked %target%'s contributor status.")
+					logTheThing("admin", usr, M, "revoked [constructTarget(M,"admin")]'s contributor status.")
+					logTheThing("diary", usr, M, "revoked [constructTarget(M,"diary")]'s contributor status.")
 					message_admins( "[key_name(usr)] revoked [key_name(M)]'s contributor status." )
 				else
 					boutput( usr, "<span class='alert'>Failed to revoke, did they have the medal to begin with?</span>" )
@@ -2138,8 +2141,8 @@ var/global/noir = 0
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				M.unlock_medal( "Unlike the director, I went to college", 1 )
-				logTheThing("admin", usr, M, "gave %target% their clown college diploma.")
-				logTheThing("diary", usr, M, "gave %target% their clown college diploma.")
+				logTheThing("admin", usr, M, "gave [constructTarget(M,"admin")] their clown college diploma.")
+				logTheThing("diary", usr, M, "gave [constructTarget(M,"diary")] their clown college diploma.")
 				message_admins( "[key_name(usr)] gave [key_name(M)] their clown college diploma." )
 			else
 				alert("You need to be at least an SA to grant this.")
@@ -2152,8 +2155,8 @@ var/global/noir = 0
 					boutput( usr, "<span class='alert'>Revoke failed, couldn't contact hub!</span>" )
 				else if(suc)
 					boutput( usr, "<span class='alert'>Clown college diploma revoked.</span>" )
-					logTheThing("admin", usr, M, "revoked %target%'s clown college diploma.")
-					logTheThing("diary", usr, M, "revoked %target%'s clown college diploma.")
+					logTheThing("admin", usr, M, "revoked [constructTarget(M,"admin")]'s clown college diploma.")
+					logTheThing("diary", usr, M, "revoked [constructTarget(M,"diary")]'s clown college diploma.")
 					message_admins( "[key_name(usr)] revoked [key_name(M)]'s clown college diploma." )
 				else
 					boutput( usr, "<span class='alert'>Failed to revoke, did they have the medal to begin with?</span>" )
@@ -3389,6 +3392,22 @@ var/global/noir = 0
 						logTheThing("admin", src, null, "has spawned [amount] normal players.")
 						logTheThing("diary", src, null, "has spawned [amount] normal players.", "admin")
 
+					if("spawn_player") //includes antag players
+						var/datum/special_respawn/SR = new /datum/special_respawn/
+						var/amount = input(usr,"Amount to respawn:","Spawn Players",3) as num
+						if(!amount) return
+						SR.spawn_normal(amount, INCLUDE_ANTAGS)
+						logTheThing("admin", src, null, "has spawned [amount] players.")
+						logTheThing("diary", src, null, "has spawned [amount] players.", "admin")
+
+					if("spawn_player_strip_antag") //includes antag players but strips status
+						var/datum/special_respawn/SR = new /datum/special_respawn/
+						var/amount = input(usr,"Amount to respawn:","Spawn Players",3) as num
+						if(!amount) return
+						SR.spawn_normal(amount, INCLUDE_ANTAGS, STRIP_ANTAG)
+						logTheThing("admin", src, null, "has spawned [amount] players.")
+						logTheThing("diary", src, null, "has spawned [amount] players.", "admin")
+
 					if("spawn_job")
 						var/datum/special_respawn/SR = new /datum/special_respawn/
 						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
@@ -3399,6 +3418,28 @@ var/global/noir = 0
 						SR.spawn_as_job(amount,job)
 						logTheThing("admin", src, null, "has spawned [amount] normal players.")
 						logTheThing("diary", src, null, "has spawned [amount] normal players.", "admin")
+
+					if("spawn_player_job") //includes antag players
+						var/datum/special_respawn/SR = new /datum/special_respawn/
+						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
+						var/datum/job/job = input(usr,"Select job to spawn players as:","Respawn Panel",null) as null|anything in jobs
+						if(!job) return
+						var/amount = input(usr,"Amount to respawn:","Spawn Players",3) as num
+						if(!amount) return
+						SR.spawn_as_job(amount, job, INCLUDE_ANTAGS)
+						logTheThing("admin", src, null, "has spawned [amount] players, and kept any antag statuses.")
+						logTheThing("diary", src, null, "has spawned [amount] players, and kept any antag statuses.", "admin")
+
+					if("spawn_player_job_strip_antag") //includes antag players but strips antag status
+						var/datum/special_respawn/SR = new /datum/special_respawn/
+						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
+						var/datum/job/job = input(usr,"Select job to spawn players as:","Respawn Panel",null) as null|anything in jobs
+						if(!job) return
+						var/amount = input(usr,"Amount to respawn:","Spawn Players",3) as num
+						if(!amount) return
+						SR.spawn_as_job(amount, job, INCLUDE_ANTAGS, STRIP_ANTAG)
+						logTheThing("admin", src, null, "has spawned [amount] players, and stripped any antag statuses.")
+						logTheThing("diary", src, null, "has spawned [amount] players, and stripped any antag statuses.", "admin")
 
 	/*				if("spawn_commandos")
 						var/datum/special_respawn/SR = new /datum/special_respawn/
@@ -3733,14 +3774,48 @@ var/global/noir = 0
 
 
 /datum/admins/proc/s_respawn()
-	var/dat = "<html><head><title>Respawn Panel</title></head>"
-	dat += {"
-			<BR>
-			<A href='?src=\ref[src];action=s_rez;type=spawn_normal'>Spawn normal players</A><BR>
-			<A href='?src=\ref[src];action=s_rez;type=spawn_job'>Spawn normal players as a job</A><BR>
-			<A href='?src=\ref[src];action=s_rez;type=spawn_syndies'>Spawn a Syndicate attack force</A><BR>
-			<A href='?src=\ref[src];action=s_rez;type=spawn_custom'>Spawn a custom mob type</A><BR>
-			"}
+	var/dat = {"
+		<html><head><title>Respawn Panel</title>
+			<style>
+				table {
+					border:1px solid #FF6961;
+					border-collapse: collapse;
+					width: 100%;
+					empty-cells: show;
+				}
+
+				th {
+					background-color: #FF6961;
+					color: white;
+					padding: 8px;
+					text-align: center;
+				}
+
+				td {
+					padding: 8px;
+					text-align: left;
+				}
+
+				tr:nth-child(odd) {background-color: #f2f2f2;}
+			</style>
+		</head>
+		<body>
+			<table>
+				<th>Respawn Panel</th>
+				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_normal'>Spawn normal players</A></td></tr>
+				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_job'>Spawn normal players as a job</A></td></tr>
+				<tr><td></td></tr>
+				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_player'>Spawn players - keep antag status</A></td></tr>
+				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_player_job'>Spawn players as a job - keep antag status</A></td></tr>
+				<tr><td></td></tr>
+				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_player_strip_antag'>Spawn players - strip antag status</A></td></tr>
+				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_player_job_strip_antag'>Spawn players as a job - strip antag status</A></td></tr>
+				<tr><td></td></tr>
+				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_syndies'>Spawn a Syndicate attack force</A></td></tr>
+				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_custom'>Spawn a custom mob type</A></td></tr>
+			</table>
+		</body></html>
+		"}
 	usr.Browse(dat, "window=SRespawn")
 
 	// Someone else removed these but left the (non-functional) buttons. Move back inside the dat section and uncomment to re-add. - IM
@@ -4367,8 +4442,8 @@ var/global/noir = 0
 
 	//to stop spamming during traitor all secret
 	if(!mass_traitor_obj)
-		logTheThing("admin", usr, M, "made %target% a[special ? " [special]" : ""] [traitor_type].")
-		logTheThing("diary", usr, M, "made %target% a[special ? " [special]" : ""] [traitor_type].", "admin")
+		logTheThing("admin", usr, M, "made [constructTarget(M,"admin")] a[special ? " [special]" : ""] [traitor_type].")
+		logTheThing("diary", usr, M, "made [constructTarget(M,"diary")] a[special ? " [special]" : ""] [traitor_type].", "admin")
 		message_admins("<span class='internal'>[key_name(usr)] has made [key_name(M)] a[special ? " [special]" : ""] [traitor_type].</span>")
 	return
 
@@ -4496,17 +4571,17 @@ var/global/noir = 0
 	var/built = {"<title>Chat Bans (todo: prettify)</title>"}
 	if(C.cloud_get( "adminhelp_banner" ))
 		built += "<a href='?src=\ref[src];target=\ref[C];action=ah_unmute' class='alert'>Adminhelp Mute</a> (Last by [C.cloud_get( "adminhelp_banner" )])<br/>"
-		logTheThing("admin", src, C, "unmuted %target% from adminhelping.")
+		logTheThing("admin", src, C, "unmuted [constructTarget(C,"admin")] from adminhelping.")
 	else
 		built += "<a href='?src=\ref[src];target=\ref[C];action=ah_mute'>Adminhelp Mute</a><br/>"
-		logTheThing("admin", src, C, "muted %target% from adminhelping.")
+		logTheThing("admin", src, C, "muted [constructTarget(C,"admin")] from adminhelping.")
 
 	if(C.cloud_get( "mentorhelp_banner" ))
 		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_unmute' class='alert'>Mentorhelp Mute</a> (Last by [C.cloud_get( "mentorhelp_banner" )])<br/>"
-		logTheThing("admin", src, C, "unmuted %target% from mentorhelping.")
+		logTheThing("admin", src, C, "unmuted [constructTarget(C,"admin")] from mentorhelping.")
 	else
 		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_mute'>Mentorhelp Mute</a><br/>"
-		logTheThing("admin", src, C, "muted %target% from mentorhelping.")
+		logTheThing("admin", src, C, "muted [constructTarget(C,"admin")] from mentorhelping.")
 
 	usr.Browse(built, "window=chatban;size=500x100")
 
@@ -4643,8 +4718,8 @@ var/global/noir = 0
 	if (!forced && alert(src, "Respawn [M]?", "Confirmation", "Yes", "No") != "Yes")
 		return
 
-	logTheThing("admin", src, M, "respawned %target%")
-	logTheThing("diary", src, M, "respawned %target%.", "admin")
+	logTheThing("admin", src, M, "respawned [constructTarget(M,"admin")]")
+	logTheThing("diary", src, M, "respawned [constructTarget(M,"diary")].", "admin")
 	message_admins("[key_name(src)] respawned [key_name(M)].")
 
 	var/mob/new_player/newM = new()
@@ -4746,3 +4821,6 @@ var/global/noir = 0
 //*********************************************************************************************************
 //
 //
+
+#undef INCLUDE_ANTAGS
+#undef STRIP_ANTAG

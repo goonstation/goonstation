@@ -220,8 +220,8 @@
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
 		.= list()
-		.["Blood:"] = src.points
-		.["Total:"] = src.vamp_blood
+		.["Blood:"] = round(src.points)
+		.["Total:"] = round(src.vamp_blood)
 		return
 
 	onLife(var/mult = 1)
@@ -407,7 +407,7 @@
 			SHOW_MINDSLAVE_TIPS(M)
 
 			boutput(owner, __blue("[M] has been revived as your thrall."))
-			logTheThing("combat", owner, M, "enthralled %target% at [log_loc(owner)].")
+			logTheThing("combat", owner, M, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")
 
 
 

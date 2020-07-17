@@ -56,8 +56,8 @@
 	admin_only
 
 	if(config.allow_admin_jump)
-		logTheThing("admin", usr, M, "jumped to %target% ([showCoords(M.x, M.y, M.z)] in [get_area(M)])")
-		logTheThing("diary", usr, M, "jumped to %target% ([showCoords(M.x, M.y, M.z)] in [get_area(M)])", "admin")
+		logTheThing("admin", usr, M, "jumped to [constructTarget(M,"admin")] ([showCoords(M.x, M.y, M.z)] in [get_area(M)])")
+		logTheThing("diary", usr, M, "jumped to [constructTarget(M,"diary")] ([showCoords(M.x, M.y, M.z)] in [get_area(M)])", "admin")
 		message_admins("[key_name(usr)] jumped to [key_name(M)] ([showCoords(M.x, M.y, M.z)] in [get_area(M)])")
 		if(flourish)
 			shrink_teleport(src.mob)
@@ -88,8 +88,8 @@
 			target = selection.mob
 		else
 			target = ckey.mob
-		logTheThing("admin", usr, target, "jumped to %target% ([showCoords(target.x, target.y, target.z)] in [get_area(target)])")
-		logTheThing("diary", usr, target, "jumped to %target% ([showCoords(target.x, target.y, target.z)] in [get_area(target)])", "admin")
+		logTheThing("admin", usr, target, "jumped to [constructTarget(target,"admin")] ([showCoords(target.x, target.y, target.z)] in [get_area(target)])")
+		logTheThing("diary", usr, target, "jumped to [constructTarget(target,"diary")] ([showCoords(target.x, target.y, target.z)] in [get_area(target)])", "admin")
 		message_admins("[key_name(usr)] jumped to [key_name(target)] ([showCoords(target.x, target.y, target.z)] in [get_area(target)])")
 		if(flourish)
 			shrink_teleport(src.mob)
@@ -139,8 +139,8 @@
 	set popup_menu = 0
 	admin_only
 	if(config.allow_admin_jump)
-		logTheThing("admin", usr, M, "teleported %target% ([showCoords(usr.x, usr.y, usr.z)] in [get_area(usr)])")
-		logTheThing("diary", usr, M, "teleported %target% ([showCoords(usr.x, usr.y, usr.z)] in [get_area(usr)])", "admin")
+		logTheThing("admin", usr, M, "teleported [constructTarget(M,"admin")] ([showCoords(usr.x, usr.y, usr.z)] in [get_area(usr)])")
+		logTheThing("diary", usr, M, "teleported [constructTarget(M,"diary")] ([showCoords(usr.x, usr.y, usr.z)] in [get_area(usr)])", "admin")
 		message_admins("[key_name(usr)] teleported [key_name(M)] ([showCoords(usr.x, usr.y, usr.z)] in [get_area(usr)])")
 		M.set_loc(get_turf(usr))
 	else
@@ -158,8 +158,8 @@
 			return
 
 		M.set_loc(pick(turfs))
-		logTheThing("admin", usr, M, "sent %target% to [A] ([showCoords(A.x, A.y, A.z)] in [get_area(A)])")
-		logTheThing("diary", usr, M, "sent %target% to [A] ([showCoords(A.x, A.y, A.z)] in [get_area(A)])", "admin")
+		logTheThing("admin", usr, M, "sent [constructTarget(M,"admin")] to [A] ([showCoords(A.x, A.y, A.z)] in [get_area(A)])")
+		logTheThing("diary", usr, M, "sent [constructTarget(M,"diary")] to [A] ([showCoords(A.x, A.y, A.z)] in [get_area(A)])", "admin")
 		message_admins("[key_name(usr)] teleported [key_name(M)] to [A] ([showCoords(A.x, A.y, A.z)] in [get_area(A)])")
 	else
 		alert("Admin jumping disabled")

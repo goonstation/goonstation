@@ -125,8 +125,8 @@ proc/toggledj(var/client/C, var/client/who)
 		C.verbs -= /client/proc/cmd_dectalk
 		C.verbs -= /client/proc/open_dj_panel
 
-	logTheThing("admin", who, C, "has [C.non_admin_dj ? "given" : "removed"] the ability for %target% to DJ and use dectalk.")
-	logTheThing("diary", who, C, "has [C.non_admin_dj ? "given" : "removed"] the ability for %target% to DJ and use dectalk.", "admin")
+	logTheThing("admin", who, C, "has [C.non_admin_dj ? "given" : "removed"] the ability for [constructTarget(C,"admin")] to DJ and use dectalk.")
+	logTheThing("diary", who, C, "has [C.non_admin_dj ? "given" : "removed"] the ability for [constructTarget(C,"diary")] to DJ and use dectalk.", "admin")
 	message_admins("[key_name(who)] has [C.non_admin_dj ? "given" : "removed"] the ability for [key_name(C)] to DJ and use dectalk.")
 	boutput(C, "<span class='alert'><b>You [C.non_admin_dj ? "can now" : "no longer can"] DJ with the 'DJ Panel' and use text2speech with 'Dectalk' commands under 'Special Verbs'.</b></span>")
 	return

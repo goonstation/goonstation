@@ -399,7 +399,7 @@
 
 	src.client.mouse_pointer_icon = src.cursor
 
-	logTheThing("diary", null, src, "Login: %target% from [src.client.address]", "access")
+	logTheThing("diary", null, src, "Login: [constructTarget(src,"diary")] from [src.client.address]", "access")
 	src.lastKnownIP = src.client.address
 	src.computer_id = src.client.computer_id
 	if (config.log_access)
@@ -409,24 +409,24 @@
 				continue
 			else if (M && M.client && M.client.address == src.client.address)
 				if(!src.client.holder && !M.client.holder)
-					logTheThing("admin", src, M, "has same IP address as %target%")
-					logTheThing("diary", src, M, "has same IP address as %target%", "access")
+					logTheThing("admin", src, M, "has same IP address as [constructTarget(M,"admin")]")
+					logTheThing("diary", src, M, "has same IP address as [constructTarget(M,"diary")]", "access")
 					if (IP_alerts)
 						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)]</span>")
 			else if (M && M.lastKnownIP && M.lastKnownIP == src.client.address && M.ckey != src.ckey && M.key)
 				if(!src.client.holder && !M.client.holder)
-					logTheThing("diary", src, M, "has same IP address as %target% did (%target% is no longer logged in).", "access")
+					logTheThing("diary", src, M, "has same IP address as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", "access")
 					if (IP_alerts)
 						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
 			if (M && M.client && M.client.computer_id == src.client.computer_id)
-				logTheThing("admin", src, M, "has same computer ID as %target%")
-				logTheThing("diary", src, M, "has same computer ID as %target%", "access")
+				logTheThing("admin", src, M, "has same computer ID as [constructTarget(M,"admin")]")
+				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")]", "access")
 				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font color='blue'> as [key_name(M)]</span>")
 				SPAWN_DBG(0)
 					if(M.lastKnownIP == src.client.address)
 						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 			else if (M && M.computer_id && M.computer_id == src.client.computer_id && M.ckey != src.ckey && M.key)
-				logTheThing("diary", src, M, "has same computer ID as %target% did (%target% is no longer logged in).", null, "access")
+				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", null, "access")
 				logTheThing("admin", M, null, "is no longer logged in.")
 				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B></span><span class='internal'> as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
 				SPAWN_DBG(0)
@@ -624,9 +624,9 @@
 				tmob.set_loc(oldloc)
 
 				if (istype(tmob.loc, /turf/space))
-					logTheThing("combat", src, tmob, "trades places with (Help Intent) %target%, pushing them into space.")
+					logTheThing("combat", src, tmob, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into space.")
 				else if (locate(/obj/hotspot) in tmob.loc)
-					logTheThing("combat", src, tmob, "trades places with (Help Intent) %target%, pushing them into a fire.")
+					logTheThing("combat", src, tmob, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into a fire.")
 				deliver_move_trigger("swap")
 				tmob.deliver_move_trigger("swap")
 				src.now_pushing = 0
@@ -654,9 +654,9 @@
 			if (victim.buckled && !victim.buckled.anchored)
 				step(victim.buckled, t)
 			if (istype(victim.loc, /turf/space))
-				logTheThing("combat", src, victim, "pushes %target% into space.")
+				logTheThing("combat", src, victim, "pushes [constructTarget(victim,"combat")] into space.")
 			else if (locate(/obj/hotspot) in victim.loc)
-				logTheThing("combat", src, victim, "pushes %target% into a fire.")
+				logTheThing("combat", src, victim, "pushes [constructTarget(victim,"combat")] into a fire.")
 
 		step(src,t)
 		AM.OnMove(src)
@@ -2843,9 +2843,15 @@
 	.=0
 
 /mob/verb/pull_verb(atom/movable/A as mob|obj in view(1))
-	set name = "Pull"
+	set name = "Pull / Unpull"
 	set category = "Local"
-	A.pull()
+
+	if (src.pulling && src.pulling == A)
+		unpull_particle(src,src.pulling)
+		src.set_pulling(null)
+	else
+		A.pull()
+
 
 /mob/verb/examine_verb(atom/A as mob|obj|turf in view())
 	set name = "Examine"

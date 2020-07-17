@@ -177,7 +177,7 @@
 			user.show_text("The alert needs at least one $JOB token.", "red")
 			return
 		src.arrivalalert = sanitize(adminscrub(newalert, 200))
-		logTheThing("station", user, src, "sets the arrival announcement on %target% to \"[src.arrivalalert]\"")
+		logTheThing("station", user, src, "sets the arrival announcement on [constructTarget(src,"station")] to \"[src.arrivalalert]\"")
 		user.show_text("Arrival alert set to '[newalert]'", "blue")
 		playsound(src.loc, "keyboard", 50, 1, 5)
 		return
