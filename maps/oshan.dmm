@@ -5834,6 +5834,7 @@
 	name = "AI Core Shield";
 	pixel_x = 28
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "amB" = (
