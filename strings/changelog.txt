@@ -1,5 +1,10 @@
 
 (t)fri jul 17 20
+(u)MarkNstein
+(p)1506
+(e)🐛🆕🗺|bug, feature, mapping
+(+)All printers on all maps are now properly hooked-up to the PNet grid.
+(+)Atlas now has printers.
 (u)Somethings
 (p)1508
 (e)🐛|bug
