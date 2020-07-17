@@ -750,9 +750,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		qdel(src)
 		return
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(5, 1, user.loc)
-	s.start()
+	elecflash(user)
 
 	src.power = max(gen_primary.power,gen_secondary.power)
 
@@ -941,9 +939,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		shoot_projectile_DIR(src, current_projectile, dir)
 
 		if(prob(35))
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, src)
-			s.start()
+			elecflash(src)
 	..()
 
 /obj/machinery/emitter/attackby(obj/item/W, mob/user)
@@ -1540,7 +1536,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 							src.icon_state = "portgen1"
 
 							// And here (Convair880).
-							logTheThing("bombing", usr, src.activator, "deactivated [src.name][src.activator ? " (primed by %target%" : ""] at [log_loc(src)].")
+							logTheThing("bombing", usr, src.activator, "deactivated [src.name][src.activator ? " (primed by [constructTarget(src.activator,"bombing")]" : ""] at [log_loc(src)].")
 							message_admins("[key_name(usr)] deactivated [src.name][src.activator ? " (primed by [key_name(src.activator)])" : ""] at [log_loc(src)].")
 
 						else

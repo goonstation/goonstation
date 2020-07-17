@@ -381,13 +381,13 @@
 				M.setStatus("resting", INFINITE_STATUS)
 				M.force_laydown_standup()
 				M.set_loc(src.loc)
-				logTheThing("combat", user, target, " laods %target% onto \the [src] at [showCoords(user.x, user.y, user.z)]")
-				logTheThing("diary", user, target, " laods %target% onto \the [src] at [showCoords(user.x, user.y, user.z)]", "combat")
+				logTheThing("combat", user, target, " laods [constructTarget(target,"combat")] onto \the [src] at [showCoords(user.x, user.y, user.z)]")
+				logTheThing("diary", user, target, " laods [constructTarget(target,"diary")] onto \the [src] at [showCoords(user.x, user.y, user.z)]", "combat")
 				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto [src]!</b></span>")
 			else
 				M.set_loc(src.loc)
-				logTheThing("combat", usr, target, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", usr, target, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", usr, target, " loads [constructTarget(target,"combat")] into \the [src] at [showCoords(src.x, src.y, src.z)]")
+				logTheThing("diary", usr, target, " loads [constructTarget(target,"diary")] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
 				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto \the [src]!</b></span>")
 				return
 
@@ -400,8 +400,8 @@
 				GM.setStatus("resting", INFINITE_STATUS)
 				GM.force_laydown_standup()
 				user.visible_message("<span class='alert'><b>[user.name] shoves [GM.name] onto [src]!</b></span>")
-				logTheThing("combat", usr, GM, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", usr, GM, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", usr, GM, " loads [constructTarget(GM,"combat")] into \the [src] at [showCoords(src.x, src.y, src.z)]")
+				logTheThing("diary", usr, GM, " loads [constructTarget(GM,"diary")] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
 				qdel(G)
 		else
 			return ..(I,user)

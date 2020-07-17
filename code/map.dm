@@ -12,7 +12,11 @@ var/global/datum/map_settings/map_settings = null
 //playerPickable defines whether the map can be chosen by players when voting on a new map. Setting to ASS_JAM should allow it on the 13th only, and not on RP.
 var/global/list/mapNames = list(
 	"Clarion" = 		list("id" = "CLARION", 		"settings" = "destiny/clarion", "playerPickable" = 1),
+#ifdef RP_MODE
+	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = 1, 	"MinPlayersAllowed" = 14),
+#else
 	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = 1),
+#endif
 	//"Construction" = list("id" = "CONSTRUCTION", "settings" = "construction"),
 	"Cogmap 1 (Old)" = 	list("id" = "COGMAP_OLD", 	"settings" = "cogmap_old"),
 	"Cogmap 2" = 		list("id" = "COGMAP2", 		"settings" = "cogmap2", 		"playerPickable" = 1, 	"MinPlayersAllowed" = 40),
@@ -127,7 +131,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/donut3
 	name = "DONUT3"
-	goonhub_map = "https://cdn.discordapp.com/attachments/469379618168897538/727936626147459192/donut3-30-FINAL2-lol.png"
+	goonhub_map = "https://cdn.discordapp.com/attachments/469379618168897538/729919886524153916/donut3-30-FINAL4-the-unlucky-number.png"
 	airlock_style = "pyro"
 	walls = /turf/simulated/wall/auto/jen
 	rwalls = /turf/simulated/wall/auto/reinforced/jen
@@ -153,6 +157,17 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
+
+	valid_nuke_targets = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
+		"inner engineering (surrounding the singularity, not in it)" = list(/area/station/engine/inner),
+		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
+		"the inner hall of the medbay" = list(/area/station/medical/medbay),
+		"the main hallway in research" = list(/area/station/science),
+		"the chapel" = list(/area/station/chapel/main),
+		"the escape hallway" = list(/area/station/hallway/secondary/exit),
+		"the Research Director's office" = list(/area/station/crew_quarters/hor),
+		"the Chief Engineer's office" = list(/area/station/engine/engineering/ce),
+		"the kitchen" = list(/area/station/crew_quarters/kitchen))
 
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"

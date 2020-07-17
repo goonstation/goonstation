@@ -313,15 +313,13 @@
 		if (tlocation)
 			explosion(src, tlocation, 0, 1, 1, 2)
 		else
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, src)
-			s.start()
+			elecflash(src,power = 2)
 			playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
 		src.visible_message("<span class='alert'>The [src] explodes!</span>")
 
 		// Added (Convair880).
 		if (ismob(src.loc))
-			logTheThing("bombing", null, src.loc, "A trick cigarette (held/equipped by %target%) explodes at [log_loc(src)].")
+			logTheThing("bombing", null, src.loc, "A trick cigarette (held/equipped by [constructTarget(src.loc,"bombing")]) explodes at [log_loc(src)].")
 		else
 			logTheThing("bombing", src.fingerprintslast, null, "A trick cigarette explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
 

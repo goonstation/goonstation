@@ -70,7 +70,7 @@
 		return 0
 
 /mob/proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
-	if (!isvampire(src))
+	if (!isvampire(src) && !isvampiriczombie(src))
 		return
 
 	var/datum/abilityHolder/vampire/AH = src.get_ability_holder(/datum/abilityHolder/vampire)
@@ -220,8 +220,8 @@
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
 		.= list()
-		.["Blood:"] = src.points
-		.["Total:"] = src.vamp_blood
+		.["Blood:"] = round(src.points)
+		.["Total:"] = round(src.vamp_blood)
 		return
 
 	onLife(var/mult = 1)
@@ -312,7 +312,6 @@
 		return
 
 	remove_unlocks()
-		src.removeAbility(/datum/targetable/vampire/blood_steal)
 		src.removeAbility(/datum/targetable/vampire/phaseshift_vampire)
 		src.removeAbility(/datum/targetable/vampire/phaseshift_vampire/mk2)
 		src.removeAbility(/datum/targetable/vampire/mark_coffin)
@@ -407,7 +406,7 @@
 			SHOW_MINDSLAVE_TIPS(M)
 
 			boutput(owner, __blue("[M] has been revived as your thrall."))
-			logTheThing("combat", owner, M, "enthralled %target% at [log_loc(owner)].")
+			logTheThing("combat", owner, M, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")
 
 
 

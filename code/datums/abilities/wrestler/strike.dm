@@ -61,7 +61,7 @@
 				target.force_laydown_standup()
 				target.change_misstep_chance(25)
 
-			logTheThing("combat", M, target, "uses the [fake ? "fake " : ""]strike wrestling move on %target% at [log_loc(M)].")
+			logTheThing("combat", M, target, "uses the [fake ? "fake " : ""]strike wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 
 		else
 			boutput(M, __red("You can't wrestle the target here!"))

@@ -241,6 +241,12 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.eyecam.show_text(message, color, 0, sight_check, allow_corruption, group)
 	return
 
+
+
+///mob/living/silicon/ai/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
+//sound.dm
+
+
 /mob/living/silicon/ai/attackby(obj/item/W as obj, mob/user as mob)
 	if (isscrewingtool(W))
 		src.anchored = !src.anchored
@@ -427,7 +433,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.dismantle_stage = 4
 	if (user)
 		src.visible_message("<span class='alert'><b>[user.name]</b> removes [src.name]'s CPU unit!</span>")
-		logTheThing("combat", user, src, "removes %target%'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
+		logTheThing("combat", user, src, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
 	else
 		src.visible_message("<span class='alert'><b>[src.name]'s</b> CPU unit is launched out of its core!</span>")
 
@@ -523,7 +529,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1)
 			if(INTENT_HARM)
 				user.visible_message("<span class='alert'><b>[user.name]</b> kicks [src.name].</span>")
-				logTheThing("combat", user, src, "kicks %target%")
+				logTheThing("combat", user, src, "kicks [constructTarget(src,"combat")]")
 				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 50, 1)
 				if (prob(20))
 					src.bruteloss += 1

@@ -108,8 +108,7 @@
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(4, 1, user)
 		s.start()
-		user.changeStatus("stunned", 2 SECONDS)
-		user.changeStatus("weakened", 150)
+		elecflash(user,power = 6, exclude_center = 0)
 		user.stuttering += 30
 
 /datum/artifact_fault/messager

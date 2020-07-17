@@ -307,8 +307,8 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 						C.CritterDeath()
 						src.attacking = 0
 				sleep(0.2 SECONDS)
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		SPAWN_DBG(1 SECOND)
 		src.attacking = 0
@@ -1115,8 +1115,8 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				src.visible_message("<span class='combat'><B>[src]</B> bites [M]!</span>")
 				playsound(src.loc, "swing_hit", 30, 0)
 				random_brute_damage(M, 3,1)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if (isliving(M))
+				var/mob/living/H = M
 				H.was_harmed(src)
 		else if (isrobot(M))
 			if (prob(10))
@@ -1718,8 +1718,8 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 						E = H.drop_organ(chosen_eye)
 						playsound(get_turf(M), "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 						E.set_loc(src.loc)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if (isliving(M))
+				var/mob/living/H = M
 				H.was_harmed(src)
 			else
 				src.visible_message("<span class='combat'><B>[src]</B> bites [M]!</span>")

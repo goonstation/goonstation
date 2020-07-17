@@ -91,7 +91,7 @@
 		var/mob/living/carbon/human/C = user
 		if (isdead(C)) //No need to call for dead people!
 			return 0
-		if (C.brainloss >= 60)
+		if (C.get_brain_damage() >= 60)
 			// No text spam, please. Bumped() is called more than once by some doors, though.
 			// If we just return 0, they will be able to bump-open the door and get past regardless
 			// because mob paralysis doesn't take effect until the next tick.
@@ -155,9 +155,8 @@
 	New()
 		..()
 		UnsubscribeProcess()
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("toggle", "toggleinput")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
 		update_nearby_tiles(need_rebuild=1)
 		doors.Add(src)
 		for (var/turf/simulated/wall/auto/T in orange(1))
@@ -391,9 +390,7 @@
 				take_damage(health_max/2)
 		if(3.0)
 			if(prob(80))
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(2, 1, src)
-				s.start()
+				elecflash(src,power=2)
 			take_damage(health_max/6)
 
 /obj/machinery/door/proc/break_me_complitely()
@@ -426,13 +423,12 @@
 		break_me_complitely()
 	else
 		if(prob(30))
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(2, 1, src)
-			s.start()
+			elecflash(src,power=2)
 
 		if (user && src.health <= health_max * 0.55 && istype(src, /obj/machinery/door/airlock) )
 			var/obj/machinery/door/airlock/A = src
 			A.shock(user, 3)
+			elecflash(src,power=2)
 
 		if (prob(2) && src.health <= health_max * 0.35 && istype(src, /obj/machinery/door/airlock) )
 			SPAWN_DBG(0)
@@ -514,7 +510,7 @@
 		update_nearby_tiles()
 		next_timeofday_opened = 0
 		sleep(src.operation_time / 2)
-		if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("doorOpened"))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorOpened")
 
 		if(operating == 1) //emag again
 			src.operating = 0
@@ -601,8 +597,7 @@
 			autoclose()
 
 /obj/machinery/door/proc/closed()
-	if(mechanics)
-		mechanics.fireOutgoing(mechanics.newSignal("doorClosed"))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorClosed")
 
 /obj/machinery/door/proc/autoclose()
 	if (!density && !operating && !locked)

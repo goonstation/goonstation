@@ -1004,4 +1004,3 @@
 	points = 1
 	isPositive = 0
 
-

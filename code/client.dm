@@ -63,6 +63,8 @@
 
 	var/list/datum/compid_info_list = list()
 
+	var/login_success = 0
+
 	perspective = EYE_PERSPECTIVE
 	// please ignore this for now thanks in advance - drsingh
 #ifdef PROC_LOGGING
@@ -116,6 +118,9 @@
 	return
 
 /client/Del()
+	if (player_capa && src.login_success)
+		player_cap_grace[src.ckey] = TIME + 2 MINUTES
+
 	if (current_state < GAME_STATE_FINISHED)
 		ircbot.event("logout", src.key)
 
@@ -136,6 +141,8 @@
 /client/New()
 	Z_LOG_DEBUG("Client/New", "New connection from [src.ckey] from [src.address] via [src.connection]")
 	logTheThing("diary", null, src, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]", "access")
+
+	login_success = 0
 
 	if(findtext(src.key, "Telnet @"))
 		boutput(src, "Sorry, this game does not support Telnet.")
@@ -179,7 +186,7 @@
 /*
 	SPAWN_DBG(rand(4,18))
 		if(proxy_check(src.address))
-			logTheThing("diary", null, src, "Failed Login: %target% - Using a Tor Proxy Exit Node", "access")
+			logTheThing("diary", null, src, "Failed Login: [constructTarget(src,"diary")] - Using a Tor Proxy Exit Node", "access")
 			if (announce_banlogin) message_admins("<span class='internal'>Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
 			boutput(src, "You may not connect through TOR.")
 			SPAWN_DBG(0) del(src)
@@ -220,6 +227,11 @@
 			del(src)
 		return
 
+	if (world.time < 7 SECONDS)
+		if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
+			if (!(src.ckey in whitelistCkeys))
+				sleep(3 SECONDS) //silly wait period bandaid so clients arent booted before whitelist load (probably)
+
 	//We're limiting connected players to a whitelist of ckeys (but let active admins in)
 	if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
 		//Key not in whitelist, show them a vaguely sassy message and boot them
@@ -253,7 +265,7 @@
 
 	if (isbanned)
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
-		logTheThing("diary", null, src, "Failed Login: %target% - Banned", "access")
+		logTheThing("diary", null, src, "Failed Login: [constructTarget(src,"diary")] - Banned", "access")
 		if (announce_banlogin) message_admins("<span class='internal'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
 		var/banstring = {"
 							<!doctype html>
@@ -291,6 +303,8 @@
 			src.verbs += /client/proc/toggle_mentorhelps
 	else if (player_capa && (total_clients_for_cap() >= player_cap) && (src.ckey in bypassCapCkeys))
 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you are allowed to bypass the player cap!</span>")
+	else if (player_capa && (total_clients_for_cap() >= player_cap) && client_has_cap_grace(src))
+		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you were recently disconnected and were caught by the grace period!</span>")
 	else if(player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
 		boutput(src, "<span class='ooc adminooc'>I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
 		alert(src.mob,"I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL")
@@ -403,23 +417,24 @@
 			src.cmd_rp_rules()
 #endif
 		//Cloud data
-		var/http[] = world.Export( "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]" )
-		if( !http )
-			logTheThing( "debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub" )
+		if (cdn)
+			var/http[] = world.Export( "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]" )
+			if( !http )
+				logTheThing( "debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub" )
 
-		var/list/ret = json_decode(file2text( http[ "CONTENT" ] ))
-		if( ret["status"] == "error" )
-			logTheThing( "debug", src, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
-		else
-			cloudsaves = ret["saves"]
-			clouddata = ret["cdata"]
-			load_antag_tokens()
-			load_persistent_bank()
-			var/decoded = cloud_get("audio_volume")
-			if(decoded)
-				var/cur = volumes.len
-				volumes = json_decode(decoded)
-				volumes.len = cur
+			var/list/ret = json_decode(file2text( http[ "CONTENT" ] ))
+			if( ret["status"] == "error" )
+				logTheThing( "debug", src, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
+			else
+				cloudsaves = ret["saves"]
+				clouddata = ret["cdata"]
+				load_antag_tokens()
+				load_persistent_bank()
+				var/decoded = cloud_get("audio_volume")
+				if(decoded)
+					var/cur = volumes.len
+					volumes = json_decode(decoded)
+					volumes.len = cur
 
 		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
 			boutput(src, "<b>You have [src.antag_tokens] antag tokens!</b>")
@@ -427,11 +442,6 @@
 		if(istype(src.mob, /mob/new_player))
 			var/mob/new_player/M = src.mob
 			M.new_player_panel() // update if tokens available
-
-
-/*	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/sandbox))
-		if(src.holder  && (src.holder.level >= 3))
-			src.verbs += /mob/proc/Delete*/
 
 	if(do_compid_analysis)
 		do_computerid_test(src) //Will ban yonder fucker in case they are prix
@@ -517,7 +527,7 @@
 		src.control_freak = 0
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
-
+	login_success = 1
 /*
 /client/proc/write_gauntlet_matches()
 	return
@@ -886,8 +896,8 @@ var/global/curr_day = null
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 					boutput(usr, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
-				logTheThing("mentor_help", src.mob, M, "Mentor PM'd %target%: [t]")
-				logTheThing("diary", src.mob, M, "Mentor PM'd %target%: [t]", "admin")
+				logTheThing("mentor_help", src.mob, M, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
+				logTheThing("diary", src.mob, M, "Mentor PM'd [constructTarget(M,"diary")]: [t]", "admin")
 
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.mob && src ? src.key : ""

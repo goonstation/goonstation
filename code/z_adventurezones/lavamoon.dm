@@ -633,9 +633,7 @@ var/sound/iomoon_alarm_sound = null
 		if (!src.alive) return
 		..()
 		SPAWN_DBG(0)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
+			elecflash(src,power = 2)
 			qdel(src)
 
 	process()
@@ -777,9 +775,7 @@ var/sound/iomoon_alarm_sound = null
 			boutput(user, "<i><b><font face = Tempus Sans ITC>EI NATH</font></b></i>")
 
 			//EI NATH!!
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(4, 1, user)
-			s.start()
+			elecflash(user,radius = 2, power = 6)
 
 			H.unkillable = 1
 			H.gib(1)

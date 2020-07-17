@@ -78,7 +78,7 @@ var/list/bible_contents = list()
 				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 			else
 				playsound(src.loc, "punch", 25, 1, -1)
-			logTheThing("combat", user, M, "biblically smote %target%")
+			logTheThing("combat", user, M, "biblically smote [constructTarget(M,"combat")]")
 
 		else if (!isdead(M))
 			var/mob/H = M
@@ -91,12 +91,12 @@ var/list/bible_contents = list()
 					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 				else
 					playsound(src.loc, "punch", 25, 1, -1)
-				logTheThing("combat", user, M, "biblically healed %target%")
+				logTheThing("combat", user, M, "biblically healed [constructTarget(M,"combat")]")
 			else
 				if (ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
 					M.take_brain_damage(10)
 					boutput(M, "<span class='alert'>You feel dazed from the blow to the head.</span>")
-				logTheThing("combat", user, M, "biblically injured %target%")
+				logTheThing("combat", user, M, "biblically injured [constructTarget(M,"combat")]")
 				M.visible_message("<span class='alert'><B>[user] beats [M] over the head with [src]!</B></span>")
 				if (narrator_mode)
 					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)

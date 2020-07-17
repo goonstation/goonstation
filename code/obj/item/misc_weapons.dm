@@ -77,43 +77,33 @@
 		switch(src.bladecolor)
 			if("R")
 				r = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/red(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/red(src)
 			if("O")
 				r = 255; g = 127
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/orange(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/orange(src)
 			if("Y")
 				r = 255; g = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/yellow(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/yellow(src)
 			if("G")
 				g = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick(src)
 			if("C")
 				b = 255; g = 200
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/cyan(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/cyan(src)
 			if("B")
 				b = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/blue(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/blue(src)
 			if("P")
 				r = 153; b = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/purple(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/purple(src)
 			if("Pi")
 				r = 255; g = 121; b = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/pink(src)
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/pink(src)
 			if("W")
 				r = 255; g = 255; b = 255
-				if (use_glowstick)
-					src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src)
-
-		if (!src.loaded_glowstick && use_glowstick) //the glowstick needs to be on!
-			src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src) // rainbow is basicall diffracted white light
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src)
+			else
+				src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src)
 		src.loaded_glowstick.turnon()
 
 		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, r, g, b, 150)
@@ -296,6 +286,10 @@
 			return
 
 		if (!src.open)
+			if (!src.bladecolor) //rainbow
+				boutput(user, "<span class='alert'>This sword cannot be modified.</span>")
+				return
+
 			user.visible_message("<b>[user]</b> unscrews and opens [src].")
 			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
 			src.open = 1
@@ -357,7 +351,7 @@
 
 /obj/item/sword/attack_hand(mob/user as mob)
 	if (src.open && src.loc == user)
-		if (src.loaded_glowstick)
+		if (src.loaded_glowstick && src.use_glowstick)
 			user.put_in_hand(loaded_glowstick)
 			src.loaded_glowstick = null
 			src.bladecolor = null

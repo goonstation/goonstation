@@ -71,6 +71,9 @@
 	var/yeet_chance = 1 //yeet
 
 	var/last_life_process = 0
+	var/use_stunned_icon = 1
+
+	var/pull_w_class = 2
 
 	blood_id = "blood"
 
@@ -374,7 +377,7 @@
 				src.visible_message("<span class='alert'>[src] throws [I].</span>")
 			if (iscarbon(I))
 				var/mob/living/carbon/C = I
-				logTheThing("combat", src, C, "throws %target% at [log_loc(src)].")
+				logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] at [log_loc(src)].")
 				if ( ishuman(C) )
 					C.changeStatus("weakened", 1 SECOND)
 			else
@@ -389,6 +392,19 @@
 			I.throw_at(target, I.throw_range, I.throw_speed, params)
 
 			playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
+
+	proc/can_pull(atom/A)
+		if (!src.ghost_spawned) //if its an admin or wizard made critter, just let them pull everythang
+			return 1
+		if (ismob(A))
+			return (src.pull_w_class >= 3)
+		else if (isobj(A))
+			if (istype(A,/obj/item))
+				var/obj/item/I = A
+				return (pull_w_class >= I.w_class)
+			else
+				return (src.pull_w_class >= 4)
+		return 0
 
 	click(atom/target, list/params)
 		if (((src.client && src.client.check_key(KEY_THROW)) || src.in_throw_mode) && src.can_throw)
@@ -647,6 +663,10 @@
 			var/datum/handHolder/HH = hands[t_hand]
 			if (HH.item || !HH.can_hold_items)
 				return 0
+			if(istype(HH.limb, /datum/limb/small_critter))
+				var/datum/limb/small_critter/L = HH.limb
+				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
+					return 0
 			HH.item = I
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
@@ -656,6 +676,10 @@
 			var/datum/handHolder/HH = hands[active_hand]
 			if (HH.item || !HH.can_hold_items)
 				return 0
+			if(istype(HH.limb, /datum/limb/small_critter))
+				var/datum/limb/small_critter/L = HH.limb
+				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
+					return 0
 			HH.item = I
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
@@ -689,6 +713,7 @@
 		if (do_drop_equipment)
 			drop_equipment()
 		hud.update_health()
+		update_stunned_icon(canmove=1)//force it to go away
 		return ..(gibbed)
 
 	proc/get_health_holder(var/assoc)
@@ -831,11 +856,11 @@
 		if(hand_to_empty > 0 && hand_to_empty <= hands.len)
 			var/datum/handHolder/HH = hands[hand_to_empty]
 			if (HH.item)
-				if (istype(HH.item, /obj/item/grab))
+				if (!HH.item.qdeled && !HH.item.disposed && istype(HH.item, /obj/item/grab))
 					qdel(HH.item)
 					return
 				var/obj/item/I = HH.item
-				I.loc = src.loc
+				I.set_loc(src.loc)
 				I.master = null
 				I.layer = initial(I.layer)
 				u_equip(I)
@@ -843,11 +868,11 @@
 	empty_hands()
 		for (var/datum/handHolder/HH in hands)
 			if (HH.item)
-				if (istype(HH.item, /obj/item/grab))
+				if (!HH.item.qdeled && !HH.item.disposed && istype(HH.item, /obj/item/grab))
 					qdel(HH.item)
 					continue
 				var/obj/item/I = HH.item
-				I.loc = src.loc
+				I.set_loc(src.loc)
 				I.master = null
 				I.layer = initial(I.layer)
 				u_equip(I)
@@ -1009,18 +1034,19 @@
 
 	force_laydown_standup()
 		..()
-		update_stunned_icon()
+		update_stunned_icon(canmove)
 
 	proc/update_stunned_icon(var/canmove)
-		if(canmove != src.old_canmove)
-			src.old_canmove = canmove
-			if (canmove)
-				src.UpdateOverlays(null, "dizzy")
-				return
-			else
-				var/image/dizzyStars = src.SafeGetOverlayImage("dizzy", src.icon, "dizzy", MOB_OVERLAY_BASE+20) // why such a big boost? because the critter could have a bunch of overlays, that's why
-				if (dizzyStars)
-					src.UpdateOverlays(dizzyStars, "dizzy")
+		if (use_stunned_icon)
+			if(canmove != src.old_canmove)
+				src.old_canmove = canmove
+				if (canmove || isdead(src))
+					src.UpdateOverlays(null, "dizzy")
+					return
+				else
+					var/image/dizzyStars = src.SafeGetOverlayImage("dizzy", src.icon, "dizzy", MOB_OVERLAY_BASE+20) // why such a big boost? because the critter could have a bunch of overlays, that's why
+					if (dizzyStars)
+						src.UpdateOverlays(dizzyStars, "dizzy")
 
 	proc/get_head_armor_modifier()
 		var/armor_mod = 0
@@ -1176,7 +1202,7 @@
 		return
 	var/msg = replacetext(message, "%src%", "<b>[src]</b>")
 	if (target)
-		msg = replacetext(msg, "%target%", "[target]")
+		msg = replacetext(msg, "[constructTarget(target,"combat")]", "[target]")
 	if (mcolor)
 		msg = "<span style='color:[mcolor]'>" + msg + "</span>"
 	src.visible_message(msg)
