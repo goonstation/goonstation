@@ -457,7 +457,7 @@
 		target = null
 
 /datum/action/bar/icon/pin_target
-	duration = 30
+	duration = 25
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED
 	id = "pin_target"
 	icon = 'icons/ui/actions.dmi'
