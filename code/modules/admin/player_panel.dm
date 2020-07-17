@@ -365,6 +365,6 @@
 	if (src.level == LEVEL_ADMIN)
 		windowHeight = "550"
 	else if (src.level == LEVEL_CODER)
-		windowHeight = "600"
+		windowHeight = "754"	//weird number, but for chui screen, it removes the scrolling.
 
 	usr.Browse(dat, "window=adminplayeropts[M.ckey];size=600x[windowHeight]")

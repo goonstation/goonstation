@@ -2451,6 +2451,32 @@ var/global/noir = 0
 						else
 							alert("You must be at least a Primary Administrator to bioeffect players.")
 							return
+					if ("add_ability_one","remove_ability_one")
+						if (src.level >= LEVEL_PA)
+
+							var/adding = href_list["type"] == "add_ability_one"
+							var/mob/M = input("Which player?","[adding ? "Give" : "Remove"] Abilities") as null|mob in world
+
+							if (!istype(M))
+								return
+
+							if (!M.abilityHolder)
+								alert("No ability holder detected. Create a holder first!")
+								return
+
+							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] Ability", null) as anything in childrentypesof(/datum/targetable)
+							if (adding)
+								M.abilityHolder.addAbility(ab_to_do)
+							else
+								M.abilityHolder.removeAbility(ab_to_do)
+							M.abilityHolder.updateButtons()
+
+							message_admins("[key_name(usr)] [adding ? "added" : "removed"] the [ab_to_do] ability [adding ? "to" : "from"] [key_name(M)].")
+							logTheThing("admin", usr, null, "[adding ? "added" : "removed"] the [ab_to_do] ability [adding ? "to" : "from"] [key_name(M)].")
+							logTheThing("diary", usr, null, "[adding ? "added" : "removed"] the [ab_to_do] ability [adding ? "to" : "from"] [key_name(M)].", "admin")
+						else
+							alert("You must be at least a Primary Administrator to change player abilities.")
+							return
 
 					if ("add_reagent_one","remove_reagent_one")
 						if (src.level >= LEVEL_PA)
@@ -2531,6 +2557,32 @@ var/global/noir = 0
 								logTheThing("diary", usr, null, "[adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] everyone.", "admin")
 						else
 							alert("You must be at least a Primary Administrator to bioeffect players.")
+							return
+
+					if ("add_ability_all","remove_ability_all")
+						if (src.level >= LEVEL_PA)
+							var/adding = href_list["type"] == "add_ability_all"
+
+							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] ability [adding ? "to" : "from"] every human.", null) as null|anything in childrentypesof(/datum/targetable)
+							if (!ab_to_do)
+								return
+							// var/humans = input("[adding ? "Add" : "Remove"] ability [adding ? "to" : "from"] Humans or mob/living?", "Humans or Living?", "Humans") as null|anything in list("Humans", "Living")
+
+							for(var/mob/living/carbon/human/M in mobs)
+								if (!M.abilityHolder)
+									continue
+								if (adding)
+									M.abilityHolder.addAbility(ab_to_do)
+								else
+									M.abilityHolder.removeAbility(ab_to_do)
+								M.abilityHolder.updateButtons()
+
+
+							message_admins("[key_name(usr)] [adding ? "added" : "removed"] the [ab_to_do] ability [adding ? "to" : "from"] everyone.")
+							logTheThing("admin", usr, null, "[adding ? "added" : "removed"] the [ab_to_do] ability [adding ? "to" : "from"] everyone.")
+							logTheThing("diary", usr, null, "[adding ? "added" : "removed"] the [ab_to_do] ability [adding ? "to" : "from"] everyone.", "admin")
+						else
+							alert("You must be at least a Primary Administrator to change player abilities.")
 							return
 
 					if ("add_reagent_all","remove_reagent_all")
@@ -3987,6 +4039,12 @@ var/global/noir = 0
 					<b>Remove Bio-Effect:</b>
 						<A href='?src=\ref[src];action=secretsfun;type=remove_bioeffect_one'>One</A> *
 						<A href='?src=\ref[src];action=secretsfun;type=remove_bioeffect_all'>All</A><BR>
+					<b>Add Ability:</b>
+						<A href='?src=\ref[src];action=secretsfun;type=add_ability_one'>One</A> *
+						<A href='?src=\ref[src];action=secretsfun;type=add_ability_all'>All</A><BR>
+					<b>Remove Ability:</b>
+						<A href='?src=\ref[src];action=secretsfun;type=remove_ability_one'>One</A> *
+						<A href='?src=\ref[src];action=secretsfun;type=remove_ability_all'>All</A><BR>
 					<b>Add Reagent<A href='?src=\ref[src];action=secretsfun;type=reagent_help'>*</a>:</b>
 						<A href='?src=\ref[src];action=secretsfun;type=add_reagent_one'>One</A> *
 						<A href='?src=\ref[src];action=secretsfun;type=add_reagent_all'>All</A><BR>
