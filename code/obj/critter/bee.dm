@@ -58,7 +58,7 @@
 	var/is_dancing = 0 // we're already dancin'!
 	var/dance_chance = 10 // fuck it I gotta test this stuff so this gets to be a var now (how likely the bee is to dance in response to a dance)
 
-	var/blog = "adult bub log|"
+	var/tmp/blog = "adult bub log|"
 
 	var/shorn = 0
 	var/shorn_time = 0
@@ -105,7 +105,7 @@
 				src.task = "thinking"
 				return
 			src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [prob(50) ? "IMMENSE" : "COLOSSAL"] stinger!</span>")
-			logTheThing("combat", src.name, M, "stings %target%")
+			logTheThing("combat", src.name, M, "stings [constructTarget(M,"combat")]")
 			random_brute_damage(src.target, 10)//armor-piercing stingers
 
 			if(M.reagents)
@@ -118,8 +118,8 @@
 				if (istype(plague,/datum/ailment_data/disease/))
 					//That bee venom plague treatment does not work at all in this manner. However, future.
 					L.cure_disease(plague)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if (isliving(M))
+				var/mob/living/H = M
 				H.was_harmed(src)
 
 		CritterAttack(mob/M)
@@ -154,10 +154,10 @@
 				return
 
 			src.visible_message("<span class='alert'><B>[src]</B> bites [M] with its [pick("rather large","big","expansive","proportionally small but still sizable")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>")
-			logTheThing("combat", src.name, M, "bites %target%")
+			logTheThing("combat", src.name, M, "bites [constructTarget(M,"combat")]")
 			random_brute_damage(M, 10,1)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if (isliving(M))
+				var/mob/living/H = M
 				H.was_harmed(src)
 			if (M.stat || M.getStatusDuration("paralysis"))
 				src.task = "thinking"
@@ -238,6 +238,7 @@
 		generic = 0
 		var/jittered = 0
 		honey_color = rgb(0, 255, 255)
+		is_pet = 2
 		var/tier = 0
 		var/original_tier = 0
 		var/original_hat_ref = ""
@@ -270,12 +271,10 @@
 			src.original_tier = src.tier
 			src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT, .proc/save_upgraded_tier)
 			heisentier_hat()
-			pets += src
 			..()
 
 		disposing()
 			UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT)
-			pets -= src
 			..()
 
 		proc/save_upgraded_tier()
@@ -454,8 +453,8 @@
 					animate_bumble(src)
 			src.visible_message("<span class='alert'><B>[src]</B> shanks [M] with its [pick("tiny","eeny-weeny","minute","little")] switchblade!</span>")
 			random_brute_damage(M, 20)//get shivved - no armor for this
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if (isliving(M))
+				var/mob/living/H = M
 				H.was_harmed(src)
 			if (M.stat || M.getStatusDuration("paralysis"))
 				src.task = "thinking"
@@ -552,9 +551,7 @@
 				return null
 			;
 			new /obj/overlay/self_deleting {name = "hole in space time"; layer=2.2; icon = 'icons/misc/lavamoon.dmi'; icon_state="voidwarp";} (T, 20)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, T)
-			s.start()
+			elecflash(T,power=3)
 
 			var/obj/item/reagent_containers/food/snacks/ingredient/honey/honey = new /obj/item/reagent_containers/food/snacks/ingredient/honey(T)
 			. = honey
@@ -585,8 +582,8 @@
 			playsound(src.loc, 'sound/voice/animal/buzz.ogg', 100, 1)
 			boutput(M, "<span class='alert'>You feel a horrible pain in your head!</span>")
 			M.changeStatus("stunned", 2 SECONDS)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if (isliving(M))
+				var/mob/living/H = M
 				H.was_harmed(src)
 			SPAWN_DBG(2.5 SECONDS)
 				if ((get_dist(src, M) <= 6) && src.alive)
@@ -1023,10 +1020,10 @@
 			return
 
 		src.visible_message("<span class='alert'><B>[src]</B> bites [M] with its [pick("tiny","eeny-weeny","minute","little", "nubby")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>")
-		logTheThing("combat", src.name, M, "bites %target%")
+		logTheThing("combat", src.name, M, "bites [constructTarget(M,"combat")]")
 		random_brute_damage(M, 2, 1)
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		if (M.stat || M.getStatusDuration("paralysis"))
 			src.task = "thinking"
@@ -1046,9 +1043,9 @@
 			src.task = "thinking"
 			return
 		src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [pick("nubby","stubby","tiny")] little stinger!</span>")
-		logTheThing("combat", src.name, M, "stings %target%")
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		logTheThing("combat", src.name, M, "stings [constructTarget(M,"combat")]")
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 
 		if(M.reagents)
@@ -1401,7 +1398,7 @@
 	var/beeMomCkey = null
 	var/scolded = 0
 
-	var/blog = "larvalog|"
+	var/tmp/blog = "larvalog|"
 
 	bonnet
 		desc = "A domestic space bee larva, but with a little bonnet.  Where did that even come from?"
@@ -1554,11 +1551,7 @@
 			..()
 
 	CritterDeath()
-		src.alive = 0
-		set_density(0)
-		src.icon_state = "[initial(src.icon_state)]-dead"
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> dies!")
+		..()
 
 		modify_christmas_cheer(-5)
 		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src))
@@ -1581,7 +1574,7 @@
 	var/larva_type = null
 	rand_pos = 1
 
-	var/blog = "egg blog|"
+	var/tmp/blog = "egg blog|"
 
 	New()
 		..()
@@ -1649,7 +1642,8 @@
 
 			qdel(src)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		if (hatched || 0)//todo: re-enable this when people stop abusing bees!!!
 			return
 		hatched = 1
@@ -1736,7 +1730,8 @@
 				R.add_reagent("wolfsbane", 10)
 				qdel (src)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		if (hatched || 0)//replace me too!!!
 			return
 
@@ -1866,7 +1861,7 @@
 		src.attacking = 1
 
 		src.visible_message("<span class='alert'><B>[src]</B> bites [M]!</span>")
-		logTheThing("combat", src.name, M, "bites %target%")
+		logTheThing("combat", src.name, M, "bites [constructTarget(M,"combat")]")
 		random_brute_damage(M, 2, 1)
 		if (M.stat || M.getStatusDuration("paralysis"))
 			src.task = "thinking"

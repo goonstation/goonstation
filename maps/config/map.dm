@@ -17,6 +17,9 @@
 #elif defined(MAP_OVERRIDE_DONUT2)
 #include "donut2.dm"
 
+#elif defined(MAP_OVERRIDE_DONUT3)
+#include "donut3.dm"
+
 #elif defined(MAP_OVERRIDE_LINEMAP)
 #include "linemap.dm"
 
@@ -62,16 +65,15 @@
 #elif defined(MAP_OVERRIDE_GEHENNA)
 #include "gehenna.dm"
 
+#elif defined(MAP_OVERRIDE_WRESTLEMAP)
+#include "wrestlemap.dm"
+
 #elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 #include "gottagofast.dm"
 
 //Entry below is the "default" map
 #else
 #include "standard.dm"
-#endif
-
-#if ASS_JAM
-#include "..\warwip\z7_urs_dungeon_5.dmm"
 #endif
 
 #if FOOTBALL_MODE

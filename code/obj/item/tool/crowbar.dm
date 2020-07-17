@@ -11,10 +11,10 @@
 	tool_flags = TOOL_PRYING
 	w_class = 2.0
 
-	force = 5.0
+	force = 7.0
 	throwforce = 7.0
-	stamina_damage = 33
-	stamina_cost = 25
+	stamina_damage = 35
+	stamina_cost = 12
 	stamina_crit_chance = 10
 
 	m_amt = 50

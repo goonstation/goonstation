@@ -173,7 +173,7 @@
 /mob/proc/critterize(var/CT)
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a critter ([CT]).")
-		logTheThing("admin", usr, src, "made %target% a critter ([CT]).")
+		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a critter ([CT]).")
 
 		return make_critter(CT, get_turf(src))
 	return 0
@@ -403,7 +403,7 @@
 /mob/proc/blobize()
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a blob.")
-		logTheThing("admin", usr, src, "made %target% a blob.")
+		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a blob.")
 
 		return make_blob()
 	return 0
@@ -412,10 +412,10 @@
 	if (src.mind || src.client)
 		if (shitty)
 			message_admins("[key_name(src)] has been made a faustian macho man.")
-			logTheThing("admin", null, src, "%target% has been made a faustian macho man.")
+			logTheThing("admin", null, src, "[constructTarget(src,"admin")] has been made a faustian macho man.")
 		else
 			message_admins("[key_name(usr)] made [key_name(src)] a macho man.")
-			logTheThing("admin", usr, src, "made %target% a macho man.")
+			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a macho man.")
 		var/mob/living/carbon/human/machoman/W = new/mob/living/carbon/human/machoman(src)
 
 		var/turf/T = get_turf(src)
@@ -487,7 +487,7 @@
 
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a cube ([CT]) with a lifetime of [life].")
-		logTheThing("admin", usr, src, "made %target% a cube ([CT]) with a lifetime of [life].")
+		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a cube ([CT]) with a lifetime of [life].")
 
 		return make_cube(CT, life)
 	return 0
@@ -626,7 +626,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		time_left_message += "[seconds] second[seconds == 1 ? "" : "s"]"
 		boutput(src, "<span class='alert'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
 	else
-		if (alert(src, "Are you sure you want to respawn as an animal? You won't be able to come back as a human or cyborg!", "Respawn as Animal", "Yes", "No") != "Yes")
+		if (alert(src, "Are you sure you want to respawn as an animal?", "Respawn as Animal", "Yes", "No") != "Yes")
 			return
 		// you can be an animal
 		// get spawnpoints
@@ -900,47 +900,47 @@ var/respawn_arena_enabled = 0
 		if(flock == null)
 			// no flocks given, make flockmind
 			message_admins("[key_name(usr)] made [key_name(src)] a flockmind ([src.real_name]).")
-			logTheThing("admin", usr, src, "made %target% a flockmind ([src.real_name]).")
+			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a flockmind ([src.real_name]).")
 			return make_flockmind()
 		else
 			// make flocktrace of existing flock
 			message_admins("[key_name(usr)] made [key_name(src)] a flocktrace of flock [flock.name].")
-			logTheThing("admin", usr, src, "made %target% a flocktrace ([flock.name]).")
+			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a flocktrace ([flock.name]).")
 			return make_flocktrace(get_turf(src), flock)
 	return null
 
 /mob/proc/make_flockmind()
-	if (src.mind || src.client)
-		var/mob/living/intangible/flock/flockmind/O = new/mob/living/intangible/flock/flockmind(src)
+	if (!src.mind && !src.client)
+		return null
 
-		var/turf/T = get_turf(src)
-		if (!(T && isturf(T)) || ((isrestrictedz(T.z) || T.z != 1) && !(src.client && src.client.holder)))
-			var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
-			if (OS)
-				O.set_loc(OS)
-			else
-				O.z = 1
+	var/mob/living/intangible/flock/flockmind/O = new/mob/living/intangible/flock/flockmind(src)
+
+	var/turf/T = get_turf(src)
+	if (!(T && isturf(T)) || (isghostrestrictedz(T.z) && !(src.client && src.client.holder)))
+		var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+		if (OS)
+			O.set_loc(OS)
 		else
-			O.set_loc(T)
+			O.z = 1
+	else
+		O.set_loc(pick(latejoin))
 
-		if (src.mind)
-			src.mind.transfer_to(O)
-		else
-			var/key = src.client.key
-			if (src.client)
-				src.client.mob = O
-			O.mind = new /datum/mind()
-			O.mind.key = key
-			O.mind.current = O
-			ticker.minds += O.mind
-		src.loc = null
-		qdel(src)
-
-		boutput(O, "<B>You are a flockmind, the collective machine consciousness of a flock of drones! Your existence is tied to your flock! Ensure that it survives and thrives!</B>")
-		boutput(O, "<B>Silicon units are able to detect your transmissions and messages (with some signal corruption), so exercise caution in what you say.</B>")
-		boutput(O, "<B>On the flipside, you can hear silicon transmissions and all radio signals, but with heavy corruption.</B>")
-		return O
-	return null
+	if (src.mind)
+		src.mind.transfer_to(O)
+	else
+		var/key = src.client.key
+		if (src.client)
+			src.client.mob = O
+		O.mind = new /datum/mind()
+		O.mind.key = key
+		O.mind.current = O
+		ticker.minds += O.mind
+	src.loc = null
+	qdel(src)
+	boutput(O, "<B>You are a flockmind, the collective machine consciousness of a flock of drones! Your existence is tied to your flock! Ensure that it survives and thrives!</B>")
+	boutput(O, "<B>Silicon units are able to detect your transmissions and messages (with some signal corruption), so exercise caution in what you say.</B>")
+	boutput(O, "<B>On the flipside, you can hear silicon transmissions and all radio signals, but with heavy corruption.</B>")
+	return O
 
 // flocktraces are made by flockminds
 /mob/proc/make_flocktrace(var/atom/spawnloc, var/datum/flock/flock)

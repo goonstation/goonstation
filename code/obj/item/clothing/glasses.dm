@@ -9,7 +9,7 @@
 	w_class = 2.0
 	c_flags = COVERSEYES
 	var/allow_blind_sight = 0
-	var/block_vision = 0
+	block_vision = 0
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
 	compatible_species = list("human", "werewolf", "flubber")
@@ -502,6 +502,14 @@
 	setupProperties()
 		..()
 		setProperty("disorient_resist_eye", 5)
+
+	equipped(mob/user, slot)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_SPECTRO, src)
+
+	unequipped(mob/user)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_SPECTRO, src)
 
 // testing thing for static overlays
 /obj/item/clothing/glasses/staticgoggles

@@ -54,7 +54,7 @@ mob
 		if (src.move_dir)
 			var/running = 0
 			var/mob/living/carbon/human/H = src
-			if ((keys & KEY_RUN) && H.get_stamina() > STAMINA_SPRINT)
+			if ((keys & KEY_RUN) && H.get_stamina() > STAMINA_SPRINT && !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 				running = 1
 			if (H.pushing && get_dir(H,H.pushing) != H.move_dir) //Stop pushing before calculating move_delay if we've changed direction
 				H.pushing = 0
@@ -185,7 +185,7 @@ mob
 						var/do_step = 1 //robust grab : don't even bother if we are in a chokehold. Assailant gets moved below. Makes the tile glide better without having a chain of step(src)->step(assailant)->step(me)
 						for(var/grab in src.grabbed_by)
 							var/obj/item/grab/G = grab
-							if (G.state < GRAB_NECK) continue
+							if (G?.state < GRAB_NECK) continue
 							do_step = 0
 							break
 
@@ -222,7 +222,7 @@ mob
 
 							var/list/pulling = list()
 							if (src.pulling)
-								if (get_dist(old_loc, src.pulling) > 1 || src.pulling == src) // fucks sake
+								if ((get_dist(old_loc, src.pulling) > 1 && get_dist(src, src.pulling) > 1)|| src.pulling == src) // fucks sake
 									src.pulling = null
 									//hud.update_pulling() // FIXME
 								else

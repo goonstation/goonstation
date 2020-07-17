@@ -50,10 +50,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	src.applied_keybind_styles.Add(initial(style.name))
 	var/datum/keybind_style/init_style = new style //Can't do static referencing for merge, press F to pay respekts
 	var/datum/keymap/init_keymap = new /datum/keymap(init_style.changed_keys)
-	if (initial(style.overwrite_actions)) //If the keymap should overwrite actions previously added in a higher keybind style
-		src.keymap.overwrite_by_action(init_keymap)
-	else
-		src.keymap.merge(init_keymap)
+	src.keymap.merge(init_keymap)
 
 /** apply_keybind: Takes a given string style, and finds the datum, then applies it.
  *	External use only.
@@ -65,16 +62,15 @@ var/global/list/datum/keybind_style/keybind_styles = null
 
 
 // Keybinds are sub-sorted in order of most common, since then it'll be further up the global list of styles. Micro-optimizations whoo!
-// Currently: base -> arrow -> tg -> azerty -> combos
+// Currently: base -> arrow -> tg -> azerty
 
 //
 //	BASE MOB KEYBINDS
 //
 
 /datum/keybind_style
-	var/name = "base" //The name
-	var/overwrite_actions = FALSE //Do we merge overwriting by action and not by key? Applied normally on subtypes.
-	var/changed_keys = list( //A list of all the key and action associations for this style to apply.
+	var/name = "base"
+	var/changed_keys = list(
 	"W" = KEY_FORWARD,
 	"A" = KEY_LEFT,
 	"S" = KEY_BACKWARD,
@@ -130,15 +126,12 @@ var/global/list/datum/keybind_style/keybind_styles = null
 
 /datum/keybind_style/tg
 	name = "base_tg"
-	overwrite_actions = TRUE
 	changed_keys = list(
-		"DELETE" = "stop_pull",
-		"C" = "resist"
+		"DELETE" = "stop_pull"
 	)
 
 /datum/keybind_style/azerty
 	name = "base_azerty"
-	overwrite_actions = TRUE
 	changed_keys = list(
 		"Z" = KEY_FORWARD,
 		"S" = KEY_BACKWARD,
@@ -179,7 +172,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 
 /datum/keybind_style/human/arrow
 	name = "human_arrow"
-	overwrite_actions = TRUE
 	changed_keys = list(
 		"NORTHEAST" = "swaphand",
 		"SOUTHEAST" = "attackself",
@@ -189,7 +181,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 
 /datum/keybind_style/human/tg
 	name = "human_tg"
-	overwrite_actions = TRUE
 	changed_keys = list(
 	"SPACE" = KEY_RUN,
 	"SHIFT" = KEY_EXAMINE,
@@ -197,21 +188,21 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"E" = "equip",
 	"X" = "swaphand",
 	"Z" = "attackself",
-	"Q" = "drop"
+	"Q" = "drop",
+	"C" = "resist"
 	)
 
 /datum/keybind_style/human/tg/azerty
 	name = "human_tg_azerty"
-	overwrite_actions = TRUE
 	changed_keys = list(
 	"W" = "attackself"
 	)
 
 /datum/keybind_style/human/azerty
 	name = "human_azerty"
-	overwrite_actions = TRUE
 	changed_keys = list(
-		"A" = "drop"
+		"A" = "drop",
+		"Q" = KEY_LEFT
 	)
 
 //
@@ -237,7 +228,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 
 /datum/keybind_style/robot/arrow
 	name = "robot_arrow"
-	overwrite_actions = TRUE
 	changed_keys = list(
 		"NORTHEAST" = "swaphand",
 		"SOUTHEAST" = "attackself",
@@ -246,7 +236,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 
 /datum/keybind_style/robot/tg
 	name = "robot_tg"
-	overwrite_actions = TRUE
 	changed_keys = list(
 		"CTRL" = KEY_BOLT,
 		"SHIFT" = KEY_OPEN,
@@ -256,19 +245,17 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"Z" = "attackself",
 	)
 
+/datum/keybind_style/robot/tg/azerty
+	name = "robot_tg_azerty"
+	changed_keys = list(
+		"W" = "attackself"
+	)
+
 /datum/keybind_style/robot/azerty
 	name = "robot_azerty"
-	overwrite_actions = TRUE
 	changed_keys = list(
 		"A" = "unequip",
 		"Q" = KEY_LEFT
-	)
-
-/datum/keybind_style/robot/tg/azerty
-	name = "robot_tg_azerty"
-	overwrite_actions = TRUE
-	changed_keys = list(
-		"W" = "attackself"
 	)
 
 //
@@ -285,7 +272,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 
 /datum/keybind_style/drone/arrow
 	name = "drone_arrow"
-	overwrite_actions = TRUE
 	changed_keys = list(
 		"SOUTHEAST" = "attackself", /*PGDN*/
 		"NORTHWEST" = "unequip" /*HOME*/
@@ -293,16 +279,15 @@ var/global/list/datum/keybind_style/keybind_styles = null
 
 /datum/keybind_style/drone/tg
 	name = "drone_tg"
-	overwrite_actions = TRUE
 	changed_keys = list(
 		"Z" = "attackself",
 	)
 
 /datum/keybind_style/drone/azerty
 	name = "drone_azerty"
-	overwrite_actions = TRUE
 	changed_keys = list(
-		"A" = "unequip"
+		"A" = "unequip",
+		"Q" = KEY_LEFT
 	)
 
 //
@@ -333,7 +318,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 
 /datum/keybind_style/col_putt/arrow
 	name = "colputt_arrow"
-	overwrite_actions = TRUE
 	changed_keys = list(
 		"SOUTHEAST" = "fire", /*PGDN*/
 		"NORTHWEST" = "stop", /*HOME*/

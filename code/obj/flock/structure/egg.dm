@@ -36,7 +36,8 @@
 		var/severity = round(((build_time - elapsed)/build_time) * 5)
 		animate_shake(src, severity, severity)
 
-/obj/flock_structure/egg/throw_impact(var/turf/T)
+/obj/flock_structure/egg/throw_impact(var/atom/A)
+	var/turf/T = get_turf(A)
 	playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 100, 1)
 	if (T && !decal_made)
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 80, 1)

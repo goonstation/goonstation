@@ -41,7 +41,7 @@
 #define access_mail 36 // Unused.
 #define access_maxsec 37 // The HoS' armory.
 #define access_securitylockers 38
-#define access_carrypermit 39 // Are allowed to carry sidearms as far as guardbuddies and secbots are concerned.
+#define access_carrypermit 39 // Are allowed to carry sidearms as far as guardbuddies and secbots are concerned. Contraband permit defined at 75.
 #define access_engineering 40 // General engineering area and substations.
 #define access_engineering_storage 41 // Main metal/tool storage things.
 #define access_engineering_eva 42 // Engineering space suits. Currently unused.
@@ -85,3 +85,5 @@
 //Polaris access
 #define access_polariscargo 73
 #define access_polarisimportant 74
+
+#define access_contrabandpermit 75

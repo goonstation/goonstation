@@ -449,10 +449,10 @@
 
 		active = 1
 		alpha = 128
-		user.visible_message("Creatin dummy for you, you dummy")
+		boutput(user, "Spawning target dummy, stand by") //no need to be rude
 
-		var/mob/living/carbon/human/tdummy/T = new(get_turf(src))
-		T.x = src.x + 1 // move it to the right
+		new /mob/living/carbon/human/tdummy(locate(src.x+1, src.y, src.z))
+		//T.x = src.x + 1 // move it to the right
 
 
 		SPAWN_DBG(10 SECONDS)

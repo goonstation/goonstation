@@ -105,6 +105,8 @@
 				else if (dir & WEST)
 					dir = WEST
 			src.update_directional_lights()
+			if (src.mdir_lights)
+				src.update_mdir_light_visibility(dir)
 
 /mob/proc/hotkey(name)
 	switch (name)
@@ -143,7 +145,7 @@
 
 	C.apply_keybind("base")
 
-	if (C.preferences.use_azerty)
+	if (C.preferences?.use_azerty) //runtime : preferences is null? idk why, bandaid for now
 		C.apply_keybind("base_azerty")
 	if (C.tg_controls)
 		C.apply_keybind("base_tg")
@@ -155,7 +157,7 @@
 	PROTECTED_PROC(TRUE)
 
 	if(!C || !C.cloud_available())
-		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to fetch custom keybinds for [C.ckey] but failed.")
+		//logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to fetch custom keybinds for [C.ckey] but failed.")
 		return
 
 	var/fetched_keylist = C.cloud_get("custom_keybind_data")

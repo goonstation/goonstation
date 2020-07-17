@@ -976,10 +976,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			sleep (2)
 			src.opacity = 0
 			sleep(0.6 SECONDS)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
-			pool(s)
+			elecflash(src,power=2,exclude_center = 0)
 
 		for (var/obj/machinery/door/airlock/otherDoor in view(7, src))
 			if (777 in otherDoor.req_access)
@@ -1073,6 +1070,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	flying = 0
 	death_text = "%src% tips over, its joints seizing and locking up.  It does not move again."
 	angertext = "seems to stare at"
+	is_pet = 0
 
 	var/does_creepy_stuff = 0
 	var/typeName = "Generic"
@@ -1123,7 +1121,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	sleeping_icon_state = "drone_service_bot_off"
 	flying = 0
 	generic = 0
-	death_text = "%src% stops moving."
+	death_text = "%src% blows apart! But not in a way at all like surveillance equipment. More like a washing machine or something."
 
 	var/static/list/non_spy_weapons = list("something that isn't a high gain microphone", "an object distinct from a tape recorder", "object that is, in all likelihood, not a spy camera")
 
@@ -1141,14 +1139,10 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 	CritterDeath()
 		if (!src.alive) return
-		src.alive = 0
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> blows apart!  But not in a way at all like surveillance equipment.  More like a washing machine or something.")
+		..()
 
 		SPAWN_DBG(0)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
+			elecflash(src,power=2,exclude_center = 0)
 			qdel(src)
 
 

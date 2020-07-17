@@ -17,11 +17,11 @@ Right Mouse Button on the mode         = Cycle loading modes<br>
 	selected()
 		. = ..()
 		update_mode()
-	
+
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		mode_number = (mode_number + 1) % mode_names.len
 		update_mode()
-	
+
 	proc/update_mode()
 		update_button_text(mode_names[mode_number + 1])
 
@@ -29,6 +29,7 @@ Right Mouse Button on the mode         = Cycle loading modes<br>
 		if(!dmm_suite)
 			dmm_suite = new
 		var/turf/A = get_turf(object)
+		if (!A) return
 		blink(A)
 		if(loading)
 			boutput(usr, "<span class='alert'>Already loading a map!</span>")

@@ -56,7 +56,7 @@
 				return
 
 			if(ismonkey(G.affecting))
-				logTheThing("combat", user, G.affecting, "shoves %target% into the [src] at [log_loc(src)].") // For player monkeys (Convair880).
+				logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")] into the [src] at [log_loc(src)].") // For player monkeys (Convair880).
 				src.visible_message("<span class='alert'><b>[user] shoves [G.affecting] into [src]!</b></span>")
 				src.icon_state = "fryer1"
 				src.cooktime = 0
@@ -67,7 +67,7 @@
 				qdel(W)
 				return
 
-			logTheThing("combat", user, G.affecting, "shoves %target%'s face into the [src] at [log_loc(src)].")
+			logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")]'s face into the [src] at [log_loc(src)].")
 			src.visible_message("<span class='alert'><b>[user] shoves [G.affecting]'s face into [src]!</b></span>")
 			src.reagents.reaction(G.affecting, TOUCH)
 
@@ -234,10 +234,8 @@
 			fryholder.amount = 5
 		else
 			fryholder.amount = src.fryitem.w_class
-		fryholder.reagents = src.fryitem.reagents
-		if(src.cooktime >= 60)
-			fryholder.reagents.maximum_volume += 25
-			fryholder.reagents.add_reagent("friedessence",25)
+		fryholder.reagents.maximum_volume += src.fryitem.reagents.total_volume
+		src.fryitem.reagents.trans_to(fryholder, src.fryitem.reagents.total_volume)
 		fryholder.reagents.my_atom = fryholder
 
 		src.fryitem.set_loc(fryholder)

@@ -182,10 +182,10 @@
 		if(scan && account)
 			wagesystem.shipping_budget += duckets / 2
 			account.fields["current_money"] += duckets / 2
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment. Splitting half of profits with [scan.registered].")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment. Splitting half of profits with [scan.registered].")
 		else
 			wagesystem.shipping_budget += duckets
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment.")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment.")
 
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
@@ -215,7 +215,7 @@
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [S.name].")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [S.name].")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		transmit_connection.post_signal(null, pdaSignal)
 
@@ -246,14 +246,14 @@
 // Debugging and admin verbs (mostly coder)
 
 /client/proc/cmd_modify_market_variables()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Edit Market Variables"
 
 	if (shippingmarket == null) boutput(src, "UH OH!")
 	else src.debug_variables(shippingmarket)
 
 /client/proc/BK_finance_debug()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Financial Info"
 	set desc = "Shows budget variables and current market prices."
 
@@ -294,7 +294,7 @@
 	usr.Browse(dat, "window=budgetdebug;size=400x400")
 
 /client/proc/BK_alter_funds()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Alter Budget"
 	set desc = "Add to or subtract from a budget."
 

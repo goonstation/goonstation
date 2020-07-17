@@ -576,7 +576,7 @@
 				return 1
 			else
 				var/message = html_encode(input("What would you like to whisper to [target]?", "Whisper", "") as text)
-				logTheThing("say", usr, target, "WRAITH WHISPER TO %target%: [message]")
+				logTheThing("say", usr, target, "WRAITH WHISPER TO [constructTarget(target,"say")]: [message]")
 				message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
 				boutput(usr, "<b>You whisper to [target]:</b> [message]")
 				boutput(target, "<b>A netherworldly voice whispers into your ears... </b> [message]")
@@ -694,8 +694,8 @@
 		lucky_dude.transfer_to(P)
 		//P.ckey = lucky_dude.ckey
 		P.antagonist_overlay_refresh(1, 0)
-		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder].")
-		logTheThing("admin", lucky_dude.current, null, "respawned as a poltergeist for [src.holder].")
+		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
+		logTheThing("admin", lucky_dude.current, null, "respawned as a poltergeist for [src.holder.owner].")
 
 		boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
 		boutput(P, "[W] is your master! Spread mischeif and do their bidding!")

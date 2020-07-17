@@ -271,6 +271,7 @@ datum
 			fluid_b = 202
 			transparency = 180
 			depletion_rate = 0.1
+			penetrates_skin = 1
 			value = 2 // I think this is correct?
 			hygiene_value = 1
 
@@ -373,8 +374,6 @@ datum
 				src = null
 				if(!volume_passed)
 					return
-				if(!ishuman(M))
-					return
 				if(method == TOUCH)
 					for(var/A in M.organs)
 						var/obj/item/affecting = null
@@ -383,8 +382,8 @@ datum
 						if(!isitem(affecting))
 							continue
 						affecting.heal_damage(volume_passed*1.5, volume_passed*1.5)
-					if (ishuman(M))
-						var/mob/living/carbon/human/H = M
+					if (isliving(M))
+						var/mob/living/H = M
 						if (H.bleeding)
 							repair_bleeding_damage(H, 80, 2)
 
@@ -451,7 +450,9 @@ datum
 				if(!M) M = holder.my_atom
 				M.drowsyness = max(M.drowsyness-5, 0)
 				if(M.sleeping) M.sleeping = 0
-				if(M.get_brain_damage() && prob(50)) M.take_brain_damage(-1 * mult)
+				if (M.get_brain_damage() <= 90)
+					if (prob(50)) M.take_brain_damage(-1 * mult)
+				else M.take_brain_damage(-10 * mult) // Zine those synapses into not dying *yet*
 				..()
 				return
 
@@ -469,9 +470,9 @@ datum
 						M.visible_message("<span class='alert'>[M.name] suddenly and violently vomits!</span>")
 						M.vomit()
 					else if (effect <= 5)
-						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
+						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes crazed and bloodshot!</span>")
 						M.dizziness += 8
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 50 * mult))
+						M.reagents.add_reagent("madness_toxin", rand(1,2) * mult)
 					if (effect <= 15)
 						M.take_toxin_damage(1 * mult)
 
@@ -502,14 +503,16 @@ datum
 				if(M.losebreath && prob(50))
 					M.lose_breath(-1)
 				M.HealDamage("All", 2 * mult, 2 * mult, 1 * mult)
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if (H.bleeding)
-						repair_bleeding_damage(H, 10, 1 * mult)
-					if (H.blood_volume < 500)
-						H.blood_volume ++
-					if (H.organHolder)
-						H.organHolder.heal_organs(1*mult, 1*mult, 1*mult, target_organs)
+				if (isliving(M))
+					var/mob/living/L = M
+					if (L.bleeding)
+						repair_bleeding_damage(L, 10, 1 * mult)
+					if (L.blood_volume < 500)
+						L.blood_volume ++
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if (H.organHolder)
+							H.organHolder.heal_organs(1*mult, 1*mult, 1*mult, target_organs)
 
 				//M.UpdateDamageIcon()
 				..()
@@ -564,8 +567,8 @@ datum
 					M = holder.my_atom
 				if (prob(33))
 					M.HealDamage("All", 2 * mult, 2 * mult)
-				if (blood_system && ishuman(M) && prob(33))
-					var/mob/living/carbon/human/H = M
+				if (blood_system && isliving(M) && prob(33))
+					var/mob/living/H = M
 					H.blood_volume += 1  * mult
 					H.nutrition += 1  * mult
 				//M.UpdateDamageIcon()
@@ -627,6 +630,19 @@ datum
 			on_mob_life(var/mob/M, var/method=INGEST, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
+				if(holder.has_reagent("neurotoxin"))
+					holder.remove_reagent("neurotoxin", 3 * mult)
+				if(holder.has_reagent("capulettium"))
+					holder.remove_reagent("capulettium", 3 * mult)
+				if(holder.has_reagent("sulfonal"))
+					holder.remove_reagent("sulfonal", 3 * mult)
+				if(holder.has_reagent("ketamine"))
+					holder.remove_reagent("ketamine", 3 * mult)
+				if(holder.has_reagent("sodium_thiopental"))
+					holder.remove_reagent("sodium_thiopental", 3 * mult)
+				if(holder.has_reagent("pancuronium"))
+					holder.remove_reagent("pancuronium", 3 * mult)
+
 
 				if(method == INGEST)
 					if (M.health < -5 && M.health > -30)
@@ -879,9 +895,9 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					repair_bleeding_damage(H, 5, 1 * mult)
+				if (isliving(M))
+					var/mob/living/H = M
+					repair_bleeding_damage(H, 90, 1 * mult)
 					if (prob(2))
 						H.contract_disease(/datum/ailment/malady/bloodclot,null,null,1)
 				..()
@@ -903,8 +919,8 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
+				if (isliving(M))
+					var/mob/living/H = M
 					H.blood_volume += 2 * mult
 				..()
 				return
@@ -912,21 +928,22 @@ datum
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if (H.organHolder)
-						H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 50)
+				if (isliving(M))
+					var/mob/living/L = M
 					if (prob(50))
-						H.losebreath += 1*mult
+						L.losebreath += 1*mult
 					else
-						H.take_oxygen_deprivation(1 * mult)
+						L.take_oxygen_deprivation(1 * mult)
 					if(prob(20))
-						H.emote("cough")
+						L.emote("cough")
 					else if (severity > 1 && prob(50))
-						H.visible_message("<span class='alert'>[H] coughs up a little blood!</span>")
-						playsound(get_turf(H), "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
-						bleed(M, rand(2,8) * mult, 3 * mult)
-
+						L.visible_message("<span class='alert'>[L] coughs up a little blood!</span>")
+						playsound(get_turf(L), "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+						bleed(L, rand(2,8) * mult, 3 * mult)
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if (H.organHolder)
+							H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 50)
 
 			// od effects: coughing up blood, damage to lungs (the alveoli specifically) so some oxy damage/losebreath
 
@@ -975,8 +992,7 @@ datum
 				src = null
 				if (!volume_passed)
 					return
-				if (!ishuman(M))
-					return
+
 				if (method == TOUCH)
 					for(var/A in M.organs)
 						var/obj/item/affecting = null
@@ -1211,7 +1227,7 @@ datum
 				src = null
 				if(!volume_passed)
 					return
-				if(!ishuman(M)) // fucking human shitfucks
+				if(!isliving(M)) // fucking human shitfucks
 					return
 				if(method == TOUCH)
 					M.HealDamage("All", volume_passed, 0)
@@ -1224,11 +1240,12 @@ datum
 						if(!istype(affecting, /obj/item/organ))    continue
 						affecting.heal_damage(volume_passed, 0)*/
 
-					if (ishuman(M))
-						var/mob/living/carbon/human/H = M
-						if (H.bleeding)
-							repair_bleeding_damage(H, 90, rand(1,3))
-							//H.bleeding = min(H.bleeding, rand(0,5))
+					var/mob/living/L = M
+					if (L.bleeding == 1)
+						repair_bleeding_damage(L, 50, 1)
+					else
+						repair_bleeding_damage(L, 5, 1)
+						//H.bleeding = min(H.bleeding, rand(0,5))
 
 					var/silent = 0
 					if (paramslist && paramslist.len)

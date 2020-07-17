@@ -283,43 +283,6 @@
 	get_desc()
 		. += "There's [src.amount ? src.amount : "no"] towel[s_es(src.amount)] in [src]."
 
-/obj/securearea
-	desc = "A warning sign which reads 'SECURE AREA'"
-	name = "SECURE AREA"
-	icon = 'icons/obj/decals/wallsigns.dmi'
-	icon_state = "securearea"
-	anchored = 1.0
-	opacity = 0
-	density = 0
-	layer = EFFECTS_LAYER_BASE
-	plane = PLANE_NOSHADOW_BELOW
-
-/obj/joeq
-	desc = "Here lies Joe Q. Loved by all. He was a terrorist. R.I.P."
-	name = "Joe Q. Memorial Plaque"
-	icon = 'icons/obj/decals/wallsigns.dmi'
-	icon_state = "rip"
-	anchored = 1.0
-	opacity = 0
-	density = 0
-
-/obj/fudad
-	desc = "In memory of Arthur \"F. U. Dad\" Muggins, the bravest, toughest Vice Cop SS13 has ever known. Loved by all. R.I.P."
-	name = "Arthur Muggins Memorial Plaque"
-	icon = 'icons/obj/decals/wallsigns.dmi'
-	icon_state = "rip"
-	anchored = 1.0
-	opacity = 0
-	density = 0
-
-/obj/juggleplaque
-	desc = "In loving and terrified memory of those who discovered the dark secret of Jugglemancy. \"E. Shirtface, Juggles the Clown, E. Klein, A.F. McGee,  J. Flarearms.\""
-	name = "Funny-Looking Memorial Plaque"
-	icon = 'icons/obj/decals/wallsigns.dmi'
-	icon_state = "rip"
-	anchored = 1.0
-	opacity = 0
-	density = 0
 
 /obj/lattice
 	desc = "A lightweight support lattice."
@@ -331,6 +294,7 @@
 	anchored = 1.0
 	layer = LATTICE_LAYER
 	//	flags = CONDUCT
+	text = "<font color=#333>+"
 
 	blob_act(var/power)
 		if(prob(75))
@@ -355,16 +319,16 @@
 	attackby(obj/item/C as obj, mob/user as mob)
 
 		if (istype(C, /obj/item/tile))
+			var/obj/item/tile/T = C
+			if (T.amount >= 1)
+				T.build(get_turf(src))
+				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+				T.add_fingerprint(user)
+				qdel(src)
 
-			C:build(get_turf(src))
-			C:amount--
-			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
-			C.add_fingerprint(user)
-
-			if (C:amount < 1)
-				user.u_equip(C)
-				qdel(C)
-			qdel(src)
+			if (T.amount < 1 && !issilicon(user))
+				user.u_equip(T)
+				qdel(T)
 			return
 		if (isweldingtool(C) && C:try_weld(user,0))
 			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")

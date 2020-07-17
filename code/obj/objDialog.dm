@@ -54,25 +54,24 @@ var/global/list/objects_using_dialogs
 			.= O
 
 /obj/proc/updateUsrDialog()
-	if (length(clients_operating))
+	if (clients_operating && clients_operating.len)
+		var/client/C = null
 		for(var/x in clients_operating)
-			var/client/C = x
+			C = x
 			if (C?.mob)
 				if (get_dist(C.mob,src) <= 1)
 					src.attack_hand(C.mob)
 				else
-					if (issilicon(C.mob))
+					if (C.mob.mob_flags & USR_DIALOG_UPDATES_RANGE)
 						src.attack_ai(usr)
-					else if (isAIeye(C.mob))
-						var/mob/dead/aieye/E = C.mob
-						src.attack_ai(E)
 					else
 						src.remove_dialog(C.mob)
 
 /obj/proc/updateDialog()
-	if (length(clients_operating))
+	if (clients_operating && clients_operating.len)
+		var/client/C = null
 		for(var/x in clients_operating)
-			var/client/C = x
+			C = x
 			if (C?.mob)
 				if (get_dist(C.mob,src) <= 1)
 					src.attack_hand(C.mob)

@@ -161,7 +161,7 @@ proc/create_fluff(var/datum/mind/target)
 			if("yellow cake")
 				steal_target = /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake
 			if("aurora MKII utility belt")
-				steal_target = /obj/item/storage/belt/utility/ceshielded
+				steal_target = /obj/item/storage/belt/utility/prepared/ceshielded
 			if("Head of Security\'s war medal")
 				steal_target = /obj/item/hosmedal
 			if("Research Director\'s Diploma")
@@ -196,7 +196,7 @@ proc/create_fluff(var/datum/mind/target)
 			if("yellow cake")
 				steal_target = /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake
 			if("aurora MKII utility belt")
-				steal_target = /obj/item/storage/belt/utility/ceshielded
+				steal_target = /obj/item/storage/belt/utility/prepared/ceshielded
 			if("much coveted Gooncode")
 				steal_target = /obj/item/toy/gooncode
 #endif
@@ -730,6 +730,7 @@ proc/create_fluff(var/datum/mind/target)
 			if (player.client) num_players++
 		min_score = min(500, num_players * 10) + (rand(-5,5) * 10)
 		explanation_text = "Remain out of sight and accumulate [min_score] points."
+		owner.stealth_objective = 1
 
 	check_completion()
 		if(score >= min_score)

@@ -12,12 +12,17 @@ var/global/datum/map_settings/map_settings = null
 //playerPickable defines whether the map can be chosen by players when voting on a new map. Setting to ASS_JAM should allow it on the 13th only, and not on RP.
 var/global/list/mapNames = list(
 	"Clarion" = 		list("id" = "CLARION", 		"settings" = "destiny/clarion", "playerPickable" = 1),
+#ifdef RP_MODE
+	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = 1, 	"MinPlayersAllowed" = 14),
+#else
 	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = 1),
+#endif
 	//"Construction" = list("id" = "CONSTRUCTION", "settings" = "construction"),
 	"Cogmap 1 (Old)" = 	list("id" = "COGMAP_OLD", 	"settings" = "cogmap_old"),
 	"Cogmap 2" = 		list("id" = "COGMAP2", 		"settings" = "cogmap2", 		"playerPickable" = 1, 	"MinPlayersAllowed" = 40),
 	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = 1),
 	"Donut 2" = 		list("id" = "DONUT2", 		"settings" = "donut2",			"playerPickable" = ASS_JAM),
+	"Donut 3" = 		list("id" = "DONUT3", 		"settings" = "donut3",			"playerPickable" = 1, 	"MinPlayersAllowed" = 40),
 	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = 1),
 	"Linemap" = 		list("id" = "LINEMAP", 		"settings" = "linemap",			"playerPickable" = ASS_JAM),
 	"Mushroom" =		list("id" = "MUSHROOM", 	"settings" = "mushroom",		"playerPickable" = ASS_JAM),
@@ -31,6 +36,7 @@ var/global/list/mapNames = list(
 	"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,				"MaxPlayersAllowed" = 30),
 	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 30),
 	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 1),
+	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = ASS_JAM)
 )
 
 /obj/landmark/map
@@ -122,6 +128,46 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/donut2
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/donut2
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/donut2
+
+/datum/map_settings/donut3
+	name = "DONUT3"
+	goonhub_map = "https://cdn.discordapp.com/attachments/469379618168897538/729919886524153916/donut3-30-FINAL4-the-unlucky-number.png"
+	airlock_style = "pyro"
+	walls = /turf/simulated/wall/auto/jen
+	rwalls = /turf/simulated/wall/auto/reinforced/jen
+
+	escape_centcom = /area/shuttle/escape/centcom/donut3
+	escape_transit = /area/shuttle/escape/transit/donut3
+	escape_station = /area/shuttle/escape/station/donut3
+	escape_dir = NORTH
+	auto_windows = 1
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = 1
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
+
+	valid_nuke_targets = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
+		"inner engineering (surrounding the singularity, not in it)" = list(/area/station/engine/inner),
+		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
+		"the inner hall of the medbay" = list(/area/station/medical/medbay),
+		"the main hallway in research" = list(/area/station/science),
+		"the chapel" = list(/area/station/chapel/main),
+		"the escape hallway" = list(/area/station/hallway/secondary/exit),
+		"the Research Director's office" = list(/area/station/crew_quarters/hor),
+		"the Chief Engineer's office" = list(/area/station/engine/engineering/ce),
+		"the kitchen" = list(/area/station/crew_quarters/kitchen))
 
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"
@@ -687,10 +733,57 @@ var/global/list/mapNames = list(
 		"the chapel" = list(/area/station/chapel/main))
 		//"the radio lab" = list(/area/station/crew_quarters/radio))
 
+/datum/map_settings/wrestlemap
+	name = "WRESTLEMAP"
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+	auto_walls = 1
+
+	arrivals_type = MAP_SPAWN_CRYO
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = 1
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
+	escape_centcom = /area/shuttle/escape/centcom/destiny
+	escape_transit = /area/shuttle/escape/transit/destiny
+	escape_station = /area/shuttle/escape/station/destiny
+	escape_dir = NORTH
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+
+	valid_nuke_targets = list("The Ring (near the bar)" = list(/area/station/crew_quarters/quarters),
+		"the monkeydome arena" = list(/area/station/medical/dome),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom),
+		"outside the Ringularity" = list(/area/station/engine/inner),
+		"the courtroom" = list(/area/station/storage/warehouse),
+		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay),
+		"the security lobby" = list(/area/station/chapel/main),
+		"the chapel" = list(/area/station/security/secwing),
+		"the south crew quarters" = list(/area/station/crew_quarters/quarters_south))
+
+
+
 /area/shuttle/escape/centcom
 	icon_state = "shuttle_escape"
 	donut2
 		icon_state = "shuttle_escape-dnt2"
+	donut3
+		icon_state = "shuttle_escape-dnt3"
 	cogmap
 		icon_state = "shuttle_escape-cog1"
 	cogmap2
@@ -702,6 +795,8 @@ var/global/list/mapNames = list(
 	manta
 		icon_state = "shuttle_escape-manta"
 		filler_turf = "/turf/space/fluid/manta"
+	donut3
+		icon_state = "shuttle_escape-dnt3"
 
 /area/shuttle/escape/station
 	#ifdef UNDERWATER_MAP
@@ -710,6 +805,8 @@ var/global/list/mapNames = list(
 	icon_state = "shuttle_escape"
 	donut2
 		icon_state = "shuttle_escape-dnt2"
+	donut3
+		icon_state = "shuttle_escape-dnt3"
 	cogmap
 		icon_state = "shuttle_escape-cog1"
 	cogmap2
@@ -726,6 +823,9 @@ var/global/list/mapNames = list(
 	donut2
 		icon_state = "shuttle_escape-dnt2"
 		warp_dir = WEST
+	donut3
+		icon_state = "shuttle_escape-dnt3"
+		warp_dir = NORTH
 	cogmap
 		icon_state = "shuttle_escape-cog1"
 	cogmap2

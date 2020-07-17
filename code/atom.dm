@@ -84,12 +84,11 @@
 /atom
 	layer = TURF_LAYER
 	plane = PLANE_DEFAULT
-	var/datum/mechanics_holder/mechanics = null
 	var/level = 2
 	var/flags = FPRINT
 	var/event_handler_flags = 0
-	var/temp_flags = 0
-	var/last_bumped = 0
+	var/tmp/temp_flags = 0
+	var/tmp/last_bumped = 0
 	var/shrunk = 0
 	var/texture_size = 0  //Override for the texture size used by setTexture.
 	var/open_to_sound = 0	//If hear_talk is triggered on this object, make my contents hear_talk as well
@@ -207,9 +206,6 @@
 		if (!isnull(reagents))
 			qdel(reagents)
 			reagents = null
-		if (!isnull(mechanics))
-			qdel(mechanics)
-			mechanics = null
 		if (temp_flags & (HAS_PARTICLESYSTEM | HAS_PARTICLESYSTEM_TARGET))
 			particleMaster.ClearSystemRefs(src)
 		if (temp_flags & (HAS_BAD_SMOKE))
@@ -455,6 +451,9 @@
 	if (temp_flags & SPACE_PUSHING)
 		EndSpacePush(src)
 
+	src.attached_objs?.Cut()
+	src.attached_objs = null
+
 
 //mbc comment out becausae im pretty sure this caused issuesss!
 /*
@@ -509,6 +508,8 @@
 	//	A.glide_size = src.glide_size
 
 	if (direct & (direct - 1))
+		ignore_simple_light_updates = 1 //to avoid double-updating on diagonal steps when we are really only taking a single step
+
 		if (direct & NORTH)
 			if (direct & EAST)
 				if (step(src, NORTH))
@@ -531,6 +532,14 @@
 					step(src, WEST)
 				else if (step(src, WEST))
 					step(src, SOUTH)
+
+		ignore_simple_light_updates = 0
+
+		if(src.medium_lights)
+			update_medium_light_visibility()
+		if (src.mdir_lights)
+			update_mdir_light_visibility(direct)
+
 		return // this should in turn fire off its own slew of move calls, so don't do anything here
 
 	var/atom/A = src.loc
@@ -590,8 +599,12 @@
 	else
 		last_turf = 0
 
-	if(src.medium_lights)
-		update_medium_light_visibility()
+	if (!ignore_simple_light_updates)
+		if(src.medium_lights)
+			update_medium_light_visibility()
+		if (src.mdir_lights)
+			update_mdir_light_visibility(direct)
+
 
 //called once per player-invoked move, regardless of diagonal etc
 //called via pulls and mob steps
@@ -622,8 +635,8 @@
 	else if (isghostdrone(usr) && ismob(src) && !isghostdrone(src))
 		return
 
-	if (issmallanimal(usr))
-		var/mob/living/critter/small_animal/C = usr
+	if (isghostcritter(usr))
+		var/mob/living/critter/C = usr
 		if (!C.can_pull(src))
 			boutput(usr,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
 			return
@@ -930,6 +943,8 @@
 
 	if(src.medium_lights)
 		update_medium_light_visibility()
+	if (src.mdir_lights)
+		update_mdir_light_visibility(src.dir)
 
 	return src
 
@@ -942,7 +957,7 @@
 	//It is probably important that we update this as density changes immediately. I don't think it breaks anything currently if we dont, but still important for future.
 	if (src.density != newdensity)
 		if (isturf(src.loc))
-			if (!src.event_handler_flags & USE_CANPASS)
+			if (!(src.event_handler_flags & USE_CANPASS))
 				if(newdensity == 1)
 					var/turf/T = src.loc
 					if (T)
@@ -1041,7 +1056,7 @@
 
 
 /atom/proc/interact(var/mob/user)
-	if (isdead(user) || (!iscarbon(user) && !iscritter(user) && !issilicon(usr)))
+	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(usr)))
 		return
 
 	if (!istype(src.loc, /turf) || user.stat || user.hasStatus(list("paralysis", "stunned", "weakened")) || user.restrained())

@@ -6,6 +6,9 @@
 #define SPAWN_FISH 4
 #define SPAWN_LOOT 8
 #define SPAWN_PLANTSMANTA 16
+#define SPAWN_TRILOBITE 32
+#define SPAWN_HALLU 64
+
 
 /turf/proc/make_light() //dummyproc so we can inherit
 	.=0
@@ -118,7 +121,7 @@
 			light.enable()
 
 //space/fluid/ReplaceWith() this is for future ctrl Fs
-	ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, var/handle_dir = 1)
+	ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, var/handle_dir = 1, force = 0)
 		.= ..(what, keep_old_material, handle_air)
 
 		if (handle_air)
@@ -156,9 +159,9 @@
 				P.initialize()
 
 		if(spawningFlags & SPAWN_FISH) //can spawn bad fishy
-			if (src.z == 5 && prob(1) && prob(7))
+			if (src.z == 5 && prob(1) && prob(2))
 				new /obj/critter/gunbot/drone/buzzdrone/fish(src)
-			else if (src.z == 5 && prob(1) && prob(4.5))
+			else if (src.z == 5 && prob(1) && prob(4))
 				new /obj/critter/gunbot/drone/gunshark(src)
 			else if (prob(1) && prob(20))
 				var/mob/fish = pick(childrentypesof(/mob/living/critter/aquatic/fish))
@@ -174,6 +177,18 @@
 					O = new /obj/naval_mine/rusted(src)
 				if (O)
 					O.initialize()
+
+		if(spawningFlags & SPAWN_TRILOBITE)
+			if (prob(17))
+				new /obj/overlay/tile_effect/cracks/spawner/trilobite(src)
+			if (prob(2))
+				new /obj/overlay/tile_effect/cracks/spawner/pikaia(src)
+
+		if(spawningFlags & SPAWN_HALLU)
+			if (prob(1) && prob(16))
+				new /mob/living/critter/small_animal/hallucigenia/ai_controlled(src)
+			else if (prob(1) && prob(18))
+				new /obj/overlay/tile_effect/cracks/spawner/pikaia(src)
 
 		if (spawningFlags & SPAWN_LOOT)
 			if (prob(1) && prob(9))
@@ -309,7 +324,7 @@
 	fullbright = 0
 	luminosity = 1
 	generateLight = 0
-	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT
+	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT | SPAWN_HALLU
 
 /turf/space/fluid/nospawn
 	spawningFlags = null

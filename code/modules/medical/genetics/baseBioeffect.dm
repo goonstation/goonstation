@@ -14,6 +14,7 @@ var/const/effectTypeFood = 4
 	var/desc = "" //Visible description of the effect.
 	var/researched_desc = null // You get this in mutation research if you've activated the effect
 	var/datum/bioEffect/global_instance = null // bioeffectlist version of this effect
+	var/datum/bioEffect/power/global_instance_power = null //just a power casted version of global instance
 	var/research_level = 0
 	// 0 = not, 1 = in progress, 2 = done, 3 = activated
 	var/research_finish_time = 0
@@ -79,6 +80,8 @@ var/const/effectTypeFood = 4
 	New(var/for_global_list = 0)
 		if (!for_global_list)
 			global_instance = bioEffectList[src.id]
+			if (istype(global_instance, /datum/bioEffect/power))
+				global_instance_power = global_instance
 		dnaBlocks = new/datum/dnaBlocks(src)
 		return ..()
 
@@ -361,7 +364,7 @@ var/const/effectTypeFood = 4
 		if (!linked_power)
 			return 1
 		if (ismob(target))
-			logTheThing("combat", owner, target, "used the [linked_power.name] power on %target%.")
+			logTheThing("combat", owner, target, "used the [linked_power.name] power on [constructTarget(target,"combat")].")
 		else if (target)
 			logTheThing("combat", owner, null, "used the [linked_power.name] power on [target].")
 		else
@@ -374,7 +377,7 @@ var/const/effectTypeFood = 4
 		if (!linked_power)
 			return 1
 		if (ismob(target))
-			logTheThing("combat", owner, target, "misfired the [linked_power.name] power on %target%.")
+			logTheThing("combat", owner, target, "misfired the [linked_power.name] power on [constructTarget(target,"combat")].")
 		else if (target)
 			logTheThing("combat", owner, null, "misfired the [linked_power.name] power on [target].")
 		else

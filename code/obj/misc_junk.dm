@@ -65,7 +65,7 @@
 	icon_state = "gnome"
 	w_class = 4.0
 	stamina_damage = 40
-	stamina_cost = 40
+	stamina_cost = 20
 	stamina_crit_chance = 5
 	var/last_laugh = 0
 
@@ -115,7 +115,7 @@
 	throw_range = 5
 	desc = "A tube made of cardboard. Extremely non-threatening."
 	w_class = 1.0
-	stamina_damage = 1
+	stamina_damage = 5
 	stamina_cost = 1
 
 	New()
@@ -147,8 +147,8 @@
 	throw_range = 5
 	desc = "A sheet of creased cardboard."
 	w_class = 1.0
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 
 	attack_self(mob/user as mob)
 		boutput(user, __blue("You deftly fold [src] into a party hat!."))
@@ -199,7 +199,7 @@
 	item_state = "rubber_chicken"
 	w_class = 2.0
 	stamina_damage = 10
-	stamina_cost = 10
+	stamina_cost = 5
 	stamina_crit_chance = 3
 
 /obj/item/module
@@ -242,11 +242,12 @@
 	icon = 'icons/misc/aprilfools.dmi'
 	icon_state = "brick"
 	item_state = "brick"
+	force = 8
 	w_class = 1
 	throwforce = 10
 	rand_pos = 1
 	stamina_damage = 40
-	stamina_cost = 35
+	stamina_cost = 20
 	stamina_crit_chance = 5
 /*
 /obj/item/saxophone
@@ -851,3 +852,86 @@
 		next_artifact.set_loc(place.loc)
 		processing_items.Remove(src)
 		..()
+
+/obj/item/scpgnome
+	name = "strange sarcophagus"
+	desc = "A sarcophagus bound by magical chains."
+	icon = 'icons/obj/junk.dmi'
+	icon_state = "sarc_0"
+	density = 1
+	var/gnome = 1
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/scpgnome_lid) && ((src.icon_state == "sarc_2")||(src.icon_state == "sarc_3")))
+			user.u_equip(W)
+			qdel(W)
+			src.icon_state = "sarc_1"
+		else if(istype(W,/obj/item/gnomechompski/mummified) && (src.icon_state == "sarc_3"))
+			user.u_equip(W)
+			qdel(W)
+			src.icon_state = "sarc_2"
+			src.gnome = 1
+		else if(istype(W,/obj/item/device/key/chompskey) && (src.icon_state == "sarc_0"))
+			user.u_equip(W)
+			qdel(W)
+			src.icon_state = "sarc_key"
+		else
+			..()
+
+	attack_hand(mob/user as mob)
+		if(src.icon_state == "sarc_key")
+			src.icon_state = "opening"
+			animate(src, time = 2.3 SECONDS)
+			animate(icon_state = "sarc_1")
+		else if(src.icon_state == "sarc_1")
+			if(src.gnome)
+				src.icon_state = "sarc_2"
+			else
+				src.icon_state = "sarc_3"
+			user.put_in_hand_or_drop(new /obj/item/scpgnome_lid)
+		else if(src.icon_state == "sarc_2")
+			src.gnome = 0
+			src.icon_state = "sarc_3"
+			user.put_in_hand_or_drop(new /obj/item/gnomechompski/mummified)
+
+/obj/item/scpgnome_lid
+	name = "strange sarcophagus lid"
+	desc = "The lid to some sort of sarcophagus"
+	icon = 'icons/obj/junk.dmi'
+	icon_state = "sarc_1"
+
+/obj/item/gnomechompski/mummified
+	name = "mummified object"
+	icon_state = "mummified"
+	var/list/gnomes = list("gnelf","chome-gnompski","chrome-chompski","gnuigi-chompini","usagi-tsukinompski","sans-undertaleski","gnoctor-florpski","gnos-secureski","crime-chompski","antignome-negachompski")
+
+	attack_self(mob/user as mob)
+		user.u_equip(src)
+		src.set_loc(user)
+		var/obj/item/gnomechompski/g = new /obj/item/gnomechompski
+		if(prob(30))
+			g.icon_state = pick(gnomes)
+			switch(g.icon_state)
+				if("gnelf")
+					g.name = "Gnelf Chompski"
+				if("chome-gnompski")
+					g.name = "Chome Gnompski"
+				if("chrome-chompski")
+					g.name = "Chrome Chompski"
+				if("gnuigi-chompini")
+					g.name = "Gnuigi Chompini"
+				if("usagi-tsukinompski")
+					g.name = "Usagi Tsukinompski"
+				if("sans-undertaleski")
+					g.name = "Boss Musicski"
+				if("gnoctor-florpski")
+					g.name = "Gnoctor Florpski"
+				if("gnos-secureski")
+					g.name = "Gnos Secureski"
+				if("crime-chompski")
+					g.name = "Crime Chompski"
+				if("antignome-negachompski")
+					g.name = "Ikspmohc-Emong"
+		user.put_in_hand_or_drop(g)
+		user.visible_message("<span style=\"color:red\">[user.name] unwraps [g]!</span>")
+		qdel(src)

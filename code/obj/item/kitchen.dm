@@ -340,6 +340,7 @@ TRAYS
 	var/box_type = "donutbox"
 	var/contained_food = /obj/item/reagent_containers/food/snacks/donut/random
 	var/contained_food_name = "donut"
+	tooltip_flags = REBUILD_DIST
 
 	donut_box
 		name = "donut box"
@@ -386,6 +387,7 @@ TRAYS
 				user.drop_item()
 				W.set_loc(src)
 				src.amount ++
+				tooltip_rebuild = 1
 				boutput(user, "You place [W] into [src].")
 				src.update()
 			else return ..()
@@ -402,11 +404,13 @@ TRAYS
 		if(myFood)
 			if(src.amount >= 1)
 				src.amount--
+				tooltip_rebuild = 1
 			user.put_in_hand_or_drop(myFood)
 			boutput(user, "You take [myFood] out of [src].")
 		else
 			if(src.amount >= 1)
 				src.amount--
+				tooltip_rebuild = 1
 				var/obj/item/reagent_containers/food/snacks/newFood = new src.contained_food(src.loc)
 				user.put_in_hand_or_drop(newFood)
 				boutput(user, "You take [newFood] out of [src].")
@@ -437,6 +441,7 @@ TRAYS
 	var/max_food = 2
 	var/list/throw_targets = list()
 	var/throw_dist = 3
+	tooltip_flags = REBUILD_DIST
 
 	New()
 		..()
@@ -444,9 +449,11 @@ TRAYS
 
 	proc/add_contents(var/obj/item/W)
 		ordered_contents += W
+		tooltip_rebuild = 1
 
 	proc/remove_contents(var/obj/item/W)
 		ordered_contents -= W
+		tooltip_rebuild = 1
 
 	proc/update_icon()
 		for (var/i = 1, i <= ordered_contents.len, i++)
@@ -508,7 +515,7 @@ TRAYS
 	proc/unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
 		playsound(get_turf(src), "sound/items/plate_tap.ogg", 30, 1)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
 		..()
 		if(ordered_contents.len == 0)
 			return
@@ -612,14 +619,14 @@ TRAYS
 				boutput(user, "<span class='alert'><B>You smash [src] over your own head!</b></span>")
 			else
 				M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
-				logTheThing("combat", user, M, "smashes [src] over %target%'s head! ")
+				logTheThing("combat", user, M, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
 			if(ordered_contents.len != 0)
 				src.shit_goes_everywhere()
 			unique_attack_garbage_fuck(M, user)
 		else
 			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
 			unique_tap_garbage_fluck(M,user)
-			logTheThing("combat", user, M, "taps %target% over the head with [src].")
+			logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 	attack_hand(mob/user as mob)
 		..()
@@ -770,6 +777,7 @@ TRAYS
 			qdel(src)
 			return
 		tray_health--
+		tooltip_rebuild = 1
 
 		src.visible_message("\The [src] looks less sturdy now.")
 
@@ -1073,7 +1081,7 @@ TRAYS
 		else
 			..()
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
 		..()
 		var/list/throw_targets = list()
 		if(platenum == 0)

@@ -105,7 +105,7 @@
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return
 
-		if (iscarbon(user) || iscritter(user))
+		if (iscarbon(user) || ismobcritter(user))
 			src.in_use = 1
 			user.visible_message("[user] applies [src] to [his_or_her(user)]self.",\
 			"<span class='notice'>You apply [src] to yourself.</span>")
@@ -116,11 +116,11 @@
 
 	throw_impact(mob/M as mob)
 		..()
-		if (src.medical && !borg && !src.in_use && (iscarbon(M) || iscritter(M)))
+		if (src.medical && !borg && !src.in_use && (iscarbon(M) || ismobcritter(M)))
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
 				M.visible_message("<span class='alert'>[src] lands on [M] sticky side down!</span>")
-				logTheThing("combat", M, usr, "is stuck by a patch [log_reagents(src)] thrown by %target% at [log_loc(M)].")
+				logTheThing("combat", M, usr, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(M)].")
 				apply_to(M,usr)
 				attach_sticker_manual(M)
 
@@ -135,7 +135,7 @@
 
 		// No src.reagents check here because empty patches can be used to counteract bleeding.
 
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			src.in_use = 1
 			if (M == user)
 				//M.show_text("You put [src] on your arm.", "blue")
@@ -145,7 +145,7 @@
 				if (medical == 0)
 					user.visible_message("<span class='alert'><b>[user]</b> is trying to stick [src] to [M]'s arm!</span>",\
 					"<span class='alert'>You try to stick [src] to [M]'s arm!</span>")
-					logTheThing("combat", user, M, "tries to apply a patch [log_reagents(src)] to %target% at [log_loc(user)].")
+					logTheThing("combat", user, M, "tries to apply a patch [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
 
 					if (!do_mob(user, M))
 						if (user && ismob(user))
@@ -173,7 +173,7 @@
 							H.patchesused ++
 						JOB_XP(user, "Medical Doctor", 1)
 
-			logTheThing("combat", user, M, "applies a patch to %target% [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, M, "applies a patch to [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
 			src.clamp_reagents()
 
@@ -183,7 +183,7 @@
 		return 0
 
 	proc/apply_to(mob/M as mob, mob/user as mob)
-		repair_bleeding_damage(M, 66, 1)
+		repair_bleeding_damage(M, 25, 1)
 		active = 1
 
 		if (reagents && reagents.total_volume)
@@ -431,11 +431,11 @@
 				patches += target
 				update_overlay()
 				boutput(user, "<span class='notice'>You add [target] to the stack.</span>")
-		else if (ishuman(target))
+		else if (isliving(target))
 			if (patches.len)
 				var/obj/item/reagent_containers/patch/P = patches[patches.len]
 				patches -= P
-				var/mob/living/carbon/human/H = target
+				var/mob/living/H = target
 				P.attack(H, user, user.zone_sel && user.zone_sel.selecting ? user.zone_sel.selecting : null)
 
 				update_overlay()
@@ -485,7 +485,7 @@
 			. = ..()
 
 	proc/can_operate_on(atom/A)
-		.= (iscarbon(A) || iscritter(A))
+		.= (iscarbon(A) || ismobcritter(A))
 
 	proc/update_icon()
 		src.overlays = null
@@ -529,7 +529,7 @@
 				if (M.health < 90)
 					JOB_XP(user, "Medical Doctor", 2)
 
-			logTheThing("combat", user, M, "begins automending %target% [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, M, "begins automending [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 			begin_application(M,user=user)
 			return 1
 
@@ -556,7 +556,7 @@
 				var/datum/reagents/R = new
 				reagents.copy_to(R)
 				R.trans_to(M, use_volume_adjusted/2)
-			logTheThing("combat", user, M, " automends %target% [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, M, " automends [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
 			playsound(get_turf(src), pick(sfx), 50, 1)
 
@@ -581,7 +581,7 @@
 
 /datum/action/bar/icon/automender_apply
 	duration = 10
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	id = "automender_apply"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mender-active"
@@ -621,8 +621,8 @@
 
 		//WEAKEN the first apply or use some sort of ramp-up!
 		var/multiply = 1
-		if (looped <= 0)
-			multiply = 0.2
+		if (looped <= 7)
+			multiply = min((looped+1)/8, 1)
 
 		M.apply_to(target,user, multiply, silent = (looped >= 1))
 
@@ -634,6 +634,7 @@
 
 		//Auto stop healing loop if we are not tampered and the health didnt change at all
 		if (!M.tampered)
+			target.updatehealth() //I hate this, but we actually need the health on time here.
 			if (health_temp == target.health)
 				user.show_text("[M] is finished healing and powers down automatically.", "blue")
 				return

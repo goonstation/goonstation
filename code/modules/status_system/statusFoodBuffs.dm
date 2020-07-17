@@ -338,7 +338,7 @@
 		if(ismob(owner))
 			var/mob/M = owner
 			APPLY_MOB_PROPERTY(M, PROP_EXPLOPROT, src, 1)
-	
+
 	onRemove()
 		. = ..()
 		if(ismob(owner))

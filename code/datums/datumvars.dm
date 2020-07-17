@@ -4,7 +4,7 @@
 
 
 /client/proc/debug_global_variable(var/S as text)
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "View Global Variable"
 
 	if( !src.holder || src.holder.level < LEVEL_CODER )
@@ -65,8 +65,8 @@
 		html += " &middot; <a href='byond://?src=\ref[src];CallProc=\ref[V]'>Call Proc</a>"
 	usr << browse(html, "window=variables\ref[V];size=600x400")
 
-/client/proc/debug_variables(atom/D) // actually any datum, not just atom but `datum/D in world` causes GC bugs
-	set category = "Debug"
+/client/proc/debug_variables(datum/D in world) // causes GC to lock up for a few minutes, the other option is to use atom/D but that doesn't autocomplete in the command bar
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "View Variables"
 	set popup_menu = 1
 
@@ -172,6 +172,7 @@
 	if (istype(D, /datum))
 		html += " &middot; <a href='byond://?src=\ref[src];AddComponent=\ref[D]'>Add Component</a>"
 	html += "<br><a href='byond://?src=\ref[src];Delete=\ref[D]'>Delete</a>"
+	html += " &middot; <a href='byond://?src=\ref[src];HardDelete=\ref[D]'>Hard Delete</a>"
 	if (istype(D, /atom) || istype(D, /image))
 		html += " &middot; <a href='byond://?src=\ref[src];Display=\ref[D]'>Display In Chat (slow!)</a>"
 
@@ -445,6 +446,15 @@
 			var/datum/D = locate(href_list["Delete"])
 			if(alert(src, "Are you sure you want to delete [D] of type [D.type]?",,"Yes","No") == "Yes")
 				qdel(D)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to delete something all rude-like.")
+		return
+	if (href_list["HardDelete"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/datum/D = locate(href_list["HardDelete"])
+			if(alert(src, "Are you sure you want to delete [D] of type [D.type]?",,"Yes","No") == "Yes")
+				del(D)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to delete something all rude-like.")
 		return

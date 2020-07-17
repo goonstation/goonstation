@@ -97,7 +97,8 @@
 	plant_reagent = "juice_tomato"
 	validforhat = 1
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		..()
 		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
@@ -289,6 +290,7 @@
 	desc = "You probably shouldn't eat this, unless you happen to be able to eat metal."
 	icon_state = "orange-clockwork"
 	validforhat = 0
+	tooltip_flags = REBUILD_ALWAYS
 
 	get_desc()
 		. += "[pick("The time is", "It's", "It's currently", "It reads", "It says")] [o_clock_time()]."
@@ -512,13 +514,13 @@
 			hitMob.do_disorient(stamina_damage = 35, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 
-	throw_at(atom/target, range, speed)
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
 		throw_unlimited = 1
 		if(target.x > src.x || (target.x == src.x && target.y > src.y))
 			src.icon_state = "[base_icon_state]-spin-right"
 		else
 			src.icon_state = "[base_icon_state]-spin-left"
-		..(target, range, speed)
+		..()
 
 	attack_hand(mob/user as mob)
 		..()

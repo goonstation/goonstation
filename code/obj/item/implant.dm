@@ -36,7 +36,7 @@ THROWING DARTS
 
 	// called when an implant is implanted into M by I
 	proc/implanted(mob/M, mob/I)
-		logTheThing("combat", I, M, "has implanted %target% with a [src] implant ([src.type]) at [log_loc(M)].")
+		logTheThing("combat", I, M, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
 		implanted = 1
 		owner = M
 		if (implant_overlay)
@@ -78,7 +78,7 @@ THROWING DARTS
 				crit_triggered = 0
 			if(death_triggered && isalive(H))
 				death_triggered = 0
-		else if (iscritter(src.owner))
+		else if (ismobcritter(src.owner))
 			var/mob/living/critter/C = owner
 			if (C.health < 0 && !crit_triggered && online)
 				on_crit()
@@ -153,8 +153,7 @@ THROWING DARTS
 	var/healthstring = ""
 
 	var/message = null
-	var/mailgroup = "medbay"
-	var/mailgroup2 = "medresearch"
+	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
 	var/net_id = null
 	var/frequency = 1149
 	var/datum/radio_frequency/radio_connection
@@ -168,6 +167,7 @@ THROWING DARTS
 				src.net_id = generate_net_id(src)
 	disposing()
 		radio_controller.remove_object(src, "[frequency]")
+		mailgroups.Cut()
 		..()
 
 	implanted(mob/M, mob/I)
@@ -266,7 +266,7 @@ THROWING DARTS
 				var/turf/T = get_turf(H)
 				if (istype(T))
 					return " at [T.x],[T.y],[T.z]"
-		else if (iscritter(src.owner))
+		else if (ismobcritter(src.owner))
 			var/mob/living/critter/C = src.owner
 			if (locate(/obj/item/implant/tracking) in C.implants)
 				var/turf/T = get_turf(C)
@@ -275,7 +275,9 @@ THROWING DARTS
 
 	proc/send_message()
 		DEBUG_MESSAGE("sending message: [src.message]")
-		if (message && mailgroup && radio_connection)
+		if(!radio_connection)
+			return
+		for(var/mailgroup in mailgroups)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.transmission_method = TRANSMISSION_RADIO
@@ -290,25 +292,12 @@ THROWING DARTS
 			radio_connection.post_signal(src, newsignal)
 			//DEBUG_MESSAGE("message sent to [src.mailgroup]")
 
-		if (message && mailgroup2 && radio_connection)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "HEALTH-MAILBOT"
-			newsignal.data["message"] = "[src.message]"
-
-			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup2
-			newsignal.data["sender"] = src.net_id
-
-			radio_connection.post_signal(src, newsignal)
-			//DEBUG_MESSAGE("message sent to [src.mailgroup2]")
-
 /obj/item/implant/health/security
 	name = "health implant - security issue"
-	mailgroup = "medbay"
-	mailgroup2 = "security"
+
+	New()
+		mailgroups.Add(MGD_SECURITY)
+		..()
 
 /obj/item/implant/freedom
 	name = "freedom implant"
@@ -549,7 +538,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 				if (ishuman(owner))
 					var/mob/living/carbon/human/H = owner
 					H.implant -= src
-				else if (iscritter(owner))
+				else if (ismobcritter(owner))
 					var/mob/living/critter/C = owner
 					C.implants -= src
 
@@ -620,7 +609,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 		if (H.mind && ((H.mind.special_role == "vampthrall") || (H.mind.special_role == "spyslave")))
 			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being enslaved!</b>", "red")
 			H.show_text("<b>You resist [implant_master]'s attempt to enslave you!</b>", "red")
-			logTheThing("combat", H, implant_master, "resists %target%'s attempt to mindslave them at [log_loc(H)].")
+			logTheThing("combat", H, implant_master, "resists [constructTarget(implant_master,"combat")]'s attempt to mindslave them at [log_loc(H)].")
 			return 0
 		// Necessary to get those expiration messages to trigger properly if the same mob is implanted again,
 		// since mindslave implants have spawns  going on.
@@ -870,6 +859,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 	impcolor = "g"
 	var/uses = 8
 	var/obj/item/card/id/access = new /obj/item/card/id
+	tooltip_flags = REBUILD_DIST
 
 	get_desc(dist)
 		if (dist <= 1)
@@ -883,6 +873,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 			return 0
 		else
 			uses -= 1
+			tooltip_rebuild = 1
 		return 1
 
 	infinite
@@ -919,6 +910,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 	w_class = 2.0
 	hide_attack = 2
 	var/sneaky = 0
+	tooltip_flags = REBUILD_DIST
 
 	New()
 		..()
@@ -930,6 +922,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 			. += "It appears to contain \a [src.imp.name]."
 
 	proc/update()
+		tooltip_rebuild = 1
 		if (src.imp)
 			src.icon_state = src.imp.impcolor ? "implanter1-[imp.impcolor]" : "implanter1-g"
 		else
@@ -947,7 +940,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src.imp)
-		else if (iscritter(M))
+		else if (ismobcritter(M))
 			var/mob/living/critter/C = M
 			C.implants.Add(src.imp)
 
@@ -958,7 +951,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 		src.update()
 
 	attack(mob/M as mob, mob/user as mob)
-		if (!ishuman(M) && !iscritter(M))
+		if (!ishuman(M) && !ismobcritter(M))
 			return ..()
 
 		if (src.imp && !src.imp.can_implant(M, user))
@@ -1127,6 +1120,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 	throw_range = 5
 	w_class = 1.0
 	var/implant_type = /obj/item/implant/tracking
+	tooltip_flags = REBUILD_DIST
 
 /obj/item/implantcase/tracking
 	name = "glass case - 'Tracking'"
@@ -1209,6 +1203,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 		. += "It appears to contain \a [src.imp.name]."
 
 /obj/item/implantcase/proc/update()
+	tooltip_rebuild = 1
 	if (src.imp)
 		src.icon_state = src.imp.impcolor ? "implantcase-[imp.impcolor]" : "implantcase-g"
 	else
@@ -1227,6 +1222,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 			src.name = "glass case - '[t]'"
 		else
 			src.name = "glass case"
+		tooltip_rebuild = 1
 		return
 	else if (istype(I, /obj/item/implanter))
 		var/obj/item/implanter/Imp = I
@@ -1504,6 +1500,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 				return
 
 			my_implant = I
+			tooltip_rebuild = 1
 
 			if (istype(W, /obj/item/implant))
 				user.u_equip(W)
@@ -1548,6 +1545,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			return ..()
 		my_implant.set_loc(P)
 		my_implant = null
+		tooltip_rebuild = 1
 
 /datum/projectile/implanter
 	name = "implant bullet"
@@ -1572,7 +1570,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 				H.implant.Add(my_implant)
 			else
 				my_implant.set_loc(get_turf(H))
-		else if (iscritter(hit))
+		else if (ismobcritter(hit))
 			var/mob/living/critter/C = hit
 			if (C.can_implant && my_implant.can_implant(C, implant_master))
 				my_implant.set_loc(C)

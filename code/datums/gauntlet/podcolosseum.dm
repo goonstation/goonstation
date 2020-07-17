@@ -97,7 +97,7 @@
 	var/boss_counter = 0
 	var/boss_count = 1
 	var/list/drone_templates = list()
-	var/list/bosses = list(/obj/critter/gunbot/drone/helldrone, /obj/critter/gunbot/drone/iridium, /obj/critter/gunbot/drone/iridium/whydrone)
+	var/list/bosses = list(/obj/critter/gunbot/drone/helldrone, /obj/critter/gunbot/drone/iridium, /obj/critter/gunbot/drone/iridium/whydrone, /obj/critter/gunbot/drone/iridium/whydrone/horse)
 	var/list/current_bosses = null
 	var/list/actors = list()
 

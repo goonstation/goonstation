@@ -293,7 +293,7 @@
 
 			src.a_intent = INTENT_HARM
 
-			if(!ai_target || ai_target == src && !ai_suicidal)
+			if(!ai_target || ai_target == src && !ai_suicidal || ai_target.z != src.z)
 				ai_frustration = 0
 				ai_target = null
 				ai_state = AI_PASSIVE
@@ -358,11 +358,7 @@
 				if((prob(33) || ai_throw) && distance > 1 && ai_validpath() && src.r_hand && !(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot()))
 					//I can attack someone! =D
 					ai_target_old.Cut()
-					var/obj/item/temp = src.r_hand
-					temp.set_loc(src.loc)
-					src.u_equip(temp)
-					src.visible_message("<span class='alert'>[src] throws [temp].</span>")
-					temp.throw_at(carbon_target, 7, 1)
+					src.throw_item(ai_target, list("npc_throw"))
 
 			if(distance <= 1 && (world.timeofday - ai_attacked) > 100 && !ai_incapacitated() && ai_meleecheck())
 				//I can attack someone! =D
@@ -380,7 +376,7 @@
 					//	src.a_intent = INTENT_HELP
 					if(ishuman(ai_target))
 						src.r_hand:attack(ai_target, src)
-					else if(iscritter(ai_target))
+					else if(ismobcritter(ai_target))
 						var/mob/living/critter/C = ai_target
 						if (isalive(C))
 							C.attackby(src.r_hand, src)
@@ -427,6 +423,7 @@
 
 /mob/living/carbon/human/proc/ai_pickupweapon()
 
+
 	if(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot())
 		return
 
@@ -442,19 +439,12 @@
 				BB.dropped(src)
 				BB.layer = initial(BB.layer)
 			return
-		if(!GN:canshoot())
-			src.drop_item()
-			if(src.w_uniform && !src.belt)
-				GN:set_loc(src)
-				src.belt = GN
-				GN:layer = HUD_LAYER
-			else if(src.back && istype(src.back,/obj/item/storage/backpack))
-				var/obj/item/storage/backpack/B = src.back
-				if(B.contents.len < 7)
-					B.attackby(GN,src)
 
-	if(istype(src.r_hand, /obj/item/gun/energy) && !src.r_hand:canshoot())
-		var/obj/item/gun/energy/GN = src.r_hand
+	if(src.r_hand?.cant_drop)
+		return
+
+	if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot())
+		var/obj/item/gun/GN = src.r_hand
 		src.drop_item()
 		if(src.w_uniform && !src.belt)
 			GN:set_loc(src)

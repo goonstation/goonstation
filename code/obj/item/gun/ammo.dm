@@ -14,8 +14,8 @@
 	throw_range = 20
 	var/datum/projectile/ammo_type
 	var/caliber = null
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 5
 
 	proc
@@ -175,6 +175,8 @@
 			ammoGun.set_loc(K)
 			K.ammo = ammoGun
 			K.current_projectile = ammoGun.ammo_type
+			if(K.silenced)
+				K.current_projectile.shot_sound = 'sound/machines/click.ogg'
 			K.update_icon()
 
 			return 1
@@ -224,6 +226,9 @@
 				ammoGun.set_loc(K)
 				K.ammo = ammoGun
 				K.current_projectile = A.ammo_type
+				if(K.silenced)
+					K.current_projectile.shot_sound = 'sound/machines/click.ogg'
+
 				//DEBUG_MESSAGE("Equalized [K]'s ammo type to [A.type]")
 
 			var/move_amount = min(A.amount_left, K.max_ammo_capacity - K.ammo.amount_left)
@@ -321,6 +326,9 @@
 	max_amount = 10.0
 	ammo_type = new/datum/projectile/bullet/bullet_22
 	caliber = 0.22
+
+/obj/item/ammo/bullets/bullet_22/faith
+	amount_left = 4.0
 
 /obj/item/ammo/bullets/bullet_22HP
 	sname = ".22 Hollow Point"
@@ -936,6 +944,16 @@
 	g_amt = 30000
 	charge = 200.0
 	max_charge = 200.0
+
+/obj/item/ammo/power_cell/med_plus_power
+	name = "Power Cell - 250"
+	desc = "A power cell that holds a max of 250PU"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	m_amt = 17500
+	g_amt = 35000
+	charge = 250.0
+	max_charge = 250.0
 
 /obj/item/ammo/power_cell/high_power
 	name = "Power Cell - 300"

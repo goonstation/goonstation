@@ -560,11 +560,11 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 			drink(user)
 		else if (ishuman(target))
 			user.visible_message("<span class='alert'>[user] attempts to force [target] to drink [src].</span>")
-			logTheThing("combat", user, target, "tries to force %target% to drink [src] ([potion_name] -- [reagent]).")
+			logTheThing("combat", user, target, "tries to force [constructTarget(target,"combat")] to drink [src] ([potion_name] -- [reagent]).")
 			if (do_after(user, 30))
 				if (reagent)
 					user.visible_message("<span class='alert'>[user] forces [target] to drink [src].</span>")
-					logTheThing("combat", user, target, "forces %target% to drink [src] ([potion_name] -- [reagent]).")
+					logTheThing("combat", user, target, "forces [constructTarget(target,"combat")] to drink [src] ([potion_name] -- [reagent]).")
 					drink(target)
 
 	identified

@@ -138,7 +138,7 @@
 	name = "silver sulfadiazine reserve tank"
 	initial_reagents = "silver_sulfadiazine"
 
-/obj/item/reagent_containers/food/drinks/reserve 
+/obj/item/reagent_containers/food/drinks/reserve
 	name = "reserve tank"
 	desc = "A specialized reserve tank."
 	icon = 'icons/obj/chemical.dmi'
@@ -150,13 +150,13 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	rc_flags = RC_SCALE
 
-/obj/item/reagent_containers/food/drinks/reserve/brute 
+/obj/item/reagent_containers/food/drinks/reserve/brute
 	name = "high capacity styptic powder reserve tank"
 	desc = "A high capacitiy reserve tank filled with stypic powder."
 	icon_state = "largebottle-brute"
 	initial_reagents = "styptic_powder"
 
-/obj/item/reagent_containers/food/drinks/reserve/burn 
+/obj/item/reagent_containers/food/drinks/reserve/burn
 	name = "high capacity silver sulfadiazine reserve tank"
 	desc = "A high capacity reserve tank filled with silver sulfadiazine."
 	icon_state = "largebottle-burn"
@@ -211,6 +211,7 @@
 		else
 			src.UpdateOverlays(null, "fluid")
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)

@@ -56,6 +56,7 @@
 		return 1
 
 	proc/change_mode(var/new_mode, var/mob/holder)
+		tooltip_rebuild = 1
 		switch (new_mode)
 			if ("prying")
 				src.omni_mode = "prying"
@@ -169,7 +170,6 @@
 					src.force = 3
 					hit_type = DAMAGE_BLUNT
 					welding = 0
-
 		if (holder)
 			holder.update_inhands()
 

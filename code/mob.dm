@@ -35,6 +35,8 @@
 	var/custom_gib_handler = null
 	var/obj/decal/cleanable/custom_vomit_type = /obj/decal/cleanable/vomit
 
+	var/list/mob/dead/target_observer/observers = list()
+
 	var/emote_allowed = 1
 	var/last_emote_time = 0
 	var/last_emote_wait = 0
@@ -63,6 +65,7 @@
 	var/sleeping = 0.0
 	var/lying = 0.0
 	var/lying_old = 0
+	var/can_lie = 0
 	var/canmove = 1.0
 	var/timeofdeath = 0.0
 	var/fakeloss = 0
@@ -83,7 +86,6 @@
 	var/charges = 0.0
 	var/urine = 0.0
 	var/nutrition = 100
-	var/last_recovering_msg = 0
 	var/losebreath = 0.0
 	var/intent = null
 	var/shakecamera = 0
@@ -284,6 +286,10 @@
 		src.s_active = null
 
 /mob/disposing()
+	for(var/mob/dead/target_observer/TO in observers)
+		observers -= TO
+		TO.ghostize()
+
 	for(var/mob/m in src) //just in case...
 		m.loc = src.loc
 		m.ghostize()
@@ -393,7 +399,7 @@
 
 	src.client.mouse_pointer_icon = src.cursor
 
-	logTheThing("diary", null, src, "Login: %target% from [src.client.address]", "access")
+	logTheThing("diary", null, src, "Login: [constructTarget(src,"diary")] from [src.client.address]", "access")
 	src.lastKnownIP = src.client.address
 	src.computer_id = src.client.computer_id
 	if (config.log_access)
@@ -403,25 +409,29 @@
 				continue
 			else if (M && M.client && M.client.address == src.client.address)
 				if(!src.client.holder && !M.client.holder)
-					logTheThing("admin", src, M, "has same IP address as %target%")
-					logTheThing("diary", src, M, "has same IP address as %target%", "access")
+					logTheThing("admin", src, M, "has same IP address as [constructTarget(M,"admin")]")
+					logTheThing("diary", src, M, "has same IP address as [constructTarget(M,"diary")]", "access")
 					if (IP_alerts)
-						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name(src)] has the same IP address as [key_name(M)]</font>")
+						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)]</span>")
 			else if (M && M.lastKnownIP && M.lastKnownIP == src.client.address && M.ckey != src.ckey && M.key)
 				if(!src.client.holder && !M.client.holder)
-					logTheThing("diary", src, M, "has same IP address as %target% did (%target% is no longer logged in).", "access")
+					logTheThing("diary", src, M, "has same IP address as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", "access")
 					if (IP_alerts)
-						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name(src)] has the same IP address as [key_name(M)] did ([key_name(M)] is no longer logged in).</font>")
+						message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same IP address as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
 			if (M && M.client && M.client.computer_id == src.client.computer_id)
-				logTheThing("admin", src, M, "has same computer ID as %target%")
-				logTheThing("diary", src, M, "has same computer ID as %target%", "access")
-				message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name(src)] has the same <font color='red'><B>computer ID</B><font color='blue'> as [key_name(M)]</font>")
-				SPAWN_DBG(0) alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+				logTheThing("admin", src, M, "has same computer ID as [constructTarget(M,"admin")]")
+				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")]", "access")
+				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B><font color='blue'> as [key_name(M)]</span>")
+				SPAWN_DBG(0)
+					if(M.lastKnownIP == src.client.address)
+						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 			else if (M && M.computer_id && M.computer_id == src.client.computer_id && M.ckey != src.ckey && M.key)
-				logTheThing("diary", src, M, "has same computer ID as %target% did (%target% is no longer logged in).", null, "access")
+				logTheThing("diary", src, M, "has same computer ID as [constructTarget(M,"diary")] did ([constructTarget(M,"diary")] is no longer logged in).", null, "access")
 				logTheThing("admin", M, null, "is no longer logged in.")
-				message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name(src)] has the same <font color='red'><B>computer ID</B><font color='blue'> as [key_name(M)] did ([key_name(M)] is no longer logged in).</font>")
-				SPAWN_DBG(0) alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+				message_admins("<span class='alert'><B>Notice: </B></span><span class='internal'>[key_name(src)] has the same </span><span class='alert'><B>computer ID</B></span><span class='internal'> as [key_name(M)] did ([key_name(M)] is no longer logged in).</span>")
+				SPAWN_DBG(0)
+					if(M.lastKnownIP == src.client.address)
+						alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 /*  don't get me wrong this was awesome but it's leading to false positives now and we stopped caring about that guy
 	var/evaderCheck = copytext(lastKnownIP,1, findtext(lastKnownIP, ".", 5))
 	if (evaderCheck in list("174.50", "69.245", "71.228", "69.247", "71.203", "98.211", "68.53"))
@@ -614,9 +624,9 @@
 				tmob.set_loc(oldloc)
 
 				if (istype(tmob.loc, /turf/space))
-					logTheThing("combat", src, tmob, "trades places with (Help Intent) %target%, pushing them into space.")
+					logTheThing("combat", src, tmob, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into space.")
 				else if (locate(/obj/hotspot) in tmob.loc)
-					logTheThing("combat", src, tmob, "trades places with (Help Intent) %target%, pushing them into a fire.")
+					logTheThing("combat", src, tmob, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into a fire.")
 				deliver_move_trigger("swap")
 				tmob.deliver_move_trigger("swap")
 				src.now_pushing = 0
@@ -644,20 +654,20 @@
 			if (victim.buckled && !victim.buckled.anchored)
 				step(victim.buckled, t)
 			if (istype(victim.loc, /turf/space))
-				logTheThing("combat", src, victim, "pushes %target% into space.")
+				logTheThing("combat", src, victim, "pushes [constructTarget(victim,"combat")] into space.")
 			else if (locate(/obj/hotspot) in victim.loc)
-				logTheThing("combat", src, victim, "pushes %target% into a fire.")
+				logTheThing("combat", src, victim, "pushes [constructTarget(victim,"combat")] into a fire.")
 
 		step(src,t)
 		AM.OnMove(src)
-		src.OnMove(src)
+		//src.OnMove(src) //dont do this here - this Bump() is called from a process_move which sould be calling onmove for us already
 		AM.glide_size = src.glide_size
 
 		//// MBC : I did this. this SUCKS. (pulling behavior is only applied in process_move... and step() doesn't trigger process_move nor is there anyway to override the step() behavior
 		// so yeah, i copy+pasted this from process_move.
 		if (old_loc != src.loc) //causes infinite pull loop without these checks. lol
 			var/list/pulling = list()
-			if (get_dist(old_loc, src.pulling) > 1 || src.pulling == src) // fucks sake
+			if ((get_dist(old_loc, src.pulling) > 1 && get_dist(src, src.pulling) > 1) || src.pulling == src) // fucks sake
 				src.pulling = null
 				//hud.update_pulling() // FIXME
 			else
@@ -796,7 +806,7 @@
 
 			if (length(unlocks))
 				for(var/datum/achievementReward/B in unlocks)
-					boutput(src, "<FONT FACE=Arial COLOR=gold SIZE=+1>You've unlocked a Reward : [B.title]!</FONT>")
+					boutput(src, "<span class=\"medal\"><FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT></span>")
 
 		else if (isnull(result) && ismob(src) && src.client)
 			return
@@ -909,7 +919,7 @@
 			continue
 		LI += W
 
-	return LI
+	.= LI
 
 /mob/living/carbon/human/get_unequippable()
 	var/list/obj/item/LI = list()
@@ -957,18 +967,17 @@
 			continue
 
 		LI += W
-	return LI
+	.= LI
 
 /mob/proc/findname(msg)
 	for(var/mob/M in mobs)
 		if (M.real_name == text("[]", msg))
-			return M
-	return 0
+			.= M
+	.= 0
 
 /mob/proc/movement_delay(var/atom/move_target = 0)
 	.= 2 + movement_delay_modifier
-	if (src.pushing)
-		. *= max (src.pushing.p_class, 1)
+	. *= max(src?.pushing.p_class, 1)
 
 /mob/proc/Life(datum/controller/process/mobs/parent)
 	return
@@ -1083,6 +1092,9 @@
 #undef DAMAGE
 
 /mob/proc/death(gibbed)
+	#ifdef COMSIG_MOB_DEATH
+	SEND_SIGNAL(src, COMSIG_MOB_DEATH)
+	#endif
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
 		message_admins("<span class='alert'>Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)].</span>")
@@ -1139,7 +1151,7 @@
 			if (held && !istype(held, /obj/ability_button))
 				W = held
 		if (!istype(W) || W.cant_drop) return
-		u_equip(W)
+
 		if (W && !W.qdeled)
 			if (istype(src.loc, /obj/vehicle))
 				var/obj/vehicle/V = src.loc
@@ -1156,8 +1168,10 @@
 
 			var/turf/T = get_turf(src.loc)
 			T.Entered(W)
+			u_equip(W)
 			.= 1
 		else
+			u_equip(W)
 			.= 0
 		if (origW)
 			origW.holding = null
@@ -1810,9 +1824,7 @@
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(2, 1, src.loc)
-	s.start()
+	elecflash(src.loc,exclude_center = 0)
 
 	if (animation)
 		animation.delaydispose()
@@ -2831,9 +2843,15 @@
 	.=0
 
 /mob/verb/pull_verb(atom/movable/A as mob|obj in view(1))
-	set name = "Pull"
+	set name = "Pull / Unpull"
 	set category = "Local"
-	A.pull()
+
+	if (src.pulling && src.pulling == A)
+		unpull_particle(src,src.pulling)
+		src.set_pulling(null)
+	else
+		A.pull()
+
 
 /mob/verb/examine_verb(atom/A as mob|obj|turf in view())
 	set name = "Examine"
@@ -2843,7 +2861,7 @@
 
 
 /mob/living/verb/interact_verb(obj/A as obj in view(1))
-	set name = "Pick Up / Interact"
+	set name = "Pick Up / Left Click"
 	set category = "Local"
 	A.interact(src)
 

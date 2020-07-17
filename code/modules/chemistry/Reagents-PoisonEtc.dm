@@ -196,7 +196,7 @@ datum
 
 				..()
 
-			on_mob_life_complete(var/mob/living/carbon/human/M)
+			on_mob_life_complete(var/mob/living/M)
 				if(M)
 					M.take_toxin_damage(damage_counter + (rand(2,3)))
 
@@ -1588,8 +1588,10 @@ datum
 			var/t4 = 26
 			var/t5 = 28
 			var/t6 = 30
-			var/t7 = 101
-			var/t8 = 103
+			var/t7 = 50
+			var/t8 = 51
+			var/t9 = 101
+			var/t10 = 103
 
 			pooled()
 				..()
@@ -1608,6 +1610,8 @@ datum
 				t6 = initial(t6)
 				t7 = initial(t7)
 				t8 = initial(t8)
+				t9 = initial(t9)
+				t10 = initial(t10)
 
 
 			//MBC : you may be wondering why this looks so weird
@@ -1655,7 +1659,6 @@ datum
 					t4 = 0
 					H.show_text("<font size=+2><B>IT HURTS!!</B></font>","red")
 					H.emote("scream")
-					H.drowsyness = max(H.drowsyness,30)
 					ai_was_active = H.ai_active
 					H.ai_init() //:getin:
 					H.ai_aggressive = 1 //Fak
@@ -1666,7 +1669,6 @@ datum
 				if (t6 && data >= t6)
 					t5 = 0
 					if (prob(33))
-						H.drowsyness = max(H.drowsyness,10)
 						H.make_jittery(600)
 						H.show_text("<B>[pick_string("chemistry_reagent_messages.txt", "madness3")]</B>", "red")
 
@@ -1679,31 +1681,33 @@ datum
 
 
 					//POWER UP!!
-
-					if (data > 50) //Oh dear
-						if (data == 51)
-							H.add_stam_mod_regen(src.id, 100) //Buff
-							H.show_text("You feel very buff!", "red")
-						if (prob(20)) //The AI is in control now.
-							H.change_misstep_chance(100 * mult)
-							H.show_text("You can't seem to control your legs!", "red")
-
-						if (prob(10)) //Stronk
-							H.show_text("You feel strong!", "red")
-							H.delStatus("weakened")
-							H.delStatus("stunned")
-							H.delStatus("paralysis")
-							H.delStatus("disorient")
-
 				if (t7 && data >= t7)
 					t6 = 0
+					H.add_stam_mod_regen(src.id, 100) //Buff
+					H.show_text("You feel very buff!", "red")
+
+				if (t8 && data >= t8)
+					t7 = 0
+
+					if (prob(20)) //The AI is in control now.
+						H.change_misstep_chance(100 * mult)
+						H.show_text("You can't seem to control your legs!", "red")
+
+					if (prob(10)) //Stronk
+						H.show_text("You feel strong!", "red")
+						H.delStatus("weakened")
+						H.delStatus("stunned")
+						H.delStatus("paralysis")
+						H.delStatus("disorient")
+
+				if (t9 && data >= t9)
+					t8 = 0
 					H.ai_suicidal = 1
 					H.show_text("Death... I can only stop this by dying...", "red")
 
-				if (t8 && data > t8)
-					t7 = 0
+				if (t10 && data > t10)
+					t9 = 0
 					if (prob(33))
-						H.drowsyness = max(H.drowsyness,10)
 						H.make_jittery(600)
 						H.show_text("<B>[pick_string("chemistry_reagent_messages.txt", "madness3")]</B>", "red")
 

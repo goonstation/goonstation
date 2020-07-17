@@ -874,9 +874,7 @@ About the new airlock wires panel:
 	if(powernets && powernets.len >= netnum)
 		PN = powernets[netnum]
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(5, 1, src)
-	s.start()
+	elecflash(user,power = 2)
 
 	var/shock_damage = 0
 	if(PN.avail > 750000)	//someone juiced up the grid enough, people going to die!
@@ -894,7 +892,7 @@ About the new airlock wires panel:
 	else
 		shock_damage = min(rand(20,45),rand(20,45))*prot
 
-//		message_admins("<span class='notice'><B>ADMIN: </B>DEBUG: shock_damage = [shock_damage] PN.avail = [PN.avail] user = [user] netnum = [netnum]</span>")
+//		message_admins("<span class='internal'><B>ADMIN: </B>DEBUG: shock_damage = [shock_damage] PN.avail = [PN.avail] user = [user] netnum = [netnum]</span>")
 
 	if (user.bioHolder.HasEffect("resist_electric") == 2)
 		var/healing = 0

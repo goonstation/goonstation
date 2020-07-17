@@ -323,7 +323,7 @@
 	icon_state = "shieldceon"
 
 	execute_ability()
-		var/obj/item/storage/belt/utility/ceshielded/C = the_item
+		var/obj/item/storage/belt/utility/prepared/ceshielded/C = the_item
 		C.toggle()
 		..()
 		//if(C.active) icon_state = "shieldceoff"
@@ -337,11 +337,29 @@
 
 	execute_ability()
 		var/obj/item/device/light/flashlight/J = the_item
-		if (ismob(J.loc))
-			J.light.attach(J.loc)
-		J.attack_self(the_mob)
-		if(J.on) icon_state = "off"
-		else  icon_state = "on"
+		J.toggle()
+		..()
+
+////////////////////////////////////////////////////////////
+
+/obj/ability_button/saw_toggle
+	name = "Toggle Saw"
+	icon_state = "saw"
+
+	execute_ability()
+		var/obj/item/saw/S = the_item
+		S.attack_self(usr)
+		..()
+
+////////////////////////////////////////////////////////////
+
+/obj/ability_button/cable_toggle
+	name = "Toggle auto-laying mode"
+	icon_state = "coil"
+
+	execute_ability()
+		var/obj/item/cable_coil/C = the_item
+		C.attack_self(usr)
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -352,8 +370,7 @@
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/space/engineer/J = the_item
-		if (ismob(J.loc))
-			J.light.attach(J.loc)
+
 		J.flashlight_toggle(the_mob)
 		if (J.on) src.icon_state = "off"
 		else  src.icon_state = "on"
@@ -367,8 +384,7 @@
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/hardhat/J = the_item
-		if (ismob(J.loc))
-			J.light.attach(J.loc)
+
 		J.flashlight_toggle(the_mob)
 		if (J.on) src.icon_state = "off"
 		else  src.icon_state = "on"

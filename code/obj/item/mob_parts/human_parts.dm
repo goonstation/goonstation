@@ -6,8 +6,9 @@
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	var/skin_tone = "#FFCC99"
 	var/mob/living/original_holder = null
-	stamina_damage = 30
-	stamina_cost = 15
+	force = 6
+	stamina_damage = 40
+	stamina_cost = 23
 	stamina_crit_chance = 5
 	skintoned = 1
 	module_research = list("medicine" = 1)
@@ -135,8 +136,8 @@
 		switch(remove_stage)
 			if(0)
 				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [holder.name]'s [src.name] securely with [tool].</span>", "<span class='alert'>You attach [holder.name]'s [src.name] securely with [tool].</span>")
-				logTheThing("combat", tool.the_mob, holder, "staples %target%'s [src.name] back on")
-				logTheThing("diary", tool.the_mob, holder, "staples %target%'s [src.name] back on", "combat")
+				logTheThing("combat", tool.the_mob, holder, "staples [constructTarget(holder,"combat")]'s [src.name] back on")
+				logTheThing("diary", tool.the_mob, holder, "staples [constructTarget(holder,"diary")]'s [src.name] back on", "combat")
 			if(1)
 				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] slices through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You slice through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>")
 			if(2)
@@ -147,8 +148,8 @@
 						src.remove(0)
 			if(3)
 				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] cuts through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>")
-				logTheThing("combat", tool.the_mob, holder, "removes %target%'s [src.name]")
-				logTheThing("diary", tool.the_mob, holder, "removes %target%'s [src.name]", "combat")
+				logTheThing("combat", tool.the_mob, holder, "removes [constructTarget(holder,"combat")]'s [src.name]")
+				logTheThing("diary", tool.the_mob, holder, "removes [constructTarget(holder,"diary")]'s [src.name]", "combat")
 				src.remove(0)
 
 		if(!isdead(holder))
@@ -160,7 +161,7 @@
 		return 1
 
 	remove(var/show_message = 1)
-		if (isnull(src.original_DNA) || isnull(src.original_fprints) && ismob(src.original_holder))
+		if ((isnull(src.original_DNA) || isnull(src.original_fprints)) && ismob(src.original_holder))
 			if (src.original_holder && src.original_holder.bioHolder) //ZeWaka: Fix for null.bioHolder
 				src.original_DNA = src.original_holder.bioHolder.Uid
 				src.original_fprints = src.original_holder.bioHolder.uid_hash

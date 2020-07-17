@@ -154,7 +154,7 @@ var/mutable_appearance/fluid_ma
 		src.floated_atoms.len = 0*/
 
 		if (isturf(src.loc))
-			src.loc:active_liquid = 0
+			src.loc:active_liquid = null
 
 		name = "fluid"
 		fluid_ma.icon_state = "15"
@@ -192,7 +192,7 @@ var/mutable_appearance/fluid_ma
 
 		if (isturf(src.loc))
 			var/turf/T = src.loc
-			T.active_liquid = 0
+			T.active_liquid = null
 		..()
 
 	get_desc(dist, mob/user)
@@ -477,6 +477,45 @@ var/mutable_appearance/fluid_ma
 
 			LAGCHECK(LAG_HIGH)
 
+	//sorry for copy paste, this ones a bit diff. return turfs of members nearby, stop at a number
+	proc/get_connected_fluid_members(var/stop_at = 0)
+		.= list()
+		if (!src.group) return list(src)
+
+		var/list/queue = list(src)
+		var/list/visited = list()
+		var/turf/t
+
+		var/obj/fluid/current_fluid = 0
+		var/visited_changed = 0
+		while(queue.len)
+			current_fluid = queue[1]
+			queue.Cut(1, 2)
+
+			for( var/dir in cardinal )
+				t = get_step( current_fluid, dir )
+				if (!VALID_FLUID_CONNECTION(current_fluid, t)) continue
+				if (t.active_liquid.group != src.group)
+					continue
+
+				//Old method : search through 'visited' for 't.active_liquid'. Probably slow when you have big groups!!
+				//if(t.active_liquid in visited) continue
+				//visited += t.active_liquid
+
+				//New method : Add the liquid at a specific index. To check whether the node has already been visited, just compare the len of the visited group from before + after the index has been set.
+				//Probably slower for small groups and much faster for large groups.
+				visited_changed = visited.len
+				visited["[t.active_liquid.x]_[t.active_liquid.y]_[t.active_liquid.z]"] = t.active_liquid
+				visited_changed = (visited.len != visited_changed)
+
+				if (visited_changed)
+					queue += t.active_liquid
+					.+= t
+
+					if (stop_at > 0 && length(.) >= stop_at)
+						return .
+
+
 	proc/try_connect_to_adjacent()
 		var/turf/t
 		for( var/dir in cardinal )
@@ -569,6 +608,8 @@ var/mutable_appearance/fluid_ma
 			src.update_perspective_overlays()
 
 	proc/update_perspective_overlays() // fancy perspective overlaying
+		return //TEMPORARILY DISABLED as it is causing shittons of runtimes ( ithink byond bug broke somethin??)
+		/*
 		if (icon_state != "15") return
 		var/blocked = 0
 		for( var/dir in cardinal )
@@ -596,6 +637,7 @@ var/mutable_appearance/fluid_ma
 				display_overlay("5",32,32) //northwest
 			else
 				clear_overlay("5") //northwest
+		*/
 
 	//perspective overlays
 	proc/display_overlay(var/overlay_key, var/pox, var/poy)
@@ -673,8 +715,6 @@ var/mutable_appearance/fluid_ma
 			src.show_submerged_image(0)
 			return
 	..()
-
-/mob/living/event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 
 /mob/living/EnteredFluid(obj/fluid/F as obj, atom/oldloc)
 	//SUBMERGED OVERLAYS

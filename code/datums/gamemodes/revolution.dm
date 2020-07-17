@@ -20,6 +20,7 @@
 	var/win_check_freq = 30 SECONDS //frequency of checks on the win conditions
 	var/round_limit = 21000 // 35 minutes (see post_setup)
 	var/endthisshit = 0
+	do_antag_random_spawns = 0
 
 /datum/game_mode/revolution/extended
 	name = "extended revolution"
@@ -187,7 +188,7 @@
 
 /datum/game_mode/revolution/proc/add_revolutionary(datum/mind/rev_mind)
 	.= 0
-	if (!rev_mind.current || (rev_mind.current && !rev_mind.current.client))
+	if (!rev_mind?.current || (rev_mind.current && !rev_mind.current.client))
 		return 0
 
 	var/list/uncons = src.get_unconvertables()
@@ -510,8 +511,8 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = EQUIPPED_WHILE_HELD
 	force = 7
-	stamina_damage = 25
-	stamina_cost = 14
+	stamina_damage = 30
+	stamina_cost = 15
 	stamina_crit_chance = 10
 	hitsound = 'sound/impact_sounds/Wood_Hit_1.ogg'
 

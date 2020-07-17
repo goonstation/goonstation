@@ -22,7 +22,7 @@
 		..()
 		icon_state = "[src.icon_tag]_deployer"
 
-	get_desc(dist)
+	get_desc()
 		. = "<br><span class='notice'>It looks [damage_words]</span>"
 
 
@@ -51,8 +51,8 @@
 		src.damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
 	*/
 
-	throw_at(atom/target, range, speed, list/params, turf/thrown_from)
-		..(target,range,speed)
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
+		..()
 		if(src.quick_deploy_fuel > 0)
 			var/turf/thrown_to = get_turf(src)
 			var/spawn_direction = get_dir(thrown_to,thrown_from)
@@ -357,6 +357,7 @@
 		//deployer.emagged = src.emagged
 		deployer.damage_words = src.damage_words
 		deployer.quick_deploy_fuel = src.quick_deploy_fuel
+		deployer.tooltip_rebuild = 1
 		return deployer
 
 

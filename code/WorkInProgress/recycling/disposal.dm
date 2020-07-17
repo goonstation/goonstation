@@ -196,6 +196,7 @@
 	desc = "An underfloor disposal pipe."
 	anchored = 1
 	density = 0
+	text = ""
 
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
@@ -341,7 +342,6 @@
 				SPAWN_DBG(1 DECI SECOND)
 					if(AM)
 						AM.throw_at(target, 5, 1)
-				LAGCHECK(LAG_REALTIME)
 
 			H.vent_gas(T)	// all gas vent to turf
 			pool(H)
@@ -885,6 +885,9 @@
 
 			if(doSuperLoaf)
 				for (var/atom/movable/O2 in H)
+					if(ismob(O2))
+						var/mob/M = O2
+						M.ghostize()
 					qdel(O2)
 					H.contents -= O2
 					O2 = null
@@ -980,7 +983,7 @@
 							poorSoul:emote("scream")
 						sleep(0.5 SECONDS)
 						poorSoul.death()
-						if ((poorSoul.mind || poorSoul.client) && !istype(poorSoul, /mob/living/carbon/human/npc))
+						if (poorSoul.mind || poorSoul.client)
 							poorSoul.ghostize()
 					else if (isitem(newIngredient))
 						var/obj/item/I = newIngredient
@@ -1239,11 +1242,10 @@
 	New()
 		..()
 
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("toggle", "toggleactivation")
-		mechanics.addInput("on", "activate")
-		mechanics.addInput("off", "deactivate")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleactivation")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", "activate")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", "deactivate")
 
 		SPAWN_DBG (10)
 			switch_dir = turn(dir, 90)
@@ -1285,11 +1287,6 @@
 		C.ptype = 11
 		C.dir = dir
 		C.update()
-
-		if (src.mechanics)
-			src.mechanics.wipeIncoming()
-			src.mechanics.wipeOutgoing()
-
 		qdel(src)
 
 //<Jewel>:
@@ -1515,8 +1512,7 @@
 	New()
 		..()
 
-		mechanics = new(src)
-		mechanics.master = src
+		AddComponent(/datum/component/mechanics_holder)
 
 		dpdir = dir | turn(dir, 180)
 
@@ -1559,18 +1555,18 @@
 			boutput(usr, "<span class='alert'>[MECHFAILSTRING]</span>")
 			return
 
-		mechanics.dropConnect(O, null, src_location, control_orig, control_new, params)
+		SEND_SIGNAL(src,_COMSIG_MECHCOMP_DROPCONNECT,O,usr)
 		return ..()
 
 	transfer(var/obj/disposalholder/H)
 		if (sense_mode == SENSE_TAG)
 			if (cmptext(H.mail_tag, sense_tag_filter))
-				mechanics.fireOutgoing(mechanics.newSignal(ckey(H.mail_tag)))
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,ckey(H.mail_tag))
 				flick("pipe-mechsense-detect", src)
 
 		else if (sense_mode == SENSE_OBJECT)
 			if (H.contents.len)
-				mechanics.fireOutgoing(mechanics.newSignal("1"))
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"1")
 				flick("pipe-mechsense-detect", src)
 
 		else
@@ -1582,7 +1578,7 @@
 							if (isdead(M))
 								continue
 
-						mechanics.fireOutgoing(mechanics.newSignal("1"))
+						SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"1")
 						flick("pipe-mechsense-detect", src)
 						break
 
@@ -1593,11 +1589,7 @@
 		C.ptype = 12
 		C.dir = dir
 		C.update()
-
-		if (src.mechanics)
-			src.mechanics.wipeIncoming()
-			src.mechanics.wipeOutgoing()
-
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		qdel(src)
 
 #undef SENSE_LIVING
@@ -1760,7 +1752,7 @@
 
 	var/message = null
 	var/mailgroup = null
-	var/mailgroup2 = null
+	var/mailgroup2 = null //Do not refactor into a list, maps override these properties
 	var/net_id = null
 	var/frequency = 1149
 	var/datum/radio_frequency/radio_connection
@@ -1847,7 +1839,6 @@
 			AM.pipe_eject(dir)
 			SPAWN_DBG(1 DECI SECOND)
 				AM.throw_at(target, src.throw_range, 1)
-			LAGCHECK(LAG_REALTIME)
 		H.vent_gas(src.loc)
 		pool(H)
 
@@ -1928,7 +1919,6 @@
 			AM.pipe_eject(dir)
 			SPAWN_DBG(1 DECI SECOND)
 				AM.throw_at(target, 10, 10) //This is literally the only thing that was changed in this, otherwise it booted them way too close.
-			LAGCHECK(LAG_REALTIME)
 		H.vent_gas(src.loc)
 		pool(H)
 

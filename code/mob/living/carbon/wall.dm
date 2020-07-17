@@ -11,10 +11,7 @@
 	density = 1
 	nodamage = 1
 	opacity = 1
-
-	//Life(datum/controller/process/mobs/parent)
-		//..(parent)
-		//return
+	use_stamina = 0
 
 	examine(mob/user)
 		. = list("<span class='notice'>*---------*</span>")

@@ -570,6 +570,9 @@
 				SPAWN_DBG(0.5 SECONDS)
 					hitmob = 0
 				var/mob/M = target
+				var/vehicular_manslaughter
+				if(M.health > 0)
+					vehicular_manslaughter = 1 //we first check if the person is not in crit before hit, if yes we qualify for vehicular manslaughter achievement
 				//M.changeStatus("stunned", 1 SECOND)
 				//M.changeStatus("weakened", 1 SECOND)
 				M.TakeDamageAccountArmor("chest", power * 1.3, 0, 0, DAMAGE_BLUNT)
@@ -578,6 +581,12 @@
 				SPAWN_DBG(0)
 					M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
 				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+				SPAWN_DBG(2.5 SECONDS)
+					if(M.health > 0)
+						vehicular_manslaughter = 0 //we now check if person was sent into crit after hit, if they did we get the achievement
+					if(vehicular_manslaughter && ishuman(M))
+						src.pilot.unlock_medal("Vehicular Manslaughter", 1)
+
 			else if(isturf(target) && power > 20)
 				if(istype(target, /turf/simulated/wall/r_wall || istype(target, /turf/simulated/wall/auto/reinforced)) && prob(power / 2))
 					return
@@ -908,7 +917,7 @@
 
 		I.set_loc(location)
 
-	logTheThing("vehicle", ejectee, src.name, "exits pod: <b>%target%</b>")
+	logTheThing("vehicle", ejectee, src.name, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
 
 ///////////////////////////////////////////////////////////////////////
 /////////Board Code  (also eject code lol)		//////////////////////
@@ -926,7 +935,7 @@
 		boutput(boarder, "<span class='alert'>You can't squeeze your wide cube body through the access door!</span>")
 		return
 
-	if(iscritter(boarder) && boarder:ghost_spawned)
+	if(ismobcritter(boarder) && boarder:ghost_spawned)
 		boutput(boarder, "<span class='alert'>You have no idea how to work this.</span>")
 		return
 
@@ -979,7 +988,7 @@
 
 	boutput(M, "<span class='hint'>You can also use the Space Bar to fire!</span>")
 
-	logTheThing("vehicle", M, src.name, "enters vehicle: <b>%target%</b>")
+	logTheThing("vehicle", M, src.name, "enters vehicle: <b>[constructTarget(src.name,"vehicle")]</b>")
 
 /obj/machinery/vehicle/proc/eject_occupants()
 	if(locked)
@@ -1130,7 +1139,7 @@
 /obj/machinery/vehicle/proc/handle_occupants_shipdeath()
 	for(var/mob/M in src)
 		boutput(M, "<span class='alert'><b>You are ejected from [src]!</b></span>")
-		logTheThing("vehicle", M, src.name, "is ejected from pod: <b>%target%</b> when it blew up!")
+		logTheThing("vehicle", M, src.name, "is ejected from pod: <b>[constructTarget(src.name,"vehicle")]</b> when it blew up!")
 		src.eject(M)
 		//var/atom/target = get_edge_target_turf(M,pick(alldirs))
 		//SPAWN_DBG(0)

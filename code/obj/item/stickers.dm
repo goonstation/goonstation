@@ -24,7 +24,7 @@
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		if (!A)
 			return
-		if (isarea(A) || istype(A, /obj/item/item_box))
+		if (isarea(A) || istype(A, /obj/item/item_box) || istype(A, /obj/screen) || istype(A, /obj/ability_button))
 			return
 		user.tri_message("<b>[user]</b> sticks [src] to [A]!",\
 		user, "You stick [src] to [user == A ? "yourself" : "[A]"]!",\
@@ -153,6 +153,7 @@
 
 			// words here, info there, result is same: SCREEAAAAAAAMMMMMMMMMMMMMMMMMMM
 			src.words += "[src.words ? "<br>" : ""]<b>\[[S.current_mode]\]</b>"
+			tooltip_rebuild = 1
 			boutput(user, "<span class='notice'>You stamp \the [src].</span>")
 			return
 
@@ -181,6 +182,7 @@
 				else
 					src.icon_state = "postit-writing"
 			src.words += "[src.words ? "<br>" : ""][t]"
+			tooltip_rebuild = 1
 			pen.in_use = 0
 			src.add_fingerprint(user)
 			return
@@ -446,7 +448,7 @@
 			src.camera.updateCoverage()
 		if (src.radio)
 			src.radio.invisibility = 101
-		logTheThing("combat", user, A, "places a spy sticker on %target% at [log_loc(user)].")
+		logTheThing("combat", user, A, "places a spy sticker on [constructTarget(A,"combat")] at [log_loc(user)].")
 
 		..()
 
@@ -562,4 +564,4 @@
 /obj/item/device/radio/spy/sec_only
 	locked_frequency = 1
 	frequency = R_FREQ_SECURITY
-	device_color = RADIOC_SECURITY
+	chat_class = RADIOCL_SECURITY

@@ -6,8 +6,9 @@
 /obj/item/clothing/head/bald_cap
 	name = "bald cap"
 	desc = "You can't tell the difference, Honest!"
-	icon_state= "baldcap"
-	item_state= "baldcap"
+	icon_state = "baldcap"
+	item_state = "baldcap"
+	seal_hair = 1
 
 /obj/item/scissors
 	name = "scissors"
@@ -16,7 +17,7 @@
 	icon_state = "scissors"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SNIPPING
-	force = 6.0
+	force = 8.0
 	w_class = 1.0
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
@@ -172,9 +173,9 @@
 		return
 
 	if (src.reagents && src.reagents.total_volume)
-		logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
+		logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 	else
-		logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
+		logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
 
 	if (!snip_surgery(M, user))
 		return ..()

@@ -72,7 +72,7 @@
 		/obj/item/tool/omnitool,
 		/obj/item/device/analyzer/healthanalyzer/borg,
 		/obj/item/device/reagentscanner,
-		/obj/item/device/analyzer/atmospheric,
+		/obj/item/device/analyzer/atmospheric/upgraded,
 		/obj/item/robojumper,
 	)
 
@@ -95,6 +95,7 @@
 		/obj/item/room_marker,
 		/obj/item/extinguisher,
 		/obj/item/rcd,
+		/obj/item/deconstructor/borg,
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
 		/datum/robot/module_tool_creator/item_type/amount/steel_rod,
 		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,
@@ -111,6 +112,7 @@
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,
 		/obj/item/rcd,
+		/obj/item/deconstructor/borg,
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
 		/datum/robot/module_tool_creator/item_type/amount/steel_rod,
 		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,

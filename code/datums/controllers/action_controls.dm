@@ -138,11 +138,28 @@ var/datum/action_controller/actions
 			A.attached_objs.Remove(border)
 		SPAWN_DBG(0.5 SECONDS)
 			if (bar)
+				bar.set_loc(null)
 				pool(bar)
 				bar = null
 			if (border)
+				border.set_loc(null)
 				pool(border)
 				border = null
+
+	disposing()
+		var/atom/movable/A = owner
+		if (owner != null && islist(A.attached_objs))
+			A.attached_objs.Remove(bar)
+			A.attached_objs.Remove(border)
+		if (bar)
+			bar.set_loc(null)
+			pool(bar)
+			bar = null
+		if (border)
+			border.set_loc(null)
+			pool(border)
+			border = null
+		..()
 
 	onEnd()
 		if (bar)
@@ -492,7 +509,7 @@ var/datum/action_controller/actions
 				source.show_text("You can't put \the [item] on [target] when it's attached to you!", "red")
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			logTheThing("combat", source, target, "tries to put \an [item] on %target% at at [log_loc(target)].")
+			logTheThing("combat", source, target, "tries to put \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
 			icon = item.icon
 			icon_state = item.icon_state
 			for(var/mob/O in AIviewers(owner))
@@ -513,7 +530,7 @@ var/datum/action_controller/actions
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			*/
-			logTheThing("combat", source, target, "tries to remove \an [I] from %target% at [log_loc(target)].")
+			logTheThing("combat", source, target, "tries to remove \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 			var/name = "something"
 			if (!hidden)
 				icon = I.icon
@@ -537,14 +554,14 @@ var/datum/action_controller/actions
 		if(item)
 			if(item == source.equipped() && !I)
 				if(target.can_equip(item, slot))
-					logTheThing("combat", source, target, "successfully puts \an [item] on %target% at at [log_loc(target)].")
+					logTheThing("combat", source, target, "successfully puts \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
 					for(var/mob/O in AIviewers(owner))
 						O.show_message("<span class='alert'><B>[source] puts [item] on [target]!</B></span>", 1)
 					source.u_equip(item)
 					target.force_equip(item, slot)
 		else if (I) //Wire: Fix for Cannot execute null.handle other remove().
 			if(I.handle_other_remove(source, target))
-				logTheThing("combat", source, target, "successfully removes \an [I] from %target% at [log_loc(target)].")
+				logTheThing("combat", source, target, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 				for(var/mob/O in AIviewers(owner))
 					O.show_message("<span class='alert'><B>[source] removes [I] from [target]!</B></span>", 1)
 
@@ -697,7 +714,7 @@ var/datum/action_controller/actions
 				else
 					ownerMob.u_equip(cuffs)
 
-			logTheThing("combat", ownerMob, target, "handcuffs %target% with [cuffs2 ? "[cuffs2]" : "[cuffs]"] at [log_loc(ownerMob)].")
+			logTheThing("combat", ownerMob, target, "handcuffs [constructTarget(target,"combat")] with [cuffs2 ? "[cuffs2]" : "[cuffs]"] at [log_loc(ownerMob)].")
 
 			if (cuffs2 && istype(cuffs2))
 				cuffs2.set_loc(target)
@@ -766,8 +783,7 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
-		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span class='alert'><B>[] attempts to remove the handcuffs!</B></span>", owner), 1)
+		owner.visible_message("<span class='alert'><B>[owner] attempts to remove the handcuffs!</B></span>")
 
 	onInterrupt(var/flag)
 		..()
@@ -778,8 +794,7 @@ var/datum/action_controller/actions
 		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = owner
 			H.handcuffs.drop_handcuffs(H)
-			for(var/mob/O in AIviewers(H))
-				O.show_message("<span class='alert'><B>[H] manages to remove the handcuffs!</B></span>", 1)
+			H.visible_message("<span class='alert'><B>[H] attempts to remove the handcuffs!</B></span>")
 			boutput(H, "<span class='notice'>You successfully remove your handcuffs.</span>")
 
 /datum/action/bar/private/icon/shackles_removal // Resisting out of shackles (Convair880).
@@ -898,13 +913,15 @@ var/datum/action_controller/actions
 			picker.working = 1
 			playsound(picker.loc, "sound/machines/whistlebeep.ogg", 50, 1)
 			out(owner, "<span class='notice'>\The [picker.name] starts to pick up \the [target].</span>")
-			if (picker.highpower && owner:cell)
+			if (picker.highpower && isghostdrone(owner))
+				var/mob/living/silicon/ghostdrone/our_drone = owner
+				if (!our_drone.cell) return
 				var/hpm_cost = 25 * (target.w_class * 2 + 1)
 				// Buff HPM by making it pick things up faster, at the expense of cell charge
 				// only allow it if more than double that power remains to keep it from bottoming out
-				if (UNLINT(owner:cell.charge >= hpm_cost * 2)) // i dont have the sanity to fix this
+				if (our_drone.cell.charge >= hpm_cost * 2)
 					duration /= 3
-					UNLINT(owner:cell.use(hpm_cost))
+					our_drone.cell.use(hpm_cost)
 
 	onInterrupt(var/flag) //They did something else while picking it up. I guess you dont have to do anything here unless you want to.
 		..()
@@ -1232,3 +1249,19 @@ var/datum/action_controller/actions
 		onEnd()
 			..()
 			target.try_equip_to_inventory_object(owner, over_object, params)
+
+	then_obj_click
+
+		var/atom/over_object
+		var/params
+
+		New(Target, Over, Parameters)
+			target = Target
+			over_object = Over
+			params = Parameters
+			..()
+
+		onEnd()
+			..()
+			if (can_reach(owner,over_object) && ismob(owner) && owner:equipped() == target)
+				over_object.attackby(target, owner, params)

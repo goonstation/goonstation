@@ -81,6 +81,7 @@
 	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
+	text = ""
 	var/on = 0 // 1 if on, 0 if off
 	var/brightness = 1.6 // luminosity when on, also used in power calculation
 	var/light_status = LIGHT_OK	// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
@@ -90,8 +91,7 @@
 	var/light_name = "light tube"				// the name of the inserted light item
 
 	var/fitting = "tube"
-	var/switchcount = 0	// count of number of times switched on/off
-											// this is used to calc the probability the light burns out
+	var/breakprob = 0	// probability the light burns out
 
 	var/wallmounted = 1
 	var/nostick = 1 //If set to true, overrides the autopositioning.
@@ -132,17 +132,44 @@
 				for (var/dir in cardinal)
 					T = get_step(src,dir)
 					if (istype(T,/turf/simulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
+						var/is_jen_wall = 0 // jen walls' ceilings are narrower, so let's move the lights a bit further inward!
+						if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
+							is_jen_wall = 1
 						src.dir = dir
 						if (dir == EAST)
-							src.pixel_x = 10
+							if (is_jen_wall)
+								src.pixel_x = 12
+							else
+								src.pixel_x = 10
 						else if (dir == WEST)
-							src.pixel_x = -10
+							if (is_jen_wall)
+								src.pixel_x = -12
+							else
+								src.pixel_x = -10
 						else if (dir == NORTH)
-							src.pixel_y = 21
+							if (is_jen_wall)
+								src.pixel_y = 24
+							else
+								src.pixel_y = 21
 						break
 				T = null
 
 
+
+//big standing lamps
+/obj/machinery/light/blamp
+	name = "big lamp"
+	icon = 'icons/obj/lighting.dmi'
+	desc = "A tall and thin lamp that rests comfortably on the floor."
+	anchored = 1
+	light_type = /obj/item/light/bulb
+	allowed_type = /obj/item/light/bulb
+	fitting = "bulb"
+	light_name = "light bulb"
+	brightness = 1.4
+	var/state
+	icon_state = "blamp1-off"
+	wallmounted = 0
 
 //regular light bulbs
 /obj/machinery/light/small
@@ -361,7 +388,7 @@
 /obj/machinery/light/worn
 	desc = "A rather old-looking lighting fixture."
 	brightness = 1
-	switchcount = 50 //break probability is ((50*50*0.01)/2) = 12.5% Azungar edit: ((50*50*0.01)/4) = 6.25%
+	breakprob = 6.25
 
 // the desk lamp
 /obj/machinery/light/lamp
@@ -480,7 +507,6 @@
 
 	// if the state changed, inc the switching counter
 	//if(src.light.enabled != on)
-	switchcount++
 
 	if (on)
 		light.enable()
@@ -495,15 +521,13 @@
 					message_admins("[key_name(rigger)]'s rigged bulb exploded in [src.loc.loc], [showCoords(src.x, src.y, src.z)].")
 					logTheThing("combat", rigger, null, "'s rigged bulb exploded in [rigger.loc.loc] ([showCoords(src.x, src.y, src.z)])")
 				explode()
-			if(on && prob( min(25, (switchcount*switchcount*0.01)/4) ) )  // reduced max probability from 60 to 25, cut sensitivity to switchcount in half. Azungar was here and switched it from divided by 2 to 4 as it was still too much.
+			if(on && prob(breakprob))
 				light_status = LIGHT_BURNED
 				icon_state = "[base_state]-burned"
 				on = 0
 				light.disable()
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(3, 1, src)
-				s.start()
-				logTheThing("station", null, null, "Light '[name]' burnt out (switchcount: [switchcount]) at ([showCoords(src.x, src.y, src.z)])")
+				elecflash(src,radius = 1, power = 2, exclude_center = 0)
+				logTheThing("station", null, null, "Light '[name]' burnt out (breakprob: [breakprob]) at ([showCoords(src.x, src.y, src.z)])")
 
 
 // attempt to set the light's on/off status
@@ -572,15 +596,15 @@
 				light_name = L.name
 				light_status = L.light_status
 				boutput(user, "You insert the [L.name].")
-				switchcount = L.switchcount
+				breakprob = L.breakprob
 				rigged = L.rigged
 				rigger = L.rigger
 				light.set_color(L.color_r, L.color_g, L.color_b)
 				user.u_equip(L)
 				qdel(L)
 				user.put_in_hand_or_drop(OL)
-				OL.switchcount = switchcount
-				switchcount = 0
+				OL.breakprob = breakprob
+				breakprob = 0
 				OL.update()
 				on = has_power()
 				update()
@@ -599,7 +623,7 @@
 				light_name = L.name
 				light_status = L.light_status
 				boutput(user, "You insert the [L.name].")
-				switchcount = L.switchcount
+				breakprob = L.breakprob
 				rigged = L.rigged
 				rigger = L.rigger
 				light.set_color(L.color_r, L.color_g, L.color_b)
@@ -625,6 +649,7 @@
 		if(prob(1+W.force * 5))
 
 			boutput(user, "You hit the light, and it smashes!")
+			logTheThing("station", user, null, "smashes a light at [log_loc(src)]")
 			for(var/mob/M in AIviewers(src))
 				if(M == user)
 					continue
@@ -660,11 +685,9 @@
 
 		boutput(user, "You stick \the [W.name] into the light socket!")
 		if(has_power() && (W.flags & CONDUCT))
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
 			if(!user.bioHolder.HasEffect("resist_electric"))
 				src.electrocute(user, 75, null, 20000)
+				elecflash(src,radius = 1, power = 2, exclude_center = 1)
 
 
 // returns whether this light has power
@@ -740,9 +763,9 @@
 	L.color_b = src.light.b
 	user.put_in_hand_or_drop(L)
 
-	// light item inherits the switchcount, then zero it
-	L.switchcount = switchcount
-	switchcount = 0
+	// light item inherits the breakprob, then zero it
+	L.breakprob = breakprob
+	breakprob = 0
 
 
 	L.update()
@@ -762,9 +785,7 @@
 	if(!nospark)
 		if(on)
 			logTheThing("station", null, null, "Light '[name]' was on and has been broken, spewing sparks everywhere ([showCoords(src.x, src.y, src.z)])")
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
+			elecflash(src,radius = 1, power = 2, exclude_center = 0)
 	light_status = LIGHT_BROKEN
 	SPAWN_DBG(0)
 		update()
@@ -900,7 +921,7 @@
 	w_class = 2
 	var/light_status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
-	var/switchcount = 0	// number of times switched
+	var/breakprob = 0	// number of times switched
 	m_amt = 60
 	var/rigged = 0		// true if rigged to explode
 	var/mob/rigger = null // mob responsible

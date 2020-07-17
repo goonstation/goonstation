@@ -62,7 +62,7 @@
 		if (linkedGun.heldItem) // Stupidity check for stripping item out of gun while projectile was in flight
 			if(ishuman(hit))
 				var/mob/living/carbon/human/M = hit
-				logTheThing("combat", linkedGun, M, " attempts to plant [linkedGun.heldItem] on %target%")
+				logTheThing("combat", linkedGun, M, " attempts to plant [linkedGun.heldItem] on [constructTarget(M,"combat")]")
 				switch (targetZone)
 					if ("chest")
 						if (M.wear_id || !M.equip_if_possible(linkedGun.heldItem, M.slot_wear_id)) // If already wearing ID or attempt to equip failed
@@ -152,6 +152,7 @@
 				if ("r_leg", "l_leg") // Tie shoelaces
 					if (M.shoes && M.shoes.laces == LACES_NORMAL)
 						M.shoes.laces = LACES_TIED
+						M.shoes.tooltip_rebuild = 1
 						if (istype(M.shoes, /obj/item/clothing/shoes/clown_shoes))
 							boutput(M, "Your shoes give out one sad, final squeak. Oh no.")
 							M.shoes.step_sound = null

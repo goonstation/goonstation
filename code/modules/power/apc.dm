@@ -24,6 +24,8 @@ var/zapLimiter = 0
 	req_access = list(access_engineering_power)
 	object_flags = CAN_REPROGRAM_ACCESS
 	netnum = -1		// set so that APCs aren't found as powernet nodes
+	text = ""
+	machine_registry_idx = MACHINES_POWER
 	var/area/area
 	var/areastring = null
 	var/autoname_on_spawn = 0 // Area.name
@@ -45,7 +47,7 @@ var/zapLimiter = 0
 	var/coverlocked = 1
 	var/aidisabled = 0
 	var/noalerts = 0
-	var/tdir = null
+	var/tmp/tdir = null
 	var/obj/machinery/power/terminal/terminal = null
 	var/lastused_light = 0
 	var/lastused_equip = 0
@@ -752,9 +754,7 @@ var/zapLimiter = 0
 	if(prot <= 0.29)
 		return 0
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(3, 1, src)
-	s.start()
+	elecflash(src,power = 2)
 
 	var/shock_damage = 0
 	if(cell_type == 2500)	//someone juiced up the grid enough, people going to die!

@@ -19,12 +19,18 @@
 	var/list/under_list = list()
 	var/list/headwear_list = list()
 
+#ifdef RP_MODE
+	var/const/setup_min_teams = 1
+	var/const/setup_max_teams = 2 //Maybe make this one?
+	var/current_max_gang_members = 3 //maximum number of gang members, not including the leader
+#else
 	var/const/setup_min_teams = 3
 	var/const/setup_max_teams = 5
+	var/current_max_gang_members = 5 //maximum number of gang members, not including the leader
+#endif
+
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-
-	var/current_max_gang_members = 5 //maximum number of gang members, not including the leader
 	//var/const/absolute_max_gang_members = 9
 
 	var/list/potential_hot_zones = null
@@ -55,7 +61,13 @@
 		if (!istype(player)) continue
 		if(player.ready) num_players++
 
-	var/num_teams = max(setup_min_teams, min(round((num_players) / 9), setup_max_teams)) //1 gang per 9 players
+#ifdef RP_MODE
+	//Using ternary since we're just choosing between 1 and 2 teams
+	var/num_teams = (num_players > 35) ? setup_max_teams : setup_min_teams
+	//var/num_teams = clamp(round((num_players-6) / 9), setup_min_teams, setup_max_teams) //third team at 29 pop
+#else
+	var/num_teams = clamp(round(num_players / 9), setup_min_teams, setup_max_teams) //1 gang per 9 players
+#endif
 
 	var/list/leaders_possible = get_possible_leaders(num_teams)
 	if (num_teams > leaders_possible.len)
@@ -149,13 +161,15 @@
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
 /datum/game_mode/gang/proc/equip_leader(mob/living/carbon/human/leader)
-	leader.verbs += /client/proc/set_gang_base
+	// leader.verbs += /client/proc/set_gang_base
+	var/datum/abilityHolder/holder = leader.add_ability_holder(/datum/abilityHolder/gang)
+	holder.addAbility(/datum/targetable/gang/set_gang_base)
 
 	//add gang channel to headset
 	if(leader.ears != null && istype(leader.ears,/obj/item/device/radio/headset))
 		var/obj/item/device/radio/headset/H = leader.ears
 		H.set_secure_frequency("g",leader.mind.gang.gang_frequency)
-		H.secure_colors["g"] = RADIOC_SYNDICATE
+		H.secure_classes["g"] = RADIOCL_SYNDICATE
 		boutput(leader, "Your headset has been tuned to your gang's frequency. Prefix a message with :g to communicate on this channel.")
 
 	return
@@ -596,6 +610,7 @@
 
 		return count
 
+// Deprecated by /datum/targetable/gang/set_gang_base
 /client/proc/set_gang_base()
 	set category = "Gang"
 	set name = "Set Gang Base"
@@ -1286,7 +1301,7 @@
 		if(target.ears != null && istype(target.ears,/obj/item/device/radio/headset))
 			var/obj/item/device/radio/headset/H = target.ears
 			H.set_secure_frequency("g",src.gang.gang_frequency)
-			H.secure_colors["g"] = RADIOC_SYNDICATE
+			H.secure_classes["g"] = RADIOCL_SYNDICATE
 			boutput(target, "Your headset has been tuned to your gang's frequency. Prefix a message with :g to communicate on this channel.")
 
 //		update_max_members()

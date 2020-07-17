@@ -353,7 +353,7 @@
 	user.visible_message("<span class='alert'><b>[user] gazes into the eyes of the [src.name]. The [src.name] gazes back!</b></span>") //And when you gaze long into an abyss, the abyss also gazes into you.
 	SPAWN_DBG(1 SECOND)
 		playsound(src.loc, "sound/voice/chanting.ogg", 25, 0, 0)
-		playsound(src.loc, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 25, 0, 0)
+		playsound(src.loc, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0)
 		SPAWN_DBG(1.5 SECONDS)
 			user.emote("scream")
 			SPAWN_DBG(1.5 SECONDS)
@@ -1089,7 +1089,7 @@
 					"You try to give [src] to [M], but [M] has no fingers to put [src] on!")
 					return
 
-				else if (iscritter(M))
+				else if (ismobcritter(M))
 					var/mob/living/critter/C = M
 					if (C.hand_count > 0) // we got hands!  hands that things can be put onto!  er, into, I guess.
 						if (C.put_in_hand(src))
@@ -1512,16 +1512,18 @@
 	desc = "This hat looks patently ridiculous. Is this what passes for fashionable in the Commonwealth of Free Worlds?"
 	icon_state = "cwhat"
 	item_state = "cwhat"
+	seal_hair = 1
 
 /obj/item/clothing/head/fthat
 	name = "trader's headwear"
 	desc = "Why in the name of space would anyone trade with someone who wears a hat that looks this dumb? Yuck."
 	icon_state = "fthat"
 	item_state = "fthat"
+	seal_hair = 1
 
 /obj/item/clothing/gloves/handcomp
-	desc = "This is some sort of hand-mounted computer. Or it would be if it wasn't made out of cheap plastic and LEDs."
 	name = "Compudyne 0451 Handcomp"
+	desc = "This is some sort of hand-mounted computer. Or it would be if it wasn't made out of cheap plastic and LEDs."
 	icon_state = "handcomp"
 	item_state = "handcomp"
 	hide_prints = 0
@@ -1567,3 +1569,29 @@
 	desc = "a dress made for casual wear"
 	icon_state = "collardressb"
 	item_state = "collardressb"
+
+/obj/item/clothing/under/redtie
+	name = "collar shirt and red tie"
+	desc = "a pale dress shirt with a nice red tie to go with it"
+	icon_state = "red-tie"
+	item_state = "red-tie"
+
+/obj/item/clothing/suit/loosejacket
+	name = "loose jacket"
+	desc = "a loose and stylish jacket"
+	icon_state = "loose"
+	item_state = "loose"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/shoes/floppy
+	name = "floppy boots"
+	desc = "a pair of boots with very floppy design around the ankles"
+	icon_state = "floppy"
+	item_state = "floppy"
+
+/obj/item/clothing/suit/labcoatlong
+	name = "off-brand lab coat"
+	desc = "a long labcoat from some sort of supermarket"
+	icon_state = "labcoat-long"
+	item_state = "labcoat-long"
+	body_parts_covered = TORSO|LEGS|ARMS

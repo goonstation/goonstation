@@ -179,7 +179,9 @@
 	/obj/item/knife/butcher/predspear = 2,
 	/obj/item/gun/energy/laser_gun/pred = 2,
 	/obj/item/stimpack = 2,
-	/obj/item/storage/belt/wrestling = 2)
+	/obj/item/storage/belt/wrestling = 2,
+	/obj/item/storage/box/kendo_box = 1,
+	/obj/item/storage/box/kendo_box/hakama = 1)
 
 /obj/storage/closet/thunderdome/green
 	icon_state = "syndicate1"
@@ -191,7 +193,9 @@
 	/obj/item/knife/butcher/predspear = 2,
 	/obj/item/gun/energy/laser_gun/pred = 2,
 	/obj/item/stimpack = 2,
-	/obj/item/storage/belt/wrestling = 2)
+	/obj/item/storage/belt/wrestling = 2,
+	/obj/item/storage/box/kendo_box = 1,
+	/obj/item/storage/box/kendo_box/hakama = 1)
 
 /obj/storage/closet/electrical_supply
 	name = "electrical supplies closet"
@@ -204,6 +208,15 @@
 	desc = "A handy closet full of everything an aspiring apprentice welder could ever need."
 	spawn_contents = list(/obj/item/clothing/head/helmet/welding = 3,
 	/obj/item/weldingtool = 3)
+
+/obj/storage/closet/wrestling
+	name = "wrestling supplies closet"
+	desc = "A handy closet full of everything an aspiring fake showboater wrestler needs to launch his career."
+	spawn_contents = list(/obj/item/storage/belt/wrestling/fake = 3,
+	/obj/item/clothing/under/shorts/random = 3,
+	/obj/item/clothing/mask/wrestling/black = 1,
+	/obj/item/clothing/mask/wrestling/blue = 1,
+	/obj/item/clothing/mask/wrestling/green = 1)
 
 /obj/storage/closet/office
 	name = "office supply closet"

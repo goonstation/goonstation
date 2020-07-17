@@ -25,6 +25,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 	var/list/obj/decal/big_number/clock_num
 	var/list/obj/decal/big_number/red_num
 	var/list/obj/decal/big_number/blue_num
+	do_antag_random_spawns = 0
 
 	announce()
 		boutput(world, "<B>Welcome to the Space American Football League's Space Bowl LXXXVII!</B>")

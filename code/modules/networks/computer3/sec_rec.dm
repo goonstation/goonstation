@@ -50,7 +50,7 @@
 
 	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
 	var/setup_logdump_name = "seclog" //What name do we give our logdump textfile?
-	var/setup_mailgroup = "security" //The PDA mailgroup used when alerting security pdas to an arrest set.
+	var/setup_mailgroup = MGD_SECURITY //The PDA mailgroup used when alerting security pdas to an arrest set.
 	var/setup_mail_freq = 1149 //Which frequency do we transmit PDA alerts on?
 
 	initialize() //Forms "SECMATE" ascii art. Oh boy.

@@ -214,9 +214,7 @@
 		speak("THE TIME IS 01/01/1971.", 0)
 		sleep(7.5 SECONDS)
 		src.change_face("static")
-		var/datum/effects/system/spark_spread/E = unpool(/datum/effects/system/spark_spread)
-		E.set_up(3,0,get_turf(src))
-		E.start()
+		elecflash(src,power=6)
 		for(var/obj/machinery/light/L in get_area(src))
 			L.on = 1
 			L.broken()
@@ -377,7 +375,7 @@
 	icon_state = "l_leg-servo"
 	appearanceString = "servo"
 	max_health = 40
-	speedbonus = 0.1
+	robot_movement_modifier = /datum/movement_modifier/robotleg_left
 
 /obj/item/parts/robot_parts/leg/right/servotron
 	name = "servotron right leg"
@@ -385,7 +383,7 @@
 	icon_state = "r_leg-servo"
 	appearanceString = "servo"
 	max_health = 40
-	speedbonus = 0.1
+	robot_movement_modifier = /datum/movement_modifier/robotleg_right
 
 
 /obj/item/parts/robot_parts/arm/right/servotron
@@ -394,8 +392,8 @@
 	icon_state = "r_arm-servo"
 	appearanceString = "servo"
 	max_health = 40
-	speedbonus = 0.1
 	handlistPart = "armR-light"
+	robot_movement_modifier = /datum/movement_modifier/robot_part/head
 
 /obj/item/parts/robot_parts/arm/left/servotron
 	name = "servotron left arm"
@@ -403,8 +401,8 @@
 	icon_state = "l_arm-servo"
 	appearanceString = "servo"
 	max_health = 40
-	speedbonus = 0.1
 	handlistPart = "armL-light"
+	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_left
 
 /obj/item/parts/robot_parts/head/servotron
 	name = "servotron head"
@@ -412,7 +410,7 @@
 	icon_state = "head-servo"
 	appearanceString = "servo"
 	max_health = 87
-	speedbonus = 0.1
+	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_right
 
 /obj/item/parts/robot_parts/chest/servotron
 	name = "servotron chest"

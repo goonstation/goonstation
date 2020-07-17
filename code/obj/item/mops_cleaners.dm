@@ -19,6 +19,7 @@ WET FLOOR SIGN
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 10
+	tooltip_flags = REBUILD_DIST | REBUILD_SPECTRO
 
 /obj/item/spraybottle/New()
 	var/datum/reagents/R = new/datum/reagents(100) // cogwerks - lowered from 1000 (what the hell) to 100
@@ -206,14 +207,14 @@ WET FLOOR SIGN
 					continue
 				D.reagents.reaction(T)
 				if (ismob(T))
-					logTheThing("combat", user, T, "'s spray hits %target% [log_reagents] at [log_loc(user)].")
+					logTheThing("combat", user, T, "'s spray hits [constructTarget(T,"combat")] [log_reagents] at [log_loc(user)].")
 				D.reagents.remove_any(1)
 			if (!D.reagents.total_volume)
 				break
 			sleep(0.3 SECONDS)
 		qdel(D)
 	var/turf/logTurf = get_turf(D)
-	logTheThing("combat", user, logTurf, "sprays [src] at %target% [log_reagents] at [log_loc(user)].")
+	logTheThing("combat", user, logTurf, "sprays [src] at [constructTarget(logTurf,"combat")] [log_reagents] at [log_loc(user)].")
 
 	return
 
@@ -241,7 +242,7 @@ WET FLOOR SIGN
 	throw_range = 10
 	w_class = 3.0
 	flags = FPRINT | TABLEPASS
-	stamina_damage = 35
+	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 10
 
@@ -609,7 +610,7 @@ WET FLOOR SIGN
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 	stamina_damage = 15
-	stamina_cost = 15
+	stamina_cost = 4
 	stamina_crit_chance = 10
 
 	New()

@@ -106,6 +106,8 @@
 
 	// This returns the time left in seconds
 	proc/timeleft()
+		if(!ticker)
+			return 0
 		var/timeleft = src.time_until_payday - ticker.round_elapsed_ticks
 
 		// TODO move this into process or something, currently it gets checked in mob/Stat
@@ -423,6 +425,7 @@
 	var/temp = null
 	var/printing = null
 	var/can_change_id = 0
+	var/payroll_rate_limit_time = 0 //for preventing coammand message spam
 
 	attack_ai(mob/user as mob)
 		return src.attack_hand(user)
@@ -568,6 +571,11 @@
 						boutput(usr, "<span class='notice'>$[t1] added to [R.fields["name"]]'s account from station budget.</span>")
 					else boutput(usr, "<span class='alert'>Error selecting withdraw/deposit mode.</span>")
 				else if(href_list["payroll"])
+					if(world.time >= src.payroll_rate_limit_time)
+						src.payroll_rate_limit_time = world.time + (10 SECONDS)
+					else //slow the fuck down cowboy
+						boutput(usr, "<span class='alert'>Nanotrasen policy forbids the modification station payroll status more than once every ten seconds!</span>")
+						return
 					if (wagesystem.pay_active)
 						wagesystem.pay_active = 0
 						command_alert("The payroll has been suspended until further notice. No further wages will be paid until the payroll is resumed.","Payroll Announcement")

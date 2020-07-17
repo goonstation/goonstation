@@ -49,8 +49,8 @@
 /////////////////////////////////////////
 
 /datum/targetable/flockmindAbility/spawnEgg
-	name = "Spawn Egg"
-	desc = "Spawn an egg where you are, and from there, begin."
+	name = "Spawn Rift"
+	desc = "Spawn an rift where you are, and from there, begin."
 	icon_state = "spawn_egg"
 	targeted = 0
 	cooldown = 0
@@ -217,7 +217,7 @@
 		if(R && R.listening)
 			// your headset's on, you're fair game!!
 			targets += M
-	if(targets.len > 1)
+	if(targets.len >= 1)
 		playsound(get_turf(holder.owner), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
 		boutput(holder.owner, "<span class='notice'>You transmit the worst static you can weave into the headsets around you.</span>")
 		for(var/mob/living/M in targets)
@@ -255,7 +255,7 @@
 				R = M.find_in_equipment(/obj/item/device/radio)
 		if(R)
 			message = html_encode(input("What would you like to transmit to [M.name]?", "Transmission", "") as text)
-			logTheThing("say", usr, target, "Narrowbeam Transmission to %target%: [message]")
+			logTheThing("say", usr, target, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			var/flockName = "--.--"
 			var/mob/living/intangible/flock/flockmind/F = holder.owner
@@ -271,7 +271,7 @@
 	else if(istype(target, /obj/item/device/radio))
 		R = target
 		message = html_encode(input("What would you like to broadcast to [R]?", "Transmission", "") as text)
-		logTheThing("say", usr, target, "Narrowbeam Transmission to %target%: [message]")
+		logTheThing("say", usr, target, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 		//set up message

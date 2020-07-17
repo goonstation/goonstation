@@ -63,12 +63,15 @@
 	var/organ_data = null
 	var/interesting_data = null
 
-	if (ishuman(M))
-		var/mob/living/carbon/human/H = M
+	var/isliving = isliving(M)
+	var/ishuman = ishuman(M)
+
+	if (isliving)
+		var/mob/living/L = M
 
 		if (blood_system)
 			var/bp_col
-			switch (H.blood_pressure["total"])
+			switch (L.blood_pressure["total"])
 				if (-INFINITY to 374) // very low (90/60)
 					bp_col = "red"
 				if (375 to 414) // low (100/65)
@@ -79,97 +82,95 @@
 					bp_col = "#CC7A1D"
 				if (666 to INFINITY) // very high (160/100)
 					bp_col = "red"
-			if (isdead(H))
+			if (isdead(L))
 				blood_data = "Blood Pressure: <span class='alert'>NO PULSE</span>"
 			else
-				blood_data = "Blood Pressure: <span style='color:[bp_col]'>[H.blood_pressure["rendered"]] ([H.blood_pressure["status"]])</span>"
+				blood_data = "Blood Pressure: <span style='color:[bp_col]'>[L.blood_pressure["rendered"]] ([L.blood_pressure["status"]])</span>"
 			if (verbose_reagent_info)
-				if (isvampire(H)) // Added a pair of vampire checks here (Convair880).
+				if (isvampire(L)) // Added a pair of vampire checks here (Convair880).
 					blood_data += " | Blood level: <span style='color:#138015'>500 units</span>"
 				else
-					blood_data += " | Blood level: <span style='color:[bp_col]'>[H.blood_pressure["total"]] unit[s_es(H.blood_pressure["total"])]</span>"
-					if (H.bleeding)
-						blood_data += " | Blood loss: <span class='alert'>[H.bleeding] unit[s_es(H.bleeding)]</span>"
-			else if (!isvampire(H))
-				switch (H.bleeding)
+					blood_data += " | Blood level: <span style='color:[bp_col]'>[L.blood_pressure["total"]] unit[s_es(L.blood_pressure["total"])]</span>"
+					if (L.bleeding)
+						blood_data += " | Blood loss: <span class='alert'>[L.bleeding] unit[s_es(L.bleeding)]</span>"
+			else if (!isvampire(L))
+				switch (L.bleeding)
 					if (1 to 3)
 						blood_data += " | <span class='alert'><B>Minor bleeding wounds detected</B></span>"
 					if (4 to 6)
 						blood_data += " | <span class='alert'><B>Bleeding wounds detected</B></span>"
 					if (7 to INFINITY)
 						blood_data += " | <span class='alert'><B>Major bleeding wounds detected</B></span>"
-			if ((H.implant && H.implant.len > 0) || H.chest_item != null)
-				var/bad_stuff = 0
-				for (var/obj/item/implant/I in H)
+
+
+			var/bad_stuff = 0
+			if (L.implant && L.implant.len > 0)
+				for (var/obj/item/implant/I in L)
 					if (istype(I, /obj/item/implant/projectile))
 						bad_stuff ++
+
+			if (ishuman)
+				var/mob/living/carbon/human/H = L
 				if(H.chest_item != null) // If item is in chest, add one
 					bad_stuff ++
 				if (bad_stuff)
 					blood_data += " | <span class='alert'><B>Foreign object[s_es(bad_stuff)] detected</B></span>"
 				if(H.chest_item != null) // State that large foreign object is located in chest
 					blood_data += " | <span class='alert'><B>Sizable foreign object located below sternum</B></span>"
-
-		if (H.pathogens.len)
-			pathogen_data = "<span class='alert'>Scans indicate the presence of [H.pathogens.len > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.</span>"
-			var/list/therapy = list()
-			var/remissive = 0
-			for (var/uid in H.pathogens)
-				var/datum/pathogen/P = H.pathogens[uid]
-				if (P.in_remission)
-					remissive ++
-				if (!(P.suppressant.therapy in therapy))
-					therapy += P.suppressant.therapy
-			var/count_part
-			if (!remissive)
-				count_part = "None of them appear"
-			else if (remissive == 1)
-				count_part = "One pathogen appears"
 			else
-				count_part = "[remissive] of them appear"
-			pathogen_data += "<br>&emsp;<span class='alert'>[count_part] to be in a remissive state.</span>"
-			pathogen_data += "<br><span style='font-weight:bold'>Suggested pathogen suppression therapies: [jointext(therapy, ", ")]."
+				if (bad_stuff)
+					blood_data += " | <span class='alert'><B>Foreign object[s_es(bad_stuff)] detected</B></span>"
 
-		if (H.get_organ("brain"))
-			if (H.get_brain_damage() >= 100)
-				brain_data = "<span class='alert'>Subject is braindead.</span>"
-			else if (H.get_brain_damage() >= 60)
-				brain_data = "<span class='alert'>Severe brain damage detected. Subject likely unable to function well.</span>"
-			else if (H.get_brain_damage() >= 10)
-				brain_data = "<span class='alert'>Significant brain damage detected. Subject may have had a concussion.</span>"
-		else
-			brain_data = "<span class='alert'>Subject has no brain.</span>"
+		if (ishuman)
+			var/mob/living/carbon/human/H = M
+			if (H.pathogens.len)
+				pathogen_data = "<span class='alert'>Scans indicate the presence of [H.pathogens.len > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.</span>"
+				for (var/uid in H.pathogens)
+					var/datum/pathogen/P = H.pathogens[uid]
+					pathogen_data += "<br>&emsp;<span class='alert'>Strain [P.name] seems to be in stage [P.stage]. Suggested suppressant: [P.suppressant.therapy].</span>."
+					if (P.in_remission)
+						pathogen_data += "<br>&emsp;&emsp;<span class='alert'>It appears to be in remission.</span>."
 
-		// if (!H.get_organ("heart"))
-		// 	heart_data = "<span class='alert'>Subject has no heart.</span>"
-		if (organ_scan)
-			var/organ_data1 = null
-			var/obfuscate = (disease_detection != 255 ? 1 : 0)		//this is so admin check_health verb see exact numbs, scanners don't. Can remove, not exactly necessary, but thought they might want it.
-
-			organ_data1 += organ_health_scan("heart", H, obfuscate)
-			// organ_data1 += organ_health_scan("brain", H, obfuscate) //Might want, might not. will be slightly more accurate than current brain damage scan
-
-			organ_data1 += organ_health_scan("left_lung", H, obfuscate)
-			organ_data1 += organ_health_scan("right_lung", H, obfuscate)
-
-			organ_data1 += organ_health_scan("left_kidney", H, obfuscate)
-			organ_data1 += organ_health_scan("right_kidney", H, obfuscate)
-			organ_data1 += organ_health_scan("liver", H, obfuscate)
-			organ_data1 += organ_health_scan("stomach", H, obfuscate)
-			organ_data1 += organ_health_scan("intestines", H, obfuscate)
-			organ_data1 += organ_health_scan("spleen", H, obfuscate)
-			organ_data1 += organ_health_scan("pancreas", H, obfuscate)
-			organ_data1 += organ_health_scan("appendix", H, obfuscate)
-
-			//Don't give organ readings for Vamps.
-			if (organ_data1 && !isvampire(H))
-				organ_data = "<span style='color:purple'><b>Internal Injuries:</b></span>"
-				organ_data += organ_data1
+			if (H.get_organ("brain"))
+				if (H.get_brain_damage() >= 100)
+					brain_data = "<span class='alert'>Subject is braindead.</span>"
+				else if (H.get_brain_damage() >= 60)
+					brain_data = "<span class='alert'>Severe brain damage detected. Subject likely unable to function well.</span>"
+				else if (H.get_brain_damage() >= 10)
+					brain_data = "<span class='alert'>Significant brain damage detected. Subject may have had a concussion.</span>"
 			else
-				organ_data = "<span style='color:purple'><b>Scans indicate organs are in perfect health.</b></span>"
-			//Joke in case there is no organHolder
-			if (!H.organHolder)
-				organ_data = "<span class='alert'>Subject has no organs. Veeeerrrry curious.</span>"
+				brain_data = "<span class='alert'>Subject has no brain.</span>"
+
+			// if (!H.get_organ("heart"))
+			// 	heart_data = "<span class='alert'>Subject has no heart.</span>"
+			if (organ_scan)
+				var/organ_data1 = null
+				var/obfuscate = (disease_detection != 255 ? 1 : 0)		//this is so admin check_health verb see exact numbs, scanners don't. Can remove, not exactly necessary, but thought they might want it.
+
+				organ_data1 += organ_health_scan("heart", H, obfuscate)
+				// organ_data1 += organ_health_scan("brain", H, obfuscate) //Might want, might not. will be slightly more accurate than current brain damage scan
+
+				organ_data1 += organ_health_scan("left_lung", H, obfuscate)
+				organ_data1 += organ_health_scan("right_lung", H, obfuscate)
+
+				organ_data1 += organ_health_scan("left_kidney", H, obfuscate)
+				organ_data1 += organ_health_scan("right_kidney", H, obfuscate)
+				organ_data1 += organ_health_scan("liver", H, obfuscate)
+				organ_data1 += organ_health_scan("stomach", H, obfuscate)
+				organ_data1 += organ_health_scan("intestines", H, obfuscate)
+				organ_data1 += organ_health_scan("spleen", H, obfuscate)
+				organ_data1 += organ_health_scan("pancreas", H, obfuscate)
+				organ_data1 += organ_health_scan("appendix", H, obfuscate)
+
+				//Don't give organ readings for Vamps.
+				if (organ_data1 && !isvampire(H))
+					organ_data = "<span style='color:purple'><b>Internal Injuries:</b></span>"
+					organ_data += organ_data1
+				else
+					organ_data = "<span style='color:purple'><b>Scans indicate organs are in perfect health.</b></span>"
+				//Joke in case there is no organHolder
+				if (!H.organHolder)
+					organ_data = "<span class='alert'>Subject has no organs. Veeeerrrry curious.</span>"
 
 
 	var/datum/statusEffect/simpledot/radiation/R = M.hasStatus("radiation")
@@ -193,7 +194,7 @@
 			if (total_amt)
 				reagent_data = "<span class='notice'>Bloodstream Analysis located [total_amt] units of rejuvenation chemicals.</span>"
 
-	if (!ishuman(M)) // vOv
+	if (!ishuman) // vOv
 		if (M.get_brain_damage() >= 100)
 			brain_data = "<span class='alert'>Subject is braindead.</span>"
 		else if (M.get_brain_damage() >= 60)
@@ -386,7 +387,7 @@
 				forensic_data += "<br><span class='notice'>[wounds] gunshot [wounds == 1 ? "wound" : "wounds"] detected.</span>"
 
 		if (H.fingerprints) // Left by grabbing or pulling people.
-			var/list/FFP = params2list(H:fingerprints)
+			var/list/FFP = H:fingerprints
 			for(var/i in FFP)
 				fingerprint_data += "<br><span class='notice'>Foreign fingerprint on [H]:</span> [i]"
 
@@ -464,7 +465,7 @@
 				*///fingerprint_data += "<br><span class='notice'>Unable to locate any fingerprints.</span>"
 //		else
 		if (A.fingerprints)
-			var/list/FP = params2list(A:fingerprints)
+			var/list/FP = A:fingerprints
 			for(var/i in FP)
 				fingerprint_data += "<br><span class='notice'>[i]</span>"
 

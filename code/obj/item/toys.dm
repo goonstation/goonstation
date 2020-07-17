@@ -191,7 +191,7 @@
 	throw_range = 5
 	contraband = 3
 	stamina_damage = 1
-	stamina_cost = 3
+	stamina_cost = 7
 	stamina_crit_chance = 1
 	var/bladecolor = "G"
 	var/sound_attackM1 = 'sound/weapons/male_toyattack.ogg'
@@ -227,9 +227,9 @@
 	throwforce = 1
 	throw_speed = 4
 	throw_range = 7
-	stamina_damage = 1
-	stamina_cost = 1
-	stamina_crit_chance = 1
+	stamina_damage = 0
+	stamina_cost = 0
+	stamina_crit_chance = 0
 	//mat_changename = 0
 	rand_pos = 1
 	var/patreon_prob = 8
@@ -446,7 +446,9 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/oranges,
 /datum/figure_info/sam,
 /datum/figure_info/beebo,
-/datum/figure_info/romillybartlesby)
+/datum/figure_info/romillybartlesby,
+/datum/figure_info/dillbehrt,
+/datum/figure_info/listelsheerfield)
 
 /datum/figure_info
 	var/name = "staff assistant"
@@ -799,6 +801,14 @@ var/list/figure_patreon_rarity = list(\
 		name = "\improper Romilly Bartlesby"
 		icon_state = "romillybartlesby"
 
+	dillbehrt
+		name = "\improper Dill Behrt"
+		icon_state = "dillbehrt"
+
+	listelsheerfield
+		name = "\improper Listel Sheerfield"
+		icon_state = "listelsheerfield"
+
 #ifdef XMAS
 	santa
 		name = "\improper Santa Claus"
@@ -882,7 +892,7 @@ var/list/figure_patreon_rarity = list(\
 	w_class = 2
 	force = 5
 	throwforce = 7
-	stamina_damage = 15
+	stamina_damage = 25
 	stamina_cost = 10
 	stamina_crit_chance = 5
 
@@ -908,8 +918,8 @@ var/list/figure_patreon_rarity = list(\
 	throwforce = 1
 	throw_speed = 4
 	throw_range = 7
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	var/cooldown = 0
 
@@ -935,8 +945,8 @@ var/list/figure_patreon_rarity = list(\
 	throwforce = 3
 	throw_speed = 3
 	throw_range = 5
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	var/redeemer = null
 	var/receiver = null

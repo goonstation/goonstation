@@ -47,11 +47,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/shoot_delay = 4
 
 	buildTooltipContent()
-		var/Tcontent = ..()
+		. = ..()
 		if(current_projectile)
-			Tcontent += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> Bullet Power: [current_projectile.power] - [current_projectile.ks_ratio * 100]% lethal"
-
-		return Tcontent
+			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> Bullet Power: [current_projectile.power] - [current_projectile.ks_ratio * 100]% lethal"
+		lastTooltipContent = .
 
 	New()
 		SPAWN_DBG(2 SECONDS)
@@ -208,7 +207,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 					user.next_click = max(user.next_click, world.time + user.l_hand:shoot_delay)
 				SPAWN_DBG(0.2 SECONDS)
 					user.l_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
-		else if(iscritter(user))
+		else if(ismobcritter(user))
 			var/mob/living/critter/M = user
 			var/list/obj/item/gun/guns = list()
 			for(var/datum/handHolder/H in M.hands)
@@ -465,6 +464,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return 1
 
 /obj/item/gun/on_spin_emote(var/mob/living/carbon/human/user as mob)
+	. = ..(user)
 	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
 		user.visible_message("<span class='alert'><b>[user] accidentally shoots [him_or_her(user)]self with [src]!</b></span>")
 		src.shoot_point_blank(user, user)

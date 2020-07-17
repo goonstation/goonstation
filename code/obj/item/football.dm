@@ -103,7 +103,7 @@
 
 	if (!src.head || !istype(src.head,/obj/item/clothing/head/helmet/football))
 		boutput(src, __red("Ouch! Feels like a properly designed helmet would come in handy."))
-		src.brainloss += 1 + power * 0.1
+		src.take_brain_damage(1 + power * 0.1)
 
 	for (var/mob/C in viewers(src))
 		shake_camera(C, 6, 1)
@@ -251,9 +251,9 @@
 
 
 
-/obj/item/football/throw_at(atom/target, range, speed)
+/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
 	src.icon_state = "football_air"
-	..(target, range, speed)
+	..()
 
 /obj/item/football/throw_impact(atom/hit_atom)
 	..(hit_atom)

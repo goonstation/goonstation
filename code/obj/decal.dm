@@ -1,4 +1,5 @@
 /obj/decal
+	text = ""
 	var/list/random_icon_states = list()
 	var/random_dir = 0
 

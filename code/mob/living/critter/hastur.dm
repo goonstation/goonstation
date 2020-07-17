@@ -28,6 +28,7 @@ var/HasturPresent = 0
 	var/lastdir = null
 
 	New()
+		..()
 		src.see_in_dark = SEE_DARK_FULL
 		northsouth = icon('icons/misc/hastur.dmi')
 		eastwest = icon('icons/misc/hastur.dmi')
@@ -39,7 +40,6 @@ var/HasturPresent = 0
 		abilityHolder.addAbility(/datum/targetable/hastur/insanityaura)
 		abilityHolder.addAbility(/datum/targetable/hastur/masswhisper)
 		abilityHolder.addAbility(/datum/targetable/hastur/ancientinvisibility)
-		..()
 
 	Bump(atom/O)
 		. = ..()

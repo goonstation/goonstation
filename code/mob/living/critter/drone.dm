@@ -12,7 +12,7 @@
 	can_throw = 0
 	can_grab = 0
 	can_disarm = 0
-	blood_id = null
+	blood_id = "oil"
 	var/dying = 0
 	speechverb_say = "states"
 	speechverb_gasp = "states"
@@ -30,27 +30,26 @@
 		name = "[initial(name)] [drone_designation]-[rand(num_max)]"
 
 	Bump(atom/movable/AM)
+		if(smashes_shit)
+			if(isobj(AM))
+				if (istype(AM, /obj/critter) || istype(AM, /obj/machinery/vehicle))
+					return
+				if(istype(AM, /obj/window))
+					var/obj/window/W = AM
+					W.health = 0
+					W.smash()
+				else if(istype(AM,/obj/grille))
+					var/obj/grille/G = AM
+					G.damage_blunt(30)
+				else if(istype(AM, /obj/table))
+					AM.meteorhit()
+				else if(istype(AM, /obj/foamedmetal))
+					AM.dispose()
+				else
+					AM.meteorhit()
+				playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
+				src.visible_message("<span class='alert'><B>[src]</B> smashes into \the [AM]!</span>")
 		..()
-		if(!smashes_shit) return
-
-		if(isobj(AM))
-			if (istype(AM, /obj/critter) || istype(AM, /obj/machinery/vehicle))
-				return
-			if(istype(AM, /obj/window))
-				var/obj/window/W = AM
-				W.health = 0
-				W.smash()
-			else if(istype(AM,/obj/grille))
-				var/obj/grille/G = AM
-				G.damage_blunt(30)
-			else if(istype(AM, /obj/table))
-				AM.meteorhit()
-			else if(istype(AM, /obj/foamedmetal))
-				AM.dispose()
-			else
-				AM.meteorhit()
-			playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
-			src.visible_message("<span class='alert'><B>[src]</B> smashes into \the [AM]!</span>")
 
 	proc/setup_loot_table()
 		loot_table = list(/obj/item/device/prox_sensor = 25)

@@ -26,6 +26,7 @@
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
+	var/list/hidden_verbs = null
 
 	var/datum/buildmode_holder/buildmode = null
 	var/lastbuildtype = 0
@@ -61,6 +62,8 @@
 	var/datum/reputations/reputations = null
 
 	var/list/datum/compid_info_list = list()
+
+	var/login_success = 0
 
 	perspective = EYE_PERSPECTIVE
 	// please ignore this for now thanks in advance - drsingh
@@ -115,6 +118,9 @@
 	return
 
 /client/Del()
+	if (player_capa && src.login_success)
+		player_cap_grace[src.ckey] = TIME + 2 MINUTES
+
 	if (current_state < GAME_STATE_FINISHED)
 		ircbot.event("logout", src.key)
 
@@ -136,68 +142,13 @@
 	Z_LOG_DEBUG("Client/New", "New connection from [src.ckey] from [src.address] via [src.connection]")
 	logTheThing("diary", null, src, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]", "access")
 
+	login_success = 0
+
 	if(findtext(src.key, "Telnet @"))
 		boutput(src, "Sorry, this game does not support Telnet.")
 		sleep(5 SECONDS)
 		del(src)
 		return
-
-	if (IsGuestKey(src.key))
-		if(!src.address || src.address == world.host)
-			world.log << ("Hello host or developer person! You're not logged into BYOND. Fix this so you can test your feature turned bug!")
-		SPAWN_DBG(0)//so, the below will only show if they're ingame so the spawn isn't a guarantee; for dev purposes shove an alert to solve some confusion. hence the above
-			var/gueststring = {"
-							<!doctype html>
-							<html>
-								<head>
-									<title>No guest logins allowed!</title>
-									<style>
-										h1, .banreason {
-											font-color:#F00;
-										}
-
-									</style>
-								</head>
-								<body>
-									<h1>No guest logins.</h1>
-									Don't forget to log in to your byond account prior to connecting to this server.
-								</body>
-							</html>
-						"}
-			src.Browse(gueststring, "window=getout")
-			if (src)
-				del(src)
-			return
-
-
-
-	//We're limiting connected players to a whitelist of ckeys (but let active admins in)
-	if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
-		//Key not in whitelist, show them a vaguely sassy message and boot them
-		if (!(src.ckey in whitelistCkeys))
-			SPAWN_DBG(0)
-				var/whitelistString = {"
-								<!doctype html>
-								<html>
-									<head>
-										<title>Server Whitelist Enabled</title>
-										<style>
-											h1, .banreason {
-												font-color:#F00;
-											}
-
-										</style>
-									</head>
-									<body>
-										<h1>Server whitelist enabled</h1>
-										This server is currently limiting connections to specific players, and you aren't one of them. Goodbye!
-									</body>
-								</html>
-							"}
-				src.Browse(whitelistString, "window=whiteout")
-				if (src)
-					del(src)
-				return
 
 	logTheThing("admin", src, null, " has connected.")
 
@@ -215,7 +166,7 @@
 	//src.chui = new /datum/chui(src)
 
 	//Should eliminate any local resource loading issues with chui windows
-	if (!cdn)
+	if (!cdn && !(!address || (world.address == src.address)))
 		var/list/chuiResources = list(
 			"browserassets/js/jquery.min.js",
 			"browserassets/js/jquery.nanoscroller.min.js",
@@ -229,75 +180,132 @@
 		)
 		src.loadResourcesFromList(chuiResources)
 
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
-	var/isbanned = checkBan(src.ckey, src.computer_id, src.address, record = 1)
-
-	if (isbanned)
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
-		logTheThing("diary", null, src, "Failed Login: %target% - Banned", "access")
-		if (announce_banlogin) message_admins("<span class='notice'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
-		SPAWN_DBG(0)
-			var/banstring = {"
-								<!doctype html>
-								<html>
-									<head>
-										<title>BANNED!</title>
-										<style>
-											h1, .banreason {
-												font-color:#F00;
-											}
-
-										</style>
-									</head>
-									<body>
-										<h1>You have been banned.</h1>
-										<span class='banreason'>Reason: [isbanned].</span><br>
-										If you believe you were unjustly banned, head to <a href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
-									</body>
-								</html>
-							"}
-			src.mob.Browse(banstring, "window=ripyou")
-
-			if (src)
-				del(src)
-			return
-
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
-
 	if (!istype(src.mob, /mob/new_player))
 		src.loadResources()
 
 /*
 	SPAWN_DBG(rand(4,18))
 		if(proxy_check(src.address))
-			logTheThing("diary", null, src, "Failed Login: %target% - Using a Tor Proxy Exit Node", "access")
-			if (announce_banlogin) message_admins("<span class='notice'>Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
+			logTheThing("diary", null, src, "Failed Login: [constructTarget(src,"diary")] - Using a Tor Proxy Exit Node", "access")
+			if (announce_banlogin) message_admins("<span class='internal'>Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
 			boutput(src, "You may not connect through TOR.")
 			SPAWN_DBG(0) del(src)
 			return
 */
 
-	if(player_capa)
-		if(total_clients() >= player_cap)
-			if (!src.holder)
-				alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
-				del(src)
-				return
+	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
+
+	..()
 
 	if (join_motd)
 		boutput(src, "<div class=\"motd\">[join_motd]</div>")
 
+	if (IsGuestKey(src.key))
+		if(!src.address || src.address == world.host)
+			world.log << ("Hello host or developer person! You're not logged into BYOND. Fix this so you can test your feature turned bug!")
+		var/gueststring = {"
+						<!doctype html>
+						<html>
+							<head>
+								<title>No guest logins allowed!</title>
+								<style>
+									h1, .banreason {
+										font-color:#F00;
+									}
+
+								</style>
+							</head>
+							<body>
+								<h1>Guest Login Denied</h1>
+								Don't forget to log in to your byond account prior to connecting to this server.
+							</body>
+						</html>
+					"}
+		src.mob.Browse(gueststring, "window=getout")
+		sleep(10)
+		if (src)
+			del(src)
+		return
+
+	//We're limiting connected players to a whitelist of ckeys (but let active admins in)
+	if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
+		//Key not in whitelist, show them a vaguely sassy message and boot them
+		if (!(src.ckey in whitelistCkeys))
+			var/whitelistString = {"
+							<!doctype html>
+							<html>
+								<head>
+									<title>Server Whitelist Enabled</title>
+									<style>
+										h1, .banreason {
+											font-color:#F00;
+										}
+
+									</style>
+								</head>
+								<body>
+									<h1>Server whitelist enabled</h1>
+									This server has a player whitelist ON. You are not on the whitelist and will now be forcibly disconnected.
+								</body>
+							</html>
+						"}
+			src.mob.Browse(whitelistString, "window=whiteout")
+			sleep(10)
+			if (src)
+				del(src)
+			return
+
+	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
+	var/isbanned = checkBan(src.ckey, src.computer_id, src.address, record = 1)
+
+	if (isbanned)
+		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
+		logTheThing("diary", null, src, "Failed Login: [constructTarget(src,"diary")] - Banned", "access")
+		if (announce_banlogin) message_admins("<span class='internal'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
+		var/banstring = {"
+							<!doctype html>
+							<html>
+								<head>
+									<title>BANNED!</title>
+									<style>
+										h1, .banreason {
+											font-color:#F00;
+										}
+
+									</style>
+								</head>
+								<body>
+									<h1>You have been banned.</h1>
+									<span class='banreason'>Reason: [isbanned].</span><br>
+									If you believe you were unjustly banned, head to <a href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
+								</body>
+							</html>
+						"}
+		src.mob.Browse(banstring, "window=ripyou")
+		sleep(10)
+		if (src)
+			del(src)
+		return
+
+	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
+
+	//admins and mentors can enter a server through player caps.
 	if (init_admin())
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
-		control_freak = 0	// heh
 	else if (player.mentor)
 		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
 		if (!src.holder)
 			src.verbs += /client/proc/toggle_mentorhelps
+	else if (player_capa && (total_clients_for_cap() >= player_cap) && (src.ckey in bypassCapCkeys))
+		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you are allowed to bypass the player cap!</span>")
+	else if (player_capa && (total_clients_for_cap() >= player_cap) && client_has_cap_grace(src))
+		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you were recently disconnected and were caught by the grace period!</span>")
+	else if(player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
+		boutput(src, "<span class='ooc adminooc'>I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
+		alert(src.mob,"I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL")
+		del(src)
+		return
 
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
-
-	..()
 	// moved preferences from new_player so it's accessible in the client scope
 	if (!preferences)
 		preferences = new
@@ -309,9 +317,7 @@
 	SPAWN_DBG(0) // to not lock up spawning process
 		if (IsGuestKey(src.key))
 			src.has_contestwinner_medal = 0
-		else if (!config)
-			src.has_contestwinner_medal = 0
-		else if (!config.medal_hub || !config.medal_password)
+		else if (!config || !config.medal_hub || !config.medal_password)
 			src.has_contestwinner_medal = 0
 		else
 			src.has_contestwinner_medal = world.GetMedal("Too Cool", src.key, config.medal_hub, config.medal_password)
@@ -344,14 +350,15 @@
 
 			//Load the preferences up here instead.
 			if(!preferences.savefile_load(src))
+#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 				//preferences.randomizeLook()
 				preferences.ShowChoices(src.mob)
 				src.mob.Browse(grabResource("html/tgControls.html"),"window=tgcontrolsinfo;size=600x400;title=TG Controls Help")
 				boutput(src, "<span class='alert'>Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!</span>")
 				//hey maybe put some 'new player mini-instructional' prompt here
 				//ok :)
+#endif
 				is_newbie = 1
-
 			else if(!src.holder)
 				preferences.sanitize_name()
 
@@ -372,19 +379,18 @@
 				src.cmd_ass_day_rules()
 
 
-			if (src.byond_version < 513 || src.byond_build < 1500)
-				if (alert(src, "Please update BYOND to version 513! Would you like to be taken to the download page? Make sure to download the beta and not the stable release.", "ALERT", "Yes", "No") == "Yes")
+			if (src.byond_version < 513 || src.byond_build < 1526)
+				if (alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", "Yes", "No") == "Yes")
 					src << link("http://www.byond.com/download/")
 				else
 					alert(src, "You won't be able to play without updating, sorry!")
 					del(src)
 					return
 
-
-			// if (src.byond_build == 1509)	//MBC : BAD CODE TO BANDAID A BROKEN BYOND THING. REMOVE THIS AS SOON AS LUMMOX FIXES  //ZeWaka: PART 2 BOOGALOOO
-			// 	if (alert(src, "Warning! The version of BYOND you are running (513.1509) is bugged. This is bad! Would you like a link to a .zip of the last working version?", "ALERT", "Yes", "No") == "Yes")
-			// 		src << link("http://www.byond.com/download/build/513/513.1510_byond.zip")
-
+// Let's throw it here, why not! -ZeWaka
+#if DM_BUILD < 1526 && !defined(SPACEMAN_DMM)
+#error Please update your BYOND version to the latest stable release.
+#endif
 
 		else
 			if (noir)
@@ -392,9 +398,6 @@
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
-
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - update_world")
-		src.update_world()
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()
@@ -409,23 +412,24 @@
 			src.cmd_rp_rules()
 #endif
 		//Cloud data
-		var/http[] = world.Export( "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]" )
-		if( !http )
-			logTheThing( "debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub" )
+		if (cdn)
+			var/http[] = world.Export( "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]" )
+			if( !http )
+				logTheThing( "debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub" )
 
-		var/list/ret = json_decode(file2text( http[ "CONTENT" ] ))
-		if( ret["status"] == "error" )
-			logTheThing( "debug", src, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
-		else
-			cloudsaves = ret["saves"]
-			clouddata = ret["cdata"]
-			load_antag_tokens()
-			load_persistent_bank()
-			var/decoded = cloud_get("audio_volume")
-			if(decoded)
-				var/cur = volumes.len
-				volumes = json_decode(decoded)
-				volumes.len = cur
+			var/list/ret = json_decode(file2text( http[ "CONTENT" ] ))
+			if( ret["status"] == "error" )
+				logTheThing( "debug", src, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
+			else
+				cloudsaves = ret["saves"]
+				clouddata = ret["cdata"]
+				load_antag_tokens()
+				load_persistent_bank()
+				var/decoded = cloud_get("audio_volume")
+				if(decoded)
+					var/cur = volumes.len
+					volumes = json_decode(decoded)
+					volumes.len = cur
 
 		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
 			boutput(src, "<b>You have [src.antag_tokens] antag tokens!</b>")
@@ -433,11 +437,6 @@
 		if(istype(src.mob, /mob/new_player))
 			var/mob/new_player/M = src.mob
 			M.new_player_panel() // update if tokens available
-
-
-/*	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/sandbox))
-		if(src.holder  && (src.holder.level >= 3))
-			src.verbs += /mob/proc/Delete*/
 
 	if(do_compid_analysis)
 		do_computerid_test(src) //Will ban yonder fucker in case they are prix
@@ -476,6 +475,20 @@
 
 	//blendmode end
 
+	// cursed darkmode stuff
+
+	src.sync_dark_mode()
+
+	if(winget(src, "menu.fullscreen", "is-checked") == "true")
+		winset(src, null, "mainwindow.titlebar=false;mainwindow.is-maximized=true")
+
+	if(winget(src, "menu.hide_status_bar", "is-checked") == "true")
+		winset(src, null, "mainwindow.statusbar=false")
+
+	if(winget(src, "menu.hide_menu", "is-checked") == "true")
+		winset(src, null, "mainwindow.menu='';menub.is-visible = true")
+
+	// cursed darkmode end
 
 	//tg controls stuff
 
@@ -505,9 +518,11 @@
 
 	src.reputations = new(src)
 
+	if(src.holder && src.holder.level >= LEVEL_CODER)
+		src.control_freak = 0
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
-
+	login_success = 1
 /*
 /client/proc/write_gauntlet_matches()
 	return
@@ -523,8 +538,6 @@
 		onlineAdmins |= (src)
 		if (!NT.Find(src.ckey))
 			NT.Add(src.ckey)
-		if(src.holder.rank in list("Host", "Coder"))
-			control_freak = 0
 		return 1
 
 	return 0
@@ -814,7 +827,7 @@ var/global/curr_day = null
 					if (C.player_mode && !C.player_mode_ahelp)
 						continue
 					else
-						boutput(K, "<font color='blue'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</font>")
+						boutput(K, "<span class='internal'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</span>")
 
 		if ("priv_msg")
 			do_admin_pm(href_list["target"], usr) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
@@ -878,8 +891,8 @@ var/global/curr_day = null
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 					boutput(usr, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
-				logTheThing("mentor_help", src.mob, M, "Mentor PM'd %target%: [t]")
-				logTheThing("diary", src.mob, M, "Mentor PM'd %target%: [t]", "admin")
+				logTheThing("mentor_help", src.mob, M, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
+				logTheThing("diary", src.mob, M, "Mentor PM'd [constructTarget(M,"diary")]: [t]", "admin")
 
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.mob && src ? src.key : ""
@@ -1288,3 +1301,69 @@ if([removeOnFinish])
 /world/proc/showCinematic(var/name, var/removeOnFinish = 0)
 	for(var/client/C)
 		C.showCinematic(name, removeOnFinish)
+
+#define SKIN_TEMPLATE "\
+rpane.background-color=[_SKIN_BG];\
+rpane.text-color=[_SKIN_TEXT];\
+rpanewindow.background-color=[_SKIN_BG];\
+rpanewindow.text-color=[_SKIN_TEXT];\
+textb.background-color=[_SKIN_BG];\
+textb.text-color=[_SKIN_TEXT];\
+browseb.background-color=[_SKIN_BG];\
+browseb.text-color=[_SKIN_TEXT];\
+infob.background-color=[_SKIN_BG];\
+infob.text-color=[_SKIN_TEXT];\
+menub.background-color=[_SKIN_BG];\
+menub.text-color=[_SKIN_TEXT];\
+bugreportb.background-color=[_SKIN_BG];\
+bugreportb.text-color=[_SKIN_TEXT];\
+wikib.background-color=[_SKIN_BG];\
+wikib.text-color=[_SKIN_TEXT];\
+mapb.background-color=[_SKIN_BG];\
+mapb.text-color=[_SKIN_TEXT];\
+forumb.background-color=[_SKIN_BG];\
+forumb.text-color=[_SKIN_TEXT];\
+infowindow.background-color=[_SKIN_BG];\
+infowindow.text-color=[_SKIN_TEXT];\
+info.background-color=[_SKIN_INFO_BG];\
+info.text-color=[_SKIN_TEXT];\
+mainwindow.background-color=[_SKIN_BG];\
+mainwindow.text-color=[_SKIN_TEXT];\
+mainvsplit.background-color=[_SKIN_BG];\
+falsepadding.background-color=[_SKIN_COMMAND_BG];\
+input.background-color=[_SKIN_COMMAND_BG];\
+input.text-color=[_SKIN_TEXT];\
+saybutton.background-color=[_SKIN_COMMAND_BG];\
+saybutton.text-color=[_SKIN_TEXT];\
+info.tab-background-color=[_SKIN_INFO_TAB_BG];\
+info.tab-text-color=[_SKIN_TEXT]"
+
+/client/verb/sync_dark_mode()
+	set hidden=1
+	if(winget(src, "menu.dark_mode", "is-checked") == "true")
+#define _SKIN_BG "#28292c"
+#define _SKIN_INFO_TAB_BG "#28292c"
+#define _SKIN_INFO_BG "#28292c"
+#define _SKIN_TEXT "#d3d4d5"
+#define _SKIN_COMMAND_BG "#28294c"
+		winset(src, null, SKIN_TEMPLATE)
+		chatOutput.changeTheme("theme-dark")
+#undef _SKIN_BG
+#undef _SKIN_INFO_TAB_BG
+#undef _SKIN_INFO_BG
+#undef _SKIN_TEXT
+#undef _SKIN_COMMAND_BG
+#define _SKIN_BG "none"
+#define _SKIN_INFO_TAB_BG "#f0f0f0"
+#define _SKIN_INFO_BG "#ffffff"
+#define _SKIN_TEXT "none"
+#define _SKIN_COMMAND_BG "#d3b5b5"
+	else
+		winset(src, null, SKIN_TEMPLATE)
+		chatOutput.changeTheme("theme-default")
+#undef _SKIN_BG
+#undef _SKIN_INFO_TAB_BG
+#undef _SKIN_INFO_BG
+#undef _SKIN_TEXT
+#undef _SKIN_COMMAND_BG
+#undef SKIN_TEMPLATE

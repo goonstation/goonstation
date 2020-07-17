@@ -174,7 +174,7 @@
 		if (!voice)
 			return
 		var/message = html_encode(input("Choose something to say:","Message","") as null|text)
-		logTheThing("say", usr, voice, "SAY: [message] (Synthesizing the voice of <b>(%target%)</b>)")
+		logTheThing("say", usr, voice, "SAY: [message] (Synthesizing the voice of <b>([constructTarget(voice,"say")])</b>)")
 		var/original_name = usr.real_name
 		usr.real_name = copytext(voice, 1, MOB_NAME_MAX_LENGTH)
 		usr.say(message)
@@ -268,7 +268,7 @@
 			boutput(user, "<span class='alert'><B>You smash the record over your own head!</b></span>")
 		else
 			M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
-			logTheThing("combat", user, M, "smashes [src] over %target%'s head! ")
+			logTheThing("combat", user, M, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		playsound(src, "shatter", 70, 1)
@@ -279,7 +279,7 @@
 		qdel(src)
 	else
 		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
-		logTheThing("combat", user, M, "taps %target% over the head with [src].")
+		logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 /obj/item/record/random/adventure_1
 	name = "record - \"adventure track #1\""
@@ -610,6 +610,26 @@
 	name = "compact tape - 'The Trial of Heisenbee'"
 	audio = "sound/radio_station/trial_of_heisenbee.ogg"
 	name_of_thing = "The Trial of Heisenbee"
+
+/obj/item/radio_tape/audio_book/commander_announcement
+	name = "Commander's Log - 'You Got A Small Arsenal'"
+	name_of_thing = "You Got A Small Arsenal"
+	audio = "sound/radio_station/commander_announcement.ogg"
+
+/obj/item/radio_tape/audio_book/commander_support
+	name = "Commander's Log - 'Customer Support Ticket #121'"
+	name_of_thing = "Customer Support Ticket #121"
+	audio = "sound/radio_station/commander_support.ogg"
+
+/obj/item/radio_tape/audio_book/commander_resignation
+	name = "Commander's Log - 'I Quit'"
+	name_of_thing = "I Quit"
+	audio = "sound/radio_station/commander_resignation.ogg"
+
+/obj/item/radio_tape/audio_book/commander_figurines
+	name = "Commander's Log - 'They're Called Collectibles'"
+	name_of_thing = "They're Called Collectibles"
+	audio = "sound/radio_station/commander_figurines.ogg"
 
 /obj/item/radio_tape/owl
 	audio_type = "???"

@@ -104,6 +104,20 @@ var/global/obj/flashDummy
 
 	for(var/mob/living/M in get_turf(target))
 		M.shock(from, wattage, "chest", 1, 1)
+
+	var/elecflashpower = 0
+	if (wattage > 12000)
+		elecflashpower = 6
+	else if (wattage > 7500)
+		elecflashpower = 5
+	else if (wattage > 5000)
+		elecflashpower = 4
+	else if (wattage > 2500)
+		elecflashpower = 3
+	else if (wattage > 1200)
+		elecflashpower = 2
+
+	elecflash(target,power = elecflashpower)
 	O.loc = null
 
 /proc/arcFlash(var/atom/from, var/atom/target, var/wattage)
@@ -116,6 +130,20 @@ var/global/obj/flashDummy
 
 	if(wattage && isliving(target)) //Probably unsafe.
 		target:shock(from, wattage, "chest", 1, 1)
+
+	var/elecflashpower = 0
+	if (wattage > 12000)
+		elecflashpower = 6
+	else if (wattage > 7500)
+		elecflashpower = 5
+	else if (wattage > 5000)
+		elecflashpower = 4
+	else if (wattage > 2500)
+		elecflashpower = 3
+	else if (wattage > 1200)
+		elecflashpower = 2
+
+	elecflash(target,power = elecflashpower)
 
 proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuff. Takes some sort of bizzaro angles ?! Aahhhhh
 	var/list/crossed = list()
@@ -529,6 +557,41 @@ proc/get_angle(atom/a, atom/b)
 				px+=sdx
 			py+=sdy
 			. += locate(px,py,M.z)
+
+//bnlah, same thing as above except instead of a list of turfs we return the first opaque turf
+/proc/getlineopaqueblocked(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
+	var/px=M.x		//starting x
+	var/py=M.y
+	. = get_turf(N)
+	var/dx=N.x-px	//x distance
+	var/dy=N.y-py
+	var/dxabs=abs(dx)//Absolute value of x distance
+	var/dyabs=abs(dy)
+	var/sdx=sign(dx)	//Sign of x distance (+ or -)
+	var/sdy=sign(dy)
+	var/x=dxabs>>1	//Counters for steps taken, setting to distance/2
+	var/y=dyabs>>1	//Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
+	var/j			//Generic integer for counting
+	if(dxabs>=dyabs)	//x distance is greater than y
+		for(j=0;j<dxabs;j++)//It'll take dxabs steps to get there
+			y+=dyabs
+			if(y>=dxabs)	//Every dyabs steps, step once in y direction
+				y-=dxabs
+				py+=sdy
+			px+=sdx		//Step on in x direction
+			var/turf/T = locate(px,py,M.z)//Add the turf to the list
+			if(!T || T.opacity || T.opaque_atom_count)
+				return T
+	else
+		for(j=0;j<dyabs;j++)
+			x+=dxabs
+			if(x>=dyabs)
+				x-=dyabs
+				px+=sdx
+			py+=sdy
+			var/turf/T = locate(px,py,M.z)
+			if(!T || T.opacity || T.opaque_atom_count)
+				return T
 
 /proc/getstraightlinewalled(atom/M,vx,vy,include_origin = 1)//hacky fuck for l ighting
 	if (!M) return null
@@ -1857,15 +1920,15 @@ proc/countJob(rank)
 		if ("mslave")
 			switch (removal_type)
 				if ("expired")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has worn off.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
 				if ("surgery")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) was removed surgically.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
 				if ("override")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) was overridden by a different implant.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
 				if ("death")
-					logTheThing("combat", M, mymaster, "(implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
+					logTheThing("combat", M, mymaster, "(implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
 				else
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has vanished mysteriously.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has vanished mysteriously.")
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
@@ -1876,9 +1939,9 @@ proc/countJob(rank)
 		if ("vthrall")
 			switch (removal_type)
 				if ("death")
-					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has died, removing vampire thrall status.")
+					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing vampire thrall status.")
 				else
-					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has been freed mysteriously, removing vampire thrall status.")
+					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing vampire thrall status.")
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
@@ -1890,15 +1953,15 @@ proc/countJob(rank)
 		if ("otherslave")
 			switch (removal_type)
 				if ("expired")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has worn off.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
 				if ("surgery")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) was removed surgically.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
 				if ("override")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) was overridden by a different implant.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
 				if ("death")
-					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
+					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
 				else
-					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has been freed mysteriously, removing mindslave status.")
+					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing mindslave status.")
 
 			// Fix for mindslaved traitors etc losing their antagonist status.
 			if (M.mind && (M.mind.special_role == "spyslave"))
@@ -1958,16 +2021,20 @@ proc/countJob(rank)
 /**
   * A universal ckey -> mob reference lookup proc, adapted from whois() (Convair880).
   */
-/proc/whois_ckey_to_mob_reference(target as text)
-	if (!target || isnull(target))
+/proc/whois_ckey_to_mob_reference(target as text, exact=1)
+	if (isnull(target))
 		return 0
-	target = lowertext(target)
+	target = ckey(target)
 	var/mob/our_mob
 	for (var/mob/M in mobs)
-		if ((!isnull(M.ckey) && !isnull(target)) && findtext(M.ckey, target))
-			//DEBUG_MESSAGE("Whois: match found for [target], it's [M].")
+		if (!isnull(M.ckey) && M.ckey == target)
 			our_mob = M
 			break
+	if(!our_mob && !exact)
+		for (var/mob/M in mobs)
+			if (!isnull(M.ckey) && findtext(M.ckey, target))
+				our_mob = M
+				break
 	if (our_mob) return our_mob
 	else return 0
 
@@ -2468,5 +2535,22 @@ proc/total_clients()
 			.++
 
 
+//total clients used for player cap (which pretends admins don't exist)
+proc/total_clients_for_cap()
+	.= 0
+	for (var/C in clients)
+		if (C)
+			var/client/CC = C
+			if (!CC.holder)
+				.++
+
+	for (var/C in player_cap_grace)
+		if (player_cap_grace[C] > TIME)
+			.++
+
+
+proc/client_has_cap_grace(var/client/C)
+	if (C.ckey in player_cap_grace)
+		.= (player_cap_grace[C.ckey] > TIME)
 
 

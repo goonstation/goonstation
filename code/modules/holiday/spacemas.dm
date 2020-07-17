@@ -306,13 +306,8 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 
 	CritterDeath()
 		if (!src.alive) return
-		src.icon_state += "-dead"
-		src.alive = 0
-		src.anchored = 0
-		src.set_density(0)
+		..()
 		src.desc = "The lifeless corpse of [src.name], why would anyone do such a thing?"
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> dies!")
 		modify_christmas_cheer(-20)
 		src.name = "dead space seal pup"
 		for (var/obj/critter/sealpup/S in view(7,src))
@@ -678,6 +673,14 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
 			src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
 			src.equip_new_if_possible(/obj/item/card/id/captains_spare/santa, slot_wear_id)
+
+			var/datum/abilityHolder/HS = src.add_ability_holder(/datum/abilityHolder/santa)
+			HS.addAbility(/datum/targetable/santa/heal)
+			HS.addAbility(/datum/targetable/santa/gifts)
+			HS.addAbility(/datum/targetable/santa/food)
+			HS.addAbility(/datum/targetable/santa/warmth)
+			HS.addAbility(/datum/targetable/santa/teleport)
+			HS.addAbility(/datum/targetable/santa/banish)
 
 	death()
 		modify_christmas_cheer(-60)

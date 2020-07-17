@@ -45,7 +45,7 @@
 			user.show_text("[src] doesn't contain any reagents.", "red")
 			return
 
-		if (iscarbon(user) || iscritter(user))
+		if (iscarbon(user) || ismobcritter(user))
 			user.visible_message("[user] swallows [src].",\
 			"<span class='notice'>You swallow [src].</span>")
 			logTheThing("combat", user, null, "swallows a pill [log_reagents(src)] at [log_loc(user)].")
@@ -62,7 +62,7 @@
 			user.show_text("[src] doesn't contain any reagents.", "red")
 			return
 
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
 				//boutput(M, "<span class='notice'>You swallow [src].</span>")
 				user.visible_message("[user] swallows [src].",\
@@ -73,7 +73,7 @@
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to swallow [src].</span>",\
 				"<span class='alert'>You attempt to force [M] to swallow [src].</span>")
-				logTheThing("combat", user, M, "tries to force-feed a pill [log_reagents(src)] to %target% at [log_loc(user)].")
+				logTheThing("combat", user, M, "tries to force-feed a pill [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
 
 				if (!do_mob(user, M))
 					if (user && ismob(user))
@@ -85,7 +85,7 @@
 				user.visible_message("<span class='alert'>[user] forces [M] to swallow [src].</span>",\
 				"<span class='alert'>You force [M] to swallow [src].</span>")
 
-			logTheThing("combat", user, M, "[user == M ? "swallows" : "makes %target% swallow"] a pill [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, M, "[user == M ? "swallows" : "makes [constructTarget(M,"combat")] swallow"] a pill [log_reagents(src)] at [log_loc(user)].")
 			if (reagents.total_volume)
 				reagents.reaction(M, INGEST)
 				sleep(0.1 SECONDS)
@@ -127,6 +127,12 @@
 			return
 		else
 			return ..()
+
+
+	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+		if (istype(over_object,/obj/item/chem_pill_bottle)) //dont do our whole fancy pickup thjing
+			return
+		..()
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */

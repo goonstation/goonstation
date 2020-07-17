@@ -57,6 +57,9 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/card/id))
+			if (src.ID)
+				src.ID.set_loc(src.loc)
+				boutput(user, "<span class='notice'>[src.ID] is ejected from the ID scanner.</span>")
 			usr.drop_item()
 			W.set_loc(src)
 			src.ID = W
@@ -174,7 +177,7 @@
 			user.show_text("The alert needs at least one $JOB token.", "red")
 			return
 		src.arrivalalert = sanitize(adminscrub(newalert, 200))
-		logTheThing("station", user, src, "sets the arrival announcement on %target% to \"[src.arrivalalert]\"")
+		logTheThing("station", user, src, "sets the arrival announcement on [constructTarget(src,"station")] to \"[src.arrivalalert]\"")
 		user.show_text("Arrival alert set to '[newalert]'", "blue")
 		playsound(src.loc, "keyboard", 50, 1, 5)
 		return

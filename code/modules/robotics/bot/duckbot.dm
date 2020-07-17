@@ -101,11 +101,11 @@
 	return src.explode()
 
 /obj/machinery/bot/duckbot/explode()
+	if(src.exploding) return
+	src.exploding = 1
 	src.on = 0
 	for(var/mob/O in hearers(src, null))
 		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(3, 1, src)
-	s.start()
+	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
 	return

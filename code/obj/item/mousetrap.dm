@@ -15,8 +15,8 @@
 	var/obj/item/device/radio/signaler/signaler = null
 	var/obj/item/reagent_containers/food/snacks/pie/pie = null
 	var/obj/item/parts/arm = null
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 5
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
@@ -217,7 +217,7 @@
 				H.visible_message("<span class='alert'><B>[H] accidentally steps on the mousetrap.</B></span>",\
 				"<span class='alert'><B>You accidentally step on the mousetrap!</B></span>")
 
-		else if ((iscritter(AM)) && (src.armed))
+		else if ((ismobcritter(AM)) && (src.armed))
 			var/mob/living/critter/C = AM
 			src.triggered(C)
 			C.visible_message("<span class='alert'><B>[C] accidentally triggers the mousetrap.</B></span>",\
@@ -260,7 +260,7 @@
 				affecting.take_damage(1, 0)
 				H.UpdateDamageIcon()
 
-		else if (iscritter(target))
+		else if (ismobcritter(target))
 			var/mob/living/critter/C = target
 			C.TakeDamage("All", 1)
 
