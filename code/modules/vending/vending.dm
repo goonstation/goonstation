@@ -2017,7 +2017,7 @@
 		use_power(10)
 		if (src.icon_vend) //Show the vending animation if needed
 			flick(src.icon_vend,src)
-		SEND_SIGNAL(O,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
 		src.generate_HTML(1)
 		SPAWN_DBG(0)
 			throw_item.throw_at(target, 16, 3)
