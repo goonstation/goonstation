@@ -1539,7 +1539,7 @@ var/global/noir = 0
 						var/list/abils = list()
 						var/datum/abilityHolder/AH = null
 						for (AH in CH.holders)
-							abils += AH.abilities //get a lit of all the different abilities in the holders
+							abils += AH.abilities //get a list of all the different abilities in each holder
 						if(!abils.len)
 							boutput(usr, "<b><span class='alert'>[M] doesn't have any abilities!</span></b>")
 							return //nothing to remove
