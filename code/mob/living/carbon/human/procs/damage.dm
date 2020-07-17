@@ -858,6 +858,7 @@
 	return
 
 /mob/living/carbon/human/take_brain_damage(var/amount)
+
 	if (!isnum(amount) || amount == 0)
 		return 1
 
@@ -870,10 +871,44 @@
 		else
 			src.organHolder.heal_organ(abs(amount), 0, 0, "brain")
 
-	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 120)
-		src.visible_message("<span class='alert'><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
-		src.death()
-		return
+	var/is_chg = ischangeling(src)
+	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 220)
+		if (!is_chg)
+			// instant death, we can assume a brain this damaged is no longer able to support life
+			src.visible_message("<span class='alert'><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
+			src.death()
+			return
+	
+	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 100) // Coma
+		if (!is_chg)
+			boutput(src, "<span class='alert'>You feel [pick("oddly", "suddenly", "quite")] [pick("faint", "dizzy", "numb", "dazed")].</span>")
+			src.change_misstep_chance(10)
+			if (!src.find_ailment_by_type(/datum/ailment/malady/coma))
+				if (prob(src.organHolder.brain.get_damage() * 0.5))
+					src.emote(pick("faint", "collapse"))
+					src.visible_message("<span class='alert'><b>[src.name]</b> suddenly falls limp!</span>")
+					boutput(src, "<span class='alert'><b>You seize up and fall limp, the pain in your head fading along with your consciousness.</b></span>")
+					src.setStatus("paralysis", max(src.getStatusDuration("paralysis"), 15))
+					src.contract_disease(/datum/ailment/malady/coma,null,null,1)
+				else
+					src.setStatus("paralysis", max(src.getStatusDuration("paralysis"), 15))
+					if (prob(8))
+						src.emote("twitch")
+	
+	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 50) // braincrit
+		if (!is_chg)
+			boutput(src, "<span class='alert'>Your head [pick("feels like shit","hurts like fuck","pounds horribly","twinges with an awful pain")].</span>")
+			if (prob(src.organHolder.brain.get_damage() * 0.5))
+				boutput(src, "<span class='alert'><b>A sudden [pick("terrible", "violent", "shooting", "sharp", "horrible", "worrying")] pain erupts inside your head, forcing you to the ground!</b></span>")
+				src.changeStatus("weakened", 3 SECONDS)
+				src.contract_disease(/datum/ailment/malady/brainfailure,null,null,1)
+	
+	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 10) // Headache
+		if (!is_chg)
+			if (prob(src.organHolder.brain.get_damage() * 1))
+				boutput(src, "<span class='alert'>Your head hurts.</span>")
+				src.contract_disease(/datum/ailment/malady/headache,null,null,1)
+
 	return
 
 
