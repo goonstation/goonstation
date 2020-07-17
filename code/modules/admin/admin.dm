@@ -1532,11 +1532,32 @@ var/global/noir = 0
 				if (!M.abilityHolder)
 					alert("No ability holder detected.")
 					return
-				var/ab_to_rem = input("Which ability?", "Ability", null) as anything in M.abilityHolder.abilities
+				var/datum/targetable/ab_to_rem = null
+				if (istype(M.abilityHolder, /datum/abilityHolder/composite))
+					var/datum/abilityHolder/composite/CH = M.abilityHolder
+					if (CH.holders.len)
+						var/list/abils = list()
+						var/datum/abilityHolder/AH = null
+						for (AH in CH.holders)
+							abils += AH.abilities //get a lit of all the different abilities in the holders
+						if(!abils.len)
+							boutput(usr, "<b><span class='alert'>[M] doesn't have any abilities!</span></b>")
+							return //nothing to remove
+						ab_to_rem = input("Which ability?", "Ability", null) as null|anything in abils
+						if (!ab_to_rem) return //user cancelled
+						AH = ab_to_rem.holder
+						AH.removeAbilityInstance(ab_to_rem)
+						M.abilityHolder.updateButtons()
+					else
+						boutput(usr, "<b><span class='alert'>[M]'s composite holder lacks any ability holders to remove from!</span></b>")
+						return //no ability holders in composite holder
+				else
+					ab_to_rem = input("Which ability?", "Ability", null) as null|anything in M.abilityHolder.abilities
+					if (!ab_to_rem) return //no abilities or user cancelled
+					M.abilityHolder.removeAbilityInstance(ab_to_rem)
+					M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] removed ability [ab_to_rem] from [key_name(M)].")
 				logTheThing("admin", usr, M, "removed ability [ab_to_rem] from [constructTarget(M,"admin")].")
-				M.abilityHolder.removeAbilityInstance(ab_to_rem)
-				M.abilityHolder.updateButtons()
 			else
 				alert("You must be at least a Primary Administrator to do this!")
 
