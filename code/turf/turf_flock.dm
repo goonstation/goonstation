@@ -22,6 +22,8 @@
 	var/brightness = 0.5
 	var/on = 0
 	var/connected = 0 //used for collector
+	var/datum/flock_tile_group/group = null //the group its connected to
+
 
 /turf/simulated/floor/feather/New()
 	..()
@@ -30,7 +32,9 @@
 	light.set_brightness(src.brightness)
 	light.set_color(col_r, col_g, col_b)
 	light.attach(src)
-
+	src.checknearby() //check for nearby groups
+	if(!group)//if no group found
+		initializegroup() //make a new one
 
 /turf/simulated/floor/feather/special_desc(dist, mob/user)
   if(isflock(user))
@@ -133,6 +137,54 @@
 	desc = "Disco's dead, baby."
 	icon_state = "floor-broken"
 	broken = 1
+
+////////////////////////////////////////////////////////////////////////////////////////
+//start of flocktilegroup stuff
+
+/turf/simulated/floor/feather/proc/initializegroup() //make a new group
+	group = new/datum/flock_tile_group
+	group.addtile(src)
+
+/turf/simulated/floor/feather/proc/checknearby()
+	var/list/tiles = list() //list of tile groups found
+	for(var/turf/simulated/floor/feather/F in orange(1, src))//check for nearby flocktiles
+		message_admins("[F] has been checked")
+		if(F.group)
+			message_admins("passed check [tiles.len] is tiles.len")
+			tiles |= F.group
+			message_admins("passed check [tiles.len] is tiles.len")
+	if(tiles.len == 1)
+		src.group = tiles[1] //set it to the group found.
+		message_admins("[group] is group")
+		src.group.addtile(src)
+		message_admins("one was found, [src.group.id] is da group's id")
+	else if(tiles.len > 1) //if there is more then one, then join the largest (add merging functionality here later)
+		var/datum/flock_tile_group/newone = new //the "third" group
+		for(var/datum/flock_tile_group/FUCK in tiles)
+//			newone.members |= FUCK.members
+			newone.powergen += FUCK.powergen
+			newone.poweruse += FUCK.poweruse
+			for(var/turf/simulated/floor/feather/F in FUCK.members)
+				message_admins("[F] is F in fuck")
+				F.group = newone
+				newone.addtile(F)
+			qdel(FUCK)
+		src.group = newone
+		newone.addtile(src)
+//		message_admins("[max(tiles).size] is max(tiles)")
+//		var/turf/simulated/floor/feather/f = max(tiles).size //max(tiles).group doesnt work so imma do this instead
+//		src.group = f.group
+//		src.group.addtile(src)
+//		message_admins("more then one was found, [src.group.id] is da group's id")
+	else
+		message_admins("nothing was found")
+		return null
+
+
+
+
+//end of flocktilegroup stuff
+////////////////////////////////////////////////////////////////////////////////////////
 
 
 /turf/simulated/wall/auto/feather
