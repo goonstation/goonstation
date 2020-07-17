@@ -1,4 +1,9 @@
 
+(t)fri jul 17 20
+(u)Somethings
+(p)1508
+(e)🐛|bug
+(+)Cloned non-infernal vampires will now keep their Blood Steal ability.
 (t)thu jul 16 20
 (u)MarkNstein
 (p)1503
