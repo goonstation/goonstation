@@ -1,5 +1,9 @@
 
 (t)thu jul 16 20
+(u)MarkNstein
+(p)1503
+(e)🔄|rework
+(+)The "Anti-Singularity  Pack" can be ordered by QM's on any map (no longer restricted to Manta).
 (u)Flaborized
 (p)1484
 (e)🎨|sprites
