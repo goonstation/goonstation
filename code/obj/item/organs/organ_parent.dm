@@ -180,7 +180,7 @@
 					src.donor.add_stam_mod_regen("cyber-[src.organ_name]", 2)
 					src.donor.add_stam_mod_max("cyber-[src.organ_name]", 10)
 
-		if (islist(src.organ_abilities) && src.organ_abilities.len)
+		if (!broken && islist(src.organ_abilities) && src.organ_abilities.len)
 			var/datum/abilityHolder/organ/A = M.get_ability_holder(/datum/abilityHolder/organ)
 			if (!istype(A))
 				A = M.add_ability_holder(/datum/abilityHolder/organ)
@@ -343,7 +343,24 @@
 			return 0
 
 	proc/breakme()
+		if (!broken && islist(src.organ_abilities) && src.organ_abilities.len)// remove abilities when broken
+			var/datum/abilityHolder/aholder
+			if (src.donor && src.donor.abilityHolder)
+				aholder = src.donor.abilityHolder
+			else if (src.holder && src.holder.donor && src.holder.donor.abilityHolder)
+				aholder = src.holder.donor.abilityHolder
+			if (istype(aholder))
+				for (var/abil in src.organ_abilities)
+					src.remove_ability(aholder, abil)
 		src.broken = 1
 
 	proc/unbreakme()
+		if (broken && islist(src.organ_abilities) && src.organ_abilities.len) //put them back if fixed (somehow)
+			var/datum/abilityHolder/organ/A = donor?.get_ability_holder(/datum/abilityHolder/organ)
+			if (!istype(A))
+				A = donor?.add_ability_holder(/datum/abilityHolder/organ)
+			if (!A)
+				return
+			for (var/abil in src.organ_abilities)
+				src.add_ability(A, abil)
 		src.broken = 0

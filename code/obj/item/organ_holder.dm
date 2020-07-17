@@ -1392,6 +1392,10 @@
 		if (istype(M))
 			M.toggle()
 			src.is_on = M.on
+		if(is_on)
+			src.icon_state = initial(src.icon_state)
+		else
+			src.icon_state = "[initial(src.icon_state)]_cd"
 
 
 /datum/targetable/organAbility/kidneypurge
@@ -1415,3 +1419,30 @@
 		holder.owner.urine += power // -.-
 		SPAWN_DBG(15 SECONDS)
 			REMOVE_MOB_PROPERTY(holder.owner, PROP_CHEM_PURGE, src)
+
+/datum/targetable/organAbility/liverdetox
+	name = "\"Detox\" Toggle"
+	desc = "Overclock the \"detoxification\" function of your liver."
+	icon_state = "eye-meson"
+	targeted = 0
+	toggled = 1
+	cooldown = 5
+	is_on = 0
+
+	New()
+		..()
+		src.icon_state = "[initial(src.icon_state)]_cd"
+		holder.updateButtons()
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		var/obj/item/organ/liver/cyber/L = linked_organ
+		if (istype(L))
+			L.overloading = !L.overloading
+			src.is_on = L.overloading
+		if(is_on)
+			src.icon_state = initial(src.icon_state)
+		else
+			src.icon_state = "[initial(src.icon_state)]_cd"
