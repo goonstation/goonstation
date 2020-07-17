@@ -1446,3 +1446,21 @@
 			src.icon_state = initial(src.icon_state)
 		else
 			src.icon_state = "[initial(src.icon_state)]_cd"
+
+/datum/targetable/organAbility/quickdigest
+	name = "DIGEST"
+	desc = "CRUNCH your intestines to digest all the food you've eaten at once. Grody."
+	icon_state = "eye-meson" //TODO get sprote made
+	targeted = 0
+	cooldown = 40 SECONDS
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		linked_organ.take_damage(20, 20) //not safe
+		if(istype(holder.owner, /mob/living))
+			var/mob/living/L = holder.owner
+			if (L.stomach_process && L.stomach_process.len)
+				for(var/obj/item/reagent_containers/food/snacks/bite/B in L.stomach_process)
+					B.process_stomach(L, (B.reagents.total_volume)) //all of the food!
