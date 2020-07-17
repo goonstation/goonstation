@@ -2843,9 +2843,15 @@
 	.=0
 
 /mob/verb/pull_verb(atom/movable/A as mob|obj in view(1))
-	set name = "Pull"
+	set name = "Pull / Unpull"
 	set category = "Local"
-	A.pull()
+
+	if (src.pulling && src.pulling == A)
+		unpull_particle(src,src.pulling)
+		src.set_pulling(null)
+	else
+		A.pull()
+
 
 /mob/verb/examine_verb(atom/A as mob|obj|turf in view())
 	set name = "Examine"
