@@ -1810,7 +1810,7 @@ var/list/mechanics_telepads = new/list()
 		return 1
 
 	proc/setidmsg(var/datum/mechanicsMessage/input)
-		if(level == 2 && input.signal)
+		if(level == 1 && input.signal)
 			teleID = input.signal
 			tooltip_rebuild = 1
 			componentSay("ID Changed to : [input.signal]")

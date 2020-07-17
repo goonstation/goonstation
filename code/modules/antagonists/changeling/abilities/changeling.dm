@@ -274,7 +274,7 @@
 		..()
 		.= list()
 		//On Changeling tab
-		.["DNA:"] = points
+		.["DNA:"] = round(points)
 		.["Total:"] = absorbtions
 
 	onAbilityHolderInstanceAdd()

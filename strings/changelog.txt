@@ -1,5 +1,10 @@
 
 (t)thu jul 16 20
+(u)RichardGere
+(p)1490
+(e)⚖🐛|balance, bug
+(+)Shambling abominations can no longer sprint.
+(+)Fixed a bug where the changeling's horror form would drain an incorrect amount of DNA points.
 (u)MarkNstein
 (p)1468
 (e)🆕|feature
