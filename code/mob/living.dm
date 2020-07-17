@@ -1573,16 +1573,18 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/critter/keys_changed(keys, changed)
 	..()
 	if (changed & KEY_RUN)
-		if (hud)
+		if (hud && !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 			src.hud.set_sprint(keys & KEY_RUN)
 
 /mob/living/carbon/human/keys_changed(keys, changed)
 	..()
 	if (changed & KEY_RUN)
-		if (hud)
+		if (hud && !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 			src.hud.set_sprint(keys & KEY_RUN)
 
 /mob/living/proc/start_sprint()
+	if (HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
+		return
 	if (special_sprint && src.client)
 		if (special_sprint & SPRINT_BAT)
 			spell_batpoof(src, cloak = 0)

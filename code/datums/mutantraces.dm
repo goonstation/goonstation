@@ -735,6 +735,7 @@
 			M.add_stam_mod_max("abomination", 1000)
 			M.add_stam_mod_regen("abomination", 1000)
 			M.add_stun_resist_mod("abomination", 1000)
+			APPLY_MOB_PROPERTY(M, PROP_CANTSPRINT, src)
 		last_drain = world.time
 		return ..(M)
 
@@ -743,6 +744,7 @@
 			mob.remove_stam_mod_max("abomination")
 			mob.remove_stam_mod_regen("abomination")
 			mob.remove_stun_resist_mod("abomination")
+			REMOVE_MOB_PROPERTY(mob, PROP_CANTSPRINT, src)
 		return ..()
 
 
@@ -761,7 +763,7 @@
 
 			if (C && C.points)
 				if (last_drain + 30 <= world.time)
-					C.points = max(0, C.points - 1)
+					C.points = max(0, C.points - (1 * mult))
 
 				switch (C.points)
 					if (-INFINITY to 0)

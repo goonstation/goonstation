@@ -228,7 +228,7 @@
 					if (src.timing)
 						src.time_started = world.timeofday//realtime
 						// People do use sleepers for grief from time to time.
-						logTheThing("station", usr, src.our_sleeper.occupant, "initiates a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""][src.time/10] seconds), forcing %target% asleep at [log_loc(src.our_sleeper)].")
+						logTheThing("station", usr, src.our_sleeper.occupant, "initiates a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""][src.time/10] seconds), forcing [constructTarget(src.our_sleeper.occupant,"station")] asleep at [log_loc(src.our_sleeper)].")
 					else
 						src.time_started = 0
 						src.wake_occupant()
@@ -239,7 +239,7 @@
 				var/t = text2num(href_list["tp"])
 				if (t > 0 && src.timing && src.our_sleeper.occupant)
 					// People do use sleepers for grief from time to time.
-					logTheThing("station", usr, src.our_sleeper.occupant, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by %target%) by [t] seconds at [log_loc(src.our_sleeper)].")
+					logTheThing("station", usr, src.our_sleeper.occupant, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by [constructTarget(src.our_sleeper.occupant,"station")]) by [t] seconds at [log_loc(src.our_sleeper)].")
 				//src.time = min(180, max(0, src.time + t))
 				src.time = clamp(src.time + (t*10), 0, 1800)
 
@@ -356,7 +356,7 @@
 			if (user && ismob(user))
 				user.show_text("You short out [src]'s reagent synthesis safety protocols.", "blue")
 			src.visible_message("<span class='alert'><b>[src] buzzes oddly!</b></span>")
-			logTheThing("station", user, src.occupant, "emags \a [src] [src.occupant ? "with %target% inside " : ""](setting it to inject poisons) at [log_loc(src)].")
+			logTheThing("station", user, src.occupant, "emags \a [src] [src.occupant ? "with [constructTarget(src.occupant,"station")] inside " : ""](setting it to inject poisons) at [log_loc(src)].")
 			return 1
 
 	demag(var/mob/user)
@@ -497,7 +497,7 @@
 					src.occupant.reagents.add_reagent(our_poison, inject_p)
 					//DEBUG_MESSAGE("Injected occupant with [inject_p] units of [our_poison] at [log_loc(src)].")
 					if (manual_injection == 1)
-						logTheThing("station", user_feedback, src.occupant, "manually injects %target% with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
+						logTheThing("station", user_feedback, src.occupant, "manually injects [constructTarget(src.occupant,"station")] with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
 			else
 				if (src.occupant.health < -25 && crit < 10)
 					var/inject_c = 5

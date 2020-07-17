@@ -1,5 +1,38 @@
 
+(t)thu jul 16 20
+(u)MarkNstein
+(p)1503
+(e)🔄|rework
+(+)The "Anti-Singularity  Pack" can be ordered by QM's on any map (no longer restricted to Manta).
+(u)Flaborized
+(p)1484
+(e)🎨|sprites
+(+)Resprited medibots.
+(u)zjdtmkhzt
+(p)1489
+(e)⚖⛔|balance, removal
+(+)Security Officers are no longer immune to being chairflipped.
+(u)Roselace:
+(p)1501
+(e)🎨|sprites
+(+)New sprites for radiation supplies closets.
+(u)RichardGere
+(p)1490
+(e)⚖🐛|balance, bug
+(+)Shambling abominations can no longer sprint.
+(+)Fixed a bug where the changeling's horror form would drain an incorrect amount of DNA points.
+(u)MarkNstein
+(p)1468
+(e)🆕|feature
+(*)RP server: Gang is added to the Intrigue gamemode picklist if >=20 players are ready at round-start.
+(u)makkipakki
+(p)1475
+(e)|
+(+)The chaplain's pistol Faith now functions like a semi-auto
 (t)wed jul 15 20
+(u)mbc
+(*)Added overhead text for emotes. Emotes that make noise or animations will not be overhead.
+(*)Added a 'pulse' special attack for the multitool. (Remember, click a distant tile on harm/disarm intent)
 (u)MarkNstein
 (p)1231
 (e)🆕|feature

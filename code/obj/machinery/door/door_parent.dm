@@ -91,7 +91,7 @@
 		var/mob/living/carbon/human/C = user
 		if (isdead(C)) //No need to call for dead people!
 			return 0
-		if (C.brainloss >= 60)
+		if (C.get_brain_damage() >= 60)
 			// No text spam, please. Bumped() is called more than once by some doors, though.
 			// If we just return 0, they will be able to bump-open the door and get past regardless
 			// because mob paralysis doesn't take effect until the next tick.

@@ -36,7 +36,7 @@ THROWING DARTS
 
 	// called when an implant is implanted into M by I
 	proc/implanted(mob/M, mob/I)
-		logTheThing("combat", I, M, "has implanted %target% with a [src] implant ([src.type]) at [log_loc(M)].")
+		logTheThing("combat", I, M, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
 		implanted = 1
 		owner = M
 		if (implant_overlay)
@@ -294,7 +294,7 @@ THROWING DARTS
 
 /obj/item/implant/health/security
 	name = "health implant - security issue"
-	
+
 	New()
 		mailgroups.Add(MGD_SECURITY)
 		..()
@@ -609,7 +609,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 		if (H.mind && ((H.mind.special_role == "vampthrall") || (H.mind.special_role == "spyslave")))
 			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being enslaved!</b>", "red")
 			H.show_text("<b>You resist [implant_master]'s attempt to enslave you!</b>", "red")
-			logTheThing("combat", H, implant_master, "resists %target%'s attempt to mindslave them at [log_loc(H)].")
+			logTheThing("combat", H, implant_master, "resists [constructTarget(implant_master,"combat")]'s attempt to mindslave them at [log_loc(H)].")
 			return 0
 		// Necessary to get those expiration messages to trigger properly if the same mob is implanted again,
 		// since mindslave implants have spawns  going on.

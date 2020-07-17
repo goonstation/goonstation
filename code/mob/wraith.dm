@@ -563,7 +563,7 @@
 /mob/proc/wraithize()
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a wraith.")
-		logTheThing("admin", usr, src, "made %target% a wraith.")
+		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a wraith.")
 		return make_wraith()
 	return null
 

@@ -185,7 +185,7 @@
 						P3.locked = 1
 
 					if (P3.occupant)
-						logTheThing("station", usr, P3.occupant, "[P3.locked ? "locks" : "unlocks"] [P3.name] with %target% inside at [log_loc(P3)].")
+						logTheThing("station", usr, P3.occupant, "[P3.locked ? "locks" : "unlocks"] [P3.name] with [constructTarget(P3.occupant,"station")] inside at [log_loc(P3)].")
 
 					PDA.display_alert("<span style=\"color:blue\">The [src.machinery_name] is now [P3.locked ? "locked" : "unlocked"].</span>")
 

@@ -4,7 +4,7 @@
 	var/last_process = 0
 
 	var/const/tick_spacing = 20 //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
-	var/const/cap_tick_spacing = 90 //highest timeofday allowance between ticks to try to play catchup with realtime thingo
+	var/const/cap_tick_spacing = 100 //highest TIME allowance between ticks to try to play catchup with realtime thingo
 
 	var/mob/living/carbon/human/human_owner = null
 	var/mob/living/silicon/hivebot/hivebot_owner = null
@@ -45,7 +45,7 @@
 	//remove these evntually cause lifeporcesses handl ethem
 	var/last_life_tick = 0 //and this ones just the whole lifetick
 	var/const/tick_spacing = 20 //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
-	var/const/cap_tick_spacing = 90 //highest timeofday allowance between ticks to try to play catchup with realtime thingo
+	var/const/cap_tick_spacing = 100 //highest TIME allowance between ticks to try to play catchup with realtime thingo
 	var/last_stam_change = 0
 	var/life_context = "begin"
 

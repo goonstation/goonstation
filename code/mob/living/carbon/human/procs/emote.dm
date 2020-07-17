@@ -804,7 +804,7 @@
 
 			if ("pale")
 				message = "<B>[src]</B> goes pale for a second."
-				maptext_out = "<I>goes pale for a second</I>"
+				maptext_out = "<I>goes pale...</I>"
 				m_type = 1
 
 			if ("flipout")
@@ -1609,7 +1609,7 @@
 
 									src.emote("scream")
 									message = "<span class='alert'><B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B></span>"
-									logTheThing("combat", src, G.affecting, "suplexes %target%[tabl ? " into \an [tabl]" : null] [log_loc(src)]")
+									logTheThing("combat", src, G.affecting, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
 									M.lastattacker = src
 									M.lastattackertime = world.time
 									if (iswrestler(src))
@@ -1673,7 +1673,7 @@
 											src.stamina_stun()
 
 										message = "<span class='alert'><B>[src]</B> flips into [M]!</span>"
-										logTheThing("combat", src, M, "flips into %target%")
+										logTheThing("combat", src, M, "flips into [constructTarget(M,"combat")]")
 										src.changeStatus("weakened", 6 SECONDS)
 										src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
 										M.changeStatus("weakened", 2 SECONDS)

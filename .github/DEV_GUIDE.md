@@ -97,7 +97,7 @@ For this guide, I'll be creating a new hat, so I'll name my branch `hat-landia`.
 
 **Remember, never commit changes to your master branch!** You can work on any branch as much as you want, as long as you **commit** the changes to the proper branch.
 
-Go wild! Make your code changes! This is a guide on how to contribute, not *what* to contribute. So, I won't tell you how to code, make sprites, or map changes. If you need help, try asking in the `#imcoder`, `#imspriter`, or the `#immapper` [Discord](https://discord.gg/0117EEzASKYV2vtek) channels respectively.
+Go wild! Make your code changes! This is a guide on how to contribute, not *what* to contribute. So, I won't tell you how to code, make sprites, or map changes. If you need help, try asking in the `#imcoder`, `#imspriter`, or the `#immapper` [Discord](https://discord.gg/zd8t6pY) channels respectively.
 
 ### Step 2: Change It Up :twisted_rightwards_arrows: 
 

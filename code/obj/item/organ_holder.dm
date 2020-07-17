@@ -1318,7 +1318,7 @@
 			return 1
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		if (ismob(target))
-			logTheThing("combat", holder.owner, target, "used ability [src.name] ([src.linked_organ]) on %target%.")
+			logTheThing("combat", holder.owner, target, "used ability [src.name] ([src.linked_organ]) on [constructTarget(target,"combat")].")
 		else if (target)
 			logTheThing("combat", holder.owner, null, "used ability [src.name] ([src.linked_organ]) on [target].")
 		else

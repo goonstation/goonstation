@@ -78,6 +78,8 @@
 #define OVERLOAD_PLAYERCOUNT 95 //when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
 #define OSHAN_LIGHT_OVERLOAD 18 //when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
 #define SLOW_LIFE_PLAYERCOUNT 65 //whenn pcount is >= this number, slow Life() processing a bit
+#define SLOWEST_LIFE_PLAYERCOUNT 85 //whenn pcount is >= this number, slow Life() processing a lot
+
 
 #define DEFAULT_CLICK_DELAY MIN_TICKLAG //used to be 1
 #define COMBAT_CLICK_DELAY 10
@@ -716,7 +718,7 @@ proc/default_frequency_color(freq)
 #define BASE_SPEED_SUSTAINED 1.5
 #define RUN_SCALING 0.12
 #define RUN_SCALING_LYING 0.2
-#define RUN_SCALING_STAGGER 0.5
+#define RUN_SCALING_STAGGER 0.64
 #define WALK_DELAY_ADD 0.8
 
 //stamina config

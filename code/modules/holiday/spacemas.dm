@@ -674,6 +674,14 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
 			src.equip_new_if_possible(/obj/item/card/id/captains_spare/santa, slot_wear_id)
 
+			var/datum/abilityHolder/HS = src.add_ability_holder(/datum/abilityHolder/santa)
+			HS.addAbility(/datum/targetable/santa/heal)
+			HS.addAbility(/datum/targetable/santa/gifts)
+			HS.addAbility(/datum/targetable/santa/food)
+			HS.addAbility(/datum/targetable/santa/warmth)
+			HS.addAbility(/datum/targetable/santa/teleport)
+			HS.addAbility(/datum/targetable/santa/banish)
+
 	death()
 		modify_christmas_cheer(-60)
 		..()
