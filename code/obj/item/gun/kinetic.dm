@@ -634,23 +634,26 @@
 		current_projectile = new/datum/projectile/bullet/derringer
 		if(prob(5))	// 5% chance that the cruddy thing you built is a piece of crud
 			failured = 1
+			desc += " Looks kinda rattly."
 		..()
 #endif
 
 	shoot(var/target,var/start ,var/mob/user)
-		if(ammo && ammo.amount_left && current_projectile && current_projectile.caliber && current_projectile.power)
-			failure_chance = max(0,min(33,round(current_projectile.power/2 - 9)))
-		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
-			failured = 1
-			if(prob(failure_chance))	// You're only warned *sometimes*
-				boutput(user, "<span class='alert'>The shoddy connections in [src]'s framework cracks!</span>")
 		if(failured)
 			var/turf/T = get_turf(src)
 			explosion(src, T,-1,-1,1,2)
 			qdel(src)
-		else
-			..()
-			return
+		if(ammo && ammo.amount_left && current_projectile && current_projectile.caliber && current_projectile.power)
+			failure_chance = max(0,min(33,round(current_projectile.power/2 - 9)))
+		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
+			failured = 1
+			if(prob(failure_chance))	// Sometimes the failure is obvious
+				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+				boutput(user, "<span class='alert'>The [src]'s shodilly thrown-together [pick("breech", "barrel", "bullet holder", "firing pin", "striker", "staple-driver mechanism", "bendy metal part", "shooty-bit")][pick("", "...thing")] [pick("cracks", "pops off", "bends nearly in half", "comes loose")]!</span>")
+			else						// Other times, less obvious
+				playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+		..()
+		return
 
 /obj/item/gun/kinetic/silenced_22
 	name = "STL Orion"
