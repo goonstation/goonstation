@@ -212,8 +212,20 @@
 				burn_type = 1
 			else
 				burn_type = 0
-		return
 
+		if (src.material.triggersOnLife.len)
+			src.AddComponent(/datum/component/holdertargeting/mat_triggersonlife)
+		else
+			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			if (C)
+				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+
+	removeMaterial()
+		if (src.material && src.material.triggersOnLife.len)
+			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			if (C)
+				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+		..()
 
 /obj/item/New()
 	// this is dumb but it won't let me initialize vars to image() for some reason
