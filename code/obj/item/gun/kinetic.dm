@@ -619,6 +619,7 @@
 	caliber = null // use any ammo at all BA HA HA HA HA
 	max_ammo_capacity = 2
 	var/failure_chance = 6
+	var/failured = 0
 
 	New()
 #if ASS_JAM
@@ -631,13 +632,19 @@
 		ammo = new/obj/item/ammo/bullets/derringer
 		ammo.amount_left = 0 // start empty
 		current_projectile = new/datum/projectile/bullet/derringer
+		if(prob(5))	// 5% chance that the cruddy thing you built is a piece of crud
+			failured = 1
 		..()
 #endif
 
-	shoot()
+	shoot(var/target,var/start ,var/mob/user)
 		if(ammo && ammo.amount_left && current_projectile && current_projectile.caliber && current_projectile.power)
 			failure_chance = max(0,min(33,round(current_projectile.power/2 - 9)))
 		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
+			failured = 1
+			if(prob(failure_chance))	// You're only warned *sometimes*
+				boutput(user, "<span class='alert'>The shoddy connections in [src]'s framework cracks!</span>")
+		if(failured)
 			var/turf/T = get_turf(src)
 			explosion(src, T,-1,-1,1,2)
 			qdel(src)
