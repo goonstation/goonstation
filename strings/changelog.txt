@@ -1,4 +1,10 @@
 
+(t)sat jul 18 20
+(u)MarkNstein
+(p)1416
+(e)🆕|feature
+(+)Vending machines connected to MechComp can now commanded to vend a specific product.
+(+)When vending, Vending machines output a signal containing the name which product was dispensed.
 (t)fri jul 17 20
 (u)MarkNstein
 (p)1506
