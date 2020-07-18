@@ -47632,7 +47632,7 @@
 	},
 /obj/machinery/door_control{
 	id = "tox_vent1";
-	name = "Pad Public-Access Lockdown";
+	name = "Chamber 1 Exhaust";
 	pixel_x = -23;
 	pixel_y = 10
 	},
@@ -69254,7 +69254,7 @@
 	},
 /obj/machinery/door_control{
 	id = "tox_vent2";
-	name = "Pad Public-Access Lockdown";
+	name = "Chamber 2 Exhaust";
 	pixel_x = -23;
 	pixel_y = -9
 	},
