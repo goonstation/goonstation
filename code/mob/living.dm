@@ -1183,6 +1183,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		else if (src.r_hand)
 			thing = src.r_hand
 
+		if (!thing)
+			return
+
 	//passing grab theoretically could be a mechanic but needs some annoying fixed - swapping around assailant and item grab handling an stuff probably
 	if(istype(thing,/obj/item/grab))
 		return
