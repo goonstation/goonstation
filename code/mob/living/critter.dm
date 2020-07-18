@@ -665,7 +665,7 @@
 				return 0
 			if(istype(HH.limb, /datum/limb/small_critter))
 				var/datum/limb/small_critter/L = HH.limb
-				if(I.w_class > L.max_wclass)
+				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 					return 0
 			HH.item = I
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
@@ -678,7 +678,7 @@
 				return 0
 			if(istype(HH.limb, /datum/limb/small_critter))
 				var/datum/limb/small_critter/L = HH.limb
-				if(I.w_class > L.max_wclass)
+				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 					return 0
 			HH.item = I
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)

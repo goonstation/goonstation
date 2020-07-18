@@ -2351,12 +2351,18 @@
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "gg" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/yellow/corner,
 /area/station/quartermaster)
 "gh" = (
 /turf/simulated/floor/yellow/side,
 /area/station/quartermaster)
 "gi" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/yellow/corner{
 	dir = 8
 	},
@@ -2559,6 +2565,11 @@
 /turf/simulated/floor/delivery,
 /area/station/quartermaster)
 "gQ" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -3125,6 +3136,9 @@
 	},
 /area/station/quartermaster)
 "iu" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -3136,6 +3150,15 @@
 	pixel_x = 25
 	},
 /obj/table/auto,
+/obj/machinery/networked/printer{
+	name = "Printer - Escape Checkpoint";
+	pixel_y = 5;
+	print_id = "EscapeCheckpoint"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster)
 "iw" = (
@@ -7847,6 +7870,11 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue2"
@@ -8159,6 +8187,14 @@
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/table/wood/auto,
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/printer{
+	name = "Printer - Escape Checkpoint";
+	pixel_y = 5;
+	print_id = "EscapeCheckpoint"
 	},
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -15818,6 +15854,16 @@
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
 "Pe" = (
+/obj/table/auto,
+/obj/machinery/networked/printer{
+	name = "Printer - Escape Checkpoint";
+	pixel_y = 5;
+	print_id = "EscapeCheckpoint"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
 "Pf" = (
@@ -16025,6 +16071,11 @@
 "PF" = (
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
@@ -16278,6 +16329,13 @@
 	dir = 4
 	},
 /area/station/hangar/science)
+"Qn" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/quartermaster)
 "Qo" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -16326,6 +16384,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
+"Qy" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/side,
+/area/station/quartermaster)
 "Qz" = (
 /obj/access_spawn/forensics,
 /obj/firedoor_spawn,
@@ -16797,6 +16861,20 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
+"Tp" = (
+/obj/storage/secure/closet/engineering/cargo,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/quartermaster)
 "Ts" = (
 /obj/cable{
 	d1 = 1;
@@ -61274,7 +61352,7 @@ dz
 ea
 bH
 fu
-gh
+Qy
 EN
 gR
 iv
@@ -61576,7 +61654,7 @@ dA
 eb
 eM
 dx
-gh
+Qy
 bH
 bH
 bH
@@ -62180,7 +62258,7 @@ dC
 dY
 eO
 fv
-gj
+Qn
 gj
 hw
 ix
@@ -62482,7 +62560,7 @@ dD
 ec
 eP
 fw
-gk
+Tp
 gk
 hx
 iy
