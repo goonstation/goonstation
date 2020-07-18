@@ -316,6 +316,7 @@
 #define IMMUNE_SINGULARITY_INACTIVE 512
 #define IS_TRINKET 1024 		//used for trinkets GC
 #define IS_FARTABLE 2048
+#define NO_MOUSEDROP_QOL 4096 //overrides the click drag mousedrop pickup QOL kinda stuff
 //TBD the rest
 
 //temp_flags lol for atoms and im gonna be constantly adding and removing these

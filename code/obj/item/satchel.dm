@@ -5,6 +5,7 @@
 	icon_state = "satchel"
 	flags = ONBELT
 	w_class = 1
+	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 	var/maxitems = 50
 	var/list/allowed = list(/obj/item/)
 	var/itemstring = "items"
