@@ -35,6 +35,21 @@
 	src.checknearby() //check for nearby groups
 	if(!group)//if no group found
 		initializegroup() //make a new one
+//debuggin
+	processing_items |= src
+
+
+
+/turf/simulated/floor/feather/proc/process()
+	var/msg = "[group.id]<br>"
+	msg += "[group.size]<br>"
+	msg += "[group.power]<br>"
+
+	maptext = "<span class='ps2p l vt ol' style=\"font-size: 6px;\">[msg] </span>"
+
+/turf/simulated/floor/feather/disposing()
+	processing_items -= src
+//debuggin end
 
 /turf/simulated/floor/feather/special_desc(dist, mob/user)
   if(isflock(user))
@@ -71,6 +86,8 @@
 /turf/simulated/floor/feather/break_tile_to_plating()
 	// if the turf's on, turn it off
 	off()
+	src.group.removetile(src)
+	src.group = null
 	var/turf/simulated/floor/F = src.ReplaceWithFloor()
 	F.to_plating()
 
@@ -148,24 +165,17 @@
 /turf/simulated/floor/feather/proc/checknearby()
 	var/list/tiles = list() //list of tile groups found
 	for(var/turf/simulated/floor/feather/F in orange(1, src))//check for nearby flocktiles
-		message_admins("[F] has been checked")
 		if(F.group)
-			message_admins("passed check [tiles.len] is tiles.len")
 			tiles |= F.group
-			message_admins("passed check [tiles.len] is tiles.len")
 	if(tiles.len == 1)
 		src.group = tiles[1] //set it to the group found.
-		message_admins("[group] is group")
 		src.group.addtile(src)
-		message_admins("one was found, [src.group.id] is da group's id")
 	else if(tiles.len > 1) //if there is more then one, then join the largest (add merging functionality here later)
 		var/datum/flock_tile_group/newone = new //the "third" group
 		for(var/datum/flock_tile_group/FUCK in tiles)
-//			newone.members |= FUCK.members
 			newone.powergen += FUCK.powergen
 			newone.poweruse += FUCK.poweruse
 			for(var/turf/simulated/floor/feather/F in FUCK.members)
-				message_admins("[F] is F in fuck")
 				F.group = newone
 				newone.addtile(F)
 			for(var/obj/flock_structure/f in FUCK.connected)
@@ -175,7 +185,6 @@
 		src.group = newone
 		newone.addtile(src)
 	else
-		message_admins("nothing was found")
 		return null
 
 

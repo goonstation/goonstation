@@ -17,6 +17,7 @@
 
 /datum/flock_tile_group/disposing()
 	members.len = 0 //delete the list
+	connected.len = 0
 	flock = null
 //	processing_items -= src
 
@@ -24,6 +25,10 @@
 
 /datum/flock_tile_group/proc/addtile(var/turf/simulated/floor/feather/f)
 	members |= f
+	size = members.len
+
+/datum/flock_tile_group/proc/removetile(var/turf/simulated/floor/feather/f)
+	members -= f
 	size = members.len
 
 /datum/flock_tile_group/proc/addstructure(var/obj/flock_structure/f)

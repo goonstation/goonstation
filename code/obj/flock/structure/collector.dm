@@ -11,6 +11,7 @@
 	var/maxrange = 5 //max range for the thing.
 	var/connected = 0 //amount of tiles "connected" to.
 	var/list/connectedto = list() //the tiles its connected to
+	poweruse = 0
 //	icon = uhhh
 //	icon_state = uhhh^2
 
@@ -25,10 +26,12 @@
 /obj/flock_structure/collector/process()
 	..()
 	calcconnected()
+	src.poweruse = ((connected * 5) / -1) //power = tiles connected * 5 / 1 (5 power per tile)
+
 
 /obj/flock_structure/collector/proc/calcconnected()
 
-	var/start = world.timeofday
+
 
 	for(var/turf/simulated/floor/feather/f in connectedto)
 		f.off()
@@ -97,4 +100,4 @@
 	connected = connectedto.len
 
 
-	world.log << (world.timeofday - start)
+
