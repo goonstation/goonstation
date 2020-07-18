@@ -58,6 +58,9 @@
 			pool (src)
 			user.put_in_hand_or_drop(P)
 
+			JOB_XP_ARCHIVED(user, "Botanist", 9)
+			message_admins("[user]. paper1")
+
 		else if (istype(W, /obj/item/bluntwrap))
 			boutput(user, "<span class='alert'>You roll [src] up in [W] and make a fat doink.</span>")
 			var/obj/item/clothing/mask/cigarette/cigarillo/doink = new(user.loc)
@@ -74,6 +77,8 @@
 			qdel(W)
 			pool(src)
 			user.put_in_hand_or_drop(doink)
+			JOB_XP_ARCHIVED(user, "Botanist", 50)
+			message_admins("[user]. blunt1")
 
 	combust_ended()
 		smoke_reaction(src.reagents, 1, get_turf(src), do_sfx = 0)
