@@ -309,6 +309,8 @@
 				for (var/mob/N in AIviewers(usr, null))
 					if (N.client)
 						shake_camera(N, 4, 1, 0.5)
+		if(ismonkey(user))
+			actions.start(new /datum/action/bar/icon/railing_jump/table_jump(user, src), user)
 		return
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -353,6 +355,25 @@
 		if (usr && usr == over_object && src.desk_drawer)
 			return src.desk_drawer.MouseDrop(over_object, src_location, over_location)
 		..()
+
+	Bumped(atom/AM)
+		..()
+		if(ismonkey(AM))
+			actions.start(new /datum/action/bar/icon/railing_jump/table_jump(AM, src), AM)
+
+//Replacement for monkies walking through tables: They now parkour over them.
+//Note: Max count of tables traversable is 2 more than the iteration limit
+/datum/action/bar/icon/railing_jump/table_jump
+	getLandingLoc()
+		var/iteration = 0
+		var/turf/target = get_step(the_railing, ownerMob.dir)
+		var/obj/table/maybe_table = locate(/obj/table) in target
+		while(maybe_table && iteration < 5)
+			iteration++
+			target = get_step(target, ownerMob.dir)
+			maybe_table = locate(/obj/table) in target
+			duration += 1 SECOND
+		return target
 
 /* ======================================== */
 /* ---------------------------------------- */
