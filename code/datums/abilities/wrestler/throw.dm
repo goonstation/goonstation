@@ -130,7 +130,7 @@
 						HH.throw_at(T, 3, 1)
 
 
-			logTheThing("combat", M, HH, "uses the [fake ? "fake " : ""]throw wrestling move on %target% at [log_loc(M)].")
+			logTheThing("combat", M, HH, "uses the [fake ? "fake " : ""]throw wrestling move on [constructTarget(HH,"combat")] at [log_loc(M)].")
 
 		if (G && istype(G)) // Target was gibbed before we could throw them, who knows.
 			qdel(G)

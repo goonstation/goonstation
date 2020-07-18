@@ -55,8 +55,8 @@
 		else
 			target.apply_flash(30, 15, stamina_damage = 350)
 
-		if (ishuman(target))
+		if (isliving(target))
 			target:was_harmed(M, special = "vamp")
 
-		logTheThing("combat", M, target, "uses glare on %target% at [log_loc(M)].")
+		logTheThing("combat", M, target, "uses glare on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0

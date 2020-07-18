@@ -541,8 +541,8 @@
 	CritterAttack(mob/M)
 		if (!src.alive) return
 		src.attacking = 1
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		if(!M.stat)
 			M.visible_message("<span class='combat'><B>[src]</B> pummels [src.target] mercilessly!</span>")
@@ -795,8 +795,8 @@
 			random_brute_damage(src.target, rand(4,8),1)
 			SPAWN_DBG(2.5 SECONDS)
 				src.attacking = 0
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		return
 
@@ -1170,8 +1170,8 @@
 			src.visible_message("<span class='combat'><B>[src]</B> grabs at [M]'s arm!</span>")
 			boutput(M, "<span class='combat'><b>It burns!</b></span>")
 			M.TakeDamage("chest", 0, rand(5,15))
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		SPAWN_DBG(6 SECONDS)
 			src.attacking = 0

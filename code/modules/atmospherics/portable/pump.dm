@@ -84,9 +84,7 @@
 			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
 			src.contained = 1
 			src.set_loc(W)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, user)
-			s.start()
+			elecflash(user)
 	..()
 
 /obj/machinery/portable_atmospherics/pump/attack_ai(var/mob/user as mob)

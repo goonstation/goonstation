@@ -494,7 +494,7 @@
 			return 1
 
 		//Do the actual control-granting here.
-		logTheThing("combat", holder.owner, HO, "granted control of their body to %target% as a changeling!")
+		logTheThing("combat", holder.owner, HO, "granted control of their body to [constructTarget(HO,"combat")] as a changeling!")
 		//Transfer the owner's mind into a hivemind observer and grant it the recovery verb
 		var/mob/dead/target_observer/hivemind_observer/master = H.insert_into_hivemind(H.owner)
 		master.verbs += /mob/dead/target_observer/hivemind_observer/proc/regain_control

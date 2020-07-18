@@ -1314,9 +1314,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 						b.blood_type = src.blood_type
 						b.color = "#0b1f8f"
 					else if (prob(10))
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(3, 1, src)
-						s.start()
+						elecflash(src)
 				if (step_to(src, get_step(src, direction), 0))
 					break
 
@@ -1372,9 +1370,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
 				if (i > 0)
 					if (prob(10))
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(3, 1, src)
-						s.start()
+						elecflash(src)
 				if (step_to(src, get_step(src, direction), 0))
 					break
 
@@ -1434,9 +1430,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 						/*var/obj/decal/cleanable/oil/o =*/
 						make_cleanable(/obj/decal/cleanable/oil/streak,src.loc)
 					else if (prob(10))
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(3, 1, src)
-						s.start()
+						elecflash(src)
 				if (step_to(src, get_step(src, direction), 0))
 					break
 
@@ -1735,11 +1729,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 			smoke.set_up(5, 0, src.loc, ,"#cb5e97")
 			smoke.start()
-		/*
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(5, 1, src.loc)
-		s.start()
-		*/
+
 		explosion(src, src.loc, -1, -1, -1, 1)
 		pool(src)
 

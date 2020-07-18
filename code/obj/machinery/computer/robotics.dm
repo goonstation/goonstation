@@ -148,7 +148,7 @@
 					if(src.check_access(I))
 						if(istype(R))
 							message_admins("<span class='alert'>[key_name(usr)] has activated the robot self destruct on [key_name(R)].</span>")
-							logTheThing("combat", usr, R, "has activated the robot killswitch process on %target%")
+							logTheThing("combat", usr, R, "has activated the robot killswitch process on [constructTarget(R,"combat")]")
 							if(R.client)
 								boutput(R, "<span class='alert'><b>Killswitch process activated.</b></span>")
 							R.killswitch = 1
@@ -156,7 +156,7 @@
 						else if(istype(A))
 							var/mob/message = A.get_message_mob()
 							message_admins("<span class='alert'>[key_name(usr)] has activated the AI self destruct on [key_name(message)].</span>")
-							logTheThing("combat", usr, message, "has activated the AI killswitch process on %target%")
+							logTheThing("combat", usr, message, "has activated the AI killswitch process on [constructTarget(message,"combat")]")
 							if(message.client)
 								boutput(message, "<span class='alert'><b>AI Killswitch process activated.</b></span>")
 								boutput(message, "<span class='alert'><b>Killswitch will engage in 60 seconds.</b></span>") // more like 180 really but whatever
@@ -170,7 +170,7 @@
 					R.killswitch_time = 60
 					R.killswitch = 0
 					message_admins("<span class='alert'>[key_name(usr)] has stopped the robot self destruct on [key_name(R, 1, 1)].</span>")
-					logTheThing("combat", usr, R, "has stopped the robot killswitch process on %target%.")
+					logTheThing("combat", usr, R, "has stopped the robot killswitch process on [constructTarget(R,"combat")].")
 					if(R.client)
 						boutput(R, "<span class='notice'><b>Killswitch process deactivated.</b></span>")
 				else if(istype(A))
@@ -178,7 +178,7 @@
 					A.killswitch = 0
 					var/mob/message = A.get_message_mob()
 					message_admins("<span class='alert'>[key_name(usr)] has stopped the AI self destruct on [key_name(message, 1, 1)].</span>")
-					logTheThing("combat", usr, message, "has stopped the AI killswitch process on %target%.")
+					logTheThing("combat", usr, message, "has stopped the AI killswitch process on [constructTarget(message,"combat")].")
 					if(message.client)
 						boutput(message, "<span class='notice'><b>Killswitch process deactivated.</b></span>")
 
@@ -195,7 +195,7 @@
 					R.weapon_lock = 1
 					R.weaponlock_time = 120
 					R.uneq_active()
-					logTheThing("combat", usr, R, "has activated %target%'s weapon lock (120 seconds).")
+					logTheThing("combat", usr, R, "has activated [constructTarget(R,"combat")]'s weapon lock (120 seconds).")
 					for (var/obj/item/roboupgrade/X in R.contents)
 						if (X.activated)
 							X.activated = 0
@@ -211,7 +211,7 @@
 								boutput(message, "<span class='alert'><b>Emergency lockout activated!</b></span>")
 								A.weapon_lock = 1
 								A.weaponlock_time = 120
-								logTheThing("combat", usr, message, "has activated %target%'s weapon lock (120 seconds).")
+								logTheThing("combat", usr, message, "has activated [constructTarget(message,"combat")]'s weapon lock (120 seconds).")
 					else
 						boutput(usr, "<span class='alert'>Access Denied.</span>")
 
@@ -222,7 +222,7 @@
 						boutput(R, "Weapon Lock deactivated.")
 					R.weapon_lock = 0
 					R.weaponlock_time = 120
-					logTheThing("combat", usr, R, "has deactivated %target%'s weapon lock.")
+					logTheThing("combat", usr, R, "has deactivated [constructTarget(R,"combat")]'s weapon lock.")
 
 				else if(istype(A))
 					var/mob/message = A.get_message_mob()
@@ -230,7 +230,7 @@
 						boutput(message, "Emergency lockout deactivated.")
 					A.weapon_lock = 0
 					A.weaponlock_time = 120
-					logTheThing("combat", usr, message, "has deactivated %target%'s weapon lock.")
+					logTheThing("combat", usr, message, "has deactivated [constructTarget(message,"combat")]'s weapon lock.")
 
 	src.updateUsrDialog()
 	return

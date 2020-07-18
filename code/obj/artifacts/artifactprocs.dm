@@ -283,7 +283,7 @@
 			if (get_dist(src.loc, M.loc) > 1)
 				return
 			src.visible_message("<strong class='combat'>[A] shoves [M] against \the [src]!</strong>")
-			logTheThing("combat", A, M, "forces %target% to touch \an ([A.type]) artifact at [log_loc(src)].")
+			logTheThing("combat", A, M, "forces [constructTarget(M,"combat")] to touch \an ([A.type]) artifact at [log_loc(src)].")
 			src.ArtifactTouched(M)
 			return 0
 
@@ -502,7 +502,7 @@
 	var/datum/artifact/A = O.artifact
 
 	if ((target && ismob(target)) && type_of_action == "weapon")
-		logTheThing("combat", user, target, "attacks %target% with an active artifact ([A.type])[special_addendum ? ", [special_addendum]" : ""] at [log_loc(target)].")
+		logTheThing("combat", user, target, "attacks [constructTarget(target,"combat")] with an active artifact ([A.type])[special_addendum ? ", [special_addendum]" : ""] at [log_loc(target)].")
 	else
 		logTheThing(type_of_action == "detonated" ? "bombing" : "station", user, target, "an artifact ([A.type]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
 

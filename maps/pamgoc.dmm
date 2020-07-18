@@ -48476,7 +48476,10 @@
 /area/station/medical/medbay/surgery)
 "bNI" = (
 /obj/machinery/optable,
-/obj/item/robodefibrillator,
+/obj/machinery/defib_mount{
+	pixel_x = -6;
+	pixel_y = 4
+	},
 /turf/simulated/floor/bot,
 /area/station/medical/medbay/surgery)
 "bNJ" = (

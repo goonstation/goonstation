@@ -186,6 +186,8 @@
 
 	var/damageMult = 1
 
+	var/animation_color
+
 	var/manualTriggerOnly = 0 //If 1, the special will not trigger from normal "out of melee range" clicks but has to be triggered manually from somewhere.
 							  //This means none of the mouse procs or pixelaction will be called.
 
@@ -223,6 +225,8 @@
 		if(name == null || master == null) return
 		if(!user) user = usr
 		var/obj/itemspecialeffect/E = unpool(/obj/itemspecialeffect)
+		if(src.animation_color)
+			E.color = src.animation_color
 		E.setup(get_turf(user))
 		E.dir = direction
 		E.icon_state = name
@@ -238,7 +242,8 @@
 			return 0
 
 		if(user.a_intent == "help" || user.a_intent == "grab")
-			return 0
+			if(!(user.equipped() && (user.equipped().item_function_flags & USE_SPECIALS_ON_ALL_INTENTS)))
+				return 0
 
 		if (user.check_block())
 			return 0
@@ -437,6 +442,8 @@
 				var/turf/turf = get_step(master, direction)
 
 				var/obj/itemspecialeffect/simple/S = unpool(/obj/itemspecialeffect/simple)
+				if(src.animation_color)
+					S.color = src.animation_color
 				S.setup(turf)
 
 				var/hit = 0
@@ -451,6 +458,20 @@
 				if (!hit)
 					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
 			return
+
+		kendo_light
+			name = "Light Attack"
+			desc = "A weak, but fast and economic attack."
+			staminaCost = 5
+			animation_color = "#a3774d"
+
+		kendo_heavy
+			name = "Heavy Attack"
+			desc = "A powerful, but slow and draining attack."
+			staminaCost = 35
+			moveDelay = 5
+			moveDelayDuration = 5
+			animation_color = "#a3774d"
 
 	rangestab
 		cooldown = 0 //10
@@ -495,6 +516,15 @@
 					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
+		kendo_thrust
+			name = "Thrust"
+			desc = "A powerful ranged stab."
+			staminaCost = 8
+			damageMult = 1
+			animation_color = "#a3774d"
+
+			onAdd()
+				return
 	swipe
 		cooldown = 0 //30
 		staminaCost = 5
@@ -578,7 +608,6 @@
 					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
-
 		csaber //no stun and less damage than normal csaber hit ( see sword/attack() )
 
 			damageMult = 0.54
@@ -598,6 +627,19 @@
 			damageMult = 1
 
 			onAdd()
+				return
+
+		kendo_sweep
+			name = "Sweep"
+			desc = "An AoE attack with a chance to disarm."
+			//cooldown = 0 //30
+			staminaCost = 15
+			swipe_color = "#a3774d"
+			damageMult = 0.8
+
+			onAdd()
+				if(master)
+					overrideStaminaDamage = master.stamina_damage * 0.8
 				return
 
 	slam
@@ -982,7 +1024,7 @@
 		staminaCost = 0
 		moveDelay = 5
 		moveDelayDuration = 5
-		damageMult = 0.33
+		damageMult = 0.5
 
 		image = "dagger"
 		name = "Slice"
@@ -993,7 +1035,7 @@
 		onAdd()
 			if(master)
 				staminaCost = master.stamina_cost * 0.2 //Inherits from the item.
-				overrideStaminaDamage = master.stamina_damage * 0.33
+				overrideStaminaDamage = master.stamina_damage * 0.5
 			return
 
 		pixelaction(atom/target, params, mob/user, reach)
@@ -1181,6 +1223,39 @@
 
 				afterUse(user)
 			return
+
+	elecflash
+		cooldown = 0
+		moveDelay = 5
+		moveDelayDuration = 2
+
+		damageMult = 0.8
+
+
+		image = "pulse"
+		name = "Pulse"
+		desc = "Pulse 1 tile away from you in any direction. The pulse will emit a mild shock that spreads in a random direction."
+
+		onAdd()
+			if(master)
+				staminaCost = master.stamina_cost * 0.4 //Inherits from the item.
+				overrideStaminaDamage = master.stamina_damage * 0.8
+			return
+
+		pixelaction(atom/target, params, mob/user, reach)
+			if(!isturf(target.loc) && !isturf(target)) return
+			if(!usable(user)) return
+			if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+				preUse(user)
+				var/direction = get_dir_pixel(user, target, params)
+				var/turf/turf = get_step(master, direction)
+
+				var/obj/itemspecialeffect/conc/C = unpool(/obj/itemspecialeffect/conc)
+				C.setup(turf)
+				elecflash(turf,0, power=2, exclude_center = 0)
+				afterUse(user)
+			return
+
 ///////////////////////////////////
 	spark/ntso
 		cooldown = 0
@@ -1274,7 +1349,7 @@
 		requiresStaminaToFire = 1
 		staminaReqAmt = 80
 
-		image = "katana"
+		image = "rush"
 		name = "Katana Dash"
 		desc = "Instantly dash to a location like you saw in all those Japanese cartoons."
 
@@ -1387,6 +1462,121 @@
 				H.do_disorient(src.stamina_damage, stunned = 10)
 
 
+	katana_dash/limb
+		cooldown = 0
+		moveDelay = 0
+		moveDelayDuration = 0
+		staminaCost = 30		//Stamina cost of attack
+		requiresStaminaToFire = 1
+		staminaReqAmt = 0
+
+		image = "rush"
+		name = "Dash"
+		desc = "Instantly dash to a location while attacking."
+
+		secondhit_delay = 1
+		reversed = 0
+
+		var/datum/limb/L
+
+		preUse(var/mob/person)
+			..()
+			L = person.equipped_limb()
+			if (!L)
+				return
+			L.special_next = 1
+
+		afterUse(var/mob/person)
+			..()
+			if (L)
+				L.special_next = 0
+
+		pixelaction(atom/target, params, mob/user, reach)
+			if(!isturf(target.loc) && !isturf(target)) return
+			if(!usable(user)) return
+
+			if(params["left"] && params["ai"] || get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+				preUse(user)
+				var/direction = get_dir_pixel(user, target, params)
+				if (reversed)
+					direction = turn(direction, 180)
+				var/list/attacked = list()
+
+				var/turf/T1 = get_turf(user)
+				var/turf/T2 = null
+				var/turf/T3 = null
+				var/turf/T4 = null
+
+				//This steps the user to his destination and gets the turfs needed for drawing the effects and where the attack hits
+				var/stopped = 0
+				var/prev_loc = get_turf(user)
+				step(user, direction)
+				if (get_turf(user) != prev_loc)
+					T2 = get_turf(user)
+				else
+					stopped = 1
+
+				sleep(world.tick_lag)
+
+				prev_loc = get_turf(user)
+				step(user, direction)
+				if (!stopped && get_turf(user) != prev_loc)
+					T3 = get_turf(user)
+				else
+					stopped = 2
+
+				sleep(world.tick_lag)
+
+				prev_loc = get_turf(user)
+				step(user, direction)
+				if (!stopped && get_turf(user) != prev_loc)
+					T4 = get_turf(user)
+				else
+					stopped = 3
+
+				sleep(world.tick_lag)
+
+				var/obj/itemspecialeffect/conc/start = new
+				var/obj/itemspecialeffect/katana_dash/mid/mid1 = new
+				var/obj/itemspecialeffect/katana_dash/mid/mid2 = new
+				var/obj/itemspecialeffect/conc/end = new
+
+				start.do_flick = 1
+				mid1.do_flick = 1
+				mid2.do_flick = 1
+				end.do_flick = 1
+
+				//Draws the effects // I did this backwards maybe, but won't fix it -kyle
+				start.setup(T1)
+				start.dir = direction
+				if (T4)
+					mid1.setup(T2)
+					mid1.dir = direction
+					mid2.setup(T2)
+					mid2.dir = direction
+					end.setup(T4)
+					end.dir = direction
+				else if (T3)
+					mid1.setup(T2)
+					mid1.dir = direction
+					end.setup(T3)
+					end.dir = direction
+				else if (T2)
+					end.setup(T2)
+					end.dir = direction
+
+				for(var/atom/movable/A in get_step(user, direction))
+					if(A in attacked) continue
+					if(isTarget(A))
+						attacked += A
+						A.attack_hand(user,params)
+						// hit = 1
+						break
+
+				afterUse(user)
+				//if (!hit)
+				playsound(get_turf(user), 'sound/effects/swoosh.ogg', 40, 1, pitch = 2.3)
+			return
 
 	nunchucks
 		cooldown = 30
@@ -1396,7 +1586,7 @@
 
 		damageMult = 0.8
 
-		image = "nunchucks"
+		image = "dagger"
 		name = "double hit"
 		desc = "Attack with two quick hits."
 
@@ -1456,7 +1646,7 @@
 		moveDelayDuration = 0
 		damageMult = 1
 
-		image = "simple"
+		image = "throw"
 		name = "Tile Fling"
 		desc = "If available, fling a floor tile from the ground in front of you. Otherwise attacks in direction. No crits."
 

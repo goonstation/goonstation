@@ -319,16 +319,16 @@
 	attackby(obj/item/C as obj, mob/user as mob)
 
 		if (istype(C, /obj/item/tile))
+			var/obj/item/tile/T = C
+			if (T.amount >= 1)
+				T.build(get_turf(src))
+				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+				T.add_fingerprint(user)
+				qdel(src)
 
-			C:build(get_turf(src))
-			C:amount--
-			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
-			C.add_fingerprint(user)
-
-			if (C:amount < 1)
-				user.u_equip(C)
-				qdel(C)
-			qdel(src)
+			if (T.amount < 1 && !issilicon(user))
+				user.u_equip(T)
+				qdel(T)
 			return
 		if (isweldingtool(C) && C:try_weld(user,0))
 			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")

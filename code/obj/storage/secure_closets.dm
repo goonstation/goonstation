@@ -564,7 +564,6 @@
 	name = "\improper Custodial supplies locker"
 	req_access = list(access_janitor)
 	spawn_contents = list(/obj/item/storage/box/clothing/janitor,\
-	/obj/item/clothing/shoes/galoshes,\
 	/obj/item/reagent_containers/glass/bottle/cleaner = 2,\
 	/obj/item/reagent_containers/glass/bottle/acetone/janitors = 1,\
 	/obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1,\
@@ -607,7 +606,8 @@
 /obj/storage/secure/closet/civilian/chaplain
 	name = "\improper Religious supplies locker"
 	req_access = list(access_chapel_office)
-	spawn_contents = list(/obj/item/storage/box/clothing/chaplain,\
+	spawn_contents = list(/obj/item/storage/box/clothing/witchfinder,\
+	/obj/item/storage/box/clothing/chaplain,\
 	/obj/item/clothing/under/misc/chaplain/atheist,\
 	/obj/item/clothing/under/misc/chaplain,\
 	/obj/item/clothing/under/misc/chaplain/rabbi,\

@@ -118,7 +118,7 @@
 				src.in_water_to_out_of_water = 1
 			src.water_need = 2
 
-/mob/living/critter/aquatic/TakeDamage(zone, brute, burn)
+/mob/living/critter/aquatic/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
 	if(prob(10 * src.in_water_buff) && !src.water_need)
 		src.HealDamage("All", in_water_buff, in_water_buff)
@@ -198,7 +198,7 @@
 		hit_twitch(src)
 		src.visible_message("<b>[src]</b> [pick("flops around desperately","gasps","shudders")].")
 
-/mob/living/critter/aquatic/TakeDamage(zone, brute, burn)
+/mob/living/critter/aquatic/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
 	if(!isdead(src))
 		animate_bumble(src)
@@ -537,7 +537,7 @@
 	if(check_target_immunity( target ))
 		return 0
 	if (prob(15))
-		logTheThing("combat", user, target, "accidentally slashes %target% with pincers at [log_loc(user)].")
+		logTheThing("combat", user, target, "accidentally slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
 		user.visible_message("<span class='alert'><b>[user] accidentally slashes [target] while trying to [user.a_intent] them!</b></span>", "<span class='alert'><b>You accidentally slash [target] while trying to [user.a_intent] them!</b></span>")
 		harm(target, user, 1)
 		return 1
@@ -560,7 +560,7 @@
 
 /datum/limb/king_crab/harm(mob/target, var/mob/living/user, var/no_logs = 0)
 	if (no_logs != 1)
-		logTheThing("combat", user, target, "slashes %target% with pincers at [log_loc(user)].")
+		logTheThing("combat", user, target, "slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
 	var/obj/item/affecting = target.get_affecting(user)
 	var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 20, 0, 2)
 	user.attack_effects(target, affecting)

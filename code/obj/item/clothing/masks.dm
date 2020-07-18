@@ -94,7 +94,7 @@
 		target.TakeDamage("head", rand(12, 18), 0) 				//OW!
 		target.changeStatus("weakened", 4 SECONDS)
 
-		logTheThing("combat", source, target, "rips out the staples on %target%'s [src]") //Crime
+		logTheThing("combat", source, target, "rips out the staples on [constructTarget(target,"combat")]'s [src]") //Crime
 
 /obj/item/clothing/mask/gas
 	name = "gas mask"

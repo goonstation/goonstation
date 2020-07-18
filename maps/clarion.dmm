@@ -18250,10 +18250,29 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aIp" = (
+/obj/item/clothing/gloves/boxing{
+	pixel_x = -4
+	},
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/under/shorts/blue{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_x = 6
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/clothing/under/shorts/black{
+	pixel_x = -7;
+	pixel_y = -5
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aIq" = (
@@ -18876,10 +18895,30 @@
 /area/station/crew_quarters/fitness)
 "aJC" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/black,
-/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/head/helmet/men{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/clothing/head/helmet/men{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/clothing/suit/armor/douandtare{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/clothing/suit/armor/douandtare{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/clothing/gloves/kote{
+	pixel_x = -1
+	},
+/obj/item/clothing/gloves/kote{
+	pixel_x = -1
+	},
+/obj/item/shinai_bag,
+/obj/item/storage/box/kendo_box/hakama,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aJD" = (
@@ -31448,7 +31487,7 @@
 /area/station/medical/medbay/surgery)
 "bga" = (
 /obj/table/reinforced/auto,
-/obj/item/robodefibrillator,
+/obj/machinery/defib_mount,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bgb" = (

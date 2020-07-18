@@ -290,6 +290,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 //	if (last_transmission && world.time < (last_transmission + TRANSMISSION_DELAY))
 //		return
 
+	var/ai_sender = 0
 	var/eqjobname
 
 	if (iscarbon(M))
@@ -300,6 +301,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 				eqjobname = "No ID"
 	else if (isAI(M))
 		eqjobname = "AI"
+		ai_sender = 1
 	else if (isrobot(M))
 		eqjobname = "Cyborg"
 	else if (istype(M, /obj/machinery/computer)) // :v
@@ -336,12 +338,20 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 
 							//mbc : i dont like doing this here but its the easiest place to fit it in since this is a point where we have access to both the receiving mob and the radio they are receiving through
 							var/mob/rmob = i
-							rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+
+							if (ai_sender)
+								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+							else
+								rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
 
 				else
 					for (var/i in R.send_hear())
 						if (!(i in receive))
 							receive += i
+
+							if (ai_sender)
+								var/mob/rmob = i
+								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
 
 		else if (istype(I, /obj/item/mechanics/radioscanner)) //MechComp radio scanner
 			var/obj/item/mechanics/radioscanner/R = I
@@ -748,7 +758,7 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 		var/mob/M = src.loc
 		if (src == M.back)
 			M.show_message("<span class='alert'><B>You feel a sharp shock!</B></span>")
-			logTheThing("signalers", usr, M, "signalled an electropack worn by %target% at [log_loc(M)].") // Added (Convair880).
+			logTheThing("signalers", usr, M, "signalled an electropack worn by [constructTarget(M,"signalers")] at [log_loc(M)].") // Added (Convair880).
 			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				if((M.mind in ticker.mode:revolutionaries) && !(M.mind in ticker.mode:head_revolutionaries) && prob(20))
 					ticker.mode:remove_revolutionary(M.mind)
@@ -1070,6 +1080,19 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	rand_pos = 0
 	density = 0
 	desc = "A Loudspeaker."
+
+	New()
+		//..()
+		if(src.pixel_x == 0 && src.pixel_y == 0)
+			switch(src.dir)
+				if(NORTH)
+					pixel_y = -14
+				if(SOUTH)
+					pixel_y = 32
+				if(EAST)
+					pixel_x = -21
+				if(WEST)
+					pixel_x = 21
 
 	north
 		dir = NORTH
