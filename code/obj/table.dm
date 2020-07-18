@@ -358,8 +358,12 @@
 
 	Bumped(atom/AM)
 		..()
-		if(ismonkey(AM))
-			actions.start(new /datum/action/bar/icon/railing_jump/table_jump(AM, src), AM)
+		if(!ismonkey(AM))
+			return
+		var/mob/living/carbon/human/M = AM
+		if(M.stat)
+			return
+		actions.start(new /datum/action/bar/icon/railing_jump/table_jump(AM, src), AM)
 
 //Replacement for monkies walking through tables: They now parkour over them.
 //Note: Max count of tables traversable is 2 more than the iteration limit
@@ -374,6 +378,24 @@
 			maybe_table = locate(/obj/table) in target
 			duration += 1 SECOND
 		return target
+
+	sendOwner()
+		var/throw_speed = 0.5
+		if (istype(ownerMob, /mob/living/carbon/human))
+			var/mob/living/carbon/human/M = ownerMob
+			if (!(M.flags & TABLEPASS))
+				var/tables_traveled = duration/(1 SECONDS)
+				SPAWN_DBG((tables_traveled/throw_speed) DECI SECONDS)
+					M.flags &= !TABLEPASS		
+			M.flags ^= TABLEPASS
+
+		ownerMob.throw_at(jump_target, 7, throw_speed)
+		for(var/mob/O in AIviewers(ownerMob))
+			var/the_text = "[ownerMob] jumps over [the_railing]."
+			if (is_athletic_jump) // athletic jumps are more athletic!!
+				the_text = "[ownerMob] swooces right over [the_railing]!"
+			O.show_text("[the_text]", "red")
+		logTheThing("combat", ownerMob, the_railing, "[is_athletic_jump ? "leaps over %the_railing% with [his_or_her(ownerMob)] athletic trait" : "crawls over %the_railing%"].")
 
 /* ======================================== */
 /* ---------------------------------------- */

@@ -235,6 +235,9 @@
 			return
 
 		// otherwise, the user jumps over without issue!
+		sendOwner()
+
+	proc/sendOwner()
 		ownerMob.set_loc(jump_target)
 		for(var/mob/O in AIviewers(ownerMob))
 			var/the_text = null
