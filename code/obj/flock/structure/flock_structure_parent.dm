@@ -16,6 +16,8 @@
 	var/bruteVuln = 1.2
 	var/fireVuln = 0.2 // very flame-retardant
 	var/datum/flock/flock = null
+	var/poweruse = 0 //does this use(/how much) power? (negatives mean it makes power)
+	var/datum/flock_tile_group/group = null //what group are we connected to?
 
 /obj/flock_structure/New(var/atom/location, var/datum/flock/F=null)
 	..()

@@ -168,14 +168,12 @@
 				message_admins("[F] is F in fuck")
 				F.group = newone
 				newone.addtile(F)
+			for(var/obj/flock_structure/f in FUCK.connected)
+				f.group = newone
+				newone.addstructure(f)
 			qdel(FUCK)
 		src.group = newone
 		newone.addtile(src)
-//		message_admins("[max(tiles).size] is max(tiles)")
-//		var/turf/simulated/floor/feather/f = max(tiles).size //max(tiles).group doesnt work so imma do this instead
-//		src.group = f.group
-//		src.group.addtile(src)
-//		message_admins("more then one was found, [src.group.id] is da group's id")
 	else
 		message_admins("nothing was found")
 		return null

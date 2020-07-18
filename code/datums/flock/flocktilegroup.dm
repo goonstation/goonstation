@@ -1,6 +1,7 @@
 //a bit of a word of warning this is janky ass code but aighto!
 /datum/flock_tile_group
 	var/list/members = list() //what tiles are a part of the group
+	var/list/connected = list() //what structures are connected
 	var/size = 0 //how many tiles in there
 	var/power = 0 //how much power is in the grid
 	var/poweruse = 0 //how much is being used
@@ -25,8 +26,19 @@
 	members |= f
 	size = members.len
 
+/datum/flock_tile_group/proc/addstructure(var/obj/flock_structure/f)
+	connected |= f
 
 
+/datum/flock_tile_group/proc/calcpower()
+	src.powergen = 0
+	src.poweruse = 0
+	for(var/obj/flock_structure/f)
+		if(!f.poweruse == 0)
+			if(f.poweruse < 0)
+				src.powergen += abs(f.poweruse)
+			else if(f.poweruse > 0)
+				src.poweruse += f.poweruse
 
-
+	src.power = src.powergen - src.poweruse
 
