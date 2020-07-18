@@ -85,6 +85,29 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	return 1
 
+
+//Called AFTER the material of the object was changed.
+/atom/proc/onMaterialChanged()
+	if(istype(src.material))
+		explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_resistance
+		explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_protection
+		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 50)) flags |= CONDUCT
+
+
+		if (src.material.triggersOnLife.len)
+			src.AddComponent(/datum/component/holdertargeting/mat_triggersonlife)
+		else
+			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			if (C)
+				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+	else
+		var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+		if (C)
+			C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+
+	return
+
+
 //Simply removes a material from an object.
 /atom/proc/removeMaterial()
 	if(src.mat_changename)
@@ -95,6 +118,10 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	if(src.mat_changedesc)
 		src.desc = initial(src.desc)
+
+	var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+	if (C)
+		C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
 
 	src.alpha = initial(src.alpha)
 	src.color = initial(src.color)
