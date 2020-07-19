@@ -177,6 +177,7 @@ To remove:
 #define PROP_METABOLIC_RATE(x) x("chem_metabolism", APPLY_MOB_PROPERTY_PRODUCT, REMOVE_MOB_PROPERTY_PRODUCT)
 #define PROP_DIGESTION_EFFICIENCY(x) x("digestion_efficiency", APPLY_MOB_PROPERTY_PRODUCT, REMOVE_MOB_PROPERTY_PRODUCT)
 #define PROP_CHEM_PURGE(x) x("chem_purging", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
+#define PROP_REBREATHING(x) x("rebreathing", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 
 
 // In lieu of comments, these are the indexes used for list access in the macros below.
