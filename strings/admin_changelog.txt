@@ -1,3 +1,9 @@
+(t)fri jul 17 20
+(u)Kyle
+(*)Add button in secrets panel to add an ability to a selected mob or to all mobs. You can specify all humans or all mob/living. Also, fixed issue with trying to add abilities to abilityholder Composites that did not have any abilityHolders inside it.
+(t)tue jul 14 20
+(u)Sovexe
+(*)Updated Respawn-Panel to handle spawning antagonist players, plus minor UI improvements.
 (t)tue jul 14 20
 (u)Sovexe
 (*)Oceanify is now compatible with underwater maps and includes Manta compatibility. Additionally ocean is now auto colored to match reagent color.

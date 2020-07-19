@@ -87,19 +87,27 @@ var/global/list/falloff_cache = list()
 	EARLY_RETURN_IF_QUIET(vol)
 
 	var/area/source_location = get_area(source)
+	var/source_location_sound_group = null
+	if (source_location)
+		source_location_sound_group = source_location.sound_group
+
 	vol *= attenuate_for_location(source)
 	//message_admins("volume: [vol]")
 	EARLY_RETURN_IF_QUIET(vol)
 
+	var/area/listener_location
+
 	var/sound/S
 	var/turf/Mloc
+	var/ourvolume
+	var/scaled_dist
+	var/storedVolume
+
 	for (var/client/C)
 		if (CLIENT_IGNORES_SOUND(C))
 			continue
 
 		var/mob/M = C.mob
-		//LAGCHECK(LAG_LOW)
-
 		Mloc = get_turf(M)
 
 		//Hard attentuation
@@ -107,25 +115,24 @@ var/global/list/falloff_cache = list()
 		if (dist > MAX_SOUND_RANGE + extrarange)
 			continue
 
-		if (Mloc && M.client && Mloc.z && Mloc.z == source.z)
+		if (Mloc && Mloc.z == source.z)
 
-
-			var/area/listener_location = Mloc.loc
+			listener_location = Mloc.loc
 			if(listener_location)
 
-				if(source_location && source_location.sound_group && source_location.sound_group != listener_location.sound_group)
+				if(source_location_sound_group && source_location_sound_group != listener_location.sound_group)
 					//boutput(M, "You did not hear a [source] at [source_location] due to the sound_group ([source_location.sound_group]) not matching yours ([listener_location.sound_group])")
 					continue
 
 				//volume-related handling
-				var/ourvolume = vol
+				ourvolume = vol
 
 				//Custom falloff handling, see: https://www.desmos.com/calculator/ybukxuu9l9
 				if (dist > falloff_cache.len)
 					falloff_cache.len = dist
 				var/falloffmult = falloff_cache[dist]
 				if (falloffmult == null)
-					var/scaled_dist = clamp(dist/(MAX_SOUND_RANGE+extrarange),0,1)
+					scaled_dist = clamp(dist/(MAX_SOUND_RANGE+extrarange),0,1)
 					falloffmult = (1 - ((1.0542 * (0.18**-1.7)) / ((scaled_dist**-1.7) + (0.18**-1.7))))
 					falloff_cache[dist] = falloffmult
 
@@ -138,7 +145,7 @@ var/global/list/falloff_cache = list()
 				//	ourvolume *= 0.2
 				ourvolume *= attenuate_for_location(Mloc) //SECRET GOON SOUND SAUCE
 
-				var/storedVolume = ourvolume
+				storedVolume = ourvolume
 				ourvolume *= C.getVolume(channel) / 100
 				//boutput(world, "for client [C] updating volume [storedVolume] to [ourvolume] for channel [channel]")
 
@@ -159,11 +166,11 @@ var/global/list/falloff_cache = list()
 					//boutput(M, "You hear a [source] at [source_location]!")
 					S.echo = ECHO_CLOSE
 
-			S.x = source.x - Mloc.x
-			S.z = source.y - Mloc.y //Since sound coordinates are 3D, z for sound falls on y for the map.  BYOND.
-			S.y = 0
+				S.x = source.x - Mloc.x
+				S.z = source.y - Mloc.y //Since sound coordinates are 3D, z for sound falls on y for the map.  BYOND.
+				S.y = 0
 
-			C << S
+				C << S
 
 /mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
 	if(!src.client)

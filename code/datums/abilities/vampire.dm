@@ -220,8 +220,8 @@
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
 		.= list()
-		.["Blood:"] = src.points
-		.["Total:"] = src.vamp_blood
+		.["Blood:"] = round(src.points)
+		.["Total:"] = round(src.vamp_blood)
 		return
 
 	onLife(var/mult = 1)
@@ -312,7 +312,6 @@
 		return
 
 	remove_unlocks()
-		src.removeAbility(/datum/targetable/vampire/blood_steal)
 		src.removeAbility(/datum/targetable/vampire/phaseshift_vampire)
 		src.removeAbility(/datum/targetable/vampire/phaseshift_vampire/mk2)
 		src.removeAbility(/datum/targetable/vampire/mark_coffin)

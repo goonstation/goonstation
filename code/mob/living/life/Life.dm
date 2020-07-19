@@ -193,9 +193,10 @@
 
 		///LIFE PROCESS
 		//Most stuff gets handled here but i've left some other code below because all living mobs can use it
+		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)
 			if (!thing) continue
-			var/datum/lifeprocess/L = src.lifeprocesses[thing]
+			L = src.lifeprocesses[thing]
 			L.process(environment)
 
 		for (var/obj/item/implant/I in src.implant)
@@ -217,10 +218,11 @@
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
 
-			for (var/thing in src) //todo optimize with signals!!!!!!
-				var/atom/movable/A = thing
-				if (A.material)
-					A.material.triggerOnLife(src, A)
+			if (src.mob_flags & MAT_TRIGGER_LIFE)//controlled by a signal that is added when an item with mat gets a lifeprocess proc
+				for (var/thing in src) //bnlech, do a smarter search later
+					var/atom/movable/A = thing
+					if (A.material)
+						A.material.triggerOnLife(src, A)
 
 		clamp_values()
 
@@ -248,22 +250,6 @@
 
 		if (!can_act(M=src,include_cuffs=0))
 			actions.interrupt(src, INTERRUPT_STUNNED)
-
-		//rev mutiny
-		//change this to trigger from the sign, not the revs!!
-		if (src.mind && ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
-			var/datum/game_mode/revolution/R = ticker.mode
-
-			if ((src.mind in R.revolutionaries) || (src.mind in R.head_revolutionaries))
-				var/found = 0
-				for (var/datum/mind/M in R.head_revolutionaries)
-					if (M.current && ishuman(M.current))
-						if (get_dist(src,M.current) <= 5)
-							for (var/obj/item/revolutionary_sign/RS in M.current.equipped_list(check_for_magtractor = 0))
-								found = 1
-								break
-				if (found)
-					src.changeStatus("revspirit", 20 SECONDS)
 
 		if (src.abilityHolder)
 			src.abilityHolder.onLife((life_time_passed / tick_spacing))

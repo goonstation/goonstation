@@ -17,6 +17,19 @@ datum/special_respawn
 		else
 			return 0
 
+	proc/find_player_any(var/type = "an unknown")
+		var/list/eligible = dead_player_list(allow_dead_antags = 1)
+
+		if (!eligible.len)
+			return 0
+		target = pick(eligible)
+
+		if(target)
+			target.respawning = 1
+//			boutput(target, text("You have been picked to come back into play as [type], enter your new body now."))
+			return target
+		else
+			return 0
 
 	proc/spawn_syndies(var/number = 3)
 		var/r_number = 0
@@ -64,10 +77,14 @@ datum/special_respawn
 		message_admins("[r_number] syndicate agents spawned at Syndicate Station.")
 		return
 
-	proc/spawn_normal(var/number = 3)
+	proc/spawn_normal(var/number = 3, var/include_antags = 0, var/strip_antag = 0)
 		var/r_number = 0
+		var/mob/player = null
 		for(var/c = 0, c < number, c++)
-			var/mob/player = find_player("a person")
+			if(include_antags)
+				player = src.find_player_any("a person")
+			else
+				player = src.find_player("a person")
 			if(player)
 				var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(pick(latejoin))
 				if(!player.mind)
@@ -75,6 +92,8 @@ datum/special_respawn
 				player.mind.transfer_to(M)
 				//M.ckey = player:ckey
 
+				if(strip_antag)
+					remove_antag(M, usr, 1, 1)
 				r_number ++
 				SPAWN_DBG(5 SECONDS)
 					if(player && !player:client)
@@ -83,10 +102,14 @@ datum/special_respawn
 				break
 		message_admins("[r_number] players spawned.")
 
-	proc/spawn_as_job(var/number = 3, var/datum/job/job)
+	proc/spawn_as_job(var/number = 3, var/datum/job/job, var/include_antags = 0, var/strip_antag = 0)
 		var/r_number = 0
+		var/mob/player = null
 		for(var/c = 0, c < number, c++)
-			var/mob/player = find_player("a person")
+			if(include_antags)
+				player = src.find_player_any("a person")
+			else
+				player = src.find_player("a person")
 			if(player)
 				var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(pick(latejoin))
 				SPAWN_DBG(0)
@@ -96,6 +119,8 @@ datum/special_respawn
 					player.mind = new (player)
 				player.mind.transfer_to(M)
 
+				if(strip_antag)
+					remove_antag(M, usr, 1, 1)
 				r_number ++
 				SPAWN_DBG(5 SECONDS)
 					if(player && !player:client)

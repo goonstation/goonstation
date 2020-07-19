@@ -966,7 +966,7 @@
 	var/list/processed = list()
 
 	var/image/chat_maptext/chat_text = null
-	if (!message_range && speechpopups)
+	if (!message_range && speechpopups && src.chat_text)
 		//new /obj/maptext_junk/speech(src, msg = messages[1], style = src.speechpopupstyle) // sorry, Zamu
 		if(!last_heard_name || src.get_heard_name() != src.last_heard_name)
 			var/num = hex2num(copytext(md5(src.get_heard_name()), 1, 7))
@@ -1182,6 +1182,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			thing = src.l_hand
 		else if (src.r_hand)
 			thing = src.r_hand
+
+		if (!thing)
+			return
 
 	//passing grab theoretically could be a mechanic but needs some annoying fixed - swapping around assailant and item grab handling an stuff probably
 	if(istype(thing,/obj/item/grab))
@@ -1573,16 +1576,18 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/critter/keys_changed(keys, changed)
 	..()
 	if (changed & KEY_RUN)
-		if (hud)
+		if (hud && !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 			src.hud.set_sprint(keys & KEY_RUN)
 
 /mob/living/carbon/human/keys_changed(keys, changed)
 	..()
 	if (changed & KEY_RUN)
-		if (hud)
+		if (hud && !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 			src.hud.set_sprint(keys & KEY_RUN)
 
 /mob/living/proc/start_sprint()
+	if (HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
+		return
 	if (special_sprint && src.client)
 		if (special_sprint & SPRINT_BAT)
 			spell_batpoof(src, cloak = 0)

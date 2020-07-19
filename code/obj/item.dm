@@ -152,7 +152,7 @@
 			. = jointext(., "")
 		if(special && !istype(special, /datum/item_special/simple))
 			var/content = resource("images/tooltips/[special.image].png")
-			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]</div>"
+			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]<br>To execute a special, use HARM or DISARM intent and click a far-away tile.</div>"
 		. = jointext(., "")
 
 		lastTooltipContent = .
@@ -212,8 +212,20 @@
 				burn_type = 1
 			else
 				burn_type = 0
-		return
 
+		if (src.material.triggersOnLife.len)
+			src.AddComponent(/datum/component/holdertargeting/mat_triggersonlife)
+		else
+			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			if (C)
+				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+
+	removeMaterial()
+		if (src.material && src.material.triggersOnLife.len)
+			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			if (C)
+				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+		..()
 
 /obj/item/New()
 	// this is dumb but it won't let me initialize vars to image() for some reason
@@ -582,7 +594,7 @@
 /obj/item/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
 	..()
 
-	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
+	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL))
 		return
 
 	var/on_turf = isturf(src.loc)
