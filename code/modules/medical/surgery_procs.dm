@@ -178,7 +178,7 @@ limbs are their own thing not included here.
 			var/obj/item/chest_item = surgeon.equipped()
 
 			if(chest_item.w_class > 3)
-				surgeon.show_text("<span class='alert'>[patient.chest_item] is too big to fit into [patient]'s chest cavity.</span>")
+				surgeon.show_text("<span class='alert'>[chest_item] is too big to fit into [patient]'s chest cavity.</span>")
 				return 1
 
 			patient.tri_message("<span class='notice'><b>[surgeon]</b> shoves [chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest.</span>",\
