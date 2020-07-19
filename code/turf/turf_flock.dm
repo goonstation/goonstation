@@ -95,6 +95,11 @@
 	off()
 	icon_state = "floor-broken"
 	broken = 1
+	for(var/obj/flock_structure/f in get_turf(src))
+		if(f.usesgroups)
+			f.group.removestructure(f)
+			f.group = null
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // stuff to make floorrunning possible (god i wish i could think of a better verb than "floorrunning")
@@ -148,6 +153,10 @@
 	src.health = initial(health)
 	src.name = initial(name)
 	src.desc = initial(desc)
+	for(var/obj/flock_structure/f in get_turf(src))
+		if(f.usesgroups)
+			f.group = src.group
+			f.group.addstructure(f)
 
 /turf/simulated/floor/feather/broken
 	name = "weird broken floor"

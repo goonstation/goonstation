@@ -12,6 +12,7 @@
 	var/connected = 0 //amount of tiles "connected" to.
 	var/list/connectedto = list() //the tiles its connected to
 	poweruse = 0
+	usesgroups = 1
 //	icon = uhhh
 //	icon_state = uhhh^2
 
@@ -30,9 +31,6 @@
 
 
 /obj/flock_structure/collector/proc/calcconnected()
-
-
-
 	for(var/turf/simulated/floor/feather/f in connectedto)
 		f.off()
 		f.connected = 0

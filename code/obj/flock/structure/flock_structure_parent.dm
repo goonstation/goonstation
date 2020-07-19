@@ -17,6 +17,7 @@
 	var/fireVuln = 0.2 // very flame-retardant
 	var/datum/flock/flock = null
 	var/poweruse = 0 //does this use(/how much) power? (negatives mean it makes power)
+	var/usesgroups = 0 //not everything needs a group so dont check for everysingle god damn structure
 	var/datum/flock_tile_group/group = null //what group are we connected to?
 
 /obj/flock_structure/New(var/atom/location, var/datum/flock/F=null)
@@ -26,9 +27,15 @@
 	processing_items |= src
 	if(F)
 		src.flock = F
+	if(usesgroups && istype(get_turf(src), /turf/simulated/floor/feather))
+		var/turf/simulated/floor/feather/f = get_turf(src)
+		group = f.group
+		f.group.addstructure(src)
 
 /obj/flock_structure/disposing()
 	processing_items -= src
+	flock = null
+	group = null
 	..()
 
 /obj/flock_structure/special_desc(dist, mob/user)
