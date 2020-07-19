@@ -119,8 +119,8 @@
 		if (do_stun)
 			target.do_disorient(150, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0)
 
-		var/sound_pitch = null
 		var/sound_in = null
+		var/sound_pitch = 1
 		var/age = 30 //default
 
 		if(ishuman(user))
