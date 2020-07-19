@@ -6,7 +6,7 @@ var/datum/action_controller/actions
 	var/list/running = list() //Associative list of running actions, format: owner=list of action datums
 
 	proc/hasAction(var/atom/owner, var/id) //has this mob an action of a given type running?
-		if(running.Find(owner))
+		if(owner in running)
 			var/list/actions = running[owner]
 			for(var/datum/action/A in actions)
 				if(A.id == id) return 1
@@ -34,15 +34,29 @@ var/datum/action_controller/actions
 		return
 
 	proc/start(var/datum/action/A, var/atom/owner) //Starts a new action.
-		if(!running.Find(owner))
+	//if the owner isn't being tracked:
+		//add the ownder to racking
+		//add the action to the tracking.ownser
+		// proprtyify the action
+	//else (owner is already tracked)
+		//
+		if(!(owner in running))
 			running.Add(owner)
 			running[owner] = list(A)
+			A.owner = owner
+			A.started = world.time
 		else
 			interrupt(owner, INTERRUPT_ACTION)
+			A.owner = owner
+			A.started = world.time
 			running[owner] += A
-
-		A.owner = owner
-		A.started = world.time
+			//If there is a a prexisting action of the same kind, let's replace it.
+			var/list/owner_actions = running[owner]
+			for(var/datum/action/OA in owner_actions)
+				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE) 
+					A.owner = OA.owner
+					A.started = OA.started
+					break
 		A.onStart()
 		return A // cirr here, I added action ref to the return because I need it for AI stuff, thank you
 
