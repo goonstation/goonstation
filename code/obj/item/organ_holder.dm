@@ -1399,7 +1399,7 @@
 
 
 /datum/targetable/organAbility/kidneypurge
-	name = "PURGE"
+	name = "Kidney Purge"
 	desc = "Dangerously overclock your cyberkidneys to rapidly purge chemicals from your blood."
 	icon_state = "eye-meson" //TODO get sprote made
 	targeted = 0
@@ -1415,6 +1415,7 @@
 				O.take_damage(15, 15) //safe-ish
 		else
 			linked_organ.take_damage(30, 30) //not safe
+		boutput(holder.owner, "<span class='notice'>You overclock your cyberkidney[islist(linked_organ) ? "s" : ""] to rapidly purge chemicals from your body.")
 		APPLY_MOB_PROPERTY(holder.owner, PROP_CHEM_PURGE, src, power)
 		holder.owner.urine += power // -.-
 		SPAWN_DBG(15 SECONDS)
@@ -1422,7 +1423,7 @@
 
 /datum/targetable/organAbility/liverdetox
 	name = "\"Detox\" Toggle"
-	desc = "Overclock the \"detoxification\" function of your liver."
+	desc = "Activate the experimental \"detoxification\" function of your liver to metabolize ethanol into omnizine."
 	icon_state = "eye-meson"
 	targeted = 0
 	toggled = 1
@@ -1441,14 +1442,15 @@
 		if (istype(L))
 			L.overloading = !L.overloading
 			src.is_on = L.overloading
+			boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the \"detox\" mode on your cyberliver.")
 		if(is_on)
 			src.icon_state = initial(src.icon_state)
 		else
 			src.icon_state = "[initial(src.icon_state)]_cd"
 
 /datum/targetable/organAbility/quickdigest
-	name = "DIGEST"
-	desc = "CRUNCH your intestines to digest all the food you've eaten at once. Grody."
+	name = "Rapid Digestion"
+	desc = "Force your cyberintestines to rapidly process the contents of your stomach. This can't be healthy."
 	icon_state = "eye-meson" //TODO get sprote made
 	targeted = 0
 	cooldown = 40 SECONDS
@@ -1461,12 +1463,17 @@
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
 			if (L.stomach_process && L.stomach_process.len)
+				boutput(L, "<span class='notice'>You force your cyberintestines to rapidly process the contents of your stomach.</span>")
 				for(var/obj/item/reagent_containers/food/snacks/bite/B in L.stomach_process)
 					B.process_stomach(L, (B.reagents.total_volume)) //all of the food!
+			else
+				boutput(L, "<span class='alert'>Your intestines crunch painfully in your gut. Maybe they would work better with some food to process.</span>")
+				linked_organ.take_damage(30) //owwww
+
 
 /datum/targetable/organAbility/projectilevomit
-	name = "VOMIT"
-	desc = "Upchuck your stomach with deadly force."
+	name = "Projectile Vomiting"
+	desc = "Upchuck your stomach contents with deadly force."
 	icon_state = "eye-meson"
 	targeted = 1
 	target_anything = 1
@@ -1479,7 +1486,7 @@
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
 			if (L.stomach_process && L.stomach_process.len)
-				L.visible_message("<span class='alert'>[L] convulses and vomits right at [target]!</span>", "<span class='alert'>You upchuck some of your stomach contents at [target]!</span>")
+				L.visible_message("<span class='alert'>[L] convulses and vomits right at [target]!</span>", "<span class='alert'>You upchuck some of your cyberstomach contents at [target]!</span>")
 				SPAWN_DBG(0)
 					for (var/i in 1 to 3)
 						var/obj/item/O = L.vomit()
@@ -1493,18 +1500,18 @@
 						if(linked_organ.broken || !L.stomach_process.len)
 							break
 			else
-				boutput(L, "<span class='alert'>You try to vomit, but have nothing left to give!</span>")
+				boutput(L, "<span class='alert'>You try to vomit, but your cyberstomach has nothing left inside!</span>")
 				linked_organ.take_damage(30) //owwww
+				L.vomit()
 
 /datum/targetable/organAbility/rebreather
 	name = "Rebreather Toggle"
-	desc = "Overload your cyberlungs to completely pause your breathing. Any oxygen deprivation already suffered will not be cleared, however."
+	desc = "Dangerously overload your cyberlungs to completely pause your breathing. Any oxygen deprivation already suffered will not be cleared, however."
 	icon_state = "eye-meson"
 	targeted = 0
 	toggled = 1
 	cooldown = 5
 	is_on = 0
-
 
 	New()
 		..()
@@ -1518,6 +1525,7 @@
 			return 1
 
 		src.is_on = !src.is_on
+		boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the rebreather mode on your cyberlungs.")
 		for(var/obj/item/organ/lung/cyber/L in linked_organ)
 			L.overloading = is_on
 		if(is_on)
