@@ -668,7 +668,8 @@
 				var/mob/living/carbon/human/H = M
 				abilityHud = H.hud
 
-		abilityHud.add_object(src)
+		if (abilityHud) //BAD BAD, this shouldnt happen but somehow it do
+			abilityHud.add_object(src)
 		/*
 		abilityHud.remove_object(src.cd_tens)
 		abilityHud.remove_object(src.cd_secs)

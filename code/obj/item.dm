@@ -594,7 +594,7 @@
 /obj/item/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
 	..()
 
-	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || over_object.event_handler_flags & NO_MOUSEDROP_QOL)
+	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL))
 		return
 
 	var/on_turf = isturf(src.loc)
