@@ -125,6 +125,10 @@
 		. = ..()
 		organ_abilities = list(/datum/targetable/organAbility/kidneypurge)
 
+	demag(mob/user)
+		..()
+		organ_abilities = initial(organ_abilities)
+
 
 	add_ability(var/datum/abilityHolder/aholder, var/abil)
 		if (!ispath(abil, /datum/targetable/organAbility/kidneypurge) || !aholder)

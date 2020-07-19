@@ -38,6 +38,10 @@
 		. = ..()
 		organ_abilities = list(/datum/targetable/organAbility/liverdetox)
 
+	demag(mob/user)
+		..()
+		organ_abilities = initial(organ_abilities)
+
 	on_life(var/mult = 1)
 		if(!..())
 			return 0

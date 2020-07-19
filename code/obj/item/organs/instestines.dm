@@ -54,6 +54,10 @@
 		. = ..()
 		organ_abilities = list(/datum/targetable/organAbility/quickdigest)
 
+	demag(mob/user)
+		..()
+		organ_abilities = initial(organ_abilities)
+
 	attackby(obj/item/W, mob/user)
 		if(ispulsingtool(W)) //TODO change values, incl. for emagged
 			digestion_efficiency = input(user, "Set the digestion efficiency of the cyberintestines, from 0 to 200 percent.", "Digenstion efficincy", "100") as num

@@ -171,6 +171,9 @@
 		..()
 		organ_abilities = list(/datum/targetable/organAbility/rebreather)
 
+	demag(mob/user)
+		..()
+		organ_abilities = initial(organ_abilities)
 
 /obj/item/organ/lung/cyber/left
 	name = "left lung"

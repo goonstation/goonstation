@@ -98,3 +98,7 @@
 	emag_act(mob/user, obj/item/card/emag/E)
 		. = ..()
 		organ_abilities = list(/datum/targetable/organAbility/projectilevomit)
+
+	demag(mob/user)
+		..()
+		organ_abilities = initial(organ_abilities)
