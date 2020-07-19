@@ -1401,7 +1401,7 @@
 /datum/targetable/organAbility/kidneypurge
 	name = "Kidney Purge"
 	desc = "Dangerously overclock your cyberkidneys to rapidly purge chemicals from your blood."
-	icon_state = "eye-meson" //TODO get sprote made
+	icon_state = "cyberkidney"
 	targeted = 0
 	cooldown = 40 SECONDS
 	var/power = 6
@@ -1424,7 +1424,7 @@
 /datum/targetable/organAbility/liverdetox
 	name = "\"Detox\" Toggle"
 	desc = "Activate the experimental \"detoxification\" function of your liver to metabolize ethanol into omnizine."
-	icon_state = "eye-meson"
+	icon_state = "cyberliver"
 	targeted = 0
 	toggled = 1
 	cooldown = 5
@@ -1451,7 +1451,7 @@
 /datum/targetable/organAbility/quickdigest
 	name = "Rapid Digestion"
 	desc = "Force your cyberintestines to rapidly process the contents of your stomach. This can't be healthy."
-	icon_state = "eye-meson" //TODO get sprote made
+	icon_state = "cyberintestine" //TODO get sprote made
 	targeted = 0
 	cooldown = 40 SECONDS
 
@@ -1474,7 +1474,7 @@
 /datum/targetable/organAbility/projectilevomit
 	name = "Projectile Vomiting"
 	desc = "Upchuck your stomach contents with deadly force."
-	icon_state = "eye-meson"
+	icon_state = "cyberstomach"
 	targeted = 1
 	target_anything = 1
 	cooldown = 10
@@ -1507,7 +1507,7 @@
 /datum/targetable/organAbility/rebreather
 	name = "Rebreather Toggle"
 	desc = "Dangerously overload your cyberlungs to completely pause your breathing. Any oxygen deprivation already suffered will not be cleared, however."
-	icon_state = "eye-meson"
+	icon_state = "cyberlung"
 	targeted = 0
 	toggled = 1
 	cooldown = 5
