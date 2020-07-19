@@ -284,9 +284,7 @@
 /obj/voting_box{
 	layer = 4.1
 	},
-/turf/simulated/floor/wood/eight{
-	dir = 4
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/crew_quarters/cafeteria)
 "aas" = (
 /obj/stool/chair/couch{
@@ -482,19 +480,6 @@
 /area/station/solar/east)
 "aaJ" = (
 /obj/grille/catwalk/cross,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -915,6 +900,7 @@
 /area/station/bridge)
 "abr" = (
 /obj/critter/parrot/random,
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
 "abs" = (
@@ -1160,7 +1146,7 @@
 	d2 = 4;
 	icon_state = "5-6"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "abL" = (
 /obj/machinery/power/data_terminal,
@@ -1495,38 +1481,31 @@
 /area/station/solar/west)
 "ach" = (
 /obj/grille/catwalk,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west)
 "aci" = (
-/obj/grille/catwalk,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/airless/plating/catwalk,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 1
-	},
-/area/station/solar/west)
+/obj/reagent_dispensers/beerkeg,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/bar)
 "acj" = (
-/obj/grille/catwalk,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/decal/mule/dropoff,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
-/turf/simulated/floor/airless/plating/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/station/solar/west)
+/obj/access_spawn,
+/obj/firedoor_spawn,
+/obj/decal/tile_edge/line/white{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/decal/garland{
+	dir = 9
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/hallway/secondary/exit)
 "ack" = (
 /obj/stool/chair{
 	dir = 4
@@ -1899,9 +1878,7 @@
 	setup_drive_type = /obj/item/disk/data/tape/master
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "ahq" = (
 /obj/cable{
@@ -1909,6 +1886,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
 "ahB" = (
@@ -2021,7 +1999,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/stripe/big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 1
 	},
 /obj/machinery/light/incandescent/warm{
@@ -2146,7 +2124,13 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "alB" = (
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/sec)
 "alN" = (
 /obj/decoration/decorativeplant/plant2,
@@ -2425,7 +2409,13 @@
 /area/station/hallway/primary/south)
 "apu" = (
 /obj/table/reinforced/auto,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "apv" = (
 /turf/simulated/floor/carpet{
@@ -2846,6 +2836,14 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/solar/small_backup1)
+"awe" = (
+/obj/wingrille_spawn/auto,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/decal/wreath,
+/turf/simulated/floor/plating,
+/area/station/medical/morgue)
 "awz" = (
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
@@ -3294,7 +3292,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "aDo" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 8
 	},
 /obj/storage/closet/biohazard,
@@ -3303,7 +3301,13 @@
 	dir = 1;
 	pixel_y = 16
 	},
-/turf/simulated/floor/plating/jen,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/science)
 "aDG" = (
 /obj/machinery/light/incandescent/netural{
@@ -3394,9 +3398,7 @@
 /obj/machinery/turret{
 	dir = 9
 	},
-/turf/simulated/floor/blueblack{
-	dir = 6
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "aFb" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -3511,11 +3513,16 @@
 /area/station/owlery)
 "aHc" = (
 /obj/table/reinforced/auto,
-/obj/random_item_spawner/tools/one,
+/obj/item/a_gift/festive{
+	pixel_y = 6
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
 /area/station/hallway/primary/east)
+"aHd" = (
+/turf/simulated/floor/snow/green,
+/area)
 "aHe" = (
 /obj/storage/secure/closet/civilian/chaplain,
 /obj/machinery/light/incandescent/netural{
@@ -3532,7 +3539,7 @@
 	d2 = 4;
 	icon_state = "2-9"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "aHk" = (
 /obj/wingrille_spawn/auto/tuff,
@@ -3737,11 +3744,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
-"aKl" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/science)
 "aKp" = (
 /obj/landmark/artifact,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -3836,6 +3838,9 @@
 /area)
 "aMp" = (
 /obj/machinery/vending/pizza,
+/obj/decal/wreath{
+	pixel_y = 32
+	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
 "aMs" = (
@@ -3876,6 +3881,11 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood/five,
+/area/station/hydroponics)
+"aNu" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
 /area/station/hydroponics)
 "aND" = (
 /obj/decal/tile_edge/stripe/xmas,
@@ -4115,6 +4125,9 @@
 /area/station/hallway/primary/west)
 "aRz" = (
 /obj/decoration/decorativeplant/plant2,
+/obj/decal/wreath{
+	pixel_y = 32
+	},
 /turf/simulated/floor/circuit/purple,
 /area/station/crew_quarters/hor)
 "aRF" = (
@@ -4199,10 +4212,16 @@
 /turf/simulated/floor/black,
 /area/station/science)
 "aSO" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 8
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "aTe" = (
 /obj/stool/chair/office/yellow{
@@ -4564,6 +4583,26 @@
 	dir = 9
 	},
 /area/station/security/hos)
+"aXr" = (
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4
+	},
+/obj/decal/mule/dropoff,
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/decal/garland{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/science)
 "aXw" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/asylum/maintenance)
@@ -4928,6 +4967,12 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/medical/asylum/computer)
+"bey" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2/right,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/security/detectives_office)
 "beA" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small/sticky,
@@ -4977,9 +5022,7 @@
 	layer = 2.8
 	},
 /obj/machinery/vending/fortune,
-/turf/simulated/floor/wood/eight{
-	dir = 4
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/crew_quarters/cafeteria)
 "bfk" = (
 /obj/cable{
@@ -5133,6 +5176,7 @@
 /area/shuttle/arrival/station)
 "biC" = (
 /obj/storage/secure/closet/animal,
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
 "biI" = (
@@ -5181,6 +5225,11 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
+"bjB" = (
+/turf/simulated/floor/snow/green{
+	dir = 6
+	},
+/area)
 "bjF" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 1
@@ -5300,6 +5349,7 @@
 "bmd" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "bmg" = (
@@ -5430,6 +5480,10 @@
 /obj/table/auto,
 /turf/simulated/floor/sanitary,
 /area/listeningpost)
+"bnR" = (
+/obj/decal/wreath,
+/turf/simulated/wall/auto/jen/blue,
+/area/station/crew_quarters/courtroom)
 "bof" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/storage,
@@ -5586,7 +5640,7 @@
 /area/station/owlery)
 "bqt" = (
 /obj/table/glass/reinforced/auto,
-/obj/random_item_spawner/desk_stuff/one_or_zero,
+/obj/item/item_box/assorted/ornaments,
 /turf/simulated/floor/carpet,
 /area/station/hallway/secondary/exit)
 "bqx" = (
@@ -5855,12 +5909,6 @@
 	icon_state = "fblue2"
 	},
 /area/station/medical/head)
-"bub" = (
-/obj/decal/tile_edge/stripe/xmas,
-/turf/simulated/floor/wood/eight{
-	dir = 1
-	},
-/area/station/crew_quarters/cafeteria)
 "bue" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/matchbook,
@@ -5885,6 +5933,9 @@
 "bul" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/decal/wreath{
+	pixel_y = 32
+	},
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "buv" = (
@@ -6037,10 +6088,13 @@
 	tag = ""
 	},
 /obj/item/instrument/large/jukebox,
-/turf/simulated/floor/wood/eight{
-	dir = 4
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/crew_quarters/cafeteria)
+"bwr" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/refinery)
 "bww" = (
 /obj/storage/closet/office,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -7111,9 +7165,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/decal/garland{
-	dir = 8
-	},
+/obj/decal/mistletoe,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersC)
 "bLG" = (
@@ -7492,6 +7544,7 @@
 	dir = 4;
 	name = "crematorium pipe"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "bRh" = (
@@ -7624,8 +7677,34 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "bUg" = (
-/turf/simulated/floor/snow/snowball,
-/area/station/maintenance/outer/ne)
+/obj/storage/crate/xmas,
+/obj/item/raw_material/char{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/raw_material/char,
+/obj/item/raw_material/char{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/raw_material/char{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/item/raw_material/char{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/obj/item/raw_material/char{
+	pixel_x = -3;
+	pixel_y = -6
+	},
+/obj/item/raw_material/char{
+	pixel_x = -11;
+	pixel_y = -6
+	},
+/turf/simulated/floor/specialroom/clown,
+/area/station/crew_quarters/clown)
 "bUi" = (
 /obj/decal/tile_edge/line/red{
 	dir = 1;
@@ -8012,6 +8091,11 @@
 /obj/access_spawn/mining,
 /turf/simulated/floor/black/grime,
 /area/station/hangar/qm)
+"bZe" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/wreath,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/fitness)
 "bZk" = (
 /obj/cable{
 	d1 = 1;
@@ -8038,9 +8122,15 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "bZv" = (
-/obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/cleanable/oil/streak,
-/turf/simulated/floor/shuttlebay,
+/obj/decal/tile_edge/stripe/xmas,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/maintenance/outer/east)
 "bZw" = (
 /obj/decal/mule/dropoff,
@@ -8230,6 +8320,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science)
+"cdq" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/wreath,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
 "cdH" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -8242,11 +8337,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"cdK" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/decal/wreath,
-/turf/simulated/floor/plating,
-/area/station/hallway)
 "cdL" = (
 /obj/cable{
 	d2 = 8;
@@ -8342,11 +8432,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
-"ceC" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/medical/medbay/lobby)
 "ceG" = (
 /obj/table/reinforced/auto,
 /obj/disposalpipe/segment/transport{
@@ -8691,6 +8776,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/firedoor_spawn,
 /obj/access_spawn/maint,
+/obj/decal/mistletoe,
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/clown)
 "cjT" = (
@@ -8856,7 +8942,13 @@
 /area/station/medical/head)
 "cni" = (
 /obj/random_pod_spawner/random_putt_spawner,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/maintenance/outer/east)
 "cnj" = (
 /obj/decal/cleanable/dirt/jen,
@@ -8952,6 +9044,7 @@
 /area/station/maintenance/inner/nw)
 "cpa" = (
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/science)
 "cpb" = (
@@ -9073,6 +9166,7 @@
 /area/station/security/main)
 "cqm" = (
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/mining)
 "cqn" = (
@@ -9141,6 +9235,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/primary)
+"csw" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/wreath,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/se)
 "csx" = (
 /obj/cable{
 	d1 = 2;
@@ -9273,7 +9372,13 @@
 /obj/disposalpipe/segment{
 	dir = 8
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "cva" = (
 /obj/decal/mule/dropoff,
@@ -9711,9 +9816,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "cAX" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 6;
-	icon_state = "bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/xmas2{
+	dir = 6
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
@@ -9729,7 +9833,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "cBx" = (
-/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/xmas,
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
 "cBH" = (
@@ -10098,7 +10202,13 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/quarters)
 "cHm" = (
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/maintenance/outer/east)
 "cHN" = (
 /obj/decal/tile_edge/stripe/xmas{
@@ -10126,6 +10236,9 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/table/auto,
 /obj/item/wrestlingbell,
+/obj/decal/xmas_lights{
+	pixel_y = 32
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "cHZ" = (
@@ -10271,6 +10384,13 @@
 	dir = 5
 	},
 /area/station/hallway/primary/west)
+"cKX" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/xmas_lights{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/east)
 "cLf" = (
 /obj/cable{
 	d1 = 1;
@@ -10305,7 +10425,13 @@
 	powerlevel = 1
 	},
 /obj/decal/mule/dropoff,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/sec)
 "cLK" = (
 /obj/machinery/conveyor/east{
@@ -10743,7 +10869,13 @@
 /area/station/maintenance/outer/north)
 "cRj" = (
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "cRr" = (
 /obj/access_spawn/maint,
@@ -10809,6 +10941,15 @@
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/barber_shop)
+"cRT" = (
+/obj/decal/mule/dropoff,
+/obj/machinery/door/airlock/pyro/glass,
+/obj/firedoor_spawn,
+/obj/access_spawn,
+/obj/disposalpipe/segment/mail,
+/obj/decal/garland,
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "cRV" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -10900,6 +11041,19 @@
 /area/station/storage/auxillary{
 	name = "Tool Storage"
 	})
+"cTB" = (
+/obj/table/auto,
+/obj/item/cable_coil,
+/obj/item/cable_coil{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/cable_coil{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/westsolar)
 "cTE" = (
 /obj/railing/orange{
 	dir = 1
@@ -10907,7 +11061,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "cUi" = (
-/obj/decal/tile_edge/stripe/big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -11408,6 +11562,9 @@
 /area/station/maintenance/inner/nw)
 "daL" = (
 /obj/table/reinforced/auto,
+/obj/item/a_gift/festive{
+	pixel_y = 6
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/exit)
 "daS" = (
@@ -11639,11 +11796,6 @@
 /obj/disposalpipe/trunk/brig,
 /turf/simulated/floor/redblack,
 /area/station/security/main)
-"des" = (
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/turret_protected/AIsat)
 "det" = (
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -11887,6 +12039,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade/dungeon)
 "die" = (
@@ -11997,8 +12150,12 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
 	},
 /area/station/science/teleporter)
 "dkF" = (
@@ -12093,6 +12250,7 @@
 "dls" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/science)
 "dlt" = (
@@ -12445,6 +12603,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"dqH" = (
+/obj/disposalpipe/segment/mail,
+/obj/decal/wreath,
+/turf/simulated/wall/auto/jen/blue,
+/area/station/medical/medbay/lobby)
 "dqL" = (
 /turf/simulated/wall/auto/jen/blue,
 /area/station/crew_quarters/clown)
@@ -12475,6 +12638,11 @@
 	dir = 8
 	},
 /area/station/engine/inner)
+"dqZ" = (
+/turf/simulated/floor/snow/green{
+	dir = 8
+	},
+/area)
 "dra" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -12487,8 +12655,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
 	},
 /area/station/science/teleporter)
 "dri" = (
@@ -13213,7 +13385,7 @@
 /turf/simulated/grimycarpet,
 /area/station/hallway/secondary/construction2)
 "dEN" = (
-/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/xmas,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
@@ -13228,7 +13400,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/bot/guardbot,
+/obj/machinery/bot/guardbot/xmas,
 /turf/simulated/floor/circuit/purple,
 /area/station/science/bot_storage)
 "dFo" = (
@@ -13440,9 +13612,7 @@
 	pixel_y = 18;
 	tag = ""
 	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "dIh" = (
 /obj/decal/cleanable/dirt/jen,
@@ -13455,15 +13625,6 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
-"dIx" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/AIsat)
 "dIz" = (
 /obj/cable{
 	d1 = 1;
@@ -13516,7 +13677,13 @@
 /obj/machinery/light/incandescent/harsh{
 	dir = 8
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/science)
 "dJA" = (
 /obj/machinery/power/apc/autoname_north,
@@ -13630,7 +13797,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/decal/xmas_lights,
+/obj/decal/wreath,
 /turf/simulated/floor/plating,
 /area/station/chemistry)
 "dLA" = (
@@ -13729,13 +13896,6 @@
 /area/station/crew_quarters/hor)
 "dMv" = (
 /obj/machinery/computer3/generic/med_data,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
@@ -13744,6 +13904,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/decal/wreath{
+	pixel_y = 32
+	},
 /turf/simulated/floor/blueblack{
 	dir = 5
 	},
@@ -14473,6 +14636,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
 "dXf" = (
@@ -14630,6 +14794,13 @@
 	dir = 1;
 	pixel_y = 16
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -14674,6 +14845,14 @@
 	dir = 10
 	},
 /area/station/security/quarters)
+"eaM" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/chemistry)
 "eaO" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -15031,6 +15210,7 @@
 	layer = 3.1;
 	name = "Bar Shutter"
 	},
+/obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/carpet/red/standard,
 /area/station/crew_quarters/cafeteria)
 "eeX" = (
@@ -15085,8 +15265,12 @@
 /area/station/owlery)
 "efW" = (
 /obj/machinery/light/incandescent/harsh,
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
 	},
 /area/station/science/teleporter)
 "ega" = (
@@ -15127,10 +15311,6 @@
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
-"egJ" = (
-/obj/decal/wreath,
-/turf/simulated/wall/auto/reinforced/jen,
-/area/station/hallway/secondary/exit)
 "egK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15295,6 +15475,10 @@
 	dir = 9;
 	icon_state = "tile1"
 	},
+/obj/decal/wreath{
+	pixel_x = 12;
+	pixel_y = 32
+	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
 "elc" = (
@@ -15435,7 +15619,13 @@
 /obj/machinery/vehicle/miniputt/armed{
 	dir = 4
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "env" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -15646,6 +15836,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade/dungeon)
 "erx" = (
@@ -15915,6 +16106,15 @@
 	dir = 5
 	},
 /area/station/engine/inner)
+"evQ" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/storage,
+/obj/random_item_spawner/junk/maybe_few,
+/obj/decal/wreath{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/east)
 "evS" = (
 /obj/machinery/r_door_control/podbay/mainpod2,
 /turf/simulated/wall/auto/reinforced/jen,
@@ -16477,9 +16677,7 @@
 	layer = 2.8
 	},
 /obj/machinery/vending/snack,
-/turf/simulated/floor/wood/eight{
-	dir = 4
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/crew_quarters/cafeteria)
 "eEK" = (
 /obj/decal/cleanable/dirt/jen,
@@ -16573,6 +16771,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
+"eGf" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/wreath,
+/turf/simulated/floor/plating,
+/area/station/engine/engineering/ce)
 "eGk" = (
 /obj/decal/tile_edge/line/white{
 	color = "#ffccff";
@@ -16658,10 +16861,16 @@
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
 "eHa" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 1
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "eHe" = (
 /obj/machinery/door/airlock/pyro,
@@ -17644,11 +17853,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/science/lab)
-"eVw" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/construction2)
 "eVN" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -17813,7 +18017,9 @@
 /area/station/security/checkpoint/arrivals)
 "eXC" = (
 /obj/table/reinforced/auto,
-/obj/random_item_spawner/tools/one,
+/obj/item/a_gift/festive{
+	pixel_y = 6
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -17854,9 +18060,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
-"eYn" = (
-/turf/simulated/floor/blueblack,
-/area/station/turret_protected/AIsat)
 "eYv" = (
 /obj/grille/catwalk/jen/side{
 	dir = 4
@@ -18068,6 +18271,11 @@
 	dir = 4
 	},
 /area/station/crew_quarters/cafeteria)
+"faE" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/se)
 "faV" = (
 /obj/plasticflaps,
 /obj/machinery/conveyor/north{
@@ -18403,6 +18611,7 @@
 /area/station/maintenance/inner/east)
 "fhn" = (
 /obj/table/wood/round/auto,
+/obj/item/item_box/assorted/ornaments,
 /turf/simulated/floor/black,
 /area/station/chapel/main)
 "fhp" = (
@@ -18591,11 +18800,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"fkg" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/hangar/main)
 "fkh" = (
 /obj/cable{
 	d1 = 2;
@@ -18780,6 +18984,9 @@
 	pixel_x = 4;
 	pixel_y = -4
 	},
+/obj/decal/xmas_lights{
+	pixel_y = 38
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "fnk" = (
@@ -18794,11 +19001,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/jen,
 /area/station/chapel/main)
-"fnD" = (
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/turret_protected/AIsat)
 "fnM" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen/side{
@@ -18830,6 +19032,9 @@
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 12
+	},
+/obj/decal/xmas_lights{
+	pixel_y = 38
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
@@ -19007,6 +19212,12 @@
 	dir = 9
 	},
 /area/station/engine/engineering)
+"fpx" = (
+/obj/decal/tile_edge/stripe/xmas,
+/turf/simulated/floor/wood/eight{
+	dir = 1
+	},
+/area/station/crew_quarters/cafeteria)
 "fpD" = (
 /obj/grille/catwalk/jen,
 /obj/cable{
@@ -19071,9 +19282,7 @@
 /obj/machinery/turret{
 	dir = 5
 	},
-/turf/simulated/floor/blueblack{
-	dir = 10
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "fqG" = (
 /obj/decal/tile_edge/line/black{
@@ -19102,13 +19311,25 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "frn" = (
-/obj/loudspeaker,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
+	},
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/curacao{
+	pixel_x = -6;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/food/drinks/bottle/ntbrew{
+	pixel_x = -3;
+	pixel_y = 6
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
@@ -19222,7 +19443,7 @@
 	d2 = 4;
 	icon_state = "6-10"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "ftm" = (
 /obj/lattice{
@@ -19472,7 +19693,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/bot/guardbot,
+/obj/machinery/bot/guardbot/xmas,
 /turf/simulated/floor/circuit/purple,
 /area/station/science/bot_storage)
 "fwR" = (
@@ -19514,7 +19735,13 @@
 	powerlevel = 1
 	},
 /obj/decal/mule/dropoff,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/sec)
 "fyb" = (
 /obj/cable{
@@ -19574,12 +19801,14 @@
 	},
 /obj/access_spawn/engineering,
 /obj/decal/mule/dropoff,
+/obj/decal/garland{
+	dir = 6
+	},
 /turf/simulated/floor/black,
 /area/station/engine/singcore)
 "fyP" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/xmas2{
+	dir = 10
 	},
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
@@ -19680,17 +19909,24 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/white,
 /area/station/security/brig/north_side)
-"fAZ" = (
-/obj/disposalpipe/segment/mail,
-/obj/decal/wreath,
-/turf/simulated/wall/auto/jen/blue,
-/area/station/medical/medbay/lobby)
 "fBg" = (
 /obj/item_dispenser/latex_gloves,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
 /area/station/science)
+"fBp" = (
+/obj/table/wood/auto,
+/obj/item/plate{
+	pixel_y = 3
+	},
+/obj/random_item_spawner/tableware/few,
+/obj/item/reagent_containers/food/drinks/eggnog,
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/cafeteria)
 "fBr" = (
 /obj/disposalpipe/segment{
 	dir = 8
@@ -19801,8 +20037,9 @@
 /area/station/security/checkpoint/podbay)
 "fCA" = (
 /obj/item/clothing/head/merchant_hat,
-/obj/storage/crate,
+/obj/storage/crate/xmas,
 /obj/machinery/light/incandescent/warm,
+/obj/item/clothing/head/helmet/space/santahat,
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
 "fCH" = (
@@ -20270,7 +20507,7 @@
 /obj/disposalpipe/switch_junction/left/west{
 	mail_tag = "fuq III"
 	},
-/obj/stool/bench/auto,
+/obj/stool/bench/blue,
 /turf/simulated/floor/greenwhite/other,
 /area/station/crew_quarters/market)
 "fIH" = (
@@ -20282,6 +20519,12 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
+"fIT" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/poster/wallsign/space,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
 "fJe" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Pool Access"
@@ -20335,11 +20578,6 @@
 /obj/bookshelf/long,
 /turf/simulated/floor/wood/six,
 /area/station/library)
-"fJU" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/stocking,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/cafeteria)
 "fKa" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 10;
@@ -20442,6 +20680,18 @@
 /obj/decal/poster/wallsign/biohazard,
 /turf/simulated/wall/auto/jen/blue,
 /area/station/medical/morgue)
+"fLQ" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/decal/stage_edge{
+	dir = 2;
+	layer = 2.8
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/cafeteria)
 "fLS" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 9;
@@ -21041,21 +21291,6 @@
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
-"fXe" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/morgue{
-	name = "kitchen freezer pipe"
-	},
-/obj/xmastree,
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fblue1"
-	},
-/area/station/crew_quarters/cafeteria)
 "fXD" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -21428,11 +21663,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
-"gcl" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/fitness)
 "gco" = (
 /obj/submachine/cargopad{
 	name = "Botany Pad"
@@ -21610,7 +21840,7 @@
 /turf/simulated/floor/carpet/green/fancy/narrow/west,
 /area/station/crew_quarters/cafeteria)
 "gej" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 1
 	},
 /turf/simulated/floor/shuttlebay{
@@ -21664,6 +21894,11 @@
 	},
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai_upload)
+"geW" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/west)
 "geZ" = (
 /obj/cable{
 	d1 = 4;
@@ -21807,11 +22042,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science)
-"ghf" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/engine/inner)
 "ghg" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 1;
@@ -21874,13 +22104,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "ghO" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/eastsolar)
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/arcade)
 "gim" = (
 /obj/landmark/gps_waypoint,
 /obj/machinery/light/emergency{
@@ -22120,7 +22347,7 @@
 	icon_state = "5-8"
 	},
 /obj/machinery/light/incandescent/cool,
-/turf/simulated/floor/blueblack,
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "gmE" = (
 /turf/simulated/floor/carpet/arcade/half,
@@ -22329,10 +22556,16 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "gpb" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 4
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/sec)
 "gpl" = (
 /obj/decal/poster/wallsign/chsc{
@@ -22380,6 +22613,14 @@
 	dir = 1
 	},
 /area/station/engine/inner)
+"gqg" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/chair/folded,
+/obj/decal/xmas_lights{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/east)
 "gqh" = (
 /obj/stool/bench/auto,
 /obj/machinery/light/incandescent/netural,
@@ -22476,6 +22717,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/decal/garland{
+	dir = 6
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/AIsat)
@@ -22607,7 +22851,13 @@
 	powerlevel = 1
 	},
 /obj/decal/mule/dropoff,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "guU" = (
 /obj/decal/poster/wallsign/poster_borg{
@@ -22638,6 +22888,20 @@
 	dir = 9
 	},
 /area/station/bridge/customs)
+"gvA" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/snow/snowball,
+/area/station/turret_protected/AIsat)
+"gvC" = (
+/obj/decal/wreath,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/asylum/medbay)
 "gvE" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -22719,9 +22983,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/decal/garland{
-	dir = 5
-	},
+/obj/decal/mistletoe,
 /turf/simulated/floor/red,
 /area/station/security/hos)
 "gwq" = (
@@ -23014,7 +23276,7 @@
 /area/station/hallway/primary/east)
 "gAw" = (
 /obj/machinery/light/incandescent/netural{
-	dir = 4
+	dir = 1
 	},
 /obj/disposalpipe/trunk{
 	dir = 8
@@ -23241,8 +23503,12 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
 	},
 /area/station/science/teleporter)
 "gEP" = (
@@ -23396,9 +23662,7 @@
 /obj/machinery/turret{
 	dir = 10
 	},
-/turf/simulated/floor/blueblack{
-	dir = 5
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "gHa" = (
 /obj/random_item_spawner/junk/one_or_zero,
@@ -23713,6 +23977,7 @@
 "gMT" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "gMZ" = (
@@ -23990,6 +24255,11 @@
 	icon_state = "fgreen2"
 	},
 /area/station/engine/engineering/ce)
+"gRu" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/engine/engineering)
 "gRy" = (
 /obj/machinery/door/unpowered/wood/pyro,
 /obj/cable{
@@ -24070,6 +24340,11 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/science/artifact)
+"gTk" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/wreath,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction2)
 "gTo" = (
 /obj/item/diary,
 /obj/item/clothing/shoes/black{
@@ -24204,6 +24479,22 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
+"gUY" = (
+/obj/decal/mule/dropoff,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/access_spawn,
+/obj/firedoor_spawn,
+/obj/decal/tile_edge/line/white{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/decal/garland{
+	dir = 8
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/hallway/secondary/exit)
 "gVg" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	dir = 4
@@ -24469,11 +24760,6 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
-"gYU" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/medical/breakroom)
 "gZp" = (
 /obj/decal/tile_edge/line/red{
 	dir = 9;
@@ -24483,19 +24769,6 @@
 /area/station/security/interrogation)
 "gZw" = (
 /obj/grille/catwalk/cross,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -24568,15 +24841,20 @@
 /obj/machinery/vehicle/miniputt/armed{
 	dir = 4
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/xmas2{
+	dir = 5
 	},
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "hao" = (
 /obj/disposalpipe/segment/transport,
@@ -24611,11 +24889,6 @@
 	},
 /turf/simulated/floor/specialroom/freezer/white,
 /area/station/security/hos)
-"haO" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/garden)
 "haS" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -24630,9 +24903,6 @@
 	},
 /turf/simulated/wall/auto/jen/blue,
 /area/station/hallway/primary/south)
-"hbA" = (
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/main)
 "hbD" = (
 /obj/cable{
 	d1 = 2;
@@ -24928,6 +25198,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/asylum/rec)
 "hgx" = (
@@ -25072,6 +25343,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "hit" = (
@@ -25145,6 +25417,7 @@
 	d2 = 8;
 	icon_state = "0-4"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/asylum/rec)
 "hjG" = (
@@ -25193,6 +25466,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "hka" = (
@@ -25258,7 +25532,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
 "hkA" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -25272,7 +25546,13 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "hkH" = (
 /turf/simulated/floor/carpet/blue/standard/edge,
@@ -25460,6 +25740,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "hoG" = (
@@ -25847,17 +26128,37 @@
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/maintenance)
 "htw" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 4
 	},
 /obj/machinery/vehicle/miniputt/nanoputt{
 	dir = 8
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/sec)
 "htz" = (
 /turf/simulated/floor/black,
 /area/station/security/equipment)
+"hua" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/disposalpipe/segment/brig,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/courtroom)
 "hub" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner{
 	dir = 9
@@ -26129,6 +26430,11 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
+"hyp" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/crewquarters/fuq3)
 "hyq" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	dir = 4;
@@ -26178,11 +26484,6 @@
 "hyQ" = (
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/maintenance/outer/north)
-"hza" = (
-/obj/table/reinforced/auto,
-/obj/item/item_box/assorted/ornaments,
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
 "hzd" = (
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
@@ -26261,7 +26562,7 @@
 	d2 = 4;
 	icon_state = "5-6"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "hAc" = (
 /obj/stool/chair/comfy/blue{
@@ -26523,27 +26824,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
-"hDV" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
-	},
-/obj/firedoor_spawn,
-/obj/access_spawn/hos,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/decal/mule/dropoff,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/decal/garland{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/hos)
 "hEe" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -26605,7 +26885,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
-/obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/stripe/xmas,
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "hFg" = (
@@ -26967,6 +27247,13 @@
 "hJW" = (
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
+"hKg" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/tile_edge/stripe/xmas{
+	dir = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "hKs" = (
 /obj/machinery/networked/test_apparatus/electrobox,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -27038,6 +27325,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/AIsat)
 "hKY" = (
@@ -27171,16 +27459,14 @@
 /turf/space,
 /area)
 "hMN" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/space,
+/turf/simulated/floor/snow/green{
+	dir = 4
+	},
 /area)
 "hMR" = (
 /obj/stool/chair/comfy{
@@ -27821,7 +28107,13 @@
 /obj/reagent_dispensers/foamtank,
 /obj/machinery/light/incandescent/netural,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "hZp" = (
 /obj/wingrille_spawn/auto/tuff,
@@ -28347,6 +28639,11 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science)
+"ifP" = (
+/turf/simulated/floor/snow/green{
+	dir = 1
+	},
+/area)
 "igh" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -28606,9 +28903,8 @@
 /turf/simulated/floor,
 /area/station/hydroponics)
 "ijG" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 10;
-	icon_state = "bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/xmas2{
+	dir = 10
 	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
@@ -29404,9 +29700,8 @@
 /area/station/maintenance/inner/sw)
 "iyp" = (
 /obj/machinery/field_generator,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/xmas2{
+	dir = 9
 	},
 /obj/machinery/power/data_terminal,
 /obj/map/light/cyan,
@@ -29475,7 +29770,13 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "izL" = (
 /obj/disposalpipe/segment/mail{
@@ -29591,7 +29892,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/mining)
 "iBp" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 1
 	},
 /obj/map/light/cyan,
@@ -29991,9 +30292,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "iHb" = (
 /obj/decal/tile_edge/line/yellow{
@@ -30268,6 +30567,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/asylum/kitchen)
 "iKV" = (
@@ -30314,10 +30614,16 @@
 /obj/machinery/light/incandescent/harsh{
 	dir = 1
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/science)
 "iMn" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 4
 	},
 /obj/machinery/light/incandescent/warm{
@@ -30595,6 +30901,7 @@
 "iRY" = (
 /obj/window_blinds/cog2/middle,
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
 "iSk" = (
@@ -30779,6 +31086,19 @@
 /area/station/chapel/main{
 	name = "Funeral Parlor"
 	})
+"iUT" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/decal/wreath,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/AIsat)
 "iVE" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 8;
@@ -30835,6 +31155,13 @@
 	dir = 1
 	},
 /area/station/science)
+"iVY" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/eggnog{
+	pixel_y = 12
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "iWa" = (
 /obj/cable{
 	d1 = 1;
@@ -30896,6 +31223,9 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/storage/crate,
 /obj/random_item_spawner/junk/maybe_few,
+/obj/decal/xmas_lights{
+	pixel_y = 32
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "iXn" = (
@@ -30912,7 +31242,7 @@
 	d2 = 4;
 	icon_state = "9-10"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "iXs" = (
 /obj/machinery/light/incandescent/cool{
@@ -31110,11 +31440,6 @@
 	dir = 8
 	},
 /area/station/chapel/main)
-"jbm" = (
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/station/turret_protected/AIsat)
 "jbJ" = (
 /obj/cable{
 	d1 = 1;
@@ -31739,6 +32064,7 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt/jen,
+/obj/item/a_gift/festive,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "jlB" = (
@@ -31924,9 +32250,7 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "jox" = (
 /obj/cable{
@@ -31939,18 +32263,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
-"joM" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
-	},
-/turf/simulated/floor/wood/eight{
-	dir = 4
-	},
-/area/station/crew_quarters/cafeteria)
 "joX" = (
 /obj/table/auto,
 /obj/item/tank/jetpack{
@@ -32153,10 +32465,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/obj/decal/garland{
-	dir = 6;
-	layer = 4
-	},
+/obj/decal/mistletoe,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "jsA" = (
@@ -32295,6 +32604,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/science)
+"jux" = (
+/turf/simulated/floor/snow/green{
+	dir = 5
+	},
+/area)
 "juz" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/jen,
@@ -32336,6 +32650,11 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"jvh" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction2)
 "jvj" = (
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/chapel/main{
@@ -32403,9 +32722,7 @@
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "jwc" = (
 /obj/disposalpipe/segment{
@@ -32595,9 +32912,7 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "jAj" = (
 /obj/disposalpipe/segment/mail{
@@ -32668,7 +32983,7 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/cloner)
 "jBt" = (
-/obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/stripe/xmas,
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "jBB" = (
@@ -33225,6 +33540,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
 "jKb" = (
@@ -33527,7 +33843,7 @@
 	},
 /area/station/chapel/main)
 "jOR" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 8
 	},
 /obj/item/storage/wall/medical{
@@ -33542,7 +33858,13 @@
 	tag = ""
 	},
 /obj/machinery/light/emergency,
-/turf/simulated/floor/plating/jen,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/science)
 "jOU" = (
 /obj/disposalpipe/junction/right/west,
@@ -33665,9 +33987,7 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 8
 	},
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "jQs" = (
 /obj/decal/poster/wallsign/cdnp{
@@ -33917,9 +34237,7 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 4
 	},
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "jUx" = (
 /obj/machinery/light/emergency,
@@ -34213,7 +34531,13 @@
 	powerlevel = 1
 	},
 /obj/decal/mule/dropoff,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "kaI" = (
 /obj/decal/cleanable/dirt/jen,
@@ -34881,6 +35205,20 @@
 	dir = 10
 	},
 /area/station/crew_quarters/quartersC)
+"klo" = (
+/obj/decal/mule/dropoff,
+/obj/machinery/door/airlock/pyro/glass,
+/obj/firedoor_spawn,
+/obj/access_spawn,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail,
+/obj/decal/garland,
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "klv" = (
 /obj/cable{
 	d1 = 1;
@@ -35025,6 +35363,9 @@
 /area/station/crew_quarters/clown)
 "kob" = (
 /obj/submachine/laundry_machine,
+/obj/decal/wreath{
+	pixel_y = 32
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "kom" = (
@@ -35126,6 +35467,7 @@
 /obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/left,
 /obj/disposalpipe/segment/mail,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "kpX" = (
@@ -35155,6 +35497,9 @@
 "kqq" = (
 /obj/table/glass/auto,
 /obj/disposalpipe/segment/transport,
+/obj/item/a_gift/festive{
+	pixel_y = 6
+	},
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "kqI" = (
@@ -35188,7 +35533,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 23
 	},
-/obj/decal/garland,
+/obj/decal/mistletoe,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "kqV" = (
@@ -35271,20 +35616,6 @@
 	icon_state = "4"
 	},
 /area/shuttle/asylum/medbay)
-"ktd" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/disposalpipe/segment/brig,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/courtroom)
 "kte" = (
 /obj/storage/secure/closet/civilian/janitor,
 /obj/item/reagent_containers/glass/bottle/cleaner,
@@ -35545,6 +35876,7 @@
 /area/station/hallway/secondary/exit)
 "kwS" = (
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "kwZ" = (
@@ -35775,6 +36107,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
 "kAj" = (
@@ -36017,6 +36350,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "kDs" = (
@@ -36358,11 +36692,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/west)
-"kKO" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/engine/engineering)
 "kKW" = (
 /turf/simulated/floor/stairs/wide,
 /area/station/crew_quarters/market)
@@ -36424,6 +36753,11 @@
 	dir = 5
 	},
 /area/station/medical/medbay/cloner)
+"kLT" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/garden)
 "kLZ" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/gas_sensor{
@@ -36551,15 +36885,29 @@
 "kNO" = (
 /turf/simulated/floor/stairs/wide/middle,
 /area/listeningpost)
+"kNR" = (
+/obj/decal/wreath,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/area/station/engine/engineering)
 "kNU" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency{
+	pixel_y = 9
+	},
 /obj/item/device/radio/intercom{
 	dir = 4
 	},
 /obj/machinery/light/emergency{
 	dir = 8;
 	pixel_x = -12
+	},
+/obj/item/tank/emergency_oxygen{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/tank/emergency_oxygen{
+	pixel_x = -8;
+	pixel_y = -10
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/hallway/secondary/exit)
@@ -37029,18 +37377,6 @@
 /obj/storage/closet/wardrobe/blue,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
-"kVW" = (
-/obj/table/wood/auto,
-/obj/item/plate{
-	pixel_y = 3
-	},
-/obj/random_item_spawner/tableware/few,
-/obj/item/reagent_containers/food/drinks/eggnog,
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fred2"
-	},
-/area/station/crew_quarters/cafeteria)
 "kWF" = (
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/quartersA)
@@ -37053,7 +37389,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "kWL" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -37346,9 +37682,7 @@
 	layer = 2.8
 	},
 /obj/machinery/vending/coffee,
-/turf/simulated/floor/wood/eight{
-	dir = 4
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/crew_quarters/cafeteria)
 "laI" = (
 /turf/simulated/floor/purpleblack/corner{
@@ -37400,6 +37734,7 @@
 	can_rupture = 0;
 	dir = 1
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/storage)
 "lbN" = (
@@ -37504,6 +37839,11 @@
 	},
 /turf/space,
 /area)
+"ldQ" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/se)
 "leg" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/right,
@@ -37600,6 +37940,11 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"lfe" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/decal/wreath,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
 "lfh" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
@@ -37693,6 +38038,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
 "lgb" = (
@@ -37730,11 +38076,15 @@
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/kitchen)
 "lgN" = (
-/obj/decal/tile_edge/stripe/xmas{
-	dir = 1
+/obj/wingrille_spawn/auto/crystal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/ne)
+/obj/cable,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
 "lgV" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/decal/tile_edge/stripe/xmas{
@@ -37953,6 +38303,7 @@
 	icon_state = "2-8"
 	},
 /obj/decal/cleanable/dirt/jen,
+/obj/item/item_box/assorted/ornaments,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "llb" = (
@@ -38034,21 +38385,6 @@
 /obj/cable,
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
-"lmr" = (
-/obj/decal/mule/dropoff,
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 8
-	},
-/obj/firedoor_spawn,
-/obj/access_spawn,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/decal/garland{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/cafeteria)
 "lms" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -38119,6 +38455,11 @@
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/medical/morgue)
+"lmT" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/hangar/main)
 "lmX" = (
 /obj/grille/catwalk,
 /obj/landmark/magnet_shield,
@@ -38346,6 +38687,9 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/multitool,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/decal/wreath{
+	pixel_y = 32
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "lpH" = (
@@ -38695,14 +39039,6 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay)
-"lvc" = (
-/obj/wingrille_spawn/auto,
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/decal/wreath,
-/turf/simulated/floor/plating,
-/area/station/medical/morgue)
 "lvg" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blue/side{
@@ -39037,7 +39373,7 @@
 	},
 /area/station/science)
 "lBs" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 4
 	},
 /obj/map/light/cyan,
@@ -39076,6 +39412,7 @@
 	d2 = 8;
 	icon_state = "0-4"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/asylum/computer)
 "lBZ" = (
@@ -39345,12 +39682,16 @@
 	},
 /area/station/science)
 "lEb" = (
-/obj/decal/cleanable/oil/streak,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/xmas2{
+	dir = 10
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/maintenance/outer/east)
 "lEh" = (
 /obj/disposalpipe/segment/transport,
@@ -39659,9 +40000,8 @@
 /area/station/maintenance/inner/east)
 "lIK" = (
 /obj/machinery/field_generator,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/xmas2{
+	dir = 6
 	},
 /obj/machinery/power/data_terminal,
 /obj/map/light/cyan,
@@ -39741,6 +40081,11 @@
 	},
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/stockex)
+"lJx" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/engine/engineering/ce)
 "lJy" = (
 /obj/cable{
 	d1 = 1;
@@ -39777,6 +40122,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/west)
+"lKb" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/hangar/science)
 "lKg" = (
 /turf/simulated/floor/airless/solar,
 /area)
@@ -39844,14 +40194,6 @@
 	dir = 1
 	},
 /area/station/science)
-"lLi" = (
-/obj/decal/mule/dropoff,
-/obj/machinery/door/airlock/pyro/glass,
-/obj/firedoor_spawn,
-/obj/access_spawn,
-/obj/decal/garland,
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
 "lLG" = (
 /obj/decal/mule/dropoff,
 /obj/cable{
@@ -40005,6 +40347,11 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science)
+"lNe" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/engine/gas)
 "lNg" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -40087,13 +40434,18 @@
 	icon_state = "line1"
 	},
 /obj/table/wood/auto,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/hydroponicsguide{
+	pixel_x = 9
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/item/a_gift/festive{
+	pixel_x = -6
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
@@ -40151,9 +40503,7 @@
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "lOT" = (
 /obj/decal/mule/dropoff,
@@ -40279,6 +40629,10 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
+"lQD" = (
+/obj/decal/wreath,
+/turf/simulated/wall/auto/jen/blue,
+/area/station/hallway/primary/west)
 "lQM" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -40489,23 +40843,20 @@
 /area/station/maintenance/outer/ne)
 "lTH" = (
 /obj/rack,
-/obj/item/clothing/suit/space{
-	pixel_x = 3;
+/obj/item/clothing/suit/space/santa{
+	pixel_x = -2;
 	pixel_y = -3
 	},
 /obj/item/clothing/mask/breath{
 	pixel_y = 3
 	},
-/obj/item/clothing/head/helmet/space{
-	pixel_y = 10
-	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/item/clothing/head/helmet/space/santahat{
+	pixel_x = 1;
+	pixel_y = 11
+	},
 /obj/machinery/light/incandescent/blueish{
 	dir = 4
-	},
-/obj/machinery/light/emergency{
-	dir = 1;
-	pixel_y = 16
 	},
 /turf/simulated/floor/darkblue,
 /area/station/ai_monitored/storage/eva)
@@ -40596,9 +40947,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "lUr" = (
 /obj/grille/catwalk{
@@ -40652,10 +41001,6 @@
 /obj/item/decoration/ashtray{
 	pixel_x = -6;
 	pixel_y = 7
-	},
-/obj/random_item_spawner/desk_stuff/one{
-	pixel_x = 7;
-	pixel_y = 8
 	},
 /obj/item/cigbutt{
 	pixel_x = -1;
@@ -40815,6 +41160,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "lYg" = (
@@ -40950,13 +41296,11 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "maS" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/rust/jen,
-/obj/decal/tile_edge/stripe/corner/xmas2{
-	dir = 5
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/ne)
+/obj/wingrille_spawn/auto/crystal,
+/obj/cable,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/medical/asylum/rec)
 "mbb" = (
 /obj/table/wood/auto,
 /obj/machinery/computer3/generic/personal/personel_alt,
@@ -40988,6 +41332,7 @@
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
 "mbi" = (
@@ -41066,6 +41411,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/asylum/kitchen)
 "mcS" = (
@@ -41184,7 +41530,7 @@
 	layer = 2.8
 	},
 /obj/submachine/slot_machine,
-/turf/simulated/floor/carpet/green,
+/turf/simulated/floor/snow/snowball,
 /area/station/crew_quarters/cafeteria)
 "mej" = (
 /obj/machinery/camera{
@@ -41351,7 +41697,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/stripe/big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 1
 	},
 /turf/simulated/floor/black,
@@ -41417,9 +41763,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/decal/garland{
-	dir = 4
-	},
+/obj/decal/mistletoe,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "miG" = (
@@ -41583,6 +41927,7 @@
 	d2 = 8;
 	icon_state = "0-4"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "mkU" = (
@@ -41766,7 +42111,7 @@
 	icon_state = "4-9"
 	},
 /obj/machinery/light/incandescent/cool,
-/turf/simulated/floor/blueblack,
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "mog" = (
 /turf/simulated/floor/redwhite{
@@ -41921,6 +42266,9 @@
 /area/station/hallway/secondary/exit)
 "mrK" = (
 /obj/decoration/decorativeplant/plant3,
+/obj/decal/wreath{
+	pixel_y = 32
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "mrN" = (
@@ -42112,7 +42460,13 @@
 /area/station/maintenance/outer/north)
 "mup" = (
 /obj/random_pod_spawner,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/science)
 "muv" = (
 /obj/table/wood/auto/desk,
@@ -42194,7 +42548,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "mvu" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 4
 	},
 /obj/storage/closet/biohazard,
@@ -42203,7 +42557,13 @@
 	dir = 1;
 	pixel_y = 16
 	},
-/turf/simulated/floor/plating/jen,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/science)
 "mvH" = (
 /obj/decal/tile_edge/line/purple{
@@ -42480,6 +42840,11 @@
 /obj/grille/catwalk/jen/side,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"mAv" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/medical/robotics)
 "mAF" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -42562,7 +42927,7 @@
 	d2 = 4;
 	icon_state = "9-10"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "mBI" = (
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -43120,7 +43485,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/stool/bench/auto,
+/obj/stool/bench/blue,
 /turf/simulated/floor/greenwhite/other,
 /area/station/crew_quarters/market)
 "mLd" = (
@@ -43178,7 +43543,13 @@
 	pixel_x = 4;
 	pixel_y = -4
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "mMc" = (
 /obj/wingrille_spawn/auto/tuff,
@@ -43220,6 +43591,23 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
+"mMD" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 8;
+	name = "Engineering"
+	},
+/obj/access_spawn/engineering,
+/obj/decal/mule/dropoff,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/decal/garland{
+	dir = 5
+	},
+/turf/simulated/floor/black,
+/area/station/engine/singcore)
 "mMG" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -43434,7 +43822,9 @@
 /area/station/hallway/primary/west)
 "mRC" = (
 /obj/table/auto,
-/obj/random_item_spawner/junk/maybe_few,
+/obj/item/a_gift/festive{
+	pixel_y = 6
+	},
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
@@ -43480,9 +43870,8 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/breakroom)
 "mSc" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/xmas2{
+	dir = 6
 	},
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
@@ -43649,7 +44038,7 @@
 	d2 = 4;
 	icon_state = "1-6"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "mUA" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -43706,6 +44095,7 @@
 	d2 = 8;
 	icon_state = "0-4"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/asylum/kitchen)
 "mVk" = (
@@ -43878,15 +44268,6 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
-"mXa" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/AIsat)
 "mXe" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	dir = 4;
@@ -44083,10 +44464,11 @@
 	can_rupture = 0;
 	dir = 5
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "naj" = (
-/obj/machinery/door/airlock/pyro/command{
+/obj/machinery/door/airlock/pyro/glass/command{
 	dir = 8;
 	req_access = null
 	},
@@ -44119,10 +44501,6 @@
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-4"
 	},
 /obj/cable,
 /obj/cable{
@@ -44641,6 +45019,11 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/hallway/primary/south)
+"njv" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/wreath,
+/turf/simulated/floor/plating,
+/area/station/hallway)
 "njx" = (
 /obj/storage/secure/closet/engineering/mechanic,
 /obj/machinery/camera{
@@ -44743,16 +45126,17 @@
 	},
 /area/station/engine/inner)
 "nlf" = (
-/obj/rack,
-/obj/item/clothing/gloves/yellow,
-/obj/random_item_spawner/tools/one_or_zero,
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/machinery/light/incandescent/warm{
 	dir = 1
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/eastsolar)
@@ -44835,6 +45219,17 @@
 	icon_state = "fgreen2"
 	},
 /area/station/engine/engineering/ce)
+"nmi" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8
+	},
+/area/station/solar/east)
 "nmF" = (
 /obj/machinery/plantpot,
 /obj/machinery/light/small/sticky{
@@ -45069,6 +45464,11 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"npj" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/storage/emergency)
 "nps" = (
 /obj/machinery/atmospherics/valve{
 	dir = 1
@@ -45285,6 +45685,7 @@
 /area/station/medical/medbay)
 "nrT" = (
 /obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical)
 "nsc" = (
@@ -45497,7 +45898,13 @@
 /area/station/routingdepot)
 "nwF" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/maintenance/outer/east)
 "nwN" = (
 /obj/cable{
@@ -45786,7 +46193,13 @@
 /obj/machinery/vehicle/pod_smooth/heavy{
 	dir = 8
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/sec)
 "nBu" = (
 /obj/table/reinforced/auto,
@@ -45859,8 +46272,14 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "nCw" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/turf/simulated/floor/shuttlebay,
+/obj/decal/tile_edge/stripe/xmas,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/maintenance/outer/east)
 "nCG" = (
 /obj/machinery/firealarm{
@@ -45882,6 +46301,15 @@
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/barber_shop)
+"nDo" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/AIsat)
 "nDr" = (
 /obj/cable{
 	d2 = 8;
@@ -46031,22 +46459,6 @@
 	dir = 1
 	},
 /area/station/engine/inner)
-"nFO" = (
-/obj/decal/mule/dropoff,
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/access_spawn,
-/obj/firedoor_spawn,
-/obj/decal/tile_edge/line/white{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/decal/garland{
-	dir = 8
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/hallway/secondary/exit)
 "nFW" = (
 /obj/machinery/manufacturer/uniform,
 /obj/machinery/camera{
@@ -46148,10 +46560,16 @@
 	},
 /area/station/engine/inner)
 "nHH" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 1
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/sec)
 "nHQ" = (
 /obj/decal/tile_edge/line/yellow{
@@ -46409,13 +46827,14 @@
 /area/station/crew_quarters/garden)
 "nLQ" = (
 /obj/random_pod_spawner/random_putt_spawner,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/science)
-"nLR" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/west)
 "nMb" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/wall/auto/reinforced/jen/blue,
@@ -46495,6 +46914,7 @@
 "nNu" = (
 /obj/machinery/vending/monkey,
 /obj/machinery/light/incandescent/warm,
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
 "nNw" = (
@@ -46636,6 +47056,19 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
+"nPW" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/security/brig/north_side)
 "nQf" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -46868,9 +47301,9 @@
 	pixel_x = 4;
 	pixel_y = 14
 	},
-/obj/item/reagent_containers/food/drinks/bottle/wine{
-	pixel_x = 8;
-	pixel_y = 2
+/obj/item/reagent_containers/food/drinks/eggnog{
+	pixel_x = 10;
+	pixel_y = 8
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -47162,9 +47595,7 @@
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "nVV" = (
 /obj/decal/tile_edge/line/yellow{
@@ -47190,11 +47621,8 @@
 	name = "Restricted Area"
 	})
 "nVZ" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/eastsolar)
 "nWh" = (
@@ -47261,6 +47689,16 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
+"nXd" = (
+/obj/grille/catwalk,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/station/solar/west)
 "nXe" = (
 /obj/cable{
 	d2 = 4;
@@ -47339,6 +47777,10 @@
 /obj/stool/chair,
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/exit)
+"nYf" = (
+/obj/decal/wreath,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/area/station/engine/inner)
 "nYi" = (
 /obj/cable{
 	d1 = 4;
@@ -47702,9 +48144,8 @@
 /area/station/security/brig/south_side)
 "oeY" = (
 /obj/table/glass/auto,
-/obj/random_item_spawner/desk_stuff/one_or_zero,
-/obj/item/device/radio/intercom{
-	dir = 1
+/obj/item/a_gift/festive{
+	pixel_y = 6
 	},
 /obj/machinery/light/emergency,
 /turf/simulated/floor/escape,
@@ -47860,6 +48301,7 @@
 	icon_state = "0-4"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/brig/south_side)
 "oia" = (
@@ -48234,12 +48676,8 @@
 /area/station/hallway/primary/west)
 "onD" = (
 /obj/table/reinforced/auto,
-/obj/item/tank/emergency_oxygen{
-	pixel_x = -8
-	},
-/obj/item/tank/emergency_oxygen{
-	pixel_x = 3;
-	pixel_y = 4
+/obj/item/a_gift/festive{
+	pixel_y = 6
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/hallway/secondary/exit)
@@ -48384,7 +48822,13 @@
 	},
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools/maybe_few,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "oph" = (
 /obj/machinery/power/terminal{
@@ -48542,6 +48986,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
 "oqV" = (
@@ -48624,6 +49069,11 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"orR" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "orX" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9;
@@ -48723,8 +49173,12 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
 	},
 /area/station/science/teleporter)
 "otu" = (
@@ -48796,6 +49250,7 @@
 /obj/window_blinds/cog2/left,
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
 "ouc" = (
@@ -48926,6 +49381,7 @@
 	name = "Kitchen Shutter"
 	},
 /obj/firedoor_spawn,
+/obj/item/reagent_containers/food/snacks/pizza/xmas,
 /turf/simulated/floor/blackwhite/whitegrime/other{
 	dir = 10
 	},
@@ -48998,7 +49454,7 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/outer/north)
 "oxs" = (
-/obj/decal/tile_edge/stripe/big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 4
 	},
 /obj/disposalpipe/segment,
@@ -49050,6 +49506,7 @@
 	dir = 4;
 	level = -1
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "oyc" = (
@@ -49278,11 +49735,30 @@
 	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/bathroom)
+"oCg" = (
+/obj/decal/mule/dropoff,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/decal/garland{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/cafeteria)
 "oCj" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/green{
 	pixel_x = -5;
 	pixel_y = 9
+	},
+/obj/item/clothing/head/helmet/space/santahat{
+	pixel_x = 8;
+	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
 /area/station/medical/head)
@@ -49302,6 +49778,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment,
+/obj/decal/garland,
 /turf/simulated/floor/black,
 /area/station/crewquarters/fuq3)
 "oCD" = (
@@ -49475,7 +49952,13 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "oGI" = (
 /obj/item/storage/secure/ssafe/loot,
@@ -49813,6 +50296,27 @@
 "oKk" = (
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/quarters)
+"oKm" = (
+/obj/machinery/door/airlock/pyro/glass/security{
+	dir = 4;
+	req_access = null
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/hos,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/decal/mule/dropoff,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/decal/garland{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/hos)
 "oKt" = (
 /obj/machinery/bot/guardbot/bad{
 	on = 0
@@ -50065,9 +50569,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "oOC" = (
 /obj/table/reinforced/bar/auto{
@@ -50274,17 +50776,18 @@
 	})
 "oSz" = (
 /obj/rack,
-/obj/item/clothing/suit/space{
-	pixel_x = 3;
+/obj/item/clothing/suit/space/santa{
+	pixel_x = -2;
 	pixel_y = -3
 	},
 /obj/item/clothing/mask/breath{
 	pixel_y = 3
 	},
-/obj/item/clothing/head/helmet/space{
-	pixel_y = 10
-	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/item/clothing/head/helmet/space/santahat{
+	pixel_x = 1;
+	pixel_y = 11
+	},
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/darkblue,
 /area/station/ai_monitored/storage/eva)
@@ -50428,6 +50931,11 @@
 	icon_state = "blue2"
 	},
 /area/station/crew_quarters/quartersB)
+"oUU" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/medical/cdc)
 "oUX" = (
 /obj/table/wood/auto,
 /obj/item/decoration/flower_vase{
@@ -50606,7 +51114,7 @@
 	},
 /obj/decal/mule/dropoff,
 /obj/decal/garland{
-	dir = 4
+	dir = 5
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -50646,6 +51154,11 @@
 "oYJ" = (
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
+"oYQ" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/grey,
+/area/station/science/lab)
 "oYS" = (
 /obj/cable{
 	d1 = 1;
@@ -50734,12 +51247,6 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
-"oZM" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/decal/poster/wallsign/space,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/engine/inner)
 "oZQ" = (
 /obj/grille/catwalk/jen/side{
 	dir = 8
@@ -50934,9 +51441,7 @@
 	level = -1
 	},
 /obj/disposalpipe/segment/mail,
-/obj/decal/garland{
-	dir = 4
-	},
+/obj/decal/mistletoe,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "pdO" = (
@@ -50962,6 +51467,11 @@
 /obj/shrub,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/hallway/primary/south)
+"pek" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/wreath,
+/turf/simulated/floor/plating,
+/area/station/hydroponics)
 "pex" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -51145,6 +51655,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/decal/mistletoe,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/head)
 "phQ" = (
@@ -51222,21 +51733,6 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
-"piT" = (
-/obj/rack,
-/obj/item/clothing/suit/space{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/clothing/mask/breath{
-	pixel_y = 3
-	},
-/obj/item/clothing/head/helmet/space{
-	pixel_y = 10
-	},
-/obj/decal/mule/beacon/no_auto_dropoff_spawn,
-/turf/simulated/floor/darkblue,
-/area/station/ai_monitored/storage/eva)
 "piX" = (
 /obj/lattice{
 	dir = 8;
@@ -51264,10 +51760,19 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
 	},
 /area/station/science/teleporter)
+"pji" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/west)
 "pjj" = (
 /obj/stool/chair/comfy,
 /obj/cable{
@@ -51356,9 +51861,8 @@
 	},
 /area/station/security/main)
 "pkD" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 5;
-	icon_state = "bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/xmas2{
+	dir = 5
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
@@ -51549,7 +52053,9 @@
 /area/station/hydroponics)
 "pmj" = (
 /obj/table/glass/reinforced/auto,
-/obj/random_item_spawner/snacks/one_or_zero,
+/obj/item/a_gift/festive{
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet,
 /area/station/hallway/secondary/exit)
 "pmn" = (
@@ -51561,11 +52067,23 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "pmt" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 10
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/maintenance/outer/east)
+"pmB" = (
+/obj/decal/wreath{
+	pixel_x = -32
+	},
+/turf/simulated/floor/black,
+/area/station/chapel/main)
 "pmM" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -51676,6 +52194,11 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
+"pnO" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/decal/xmas_lights,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/arrival/station)
 "pnU" = (
 /obj/cable{
 	d1 = 2;
@@ -51711,7 +52234,13 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/sec)
 "pos" = (
 /obj/disposalpipe/segment/morgue,
@@ -51820,19 +52349,6 @@
 /obj/railing/yellow,
 /turf/space,
 /area)
-"ppU" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/decal/wreath,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/AIsat)
 "pqm" = (
 /obj/cable,
 /obj/cable{
@@ -51903,6 +52419,11 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
+"prd" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/east)
 "prh" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/bridge)
@@ -52043,8 +52564,8 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/decal/xmas_lights{
-	pixel_y = 38
+/obj/decal/wreath{
+	pixel_y = 32
 	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
@@ -52316,7 +52837,13 @@
 	powerlevel = 1
 	},
 /obj/decal/mule/dropoff,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "pwI" = (
 /obj/machinery/light/incandescent/warm{
@@ -52385,6 +52912,9 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
+/obj/decal/wreath{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "purple2"
@@ -52399,15 +52929,20 @@
 /obj/machinery/vehicle/miniputt/armed{
 	dir = 4
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/xmas2{
+	dir = 9
 	},
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "pyd" = (
 /obj/disposalpipe/segment{
@@ -52443,11 +52978,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/arrivals)
-"pyw" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/hallway)
 "pyF" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/specialroom/arcade,
@@ -52459,9 +52989,15 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "pyM" = (
-/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/xmas,
 /obj/random_pod_spawner,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/maintenance/outer/east)
 "pyN" = (
 /obj/decal/tile_edge/stripe/extra_big,
@@ -52525,19 +53061,6 @@
 /area/station/maintenance/outer/east)
 "pzN" = (
 /obj/grille/catwalk/cross,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross"
@@ -52573,12 +53096,6 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/breakroom)
-"pAl" = (
-/obj/cable{
-	icon_state = "2-5"
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/AIsat)
 "pAs" = (
 /obj/disposalpipe/trunk/mail{
 	dir = 4
@@ -52793,10 +53310,20 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "pCw" = (
+/obj/rack,
+/obj/item/clothing/shoes/magnetic,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/clothing/suit/space/engineer,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "4-10"
+	},
+/obj/item/clothing/head/helmet/space/engineer{
+	pixel_x = -3;
+	pixel_y = 12
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/westsolar)
@@ -53141,7 +53668,7 @@
 	},
 /area/station/bridge/customs)
 "pHu" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 4
 	},
 /obj/machinery/phone/wall{
@@ -53351,6 +53878,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/main)
+"pLp" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/wreath,
+/turf/simulated/floor/plating,
+/area/station/science)
 "pLG" = (
 /obj/machinery/light/incandescent{
 	dir = 8
@@ -53408,6 +53940,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/mistletoe,
 /turf/simulated/floor/black,
 /area/station/turret_protected/AIsat)
 "pMo" = (
@@ -53417,14 +53950,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/routingdepot)
-"pMp" = (
-/obj/decal/wreath{
-	pixel_x = 32
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 4
-	},
-/area/station/chapel/main)
 "pMv" = (
 /obj/cable{
 	d1 = 4;
@@ -53771,6 +54296,7 @@
 /area/station/crew_quarters/market)
 "pRX" = (
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "pRZ" = (
@@ -53785,6 +54311,11 @@
 	},
 /turf/simulated/floor/caution/south,
 /area/listeningpost)
+"pSf" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/east)
 "pSl" = (
 /obj/cable{
 	d1 = 2;
@@ -53896,7 +54427,13 @@
 	powerlevel = 1
 	},
 /obj/decal/mule/dropoff,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/maintenance/outer/east)
 "pUd" = (
 /obj/decal/tile_edge/line/yellow{
@@ -54436,7 +54973,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/stripe/xmas,
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
@@ -54661,6 +55198,10 @@
 	pixel_x = 1;
 	pixel_y = 30
 	},
+/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff{
+	pixel_x = -15;
+	pixel_y = 8
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "qeW" = (
@@ -54736,13 +55277,13 @@
 /turf/simulated/floor/blueblack,
 /area/station/bridge)
 "qfT" = (
-/obj/lattice,
 /obj/machinery/communications_dish,
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/turf/space,
+/obj/decal/tile_edge/flowers,
+/turf/simulated/floor/snow/snowball,
 /area)
 "qfV" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -55179,6 +55720,7 @@
 "qlq" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/arrivals)
 "qlu" = (
@@ -55278,6 +55820,11 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/darkblue/checker,
 /area/station/ai_monitored/storage/eva)
+"qmD" = (
+/turf/simulated/floor/snow/green{
+	dir = 9
+	},
+/area)
 "qmI" = (
 /obj/access_spawn/maint,
 /obj/decal/mule/dropoff,
@@ -55536,6 +56083,7 @@
 "qqd" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/window_blinds/cog2/right,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "qqj" = (
@@ -55845,7 +56393,7 @@
 	},
 /area/station/medical/head)
 "qtl" = (
-/obj/machinery/door/airlock/pyro/command{
+/obj/machinery/door/airlock/pyro/glass/command{
 	dir = 8;
 	req_access = null
 	},
@@ -56492,8 +57040,20 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "qCd" = (
+/obj/rack,
+/obj/item/clothing/shoes/magnetic,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/clothing/suit/space/engineer,
 /obj/cable{
+	d1 = 1;
+	d2 = 4;
 	icon_state = "1-4"
+	},
+/obj/item/clothing/head/helmet/space/engineer{
+	pixel_x = -3;
+	pixel_y = 12
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/eastsolar)
@@ -56884,8 +57444,12 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
 "qJf" = (
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
 	},
 /area/station/science/teleporter)
 "qJk" = (
@@ -56919,19 +57483,6 @@
 /area/station/hallway/secondary/exit)
 "qJG" = (
 /obj/grille/catwalk/cross,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
@@ -57017,7 +57568,13 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "qLm" = (
 /obj/machinery/light/incandescent{
@@ -57035,13 +57592,22 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "qLF" = (
 /obj/table/wood/auto,
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/machinery/computer3/generic/personal/personel_alt,
+/obj/decal/xmas_lights{
+	pixel_y = -32
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/breakroom)
 "qLJ" = (
@@ -57373,6 +57939,14 @@
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
+"qPH" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/chair/folded,
+/obj/decal/wreath{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/east)
 "qPJ" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -57463,6 +58037,9 @@
 /obj/item/decoration/ashtray{
 	pixel_x = -3;
 	pixel_y = 5
+	},
+/obj/decal/wreath{
+	pixel_x = 32
 	},
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/stockex)
@@ -57610,9 +58187,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "qSP" = (
 /obj/cable{
@@ -57732,6 +58307,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway)
+"qUc" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "qUg" = (
 /obj/lattice{
 	dir = 5;
@@ -57784,6 +58364,7 @@
 	dir = 4;
 	level = 2
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "qVn" = (
@@ -58059,11 +58640,11 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
-"qZg" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/medical/cdc)
+"qZk" = (
+/turf/simulated/floor/snow/green{
+	dir = 10
+	},
+/area)
 "qZz" = (
 /turf/simulated/floor/black/grime,
 /area/station/mining)
@@ -58299,6 +58880,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/brig/south_side)
 "rcv" = (
@@ -58472,7 +59054,13 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "reQ" = (
 /obj/cable{
@@ -58607,7 +59195,13 @@
 	powerlevel = 1
 	},
 /obj/decal/mule/dropoff,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/maintenance/outer/east)
 "rim" = (
 /obj/cable{
@@ -58654,22 +59248,6 @@
 	dir = 1
 	},
 /area/station/bridge/customs)
-"riX" = (
-/obj/decal/mule/dropoff,
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/access_spawn,
-/obj/firedoor_spawn,
-/obj/decal/tile_edge/line/white{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/decal/garland{
-	dir = 4
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/hallway/secondary/exit)
 "rje" = (
 /obj/grille/catwalk/jen/side{
 	dir = 4
@@ -58740,7 +59318,13 @@
 /obj/machinery/vehicle/pod_smooth/light{
 	dir = 4
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "rjS" = (
 /obj/machinery/power/apc/autoname_north,
@@ -58769,10 +59353,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/obj/decal/garland{
-	dir = 6;
-	layer = 4
-	},
+/obj/decal/mistletoe,
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
 "rkf" = (
@@ -58925,6 +59506,7 @@
 "rlA" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/mining)
 "rlP" = (
@@ -59247,7 +59829,13 @@
 	powerlevel = 1
 	},
 /obj/decal/mule/dropoff,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/science)
 "rqF" = (
 /obj/decal/tile_edge/line/yellow{
@@ -59585,6 +60173,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
 "rvo" = (
@@ -59932,11 +60521,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
-"rzJ" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/medical/robotics)
 "rzM" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -60386,6 +60970,7 @@
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics)
 "rGd" = (
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
 "rGo" = (
@@ -60453,6 +61038,11 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
+"rGZ" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/medical/breakroom)
 "rHb" = (
 /obj/cable{
 	d1 = 4;
@@ -60493,10 +61083,10 @@
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/arrivals)
 "rHw" = (
-/obj/reagent_dispensers/beerkeg,
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
+/obj/loudspeaker,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "rHC" = (
@@ -60578,7 +61168,13 @@
 	},
 /obj/reagent_dispensers/fueltank,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "rIy" = (
 /obj/disposalpipe/segment{
@@ -61105,11 +61701,17 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "rSb" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 1
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "rSf" = (
 /obj/table/wood/auto,
@@ -61183,7 +61785,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "rTd" = (
 /turf/simulated/wall/auto/reinforced/jen/yellow,
@@ -61422,17 +62024,25 @@
 	dir = 8;
 	name = "rusty sink"
 	},
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 8
 	},
 /obj/machinery/light/incandescent/harsh{
 	dir = 4
 	},
-/turf/simulated/floor/plating/jen,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/science)
 "rWD" = (
 /obj/table/round/auto,
-/obj/random_item_spawner/desk_stuff/few,
+/obj/item/a_gift/festive{
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet/red/fancy/narrow/north,
 /area/station/quartermaster/office)
 "rWM" = (
@@ -61516,6 +62126,7 @@
 /area/station/crew_quarters/bathroom)
 "rYa" = (
 /obj/machinery/light/incandescent/warm,
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
 "rYj" = (
@@ -61812,7 +62423,7 @@
 	d2 = 4;
 	icon_state = "5-8"
 	},
-/turf/simulated/floor/blueblack/corner,
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "scx" = (
 /obj/machinery/door_control{
@@ -62019,6 +62630,9 @@
 "sgb" = (
 /obj/reagent_dispensers/watertank/fountain,
 /obj/machinery/light/incandescent/cool,
+/obj/decal/xmas_lights{
+	pixel_y = -32
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/breakroom)
 "sgi" = (
@@ -62044,12 +62658,6 @@
 	dir = 1
 	},
 /area/station/security/quarters)
-"sgu" = (
-/obj/decal/wreath{
-	pixel_x = -32
-	},
-/turf/simulated/floor/black,
-/area/station/chapel/main)
 "sgv" = (
 /obj/cable{
 	d2 = 4;
@@ -62237,15 +62845,14 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
-"siN" = (
-/obj/wingrille_spawn/auto,
+"siQ" = (
+/obj/wingrille_spawn/auto/tuff,
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
-/area/station/crewquarters/fuq3)
+/area/station/science)
 "sjd" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 6;
-	icon_state = "bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/xmas2{
+	dir = 6
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/yellowblack/corner{
@@ -62341,6 +62948,7 @@
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
 "skf" = (
@@ -62406,6 +63014,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/wreath,
 /turf/simulated/floor/plating,
 /area/station/security/brig/south_side)
 "slw" = (
@@ -62652,7 +63261,13 @@
 	powerlevel = 1
 	},
 /obj/decal/mule/dropoff,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/science)
 "spo" = (
 /obj/disposalpipe/segment/mail{
@@ -63030,7 +63645,13 @@
 /obj/item/shipcomponent/secondary_system/gps{
 	pixel_x = 6
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "sws" = (
 /obj/storage/closet/office,
@@ -63125,7 +63746,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "sxx" = (
-/turf/simulated/floor/black,
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "sxT" = (
 /obj/disposalpipe/segment,
@@ -63160,11 +63781,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "syK" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/decal/tile_edge/stripe/xmas{
-	dir = 1
-	},
-/turf/simulated/floor/plating/jen,
+/turf/simulated/floor/snow/snowball,
 /area/station/maintenance/outer/ne)
 "syR" = (
 /obj/wingrille_spawn/auto/tuff,
@@ -63363,9 +63980,7 @@
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "sBR" = (
 /obj/decal/cleanable/dirt/jen,
@@ -63415,10 +64030,8 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "sCX" = (
-/obj/random_item_spawner/junk/one_or_zero,
-/obj/decal/cleanable/dirt/jen,
-/obj/decal/tile_edge/stripe/corner/xmas2{
-	dir = 9
+/obj/decal/tile_edge/stripe/xmas{
+	dir = 1
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -63995,6 +64608,7 @@
 "sMr" = (
 /obj/window_blinds/cog2/right,
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
 "sMw" = (
@@ -64694,9 +65308,8 @@
 /area/station/crew_quarters/pool)
 "sYJ" = (
 /obj/machinery/field_generator,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/xmas2{
+	dir = 5
 	},
 /obj/machinery/power/data_terminal,
 /obj/map/light/cyan,
@@ -64838,6 +65451,9 @@
 /obj/noticeboard{
 	pixel_y = 32
 	},
+/obj/stool/chair/couch/blue{
+	dir = 8
+	},
 /turf/simulated/floor/greenwhite/other{
 	dir = 1
 	},
@@ -64864,7 +65480,13 @@
 	pixel_x = 3;
 	pixel_y = -2
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "tbD" = (
 /obj/disposalpipe/segment/brig{
@@ -64879,7 +65501,13 @@
 /area/station/ai_monitored/storage/eva)
 "tbP" = (
 /obj/decal/cleanable/oil/streak,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "tcd" = (
 /obj/wingrille_spawn/auto,
@@ -64926,9 +65554,7 @@
 	},
 /area/station/medical/asylum/kitchen)
 "tdf" = (
-/obj/stool/chair/couch/blue{
-	dir = 8
-	},
+/obj/stool/chair/couch/blue,
 /turf/simulated/floor/greenwhite/other{
 	dir = 1
 	},
@@ -65401,11 +66027,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/south)
-"tkH" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/wreath,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/fitness)
 "tkQ" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 8;
@@ -65417,6 +66038,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/garland{
+	dir = 9
 	},
 /turf/simulated/floor/black,
 /area/station/engine/singcore)
@@ -65447,9 +66071,7 @@
 	d2 = 4;
 	icon_state = "4-9"
 	},
-/turf/simulated/floor/blueblack/corner{
-	dir = 4
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "tlE" = (
 /obj/decal/cleanable/dirt/jen,
@@ -65852,21 +66474,27 @@
 "trw" = (
 /turf/space,
 /area/supply/spawn_point)
+"trN" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/morgue{
+	name = "kitchen freezer pipe"
+	},
+/obj/xmastree,
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fblue1"
+	},
+/area/station/crew_quarters/cafeteria)
 "trW" = (
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/asylum)
-"tsa" = (
-/obj/decal/mule/dropoff,
-/obj/machinery/door/airlock/pyro/glass,
-/obj/firedoor_spawn,
-/obj/access_spawn,
-/obj/disposalpipe/segment/mail,
-/obj/decal/garland,
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
 "tsc" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 6;
@@ -66091,7 +66719,7 @@
 	},
 /area/station/maintenance/outer/west)
 "tuP" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 1
 	},
 /obj/machinery/disposal/small{
@@ -66116,9 +66744,8 @@
 	},
 /area/station/engine/engineering)
 "tuU" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 9;
-	icon_state = "bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/xmas2{
+	dir = 9
 	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
@@ -66195,6 +66822,11 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
+"twh" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "two" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/carpet/red/fancy/edge{
@@ -66321,7 +66953,13 @@
 /area/station/hydroponics)
 "tyb" = (
 /obj/machinery/vehicle/pod_smooth/light,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/science)
 "tyo" = (
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
@@ -66586,6 +67224,11 @@
 "tBW" = (
 /turf/space,
 /area/station/engine/singcore)
+"tCe" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/surgery/storage)
 "tCi" = (
 /obj/cable{
 	d2 = 8;
@@ -66670,13 +67313,10 @@
 	},
 /area/station/security/checkpoint/west)
 "tCL" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
-/area/station/turret_protected/AIsat)
+/area/station/medical/medbooth)
 "tCM" = (
 /obj/cable{
 	d1 = 1;
@@ -67080,7 +67720,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/stripe/xmas,
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "tJn" = (
@@ -67318,7 +67958,7 @@
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/hangar/main)
 "tMH" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 1
 	},
 /obj/cable{
@@ -67441,7 +68081,13 @@
 /obj/disposalpipe/segment{
 	dir = 8
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "tOJ" = (
 /obj/decal/cleanable/dirt/jen,
@@ -67684,7 +68330,13 @@
 "tSf" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "tSo" = (
 /obj/machinery/portable_reclaimer,
@@ -67744,6 +68396,11 @@
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"tSB" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/hallway)
 "tSO" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/arrival{
@@ -67878,7 +68535,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/stripe/big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 1
 	},
 /obj/machinery/camera{
@@ -68032,7 +68689,7 @@
 	d2 = 4;
 	icon_state = "6-10"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "tXI" = (
 /obj/machinery/emitter,
@@ -68153,7 +68810,13 @@
 	powerlevel = 1
 	},
 /obj/decal/mule/dropoff,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/science)
 "tZS" = (
 /turf/simulated/floor/yellowblack{
@@ -68287,6 +68950,7 @@
 "ucb" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/window_blinds/cog2/middle,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "ucs" = (
@@ -68652,6 +69316,9 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
+/obj/item/a_gift/festive{
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet/purple/decal/outercross,
 /area/station/chapel/main)
 "ujy" = (
@@ -68833,6 +69500,11 @@
 "umn" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"umQ" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/science/artifact)
 "umS" = (
 /obj/potted_plant/potted_plant2{
 	dir = 8;
@@ -69088,6 +69760,18 @@
 /obj/item/storage/box/health_upgrade_kit,
 /turf/simulated/floor/carpet/green/standard,
 /area/station/medical/breakroom)
+"uqM" = (
+/obj/machinery/light/small/floor,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/cafeteria)
 "uqW" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/disposalpipe/segment/brig{
@@ -69987,6 +70671,7 @@
 	pixel_x = -8;
 	pixel_y = 15
 	},
+/obj/item/reagent_containers/food/snacks/cake/fruit,
 /turf/simulated/floor/carpet/red/standard,
 /area/station/crew_quarters/cafeteria)
 "uEq" = (
@@ -70278,6 +70963,11 @@
 	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/captain)
+"uHS" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
 "uHV" = (
 /obj/stool/chair/couch/green,
 /turf/simulated/floor/wood,
@@ -70374,7 +71064,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
-/turf/simulated/floor/blueblack,
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "uIY" = (
 /obj/shrub{
@@ -70516,12 +71206,6 @@
 /obj/decal/garland,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
-"uLi" = (
-/obj/decal/wreath,
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "12"
-	},
-/area/shuttle/asylum/medbay)
 "uLk" = (
 /obj/cable{
 	d1 = 4;
@@ -70709,26 +71393,6 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
-"uOD" = (
-/obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 4
-	},
-/obj/decal/mule/dropoff,
-/obj/firedoor_spawn,
-/obj/access_spawn/research,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/decal/garland{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/science)
 "uOI" = (
 /obj/cable{
 	d1 = 1;
@@ -71190,13 +71854,20 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "uUd" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
 	},
-/turf/simulated/floor/plating,
-/area/station/turret_protected/AIsat)
+/obj/item/device/radio/intercom{
+	pixel_y = 23
+	},
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "uUe" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -71238,9 +71909,7 @@
 /obj/machinery/turret{
 	dir = 6
 	},
-/turf/simulated/floor/blueblack{
-	dir = 9
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "uUJ" = (
 /obj/machinery/door/airlock/pyro/glass,
@@ -71384,6 +72053,9 @@
 /area/station/quartermaster/office)
 "uWN" = (
 /obj/table/auto,
+/obj/item/a_gift/festive{
+	pixel_y = 6
+	},
 /turf/simulated/floor/black,
 /area/station/crewquarters/fuq3)
 "uWU" = (
@@ -71449,6 +72121,22 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/bridge)
+"uXD" = (
+/obj/decal/mule/dropoff,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/access_spawn,
+/obj/firedoor_spawn,
+/obj/decal/tile_edge/line/white{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/decal/garland{
+	dir = 4
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/hallway/secondary/exit)
 "uXF" = (
 /obj/cable{
 	d2 = 4;
@@ -71697,7 +72385,13 @@
 /area/station/maintenance/outer/se)
 "vcw" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "vcG" = (
 /turf/simulated/floor/black/grime,
@@ -71867,6 +72561,7 @@
 	dir = 4
 	},
 /obj/item/clothing/suit/monkey,
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
 "veT" = (
@@ -72011,6 +72706,23 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/south)
+"vgZ" = (
+/obj/item/cable_coil,
+/obj/table/auto,
+/obj/item/cable_coil{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/obj/item/cable_coil{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/eastsolar)
 "vhf" = (
 /obj/cable{
 	d1 = 2;
@@ -72053,6 +72765,11 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
+"vht" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/stockex)
 "vhP" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
@@ -72187,6 +72904,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "vkJ" = (
@@ -72206,6 +72924,11 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
+"vkU" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
 "vkX" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -72275,10 +72998,16 @@
 	layer = 3.1;
 	name = "Bar Shutter"
 	},
+/obj/item/wrapping_paper/xmas,
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 4
 	},
 /area/station/crew_quarters/cafeteria)
+"vlN" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
 "vlP" = (
 /obj/cable{
 	d1 = 4;
@@ -72321,9 +73050,7 @@
 	layer = 2.8
 	},
 /obj/machinery/vending/cigarette,
-/turf/simulated/floor/wood/eight{
-	dir = 4
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/crew_quarters/cafeteria)
 "vmk" = (
 /obj/noticeboard{
@@ -72344,7 +73071,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "vmC" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 8
 	},
 /obj/map/light/cyan,
@@ -72437,13 +73164,19 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "vnU" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 6
 	},
 /obj/machinery/shower{
 	dir = 8
 	},
-/turf/simulated/floor/plating/jen,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/science)
 "vob" = (
 /obj/landmark/magnet_center,
@@ -72504,6 +73237,7 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/access_spawn,
 /obj/firedoor_spawn,
+/obj/decal/garland,
 /turf/simulated/floor,
 /area/station/crewquarters/fuq3)
 "vpz" = (
@@ -72806,6 +73540,12 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"vvH" = (
+/obj/decal/wreath{
+	pixel_y = 32
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/quarters)
 "vvL" = (
 /obj/decal/tile_edge/line/green{
 	dir = 5;
@@ -72877,6 +73617,7 @@
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
 "vwF" = (
@@ -72912,6 +73653,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "vwH" = (
@@ -72924,6 +73666,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
 "vwM" = (
@@ -72958,7 +73701,7 @@
 	name = "autoname  - SS13";
 	tag = ""
 	},
-/turf/simulated/floor/blueblack,
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "vxo" = (
 /obj/cable{
@@ -73193,6 +73936,9 @@
 /obj/stool/bed,
 /obj/landmark/start{
 	name = "Staff Assistant"
+	},
+/obj/decal/wreath{
+	pixel_y = 32
 	},
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -73558,6 +74304,17 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
+"vFS" = (
+/obj/disposalpipe/segment,
+/obj/decal/cleanable/oil/streak,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
+/area/station/hangar/main)
 "vGa" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 5;
@@ -73672,6 +74429,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage/eva)
 "vHg" = (
@@ -74005,20 +74763,17 @@
 /area/station/hallway/secondary/construction)
 "vMa" = (
 /obj/rack,
-/obj/item/clothing/suit/space{
-	pixel_x = 3;
+/obj/item/clothing/suit/space/santa{
+	pixel_x = -2;
 	pixel_y = -3
 	},
 /obj/item/clothing/mask/breath{
 	pixel_y = 3
 	},
-/obj/item/clothing/head/helmet/space{
-	pixel_y = 10
-	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
-/obj/machinery/light/emergency{
-	dir = 1;
-	pixel_y = 16
+/obj/item/clothing/head/helmet/space/santahat{
+	pixel_x = 1;
+	pixel_y = 11
 	},
 /turf/simulated/floor/darkblue,
 /area/station/ai_monitored/storage/eva)
@@ -74031,8 +74786,13 @@
 /turf/space,
 /area)
 "vMB" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "vMD" = (
 /obj/railing/orange{
@@ -74307,6 +75067,7 @@
 	icon_state = "0-8"
 	},
 /obj/disposalpipe/segment/ejection,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/brig/south_side)
 "vQd" = (
@@ -74737,7 +75498,13 @@
 	dir = 4
 	},
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "vXA" = (
 /obj/decal/tile_edge/line/yellow{
@@ -75113,10 +75880,7 @@
 	layer = 2.8
 	},
 /obj/machinery/vending/capsule,
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fgreen2"
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/crew_quarters/cafeteria)
 "wdS" = (
 /turf/simulated/wall/auto/reinforced/jen/blue{
@@ -75186,6 +75950,9 @@
 	name = "Staff Assistant"
 	},
 /obj/item/clothing/suit/bedsheet/black,
+/obj/decal/wreath{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor/carpet/green/standard/edge{
 	dir = 5
 	},
@@ -75705,12 +76472,17 @@
 /turf/simulated/floor/black/grime,
 /area/station/quartermaster/refinery)
 "wmE" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8;
-	tag = "icon-xtra_bigstripe-edge (WEST)"
+/obj/decal/tile_edge/stripe/xmas{
+	dir = 8
 	},
 /obj/random_pod_spawner/random_putt_spawner,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/maintenance/outer/east)
 "wmH" = (
 /obj/disposalpipe/segment/mail{
@@ -76013,6 +76785,7 @@
 /obj/shrub{
 	dir = 6
 	},
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
 "wqJ" = (
@@ -76178,7 +76951,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "wsM" = (
-/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/xmas,
 /obj/map/light/cyan,
 /turf/simulated/floor/airless/engine/glow/blue,
 /area/station/engine/singcore)
@@ -76188,10 +76961,7 @@
 	},
 /obj/submachine/claw_machine,
 /obj/disposalpipe/segment/transport,
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fgreen2"
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/crew_quarters/cafeteria)
 "wtb" = (
 /obj/machinery/light/emergency{
@@ -76476,6 +77246,11 @@
 "wwE" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/asylum/kitchen)
+"wwH" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/fitness)
 "wwT" = (
 /obj/rack,
 /obj/random_item_spawner/hat/one_or_zero,
@@ -76529,6 +77304,14 @@
 "wxG" = (
 /turf/simulated/floor/carpet/red/fancy/innercorner/omni,
 /area/station/maintenance/outer/north)
+"wxL" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/tile_edge/stripe/corner/xmas2{
+	dir = 9
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "wxN" = (
 /obj/cable{
 	d1 = 1;
@@ -76607,7 +77390,13 @@
 /area/station/chapel/main)
 "wyA" = (
 /obj/machinery/light/small/floor/warm,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/sec)
 "wyD" = (
 /obj/cable{
@@ -76697,9 +77486,8 @@
 /area/station/crew_quarters/heads)
 "wAg" = (
 /obj/machinery/field_generator,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/xmas2{
+	dir = 10
 	},
 /obj/machinery/power/data_terminal,
 /obj/map/light/cyan,
@@ -76720,7 +77508,13 @@
 	powerlevel = 1
 	},
 /obj/decal/mule/dropoff,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/maintenance/outer/east)
 "wAj" = (
 /obj/submachine/chef_oven{
@@ -76769,7 +77563,13 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "wBl" = (
 /obj/decal/cleanable/dirt/jen,
@@ -76827,6 +77627,7 @@
 "wCg" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/hazard_rad,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "wCh" = (
@@ -77012,6 +77813,7 @@
 /area/station/maintenance/inner/nw)
 "wFv" = (
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "wFC" = (
@@ -77340,6 +78142,7 @@
 /obj/shrub{
 	dir = 1
 	},
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
 "wKi" = (
@@ -77447,6 +78250,11 @@
 	dir = 1
 	},
 /area/listeningpost)
+"wLM" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/lobby)
 "wLQ" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/firedoor_spawn,
@@ -77788,6 +78596,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage/eva)
 "wQc" = (
@@ -77803,7 +78612,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/exit)
 "wQl" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 8
 	},
 /obj/map/light/cyan,
@@ -78616,6 +79425,7 @@
 "xbh" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/window_blinds/cog2/left,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "xbw" = (
@@ -78650,7 +79460,13 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "xbV" = (
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/science)
 "xcf" = (
 /obj/disposalpipe/block_sensing_outlet{
@@ -78962,6 +79778,7 @@
 	icon_state = "4-8"
 	},
 /obj/access_spawn/engineering_chief,
+/obj/decal/mistletoe,
 /turf/simulated/floor/black/grime,
 /area/station/engine/engineering/ce)
 "xhd" = (
@@ -79175,6 +79992,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "xkP" = (
@@ -79310,6 +80128,14 @@
 	},
 /turf/simulated/floor/stairs/wide/other,
 /area/station/hallway/primary/west)
+"xmQ" = (
+/obj/decal/mule/dropoff,
+/obj/machinery/door/airlock/pyro/glass,
+/obj/firedoor_spawn,
+/obj/access_spawn,
+/obj/decal/garland,
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "xmR" = (
 /obj/cable{
 	d1 = 2;
@@ -79495,6 +80321,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade/dungeon)
 "xqJ" = (
@@ -79549,6 +80376,11 @@
 /obj/machinery/light/incandescent/harsh,
 /turf/simulated/floor/purpleblack,
 /area/station/science)
+"xrc" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/testchamber)
 "xrf" = (
 /obj/disposalpipe/switch_junction/left/north{
 	mail_tag = "podbay"
@@ -79666,6 +80498,7 @@
 /area/station/medical/medbay/lobby)
 "xtH" = (
 /obj/wingrille_spawn/auto/tuff,
+/obj/decal/wreath,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade)
 "xtI" = (
@@ -79697,7 +80530,7 @@
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "xus" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 4
 	},
 /obj/map/light/cyan,
@@ -79839,6 +80672,11 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
 /turf/simulated/floor/redblack/corner,
 /area/station/security/main)
+"xvM" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/stocking,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/cafeteria)
 "xvP" = (
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
@@ -79882,7 +80720,7 @@
 /obj/cable{
 	icon_state = "1-10"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/snow/snowball,
 /area/station/turret_protected/AIsat)
 "xxa" = (
 /turf/simulated/floor/carpet/green/decal/outercross,
@@ -80197,7 +81035,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/stripe/big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 1
 	},
 /turf/simulated/floor/black,
@@ -80603,6 +81441,14 @@
 "xIo" = (
 /turf/simulated/floor/stairs/wood2/middle,
 /area/station/crew_quarters/cafeteria)
+"xIu" = (
+/obj/decal/wreath{
+	pixel_x = 32
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/main)
 "xID" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -80676,11 +81522,6 @@
 "xJc" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/owlery)
-"xJi" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/west)
 "xJk" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -80972,7 +81813,13 @@
 	powerlevel = 1
 	},
 /obj/decal/mule/dropoff,
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/sec)
 "xNI" = (
 /obj/table/reinforced/bar/auto{
@@ -81151,7 +81998,13 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/main)
 "xQr" = (
 /obj/wingrille_spawn/auto/tuff,
@@ -81304,7 +82157,7 @@
 	},
 /obj/access_spawn/research_director,
 /obj/disposalpipe/segment,
-/obj/decal/garland,
+/obj/decal/mistletoe,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "xSE" = (
@@ -81317,20 +82170,6 @@
 	dir = 1
 	},
 /area/station/medical/asylum/kitchen)
-"xSH" = (
-/obj/decal/mule/dropoff,
-/obj/machinery/door/airlock/pyro/glass,
-/obj/firedoor_spawn,
-/obj/access_spawn,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail,
-/obj/decal/garland,
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
 "xSV" = (
 /turf/simulated/floor/carpet/red/fancy/narrow/south,
 /area/station/crew_quarters/cafeteria)
@@ -81497,10 +82336,16 @@
 /turf/simulated/wall/auto/reinforced/jen/yellow,
 /area/station/quartermaster/refinery)
 "xUq" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/tile_edge/stripe/xmas{
 	dir = 5
 	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/snow/snowball{
+	allows_vehicles = 1;
+	desc = "This Industrial-grade Space Snow(TM) makes for the perfect landing space for pods!";
+	heat_capacity = 325000;
+	name = "reinforced snow";
+	thermal_conductivity = 0.025
+	},
 /area/station/hangar/sec)
 "xUY" = (
 /obj/wingrille_spawn/auto/tuff,
@@ -81536,11 +82381,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/science/lab)
-"xVp" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/medical/medbay/surgery/storage)
 "xVz" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -81640,11 +82480,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
-"xXo" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/decal/wreath,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/construction2)
 "xXq" = (
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
@@ -82500,6 +83335,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
+"yjx" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/AIsat)
 "yjy" = (
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
@@ -82608,6 +83452,7 @@
 	d2 = 8;
 	icon_state = "0-4"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "ylq" = (
@@ -82620,10 +83465,13 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "ylx" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/rust/jen,
+/obj/decal/tile_edge/stripe/corner/xmas2{
+	dir = 5
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "yly" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/asylum/bathroom)
@@ -94964,8 +95812,8 @@ acc
 ach
 ach
 acn
-aci
-aci
+rEh
+rEh
 acu
 fiN
 rdj
@@ -95265,7 +96113,7 @@ nMC
 acd
 ooV
 kuM
-ace
+opj
 kuM
 nMC
 acd
@@ -95567,7 +96415,7 @@ nMC
 acd
 ooV
 kuM
-ace
+opj
 kuM
 nMC
 acd
@@ -95869,7 +96717,7 @@ nMC
 acd
 ooV
 kuM
-ace
+opj
 kuM
 nMC
 acd
@@ -96171,7 +97019,7 @@ nMC
 acd
 ooV
 kuM
-ace
+opj
 kuM
 nMC
 acd
@@ -96473,7 +97321,7 @@ nMC
 acd
 ooV
 kuM
-ace
+opj
 kuM
 nMC
 acd
@@ -96775,7 +97623,7 @@ rfc
 ace
 kuM
 kuM
-ace
+opj
 kuM
 kuM
 ace
@@ -97075,11 +97923,11 @@ erB
 cNV
 kuM
 acf
-aci
-aci
+rEh
+rEh
 acp
-aci
-aci
+rEh
+rEh
 tsu
 kuM
 cNV
@@ -99189,11 +100037,11 @@ rdj
 rdj
 muh
 acg
-acj
-acj
+gPO
+gPO
 acp
-acj
-acj
+gPO
+gPO
 acy
 gjB
 rdj
@@ -100098,8 +100946,8 @@ acc
 ach
 ach
 acq
-aci
-aci
+rEh
+rEh
 acu
 jYm
 rdj
@@ -103069,7 +103917,7 @@ sIK
 sIK
 sIK
 jhw
-hDV
+oKm
 jhw
 jhw
 lpZ
@@ -104326,8 +105174,8 @@ acg
 gPO
 gPO
 acp
-acj
-acj
+gPO
+gPO
 acy
 gjB
 rdj
@@ -106433,7 +107281,7 @@ lJM
 rdj
 rdj
 xRY
-mqx
+cTB
 qaq
 tTy
 xRY
@@ -106699,7 +107547,7 @@ jJd
 fAb
 czV
 cgK
-czV
+nPW
 rCp
 xxf
 nug
@@ -107041,8 +107889,8 @@ gHQ
 mqx
 xxo
 lOq
-gPO
-gPO
+nXd
+nXd
 ozA
 jYm
 rdj
@@ -107866,7 +108714,7 @@ rdj
 rdj
 rdj
 rdj
-biB
+pnO
 pxg
 ecq
 bvY
@@ -108168,7 +109016,7 @@ rdj
 rdj
 rdj
 rdj
-biB
+pnO
 gcU
 ecq
 ecq
@@ -108234,7 +109082,7 @@ wXb
 htz
 abJ
 lJM
-nsT
+vvH
 qgO
 auG
 ewr
@@ -108470,7 +109318,7 @@ rdj
 rdj
 rdj
 rdj
-biB
+pnO
 vJd
 ecq
 bvY
@@ -108772,7 +109620,7 @@ rdj
 rdj
 rdj
 rdj
-biB
+pnO
 gjU
 ecq
 ecq
@@ -109074,7 +109922,7 @@ rdj
 rdj
 rdj
 rdj
-biB
+pnO
 rVd
 ecq
 bvY
@@ -110398,7 +111246,7 @@ wLQ
 fQj
 jeN
 jeN
-qZg
+oUU
 rdj
 rdj
 rdj
@@ -110638,11 +111486,11 @@ uFF
 clC
 ovT
 ovT
-nLR
-rdj
-vVp
-rdj
-nLR
+pji
+qmD
+dqZ
+qZk
+pji
 cCY
 lqZ
 wTN
@@ -110700,7 +111548,7 @@ pEb
 pEb
 jeN
 leE
-qZg
+oUU
 rdj
 rdj
 rdj
@@ -110940,11 +111788,11 @@ uFF
 fNH
 ovT
 hrF
-nLR
-cNV
+pji
+ifP
 qfT
-cNV
-nLR
+aHd
+pji
 rEC
 pCv
 aUX
@@ -110976,7 +111824,7 @@ umn
 umn
 kws
 wlr
-xJi
+geW
 vVu
 stB
 qlU
@@ -111002,7 +111850,7 @@ rdj
 pEb
 jeN
 jeN
-qZg
+oUU
 rdj
 rdj
 rdj
@@ -111242,11 +112090,11 @@ qFN
 sQv
 ovT
 ovT
-nLR
-rdj
+pji
+jux
 hMN
-rdj
-nLR
+bjB
+pji
 pRZ
 mRx
 hib
@@ -111259,7 +112107,7 @@ ncD
 gxU
 dPc
 nbC
-xJG
+lQD
 dTM
 oMM
 rkf
@@ -111278,7 +112126,7 @@ oMM
 aLn
 umn
 oXO
-xJi
+geW
 rpr
 vpM
 gWu
@@ -111304,7 +112152,7 @@ sNh
 pEb
 jeN
 jeN
-qZg
+oUU
 rdj
 rdj
 rdj
@@ -111580,7 +112428,7 @@ hlE
 nvt
 umn
 oXO
-xJi
+geW
 xNL
 gUO
 snQ
@@ -111882,7 +112730,7 @@ gjH
 qmx
 umn
 eMq
-xJi
+geW
 uKt
 oZQ
 stB
@@ -112784,7 +113632,7 @@ ack
 pfV
 ePA
 cHQ
-hBL
+bnR
 pOK
 umn
 oXO
@@ -113036,8 +113884,8 @@ fsE
 eoC
 vHe
 vMa
-piT
-piT
+vMa
+vMa
 oSz
 jMF
 sgZ
@@ -113344,7 +114192,7 @@ tbH
 jMF
 pHq
 ced
-pyw
+tSB
 rdj
 rdj
 rdj
@@ -113413,7 +114261,7 @@ vaw
 tRB
 ybe
 raD
-qZg
+oUU
 hIa
 qMM
 pEb
@@ -113640,13 +114488,13 @@ hEu
 cVQ
 wQb
 lTH
-piT
-piT
-piT
+vMa
+vMa
+vMa
 jMF
 pHq
 ced
-pyw
+tSB
 rdj
 rdj
 rdj
@@ -113948,7 +114796,7 @@ jMF
 jMF
 lBb
 ced
-pyw
+tSB
 rdj
 rdj
 rdj
@@ -114017,7 +114865,7 @@ fpc
 rVv
 bos
 wos
-qZg
+oUU
 tXr
 tVH
 pEb
@@ -114250,7 +115098,7 @@ ddq
 otB
 riP
 ced
-pyw
+tSB
 rdj
 rdj
 rdj
@@ -114552,7 +115400,7 @@ wCp
 wCp
 ltw
 ced
-pyw
+tSB
 rdj
 rdj
 rdj
@@ -114621,7 +115469,7 @@ tUg
 uiV
 ybe
 lQS
-qZg
+oUU
 bSj
 nkZ
 pEb
@@ -114854,7 +115702,7 @@ pWb
 iff
 fEj
 toV
-pyw
+tSB
 rdj
 rdj
 rdj
@@ -115111,7 +115959,7 @@ sKH
 gNb
 vRz
 vRz
-sgu
+pmB
 eAc
 uSo
 umS
@@ -115156,7 +116004,7 @@ tWw
 cop
 rFa
 ced
-pyw
+tSB
 rdj
 rdj
 rdj
@@ -115225,7 +116073,7 @@ fpc
 vvy
 bos
 hYV
-qZg
+oUU
 pbi
 qtC
 pEb
@@ -115458,7 +116306,7 @@ sBt
 kjc
 tWw
 rqI
-pyw
+tSB
 rdj
 rdj
 rdj
@@ -115801,7 +116649,7 @@ jTG
 kMo
 ceG
 kXn
-ktd
+hua
 thU
 rdq
 ahG
@@ -116106,7 +116954,7 @@ pJj
 qyV
 fTM
 fay
-hBL
+bnR
 qfY
 vzl
 aVz
@@ -116451,7 +117299,7 @@ hyr
 izO
 jEt
 vDz
-ijU
+orR
 qRD
 ijU
 uNA
@@ -116753,7 +117601,7 @@ hyr
 plm
 vDz
 vDz
-ijU
+orR
 oZg
 ijU
 uKq
@@ -117055,7 +117903,7 @@ hyr
 vDz
 vDz
 gca
-ijU
+orR
 tzW
 ijU
 vdN
@@ -117338,7 +118186,7 @@ cma
 xEj
 oPf
 oPf
-uOD
+aXr
 oPf
 oPf
 oPf
@@ -117357,7 +118205,7 @@ jPh
 vGp
 llb
 vDz
-ijU
+orR
 naf
 ijU
 eym
@@ -118545,7 +119393,7 @@ gBK
 fyr
 fyr
 saU
-pJN
+xrc
 vDQ
 hAg
 rla
@@ -118847,11 +119695,11 @@ nOR
 wkT
 fyr
 wkT
-pJN
+xrc
 ggY
 hAg
 prl
-dRf
+siQ
 hML
 buA
 kBy
@@ -119149,11 +119997,11 @@ nOR
 ops
 fyr
 lEp
-pJN
+xrc
 fCo
 hAg
 prl
-dRf
+siQ
 lYU
 buA
 kBy
@@ -119169,7 +120017,7 @@ hyr
 cWT
 bVJ
 pjD
-ijU
+orR
 uzQ
 ijU
 mEC
@@ -119451,7 +120299,7 @@ nOR
 fyr
 fyr
 kfp
-pJN
+xrc
 vDQ
 hAg
 prl
@@ -119471,7 +120319,7 @@ hyr
 xGx
 dYt
 weX
-ijU
+orR
 qzn
 ijU
 pNo
@@ -119766,14 +120614,14 @@ yaE
 oEd
 wZp
 vIN
-qnG
+oYQ
 oHC
 oNo
 hyr
 vDz
 vDz
 dJr
-ijU
+orR
 gCU
 ijU
 gaH
@@ -120075,7 +120923,7 @@ hyr
 cbj
 vDz
 vDz
-ijU
+orR
 mPj
 ijU
 aCt
@@ -120262,7 +121110,7 @@ nxv
 vNC
 orp
 fDa
-xJi
+geW
 rMd
 qKT
 nxh
@@ -120347,7 +121195,7 @@ dpI
 fHL
 pyL
 mfI
-qEc
+eaM
 oqi
 oqi
 aZz
@@ -120564,7 +121412,7 @@ pFl
 pVy
 gAb
 wmH
-xJi
+geW
 aFn
 qKT
 qKT
@@ -120866,7 +121714,7 @@ ovT
 edQ
 uiq
 dcb
-xJi
+geW
 gkS
 qKT
 dYm
@@ -121454,11 +122302,11 @@ bJZ
 aaz
 tph
 bko
-pMp
+xIu
 udY
 jeT
 hdj
-pMp
+xIu
 bko
 tph
 aaz
@@ -121475,7 +122323,7 @@ dlu
 nNm
 hEe
 sgv
-gcl
+wwH
 dXQ
 jYw
 gPJ
@@ -121777,7 +122625,7 @@ nNm
 nNm
 pYD
 veT
-tkH
+bZe
 dCC
 vNw
 kWJ
@@ -122079,7 +122927,7 @@ iea
 pUI
 eVY
 nUM
-gcl
+wwH
 tqn
 rAH
 pCZ
@@ -122100,17 +122948,17 @@ nSh
 nSh
 nSh
 dra
-mXa
+yjx
 uUH
-jbm
+sxx
 jQb
 lUp
 qSC
 lOS
 jQb
-jbm
+sxx
 fqB
-tCL
+yjx
 xms
 nSh
 nSh
@@ -122140,7 +122988,7 @@ iaM
 dGu
 sZE
 pAf
-gYU
+rGZ
 uHm
 kYu
 fFl
@@ -122152,7 +123000,7 @@ xJx
 xJx
 fPh
 wID
-nGp
+lfe
 qfm
 lnn
 ugr
@@ -122176,7 +123024,7 @@ rGo
 nxf
 wVP
 aGD
-uBi
+umQ
 oNe
 iJg
 iFU
@@ -122362,7 +123210,7 @@ fIA
 wrL
 ptL
 pae
-pae
+aci
 wrL
 qeU
 tiA
@@ -122442,7 +123290,7 @@ ffD
 mdg
 xiU
 mRY
-gYU
+rGZ
 wHi
 nUt
 tAU
@@ -122478,7 +123326,7 @@ rGo
 iVW
 wVP
 aGD
-uBi
+umQ
 kgu
 gIT
 lCT
@@ -122677,7 +123525,7 @@ oMe
 vmc
 jKb
 hLA
-joM
+fLQ
 teY
 hAd
 ioE
@@ -122704,17 +123552,17 @@ nMZ
 nMZ
 mTH
 rES
-ppU
-fnD
+iUT
+sxx
 hzR
-rpu
+gvA
 wiW
 rdy
 ftw
-rpu
+gvA
 ftg
-eYn
-uUd
+sxx
+nDo
 xms
 iox
 nSh
@@ -122780,7 +123628,7 @@ rGo
 iVW
 wVP
 aGD
-uBi
+umQ
 tbu
 iJg
 iFU
@@ -123008,7 +123856,7 @@ nSh
 xms
 sig
 jzW
-pAl
+uIX
 leR
 rdy
 nKu
@@ -123586,7 +124434,7 @@ pPR
 ded
 yht
 hKu
-fXe
+trN
 eer
 bpC
 gWT
@@ -123952,7 +124800,7 @@ mUr
 dko
 lxR
 gmo
-xVp
+tCe
 jAj
 kBD
 lxl
@@ -123988,7 +124836,7 @@ hAg
 hAg
 qva
 juJ
-uBi
+umQ
 qDC
 fDw
 oOH
@@ -124488,7 +125336,7 @@ grT
 qHy
 bfb
 rul
-hLA
+uqM
 jKb
 jKb
 veJ
@@ -124516,17 +125364,17 @@ nSh
 nSh
 nSh
 ccC
-ppU
-fnD
+iUT
+sxx
 mBC
-rpu
+gvA
 mnw
 rdy
 nYw
-rpu
+gvA
 tXG
-eYn
-tCL
+sxx
+yjx
 xms
 pxu
 nSh
@@ -124563,7 +125411,7 @@ uAU
 nrT
 rdj
 rdj
-ceC
+wLM
 lum
 kPi
 pEq
@@ -124819,12 +125667,12 @@ nSh
 nSh
 ccC
 sig
-fnD
+sxx
 sxx
 mBC
 mUt
 qqY
-pAl
+uIX
 iXn
 sxx
 vwT
@@ -124858,14 +125706,14 @@ haS
 amC
 eEs
 rzR
-xVp
+tCe
 okT
 aqP
 lxl
 nrT
 rdj
 rdj
-ceC
+wLM
 mPY
 qPY
 vqX
@@ -124888,10 +125736,10 @@ lKW
 hAg
 ciS
 bPo
-dRf
+siQ
 jYm
 rfc
-dRf
+siQ
 qva
 aGD
 xJS
@@ -125094,7 +125942,7 @@ eEy
 rul
 hLA
 jKb
-kVW
+fBp
 lfx
 hrm
 xFf
@@ -125120,17 +125968,17 @@ nSh
 nSh
 nSh
 ccC
-dIx
+nDo
 gGY
-des
+sxx
 jUv
 jvU
 nVO
 sBP
 jUv
-des
+sxx
 aFa
-uUd
+nDo
 xms
 nSh
 nSh
@@ -125190,10 +126038,10 @@ lKW
 hAg
 hAg
 hAg
-dRf
+siQ
 jYm
 rfc
-dRf
+pLp
 qva
 aGD
 xJS
@@ -125466,7 +126314,7 @@ qaY
 eDW
 oac
 nGs
-fAZ
+dqH
 cwW
 jGH
 xJX
@@ -125492,10 +126340,10 @@ oiG
 laI
 hAg
 oHu
-dRf
+siQ
 jYm
 rfc
-dRf
+siQ
 vRh
 aGD
 odP
@@ -125794,13 +126642,13 @@ gaS
 fBg
 hAg
 hAg
-dRf
+siQ
 jYm
 rfc
-dRf
+siQ
 qva
 aGD
-yhV
+lKb
 iMm
 mup
 xbV
@@ -126096,13 +126944,13 @@ xJS
 tgq
 hAg
 hAg
-dRf
+siQ
 jYm
 rfc
-dRf
+siQ
 qva
 aGD
-yhV
+lKb
 xbV
 xbV
 xbV
@@ -126398,13 +127246,13 @@ hrd
 wvd
 hAg
 hAg
-dRf
+siQ
 jYm
 rfc
-dRf
+siQ
 qva
 aGD
-yhV
+lKb
 xbV
 xbV
 xbV
@@ -126700,13 +127548,13 @@ xJS
 nUy
 hAg
 oHu
-dRf
+pLp
 jYm
 rfc
-dRf
+siQ
 vRh
 aGD
-yhV
+lKb
 xbV
 nLQ
 xbV
@@ -126957,7 +127805,7 @@ rdj
 uWU
 iha
 kgo
-uLi
+gvC
 jYv
 jVH
 wIr
@@ -126979,7 +127827,7 @@ qiP
 sjV
 ava
 fdS
-ceC
+wLM
 lum
 aBZ
 lum
@@ -127002,10 +127850,10 @@ xJS
 wSo
 hAg
 hAg
-dRf
+siQ
 jYm
 rfc
-dRf
+siQ
 qva
 aGD
 jvb
@@ -127304,10 +128152,10 @@ wFD
 tOe
 hAg
 bPo
-dRf
+siQ
 jYm
 rfc
-dRf
+siQ
 qva
 juJ
 yhV
@@ -127505,7 +128353,7 @@ xoh
 tYd
 jsk
 oQN
-bub
+fpx
 uyn
 rul
 ibp
@@ -127807,10 +128655,10 @@ kjE
 gyG
 pQh
 nNm
-fJU
+xvM
 qle
 cLm
-lmr
+oCg
 qle
 qle
 nNm
@@ -127885,7 +128733,7 @@ aTA
 nrT
 rdj
 rdj
-ceC
+wLM
 mPY
 rFO
 wim
@@ -128180,14 +129028,14 @@ aIa
 cBI
 nKK
 bcE
-lvc
+awe
 reX
 kBD
 qiP
 nrT
 rdj
 rdj
-ceC
+wLM
 lum
 aBZ
 jKV
@@ -128410,7 +129258,7 @@ jVj
 ddE
 ddE
 lRh
-txZ
+pek
 abO
 lns
 bxb
@@ -128712,7 +129560,7 @@ mke
 kHx
 kHx
 kHx
-txZ
+aNu
 sfc
 lns
 bxb
@@ -128808,7 +129656,7 @@ qWk
 jcK
 hoG
 xfi
-aKl
+siQ
 onh
 qva
 hAg
@@ -129014,7 +129862,7 @@ mke
 gNW
 mke
 tRV
-txZ
+aNu
 ope
 qDS
 bxb
@@ -129618,7 +130466,7 @@ mke
 nVl
 mke
 kHx
-txZ
+aNu
 fYJ
 nvb
 bxb
@@ -129714,7 +130562,7 @@ pTF
 iSk
 eKX
 mer
-aKl
+siQ
 oGa
 qva
 aGD
@@ -129920,7 +130768,7 @@ mke
 mke
 mke
 xNi
-txZ
+aNu
 sfc
 lns
 ftS
@@ -130016,7 +130864,7 @@ qef
 jcK
 hoG
 wfL
-aKl
+siQ
 onh
 qva
 aGD
@@ -130222,7 +131070,7 @@ mke
 gNW
 mke
 kHx
-txZ
+aNu
 paG
 lns
 nYk
@@ -130294,7 +131142,7 @@ fTb
 osb
 cPu
 qXC
-rzJ
+mAv
 mkx
 scV
 bEP
@@ -130531,7 +131379,7 @@ lOr
 dkY
 jMq
 gYS
-leg
+bey
 qFg
 dXP
 goM
@@ -130596,7 +131444,7 @@ osY
 uvs
 wMO
 qXC
-rzJ
+mAv
 unQ
 uif
 aTA
@@ -130829,7 +131677,7 @@ xNi
 wqJ
 yjy
 yjy
-haO
+yjy
 gIM
 jMq
 snN
@@ -130898,7 +131746,7 @@ wXy
 uvs
 rCl
 ohz
-rzJ
+mAv
 nAG
 wlu
 oEH
@@ -130922,7 +131770,7 @@ vGK
 hIu
 maP
 mZn
-aKl
+siQ
 onh
 qva
 aGD
@@ -131131,7 +131979,7 @@ wqJ
 wqJ
 oMl
 qNn
-haO
+kLT
 fcN
 tQL
 whZ
@@ -131200,7 +132048,7 @@ uvs
 uvs
 buf
 kLL
-rzJ
+mAv
 nAG
 gGo
 qnY
@@ -131224,7 +132072,7 @@ loj
 cRZ
 vFt
 wIy
-aKl
+siQ
 oGa
 qva
 juJ
@@ -131433,7 +132281,7 @@ hFD
 wqJ
 cLT
 qNn
-haO
+kLT
 rxE
 nRh
 fwe
@@ -131526,7 +132374,7 @@ ktO
 qiH
 vOr
 orj
-aKl
+siQ
 onh
 bpt
 tMS
@@ -131713,7 +132561,7 @@ mkF
 aUm
 kyD
 kkV
-maS
+ylx
 kkV
 jKD
 kvH
@@ -132012,7 +132860,7 @@ rdj
 aUm
 ajf
 jRj
-lgN
+sCX
 jba
 kkV
 fEX
@@ -132313,11 +133161,11 @@ rdj
 rdj
 aUm
 oht
-bUg
-lgN
+syK
+sCX
 jba
 nxs
-syK
+hKg
 kkV
 bzZ
 xrP
@@ -132343,7 +133191,7 @@ wHU
 yhM
 wBD
 pFu
-xtH
+ghO
 txt
 oXw
 ePG
@@ -132615,11 +133463,11 @@ rdj
 rdj
 aUm
 oht
-bUg
+syK
 gYi
 jba
 kkV
-syK
+hKg
 kkV
 gfX
 kkV
@@ -132645,7 +133493,7 @@ eGd
 rni
 wBD
 xTs
-xtH
+ghO
 rKu
 oXw
 koX
@@ -132693,13 +133541,13 @@ duN
 duN
 duN
 gEi
-ciC
+qPH
 sEM
 pgy
 cPt
 dvP
 dvP
-uFa
+ldQ
 mlb
 hBi
 wyp
@@ -132917,11 +133765,11 @@ rdj
 rdj
 aUm
 oht
-bUg
-lgN
+syK
+sCX
 jba
 kkV
-sCX
+wxL
 aRI
 aRI
 aRI
@@ -132947,7 +133795,7 @@ fDV
 bfH
 wBD
 xTs
-xtH
+ghO
 gxN
 oXw
 jFv
@@ -133001,7 +133849,7 @@ pgy
 cTE
 usx
 aHT
-uFa
+ldQ
 mlb
 ahg
 kXF
@@ -133249,7 +134097,7 @@ wHU
 yhM
 wBD
 faY
-xtH
+ghO
 fGC
 oXw
 sRc
@@ -133297,13 +134145,13 @@ rFE
 sTt
 fCA
 jnN
-ciC
+gqg
 sEM
 pgy
 cTE
 aHT
 ehZ
-uFa
+ldQ
 mYX
 imF
 bQL
@@ -133599,13 +134447,13 @@ sfb
 iCq
 sNK
 jnN
-aeN
+cKX
 sEM
 pgy
 cTE
 dPw
 aHT
-uFa
+ldQ
 ulz
 beA
 bCH
@@ -133907,7 +134755,7 @@ pgy
 aJo
 cLU
 cLU
-soi
+pSf
 iRo
 eDU
 tQp
@@ -134203,7 +135051,7 @@ eXv
 duN
 cLK
 jnN
-aeN
+cKX
 iMh
 mBl
 hna
@@ -134505,7 +135353,7 @@ isW
 lNT
 mBI
 jnN
-gmf
+evQ
 eEK
 lIw
 gMo
@@ -134748,7 +135596,7 @@ bBz
 svU
 cVL
 ecz
-xFa
+hyp
 kCQ
 xLS
 xLS
@@ -135122,7 +135970,7 @@ oxI
 oxI
 txw
 uDm
-eVw
+jvh
 cQh
 krI
 orh
@@ -135151,7 +135999,7 @@ bWd
 cHZ
 cHZ
 cHZ
-aEC
+qUc
 rdj
 rdj
 rdj
@@ -135359,7 +136207,7 @@ koB
 flp
 koB
 klB
-siN
+hyp
 yhM
 acl
 uDq
@@ -135453,7 +136301,7 @@ bWd
 wFv
 nQB
 cHZ
-aEC
+qUc
 rdj
 rdj
 rdj
@@ -135956,7 +136804,7 @@ svU
 svU
 epf
 niG
-xFa
+hyp
 dDv
 aai
 bMt
@@ -135967,7 +136815,7 @@ puU
 nqL
 ipG
 fIF
-wfJ
+tCL
 mJC
 bWs
 peK
@@ -136028,18 +136876,18 @@ wVc
 wVc
 vLR
 kyC
-eVw
+jvh
 uQW
 vdq
 xBW
 ged
-eVw
+jvh
 rdj
 rdj
 rdj
 rdj
 rdj
-pyw
+tSB
 uUY
 dwI
 wBQ
@@ -136335,13 +137183,13 @@ gIe
 ucK
 jwX
 bhG
-xXo
+gTk
 rdj
 rdj
 rdj
 rdj
 rdj
-cdK
+njv
 cqk
 dwI
 jxO
@@ -136605,11 +137453,11 @@ nyk
 gXc
 ptT
 qmW
-qvg
+bwr
 mHm
 xAW
 aSD
-qxQ
+twh
 vIE
 sxu
 ydb
@@ -136637,13 +137485,13 @@ orh
 jmk
 iYL
 iYL
-eVw
+jvh
 rdj
 rdj
 rdj
 rdj
 rdj
-pyw
+tSB
 goI
 dwI
 jxO
@@ -136661,7 +137509,7 @@ bWd
 wFv
 fuN
 bWd
-aEC
+qUc
 rdj
 rdj
 rdj
@@ -136963,7 +137811,7 @@ nzx
 uls
 uls
 qUX
-aEC
+qUc
 rdj
 rdj
 rdj
@@ -137197,7 +138045,7 @@ nkB
 nkB
 nnD
 duG
-gWF
+npj
 aaM
 vpC
 rLN
@@ -137213,7 +138061,7 @@ bmd
 uWL
 uSd
 ivX
-qxQ
+twh
 ugb
 buT
 edW
@@ -137499,7 +138347,7 @@ jht
 eCo
 nTK
 jJQ
-gWF
+npj
 dhW
 uyd
 uyd
@@ -137554,7 +138402,7 @@ oDo
 hcu
 vcO
 paR
-uIw
+vht
 vyj
 sYR
 fhT
@@ -137772,10 +138620,10 @@ vNj
 eeF
 kwO
 kMv
-akj
+vkU
 lFE
 hRO
-akj
+vkU
 tIl
 cZk
 hxc
@@ -137801,7 +138649,7 @@ jht
 mBo
 eNt
 uSk
-gWF
+npj
 sWY
 hWs
 oGY
@@ -137817,7 +138665,7 @@ wPZ
 fKb
 hrD
 dYj
-heB
+prd
 uXB
 sea
 xxE
@@ -138074,10 +138922,10 @@ cUx
 iPz
 mxH
 mkl
-akj
+vkU
 oys
 jFH
-akj
+vkU
 gdO
 jgR
 tBR
@@ -138158,7 +139006,7 @@ cFR
 cFR
 nkz
 ggR
-uIw
+vht
 cVK
 gnb
 lhf
@@ -138412,7 +139260,7 @@ dqq
 bCs
 bhZ
 aCT
-lLi
+xmQ
 bhZ
 kow
 xPd
@@ -138714,7 +139562,7 @@ luj
 nkN
 gQz
 gQz
-tsa
+cRT
 gQz
 gQz
 gQz
@@ -138731,7 +139579,7 @@ nhf
 gAp
 bQw
 tYb
-xSH
+klo
 tYb
 tYb
 qlw
@@ -139016,7 +139864,7 @@ wdp
 gXg
 ihV
 wdp
-lLi
+xmQ
 qaW
 ihV
 mPb
@@ -139027,7 +139875,7 @@ oVh
 xPd
 xPd
 vBf
-hza
+iVY
 hoj
 epl
 qvl
@@ -139576,23 +140424,23 @@ nYe
 daL
 grn
 sdZ
+cdq
+sdZ
+sdZ
+gUY
+gUY
 sdZ
 sdZ
 sdZ
-nFO
-nFO
 sdZ
 sdZ
-sdZ
+etV
+etV
+etV
 sdZ
 sdZ
 etV
 etV
-etV
-sdZ
-sdZ
-etV
-egJ
 aeQ
 mxH
 fXb
@@ -140196,7 +141044,7 @@ qRB
 qRB
 qFI
 icu
-ylx
+uHS
 xCY
 mxH
 xET
@@ -140529,7 +141377,7 @@ xLg
 bul
 spT
 tQD
-xSW
+lNe
 iGs
 bvR
 tyo
@@ -140549,7 +141397,7 @@ hix
 tAd
 iJR
 iaT
-kKO
+gRu
 xNv
 wbG
 wTQ
@@ -140778,7 +141626,7 @@ rdj
 rdj
 rdj
 rdj
-ylx
+uHS
 icu
 qfl
 sTy
@@ -140800,7 +141648,7 @@ qRB
 qRB
 qRB
 qFI
-ylx
+uHS
 aeQ
 mxH
 aiP
@@ -141080,7 +141928,7 @@ rdj
 rdj
 rdj
 rdj
-ylx
+uHS
 jKw
 rss
 qRB
@@ -141103,18 +141951,18 @@ qRB
 qRB
 qFI
 etV
-xWh
+uUd
 mxH
 rll
 tSd
 rIw
 vMB
-hbA
+vMB
 swl
 mLQ
 tbC
 oGA
-hbA
+vMB
 wAX
 hZl
 dGg
@@ -141174,7 +142022,7 @@ nxQ
 wPF
 vfx
 vTs
-gDk
+faE
 rdj
 rdj
 rdj
@@ -141382,7 +142230,7 @@ rdj
 rdj
 rdj
 rdj
-ylx
+uHS
 fYO
 qRB
 qRB
@@ -141410,12 +142258,12 @@ mxH
 mkl
 tSd
 qKY
-hbA
-hbA
-hbA
+vMB
+vMB
+vMB
 tbP
-hbA
-hbA
+vMB
+vMB
 vMB
 qLB
 izx
@@ -141476,7 +142324,7 @@ vco
 rhm
 vfx
 rJj
-gDk
+faE
 rdj
 rdj
 rdj
@@ -141706,19 +142554,19 @@ qRB
 qRB
 xEI
 sOZ
-ylx
+cdq
 hlk
 mxH
 cOF
-fkg
+lmT
 ham
-hbA
-hbA
-hbA
-hbA
-hbA
-hbA
-hbA
+vMB
+tbP
+vMB
+vMB
+vMB
+vMB
+vMB
 tOD
 emQ
 tSd
@@ -142008,21 +142856,21 @@ qRB
 dph
 sOZ
 icu
-ylx
+uHS
 aeQ
 mxH
 fRG
 uoX
 eHa
-hbA
-hbA
+vMB
+vMB
 vXu
-hbA
-hbA
+vMB
+vMB
 tSf
 rjP
 cus
-hbA
+vMB
 tSd
 stM
 aVk
@@ -142082,7 +142930,7 @@ nxQ
 rJj
 vTC
 bUv
-gDk
+faE
 rdj
 rdj
 rdj
@@ -142310,7 +143158,7 @@ qRB
 wMo
 wQk
 icu
-ylx
+uHS
 aeQ
 nlp
 hxO
@@ -142320,7 +143168,7 @@ vcw
 vcw
 vcw
 vcw
-vcw
+vFS
 vcw
 vcw
 xPW
@@ -142384,7 +143232,7 @@ nxQ
 rJj
 wZR
 hyN
-gDk
+csw
 rdj
 rdj
 rdj
@@ -142612,20 +143460,20 @@ qRB
 qRB
 xDL
 wQk
-ylx
+cdq
 xCY
 ldu
 cOF
-fkg
+lmT
 pxQ
 tbP
-hbA
-hbA
-hbA
-hbA
-hbA
-hbA
-hbA
+vMB
+vMB
+vMB
+vMB
+vMB
+vMB
+vMB
 emQ
 tSd
 tUI
@@ -142644,7 +143492,7 @@ nHF
 pqD
 ocE
 ocE
-aSs
+vlN
 rdj
 rdj
 rdj
@@ -142658,7 +143506,7 @@ rdj
 rdj
 rdj
 rdj
-aSs
+vlN
 tQn
 eYU
 anr
@@ -142686,7 +143534,7 @@ nxQ
 rJj
 vTC
 wZR
-gDk
+faE
 rdj
 rdj
 rdj
@@ -142892,7 +143740,7 @@ rdj
 rdj
 rdj
 rdj
-ylx
+uHS
 fYO
 qRB
 qRB
@@ -142920,15 +143768,15 @@ ldu
 mkl
 onZ
 rek
-hbA
 vMB
-hbA
+vMB
+vMB
 apu
 opg
-hbA
-hbA
-hbA
-hbA
+vMB
+vMB
+vMB
+tbP
 tSd
 agU
 cZi
@@ -142941,7 +143789,7 @@ tat
 fRP
 tat
 dbP
-dbP
+nYf
 tZh
 pqD
 ocE
@@ -142966,7 +143814,7 @@ ocE
 ogR
 xkU
 vqi
-vqi
+kNR
 xNv
 qDt
 luR
@@ -142988,7 +143836,7 @@ nxQ
 rJj
 wOD
 dec
-gDk
+faE
 rdj
 rdj
 rdj
@@ -143194,7 +144042,7 @@ rdj
 rdj
 rdj
 rdj
-ylx
+uHS
 jSv
 mXw
 qRB
@@ -143247,7 +144095,7 @@ bDq
 gsR
 pqD
 ocE
-ghf
+vlN
 rdj
 rdj
 rdj
@@ -143496,7 +144344,7 @@ rdj
 rdj
 rdj
 rdj
-ylx
+uHS
 icu
 iqj
 xKy
@@ -143518,7 +144366,7 @@ qRB
 qRB
 qRB
 qFI
-ylx
+uHS
 xCY
 ldu
 rKd
@@ -143549,7 +144397,7 @@ xEu
 xPj
 pqD
 xVe
-ghf
+vlN
 rdj
 rdj
 rdj
@@ -143590,7 +144438,7 @@ rhm
 vfx
 vTC
 vTC
-gDk
+faE
 rdj
 rdj
 rdj
@@ -143851,7 +144699,7 @@ ixc
 xPj
 pqD
 ocE
-ghf
+vlN
 rdj
 rdj
 rdj
@@ -143892,7 +144740,7 @@ wPF
 vfx
 vTC
 wZR
-gDk
+faE
 rdj
 rdj
 rdj
@@ -144122,11 +144970,11 @@ qRB
 qRB
 qFI
 icu
-ylx
+uHS
 hlk
 ldu
 biN
-ylx
+uHS
 rdj
 rdj
 rdj
@@ -144153,7 +145001,7 @@ vYM
 law
 pqD
 ewf
-oZM
+fIT
 aAV
 eRG
 suB
@@ -144194,7 +145042,7 @@ wPF
 vfx
 rBB
 tdY
-gDk
+faE
 rdj
 rdj
 rdj
@@ -144428,7 +145276,7 @@ etV
 xCY
 ldu
 xcm
-ylx
+uHS
 rdj
 rdj
 rdj
@@ -144496,7 +145344,7 @@ wPF
 vfx
 kTi
 paM
-gDk
+faE
 rdj
 rdj
 rdj
@@ -144713,11 +145561,11 @@ akj
 etV
 etV
 sdZ
-riX
-riX
+uXD
+uXD
 sdZ
 sdZ
-sdZ
+cdq
 sdZ
 sdZ
 etV
@@ -144726,11 +145574,11 @@ etV
 akj
 akj
 etV
-egJ
+etV
 xWh
 ldu
 ckY
-ylx
+uHS
 rdj
 rdj
 rdj
@@ -144757,7 +145605,7 @@ tZh
 ocE
 ocE
 mmY
-oZM
+fIT
 qLN
 lqn
 gYH
@@ -144798,7 +145646,7 @@ wPF
 rhm
 vco
 wvu
-gDk
+faE
 rdj
 rdj
 rdj
@@ -145059,7 +145907,7 @@ nFM
 sEg
 ocE
 ocE
-ghf
+vlN
 rdj
 rdj
 rdj
@@ -145100,7 +145948,7 @@ wPF
 rhm
 uvJ
 iaL
-gDk
+faE
 rdj
 rdj
 rdj
@@ -145361,7 +146209,7 @@ ohe
 xPj
 ocE
 xVe
-ghf
+vlN
 rdj
 rdj
 rdj
@@ -145663,7 +146511,7 @@ bDq
 dqW
 ocE
 ocE
-ghf
+vlN
 rdj
 rdj
 rdj
@@ -145925,7 +146773,7 @@ etV
 etV
 sdZ
 sdZ
-wns
+acj
 sdZ
 sdZ
 etV
@@ -145935,7 +146783,7 @@ sdZ
 etV
 sdZ
 sdZ
-wns
+acj
 sdZ
 sdZ
 etV
@@ -145986,7 +146834,7 @@ ocE
 jox
 ucs
 vqi
-vqi
+kNR
 tmk
 kYt
 onW
@@ -146268,7 +147116,7 @@ rnc
 ocE
 ocE
 ocE
-aSs
+vlN
 rdj
 rdj
 rdj
@@ -146282,7 +147130,7 @@ rdj
 rdj
 rdj
 rdj
-aSs
+vlN
 tQn
 fax
 anr
@@ -146563,7 +147411,7 @@ ttM
 wDz
 buS
 nVZ
-ghO
+wjo
 kfU
 dbP
 wuR
@@ -146864,7 +147712,7 @@ hZp
 jOz
 jOz
 wYn
-wjo
+vgZ
 wjo
 bVk
 dbP
@@ -146879,7 +147727,7 @@ aSs
 aSs
 aSs
 lWj
-tkQ
+mMD
 lWj
 aSs
 aSs
@@ -148069,7 +148917,7 @@ rdj
 rdj
 rdj
 rdj
-aan
+nmi
 rdj
 rdj
 rdj
@@ -148673,7 +149521,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -148975,7 +149823,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -149277,7 +150125,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -149579,7 +150427,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -149881,7 +150729,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -149895,7 +150743,7 @@ rdj
 rdj
 wCh
 dXs
-kTR
+lJx
 jPm
 iik
 jPm
@@ -149903,7 +150751,7 @@ ise
 nyj
 iik
 tLa
-kTR
+lJx
 xcQ
 wCh
 rdj
@@ -150183,7 +151031,7 @@ rfc
 aan
 kuM
 kuM
-aan
+nmi
 kuM
 kuM
 aan
@@ -150197,7 +151045,7 @@ rdj
 rdj
 wCh
 qHX
-kTR
+lJx
 owJ
 ise
 jZM
@@ -150205,7 +151053,7 @@ hnV
 gRk
 wpq
 aQh
-kTR
+lJx
 mfw
 wCh
 rdj
@@ -150787,7 +151635,7 @@ rfc
 aan
 kuM
 kuM
-aan
+nmi
 kuM
 kuM
 aan
@@ -151089,7 +151937,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -151391,7 +152239,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -151408,9 +152256,9 @@ mfw
 mfw
 waf
 dXs
-kTR
+lJx
 ltY
-kTR
+eGf
 miJ
 mfw
 mfw
@@ -151693,7 +152541,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -151995,7 +152843,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -152297,7 +153145,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -152312,13 +153160,13 @@ rdj
 kTR
 pKM
 mfw
-kTR
+lJx
 pkw
 lST
 cGG
 lST
 xXy
-kTR
+lJx
 waf
 mfw
 kTR
@@ -152614,13 +153462,13 @@ rdj
 wCh
 mfw
 mfw
-kTR
+lJx
 muv
 gnC
 gPe
 gnC
 nzY
-kTR
+lJx
 mfw
 mfw
 wCh
@@ -152901,7 +153749,7 @@ vVp
 rdj
 rdj
 rfc
-aan
+nmi
 jYm
 rdj
 rdj
@@ -153203,7 +154051,7 @@ vVp
 rdj
 rdj
 rfc
-aan
+nmi
 jYm
 rdj
 rdj
@@ -153807,7 +154655,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -154109,7 +154957,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -154411,7 +155259,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -154713,7 +155561,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -155015,7 +155863,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -155317,7 +156165,7 @@ rfc
 aan
 kuM
 kuM
-aan
+nmi
 kuM
 kuM
 aan
@@ -155816,7 +156664,7 @@ sso
 sso
 sso
 eZr
-sso
+bUg
 hid
 vrN
 hpt
@@ -155824,7 +156672,7 @@ jLD
 ddC
 jLD
 kaD
-qfV
+maS
 sIR
 cdc
 dNz
@@ -155921,7 +156769,7 @@ rfc
 aan
 kuM
 kuM
-aan
+nmi
 kuM
 kuM
 aan
@@ -156223,7 +157071,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -156525,7 +157373,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -156723,7 +157571,7 @@ xCR
 xCR
 fiq
 pGS
-mJx
+lgN
 ntX
 hsc
 pJG
@@ -156827,7 +157675,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -157129,7 +157977,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
@@ -157431,7 +158279,7 @@ qpP
 aam
 dYw
 kuM
-aan
+nmi
 kuM
 qpP
 aam
