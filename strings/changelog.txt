@@ -1,5 +1,9 @@
 
 (t)sun jul 19 20
+(u)zjdtmkhzt
+(p)1465
+(e)🆕🔄|feature, rework
+(*)Changed pathogen manipulator UI bigly, pathology is still disabled, but you can look at it and be sad.
 (u)RichardGere
 (p)1532
 (e)|
