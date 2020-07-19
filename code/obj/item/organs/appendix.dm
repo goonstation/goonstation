@@ -40,8 +40,8 @@
 			#ifdef CREATE_PATHOGENS
 			add_pathogens(donor, 30) //oh no
 			#endif
-
 			boutput(donor, "<span class='alert'>Your appendix has burst! It has given you medical help... though you might want to see a doctor very soon.</span>")
+		return 1
 
 	on_broken(var/mult = 1)
 		if (!..())

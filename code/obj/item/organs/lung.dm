@@ -159,9 +159,12 @@
 			aholder.removeAbility(abil)
 
 	on_life(var/mult = 1)
-		..()
+		if(!..())
+			return 0
+			
 		if(overloading)
 			src.take_damage(0, 1 * mult)
+		return 1
 
 	disposing()
 		if(donor)
