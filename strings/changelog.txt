@@ -1,4 +1,9 @@
 
+(t)sun jul 19 20
+(u)RichardGere
+(p)1532
+(e)|
+(+)Fixed an issue that prevented possessed csabers from being able to attack.
 (t)sat jul 18 20
 (u)MarkNstein
 (p)1416
