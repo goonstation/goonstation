@@ -36,7 +36,7 @@
 			var/decrease_chance = 2 // defaults to 2 because blood does clot and all, but we want bleeding to maybe not stop entirely on its own TOO easily, and there's only so much clotting can do when all your blood is falling out at once
 			var/surgery_increase_chance = 5 //likelihood we bleed more bc we are being surgeried or have open cuts
 
-			if (owner.bleeding > 1 && owner.bleeding < 4) // midrange bleeding gets a better chance to drop down
+			if (owner.bleeding > 1)
 				decrease_chance += 3
 			else
 				surgery_increase_chance += 10
