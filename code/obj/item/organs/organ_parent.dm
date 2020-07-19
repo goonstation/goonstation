@@ -171,15 +171,6 @@
 			if (!src.broken  && failure_disease)
 				src.donor.cure_disease(failure_disease)
 
-			//all robotic organs have a base stamina buff, some have others, see heart. maybe lungs in future
-			if (src.robotic)
-				if (src.emagged)
-					src.donor.add_stam_mod_regen("cyber-[src.organ_name]", 5)
-					src.donor.add_stam_mod_max("cyber-[src.organ_name]", 20)
-				else
-					src.donor.add_stam_mod_regen("cyber-[src.organ_name]", 2)
-					src.donor.add_stam_mod_max("cyber-[src.organ_name]", 10)
-
 		if (!broken && islist(src.organ_abilities) && src.organ_abilities.len)
 			var/datum/abilityHolder/organ/A = M.get_ability_holder(/datum/abilityHolder/organ)
 			if (!istype(A))
@@ -197,14 +188,6 @@
 		if (src.donor)
 			if (failure_disease)
 				src.donor.cure_disease(failure_disease)
-
-			if (src.robotic)
-				if (src.emagged)
-					src.donor.remove_stam_mod_regen("cyber-[src.organ_name]")
-					src.donor.remove_stam_mod_max("cyber-[src.organ_name]")
-				else
-					src.donor.remove_stam_mod_regen("cyber-[src.organ_name]")
-					src.donor.remove_stam_mod_max("cyber-[src.organ_name]")
 
 		if (!src.donor_DNA && src.donor && src.donor.bioHolder)
 			src.donor_DNA = src.donor.bioHolder.Uid
