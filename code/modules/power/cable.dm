@@ -403,5 +403,10 @@
 	if (PN && istype(PN) && (PN.avail > 0))
 		powered = 1
 
-	logTheThing("station", user, null, "[cut == 0 ? "lays" : "cuts"] a cable[powered == 1 ? " (powered when [cut == 0 ? "connected" : "cut"])" : ""] at [log_loc(src)].")
+
+	if (cut) //avoid some slower string builds lol
+		logTheThing("station", user, null, "cuts a cable[powered == 1 ? " (powered when cut)" : ""] at [log_loc(src)].")
+	else
+		logTheThing("station", user, null, "lays a cable[powered == 1 ? " (powered when connected)" : ""] at [log_loc(src)].")
+
 	return

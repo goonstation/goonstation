@@ -280,14 +280,6 @@
 	proc/handle_event(var/event, var/sender) //This is sort of like a version of Topic that is not for browsing.
 		return
 
-	//Called AFTER the material of the object was changed.
-	proc/onMaterialChanged()
-		if(istype(src.material))
-			explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_resistance
-			explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_protection
-			if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 50)) flags |= CONDUCT
-		return
-
 	proc/serialize_icon(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		icon_serializer(F, path, sandbox, icon, icon_state)
 

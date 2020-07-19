@@ -103,18 +103,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
 		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-		if("intrigue") 
-			var/ready_count = 0
-			for (var/mob/new_player/P in mobs)
-				if(P.ready)
-					ready_count++
-					if(ready_count >= 20)
-						break //for now, we don't care about higher numbers
-			//weighted pick() cannot use lists, so this is the best solution that I can think of.
-			if(ready_count >= 20)
-				src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft","gang", prob(50); "extended"))
-			else
-				src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft", prob(50); "extended"))
+		if("intrigue") src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft", prob(50); "extended"))
 		else src.mode = config.pick_mode(master_mode)
 
 	if(hide_mode)

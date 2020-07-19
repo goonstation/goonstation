@@ -113,7 +113,8 @@
 	New()
 		src.create_products()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"vend", "vendinput")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", "vendinput")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", "vendname")
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.6)
@@ -126,6 +127,12 @@
 		if( world.time < lastvend ) return//aaaaaaa
 		lastvend = world.time + 2
 		throw_item()
+		return
+	proc/vendname(var/datum/mechanicsMessage/inp)
+		if( world.time < lastvend || !inp) return//aaaaaaa
+		if(!length(inp.signal)) return//aaaaaaa
+		lastvend = world.time + 5 //Make it slower to vend by name?
+		throw_item(inp.signal)
 		return
 
 	// just making this proc so we don't have to override New() for every vending machine, which seems to lead to bad things
@@ -1783,7 +1790,7 @@
 
 				src.postvend_effect()
 
-				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"productDispensed")
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
 
 			if (src.paying_for)
 				src.paying_for = null
@@ -1954,60 +1961,71 @@
 	return
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
-/obj/machinery/vending/proc/throw_item()
-	var/obj/throw_item = null
+/obj/machinery/vending/proc/throw_item(var/item_name_to_throw = "")
+	var/thrown = 0
+	var/list/datum/data/vending_product/valid_products = list()
 	var/mob/living/target = locate() in view(7,src)
 	if(!target)
 		return 0
 
-	for(var/datum/data/vending_product/R in src.product_list)
-		if (R.product_amount <= 0) //Try to use a record that actually has something to dump.
-			continue
+	if(length(item_name_to_throw))
+		for(var/datum/data/vending_product/product in src.product_list)
+			if(item_name_to_throw == product.product_name_cache[product.product_path])
+				if(product.product_amount > 0)
+					thrown = throw_item_act(product, target)
+				break
+	else
+		for(var/datum/data/vending_product/R in src.product_list)
+			if (R.product_amount <= 0) //Try to use a record that actually has something to dump.
+				continue
+			valid_products.Add(R)
+		thrown = throw_item_act(pick(valid_products), target)
+	return thrown
 
-		if (!prob(100/src.product_list.len)) //don't always use the top thing
-			continue
-
-		if (ispath(R.product_path))
-			var/dump_path = R.product_path
+/obj/machinery/vending/proc/throw_item_act(var/datum/data/vending_product/R, var/mob/living/target)
+	var/obj/throw_item = null
+	//Big if/else trying to create the object properly
+	if (ispath(R.product_path))
+		var/dump_path = R.product_path
+		throw_item = new dump_path(src.loc)
+	else if (istext(R.product_path))
+		var/dump_path = text2path(R.product_path)
+		if (dump_path)
 			throw_item = new dump_path(src.loc)
-			if (throw_item)
-				R.product_amount--
-				break
-		else if (istext(R.product_path))
-			var/dump_path = text2path(R.product_path)
-			if (dump_path)
-				throw_item = new dump_path(src.loc)
-			if (throw_item)
-				R.product_amount--
-				break
-		else if (isicon(R.product_path))
-			var/icon/welp = icon(R.product_path)
-			if (welp.Width() > 32 || welp.Height() > 32)
-				welp.Scale(32, 32)
-				R.product_path = welp // if scaling is required reset the product_path so it only happens the first time
-			var/obj/dummy = new /obj/item(src.get_output_location())
-			dummy.name = R.product_name
-			dummy.desc = "?!"
-			dummy.icon = welp
-			throw_item = dummy
-			if (throw_item)
-				R.product_amount--
-				break
-		else if (isfile(R.product_path))
-			var/sound/S = sound(R.product_path)
-			if (S)
-				R.product_amount--
-				SPAWN_DBG(0)
-					playsound(src.loc, S, 50, 0)
-					src.visible_message("<span class='alert'><b>[src] launches [R.product_name] at [target.name]!</b></span>")
-					src.generate_HTML(1)
-				return 1
+	else if (isicon(R.product_path))
+		var/icon/welp = icon(R.product_path)
+		if (welp.Width() > 32 || welp.Height() > 32)
+			welp.Scale(32, 32)
+			R.product_path = welp // if scaling is required reset the product_path so it only happens the first time
+		var/obj/dummy = new /obj/item(src.get_output_location())
+		dummy.name = R.product_name
+		dummy.desc = "?!"
+		dummy.icon = welp
+		throw_item = dummy
+	else if (isfile(R.product_path))
+		var/sound/S = sound(R.product_path)
+		if (S)
+			R.product_amount--
+			SPAWN_DBG(0)
+				playsound(src.loc, S, 50, 0)
+				src.visible_message("<span class='alert'><b>[src] launches [R.product_name] at [target.name]!</b></span>")
+				src.generate_HTML(1)
+			return 1
 
-	SPAWN_DBG(0)
-		if (throw_item)
+	if (throw_item)
+		R.product_amount--
+		use_power(10)
+		if (src.icon_vend) //Show the vending animation if needed
+			flick(src.icon_vend,src)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
+		src.generate_HTML(1)
+		SPAWN_DBG(0)
 			throw_item.throw_at(target, 16, 3)
 			src.visible_message("<span class='alert'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
-	return 1
+			postvend_effect()
+		return 1
+	return 0
+
 
 /obj/machinery/vending/proc/isWireColorCut(var/wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
