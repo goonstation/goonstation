@@ -1174,8 +1174,6 @@
 	containertype = /obj/storage/crate
 	containername = "Telecrystal Resupply Pack"
 
-
-#ifdef MAP_OVERRIDE_MANTA
 /datum/supply_packs/antisingularity
 	name = "Anti-Singularity  Pack"
 	desc = "Everything that the crew needs to take down a rogue singularity."
@@ -1184,7 +1182,6 @@
 	cost = 10000
 	containertype = /obj/storage/crate/classcrate/qm
 	containername = "Anti-Singularity Supply Pack"
-#endif
 
 /* ================================================= */
 /* -------------------- Complex -------------------- */

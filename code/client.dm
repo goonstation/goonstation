@@ -227,6 +227,11 @@
 			del(src)
 		return
 
+	if (world.time < 7 SECONDS)
+		if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
+			if (!(src.ckey in whitelistCkeys))
+				sleep(3 SECONDS) //silly wait period bandaid so clients arent booted before whitelist load (probably)
+
 	//We're limiting connected players to a whitelist of ckeys (but let active admins in)
 	if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
 		//Key not in whitelist, show them a vaguely sassy message and boot them
