@@ -149,7 +149,7 @@
 			var/list/lorgans = OA.linked_organ
 			lorgans -= src // remove us from the list so only the other kidney is left and thus will be lorgans[1]
 			OA.linked_organ = lorgans[1]
-			OA.power = 3
+			OA.power = 6
 		else // just us!
 			aholder.removeAbility(abil)
 
