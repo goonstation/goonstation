@@ -35,7 +35,7 @@ limbs are their own thing not included here.
 */
 
 // chest item whitelist, because some things are more important than being reasonable
-var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, obj/item/gnomechompski/elf, /obj/item/gnomechompski/mummified)
+var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gnomechompski/elf, /obj/item/gnomechompski/mummified)
 
 // ~make procs 4 everything~
 /proc/surgeryCheck(var/mob/living/carbon/human/patient as mob, var/mob/surgeon as mob)
