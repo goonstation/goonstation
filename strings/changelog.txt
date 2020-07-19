@@ -1,4 +1,13 @@
 
+(t)sun jul 19 20
+(u)zjdtmkhzt
+(p)1465
+(e)🆕🔄|feature, rework
+(*)Changed pathogen manipulator UI bigly, pathology is still disabled, but you can look at it and be sad.
+(u)RichardGere
+(p)1532
+(e)|
+(+)Fixed an issue that prevented possessed csabers from being able to attack.
 (t)sat jul 18 20
 (u)MarkNstein
 (p)1416
