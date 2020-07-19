@@ -786,7 +786,7 @@
 					boutput(observer, "<I>... You can almost hear something ...</I>")
 	else
 		boutput(src, msg, group)
-		if(assoc_maptext && src.client && !src.client.preferences.flying_chat_hidden)
+		if(assoc_maptext && src.client && !src.client.preferences?.flying_chat_hidden)
 			assoc_maptext.show_to(src.client)
 
 		var/psychic_link = src.get_psychic_link()
