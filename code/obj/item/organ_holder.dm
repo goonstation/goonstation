@@ -1464,3 +1464,35 @@
 			if (L.stomach_process && L.stomach_process.len)
 				for(var/obj/item/reagent_containers/food/snacks/bite/B in L.stomach_process)
 					B.process_stomach(L, (B.reagents.total_volume)) //all of the food!
+
+/datum/targetable/organAbility/projectilevomit
+	name = "VOMIT"
+	desc = "Upchuck your stomach with deadly force."
+	icon_state = "eye-meson"
+	targeted = 1
+	target_anything = 1
+	cooldown = 10
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		if(istype(holder.owner, /mob/living))
+			var/mob/living/L = holder.owner
+			if (L.stomach_process && L.stomach_process.len)
+				L.visible_message("<span class='alert'>[L] convulses and vomits right at [target]!</span>", "<span class='alert'>You upchuck some of your stomach contents at [target]!</span>")
+				SPAWN_DBG(0)
+					for (var/i in 1 to 3)
+						var/obj/item/O = L.vomit()
+						O.throwforce += 5
+						SPAWN_DBG(0.8 SECONDS)
+							O.throwforce -= 5
+						SPAWN_DBG(0)
+							O.throw_at(target, 8, 3)
+						linked_organ.take_damage(3)
+						sleep(0.1 SECONDS)
+						if(linked_organ.broken || !L.stomach_process.len)
+							break
+			else
+				boutput(L, "<span class='alert'>You try to vomit, but have nothing left to give!</span>")
+				linked_organ.take_damage(30) //owwww
