@@ -84,7 +84,6 @@
 /atom
 	layer = TURF_LAYER
 	plane = PLANE_DEFAULT
-	var/datum/mechanics_holder/mechanics = null
 	var/level = 2
 	var/flags = FPRINT
 	var/event_handler_flags = 0
@@ -207,9 +206,6 @@
 		if (!isnull(reagents))
 			qdel(reagents)
 			reagents = null
-		if (!isnull(mechanics))
-			qdel(mechanics)
-			mechanics = null
 		if (temp_flags & (HAS_PARTICLESYSTEM | HAS_PARTICLESYSTEM_TARGET))
 			particleMaster.ClearSystemRefs(src)
 		if (temp_flags & (HAS_BAD_SMOKE))
@@ -282,14 +278,6 @@
 			src.loc.handle_event(event, src)
 
 	proc/handle_event(var/event, var/sender) //This is sort of like a version of Topic that is not for browsing.
-		return
-
-	//Called AFTER the material of the object was changed.
-	proc/onMaterialChanged()
-		if(istype(src.material))
-			explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_resistance
-			explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_protection
-			if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 50)) flags |= CONDUCT
 		return
 
 	proc/serialize_icon(var/savefile/F, var/path, var/datum/sandbox/sandbox)
@@ -639,8 +627,8 @@
 	else if (isghostdrone(usr) && ismob(src) && !isghostdrone(src))
 		return
 
-	if (issmallanimal(usr))
-		var/mob/living/critter/small_animal/C = usr
+	if (isghostcritter(usr))
+		var/mob/living/critter/C = usr
 		if (!C.can_pull(src))
 			boutput(usr,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
 			return
@@ -961,7 +949,7 @@
 	//It is probably important that we update this as density changes immediately. I don't think it breaks anything currently if we dont, but still important for future.
 	if (src.density != newdensity)
 		if (isturf(src.loc))
-			if (!src.event_handler_flags & USE_CANPASS)
+			if (!(src.event_handler_flags & USE_CANPASS))
 				if(newdensity == 1)
 					var/turf/T = src.loc
 					if (T)

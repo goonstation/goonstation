@@ -28,7 +28,7 @@
 			// will work out a fix for that soon, too tired right now
 
 			// hello I fixed the thing by making it so that next_decomp_time is added to even if src is in a morgue/cryo or they have formaldehyde in them - haine
-			if (!suspend_rot)
+			if (!suspend_rot && environment)
 				env_temp = environment.temperature
 				H.next_decomp_time -= min(30, max(round((env_temp - T20C)/10), -60))
 				if(!(istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded)))

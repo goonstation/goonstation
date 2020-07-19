@@ -609,9 +609,7 @@ datum
 						boutput(M, "<span class='notice'>You feel strange. Almost a sense of guilt.</span>")
 						return
 					var/telerange = 10
-					var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-					s.set_up(4, 1, M)
-					s.start()
+					elecflash(M,power=2)
 					var/list/randomturfs = new/list()
 					for(var/turf/T in orange(M, telerange))
 						if(istype(T, /turf/space) || T.density) continue
@@ -3751,7 +3749,7 @@ datum
 					M.reagents.add_reagent("ethanol", (alch_counter + (rand(2,3))))
 
 		fooddrink/alcoholic/hottoddy
-			name = "Hot Toddy"
+			name = "hot Toddy"
 			id = "hottoddy"
 			fluid_r = 255
 			fluid_g = 220
@@ -3761,7 +3759,7 @@ datum
 			reagent_state = LIQUID
 
 		fooddrink/grenadine
-			name = "Grenadine"
+			name = "grenadine"
 			id = "grenadine"
 			fluid_r = 234
 			fluid_g = 19
@@ -3770,7 +3768,7 @@ datum
 			reagent_state = LIQUID
 
 		fooddrink/lemonade/pinklemonade
-			name = "Pink lemonade"
+			name = "pink lemonade"
 			id = "pinklemonade"
 			fluid_r = 253
 			fluid_g = 230
@@ -3799,7 +3797,7 @@ datum
 			reagent_state = LIQUID
 
 		fooddrink/alcoholic/spicedrum
-			name = "Spiced rum"
+			name = "spiced rum"
 			id = "spicedrum"
 			fluid_r = 205
 			fluid_g = 149
@@ -3817,20 +3815,3 @@ datum
 			alch_strength = 0.3
 			description = "A cocktail from the prohibition era, named after a popular expression."
 			reagent_state = LIQUID
-
-		fooddrink/alcoholic/methacola
-			name = "Methacola"
-			id = "methacola"
-			fluid_r = 173
-			fluid_g = 124
-			fluid_b = 76
-			description = "A potent cocktail of amphetamines, caffeine and corn syrup. If this doesn't kill you then I don't know what will."
-			reagent_state = LIQUID
-
-			on_mob_life(var/mob/M, var/mult = 1)
-				if(!M) M = holder.my_atom
-				M.make_jittery(2)
-				M.drowsyness = max(M.drowsyness-5, 0)
-				if(prob(8))
-					M.reagents.add_reagent("methamphetamine", 1.2 * mult)
-				..()

@@ -38,7 +38,7 @@
 		..()
 		var/mob/ownerMob = owner
 		if (owner && ownerMob && target && get_dist(owner, target) <= 1 && envelope && envelope.cooldowncheck())
-			logTheThing("combat", target, ownerMob, "was enveloped by %target% (mob) at [log_loc(ownerMob)].")
+			logTheThing("combat", target, ownerMob, "was enveloped by [constructTarget(ownerMob,"combat")] (mob) at [log_loc(ownerMob)].")
 			for (var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='combat'><B>[ownerMob]</B> completely envelops [target]!</span>", 1)
 			playsound(get_turf(ownerMob), "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)

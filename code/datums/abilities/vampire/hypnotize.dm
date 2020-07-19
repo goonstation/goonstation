@@ -53,7 +53,7 @@
 		if (isliving(target))
 			target:was_harmed(M, special = "vamp")
 
-		logTheThing("combat", M, target, "uses hypnotise on [target ? "%target%" : "*UNKNOWN*"] at [log_loc(M)].") // Target might have been gibbed, who knows.
+		logTheThing("combat", M, target, "uses hypnotise on [target ? "[constructTarget(target,"combat")]" : "*UNKNOWN*"] at [log_loc(M)].") // Target might have been gibbed, who knows.
 		return 1
 
 

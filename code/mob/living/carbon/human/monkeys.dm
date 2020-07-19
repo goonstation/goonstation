@@ -292,7 +292,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		logTheThing("combat", source, target, "tries to pickpocket \an [I] from %target%")
+		logTheThing("combat", source, target, "tries to pickpocket \an [I] from [constructTarget(target,"combat")]")
 
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<B>[source]</B> rifles through [target]'s pockets!", 1)
@@ -309,7 +309,7 @@
 		var/obj/item/I = target.get_slot(slot)
 
 		if(I.handle_other_remove(source, target))
-			logTheThing("combat", source, target, "successfully pickpockets \an [I] from %target%!")
+			logTheThing("combat", source, target, "successfully pickpockets \an [I] from [constructTarget(target,"combat")]!")
 			for(var/mob/O in AIviewers(owner))
 				O.show_message("<B>[source]</B> grabs [I] from [target]'s pockets!", 1)
 			target.u_equip(I)

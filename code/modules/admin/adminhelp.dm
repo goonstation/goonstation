@@ -219,8 +219,8 @@
 				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 			boutput(user, "<span class='notice' class=\"bigPM\">Reply PM to-<b>[key_name(M, 0, 0)]</b>: [t]</span>")
 
-		logTheThing("admin_help", user, M, "<b>PM'd %target%</b>: [t]")
-		logTheThing("diary", user, M, "PM'd %target%: [t]", "ahelp")
+		logTheThing("admin_help", user, M, "<b>PM'd [constructTarget(M,"admin_help")]</b>: [t]")
+		logTheThing("diary", user, M, "PM'd [constructTarget(M,"diary")]: [t]", "ahelp")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = user && user.client ? user.client.key : ""

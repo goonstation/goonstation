@@ -727,15 +727,12 @@ Contains:
 	return
 
 obj/item/assembly/radio_horn/attack_self(mob/user as mob)
-
 	src.part1.attack_self(user)
 	src.add_fingerprint(user)
 	return
 
 obj/item/assembly/radio_horn/receive_signal()
-	if (part2.next_play >= TIME)
-		part2.next_play = TIME + part2.note_time
-		part2.play_note(rand(1,part2.sounds_instrument.len), user = null)
+	part2.play_note(rand(1,part2.sounds_instrument.len), user = null)
 	return
 
 /////////////////////////////////////////////////////// Remote signaller/timer /////////////////////////////////////

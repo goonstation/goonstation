@@ -291,8 +291,8 @@ var/global/IP_alerts = 1
 	M.nodamage = !(M.nodamage)
 	boutput(usr, "<span class='notice'><b>[M]'s godmode is now [usr.nodamage ? "ON" : "OFF"]</b></span>")
 
-	logTheThing("admin", usr, M, "has toggled %target%'s nodamage to [(M.nodamage ? "On" : "Off")]")
-	logTheThing("diary", usr, M, "has toggled %target%'s nodamage to [(M.nodamage ? "On" : "Off")]", "admin")
+	logTheThing("admin", usr, M, "has toggled [constructTarget(M,"admin")]'s nodamage to [(M.nodamage ? "On" : "Off")]")
+	logTheThing("diary", usr, M, "has toggled [constructTarget(M,"diary")]'s nodamage to [(M.nodamage ? "On" : "Off")]", "admin")
 	message_admins("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.nodamage ? "On" : "Off")]")
 
 /client/proc/cmd_admin_godmode_self()

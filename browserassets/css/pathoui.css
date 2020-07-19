@@ -1,8 +1,15 @@
-* {
+*{
 	font-family:Consolas,monospace;
 }
+
+li {
+	margin-right: 15px
+}
+
 body {
 	background-color:#222;
+	overflow:hidden;
+	color: rgb(25, 201, 133);
 }
 
 div {
@@ -35,7 +42,7 @@ div {
 /*DNA Load-Save components*/
 .dna-slot {
 	display:inline-block;
-	width:650px;
+	width:580px;
 	height:110px;
 	padding-left:5px;
 	background-color:#444;
@@ -49,12 +56,50 @@ div {
 }
 
 /*Manipulator components*/
+
 #manipHolder {
 	display:block;
-	width:650px;
-	height:80%;
+	width:375px;
+	height:50%;
 	margin:auto;
+	float:left;
 	border:none;
+}
+
+#manipStats {
+	width:50px;
+	display:inline;
+	height:50%;
+	border:none;
+}
+
+#manipHelp
+{
+	display:block;
+	margin:auto;
+	margin-right: 50px;
+	padding: 2px;
+	height: 107px;
+	width: 630px;
+	float: left;
+	background-color: rgb(20, 75, 78);
+}
+
+#analyzerHelp {
+	display:block;
+	margin-right: 155px;
+	padding: 2px;
+	height: 92px;
+	width: 310px;
+	float: right;
+	background-color: rgb(20, 75, 78);
+}
+
+#analyzerButtons {
+	display: inline;
+	height: 80px;
+	width: 50%;
+	padding-bottom: 2px;
 }
 
 /*Analyzer components*/
@@ -76,8 +121,8 @@ div {
 	background-color:#AAA;
 }
 #analyzeComponents {
-	height:150px;
-	width:350px;
+	height:200px;
+	width:300px;
 	overflow:auto;
 	display:inline-block;
 	vertical-align:top;
@@ -85,7 +130,7 @@ div {
 }
 #analyzeResults {
 	padding-top:2px;
-	width:400px;
+	width:300px;
 	height:170px;
 	display:inline-block;
 }
@@ -110,7 +155,7 @@ div {
 .splice-selection {
 	vertical-align:top;
 	height:350px;
-	width:800px;
+	width:600px;
 }
 
 	/* Part 2 */
@@ -165,7 +210,7 @@ div {
 #spliceFinalButtons {
 	height:338px;
 	width:150px;
-	float:right;
+	display:block;
 }
 
 /********************
@@ -180,12 +225,12 @@ div {
 	padding-left:20px;
 	width:200px;
 	vertical-align:middle;
-	background-color:#111;
-	color:#0D0;
+	background-color:rgb(17, 17, 17);
+	color:rgb(165, 190, 161);
 }
 
 .tf-c-red {
-		color:#e00;
+	color:#e00;
 }
 
 .tf-long {
@@ -216,6 +261,14 @@ div {
 	cursor:default;
 }
 
+#transTypesGood {
+	background-color: #090;
+}
+
+#transTypesBad {
+	background-color: #E00;
+}
+
 .tf-med {
 	width:100px;
 }
@@ -244,36 +297,37 @@ div {
 	height:25px;
 	font-weight:bold;
 	cursor:default;
+	border-radius: 10px;
 }
 
 
 
 .a-green {
-	color:#050;
-	background-color:#010;
+	color:rgb(0, 0, 0);
+	background-color:rgb(185, 197, 185);
 }
 .a-green-on {
-	color:#090;
+	color:rgb(0, 0, 0);
 	background-color:#0E0;
 }
 
 .a-red {
-	color:#500;
+	color:rgb(0, 0, 0);
 	background-color:#100;
 }
 .a-red-on{
-	color:#900;
+	color:rgb(0, 0, 0);
 	background-color:#E00;
 }
 
 .a-yellow {
 	background-color:#252205;
-	color:151203;
+	color:rgb(0, 0, 0);
 }
 
 .a-yellow-on {
 	background-color:#FAF320;
-	color:#737012;
+	color:rgb(0, 0, 0);
 }
 
 #annSynch {
@@ -284,6 +338,7 @@ div {
 }
 
 /*buttons*/
+/* this is the fucking fuck zone that is not vertically aligned */
 .button {
 	display:inline-block;
 	text-align:center;
@@ -293,7 +348,7 @@ div {
 	width:100px;
 	height:50px;
 	font-weight:bold;
-	background-color:#DDD;
+	background-color:rgb(25, 201, 133);
 	color:#111;
 
 	font-family: sans-serif;
@@ -312,6 +367,9 @@ div {
 .btn-long {
 	width:150px;
 }
+.btn-xlong {
+	width:220px;
+}
 .btn-med {
 	height:25px;
 }
@@ -320,7 +378,7 @@ div {
 	width:70px;
 }
 .btn-tinyish {
-	height:25px;
+	height:22px;
 	width:35px;
 	margin:1px;
 }
@@ -359,8 +417,12 @@ div {
 	width:150px;
 }
 
+.lb-medl {
+	width:170px;
+}
+
 .lb-long {
-	width:200px;
+	width:220px;
 }
 
 .lb-elong {
@@ -381,9 +443,9 @@ div {
 Content containers
 ***************************/
 .mainContent {
-	background-color:#DDD;
-	width:850px;
-	height:auto;
+	background-color:rgb(27,103,107);
+	width:680px;
+	height:650;
 	margin:auto;
 	vertical-align:middle;
 	border-top: 4px solid #555;
@@ -395,17 +457,17 @@ Content containers
 #loadedPathogen {
 	width:auto;
 	display:block;
-	height:155px;
+	height:100px;
 	padding-left:20px;
 	padding-top:10px;
-	background-color:#BBB;
+	background-color:rgb(22, 72, 75);
 }
 
 
 .dataDisplay {
 	width:auto;
 	display:block;
-	height:500px;
+	height:450px;
 	overflow:hidden;
 }
 
@@ -416,11 +478,16 @@ Content containers
 	border:none;
 	padding-left:25px;
 }
+
+.bigfont{
+	font-size: large;
+}
+
 #mainMenu {
 	width:auto;
 	display:block;
 	height:75px;
 	bottom:0px;
 	padding:10px;
-	background-color:#BBB;
+	background-color:#1b676b;
 }

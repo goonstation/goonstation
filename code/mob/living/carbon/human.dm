@@ -413,7 +413,7 @@
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your left arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_arm]!</b></span>")
 				if (user)
-					logTheThing("admin", user, src.holder, "replaced %target%'s left arm with [new_type]")
+					logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s left arm with [new_type]")
 				. ++
 
 			if (target == "both_arms" || target == "r_arm")
@@ -429,7 +429,7 @@
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your right arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_arm]!</b></span>")
 				if (user)
-					logTheThing("admin", user, src.holder, "replaced %target%'s right arm with [new_type]")
+					logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s right arm with [new_type]")
 				. ++
 
 			if (target == "both_legs" || target == "l_leg")
@@ -440,7 +440,7 @@
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your left leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_leg]!</b></span>")
 					if (user)
-						logTheThing("admin", user, src.holder, "replaced %target%'s left leg with [new_type]")
+						logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s left leg with [new_type]")
 					. ++
 
 			if (target == "both_legs" || target == "r_leg")
@@ -451,7 +451,7 @@
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your right leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_leg]!</b></span>")
 					if (user)
-						logTheThing("admin", user, src.holder, "replaced %target%'s right leg with [new_type]")
+						logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s right leg with [new_type]")
 					. ++
 			if (.)
 				src.holder.set_body_icon_dirty()
@@ -874,7 +874,7 @@
 			if (W)
 				src.click(W, list())
 		if ("equip")
-			src.hud.clicked("invtoggle", list()) // this is incredibly dumb, it's also just as dumb as what was here previously
+			src.hud.clicked("invtoggle", src, list()) // this is incredibly dumb, it's also just as dumb as what was here previously
 		if ("togglethrow")
 			src.toggle_throw_mode()
 		if ("walk")
@@ -939,7 +939,7 @@
 /mob/living/carbon/human/proc/throw_item(atom/target, list/params)
 	var/turf/thrown_from = get_turf(src)
 	src.throw_mode_off()
-	if (usr.stat)
+	if (src.stat)
 		return
 #if ASS_JAM //no throwing while in timestop
 	if (paused)
@@ -951,6 +951,8 @@
 	//	return
 
 	var/obj/item/I = src.equipped()
+	if("npc_throw" in params)
+		I = src.r_hand
 
 	if (!I || !isitem(I) || I.cant_drop) return
 
@@ -987,7 +989,7 @@
 			src.visible_message("<span class='alert'>[src] throws [I].</span>")
 		if (iscarbon(I))
 			var/mob/living/carbon/C = I
-			logTheThing("combat", src, C, "throws %target% at [log_loc(src)].")
+			logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] at [log_loc(src)].")
 			if ( ishuman(C) && !C.getStatusDuration("weakened"))
 				C.changeStatus("weakened", 1 SECOND)
 		else
@@ -2366,98 +2368,6 @@
 		src.immunities += P.pathogen_uid
 		logTheThing("pathology", src, null, "gains immunity to pathogen [P].")
 
-/mob/living/carbon/human/shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
-	if (!wattage)
-		return 0
-	var/prot = 1
-	var/obj/item/clothing/gloves/G = src.gloves
-	if (G && !ignore_gloves)
-		prot = (G.hasProperty("conductivity") ? G.getProperty("conductivity") : 1)
-	if (src.limbs.l_arm)
-		prot = min(prot,src.limbs.l_arm.siemens_coefficient)
-	if (src.limbs.r_arm)
-		prot = min(prot,src.limbs.r_arm.siemens_coefficient)
-	if (prot <= 0.29)
-		return 0
-
-	var/shock_damage = 0
-	if (wattage > 7500)
-		shock_damage = (max(rand(10,20), round(wattage * 0.00004)))*prot
-	else if (wattage > 5000)
-		shock_damage = 15 * prot
-	else if (wattage > 2500)
-		shock_damage = 5 * prot
-	else
-		shock_damage = 1 * prot
-
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		shock_damage = P.onshocked(shock_damage, wattage)
-		if (!shock_damage)
-			return 0
-
-	if (src.bioHolder.HasEffect("resist_electric") == 2)
-		var/healing = 0
-		healing = shock_damage / 3
-		src.HealDamage("All", healing, healing)
-		src.take_toxin_damage(0 - healing)
-		boutput(src, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
-		return 0
-	else if (src.bioHolder.HasEffect("resist_electric") == 1)
-		boutput(src, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
-		return 0
-
-	switch(shock_damage)
-		if (0 to 25)
-			playsound(src.loc, "sound/effects/electric_shock.ogg", 50, 1)
-		if (26 to 59)
-			playsound(src.loc, "sound/effects/elec_bzzz.ogg", 50, 1)
-		if (60 to 99)
-			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 50, 1)  // begin the fun arcflash
-			boutput(src, "<span class='alert'><b>[origin] discharges a violent arc of electricity!</b></span>")
-			src.apply_flash(60, 0, 10)
-			if (ishuman(src))
-				var/mob/living/carbon/human/H = src
-				H.cust_one_state = pick("xcom","bart","zapped")
-				H.set_face_icon_dirty()
-		if (100 to INFINITY)  // cogwerks - here are the big fuckin murderflashes
-			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 50, 1)
-			playsound(src.loc, "explosion", 50, 1)
-			src.flash(60)
-			if (ishuman(src))
-				var/mob/living/carbon/human/H = src
-				H.cust_one_state = pick("xcom","bart","zapped")
-				H.set_face_icon_dirty()
-
-			var/turf/T = get_turf(src)
-			if (T)
-				T.hotspot_expose(5000,125)
-				explosion(origin, T, -1,-1,1,2)
-			if (ishuman(src))
-				if (prob(20))
-					boutput(src, "<span class='alert'><b>[origin] vaporizes you with a lethal arc of electricity!</b></span>")
-					if (src.shoes)
-						src.drop_from_slot(src.shoes)
-					make_cleanable(/obj/decal/cleanable/ash,src.loc)
-					SPAWN_DBG(1 DECI SECOND)
-						src.elecgib()
-				else
-					boutput(src, "<span class='alert'><b>[origin] blasts you with an arc flash!</b></span>")
-					if (src.shoes)
-						src.drop_from_slot(src.shoes)
-					var/atom/targetTurf = get_edge_target_turf(src, get_dir(src, get_step_away(src, origin)))
-					src.throw_at(targetTurf, 200, 4)
-	shock_cyberheart(shock_damage)
-	TakeDamage(zone, 0, shock_damage, 0, DAMAGE_BURN)
-	boutput(src, "<span class='alert'><B>You feel a [wattage > 7500 ? "powerful" : "slight"] shock course through your body!</B></span>")
-	src.unlock_medal("HIGH VOLTAGE", 1)
-	src.Virus_ShockCure(min(wattage / 500, 100))
-
-	var/stun = (min((shock_damage/5), 12) * stun_multiplier)* 10
-	src.do_disorient(100 + stun, weakened = stun, stunned = stun, disorient = stun + 40, remove_stamina_below_zero = 1)
-
-	return shock_damage
-
 /mob/living/carbon/human/emag_act(mob/user, obj/item/card/emag/E)
 
 	if (prob(1)) //Magnet healing!
@@ -3136,7 +3046,7 @@
 	set category = "Local"
 
 	if (usr == src)
-		src.hud.clicked("invtoggle", list()) // ha i copy the dumb thing
+		src.hud.clicked("invtoggle", src, list()) // ha i copy the dumb thing
 		return
 	if (!src.can_strip(src, 1)) return
 	if (LinkBlocked(src.loc,usr.loc)) return

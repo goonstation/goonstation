@@ -87,9 +87,7 @@
 	var/obj/decal/cleanable/machine_debris/gib = null
 
 	// RUH ROH
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(2, 1, location)
-	s.start()
+	elecflash(src, power = 3)
 
 	// NORTH
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)

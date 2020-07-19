@@ -127,17 +127,37 @@ client/proc/replace_space_exclusive()
 		ocean_reagent_id = reagent.id
 		var/datum/reagents/R = new /datum/reagents(100)
 		R.add_reagent(reagent.id, 100)
+
+#ifdef UNDERWATER_MAP
+		var/master_reagent_name = R.get_master_reagent_name()
+		if(master_reagent_name == "water")
+			ocean_name = "ocean floor" //normal ocean
+		else
+			ocean_name = master_reagent_name + " ocean floor"
+#else
 		ocean_name = "ocean of " + R.get_master_reagent_name()
-		ocean_color = R.get_average_color()
+#endif
+
+		ocean_color = R.get_average_color().to_rgb()
 		qdel(R)
 
-#ifndef UNDERWATER_MAP
 		map_currently_underwater = 1
 		for(var/turf/space/S in world)
 			if (S.z != 1) continue
-			new /turf/space/fluid( locate(S.x, S.y, S.z) )
-			LAGCHECK(LAG_REALTIME)
+
+#ifdef MOVING_SUB_MAP
+			var/turf/space/fluid/manta/T = new /turf/space/fluid/manta( locate(S.x, S.y, S.z) )
+#else
+			var/turf/space/fluid/T = new /turf/space/fluid( locate(S.x, S.y, S.z) )
 #endif
+
+#ifdef UNDERWATER_MAP
+			T.name = ocean_name
+#endif
+
+			T.color = ocean_color
+			LAGCHECK(LAG_REALTIME)
+
 		message_admins("Finished space replace!")
 		map_currently_underwater = 1
 

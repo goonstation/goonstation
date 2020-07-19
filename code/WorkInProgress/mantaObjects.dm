@@ -160,6 +160,7 @@ var/obj/manta_speed_lever/mantaLever = null
 /proc/mantaSetMove(var/moving=1, var/doShake=1)
 
 	if(mantaIsBroken() && moving == 1) //If too many are broken and we want to move, nope out. This is just an extra safety.
+		mantaMoving = 0
 		return
 
 	if(doShake)

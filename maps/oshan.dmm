@@ -1713,17 +1713,15 @@
 /area/station/bridge)
 "ady" = (
 /obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/teleporter)
+/turf/simulated/floor/bot,
+/area/station/crew_quarters/market)
 "adz" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
@@ -1731,17 +1729,6 @@
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/teleporter)
-"adB" = (
-/obj/cable{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
@@ -5834,6 +5821,7 @@
 	name = "AI Core Shield";
 	pixel_x = 28
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "amB" = (
@@ -6602,6 +6590,10 @@
 	print_id = "Lounge"
 	},
 /obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
 "aot" = (
@@ -6613,6 +6605,10 @@
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
@@ -32256,6 +32252,11 @@
 /obj/landmark/start{
 	name = "Medical Director"
 	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/west,
 /area/station/bridge)
 "bxU" = (
@@ -32266,6 +32267,10 @@
 /obj/item/device/infra,
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "blue2"
@@ -32571,6 +32576,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw,
 /area/station/bridge)
 "byM" = (
@@ -32583,6 +32593,10 @@
 	dir = 4;
 	pixel_x = 26;
 	pixel_y = 1
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -33038,6 +33052,7 @@
 	print_id = "Information"
 	},
 /obj/machinery/power/data_terminal,
+/obj/cable,
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},
@@ -91398,9 +91413,9 @@ bwN
 byE
 bzB
 bzB
-ady
+bzB
 bAK
-ady
+bzB
 bzB
 bzB
 bHo
@@ -91702,7 +91717,7 @@ bzC
 bAX
 adz
 adA
-adB
+bDy
 bFz
 bGq
 bHb
@@ -94716,8 +94731,8 @@ bvc
 bvI
 bwo
 bwW
-bwo
-bvE
+bwW
+bvI
 bzE
 bBa
 bCq
@@ -95018,8 +95033,8 @@ bvd
 bvJ
 bvE
 bvI
-bvE
-bvE
+bvI
+bvI
 bzE
 btK
 bCr
@@ -102568,8 +102583,8 @@ btM
 bvO
 bwu
 bxh
-byb
-byR
+byd
+ady
 bzU
 cfw
 bBq

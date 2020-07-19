@@ -15,10 +15,9 @@ var/list/magnet_locations = list()
 
 	New()
 		..()
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("send", "mechcompsend")
-		mechanics.addInput("recieve", "mechcomprecieve")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", "mechcompsend")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"recieve", "mechcomprecieve")
 
 	attack_ai(mob/user as mob)
 		return attack_hand(user)

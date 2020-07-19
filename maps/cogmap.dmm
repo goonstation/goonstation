@@ -33363,10 +33363,6 @@
 /obj/lattice,
 /turf/space,
 /area)
-"bsu" = (
-/obj/effects/background_objects/x0,
-/turf/space,
-/area)
 "bsv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
@@ -34981,10 +34977,6 @@
 "bvM" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/main)
-"bvN" = (
-/obj/effects/background_objects,
-/turf/space,
-/area)
 "bvO" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -42755,6 +42747,11 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 4
 	},
@@ -43521,6 +43518,9 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "bMY" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 4
 	},
@@ -44182,13 +44182,29 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "bOs" = (
-/obj/machinery/space_heater,
+/obj/reagent_dispensers/foamtank,
+/obj/item/extinguisher,
+/obj/item/extinguisher{
+	pixel_x = 8
+	},
 /turf/simulated/floor/bot,
 /area/station/science/teleporter)
 "bOt" = (
-/obj/reagent_dispensers/foamtank,
-/obj/item/extinguisher,
-/obj/item/extinguisher,
+/obj/table/auto,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/paper_bin{
+	pixel_x = -5
+	},
+/obj/item/device/radio/headset/multifreq{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/pen{
+	pixel_x = 4
+	},
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "bOu" = (
@@ -44279,14 +44295,14 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "bOC" = (
-/obj/table/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/device/radio/headset/multifreq,
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/storage/firstaid/regular,
+/obj/machinery/computer/telescope{
+	dir = 8
+	},
+/obj/cable,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 4
 	},
@@ -63805,6 +63821,10 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
+"naz" = (
+/obj/machinery/space_heater,
+/turf/simulated/floor,
+/area/station/science/teleporter)
 "niO" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
@@ -79833,7 +79853,7 @@ aaa
 aaa
 aaa
 aaa
-bsu
+aaa
 aaa
 aaa
 aaa
@@ -95557,7 +95577,7 @@ aaq
 bIP
 bKc
 bLq
-bLr
+naz
 bOs
 bIP
 bQY
@@ -123900,7 +123920,7 @@ aaa
 aaa
 aaa
 aaa
-bvN
+aaa
 aaa
 aaa
 aaa

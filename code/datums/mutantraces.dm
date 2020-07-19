@@ -735,6 +735,7 @@
 			M.add_stam_mod_max("abomination", 1000)
 			M.add_stam_mod_regen("abomination", 1000)
 			M.add_stun_resist_mod("abomination", 1000)
+			APPLY_MOB_PROPERTY(M, PROP_CANTSPRINT, src)
 		last_drain = world.time
 		return ..(M)
 
@@ -743,6 +744,7 @@
 			mob.remove_stam_mod_max("abomination")
 			mob.remove_stam_mod_regen("abomination")
 			mob.remove_stun_resist_mod("abomination")
+			REMOVE_MOB_PROPERTY(mob, PROP_CANTSPRINT, src)
 		return ..()
 
 
@@ -761,7 +763,7 @@
 
 			if (C && C.points)
 				if (last_drain + 30 <= world.time)
-					C.points = max(0, C.points - 1)
+					C.points = max(0, C.points - (1 * mult))
 
 				switch (C.points)
 					if (-INFINITY to 0)
@@ -1385,38 +1387,45 @@
 	// r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/
 	// l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/ //kudzu
 	// ignore_missing_limbs = OVERRIDE_ARM_L | OVERRIDE_ARM_R
-	custom_attack(atom/target) // Fixed: monkeys can click-hide under every table now, not just the parent type. Also added beds (Convair880).
+
+	custom_attack(atom/target)
 		if(ishuman(target))
 			mob.visible_message("<span class='alert'><B>[mob]</B> waves its limbs at [target] threateningly!</span>")
 		else
 			return target.attack_hand(mob)
 
-	var/nutrients = 0
-
 	say_verb()
 		return "rasps"
 
 	New(var/mob/living/carbon/human/H)
-		..()
-		H.max_health -= 50
-		H.add_stam_mod_max("kudzu", -100)
-		H.add_stam_mod_regen("kudzu", -5)
-		if(ishuman(mob))
-			H.abilityHolder = new /datum/abilityHolder/kudzu(H)
-			H.abilityHolder.owner = H
-			H.abilityHolder.addAbility(/datum/targetable/kudzu/guide)
-			H.abilityHolder.addAbility(/datum/targetable/kudzu/heal_other)
-			H.abilityHolder.addAbility(/datum/targetable/kudzu/stealth)
-			H.abilityHolder.addAbility(/datum/targetable/kudzu/kudzusay)
+		..(H)
+		SPAWN_DBG(0)	//ugh
+			H.max_health -= 50
+			H.health = max(H.max_health, H.health)
+			H.add_stam_mod_max("kudzu", -100)
+			H.add_stam_mod_regen("kudzu", -5)
+			if(ishuman(mob))
+				H.abilityHolder = new /datum/abilityHolder/kudzu(H)
+				H.abilityHolder.owner = H
+				H.abilityHolder.addAbility(/datum/targetable/kudzu/guide)
+				H.abilityHolder.addAbility(/datum/targetable/kudzu/growth)
+				H.abilityHolder.addAbility(/datum/targetable/kudzu/seed)
+				H.abilityHolder.addAbility(/datum/targetable/kudzu/heal_other)
+				H.abilityHolder.addAbility(/datum/targetable/kudzu/stealth)
+				H.abilityHolder.addAbility(/datum/targetable/kudzu/kudzusay)
+				H.abilityHolder.addAbility(/datum/targetable/kudzu/vine_appendage)
 
 
 	disposing()
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			H.abilityHolder.removeAbility(/datum/targetable/kudzu/guide)
+			H.abilityHolder.removeAbility(/datum/targetable/kudzu/growth)
+			H.abilityHolder.removeAbility(/datum/targetable/kudzu/seed)
 			H.abilityHolder.removeAbility(/datum/targetable/kudzu/heal_other)
 			H.abilityHolder.removeAbility(/datum/targetable/kudzu/stealth)
-			H.abilityHolder.addAbility(/datum/targetable/kudzu/kudzusay)
+			H.abilityHolder.removeAbility(/datum/targetable/kudzu/kudzusay)
+			H.abilityHolder.removeAbility(/datum/targetable/kudzu/vine_appendage)
 			H.remove_stam_mod_max("kudzu")
 			H.remove_stam_mod_regen("kudzu")
 		return ..()
@@ -1429,7 +1438,8 @@
 		mob.see_in_dark = SEE_DARK_FULL
 		return
 
-	onLife(var/mult = 1)	//Called every Life cycle of our mob
+	//Should figure out what I'm doing with this and the onLife in the abilityHolder one day. I'm thinking, maybe move it all to the abilityholder, but idk, composites are weird.
+	onLife(var/mult = 1)
 		if (!mob.abilityHolder)
 			mob.abilityHolder = new /datum/abilityHolder/kudzu(mob)
 
@@ -1438,7 +1448,7 @@
 		var/turf/T = get_turf(mob)
 		//if on kudzu, get nutrients for later use. If at max nutrients. Then heal self.
 		if (T && T.temp_flags & HAS_KUDZU)
-			if (KAH.points < KAH:MAX_POINTS)
+			if (KAH.points < KAH.MAX_POINTS)
 				KAH.points += round_mult
 			else
 				//at max points, so heal

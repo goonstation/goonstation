@@ -587,7 +587,7 @@
 			A.name_suffix("([src.label])")
 			A.UpdateName()
 		if (user && !no_message)
-			logTheThing("combat", user, A, "labels %target% with \"[src.label]\"")
+			logTheThing("combat", user, A, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
 		else if(!no_message)
 			logTheThing("combat", A, null, "has a label applied to them, \"[src.label]\"")
 		A.add_fingerprint(user)
