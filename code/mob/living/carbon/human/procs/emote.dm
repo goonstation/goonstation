@@ -1631,7 +1631,7 @@
 
 										if (client && client.hellbanned)
 											src.changeStatus("weakened", 4 SECONDS)
-										if (!G.affecting.hasStatus("weakened"))
+										if (G.affecting && !G.affecting.hasStatus("weakened"))
 											G.affecting.changeStatus("weakened", 4.5 SECONDS)
 
 
