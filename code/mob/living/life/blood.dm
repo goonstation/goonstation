@@ -49,15 +49,15 @@
 
 			if (owner.get_surgery_status())
 				decrease_chance -= 1
-			if (prob(decrease_chance))
+
+			if (prob(decrease_chance*mult))
 				owner.bleeding -= 1 * mult
 				boutput(owner, "<span class='notice'>Your wounds feel [pick("better", "like they're healing a bit", "a little better", "itchy", "less tender", "less painful", "like they're closing", "like they're closing up a bit", "like they're closing up a little")].</span>")
 
-			if (owner.bleeding < 0) //INVERSE BLOOD LOSS was a fun but ultimately easily fixed bug
-				owner.bleeding = 0
-
 			if (prob(surgery_increase_chance) && owner.get_surgery_status())
-				owner.bleeding = clamp(owner.bleeding+(1*mult), 0, 6) //mbc : clamp at 6 even though final_bleed is clamped at 5 because overbleed is kinda cool idk
+				owner.bleeding += (1*mult)
+
+			owner.bleeding = clamp(owner.bleeding, 0, 5)
 
 			if (owner.blood_volume)
 				var/final_bleed = clamp(owner.bleeding, 0, 5) // trying this at 5 being the max
