@@ -188,6 +188,8 @@
 		var/area/A = get_area(owner)
 		if( A && A.sanctuary )
 			return
+		if (HAS_MOB_PROPERTY(owner, PROP_REBREATHING)) //for whatever reason, we aren't breathing at all
+			return 0
 		// Looks like we're in space
 		// or with recent atmos changes, in a room that's had a hole in it for any amount of time, so now we check src.loc
 		if (underwater || !breath || (TOTAL_MOLES(breath) == 0))

@@ -1432,7 +1432,6 @@
 	New()
 		..()
 		src.icon_state = "[initial(src.icon_state)]_cd"
-		holder.updateButtons()
 
 	cast(atom/target)
 		if (..())
@@ -1496,3 +1495,37 @@
 			else
 				boutput(L, "<span class='alert'>You try to vomit, but have nothing left to give!</span>")
 				linked_organ.take_damage(30) //owwww
+
+/datum/targetable/organAbility/rebreather
+	name = "Rebreather Toggle"
+	desc = "Overload your cyberlungs to completely pause your breathing. Any oxygen deprivation already suffered will not be cleared, however."
+	icon_state = "eye-meson"
+	targeted = 0
+	toggled = 1
+	cooldown = 5
+	is_on = 0
+
+
+	New()
+		..()
+		src.icon_state = "[initial(src.icon_state)]_cd"
+
+	cast(atom/target)
+		if (..())
+			return 1
+		if(!islist(linked_organ) && !is_on)
+			boutput(holder.owner, "<span class='notice'>This ability is only usable with two unregulated cyberlungs!")
+			return 1
+
+		src.is_on = !src.is_on
+		for(var/obj/item/organ/lung/cyber/L in linked_organ)
+			L.overloading = is_on
+		if(is_on)
+			APPLY_MOB_PROPERTY(holder.owner, PROP_REBREATHING, "cyberlungs")
+		else
+			REMOVE_MOB_PROPERTY(holder.owner, PROP_REBREATHING, "cyberlungs")
+
+		if(is_on)
+			src.icon_state = initial(src.icon_state)
+		else
+			src.icon_state = "[initial(src.icon_state)]_cd"
