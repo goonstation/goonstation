@@ -1,5 +1,8 @@
 
 (t)sun jul 19 20
+(u)Zamujasa
+(e)🔄|rework
+(*)The Genetics "dissolve" power no longer instantly kills you if it isn't synchronized. Instead, you drop all your equipment. Misfires drop a random organ instead. Hopefully not one of the important ones.
 (u)zjdtmkhzt
 (p)1465
 (e)🆕🔄|feature, rework
