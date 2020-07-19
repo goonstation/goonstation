@@ -3,7 +3,14 @@
 //TODO:
 // - Message Datum pooling and recycling.
 
-
+// sloppy ass hack, dont hurt me
+#ifndef _COMSIG_MECHCOMP_RM_INCOMING
+#define _COMSIG_MECHCOMP_RM_INCOMING "_mechcomp_remove_incoming"
+#endif
+#ifndef _COMSIG_MECHCOMP_RM_OUTGOING
+#define _COMSIG_MECHCOMP_RM_OUTGOING "_mechcomp_remove_outgoing"
+#endif
+// defines weren't/aren't up to date somehow, this is to make it compile FTTB
 
 #define IN_CABINET (istype(src.loc,/obj/item/storage/mechanics))
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
