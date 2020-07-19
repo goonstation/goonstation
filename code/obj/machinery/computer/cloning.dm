@@ -72,7 +72,7 @@
 
 /obj/machinery/computer/cloning/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN_DBG(0.7 SECONDS)
 		if(portable) return
 		src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
 		src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))

@@ -19,11 +19,10 @@
 		if (..())
 			return
 
-		var/input = null
 		switch (alert(usr, "Choose the pest type?", src.name, "Random", "Custom"))
 			if ("Custom")
 				src.pest_type = input("Enter a /mob/living/critter path or partial name.", src.name, null) as null|text
-				src.pest_type = get_one_match(input, "/mob/living/critter")
+				src.pest_type = get_one_match(src.pest_type, "/mob/living/critter")
 				if (!src.pest_type)
 					return
 			if ("Random")
@@ -75,11 +74,11 @@
 
 			var/atom/pestlandmark = pick(EV)
 
-			var/list/select = null
+			var/list/select = list()
 			if (src.pest_type) //customized
-				select = src.pest_type
+				select += src.pest_type
 			else
-				select = pick(src.pest_invasion_critter_types)
+				select += pick(src.pest_invasion_critter_types)
 
 			if (src.num_pests) //customized
 				src.num_pests = min(src.num_pests, candidates.len)
@@ -92,7 +91,7 @@
 
 				var/datum/mind/M = pick(candidates)
 				if (M.current)
-					M.current.make_critter(pick(select), pestlandmark)
+					M.current.make_ghost_critter(pestlandmark,select)
 				candidates -= M
 
 			pestlandmark.visible_message("A group of pests emerge from their hidey-hole!")

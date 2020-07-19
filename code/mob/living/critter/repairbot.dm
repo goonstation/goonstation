@@ -37,9 +37,7 @@
 		return L.get_messages(message, (1 - health / max_health) * 16)
 
 	death(var/gibbed)
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(3, 1, src)
-		s.start()
+		elecflash(src,power = 3)
 		..()
 		ghostize()
 		qdel(src)

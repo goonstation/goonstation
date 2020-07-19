@@ -36,7 +36,7 @@
 	var/botcard_access = "Head of Security" //Job access for doors.
 	var/hat = null //Add an overlay from bots/aibots.dmi with this state.  hats.
 	var/our_baton_type = /obj/item/baton/secbot
-	var/loot_baton_type = /obj/item/baton
+	var/loot_baton_type = /obj/item/scrap
 	var/stun_type = "stun"
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
@@ -71,6 +71,9 @@
 	var/nearest_beacon			// the nearest beacon's tag
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
 
+	var/last_attack = 0
+	var/attack_per_step = 0
+
 	disposing()
 		if(mover)
 			mover.dispose()
@@ -93,7 +96,9 @@
 	idcheck = 1
 	auto_patrol = 1
 	report_arrests = 1
+	loot_baton_type = /obj/item/baton
 	hat = "nt"
+	attack_per_step = 1
 
 	New()
 		. = ..()
@@ -102,6 +107,18 @@
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+	explode()
+		//////PDA NOTIFY/////
+		var/bot_location = get_area(src)
+		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
+		var/datum/signal/pdaSignal = get_free_signal()
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="Notification: [src] destroyed in [bot_location]! Officer down!")
+		pdaSignal.transmission_method = TRANSMISSION_RADIO
+		if(transmit_connection != null)
+			transmit_connection.post_signal(src, pdaSignal)
+
+		..()
 
 /obj/machinery/bot/secbot/warden
 	name = "Warden Jack"
@@ -361,6 +378,54 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 		return 0
 
+	proc/baton_attack(var/mob/living/carbon/M)
+		src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
+		var/maxstuns = 4
+		var/stuncount = (src.emagged >= 2) ? rand(5,10) : 1
+
+		last_attack = world.time
+
+		while (stuncount > 0 && src.target)
+			// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
+			if (src.our_baton && istype(src.our_baton))
+				if (src.our_baton.uses_electricity == 0)
+					src.our_baton.uses_electricity = 1
+				if (src.our_baton.uses_charges != 0)
+					src.our_baton.uses_charges = 0
+			else
+				src.our_baton = new our_baton_type(src)
+
+			stuncount--
+			src.our_baton.do_stun(src, M, src.stun_type, 2)
+			if (!stuncount && maxstuns-- <= 0)
+				target = null
+			if (stuncount > 0)
+				sleep(0.3 SECONDS)
+
+		SPAWN_DBG(0.2 SECONDS)
+			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
+		if (src.target.getStatusDuration("weakened"))
+			mode = SECBOT_PREP_ARREST
+			src.anchored = 1
+			src.target_lastloc = M.loc
+			moving = 0
+
+			//qdel(src.mover)
+			if (src.mover)
+				src.mover.master = null
+				src.mover = null
+			src.frustration = 0
+		return
+
+	Move(var/turf/NewLoc, direct)
+		var/oldloc = src.loc
+		..()
+		if (src.attack_per_step && prob(75))
+			if (oldloc != NewLoc && world.time != last_attack)
+				if (mode == SECBOT_HUNT && target)
+					if (get_dist(src, src.target) <= 1)
+						src.baton_attack(src.target)
+
 	process()
 		if (!src.on)
 			return
@@ -393,43 +458,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 				if (target)		// make sure target exists
 					if (get_dist(src, src.target) <= 1)		// if right next to perp
-						src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
-						var/mob/living/carbon/M = src.target
-						var/maxstuns = 4
-						var/stuncount = (src.emagged >= 2) ? rand(5,10) : 1
-
-						while (stuncount > 0 && src.target)
-							// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
-							if (src.our_baton && istype(src.our_baton))
-								if (src.our_baton.uses_electricity == 0)
-									src.our_baton.uses_electricity = 1
-								if (src.our_baton.uses_charges != 0)
-									src.our_baton.uses_charges = 0
-							else
-								src.our_baton = new our_baton_type(src)
-
-							stuncount--
-							src.our_baton.do_stun(src, M, src.stun_type, 2)
-							if (!stuncount && maxstuns-- <= 0)
-								target = null
-							if (stuncount > 0)
-								sleep(0.3 SECONDS)
-
-						SPAWN_DBG(0.2 SECONDS)
-							src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
-						if (src.target.getStatusDuration("weakened"))
-							mode = SECBOT_PREP_ARREST
-							src.anchored = 1
-							src.target_lastloc = M.loc
-							moving = 0
-
-							//qdel(src.mover)
-							if (src.mover)
-								src.mover.master = null
-								src.mover = null
-							src.frustration = 0
-						return
-
+						src.baton_attack(src.target)
 					else								// not next to perp
 						if(!(src.target in view(7,src)) || !moving)
 							//qdel(src.mover)
@@ -504,7 +533,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 									//////PDA NOTIFY/////
 								var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 								var/datum/signal/pdaSignal = get_free_signal()
-								pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"="security", "sender"="00000000", "message"="Notification: [last_target] detained by [src] in [bot_location].")
+								pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="Notification: [last_target] detained by [src] in [bot_location].")
 								pdaSignal.transmission_method = TRANSMISSION_RADIO
 								if(transmit_connection != null)
 									transmit_connection.post_signal(src, pdaSignal)
@@ -1016,7 +1045,8 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		return
 
 	explode()
-
+		if(src.exploding) return
+		src.exploding = 1
 		walk_to(src,0)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
@@ -1031,16 +1061,17 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		new /obj/item/device/prox_sensor(Tsec)
 
 		// Not charged when dropped (ran on Beepsky's internal battery or whatever).
-		var/obj/item/baton/B = new loot_baton_type(Tsec)
-		B.status = 0
-		B.process_charges(-INFINITY)
+		if (loot_baton_type == /obj/item/baton)
+			var/obj/item/baton/B = new loot_baton_type(Tsec)
+			B.status = 0
+			B.process_charges(-INFINITY)
+		else
+			new loot_baton_type
 
 		if (prob(50))
 			new /obj/item/parts/robot_parts/arm/left(Tsec)
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(3, 1, src)
-		s.start()
+		elecflash(src, radius=1, power=3, exclude_center = 0)
 		qdel(src)
 
 
@@ -1139,7 +1170,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			src.overlays += image('icons/obj/bots/aibots.dmi', "hs_hole")
 			boutput(user, "You weld a hole in [src]!")
 
-	else if ((istype(W, /obj/item/device/prox_sensor)) && (src.build_step == 1))
+	else if (istype(W, /obj/item/device/prox_sensor) && src.build_step == 1)
 		src.build_step++
 		boutput(user, "You add the prox sensor to [src]!")
 		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_eye")
@@ -1151,17 +1182,34 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		boutput(user, "You add the robot arm to [src]!")
 		src.name = "helmet/signaler/prox sensor/robot arm assembly"
 		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_arm")
+		user.u_equip(W)
 		qdel(W)
 
-	else if ((istype(W, /obj/item/baton)) && (src.build_step >= 3))
-		src.build_step++
-		boutput(user, "You complete the Securitron! Beep boop.")
-		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
-		S.beacon_freq = src.beacon_freq
-		S.hat = src.hat
-		S.name = src.created_name
-		qdel(W)
-		qdel(src)
+	else if (istype(W, /obj/item/rods) && src.build_step == 3)
+		if (W.amount < 1)
+			boutput(user, "You need a non-zero amount of rods. How did you even do that?")
+		else
+			src.build_step++
+			boutput(user, "You add a rod to [src]'s robot arm!")
+			src.name = "helmet/signaler/prox sensor/robot arm/rod assembly"
+			src.overlays += image('icons/obj/bots/aibots.dmi', "hs_rod")
+			W.amount -= 1
+			if (W.amount < 1)
+				user.u_equip(W)
+				qdel(W)
+
+	else if (istype(W, /obj/item/cable_coil) && src.build_step >= 4)
+		var/obj/item/cable_coil/C = W
+		if (!C.use(5))
+			boutput(user, "You need a longer length of cable! A length of five should be enough.")
+		else
+			src.build_step++
+			boutput(user, "You add the wires to the rod, completing the Securitron! Beep boop.")
+			var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
+			S.beacon_freq = src.beacon_freq
+			S.hat = src.hat
+			S.name = src.created_name
+			qdel(src)
 
 	else if (istype(W, /obj/item/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text

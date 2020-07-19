@@ -236,7 +236,7 @@
 		if(!who) return 8
 		src.measured_height = text2num(splittext(who.MeasureText(src.maptext, width = src.maptext_width), "x")[2])
 
-proc/make_chat_maptext(atom/target, msg, style = "")
+proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
 	var/image/chat_maptext/text = unpool(/image/chat_maptext)
 	animate(text, maptext_y = 28, time = 0.01) // this shouldn't be necessary but it keeps breaking without it
 	if(istype(target, /mob/living))
@@ -247,7 +247,7 @@ proc/make_chat_maptext(atom/target, msg, style = "")
 		text.loc = target
 	msg = copytext(msg, 1, 128) // 4 lines, seems fine to me
 	text.maptext = "<span class='pixel c ol' style=\"[style]\">[msg]</span>"
-	animate(text, alpha = 255, maptext_y = 34, time = 4, flags = ANIMATION_END_NOW)
+	animate(text, alpha = alpha, maptext_y = 34, time = 4, flags = ANIMATION_END_NOW)
 	var/text_id = text.unique_id
 	SPAWN_DBG(4 SECONDS)
 		if(text_id == text.unique_id)

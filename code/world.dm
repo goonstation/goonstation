@@ -42,7 +42,7 @@ var/global/mob/twitch_mob = 0
 		var/list/lines = splittext(text, "\n")
 		if (lines[1])
 			master_mode = lines[1]
-			diary << "Saved mode is '[master_mode]'"
+			logDiary("Saved mode is '[master_mode]'")
 
 /world/proc/save_mode(var/the_mode)
 	var/F = file("data/mode.txt")
@@ -90,7 +90,7 @@ var/global/mob/twitch_mob = 0
 	set background = 1
 	var/text = file2text("config/admins.txt")
 	if (!text)
-		diary << "Failed to load config/admins.txt\n"
+		logDiary("Failed to load config/admins.txt\n")
 	else
 		var/list/lines = splittext(text, "\n")
 		for(var/line in lines)
@@ -105,7 +105,7 @@ var/global/mob/twitch_mob = 0
 				var/m_key = copytext(line, 1, pos)
 				var/a_lev = copytext(line, pos + 3, length(line) + 1)
 				admins[m_key] = a_lev
-				diary << ("ADMIN: [m_key] = [a_lev]")
+				logDiary("ADMIN: [m_key] = [a_lev]")
 
 /world/proc/load_whitelist(fileName = "strings/whitelist.txt")
 	set background = 1
@@ -122,12 +122,12 @@ var/global/mob/twitch_mob = 0
 				continue
 
 			whitelistCkeys += line
-			diary << ("WHITELIST: [line]")
+			logDiary("WHITELIST: [line]")
 
 
 /world/proc/load_playercap_bypass()
 	set background = 1
-	var/text = file2text("strings/allow_thru_cap.txt")
+	var/text = file2text("+secret/strings/allow_thru_cap.txt")
 	if (!text)
 		return
 	else
@@ -140,7 +140,7 @@ var/global/mob/twitch_mob = 0
 				continue
 
 			bypassCapCkeys += line
-			diary << ("WHITELIST: [line]")
+			logDiary("WHITELIST: [line]")
 
 // dsingh for faster create panel loads
 /world/proc/precache_create_txt()
@@ -417,11 +417,8 @@ var/f_color_selector_handler/F_Color_Selector
 
 
 	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
-	diary << ""
-	diary << ""
-	diary << "Starting up. [time2text(world.timeofday, "hh:mm.ss")]"
-	diary << "---------------------"
-	diary << ""
+	diary_name = "data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log"
+	logDiary("\n----------------------\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n----------------------\n")
 
 	//This is used by bans for checking, so we want it very available
 	apiHandler = new()
@@ -715,6 +712,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 /world/Reboot()
 	TgsReboot()
+	shutdown_logging()
 	return ..()
 
 /world/proc/update_status()
@@ -793,7 +791,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC	// logging for these is done in TGS
-	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
+	logDiary("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 	Z_LOG_DEBUG("World", "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
 	if (T == "ping")
@@ -1246,7 +1244,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
 
-				var/mob/M = whois_ckey_to_mob_reference(who)
+				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
 				if (M.client)
 					boutput(M, {"
 						<div style='border: 2px solid red; font-size: 110%;'>
@@ -1262,8 +1260,8 @@ var/f_color_selector_handler/F_Color_Selector
 						</div>
 						"})
 					M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
-					logTheThing("admin_help", null, M, "Discord: [nick] PM'd %target%: [msg]")
-					logTheThing("diary", null, M, "Discord: [nick] PM'd %target%: [msg]", "ahelp")
+					logTheThing("admin_help", null, M, "Discord: [nick] PM'd [constructTarget(M,"admin_help")]: [msg]")
+					logTheThing("diary", null, M, "Discord: [nick] PM'd [constructTarget(M,"diary")]: [msg]", "ahelp")
 					for (var/client/C)
 						if (C.holder && C.key != M.key)
 							if (C.player_mode && !C.player_mode_ahelp)
@@ -1287,11 +1285,11 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
-				var/mob/M = whois_ckey_to_mob_reference(who)
+				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
 				if (M.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[msg]</span></span>")
-					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd %target%: [msg]")
-					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd %target%: [msg]", "admin")
+					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
+					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 					for (var/client/C)
 						if (C.can_see_mentor_pms() && C.key != M.key)
 							if(C.holder)
@@ -1375,8 +1373,8 @@ var/f_color_selector_handler/F_Color_Selector
 				for (var/mob/M in mobs)
 					if (M.ckey && (findtext(M.real_name, who) || findtext(M.ckey, who)))
 						M.full_heal()
-						logTheThing("admin", nick, M, "healed / revived %target%")
-						logTheThing("diary", nick, M, "healed / revived %target%", "admin")
+						logTheThing("admin", nick, M, "healed / revived [constructTarget(M,"admin")]")
+						logTheThing("diary", nick, M, "healed / revived [constructTarget(M,"diary")]", "admin")
 						message_admins("<span class='alert'>Admin [nick] healed / revived [key_name(M)] from Discord!</span>")
 
 						var/ircmsg[] = new()

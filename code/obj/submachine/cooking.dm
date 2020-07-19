@@ -158,6 +158,7 @@
 
 					doing_a_thing = 1
 					qdel(src.cone)
+					src.cone = null
 					var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new
 					beaker.reagents.trans_to(newcream,40)
 					newcream.set_loc(src.loc)
@@ -166,6 +167,7 @@
 					if(the_flavor in src.flavors)
 						doing_a_thing = 1
 						qdel(src.cone)
+						src.cone = null
 						var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new
 						newcream.reagents.add_reagent(the_flavor,40)
 						newcream.set_loc(src.loc)
@@ -384,14 +386,14 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/butterburger(src)
 			src.recipes += new /datum/cookingrecipe/cheeseburger_m(src)
 			src.recipes += new /datum/cookingrecipe/cheeseburger(src)
+			src.recipes += new /datum/cookingrecipe/tikiburger(src)
+			src.recipes += new /datum/cookingrecipe/luauburger(src)
+			src.recipes += new /datum/cookingrecipe/coconutburger(src)
 			src.recipes += new /datum/cookingrecipe/humanburger(src)
 			src.recipes += new /datum/cookingrecipe/monkeyburger(src)
 			src.recipes += new /datum/cookingrecipe/synthburger(src)
 			src.recipes += new /datum/cookingrecipe/baconburger(src)
 			src.recipes += new /datum/cookingrecipe/mysteryburger(src)
-			src.recipes += new /datum/cookingrecipe/tikiburger(src)
-			src.recipes += new /datum/cookingrecipe/coconutburger(src)
-			src.recipes += new /datum/cookingrecipe/luauburger(src)
 			src.recipes += new /datum/cookingrecipe/buttburger(src)
 			src.recipes += new /datum/cookingrecipe/heartburger(src)
 			src.recipes += new /datum/cookingrecipe/flockburger(src)

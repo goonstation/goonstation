@@ -410,6 +410,10 @@
 
 	destinations = list("North","South")
 
+/obj/machinery/computer/barcode/qm/donut3
+	name = "Barcode Computer"
+	desc = "Used to print barcode stickers for the off-station merchants."
+	destinations = list()
 
 /obj/item/sticker/barcode
 	name = "barcode sticker"

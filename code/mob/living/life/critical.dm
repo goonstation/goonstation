@@ -76,8 +76,14 @@
 				owner.losebreath+=10
 				owner.changeStatus("weakened", 3 SECONDS)
 		if (owner.health <= -100)
-			var/deathchance = min(99, ((owner.get_brain_damage() * -5) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.01)
-			if (prob(deathchance))
-				owner.death()
+			if (owner.reagents && owner.reagents.has_reagent("synaptizine") && owner.reagents.has_reagent("atropine"))
+				var/deathchance = min(99, ((owner.get_brain_damage() * -5) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.001)
+				if (prob(deathchance))
+					owner.death()
+			else
+				var/deathchance = min(99, ((owner.get_brain_damage() * -5) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.01)
+				if (prob(deathchance))
+					owner.death()
+				
 
 		..()

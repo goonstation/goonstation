@@ -85,6 +85,16 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	return 1
 
+
+//Called AFTER the material of the object was changed.
+/atom/proc/onMaterialChanged()
+	if(istype(src.material))
+		explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_resistance
+		explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_protection
+		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 50)) flags |= CONDUCT
+	return
+
+
 //Simply removes a material from an object.
 /atom/proc/removeMaterial()
 	if(src.mat_changename)
@@ -183,7 +193,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	mat1.owner = src
 	mat1.triggerOnAdd(src)
 	src.onMaterialChanged()
-	return
 
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
 	if (!istype(MAT))

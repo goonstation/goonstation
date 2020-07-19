@@ -29,6 +29,7 @@
 			if (iscarbon(C) && !src.atkcarbon) continue
 			if (issilicon(C) && !src.atksilicon) continue
 			if (C.job == "Botanist") continue
+			if (iskudzuman(C)) continue
 			if (C.health < 0) continue
 			if (C in src.friends) continue
 			if (iscarbon(C) && src.atkcarbon) src.attack = 1
@@ -78,8 +79,8 @@
 					src.task = "thinking"
 					playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
 			else
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
+				if (isliving(M))
+					var/mob/living/H = M
 					H.was_harmed(src)
 				if(src.alive) // don't gnash teeth if dead
 					src.visible_message("<span class='combat'><B>[src]</B> gnashes its teeth in fustration!</span>")
@@ -113,6 +114,7 @@
 			if (iscarbon(C) && !src.atkcarbon) continue
 			if (issilicon(C) && !src.atksilicon) continue
 			if (C.health < 0) continue
+			if (iskudzuman(C)) continue
 			if (C in src.friends) continue
 			if (C.name == src.attacker) src.attack = 1
 			if (iscarbon(C) && src.atkcarbon) src.attack = 1

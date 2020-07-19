@@ -26,6 +26,4 @@
 		if(randomturfs.len > 0)
 			boutput(affected_mob, "<span class='alert'>You are suddenly zapped away elsewhere!</span>")
 			affected_mob.set_loc(pick(randomturfs))
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, affected_mob)
-			s.start()
+			elecflash(affected_mob)

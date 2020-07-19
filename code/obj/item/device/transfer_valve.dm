@@ -372,6 +372,7 @@
 		processing_items.Remove(src)
 		if(tester)
 			tester.update_bomb_log("VR Bomb deleted.", 1)
+			tester.vrbomb = null;
 		if(ismob(src.loc))
 			boutput(src.loc, "<span class='alert'>[src] fades away!</span>")
 		else

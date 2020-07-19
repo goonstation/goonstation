@@ -1247,25 +1247,8 @@ datum/pathogen
 			rad_mutate_cooldown = 0
 		*/
 
-	// This is the real thing, wrapped by process().
-	proc/disease_act()
-		var/list/acted = list()
-		var/order = pick(0,1)
-		if (order)
-			for (var/datum/effect in src.effects)
-				if (effect.type in acted)
-					continue
-				acted += effect.type
-				if (prob(body_type.activity[stage]))
-					effect:disease_act(infected, src)
-		else
-			for (var/i = src.effects.len, i > 0, i--)
-				var/datum/effect = src.effects[i]
-				if (effect.type in acted)
-					continue
-				acted += effect.type
-				if (prob(body_type.activity[stage]))
-					effect:disease_act(infected, src)
+	// handles pathogen advancing or receding in stage and also being cured
+	proc/progress_pathogen()
 		if (!cooldown)
 			if (in_remission)
 				if (prob(abs(advance_speed)))
@@ -1298,6 +1281,27 @@ datum/pathogen
 		else
 			cooldown--
 
+	// This is the real thing, wrapped by process().
+	proc/disease_act()
+		var/list/acted = list()
+		var/order = pick(0,1)
+		if (order)
+			for (var/datum/effect in src.effects)
+				if (effect.type in acted)
+					continue
+				acted += effect.type
+				if (prob(body_type.activity[stage]))
+					effect:disease_act(infected, src)
+		else
+			for (var/i = src.effects.len, i > 0, i--)
+				var/datum/effect = src.effects[i]
+				if (effect.type in acted)
+					continue
+				acted += effect.type
+				if (prob(body_type.activity[stage]))
+					effect:disease_act(infected, src)
+		progress_pathogen()
+
 	// it's like disease_act, but for dead people!
 	proc/disease_act_dead()
 		var/list/acted = list()
@@ -1317,7 +1321,7 @@ datum/pathogen
 				acted += effect.type
 				if (prob(body_type.activity[stage]))
 					effect:disease_act_dead(infected, src)
-		// let's not bother doing all the suppression and curing type stuff for dead people, most symptoms won't do anything anyway
+		progress_pathogen()
 
 	// A safe method for advancing the pathogen's stage.
 	proc/advance()
@@ -1423,10 +1427,10 @@ datum/pathogen
 		return message
 
 	// Act on emoting. Vetoing available by returning 0.
-	proc/onemote(act, voluntary)
-		suppressant.onemote(infected, act, voluntary, src)
+	proc/onemote(act, voluntary, param)
+		suppressant.onemote(infected, act, voluntary, param, src)
 		for (var/effect in src.effects)
-			. *= effect:onemote(infected, act, voluntary, src)
+			. *= effect:onemote(infected, act, voluntary, param, src)
 
 	// Act when dying. Returns nothing.
 	proc/ondeath()

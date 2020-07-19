@@ -78,6 +78,8 @@
 #define OVERLOAD_PLAYERCOUNT 95 //when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
 #define OSHAN_LIGHT_OVERLOAD 18 //when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
 #define SLOW_LIFE_PLAYERCOUNT 65 //whenn pcount is >= this number, slow Life() processing a bit
+#define SLOWEST_LIFE_PLAYERCOUNT 85 //whenn pcount is >= this number, slow Life() processing a lot
+
 
 #define DEFAULT_CLICK_DELAY MIN_TICKLAG //used to be 1
 #define COMBAT_CLICK_DELAY 10
@@ -212,6 +214,10 @@
 #define ALWAYS_SOLID_FLUID 262144	//specifically note this object as solid
 #define HAS_EQUIP_CLICK 524288 //Calls equipment_click from hand_range_attack on items worn with this flag set.
 
+//Item function flags
+#define USE_INTENT_SWITCH_TRIGGER 1 //apply to an item's flags to use the item's intent_switch_trigger() proc. This will be called when intent is switched while this item is in hand.
+#define USE_SPECIALS_ON_ALL_INTENTS 2 //allows special attacks to be performed on help and grab intent with this item
+
 // human equipment slots
 #define SLOT_BACK 1
 #define SLOT_WEAR_MASM 2
@@ -310,6 +316,7 @@
 #define IMMUNE_SINGULARITY_INACTIVE 512
 #define IS_TRINKET 1024 		//used for trinkets GC
 #define IS_FARTABLE 2048
+#define NO_MOUSEDROP_QOL 4096 //overrides the click drag mousedrop pickup QOL kinda stuff
 //TBD the rest
 
 //temp_flags lol for atoms and im gonna be constantly adding and removing these
@@ -337,6 +344,7 @@
 #define IGNORE_SHIFT_CLICK_MODIFIER 2048 //shift+click doesn't retrigger a SHIFT keypress - use for mobs that sprint on shift and not on mobs that use shfit for bolting doors etc
 #define LIGHTWEIGHT_AI_MOB 4096		//not a part of the normal 'mobs' list so it wont show up in searches for observe admin etc, has its own slowed update rate on Life() etc
 #define USR_DIALOG_UPDATES_RANGE 8192	//updateusrdialog will consider this mob as being able to 'attack_ai' and update its ui at range
+#define MAT_TRIGGER_LIFE 16384 //do some extra shit in life to trigger mats onlife
 
 //object_flags
 #define BOTS_DIRBLOCK 1	//bot considers this solid object that can be opened with a Bump() in pathfinding DirBlockedWithAccess
@@ -712,7 +720,7 @@ proc/default_frequency_color(freq)
 #define BASE_SPEED_SUSTAINED 1.5
 #define RUN_SCALING 0.12
 #define RUN_SCALING_LYING 0.2
-#define RUN_SCALING_STAGGER 0.5
+#define RUN_SCALING_STAGGER 0.64
 #define WALK_DELAY_ADD 0.8
 
 //stamina config
@@ -1023,7 +1031,7 @@ proc/default_frequency_color(freq)
 #ifdef RP_MODE
 #define ASS_JAM 0
 #elif BUILD_TIME_DAY == 13
-#define ASS_JAM 1
+#define ASS_JAM 0
 #else
 #define ASS_JAM 0
 #endif
@@ -1132,6 +1140,11 @@ var/ZLOG_START_TIME
 #define TABLE_STRENGTHEN 2
 #define TABLE_ADJUST 3
 #define TABLE_LOCKPICK 4
+
+//railing defines
+#define RAILING_DISASSEMBLE 0
+#define RAILING_UNFASTEN 1
+#define RAILING_FASTEN 2
 
 //Auditing
 //Whether or not a potentially suspicious action gets denied by the code.

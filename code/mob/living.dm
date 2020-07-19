@@ -966,7 +966,7 @@
 	var/list/processed = list()
 
 	var/image/chat_maptext/chat_text = null
-	if (!message_range && speechpopups)
+	if (!message_range && speechpopups && src.chat_text)
 		//new /obj/maptext_junk/speech(src, msg = messages[1], style = src.speechpopupstyle) // sorry, Zamu
 		if(!last_heard_name || src.get_heard_name() != src.last_heard_name)
 			var/num = hex2num(copytext(md5(src.get_heard_name()), 1, 7))
@@ -1183,6 +1183,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		else if (src.r_hand)
 			thing = src.r_hand
 
+		if (!thing)
+			return
+
 	//passing grab theoretically could be a mechanic but needs some annoying fixed - swapping around assailant and item grab handling an stuff probably
 	if(istype(thing,/obj/item/grab))
 		return
@@ -1314,6 +1317,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	attack_particle(M,src)
 
 	if (M.a_intent != INTENT_HELP)
+		src.was_harmed(M)
+
 		if (M.mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in M.grabbed_by)
 				G.shoot()
@@ -1455,6 +1460,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/pushpull_multiplier = 1
 	var/aquatic_movement = 0
 	var/space_movement = 0
+	var/mob_pull_multiplier = 1
 
 	var/datum/movement_modifier/modifier
 	for(var/type_or_instance in src.movement_modifiers)
@@ -1475,6 +1481,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		pushpull_multiplier *= modifier.pushpull_multiplier
 		aquatic_movement += modifier.aquatic_movement
 		space_movement += modifier.space_movement
+		mob_pull_multiplier *= modifier.mob_pull_multiplier
 
 		if (modifier.maximum_slowdown < maximum_slowdown)
 			maximum_slowdown = modifier.maximum_slowdown
@@ -1502,10 +1509,33 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (pushpull_multiplier != 0) // if we're not completely ignoring pushing/pulling
 		if (src.pulling)
-			. *= (pull_speed_modifier(move_target) * pushpull_multiplier)
+			if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
+				var/atom/movable/A = src.pulling
+				// hi grayshift sorry grayshift
+				if (get_dist(src,A) > 0 && get_dist(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
+					if(pull_slowing)
+						. *= max(A.p_class, 1)
+					else
+						if(istype(A,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
+							. *= max(A.p_class, 1)
+						// else, ignore p_class*/
+						else if(ismob(A))
+							var/mob/M = A
+							//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
+							if(M.lying)
+								if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
+									. *= 1		//do nothing
+								else
+									. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
+						else if(istype(A, /obj/storage))
+							// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
+							if (locate(/mob) in A.contents)
+								. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
+			. = lerp(1, . , pushpull_multiplier)
+
 
 		if (src.pushing && (src.pulling != src.pushing))
-			. *= (max(src.pushing.p_class, 1) * pushpull_multiplier)
+			. *= lerp(1, max(src.pushing.p_class, 1), pushpull_multiplier)
 
 		for (var/obj/item/grab/G in list(src.r_hand, src.l_hand))
 			var/mob/M = G.affecting
@@ -1515,9 +1545,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (G.state == 0)
 				if (get_dist(src,M) > 0 && get_dist(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
 					if(ismob(M) && M.lying)
-						. *= (max(M.p_class, 1) * pushpull_multiplier)
+						. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)
 			else
-				. *= (max(M.p_class, 1) * pushpull_multiplier)
+				. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)
 
 	. *= multiplier
 
@@ -1546,16 +1576,18 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/critter/keys_changed(keys, changed)
 	..()
 	if (changed & KEY_RUN)
-		if (hud)
+		if (hud && !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 			src.hud.set_sprint(keys & KEY_RUN)
 
 /mob/living/carbon/human/keys_changed(keys, changed)
 	..()
 	if (changed & KEY_RUN)
-		if (hud)
+		if (hud && !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 			src.hud.set_sprint(keys & KEY_RUN)
 
 /mob/living/proc/start_sprint()
+	if (HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
+		return
 	if (special_sprint && src.client)
 		if (special_sprint & SPRINT_BAT)
 			spell_batpoof(src, cloak = 0)
@@ -1584,32 +1616,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					sprint_particle(src, last)
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 25, 1)
 
-/mob/living/proc/pull_speed_modifier(var/atom/move_target = 0)
-	. = 1
-	if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
-		var/atom/movable/A = src.pulling
-		// hi grayshift sorry grayshift
-		if (get_dist(src,A) > 0 && get_dist(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
-			if(pull_slowing)
-				. *= max(A.p_class, 1)
-			else
-				if(istype(A,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
-					. *= max(A.p_class, 1)
-				// else, ignore p_class*/
-				if(ismob(A))
-					var/mob/M = A
-					//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
-					if(M.lying)
-						if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
-							. *= 1		//do nothing
-						else
-							. *= max(A.p_class, 1)
-				else if(istype(A, /obj/storage))
-					// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
-					if (locate(/mob) in A.contents)
-						. *= max(A.p_class,1)
-
-
 // cogwerks - fix for soulguard and revive
 /mob/living/proc/remove_ailments()
 	if (src.ailments)
@@ -1617,4 +1623,127 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			src.cure_disease(D)
 		for (var/datum/ailment_data/malady/M in src.ailments)
 			src.cure_disease(M)
+
+
+/mob/living/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	.= 0
+
+//left this here to standardize into living later
+/mob/living/critter/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	if (src.ai)
+		src.ai.was_harmed(weapon,M)
+	..()
+
+/mob/living/bullet_act(var/obj/projectile/P)
+	if (P.mob_shooter)
+		src.was_harmed(P.mob_shooter)
+	..()
+
+/mob/living/attackby(obj/item/W, mob/M)
+	var/oldbloss = get_brute_damage()
+	var/oldfloss = get_burn_damage()
+	..()
+	var/newbloss = get_brute_damage()
+	var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
+	if (reagents)
+		reagents.physical_shock((newbloss - oldbloss) * 0.15)
+
+	if ((damage > 0) || W.force)
+		src.was_harmed(M, W)
+
+
+/mob/living/shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
+	if (!wattage)
+		return 0
+
+	var/prot = 1
+
+	var/mob/living/carbon/human/H = null //ughhh sort this out with proper inheritance later
+	if (ishuman(src))
+		H = src
+		var/obj/item/clothing/gloves/G = H.gloves
+		if (G && !ignore_gloves)
+			prot = (G.hasProperty("conductivity") ? G.getProperty("conductivity") : 1)
+		if (H.limbs.l_arm)
+			prot = min(prot,H.limbs.l_arm.siemens_coefficient)
+		if (H.limbs.r_arm)
+			prot = min(prot,H.limbs.r_arm.siemens_coefficient)
+		if (prot <= 0.29)
+			return 0
+
+	var/shock_damage = 0
+	if (wattage > 7500)
+		shock_damage = (max(rand(10,20), round(wattage * 0.00004)))*prot
+	else if (wattage > 5000)
+		shock_damage = 15 * prot
+	else if (wattage > 2500)
+		shock_damage = 5 * prot
+	else
+		shock_damage = 1 * prot
+
+	if (H)
+		for (var/uid in H.pathogens)
+			var/datum/pathogen/P = H.pathogens[uid]
+			shock_damage = P.onshocked(shock_damage, wattage)
+			if (!shock_damage)
+				return 0
+
+	if (src.bioHolder.HasEffect("resist_electric") == 2)
+		var/healing = 0
+		healing = shock_damage / 3
+		src.HealDamage("All", healing, healing)
+		src.take_toxin_damage(0 - healing)
+		boutput(src, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
+		return 0
+	else if (src.bioHolder.HasEffect("resist_electric") == 1)
+		boutput(src, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
+		return 0
+
+	switch(shock_damage)
+		if (0 to 25)
+			playsound(src.loc, "sound/effects/electric_shock.ogg", 50, 1)
+		if (26 to 59)
+			playsound(src.loc, "sound/effects/elec_bzzz.ogg", 50, 1)
+		if (60 to 99)
+			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 50, 1)  // begin the fun arcflash
+			boutput(src, "<span class='alert'><b>[origin] discharges a violent arc of electricity!</b></span>")
+			src.apply_flash(60, 0, 10)
+			if (H)
+				H.cust_one_state = pick("xcom","bart","zapped")
+				H.set_face_icon_dirty()
+		if (100 to INFINITY)  // cogwerks - here are the big fuckin murderflashes
+			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 50, 1)
+			playsound(src.loc, "explosion", 50, 1)
+			src.flash(60)
+			if (H)
+				H.cust_one_state = pick("xcom","bart","zapped")
+				H.set_face_icon_dirty()
+
+			var/turf/T = get_turf(src)
+			if (T)
+				T.hotspot_expose(5000,125)
+				explosion(origin, T, -1,-1,1,2)
+			if (prob(20))
+				boutput(src, "<span class='alert'><b>[origin] vaporizes you with a lethal arc of electricity!</b></span>")
+				if (H && H.shoes)
+					H.drop_from_slot(H.shoes)
+				make_cleanable(/obj/decal/cleanable/ash,src.loc)
+				SPAWN_DBG(1 DECI SECOND)
+					src.elecgib()
+			else
+				boutput(src, "<span class='alert'><b>[origin] blasts you with an arc flash!</b></span>")
+				if (H && H.shoes)
+					H.drop_from_slot(H.shoes)
+				var/atom/targetTurf = get_edge_target_turf(src, get_dir(src, get_step_away(src, origin)))
+				src.throw_at(targetTurf, 200, 4)
+	shock_cyberheart(shock_damage)
+	TakeDamage(zone, 0, shock_damage, 0, DAMAGE_BURN)
+	boutput(src, "<span class='alert'><B>You feel a [wattage > 7500 ? "powerful" : "slight"] shock course through your body!</B></span>")
+	src.unlock_medal("HIGH VOLTAGE", 1)
+	src.Virus_ShockCure(min(wattage / 500, 100))
+
+	var/stun = (min((shock_damage/5), 12) * stun_multiplier)* 10
+	src.do_disorient(100 + stun, weakened = stun, stunned = stun, disorient = stun + 40, remove_stamina_below_zero = 1)
+
+	return shock_damage
 

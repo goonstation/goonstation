@@ -737,6 +737,21 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_reagent = "iron"
 	sample_verb = "scrape"
 
+/obj/decal/cleanable/rust/jen
+	icon_state = "rust_jen"
+	random_icon_states = null
+	plane = PLANE_NOSHADOW_BELOW
+
+	// This is a big sprite that covers up most of the turf, so here's a way to interact with turfs without bludgeoning the rust
+	attack_hand(obj/M, mob/user)
+		return 0
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop))
+			..()
+		else
+			src.loc.attackby(user.equipped(), user)
+
 /obj/decal/cleanable/balloon
 	name = "balloon"
 	desc = "The remains of a balloon."
@@ -1175,6 +1190,19 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	dirt5
 		icon_state = "dirt5"
 
+	jen
+		icon_state = "dirt_jen"
+		plane = PLANE_NOSHADOW_BELOW
+
+		// This is a big sprite that covers up most of the turf, so here's a way to interact with turfs without bludgeoning the dirt
+		attack_hand(obj/M, mob/user)
+			return 0
+
+		attackby(obj/item/W, mob/user)
+			if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop))
+				..()
+			else
+				src.loc.attackby(user.equipped(), user)
 
 /obj/decal/cleanable/cobweb
 	name = "cobweb"
@@ -1286,9 +1314,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 						b.blood_type = src.blood_type
 						b.color = "#0b1f8f"
 					else if (prob(10))
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(3, 1, src)
-						s.start()
+						elecflash(src)
 				if (step_to(src, get_step(src, direction), 0))
 					break
 
@@ -1344,9 +1370,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
 				if (i > 0)
 					if (prob(10))
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(3, 1, src)
-						s.start()
+						elecflash(src)
 				if (step_to(src, get_step(src, direction), 0))
 					break
 
@@ -1406,9 +1430,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 						/*var/obj/decal/cleanable/oil/o =*/
 						make_cleanable(/obj/decal/cleanable/oil/streak,src.loc)
 					else if (prob(10))
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(3, 1, src)
-						s.start()
+						elecflash(src)
 				if (step_to(src, get_step(src, direction), 0))
 					break
 
@@ -1707,11 +1729,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 			smoke.set_up(5, 0, src.loc, ,"#cb5e97")
 			smoke.start()
-		/*
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(5, 1, src.loc)
-		s.start()
-		*/
+
 		explosion(src, src.loc, -1, -1, -1, 1)
 		pool(src)
 

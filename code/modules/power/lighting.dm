@@ -132,17 +132,44 @@
 				for (var/dir in cardinal)
 					T = get_step(src,dir)
 					if (istype(T,/turf/simulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
+						var/is_jen_wall = 0 // jen walls' ceilings are narrower, so let's move the lights a bit further inward!
+						if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
+							is_jen_wall = 1
 						src.dir = dir
 						if (dir == EAST)
-							src.pixel_x = 10
+							if (is_jen_wall)
+								src.pixel_x = 12
+							else
+								src.pixel_x = 10
 						else if (dir == WEST)
-							src.pixel_x = -10
+							if (is_jen_wall)
+								src.pixel_x = -12
+							else
+								src.pixel_x = -10
 						else if (dir == NORTH)
-							src.pixel_y = 21
+							if (is_jen_wall)
+								src.pixel_y = 24
+							else
+								src.pixel_y = 21
 						break
 				T = null
 
 
+
+//big standing lamps
+/obj/machinery/light/blamp
+	name = "big lamp"
+	icon = 'icons/obj/lighting.dmi'
+	desc = "A tall and thin lamp that rests comfortably on the floor."
+	anchored = 1
+	light_type = /obj/item/light/bulb
+	allowed_type = /obj/item/light/bulb
+	fitting = "bulb"
+	light_name = "light bulb"
+	brightness = 1.4
+	var/state
+	icon_state = "blamp1-off"
+	wallmounted = 0
 
 //regular light bulbs
 /obj/machinery/light/small
@@ -499,9 +526,7 @@
 				icon_state = "[base_state]-burned"
 				on = 0
 				light.disable()
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(3, 1, src)
-				s.start()
+				elecflash(src,radius = 1, power = 2, exclude_center = 0)
 				logTheThing("station", null, null, "Light '[name]' burnt out (breakprob: [breakprob]) at ([showCoords(src.x, src.y, src.z)])")
 
 
@@ -660,11 +685,9 @@
 
 		boutput(user, "You stick \the [W.name] into the light socket!")
 		if(has_power() && (W.flags & CONDUCT))
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
 			if(!user.bioHolder.HasEffect("resist_electric"))
 				src.electrocute(user, 75, null, 20000)
+				elecflash(src,radius = 1, power = 2, exclude_center = 1)
 
 
 // returns whether this light has power
@@ -762,9 +785,7 @@
 	if(!nospark)
 		if(on)
 			logTheThing("station", null, null, "Light '[name]' was on and has been broken, spewing sparks everywhere ([showCoords(src.x, src.y, src.z)])")
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
+			elecflash(src,radius = 1, power = 2, exclude_center = 0)
 	light_status = LIGHT_BROKEN
 	SPAWN_DBG(0)
 		update()

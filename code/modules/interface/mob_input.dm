@@ -145,7 +145,7 @@
 
 	C.apply_keybind("base")
 
-	if (C.preferences.use_azerty)
+	if (C.preferences?.use_azerty) //runtime : preferences is null? idk why, bandaid for now
 		C.apply_keybind("base_azerty")
 	if (C.tg_controls)
 		C.apply_keybind("base_tg")

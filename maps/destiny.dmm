@@ -1371,8 +1371,8 @@
 /obj/item/device/radio/headset/civilian,
 /obj/item/device/radio/headset/civilian,
 /obj/item/device/radio/intercom/bridge{
-	dir = 8;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 8
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -3318,9 +3318,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/recharger{
-	pixel_y = 22
-	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint{
 	name = "Security Checkpoint"
@@ -3330,7 +3328,9 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/item/storage/wall/office,
+/obj/machinery/recharger{
+	pixel_y = 22
+	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint{
 	name = "Security Checkpoint"
@@ -9132,8 +9132,8 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom/AI{
-	dir = 8;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 8
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -13319,10 +13319,10 @@
 /obj/decal/poster/wallsign/poster_nt{
 	pixel_x = 28
 	},
-/obj/machinery/weapon_stand/taser_rack/recharger,
 /obj/decal/poster/wallsign/poster_y4nt{
 	pixel_x = 32
 	},
+/obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/caution/misc{
 	dir = 1
 	},
@@ -16021,8 +16021,8 @@
 	icon_state = "line4"
 	},
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 4
 	},
 /turf/simulated/floor/green/side{
 	dir = 9
@@ -17888,8 +17888,8 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom/AI{
-	dir = 4;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 4
 	},
 /turf/simulated/floor/green/side{
 	dir = 10
@@ -21472,6 +21472,14 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/item/clothing/head/helmet/men,
+/obj/item/clothing/head/helmet/men,
+/obj/item/clothing/suit/armor/douandtare,
+/obj/item/clothing/suit/armor/douandtare,
+/obj/item/clothing/gloves/kote,
+/obj/item/clothing/gloves/kote,
+/obj/item/shinai_bag,
+/obj/item/storage/box/kendo_box/hakama,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
 "aLI" = (
@@ -23660,8 +23668,8 @@
 	icon_state = "1-4"
 	},
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 4
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering/ce)
@@ -24350,7 +24358,6 @@
 	icon_state = "bigstripe"
 	},
 /obj/item/clothing/under/patient_gown,
-/obj/item/robodefibrillator,
 /obj/item/paper/book/medical_surgery_guide,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
@@ -26354,6 +26361,9 @@
 	icon_state = "0-4"
 	},
 /obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/computer/telescope{
 	dir = 4
 	},
 /turf/simulated/floor/orangeblack/side/white{
@@ -32962,15 +32972,19 @@
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "bfU" = (
+/obj/disposalpipe/trunk/mail{
+	dir = 1
+	},
+/obj/rack,
+/obj/item/ammo/bullets/smoke,
+/obj/item/ammo/bullets/smoke,
+/obj/item/gun/kinetic/riot40mm,
 /obj/machinery/disposal/mail/small{
 	dir = 4;
 	mail_tag = "security";
 	mailgroup = "security";
 	message = "1";
 	name = "mail chute-'Security'"
-	},
-/obj/disposalpipe/trunk/mail{
-	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -34231,7 +34245,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/oreaccumulator,
+/obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor,
 /area/station/mining)
 "bhS" = (
@@ -34602,8 +34616,8 @@
 /obj/machinery/port_a_brig,
 /obj/window/crystal/reinforced/south,
 /obj/item/device/radio/intercom/brig{
-	dir = 4;
-	broadcasting = 1
+	broadcasting = 1;
+	dir = 4
 	},
 /turf/simulated/floor/red,
 /area/station/security/brig)
@@ -36332,15 +36346,12 @@
 /obj/machinery/light/emergency{
 	dir = 4
 	},
-/obj/rack,
-/obj/item/ammo/bullets/smoke,
-/obj/item/ammo/bullets/smoke,
-/obj/item/gun/kinetic/riot40mm,
 /obj/machinery/computer/riotgear{
 	dir = 8;
 	icon_state = "drawbr0";
 	pixel_x = 28
 	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/caution/westeast,
 /area/station/security/main)
 "blt" = (
@@ -37312,6 +37323,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/oreaccumulator,
 /turf/simulated/floor,
 /area/station/mining)
 "bnd" = (
@@ -41985,8 +41997,8 @@
 "bvi" = (
 /obj/storage/secure/closet/command/hos,
 /obj/item/device/radio/intercom/bridge{
-	dir = 1;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 1
 	},
 /obj/machinery/light,
 /turf/simulated/floor/white/checker{
@@ -42690,8 +42702,8 @@
 /obj/item/chem_grenade/firefighting,
 /obj/machinery/phone,
 /obj/item/device/transfer_valve{
-	pixel_y = 4;
-	pixel_x = 14
+	pixel_x = 14;
+	pixel_y = 4
 	},
 /obj/item/device/transfer_valve{
 	pixel_x = -12;
@@ -44741,8 +44753,8 @@
 /area/listeningpost)
 "bAE" = (
 /obj/item/device/radio/intercom{
-	dir = 8;
 	broadcasting = 0;
+	dir = 8;
 	frequency = 1485;
 	name = "Security Intercom"
 	},
@@ -44812,8 +44824,8 @@
 /area/listeningpost)
 "bAL" = (
 /obj/item/device/radio/intercom{
-	dir = 8;
 	broadcasting = 1;
+	dir = 8;
 	frequency = 1489;
 	name = "Brig Intercom"
 	},
@@ -45258,9 +45270,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/stool/chair/comfy/wheelchair{
-	dir = 4
-	},
+/obj/table/reinforced/auto,
+/obj/machinery/defib_mount,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bBP" = (
@@ -45327,8 +45338,8 @@
 	icon_state = "1-2"
 	},
 /obj/item/device/radio/intercom/AI{
-	dir = 8;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 8
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)

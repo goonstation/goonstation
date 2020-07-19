@@ -305,8 +305,8 @@
 				new /obj/decal/skeleton(M.loc)
 				M.gib()
 				src.target = null
-			else if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			else if (isliving(M))
+				var/mob/living/H = M
 				H.was_harmed(src)
 
 		SPAWN_DBG(attack_delay)

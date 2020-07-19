@@ -15,12 +15,12 @@
 			cant_lie = 1
 			must_lie = 0
 
-		var/changeling_fakedeath = 0
-		var/datum/abilityHolder/changeling/C = owner.get_ability_holder(/datum/abilityHolder/changeling)
-		if (C && C.in_fakedeath)
-			changeling_fakedeath = 1
-
 		if (!isdead(owner)) //Alive.
+			var/changeling_fakedeath = 0
+			var/datum/abilityHolder/changeling/C = owner.get_ability_holder(/datum/abilityHolder/changeling)
+			if (C && C.in_fakedeath)
+				changeling_fakedeath = 1
+
 			if (statusList["paralysis"] || statusList["stunned"] || statusList["weakened"] || statusList["pinned"] || changeling_fakedeath || statusList["resting"]) //Stunned etc.
 				var/setStat = owner.stat
 				var/oldStat = owner.stat

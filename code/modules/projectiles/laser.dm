@@ -9,7 +9,7 @@
 //How much of a punch this has, tends to be seconds/damage before any resist
 	power = 45
 //How much ammo this costs
-	cost = 25
+	cost = 31.25
 //How fast the power goes away
 	dissipation_rate = 5
 //How many tiles till it starts to lose power
@@ -60,7 +60,7 @@ toxic - poisons
 	name = "4 lasers"
 	icon_state = "laser"
 	power = 240
-	cost = 100
+	cost = 125
 	dissipation_rate = 250
 	dissipation_delay = 0
 

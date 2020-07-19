@@ -242,6 +242,7 @@ MATERIAL
 				L["fl_tiles"] = "x4 Floor Tile"
 				L["rods"] = "x2 Rods"
 				L["rack"] = "Rack Parts"
+				L["railing"] = "Railing"
 				L["stool"] = "stool"
 				L["chair"] = "chair"
 				L["table"] = "Table Parts (2 Sheets)"
@@ -380,6 +381,14 @@ MATERIAL
 					a_icon = 'icons/obj/objects.dmi'
 					a_icon_state = "stool"
 					a_name = "a stool"
+
+				if("railing")
+					a_type = /obj/railing
+					a_amount = 1
+					a_cost = 1
+					a_icon = 'icons/obj/objects.dmi'
+					a_icon_state = "railing"
+					a_name = "a railing"
 
 				if("chair")
 					a_type = /obj/stool/chair
@@ -1005,12 +1014,11 @@ MATERIAL
 				return
 			else
 				src.build(S)
-				src.amount--
 				tooltip_rebuild = 1
 		if (src.amount < 1)
-			user.u_equip(src)
-			//SN src = null
-			qdel(src)
+			if (!issilicon(user))
+				user.u_equip(src)
+				qdel(src)
 			return
 		src.add_fingerprint(user)
 		return
@@ -1045,6 +1053,8 @@ MATERIAL
 		boutput(user, "<span class='notice'>You finish stacking tiles.</span>")
 
 	proc/build(turf/S as turf)
+		if (src.amount < 1)
+			return
 		var/turf/simulated/floor/W = S.ReplaceWithFloor()
 		if (W) //Wire: Fix for: Cannot read null.icon_old
 			W.inherit_area()
@@ -1054,7 +1064,7 @@ MATERIAL
 
 		if(ismob(usr) && !istype(src.material, /datum/material/metal/steel))
 			logTheThing("station", usr, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
-
+		src.amount--
 		return
 
 /obj/item/tile/steel

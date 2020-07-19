@@ -340,29 +340,43 @@
 			var/obj/overlay/simple_light/medium/directional/light = x
 			src:vis_contents -= light
 		return
-
 	if (!direct)
 		return
 
 	//optimize
 	var/vx = 0
 	var/vy = 0
-	if (direct & NORTH)
-		vy = 1
-	if (direct & SOUTH)
-		vy = -1
-	if (direct & WEST)
-		vx = -1
-	if (direct & EAST)
-		vx = 1
+	switch(direct)
+		if (NORTH)
+			vx = 0
+			vy = 1
+		if (NORTHEAST)
+			vx = 0.7071
+			vy = 0.7071
+		if (EAST)
+			vx = 1
+			vy = 0
+		if (SOUTHEAST)
+			vx = 0.7071
+			vy = -0.7071
+		if (SOUTH)
+			vx = 0
+			vy = -1
+		if (SOUTHWEST)
+			vx = -0.7071
+			vy = -0.7071
+		if (WEST)
+			vx = -1
+			vy = 0
+		if (NORTHWEST)
+			vx = -0.7071
+			vy = 0.7071
 
 	var/turf/T = get_steps(src, src.dir, 5)
+	if (!src || !T)
+		return
 	var/turf/TT = getlineopaqueblocked(src,T)
 	var/dist = get_dist(src,TT)-1
-	var/mag = vector_magnitude(vx, vy) //normalize vec
-	if (mag)
-		vx /= mag
-		vy /= mag
 
 	for(var/x in src.mdir_lights)
 		var/obj/overlay/simple_light/medium/directional/light = x

@@ -5802,9 +5802,12 @@
 	},
 /area/station/hangar/sec)
 "ajw" = (
-/obj/table/reinforced/auto,
-/obj/item/device/light/zippo,
-/obj/item/cigpacket/random,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname  - SS13"
+	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -6012,11 +6015,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname  - SS13"
 	},
 /turf/simulated/floor/black,
 /area/station/hangar/sec)
@@ -18252,10 +18250,29 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aIp" = (
+/obj/item/clothing/gloves/boxing{
+	pixel_x = -4
+	},
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/under/shorts/blue{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_x = 6
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/clothing/under/shorts/black{
+	pixel_x = -7;
+	pixel_y = -5
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aIq" = (
@@ -18878,10 +18895,30 @@
 /area/station/crew_quarters/fitness)
 "aJC" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/black,
-/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/head/helmet/men{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/clothing/head/helmet/men{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/clothing/suit/armor/douandtare{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/clothing/suit/armor/douandtare{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/clothing/gloves/kote{
+	pixel_x = -1
+	},
+/obj/item/clothing/gloves/kote{
+	pixel_x = -1
+	},
+/obj/item/shinai_bag,
+/obj/item/storage/box/kendo_box/hakama,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aJD" = (
@@ -23462,8 +23499,8 @@
 /obj/item/device/radio/headset/medical,
 /obj/item/device/radio/headset/medical,
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -23684,11 +23721,7 @@
 	pixel_y = 24;
 	text = "NF"
 	},
-/obj/machinery/computer3/generic/secure_data,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor,
 /area/station/security/main)
 "aSn" = (
@@ -23920,8 +23953,8 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
 	broadcasting = 0;
+	dir = 4;
 	layer = 6.02
 	},
 /obj/item_dispenser/idcarddispenser{
@@ -28394,8 +28427,8 @@
 	},
 /obj/item/paper/book/space_law,
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
 	broadcasting = 0;
+	dir = 4;
 	layer = 6.02
 	},
 /turf/simulated/floor/carpet{
@@ -31454,7 +31487,7 @@
 /area/station/medical/medbay/surgery)
 "bga" = (
 /obj/table/reinforced/auto,
-/obj/item/robodefibrillator,
+/obj/machinery/defib_mount,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bgb" = (
@@ -32979,7 +33012,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hos)
 "biL" = (
-/obj/machinery/weapon_stand/taser_rack/recharger,
+/obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor,
 /area/station/security/main)
 "biM" = (
@@ -33686,8 +33719,8 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
 	broadcasting = 0;
+	dir = 4;
 	layer = 6.02
 	},
 /turf/simulated/floor/escape{
@@ -40847,8 +40880,8 @@
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
-	broadcasting = 0
+	broadcasting = 0;
+	dir = 4
 	},
 /obj/item/device/radio/intercom/bridge{
 	dir = 4
@@ -49084,10 +49117,25 @@
 /obj/machinery/vending/janitor,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor)
+"jKb" = (
+/obj/window/reinforced/north,
+/obj/table/reinforced/auto,
+/obj/item/cigpacket/random,
+/obj/item/device/light/zippo,
+/turf/simulated/floor/white/checker{
+	dir = 5
+	},
+/area/station/hallway/secondary/exit)
 "mFQ" = (
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"oCF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/security/main)
 "pNt" = (
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
@@ -75677,7 +75725,7 @@ agr
 aeN
 ahc
 ahu
-ahX
+jKb
 ait
 aiX
 aju
@@ -77524,7 +77572,7 @@ aOu
 aPB
 aQR
 aSm
-aTL
+oCF
 biL
 aWB
 aXN

@@ -73,6 +73,15 @@
 	/obj/item/wirecutters,\
 	/obj/item/device/analyzer/atmospheric)
 
+	engineer_spawn
+		spawn_contents = list(/obj/item/device/analyzer/atmospheric/upgraded,\
+		/obj/item/electronics/soldering,\
+		/obj/item/device/t_scanner,\
+		/obj/item/cable_coil,\
+		/obj/item/reagent_containers/food/snacks/sandwich/pb,\
+		/obj/item/reagent_containers/food/snacks/plant/banana,\
+		/obj/item/reagent_containers/food/drinks/milk)
+
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"
@@ -86,13 +95,13 @@
 
 	// The extra items (scanner and soldering iron) take up precious space in the backpack.
 	mechanic_spawn
-		spawn_contents = list(/obj/item/screwdriver,\
-		/obj/item/wirecutters,\
-		/obj/item/device/t_scanner,\
-		/obj/item/crowbar,\
-		/obj/item/electronics/scanner,\
+		spawn_contents = list(/obj/item/electronics/scanner,\
 		/obj/item/electronics/soldering,\
-		/obj/item/cable_coil)
+		/obj/item/device/t_scanner,\
+		/obj/item/cable_coil,\
+		/obj/item/reagent_containers/food/snacks/sandwich/cheese,\
+		/obj/item/reagent_containers/food/snacks/chips,\
+		/obj/item/reagent_containers/food/drinks/coffee)
 
 /obj/item/storage/toolbox/artistic
 	name = "artistic toolbox"

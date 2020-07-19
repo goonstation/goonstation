@@ -30,7 +30,7 @@
 		if(prob(5))
 			SPAWN_DBG(0)
 				src.say("HANK!")
-				playsound(src.loc, "sound/musical_instruments/Boathorn_1.ogg", 50, 1)
+				playsound(src.loc, "sound/musical_instruments/Boathorn_1.ogg", 22, 1)
 
 /mob/living/carbon/human/cluwne/floor
 	nodamage = 1

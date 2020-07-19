@@ -12,6 +12,7 @@ jobs:
   lint:
     name: Run Linters
     runs-on: ubuntu-18.04
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v2
 
@@ -40,7 +41,7 @@ jobs:
 
       - name: Run Linter
         run: |
-          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
+          ~/dreamchecker
 
 #       - name: Annotate Errors
 #         uses: yogstation13/add-annotations-github-action@master
@@ -56,6 +57,7 @@ jobs:
   compile:
     name: Compile
     runs-on: ubuntu-18.04
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v2
 
@@ -104,6 +106,7 @@ jobs:
   compile_ass:
     name: "Compile for Ass Day"
     runs-on: ubuntu-18.04
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v2
 
@@ -143,7 +146,7 @@ jobs:
     name: "Compile and Lint with Secret Submodule"
     runs-on: ubuntu-18.04
     if: |
-      (github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')
+      ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     steps:
       - uses: actions/checkout@v2
 

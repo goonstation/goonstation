@@ -720,7 +720,7 @@
 		src.visible_message("<span class='alert'>[src] drives over [H]!</span>")
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 
-		logTheThing("vehicle", H, src.emagger, "is run over by a MULE ([src.name]) at [log_loc(src)].[src.emagger && ismob(src.emagger) ? " Safety disabled by %target%." : ""]")
+		logTheThing("vehicle", H, src.emagger, "is run over by a MULE ([src.name]) at [log_loc(src)].[src.emagger && ismob(src.emagger) ? " Safety disabled by [constructTarget(src.emagger,"vehicle")]." : ""]")
 
 		if(ismob(load))
 			var/mob/M = load

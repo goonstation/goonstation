@@ -5,7 +5,6 @@
 
 
 
-
 #define IN_CABINET (istype(src.loc,/obj/item/storage/mechanics))
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
@@ -238,8 +237,6 @@
 	updateIcon()
 		icon_state = icon_up
 		return
-
-
 
 
 
@@ -521,6 +518,7 @@ var/list/mechanics_telepads = new/list()
 	icon_state = "comp_flush"
 	cooldown_time = 2 SECONDS
 	cabinet_banned = 1
+
 
 	var/obj/disposalpipe/trunk/trunk = null
 	var/datum/gas_mixture/air_contents
@@ -1134,7 +1132,7 @@ var/list/mechanics_telepads = new/list()
 			tooltip_rebuild = 1
 			return 1
 		return 0
-
+    
 	proc/setRegexReplacement(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Replacement:","Replacement setting", expressionrepl) as text
 		if(!in_range(src, user) || user.stat)
@@ -2056,7 +2054,7 @@ var/list/mechanics_telepads = new/list()
 		return 1
 
 	proc/setidmsg(var/datum/mechanicsMessage/input)
-		if(level == 2 && input.signal)
+		if(level == 1 && input.signal)
 			teleID = input.signal
 			tooltip_rebuild = 1
 			componentSay("ID Changed to : [input.signal]")
