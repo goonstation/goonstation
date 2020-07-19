@@ -129,6 +129,18 @@
 		return
 
 	src.emote(message, 1)
+
+/mob/verb/me_verb_hotkey(message as text)
+	set name = "me_hotkey"
+	set hidden = 1
+
+	if (src.client && !src.client.holder && url_regex && url_regex.Find(message)) //we still do this check just in case they access the hidden emote
+		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
+		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
+		return
+
+	src.emote(message,2)
+
 /* ghost emotes wooo also the logging is already taken care of in the emote() procs vOv
 	if (isliving(src) && isalive(src))
 		src.emote(message, 1)
