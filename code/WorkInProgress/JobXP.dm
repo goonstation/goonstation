@@ -147,7 +147,7 @@ var/global/awarded_xp = 0
 			///////////////////////////MORE DEBUG STUFF REMOVE WHEN DONE TESTING///////////////
 			var/debug_field = get_xp(key, field)
 			logTheThing("debug", null, null, "XP AWARDED:[key],[field],[amt]||[debug_field]")
-
+	message_admins("Testing round end exp, check debug logs")
 			////////////////////////////////////////////////////////////////////////////////
 
 //wrapper for set_xp

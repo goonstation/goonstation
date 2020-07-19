@@ -1243,13 +1243,12 @@
 					seedcount++
 				getamount--
 			
-			if (tmp_crop.quality_score >= -10 && prob(20))
-				if (tmp_crop.quality_score >= 20)
+			//Get the first crop harvasted, give XP based on quality. Will make better later, like so more plants harvasted and stuff, this is just for testing.
+			if (tmp_crop.quality >= -10 && prob(20))
+				if (tmp_crop.quality >= 20)
 					JOB_XP_ARCHIVED(user, "Botanist", 2)
-					message_admins("[user]. exp2")
 				else
 					JOB_XP_ARCHIVED(user, "Botanist", 1)
-					message_admins("[user]. exp1")
 
 			var/list/harvest_string = list("You harvest [cropcount] item")
 			if (cropcount > 1)
