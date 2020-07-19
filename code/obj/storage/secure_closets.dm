@@ -634,6 +634,16 @@
 	icon_greenlight = "fridge-greenlight"
 	icon_redlight = "fridge-redlight"
 	icon_sparks = "fridge-sparks"
+	intact_frame = 1
+
+/obj/storage/secure/closet/fridge/opened
+	New()
+		..()
+		name = "busted refrigerator"
+		desc = "The newest cooling technology...now with - oh god! What happened to the poor door?!"
+		intact_frame = 0
+		unlock()
+		toggle()
 
 /obj/storage/secure/closet/fridge/kitchen
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 5,/obj/item/storage/box/cookie_tin)

@@ -32,6 +32,34 @@
 			return 1
 		return ..()
 
+// Gore delivers new crates - woo!
+/obj/storage/secure/crate/dan
+	name = "Discount Dans cargo crate"
+	desc = "Because space is not available!"
+	icon_state = "dd_freezer"
+	icon_opened = "dd_freezeropen"
+	icon_closed = "dd_freezer"
+
+	beverages
+		name = "Discount Dans beverages crate"
+		desc = "Contents vary from sugar-shockers to pure poison."
+		spawn_contents = list(/obj/item/reagent_containers/food/drinks/noodlecup = 2,
+		/obj/item/reagent_containers/food/drinks/peach = 2,
+		/obj/item/reagent_containers/food/drinks/covfefe = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/spooky = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/spooky2 = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/gingerale = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/drowsy = 2)
+
+	snacks
+		name = "Discount Dans 'edibles' crate"
+		desc = "Contents may hold many surprises or...just a quick way out."
+		spawn_contents = list(/obj/item/tvdinner = 2,
+		/obj/item/reagent_containers/food/snacks/strudel = 2,
+		/obj/item/reagent_containers/food/snacks/snack_cake/golden = 2,
+		/obj/item/reagent_containers/food/snacks/burrito = 2,
+		/obj/item/reagent_containers/food/snacks/snack_cake = 2)
+
 /obj/storage/crate/internals
 	name = "internals crate"
 	desc = "An internals crate."

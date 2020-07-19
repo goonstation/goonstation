@@ -469,6 +469,12 @@
 		..()
 		setProperty("meleeprot_head", 2)
 
+/obj/item/clothing/head/danberet
+	name = "Discount Dan's beret"
+	desc = "A highly advanced textile experience!"
+	icon_state = "danberet"
+	item_state = "danberet"
+
 /obj/item/clothing/head/hosberet
 	name = "HoS Beret"
 	desc = "This makes you feel like Che Guevara."
