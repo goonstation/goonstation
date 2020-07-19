@@ -39,8 +39,7 @@ var/datum/action_controller/actions
 			running[owner] = list(A)
 		else
 			interrupt(owner, INTERRUPT_ACTION)
-			var/list/owner_actions = running[owner]
-			for(var/datum/action/OA in owner_actions)
+			for(var/datum/action/OA in running[owner])
 				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE) 
 					OA.onResume()
 					qdel(A)
