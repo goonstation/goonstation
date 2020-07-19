@@ -137,9 +137,6 @@
 	proc/on_life(var/mult = 1)
 		if (holder && (src.broken || src.get_damage() > MAX_DAMAGE) )
 			return 0
-		if (emagged && prob(30))	//don't really need to check for robotic too since no other types of organs can or should be emagged
-			take_damage(1, 0, 0)
-
 		return 1
 
 	//What should happen each life tick when an organ is broken.
