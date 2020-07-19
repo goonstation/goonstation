@@ -47,16 +47,16 @@ var/datum/action_controller/actions
 			A.started = world.time
 		else
 			interrupt(owner, INTERRUPT_ACTION)
-			A.owner = owner
-			A.started = world.time
-			running[owner] += A
 			//If there is a a prexisting action of the same kind, let's replace it.
 			var/list/owner_actions = running[owner]
 			for(var/datum/action/OA in owner_actions)
 				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE) 
-					A.owner = OA.owner
-					A.started = OA.started
-					break
+					OA.onResume()
+					qdel(A)
+					return OA
+			A.owner = owner
+			A.started = world.time
+			running[owner] += A
 		A.onStart()
 		return A // cirr here, I added action ref to the return because I need it for AI stuff, thank you
 
@@ -108,6 +108,10 @@ var/datum/action_controller/actions
 		return
 
 	proc/onStart()				   //Called when the action begins
+		state = ACTIONSTATE_RUNNING
+		return
+
+	proc/onResume()				   //Called when the action resumes - likely from almost ending
 		state = ACTIONSTATE_RUNNING
 		return
 
@@ -188,6 +192,12 @@ var/datum/action_controller/actions
 				updateBar(0)
 				bar.color = "#FFFFFF"
 				animate( bar, color = "#CC0000", time = 2.5 )
+		..()
+
+	onResume()
+		if (bar)
+			updateBar()
+			bar.color = "#4444FF"
 		..()
 
 	onUpdate()
