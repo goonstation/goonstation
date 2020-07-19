@@ -26,10 +26,6 @@
 	on_transplant(var/mob/M as mob)
 		..()
 		if (src.robotic)
-			if (src.emagged)
-				src.donor.add_stam_mod_regen(icon_state, 5) //icon_state because we want both lungs to get it. yeeah
-				src.donor.add_stam_mod_max(icon_state, 25)
-			else
 				src.donor.add_stam_mod_regen(icon_state, 2)
 				src.donor.add_stam_mod_max(icon_state, 10)
 			return
