@@ -312,7 +312,6 @@
 		return
 
 	remove_unlocks()
-		src.removeAbility(/datum/targetable/vampire/blood_steal)
 		src.removeAbility(/datum/targetable/vampire/phaseshift_vampire)
 		src.removeAbility(/datum/targetable/vampire/phaseshift_vampire/mk2)
 		src.removeAbility(/datum/targetable/vampire/mark_coffin)

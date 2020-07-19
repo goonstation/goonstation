@@ -2072,7 +2072,7 @@
 
 	//copy paste lol
 	var/image/chat_maptext/chat_text = null
-	if (maptext_out && speechpopups)
+	if (maptext_out && speechpopups && src.chat_text)
 
 		chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
 		chat_text.measure(src.client)
