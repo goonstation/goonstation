@@ -121,18 +121,18 @@
 
 		var/sound_in = null
 		var/sound_pitch = 1
-		var/age = 30 //default
+		var/age_modifier = 0
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			age = H.bioHolder.age
+			age_modifier = 30 - H.bioHolder.age
 
 		if(user.gender == MALE)
 			sound_in = pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg')
-			sound_pitch = max(0.7, min(1.2, 1.0 + (30 - age)/60))
+			sound_pitch = max(0.7, min(1.2, 1.0 + age_modifier/60))
 		else
 			sound_in = pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg')
-			sound_pitch = max(0.7, min(1.4, 1.0 + (30 - age)/50))
+			sound_pitch = max(0.7, min(1.4, 1.0 + age_modifier/50))
 
 		playsound(get_turf(user), sound_in, 70, 5, 0, sound_pitch)
 
