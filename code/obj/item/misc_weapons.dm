@@ -135,7 +135,7 @@
 			sound_pitch = max(0.7, min(1.4, 1.0 + age_modifier/50))
 
 		playsound(get_turf(user), sound_in, 70, 5, 0, sound_pitch)
-
+		..()
 	else
 		..()
 	if (user.a_intent == INTENT_HELP)
