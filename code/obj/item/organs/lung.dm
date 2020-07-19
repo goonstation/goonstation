@@ -26,9 +26,9 @@
 	on_transplant(var/mob/M as mob)
 		..()
 		if (src.robotic)
-				src.donor.add_stam_mod_regen(icon_state, 2)
-				src.donor.add_stam_mod_max(icon_state, 10)
-			return
+			src.donor.add_stam_mod_regen(icon_state, 2)
+			src.donor.add_stam_mod_max(icon_state, 10)
+		return
 
 	on_removal()
 		..()
