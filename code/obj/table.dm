@@ -363,7 +363,7 @@
 		var/mob/living/carbon/human/M = AM
 		if(M.stat)
 			return
-		actions.start(new /datum/action/bar/icon/railing_jump/table_jump(AM, src), AM)
+		actions.start(new /datum/action/bar/icon/railing_jump/table_jump(M, src), M)
 
 //Replacement for monkies walking through tables: They now parkour over them.
 //Note: Max count of tables traversable is 2 more than the iteration limit
