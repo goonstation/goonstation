@@ -1,4 +1,20 @@
 
+(t)sat jul 18 20
+(u)MarkNstein
+(p)1416
+(e)🆕|feature
+(+)Vending machines connected to MechComp can now commanded to vend a specific product.
+(+)When vending, Vending machines output a signal containing the name which product was dispensed.
+(t)fri jul 17 20
+(u)MarkNstein
+(p)1506
+(e)🐛🆕🗺|bug, feature, mapping
+(+)All printers on all maps are now properly hooked-up to the PNet grid.
+(+)Atlas now has printers.
+(u)Somethings
+(p)1508
+(e)🐛|bug
+(+)Cloned non-infernal vampires will now keep their Blood Steal ability.
 (t)thu jul 16 20
 (u)MarkNstein
 (p)1503

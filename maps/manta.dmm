@@ -29242,6 +29242,10 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "bmg" = (
@@ -29256,6 +29260,10 @@
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)

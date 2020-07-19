@@ -10,6 +10,7 @@
 	icon_state = "ore_storage_unit"
 	density = 1
 	anchored = 1
+	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 
 	var/list/ores = list()
 

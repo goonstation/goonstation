@@ -300,6 +300,7 @@ var/datum/action_controller/actions
 	var/icon_y_off = 30
 	var/icon_x_off = 0
 	var/image/icon_image
+	var/icon_plane = PLANE_HUD
 
 	onStart()
 		..()
@@ -307,7 +308,7 @@ var/datum/action_controller/actions
 			icon_image = image(icon, border ,icon_state, 10)
 			icon_image.pixel_y = icon_y_off
 			icon_image.pixel_x = icon_x_off
-			icon_image.plane = PLANE_HUD
+			icon_image.plane = icon_plane
 			icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
 			border.overlays += icon_image
 
@@ -427,6 +428,7 @@ var/datum/action_controller/actions
 	var/icon_y_off = 30
 	var/icon_x_off = 0
 	var/image/icon_image
+	var/icon_plane = PLANE_HUD
 
 	onStart()
 		..()
@@ -434,7 +436,8 @@ var/datum/action_controller/actions
 			icon_image = image(icon ,owner,icon_state,10)
 			icon_image.pixel_y = icon_y_off
 			icon_image.pixel_x = icon_x_off
-			icon_image.plane = PLANE_HUD
+			icon_image.plane = icon_plane
+
 			icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
 			owner << icon_image
 
@@ -1213,6 +1216,7 @@ var/datum/action_controller/actions
 	var/obj/item/target
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "pickup"
+	icon_plane = PLANE_HUD+2
 
 	New(Target)
 		target = Target
@@ -1263,5 +1267,5 @@ var/datum/action_controller/actions
 
 		onEnd()
 			..()
-			if (can_reach(owner,over_object))
+			if (can_reach(owner,over_object) && ismob(owner) && owner:equipped() == target)
 				over_object.attackby(target, owner, params)

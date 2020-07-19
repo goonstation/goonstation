@@ -5381,6 +5381,11 @@
 /obj/machinery/phone/wall{
 	pixel_y = 32
 	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -5390,6 +5395,11 @@
 	pixel_y = 24
 	},
 /obj/storage/secure/closet/brig,
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -5844,6 +5854,9 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/podbay)
