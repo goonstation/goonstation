@@ -57,7 +57,7 @@ var/global/mutable_appearance/elecflash_ma = null
 		for (var/turf/T in oview(1,center_turf))
 			if (prob(25))
 				//copy paste
-				if (T.active_liquid?.group && radius + power > 1)
+				if (T.active_liquid && T.active_liquid.group && radius + power > 1)
 					if (!(T.active_liquid.group in fluid_groups_touched))
 						fluid_groups_touched += T.active_liquid.group
 						chain_to |= T.active_liquid.get_connected_fluid_members(power * 9.5 * (1-(T.active_liquid.group.avg_viscosity/T.active_liquid.group.max_viscosity)))
