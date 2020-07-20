@@ -98,8 +98,11 @@
 	var/title = ""
 	var/list/body = new
 
+	// Since istype(D, /atom) is used a few times, I guess just have a copy of it here...
+	// Saves a little time casting later, maybe? I don't know. BYOND.
+	var/atom/A	= null
 	if (istype(D, /atom))
-		var/atom/A = D
+		A = D
 		title = "[A.name][src.holder.level >= LEVEL_ADMIN ? " (\ref[A])" : ""] = [A.type]"
 
 		#ifdef VARSICON
@@ -155,15 +158,29 @@
 <body>
 	<a style="display:block;position:fixed;right:0;" href='byond://?src=\ref[src];Refresh=\ref[D]'>🔄</a>
 	<strong>[title]</strong>
-	<hr>
-	<a href='byond://?src=\ref[src];Refresh=\ref[D]'>Refresh</a>
 "})
+
+	if (A)
+		html += "<br><strong><a href='byond://?src=\ref[src];Vars=\ref[A];varToEdit=name'>Name:</a></strong> [html_encode(A.name)]"
+		html += "<br><strong><a href='byond://?src=\ref[src];Vars=\ref[A];varToEdit=desc'>Desc:</a></strong> "
+		if (A.desc)
+			if(length(A.desc) > 1000)
+				html += html_encode(copytext(A.desc,1,1000)) + "..."
+			else
+				html += html_encode(A.desc)
+		else
+			html += "<em>(null)</em>"
+
+
+	html += {"	<hr>
+	<a href='byond://?src=\ref[src];Refresh=\ref[D]'>Refresh</a>
+"}
 
 	if (src.holder.level >= LEVEL_CODER && D != "GLOB")
 		html += " &middot; <a href='byond://?src=\ref[src];CallProc=\ref[D]'>Call Proc</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];ViewReferences=\ref[D]'>View References</a>"
 
-	if (istype(D, /atom))
+	if (A)
 		html += " &middot; <a href='byond://?src=\ref[src];JumpToThing=\ref[D]'>Jump To</a>"
 		if (ismob(D) || isobj(D))
 			html += " &middot; <a href='byond://?src=\ref[src];GetThing=\ref[D]'>Get (turf)</a> &middot; <a href='byond://?src=\ref[src];GetThing_Insert=\ref[D]'>Get (loc)</a>"
@@ -173,7 +190,7 @@
 		html += " &middot; <a href='byond://?src=\ref[src];AddComponent=\ref[D]'>Add Component</a>"
 	html += "<br><a href='byond://?src=\ref[src];Delete=\ref[D]'>Delete</a>"
 	html += " &middot; <a href='byond://?src=\ref[src];HardDelete=\ref[D]'>Hard Delete</a>"
-	if (istype(D, /atom) || istype(D, /image))
+	if (A || istype(D, /image))
 		html += " &middot; <a href='byond://?src=\ref[src];Display=\ref[D]'>Display In Chat (slow!)</a>"
 
 	if (isobj(D))
@@ -186,7 +203,7 @@
 		if (isitem(D))
 			html += "<br><a href='byond://?src=\ref[src];GiveProperty=\ref[D]'>Give Property</a>"
 			html += " &middot; <a href='byond://?src=\ref[src];GiveSpecial=\ref[D]'>Give Special</a>"
-	if (istype(D,/atom))
+	if (A)
 		html += "<br><a href='byond://?src=\ref[src];CreatePoster=\ref[D]'>Create Poster</a>"
 
 	if (istype(D,/obj/critter))
