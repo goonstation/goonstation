@@ -581,7 +581,7 @@
 			if (1)
 				new /obj/item/storage/pill_bottle/cyberpunk(src)
 				new /obj/item/storage/pill_bottle/ipecac(src)
-				new /obj/item/pen/sleepypen(src)
+				new /obj/item/paint_can/random(src)
 				new /obj/item/paper/orangeroomsafe(src)
 			if (2)
 				new /obj/item/storage/pill_bottle/bathsalts(src)
