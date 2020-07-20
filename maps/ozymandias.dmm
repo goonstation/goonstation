@@ -5456,7 +5456,7 @@
 /area)
 "Fb" = (
 /obj/shrub{
-	desc = "A strangely familiar shrub somehow drawing nutrients from the plating beneath. Probably not safe.;
+	desc = "A strangely familiar shrub somehow drawing nutrients from the plating beneath. Probably not safe.";
 	dir = 10;
 	name = "Eric"
 	},
