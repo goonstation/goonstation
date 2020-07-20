@@ -2442,8 +2442,8 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 			TA.reagents.del_reagent(reagent_id)
 			found = 1
 	if (found)
-		if (user)
-			boutput(user, "[custom_message]") // haine: done -> //TODO: using usr in procs is evil shame on you
+		if (usr) 			// using usr here because the procs that call this aren't in a position to know the actual user
+			boutput(usr, "[custom_message]")
 		else if (ismob(TA.loc))
 			var/mob/M = TA.loc
 			boutput(M, "[custom_message]")
