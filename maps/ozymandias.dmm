@@ -3050,6 +3050,10 @@
 "qV" = (
 /turf/simulated/floor/specialroom/arcade,
 /area)
+"qW" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/black,
+/area)
 "qX" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -3554,6 +3558,12 @@
 "tE" = (
 /obj/storage/secure/closet/command/chief_engineer,
 /turf/simulated/floor/grey,
+/area)
+"tF" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
 /area)
 "tH" = (
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
@@ -4995,6 +5005,12 @@
 /obj/machinery/computer/security/wooden_tv/small,
 /turf/simulated/floor/carpet/grime,
 /area)
+"Cd" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area)
 "Ce" = (
 /turf/simulated/floor/caution/corner/misc{
 	dir = 6
@@ -5941,10 +5957,6 @@
 /area)
 "IJ" = (
 /obj/storage/crate/furnacefuel,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
 /turf/simulated/floor/plating/random,
 /area)
 "IL" = (
@@ -6812,6 +6824,10 @@
 "Oo" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/drainage,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/plating/random,
 /area)
 "Op" = (
@@ -32934,7 +32950,7 @@ cl
 cl
 cl
 Tt
-OB
+tF
 Tt
 Tt
 FC
@@ -33537,7 +33553,7 @@ OB
 OB
 OB
 OB
-OB
+Ru
 OB
 OB
 Tt
@@ -34441,7 +34457,7 @@ cl
 Tt
 Tt
 Tt
-OB
+Cd
 Tt
 Tt
 OB
@@ -34793,15 +34809,15 @@ Xj
 Xj
 Wv
 bB
-cl
-cl
+bB
+bB
 bB
 cl
 cl
 cl
 bB
-cl
-cl
+bB
+bB
 bB
 bB
 ts
@@ -35708,7 +35724,7 @@ bB
 mO
 mO
 bB
-cl
+bB
 bB
 Mf
 Hk
@@ -36012,7 +36028,7 @@ qS
 qC
 Jj
 bB
-cl
+bB
 cl
 cl
 cl
@@ -36309,11 +36325,11 @@ bB
 Jm
 Jj
 bB
-cl
-cl
+bB
+bB
 bB
 Jj
-cl
+bB
 bp
 HD
 cJ
@@ -36615,12 +36631,12 @@ qR
 eA
 Lp
 Kn
-cl
+bB
 dE
 SW
 dB
 QG
-cl
+bB
 jJ
 vY
 UZ
@@ -36922,7 +36938,7 @@ yO
 SW
 HD
 Ej
-cl
+bB
 vY
 jJ
 pw
@@ -37219,12 +37235,12 @@ oi
 oi
 Br
 Jj
-cl
+bB
 TS
 HD
 NQ
 bv
-cl
+bB
 jJ
 SG
 UZ
@@ -39037,7 +39053,7 @@ bB
 Lu
 Tt
 OB
-OB
+Ru
 ni
 ni
 ni
@@ -39338,7 +39354,7 @@ bB
 bB
 Tt
 Tt
-OB
+tF
 Tt
 Tt
 ni
@@ -40242,7 +40258,7 @@ bB
 bB
 OB
 OB
-OB
+wq
 OB
 OB
 OB
@@ -44164,10 +44180,10 @@ ZS
 ZS
 ZS
 ZS
+qW
 ZS
 ZS
-ZS
-ZS
+qW
 ZS
 ZS
 ZS
@@ -44466,10 +44482,10 @@ ZS
 ZS
 ZS
 ZS
+qW
 ZS
 ZS
-ZS
-ZS
+qW
 ZS
 ZS
 ZS
