@@ -299,7 +299,7 @@
 			switch(selected_config)
 				if(SET_SEND)
 					var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
-					if(!in_range(parent, user) || user.stat) //MarkNstein - check nested config setting at range
+					if(!in_range(parent, user) || user.stat)
 						return 0
 					inp = trim(adminscrub(inp), 1)
 					if(length(inp))
