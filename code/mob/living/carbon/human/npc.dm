@@ -149,7 +149,7 @@
 
 	var/action_delay = 0
 	delStatus("resting")
-	if(hud) hud.update_resting()
+	if(hud && hud.master) hud.update_resting()
 
 	if (isdead(src))
 		ai_set_active(0)

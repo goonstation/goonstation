@@ -1920,15 +1920,15 @@ proc/countJob(rank)
 		if ("mslave")
 			switch (removal_type)
 				if ("expired")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has worn off.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
 				if ("surgery")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) was removed surgically.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
 				if ("override")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) was overridden by a different implant.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
 				if ("death")
-					logTheThing("combat", M, mymaster, "(implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
+					logTheThing("combat", M, mymaster, "(implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
 				else
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has vanished mysteriously.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has vanished mysteriously.")
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
@@ -1939,9 +1939,9 @@ proc/countJob(rank)
 		if ("vthrall")
 			switch (removal_type)
 				if ("death")
-					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has died, removing vampire thrall status.")
+					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing vampire thrall status.")
 				else
-					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has been freed mysteriously, removing vampire thrall status.")
+					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing vampire thrall status.")
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
@@ -1953,15 +1953,15 @@ proc/countJob(rank)
 		if ("otherslave")
 			switch (removal_type)
 				if ("expired")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has worn off.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
 				if ("surgery")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) was removed surgically.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
 				if ("override")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) was overridden by a different implant.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
 				if ("death")
-					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
+					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
 				else
-					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has been freed mysteriously, removing mindslave status.")
+					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing mindslave status.")
 
 			// Fix for mindslaved traitors etc losing their antagonist status.
 			if (M.mind && (M.mind.special_role == "spyslave"))
@@ -2543,3 +2543,14 @@ proc/total_clients_for_cap()
 			var/client/CC = C
 			if (!CC.holder)
 				.++
+
+	for (var/C in player_cap_grace)
+		if (player_cap_grace[C] > TIME)
+			.++
+
+
+proc/client_has_cap_grace(var/client/C)
+	if (C.ckey in player_cap_grace)
+		.= (player_cap_grace[C.ckey] > TIME)
+
+

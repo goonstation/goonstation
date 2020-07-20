@@ -105,7 +105,7 @@
 				src.task = "thinking"
 				return
 			src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [prob(50) ? "IMMENSE" : "COLOSSAL"] stinger!</span>")
-			logTheThing("combat", src.name, M, "stings %target%")
+			logTheThing("combat", src.name, M, "stings [constructTarget(M,"combat")]")
 			random_brute_damage(src.target, 10)//armor-piercing stingers
 
 			if(M.reagents)
@@ -154,7 +154,7 @@
 				return
 
 			src.visible_message("<span class='alert'><B>[src]</B> bites [M] with its [pick("rather large","big","expansive","proportionally small but still sizable")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>")
-			logTheThing("combat", src.name, M, "bites %target%")
+			logTheThing("combat", src.name, M, "bites [constructTarget(M,"combat")]")
 			random_brute_damage(M, 10,1)
 			if (isliving(M))
 				var/mob/living/H = M
@@ -1020,7 +1020,7 @@
 			return
 
 		src.visible_message("<span class='alert'><B>[src]</B> bites [M] with its [pick("tiny","eeny-weeny","minute","little", "nubby")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>")
-		logTheThing("combat", src.name, M, "bites %target%")
+		logTheThing("combat", src.name, M, "bites [constructTarget(M,"combat")]")
 		random_brute_damage(M, 2, 1)
 		if (isliving(M))
 			var/mob/living/H = M
@@ -1043,7 +1043,7 @@
 			src.task = "thinking"
 			return
 		src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [pick("nubby","stubby","tiny")] little stinger!</span>")
-		logTheThing("combat", src.name, M, "stings %target%")
+		logTheThing("combat", src.name, M, "stings [constructTarget(M,"combat")]")
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
@@ -1861,7 +1861,7 @@
 		src.attacking = 1
 
 		src.visible_message("<span class='alert'><B>[src]</B> bites [M]!</span>")
-		logTheThing("combat", src.name, M, "bites %target%")
+		logTheThing("combat", src.name, M, "bites [constructTarget(M,"combat")]")
 		random_brute_damage(M, 2, 1)
 		if (M.stat || M.getStatusDuration("paralysis"))
 			src.task = "thinking"

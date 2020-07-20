@@ -191,7 +191,7 @@
 	for(var/mob/O in hearers(src, null))
 		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
-	elecflash(src, power=2)
+	elecflash(src, radius=1, power=3, exclude_center = 0)
 	new /obj/item/clothing/head/dramachefhat(Tsec)
 	qdel(src)
 	return

@@ -638,8 +638,11 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "abf" = (
-/obj/item/device/radio/intercom/AI,
-/turf/simulated/floor/darkblue,
+/obj/decal/stage_edge/alt,
+/obj/item/device/radio/intercom/AI{
+	pixel_y = 7
+	},
+/turf/simulated/floor/black,
 /area/station/bridge)
 "abg" = (
 /obj/table/reinforced/auto,
@@ -689,8 +692,11 @@
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
 "abo" = (
-/obj/item/device/radio/intercom/brig,
-/turf/simulated/floor/darkblue,
+/obj/decal/stage_edge/alt,
+/obj/item/device/radio/intercom/brig{
+	pixel_y = 7
+	},
+/turf/simulated/floor/black,
 /area/station/bridge)
 "abp" = (
 /obj/machinery/drainage/big,
@@ -716,20 +722,32 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "abs" = (
-/obj/item/device/radio/intercom/security,
-/turf/simulated/floor/darkblue,
+/obj/decal/stage_edge/alt,
+/obj/item/device/radio/intercom/security{
+	pixel_y = 7
+	},
+/turf/simulated/floor/black,
 /area/station/bridge)
 "abt" = (
-/obj/item/device/radio/intercom/medical,
-/turf/simulated/floor/darkblue,
+/obj/decal/stage_edge/alt,
+/obj/item/device/radio/intercom/medical{
+	pixel_y = 7
+	},
+/turf/simulated/floor/black,
 /area/station/bridge)
 "abu" = (
-/obj/item/device/radio/intercom/engineering,
-/turf/simulated/floor/darkblue,
+/obj/decal/stage_edge/alt,
+/obj/item/device/radio/intercom/engineering{
+	pixel_y = 7
+	},
+/turf/simulated/floor/black,
 /area/station/bridge)
 "abv" = (
-/obj/item/device/radio/intercom/science,
-/turf/simulated/floor/darkblue,
+/obj/decal/stage_edge/alt,
+/obj/item/device/radio/intercom/science{
+	pixel_y = 7
+	},
+/turf/simulated/floor/black,
 /area/station/bridge)
 "abw" = (
 /obj/displaycase{
@@ -3099,8 +3117,11 @@
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
 "ail" = (
-/obj/item/device/radio/intercom/cargo,
-/turf/simulated/floor/darkblue,
+/obj/decal/stage_edge/alt,
+/obj/item/device/radio/intercom/cargo{
+	pixel_y = 7
+	},
+/turf/simulated/floor/black,
 /area/station/bridge)
 "aim" = (
 /obj/machinery/camera{
@@ -4288,8 +4309,11 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "alv" = (
-/obj/item/device/radio/intercom/catering,
-/turf/simulated/floor/darkblue,
+/obj/decal/stage_edge/alt,
+/obj/item/device/radio/intercom/catering{
+	pixel_y = 7
+	},
+/turf/simulated/floor/black,
 /area/station/bridge)
 "alw" = (
 /obj/cable{
@@ -4691,7 +4715,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/networked/mainframe/zeta{
-	tag = "ZETA_MAINFRAME"
+	tag = "OTHER_MAINFRAME"
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/redblack,
@@ -17470,7 +17494,9 @@
 /area/station/security/brig/cell1)
 "aNF" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer3/terminal/zeta,
+/obj/machinery/computer3/terminal/zeta{
+	setup_os_string = "ZETA_MAINFRAME"
+	},
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -29216,6 +29242,10 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "bmg" = (
@@ -29230,6 +29260,10 @@
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -39656,7 +39690,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer3/terminal/zeta,
+/obj/machinery/computer3/terminal/zeta{
+	setup_os_string = "ZETA_MAINFRAME"
+	},
 /turf/simulated/floor,
 /area/station/science/artifact)
 "bJd" = (
@@ -88809,8 +88845,8 @@ aah
 aal
 aaw
 aaI
-aaR
 abf
+abd
 aag
 aag
 aBz
@@ -89111,8 +89147,8 @@ aah
 aam
 aax
 aaI
-aaR
 abo
+abd
 abI
 aky
 aBz
@@ -89413,8 +89449,8 @@ aah
 aan
 aan
 aaJ
-aaR
 abs
+abd
 abe
 ahu
 aBB
@@ -89715,8 +89751,8 @@ aah
 aao
 aay
 aaI
-aaR
 abt
+abd
 abe
 ahx
 aBD
@@ -90319,8 +90355,8 @@ aaj
 aar
 aaC
 aaI
-aaR
 abu
+abd
 abe
 aoR
 aBF
@@ -90621,8 +90657,8 @@ aaj
 aan
 aan
 aaJ
-aaR
 abv
+abd
 abe
 aBq
 aBG
@@ -90923,8 +90959,8 @@ aaj
 aas
 aaD
 aaI
-aaR
 ail
+abd
 abP
 akA
 aBz
@@ -91225,8 +91261,8 @@ aaj
 aat
 aaw
 aaI
-aaR
 alv
+abd
 aag
 aag
 aBz

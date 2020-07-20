@@ -1,10 +1,11 @@
+var/global/life_pause_check = 0
 
 /datum/lifeprocess
 	var/mob/living/owner
 	var/last_process = 0
 
 	var/const/tick_spacing = 20 //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
-	var/const/cap_tick_spacing = 90 //highest timeofday allowance between ticks to try to play catchup with realtime thingo
+	var/const/cap_tick_spacing = 100 //highest TIME allowance between ticks to try to play catchup with realtime thingo
 
 	var/mob/living/carbon/human/human_owner = null
 	var/mob/living/silicon/hivebot/hivebot_owner = null
@@ -45,7 +46,7 @@
 	//remove these evntually cause lifeporcesses handl ethem
 	var/last_life_tick = 0 //and this ones just the whole lifetick
 	var/const/tick_spacing = 20 //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
-	var/const/cap_tick_spacing = 90 //highest timeofday allowance between ticks to try to play catchup with realtime thingo
+	var/const/cap_tick_spacing = 100 //highest TIME allowance between ticks to try to play catchup with realtime thingo
 	var/last_stam_change = 0
 	var/life_context = "begin"
 
@@ -182,6 +183,7 @@
 
 	var/life_time_passed = max(tick_spacing, TIME - last_life_tick)
 
+	life_pause_check = 0
 	// Jewel's attempted fix for: null.return_air()
 	// These objects should be garbage collected the next tick, so it's not too bad if it's not breathing I think? I might be totallly wrong here.
 	if (loc)
@@ -193,18 +195,24 @@
 
 		///LIFE PROCESS
 		//Most stuff gets handled here but i've left some other code below because all living mobs can use it
+		life_pause_check = 1
+		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)
 			if (!thing) continue
-			var/datum/lifeprocess/L = src.lifeprocesses[thing]
+			L = src.lifeprocesses[thing]
 			L.process(environment)
 
+		life_pause_check = 2
 		for (var/obj/item/implant/I in src.implant)
 			I.on_life((life_time_passed / tick_spacing))
 
+		life_pause_check = 3
 		update_item_abilities()
 
+		life_pause_check = 4
 		update_objectives()
 
+		life_pause_check = 5
 		if (!isdead(src)) //still breathing
 			//do on_life things for components?
 			SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, (life_time_passed / tick_spacing))
@@ -216,16 +224,16 @@
 					src.no_gravity = 0
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
-
-/*
-			for (var/thing in src) //not worth the CPU, nothing even uses this stuff
-				var/atom/movable/A = thing
-				if (A.material)
-					A.material.triggerOnLife(src, A)
-*/
+			life_pause_check = 6
+			if (src.mob_flags & MAT_TRIGGER_LIFE)//controlled by a signal that is added when an item with mat gets a lifeprocess proc
+				for (var/thing in src) //bnlech, do a smarter search later
+					var/atom/movable/A = thing
+					if (A.material)
+						A.material.triggerOnLife(src, A)
 
 		clamp_values()
 
+		life_pause_check = 7
 		//Regular Trait updates
 		if(src.traitHolder)
 			for(var/T in src.traitHolder.traits)
@@ -239,33 +247,22 @@
 			src.updateOverlaysClient(src.client)
 			src.antagonist_overlay_refresh(0, 0)
 
+		life_pause_check = 8
+
 		if (src.observers.len)
 			for (var/mob/x in src.observers)
 				if (x.client)
 					src.updateOverlaysClient(x.client)
 
+		life_pause_check = 9
+
 		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 			G.process((life_time_passed / tick_spacing))
 
+		life_pause_check = 10
 
 		if (!can_act(M=src,include_cuffs=0))
 			actions.interrupt(src, INTERRUPT_STUNNED)
-
-		//rev mutiny
-		//change this to trigger from the sign, not the revs!!
-		if (src.mind && ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
-			var/datum/game_mode/revolution/R = ticker.mode
-
-			if ((src.mind in R.revolutionaries) || (src.mind in R.head_revolutionaries))
-				var/found = 0
-				for (var/datum/mind/M in R.head_revolutionaries)
-					if (M.current && ishuman(M.current))
-						if (get_dist(src,M.current) <= 5)
-							for (var/obj/item/revolutionary_sign/RS in M.current.equipped_list(check_for_magtractor = 0))
-								found = 1
-								break
-				if (found)
-					src.changeStatus("revspirit", 20 SECONDS)
 
 		if (src.abilityHolder)
 			src.abilityHolder.onLife((life_time_passed / tick_spacing))

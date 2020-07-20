@@ -404,7 +404,7 @@
 		if (prob(25))
 			boutput(HH, __red("Some blood is forced right out of your body!"))
 
-		logTheThing("combat", M, HH, "steals blood from %target% at [log_loc(M)].")
+		logTheThing("combat", M, HH, "steals blood from [constructTarget(HH,"combat")] at [log_loc(M)].")
 
 	onEnd()
 		..()
@@ -523,7 +523,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		logTheThing("combat", M, HH, "bites %target%'s neck at [log_loc(M)].")
+		logTheThing("combat", M, HH, "bites [constructTarget(HH,"combat")]'s neck at [log_loc(M)].")
 
 		if (istype(H))
 			H.vamp_isbiting = HH

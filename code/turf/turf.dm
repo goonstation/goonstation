@@ -867,6 +867,19 @@ var/global/client/ff_debugger = null
 	#endif
 		lobby_titlecard = src
 
+#ifndef RP_MODE
+		if (!player_capa)
+			encourage()
+#endif
+
+	proc/encourage()
+		var/obj/overlay/clickable = new/obj/overlay(src)
+		clickable.maptext = "<span class='ol c ps2p'>Hello! We are experiencing more load than usual. <br><a href='byond://goon3.goonhub.com:26300'>click here to join Goonstation Overflow (Smoother game, RP flavor).</a> </span>"
+		clickable.maptext_width = 300
+		clickable.maptext_height = 300
+		clickable.plane = 100
+		clickable.layer = src.layer + 1
+
 	proc/educate()
 		maptext = "<span class='ol c ps2p'>Hello! Press F3 to ask for help. You can change game settings using the file menu on the top left, and see our wiki + maps by clicking the buttons on the top right.</span>"
 		maptext_width = 300

@@ -145,10 +145,10 @@
 			call(X,  "execute")(owner, attacker, attacked)
 		return
 
-	/*proc/triggerOnLife(var/mob/M, var/obj/item/I) //nothing uses this, slowing down life loop for no reason currenlty
+	proc/triggerOnLife(var/mob/M, var/obj/item/I)
 		for(var/datum/materialProc/X in triggersOnLife)
 			call(X,  "execute")(M, I)
-		return*/
+		return
 
 	proc/triggerOnAdd(var/location)
 		for(var/datum/materialProc/X in triggersOnAdd)

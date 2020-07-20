@@ -41,15 +41,16 @@
 
 /datum/aiTask/timed/targeted/trilobite/frustration_check()
 	.= 0
-	var/dist = get_dist(holder.owner, holder.target)
-	if (dist > target_range)
-		return 1
+	if (holder)
+		var/dist = get_dist(holder.owner, holder.target)
+		if (dist > target_range)
+			return 1
 
-	if (ismob(holder.target))
-		var/mob/M = holder.target
-		. = !(holder.target && isalive(M))
-	else
-		. = !(holder.target)
+		if (ismob(holder.target))
+			var/mob/M = holder.target
+			. = !(holder.target && isalive(M))
+		else
+			. = !(holder.target)
 
 /datum/aiTask/timed/targeted/trilobite/evaluate()
 	return precondition() * weight * score_target(get_best_target(get_targets()))

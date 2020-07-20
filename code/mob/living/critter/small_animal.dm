@@ -59,7 +59,6 @@ todo: add more small animals!
 	var/health_brute_vuln = 1
 	var/health_burn = 20
 	var/health_burn_vuln = 1
-	var/pull_w_class = 2
 
 	var/fur_color = 0
 	var/eye_color = 0
@@ -95,20 +94,6 @@ todo: add more small animals!
 			return prob(50)
 		else
 			return ..()
-
-	proc/can_pull(atom/A)
-		if (!src.ghost_spawned) //if its an admin or wizard made critter, just let them pull everythang
-			return 1
-		if (ismob(A))
-			return (src.pull_w_class >= 3)
-		else if (isobj(A))
-			if (istype(A,/obj/item))
-				var/obj/item/I = A
-				return (pull_w_class >= I.w_class)
-			else
-				return (src.pull_w_class >= 4)
-		return 0
-
 
 	death(var/gibbed)
 		if (!gibbed)
@@ -2853,7 +2838,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 				if (G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc))
 					src.emote("scream")
-					logTheThing("combat", src, G.affecting, "crunches %target% [log_loc(src)]")
+					logTheThing("combat", src, G.affecting, "crunches [constructTarget(G.affecting,"combat")] [log_loc(src)]")
 					M.lastattacker = src
 					M.lastattackertime = world.time
 					G.affecting.TakeDamage("head", rand(2,8), 0, 0, DAMAGE_BLUNT)

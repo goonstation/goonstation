@@ -103,7 +103,7 @@
 
 	if (!src.head || !istype(src.head,/obj/item/clothing/head/helmet/football))
 		boutput(src, __red("Ouch! Feels like a properly designed helmet would come in handy."))
-		src.brainloss += 1 + power * 0.1
+		src.take_brain_damage(1 + power * 0.1)
 
 	for (var/mob/C in viewers(src))
 		shake_camera(C, 6, 1)

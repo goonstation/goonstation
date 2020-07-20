@@ -142,7 +142,7 @@
 							W.dropped(HH)
 							W.layer = initial(W.layer)
 
-				logTheThing("combat", M, HH, "uses take trophy on %target%, gibbing them at [log_loc(M)].")
+				logTheThing("combat", M, HH, "uses take trophy on [constructTarget(HH,"combat")], gibbing them at [log_loc(M)].")
 				HH.gib(1)
 
 		else

@@ -433,7 +433,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.dismantle_stage = 4
 	if (user)
 		src.visible_message("<span class='alert'><b>[user.name]</b> removes [src.name]'s CPU unit!</span>")
-		logTheThing("combat", user, src, "removes %target%'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
+		logTheThing("combat", user, src, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
 	else
 		src.visible_message("<span class='alert'><b>[src.name]'s</b> CPU unit is launched out of its core!</span>")
 
@@ -529,7 +529,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1)
 			if(INTENT_HARM)
 				user.visible_message("<span class='alert'><b>[user.name]</b> kicks [src.name].</span>")
-				logTheThing("combat", user, src, "kicks %target%")
+				logTheThing("combat", user, src, "kicks [constructTarget(src,"combat")]")
 				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 50, 1)
 				if (prob(20))
 					src.bruteloss += 1

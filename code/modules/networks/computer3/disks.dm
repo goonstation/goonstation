@@ -31,6 +31,7 @@
 	var/file_used = 0
 	var/portable = 1
 	var/title = "Data Disk"
+
 	New()
 		src.root = new /datum/computer/folder
 		src.root.holder = src
@@ -42,7 +43,7 @@
 			root = null
 
 		data = null
-		..()
+		. = ..()
 
 	clone()
 		var/obj/item/disk/data/D = ..()
@@ -67,7 +68,7 @@
 	var/random_color = 1
 
 /obj/item/disk/data/floppy/New()
-	..()
+	. = ..()
 	if(random_color)
 		var/diskcolor = pick(0,1,2)
 		src.icon_state = "datadisk[diskcolor]"
@@ -119,7 +120,6 @@
 				src.root = new /datum/computer/folder
 				src.root.holder = src
 				src.root.name = "root"
-			return
 
 /obj/item/disk/data/tape
 	name = "ThinkTape"
@@ -132,9 +132,8 @@
 	portable = 0
 
 	New()
-		..()
+		. = ..()
 		src.root.gen = 99 //No subfolders!!
-		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/pen))
@@ -149,7 +148,6 @@
 			src.name = "ThinkTape-'[t]'"
 		else
 			..()
-		return
 
 //Floppy disks that are read-only ONLY.
 //It's good to have a more permanent source of programs when somebody deletes everything (until they space all the disks)
@@ -165,7 +163,7 @@
 	name = "data disk-'ThinkDOS'"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/os/main_os(src))
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "logs"
@@ -182,7 +180,7 @@
 	title = "Network Help"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/background/ping(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/background/signal_catcher(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/file_transfer(src))
@@ -197,7 +195,7 @@
 	title = "Med-Trak 4"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/medical_records(src))
 		src.read_only = 1
 
@@ -207,7 +205,7 @@
 	title = "SecMate 6"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/secure_records(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/manifest(src))
 		src.read_only = 1
@@ -218,7 +216,7 @@
 	title = "Research"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/robotics_research(src))
 		src.read_only = 1
 
@@ -228,7 +226,7 @@
 	title = "Research"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/artifact_research(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/disease_research(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/robotics_research(src))
@@ -240,7 +238,7 @@
 	title = "TermOS"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/os/terminal_os(src))
 		src.read_only = 1
 
@@ -250,7 +248,7 @@
 	title = "COMMaster"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/communications(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/manifest(src))
 		src.read_only = 1
@@ -261,7 +259,7 @@
 	title = "EngineDisk"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/engine_control(src))
 		src.read_only = 1
 #endif
@@ -278,9 +276,9 @@
 	file_amount = 32.0
 
 	New()
-		..()
+		. = ..()
 		SPAWN_DBG (10) //Give time to actually generate network passes I guess.
-			//src.root.add_file( new /datum/computer/file/nuclear_auth(src))
+			if (!root) return
 			var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "GENAUTH";} (src)
 			authrec.fields = list("HEADS"="[netpass_heads]",
 								"SEC"="[netpass_security]",
@@ -297,7 +295,7 @@
 //A fixed disk with some structure already set up for the main os I guess
 /obj/item/disk/data/fixed_disk/computer3
 	New()
-		..()
+		. = ..()
 		//First off, create the directory for logging stuff
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "logs"

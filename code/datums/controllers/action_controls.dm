@@ -300,6 +300,7 @@ var/datum/action_controller/actions
 	var/icon_y_off = 30
 	var/icon_x_off = 0
 	var/image/icon_image
+	var/icon_plane = PLANE_HUD
 
 	onStart()
 		..()
@@ -307,7 +308,7 @@ var/datum/action_controller/actions
 			icon_image = image(icon, border ,icon_state, 10)
 			icon_image.pixel_y = icon_y_off
 			icon_image.pixel_x = icon_x_off
-			icon_image.plane = PLANE_HUD
+			icon_image.plane = icon_plane
 			icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
 			border.overlays += icon_image
 
@@ -427,6 +428,7 @@ var/datum/action_controller/actions
 	var/icon_y_off = 30
 	var/icon_x_off = 0
 	var/image/icon_image
+	var/icon_plane = PLANE_HUD
 
 	onStart()
 		..()
@@ -434,7 +436,8 @@ var/datum/action_controller/actions
 			icon_image = image(icon ,owner,icon_state,10)
 			icon_image.pixel_y = icon_y_off
 			icon_image.pixel_x = icon_x_off
-			icon_image.plane = PLANE_HUD
+			icon_image.plane = icon_plane
+
 			icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
 			owner << icon_image
 
@@ -509,7 +512,7 @@ var/datum/action_controller/actions
 				source.show_text("You can't put \the [item] on [target] when it's attached to you!", "red")
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			logTheThing("combat", source, target, "tries to put \an [item] on %target% at at [log_loc(target)].")
+			logTheThing("combat", source, target, "tries to put \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
 			icon = item.icon
 			icon_state = item.icon_state
 			for(var/mob/O in AIviewers(owner))
@@ -530,7 +533,7 @@ var/datum/action_controller/actions
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			*/
-			logTheThing("combat", source, target, "tries to remove \an [I] from %target% at [log_loc(target)].")
+			logTheThing("combat", source, target, "tries to remove \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 			var/name = "something"
 			if (!hidden)
 				icon = I.icon
@@ -554,14 +557,14 @@ var/datum/action_controller/actions
 		if(item)
 			if(item == source.equipped() && !I)
 				if(target.can_equip(item, slot))
-					logTheThing("combat", source, target, "successfully puts \an [item] on %target% at at [log_loc(target)].")
+					logTheThing("combat", source, target, "successfully puts \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
 					for(var/mob/O in AIviewers(owner))
 						O.show_message("<span class='alert'><B>[source] puts [item] on [target]!</B></span>", 1)
 					source.u_equip(item)
 					target.force_equip(item, slot)
 		else if (I) //Wire: Fix for Cannot execute null.handle other remove().
 			if(I.handle_other_remove(source, target))
-				logTheThing("combat", source, target, "successfully removes \an [I] from %target% at [log_loc(target)].")
+				logTheThing("combat", source, target, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 				for(var/mob/O in AIviewers(owner))
 					O.show_message("<span class='alert'><B>[source] removes [I] from [target]!</B></span>", 1)
 
@@ -714,7 +717,7 @@ var/datum/action_controller/actions
 				else
 					ownerMob.u_equip(cuffs)
 
-			logTheThing("combat", ownerMob, target, "handcuffs %target% with [cuffs2 ? "[cuffs2]" : "[cuffs]"] at [log_loc(ownerMob)].")
+			logTheThing("combat", ownerMob, target, "handcuffs [constructTarget(target,"combat")] with [cuffs2 ? "[cuffs2]" : "[cuffs]"] at [log_loc(ownerMob)].")
 
 			if (cuffs2 && istype(cuffs2))
 				cuffs2.set_loc(target)
@@ -1213,6 +1216,7 @@ var/datum/action_controller/actions
 	var/obj/item/target
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "pickup"
+	icon_plane = PLANE_HUD+2
 
 	New(Target)
 		target = Target
@@ -1249,3 +1253,19 @@ var/datum/action_controller/actions
 		onEnd()
 			..()
 			target.try_equip_to_inventory_object(owner, over_object, params)
+
+	then_obj_click
+
+		var/atom/over_object
+		var/params
+
+		New(Target, Over, Parameters)
+			target = Target
+			over_object = Over
+			params = Parameters
+			..()
+
+		onEnd()
+			..()
+			if (can_reach(owner,over_object) && ismob(owner) && owner:equipped() == target)
+				over_object.attackby(target, owner, params)
