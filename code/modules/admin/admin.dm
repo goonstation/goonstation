@@ -1578,14 +1578,6 @@ var/global/noir = 0
 			else
 				alert("You must be at least a Primary Administrator to do this!")
 
-		if ("manageabils_refresh")
-			if (src.level >= LEVEL_PA)
-				var/mob/M = locate(href_list["target"])
-				if (!M) return
-				usr.client.cmd_admin_manageabils(M)
-			else
-				alert("You must be at least a Primary Administrator to do this!")
-
 		if ("manageabils_alter_cooldown")
 			if (src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
@@ -4813,7 +4805,7 @@ var/global/noir = 0
 		<body>
 		<h3>
 			Abilities of [M.name]
-			<a href='?src=\ref[src.holder];action=manageabils_refresh;target=\ref[M];origin=manageabils' class="button">&#x1F504;</a>
+			<a href='?src=\ref[src.holder];action=manageabils;target=\ref[M];origin=manageabils' class="button">&#x1F504;</a>
 			<a href='?src=\ref[src.holder];action=addabil;target=\ref[M];origin=manageabils' class="button">&#x2795;</a>
 		</h3>
 		<table>
