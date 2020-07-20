@@ -1,4 +1,9 @@
 
+(t)mon jul 20 20
+(u)zjdtmkhzt
+(p)1552
+(e)|
+(+)Fixed bug where chemmaster would sometimes lose reagents when making patches between 15 and 20 units in size.
 (t)sun jul 19 20
 (u)Zamujasa
 (e)🔄|rework
