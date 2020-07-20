@@ -1,4 +1,17 @@
 
+(t)mon jul 20 20
+(u)mbc
+(p)1559
+(e)|
+(*)Added sounds for when you are in space. Differences from normal sounds include : very limited range + muffled with limited reverb
+(u)RichardGere
+(p)1535
+(e)⚖|balance
+(+)Bulky items no longer fit into a patient's chest. Some exceptions apply.
+(u)zjdtmkhzt
+(p)1552
+(e)|
+(+)Fixed bug where chemmaster would sometimes lose reagents when making patches between 15 and 20 units in size.
 (t)sun jul 19 20
 (u)Zamujasa
 (e)🔄|rework
