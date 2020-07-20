@@ -10,10 +10,14 @@ var/global/list/global_asset_datum_list = list()
 /// Base asset type
 ABSTRACT_TYPE(/datum/asset)
 /datum/asset
+	var/cdn_only = FALSE
 
 /datum/asset/proc/init()
 
 /datum/asset/proc/deliver(client)
+
+/datum/asset/proc/get_associated_urls()
+	return list()
 
 /datum/asset/New()
 	global_asset_datum_list[src.type] = src
@@ -22,10 +26,14 @@ ABSTRACT_TYPE(/datum/asset)
 /// Basic assets
 ABSTRACT_TYPE(/datum/asset/basic)
 /datum/asset/basic
-	var/assets = list()
+	var/local_assets = list()
+	var/url_map = list()
 
 	deliver(client)
-		. = send_assets(client, assets)
+		. = send_assets(client, local_assets)
+
+	get_associated_urls()
+		. = url_map
 
 /// For grouping multiple assets together
 ABSTRACT_TYPE(/datum/asset/group)
@@ -40,6 +48,12 @@ ABSTRACT_TYPE(/datum/asset/group)
 		for (var/asset in subassets)
 			var/datum/asset/ass = get_assets(asset)
 			. = ass.deliver(client) || .
+
+	get_associated_urls()
+		. = list()
+		for(var/asset in subassets)
+			var/datum/asset/A = get_assets(type)
+			. += A.get_associated_urls()
 
 /// Returns either the already-created asset or creates a new one and returns it
 /proc/get_assets(asset)

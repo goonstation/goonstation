@@ -30,7 +30,6 @@ import './styles/themes/syndicate.scss';
 import { perf } from 'common/perf';
 import { render } from 'inferno';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
-import { loadCSS } from './assets';
 import { backendUpdate, backendSuspendSuccess, selectBackend, sendMessage } from './backend';
 import { setupDrag } from './drag';
 import { logger } from './logging';
@@ -96,8 +95,6 @@ const renderLayout = () => {
   if (initialRender) {
     initialRender = false;
   }
-  // Load assets
-  assets?.styles?.forEach(filename => loadCSS(filename));
 };
 
 // Parse JSON and report all abnormal JSON strings coming from BYOND
@@ -143,9 +140,8 @@ const setupApp = () => {
     logger.debug(`received message '${message?.type}'`);
     const { type, payload } = message;
     if (type === 'update') {
-      window.__ref__ = payload.config.ref;
       if (suspended) {
-        logger.log('reinitializing to:', payload.config.ref);
+        logger.log('resuming');
         initialRender = 'recycled';
       }
       // Backend update dispatches a store action
@@ -162,7 +158,8 @@ const setupApp = () => {
       });
       return;
     }
-    logger.log('unhandled message', message);
+    // Pass the message directly to the store
+    store.dispatch(message);
   };
 
   // Enable hot module reloading
@@ -186,8 +183,6 @@ const setupApp = () => {
     window.update(stateJson);
   }
 
-  // Load font-awesome 5.14.0 from the cdn [GOONSTATION-ADD]
-  loadCSS('http://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css');
 };
 
 // Setup a fatal error reporter

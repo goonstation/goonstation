@@ -33,8 +33,6 @@
 	var/status = UI_INTERACTIVE
 	/// Topic state used to determine status/interactability.
 	var/datum/ui_state/state = null
-	/// Asset data to be sent with every update
-	var/list/asset_data
 
 /**
  * public
@@ -82,7 +80,7 @@
 	opened_at = world.time
 	window.acquire_lock(src)
 	if(!window.is_ready())
-		window.initialize()
+		window.initialize(inline_assets = list(get_assets(/datum/asset/group/base_tgui)))
 	else
 		window.send_message("ping")
 	for(var/datum/asset/asset in src_object.ui_assets(user))
@@ -143,10 +141,10 @@
  *
  * required asset datum/asset
  */
-/datum/tgui/proc/send_asset(var/datum/asset/asset)
-	if(!user.client || cdn) //Don't deliver if there's nobody to see it, or if they'd get it from the cdn
-		return
-	asset.deliver(user)
+/datum/tgui/proc/send_asset(datum/asset/asset)
+	if(!window)
+		CRASH("send_asset() can only be called after open().")
+	window.send_asset(asset)
 
 /**
  * public
@@ -212,8 +210,6 @@
 	var/static_data = with_static_data && src_object.ui_static_data(user)
 	if(static_data)
 		json_data["static_data"] = static_data
-	if(asset_data)
-		json_data["assets"] = asset_data
 	if(src_object.tgui_shared_states)
 		json_data["shared"] = src_object.tgui_shared_states
 	return json_data
