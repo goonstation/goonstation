@@ -3149,9 +3149,6 @@
 	name = "Cargo Shutter Control";
 	pixel_x = 25
 	},
-<<<<<<< HEAD
-/obj/machinery/manufacturer/qm,
-=======
 /obj/table/auto,
 /obj/machinery/networked/printer{
 	name = "Printer - Escape Checkpoint";
@@ -3162,7 +3159,6 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
->>>>>>> 8b87e5f7fd8e562db280a2f856b1bfedeb38805c
 /turf/simulated/floor/yellow,
 /area/station/quartermaster)
 "iw" = (
@@ -17093,6 +17089,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/tools)
+"UL" = (
+/obj/machinery/manufacturer/qm,
+/turf/simulated/floor/yellow,
+/area/station/quartermaster)
 "UM" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -61659,7 +61659,7 @@ eb
 eM
 dx
 Qy
-bH
+UL
 bH
 bH
 jo
