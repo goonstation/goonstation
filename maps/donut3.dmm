@@ -1485,9 +1485,16 @@
 	},
 /area/station/solar/west)
 "acj" = (
-/obj/reagent_dispensers/beerkeg,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/obj/machinery/door/airlock/pyro/external,
+/obj/access_spawn/maint,
+/obj/decal/mule/dropoff,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "ack" = (
 /obj/stool/chair{
 	dir = 4
@@ -5268,9 +5275,11 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "bmF" = (
-/obj/machinery/chem_heater,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
+	},
+/obj/machinery/chem_master{
+	dir = 4
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -12015,6 +12024,16 @@
 	dir = 4
 	},
 /area/listeningpost)
+"dlG" = (
+/obj/grille/catwalk,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/station/solar/west)
 "dlK" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/machinery/light/incandescent/cool{
@@ -19406,6 +19425,11 @@
 	},
 /obj/access_spawn/engineering,
 /obj/decal/mule/dropoff,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/black,
 /area/station/engine/singcore)
 "fyP" = (
@@ -20913,9 +20937,6 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
-/obj/machinery/secscanner{
-	dir = 4
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -21647,16 +21668,9 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "ghO" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8
-	},
-/area/station/solar/east)
+/obj/reagent_dispensers/beerkeg,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/bar)
 "gim" = (
 /obj/landmark/gps_waypoint,
 /obj/machinery/light/emergency{
@@ -22109,7 +22123,7 @@
 	pixel_x = -1;
 	pixel_y = -32
 	},
-/obj/table/reinforced/chemistry/beakers,
+/obj/table/reinforced/chemistry/auto,
 /obj/item/storage/box/syringes{
 	pixel_x = 3;
 	pixel_y = 7
@@ -22246,6 +22260,11 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/AIsat)
@@ -24221,6 +24240,19 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
+"gZh" = (
+/obj/table/auto,
+/obj/item/cable_coil,
+/obj/item/cable_coil{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/cable_coil{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/westsolar)
 "gZp" = (
 /obj/decal/tile_edge/line/red{
 	dir = 9;
@@ -24479,23 +24511,6 @@
 /obj/loudspeaker,
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/main)
-"hdC" = (
-/obj/item/cable_coil,
-/obj/table/auto,
-/obj/item/cable_coil{
-	pixel_x = 3;
-	pixel_y = 7
-	},
-/obj/item/cable_coil{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/storage/toolbox/electrical{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/eastsolar)
 "hdF" = (
 /turf/simulated/floor/white/checker2{
 	dir = 1
@@ -24641,6 +24656,11 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -28499,15 +28519,13 @@
 /turf/simulated/floor/plating/jen,
 /area/station/science/storage)
 "iou" = (
-/obj/machinery/chem_master{
-	dir = 4
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /obj/machinery/light/small/sticky/harsh{
 	dir = 8
 	},
+/obj/machinery/chem_heater,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -29557,6 +29575,12 @@
 	icon_state = "4-8"
 	},
 /obj/access_spawn/engineering,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/eastsolar)
 "iFU" = (
@@ -34801,7 +34825,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/secscanner{
-	pixel_y = 32
+	pixel_y = 23
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
@@ -39607,6 +39631,11 @@
 	icon_state = "1-2"
 	},
 /obj/access_spawn/engineering,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/westsolar)
 "lOr" = (
@@ -43682,6 +43711,11 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/access_spawn/maint,
 /obj/decal/mule/dropoff,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/grime{
 	dir = 8
 	},
@@ -45349,6 +45383,17 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
+"nCP" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8
+	},
+/area/station/solar/east)
 "nCS" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -47010,6 +47055,14 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/hallway/primary/south)
+"ocl" = (
+/obj/decal/tile_edge/line/purple{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/machinery/bot/firebot,
+/turf/simulated/floor/black,
+/area/station/chemistry)
 "ocq" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 6;
@@ -47932,7 +47985,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
 "oqi" = (
-/obj/stool,
+/obj/stool/bench/red,
 /turf/unsimulated/floor/purple,
 /area/station/hallway/primary/south)
 "oqj" = (
@@ -50473,7 +50526,7 @@
 	},
 /area/station/crew_quarters/market)
 "pgr" = (
-/obj/table/reinforced/chemistry/beakers,
+/obj/table/reinforced/chemistry/auto,
 /obj/item/storage/toolbox/emergency{
 	pixel_x = -3;
 	pixel_y = 7
@@ -52629,6 +52682,11 @@
 	doordir = "single";
 	icon_state = "bdoorsingle1";
 	id = "chapel_driver"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/chapel/main{
@@ -64622,6 +64680,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/black,
 /area/station/engine/singcore)
 "tlf" = (
@@ -64827,7 +64891,7 @@
 "tor" = (
 /obj/machinery/optable,
 /obj/item/reagent_containers/iv_drip/blood,
-/obj/machinery/defib_mount,
+/obj/item/robodefibrillator,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "tou" = (
@@ -67657,16 +67721,6 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
-"ufP" = (
-/obj/grille/catwalk,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/airless/plating/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/station/solar/west)
 "ufX" = (
 /obj/shrub{
 	dir = 6
@@ -71836,6 +71890,23 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"vtI" = (
+/obj/item/cable_coil,
+/obj/table/auto,
+/obj/item/cable_coil{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/obj/item/cable_coil{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/eastsolar)
 "vtO" = (
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -75601,19 +75672,6 @@
 /obj/disposalpipe/trunk/mail,
 /turf/simulated/floor/black,
 /area/station/mining)
-"wxe" = (
-/obj/table/auto,
-/obj/item/cable_coil,
-/obj/item/cable_coil{
-	pixel_x = 3;
-	pixel_y = 5
-	},
-/obj/item/cable_coil{
-	pixel_x = -3;
-	pixel_y = 6
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/westsolar)
 "wxh" = (
 /obj/machinery/light/small/floor/cool,
 /obj/decal/tile_edge/line/blue{
@@ -76567,6 +76625,11 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "wLV" = (
@@ -79710,6 +79773,25 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"xIm" = (
+/obj/decal/mule/dropoff,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/access_spawn,
+/obj/firedoor_spawn,
+/obj/decal/tile_edge/line/white{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/hallway/secondary/exit)
 "xIo" = (
 /turf/simulated/floor/stairs/wood2/middle,
 /area/station/crew_quarters/cafeteria)
@@ -105509,7 +105591,7 @@ lJM
 rdj
 rdj
 xRY
-wxe
+gZh
 qaq
 tTy
 xRY
@@ -106117,8 +106199,8 @@ gHQ
 mqx
 xxo
 lOq
-ufP
-ufP
+dlG
+dlG
 ozA
 jYm
 rdj
@@ -120333,7 +120415,7 @@ aLq
 pGt
 yhF
 ejc
-pLO
+ocl
 pLO
 dpO
 bld
@@ -121438,7 +121520,7 @@ fIA
 wrL
 ptL
 pae
-acj
+ghO
 wrL
 qeU
 tiA
@@ -134710,7 +134792,7 @@ rdj
 rdj
 rdj
 xJk
-csU
+acj
 ofw
 ofw
 csU
@@ -145605,7 +145687,7 @@ rdj
 rdj
 rdj
 sdZ
-wns
+xIm
 sdZ
 rdj
 rdj
@@ -145615,7 +145697,7 @@ rdj
 rdj
 rdj
 sdZ
-wns
+xIm
 sdZ
 rdj
 rdj
@@ -145940,7 +146022,7 @@ hZp
 jOz
 jOz
 wYn
-hdC
+vtI
 wjo
 bVk
 dbP
@@ -147145,7 +147227,7 @@ rdj
 rdj
 rdj
 rdj
-ghO
+nCP
 rdj
 rdj
 rdj
@@ -147749,7 +147831,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -148051,7 +148133,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -148353,7 +148435,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -148655,7 +148737,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -148957,7 +149039,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -149259,7 +149341,7 @@ rfc
 aan
 kuM
 kuM
-ghO
+nCP
 kuM
 kuM
 aan
@@ -149863,7 +149945,7 @@ rfc
 aan
 kuM
 kuM
-ghO
+nCP
 kuM
 kuM
 aan
@@ -150165,7 +150247,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -150467,7 +150549,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -150769,7 +150851,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -151071,7 +151153,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -151373,7 +151455,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -151977,7 +152059,7 @@ vVp
 rdj
 rdj
 rfc
-ghO
+nCP
 jYm
 rdj
 rdj
@@ -152279,7 +152361,7 @@ vVp
 rdj
 rdj
 rfc
-ghO
+nCP
 jYm
 rdj
 rdj
@@ -152883,7 +152965,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -153185,7 +153267,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -153487,7 +153569,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -153789,7 +153871,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -154091,7 +154173,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -154393,7 +154475,7 @@ rfc
 aan
 kuM
 kuM
-ghO
+nCP
 kuM
 kuM
 aan
@@ -154997,7 +155079,7 @@ rfc
 aan
 kuM
 kuM
-ghO
+nCP
 kuM
 kuM
 aan
@@ -155299,7 +155381,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -155601,7 +155683,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -155903,7 +155985,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -156205,7 +156287,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
@@ -156507,7 +156589,7 @@ qpP
 aam
 dYw
 kuM
-ghO
+nCP
 kuM
 qpP
 aam
