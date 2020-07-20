@@ -1513,15 +1513,20 @@ var/global/noir = 0
 		if ("addabil")
 			if (src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
+				var/origin = href_list["origin"]
 				if (!M) return
 				if (!M.abilityHolder)
 					alert("No ability holder detected. Create a holder first!")
 					return
-				var/ab_to_add = input("Which ability?", "Ability", null) as anything in childrentypesof(/datum/targetable)
+				var/ab_to_add = input("Enter a /datum/targetable path or search by partial path", "Add an Ability", null) as null|text
+				ab_to_add = get_one_match(ab_to_add, "/datum/targetable")
+				if (!ab_to_add) return // user canceled
 				M.abilityHolder.addAbility(ab_to_add)
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] added ability [ab_to_add] to [key_name(M)].")
 				logTheThing("admin", usr, M, "added ability [ab_to_add] to [constructTarget(M,"admin")].")
+				if (origin == "manageabils")//called via ability management panel
+					usr.client.cmd_admin_manageabils(M)
 			else
 				alert("You must be at least a Primary Administrator to do this!")
 
@@ -1549,6 +1554,58 @@ var/global/noir = 0
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] created abilityHolder [ab_to_add] for [key_name(M)].")
 				logTheThing("admin", usr, M, "created abilityHolder [ab_to_add] for [constructTarget(M,"admin")].")
+			else
+				alert("You must be at least a Primary Administrator to do this!")
+
+		if ("manageabils")
+			if (src.level >= LEVEL_PA)
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_manageabils(M)
+			else
+				alert("You must be at least a Primary Administrator to do this!")
+
+		if ("manageabils_remove")
+			if (src.level >= LEVEL_PA)
+				var/mob/M = locate(href_list["target"])
+				var/datum/targetable/A = locate(href_list["ability"])
+				if (!M || !A) return
+				message_admins("[key_name(usr)] removed ability [A] from [key_name(M)].")
+				logTheThing("admin", usr, M, "removed ability [A] from [constructTarget(M,"admin")].")
+				M.abilityHolder.removeAbilityInstance(A)
+				M.abilityHolder.updateButtons()
+				usr.client.cmd_admin_manageabils(M)
+			else
+				alert("You must be at least a Primary Administrator to do this!")
+
+		if ("manageabils_refresh")
+			if (src.level >= LEVEL_PA)
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_manageabils(M)
+			else
+				alert("You must be at least a Primary Administrator to do this!")
+
+		if ("manageabils_alter_cooldown")
+			if (src.level >= LEVEL_PA)
+				var/mob/M = locate(href_list["target"])
+				var/datum/targetable/A = locate(href_list["ability"])
+				if (!M || !A) return
+				var/input = input(usr, "Enter a cooldown in deciseconds", "Alter Cooldown", A.cooldown) as num|null
+				if(isnull(input))
+					return
+				else if(input < 0)
+					A.cooldown = 0
+				else
+					A.cooldown = round(input)
+				usr.client.cmd_admin_manageabils(M)
+			else
+				alert("You must be at least a Primary Administrator to do this!")
+
+		if ("manageabilt_debug_vars")
+			if (src.level >= LEVEL_PA)
+				var/datum/targetable/A = locate(href_list["ability"])
+				usr.client.debug_variables(A)
 			else
 				alert("You must be at least a Primary Administrator to do this!")
 
@@ -4650,8 +4707,8 @@ var/global/noir = 0
 		</style>
 		</head>
 		<body>
-		<h3>Bioeffects of [M.name]
-		<a href='?src=\ref[src.holder];action=checkbioeffect_refresh;target=\ref[M];origin=bioeffect_check' class="button">&#x1F504;</a></h3>
+		<h1>Bioeffects of [M.name]
+		<a href='?src=\ref[src.holder];action=checkbioeffect_refresh;target=\ref[M];origin=bioeffect_check' class="button">&#x1F504;</a></h1>
 		<h4>(Stability: <a href='?src=\ref[src.holder];action=checkbioeffect_alter_genetic_stability;target=\ref[M];origin=bioeffect_check'>[M.bioHolder.genetic_stability]</a>)
 		<a href='?src=\ref[src.holder];action=checkbioeffect_add;target=\ref[M];origin=bioeffect_check' class="button">&#x2795;</a></h4>
 		<table>
@@ -4707,6 +4764,96 @@ var/global/noir = 0
 			</tr>"}
 	dat += "</table></body></html>"
 	usr.Browse(dat.Join(),"window=bioeffect_check;size=900x400")
+
+/client/proc/cmd_admin_manageabils(var/mob/M)
+	var/list/dat = list()
+	dat += {"
+		<html>
+		<head>
+		<title>Ability Management Panel</title>
+		<style>
+		table {
+			border:1px solid #ff4444;
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		td {
+			padding: 8px;
+			text-align: left;
+		}
+
+		th {
+			background-color: #ff4444;
+			color: white;
+			padding: 8px;
+			text-align: left;
+		}
+
+		th:nth-child(4), td:nth-child(4) {text-align: center;}
+		tr:nth-child(odd) {background-color: #f2f2f2;}
+		tr:hover {background-color: #e2e2e2;}
+
+
+		.button {
+			padding: 6px 12px;
+			text-align: center;
+			float: right;
+			display: inline-block;
+			font-size: 12px;
+			margin: 0px 2px;
+			cursor: pointer;
+			color: white;
+			border: 2px solid #008CBA;
+			background-color: #008CBA;
+			text-decoration: none;
+		}
+		</style>
+		</head>
+		<body>
+		<h3>
+			Abilities of [M.name]
+			<a href='?src=\ref[src.holder];action=manageabils_refresh;target=\ref[M];origin=manageabils' class="button">&#x1F504;</a>
+			<a href='?src=\ref[src.holder];action=addabil;target=\ref[M];origin=manageabils' class="button">&#x2795;</a>
+		</h3>
+		<table>
+			<tr>
+				<th>Remove</th>
+				<th>Name</th>
+				<th>Type Path</th>
+				<th>Cooldown</th>
+			</tr>
+		"}
+
+	if (!M.abilityHolder)
+		return
+	var/list/abils = list()
+	if (istype(M.abilityHolder, /datum/abilityHolder/composite))
+		var/datum/abilityHolder/composite/CH = M.abilityHolder
+		if (CH.holders.len)
+			for (var/datum/abilityHolder/AH in CH.holders)
+				abils += AH.abilities //get a list of all the different abilities in each holder
+			//if(!abils.len)
+				//usr.Browse(dat.Join(),"window=manageabils;size=900x400")
+				//return //no abilities
+		//else
+			//usr.Browse(dat.Join(),"window=manageabils;size=900x400")
+			//return //no ability holders in composite holder
+	else
+		abils += M.abilityHolder.abilities
+		if (!abils.len)
+			return
+
+	for (var/datum/targetable/A in abils)
+		dat += {"
+			<tr>
+				<td><a href='?src=\ref[src.holder];action=manageabils_remove;target=\ref[M];ability=\ref[A];origin=manageabils'>remove</a></td>
+				<td><a href='?src=\ref[src.holder];action=manageabilt_debug_vars;ability=\ref[A];origin=manageabils'>[A.name]</a></td>
+				<td>[A.type]
+				<td><a href='?src=\ref[src.holder];action=manageabils_alter_cooldown;target=\ref[M];ability=\ref[A];origin=manageabils'>[isnull(A.cooldown) ? "&#x26D4;" : A.cooldown]</a></td>
+			</tr>"}
+	dat += "</table></body></html>"
+	usr.Browse(dat.Join(),"window=manageabils;size=700x400")
 
 /client/proc/respawn_target(mob/M as mob in world, var/forced = 0)
 	set name = "Respawn Target"

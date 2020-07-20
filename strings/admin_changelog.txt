@@ -1,3 +1,6 @@
+(t)mon jul 20 20
+(u)Sovexe
+(*)New Manage Abilities Panel accesible in player options and tilde menu.
 (t)fri jul 17 20
 (u)Kyle
 (*)Add button in secrets panel to add an ability to a selected mob or to all mobs. You can specify all humans or all mob/living. Also, fixed issue with trying to add abilities to abilityholder Composites that did not have any abilityHolders inside it.
