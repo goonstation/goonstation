@@ -216,7 +216,7 @@
 	return ret
 
 //Called when a component is dragged onto another one.
-/datum/component/mechanics_holder/proc/dropConnect(var/comsig_target, atom/A, mob/user)
+/datum/component/mechanics_holder/proc/dropConnect(atom/comsig_target, atom/A, mob/user)
 	if(!A || A == parent || user.stat || !isliving(user) || (SEND_SIGNAL(A,_COMSIG_MECHCOMP_COMPATIBLE) != 1))  //ZeWaka: Fix for null.mechanics
 		return
 
