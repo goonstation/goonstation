@@ -1,5 +1,9 @@
 
 (t)mon jul 20 20
+(u)RichardGere
+(p)1535
+(e)⚖|balance
+(+)Bulky items no longer fit into a patient's chest. Some exceptions apply.
 (u)zjdtmkhzt
 (p)1552
 (e)|
