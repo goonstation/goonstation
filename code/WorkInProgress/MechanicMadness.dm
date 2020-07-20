@@ -213,7 +213,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..()) return 1
-		return attack_hand(user)
+		return //attack_hand(user) // was causing issues
 
 	attack_hand(mob/user as mob)
 		..()
