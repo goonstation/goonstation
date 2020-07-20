@@ -530,6 +530,7 @@ var/global
 		"pathology" = list (  ),
 		"deleted" = list (  ),
 		"vehicle" = list (  ),
+		"tgui" = list (), //me 2
 		"audit" = list()//im a rebel, i refuse to add that gross SPACING
 	)
 	savefile/compid_file 	//The file holding computer ID information

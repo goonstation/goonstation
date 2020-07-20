@@ -797,6 +797,10 @@ var/global/curr_day = null
 	if (!usr || isnull(usr.client))
 		return
 
+	// Tgui Topic middleware
+	if(!tgui_Topic(href_list))
+		return
+
 	var/mob/M
 	if (href_list["target"])
 		var/targetCkey = href_list["target"]

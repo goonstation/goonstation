@@ -11,7 +11,7 @@
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
-	flags = FPRINT | FLUID_SUBMERGE
+	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 
 	var/status = 0
 	var/power_usage = 0
@@ -144,21 +144,22 @@
 	return src.attack_hand(user)
 
 /obj/machinery/attack_hand(mob/user as mob)
+	. = ..()
 	if(status & (NOPOWER|BROKEN))
 		return 1
 	if(user && (user.lying || user.stat))
 		return 1
 	if (user && (get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user) && !isAI(usr))
 		return 1
-	if (user && ishuman(user))
-		if(user.get_brain_damage() >= 60 || prob(user.get_brain_damage()))
-			boutput(user, "<span class='alert'>You are too dazed to use [src] properly.</span>")
-			return 1
 
 	if (user)
+		if (ishuman(user))
+			if(user.get_brain_damage() >= 60 || prob(user.get_brain_damage()))
+				boutput(user, "<span class='alert'>You are too dazed to use [src] properly.</span>")
+				return 1
+
 		src.add_fingerprint(user)
 		interact_particle(user,src)
-
 	return 0
 
 /obj/machinery/ex_act(severity)
