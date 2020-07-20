@@ -39,6 +39,7 @@
 	var/treatment_tox = "charcoal"
 	var/treatment_virus = "spaceacillin"
 	var/terrifying = 0 // for making the medbots all super fucked up
+	var/nanomedbot = 0	// If we build one out of a nanomed
 
 /obj/machinery/bot/medbot/no_camera
 	no_camera = 1
@@ -81,10 +82,31 @@
 	treatment_virus = "loose screws"
 	no_camera = 1
 
+/obj/machinery/bot/medbot/nanomedbot	// nanomedbot
+	name = "Automatic NanoMed Plus"
+	desc = "Huh. That vending machine has an arm. Seems to be blocking the controls."
+	density = 1	// Its kinda big...
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "med"
+	access_lookup = "Staff Assistant"
+	text2speech = 1
+	nanomedbot = 1
+	health = 50
+
+/obj/item/arm_scanner_assembly
+	name = "Medical scanner/robot arm assembly"
+	desc = "A robot arm with a medical scanner stuck to it."
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "nanomed-arm-assy"
+	var/build_step = 0
+	var/created_name = "Automatic NanoMed Plus" //To preserve the name if it's a unique medbot I guess
+	pixel_y = 3 // hax
+	w_class = 3.0
+
 /obj/item/firstaid_arm_assembly
 	name = "first aid/robot arm assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."
-	icon = 'icons/obj/bots/medbots.dmi'
+	icon = 'icons/obj/vending.dmi'
 	icon_state = "medskin-firstaid"
 	item_state = "firstaid"
 	pixel_y = 4 // so we don't have to have two sets of the skin sprites, we're just gunna bump this up a bit
@@ -113,19 +135,30 @@
 		return
 
 	else
-		src.icon_state = "medibot"
-		if (src.skin)
+		if (!nanomedbot)
+			src.icon_state = "medibot"
+		else
+			src.icon = 'icons/obj/vending.dmi'
+			src.icon_state = "med"
+		if (src.skin && !nanomedbot)
 			src.overlays += "medskin-[src.skin]"
 		src.overlays += "medibot-scanner"
 		if (heal)
-			src.overlays += "medibot-arm-syringe"
-			src.overlays += "medibot-light-flash"
-		else
-			src.overlays += "medibot-arm"
-			if (stun)
-				src.overlays += "medibot-light-stun"
+			if (nanomedbot)
+				src.overlays += "nanomed-arme"
+				src.overlays += "medibot-light-flash"
 			else
-				src.overlays += "medibot-light[src.on]"
+				src.overlays += "medibot-arm-syringe"
+				src.overlays += "medibot-light-flash"
+		else
+			if (nanomedbot)
+				src.overlays += "nanomed-arm"
+			else
+				src.overlays += "medibot-arm"
+		if (stun)
+			src.overlays += "medibot-light-stun"
+		else
+			src.overlays += "medibot-light[src.on]"
 		/*
 		if (emagged)
 			src.overlays += "medibot-spark"
@@ -140,6 +173,9 @@
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.access_lookup)
 			src.update_icon()
+		if (src.nanomedbot)
+			src.speak("Welcome to the NanoMedbay Mk-IV Automatic Doctoring System.")
+			src.speak("For use by undertrained medical personnel.")
 	return
 
 /obj/machinery/bot/medbot/attack_ai(mob/user as mob)
@@ -158,7 +194,7 @@
 	else
 		dat += "None Loaded"
 	dat += "<br>Behaviour controls are [src.locked ? "locked" : "unlocked"]"
-	if (!src.locked)
+	if (!src.locked && !src.nanomedbot)
 		dat += "<hr><TT>Healing Threshold: "
 		dat += "<a href='?src=\ref[src];adj_threshold=-10'>--</a> "
 		dat += "<a href='?src=\ref[src];adj_threshold=-5'>-</a> "
@@ -231,7 +267,10 @@
 		if (!src.currently_healing)
 			src.currently_healing = 1
 			src.frustration = 0
-			src.medicate_patient(src.patient)
+			if (nanomedbot)
+				src.medicate_patient_nanomedbot(src.patient)
+			else
+				src.medicate_patient(src.patient)
 
 /obj/machinery/bot/medbot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
@@ -284,7 +323,7 @@
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
 		W = W:ID_card
 	if (istype(W, /obj/item/card/id))
-		if (src.allowed(user))
+		if (src.allowed(user) && !src.nanomedbot)
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			src.updateUsrDialog()
@@ -296,7 +335,20 @@
 			src.health = initial(src.health)
 			src.visible_message("<span class='notice'>[user] repairs [src]!</span>", "<span class='notice'>You repair [src].</span>")
 
+	else if (istype(W, /obj/item/pen))
+		var/t = input(user, "Enter new robot name", src.name) as text
+		t = strip_html(replacetext(t, "'",""))
+		t = copytext(t, 1, 45)
+		if (!t)
+			return
+		if (!in_range(src, usr) && src.loc != usr)
+			return
+
+		src.name = t
+
 	else if (istype(W, /obj/item/reagent_containers/glass))
+		if (src.nanomedbot)
+			boutput(user, "There's nowhere to fit another container inside this thing!")
 		if (src.locked)
 			boutput(user, "You cannot insert a beaker because the panel is locked!")
 			return
@@ -354,39 +406,52 @@
 		src.currently_healing = 0
 		src.last_found = world.time
 		src.path = null
+		if (nanomedbot)
+			src.speak("User not found. Automatic target acquisition system activated.")
 
 	if (!src.patient)
-		if(prob(1))
-			var/message = pick("Radar, put a mask on!","I'm a doctor.","There's always a catch, and it's the best there is.","I knew it, I should've been a plastic surgeon.","What kind of medbay is this? Everyone's dropping like dead flies.","Delicious!")
-			src.speak(message)
+		if(nanomedbot)
+			if(prob(1))
+				var/message = pick("Ammunition depleted.","The time is now ERROR P.M.","Have a very healthy day.")
+				src.speak(message)
+		else
+			if(prob(1))
+				var/message = pick("Radar, put a mask on!","I'm a doctor.","There's always a catch, and it's the best there is.","I knew it, I should've been a plastic surgeon.","What kind of medbay is this? Everyone's dropping like dead flies.","Delicious!")
+				src.speak(message)
 
-		for (var/mob/living/carbon/C in view(7,src)) //Time to find a patient!
+		for (var/mob/living/carbon/C in view(src.nanomedbot ? 1 : 7,src)) //Time to find a patient!
 			if ((isdead(C)) || !ishuman(C))
 				continue
 
 			if ((C == src.oldpatient) && (world.time < src.last_found + 100))
 				continue
 
-			if (src.assess_patient(C))
+			if (src.assess_patient(C) || src.assess_patient_nanomedbot(C))
 				src.patient = C
 				src.oldpatient = C
 				src.last_found = world.time
 				SPAWN_DBG(0)
 					if ((src.last_newpatient_speak + 100) < world.time) //Don't spam these messages!
-						var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!","Don't worry, I'm trained for this!")
-						src.speak(message)
-						src.last_newpatient_speak = world.time
+						if (nanomedbot)
+							src.speak("User detected. Please stand by for treatment.")
+							src.last_newpatient_speak = world.time
+						else
+							var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!","Don't worry, I'm trained for this!")
+							src.speak(message)
+							src.last_newpatient_speak = world.time
 					src.point(C.name)
 				break
 			else
 				continue
 
-
 	if (src.patient && (get_dist(src,src.patient) <= 1))
 		if (!src.currently_healing)
 			src.currently_healing = 1
 			src.frustration = 0
-			src.medicate_patient(src.patient)
+			if (nanomedbot)
+				src.medicate_patient_nanomedbot(src.patient)
+			else
+				src.medicate_patient(src.patient)
 		return
 
 	else if (src.patient && src.path && src.path.len && (get_dist(src.patient,src.path[src.path.len]) > 2))
@@ -406,7 +471,7 @@
 				src.last_found = world.time
 		return
 
-	if(src.path && src.path.len && src.patient)
+	if(src.path && src.path.len && !src.nanomedbot && src.patient)	// Vending machines aren't known for being terribly mobile
 		step_to(src, src.path[1])
 		src.path -= src.path[1]
 		SPAWN_DBG(0.3 SECONDS)
@@ -414,8 +479,11 @@
 				step_to(src, src.path[1])
 				src.path -= src.path[1]
 
-	if(src.path && src.path.len > 8 && src.patient)
+	if(src.path && src.path.len > 8 && src.patient && !src.nanomedbot)
 		src.frustration++
+
+	if(src.path && src.path.len > 1 && src.patient && src.nanomedbot)
+		src.frustration += 10
 
 	return
 
@@ -474,6 +542,261 @@
 				return 1 //STOP DISEASE FOREVER
 
 	return 0
+
+/obj/machinery/bot/medbot/proc/assess_patient_nanomedbot(mob/living/carbon/C as mob)	// Copied from above!
+	//Time to see if they need medical help!
+	if(isdead(C))
+		return 0 			//welp too late for them!
+
+	if(C.suiciding)
+		return 0 			//Kevorkian school of robotic medical assistants.
+
+	if(src.emagged) //Everyone needs our medicine. (Our medicine is drugs)
+		return 1
+
+	// We have ALL THE MEDS, no need to check if we have em
+	var/brain = C.get_brain_damage()
+	var/health = C.health
+
+	if(health <= 50)	// Change this once I figure out how to html
+		return 1
+
+	if(brain >= 30)		// ditto
+		return 1
+
+	for(var/datum/ailment_data/disease/am in C.ailments)
+		if((am.stage > 1) || (am.spread == "Airborne"))
+			if (!C.reagents.has_reagent(src.treatment_virus))
+				return 1 //STOP DISEASE FOREVER
+
+	return 0
+
+/obj/machinery/bot/medbot/proc/medicate_patient_nanomedbot(mob/living/carbon/C as mob)
+	if(!src.on)
+		return
+
+	if(!istype(C))
+		src.oldpatient = src.patient
+		src.patient = null
+		src.currently_healing = 0
+		src.last_found = world.time
+		return
+
+	if(isdead(C))		// rip
+		var/death_message = pick("VITAL SIGNS TERMINATED","CANNOT REPAIR CONDITION: DEATH","TIME OF DEATH: ERROR P.M.")
+		src.speak(death_message)
+		src.oldpatient = src.patient
+		src.patient = null
+		src.currently_healing = 0
+		src.last_found = world.time
+		return
+
+	var/reagent_idA = null	// Drug number A!
+	var/reagent_idB = null	// Drug number B!
+	var/reagent_idC = null	// Drug number C!
+
+	var/health = C.health
+	var/brute = C.get_brute_damage()
+	var/burn = C.get_burn_damage()
+	var/tox = C.get_toxin_damage()
+	var/oxy = C.get_oxygen_deprivation()
+	var/brain = C.get_brain_damage()
+
+	var/medbarkA = null	// Multiline bork hack cus I dont know how it works
+	var/medbarkB = null
+	var/medbarkC = null
+
+	// So what's wrong with the spaceman?
+
+	if (health <= 0) // Are they in crit? Blurt out their hitpoints!
+		src.speak("VITAL STATUS OF USER: [C]")
+		src.speak("BRUTE = [brute]. BURNS = [burn]. TOXIN = [tox]")
+		src.speak("OXY = [oxy]. BRAIN = [brain]")
+
+	// Lets play Choose Your Own Medical Adventure
+	// A winding tale of conditional statements!
+
+	// First, how's their brain doing?
+	if (src.emagged && !src.terrifying) //Emagged! Time to drug everybody.
+		switch(rand(1,3))
+			if (1)
+				reagent_idA = pick("pancuronium","curare") // YEE
+				reagent_idB = pick("methamphetamine","bathsalts") // YEEB
+				reagent_idC = pick("psilocybin","LSD") // YEEC
+				medbarkA = "WARNING. USER BRAINDEATH IMMINENT."
+				medbarkB = "AUTOMATIC MEDICAL SYSTEMS ENGAGED."
+				medbarkC = "SYNAPTIZINE ADMINISTERED."
+			if (2)
+				reagent_idA = "morphine"
+				medbarkA = "WARNING. USER DEATH IMMINENT."
+				medbarkB = "AUTOMATIC MEDICAL SYSTEMS ENGAGED."
+				medbarkC = "MORPHINE ADMINISTERED."
+			if (3)
+				reagent_idA = "ether"
+				reagent_idB = "haloperidol"
+				reagent_idC = "curare"
+				medbarkA = "WARNING. USER BEDTIME IMMINENT."
+				medbarkB = "AUTOMATIC MEDICAL SYSTEMS ENGAGED."
+				medbarkC = "NARCOTICS ADMINISTERED."
+
+	else if (brain >= 80 && !C.reagents.has_reagent("synaptizine"))	//Fricked?
+		reagent_idA = "synaptizine"
+		medbarkA = "WARNING. USER BRAINDEATH IMMINENT."
+		medbarkB = "AUTOMATIC MEDICAL SYSTEMS ENGAGED."
+		medbarkC = "SYNAPTIZINE ADMINISTERED."
+	else if (brain >= 40 && !C.reagents.has_reagent("mannitol")) //Less fricked?
+		reagent_idA = "mannitol"
+		medbarkA = "MINOR CONCUSSION DETECTED."
+		medbarkB = "AUTOMATIC MEDICAL SYSTEMS ENGAGED."
+		medbarkC = "MANNITOL ADMINISTERED."
+
+	// Next, are they in deepass crit?
+	else if (health <= -400)
+		if(!C.reagents.has_reagent("atropine") && !C.reagents.has_reagent("synaptizine"))
+			reagent_idA = "synaptizine"
+			reagent_idB = "atropine"
+			reagent_idC = "epinephrine"
+			medbarkA = "WARNING. USER DEATH IMMINENT."
+			medbarkB = "AUTOMATIC MEDICAL SYSTEMS ENGAGED."
+			medbarkC = "EMERGENCY MEDICATIONS ADMINISTERED."
+
+	// What about less deep crit?
+	else if (health <= -200)
+		if(!C.reagents.has_reagent("atropine"))
+			reagent_idA = "salbutamol"
+			reagent_idB = "atropine"
+			reagent_idC = "epinephrine"
+			medbarkA = "WARNING. VITAL SIGNS CRITICAL."
+			medbarkB = "AUTOMATIC MEDICAL SYSTEMS ENGAGED."
+			medbarkC = "EMERGENCY MEDICATIONS ADMINISTERED."
+
+	// Are we barely even in crit at all?
+	else if (health <= 0)
+		if (tox && !C.reagents.has_reagent("charcoal"))
+			reagent_idA = "salbutamol"
+			reagent_idB = "charcoal"
+			reagent_idC = "epinephrine"
+			medbarkA = "WARNING. BLOOD TOXIN LEVELS DETECTE."
+			medbarkB = "AUTOMATIC MEDICAL SYSTEMS ENGAGED."
+			medbarkC = "EMERGENCY MEDICATIONS ADMINISTERED."
+		else if(!C.reagents.has_reagent("epinephrine"))
+			reagent_idA = "salbutamol"
+			reagent_idB = "saline"
+			reagent_idC = "epinephrine"
+			medbarkA = "WARNING. VITAL SIGNS ARE DROPPING."
+			medbarkB = "AUTOMATIC MEDICAL SYSTEMS ENGAGED."
+			medbarkC = "EMERGENCY MEDICATIONS ADMINISTERED."
+
+	// Are we hurt, but not like *hurt* hurt?
+	else if (health <= 100)
+		if (oxy && !C.reagents.has_reagent("salbutamol"))
+			reagent_idA = "salbutamol"
+			medbarkA = "WARNING. BLOOD OXYGEN SATURATION LEVELS LOW."
+			medbarkB = "AUTOMATIC MEDICAL SYSTEMS ENGAGED."
+			medbarkC = "BLOOD REOXYGENATION ADMINISTERED."
+		else if (brute && burn && !C.reagents.has_reagent("menthol"))
+			reagent_idA = "menthol"
+			reagent_idB = "saline"
+			reagent_idC = "morphine"
+			medbarkA = "MINOR [pick("LACERATIONS", "FRACTURE")] DETECTED."
+			medbarkB = "AUTOMATIC MEDICAL SYSTEMS ENGAGED."
+			medbarkC = "MORPHINE ADMINISTERED."
+		else if (brute && !C.reagents.has_reagent("salicylic_acid"))
+			reagent_idA = "salicylic_acid"
+			reagent_idB = "saline"
+			reagent_idC = "morphine"
+			medbarkA = "MINOR [pick("LACERATIONS", "FRACTURE")] DETECTED."
+			medbarkB = "AUTOMATIC MEDICAL SYSTEMS ENGAGED."
+			medbarkC = "MORPHINE ADMINISTERED."
+		else if (tox && !C.reagents.has_reagent("charcoal"))
+			reagent_idA = "charcoal"
+			reagent_idB = "morphine"
+			medbarkA = "BLOOD TOXIN LEVELS DETECTED."
+			medbarkB = "AUTOMATIC MEDICAL SYSTEMS ENGAGED."
+			medbarkC = "ANTIDOTE ADMINISTERED."
+
+
+	// Inject the things!
+	if (!reagent_idA && !reagent_idB && !reagent_idC ) 			// If we've gotten this far without setting a reagent, they're probably fine
+		src.oldpatient = src.patient
+		src.patient = null
+		src.currently_healing = 0
+		src.last_found = world.time
+		var/message = pick("Automatic medical systems disengaged.")
+		src.speak(message)
+		return
+	else if (reagent_idA && !reagent_idB && !reagent_idC ) 	// Only one of our drugs are set!
+		src.update_icon(stun = 0, heal = 1)
+		if (src.emagged)
+			src.visible_message("<span class='alert'><B>[src] is trying to inject [src.patient] with [pick("salicylic acid", "epinephrine", "morphine")]!</B></span>")
+		else
+			src.visible_message("<span class='alert'><B>[src] is trying to inject [src.patient] with [reagent_idA]!</B></span>")
+		//I dont know if anything'll freak out if speak tries to speak a null line and I dont wanna find out
+		if (medbarkA)
+			src.speak(medbarkA)
+		if (medbarkB)
+			src.speak(medbarkB)
+		SPAWN_DBG(3 SECONDS)
+			if ((get_dist(src, src.patient) <= 1) && (src.on))
+				src.patient.reagents.add_reagent(reagent_idA,(15 * (src.emagged + 1)))
+				src.visible_message("<span class='alert'><B>[src] injects [src.patient] with the syringe!</B></span>")
+				if (medbarkC)
+					src.speak(medbarkC)
+			src.update_icon()
+			src.currently_healing = 0
+			return
+	else if (reagent_idA && reagent_idB && !reagent_idC ) 	// Two drugs, one syringe
+		src.update_icon(stun = 0, heal = 1)
+		if (src.emagged)
+			src.visible_message("<span class='alert'><B>[src] is trying to inject [src.patient] with [pick("atropine", "menthol", "morphine")] and [pick("synaptizine", "pizza", "morphine")]!</B></span>")
+		else
+			src.visible_message("<span class='alert'><B>[src] is trying to inject [src.patient] with [reagent_idA] and [reagent_idB]!</B></span>")
+		//I dont know if anything'll freak out if speak tries to speak a null line and I dont wanna find out
+		if (medbarkA)
+			src.speak(medbarkA)
+		if (medbarkB)
+			src.speak(medbarkB)
+		SPAWN_DBG(3 SECONDS)
+			if ((get_dist(src, src.patient) <= 1) && (src.on))
+				src.patient.reagents.add_reagent(reagent_idA,(5 * ((src.emagged * 2) + 1)))
+				src.patient.reagents.add_reagent(reagent_idB,(5 * ((src.emagged * 2) + 1)))
+				src.visible_message("<span class='alert'><B>[src] injects [src.patient] with the syringe!</B></span>")
+				if (medbarkC)
+					src.speak(medbarkC)
+			src.update_icon()
+			src.currently_healing = 0
+			return
+	else if (reagent_idA && reagent_idB && reagent_idC ) 		// Three drugs!
+		src.update_icon(stun = 0, heal = 1)
+		if (src.emagged)
+			src.visible_message("<span class='alert'><B>[src] is trying to inject [src.patient] with [pick("atropine", "menthol", "morphine")], [pick("synaptizine", "pizza", "morphine")], and [pick("saline", "pepperoni", "morphine")]!</B></span>")
+		else
+			src.visible_message("<span class='alert'><B>[src] is trying to inject [src.patient] with [reagent_idA], [reagent_idB], and [reagent_idC]!</B></span>")
+		//I dont know if anything'll freak out if speak tries to speak a null line and I dont wanna find out
+		if (medbarkA)
+			src.speak(medbarkA)
+		if (medbarkB)
+			src.speak(medbarkB)
+		SPAWN_DBG(3 SECONDS)
+			if ((get_dist(src, src.patient) <= 1) && (src.on))
+				src.patient.reagents.add_reagent(reagent_idA,(5 * ((src.emagged * 2) + 1)))
+				src.patient.reagents.add_reagent(reagent_idB,(5 * ((src.emagged * 2) + 1)))
+				src.patient.reagents.add_reagent(reagent_idC,(5 * ((src.emagged * 2) + 1)))
+				src.visible_message("<span class='alert'><B>[src] injects [src.patient] with the syringe!</B></span>")
+				if (medbarkC)
+					src.speak(medbarkC)
+			src.update_icon()
+			src.currently_healing = 0
+			return
+
+	// Cleanup!
+	medbarkA = null
+	medbarkB = null
+	medbarkC = null
+	reagent_idA = null
+	reagent_idB = null
+	reagent_idC = null
+	return
 
 /obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C as mob)
 	if(!src.on)
@@ -759,3 +1082,29 @@
 			return
 
 		src.created_name = t
+
+
+/*
+ *	NanoMedbot Assembly -- Arm + scanner + proxy thing + Big ol' NanoMed Plus
+ */
+
+/obj/item/device/analyzer/healthanalyzer/attackby(var/obj/item/parts/robot_parts/S, mob/user as mob)
+	if (!istype(S, /obj/item/parts/robot_parts/arm/))
+		..()
+		return
+	else
+		var/obj/item/arm_scanner_assembly/A = new /obj/item/arm_scanner_assembly
+		user.u_equip(A)
+		user.put_in_hand_or_drop(A)
+		boutput(user, "You add the robot arm to the medical scanner!")
+		qdel(S)
+		qdel(src)
+
+/obj/item/arm_scanner_assembly/attackby(obj/item/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/device/prox_sensor))
+		src.overlays += "medibot-light0"
+		boutput(user, "You complete the Medical Arm Attachment! It looks ready to attach to a NanoMed Plus!")
+		src.pixel_y = 5
+		qdel(W)
+
+// Can't rename it here. Rename it elsewhere!

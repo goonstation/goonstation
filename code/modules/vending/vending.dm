@@ -1547,6 +1547,14 @@
 	src.wire_HTML = jointext(html_parts, "")
 
 /obj/machinery/vending/attackby(obj/item/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/arm_scanner_assembly) && W.pixel_y == 5)
+		if (istype(src, /obj/machinery/vending/medical))
+			boutput(user, "<span class='notice'>You attach the [W] to the [src], completing the Auto NanoMed Plus! Beep boop.</span>")
+			var/obj/machinery/bot/medbot/nanomedbot/A = new /obj/machinery/bot/medbot/nanomedbot
+			A.set_loc(get_turf(src))
+			W.set_loc(A)
+			src.set_loc(A)
+			user.u_equip(W)
 	if (istype(W, /obj/item/spacecash))
 		if (src.pay)
 			src.credit += W.amount
