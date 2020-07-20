@@ -3,7 +3,7 @@
 
 /// Group for tgui assets
 /datum/asset/group/base_tgui
-	children = list(
+	subassets = list(
 		/datum/asset/basic/tgui,
 		/datum/asset/basic/fontawesome
 	)
