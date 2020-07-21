@@ -26,7 +26,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps
 	var/cellsize
 	var/cellwidth
 
-	var/last_update = 0
+	var/last_update = 1
 
 	var/tmp/list/buckets_holding_atom
 	var/tmp/min_x = 0
