@@ -3,7 +3,7 @@
 
 #define GET_NEARBY(A,range) spatial_z_maps[A.z].get_nearby(A,range)
 
-#define CELL_POSITION(X,Y) clamp(((round(X / cellsize)) + (round(Y / cellsize)) * cellwidth) + 1,0,hashmap.len)
+#define CELL_POSITION(X,Y) clamp(((round(X / cellsize)) + (round(Y / cellsize)) * cellwidth) + 1,1,hashmap.len)
 
 #define ADD_BUCKET(X,Y) do{\
 var/cellposition = CELL_POSITION(X,Y);\
