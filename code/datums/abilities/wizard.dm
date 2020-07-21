@@ -89,15 +89,20 @@
 	if (magcount >= 4) return 1
 	else return 0
 
-/mob/proc/wizard_castcheck(var/offensive = 0)
+/mob/proc/wizard_castcheck(var/datum/targetable/spell = null)
 	return 0
 
-/mob/living/carbon/human/wizard_castcheck(var/offensive = 0)
+/mob/living/carbon/human/wizard_castcheck(var/datum/targetable/spell = null)
 	if(src.stat)
 		boutput(src, "You can't cast spells while incapacitated.")
 		return 0
 	if (src.bioHolder.HasEffect("arcane_power") == 2)
 		return 1
+	if(spell && !istype(src.gloves, /obj/item/clothing/gloves/ring/wizard))
+		var/obj/item/clothing/gloves/ring/wizard/WR = src.gloves
+		if (WR.ability_path == spell.type)
+			return 1
+
 	if(!istype(src.wear_suit, /obj/item/clothing/suit/wizrobe))
 		boutput(src, "You don't feel strong enough without a magical robe.")
 		return 0
@@ -105,18 +110,18 @@
 		boutput(src, "You don't feel strong enough without a magical hat.")
 		return 0
 	var/area/getarea = get_area(src)
-	if(offensive && getarea.sanctuary)
+	if(spell.offensive && getarea.sanctuary)
 		boutput( src, "You cannot cast offensive spells in a sanctuary." )
 		return 0
 	if(getarea.name == "Chapel" || getarea.name == "Chapel Office")
 		boutput(src, "You cannot cast spells on hallowed ground!")// Maybe if the station were more corrupted...")
 		return 0
-	if (offensive == 1 && src.bioHolder.HasEffect("arcane_shame"))
+	if (spell.offensive == 1 && src.bioHolder.HasEffect("arcane_shame"))
 		boutput(src, "You are too consumed with shame to cast that spell!")
 		return 0
 	return 1
 
-/mob/living/critter/wizard_castcheck(var/offensive = 0)
+/mob/living/critter/wizard_castcheck(var/datum/targetable/spell = null)
 	if(src.stat)
 		boutput(src, "You can't cast spells while incapacitated.")
 		return 0
@@ -127,7 +132,7 @@
 		boutput(src, "You don't feel strong enough without a magical hat.")
 		return 0
 	var/area/getarea = get_area(src)
-	if(offensive && getarea.sanctuary)
+	if(spell.offensive && getarea.sanctuary)
 		boutput( src, "You cannot cast spells in a sanctuary." )
 		return 0
 	if(getarea.name == "Chapel" || getarea.name == "Chapel Office")
@@ -166,7 +171,7 @@
 			usr.update_cursor()
 			return
 		var/mob/user = spell.holder.owner
-		if (!istype(spell, /datum/targetable/spell/prismatic_spray/admin) && !user.wizard_castcheck(spell.offensive))
+		if (!istype(spell, /datum/targetable/spell/prismatic_spray/admin) && !user.wizard_castcheck(spell))
 			return
 		if (spell.targeted)
 			usr.targeting_ability = owner
@@ -235,7 +240,7 @@
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are dead.</span>")
 			src.holder.locked = 0
 			return 999
-		if (!istype(src, /datum/targetable/spell/prismatic_spray/admin) && !H.owner.wizard_castcheck()) // oh god this is ugly but it's technically not duplicating code so it fixes to problem with the move to ability buttons
+		if (!istype(src, /datum/targetable/spell/prismatic_spray/admin) && !H.owner.wizard_castcheck(spell)) // oh god this is ugly but it's technically not duplicating code so it fixes to problem with the move to ability buttons
 			src.holder.locked = 0
 			return 999
 		var/turf/T = get_turf(holder.owner)
@@ -281,7 +286,7 @@
 		object.owner = src
 
 	castcheck()
-		return !istype(src, /datum/targetable/spell/prismatic_spray/admin) && holder.owner.wizard_castcheck(src.offensive)
+		return !istype(src, /datum/targetable/spell/prismatic_spray/admin) && holder.owner.wizard_castcheck(spell)
 
 	cast()
 		if(ishuman(holder.owner))

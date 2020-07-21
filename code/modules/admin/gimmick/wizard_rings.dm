@@ -8,7 +8,7 @@
 
 	equipped(var/mob/user, var/slot)
 		..()
-		if (ability_path && istype(user.abilityHolder))
+		if (istype(user.abilityHolder))
 			user.abilityHolder.addAbility(ability_path)
 
 	unequipped(var/mob/user)
