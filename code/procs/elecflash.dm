@@ -110,6 +110,4 @@ var/global/mutable_appearance/elecflash_ma = null
 			boutput(src, "<span class='notice'>You feel electricity spark across you harmlessly!</span>")
 			return 0
 		src.do_disorient(stamina_damage = 15 + power * 8, weakened = 1 SECONDS + (power * (0.1 SECONDS)), stunned = 0, paralysis = 0, disorient = (power * (0.5 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
-
-		if (power >= 4)
-			src.TakeDamage("chest", 0, rand(0,1.00) * power * 0.2, damage_type=DAMAGE_BURN)
+		src.TakeDamage("chest", 0, rand(0,1.00) * power * 0.2, damage_type=DAMAGE_BURN)
