@@ -1,4 +1,10 @@
 
+(t)tue jul 21 20
+(u)CodeDude
+(p)1566
+(e)|
+(*)Added soft soft pizza to the game - a tasty drink found in soda machines!
+(+)Made some small sprite changes to the base pizza sprite.
 (t)mon jul 20 20
 (u)Zamujasa
 (e)🆕|feature
