@@ -92,7 +92,7 @@
 			/*if (!iswizard(src))
 				boutput(src, "<span class='alert'>You seem to have lost all magical abilities.</span>")
 				return 0*/
-			if (src.wizard_castcheck() == 0)
+			if (src.wizard_castcheck(src) == 0)
 				return 0 // Has own user feedback.
 
 	if (src.getStatusDuration("paralysis") || !isalive(src))
