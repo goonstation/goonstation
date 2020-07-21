@@ -15,7 +15,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps
 /proc/init_spatial_map()
 	spatial_z_maps = list(world.maxz)
 	for (var/zlevel = 1; zlevel <= world.maxz; zlevel++)
-		spatial_z_maps[zlevel] = new/datum/spatial_hashmap(world.maxx,world.maxy,60)
+		spatial_z_maps[zlevel] = new/datum/spatial_hashmap(world.maxx,world.maxy,60,zlevel)
 
 /datum/spatial_hashmap
 	var/list/list/hashmap
@@ -28,6 +28,8 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps
 
 	var/last_update = 0
 
+	var/my_z = 0
+
 	var/tmp/list/buckets_holding_atom
 	var/tmp/min_x = 0
 	var/tmp/min_y = 0
@@ -36,7 +38,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps
 
 
 
-	New(w,h,cs)
+	New(w,h,cs,z)
 		cols = w / cs
 		rows = h / cs
 
@@ -55,6 +57,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps
 		buckets_holding_atom = list()
 		buckets_holding_atom.len = hashmap.len
 
+		my_z = z
 	/* unused, could be useful later idk
 
 	proc/clear()
@@ -71,7 +74,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps
 		for (var/i = 1; i <= cols*rows; i++) //clean
 			hashmap[i].len = 0
 		for (var/client/C) //register
-			if (C.mob)
+			if (C.mob && C.mob.z == my_z)
 				hashmap[CELL_POSITION(C.mob.x,C.mob.y)] += C.mob
 				//a formal spatial map implementation would place an atom into any bucket its bounds occupy (register proc instead of the above line). We don't need that here
 				//register(C.mob)
