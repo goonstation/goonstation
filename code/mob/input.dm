@@ -36,6 +36,16 @@ mob
 
 			if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
 				src.dir = src.move_dir
+			#if ASS_JAM//only way to do this I thinks
+			var/mob/living/carbon/human/H = src
+			if (H.in_struggle)
+				H.setStatus("resting", INFINITE_STATUS)
+				if (H.defendere == 1)
+					H.strugglethingy.defend()
+				else
+					H.strugglethingy.attack()
+
+			#endif
 		if (changed & (KEY_THROW|KEY_PULL|KEY_POINT|KEY_EXAMINE|KEY_BOLT|KEY_OPEN|KEY_SHOCK)) // bleh
 			src.update_cursor()
 

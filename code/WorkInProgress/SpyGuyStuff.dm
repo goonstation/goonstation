@@ -905,7 +905,144 @@ proc/Create_Tommyname()
 		M = usr
 	M.update_equipped_modifiers() // Call the bruteforce movement modifier proc because we changed movespeed while (maybe!) equipped
 
+/datum/action/bar/private/icon/garrote_target/handcuffs
+	duration = 10
 
+/obj/item/garrote/handcuffs/attempt_grab(var/mob/living/assailant, var/mob/living/target)
+	// Can't strangle someone who doesn't exist. Or if we're already strangling someone.
+	// Also no strangling with flaccid wires, that's just weird.
+
+	if(!assailant || !target)
+		return 1
+
+	if(!wire_readied)
+		assailant.show_message("<span class='combat'>You have to have a firm grip of the wire before you can strangle [target]!</span>")
+		return 1
+
+	if(chokehold)
+		assailant.show_message("<span class='combat'>You're too busy strangling [chokehold.affecting] to strangle someone else!</span>")
+		return 1
+
+	// TODO: check that target has their back turned
+	if(is_behind_target(assailant, target))
+		// Try to grab a dude
+		actions.start(new/datum/action/bar/private/icon/garrote_target/handcuffs(target, src), assailant)
+	else
+		assailant.show_message("<span class='combat'>You have to be behind your target or they'll see you coming!</span>")
+		return 1
+
+/obj/item/garrote/handcuffs/try_grab(var/mob/living/carbon/human/target, var/mob/living/carbon/human/assailant)
+	..()
+	assailant.visible_message("<span class='combat bold'>[assailant] wraps \the [src] around [target]'s neck!</span>")
+	target.setStatus("handcuffed", 3000)
+	chokehold.state = GRAB_NECK
+	target.in_struggle = 1
+	assailant.in_struggle = 1
+	target.defendere = 1
+	assailant.attackere = 1
+	var/datum/action/bar/struggleProgress/struggleBar = new
+	var/datum/strugglethingy/struggle = new
+	assailant.strugglethingy = struggle
+	target.strugglethingy = struggle
+	struggle.attackere = assailant
+	struggle.defendere = target
+	struggleBar.owner = assailant
+	assailant.bar = struggleBar
+	struggle.setup()
+	struggleBar.onStart()
+	struggleBar.onUpdate()
+	update_state()
+/obj/item/garrote/handcuffs/attack_self(mob/user)
+	if(!chokehold)
+		..()
+		toggle_wire_readiness()
+	else
+		var/obj/item/grab/garrote_grab/GG = src.chokehold
+		var/mob/living/carbon/human/H = GG.assailant
+		if(H.won)
+			GG.extra_deadly = !GG.extra_deadly
+		if(GG.extra_deadly)
+			GG.assailant.visible_message("<span class='combat bold'>[GG.assailant] tightens their grip on \the [src], it digs into [GG.affecting]'s neck!</span>")
+		else
+			GG.assailant.visible_message("<span class='combat bold'>[GG.assailant] releases their hold on [GG.affecting] slightly!</span>")
+
+		update_state()
+/obj/item/garrote/handcuffs/drop_grab()
+	var/mob/living/carbon/human/H = src.chokehold.assailant
+	H.strugglethingy.reset()
+	..()
+	update_state()
+/datum/strugglethingy
+	var/strug_progress = 50
+	var/mob/living/carbon/human/attackere = null
+	var/mob/living/carbon/human/defendere = null
+	var/datum/action/bar/struggleProgress/S
+	var/obj/actions/strugleicon/I2
+	var/obj/actions/strugleicon/I
+
+	proc/setup()
+		S = attackere.bar
+		I2 = S.I
+		I = S.I2
+	proc/win()
+		attackere.won = 1
+		attackere.visible_message("<span class='alert'><B>[defendere] fails to push off [attackere]!</B></span>")
+		defendere.delStatus("handcuffed")
+		attackere.in_struggle = 0
+		defendere.in_struggle = 0
+		flick("defendelost",I2)
+		I2.icon_state = null
+		SPAWN_DBG(10)
+			attackere.bar.onDelete()
+			attackere.r_hand.chokehold.upgrade_to_kill()
+	proc/lose()
+		attackere.setStatus("stunned", INFINITY)
+		defendere.delStatus("handcuffed")
+		attackere.visible_message("<span class='alert'><B>[attackere]'s attempt to strangle [defendere] is foiled!</B></span>")
+		attackere.in_struggle = 0
+		defendere.in_struggle = 0
+		flick("attackelost",I)
+		I.icon_state = null
+		SPAWN_DBG(10)
+			attackere.bar.onDelete()
+			attackere.r_hand.drop_grab()
+	proc/attack()
+		if (strug_progress < 90)
+			I.icon_state = "attacke"
+			flick("attacke2",I)
+		else
+			I.icon_state = "attackelosing"
+			flick("attackelosing2",I)
+		strug_progress -= 0.5
+		attackere.bar.onUpdate()
+
+		if (strug_progress <= 0)
+			win()
+	proc/defend()
+		if (strug_progress > 10)
+			I2.icon_state = "defende"
+			flick("defende2",I2)
+		else
+			I2.icon_state = "defendelosing"
+			flick("defendelosing2",I2)
+		strug_progress += 0.5
+		attackere.bar.onUpdate()
+
+		if (strug_progress >= 100)
+			lose()
+	proc/reset()
+		attackere.in_struggle = 0
+		attackere.attackere = 0
+		attackere.strugglethingy = null
+		if (attackere.bar)
+			attackere.bar.onDelete()
+			attackere.bar = null
+		attackere.won = 0
+		defendere.in_struggle = 0
+		defendere.strugglethingy = null
+		defendere.defendere = null
+		defendere.delStatus("handcuffed")
+		qdel(src)
 #endif
 /obj/item/garrote/proc/toggle_wire_readiness()
 #if ASS_JAM

@@ -1389,7 +1389,7 @@
 								JOB_XP(src, "Clown", 1)
 						#endif
 							#if ASS_JAM
-							if (src.hasStatus("handcuffed") && !src.hasStatus("hands_in_front"))
+							if (src.hasStatus("handcuffed") && !src.hasStatus("hands_in_front") && src.grabbed_by.len == 0 )
 								actions.start(new/datum/action/bar/private/icon/handcuffMoval(200), src) //you need to hold still
 							#endif
 

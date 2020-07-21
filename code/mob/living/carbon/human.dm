@@ -134,6 +134,15 @@
 
 	var/datum/simsHolder/sims = null
 
+	#if ASS_JAM//Very good and cool way to do things
+	var/in_struggle = 0
+	var/attackere = 0
+	var/defendere = 0
+	var/datum/strugglethingy/strugglethingy = null
+	var/datum/action/bar/bar = null
+	var/won = 0
+
+	#endif
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r", "nosepick")
 

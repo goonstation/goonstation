@@ -884,6 +884,61 @@ var/datum/action_controller/actions
 			H.visible_message("<span class='alert'><B>[H] attempts to move the handcuffs!</B></span>")
 			boutput(H, "<span class='notice'>You successfully move your hands to the front.</span>")
 
+/datum/action/bar/struggleProgress//big
+	var/icon_state = "defende"
+	var/icon_y_off = 15
+	var/icon_x_off = -20
+	var/obj/actions/strugleicon/I = new
+	var/icon2_state = "attacke"
+	var/icon2_y_off = 15
+	var/icon2_x_off = 20
+	var/obj/actions/strugleicon/I2 = new
+	var/atom/movable/A
+	onStart()
+		..()
+		A = owner
+		if(icon_state && owner)
+			I.icon_state = icon_state
+			A.attached_objs.Add(I)
+			I.loc = A.loc
+			I.pixel_y = icon_y_off
+			I.pixel_x = icon_x_off
+			I.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
+
+		if(icon2_state && owner)
+			I2.icon_state = icon2_state
+			A.attached_objs.Add(I2)
+			I2.loc = A.loc
+			I2.pixel_x = icon2_x_off
+			I2.pixel_y = icon2_y_off
+			I2.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
+
+		border.pixel_y -= 5
+		border.color = "#ff0000"
+		bar.color = "#ffee00"
+		bar.pixel_y -= 5
+
+	onUpdate()
+		var/mob/living/carbon/human/H = owner
+		if (!owner || !istype(owner) || !bar || !border) //Wire note: Fix for Cannot modify null.invisibility
+			return
+		var/complete = (H.strugglethingy.strug_progress - 50) / 4
+		var/complete2 = H.strugglethingy.strug_progress / 100
+		I.pixel_x = complete - 5
+		I2.pixel_x = complete + 5
+		if (complete < -10)
+			I.icon_state = "defendelosing"
+		if (complete > 10)
+			I2.icon_state = "attackelosing"
+		bar.transform = matrix(complete2, 1, MATRIX_SCALE)
+		bar.pixel_x = -nround( ((30 - (30 * complete2)) / 2) )
+
+	onDelete()
+		..()
+		A.attached_objs.Remove(I)
+		A.attached_objs.Remove(I2)
+		qdel(I)
+		qdel(I2)
 #endif
 //CLASSES & OBJS
 
@@ -933,6 +988,13 @@ var/datum/action_controller/actions
 		attached_objs = list()
 		overlays.len = 0
 
+#if ASS_JAM//for flavour
+/obj/actions/strugleicon
+	layer = 102
+	plane = PLANE_HUD + 1
+	icon = 'icons/ui/strugling.dmi'
+
+#endif
 //Use this to start the action
 //actions.start(new/datum/action/bar/private/icon/magPicker(item, picker), usr)
 /datum/action/bar/private/icon/magPicker
