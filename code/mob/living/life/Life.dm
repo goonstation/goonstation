@@ -200,7 +200,6 @@ var/global/life_pause_check = 0
 		for (var/thing in src.lifeprocesses)
 			if (!thing) continue
 			L = src.lifeprocesses[thing]
-			life_pause_check = L.type
 			L.process(environment)
 
 		for (var/obj/item/implant/I in src.implant)
