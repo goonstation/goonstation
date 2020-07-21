@@ -1672,7 +1672,7 @@
 
 	moon
 		name = "moon egg"
-		desc = "DAMU AK SIN"
+		desc = "DUMU NANNA AK"
 		icon_state = "moonbee_egg"
 		bee_name = "moon larva"
 
@@ -1681,7 +1681,7 @@
 			SPAWN_DBG (20)
 				if (derelict_mode)
 					name = "sun egg"
-					desc = "DAMU AK UTU"
+					desc = "DUMU UTU AK"
 					icon_state = "sunbee_egg"
 					bee_name = "sun larva"
 
