@@ -8,12 +8,12 @@
 
 	equipped(var/mob/user, var/slot)
 		..()
-		if (ability_path && istype(user?.abilityHolder))
+		if (ability_path && istype(user.abilityHolder))
 			user.abilityHolder.addAbility(ability_path)
 
 	unequipped(var/mob/user)
 		..()
-		if (ability_path && istype(user?.abilityHolder))
+		if (ability_path && istype(user.abilityHolder))
 			user.abilityHolder.removeAbility(ability_path)
 
 	fireball
@@ -192,11 +192,15 @@
 
 		equipped(var/mob/user, var/slot)
 			..()
-			user?.spell_soulguard = 1
+			if (isliving(user))
+				var/mob/living/L = user
+				L.spell_soulguard = 1
 
 		unequipped(var/mob/user)
 			..()
-			user?.spell_soulguard = 0
+			if (isliving(user))
+				var/mob/living/L = user
+				L.spell_soulguard = 0
 
 	random_type
 		//Doesn't have these spells. no ring for em: kill, shockwave, and candy_ring. (last one isn't actually a spell)
