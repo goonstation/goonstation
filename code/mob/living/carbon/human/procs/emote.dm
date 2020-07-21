@@ -2,7 +2,7 @@
 
 
 
-/mob/living/carbon/human/emote(var/act, var/voluntary = 0) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
+/mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
 	var/param = null
 
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
@@ -11,7 +11,9 @@
 		src.visible_message("<span class='alert'>[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!</span>", group = "revenant_emote")
 		return
 
-	if (voluntary == 1)
+	if (emoteTarget)
+		param = emoteTarget
+	else if (voluntary == 1)
 		if (findtext(act, " ", 1, null))
 			var/t1 = findtext(act, " ", 1, null)
 			param = copytext(act, t1 + 1, length(act) + 1)
