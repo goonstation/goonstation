@@ -62,3 +62,5 @@ datum/controller/process/mobs
 				if (count > 4)
 					stats += "[thing] used [count] ticks.<br>"
 			boutput(usr, "<br>[stats]")
+
+			boutput(usr,"life pause check [life_pause_check]")
