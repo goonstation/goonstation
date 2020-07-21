@@ -21,7 +21,7 @@
 		}\
 		else{\
 			spaced_env = 1;\
-			ourvolume = clamp(ourvolume + 65, 25,200);\
+			ourvolume = clamp(ourvolume + 95, 25,200);\
 		}\
 	}\
 	else{\
@@ -53,8 +53,8 @@
 
 	return attenuate
 
-var/global/SPACED_ENV = list(100,0.52,0,-1368,-1261,0,2,2,-10000,0,600,0,0.165,0,0.25,0.01,-5,1000,20,10,53,100,0x3f)
-var/global/SPACED_ECHO = list(-10000,0,-1503,0,0,1,0,1,10,10,0,1,0,10,10,10,10,7)
+var/global/SPACED_ENV = list(100,0.52,0,-1600,-1500,0,2,2,-10000,0,200,0.01,0.165,0,0.25,0.01,-5,1000,20,10,53,100,0x3f)
+var/global/SPACED_ECHO = list(-10000,0,-1450,0,0,1,0,1,10,10,0,1,0,10,10,10,10,7)
 var/global/ECHO_AFAR = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
