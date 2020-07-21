@@ -344,10 +344,12 @@
 	cooldown = 150
 	targeted = 1
 	target_anything = 1
+	var/egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown
 
 	cast(atom/T)
-		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown/ammo = new(holder.owner.loc)
-		SPAWN_DBG(0.5 SECONDS)
+		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/ammo = new egg_path(holder.owner.loc)
+		ammo.parent = holder?.owner
+		SPAWN_DBG(1)
 		ammo.throw_at(T, 32, 2)
 
 		doCooldown()

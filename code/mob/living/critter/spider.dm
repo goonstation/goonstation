@@ -334,6 +334,8 @@
 						/datum/targetable/critter/spider_drain)
 	var/item_shoes = /obj/item/clothing/shoes/clown_shoes
 	var/item_mask = /obj/item/clothing/mask/clown_hat
+	var/list/babies = null
+	var/egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown
 
 	cluwne
 		name = "queen cluwnespider"
@@ -347,6 +349,19 @@
 							/datum/targetable/critter/spider_drain)
 		item_shoes = /obj/item/clothing/shoes/cursedclown_shoes
 		item_mask = /obj/item/clothing/mask/cursedclown_hat
+		egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/cluwne
+
+	New()
+		..()
+		babies = list()
+		var/datum/targetable/critter/vomitegg/ability = abilityHolder.getAbility(/datum/targetable/critter/vomitegg)
+		if (istype(ability))
+			ability.egg_path = src.egg_path
+
+	disposing()
+		if (islist(babies))
+			babies.len = 0
+		..()
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
@@ -366,6 +381,25 @@
 					if (T)
 						I.throw_at(T, 12, 3)
 			src.gib(1)
+
+	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0)
+		..()
+
+		//clownbabies can't fight clownqueens. but they can fight Cluwnequeens and vice versa
+		if (istype(T, src.type))
+			return
+		var/count = 0
+		for (var/obj/critter/spider/clown/CS in babies)
+			if (get_dist(src, CS) > 7)
+				continue
+			if (count >= 3)
+				return
+			if (prob(10))
+				continue
+			CS.target = T
+			CS.attack = 1
+			CS.task = "chasing"
+			count++
 
 /proc/funnygibs(atom/location, var/list/ejectables, var/bDNA, var/btype)
 	SPAWN_DBG(0)
