@@ -112,6 +112,9 @@ var/global/list/falloff_cache = list()
 	if (!source || !source.loc)
 		return
 
+	if (!length(spatial_z_maps))
+		return
+
 	EARLY_RETURN_IF_QUIET(vol)
 
 	var/area/source_location = get_area(source)
@@ -134,11 +137,15 @@ var/global/list/falloff_cache = list()
 	var/scaled_dist
 	var/storedVolume
 
-	for (var/client/C)
+	for (var/mob/M in GET_NEARBY(source,MAX_SOUND_RANGE + extrarange))
+		var/client/C = M.client
+		if (!C)
+			continue
+
 		if (CLIENT_IGNORES_SOUND(C))
 			continue
 
-		var/mob/M = C.mob
+		//var/mob/M = C.mob
 		Mloc = get_turf(M)
 
 		if (!Mloc || Mloc.z != source.z)
