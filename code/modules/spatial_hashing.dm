@@ -13,7 +13,8 @@ buckets_holding_atom[cellposition] = 1;\
 var/global/list/datum/spatial_hashmap/spatial_z_maps
 
 /proc/init_spatial_map()
-	spatial_z_maps = list(world.maxz)
+	spatial_z_maps = list()
+	spatial_z_maps.len = world.maxz
 	for (var/zlevel = 1; zlevel <= world.maxz; zlevel++)
 		spatial_z_maps[zlevel] = new/datum/spatial_hashmap(world.maxx,world.maxy,60,zlevel)
 
