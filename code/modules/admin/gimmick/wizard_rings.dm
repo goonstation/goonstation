@@ -15,6 +15,11 @@
 		..()
 		if (ability_path && istype(user.abilityHolder))
 			user.abilityHolder.removeAbility(ability_path)
+			if (istype(user.abilityHolder, /datum/abilityHolder/wizard))
+				user.abilityHolder = null
+			else if (istype(user.abilityHolder, /datum/abilityHolder/composite))
+				var/datum/abilityHolder/composite/CH = user.abilityHolder
+				CH.removeHolder(/datum/abilityHolder/wizard)
 
 	fireball
 		name = "ring of fireball"
