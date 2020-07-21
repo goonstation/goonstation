@@ -2395,6 +2395,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/)) src.amount += 1
+		else ..()
 
 	examine(mob/user)
 		. = list("This is a [src.name].")

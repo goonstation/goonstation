@@ -309,7 +309,7 @@
 				MT.canmove = 0
 				if (MT.loc)
 					holder.owner.set_loc(MT.loc)
-				holder.owner.changeStatus("stunned", 1 SECOND)
+				MT.changeStatus("stunned", 1 SECOND)
 				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
 					break
 				playsound(get_turf(holder.owner), "sound/impact_sounds/flesh_break_1.ogg", 50, 1)

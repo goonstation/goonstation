@@ -62653,17 +62653,6 @@
 	},
 /area/owlery/gangzone)
 "cVr" = (
-/obj/machinery/power/apc{
-	areastring = "Owlery Hall Junction";
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24;
-	start_charge = 0
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -69464,22 +69453,15 @@
 /turf/space,
 /area/syndicate_station/battlecruiser)
 "diZ" = (
-/obj/decal/fakeobjects{
-	desc = "Geocities, is that you?";
-	dir = 1;
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "construction";
-	name = "construction zone"
+/obj/table/wood/round/auto,
+/obj/machinery/light{
+	dir = 1
 	},
-/turf/unsimulated/iomoon/floor{
-	name = "silicate cave floor";
-	temperature = 313.15
+/obj/item/kitchen/food_box/donut_box,
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
-/turf/unsimulated/iomoon/crustwall{
-	dir = 1;
-	icon_state = "iowall_edge3"
-	},
-/area/afterlife/hell)
+/area/centcom/lounge)
 "dja" = (
 /obj/grille/catwalk{
 	dir = 6;
@@ -73531,14 +73513,15 @@
 /obj/decal/poster/wallsign/warning2{
 	desc = "This sign tells you that you are transitioning (from the bar to botany).";
 	name = "warning sign-'Transition Zone'";
-	pixel_y = 28
+	pixel_x = 16;
+	pixel_y = 32
 	},
 /turf/unsimulated/floor/setpieces/gauntlet,
 /area/afterlife/heaven)
 "duY" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid2";
-	name = "hopes and dreams"
+	name = "\proper hopes and dreams"
 	},
 /turf/unsimulated/grass,
 /area/centcom/lounge)
@@ -82774,6 +82757,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/clothing/under/gimmick/maid,
 /turf/unsimulated/floor/wood/three,
 /area/centcom/offices/zamujasa)
 "dRP" = (
@@ -83605,7 +83589,7 @@
 	},
 /area/centcom/lounge)
 "gbA" = (
-/obj/decal/fakeobjects/cargopad,
+/obj/storage/crate,
 /obj/machinery/light,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -83648,7 +83632,9 @@
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
 "gTp" = (
-/obj/storage/crate,
+/obj/stool/chair/yellow{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -83740,7 +83726,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
 "iHl" = (
-/obj/stool/chair/yellow{
+/obj/machinery/computer/ordercomp{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -83804,7 +83790,7 @@
 	},
 /area/centcom/lounge)
 "jvG" = (
-/obj/storage/crate,
+/obj/decal/fakeobjects/cargopad,
 /obj/machinery/light,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -83820,11 +83806,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/cogmap)
 "jMC" = (
-/obj/table/wood/round/auto,
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/item/kitchen/food_box/donut_box,
+/obj/storage/crate,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -84083,6 +84065,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
+"ncn" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/efrem)
 "njo" = (
 /turf/unsimulated/floor/stairs/dark,
 /area/centcom/offices/enakai)
@@ -84378,7 +84367,6 @@
 /area/shuttle/merchant_shuttle/diner_centcom)
 "qBZ" = (
 /obj/table/wood/round/auto,
-/obj/machinery/light/lamp,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -84611,6 +84599,7 @@
 /area/shuttle/escape/centcom/cogmap2)
 "tuF" = (
 /obj/table/wood/round/auto,
+/obj/machinery/light/lamp,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -84833,13 +84822,9 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "vSf" = (
-/obj/machinery/computer/ordercomp{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/lounge)
+/obj/item/clothing/under/pride/ace,
+/turf/unsimulated/floor/wood/three,
+/area/centcom/offices/zamujasa)
 "woz" = (
 /obj/machinery/light{
 	dir = 4;
@@ -108002,7 +107987,7 @@ cuj
 ctA
 ctA
 ctA
-diZ
+cuD
 ctn
 aaa
 "}
@@ -150036,9 +150021,9 @@ dnY
 dnY
 dGQ
 dmx
-dnU
-dnY
-dnY
+diZ
+gfz
+iHl
 jvG
 dmx
 aES
@@ -150339,9 +150324,9 @@ dnY
 dGS
 dGl
 tuF
-dnY
-dnY
 gTp
+dnY
+dnY
 dmx
 aES
 aES
@@ -150641,9 +150626,9 @@ dnY
 dGT
 dGl
 qBZ
-iHl
 dnY
 dnY
+jMC
 dmx
 aES
 aES
@@ -150942,9 +150927,9 @@ dnY
 dnY
 dGU
 dmx
-jMC
-gfz
-vSf
+dnU
+dnY
+dnY
 gbA
 dmx
 aES
@@ -157662,7 +157647,7 @@ dEz
 dDP
 dvP
 dDP
-dwA
+ncn
 dDP
 dvP
 vJb
@@ -158863,7 +158848,7 @@ dyV
 dvw
 dRO
 dCF
-dCF
+vSf
 dvw
 dCy
 dDl

@@ -269,7 +269,7 @@
 	desc = {"Human worker clone batch #92 may contain inactive space bee DNA.
 	If you do not have the authorization level to know that SS13 is staffed with clones, please forget this entire message."}
 	id = "bee"
-	msgGain = "You feel buzzed"
+	msgGain = "You feel buzzed!"
 	msgLose = "You lose your buzz."
 	probability = 99
 
