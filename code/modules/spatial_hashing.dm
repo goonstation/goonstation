@@ -18,7 +18,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps
 		spatial_z_maps[zlevel] = new/datum/spatial_hashmap(world.maxx,world.maxy,60)
 
 /datum/spatial_hashmap
-	var/list/hashmap
+	var/list/list/hashmap
 	var/cols
 	var/rows
 	var/width
@@ -26,7 +26,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps
 	var/cellsize
 	var/cellwidth
 
-	var/last_update = 1
+	var/last_update = 0
 
 	var/tmp/list/buckets_holding_atom
 	var/tmp/min_x = 0
