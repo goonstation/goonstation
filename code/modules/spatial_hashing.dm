@@ -99,10 +99,10 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps
 		ADD_BUCKET(A.x,max_y)
 
 		//NW,NE,SW,SE
-		min_x = A.x - (atomboundsize * 0.7071)
-		min_y = A.y - (atomboundsize * 0.7071)
-		max_x = A.x + (atomboundsize * 0.7071)
-		max_y = A.y + (atomboundsize * 0.7071)
+		min_x = A.x - (atomboundsize * (sqrt(2)/2))
+		min_y = A.y - (atomboundsize * (sqrt(2)/2))
+		max_x = A.x + (atomboundsize * (sqrt(2)/2))
+		max_y = A.y + (atomboundsize * (sqrt(2)/2))
 		ADD_BUCKET(min_x,min_y)
 		ADD_BUCKET(min_x,max_y)
 		ADD_BUCKET(max_x,min_y)
