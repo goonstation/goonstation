@@ -1,5 +1,8 @@
 
 (t)mon jul 20 20
+(u)Zamujasa
+(e)🆕|feature
+(*)A countdown timer until the round starts has been added to the title screen. A similar countdown appears wen a round is ending.
 (u)mbc
 (p)1559
 (e)|
