@@ -454,7 +454,7 @@
 	else
 		return "[speechverb], \"[font_accent ? "<font face='[font_accent]'[style]>" : null][text][font_accent ? "</font>" : null]\""
 
-/mob/proc/emote(var/act, var/voluntary = 0, var/emoteTarget = null)
+/mob/proc/emote(var/act, var/voluntary = 0)
 	return
 
 /mob/proc/emote_check(var/voluntary = 1, var/time = 10, var/admin_bypass = 1, var/dead_check = 1)

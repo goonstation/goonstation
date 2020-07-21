@@ -1699,12 +1699,13 @@ datum
 
 					boutput(M, "<span class='notice'>You feel [.].</span>")
 
-				else if (prob(50) && !M.restrained())//(prob(16))
-					for (var/mob/living/hugTarget in orange(1,M))
-						if (hugTarget == M)
+				else if (prob(50) && !M.restrained() && istype(M, /mob/living/carbon/human)) // only humans hug, I think?
+					var/mob/living/carbon/human/H = M
+					for (var/mob/living/carbon/human/hugTarget in orange(1,H))
+						if (hugTarget == H)
 							continue
 						if (!hugTarget.stat)
-							M.emote(prob(5)?"sidehug":"hug", emoteTarget="[hugTarget]")
+							H.emote(prob(5)?"sidehug":"hug", emoteTarget="[hugTarget]")
 							break
 
 				..()

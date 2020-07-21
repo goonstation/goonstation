@@ -78,7 +78,7 @@
 
 		. = src.say_dead(message, 1)
 
-	emote(var/act, var/voluntary = 0)
+	emote(var/act, var/voluntary = 0, var/emoteTarget = null)
 		if(isghost)
 			if (findtext(act, " ", 1, null))
 				var/t1 = findtext(act, " ", 1, null)
