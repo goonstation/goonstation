@@ -12,13 +12,6 @@
 			bioHolder.mobAppearance.customization_second_color = "#555555"
 			bioHolder.mobAppearance.customization_third_color = "#555555"
 
-			src.add_ability_holder(/datum/abilityHolder/cyalume_knight)
-			abilityHolder.addAbility(/datum/targetable/cyalume_knight/recall_sword)
-			abilityHolder.addAbility(/datum/targetable/cyalume_knight/push)
-			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_heal)
-			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_lightning)
-			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_choke)
-
 			SPAWN_DBG(1 SECOND)
 				bioHolder.mobAppearance.UpdateMob()
 				abilityHolder.updateButtons()
@@ -45,6 +38,13 @@
 			my_sword = new /obj/item/sword(src)
 			my_sword.bladecolor = "P"
 			src.equip_if_possible(my_sword, slot_l_store)
+
+			src.add_ability_holder(/datum/abilityHolder/cyalume_knight)
+			abilityHolder.addAbility(/datum/targetable/cyalume_knight/recall_sword)
+			abilityHolder.addAbility(/datum/targetable/cyalume_knight/push)
+			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_heal)
+			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_lightning)
+			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_choke)
 
 	bullet_act(obj/projectile/P, mob/meatshield) // deflect energy projectiles, cut bullets
 		var/obj/item/sword/deflecting_sword
@@ -156,7 +156,8 @@
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/cyalume_knight
 
-	New()
+	New(datum/abilityHolder/holder)
+		..(holder)
 		var/obj/screen/ability/topBar/cyalume_knight/B = new /obj/screen/ability/topBar/cyalume_knight(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
@@ -178,22 +179,47 @@
 	targeted = 0
 	cooldown = 6 SECONDS
 	pointCost = 0
+	var/obj/item/sword/sword = null
+
+	onAttach(datum/abilityHolder/holder)
+		..(holder)
+
+		if(istype(holder.owner, /mob/living/carbon/human/cyalume_knight))
+			var/mob/living/carbon/human/cyalume_knight/my_mob = holder.owner
+			src.sword = my_mob.my_sword
+
+
+		if(!src.sword)
+			boutput(holder.owner, "<span class='alert'>Your sword appears to have been banished from the physical realm!</span>")
+			return 1
+
+	disposing()
+		sword = null
+		..()
 
 	cast(atom/target)
 		if (..())
 			return 1
 
+		var/mob/living/my_mob = holder.owner
+		if(!src.sword)
+			boutput(my_mob, "<span class='alert'>Your sword appears to have been banished from the physical realm!</span>")
+			var/obj/item/R = my_mob.find_type_in_hand(/obj/item/sword, "right") // same with grabs
+			var/obj/item/L = my_mob.find_type_in_hand(/obj/item/sword, "left") // same for the other hand
+			if (R)
+				src.sword = R
+				if (istype(my_mob, /mob/living/carbon/human/cyalume_knight))
+					var/mob/living/carbon/human/cyalume_knight/knight = my_mob
+					knight.my_sword = R
+			else if (L)
+				src.sword = L
+				if (istype(my_mob, /mob/living/carbon/human/cyalume_knight))
+					var/mob/living/carbon/human/cyalume_knight/knight = my_mob
+					knight.my_sword = L
 
-		if(!istype(holder.owner, /mob/living/carbon/human/cyalume_knight))
-			boutput(holder.owner, "<span class='alert'>You aren't a true cyalume knight to be able to recall your sword!</span>")
+			if (src.sword)
+				boutput(my_mob, "<span class='notice'>You have claimed [src.sword] as your own! You'll be able to call it back to you!</span>")
 			return 1
-
-		var/mob/living/carbon/human/cyalume_knight/my_mob = holder.owner
-
-		if(!my_mob.my_sword)
-			boutput(holder.owner, "<span class='alert'>Your sword appears to have been banished from the physical realm!</span>")
-			return 1
-		var/obj/item/sword = my_mob.my_sword
 
 		my_mob.visible_message("<span class='alert'><b>[holder.owner] raises his hand into the air wide open!</b></span>")
 		playsound(get_turf(sword), 'sound/effects/gust.ogg', 70, 1)

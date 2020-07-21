@@ -195,24 +195,20 @@ var/global/life_pause_check = 0
 
 		///LIFE PROCESS
 		//Most stuff gets handled here but i've left some other code below because all living mobs can use it
-		life_pause_check = 1
+
 		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)
 			if (!thing) continue
 			L = src.lifeprocesses[thing]
 			L.process(environment)
 
-		life_pause_check = 2
 		for (var/obj/item/implant/I in src.implant)
 			I.on_life((life_time_passed / tick_spacing))
 
-		life_pause_check = 3
 		update_item_abilities()
 
-		life_pause_check = 4
 		update_objectives()
 
-		life_pause_check = 5
 		if (!isdead(src)) //still breathing
 			//do on_life things for components?
 			SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, (life_time_passed / tick_spacing))
@@ -224,7 +220,6 @@ var/global/life_pause_check = 0
 					src.no_gravity = 0
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
-			life_pause_check = 6
 			if (src.mob_flags & MAT_TRIGGER_LIFE)//controlled by a signal that is added when an item with mat gets a lifeprocess proc
 				for (var/thing in src) //bnlech, do a smarter search later
 					var/atom/movable/A = thing
@@ -233,7 +228,6 @@ var/global/life_pause_check = 0
 
 		clamp_values()
 
-		life_pause_check = 7
 		//Regular Trait updates
 		if(src.traitHolder)
 			for(var/T in src.traitHolder.traits)
@@ -247,19 +241,13 @@ var/global/life_pause_check = 0
 			src.updateOverlaysClient(src.client)
 			src.antagonist_overlay_refresh(0, 0)
 
-		life_pause_check = 8
-
 		if (src.observers.len)
 			for (var/mob/x in src.observers)
 				if (x.client)
 					src.updateOverlaysClient(x.client)
 
-		life_pause_check = 9
-
 		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 			G.process((life_time_passed / tick_spacing))
-
-		life_pause_check = 10
 
 		if (!can_act(M=src,include_cuffs=0))
 			actions.interrupt(src, INTERRUPT_STUNNED)
