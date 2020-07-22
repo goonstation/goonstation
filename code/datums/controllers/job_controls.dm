@@ -50,23 +50,17 @@ var/datum/job_controller/job_controls
 		src.staple_jobs += new daily_job_path(src)
 
 	proc/handle_roundstart_job_counts(var/num_clients) //called in the lobby around the mapvote, adjusts job counts based on population
-		logTheThing("admin", usr, null, "DEBUG: [num_clients] clients right now") //remove these 4 lines b4 merge
-#ifdef DEBUG_JOB_CAP
-		num_clients = 1000000
-#endif
-		if (num_clients > src.mojobs_pop_threshold || (src.fuzzy_pop_threshold && (num_clients > src.mojobs_pop_threshold - 5))) //do the excess jobs stuff
-			//lets add all the daily jobs to the normal job list
-			var/list/daily_job_limit_list = list()
-			for (var/datum/job/daily/job in childrentypesof(/datum/job/daily))
-				job = new job(src)
-				src.staple_jobs += job
-				daily_job_limit_list[job.name] = job.limit //a lot of the daily jobs have custom limits
+		if (num_clients > src.mojobs_pop_threshold || (src.fuzzy_pop_threshold && (num_clients > src.mojobs_pop_threshold - 5)))
 			//boosting normal job numbers
 			for (var/datum/job/job in src.staple_jobs)
 				logTheThing("admin", usr, null, "DEBUG: [job.type], [job.name]")
 				//first, we wont be adding anything to command
 				if (istype(job, /datum/job/command))
 					continue
+				//lets get rid of the daily job too, we have our own logic for that
+				if (istype(job, /datum/job/daily))
+					job.limit = 0
+					src.staple_jobs -= job //cant qdel that in this proc, so we just have an instantiated job datum floating around, oops
 				//now we want to start increasing job thresholds
 				switch(job.type)
 					if (/datum/job/security/security_officer)
@@ -85,33 +79,33 @@ var/datum/job_controller/job_controls
 						job.limit += 2
 					if (/datum/job/civilian/chef)
 						job.limit += 2
-/*					if (/datum/job/civilian/barman) //not sure how i feel abt bartender getting more than one slot?
-						job.limit += 1 */
 					if (/datum/job/civilian/botanist)
 						job.limit += 1
 					if (/datum/job/civilian/chaplain)
-						job.limit += 3
+						job.limit += 1
 					if (/datum/job/civilian/clown) //its a trans-siberian clown off
 						job.limit += 1
-			//now we want to add all random and daily jobs to the pool
+			//now lets add all the daily jobs to the right pool, and store their limits (bc a lot of them have custom ones, not just 1 or 0)
+			var/list/daily_job_limit_list = list()
+			for (var/job_path in childrentypesof(/datum/job/daily))
+				var/datum/job/job = new job_path(src)
+				src.staple_jobs += job
+				daily_job_limit_list[job.name] = job.limit
+			//now we want to add all random jobs to the pool
 			var/list/shuffled_rand_jobs = list()
 			for (var/datum/job/job in src.special_jobs)
 				if (istype(job, /datum/job/special/random))
 					shuffled_rand_jobs += job
 					job.limit = 0
+			//daily jobs too
 			for (var/datum/job/daily/job in src.staple_jobs)
-				logTheThing("admin", usr, null, "DEBUG: RAN THIS CODE AT LEAST FUCKING ONCE")
 				shuffled_rand_jobs += job
 				job.limit = 0
 			//shuffle the list
 			shuffle_list(shuffled_rand_jobs)
 			var/job_num = min(shuffled_rand_jobs.len, max(1, round(shuffled_rand_jobs.len * 0.8)))
-			logTheThing("admin", usr, null, "DEBUG: len [shuffled_rand_jobs.len], job_num [job_num]") //DEBUG!
-			for (var/i in 1 to shuffled_rand_jobs.len) //DEBUG
-				logTheThing("admin", usr, null, "DEBUG: element [i]: [shuffled_rand_jobs[i].type]")
-			//now that the list is shuffled, make the first x able to be selected
+			//now that the list is shuffled, make the first job_num able to be selected in game
 			for (var/i in 1 to job_num)
-				logTheThing("admin", usr, null, "DEBUG: [i]")
 				if (istype(shuffled_rand_jobs[i], /datum/job/daily)) //daily jobs have special limits
 					var/datum/job/daily/job = shuffled_rand_jobs[i]
 					job.limit = daily_job_limit_list[job.name]
