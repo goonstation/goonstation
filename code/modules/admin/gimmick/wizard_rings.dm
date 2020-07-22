@@ -1,10 +1,12 @@
 /obj/item/clothing/gloves/ring/wizard
 	name = "wizard ring"
 	desc = "Parent object for wizadry rings, you shouldn't see this..."
+	icon = 'icons/obj/clothing/item_wizard_rings.dmi'
 	icon_state = "ring"
 	item_state = "ring"
 	burn_possible = 0
 	var/ability_path = null			//The ability that this ring is linked to.	//When it's null it's either soulguard or the parent. I'm lazy.
+	magical = 1
 
 	equipped(var/mob/user, var/slot)
 		..()
@@ -51,11 +53,39 @@
 		icon_state = "empower"
 		ability_path = /datum/targetable/spell/mutate
 
+		unequipped(var/mob/user)
+			..()
+			var/show_message = 0
+			if (user?.bioHolder.HasEffect("telekinesis"))
+				user.bioHolder.RemoveEffect("telekinesis")
+				show_message = 1
+			if (user?.bioHolder.HasEffect("hulk"))
+				user.bioHolder.RemoveEffect("hulk")
+				show_message = 1 
+			if (show_message)
+				boutput(user, "<span class='alert'><b>Removing [src] removes its powers with it!</b></span>")
 	staff
 		name = "ring of cthulhu"
 		desc = ""
 		icon_state = "staff"
 		ability_path = /datum/targetable/spell/summon_staff
+		var/obj/item/staff/cthulhu/created_staff
+
+		equipped(var/mob/user, var/slot)
+			..()
+			
+			//can only make one staff per ring. Anyone who equips the ring claims the staff
+			if (!created_staff)
+				var/obj/item/staff/cthulhu/staff = new /obj/item/staff/cthulhu(get_turf(user))
+				created_staff = staff
+
+			if (created_staff?.wizard_key != user?.mind.key)
+				boutput(user, "<span class='notice'><b>You claim [created_staff] as your own!</b></span>")
+				created_staff.wizard_key = user?.mind.key
+
+		disposing()
+			created_staff = null
+			..()
 
 	phase_shift
 		name = "ring of phase shift"
@@ -135,10 +165,10 @@
 	// 	icon_state = "// shockwave"
 	// 	ability_path = /datum/targetable/spell/shockwave
 
-	spell_sheild
+	spell_shield
 		name = "ring of protection"
 		desc = ""
-		icon_state = "spell_sheild"
+		icon_state = "spell_shield"
 		ability_path = /datum/targetable/spell/magshield
 
 	warp
@@ -165,10 +195,10 @@
 		icon_state = "polymorph"
 		ability_path = /datum/targetable/spell/animal
 
-	bullcharge
+	bull_charge
 		name = "ring of the charging bull"
 		desc = ""
-		icon_state = "bullcharge"
+		icon_state = "bull_charge"
 		ability_path = /datum/targetable/spell/bullcharge
 
 	pandemonium
@@ -210,7 +240,38 @@
 	random_type
 		//Doesn't have these spells. no ring for em: kill, shockwave, and candy_ring. (last one isn't actually a spell)
 
-		New()
-			var/list/L = list(/datum/targetable/spell/fireball,/datum/targetable/spell/magicmissile,/datum/targetable/spell/knock,/datum/targetable/spell/blind,/datum/targetable/spell/mutate,/datum/targetable/spell/summon_staff,/datum/targetable/spell/phaseshift,/datum/targetable/spell/clairvoyance,/datum/targetable/spell/iceburst,/datum/targetable/spell/prismatic_spray,/datum/targetable/spell/animatedead,/datum/targetable/spell/cluwne,/datum/targetable/spell/teleport,/datum/targetable/spell/blink,/datum/targetable/spell/shock,/datum/targetable/spell/rathens,/datum/targetable/spell/magshield,/datum/targetable/spell/warp,/datum/targetable/spell/forcewall,/datum/targetable/spell/doppelganger,/datum/targetable/spell/animal,/datum/targetable/spell/bullcharge,/datum/targetable/spell/pandemonium,/datum/targetable/spell/golem,/datum/targetable/spell/stickstosnakes,null)
-			ability_path = pick(L)
+		New(loc)
+			// var/list/L = childrentypesof(/datum/targetable/spell)
+			// L -= /datum/targetable/spell/kill
+			// L -= /datum/targetable/spell/shockwave
+			// ability_path = pick(L)
 			..()
+			//I'm lazy again.
+			var/list/L = childrentypesof(/obj/item/clothing/gloves/ring/wizard)
+			L -= /obj/item/clothing/gloves/ring/wizard/random_type
+			if (locate(/obj/item/clothing/gloves/ring/wizard/random_type) in L)
+				message_admins("WRONG WRONG WRONG")
+			var/path = pick(L)
+			new path(loc)
+			qdel(src)
+
+/client/proc/create_all_wizard_rings()
+	set name = "Create All Wizard Rings"
+	set desc = "Spawn all of the magical wizard rings."
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set popup_menu = 0
+	admin_only
+
+	var/turf/T_LOC = get_turf(src.mob)
+
+	var/list/L = childrentypesof(/obj/item/clothing/gloves/ring/wizard)
+	L -= /obj/item/clothing/gloves/ring/wizard/random_type
+	var/index = 1
+	for (var/turf/T in range(T_LOC, 3))
+		if (index <= L.len)
+			var/path = L[index]
+			if (ispath(path))
+				new path(T)
+				index++
+		else break
+

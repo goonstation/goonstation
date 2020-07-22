@@ -63,16 +63,20 @@
 
 ////////////////////////////////////////////// Helper procs ////////////////////////////////////////////////////
 
-/mob/proc/wizard_spellpower()
+/mob/proc/wizard_spellpower(var/datum/targetable/spell/spell = null)
 	return 0
 
-/mob/living/carbon/human/wizard_spellpower()
+/mob/living/carbon/human/wizard_spellpower(var/datum/targetable/spell/spell = null)
 	var/magcount = 0
 	if (!src) return 0 // ??
 	if (src.bioHolder.HasEffect("arcane_power") == 2)
 		magcount += 10
 	for (var/obj/item/clothing/C in src.contents)
 		if (C.magical) magcount += 1
+	if(istype(spell) && istype(src.gloves, /obj/item/clothing/gloves/ring/wizard))
+		var/obj/item/clothing/gloves/ring/wizard/WR = src.gloves
+		if (WR.ability_path == spell.type)
+			magcount += 10
 	if (istype(src.r_hand, /obj/item/staff))
 		magcount += 2
 	if (istype(src.l_hand, /obj/item/staff))
@@ -80,10 +84,15 @@
 	if (magcount >= 4) return 1
 	else return 0
 
-/mob/living/critter/wizard_spellpower()
+/mob/living/critter/wizard_spellpower(var/datum/targetable/spell/spell = null)
 	var/magcount = 0
 	for (var/obj/item/clothing/C in src.contents)
-		if (C.magical) magcount += 1
+		if (C.magical)
+			magcount += 1
+			if (istype(spell) && istype(C, /obj/item/clothing/gloves/ring/wizard))
+				var/obj/item/clothing/gloves/ring/wizard/WR = C
+				if (WR.ability_path == spell.type)
+					magcount += 10
 	if (src.find_type_in_hand(/obj/item/staff))
 		magcount += 2
 	if (magcount >= 4) return 1
@@ -98,7 +107,7 @@
 		return 0
 	if (src.bioHolder.HasEffect("arcane_power") == 2)
 		return 1
-	if(spell && !istype(src.gloves, /obj/item/clothing/gloves/ring/wizard))
+	if(spell && istype(src.gloves, /obj/item/clothing/gloves/ring/wizard))
 		var/obj/item/clothing/gloves/ring/wizard/WR = src.gloves
 		if (WR.ability_path == spell.type)
 			return 1
@@ -128,11 +137,15 @@
 //	if(!find_in_equipment(/obj/item/clothing/suit/wizrobe))
 //		boutput(src, "You don't feel strong enough without a magical robe.")
 //		return 0
+	if (istype(spell))
+		for (var/obj/item/clothing/gloves/ring/wizard/WR in src.contents)
+			if (WR.ability_path == spell.type)
+				return 1
 	if(!find_in_equipment(/obj/item/clothing/head/wizard))
 		boutput(src, "You don't feel strong enough without a magical hat.")
 		return 0
 	var/area/getarea = get_area(src)
-	if(spell.offensive && getarea.sanctuary)
+	if(spell?.offensive && getarea.sanctuary)
 		boutput( src, "You cannot cast spells in a sanctuary." )
 		return 0
 	if(getarea.name == "Chapel" || getarea.name == "Chapel Office")
@@ -208,7 +221,7 @@
 					cool /= 2
 				if (2)
 					cool = 1
-		if (src.cooldown_staff && !user.wizard_spellpower())
+		if (src.cooldown_staff && !user.wizard_spellpower(src))
 			cool *= 1.5
 		return cool
 
@@ -265,7 +278,7 @@
 						return 1
 		if (src.dont_lock_holder != 1)
 			H.locked = 1
-		if (src.cooldown_staff && !holder.owner.wizard_spellpower())
+		if (src.cooldown_staff && !holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Your spell takes longer to recharge without a staff to focus it!</span>")
 		var/val = cast(target)
 		H.locked = 0
