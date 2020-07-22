@@ -2079,12 +2079,12 @@
 	//copy paste lol
 	var/image/chat_maptext/chat_text = null
 	if (maptext_out && speechpopups && src.chat_text)
-
 		chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
 		chat_text.measure(src.client)
-		for(var/image/chat_maptext/I in src.chat_text.lines)
-			if(I != chat_text)
-				I.bump_up(chat_text.measured_height)
+		SPAWN_DBG(0) //blind stab at a life() hang
+			for(var/image/chat_maptext/I in src.chat_text.lines)
+				if(I != chat_text)
+					I.bump_up(chat_text.measured_height)
 
 
 	if (message)
