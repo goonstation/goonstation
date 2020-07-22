@@ -581,7 +581,7 @@
 			if (1)
 				new /obj/item/storage/pill_bottle/cyberpunk(src)
 				new /obj/item/storage/pill_bottle/ipecac(src)
-				new /obj/item/gun/kinetic/colt_saa/detective(src)
+				new /obj/item/gun/kinetic/pistol(src)
 				new /obj/item/paper/orangeroomsafe(src)
 			if (2)
 				new /obj/item/storage/pill_bottle/bathsalts(src)
