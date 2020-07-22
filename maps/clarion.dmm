@@ -49113,6 +49113,13 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/NWmaint)
+"hZx" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/table/reinforced/auto,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "jAP" = (
 /obj/machinery/vending/janitor,
 /turf/simulated/floor/specialroom/arcade,
@@ -86341,7 +86348,7 @@ bsw
 btH
 buN
 bvV
-qKs
+hZx
 byn
 bzr
 bAt

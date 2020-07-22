@@ -69452,6 +69452,16 @@
 	},
 /turf/space,
 /area/syndicate_station/battlecruiser)
+"diZ" = (
+/obj/table/wood/round/auto,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/kitchen/food_box/donut_box,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/lounge)
 "dja" = (
 /obj/grille/catwalk{
 	dir = 6;
@@ -83591,7 +83601,7 @@
 	},
 /area/centcom/lounge)
 "gbA" = (
-/obj/decal/fakeobjects/cargopad,
+/obj/storage/crate,
 /obj/machinery/light,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -83634,7 +83644,9 @@
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
 "gTp" = (
-/obj/storage/crate,
+/obj/stool/chair/yellow{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -83725,6 +83737,14 @@
 "iBT" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"iHl" = (
+/obj/machinery/computer/ordercomp{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/lounge)
 "iMA" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
@@ -83782,7 +83802,7 @@
 	},
 /area/centcom/lounge)
 "jvG" = (
-/obj/storage/crate,
+/obj/decal/fakeobjects/cargopad,
 /obj/machinery/light,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -83798,11 +83818,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/cogmap)
 "jMC" = (
-/obj/table/wood/round/auto,
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/item/kitchen/food_box/donut_box,
+/obj/storage/crate,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -84061,6 +84077,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
+"ncn" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/efrem)
 "njo" = (
 /turf/unsimulated/floor/stairs/dark,
 /area/centcom/offices/enakai)
@@ -84356,7 +84379,6 @@
 /area/shuttle/merchant_shuttle/diner_centcom)
 "qBZ" = (
 /obj/table/wood/round/auto,
-/obj/machinery/light/lamp,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -84596,6 +84618,7 @@
 /area/shuttle/escape/centcom/cogmap2)
 "tuF" = (
 /obj/table/wood/round/auto,
+/obj/machinery/light/lamp,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -84817,6 +84840,10 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"vSf" = (
+/obj/item/clothing/under/pride/ace,
+/turf/unsimulated/floor/wood/three,
+/area/centcom/offices/zamujasa)
 "woz" = (
 /obj/machinery/light{
 	dir = 4;
@@ -150021,10 +150048,10 @@ dnY
 dnY
 dGQ
 dmx
-jMC
+diZ
 gfz
-xnD
-gbA
+iHl
+jvG
 dmx
 aES
 aES
@@ -150323,8 +150350,8 @@ dnY
 dnY
 dGS
 dGl
-qBZ
-fob
+tuF
+gTp
 dnY
 dnY
 dmx
@@ -150625,10 +150652,10 @@ dnY
 dnY
 dGT
 dGl
-tuF
+qBZ
 dnY
 dnY
-gTp
+jMC
 dmx
 aES
 aES
@@ -150930,7 +150957,7 @@ dmx
 dnU
 dnY
 dnY
-jvG
+gbA
 dmx
 aES
 aES
@@ -157647,7 +157674,7 @@ dEz
 dDP
 dvP
 dDP
-roB
+ncn
 dDP
 dvP
 vJb
@@ -158848,7 +158875,7 @@ dyV
 dvw
 dRO
 dCF
-eTm
+vSf
 dvw
 dCy
 dDl
