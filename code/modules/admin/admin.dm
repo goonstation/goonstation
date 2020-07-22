@@ -4699,8 +4699,8 @@ var/global/noir = 0
 		</style>
 		</head>
 		<body>
-		<h1>Bioeffects of [M.name]
-		<a href='?src=\ref[src.holder];action=checkbioeffect_refresh;target=\ref[M];origin=bioeffect_check' class="button">&#x1F504;</a></h1>
+		<h3>Bioeffects of [M.name]
+		<a href='?src=\ref[src.holder];action=checkbioeffect_refresh;target=\ref[M];origin=bioeffect_check' class="button">&#x1F504;</a></h3>
 		<h4>(Stability: <a href='?src=\ref[src.holder];action=checkbioeffect_alter_genetic_stability;target=\ref[M];origin=bioeffect_check'>[M.bioHolder.genetic_stability]</a>)
 		<a href='?src=\ref[src.holder];action=checkbioeffect_add;target=\ref[M];origin=bioeffect_check' class="button">&#x2795;</a></h4>
 		<table>
@@ -4809,11 +4809,11 @@ var/global/noir = 0
 		</style>
 		</head>
 		<body>
-		<h3>
+		<h1>
 			Abilities of [M.name]
 			<a href='?src=\ref[src.holder];action=manageabils;target=\ref[M];origin=manageabils' class="button">&#x1F504;</a>
 			<a href='?src=\ref[src.holder];action=addabil;target=\ref[M];origin=manageabils' class="button">&#x2795;</a>
-		</h3>
+		</h1>
 		<table>
 			<tr>
 				<th>Remove</th>
@@ -4831,12 +4831,6 @@ var/global/noir = 0
 		if (CH.holders.len)
 			for (var/datum/abilityHolder/AH in CH.holders)
 				abils += AH.abilities //get a list of all the different abilities in each holder
-			//if(!abils.len)
-				//usr.Browse(dat.Join(),"window=manageabils;size=900x400")
-				//return //no abilities
-		//else
-			//usr.Browse(dat.Join(),"window=manageabils;size=900x400")
-			//return //no ability holders in composite holder
 	else
 		abils += M.abilityHolder.abilities
 		if (!abils.len)
