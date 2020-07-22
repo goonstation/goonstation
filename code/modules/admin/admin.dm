@@ -4761,7 +4761,7 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Manage Abilities"
 	set desc = "Select a mob to manage its abilities."
-	set popup_menu = 1
+	set popup_menu = 0
 	admin_only
 
 	var/list/dat = list()
