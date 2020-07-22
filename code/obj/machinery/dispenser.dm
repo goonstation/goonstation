@@ -91,8 +91,6 @@
 /obj/machinery/dispenser/ui_act(action, params)
 	if(..())
 		return
-	if(usr.stat || usr.restrained())
-		return
 	switch(action)
 		if("plasma")
 			if(pltanks > 0)

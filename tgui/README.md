@@ -39,14 +39,7 @@ You will need these programs to start developing in tgui:
 
 - [Node v12.13+](https://nodejs.org/en/download/)
 - [Yarn v1.19+](https://yarnpkg.com/en/docs/install)
-- [MSys2](https://www.msys2.org/) (optional)
-
-> MSys2 closely replicates a unix-like environment which is necessary for
-> the `bin/tgui` script to run. It comes with a robust "mintty" terminal
-> emulator which is better than any standard Windows shell, it supports
-> "git" out of the box (almost like Git for Windows, but better), has
-> a "pacman" package manager, and you can install a text editor like "vim"
-> for a full boomer experience.
+- Some kind of terminal, whether it in be a Unix-like environment, or a Windows one.
 
 ## Usage
 
@@ -135,7 +128,7 @@ logs and time spent on rendering. Use this information to optimize your
 code, and try to keep re-renders below 16ms.
 
 **Kitchen Sink.**
-Press `F12` to open the KitchenSink interface. This interface is a
+Press `F12` or click the green bug to open the KitchenSink interface. This interface is a
 playground to test various tgui components.
 
 **Layout Debugger.**

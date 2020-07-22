@@ -31,6 +31,11 @@ var/global/datum/ui_state/default/default_state = new /datum/ui_state/default
 	// Robots can interact with anything they can see.
 	if(get_dist(src, src_object) <= SQUARE_TILE_WIDTH)
 		return UI_INTERACTIVE
+
+	// AI Borgs can recieve updates from anything that the AI can see.
+	if (src.connected_ai)
+		return UI_UPDATE
+
 	return UI_DISABLED // Otherwise they can keep the UI open.
 
 /mob/dead/aieye/default_can_use_topic(src_object)

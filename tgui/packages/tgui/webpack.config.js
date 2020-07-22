@@ -39,7 +39,7 @@ module.exports = (env = {}, argv) => {
       chunkFilename: '[name].chunk.js',
     },
     resolve: {
-      extensions: ['.mjs', '.js', '.jsx'],
+      extensions: ['.js', '.jsx'],
       alias: {},
     },
     module: {
