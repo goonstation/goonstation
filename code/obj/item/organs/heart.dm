@@ -74,7 +74,7 @@
 
 		if (success)
 			if (!isdead(H))
-				JOB_XP(user, "Medical Doctor", src.health > 0 ? transplant_XP*2 : transplant_XP)
+				JOB_XP_ARCHIVED(user, "Medical Doctor", src.health > 0 ? transplant_XP*2 : transplant_XP)
 			return 1
 		else
 			return 0

@@ -161,7 +161,7 @@ WET FLOOR SIGN
 		reagents.add_reagent("cleaner", 100)
 
 		if(src.reagents.has_reagent("water") || src.reagents.has_reagent("cleaner"))
-			JOB_XP(user, "Janitor", 2)
+			JOB_XP_ARCHIVED(user, "Janitor", 2)
 
 		new/obj/janitorTsunamiWave(get_turf(src), A)
 		playsound(src.loc, 'sound/effects/bigwave.ogg', 70, 1)
@@ -185,7 +185,7 @@ WET FLOOR SIGN
 		return
 
 	if(src.reagents.has_reagent("water") || src.reagents.has_reagent("cleaner"))
-		JOB_XP(user, "Janitor", 2)
+		JOB_XP_ARCHIVED(user, "Janitor", 2)
 
 	var/obj/decal/D = new/obj/decal(get_turf(src))
 	D.name = "chemicals"
@@ -276,7 +276,7 @@ WET FLOOR SIGN
 
 /obj/item/mop/proc/clean(atom/A, mob/user as mob)
 	var/turf/U = get_turf(A)
-	JOB_XP(user, "Janitor", 2)
+	JOB_XP_ARCHIVED(user, "Janitor", 2)
 	playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 
 	// Some people use mops for heat-delayed fireballs and stuff.
@@ -376,7 +376,7 @@ WET FLOOR SIGN
 
 	clean(atom/A, mob/user as mob)
 		var/turf/U = get_turf(A)
-		JOB_XP(user, "Janitor", 2)
+		JOB_XP_ARCHIVED(user, "Janitor", 2)
 		playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 
 		if (U && isturf(U))
@@ -545,7 +545,7 @@ WET FLOOR SIGN
 					user.visible_message("[user] soaks up the mess on [target] with [src].",\
 					"<span class='notice'>You soak up the mess on [target] with [src].</span>")
 
-				JOB_XP(user, "Janitor", 1)
+				JOB_XP_ARCHIVED(user, "Janitor", 1)
 				return
 
 			if ("Dry")
@@ -554,7 +554,7 @@ WET FLOOR SIGN
 				var/turf/simulated/T = target
 				user.visible_message("[user] dries up [T] with [src].",\
 				"<span class='notice'>You dry up [T] with [src].</span>")
-				JOB_XP(user, "Janitor", 1)
+				JOB_XP_ARCHIVED(user, "Janitor", 1)
 				src.reagents.add_reagent("water", rand(5,15))
 				T.wet = 0
 				return
@@ -566,7 +566,7 @@ WET FLOOR SIGN
 					target.clean_forensic()
 				src.reagents.reaction(target, TOUCH, 5)
 				src.reagents.remove_any(5)
-				JOB_XP(user, "Janitor", 3)
+				JOB_XP_ARCHIVED(user, "Janitor", 3)
 				if (target.reagents)
 					target.reagents.trans_to(src, 5)
 				return
@@ -584,7 +584,7 @@ WET FLOOR SIGN
 					target.reagents.trans_to(src, fill_amt)
 				else
 					src.reagents.add_reagent("water", fill_amt)
-					JOB_XP(user, "Janitor", 1)
+					JOB_XP_ARCHIVED(user, "Janitor", 1)
 				return
 	else
 		..()
@@ -618,7 +618,7 @@ WET FLOOR SIGN
 		BLOCK_SOFT
 
 	dropped()
-		JOB_XP(usr, "Janitor", 2)
+		JOB_XP_ARCHIVED(usr, "Janitor", 2)
 		return
 
 /obj/item/holoemitter
@@ -688,7 +688,7 @@ WET FLOOR SIGN
 
 
 	dropped()
-		JOB_XP(usr, "Janitor", 2)
+		JOB_XP_ARCHIVED(usr, "Janitor", 2)
 		return
 
 /obj/holosign

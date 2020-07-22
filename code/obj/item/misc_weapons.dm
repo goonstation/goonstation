@@ -221,7 +221,7 @@
 		user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 		user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 5, 5)
 		take_bleeding_damage(user, user, 5)
-		JOB_XP(user, "Clown", 1)
+		JOB_XP_ARCHIVED(user, "Clown", 1)
 	src.active = !( src.active )
 	tooltip_rebuild = 1
 	if (src.active)

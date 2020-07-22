@@ -164,14 +164,14 @@
 					if (user.mind && user.mind.objectives && M.health < 90) //might as well let people complete this even if they're borged
 						for (var/datum/objective/crew/medicaldoctor/heal/H in user.mind.objectives)
 							H.patchesused ++
-						JOB_XP(user, "Medical Doctor", 1)
+						JOB_XP_ARCHIVED(user, "Medical Doctor", 1)
 				else
 					user.visible_message("<span class='notice'><b>[user]</b> applies [src] to [M].</span>",\
 					"<span class='notice'>You apply [src] to [M].</span>")
 					if (user.mind && user.mind.objectives && M.health < 90)
 						for (var/datum/objective/crew/medicaldoctor/heal/H in user.mind.objectives)
 							H.patchesused ++
-						JOB_XP(user, "Medical Doctor", 1)
+						JOB_XP_ARCHIVED(user, "Medical Doctor", 1)
 
 			logTheThing("combat", user, M, "applies a patch to [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
@@ -527,7 +527,7 @@
 				user.visible_message("<span class='alert'><b>[user]</b> begins mending [M] with [src].</span>",\
 					"<span class='alert'>You begin mending [M] with [src].</span>")
 				if (M.health < 90)
-					JOB_XP(user, "Medical Doctor", 2)
+					JOB_XP_ARCHIVED(user, "Medical Doctor", 2)
 
 			logTheThing("combat", user, M, "begins automending [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 			begin_application(M,user=user)

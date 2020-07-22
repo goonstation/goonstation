@@ -82,7 +82,7 @@
 			if (!H.limbs || !H.limbs.l_arm || !H.limbs.r_arm)
 				return
 			M = user
-			JOB_XP(user, "Clown", 1)
+			JOB_XP_ARCHIVED(user, "Clown", 1)
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if (isabomination(H))

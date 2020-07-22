@@ -58,7 +58,7 @@
 		HS.death()
 		HS.set_loc(M.loc)
 
-	JOB_XP(surgeon, "Medical Doctor", 15)
+	JOB_XP_ARCHIVED(surgeon, "Medical Doctor", 15)
 
 
 /datum/ailment/parasite/headspider/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/parasite/D,var/datum/mind/changeto)

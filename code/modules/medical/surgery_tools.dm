@@ -383,7 +383,7 @@ CONTAINS:
 		if (!isliving(M) || issilicon(M))
 			return ..()
 		if (src.defibrillate(M, user, src.emagged, src.makeshift, src.cell))
-			JOB_XP(user, "Medical Doctor", 5)
+			JOB_XP_ARCHIVED(user, "Medical Doctor", 5)
 			src.charged = 0
 			set_icon_state("[src.icon_base]-shock")
 			SPAWN_DBG(1 SECOND)
@@ -1328,7 +1328,7 @@ CONTAINS:
 
 		if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(33))
 			M = user // hold the pen the right way, dingus!
-			JOB_XP(user, "Clown", 1)
+			JOB_XP_ARCHIVED(user, "Clown", 1)
 
 		if (!src.on || def_zone != "head")
 			M.tri_message("[user] wiggles [src] at [M == user ? "[his_or_her(user)] own" : "[M]'s"] [zone_sel2name[def_zone]].[!src.on ? " \The [src] isn't on, so it doesn't do much." : null]",\

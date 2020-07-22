@@ -191,7 +191,7 @@ Contains:
 				continue
 			C.show_message("<span class='alert'><B>[rider] crashes into the wall with \the [src]!</B></span>", 1)
 		eject_rider(2)
-		JOB_XP(rider, "Clown", 1)
+		JOB_XP_ARCHIVED(rider, "Clown", 1)
 		in_bump = 0
 		return
 	if(ismob(AM))
@@ -615,7 +615,7 @@ Contains:
 				return
 
 			if(src.reagents.has_reagent("water") || src.reagents.has_reagent("cleaner"))
-				JOB_XP(rider, "Janitor", 1)
+				JOB_XP_ARCHIVED(rider, "Janitor", 1)
 
 			else if(src.reagents.total_volume < 250 && !low_reagents_warning)
 				low_reagents_warning = 1

@@ -1049,7 +1049,7 @@
 			user.visible_message("<span class='alert'><b>[user] fumbles and drops [src]!</b></span>",\
 			"<span class='alert'><b>You fumble and drop [src]!</b></span>")
 			user.u_equip(src)
-			JOB_XP(user, "Clown", 2)
+			JOB_XP_ARCHIVED(user, "Clown", 2)
 			src.set_loc(get_turf(user))
 			src.oh_no_the_ring()
 			return

@@ -155,7 +155,7 @@
 					boutput(M, "<span class='notice'>You slipped on the PDA!</span>")
 					if (M.bioHolder.HasEffect("clumsy"))
 						M.changeStatus("weakened", 5 SECONDS)
-						JOB_XP(M, "Clown", 1)
+						JOB_XP_ARCHIVED(M, "Clown", 1)
 
 	janitor
 		icon_state = "pda-j"

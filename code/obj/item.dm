@@ -1376,7 +1376,7 @@
 		. = "<B>[user]</B> [pick("spins", "twirls")] [src] around in [his_or_her(user)] hand, and drops it right on the ground.[prob(10) ? " What an oaf." : null]"
 		user.u_equip(src)
 		src.set_loc(user.loc)
-		JOB_XP(user, "Clown", 1)
+		JOB_XP_ARCHIVED(user, "Clown", 1)
 	else
 		. = "<B>[user]</B> [pick("spins", "twirls")] [src] around in [his_or_her(user)] hand."
 

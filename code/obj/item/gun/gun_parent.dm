@@ -468,4 +468,4 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
 		user.visible_message("<span class='alert'><b>[user] accidentally shoots [him_or_her(user)]self with [src]!</b></span>")
 		src.shoot_point_blank(user, user)
-		JOB_XP(user, "Clown", 3)
+		JOB_XP_ARCHIVED(user, "Clown", 3)

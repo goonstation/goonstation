@@ -46,10 +46,10 @@ VUVUZELA
 					last_touched.sims.affectMotive("fun", 10)
 			if(M.bioHolder.HasEffect("clumsy"))
 				M.changeStatus("weakened", 5 SECONDS)
-				JOB_XP(M, "Clown", 2)
+				JOB_XP_ARCHIVED(M, "Clown", 2)
 			else
 				if (prob(20))
-					JOB_XP(last_touched, "Clown", 1)
+					JOB_XP_ARCHIVED(last_touched, "Clown", 1)
 
 /obj/item/canned_laughter
 	name = "Canned laughter"

@@ -281,7 +281,7 @@ that cannot be itched
 			user.show_message("&emsp; Damage Specifics: <font color='#1F75D1'>[0]</font> - <font color='#138015'>[0]</font> - <font color='#CC7A1D'>[0]</font> - <font color='red'>[0]</font>", 1)
 			user.show_message("&emsp; Key: <font color='#1F75D1'>Suffocation</font>/<font color='#138015'>Toxin</font>/<font color='#CC7A1D'>Burns</font>/<font color='red'>Brute</font>", 1)
 			user.show_message("<span class='notice'>Body Temperature: ???</span>", 1)
-			JOB_XP(user, "Clown", 1)
+			JOB_XP_ARCHIVED(user, "Clown", 1)
 			return
 
 		user.visible_message("<span class='alert'><b>[user]</b> has analyzed [M]'s vitals.</span>",\
