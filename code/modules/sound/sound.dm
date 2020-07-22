@@ -145,10 +145,9 @@ var/global/list/falloff_cache = list()
 		if (CLIENT_IGNORES_SOUND(C))
 			continue
 
-		//var/mob/M = C.mob
 		Mloc = get_turf(M)
 
-		if (!Mloc || Mloc.z != source.z)
+		if (!Mloc)
 			continue
 
 		//Hard attentuation
