@@ -397,7 +397,7 @@
 				continue
 			if (defenders >= 3)
 				return
-			if (prob(10))
+			if (prob(70))
 				continue
 			CS.target = T
 			CS.attack = 1
