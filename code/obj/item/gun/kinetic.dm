@@ -632,9 +632,6 @@
 		ammo = new/obj/item/ammo/bullets/derringer
 		ammo.amount_left = 0 // start empty
 		current_projectile = new/datum/projectile/bullet/derringer
-		if(prob(5))	// 5% chance that the cruddy thing you built is a piece of crud
-			failured = 1
-			desc += " Looks kinda rattly."
 		..()
 #endif
 
