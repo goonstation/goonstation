@@ -4,7 +4,7 @@
 (p)1563
 (e)🐛🆕🎨|bug, feature, sprites
 (+)Clownspiders now protect their momma when attacked.
-(+)Clown/Cluwne spider ability button sprites added by BatElite.
+(+)Fire Elemental/Clown/Cluwne spider ability button sprites added by BatElite.
 (u)MarkNstein
 (p)1428
 (e)🆕|feature
