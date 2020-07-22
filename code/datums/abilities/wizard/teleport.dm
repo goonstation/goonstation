@@ -43,6 +43,11 @@
 	var/A
 	var/area/wizard_station/wiz_shuttle = locate(/area/wizard_station)
 	var/area/thearea = null
+	//if you have a teleport ring, you can't go to the wizard's den. lame src istypes, but I'm too lazy and tired to care right now. It should work.
+	if(ishuman(src) && istype(src:gloves, /obj/item/clothing/gloves/ring/wizard/teleport))
+		wiz_shuttle = null
+	else if (iscritter(src) && locate(/obj/item/clothing/gloves/ring/wizard/teleport) in src)
+		wiz_shuttle = null
 
 	// Doing it this way to avoid modifying the cached areas
 	if (wiz_shuttle)

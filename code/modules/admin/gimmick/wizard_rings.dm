@@ -11,7 +11,9 @@
 	equipped(var/mob/user, var/slot)
 		..()
 		if (istype(user.abilityHolder))
-			user.abilityHolder.addAbility(ability_path)
+			var/datum/targetable/ability = user.abilityHolder.addAbility(ability_path)
+			if (istype(ability))
+				ability.doCooldown()
 
 	unequipped(var/mob/user)
 		..()
@@ -25,13 +27,13 @@
 
 	fireball
 		name = "ring of fireball"
-		desc = ""
+		desc = "The jewel set in this ring appears to have a flame burning violently."
 		icon_state = "fireball"
 		ability_path = /datum/targetable/spell/fireball
 
 	magic_missile
 		name = "ring of magic missile"
-		desc = ""
+		desc = "The jewel set in this ring is bubbling with pink magical energy ."
 		icon_state = "magic_missile"
 		ability_path = /datum/targetable/spell/magicmissile
 
