@@ -66769,9 +66769,6 @@
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "cPO" = (
-/obj/table/reinforced/auto,
-/obj/item/hand_labeler,
-/obj/item/hand_labeler,
 /obj/machinery/door_control{
 	id = "cargodock_in";
 	pixel_x = -24;
@@ -66782,7 +66779,7 @@
 	pixel_x = 24;
 	pixel_y = 28
 	},
-/obj/item/hand_labeler,
+/obj/machinery/manufacturer/qm,
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "cPP" = (
