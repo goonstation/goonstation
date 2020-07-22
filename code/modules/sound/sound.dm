@@ -109,7 +109,7 @@ var/global/list/falloff_cache = list()
 		return
 
 	// don't play if the sound is happening nowhere
-	if (!source || !source.loc)
+	if (!source || !source.loc || source.z <= 0)
 		return
 
 	if (!length(spatial_z_maps))
