@@ -4757,7 +4757,13 @@ var/global/noir = 0
 	dat += "</table></body></html>"
 	usr.Browse(dat.Join(),"window=bioeffect_check;size=900x400")
 
-/client/proc/cmd_admin_manageabils(var/mob/M)
+/client/proc/cmd_admin_manageabils(var/mob/M in mobs)
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Manage Abilities"
+	set desc = "Select a mob to manage its abilities."
+	set popup_menu = 1
+	admin_only
+
 	var/list/dat = list()
 	dat += {"
 		<html>

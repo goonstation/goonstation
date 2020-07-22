@@ -230,6 +230,7 @@ var/list/admin_verbs = list(
 		/client/proc/admin_set_ai_vox,
 		/client/proc/cmd_makeshittyweapon,
 		/client/proc/rspawn_panel,
+		/client/proc/cmd_admin_manageabils,
 
 		// moved up from admin
 		//client/proc/cmd_admin_delete,
