@@ -790,8 +790,8 @@ $(function() {
 			tgui<span class="info-thing" title="tgui is the UI framework we use for some game windows, and it comes with options!">?</span>
 		</th>
 		<td colspan="2">
-			<a href="[pref_link]tgui_fancy=1" class="toggle">[crap_checkbox(src.tgui_fancy)] ~fancy~ tgui windows</a>
-			<br><a href="[pref_link]tgui_lock=1" class="toggle">[crap_checkbox(src.tgui_lock)] Lock tgui on screen</a>
+			<a href="[pref_link]tgui_fancy=1" class="toggle">[crap_checkbox(src.tgui_fancy)] Fast & Fancy Windows</a>
+			<br><a href="[pref_link]tgui_lock=1" class="toggle">[crap_checkbox(src.tgui_lock)] Lock initial placement of windows</a>
 		</td>
 	</tr>"}
 		LAGCHECK(80)

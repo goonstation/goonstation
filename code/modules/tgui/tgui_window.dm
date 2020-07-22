@@ -59,43 +59,53 @@
 	var/html = tgui_process.basehtml
 	html = replacetextEx(html, "\[tgui:windowId]", id)
 
-	// Process inline assets
-	var/inline_styles = ""
-	var/inline_scripts = ""
+	// Process inline assets [GOONSTATION-CHANGE]
+	var/list/inline_styles = list()
+	var/list/inline_scripts = list()
 
-	// Operating locally. Deliver what assets we can manually.
-	if (!cdn)
-		for(var/datum/asset/asset in inline_assets)
-			if (!asset.cdn_only)
-				asset.deliver(client)
-			else
-				var/url_map = asset.get_associated_urls()
-				for(var/name in url_map)
-					var/url = url_map[name]
-					// Not urlencoding since asset strings are considered safe
-					if(copytext(name, -4) == ".css")
-						inline_styles += "<link rel=\"stylesheet\" type=\"text/css\" href=\"[url]\">\n"
-					else if(copytext(name, -3) == ".js")
-						inline_scripts += "<script type=\"text/javascript\" defer src=\"[url]\"></script>\n"
-	else
-		for(var/datum/asset/asset in inline_assets)
-			var/url_map = asset.get_associated_urls()
-			for(var/name in url_map)
-				var/url = url_map[name]
-				// Not urlencoding since asset strings are considered safe
-				if(copytext(name, -4) == ".css")
-					inline_styles += "<link rel=\"stylesheet\" type=\"text/css\" href=\"[url]\">\n"
-				else if(copytext(name, -3) == ".js")
-					inline_scripts += "<script type=\"text/javascript\" defer src=\"[url]\"></script>\n"
-			asset.deliver()
+	// Handle CDN Assets, Goonstation-style [GOONSTATION-ADD]
+	for(var/datum/asset/asset in inline_assets)
+		if (istype(asset, /datum/asset/group))
+			var/datum/asset/group/g = asset
+			for(var/subasset in g.subassets)
+				handle_cdn_asset(get_assets(subasset), inline_styles, inline_scripts)
+		else
+			handle_cdn_asset(get_assets(asset), inline_styles, inline_scripts)
 
-	html = replacetextEx(html, "<!-- tgui:styles -->\n", inline_styles)
-	html = replacetextEx(html, "<!-- tgui:scripts -->\n", inline_scripts)
+	html = replacetextEx(html, "<!-- tgui:styles -->", inline_styles.Join())
+	html = replacetextEx(html, "<!-- tgui:scripts -->", inline_scripts.Join())
 
 	// Open the window
 	client << browse(html, "window=[id];[options]")
 	// Instruct the client to signal UI when the window is closed.
 	winset(client, id, "on-close=\"uiclose [id]\"")
+
+/** [GOONSTATION-ADD]
+ * private
+ *
+ * Does Goonstation CDN shit to assets, essentially either throws in the url or the filepath to the asset.
+ *
+ */
+/datum/tgui_window/proc/handle_cdn_asset(datum/asset/asset, list/inline_styles, list/inline_scripts)
+	// Operating locally. Deliver what assets we can manually.
+	if (!cdn)
+		asset.deliver(client)
+		if (istype(asset, /datum/asset/basic))
+			var/datum/asset/basic/b = asset
+			for (var/file in b.local_assets)
+				if(copytext(file, -4) == ".css")
+					inline_styles += "<link rel=\"stylesheet\" type=\"text/css\" href=\"[file]\">\n"
+				else if(copytext(file, -3) == ".js")
+					inline_scripts += "<script type=\"text/javascript\" defer src=\"[file]\"></script>\n"
+	else
+		var/url_map = asset.get_associated_urls()
+		for(var/name in url_map)
+			var/url = url_map[name]
+			// Not urlencoding since asset strings are considered safe
+			if(copytext(name, -4) == ".css")
+				inline_styles += "<link rel=\"stylesheet\" type=\"text/css\" href=\"[url]\">\n"
+			else if(copytext(name, -3) == ".js")
+				inline_scripts += "<script type=\"text/javascript\" defer src=\"[url]\"></script>\n"
 
 /**
  * public
@@ -186,9 +196,6 @@
 		"type" = type,
 		"payload" = payload,
 	))
-	// Strip #255/improper.
-	message = replacetext(message, "\proper", "")
-	message = replacetext(message, "\improper", "")
 	// Pack for sending via output()
 	message = url_encode(message)
 	// Place into queue if window is still loading

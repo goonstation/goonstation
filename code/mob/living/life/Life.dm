@@ -1,3 +1,4 @@
+var/global/life_pause_check = 0
 
 /datum/lifeprocess
 	var/mob/living/owner
@@ -182,6 +183,7 @@
 
 	var/life_time_passed = max(tick_spacing, TIME - last_life_tick)
 
+	life_pause_check = 0
 	// Jewel's attempted fix for: null.return_air()
 	// These objects should be garbage collected the next tick, so it's not too bad if it's not breathing I think? I might be totallly wrong here.
 	if (loc)
@@ -193,6 +195,7 @@
 
 		///LIFE PROCESS
 		//Most stuff gets handled here but i've left some other code below because all living mobs can use it
+
 		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)
 			if (!thing) continue
@@ -217,7 +220,6 @@
 					src.no_gravity = 0
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
-
 			if (src.mob_flags & MAT_TRIGGER_LIFE)//controlled by a signal that is added when an item with mat gets a lifeprocess proc
 				for (var/thing in src) //bnlech, do a smarter search later
 					var/atom/movable/A = thing
@@ -246,7 +248,6 @@
 
 		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 			G.process((life_time_passed / tick_spacing))
-
 
 		if (!can_act(M=src,include_cuffs=0))
 			actions.interrupt(src, INTERRUPT_STUNNED)

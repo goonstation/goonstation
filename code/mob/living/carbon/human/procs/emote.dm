@@ -2,7 +2,7 @@
 
 
 
-/mob/living/carbon/human/emote(var/act, var/voluntary = 0) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
+/mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
 	var/param = null
 
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
@@ -11,7 +11,9 @@
 		src.visible_message("<span class='alert'>[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!</span>", group = "revenant_emote")
 		return
 
-	if (voluntary == 1)
+	if (emoteTarget)
+		param = emoteTarget
+	else if (voluntary == 1)
 		if (findtext(act, " ", 1, null))
 			var/t1 = findtext(act, " ", 1, null)
 			param = copytext(act, t1 + 1, length(act) + 1)
@@ -1631,7 +1633,7 @@
 
 										if (client && client.hellbanned)
 											src.changeStatus("weakened", 4 SECONDS)
-										if (!G.affecting.hasStatus("weakened"))
+										if (G.affecting && !G.affecting.hasStatus("weakened"))
 											G.affecting.changeStatus("weakened", 4.5 SECONDS)
 
 
@@ -2077,29 +2079,47 @@
 	showmessage:
 
 	//copy paste lol
-	var/image/chat_maptext/chat_text = null
-	if (maptext_out && speechpopups && src.chat_text)
 
-		chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
-		chat_text.measure(src.client)
-		for(var/image/chat_maptext/I in src.chat_text.lines)
-			if(I != chat_text)
-				I.bump_up(chat_text.measured_height)
+	if (maptext_out)
+		var/image/chat_maptext/chat_text = null
+		SPAWN_DBG(0) //blind stab at a life() hang - REMOVE LATER
+			if (speechpopups && src.chat_text)
+				chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
+				chat_text.measure(src.client)
+				for(var/image/chat_maptext/I in src.chat_text.lines)
+					if(I != chat_text)
+						I.bump_up(chat_text.measured_height)
+
+			if (message)
+				logTheThing("say", src, null, "EMOTE: [message]")
+				act = lowertext(act)
+				if (m_type & 1)
+					for (var/mob/O in viewers(src, null))
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+				else if (m_type & 2)
+					for (var/mob/O in hearers(src, null))
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+				else if (!isturf(src.loc))
+					var/atom/A = src.loc
+					for (var/mob/O in A.contents)
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
 
 
-	if (message)
-		logTheThing("say", src, null, "EMOTE: [message]")
-		act = lowertext(act)
-		if (m_type & 1)
-			for (var/mob/O in viewers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-		else if (m_type & 2)
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-		else if (!isturf(src.loc))
-			var/atom/A = src.loc
-			for (var/mob/O in A.contents)
-				O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+	else
+
+		if (message)
+			logTheThing("say", src, null, "EMOTE: [message]")
+			act = lowertext(act)
+			if (m_type & 1)
+				for (var/mob/O in viewers(src, null))
+					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+			else if (m_type & 2)
+				for (var/mob/O in hearers(src, null))
+					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+			else if (!isturf(src.loc))
+				var/atom/A = src.loc
+				for (var/mob/O in A.contents)
+					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
 
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)

@@ -11,7 +11,7 @@
 	var/mob/user
 	/// The object which owns the UI.
 	var/datum/src_object
-	/// The title of te UI.
+	/// The title of the UI.
 	var/title
 	/// The window_id for browse() and onclose().
 	var/datum/tgui_window/window
@@ -43,23 +43,18 @@
  * required src_object datum The object or datum which owns the UI.
  * required interface string The interface used to render the UI.
  * optional title string The title of the UI.
- * optional ui_x int Deprecated: Window width.
- * optional ui_y int Deprecated: Window height.
  *
  * return datum/tgui The requested UI.
  */
-/datum/tgui/New(mob/user, datum/src_object, interface, title, ui_x, ui_y)
-	log_tgui(user, "new [interface] fancy [user.client.preferences.tgui_fancy]") // client.preferences [GOONSTATION-ADD]
+/datum/tgui/New(mob/user, datum/src_object, interface, title)
+	log_tgui(user, "new [interface] fancy [user.client.preferences.tgui_fancy]") // client.preferences [GOONSTATION-CHANGE]
 	src.user = user
 	src.src_object = src_object
-	src.window_key = "\ref[src_object]-main" // REF doesn't exist [GOONSTATION-ADD]
+	src.window_key = "\ref[src_object]-main" // REF doesn't exist [GOONSTATION-CHANGE]
 	src.interface = interface
 	if(title)
 		src.title = title
 	src.state = src_object.ui_state()
-	// Deprecated
-	if(ui_x && ui_y)
-		src.window_size = list(ui_x, ui_y)
 
 /**
  * public

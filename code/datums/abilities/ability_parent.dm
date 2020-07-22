@@ -826,6 +826,7 @@
 		theme = null // for wire's tooltips, it's about time this got varized
 		tooltip_flags = null
 
+	//DON'T OVERRIDE THIS. OVERRIDE onAttach()!
 	New(datum/abilityHolder/holder)
 		..()
 		src.holder = holder
@@ -861,6 +862,7 @@
 			if(interrupt_action_bars) actions.interrupt(holder.owner, INTERRUPT_ACT)
 			return
 
+		//Use this when you need to do something at the start of the ability where you need the holder or the mob owner of the holder. DO NOT change New()
 		onAttach(var/datum/abilityHolder/H)
 			if (src.start_on_cooldown)
 				doCooldown()
@@ -1206,24 +1208,20 @@
 		if (!ispath(abilityType))
 			return
 
-		var/datum/targetable/A = new abilityType
+		var/datum/targetable/tmp_A = new abilityType(src)
+
 		if (holders.len)
 			for (var/datum/abilityHolder/H in holders)
-				if (istype(H, A.preferred_holder_type))
-					A.holder = H
-					H.abilities += A
-					A.onAttach(H)
-					//H.updateButtons()
-					return A
+				if (istype(H, tmp_A.preferred_holder_type))
+					return H.addAbility(abilityType)
 
+		var/datum/targetable/A = new abilityType(src)
 		var/datum/abilityHolder/X
 		if (holders.len)
 			X = holders[1]
 		else
 			X = src.addHolder(A.preferred_holder_type)
-		A.holder = X
-		X.abilities += A
-		A.onAttach(X)
+		A = X.addAbility(abilityType)
 
 		src.updateButtons()
 		return A

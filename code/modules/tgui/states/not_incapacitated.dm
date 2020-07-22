@@ -24,7 +24,7 @@ var/global/datum/ui_state/not_incapacitated_state/not_incapacitated_turf_state =
 /datum/ui_state/not_incapacitated_state/can_use_topic(src_object, mob/user)
 	if(user.stat)
 		return UI_CLOSE
-	if(can_act(user) || (turf_check && !isturf(user.loc)))
+	if(!can_act(user) || (turf_check && !isturf(user.loc)))
 		return UI_DISABLED
 	if(isliving(user))
 		var/mob/living/L = user

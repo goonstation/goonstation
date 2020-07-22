@@ -11,20 +11,26 @@
 /// Base tgui assets
 /datum/asset/basic/tgui
 	local_assets = list(
-		"tgui/packages/tgui/public/.tmp/tgui.bundle.js",
-		"tgui/packages/tgui/public/.tmp/tgui.bundle.css"
+		"tgui.bundle.js",
+		"tgui.bundle.css"
 	)
 
 	init()
 		. = ..()
 		url_map = list(
-			"js/tgui/tgui.bundle.js" = "[grabResource("js/tgui/tgui.bundle.js")]",
-			"css/tgui/tgui.bundle.css" = "[grabResource("css/tgui/tgui.bundle.css")]"
+			"js/tgui/tgui.bundle.js" = "[resource("js/tgui/tgui.bundle.js")]",
+			"css/tgui/tgui.bundle.css" = "[resource("css/tgui/tgui.bundle.css")]"
 		)
 
 /// Fontawesome assets
 /datum/asset/basic/fontawesome
-	cdn_only = TRUE
+	local_assets = list(
+		"all.min.css",
+		"fa-regular-400.eot",
+		"fa-regular-400.woff",
+		"fa-solid-900.eot",
+		"fa-solid-900.woff"
+	)
 
 	url_map = list(
 		"all.min.css" = "http://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"

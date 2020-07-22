@@ -79,7 +79,7 @@
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "TankDispenser", name)
-	ui.open()
+		ui.open()
 
 /obj/machinery/dispenser/ui_data(mob/user)
 	var/list/data = list()

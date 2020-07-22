@@ -30,7 +30,7 @@
 			. = max(., UI_INTERACTIVE)
 
 		// Regular ghosts can always at least view if in range.
-		if(get_dist(src_object, user) < SQUARE_TILE_WIDTH)
+		if(get_dist(src_object, user) < (SQUARE_TILE_WIDTH / 2))
 			. = max(., UI_UPDATE)
 
 	// Check if the state allows interaction
@@ -79,6 +79,11 @@
 
 /mob/living/silicon/robot/shared_ui_interaction(src_object)
 	if(!cell || cell.charge <= 0 || weapon_lock) // Disable UIs if the Borg is unpowered or locked.
+		return UI_DISABLED
+	return ..()
+
+/mob/living/silicon/ghostdrone/shared_ui_interaction(src_object)
+	if(!cell || cell.charge <= 0) // Disable UIs if the Ghostdrone is unpowered.
 		return UI_DISABLED
 	return ..()
 

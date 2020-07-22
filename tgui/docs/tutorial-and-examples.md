@@ -41,7 +41,7 @@ Let's start with a very basic hello world.
   ui = SStgui.try_update_ui(user, src, ui)
   if(!ui)
     ui = new(user, src, "MyMachine")
-  ui.open()
+    ui.open()
 ```
 
 This is the proc that defines our interface. There's a bit going on here, so
@@ -296,7 +296,7 @@ upon code review):
   ui = SStgui.try_update_ui(user, src, ui)
   if(!ui)
     ui = new(user, src, "copypasta")
-  ui.open()
+    ui.open()
 
 /obj/copypasta/ui_data(mob/user)
   var/list/data = list()

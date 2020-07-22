@@ -10,7 +10,6 @@ var/global/list/global_asset_datum_list = list()
 /// Base asset type
 ABSTRACT_TYPE(/datum/asset)
 /datum/asset
-	var/cdn_only = FALSE
 
 /datum/asset/proc/init()
 
