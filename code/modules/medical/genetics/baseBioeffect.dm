@@ -364,7 +364,7 @@ var/const/effectTypeFood = 4
 		if (!linked_power)
 			return 1
 		if (ismob(target))
-			logTheThing("combat", owner, target, "used the [linked_power.name] power on %target%.")
+			logTheThing("combat", owner, target, "used the [linked_power.name] power on [constructTarget(target,"combat")].")
 		else if (target)
 			logTheThing("combat", owner, null, "used the [linked_power.name] power on [target].")
 		else
@@ -377,7 +377,7 @@ var/const/effectTypeFood = 4
 		if (!linked_power)
 			return 1
 		if (ismob(target))
-			logTheThing("combat", owner, target, "misfired the [linked_power.name] power on %target%.")
+			logTheThing("combat", owner, target, "misfired the [linked_power.name] power on [constructTarget(target,"combat")].")
 		else if (target)
 			logTheThing("combat", owner, null, "misfired the [linked_power.name] power on [target].")
 		else

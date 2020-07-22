@@ -48,7 +48,7 @@
 						MT:blood_volume -= 5
 
 				if (MT.dna_to_absorb <= 0)
-					logTheThing("combat", holder.owner, MT, "drains %target% of all DNA as a handspider [log_loc(holder.owner)].")
+					logTheThing("combat", holder.owner, MT, "drains [constructTarget(MT,"combat")] of all DNA as a handspider [log_loc(holder.owner)].")
 					MT.real_name = "Unknown"
 					MT.bioHolder.AddEffect("husk")
 			else

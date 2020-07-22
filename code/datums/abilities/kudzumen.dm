@@ -85,10 +85,8 @@
 		else if (points > MAX_POINTS)
 			points = MAX_POINTS
 
-
 		if (src.stealthed)
 			points -= round(2*mult)
-
 
 /datum/targetable/kudzu
 	icon = 'icons/misc/kudzu_plus.dmi'
@@ -121,7 +119,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/vampire()
+			src.object = new /obj/screen/ability/topBar/kudzu()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)
@@ -166,6 +164,9 @@
 
 	cast(atom/target)
 		. = ..()
+		if (istype(holder, /datum/abilityHolder/kudzu))
+			var/datum/abilityHolder/kudzu/KAH = holder
+			KAH.nutrients_meter.update()
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		return
 
@@ -629,15 +630,18 @@
 	proc/update()
 		amount = length(kudzu_controller.kudzu)
 
-		if (amount > 9999)
-			src.maptext = "<div style='font-size:8px; color:maroon;text-align:center;'>+</div>"
-			src.maptext_y = 2
-		else if (amount > 999)
+		if (amount <= 99)
+			src.maptext = "<div style='font-size:14px; color:maroon;text-align:center;'>[amount]</div>"
+			src.maptext_y = 4
+		else if (amount <= 999)
 			src.maptext = "<div style='font-size:10px; color:maroon;text-align:center;'>[amount]</div>"
 			src.maptext_y = 8
-		else
-			src.maptext = "<div style='font-size:14px; color:maroon;text-align:center;'>[amount]</div>"
-			src.maptext_y = 10
+		else if (amount <= 9999)
+			src.maptext = "<div style='font-size:8px; color:maroon;text-align:center;'>[amount]</div>"
+			src.maptext_y = 8
+		else 
+			src.maptext = "<div style='font-size:8px; color:maroon;text-align:center;'>+</div>"
+			src.maptext_y = 8
 
 //This will be the hud element that contains a vine thingy which covers up the left and right hand hud ui elements
 /obj/screen/kudzu/vine_hands_cover
@@ -751,6 +755,7 @@
 			return
 
 		kudzu.growth = 1
+		kudzu.update_self()		
 		new creation_path(get_turf(kudzu))
 
 

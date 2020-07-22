@@ -2,7 +2,7 @@
 
 
 
-/mob/living/carbon/human/emote(var/act, var/voluntary = 0)
+/mob/living/carbon/human/emote(var/act, var/voluntary = 0) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
 	var/param = null
 
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
@@ -11,24 +11,26 @@
 		src.visible_message("<span class='alert'>[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!</span>", group = "revenant_emote")
 		return
 
-	if (findtext(act, " ", 1, null))
-		var/t1 = findtext(act, " ", 1, null)
-		param = copytext(act, t1 + 1, length(act) + 1)
-		act = copytext(act, 1, t1)
+	if (voluntary == 1)
+		if (findtext(act, " ", 1, null))
+			var/t1 = findtext(act, " ", 1, null)
+			param = copytext(act, t1 + 1, length(act) + 1)
+			act = copytext(act, 1, t1)
 
 	for (var/uid in src.pathogens)
 		var/datum/pathogen/P = src.pathogens[uid]
 		if (P.onemote(act, voluntary, param))
 			return
 
-	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
-	var/m_type = 1 //1 is visible, 2 is audible
-	var/custom = 0 //Sorry, gotta make this for chat groupings.
-
-	for (var/obj/item/implant/I in src)
+	for (var/obj/item/implant/I in src.implant)
 		if (I.implanted)
 			I.trigger(act, src)
 
+	var/muzzled = (src.wear_mask && src.wear_mask.is_muzzle)
+	var/m_type = 1 //1 is visible, 2 is audible
+	var/custom = 0 //Sorry, gotta make this for chat groupings.
+
+	var/maptext_out = 0
 	var/message = null
 	if (src.mutantrace)
 		message = src.mutantrace.emote(act, voluntary)
@@ -281,26 +283,34 @@
 						switch(act)
 							if ("bow","wave")
 								message = "<B>[src]</B> [act]s to [param]."
+								maptext_out = "<I>[act]s to [param]</I>"
 							if ("sidehug")
 								message = "<B>[src]</B> awkwardly side-hugs [param]."
+								maptext_out = "<I>awkwardly side-hugs [param]</I>"
 							if ("blowkiss")
 								message = "<B>[src]</B> blows a kiss to [param]."
+								maptext_out = "<I>blows a kiss to [param]</I>"
 								//var/atom/U = get_turf(param)
 								//shoot_projectile_ST(src, new/datum/projectile/special/kiss(), U) //I gave this all of 5 minutes of my time I give up
 							else
 								message = "<B>[src]</B> [act]s [param]."
+								maptext_out = "<I>[act]s [param]</I>"
 					else
 						switch(act)
 							if ("hug", "sidehug")
 								message = "<B>[src]</b> [act]s [himself_or_herself(src)]."
+								maptext_out = "<I>[act]s [himself_or_herself(src)]</I>"
 							if ("blowkiss")
 								message = "<B>[src]</b> blows a kiss to... [himself_or_herself(src)]?"
+								maptext_out = "<I> blows a kiss to... [himself_or_herself(src)]?</I>"
 							else
 								message = "<B>[src]</b> [act]s."
+								maptext_out = "<I>[act]s [param]</I>"
 								karma_update(2, "SAINT", src)
 
 				else
 					message = "<B>[src]</B> struggles to move."
+					maptext_out = "<I>struggles to move</I>"
 
 				m_type = 1
 
@@ -319,10 +329,13 @@
 					switch(act)
 						if ("nod")
 							message = "<B>[src]</B> [act]s to [param]."
+							maptext_out = "<I>[act]s to [param]</I>"
 						if ("glare","stare","look","leer")
 							message = "<B>[src]</B> [act]s at [param]."
+							maptext_out = "<I>[act]s at [param]</I>"
 				else
 					message = "<B>[src]</b> [act]s."
+					maptext_out = "<I>[act]s</I>"
 
 				m_type = 1
 
@@ -339,6 +352,7 @@
 						alert("Unable to use this emote, must be either audible or visible.")
 						return
 					message = "<B>[src]</B> [input]"
+					maptext_out = "<I>[input]</I>"
 
 			if ("customv")
 				if (IS_TWITCH_CONTROLLED(src)) return
@@ -348,6 +362,7 @@
 
 				param = sanitize(html_encode(param))
 				message = "<b>[src]</b> [param]"
+				maptext_out = "<I>[param]</I>"
 				m_type = 1
 				custom = copytext(param, 1, 10)
 
@@ -358,6 +373,7 @@
 					if(!param) return
 				param = sanitize(html_encode(param))
 				message = "<b>[src]</b> [param]"
+				maptext_out = "<I>[param]</I>"
 				m_type = 2
 				custom = copytext(param, 1, 10)
 
@@ -367,6 +383,7 @@
 					return
 				param = sanitize(html_encode(param))
 				message = "<b>[src]</b> [param]"
+				maptext_out = "<I>[param]</I>"
 				m_type = 1 // default to visible
 				custom = copytext(param, 1, 10)
 
@@ -402,6 +419,7 @@
 						if (IS_TWITCH_CONTROLLED(H))
 							return
 #endif
+						maptext_out = "<I>offers to [H]...</I>"
 						src.give_to(H)
 						return
 				m_type = 1
@@ -489,6 +507,7 @@
 			if ("birdwell")
 				if ((src.client && src.client.holder) && src.emote_check(voluntary, 50))
 					message = "<B>[src]</B> birdwells."
+					maptext_out = "<I>birdwells</I>"
 					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1)
 				else
 					src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
@@ -498,6 +517,7 @@
 				if (istype(src.wear_mask, /obj/item/clothing/mask/anime) && !src.stat)
 
 					message = "<B>[src]</B> uguus!"
+					maptext_out = "<I>uguus</I>"
 					m_type = 2
 					if (narrator_mode)
 						playsound(get_turf(src), 'sound/vox/uguu.ogg', 80, 0, 0, src.get_age_pitch())
@@ -533,6 +553,7 @@
 									src.add_juggle(thing)
 							else
 								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
+								maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
 			if ("twirl", "spin"/*, "juggle"*/)
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))
@@ -546,13 +567,16 @@
 								thing = src.r_hand
 						if (thing)
 							message = thing.on_spin_emote(src)
+							maptext_out = "<I>twirls [thing]</I>"
 							animate(thing, transform = turn(matrix(), 120), time = 0.7, loop = 3)
 							animate(transform = turn(matrix(), 240), time = 0.7)
 							animate(transform = null, time = 0.7)
 						else
 							message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
+							maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
 				else
 					message = "<B>[src]</B> struggles to move."
+					maptext_out = "<I>struggles to move</I>"
 
 			if ("tip")
 				if (!src.restrained() && !src.stat)
@@ -566,6 +590,7 @@
 							karma_update(10, "SIN", src)
 					else if (istype(src.head, /obj/item/clothing/head) && !istype(src.head, /obj/item/clothing/head/fedora))
 						src.show_text("This hat just isn't [pick("fancy", "suave", "manly", "sexerific", "majestic", "euphoric")] enough for that!", "red")
+						//maptext_out = "<I>tips hat</I>"
 						return
 					else
 						src.show_text("You can't tip a hat you don't have!", "red")
@@ -599,6 +624,8 @@
 						message = "<B>[src]</B> throws [his_or_her(src)] [hat_or_beret] on the floor and stomps on it![already_stomped]\
 						<br><B>[src]</B> grumbles, \"<i>rasmn frasmn grmmn</i>.\""
 
+					maptext_out = "<I>stomps on their hat!</I>"
+
 					if (hat_or_beret == "beret")
 						hat.icon_state = "hosberet-smash" // make sure it looks smushed!
 					else
@@ -617,12 +644,14 @@
 				if (!muzzled)
 					if (src.emote_check(voluntary, 25))
 						message = "<B>[src]</B> blows a bubble."
+						maptext_out = "<I>blows a bubble</I>"
 						//todo: sound
 						//todo: gum icon animation?
 						if (gum.reagents && gum.reagents.total_volume)
 							gum.reagents.reaction(get_turf(src), TOUCH, gum.chew_size)
 				else
 					message = "<B>[src]</B> tries to make a noise."
+					maptext_out = "<I>tries to make a noise</I>"
 				m_type = 2
 
 			if ("handpuppet")
@@ -632,54 +661,67 @@
 			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","drool","shrug","tremble","quiver","shiver","shudder","shake","think","ponder","contemplate","grump")
 				// basic visible single-word emotes
 				message = "<B>[src]</B> [act]s."
+				maptext_out = "<I>[act]s</I>"
 				m_type = 1
 
 			if (":)")
 				message = "<B>[src]</B> smiles."
+				maptext_out = "<I>smiles</I>"
 				m_type = 1
 
 			if (":(")
 				message = "<B>[src]</B> frowns."
+				maptext_out = "<I>frowns</I>"
 				m_type = 1
 
 			if (":d", ">:)") // the switch is lowertext()ed so this is what :D would be
 				message = "<B>[src]</B> grins."
+				maptext_out = "<I>grins</I>"
 				m_type = 1
 
 			if ("d:", "dx") // same as above for D: and DX
 				message = "<B>[src]</B> grimaces."
+				maptext_out = "<I>grimaces</I>"
 				m_type = 1
 
 			if (">:(")
 				message = "<B>[src]</B> scowls."
+				maptext_out = "<I>scowls</I>"
 				m_type = 1
 
 			if (":j")
 				message = "<B>[src]</B> smirks."
+				maptext_out = "<I>smirks</I>"
 				m_type = 1
 
 			if (":i")
 				message = "<B>[src]</B> grumps."
+				maptext_out = "<I>grumps</I>"
 				m_type = 1
 
 			if (":|")
 				message = "<B>[src]</B> stares."
+				maptext_out = "<I>stares</I>"
 				m_type = 1
 
 			if ("xd")
 				message = "<B>[src]</B> laughs."
+				maptext_out = "<I>laughs</I>"
 				m_type = 1
 
 			if (":c")
 				message = "<B>[src]</B> pouts."
+				maptext_out = "<I>pouts</I>"
 				m_type = 1
 
 			if ("clap")
 				// basic visible single-word emotes - unusable while restrained
 				if (!src.restrained())
 					message = "<B>[src]</B> [lowertext(act)]s."
+					maptext_out = "<I>claps</I>"
 				else
 					message = "<B>[src]</B> struggles to move."
+					maptext_out = "<I>struggles to move</I>"
 				m_type = 1
 
 			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","sniff","snore","whimper","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle")
@@ -687,9 +729,13 @@
 				if (!muzzled)
 					if (lowertext(act) == "sigh" && prob(1)) act = "singh" //1% chance to change sigh to singh. a bad joke for drsingh fans.
 					message = "<B>[src]</B> [act]s."
+					maptext_out = "<I>[act]s</I>"
 				else
 					message = "<B>[src]</B> tries to make a noise."
+					maptext_out = "<I>tries to make a noise</I>"
 				m_type = 2
+
+				maptext_out = "<I>[act]s</I>"
 
 				if (src.emote_check(voluntary,20))
 					if (act == "gasp")
@@ -702,36 +748,44 @@
 			if ("laugh","chuckle","giggle","chortle","guffaw","cackle")
 				if (!muzzled)
 					message = "<B>[src]</B> [act]s."
+					maptext_out = "<I>[act]s</I>"
 					if (src.sound_list_laugh && src.sound_list_laugh.len)
 						playsound(src.loc, pick(src.sound_list_laugh), 80, 0, 0, src.get_age_pitch())
 				else
 					message = "<B>[src]</B> tries to make a noise."
+					maptext_out = "<I>tries to make a noise</I>"
 				m_type = 2
 
 			// basic emotes that change the wording a bit
 
 			if ("blush")
 				message = "<B>[src]</B> blushes."
+				maptext_out = "<I>blushes</I>"
 				m_type = 1
 
 			if ("flinch")
 				message = "<B>[src]</B> flinches."
+				maptext_out = "<I>flinches</I>"
 				m_type = 1
 
 			if ("blink_r")
 				message = "<B>[src]</B> blinks rapidly."
+				maptext_out = "<I>blinks rapidly</I>"
 				m_type = 1
 
 			if ("eyebrow","raiseeyebrow")
 				message = "<B>[src]</B> raises an eyebrow."
+				maptext_out = "<I>raises an eyebrow</I>"
 				m_type = 1
 
 			if ("shakehead","smh")
 				message = "<B>[src]</B> shakes [his_or_her(src)] head."
+				maptext_out = "<I>shakes [his_or_her(src)] head</I>"
 				m_type = 1
 
 			if ("shakebutt","shakebooty","shakeass","twerk")
 				message = "<B>[src]</B> shakes [his_or_her(src)] ass!"
+				maptext_out = "<I>shakes [his_or_her(src)] ass!</I>"
 				m_type = 1
 				karma_update(3, "SIN", src)
 
@@ -751,18 +805,22 @@
 
 			if ("pale")
 				message = "<B>[src]</B> goes pale for a second."
+				maptext_out = "<I>goes pale...</I>"
 				m_type = 1
 
 			if ("flipout")
 				message = "<B>[src]</B> flips the fuck out!"
+				maptext_out = "<I>flips the fuck out!</I>"
 				m_type = 1
 
 			if ("rage","fury","angry")
 				message = "<B>[src]</B> becomes utterly furious!"
+				maptext_out = "<I>becomes utterly furious!</I>"
 				m_type = 1
 
 			if ("shame","hanghead")
 				message = "<B>[src]</B> hangs [his_or_her(src)] head in shame."
+				maptext_out = "<I>hangs [his_or_her(src)] head in shame</I>"
 				m_type = 1
 
 			// basic emotes with alternates for restraints
@@ -770,81 +828,133 @@
 			if ("flap")
 				if (!src.restrained())
 					message = "<B>[src]</B> flaps [his_or_her(src)] arms!"
+					maptext_out = "<I>flaps [his_or_her(src)] arms!</I>"
 					if (src.sound_list_flap && src.sound_list_flap.len)
 						playsound(src.loc, pick(src.sound_list_flap), 80, 0, 0, src.get_age_pitch())
 				else
 					message = "<B>[src]</B> writhes!"
+					maptext_out = "<I>writhes!</I>"
 				m_type = 1
 
 			if ("aflap")
 				if (!src.restrained())
 					message = "<B>[src]</B> flaps [his_or_her(src)] arms ANGRILY!"
+					maptext_out = "<I>flaps [his_or_her(src)] arms ANGRILY!</I>"
 					if (src.sound_list_flap && src.sound_list_flap.len)
 						playsound(src.loc, pick(src.sound_list_flap), 80, 0, 0, src.get_age_pitch())
 				else
 					message = "<B>[src]</B> writhes angrily!"
+					maptext_out = "<I>writhes angrily!</I>"
 				m_type = 1
 
 			if ("raisehand")
-				if (!src.restrained()) message = "<B>[src]</B> raises a hand."
-				else message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
+				if (!src.restrained())
+					message = "<B>[src]</B> raises a hand."
+					maptext_out = "<I>raises a hand</I>"
+				else
+					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
+					maptext_out = "<I>tries to move their arm</I>"
 				m_type = 1
 
 			if ("crackknuckles","knuckles")
-				if (!src.restrained()) message = "<B>[src]</B> cracks [his_or_her(src)] knuckles."
-				else message = "<B>[src]</B> irritably shuffles around."
+				if (!src.restrained())
+					message = "<B>[src]</B> cracks [his_or_her(src)] knuckles."
+					maptext_out = "<I>cracks their knuckles</I>"
+				else
+					message = "<B>[src]</B> irritably shuffles around."
+					maptext_out = "<I>irritably shuffles around</I>"
 				m_type = 1
 
 			if ("stretch")
-				if (!src.restrained()) message = "<B>[src]</B> stretches."
-				else message = "<B>[src]</B> writhes around slowly."
+				if (!src.restrained())
+					message = "<B>[src]</B> stretches."
+					maptext_out = "<I>stretches</I>"
+				else
+					message = "<B>[src]</B> writhes around slowly."
+					maptext_out = "<I>writhes around slowly</I>"
 				m_type = 1
 
 			if ("rude")
-				if (!src.restrained()) message = "<B>[src]</B> makes a rude gesture."
-				else message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
+				if (!src.restrained())
+					message = "<B>[src]</B> makes a rude gesture."
+					maptext_out = "<I>makes a rude gesture</I>"
+				else
+					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
+					maptext_out = "<I>tries to move their arm</I>"
 				m_type = 1
 
 			if ("cry")
-				if (!muzzled) message = "<B>[src]</B> cries."
-				else message = "<B>[src]</B> makes an odd noise. A tear runs down [his_or_her(src)] face."
+				if (!muzzled)
+					message = "<B>[src]</B> cries."
+					maptext_out = "<I>cries</I>"
+				else
+					message = "<B>[src]</B> makes an odd noise. A tear runs down [his_or_her(src)] face."
+					maptext_out = "<I>makes an odd noise</I>"
 				m_type = 2
 
 			if ("retch","gag")
-				if (!muzzled) message = "<B>[src]</B> retches in disgust!"
-				else message = "<B>[src]</B> makes a strange choking sound."
+				if (!muzzled)
+					message = "<B>[src]</B> retches in disgust!"
+					maptext_out = "<I>retches in disgust!</I>"
+				else
+					message = "<B>[src]</B> makes a strange choking sound."
+					maptext_out = "<I>makes a strange choking sound</I>"
 				m_type = 2
 
 			if ("raspberry")
-				if (!muzzled) message = "<B>[src]</B> blows a raspberry."
-				else message = "<B>[src]</B> slobbers all over [himself_or_herself(src)]."
+				if (!muzzled)
+					message = "<B>[src]</B> blows a raspberry."
+					maptext_out = "<I>blows a raspberry</I>"
+				else
+					message = "<B>[src]</B> slobbers all over [himself_or_herself(src)]."
+					maptext_out = "<I>slobbers all over themselves</I>"
 				m_type = 2
 
 			if ("tantrum")
-				if (!src.restrained()) message = "<B>[src]</B> throws a tantrum!"
-				else message = "<B>[src]</B> starts wriggling around furiously!"
+				if (!src.restrained())
+					message = "<B>[src]</B> throws a tantrum!"
+					maptext_out = "<I>throws a tantrum!</I>"
+				else
+					message = "<B>[src]</B> starts wriggling around furiously!"
+					maptext_out = "<I>starts wriggling around furiously!</I>"
 				m_type = 1
 
 			if ("gesticulate")
-				if (!src.restrained()) message = "<B>[src]</B> gesticulates."
-				else message = "<B>[src]</B> wriggles around a lot."
+				if (!src.restrained())
+					message = "<B>[src]</B> gesticulates."
+					maptext_out = "<I>gesticulates</I>"
+				else
+					message = "<B>[src]</B> wriggles around a lot."
+					maptext_out = "<I>wriggles around a lot</I>"
 				m_type = 1
 
 			if ("wgesticulate")
-				if (!src.restrained()) message = "<B>[src]</B> gesticulates wildly."
-				else message = "<B>[src]</B> enthusiastically wriggles around a lot!"
+				if (!src.restrained())
+					message = "<B>[src]</B> gesticulates wildly."
+					maptext_out = "<I>gesticulates wildly</I>"
+				else
+					message = "<B>[src]</B> enthusiastically wriggles around a lot!"
+					maptext_out = "<I>enthusiastically wriggles around a lot!</I>"
 				m_type = 1
 
 			if ("smug")
-				if (!src.restrained()) message = "<B>[src]</B> folds [his_or_her(src)] arms and smirks broadly, making a self-satisfied \"heh\"."
-				else message = "<B>[src]</B> shuffles a bit and smirks broadly, emitting a rather self-satisfied noise."
+				if (!src.restrained())
+					message = "<B>[src]</B> folds [his_or_her(src)] arms and smirks broadly, making a self-satisfied \"heh\"."
+					maptext_out = "<I>folds their arms and smirks broadly</I>"
+				else
+					message = "<B>[src]</B> shuffles a bit and smirks broadly, emitting a rather self-satisfied noise."
+					maptext_out = "<I>shuffles a bit and smirks broadly</I>"
 				m_type = 1
 				if (src.mind)
 					karma_update(2, "SIN", src)
 
 			if ("nosepick","picknose")
-				if (!src.restrained()) message = "<B>[src]</B> picks [his_or_her(src)] nose."
-				else message = "<B>[src]</B> sniffs and scrunches [his_or_her(src)] face up irritably."
+				if (!src.restrained())
+					message = "<B>[src]</B> picks [his_or_her(src)] nose."
+					maptext_out = "<I>picks their nose</I>"
+				else
+					message = "<B>[src]</B> sniffs and scrunches [his_or_her(src)] face up irritably."
+					maptext_out = "<I>sniffs and scrunches their face up irritably</I>"
 				m_type = 1
 				if (src.mind)
 					karma_update(1, "SIN", src)
@@ -852,9 +962,15 @@
 			if ("flex","flexmuscles")
 				if (!src.restrained())
 					var/roboarms = src.limbs && istype(src.limbs.r_arm, /obj/item/parts/robot_parts) && istype(src.limbs.l_arm, /obj/item/parts/robot_parts)
-					if (roboarms) message = "<B>[src]</B> flexes [his_or_her(src)] powerful robotic muscles."
-					else message = "<B>[src]</B> flexes [his_or_her(src)] muscles."
-				else message = "<B>[src]</B> tries to stretch [his_or_her(src)] arms."
+					if (roboarms)
+						message = "<B>[src]</B> flexes [his_or_her(src)] powerful robotic muscles."
+						maptext_out = "<I>flexes [his_or_her(src)] powerful robotic muscles</I>"
+					else
+						message = "<B>[src]</B> flexes [his_or_her(src)] muscles."
+						maptext_out = "<I>flexes [his_or_her(src)] muscles</I>"
+				else
+					message = "<B>[src]</B> tries to stretch [his_or_her(src)] arms."
+					maptext_out = "<I>tries to stretch [his_or_her(src)] arms</I>"
 				m_type = 1
 
 				for(var/atom in src.get_equipped_items())
@@ -870,13 +986,21 @@
 						break
 
 			if ("facepalm")
-				if (!src.restrained()) message = "<B>[src]</B> places [his_or_her(src)] hand on [his_or_her(src)] face in exasperation."
-				else message = "<B>[src]</B> looks rather exasperated."
+				if (!src.restrained())
+					message = "<B>[src]</B> places [his_or_her(src)] hand on [his_or_her(src)] face in exasperation."
+					maptext_out = "<I>places [his_or_her(src)] hand on [his_or_her(src)] face in exasperation</I>"
+				else
+					message = "<B>[src]</B> looks rather exasperated."
+					maptext_out = "<I>looks rather exasperated</I>"
 				m_type = 1
 
 			if ("panic","freakout")
-				if (!src.restrained()) message = "<B>[src]</B> enters a state of hysterical panic!"
-				else message = "<B>[src]</B> starts writhing around in manic terror!"
+				if (!src.restrained())
+					message = "<B>[src]</B> enters a state of hysterical panic!"
+					maptext_out = "<I>enters a state of hysterical panic!</I>"
+				else
+					message = "<B>[src]</B> starts writhing around in manic terror!"
+					maptext_out = "<I>starts writhing around in manic terror!</I>"
 				m_type = 1
 
 			// targeted emotes
@@ -907,9 +1031,15 @@
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
-					if (M) message = "<B>[src]</B> flips off [M]."
-					else message = "<B>[src]</B> raises [his_or_her(src)] middle finger."
-				else message = "<B>[src]</B> scowls and tries to move [his_or_her(src)] arm."
+					if (M)
+						message = "<B>[src]</B> flips off [M]."
+						maptext_out = "<I>flips off [M]!</I>"
+					else
+						message = "<B>[src]</B> raises [his_or_her(src)] middle finger."
+						maptext_out = "<I>raises [his_or_her(src)] middle finger</I>"
+				else
+					message = "<B>[src]</B> scowls and tries to move [his_or_her(src)] arm."
+					maptext_out = "<I>scowls and tries to move [his_or_her(src)] arm</I>"
 
 			if ("doubleflip","doubledeuce","doublebird","flip2")
 				m_type = 1
@@ -920,9 +1050,15 @@
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
-					if (M) message = "<B>[src]</B> gives [M] the double deuce!"
-					else message = "<B>[src]</B> raises both of [his_or_her(src)] middle fingers."
-				else message = "<B>[src]</B> scowls and tries to move [his_or_her(src)] arms."
+					if (M)
+						message = "<B>[src]</B> gives [M] the double deuce!"
+						maptext_out = "<I>gives [M] the double deuce!</I>"
+					else
+						message = "<B>[src]</B> raises both of [his_or_her(src)] middle fingers."
+						maptext_out = "<I>raises both of [his_or_her(src)] middle fingers</I>"
+				else
+					message = "<B>[src]</B> scowls and tries to move [his_or_her(src)] arms."
+					maptext_out = "<I>scowls and tries to move [his_or_her(src)] arms.</I>"
 
 			if ("boggle")
 				m_type = 1
@@ -932,8 +1068,12 @@
 						if (ckey(param) == ckey(A.name))
 							M = A
 							break
-				if (M) message = "<B>[src]</B> boggles at [M]'s stupidity."
-				else message = "<B>[src]</B> boggles at the stupidity of it all."
+				if (M)
+					message = "<B>[src]</B> boggles at [M]'s stupidity."
+					maptext_out = "<I> boggles at [M]'s stupidity</I>"
+				else
+					message = "<B>[src]</B> boggles at the stupidity of it all."
+					maptext_out = "<I>boggles at the stupidity of it all</I>"
 
 			if ("shakefist")
 				m_type = 1
@@ -944,9 +1084,15 @@
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
-					if (M) message = "<B>[src]</B> angrily shakes [his_or_her(src)] fist at [M]!"
-					else message = "<B>[src]</B> angrily shakes [his_or_her(src)] fist!"
-				else message = "<B>[src]</B> tries to move [his_or_her(src)] arm angrily!"
+					if (M)
+						message = "<B>[src]</B> angrily shakes [his_or_her(src)] fist at [M]!"
+						maptext_out = "<I>angrily shakes [his_or_her(src)] fist at [M]!</I>"
+					else
+						message = "<B>[src]</B> angrily shakes [his_or_her(src)] fist!"
+						maptext_out = "<I>angrily shakes [his_or_her(src)] fist!</I>"
+				else
+					message = "<B>[src]</B> tries to move [his_or_her(src)] arm angrily!"
+					maptext_out = "<I>tries to move [his_or_her(src)] arm angrily!</I>"
 
 			if ("handshake","shakehand","shakehands")
 				m_type = 1
@@ -960,8 +1106,12 @@
 					if (M == src) M = null
 
 					if (M)
-						if (M.canmove && !M.r_hand && !M.restrained()) message = "<B>[src]</B> shakes hands with [M]."
-						else message = "<B>[src]</B> holds out [his_or_her(src)] hand to [M]."
+						if (M.canmove && !M.r_hand && !M.restrained())
+							message = "<B>[src]</B> shakes hands with [M]."
+							maptext_out = "<I>shakes hands with [M]</I>"
+						else
+							message = "<B>[src]</B> holds out [his_or_her(src)] hand to [M]."
+							maptext_out = "<I>holds out [his_or_her(src)] hand to [M]</I>"
 
 			if ("daps","dap")
 				m_type = 1
@@ -972,9 +1122,15 @@
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
-					if (M) message = "<B>[src]</B> gives daps to [M]."
-					else message = "<B>[src]</B> sadly can't find anybody to give daps to, and daps [himself_or_herself(src)]. Shameful."
-				else message = "<B>[src]</B> wriggles around a bit."
+					if (M)
+						message = "<B>[src]</B> gives daps to [M]."
+						maptext_out = "<I>gives daps to [M]</I>"
+					else
+						message = "<B>[src]</B> sadly can't find anybody to give daps to, and daps [himself_or_herself(src)]. Shameful."
+						maptext_out = "<I>shamefully gives daps to [himself_or_herself(src)]</I>"
+				else
+					message = "<B>[src]</B> wriggles around a bit."
+					maptext_out = "<I>wriggles around a bit</I>"
 
 			if ("slap","bitchslap","smack")
 				m_type = 1
@@ -988,12 +1144,17 @@
 								if (ckey(param) == ckey(A.name))
 									M = A
 									break
-						if (M) message = "<B>[src]</B> slaps [M] across the face! Ouch!"
+						if (M)
+							message = "<B>[src]</B> slaps [M] across the face! Ouch!"
+							maptext_out = "<I>slaps [M] across the face!</I>"
 						else
 							message = "<B>[src]</B> slaps [himself_or_herself(src)]!"
+							maptext_out = "<I>slaps [himself_or_herself(src)]!</I>"
 							src.TakeDamage("head", 0, 4, 0, DAMAGE_BURN)
 						playsound(src.loc, src.sound_snap, 100, 1)
-				else message = "<B>[src]</B> lurches forward strangely and aggressively!"
+				else
+					message = "<B>[src]</B> lurches forward strangely and aggressively!"
+					maptext_out = "<I>lurches forward strangely and aggressively!</I>"
 
 			if ("highfive")
 				m_type = 1
@@ -1014,16 +1175,20 @@
 								if (alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", "Yes", "No") == "Yes")
 									if (M in view(1,null))
 										message = "<B>[src]</B> and [M] highfive!"
+										maptext_out = "<I>highfives [M]!</I>"
 										playsound(src.loc, src.sound_snap, 100, 1)
 								else
 									message = "<B>[src]</B> offers [M] a highfive, but [M] leaves [him_or_her(src)] hanging!"
+									maptext_out = "<I>tries to highfive [M] but is left hanging!</I>"
 									if (M.mind)
 										karma_update(5, "SIN", src)
 							else
 								message = "<B>[src]</B> highfives [M]!"
+								maptext_out = "<I>highfives [M]!</I>"
 								playsound(src.loc, src.sound_snap, 100, 1)
 						else
 							message = "<B>[src]</B> randomly raises [his_or_her(src)] hand!"
+							maptext_out = "<I>randomly raises [his_or_her(src)] hand!</I>"
 			// emotes that do STUFF! or are complex in some way i guess
 
 			if ("snap","snapfingers","fingersnap","click","clickfingers")
@@ -1058,6 +1223,7 @@
 					m_type = 2
 				else
 					message = "<B>[src]</B> makes air quotes with [his_or_her(src)] fingers."
+					maptext_out = "<I>makes air quotes with [his_or_her(src)] fingers</I>"
 					m_type = 1
 
 			if ("twitch")
@@ -1126,11 +1292,13 @@
 
 					if (!M)
 						message = "<B>[src]</B> points."
+						maptext_out = "<I>points</I>"
 					else
 						src.point(M)
 
 					if (M)
 						message = "<B>[src]</B> points to [M]."
+						maptext_out = "<I>points to [M]</I>"
 					else
 				m_type = 1
 
@@ -1140,8 +1308,10 @@
 					if (isnum(t1))
 						if (t1 <= 5 && (!src.r_hand || !src.l_hand))
 							message = "<B>[src]</B> raises [t1] finger\s."
+							maptext_out = "<I>raises [t1] finger\s</I>"
 						else if (t1 <= 10 && (!src.r_hand && !src.l_hand))
 							message = "<B>[src]</B> raises [t1] finger\s."
+							maptext_out = "<I>raises [t1] finger\s</I>"
 				m_type = 1
 
 			if ("wink")
@@ -1158,6 +1328,7 @@
 						break
 
 				message = "<B>[src]</B> winks."
+				maptext_out = "<I>winks</I>"
 				m_type = 1
 
 			if ("collapse", "trip")
@@ -1299,6 +1470,8 @@
 									// todo: add context-sensitive break dancing and some other goofy shit
 
 						SPAWN_DBG(0.5 SECONDS)
+							//i hate these checks - too lazy to fix for real now but lets throw on some lagchecks since we're already spawning
+							LAGCHECK(LAG_MED)
 							var/beeMax = 15
 							for (var/obj/critter/domestic_bee/responseBee in range(7, src))
 								if (!responseBee.alive)
@@ -1310,6 +1483,7 @@
 								responseBee.dance_response()
 								karma_update(1, "SAINT", src)
 
+							LAGCHECK(LAG_MED)
 							var/parrotMax = 15
 							for (var/obj/critter/parrot/responseParrot in range(7, src))
 								if (!responseParrot.alive)
@@ -1318,6 +1492,7 @@
 									break
 								responseParrot.dance_response()
 
+							LAGCHECK(LAG_MED)
 							var/crabMax = 5
 							for (var/obj/critter/crab/party/responseCrab in range(7, src))
 								if (!responseCrab.alive)
@@ -1329,6 +1504,7 @@
 						if (src.traitHolder && src.traitHolder.hasTrait("happyfeet"))
 							if (prob(33))
 								SPAWN_DBG(0.5 SECONDS)
+									LAGCHECK(LAG_MED)
 									for (var/mob/living/carbon/human/responseMonkey in range(1, src)) // they don't have to be monkeys, but it's signifying monkey code
 										if (responseMonkey.stat || responseMonkey.getStatusDuration("paralysis") || responseMonkey.sleeping || responseMonkey.getStatusDuration("stunned") || (responseMonkey == src))
 											continue
@@ -1360,7 +1536,7 @@
 					//		animate(transform = turn(GetPooledMatrix(), -180), time = 1, loop = -1)
 					//		animate(transform = turn(GetPooledMatrix(), -270), time = 1, loop = -1)
 					//		animate(transform = turn(GetPooledMatrix(), -360), time = 1, loop = -1)
-					if (istype(src.loc,/obj/))
+					if (isobj(src.loc))
 						var/obj/container = src.loc
 						container.mob_flip_inside(src)
 
@@ -1439,7 +1615,7 @@
 
 									src.emote("scream")
 									message = "<span class='alert'><B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B></span>"
-									logTheThing("combat", src, G.affecting, "suplexes %target%[tabl ? " into \an [tabl]" : null] [log_loc(src)]")
+									logTheThing("combat", src, G.affecting, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
 									M.lastattacker = src
 									M.lastattackertime = world.time
 									if (iswrestler(src))
@@ -1455,7 +1631,7 @@
 
 										if (client && client.hellbanned)
 											src.changeStatus("weakened", 4 SECONDS)
-										if (!G.affecting.hasStatus("weakened"))
+										if (G.affecting && !G.affecting.hasStatus("weakened"))
 											G.affecting.changeStatus("weakened", 4.5 SECONDS)
 
 
@@ -1503,7 +1679,7 @@
 											src.stamina_stun()
 
 										message = "<span class='alert'><B>[src]</B> flips into [M]!</span>"
-										logTheThing("combat", src, M, "flips into %target%")
+										logTheThing("combat", src, M, "flips into [constructTarget(M,"combat")]")
 										src.changeStatus("weakened", 6 SECONDS)
 										src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
 										M.changeStatus("weakened", 2 SECONDS)
@@ -1667,6 +1843,7 @@
 			if ("poo", "poop", "shit", "crap")
 				if (src.emote_check(voluntary))
 					message = "<B>[src]</B> grunts for a moment. [prob(1) ? "Something" : "Nothing"] happens."
+					maptext_out = "<I>grunts</I>"
 
 			if ("monologue")
 				m_type = 2
@@ -1898,19 +2075,49 @@
 				return
 
 	showmessage:
-	if (message)
-		logTheThing("say", src, null, "EMOTE: [message]")
-		act = lowertext(act)
-		if (m_type & 1)
-			for (var/mob/O in viewers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
-		else if (m_type & 2)
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
-		else if (!isturf(src.loc))
-			var/atom/A = src.loc
-			for (var/mob/O in A.contents)
-				O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+
+	//copy paste lol
+
+	if (maptext_out)
+		var/image/chat_maptext/chat_text = null
+		SPAWN_DBG(0) //blind stab at a life() hang - REMOVE LATER
+			if (speechpopups && src.chat_text)
+				chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
+				chat_text.measure(src.client)
+				for(var/image/chat_maptext/I in src.chat_text.lines)
+					if(I != chat_text)
+						I.bump_up(chat_text.measured_height)
+
+			if (message)
+				logTheThing("say", src, null, "EMOTE: [message]")
+				act = lowertext(act)
+				if (m_type & 1)
+					for (var/mob/O in viewers(src, null))
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+				else if (m_type & 2)
+					for (var/mob/O in hearers(src, null))
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+				else if (!isturf(src.loc))
+					var/atom/A = src.loc
+					for (var/mob/O in A.contents)
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+
+
+	else
+
+		if (message)
+			logTheThing("say", src, null, "EMOTE: [message]")
+			act = lowertext(act)
+			if (m_type & 1)
+				for (var/mob/O in viewers(src, null))
+					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+			else if (m_type & 2)
+				for (var/mob/O in hearers(src, null))
+					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+			else if (!isturf(src.loc))
+				var/atom/A = src.loc
+				for (var/mob/O in A.contents)
+					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
 
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)

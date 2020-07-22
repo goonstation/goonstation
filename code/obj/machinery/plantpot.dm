@@ -394,7 +394,7 @@
 						// It doesn't make much sense to feed a full man to a dinky little plant.
 					var/mob/living/carbon/C = W:affecting
 					user.visible_message("<span class='alert'>[user] starts to feed [C] to the plant!</span>")
-					logTheThing("combat", user, (C), "attempts to feed %target% to a man-eater at [log_loc(src)].") // Some logging would be nice (Convair880).
+					logTheThing("combat", user, (C), "attempts to feed [constructTarget(C,"combat")] to a man-eater at [log_loc(src)].") // Some logging would be nice (Convair880).
 					message_admins("[key_name(user)] attempts to feed [key_name(C, 1)] ([isdead(C) ? "dead" : "alive"]) to a man-eater at [log_loc(src)].")
 					src.add_fingerprint(user)
 					if(!(user in src.contributors))
@@ -402,7 +402,7 @@
 					if(do_after(user, 30)) // Same as the gibber and reclaimer. Was 20 (Convair880).
 						if(src && W && W.loc == user && C)
 							user.visible_message("<span class='alert'>[src.name] grabs [C] and devours them ravenously!</span>")
-							logTheThing("combat", user, (C), "feeds %target% to a man-eater at [log_loc(src)].")
+							logTheThing("combat", user, (C), "feeds [constructTarget(C,"combat")] to a man-eater at [log_loc(src)].")
 							message_admins("[key_name(user)] feeds [key_name(C, 1)] ([isdead(C) ? "dead" : "alive"]) to a man-eater at [log_loc(src)].")
 							if(C.mind)
 								C.ghostize()
@@ -1015,6 +1015,7 @@
 		else
 			var/cropcount = getamount
 			var/seedcount = 0
+			var/obj/tmp_crop = null		//for XP calc
 
 			while (getamount > 0)
 				var/quality_score = base_quality_score
@@ -1236,8 +1237,18 @@
 							if(issaved(growing.vars[V]) && V != "holder")
 								hybrid.vars[V] = growing.vars[V]
 						S.planttype = hybrid
+
+					if (!tmp_crop)
+						tmp_crop = CROP
 					seedcount++
 				getamount--
+			
+			//Get the first crop harvasted, give XP based on quality. Will make better later, like so more plants harvasted and stuff, this is just for testing.
+			if (tmp_crop.quality >= -10 && prob(20))
+				if (tmp_crop.quality >= 20)
+					JOB_XP_ARCHIVED(user, "Botanist", 2)
+				else
+					JOB_XP_ARCHIVED(user, "Botanist", 1)
 
 			var/list/harvest_string = list("You harvest [cropcount] item")
 			if (cropcount > 1)

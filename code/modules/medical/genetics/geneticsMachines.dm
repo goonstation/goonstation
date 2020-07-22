@@ -822,7 +822,7 @@ var/list/genetics_computers = list()
 			src.printlabel = null
 		else
 			src.printlabel = label
-			playsound(src.loc, "keyboard", 50, 1, 5)
+			playsound(src.loc, "keyboard", 50, 1, -15)
 
 	else if(href_list["setseq"])
 
@@ -1373,7 +1373,7 @@ var/list/genetics_computers = list()
 
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, 5)
+	playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 	return
 
 /obj/machinery/computer/genetics/proc/equipment_available(var/equipment = "analyser",var/datum/bioEffect/E)
@@ -1654,5 +1654,5 @@ var/list/genetics_computers = list()
 	if (!src || !M || !ismob(M) || !action)
 		return
 
-	logTheThing("station", usr, M, "uses [src.name] on %target%[M.bioHolder ? " (Genetic stability: [M.bioHolder.genetic_stability])" : ""] at [log_loc(src)]. Action: [action][BE && istype(BE, /datum/bioEffect/) ? ". Gene: [BE] (Stability impact: [BE.stability_loss])" : ""]")
+	logTheThing("station", usr, M, "uses [src.name] on [constructTarget(M,"station")][M.bioHolder ? " (Genetic stability: [M.bioHolder.genetic_stability])" : ""] at [log_loc(src)]. Action: [action][BE && istype(BE, /datum/bioEffect/) ? ". Gene: [BE] (Stability impact: [BE.stability_loss])" : ""]")
 	return

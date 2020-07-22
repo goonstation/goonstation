@@ -354,6 +354,7 @@
 	force = 5.0
 	caliber = 0.22
 	max_ammo_capacity = 4
+	auto_eject = 1
 	w_class = 2
 	muzzle_flash = 0
 

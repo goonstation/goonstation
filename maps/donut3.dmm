@@ -6325,6 +6325,11 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "bBc" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 9
 	},
@@ -8734,6 +8739,10 @@
 /obj/machinery/networked/printer{
 	pixel_y = 9;
 	print_id = "Research Sector"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/carpet/purple/standard/edge{
 	dir = 1
@@ -29026,6 +29035,12 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/maintenance)
+"ixs" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/science)
 "ixI" = (
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/firealarm{
@@ -39551,6 +39566,9 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -42526,6 +42544,10 @@
 	},
 /obj/machinery/light/incandescent/netural,
 /obj/disposalpipe/segment/food,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/black,
 /area/station/chapel/main)
 "mJx" = (
@@ -43406,6 +43428,11 @@
 "mXi" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 1
@@ -47570,6 +47597,9 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/black,
 /area/station/science)
@@ -52957,6 +52987,14 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
+"pPk" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/chapel/main)
 "pPD" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail,
@@ -55084,6 +55122,15 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
+"qsm" = (
+/obj/stool,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/chapel/main)
 "qsz" = (
 /obj/table/wood/round/auto,
 /obj/critter/owl{
@@ -57566,6 +57613,11 @@
 	},
 /area/station/crew_quarters/kitchen)
 "rcr" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/purple/standard,
 /area/station/science)
 "rcs" = (
@@ -64987,6 +65039,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 1
@@ -72602,6 +72657,9 @@
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
 "vEx" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/purple/standard/edge{
 	dir = 10
 	},
@@ -79788,6 +79846,12 @@
 	dir = 4
 	},
 /area/station/hallway/primary/west)
+"xKP" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/carpet/purple/standard/edge,
+/area/station/science)
 "xKX" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -117436,7 +117500,7 @@ gRP
 dhe
 gRP
 gDq
-bHI
+qsm
 mpU
 tJK
 tJK
@@ -117738,7 +117802,7 @@ tph
 vNJ
 tph
 aaz
-vRz
+pPk
 bHI
 mpU
 otv
@@ -122971,7 +123035,7 @@ gYK
 nUB
 aFv
 eWy
-hAg
+ixs
 hAg
 hAg
 hAg
@@ -123877,7 +123941,7 @@ pdV
 dRf
 clm
 rcr
-omL
+xKP
 lKW
 hAg
 ciS

@@ -152,7 +152,7 @@
 			. = jointext(., "")
 		if(special && !istype(special, /datum/item_special/simple))
 			var/content = resource("images/tooltips/[special.image].png")
-			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]</div>"
+			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]<br>To execute a special, use HARM or DISARM intent and click a far-away tile.</div>"
 		. = jointext(., "")
 
 		lastTooltipContent = .
@@ -168,7 +168,8 @@
 				tooltip_rebuild = 1
 
 			//If user has tooltips to always show, and the item is in world, and alt key is NOT pressed, deny
-			if (usr.client.preferences.tooltip_option == TOOLTIP_ALWAYS && !(ismob(src.loc) || (src.loc && src.loc.loc && ismob(src.loc.loc))) && !usr.client.check_key(KEY_EXAMINE))
+			//z == 0 seems to be a good way to check if something is inworld or not... removed some ismob checks.
+			if (usr.client.preferences.tooltip_option == TOOLTIP_ALWAYS && z != 0 && !usr.client.check_key(KEY_EXAMINE))
 				show = 0
 
 			var/title
@@ -191,7 +192,7 @@
 				)
 
 				//If we're over an item that's stored in a container the user has equipped
-				if (istype(src.loc, /obj/item/storage) && src.loc.loc == usr)
+				if (src.z == 0 && istype(src.loc, /obj/item/storage) && src.loc.loc == usr)
 					tooltipParams["flags"] = TOOLTIP_RIGHT
 
 				usr.client.tooltipHolder.showHover(src, tooltipParams)
@@ -211,8 +212,20 @@
 				burn_type = 1
 			else
 				burn_type = 0
-		return
 
+		if (src.material.triggersOnLife.len)
+			src.AddComponent(/datum/component/holdertargeting/mat_triggersonlife)
+		else
+			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			if (C)
+				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+
+	removeMaterial()
+		if (src.material && src.material.triggersOnLife.len)
+			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			if (C)
+				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+		..()
 
 /obj/item/New()
 	// this is dumb but it won't let me initialize vars to image() for some reason
@@ -350,7 +363,7 @@
 		user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
 		user, "<span class='alert'>You try to feed [M] [src]!</span>",\
 		M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
-		logTheThing("combat", user, M, "attempts to feed %target% [src] [log_reagents(src)]")
+		logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (!do_mob(user, M))
 			return 0
@@ -360,7 +373,7 @@
 		user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
 		user, "<span class='alert'>You feed [M] [src]!</span>",\
 		M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
-		logTheThing("combat", user, M, "feeds %target% [src] [log_reagents(src)]")
+		logTheThing("combat", user, M, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (src.material && src.material.edible)
 			src.material.triggerEat(M, src)
@@ -581,7 +594,7 @@
 /obj/item/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
 	..()
 
-	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
+	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL))
 		return
 
 	var/on_turf = isturf(src.loc)
@@ -622,7 +635,7 @@
 			else
 				try_equip_to_inventory_object(usr, over_object, params)
 
-		else if (isobj(over_object))
+		else if (isobj(over_object) && !src.check_valid_stack(over_object))
 			if (src.loc == usr || istype(src.loc,/obj/item/storage))
 				if (try_put_hand_mousedrop(usr))
 					if (can_reach(usr, over_object))
@@ -1056,7 +1069,7 @@
 			return
 
 	if (src.flags & SUPPRESSATTACK)
-		logTheThing("combat", user, M, "uses [src] ([type], object name: [initial(name)]) on %target%")
+		logTheThing("combat", user, M, "uses [src] ([type], object name: [initial(name)]) on [constructTarget(M,"combat")]")
 		return
 
 	if (user.mind && user.mind.special_role == "vampthrall" && isvampire(M) && user.is_mentally_dominated_by(M))
@@ -1065,7 +1078,7 @@
 
 	if(user.traitHolder && !user.traitHolder.hasTrait("glasscannon"))
 		if (!user.process_stamina(src.stamina_cost))
-			logTheThing("combat", user, M, "tries to attack %target% with [src] ([type], object name: [initial(name)]) but is out of stamina")
+			logTheThing("combat", user, M, "tries to attack [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but is out of stamina")
 			return
 
 	if (chokehold)
@@ -1092,7 +1105,7 @@
 		d_zone = affecting
 
 	if (!M.melee_attack_test(user, src, d_zone))
-		logTheThing("combat", user, M, "attacks %target% with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
+		logTheThing("combat", user, M, "attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
 		return
 
 	if(hasProperty("frenzy"))
@@ -1127,7 +1140,7 @@
 	msgs.clear(M)
 	msgs.affecting = affecting
 	msgs.logs = list()
-	msgs.logc("attacks %target% with [src] ([type], object name: [initial(name)])")
+	msgs.logc("attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)])")
 
 	SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src)
 	var/stam_crit_pow = src.stamina_crit_chance

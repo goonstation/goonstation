@@ -1048,7 +1048,7 @@ datum
 				for (var/i = 1, i <= booster_enzyme_reagents_to_check.len, i++)
 					var/check_amount = holder.get_reagent_amount(booster_enzyme_reagents_to_check[i])
 					if (check_amount && check_amount < 18)
-						holder.add_reagent("[booster_enzyme_reagents_to_check[i]]", 2 * mult)
+						holder.add_reagent("[booster_enzyme_reagents_to_check[i]]", min(2 * mult, 20-check_amount))
 				..()
 				return
 
@@ -2494,7 +2494,7 @@ datum
 				if (prob(66))
 					M.emote("fart")
 
-				if (M.reagents.has_reagent("anti_fart"))
+				if (M?.reagents.has_reagent("anti_fart"))
 					if (prob(25))
 						boutput(M, "<span class='alert'>[pick("Oh god, something doesn't feel right!", "<B>IT HURTS!</B>", "<B>FUCK!</B>", "Something is seriously wrong!", "<B>THE PAIN!</B>", "You feel like you're gunna die!")]</span>")
 						random_brute_damage(M, 1 * mult)

@@ -395,7 +395,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 				src.locked = !src.locked
 				boutput(user, "You [ src.locked ? "lock" : "unlock"] the [src].")
 				if (src.occupant)
-					logTheThing("station", user, src.occupant, "[src.locked ? "locks" : "unlocks"] [src.name] with %target% inside at [log_loc(src)].")
+					logTheThing("station", user, src.occupant, "[src.locked ? "locks" : "unlocks"] [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
 			else
 				boutput(user, "<span class='alert'>This [src] doesn't seem to accept your authority.</span>")
 
@@ -743,7 +743,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 						var/mob/M = body_list[I] //What the actual fuck is this motherfucking nonsense shit fuck I hate you byond what the hell.
 						if(M.mind)
-							logTheThing("combat", src, body_list[next_in_line], "swapped [key_name(M)] and %target%'s bodies!")
+							logTheThing("combat", src, body_list[next_in_line], "swapped [key_name(M)] and [constructTarget(body_list[next_in_line],"combat")]'s bodies!")
 							M.mind.swap_with(body_list[next_in_line])
 							I++ //Step once more to prevent us from hitting the swapped mob
 

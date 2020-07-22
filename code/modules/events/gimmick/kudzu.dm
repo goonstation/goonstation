@@ -13,7 +13,7 @@
 				logTheThing( "combat", user, null, "fed themself a [src]." )
 			else
 				boutput( user, "You feed [M] the [src]. <span class='alert'>Oh god!</span>" )
-				logTheThing( "combat", user, M, "fed %target% a [src]." )
+				logTheThing( "combat", user, M, "fed [constructTarget(M,"combat")] a [src]." )
 			animate( M, color = "#0F0", time = 300 )//TODO: See below.
 			qdel( src )
 			return
@@ -394,7 +394,12 @@
 					if (!H.ckey && H.last_client && !H.last_client.mob.mind.dnr)
 						if ((!istype(H.last_client.mob,/mob/living) && !istype(H.last_client.mob,/mob/wraith)) || inafterlifebar(H.last_client.mob))
 							H.ckey = H.last_client.ckey
-
+					if (istype(H.abilityHolder, /datum/abilityHolder/composite))
+						var/datum/abilityHolder/composite/Comp = H.abilityHolder
+						Comp.removeHolder(/datum/abilityHolder/kudzu)
+					else if (H.abilityHolder)
+						H.abilityHolder.dispose()
+						H.abilityHolder = null
 					H.set_mutantrace(/datum/mutantrace/kudzu)
 					natural_opening = 1
 					SHOW_KUDZU_TIPS(H)

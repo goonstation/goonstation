@@ -29,7 +29,7 @@
 			return 1
 		if(!istype(target.bioHolder))
 			return 1
-		logTheThing("combat", user, target, "injects %target% with [src.name]")
+		logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with [src.name]")
 		return 0
 
 	proc/update_appearance()
@@ -181,7 +181,7 @@
 			return
 		if (payload)
 			boutput(user, "<span class='alert'>You stab [M], injecting them.</span>")
-			logTheThing("combat", user, M, "stabs %target% with the speed injector (<b>Payload:</b> [payload.name]).")
+			logTheThing("combat", user, M, "stabs [constructTarget(M,"combat")] with the speed injector (<b>Payload:</b> [payload.name]).")
 			payload.injected(user,M)
 			qdel(payload)
 			payload = null
