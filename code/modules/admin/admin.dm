@@ -4833,8 +4833,6 @@ var/global/noir = 0
 				abils += AH.abilities //get a list of all the different abilities in each holder
 	else
 		abils += M.abilityHolder.abilities
-		if (!abils.len)
-			return
 
 	for (var/datum/targetable/A in abils)
 		dat += {"
