@@ -39,19 +39,19 @@
 
 	knock
 		name = "ring of knock"
-		desc = ""
+		desc = "Looking at this ring makes you feel like you could go anywhere."
 		icon_state = "knock"
 		ability_path = /datum/targetable/spell/knock
 
 	blind
 		name = "ring of blind"
-		desc = ""
+		desc = "The eyeball on this ring is staring at you."
 		icon_state = "blind"
 		ability_path = /datum/targetable/spell/blind
 
 	empower
 		name = "ring of empower"
-		desc = ""
+		desc = "The red carvings on this ring seem to vibrate."
 		icon_state = "empower"
 		ability_path = /datum/targetable/spell/mutate
 
@@ -68,7 +68,7 @@
 				boutput(user, "<span class='alert'><b>Removing [src] removes its powers with it!</b></span>")
 	staff
 		name = "ring of cthulhu"
-		desc = ""
+		desc = "Looking at this ring makes your head hurt."
 		icon_state = "staff"
 		ability_path = /datum/targetable/spell/summon_staff
 		var/obj/item/staff/cthulhu/created_staff
@@ -91,13 +91,13 @@
 
 	phase_shift
 		name = "ring of phase shift"
-		desc = ""
+		desc = "The jewel set in this ring looks like it has raining water inside."
 		icon_state = "phase_shift"
 		ability_path = /datum/targetable/spell/phaseshift
 
 	clairvoyance
 		name = "ring of clairvoyance"
-		desc = ""
+		desc = "Looking at this ring makes you feel smarter than everyone else."
 		icon_state = "clairvoyance"
 		ability_path = /datum/targetable/spell/clairvoyance
 
@@ -109,43 +109,43 @@
 
 	ice_burst
 		name = "ring of ice burst"
-		desc = ""
+		desc = "This ring feels wet and cold."
 		icon_state = "ice_burst"
 		ability_path = /datum/targetable/spell/iceburst
 
 	prismatic_spray
 		name = "ring of prismatic_spray"
-		desc = ""
+		desc = "The crystal on this ring hums quietly."
 		icon_state = "prismatic_spray"
 		ability_path = /datum/targetable/spell/prismatic_spray
 
 	animate_dead
 		name = "ring of animate dead"
-		desc = ""
+		desc = "The skull on this ring appears to move when you aren't looking."
 		icon_state = "animate_dead"
 		ability_path = /datum/targetable/spell/animatedead
 
 	cluwne
 		name = "ring of cluwne"
-		desc = ""
+		desc = "This ring feels greasy."
 		icon_state = "cluwne"
 		ability_path = /datum/targetable/spell/cluwne
 
 	teleport
 		name = "ring of teleport"
-		desc = ""
+		desc = "The gemstones encrusted into this ring appear to swap places with each other."
 		icon_state = "teleport"
 		ability_path = /datum/targetable/spell/teleport
 
 	blink
 		name = "ring of blink"
-		desc = ""
+		desc = "The gemstones encrusted into this ring are filled with moving dust particles."
 		icon_state = "blink"
 		ability_path = /datum/targetable/spell/blink
 
 	shocking_touch
 		name = "ring of shocking touch"
-		desc = ""
+		desc = "This ring feels like static."
 		icon_state = "shocking_touch"
 		ability_path = /datum/targetable/spell/shock
 
@@ -157,7 +157,7 @@
 
 	rathens_secret
 		name = "ring of rathens secret"
-		desc = ""
+		desc = "This ring smells bad."
 		icon_state = "rathens_secret"
 		ability_path = /datum/targetable/spell/rathens
 
@@ -169,61 +169,61 @@
 
 	spell_shield
 		name = "ring of protection"
-		desc = ""
+		desc = "The jewel in this ring has a small field around it."
 		icon_state = "spell_shield"
 		ability_path = /datum/targetable/spell/magshield
 
 	warp
 		name = "ring of warp"
-		desc = ""
+		desc = "The jewel set in this ring looks like it's moving, somehow."
 		icon_state = "warp"
 		ability_path = /datum/targetable/spell/warp
 
 	forcewall
 		name = "ring of forcewall"
-		desc = ""
+		desc = "The colorful cube on this ring seems to repel matter around it."
 		icon_state = "forcewall"
 		ability_path = /datum/targetable/spell/forcewall
 
 	doppelganger
 		name = "ring of doppelganger"
-		desc = ""
+		desc = "Inside the jewels on this ring, you see yourself inspecting the jewels on this ring."
 		icon_state = "doppelganger"
 		ability_path = /datum/targetable/spell/doppelganger
 
 	polymorph
 		name = "ring of polymorph"
-		desc = ""
+		desc = "The texture of this ring appears to change periodically."
 		icon_state = "polymorph"
 		ability_path = /datum/targetable/spell/animal
 
 	bull_charge
 		name = "ring of the charging bull"
-		desc = ""
+		desc = "The bull on this ring appears to be breathing."
 		icon_state = "bull_charge"
 		ability_path = /datum/targetable/spell/bullcharge
 
 	pandemonium
 		name = "ring of pandemonium"
-		desc = ""
+		desc = "Looking at this ring makes you feel confused."
 		icon_state = "pandemonium"
 		ability_path = /datum/targetable/spell/pandemonium
 
 	golem
 		name = "ring of golem"
-		desc = ""
+		desc = "The jewel set in this ring appears to be filled with a liquid."
 		icon_state = "golem"
 		ability_path = /datum/targetable/spell/golem
 
 	sticks_to_snakes
 		name = "ring of sticks to snakes"
-		desc = ""
+		desc = "This ring occasionally makes rattling noises."
 		icon_state = "sticks_to_snakes"
 		ability_path = /datum/targetable/spell/stickstosnakes
 
 	soulguard
 		name = "ring of soulguard"
-		desc = ""
+		desc = "Looking at the jewel of this ring makes you feel safe."
 		icon_state = "soulguard"
 		ability_path = null
 
