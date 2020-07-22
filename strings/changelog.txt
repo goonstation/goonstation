@@ -1,5 +1,9 @@
 
 (t)wed jul 22 20
+(u)Chickenish
+(p)1507
+(e)🆕|feature
+(+)Added a suicide for the Portable Reclaimer, it's quite cubular.
 (u)Kyle and BatElite
 (p)1563
 (e)🐛🆕🎨|bug, feature, sprites
