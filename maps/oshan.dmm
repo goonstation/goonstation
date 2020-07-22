@@ -32097,6 +32097,7 @@
 	dir = 4;
 	icon_state = "xtra_bigstripe-edge"
 	},
+/obj/machinery/manufacturer/qm,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "bxC" = (
