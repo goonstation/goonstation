@@ -66,4 +66,5 @@ datum/controller/process/mobs
 					stats += "[thing] used [count] ticks.<br>"
 			boutput(usr, "<br>[stats]")
 
-			boutput(usr,"life pause check [life_pause_check]")
+	proc/test()
+		boutput(usr,"life pause check [life_pause_check]")
