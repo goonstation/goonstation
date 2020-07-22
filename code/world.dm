@@ -590,6 +590,9 @@ var/f_color_selector_handler/F_Color_Selector
 	makeMiningLevel()
 	#endif
 
+	Z_LOG_DEBUG("World/New", "Setting up spatial map...")
+	init_spatial_map()
+
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
 	aiDirty = 2
 	world.updateCameraVisibility()

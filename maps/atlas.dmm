@@ -17089,6 +17089,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/tools)
+"UL" = (
+/obj/machinery/manufacturer/qm,
+/turf/simulated/floor/yellow,
+/area/station/quartermaster)
 "UM" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -61655,7 +61659,7 @@ eb
 eM
 dx
 Qy
-bH
+UL
 bH
 bH
 jo

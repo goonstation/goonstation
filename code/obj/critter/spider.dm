@@ -457,6 +457,10 @@
 		item_shoes = /obj/item/clothing/shoes/cursedclown_shoes
 		item_mask = /obj/item/clothing/mask/cursedclown_hat
 
+	New(var/parent = null)
+		..()
+		src.parent = parent
+
 	attack_hand(mob/user as mob)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> [src.pet_text] [src]!</span>")
@@ -524,6 +528,13 @@
 			new src.item_mask(src.loc)
 		gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
 		qdel (src)
+
+	disposing()
+		if (istype(parent, /mob/living/critter/spider/clownqueen))	//obj/critter queens can't make babies so who cares.
+			var/mob/living/critter/spider/clownqueen/queen = parent
+			if (islist(queen.babies))
+				queen.babies -= src
+		..()
 
 /obj/critter/spider/clownqueen
 	name = "queen clownspider"
