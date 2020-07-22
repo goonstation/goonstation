@@ -103,6 +103,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	#endif
 
 	handle_mapvote()
+	global.job_controls.handle_roundstart_job_counts(total_clients()) //this should be a fine place for this
 
 	while(current_state <= GAME_STATE_PREGAME)
 		sleep(1 SECOND)

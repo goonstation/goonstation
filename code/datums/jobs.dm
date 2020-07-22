@@ -1304,8 +1304,8 @@
 
 	New()
 		..()
-		if (prob(15))
-			limit = 1
+/*		if (prob(15)) //moved to job_controls.dm
+			limit = 1*/
 		if (src.alt_names.len)
 			name = pick(src.alt_names)
 

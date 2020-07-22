@@ -6,6 +6,8 @@ var/datum/job_controller/job_controls
 	var/list/hidden_jobs = list() // not visible to players, for admin stuff, like the respawn panel
 	var/allow_special_jobs = 1 // hopefully this doesn't break anything!!
 	var/datum/job/job_creator = null
+	var/mojobs_pop_threshold = 65 //this many people usually means every job is full, and theres 8-10 staffies, a good num
+	var/fuzzy_pop_threshold = 0 //set this to 1 if you want it to not require exactly the pop threshold, but a range from 5 below it
 
 	var/loaded_save = 0
 	var/last_client = null
@@ -25,26 +27,98 @@ var/datum/job_controller/job_controls
 			new /datum/job/civilian/barman (),
 			new /datum/job/civilian/chaplain ())
 
-		else
-			for (var/A in typesof(/datum/job/command)) src.staple_jobs += new A(src)
-			for (var/A in typesof(/datum/job/security)) src.staple_jobs += new A(src)
-			for (var/A in typesof(/datum/job/research)) src.staple_jobs += new A(src)
-			for (var/A in typesof(/datum/job/engineering)) src.staple_jobs += new A(src)
-			for (var/A in typesof(/datum/job/civilian)) src.staple_jobs += new A(src)
-			for (var/A in typesof(/datum/job/special)) src.special_jobs += new A(src)
-		job_creator = new /datum/job/created(src)
-		//Add special daily variety job
-		var/variety_job_path = text2path("/datum/job/daily/[lowertext(time2text(world.realtime,"Day"))]")
-		if (variety_job_path)
-			src.staple_jobs += new variety_job_path(src)
-
+		else //possible future optimisation - childrentypesof/concretetypesof instead of manually purging null name jobs? dont wanna deal with that rn tho
+			for (var/A in childrentypesof(/datum/job/command)) src.staple_jobs += new A(src)
+			for (var/A in childrentypesof(/datum/job/security)) src.staple_jobs += new A(src)
+			for (var/A in childrentypesof(/datum/job/research)) src.staple_jobs += new A(src)
+			for (var/A in childrentypesof(/datum/job/engineering)) src.staple_jobs += new A(src)
+			for (var/A in childrentypesof(/datum/job/civilian)) src.staple_jobs += new A(src)
+			for (var/A in childrentypesof(/datum/job/special)) src.special_jobs += new A(src)
+		src.job_creator = new /datum/job/created(src)
 		for (var/datum/job/J in src.staple_jobs)
-			// Cull any of those nasty null jobs from the category heads
+			// even though it seems like the above code would mean we wouldnt need the lines manually removing null jobs, ui looks bad without it. because of course it does. fuck
 			if (!J.name)
 				src.staple_jobs -= J
 		for (var/datum/job/J in src.special_jobs)
 			if (!J.name)
 				src.special_jobs -= J
+		for (var/datum/job/random in src.special_jobs)
+			if (istype(random, /datum/job/special/random))
+				if (prob(15))
+					random.limit = 1
+		var/daily_job_path = text2path("/datum/job/daily/[lowertext(time2text(world.realtime,"Day"))]")
+		src.staple_jobs += new daily_job_path(src)
+
+	proc/handle_roundstart_job_counts(var/num_clients) //called in the lobby around the mapvote, adjusts job counts based on population
+		logTheThing("admin", usr, null, "DEBUG: [num_clients] clients right now") //remove these 4 lines b4 merge
+#ifdef DEBUG_JOB_CAP
+		num_clients = 1000000
+#endif
+		if (num_clients > src.mojobs_pop_threshold || (src.fuzzy_pop_threshold && (num_clients > src.mojobs_pop_threshold - 5))) //do the excess jobs stuff
+			//lets add all the daily jobs to the normal job list
+			var/list/daily_job_limit_list = list()
+			for (var/datum/job/daily/job in childrentypesof(/datum/job/daily))
+				job = new job(src)
+				src.staple_jobs += job
+				daily_job_limit_list[job.name] = job.limit //a lot of the daily jobs have custom limits
+			//boosting normal job numbers
+			for (var/datum/job/job in src.staple_jobs)
+				logTheThing("admin", usr, null, "DEBUG: [job.type], [job.name]")
+				//first, we wont be adding anything to command
+				if (istype(job, /datum/job/command))
+					continue
+				//now we want to start increasing job thresholds
+				switch(job.type)
+					if (/datum/job/security/security_officer)
+						job.limit += 2
+					if (/datum/job/research/roboticist)
+						job.limit += 1
+					if (/datum/job/research/scientist)
+						job.limit += 2
+					if (/datum/job/research/medical_doctor)
+						job.limit += 3
+					if (/datum/job/engineering/construction_worker)
+						job.limit += 1
+					if (/datum/job/engineering/quartermaster)
+						job.limit += 2
+					if (/datum/job/engineering/engineer)
+						job.limit += 2
+					if (/datum/job/civilian/chef)
+						job.limit += 2
+/*					if (/datum/job/civilian/barman) //not sure how i feel abt bartender getting more than one slot?
+						job.limit += 1 */
+					if (/datum/job/civilian/botanist)
+						job.limit += 1
+					if (/datum/job/civilian/chaplain)
+						job.limit += 3
+					if (/datum/job/civilian/clown) //its a trans-siberian clown off
+						job.limit += 1
+			//now we want to add all random and daily jobs to the pool
+			var/list/shuffled_rand_jobs = list()
+			for (var/datum/job/job in src.special_jobs)
+				if (istype(job, /datum/job/special/random))
+					shuffled_rand_jobs += job
+					job.limit = 0
+			for (var/datum/job/daily/job in src.staple_jobs)
+				logTheThing("admin", usr, null, "DEBUG: RAN THIS CODE AT LEAST FUCKING ONCE")
+				shuffled_rand_jobs += job
+				job.limit = 0
+			//shuffle the list
+			shuffle_list(shuffled_rand_jobs)
+			var/job_num = min(shuffled_rand_jobs.len, max(1, round(shuffled_rand_jobs.len * 0.8)))
+			logTheThing("admin", usr, null, "DEBUG: len [shuffled_rand_jobs.len], job_num [job_num]") //DEBUG!
+			for (var/i in 1 to shuffled_rand_jobs.len) //DEBUG
+				logTheThing("admin", usr, null, "DEBUG: element [i]: [shuffled_rand_jobs[i].type]")
+			//now that the list is shuffled, make the first x able to be selected
+			for (var/i in 1 to job_num)
+				logTheThing("admin", usr, null, "DEBUG: [i]")
+				if (istype(shuffled_rand_jobs[i], /datum/job/daily)) //daily jobs have special limits
+					var/datum/job/daily/job = shuffled_rand_jobs[i]
+					job.limit = daily_job_limit_list[job.name]
+				else
+					var/datum/job/job = shuffled_rand_jobs[i]
+					job.limit = 1
+//				shuffled_rand_jobs -= shuffled_rand_jobs[i]
 
 	proc/job_config()
 		var/dat = "<html><body><title>Job Controller</title>"
