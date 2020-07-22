@@ -135,6 +135,8 @@ var/global
 
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
+	footstep_extrarange = 0 // lol same (modified hackily in mobs.dm to avoid lag from sound at high player coutns)
+
 	list/cursors_selection = list("Default" = 'icons/cursors/target/default.dmi',
 	"Red" = 'icons/cursors/target/red.dmi',
 	"Green" = 'icons/cursors/target/green.dmi',
