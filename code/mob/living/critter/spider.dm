@@ -309,8 +309,8 @@
 		stepsound = "cluwnestep"
 		adultpath = /mob/living/critter/spider/clownqueen/cluwne
 		add_abilities = list(/datum/targetable/critter/clownspider_kick/cluwne,
-							/datum/targetable/critter/spider_bite,
-							/datum/targetable/critter/spider_drain)
+							/datum/targetable/critter/spider_bite/cluwne,
+							/datum/targetable/critter/spider_drain/cluwne)
 		item_shoes = /obj/item/clothing/shoes/cursedclown_shoes
 		item_mask = /obj/item/clothing/mask/cursedclown_hat
 
@@ -335,7 +335,8 @@
 	var/item_shoes = /obj/item/clothing/shoes/clown_shoes
 	var/item_mask = /obj/item/clothing/mask/clown_hat
 	var/list/babies = null
-	var/egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown
+	// var/egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown
+	var/max_defensive_babies = 100
 
 	cluwne
 		name = "queen cluwnespider"
@@ -344,19 +345,17 @@
 		icon_state_dead = "cluwnespider_queen"
 		stepsound = "cluwnestep"
 		add_abilities = list(/datum/targetable/critter/clownspider_trample/cluwne,
-							/datum/targetable/critter/vomitegg,
-							/datum/targetable/critter/spider_bite,
-							/datum/targetable/critter/spider_drain)
+							/datum/targetable/critter/vomitegg/cluwne,
+							/datum/targetable/critter/spider_bite/cluwne,
+							/datum/targetable/critter/spider_drain/cluwne)
 		item_shoes = /obj/item/clothing/shoes/cursedclown_shoes
 		item_mask = /obj/item/clothing/mask/cursedclown_hat
-		egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/cluwne
+		// egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/cluwne
+		max_defensive_babies = 150
 
 	New()
 		..()
 		babies = list()
-		var/datum/targetable/critter/vomitegg/ability = abilityHolder.getAbility(/datum/targetable/critter/vomitegg)
-		if (istype(ability))
-			ability.egg_path = src.egg_path
 
 	disposing()
 		if (islist(babies))
@@ -388,18 +387,22 @@
 		//clownbabies can't fight clownqueens. but they can fight Cluwnequeens and vice versa
 		if (istype(T, src.type))
 			return
+		var/defenders = 0		//this is the amount of babies that will defend you
 		var/count = 0
 		for (var/obj/critter/spider/clown/CS in babies)
+			count++
+			if (count > max_defensive_babies)
+				break
 			if (get_dist(src, CS) > 7)
 				continue
-			if (count >= 3)
+			if (defenders >= 3)
 				return
 			if (prob(10))
 				continue
 			CS.target = T
 			CS.attack = 1
 			CS.task = "chasing"
-			count++
+			defenders++
 
 /proc/funnygibs(atom/location, var/list/ejectables, var/bDNA, var/btype)
 	SPAWN_DBG(0)
