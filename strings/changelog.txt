@@ -1,5 +1,9 @@
 
 (t)wed jul 22 20
+(u)Carbadox
+(p)1458
+(e)🆕🗺|feature, mapping
+(*)Added the crate manufactor to Atlas, Clarion, Destiny, Cog1, Cog2, Horizon and Oshan
 (u)AwkwardDryad
 (p)1179
 (e)🆕🎨|feature, sprites
