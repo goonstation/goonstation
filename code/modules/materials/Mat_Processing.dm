@@ -263,7 +263,7 @@
 		user.visible_message("<span class='alert'><b>[user] hops right into [src]! Jesus!</b></span>")
 		user.unequip_all()
 		user.set_loc(src)
-		user.make_cube(life = INFINITY, T = src.loc)
+		user.make_cube(life = 5 MINUTES, T = src.loc)
 /obj/machinery/neosmelter
 	name = "Nano-crucible"
 	desc = "A huge furnace-like machine used to combine materials."
