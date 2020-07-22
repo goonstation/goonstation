@@ -40,6 +40,7 @@ var/datum/action_controller/actions
 		else
 			interrupt(owner, INTERRUPT_ACTION)
 			for(var/datum/action/OA in running[owner])
+				//Meant to catch users starting the same action twice, and saving the first-attempt from deletion
 				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE) 
 					OA.onResume()
 					qdel(A)
@@ -101,6 +102,16 @@ var/datum/action_controller/actions
 		state = ACTIONSTATE_RUNNING
 		return
 
+	proc/onRestart()			   //Called when the action restarts (for example: automenders)
+		sleep(1)
+		started = world.time
+		state = ACTIONSTATE_RUNNING
+		loopStart()
+		return
+
+	proc/loopStart()				//Called after restarting. Meant to cotain code from -and be called from- onStart()
+		return
+
 	proc/onResume()				   //Called when the action resumes - likely from almost ending
 		state = ACTIONSTATE_RUNNING
 		return
@@ -137,6 +148,11 @@ var/datum/action_controller/actions
 			// this will absolutely obviously cause no problems.
 			bar.color = "#4444FF"
 			updateBar()
+
+	onRestart()
+		//Start the bar back at 0
+		bar.transform = matrix(0, 0, -15, 0, 1, 0)
+		..()
 
 	onDelete()
 		..()
@@ -207,6 +223,7 @@ var/datum/action_controller/actions
 			animate( bar, transform = matrix(1, 0, 0, 0, 1, 0), time = remain )
 		else
 			animate( bar, flags = ANIMATION_END_NOW )
+		return
 
 /datum/action/bar/blob_health // WOW HACK
 	onUpdate()
