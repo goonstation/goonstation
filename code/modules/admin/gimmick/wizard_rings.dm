@@ -263,8 +263,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 
 	var/turf/T_LOC = get_turf(src.mob)
 
-	var/list/L = childrentypesof(/obj/item/clothing/gloves/ring/wizard)
-	L -= /obj/item/clothing/gloves/ring/wizard/random_type
+	var/list/L = concrete_typesof(/obj/item/clothing/gloves/ring/wizard) - /obj/item/clothing/gloves/ring/wizard/random_type
 	var/index = 1
 	for (var/turf/T in range(T_LOC, 3))
 		if (index <= L.len)
