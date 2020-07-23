@@ -244,10 +244,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 		//Doesn't have these spells. no ring for em: kill, shockwave, and candy_ring. (last one isn't actually a spell)
 
 		New(loc)
-			// var/list/L = childrentypesof(/datum/targetable/spell)
-			// L -= /datum/targetable/spell/kill
-			// L -= /datum/targetable/spell/shockwave
-			// ability_path = pick(L)
 			..()
 			//I'm lazy again.
 			var/list/L = childrentypesof(/obj/item/clothing/gloves/ring/wizard)
@@ -277,4 +273,3 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 				new path(T)
 				index++
 		else break
-
