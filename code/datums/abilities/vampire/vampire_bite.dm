@@ -530,17 +530,19 @@
 		HH.vamp_beingbitten = 1
 
 	onEnd()
-		..()
 		if(get_dist(M, HH) > 1 || M == null || HH == null || B == null)
+			..()
 			interrupt(INTERRUPT_ALWAYS)
+			src.end()
 			return
 
 		if (!H.do_bite(HH,mult = 1.5, thrall = B.thrall))
+			..()
 			interrupt(INTERRUPT_ALWAYS)
+			src.end()
 			return
 
-		src.end()
-		actions.start(new/datum/action/bar/icon/vamp_blood_suc(M,H,HH,B), M)
+		src.onRestart()
 
 	onInterrupt() //Called when the action fails / is interrupted.
 		if (state == ACTIONSTATE_RUNNING)
