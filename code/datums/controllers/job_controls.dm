@@ -27,7 +27,7 @@ var/datum/job_controller/job_controls
 			new /datum/job/civilian/barman (),
 			new /datum/job/civilian/chaplain ())
 
-		else //possible future optimisation - childrentypesof/concretetypesof instead of manually purging null name jobs? dont wanna deal with that rn tho
+		else
 			for (var/A in childrentypesof(/datum/job/command)) src.staple_jobs += new A(src)
 			for (var/A in childrentypesof(/datum/job/security)) src.staple_jobs += new A(src)
 			for (var/A in childrentypesof(/datum/job/research)) src.staple_jobs += new A(src)
@@ -36,7 +36,7 @@ var/datum/job_controller/job_controls
 			for (var/A in childrentypesof(/datum/job/special)) src.special_jobs += new A(src)
 		src.job_creator = new /datum/job/created(src)
 		for (var/datum/job/J in src.staple_jobs)
-			// even though it seems like the above code would mean we wouldnt need the lines manually removing null jobs, ui looks bad without it. because of course it does. fuck
+			// we also need to get rid of jobs that have null names, because it messes with the ui otherwise.
 			if (!J.name)
 				src.staple_jobs -= J
 		for (var/datum/job/J in src.special_jobs)
@@ -60,7 +60,7 @@ var/datum/job_controller/job_controls
 				//lets get rid of the daily job too, we have our own logic for that
 				if (istype(job, /datum/job/daily))
 					job.limit = 0
-					src.staple_jobs -= job //cant qdel that in this proc, so we just have an instantiated job datum floating around, oops
+					src.staple_jobs -= job //cant qdel that in this proc, so we just have an instantiated job datum floating around
 				//now we want to start increasing job thresholds
 				switch(job.type)
 					if (/datum/job/security/security_officer)
@@ -112,7 +112,6 @@ var/datum/job_controller/job_controls
 				else
 					var/datum/job/job = shuffled_rand_jobs[i]
 					job.limit = 1
-//				shuffled_rand_jobs -= shuffled_rand_jobs[i]
 
 	proc/job_config()
 		var/dat = "<html><body><title>Job Controller</title>"
