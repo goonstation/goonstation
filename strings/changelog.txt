@@ -1,4 +1,9 @@
 
+(t)thu jul 23 20
+(u)mbc
+(p)1584
+(e)🆕|feature
+(*)Handspider can now pick up items but moves slowly and cannot sprint while doing so. Legworm has more stamina, can throw items by clicking on them, and fixed writhe ability (was stunning the legworm much longer than it should). Eyespider can move faster. Buttcrab farts can block line of sight.
 (t)wed jul 22 20
 (u)mbc
 (+)QOL stuff for the hud - you can now mousedrag from slot to slot without directly clicking the item and see tooltips without pixel perfect hovering. Also slots enlarge slightly to let you know they will accept a held item. Doesnt work for containers hud yet.
