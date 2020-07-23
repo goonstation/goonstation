@@ -551,47 +551,63 @@
 		if (!H) return
 		var/obj/item/W = null
 		var/obj/item/I
-		#define entered_slot(slot, enlarge) W = master.get_slot(master.slot); if (W) { W.MouseEntered(location,control,params); } else if (enlarge) { test_slot(slot); if (I) { H.transform *= 1.1; } }
-		#define test_slot(slot) I = master.equipped(); if (I && !master.can_equip(I, master.slot)) { I = null; }
+
+		#define entered_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseEntered(location,control,params); }
+		#define test_slot(slot) if (!W) { I = master.equipped(); if (I && !master.can_equip(I, master.slot)) { I = null; } if (I) { H.transform *= 1.1; } }
+
 		switch(H.id)
 			if("belt")
-				entered_slot(slot_belt,1)
+				entered_slot(slot_belt)
+				test_slot(slot_belt)
 			if("storage1")
-				entered_slot(slot_l_store,1)
+				entered_slot(slot_l_store)
+				test_slot(slot_l_store)
 			if("storage2")
-				entered_slot(slot_r_store,1)
+				entered_slot(slot_r_store)
+				test_slot(slot_r_store)
 			if("back")
-				entered_slot(slot_back,1)
+				entered_slot(slot_back)
+				test_slot(slot_back)
 			if("shoes")
-				entered_slot(slot_shoes,1)
+				entered_slot(slot_shoes)
+				test_slot(slot_shoes)
 			if("gloves")
-				entered_slot(slot_gloves,1)
+				entered_slot(slot_gloves)
+				test_slot(slot_gloves)
 			if("id")
-				entered_slot(slot_wear_id,1)
+				entered_slot(slot_wear_id)
+				test_slot(slot_wear_id)
 			if("under")
-				entered_slot(slot_w_uniform,1)
+				entered_slot(slot_w_uniform)
+				test_slot(slot_w_uniform)
 			if("suit")
-				entered_slot(slot_wear_suit,1)
+				entered_slot(slot_wear_suit)
+				test_slot(slot_wear_suit)
 			if("glasses")
-				entered_slot(slot_glasses,1)
+				entered_slot(slot_glasses)
+				test_slot(slot_glasses)
 			if("ears")
-				entered_slot(slot_ears,1)
+				entered_slot(slot_ears)
+				test_slot(slot_ears)
 			if("mask")
-				entered_slot(slot_wear_mask,1)
+				entered_slot(slot_wear_mask)
+				test_slot(slot_wear_mask)
 			if("head")
-				entered_slot(slot_head,1)
+				entered_slot(slot_head)
+				test_slot(slot_head)
 			if ("lhand")
-				entered_slot(slot_l_hand,0)
+				entered_slot(slot_l_hand)
 			if ("rhand")
-				entered_slot(slot_r_hand,0)
+				entered_slot(slot_r_hand)
+
 		#undef entered_slot
 		#undef test_slot
 
-	MouseExited(var/obj/screen/hud/H)
+	MouseExited(obj/screen/hud/H)
 		if (!H) return
 		H.transform = null
 
-	MouseDrop(var/obj/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
+	MouseDrop(obj/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
 		if (!H) return
 		var/obj/item/W = null
 		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseDrop(over_object, src_location, over_location, over_control, params); }
@@ -628,7 +644,7 @@
 				mdrop_slot(slot_r_hand)
 		#undef mdrop_slot
 
-	MouseDrop_T(var/obj/screen/hud/H, atom/movable/O as obj, mob/user as mob)
+	MouseDrop_T(obj/screen/hud/H, atom/movable/O as obj, mob/user as mob)
 		if (!H) return
 		var/obj/item/W = null
 		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseDrop_T(O,user); }
