@@ -86,6 +86,30 @@
 				user.detach_hud(src)
 				user.s_active = null
 
+	//not working, im lazy, fix later
+	/*
+	MouseEntered(var/obj/screen/hud/H, location, control, params)
+		if (!H || H.id != "boxes") return
+		var/obj/item/I = src.obj_locs[H.screen_loc]
+		if (I)
+			I.MouseEntered(location,control,params)
+		else if (usr)
+			I = usr.equipped()
+			if (src.master && I && src.master.check_can_hold(I))
+				H.transform *= 1.15;
+
+
+	MouseExited(var/obj/screen/hud/H)
+		if (!H) return
+		H.transform = null
+
+
+	MouseDrop(var/obj/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
+		var/obj/item/I = src.obj_locs[H.screen_loc]
+		if (I)
+			I.MouseDrop(over_object, src_location, over_location, over_control, params)
+	*/
+
 	proc/update()
 		var x = 1
 		var y = 1 + master.slots

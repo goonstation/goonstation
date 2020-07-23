@@ -39622,7 +39622,7 @@
 	dir = 8;
 	tag = ""
 	},
-/obj/machinery/portable_reclaimer,
+/obj/machinery/manufacturer/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bFn" = (
@@ -43201,6 +43201,7 @@
 	name = "Storage Door Control";
 	pixel_x = -26
 	},
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "bMu" = (

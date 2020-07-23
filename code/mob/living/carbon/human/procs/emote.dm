@@ -2,7 +2,7 @@
 
 
 
-/mob/living/carbon/human/emote(var/act, var/voluntary = 0)
+/mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
 	var/param = null
 
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
@@ -11,23 +11,26 @@
 		src.visible_message("<span class='alert'>[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!</span>", group = "revenant_emote")
 		return
 
-	if (findtext(act, " ", 1, null))
-		var/t1 = findtext(act, " ", 1, null)
-		param = copytext(act, t1 + 1, length(act) + 1)
-		act = copytext(act, 1, t1)
+	if (emoteTarget)
+		param = emoteTarget
+	else if (voluntary == 1)
+		if (findtext(act, " ", 1, null))
+			var/t1 = findtext(act, " ", 1, null)
+			param = copytext(act, t1 + 1, length(act) + 1)
+			act = copytext(act, 1, t1)
 
 	for (var/uid in src.pathogens)
 		var/datum/pathogen/P = src.pathogens[uid]
 		if (P.onemote(act, voluntary, param))
 			return
 
-	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
-	var/m_type = 1 //1 is visible, 2 is audible
-	var/custom = 0 //Sorry, gotta make this for chat groupings.
-
-	for (var/obj/item/implant/I in src)
+	for (var/obj/item/implant/I in src.implant)
 		if (I.implanted)
 			I.trigger(act, src)
+
+	var/muzzled = (src.wear_mask && src.wear_mask.is_muzzle)
+	var/m_type = 1 //1 is visible, 2 is audible
+	var/custom = 0 //Sorry, gotta make this for chat groupings.
 
 	var/maptext_out = 0
 	var/message = null
@@ -1469,6 +1472,8 @@
 									// todo: add context-sensitive break dancing and some other goofy shit
 
 						SPAWN_DBG(0.5 SECONDS)
+							//i hate these checks - too lazy to fix for real now but lets throw on some lagchecks since we're already spawning
+							LAGCHECK(LAG_MED)
 							var/beeMax = 15
 							for (var/obj/critter/domestic_bee/responseBee in range(7, src))
 								if (!responseBee.alive)
@@ -1480,6 +1485,7 @@
 								responseBee.dance_response()
 								karma_update(1, "SAINT", src)
 
+							LAGCHECK(LAG_MED)
 							var/parrotMax = 15
 							for (var/obj/critter/parrot/responseParrot in range(7, src))
 								if (!responseParrot.alive)
@@ -1488,6 +1494,7 @@
 									break
 								responseParrot.dance_response()
 
+							LAGCHECK(LAG_MED)
 							var/crabMax = 5
 							for (var/obj/critter/crab/party/responseCrab in range(7, src))
 								if (!responseCrab.alive)
@@ -1499,6 +1506,7 @@
 						if (src.traitHolder && src.traitHolder.hasTrait("happyfeet"))
 							if (prob(33))
 								SPAWN_DBG(0.5 SECONDS)
+									LAGCHECK(LAG_MED)
 									for (var/mob/living/carbon/human/responseMonkey in range(1, src)) // they don't have to be monkeys, but it's signifying monkey code
 										if (responseMonkey.stat || responseMonkey.getStatusDuration("paralysis") || responseMonkey.sleeping || responseMonkey.getStatusDuration("stunned") || (responseMonkey == src))
 											continue
@@ -1530,7 +1538,7 @@
 					//		animate(transform = turn(GetPooledMatrix(), -180), time = 1, loop = -1)
 					//		animate(transform = turn(GetPooledMatrix(), -270), time = 1, loop = -1)
 					//		animate(transform = turn(GetPooledMatrix(), -360), time = 1, loop = -1)
-					if (istype(src.loc,/obj/))
+					if (isobj(src.loc))
 						var/obj/container = src.loc
 						container.mob_flip_inside(src)
 
@@ -1625,7 +1633,7 @@
 
 										if (client && client.hellbanned)
 											src.changeStatus("weakened", 4 SECONDS)
-										if (!G.affecting.hasStatus("weakened"))
+										if (G.affecting && !G.affecting.hasStatus("weakened"))
 											G.affecting.changeStatus("weakened", 4.5 SECONDS)
 
 
@@ -2071,29 +2079,47 @@
 	showmessage:
 
 	//copy paste lol
-	var/image/chat_maptext/chat_text = null
-	if (maptext_out && speechpopups)
 
-		chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
-		chat_text.measure(src.client)
-		for(var/image/chat_maptext/I in src.chat_text.lines)
-			if(I != chat_text)
-				I.bump_up(chat_text.measured_height)
+	if (maptext_out)
+		var/image/chat_maptext/chat_text = null
+		SPAWN_DBG(0) //blind stab at a life() hang - REMOVE LATER
+			if (speechpopups && src.chat_text)
+				chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
+				chat_text.measure(src.client)
+				for(var/image/chat_maptext/I in src.chat_text.lines)
+					if(I != chat_text)
+						I.bump_up(chat_text.measured_height)
+
+			if (message)
+				logTheThing("say", src, null, "EMOTE: [message]")
+				act = lowertext(act)
+				if (m_type & 1)
+					for (var/mob/O in viewers(src, null))
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+				else if (m_type & 2)
+					for (var/mob/O in hearers(src, null))
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+				else if (!isturf(src.loc))
+					var/atom/A = src.loc
+					for (var/mob/O in A.contents)
+						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
 
 
-	if (message)
-		logTheThing("say", src, null, "EMOTE: [message]")
-		act = lowertext(act)
-		if (m_type & 1)
-			for (var/mob/O in viewers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-		else if (m_type & 2)
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-		else if (!isturf(src.loc))
-			var/atom/A = src.loc
-			for (var/mob/O in A.contents)
-				O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+	else
+
+		if (message)
+			logTheThing("say", src, null, "EMOTE: [message]")
+			act = lowertext(act)
+			if (m_type & 1)
+				for (var/mob/O in viewers(src, null))
+					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+			else if (m_type & 2)
+				for (var/mob/O in hearers(src, null))
+					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+			else if (!isturf(src.loc))
+				var/atom/A = src.loc
+				for (var/mob/O in A.contents)
+					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
 
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)

@@ -164,7 +164,7 @@
 		updateicon()
 
 		usr.show_text("You have selected [P.name]. Walk into an opening on the side of this machine to purchase this item.", "blue")
-		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, pitch = 0.60)
+		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, extrarange = -15, pitch = 0.60)
 
 	proc/just_pick_anything()
 		for (var/datum/geneboothproduct/P in offered_genes)

@@ -413,7 +413,7 @@
 	var/manipulating = false //are we currently irradiating the pathogen?
 	New()
 		..()
-		gui = new("html/pathoComp.html", "pathology", "size=900x800", src)
+		gui = new("html/pathoComp.html", "pathology", "size=715x685", src)
 		gui.validate_user = 1
 		SPAWN_DBG(5 SECONDS)
 			rescan()
@@ -452,7 +452,13 @@
 		if(!PDNA)
 			return "null"
 		var/splicing = (PDNA == src.manip.loaded && (!PDNA.valid || src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION))
-		return {"{"seq":"[PDNA.seqnumeric + PDNA.seqsplice]","pathogenName":"[PDNA.reference.name]","pathogenType":"[PDNA.reference.body_type.singular]","isSplicing":[splicing]}"}
+		return {"{"seq":"[PDNA.seqnumeric + PDNA.seqsplice]",
+		"pathogenName":"[PDNA.reference.name]",
+		"pathogenStages":"[PDNA.reference.stages]",
+		"pathogenSymptomaticity":"[PDNA.reference.symptomatic]",
+		"pathogenSupCode":"[pathogen_controller.suppressant_to_UID[PDNA.reference.suppressant.type]]",
+		"pathogenCap":"[PDNA.reference.body_type.seqMax]",
+		"pathogenType":"[PDNA.reference.body_type.singular]","isSplicing":[splicing]}"}
 
 	proc/slots2json()
 		if(!src.manip) return "\[null,null,null]"
@@ -766,6 +772,7 @@
 						out= {"{"success":0}"}
 					else if (act == -1)
 						src.manip.visible_message("<span class='alert'>The structure of the DNA appears to fundamentally change.</span>")
+						SEND_SLOT_LOAD_INFO
 					if(!out) out = {"{"newseq":"[src.manip.loaded.seqnumeric + src.manip.loaded.seqsplice]","success":1}"}
 					gui.sendToSubscribers(out, "handleManipCallback")
 					manipulating = false
@@ -863,7 +870,7 @@
 			sendSpliceInfo(1)
 
 		if (href_list["beginsplice"])
-			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICE && src.manip.loaded && src.manip.splicesource && src.manip.slots[src.manip.splicesource])
+			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_LOADER && src.manip.loaded && src.manip.splicesource && src.manip.slots[src.manip.splicesource])
 				src.manip.cache_target = src.manip.loaded.explode()
 				var/datum/pathogendna/P = src.manip.slots[src.manip.splicesource]
 				src.manip.cache_source = P.explode()
@@ -1069,11 +1076,16 @@
 		flags |= NOSPLASH
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
-		if (!exposed)
-			user.show_message("<span class='alert'>The manipulator has no exposed slots.</span>")
-			return
-		if (slots[exposed])
-			user.show_message("<span class='alert'>The currently exposed slot on the manipulator is occupied.</span>")
+		var/firstFreeSlot = -1 // -1 means no free slot, -2 means the active slot is free
+		if(!loaded)
+			firstFreeSlot = -2
+		else
+			for(var/i in 1 to length(slots))
+				if(isnull(slots[i]))
+					firstFreeSlot = i
+					break
+		if (firstFreeSlot == -1)
+			user.show_message("<span class='alert'>The manipulator has no free slots.</span>")
 			return
 		if (!istype(O, /obj/item/reagent_containers/glass/vial))
 			user.show_message("<span class='alert'>The slots on the manipulator are designed so that only vials will fit.</span>")
@@ -1100,7 +1112,10 @@
 		if (!PT.dnasample)
 			PT.dnasample = new(PT) // damage control
 			logTheThing("pathology", usr, null, "Pathogen [PT.name] (\ref[PT]) had no DNA. (this is a bug)")
-		slots[exposed] = PT.dnasample.clone()
+		if(firstFreeSlot == -2)
+			loaded = PT.dnasample.clone()
+		else
+			slots[firstFreeSlot] = PT.dnasample.clone()
 		O.reagents.del_reagent("pathogen")
 		user.u_equip(O)
 		qdel(O)
@@ -1557,30 +1572,34 @@
 				boutput(usr, "<span class='notice'>[added] units of anti-agent added to the beaker.</span>")
 			else if (href_list["buymats"])
 				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
-				var/confirm = alert("Are you sure you want to spend [synthesize_pathogen_cost] credits to manufacture a new pathogen culture? This will take about five seconds.", "Confirm Purchase", "Yes", "No")
-				if (confirm == "Yes" && machine_state == 0 && (usr in range(1)))
+				var/confirm = alert("How many pathogen samples do you wish to synthesize? ([synthesize_pathogen_cost] credits per sample)", "Confirm Purchase", "1", "5", "Cancel")
+				if (confirm != "Cancel" && machine_state == 0 && (usr in range(1)))
 					if (synthesize_pathogen_cost > wagesystem.research_budget)
 						boutput(usr, "<span class='alert'>Insufficient research budget to make that transaction.</span>")
 					else
+						var/count = text2num(confirm)
 						boutput(usr, "<span class='notice'>Transaction successful.</span>")
-						wagesystem.research_budget -= synthesize_pathogen_cost
+						wagesystem.research_budget -= synthesize_pathogen_cost*count
 						machine_state = 1
 						icon_state = "synth2"
 						src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-						SPAWN_DBG (5 SECONDS)
+						SPAWN_DBG (0 SECONDS)
+							while(count > 0)
+								count--
+								sleep(5 SECONDS)
+								for (var/mob/C in viewers(src))
+									C.show_message("The [src.name] ejects a new pathogen sample.", 3)
+								switch(href_list["microbody"])
+									if("virus")
+										new /obj/item/reagent_containers/glass/vial/prepared/virus(src.loc)
+									if("parasite")
+										new /obj/item/reagent_containers/glass/vial/prepared/parasite(src.loc)
+									if("bacterium")
+										new /obj/item/reagent_containers/glass/vial/prepared/bacterium(src.loc)
+									if("fungus")
+										new /obj/item/reagent_containers/glass/vial/prepared/fungus(src.loc)
 							machine_state = 0
 							icon_state = "synth1"
-							for (var/mob/C in viewers(src))
-								C.show_message("The [src.name] shuts down and ejects a new pathogen sample.", 3)
-							switch(href_list["microbody"])
-								if("virus")
-									new /obj/item/reagent_containers/glass/vial/prepared/virus(src.loc)
-								if("parasite")
-									new /obj/item/reagent_containers/glass/vial/prepared/parasite(src.loc)
-								if("bacterium")
-									new /obj/item/reagent_containers/glass/vial/prepared/bacterium(src.loc)
-								if("fungus")
-									new /obj/item/reagent_containers/glass/vial/prepared/fungus(src.loc)
 				#else
 				boutput(usr, "<span class='alert'>[src] unable to complete task. Please contact your network administrator.</span>")
 				#endif

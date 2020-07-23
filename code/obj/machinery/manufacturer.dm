@@ -64,6 +64,9 @@
 	var/list/text_bad_output_adjective = list("janky","crooked","warped","shoddy","shabby","lousy","crappy","shitty")
 	var/obj/item/card/id/scan = null
 	var/temp = null
+	var/frequency = 1149
+	var/datum/radio_frequency/transmit_connection = null
+	var/net_id = null
 
 #define WIRE_EXTEND 1
 #define WIRE_POWER 2
@@ -74,6 +77,8 @@
 		START_TRACKING
 		..()
 		src.area_name = src.loc.loc.name
+		src.transmit_connection = radio_controller.add_object(src,"[frequency]")
+		src.net_id = generate_net_id(src)
 
 		if (istype(manuf_controls,/datum/manufacturing_controller))
 			src.set_up_schematics()
@@ -116,6 +121,8 @@
 		src.sound_beginwork = null
 		src.sound_damaged = null
 		src.sound_destroyed = null
+		radio_controller.remove_object(src,"[frequency]")
+		src.transmit_connection = null
 
 		for (var/obj/O in src.contents)
 			O.loc = src.loc
@@ -723,17 +730,24 @@
 									accounts += t
 
 
+							var/datum/signal/minerSignal = get_free_signal()
+							minerSignal.source = src
+							minerSignal.transmission_method = TRANSMISSION_RADIO
 							//any non-divisible amounts go to the shipping budget
 							var/leftovers = 0
 							if(accounts.len)
 								leftovers = subtotal%accounts.len
 								var/divisible_amount = subtotal - leftovers
 								if(divisible_amount)
+									var/amount_per_account = divisible_amount/length(accounts)
 									for(var/datum/data/record/t in accounts)
-										t.fields["current_money"] += divisible_amount/accounts.len
+										t.fields["current_money"] += amount_per_account
+									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"="mining", "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
 							else
 								leftovers = subtotal
+								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"="mining", "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
 							wagesystem.shipping_budget += (leftovers + sum_taxes)
+							transmit_connection.post_signal(src, minerSignal)
 
 							src.temp = {"Enjoy your purchase!<BR>"}
 						else

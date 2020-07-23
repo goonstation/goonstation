@@ -380,16 +380,19 @@
 /datum/configuration/proc/pick_random_mode()
 	var/total = 0
 	var/list/accum = list()
+	var/list/avail_modes = list()
 
 	for(var/M in src.modes)
-		total += src.probabilities[M]
-		accum[M] = total
+		if (src.probabilities[M] && getSpecialModeCase(M))
+			total += src.probabilities[M]
+			avail_modes += M
+			accum[M] = total
 
 	var/r = total - (rand() * total)
 
 	var/mode_name = null
-	for (var/M in modes)
-		if (src.probabilities[M] > 0 && accum[M] >= r && getSpecialModeCase(M))
+	for (var/M in avail_modes)
+		if (accum[M] >= r)
 			mode_name = M
 			break
 

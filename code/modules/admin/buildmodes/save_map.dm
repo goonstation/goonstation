@@ -25,11 +25,11 @@ Right Mouse Button on the mode         = Cycle saving modes<br>
 	selected()
 		. = ..()
 		update_mode()
-	
+
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		mode_number = (mode_number + 1) % mode_names.len
 		update_mode()
-	
+
 	proc/update_mode()
 		if(mode_number == SAVE_MODE_PREFAB)
 			src.dmm_suite = new/dmm_suite/prefab_saving
@@ -42,7 +42,7 @@ Right Mouse Button on the mode         = Cycle saving modes<br>
 	proc/mark_corner(atom/object)
 		A = get_turf(object)
 		boutput(usr, "<span class='notice'>Corner set!</span>")
-	
+
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!A)
 			mark_corner(object)
@@ -56,7 +56,7 @@ Right Mouse Button on the mode         = Cycle saving modes<br>
 			if(saving)
 				boutput(usr, "<span class='alert'>Already saving a map!</span>")
 				return
-			if(alert("Are you sure you want to save an area of size [abs(A.x - B.x)]x[abs(A.y - B.y)]?",,"Yes","No") != "Yes")
+			if(alert("Are you sure you want to save an area of size [abs(A.x - B.x) + 1]x[abs(A.y - B.y) + 1]?",,"Yes","No") != "Yes")
 				boutput(usr, "<span class='alert'>Saving cancelled!</span>")
 				A = null
 				return
