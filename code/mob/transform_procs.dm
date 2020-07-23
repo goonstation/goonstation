@@ -494,7 +494,10 @@
 
 /mob/proc/make_cube(var/CT, var/life, var/turf/T)
 	if (!CT)
-		CT = /mob/living/carbon/cube/meat
+		if(issilicon(CT))
+			CT = /mob/living/carbon/cube/metal
+		else
+			CT = /mob/living/carbon/cube/meat
 	var/mob/living/carbon/cube/W = new CT()
 	if (!T || !isturf(T))
 		T = get_turf(src)

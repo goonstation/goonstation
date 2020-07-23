@@ -1,5 +1,14 @@
 
 (t)wed jul 22 20
+(u)Chickenish
+(p)1507
+(e)🆕|feature
+(+)Added a suicide for the Portable Reclaimer, it's quite cubular.
+(u)Kyle and BatElite
+(p)1563
+(e)🐛🆕🎨|bug, feature, sprites
+(+)Clownspiders now protect their momma when attacked.
+(+)Fire Elemental/Clown/Cluwne spider ability button sprites added by BatElite.
 (u)MarkNstein
 (p)1428
 (e)🆕|feature
