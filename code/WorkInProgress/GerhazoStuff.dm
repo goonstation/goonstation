@@ -358,7 +358,8 @@
 	proc/checkNulls()
 		if(M == null || lightningability == null)
 			interrupt(INTERRUPT_ALWAYS)
-			return
+			return 0
+		return 1
 
 	onUpdate()
 		..()
@@ -373,7 +374,9 @@
 		checkNulls()
 
 	onEnd()
-		checkNulls()
+		if(!checkNulls())
+			..()
+			return
 
 		var/targetcounter = rand(4,7)
 		var/i
@@ -467,7 +470,8 @@
 	proc/checkNulls()
 		if(M == null || chokeability == null)
 			interrupt(INTERRUPT_ALWAYS)
-			return
+			return 0
+		return 1
 
 	onUpdate()
 		..()
@@ -482,7 +486,9 @@
 		checkNulls()
 
 	onEnd()
-		checkNulls()
+		if(!checkNulls())
+			..()
+			return
 
 		if(HH.losebreath < 8)
 			HH.losebreath += 5
@@ -543,7 +549,8 @@
 	proc/checkNulls()
 		if(M == null || healability == null)
 			interrupt(INTERRUPT_ALWAYS)
-			return
+			return 0
+		return 1
 
 	onUpdate()
 		..()
@@ -558,7 +565,9 @@
 		checkNulls()
 
 	onEnd()
-		checkNulls()
+		if(!checkNulls())
+			..()
+			return
 
 		if (M.get_burn_damage() > 0 || M.get_toxin_damage() > 0 || M.get_brute_damage() > 0 || M.get_oxygen_deprivation() > 0 || M.losebreath > 0)
 			M.HealDamage("All", 15, 15)
