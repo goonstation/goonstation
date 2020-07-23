@@ -1413,14 +1413,15 @@
 /obj/item/proc/dropped(mob/user)
 	if (user)
 		src.dir = user.dir
+		#ifdef COMSIG_MOB_DROPPED
+		SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
+		#endif
 	if (src.c_flags & EQUIPPED_WHILE_HELD)
 		src.unequipped(user)
 	#ifdef COMSIG_ITEM_DROPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	#endif
-	#ifdef COMSIG_MOB_DROPPED
-	SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
-	#endif
+
 	if(src.material) src.material.triggerDrop(user, src)
 	if (islist(src.ability_buttons))
 		for(var/obj/ability_button/B in ability_buttons)
