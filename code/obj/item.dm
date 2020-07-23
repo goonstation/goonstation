@@ -191,8 +191,8 @@
 					"theme" = usr.client.preferences.hud_style == "New" ? "newhud" : "item"
 				)
 
-				//if (src.z == 0 && src.loc == usr)
-				//	tooltipParams["flags"] = TOOLTIP_TOP //space up one tile, not TOP. need other spacing flag thingy
+				if (src.z == 0 && src.loc == usr)
+					tooltipParams["flags"] = TOOLTIP_TOP2 //space up one tile, not TOP. need other spacing flag thingy
 
 				//If we're over an item that's stored in a container the user has equipped
 				if (src.z == 0 && istype(src.loc, /obj/item/storage) && src.loc.loc == usr)
