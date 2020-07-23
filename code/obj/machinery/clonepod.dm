@@ -830,7 +830,7 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 
 				qdel(theMeat)
 				// Each bit of meat adds 2 units
-				src.process_total += 2
+				process_total += 2
 
 			src.meats.len = 0
 
