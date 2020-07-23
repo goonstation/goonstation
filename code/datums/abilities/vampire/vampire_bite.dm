@@ -392,6 +392,7 @@
 		src.loopStart()
 	
 	loopStart()
+		..()
 		var/obj/projectile/proj = initialize_projectile_ST(HH, new/datum/projectile/special/homing/vamp_blood, M)
 		var/tries = 10
 		while (tries > 0 && (!proj || proj.disposed))
@@ -533,6 +534,7 @@
 		src.onLoopStart()
 
 	onLoopStart()
+		..()
 		logTheThing("combat", M, HH, "bites [constructTarget(HH,"combat")]'s neck at [log_loc(M)].")
 		return
 
