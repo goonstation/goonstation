@@ -248,8 +248,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 			//I'm lazy again.
 			var/list/L = childrentypesof(/obj/item/clothing/gloves/ring/wizard)
 			L -= /obj/item/clothing/gloves/ring/wizard/random_type
-			if (locate(/obj/item/clothing/gloves/ring/wizard/random_type) in L)
-				message_admins("WRONG WRONG WRONG")
 			var/path = pick(L)
 			new path(loc)
 			qdel(src)
