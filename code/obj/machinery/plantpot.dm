@@ -1015,7 +1015,6 @@
 		else
 			var/cropcount = getamount
 			var/seedcount = 0
-			var/obj/tmp_crop = null		//for XP calc
 
 			while (getamount > 0)
 				var/quality_score = base_quality_score
@@ -1238,14 +1237,22 @@
 								hybrid.vars[V] = growing.vars[V]
 						S.planttype = hybrid
 
-					if (!tmp_crop)
-						tmp_crop = CROP
 					seedcount++
 				getamount--
 
-			//Get the first crop harvasted, give XP based on quality. Will make better later, like so more plants harvasted and stuff, this is just for testing.
-			if (tmp_crop.quality >= -10 && prob(20))
-				if (tmp_crop.quality >= 20)
+
+			// Give XP based on base quality of crop harvest. Will make better later, like so more plants harvasted and stuff, this is just for testing.
+			// This is only reached if you actually got anything harvested.
+			// (tmp_crop here was causing runtimes in a lot of cases, so changing to just use it like this)
+			// Base quality score:
+			//   1: base
+			// -12: if HP <=  50% w/ 70% chance
+			// + 5: if HP >= 200% w/ 30% chance
+			// +10: if HP >= 400% w/ 30% chance
+			// Mutations can add or remove this, of course
+			// @TODO adjust this later, this is just to fix runtimes and make it slightly consistent
+			if (base_quality_score >= 1 && prob(20))
+				if (base_quality_score >= 11)
 					JOB_XP(user, "Botanist", 2)
 				else
 					JOB_XP(user, "Botanist", 1)
