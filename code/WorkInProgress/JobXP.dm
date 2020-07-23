@@ -134,23 +134,9 @@ var/global/awarded_xp = 0
 	for (var/key in xp_archive)
 		var/list/v_list = xp_archive[key]
 		for (var/field in v_list)		//field is the job. Botanist, Clown, etc.
-
-			//This conditional is for testing, which I am doing with the "Botanist" job. Remove when this is adequately tested.
-			if (field != "Botanist") continue
-			var/debug_field1 = get_xp(key, field)
-			logTheThing("debug", null, null, "XP START:[key],[field],debug=[debug_field1]")
-
-			//////////////////////////////////////////////////////////////////////////////
-
 			var/amt = v_list["[field]"]
 			amt = clamp(amt,0,XP_ROUND_CAP)
 			add_xp(key, field, amt)
-
-			///////////////////////////MORE DEBUG STUFF REMOVE WHEN DONE TESTING///////////////
-			var/debug_field2 = get_xp(key, field)
-			logTheThing("debug", null, null, "XP AWARDED:[key],[field],[amt]||[debug_field2]")
-	message_admins("Testing round end exp, check debug logs")
-			////////////////////////////////////////////////////////////////////////////////
 
 //wrapper for set_xp
 /proc/add_xp(var/key = null, var/field_name="debug", var/amount = 0)
