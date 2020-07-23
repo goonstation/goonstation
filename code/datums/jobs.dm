@@ -286,7 +286,7 @@
 			return
 		M.traitHolder.addTrait("training_drinker")
 		M.traitHolder.addTrait("training_security")
-		JOB_XP_ARCHIVED(M, "Head of Security", 1)
+		JOB_XP(M, "Head of Security", 1)
 
 	derelict
 		name = null//"NT-SO Special Operative"

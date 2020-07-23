@@ -1034,7 +1034,7 @@
 					"You add [W] to [src].<br><span class='alert'>[src] is too full and spills!</span>")
 					src.reagents.reaction(get_turf(user), TOUCH, src.reagents.total_volume / 2)
 					src.reagents.add_reagent("ice", 5, null, (T0C - 1))
-					JOB_XP_ARCHIVED(user, "Clown", 1)
+					JOB_XP(user, "Clown", 1)
 					pool(W)
 					return
 				else

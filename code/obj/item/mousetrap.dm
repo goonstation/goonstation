@@ -54,7 +54,7 @@
 				if (!user.hand)
 					which_hand = "r_arm"
 				src.triggered(user, which_hand)
-				JOB_XP_ARCHIVED(user, "Clown", 1)
+				JOB_XP(user, "Clown", 1)
 				user.visible_message("<span class='alert'><B>[user] accidentally sets off the mousetrap, breaking their fingers.</B></span>",\
 				"<span class='alert'><B>You accidentally trigger the mousetrap!</B></span>")
 				return
@@ -71,7 +71,7 @@
 				if (!user.hand)
 					which_hand = "r_arm"
 				src.triggered(user, which_hand)
-				JOB_XP_ARCHIVED(user, "Clown", 1)
+				JOB_XP(user, "Clown", 1)
 				user.visible_message("<span class='alert'><B>[user] accidentally sets off the mousetrap, breaking their fingers.</B></span>",\
 				"<span class='alert'><B>You accidentally trigger the mousetrap!</B></span>")
 				return

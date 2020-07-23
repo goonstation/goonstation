@@ -533,7 +533,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			user.visible_message("<span class='alert'>[user] plasters the snowball over [his_or_her(user)] face.</span>",\
 			"<span class='alert'>You plaster the snowball over your face.</span>")
 			src.hit(user, 0)
-			JOB_XP_ARCHIVED(user, "Clown", 4)
+			JOB_XP(user, "Clown", 4)
 			return
 
 		src.add_fingerprint(user)

@@ -841,7 +841,7 @@
 				user.visible_message("<span class='alert'><b>[user]</b> fumbles and pokes \himself in the eye with [src].</span>")
 				user.change_eye_blurry(5)
 				user.changeStatus("weakened", 3 SECONDS)
-				JOB_XP_ARCHIVED(user, "Clown", 2)
+				JOB_XP(user, "Clown", 2)
 
 				return
 			boutput(user, "<span class='notice'>You peel [src].</span>")

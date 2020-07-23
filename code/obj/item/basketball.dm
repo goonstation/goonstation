@@ -40,7 +40,7 @@
 				if((prob(50) && M.bioHolder.HasEffect("clumsy")) || M.equipped() || get_dir(M, src) == M.dir)
 					src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
 					M.changeStatus("stunned", 2 SECONDS)
-					JOB_XP_ARCHIVED(M, "Clown", 1)
+					JOB_XP(M, "Clown", 1)
 					return
 				// catch the ball!
 				src.attack_hand(M)
@@ -116,7 +116,7 @@
 			if (user.bioHolder.HasEffect("clumsy") && prob(50)) // clowns are not good at basketball I guess
 				user.visible_message("<span class='combat'><b>[user] knocks their head into the rim of [src]!</b></span>")
 				user.changeStatus("weakened", 5 SECONDS)
-				JOB_XP_ARCHIVED(user, "Clown", 1)
+				JOB_XP(user, "Clown", 1)
 
 			if (!src.shoot(W, user))
 				SPAWN_DBG(1 SECOND)

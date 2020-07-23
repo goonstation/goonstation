@@ -255,7 +255,7 @@
 			if ("stun", "stun_classic")
 				user.visible_message("<span class='alert'><B>[victim] has been stunned with the [src.name] by [user]!</B></span>")
 				logTheThing("combat", user, victim, "stuns [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
-				JOB_XP_ARCHIVED(victim, "Clown", 3)
+				JOB_XP(victim, "Clown", 3)
 				if (type == "stun_classic")
 					playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
 				else
@@ -332,7 +332,7 @@
 
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			src.do_stun(user, user, "failed", 1)
-			JOB_XP_ARCHIVED(user, "Clown", 2)
+			JOB_XP(user, "Clown", 2)
 			return
 
 		if (src.status)
@@ -362,7 +362,7 @@
 
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			src.do_stun(user, M, "failed", 1)
-			JOB_XP_ARCHIVED(user, "Clown", 1)
+			JOB_XP(user, "Clown", 1)
 			return
 
 		switch (user.a_intent)
@@ -497,7 +497,7 @@
 		//make it harder for them clowns...
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			src.do_stun(user, user, "failed", 1)
-			JOB_XP_ARCHIVED(user, "Clown", 2)
+			JOB_XP(user, "Clown", 2)
 			return
 
 		//move to next state

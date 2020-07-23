@@ -1244,7 +1244,7 @@ toxic - poisons
 				SPAWN_DBG(0)
 					H.throw_at(get_offset_target_turf(H, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2, throw_type = THROW_GUNIMPACT)
 				H.emote("twitch_v")
-				JOB_XP_ARCHIVED(H, "Clown", 1)
+				JOB_XP(H, "Clown", 1)
 		return
 
 /datum/projectile/bullet/mininuke //Assday only.

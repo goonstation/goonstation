@@ -493,7 +493,7 @@ obj/critter/bear/care
 
 	drink_blood(var/atom/target)
 		..()
-		JOB_XP_ARCHIVED(target, "Medical Doctor", 1)
+		JOB_XP(target, "Medical Doctor", 1)
 
 
 // A slightly scarier (but still cute) bat for vampires

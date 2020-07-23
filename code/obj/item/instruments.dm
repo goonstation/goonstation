@@ -277,7 +277,7 @@
 		if (prob(30))
 			for (var/mob/living/carbon/human/H in view(2, user))
 				if (H.hasStatus("weakened"))
-					JOB_XP_ARCHIVED(user, "Clown", 2)
+					JOB_XP(user, "Clown", 2)
 					break
 
 	is_detonator_attachment()

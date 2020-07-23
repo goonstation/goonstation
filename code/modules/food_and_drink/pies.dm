@@ -16,7 +16,7 @@
 			M.change_eye_blurry(rand(5,10))
 			M.take_eye_damage(rand(0, 2), 1)
 			if (prob(40))
-				JOB_XP_ARCHIVED(M, "Clown", 2)
+				JOB_XP(M, "Clown", 2)
 		else
 			..()
 

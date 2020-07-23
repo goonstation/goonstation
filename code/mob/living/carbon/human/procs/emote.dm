@@ -1564,7 +1564,7 @@
 								message = pick("<B>[src]</B> tries to flip, but stumbles!", "<B>[src]</B> slips!")
 								src.changeStatus("weakened", 4 SECONDS)
 								src.TakeDamage("head", 8, 0, 0, DAMAGE_BLUNT)
-								JOB_XP_ARCHIVED(src, "Clown", 1)
+								JOB_XP(src, "Clown", 1)
 
 							if (src.bioHolder.HasEffect("fat"))
 								message = pick("<B>[src]</B> tries to flip, but stumbles!", "<B>[src]</B> collapses under [his_or_her(src)] own weight!")

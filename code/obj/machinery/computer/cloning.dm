@@ -479,7 +479,7 @@
 
 	src.records += R
 	src.temp = "Subject successfully scanned."
-	JOB_XP_ARCHIVED(usr, "Medical Doctor", 10)
+	JOB_XP(usr, "Medical Doctor", 10)
 
 //Find a specific record by key.
 /obj/machinery/computer/cloning/proc/find_record(var/find_key)
@@ -550,7 +550,7 @@
 		src.temp = "Cloning cycle activated."
 		src.records.Remove(C)
 		qdel(C)
-		JOB_XP_ARCHIVED(usr, "Medical Doctor", 15)
+		JOB_XP(usr, "Medical Doctor", 15)
 		src.menu = 1
 
 /obj/machinery/computer/cloning/power_change()

@@ -87,7 +87,7 @@
 				playsound(user.loc, 'sound/impact_sounds/Generic_Hit_2.ogg', 15, 1, -3)
 				user.set_loc(src.loc)
 				user.changeStatus("weakened", 1 SECOND)
-				JOB_XP_ARCHIVED(user, "Clown", 1)
+				JOB_XP(user, "Clown", 1)
 				return
 			else
 				user.show_text("You scoot around [src].")

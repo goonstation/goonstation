@@ -191,7 +191,7 @@
 	if (user && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], but slips and drops it!</span>")
 		user.drop_item()
-		JOB_XP_ARCHIVED(user, "Clown", 1)
+		JOB_XP(user, "Clown", 1)
 		return
 	if (status == 0)
 		boutput(user, "<span class='alert'>The bulb has been burnt out!</span>")

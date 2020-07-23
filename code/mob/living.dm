@@ -1201,7 +1201,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (src.bioHolder && src.bioHolder.HasEffect("clumsy") && prob(50))
 				message = "<B>[src]</B> tries to hand [thing] to [M], but [src] drops it!"
 				thing.set_loc(src.loc)
-				JOB_XP_ARCHIVED(src, "Clown", 2)
+				JOB_XP(src, "Clown", 2)
 			else if (M.bioHolder && M.bioHolder.HasEffect("clumsy") && prob(50))
 				message = "<B>[src]</B> tries to hand [thing] to [M], but [M] drops it!"
 				thing.set_loc(M.loc)
