@@ -526,11 +526,15 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		logTheThing("combat", M, HH, "bites [constructTarget(HH,"combat")]'s neck at [log_loc(M)].")
-
 		if (istype(H))
 			H.vamp_isbiting = HH
 		HH.vamp_beingbitten = 1
+
+		src.onLoopStart()
+
+	onLoopStart()
+		logTheThing("combat", M, HH, "bites [constructTarget(HH,"combat")]'s neck at [log_loc(M)].")
+		return
 
 	onEnd()
 		if(get_dist(M, HH) > 1 || M == null || HH == null || B == null)
