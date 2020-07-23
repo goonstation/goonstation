@@ -551,40 +551,39 @@
 		if (!H) return
 		var/obj/item/W = null
 		var/obj/item/I
-		#define entered_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseEntered(location,control,params); } else { test_slot(slot); if (I) { H.transform *= 1.1; } }
+		#define entered_slot(slot, enlarge) W = master.get_slot(master.slot); if (W) { W.MouseEntered(location,control,params); } else if (enlarge) { test_slot(slot); if (I) { H.transform *= 1.1; } }
 		#define test_slot(slot) I = master.equipped(); if (I && !master.can_equip(I, master.slot)) { I = null; }
 		switch(H.id)
 			if("belt")
-				entered_slot(slot_belt)
+				entered_slot(slot_belt,1)
 			if("storage1")
-				entered_slot(slot_l_store)
+				entered_slot(slot_l_store,1)
 			if("storage2")
-				entered_slot(slot_r_store)
+				entered_slot(slot_r_store,1)
 			if("back")
-				entered_slot(slot_back)
+				entered_slot(slot_back,1)
 			if("shoes")
-				entered_slot(slot_shoes)
+				entered_slot(slot_shoes,1)
 			if("gloves")
-				entered_slot(slot_gloves)
+				entered_slot(slot_gloves,1)
 			if("id")
-				entered_slot(slot_wear_id)
+				entered_slot(slot_wear_id,1)
 			if("under")
-				entered_slot(slot_w_uniform)
+				entered_slot(slot_w_uniform,1)
 			if("suit")
-				entered_slot(slot_wear_suit)
+				entered_slot(slot_wear_suit,1)
 			if("glasses")
-				entered_slot(slot_glasses)
+				entered_slot(slot_glasses,1)
 			if("ears")
-				entered_slot(slot_ears)
+				entered_slot(slot_ears,1)
 			if("mask")
-				entered_slot(slot_wear_mask)
+				entered_slot(slot_wear_mask,1)
 			if("head")
-				entered_slot(slot_head)
-			//ehhh dont enlarge these
-			//if ("lhand")
-			//	entered_slot(slot_l_hand)
-			//if ("rhand")
-			//	entered_slot(slot_r_hand)
+				entered_slot(slot_head,1)
+			if ("lhand")
+				entered_slot(slot_l_hand,0)
+			if ("rhand")
+				entered_slot(slot_r_hand,0)
 		#undef entered_slot
 		#undef test_slot
 
