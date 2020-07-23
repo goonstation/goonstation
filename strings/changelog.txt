@@ -1,5 +1,8 @@
 
 (t)wed jul 22 20
+(u)Zamujasa
+(e)🔄|rework
+(*)Tweaked some parameters of how the cloner and grinder work. May speed up cloning and make it less likely to get stuck in the cloner for long periods of time.
 (u)Chickenish
 (p)1507
 (e)🆕|feature
