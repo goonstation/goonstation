@@ -3395,9 +3395,6 @@
 			if(!created_cell || stage != 2)
 				boutput(user, "<span class='alert'>You need to add a power cell first!</span>")
 				return
-//			if(!created_module)
-//				boutput(user, "<span class='alert'>You need to add a tool module first!</span>")
-//				return
 			src.stage = 3
 			src.icon_state = "robuddy_frame-[buddy_model]-3"
 			if(W:created_name)
