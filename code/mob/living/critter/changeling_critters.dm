@@ -152,7 +152,7 @@
 		if (src.lying)
 			. += 14
 		if (HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
-			. += 8
+			. += 7
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
