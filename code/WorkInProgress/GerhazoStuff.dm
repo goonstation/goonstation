@@ -392,7 +392,6 @@
 			H.points = 0
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		//src.interrupt_flags &= ~INTERRUPT_ACTION
 		src.onRestart()
 
 	onInterrupt()
@@ -497,7 +496,6 @@
 			H.points = 0
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		//src.interrupt_flags &= ~INTERRUPT_ACTION // this action is already finished, this prevents it from getting interrupted by starting a new one
 		src.onRestart()
 
 	onInterrupt()
@@ -582,7 +580,6 @@
 			H.points = 0
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		//src.interrupt_flags &= ~INTERRUPT_ACTION // this action is already finished, this prevents it from getting interrupted by starting a new one
 		src.onRestart()
 
 	onInterrupt()
