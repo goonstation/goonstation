@@ -1240,6 +1240,7 @@
 					seedcount++
 				getamount--
 
+
 			// Give XP based on base quality of crop harvest. Will make better later, like so more plants harvasted and stuff, this is just for testing.
 			// This is only reached if you actually got anything harvested.
 			// (tmp_crop here was causing runtimes in a lot of cases, so changing to just use it like this)
@@ -1252,9 +1253,9 @@
 			// @TODO adjust this later, this is just to fix runtimes and make it slightly consistent
 			if (base_quality_score >= 1 && prob(20))
 				if (base_quality_score >= 11)
-					JOB_XP_ARCHIVED(user, "Botanist", 2)
+					JOB_XP(user, "Botanist", 2)
 				else
-					JOB_XP_ARCHIVED(user, "Botanist", 1)
+					JOB_XP(user, "Botanist", 1)
 
 			var/list/harvest_string = list("You harvest [cropcount] item")
 			if (cropcount > 1)
