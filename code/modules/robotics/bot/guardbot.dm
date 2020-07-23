@@ -3418,12 +3418,6 @@
 			src.icon_state = "robuddy_frame-[buddy_model]-2"
 			boutput(user, "You add the power cell to [src]!")
 
-//		else if((istype(W, /obj/item/device/guardbot_tool)) && stage == 2 && !created_module)
-//			user.drop_item()
-//
-//			W.set_loc(src)
-//			src.created_module = W
-//			boutput(user, "You add the [W.name] to [src]!")
 
 		else if (istype(W, /obj/item/parts/robot_parts/arm/) && src.stage == 3)
 			src.stage++
