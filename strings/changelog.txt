@@ -1,5 +1,7 @@
 
 (t)wed jul 22 20
+(u)mbc
+(+)QOL stuff for the hud - you can now mousedrag from slot to slot without directly clicking the item and see tooltips without pixel perfect hovering. Also slots enlarge slightly to let you know they will accept a held item. Doesnt work for containers hud yet.
 (u)Zamujasa
 (e)🔄|rework
 (*)Tweaked some parameters of how the cloner and grinder work. May speed up cloning and make it less likely to get stuck in the cloner for long periods of time.
