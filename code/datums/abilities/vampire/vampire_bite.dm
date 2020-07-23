@@ -531,9 +531,9 @@
 			H.vamp_isbiting = HH
 		HH.vamp_beingbitten = 1
 
-		src.onLoopStart()
+		src.loopStart()
 
-	onLoopStart()
+	loopStart()
 		..()
 		logTheThing("combat", M, HH, "bites [constructTarget(HH,"combat")]'s neck at [log_loc(M)].")
 		return
