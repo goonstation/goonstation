@@ -1418,6 +1418,7 @@
 	#ifdef COMSIG_ITEM_DROPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	#endif
+	SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
 	if(src.material) src.material.triggerDrop(user, src)
 	if (islist(src.ability_buttons))
 		for(var/obj/ability_button/B in ability_buttons)
@@ -1430,9 +1431,9 @@
 	return
 
 /obj/item/proc/pickup(mob/user)
-	#ifdef COMSIG_ITEM_PICKUP
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
 	#endif
+	SEND_SIGNAL(user, COMSIG_MOB_PICKUP, src)
 	if(src.material)
 		src.material.triggerPickup(user, src)
 	set_mob(user)
