@@ -24,7 +24,7 @@ export const TankDispenser = (props, context) => {
                   icon={data.plasma ? 'circle' : 'circle-o'}
                   content="Dispense"
                   disabled={!data.plasma}
-                  onClick={() => act('plasma')} />
+                  onClick={() => act('dispense-plasma')} />
               )}>
               {data.plasma}
             </LabeledList.Item>
@@ -35,7 +35,7 @@ export const TankDispenser = (props, context) => {
                   icon={data.oxygen ? 'circle' : 'circle-o'}
                   content="Dispense"
                   disabled={!data.oxygen}
-                  onClick={() => act('oxygen')} />
+                  onClick={() => act('dispense-oxygen')} />
               )}>
               {data.oxygen}
             </LabeledList.Item>

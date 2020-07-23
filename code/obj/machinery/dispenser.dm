@@ -92,14 +92,14 @@
 	if(..())
 		return
 	switch(action)
-		if("plasma")
+		if("dispense-plasma")
 			if(pltanks > 0)
 				use_power(5)
 				var/newtank = new /obj/item/tank/plasma(src.loc)
 				usr.put_in_hand_or_eject(newtank)
 				src.pltanks--
 			. = TRUE
-		if("oxygen")
+		if("dispense-oxygen")
 			if (o2tanks > 0)
 				use_power(5)
 				var/newtank = new /obj/item/tank/oxygen(src.loc)
