@@ -389,6 +389,9 @@
 			H.vamp_isbiting = HH
 		HH.vamp_beingbitten = 1
 
+		src.loopStart()
+	
+	loopStart()
 		var/obj/projectile/proj = initialize_projectile_ST(HH, new/datum/projectile/special/homing/vamp_blood, M)
 		var/tries = 10
 		while (tries > 0 && (!proj || proj.disposed))
@@ -407,13 +410,13 @@
 		logTheThing("combat", M, HH, "steals blood from [constructTarget(HH,"combat")] at [log_loc(M)].")
 
 	onEnd()
-		..()
 		if(get_dist(M, HH) > 7 || M == null || HH == null)
+			..()
 			interrupt(INTERRUPT_ALWAYS)
+			src.end()
 			return
 
-		src.end()
-		actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(M,H,HH), M)
+		src.onRestart()
 
 	onInterrupt() //Called when the action fails / is interrupted.
 		if (state == ACTIONSTATE_RUNNING)
