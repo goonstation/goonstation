@@ -50,6 +50,8 @@
 
 	var/layout_style = "goon"
 
+	var/mutable_appearance/default_sel_appearance
+
 	var/static/list/layouts = \
 							list("goon" = list( \
 										"invtoggle" = ui_invtoggle,\
@@ -277,6 +279,7 @@
 
 			sel = create_screen("sel", "sel", src.icon_hud, "sel", null, HUD_LAYER+1.2)
 			sel.mouse_opacity = 0
+			default_sel_appearance = new(sel)
 
 			set_visible(twohandl, 0)
 			set_visible(twohandr, 0)
@@ -552,7 +555,7 @@
 			#undef clicked_slot
 
 	MouseEntered(var/obj/screen/hud/H, location, control, params)
-		if (!H) return
+		if (!H || usr != src.master) return
 		var/obj/item/W = null
 		var/obj/item/I
 
@@ -626,11 +629,12 @@
 		#undef test_slot
 
 	MouseExited(obj/screen/hud/H)
-		if (!H) return
+		if (!H || usr != src.master) return
 		if (sel)
 			sel.screen_loc = null
 			if (sel.icon_state != sel)
-				sel.icon_state = "sel"
+				//sel.icon_state = "sel"
+				sel.appearance = default_sel_appearance
 
 	MouseDrop(obj/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
 		if (!H) return
@@ -1184,9 +1188,17 @@
 					src.hud.sel.screen_loc = src.hud.lhand.screen_loc
 				else
 					src.hud.sel.screen_loc = src.hud.rhand.screen_loc
-			src.hud.sel.icon_state = "sel-hand"
+
+			src.hud.sel.icon = I.icon
+			src.hud.sel.icon_state = I.icon_state
+			src.hud.sel.alpha = 120
+			src.hud.sel.filters += filter(type = "outline")
 
 	moused_exit(var/obj/item/I)
 		if (src.hud?.sel?.screen_loc)
 			src.hud.sel.screen_loc = null
-			src.hud.sel.icon_state = "sel"
+			////src.hud.sel.icon = src.hud.icon_hud
+			//src.hud.sel.icon_state = "sel"
+			//src.hud.alpha = 255
+			src.hud.sel.appearance = src.hud.default_sel_appearance
+			src.hud.sel.filters = null
