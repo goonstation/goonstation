@@ -1532,7 +1532,26 @@ var/global/noir = 0
 				if (!M.abilityHolder)
 					alert("No ability holder detected.")
 					return
-				var/ab_to_rem = input("Which ability?", "Ability", null) as anything in M.abilityHolder.abilities
+
+				var/datum/targetable/ab_to_rem = null
+				var/list/abils = list()
+				if (istype(M.abilityHolder, /datum/abilityHolder/composite))
+					var/datum/abilityHolder/composite/CH = M.abilityHolder
+					if (CH.holders.len)
+						for (var/datum/abilityHolder/AH in CH.holders)
+							abils += AH.abilities //get a list of all the different abilities in each holder
+					else
+						boutput(usr, "<b><span class='alert'>[M]'s composite holder lacks any ability holders to remove from!</span></b>")
+						return //no ability holders in composite holder
+				else
+					abils += M.abilityHolder.abilities
+
+				if(!abils.len)
+					boutput(usr, "<b><span class='alert'>[M] doesn't have any abilities!</span></b>")
+					return //nothing to remove
+
+				ab_to_rem = input("Remove which ability?", "Ability", null) as null|anything in abils
+				if (!ab_to_rem) return //user cancelled
 				message_admins("[key_name(usr)] removed ability [ab_to_rem] from [key_name(M)].")
 				logTheThing("admin", usr, M, "removed ability [ab_to_rem] from [constructTarget(M,"admin")].")
 				M.abilityHolder.removeAbilityInstance(ab_to_rem)
