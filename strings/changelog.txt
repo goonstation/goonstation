@@ -1,4 +1,79 @@
 
+(t)fri jul 24 20
+(u)Superlagg
+(p)1526
+(e)🆕|feature
+(*)Zip guns now explode one shot later than they used to.
+(t)thu jul 23 20
+(u)MarkNstein
+(p)1536
+(e)🔄|rework
+(*)Action(bar)s will no longer reset upon successive attempts.
+(u)mbc
+(p)1584
+(e)🆕|feature
+(*)Handspider can now pick up items but moves slowly and cannot sprint while doing so. Legworm has more stamina, can throw items by clicking on them, and fixed writhe ability (was stunning the legworm much longer than it should). Eyespider can move faster. Buttcrab farts can block line of sight.
+(t)wed jul 22 20
+(u)mbc
+(+)QOL stuff for the hud - you can now mousedrag from slot to slot without directly clicking the item and see tooltips without pixel perfect hovering. Also slots enlarge slightly to let you know they will accept a held item. Doesnt work for containers hud yet.
+(u)Zamujasa
+(e)🔄|rework
+(*)Tweaked some parameters of how the cloner and grinder work. May speed up cloning and make it less likely to get stuck in the cloner for long periods of time.
+(u)Chickenish
+(p)1507
+(e)🆕|feature
+(+)Added a suicide for the Portable Reclaimer, it's quite cubular.
+(u)Kyle and BatElite
+(p)1563
+(e)🐛🆕🎨|bug, feature, sprites
+(+)Clownspiders now protect their momma when attacked.
+(+)Fire Elemental/Clown/Cluwne spider ability button sprites added by BatElite.
+(u)MarkNstein
+(p)1428
+(e)🆕|feature
+(+)Miners now get PDA notifications of RockBox™ sales.
+(u)Carbadox
+(p)1458
+(e)🆕🗺|feature, mapping
+(*)Added the crate manufactor to Atlas, Clarion, Destiny, Cog1, Cog2, Horizon and Oshan
+(u)AwkwardDryad
+(p)1179
+(e)🆕🎨|feature, sprites
+(*)Added chopsticks and premium plastic silverware
+(t)tue jul 21 20
+(u)CodeDude
+(p)1566
+(e)|
+(*)Added soft soft pizza to the game - a tasty drink found in soda machines!
+(+)Made some small sprite changes to the base pizza sprite.
+(t)mon jul 20 20
+(u)Zamujasa
+(e)🆕|feature
+(*)A countdown timer until the round starts has been added to the title screen. A similar countdown appears wen a round is ending.
+(u)mbc
+(p)1559
+(e)|
+(*)Added sounds for when you are in space. Differences from normal sounds include : very limited range + muffled with limited reverb
+(u)RichardGere
+(p)1535
+(e)⚖|balance
+(+)Bulky items no longer fit into a patient's chest. Some exceptions apply.
+(u)zjdtmkhzt
+(p)1552
+(e)|
+(+)Fixed bug where chemmaster would sometimes lose reagents when making patches between 15 and 20 units in size.
+(t)sun jul 19 20
+(u)Zamujasa
+(e)🔄|rework
+(*)The Genetics "dissolve" power no longer instantly kills you if it isn't synchronized. Instead, you drop all your equipment. Misfires drop a random organ instead. Hopefully not one of the important ones.
+(u)zjdtmkhzt
+(p)1465
+(e)🆕🔄|feature, rework
+(*)Changed pathogen manipulator UI bigly, pathology is still disabled, but you can look at it and be sad.
+(u)RichardGere
+(p)1532
+(e)|
+(+)Fixed an issue that prevented possessed csabers from being able to attack.
 (t)sat jul 18 20
 (u)MarkNstein
 (p)1416

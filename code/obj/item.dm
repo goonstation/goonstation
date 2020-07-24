@@ -191,6 +191,9 @@
 					"theme" = usr.client.preferences.hud_style == "New" ? "newhud" : "item"
 				)
 
+				if (src.z == 0 && src.loc == usr)
+					tooltipParams["flags"] = TOOLTIP_TOP2 //space up one tile, not TOP. need other spacing flag thingy
+
 				//If we're over an item that's stored in a container the user has equipped
 				if (src.z == 0 && istype(src.loc, /obj/item/storage) && src.loc.loc == usr)
 					tooltipParams["flags"] = TOOLTIP_RIGHT
@@ -1410,11 +1413,15 @@
 /obj/item/proc/dropped(mob/user)
 	if (user)
 		src.dir = user.dir
+		#ifdef COMSIG_MOB_DROPPED
+		SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
+		#endif
 	if (src.c_flags & EQUIPPED_WHILE_HELD)
 		src.unequipped(user)
 	#ifdef COMSIG_ITEM_DROPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	#endif
+
 	if(src.material) src.material.triggerDrop(user, src)
 	if (islist(src.ability_buttons))
 		for(var/obj/ability_button/B in ability_buttons)
@@ -1429,6 +1436,9 @@
 /obj/item/proc/pickup(mob/user)
 	#ifdef COMSIG_ITEM_PICKUP
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
+	#endif
+	#ifdef COMSIG_MOB_PICKUP
+	SEND_SIGNAL(user, COMSIG_MOB_PICKUP, src)
 	#endif
 	if(src.material)
 		src.material.triggerPickup(user, src)

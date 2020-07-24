@@ -1,7 +1,7 @@
 #define MEAT_NEEDED_TO_CLONE	16
 #define MAXIMUM_MEAT_LEVEL		100
 #define DEFAULT_MEAT_USED_PER_TICK 0.6
-#define DEFAULT_SPEED_BONUS 1
+#define DEFAULT_SPEED_BONUS 1.5
 
 #define MEAT_LOW_LEVEL	MAXIMUM_MEAT_LEVEL * 0.15
 
@@ -176,6 +176,8 @@
 		logTheThing("debug", null, null, "<b>Cloning:</b> growclone([english_list(args)]) with invalid holder.")
 
 	if (istype(oldabilities))
+		// @TODO @BUG: Things with abilities that should lose them (eg zombie clones) keep their zombie abilities.
+		// Maybe not a bug? idk.
 		src.occupant.abilityHolder = oldabilities // This should already be a copy.
 		src.occupant.abilityHolder.transferOwnership(src.occupant) //mbc : fixed clone removing abilities bug!
 		src.occupant.abilityHolder.remove_unlocks()
@@ -272,6 +274,7 @@
 	previous_heal = src.occupant.health
 	src.attempting = 0
 	src.operating = 1
+	// effectively "(1 + (!gen_analysis * 0.15)) * speed_bonus" (cash-4-clones is never on)
 	src.gen_bonus = src.healing_multiplier()
 	return 1
 
@@ -329,7 +332,8 @@
 			src.occupant.HealDamage("All", 1 * gen_bonus, 1 * gen_bonus)
 
 			//At this rate one clone takes about 95 seconds to produce.(with heal_level 90)
-			src.occupant.take_toxin_damage(-0.5 * gen_bonus)
+			// Zamujasa: changed -0.5 to -1; consistently the slowest type to heal
+			src.occupant.take_toxin_damage(-1 * gen_bonus)
 
 			//Premature clones may have brain damage.
 			src.occupant.take_brain_damage(-2 * gen_bonus)
@@ -437,7 +441,7 @@
 			return
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		logTheThing("combat", src, user, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
-		speed_bonus += 1
+		speed_bonus *= 2
 		meat_used_per_tick *= 3
 		is_speedy = 1
 		user.drop_item()
@@ -641,7 +645,8 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 	var/list/pods = null // cloning pods we're tied to
 	var/id = null // if this isn't null, we'll only look for pods with this ID
 	var/pod_range = 4 // if we don't have an ID, we look for pods in orange(this value)
-	var/process_timer = 0
+	var/process_timer = 0	// how long this shit is running for
+	var/process_per_tick = 0	// how much shit it will output per tick
 	var/mob/living/occupant = null
 	var/list/meats = list() //Meat that we want to reclaim.
 	var/max_meat = 7 //To be honest, I added the meat reclamation thing in part because I wanted a "max_meat" var.
@@ -697,22 +702,27 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 		return
 
 	process()
-		if (process_timer-- < 1)
+		process_timer--
+		if (process_timer > 0)
+			// Add reagents for this tick
+			src.reagents.add_reagent("blood", 2 * process_per_tick)
+			src.reagents.add_reagent("meat_slurry", 2 * process_per_tick)
+			if (prob(2))
+				src.reagents.add_reagent("beff", 1 * process_per_tick)
+
+		if (src.reagents.total_volume && islist(src.pods) && pods.len)
+			// Distribute reagents to cloning pods nearby
+			// Changed from before to distribute while grinding rather than all at once
+			// give an equal amount of reagents to each pod that happens to be around
+			var/volume_to_share = (src.reagents.total_volume / max(pods.len, 1))
+			for (var/obj/machinery/clonepod/pod in src.pods)
+				src.reagents.trans_to(pod, volume_to_share)
+				DEBUG_MESSAGE("[src].reagents.trans_to([pod] [log_loc(pod)], [src.reagents.total_volume]/[max(pods.len, 1)])")
+
+		if (process_timer <= 0)
 			UnsubscribeProcess()
 			update_icon(1)
-			DEBUG_MESSAGE("[src].reagents.total_volume on completion of cycle: [src.reagents.total_volume]")
 
-			if (islist(src.pods) && pods.len && src.reagents.total_volume)
-				for (var/obj/machinery/clonepod/pod in src.pods)
-					src.reagents.trans_to(pod, (src.reagents.total_volume / max(pods.len, 1))) // give an equal amount of reagents to each pod that happens to be around
-					DEBUG_MESSAGE("[src].reagents.trans_to([pod] [log_loc(pod)], [src.reagents.total_volume]/[max(pods.len, 1)])")
-			return
-
-		var/mult = src.upgraded ? 2 : 1
-		src.reagents.add_reagent("blood", 2 * mult)
-		src.reagents.add_reagent("meat_slurry", 2 * mult)
-		if (prob(2))
-			src.reagents.add_reagent("beff", 1 * mult)
 		return
 
 	on_reagent_change()
@@ -764,6 +774,10 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 
 	proc/start_cycle()
 		src.find_pods()
+
+		// how much we will be producing
+		var/process_total = 0
+
 		if (istype(src.occupant))
 			src.occupant.death(1)
 			var/humanOccupant = (ishuman(src.occupant) && !ismonkey(src.occupant))
@@ -775,11 +789,38 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 				qdel(src.occupant)
 			src.occupant = null
 
-			var/mult = src.upgraded ? rand(2,4) : rand(4,8)
-			src.process_timer = (humanOccupant ? 2 : 1)// * (rand(4,8) - (2 * decomp))
-			src.process_timer *= (mult - (2 * decomp))
-			DEBUG_MESSAGE("[src] process_timer calced as [src.process_timer] (upgraded [src.upgraded], mult [mult], humanOccupant [humanOccupant])")
-			DEBUG_MESSAGE("[src] rough end result of cycle: [(src.process_timer * (src.upgraded ? 8 : 4))]u + up to [(src.process_timer * (src.upgraded ? 2 : 1))]u")
+			// Old table of cloner values --
+			// grinder used to count down and added either x or x + 2 depending on upgrade
+			// now uses varying amounts of things! i guess!
+			// here is the old code and a table of how the timer was calculated:
+			// var/mult = src.upgraded ? rand(2,4) : rand(4,8)
+			// src.process_timer = (humanOccupant ? 2 : 1)
+			// src.process_timer *= (mult - (2 * decomp))
+			// ------------------------------------------------
+			// process_timer    ____speedy|normal__________
+			// mult>              2   3   4   5   6   7   8  (note: speedy would increase
+			// Decomp stage  0    4   6   8  10  12  14  16   reagent production by * 2)
+			//               1    0   2   4   6   8  10  12
+			//               2   -4  -2   0   2   4   6   8  (slightly decomposed bodies
+			//               3   -8  -6  -4  -2   0   2   4   became worthless with
+			//               4  -12 -10  -8  -6  -4  -2   0   speedy grinder upgrade)
+			// total reagents: process_timer * (speedy ? 2 : 1)
+			// this effectively means/meant that the speedy upgrade was faster,
+			// but otherwise objectively worse if you had decomposed corpses
+
+			// attempting to rewrite this to be better or at least different, i guess
+			// First, how much are we going to get from this?
+			//                        rand  human   decomp        total
+			// Human, no decomposure: (5~8) * 2 * (4.5 / 4.5) =  10 ~ 16
+			// Human, stage 1:        (5~8) * 2 * (3.5 / 4.5) = 8.8 ~12.4
+			// Human, stage 2:        (5~8) * 2 * (2.5 / 4.5) = 5.5 ~ 7.7
+			// Human, stage 3:        (5~8) * 2 * (1.5 / 4.5) = 3.3 ~ 5.3
+			// Human, stage 4:        (5~8) * 2 * (0.5 / 4.5) = 1.1 ~ 1.7
+			// Non-human monkey:      (5~8) * 1 * (4.5 / 4.5) =   5 ~ 8
+			process_total += rand(5, 8) * (humanOccupant ? 2 : 1) * ((4.5 - decomp) / 4.5)
+
+			//DEBUG_MESSAGE("[src] process_timer calced as [src.process_timer] (upgraded [src.upgraded], mult [mult], humanOccupant [humanOccupant])")
+			//DEBUG_MESSAGE("[src] rough end result of cycle: [(src.process_timer * (src.upgraded ? 8 : 4))]u + up to [(src.process_timer * (src.upgraded ? 2 : 1))]u")
 
 		if (src.meats.len)
 			for (var/obj/item/theMeat in src.meats)
@@ -788,9 +829,23 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 					theMeat.reagents.trans_to(src, src.upgraded ? 10 : 5)
 
 				qdel(theMeat)
-				src.process_timer += (src.upgraded ? 1 : 2)
+				// Each bit of meat adds 2 units
+				process_total += 2
 
 			src.meats.len = 0
+
+		// process_timer = total * 0.8 or 0.4 (rounded up) - slightly faster than before
+		// normal:
+		// 8 * 2 (human) =    16 units
+		// 16 * 0.8 = 12.8 -> 13 ticks
+		// 16 / 13 =           1.2307 per tick
+		// upgraded:
+		// 8 * 2 =            16 units
+		// 16 * 0.4 = 6.4 ->   7 ticks
+		// 16 / 7 =            2.2857 per tick
+		// end result is that they produce the same amounts, the upgrade just does it faster
+		src.process_timer = ceil(process_total * (src.upgraded ? 0.4 : 0.8))
+		src.process_per_tick = process_total / process_timer
 
 		src.update_icon(1)
 		SubscribeToProcess()
