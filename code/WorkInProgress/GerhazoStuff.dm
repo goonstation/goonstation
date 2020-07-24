@@ -381,30 +381,27 @@
 		lightning_targets = potentiallightningtargets
 		..()
 
+	proc/checkNulls()
+		if(M == null || lightningability == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return 0
+		return 1
 
 	onUpdate()
 		..()
-		if(M == null || lightningability == null)
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
+		checkNulls()
 
 	onStart()
 		..()
-		if(M == null || lightningability == null)
-			interrupt(INTERRUPT_ALWAYS)
-			return
+		src.loopStart()
 
-		/*
-		if (!H.can_bite(HH, is_pointblank = 1))
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		*/
+	loopStart()
+		..()
+		checkNulls()
 
 	onEnd()
-		..()
-		if(M == null || lightningability == null)
-			interrupt(INTERRUPT_ALWAYS)
+		if(!checkNulls())
+			..()
 			return
 
 		var/targetcounter = rand(4,7)
@@ -420,11 +417,11 @@
 				arcFlashTurf(M, shock_target, 20000)
 		H.points -= targetcounter
 		if(H.points <= 0)
+			..()
 			H.points = 0
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		src.interrupt_flags &= ~INTERRUPT_ACTION
-		actions.start(new/datum/action/bar/icon/force_lightning_action(M,H,HH,lightningability,lightning_targets), M)
+		src.onRestart()
 
 	onInterrupt()
 		..()
@@ -496,24 +493,27 @@
 		original_pixel_y = origpixely
 		..()
 
+	proc/checkNulls()
+		if(M == null || chokeability == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return 0
+		return 1
 
 	onUpdate()
 		..()
-		if(M == null || chokeability == null)
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
+		checkNulls()
 
 	onStart()
 		..()
-		if(M == null || chokeability == null)
-			interrupt(INTERRUPT_ALWAYS)
-			return
+		src.loopStart()
+
+	loopStart()
+		..()
+		checkNulls()
 
 	onEnd()
-		..()
-		if(M == null || chokeability == null)
-			interrupt(INTERRUPT_ALWAYS)
+		if(!checkNulls())
+			..()
 			return
 
 		if(HH.losebreath < 8)
@@ -524,11 +524,11 @@
 		H.points -= 5
 
 		if(H.points <= 0)
+			..()
 			H.points = 0
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		src.interrupt_flags &= ~INTERRUPT_ACTION // this action is already finished, this prevents it from getting interrupted by starting a new one
-		actions.start(new/datum/action/bar/icon/force_choke_action(M,H,HH,chokeability,original_pixel_y), M)
+		src.onRestart()
 
 	onInterrupt()
 		..()
@@ -572,24 +572,27 @@
 		healability = healabil
 		..()
 
+	proc/checkNulls()
+		if(M == null || healability == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return 0
+		return 1
 
 	onUpdate()
 		..()
-		if(M == null || healability == null)
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
+		checkNulls()
 
 	onStart()
 		..()
-		if(M == null || healability == null)
-			interrupt(INTERRUPT_ALWAYS)
-			return
+		src.loopStart()
+	
+	loopStart()
+		..()
+		checkNulls()
 
 	onEnd()
-		..()
-		if(M == null || healability == null)
-			interrupt(INTERRUPT_ALWAYS)
+		if(!checkNulls())
+			..()
 			return
 
 		if (M.get_burn_damage() > 0 || M.get_toxin_damage() > 0 || M.get_brute_damage() > 0 || M.get_oxygen_deprivation() > 0 || M.losebreath > 0)
@@ -600,6 +603,7 @@
 			M.visible_message("<span class='alert'>Some of [M]'s wounds slowly fade away!</span>", "<span class='alert'>Your wounds begin to fade away.</span>")
 			playsound(get_turf(M), 'sound/items/mender.ogg', 50, 1)
 		else
+			..()
 			boutput(M, "<span class='alert'>You don't have any lingering wounds to heal.</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -607,11 +611,11 @@
 		H.points -= 15
 
 		if(H.points <= 0)
+			..()
 			H.points = 0
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		src.interrupt_flags &= ~INTERRUPT_ACTION // this action is already finished, this prevents it from getting interrupted by starting a new one
-		actions.start(new/datum/action/bar/icon/force_heal_action(M,H,healability), M)
+		src.onRestart()
 
 	onInterrupt()
 		..()
