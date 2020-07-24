@@ -1021,6 +1021,9 @@ datum/projectile/snowball
 	if(P.reflectcount >= max_reflects)
 		return
 	if (P)
+		if (abs(P.shooter.x - reflector.x) < 1 || abs(P.shooter.y - reflector.y) < 1)
+			return //stop breaking the world you fuck!
+
 		/*
 		 * We have to calculate our incidence each time
 		 * Otherwise we risk the reflect projectile using the same incidence over and over
@@ -1041,9 +1044,6 @@ datum/projectile/snowball
 			P.incidence = NORTH
 		else
 			return //please no runtimes
-
-		if (abs(P.shooter.x - reflector.x) < 1 || abs(P.shooter.y - reflector.y) < 1)
-			return //stop breaking the world you fuck!
 
 	var/rx = 0
 	var/ry = 0
