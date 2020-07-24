@@ -736,14 +736,6 @@
 "dk" = (
 /turf/simulated/floor/circuit/purple,
 /area)
-"dl" = (
-/obj/table/auto,
-/obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/turf/simulated/floor/yellow,
-/area)
 "dm" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/flower_vase{
@@ -811,26 +803,9 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area)
-"dB" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable,
-/turf/simulated/floor/plating,
-/area)
 "dD" = (
 /obj/machinery/vending/paint/broken,
 /turf/simulated/floor/plating/random,
-/area)
-"dE" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/plating,
 /area)
 "dF" = (
 /turf/simulated/floor/redblack,
@@ -857,22 +832,6 @@
 /obj/decal/tile_edge/floorguide/evac,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
-"dK" = (
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/item/storage/box/lightbox/bulbs,
-/obj/item/storage/box/lightbox/tubes,
-/obj/item/device/multitool,
-/turf/simulated/floor/yellow,
-/area)
 "dL" = (
 /obj/rack,
 /obj/item/sponge,
@@ -891,15 +850,6 @@
 	name = "Combustion Chamber Heat Shield";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
-/area)
-"dO" = (
-/obj/wingrille_spawn/auto,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable,
 /turf/simulated/floor/plating,
 /area)
 "dP" = (
@@ -926,7 +876,13 @@
 /area)
 "dU" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/grey,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/stairs/wide{
+	dir = 4
+	},
 /area)
 "dV" = (
 /obj/storage/crate{
@@ -974,21 +930,6 @@
 /obj/table/auto,
 /turf/simulated/floor,
 /area)
-"ef" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/electronics/soldering,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west,
-/turf/simulated/floor/yellow/side{
-	dir = 9
-	},
-/area)
 "eg" = (
 /obj/stool/chair/couch{
 	dir = 8
@@ -998,24 +939,6 @@
 "eh" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
-/area)
-"ej" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
 /area)
 "ek" = (
 /obj/stool/chair/boxingrope_corner{
@@ -1037,16 +960,6 @@
 "em" = (
 /obj/item/clothing/suit/cardboard_box,
 /turf/simulated/floor/plating,
-/area)
-"eq" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
 /area)
 "er" = (
 /obj/machinery/door/airlock/pyro/command{
@@ -1103,27 +1016,6 @@
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
 /turf/simulated/floor/orangeblack/side{
-	dir = 8
-	},
-/area)
-"ez" = (
-/obj/machinery/manufacturer/mechanic,
-/turf/simulated/floor/yellow/side{
-	dir = 5
-	},
-/area)
-"eA" = (
-/obj/table/auto,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/electronics/soldering,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/yellow/side{
 	dir = 8
 	},
 /area)
@@ -1189,14 +1081,6 @@
 	},
 /turf/simulated/floor/grey,
 /area)
-"eR" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area)
 "eS" = (
 /obj/machinery/power/furnace,
 /obj/cable{
@@ -1239,17 +1123,6 @@
 	},
 /turf/simulated/floor/white,
 /area)
-"fi" = (
-/obj/stool/chair/yellow{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Mechanic"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area)
 "fj" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4
@@ -1263,21 +1136,11 @@
 	dir = 4
 	},
 /area)
-"fo" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area)
 "fp" = (
-/obj/stool/chair/comfy{
-	dir = 8
+/obj/machinery/alarm{
+	pixel_y = 24
 	},
-/turf/simulated/floor/carpet/green/standard/edge/se,
+/turf/simulated/floor,
 /area)
 "fq" = (
 /obj/machinery/communications_dish{
@@ -1322,25 +1185,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area)
-"fz" = (
-/obj/decal/tile_edge/line/yellow{
-	dir = 6;
-	icon_state = "line1"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor,
-/area)
-"fA" = (
-/obj/decal/tile_edge/line/yellow{
-	icon_state = "line1"
-	},
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor,
-/area)
 "fB" = (
 /turf/simulated/floor/white,
 /area)
@@ -1357,13 +1201,6 @@
 	dir = 8
 	},
 /turf/simulated/floor/circuit,
-/area)
-"fG" = (
-/obj/decal/tile_edge/line/yellow{
-	dir = 10;
-	icon_state = "line1"
-	},
-/turf/simulated/floor,
 /area)
 "fJ" = (
 /obj/stool/chair,
@@ -1419,34 +1256,12 @@
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/simulated/floor/blue/checker,
 /area)
-"fU" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
-/obj/item/device/t_scanner,
-/obj/item/device/t_scanner,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
-/obj/item/device/radio/intercom/engineering{
-	dir = 4
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area)
 "fW" = (
 /obj/machinery/disposal/morgue{
 	desc = "A pneumatic delivery chute for sending things directly to the crematorium.";
 	name = "crematorium chute"
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
-"fY" = (
-/obj/decal/tile_edge/line/yellow{
-	dir = 4;
-	icon_state = "line1"
-	},
-/turf/simulated/floor,
 /area)
 "fZ" = (
 /obj/machinery/disposal,
@@ -1561,10 +1376,6 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/sanitary/white,
 /area)
-"gq" = (
-/obj/submachine/cargopad/mechanics,
-/turf/simulated/floor/black,
-/area)
 "gr" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -1589,20 +1400,6 @@
 "gt" = (
 /obj/grille/steel,
 /turf/simulated/floor/airless/plating,
-/area)
-"gu" = (
-/obj/decal/tile_edge/line/yellow{
-	dir = 8;
-	icon_state = "line1"
-	},
-/turf/simulated/floor,
-/area)
-"gv" = (
-/obj/machinery/disposal/mail/autoname/mechanics,
-/obj/disposalpipe/trunk/mail/south,
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
 /area)
 "gw" = (
 /obj/machinery/light/small/floor,
@@ -1700,30 +1497,6 @@
 	},
 /turf/simulated/floor/grime,
 /area)
-"gY" = (
-/obj/machinery/vending/mechanics,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area)
-"gZ" = (
-/obj/decal/tile_edge/line/yellow{
-	dir = 5;
-	icon_state = "line1"
-	},
-/turf/simulated/floor,
-/area)
 "hb" = (
 /obj/machinery/door/airlock/pyro/glass/engineering,
 /turf/simulated/floor/engine,
@@ -1752,20 +1525,6 @@
 /obj/item/clothing/under/shorts/blue,
 /turf/simulated/floor/industrial,
 /area)
-"hf" = (
-/obj/decal/tile_edge/line/yellow{
-	dir = 1;
-	icon_state = "line1"
-	},
-/turf/simulated/floor,
-/area)
-"hg" = (
-/obj/decal/tile_edge/line/yellow{
-	dir = 9;
-	icon_state = "line1"
-	},
-/turf/simulated/floor,
-/area)
 "hi" = (
 /obj/storage/closet/welding_supply,
 /turf/simulated/floor/caution/south,
@@ -1773,12 +1532,6 @@
 "hj" = (
 /obj/machinery/manufacturer/general,
 /turf/simulated/floor/yellow/checker,
-/area)
-"hn" = (
-/obj/disposalpipe/segment/mail/bent/north,
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
 /area)
 "ho" = (
 /obj/plasticflaps,
@@ -1806,13 +1559,6 @@
 /obj/item/device/multitool,
 /turf/simulated/floor/grey,
 /area)
-"hy" = (
-/obj/machinery/rkit,
-/obj/machinery/light_switch/west,
-/turf/simulated/floor/yellow/side{
-	dir = 10
-	},
-/area)
 "hz" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -1825,25 +1571,6 @@
 	name = "Waste Processing Hatch"
 	},
 /turf/simulated/floor/plating/random,
-/area)
-"hB" = (
-/obj/machinery/manufacturer/mechanic,
-/turf/simulated/floor/yellow/side,
-/area)
-"hC" = (
-/obj/machinery/portable_reclaimer,
-/turf/simulated/floor/yellow/side,
-/area)
-"hD" = (
-/obj/storage/secure/closet/engineering/mechanic,
-/obj/machinery/light,
-/turf/simulated/floor/yellow/side,
-/area)
-"hE" = (
-/obj/storage/secure/closet/engineering/mechanic,
-/turf/simulated/floor/yellow/side{
-	dir = 6
-	},
 /area)
 "hF" = (
 /obj/table/round/auto,
@@ -1891,7 +1618,7 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/green/standard/edge/west,
+/turf/simulated/floor/carpet/green/standard/edge/sw,
 /area)
 "hO" = (
 /obj/machinery/atmospherics/binary/pump{
@@ -2449,6 +2176,10 @@
 /obj/item/crowbar,
 /obj/item/storage/box/mousetraps,
 /obj/random_item_spawner/tools,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/simulated/floor/plating,
 /area)
 "ki" = (
@@ -2689,10 +2420,11 @@
 /turf/simulated/floor/plating,
 /area)
 "kU" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 20
 	},
-/turf/simulated/floor/grime,
+/turf/simulated/floor,
 /area)
 "kV" = (
 /obj/cable{
@@ -2957,8 +2689,13 @@
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "lQ" = (
-/obj/machinery/computer/magnet{
-	dir = 4
+/obj/table/auto,
+/obj/item/magnetizer{
+	desc = "Some kind of old mining tool.  Looks like there's a big coil on it, maybe?";
+	loaded = 1;
+	name = "old mining gizmo";
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/simulated/floor/plating/airless,
 /area)
@@ -3365,11 +3102,6 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/sanitary/blue,
-/area)
-"nv" = (
-/obj/table/reinforced/auto,
-/obj/random_item_spawner/tools,
-/turf/simulated/floor/grime,
 /area)
 "nw" = (
 /obj/storage/crate{
@@ -4403,6 +4135,10 @@
 	},
 /turf/simulated/floor/sanitary,
 /area)
+"rM" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/grey,
+/area)
 "rN" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/rockdrills,
@@ -5034,15 +4770,8 @@
 	},
 /area)
 "uf" = (
-/obj/table/auto,
-/obj/item/magnetizer{
-	desc = "Some kind of old mining tool.  Looks like there's a big coil on it, maybe?";
-	loaded = 1;
-	name = "old mining gizmo";
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/turf/simulated/floor/plating/airless,
+/obj/machinery/vending/cola/blue,
+/turf/simulated/floor,
 /area)
 "ug" = (
 /obj/table/reinforced/bar/auto,
@@ -5492,7 +5221,6 @@
 /turf/simulated/floor/stairs/dark,
 /area)
 "wi" = (
-/obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -5505,9 +5233,11 @@
 /turf/simulated/floor/sanitary/white,
 /area)
 "wn" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
-/turf/simulated/floor/grime,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -20
+	},
+/turf/simulated/floor/grass/leafy,
 /area)
 "wo" = (
 /turf/space,
@@ -5894,14 +5624,7 @@
 	},
 /area)
 "xO" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/mining_tool/power_pick,
-/obj/item/satchel/mining,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/grey,
 /area)
 "xP" = (
@@ -6807,6 +6530,12 @@
 "Bi" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/specialroom/arcade,
+/area)
+"Bj" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
 /area)
 "Bk" = (
 /turf/simulated/floor/green/corner{
@@ -7760,6 +7489,9 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
 /turf/simulated/floor/grime,
 /area)
 "EO" = (
@@ -7850,19 +7582,11 @@
 /turf/simulated/floor/carpet/grime,
 /area)
 "Fi" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
 /obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
+	dir = 4;
+	pixel_x = 12
 	},
-/obj/item/device/light/flashlight,
-/obj/item/mining_tool/power_pick,
-/obj/item/satchel/mining,
-/turf/simulated/floor/grey,
+/turf/simulated/floor/plating/airless,
 /area)
 "Fj" = (
 /turf/simulated/floor/escape{
@@ -8051,6 +7775,11 @@
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
+/area)
+"Gh" = (
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/tools,
+/turf/simulated/floor/grime,
 /area)
 "Gj" = (
 /obj/machinery/launcher_loader/north,
@@ -8251,10 +7980,8 @@
 /turf/simulated/floor/grey,
 /area)
 "Hn" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/stairs/wide{
-	dir = 4
-	},
+/obj/machinery/neosmelter,
+/turf/simulated/floor/black/grime,
 /area)
 "Ho" = (
 /turf/simulated/floor/caution/north,
@@ -8513,6 +8240,13 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"Ik" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/plating,
+/area)
 "Il" = (
 /obj/shrub{
 	dir = 8
@@ -8552,7 +8286,7 @@
 "It" = (
 /obj/decal/cleanable/dirt,
 /obj/item/plant/herb/cannabis/spawnable,
-/turf/simulated/floor/carpet/red/standard/edge/east,
+/turf/simulated/floor/carpet/red/standard/edge/se,
 /area)
 "Iu" = (
 /obj/rack,
@@ -8590,6 +8324,21 @@
 "Iz" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
+/area)
+"IA" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/mining_tool/power_pick,
+/obj/item/satchel/mining,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/grey,
 /area)
 "IC" = (
 /obj/table/auto,
@@ -9104,8 +8853,9 @@
 /turf/simulated/floor/plating/random,
 /area)
 "KE" = (
-/obj/reagent_dispensers/foamtank,
-/turf/simulated/floor/black/grime,
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/turf/simulated/floor/grime,
 /area)
 "KF" = (
 /obj/decal/tile_edge/floorguide/medbay{
@@ -9125,6 +8875,14 @@
 /area)
 "KH" = (
 /turf/simulated/floor/sanitary/blue,
+/area)
+"KM" = (
+/obj/machinery/space_heater,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/plating,
 /area)
 "KN" = (
 /obj/table/reinforced/auto,
@@ -9924,7 +9682,7 @@
 /area)
 "Og" = (
 /obj/decal/cleanable/dirt,
-/obj/item/plank,
+/obj/item/reagent_containers/food/snacks/chips,
 /turf/simulated/floor/carpet/green/standard/edge/ne,
 /area)
 "Oi" = (
@@ -10372,7 +10130,8 @@
 	},
 /area)
 "Qe" = (
-/obj/machinery/light/small,
+/obj/table/auto,
+/obj/item/magnet_parts/construction,
 /turf/simulated/floor/plating/airless,
 /area)
 "Qg" = (
@@ -10487,6 +10246,14 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/arrival/station)
+"QA" = (
+/obj/reagent_dispensers/foamtank,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/plating,
+/area)
 "QC" = (
 /obj/window/auto/reinforced/indestructible,
 /obj/grille/steel,
@@ -10601,6 +10368,10 @@
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
+/area)
+"Rc" = (
+/obj/item/slag_shovel,
+/turf/simulated/floor/grime,
 /area)
 "Rd" = (
 /obj/submachine/chem_extractor{
@@ -11057,11 +10828,8 @@
 /turf/space,
 /area/shuttle/arrival/station)
 "SH" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10
-	},
-/obj/machinery/portable_atmospherics/pump,
-/turf/simulated/floor/grime,
+/obj/machinery/light/small,
+/turf/simulated/floor/plating/airless,
 /area)
 "SJ" = (
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
@@ -11612,14 +11380,10 @@
 	},
 /area/shuttle/arrival/station)
 "UF" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
 	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/stairs/wide/other{
-	dir = 4
-	},
+/turf/simulated/floor/grime,
 /area)
 "UG" = (
 /obj/table/reinforced/auto,
@@ -11761,8 +11525,9 @@
 	},
 /area/shuttle/arrival/station)
 "Vi" = (
-/obj/table/auto,
-/obj/item/magnet_parts/construction,
+/obj/machinery/computer/magnet{
+	dir = 4
+	},
 /turf/simulated/floor/plating/airless,
 /area)
 "Vk" = (
@@ -11931,10 +11696,15 @@
 /turf/simulated/floor/specialroom/gym/alt,
 /area)
 "VR" = (
-/obj/decal/cleanable/dirt,
-/obj/item/plant/herb/cannabis/spawnable,
-/obj/item/reagent_containers/food/snacks/chips,
-/turf/simulated/floor/carpet/red/standard/edge/sw,
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/mining_tool/power_pick,
+/obj/item/satchel/mining,
+/turf/simulated/floor/grey,
 /area)
 "VS" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -12510,8 +12280,10 @@
 /turf/simulated/floor/specialroom/gym/alt,
 /area)
 "Ye" = (
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/grey,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/stairs/wide/other{
+	dir = 4
+	},
 /area)
 "Yh" = (
 /obj/fitness/speedbag/captain,
@@ -12875,6 +12647,13 @@
 /obj/machinery/atmospherics/valve/notify_admins/vertical{
 	dir = 4;
 	name = "Sauna Air Supply"
+	},
+/turf/simulated/floor/grime,
+/area)
+"ZK" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
 	},
 /turf/simulated/floor/grime,
 /area)
@@ -33719,7 +33498,7 @@ Nn
 le
 bB
 bB
-HG
+bB
 ni
 ni
 ni
@@ -34019,9 +33798,9 @@ ni
 ni
 sq
 le
-Qe
+le
+Vi
 bB
-HG
 ni
 ni
 ni
@@ -34322,7 +34101,7 @@ ni
 sq
 le
 le
-bB
+SH
 bB
 ni
 ni
@@ -35228,10 +35007,10 @@ ni
 sq
 le
 le
-uf
 bB
-Fo
-ni
+bB
+bB
+bB
 ni
 ni
 ni
@@ -35529,11 +35308,11 @@ ni
 ni
 sq
 le
-le
-Vi
+SH
 bB
-Pu
-Fo
+VR
+IA
+bB
 ni
 ni
 ni
@@ -35832,9 +35611,9 @@ ni
 sq
 le
 le
-bB
-bB
-bB
+cy
+xO
+rM
 bB
 ni
 ni
@@ -36133,9 +35912,9 @@ Oi
 Oi
 lI
 le
-Qe
+le
 bB
-Fi
+Li
 xO
 bB
 lf
@@ -36433,10 +36212,10 @@ bB
 bB
 le
 VU
+Fi
 le
 le
-le
-cy
+bB
 dU
 Ye
 bB
@@ -36739,8 +36518,8 @@ bB
 bB
 bB
 bB
-Li
-dU
+bB
+Bj
 bB
 cl
 bB
@@ -37039,11 +36818,11 @@ qN
 bB
 ux
 hN
-VR
-wr
+bB
+FT
 Hn
 UF
-bB
+Gh
 KE
 wi
 Gb
@@ -37341,12 +37120,12 @@ Ug
 wr
 Og
 It
-fp
 bB
-kU
-bB
-bB
-SH
+FT
+FT
+UF
+Rc
+WG
 FT
 TU
 bB
@@ -37644,10 +37423,10 @@ bB
 bB
 bB
 bB
-bB
+FT
+FT
+UF
 Jj
-nv
-wn
 Xn
 FT
 dc
@@ -37947,7 +37726,7 @@ yy
 RQ
 bB
 EN
-sF
+ZK
 Jj
 Jj
 Uj
@@ -49920,7 +49699,7 @@ FC
 FC
 FC
 FC
-FC
+kU
 FC
 FC
 FC
@@ -50226,9 +50005,9 @@ Tt
 Tt
 Tt
 Tt
-FC
-FC
-FC
+uf
+ZZ
+Jf
 Tt
 Tt
 Tt
@@ -50523,19 +50302,19 @@ Bv
 Bv
 dP
 Tt
-Ya
-Ya
-Ya
-Ya
+ni
+ni
+ni
+ni
 Tt
 Tt
 Tt
 Tt
 Tt
-Ya
-Ya
-Ya
-Ya
+ni
+ni
+ni
+ni
 Tt
 bB
 bB
@@ -50825,7 +50604,7 @@ AU
 dP
 dP
 Tt
-Ya
+ni
 Tt
 Tt
 Tt
@@ -50837,7 +50616,7 @@ Tt
 Tt
 Tt
 Tt
-Ya
+ni
 Tt
 Jj
 Jj
@@ -50845,7 +50624,7 @@ Jj
 bB
 kT
 OB
-OB
+oU
 bB
 SW
 SW
@@ -51139,7 +50918,7 @@ kt
 kt
 kt
 Tt
-Ya
+ni
 Tt
 Jj
 Jj
@@ -51441,7 +51220,7 @@ kt
 JK
 kt
 Tt
-Ya
+ni
 Tt
 Jj
 Jj
@@ -51743,7 +51522,7 @@ Ya
 Ya
 kt
 Tt
-Ya
+ni
 Tt
 bB
 Jj
@@ -52045,13 +51824,13 @@ Ya
 kt
 kt
 Tt
-Ya
+ni
 Tt
 Jj
 Jj
 Jj
 bB
-Fb
+QA
 OB
 OB
 oC
@@ -52649,7 +52428,7 @@ Ya
 kt
 kt
 Tt
-Ya
+ni
 Tt
 Jj
 Jj
@@ -52951,7 +52730,7 @@ Ya
 Ya
 kt
 Tt
-Ya
+ni
 Tt
 Jj
 Jj
@@ -53230,7 +53009,7 @@ bB
 pC
 bB
 bB
-FC
+fp
 FC
 FC
 FC
@@ -53253,7 +53032,7 @@ kt
 JK
 kt
 Tt
-Ya
+ni
 Tt
 Jj
 bB
@@ -53555,7 +53334,7 @@ kt
 kt
 kt
 Tt
-Ya
+ni
 Tt
 iy
 bB
@@ -53845,7 +53624,7 @@ AU
 dP
 dP
 Tt
-Ya
+ni
 Tt
 Tt
 Tt
@@ -53857,7 +53636,7 @@ Tt
 Tt
 Tt
 Tt
-Ya
+ni
 Tt
 OB
 xv
@@ -54147,19 +53926,19 @@ Fc
 Fc
 dP
 Tt
-Ya
-Ya
-Ya
-Ya
+ni
+ni
+ni
+ni
 Tt
 Tt
 Tt
 Tt
 Tt
-Ya
-Ya
-Ya
-Ya
+ni
+ni
+ni
+ni
 Tt
 OB
 bB
@@ -54168,7 +53947,7 @@ OB
 OB
 OB
 OB
-QY
+KM
 bB
 RN
 RN
@@ -54455,7 +54234,7 @@ Tt
 Tt
 Tt
 nE
-nE
+wn
 nE
 Tt
 Tt
@@ -54768,7 +54547,7 @@ Iz
 nO
 OB
 OB
-OB
+oU
 bB
 mh
 FR
@@ -55368,7 +55147,7 @@ nE
 nE
 bB
 Iz
-OB
+HW
 OB
 Iz
 nO
@@ -57783,17 +57562,17 @@ se
 se
 bB
 OB
+HW
 OB
 OB
 OB
 OB
-OB
-OB
+Ik
 OB
 bB
-OB
-OB
-OB
+Fo
+lf
+Fo
 bB
 XA
 XA
@@ -58092,10 +57871,10 @@ OB
 OB
 OB
 OB
-xv
-OB
-OB
-OB
+bB
+HG
+ni
+oQ
 bB
 XA
 XA
@@ -58394,10 +58173,10 @@ OB
 bB
 OB
 OB
-bB
-OB
-OB
-OB
+cl
+HG
+ni
+oQ
 bB
 bB
 Li
@@ -58696,10 +58475,10 @@ OB
 bB
 OB
 OB
-bB
-bB
-bB
-bB
+cl
+Fo
+lf
+Fo
 bB
 Li
 Li
@@ -58998,10 +58777,10 @@ OB
 OB
 OB
 OB
-bB
-OB
-OB
-OB
+cl
+HG
+ni
+oQ
 bB
 Li
 Li
@@ -59295,15 +59074,15 @@ yr
 OB
 OB
 Tt
+Wm
 OB
 OB
 OB
-OB
-OB
-xv
-OB
-OB
-OB
+oU
+bB
+HG
+ni
+oQ
 bB
 Li
 Li
@@ -59603,9 +59382,9 @@ bB
 OB
 OB
 bB
-OB
-OB
-OB
+Fo
+lf
+Fo
 bB
 bB
 bB
@@ -59905,9 +59684,9 @@ bB
 bB
 sG
 bB
-bB
-bB
-bB
+cl
+cl
+cl
 bB
 ZS
 ZS
@@ -85557,13 +85336,13 @@ ni
 ni
 ni
 ni
-dl
-ef
-eA
-fo
-fU
-gY
-hy
+ni
+ni
+ni
+ni
+ni
+ni
+ni
 ni
 ni
 ni
@@ -85859,13 +85638,13 @@ ni
 ni
 ni
 ni
-dB
-ej
-eR
-fz
-fY
-gZ
-hB
+ni
+ni
+ni
+ni
+ni
+ni
+ni
 ni
 ni
 ni
@@ -86161,13 +85940,13 @@ ni
 ni
 ni
 ni
-dE
-eq
-FC
-fA
-gq
-hf
-hC
+ni
+ni
+ni
+ni
+ni
+ni
+ni
 ni
 ni
 ni
@@ -86463,13 +86242,13 @@ ni
 ni
 ni
 ni
-dK
-os
-FC
-fG
-gu
-hg
-hD
+ni
+ni
+ni
+ni
+ni
+ni
+ni
 ni
 ni
 ni
@@ -86765,13 +86544,13 @@ ni
 ni
 ni
 ni
-dO
-ez
-fi
-fi
-gv
-hn
-hE
+ni
+ni
+ni
+ni
+ni
+ni
+ni
 ni
 ni
 ni
