@@ -120,7 +120,6 @@
 		/obj/item/device/radio/headset/research,
 		/obj/item/clothing/mask/gas,
 		/obj/item/clothing/gloves/latex,
-		/obj/item/clothing/suit/labcoat,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/device/reagentscanner)
 
