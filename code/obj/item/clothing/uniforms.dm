@@ -430,6 +430,12 @@
 	icon_state = "detective"
 	item_state = "detective"
 
+/obj/item/clothing/under/rank/staffsec
+	name = "security assistant's jumpsuit"
+	desc = "The haute couture for Nanotrasen's finest cannon fodder."
+	icon_state = "staff-sec"
+	item_state = "staff-sec"
+
 // Research
 
 /obj/item/clothing/under/rank/medical
@@ -475,6 +481,20 @@
 	april_fools
 		icon_state = "genetics-alt"
 		item_state = "genetics-alt"
+
+/obj/item/clothing/under/rank/staffmed
+	name = "medical assistant's jumpsuit"
+	desc = "Not quite a doctor, but not quite an assistant? Snazzy black and blue will do."
+	icon_state = "staff-med"
+	item_state = "staff-med"
+	permeability_coefficient = 0.75
+
+/obj/item/clothing/under/rank/staffres
+	name = "research assistant's jumpsuit"
+	desc = "The tag claims craftsmanship and high grade fabric. It's printed in Comic Sans."
+	icon_state = "staff-res"
+	item_state = "staff-res"
+	permeability_coefficient = 0.75
 
 // Engineering
 
@@ -530,6 +550,11 @@
 		icon_state = "overalls_yellow"
 		item_state = "overalls_yellow"
 
+/obj/item/clothing/under/rank/staffeng
+	name = "engineering assistant's jumpsuit"
+	desc = "The work's exhausting and you barely get paid, but hey, cool jumpsuit!"
+	icon_state = "staff-eng"
+	item_state = "staff-eng"
 
 // Civilian
 
@@ -571,6 +596,12 @@
 	desc = "A protestant vicar's outfit. Used to be a nun's, but it was a rather bad habit."
 	icon_state = "chaplain"
 	item_state = "chaplain"
+
+/obj/item/clothing/under/rank/staffciv
+	name = "catering assistant's jumpsuit"
+	desc = "Science fails to explain its almost magnetic attraction to potato peels."
+	icon_state = "staff-civ"
+	item_state = "staff-civ"
 
 // Not jobs, but not gimmicks
 

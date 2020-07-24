@@ -78,3 +78,59 @@
 	desc = "Conveniently, once this box runs out of hazardous waste bags, you can throw it away in one of your new hazardous waste bags!! (Please be sure to bleed on it first, though, otherwise it's a bit of a waste of a bag.)"
 	icon_state = "biohazard"
 	spawn_contents = list(/obj/item/clothing/under/trash_bag/biohazard = 7)
+
+//equipment kits for the staff assignment kiosk
+
+/obj/item/storage/box/staffkit/civ
+	name = "catering assistant kit"
+	desc = "A slightly stale-smelling set of equipment."
+	spawn_contents = list(/obj/item/clothing/under/rank/staffciv,
+		/obj/item/device/radio/headset/civilian,
+		/obj/item/clothing/head/souschefhat,
+		/obj/item/clothing/gloves/latex,
+		/obj/item/satchel/hydro,
+		/obj/item/reagent_containers/glass/bottle/cleaner)
+
+/obj/item/storage/box/staffkit/eng
+	name = "engineering assistant kit"
+	desc = "A slightly stale-smelling set of equipment."
+	spawn_contents = list(/obj/item/clothing/under/rank/staffeng,
+		/obj/item/device/radio/headset/engineer,
+		/obj/item/crowbar,
+		/obj/item/clothing/head/emerg,
+		/obj/item/clothing/suit/space/emerg,
+		/obj/item/mining_tool/power_pick,
+		/obj/item/satchel/mining)
+
+/obj/item/storage/box/staffkit/med
+	name = "medical assistant kit"
+	desc = "A slightly stale-smelling set of equipment."
+	spawn_contents = list(/obj/item/clothing/under/rank/staffmed,
+		/obj/item/device/radio/headset/medical,
+		/obj/item/reagent_containers/emergency_injector/epinephrine,
+		/obj/item/device/analyzer/healthanalyzer,
+		/obj/item/reagent_containers/mender/brute,
+		/obj/item/reagent_containers/mender/burn,
+		/obj/item/reagent_containers/pill/salbutamol)
+
+/obj/item/storage/box/staffkit/res
+	name = "research assistant kit"
+	desc = "A slightly stale-smelling set of equipment."
+	spawn_contents = list(/obj/item/clothing/under/rank/staffres,
+		/obj/item/device/radio/headset/research,
+		/obj/item/clothing/mask/gas,
+		/obj/item/clothing/gloves/latex,
+		/obj/item/clothing/suit/labcoat,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/device/reagentscanner)
+
+/obj/item/storage/box/staffkit/sec
+	name = "security assistant kit"
+	desc = "A slightly stale-smelling set of equipment."
+	spawn_contents = list(/obj/item/clothing/under/rank/staffsec,
+		/obj/item/device/radio/headset/security,
+		/obj/item/clothing/head/helmet/siren,
+		/obj/item/device/flash,
+		/obj/item/handcuffs,
+		/obj/item/instrument/whistle,
+		/obj/item/device/detective_scanner)
