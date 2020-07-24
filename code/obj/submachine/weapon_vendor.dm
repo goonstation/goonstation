@@ -171,7 +171,7 @@
 /obj/submachine/weapon_vendor/staff
 	name = "Staff Assignment Kiosk"
 	icon = 'icons/obj/vending.dmi'
-	icon_state = "weapon"
+	icon_state = "staffkiosk"
 	desc = "An automated quartermaster service for self-assignment of staff assistants to departments."
 	token_accepted = /obj/item/requisition_token/staff
 	New()
