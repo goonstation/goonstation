@@ -1,5 +1,9 @@
 
 (t)fri jul 24 20
+(u)BatElite
+(p)1514
+(e)🎨|sprites
+(*)New cyborg upgrade sprites.
 (u)Superlagg
 (p)1526
 (e)🆕|feature
