@@ -1009,6 +1009,18 @@
 	containertype = /obj/storage/crate/packing
 	containername = "Shoe Crate"
 
+/datum/supply_packs/kendo
+	name = "Kendo Crate"
+	desc = "A crate containing two full sets of kendo equipment."
+	contains = list(/obj/item/clothing/head/helmet/men = 2,
+					/obj/item/clothing/suit/armor/douandtare = 2,
+					/obj/item/clothing/gloves/kote = 2,
+					/obj/item/shinai_bag,
+					/obj/item/storage/box/kendo_box/hakama)
+	cost = 5000
+	containertype = /obj/storage/crate/wooden
+	containername = "Kendo Crate"
+
 /datum/supply_packs/sponge
 	name = "Sponge Capsule Crate"
 	desc = "For all your watery animal needs!"
@@ -1162,8 +1174,6 @@
 	containertype = /obj/storage/crate
 	containername = "Telecrystal Resupply Pack"
 
-
-#ifdef MAP_OVERRIDE_MANTA
 /datum/supply_packs/antisingularity
 	name = "Anti-Singularity  Pack"
 	desc = "Everything that the crew needs to take down a rogue singularity."
@@ -1172,7 +1182,6 @@
 	cost = 10000
 	containertype = /obj/storage/crate/classcrate/qm
 	containername = "Anti-Singularity Supply Pack"
-#endif
 
 /* ================================================= */
 /* -------------------- Complex -------------------- */

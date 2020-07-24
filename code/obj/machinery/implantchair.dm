@@ -53,7 +53,7 @@
 	M.visible_message("<span class='alert'>[M] has been implanted by the [src].</span>")
 
 
-	logTheThing("combat", M, "has implanted %target% with a [src.imp] implant ([src.imp.type]) at [log_loc(M)].")
+	logTheThing("combat", usr, M, "has implanted [constructTarget(M,"combat")] with a [src.imp] implant ([src.imp.type]) at [log_loc(M)].")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.implant.Add(src.imp)

@@ -200,7 +200,7 @@
 	Topic(href, href_list)
 		if (..(href, href_list))
 			return 1
-		playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, 5)
+		playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, -15)
 
 	attack_hand(var/mob/user)
 		..()
@@ -425,6 +425,7 @@
 	var/temp = null
 	var/printing = null
 	var/can_change_id = 0
+	var/payroll_rate_limit_time = 0 //for preventing coammand message spam
 
 	attack_ai(mob/user as mob)
 		return src.attack_hand(user)
@@ -532,7 +533,7 @@
 					t1 = copytext(html_encode(t1), 1, MAX_MESSAGE_LEN)
 					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)))) return
 					R.fields["job"] = t1
-					playsound(src.loc, "keyboard", 50, 1, 5)
+					playsound(src.loc, "keyboard", 50, 1, -15)
 				else if(href_list["Fwage"])
 					var/datum/data/record/R = locate(href_list["Fwage"])
 					var/t1 = input("Please input wage:", "Secure. records", R.fields["wage"], null)  as null|num
@@ -570,6 +571,11 @@
 						boutput(usr, "<span class='notice'>$[t1] added to [R.fields["name"]]'s account from station budget.</span>")
 					else boutput(usr, "<span class='alert'>Error selecting withdraw/deposit mode.</span>")
 				else if(href_list["payroll"])
+					if(world.time >= src.payroll_rate_limit_time)
+						src.payroll_rate_limit_time = world.time + (10 SECONDS)
+					else //slow the fuck down cowboy
+						boutput(usr, "<span class='alert'>Nanotrasen policy forbids the modification station payroll status more than once every ten seconds!</span>")
+						return
 					if (wagesystem.pay_active)
 						wagesystem.pay_active = 0
 						command_alert("The payroll has been suspended until further notice. No further wages will be paid until the payroll is resumed.","Payroll Announcement")

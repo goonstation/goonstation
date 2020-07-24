@@ -11,7 +11,7 @@
 		return 1
 
 	var/turf/T = get_turf(holder.owner)
-	if(istype(T))
+	if(T == holder.owner.loc)
 		playsound(T, 'sound/effects/shovel1.ogg', 50, 1, 0.3)
 		holder.owner.visible_message("<span class='notice'><b>[holder.owner]</b> buries themselves!</span>",
 		                             "<span class='notice'>You bury yourself.</span>")
@@ -41,3 +41,24 @@
 				M.ai.enabled = 1
 			M.set_loc(src.loc)
 		qdel(src)
+
+
+	spawner
+		var/spawntype = null
+
+
+		HasProximity(atom/movable/AM)
+			if (spawntype)
+				new spawntype(src)
+				spawntype = null
+			..()
+
+		trilobite
+			spawntype = /mob/living/critter/small_animal/trilobite/ai_controlled
+
+		pikaia
+			spawntype = /mob/living/critter/small_animal/pikaia/ai_controlled
+
+
+///obj/overlay/tile_effect/cracks/trilobite
+///obj/overlay/tile_effect/cracks/pikaia

@@ -10551,8 +10551,7 @@
 /area/station/crew_quarters/bar)
 "axZ" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10;
-	icon_state = "ringrope"
+	dir = 10
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -10562,8 +10561,7 @@
 /area/station/crew_quarters/fitness)
 "ayb" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6;
-	icon_state = "ringrope"
+	dir = 6
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -41778,7 +41776,6 @@
 /obj/vehicle/segway,
 /obj/machinery/computer/riotgear{
 	dir = 4;
-	icon_state = "drawbr0";
 	pixel_x = -28
 	},
 /turf/simulated/floor/bot,
@@ -45961,10 +45958,6 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/teleporter)
-"bUE" = (
-/obj/effects/background_objects,
-/turf/space,
-/area)
 "bUF" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor/bot,
@@ -52316,8 +52309,8 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/disposalpipe/trunk/mail/south,
 /obj/machinery/disposal/mail/small/autoname/research/telescience/east,
+/obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/caution/corner/nw,
 /area/station/science/teleporter)
 "cjy" = (
@@ -52992,6 +52985,14 @@
 /turf/simulated/floor/circuit/green,
 /area/station/science/teleporter)
 "ckW" = (
+/obj/machinery/computer/telescope{
+	dir = 4
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/caution/west,
 /area/station/science/teleporter)
@@ -53818,6 +53819,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/caution/east{
 	dir = 8
@@ -65018,6 +65022,11 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/science/lab)
 "cMb" = (
@@ -65567,11 +65576,21 @@
 /turf/simulated/floor/red,
 /area/station/science/lab)
 "cNu" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/caution/east,
 /area/station/science/lab)
 "cNv" = (
 /obj/machinery/networked/storage/bomb_tester{
 	bank_id = "Mixer"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/bot,
 /area/station/science/lab)
@@ -66750,9 +66769,6 @@
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "cPO" = (
-/obj/table/reinforced/auto,
-/obj/item/hand_labeler,
-/obj/item/hand_labeler,
 /obj/machinery/door_control{
 	id = "cargodock_in";
 	pixel_x = -24;
@@ -66763,7 +66779,7 @@
 	pixel_x = 24;
 	pixel_y = 28
 	},
-/obj/item/hand_labeler,
+/obj/machinery/manufacturer/qm,
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "cPP" = (
@@ -69186,10 +69202,6 @@
 	icon_state = "fpurple2"
 	},
 /area/station/science)
-"cUT" = (
-/obj/effects/background_objects/x0,
-/turf/space,
-/area)
 "cUU" = (
 /obj/machinery/dispenser{
 	o2tanks = 5;
@@ -78766,9 +78778,26 @@
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/plating,
 /area/station/mining)
+"dOs" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/science/teleporter)
 "hRi" = (
 /turf/space,
 /area/shuttle/arrival/station)
+"iFq" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/caution/west,
+/area/station/science/teleporter)
 "nKf" = (
 /obj/machinery/incubator,
 /turf/simulated/floor/white,
@@ -100375,7 +100404,7 @@ aaa
 aaa
 aaa
 aaa
-bUE
+aaa
 aaa
 aaa
 aaa
@@ -109776,7 +109805,7 @@ chf
 cik
 cjx
 ckW
-ckW
+iFq
 cot
 cqh
 crU
@@ -110078,7 +110107,7 @@ chf
 cil
 cjy
 ckX
-cmJ
+dOs
 cmJ
 cqi
 crV
@@ -146022,7 +146051,7 @@ aao
 aaa
 arQ
 aaa
-cUT
+aaa
 aaa
 cxj
 cxj

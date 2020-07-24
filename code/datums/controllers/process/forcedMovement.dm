@@ -145,7 +145,7 @@ datum/controller/process/fMove
 
 		//now manta!
 		debugPushList = mantaPushList
-		if(mantaMoving)
+		if(mantaMoving == 1)
 			for(var/A in mantaPushList)
 				var/atom/movable/M = A
 				if(!M)

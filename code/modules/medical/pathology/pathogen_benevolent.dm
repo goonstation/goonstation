@@ -301,11 +301,24 @@ datum/pathogeneffects/benevolent/brewery
 datum/pathogeneffects/benevolent/oxytocinproduction
 	name = "Oxytocin Production"
 	desc = "The pathogen produces Pure Love within the infected."
-	infect_type = INFECT_TOUCH // TODO: make also spread via hugs, will require reworking pure love and part of the emote call, so I'll do it in another patch
+	infect_type = INFECT_TOUCH
 	rarity = RARITY_COMMON
 	spread = SPREAD_BODY | SPREAD_HANDS
 	infect_message = "<span style=\"color:pink\">You can't help but feel loved.</span>"
 	infect_attempt_message = "Their touch is suspiciously soft..."
+
+	onemote(mob/M as mob, act, voluntary, param, datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		if (act != "hug" && act != "sidehug")  // not a hug
+			return
+		if (param == null) // weirdo is just hugging themselves
+			return
+		for (var/mob/living/carbon/human/H in view(1, M))
+			if (ckey(param) == ckey(H.name))
+				SPAWN_DBG(0.5)
+					infect_direct(H, origin, "hug")
+				return
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)

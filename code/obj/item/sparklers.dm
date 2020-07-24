@@ -16,16 +16,12 @@
 	col_r = 0.7
 	col_g = 0.3
 	col_b = 0.3
-	var/datum/effects/system/spark_spread/spark_system
 	var/sparks = 7
 	var/burnt = 0
 
 
 	New()
 		..()
-		src.spark_system = unpool(/datum/effects/system/spark_spread)
-		spark_system.set_up(5, 0, src)
-		spark_system.attach(src)
 
 	attack_self(mob/user as mob)
 		if (src.on)
@@ -77,8 +73,7 @@
 
 	proc/gen_sparks()
 		src.sparks--
-		spark_system.set_up(1, 0, src)
-		src.spark_system.start()
+		elecflash(src)
 		if(!sparks)
 			src.put_out()
 			src.burnt = 1

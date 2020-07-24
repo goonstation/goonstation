@@ -199,7 +199,8 @@
 	var/lastTick = 0
 	var/chargeTime = 50 //world.time Ticks per charge increase. 50 works out to be roughly 45 seconds from 0 -> 10 under normal conditions.
 	can_hold = list(/obj/item/rcd,
-	/obj/item/rcd_ammo)
+	/obj/item/rcd_ammo,
+	/obj/item/deconstructor)
 	in_list_or_max = 1
 
 	New()
@@ -253,6 +254,9 @@
 		delProperty("heatprot")
 
 		if(overlay)
+			if(ishuman(src.loc))
+				var/mob/living/carbon/human/H = src.loc
+				H.attached_objs.Remove(overlay)
 			qdel(overlay)
 			overlay = null
 

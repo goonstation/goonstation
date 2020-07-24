@@ -552,6 +552,7 @@ toxic - poisons
 	dissipation_delay = 8
 	nomsg = 1
 	slow = 0
+	implanted = null
 
 /datum/projectile/bullet/ak47
 	name = "bullet"
@@ -1280,4 +1281,4 @@ toxic - poisons
 	hit_type = DAMAGE_STAB
 	shot_sound = null
 	projectile_speed = 8
-
+	implanted = null

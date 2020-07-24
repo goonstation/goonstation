@@ -404,8 +404,8 @@ var/global/debug_messages = 0
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
-		logTheThing("admin", src, M, "has mobile-AIized %target%")
-		logTheThing("diary", src, M, "has mobile-AIized %target%", "admin")
+		logTheThing("admin", src, M, "has mobile-AIized [constructTarget(M,"admin")]")
+		logTheThing("diary", src, M, "has mobile-AIized [constructTarget(M,"diary")]", "admin")
 		SPAWN_DBG(1 SECOND)
 			M:AIize(1)
 
@@ -427,8 +427,8 @@ var/global/debug_messages = 0
 			M.set_loc(S.loc)
 			M.buckled = null
 		message_admins("<span class='alert'>Admin [key_name(src)] AIized [key_name(M)]!</span>")
-		logTheThing("admin", src, M, "AIized %target%")
-		logTheThing("diary", src, M, "AIized %target%", "admin")
+		logTheThing("admin", src, M, "AIized [constructTarget(M,"admin")]")
+		logTheThing("diary", src, M, "AIized [constructTarget(M,"diary")]", "admin")
 		return H.AIize()
 
 	else
@@ -472,8 +472,8 @@ var/global/debug_messages = 0
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M) && M.mind != null)
-		logTheThing("admin", src, M, "has made %target% a changeling.")
-		logTheThing("diary", src, M, "has made %target% a changeling.", "admin")
+		logTheThing("admin", src, M, "has made [constructTarget(M,"admin")] a changeling.")
+		logTheThing("diary", src, M, "has made [constructTarget(M,"diary")] a changeling.", "admin")
 		SPAWN_DBG(1 SECOND)
 			M.mind.absorbed_dna[M.bioHolder] = M.real_name
 			M.make_changeling()

@@ -121,7 +121,7 @@
 			if (prob(25))
 				M.emote("scream")
 
-			logTheThing("combat", src, M, "[src] chairflips into %target%, [showCoords(M.x, M.y, M.z)].")
+			logTheThing("combat", src, M, "[src] chairflips into [constructTarget(M,"combat")], [showCoords(M.x, M.y, M.z)].")
 			M.lastattacker = src
 			M.lastattackertime = world.time
 
@@ -132,12 +132,6 @@
 					random_brute_damage(M, 20 * effect_mult)
 					M.changeStatus("weakened", 7 SECONDS * effect_mult)
 					M.force_laydown_standup()
-			else if (M.traitHolder.hasTrait("training_security")) //consider rremoving this, prrobably not necessarry any more
-				M.visible_message("<span class='alert'><B>[src]</B></span> does a flying flip into <span class='alert'>[M]</span>, but <span class='alert'>[M]</span> skillfully slings them away!")
-				src.changeStatus("weakened", 6 SECONDS)
-				var/atom/target = get_edge_target_turf(M, M.dir)
-				src.throw_at(target, 3, 10)
-				src.force_laydown_standup()
 			else
 				random_brute_damage(M, 10 * effect_mult)
 				if (!M.hasStatus("weakened"))

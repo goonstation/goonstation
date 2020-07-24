@@ -105,7 +105,7 @@
 				src.task = "thinking"
 				return
 			src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [prob(50) ? "IMMENSE" : "COLOSSAL"] stinger!</span>")
-			logTheThing("combat", src.name, M, "stings %target%")
+			logTheThing("combat", src.name, M, "stings [constructTarget(M,"combat")]")
 			random_brute_damage(src.target, 10)//armor-piercing stingers
 
 			if(M.reagents)
@@ -154,7 +154,7 @@
 				return
 
 			src.visible_message("<span class='alert'><B>[src]</B> bites [M] with its [pick("rather large","big","expansive","proportionally small but still sizable")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>")
-			logTheThing("combat", src.name, M, "bites %target%")
+			logTheThing("combat", src.name, M, "bites [constructTarget(M,"combat")]")
 			random_brute_damage(M, 10,1)
 			if (isliving(M))
 				var/mob/living/H = M
@@ -551,9 +551,7 @@
 				return null
 			;
 			new /obj/overlay/self_deleting {name = "hole in space time"; layer=2.2; icon = 'icons/misc/lavamoon.dmi'; icon_state="voidwarp";} (T, 20)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, T)
-			s.start()
+			elecflash(T,power=3)
 
 			var/obj/item/reagent_containers/food/snacks/ingredient/honey/honey = new /obj/item/reagent_containers/food/snacks/ingredient/honey(T)
 			. = honey
@@ -1022,7 +1020,7 @@
 			return
 
 		src.visible_message("<span class='alert'><B>[src]</B> bites [M] with its [pick("tiny","eeny-weeny","minute","little", "nubby")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>")
-		logTheThing("combat", src.name, M, "bites %target%")
+		logTheThing("combat", src.name, M, "bites [constructTarget(M,"combat")]")
 		random_brute_damage(M, 2, 1)
 		if (isliving(M))
 			var/mob/living/H = M
@@ -1045,7 +1043,7 @@
 			src.task = "thinking"
 			return
 		src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [pick("nubby","stubby","tiny")] little stinger!</span>")
-		logTheThing("combat", src.name, M, "stings %target%")
+		logTheThing("combat", src.name, M, "stings [constructTarget(M,"combat")]")
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
@@ -1674,7 +1672,7 @@
 
 	moon
 		name = "moon egg"
-		desc = "DAMU AK SIN"
+		desc = "DUMU NANNA AK"
 		icon_state = "moonbee_egg"
 		bee_name = "moon larva"
 
@@ -1683,7 +1681,7 @@
 			SPAWN_DBG (20)
 				if (derelict_mode)
 					name = "sun egg"
-					desc = "DAMU AK UTU"
+					desc = "DUMU UTU AK"
 					icon_state = "sunbee_egg"
 					bee_name = "sun larva"
 
@@ -1863,7 +1861,7 @@
 		src.attacking = 1
 
 		src.visible_message("<span class='alert'><B>[src]</B> bites [M]!</span>")
-		logTheThing("combat", src.name, M, "bites %target%")
+		logTheThing("combat", src.name, M, "bites [constructTarget(M,"combat")]")
 		random_brute_damage(M, 2, 1)
 		if (M.stat || M.getStatusDuration("paralysis"))
 			src.task = "thinking"

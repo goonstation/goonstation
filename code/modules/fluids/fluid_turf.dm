@@ -159,9 +159,9 @@
 				P.initialize()
 
 		if(spawningFlags & SPAWN_FISH) //can spawn bad fishy
-			if (src.z == 5 && prob(1) && prob(7))
+			if (src.z == 5 && prob(1) && prob(2))
 				new /obj/critter/gunbot/drone/buzzdrone/fish(src)
-			else if (src.z == 5 && prob(1) && prob(4.5))
+			else if (src.z == 5 && prob(1) && prob(4))
 				new /obj/critter/gunbot/drone/gunshark(src)
 			else if (prob(1) && prob(20))
 				var/mob/fish = pick(childrentypesof(/mob/living/critter/aquatic/fish))
@@ -179,13 +179,16 @@
 					O.initialize()
 
 		if(spawningFlags & SPAWN_TRILOBITE)
-			if (prob(20))
-				new /mob/living/critter/small_animal/trilobite/ai_controlled(src)
+			if (prob(17))
+				new /obj/overlay/tile_effect/cracks/spawner/trilobite(src)
+			if (prob(2))
+				new /obj/overlay/tile_effect/cracks/spawner/pikaia(src)
 
 		if(spawningFlags & SPAWN_HALLU)
-			if (prob(1) && prob(30))
+			if (prob(1) && prob(16))
 				new /mob/living/critter/small_animal/hallucigenia/ai_controlled(src)
-
+			else if (prob(1) && prob(18))
+				new /obj/overlay/tile_effect/cracks/spawner/pikaia(src)
 
 		if (spawningFlags & SPAWN_LOOT)
 			if (prob(1) && prob(9))

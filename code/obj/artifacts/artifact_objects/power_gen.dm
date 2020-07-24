@@ -36,9 +36,7 @@
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
 			return
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(4, 1, user)
-		s.start()
+		elecflash(user,power=2)
 		user.shock(O, rand(5000, gen_rate / 4))
 		if(mode == 0)
 			var/turf/T = get_turf(O)

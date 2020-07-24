@@ -116,8 +116,9 @@ var/list/all_toilets = null
 
 
 #ifdef UNDERWATER_MAP
-		if (isturf(src.loc))
-			var/turf/target = locate(src.x,src.y,5)
+		var/turf/source = get_turf(src)
+		if (source)
+			var/turf/target = locate(source.x,source.y,5)
 			for (var/thing in contents)
 				var/atom/movable/A = thing
 				A.set_loc(target)

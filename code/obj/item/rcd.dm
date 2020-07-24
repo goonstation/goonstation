@@ -49,7 +49,7 @@ Broken RCD + Effects
 	throw_range = 5
 	w_class = 3.0
 	m_amt = 50000
-	var/datum/effects/system/spark_spread/spark_system
+
 	mats = 12
 	stamina_damage = 15
 	stamina_cost = 15
@@ -108,10 +108,6 @@ Broken RCD + Effects
 		. += "mode."
 
 	New()
-		if (src.shits_sparks)
-			src.spark_system = unpool(/datum/effects/system/spark_spread)
-			spark_system.set_up(5, 0, src)
-			spark_system.attach(src)
 		src.update_icon()
 		return
 
@@ -323,8 +319,7 @@ Broken RCD + Effects
 					N.show_message(text("<span class='alert'><B>[] shoves \the [src] down []'s throat!</B></span>", user, H), 1)
 			playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
 			if(do_after(user, 20))
-				spark_system.set_up(5, 0, src)
-				src.spark_system.start()
+				elecflash(src)
 				var/mob/living/carbon/wall/W = new(H.loc)
 				W.real_name = H.real_name
 				playsound(get_turf(src), "sound/items/Deconstruct.ogg", 50, 1)
@@ -343,8 +338,7 @@ Broken RCD + Effects
 	proc/shitSparks()
 		if (!src.shits_sparks)
 			return
-		spark_system.set_up(5, 0, src)
-		src.spark_system.start()
+		elecflash(src)
 
 	proc/update_maptext()
 		if (!src.matter)
@@ -687,14 +681,10 @@ Broken RCD + Effects
 	m_amt = 50000
 	var/mode = 1
 	var/broken = 0 //Fully broken, that is.
-	var/datum/effects/system/spark_spread/spark_system
 
 	New()
 		..()
 		src.icon_state = "bad_rcd[rand(0,2)]"
-		src.spark_system = unpool(/datum/effects/system/spark_spread)
-		spark_system.set_up(5, 0, src)
-		spark_system.attach(src)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/rcd_ammo))
@@ -710,12 +700,12 @@ Broken RCD + Effects
 		if (mode)
 			mode = 0
 			boutput(user, "Changed mode to 'Deconstruct'")
-			src.spark_system.start()
+			elecflash(src)
 			return
 		else
 			mode = 1
 			boutput(user, "Changed mode to 'Floor & Walls'")
-			src.spark_system.start()
+			elecflash(src)
 			return
 
 	afterattack(atom/A, mob/user as mob)
@@ -738,8 +728,7 @@ Broken RCD + Effects
 					return
 
 				src.broken++
-				spark_system.set_up(5, 0, src)
-				src.spark_system.start()
+				elecflash(src)
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 
 				for (var/turf/T in orange(1,user))
@@ -758,8 +747,7 @@ Broken RCD + Effects
 					return
 
 				src.broken++
-				spark_system.set_up(5,0,src)
-				src.spark_system.start()
+				elecflash(src)
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 100, 1)
 
 				boutput(user, "<span class='combat'>\the [src] shorts out!</span>")
@@ -803,9 +791,7 @@ Broken RCD + Effects
 
 				continue
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(3, 1, src)
-		s.start()
+		elecflash(src,power=3)
 
 	proc/void_loop()
 		if (lifespan-- < 0)

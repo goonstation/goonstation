@@ -568,7 +568,7 @@ function lineEnter (ev)
 	if((href_list["command"]) && src.active_program)
 		usr << output(null, "comp3.browser:input_clear")
 		src.active_program.input_text(href_list["command"])
-		playsound(src.loc, "keyboard", 50, 1, 5)
+		playsound(src.loc, "keyboard", 50, 1, -15)
 
 	else if(href_list["disk"])
 		if (src.diskette)
@@ -875,7 +875,7 @@ function lineEnter (ev)
 		src.temp = null
 		src.temp_add = "Restarting system...<br>"
 		src.updateUsrDialog()
-		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, 5)
+		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 		SPAWN_DBG(2 SECONDS)
 			src.restarting = 0
 			src.post_system()

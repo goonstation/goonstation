@@ -376,9 +376,7 @@ Obsidian Crown
 			if (that_jerk)
 				that_jerk.dropped(host)
 				that_jerk.layer = initial(that_jerk.layer)
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(4, 1, host)
-				s.start()
+				elecflash(host,power = 3)
 				if (isrestrictedz(host.z))
 					return
 				var/list/randomturfs = new/list()
@@ -408,9 +406,7 @@ Obsidian Crown
 					return
 
 				host.lastattacker = null
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(4, 1, M)
-				s.start()
+				elecflash(M,power = 4)
 				var/list/randomturfs = new/list()
 
 				if(isrestrictedz(host.z))
