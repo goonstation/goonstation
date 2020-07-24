@@ -270,6 +270,7 @@
 	return ..()
 
 /mob/living/projCanHit(datum/projectile/P)
+	if (!P) return 0
 	if (!src.lying || (src:lying && prob(P.hit_ground_chance))) return 1
 	return 0
 

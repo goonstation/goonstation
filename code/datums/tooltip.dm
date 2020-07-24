@@ -353,6 +353,8 @@ var/global/list/atomTooltips = new()
 				extra += "left"
 			if (options["flags"] & TOOLTIP_CENTER)
 				extra += "center"
+			if (options["flags"] & TOOLTIP_TOP2)
+				extra += "top2"
 
 			params["flags"] = extra
 			//src.specialFlags = extra

@@ -234,7 +234,8 @@
 					who = C
 					break
 		if(!who) return 8
-		src.measured_height = text2num(splittext(who.MeasureText(src.maptext, width = src.maptext_width), "x")[2])
+		var/measured = who.MeasureText(src.maptext, width = src.maptext_width)
+		src.measured_height = text2num(splittext(measured, "x")[2])
 
 proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
 	var/image/chat_maptext/text = unpool(/image/chat_maptext)
