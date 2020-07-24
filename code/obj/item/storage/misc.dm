@@ -89,7 +89,7 @@
 		/obj/item/clothing/head/souschefhat,
 		/obj/item/clothing/gloves/latex,
 		/obj/item/satchel/hydro,
-		/obj/item/reagent_containers/glass/bottle/cleaner)
+		/obj/item/spraybottle/cleaner)
 
 /obj/item/storage/box/staffkit/eng
 	name = "engineering assistant kit"
