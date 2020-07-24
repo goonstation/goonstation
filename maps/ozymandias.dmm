@@ -284,6 +284,11 @@
 "bl" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
@@ -1567,6 +1572,16 @@
 "hj" = (
 /obj/machinery/manufacturer/general,
 /turf/simulated/floor/yellow/checker,
+/area)
+"hm" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/red/corner{
+	dir = 1
+	},
 /area)
 "ho" = (
 /obj/plasticflaps,
@@ -3512,6 +3527,14 @@
 	},
 /turf/simulated/floor/plating/random,
 /area)
+"oO" = (
+/obj/table/auto,
+/obj/item/reagent_containers/patch/mini/synthflesh,
+/obj/item/reagent_containers/patch/mini/synthflesh,
+/obj/item/storage/firstaid/oxygen,
+/obj/machinery/light,
+/turf/simulated/floor/green/checker,
+/area)
 "oQ" = (
 /obj/lattice{
 	dir = 8;
@@ -3572,6 +3595,31 @@
 "oZ" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/green/side,
+/area)
+"pb" = (
+/obj/stool/chair/green{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/green/side{
+	dir = 8
+	},
+/area)
+"pc" = (
+/obj/decal/tile_edge/floorguide/medbay{
+	dir = 4
+	},
+/obj/decal/tile_edge/floorguide/arrow_e,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor,
 /area)
 "pe" = (
 /turf/simulated/floor/blue,
@@ -4704,11 +4752,6 @@
 /obj/item/reagent_containers/glass/bottle/powerplant{
 	pixel_x = 5
 	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -4793,6 +4836,11 @@
 	},
 /obj/item/reagent_containers/glass/bottle/topcrop{
 	pixel_x = 5
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
 	},
 /turf/simulated/floor,
 /area)
@@ -5086,6 +5134,15 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
+/area)
+"uU" = (
+/obj/machinery/portable_atmospherics/pump,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/green/checker,
 /area)
 "uV" = (
 /obj/storage/secure/closet/engineering/mining,
@@ -5870,11 +5927,14 @@
 /turf/simulated/floor/engine,
 /area)
 "yh" = (
-/obj/machinery/plantpot{
-	anchored = 1
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
 	},
-/obj/machinery/light,
-/turf/simulated/floor/grass,
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
 /area)
 "yk" = (
 /obj/random_item_spawner/junk/one_or_zero,
@@ -6751,6 +6811,13 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area)
+"Br" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/plating/random,
+/area)
 "Bs" = (
 /turf/simulated/floor/escape{
 	dir = 9
@@ -6944,11 +7011,8 @@
 /turf/simulated/floor/wood/eight,
 /area)
 "Cb" = (
-/obj/machinery/light/small,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/random,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/grass,
 /area)
 "Cc" = (
 /obj/grille/catwalk{
@@ -7752,6 +7816,11 @@
 /obj/item/reagent_containers/glass/wateringcan{
 	pixel_y = 5
 	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
 /turf/simulated/floor,
 /area)
 "Fb" = (
@@ -8262,6 +8331,7 @@
 /obj/submachine/seed_manipulator{
 	dir = 4
 	},
+/obj/machinery/light,
 /turf/simulated/floor/green/checker,
 /area)
 "Hz" = (
@@ -8525,11 +8595,6 @@
 "Iw" = (
 /obj/machinery/computer3/terminal/zeta{
 	setup_os_string = "ZETA_MAINFRAME"
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
 	},
 /turf/simulated/floor/green/side{
 	dir = 8
@@ -10134,11 +10199,11 @@
 	},
 /area)
 "OT" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
+/obj/disposalpipe/segment/transport{
+	dir = 4
 	},
-/turf/simulated/floor/plating/random,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/grass,
 /area)
 "OU" = (
 /turf/simulated/floor/red/side{
@@ -10252,15 +10317,12 @@
 /turf/simulated/floor/plating/random,
 /area)
 "Px" = (
-/obj/stool/chair/green,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/simulated/floor/green/side{
-	dir = 4
-	},
+/turf/simulated/floor,
 /area)
 "Py" = (
 /obj/machinery/vending/coffee,
@@ -10478,15 +10540,7 @@
 	},
 /area)
 "Qn" = (
-/obj/table/auto,
-/obj/item/device/light/lava_lamp{
-	pixel_y = 8
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
+/obj/machinery/disposal/mail/autoname/hydroponics,
 /turf/simulated/floor/green/checker,
 /area)
 "Qp" = (
@@ -10643,7 +10697,10 @@
 /turf/simulated/floor/shuttlebay,
 /area)
 "QS" = (
-/obj/machinery/disposal/mail/autoname/hydroponics,
+/obj/table/auto,
+/obj/item/device/light/lava_lamp{
+	pixel_y = 8
+	},
 /turf/simulated/floor/green/checker,
 /area)
 "QU" = (
@@ -10674,6 +10731,7 @@
 /area)
 "QZ" = (
 /obj/storage/secure/closet/fridge,
+/obj/machinery/light,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
@@ -11491,6 +11549,10 @@
 	dir = 5
 	},
 /area)
+"TT" = (
+/obj/machinery/light,
+/turf/simulated/floor,
+/area)
 "TU" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/black/grime,
@@ -12307,12 +12369,11 @@
 /turf/simulated/floor/specialroom/gym/alt,
 /area)
 "WY" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
+/obj/machinery/plantpot{
+	anchored = 1
 	},
-/turf/simulated/floor,
+/obj/machinery/light,
+/turf/simulated/floor/grass,
 /area)
 "WZ" = (
 /turf/simulated/wall/auto/shuttle{
@@ -37456,7 +37517,7 @@ gh
 Xc
 Rq
 bB
-No
+ID
 No
 vd
 fv
@@ -37758,7 +37819,7 @@ Xo
 Xc
 Xc
 bB
-ID
+No
 No
 Kf
 Ug
@@ -41379,7 +41440,7 @@ OB
 vD
 bB
 Kb
-Cb
+zQ
 bB
 bB
 bB
@@ -41982,7 +42043,7 @@ yr
 OB
 vD
 bB
-Kb
+Br
 zQ
 YU
 wr
@@ -42284,7 +42345,7 @@ iX
 Wz
 SQ
 bB
-OT
+Kb
 zQ
 Uv
 bB
@@ -63381,7 +63442,7 @@ OB
 OB
 OB
 bB
-aC
+pc
 aW
 bD
 bH
@@ -64587,7 +64648,7 @@ bB
 ES
 EV
 Hs
-Ip
+oO
 cl
 FC
 FC
@@ -64894,7 +64955,7 @@ cl
 FC
 FC
 FC
-FC
+TT
 bB
 FC
 FC
@@ -65794,7 +65855,7 @@ bB
 bB
 EW
 GG
-Cw
+uU
 cl
 cl
 FC
@@ -66383,19 +66444,19 @@ PQ
 KW
 OU
 OU
-OU
+yh
 OU
 OU
 OU
 dA
-OU
+yh
 OU
 OU
 xf
 OU
 xf
 OU
-Sn
+hm
 FC
 FC
 FC
@@ -66706,7 +66767,7 @@ FC
 FC
 FC
 FC
-FC
+TT
 bB
 FC
 FC
@@ -67286,7 +67347,7 @@ FC
 FC
 FC
 ql
-VI
+Od
 VI
 VI
 VI
@@ -67298,11 +67359,11 @@ VI
 Ne
 Ne
 VI
+Od
 VI
 VI
 VI
-VI
-VI
+Od
 VI
 VI
 VI
@@ -67893,8 +67954,8 @@ cl
 cl
 uW
 uW
-zN
 Ah
+zN
 Ah
 Ah
 Ah
@@ -68505,7 +68566,7 @@ Ah
 Ah
 CN
 CN
-Ah
+WY
 cl
 QF
 ue
@@ -68807,7 +68868,7 @@ xK
 MH
 zg
 CN
-yh
+Ah
 cl
 QS
 ue
@@ -69102,10 +69163,10 @@ th
 dT
 dT
 dT
+Cb
 dT
 dT
-dT
-CN
+OT
 xK
 MH
 zg
@@ -69711,8 +69772,8 @@ xs
 xs
 MS
 MS
+Px
 FC
-WY
 FC
 dw
 Ra
@@ -70326,7 +70387,7 @@ GT
 GY
 HH
 Iw
-Av
+pb
 GT
 GT
 GT
@@ -71234,8 +71295,8 @@ HM
 fb
 VI
 VI
-VI
-Px
+Od
+WU
 Nu
 Of
 fb
