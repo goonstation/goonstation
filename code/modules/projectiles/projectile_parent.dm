@@ -1020,30 +1020,29 @@ datum/projectile/snowball
 /proc/shoot_reflected_bounce(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3)
 	if(P.reflectcount >= max_reflects)
 		return
-	if (P)
-		if (abs(P.shooter.x - reflector.x) < 1 || abs(P.shooter.y - reflector.y) < 1)
-			return //stop breaking the world you fuck!
+	if (abs(P.shooter.x - reflector.x) < 1 || abs(P.shooter.y - reflector.y) < 1)
+		return //stop breaking the world you fuck!
 
-		/*
-		 * We have to calculate our incidence each time
-		 * Otherwise we risk the reflect projectile using the same incidence over and over
-		 * resulting in bumping same wall repeatadly
-		*/
-		var/x_diff = reflector.x - P.x
-		var/y_diff = reflector.y - P.y
+	/*
+		* We have to calculate our incidence each time
+		* Otherwise we risk the reflect projectile using the same incidence over and over
+		* resulting in bumping same wall repeatadly
+	*/
+	var/x_diff = reflector.x - P.x
+	var/y_diff = reflector.y - P.y
 
-		if (!x_diff && !y_diff)
-			return //we are inside the reflector or something went terribly wrong
-		else if (x_diff > 0 && y_diff == 0)
-			P.incidence = WEST
-		else if (x_diff < 0 && y_diff == 0)
-			P.incidence = EAST
-		else if (x_diff == 0 && y_diff > 0)
-			P.incidence = SOUTH
-		else if (x_diff == 0 && y_diff < 0)
-			P.incidence = NORTH
-		else
-			return //please no runtimes
+	if (!x_diff && !y_diff)
+		return //we are inside the reflector or something went terribly wrong
+	else if (x_diff > 0 && y_diff == 0)
+		P.incidence = WEST
+	else if (x_diff < 0 && y_diff == 0)
+		P.incidence = EAST
+	else if (x_diff == 0 && y_diff > 0)
+		P.incidence = SOUTH
+	else if (x_diff == 0 && y_diff < 0)
+		P.incidence = NORTH
+	else
+		return //please no runtimes
 
 	var/rx = 0
 	var/ry = 0
