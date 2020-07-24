@@ -37,6 +37,7 @@
 		ability_toggle
 		stats
 		legend
+		sel
 	var/list/obj/screen/hud/inventory_bg = list()
 	var/list/obj/item/inventory_items = list()
 	var/show_inventory = 1
@@ -273,6 +274,9 @@
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/burnprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs burning attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/bluntprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs blunt attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/protdisorient.png")]\" width=\"12\" height=\"12\" /> Body Insulation (Disorient Resist): 15%"
+
+			sel = create_screen("sel", "sel", src.icon_hud, "sel", null, HUD_LAYER+1.2)
+			sel.mouse_opacity = 0
 
 			set_visible(twohandl, 0)
 			set_visible(twohandr, 0)
@@ -553,7 +557,7 @@
 		var/obj/item/I
 
 		#define entered_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseEntered(location,control,params); }
-		#define test_slot(slot) if (!W) { I = master.equipped(); if (I && !master.can_equip(I, master.slot)) { I = null; } if (I) { H.transform *= 1.1; } }
+		#define test_slot(slot) if (!W) { I = master.equipped(); if (I && !master.can_equip(I, master.slot)) { I = null; } if (I && sel) { sel.screen_loc = H.screen_loc; } }
 
 		switch(H.id)
 			if("belt")
@@ -565,7 +569,7 @@
 			if("storage2")
 				entered_slot(slot_r_store)
 				test_slot(slot_r_store)
-			if("back")
+			if("back") //mousing over the bag to trigger a sel outline is handled in small_storage_parent.dm off of the storage hud so we dont have to do typechecks
 				entered_slot(slot_back)
 				test_slot(slot_back)
 			if("shoes")
@@ -599,13 +603,34 @@
 				entered_slot(slot_l_hand)
 			if ("rhand")
 				entered_slot(slot_r_hand)
+			if ("intent")
+				switch (master.a_intent)
+					if (INTENT_DISARM)
+						sel.icon_state = "intent-sel-disarm"
+					if (INTENT_HARM)
+						sel.icon_state = "intent-sel-harm"
+					if (INTENT_HELP)
+						sel.icon_state = "intent-sel-help"
+					if (INTENT_GRAB)
+						sel.icon_state = "intent-sel-grab"
+				sel.screen_loc = H.screen_loc
+
+			if ("throw")
+				if (master.in_throw_mode)
+					sel.icon_state = "throw1_over"
+				else
+					sel.icon_state = "throw0_over"
+				sel.screen_loc = H.screen_loc
 
 		#undef entered_slot
 		#undef test_slot
 
 	MouseExited(obj/screen/hud/H)
 		if (!H) return
-		H.transform = null
+		if (sel)
+			sel.screen_loc = null
+			if (sel.icon_state != sel)
+				sel.icon_state = "sel"
 
 	MouseDrop(obj/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
 		if (!H) return
@@ -749,10 +774,14 @@
 	proc/update_throwing()
 		if (!throwing) return 0
 		throwing.icon_state = "throw[master.in_throw_mode]"
+		if (sel.screen_loc == throwing.screen_loc)
+			sel.icon_state = "[throwing.icon_state]_over"
 
 	proc/update_intent()
 		if (!intent) return 0
 		intent.icon_state = "intent-[master.a_intent]"
+		if (sel.screen_loc == intent.screen_loc)
+			sel.icon_state = "intent-sel-[master.a_intent]"
 
 	proc/update_mintent()
 		if (!mintent) return 0
@@ -1125,9 +1154,39 @@
 		if(stamina)
 			stamina.icon_state = on ? "stamina_sprint" : "stamina"
 
+
+
+
+
+
+
+//item moused over events
+
+/mob/proc/moused_over(var/obj/item/I)
+	.=0
+
+/mob/proc/moused_exit(var/obj/item/I)
+	.=0
+
 /mob/living/carbon/human
 	updateStatusUi()
 		if(src.hud && istype(src.hud, /datum/hud/human))
 			var/datum/hud/human/H = src.hud
 			H.update_status_effects()
 		return
+
+	moused_over(var/obj/item/I)
+		if (!src.equipped() && !I.anchored && src.hud?.sel && I != src.back && can_reach(src, I))
+			if (I.two_handed)
+				src.hud.sel.screen_loc = "[src.hud.lhand.screen_loc] to [src.hud.rhand.screen_loc]"
+			else
+				if (src.hand)
+					src.hud.sel.screen_loc = src.hud.lhand.screen_loc
+				else
+					src.hud.sel.screen_loc = src.hud.rhand.screen_loc
+			src.hud.sel.icon_state = "sel-hand"
+
+	moused_exit(var/obj/item/I)
+		if (src.hud?.sel?.screen_loc)
+			src.hud.sel.screen_loc = null
+			src.hud.sel.icon_state = "sel"

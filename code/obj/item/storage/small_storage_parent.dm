@@ -98,6 +98,8 @@
 
 	//failure returns 0 or lower for diff messages - sorry
 	proc/check_can_hold(obj/item/W)
+		if (!W)
+			return 0
 		.= 1
 		if (W.cant_drop)
 			return
