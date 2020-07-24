@@ -78819,6 +78819,10 @@
 	dir = 4
 	},
 /area/shuttle/arrival/station)
+"uas" = (
+/obj/machinery/photocopier,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/quartersA)
 
 (1,1,1) = {"
 aaa
@@ -137833,7 +137837,7 @@ aQN
 aSe
 aTg
 aUy
-aNX
+uas
 aNX
 aYX
 bap

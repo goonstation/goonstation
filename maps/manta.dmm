@@ -12708,6 +12708,14 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
+/obj/table/reinforced/bar/auto,
+/obj/item/paper_bin{
+	pixel_y = 6
+	},
+/obj/item/storage/box/marker/basic{
+	pixel_x = 3;
+	pixel_y = 2
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aDi" = (
@@ -45526,6 +45534,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/chemistry)
+"jLG" = (
+/obj/machinery/photocopier,
+/turf/simulated/floor/wood/seven,
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "keQ" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 6;
@@ -45943,6 +45955,12 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
+"pQn" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/poster/wallsign/bar,
+/obj/machinery/photocopier,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "qJt" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer/robotics{
@@ -86168,7 +86186,7 @@ bdZ
 bcb
 bcb
 aCM
-aNq
+pQn
 aFu
 aFS
 aNq
@@ -87985,7 +88003,7 @@ aGd
 aGN
 aDd
 aDd
-aDd
+jLG
 bnZ
 bpg
 bqt

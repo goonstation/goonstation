@@ -9844,6 +9844,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge)
 "avP" = (
+/obj/machinery/photocopier,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge)
 "avQ" = (

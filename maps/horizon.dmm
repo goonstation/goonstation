@@ -57902,6 +57902,13 @@
 	icon_state = "floorscorched1"
 	},
 /area)
+"dks" = (
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/obj/machinery/photocopier,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/quarters_south)
 "mTS" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -102789,7 +102796,7 @@ bvT
 byA
 bBu
 bEk
-bGQ
+dks
 bJM
 bNb
 bPS

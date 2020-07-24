@@ -55840,6 +55840,12 @@
 /obj/decal/poster/wallsign/fuck2,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quarters_north)
+"okC" = (
+/obj/machinery/photocopier,
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
+/area/station/crew_quarters/quarters_north)
 "omd" = (
 /obj/lattice,
 /obj/warp_beacon/security,
@@ -121489,7 +121495,7 @@ aHU
 aIS
 aJP
 aLg
-aLg
+okC
 aNo
 rtZ
 aOi

@@ -45322,6 +45322,14 @@
 	dir = 6
 	},
 /area)
+"dim" = (
+/obj/table/wood/auto,
+/obj/item/paper_bin{
+	pixel_y = 6
+	},
+/obj/item/storage/box/marker,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/east)
 "eLW" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 8;
@@ -45343,6 +45351,10 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"wKX" = (
+/obj/machinery/photocopier,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/east)
 
 (1,1,1) = {"
 aaa
@@ -93554,7 +93566,7 @@ azW
 avt
 aBo
 aCh
-azk
+dim
 aEu
 aFW
 aIa
@@ -93856,7 +93868,7 @@ azX
 avt
 aBo
 aCh
-azk
+wKX
 aEu
 aFX
 aIb
