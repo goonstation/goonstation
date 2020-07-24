@@ -1,5 +1,9 @@
 
 (t)thu jul 23 20
+(u)MarkNstein
+(p)1536
+(e)🔄|rework
+(*)Action(bar)s will no longer reset upon successive attempts.
 (u)mbc
 (p)1584
 (e)🆕|feature
