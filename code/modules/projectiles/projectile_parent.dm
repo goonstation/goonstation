@@ -1012,3 +1012,59 @@ datum/projectile/snowball
 	Q.name = "reflected [Q.name]"
 	Q.launch()
 	return Q
+
+/*
+ * shoot_reflected_true seemed half broken...
+ * So I made my own proc, but left the old one in place just in case -- Sovexe
+ */
+/proc/shoot_reflected_bounce(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3)
+	if(P.reflectcount >= max_reflects)
+		return
+	if (abs(P.shooter.x - reflector.x) < 1 || abs(P.shooter.y - reflector.y) < 1)
+		return //stop breaking the world you fuck!
+
+	/*
+		* We have to calculate our incidence each time
+		* Otherwise we risk the reflect projectile using the same incidence over and over
+		* resulting in bumping same wall repeatadly
+	*/
+	var/x_diff = reflector.x - P.x
+	var/y_diff = reflector.y - P.y
+
+	if (!x_diff && !y_diff)
+		return //we are inside the reflector or something went terribly wrong
+	else if (x_diff > 0 && y_diff == 0)
+		P.incidence = WEST
+	else if (x_diff < 0 && y_diff == 0)
+		P.incidence = EAST
+	else if (x_diff == 0 && y_diff > 0)
+		P.incidence = SOUTH
+	else if (x_diff == 0 && y_diff < 0)
+		P.incidence = NORTH
+	else
+		return //please no runtimes
+
+	var/rx = 0
+	var/ry = 0
+
+	var/nx = P.incidence == WEST ? -1 : (P.incidence == EAST ?  1 : 0)
+	var/ny = P.incidence == SOUTH ? -1 : (P.incidence == NORTH ?  1 : 0)
+
+	var/dn = 2 * (P.xo * nx + P.yo * ny) // incident direction DOT normal * 2
+	rx = P.xo - dn * nx // r = d - 2 * (d * n) * n
+	ry = P.yo - dn * ny
+
+	if (rx == ry && rx == 0)
+		logTheThing("debug", null, null, "<b>Reflecting Projectiles</b>: Reflection failed for [P.name] (incidence: [P.incidence], direction: [P.xo];[P.yo]).")
+		return null // unknown error
+
+	//spawns the new projectile in the same location as the existing one, not inside the hit thing
+	var/obj/projectile/Q = initialize_projectile(get_turf(P), P.proj_data, rx, ry, reflector)
+	if (!Q)
+		return null
+	Q.reflectcount = P.reflectcount + 1
+	if (ismob(P.shooter))
+		Q.mob_shooter = P.shooter
+	Q.name = "reflected [Q.name]"
+	Q.launch()
+	return Q

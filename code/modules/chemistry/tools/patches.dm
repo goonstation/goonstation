@@ -611,7 +611,11 @@
 		if(get_dist(user, target) > 1 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		src.loopStart()
+		return
 
+	loopStart()
+		..()
 		if (!M.reagents || M.reagents.total_volume <= 0)
 			user.show_text("[M] is empty.", "red")
 			interrupt(INTERRUPT_ALWAYS)
@@ -627,8 +631,8 @@
 		M.apply_to(target,user, multiply, silent = (looped >= 1))
 
 	onEnd()
-		..()
 		if(get_dist(user, target) > 1 || user == null || target == null)
+			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -636,7 +640,9 @@
 		if (!M.tampered)
 			target.updatehealth() //I hate this, but we actually need the health on time here.
 			if (health_temp == target.health)
+				..()
 				user.show_text("[M] is finished healing and powers down automatically.", "blue")
 				return
-
-		actions.start(new/datum/action/bar/icon/automender_apply(user, M, target, looped + 1), user)
+		
+		looped++
+		src.onRestart()

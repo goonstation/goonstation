@@ -646,7 +646,7 @@ $(function() {
 			data_cache["hair_top"] = {"
 	<tr>
 		<th>
-			Top Detail<span class="info-thing" title="Hair or other features. This one is appied above the other ones.">?</span>
+			Top Detail<span class="info-thing" title="Hair or other features. This one is applied above the other ones.">?</span>
 		</th>
 		<td>
 			<a href='[pref_link]detail=input'>&#9998;</a>

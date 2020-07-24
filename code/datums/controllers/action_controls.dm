@@ -6,7 +6,7 @@ var/datum/action_controller/actions
 	var/list/running = list() //Associative list of running actions, format: owner=list of action datums
 
 	proc/hasAction(var/atom/owner, var/id) //has this mob an action of a given type running?
-		if(running.Find(owner))
+		if(owner in running)
 			var/list/actions = running[owner]
 			for(var/datum/action/A in actions)
 				if(A.id == id) return 1
@@ -34,13 +34,18 @@ var/datum/action_controller/actions
 		return
 
 	proc/start(var/datum/action/A, var/atom/owner) //Starts a new action.
-		if(!running.Find(owner))
+		if(!(owner in running))
 			running.Add(owner)
 			running[owner] = list(A)
 		else
 			interrupt(owner, INTERRUPT_ACTION)
+			for(var/datum/action/OA in running[owner])
+				//Meant to catch users starting the same action twice, and saving the first-attempt from deletion
+				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE) 
+					OA.onResume()
+					qdel(A)
+					return OA
 			running[owner] += A
-
 		A.owner = owner
 		A.started = world.time
 		A.onStart()
@@ -97,6 +102,20 @@ var/datum/action_controller/actions
 		state = ACTIONSTATE_RUNNING
 		return
 
+	proc/onRestart()			   //Called when the action restarts (for example: automenders)
+		sleep(1)
+		started = world.time
+		state = ACTIONSTATE_RUNNING
+		loopStart()
+		return
+
+	proc/loopStart()				//Called after restarting. Meant to cotain code from -and be called from- onStart()
+		return
+
+	proc/onResume()				   //Called when the action resumes - likely from almost ending
+		state = ACTIONSTATE_RUNNING
+		return
+
 	proc/onEnd()				   //Called when the action succesfully ends.
 		state = ACTIONSTATE_DELETE
 		return
@@ -129,6 +148,11 @@ var/datum/action_controller/actions
 			// this will absolutely obviously cause no problems.
 			bar.color = "#4444FF"
 			updateBar()
+
+	onRestart()
+		//Start the bar back at 0
+		bar.transform = matrix(0, 0, -15, 0, 1, 0)
+		..()
 
 	onDelete()
 		..()
@@ -176,6 +200,12 @@ var/datum/action_controller/actions
 				animate( bar, color = "#CC0000", time = 2.5 )
 		..()
 
+	onResume()
+		if (bar)
+			updateBar()
+			bar.color = "#4444FF"
+		..()
+
 	onUpdate()
 		updateBar()
 		..()
@@ -193,6 +223,7 @@ var/datum/action_controller/actions
 			animate( bar, transform = matrix(1, 0, 0, 0, 1, 0), time = remain )
 		else
 			animate( bar, flags = ANIMATION_END_NOW )
+		return
 
 /datum/action/bar/blob_health // WOW HACK
 	onUpdate()
