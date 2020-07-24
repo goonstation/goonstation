@@ -100,6 +100,7 @@
 	var/mob/living/corpse_target = null
 
 	var/area/registered_area = null //the area this critter is registered in
+	var/parent = null			//the mob or obj/critter that is the progenitor of this critter. Currently only set via hatched eggs
 #if ASS_JAM //timestop stuff
 	var/paused = FALSE
 #endif
@@ -1071,6 +1072,7 @@
 	var/critter_type = null
 	var/warm_count = 10 // how many times you gotta warm it before it hatches
 	var/critter_reagent = null
+	var/parent = null
 	rand_pos = 1
 
 	New()
@@ -1161,13 +1163,19 @@
 						qdel(src)
 						return
 
-				var/obj/critter/newCritter = new critter_type(T ? T : get_turf(src))
+				var/obj/critter/newCritter = new critter_type(T ? T : get_turf(src), src.parent)
 
 				if (critter_name)
 					newCritter.name = critter_name
 
 				if (shouldThrow && T)
 					newCritter.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
+				
+				//hack. Clownspider queens keep track of their babies.
+				if (istype(src.parent, /mob/living/critter/spider/clownqueen))
+					var/mob/living/critter/spider/clownqueen/queen = src.parent
+					if (islist(queen.babies))
+						queen.babies += newCritter
 
 				sleep(0.1 SECONDS)
 				qdel(src)

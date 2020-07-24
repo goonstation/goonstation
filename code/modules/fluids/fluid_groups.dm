@@ -51,7 +51,7 @@
 						my_group.evaporate()
 						return
 				skip_next_update = 1
-				my_group.drain(remove_source, fluids_to_remove)
+				my_group.drain(remove_source, fluids_to_remove, remove_reagent = 0)
 
 	get_reagents_fullness()
 		.= "empty"
@@ -632,7 +632,7 @@
 				break
 			src.waitforit = 0
 
-	proc/drain(var/obj/fluid/drain_source, var/fluids_to_remove, var/atom/transfer_to = 0) //basically a reverse spread with drain_source as the center
+	proc/drain(var/obj/fluid/drain_source, var/fluids_to_remove, var/atom/transfer_to = 0, var/remove_reagent = 1) //basically a reverse spread with drain_source as the center
 		if (!drain_source || drain_source.group != src) return
 
 		//Don't delete tiles if we can just drain existing deep fluid
@@ -678,7 +678,7 @@
 			src.reagents.skip_next_update = 1
 			src.reagents.trans_to_direct(transfer_to.reagents,src.amt_per_tile * removed_len)
 			src.contained_amt = src.reagents.total_volume
-		else if (src.reagents)
+		else if (src.reagents && remove_reagent)
 			src.reagents.skip_next_update = 1
 			src.reagents.remove_any(src.amt_per_tile * removed_len)
 			src.contained_amt = src.reagents.total_volume

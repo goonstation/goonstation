@@ -191,6 +191,9 @@
 					"theme" = usr.client.preferences.hud_style == "New" ? "newhud" : "item"
 				)
 
+				if (src.z == 0 && src.loc == usr)
+					tooltipParams["flags"] = TOOLTIP_TOP2 //space up one tile, not TOP. need other spacing flag thingy
+
 				//If we're over an item that's stored in a container the user has equipped
 				if (src.z == 0 && istype(src.loc, /obj/item/storage) && src.loc.loc == usr)
 					tooltipParams["flags"] = TOOLTIP_RIGHT
@@ -212,8 +215,20 @@
 				burn_type = 1
 			else
 				burn_type = 0
-		return
 
+		if (src.material.triggersOnLife.len)
+			src.AddComponent(/datum/component/holdertargeting/mat_triggersonlife)
+		else
+			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			if (C)
+				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+
+	removeMaterial()
+		if (src.material && src.material.triggersOnLife.len)
+			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			if (C)
+				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+		..()
 
 /obj/item/New()
 	// this is dumb but it won't let me initialize vars to image() for some reason
@@ -582,7 +597,7 @@
 /obj/item/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
 	..()
 
-	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
+	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL))
 		return
 
 	var/on_turf = isturf(src.loc)
@@ -1398,11 +1413,15 @@
 /obj/item/proc/dropped(mob/user)
 	if (user)
 		src.dir = user.dir
+		#ifdef COMSIG_MOB_DROPPED
+		SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
+		#endif
 	if (src.c_flags & EQUIPPED_WHILE_HELD)
 		src.unequipped(user)
 	#ifdef COMSIG_ITEM_DROPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	#endif
+
 	if(src.material) src.material.triggerDrop(user, src)
 	if (islist(src.ability_buttons))
 		for(var/obj/ability_button/B in ability_buttons)
@@ -1417,6 +1436,9 @@
 /obj/item/proc/pickup(mob/user)
 	#ifdef COMSIG_ITEM_PICKUP
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
+	#endif
+	#ifdef COMSIG_MOB_PICKUP
+	SEND_SIGNAL(user, COMSIG_MOB_PICKUP, src)
 	#endif
 	if(src.material)
 		src.material.triggerPickup(user, src)

@@ -93,6 +93,7 @@
 #define TOOLTIP_RIGHT 2
 #define TOOLTIP_LEFT 4
 #define TOOLTIP_CENTER 8
+#define TOOLTIP_TOP2 16
 
 #define TOOLTIP_ALWAYS 1
 #define TOOLTIP_NEVER 2
@@ -316,6 +317,7 @@
 #define IMMUNE_SINGULARITY_INACTIVE 512
 #define IS_TRINKET 1024 		//used for trinkets GC
 #define IS_FARTABLE 2048
+#define NO_MOUSEDROP_QOL 4096 //overrides the click drag mousedrop pickup QOL kinda stuff
 //TBD the rest
 
 //temp_flags lol for atoms and im gonna be constantly adding and removing these
@@ -343,6 +345,7 @@
 #define IGNORE_SHIFT_CLICK_MODIFIER 2048 //shift+click doesn't retrigger a SHIFT keypress - use for mobs that sprint on shift and not on mobs that use shfit for bolting doors etc
 #define LIGHTWEIGHT_AI_MOB 4096		//not a part of the normal 'mobs' list so it wont show up in searches for observe admin etc, has its own slowed update rate on Life() etc
 #define USR_DIALOG_UPDATES_RANGE 8192	//updateusrdialog will consider this mob as being able to 'attack_ai' and update its ui at range
+#define MAT_TRIGGER_LIFE 16384 //do some extra shit in life to trigger mats onlife
 
 //object_flags
 #define BOTS_DIRBLOCK 1	//bot considers this solid object that can be opened with a Bump() in pathfinding DirBlockedWithAccess
@@ -971,7 +974,7 @@ proc/default_frequency_color(freq)
 
 //Short macro that will give TRG, XP amount if they have the appropriate job.
 //JOB_XP(someMobHere, "Clown", 5) //Would give someMobHere 5xp if they are a clown.
-#define JOB_XP(TRG, JOB, XP) if(ismob(TRG) && TRG:job == JOB && TRG:key) award_xp(TRG:key, JOB, XP)
+#define JOB_XP(TRG, JOB, XP) if(ismob(TRG) && TRG:job == JOB && TRG:key) award_xp_and_archive(TRG:key, JOB, XP)
 
 //0.2, 25, 100, 225, 400, 625 ... 7=1225,10=2500,20=10000,30=22500,50=62500,100=250000
 //Say a round lasts 60 minutes. Level 5 should take 2 hours. ??

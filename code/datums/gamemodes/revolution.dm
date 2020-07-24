@@ -520,3 +520,26 @@
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_LARGE
+		processing_items.Add(src)
+
+	disposing()
+		..()
+		processing_items.Remove(src)
+
+	process()
+		..()
+		if (ismob(src.loc))
+			var/mob/owner = src.loc
+			if (owner.mind && ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
+				var/datum/game_mode/revolution/R = ticker.mode
+
+				if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
+					var/found = 0
+					for (var/datum/mind/M in R.head_revolutionaries)
+						if (M.current && ishuman(M.current))
+							if (get_dist(owner,M.current) <= 5)
+								for (var/obj/item/revolutionary_sign/RS in M.current.equipped_list(check_for_magtractor = 0))
+									found = 1
+									break
+					if (found)
+						owner.changeStatus("revspirit", 20 SECONDS)

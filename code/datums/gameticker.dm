@@ -61,6 +61,26 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #endif
 #endif
 
+	var/obj/overlay/countdown_clock = new/obj/overlay()
+	if (lobby_titlecard)
+		countdown_clock.x = lobby_titlecard.x + 7
+		countdown_clock.y = lobby_titlecard.y + 2
+		countdown_clock.z = lobby_titlecard.z
+		countdown_clock.layer = lobby_titlecard.layer + 1
+	else
+		// oops
+		countdown_clock.x = 7
+		countdown_clock.y = 2
+		countdown_clock.z = 1
+		countdown_clock.layer = 1
+
+	countdown_clock.maptext = ""
+	countdown_clock.maptext_width = 320
+	countdown_clock.maptext_x = -(320 / 2) + 16
+	countdown_clock.maptext_height = 320
+	countdown_clock.plane = 100
+
+
 	pregame_timeleft = PREGAME_LOBBY_TICKS
 	boutput(world, "<B><FONT style='notice'>Welcome to the pre-game lobby!</FONT></B>")
 	boutput(world, "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds")
@@ -88,9 +108,26 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		sleep(1 SECOND)
 		if (!game_start_delayed)
 			pregame_timeleft--
+			if (countdown_clock)
+				// just in case some nerd deletes it or it otherwise goes away
+				var/timeLeftColor
+				switch (pregame_timeleft)
+					if (90 to INFINITY)
+						timeLeftColor = "#33dd33"
+					if (60 to 90)
+						timeLeftColor = "#ffff00"
+					if (30 to 60)
+						timeLeftColor = "#ffb400"
+					if (0 to 30)
+						timeLeftColor = "#ff6666"
+				countdown_clock.maptext = "<span class='c ol vga vb'>Round begins in<br><span style='color: [timeLeftColor]; font-size: 36px;'>[pregame_timeleft]</span></span>"
+		else if(countdown_clock)
+			countdown_clock.maptext = "<span class='c ol vga vb'>Round begins in<br><span style='color: #888888; font-size: 36px;'>soon</span></span>"
+
 
 		if(pregame_timeleft <= 0)
 			current_state = GAME_STATE_SETTING_UP
+			qdel(countdown_clock)
 
 	SPAWN_DBG(0) setup()
 
@@ -103,18 +140,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
 		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-		if("intrigue") 
-			var/ready_count = 0
-			for (var/mob/new_player/P in mobs)
-				if(P.ready)
-					ready_count++
-					if(ready_count >= 20)
-						break //for now, we don't care about higher numbers
-			//weighted pick() cannot use lists, so this is the best solution that I can think of.
-			if(ready_count >= 20)
-				src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft","gang", prob(50); "extended"))
-			else
-				src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft", prob(50); "extended"))
+		if("intrigue") src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft", prob(50); "extended"))
 		else src.mode = config.pick_mode(master_mode)
 
 	if(hide_mode)
@@ -443,10 +469,21 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				boutput(world, "<span class='bold notice'>A new round will begin soon.</span>")
 
-				sleep(60 SECONDS)
-				//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] one minute delay, game should restart now")
+				var/datum/hud/roundend/roundend_countdown = new()
 
+				for (var/client/C in clients)
+					roundend_countdown.add_client(C)
+
+				var/roundend_time = 60
+				while (roundend_time >= 0)
+					roundend_countdown.update_time(roundend_time)
+					sleep(1 SECONDS)
+					roundend_time--
+
+				//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] one minute delay, game should restart now")
 				if (game_end_delayed == 1)
+					roundend_countdown.update_delayed()
+
 					message_admins("<span class='internal>Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]. Remove the delay for an immediate restart.</span>")
 					game_end_delayed = 2
 					var/ircmsg[] = new()
@@ -736,6 +773,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		for(var/obj/bookshelf/persistent/P in by_type[/obj/bookshelf/persistent]) //make the bookshelf save its contents
 			P.build_curr_contents()
 
+	award_archived_round_xp()
+	
 	SPAWN_DBG(0)
 		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] creds/new")
 		var/chui/window/crew_credits/creds = new

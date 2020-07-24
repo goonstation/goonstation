@@ -874,8 +874,8 @@ var/global/client/ff_debugger = null
 
 	proc/encourage()
 		var/obj/overlay/clickable = new/obj/overlay(src)
-		clickable.maptext = "<span class='ol c ps2p'>Hello! We are experiencing more load than usual. <br><a href='byond://goon3.goonhub.com:26300'>click here to join Goonstation Overflow (Smoother game, RP flavor).</a> </span>"
-		clickable.maptext_width = 300
+		clickable.maptext = "<span class='ol c ps2p'><strong>Goonstation has a lot of players!</strong> We have other servers you can play on, that may be more responsive or offer you some breathing room. <br> <br><strong>Goonstation</strong>: <a href=\"https://play.goonhub.com/?s=main\">Click to Join</a> <br><strong>Goonstation Overflow</strong>: <a href=\"https://play.goonhub.com/?s=main3\">Click to Join</a> <br><strong>Goonstation RP</strong>: <a href=\"https://play.goonhub.com/?s=rp\">Click to Join</a> <br><strong>Goonstation RP Overflow</strong>: <a href=\"https://play.goonhub.com/?s=main2\">Click to Join</a></span>"
+		clickable.maptext_width = 400
 		clickable.maptext_height = 300
 		clickable.plane = 100
 		clickable.layer = src.layer + 1
