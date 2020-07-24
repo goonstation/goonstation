@@ -1,4 +1,9 @@
 
+(t)fri jul 24 20
+(u)Superlagg
+(p)1526
+(e)🆕|feature
+(*)Zip guns now explode one shot later than they used to.
 (t)thu jul 23 20
 (u)MarkNstein
 (p)1536
