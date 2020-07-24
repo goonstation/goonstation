@@ -59,7 +59,7 @@
 		organ_abilities = initial(organ_abilities)
 
 	attackby(obj/item/W, mob/user)
-		if(ispulsingtool(W)) //TODO change values, incl. for emagged
+		if(ispulsingtool(W)) //TODO kyle's robotics configuration console/machine/thing
 			digestion_efficiency = input(user, "Set the digestion efficiency of the cyberintestines, from 0 to 200 percent.", "Digenstion efficincy", "100") as num
 			digestion_efficiency = clamp(digestion_efficiency, 0, 200) / 100
 		else

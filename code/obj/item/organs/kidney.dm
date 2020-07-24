@@ -158,7 +158,7 @@
 			aholder.removeAbility(abil)
 
 	attackby(obj/item/W, mob/user)
-		if(ispulsingtool(W)) //TODO change values, incl. for emagged
+		if(ispulsingtool(W)) //TODO kyle's robotics configuration console/machine/thing
 			chem_metabolism_modifier = input(user, "Enter a percentage to clock the cyberkidney at, from 75 to 150.", "Organ clocking", "100") as num
 			chem_metabolism_modifier = clamp(chem_metabolism_modifier, 75, 150) / 100
 		else

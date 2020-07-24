@@ -1451,7 +1451,7 @@
 /datum/targetable/organAbility/quickdigest
 	name = "Rapid Digestion"
 	desc = "Force your cyberintestines to rapidly process the contents of your stomach. This can't be healthy."
-	icon_state = "cyberintestine" //TODO get sprote made
+	icon_state = "cyberintestine"
 	targeted = 0
 	cooldown = 40 SECONDS
 
