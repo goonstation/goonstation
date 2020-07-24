@@ -1322,7 +1322,7 @@
 
 /obj/item/gun/kinetic/meowitzer
 	name = "\improper Meowitzer"
-	desc = "It purrs gently in your hand."
+	desc = "It purrs gently in your hands."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "blaster"
 
@@ -1336,12 +1336,12 @@
 	can_dual_wield = 0
 	slowdown = 0
 	slowdown_time = 0
-	two_handed = 0
+	two_handed = 1
 	w_class = 4
 
 	New()
-		ammo = new/obj/item/ammo/bullets/meowitzer/inert
-		current_projectile = new/datum/projectile/special/meowitzer/inert
+		ammo = new/obj/item/ammo/bullets/meowitzer
+		current_projectile = new/datum/projectile/special/meowitzer
 		..()
 
 	afterattack(atom/A, mob/user as mob)
@@ -1353,3 +1353,9 @@
 			return
 		else
 			..()
+
+/obj/item/gun/kinetic/meowitzer/inert
+	New()
+		..()
+		ammo = new/obj/item/ammo/bullets/meowitzer/inert
+		current_projectile = new/datum/projectile/special/meowitzer/inert
