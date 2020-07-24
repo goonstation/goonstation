@@ -284,7 +284,7 @@
 			if(istype(user.l_hand,/obj/item/phone_handset) || istype(user.r_hand,/obj/item/phone_handset)) // travel through space line
 				var/obj/item/phone_handset/PH = null
 				var/obj/item/phone_handset/EXIT = null
-				var/target_loc = null
+				var/turf/target_loc = null
 				if(istype(user.l_hand,/obj/item/phone_handset))
 					PH = user.l_hand
 				else
@@ -298,6 +298,9 @@
 						boutput(user, "You can't seem to enter the phone for some reason!")
 						return
 				else
+					boutput(user, "You can't seem to enter the phone for some reason!")
+					return
+				if(isrestrictedz(user.loc.z) || isrestrictedz(target_loc.z))
 					boutput(user, "You can't seem to enter the phone for some reason!")
 					return
 				EXIT = PH.parent.linked.handset
