@@ -1319,3 +1319,37 @@
 		ammo.amount_left = 6 //spawn full please
 		current_projectile = new /datum/projectile/special/spawner/gun
 		..()
+
+/obj/item/gun/kinetic/meowitzer
+	name = "\improper Meowitzer"
+	desc = "It purrs gently in your hand."
+	icon = 'icons/obj/items/mining.dmi'
+	icon_state = "blaster"
+
+	color = "#ff7b00"
+	force = 5
+	caliber = 20
+	max_ammo_capacity = 1
+	auto_eject = 0
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	spread_angle = 0
+	can_dual_wield = 0
+	slowdown = 0
+	slowdown_time = 0
+	two_handed = 0
+	w_class = 4
+
+	New()
+		ammo = new/obj/item/ammo/bullets/meowitzer/inert
+		current_projectile = new/datum/projectile/special/meowitzer/inert
+		..()
+
+	afterattack(atom/A, mob/user as mob)
+		if(src.ammo.amount_left < max_ammo_capacity && istype(A, /obj/critter/cat))
+			src.ammo.amount_left += 1
+			user.visible_message("<span class='alert'>[user] loads \the [A] into \the [src].</span>", "<span class='alert'>You load \the [A] into \the [src].</span>")
+			src.current_projectile.icon_state = A.icon_state //match the cat sprite that we load
+			qdel(A)
+			return
+		else
+			..()

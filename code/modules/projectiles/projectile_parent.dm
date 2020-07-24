@@ -1016,8 +1016,9 @@ datum/projectile/snowball
 /*
  * shoot_reflected_true seemed half broken...
  * So I made my own proc, but left the old one in place just in case -- Sovexe
+ * var/reflect_on_nondense_hits - flag for handling hitting objects that let bullets pass through like secbots, rather than duplicating projectiles
  */
-/proc/shoot_reflected_bounce(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3)
+/proc/shoot_reflected_bounce(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3, var/reflect_on_nondense_hits = 0)
 	if(P.reflectcount >= max_reflects)
 		return
 	if (abs(P.shooter.x - reflector.x) < 1 || abs(P.shooter.y - reflector.y) < 1)
@@ -1056,12 +1057,22 @@ datum/projectile/snowball
 
 	if (rx == ry && rx == 0)
 		logTheThing("debug", null, null, "<b>Reflecting Projectiles</b>: Reflection failed for [P.name] (incidence: [P.incidence], direction: [P.xo];[P.yo]).")
-		return null // unknown error
+		return // unknown error
 
 	//spawns the new projectile in the same location as the existing one, not inside the hit thing
 	var/obj/projectile/Q = initialize_projectile(get_turf(P), P.proj_data, rx, ry, reflector)
-	if (!Q)
-		return null
+
+	//fix for duplicating projectiles when hitting nondense objects like secbots that don't kill projectiles
+	if (isobj(reflector) && reflector.density == 0)
+		if (reflect_on_nondense_hits)
+			P.die()
+		else
+			Q.die()
+
+	if (!Q && !P)
+		return
+	else if (!Q && P) // P existed but we deleted Q
+		return P
 	Q.reflectcount = P.reflectcount + 1
 	if (ismob(P.shooter))
 		Q.mob_shooter = P.shooter
