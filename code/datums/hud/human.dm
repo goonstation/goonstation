@@ -1180,25 +1180,27 @@
 		return
 
 	moused_over(var/obj/item/I)
-		if (!src.equipped() && !I.anchored && src.hud?.sel && I != src.back && can_reach(src, I))
-			if (I.two_handed)
-				src.hud.sel.screen_loc = "[src.hud.lhand.screen_loc] to [src.hud.rhand.screen_loc]"
-			else
-				if (src.hand)
-					src.hud.sel.screen_loc = src.hud.lhand.screen_loc
+		if (src.client && src.client.hand_ghosts)
+			if (!src.equipped() && !I.anchored && src.hud?.sel && I != src.back && can_reach(src, I))
+				if (I.two_handed)
+					src.hud.sel.screen_loc = "[src.hud.lhand.screen_loc] to [src.hud.rhand.screen_loc]"
 				else
-					src.hud.sel.screen_loc = src.hud.rhand.screen_loc
+					if (src.hand)
+						src.hud.sel.screen_loc = src.hud.lhand.screen_loc
+					else
+						src.hud.sel.screen_loc = src.hud.rhand.screen_loc
 
-			src.hud.sel.icon = I.icon
-			src.hud.sel.icon_state = I.icon_state
-			src.hud.sel.alpha = 120
-			src.hud.sel.filters += filter(type = "outline")
+				src.hud.sel.icon = I.icon
+				src.hud.sel.icon_state = I.icon_state
+				src.hud.sel.alpha = 120
+				src.hud.sel.filters += filter(type = "outline")
 
 	moused_exit(var/obj/item/I)
-		if (src.hud?.sel?.screen_loc)
-			src.hud.sel.screen_loc = null
-			////src.hud.sel.icon = src.hud.icon_hud
-			//src.hud.sel.icon_state = "sel"
-			//src.hud.alpha = 255
-			src.hud.sel.appearance = src.hud.default_sel_appearance
-			src.hud.sel.filters = null
+		if (src.client && src.client.hand_ghosts)
+			if (src.hud?.sel?.screen_loc)
+				src.hud.sel.screen_loc = null
+				////src.hud.sel.icon = src.hud.icon_hud
+				//src.hud.sel.icon_state = "sel"
+				//src.hud.alpha = 255
+				src.hud.sel.appearance = src.hud.default_sel_appearance
+				src.hud.sel.filters = null
