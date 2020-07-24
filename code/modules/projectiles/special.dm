@@ -411,7 +411,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 					shake_camera(M, 2, 1)
 
 			SPAWN_DBG(0)
-				explosion_new(null, T, explosion_power, 1)
+				explosion_new(projectile, T, explosion_power, 1)
 			if(prob(50))
 				playsound(A, hit_sound, 60, 1)
 		return
