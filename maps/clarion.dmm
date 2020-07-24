@@ -49164,13 +49164,6 @@
 	dir = 1
 	},
 /area/station/engine/substation/east)
-"qKs" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/table/reinforced/auto,
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 
 (1,1,1) = {"
 aaa

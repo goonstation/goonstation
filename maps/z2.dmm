@@ -83643,14 +83643,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
-"gTp" = (
-/obj/stool/chair/yellow{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/lounge)
 "gZG" = (
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/shuttle{
@@ -84441,13 +84433,6 @@
 	icon_state = "floor4"
 	},
 /area/shuttle/escape/centcom/destiny)
-"roB" = (
-/obj/machinery/door/unpowered/wood{
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/efrem)
 "rst" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -84840,10 +84825,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
-"vSf" = (
-/obj/item/clothing/under/pride/ace,
-/turf/unsimulated/floor/wood/three,
-/area/centcom/offices/zamujasa)
 "woz" = (
 /obj/machinery/light{
 	dir = 4;
@@ -84962,14 +84943,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
-"xnD" = (
-/obj/machinery/computer/ordercomp{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/lounge)
 "xoF" = (
 /obj/machinery/light{
 	dir = 1
@@ -150351,7 +150324,7 @@ dnY
 dGS
 dGl
 tuF
-gTp
+fob
 dnY
 dnY
 dmx
@@ -158875,7 +158848,7 @@ dyV
 dvw
 dRO
 dCF
-vSf
+eTm
 dvw
 dCy
 dDl

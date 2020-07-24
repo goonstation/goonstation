@@ -5,16 +5,16 @@
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1 //Uncomment this to just skip everything possible and get into the game asap.
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1 // uncomment this to use atlas as the single map. will horribly break things but speeds up compile/boot times.
 
-#ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
-#define SKIP_FEA_SETUP 0 //Skip atmos setup
-#define SKIP_Z5_SETUP 0 //Skip z5 gen
-#endif
-
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
 #define SKIP_FEA_SETUP 1
 #define SKIP_Z5_SETUP 1
 #define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME 1 //Skip changelogs
 #define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO 1 //Automatically ready up and start the game ASAP. No input required.
+#endif
+
+#ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
+#define SKIP_FEA_SETUP 0 //Skip atmos setup
+#define SKIP_Z5_SETUP 0 //Skip z5 gen
 #endif
 
 // Server side profiler stuff for when you want to profile how laggy the game is
