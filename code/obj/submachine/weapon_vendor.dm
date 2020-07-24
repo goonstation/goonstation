@@ -173,7 +173,7 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "weapon"
 	desc = "An automated quartermaster service for assignment of staff assistants to departments."
-	token_accepted = /obj/item/requisition_token/security
+	token_accepted = /obj/item/requisition_token/staff
 	New()
 		..()
 		materiel_stock += new/datum/materiel/loadout/assist_civ

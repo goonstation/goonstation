@@ -893,6 +893,7 @@
 	cant_allocate_unwanted = 1
 	slot_jump = /obj/item/clothing/under/rank
 	slot_foot = /obj/item/clothing/shoes/black
+	//slot_poc1 = /obj/item/requisition_token/staff //this should be enabled alongside implementation of Staff Assignment Kiosks
 
 	New()
 		..()
