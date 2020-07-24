@@ -128,5 +128,5 @@
 		boutput(src, __red("You have parted with the hivemind."))
 		src.boot()
 	else
-		boutput(src, __red("You are not able to part from the hivemind at this time. You will be able to leave in [can_exit_hivemind_time/10] seconds."))
+		boutput(src, __red("You are not able to part from the hivemind at this time. You will be able to leave in [(can_exit_hivemind_time/10 - world.time/10)] seconds."))
 
