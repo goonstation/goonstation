@@ -4,9 +4,9 @@
  * Only checks if an object is not broken, can depend on obj type
  */
 
-var/global/datum/ui_state/broken_state/broken_state = new /datum/ui_state/broken_state
+var/global/datum/ui_state/tgui_broken_state/tgui_broken_state = new /datum/ui_state/tgui_broken_state
 
-/datum/ui_state/broken_state/can_use_topic(obj/src_object, mob/user)
+/datum/ui_state/tgui_broken_state/can_use_topic(obj/src_object, mob/user)
 	return src_object.broken_state_topic(user) // Call the individual obj-overridden procs.
 
 /obj/proc/broken_state_topic(mob/user)

@@ -65,15 +65,6 @@
 
 
 /* INTERFACE */
-/obj/machinery/dispenser/ui_state(mob/user)
-	return physical_state
-
-/obj/machinery/dispenser/ui_status(mob/user)
-  return min(
-		broken_state.can_use_topic(src, user),
-		physical_state.can_use_topic(src, user),
-		not_incapacitated_state.can_use_topic(src, user)
-	)
 
 /obj/machinery/dispenser/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)

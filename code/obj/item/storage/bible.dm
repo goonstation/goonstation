@@ -1,5 +1,5 @@
 // rest in peace the_very_holy_global_bible_list_amen (??? - 2020)
-var/list/bible_contents = list()
+var/global/list/bible_contents = list()
 
 /obj/item/storage/bible
 	name = "bible"
@@ -128,6 +128,11 @@ var/list/bible_contents = list()
 		for (var/obj/item/storage/S in bible_contents)
 			L += S.get_all_contents()
 		return L
+
+	contains(var/atom/A)
+		if(!A)
+			return 0
+		return (A in bible_contents)
 
 	add_contents(obj/item/I)
 		bible_contents += I

@@ -162,6 +162,16 @@
 		interact_particle(user,src)
 	return 0
 
+/obj/machinery/ui_state(mob/user)
+	return tgui_physical_state
+
+/obj/machinery/ui_status(mob/user)
+  return min(
+		tgui_broken_state.can_use_topic(src, user),
+		tgui_physical_state.can_use_topic(src, user),
+		tgui_not_incapacitated_state.can_use_topic(src, user)
+	)
+
 /obj/machinery/ex_act(severity)
 	// Called when an object is in an explosion
 	// Higher "severity" means the object was further from the centre of the explosion

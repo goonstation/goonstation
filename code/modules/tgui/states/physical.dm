@@ -3,9 +3,9 @@
  *
  * Short-circuits the default state to only check physical distance.
  */
-var/global/datum/ui_state/physical/physical_state = new /datum/ui_state/physical
+var/global/datum/ui_state/tgui_physical_state/tgui_physical_state = new /datum/ui_state/tgui_physical_state
 
-/datum/ui_state/physical/can_use_topic(src_object, mob/user)
+/datum/ui_state/tgui_physical_state/can_use_topic(src_object, mob/user)
 	. = user.shared_ui_interaction(src_object)
 	if(. > UI_CLOSE)
 		return min(., user.physical_can_use_topic(src_object))
@@ -29,9 +29,9 @@ var/global/datum/ui_state/physical/physical_state = new /datum/ui_state/physical
  * Short-circuits the default state to only check physical distance, being in view doesn't matter
  */
 
-var/global/datum/ui_state/physical_obscured_state/physical_obscured_state = new /datum/ui_state/physical_obscured_state
+var/global/datum/ui_state/tgui_physical_obscured_state/tgui_physical_obscured_state = new /datum/ui_state/tgui_physical_obscured_state
 
-/datum/ui_state/physical_obscured_state/can_use_topic(src_object, mob/user)
+/datum/ui_state/tgui_physical_obscured_state/can_use_topic(src_object, mob/user)
 	. = user.shared_ui_interaction(src_object)
 	if(. > UI_CLOSE)
 		return min(., user.physical_obscured_can_use_topic(src_object))
