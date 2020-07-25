@@ -1061,6 +1061,11 @@ datum/projectile/snowball
 
 	//spawns the new projectile in the same location as the existing one, not inside the hit thing
 	var/obj/projectile/Q = initialize_projectile(get_turf(P), P.proj_data, rx, ry, reflector)
+	if (!Q)
+		return
+	Q.reflectcount = P.reflectcount + 1
+	if (ismob(P.shooter))
+		Q.mob_shooter = P.shooter
 
 	//fix for duplicating projectiles when hitting nondense objects like secbots that don't kill projectiles
 	if (isobj(reflector) && reflector.density == 0)
@@ -1068,14 +1073,11 @@ datum/projectile/snowball
 			P.die()
 		else
 			Q.die()
+			if (P)
+				return P
+			else
+				return
 
-	if (!Q && !P)
-		return
-	else if (!Q && P) // P existed but we deleted Q
-		return P
-	Q.reflectcount = P.reflectcount + 1
-	if (ismob(P.shooter))
-		Q.mob_shooter = P.shooter
 	Q.name = "reflected [Q.name]"
 	Q.launch()
 	return Q
