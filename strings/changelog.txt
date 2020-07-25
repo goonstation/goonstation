@@ -1,4 +1,8 @@
 
+(t)sat jul 26 20
+(u)mbc
+(e)🆕🎨|feature, sprites
+(*)New muzzle flash animations for taser and lasers. Also improved muzzle flash visibility in general.
 (t)fri jul 24 20
 (u)Kyle and Flaborized
 (p)1574
