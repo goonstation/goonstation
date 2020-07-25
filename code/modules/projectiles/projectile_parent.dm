@@ -1053,13 +1053,13 @@ datum/projectile/snowball
 	else if (x_diff == 0 && y_diff < 0)
 		P.incidence = NORTH
 	else if (x_diff < 0 && y_diff < 0)
-		P.incidence = pick(NORTH, EAST)
+		P.incidence = pick(EAST, NORTH)
 	else if (x_diff < 0 && y_diff > 0)
-		P.incidence = pick(NORTH, WEST)
+		P.incidence = pick(EAST, SOUTH)
 	else if (x_diff > 0 && y_diff < 0)
-		P.incidence = pick(SOUTH, EAST)
+		P.incidence = pick(WEST, NORTH)
 	else if (x_diff > 0 && y_diff > 0)
-		P.incidence = pick(SOUTH, WEST)
+		P.incidence = pick(WEST, SOUTH)
 	else
 		return //please no runtimes
 
