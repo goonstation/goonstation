@@ -13,6 +13,7 @@
 	var/custom_cell_max_capacity = null // Is there a limit as to what power cell (in PU) we can use?
 	var/wait_cycle = 0 // Using a self-charging cell should auto-update the gun's sprite.
 	var/can_swap_cell = 1
+	muzzle_flash = null
 
 	New()
 		if (!cell)
@@ -317,6 +318,7 @@
 	hide_attack = 1
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
 	module_research = list("medicine" = 2, "science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10)
+	muzzle_flash = null
 
 	New()
 		current_projectile = new/datum/projectile/rad_bolt
