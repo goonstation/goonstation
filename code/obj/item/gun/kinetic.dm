@@ -545,7 +545,8 @@
 
 /obj/item/gun/kinetic/ak47
 	name = "AK-744 Rifle"
-	desc = "Based on a an old Cold War relic, often used by paramilitary organizations and space terrorists."
+	desc = "Based on an old Cold War relic, often used by paramilitary organizations and space terrorists."
+	icon = 'icons/obj/64x32.dmi' // big guns get big icons
 	icon_state = "ak47"
 	item_state = "ak47"
 	force = 30.0
