@@ -21,7 +21,7 @@
 		..()
 
 		var/SPtime = 35
-		if(holder.owner.wizard_spellpower())
+		if(holder.owner.wizard_spellpower(src))
 			SPtime = 50
 		else
 			boutput(holder.owner, "<span class='alert'>Your spell doesn't last as long without a staff to focus it!</span>")
