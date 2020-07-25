@@ -1048,7 +1048,7 @@ datum
 				for (var/i = 1, i <= booster_enzyme_reagents_to_check.len, i++)
 					var/check_amount = holder.get_reagent_amount(booster_enzyme_reagents_to_check[i])
 					if (check_amount && check_amount < 18)
-						holder.add_reagent("[booster_enzyme_reagents_to_check[i]]", 2 * mult)
+						holder.add_reagent("[booster_enzyme_reagents_to_check[i]]", min(2 * mult, 20-check_amount))
 				..()
 				return
 
@@ -1699,12 +1699,13 @@ datum
 
 					boutput(M, "<span class='notice'>You feel [.].</span>")
 
-				else if (prob(100) && !M.restrained())//(prob(16))
-					for (var/mob/living/hugTarget in orange(1,M))
-						if (hugTarget == M)
+				else if (prob(50) && !M.restrained() && ishuman(M)) // only humans hug, I think?
+					var/mob/living/carbon/human/H = M
+					for (var/mob/living/carbon/human/hugTarget in orange(1,H))
+						if (hugTarget == H)
 							continue
 						if (!hugTarget.stat)
-							M.emote(prob(5)?"sidehug [hugTarget]":"hug [hugTarget]")
+							H.emote(prob(5)?"sidehug":"hug", emoteTarget="[hugTarget]")
 							break
 
 				..()

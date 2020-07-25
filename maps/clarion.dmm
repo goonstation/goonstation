@@ -41163,8 +41163,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/wingrille_spawn,
-/turf/simulated/floor/plating,
+/obj/machinery/manufacturer/qm,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "bxi" = (
 /obj/disposalpipe/segment/mail{
@@ -49113,6 +49113,13 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/NWmaint)
+"hZx" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/table/reinforced/auto,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "jAP" = (
 /obj/machinery/vending/janitor,
 /turf/simulated/floor/specialroom/arcade,
@@ -86334,7 +86341,7 @@ bsw
 btH
 buN
 bvV
-bxe
+hZx
 byn
 bzr
 bAt

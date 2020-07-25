@@ -755,7 +755,11 @@
 
 	if (!antag_removal && src.spell_soulguard)
 		boutput(src, "<span class='notice'>Your Soulguard enchantment activates and saves you...</span>")
-		reappear_turf = pick(wizardstart)
+		//soulguard ring puts you in the same spot
+		if(istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport))
+			reappear_turf = get_turf(src)
+		else
+			reappear_turf = pick(wizardstart)
 
 	////////////////Set up the new body./////////////////
 
@@ -3096,14 +3100,14 @@
 					else
 						src.footstep += steps
 					if (src.footstep == 0)
-						playsound(NewLoc, NewLoc.active_liquid.step_sound, 50, 1)
+						playsound(NewLoc, NewLoc.active_liquid.step_sound, 50, 1, extrarange = footstep_extrarange)
 				else
 					if (src.footstep >= 2)
 						src.footstep = 0
 					else
 						src.footstep += steps
 					if (src.footstep == 0)
-						playsound(NewLoc, NewLoc.active_liquid.step_sound, 20, 1)
+						playsound(NewLoc, NewLoc.active_liquid.step_sound, 20, 1, extrarange = footstep_extrarange)
 		else if (src.shoes && src.shoes.step_sound && src.shoes.step_lots)
 			if (src.m_intent == "run")
 				if (src.footstep >= 2)
@@ -3111,9 +3115,9 @@
 				else
 					src.footstep += steps
 				if (src.footstep == 0)
-					playsound(NewLoc, src.shoes.step_sound, 50, 1)
+					playsound(NewLoc, src.shoes.step_sound, 50, 1, extrarange = footstep_extrarange)
 			else
-				playsound(NewLoc, src.shoes.step_sound, 20, 1)
+				playsound(NewLoc, src.shoes.step_sound, 20, 1, extrarange = footstep_extrarange)
 
 		else
 			src.footstep += steps

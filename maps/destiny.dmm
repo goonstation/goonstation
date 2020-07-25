@@ -37547,7 +37547,7 @@
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
 	},
-/obj/storage/crate,
+/obj/machinery/manufacturer/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bnz" = (

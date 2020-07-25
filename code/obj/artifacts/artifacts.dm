@@ -29,6 +29,7 @@
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
 	attack_hand(mob/user as mob)
+		user.lastattacked = src
 		src.ArtifactTouched(user)
 		return
 
@@ -36,6 +37,7 @@
 		return attack_hand(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		user.lastattacked = src
 		if (src.Artifact_attackby(W,user))
 			..()
 

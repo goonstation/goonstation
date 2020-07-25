@@ -111,6 +111,20 @@ var/global/disable_log_lists = 0
 /proc/logDiary(text)
 	WRITE_LOG(diary_name, "[text]")
 
+/* tgui logging */
+/proc/log_tgui(user_or_client, text)
+	var/entry = "tgui: "
+	if(!user_or_client)
+		entry += "no user"
+	else if(istype(user_or_client, /mob))
+		var/mob/user = user_or_client
+		entry += "[user.ckey] (as [user])"
+	else if(istype(user_or_client, /client))
+		var/client/client = user_or_client
+		entry += "[client.ckey]"
+	entry += " | [text]\n"
+	WRITE_LOG(roundLog_name, entry)
+
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
 /proc/shutdown_logging()
 	rustg_log_close_all()

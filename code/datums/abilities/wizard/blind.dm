@@ -51,7 +51,7 @@
 				if (G.allow_blind_sight)
 					blindProtected = 1
 
-		if (holder.owner.wizard_spellpower())
+		if (holder.owner.wizard_spellpower(src))
 			target.changeStatus("weakened", 2 SECONDS)
 			if (!blindProtected)
 				target.bioHolder.AddEffect("bad_eyesight")

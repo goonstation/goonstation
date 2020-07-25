@@ -721,10 +721,6 @@
 		if (!isobserver(activator))
 			boutput(activator, "<span class='alert'>You gotta be dead to use this, you goof!</span>")
 			return
-		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-		smoke.set_up(5, 0, get_turf(usr))
-		smoke.attach(usr)
-		smoke.start()
 		var/mob/living/object/O = new /mob/living/object(new /obj/item/sticker/ribbon/participant(get_turf(usr)), usr)
 		O.say_language = "animal"
 		O.literate = 0

@@ -73,7 +73,7 @@ You're just about done with that! Just one last thing you need to manually do.
 ### Step 6: Fixing Up :wrench: 
 
 :::info
-If you're a Goonstation maintainer, run `git submodule update --init` instead of this step.
+If you're a Goonstation developer, run `git submodule update --init` instead of this step.
 :::
 
 ++**This step is required.**++ You'll need to create a file named `__secret.dme` in the `+secret` subdirectory. **It should be blank and have no contents.** If you can't figure out how to make a empty file, use [this](https://www.dropbox.com/s/asvkccrk2fqkh14/__secret.dme).
