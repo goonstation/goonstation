@@ -59,7 +59,7 @@ toxic - poisons
 		return*/
 
 /datum/projectile/energy_bolt/bouncy
-	name = "richochet energy bolt"
+	name = "ricochet energy bolt"
 	var/max_bounce_count = 1
 	var/allow_headon_bounce = 0
 	var/reflect_on_nondense_hits = 0

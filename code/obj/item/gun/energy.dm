@@ -196,7 +196,7 @@
 
 /obj/item/gun/energy/taser_gun/bouncy
 	name = "richochet taser gun"
-	desc = "A weapon that produces an cohesive electrical charge that stuns its target. This one appears to be capable of firing richochet charges."
+	desc = "A weapon that produces an cohesive electrical charge that stuns its target. This one appears to be capable of firing ricochet charges."
 
 	New()
 		..()
