@@ -399,9 +399,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/explosion_power = 30
 	var/hit_sound = 'sound/voice/animal/cat.ogg'
 	var/max_bounce_count = 50
+	var/allow_headon_bounce = 1
 
 	on_hit(atom/A, direction, projectile)
-		shoot_reflected_bounce(projectile, A, max_bounce_count)
+		shoot_reflected_bounce(projectile, A, max_bounce_count, allow_headon_bounce)
 		var/turf/T = get_turf(A)
 		playsound(A, hit_sound, 60, 1)
 

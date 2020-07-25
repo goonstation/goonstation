@@ -1018,11 +1018,21 @@ datum/projectile/snowball
  * So I made my own proc, but left the old one in place just in case -- Sovexe
  * var/reflect_on_nondense_hits - flag for handling hitting objects that let bullets pass through like secbots, rather than duplicating projectiles
  */
-/proc/shoot_reflected_bounce(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3, var/reflect_on_nondense_hits = 0)
+/proc/shoot_reflected_bounce(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3, var/allow_headon_bounce = 0, var/reflect_on_nondense_hits = 0)
 	if(P.reflectcount >= max_reflects)
 		return
-	if (abs(P.shooter.x - reflector.x) < 1 || abs(P.shooter.y - reflector.y) < 1)
-		return //stop breaking the world you fuck!
+
+	if (allow_headon_bounce)
+		//stop breaking the world you fuck!
+		if (abs(P.shooter.x - reflector.x) == 1 && abs(P.shooter.y - reflector.y) == 1)
+			return
+		else if (abs(P.shooter.x - reflector.x) == 0 && abs(P.shooter.y - reflector.y) == 2)
+			return
+		else if (abs(P.shooter.x - reflector.x) == 2 && abs(P.shooter.y - reflector.y) == 0)
+			return
+	else
+		if(abs(P.shooter.x - reflector.x) == 0 || abs(P.shooter.y - reflector.y) == 0)
+			return //no
 
 	/*
 		* We have to calculate our incidence each time
@@ -1042,6 +1052,14 @@ datum/projectile/snowball
 		P.incidence = SOUTH
 	else if (x_diff == 0 && y_diff < 0)
 		P.incidence = NORTH
+	else if (x_diff < 0 && y_diff < 0)
+		P.incidence = pick(NORTH, EAST)
+	else if (x_diff < 0 && y_diff > 0)
+		P.incidence = pick(NORTH, WEST)
+	else if (x_diff > 0 && y_diff < 0)
+		P.incidence = pick(SOUTH, EAST)
+	else if (x_diff > 0 && y_diff > 0)
+		P.incidence = pick(SOUTH, WEST)
 	else
 		return //please no runtimes
 
