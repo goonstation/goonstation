@@ -194,6 +194,22 @@
 			cell.charge = 100
 			..()
 
+/obj/item/gun/energy/taser_gun/bouncy
+	name = "richochet taser gun"
+	desc = "A weapon that produces an cohesive electrical charge that stuns its target. This one appears to be capable of firing richochet charges."
+
+	New()
+		..()
+		current_projectile = new/datum/projectile/energy_bolt/bouncy
+		projectiles = list(current_projectile)
+
+	update_icon()
+		if(cell)
+			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+			ratio = round(ratio, 0.25) * 100
+			if(current_projectile.type == /datum/projectile/energy_bolt/bouncy)
+				src.icon_state = "taser[ratio]"
+
 /////////////////////////////////////LASERGUN
 /obj/item/gun/energy/laser_gun
 	name = "laser gun"
