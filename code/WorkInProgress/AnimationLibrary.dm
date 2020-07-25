@@ -166,8 +166,27 @@
 		layer = MOB_LAYER_BASE - 0.1
 		appearance_flags = TILE_BOUND
 
+	muzzleflash
+		icon = 'icons/mob/mob.dmi'
+		alpha = 255
+		plane = PLANE_OVERLAY_EFFECTS
+
+		unpooled()
+			..()
+			src.alpha = 255
+			src.pixel_x = 0
+			src.pixel_y = 0
+
+		pooled()
+			..()
+
+
+
 /mob/var/obj/particle/attack/attack_particle
 /mob/var/obj/particle/attack/sprint/sprint_particle
+
+
+
 
 ///obj/attackby(var/obj/item/I as obj, mob/user as mob)
 //	attack_particle(user,src)
@@ -430,55 +449,48 @@ proc/fuckup_attack_particle(var/mob/M)
 		animate(M.attack_particle, pixel_x = M.attack_particle.pixel_x + x , pixel_y = M.attack_particle.pixel_y + y, time = 5, easing = BOUNCE_EASING, flags = ANIMATION_END_NOW)
 
 proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim)
-	if (!M || !M.attack_particle || !origin || !target || !muzzle_anim) return
+	if (!M || !origin || !target || !muzzle_anim) return
 
 	var/offset = 22 //amt of pixels the muzzle flash sprite is offset the shooting mob by
 	var/firing_angle = get_angle(origin, target)
 	var/firing_dir = angle_to_dir(firing_angle)
+
+	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
+
 	switch(firing_dir) //so we apply the correct offset
 		if (NORTH)
-			M.attack_particle.pixel_y = 32
+			muzzleflash.pixel_y = 32
 		if (SOUTH)
-			M.attack_particle.pixel_y = -32
+			muzzleflash.pixel_y = -32
 		if (EAST)
-			M.attack_particle.pixel_x = offset
+			muzzleflash.pixel_x = offset
 		if (WEST)
-			M.attack_particle.pixel_x = -offset
+			muzzleflash.pixel_x = -offset
 		if (NORTHEAST) //diags look a little weird but what can you do
-			M.attack_particle.pixel_y = offset
-			M.attack_particle.pixel_x = offset
+			muzzleflash.pixel_y = offset
+			muzzleflash.pixel_x = offset
 		if (NORTHWEST)
-			M.attack_particle.pixel_y = offset
-			M.attack_particle.pixel_x = -offset
+			muzzleflash.pixel_y = offset
+			muzzleflash.pixel_x = -offset
 		if (SOUTHEAST)
-			M.attack_particle.pixel_y = -offset
-			M.attack_particle.pixel_x = offset
+			muzzleflash.pixel_y = -offset
+			muzzleflash.pixel_x = offset
 		if (SOUTHWEST)
-			M.attack_particle.pixel_y = -offset
-			M.attack_particle.pixel_x = -offset
+			muzzleflash.pixel_y = -offset
+			muzzleflash.pixel_x = -offset
 
-	var/matrix/start = matrix()
-	M.attack_particle.transform = start
 
-	M.attack_particle.Turn(firing_angle)
-	M.attack_particle.layer = MOB_INHAND_LAYER //so it looks like its from the weapon maybe??
+	muzzleflash.Turn(firing_angle)
+	muzzleflash.layer = MOB_INHAND_LAYER
+	muzzleflash.set_loc(M)
+	M.vis_contents.Add(muzzleflash)
+	if (muzzleflash.icon_state == muzzle_anim)
+		flick(muzzle_anim,muzzleflash)
+	muzzleflash.icon_state = muzzle_anim
 
-	M.attack_particle.set_loc(M) //so it doesnt linger when we move part 1
-	M.vis_contents.Add(M.attack_particle) //so it doesnt linger when we move part 2
-	M.attack_particle.invisibility = M.invisibility
-	M.last_interact_particle = world.time
-	M.attack_particle.alpha = 255
-	M.attack_particle.icon = 'icons/mob/mob.dmi'
-	if (M.attack_particle.icon_state == muzzle_anim)
-		flick(muzzle_anim,M.attack_particle)
-	M.attack_particle.icon_state = muzzle_anim
-
-	SPAWN_DBG(1.7 DECI SECONDS) //clears all the bs we had to do
-		M.attack_particle.alpha = 0
-		M.attack_particle.pixel_x = 0
-		M.attack_particle.pixel_y = 0
-		M.vis_contents.Remove(M.attack_particle)
-		M.attack_particle.layer = EFFECTS_LAYER_BASE
+	SPAWN_DBG(0.6 SECONDS)
+		M.vis_contents.Remove(muzzleflash)
+		pool(muzzleflash)
 
 
 /proc/sprint_particle(var/mob/M, var/turf/T = null)

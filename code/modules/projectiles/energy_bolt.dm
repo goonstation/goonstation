@@ -295,7 +295,11 @@ toxic - poisons
 	shot_sound = 'sound/weapons/Taser.ogg'
 	damage_type = D_ENERGY
 	hit_ground_chance = 30
-	brightness = 0
+	brightness = 1
+	color_red = 0.18
+	color_green = 0.2
+	color_blue = 1
+
 	disruption = 8
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'

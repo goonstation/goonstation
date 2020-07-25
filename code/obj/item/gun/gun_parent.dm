@@ -46,6 +46,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/charge_up = 0 //Does this gun have a charge up time and how long is it? 0 = normal instant shots.
 	var/shoot_delay = 4
 
+	var/muzzle_flash = "muzzle_flash" //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
+	var/list/muzzle_flash_simplelight_color
+
 	buildTooltipContent()
 		. = ..()
 		if(current_projectile)
@@ -364,6 +367,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return
 	if (!istype(src.current_projectile,/datum/projectile/))
 		return
+
+	if (src.muzzle_flash) //probably reinventing the wheel here as far as all of this goes, but idk
+		if (isturf(user.loc))
+			var/turf/origin = user.loc
+			muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 
 	if (ismob(user))
 		var/mob/M = user

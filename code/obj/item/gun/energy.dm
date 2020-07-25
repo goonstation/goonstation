@@ -168,6 +168,7 @@
 	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target."
 	module_research = list("weapons" = 4, "energy" = 4, "miniaturization" = 2)
+	muzzle_flash = "muzzle_flash_elec"
 
 	New()
 		current_projectile = new/datum/projectile/energy_bolt
@@ -204,6 +205,7 @@
 	force = 7.0
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	module_research = list("weapons" = 4, "energy" = 4)
+	muzzle_flash = "muzzle_flash_laser"
 
 	New()
 		current_projectile = new/datum/projectile/laser
@@ -235,6 +237,7 @@
 	icon_state = "caplaser"
 	uses_multiple_icon_states = 1
 	desc = "Wait, that's not a plastic toy..."
+	muzzle_flash = "muzzle_flash_laser"
 
 	New()
 		if (!src.cell)
@@ -327,6 +330,7 @@
 	mats = 50
 	module_research = list("weapons" = 5, "energy" = 4, "miniaturization" = 5)
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
+	muzzle_flash = "muzzle_flash_elec"
 
 	New()
 		current_projectile = new/datum/projectile/energy_bolt
@@ -339,12 +343,15 @@
 			if(current_projectile.type == /datum/projectile/energy_bolt)
 				src.item_state = "egun"
 				src.icon_state = "energystun[ratio]"
+				muzzle_flash = "muzzle_flash_elec"
 			else if (current_projectile.type == /datum/projectile/laser)
 				src.item_state = "egun-kill"
 				src.icon_state = "energykill[ratio]"
+				muzzle_flash = "muzzle_flash_laser"
 			else
 				src.item_state = "egun"
 				src.icon_state = "energy[ratio]"
+				muzzle_flash = "muzzle_flash_elec"
 	attack_self(var/mob/M)
 		..()
 		update_icon()
@@ -400,6 +407,7 @@
 	two_handed = 1
 	can_dual_wield = 0
 	shoot_delay = 6
+	muzzle_flash = "muzzle_flash_elec"
 
 	New()
 		current_projectile = new/datum/projectile/special/spreader/tasershotgunspread
@@ -1010,6 +1018,7 @@
 	item_state = "bullpup"
 	uses_multiple_icon_states = 1
 	force = 5.0
+	muzzle_flash = null
 
 	New()
 		..()
@@ -1437,6 +1446,7 @@
 	force = 5
 	two_handed = 1
 	can_dual_wield = 0
+	muzzle_flash = "muzzle_flash_bluezap"
 
 	New()
 		..()
