@@ -1,5 +1,11 @@
 
 (t)sat jul 25 20
+(u)ZeWaka
+(p)1542
+(e)🆕🔄|feature, rework
+(*)Ported the tgui interface system from tgstation. If you encounter weird interaction or ui bugs, please report them with the bug report button on the top right!
+(*)Much credit given to StyleMistake, spookydonut, actioninja, neersighted, and Faerdan for making this possible.
+(+)Atmos Tank Dispensers now use a fancy tgui interface.
 (u)mbc
 (e)🆕🎨|feature, sprites
 (*)New muzzle flash animations for taser and lasers. Also improved muzzle flash visibility in general.
