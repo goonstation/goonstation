@@ -1,4 +1,9 @@
 
+(t)sat jul 25 20
+(u)Flaborized
+(p)1594
+(e)🎨|sprites
+(+)Resprited the AK-477
 (t)sat jul 26 20
 (u)mbc
 (e)🆕🎨|feature, sprites
