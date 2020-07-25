@@ -1376,7 +1376,7 @@
 			var/action = input("What do you want to do?", "Cyborg Maintenance") as null|anything in available_actions
 			if (!action)
 				return
-			if (get_dist(src.loc,user.loc) > 1 && (!src.bioHolder || !src.bioHolder.HasEffect("telekinesis")))
+			if (get_dist(src.loc,user.loc) > 1 && !src.bioHolder?.HasEffect("telekinesis"))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
 

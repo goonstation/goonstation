@@ -4089,6 +4089,10 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/cafeteria)
+"kY" = (
+/obj/machinery/manufacturer/qm,
+/turf/simulated/floor/yellow,
+/area/station/quartermaster)
 "kZ" = (
 /turf/simulated/floor/stairs/wide/middle{
 	dir = 8
@@ -17089,10 +17093,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/tools)
-"UL" = (
-/obj/machinery/manufacturer/qm,
-/turf/simulated/floor/yellow,
-/area/station/quartermaster)
 "UM" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -61659,7 +61659,7 @@ eb
 eM
 dx
 Qy
-UL
+kY
 bH
 bH
 jo
