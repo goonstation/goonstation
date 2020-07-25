@@ -1030,9 +1030,8 @@ datum/projectile/snowball
 			return
 		else if (abs(P.shooter.x - reflector.x) == 2 && abs(P.shooter.y - reflector.y) == 0)
 			return
-	else
-		if(abs(P.shooter.x - reflector.x) == 0 || abs(P.shooter.y - reflector.y) == 0)
-			return //no
+	else if (abs(P.shooter.x - reflector.x) == 0 || abs(P.shooter.y - reflector.y) == 0)
+		return //no headon bounces
 
 	/*
 		* We have to calculate our incidence each time
