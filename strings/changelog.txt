@@ -1,5 +1,16 @@
 
 (t)fri jul 24 20
+(u)Kyle and Flaborized
+(p)1574
+(e)🆕🎨|feature, sprites
+(+)Wizard spell rings. Currently admin only. Sprites by flab, obviously.
+(u)mbc
+(*)New HUD highlights for humans to indicate where items may be placed, which hand(s) an item would go into, and making the intents/drop buttons more clear on the default hud.
+(*)You can toggle off the item ghosts that appear on mouse-over using the Game panel on the top left menu.
+(u)BatElite
+(p)1514
+(e)🎨|sprites
+(*)New cyborg upgrade sprites.
 (u)Superlagg
 (p)1526
 (e)🆕|feature
