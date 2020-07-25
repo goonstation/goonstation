@@ -97,9 +97,6 @@
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0
 
-	proc/get_power(obj/O)
-		return src.proj_data.power - max(0,((isnull(src.orig_turf)? 0 : get_dist(src.orig_turf, get_turf(O)))-src.proj_data.dissipation_delay))*src.proj_data.dissipation_rate
-
 	proc/collide(atom/A as mob|obj|turf|area)
 		if (!A) return // you never know ok??
 		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
@@ -114,7 +111,7 @@
 				return
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				ticks_until_can_hit_mob = src.proj_data.ticks_between_mob_hits
-		src.power = src.get_power(A)
+		src.power = src.proj_data.get_power(src, A)
 		if(src.power <= 0 && src.proj_data.power != 0) return //we have run out of power
 		// Necessary because the check in human.dm is ineffective (Convair880).
 		var/immunity = check_target_immunity(A, source = src)
@@ -658,6 +655,9 @@ datum/projectile
 		on_canpass(var/obj/projectile/O, atom/movable/passing_thing)
 			.= 1
 
+		get_power(obj/projectile/P, atom/A)
+			return src.power - max(0,((isnull(P.orig_turf)? 0 : get_dist(P.orig_turf, get_turf(A)))-src.dissipation_delay))*src.dissipation_rate
+
 // WOO IMPACT RANGES
 // Meticulously calculated by hand.
 
@@ -1009,6 +1009,92 @@ datum/projectile/snowball
 	Q.reflectcount = P.reflectcount + 1
 	if (ismob(P.shooter))
 		Q.mob_shooter = P.shooter
+	Q.name = "reflected [Q.name]"
+	Q.launch()
+	return Q
+
+/*
+ * shoot_reflected_true seemed half broken...
+ * So I made my own proc, but left the old one in place just in case -- Sovexe
+ * var/reflect_on_nondense_hits - flag for handling hitting objects that let bullets pass through like secbots, rather than duplicating projectiles
+ */
+/proc/shoot_reflected_bounce(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3, var/allow_headon_bounce = 0, var/reflect_on_nondense_hits = 0)
+	if(P.reflectcount >= max_reflects)
+		return
+
+	if (allow_headon_bounce)
+		//stop breaking the world you fuck!
+		if (abs(P.shooter.x - reflector.x) == 1 && abs(P.shooter.y - reflector.y) == 1)
+			return
+		else if (abs(P.shooter.x - reflector.x) == 0 && abs(P.shooter.y - reflector.y) == 2)
+			return
+		else if (abs(P.shooter.x - reflector.x) == 2 && abs(P.shooter.y - reflector.y) == 0)
+			return
+	else if (abs(P.shooter.x - reflector.x) == 0 || abs(P.shooter.y - reflector.y) == 0)
+		return //no headon bounces
+
+	/*
+		* We have to calculate our incidence each time
+		* Otherwise we risk the reflect projectile using the same incidence over and over
+		* resulting in bumping same wall repeatadly
+	*/
+	var/x_diff = reflector.x - P.x
+	var/y_diff = reflector.y - P.y
+
+	if (!x_diff && !y_diff)
+		return //we are inside the reflector or something went terribly wrong
+	else if (x_diff > 0 && y_diff == 0)
+		P.incidence = WEST
+	else if (x_diff < 0 && y_diff == 0)
+		P.incidence = EAST
+	else if (x_diff == 0 && y_diff > 0)
+		P.incidence = SOUTH
+	else if (x_diff == 0 && y_diff < 0)
+		P.incidence = NORTH
+	else if (x_diff < 0 && y_diff < 0)
+		P.incidence = pick(EAST, NORTH)
+	else if (x_diff < 0 && y_diff > 0)
+		P.incidence = pick(EAST, SOUTH)
+	else if (x_diff > 0 && y_diff < 0)
+		P.incidence = pick(WEST, NORTH)
+	else if (x_diff > 0 && y_diff > 0)
+		P.incidence = pick(WEST, SOUTH)
+	else
+		return //please no runtimes
+
+	var/rx = 0
+	var/ry = 0
+
+	var/nx = P.incidence == WEST ? -1 : (P.incidence == EAST ?  1 : 0)
+	var/ny = P.incidence == SOUTH ? -1 : (P.incidence == NORTH ?  1 : 0)
+
+	var/dn = 2 * (P.xo * nx + P.yo * ny) // incident direction DOT normal * 2
+	rx = P.xo - dn * nx // r = d - 2 * (d * n) * n
+	ry = P.yo - dn * ny
+
+	if (rx == ry && rx == 0)
+		logTheThing("debug", null, null, "<b>Reflecting Projectiles</b>: Reflection failed for [P.name] (incidence: [P.incidence], direction: [P.xo];[P.yo]).")
+		return // unknown error
+
+	//spawns the new projectile in the same location as the existing one, not inside the hit thing
+	var/obj/projectile/Q = initialize_projectile(get_turf(P), P.proj_data, rx, ry, reflector)
+	if (!Q)
+		return
+	Q.reflectcount = P.reflectcount + 1
+	if (ismob(P.shooter))
+		Q.mob_shooter = P.shooter
+
+	//fix for duplicating projectiles when hitting nondense objects like secbots that don't kill projectiles
+	if (isobj(reflector) && reflector.density == 0)
+		if (reflect_on_nondense_hits)
+			P.die()
+		else
+			Q.die()
+			if (P)
+				return P
+			else
+				return
+
 	Q.name = "reflected [Q.name]"
 	Q.launch()
 	return Q

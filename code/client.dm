@@ -100,6 +100,8 @@
 
 	var/admin_intent = 0
 
+	var/hand_ghosts = 1 //pickup ghosts inhand
+
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
 		logTheThing("audit", src, target, message)
@@ -513,6 +515,9 @@
 	else
 		src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
 
+	//game stuf
+	hand_ghosts = winget( src, "menu.use_hand_ghosts", "is-checked" ) == "true"
+
 	//sound
 	if (winget( src, "menu.speech_sounds", "is-checked" ) == "true")
 		ignore_sound_flags |= SOUND_SPEECH
@@ -795,6 +800,10 @@ var/global/curr_day = null
 
 /client/Topic(href, href_list)
 	if (!usr || isnull(usr.client))
+		return
+
+	// Tgui Topic middleware
+	if(!tgui_Topic(href_list))
 		return
 
 	var/mob/M
@@ -1216,6 +1225,12 @@ var/global/curr_day = null
 		src.ignore_sound_flags &= ~SOUND_VOX
 	else
 		src.ignore_sound_flags |= SOUND_VOX
+
+
+/client/verb/set_hand_ghosts()
+	set hidden = 1
+	set name = "set-hand-ghosts"
+	hand_ghosts = winget( src, "menu.use_hand_ghosts", "is-checked" ) == "true"
 
 //These size helpers are invisible browser windows that help with getting client screen dimensions
 /client/proc/initSizeHelpers()

@@ -1,5 +1,40 @@
 
+(t)sat jul 25 20
+(u)ZeWaka
+(p)1542
+(e)🆕🔄|feature, rework
+(*)Ported the tgui interface system from tgstation. If you encounter weird interaction or ui bugs, please report them with the bug report button on the top right!
+(*)Much credit given to StyleMistake, spookydonut, actioninja, neersighted, and Faerdan for making this possible.
+(+)Atmos Tank Dispensers now use a fancy tgui interface.
+(u)mbc
+(e)🆕🎨|feature, sprites
+(*)New muzzle flash animations for taser and lasers. Also improved muzzle flash visibility in general.
+(+)Fixed bug where glasses weren't correctly applying vision color mods.
+(u)Flaborized
+(p)1594
+(e)🎨|sprites
+(+)Resprited the AK-477
+(t)fri jul 24 20
+(u)Kyle and Flaborized
+(p)1574
+(e)🆕🎨|feature, sprites
+(+)Wizard spell rings. Currently admin only. Sprites by flab, obviously.
+(u)mbc
+(*)New HUD highlights for humans to indicate where items may be placed, which hand(s) an item would go into, and making the intents/drop buttons more clear on the default hud.
+(*)You can toggle off the item ghosts that appear on mouse-over using the Game panel on the top left menu.
+(u)BatElite
+(p)1514
+(e)🎨|sprites
+(*)New cyborg upgrade sprites.
+(u)Superlagg
+(p)1526
+(e)🆕|feature
+(*)Zip guns now explode one shot later than they used to.
 (t)thu jul 23 20
+(u)MarkNstein
+(p)1536
+(e)🔄|rework
+(*)Action(bar)s will no longer reset upon successive attempts.
 (u)mbc
 (p)1584
 (e)🆕|feature

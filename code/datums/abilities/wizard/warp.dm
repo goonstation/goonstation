@@ -31,7 +31,7 @@
 			return
 
 		var/telerange = 10
-		if (holder.owner.wizard_spellpower())
+		if (holder.owner.wizard_spellpower(src))
 			telerange = 25
 		else
 			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")

@@ -73,6 +73,9 @@ datum/preferences
 	var/target_cursor = "Default"
 	var/hud_style = "New"
 
+	var/tgui_fancy = TRUE
+	var/tgui_lock = FALSE
+
 	var/tooltip_option = TOOLTIP_ALWAYS
 
 	var/regex/character_name_validation = null //This regex needs to match the name in order to consider it a valid name
@@ -228,11 +231,11 @@ datum/preferences
 			data_cache = list("script" = null,"css" = null,"profile_name" = null,"character_name" = null,"gender" = null,"age_blood" = null,\
 								"bank" = null,"flavortext" = null,"security_note" = null,"medical_note" = null,"occupation" = null,"traits" = null,\
 								"fartsound" = null,"screamsound" = null,"chatsound" = null,"skintone" = null,"eyecolor" = null,"hair_top" = null,"hair_mid" = null,"hair_bottom" = null,\
-								"underwear" = null,"randomize" = null,"font_size" = null,"messages" = null,"hud" = null,"tooltips" = null,"popups" = null,"controls" = null,"map"=null)
+								"underwear" = null,"randomize" = null,"font_size" = null,"messages" = null,"hud" = null,"tooltips" = null, "tgui" = null,"popups" = null,"controls" = null,"map"=null)
 			rebuild_data = list("script" = 1,"css" = 1,"profile_name" = 1,"character_name" = 1,"gender" = 1,"age_blood" = 1,\
 								"bank" = 1,"flavortext" = 1,"security_note" = 1,"medical_note" = 1,"occupation" = 1,"traits" = 1,\
 								"fartsound" = 1,"screamsound" = 1,"chatsound" = 1,"skintone" = 1,"eyecolor" = 1,"hair_top" = 1,"hair_mid" = 1,"hair_bottom" = 1,\
-								"underwear" = 1,"randomize" = 1,"font_size" = 1,"messages" = 1,"hud" = 1,"tooltips" = 1,"popups" = 1,"controls" = 1,"map"=1)
+								"underwear" = 1,"randomize" = 1,"font_size" = 1,"messages" = 1,"hud" = 1,"tooltips" = 1, "tgui" = 1, "popups" = 1,"controls" = 1,"map"=1)
 		if (!profile_cache)
 			profile_cache = list()
 			rebuild_profile = 1
@@ -646,7 +649,7 @@ $(function() {
 			data_cache["hair_top"] = {"
 	<tr>
 		<th>
-			Top Detail<span class="info-thing" title="Hair or other features. This one is appied above the other ones.">?</span>
+			Top Detail<span class="info-thing" title="Hair or other features. This one is applied above the other ones.">?</span>
 		</th>
 		<td>
 			<a href='[pref_link]detail=input'>&#9998;</a>
@@ -776,6 +779,19 @@ $(function() {
 			<a href="[pref_link]tooltip=1" class="toggle">[crap_checkbox(src.tooltip_option == TOOLTIP_ALWAYS)] Show Always</a>
 			<br><a href="[pref_link]tooltip=2" class="toggle">[crap_checkbox(src.tooltip_option == TOOLTIP_ALT)] Show When ALT is held</a>
 			<br><a href="[pref_link]tooltip=3" class="toggle">[crap_checkbox(src.tooltip_option == TOOLTIP_NEVER)] Never Show</a>
+		</td>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["tgui"])
+			rebuild_data["tgui"] = 0
+			data_cache["tgui"] = {"
+	<tr>
+		<th>
+			tgui<span class="info-thing" title="tgui is the UI framework we use for some game windows, and it comes with options!">?</span>
+		</th>
+		<td colspan="2">
+			<a href="[pref_link]tgui_fancy=1" class="toggle">[crap_checkbox(src.tgui_fancy)] Fast & Fancy Windows</a>
+			<br><a href="[pref_link]tgui_lock=1" class="toggle">[crap_checkbox(src.tgui_lock)] Lock initial placement of windows</a>
 		</td>
 	</tr>"}
 		LAGCHECK(80)
@@ -1663,6 +1679,14 @@ $(function() {
 					src.tooltip_option = TOOLTIP_NEVER
 				else src.tooltip_option = TOOLTIP_ALWAYS
 
+		if (link_tags["tgui_fancy"])
+			rebuild_data["tgui"] = 1
+			src.tgui_fancy = !(src.tgui_fancy)
+
+		if (link_tags["tgui_lock"])
+			rebuild_data["tgui"] = 1
+			src.tgui_lock = !(src.tgui_lock)
+
 		if (link_tags["scores"])
 			rebuild_data["popups"] = 1
 			src.view_score = !(src.view_score)
@@ -1893,6 +1917,8 @@ $(function() {
 			be_spy = 0
 			be_gangleader = 0
 			tooltip_option = TOOLTIP_ALWAYS
+			tgui_fancy = TRUE
+			tgui_lock = FALSE
 			if (!force_random_names)
 				be_random_name = 0
 			else
