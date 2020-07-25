@@ -11,6 +11,13 @@
 	dir = 10
 	},
 /area)
+"ac" = (
+/obj/table/auto,
+/obj/machinery/defib_mount{
+	pixel_y = -4
+	},
+/turf/simulated/floor/bluewhite/corner,
+/area)
 "ad" = (
 /turf/simulated/floor/wood/three{
 	icon_state = "c12"
@@ -141,6 +148,12 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area)
+"aB" = (
+/obj/machinery/disposal,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area)
 "aC" = (
 /obj/decal/tile_edge/floorguide/medbay{
 	dir = 4
@@ -159,6 +172,15 @@
 	dir = 4
 	},
 /turf/simulated/floor,
+/area)
+"aF" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/simulated/floor/sanitary,
 /area)
 "aG" = (
 /obj/machinery/door/airlock/pyro/engineering,
@@ -192,6 +214,14 @@
 "aK" = (
 /obj/machinery/launcher_loader/south,
 /turf/simulated/floor/airless/plating,
+/area)
+"aL" = (
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/turf/simulated/floor/bluewhite/corner{
+	dir = 1
+	},
 /area)
 "aM" = (
 /obj/cable{
@@ -231,6 +261,10 @@
 	name = "ratty blue couch"
 	},
 /turf/simulated/floor/wood/two,
+/area)
+"aS" = (
+/obj/machinery/door/airlock/pyro/medical,
+/turf/simulated/floor/grey,
 /area)
 "aT" = (
 /obj/stool/chair/couch{
@@ -319,12 +353,31 @@
 	dir = 8
 	},
 /area)
+"bh" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/firstaid/regular,
+/turf/simulated/floor/black,
+/area)
 "bi" = (
 /obj/table/auto,
 /obj/item/reagent_containers/glass/wateringcan{
 	pixel_y = 6
 	},
 /turf/simulated/floor/grime,
+/area)
+"bj" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/beaker/large/epinephrine{
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/glass/beaker/large/antitox{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/hypospray,
+/obj/item/reagent_containers/hypospray,
+/obj/item/reagent_containers/dropper,
+/turf/simulated/floor/carpet/blue/standard/edge/east,
 /area)
 "bk" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -539,6 +592,12 @@
 	dir = 4
 	},
 /area)
+"bV" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/turf/simulated/floor/sanitary,
+/area)
 "bW" = (
 /turf/simulated/floor/arrival{
 	dir = 9
@@ -622,6 +681,15 @@
 	},
 /turf/simulated/floor/sanitary/blue,
 /area)
+"co" = (
+/obj/table/wood/auto,
+/obj/machinery/networked/printer{
+	name = "Printer - MD";
+	pixel_y = 5;
+	print_id = "MD"
+	},
+/turf/simulated/floor/black,
+/area)
 "cp" = (
 /obj/table/wood/auto,
 /obj/machinery/computer3/generic/personal,
@@ -679,6 +747,14 @@
 	},
 /turf/simulated/floor/engine/caution/northsouth,
 /area)
+"cB" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/brute,
+/obj/item/storage/firstaid/brute,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area)
 "cC" = (
 /turf/simulated/floor/engine/vacuum,
 /area)
@@ -687,6 +763,10 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
+/area)
+"cF" = (
+/obj/stool/chair/blue,
+/turf/simulated/floor/carpet/blue/standard/edge/sw,
 /area)
 "cG" = (
 /obj/machinery/door/airlock/pyro/engineering{
@@ -874,6 +954,12 @@
 "dk" = (
 /turf/simulated/floor/circuit/purple,
 /area)
+"dl" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/turf/simulated/floor/bluewhite,
+/area)
 "dm" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/flower_vase{
@@ -1043,6 +1129,9 @@
 	},
 /turf/simulated/floor/plating,
 /area)
+"dO" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area)
 "dP" = (
 /turf/simulated/floor/blueblack,
 /area)
@@ -1151,6 +1240,12 @@
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
 /area)
+"ei" = (
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue/standard/edge/nw,
+/area)
 "ek" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 10;
@@ -1176,6 +1271,10 @@
 /obj/decal/stage_edge/alt,
 /turf/simulated/floor/wood,
 /area)
+"eq" = (
+/obj/machinery/chem_heater,
+/turf/simulated/floor/black,
+/area)
 "er" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4
@@ -1190,6 +1289,15 @@
 	icon_state = "4-8"
 	},
 /turf/space,
+/area)
+"et" = (
+/obj/critter/bat/doctor,
+/obj/shrub{
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/turf/simulated/floor/black,
 /area)
 "eu" = (
 /obj/grille/catwalk{
@@ -1249,6 +1357,8 @@
 	},
 /area)
 "eB" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/regular,
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
@@ -1397,6 +1507,15 @@
 	},
 /turf/simulated/floor/white,
 /area)
+"fh" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 1
+	},
+/turf/simulated/floor/grey,
+/area)
+"fi" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area)
 "fj" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/blue,
@@ -1406,6 +1525,9 @@
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
+/area)
+"fl" = (
+/turf/simulated/floor/carpet/blue,
 /area)
 "fm" = (
 /obj/machinery/atmospherics/valve,
@@ -1707,6 +1829,14 @@
 "gk" = (
 /turf/simulated/floor/grey/blackgrime/other,
 /area)
+"gl" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area)
 "gm" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/wood/two,
@@ -1854,6 +1984,14 @@
 "gQ" = (
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
+"gS" = (
+/obj/machinery/computer/announcement{
+	dir = 4;
+	name = "Medical Announcement Computer";
+	req_access_txt = "19"
+	},
+/turf/simulated/floor/black,
+/area)
 "gT" = (
 /turf/simulated/floor/delivery,
 /area)
@@ -1897,6 +2035,12 @@
 /area/station/routingdepot/eva{
 	name = "Router Cabinet"
 	})
+"ha" = (
+/obj/stool/chair/office/green{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
+/area)
 "hb" = (
 /obj/machinery/door/airlock/pyro/glass/engineering,
 /turf/simulated/floor/engine,
@@ -1924,6 +2068,9 @@
 	},
 /obj/item/clothing/under/shorts/blue,
 /turf/simulated/floor/industrial,
+/area)
+"he" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area)
 "hf" = (
 /obj/table/auto,
@@ -1971,6 +2118,10 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine/caution/westeast,
+/area)
+"hq" = (
+/obj/stool/chair/blue,
+/turf/simulated/floor/carpet/blue/standard/edge/south,
 /area)
 "hr" = (
 /obj/machinery/networked/test_apparatus/heater,
@@ -2129,6 +2280,9 @@
 	dir = 8
 	},
 /area)
+"hU" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
+/area)
 "hV" = (
 /turf/simulated/floor/airless/caution/westeast,
 /area)
@@ -2267,6 +2421,14 @@
 	},
 /turf/simulated/floor/plating,
 /area)
+"iv" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/toxin,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area)
 "iw" = (
 /turf/simulated/floor/engine/caution/north,
 /area)
@@ -2283,14 +2445,32 @@
 	dir = 8
 	},
 /area)
+"iz" = (
+/obj/machinery/clonepod,
+/turf/simulated/floor/bluewhite,
+/area)
 "iA" = (
 /obj/stool/chair/office/yellow{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area)
+"iB" = (
+/obj/table/wood/auto,
+/obj/machinery/networked/storage/scanner{
+	bank_id = "md";
+	pixel_y = 4
+	},
+/turf/simulated/floor/black,
+/area)
 "iC" = (
 /turf/simulated/floor/carpet/red/fancy/edge/north,
+/area)
+"iD" = (
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/turf/simulated/floor,
 /area)
 "iF" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -2300,6 +2480,12 @@
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
+/area)
+"iG" = (
+/obj/machinery/computer3/terminal/zeta{
+	setup_os_string = "ZETA_MAINFRAME"
+	},
+/turf/simulated/floor/grey,
 /area)
 "iH" = (
 /turf/simulated/floor/engine/caution/corner{
@@ -2379,6 +2565,9 @@
 	name = "Router Cabinet"
 	})
 "iU" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -2673,6 +2862,9 @@
 	},
 /turf/simulated/floor/sanitary/blue,
 /area)
+"jQ" = (
+/turf/simulated/floor/carpet/blue/standard/edge/west,
+/area)
 "jR" = (
 /obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/cable{
@@ -2932,6 +3124,14 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area)
+"kA" = (
+/obj/storage/secure/closet/medical{
+	name = "Patient Locker"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area)
 "kB" = (
 /obj/item/storage/secure/ssafe{
 	pixel_x = 28
@@ -2979,6 +3179,12 @@
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
+/area)
+"kH" = (
+/obj/stool/chair/office/blue{
+	dir = 4
+	},
+/turf/simulated/floor,
 /area)
 "kI" = (
 /obj/cable{
@@ -3170,6 +3376,12 @@
 	},
 /turf/simulated/floor/airless/black,
 /area)
+"ll" = (
+/obj/machinery/sleeper/port_a_medbay,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 4
+	},
+/area)
 "lm" = (
 /obj/table/wood/auto,
 /obj/item/device/audio_log,
@@ -3211,6 +3423,16 @@
 	amount = 2100
 	},
 /turf/simulated/pool/no_animate,
+/area)
+"ls" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -2
+	},
+/obj/item/storage/belt/utility{
+	pixel_y = 4
+	},
+/turf/simulated/floor/grey,
 /area)
 "lt" = (
 /turf/simulated/floor/stairs/wide/other{
@@ -3466,6 +3688,12 @@
 	},
 /turf/simulated/floor/wood/two,
 /area)
+"mb" = (
+/obj/machinery/sleep_console{
+	dir = 8
+	},
+/turf/simulated/floor/bluewhite,
+/area)
 "mc" = (
 /obj/stool/bar,
 /turf/simulated/floor/wood/two,
@@ -3474,6 +3702,12 @@
 /turf/simulated/floor/wood/three{
 	icon_state = "3,5"
 	},
+/area)
+"me" = (
+/obj/stool/chair/office/blue{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
 /area)
 "mf" = (
 /turf/simulated/floor/carpet{
@@ -3560,6 +3794,10 @@
 	name = "Observer-Start"
 	},
 /turf/simulated/floor/airless/circuit,
+/area)
+"mr" = (
+/obj/stool/bench/blue/auto,
+/turf/simulated/floor,
 /area)
 "mt" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -3695,6 +3933,12 @@
 "mR" = (
 /obj/structure/girder/displaced,
 /turf/simulated/floor/plating/random,
+/area)
+"mT" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor/black/side{
+	dir = 8
+	},
 /area)
 "mU" = (
 /obj/stool/chair/office{
@@ -3968,6 +4212,12 @@
 /obj/item/scalpel,
 /turf/simulated/floor/redwhite,
 /area)
+"nA" = (
+/obj/stool/chair/office{
+	dir = 4
+	},
+/turf/simulated/floor/grey,
+/area)
 "nC" = (
 /turf/simulated/floor/wood/three{
 	icon_state = "c11"
@@ -3982,6 +4232,12 @@
 /area)
 "nE" = (
 /turf/simulated/floor/grass/leafy,
+/area)
+"nF" = (
+/obj/machinery/computer/cloning{
+	dir = 4
+	},
+/turf/simulated/floor/bluewhite,
 /area)
 "nG" = (
 /obj/tree1,
@@ -4130,6 +4386,15 @@
 "og" = (
 /turf/simulated/floor/carpet/red/fancy/innercorner/ne_sw,
 /area)
+"oi" = (
+/obj/table/auto,
+/obj/item/storage/box/stma_kit{
+	pixel_y = 4
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area)
 "oj" = (
 /obj/machinery/emitter{
 	dir = 4
@@ -4203,6 +4468,20 @@
 "op" = (
 /turf/simulated/floor/white/side,
 /area)
+"oq" = (
+/obj/machinery/computer3/generic/med_data{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area)
+"or" = (
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 16
+	},
+/turf/simulated/floor/bluewhite/corner{
+	dir = 8
+	},
+/area)
 "os" = (
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -4230,6 +4509,12 @@
 /area)
 "oy" = (
 /turf/simulated/floor/stairs/wide/other,
+/area)
+"oA" = (
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4
+	},
+/turf/simulated/floor/darkblue,
 /area)
 "oB" = (
 /obj/item/reagent_containers/glass/bottle,
@@ -4320,6 +4605,14 @@
 /obj/item/storage/firstaid/oxygen,
 /obj/machinery/light,
 /turf/simulated/floor/green/checker,
+/area)
+"oP" = (
+/obj/stool/chair/comfy/wheelchair{
+	dir = 8
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
 /area)
 "oQ" = (
 /obj/lattice{
@@ -4422,6 +4715,10 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor,
+/area)
+"pd" = (
+/obj/machinery/chem_dispenser,
+/turf/simulated/floor/black,
 /area)
 "pe" = (
 /turf/simulated/floor/blue,
@@ -4639,6 +4936,17 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area)
+"pQ" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/clothing/mask/surgical,
+/obj/item/spraybottle/cleaner,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area)
 "pR" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -4716,6 +5024,10 @@
 /turf/simulated/floor/stairs/wood/wide{
 	dir = 8
 	},
+/area)
+"qd" = (
+/obj/submachine/cargopad/robotics,
+/turf/simulated/floor/grey,
 /area)
 "qe" = (
 /turf/simulated/floor/carpet/red/fancy/narrow/se,
@@ -5032,6 +5344,12 @@
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/dropper/mechanical,
 /turf/simulated/floor/white,
+/area)
+"re" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/darkblue/checker,
 /area)
 "rf" = (
 /turf/simulated/floor/sandytile,
@@ -5579,6 +5897,14 @@
 	},
 /turf/simulated/floor/black,
 /area)
+"sN" = (
+/obj/stool/chair/blue{
+	dir = 8
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area)
 "sP" = (
 /turf/simulated/floor/escape{
 	dir = 1
@@ -5642,9 +5968,40 @@
 	},
 /turf/simulated/floor/plating,
 /area)
+"ta" = (
+/obj/table/auto,
+/obj/machinery/phone,
+/turf/simulated/floor/darkblue/checker,
+/area)
+"tb" = (
+/obj/table/auto,
+/obj/machinery/computer3/generic/personal,
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area)
 "tc" = (
 /turf/simulated/floor/escape/corner,
 /area/station/hallway/secondary/exit)
+"td" = (
+/obj/item/storage/firstaid/oxygen{
+	pixel_y = -4
+	},
+/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/fire{
+	pixel_y = -4
+	},
+/obj/item/storage/firstaid/regular,
+/obj/item/bandage,
+/obj/item/bandage,
+/obj/item/bandage,
+/obj/item/robodefibrillator,
+/obj/item/body_bag,
+/obj/item/body_bag,
+/obj/item/body_bag,
+/obj/storage/cart/medcart,
+/turf/simulated/floor/bluewhite,
+/area)
 "te" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -5821,6 +6178,10 @@
 /turf/simulated/floor/purpleblack{
 	dir = 10
 	},
+/area)
+"tD" = (
+/obj/machinery/vending/standard,
+/turf/simulated/floor/black,
 /area)
 "tE" = (
 /obj/storage/secure/closet/command/chief_engineer,
@@ -6070,6 +6431,14 @@
 	},
 /turf/simulated/floor/plating,
 /area)
+"uv" = (
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/turf/simulated/floor/bluewhite/corner{
+	dir = 4
+	},
+/area)
 "uw" = (
 /obj/storage/secure/filing_cabinet,
 /turf/simulated/floor/black,
@@ -6170,6 +6539,18 @@
 	},
 /turf/simulated/floor/grey,
 /area)
+"uP" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/turf/simulated/floor/black,
+/area)
 "uQ" = (
 /obj/decal/stage_edge/alt,
 /obj/stool/chair/office/yellow{
@@ -6254,6 +6635,11 @@
 "ve" = (
 /obj/decal/stage_edge/alt,
 /turf/simulated/floor/black,
+/area)
+"vf" = (
+/obj/table/auto,
+/obj/item/remote/porter/port_a_medbay,
+/turf/simulated/floor/bluewhite,
 /area)
 "vh" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/south,
@@ -6462,6 +6848,12 @@
 	},
 /turf/simulated/floor/black,
 /area)
+"vS" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor/grey,
+/area)
 "vT" = (
 /obj/stool/chair/office/blue{
 	dir = 4
@@ -6530,6 +6922,12 @@
 	},
 /turf/space,
 /area)
+"wd" = (
+/obj/machinery/chem_master{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area)
 "we" = (
 /obj/item/storage/toilet{
 	desc = "You think you see something in there... you should take another look.";
@@ -6584,6 +6982,16 @@
 	icon_state = "2-5"
 	},
 /turf/space,
+/area)
+"wk" = (
+/obj/table/auto,
+/obj/item/staple_gun,
+/obj/item/scalpel{
+	pixel_x = -4;
+	pixel_y = 11
+	},
+/obj/item/circular_saw,
+/turf/simulated/floor/black,
 /area)
 "wm" = (
 /obj/table/auto,
@@ -6647,6 +7055,15 @@
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
+/area)
+"wx" = (
+/obj/table/auto,
+/obj/item/scalpel,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/turf/simulated/floor/caution/east,
 /area)
 "wy" = (
 /obj/machinery/atmospherics/pipe/simple,
@@ -6805,6 +7222,12 @@
 /obj/storage/closet/office,
 /turf/simulated/floor/plating/random,
 /area)
+"wX" = (
+/obj/stool/chair/blue{
+	dir = 1
+	},
+/turf/simulated/floor/bluewhite,
+/area)
 "wY" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/barber,
@@ -6841,6 +7264,17 @@
 	},
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/grey,
+/area)
+"xe" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/clothing/mask/surgical,
+/obj/item/spraybottle/cleaner,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 4
+	},
 /area)
 "xf" = (
 /obj/disposalpipe/segment/transport{
@@ -7176,9 +7610,17 @@
 /obj/machinery/disposal,
 /turf/simulated/floor/redwhite,
 /area)
+"yj" = (
+/obj/iv_stand,
+/turf/simulated/floor/sanitary/white,
+/area)
 "yk" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/random,
+/area)
+"yl" = (
+/obj/machinery/clone_scanner,
+/turf/simulated/floor/bluewhite,
 /area)
 "ym" = (
 /obj/machinery/atmospherics/unary/furnace_connector{
@@ -7317,6 +7759,12 @@
 "yI" = (
 /obj/random_item_spawner/junk/few,
 /turf/simulated/floor/plating/random,
+/area)
+"yJ" = (
+/obj/machinery/optable{
+	id = "robotics"
+	},
+/turf/simulated/floor/sanitary/white,
 /area)
 "yK" = (
 /obj/machinery/disposal,
@@ -7478,6 +7926,12 @@
 	dir = 10
 	},
 /area/station/hallway/secondary/exit)
+"zj" = (
+/obj/machinery/computer/operating{
+	dir = 8
+	},
+/turf/simulated/floor/sanitary/white,
+/area)
 "zk" = (
 /obj/storage/closet/wardrobe/white,
 /turf/simulated/floor/plating,
@@ -7864,6 +8318,13 @@
 	},
 /turf/simulated/floor/plating,
 /area)
+"Ap" = (
+/obj/table/auto,
+/obj/item/storage/belt/utility,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/device/multitool,
+/turf/simulated/floor/black,
+/area)
 "Aq" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -8136,6 +8597,14 @@
 /area)
 "Bg" = (
 /turf/simulated/floor/carpet/red/standard/edge/ne,
+/area)
+"Bh" = (
+/obj/rack,
+/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/medical,
+/turf/simulated/floor/darkblue/checker,
 /area)
 "Bi" = (
 /obj/storage/closet/fire,
@@ -8556,6 +9025,9 @@
 "CB" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
 /area)
+"CC" = (
+/turf/simulated/floor/carpet/blue/standard/edge/north,
+/area)
 "CD" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
@@ -8643,6 +9115,13 @@
 /obj/item/card_box/suit,
 /turf/simulated/floor/carpet/grime,
 /area)
+"CP" = (
+/obj/table/auto,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
+	},
+/turf/simulated/floor/darkblue/checker,
+/area)
 "CQ" = (
 /obj/machinery/computer/announcement{
 	dir = 8;
@@ -8677,11 +9156,21 @@
 	},
 /turf/simulated/floor/sanitary,
 /area)
+"CW" = (
+/obj/storage/secure/closet/command/medical_director,
+/turf/simulated/floor/black,
+/area)
 "CY" = (
 /obj/cable{
 	icon_state = "5-8"
 	},
 /turf/simulated/floor/plating/random,
+/area)
+"CZ" = (
+/obj/table/auto,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/remote/porter/port_a_nanomed,
+/turf/simulated/floor/bluewhite,
 /area)
 "Da" = (
 /obj/table/reinforced/bar/auto,
@@ -8735,6 +9224,12 @@
 "Dh" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/catering_horizontal/vertical,
 /turf/simulated/floor/engine,
+/area)
+"Di" = (
+/obj/machinery/computer/operating{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary/white,
 /area)
 "Dj" = (
 /obj/machinery/disposal,
@@ -9094,6 +9589,12 @@
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
 /area)
+"En" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/oilcan,
+/obj/item/reagent_containers/glass/oilcan,
+/turf/simulated/floor/black,
+/area)
 "Eo" = (
 /obj/grille/catwalk{
 	dir = 1
@@ -9137,8 +9638,7 @@
 /area)
 "Ev" = (
 /obj/table/wood/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/random_item_spawner/desk_stuff/g_clip_bin_fpen,
 /turf/simulated/floor/black,
 /area)
 "Ew" = (
@@ -9189,6 +9689,12 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/mousetraps,
 /turf/simulated/floor/plating,
+/area)
+"EC" = (
+/obj/machinery/vending/medical,
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
 /area)
 "ED" = (
 /obj/table/wood/auto,
@@ -9281,6 +9787,14 @@
 	dir = 8
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area)
+"EP" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/oxygen,
+/obj/item/storage/firstaid/oxygen,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
 /area)
 "EQ" = (
 /turf/simulated/floor/carpet/red/fancy/edge/west,
@@ -9431,6 +9945,12 @@
 	dir = 1
 	},
 /area)
+"Fs" = (
+/obj/stool/chair/blue,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area)
 "Ft" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -9502,6 +10022,15 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/random,
+/area)
+"FE" = (
+/obj/table/auto,
+/obj/item/scalpel,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/turf/simulated/floor/caution/west,
 /area)
 "FF" = (
 /obj/decal/tile_edge/floorguide/security{
@@ -9576,6 +10105,12 @@
 "FW" = (
 /turf/simulated/floor/purpleblack{
 	dir = 4
+	},
+/area)
+"FX" = (
+/obj/machinery/manufacturer/medical,
+/turf/simulated/floor/bluewhite{
+	dir = 1
 	},
 /area)
 "FY" = (
@@ -9752,6 +10287,10 @@
 /obj/item/clothing/under/misc/tourist/max_payne,
 /turf/simulated/floor/plating/random,
 /area)
+"Gy" = (
+/obj/machinery/vending/medical,
+/turf/simulated/floor/bluewhite/corner,
+/area)
 "Gz" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -9849,6 +10388,14 @@
 	dir = 9
 	},
 /area)
+"GR" = (
+/obj/stool/chair/blue{
+	dir = 1
+	},
+/turf/simulated/floor/bluewhite/corner{
+	dir = 1
+	},
+/area)
 "GS" = (
 /obj/machinery/disposal,
 /turf/simulated/floor/wood/eight,
@@ -9880,6 +10427,18 @@
 "Ha" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/grey,
+/area)
+"Hb" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/black,
+/area)
+"Hc" = (
+/obj/table/auto,
+/obj/item/suture{
+	pixel_y = 6
+	},
+/obj/item/hemostat,
+/turf/simulated/floor/caution/east,
 /area)
 "He" = (
 /turf/simulated/floor/stairs/dark/wide{
@@ -10007,6 +10566,9 @@
 /obj/storage/crate,
 /turf/simulated/floor/green/checker,
 /area)
+"Hx" = (
+/turf/simulated/floor/carpet/blue/standard,
+/area)
 "Hy" = (
 /obj/submachine/seed_manipulator{
 	dir = 4
@@ -10109,6 +10671,12 @@
 /obj/machinery/turret,
 /turf/simulated/floor/black,
 /area)
+"HP" = (
+/obj/machinery/manufacturer/medical,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area)
 "HR" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -10186,6 +10754,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
+"Id" = (
+/obj/table/auto,
+/obj/item/suture{
+	pixel_y = 6
+	},
+/obj/item/hemostat,
+/turf/simulated/floor/caution/west,
+/area)
 "Ie" = (
 /obj/grille/catwalk{
 	dir = 1
@@ -10339,6 +10915,12 @@
 	},
 /turf/simulated/floor/grey,
 /area)
+"IB" = (
+/obj/stool/chair/office{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/nw,
+/area)
 "IC" = (
 /obj/table/auto,
 /obj/machinery/phone,
@@ -10374,6 +10956,10 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor,
+/area)
+"IH" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/black,
 /area)
 "II" = (
 /obj/machinery/computer/robotics{
@@ -10555,6 +11141,10 @@
 	},
 /turf/simulated/floor/sanitary,
 /area)
+"Jl" = (
+/obj/storage/secure/closet/medical/chemical,
+/turf/simulated/floor/black,
+/area)
 "Jm" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -10684,6 +11274,12 @@
 /obj/machinery/turret,
 /turf/simulated/floor/engine,
 /area)
+"JL" = (
+/obj/stool/chair/office/blue{
+	dir = 4
+	},
+/turf/simulated/floor/grey,
+/area)
 "JM" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/simulated/floor,
@@ -10704,6 +11300,17 @@
 "JP" = (
 /obj/critter/boogiebot,
 /turf/simulated/floor/carpet/red/fancy/edge/east,
+/area)
+"JQ" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
+/area)
+"JR" = (
+/obj/table/wood/auto,
+/obj/machinery/computer3/generic/personal,
+/turf/simulated/floor/black,
 /area)
 "JS" = (
 /turf/simulated/floor/carpet/grime,
@@ -10861,6 +11468,12 @@
 /obj/item/cable_coil,
 /turf/simulated/floor/yellow/checker,
 /area)
+"Ks" = (
+/obj/submachine/chem_extractor{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area)
 "Kt" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -10906,6 +11519,11 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
+/area)
+"KD" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/green,
+/turf/simulated/floor/grey,
 /area)
 "KE" = (
 /obj/table/reinforced/auto,
@@ -11056,6 +11674,12 @@
 /obj/item/shipcomponent/communications/mining,
 /turf/simulated/floor,
 /area)
+"Lk" = (
+/obj/stool/chair/blue{
+	dir = 8
+	},
+/turf/simulated/floor/darkblue/checker,
+/area)
 "Ll" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light/small{
@@ -11175,6 +11799,12 @@
 	},
 /turf/space,
 /area)
+"LA" = (
+/obj/machinery/photocopier{
+	pixel_x = 0
+	},
+/turf/simulated/floor/black,
+/area)
 "LB" = (
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
@@ -11291,6 +11921,10 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/darkblue,
 /area)
+"LX" = (
+/obj/machinery/manufacturer/robotics,
+/turf/simulated/floor/black,
+/area)
 "LY" = (
 /obj/machinery/mass_driver{
 	dir = 1
@@ -11351,6 +11985,10 @@
 	},
 /turf/simulated/floor,
 /area)
+"Mi" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/darkblue/checker,
+/area)
 "Mj" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/grey,
@@ -11361,6 +11999,17 @@
 	icon_state = "catwalk_cross"
 	},
 /turf/simulated/floor/grey,
+/area)
+"Mm" = (
+/obj/table/auto,
+/obj/item/weldingtool{
+	pixel_y = 6;
+	rand_pos = 0
+	},
+/obj/item/staple_gun{
+	pixel_x = 6
+	},
+/turf/simulated/floor/caution/east,
 /area)
 "Mn" = (
 /obj/table/auto,
@@ -11396,6 +12045,14 @@
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass,
+/area)
+"Ms" = (
+/obj/table/auto,
+/obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
+/obj/item/device/multitool{
+	pixel_x = 11
+	},
+/turf/simulated/floor/grey,
 /area)
 "Mu" = (
 /obj/cable{
@@ -11608,6 +12265,12 @@
 	dir = 4
 	},
 /area)
+"Nf" = (
+/obj/table/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged,
+/turf/simulated/floor/grey,
+/area)
 "Nh" = (
 /obj/machinery/shower{
 	dir = 4;
@@ -11742,6 +12405,12 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area)
+"NB" = (
+/obj/stool/chair/office{
+	dir = 1
+	},
+/turf/simulated/floor/sanitary/white,
+/area)
 "ND" = (
 /obj/table/auto,
 /obj/item/disk/data/tape/master/readonly,
@@ -11780,7 +12449,13 @@
 /area)
 "NL" = (
 /obj/table/auto,
-/obj/item/storage/box/stma_kit,
+/obj/item/paper/book/medical_surgery_guide{
+	pixel_x = 5
+	},
+/obj/item/storage/box/stma_kit{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/simulated/floor/white/grime,
 /area)
 "NM" = (
@@ -11790,6 +12465,13 @@
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
+/area)
+"NO" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/clothing/mask/surgical_shield,
+/turf/simulated/floor/sanitary/white,
 /area)
 "NP" = (
 /obj/stool/bench/sauna,
@@ -11824,6 +12506,17 @@
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
+/area)
+"NU" = (
+/obj/table/auto,
+/obj/item/weldingtool{
+	pixel_y = 6;
+	rand_pos = 0
+	},
+/obj/item/staple_gun{
+	pixel_x = 6
+	},
+/turf/simulated/floor/caution/west,
 /area)
 "NV" = (
 /obj/grille/catwalk{
@@ -12054,6 +12747,10 @@
 "OB" = (
 /turf/simulated/floor/plating,
 /area)
+"OC" = (
+/obj/machinery/clonegrinder,
+/turf/simulated/floor/bluewhite,
+/area)
 "OD" = (
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
@@ -12111,6 +12808,14 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
+/area)
+"OM" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/turf/simulated/floor/bluewhite/corner{
+	dir = 4
+	},
 /area)
 "OO" = (
 /obj/wingrille_spawn/auto,
@@ -12438,6 +13143,11 @@
 /obj/item/chem_grenade/firefighting,
 /turf/simulated/floor/darkblue,
 /area)
+"PT" = (
+/obj/table/wood/auto,
+/obj/machinery/phone,
+/turf/simulated/floor/black,
+/area)
 "PU" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
@@ -12503,6 +13213,10 @@
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
+/area)
+"Qc" = (
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/black,
 /area)
 "Qd" = (
 /turf/simulated/floor/red/side{
@@ -12575,6 +13289,12 @@
 "Qn" = (
 /obj/machinery/disposal/mail/autoname/hydroponics,
 /turf/simulated/floor/green/checker,
+/area)
+"Qo" = (
+/obj/machinery/computer3/generic/med_data{
+	dir = 4
+	},
+/turf/simulated/floor/black,
 /area)
 "Qp" = (
 /turf/simulated/floor/neutral/side{
@@ -12698,6 +13418,18 @@
 	name = "ratty blue couch"
 	},
 /turf/simulated/floor/green/checker,
+/area)
+"QG" = (
+/obj/stool/chair/comfy/wheelchair{
+	dir = 8
+	},
+/turf/simulated/floor/bluewhite,
+/area)
+"QH" = (
+/obj/shrub,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
 /area)
 "QI" = (
 /obj/machinery/vending/medical,
@@ -12899,6 +13631,10 @@
 	dir = 4
 	},
 /area)
+"Rl" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/black,
+/area)
 "Rm" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible,
@@ -12910,7 +13646,7 @@
 /area/shuttle/arrival/station)
 "Rn" = (
 /obj/table/auto,
-/obj/item/paper/book/medical_surgery_guide,
+/obj/machinery/phone,
 /turf/simulated/floor/redwhite,
 /area)
 "Ro" = (
@@ -12953,6 +13689,12 @@
 	id = "qmin"
 	},
 /turf/simulated/floor/airless/plating,
+/area)
+"Rv" = (
+/obj/stool/chair/office{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
 /area)
 "Rw" = (
 /obj/machinery/vending/book,
@@ -13066,6 +13808,11 @@
 "RN" = (
 /turf/simulated/floor/wood,
 /area)
+"RO" = (
+/obj/decal/stage_edge/alt,
+/obj/machinery/disposal/mail/autoname/medbay/robotics,
+/turf/simulated/floor/black,
+/area)
 "RP" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -13148,6 +13895,13 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/arrival/station)
+"RY" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/darkblue/checker,
+/area)
+"RZ" = (
+/turf/simulated/floor/stairs/medical,
+/area)
 "Sa" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -13250,6 +14004,11 @@
 	},
 /obj/access_spawn/hydro,
 /turf/simulated/floor/green,
+/area)
+"Sp" = (
+/obj/decal/stage_edge/alt,
+/obj/machinery/computer/robot_module_rewriter,
+/turf/simulated/floor/grey,
 /area)
 "Sq" = (
 /obj/machinery/door/unpowered/wood/pyro{
@@ -13379,6 +14138,11 @@
 	dir = 8
 	},
 /area/shuttle/arrival/station)
+"SL" = (
+/obj/decal/stage_edge/alt,
+/obj/machinery/manufacturer/robotics,
+/turf/simulated/floor/grey,
+/area)
 "SM" = (
 /turf/simulated/floor/escape/corner{
 	dir = 4
@@ -13512,6 +14276,12 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/arrival/station)
+"Tg" = (
+/obj/stool/chair/blue{
+	dir = 8
+	},
+/turf/simulated/floor/bluewhite,
+/area)
 "Th" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
@@ -13589,6 +14359,11 @@
 	icon_state = "11"
 	},
 /area/shuttle/arrival/station)
+"Ts" = (
+/obj/decal/stage_edge/alt,
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/grey,
+/area)
 "Tt" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area)
@@ -13725,6 +14500,11 @@
 /obj/table/auto,
 /obj/machinery/phone,
 /turf/simulated/floor/carpet/arcade,
+/area)
+"TK" = (
+/obj/decal/stage_edge/alt,
+/obj/machinery/disposal,
+/turf/simulated/floor/black,
 /area)
 "TL" = (
 /obj/grille/catwalk{
@@ -13929,6 +14709,19 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
+"Ul" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/beaker/large/brute{
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/glass/beaker/large/burn{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/hypospray,
+/obj/item/reagent_containers/hypospray,
+/obj/item/reagent_containers/dropper,
+/turf/simulated/floor/carpet/blue/standard/edge/ne,
+/area)
 "Um" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -13995,6 +14788,19 @@
 	dir = 4
 	},
 /area)
+"Uy" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 8
+	},
+/turf/simulated/floor/black,
+/area)
+"Uz" = (
+/obj/machinery/sleep_console{
+	dir = 4
+	},
+/turf/simulated/floor/bluewhite,
+/area)
 "UA" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/wood,
@@ -14039,6 +14845,12 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/white,
 /area)
+"UE" = (
+/obj/table/auto,
+/obj/item/sheet/steel/fullstack,
+/obj/item/storage/box/cablesbox,
+/turf/simulated/floor/black,
+/area)
 "UF" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -14071,6 +14883,14 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
+	},
+/area)
+"UI" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/brain,
+/obj/item/crowbar,
+/turf/simulated/floor/bluewhite{
+	dir = 1
 	},
 /area)
 "UK" = (
@@ -14196,6 +15016,13 @@
 /turf/simulated/floor/yellowblack{
 	dir = 10
 	},
+/area)
+"Vd" = (
+/obj/table/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/turf/simulated/floor/black,
 /area)
 "Ve" = (
 /turf/simulated/floor/green/side,
@@ -14425,6 +15252,12 @@
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/grey,
 /area)
+"VL" = (
+/obj/storage/secure/closet/medical/medkit,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area)
 "VM" = (
 /obj/item/clothing/mask/wrestling,
 /obj/item/clothing/mask/wrestling/black,
@@ -14493,6 +15326,18 @@
 	dir = 1
 	},
 /turf/simulated/floor/sanitary/white,
+/area)
+"VY" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -8
+	},
+/obj/stool,
+/turf/simulated/floor/black,
+/area)
+"VZ" = (
+/obj/machinery/vending/port_a_nanomed,
+/turf/simulated/floor/bluewhite,
 /area)
 "Wa" = (
 /obj/machinery/vending/standard,
@@ -14754,6 +15599,10 @@
 	dir = 9
 	},
 /area/station/hallway/secondary/exit)
+"WN" = (
+/obj/machinery/photocopier,
+/turf/simulated/floor/black,
+/area)
 "WO" = (
 /obj/storage/cart/trash,
 /turf/simulated/floor/grime,
@@ -14783,6 +15632,10 @@
 	},
 /obj/submachine/laundry_machine,
 /turf/simulated/floor/blue/checker,
+/area)
+"WT" = (
+/obj/decal/tile_edge/stripe/big,
+/turf/simulated/floor/grey,
 /area)
 "WU" = (
 /obj/stool/chair/green,
@@ -15248,6 +16101,13 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area)
+"Yt" = (
+/obj/machinery/recharge_station,
+/obj/landmark/start{
+	name = "Cyborg"
+	},
+/turf/simulated/floor/black,
+/area)
 "Yu" = (
 /obj/decal/tile_edge/line/black{
 	dir = 10;
@@ -15256,6 +16116,10 @@
 /turf/simulated/floor/wood/three{
 	icon_state = "0,0"
 	},
+/area)
+"Yv" = (
+/obj/storage/secure/filing_cabinet,
+/turf/simulated/floor/grey,
 /area)
 "Yw" = (
 /obj/decal/tile_edge/line/black{
@@ -15295,6 +16159,12 @@
 	name = "palm tree"
 	},
 /turf/simulated/floor/grass,
+/area)
+"YE" = (
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/turf/simulated/floor/bluewhite,
 /area)
 "YF" = (
 /obj/table/reinforced/auto,
@@ -15513,6 +16383,12 @@
 /obj/item/storage/secure/sbriefcase,
 /turf/simulated/floor/carpet/red/standard/edge/se,
 /area)
+"Zu" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/turf/simulated/floor/bluewhite,
+/area)
 "Zv" = (
 /obj/machinery/conveyor{
 	id = "garbage";
@@ -15581,6 +16457,12 @@
 	},
 /turf/simulated/floor/sanitary/blue,
 /area)
+"ZF" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor/grey,
+/area)
 "ZG" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor/southeast,
 /obj/table/auto,
@@ -15600,6 +16482,11 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/two,
+/area)
+"ZJ" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/blue,
+/turf/simulated/floor/black,
 /area)
 "ZK" = (
 /obj/decal/cleanable/dirt,
@@ -43624,7 +44511,7 @@ rR
 rR
 rR
 Tt
-ZS
+WN
 zn
 zX
 zX
@@ -55656,7 +56543,7 @@ bB
 ba
 bB
 bB
-bB
+OB
 OB
 OB
 OB
@@ -55951,17 +56838,17 @@ Li
 Li
 Li
 bB
+tD
+Hb
+IH
+Qc
 Li
-Li
-Li
-Li
-Li
-Li
-Li
+UE
 Tt
 Tt
 Tt
-ba
+oA
+Tt
 Tt
 Tt
 bB
@@ -56253,18 +57140,18 @@ Li
 Li
 Li
 bB
+uP
 Li
 Li
 Li
 Li
-Li
-Li
-Li
+UE
 Tt
-Li
-Li
-Li
-Li
+Bh
+ei
+jQ
+cF
+ta
 Tt
 Vs
 XA
@@ -56535,9 +57422,9 @@ Cd
 Tt
 Cd
 Tt
-bB
-bB
-bB
+cl
+cl
+cl
 bB
 bB
 bB
@@ -56554,19 +57441,19 @@ Li
 Li
 Li
 Li
-bB
+aS
 Li
 Li
 Li
 Li
 Li
-Li
-Li
+Vd
 Tt
-Li
-Li
-Li
-Li
+Bh
+CC
+Hx
+hq
+CP
 Tt
 AA
 fx
@@ -56836,11 +57723,11 @@ YI
 YI
 YI
 YI
-bB
+cl
+KD
 Li
 Li
-Li
-bB
+fh
 XA
 XA
 bB
@@ -56857,18 +57744,18 @@ Li
 Li
 Li
 bB
-bB
-bB
-bB
-bB
-ba
-bB
-bB
+wk
+Hb
+LX
+Rl
+Li
+Vd
 Tt
-Li
-Li
-Li
-Li
+Mi
+CC
+Hx
+Fp
+Lk
 Tt
 vs
 fB
@@ -57138,11 +58025,11 @@ Li
 Li
 Li
 Li
-Li
+aS
 Li
 Do
-Li
-XA
+cM
+bB
 XA
 XA
 bB
@@ -57158,19 +58045,19 @@ Li
 Li
 Li
 Li
-cl
-ZS
-ZS
-ZS
-ZS
-Li
-ZS
-ZS
+bB
+bB
+bB
+bB
+bB
+ba
+bB
 Tt
-Li
-Li
-Li
-Li
+RY
+Ul
+bj
+bo
+gC
 Tt
 ca
 vj
@@ -57434,16 +58321,16 @@ bB
 bB
 bB
 bB
-bB
-bB
-bB
-bB
-Li
-Li
+cl
+cl
+cl
 bB
 Li
 Li
-Li
+cl
+Ha
+ha
+XL
 bB
 XA
 XA
@@ -57461,18 +58348,18 @@ Li
 Li
 Li
 cl
-ZS
+wx
+Hc
+Mm
+RO
 Li
-Li
-Li
-Li
-Li
-ZS
+VY
 Tt
+cl
+cl
 Tt
-Tt
-Tt
-ba
+cl
+re
 Tt
 cl
 cl
@@ -57739,7 +58626,7 @@ bB
 cM
 gL
 BY
-bB
+cl
 Li
 Li
 bB
@@ -57763,27 +58650,27 @@ Li
 Li
 Li
 cl
+yj
+YZ
+YZ
+RZ
+Li
 ZS
-Li
-Li
-Li
-Li
-Li
-ZS
-ZS
-ZS
+Yt
+Yt
+Ap
 cl
-ex
+QH
 fB
-eZ
-bY
-eJ
+xe
+tb
+GR
 fB
-eZ
-bY
-eJ
+uv
+EC
+aL
 fB
-cc
+Uz
 cl
 qV
 qV
@@ -58041,14 +58928,14 @@ bB
 fj
 fB
 Li
+aS
 Li
 Li
+cl
+KD
 Li
-bB
 Li
-Li
-Li
-bB
+fh
 XA
 XA
 bB
@@ -58064,18 +58951,18 @@ Li
 Li
 Li
 Li
+bB
+yJ
+JU
+NB
+Sp
+Li
+Li
+Li
+nA
+Ap
 cl
-ZS
-Li
-Li
-Li
-Li
-Li
-Li
-Li
-ZS
-cl
-ex
+gl
 fB
 fB
 fB
@@ -58085,7 +58972,7 @@ fB
 fB
 fB
 fB
-eZ
+OM
 cl
 qV
 qV
@@ -58339,18 +59226,18 @@ ni
 bB
 XA
 XA
-XA
+MJ
 Li
 Li
 Ha
-bB
+cl
 Li
 Li
-Li
+aS
 Li
 Do
-Li
-XA
+cM
+bB
 XA
 XA
 bB
@@ -58366,18 +59253,18 @@ Li
 Li
 Li
 Li
-bB
-ZS
-Li
-Li
-Li
-Li
-Li
-Li
-Li
-ZS
 cl
-ex
+zj
+YZ
+NO
+SL
+Li
+Li
+ZF
+Li
+Nf
+cl
+cB
 fB
 fB
 fB
@@ -58648,10 +59535,10 @@ bB
 bB
 Li
 Li
-bB
-Li
-Li
-Li
+cl
+Ha
+ha
+XL
 bB
 XA
 XA
@@ -58669,17 +59556,17 @@ Li
 Li
 Li
 cl
-ZS
+Di
+YZ
+NO
+Ts
 Li
-Li
-Li
-Li
-Li
-Li
-Li
-ZS
+WT
+qd
+vS
+UE
 bB
-ex
+VL
 fB
 fB
 eT
@@ -58688,8 +59575,8 @@ fk
 fk
 fk
 fk
-fk
-fk
+HP
+aB
 cl
 qV
 qV
@@ -58947,7 +59834,7 @@ bB
 cM
 gL
 BY
-bB
+cl
 Li
 Li
 bB
@@ -58970,21 +59857,21 @@ Li
 Li
 Li
 Li
+bB
+yJ
+JU
+NB
+SL
+Li
+Li
+JQ
+Li
+Nf
 cl
-ZS
-Li
-Li
-Li
-Li
-Li
-Li
-Li
-ZS
-cl
-ex
+EP
 fB
 fB
-cc
+QG
 cl
 cl
 jL
@@ -59249,7 +60136,7 @@ bB
 fj
 fB
 Li
-Li
+aS
 Li
 Li
 bB
@@ -59273,20 +60160,20 @@ Li
 Li
 Li
 cl
-ZS
+yj
+YZ
+YZ
+RZ
 Li
 Li
 Li
-Li
-Li
-Li
-Li
-ZS
+Rv
+bh
 cl
-ex
+iv
 fB
 fB
-cc
+QG
 cl
 li
 RN
@@ -59547,11 +60434,11 @@ ni
 bB
 XA
 XA
-XA
+MJ
 Li
 Li
 Ha
-bB
+cl
 Li
 Li
 bB
@@ -59575,20 +60462,20 @@ Li
 Li
 Li
 cl
-ZS
-ZS
-ZS
-ZS
-ZS
+FE
+Id
+NU
+TK
+Uy
 Li
-ZS
-ZS
-ZS
+Yt
+Yt
+En
 cl
-ex
+QH
 fB
 fB
-cc
+QG
 cl
 OJ
 mg
@@ -59858,15 +60745,15 @@ Li
 Li
 bB
 bB
-XA
+bV
 bB
 bB
 bB
-XA
+bV
 bB
 bB
 bB
-XA
+bV
 bB
 bB
 Li
@@ -59880,10 +60767,10 @@ bB
 cl
 cl
 cl
-cl
 bB
+cl
 eQ
-bB
+cl
 cl
 cl
 bB
@@ -60155,22 +61042,22 @@ bB
 cM
 gL
 BY
+cl
+Li
+Li
+cl
+Ms
+Li
+Ha
 bB
+Ms
 Li
-Li
+Ha
 bB
+Ms
 Li
-Li
-Li
-bB
-Li
-Li
-Li
-bB
-Li
-Li
-Li
-bB
+Ha
+cl
 Li
 Li
 Li
@@ -60192,7 +61079,7 @@ bY
 eJ
 fB
 fB
-cc
+nx
 bB
 kc
 bo
@@ -60457,28 +61344,28 @@ bB
 fj
 fB
 Li
+aS
 Li
 Li
-Li
-bB
-Li
+cl
+iG
 ak
-Li
+JL
 bB
-Li
+iG
 ak
-Li
+JL
 bB
-Li
+iG
 ak
-Li
-bB
+JL
+cl
 Li
 Li
 Li
 Li
 cl
-bY
+oi
 eJ
 fB
 fB
@@ -60494,7 +61381,7 @@ fB
 fB
 fB
 fB
-cc
+YE
 bB
 LH
 LH
@@ -60755,26 +61642,26 @@ ni
 bB
 XA
 XA
-XA
+MJ
 Li
 Li
 Ha
+cl
+Li
+Li
+cl
+ls
+Li
+fj
 bB
+ls
 Li
-Li
+fj
 bB
+ls
 Li
-Li
-Li
-bB
-Li
-Li
-Li
-bB
-Li
-Li
-Li
-bB
+fj
+cl
 Li
 Li
 Li
@@ -60796,7 +61683,7 @@ fB
 fB
 fB
 fB
-cc
+CZ
 bB
 gF
 Hi
@@ -61065,17 +61952,17 @@ bB
 Li
 Li
 bB
+cl
+ba
+cl
 bB
-Li
+cl
+ba
+cl
 bB
-bB
-bB
-Li
-bB
-bB
-bB
-Li
-bB
+cl
+ba
+cl
 bB
 Li
 Li
@@ -61085,7 +61972,7 @@ fB
 fB
 fB
 fB
-eT
+Gy
 Tt
 Tt
 Tt
@@ -61098,7 +61985,7 @@ Yn
 jE
 fB
 fB
-cc
+td
 bB
 Zm
 Lg
@@ -61363,7 +62250,7 @@ bB
 cM
 gL
 BY
-bB
+cl
 Li
 Li
 Li
@@ -61384,7 +62271,7 @@ Li
 Li
 Li
 cl
-ap
+or
 fB
 fB
 Tt
@@ -61400,7 +62287,7 @@ Tt
 oV
 fB
 fB
-cc
+td
 bB
 Gu
 Qk
@@ -61665,7 +62552,7 @@ bB
 fj
 fB
 Li
-Li
+aS
 Li
 Li
 Li
@@ -61686,10 +62573,10 @@ Li
 Li
 Li
 bB
-ex
+Fs
 fB
 fB
-cc
+yl
 Tt
 fR
 gs
@@ -61702,7 +62589,7 @@ gK
 oV
 fB
 fB
-cc
+VZ
 bB
 cl
 cl
@@ -61963,11 +62850,11 @@ ni
 bB
 XA
 XA
-XA
+MJ
 Li
 Li
 Ha
-bB
+cl
 Li
 Li
 Li
@@ -61988,10 +62875,10 @@ Li
 Li
 Li
 cl
-ex
+Fs
 fB
 fB
-cc
+nF
 Tt
 fS
 YZ
@@ -62273,12 +63160,12 @@ bB
 Li
 Li
 Li
-cl
-cl
-cl
-cl
-cl
-cl
+dA
+dA
+dA
+dA
+dA
+dA
 Tt
 cl
 bJ
@@ -62290,10 +63177,10 @@ Li
 Li
 Li
 cl
-ex
+Fs
 fB
 fB
-cc
+Tg
 Tt
 fW
 YZ
@@ -62571,20 +63458,20 @@ bB
 cM
 gL
 BY
-bB
-Li
-Li
-cl
 cl
 Li
 Li
-Li
-Li
-Li
-cl
+dA
+dA
+JR
+gS
+Qo
+vo
+Jl
+dA
+iD
 FC
 FC
-FC
 cl
 cl
 Li
@@ -62592,10 +63479,10 @@ Li
 Li
 Li
 cl
-ex
+UI
 fB
 fB
-cc
+iz
 Tt
 fZ
 YZ
@@ -62873,31 +63760,31 @@ bB
 fj
 fB
 Li
+aS
 Li
 Li
+dA
+Ev
+PT
+IB
+fi
+vv
 Li
+iY
+FC
+FC
+FC
+mr
 cl
 Li
 Li
 Li
 Li
-Li
-Li
-Li
-FC
-FC
-FC
-FC
 cl
-Li
-Li
-Li
-Li
-cl
-ex
+kA
 fB
 fB
-cc
+OC
 Tt
 ga
 YZ
@@ -63171,7 +64058,7 @@ ni
 bB
 XA
 XA
-XA
+MJ
 Li
 Li
 Ha
@@ -63179,27 +64066,27 @@ bB
 bB
 bB
 Tt
+LA
 Li
-Li
-Li
-Li
-Li
-Li
-cl
+dO
+fl
+hU
+co
+dA
 FC
+kH
 FC
-FC
-FC
+mr
 cl
 Li
 Li
 Li
 Li
 bB
-ex
+kA
 fB
 fB
-cc
+vf
 Tt
 YZ
 YZ
@@ -63212,7 +64099,7 @@ lY
 oV
 Vp
 fB
-cc
+dl
 bB
 cl
 cl
@@ -63478,27 +64365,27 @@ bB
 bB
 bB
 bB
-XA
-XA
+UK
+Kt
 Tt
+pd
 Li
-Li
-Li
-Li
-Li
-Li
+dO
+fl
+hU
+iB
 Tt
 bg
 bg
 bg
-bg
+mT
 bB
 Li
 Li
 Li
 Li
 cl
-ex
+oP
 fB
 fB
 Tt
@@ -63514,7 +64401,7 @@ Tt
 oV
 Vp
 fB
-cc
+mb
 cl
 rf
 rf
@@ -63778,32 +64665,32 @@ ni
 ni
 ni
 bB
+uD
+xj
 XA
 XA
-XA
-XA
+iY
 Li
 Li
+tM
+he
+vC
+Li
+iY
 Li
 Li
-Li
-Li
-Li
-Li
-RN
-RN
-RN
-RN
+me
+Yv
 bB
 Li
 Li
 Li
 Li
 cl
-ex
+oP
 fB
 fB
-eZ
+ll
 Tt
 Tt
 Tt
@@ -63816,7 +64703,7 @@ PP
 zw
 Vp
 fB
-cc
+wX
 cl
 rf
 rf
@@ -64080,29 +64967,29 @@ ni
 ni
 ni
 bB
+aF
 XA
 XA
-XA
-XA
+NR
 Tt
-Li
-Li
-Li
-Li
-Li
-Li
+eq
+wd
+Ks
+CW
+ZJ
+et
 Tt
-RN
-RN
-RN
-RN
+vQ
+xA
+oq
+vR
 bB
 Li
 Li
 Li
 Li
 cl
-ex
+FX
 fB
 fB
 fB
@@ -64118,7 +65005,7 @@ fB
 fB
 Vp
 fB
-cc
+Uz
 cl
 rf
 MV
@@ -64388,10 +65275,10 @@ Tt
 Tt
 Tt
 Tt
-Tt
-Tt
-Tt
-Tt
+dA
+dA
+dA
+dA
 Tt
 Tt
 Tt
@@ -64404,7 +65291,7 @@ Li
 Li
 Li
 cl
-ex
+pQ
 fB
 eL
 am
@@ -64420,7 +65307,7 @@ am
 am
 am
 fB
-cc
+Zu
 cl
 rf
 rf
@@ -64707,7 +65594,7 @@ Li
 Li
 cl
 eB
-fk
+sN
 eD
 fB
 Vp
@@ -64721,7 +65608,7 @@ fk
 fk
 ap
 fB
-eT
+ac
 iU
 cl
 Ay
