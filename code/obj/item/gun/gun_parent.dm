@@ -300,6 +300,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!process_ammo(user))
 		return
 
+	if (src.muzzle_flash)
+		if (isturf(user.loc))
+			muzzle_flash_attack_particle(user, user.loc, M, src.muzzle_flash)
+
+
 	if(slowdown)
 		SPAWN_DBG(-1)
 			user.movement_delay_modifier += slowdown
@@ -368,7 +373,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!istype(src.current_projectile,/datum/projectile/))
 		return
 
-	if (src.muzzle_flash) //probably reinventing the wheel here as far as all of this goes, but idk
+	if (src.muzzle_flash)
 		if (isturf(user.loc))
 			var/turf/origin = user.loc
 			muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
