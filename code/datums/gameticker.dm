@@ -644,12 +644,17 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		escape_possible = 0
 
 	var/time = world.time
+
+	logTheThing("debug", null, null, "Revving up the spacebux loop...")
+
 	for(var/mob/player in mobs)
 		if (player.client && player.mind && !player.mind.joined_observer && !istype(player,/mob/new_player))
+			logTheThing("debug", null, null, "Iterating on [player.client]")
 			//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] spacebux calc start: [player.mind.ckey]")
 
 			var/chui/window/earn_spacebux/bank_earnings = new
 
+			logTheThing("debug", null, null, "1")
 			//get base wage + initial earnings calculation
 			var/job_wage = 100
 			if (wagesystem.jobs.Find(player.mind.assigned_role))
@@ -669,6 +674,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 			bank_earnings.wage_base = round(job_wage * 2) //TODO ECNONMY_REBALANCE: remove the *2
 			bank_earnings.wage_after_score = round(earnings)
+
+			logTheThing("debug", null, null, "2")
 
 			//check if escaped
 			//if we are dead - get the location of our corpse
@@ -692,6 +699,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				player_dead = 1
 				player_body_escaped = 0
 
+			logTheThing("debug", null, null, "3")
+
 			//AI doesn't need to escape
 			if (isAI(player) || isshell(player))
 				player_body_escaped = 1
@@ -711,7 +720,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				bank_earnings.escaped = 0
 				player_dead = 1
 
-
+			logTheThing("debug", null, null, "4")
 
 			//handle traitors
 			if (player.mind && ticker.mode.traitors.Find(player.mind))
@@ -729,6 +738,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				if (player.mind.all_objs)
 					earnings += 100; // ALL CREW OBJECTIVE SBUX BONUS
 					bank_earnings.all_objs = 100
+
+			logTheThing("debug", null, null, "5")
 
 			if (it_is_ass_day)
 				earnings *= 2
@@ -751,9 +762,13 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 						bank_earnings.pilot = 1
 						earnings += pilot_bonus
 
+			logTheThing("debug", null, null, "6")
+
 			//add_to_bank and show earnings receipt
 			earnings = round(earnings)
 			//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] spacebux calc finish: [player.mind.ckey]")
+
+			logTheThing("debug", null, null, "7")
 
 			SPAWN_DBG(0)
 				if(player.client)
@@ -770,11 +785,13 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					bank_earnings.new_balance = player.client.persistent_bank
 					bank_earnings.Subscribe( player.client )
 
-		for(var/obj/bookshelf/persistent/P in by_type[/obj/bookshelf/persistent]) //make the bookshelf save its contents
-			P.build_curr_contents()
+			logTheThing("debug", null, null, "OK! All done with [player.client]")
+
+	for(var/obj/bookshelf/persistent/P in by_type[/obj/bookshelf/persistent]) //make the bookshelf save its contents
+		P.build_curr_contents()
 
 	award_archived_round_xp()
-	
+
 	SPAWN_DBG(0)
 		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] creds/new")
 		var/chui/window/crew_credits/creds = new
