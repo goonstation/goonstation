@@ -63,19 +63,7 @@ var/list/genetics_computers = list()
 			user.drop_item()
 			qdel(DNA)
 
-			if (genResearch.time_discount < 0.75)
-				genResearch.time_discount += 0.025
-			if (genResearch.cost_discount < 0.75)
-				genResearch.cost_discount += 0.025
-
-			boutput(user, "<b>SCANNER ALERT:</b> Recycled genetic info has yielded materials, auto-decryptors, and chromosomes.")
-			genResearch.researchMaterial += 40
-			genResearch.lock_breakers += rand(1, 3)
-			var/numChromosomes = rand(1, 3) == 3 ? rand(3, 5) : rand(2, 3)
-			for (var/i = 1; i <= numChromosomes; i++)
-				var/type_to_make = pick(typesof(/datum/dna_chromosome))
-				var/datum/dna_chromosome/C = new type_to_make(src)
-				src.saved_chromosomes += C
+			activated_bonus(user)
 
 		else
 			src.attack_hand(user)
@@ -89,6 +77,21 @@ var/list/genetics_computers = list()
 
 		src.attack_hand(user)
 	return
+
+/obj/machinery/computer/genetics/proc/activated_bonus(mob/user as mob)
+	if (genResearch.time_discount < 0.75)
+		genResearch.time_discount += 0.025
+	if (genResearch.cost_discount < 0.75)
+		genResearch.cost_discount += 0.025
+
+	boutput(user, "<b>SCANNER ALERT:</b> Recycled genetic info has yielded materials, auto-decryptors, and chromosomes.")
+	genResearch.researchMaterial += 40
+	genResearch.lock_breakers += rand(1, 3)
+	var/numChromosomes = rand(1, 3) == 3 ? rand(3, 5) : rand(2, 3)
+	for (var/i = 1; i <= numChromosomes; i++)
+		var/type_to_make = pick(typesof(/datum/dna_chromosome))
+		var/datum/dna_chromosome/C = new type_to_make(src)
+		src.saved_chromosomes += C
 
 /obj/machinery/computer/genetics/attack_ai(mob/user as mob)
 	return attack_hand(user)
@@ -996,6 +999,7 @@ var/list/genetics_computers = list()
 
 		subject.bioHolder.ActivatePoolEffect(E)
 		usr << link("byond://?src=\ref[src];menu=mutations")
+		activated_bonus(usr)
 		//send them to the mutations page.
 		return
 
@@ -1559,7 +1563,6 @@ var/list/genetics_computers = list()
 						gene_icon_status = "mutGreen.png"
 				build += {"<a href='?src=\ref[src];sample_viewpool=\ref[E];sample_to_viewpool=\ref[sample]'>"}
 				build += {"<img style="border: [E == src.currently_browsing ? "solid 1px #00FFFF" : "dotted 1px #88C425"]" src="[resource("images/genetics/[gene_icon_status]")]" alt="[GBE.research_level >= 2  ? E.name : "???"]" width="43" height="39"></a>"}
-
 		if("pool")
 			var/mob/living/subject = get_scan_subject()
 			var/datum/bioEffect/E
@@ -1604,7 +1607,10 @@ var/list/genetics_computers = list()
 					if (3)
 						gene_icon_status = "mutGreen.png"
 				build += {"<a href='?src=\ref[src];vieweffect=\ref[E]'>"}
-				build += {"<img style="border: [E == src.currently_browsing ? "solid 1px #00FFFF" : "dotted 1px #88C425"]" src="[resource("images/genetics/[gene_icon_status]")]" alt="[GBE.research_level >= 2  ? E.name : "???"]" width="43" height="39"></a>"}
+				build += {"<img  style="border: [E == src.currently_browsing ? "solid 1px #00FFFF" : "dotted 1px #88C425"]" src="[resource("images/genetics/[gene_icon_status]")]" alt="[GBE.research_level >= 2  ? E.name : "???"]" width="43" height="39"></a>"}
+	//idk not wokring, leaving this if someone wants to fix it.
+	//in img onMouseover="displayText(this);" onMouseout="removeText();"
+	// build += {"<p id="DNAN"></p><script>function displayText(el) {document.getElementById("DNAN").textContent = el.alt;}function removeText() {document.getElementById("DNAN").textContent = "";}</script>"}
 
 	return build.Join()
 
