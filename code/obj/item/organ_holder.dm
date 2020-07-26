@@ -1419,6 +1419,11 @@
 		APPLY_MOB_PROPERTY(holder.owner, PROP_CHEM_PURGE, src, power)
 		holder.owner.urine += power // -.-
 		SPAWN_DBG(15 SECONDS)
+			if(holder?.owner)
+				REMOVE_MOB_PROPERTY(holder.owner, PROP_CHEM_PURGE, src)
+
+	proc/cancel_purge()
+		if(holder?.owner)
 			REMOVE_MOB_PROPERTY(holder.owner, PROP_CHEM_PURGE, src)
 
 /datum/targetable/organAbility/liverdetox

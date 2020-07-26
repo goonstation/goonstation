@@ -149,6 +149,7 @@
 		var/datum/targetable/organAbility/kidneypurge/OA = aholder.getAbility(abil)
 		if (!OA) // what??
 			return
+		OA.cancel_purge()
 		if (islist(OA.linked_organ)) // two emagged kidneys, just remove us :3
 			var/list/lorgans = OA.linked_organ
 			lorgans -= src // remove us from the list so only the other kidney is left and thus will be lorgans[1]
