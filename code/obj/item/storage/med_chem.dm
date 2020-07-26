@@ -74,7 +74,7 @@
 	desc = "A medical kit designed to counter radiation and poisoning by common toxins. Contains two pills each of anti-toxin and anti-radiation medicine, a syringe of a powerful purgative, and a health analyzer to determine the health of the patient."
 	kit_styles = list("toxin1", "toxin2", "toxin3", "toxin4")
 	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/epinephrine,\
-	/obj/item/reagent_containers/syringe/calomel,\
+	/obj/item/reagent_containers/emergency_injector/charcoal = 1,\
 	/obj/item/reagent_containers/pill/antirad = 2,\
 	/obj/item/reagent_containers/pill/antitox = 2,\
 	/obj/item/device/analyzer/healthanalyzer)
