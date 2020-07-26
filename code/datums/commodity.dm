@@ -1900,12 +1900,20 @@
 	baseprice = 2000
 	upperfluc = 500
 	lowerfluc = -700
-	
+
 /datum/commodity/medical/injectorPent
 	comname = "Auto-Injector - Pentetic Acid"
 	comtype = /obj/item/reagent_containers/emergency_injector/pentetic_acid
 	price = 2000
 	baseprice = 2000
+	upperfluc = 500
+	lowerfluc = -700
+
+/datum/commodity/medical/injectorPerf
+	comname = "Auto-Injector - Perfluorodecalin"
+	comtype = /obj/item/reagent_containers/emergency_injector/perf
+	price = 800
+	baseprice = 800
 	upperfluc = 500
 	lowerfluc = -700
 
