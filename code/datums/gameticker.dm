@@ -790,7 +790,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	for(var/obj/bookshelf/persistent/P in by_type[/obj/bookshelf/persistent]) //make the bookshelf save its contents
 		P.build_curr_contents()
 
-	award_archived_round_xp()
+	SPAWN_DBG(0)
+		award_archived_round_xp()
 
 	SPAWN_DBG(0)
 		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] creds/new")
