@@ -1415,7 +1415,7 @@
 				O.take_damage(15, 15) //safe-ish
 		else
 			linked_organ.take_damage(30, 30) //not safe
-		boutput(holder.owner, "<span class='notice'>You overclock your cyberkidney[islist(linked_organ) ? "s" : ""] to rapidly purge chemicals from your body.")
+		boutput(holder.owner, "<span class='notice'>You overclock your cyberkidney[islist(linked_organ) ? "s" : ""] to rapidly purge chemicals from your body.</span>")
 		APPLY_MOB_PROPERTY(holder.owner, PROP_CHEM_PURGE, src, power)
 		holder.owner.urine += power // -.-
 		SPAWN_DBG(15 SECONDS)
@@ -1442,7 +1442,7 @@
 		if (istype(L))
 			L.overloading = !L.overloading
 			src.is_on = L.overloading
-			boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the \"detox\" mode on your cyberliver.")
+			boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the \"detox\" mode on your cyberliver.</span>")
 		if(is_on)
 			src.icon_state = initial(src.icon_state)
 		else
@@ -1521,11 +1521,11 @@
 		if (..())
 			return 1
 		if(!islist(linked_organ) && !is_on)
-			boutput(holder.owner, "<span class='notice'>This ability is only usable with two unregulated cyberlungs!")
+			boutput(holder.owner, "<span class='notice'>This ability is only usable with two unregulated cyberlungs!</span>")
 			return 1
 
 		src.is_on = !src.is_on
-		boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the rebreather mode on your cyberlungs.")
+		boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the rebreather mode on your cyberlungs.</span>")
 		for(var/obj/item/organ/lung/cyber/L in linked_organ)
 			L.overloading = is_on
 		if(is_on)
