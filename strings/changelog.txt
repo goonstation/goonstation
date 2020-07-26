@@ -8,7 +8,7 @@
 (+)Atmos Tank Dispensers now use a fancy tgui interface.
 (u)mbc
 (e)🆕🎨|feature, sprites
-(*)New muzzle flash animations for taser and lasers. Also improved muzzle flash visibility in general.
+(*)New muzzle flash animations for taser, laser, advanced laser, phaser, wavegun, some launchers and others. Also improved muzzle flash visibility in general.
 (+)Fixed bug where glasses weren't correctly applying vision color mods.
 (u)Flaborized
 (p)1594
