@@ -1,4 +1,8 @@
 
+(t)sun jul 26 20
+(u)kyle
+(e)⚖|balance
+(*)Activating genes in the genetics console via the base-pair matching game now nets materials, chromosomes, and decryptors for humans like activators do... Probably, this is a pain to test so I assume it works.
 (t)sat jul 25 20
 (u)ZeWaka
 (p)1542
