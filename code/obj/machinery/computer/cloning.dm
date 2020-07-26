@@ -78,13 +78,16 @@
 		src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
 
 		src.temp = ""
+		var/hookup_error = FALSE
 		if (isnull(src.scanner))
 			src.temp += " <font color=red>SCNR-ERROR</font>"
+			hookup_error = TRUE
 		if (isnull(src.pod1))
 			src.temp += " <font color=red>POD1-ERROR</font>"
-		else
-			src.pod1.connected = src
-			src.scanner.connected = src
+			hookup_error = TRUE
+		if (!hookup_error)
+			src.pod1?.connected = src
+			src.scanner?.connected = src
 
 		if (src.temp == "")
 			src.temp = "System ready."

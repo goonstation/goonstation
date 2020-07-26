@@ -384,7 +384,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			world << sound('sound/effects/creaking_metal1.ogg', volume = 60)
 
 // A weapon by Sovexe
-datum/projectile/special/meowitzer //what have I done
+/datum/projectile/special/meowitzer //what have I done
 	shot_sound = 'sound/misc/boing/6.ogg'
 	name  = "meowitzer"
 	sname  = "meowitzer"
@@ -393,24 +393,32 @@ datum/projectile/special/meowitzer //what have I done
 	dissipation_delay = 75
 	dissipation_rate = 300
 	projectile_speed = 20
+	cost = 1
 
+	var/explosive_hits = 1
 	var/explosion_power = 30
 	var/hit_sound = 'sound/voice/animal/cat.ogg'
 	var/max_bounce_count = 50
+	var/allow_headon_bounce = 1
 
 	on_hit(atom/A, direction, projectile)
-		shoot_reflected_bounce(projectile, A, max_bounce_count)
+		shoot_reflected_bounce(projectile, A, max_bounce_count, allow_headon_bounce)
 		var/turf/T = get_turf(A)
 		playsound(A, hit_sound, 60, 1)
-		SPAWN_DBG(1 DECI SECOND)
-			for(var/mob/living/M in mobs)
-				shake_camera(M, 2, 1)
 
-		SPAWN_DBG(0)
-			explosion_new(null, T, explosion_power, 1)
-		if(prob(50))
-			playsound(A, hit_sound, 60, 1)
+		if (explosive_hits)
+			SPAWN_DBG(1 DECI SECOND)
+				for(var/mob/living/M in mobs)
+					shake_camera(M, 2, 1)
+
+			SPAWN_DBG(0)
+				explosion_new(projectile, T, explosion_power, 1)
+			if(prob(50))
+				playsound(A, hit_sound, 60, 1)
 		return
+
+/datum/projectile/special/meowitzer/inert
+	explosive_hits = 0
 
 /datum/projectile/special/spewer
 	name = "volatile bolt"

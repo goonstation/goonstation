@@ -83545,6 +83545,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/john/owlery)
+"eTm" = (
+/obj/item/clothing/under/pride/ace,
+/turf/unsimulated/floor/wood/three,
+/area/centcom/offices/zamujasa)
 "eTR" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
@@ -83566,6 +83570,14 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
+"fob" = (
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/lounge)
 "fNm" = (
 /obj/table/auto,
 /obj/item/kitchen/food_box/donut_box,
@@ -83631,14 +83643,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
-"gTp" = (
-/obj/stool/chair/yellow{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/lounge)
 "gZG" = (
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/shuttle{
@@ -84821,10 +84825,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
-"vSf" = (
-/obj/item/clothing/under/pride/ace,
-/turf/unsimulated/floor/wood/three,
-/area/centcom/offices/zamujasa)
 "woz" = (
 /obj/machinery/light{
 	dir = 4;
@@ -150324,7 +150324,7 @@ dnY
 dGS
 dGl
 tuF
-gTp
+fob
 dnY
 dnY
 dmx
@@ -158848,7 +158848,7 @@ dyV
 dvw
 dRO
 dCF
-vSf
+eTm
 dvw
 dCy
 dDl

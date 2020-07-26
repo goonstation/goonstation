@@ -31,12 +31,14 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          tools/ci/install_build_tools.sh
           tools/ci/install_spaceman_dmm.sh dreamchecker
           touch +secret/__secret.dme
 
       - name: Misc Checks
         run: |
           tools/ci/check_filedirs.sh goonstation.dme
+          tools/ci/build_tgui.sh
           tools/ci/check_grep.sh
 
       - name: Run Linter

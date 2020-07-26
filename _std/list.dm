@@ -1,3 +1,20 @@
+
+#define LAZYLISTINIT(L) \
+	if (!L) \
+		L = list() \
+
+#define LAZYLISTADD(L, X) \
+	if(!L) { L = list(); } \
+	L += X; \
+
+#define LAZYLISTREMOVE(L, I) \
+	if(L) { \
+		L -= I; \
+		if(!length(L)) { \
+			L = null; \
+		} \
+	} \
+
 /proc/uniquelist(var/list/L)
 	. = list()
 	for(var/item in L)
