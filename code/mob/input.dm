@@ -40,6 +40,8 @@ mob
 			src.update_cursor()
 
 	process_move(keys)
+		set waitfor = 0
+
 		if (src.use_movement_controller)
 			var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
 			if (controller)
