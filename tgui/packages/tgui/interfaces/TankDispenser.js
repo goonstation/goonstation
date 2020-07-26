@@ -13,7 +13,7 @@ export const TankDispenser = (props, context) => {
   return (
     <Window
       width={275}
-      height={105}>
+      height={106}>
       <Window.Content>
         <Section>
           <LabeledList>
