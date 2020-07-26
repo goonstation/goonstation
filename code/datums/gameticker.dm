@@ -648,7 +648,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	logTheThing("debug", null, null, "Revving up the spacebux loop...")
 
 	for(var/mob/player in mobs)
-		if (player.client && player.mind && !player.mind.joined_observer && !istype(player,/mob/new_player))
+		if (player && player.client && player.mind && !player.mind.joined_observer && !istype(player,/mob/new_player))
 			logTheThing("debug", null, null, "Iterating on [player.client]")
 			//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] spacebux calc start: [player.mind.ckey]")
 
