@@ -62,9 +62,7 @@ var/list/genetics_computers = list()
 		if (DNA.expended_properly)
 			user.drop_item()
 			qdel(DNA)
-
 			activated_bonus(user)
-
 		else
 			src.attack_hand(user)
 	else
@@ -997,9 +995,9 @@ var/list/genetics_computers = list()
 
 		src.log_me(subject, "mutation activated", E)
 
-		subject.bioHolder.ActivatePoolEffect(E)
+		if (subject.bioHolder.ActivatePoolEffect(E) && !ismonkey(subject) && subject.client)
+			activated_bonus(usr)
 		usr << link("byond://?src=\ref[src];menu=mutations")
-		activated_bonus(usr)
 		//send them to the mutations page.
 		return
 
