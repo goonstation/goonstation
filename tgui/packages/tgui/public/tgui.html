@@ -186,7 +186,7 @@ window.onerror = function (msg, url, line, col, error) {
   setFatalErrorGeometry();
   setInterval(setFatalErrorGeometry, 1000);
   // Use a hook that comes with the bundle to augment the stack
-  // and send errors to a dev server (if using a development build).
+  // and send errors to a local dev server (if using a development build).
   if (window.__logger__) {
     stack = window.__logger__.fatal(error, stack);
   }
