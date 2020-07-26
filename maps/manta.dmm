@@ -45955,12 +45955,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
-"pQn" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/poster/wallsign/bar,
-/obj/machinery/photocopier,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "qJt" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer/robotics{
@@ -86186,7 +86180,7 @@ bdZ
 bcb
 bcb
 aCM
-pQn
+aNq
 aFu
 aFS
 aNq
