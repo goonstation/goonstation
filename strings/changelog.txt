@@ -1,4 +1,23 @@
 
+(t)sun jul 26 20
+(u)kyle
+(e)⚖|balance
+(*)Activating genes in the genetics console via the base-pair matching game now nets materials, chromosomes, and decryptors for humans like activators do... Probably, this is a pain to test so I assume it works.
+(t)sat jul 25 20
+(u)ZeWaka
+(p)1542
+(e)🆕🔄|feature, rework
+(*)Ported the tgui interface system from tgstation. If you encounter weird interaction or ui bugs, please report them with the bug report button on the top right!
+(*)Much credit given to StyleMistake, spookydonut, actioninja, neersighted, and Faerdan for making this possible.
+(+)Atmos Tank Dispensers now use a fancy tgui interface.
+(u)mbc
+(e)🆕🎨|feature, sprites
+(*)New muzzle flash animations for taser, laser, advanced laser, phaser, wavegun, some launchers and others. Also improved muzzle flash visibility in general.
+(+)Fixed bug where glasses weren't correctly applying vision color mods.
+(u)Flaborized
+(p)1594
+(e)🎨|sprites
+(+)Resprited the AK-477
 (t)fri jul 24 20
 (u)Kyle and Flaborized
 (p)1574
