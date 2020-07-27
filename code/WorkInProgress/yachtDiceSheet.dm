@@ -1,20 +1,20 @@
 obj/item/paper/yachtdice
 	name = "yacht dice sheet"
-	info = {"Aces (Sum): __
-	<BR>Twos (Sum): __
-	<BR>Threes (Sum): __
-	<BR>Fours (Sum): __
-	<BR>Fives (Sum): __
-	<BR>Sixes (Sum): __
+	info = {"Aces (Sum of Match): __
+	<BR>Twos (Sum of Match): __
+	<BR>Threes (Sum of Match): __
+	<BR>Fours (Sum of Match): __
+	<BR>Fives (Sum of Match): __
+	<BR>Sixes (Sum of Match): __
 	<BR>Over 63 (35): __
 	<BR>
-	<BR>3 of a Kind (Sum): __
-	<BR>4 of a Kind (Sum): __
+	<BR>3 of a Kind (Sum of All): __
+	<BR>4 of a Kind (Sum of All): __
 	<BR>Full House (25): __
 	<BR>4 in a Row (30): __
 	<BR>5 in a Row (35): __
 	<BR>Yacht (50): __
-	<BR>Chance (Any Sum): __
+	<BR>Chance (Sum of All): __
 	<BR>
 	<BR>Grand Total: ____"}
 
