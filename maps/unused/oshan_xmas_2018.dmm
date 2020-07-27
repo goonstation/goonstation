@@ -5034,7 +5034,7 @@
 	anchored = 1;
 	name = "costume dresser"
 	},
-/obj/item/clothing/under/shirt_pants,
+/obj/item/clothing/under/shirt_pants_b,
 /obj/item/clothing/under/suit,
 /obj/item/clothing/head/mime_beret,
 /obj/item/clothing/head/devil,

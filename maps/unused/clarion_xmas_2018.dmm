@@ -18696,7 +18696,7 @@
 	name = "black dress"
 	},
 /obj/item/clothing/under/suit,
-/obj/item/clothing/under/shirt_pants,
+/obj/item/clothing/under/shirt_pants_b,
 /obj/item/clothing/shoes/black,
 /obj/item/clothing/head/fedora,
 /obj/item/clothing/glasses/eyepatch{
@@ -25502,7 +25502,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2";

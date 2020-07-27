@@ -30,7 +30,7 @@
 "aD" = (/turf/simulated/floor/carpet/red/fancy/edge/ne,/area/blind_pig)
 "aE" = (/obj/stool/chair/wooden{dir = 1},/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/wood,/area/blind_pig)
 "aF" = (/turf/simulated/floor/black,/area/blind_pig)
-"aG" = (/obj/storage/closet/dresser,/obj/item/clothing/under/suit,/obj/item/clothing/under/shirt_pants,/turf/simulated/floor/black,/area/blind_pig)
+"aG" = (/obj/storage/closet/dresser,/obj/item/clothing/under/suit,/obj/item/clothing/under/shirt_pants_b,/turf/simulated/floor/black,/area/blind_pig)
 "aH" = (/obj/storage/closet/dresser,/obj/item/clothing/suit/johnny_coat{desc = "This outfit just looks smug as hell."; name = "overcoat and scarf"},/obj/item/clothing/suit/tuxedo_jacket,/turf/simulated/floor/black,/area/blind_pig)
 "aI" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,/turf/simulated/floor/wood,/area/blind_pig)
 "aJ" = (/turf/simulated/floor/carpet/red/fancy/edge/west,/area/blind_pig)
