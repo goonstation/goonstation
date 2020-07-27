@@ -156,6 +156,7 @@
 					"}]
 					<div class='l'>Abilities</div>
 					<div class='r'>
+						<a href='[playeropt_link(M, "manageabils")]'>Manage</a> &bull;
 						<a href='[playeropt_link(M, "addabil")]'>Add</a> &bull;
 						<a href='[playeropt_link(M, "removeabil")]'>Remove</a> &bull;
 						<a href='[playeropt_link(M, "abilholder")]'>New Holder</a>
