@@ -51,7 +51,7 @@
 	var/stat = 0.0
 	var/next_click = 0
 	var/transforming = null
-	var/hand = 0
+	var/hand = 0 //1 means left hand is active, 0 means right hand is active. fucking hell why was this undocumented for so long
 	var/eye_blind = null
 	var/eye_blurry = null
 	var/eye_damage = null
@@ -759,9 +759,9 @@
 	if (src.client)
 		src.client.mouse_pointer_icon = cursor
 
-/mob/proc/update_cursor()
+/mob/proc/update_cursor(var/aim_override = 0)
 	if (client)
-		if (src.targeting_ability)
+		if (src.targeting_ability || aim_override)
 			src.set_cursor(cursors_selection[client.preferences.target_cursor])
 			return
 		if (src.client.admin_intent)

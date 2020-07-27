@@ -2202,6 +2202,10 @@
 	hud.update_hands()
 	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER) && !src.equipped().two_handed)
 		src.equipped().intent_switch_trigger(src)
+	if(src.find_type_in_active_hand(/obj/item/gun)) //if they have a gun in that hand, do the target stuff
+		src.update_cursor(1)
+	else
+		src.update_cursor()
 
 /mob/living/carbon/human/emp_act()
 	boutput(src, "<span class='alert'><B>Your equipment malfunctions.</B></span>")

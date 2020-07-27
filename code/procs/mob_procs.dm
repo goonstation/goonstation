@@ -52,6 +52,34 @@
 	else
 		return 0 // vOv
 
+/mob/proc/find_in_active_hand(var/obj/item/I) //for when you want to find a SPECIFIC THING in the mobs active hand
+	if (!I)
+		return 0
+	if (!src.r_hand && !src.l_hand)
+		return 0
+
+	if (src.hand) //left hand first
+		if (src.l_hand && src.l_hand == I)
+			return src.l_hand
+	else //then right hand
+		if (src.r_hand && src.r_hand == I)
+			return src.r_hand
+	return 0 //active hand had no item
+
+/mob/proc/find_type_in_active_hand(var/obj/item/I) //for finding a thing of a type but not an instance in the mobs active hand
+	if (!I)
+		return 0
+	if (!src.r_hand && !src.l_hand)
+		return 0
+
+	if (src.hand) //left hand first
+		if (src.l_hand && istype(src.l_hand, I))
+			return src.l_hand
+	else //then right hand
+		if (src.r_hand && istype(src.r_hand, I))
+			return src.r_hand
+	return 0 //active hand had no item
+
 /**
  * @param {int} tool_flag See _setup.dm for valid TOOL_X values
  * @param {string} [hand] If set, checks only in specific hand, else checks all hands

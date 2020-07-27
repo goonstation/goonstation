@@ -482,3 +482,16 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		user.visible_message("<span class='alert'><b>[user] accidentally shoots [him_or_her(user)]self with [src]!</b></span>")
 		src.shoot_point_blank(user, user)
 		JOB_XP(user, "Clown", 3)
+
+/obj/item/gun/attack_hand(var/mob/user)
+	..()
+	if (user.find_in_active_hand(src)) //safety check
+		user.update_cursor(1)
+
+/obj/item/gun/dropped(var/mob/user)
+	..()
+	user.update_cursor()
+
+/obj/item/gun/equipped(var/mob/user)
+	..()
+	user.update_cursor()
