@@ -760,22 +760,17 @@
 				else
 					return
 			var/dir = text2num(href_list["dir"])
-			if(mut_type && dir && (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_MANIPULATE) && !(manipulating))
-				manipulating = true
-				var/mal = src.manip.loaded.reference.maliciousness
-				var/manip_cooldown = mal < 15 ? 1 : mal < 65 ? 10 : 20
-				SPAWN_DBG(manip_cooldown)
-					var/act = src.manip.loaded.manipulate(mut_type, dir)
-					var/out
-					if (act == 0)
-						src.manip.visible_message("<span class='alert'>The DNA is destabilized and destroyed by the radiation.</span>")
-						out= {"{"success":0}"}
-					else if (act == -1)
-						src.manip.visible_message("<span class='alert'>The structure of the DNA appears to fundamentally change.</span>")
-						SEND_SLOT_LOAD_INFO
-					if(!out) out = {"{"newseq":"[src.manip.loaded.seqnumeric + src.manip.loaded.seqsplice]","success":1}"}
-					gui.sendToSubscribers(out, "handleManipCallback")
-					manipulating = false
+			if(mut_type && dir && (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_MANIPULATE)) // TODO: check if there are points to spread around left
+				var/act = src.manip.loaded.manipulate(mut_type, dir)
+				var/out
+				if (act == 0)
+					src.manip.visible_message("<span class='alert'>The DNA is destabilized and destroyed by the radiation.</span>")
+					out= {"{"success":0}"}
+				else if (act == -1)
+					src.manip.visible_message("<span class='alert'>The structure of the DNA appears to fundamentally change.</span>")
+					SEND_SLOT_LOAD_INFO
+				if(!out) out = {"{"newseq":"[src.manip.loaded.seqnumeric + src.manip.loaded.seqsplice]","success":1}"}
+				gui.sendToSubscribers(out, "handleManipCallback")
 
 		if (href_list["eject"])
 			if (src.manip.exposed && src.manip.slots[src.manip.exposed] && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
