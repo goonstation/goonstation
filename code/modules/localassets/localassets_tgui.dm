@@ -18,8 +18,8 @@
 	init()
 		. = ..()
 		url_map = list(
-			"js/tgui/tgui.bundle.js" = "[resource("js/tgui/tgui.bundle.js")]",
-			"css/tgui/tgui.bundle.css" = "[resource("css/tgui/tgui.bundle.css")]"
+			"tgui/tgui.bundle.js" = "[resource("tgui/tgui.bundle.js")]",
+			"tgui/tgui.bundle.css" = "[resource("tgui/tgui.bundle.css")]"
 		)
 
 /// Fontawesome assets

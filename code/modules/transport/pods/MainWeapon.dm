@@ -11,6 +11,8 @@
 
 	var/uses_ammunition = 0
 	var/remaining_ammunition = 0
+	var/muzzle_flash = null
+
 
 	icon = 'icons/obj/podweapons.dmi'		//remove this line.  or leave it. Could put these sprites in ship.dmi like how the original is
 	icon_state = "class-a"
@@ -87,6 +89,7 @@
 	desc = "A phaser designed for scout vehicles. Features a more focused energy discharge, leading to an increased range."
 	current_projectile = new/datum/projectile/laser/light/longrange
 	icon_state = "class-a"
+	muzzle_flash = "muzzle_flash_phaser"
 
 /obj/item/shipcomponent/mainweapon/mining
 	name = "Plasma Cutter System"
@@ -116,6 +119,7 @@
 	current_projectile = new/datum/projectile/energy_bolt
 	firerate = 10
 	icon_state = "combat-taser"
+	muzzle_flash = "muzzle_flash_elec"
 
 /obj/item/shipcomponent/mainweapon/phaser
 	name = "Mk 1.5 Light Phaser"
@@ -124,6 +128,7 @@
 	appearanceString = "pod_weapon_ltlaser"
 	current_projectile = new/datum/projectile/laser/light
 	icon_state = "class-a"
+	muzzle_flash = "muzzle_flash_phaser"
 
 /obj/item/shipcomponent/mainweapon/laser
 	name = "Mk.2 Scout Laser"
@@ -133,6 +138,7 @@
 	power_used = 100
 	current_projectile = new/datum/projectile/laser
 	icon_state = "mk-2-scout"
+	muzzle_flash = "muzzle_flash_laser"
 
 /obj/item/shipcomponent/mainweapon/russian
 	name = "Svet-Oruzhiye Mk.4"
@@ -140,6 +146,7 @@
 	current_projectile = new/datum/projectile/laser/glitter
 	firerate = 5
 	icon_state = "strelka"
+	muzzle_flash = "muzzle_flash_laser"
 
 /obj/item/shipcomponent/mainweapon/disruptor_light
 	name = "Mk.3 Disruptor"
@@ -147,6 +154,7 @@
 	weapon_score = 0.6
 	current_projectile = new/datum/projectile/disruptor
 	icon_state = "disruptor-l"
+	muzzle_flash = "muzzle_flash_plaser"
 
 /obj/item/shipcomponent/mainweapon/precursor
 	name = "IRIDIUM Spheroid Projector"
@@ -164,6 +172,7 @@
 	appearanceString = "pod_weapon_gun_off"
 	firerate = 10
 	icon_state = "spes"
+	muzzle_flash = "muzzle_flash"
 
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"
@@ -173,6 +182,7 @@
 	appearanceString = "pod_weapon_emitter"
 	current_projectile = new/datum/projectile/laser/asslaser
 	icon_state = "assult-laser"
+	muzzle_flash = "muzzle_flash_laser"
 
 /obj/item/shipcomponent/mainweapon/rockdrills
 	name = "Rock Drilling Rig"
@@ -206,6 +216,7 @@
 	appearanceString = "pod_weapon_bfg"
 	firerate = 100
 	icon_state = "grenade-launcher"
+	muzzle_flash = "muzzle_flash_launch"
 
 /obj/item/shipcomponent/mainweapon/UFO
 	name = "UFO Blaster"

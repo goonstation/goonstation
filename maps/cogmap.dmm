@@ -61085,11 +61085,11 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cxK" = (
-/obj/storage/closet/biohazard,
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/machinery/chem_heater,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cxL" = (
@@ -63839,6 +63839,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
+"nsR" = (
+/obj/table/auto,
+/obj/machinery/glass_recycler,
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "ntO" = (
 /obj/machinery/atmospherics/mixer{
 	dir = 1;
@@ -99844,7 +99849,7 @@ aaw
 cxe
 cxK
 cxp
-cyf
+nsR
 cxp
 cyD
 cyK

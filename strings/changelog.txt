@@ -1,4 +1,26 @@
 
+(t)mon jul 27 20
+(u)MarkNstein
+(p)1487
+(e)🗺|mapping
+(*)Cog1: Pathology now has proper pharmacy equipment: Reagent heater and glass recycler.
+(*)Cog2: Medical reception desk is now also a pharmacy.
+(u)Tarmunora
+(p)1466
+(e)⚖🐛|balance, bug
+(+)Nitro inside humans is no longer stable.
+(u)Tarmunora
+(p)1534
+(e)⚖🆕🔄🎨|balance, feature, rework, sprites
+(*)Reworked most cyberorgans and their emagged effects - notably removed blanket stamina buffs from cyberorgans
+(u)Nebulacrity
+(p)1609
+(e)|
+(+)Updated portal sprites.
+(t)sun jul 26 20
+(u)kyle
+(e)⚖|balance
+(*)Activating genes in the genetics console via the base-pair matching game now nets materials, chromosomes, and decryptors for humans like activators do... Probably, this is a pain to test so I assume it works.
 (t)sat jul 25 20
 (u)ZeWaka
 (p)1542
@@ -8,7 +30,7 @@
 (+)Atmos Tank Dispensers now use a fancy tgui interface.
 (u)mbc
 (e)🆕🎨|feature, sprites
-(*)New muzzle flash animations for taser and lasers. Also improved muzzle flash visibility in general.
+(*)New muzzle flash animations for taser, laser, advanced laser, phaser, wavegun, some launchers and others. Also improved muzzle flash visibility in general.
 (+)Fixed bug where glasses weren't correctly applying vision color mods.
 (u)Flaborized
 (p)1594

@@ -1,3 +1,6 @@
+(t)mon jul 24
+(u)Sovexe
+(*)New Ability Management Panel accesible in player options and tilde menu.
 (t)thu jul 23
 (u)Sovexe
 (*)Added the meowitzer.

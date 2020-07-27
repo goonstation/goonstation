@@ -210,8 +210,9 @@ module.exports = function (grunt) {
           src: [
             'images/{,*/}*.webp',
             'css/fonts/**',
-			'sounds/**',
-			'misc/**'
+						'sounds/**',
+						'misc/**',
+						'tgui/**'
           ]
         },
         ]

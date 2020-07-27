@@ -15,6 +15,8 @@
 	var/allowReverseReload = 1 //Use gun on ammo to reload
 	var/allowDropReload = 1    //Drag&Drop ammo onto gun to reload
 
+	muzzle_flash = "muzzle_flash"
+
 	// caliber list: update as needed
 	// 0.22 - pistols
 	// 0.308 - rifles
@@ -718,7 +720,7 @@
 	contraband = 7
 	caliber = 1.57
 	max_ammo_capacity = 1
-	muzzle_flash = null
+	muzzle_flash = "muzzle_flash_launch"
 
 	New()
 		ammo = new/obj/item/ammo/bullets/smoke/single
@@ -759,7 +761,7 @@
 	max_ammo_capacity = 1
 	can_dual_wield = 0
 	two_handed = 1
-	muzzle_flash = null
+	muzzle_flash = "muzzle_flash_launch"
 
 	New()
 		ammo = new /obj/item/ammo/bullets/rpg
@@ -805,7 +807,7 @@
 	icon_state = "airzooka"
 	max_ammo_capacity = 10
 	caliber = 4.6 // I rolled a dice
-	muzzle_flash = null
+	muzzle_flash = "muzzle_flash_launch"
 
 	New()
 		ammo = new/obj/item/ammo/bullets/airzooka
@@ -1285,7 +1287,7 @@
 	max_ammo_capacity = 1
 	can_dual_wield = 0
 	two_handed = 1
-	muzzle_flash = null
+	muzzle_flash = "muzzle_flash_launch"
 
 	New()
 		ammo = new /obj/item/ammo/bullets/antisingularity

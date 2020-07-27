@@ -644,8 +644,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		escape_possible = 0
 
 	var/time = world.time
+
+	logTheThing("debug", null, null, "Revving up the spacebux loop...")
+
 	for(var/mob/player in mobs)
-		if (player.client && player.mind && !player.mind.joined_observer && !istype(player,/mob/new_player))
+		if (player && player.client && player.mind && !player.mind.joined_observer && !istype(player,/mob/new_player))
+			logTheThing("debug", null, null, "Iterating on [player.client]")
 			//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] spacebux calc start: [player.mind.ckey]")
 
 			var/chui/window/earn_spacebux/bank_earnings = new
@@ -711,8 +715,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				bank_earnings.escaped = 0
 				player_dead = 1
 
-
-
 			//handle traitors
 			if (player.mind && ticker.mode.traitors.Find(player.mind))
 				earnings = job_wage
@@ -770,11 +772,18 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					bank_earnings.new_balance = player.client.persistent_bank
 					bank_earnings.Subscribe( player.client )
 
-		for(var/obj/bookshelf/persistent/P in by_type[/obj/bookshelf/persistent]) //make the bookshelf save its contents
-			P.build_curr_contents()
+
+	logTheThing("debug", null, null, "Done with spacebux")
+
+	for(var/obj/bookshelf/persistent/P in by_type[/obj/bookshelf/persistent]) //make the bookshelf save its contents
+		P.build_curr_contents()
+
+	logTheThing("debug", null, null, "Done with books")
 
 	award_archived_round_xp()
-	
+
+	logTheThing("debug", null, null, "Spawned XP")
+
 	SPAWN_DBG(0)
 		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] creds/new")
 		var/chui/window/crew_credits/creds = new
@@ -794,6 +803,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] done showing tickets/scores")
 
+	logTheThing("debug", null, null, "Did credits")
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] finished spacebux updates")
 

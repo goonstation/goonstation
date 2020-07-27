@@ -23,7 +23,7 @@ var/global/datum/controller/process/tgui/tgui_process
 	setup()
 		name = "tgui"
 		schedule_interval = 9 DECI SECONDS
-		basehtml = grabResource("html/tgui/tgui.html") // [GOONSTATION-ADD]
+		basehtml = grabResource("tgui/tgui.html") // [GOONSTATION-ADD]
 		tgui_process = src
 
 	doWork()
@@ -44,4 +44,4 @@ var/global/datum/controller/process/tgui/tgui_process
 		close_all_uis()
 
 	tickDetail()
-		boutput(usr, "P:[open_uis.len]")
+		boutput(usr, "Open TGUIs:[open_uis.len]")

@@ -14,7 +14,7 @@ ui_state()
 - `src_object` - The atom, which UI corresponds to in the game world.
 - `ui_interact` - The proc where you will handle a request to open an
 interface. Typically, you would update an existing UI (if it exists),
-or set up a new instance of UI by calling the `SStgui` subsystem.
+or set up a new instance of UI by calling the `tgui_process` process.
 - `ui_data` - In this proc you munges whatever complex data your `src_object`
 has into an associative list, which will then be sent to UI as a JSON string.
 - `ui_act` - This proc receives user actions and reacts to them by changing
@@ -38,7 +38,7 @@ Let's start with a very basic hello world.
 
 ```dm
 /obj/machinery/my_machine/ui_interact(mob/user, datum/tgui/ui)
-  ui = SStgui.try_update_ui(user, src, ui)
+  ui = tgui_process.try_update_ui(user, src, ui)
   if(!ui)
     ui = new(user, src, "MyMachine")
     ui.open()
@@ -293,7 +293,7 @@ upon code review):
 
 ```dm
 /obj/copypasta/ui_interact(mob/user, datum/tgui/ui)
-  ui = SStgui.try_update_ui(user, src, ui)
+  ui = tgui_process.try_update_ui(user, src, ui)
   if(!ui)
     ui = new(user, src, "copypasta")
     ui.open()

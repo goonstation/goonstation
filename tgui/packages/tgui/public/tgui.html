@@ -58,7 +58,7 @@ window.Byond = (function () {
   // Callbacks for asynchronous calls
   Byond.__callbacks__ = [];
 
-  // Makes a BYOND call.
+  // Makes a BYOND call
   // See: https://secure.byond.com/docs/ref/skinparams.html
   Byond.call = function (path, params) {
     // Not running in BYOND, abort.
@@ -186,7 +186,7 @@ window.onerror = function (msg, url, line, col, error) {
   setFatalErrorGeometry();
   setInterval(setFatalErrorGeometry, 1000);
   // Use a hook that comes with the bundle to augment the stack
-  // and send errors to a dev server (if using a development build).
+  // and send errors to a local dev server (if using a development build).
   if (window.__logger__) {
     stack = window.__logger__.fatal(error, stack);
   }
@@ -230,38 +230,25 @@ Byond.topic({
 <!-- Fatal error container -->
 <div id="FatalError" style="display: none">
 <div class="FatalError__logo">
-          _____            _____                  _______                  _____
-         /\    \          /\    \                /::\    \                /\    \
-        /::\____\        /::\    \              /::::\    \              /::\    \
-       /::::|   |        \:::\    \            /::::::\    \            /::::\    \
-      /:::::|   |         \:::\    \          /::::::::\    \          /::::::\    \
-     /::::::|   |          \:::\    \        /:::/~~\:::\    \        /:::/\:::\    \
-    /:::/|::|   |           \:::\    \      /:::/    \:::\    \      /:::/__\:::\    \
-   /:::/ |::|   |           /::::\    \    /:::/    / \:::\    \     \:::\   \:::\    \
-  /:::/  |::|   | _____    /::::::\    \  /:::/____/   \:::\____\  ___\:::\   \:::\    \
- /:::/   |::|   |/\    \  /:::/\:::\    \|:::|    |     |:::|    |/\   \:::\   \:::\    \
-/:: /    |::|   /::\____\/:::/  \:::\____\:::|____|     |:::|    /::\   \:::\   \:::\____\
-\::/    /|::|  /:::/    /:::/    \::/    /\:::\    \   /:::/    /\:::\   \:::\   \::/    /
- \/____/ |::| /:::/    /:::/    / \/____/  \:::\    \ /:::/    /  \:::\   \:::\   \/____/
-         |::|/:::/    /:::/    /            \:::\    /:::/    /    \:::\   \:::\    \
-         |::::::/    /:::/    /              \:::\__/:::/    /      \:::\   \:::\____\
-         |:::::/    /\::/    /                \::::::::/    /        \:::\  /:::/    /
-         |::::/    /  \/____/                  \::::::/    /          \:::\/:::/    /
-         /:::/    /                             \::::/    /            \::::::/    /
-        /:::/    /                               \::/____/              \::::/    /
-        \::/    /                                                        \::/    /
-         \/____/                                                          \/____/
+ ███████████                                       ███████     █████████
+░█░░░███░░░█                                     ███░░░░░███  ███░░░░░███
+░   ░███  ░   ██████  ████████  █████████████   ███     ░░███░███    ░░░
+    ░███     ███░░███░░███░░███░░███░░███░░███ ░███      ░███░░█████████
+    ░███    ░███████  ░███ ░░░  ░███ ░███ ░███ ░███      ░███ ░░░░░░░░███
+    ░███    ░███░░░   ░███      ░███ ░███ ░███ ░░███     ███  ███    ░███
+    █████   ░░██████  █████     █████░███ █████ ░░░███████░  ░░█████████
+   ░░░░░     ░░░░░░  ░░░░░     ░░░░░ ░░░ ░░░░░    ░░░░░░░     ░░░░░░░░░
 </div>
 <marquee class="FatalError__header">
-A fatal exception has occurred at 003C:D673G2C8 in TGUI.
+A fatal exception has occurred in the TermOS TGUI subsystem.
 The current application will be terminated.
-Please remain calm. Get to the nearest NTNet workstation
-and send the copy of the following stack trace to:
-www.github.com/goonstation/goonstation. Thank you for your cooperation.
+Please remain calm. Get to the nearest TermOS workstation
+and send a copy of the following stack trace to:
+https://github.com/goonstation/goonstation. Thank you for your cooperation.
 </marquee>
 <div id="FatalError__stack" class="FatalError__stack"></div>
 <div class="FatalError__footer">
-Nanotrasen (c) 2525-2559
+Copyright 2046-2053 Thinktronic Systems, LTD.
 </div>
 </div>
 

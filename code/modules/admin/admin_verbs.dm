@@ -230,6 +230,7 @@ var/list/admin_verbs = list(
 		/client/proc/admin_set_ai_vox,
 		/client/proc/cmd_makeshittyweapon,
 		/client/proc/rspawn_panel,
+		/client/proc/cmd_admin_manageabils,
 
 		// moved up from admin
 		//client/proc/cmd_admin_delete,
@@ -1846,6 +1847,8 @@ var/list/fun_images = list()
 			C.admin_follow_mobject(A)
 		if("Check Bioeffects")
 			C.cmd_admin_checkbioeffect(A)
+		if("Manage Abilities")
+			C.cmd_admin_manageabils(A)
 		if("Add Reagents")
 			C.addreagents(A)
 		if("Check Reagents")
