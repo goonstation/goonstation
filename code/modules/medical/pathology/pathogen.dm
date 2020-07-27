@@ -321,9 +321,6 @@ datum/controller/pathogen
 						if (new_act >= 0 && new_act <= 100)
 							MB.activity[stage] = new_act
 							message_admins("[key_name(usr)] set the activity for pathogen microbody [MB.plural] on stage [stage] to [new_act].")
-					if ("mutativeness")
-						MB.mutativeness = input("New base mutativeness for [MB]? The higher, the more likely it is to mutate on transmission.", "Base mutativeness", MB.mutativeness) as num
-						message_admins("[key_name(usr)] set the initial mutativeness for pathogen microbody [MB.plural] to [MB.mutativeness].")
 			if ("symptom_data")
 				var/datum/pathogeneffects/EF = locate(href_list["which"])
 				switch (href_list["data"])
