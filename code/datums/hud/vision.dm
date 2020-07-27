@@ -57,6 +57,7 @@
 				remove_screen(color_mod)
 			else
 				add_screen(color_mod)
+				color_mod.plane = PLANE_OVERLAY_EFFECTS-1
 
 		animate_color_mod(color, duration)
 			if(color_mod.color == color)

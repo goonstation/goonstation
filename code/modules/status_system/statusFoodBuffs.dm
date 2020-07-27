@@ -67,6 +67,7 @@
 		var/obj/gross = pick(src.stomach_process)
 		src.stomach_process -= gross
 		gross.loc = src.loc
+		return gross
 
 
 
