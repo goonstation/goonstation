@@ -1,5 +1,10 @@
 
 (t)mon jul 27 20
+(u)MarkNstein
+(p)1487
+(e)🗺|mapping
+(*)Cog1: Pathology now has proper pharmacy equipment: Reagent heater and glass recycler.
+(*)Cog2: Medical reception desk is now also a pharmacy.
 (u)Tarmunora
 (p)1466
 (e)⚖🐛|balance, bug
