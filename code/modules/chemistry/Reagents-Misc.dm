@@ -3355,8 +3355,8 @@ datum
 			transparency = 225
 			penetrates_skin = 1
 			var/music_given_to = null
-			var/furry = null
-			var/furrie = null
+			var/stored_furry_bioeffect = null
+			var/stored_furry_mutantrace = null
 
 			disposing()
 				if (src.music_given_to)
@@ -3374,9 +3374,9 @@ datum
 					M << sound('sound/misc/yee_music.ogg', repeat = 1, wait = 0, channel = 391, volume = 50) // play them tunes
 					if (M.bioHolder && ishuman(M))			// All mobs get the tunes, only "humans" get the scales
 						var/mob/living/carbon/human/H = M
-						src.furry = H.mutantrace.name			// then write down what your whatsit was
-						src.furrie = H.mutantrace.type		// write that down too
-						if (src.furry != "lizard")				// Dont make me a lizard if im already a lizard
+						src.stored_furry_bioeffect = H.mutantrace.name			// then write down what your whatsit was
+						src.stored_furry_mutantrace = H.mutantrace.type		// write that down too
+						if (src.stored_furry_bioeffect != "lizard")				// Dont make me a lizard if im already a lizard
 							H.bioHolder.AddEffect("lizard", timeleft = 180)
 						else
 							boutput(H, "You have a strange feeling for a moment.")
@@ -3399,14 +3399,14 @@ datum
 					var/mob/M = A
 					M << sound(null, channel = 391) // really stop playing them tunes!!
 					if (M.bioHolder)
-						if (src.furry != "lizard")
+						if (src.stored_furry_bioeffect != "lizard")
 							M.bioHolder.RemoveEffect("lizard")
 						else	// I'm already a lizard!
 							boutput(M, "You have a strange feeling for a moment, then it passes.")
-						if (src.furrie)									// If you were a thing before...
-							M.set_mutantrace(src.furrie)	// Be that thing you were
-						if (src.furry && src.furry != "lizard")
-							M.bioHolder.AddEffect(src.furry)
+						if (src.stored_furry_mutantrace)								// If you were a thing before...
+							M.set_mutantrace(src.stored_furry_mutantrace)	// Be that thing you were
+						if (src.stored_furry_bioeffect && src.stored_furry_bioeffect != "lizard")
+							M.bioHolder.AddEffect(src.stored_furry_bioeffect)
 						M.bioHolder.RemoveEffect("accent_yee")
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3416,7 +3416,7 @@ datum
 					src.music_given_to = M
 					M << sound('sound/misc/yee_music.ogg', repeat = 1, wait = 0, channel = 391, volume = 50) // play them tunes
 				if (M.bioHolder)
-					if (src.furry != "lizard")	// Just for consistency
+					if (src.stored_furry_bioeffect != "lizard")	// Just for consistency
 						M.bioHolder.AddEffect("lizard", timeleft = 180)
 					M.bioHolder.AddEffect("accent_yee", timeleft = 180)
 				if (prob(20))
