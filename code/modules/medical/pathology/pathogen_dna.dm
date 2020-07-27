@@ -60,21 +60,6 @@
  *   valid unique identifier.
  */
 
-/**
- * Pathogen mutate-and-effect graph
- *
- * When numeric values of pathogens are mutated, other values are mutated in the other direction. This graph defines the mutation of which values effect which other values.
- * (For every action, there is an equal and opposite reaction, except it's not equal because that would be annoying and I'm not trying to apply Newton's third law of motion)
- *
- * mutativeness ------------- advance_speed
- *     |                    /
- *     |        maliciousness
- *     |                    \
- * sthreshold --------------- mutation_speed
- *
- * ...sometimes I wish BYOND had pointers because it would be so much cleaner. I'm not going to use whatever twisted thing DM called refs.
- */
-
 datum/pathogendna
 	var/seqnumeric = "00000000000000000000000000"
 	var/seqsplice = ""

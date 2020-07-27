@@ -747,16 +747,12 @@
 		if(href_list["manip"])
 			var/mut_type
 			switch(href_list["manip"])
-				if("mut")
-					mut_type = "mutativeness"
-				if("mts")
-					mut_type = "mutation_speed"
 				if("adv")
 					mut_type = "advance_speed"
-				if("mal")
-					mut_type = "maliciousness"
 				if("sth")
 					mut_type = "suppression_threshold"
+				if("spr")
+					mut_type = "spread"
 				else
 					return
 			var/dir = text2num(href_list["dir"])
