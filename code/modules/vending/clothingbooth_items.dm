@@ -516,47 +516,102 @@
 	amount = 3
 	cost = 150
 
+//Headwear
 /datum/clothingbooth_item/catears_white
 	path = /obj/item/clothing/head/nyan/white
+	category = "Headwear"
 	amount = 3
 	cost = 200
 
 /datum/clothingbooth_item/catears_gray
 	path = /obj/item/clothing/head/nyan/gray
+	category = "Headwear"
 	amount = 3
 	cost = 200
 
 /datum/clothingbooth_item/catears_black
 	path = /obj/item/clothing/head/nyan/black
+	category = "Headwear"
 	amount = 3
 	cost = 200
 
 /datum/clothingbooth_item/catears_red
 	path = /obj/item/clothing/head/nyan/red
+	category = "Headwear"
 	amount = 3
 	cost = 200
 
 /datum/clothingbooth_item/catears_orange
 	path = /obj/item/clothing/head/nyan/orange
+	category = "Headwear"
 	amount = 3
 	cost = 200
 
 /datum/clothingbooth_item/catears_yellow
 	path = /obj/item/clothing/head/nyan/yellow
+	category = "Headwear"
 	amount = 3
 	cost = 200
 
 /datum/clothingbooth_item/catears_green
 	path = /obj/item/clothing/head/nyan/green
+	category = "Headwear"
 	amount = 3
 	cost = 200
 
 /datum/clothingbooth_item/catears_blue
 	path = /obj/item/clothing/head/nyan/blue
+	category = "Headwear"
 	amount = 3
 	cost = 200
 
 /datum/clothingbooth_item/catears_purple
 	path = /obj/item/clothing/head/nyan/purple
+	category = "Headwear"
 	amount = 3
 	cost = 200
+
+/datum/clothingbooth_item/tophat
+	path = /obj/item/clothing/head/that
+	name = "Top Hat"
+	category = "Headwear"
+	amount = 3
+	cost = 100
+
+/datum/clothingbooth_item/blackfedora
+	path = /obj/item/clothing/head/fedora
+	name = "Black Fedora"
+	category = "Headwear"
+	cost = 75
+
+
+/datum/clothingbooth_item/brownfedora
+	path = /obj/item/clothing/head/det_hat
+	name = "Brown Fedora"
+	category = "Headwear"
+	cost = 75
+
+/datum/clothingbooth_item/whitefedora
+	path = /obj/item/clothing/head/mj_hat
+	name = "White Fedora"
+	category = "Headwear"
+	cost = 75
+
+/datum/clothingbooth_item/bowler
+	path = /obj/item/clothing/head/mime_bowler
+	name = "Bowler Hat"
+	category = "Headwear"
+	cost = 50
+
+/datum/clothingbooth_item/beret
+	path = /obj/item/clothing/head/mime_beret
+	name = "Black Beret"
+	category = "Headwear"
+	cost = 60
+
+/datum/clothingbooth_item/cowboy
+	path = /obj/item/clothing/head/cowboy
+	name = "Cowboy Hat"
+	category = "Headwear"
+	cost = 75
+
