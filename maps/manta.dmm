@@ -33788,6 +33788,7 @@
 /turf/simulated/floor/greenblack/corner,
 /area/station/crewquarters/garbagegarbs)
 "bvz" = (
+/obj/machinery/clothingbooth,
 /turf/simulated/floor/greenblack,
 /area/station/crewquarters/garbagegarbs)
 "bvA" = (
