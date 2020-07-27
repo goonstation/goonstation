@@ -1,6 +1,10 @@
 
 (t)mon jul 27 20
 (u)Tarmunora
+(p)1466
+(e)⚖🐛|balance, bug
+(+)Nitro inside humans is no longer stable.
+(u)Tarmunora
 (p)1534
 (e)⚖🆕🔄🎨|balance, feature, rework, sprites
 (*)Reworked most cyberorgans and their emagged effects - notably removed blanket stamina buffs from cyberorgans
