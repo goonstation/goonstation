@@ -485,7 +485,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/attack_hand(var/mob/user)
 	..()
-	if (user.find_in_active_hand(src)) //safety check
+	if (user.find_in_active_hand(src) && ishuman(user)) //safety check, also it wont work properly if nonhuman
 		user.update_cursor(1)
 
 /obj/item/gun/dropped(var/mob/user)
