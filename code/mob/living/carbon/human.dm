@@ -1129,6 +1129,8 @@
 	for (var/obj/O in contents)
 		if (O.move_triggered)
 			O.move_trigger(src, ev)
+	if(reagents)
+		reagents.move_trigger(src, ev)
 	for (var/atom in statusEffects)
 		var/datum/statusEffect/S = atom
 		if (S && S.move_triggered)
