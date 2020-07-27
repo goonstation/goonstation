@@ -445,8 +445,8 @@ datum/controller/pathogen
 						output += "</tr>"
 					output += "</tbody></table>"
 				if ("microbodies")
-					output += "<h3>Changes to stage cap and base mutativeness only affects future pathogens.</h3>"
-					output += "<table class='pathology-table'><thead><tr><th>Name</th><th>Medium</tħ><th>Nutrition</th><th>Stages</th><th>Vaccinable</th><th>Activity</th><th>Base mutativeness</th></thead><tbody>"
+					output += "<h3>Changes to stage cap only affects future pathogens.</h3>"
+					output += "<table class='pathology-table'><thead><tr><th>Name</th><th>Medium</tħ><th>Nutrition</th><th>Stages</th><th>Vaccinable</th><th>Activity</th></thead><tbody>"
 					for (var/microbody_path in src.path_to_microbody)
 						output += "<tr>"
 						var/datum/microbody/MB = src.path_to_microbody[microbody_path]
@@ -469,7 +469,6 @@ datum/controller/pathogen
 								output += "<br>"
 							output += "<a href='?src=\ref[src];action=microbody_data;which=\ref[MB];data=activity;stage=[stage];topic_holder=\ref[topic_holder]'>[MB.activity[stage]]%</a>"
 						output += "</td>"
-						output += "<td><a href='?src=\ref[src];action=microbody_data;which=\ref[MB];data=mutativeness;topic_holder=\ref[topic_holder]'>[MB.mutativeness]</a></td>"
 						output += "</tr>"
 					output += "</tbody></table>"
 				if ("symptoms")
@@ -785,7 +784,7 @@ datum/pathogen
 	var/stage										// The current stage of the pathogen.
 	var/advance_speed								// The speed at which this pathogen advances stages. An advance speed of N means a flat N/10% chance to advance each tick.
 	var/base_mutation								// Currently unused.
-	var/datum/microbody/body_type					// The body type of the pathogen, which determines the base mutativeness and the method of synthesizing a cure.
+	var/datum/microbody/body_type					// The body type of the pathogen, which determines the capacity, maximum stat points, activity, and
 	var/mob/infected								// The mob that is infected with this pathogen.
 	var/cooldown = 3								// An internal 'cooldown' so that the pathogen doesn't instantly advance to stage 5.
 	var/suppression_threshold						// The pathogen's resistance to suppression. The higher this value, the more extreme conditions are required to suppress the pathogen.
