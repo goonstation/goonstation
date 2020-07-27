@@ -3877,7 +3877,7 @@ var/global/noir = 0
 /datum/admins/var/jobbans_last_cached = 0
 /datum/admins/proc/Jobbans()
 	set background = 1
-	if (src.level >= LEVEL_CODER)
+	if (src.level >= LEVEL_SA)
 		if (current_jobbans_rev == 0 || current_jobbans_rev < global_jobban_cache_rev) // the cache is newer than our panel
 			var/jobban_dialog_text = replacetext(grabResource("html/admin/jobbans_list.html"), "null /* raw_bans */", "\"[global_jobban_cache]\"");
 			usr.Browse(replacetext(jobban_dialog_text, "null /* ref_src */", "\"\ref[src]\""),"file=jobbans.html;display=0")
