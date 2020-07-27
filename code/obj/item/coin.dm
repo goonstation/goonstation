@@ -21,7 +21,7 @@
 		
 /obj/item/coin/proc/flip()
 	if(prob(1))
-		src.visible_message("<span class='notice'>The coin lands on its side.</span>")
+		src.visible_message("<span class='notice'>The coin lands on its side. Fuck.</span>")
 		return
 	else if(prob(50))
 		src.visible_message("<span class='notice'>The coin comes up heads.</span>")
