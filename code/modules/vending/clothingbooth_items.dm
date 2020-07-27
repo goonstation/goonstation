@@ -32,6 +32,24 @@
 	cost = 200
 	hidden = 1
 
+/datum/clothingbooth_item/monocole
+	name = "Monocole"
+	path = /obj/item/clothing/glasses/monocle
+	category = "Accessories"
+	cost = 180
+
+/datum/clothingbooth_item/scarf
+	name = "French Scarf"
+	path = /obj/item/clothing/suit/scarf
+	category = "Accessories"
+	cost = 45
+
+/datum/clothingbooth_item/suspenders
+	name = "Suspenders"
+	path = /obj/item/clothing/suit/suspenders
+	category = "Accessories"
+	cost = 70
+
 //Casual
 /datum/clothingbooth_item/hawaiian
 	name = "Hawaiian Dress"
@@ -70,6 +88,30 @@
 	cost = 80
 	hidden = 1
 
+/datum/clothingbooth_item/dirtyvest
+	name = "Dirty Tank Top Vest"
+	path = /obj/item/clothing/under/misc/head_of_security
+	category = "Casual"
+	cost = 25
+
+/datum/clothingbooth_item/bandshirt
+	name = "Band Shirt"
+	path = /obj/item/clothing/under/misc/bandshirt
+	category = "Casual"
+	cost = 50
+
+/datum/clothingbooth_item/orangehoodie
+	name = "Orange Hoodie"
+	path = /obj/item/clothing/suit/hoodie
+	category = "Casual"
+	cost = 75
+
+/datum/clothingbooth_item/bluehoodie
+	name = "Blue Hoodie"
+	path = /obj/item/clothing/suit/hoodie/blue
+	category = "Casual"
+	cost = 75
+
 //Costumes
 /datum/clothingbooth_item/rando
 	name = "Skull Mask and Cloak"
@@ -84,7 +126,135 @@
 	category = "Costumes"
 	cost = 100
 
+/datum/clothingbooth_item/russsianmob
+	name = "Russian Mobster Suit"
+	path = /obj/item/clothing/under/misc/rusmob
+	category = "Costumes"
+	cost = 125
+
+/datum/clothingbooth_item/columbianmob
+	name = "Columbian Mobster Suit"
+	path = /obj/item/clothing/under/misc/colmob
+	category = "Costumes"
+	cost = 125
+
+/datum/clothingbooth_item/mobilesuit
+	name = "Mobile Robot Suit"
+	path = /obj/item/clothing/under/gimmick/mobile_suit
+	category = "Costumes"
+	cost = 10000
+
+/datum/clothingbooth_item/mobilesuithelmet
+	name = "Mobile Robot Helmet"
+	path = /obj/item/clothing/head/mobile_suit
+	category = "Costumes"
+	cost = 1000
+
 //Formal
+
+/datum/clothingbooth_item/shirtandpantsblack
+	name = "Shirt And Black Pants"
+	path = /obj/item/clothing/under/shirt_pants_b
+	category = "Formal"
+	cost = 100
+
+/datum/clothingbooth_item/shirtandpantsblack_redtie
+	name = "Shirt And Black Pants With Red Tie"
+	path = /obj/item/clothing/under/shirt_pants_b/redtie
+	category = "Formal"
+	cost = 100
+
+/datum/clothingbooth_item/shirtandpantsblack_blacktie
+	name = "Shirt And Black Pants With Black Tie"
+	path = /obj/item/clothing/under/shirt_pants_b/blacktie
+	category = "Formal"
+	cost = 100
+
+/datum/clothingbooth_item/shirtandpantsblack_bluetie
+	name = "Shirt And Black Pants With Blue Tie"
+	path = /obj/item/clothing/under/shirt_pants_b/bluetie
+	category = "Formal"
+	cost = 100
+
+/datum/clothingbooth_item/shirtandpantsbrown
+	name = "Shirt And Brown Pants"
+	path = /obj/item/clothing/under/shirt_pants_br
+	category = "Formal"
+	cost = 100
+
+/datum/clothingbooth_item/shirtandpantsbrown_redtie
+	name = "Shirt And Brown Pants With Red Tie"
+	path = /obj/item/clothing/under/shirt_pants_br/redtie
+	category = "Formal"
+	cost = 100
+
+/datum/clothingbooth_item/shirtandpantsbrown_blacktie
+	name = "Shirt And Brown Pants With Black Tie"
+	path = /obj/item/clothing/under/shirt_pants_br/blacktie
+	category = "Formal"
+	cost = 100
+
+/datum/clothingbooth_item/shirtandpantsbrown_bluetie
+	name = "Shirt And Brown Pants With Blue Tie"
+	path = /obj/item/clothing/under/shirt_pants_br/bluetie
+	category = "Formal"
+	cost = 100
+
+/datum/clothingbooth_item/shirtandpantswhite
+	name = "Shirt And White Pants"
+	path = /obj/item/clothing/under/shirt_pants_w
+	category = "Formal"
+	cost = 100
+
+/datum/clothingbooth_item/shirtandpantswhite_redtie
+	name = "Shirt And White Pants With Red Tie"
+	path = /obj/item/clothing/under/shirt_pants_w/redtie
+	category = "Formal"
+	cost = 100
+
+/datum/clothingbooth_item/shirtandpantswhite_blacktie
+	name = "Shirt And White Pants With Black Tie"
+	path = /obj/item/clothing/under/shirt_pants_w/blacktie
+	category = "Formal"
+	cost = 100
+
+/datum/clothingbooth_item/shirtandpantswhite_bluetie
+	name = "Shirt And White Pants With White Tie"
+	path = /obj/item/clothing/under/shirt_pants_w/bluetie
+	category = "Formal"
+	cost = 100
+
+/datum/clothingbooth_item/redtie
+	name = "Shirt and Loose Red Tie"
+	path = /obj/item/clothing/under/redtie
+	category = "Formal"
+	cost = 250
+
+/datum/clothingbooth_item/tux
+	name = "Tuxedo"
+	path = /obj/item/clothing/under/rank/bartender/tuxedo
+	category = "Formal"
+	cost = 80
+	hidden = 1
+
+/datum/clothingbooth_item/waistcoat
+	name = "Waistcoat"
+	path = /obj/item/clothing/suit/wcoat
+	category = "Formal"
+	cost = 60
+
+/datum/clothingbooth_item/butler
+	name = "Butler's Suit"
+	path = /obj/item/clothing/under/gimmick/butler
+	category = "Formal"
+	cost = 120
+
+/datum/clothingbooth_item/maid
+	name = "Maid's Outfit"
+	path = /obj/item/clothing/under/gimmick/maid
+	category = "Formal"
+	cost = 120
+
 /datum/clothingbooth_item/dress
 	name = "Little Black Dress"
 	path = /obj/item/clothing/under/misc/dress
@@ -97,17 +267,11 @@
 	category = "Formal"
 	cost = 250
 
-/datum/clothingbooth_item/redtie
-	name = "Shirt and Red Tie"
-	path = /obj/item/clothing/under/redtie
+/datum/clothingbooth_item/weddingdress
+	name = "Wedding Dress"
+	path = /obj/item/clothing/under/gimmick/wedding_dress
 	category = "Formal"
-	cost = 250
-
-/datum/clothingbooth_item/tux
-	name = "Tuxedo"
-	path = /obj/item/clothing/under/rank/bartender/tuxedo
-	category = "Formal"
-	cost = 80
+	cost = 5000
 	hidden = 1
 
 /datum/clothingbooth_item/veil
@@ -117,14 +281,8 @@
 	cost = 80
 	hidden = 1
 
-/datum/clothingbooth_item/weddingdress
-	name = "Wedding Dress"
-	path = /obj/item/clothing/under/gimmick/wedding_dress
-	category = "Formal"
-	cost = 5000
-	hidden = 1
-
 //Jackets
+
 /datum/clothingbooth_item/cerulean
 	name = "Cerulean Jacket"
 	path = /obj/item/clothing/suit/jacket/design/cerulean
@@ -178,6 +336,18 @@
 	path = /obj/item/clothing/suit/loosejacket
 	category = "Jackets"
 	cost = 250
+
+/datum/clothingbooth_item/johhnycoat
+	name = "Overcoat And Scarf"
+	path = /obj/item/clothing/suit/johnny_coat
+	category = "Jackets"
+	cost = 150
+
+/datum/clothingbooth_item/merchantjacket
+	name = "Tacky Merchants Jacket"
+	path = /obj/item/clothing/suit/merchant
+	category = "Jackets"
+	cost = 80
 
 /datum/clothingbooth_item/tuxedojacket
 	name = "Tuxedo Jacket"
