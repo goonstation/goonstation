@@ -270,6 +270,7 @@
 	return ..()
 
 /mob/living/projCanHit(datum/projectile/P)
+	if (!P) return 0
 	if (!src.lying || (src:lying && prob(P.hit_ground_chance))) return 1
 	return 0
 
@@ -1614,7 +1615,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 				if (src.loc != last || force_puff) //ugly check to prevent stationary sprint weirds
 					sprint_particle(src, last)
-					playsound(src.loc,"sound/effects/sprint_puff.ogg", 25, 1)
+					playsound(src.loc,"sound/effects/sprint_puff.ogg", 29, 1,extrarange = -4)
 
 // cogwerks - fix for soulguard and revive
 /mob/living/proc/remove_ailments()
@@ -1643,13 +1644,14 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/oldbloss = get_brute_damage()
 	var/oldfloss = get_burn_damage()
 	..()
-	var/newbloss = get_brute_damage()
-	var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
-	if (reagents)
-		reagents.physical_shock((newbloss - oldbloss) * 0.15)
+	SPAWN_DBG(0.1 SECONDS) //fix race condition
+		var/newbloss = get_brute_damage()
+		var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
+		if (reagents)
+			reagents.physical_shock((newbloss - oldbloss) * 0.15)
 
-	if ((damage > 0) || W.force)
-		src.was_harmed(M, W)
+		if ((damage > 0) || W.force)
+			src.was_harmed(M, W)
 
 
 /mob/living/shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)

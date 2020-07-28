@@ -2395,6 +2395,7 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/)) src.amount += 1
+		else ..()
 
 	examine(mob/user)
 		. = list("This is a [src.name].")
@@ -2526,8 +2527,8 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 	food_color = "#5E6351"
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
-			if (src.cut == 1)
+		if(istool(W, TOOL_CUTTING | TOOL_SAWING))
+			if(src.cut == 1)
 				boutput(user, "<span class='alert'>This has already been cut.</span>")
 				return
 			if(istype(src.loc,/mob))
@@ -2557,6 +2558,10 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 				S.set_loc(spawnloc)
 				makepieces--
 			qdel(src)
+		else if(istype(W,/obj/item/kitchen/utensil/fork))
+			src.Eat(user,user)
+		else
+			..()
 
 /obj/item/reagent_containers/food/snacks/nigiri_roll
 	name = "nigiri roll"

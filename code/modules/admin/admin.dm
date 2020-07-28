@@ -1513,15 +1513,20 @@ var/global/noir = 0
 		if ("addabil")
 			if (src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
+				var/origin = href_list["origin"]
 				if (!M) return
 				if (!M.abilityHolder)
 					alert("No ability holder detected. Create a holder first!")
 					return
-				var/ab_to_add = input("Which ability?", "Ability", null) as anything in childrentypesof(/datum/targetable)
+				var/ab_to_add = input("Enter a /datum/targetable path or search by partial path", "Add an Ability", null) as null|text
+				ab_to_add = get_one_match(ab_to_add, "/datum/targetable")
+				if (!ab_to_add) return // user canceled
 				M.abilityHolder.addAbility(ab_to_add)
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] added ability [ab_to_add] to [key_name(M)].")
 				logTheThing("admin", usr, M, "added ability [ab_to_add] to [constructTarget(M,"admin")].")
+				if (origin == "manageabils")//called via ability management panel
+					usr.client.cmd_admin_manageabils(M)
 			else
 				alert("You must be at least a Primary Administrator to do this!")
 
@@ -1532,7 +1537,26 @@ var/global/noir = 0
 				if (!M.abilityHolder)
 					alert("No ability holder detected.")
 					return
-				var/ab_to_rem = input("Which ability?", "Ability", null) as anything in M.abilityHolder.abilities
+
+				var/datum/targetable/ab_to_rem = null
+				var/list/abils = list()
+				if (istype(M.abilityHolder, /datum/abilityHolder/composite))
+					var/datum/abilityHolder/composite/CH = M.abilityHolder
+					if (CH.holders.len)
+						for (var/datum/abilityHolder/AH in CH.holders)
+							abils += AH.abilities //get a list of all the different abilities in each holder
+					else
+						boutput(usr, "<b><span class='alert'>[M]'s composite holder lacks any ability holders to remove from!</span></b>")
+						return //no ability holders in composite holder
+				else
+					abils += M.abilityHolder.abilities
+
+				if(!abils.len)
+					boutput(usr, "<b><span class='alert'>[M] doesn't have any abilities!</span></b>")
+					return //nothing to remove
+
+				ab_to_rem = input("Remove which ability?", "Ability", null) as null|anything in abils
+				if (!ab_to_rem) return //user cancelled
 				message_admins("[key_name(usr)] removed ability [ab_to_rem] from [key_name(M)].")
 				logTheThing("admin", usr, M, "removed ability [ab_to_rem] from [constructTarget(M,"admin")].")
 				M.abilityHolder.removeAbilityInstance(ab_to_rem)
@@ -1549,6 +1573,50 @@ var/global/noir = 0
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] created abilityHolder [ab_to_add] for [key_name(M)].")
 				logTheThing("admin", usr, M, "created abilityHolder [ab_to_add] for [constructTarget(M,"admin")].")
+			else
+				alert("You must be at least a Primary Administrator to do this!")
+
+		if ("manageabils")
+			if (src.level >= LEVEL_PA)
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_manageabils(M)
+			else
+				alert("You must be at least a Primary Administrator to do this!")
+
+		if ("manageabils_remove")
+			if (src.level >= LEVEL_PA)
+				var/mob/M = locate(href_list["target"])
+				var/datum/targetable/A = locate(href_list["ability"])
+				if (!M || !A) return
+				message_admins("[key_name(usr)] removed ability [A] from [key_name(M)].")
+				logTheThing("admin", usr, M, "removed ability [A] from [constructTarget(M,"admin")].")
+				M.abilityHolder.removeAbilityInstance(A)
+				M.abilityHolder.updateButtons()
+				usr.client.cmd_admin_manageabils(M)
+			else
+				alert("You must be at least a Primary Administrator to do this!")
+
+		if ("manageabils_alter_cooldown")
+			if (src.level >= LEVEL_PA)
+				var/mob/M = locate(href_list["target"])
+				var/datum/targetable/A = locate(href_list["ability"])
+				if (!M || !A) return
+				var/input = input(usr, "Enter a cooldown in deciseconds", "Alter Cooldown", A.cooldown) as num|null
+				if(isnull(input))
+					return
+				else if(input < 0)
+					A.cooldown = 0
+				else
+					A.cooldown = round(input)
+				usr.client.cmd_admin_manageabils(M)
+			else
+				alert("You must be at least a Primary Administrator to do this!")
+
+		if ("manageabilt_debug_vars")
+			if (src.level >= LEVEL_PA)
+				var/datum/targetable/A = locate(href_list["ability"])
+				usr.client.debug_variables(A)
 			else
 				alert("You must be at least a Primary Administrator to do this!")
 
@@ -3858,7 +3926,7 @@ var/global/noir = 0
 /datum/admins/var/jobbans_last_cached = 0
 /datum/admins/proc/Jobbans()
 	set background = 1
-	if (src.level >= LEVEL_CODER)
+	if (src.level >= LEVEL_SA)
 		if (current_jobbans_rev == 0 || current_jobbans_rev < global_jobban_cache_rev) // the cache is newer than our panel
 			var/jobban_dialog_text = replacetext(grabResource("html/admin/jobbans_list.html"), "null /* raw_bans */", "\"[global_jobban_cache]\"");
 			usr.Browse(replacetext(jobban_dialog_text, "null /* ref_src */", "\"\ref[src]\""),"file=jobbans.html;display=0")
@@ -4707,6 +4775,94 @@ var/global/noir = 0
 			</tr>"}
 	dat += "</table></body></html>"
 	usr.Browse(dat.Join(),"window=bioeffect_check;size=900x400")
+
+/client/proc/cmd_admin_manageabils(var/mob/M in mobs)
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Manage Abilities"
+	set desc = "Select a mob to manage its abilities."
+	set popup_menu = 0
+	admin_only
+
+	var/list/dat = list()
+	dat += {"
+		<html>
+		<head>
+		<title>Ability Management Panel</title>
+		<style>
+		table {
+			border:1px solid #ff4444;
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		td {
+			padding: 8px;
+			text-align: left;
+		}
+
+		th {
+			background-color: #ff4444;
+			color: white;
+			padding: 8px;
+			text-align: left;
+		}
+
+		th:nth-child(4), td:nth-child(4) {text-align: center;}
+		tr:nth-child(odd) {background-color: #f2f2f2;}
+		tr:hover {background-color: #e2e2e2;}
+
+
+		.button {
+			padding: 6px 12px;
+			text-align: center;
+			float: right;
+			display: inline-block;
+			font-size: 12px;
+			margin: 0px 2px;
+			cursor: pointer;
+			color: white;
+			border: 2px solid #008CBA;
+			background-color: #008CBA;
+			text-decoration: none;
+		}
+		</style>
+		</head>
+		<body>
+		<h1>
+			Abilities of [M.name]
+			<a href='?src=\ref[src.holder];action=manageabils;target=\ref[M];origin=manageabils' class="button">&#x1F504;</a>
+			<a href='?src=\ref[src.holder];action=addabil;target=\ref[M];origin=manageabils' class="button">&#x2795;</a>
+		</h1>
+		<table>
+			<tr>
+				<th>Remove</th>
+				<th>Name</th>
+				<th>Type Path</th>
+				<th>Cooldown</th>
+			</tr>
+		"}
+
+	if (!M.abilityHolder)
+		return
+	var/list/abils = list()
+	if (istype(M.abilityHolder, /datum/abilityHolder/composite))
+		var/datum/abilityHolder/composite/CH = M.abilityHolder
+		if (CH.holders.len)
+			for (var/datum/abilityHolder/AH in CH.holders)
+				abils += AH.abilities //get a list of all the different abilities in each holder
+	else
+		abils += M.abilityHolder.abilities
+
+	for (var/datum/targetable/A in abils)
+		dat += {"
+			<tr>
+				<td><a href='?src=\ref[src.holder];action=manageabils_remove;target=\ref[M];ability=\ref[A];origin=manageabils'>remove</a></td>
+				<td><a href='?src=\ref[src.holder];action=manageabilt_debug_vars;ability=\ref[A];origin=manageabils'>[A.name]</a></td>
+				<td>[A.type]
+				<td><a href='?src=\ref[src.holder];action=manageabils_alter_cooldown;target=\ref[M];ability=\ref[A];origin=manageabils'>[isnull(A.cooldown) ? "&#x26D4;" : A.cooldown]</a></td>
+			</tr>"}
+	dat += "</table></body></html>"
+	usr.Browse(dat.Join(),"window=manageabils;size=700x400")
 
 /client/proc/respawn_target(mob/M as mob in world, var/forced = 0)
 	set name = "Respawn Target"

@@ -4089,6 +4089,10 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/cafeteria)
+"kY" = (
+/obj/machinery/manufacturer/qm,
+/turf/simulated/floor/yellow,
+/area/station/quartermaster)
 "kZ" = (
 /turf/simulated/floor/stairs/wide/middle{
 	dir = 8
@@ -61655,7 +61659,7 @@ eb
 eM
 dx
 Qy
-bH
+kY
 bH
 bH
 jo

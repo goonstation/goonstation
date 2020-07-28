@@ -13,23 +13,20 @@
 /obj/item/coin/attack_self(mob/user as mob)
 	boutput(user, "<span class='notice'>You flip the coin</span>")
 	SPAWN_DBG(1 SECOND)
-		if(prob(49))
-			boutput(user, "<span class='notice'>It comes up heads</span>")
-		else if(prob(49))
-			boutput(user, "<span class='notice'>It comes up tails</span>")
-		else
-			boutput(user, "<span class='alert'>It lands on its side, fuck</span>")
+	flip()
 
 /obj/item/coin/throw_impact(atom/hit_atom)
 	..(hit_atom)
-	var/p = rand(100)
-	if(p < 50)
-		src.visible_message("<span class='notice'>The coin comes up heads</span>")
-
-	else if(p < 99)
-		src.visible_message("<span class='notice'>The coin comes up tails</span>")
+	flip()
+		
+/obj/item/coin/proc/flip()
+	if(prob(1))
+		src.visible_message("<span class='notice'>The coin lands on its side. Fuck.</span>")
+		return
+	else if(prob(50))
+		src.visible_message("<span class='notice'>The coin comes up heads.</span>")
 	else
-		src.visible_message("<span class='notice'>The coin lands on its side</span>")
+		src.visible_message("<span class='notice'>The coin comes up tails.</span>")
 
 /obj/item/coin_bot
 	name = "Probability Disc"

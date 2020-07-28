@@ -278,10 +278,11 @@
 				else items_screen--
 				update_equipment()
 			else
-				if(scr.item)
+				if(scr?.item)
 					if(dy < 0) items_screen++
 					else items_screen--
 					update_equipment()
+
 	clicked(id)
 		if (!master)
 			return

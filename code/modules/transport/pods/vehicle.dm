@@ -410,6 +410,8 @@
 	proc/ShootProjectiles(var/mob/user, var/datum/projectile/PROJ, var/shoot_dir)
 		var/obj/projectile/P = shoot_projectile_DIR(src, PROJ, shoot_dir)
 		P.mob_shooter = user
+		if (src.m_w_system?.muzzle_flash)
+			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
 
 	bullet_act(var/obj/projectile/P)
 		if(P.shooter == src)
