@@ -616,7 +616,7 @@ var/global/noir = 0
 			usr.client.cmd_boot(M)
 
 		if ("removejobban")
-			if (src.level >= LEVEL_CODER)
+			if (src.level >= LEVEL_SA)
 				var/t = href_list["target"]
 				if(t)
 					logTheThing("admin", usr, null, "removed [t]")
@@ -624,7 +624,7 @@ var/global/noir = 0
 					message_admins("<span class='internal'>[key_name(usr)] removed [t]</span>")
 					jobban_remove(t)
 			else
-				alert("You need to be at least a Coder to remove job bans.")
+				alert("You need to be at least a Secondary Administrator to remove job bans.")
 
 		if ("mute")
 			if (src.level >= LEVEL_MOD)
