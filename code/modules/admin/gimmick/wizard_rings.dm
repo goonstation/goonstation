@@ -252,7 +252,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 			var/path = pick(L)
 			new path(loc)
 			qdel(src)
-8
+
 /client/proc/create_all_wizard_rings()
 	set name = "Create All Wizard Rings"
 	set desc = "Spawn all of the magical wizard rings."
