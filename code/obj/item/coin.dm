@@ -9,6 +9,7 @@
 	stamina_cost = 0
 	module_research = list("vice" = 3, "efficiency" = 1)
 	module_research_type = /obj/item/coin
+	var/emagged = FALSE
 
 /obj/item/coin/attack_self(mob/user as mob)
 	boutput(user, "<span class='notice'>You flip the coin</span>")
@@ -19,14 +20,29 @@
 	..(hit_atom)
 	flip()
 		
+		
+/obj/item/coin/emag_act(var/mob/user, var/obj/item/card/emag/E)
+	..()
+	if(!emagged)
+		boutput(user, "You magnetize the coin, ruining it's chances of ever being used in the Inter-galactic Poker Tournaments ever again.")
+		emagged = TRUE
+		
 /obj/item/coin/proc/flip()
-	if(prob(1))
-		src.visible_message("<span class='notice'>The coin lands on its side. Fuck.</span>")
+	if(!emagged)
+		if(prob(1))
+			src.visible_message("<span class='notice'>The coin lands on its side. Fuck.</span>")
+		else if(prob(50))
+			src.visible_message("<span class='notice'>The coin comes up heads.</span>")
+		else
+			src.visible_message("<span class='notice'>The coin comes up tails.</span>")
 		return
-	else if(prob(50))
+	if(prob(49))
 		src.visible_message("<span class='notice'>The coin comes up heads.</span>")
-	else
+	else if(prob(49))
 		src.visible_message("<span class='notice'>The coin comes up tails.</span>")
+	else
+		src.visible_message("<span class='notice'>The coin lands on its side. Fuck.</span>")
+
 
 /obj/item/coin_bot
 	name = "Probability Disc"
