@@ -102,21 +102,29 @@ datum/pathogeneffects
 	// ondisarm(mob, mob, boolean, datum/pathogen) : float
 	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
 	proc/ondisarm(var/mob/M as mob, var/mob/V as mob, isPushDown, var/datum/pathogen/origin)
-		if (infect_type == INFECT_TOUCH)
+		if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
 			infect_direct(V, origin, "disarm")
 		return 1
+
+	// ongrab(mob, mob, datum/pathogen) : void
+	// TODO: Make this a veto event.
+	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
+	proc/ongrab(var/mob/M as mob, var/mob/V as mob, var/datum/pathogen/origin)
+		if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
+			infect_direct(V, origin, "grab")
+		return
 
 	// onpunch(mob, mob, string, datum/pathogen) : float
 	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
 	proc/onpunch(var/mob/M as mob, var/mob/V as mob, zone, var/datum/pathogen/origin)
-		if (infect_type == INFECT_TOUCH)
+		if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
 			infect_direct(V, origin, "punching")
 		return 1
 
 	// onpunched(mob, mob, string, datum/pathogen) : float
 	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
 	proc/onpunched(var/mob/M as mob, var/mob/A as mob, zone, var/datum/pathogen/origin)
-		if (infect_type == INFECT_TOUCH)
+		if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
 			infect_direct(A, origin, "being punched")
 		return 1
 
@@ -124,14 +132,6 @@ datum/pathogeneffects
 	// OVERRIDE: Overriding this is situational.
 	proc/onshocked(var/mob/M as mob, var/datum/shockparam/ret, var/datum/pathogen/origin)
 		return ret
-
-	// ongrab(mob, mob, datum/pathogen) : void
-	// TODO: Make this a veto event.
-	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
-	proc/ongrab(var/mob/M as mob, var/mob/V as mob, var/datum/pathogen/origin)
-		if (infect_type == INFECT_TOUCH)
-			infect_direct(V, origin, "grab")
-		return
 
 	// onsay(mob, string, datum/pathogen) : string
 	// OVERRIDE: Overriding this is situational.
@@ -221,25 +221,25 @@ datum/pathogeneffects/malevolent/coughing
 			if (1)
 				if (prob(3))
 					M.show_message("<span class='alert'>You cough.</span>")
-					src.infect_cloud(M, origin)
+					src.infect_cloud(M, origin, origin.spread/5)
 			if (2)
 				if (prob(5))
 					M.visible_message("<span class='alert'>[M] coughs!</span>", "<span class='alert'>You cough.</span>", "<span class='alert'>You hear someone coughing.</span>")
-					src.infect_cloud(M, origin)
+					src.infect_cloud(M, origin, origin.spread/5)
 			if (3)
 				if (prob(7))
 					M.visible_message("<span class='alert'>[M] coughs violently!</span>", "<span class='alert'>You cough violently!</span>", "<span class='alert'>You hear someone cough violently!</span>")
-					src.infect_cloud(M, origin)
+					src.infect_cloud(M, origin, origin.spread/5)
 			if (4)
 				if (prob(10))
 					M.visible_message("<span class='alert'>[M] coughs violently!</span>", "<span class='alert'>You cough violently!</span>", "<span class='alert'>You hear someone cough violently!</span>")
 					M.TakeDamage("chest", 1, 0)
-					src.infect_cloud(M, origin)
+					src.infect_cloud(M, origin, origin.spread/5)
 			if (5)
 				if (prob(10))
 					M.visible_message("<span class='alert'>[M] coughs very violently!</span>", "<span class='alert'>You cough very violently!</span>", "<span class='alert'>You hear someone cough very violently!</span>")
 					M.TakeDamage("chest", 2, 0)
-					src.infect_cloud(M, origin)
+					src.infect_cloud(M, origin, origin.spread/5)
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
@@ -308,25 +308,25 @@ datum/pathogeneffects/malevolent/sneezing
 			if (1)
 				if (prob(10))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					src.infect_cloud(M, origin)
+					src.infect_cloud(M, origin, origin.spread/5)
 			if (2)
 				if (prob(12))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					src.infect_cloud(M, origin)
+					src.infect_cloud(M, origin, origin.spread/5)
 			if (3)
 				if (prob(15))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					src.infect_cloud(M, origin)
+					src.infect_cloud(M, origin, origin.spread/5)
 
 			if (4)
 				if (prob(20))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					src.infect_cloud(M, origin)
+					src.infect_cloud(M, origin, origin.spread/5)
 
 			if (5)
 				if (prob(20))
 					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					src.infect_cloud(M, origin)
+					src.infect_cloud(M, origin, origin.spread/5)
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
@@ -933,7 +933,7 @@ datum/pathogeneffects/malevolent/gibbing
 						var/mob/living/carbon/human/H = M
 						H.dump_contents_chance = 100
 					M.show_message("<span class='alert'>Your organs burst out of your body!</span>")
-					src.infect_cloud(M, origin, 20)
+					src.infect_cloud(M, origin, origin.spread)
 					logTheThing("pathology", M, null, "gibbed due to Gibbing symptom in [origin].")
 					M.gib()
 				else if (prob(30))
@@ -1009,11 +1009,11 @@ datum/pathogeneffects/malevolent/fluent
 		switch (origin.stage)
 			if (1 to 3)
 				if (prob(origin.stage * 2))
-					src.infect_cloud(M, origin)
+					src.infect_cloud(M, origin, origin.spread/5)
 
 			if (4 to 5)
 				if (prob(origin.stage * 5))
-					src.infect_cloud(M, origin)
+					src.infect_cloud(M, origin, origin.spread/5)
 		return message
 
 	may_react_to()
@@ -1075,7 +1075,7 @@ datum/pathogeneffects/malevolent/capacitor
 		var/load = origin.symptom_data["capacitor"]
 		if (load > capacity)
 			M.show_message("<span class='alert'>You burst into several, shocking pieces.</span>")
-			src.infect_cloud(M, origin, 20)
+			src.infect_cloud(M, origin, origin.spread)
 			explosion(M, M.loc,1,2,3,4)
 		else if (load > capacity * 0.9)
 			M.show_message("<span class='alert'>You are severely overcharged. It feels like the voltage could burst your body at any moment.</span>")
@@ -1682,7 +1682,7 @@ datum/pathogeneffects/malevolent/farts
 
 	proc/fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
 		if(doInfect)
-			infect_cloud(M, origin)
+			infect_cloud(M, origin, origin.spread/5)
 		if(voluntary)
 			origin.symptom_data[name] = TIME
 
@@ -1894,7 +1894,7 @@ datum/pathogeneffects/malevolent/beesneeze
 		var/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/toThrow = new /obj/item/reagent_containers/food/snacks/ingredient/egg/bee(T)
 		M.visible_message("<span class='alert'>[M] sneezes out a space bee egg!</span> [chosen_phrase]", "<span class='alert'>You sneeze out a bee egg!</span> [chosen_phrase]", "<span class='alert'>You hear someone sneezing.</span>")
 		toThrow.throw_at(target, 6, 1)
-		src.infect_cloud(M, origin, 10)
+		src.infect_cloud(M, origin, origin.spread/2)
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
