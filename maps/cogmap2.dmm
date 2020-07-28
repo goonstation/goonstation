@@ -78845,6 +78845,12 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/caution/west,
 /area/station/science/teleporter)
+"nqk" = (
+/obj/machinery/photocopier,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/security/detectives_office)
 "nKf" = (
 /obj/machinery/incubator,
 /turf/simulated/floor/white,
@@ -113709,7 +113715,7 @@ ahW
 aoK
 apS
 arj
-apS
+nqk
 atC
 auZ
 awt

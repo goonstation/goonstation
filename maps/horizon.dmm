@@ -13125,6 +13125,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/photocopier,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north)
 "aGC" = (
@@ -18651,6 +18652,14 @@
 /area/station/hallway/secondary/exit)
 "aSv" = (
 /obj/decal/cleanable/ash,
+/obj/table/wood/auto,
+/obj/item/paper_bin{
+	pixel_y = 6
+	},
+/obj/item/storage/box/marker/basic{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north)
 "aSw" = (

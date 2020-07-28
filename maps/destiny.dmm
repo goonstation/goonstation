@@ -45343,6 +45343,33 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"wab" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail,
+/obj/machinery/photocopier,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/north)
+"xac" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail,
+/obj/table/wood/auto,
+/obj/item/paper_bin{
+	pixel_y = 6
+	},
+/obj/item/storage/box/marker/basic,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/north)
 
 (1,1,1) = {"
 aaa
@@ -91630,8 +91657,8 @@ abH
 abO
 acz
 acE
-abH
-abO
+xac
+wab
 abv
 abT
 abH

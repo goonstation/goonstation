@@ -4044,6 +4044,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/machinery/photocopier,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio{
 	name = "News Office"

@@ -15564,6 +15564,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/photocopier,
 /turf/simulated/floor/carpet/grime,
 /area/station/communications/communicationsbedroom)
 "aJl" = (

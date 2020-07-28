@@ -37920,6 +37920,7 @@
 /area/station/crew_quarters/radio)
 "bLC" = (
 /obj/machinery/light/incandescent/warm,
+/obj/machinery/photocopier,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio)
 "bLD" = (
