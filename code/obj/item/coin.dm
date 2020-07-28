@@ -21,7 +21,7 @@
 	flip()
 		
 		
-/obj/item/coin/emag_actemag_act(var/mob/user, var/obj/item/card/emag/E)
+/obj/item/coin/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	..()
 	if(!emagged)
 		boutput(user, "You magnetize the coin, ruining it's chances of ever being used in the Inter-galactic Poker Tournaments ever again.")
