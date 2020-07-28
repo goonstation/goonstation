@@ -137,33 +137,32 @@
 			elecflash(user)
 
 
-/obj/item/borg_lamp_manufacturer //Very copy-paste WIP right now
+/obj/item/borg_lamp_manufacturer
 	name = "Miniaturized Lamp Manufacturer"
 	desc = "A small manufacturing unit for cyborgs to produce and (re)place lamps in existing fittings."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "borglampman-tube"
 	var/prefix = "borglampman"
-	var/capacity = 2
+
 	var/cost_broken = 50 //For broken/burned lamps (the old lamp gets recycled in the tool)
 	var/cost_empty = 75
 	var/setting = "tube" //Currently either tube or bulb
+	var/dispensing = /obj/item/light/tube
 
 	attack_self(var/mob/user as mob)
-		//if (src.setting = "tube") boutput(user, "<span class='alert'>You have nothing stored!</span>")
-		switch (src.setting)
-			if ("tube") setting = "bulb"
-			if ("bulb") setting = "tube"
-		/*else
-			var/selection = input("What do you want to drop?", "Atmos Transporter", null, null) as null|anything in src.contents
-			if(!selection) return
-			selection:set_loc(user.loc)
-			selection:contained = 0
-			elecflash(user)*/
+		switch (src.setting) //This should be relatively easily expandable I think
+			if ("tube")
+				setting = "bulb"
+				dispensing = /obj/item/light/bulb
+			if ("bulb")
+				setting = "tube"
+				dispensing = /obj/item/light/tube
 		set_icon_state("[prefix]-[setting]")
 
 	get_desc(var/dist)
 		if (dist < 3)
 			. = "<span class='notice'>It is currently set to dispense [setting]s.</span>"
+
 
 
 /obj/item/robot_chemaster

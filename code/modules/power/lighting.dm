@@ -559,12 +559,61 @@
 
 /obj/machinery/light/attackby(obj/item/W, mob/user)
 
-	if (issilicon(user) && !isghostdrone(user))
+	if (issilicon(user) && !isghostdrone(user) && !istype(W, /obj/item/borg_lamp_manufacturer))
 		return
 		/*if (isghostdrone(user))
 			return src.attack_hand(user)
 		else
 			return*/
+
+	if (istype(W, /obj/item/borg_lamp_manufacturer))
+
+		//var/fabsetting = W.setting
+		//boutput(user, "The fab is set to dispense a [M.setting].")
+		//boutput(user, "This type of light requires a [fitting].")
+		//return
+
+		//src.add_fingerprint(user)
+		//var/obj/item/light/L = W
+		var/obj/item/borg_lamp_manufacturer/M = W
+		if (M.dispensing == allowed_type) //TODO - check if a light can be replaced!!
+			if (light_status == LIGHT_OK	&& light_type == M.dispensing) // the type of the inserted light item
+				boutput(user, "This fitting already has a lamp of that type.")
+				return //Stop borgs from making more sparks than necessary
+			/*else
+				if (light_status != LIGHT_EMPTY)
+
+				else
+				if (issilicon(user)) //Not that non-silicons should have these
+					var/mob/living/silicon/S = user
+					if (S.cell)
+						S.cell.charge -= checkamt * silicon_cost_multiplier*/
+			//boutput(user, "You'd insert a [M.setting] if this thing worked.")
+			var/obj/item/light/L = new M.dispensing
+			light_name = L.name
+			light_status = L.light_status
+			boutput(user, "You insert a [L.name].")
+			breakprob = L.breakprob
+			rigged = L.rigged
+			rigger = L.rigger
+			light.set_color(L.color_r, L.color_g, L.color_b)
+			qdel(L)
+
+			on = has_power()
+			update()
+			if(on && rigged)
+				if (rigger)
+					message_admins("[key_name(rigger)]'s rigged bulb exploded in [src.loc.loc], [showCoords(src.x, src.y, src.z)].")
+					logTheThing("combat", rigger, null, "'s rigged bulb exploded in [rigger.loc.loc] ([showCoords(src.x, src.y, src.z)])")
+				explode()
+
+			elecflash(user)
+			return
+		else
+			boutput(user, "This type of light requires a [fitting].")
+			return
+
+
 
 	// see if there's a magtractor involved and if so save it for later as mag
 	var/obj/item/magtractor/mag
