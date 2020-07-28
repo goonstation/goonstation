@@ -31,7 +31,6 @@
 	if(!emagged)
 		if(prob(1))
 			src.visible_message("<span class='notice'>The coin lands on its side. Fuck.</span>")
-			return
 		else if(prob(50))
 			src.visible_message("<span class='notice'>The coin comes up heads.</span>")
 		else
