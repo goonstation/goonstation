@@ -424,7 +424,7 @@
 	uses_charges = 0
 
 /obj/item/baton/beepsky
-	name = "Securitron Stun Baton"
+	name = "securitron stun baton"
 	desc = "A stun baton that's been modified to be used more effectively by security robots. There's a small parallel port on the bottom of the handle."
 
 /obj/item/baton/stamina

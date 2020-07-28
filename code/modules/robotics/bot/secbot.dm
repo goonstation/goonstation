@@ -1076,7 +1076,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			if(src.is_beepsky == 1 || src.is_beepsky == 2)	// Holding Beepsky's baton doesnt make you him, but it does mean you're holding his baton
 				B.name = "Beepsky's stun baton"
 		else
-			new loot_baton_type
+			new loot_baton_type(Tsec)
 
 		if (prob(50))
 			new /obj/item/parts/robot_parts/arm/left(Tsec)
@@ -1255,6 +1255,13 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		var/obj/item/cable_coil/C = W
 		if (!C.use(5))
 			boutput(user, "You need a longer length of cable! A length of five should be enough.")
+		else if (src.is_dead_beepsky)	// On Beepsky's corpse
+			boutput(user, "You add wires to Officer Beepsky, reassembling the Securitron! Beep boop.")
+			var/obj/machinery/bot/secbot/beepsky/S = new /obj/machinery/bot/secbot/beepsky(get_turf(src))
+			S.attack_per_step = 0		// We just get a surly head of robosecurity
+			S.is_beepsky = 3				// So Beepsky's corpse is his corpse
+			S.loot_baton_type = /obj/item/scrap	// our baton's a hunk of junk!
+			qdel(src)
 		else
 			src.build_step++
 			boutput(user, "You add the wires to the rod, completing the Securitron! Beep boop.")
