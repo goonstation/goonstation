@@ -1024,9 +1024,7 @@ datum/projectile/snowball
 
 	if (allow_headon_bounce)
 		//stop breaking the world you fuck!
-		if (abs(P.shooter.x - reflector.x) == 1 && abs(P.shooter.y - reflector.y) == 1)
-			return
-		else if (abs(P.shooter.x - reflector.x) == 0 && abs(P.shooter.y - reflector.y) == 2)
+		if (abs(P.shooter.x - reflector.x) == 0 && abs(P.shooter.y - reflector.y) == 2)
 			return
 		else if (abs(P.shooter.x - reflector.x) == 2 && abs(P.shooter.y - reflector.y) == 0)
 			return
