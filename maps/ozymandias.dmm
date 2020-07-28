@@ -5512,6 +5512,10 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor/greenblack/corner{
 	dir = 1
 	},
@@ -14111,6 +14115,10 @@
 "mGq" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/south)
+"mGC" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/green,
+/area/station/crewquarters/garbagegarbs)
 "mGE" = (
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
@@ -17284,6 +17292,10 @@
 	dir = 1;
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
 	},
 /turf/simulated/floor/greenblack/corner{
 	dir = 4
@@ -77967,7 +77979,7 @@ skb
 eyF
 wfs
 dxg
-dxg
+mGC
 dxg
 dxg
 dxg

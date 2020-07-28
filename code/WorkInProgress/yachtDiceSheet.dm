@@ -7,6 +7,7 @@ obj/item/paper/yachtdice
 	<BR>Fives (Sum of Match): __
 	<BR>Sixes (Sum of Match): __
 	<BR>Over 63 (35): __
+	<BR>Upper Total: __
 	<BR>
 	<BR>3 of a Kind (Sum of All): __
 	<BR>4 of a Kind (Sum of All): __
@@ -15,6 +16,7 @@ obj/item/paper/yachtdice
 	<BR>5 in a Row (35): __
 	<BR>Yacht (50): __
 	<BR>Chance (Sum of All): __
+	<BR>Lower Total: __
 	<BR>
 	<BR>Grand Total: ____"}
 
