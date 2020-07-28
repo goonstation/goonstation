@@ -1,9 +1,12 @@
+#define MAX_RELEASE_PRESSURE 10*ONE_ATMOSPHERE
+#define MIN_RELEASE_PRESSURE ONE_ATMOSPHERE/10
+
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
 	icon = 'icons/obj/atmospherics/atmos.dmi'
 	density = 1
 	var/health = 100.0
-	flags = FPRINT | CONDUCT
+	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	p_class = 2
 
 	var/has_valve = 1
@@ -320,6 +323,8 @@
 	return
 
 /obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/W as obj, var/mob/user as mob)
+	if(istool(W, TOOL_PULSING))
+		src.attack_hand(user, FALSE)
 	if (istype(W, /obj/item/assembly/detonator)) //Wire: canister bomb stuff
 		if (holding)
 			user.show_message("<span class='alert'>You must remove the currently inserted tank from the slot first.</span>")
@@ -367,7 +372,43 @@
 		return
 	return src.attack_hand(user)
 
-/obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "GasCanister", name)
+		ui.open()
+
+/obj/machinery/portable_atmospherics/canister/ui_data(mob/user)
+	var/list/data = list()
+	data["release_pressure"] = src.release_pressure
+	data["current_pressure"] = MIXTURE_PRESSURE(src.air_contents)
+	data["has_valve"] = src.has_valve
+	data["valve_open"] = src.valve_open
+
+	return data
+
+/obj/machinery/portable_atmospherics/canister/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("toggle-valve")
+			if(src.has_valve)
+				src.toggle_valve()
+				. = TRUE
+		if("set-pressure")
+			src.set_release_pressure(params["release_pressure"])
+			. = TRUE
+		if("set-max-pressure")
+			src.set_release_pressure(MAX_RELEASE_PRESSURE)
+			. = TRUE
+		if("set-min-pressure")
+			src.set_release_pressure(MIN_RELEASE_PRESSURE)
+			. = TRUE
+
+/obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob, var/new_ui = TRUE)
+	if(new_ui)
+		return ..()
+
 	if (src.destroyed)
 		return
 
@@ -529,6 +570,20 @@
 	onclose(user, "canister")
 	return
 
+/obj/machinery/portable_atmospherics/canister/proc/toggle_valve()
+	valve_open = !valve_open
+	if (!src.holding && !src.connected_port)
+		logTheThing("station", usr, null, "[valve_open ? "opened [src] into" : "closed [src] from"] the air [log_atmos(src)] at [log_loc(src)].")
+		playsound(src.loc, "sound/effects/valve_creak.ogg", 50, 1)
+		playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
+		if (valve_open)
+			message_admins("[key_name(usr)] opened [src] into the air at [log_loc(src)]. See station logs for atmos readout.")
+			if (src.det)
+				src.det.leaking()
+
+/obj/machinery/portable_atmospherics/canister/proc/set_release_pressure(var/pressure)
+	src.release_pressure = clamp(pressure, MIN_RELEASE_PRESSURE, MAX_RELEASE_PRESSURE)
+
 /obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
 	if(..())
 		return
@@ -538,15 +593,7 @@
 		src.add_dialog(usr)
 
 		if(href_list["toggle"])
-			valve_open = !valve_open
-			if(!holding && !connected_port)
-				logTheThing("station", usr, null, "[valve_open ? "opened [src] into" : "closed [src] from"] the air [log_atmos(src)] at [log_loc(src)].")
-				playsound(src.loc, "sound/effects/valve_creak.ogg", 50, 1)
-				playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
-				if(valve_open)
-					message_admins("[key_name(usr)] opened [src] into the air at [log_loc(src)]. See station logs for atmos readout.")
-					if (src.det)
-						src.det.leaking()
+			src.toggle_valve()
 
 		if (href_list["remove_tank"])
 			if(holding)
