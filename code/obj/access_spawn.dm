@@ -22,9 +22,11 @@
 
 	proc/setup()
 		for (var/obj/machinery/M in src.loc)
-			if (istype(M,/obj/machinery/door/airlock) && M:modBySpawner == 0) //access spawn mapper QoL upgrade: no more accidental extra access
-				M.req_access = null
-				M:modBySpawner = 1
+			if (istype(M, /obj/machinery/door/airlock)) //access spawn mapper QoL upgrade: no more accidental extra access
+				var/obj/machinery/door/airlock/A = M
+				if (!A.modded_by_spawner)
+					A.req_access = null
+					A.modded_by_spawner = 1
 			if (!M.req_access)
 				M.req_access = src.req_access
 			else
