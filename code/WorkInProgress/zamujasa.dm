@@ -687,8 +687,10 @@
 
 	var/datum/monitored = null
 	var/monitored_var = null
+	var/monitored_list = null
 	var/monitored_ref = null
 	var/last_value = null
+	var/display_mode = null
 	var/maptext_prefix = "<span class='c'>"
 	var/maptext_suffix = "</span>"
 	var/ding_on_change = 0
@@ -721,14 +723,31 @@
 			if (!src.monitored_var)
 				return
 			try
-				var/current_value = monitored.vars[monitored_var]
+				var/current_value
+				if (src.monitored_list)
+					current_value = monitored.vars[src.monitored_list][src.monitored_var]
+				else
+					current_value = monitored.vars[monitored_var]
+
 				if (current_value != last_value)
-					src.maptext = "[maptext_prefix][current_value][maptext_suffix]"
+					src.maptext = "[maptext_prefix][format_value(current_value)][maptext_suffix]"
 					src.last_value = current_value
 					if (src.ding_on_change)
 						playsound(src, src.ding_sound, 33, 0)
 			catch(var/exception/e)
 				src.maptext = "(Err: [e])"
+
+
+	proc/format_value(var/val)
+		switch (src.display_mode)
+			if ("power")
+				return engineering_notation(val)
+			if ("percent")
+				return (val * 100)
+			if ("temperature")
+				return "[val - T0C]&deg;C"
+
+		return val
 
 
 	ex_act()
