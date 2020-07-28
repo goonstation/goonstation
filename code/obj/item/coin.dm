@@ -41,8 +41,8 @@
 	else if(prob(49))
 		src.visible_message("<span class='notice'>The coin comes up tails.</span>")
 	else
-			src.visible_message("<span class='notice'>The coin lands on its side. Fuck.</span>")
-	
+		src.visible_message("<span class='notice'>The coin lands on its side. Fuck.</span>")
+
 
 /obj/item/coin_bot
 	name = "Probability Disc"
