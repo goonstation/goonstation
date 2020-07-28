@@ -64,7 +64,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 				show_message = 1
 			if (user?.bioHolder.HasEffect("hulk"))
 				user.bioHolder.RemoveEffect("hulk")
-				show_message = 1 
+				show_message = 1
 			if (show_message)
 				boutput(user, "<span class='alert'><b>Removing [src] removes its powers with it!</b></span>")
 	staff
@@ -76,7 +76,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 
 		equipped(var/mob/user, var/slot)
 			..()
-			
+
 			//can only make one staff per ring. Anyone who equips the ring claims the staff
 			if (!created_staff)
 				var/obj/item/staff/cthulhu/staff = new /obj/item/staff/cthulhu(get_turf(user))
@@ -252,11 +252,11 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 			var/path = pick(L)
 			new path(loc)
 			qdel(src)
-
+8
 /client/proc/create_all_wizard_rings()
 	set name = "Create All Wizard Rings"
 	set desc = "Spawn all of the magical wizard rings."
-	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set popup_menu = 0
 	admin_only
 
