@@ -55,6 +55,13 @@
 		return (calcTotal() >= 0)
 
 	proc/updateTraits(var/mob/user)
+
+		// Not passed a user, try to gracefully recover.
+		if (!user)
+			user = usr
+			if (!user)
+				return
+
 		if(!winexists(user, "traitssetup_[user.ckey]"))
 			winclone(user, "traitssetup", "traitssetup_[user.ckey]")
 

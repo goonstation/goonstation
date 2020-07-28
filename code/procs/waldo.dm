@@ -47,7 +47,7 @@
 
 
 	var/SPcool = 3000
-	if (usr.wizard_spellpower()) SPcool = 600
+	if (usr.wizard_spellpower(null)) SPcool = 600
 
 	var/A
 	usr.verbs -= /client/proc/mass_teleport

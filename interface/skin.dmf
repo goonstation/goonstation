@@ -386,6 +386,13 @@ menu "menu"
 		is-checked = true
 		can-check = true
 		saved-params = "is-checked"
+	elem "use_hand_ghosts"
+		name = "Show item ghosts on mouse-over"
+		command = "set-hand-ghosts"
+		category = "&Interface"
+		is-checked = true
+		can-check = true
+		saved-params = "is-checked"
 	elem
 		name = "&Audio"
 		command = ""

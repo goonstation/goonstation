@@ -202,9 +202,12 @@
 
 			tooltip_rebuild = 0
 
+		usr.moused_over(src)
+
 	MouseExited()
 		if(showTooltip && usr.client.tooltipHolder)
 			usr.client.tooltipHolder.hideHover()
+		usr.moused_exit(src)
 
 	onMaterialChanged()
 		..()

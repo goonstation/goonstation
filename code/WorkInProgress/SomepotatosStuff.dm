@@ -74,7 +74,7 @@
 		return
 	world << targets.len
 	var/target = input("Choose a destination!") in wtfbyond|null
-	if(!target) return
+	if(!target || !src.client) return
 	target = targets[target]
 	var/turf/dest = get_turf(target)
 	if(dest.z != OT.z)

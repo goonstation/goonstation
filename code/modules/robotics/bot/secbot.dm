@@ -1130,7 +1130,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					master.frustration++
 					sleep(delay)
 					continue
-				master.path -= master.path[1]
+				master?.path -= master?.path[1]
 				sleep(delay)
 
 			if (master)

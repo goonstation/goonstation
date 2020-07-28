@@ -57,7 +57,8 @@
 			pool (W)
 			pool (src)
 			user.put_in_hand_or_drop(P)
-			JOB_XP(user, "Botanist", 2)
+			if (prob(20))
+				JOB_XP(user, "Botanist", 2)
 
 		else if (istype(W, /obj/item/bluntwrap))
 			boutput(user, "<span class='alert'>You roll [src] up in [W] and make a fat doink.</span>")
@@ -75,7 +76,8 @@
 			qdel(W)
 			pool(src)
 			user.put_in_hand_or_drop(doink)
-			JOB_XP(user, "Botanist", 3)
+			if (prob(20))
+				JOB_XP(user, "Botanist", 3)
 
 	combust_ended()
 		smoke_reaction(src.reagents, 1, get_turf(src), do_sfx = 0)

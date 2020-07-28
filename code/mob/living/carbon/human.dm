@@ -755,7 +755,11 @@
 
 	if (!antag_removal && src.spell_soulguard)
 		boutput(src, "<span class='notice'>Your Soulguard enchantment activates and saves you...</span>")
-		reappear_turf = pick(wizardstart)
+		//soulguard ring puts you in the same spot
+		if(istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport))
+			reappear_turf = get_turf(src)
+		else
+			reappear_turf = pick(wizardstart)
 
 	////////////////Set up the new body./////////////////
 
@@ -1125,6 +1129,8 @@
 	for (var/obj/O in contents)
 		if (O.move_triggered)
 			O.move_trigger(src, ev)
+	if(reagents)
+		reagents.move_trigger(src, ev)
 	for (var/atom in statusEffects)
 		var/datum/statusEffect/S = atom
 		if (S && S.move_triggered)
@@ -2264,7 +2270,7 @@
 	for (var/organ_slot in src.organHolder.organ_list)
 		var/obj/item/organ/O = src.organHolder.organ_list[organ_slot]
 		if(istype(O))
-			O.broken = 0
+			O.unbreakme()
 	if (!src.organHolder)
 		src.organHolder = new(src)
 	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye"))

@@ -375,13 +375,7 @@ datum
 				if(!volume_passed)
 					return
 				if(method == TOUCH)
-					for(var/A in M.organs)
-						var/obj/item/affecting = null
-						if(!M.organs[A])    continue
-						affecting = M.organs[A]
-						if(!isitem(affecting))
-							continue
-						affecting.heal_damage(volume_passed*1.5, volume_passed*1.5)
+					M.HealDamage("All", volume_passed * 1.5, volume_passed * 1.5)
 					if (isliving(M))
 						var/mob/living/H = M
 						if (H.bleeding)
@@ -994,13 +988,7 @@ datum
 					return
 
 				if (method == TOUCH)
-					for(var/A in M.organs)
-						var/obj/item/affecting = null
-						if(!M.organs[A])    continue
-						affecting = M.organs[A]
-						if (!isitem(affecting))
-							continue
-						affecting.heal_damage(0, volume_passed)
+					M.HealDamage("All", 0, volume_passed)
 
 					var/silent = 0
 					if (paramslist && paramslist.len)
