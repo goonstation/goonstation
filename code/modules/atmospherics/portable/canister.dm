@@ -381,6 +381,7 @@
 /obj/machinery/portable_atmospherics/canister/ui_data(mob/user)
 	var/list/data = list()
 	data["release_pressure"] = src.release_pressure
+	data["maximum_pressure"] = src.maximum_pressure
 	data["current_pressure"] = MIXTURE_PRESSURE(src.air_contents)
 	data["has_valve"] = src.has_valve
 	data["valve_open"] = src.valve_open
@@ -396,7 +397,9 @@
 				src.toggle_valve()
 				. = TRUE
 		if("set-pressure")
-			src.set_release_pressure(params["release_pressure"])
+			var/target_pressure = params["release_pressure"] as num
+			if(target_pressure && isnum(target_pressure))
+			src.set_release_pressure(target_pressure)
 			. = TRUE
 		if("set-max-pressure")
 			src.set_release_pressure(MAX_RELEASE_PRESSURE)
@@ -581,7 +584,7 @@
 			if (src.det)
 				src.det.leaking()
 
-/obj/machinery/portable_atmospherics/canister/proc/set_release_pressure(var/pressure)
+/obj/machinery/portable_atmospherics/canister/proc/set_release_pressure(var/pressure as num)
 	src.release_pressure = clamp(pressure, MIN_RELEASE_PRESSURE, MAX_RELEASE_PRESSURE)
 
 /obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
