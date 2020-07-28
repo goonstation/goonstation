@@ -47,7 +47,7 @@ datum
 
 					logTheThing("combat", usr, null, "is associated with a nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)]. Context: [context].")
 
-					explosion_new(usr, T, sqrt(10 * (volume/covered_turf.len)), log(10 * (volume/covered_turf.len), 10)) // Because people were being shit // okay its back but harder to handle
+					explosion_new(usr, T, sqrt(10 * (volume/covered_turf.len)), min(log(10 * (volume/covered_turf.len), 10), 1)) // Because people were being shit // okay its back but harder to handle
 					//explosion_new(usr, T, min(volume * 6 / 21, 250)) // 6 is power needed to cause ex_act(1) in explosion_new, 21 is the minimum # of units we want required to cause a gib-capable explosion. 250 is just a guess in case someone goes insane with an artbeaker/chemicompiler
 				holder.del_reagent("nitroglycerin")
 				if (del_holder)
