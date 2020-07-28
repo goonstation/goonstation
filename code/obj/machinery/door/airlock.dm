@@ -103,7 +103,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/no_access = 0
 
 	//for access spawn mapper QoL upgrade
-	var/modBySpawner = 0
+	var/modded_by_spawner = 0 //has this airlock had its access changed by a spawner? 0 if no, 1 if yes
 
 	autoclose = 1
 	power_usage = 50
