@@ -19,6 +19,8 @@
 		else if (donor.blood_volume > 500)
 			if (prob(20))
 				donor.blood_volume -= 1 * mult
+		if(emagged)
+			donor.blood_volume += 2 * mult //Don't worry friend, you'll have /plenty/ of blood!
 		return 1
 
 	on_broken(var/mult = 1)

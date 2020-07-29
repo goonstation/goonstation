@@ -780,8 +780,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	logTheThing("debug", null, null, "Done with books")
 
-	SPAWN_DBG(0)
-		award_archived_round_xp()
+	award_archived_round_xp()
 
 	logTheThing("debug", null, null, "Spawned XP")
 

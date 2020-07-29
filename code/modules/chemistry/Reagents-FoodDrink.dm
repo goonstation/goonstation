@@ -2692,6 +2692,12 @@ datum
 				M.reagents.add_reagent("sugar", 1.2 * mult)
 				..()
 
+			glaucogen
+				name = "glaucogen"
+				id = "glaucogen"
+				description = "A synthetically generated polysaccharide structure that mimics the main storage form of glucose in the body."
+				depletion_rate = 1
+
 		fooddrink/VHFCS
 			name = "very-high-fructose corn syrup"
 			id = "VHFCS"

@@ -211,3 +211,16 @@ while(FALSE)
 #define area_space_nopower(x) (x.type == /area || x.type == /area/allowGenerate || x.type == /area/allowGenerate/trench) //areas where we will skip searching for shit like APCs and that do not have innate power
 												 //blahhh i think faster than istypes
 
+#define ADD_STATUS_LIMIT(target, group, value)\
+	do { \
+		if (length(target.statusLimits)) { \
+			target.statusLimits[group] = value; \
+		} else { \
+			target.statusLimits = list(group = value);\
+		} \
+	} while (0)
+
+#define REMOVE_STATUS_LIMIT(target, group)\
+	do { \
+		target.statusLimits -= group;\
+	} while (0)
