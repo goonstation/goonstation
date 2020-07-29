@@ -757,8 +757,8 @@ proc/debug_color_of(var/thing)
 			var/list/lparams = params2list(params)
 			var/offs = splittext(lparams["screen-loc"], ",")
 
-			var/x = text2num(splittext(offs[1], ":")[1])+1
-			var/y = text2num(splittext(offs[2], ":")[1])+1
+			var/x = text2num(splittext(offs[1], ":")[1])
+			var/y = text2num(splittext(offs[2], ":")[1])
 			var/image/im = usr.client.infoOverlayImages["[x]-[y]"]
 			if(im && im.desc)
 				usr.client.tooltipHolder.transient.show(src, list(

@@ -161,6 +161,9 @@ Mr. Showtime
 Mr. Wings
 Mr. Lallander
 Mr. Varinn
+Mr. Efrem
+Mr. Law
+Ms. Smelly
 James Bond
 Scooby
 Nicholas Cage
@@ -195,7 +198,7 @@ CM Munkey
 Gibbon Cena
 Edge
 Chimpton
-The Underape
+The Underchimp
 Triple M
 Strike
 Queensbury Rules

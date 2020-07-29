@@ -132,11 +132,12 @@ var/global/awarded_xp = 0
 	awarded_xp = 1
 
 	for (var/key in xp_archive)
-		var/list/v_list = xp_archive[key]
-		for (var/field in v_list)		//field is the job. Botanist, Clown, etc.
-			var/amt = v_list["[field]"]
-			amt = clamp(amt,0,XP_ROUND_CAP)
-			add_xp(key, field, amt)
+		SPAWN_DBG(0)
+			var/list/v_list = xp_archive[key]
+			for (var/field in v_list)		//field is the job. Botanist, Clown, etc.
+				var/amt = v_list["[field]"]
+				amt = clamp(amt,0,XP_ROUND_CAP)
+				add_xp(key, field, amt)
 
 //wrapper for set_xp
 /proc/add_xp(var/key = null, var/field_name="debug", var/amount = 0)
