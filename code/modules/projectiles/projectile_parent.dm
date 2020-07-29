@@ -79,7 +79,6 @@
 		if (proj_data)
 			proj_data.on_launch(src)
 		src.setup()
-
 		if (!disposed && !pooled)
 			SPAWN_DBG(0)
 				if (!is_processing)
