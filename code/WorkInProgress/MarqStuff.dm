@@ -244,9 +244,7 @@
 	duration = -1
 	var/obj/item/gun/bow/bow = null
 	var/progress = 0
-	var/direction = 1
-	var/progression = 0.18
-	var/linger = 15
+	var/progression = 0.34
 	var/moved = 0
 
 	New(var/mob/M, var/obj/item/gun/bow/B)
@@ -271,58 +269,20 @@
 		..()
 
 	interrupt(var/flag)
-		var/mob/mowner = owner
-		if(flag == INTERRUPT_MOVE && mowner.m_intent == "walk")
-			bar.color = "#FF0000"
-			switch (direction)
-				if (-1)
-					progress = max(0, progress - 4 * progression)
-					progression += 0.035
-					if (!progress)
-						state = ACTIONSTATE_FINISH
-				if (0)
-					linger = max(linger - 4, 0)
-					if (linger)
-						direction = 1
-						progress = max(0, progress - 4 * progression)
-						moved = 1
-					else
-						direction = -1
-						moved = 0
-				if (1)
-					moved = 2
-					linger = max(0, linger - 2)
-					progress = max(0, progress - 3 * progression)
-					if (!linger)
-						direction = -1
-						moved = 0
+		if(flag == INTERRUPT_MOVE)
+			moved = 1
 			return
 		..()
 
+
 	onUpdate()
-		if (!progress && direction == -1)
-			state = ACTIONSTATE_FINISH
-			return
 		if (moved)
-			moved--
-			linger = max(0, linger - 1)
-			if (linger <= 0)
-				direction = -1
-				moved = 0
-			return
-		switch (direction)
-			if (-1)
-				progress = max(0, progress - progression)
-				if (!progress)
-					state = ACTIONSTATE_FINISH
-			if (0)
-				linger--
-				if (linger <= 0)
-					direction = -1
-			if (1)
-				progress = min(1, progress + progression)
-				if (progress == 1)
-					direction = 0
+			progress += (progression/2)
+		else
+			progress +=progression
+		progress = min(1,progress)
+		moved = 0
+
 		var/complete = progress
 		bar.color = "#0000FF"
 		bar.transform = matrix(complete, 1, MATRIX_SCALE)
@@ -523,7 +483,7 @@
 	icon_state = "quiver-0"
 	wear_image_icon = 'icons/mob/back.dmi'
 	item_state = "quiver"
-	flags = FPRINT | TABLEPASS | ONBACK
+	flags = FPRINT | TABLEPASS | ONBACK | ONBELT
 
 	attackby(var/obj/item/arrow/I, var/mob/user)
 		if (!istype(I))
@@ -602,7 +562,7 @@
 /datum/projectile/arrow
 	name = "arrow"
 	power = 17
-	dissipation_delay = 4
+	dissipation_delay = 12
 	dissipation_rate = 5
 	shot_sound = 'sound/effects/bow_fire.ogg'
 	damage_type = D_KINETIC
@@ -643,6 +603,14 @@
 			var/mob/living/carbon/human/H = user
 			if(istype(H.back, /obj/item/quiver))
 				var/obj/item/quiver/Q = H.back
+				var/obj/item/arrow/I = Q.getArrow(user)
+				if(I)
+					loaded = I
+					I.loc = src
+					overlays += I
+					Q.updateApperance()
+			if(istype(H.belt, /obj/item/quiver))
+				var/obj/item/quiver/Q = H.belt
 				var/obj/item/arrow/I = Q.getArrow(user)
 				if(I)
 					loaded = I
@@ -708,10 +676,10 @@
 		loaded.set_loc(A)
 		current_projectile.implanted = A
 		current_projectile.material = copyMaterial(loaded.head_material)
-		var/default_power = 12
+		var/default_power = 20
 		if(loaded.head_material)
 			if(loaded.head_material.hasProperty("hard"))
-				current_projectile.power = round(loaded.head_material.getProperty("hard") / 2.6) //40hard ~ 15dmg, 80hard ~ 30dmg
+				current_projectile.power = round(20+loaded.head_material.getProperty("hard") / 4) //40hard ~ 15dmg, 80hard ~ 30dmg note this has now been modified by anacroniser for it to be 30 and 40 respectively
 			else
 				current_projectile.power = default_power
 		else
@@ -724,15 +692,19 @@
 		return loaded != null
 
 	pixelaction(atom/target, params, mob/user, reach)
+		/*
 		if (!loaded)
 			boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")
 			return 1
-
+		*/
 		if (!aim)
 			//var/list/parameters = params2list(params)
 			if(ismob(target.loc) || istype(target, /obj/screen)) return
 			if (!aim && !loaded)
 				loadFromQuiver(user)
+				if(loaded)
+					boutput(user, "<span class='alert'>You load an arrow from the quiver.</span>")
+				return
 
 			if (!aim && loaded)
 				aim = new(user, src)
