@@ -184,9 +184,11 @@ var/const/effectTypeFood = 4
 		for(var/datum/basePair/bp in blockListCurr)
 			if(prob(33))
 				if(prob(50))
-					bp.bpp1 = "X"
+					bp.bpp1 = "?"
 				else
-					bp.bpp2 = "X"
+					bp.bpp2 = "?"
+				bp.style = "X"
+
 
 		var/list/gapList = new/list()
 		//Make sure you don't have more gaps than basepairs or youll get an error.
@@ -195,8 +197,9 @@ var/const/effectTypeFood = 4
 		for(var/i=0, i<owner.blockGaps, i++)
 			var/datum/basePair/bp = pick(blockListCurr - gapList)
 			gapList.Add(bp)
-			bp.bpp1 = "X"
-			bp.bpp2 = "X"
+			bp.bpp1 = "?"
+			bp.bpp2 = "?"
+			bp.style = "X"
 
 		for(var/i=0, i<owner.lockedGaps, i++)
 			if (!prob(owner.lockProb))
@@ -220,8 +223,9 @@ var/const/effectTypeFood = 4
 					if(31 to 50) diff = 4
 					if(51 to INFINITY) diff = 5
 
-			bp.bpp1 = "Unk[diff]"
-			bp.bpp2 = "Unk[diff]"
+			bp.bpp1 = "?"
+			bp.bpp2 = "?"
+			bp.style = "[diff]"
 			bp.marker = "locked"
 
 		return sequenceCorrect()
@@ -249,12 +253,14 @@ var/const/effectTypeFood = 4
 			sprite_state = "white"
 		for(var/datum/basePair/bp in blockListCurr)
 			bp.marker = sprite_state
+			bp.style = ""
 		return
 
 /datum/basePair
 	var/bpp1 = ""
 	var/bpp2 = ""
 	var/marker = "green"
+	var/style = ""
 	var/lockcode = ""
 	var/locktries = 0
 
