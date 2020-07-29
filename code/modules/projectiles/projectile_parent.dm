@@ -79,7 +79,7 @@
 		if (proj_data)
 			proj_data.on_launch(src)
 		src.setup()
-		if (!disposed && !pooled && !qdeled)
+		if (!disposed && !pooled)
 			SPAWN_DBG(-1)
 				if (!is_processing)
 					process()
@@ -88,7 +88,7 @@
 		if(hitlist.len)
 			hitlist.len = 0
 		is_processing = 1
-		while (!disposed)
+		while (!disposed && !pooled)
 #if ASS_JAM //dont move while in timestop
 			while(src.projectile_paused)
 				sleep(1 SECOND)
@@ -432,7 +432,7 @@
 			die()
 			return
 		proj_data.tick(src)
-		if (disposed)
+		if (disposed || pooled)
 			return
 
 		var/turf/curr_turf = loc
@@ -455,7 +455,7 @@
 				var/turf/T = crossing[i]
 				if (crossing[T] < curr_t)
 					Move(T)
-					if (disposed)
+					if (disposed || pooled)
 						return
 					incidence = get_dir(curr_turf, T)
 					curr_turf = T
