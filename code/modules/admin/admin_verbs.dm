@@ -231,6 +231,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_makeshittyweapon,
 		/client/proc/rspawn_panel,
 		/client/proc/cmd_admin_manageabils,
+		/client/proc/create_all_wizard_rings,
 
 		// moved up from admin
 		//client/proc/cmd_admin_delete,
