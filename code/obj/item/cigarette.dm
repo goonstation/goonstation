@@ -1177,6 +1177,11 @@
 				return
 			//sleep(1 SECOND)
 
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		if (exposed_temperature > 1000)
+			return ..()
+		return
+
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
