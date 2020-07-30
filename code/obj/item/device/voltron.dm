@@ -254,7 +254,7 @@
 
 			activating = 1
 
-			playsound(get_turf(src), 'sound/effects/singsuck.ogg', 40, 1)
+			playsound(get_turf(src), "sound/effects/singsuck.ogg", 40, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(usr))
 			O.name = "Energy"
 			O.anchored = 1
@@ -305,10 +305,10 @@
 					return
 				EXIT = PH.parent.linked.handset
 				user.visible_message("[user] enters the phone line using their [src].", "You enter the phone line using your [src].", "You hear a strange sucking noise.")
-				playsound(user.loc, 'sound/effects/singsuck.ogg', 40, 1)
+				playsound(user.loc, "sound/effects/singsuck.ogg", 40, 1)
 				user.drop_item(PH)
 				user.set_loc(target_loc)
-				playsound(user.loc, 'sound/effects/singsuck.ogg', 40, 1)
+				playsound(user.loc, "sound/effects/singsuck.ogg", 40, 1)
 				user.visible_message("[user] suddenly emerges from the [EXIT]. [pick("","What the fuck?")]", "You emerge from the [EXIT].", "You hear a strange sucking noise.")
 			else
 				boutput(user, "<span class='notice'>You activate the [src].</span>")
