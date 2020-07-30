@@ -71,6 +71,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	var/last_vox = -INFINITY
 	var/vox_cooldown = 1200
+	var/announcing_vox = 0
 
 	var/has_feet = 0
 
