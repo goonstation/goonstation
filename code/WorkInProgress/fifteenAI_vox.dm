@@ -1,3 +1,5 @@
+#define UNTIL(X) while(!(X)) sleep(world.tick_lag)
+
 var/list/friendly_voice_names = list(
 	"Artifical Intelligence" = "GLaDOS (Portal)",
 	"Fry Cook" = "SpongeBob",
@@ -35,7 +37,7 @@ var/list/available_emotions = list(
 	var/emotion_to_use = input(src, "Choose what emotion to use! Higher numbers are more emotive:", "Emotion Choice")  as null|anything in available_emotions[friendly_voice_names[character_to_use]]
 	if(!emotion_to_use)
 		return
-	var/const/max_characters = 300 // magic number but its the cap 15 allows
+	var/max_characters = 300 // magic number but its the cap 15 allows
 	var/message = input(src, "Use the power of 15.ai to say anything! (300 character OR 3 sentence maximum)", "15.ai VOX System", src.last_announcement) as text|null
 
 	if(!message || announcing_vox > world.time)
@@ -58,7 +60,7 @@ var/list/available_emotions = list(
 
 
 /proc/play_vox_word(message, character, emotion, mob/living/silicon/ai/speaker, z_level, mob/only_listener)
-	var/const/api_url = "https://api.fifteen.ai/app/getAudioFile"
+	var/api_url = "https://api.fifteen.ai/app/getAudioFile"
 	var/static/vox_voice_number = 0
 	var/datum/http_request/req = new()
 	vox_voice_number++
