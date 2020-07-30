@@ -139,7 +139,7 @@ var/list/available_emotions = list(
 
 
 /proc/play_vox_word(message, character, emotion, mob/living/silicon/ai/speaker, z_level, mob/only_listener)
-	var/api_url = "https://api.fifteen.ai/app/getAudioFile"
+	var/const/api_url = "https://api.fifteen.ai/app/getAudioFile"
 	var/static/vox_voice_number = 0
 	var/datum/http_request/req = new()
 	vox_voice_number++
