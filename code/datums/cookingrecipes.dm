@@ -1193,8 +1193,11 @@
 
 		var/obj/item/reagent_containers/food/snacks/S = docakeitem.custom_item
 		var/obj/item/reagent_containers/food/snacks/cake/custom/B = new /obj/item/reagent_containers/food/snacks/cake/custom(ourCooker)
+		var/image/overlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-overlay")
 		B.food_color = S ? S.food_color : "#F0F0F0"
-		B.update_icon(0)
+		overlay.color = B.food_color
+		overlay.alpha = 255
+		B.UpdateOverlays(image(overlay),"base")
 		if (S)
 			S.reagents.trans_to(B, 50)
 			if(S.real_name)
@@ -1206,7 +1209,10 @@
 			B.name = "[rand(50) ? "yellow" : "white"] cake"
 
 		B.desc = "Mmm! A delicious-looking [B.name]!"
-		B.food_effects += S.food_effects
+		for(var/i=1,i<=S.food_effects.len,i++)
+			if(S.food_effects[i] in B.food_effects)
+				continue
+			B.food_effects += S.food_effects[i]
 		return B
 
 
@@ -1241,19 +1247,6 @@
 			if (istype(I, item1))
 				continue
 			else if (istype(I,/obj/item/reagent_containers/food/snacks/))
-				/*
-				var/obj/item/reagent_containers/food/snacks/S = I
-				var/obj/item/reagent_containers/food/snacks/cake/custom/B = new /obj/item/reagent_containers/food/snacks/cake/custom(src.loc)
-				B.food_color = S.food_color
-				B.update_icon(0)
-				S.reagents.trans_to(B, 50)
-				if(S.real_name)
-					B.name = "[S.real_name] cake"
-
-				else
-					B.name = "[S.name] cake"
-				B.desc = "Mmm! A delicious-looking [B.name]!"
-				*/
 				var/obj/item/reagent_containers/food/snacks/cake/batter/batter = new
 
 				batter.custom_item = I
