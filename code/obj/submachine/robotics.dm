@@ -122,9 +122,9 @@
 
 /obj/item/atmosporter
 	name = "Atmospherics Transporter"
-	desc = "Used by Atmospherics Cyborgs for convenient transport of siphons and tanks."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "bedbin"
+	desc = "Used by Engineering Cyborgs for convenient transport of siphons and tanks."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "atmosporter"
 	var/capacity = 2
 
 	attack_self(var/mob/user as mob)
