@@ -1,4 +1,9 @@
 
+(t)thu jul 30 20
+(u)Kubius
+(p)1663
+(e)🐛🗺|bug, mapping
+(+)More Fleet fixes to make the map slightly closer to bearable.
 (t)tue jul 28 20
 (u)Kubius
 (p)1629
