@@ -377,3 +377,5 @@ git rebase master
 Yogstation for making an amazing guide that this is based on, found [here](https://forums.yogstation.net/index.php?threads/release-the-gitkraken-how-to-make-your-first-pull-request.15099/).
 
 /TG/station for for their [contribution guide](https://github.com/tgstation/tgstation/blob/master/.github/CONTRIBUTING.md), which was invaluable.
+
+[//]: # (This file is licensed under CC-BY-NC-SA 3.0 and the ISC licenses.)

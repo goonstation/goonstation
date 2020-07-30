@@ -8,7 +8,7 @@
 	},
 /area)
 "aac" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/asteroid/dark,
 /area)
 "aad" = (
 /obj/lattice{
@@ -490,7 +490,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
 "abi" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/asteroid/dark,
 /area/station/owlery)
 "abj" = (
 /obj/cable{
@@ -522,7 +522,7 @@
 	},
 /area)
 "abm" = (
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless/asteroid/dark,
 /area/station/owlery)
 "abn" = (
 /obj/grille/catwalk{
@@ -592,7 +592,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless/asteroid/dark,
 /area/station/owlery)
 "abr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -627,12 +627,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/owlery)
 "abx" = (
-/turf/simulated/wall{
-	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass";
-	name = "tall grass"
-	},
+/turf/simulated/wall/auto/jen/green,
 /area/station/owlery)
 "aby" = (
 /turf/simulated/floor/shuttlebay,
@@ -2897,17 +2892,11 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/office)
 "agS" = (
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	tag = "icon-plant (NORTH)"
-	},
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/machinery/photocopier,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "agT" = (
@@ -4044,6 +4033,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/machinery/photocopier,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio{
 	name = "News Office"
@@ -6977,6 +6967,7 @@
 	d2 = 4;
 	icon_state = "8-9"
 	},
+/obj/item/ghostboard,
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/chapel/office)
 "aqe" = (
@@ -8385,6 +8376,9 @@
 /obj/item/clothing/under/shorts/black{
 	pixel_x = -7;
 	pixel_y = -5
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -15749,7 +15743,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/carpet/red/fancy/edge/nw,
+/turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/station/crew_quarters/quarters_north)
 "aJS" = (
 /obj/table/wood/auto,
@@ -17494,8 +17488,10 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/table/round/auto,
-/obj/machinery/phone,
+/obj/machinery/photocopier,
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 9
 	},
@@ -23033,6 +23029,9 @@
 /obj/item/decoration/flower_vase{
 	pixel_y = 14
 	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
@@ -24474,8 +24473,8 @@
 	})
 "bdE" = (
 /obj/table/round/auto,
-/obj/item/decoration/flower_vase{
-	pixel_y = 14
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 8
@@ -28169,14 +28168,14 @@
 /area/station/maintenance/SEmaint)
 "bma" = (
 /obj/table/round/auto,
-/obj/machinery/phone,
+/obj/item/gobowl/b,
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
 /area/station/crew_quarters/quarters_south)
 "bmb" = (
 /obj/table/round/auto,
-/obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
+/obj/item/goboard,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
 "bmc" = (
@@ -28728,9 +28727,7 @@
 /area/station/crew_quarters/quarters_south)
 "bns" = (
 /obj/table/round/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
+/obj/item/gobowl/w,
 /turf/simulated/floor/neutral/corner{
 	dir = 1
 	},
@@ -28743,6 +28740,9 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/machinery/phone/wall{
+	pixel_x = 24
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 4
@@ -31347,6 +31347,7 @@
 /area/station/bridge)
 "btS" = (
 /obj/machinery/light/small,
+/obj/machinery/photocopier,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "btT" = (
@@ -31401,9 +31402,7 @@
 /turf/simulated/floor/grass,
 /area/station/aviary)
 "btZ" = (
-/obj/tree1{
-	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
-	},
+/obj/tree1,
 /turf/simulated/floor/grass,
 /area/station/aviary)
 "bua" = (
@@ -37496,6 +37495,7 @@
 	},
 /area/station/storage/warehouse)
 "bHB" = (
+/obj/mic_stand,
 /turf/simulated/floor/neutral/side{
 	dir = 9
 	},
@@ -39003,7 +39003,7 @@
 	},
 /area/station/storage/warehouse)
 "bKB" = (
-/obj/mic_stand,
+/obj/machinery/photocopier,
 /turf/simulated/floor/neutral/side{
 	dir = 10
 	},
@@ -50144,7 +50144,7 @@
 /turf/space,
 /area)
 "ciA" = (
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless/asteroid/dark,
 /area)
 "ciB" = (
 /obj/storage/crate,
@@ -50162,12 +50162,12 @@
 /area/station/crew_quarters/utility)
 "ciC" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless/asteroid/dark,
 /area/research_outpost{
 	name = "Indigo Rye"
 	})
 "ciD" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/asteroid/dark,
 /area/research_outpost{
 	name = "Indigo Rye"
 	})
@@ -50225,13 +50225,13 @@
 	name = "Indigo Rye"
 	})
 "ciM" = (
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless/asteroid/dark,
 /area/research_outpost{
 	name = "Indigo Rye"
 	})
 "ciN" = (
 /obj/decal/cleanable/robot_debris,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless/asteroid/dark,
 /area/research_outpost{
 	name = "Indigo Rye"
 	})
@@ -50366,7 +50366,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless/asteroid/dark,
 /area/research_outpost{
 	name = "Indigo Rye"
 	})
@@ -50903,7 +50903,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless/asteroid/dark,
 /area/research_outpost{
 	name = "Indigo Rye"
 	})
@@ -51944,7 +51944,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "cms" = (
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless/asteroid/dark,
 /area/listeningpost)
 "cmt" = (
 /obj/machinery/door/airlock/syndicate{
@@ -52316,7 +52316,7 @@
 /obj/machinery/shuttle/engine/propulsion{
 	icon_state = "alt_propulsion"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless/asteroid/dark,
 /area/listeningpost)
 "cnp" = (
 /turf/space,
@@ -54081,7 +54081,7 @@
 	})
 "cZV" = (
 /obj/storage/crate/loot,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless/asteroid/dark,
 /area/station/owlery)
 "daF" = (
 /obj/wingrille_spawn/auto,
@@ -55116,7 +55116,7 @@
 /area/station/medical/medbooth)
 "jCx" = (
 /obj/storage/crate/loot,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless/asteroid/dark,
 /area)
 "jDX" = (
 /obj/landmark{
@@ -55875,7 +55875,7 @@
 /area/station/hallway/primary/north)
 "ovi" = (
 /obj/item/seed/alien,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless/asteroid/dark,
 /area)
 "ovZ" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -55934,6 +55934,10 @@
 /area/research_outpost{
 	name = "Indigo Rye"
 	})
+"oIX" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/barber_shop)
 "oQa" = (
 /obj/lattice{
 	dir = 8;
@@ -56126,6 +56130,10 @@
 /obj/machinery/vending/standard,
 /turf/simulated/floor/plating,
 /area/station/maintenance/SWmaint)
+"qpS" = (
+/obj/tree1,
+/turf/simulated/floor/grass/leafy,
+/area/station/owlery)
 "qqG" = (
 /obj/landmark{
 	name = "blobstart"
@@ -116974,7 +116982,7 @@ aNY
 aXX
 aYS
 bad
-bac
+oIX
 bcq
 aYR
 beC
@@ -132855,7 +132863,7 @@ abi
 abx
 abB
 abB
-abG
+qpS
 abi
 abi
 abi
