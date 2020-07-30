@@ -116,7 +116,7 @@ var/list/available_emotions = list(
 	var/emotion_to_use = input(src, "Choose what emotion to use! Higher numbers are more emotive:", "Emotion Choice")  as null|anything in available_emotions[friendly_voice_names[character_to_use]]
 	if(!emotion_to_use)
 		return
-	var/max_characters = 300 // magic number but its the cap 15 allows
+	var/const/max_characters = 300 // magic number but its the cap 15 allows
 	var/message = input(src, "Use the power of 15.ai to say anything! (300 character OR 3 sentence maximum)", "15.ai VOX System", src.last_announcement) as text|null
 
 	if(!message || announcing_vox > world.time)
