@@ -28,7 +28,7 @@ var/list/genetics_computers = list()
 	var/datum/bioEffect/currently_browsing = null
 	var/datum/geneticsResearchEntry/tracked_research = null
 
-	var/botbutton_html = ""
+	var/list/botbutton_html = list()
 	var/info_html = ""
 	var/topbotbutton_html = ""
 
@@ -116,30 +116,30 @@ var/list/genetics_computers = list()
 	if(status & (BROKEN|NOPOWER))
 		return
 
-	var/basicinfo = {"<b>Materials:</b> [genResearch.researchMaterial] (+[genResearch.checkMaterialGenerationRate()]) * "}
+	var/basicinfo = {"<b>Materials:</b> [genResearch.researchMaterial] / [genResearch.max_material] * "}
 
-	botbutton_html = "<p><small>"
+	botbutton_html.len = 0
 	var/mob/living/subject = get_scan_subject()
 	if (subject)
 		basicinfo += {"<b>Scanner Occupant:</b> [subject.name] - Health: [subject.health] - Stability: [subject.bioHolder.genetic_stability]"}
-		botbutton_html += {"* <a href='?src=\ref[src];menu=potential'>Potential</a>"}
-		botbutton_html += {" * <a href='?src=\ref[src];menu=mutations'>Mutations</a>"}
+		botbutton_html += {"* <a href=\"javascript:goBYOND('menu=potential')\">Potential</a>"}
+		botbutton_html += {" * <a href=\"javascript:goBYOND('menu=mutations')\">Mutations</a>"}
 		if (ishuman(subject))
 			var/mob/living/carbon/human/H = subject
 			if (!istype(H.mutantrace))
-				botbutton_html += {" * <a href='?src=\ref[src];menu=appearance'>Appearance</a>"}
-			botbutton_html += {" * <a href='?src=\ref[src];menu=mutantrace'>Body</a>  "}
+				botbutton_html += {" * <a href=\"javascript:goBYOND('menu=appearance')\">Appearance</a>"}
+			botbutton_html += {" * <a href=\"javascript:goBYOND('menu=mutantrace')\">Body</a>  "}
 	else
 		basicinfo += {"<b>Scanner Occupant:</b> None"}
 	if (genResearch.debug_mode)
 		if (src.get_scan_subject())
-			botbutton_html += {"<a href='?src=\ref[src];debug_erase=1'>Erase Occupant</a>  "}
+			botbutton_html += {"<a href=\"javascript:goBYOND('debug_erase=1')\">Erase Occupant</a>  "}
 		else
-			botbutton_html += {"<a href='?src=\ref[src];debug_create=1'>Create Occupant</a>  "}
+			botbutton_html += {"<a href=\"javascript:goBYOND('debug_create=1')\">Create Occupant</a>  "}
 	botbutton_html += "<br>"
 	if (src.backpage)
-		botbutton_html += "<a href='?src=\ref[src];menu=[src.backpage]'><b>\<</b></a> "
-	botbutton_html += {"<a href='?src=\ref[src];menu=research'>Research Menu</a>  "}
+		botbutton_html += "<a href=\"javascript:goBYOND('menu=[src.backpage]')\"><b>\<</b></a> "
+	botbutton_html += {"<a href=\"javascript:goBYOND('menu=research')\">Research Menu</a>  "}
 
 	if (genResearch.isResearched(/datum/geneticsResearchEntry/checker))
 		botbutton_html += {"<img alt="Analyser Cooldown" src="[resource("images/genetics/eqAnalyser.png")]" style="border-style: none">: [max(0,round((src.equipment[2] - world.time) / 10))] "}
@@ -235,35 +235,32 @@ var/list/genetics_computers = list()
 			}
 
 	</style>
+	<script>
+		function goBYOND(url) {
+			window.location = "?src=\ref[src]&" + url;
+		}
+	</script>
 </head>
 <body>
 	<h1>GeneTek Console v1.01</h1>
-	<table style="width: 700px; height: 335px;" border="0" cellpadding="0" cellspacing="0">
+	<table style="width: 100%; height: 100%; min-height: 350px;" border="0" cellpadding="0" cellspacing="0">
 		<tbody>
 			<tr>
-				<td style="width: 183px;">
+				<td style="width: 183px;" rowspan="2">
 					<img style="width: 182px; height: 300px;" alt="" src="[resource("images/genetics/DNAorbit.gif")]">
 				</td>
-				<td>
-					<table style="text-align: left; width: 100%; height: 100%;" border="0" cellpadding="0" cellspacing="0">
-						<tbody>
-							<tr>
-								<td style="vertical-align: middle; height: 20%;">
-									[topbotbutton_html]
-								</td>
-							</tr>
-							<tr>
-								<td valign="middle">
-									<div style="overflow:auto;width:517px; height:240px; padding:0px 0px 0px 0px; margin:0px 0 0px 0;margin:0 auto;">[info_html]</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+				<td style="vertical-align: middle; height: 20%;">
+					[topbotbutton_html]
 				</td>
 			</tr>
 			<tr>
-				<td style="vertical-align: middle; height: 40px;">
-					[botbutton_html]
+				<td style="width: 100%; height: 100%;">
+					[info_html]
+				</td>
+			</tr>
+			<tr>
+				<td style="vertical-align: middle; height: 40px;" colspan="2">
+					[botbutton_html.Join()]
 				</td>
 			</tr>
 		</tbody>
@@ -338,9 +335,9 @@ var/list/genetics_computers = list()
 		html_list += {"<p><b>[GBE.research_level >= 2 ? E.name : "Unknown Mutation"]</b>"}
 		if (GBE.research_level >= 2)
 			if(src.equipment_available("precision_emitter",E))
-				html_list += " <a href='?src=\ref[src];Prademitter=\ref[E]'><small>(Scramble)</small></a>"
+				html_list += " <a href=\"javascript:goBYOND('Prademitter=\ref[E]')\"><small>(Scramble)</small></a>"
 			if(src.equipment_available("reclaimer",E))
-				html_list += " <a href='?src=\ref[src];reclaimer=\ref[E]'><small>(Reclaim)</small></a>"
+				html_list += " <a href=\"javascript:goBYOND('reclaimer=\ref[E]')\"><small>(Reclaim)</small></a>"
 		html_list += "</p><br>"
 
 		html_list += src.ui_build_mutation_research(E)
@@ -352,14 +349,14 @@ var/list/genetics_computers = list()
 
 		html_list += "<p><small>"
 		if(E.dnaBlocks.sequenceCorrect())
-			html_list += "* <a href='?src=\ref[src];activatepool=\ref[E]'>Activate</a>"
+			html_list += "* <a href=\"javascript:goBYOND('activatepool=\ref[E]')\">Activate</a>"
 		else
 			if (GBE.research_level >= 3)
-				html_list += " * <a href='?src=\ref[src];autocomplete=\ref[E]'>Autocomplete</a>"
+				html_list += " * <a href=\"javascript:goBYOND('autocomplete=\ref[E]')\">Autocomplete</a>"
 		if (src.equipment_available("activator",E) && GBE.research_level >= 2)
-			html_list += " * <a href='?src=\ref[src];make_activator=\ref[E]'>Create Activator</a>"
+			html_list += " * <a href=\"javascript:goBYOND('make_activator=\ref[E]')\">Create Activator</a>"
 		if (src.equipment_available("analyser"))
-			html_list += " * <a href='?src=\ref[src];checkstability=\ref[E]'>Check Stability</a>"
+			html_list += " * <a href=\"javascript:goBYOND('checkstability=\ref[E]')\">Check Stability</a>"
 		html_list += "</small></p>"
 
 	else if(href_list["sample_viewpool"])
@@ -383,7 +380,7 @@ var/list/genetics_computers = list()
 		//html_list += "[build[1]]<br>[build[2]]<br>[build[3]]</p><br>"
 
 		if (src.equipment_available("activator",E) && GBE.research_level >= 2)
-			html_list += " <p><small><a href='?src=\ref[src];make_activator=\ref[E]'>Create Activator</a></small></p>"
+			html_list += " <p><small><a href=\"javascript:goBYOND('make_activator=\ref[E]')\">Create Activator</a></small></p>"
 
 	else if(href_list["researched_mutation"])
 
@@ -406,7 +403,7 @@ var/list/genetics_computers = list()
 			html_list += "<p> This mutation needs to be activated at least once to see the sequence.</p>"
 
 		if (src.equipment_available("activator",E) && E.research_level >= 2)
-			html_list += " <p><small><a href='?src=\ref[src];make_activator=\ref[E]'>Create Activator</a></small></p>"
+			html_list += " <p><small><a href=\"javascript:goBYOND('make_activator=\ref[E]')\">Create Activator</a></small></p>"
 
 	else if(href_list["vieweffect"])
 		var/datum/bioEffect/E = locate(href_list["vieweffect"])
@@ -437,15 +434,15 @@ var/list/genetics_computers = list()
 
 			html_list += "<p><small>"
 			if (src.equipment_available("injector",E))
-				html_list += " * <a href='?src=\ref[src];make_injector=\ref[E]'>Create Injector</a>"
+				html_list += " * <a href=\"javascript:goBYOND('make_injector=\ref[E]')\">Create Injector</a>"
 			if (src.equipment_available("genebooth",E))
-				html_list += " * <a href='?src=\ref[src];send_booth=\ref[E]'>Sell at Gene Booth</a>"
+				html_list += " * <a href=\"javascript:goBYOND('send_booth=\ref[E]')\">Sell at Gene Booth</a>"
 			if (src.equipment_available("activator",E))
-				html_list += " * <a href='?src=\ref[src];make_activator=\ref[E]'>Create Activator</a>"
+				html_list += " * <a href=\"javascript:goBYOND('make_activator=\ref[E]')\">Create Activator</a>"
 			if (src.to_splice)
-				html_list += " * <a href='?src=\ref[src];splice_chromosome=\ref[E]'>Splice Chromosome</a>"
+				html_list += " * <a href=\"javascript:goBYOND('splice_chromosome=\ref[E]')\">Splice Chromosome</a>"
 			if (src.equipment_available("saver",E))
-				html_list += " * <a href='?src=\ref[src];genesaver=\ref[E]'>Store</a>"
+				html_list += " * <a href=\"javascript:goBYOND('genesaver=\ref[E]')\">Store</a>"
 			html_list += "</small></p>"
 		else
 			html_list += "<p>Error attempting to read gene.</p>"
@@ -477,17 +474,17 @@ var/list/genetics_computers = list()
 			// html_list += "[build[1]]<br>[build[2]]<br>[build[3]]</p><br>"
 
 			var/mob/living/subject = get_scan_subject()
-			html_list += "<p><small>* <a href='?src=\ref[src];delete_stored_mut=\ref[E]'>Delete</a>"
+			html_list += "<p><small>* <a href=\"javascript:goBYOND('delete_stored_mut=\ref[E]')\">Delete</a>"
 			if (subject)
-				html_list += " * <a href='?src=\ref[src];add_stored_mut=\ref[E]'>Add to Occupant</a>"
+				html_list += " * <a href=\"javascript:goBYOND('add_stored_mut=\ref[E]')\">Add to Occupant</a>"
 			if (src.equipment_available("injector",E))
-				html_list += " * <a href='?src=\ref[src];make_injector=\ref[E]'>Create Injector</a>"
+				html_list += " * <a href=\"javascript:goBYOND('make_injector=\ref[E]')\">Create Injector</a>"
 			if (src.equipment_available("genebooth",E))
-				html_list += " * <a href='?src=\ref[src];send_booth=\ref[E]'>Sell at Gene Booth</a>"
+				html_list += " * <a href=\"javascript:goBYOND('send_booth=\ref[E]')\">Sell at Gene Booth</a>"
 			if (src.equipment_available("activator",E))
-				html_list += " * <a href='?src=\ref[src];make_activator=\ref[E]'>Create Activator</a>"
+				html_list += " * <a href=\"javascript:goBYOND('make_activator=\ref[E]')\">Create Activator</a>"
 			if (src.to_splice)
-				html_list += " * <a href='?src=\ref[src];splice_chromosome=\ref[E]'>Splice Chromosome</a>"
+				html_list += " * <a href=\"javascript:goBYOND('splice_chromosome=\ref[E]')\">Splice Chromosome</a>"
 			html_list += "</small></p>"
 		else
 			html_list += "<p>Error attempting to read gene.</p>"
@@ -499,8 +496,8 @@ var/list/genetics_computers = list()
 
 		html_list += "<p><b>[E.name]</b><br>[E.desc]</p>"
 		if (src.to_splice != E)
-			html_list += "<small><a href='?src=\ref[src];splice_stored_chromosome=\ref[E]'>Mark for Splicing</a>"
-		html_list += " <a href='?src=\ref[src];delete_stored_chromosome=\ref[E]'>Delete</a></small>"
+			html_list += "<small><a href=\"javascript:goBYOND('splice_stored_chromosome=\ref[E]')\">Mark for Splicing</a>"
+		html_list += " <a href=\"javascript:goBYOND('delete_stored_chromosome=\ref[E]')\">Delete</a></small>"
 
 	else if(href_list["splice_chromosome"])
 		var/datum/bioEffect/E = locate(href_list["splice_chromosome"])
@@ -1098,7 +1095,7 @@ var/list/genetics_computers = list()
 		html_list += {"
 		<p>[E.name]<br><br>
 		[E.desc]</p><br><br>
-		<a href='?src=\ref[src];research=\ref[E]'>Research now</a>"}
+		<a href=\"javascript:goBYOND('research=\ref[E]')\">Research now</a>"}
 
 	else if(href_list["researchmut"])
 		var/datum/bioEffect/E = locate(href_list["researchmut"])
@@ -1192,7 +1189,7 @@ var/list/genetics_computers = list()
 				html_list += "<p><b>Occupant</b>: [subject ? "[subject.name]" : "None"]</p><br>"
 				html_list += "<p>Showing potential mutations</p><br>"
 				if(src.equipment_available("emitter"))
-					html_list += "<a href='?src=\ref[src];rademitter=1'>Scramble DNA</a>"
+					html_list += "<a href=\"javascript:goBYOND('rademitter=1')\">Scramble DNA</a>"
 
 			if("sample_potential")
 				topbotbutton_html = ""
@@ -1203,7 +1200,7 @@ var/list/genetics_computers = list()
 				topbotbutton_html = ui_build_clickable_genes("sample_pool",sample)
 
 				html_list += "<p><b>Sample</b>: [sample.subject_name] <small>([sample.subject_uID])</small></p><br>"
-				html_list += "<p>Showing potential mutations <small><a href='?src=\ref[src];menu=dna_samples'>(Back)</a></small></p><br>"
+				html_list += "<p>Showing potential mutations <small><a href=\"javascript:goBYOND('menu=dna_samples')\">(Back)</a></small></p><br>"
 
 			if("mutations")
 				var/mob/living/subject = get_scan_subject()
@@ -1228,15 +1225,15 @@ var/list/genetics_computers = list()
 					topbotbutton_html += "<b>Mutations Stored:</b> [saved_mutations.len]/[genResearch.max_save_slots]</p>"
 
 				html_list += "<br>"
-				html_list += "<a href='?src=\ref[src];menu=buymats'>Purchase Additional Materials</a><br>"
-				html_list += "<a href='?src=\ref[src];menu=resopen'>Available Research</a><br>"
-				html_list += "<a href='?src=\ref[src];menu=resrunning'>Research in Progress</a><br>"
-				html_list += "<a href='?src=\ref[src];menu=mutresearch'>Researched Mutations</a><br>"
+				html_list += "<a href=\"javascript:goBYOND('menu=buymats')\">Purchase Additional Materials</a><br>"
+				html_list += "<a href=\"javascript:goBYOND('menu=resopen')\">Available Research</a><br>"
+				html_list += "<a href=\"javascript:goBYOND('menu=resrunning')\">Research in Progress</a><br>"
+				html_list += "<a href=\"javascript:goBYOND('menu=mutresearch')\">Researched Mutations</a><br>"
 				if (genResearch.isResearched(/datum/geneticsResearchEntry/saver))
-					html_list += "<a href='?src=\ref[src];menu=storedmuts'>Stored Mutations</a><br>"
-				html_list += "<a href='?src=\ref[src];menu=chromosomes'>Stored Chromosomes</a><br>"
-				html_list += "<a href='?src=\ref[src];menu=dna_samples'>View DNA Samples</a><br>"
-				html_list += "<a href='?src=\ref[src];menu=resfin'>Finished Research</a><br>"
+					html_list += "<a href=\"javascript:goBYOND('menu=storedmuts')\">Stored Mutations</a><br>"
+				html_list += "<a href=\"javascript:goBYOND('menu=chromosomes')\">Stored Chromosomes</a><br>"
+				html_list += "<a href=\"javascript:goBYOND('menu=dna_samples')\">View DNA Samples</a><br>"
+				html_list += "<a href=\"javascript:goBYOND('menu=resfin')\">Finished Research</a><br>"
 
 			if("resopen")
 				backpage = "research"
@@ -1262,7 +1259,7 @@ var/list/genetics_computers = list()
 						if (research_time)
 							research_time = round(research_time / 10)
 
-						html_list += "<a href='?src=\ref[src];viewopenres=\ref[C]'>� [C.name] (Cost: [research_cost] * Time: [research_time] sec)</a><br>"
+						html_list += "<a href=\"javascript:goBYOND('viewopenres=\ref[C]')\">� [C.name] (Cost: [research_cost] * Time: [research_time] sec)</a><br>"
 
 			if("resrunning")
 				backpage = "research"
@@ -1271,7 +1268,7 @@ var/list/genetics_computers = list()
 				for(var/datum/geneticsResearchEntry/R in genResearch.currentResearch)
 					html_list += "� [R.name] - [round((R.finishTime - world.time) / 10)] seconds left."
 					if (R != src.tracked_research)
-						html_list += " <small><a href='?src=\ref[src];track_research=\ref[R]'>(Track)</a></small>"
+						html_list += " <small><a href=\"javascript:goBYOND('track_research=\ref[R]')\">(Track)</a></small>"
 					html_list += "<br>"
 				html_list += "</p>"
 
@@ -1302,19 +1299,19 @@ var/list/genetics_computers = list()
 					if (!BE.scanner_visibility || BE.research_level < 2)
 						continue
 					if (BE.research_level == 2)
-						html_list += "- <a href='?src=\ref[src];researched_mutation=\ref[BE]'>[BE.name]</a><br>"
+						html_list += "- <a href=\"javascript:goBYOND('researched_mutation=\ref[BE]')\">[BE.name]</a><br>"
 					else if (BE.research_level == 3)
-						html_list += "* <a href='?src=\ref[src];researched_mutation=\ref[BE]'>[BE.name]</a><br>"
+						html_list += "* <a href=\"javascript:goBYOND('researched_mutation=\ref[BE]')\">[BE.name]</a><br>"
 				html_list += "</p>"
 
 			if("storedmuts")
 				topbotbutton_html = "<p><b>Stored Mutations: [saved_mutations.len]/[genResearch.max_save_slots]</b></p>"
 
 				backpage = "research"
-				html_list += "<p><a href='?src=\ref[src];menu=combinemuts'>Combine Mutations</a><br><br>"
+				html_list += "<p><a href=\"javascript:goBYOND('menu=combinemuts')\">Combine Mutations</a><br><br>"
 				var/slot = 1
 				for(var/datum/bioEffect/BE in saved_mutations)
-					html_list += "<a href='?src=\ref[src];stored_mut=\ref[BE]'><b>Slot [slot]:</b> [BE.name]</a><br>"
+					html_list += "<a href=\"javascript:goBYOND('stored_mut=\ref[BE]')\"><b>Slot [slot]:</b> [BE.name]</a><br>"
 					slot++
 				html_list += "</p>"
 
@@ -1325,7 +1322,7 @@ var/list/genetics_computers = list()
 				html_list += ""
 				var/slot = 1
 				for(var/datum/dna_chromosome/C in src.saved_chromosomes)
-					html_list += "<a href='?src=\ref[src];stored_chromosome=\ref[C]'><b>[slot]:</b> [C.name]</a><br>"
+					html_list += "<a href=\"javascript:goBYOND('stored_chromosome=\ref[C]')\"><b>[slot]:</b> [C.name]</a><br>"
 					slot++
 				html_list += "</p>"
 
@@ -1335,11 +1332,11 @@ var/list/genetics_computers = list()
 				backpage = "storedmuts"
 				html_list += "<p>"
 				var/slot = 1
-				html_list += "<a href='?src=\ref[src];do_combine=1'>Combine Marked Mutations</a><br>"
-				html_list += "<a href='?src=\ref[src];cancel_combine=1'>Cancel</a><br><br>"
+				html_list += "<a href=\"javascript:goBYOND('do_combine=1')\">Combine Marked Mutations</a><br>"
+				html_list += "<a href=\"javascript:goBYOND('cancel_combine=1')\">Cancel</a><br><br>"
 
 				for(var/datum/bioEffect/BE in saved_mutations)
-					html_list += "<a href='?src=\ref[src];mark_for_combination=\ref[BE]'><b>Slot [slot]:</b> [BE.name]</a>"
+					html_list += "<a href=\"javascript:goBYOND('mark_for_combination=\ref[BE]')\"><b>Slot [slot]:</b> [BE.name]</a>"
 					if (BE in combining)
 						html_list += " *"
 					html_list += "<br>"
@@ -1373,7 +1370,7 @@ var/list/genetics_computers = list()
 					S = R.fields["dnasample"]
 					if (!istype(S))
 						continue
-					html_list += "* <a href='?src=\ref[src];menu=sample_potential;sample_to_view_potential=\ref[S]'>[S.subject_name]</a><br>"
+					html_list += "* <a href=\"javascript:goBYOND('menu=sample_potential;sample_to_view_potential=\ref[S]')\">[S.subject_name]</a><br>"
 				html_list += "</p>"
 
 			if("appearance")
@@ -1438,7 +1435,7 @@ var/list/genetics_computers = list()
 
 			if("saveload")
 				topbotbutton_html = ""
-				//html_list += "<p>Temporary : </p><a href='?src=\ref[src];copyself=1'>Copy Occupant to Self</a>" Disabled due to shitlords
+				//html_list += "<p>Temporary : </p><a href=\"javascript:goBYOND('copyself=1')\">Copy Occupant to Self</a>" Disabled due to shitlords
 
 	info_html = html_list.Join()
 
@@ -1529,9 +1526,9 @@ var/list/genetics_computers = list()
 					build += "<p>Genetic structure unknown. Research currently impossible.</p>"
 				else
 					if (sample)
-						build += "<p><a href='?src=\ref[src];researchmut_sample=\ref[E];sample_to_research=\ref[sample]'>Research required.</a>"
+						build += "<p><a href=\"javascript:goBYOND('researchmut_sample=\ref[E];sample_to_research=\ref[sample]')\">Research required.</a>"
 					else
-						build += "<p><a href='?src=\ref[src];researchmut=\ref[E]'>Research required.</a>"
+						build += "<p><a href=\"javascript:goBYOND('researchmut=\ref[E]')\">Research required.</a>"
 					if (research_cost > genResearch.researchMaterial)
 						build += " <i>Material: [research_cost]/[genResearch.researchMaterial]</i></p>"
 					else
@@ -1544,6 +1541,7 @@ var/list/genetics_computers = list()
 			build += "<p>[E.desc]</p>"
 
 	return build.Join()
+
 
 /obj/machinery/computer/genetics/proc/ui_build_sequence(var/datum/bioEffect/E, var/screen = "pool")
 	if (!E)
@@ -1573,9 +1571,10 @@ var/list/genetics_computers = list()
 			window.location("byond://?src=\ref[src];setseq=\ref[E];setseq" + a + "=" + n);
 			"} : "") + {"
 		}</script>
-		<div class="gene-sequence">[top.Join()]</div>"}
+		<div class="gene-sequence">[pairs.Join()]</div>"}
 
-/obj/machinery/computer/genetics/proc/ui_build_clickable_genes(var/screen = "pool",var/datum/computer/file/genetics_scan/sample)
+
+/obj/machinery/computer/genetics/proc/ui_build_clickable_genes(var/screen = "pool", var/datum/computer/file/genetics_scan/sample)
 	if(screen == "sample_pool")
 		if(!sample)
 			return
@@ -1603,7 +1602,7 @@ var/list/genetics_computers = list()
 						gene_icon_status = "mutYellow.png"
 					if (3)
 						gene_icon_status = "mutGreen.png"
-				build += {"<a href='?src=\ref[src];sample_viewpool=\ref[E];sample_to_viewpool=\ref[sample]'>"}
+				build += {"<a href=\"javascript:goBYOND('sample_viewpool=\ref[E];sample_to_viewpool=\ref[sample]')\">"}
 				build += {"<img style="border: [E == src.currently_browsing ? "solid 1px #00FFFF" : "dotted 1px #88C425"]" src="[resource("images/genetics/[gene_icon_status]")]" alt="[GBE.research_level >= 2  ? E.name : "???"]" width="43" height="39"></a>"}
 		if("pool")
 			var/mob/living/subject = get_scan_subject()
@@ -1624,7 +1623,7 @@ var/list/genetics_computers = list()
 						gene_icon_status = "mutYellow.png"
 					if (3)
 						gene_icon_status = "mutGreen.png"
-				build += {"<a href='?src=\ref[src];viewpool=\ref[E]'>"}
+				build += {"<a href=\"javascript:goBYOND('viewpool=\ref[E]')\">"}
 				build += {"<img style="border: [E == src.currently_browsing ? "solid 1px #00FFFF" : "dotted 1px #88C425"]" src="[resource("images/genetics/[gene_icon_status]")]" alt="[GBE.research_level >= 2  ? E.name : "???"]" width="43" height="39"></a>"}
 
 		if("active")
@@ -1648,7 +1647,7 @@ var/list/genetics_computers = list()
 						gene_icon_status = "mutYellow.png"
 					if (3)
 						gene_icon_status = "mutGreen.png"
-				build += {"<a href='?src=\ref[src];vieweffect=\ref[E]'>"}
+				build += {"<a href=\"javascript:goBYOND('vieweffect=\ref[E]')\">"}
 				build += {"<img  style="border: [E == src.currently_browsing ? "solid 1px #00FFFF" : "dotted 1px #88C425"]" src="[resource("images/genetics/[gene_icon_status]")]" alt="[GBE.research_level >= 2  ? E.name : "???"]" width="43" height="39"></a>"}
 	//idk not wokring, leaving this if someone wants to fix it.
 	//in img onMouseover="displayText(this);" onMouseout="removeText();"
