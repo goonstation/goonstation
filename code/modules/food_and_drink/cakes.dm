@@ -63,7 +63,7 @@
 				P.pixel_y = rand(-6, 6)
 				makeslices--
 			qdel (src)
-		if(istype(W, /obj/item/reagent_containers/glass/bottle/icing) && !(icing) &&(!sliced) && (W.reagents.total_volume))
+		if(istype(W, /obj/item/reagent_containers/food/drinks/drinkingglass/icing) && !(icing) &&(!sliced) && (W.reagents.total_volume))
 			if(W.reagents.total_volume == 50)
 				boutput(user, "<span class='notice'>You add the icing to the cake.</span>")
 				icing = 1

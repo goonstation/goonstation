@@ -58614,8 +58614,8 @@
 /area/station/crew_quarters/kitchen)
 "ciI" = (
 /obj/table/auto,
-/obj/item/reagent_containers/glass/bottle/icing,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /obj/item/kitchen/utensil/knife,
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/specialroom/cafeteria,

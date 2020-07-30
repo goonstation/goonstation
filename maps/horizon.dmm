@@ -41384,7 +41384,7 @@
 	},
 /obj/table/auto,
 /obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "bQc" = (
@@ -42658,7 +42658,7 @@
 	desc = "Ew.";
 	name = "meat of questionable origin"
 	},
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "bSV" = (

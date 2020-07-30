@@ -151,7 +151,7 @@
 	bottle_style = "4"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "sulfonal"
-	
+
 /obj/item/reagent_containers/glass/bottle/synaptizine
 	name = "synaptizine bottle"
 	desc = "A small bottle."
@@ -326,15 +326,6 @@
 	icon_state = "moonshine"
 	initial_volume = 50
 	initial_reagents = list("fluorosurfactant"=30,"pepperoni"=10,"bourbon"=10)
-	amount_per_transfer_from_this = 5
-	rc_flags = RC_FULLNESS
-
-/obj/item/reagent_containers/glass/bottle/icing
-	name = "icing tube"
-	desc = "Used to put icing on cakes."
-	icon = 'icons/obj/foodNdrink/food.dmi'
-	icon_state = "icing_tube"
-	initial_volume = 50
 	amount_per_transfer_from_this = 5
 	rc_flags = RC_FULLNESS
 

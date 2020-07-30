@@ -27050,7 +27050,7 @@
 /area/station/crew_quarters/kitchen)
 "blr" = (
 /obj/table/auto,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "bls" = (
