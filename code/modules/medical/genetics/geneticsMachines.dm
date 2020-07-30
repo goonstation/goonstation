@@ -116,44 +116,51 @@ var/list/genetics_computers = list()
 	if(status & (BROKEN|NOPOWER))
 		return
 
-	var/basicinfo = {"<b>Materials:</b> [genResearch.researchMaterial] / [genResearch.max_material] * "}
+	var/list/basicinfo = list()
 
 	botbutton_html.len = 0
-	var/mob/living/subject = get_scan_subject()
-	if (subject)
-		basicinfo += {"<b>Scanner Occupant:</b> [subject.name] - Health: [subject.health] - Stability: [subject.bioHolder.genetic_stability]"}
-		botbutton_html += {"* <a href=\"javascript:goBYOND('menu=potential')\">Potential</a>"}
-		botbutton_html += {" * <a href=\"javascript:goBYOND('menu=mutations')\">Mutations</a>"}
-		if (ishuman(subject))
-			var/mob/living/carbon/human/H = subject
-			if (!istype(H.mutantrace))
-				botbutton_html += {" * <a href=\"javascript:goBYOND('menu=appearance')\">Appearance</a>"}
-			botbutton_html += {" * <a href=\"javascript:goBYOND('menu=mutantrace')\">Body</a>  "}
-	else
-		basicinfo += {"<b>Scanner Occupant:</b> None"}
-	if (genResearch.debug_mode)
-		if (src.get_scan_subject())
-			botbutton_html += {"<a href=\"javascript:goBYOND('debug_erase=1')\">Erase Occupant</a>  "}
-		else
-			botbutton_html += {"<a href=\"javascript:goBYOND('debug_create=1')\">Create Occupant</a>  "}
-	botbutton_html += "<br>"
+
+	// botbutton_html += "<br>"
 	if (src.backpage)
-		botbutton_html += "<a href=\"javascript:goBYOND('menu=[src.backpage]')\"><b>\<</b></a> "
+		botbutton_html += "<a href=\"javascript:goBYOND('menu=[src.backpage]')\"><b>&lt;</b></a> "
 	botbutton_html += {"<a href=\"javascript:goBYOND('menu=research')\">Research Menu</a>  "}
 
 	if (genResearch.isResearched(/datum/geneticsResearchEntry/checker))
-		botbutton_html += {"<img alt="Analyser Cooldown" src="[resource("images/genetics/eqAnalyser.png")]" style="border-style: none">: [max(0,round((src.equipment[2] - world.time) / 10))] "}
+		// botbutton_html += {"<img alt="Analyser Cooldown" src="[resource("images/genetics/eqAnalyser.png")]" style="border-style: none">: [max(0,round((src.equipment[2] - world.time) / 10))] "}
+		botbutton_html += {"&mdash; Analyzer: [max(0,round((src.equipment[2] - world.time) / 10))] "}
 	if (genResearch.isResearched(/datum/geneticsResearchEntry/rademitter))
-		botbutton_html += {"<img alt="Emitter Cooldown" src="[resource("images/genetics/eqEmitter.png")]" style="border-style: none">: [max(0,round((src.equipment[3] - world.time) / 10))] "}
+		// botbutton_html += {"<img alt="Emitter Cooldown" src="[resource("images/genetics/eqEmitter.png")]" style="border-style: none">: [max(0,round((src.equipment[3] - world.time) / 10))] "}
+		botbutton_html += {"&mdash; Emitter: [max(0,round((src.equipment[3] - world.time) / 10))] "}
 	if (genResearch.isResearched(/datum/geneticsResearchEntry/reclaimer))
-		botbutton_html += {"<img alt="Reclaimer Cooldown" src="[resource("images/genetics/eqReclaimer.png")]" style="border-style: none">: [max(0,round((src.equipment[4] - world.time) / 10))] "}
-	botbutton_html += {"<img alt="Injector Cooldown" src="[resource("images/genetics/eqInjector.png")]" style="border-style: none">: [max(0,round((src.equipment[1] - world.time) / 10))] "}
+		// botbutton_html += {"<img alt="Reclaimer Cooldown" src="[resource("images/genetics/eqReclaimer.png")]" style="border-style: none">: [max(0,round((src.equipment[4] - world.time) / 10))] "}
+		botbutton_html += {"&mdash; Reclaimer: [max(0,round((src.equipment[4] - world.time) / 10))] "}
+	// botbutton_html += {"<img alt="Injector Cooldown" src="[resource("images/genetics/eqInjector.png")]" style="border-style: none">: [max(0,round((src.equipment[1] - world.time) / 10))] "}
+	botbutton_html += {"&mdash; Injectors: [max(0,round((src.equipment[1] - world.time) / 10))] "}
 	if (src.tracked_research)
-		botbutton_html += {"<img alt="[src.tracked_research.name]" src="[resource("images/genetics/eqResearch.png")]" style="border-style: none">: [max(0,round((src.tracked_research.finishTime - world.time) / 10))] "}
+		// botbutton_html += {"<img alt="[src.tracked_research.name]" src="[resource("images/genetics/eqResearch.png")]" style="border-style: none">: [max(0,round((src.tracked_research.finishTime - world.time) / 10))] "}
+		botbutton_html += {"&mdash; [src.tracked_research.name]: [max(0,round((src.tracked_research.finishTime - world.time) / 10))] "}
 
-	botbutton_html += "<br>[basicinfo]"
+	// botbutton_html += "<br>[basicinfo]"
 
-	botbutton_html += "</small></p>"
+	basicinfo += {"<div id="mats"><b>Materials:</b> [genResearch.researchMaterial] / [genResearch.max_material]</div>"}
+	var/mob/living/subject = get_scan_subject()
+	if (subject)
+		basicinfo += {"<b>Scanner Occupant:</b> [subject.name] - Health: [subject.health] - Stability: [subject.bioHolder.genetic_stability]
+			<br><a href=\"javascript:goBYOND('menu=potential')\">Potential</a> &bull; <a href=\"javascript:goBYOND('menu=mutations')\">Mutations</a>"}
+		if (ishuman(subject))
+			var/mob/living/carbon/human/H = subject
+			if (!istype(H.mutantrace))
+				basicinfo += {" &bull; <a href=\"javascript:goBYOND('menu=appearance')\">Appearance</a>"}
+			basicinfo += {" &bull; <a href=\"javascript:goBYOND('menu=mutantrace')\">Body</a>  "}
+	else
+		basicinfo += {"<b>Scanner Occupant:</b> None"}
+
+	if (genResearch.debug_mode)
+		if (src.get_scan_subject())
+			basicinfo += {"<a href=\"javascript:goBYOND('debug_erase=1')\">Erase Occupant</a>  "}
+		else
+			basicinfo += {"<a href=\"javascript:goBYOND('debug_create=1')\">Create Occupant</a>  "}
+
 
 	var/html = {"<!doctype html>
 <html>
@@ -173,6 +180,12 @@ var/list/genetics_computers = list()
 		a:link {color: #EAFDE6;}
 		a:visited {color: #88C425;}
 		a:hover{color: #BEF202;}
+
+		#mats {
+			position: fixed;
+			top: 0.25em;
+			right: 0.25em;
+		}
 
 		h1, h2, h3, h4, h5, h6 { margin: 0; }
 
@@ -231,17 +244,20 @@ var/list/genetics_computers = list()
 		.gene-DX {
 			border: 1px solid #88c425;
 			background: #000000;
-			color: #999999;
+			color: #cccccc;
 			}
 
 	</style>
 	<script>
 		function goBYOND(url) {
-			window.location = "?src=\ref[src]&" + url;
+			var surrogate = document.getElementById("surrogate");
+			surrogate.src = "?src=\ref[src];" + url;
+			// window.location = "?src=\ref[src];" + url;
 		}
 	</script>
 </head>
 <body>
+	<iframe src="about:blank" style="display: none;" id="surrogate"></iframe>
 	<h1>GeneTek Console v1.01</h1>
 	<table style="width: 100%; height: 100%; min-height: 350px;" border="0" cellpadding="0" cellspacing="0">
 		<tbody>
@@ -249,7 +265,7 @@ var/list/genetics_computers = list()
 				<td style="width: 183px;" rowspan="2">
 					<img style="width: 182px; height: 300px;" alt="" src="[resource("images/genetics/DNAorbit.gif")]">
 				</td>
-				<td style="vertical-align: middle; height: 20%;">
+				<td style="vertical-align: top; height: 40px; background: rgb(16, 72, 75);">
 					[topbotbutton_html]
 				</td>
 			</tr>
@@ -261,6 +277,7 @@ var/list/genetics_computers = list()
 			<tr>
 				<td style="vertical-align: middle; height: 40px;" colspan="2">
 					[botbutton_html.Join()]
+					<br>[basicinfo.Join()]
 				</td>
 			</tr>
 		</tbody>
@@ -1266,7 +1283,7 @@ var/list/genetics_computers = list()
 				topbotbutton_html = "<p><b>Research in Progress</b></p>"
 				html_list += "<p>"
 				for(var/datum/geneticsResearchEntry/R in genResearch.currentResearch)
-					html_list += "� [R.name] - [round((R.finishTime - world.time) / 10)] seconds left."
+					html_list += "- [R.name] - [round((R.finishTime - world.time) / 10)] seconds left."
 					if (R != src.tracked_research)
 						html_list += " <small><a href=\"javascript:goBYOND('track_research=\ref[R]')\">(Track)</a></small>"
 					html_list += "<br>"
