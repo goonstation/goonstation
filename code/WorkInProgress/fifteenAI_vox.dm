@@ -150,9 +150,11 @@ var/list/available_emotions = list(
 	if(res.status_code == 200)
 		message_admins("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message]")
 		speaker.say(";[message]")
+		var/sound/voice = sound("data/vox_[vox_voice_number].wav")
+		voice.environment = -1
 		for(var/C in clients)
 			if(C)
-				C << sound("data/vox_[vox_voice_number].wav", environment = -1)
+				C << voice
 		fdel("data/vox_[vox_voice_number].wav")
 		return 1
 	else
