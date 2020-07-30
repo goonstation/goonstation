@@ -15690,9 +15690,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Eb" = (
-/obj/tree1{
-	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
-	},
+/obj/tree1,
 /turf/simulated/floor/grass,
 /area/station/aviary{
 	name = "Demeter Primary Zone"
@@ -16954,16 +16952,9 @@
 	name = "Demeter Primary Zone"
 	})
 "Gs" = (
-/obj/tree1{
-	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/grass,
-/area/station/aviary{
-	name = "Demeter Primary Zone"
-	})
+/obj/tree1,
+/turf/simulated/floor/grass/leafy,
+/area/station/owlery)
 "Gt" = (
 /obj/stool/bench/blue/auto,
 /obj/landmark/start{
@@ -56822,7 +56813,7 @@ EZ
 Fq
 Fq
 Fq
-Gs
+Fq
 GJ
 Fq
 Hf
@@ -102851,7 +102842,7 @@ aF
 aF
 eY
 gN
-og
+Gs
 gN
 gN
 qQ
@@ -104362,7 +104353,7 @@ aF
 aF
 gN
 gN
-og
+Gs
 eY
 aF
 aF
