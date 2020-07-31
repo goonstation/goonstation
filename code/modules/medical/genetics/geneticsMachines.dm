@@ -50,6 +50,8 @@ var/list/genetics_computers = list()
 	gene_icon_cache["researching"] = resource("images/genetics/mutGrey2.png")
 	gene_icon_cache["researched"] = resource("images/genetics/mutYellow.png")
 	gene_icon_cache["active"] = resource("images/genetics/mutGreen.png")
+	gene_icon_cache["seperator"] = resource("images/genetics/bpSep.png")
+	gene_icon_cache["locked"] = resource("images/genetics/bpSep-locked.png")
 	return
 
 
@@ -186,7 +188,7 @@ var/list/genetics_computers = list()
 			}
 		a {font-family:"Arial", sans-serif; font-size:14px; color: #EAFDE6;}
 		a:link {color: #EAFDE6;}
-		a:visited {color: #88C425;}
+		a:visited {color: #BEF202;}
 		a:hover{color: #BEF202;}
 		p { margin: 0; }
 		#mats {
@@ -203,13 +205,15 @@ var/list/genetics_computers = list()
 			width: 43px;
 			height: 39px;
 			border: 1px dotted #bef202;
+			background: rgb(7, 41, 43);
 			}
 		.mut-link.mut-active {
 			border: 1px solid #bef202;
+			background: rgb(26, 100, 104);
 		}
 		.mut-link:hover {
 			border: 1px solid #efff60;
-			background: rgb(7, 41, 43);
+			background: rgb(38, 167, 173);
 		}
 		.mut-link img { width: 43px; height: 39px; }
 		.mut-link span { display: none; }
@@ -245,7 +249,11 @@ var/list/genetics_computers = list()
 			display: inline-block;
 			text-align: center;
 			padding: 0.1em 0.3em;
-			}
+		}
+
+		.gene-sequence-links > div span {
+			cursor: pointer;
+		}
 
 		.gene, .gene-D, .gene-D1 {
 			border: 1px solid #88c425;
@@ -281,7 +289,7 @@ var/list/genetics_computers = list()
 			}
 		.gene-DX {
 			border: 1px solid #88c425;
-			background: #000000;
+			background: #666666;
 			color: #cccccc;
 			}
 
@@ -300,28 +308,24 @@ var/list/genetics_computers = list()
 	<iframe src="about:blank" style="display: none;" id="surrogate"></iframe>
 	<h1>GeneTek Console v1.01</h1>
 	[breadcrumbs.Join(" &gt; ")]
-	<table style="width: 100%;" border="0" cellpadding="0" cellspacing="0">
-		<tbody>
-			<tr>
-				<td style="width: 183px;">
-					<img style="width: 182px; height: 300px;" alt="" src="[resource("images/genetics/DNAorbit.gif")]">
-				</td>
-				<td style="width: 100%; height: 100%;">
-					<div style="height: 300px; max-height: 300px; overflow: auto;">
+	<div style="height: 300px; max-height: 300px; overflow-y: auto;">
+		<table style="width: 100%;" border="0" cellpadding="0" cellspacing="0">
+			<tbody>
+				<tr>
+					<td style="width: 183px;" valign="top">
+						<img style="width: 182px; height: 300px;" alt="" src="[resource("images/genetics/DNAorbit.gif")]">
+					</td>
+					<td style="width: 100%;" valign="top">
 						[topbotbutton_html]
 						<hr>
 						[info_html]
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td style="vertical-align: middle;" colspan="2">
-					[botbutton_html.Join()]
-					<br>[basicinfo.Join()]
-				</td>
-			</tr>
-		</tbody>
-	</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	[botbutton_html.Join()]
+	<br>[basicinfo.Join()]
 </body>
 </html>
 "}
@@ -1625,7 +1629,7 @@ var/list/genetics_computers = list()
 	var/list/pairs = list()
 	for(var/i = 1, i <= display_these.len, i++)
 		var/datum/basePair/bp = display_these[i]
-		pairs += {"<div><span class='gene gene-D[bp.style]' onclick='editbp([i], 1);'>[bp.bpp1]</span><br>[bp.marker == "locked" ? {"<img alt="" src="[resource("images/genetics/bpSep-[bp.marker].png")]">"} : "|"]<br><span class='gene gene-D[bp.style]' onclick='editbp([i], 2);'>[bp.bpp2]</span></div>"}
+		pairs += {"<div><span class='gene gene-D[bp.style]' onclick='editbp([i], 1);'>[bp.bpp1]</span><br><img alt="" src="[gene_icon_cache[bp.marker == "locked" ? "locked" : "seperator"]]"><br><span class='gene gene-D[bp.style]' onclick='editbp([i], 2);'>[bp.bpp2]</span></div>"}
 
 	return {"<script>
 		function editbp(n, a) {
@@ -1633,7 +1637,7 @@ var/list/genetics_computers = list()
 			window.location("byond://?src=\ref[src];setseq=\ref[E];setseq" + a + "=" + n);
 			"} : "") + {"
 		}</script>
-		<div class="gene-sequence">[pairs.Join()]</div>"}
+		<div class="gene-sequence[enable_links ? " gene-sequence-links" : ""]">[pairs.Join()]</div>"}
 
 
 /obj/machinery/computer/genetics/proc/ui_build_clickable_genes(var/screen = "pool", var/datum/computer/file/genetics_scan/sample)
