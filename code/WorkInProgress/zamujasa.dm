@@ -725,7 +725,8 @@
 			try
 				var/current_value
 				if (src.monitored_list && !src.monitored_var)
-					current_value = monitored.vars[src.monitored_list].len
+					var/list/monlist = monitored.vars[src.monitored_list]
+					current_value = monlist.len
 				else if (src.monitored_list)
 					current_value = monitored.vars[src.monitored_list][src.monitored_var]
 				else
