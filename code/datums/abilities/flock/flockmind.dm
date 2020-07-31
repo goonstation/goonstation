@@ -310,7 +310,7 @@
 /datum/targetable/flockmindAbility/createStructure
 	name = "Fabricate Structure"
 	desc = "Create a structure tealprint for your drones to construct onto."
-//	icon_state = "talk"
+	icon_state = "fabstructure"
 	cooldown = 4
 	targeted = 0
 
@@ -329,7 +329,7 @@
 			resourcecost = 200
 		if("Collector")
 			structurewantedtype = /obj/flock_structure/collector
-			resourcecost = 20
+			resourcecost = 200
 	if(structurewantedtype)
 		var/mob/living/intangible/flock/flockmind/F = holder.owner
 		F.createstructure(structurewantedtype, resourcecost)
