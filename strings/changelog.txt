@@ -1,5 +1,9 @@
 
 (t)thu jul 30 20
+(u)zjdtmkhzt
+(p)1589
+(e)🆕|feature
+(+)You can now use a Voltron to travel through active phone calls. Just use it while holding the phone handset in your other hand!
 (u)Kubius
 (p)1663
 (e)🐛🗺|bug, mapping
