@@ -559,14 +559,6 @@
 
 /obj/machinery/light/attackby(obj/item/W, mob/user)
 
-	if (issilicon(user) && !isghostdrone(user) && !istype(W, /obj/item/borg_lamp_manufacturer))
-		return
-		/*if (isghostdrone(user))
-			return src.attack_hand(user)
-		else
-			return*/
-
-
 	if (istype(W, /obj/item/borg_lamp_manufacturer))
 
 		if (removable_bulb == 0)
@@ -574,43 +566,51 @@
 			return
 
 		var/obj/item/borg_lamp_manufacturer/M = W
-		var/obj/item/light/L = new M.dispensing()
-		if (M.dispensing == allowed_type)
-			if (light_status == LIGHT_OK && light_name == L.name) //light_name because I want this to be able to replace working lights with different colours
-				boutput(user, "This fitting already has an identical lamp.")
-				qdel(L)
-				return //Stop borgs from making more sparks than necessary
-
-			if (issilicon(user)) //Not that non-silicons should have these
-				var/mob/living/silicon/S = user
-				if (S.cell)
-					if (light_status == LIGHT_EMPTY)
-						S.cell.charge -= M.cost_empty
-					else
-						S.cell.charge -= M.cost_broken
-
-			light_name = L.name
-			light_status = L.light_status
-			boutput(user, "You insert a [L.name].")
-			breakprob = L.breakprob
-			rigged = L.rigged
-			rigger = L.rigger
-			light.set_color(L.color_r, L.color_g, L.color_b)
-
-
-			on = has_power()
-			update()
-			if(on && rigged)
-				if (rigger)
-					message_admins("[key_name(rigger)]'s rigged bulb exploded in [src.loc.loc], [showCoords(src.x, src.y, src.z)].")
-					logTheThing("combat", rigger, null, "'s rigged bulb exploded in [rigger.loc.loc] ([showCoords(src.x, src.y, src.z)])")
-				explode()
-
-			elecflash(user)
+		var/obj/item/light/L = null
+		if (fitting == "tube")
+			L = new M.dispensing_tube()
 		else
-			boutput(user, "This type of light requires a [fitting].")
-		qdel(L)
+			L = new M.dispensing_bulb()
+		//if (M.dispensing == allowed_type)
+		if (light_status == LIGHT_OK && light_name == L.name) //light_name because I want this to be able to replace working lights with different colours
+			boutput(user, "This fitting already has an identical lamp.")
+			qdel(L)
+			return //Stop borgs from making more sparks than necessary
+
+		if (issilicon(user)) //Not that non-silicons should have these
+			var/mob/living/silicon/S = user
+			if (S.cell)
+				if (light_status == LIGHT_EMPTY)
+					S.cell.charge -= M.cost_empty
+				else
+					S.cell.charge -= M.cost_broken
+
+		light_name = L.name
+		light_status = L.light_status
+		boutput(user, "You insert a [L.name].")
+		breakprob = L.breakprob
+		rigged = L.rigged
+		rigger = L.rigger
+		light.set_color(L.color_r, L.color_g, L.color_b)
+
+		on = has_power()
+		update()
+		if(on && rigged)
+			if (rigger)
+				message_admins("[key_name(rigger)]'s rigged bulb exploded in [src.loc.loc], [showCoords(src.x, src.y, src.z)].")
+				logTheThing("combat", rigger, null, "'s rigged bulb exploded in [rigger.loc.loc] ([showCoords(src.x, src.y, src.z)])")
+			explode()
+		elecflash(user)
 		return
+
+
+	if (issilicon(user) && !isghostdrone(user))
+		return
+		/*if (isghostdrone(user))
+			return src.attack_hand(user)
+		else
+			return*/
+
 
 	// see if there's a magtractor involved and if so save it for later as mag
 	var/obj/item/magtractor/mag

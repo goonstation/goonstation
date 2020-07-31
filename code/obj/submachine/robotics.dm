@@ -110,7 +110,7 @@
 
 /obj/item/robojumper
 	name = "Cell Cables"
-	desc = "Used by Engineering Cyborgs for emergency recharging of APCs."
+	desc = "Used by cyborgs for emergency recharging of APCs."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "robojumper-plus"
 	var/positive = 1 //boolean, if positive, then you will charge an APC with your cell, if negative, you will take charge from apc
@@ -122,7 +122,7 @@
 
 /obj/item/atmosporter
 	name = "Atmospherics Transporter"
-	desc = "Used by Engineering Cyborgs for convenient transport of siphons and tanks."
+	desc = "Used by cyborgs for convenient transport of siphons and tanks."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "atmosporter"
 	var/capacity = 2
@@ -137,31 +137,59 @@
 			elecflash(user)
 
 
+
 /obj/item/borg_lamp_manufacturer
 	name = "Miniaturized Lamp Manufacturer"
 	desc = "A small manufacturing unit for cyborgs to produce and (re)place lamps in existing fittings."
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "borglampman-tube"
+	icon_state = "borglampman-white"
 	var/prefix = "borglampman"
 
 	var/cost_broken = 50 //For broken/burned lamps (the old lamp gets recycled in the tool)
 	var/cost_empty = 75
-	var/setting = "tube" //Currently either tube or bulb
-	var/dispensing = /obj/item/light/tube
+	var/setting = "white" //Currently either tube or bulb
+	var/dispensing_tube = /obj/item/light/tube
+	var/dispensing_bulb = /obj/item/light/bulb
 
 	attack_self(var/mob/user as mob)
 		switch (src.setting) //This should be relatively easily expandable I think
-			if ("tube")
-				setting = "bulb"
-				dispensing = /obj/item/light/bulb
-			if ("bulb")
-				setting = "tube"
-				dispensing = /obj/item/light/tube
+			if ("white")
+				setting = "red"
+				dispensing_tube = /obj/item/light/tube/red
+				dispensing_bulb = /obj/item/light/bulb/red
+			if ("red")
+				setting = "yellow"
+				dispensing_tube = /obj/item/light/tube/yellow
+				dispensing_bulb = /obj/item/light/bulb/yellow
+			if ("yellow")
+				setting = "green"
+				dispensing_tube = /obj/item/light/tube/green
+				dispensing_bulb = /obj/item/light/bulb/green
+			if ("green")
+				setting = "cyan"
+				dispensing_tube = /obj/item/light/tube/cyan
+				dispensing_bulb = /obj/item/light/bulb/cyan
+			if ("cyan")
+				setting = "blue"
+				dispensing_tube = /obj/item/light/tube/blue
+				dispensing_bulb = /obj/item/light/bulb/blue
+			if ("blue")
+				setting = "purple"
+				dispensing_tube = /obj/item/light/tube/purple
+				dispensing_bulb = /obj/item/light/bulb/purple
+			if ("purple")
+				setting = "blacklight"
+				dispensing_tube = /obj/item/light/tube/blacklight
+				dispensing_bulb = /obj/item/light/bulb/blacklight
+			if ("blacklight")
+				setting = "white"
+				dispensing_tube = /obj/item/light/tube
+				dispensing_bulb = /obj/item/light/bulb
 		set_icon_state("[prefix]-[setting]")
 
 	get_desc(var/dist)
 		if (dist < 3)
-			. = "<span class='notice'>It is currently set to dispense [setting]s.</span>"
+			. = "<span class='notice'>It is currently set to dispense [setting] lamps.</span>"
 
 
 
