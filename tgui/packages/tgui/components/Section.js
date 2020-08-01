@@ -14,6 +14,7 @@ export const Section = props => {
     level = 1,
     buttons,
     fill,
+    scrollable,
     children,
     ...rest
   } = props;
@@ -25,6 +26,7 @@ export const Section = props => {
         'Section',
         'Section--level--' + level,
         fill && 'Section--fill',
+        scrollable && 'Section--scrollable',
         className,
         ...computeBoxClassName(rest),
       ])}
