@@ -11,6 +11,7 @@
 	desc="You should not bee seeing this! Call 1-800-CODER or just crusher it"
 	icon='icons/misc/mechanicsExpansion.dmi'
 	can_hold=list(/obj/item/mechanics)
+	var/list/users = list() // le chumps who have opened the housing
 	deconstruct_flags = DECON_NONE //nope, so much nope.
 	slots=1
 	var/open=true
@@ -49,8 +50,15 @@
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return
-
-
+	attack_self(mob/user as mob)
+		if(!(usr in src.users) && istype(user))
+			src.users+=usr
+		return ..()
+	attack_hand(mob/user as mob)
+		if(!(usr in src.users) && istype(user))
+			src.users+=usr
+		return ..()
+		
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isscrewingtool(W))
 			if(src.welded)
@@ -103,14 +111,12 @@
 		else
 			src.icon_state=initial(src.icon_state)+"_closed"
 		return
-	proc/close_storage_menus() // look for nerds who still have the container UI open and close it for them
-		for (var/mob/chump in range(get_turf(src),1))
+	proc/close_storage_menus() // still ugly but probably quite better performing
+		for(var/mob/chump in src.users)
 			for(var/datum/hud/storage/hud in chump.huds)
 				if(hud.master==src) hud.close.clicked()
-		for (var/obj/storage/storage in range(get_turf(src),1)) // this amount of for() loops cannot be healthy, but oh well
-			for (var/mob/chump in storage.contents)
-				for(var/datum/hud/storage/hud in chump.huds)
-					if(hud.master==src) hud.close.clicked()
+		src.users = list() // gee golly i hope garbage collection does its job
+		return 1
 	proc/destroy_outside_connections()
 		//called when the cabinet is unanchored
 		var/discons=0
@@ -143,6 +149,8 @@
 		if(!istype(usr))
 			return
 		if(src.open && target == usr)
+			if(!(usr in src.users))
+				src.users+=usr
 			return ..()
 		if(!src.anchored && target != usr)
 			return ..()
@@ -200,6 +208,8 @@
 			return true
 		attack_self(mob/user as mob)
 			if(src.open)
+				if(!(usr in src.users))
+					src.users+=usr
 				return ..() // you can just use the trigger manually from the UI
 			if(src.find_trigger() && !src.open && src.loc==user)
 				return src.the_trigger.attack_hand(user)
@@ -219,8 +229,10 @@
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 	attackby(obj/item/W as obj, mob/user as mob)
+		if(iswrenchingtool(W)) // prevent unanchoring 
+			return 0
 		if(..()) return 1
-		return //attack_hand(user) // was causing issues
+		return 1 //attack_hand(user) // was causing issues
 
 	attack_hand(mob/user as mob)
 		..()
