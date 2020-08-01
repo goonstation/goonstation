@@ -9,22 +9,27 @@ export const GasCanister = (props, context) => {
   const {
     connected,
     holding,
-    on,
+    has_valve,
+    valve_open,
     pressure,
     max_pressure,
+    release_pressure,
+    min_release,
+    max_release,
   } = data;
   return (
     <Window
       width={400}
-      height={700}>
+      height={370}>
       <Window.Content>
         <PortableBasicInfo />
         <Section>
-          <ReleaseValve
-            valve_open={on}
-            release_pressure={0}
-            min_release={0}
-            max_release={0} />
+          { has_valve
+            && <ReleaseValve
+              valve_open={valve_open}
+              release_pressure={release_pressure}
+              min_release={min_release}
+              max_release={max_release} />}
         </Section>
       </Window.Content>
     </Window>

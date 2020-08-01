@@ -8,6 +8,7 @@ export const PressureBar = props => {
     max_pressure,
     ...rest
   } = props;
+
   const bgColorSafe = "black";
   const bgColorDanger = "red";
   const barColorSafe = "green";

@@ -9,7 +9,7 @@ export const PortableBasicInfo = (props, context) => {
 
   const {
     connected,
-    holding,
+    holding = null,
     on,
     pressure,
     max_pressure,
@@ -18,14 +18,7 @@ export const PortableBasicInfo = (props, context) => {
   return (
     <Fragment>
       <Section
-        title="Status"
-        buttons={(
-          <Button
-            icon={on ? 'power-off' : 'times'}
-            content={on ? 'On' : 'Off'}
-            selected={on}
-            onClick={() => act('toggle-on')} />
-        )}>
+        title="Status">
         <LabeledList>
           <LabeledList.Item label="Pressure">
             <AnimatedNumber value={pressure} />

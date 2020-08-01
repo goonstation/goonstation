@@ -384,15 +384,20 @@
 	data["max_pressure"] = maximum_pressure
 	data["connected"] = connected_port ? TRUE : FALSE
 	data["release_pressure"] = release_pressure
+	data["min_release"] = PORTABLE_ATMOS_MIN_RELEASE_PRESSURE
+	data["max_release"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
 	data["valve_open"] = valve_open
 	data["has_valve"] = has_valve ? TRUE : FALSE
-	data["has_detonator"] = det ? TRUE : FALSE
 
-	if(src.holding)
+	data["holding"] = null // need to tell the client it doesn't exist
+	if(holding)
 		data["holding"] = list()
 		data["holding"]["name"] = holding.name
 		data["holding"]["pressure"] = MIXTURE_PRESSURE(holding.air_contents)
-		data["holding"]["max_pressure"] = TANK_RUPTURE_PRESSURE
+		data["holding"]["max_pressure"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE //not really, but having the big green bar fill up all the way feels really good doesn't it
+
+	if(det)
+		data["detonator"] = list()
 
 	return data
 
@@ -405,7 +410,7 @@
 				toggle_valve()
 				. = TRUE
 		if("set-pressure")
-			var/target_pressure = params["release_pressure"] as num
+			var/target_pressure = params["release_pressure"]
 			if(target_pressure && isnum(target_pressure))
 				set_release_pressure(target_pressure)
 				. = TRUE
