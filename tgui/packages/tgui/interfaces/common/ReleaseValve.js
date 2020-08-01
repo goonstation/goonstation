@@ -24,9 +24,8 @@ export const ReleaseValve = (props, context) => {
         <Button
           onClick={() => act('set-pressure', {
             release_pressure: min_release,
-          })}>
-          <Icon name="angle-double-left" size={1} mx={0} />
-        </Button>
+          })}
+          content="Min" />
         <NumberInput
           animated
           width="85px"
@@ -39,9 +38,8 @@ export const ReleaseValve = (props, context) => {
         <Button
           onClick={() => act('set-pressure', {
             release_pressure: max_release,
-          })} >
-          <Icon name="angle-double-right" size={1} mx={0} />
-        </Button>
+          })}
+          content="Max" />
       </LabeledList.Item>
     </LabeledList>
   );
