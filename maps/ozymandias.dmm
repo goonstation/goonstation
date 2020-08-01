@@ -128,10 +128,6 @@
 	desc = "A precision instrument for biological research.";
 	name = "dissection knife"
 	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
 /turf/simulated/floor/engine,
 /area/station/testchamber)
 "aeX" = (
@@ -810,7 +806,7 @@
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},
-/turf/unsimulated/floor/engine/glow,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "aDR" = (
 /obj/machinery/light/small/floor,
@@ -2341,7 +2337,7 @@
 /area/station/maintenance/SWmaint)
 "bRm" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/vertical,
-/turf/unsimulated/floor/engine/glow,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "bRt" = (
 /turf/simulated/floor/green/side{
@@ -3319,7 +3315,7 @@
 	dir = 4;
 	name = "Chamber Two Aux"
 	},
-/turf/unsimulated/floor/engine/glow,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "cGT" = (
 /obj/table/wood/round/auto,
@@ -5636,6 +5632,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
+/obj/machinery/light/small/floor,
 /turf/simulated/floor,
 /area/station/science/lab)
 "ete" = (
@@ -6832,7 +6829,7 @@
 	dir = 4;
 	name = "joint manifold valve"
 	},
-/turf/unsimulated/floor/engine/glow,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "ftq" = (
 /obj/stool/bench/wooden/auto,
@@ -7865,6 +7862,10 @@
 	dir = 8;
 	name = "camera - test chamber"
 	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor/engine,
 /area/station/testchamber)
 "gne" = (
@@ -8114,10 +8115,8 @@
 /turf/simulated/floor/red,
 /area/station/security/processing)
 "gwX" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8
-	},
-/turf/unsimulated/floor/engine/glow,
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/caution/north,
 /area/station/science/lab)
 "gxD" = (
 /obj/decal/tile_edge/floorguide/evac{
@@ -10227,13 +10226,6 @@
 	dir = 9
 	},
 /area/station/science)
-"hZs" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "pressure tank valve"
-	},
-/turf/unsimulated/floor/engine/glow,
-/area/station/science/lab)
 "hZC" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/grey,
@@ -11526,12 +11518,6 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
-"iYm" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/turf/unsimulated/floor/engine/glow,
-/area/station/science/lab)
 "iYv" = (
 /obj/machinery/sauna_stove,
 /turf/simulated/floor/wood/two,
@@ -12314,7 +12300,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/turf/unsimulated/floor/engine/glow/blue,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "jzG" = (
 /turf/simulated/floor/black,
@@ -13229,7 +13215,7 @@
 /area/station/medical/medbay/lobby)
 "kjf" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/south,
-/turf/unsimulated/floor/engine/glow/blue,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "kjE" = (
 /obj/item/storage/toilet{
@@ -14749,7 +14735,7 @@
 	dir = 4;
 	name = "Chamber One Aux"
 	},
-/turf/unsimulated/floor/engine/glow,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "lqi" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -16383,7 +16369,7 @@
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
 	},
-/turf/unsimulated/floor/engine/glow/blue,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "myM" = (
 /obj/table/reinforced/bar/auto{
@@ -16570,10 +16556,6 @@
 /area/station/crew_quarters/lounge_port{
 	name = "Research Staff Room"
 	})
-"mFJ" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/southeast,
-/turf/unsimulated/floor/engine/glow,
-/area/station/science/lab)
 "mFL" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle,
@@ -17427,7 +17409,7 @@
 	})
 "nqL" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/west,
-/turf/unsimulated/floor/engine/glow,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "nqU" = (
 /turf/simulated/floor/stairs/wide/other,
@@ -19982,7 +19964,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/unsimulated/floor/engine/glow,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "prK" = (
 /obj/machinery/shieldgenerator/meteorshield,
@@ -20452,7 +20434,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/unsimulated/floor/engine/glow,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "pMc" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -22129,7 +22111,8 @@
 	name = "Router Cabinet"
 	})
 "ras" = (
-/turf/unsimulated/floor/engine/glow,
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "raz" = (
 /obj/stool/chair/couch{
@@ -22276,7 +22259,7 @@
 "reS" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/horizontal,
 /obj/machinery/meter,
-/turf/unsimulated/floor/engine/glow,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "reW" = (
 /obj/machinery/computer3/generic/med_data{
@@ -22343,9 +22326,6 @@
 /obj/table/auto,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"rgS" = (
-/turf/unsimulated/floor/engine/glow/blue,
-/area/station/science/lab)
 "rgU" = (
 /obj/machinery/disposal/mail/autoname/medbay/genetics,
 /turf/simulated/floor/bluewhite{
@@ -22397,7 +22377,7 @@
 "rhQ" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/east,
 /obj/machinery/meter,
-/turf/unsimulated/floor/engine/glow,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "rhX" = (
 /obj/machinery/door/airlock/pyro/engineering,
@@ -22434,7 +22414,7 @@
 /area/station/crew_quarters/jazz)
 "rjz" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/east,
-/turf/unsimulated/floor/engine/glow,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "rjC" = (
 /obj/stool/chair/wooden{
@@ -22572,7 +22552,7 @@
 /area/station/hallway/primary/north)
 "roJ" = (
 /obj/machinery/atmospherics/pipe/tank/east,
-/turf/unsimulated/floor/engine/glow,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "rpg" = (
 /obj/machinery/sim/vr_bed{
@@ -23196,10 +23176,6 @@
 	icon_state = "2,2"
 	},
 /area/station/crew_quarters/fitness)
-"rMw" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/northwest,
-/turf/unsimulated/floor/engine/glow,
-/area/station/science/lab)
 "rMB" = (
 /obj/table/wood/auto,
 /obj/item/storage/secure/sbriefcase,
@@ -24791,7 +24767,7 @@
 /area/station/engine/engineering/ce)
 "sVy" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/southwest,
-/turf/unsimulated/floor/engine/glow,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "sVX" = (
 /obj/stool/chair,
@@ -28074,7 +28050,7 @@
 	})
 "vwA" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/northwest,
-/turf/unsimulated/floor/engine/glow/blue,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "vwE" = (
 /turf/simulated/floor/neutral/side{
@@ -29515,7 +29491,7 @@
 /area/station/turret_protected/Zeta)
 "wGh" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/northeast,
-/turf/unsimulated/floor/engine/glow,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "wGm" = (
 /obj/stool/bed,
@@ -30399,7 +30375,7 @@
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
 	},
-/turf/unsimulated/floor/engine/glow/blue,
+/turf/unsimulated/floor/engine,
 /area/station/science/lab)
 "xrW" = (
 /obj/decal/tile_edge/floorguide/mining{
@@ -54796,7 +54772,7 @@ hSf
 cVN
 vac
 hvh
-mFJ
+rKG
 nqL
 rhQ
 nqL
@@ -55395,21 +55371,21 @@ wqf
 aJu
 nGH
 dfr
-hZs
+sRb
 qdn
 prw
 vAb
-iYm
+gYv
 ftn
 reS
-ras
+kQR
 reS
 ftn
-iYm
+gYv
 dkI
 prw
 hjG
-hZs
+sRb
 rvl
 nGH
 mWp
@@ -55702,10 +55678,10 @@ bRm
 bRm
 bRm
 rjz
-rMw
-gwX
-ras
-gwX
+vwA
+qIl
+kQR
+qIl
 sVy
 rjz
 bRm
@@ -56301,7 +56277,7 @@ jja
 aJu
 jLB
 myk
-rgS
+kQR
 kTZ
 dqv
 nGH
@@ -56603,7 +56579,7 @@ vfH
 mYY
 jwZ
 jzk
-rgS
+kQR
 tGs
 kok
 nGH
@@ -56905,7 +56881,7 @@ xSa
 mYY
 pTS
 vwA
-rgS
+kQR
 tGs
 kok
 xIa
@@ -56914,7 +56890,7 @@ oYM
 wwd
 oYM
 xIa
-tGs
+gwX
 wRK
 gYv
 sRb
