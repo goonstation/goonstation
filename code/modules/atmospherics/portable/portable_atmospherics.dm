@@ -100,6 +100,12 @@
 
 			return 1
 
+/obj/machinery/portable_atmospherics/proc/eject_tank()
+	if(holding)
+		holding.set_loc(loc)
+		usr.put_in_hand_or_eject(holding) // try to eject it into the users hand, if we can
+		holding = null
+
 /obj/machinery/portable_atmospherics/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/tank))
 		if(!src.holding)

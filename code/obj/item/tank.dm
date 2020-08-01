@@ -35,6 +35,7 @@ Contains:
 		src.air_contents = unpool(/datum/gas_mixture)
 		src.air_contents.volume = 70 //liters
 		src.air_contents.temperature = T20C
+		src.flags |= TGUI_INTERACTIVE
 		if (!(src in processing_items))
 			processing_items.Add(src)
 		BLOCK_TANK
@@ -66,57 +67,11 @@ Contains:
 				.= 1
 
 	attack_self(mob/user as mob)
-		src.add_dialog(user)
 		if (!(src.air_contents))
 			return
 
-		var/using_internal
-		if(iscarbon(src.loc))
-			var/mob/living/carbon/location = loc
-			if(location.internal==src)
-				using_internal = 1
-
-		//var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? "<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"pragma\" content=\"no-cache\"><style type='text/css'>body { font-family: Tahoma, sans-serif; font-size: 10pt; }</style></head><body>" : ""
-
-		var/message = {"
-		<b>[src]</b>
-		<br><b>Tank Pressure:</b> [MIXTURE_PRESSURE(air_contents)] kPa
-		<br>[fancy_pressure_bar(MIXTURE_PRESSURE(air_contents), 10 * ONE_ATMOSPHERE)]
-		<hr>
-		<b>Mask Release Valve:</b> <A href='?src=\ref[src];stat=1'>[using_internal?("Open"):("Closed")]</A>
-		<br><b>Mask Release Pressure:</b> <A href='?src=\ref[src];dist_p=-10'>-</A> <A href='?src=\ref[src];dist_p=-1'>-</A> <A href='?src=\ref[src];setpressure=1'>[distribute_pressure]</A> <A href='?src=\ref[src];dist_p=1'>+</A> <A href='?src=\ref[src];dist_p=10'>+</A>
-		"}
-		user.Browse(message, "window=tank;size=600x300")
-		onclose(user, "tank")
-		return
-
-	Topic(href, href_list)
-		..()
-		if (usr.stat|| usr.restrained())
-			return
-		if (src.loc == usr)
-			src.add_dialog(usr)
-			if (href_list["dist_p"])
-				var/cp = text2num(href_list["dist_p"])
-				src.distribute_pressure += cp
-				src.distribute_pressure = min(max(round(src.distribute_pressure), 0), 3*ONE_ATMOSPHERE)
-			if (href_list["stat"])
-				var/toggled = toggle_valve()
-				for (var/obj/ability_button/tank_valve_toggle/T in ability_buttons)
-					T.icon_state = toggled ? "airon" : "airoff"
-			if (href_list["setpressure"])
-				var/change = input(usr,"Target Pressure (0-303.975):","Enter target pressure",distribute_pressure) as num
-				if(!isnum(change)) return
-				distribute_pressure = min(max(0, change),303.975)
-				src.updateUsrDialog()
-				return
-
-			src.add_fingerprint(usr)
-			src.updateSelfDialog()
-		else
-			usr.Browse(null, "window=tank")
-			return
-		return
+		if (flags & TGUI_INTERACTIVE)
+			return ui_interact(user)
 
 	remove_air(amount)
 		return air_contents.remove(amount)
@@ -129,6 +84,9 @@ Contains:
 
 		check_status()
 		return 1
+
+	proc/set_release_pressure(var/pressure as num)
+		distribute_pressure = min(max(0, pressure), TANK_MAX_RELEASE_PRESSURE)
 
 	proc/toggle_valve()
 		if(iscarbon(src.loc))
@@ -271,6 +229,33 @@ Contains:
 			B.auto_setup(src,user)
 		else
 			..()
+
+/obj/item/tank/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "GasTank", name)
+		ui.open()
+
+/obj/item/tank/ui_data(mob/user)
+	var/list/data = list()
+	data["max_pressure"] = 10 * ONE_ATMOSPHERE
+	data["pressure"] = MIXTURE_PRESSURE(air_contents)
+	data["valve_open"] = using_internal()
+	data["release_pressure"] = distribute_pressure
+	data["max_release"] = TANK_MAX_RELEASE_PRESSURE
+
+	return data
+
+/obj/item/tank/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("toggle-valve")
+			toggle_valve()
+			. = TRUE
+		if("set-release-pressure")
+			set_release_pressure(params["release_pressure"])
+			. = TRUE
 
 ////////////////////////////////////////////////////////////
 

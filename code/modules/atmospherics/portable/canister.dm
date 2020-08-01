@@ -10,7 +10,6 @@
 	p_class = 2
 
 	var/has_valve = 1
-	var/valve_open = 0
 	var/release_pressure = ONE_ATMOSPHERE
 
 	var/casecolor = "blue"
@@ -380,11 +379,19 @@
 
 /obj/machinery/portable_atmospherics/canister/ui_data(mob/user)
 	var/list/data = list()
-	data["release_pressure"] = src.release_pressure
-	data["maximum_pressure"] = src.maximum_pressure
-	data["current_pressure"] = MIXTURE_PRESSURE(src.air_contents)
-	data["has_valve"] = src.has_valve
-	data["valve_open"] = src.valve_open
+	data["pressure"] = MIXTURE_PRESSURE(air_contents)
+	data["max_pressure"] = maximum_pressure
+	data["connected"] = connected_port ? TRUE : FALSE
+	data["release_pressure"] = release_pressure
+	data["valve_open"] = valve_open
+	data["has_valve"] = has_valve ? TRUE : FALSE
+	data["has_detonator"] = det ? TRUE : FALSE
+
+	if(src.holding)
+		data["holding"] = list()
+		data["holding"]["name"] = holding.name
+		data["holding"]["pressure"] = MIXTURE_PRESSURE(holding.air_contents)
+		data["holding"]["max_pressure"] = TANK_RUPTURE_PRESSURE
 
 	return data
 
@@ -393,19 +400,22 @@
 		return
 	switch(action)
 		if("toggle-valve")
-			if(src.has_valve)
-				src.toggle_valve()
+			if(has_valve)
+				toggle_valve()
 				. = TRUE
 		if("set-pressure")
 			var/target_pressure = params["release_pressure"] as num
 			if(target_pressure && isnum(target_pressure))
-			src.set_release_pressure(target_pressure)
-			. = TRUE
+				set_release_pressure(target_pressure)
+				. = TRUE
 		if("set-max-pressure")
-			src.set_release_pressure(MAX_RELEASE_PRESSURE)
+			set_release_pressure(MAX_RELEASE_PRESSURE)
 			. = TRUE
 		if("set-min-pressure")
-			src.set_release_pressure(MIN_RELEASE_PRESSURE)
+			set_release_pressure(MIN_RELEASE_PRESSURE)
+			. = TRUE
+		if("eject-tank")
+			eject_tank()
 			. = TRUE
 
 /obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob, var/new_ui = TRUE)
@@ -585,7 +595,7 @@
 				src.det.leaking()
 
 /obj/machinery/portable_atmospherics/canister/proc/set_release_pressure(var/pressure as num)
-	src.release_pressure = clamp(pressure, MIN_RELEASE_PRESSURE, MAX_RELEASE_PRESSURE)
+	release_pressure = clamp(pressure, MIN_RELEASE_PRESSURE, MAX_RELEASE_PRESSURE)
 
 /obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
 	if(..())
