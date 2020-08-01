@@ -154,7 +154,8 @@ var/global
 	"Old" = 'icons/mob/hud_human.dmi',
 	"Classic" = 'icons/mob/hud_human_classic.dmi',
 	"Mithril" = 'icons/mob/hud_human_quilty.dmi',
-	"Colorblind" = 'icons/mob/hud_human_new_colorblind.dmi')
+	"Colorblind" = 'icons/mob/hud_human_new_colorblind.dmi',
+	"Vaporized" = 'icons/mob/hud_human_vapor.dmi')
 
 	list/customization_styles = list("None" = "none",
 	/*Short*/
