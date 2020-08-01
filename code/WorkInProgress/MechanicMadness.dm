@@ -11,23 +11,30 @@
 	desc="You should not bee seeing this! Call 1-800-CODER or just crusher it"
 	icon='icons/misc/mechanicsExpansion.dmi'
 	can_hold=list(/obj/item/mechanics)
-	deconstruct_flags = 0 //nope, so much nope.
+	deconstruct_flags = DECON_NONE //nope, so much nope.
 	slots=1
-	var/open=1
-	var/welded=0
-	var/can_be_welded=0
-	var/can_be_anchored=0
-	custom_suicide=1
+	var/open=true
+	var/welded=false
+	var/can_be_welded=false
+	var/can_be_anchored=false
+	custom_suicide=true
 	ex_act(severity)
 		switch(severity)
 			if (1.0)
 				src.dispose() // disposing upon being blown up unlike all those decorative rocks on cog2
 				return
 			if (2.0)
-				//tbd, maybe unbolt/open?
+				if(prob(25))
+					src.dispose()
+					return
+				src.open=true
+				src.welded=false
+				src.updateIcon()
 				return
 			if (3.0)
-				//??????
+				if(prob(50) && !src.welded)
+					src.open=true
+					src.updateIcon()
 				return
 		return
 	suicide(var/mob/user as mob) // lel
@@ -143,14 +150,14 @@
 	get_desc()
 		.+="[src.welded ? " It is welded shut." : ""][src.open ? " Its cover has been opened." : ""][src.anchored ? "It is [src.open || src.welded ? "also" : ""] anchored to the ground." : ""]"
 	housing_large // chonker
-		can_be_welded=1
-		can_be_anchored=1
+		can_be_welded=true
+		can_be_anchored=true
 		slots=23 // wew, dont use this in-hand or equipped!
 		name="Component Cabinet"
 		desc="A rather chunky cabinet for storing up to 23 active mechanic components at once.<br>It can only be connected to external components when bolted to the floor.<br>"
 		w_class = 4.0 //all the weight
 		density=1
-		anchored=0
+		anchored=false
 		icon_state="housing_cabinet"
 		flags = FPRINT | EXTRADELAY | CONDUCT
 		attack_hand(mob/user as mob)
@@ -182,19 +189,19 @@
 		flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | ONBELT
 
 		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
-		proc/get_trigger()
+		proc/find_trigger() // find the trigger comp, return 1 if found.
 			if (!istype(src.the_trigger))
 				src.the_trigger = (locate(/obj/item/mechanics/trigger/trigger) in src.contents)
 				if (!istype(src.the_trigger)) //no trigger?
 					for(var/obj/item in src.contents)
 						item.loc=get_turf(src) // kick out any mechcomp
 					qdel(src) // delet
-					return 0
-			return 1
+					return false
+			return true
 		attack_self(mob/user as mob)
 			if(src.open)
 				return ..() // you can just use the trigger manually from the UI
-			if(src.get_trigger() && !src.open && src.loc==user)
+			if(src.find_trigger() && !src.open && src.loc==user)
 				return src.the_trigger.attack_hand(user)
 			return
 
@@ -250,7 +257,7 @@ var/list/mechanics_telepads = new/list()
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = 1.0
 	level = 2
-	var/cabinet_banned = 0 // 1=cannot be attached to a housing/cabinet
+	var/cabinet_banned = false // whether or not this component is prevented from being anchored in cabinets
 	var/under_floor = 0
 	var/can_rotate = 0
 	var/cooldown_time = 3 SECONDS
@@ -515,7 +522,7 @@ var/list/mechanics_telepads = new/list()
 	desc = ""
 	icon_state = "comp_flush"
 	cooldown_time = 2 SECONDS
-	cabinet_banned = 1
+	cabinet_banned = true
 
 
 	var/obj/disposalpipe/trunk/trunk = null
@@ -706,7 +713,7 @@ var/list/mechanics_telepads = new/list()
 	icon = 'icons/obj/networked.dmi'
 	icon_state = "secdetector0"
 	can_rotate = 1
-	cabinet_banned = 1 // abusable. B&
+	cabinet_banned = true // abusable. B&
 	var/range = 5
 	var/list/beamobjs = new/list(5)//just to avoid someone doing something dumb and making it impossible for us to clear out the beams
 	var/active = 0
@@ -811,7 +818,7 @@ var/list/mechanics_telepads = new/list()
 	desc = ""
 	icon_state = "comp_accel"
 	can_rotate = 1
-	cabinet_banned = 1 // non-functional
+	cabinet_banned = true // non-functional
 	var/active = 0
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
@@ -2009,7 +2016,7 @@ var/list/mechanics_telepads = new/list()
 	name = "Teleport Component"
 	desc = ""
 	icon_state = "comp_tele"
-	cabinet_banned = 1 // potentially abusable. b&
+	cabinet_banned = true // potentially abusable. b&
 	var/teleID = "tele1"
 	var/send_only = 0
 
@@ -2453,7 +2460,7 @@ var/list/mechanics_telepads = new/list()
 	can_rotate = 1
 	var/obj/item/gun/Gun = null
 	var/compatible_guns = /obj/item/gun/kinetic
-	cabinet_banned=1 // non-functional thankfully
+	cabinet_banned = true // non-functional thankfully
 	get_desc()
 		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot() ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
 
