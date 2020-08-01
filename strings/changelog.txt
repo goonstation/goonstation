@@ -1,4 +1,9 @@
 
+(t)fri jul 31 20
+(u)Flaborized
+(p)1659
+(e)🆕🎨|feature, sprites
+(*)Added a new cosmetic HUD option to character setup, "vaporized".
 (t)thu jul 30 20
 (u)zjdtmkhzt
 (p)1589
