@@ -193,9 +193,13 @@
 			"fancy" = user.client.preferences.tgui_fancy,
 			"locked" = user.client.preferences.tgui_lock,
 		),
+		"client" = list(
+			"ckey" = user.client.ckey,
+			"address" = user.client.address,
+			"computer_id" = user.client.computer_id,
+		),
 		"user" = list(
 			"name" = "[user]",
-			"ckey" = "[user.ckey]",
 			"observer" = isobserver(user),
 		),
 	)

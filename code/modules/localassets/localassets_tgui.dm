@@ -12,6 +12,7 @@
 /datum/asset/basic/tgui
 	local_assets = list(
 		"tgui.bundle.js",
+		"tgui-common.chunk.js",
 		"tgui.bundle.css"
 	)
 
@@ -19,6 +20,7 @@
 		. = ..()
 		url_map = list(
 			"tgui/tgui.bundle.js" = "[resource("tgui/tgui.bundle.js")]",
+			"tgui/tgui-common.chunk.js" = "[resource("tgui/tgui-common.chunk.js")]",
 			"tgui/tgui.bundle.css" = "[resource("tgui/tgui.bundle.css")]"
 		)
 
