@@ -43,22 +43,20 @@
 		updateHealth(prevHealth)
 		return
 	proc/updateHealth(var/prevHealth)
-		/*
+
 		if(_health <= 0)
 			onDestroy()
-		else
+/*		else
 			if((_health > 75) && !(prevHealth > 75))
-				UpdateOverlays(null, "damage")
+				//UpdateOverlays(null, "damage")
 			else if((_health <= 75 && _health > 50) && !(prevHealth <= 75 && prevHealth > 50))
-				setTexture("damage1", BLEND_MULTIPLY, "damage")
+				//setTexture("damage1", BLEND_MULTIPLY, "damage")
 			else if((_health <= 50 && _health > 25) && !(prevHealth <= 50 && prevHealth > 25))
-				setTexture("damage2", BLEND_MULTIPLY, "damage")
+				//setTexture("damage2", BLEND_MULTIPLY, "damage")
 			else if((_health <= 25) && !(prevHealth <= 25))
-				setTexture("damage3", BLEND_MULTIPLY, "damage")
-		*/
-		return
+				//setTexture("damage3", BLEND_MULTIPLY, "damage")
+		return*/
 	proc/onDestroy()
-		src.visible_message("<span class='alert'><b>[src] is destroyed.</b></span>")
 		qdel(src)
 		return
 
@@ -71,7 +69,7 @@
 			src.material.triggerExp(src, severity)
 		switch(severity)
 			if(1.0)
-				changeHealth(-95)
+				changeHealth(-100)
 				return
 			if(2.0)
 				changeHealth(-70)
