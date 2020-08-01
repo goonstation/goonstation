@@ -294,7 +294,7 @@ var/global/client/ff_debugger = null
 						if (!mover.throwing)
 							mover.Bump(obstacle, 1)
 						return 0
-				else //cheaper, skip proc call lol lold
+				else //cheaper, skip proc call lol lol
 					if (obstacle.density)
 						if (!mover.throwing)
 							mover.Bump(obstacle,1)
