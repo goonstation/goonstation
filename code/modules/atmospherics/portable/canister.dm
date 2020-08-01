@@ -10,6 +10,7 @@
 	p_class = 2
 
 	var/has_valve = 1
+	var/valve_open = 0
 	var/release_pressure = ONE_ATMOSPHERE
 
 	var/casecolor = "blue"
