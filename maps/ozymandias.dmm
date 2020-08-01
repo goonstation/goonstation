@@ -2988,6 +2988,10 @@
 /area/station/crew_quarters/bar)
 "ctz" = (
 /obj/machinery/atmospherics/pipe/tank/toxins/east,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/simulated/floor/caution/corner/sw,
 /area/station/science/storage)
 "ctI" = (
@@ -3690,6 +3694,12 @@
 	dir = 1
 	},
 /area/station/crew_quarters/quartersA)
+"cRg" = (
+/obj/storage/crate/loot,
+/turf/simulated/floor/plating/random,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "cRj" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -5870,6 +5880,10 @@
 /area/station/crew_quarters/catering)
 "eEp" = (
 /obj/machinery/vending/standard,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
 "eEx" = (
@@ -6919,6 +6933,10 @@
 /area/station/maintenance/NEmaint)
 "fxd" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide/east,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/simulated/floor/caution/west,
 /area/station/science/storage)
 "fxr" = (
@@ -7455,6 +7473,17 @@
 /obj/item/clothing/suit/bedsheet/cape/green,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/arcade/dungeon)
+"fUB" = (
+/obj/item/dice{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/stool/chair{
+	dir = 4;
+	tag = "icon-chair (EAST)"
+	},
+/turf/simulated/floor/grime,
+/area/station/maintenance/disposal)
 "fUV" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/grey,
@@ -7547,6 +7576,10 @@
 	})
 "fXN" = (
 /obj/machinery/manufacturer/gas,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor/caution/corner/se,
 /area/station/science/storage)
 "fYC" = (
@@ -8115,9 +8148,13 @@
 /turf/simulated/floor/red,
 /area/station/security/processing)
 "gwX" = (
-/obj/machinery/light/small/floor,
-/turf/unsimulated/floor/caution/north,
-/area/station/science/lab)
+/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/science/storage)
 "gxD" = (
 /obj/decal/tile_edge/floorguide/evac{
 	dir = 4
@@ -8308,6 +8345,7 @@
 	dir = 1;
 	name = "Mixing Port"
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor/caution/corner/sw,
 /area/station/science/storage)
 "gDV" = (
@@ -10226,6 +10264,14 @@
 	dir = 9
 	},
 /area/station/science)
+"hZs" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/science/storage)
 "hZC" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/grey,
@@ -11518,6 +11564,14 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"iYm" = (
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/science/storage)
 "iYv" = (
 /obj/machinery/sauna_stove,
 /turf/simulated/floor/wood/two,
@@ -12638,11 +12692,13 @@
 /turf/simulated/floor/carpet/green/decal/outercross,
 /area/station/crew_quarters/courtroom)
 "jQs" = (
-/obj/storage/crate/loot,
-/turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/science/storage)
 "jQD" = (
 /obj/table/reinforced/auto,
 /obj/item/extinguisher,
@@ -14904,6 +14960,10 @@
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor,
 /area/station/crew_quarters/md)
+"lwe" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/caution/north,
+/area/station/science/lab)
 "lwf" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2{
@@ -16295,6 +16355,8 @@
 /area)
 "mvo" = (
 /obj/table/auto,
+/obj/item/paper/yachtdice,
+/obj/item/paper/yachtdice,
 /obj/item/instrument/harmonica,
 /obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_y = 6
@@ -16556,6 +16618,13 @@
 /area/station/crew_quarters/lounge_port{
 	name = "Research Staff Room"
 	})
+"mFJ" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
 "mFL" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle,
@@ -17785,6 +17854,10 @@
 "nEM" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold/southeast,
 /obj/machinery/meter,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
 "nEN" = (
@@ -22326,6 +22399,10 @@
 /obj/table/auto,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"rgS" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
 "rgU" = (
 /obj/machinery/disposal/mail/autoname/medbay/genetics,
 /turf/simulated/floor/bluewhite{
@@ -22699,6 +22776,13 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
+"rvw" = (
+/obj/item/dice{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/turf/simulated/floor/grime,
+/area/station/maintenance/disposal)
 "rvJ" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
@@ -23961,6 +24045,13 @@
 	dir = 5
 	},
 /area/station/hangar/main)
+"smI" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/caution/east,
+/area/station/science/storage)
 "smL" = (
 /obj/lattice{
 	dir = 8;
@@ -26590,6 +26681,13 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/north)
+"urQ" = (
+/obj/item/dice{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/turf/simulated/floor/grime,
+/area/station/maintenance/disposal)
 "usm" = (
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/grey,
@@ -27732,6 +27830,7 @@
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor/caution/corner/se,
 /area/station/science/storage)
 "vlk" = (
@@ -52494,7 +52593,7 @@ nzC
 fXG
 hWt
 fXG
-aJu
+fXG
 aJu
 aJu
 aJu
@@ -52795,7 +52894,7 @@ oBE
 rUn
 fXG
 jYW
-fXG
+cRg
 fXG
 fXG
 aJu
@@ -53097,7 +53196,7 @@ oBE
 cKD
 fXG
 jYW
-elo
+jYW
 lzs
 fXG
 aJu
@@ -53398,7 +53497,7 @@ aZe
 aZe
 jlZ
 fXG
-jQs
+elo
 jYW
 jYW
 fXG
@@ -56890,7 +56989,7 @@ oYM
 wwd
 oYM
 xIa
-gwX
+lwe
 wRK
 gYv
 sRb
@@ -57029,7 +57128,7 @@ wDI
 uBP
 wkL
 hFv
-rQn
+fUB
 rQn
 hFv
 aJu
@@ -57331,7 +57430,7 @@ gon
 hFv
 raU
 hFv
-ofK
+urQ
 cHH
 hFv
 aJu
@@ -57633,7 +57732,7 @@ mQv
 fZL
 tee
 hFv
-ofK
+rvw
 eeG
 hFv
 aJu
@@ -58389,7 +58488,7 @@ aRJ
 aJu
 aTz
 xok
-xok
+gwX
 xok
 fAY
 nEM
@@ -59298,7 +59397,7 @@ mxg
 mxg
 mxg
 fAY
-pse
+mFJ
 pse
 ovi
 eoo
@@ -59597,13 +59696,13 @@ aRJ
 aJu
 aTz
 mxg
-mxg
+hZs
 mxg
 qUo
 pse
 pse
 pse
-pse
+rgS
 pse
 pse
 pse
@@ -60201,13 +60300,13 @@ brn
 ath
 aTz
 ufG
-ufG
+iYm
 ufG
 qUo
 pse
 pse
 pse
-pse
+rgS
 pse
 pse
 pse
@@ -60506,7 +60605,7 @@ ufG
 ufG
 ufG
 fAY
-pse
+mFJ
 pse
 ifg
 rnD
@@ -61409,13 +61508,13 @@ aRJ
 aJu
 aTz
 uIz
-uIz
+jQs
 uIz
 fAY
 eEp
 tDQ
 nIX
-kDY
+smI
 kDY
 kDY
 fXN
