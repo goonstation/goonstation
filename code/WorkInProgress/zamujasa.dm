@@ -466,7 +466,7 @@
 	var/bar_bg_color = "#000000"
 	var/bar_color = "#00cc00"
 	var/bar_width = clamp(pct, 0, 1)
-	if (pct > 1)
+	if (pct > 1.01)
 		bar_width = clamp((pressure / (max_pressure * 10)), 0, 1)
 		bar_bg_color = "#b00000"
 		bar_color = "#ffff00"
@@ -672,6 +672,86 @@
 			src.maptext_x = -100
 			src.maptext_width = 232
 			src.maptext_y = 34
+
+	ex_act()
+		return
+
+
+
+/obj/machinery/maptext_monitor
+	name = "maptext monitor doodad"
+	desc = "This thing reports the value something else has, automatically! Wow!"
+	icon = null
+	anchored = 2
+	density = 0
+
+	var/datum/monitored = null
+	var/monitored_var = null
+	var/monitored_list = null
+	var/monitored_ref = null
+	var/last_value = null
+	var/display_mode = null
+	var/maptext_prefix = "<span class='c'>"
+	var/maptext_suffix = "</span>"
+	var/ding_on_change = 0
+	var/ding_sound = "sound/machines/ping.ogg"
+
+	New()
+		src.maptext_x = -100
+		src.maptext_width = 232
+		src.maptext_height = 64
+		SubscribeToProcess()
+		src.process()
+
+	disposing()
+		UnsubscribeProcess()
+		..()
+
+	process()
+		if (src.monitored_ref)
+			var/datum/thing = locate(src.monitored_ref)
+			if (thing)
+				src.monitored = thing
+			src.monitored_ref = null
+
+		if (monitored)
+			if (monitored.pooled || monitored.qdeled)
+				// The thing we were watching was deleted/removed! Welp.
+				monitored = null
+				return
+
+			if (!src.monitored_list && !src.monitored_var)
+				return
+			try
+				var/current_value
+				if (src.monitored_list && !src.monitored_var)
+					var/list/monlist = monitored.vars[src.monitored_list]
+					current_value = monlist.len
+				else if (src.monitored_list)
+					current_value = monitored.vars[src.monitored_list][src.monitored_var]
+				else
+					current_value = monitored.vars[monitored_var]
+
+				if (current_value != last_value)
+					src.maptext = "[maptext_prefix][format_value(current_value)][maptext_suffix]"
+					src.last_value = current_value
+					if (src.ding_on_change)
+						playsound(src, src.ding_sound, 33, 0)
+			catch(var/exception/e)
+				src.maptext = "(Err: [e])"
+
+
+	proc/format_value(var/val)
+		switch (src.display_mode)
+			if ("power")
+				return engineering_notation(val)
+			if ("percent")
+				return (val * 100)
+			if ("temperature")
+				return "[val - T0C]&deg;C"
+
+		return val
+
 
 	ex_act()
 		return

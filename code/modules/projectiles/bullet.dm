@@ -662,6 +662,56 @@ toxic - poisons
 	casing = null
 	icon_turf_hit = "bhole-staple"
 
+/datum/projectile/bullet/cannon // autocannon should probably be renamed next
+	name = "cannon round"
+	window_pass = 0
+	icon_state = "40mmR"
+	damage_type = D_PIERCING
+	hit_type = DAMAGE_CUT
+	power = 150
+	dissipation_delay = 30
+	cost = 1
+	shot_sound = 'sound/weapons/20mm.ogg'
+	ks_ratio = 1.0
+	caliber = 0.787 //20mm
+	icon_turf_hit = "bhole-large"
+	casing = /obj/item/casing/rifle
+	pierces = 5
+
+	on_launch(obj/projectile/O)
+		O.AddComponent(/datum/component/sniper_wallpierce, 4) //pierces 4 walls/lockers/doors/etc. Does not function on restriced Z, rwalls and blast doors use 2 pierces
+		for(var/mob/M in range(O.loc, 6))
+			shake_camera(M, 3, 1)
+
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(proj.power >= 30)
+				M.do_disorient(75, weakened = 50, stunned = 50, disorient = 30, remove_stamina_below_zero = 0)
+
+			if(proj.power >= 40)
+				var/throw_range = (proj.power > 50) ? 6 : 3
+				var/turf/target = get_edge_target_turf(M, dirflag)
+				SPAWN_DBG(0)
+					if(!M.stat) M.emote("scream")
+					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
+					M.update_canmove()
+			if (M.organHolder)
+				var/targetorgan
+				for (var/i in 1 to (power/10)-2)
+					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+					M.organHolder.damage_organ(proj.power/M.get_ranged_protection(), 0, 0, prob(5) ? "heart" : targetorgan) //5% chance to hit the heart
+
+			if(prob(proj.power/4) && power > 50) //only for strong. Lowish chance
+				M.sever_limb(pick("l_arm","r_arm","l_leg","r_leg"))
+			..()
+
+		var/turf/T = get_turf(hit)
+		SPAWN_DBG(0)
+			explosion_new(null, T, 1, 1)
+
+
 /datum/projectile/bullet/autocannon
 	name = "HE grenade"
 	window_pass = 0

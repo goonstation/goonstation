@@ -989,6 +989,41 @@
 		..()
 		setProperty("movespeed", 0.5)
 
+
+/obj/item/gun/kinetic/cannon
+	name = "M20-CV tactical cannon"
+	desc = "A shortened conversion of a 20mm military cannon. Slow but enormously powerful."
+	icon = 'icons/obj/64x32.dmi'
+	icon_state = "cannon"
+	item_state = "cannon"
+	wear_image_icon = 'icons/mob/back.dmi'
+	force = 10
+	caliber = 0.787
+	max_ammo_capacity = 1
+	auto_eject = 1
+
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
+	object_flags = NO_ARM_ATTACH
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+
+	can_dual_wield = 0
+
+	slowdown = 5
+	slowdown_time = 10
+
+	two_handed = 1
+	w_class = 4
+	muzzle_flash = "muzzle_flash_launch"
+
+	New()
+		ammo = new/obj/item/ammo/bullets/cannon/single
+		current_projectile = new/datum/projectile/bullet/cannon
+		..()
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 0.3)
+
 // demo
 /obj/item/gun/kinetic/grenade_launcher
 	desc = "A 40mm hand-held grenade launcher able to fire a variety of explosives."

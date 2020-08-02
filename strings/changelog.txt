@@ -1,4 +1,50 @@
 
+(t)sat aug 01 20
+(u)Emcee-Gore
+(p)1650
+(e)🗺|mapping
+(+)Added Photocopiers to (Oshan, CogMap2, Manta, Horizon and Destiny).
+(u)Comradef191
+(p)1655
+(e)🗺|mapping
+(+)Slightly Improved Radiator Coverage in the Cogmap1 Engineering Burnchamber
+(t)fri jul 31 20
+(u)Flaborized
+(p)1659
+(e)🆕🎨|feature, sprites
+(*)Added a new cosmetic HUD option to character setup, "vaporized".
+(t)thu jul 30 20
+(u)zjdtmkhzt
+(p)1589
+(e)🆕|feature
+(+)You can now use a Voltron to travel through active phone calls. Just use it while holding the phone handset in your other hand!
+(u)Kubius
+(p)1663
+(e)🐛🗺|bug, mapping
+(+)More Fleet fixes to make the map slightly closer to bearable.
+(t)tue jul 28 20
+(u)Kubius
+(p)1629
+(e)🆕🗺|feature, mapping
+(+)Kondaru fix batch, inc. go board, photocopiers, luigi board, spooky asteroids.
+(t)mon jul 27 20
+(u)MarkNstein
+(p)1487
+(e)🗺|mapping
+(*)Cog1: Pathology now has proper pharmacy equipment: Reagent heater and glass recycler.
+(*)Cog2: Medical reception desk is now also a pharmacy.
+(u)Tarmunora
+(p)1466
+(e)⚖🐛|balance, bug
+(+)Nitro inside humans is no longer stable.
+(u)Tarmunora
+(p)1534
+(e)⚖🆕🔄🎨|balance, feature, rework, sprites
+(*)Reworked most cyberorgans and their emagged effects - notably removed blanket stamina buffs from cyberorgans
+(u)Nebulacrity
+(p)1609
+(e)|
+(+)Updated portal sprites.
 (t)sun jul 26 20
 (u)kyle
 (e)⚖|balance
