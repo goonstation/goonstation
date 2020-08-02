@@ -1195,6 +1195,7 @@
 /area/station/medical/breakroom)
 "aNu" = (
 /obj/storage/closet/biohazard,
+/obj/machinery/light,
 /turf/simulated/floor/purplewhite,
 /area/station/science/lab)
 "aOc" = (
@@ -1981,11 +1982,6 @@
 /obj/item/device/audio_log,
 /obj/item/audio_tape,
 /obj/item/audio_tape,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
 /turf/simulated/floor/engine,
 /area/station/science/artifact)
 "bkA" = (
@@ -2318,6 +2314,16 @@
 	},
 /turf/simulated/floor/wood/eight,
 /area/station/security/detectives_office)
+"byn" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/yellow/checker,
+/area/station/routingdepot/medsci{
+	name = "Research Router"
+	})
 "byF" = (
 /obj/lattice{
 	dir = 4;
@@ -2488,6 +2494,10 @@
 "bHg" = (
 /turf/simulated/floor/grey/side,
 /area/station/crew_quarters/quarters_west)
+"bHl" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/grey,
+/area/station/security/brig)
 "bHr" = (
 /obj/decal/stage_edge/alt,
 /obj/machinery/portable_reclaimer,
@@ -2591,6 +2601,7 @@
 "bMT" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
+/obj/machinery/light/small,
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/security/hos)
 "bNh" = (
@@ -3875,6 +3886,10 @@
 	},
 /obj/disposalpipe/segment/brig{
 	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig/cell_block)
@@ -8627,10 +8642,13 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "fZB" = (
-/turf/simulated/floor/purpleblack{
-	dir = 6
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
 	},
-/area/station/hallway/secondary/west)
+/turf/simulated/floor/black,
+/area/station/crew_quarters/hor)
 "fZL" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/black/grime,
@@ -9297,6 +9315,14 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
+"gze" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "gzh" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/market)
@@ -13401,10 +13427,6 @@
 "jnm" = (
 /obj/machinery/computer/security{
 	dir = 4
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/station/security/hos)
@@ -17518,6 +17540,11 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "lZH" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 10
 	},
@@ -25428,6 +25455,18 @@
 "rzU" = (
 /turf/simulated/floor/engine/caution/east,
 /area/station/science/artifact)
+"rAd" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "black";
+	icon_state = "bedsheet-black"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/grime,
+/area/station/security/brig/cell_block)
 "rAk" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/north,
 /turf/simulated/floor/bluewhite{
@@ -25751,6 +25790,16 @@
 	dir = 4
 	},
 /area/station/security/equipment)
+"rJn" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/greenblack{
+	dir = 1
+	},
+/area/station/hallway/secondary/west)
 "rJI" = (
 /obj/table/wood/auto,
 /obj/item/device/analyzer/atmospheric,
@@ -28697,6 +28746,15 @@
 /obj/item/clothing/glasses/sunglasses,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/testchamber)
+"tMD" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/yellow/checker,
+/area/station/routingdepot/medsci{
+	name = "Research Router"
+	})
 "tNy" = (
 /obj/cable{
 	d1 = 2;
@@ -31696,6 +31754,16 @@
 	dir = 10
 	},
 /area)
+"vRr" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/yellow/checker,
+/area/station/routingdepot/medsci{
+	name = "Research Router"
+	})
 "vRw" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4;
@@ -31712,6 +31780,11 @@
 "vRZ" = (
 /obj/shrub{
 	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/hor)
@@ -31787,6 +31860,11 @@
 	},
 /obj/landmark/start{
 	name = "Scientist"
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/lounge_port{
@@ -32812,7 +32890,6 @@
 	},
 /area/station/engine/engineering/private)
 "wJq" = (
-/obj/machinery/light,
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency,
 /obj/item/wrench,
@@ -34482,12 +34559,14 @@
 /area/station/security/equipment)
 "xXo" = (
 /obj/machinery/light{
-	dir = 4;
+	dir = 1;
 	layer = 9.1;
-	pixel_x = 10
+	pixel_y = 21
 	},
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
+/turf/simulated/floor/greenblack{
+	dir = 1
+	},
+/area/station/hallway/secondary/west)
 "xXP" = (
 /obj/storage/secure/closet/engineering/engineer,
 /turf/simulated/floor/grey,
@@ -58310,13 +58389,13 @@ jhZ
 tSM
 uVD
 jhZ
-kPz
+tMD
 wmZ
 kPz
-kPz
+tMD
 kPz
 tly
-kPz
+tMD
 rHE
 rse
 dvW
@@ -59216,11 +59295,11 @@ jhZ
 jhZ
 jhZ
 jhZ
-kPz
+byn
 mVO
 kPz
 kPz
-kPz
+vRr
 jqz
 tly
 fyr
@@ -61041,7 +61120,7 @@ wHp
 wHp
 wHp
 wHp
-wHp
+tTr
 wHp
 wHp
 wHp
@@ -61306,7 +61385,7 @@ woM
 woM
 woM
 aOc
-oTq
+dSs
 ghr
 spg
 spg
@@ -61611,8 +61690,8 @@ aOc
 oTq
 ftw
 wPO
-cBq
 trp
+cBq
 lWl
 trp
 trp
@@ -61636,19 +61715,19 @@ trp
 trp
 trp
 trp
+cBq
 trp
 trp
 trp
 trp
 trp
+cBq
 trp
 trp
 trp
 trp
 trp
-trp
-trp
-trp
+cBq
 trp
 trp
 hTi
@@ -61902,13 +61981,13 @@ ctz
 aTz
 nOp
 wHp
-tTr
-wHp
-wHp
-wHp
 wHp
 wHp
 tTr
+wHp
+wHp
+wHp
+wHp
 wHp
 gFa
 ftw
@@ -61933,7 +62012,7 @@ pub
 ftw
 ftw
 wPO
-fZB
+krN
 cJH
 uOE
 uOE
@@ -62202,7 +62281,7 @@ uqv
 uqv
 xkU
 aTz
-oTq
+dSs
 ftw
 ftw
 ftw
@@ -62231,7 +62310,7 @@ jOu
 oMD
 deW
 gXt
-dQh
+xXo
 ftw
 ftw
 lvB
@@ -62504,19 +62583,19 @@ vAm
 gPQ
 unw
 aTz
-dSs
+oTq
 ftw
 wPO
 trp
 trp
+trp
+trp
+trp
 cBq
 trp
 trp
 trp
-trp
-trp
-cBq
-fZB
+krN
 pLP
 vSY
 hsI
@@ -63140,7 +63219,7 @@ uGp
 dQh
 ftw
 ftw
-lvB
+nAP
 uVC
 fjP
 fjP
@@ -63435,7 +63514,7 @@ xUJ
 rdj
 ooB
 ueE
-fjP
+fZB
 fjP
 fjP
 uVC
@@ -63741,7 +63820,7 @@ uaB
 gCj
 gCj
 krH
-dQh
+rJn
 ftw
 ftw
 lvB
@@ -67649,7 +67728,7 @@ wHp
 wHp
 vad
 gPw
-bgP
+ePM
 biw
 biw
 rfL
@@ -67951,7 +68030,7 @@ ftw
 ftw
 lvB
 gPw
-ePM
+bgP
 qxO
 biw
 tCv
@@ -69450,7 +69529,7 @@ ckC
 ckC
 ckC
 aOc
-oTq
+dSs
 lvB
 uxa
 mih
@@ -80703,7 +80782,7 @@ uXK
 kZR
 woV
 ekG
-ekG
+bHl
 hoN
 ddA
 xeR
@@ -81012,7 +81091,7 @@ viT
 pYZ
 rec
 rEy
-mKZ
+rAd
 lPC
 ezr
 thT
@@ -81616,7 +81695,7 @@ viT
 pYZ
 rsq
 rEy
-mKZ
+rAd
 lPC
 oIq
 lxP
@@ -82824,7 +82903,7 @@ xeR
 ddA
 ddA
 rEy
-mKZ
+rAd
 lPC
 gjg
 noq
@@ -90020,9 +90099,9 @@ kZB
 kZB
 kZB
 ovn
-xXo
 dfD
 dfD
+gze
 dfD
 dfD
 dfD
