@@ -13125,6 +13125,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/photocopier,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north)
 "aGC" = (
@@ -18651,6 +18652,14 @@
 /area/station/hallway/secondary/exit)
 "aSv" = (
 /obj/decal/cleanable/ash,
+/obj/table/wood/auto,
+/obj/item/paper_bin{
+	pixel_y = 6
+	},
+/obj/item/storage/box/marker/basic{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north)
 "aSw" = (
@@ -26667,12 +26676,8 @@
 	d2 = 4;
 	icon_state = "1-6"
 	},
-/obj/table/wood/auto,
-/obj/item/disk/data/cartridge/diagnostics{
-	pixel_x = 4;
-	pixel_y = -2
-	},
 /obj/disposalpipe/segment/vertical,
+/obj/machinery/photocopier,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -26742,15 +26747,26 @@
 	icon_state = "1-10"
 	},
 /obj/table/wood/auto,
-/obj/item/disk/data/cartridge{
-	desc = "A programmable data cartridge for portable microcomputers.";
-	name = "EEPROM Cart"
+/obj/machinery/light_switch/east,
+/obj/item/paper_bin{
+	pixel_y = 6
 	},
 /obj/item/disk/data/cartridge/atmos{
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/machinery/light_switch/east,
+/obj/item/disk/data/cartridge{
+	desc = "A programmable data cartridge for portable microcomputers.";
+	name = "EEPROM Cart"
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/pen{
+	pixel_x = 5;
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
