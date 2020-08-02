@@ -132,8 +132,15 @@
 		else
 			var/selection = input("What do you want to drop?", "Atmos Transporter", null, null) as null|anything in src.contents
 			if(!selection) return
-			selection:set_loc(user.loc)
-			selection:contained = 0
+			if (istype(selection, /obj/machinery/fluid_canister))
+				var/obj/machinery/fluid_canister/S = selection
+				S.set_loc(user.loc)
+				S.contained = 0
+			else if (istype(selection, /obj/machinery/portable_atmospherics))
+				var/obj/machinery/portable_atmospherics/S = selection
+				S.set_loc(user.loc)
+				S.contained = 0
+			else return //no sparks for unintended items
 			elecflash(user)
 
 
@@ -147,7 +154,7 @@
 
 	var/cost_broken = 50 //For broken/burned lamps (the old lamp gets recycled in the tool)
 	var/cost_empty = 75
-	var/setting = "white" //Currently either tube or bulb
+	var/setting = "white"
 	var/dispensing_tube = /obj/item/light/tube
 	var/dispensing_bulb = /obj/item/light/bulb
 
@@ -187,9 +194,10 @@
 				dispensing_bulb = /obj/item/light/bulb
 		set_icon_state("[prefix]-[setting]")
 
-	get_desc(var/dist)
-		if (dist < 3)
-			. = "<span class='notice'>It is currently set to dispense [setting] lamps.</span>"
+
+	get_desc()
+		//if (dist < 3)
+		. += "It is currently set to dispense [setting] lamps."
 
 
 

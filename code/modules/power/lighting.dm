@@ -559,10 +559,10 @@
 
 /obj/machinery/light/attackby(obj/item/W, mob/user)
 
-	if (istype(W, /obj/item/borg_lamp_manufacturer))
+	if (istype(W, /obj/item/borg_lamp_manufacturer)) //deliberately placed above the borg check
 
 		if (removable_bulb == 0)
-			boutput(user, "This fitting isn't user-serviceable.") //More informative than telling
+			boutput(user, "This fitting isn't user-serviceable.")
 			return
 
 		var/obj/item/borg_lamp_manufacturer/M = W
@@ -571,7 +571,6 @@
 			L = new M.dispensing_tube()
 		else
 			L = new M.dispensing_bulb()
-		//if (M.dispensing == allowed_type)
 		if (light_status == LIGHT_OK && light_name == L.name) //light_name because I want this to be able to replace working lights with different colours
 			boutput(user, "This fitting already has an identical lamp.")
 			qdel(L)
@@ -592,6 +591,7 @@
 		rigged = L.rigged
 		rigger = L.rigger
 		light.set_color(L.color_r, L.color_g, L.color_b)
+		qdel(L)
 
 		on = has_power()
 		update()

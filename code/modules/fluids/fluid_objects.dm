@@ -361,8 +361,8 @@
 
 /obj/machinery/fluid_canister/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/atmosporter))
-		var/canamt = W.contents.len
-		if (canamt >= W:capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
+		var/obj/item/atmosporter/porter = W
+		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
 		else
 			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
 			src.contained = 1
