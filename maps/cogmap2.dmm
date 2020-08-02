@@ -11048,6 +11048,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/photocopier,
 /turf/simulated/floor/blueblack{
 	dir = 10
 	},
@@ -11661,6 +11662,9 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
+	},
+/obj/item/paper_bin{
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	icon_state = "carpetN"
@@ -35361,10 +35365,7 @@
 	dir = 1;
 	pixel_y = 32
 	},
-/obj/vehicle/tug{
-	desc = "Pretty much just an airport baggage cart, really.";
-	name = "utility tractor"
-	},
+/obj/machinery/photocopier,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "blue2"
@@ -36530,6 +36531,10 @@
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
+	},
+/obj/vehicle/tug{
+	desc = "Pretty much just an airport baggage cart, really.";
+	name = "utility tractor"
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -38729,7 +38734,6 @@
 /area/station/hallway/primary/east)
 "bHu" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
 /obj/noticeboard{
 	name = "Complaint Board";
 	pixel_y = 28
@@ -38743,6 +38747,13 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/machinery/light/lamp{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/obj/machinery/cashreg{
+	pixel_y = -3
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/customs)
@@ -39879,7 +39890,6 @@
 /area/station/hallway/primary/east)
 "bJq" = (
 /obj/table/reinforced/auto,
-/obj/machinery/cashreg,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -39895,6 +39905,11 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/pen,
 /turf/simulated/floor,
 /area/station/security/checkpoint/customs)
 "bJr" = (
@@ -78845,6 +78860,12 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/caution/west,
 /area/station/science/teleporter)
+"nqk" = (
+/obj/machinery/photocopier,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/security/detectives_office)
 "nKf" = (
 /obj/machinery/incubator,
 /turf/simulated/floor/white,
@@ -113709,7 +113730,7 @@ ahW
 aoK
 apS
 arj
-apS
+nqk
 atC
 auZ
 awt

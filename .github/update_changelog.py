@@ -29,7 +29,8 @@ labels_to_emoji = {
 	'removal': '⛔',
 	'sprites': '🎨',
 	'mapping': '🗺',
-	'rework': '🔄'
+	'rework': '🔄',
+	'tgui': '📄'
 }
 
 def parse_pr_changelog(pr):

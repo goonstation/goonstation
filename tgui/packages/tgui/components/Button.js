@@ -20,15 +20,18 @@ export const Button = props => {
     className,
     fluid,
     icon,
+    iconRotation,
+    iconSpin,
     color,
     disabled,
     selected,
     tooltip,
     tooltipPosition,
+    tooltipOverrideLong,
     ellipsis,
+    compact,
+    circular,
     content,
-    iconRotation,
-    iconSpin,
     children,
     onclick,
     onClick,
@@ -54,6 +57,8 @@ export const Button = props => {
         selected && 'Button--selected',
         hasContent && 'Button--hasContent',
         ellipsis && 'Button--ellipsis',
+        circular && 'Button--circular',
+        compact && 'Button--compact',
         (color && typeof color === 'string')
           ? 'Button--color--' + color
           : 'Button--color--default',
@@ -96,6 +101,7 @@ export const Button = props => {
       {tooltip && (
         <Tooltip
           content={tooltip}
+          overrideLong={tooltipOverrideLong}
           position={tooltipPosition} />
       )}
     </Box>
@@ -220,6 +226,7 @@ export class ButtonInput extends Component {
       iconSpin,
       tooltip,
       tooltipPosition,
+      tooltipOverrideLong,
       color = 'default',
       placeholder,
       maxLength,
@@ -269,6 +276,7 @@ export class ButtonInput extends Component {
         {tooltip && (
           <Tooltip
             content={tooltip}
+            overrideLong={tooltipOverrideLong}
             position={tooltipPosition}
           />
         )}
