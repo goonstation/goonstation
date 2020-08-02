@@ -196,15 +196,15 @@
 					/obj/item/reagent_containers/food/snacks/plant/banana = 2,
 					/obj/item/reagent_containers/food/snacks/plant/carrot = 2,
 					/obj/item/reagent_containers/food/snacks/plant/corn = 2,
-					/obj/item/reagent_containers/food/snacks/plant/garlic,
+					/obj/item/reagent_containers/food/snacks/plant/garlic = 1,
 					/obj/item/reagent_containers/food/snacks/plant/lettuce = 2,
-					/obj/item/reagent_containers/food/snacks/plant/tomato = 4,
+					/obj/item/reagent_containers/food/snacks/plant/tomato = 3,
 					/obj/item/reagent_containers/food/snacks/plant/potato = 2,
 					/obj/item/reagent_containers/food/snacks/plant/onion,
 					/obj/item/reagent_containers/food/snacks/plant/lime,
 					/obj/item/reagent_containers/food/snacks/plant/lemon,
 					/obj/item/reagent_containers/food/snacks/plant/orange)
-	cost = 1050
+	cost = 1500
 	containertype = /obj/storage/crate/freezer
 	containername = "Catering: Fresh Produce Crate"
 
@@ -336,8 +336,8 @@
 					/obj/item/breaching_charge/mining = 3)
 	cost = 500
 	containertype = /obj/storage/secure/crate/plasma
-	containername = "Mining Equipment Crate (Cardlocked \[Mining])"
-	access = access_mining
+	containername = "Mining Equipment Crate"
+	access = null
 
 /datum/supply_packs/monkey4
 	name = "Lab Monkey Crate - 4 pack"
@@ -355,12 +355,13 @@
 	contains = list(/obj/item/bee_egg_carton = 5)
 	cost = 450
 	containertype = /obj/storage/secure/crate/bee
-	containername = "Honey Production Kit (Cardlocked \[Hydroponics])"
+	containername = "Honey Production Kit"
 	access = access_hydro
 	create(var/sp, var/mob/creator)
 		var/obj/storage/secure/crate/bee/beez=..()
 		for(var/obj/item/bee_egg_carton/carton in beez)
 			carton.ourEgg.blog = "ordered by [key_name(creator)]|"
+		beez.req_access.len = 0
 		return beez
 
 /datum/supply_packs/chemical
@@ -1188,11 +1189,11 @@
 /* ================================================= */
 
 /datum/supply_packs/complex
-	hidden = 1
+	hidden = 0
 	var/list/blueprints = list()
 	var/list/frames = list()
 
-	create(var/spawnpoint)
+	create(var/spawnpoint,var/mob/creator)
 		var/atom/movable/A = ..()
 		if (!A)
 			// TODO: spawn a new crate instead of just returning?
@@ -1235,6 +1236,8 @@
 				F.viewstat = 2
 				F.secured = 2
 				F.icon_state = "dbox"
+
+		return A
 
 /datum/supply_packs/complex/electronics_kit
 	name = "Mechanics Reconstruction Kit"
@@ -1299,6 +1302,7 @@
 	name = "Cargo Bay Kit"
 	desc = "Contains a higher tier of cargo computer, allowed access to the full NT catalog.<br>1x Cargo Teleporter, Frames: 1x Commerce Computer, 1x Incoming supply pad, 1x Outgoing supply pad, 1x Cargo Teleporter pad, 1x Recharger"
 	category = "Engineering Department"
+	hidden = 1
 	contains = list(/obj/item/paper/cargo_instructions,
 					/obj/item/cargotele)
 	frames = list(/obj/machinery/computer/special_supply/commerce,
@@ -1327,6 +1331,7 @@
 					/obj/machinery/turretid/computer,
 					/obj/machinery/camera = 2)
 	cost = 40000
+	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "Defense Turret Kit"
 
@@ -1338,6 +1343,7 @@
 					/obj/machinery/turretid/computer,
 					/obj/machinery/camera = 2)
 	cost = 100000
+	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "AI Kit"
 
@@ -1364,6 +1370,7 @@
 					/obj/machinery/power/data_terminal = 3,
 					/obj/machinery/vending/computer3)
 	cost = 150000
+	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "Computer Core Kit"
 
@@ -1442,6 +1449,7 @@
 					/obj/machinery/networked/telepad,
 					/obj/machinery/power/data_terminal = 2)
 	cost = 40000
+	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "Telescience"
 
@@ -1451,6 +1459,7 @@
 	category = "Security Department"
 	frames = list(/obj/machinery/camera = 5)
 	cost = 1000
+	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "Security Camera"
 
