@@ -254,8 +254,10 @@ Contains:
 			toggle_valve()
 			. = TRUE
 		if("set-pressure")
-			set_release_pressure(params["release_pressure"])
-			. = TRUE
+			var/target_pressure = params["release_pressure"]
+			if(target_pressure && isnum(target_pressure))
+				set_release_pressure(params["release_pressure"])
+				. = TRUE
 
 ////////////////////////////////////////////////////////////
 

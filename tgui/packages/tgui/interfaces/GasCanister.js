@@ -1,26 +1,25 @@
 import { useBackend } from '../backend';
 import { Button, LabeledList, Section, NoticeBox, Box, Icon, ProgressBar, NumberInput, AnimatedNumber, LabeledControls, Flex } from '../components';
 import { Window } from '../layouts';
-import { PortableBasicInfo } from './common/PortableAtmos';
+import { PortableBasicInfo, PortableHoldingTank } from './common/PortableAtmos';
 import { ReleaseValve } from './common/ReleaseValve';
 
 export const GasCanister = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { data } = useBackend(context);
   const {
-    connected,
     holding,
     has_valve,
     valve_open,
-    pressure,
-    max_pressure,
     release_pressure,
     min_release,
     max_release,
+    detonator,
   } = data;
   return (
     <Window
+      key={holding}
       width={400}
-      height={370}>
+      height={holding ? 370 : 330}>
       <Window.Content>
         <PortableBasicInfo />
         <Section>
@@ -31,6 +30,7 @@ export const GasCanister = (props, context) => {
               min_release={min_release}
               max_release={max_release} />}
         </Section>
+        <PortableHoldingTank />
       </Window.Content>
     </Window>
   );

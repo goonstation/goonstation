@@ -1,6 +1,5 @@
 import { useBackend } from '../../backend';
-import { Fragment } from 'inferno';
-import { Box, NumberInput, LabeledList, Button, Icon, Flex } from '../../components';
+import { NumberInput, LabeledList, Button } from '../../components';
 
 export const ReleaseValve = (props, context) => {
   const { act, data } = useBackend(context);
@@ -29,7 +28,7 @@ export const ReleaseValve = (props, context) => {
         <NumberInput
           animated
           width="85px"
-          value={parseFloat(release_pressure)}
+          value={release_pressure}
           minValue={min_release}
           maxValue={max_release}
           onChange={(e, target_pressure) => act('set-pressure', {
