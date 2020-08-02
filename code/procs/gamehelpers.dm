@@ -127,7 +127,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 						qdel(O)
 
 				return 1
-		if (istype(source, /obj/machinery) && isAI(user))
+		else if (istype(source, /obj/machinery) && isAI(user))
 			return 1
 
 	return 0 //not in range and not telekinetic

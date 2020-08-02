@@ -253,6 +253,11 @@
 						src.expel_fart_gas(oxyplasmafart)
 
 						src.stamina_stun()
+						fartcount++
+						if(fartcount == 69 || fartcount == 420)
+							var/obj/item/paper/grillnasium/fartnasium_recruitment/flyer/F = new(get_turf(src))
+							src.put_in_hand_or_drop(F)
+							src.visible_message("<b>[src]</B> farts out a... wait is this viral marketing?")
 		#ifdef DATALOGGER
 						game_stats.Increment("farts")
 		#endif

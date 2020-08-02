@@ -720,11 +720,14 @@
 				monitored = null
 				return
 
-			if (!src.monitored_var)
+			if (!src.monitored_list && !src.monitored_var)
 				return
 			try
 				var/current_value
-				if (src.monitored_list)
+				if (src.monitored_list && !src.monitored_var)
+					var/list/monlist = monitored.vars[src.monitored_list]
+					current_value = monlist.len
+				else if (src.monitored_list)
 					current_value = monitored.vars[src.monitored_list][src.monitored_var]
 				else
 					current_value = monitored.vars[monitored_var]
