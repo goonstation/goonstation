@@ -193,10 +193,10 @@
 				dispensing_tube = /obj/item/light/tube
 				dispensing_bulb = /obj/item/light/bulb
 		set_icon_state("[prefix]-[setting]")
+		tooltip_rebuild = 1
 
 
 	get_desc()
-		//if (dist < 3)
 		. += "It is currently set to dispense [setting] lamps."
 
 
