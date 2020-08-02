@@ -338,12 +338,18 @@
 			src.appendix = new /obj/item/organ/appendix(src.donor, src)
 			organ_list["appendix"] = appendix
 		if (!src.tail)
-			if (src.donor.mutantrace && src.donor.mutantrace.tail_organ)
-				src.tail = new src.donor.mutantrace.tail_organ(src.donor, src)
-				organ_list["tail"] = tail
-			else	// regular old nonexistant human tail
-				src.tail = new /obj/item/organ/tail(src.donor, src)
-				organ_list["tail"] = tail
+		/*	if(ishuman(src.donor))
+				var/mob/living/carbon/human/H = src.donor
+				if (H && H.mutantrace.tail_organ)
+					src.tail = new H.mutantrace.tail_organ(src.donor, src)
+					organ_list["tail"] = tail
+				else	// regular old nonexistant human tail
+					src.tail = new /obj/item/organ/tail/human(src.donor, src)
+					organ_list["tail"] = tail
+			else	// You're still getting a tail
+			*/
+			src.tail = new /obj/item/organ/tail/human(src.donor, src) // We'll fix it in post
+			organ_list["tail"] = tail
 
 	//input organ = string value of organ_list assoc list
 	proc/get_organ(var/organ)
@@ -400,6 +406,8 @@
 				organ = "pancreas"
 			else if(organ == appendix)
 				organ = "appendix"
+			else if(organ == tail)
+				organ = "tail"
 			else
 				return 0 // what the fuck are you trying to remove
 
@@ -697,6 +705,18 @@
 				src.donor.update_body()
 				src.organ_list["appendix"] = null
 				return myappendix
+
+			if ("tail")
+				if (!src.tail)
+					return 0
+				var/obj/item/organ/tail/mytail = src.tail
+				mytail.set_loc(location)
+				mytail.on_removal()
+				mytail.holder = null
+				src.tail = null
+				src.donor.update_body()
+				src.organ_list["tail"] = null
+				return mytail
 
 	proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0)
 		if (!src.donor || !I || !organ)
@@ -1045,6 +1065,20 @@
 				newappendix.set_loc(src.donor)
 				newappendix.holder = src
 				organ_list["appendix"] = newappendix
+				success = 1
+
+			if ("tail")
+				if (src.tail)
+					if (force)
+						qdel(src.tail)
+					else
+						return 0
+				var/obj/item/organ/tail/newtail = I
+				newtail.op_stage = op_stage
+				src.tail = newtail
+				newtail.set_loc(src.donor)
+				newtail.holder = src
+				organ_list["tail"] = newtail
 				success = 1
 
 		if (success)

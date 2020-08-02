@@ -205,7 +205,6 @@
 	if (src.organHolder)
 		src.organs["chest"] = src.organHolder.chest
 		src.organs["head"] = src.organHolder.head
-		src.organs["tail"] = src.organHolder.tail
 	if (src.limbs)
 		src.organs["l_arm"] = src.limbs.l_arm
 		src.organs["r_arm"] = src.limbs.r_arm
@@ -2643,6 +2642,10 @@
 			processed += organHolder.intestines
 			if (prob(25) && organHolder.intestines.loc == src)
 				ret += organHolder.intestines
+		if (organHolder.tail)
+			processed += organHolder.tail
+			if (prob(75) && organHolder.tail.loc == src && !istype(organHolder.tail, /obj/item/organ/tail/human))
+				ret += organHolder.tail
 		if (prob(50))
 			var/obj/item/clothing/head/wig/W = create_wig()
 			if (W)
@@ -2892,6 +2895,8 @@
 	//Clean up the old mutantrace
 	if (src.organHolder && src.organHolder.head && src.organHolder.head.donor == src)
 		src.organHolder.head.donor_mutantrace = null
+	if (src.organHolder && src.organHolder.tail && src.organHolder.tail.donor == src)
+		src.organHolder.tail = null
 
 	if(src.mutantrace != null)
 		qdel(src.mutantrace) // so that disposing() runs and removes mutant traits

@@ -33,7 +33,7 @@
 	var/icon_override_static = 0 // does this look different enough from a default human to warrant a static icon of its own?
 
 	var/tail = null // What tail do we have? Or are supposed to have?
-	var/tail_organ = /obj/item/organ/tail	// What type of tail are we supposed to have?
+	var/tail_organ = /obj/item/organ/tail/human	// What type of tail are we supposed to have?
 
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
@@ -202,9 +202,10 @@
 						limb.remove_stage = 0
 
 
-
+			fix_tail(M)
 			M.update_face()
 			M.update_body()
+
 
 			if (M.bioHolder && M.bioHolder.mobAppearance)
 				M.bioHolder.mobAppearance.UpdateMob()
@@ -305,12 +306,14 @@
 		..()
 		return
 
-	proc/fix_tail(var/mob/tail_fix)
-		if(ishuman(tail_fix) && tail_fix.organHolder && (tail_fix.organHolder.tail != tail_fix.mutantrace.tail_organ))
-			tail_fix.organHolder.tail = null	// Toss the old tail
-			tail_fix.organHolder.organ_list["tail"] = null
-			tail_fix.organHolder.tail = new tail_fix.mutantrace.tail_organ(src.donor, src)
-			tail_fix.organHolder.organ_list["tail"] = tail_fix.organHolder.tail
+	proc/fix_tail(var/mob/living/tail_fix)
+		if(ishuman(tail_fix))
+			var/mob/living/carbon/human/Tf = tail_fix
+			if (Tf.organHolder && (Tf.organHolder.tail != Tf.mutantrace.tail_organ))
+				Tf.organHolder.tail = null	// Toss the old tail
+				Tf.organHolder.organ_list["tail"] = null
+				Tf.organHolder.tail = new Tf.mutantrace.tail_organ(Tf.organHolder.donor, Tf)
+				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
 
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
@@ -1180,10 +1183,6 @@
 	tail = SEAMONKEY_TAIL
 	tail_organ = /obj/item/organ/tail/seamonkey
 
-	new(var/mob/living/carbon/human/H)
-		..()
-		fix_tail(M)
-
 /datum/mutantrace/martian
 	name = "martian"
 	icon_state = "martian"
@@ -1280,10 +1279,6 @@
 	tail = ROACH_TAIL
 	tail_organ = /obj/item/organ/tail/roach
 
-	new(var/mob/living/carbon/human/H)
-		..()
-		fix_tail(M)
-
 	say_verb()
 		return "clicks"
 
@@ -1300,10 +1295,6 @@
 	firevuln = 1.5 // very flammable catthings
 	tail = CAT_TAIL
 	tail_organ = /obj/item/organ/tail/cat
-
-	new(var/mob/living/carbon/human/H)
-		..()
-		fix_tail(M)
 
 	say_verb()
 		return "meows"
@@ -1611,7 +1602,7 @@
 	New(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(mob))
-			fix_tail(H)
+
 			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
 
 			detail_1 = image('icons/effects/genetics.dmi', icon_state="cow_detail-1", layer = MOB_LIMB_LAYER+0.1)
@@ -1623,6 +1614,7 @@
 			mob.update_face()
 			mob.update_body()
 			mob.update_clothing()
+			fix_tail(mob)
 
 			H.blood_id = "milk"
 			H.blood_color = "FFFFFF"

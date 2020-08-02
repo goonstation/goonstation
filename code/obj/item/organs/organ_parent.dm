@@ -41,13 +41,14 @@
 	var/broken = 0
 	var/failure_disease = null		//The organ failure disease associated with this organ. Not used for Heart atm.
 
-	// So we can have an organ have a visible counterpart while inside someone
-	var/image/organ_detail_over_suit = null			// Shows up over our suit, usually while the mob is facing north
-	var/image/organ_detail_under_suit_1 = null	// Shows up under our suit, usually while the mob is facing anywhere else
-	var/image/organ_detail_under_suit_2 = null	// If our organ needs another picture, usually for another coloration
-	var/organ_detail_1 = null							// Colorful overlays, if any. Typically inherited from hairstyle
-	var/organ_detail_2 = null
-	// Just in case we want a *very* custom visible organ
+	// So we can have an organ have a visible counterpart while inside someone, like a tail or some kind of krang
+	var/image/organ_image_over_suit = null		// Shows up over our suit, usually while the mob is facing north
+	var/image/organ_image_under_suit_1 = null	// Shows up under our suit, usually while the mob is facing anywhere else
+	var/image/organ_image_under_suit_2 = null	// If our organ needs another picture, usually for another coloration
+	// Course all of those details can be on whatever layer you want, since they're defined in full by the organ
+	// The organ colors are inherited from the mob's hairstyle.
+	var/organ_color_1 = null		// Typically used to colorize the organ image, set in new()
+	var/organ_color_2 = null		// Might also be usable to color organs if their owner has funky colored blood. Shrug.
 
 	var/MAX_DAMAGE = 100	//Max damage before organ "dies"
 	var/FAIL_DAMAGE = 65	//Total damage amount at which organ failure starts
@@ -107,11 +108,12 @@
 				src.donor_name = src.donor.name
 				src.name = "[src.donor_name]'s [initial(src.name)]"
 			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
+			if (src.donor.bioHolder.mobAppearance)	// Get the colors here so they dont change later, ie reattached on someone else
+				var/datum/appearanceHolder/aH = src.donor.bioHolder.mobAppearance
+				src.organ_color_1 = organ_fix_colors(aH.customization_first_color)
+				src.organ_color_2 = organ_fix_colors(aH.customization_second_color)
 		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
-		if (src.donor.bioHolder.mobAppearance)	// Get the colors here so they dont change later, ie reattached on someone else
-			var/datum/appearanceHolder/aH = src.donor.bioHolder.mobAppearance
-			src.organ_detail_1 = organ_fix_colors(aH.customization_first_color)
-			src.organ_detail_2 = organ_fix_colors(aH.customization_second_color)
+
 
 	disposing()
 		if (src.holder)

@@ -1194,7 +1194,14 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 			src.body_standing.overlays += mutantrace.detail_1//image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)
 			src.body_standing.overlays += mutantrace.detail_2//image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)
 			src.body_standing.overlays += mutantrace.detail_3//image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)
-		src.body_standing.overlays += mutantrace.detail_over_suit// used by lizards so that when they're facing upwards their tail doesn't look awkward.
+		//	src.body_standing.overlays += mutantrace.detail_over_suit// used by lizards so that when they're facing upwards their tail doesn't look awkward.
+	if (src.organHolder && src.organHolder.tail)
+		if(src.organHolder.tail.organ_image_under_suit_1)
+			src.body_standing.overlays += src.organHolder.tail.organ_image_under_suit_1
+		if(src.organHolder.tail.organ_image_under_suit_2)
+			src.body_standing.overlays += src.organHolder.tail.organ_image_under_suit_2
+		if(src.organHolder.tail.organ_image_over_suit)
+			src.body_standing.overlays += src.organHolder.tail.organ_image_over_suit
 
 #if ASS_JAM
 	src.maptext_y = 32
