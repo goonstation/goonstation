@@ -14,7 +14,7 @@ import { toggleKitchenSink, useDebug } from '../debug';
 import { dragStartHandler, recallWindowGeometry, resizeStartHandler, setWindowKey } from '../drag';
 import { createLogger } from '../logging';
 import { useDispatch } from '../store';
-import { Layout, refocusLayout } from './Layout';
+import { Layout } from './Layout';
 
 const logger = createLogger('Window');
 
@@ -34,9 +34,10 @@ export class Window extends Component {
     if (this.props.width && this.props.height) {
       options.size = [this.props.width, this.props.height];
     }
-    setWindowKey(config.window.key);
-    recallWindowGeometry(config.window.key, options);
-    refocusLayout();
+    if (config.window?.key) {
+      setWindowKey(config.window.key);
+    }
+    recallWindowGeometry(options);
   }
 
   render() {
@@ -54,9 +55,11 @@ export class Window extends Component {
     const dispatch = useDispatch(this.context);
     const fancy = config.window?.fancy;
     // Determine when to show dimmer
-    const showDimmer = config.user.observer
-      ? config.status < UI_DISABLED
-      : config.status < UI_INTERACTIVE;
+    const showDimmer = config.user && (
+      config.user.observer
+        ? config.status < UI_DISABLED
+        : config.status < UI_INTERACTIVE
+    );
     return (
       <Layout
         className="Window"
@@ -103,8 +106,6 @@ const WindowContent = props => {
     children,
     ...rest
   } = props;
-  // A bit lazy to actually write styles for it,
-  // so we simply include a Box with margins.
   return (
     <Layout.Content
       className={classes([
@@ -151,10 +152,17 @@ const TitleBar = (props, context) => {
         'TitleBar',
         className,
       ])}>
-      <Icon
-        className="TitleBar__statusIcon"
-        color={statusToColor(status)}
-        name="eye" />
+      {status === undefined && (
+        <Icon
+          className="TitleBar__statusIcon"
+          name="tools"
+          opacity={0.5} />
+      ) || (
+        <Icon
+          className="TitleBar__statusIcon"
+          color={statusToColor(status)}
+          name="eye" />
+      )}
       <div className="TitleBar__title">
         {typeof title === 'string'
           && title === title.toLowerCase()

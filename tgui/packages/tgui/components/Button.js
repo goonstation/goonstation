@@ -7,7 +7,6 @@
 import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from '../hotkeys';
-import { refocusLayout } from '../layouts';
 import { createLogger } from '../logging';
 import { Box } from './Box';
 import { Icon } from './Icon';
@@ -20,6 +19,8 @@ export const Button = props => {
     className,
     fluid,
     icon,
+    iconRotation,
+    iconSpin,
     color,
     disabled,
     selected,
@@ -27,9 +28,9 @@ export const Button = props => {
     tooltipPosition,
     tooltipOverrideLong,
     ellipsis,
+    compact,
+    circular,
     content,
-    iconRotation,
-    iconSpin,
     children,
     onclick,
     onClick,
@@ -55,6 +56,8 @@ export const Button = props => {
         selected && 'Button--selected',
         hasContent && 'Button--hasContent',
         ellipsis && 'Button--ellipsis',
+        circular && 'Button--circular',
+        compact && 'Button--compact',
         (color && typeof color === 'string')
           ? 'Button--color--' + color
           : 'Button--color--default',
@@ -63,7 +66,6 @@ export const Button = props => {
       tabIndex={!disabled && '0'}
       unselectable={Byond.IS_LTE_IE8}
       onclick={e => {
-        refocusLayout();
         if (!disabled && onClick) {
           onClick(e);
         }
@@ -81,7 +83,6 @@ export const Button = props => {
         // Refocus layout on pressing escape.
         if (keyCode === KEY_ESCAPE) {
           e.preventDefault();
-          refocusLayout();
           return;
         }
       }}
