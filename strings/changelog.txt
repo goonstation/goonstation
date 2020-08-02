@@ -1,5 +1,9 @@
 
 (t)sat aug 01 20
+(u)Emcee-Gore
+(p)1650
+(e)🗺|mapping
+(+)Added Photocopiers to (Oshan, CogMap2, Manta, Horizon and Destiny).
 (u)Comradef191
 (p)1655
 (e)🗺|mapping
