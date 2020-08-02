@@ -5,11 +5,11 @@
  */
 
 /**
- * UUID v4 string generator
+ * Creates a UUID v4 string
  *
  * @return {string}
  */
-export const CreateUuid = function () {
+export const createUuid = () => {
   let d = new Date().getTime();
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
     const r = (d + Math.random() * 16) % 16 | 0;
