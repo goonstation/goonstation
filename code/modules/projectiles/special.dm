@@ -402,7 +402,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/max_bounce_count = 50
 
 	on_hit(atom/A, direction, projectile)
-		shoot_reflected_bounce(projectile, A, max_bounce_count)
+		shoot_reflected_bounce(projectile, A, max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
 		var/turf/T = get_turf(A)
 
 		//prevent playing all 50 sounds at once on rapid bounce
