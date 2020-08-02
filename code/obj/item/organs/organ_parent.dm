@@ -41,6 +41,14 @@
 	var/broken = 0
 	var/failure_disease = null		//The organ failure disease associated with this organ. Not used for Heart atm.
 
+	// So we can have an organ have a visible counterpart while inside someone
+	var/image/organ_detail_over_suit = null			// Shows up over our suit, usually while the mob is facing north
+	var/image/organ_detail_under_suit_1 = null	// Shows up under our suit, usually while the mob is facing anywhere else
+	var/image/organ_detail_under_suit_2 = null	// If our organ needs another picture, usually for another coloration
+	var/organ_detail_1 = null							// Colorful overlays, if any. Typically inherited from hairstyle
+	var/organ_detail_2 = null
+	// Just in case we want a *very* custom visible organ
+
 	var/MAX_DAMAGE = 100	//Max damage before organ "dies"
 	var/FAIL_DAMAGE = 65	//Total damage amount at which organ failure starts
 
@@ -100,6 +108,10 @@
 				src.name = "[src.donor_name]'s [initial(src.name)]"
 			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
 		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
+		if (src.donor.bioHolder.mobAppearance)	// Get the colors here so they dont change later, ie reattached on someone else
+			var/datum/appearanceHolder/aH = src.donor.bioHolder.mobAppearance
+			src.organ_detail_1 = organ_fix_colors(aH.customization_first_color)
+			src.organ_detail_2 = organ_fix_colors(aH.customization_second_color)
 
 	disposing()
 		if (src.holder)
@@ -341,3 +353,12 @@
 			return 1
 		else
 			return 0
+
+	proc/organ_fix_colors(var/hex)
+		var/list/L = hex_to_rgb_list(hex)
+		for (var/i in L)
+			L[i] = min(L[i], 190)
+			L[i] = max(L[i], 50)
+		if (L.len == 3)
+			return rgb(L["r"], L["g"], L["b"])
+		return rgb(22, 210, 22)

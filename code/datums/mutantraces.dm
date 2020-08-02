@@ -32,6 +32,9 @@
 	var/icon_beard = null
 	var/icon_override_static = 0 // does this look different enough from a default human to warrant a static icon of its own?
 
+	var/tail = null // What tail do we have? Or are supposed to have?
+	var/tail_organ = /obj/item/organ/tail	// What type of tail are we supposed to have?
+
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
 	var/body_offset = 0
@@ -302,6 +305,13 @@
 		..()
 		return
 
+	proc/fix_tail(var/mob/tail_fix)
+		if(ishuman(tail_fix) && tail_fix.organHolder && (tail_fix.organHolder.tail != tail_fix.mutantrace.tail_organ))
+			tail_fix.organHolder.tail = null	// Toss the old tail
+			tail_fix.organHolder.organ_list["tail"] = null
+			tail_fix.organHolder.tail = new tail_fix.mutantrace.tail_organ(src.donor, src)
+			tail_fix.organHolder.organ_list["tail"] = tail_fix.organHolder.tail
+
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
 	icon = 'icons/mob/blob_ambassador.dmi'
@@ -452,23 +462,25 @@
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "lizard"
+	tail = LIZARD_TAIL
+	tail_organ = /obj/item/organ/tail/lizard
 
 	New(var/mob/living/carbon/human/H)
 		..()
+
 		if(ishuman(mob))
+			fix_tail(mob)
 			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
 
 			detail_1 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-1", layer = MOB_LIMB_LAYER+0.1)
 			detail_2 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-2", layer = MOB_LIMB_LAYER+0.2)
 			detail_3 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-3", layer = MOB_LIMB_LAYER+0.3)
-			detail_over_suit = image('icons/effects/genetics.dmi', icon_state="lizard_over_suit", layer = MOB_LAYER_BASE+0.3)
 
 			hex_to_rgb_list(aH.customization_first_color)
 
 			detail_1.color = fix_colors(aH.customization_first_color)
 			detail_2.color = fix_colors(aH.customization_second_color)
 			detail_3.color = fix_colors(aH.customization_third_color)
-			detail_over_suit.color = fix_colors(aH.customization_first_color)
 
 			// detail_1.color = aH.customization_first_color
 			// detail_2.color = aH.customization_second_color
@@ -685,10 +697,13 @@
 	icon_state = "skeleton"
 	icon_override_static = 1
 	voice_override = "skelly"
+	tail = SKELETON_TAIL
+	tail_organ = /obj/item/organ/tail/bone
 
 	New(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(M))
+			fix_tail(M)
 			M.mob_flags |= IS_BONER
 
 	disposing()
@@ -812,10 +827,13 @@
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/werewolf
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/werewolf
 	ignore_missing_limbs = 0
+	tail = WEREWOLF_TAIL
+	tail_organ = /obj/item/organ/tail/wolf
 
 	New()
 		..()
 		if (mob)
+			fix_tail(mob)
 			mob.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
 			mob.add_stam_mod_regen("werewolf", 9) //mbc : these increase as they feast now. reduced!
 			mob.add_stun_resist_mod("werewolf", 40)
@@ -952,7 +970,7 @@
 	head_offset = -9
 	hand_offset = -5
 	body_offset = -7
-//	uses_human_clothes = 0 // Guess they can keep that ability for now (Convair880).
+	//	uses_human_clothes = 0 // Guess they can keep that ability for now (Convair880).
 	human_compatible = 0
 	exclusive_language = 1
 	voice_message = "chimpers"
@@ -963,9 +981,12 @@
 	var/sound_monkeyscream = 'sound/voice/screams/monkey_scream.ogg'
 	var/had_tablepass = 0
 	var/table_hide = 0
+	tail = MONKEY_TAIL
+	tail_organ = /obj/item/organ/tail/monkey
 
 	New(var/mob/living/carbon/human/M)
 		if (M)
+			fix_tail(M)
 			if (M.flags & TABLEPASS)
 				had_tablepass = 1
 			else
@@ -1156,6 +1177,12 @@
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = "seamonkey"
 	aquatic = 1
+	tail = SEAMONKEY_TAIL
+	tail_organ = /obj/item/organ/tail/seamonkey
+
+	new(var/mob/living/carbon/human/H)
+		..()
+		fix_tail(M)
 
 /datum/mutantrace/martian
 	name = "martian"
@@ -1250,6 +1277,12 @@
 	icon_state = "roach"
 	icon_override_static = 1
 	override_attack = 0
+	tail = ROACH_TAIL
+	tail_organ = /obj/item/organ/tail/roach
+
+	new(var/mob/living/carbon/human/H)
+		..()
+		fix_tail(M)
 
 	say_verb()
 		return "clicks"
@@ -1265,6 +1298,12 @@
 	jerk = 1
 	override_attack = 0
 	firevuln = 1.5 // very flammable catthings
+	tail = CAT_TAIL
+	tail_organ = /obj/item/organ/tail/cat
+
+	new(var/mob/living/carbon/human/H)
+		..()
+		fix_tail(M)
 
 	say_verb()
 		return "meows"
@@ -1566,14 +1605,16 @@
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "cow"
+	tail = COW_TAIL
+	tail_organ = /obj/item/organ/tail/cow
 
 	New(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(mob))
+			fix_tail(H)
 			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
 
 			detail_1 = image('icons/effects/genetics.dmi', icon_state="cow_detail-1", layer = MOB_LIMB_LAYER+0.1)
-			detail_over_suit = image('icons/effects/genetics.dmi', icon_state="cow_over_suit", layer = MOB_LAYER_BASE+0.3)
 
 			hex_to_rgb_list(aH.customization_first_color)
 

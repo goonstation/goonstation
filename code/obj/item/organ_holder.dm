@@ -22,6 +22,7 @@
 	var/obj/item/organ/stomach = null
 	var/obj/item/organ/intestines = null
 	var/obj/item/organ/appendix = null
+	var/obj/item/organ/tail = null
 	var/lungs_changed = 2				//for changing lung stamina debuffs if it has changed since last cycle. starts at 2 for having 2 working lungs
 
 	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
@@ -44,7 +45,8 @@
 		"stomach"="/obj/item/organ/stomach",
 		"intestines"="/obj/item/organ/intestines",
 		"appendix"="/obj/item/organ/appendix",
-		"butt"="/obj/item/clothing/head/butt")
+		"butt"="/obj/item/clothing/head/butt",
+		"tail"="/obj/item/organ/tail")
 
 	New(var/mob/living/L)
 		..()
@@ -115,6 +117,9 @@
 		if (appendix)
 			appendix.donor = null
 			appendix.holder = null
+		if (tail)
+			tail.donor = null
+			tail.holder = null
 
 		head = null
 		skull = null
@@ -134,6 +139,7 @@
 		spleen = null
 		pancreas = null
 		appendix = null
+		tail = null
 
 		donor = null
 		..()
@@ -331,6 +337,13 @@
 		if (!src.appendix)
 			src.appendix = new /obj/item/organ/appendix(src.donor, src)
 			organ_list["appendix"] = appendix
+		if (!src.tail)
+			if (src.donor.mutantrace && src.donor.mutantrace.tail_organ)
+				src.tail = new src.donor.mutantrace.tail_organ(src.donor, src)
+				organ_list["tail"] = tail
+			else	// regular old nonexistant human tail
+				src.tail = new /obj/item/organ/tail(src.donor, src)
+				organ_list["tail"] = tail
 
 	//input organ = string value of organ_list assoc list
 	proc/get_organ(var/organ)

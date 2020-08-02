@@ -79,6 +79,12 @@
 
 	var/datum/mutantrace/mutantrace = null
 
+	var/image/tail_detail_1	= null
+	var/image/tail_detail_2 = null
+	var/image/tail_detail_3 = null
+	var/image/tail_under_suit = null
+	var/image/tail_over_suit = null
+
 	var/emagged = 0 //What the hell is wrong with me?
 	var/spiders = 0 // SPIDERS
 	var/makeup = null // for when you wanna look pretty
@@ -199,6 +205,7 @@
 	if (src.organHolder)
 		src.organs["chest"] = src.organHolder.chest
 		src.organs["head"] = src.organHolder.head
+		src.organs["tail"] = src.organHolder.tail
 	if (src.limbs)
 		src.organs["l_arm"] = src.limbs.l_arm
 		src.organs["r_arm"] = src.limbs.r_arm
