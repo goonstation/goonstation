@@ -510,12 +510,6 @@
 	amount = 2
 	cost = 300
 
-/datum/clothingbooth_item/pokervisor
-	path = /obj/item/clothing/head/pokervisor
-	category = "Accessories"
-	amount = 3
-	cost = 150
-
 //Headwear
 /datum/clothingbooth_item/catears_white
 	path = /obj/item/clothing/head/nyan/white
@@ -615,3 +609,9 @@
 	category = "Headwear"
 	cost = 75
 
+
+/datum/clothingbooth_item/pokervisor
+	path = /obj/item/clothing/head/pokervisor
+	name = "Green Visor"
+	category = "Accessories"
+	cost = 150

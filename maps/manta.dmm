@@ -15312,7 +15312,7 @@
 	name = "black dress"
 	},
 /obj/item/clothing/under/suit,
-/obj/item/clothing/under/shirt_pants_b,
+/obj/item/clothing/under/shirt_pants,
 /obj/item/clothing/shoes/black,
 /obj/item/clothing/head/fedora,
 /obj/item/clothing/glasses/eyepatch{
@@ -39168,13 +39168,6 @@
 /obj/machinery/disposal_pipedispenser/mobile,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
-"bHV" = (
-/obj/machinery/clothingbooth,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/crewquarters/garbagegarbs)
 "bHW" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -81056,7 +81049,7 @@ bsn
 bEr
 bFD
 bui
-bHV
+bHW
 bIJ
 aBj
 bJY

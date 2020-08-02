@@ -10145,7 +10145,7 @@
 	name = "black dress"
 	},
 /obj/item/clothing/under/suit,
-/obj/item/clothing/under/shirt_pants_b,
+/obj/item/clothing/under/shirt_pants,
 /obj/item/clothing/shoes/black,
 /obj/item/clothing/glasses/eyepatch{
 	name = "costume eyepatch"

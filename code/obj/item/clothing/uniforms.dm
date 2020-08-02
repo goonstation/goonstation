@@ -897,6 +897,18 @@
 	icon_state = "referee"
 	item_state = "referee"
 
+/obj/item/clothing/under/shirt_pants
+	name = "shirt and pants"
+	desc = "A button-down shirt and some pants."
+	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	icon_state = "shirt_n_pant-b"
+	item_state = "shirt_n_pant-b"
+
+	New()
+		..()
+		src.icon_state = "shirt_n_pant-[pick("b", "br", "w")][pick("", "_tie-r", "_tie-b", "_tie-bl")]"
+		src.item_state = "[src.icon_state]"
+
 //Black Pants
 /obj/item/clothing/under/shirt_pants_b
 	name = "shirt and black pants"
