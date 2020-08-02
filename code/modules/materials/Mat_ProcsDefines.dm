@@ -1,8 +1,8 @@
 /proc/testMat()
 	boutput(world, "[materialProps.len]")
-	sleep(10)
+	sleep(1 SECOND)
 	usr.client.debug_variables(material_cache["cerenkite"])
-	sleep(10)
+	sleep(1 SECOND)
 	usr.client.debug_variables(new/datum/material/metal/cerenkite())
 	return
 
@@ -84,6 +84,16 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			if(!(locate(B.type) in M1.vars[X])) return 0
 
 	return 1
+
+
+//Called AFTER the material of the object was changed.
+/atom/proc/onMaterialChanged()
+	if(istype(src.material))
+		explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_resistance
+		explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_protection
+		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 50)) flags |= CONDUCT
+	return
+
 
 //Simply removes a material from an object.
 /atom/proc/removeMaterial()
@@ -183,7 +193,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	mat1.owner = src
 	mat1.triggerOnAdd(src)
 	src.onMaterialChanged()
-	return
 
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
 	if (!istype(MAT))

@@ -16,7 +16,7 @@
 	if (prob(8))
 		M.emote("twitch")
 	if (prob(6))
-		M.visible_message("<span style=\"color:red\"><B>[M.name]'s</B> hands shake uncontrollably!</span>")
+		M.visible_message("<span class='alert'><B>[M.name]'s</B> hands shake uncontrollably!</span>")
 		var/h = M.hand
 		M.hand = 0
 		M.drop_item()
@@ -26,4 +26,4 @@
 	if (prob(4))
 		M.changeStatus("stunned", 3 SECONDS)
 		M.changeStatus("weakened", 3 SECONDS)
-		M.visible_message("<span style=\"color:red\"><B>[M.name]</B> falls to the ground, spasming wildly!</span>")
+		M.visible_message("<span class='alert'><B>[M.name]</B> falls to the ground, spasming wildly!</span>")

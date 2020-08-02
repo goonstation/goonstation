@@ -26,8 +26,8 @@
 	var/monkey_clothes = 0
 	// it's clothes specifically for monkeys please don't plaster it to their chest with an offset
 
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 
 	flags = FPRINT | TABLEPASS

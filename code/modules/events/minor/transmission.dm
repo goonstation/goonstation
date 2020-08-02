@@ -16,7 +16,8 @@
 		var/event = pick(event_transmissions)
 		var/command_report = event["text"]
 		if(event["x"])
-			for(var/obj/machinery/networked/teleconsole/tele in world) // I know, I know. Bad and slow.
+			for(var/x in by_type[/obj/machinery/networked/teleconsole])
+				var/obj/machinery/networked/teleconsole/tele = x
 				var/datum/teleporter_bookmark/bm = new
 				bm.name = "<b>emergency transmission source</b>"
 				bm.x = (event["x"] + XSUBTRACT) / XMULTIPLY
@@ -27,10 +28,10 @@
 				tele.bookmarks.Add(bm)
 				tele.updateUsrDialog()
 			command_report += "\n\nTransmission source stored in the Teleportation Console."
-		
+
 		var/sound_to_play = "sound/misc/announcement_1.ogg"
 		command_announcement(replacetext(command_report, "\n", "<br>"), "Emergency Broadcast Received", sound_to_play, do_sanitize=0);
 		return
-	
-	is_event_available()
+
+	is_event_available(var/ignore_time_lock = 0)
 		return 0

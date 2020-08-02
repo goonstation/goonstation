@@ -16,14 +16,15 @@
 
 //
 /area
-	var/active = 0 //True if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
+	var/tmp/active = 0 //True if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
 	var/list/population = list() //Who is here (ditto)
-	var/fire = null
+	var/tmp/fire = null
 	var/atmos = 1
 	var/poweralm = 1
 	var/skip_sims = 0
-	var/sims_score = 100
+	var/tmp/sims_score = 100
 	var/virtual = 0
+	var/is_centcom = 0 // for escape checks
 	var/gencolor
 	level = null
 	#ifdef UNDERWATER_MAP
@@ -37,6 +38,7 @@
 	mouse_opacity = 0
 	mat_changename = 0
 	mat_changedesc = 0
+	text = ""
 	var/lightswitch = 1
 	var/may_eat_here_in_restricted_z = 0
 
@@ -45,12 +47,12 @@
 	var/obj/machinery/power/apc/area_apc = null // okay in certain cases you may have more than one apc, but for my purposes the latest apc works just fine
 
 	var/requires_power = 1
-	var/power_equip = 1
-	var/power_light = 1
-	var/power_environ = 1
-	var/used_equip = 0
-	var/used_light = 0
-	var/used_environ = 0
+	var/tmp/power_equip = 1
+	var/tmp/power_light = 1
+	var/tmp/power_environ = 1
+	var/tmp/used_equip = 0
+	var/tmp/used_light = 0
+	var/tmp/used_environ = 0
 	var/expandable = 1
 
 	var/irradiated = 0 // space blowouts use this, should always be 0
@@ -78,8 +80,8 @@
 	var/sound_loop_vol = 50
 	var/sound_fx_1 = null
 	var/sound_fx_2 = null
-	var/played_fx_1 = 0
-	var/played_fx_2 = 0
+	var/tmp/played_fx_1 = 0
+	var/tmp/played_fx_2 = 0
 	var/sound_group = null
 	var/sound_environment = 1 //default environment for sounds - see sound datum vars documentation for the presets.
 
@@ -109,7 +111,7 @@
 	Entered(var/atom/movable/A, atom/oldloc)
 		if (ismob(A))
 			var/mob/M = A
-			if (M.client)
+			if (M?.client)
 				#define AMBIENCE_ENTER_PROB 6
 
 				//Handle ambient sound
@@ -143,7 +145,6 @@
 					if (enteringM.ckey && enteringM.client)
 						if( !CanEnter( enteringM ) )
 
-							//boutput( enteringM, "<span style='color:red'>You cannot enter this area.</span>" )
 							var/target = get_turf(oldloc)
 							if( !target && blocked_waypoint )
 								target = get_turf(locate(blocked_waypoint) in world)
@@ -168,11 +169,11 @@
 	Exited(var/atom/movable/A)
 		if (ismob(A))
 			var/mob/M = A
-			if (M.client)
+			if (M?.client)
 				if (sound_loop)
 					SPAWN_DBG(1 DECI SECOND)
 						var/area/mobarea = get_area(M)
-						if (M && (mobarea.sound_group != src.sound_group))
+						if (M?.client && (mobarea?.sound_group != src?.sound_group) && !mobarea.sound_loop)
 							M.client.playAmbience(src, AMBIENCE_LOOPING, 0) //pass 0 to cancel
 
 		if ((isliving(A) || iswraith(A)) || locate(/mob) in A)
@@ -188,7 +189,7 @@
 							boutput( exitingM, "<b style='color:#31BAE8'>You are leaving the sanctuary zone.</b>" )
 						if( blocked && !exitingM.client.holder )
 							blockedTimers[ exitingM.client.key ] = world.time + 300
-							boutput( exitingM, "<b style='color:red'>If you stay out of [name] for 30 seconds, you will be prevented from re-entering.</b>" )
+							boutput( exitingM, "<b class='alert'>If you stay out of [name] for 30 seconds, you will be prevented from re-entering.</b>" )
 
 						if (src.name != "Space" || src.name != "Ocean")
 							if (exitingM.mind in src.population)
@@ -231,7 +232,7 @@
 		return R
 
 	proc/build_sims_score()
-		if (name == "Space" || src.name == "Ocean" || type == /area || skip_sims)
+		if (name == "Space" || src.name == "Ocean" || area_space_nopower(src) || skip_sims)
 			return
 		sims_score = 100
 		for (var/turf/T in src)
@@ -328,8 +329,9 @@
 			if ("M. Fortuna's House of Fortune") sound_fx_1 = 'sound/ambience/spooky/MFortuna.ogg'
 			#ifdef SUBMARINE_MAP
 			else sound_fx_1 = pick(ambience_submarine)
-			#endif
+			#else
 			else sound_fx_1 = pick(ambience_general)
+			#endif
 
 	proc/add_light(var/obj/machinery/light/L)
 		if (!light_manager)
@@ -344,7 +346,7 @@
 		if (light_manager)
 			light_manager.lights -= L
 	New()
-		if( type == /area )
+		if(area_space_nopower(src))
 			power_equip = power_light = power_environ = 0
 //////////////////////////// zewaka - adventure/technical/admin areas below
 
@@ -380,7 +382,7 @@
 	teleport_blocked = 2
 	force_fullbright = 1
 	expandable = 0
-	filler_turf = "/turf/unsimulated/floor/setpieces/gauntlet"
+	// filler_turf = "/turf/unsimulated/floor/setpieces/gauntlet"
 
 /area/cavetiny
 	name = "Caves"
@@ -474,7 +476,7 @@
 #else
 	requires_power = 0
 	luminosity = 1
-	force_fullbright = 1
+	force_fullbright = 0
 #endif
 	sound_environment = 2
 	expandable = 0
@@ -502,6 +504,7 @@
 /area/shuttle/escape/centcom
 	icon_state = "shuttle"
 	sound_group = "centcom"
+	is_centcom = 1
 
 /area/shuttle/prison/
 	name = "Prison Shuttle"
@@ -568,10 +571,13 @@
 	teleport_blocked = 1
 
 /area/shuttle/merchant_shuttle/left_centcom
+	is_centcom = 1
 
 /area/shuttle/merchant_shuttle/right_centcom
+	is_centcom = 1
 
 /area/shuttle/merchant_shuttle/diner_centcom
+	is_centcom = 1
 
 /area/shuttle/merchant_shuttle/diner_station
 
@@ -690,7 +696,7 @@
 /area/someplace
 	name = "some place"
 	icon_state = "purple"
-	filler_turf = "/turf/simulated/floor/void"
+	filler_turf = "/turf/unsimulated/floor/void"
 	requires_power = 0
 	luminosity = 1
 	force_fullbright = 1
@@ -703,7 +709,7 @@
 /area/someplacehot
 	name = "some place"
 	icon_state = "atmos"
-	filler_turf = "/turf/simulated/floor/void"
+	filler_turf = "/turf/unsimulated/floor/void"
 	requires_power = 0
 	luminosity = 1
 	force_fullbright = 1
@@ -862,7 +868,7 @@
 
 
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(60)
+			sleep(6 SECONDS)
 /*
 			if(prob(10) && fxlist)
 				S = sound(file=pick(fxlist), volume=50)
@@ -945,6 +951,15 @@
 	name = "Abandoned ship"
 	icon_state = "yellow"
 
+/area/spacehabitat
+	name = "Habitat Dome"
+	icon_state = "green"
+
+/area/spacehabitat/beach
+	name = "Habitat Dome Beach"
+	icon_state = "yellow"
+	force_fullbright = 1
+
 /area/salyut
 	name = "Soviet derelict"
 	icon_state = "yellow"
@@ -974,8 +989,12 @@
 	icon_state = "showers"
 
 /area/diner/hallway
-	name = "Diner Hallway"
+	name = "Hallway"
 	icon_state = "blue"
+
+/area/diner/hallway/docking
+	name = "East Shuttle Docks"
+	icon_state = "purple"
 
 /area/diner/backroom
 	name = "Diner Backroom"
@@ -1000,6 +1019,10 @@
 /area/diner/motel/chemstorage
 	name = "Chemical Storage"
 	icon_state = "orange"
+
+/area/diner/arcade
+	name = "Bill E Bheezes"
+	icon_state = "red"
 
 /area/tech_outpost
 	name = "Tech Outpost"
@@ -1111,6 +1134,13 @@
 	name = "Crashed Transport"
 	icon_state = "purple"
 
+/area/water_treatment
+	name = "Water Treatment Facility"
+	icon_state = "purple"
+
+/area/station/bee_sanctuary
+	name = "Bee Sanctuary"
+	icon_state = "purple"
 
 //////////////////////////// zewaka - vspace areas
 
@@ -1180,7 +1210,7 @@
 /area/station
 	do_not_irradiate = 0
 	sound_fx_1 = 'sound/ambience/station/Station_VocalNoise1.ogg'
-	var/initial_structure_value = 0
+	var/tmp/initial_structure_value = 0
 #ifdef MOVING_SUB_MAP
 	filler_turf = "/turf/space/fluid/manta"
 
@@ -1288,6 +1318,163 @@ area/station/communications
 /area/station/maintenance/inner
 	name = "Inner Maintenance"
 	icon_state = "imaint"
+
+/////////////////////////////////////////////////// Donut 3 specific areas
+
+// Civilian
+
+/area/station/library
+	name = "Library"
+	icon_state = "library"
+
+/area/station/library/reading1
+	name = "Reading Room 1"
+	icon_state = "reading-room1"
+
+/area/station/library/reading2
+	name = "Reading Room 2"
+	icon_state = "reading-room2"
+
+// Security
+
+/area/shuttle/asylum
+	name = "Asylum Shuttle"
+	icon_state = "asylum_shuttle"
+
+	medbay
+		icon_state = "shuttle1"
+
+	pathology
+		icon_state = "shuttle2"
+
+	observation
+		icon_state = "shuttle3"
+
+/area/station/security/quarters
+	name = "Security Officer Quarters"
+	icon_state = "officer_quarters"
+
+/area/station/security/equipment
+	name = "Security Equipment Storage"
+	icon_state = "sec_equipment"
+
+/area/station/security/brig/north_side
+	name = "Brig Long-Term Cell - North Side"
+	icon_state = "brigcell_Nside"
+
+/area/station/security/brig/south_side
+	name = "Brig Long-Term Cell - South Side"
+	icon_state = "brigcell_Sside"
+
+/area/station/security/brig/solitary
+	name = "Brig - Solitary Cells"
+	icon_state = "brigcell"
+
+// Medical
+
+/area/station/medical/medbay/treatment
+	name = "Treatment Center"
+	icon_state = "treatment_center"
+
+// Asylum
+
+/area/station/medical/asylum
+	name = "Asylum Mini-Station"
+	icon_state = "blue"
+
+/area/station/medical/asylum/computer
+	name = "Asylum Computer Room"
+	icon_state = "green"
+
+/area/station/medical/asylum/dining
+	name = "Asylum Dining Hall"
+
+/area/station/medical/asylum/rec
+	name = "Asylum Rec Room"
+
+/area/station/medical/asylum/kitchen
+	name = "Asylum Kitchen"
+
+/area/station/medical/asylum/bathroom
+	name = "Asylum Bathrooms"
+
+/area/station/medical/asylum/maintenance
+	name = "Asylum Maintenance"
+	icon_state = "yellow"
+
+// INNER Maintenance
+
+/area/station/maintenance/outer
+	name = "Outer Maintenance"
+	icon_state = "OUT_maint"
+
+/area/station/maintenance/inner/north
+	name = "North Inner Maintenance"
+	icon_state = "IN_Nmaint"
+
+/area/station/maintenance/inner/ne
+	name = "Northeast Inner Maintenance"
+	icon_state = "IN_NEmaint"
+
+/area/station/maintenance/inner/east
+	name = "East Inner Maintenance"
+	icon_state = "IN_Emaint"
+
+/area/station/maintenance/inner/se
+	name = "Southeast Inner Maintenance"
+	icon_state = "IN_SEmaint"
+
+/area/station/maintenance/inner/south
+	name = "South Inner Maintenance"
+	icon_state = "IN_Smaint"
+
+/area/station/maintenance/inner/sw
+	name = "Southwest Inner Maintenance"
+	icon_state = "IN_SWmaint"
+
+/area/station/maintenance/inner/west
+	name = "West Inner Maintenance"
+	icon_state = "IN_Wmaint"
+
+/area/station/maintenance/inner/nw
+	name = "Northwest Inner Maintenance"
+	icon_state = "IN_NWmaint"
+
+// OUTER maintenance
+
+/area/station/maintenance/outer/north
+	name = "North Outer Maintenance"
+	icon_state = "OUT_Nmaint"
+
+/area/station/maintenance/outer/ne
+	name = "Northeast Outer Maintenance"
+	icon_state = "OUT_NEmaint"
+
+/area/station/maintenance/outer/east
+	name = "East Outer Maintenance"
+	icon_state = "OUT_Emaint"
+
+/area/station/maintenance/outer/se
+	name = "Southeast Outer Maintenance"
+	icon_state = "OUT_SEmaint"
+
+/area/station/maintenance/outer/south
+	name = "South Outer Maintenance"
+	icon_state = "OUT_Smaint"
+
+/area/station/maintenance/outer/sw
+	name = "Southwest Outer Maintenance"
+	icon_state = "OUT_SWmaint"
+
+/area/station/maintenance/outer/west
+	name = "West Outer Maintenance"
+	icon_state = "OUT_Wmaint"
+
+/area/station/maintenance/outer/nw
+	name = "Northwest Outer Maintenance"
+	icon_state = "OUT_NWmaint"
+
+////////////////////////////////////////////////////////// end
 
 /area/station/maintenance/storage
 	name = "Atmospherics"
@@ -1733,6 +1920,10 @@ area/station/crewquarters/garbagegarbs //It's the clothing store on Manta
 	name = "Garbage Garbs clothing store"
 	icon_state = "green"
 
+area/station/crewquarters/fuq3 // Donut 3's clothing store... be afraid
+	name = "Fuq 3 clothing store"
+	icon_state = "fuq3"
+
 area/station/crewquarters/cryotron
 	name ="Cryogenic Crew Storage"
 	icon_state = "blue"
@@ -2012,7 +2203,7 @@ area/station/crewquarters/cryotron
 
 /area/station/security/interrogation
 	name = "Interrogation Room"
-	icon_state = "red"
+	icon_state = "interrogation"
 	sound_environment = 2
 
 /area/station/security/processing
@@ -2559,7 +2750,7 @@ area/station/security/visitation
 		if( istype(M) && M.mind && M.mind.special_role != "wizard" && isliving(M) )
 			if(M.client && M.client.holder)
 				return 1
-			boutput( M, "<span style='color:red'>A magical barrier prevents you from entering!</span>" )//or something
+			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" )//or something
 			return 0
 		return 1
 
@@ -2631,13 +2822,14 @@ area/station/security/visitation
 
 /area/station/turret_protected/Entered(O)
 	..()
-	if (isliving(O))
-		if(!issilicon(O))
-			if (motioncamera)
-				motioncamera.newTarget(O)
-			popUpTurrets()
 	if (istype(O,/obj/blob))
 		blob_list += O
+
+	if (!isliving(O) || issilicon(O) || isintangible(O))
+		return 1
+
+	motioncamera?.newTarget(O)
+	popUpTurrets()
 	return 1
 
 /area/station/turret_protected/Exited(O)
@@ -2682,11 +2874,18 @@ area/station/security/visitation
 	icon_state = "AIt"
 	sound_environment = 12
 
+/area/station/turret_protected/AIsat
+	name = "AI Satellite"
+	icon_state = "ai_chamber"
+	sound_environment = 12
+	do_not_irradiate = 1
+
 /area/station/turret_protected/AIbaseoutside
 	name = "AI Perimeter Defenses"
 	icon_state = "AIt"
 	requires_power = 0
 	sound_environment = 12
+	force_fullbright = 1
 
 /area/station/turret_protected/AIbasecore2
 	name = "AI Core 2"
@@ -2708,8 +2907,9 @@ area/station/security/visitation
 	sound_environment = 12
 	icon_state = "ai_foyer"
 
-
-
+/area/station/turret_protected/armory_outside
+	name = "Armory Outer Perimeter"
+	icon_state = "red"
 
 /////////////////////////////// OLD AREAS THAT ARE NOT USED BUT ARE IN HERE
 
@@ -3119,7 +3319,7 @@ area/station/security/visitation
 		for (var/obj/machinery/camera/C in orange(source, 7))
 			cameras += C
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/aiPlayer in mobs)
+		for (var/mob/living/silicon/aiPlayer in AIs)
 			if (state == 1)
 				aiPlayer.cancelAlarm("Power", src, source)
 			else
@@ -4600,7 +4800,7 @@ area/station/security/visitation
 		if( istype(M) && M.mind && M.mind.special_role != "wizard" && isliving(M) )
 			if(M.client && M.client.holder)
 				return 1
-			boutput( M, "<span style='color:red'>A magical barrier prevents you from entering!</span>" )//or something
+			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" )//or something
 			return 0
 		return 1
 

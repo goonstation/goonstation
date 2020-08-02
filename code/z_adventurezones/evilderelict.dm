@@ -27,7 +27,7 @@ var/maniac_previous_victim = "Unknown"
 			else
 				walk_to(src, src.target, 0, 3)
 
-			sleep(10)
+			sleep(1 SECOND)
 			SPAWN_DBG(0.5 SECONDS)
 				process()
 
@@ -47,7 +47,7 @@ var/maniac_previous_victim = "Unknown"
 
 	proximity_act()
 		if(prob(40))
-			src.visible_message("<span style=\"color:red\"><B>[src] slices through [target.name] with the axe!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] slices through [target.name] with the axe!</B></span>")
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 			target.change_eye_blurry(10)
 			boutput(target, "Help... help...")
@@ -72,7 +72,7 @@ var/maniac_previous_victim = "Unknown"
 				qdel(target)
 				qdel(src)
 		else
-			src.visible_message("<span style=\"color:red\"><B>[src] swings at [target.name] with the axe!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] swings at [target.name] with the axe!</B></span>")
 			playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)
 
 	process()
@@ -161,7 +161,7 @@ var/maniac_previous_victim = "Unknown"
 						if (!P.density)
 							SPAWN_DBG( 0 )
 								P.close()
-				sleep(50)
+				sleep(5 SECONDS)
 				if(id == "evilreaverbridge")
 					playsound(src.loc, 'sound/machines/driveclick.ogg', 50, 1)
 					var/obj/item/paper/PA = unpool(/obj/item/paper)
@@ -276,7 +276,7 @@ var/maniac_previous_victim = "Unknown"
 	cant_self_remove = 1
 
 	equipped(var/mob/user, var/slot)
-		boutput(user, "<span style=\"color:red\">Uh oh..</span>")
+		boutput(user, "<span class='alert'>Uh oh..</span>")
 		..()
 
 /obj/item/clothing/head/helmet/space/old
@@ -296,7 +296,7 @@ var/maniac_previous_victim = "Unknown"
 
 	proximity_act()
 		if(prob(40))
-			src.visible_message("<span style=\"color:red\"><B>[src] slashes [target.name] with the axe!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] slashes [target.name] with the axe!</B></span>")
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 			target.change_eye_blurry(10)
 			boutput(target, "Help... help...")
@@ -311,7 +311,7 @@ var/maniac_previous_victim = "Unknown"
 				qdel(src)
 				maniac_active &= ~1
 		else
-			src.visible_message("<span style=\"color:red\"><B>[src] swings at [target.name] with the axe!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] swings at [target.name] with the axe!</B></span>")
 			playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)
 
 	process()

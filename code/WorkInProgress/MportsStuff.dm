@@ -7,12 +7,11 @@
 	anchored = 1
 	invisibility = 1
 
-/obj/infared_icon/examine()
-	set src in view()
-	if(usr.see_infrared)
-		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", src.name, src.info), text("window=[]", src.name))
-		onclose(usr, "[src.name]")
-	return
+/obj/infared_icon/examine(mob/user)
+	if(user.see_infrared)
+		user << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", src.name, src.info), text("window=[]", src.name))
+		onclose(user, "[src.name]")
+	return list()
 
 /obj/infared_icon/attack_ai(var/mob/living/silicon/user as mob)
 //I still need a way for the AI to actually make these
@@ -87,5 +86,3 @@
 			if("Remove")
 				SPAWN_DBG(0.5 SECONDS)
 				qdel(src)
-
-

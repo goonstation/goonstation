@@ -25,25 +25,25 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isghostdrone(user) || isAI(user))
-			boutput(usr, "<span style=\"color:red\">The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+			boutput(usr, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
 		if (src.fryitem)
-			boutput(user, "<span style=\"color:red\">There is already something in the fryer!</span>")
+			boutput(user, "<span class='alert'>There is already something in the fryer!</span>")
 			return
-		if (istype(W, /obj/item/reagent_containers/food/snacks/fry_holder))
-			boutput(user, "<span style=\"color:red\">Your cooking skills are not up to the legendary Doublefry technique.</span>")
+		if (istype(W, /obj/item/reagent_containers/food/snacks/shell/deepfry))
+			boutput(user, "<span class='alert'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
 			return
 
 		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
 			if (!W.reagents.total_volume)
-				boutput(user, "<span style=\"color:red\">There is nothing in [W] to pour!</span>")
+				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 
 			else
 				logTheThing("combat", user, null, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
-				src.visible_message("<span style=\"color:blue\">[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
+				src.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
-				if (!W.reagents.total_volume) boutput(user, "<span style=\"color:red\"><b>[W] is now empty.</b></span>")
+				if (!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
 
 			return
 
@@ -51,13 +51,13 @@
 			var/obj/item/grab/G = W
 			if (!G.affecting) return
 			user.lastattacked = src
-			src.visible_message("<span style=\"color:red\"><b>[user] is trying to shove [G.affecting] into [src]!</b></span>")
+			src.visible_message("<span class='alert'><b>[user] is trying to shove [G.affecting] into [src]!</b></span>")
 			if(!do_mob(user, G.affecting) || !W)
 				return
 
 			if(ismonkey(G.affecting))
-				logTheThing("combat", user, G.affecting, "shoves %target% into the [src] at [log_loc(src)].") // For player monkeys (Convair880).
-				src.visible_message("<span style=\"color:red\"><b>[user] shoves [G.affecting] into [src]!</b></span>")
+				logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")] into the [src] at [log_loc(src)].") // For player monkeys (Convair880).
+				src.visible_message("<span class='alert'><b>[user] shoves [G.affecting] into [src]!</b></span>")
 				src.icon_state = "fryer1"
 				src.cooktime = 0
 				src.fryitem = G.affecting
@@ -67,17 +67,17 @@
 				qdel(W)
 				return
 
-			logTheThing("combat", user, G.affecting, "shoves %target%'s face into the [src] at [log_loc(src)].")
-			src.visible_message("<span style=\"color:red\"><b>[user] shoves [G.affecting]'s face into [src]!</b></span>")
+			logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")]'s face into the [src] at [log_loc(src)].")
+			src.visible_message("<span class='alert'><b>[user] shoves [G.affecting]'s face into [src]!</b></span>")
 			src.reagents.reaction(G.affecting, TOUCH)
 
 			return
 
 		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage) || istype(W, /obj/item/storage/secure) || istype(W, /obj/item/plate))
-			boutput(user, "<span style=\"color:red\">There is no way that could fit!</span>")
+			boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 			return
 
-		src.visible_message("<span style=\"color:blue\">[user] loads [W] into the [src].</span>")
+		src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
 		W.dropped()
@@ -96,17 +96,17 @@
 
 	attack_hand(mob/user as mob)
 		if (isghostdrone(user))
-			boutput(usr, "<span style=\"color:red\">The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+			boutput(usr, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
 		if (!src.fryitem)
-			boutput(user, "<span style=\"color:red\">There is nothing in the fryer.</span>")
+			boutput(user, "<span class='alert'>There is nothing in the fryer.</span>")
 			return
 
 		if (src.cooktime < 5)
-			boutput(user, "<span style=\"color:red\">Frying things takes time! Be patient!</span>")
+			boutput(user, "<span class='alert'>Frying things takes time! Be patient!</span>")
 			return
 
-		user.visible_message("<span style=\"color:blue\">[user] removes [src.fryitem] from [src]!</span>", "<span style=\"color:blue\">You remove [src.fryitem] from [src].</span>")
+		user.visible_message("<span class='notice'>[user] removes [src.fryitem] from [src]!</span>", "<span class='notice'>You remove [src.fryitem] from [src].</span>")
 		src.eject_food()
 		return
 
@@ -141,13 +141,13 @@
 
 			if (src.cooktime == 30)
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				src.visible_message("<span style=\"color:blue\">[src] dings!</span>")
+				src.visible_message("<span class='notice'>[src] dings!</span>")
 			else if (src.cooktime == 60) //Welp!
-				src.visible_message("<span style=\"color:red\">[src] emits an acrid smell!</span>")
+				src.visible_message("<span class='alert'>[src] emits an acrid smell!</span>")
 		else if(src.cooktime >= 120)
 
 			if((src.cooktime % 5) == 0 && prob(10))
-				src.visible_message("<span style=\"color:red\">[src] sprays burning oil all around it!</span>")
+				src.visible_message("<span class='alert'>[src] sprays burning oil all around it!</span>")
 				fireflash(src, 1)
 
 		return
@@ -158,7 +158,7 @@
 			return 0
 		if (src.fryitem)
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] climbs into the deep fryer! How is that even possible?!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] climbs into the deep fryer! How is that even possible?!</b></span>")
 
 		user.set_loc(src)
 		src.cooktime = 0
@@ -169,7 +169,6 @@
 			var/amt = user.reagents.get_reagent_amount("dabs")
 			user.reagents.del_reagent("dabs")
 			user.reagents.add_reagent("deepfrieddabs",amt)
-		user.updatehealth()
 		SubscribeToProcess()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
@@ -181,7 +180,7 @@
 			UnsubscribeProcess()
 			return
 
-		var/obj/item/reagent_containers/food/snacks/fry_holder/fryholder = new /obj/item/reagent_containers/food/snacks/fry_holder(src)
+		var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = new /obj/item/reagent_containers/food/snacks/shell/deepfry(src)
 
 		if (src.cooktime >= 60)
 			if (ismob(src.fryitem))
@@ -227,6 +226,7 @@
 				fryholder.reagents.maximum_volume += 25
 				fryholder.reagents.add_reagent("friedessence",25)
 
+		fryholder.charcoaliness = src.cooktime
 		fryholder.icon = composite
 		fryholder.overlays = fryitem.overlays
 		fryholder.set_loc(get_turf(src))
@@ -234,10 +234,8 @@
 			fryholder.amount = 5
 		else
 			fryholder.amount = src.fryitem.w_class
-		fryholder.reagents = src.fryitem.reagents
-		if(src.cooktime >= 60)
-			fryholder.reagents.maximum_volume += 25
-			fryholder.reagents.add_reagent("friedessence",25)
+		fryholder.reagents.maximum_volume += src.fryitem.reagents.total_volume
+		src.fryitem.reagents.trans_to(fryholder, src.fryitem.reagents.total_volume)
 		fryholder.reagents.my_atom = fryholder
 
 		src.fryitem.set_loc(fryholder)
@@ -261,6 +259,6 @@
 				return
 			else
 				src.reagents.clear_reagents()
-				src.visible_message("<span style=\"color:red\">[usr] drains and refreshes the frying oil!</span>")
+				src.visible_message("<span class='alert'>[usr] drains and refreshes the frying oil!</span>")
 
 		return

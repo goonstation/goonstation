@@ -26,6 +26,7 @@
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
+	var/list/hidden_verbs = null
 
 	var/datum/buildmode_holder/buildmode = null
 	var/lastbuildtype = 0
@@ -62,6 +63,8 @@
 
 	var/list/datum/compid_info_list = list()
 
+	var/login_success = 0
+
 	perspective = EYE_PERSPECTIVE
 	// please ignore this for now thanks in advance - drsingh
 #ifdef PROC_LOGGING
@@ -75,6 +78,8 @@
 	var/datum/chatOutput/chatOutput = null
 	var/resourcesLoaded = 0 //Has this client done the mass resource downloading yet?
 	var/datum/tooltipHolder/tooltipHolder = null
+
+	var/chui/window/keybind_menu/keybind_menu = null
 
 	var/delete_state = DELETE_STOP
 
@@ -92,6 +97,10 @@
 	var/obj/screen/screenHolder //Invisible, holds images that are used as render_sources.
 
 	var/experimental_intents = 0
+
+	var/admin_intent = 0
+
+	var/hand_ghosts = 1 //pickup ghosts inhand
 
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
@@ -111,12 +120,18 @@
 	return
 
 /client/Del()
+	if (player_capa && src.login_success)
+		player_cap_grace[src.ckey] = TIME + 2 MINUTES
+
 	if (current_state < GAME_STATE_FINISHED)
 		ircbot.event("logout", src.key)
 
 	logTheThing("admin", src, null, " has disconnected.")
 
 	src.images.Cut() //Probably not needed but eh.
+
+	if (src.mob)
+		src.mob.remove_dialogs()
 
 	clients -= src
 	if(src.holder)
@@ -129,68 +144,13 @@
 	Z_LOG_DEBUG("Client/New", "New connection from [src.ckey] from [src.address] via [src.connection]")
 	logTheThing("diary", null, src, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]", "access")
 
+	login_success = 0
+
 	if(findtext(src.key, "Telnet @"))
 		boutput(src, "Sorry, this game does not support Telnet.")
-		sleep(50)
+		sleep(5 SECONDS)
 		del(src)
 		return
-
-	if (IsGuestKey(src.key))
-		if(!src.address || src.address == world.host)
-			world.log << ("Hello host or developer person! You're not logged into BYOND. Fix this so you can test your feature turned bug!")
-		SPAWN_DBG(0)//so, the below will only show if they're ingame so the spawn isn't a guarantee; for dev purposes shove an alert to solve some confusion. hence the above
-			var/gueststring = {"
-							<!doctype html>
-							<html>
-								<head>
-									<title>No guest logins allowed!</title>
-									<style>
-										h1, .banreason {
-											font-color:#F00;
-										}
-
-									</style>
-								</head>
-								<body>
-									<h1>No guest logins.</h1>
-									Don't forget to log in to your byond account prior to connecting to this server.
-								</body>
-							</html>
-						"}
-			src.Browse(gueststring, "window=getout")
-			if (src)
-				del(src)
-			return
-
-
-
-	//We're limiting connected players to a whitelist of ckeys (but let active admins in)
-	if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
-		//Key not in whitelist, show them a vaguely sassy message and boot them
-		if (!(src.ckey in whitelistCkeys))
-			SPAWN_DBG(0)
-				var/whitelistString = {"
-								<!doctype html>
-								<html>
-									<head>
-										<title>Server Whitelist Enabled</title>
-										<style>
-											h1, .banreason {
-												font-color:#F00;
-											}
-
-										</style>
-									</head>
-									<body>
-										<h1>Server whitelist enabled</h1>
-										This server is currently limiting connections to specific players, and you aren't one of them. Goodbye!
-									</body>
-								</html>
-							"}
-				src.Browse(whitelistString, "window=whiteout")
-				if (src)
-					del(src)
-				return
 
 	logTheThing("admin", src, null, " has connected.")
 
@@ -208,7 +168,7 @@
 	//src.chui = new /datum/chui(src)
 
 	//Should eliminate any local resource loading issues with chui windows
-	if (!cdn)
+	if (!cdn && !(!address || (world.address == src.address)))
 		var/list/chuiResources = list(
 			"browserassets/js/jquery.min.js",
 			"browserassets/js/jquery.nanoscroller.min.js",
@@ -222,85 +182,137 @@
 		)
 		src.loadResourcesFromList(chuiResources)
 
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
-	var/isbanned = checkBan(src.ckey, src.computer_id, src.address, record = 1)
-
-	if (isbanned)
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
-		logTheThing("diary", null, src, "Failed Login: %target% - Banned", "access")
-		if (announce_banlogin) message_admins("<span style=\"color:blue\">Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
-		SPAWN_DBG(0)
-			var/banstring = {"
-								<!doctype html>
-								<html>
-									<head>
-										<title>BANNED!</title>
-										<style>
-											h1, .banreason {
-												font-color:#F00;
-											}
-
-										</style>
-									</head>
-									<body>
-										<h1>You have been banned.</h1>
-										<span class='banreason'>Reason: [isbanned].</span><br>
-										If you believe you were unjustly banned, head to <a href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
-									</body>
-								</html>
-							"}
-			src.mob.Browse(banstring, "window=ripyou")
-
-			if (src)
-				del(src)
-			return
-
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
-
 	if (!istype(src.mob, /mob/new_player))
 		src.loadResources()
 
 /*
 	SPAWN_DBG(rand(4,18))
 		if(proxy_check(src.address))
-			logTheThing("diary", null, src, "Failed Login: %target% - Using a Tor Proxy Exit Node", "access")
-			if (announce_banlogin) message_admins("<span style=\"color:blue\">Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
+			logTheThing("diary", null, src, "Failed Login: [constructTarget(src,"diary")] - Using a Tor Proxy Exit Node", "access")
+			if (announce_banlogin) message_admins("<span class='internal'>Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
 			boutput(src, "You may not connect through TOR.")
 			SPAWN_DBG(0) del(src)
 			return
 */
 
-	//if (((world.address == src.address || !(src.address)) && !(host)))
-		//host = src.key
-		//src.holder = new /datum/admins(src)
-		//src.holder.rank = "Host"
-		//world.update_status()
+	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
 
-	if(player_capa)
-		var/howmany = 0
-		for(var/mob/M in mobs)
-			if(M.client)
-				howmany ++
-		if(howmany >= player_cap)
-			if (!src.holder)
-				alert(src,"I'm sorry, the player cap of [player_cap] has been reached for this server.")
-				del(src)
-				return
+	..()
 
 	if (join_motd)
 		boutput(src, "<div class=\"motd\">[join_motd]</div>")
 
+	if (IsGuestKey(src.key))
+		if(!src.address || src.address == world.host)
+			world.log << ("Hello host or developer person! You're not logged into BYOND. Fix this so you can test your feature turned bug!")
+		var/gueststring = {"
+						<!doctype html>
+						<html>
+							<head>
+								<title>No guest logins allowed!</title>
+								<style>
+									h1, .banreason {
+										font-color:#F00;
+									}
+
+								</style>
+							</head>
+							<body>
+								<h1>Guest Login Denied</h1>
+								Don't forget to log in to your byond account prior to connecting to this server.
+							</body>
+						</html>
+					"}
+		src.mob.Browse(gueststring, "window=getout")
+		sleep(10)
+		if (src)
+			del(src)
+		return
+
+	if (world.time < 7 SECONDS)
+		if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
+			if (!(src.ckey in whitelistCkeys))
+				sleep(3 SECONDS) //silly wait period bandaid so clients arent booted before whitelist load (probably)
+
+	//We're limiting connected players to a whitelist of ckeys (but let active admins in)
+	if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
+		//Key not in whitelist, show them a vaguely sassy message and boot them
+		if (!(src.ckey in whitelistCkeys))
+			var/whitelistString = {"
+							<!doctype html>
+							<html>
+								<head>
+									<title>Server Whitelist Enabled</title>
+									<style>
+										h1, .banreason {
+											font-color:#F00;
+										}
+
+									</style>
+								</head>
+								<body>
+									<h1>Server whitelist enabled</h1>
+									This server has a player whitelist ON. You are not on the whitelist and will now be forcibly disconnected.
+								</body>
+							</html>
+						"}
+			src.mob.Browse(whitelistString, "window=whiteout")
+			sleep(10)
+			if (src)
+				del(src)
+			return
+
+	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
+	var/isbanned = checkBan(src.ckey, src.computer_id, src.address, record = 1)
+
+	if (isbanned)
+		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
+		logTheThing("diary", null, src, "Failed Login: [constructTarget(src,"diary")] - Banned", "access")
+		if (announce_banlogin) message_admins("<span class='internal'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
+		var/banstring = {"
+							<!doctype html>
+							<html>
+								<head>
+									<title>BANNED!</title>
+									<style>
+										h1, .banreason {
+											font-color:#F00;
+										}
+
+									</style>
+								</head>
+								<body>
+									<h1>You have been banned.</h1>
+									<span class='banreason'>Reason: [isbanned].</span><br>
+									If you believe you were unjustly banned, head to <a href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
+								</body>
+							</html>
+						"}
+		src.mob.Browse(banstring, "window=ripyou")
+		sleep(10)
+		if (src)
+			del(src)
+		return
+
+	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
+
+	//admins and mentors can enter a server through player caps.
 	if (init_admin())
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
-		control_freak = 0	// heh
 	else if (player.mentor)
 		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
 		if (!src.holder)
 			src.verbs += /client/proc/toggle_mentorhelps
+	else if (player_capa && (total_clients_for_cap() >= player_cap) && (src.ckey in bypassCapCkeys))
+		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you are allowed to bypass the player cap!</span>")
+	else if (player_capa && (total_clients_for_cap() >= player_cap) && client_has_cap_grace(src))
+		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you were recently disconnected and were caught by the grace period!</span>")
+	else if(player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
+		boutput(src, "<span class='ooc adminooc'>I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
+		alert(src.mob,"I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL")
+		del(src)
+		return
 
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
-
-	..()
 	// moved preferences from new_player so it's accessible in the client scope
 	if (!preferences)
 		preferences = new
@@ -312,9 +324,7 @@
 	SPAWN_DBG(0) // to not lock up spawning process
 		if (IsGuestKey(src.key))
 			src.has_contestwinner_medal = 0
-		else if (!config)
-			src.has_contestwinner_medal = 0
-		else if (!config.medal_hub || !config.medal_password)
+		else if (!config || !config.medal_hub || !config.medal_password)
 			src.has_contestwinner_medal = 0
 		else
 			src.has_contestwinner_medal = world.GetMedal("Too Cool", src.key, config.medal_hub, config.medal_password)
@@ -337,6 +347,7 @@
 		updateXpRewards()
 
 	SPAWN_DBG(3 SECONDS)
+		var/is_newbie = 0
 		// new player logic, moving some of the preferences handling procs from new_player.Login
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - 3 sec spawn stuff")
 		if (!preferences)
@@ -346,22 +357,24 @@
 
 			//Load the preferences up here instead.
 			if(!preferences.savefile_load(src))
+#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 				//preferences.randomizeLook()
 				preferences.ShowChoices(src.mob)
-				boutput(src, "<span class='alert'>Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!</span>")
+				src.mob.Browse(grabResource("html/tgControls.html"),"window=tgcontrolsinfo;size=600x400;title=TG Controls Help")
+				boutput(src, "<span class='alert'>Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!</span>")
 				//hey maybe put some 'new player mini-instructional' prompt here
 				//ok :)
-
+#endif
+				is_newbie = 1
 			else if(!src.holder)
 				preferences.sanitize_name()
 
 			if (noir)
 				animate_fade_grayscale(src, 50)
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
-			if (!changes && preferences.view_changelog)
+			if (!changes && preferences.view_changelog && !is_newbie)
 				if (!cdn)
-					src << browse_rsc(file("browserassets/images/changelog/postcardsmall.jpg"))
-					src << browse_rsc(file("browserassets/images/changelog/somerights20.png"))
+					//src << browse_rsc(file("browserassets/images/changelog/postcardsmall.jpg"))
 					src << browse_rsc(file("browserassets/images/changelog/88x31.png"))
 				changes()
 
@@ -373,19 +386,18 @@
 				src.cmd_ass_day_rules()
 
 
-			if (src.byond_version < 513 || src.byond_build < 1500)
-				if (alert(src, "Please update BYOND to version 513! Would you like to be taken to the download page? Make sure to download the beta and not the stable release.", "ALERT", "Yes", "No") == "Yes")
+			if (src.byond_version < 513 || src.byond_build < 1526)
+				if (alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", "Yes", "No") == "Yes")
 					src << link("http://www.byond.com/download/")
 				else
 					alert(src, "You won't be able to play without updating, sorry!")
 					del(src)
 					return
 
-
-			if (src.byond_build == 1509)	//MBC : BAD CODE TO BANDAID A BROKEN BYOND THING. REMOVE THIS AS SOON AS LUMMOX FIXES  //ZeWaka: PART 2 BOOGALOOO
-				if (alert(src, "Warning! The version of BYOND you are running (513.1509) is bugged. This is bad! Would you like a link to a .zip of the last working version?", "ALERT", "Yes", "No") == "Yes")
-					src << link("http://www.byond.com/download/build/513/513.1510_byond.zip")
-
+// Let's throw it here, why not! -ZeWaka
+#if DM_BUILD < 1526 && !defined(SPACEMAN_DMM)
+#error Please update your BYOND version to the latest stable release.
+#endif
 
 		else
 			if (noir)
@@ -393,9 +405,6 @@
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
-
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - update_world")
-		src.update_world()
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()
@@ -410,32 +419,31 @@
 			src.cmd_rp_rules()
 #endif
 		//Cloud data
-		var/http[] = world.Export( "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]" )
-		if( !http )
-			logTheThing( "debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub" )
+		if (cdn)
+			var/http[] = world.Export( "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]" )
+			if( !http )
+				logTheThing( "debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub" )
 
-		var/list/ret = json_decode(file2text( http[ "CONTENT" ] ))
-		if( ret["status"] == "error" )
-			logTheThing( "debug", src, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
-		else
-			cloudsaves = ret["saves"]
-			clouddata = ret["cdata"]
-			load_antag_tokens()
-			load_persistent_bank()
-			var/decoded = cloud_get("audio_volume")
-			if(decoded)
-				var/cur = volumes.len
-				volumes = json_decode(decoded)
-				volumes.len = cur
+			var/list/ret = json_decode(file2text( http[ "CONTENT" ] ))
+			if( ret["status"] == "error" )
+				logTheThing( "debug", src, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
+			else
+				cloudsaves = ret["saves"]
+				clouddata = ret["cdata"]
+				load_antag_tokens()
+				load_persistent_bank()
+				var/decoded = cloud_get("audio_volume")
+				if(decoded)
+					var/cur = volumes.len
+					volumes = json_decode(decoded)
+					volumes.len = cur
+
+		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
+			boutput(src, "<b>You have [src.antag_tokens] antag tokens!</b>")
 
 		if(istype(src.mob, /mob/new_player))
 			var/mob/new_player/M = src.mob
 			M.new_player_panel() // update if tokens available
-
-
-/*	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/sandbox))
-		if(src.holder  && (src.holder.level >= 3))
-			src.verbs += /mob/proc/Delete*/
 
 	if(do_compid_analysis)
 		do_computerid_test(src) //Will ban yonder fucker in case they are prix
@@ -474,6 +482,20 @@
 
 	//blendmode end
 
+	// cursed darkmode stuff
+
+	src.sync_dark_mode()
+
+	if(winget(src, "menu.fullscreen", "is-checked") == "true")
+		winset(src, null, "mainwindow.titlebar=false;mainwindow.is-maximized=true")
+
+	if(winget(src, "menu.hide_status_bar", "is-checked") == "true")
+		winset(src, null, "mainwindow.statusbar=false")
+
+	if(winget(src, "menu.hide_menu", "is-checked") == "true")
+		winset(src, null, "mainwindow.menu='';menub.is-visible = true")
+
+	// cursed darkmode end
 
 	//tg controls stuff
 
@@ -493,6 +515,9 @@
 	else
 		src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
 
+	//game stuf
+	hand_ghosts = winget( src, "menu.use_hand_ghosts", "is-checked" ) == "true"
+
 	//sound
 	if (winget( src, "menu.speech_sounds", "is-checked" ) == "true")
 		ignore_sound_flags |= SOUND_SPEECH
@@ -503,16 +528,18 @@
 
 	src.reputations = new(src)
 
+	if(src.holder && src.holder.level >= LEVEL_CODER)
+		src.control_freak = 0
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
-
+	login_success = 1
 /*
 /client/proc/write_gauntlet_matches()
 	return
 */
 
 /client/proc/init_admin()
-	if(!address)
+	if(!address || (world.address == src.address))
 		admins[src.ckey] = "Host"
 	if (admins.Find(src.ckey) && !src.holder)
 		src.holder = new /datum/admins(src)
@@ -521,8 +548,6 @@
 		onlineAdmins |= (src)
 		if (!NT.Find(src.ckey))
 			NT.Add(src.ckey)
-		if(src.holder.rank in list("Host", "Coder"))
-			control_freak = 0
 		return 1
 
 	return 0
@@ -658,7 +683,7 @@
 	return player.mentor
 
 /client/proc/can_see_mentor_pms()
-	return (player.mentor || src.holder) && player.see_mentor_pms
+	return (src.player?.mentor || src.holder) && src.player?.see_mentor_pms
 
 var/global/curr_year = null
 var/global/curr_month = null
@@ -769,10 +794,16 @@ var/global/curr_day = null
 			stat( A )
 
 	if (!src.holder)//todo : maybe give admins a toggle
-		sleep(12) //and make this number larger
+		sleep(1.2 SECONDS) //and make this number larger
+	else
+		sleep(0.1 SECONDS)
 
 /client/Topic(href, href_list)
 	if (!usr || isnull(usr.client))
+		return
+
+	// Tgui Topic middleware
+	if(!tgui_Topic(href_list))
 		return
 
 	var/mob/M
@@ -790,7 +821,7 @@ var/global/curr_day = null
 				t = strip_html(t,500)
 			if (!( t ))
 				return
-			boutput(src.mob, "<span style=\"color:blue\" class=\"bigPM\">Admin PM to-<b>[target] (Discord)</b>: [t]</span>")
+			boutput(src.mob, "<span class='notice' class=\"bigPM\">Admin PM to-<b>[target] (Discord)</b>: [t]</span>")
 			logTheThing("admin_help", src, null, "<b>PM'd [target]</b>: [t]")
 			logTheThing("diary", src, null, "PM'd [target]: [t]", "ahelp")
 
@@ -798,17 +829,19 @@ var/global/curr_day = null
 			ircmsg["key"] = src.mob && src ? src.key : ""
 			ircmsg["name"] = src.mob.real_name
 			ircmsg["key2"] = target
-			ircmsg["name2"] = "IRC"
+			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
 			ircbot.export("pm", ircmsg)
 
 			//we don't use message_admins here because the sender/receiver might get it too
-			for (var/mob/K in mobs)
-				if(K && K.client && K.client.holder && K.key != usr.key)
-					if (K.client.player_mode && !K.client.player_mode_ahelp)
+			for (var/client/C)
+				if (!C.mob) continue
+				var/mob/K = C.mob
+				if(C.holder && C.key != usr.key)
+					if (C.player_mode && !C.player_mode_ahelp)
 						continue
 					else
-						boutput(K, "<font color='blue'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</font>")
+						boutput(K, "<span class='internal'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</span>")
 
 		if ("priv_msg")
 			do_admin_pm(href_list["target"], usr) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
@@ -822,7 +855,7 @@ var/global/curr_day = null
 				t = strip_html(t,500)
 			if (!( t ))
 				return
-			boutput(src.mob, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: TO [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+			boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 			logTheThing("mentor_help", src, null, "<b>Mentor PM'd [target]</b>: [t]")
 			logTheThing("diary", src, null, "Mentor PM'd [target]: [t]", "admin")
 
@@ -830,20 +863,21 @@ var/global/curr_day = null
 			ircmsg["key"] = src.mob && src ? src.key : ""
 			ircmsg["name"] = src.mob.real_name
 			ircmsg["key2"] = target
-			ircmsg["name2"] = "IRC"
+			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
 			ircbot.export("mentorpm", ircmsg)
 
 			//we don't use message_admins here because the sender/receiver might get it too
-			for (var/mob/K in mobs)
-				if (K && K.client && K.client.can_see_mentor_pms() && K.key != usr.key)
-					if (K.client.holder)
-						if (K.client.player_mode && !K.client.player_mode_mhelp)
+			var/mentormsg = "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>"
+			for (var/client/C)
+				if (C.can_see_mentor_pms() && C.key != usr.key)
+					if (C.holder)
+						if (C.player_mode && !C.player_mode_mhelp)
 							continue
 						else //Message admins
-							boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+							boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 					else //Message mentors
-						boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+						boutput(C, mentormsg)
 
 		if ("mentor_msg")
 			if (M)
@@ -863,17 +897,17 @@ var/global/curr_day = null
 					return
 
 				if (src.holder)
-					boutput(M, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
-					boutput(src.mob, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: TO [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+					boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 				else
 					if (M.client && M.client.holder)
-						boutput(M, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 					else
-						boutput(M, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
-					boutput(usr, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+					boutput(usr, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
-				logTheThing("mentor_help", src.mob, M, "Mentor PM'd %target%: [t]")
-				logTheThing("diary", src.mob, M, "Mentor PM'd %target%: [t]", "admin")
+				logTheThing("mentor_help", src.mob, M, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
+				logTheThing("diary", src.mob, M, "Mentor PM'd [constructTarget(M,"diary")]: [t]", "admin")
 
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.mob && src ? src.key : ""
@@ -883,20 +917,21 @@ var/global/curr_day = null
 				ircmsg["msg"] = html_decode(t)
 				ircbot.export("mentorpm", ircmsg)
 
-				for (var/mob/K in mobs)
-					if (K && K.client && K.client.can_see_mentor_pms() && K.key != usr.key && (M && K.key != M.key))
-						if (K.client.holder)
-							if (K.client.player_mode && !K.client.player_mode_mhelp)
+				var/mentormsg = "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>"
+				for (var/client/C)
+					if (C.can_see_mentor_pms() && C.key != usr.key && (M && C.key != M.key))
+						if (C.holder)
+							if (C.player_mode && !C.player_mode_mhelp)
 								continue
 							else
-								boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]/[M.real_name] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+								boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]/[M.real_name] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 						else
-							boutput(K, "<span style='color:[mentorhelp_text_color]'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+							boutput(C, mentormsg)
 
 		if ("mach_close")
 			var/window = href_list["window"]
 			var/t1 = text("window=[window]")
-			usr.machine = null
+			usr.remove_dialogs()
 			usr.Browse(null, t1)
 			//Special cases
 			switch (window)
@@ -911,7 +946,7 @@ var/global/curr_day = null
 			ehjax.topic("main", href_list, src)
 
 		if("resourcePreloadComplete")
-			bout(src, "<span style='color:blue;'><b>Preload completed.</b></span>")
+			bout(src, "<span class='notice'><b>Preload completed.</b></span>")
 			src.Browse(null, "window=resourcePreload")
 			return
 
@@ -948,7 +983,7 @@ var/global/curr_day = null
 	SPAWN_DBG(0)//I do not advocate this! So basically hide your eyes for one line of code.
 		world.Export( "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]" )//If it fails, oh well...
 //Returns some cloud data on the client
-/client/proc/cloud_get( var/key, var/value )
+/client/proc/cloud_get( var/key )
 	return clouddata ? clouddata[key] : null
 //Returns 1 if you can set or retrieve cloud data on the client
 /client/proc/cloud_available()
@@ -1087,7 +1122,7 @@ var/global/curr_day = null
 	tg_controls = tg
 	winset( src, "menu", "tg_controls.is-checked=[tg ? "true" : "false"]" )
 
-	src.mob.update_keymap()
+	src.mob.reset_keymap()
 
 /client/verb/set_tg_controls()
 	set hidden = 1
@@ -1122,7 +1157,7 @@ var/global/curr_day = null
 		H.zone_sel = new(H)
 		H.attach_hud(H.zone_sel)
 		H.stamina_bar = new(H)
-		H.hud.add_object(H.stamina_bar, HUD_LAYER+1, "EAST-1, NORTH")
+		H.hud.add_object(H.stamina_bar, initial(H.stamina_bar.layer), "EAST-1, NORTH")
 		if(H.sims)
 			H.sims.add_hud()
 
@@ -1191,6 +1226,12 @@ var/global/curr_day = null
 	else
 		src.ignore_sound_flags |= SOUND_VOX
 
+
+/client/verb/set_hand_ghosts()
+	set hidden = 1
+	set name = "set-hand-ghosts"
+	hand_ghosts = winget( src, "menu.use_hand_ghosts", "is-checked" ) == "true"
+
 //These size helpers are invisible browser windows that help with getting client screen dimensions
 /client/proc/initSizeHelpers()
 	src.screenSizeHelper = new(src)
@@ -1216,14 +1257,37 @@ var/global/curr_day = null
 	set hidden = 1
 	set name = "intent-test"
 
+	if (preferences)
+		if (!src.preferences.use_wasd)
+			boutput(src, "<B>Experimental intent switcher cannot be toggled on unless you enter WASD mode.</B>")
+			return
+	if (tg_controls)
+		boutput(src, "<B>Experimental intent switcher cannot be toggled when you are using TG controls.</B>")
+		return
+
+	if (!src.mob || !ishuman(mob))
+		boutput(src, "<B>Experimental intent switcher only works on humans right now.</B>")
+		return
+
 	experimental_intents = !experimental_intents
 	if (experimental_intents)
-		boutput(src, "<B>Experimental intent switcher ON.</B> I would reccomend you only test this out if you have a mouse with a middle-click.")
-		boutput(src, "Hold space to enter 'comabt' intent - blocks attacks passively just like Disarm intent does.")
-		boutput(src, "Hold space and left click to Harm.")
-		boutput(src, "Hold space and right click with an empty hand to Disarm.")
-		boutput(src, "Hold space and right click with an item held to Throw.")
-		boutput(src, "Hold space and middle click to Grab.")
+		boutput(src, "<br><B>Experimental intent switcher ON.</B>")
+		boutput(src, "Hold space to enter 'combat' intent, which will let you Harm/Disarm if you left or right click. If you are holding an item, Disarm turns into Throw")
+		boutput(src, "Hold ctrl to enter 'grab' intent. Left click tries Grab, right click Pull.")
+
+		boutput(src, "<br>Also, CTRL+WASD emotes have been moved to 1-2-3-4 keys (this lets you hold CTRL while moving around. Scream is 2, you're welcome.")
+		boutput(src, "If you want to turn this off, type `intent-test` in the command bar at the bottom.<br>")
+
+		//lazy control scheme test : remove all this later for real tho
+		if (keymap)
+			keymap.keys.Remove("4S")
+			keymap.keys.Remove("4D")
+			keymap.keys.Remove("4A")
+			keymap.keys.Remove("4W")
+			keymap.keys["01"] = "salute"
+			keymap.keys["02"] = "scream"
+			keymap.keys["03"] = "dance"
+			keymap.keys["04"] = "wink"
 	else
 		boutput(src, "Experimental intent switcher <B>OFF</B>.")
 
@@ -1259,3 +1323,69 @@ if([removeOnFinish])
 /world/proc/showCinematic(var/name, var/removeOnFinish = 0)
 	for(var/client/C)
 		C.showCinematic(name, removeOnFinish)
+
+#define SKIN_TEMPLATE "\
+rpane.background-color=[_SKIN_BG];\
+rpane.text-color=[_SKIN_TEXT];\
+rpanewindow.background-color=[_SKIN_BG];\
+rpanewindow.text-color=[_SKIN_TEXT];\
+textb.background-color=[_SKIN_BG];\
+textb.text-color=[_SKIN_TEXT];\
+browseb.background-color=[_SKIN_BG];\
+browseb.text-color=[_SKIN_TEXT];\
+infob.background-color=[_SKIN_BG];\
+infob.text-color=[_SKIN_TEXT];\
+menub.background-color=[_SKIN_BG];\
+menub.text-color=[_SKIN_TEXT];\
+bugreportb.background-color=[_SKIN_BG];\
+bugreportb.text-color=[_SKIN_TEXT];\
+wikib.background-color=[_SKIN_BG];\
+wikib.text-color=[_SKIN_TEXT];\
+mapb.background-color=[_SKIN_BG];\
+mapb.text-color=[_SKIN_TEXT];\
+forumb.background-color=[_SKIN_BG];\
+forumb.text-color=[_SKIN_TEXT];\
+infowindow.background-color=[_SKIN_BG];\
+infowindow.text-color=[_SKIN_TEXT];\
+info.background-color=[_SKIN_INFO_BG];\
+info.text-color=[_SKIN_TEXT];\
+mainwindow.background-color=[_SKIN_BG];\
+mainwindow.text-color=[_SKIN_TEXT];\
+mainvsplit.background-color=[_SKIN_BG];\
+falsepadding.background-color=[_SKIN_COMMAND_BG];\
+input.background-color=[_SKIN_COMMAND_BG];\
+input.text-color=[_SKIN_TEXT];\
+saybutton.background-color=[_SKIN_COMMAND_BG];\
+saybutton.text-color=[_SKIN_TEXT];\
+info.tab-background-color=[_SKIN_INFO_TAB_BG];\
+info.tab-text-color=[_SKIN_TEXT]"
+
+/client/verb/sync_dark_mode()
+	set hidden=1
+	if(winget(src, "menu.dark_mode", "is-checked") == "true")
+#define _SKIN_BG "#28292c"
+#define _SKIN_INFO_TAB_BG "#28292c"
+#define _SKIN_INFO_BG "#28292c"
+#define _SKIN_TEXT "#d3d4d5"
+#define _SKIN_COMMAND_BG "#28294c"
+		winset(src, null, SKIN_TEMPLATE)
+		chatOutput.changeTheme("theme-dark")
+#undef _SKIN_BG
+#undef _SKIN_INFO_TAB_BG
+#undef _SKIN_INFO_BG
+#undef _SKIN_TEXT
+#undef _SKIN_COMMAND_BG
+#define _SKIN_BG "none"
+#define _SKIN_INFO_TAB_BG "#f0f0f0"
+#define _SKIN_INFO_BG "#ffffff"
+#define _SKIN_TEXT "none"
+#define _SKIN_COMMAND_BG "#d3b5b5"
+	else
+		winset(src, null, SKIN_TEMPLATE)
+		chatOutput.changeTheme("theme-default")
+#undef _SKIN_BG
+#undef _SKIN_INFO_TAB_BG
+#undef _SKIN_INFO_BG
+#undef _SKIN_TEXT
+#undef _SKIN_COMMAND_BG
+#undef SKIN_TEMPLATE

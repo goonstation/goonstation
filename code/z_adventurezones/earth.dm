@@ -25,6 +25,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	sims_score = 25
 	sound_group = "centcom"
 	filler_turf = "/turf/unsimulated/nicegrass/random"
+	is_centcom = 1
 
 /area/centcom/outside
 	name = "Earth"
@@ -141,6 +142,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	studenterhue/name = "Office of Studenterhue"
 	zamujasa/name = "Office of Zamujasa"
 	lyra/name = "Office of Lyra"
+	efrem/name = "Office of Vaughn Moon"
+	sovexe/name = "Office of Sov Extant"
+	enakai/name = "Office of Enakai"
 
 /area/centcom/lobby
 	name = "NT Offices Lobby"

@@ -214,7 +214,7 @@ obj/machinery/atmospherics/valve
 
 	attack_hand(mob/user as mob)
 		update_icon(1)
-		sleep(10)
+		sleep(1 SECOND)
 		logTheThing("station", user, null, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
 		if (src.open)
 			src.close()
@@ -225,7 +225,7 @@ obj/machinery/atmospherics/valve
 	attackby(var/obj/item/G as obj, var/mob/user as mob)
 		if (iswrenchingtool(G))
 			update_icon(1)
-			sleep(10)
+			sleep(1 SECOND)
 			logTheThing("station", user, null, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
 			if (src.open)
 				src.close()

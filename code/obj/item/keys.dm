@@ -28,6 +28,11 @@
 	desc = "An old key of iron."
 	var/last_use = 0
 
+/obj/item/device/key/chompskey
+	name = "chomps key"
+	desc = "It's gnot what you were expecting..."
+	icon_state = "chompskey"
+
 var/list/rkey_adjectives = list("burning", "searing","alien","old", "ancient","ethereal", "shining", "secret", "hidden", "dull", "prismatic", "crystaline", "eldritch", "strange", "odd", "buzzing", "mysterious", "great", "rusted", "broken", "glowing", "floating", "mystical", "magic")
 var/list/rkey_nouns = list("dragon", "master", "wizard's", "yendor's", "solarium", "automaton's", "bee's", "shitty bill's", "captain's", "jones'", "void", "ghost", "skeleton")
 var/list/rkey_materials = list("bronze","crystal", "metal", "iron", "mauxite", "pharosium", "char", "molitz", "cobryl", "cytine", "uqill", "bohrum", "claretine", "erebite", "cerenkite", "plasmastone", "syreline", "gold", "silver", "copper", "titanium", "unobtanium")
@@ -57,7 +62,7 @@ var/list/rkey_descfluff = list(\
 	name = ""
 	desc = "You are not sure what this key is for."
 
-	icon = 'icons/obj/randomkeys.dmi'
+	icon = 'icons/obj/items/randomkeys.dmi'
 	icon_state = "null"
 
 	New(var/loca)
@@ -107,9 +112,9 @@ var/list/rkey_descfluff = list(\
 		if (findtext(name, "burning") || findtext(name, "searing") || findtext(name, "fire") || findtext(name, "sun"))
 			particleMaster.SpawnSystem(new /datum/particleSystem/fireTest(src))
 
-		overlays += image('icons/obj/randomkeys.dmi',src,"ring[rand(0,10)]")
-		overlays += image('icons/obj/randomkeys.dmi',src,"shaft[rand(0,9)]")
-		overlays += image('icons/obj/randomkeys.dmi',src,"teeth[rand(0,10)]")
+		overlays += image('icons/obj/items/randomkeys.dmi',src,"ring[rand(0,10)]")
+		overlays += image('icons/obj/items/randomkeys.dmi',src,"shaft[rand(0,9)]")
+		overlays += image('icons/obj/items/randomkeys.dmi',src,"teeth[rand(0,10)]")
 		return
 
 /obj/item/device/key/iridium

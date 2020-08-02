@@ -11,9 +11,7 @@
 	if(powernets && powernets.len >= netnum)
 		PN = powernets[netnum]
 
-	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-	s.set_up(3, 1, src)
-	s.start()
+	elecflash(src)
 
 	return user.shock(src, PN ? PN.avail : 0, user.hand == 1 ? "l_arm": "r_arm", 1, ignore_gloves ? 1 : 0)
 
@@ -62,7 +60,7 @@
 /obj/cable
 	level = 1
 	anchored =1
-	var/netnum = 0
+	var/tmp/netnum = 0
 	name = "power cable"
 	desc = "A flexible power cable."
 	icon = 'icons/obj/power_cond.dmi'
@@ -73,7 +71,9 @@
 	//var/image/cableimg = null
 	//^ is unnecessary, i think
 	layer = CABLE_LAYER
+	plane = PLANE_DEFAULT
 	color = "#DD0000"
+	text = ""
 
 	var/insulator_default = "synthrubber"
 	var/condcutor_default = "copper"
@@ -117,7 +117,7 @@
 			num = "fourth"
 		if (cuts == 5)
 			num = "fifth"
-		src.visible_message("<span style=\"color:red\">[user] cuts through the [num] section of [src].</span>")
+		src.visible_message("<span class='alert'>[user] cuts through the [num] section of [src].</span>")
 
 		if (cuts >= cuts_required)
 			..()
@@ -156,7 +156,7 @@
 			var/datum/powernet/PN = powernets[netnum]
 			PN.cut_cable(src)									// updated the powernets
 	else
-		if(Debug) diary << "Defered cable deletion at [x],[y]: #[netnum]"
+		if(Debug) logDiary("Defered cable deletion at [x],[y]: #[netnum]")
 		defer_powernet_rebuild = 2
 
 		if(netnum && powernets && powernets.len >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
@@ -205,7 +205,7 @@
 			C.iconmod = src.iconmod
 			C.updateicon()
 
-	src.visible_message("<span style=\"color:red\">[user] cuts the cable.</span>")
+	src.visible_message("<span class='alert'>[user] cuts the cable.</span>")
 	src.log_wirelaying(user, 1)
 
 	shock(user, 50)
@@ -235,10 +235,10 @@
 		var/datum/powernet/PN = get_powernet()		// find the powernet
 
 		if(PN && (PN.avail > 0))		// is it powered?
-			boutput(user, "<span style=\"color:red\">[PN.avail]W in power network.</span>")
+			boutput(user, "<span class='alert'>[PN.avail]W in power network.</span>")
 
 		else
-			boutput(user, "<span style=\"color:red\">The cable is not powered.</span>")
+			boutput(user, "<span class='alert'>The cable is not powered.</span>")
 
 		if(prob(40))
 			shock(user, 10)
@@ -292,7 +292,7 @@
 	for (var/obj/cable/new_cable_d2 in src.get_connections_one_dir(is_it_d2 = 1))
 		cable_d2 = new_cable_d2
 		break
-	
+
 	// due to the first two lines of this proc it can happen that some cables are left at netnum 0, oh no
 	// this is bad and should be fixed, probably by having a queue of stuff to process once current makepowernets finishes
 	// but I'm too lazy to do that, so here's a bandaid
@@ -387,7 +387,7 @@
 			else if(M.netnum != src.netnum)
 				request_rebuild = 1
 				break
-	
+
 	if(request_rebuild)
 		makepowernets()
 
@@ -403,5 +403,10 @@
 	if (PN && istype(PN) && (PN.avail > 0))
 		powered = 1
 
-	logTheThing("station", user, null, "[cut == 0 ? "lays" : "cuts"] a cable[powered == 1 ? " (powered when [cut == 0 ? "connected" : "cut"])" : ""] at [log_loc(src)].")
+
+	if (cut) //avoid some slower string builds lol
+		logTheThing("station", user, null, "cuts a cable[powered == 1 ? " (powered when cut)" : ""] at [log_loc(src)].")
+	else
+		logTheThing("station", user, null, "lays a cable[powered == 1 ? " (powered when connected)" : ""] at [log_loc(src)].")
+
 	return

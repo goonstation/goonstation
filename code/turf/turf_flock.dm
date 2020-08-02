@@ -50,17 +50,17 @@
 		src.break_tile_to_plating()
 		return
 	if(src.broken)
-		boutput(user, "<span class='text-blue'>It's already broken, you need to pry it out with a crowbar.</span>")
+		boutput(user, "<span class='hint'>It's already broken, you need to pry it out with a crowbar.</span>")
 		return
 	src.health -= C.force
 	if(src.health <= 0)
-		src.visible_message("<span class='text-red'><span class='bold'>[user]</span> smacks [src] with [C], shattering it!</span>")
+		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks [src] with [C], shattering it!</span>")
 		src.name = "weird broken floor"
 		src.desc = "It's broken. You could probably use a crowbar to pull the remnants out."
 		playsound(src.loc, "sound/impact_sounds/Crystal_Shatter_1.ogg", 25, 1)
 		break_tile()
 	else
-		src.visible_message("<span class='text-red'><span class='bold'>[user]</span> smacks [src] with [C]!</span>")
+		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks [src] with [C]!</span>")
 		playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 25, 1)
 
 /turf/simulated/floor/feather/break_tile_to_plating()

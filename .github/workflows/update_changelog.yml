@@ -1,0 +1,32 @@
+name: "Update Changelog"
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  update-changelog:
+    runs-on: ubuntu-latest
+    if: github.repository == 'goonstation/goonstation'
+    steps:
+    - name: Get The Script
+      run: |
+        wget "https://raw.githubusercontent.com/${{ github.repository }}/master/.github/update_changelog.py"
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pygithub pytz
+    - name: Update Changelog
+      run: |
+        python update_changelog.py
+      env:
+        REPO: ${{ github.repository }}
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CHANGELOG_PATH: strings/changelog.txt
+        ASS_CHANGELOG_PATH: strings/ass_changelog.txt
+        GIT_EMAIL: "65057909+robuddybot@users.noreply.github.com"
+        GIT_NAME: "robuddybot"

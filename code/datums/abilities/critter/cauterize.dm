@@ -4,6 +4,7 @@
 /datum/targetable/critter/cauterize
 	name = "Cauterize"
 	desc = "Cauterize a mob, stopping all bleeding immediately but inflicting mild fire damage."
+	icon_state = "fire_e_cauterize"
 	cooldown = 150
 	targeted = 1
 	target_anything = 1

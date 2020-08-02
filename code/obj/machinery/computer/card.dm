@@ -31,7 +31,7 @@
 	if(..())
 		return
 
-	user.machine = src
+	src.add_dialog(user)
 	var/dat
 	if (!( ticker ))
 		return
@@ -125,7 +125,7 @@
 			var/research_access = list("<br>Science and Medical:")
 			var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry)
 			var/security_access = list("<br>Security:")
-			var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit)
+			var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit, access_contrabandpermit)
 			var/command_access = list("<br>Command:")
 			var/list/command_access_list = list(access_research_director, access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_ghostdrone)
 
@@ -181,7 +181,7 @@
 /obj/machinery/computer/card/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 	if (href_list["modify"])
 		if (src.modify)
 			src.modify.update_name()
@@ -213,7 +213,7 @@
 						I.set_loc(src)
 					src.modify = I
 			if (I && !src.modify)
-				boutput(usr, "<span style=\"color:blue\">[I] won't fit in the modify slot.</span>")
+				boutput(usr, "<span class='notice'>[I] won't fit in the modify slot.</span>")
 		src.authenticated = 0
 		src.scan_access = null
 	if (href_list["scan"])
@@ -234,7 +234,7 @@
 					I.set_loc(src)
 					src.modify = I
 			else
-				boutput(usr, "<span style=\"color:blue\">[I] won't fit in the authentication slot.</span>")
+				boutput(usr, "<span class='notice'>[I] won't fit in the authentication slot.</span>")
 		src.authenticated = 0
 		src.scan_access = null
 	if (href_list["auth"])
@@ -263,7 +263,7 @@
 			if (t1 == "Custom Assignment")
 				t1 = input(usr, "Enter a custom job assignment.", "Assignment")
 				t1 = strip_html(t1, 100, 1)
-				playsound(src.loc, "keyboard", 50, 1, 5)
+				playsound(src.loc, "keyboard", 50, 1, -15)
 			else
 				src.modify.access = get_access(t1)
 
@@ -283,7 +283,7 @@
 				logTheThing("station", usr, null, "changes the registered name on the ID card from [src.modify.registered] to [t1]")
 				src.modify.registered = t1
 
-			playsound(src.loc, "keyboard", 50, 1, 5)
+			playsound(src.loc, "keyboard", 50, 1, -15)
 
 	if (href_list["pin"])
 		if (src.authenticated)
@@ -298,14 +298,14 @@
 					src.modify.pin = 9999
 				else
 					src.modify.pin = round(newpin)
-				playsound(src.loc, "keyboard", 50, 1, 5)
+				playsound(src.loc, "keyboard", 50, 1, -15)
 
 	if (href_list["mode"])
 		src.mode = text2num(href_list["mode"])
 	if (href_list["print"])
 		if (!( src.printing ))
 			src.printing = 1
-			sleep(50)
+			sleep(5 SECONDS)
 			var/obj/item/paper/P = unpool(/obj/item/paper)
 			P.set_loc(src.loc)
 
@@ -320,7 +320,7 @@
 		src.scan_access = null
 		src.mode = text2num(href_list["mode"])
 	if (href_list["colour"])
-		if(src.modify && src.modify.icon_state != "gold" && src.modify.icon_state != "id_clown")
+		if(src.modify && src.modify.icon_state != "gold" && src.modify.icon_state != "id_clown" && src.modify.icon_state != "id_dab")
 			var/newcolour = href_list["colour"]
 			if (newcolour == "none")
 				src.modify.icon_state = "id"
@@ -355,7 +355,7 @@
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 20))
 			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -369,7 +369,7 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
+				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				if(src.material) A.setMaterial(src.material)
 				var/obj/item/circuitboard/card/M = new /obj/item/circuitboard/card( A )
@@ -388,16 +388,16 @@
 			modify_only = 1
 
 		if (modify_only && src.eject && !src.scan && src.modify)
-			boutput(user, "<span style=\"color:blue\">[src.eject] will not work in the authentication card slot.</span>")
+			boutput(user, "<span class='notice'>[src.eject] will not work in the authentication card slot.</span>")
 			return
 		else if (istype(I, /obj/item/card/id))
 			if (!src.scan && !modify_only)
-				boutput(user, "<span style=\"color:blue\">You insert [I] into the authentication card slot.</span>")
+				boutput(user, "<span class='notice'>You insert [I] into the authentication card slot.</span>")
 				user.drop_item()
 				I.set_loc(src)
 				src.scan = I
 			else if (!src.modify)
-				boutput(user, "<span style=\"color:blue\">You insert [src.eject ? src.eject : I] into the target card slot.</span>")
+				boutput(user, "<span class='notice'>You insert [src.eject ? src.eject : I] into the target card slot.</span>")
 				user.drop_item()
 				if (src.eject)
 					src.eject.set_loc(src)

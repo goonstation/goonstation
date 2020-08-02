@@ -33,9 +33,9 @@ var/global
 	/*
 	8 = LEVEL_HOST
 	7 = LEVEL_CODER
-	6 = LEVEL_SHITGUY
+	6 = LEVEL_ADMIN
 	5 = LEVEL_PA
-	4 = LEVEL_ADMIN
+	4 = LEVEL_IA
 	3 = LEVEL_SA
 	2 = LEVEL_MOD
 	1 = LEVEL_BABBY
@@ -137,6 +137,10 @@ var/global
 			var/data = json_encode(list("loadAdminCode" = replacetext(replacetext(grabResource("html/adminOutput.html"), "\n", ""), "\t", "")))
 			ehjax.send(src.owner, "browseroutput", url_encode(data))
 
+		changeTheme(theme)
+			var/data = json_encode(list("changeTheme" = theme))
+			ehjax.send(src.owner, "browseroutput", url_encode(data))
+
 		//Sends client connection details to the chat to handle and save
 		sendClientData()
 			//Fix for Cannot read null.ckey (how!?)
@@ -228,7 +232,7 @@ var/global
 					src.owner.addBanDialog(targetMob)
 				if ("gib")
 					src.owner.cmd_admin_gib(targetMob)
-					logTheThing("admin", src.owner, targetMob, "gibbed %target%.")
+					logTheThing("admin", src.owner, targetMob, "gibbed [constructTarget(targetMob,"admin")].")
 				if ("popt")
 					if(src.owner.holder)
 						src.owner.holder.playeropt(targetMob)
@@ -357,6 +361,8 @@ var/global
 
 		//Some macros remain in the string even after parsing and fuck up the eventual output
 		message = stripTextMacros(message)
+
+		message = replacetext(message, "\u2028", "") // this character crashes the js side and I don't know how to fix it there
 
 		//Grab us a client if possible
 		var/client/C

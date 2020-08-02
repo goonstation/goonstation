@@ -270,7 +270,7 @@
 			return
 
 		if (prob(10) || user.is_hulk())
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> snaps the burrito in half!</span>", "<span style=\"color:red\">You accidentally snap the burrito apart. Fuck!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> snaps the burrito in half!</span>", "<span class='alert'>You accidentally snap the burrito apart. Fuck!</span>")
 			src.splat()
 			return
 
@@ -282,7 +282,8 @@
 		boutput(user, "You crack the burrito like a glow stick, activating the heater mechanism.")
 		return
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		if (prob(10) && T)
 			src.splat()
 		else
@@ -291,7 +292,7 @@
 	heal(var/mob/M)
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
-				boutput(M, "<span style=\"color:blue\">You find a shiny golden ticket in this bite!</span>")
+				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
 				new /obj/item/ticket/golden(get_turf(M))
 			else
 				M.emote("choke")
@@ -353,7 +354,7 @@
 	/*heal(var/mob/M)
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
-				boutput(M, "<span style=\"color:blue\">You find a shiny platinum ticket in this bite!</span>")
+				boutput(M, "<span class='notice'>You find a shiny platinum ticket in this bite!</span>")
 				new /obj/item/ticket/platinum(get_turf(M))
 			else
 				M.emote("choke")*/
@@ -368,8 +369,8 @@
 	var/full = 1
 	var/traytype = 0
 	flags = ONBELT | TABLEPASS | FPRINT
-	stamina_damage = 3
-	stamina_cost = 3
+	stamina_damage = 0
+	stamina_cost = 0
 	rand_pos = 1
 
 	New()
@@ -552,7 +553,7 @@
 	heal(var/mob/M)
 		if (prob(8))
 			if (M.mind && M.mind.ckey)
-				boutput(M, "<span style=\"color:blue\">You find a shiny golden ticket in this bite!</span>")
+				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
 				new /obj/item/ticket/golden(get_turf(M))
 			else
 				M.emote("choke")
@@ -580,7 +581,7 @@
 	heal(var/mob/M)
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
-				boutput(M, "<span style=\"color:blue\">You find a shiny golden ticket in this bite!</span>")
+				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
 				new /obj/item/ticket/golden(get_turf(M))
 			else
 				M.emote("choke")

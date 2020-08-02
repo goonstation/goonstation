@@ -17,8 +17,8 @@
 		name = "rifle magazine pouch"
 		icon_state = "ammopouch-large"
 		spawn_contents = list(/obj/item/ammo/bullets/assault_rifle = 5)
-	
-		mixed 
+
+		mixed
 			spawn_contents = list(/obj/item/ammo/bullets/assault_rifle = 3, /obj/item/ammo/bullets/assault_rifle/armor_piercing = 2)
 
 	bullet_9mm
@@ -43,14 +43,14 @@
 	clock
 		name = "9mm rounds pouch"
 		icon_state = "ammopouch-double"
-		spawn_contents = list(/obj/item/ammo/bullets/nine_mm_NATO = 3)
+		spawn_contents = list(/obj/item/ammo/bullets/nine_mm_NATO = 5)
 
 
 	powercell_medium
 		name = "power cell pouch"
 		icon_state = "ammopouch-cell"
 		spawn_contents = list(/obj/item/ammo/power_cell/med_power = 5)
-	
+
 	sniper
 		name = "sniper magazine pouch"
 		icon_state = "ammopouch-double"
@@ -64,11 +64,22 @@
 
 		weak
 			spawn_contents = list(/obj/item/ammo/bullets/a12/weak = 5)
-	
+
 	revolver
 		name = "revolver speedloader pouch"
 		icon_state = "ammopouch-double"
 		spawn_contents = list(/obj/item/ammo/bullets/a357=5)
+
+	grenade_round
+		name = "grenade round pouch"
+		slots = 4
+		spawn_contents = list(/obj/item/ammo/bullets/grenade_round/explosive = 2,
+		/obj/item/ammo/bullets/grenade_round/high_explosive = 2)
+
+	rpg
+		name = "MPRT rocket pouch"
+		slots = 4
+		spawn_contents = list(/obj/item/ammo/bullets/rpg = 2)
 
 /obj/item/storage/grenade_pouch
 	name = "grenade pouch"
@@ -94,10 +105,21 @@
 	high_explosive
 		name = "high explosive grenade pouch"
 		spawn_contents = list(/obj/item/old_grenade/high_explosive = 6)
-	
+
 	smoke
 		name = "smoke grenade pouch"
 		spawn_contents = list(/obj/item/old_grenade/smoke = 6)
+
+	mixed_standard
+		name = "mixed grenade pouch"
+		spawn_contents = list(/obj/item/chem_grenade/flashbang = 2,
+		/obj/item/old_grenade/stinger/frag = 2,
+		/obj/item/old_grenade/stinger = 2)
+
+	mixed_explosive
+		name = "mixed grenade pouch"
+		spawn_contents = list(/obj/item/old_grenade/stinger/frag = 3,
+		/obj/item/old_grenade/stinger = 3)
 
 // dumb idiot gannets shouldn't have called these "ammo_pouches" if he was gonna make pouches for non-ammo things. wow.
 
@@ -111,3 +133,14 @@
 	/obj/item/item_box/medical_patches/mini_silver_sulf,
 	/obj/item/item_box/medical_patches/mini_synthflesh)
 
+/obj/item/storage/security_pouch
+	name = "security pouch"
+	desc = "A small pouch containing some essential security supplies. Keep out of reach of the clown."
+	icon_state = "ammopouch-sec"
+	w_class = 2.00
+	slots = 6
+	does_not_open_in_pocket = 0
+	spawn_contents = list(/obj/item/handcuffs/ = 3,\
+	/obj/item/ammo/power_cell/high_power,\
+	/obj/item/device/flash,\
+	/obj/item/instrument/whistle)

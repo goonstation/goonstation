@@ -34,7 +34,7 @@
 			var/mob/living/MT = M
 			//Only able to absorb 4 dna points from a living target (out of a total of 10)
 			if (istype (MT,/mob/living/carbon/human) && istype(MT:mutantrace, /datum/mutantrace/monkey))
-				boutput(holder.owner, "<span style=\"color:red\">Our hunger will not be satisfied by this lesser being.</span>")
+				boutput(holder.owner, "<span class='alert'>Our hunger will not be satisfied by this lesser being.</span>")
 			else if (MT.dna_to_absorb > 0 && (isdead(MT) || MT.dna_to_absorb > 6))
 				var/absorbed = 1
 				if (isdead(MT) && MT.dna_to_absorb > 1)
@@ -48,7 +48,7 @@
 						MT:blood_volume -= 5
 
 				if (MT.dna_to_absorb <= 0)
-					logTheThing("combat", holder.owner, MT, "drains %target% of all DNA as a handspider [log_loc(holder.owner)].")
+					logTheThing("combat", holder.owner, MT, "drains [constructTarget(MT,"combat")] of all DNA as a handspider [log_loc(holder.owner)].")
 					MT.real_name = "Unknown"
 					MT.bioHolder.AddEffect("husk")
 			else

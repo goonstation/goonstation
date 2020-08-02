@@ -184,6 +184,10 @@ var/global/lastStationNameChange = 0 //timestamp
 		if (!name)
 			return 0
 
+		#if defined(REVERSED_MAP)
+			name = reverse_text(name)
+		#endif
+
 		the_station_name = name
 
 		if (user)
@@ -199,6 +203,9 @@ var/global/lastStationNameChange = 0 //timestamp
 
 	else
 		name = generate_random_station_name()
+		#if defined(REVERSED_MAP)
+			name = reverse_text(name)
+		#endif
 		if (station_or_ship() == "ship")
 #ifdef HALLOWEEN // a lot of the halloween prefixes already have a "the" at the start of them so we can skip that
 			the_station_name = name

@@ -58,7 +58,7 @@
 
 /datum/intercept_text/proc/pick_fingerprints()
 	var/mob/living/carbon/human/dude = src.pick_mob()
-	var/print = "[md5(dude.bioHolder.Uid)]"
+	var/print = "[dude.bioHolder.uid_hash]"
 	return print
 
 /datum/intercept_text/proc/build_traitor(correct_mob)

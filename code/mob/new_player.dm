@@ -68,7 +68,7 @@ mob/new_player
 					src.spawning = 1
 
 					close_spawn_windows()
-					boutput(src, "<span style=\"color:blue\">Now teleporting.</span>")
+					boutput(src, "<span class='notice'>Now teleporting.</span>")
 					var/ASLoc = pick(observer_start)
 					if (ASLoc)
 						observer.set_loc(ASLoc)
@@ -94,7 +94,7 @@ mob/new_player
 		else
 			if (src.client && src.client.ckey == TWITCH_BOT_CKEY)
 				twitch_bill_spawn = 1
-				boutput(src, "<span style='font-size: 1.5em; color: blue;'><B>Please wait. When the game starts, Shitty Bill will be activated.</B></span>")
+				boutput(src, "<span class='bold notice'>Please wait. When the game starts, Shitty Bill will be activated.</span>")
 #endif
 
 	Logout()
@@ -163,8 +163,11 @@ mob/new_player
 		if(current_state <= GAME_STATE_PREGAME)
 			statpanel("Lobby")
 			if(client.statpanel=="Lobby" && ticker)
-				for(var/mob/new_player/player in mobs)
-					if (player.client && player.client.holder && (player.client.stealth || player.client.alt_key)) // are they an admin and in stealth mode/have a fake key?
+				for (var/client/C)
+					var/mob/new_player/player = C.mob
+					if (!istype(player)) continue
+
+					if (player.client.holder && (player.client.stealth || player.client.alt_key)) // are they an admin and in stealth mode/have a fake key?
 						if (client.holder) // are we an admin?
 							stat("[player.key] (as [player.client.fakekey])", (player.ready)?("(Playing)"):(null)) // give us the full deets
 						else // are we not an admin?
@@ -184,12 +187,13 @@ mob/new_player
 
 		if(href_list["observe"])
 			if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
+				if(!src.client) return
 				var/mob/dead/observer/observer = new()
 
 				src.spawning = 1
 
 				close_spawn_windows()
-				boutput(src, "<span style=\"color:blue\">Now teleporting.</span>")
+				boutput(src, "<span class='notice'>Now teleporting.</span>")
 				var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
 				if (ASLoc)
 					observer.set_loc(ASLoc)
@@ -226,7 +230,7 @@ mob/new_player
 				return
 
 			if (!enter_allowed)
-				boutput(usr, "<span style=\"color:blue\">There is an administrative lock on entering the game!</span>")
+				boutput(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 				return
 
 			if (ticker && ticker.mode)
@@ -242,7 +246,7 @@ mob/new_player
 							qdel(src)
 					else
 						close_spawn_windows()
-						boutput(usr, "<span style=\"color:blue\">Sorry, that Silicon has already been taken control of.</span>")
+						boutput(usr, "<span class='notice'>Sorry, that Silicon has already been taken control of.</span>")
 
 				else if (istype(ticker.mode, /datum/game_mode/construction))
 					var/datum/game_mode/construction/C = ticker.mode
@@ -263,8 +267,6 @@ mob/new_player
 		if(!ticker || !ticker.mode)
 			return 0
 		if (!JOB || !istype(JOB,/datum/job/) || JOB.limit == 0)
-			return 0
-		if((ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)) && istype(JOB,/datum/job/command/))
 			return 0
 		if (!JOB.no_jobban_from_this_job && jobban_isbanned(src,JOB.name))
 			return 0
@@ -294,10 +296,10 @@ mob/new_player
 		return 0
 
 
-	proc/AttemptLateSpawn(var/datum/job/JOB)
+	proc/AttemptLateSpawn(var/datum/job/JOB, force=0)
 		if (!JOB)
 			return
-		if (JOB && IsJobAvailable(JOB))
+		if (JOB && (force || IsJobAvailable(JOB)))
 			var/mob/character = create_character(JOB, JOB.allow_traitors)
 			if (isnull(character))
 				return
@@ -307,18 +309,18 @@ mob/new_player
 				F.init_player(character, 0, 1)
 
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
-				boutput(character.mind.current,"<h3 style=\"color:blue\">You've arrived on a station in a nondescript container! Good luck!</h3>")
+				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
-			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner))
+			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
 				// Location is set in bank_purchaseable Create()
-				boutput(character.mind.current,"<h3 style=\"color:blue\">You're a space diner patron!</h3>")
+				boutput(character.mind.current,"<h3 class='notice'>You've arrived through an alternative mode of travel! Good luck!</h3>")
 			else if (map_settings && map_settings.arrivals_type == MAP_SPAWN_CRYO)
 				var/obj/cryotron/starting_loc = null
 				if (ishuman(character) && rp_latejoin && rp_latejoin.len)
 					starting_loc = pick(rp_latejoin)
 
 				if (istype(starting_loc))
-					starting_loc.add_person_to_queue(character)
+					starting_loc.add_person_to_queue(character, JOB)
 				else
 					starting_loc = latejoin.len ? pick(latejoin) : locate(1, 1, 1)
 					character.set_loc(starting_loc)
@@ -333,7 +335,7 @@ mob/new_player
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
 				var/datum/game_mode/battle_royale/battlemode = ticker.mode
 				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
-					boutput(character.mind.current,"<h3 style=\"color:blue\">You've arrived on a station with a battle royale in progress! Feel free to spectate, but you are not considered one of the contestants!</h3>")
+					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate, but you are not considered one of the contestants!</h3>")
 					return AttemptLateSpawn(new /datum/job/special/tourist)
 				var/starting_loc = pick(battle_royale_spawn)
 				character.set_loc(starting_loc)
@@ -402,13 +404,16 @@ mob/new_player
 				// 0 slots, nobody in it, don't show it
 				return
 
+			//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
+			if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
+				c = limit
+
 			// probalby could be a define but dont give a shite
 			var/maxslots = 5
 			var/list/slots = list()
 			var/shown = min(max(c, (limit == -1 ? 99 : limit)), maxslots)
-
 			// if there's still an open space, show a final join link
-			if (limit == -1 || (limit > maxslots && c < J.limit))
+			if (limit == -1 || (limit > maxslots && c < limit))
 				slots += "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];' title='Join the round as [J.name].'>&#x2713;&#xFE0E;</a>"
 
 			// show slots up to the limit
@@ -418,7 +423,7 @@ mob/new_player
 
 			return {"
 				<tr><td class='latejoin-link'>
-					[(J.limit == -1 || c < J.limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' style='color: [J.linkcolor];' title='Join the round as [J.name].'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
+					[(limit == -1 || c < limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' style='color: [J.linkcolor];' title='Join the round as [J.name].'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
 					</td>
 					<td class='latejoin-cards'>[jointext(slots, " ")]</td>
 				</tr>
@@ -616,7 +621,6 @@ a.latejoin-card:hover {
 			makebad(new_character, bad_type)
 			new_character.mind.late_special_role = 1
 			logTheThing("debug", new_character, null, "<b>Late join</b>: assigned antagonist role: [bad_type].")
-			antagWeighter.record(role = bad_type, ckey = new_character.ckey, latejoin = 1)
 		else
 			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !C.hellbanned) // no new evils for the first 10 minutes or last 5 before shuttle
 				if (late_traitors && ticker.mode && ticker.mode.latejoin_antag_compatible == 1)
@@ -648,6 +652,12 @@ a.latejoin-card:hover {
 
 		if(new_character && new_character.client)
 			new_character.client.loadResources()
+
+#if ASS_JAM
+			if(ass_mutation)
+				new_character.bioHolder.AddEffect(ass_mutation)
+				boutput(new_character.mind.current,"<span class='alert'>A radiation anomaly is currently affecting [the_station_name] and everyone - including you - is afflicted with a certain mutation.</h3>")
+#endif
 
 		new_character.temporary_attack_alert(1200) //Messages admins if this new character attacks someone within 2 minutes of signing up. Might help detect grief, who knows?
 		new_character.temporary_suicide_alert(1500) //Messages admins if this new character commits suicide within 2 1/2 minutes. probably a bit much but whatever
@@ -766,7 +776,7 @@ a.latejoin-card:hover {
 				if (istype(ticker.mode, /datum/game_mode/construction))
 					var/datum/game_mode/construction/C = ticker.mode
 					if (C.in_setup)
-						boutput(usr, "<span style=\"color:red\">The round is currently being set up. Please wait.</span>")
+						boutput(usr, "<span class='alert'>The round is currently being set up. Please wait.</span>")
 						return
 
 		if(!ticker || current_state <= GAME_STATE_PREGAME)
@@ -793,7 +803,7 @@ a.latejoin-card:hover {
 				if (istype(ticker.mode, /datum/game_mode/construction))
 					var/datum/game_mode/construction/C = ticker.mode
 					if (C.in_setup)
-						boutput(usr, "<span style=\"color:red\">You are already spawning, and cannot unready. Please wait until setup finishes.</span>")
+						boutput(usr, "<span class='alert'>You are already spawning, and cannot unready. Please wait until setup finishes.</span>")
 						return
 
 		if(ready)
@@ -811,6 +821,7 @@ a.latejoin-card:hover {
 		set name = ".observe_round"
 
 		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
+			if(!src.client) return
 			var/mob/dead/observer/observer = new()
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
 				src.client.using_antag_token = 0
@@ -818,7 +829,7 @@ a.latejoin-card:hover {
 			src.spawning = 1
 
 			close_spawn_windows()
-			boutput(src, "<span style=\"color:blue\">Now teleporting.</span>")
+			boutput(src, "<span class='notice'>Now teleporting.</span>")
 			var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
 			if (ASLoc)
 				observer.set_loc(ASLoc)

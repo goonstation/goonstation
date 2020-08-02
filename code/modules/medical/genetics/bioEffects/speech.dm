@@ -580,12 +580,56 @@
 	can_reclaim = 0
 	can_scramble = 0
 	curable_by_mutadone = 0
+	acceptable_in_mutini = 0
 
 	OnSpeak(var/message)
 		if (!istext(message))
 			return ""
 		message = owotalk(message)
 		return message
+
+/datum/bioEffect/speech/literalowotalk
+	name = "Frontal Gyrus Alteration Type-OWO"
+	desc = "Reconstructs the language center of the subject's brain, shutting most of it down and allowing for a very limited functionality."
+	id = "accent_literalowo"
+	effectType = effectTypeDisability
+	isBad = 1
+	msgGain = "Owo wowo wowow owow!"
+	msgLose = "You feel like your vocabulary has expanded!"
+	probability = 0
+	occur_in_genepools = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
+	acceptable_in_mutini = 0
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+
+		var/list/speech_list = splittext(message, " ")
+		if(!speech_list || !speech_list.len)
+			return ""
+
+		var/o = 1
+
+		for (var/i = 1 to length(speech_list))
+			o = 1
+			var/text = speech_list[i]
+			var/newtext = ""
+			for (var/j = 1 to length(text))
+				if (o)
+					newtext += "o"
+				else
+					newtext += "w"
+				o = !o
+			speech_list[i] = newtext
+
+		return jointext(speech_list, " ")
 
 /datum/bioEffect/speech/french
 	name = "Frontal Gyrus Alteration Type-Q"

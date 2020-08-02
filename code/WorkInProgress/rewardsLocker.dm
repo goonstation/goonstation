@@ -22,13 +22,13 @@
 			return
 
 		if (!activator.back)
-			boutput(activator, "<span style=\"color:red\">You can't reskin a backpack if you're not wearing one!</span>")
+			boutput(activator, "<span class='alert'>You can't reskin a backpack if you're not wearing one!</span>")
 			return
 
 		if (istype(activator.back, /obj/item/storage/backpack/medic))
 			var/obj/item/storage/backpack/medic/M = activator.back
 			var/prev1 = M.name
-			M.icon = 'icons/obj/storage.dmi'
+			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_general.dmi'
 			M.wear_image_icon = 'icons/mob/back.dmi'
@@ -43,7 +43,7 @@
 		else if (istype(activator.back, /obj/item/storage/backpack/NT) || activator.back.icon_state == "NTbackpack")
 			var/obj/item/storage/backpack/M = activator.back
 			var/prev2 = M.name
-			M.icon = 'icons/obj/storage.dmi'
+			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_general.dmi'
 			M.wear_image_icon = 'icons/mob/back.dmi'
@@ -58,7 +58,7 @@
 		else if (istype(activator.back, /obj/item/storage/backpack))
 			var/obj/item/storage/backpack/M = activator.back
 			var/prev3 = M.name
-			M.icon = 'icons/obj/storage.dmi'
+			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_general.dmi'
 			M.wear_image_icon = 'icons/mob/back.dmi'
@@ -71,7 +71,7 @@
 			activator.set_clothing_icon_dirty()
 
 		else
-			boutput(activator, "<span style=\"color:red\">Whatever it is you've got on your back, it can't be reskinned!</span>")
+			boutput(activator, "<span class='alert'>Whatever it is you've got on your back, it can't be reskinned!</span>")
 			return
 
 		return
@@ -82,7 +82,7 @@
 	required_medal = "Newton's Crew"
 
 	rewardActivate(var/mob/activator)
-		boutput(usr, "<span style=\"color:blue\">The Kit has been dropped at your current location.</span>")
+		boutput(usr, "<span class='notice'>The Kit has been dropped at your current location.</span>")
 		new /obj/item/pod/paintjob/tronthing(get_turf(activator))
 		return
 
@@ -157,7 +157,7 @@
 			activator.set_clothing_icon_dirty()
 
 		else
-			boutput(activator, "<span style=\"color:red\">You need to be holding a large beaker in order to claim this reward!</span>")
+			boutput(activator, "<span class='alert'>You need to be holding a large beaker in order to claim this reward!</span>")
 			return
 
 		return
@@ -201,7 +201,7 @@
 			activator.put_in_hand(new_bucket, 0)
 
 		else
-			boutput(activator, "<span style=\"color:red\">You need to be holding a bucket in order to claim this reward!</span>")
+			boutput(activator, "<span class='alert'>You need to be holding a bucket in order to claim this reward!</span>")
 			return
 
 		return
@@ -242,7 +242,7 @@
 			if (H.w_uniform)
 				var/obj/item/clothing/under/scrub/M = H.w_uniform
 				if (!istype(M))
-					boutput(activator, "<span style=\"color:red\">You're not wearing medical scrubs!</span>")
+					boutput(activator, "<span class='alert'>You're not wearing medical scrubs!</span>")
 					return
 				var/prev = M.name
 				M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
@@ -288,7 +288,7 @@
 			if (H.wear_suit)
 				var/obj/item/clothing/suit/labcoat/M = H.wear_suit
 				if (!istype(M))
-					boutput(activator, "<span style=\"color:red\">You're not wearing a labcoat!</span>")
+					boutput(activator, "<span class='alert'>You're not wearing a labcoat!</span>")
 					return
 				var/prev = M.name
 				M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
@@ -317,7 +317,7 @@
 			if (H.wear_suit)
 				var/obj/item/clothing/suit/labcoat/M = H.wear_suit
 				if (!istype(M))
-					boutput(activator, "<span style=\"color:red\">You're not wearing a labcoat!</span>")
+					boutput(activator, "<span class='alert'>You're not wearing a labcoat!</span>")
 					return
 				var/prev = M.name
 				M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
@@ -346,7 +346,7 @@
 			if (H.wear_suit)
 				var/obj/item/clothing/suit/labcoat/M = H.wear_suit
 				if (!istype(M))
-					boutput(activator, "<span style=\"color:red\">You're not wearing a labcoat!</span>")
+					boutput(activator, "<span class='alert'>You're not wearing a labcoat!</span>")
 					return
 				var/prev = M.name
 				M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
@@ -394,6 +394,24 @@
 				M.real_name = "strange vampire outfit"
 				M.desc = "How many breads <i>have</i> you eaten in your life? It's a good question. (Base Item: [prev])"
 				H.set_clothing_icon_dirty()
+		return
+
+/datum/achievementReward/clown_college
+	title = "Clown College Regalia"
+	desc = "Spawns you your clown college graduation cap and diploma."
+	required_medal = "Unlike the director, I went to college"
+
+	rewardActivate(var/mob/activator)
+		if (ishuman(activator))
+			var/mob/living/carbon/human/H = activator
+			if (H.mind.assigned_role == "Clown")
+				H.equip_if_possible(new /obj/item/clothing/head/graduation_cap(H), H.slot_head)
+				var/obj/item/toy/diploma/D = new /obj/item/toy/diploma(get_turf(H))
+				D.redeemer = H.ckey
+				H.put_in_hand_or_drop(D)
+
+			else
+				boutput(H, "You're not a honking clown, you imposter!")
 		return
 
 /datum/achievementReward/inspectorscloths
@@ -458,16 +476,7 @@
 
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
-				if (istype(M, /obj/item/clothing/under/rank/captain/dress))
-					var/prev = M.name
-					M.icon_state = "captain-dress-blue"
-					M.item_state = "captain-dress-blue"
-					M.name = "commander's uniform"
-					M.real_name = "commander's uniform"
-					M.desc = "A uniform specifically for NanoTrasen commanders. (Base Item: [prev])"
-					H.set_clothing_icon_dirty()
-
-				else if (istype(M, /obj/item/clothing/under/rank/captain))
+				if (istype(M, /obj/item/clothing/under/rank/captain))
 					var/prev = M.name
 					M.name = "commander's uniform"
 					M.desc = "A uniform specifically for NanoTrasen commanders. (Base Item: [prev])"
@@ -484,10 +493,14 @@
 
 				else if (istype(M, /obj/item/clothing/under/suit/captain))
 					var/prev = M.name
-					M.name = "commander's uniform"
+					M.name = "\improper Commander's suit"
 					M.desc = "A uniform specifically for NanoTrasen commanders. (Base Item: [prev])"
-					M.icon_state = "suit-capB"
-					M.item_state = "suit-capB"
+					if (istype(M, /obj/item/clothing/under/suit/captain/dress))
+						M.icon_state = "suit-capB-dress"
+						M.item_state = "suit-capB-dress"
+					else
+						M.icon_state = "suit-capB"
+						M.item_state = "suit-capB"
 					H.set_clothing_icon_dirty()
 
 			if (H.wear_suit)
@@ -606,7 +619,7 @@
 			A.set_color("#EE0000")
 			//A.icon_state = "ai-malf"
 		else
-			boutput(activator, "<span style=\"color:red\">You need to be an AI to use this, you goof!</span>")
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
 		return
 
 /datum/achievementReward/borg_automoton
@@ -620,7 +633,7 @@
 			C.automaton_skin = 1
 			C.update_appearance()
 		else
-			boutput(activator, "<span style=\"color:red\">You need to be a cyborg to use this, you goof!</span>")
+			boutput(activator, "<span class='alert'>You need to be a cyborg to use this, you goof!</span>")
 		return
 /*
 /datum/achievementReward/secbelt
@@ -686,7 +699,7 @@
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
 			return
-		boutput(usr, "<span style=\"color:blue\">:shelterbee:</span>")
+		boutput(usr, "<span class='notice'>:shelterbee:</span>")
 		animate_emote(usr, /obj/effect/shelterbee)
 		return
 
@@ -706,12 +719,8 @@
 
 	rewardActivate(var/mob/activator)
 		if (!isobserver(activator))
-			boutput(activator, "<span style=\"color:red\">You gotta be dead to use this, you goof!</span>")
+			boutput(activator, "<span class='alert'>You gotta be dead to use this, you goof!</span>")
 			return
-		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-		smoke.set_up(5, 0, get_turf(usr))
-		smoke.attach(usr)
-		smoke.start()
 		var/mob/living/object/O = new /mob/living/object(new /obj/item/sticker/ribbon/participant(get_turf(usr)), usr)
 		O.say_language = "animal"
 		O.literate = 0
@@ -738,7 +747,7 @@
 			qdel(M)
 
 		else
-			boutput(activator, "<span style=\"color:red\">You need to be holding a PR-4 Guardbuddy frame in order to claim this reward!</span>")
+			boutput(activator, "<span class='alert'>You need to be holding a PR-4 Guardbuddy frame in order to claim this reward!</span>")
 			return
 
 		return
@@ -753,7 +762,7 @@
 	usr.verbs -= /proc/smugproc
 	usr.verbs += /proc/smugprocCD
 	SPAWN_DBG(30 SECONDS)
-		boutput(usr, "<span style=\"color:blue\">You can now be smug again! Go hog wild.</span>")
+		boutput(usr, "<span class='notice'>You can now be smug again! Go hog wild.</span>")
 		usr.verbs += /proc/smugproc
 		usr.verbs -= /proc/smugprocCD
 	return
@@ -763,7 +772,7 @@
 	set desc = "Currently on cooldown."
 	set category = "Commands"
 
-	boutput(usr, "<span style=\"color:red\">You can't use that again just yet.</span>")
+	boutput(usr, "<span class='alert'>You can't use that again just yet.</span>")
 	return
 
 /obj/effect/smug
@@ -782,7 +791,7 @@
 	rewardActivate(var/mob/activator)
 		if (!activator.reagents) return
 		activator.reagents.add_reagent("bee", 5)
-		boutput (activator, "<span style='color:red'>Pleeze hold, bee will bee with thee shortlee!</span>" )
+		boutput (activator, "<span class='alert'>Pleeze hold, bee will bee with thee shortlee!</span>" )
 
 /datum/achievementReward/bloodflood
 	title = "(Fancy Gib) Plague of Blood"
@@ -790,11 +799,37 @@
 	required_medal = "Original Sin"
 
 	rewardActivate(var/mob/activator)
+		if (isdead(activator))
+			boutput(activator, "<span class='alert'>You uh, yeah no- you already popped, buddy.</span>")
+			return
+		if (activator.stat || activator.restrained() || activator.getStatusDuration("paralysis") || activator.getStatusDuration("stunned"))
+			boutput(activator, "<span style=\"color:red\">Absolutely Not.</span>")
+			return
+		var/blood_id = "blood"
+		var/blood_amount = 500
+		var/blood_mult = 6.9
+		var/mob/living/L = activator
+		if(istype(L))
+			var/mob/living/carbon/human/H = activator
+			if(L.blood_id)
+				blood_id = L.blood_id
+			if(istype(H) && H.blood_volume)
+				blood_amount = H.blood_volume
+		activator.suiciding = 1
 		var/turf/T = get_turf(activator)
-		T.fluid_react_single("blood",5000)
+		if(L?.traitHolder?.hasTrait("hemophilia"))
+			blood_mult = blood_mult + 3
+		T.fluid_react_single(blood_id,blood_mult * blood_amount)
+		var/result = world.ClearMedal("Original Sin", activator)
+		logTheThing("combat", activator, null, "Activated the blood flood gib reward thing (Original Sin)")
+		if(result)
+			boutput(activator, "<span class='alert'>You feel your soul cleansed of sin.</span>")
+			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, 1 )
 		activator.gib()
-
-
+		/* This is dumb we just gibbed the mob
+		SPAWN_DBG(20 SECONDS)
+			if(activator && !isdead(activator))
+				activator.suiciding = 0*/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Management stuff below.
 /chui/window/contributorrewards
 	name = "Contributor Rewards"
@@ -824,7 +859,7 @@
 			c << sound( living.sound_scream )
 			return 1
 		else
-			boutput( usr, "<span style='color:red'>Hmm.. I can't set the scream sound of that!</span>" )
+			boutput( usr, "<span class='alert'>Hmm.. I can't set the scream sound of that!</span>" )
 			return 0
 
 /datum/achievementReward/contributor
@@ -855,7 +890,7 @@
 
 	SPAWN_DBG(0)
 		src.verbs -= /client/verb/claimreward
-		boutput(usr, "<span style=\"color:red\">Checking your eligibility. There might be a short delay, please wait.</span>")
+		boutput(usr, "<span class='alert'>Checking your eligibility. There might be a short delay, please wait.</span>")
 		var/list/eligible = list()
 		for(var/A in rewardDB)
 			var/datum/achievementReward/D = rewardDB[A]
@@ -867,7 +902,7 @@
 					eligible[D.title] = D
 
 		if(!length(eligible))
-			boutput(usr, "<span style=\"color:red\">Sorry, you don't have any rewards available.</span>")
+			boutput(usr, "<span class='alert'>Sorry, you don't have any rewards available.</span>")
 			src.verbs += /client/verb/claimreward
 			return
 
@@ -886,7 +921,7 @@
 				break
 
 		if(S == null)
-			boutput(usr, "<span style=\"color:red\">Invalid Rewardtype after selection. Please inform a coder.</span>")
+			boutput(usr, "<span class='alert'>Invalid Rewardtype after selection. Please inform a coder.</span>")
 
 		var/M = alert(usr,S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)","Claim this Reward?","Yes","No")
 		if(M == "Yes")

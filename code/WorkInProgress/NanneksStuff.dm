@@ -127,7 +127,7 @@
 
 						B.icon = make_icon_with_turf(T)
 
-			sleep(5)
+			sleep(0.5 SECONDS)
 
 
 

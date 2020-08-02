@@ -38,7 +38,7 @@
 		if(istype( what, /obj/machinery/bathtub ))
 			var/obj/machinery/bathtub/B = what
 			B.wheels = src
-			boutput( user, "<span style='color:blue'>You attach the [CLEAN(src)] to the [CLEAN(what)].</span>" )
+			boutput( user, "<span class='notice'>You attach the [CLEAN(src)] to the [CLEAN(what)].</span>" )
 		*/
 
 
@@ -74,7 +74,7 @@
 		return
 	world << targets.len
 	var/target = input("Choose a destination!") in wtfbyond|null
-	if(!target) return
+	if(!target || !src.client) return
 	target = targets[target]
 	var/turf/dest = get_turf(target)
 	if(dest.z != OT.z)
@@ -111,11 +111,11 @@
 			var/matrix/xf = matrix()
 			img.transform = xf/2
 			animate(img,alpha=255,transform=xf,time=2)
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 /mob/living/carbon/verb/GPS()
 	set name = "GPS"
-	set category = "Special Verbs"
+	set category = "Commands"
 	set desc = "Find your way around with ease!"
 	if(ON_COOLDOWN(src, /mob/living/carbon/verb/GPS, 10 SECONDS))
 		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, /mob/living/carbon/verb/GPS, 0))].")
@@ -124,7 +124,7 @@
 		DoGPS(src:wear_id)
 /mob/living/silicon/verb/GPS()
 	set name = "GPS"
-	set category = "Special Verbs"
+	set category = "Commands"
 	set desc = "Find your way around with ease!"
 	if(ON_COOLDOWN(src, /mob/living/silicon/verb/GPS, 10 SECONDS)) // using ..... is very wacked
 		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, /mob/living/silicon/verb/GPS, 0))].")
@@ -292,7 +292,7 @@ world/proc/updateCameraVisibility()
 /obj/somepotato/vfd
 	name = "Variable Frequency Drive"
 	desc = "To avoid arousing too much suspicion, this fella converts single-phase power to three-phase. Sure, that power is passed down via a 24 AWG USB cable, but it's probably fine."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "vfd"
 	New()
 /obj/somepotato/billiards

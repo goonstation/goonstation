@@ -10,7 +10,7 @@ var/list/xp_archive = list()
 /proc/testSummary(var/amt = 1)
 	award_xp(usr.key, "Bip", amt, 1)
 	award_xp(usr.key, "Bop", amt, 1)
-	sleep(10)
+	sleep(1 SECOND)
 	SPAWN_DBG(0) show_xp_summary(usr.key, usr)
 	return
 
@@ -103,7 +103,43 @@ var/list/xp_archive = list()
 				add_xp_throttle_entry(key, actual)
 				archive_xp(key, field_name, actual)
 	return
+//Wrapper for awarding exp without actually adding it to the byond medals database
+/proc/award_xp_and_archive(var/key = null, var/field_name="debug", var/amount = 0, var/ignore_caps=0)
+	if(!key) return null
+	var/actual = round(amount * XP_GLOBAL_MOD)
 
+	if(is_eligible_xp(key, amount) || (amount >= XP_THROTTLE_AMT) || ignore_caps)
+		if(xp_earned[key] && !ignore_caps)
+			if(xp_earned[key] + (amount * XP_GLOBAL_MOD) > XP_ROUND_CAP)
+				actual = (XP_ROUND_CAP - xp_earned[key])
+
+		if(actual >= 0)
+			SPAWN_DBG(0)
+				add_xp_throttle_entry(key, actual)
+				archive_xp(key, field_name, actual)
+	return
+
+//Saves the xp gained by players in this round into the byond scores db
+//Only to be used at round end.
+var/global/awarded_xp = 0
+/proc/award_archived_round_xp()
+	if (awarded_xp)
+		message_admins("Tried to award job exp for the round more than once. Probably some fuckery is going on.")
+		logTheThing("debug", null, null, "Tried to award job exp for the round more than once. Probably some fuckery is going on.")
+		return
+	if (!islist(xp_archive))
+		return
+	awarded_xp = 1
+
+	for (var/key in xp_archive)
+		SPAWN_DBG(0)
+			var/list/v_list = xp_archive[key]
+			for (var/field in v_list)		//field is the job. Botanist, Clown, etc.
+				var/amt = v_list["[field]"]
+				amt = clamp(amt,0,XP_ROUND_CAP)
+				add_xp(key, field, amt)
+
+//wrapper for set_xp
 /proc/add_xp(var/key = null, var/field_name="debug", var/amount = 0)
 	if(!key) return null
 
@@ -140,6 +176,7 @@ var/list/xp_archive = list()
 		return round(LEVEL_FOR_XP(xp))
 	return null
 
+//Actually sets the xp on byond scores
 /proc/set_xp(var/key = null, var/field_name="debug", var/field_value="0")
 	if(!key) return null
 	if (IsGuestKey(key))

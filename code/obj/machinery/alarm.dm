@@ -65,7 +65,7 @@
 		safe = -1
 		return
 
-	var/environment_pressure = environment.return_pressure()
+	var/environment_pressure = MIXTURE_PRESSURE(environment)
 
 	if((environment_pressure < ONE_ATMOSPHERE*0.90) || (environment_pressure > ONE_ATMOSPHERE*1.10))
 		//Pressure sensor
@@ -98,7 +98,7 @@
 		else safe = 1
 
 	var/tgmoles = 0
-	if(environment.trace_gases && environment.trace_gases.len)
+	if(length(environment.trace_gases))
 		for(var/datum/gas/trace_gas in environment.trace_gases)
 			tgmoles += trace_gas.moles
 
@@ -146,19 +146,19 @@
 	if (issnippingtool(W))
 		status ^= BROKEN
 		src.add_fingerprint(user)
-		src.visible_message("<span style=\"color:red\">[user] has [(status & BROKEN) ? "de" : "re"]activated [src]!</span>")
+		src.visible_message("<span class='alert'>[user] has [(status & BROKEN) ? "de" : "re"]activated [src]!</span>")
 		return
 	if (istype(W, /obj/item/card/id) || (istype(W, /obj/item/device/pda2) && W:ID_card))
 		if (status & (BROKEN|NOPOWER))
-			boutput(user, "<span style=\"color:red\">The local air monitor has no power!</span>")
+			boutput(user, "<span class='alert'>The local air monitor has no power!</span>")
 			return
 		if (src.allowed(usr))
 //			locked = !locked
 //			boutput(user, "You [ locked ? "lock" : "unlock"] the local air monitor.")
-			boutput(user, "<span style=\"color:red\">Error: No atmospheric pipe network detected.</span>") // <-- dumb workaround until atmos processing is better
+			boutput(user, "<span class='alert'>Error: No atmospheric pipe network detected.</span>") // <-- dumb workaround until atmos processing is better
 			return
 		else
-			boutput(user, "<span style=\"color:red\">Access denied.</span>")
+			boutput(user, "<span class='alert'>Access denied.</span>")
 			return
 	return ..()
 
@@ -166,13 +166,13 @@
 	if(status & (NOPOWER|BROKEN))
 		return
 	user.Browse(return_text(user),"window=atmos")
-	user.machine = src
+	src.add_dialog(user)
 	onclose(user, "atmos")
 
 /obj/machinery/alarm/proc/return_text(mob/user)
 	if ( (get_dist(src, user) > 1 ))
 		if (!issilicon(user))
-			user.machine = null
+			src.remove_dialog(user)
 			user.Browse(null, "window=atmos")
 		return
 
@@ -182,8 +182,8 @@
 		output += "<FONT color = 'red'>ERROR: Unable to determine environmental status!</FONT><BR><BR>"
 		safe = -1
 	else
-		var/environment_pressure = environment.return_pressure()
-		var/total_moles = environment.total_moles()
+		var/environment_pressure = MIXTURE_PRESSURE(environment)
+		var/total_moles = TOTAL_MOLES(environment)
 
 		if((environment_pressure < ONE_ATMOSPHERE*0.80) || (environment_pressure > ONE_ATMOSPHERE*1.20))
 			output += "<FONT color = 'red'>"
@@ -251,8 +251,10 @@
 		else
 			output += ""
 
+		// Newly added gases should be added here manually since there's no nice way of using APPLY_TO_GASES here
+
 		var/tgmoles = 0
-		if(environment.trace_gases && environment.trace_gases.len)
+		if(length(environment.trace_gases))
 			for(var/datum/gas/trace_gas in environment.trace_gases)
 				tgmoles += trace_gas.moles
 

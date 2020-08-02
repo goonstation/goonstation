@@ -33,7 +33,7 @@
 
 		if (message_type == 3)
 			violent_standup_twitch(M)
-			M.visible_message("<span style=\"color:red\"><B>[M] contorts their body and judders upright!</B></span>")
+			M.visible_message("<span class='alert'><B>[M] contorts their body and judders upright!</B></span>")
 			playsound(M.loc, 'sound/effects/bones_break.ogg', 60, 1)
 		else if (message_type == 2)
 			boutput(M, __blue("You feel your flesh knitting itself back together."))
@@ -66,7 +66,6 @@
 		M.TakeDamage("All", greatest_stun, 0)
 		M.take_oxygen_deprivation(-5)
 		M.losebreath = min(usr.losebreath - 3)
-		M.updatehealth()
 		boutput(M, __blue("You cancel your stuns and take [greatest_stun] damage in return."))
 
 		src.remove_stuns(3)
@@ -94,7 +93,6 @@
 			M.take_toxin_damage(-40)
 			M.take_oxygen_deprivation(-40)
 			M.losebreath = min(usr.losebreath - 40)
-			M.updatehealth()
 
 		src.remove_stuns(2)
 		return 0

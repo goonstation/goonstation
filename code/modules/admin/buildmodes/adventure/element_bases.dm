@@ -8,6 +8,8 @@
 	proc/build_click(var/mob/user, var/datum/buildmode_holder/holder, pa, var/atom/object)
 		return
 
+var/global/list/adventure_elements_by_id = list()
+
 /obj/adventurepuzzle
 	icon = 'icons/obj/randompuzzles.dmi'
 	name = "You shouldn't see this"
@@ -18,6 +20,10 @@
 		if (src.opacity)
 			src.opacity = 0
 			RL_SetOpacity(1)
+		if(!(src.id in adventure_elements_by_id))
+			adventure_elements_by_id[src.id] = list(src)
+		else
+			adventure_elements_by_id[src.id] += src
 		..()
 
 	ex_act()
@@ -31,6 +37,10 @@
 
 	meteorhit()
 		return
+
+	disposing()
+		adventure_elements_by_id[src.id] -= src
+		..()
 
 /obj/adventurepuzzle/marker
 	icon_state = "select_generic"
@@ -216,6 +226,17 @@
 	name = "You shouldn't see this"
 	desc = "AND YOU DAMN WELL SHOULDN'T EXAMINE IT"
 	var/id = null
+
+	New()
+		if(!(src.id in adventure_elements_by_id))
+			adventure_elements_by_id[src.id] = list(src)
+		else
+			adventure_elements_by_id[src.id] += src
+		..()
+
+	disposing()
+		adventure_elements_by_id[src.id] -= src
+		..()
 
 // WOULDN'T IT BE NICE TO HAVE TRAITS???
 /obj/item/adventurepuzzle/triggerer

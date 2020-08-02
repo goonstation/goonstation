@@ -4,7 +4,7 @@
 	mouse_opacity = 0
 	density = 0
 	anchored = 1
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "tile_edge"
 	layer = TURF_LAYER + 0.1 // it should basically be part of a turf
 	plane = PLANE_FLOOR // hence, they should be on the same plane!
@@ -16,6 +16,8 @@
 			if (!T)
 				return ..()
 			var/image/I = image(src.icon, T, src.icon_state, src.layer, src.dir)
+			I.pixel_x = src.pixel_x
+			I.pixel_y = src.pixel_y
 			I.appearance_flags = RESET_COLOR
 			if (src.color)
 				I.color = src.color
@@ -41,6 +43,27 @@
 
 /obj/decal/tile_edge/stripe/extra_big
 	icon_state = "xtra_bigstripe-edge"
+
+/obj/decal/tile_edge/stripe/corner
+	name = "hazard stripe corner"
+
+/obj/decal/tile_edge/stripe/corner/big
+	icon_state = "bigstripe-corner"
+
+/obj/decal/tile_edge/stripe/corner/big2
+	icon_state = "bigstripe-corner2"
+
+/obj/decal/tile_edge/stripe/corner/extra_big
+	icon_state = "xtra_bigstripe-corner"
+
+/obj/decal/tile_edge/stripe/corner/extra_big2
+	icon_state = "xtra_bigstripe-corner2"
+
+/obj/decal/tile_edge/stripe/corner/xmas
+	icon_state = "xmas-corner"
+
+/obj/decal/tile_edge/stripe/corner/xmas2
+	icon_state = "xmas-corner2"
 
 /obj/decal/tile_edge/line
 	icon = 'icons/obj/line.dmi'
@@ -110,7 +133,7 @@
 
 /obj/decal/stage_edge
 	name = "stage"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "curtainthing"
 	density = 1
 	anchored = 1

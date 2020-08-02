@@ -5,6 +5,7 @@
 	name = "backpack"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
 	icon_state = "backpack"
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
 	flags = ONBACK | FPRINT | TABLEPASS | NOSPLASH
 	w_class = 4.0
@@ -13,17 +14,37 @@
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/storage/box/starter)
 
+	New()
+		..()
+		BLOCK_LARGE
+		AddComponent(/datum/component/itemblock/backpackblock)
+
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 /obj/item/storage/backpack/NT
 	name = "\improper NT backpack"
+	desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
 	icon_state = "NTbackpack"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+/obj/item/storage/backpack/syndie
+	name = "\improper Syndicate backpack"
+	desc = "A stylish red, evil, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on an operative's back."
+	icon_state = "Syndiebackpack"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
+/obj/item/storage/backpack/syndie/tactical
+	name = "tactical assault rucksack"
+	desc = "A military backpack made of high density fabric, designed to fit a wide array of tools for comprehensive storage support."
+	icon_state = "tactical_backpack"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	slots = 10
+
 /obj/item/storage/backpack/medic
 	name = "medic's backpack"
-	icon_state = "bp_medic"
+	icon_state = "bp_medic" //im doing inhands, im not getting baited into refactoring every icon state to use hyphens instead of underscores right now
+	item_state = "bp-medic"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 /obj/item/storage/backpack/satchel
@@ -31,6 +52,11 @@
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
 	icon_state = "satchel"
 
+/obj/item/storage/backpack/satchel/syndie
+	name = "\improper Syndicate Satchel"
+	desc = "A stylish red, evil, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on an operative's back."
+	icon_state = "Syndiesatchel"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 /obj/item/storage/backpack/satchel/medic
 	name = "medic's satchel"
@@ -62,17 +88,21 @@
 /obj/item/storage/fanny
 	name = "fanny pack"
 	desc = "No, 'fanny' as in 'butt.' Not the other thing."
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "fanny"
 	item_state = "fanny"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
 	w_class = 4.0
 	max_wclass = 3
 	does_not_open_in_pocket = 0
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 5
 	spawn_contents = list(/obj/item/storage/box/starter)
+
+	New()
+		..()
+		BLOCK_ROPE
 
 /obj/item/storage/fanny/funny
 	name = "funny pack"
@@ -81,6 +111,11 @@
 	item_state = "funny"
 	spawn_contents = list(/obj/item/storage/box/starter,\
 	/obj/item/storage/box/balloonbox)
+
+/obj/item/storage/fanny/funny/mini
+	name = "mini funny pack"
+	desc = "Haha, get it? Get it? 'Funny'! This one seems a little smaller, and made of even cheaper material."
+	slots = 3
 
 /obj/item/storage/fanny/syndie
 	name = "syndicate tactical espionage belt pack"
@@ -92,38 +127,46 @@
 
 /obj/item/storage/belt
 	name = "belt"
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "belt"
 	item_state = "belt"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
 	max_wclass = 2
 	does_not_open_in_pocket = 0
-	stamina_damage = 5
+	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 5
+	w_class = 4.0
+
+	New()
+		..()
+		BLOCK_ROPE
 
 	proc/can_use()
 		.= 1
 		if (!ismob(loc))
 			return 0
 
+
+
 	MouseDrop(obj/over_object as obj, src_location, over_location)
 		var/mob/M = usr
-		if (!istype(over_object, /obj/screen))
+		if (istype(over_object,/obj/item) || istype(over_object,/mob/)) // covers pretty much all the situations we're trying to prevent; namely transferring storage and opening while on ground
 			if(!can_use())
-				boutput(M, "<span style=\"color:red\">I need to wear [src] for that.</span>")
+				boutput(M, "<span class='alert'>You need to wear [src] for that.</span>")
 				return
 		return ..()
 
+
 	attack_hand(mob/user as mob)
 		if (src.loc == user && !can_use())
-			boutput(user, "<span style=\"color:red\">I need to wear [src] for that.</span>")
+			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
 			return
 		return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(!can_use())
-			boutput(user, "<span style=\"color:red\">I need to wear [src] for that.</span>")
+			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
 			return
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
@@ -139,8 +182,10 @@
 	desc = "Can hold various small objects."
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	can_hold = list(/obj/item/deconstructor)
+	in_list_or_max = 1
 
-/obj/item/storage/belt/utility/ceshielded
+/obj/item/storage/belt/utility/prepared/ceshielded
 	name = "aurora MKII utility belt"
 	desc = "An utility belt for usage in high-risk salvage operations. Contains a personal shield generator. Can be activated to overcharge the shields temporarily."
 	icon_state = "cebelt"
@@ -154,7 +199,8 @@
 	var/lastTick = 0
 	var/chargeTime = 50 //world.time Ticks per charge increase. 50 works out to be roughly 45 seconds from 0 -> 10 under normal conditions.
 	can_hold = list(/obj/item/rcd,
-	/obj/item/rcd_ammo)
+	/obj/item/rcd_ammo,
+	/obj/item/deconstructor)
 	in_list_or_max = 1
 
 	New()
@@ -208,6 +254,9 @@
 		delProperty("heatprot")
 
 		if(overlay)
+			if(ishuman(src.loc))
+				var/mob/living/carbon/human/H = src.loc
+				H.attached_objs.Remove(overlay)
 			qdel(overlay)
 			overlay = null
 
@@ -245,14 +294,13 @@
 		return ..()
 
 	examine()
-		..()
-		boutput(usr, "There are [src.charge]/[src.maxCharge] PU left.")
-		return
+		. = ..()
+		. += "There are [src.charge]/[src.maxCharge] PU left."
 
 	buildTooltipContent()
-		var/content = ..()
-		content += "<br>There are [src.charge]/[src.maxCharge] PU left."
-		return content
+		. = ..()
+		. += "<br>There are [src.charge]/[src.maxCharge] PU left."
+		lastTooltipContent = .
 
 /obj/item/storage/belt/utility/prepared
 	spawn_contents = list(/obj/item/crowbar,
@@ -261,7 +309,7 @@
 	/obj/item/screwdriver,
 	/obj/item/wrench,
 	/obj/item/device/multitool,
-	/obj/item/cable_coil)
+	/obj/item/deconstructor)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
@@ -300,8 +348,8 @@
 	/obj/item/gun/energy/phaser_gun,
 	/obj/item/gun/energy/laser_gun,
 	/obj/item/gun/energy/egun,
-	/obj/item/gun/energy/lawgiver,
-	/obj/item/gun/energy/lawgiver/old,
+	/obj/item/gun/energy/lawbringer,
+	/obj/item/gun/energy/lawbringer/old,
 	/obj/item/gun/energy/wavegun,
 	/obj/item/gun/kinetic/revolver,
 	/obj/item/gun/kinetic/zipgun)
@@ -319,6 +367,22 @@
 			icon_state = "inspector_holster"
 			item_state = "inspector_holster"
 
+
+	standard
+		spawn_contents = list(/obj/item/gun/energy/taser_gun, /obj/item/baton)
+
+	offense
+		spawn_contents = list(/obj/item/gun/energy/wavegun, /obj/item/baton)
+
+	support
+		spawn_contents = list(/obj/item/baton, /obj/item/reagent_containers/food/snacks/donut/robust = 2,  /obj/item/reagent_containers/emergency_injector/morphine = 4)
+
+	control
+		spawn_contents = list(/obj/item/gun/energy/tasershotgun, /obj/item/chem_grenade/pepper = 4, /obj/item/baton)
+		New()
+			..()
+			can_hold += /obj/item/gun/energy/tasershotgun //lol
+
 //////////////////////////////
 // ~Nuke Ops Class Storage~ //
 //////////////////////////////
@@ -332,6 +396,26 @@
 	item_state = "utility"
 	can_hold = list(/obj/item/ammo/bullets)
 	in_list_or_max = 0
+
+/obj/item/storage/belt/revolver
+	name = "revolver belt"
+	desc = "A stylish leather belt for holstering a revolver and it's ammo."
+	icon_state = "revolver_belt"
+	item_state = "revolver_belt"
+	slots = 3
+	in_list_or_max = 0
+	can_hold = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357)
+	spawn_contents = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357 = 2)
+
+/obj/item/storage/belt/pistol
+	name = "pistol belt"
+	desc = "A rugged belt fitted with a pistol holster and some magazine pouches."
+	icon_state = "pistol_belt"
+	item_state = "pistol_belt"
+	slots = 5
+	in_list_or_max = 0
+	can_hold = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm)
+	spawn_contents = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm = 4)
 
 // fancy shoulder sling for grenades
 
@@ -350,7 +434,7 @@
 
 /obj/item/storage/belt/syndicate_medic_belt
 	name = "medical lifesaver bag"
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	desc = "A canvas duffel bag full of medicines."
 	icon_state = "medic_belt"
 	item_state = "medic_belt"
@@ -362,10 +446,10 @@
 	/obj/item/reagent_containers/emergency_injector/high_capacity/pentetic,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/mannitol)
 
-/obj/item/storage/backpack/syndicate_medic_satchel
+/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel
 	name = "medical shoulder pack"
 	desc = "A satchel containing larger medical supplies and instruments."
-	icon_state = "NTsatchel"
+	icon_state = "Syndiesatchel"
 	item_state = "backpack"
 	spawn_contents = list(/obj/item/robodefibrillator,
 	/obj/item/extinguisher,
@@ -385,18 +469,28 @@
 	contraband = 8
 	is_syndicate = 1
 	mats = 18 //SPACE IS THE PLACE FOR WRESTLESTATION 13
+	var/fake = 0		//So the moves are all fake.
 
 	equipped(var/mob/user)
-		user.make_wrestler(0, 1, 0)
+		..()
+		user.make_wrestler(0, 1, 0, fake)
 
 	unequipped(var/mob/user)
-		user.make_wrestler(0, 1, 1)
+		..()
+		user.make_wrestler(0, 1, 1, fake)
+
+/obj/item/storage/belt/wrestling/fake
+	name = "fake wrestling belt"
+	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
+	contraband = 0
+	is_syndicate = 0
+	fake = 1
 
 // I dunno where else to put these vOv
 /obj/item/inner_tube
 	name = "inner tube"
 	desc = "An inflatable torus for your waist!"
-	icon = 'icons/obj/belts.dmi'
+	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "pool_ring"
 	item_state = "pool_ring"
 	flags = FPRINT | TABLEPASS | ONBELT

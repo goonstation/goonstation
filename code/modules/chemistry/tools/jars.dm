@@ -21,7 +21,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks))
 			if (src.contents.len > 16)
-				boutput(user, "<span style=\"color:red\">There is no way that will fit into this jar.  This VERY FULL jar.</span>")
+				boutput(user, "<span class='alert'>There is no way that will fit into this jar.  This VERY FULL jar.</span>")
 				return
 
 			user.drop_item()

@@ -36,16 +36,13 @@
 	return 0
 
 /datum/game_mode/monkey/declare_completion()
-	var/area/escape_zone = locate(map_settings.escape_centcom)
-
 	var/monkeywin = 0
 	for(var/mob/living/carbon/human/monkey_player in mobs)
 		if (!ismonkey(monkey_player))
 			continue
 
 		if (!isdead(monkey_player))
-			var/turf/location = get_turf(monkey_player.loc)
-			if (location in escape_zone)
+			if (in_centcom(monkey_player))
 				monkeywin = 1
 				break
 
@@ -57,7 +54,7 @@
 			if (!isdead(human_player))
 				var/turf/location = get_turf(human_player.loc)
 				if (istype(human_player.loc, /turf))
-					if (location in escape_zone)
+					if (in_centcom(human_player))
 						monkeywin = 0
 						break
 

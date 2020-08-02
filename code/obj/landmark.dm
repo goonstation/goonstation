@@ -327,11 +327,6 @@ var/global/list/landmarks = list()
 	return 1
 
 /obj/landmark/disposing()
-	..()
-	if (!deleted_on_start && islist(landmarks))
-		landmarks.Remove(src)
-
-/obj/landmark/disposing()
 	if (!deleted_on_start && islist(landmarks))
 		landmarks.Remove(src)
 	..()
@@ -353,7 +348,10 @@ var/global/list/job_start_locations = list()
 			else
 				job_start_locations[src.name] += src
 		//src.invisibility = 101
-		return 1
+
+	disposing()
+		job_start_locations[src.name] -= src
+		..()
 
 /obj/landmark/start/latejoin
 	name = "JoinLate"
@@ -435,3 +433,17 @@ obj/landmark/interesting
 		var/turf/T = src.loc
 		T.interesting = src.interesting
 
+obj/landmark/lrt //for use with long range teleporter locations, please add new subtypes of this for new locations and use those
+	name = "lrt landmark"
+	var/turf/held_turf = null //a reference to the turf its on
+
+	New()
+		..()
+		if (get_turf(src))
+			src.held_turf = get_turf(src)
+
+/obj/landmark/lrt/gemv
+	name = "Geminorum V"
+
+/obj/landmark/lrt/workshop
+	name = "Hidden Workshop"

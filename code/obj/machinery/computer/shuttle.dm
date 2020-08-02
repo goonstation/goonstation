@@ -31,6 +31,34 @@
 		dir = WEST
 		pixel_x = -25
 
+/obj/machinery/computer/asylum_shuttle
+	name = "Asylum Shuttle"
+	icon_state = "shuttle"
+	machine_registry_idx = MACHINES_SHUTTLECOMPS
+	var/active = 0
+	var/shuttle_loc = 2 //1 = asylum, 2 = medbay, 3 = pathology
+
+/obj/machinery/computer/asylum_shuttle/embedded
+	icon_state = "shuttle-embed"
+	density = 0
+	layer = EFFECTS_LAYER_1 // Must appear over cockpit shuttle wall thingy.
+
+	north
+		dir = NORTH
+		pixel_y = 25
+
+	east
+		dir = EAST
+		pixel_x = 25
+
+	south
+		dir = SOUTH
+		pixel_y = -25
+
+	west
+		dir = WEST
+		pixel_x = -25
+
 /obj/machinery/computer/prison_shuttle
 	name = "Prison Shuttle"
 	icon_state = "shuttle"
@@ -136,14 +164,14 @@
 		if(get_dist(user, src) > 1 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
 		switch(choice)
 			if("Launch")
-				boutput(world, "<span style=\"color:blue\"><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
+				boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
 				emergency_shuttle.settimeleft( 10 )
 				logTheThing("admin", user, null, "shortens Emergency Shuttle launch time to 10 seconds.")
 				return 1
 			if("Cancel")
 				return 1
 	else
-		boutput(world, "<span style=\"color:blue\"><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
+		boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
 		emergency_shuttle.settimeleft( 10 )
 		return 1
 	return 0
@@ -182,9 +210,9 @@
 				src.authorized -= W:registered
 				src.authorized += W:registered
 				if (src.auth_need - src.authorized.len > 0)
-					boutput(world, text("<span style=\"color:blue\"><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
+					boutput(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
 				else
-					boutput(world, "<span style=\"color:blue\"><B>Alert: Shuttle launch time shortened to 60 seconds!</B></span>")
+					boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 60 seconds!</B></span>")
 					emergency_shuttle.settimeleft(60)
 					//src.authorized = null
 					qdel(src.authorized)
@@ -192,10 +220,10 @@
 
 			if("Repeal")
 				src.authorized -= W:registered
-				boutput(world, text("<span style=\"color:blue\"><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
+				boutput(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
 
 			if("Abort")
-				boutput(world, "<span style=\"color:blue\"><B>All authorizations to shorting time for shuttle launch have been revoked!</B></span>")
+				boutput(world, "<span class='notice'><B>All authorizations to shorting time for shuttle launch have been revoked!</B></span>")
 				src.authorized.len = 0
 				src.authorized = list(  )
 	return
@@ -229,13 +257,13 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["send"])
 			src.send()
 
 		if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=shuttle")
 
 	src.add_fingerprint(usr)
@@ -246,7 +274,7 @@
 	if(!active)
 		for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 			active = 1
-			C.visible_message("<span style=\"color:red\">The Mining Shuttle has been Called and will leave shortly!</span>")
+			C.visible_message("<span class='alert'>The Mining Shuttle has been Called and will leave shortly!</span>")
 		SPAWN_DBG(10 SECONDS)
 			call_shuttle()
 
@@ -265,7 +293,7 @@
 
 	for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span style=\"color:red\">The Mining Shuttle has Moved!</span>")
+		C.visible_message("<span class='alert'>The Mining Shuttle has Moved!</span>")
 
 	return
 
@@ -298,19 +326,19 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["send"])
 			if(!active)
 				for(var/obj/machinery/computer/prison_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 					active = 1
-					C.visible_message("<span style=\"color:red\">The Prison Shuttle has been Called and will leave shortly!</span>")
+					C.visible_message("<span class='alert'>The Prison Shuttle has been Called and will leave shortly!</span>")
 
 				SPAWN_DBG(10 SECONDS)
 					call_shuttle()
 
 		else if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=shuttle")
 
 	src.add_fingerprint(usr)
@@ -351,7 +379,7 @@
 
 	for(var/obj/machinery/computer/prison_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span style=\"color:red\">The Prison Shuttle has Moved!</span>")
+		C.visible_message("<span class='alert'>The Prison Shuttle has Moved!</span>")
 
 	return
 
@@ -390,29 +418,29 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (isturf(src.loc) && in_range(src, usr))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["send"])
 			for(var/obj/machinery/shuttle/engine/propulsion/eng in machine_registry[MACHINES_SHUTTLEPROPULSION]) // ehh
 				if(eng.stat1 == 0 && eng.stat2 == 0 && eng.id == "zeta")
-					boutput(usr, "<span style=\"color:red\">Propulsion thruster damaged. Unable to move shuttle.</span>")
+					boutput(usr, "<span class='alert'>Propulsion thruster damaged. Unable to move shuttle.</span>")
 					return
 				else
 					continue
 
 			if(researchshuttle_lockdown)
-				boutput(usr, "<span style=\"color:red\">The shuttle cannot be called during lockdown.</span>")
+				boutput(usr, "<span class='alert'>The shuttle cannot be called during lockdown.</span>")
 				return
 
 			if(!active)
 				for(var/obj/machinery/computer/research_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 					active = 1
-					C.visible_message("<span style=\"color:red\">The Research Shuttle has been Called and will leave shortly!</span>")
+					C.visible_message("<span class='alert'>The Research Shuttle has been Called and will leave shortly!</span>")
 
 				SPAWN_DBG(10 SECONDS)
 					call_shuttle()
 
 		else if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=shuttle")
 
 	src.add_fingerprint(usr)
@@ -421,7 +449,7 @@
 
 /obj/machinery/computer/research_shuttle/proc/call_shuttle()
 	if(researchshuttle_lockdown)
-		boutput(usr, "<span style=\"color:red\">This shuttle is currently on lockdown and cannot be used.</span>")
+		boutput(usr, "<span class='alert'>This shuttle is currently on lockdown and cannot be used.</span>")
 		return
 
 	if(researchshuttle_location == 0)
@@ -438,10 +466,110 @@
 
 	for(var/obj/machinery/computer/research_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span style=\"color:red\">The Research Shuttle has Moved!</span>")
+		C.visible_message("<span class='alert'>The Research Shuttle has Moved!</span>")
 
 	return
 
+/obj/machinery/computer/asylum_shuttle/attack_hand(mob/user as mob)
+	if(..())
+		return
+
+	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
+
+	switch(shuttle_loc)
+		if(1)
+			dat += "Shuttle Location: Asylum"
+		if(2)
+			dat += "Shuttle Location: Medbay"
+		if(3)
+			dat += "Shuttle Location: Pathology Research"
+	dat += "<BR><BR>"
+
+	if(active)
+		dat += "Moving"
+	else
+		for(var/i=1,i<=3,i++)
+			if(i == shuttle_loc)
+				continue
+			switch(i)
+				if(1)
+					dat += "<a href='byond://?src=\ref[src];asylum=1'>Asylum</a><BR>"
+				if(2)
+					dat += "<a href='byond://?src=\ref[src];medbay=1'>Medbay</a><BR>"
+				if(3)
+					dat += "<a href='byond://?src=\ref[src];pathology=1'>Pathology Research</a><BR>"
+
+	user.Browse(dat, "window=shuttle")
+	onclose(user, "shuttle")
+	return
+
+/obj/machinery/computer/asylum_shuttle/Topic(href, href_list)
+	if(..())
+		return
+	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		src.add_dialog(usr)
+
+		if(href_list["asylum"])
+			src.call_shuttle(1)
+		else if(href_list["medbay"])
+			src.call_shuttle(2)
+		else if(href_list["pathology"])
+			src.call_shuttle(3)
+		else if (href_list["close"])
+			src.remove_dialog(usr)
+			usr.Browse(null, "window=shuttle")
+
+	src.add_fingerprint(usr)
+	src.updateUsrDialog()
+	usr.Browse(null, "window=shuttle")
+	return
+
+/obj/machinery/computer/asylum_shuttle/proc/call_shuttle(var/target_loc)
+	if(!active)
+		for(var/obj/machinery/computer/asylum_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
+			C.active = 1
+			var/message_string
+			switch(target_loc)
+				if(1)
+					message_string = "the Asylum"
+				if(2)
+					message_string = "Medbay"
+				if(3)
+					message_string = "Pathology Research"
+			C.visible_message("<span class='alert'>The Asylum Shuttle has been sent to [message_string]!</span>")
+		SPAWN_DBG(10 SECONDS)
+			var/area/start_location
+			var/area/end_location
+			switch(shuttle_loc)
+				if(1)
+					start_location = locate(/area/shuttle/asylum/observation)
+				if(2)
+					start_location = locate(/area/shuttle/asylum/medbay)
+				if(3)
+					start_location = locate(/area/shuttle/asylum/pathology)
+			switch(target_loc)
+				if(1)
+					end_location = locate(/area/shuttle/asylum/observation)
+				if(2)
+					end_location = locate(/area/shuttle/asylum/medbay)
+				if(3)
+					end_location = locate(/area/shuttle/asylum/pathology)
+
+			for(var/x in end_location)
+				if(isliving(x))
+					var/mob/living/M = x
+					M.gib(1)
+				if(istype(x, /obj/storage))
+					var/obj/storage/S = x
+					qdel(S)
+
+			start_location.move_contents_to(end_location)
+
+			for(var/obj/machinery/computer/asylum_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
+				C.active = 0
+				C.shuttle_loc = target_loc
+				C.visible_message("<span class='alert'>The Asylum Shuttle has Moved!</span>")
+			return
 
 
 /obj/machinery/computer/icebase_elevator/attack_hand(mob/user as mob)
@@ -467,18 +595,18 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["send"])
 			if(!active)
 				for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 					active = 1
-					C.visible_message("<span style=\"color:red\">The elevator begins to move!</span>")
+					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
 				SPAWN_DBG(5 SECONDS)
 					call_shuttle()
 
 		if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=ice_elevator")
 
 	src.add_fingerprint(usr)
@@ -503,7 +631,7 @@
 
 	for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 		active = 0
-		C.visible_message("<span style=\"color:red\">The elevator has moved.</span>")
+		C.visible_message("<span class='alert'>The elevator has moved.</span>")
 		C.location = src.location
 
 	return
@@ -531,18 +659,18 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if (href_list["send"])
 			if(!active)
 				for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 					active = 1
-					C.visible_message("<span style=\"color:red\">The elevator begins to move!</span>")
+					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
 				SPAWN_DBG(5 SECONDS)
 					call_shuttle()
 
 		if (href_list["close"])
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=biodome_elevator")
 
 	src.add_fingerprint(usr)
@@ -571,14 +699,14 @@
 
 	for(var/obj/machinery/computer/biodome_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 		active = 0
-		C.visible_message("<span style=\"color:red\">The elevator has moved.</span>")
+		C.visible_message("<span class='alert'>The elevator has moved.</span>")
 		C.location = src.location
 
 	return
 
 /obj/sign_accidents
 	name = "Elevator Safety Sign"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "accidents_sign"
 	flags = FPRINT
 	density = 0

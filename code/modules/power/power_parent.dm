@@ -4,7 +4,7 @@
 	anchored = 1.0
 	machine_registry_idx = MACHINES_POWER
 	var/datum/powernet/powernet = null
-	var/netnum = 0
+	var/tmp/netnum = 0
 	var/use_datanet = 0		// If set to 1, communicate with other devices over cable network.
 	var/directwired = 1		// by default, power machines are connected by a cable in a neighbouring turf
 							// if set to 0, requires a 0-X cable on this turf
@@ -130,7 +130,7 @@ var/makingpowernetssince = 0
 	makingpowernets = 0
 
 /client/proc/fix_powernets()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc = "Attempts for fix the powernets."
 	set name = "Fix powernets"
 	unfuck_makepowernets()
@@ -250,7 +250,7 @@ var/makingpowernetssince = 0
         else if( istype(O, /obj/machinery/power) )
 
             var/obj/machinery/power/M = O
-            if(M.netnum > 0) 
+            if(M.netnum > 0)
                 if(!more || !more.len) return
                 O = more[more.len]
                 more -= O
@@ -299,7 +299,7 @@ var/makingpowernetssince = 0
 		cables -= C
 		if(Debug) world.log << "Was end of cable"
 		return
-	
+
 	if(makingpowernets)
 		return // TODO queue instead
 
@@ -375,18 +375,17 @@ var/makingpowernetssince = 0
 
 	return
 
-/datum/powernet/proc/join_to(var/datum/powernet/PN)
+/datum/powernet/proc/join_to(var/datum/powernet/PN) // maybe pool powernets someday
 	for(var/obj/cable/C in src.cables)
 		C.netnum = PN.number
 		PN.cables += C
 
 	for(var/obj/machinery/power/M in src.nodes)
 		M.netnum = PN.number
+		M.powernet = PN
 		PN.nodes += M
-	
-	for(var/obj/machinery/power/M in src.data_nodes)
-		M.netnum = PN.number
-		PN.data_nodes += M
+		if (M.use_datanet)
+			PN.data_nodes += M
 
 /datum/powernet/proc/reset()
 	load = newload

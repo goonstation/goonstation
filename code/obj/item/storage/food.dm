@@ -30,7 +30,8 @@
 	name = "\improper Donk-Pockets box"
 	desc = "Remember to fully heat prior to serving.  Product will cool if not eaten within seven minutes."
 	icon_state = "donk_kit"
-	item_state = "box_red"
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	item_state = "box-red"
 	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donkpocket = 7)
 
 /obj/item/storage/box/bacon_kit
@@ -110,7 +111,7 @@
 		else
 			new /obj/item/reagent_containers/food/snacks/ingredient/cheese(src)
 
-		shuffle(src.contents)
+		shuffle_list(src.contents)
 
 /obj/item/storage/goodybag
 	name = "goodybag"

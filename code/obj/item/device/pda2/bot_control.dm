@@ -156,7 +156,7 @@
 		if(..())
 			return
 
-		. = src.return_text_header()
+		. = list(src.return_text_header())
 		. += "<h4>M.U.L.E. bot Interlink V0.8</h4>"
 
 		if(!src.active)
@@ -212,6 +212,7 @@
 				. += "\[<A href='byond://?src=\ref[src];op=go'>Proceed</A>\] "
 				. += "\[<A href='byond://?src=\ref[src];op=home'>Return Home</A>\]<BR>"
 				. += "<HR><A href='byond://?src=\ref[src];op=botlist'>Return to bot list</A>"
+		. = jointext(., "")
 
 	Topic(href, href_list)
 		if(..())

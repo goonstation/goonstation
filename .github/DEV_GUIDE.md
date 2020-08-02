@@ -42,18 +42,19 @@ Next, we're going to need to get some necessary extensions!
 
 ### Step 4: Extension-O-Rama :gear: 
 
-Click the Extensions button on the left bar or press `Ctrl+Shift+X`. It looks like a bunch of squares. You should see 5 recommended extensions. If you don't, type `@recommended` into the search bar. You'll want to install all of these.
+Click the Extensions button on the left bar or press `Ctrl+Shift+X`. It looks like a bunch of squares. You should see 6 recommended extensions. If you don't, type `@recommended` into the search bar. You'll want to install all of these.
 
 :::warning
 If this does not work, search for the following extensions:
- - BYOND DM Language Support - syntax highlighting for the language
+ - BYOND DM Language Support - syntax highlighting for the DM language
  - DreamMaker Language Client - fancy features like debugging and jumping to definitions
- - EditorConfig for VS Code - loads the suggested editor configuration for the codebase
+ - EditorConfig for VS Code - loads the standardized editor configuration for the codebase
  - GitHub Pull Requests - lets you make a pull request directly from the editor
  - Bracket Pair Colorizer 2 - paints matching brackets the same color
+ - Git Graph - lets you work with branches visually for ease of use
 :::
 
-For the GitHub Pull Requests extension, you'll have to sign in to GitHub to link it properly.
+For the GitHub Pull Requests extension, you'll have to sign in to GitHub to link it properly. Also, sometime is just breaks. :shrug:
 
 :::warning
 If it errors, try again by launching `Sign in to GitHub` from the command palette.
@@ -72,10 +73,10 @@ You're just about done with that! Just one last thing you need to manually do.
 ### Step 6: Fixing Up :wrench: 
 
 :::info
-If you're a Goonstation maintainer, run `git submodule update --init` instead of this step.
+If you're a Goonstation developer, run `git submodule update --init` instead of this step.
 :::
 
-++**This step is required.**++ You'll need to create a file named `__secret.dme` in the `+secret` subdirectory. **It should be blank and have no contents.**
+++**This step is required.**++ You'll need to create a file named `__secret.dme` in the `+secret` subdirectory. **It should be blank and have no contents.** If you can't figure out how to make a empty file, use [this](https://www.dropbox.com/s/asvkccrk2fqkh14/__secret.dme).
 
 That's it! Your local codebase is all set up to contribute now.
 
@@ -96,7 +97,7 @@ For this guide, I'll be creating a new hat, so I'll name my branch `hat-landia`.
 
 **Remember, never commit changes to your master branch!** You can work on any branch as much as you want, as long as you **commit** the changes to the proper branch.
 
-Go wild! Make your code changes! This is a guide on how to contribute, not *what* to contribute. So, I won't tell you how to code, make sprites, or map changes. If you need help, try asking in the `#imcoder`, `#imspriter`, or the `#immapper` [Discord](https://discord.gg/0117EEzASKYV2vtek) channels respectively.
+Go wild! Make your code changes! This is a guide on how to contribute, not *what* to contribute. So, I won't tell you how to code, make sprites, or map changes. If you need help, try asking in the `#imcoder`, `#imspriter`, or the `#immapper` [Discord](https://discord.gg/zd8t6pY) channels respectively.
 
 ### Step 2: Change It Up :twisted_rightwards_arrows: 
 
@@ -181,6 +182,23 @@ If you go to your fork on the GitHub website and go to your code, you'll see tha
 *I know it's tempting, but don't press the green button.*
 
 Okay, we're almost done! Make as many changes and commits on your branch as you want, and move to the next step when you're done! Make sure to test your code. If you're not sure how to do that, ask somebody on `#imcoder`.
+
+### Addendum: Git Graph Extension
+
+Included in the recommended extensions is a really neat one, called **Git Graph**. It can be found at the bottom left of your toolbar, right here:  
+![](https://i.imgur.com/A18DGKb.png)
+
+This opens up a cool window, where you can visualize branches both on the upstream and your fork. You can configure some neat settings with the gear button in the top right to automatically link to issues and create PRs through the GitHub interface.
+
+If you right click, you can be presented with a variety of options. For example, if I right-clicked on the upstream master branch, I'm presented with these options:
+![](https://i.imgur.com/j3mksYv.png)
+
+If I have no changes to my local master, I can use that **Pull** button to *fast-forward* my branch to be up-to-date instantly! Pretty spiffy.
+
+If I'm working on a feature on a seprate branch, sometimes I might want to pull a specific commit from another branch. This is called *cherry-picking*, and is made super easy with Git Graph!
+![](https://i.imgur.com/xMj61i9.png)
+
+There's buttons for pretty much anything you want to do with Git. When you're all finished with your changes, you can even push your current branch to the origin by right clicking on your current commit.
 
 ## Making a Pull Request :arrow_heading_up:
 
@@ -359,3 +377,5 @@ git rebase master
 Yogstation for making an amazing guide that this is based on, found [here](https://forums.yogstation.net/index.php?threads/release-the-gitkraken-how-to-make-your-first-pull-request.15099/).
 
 /TG/station for for their [contribution guide](https://github.com/tgstation/tgstation/blob/master/.github/CONTRIBUTING.md), which was invaluable.
+
+[//]: # (This file is licensed under CC-BY-NC-SA 3.0 and the ISC licenses.)

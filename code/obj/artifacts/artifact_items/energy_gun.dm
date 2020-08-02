@@ -31,13 +31,12 @@
 		src.setItemSpecial(null)
 
 	examine()
-		set src in oview()
-		boutput(usr, "You have no idea what this thing is!")
+		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
 		if (istext(A.examine_hint))
-			boutput(usr, "[A.examine_hint]")
+			. += A.examine_hint
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -104,8 +103,8 @@
 		var/prev_health = integrity
 		integrity -= integrity_loss
 		if (integrity <= 20 && prev_health > 20)
-			O.visible_message("<span style=\"color:red\">[O] emits a terrible cracking noise.</span>")
+			O.visible_message("<span class='alert'>[O] emits a terrible cracking noise.</span>")
 		if (integrity <= 0)
-			O.visible_message("<span style=\"color:red\">[O] crumbles into nothingness.</span>")
+			O.visible_message("<span class='alert'>[O] crumbles into nothingness.</span>")
 			qdel(O)
 		react_xray[3] = integrity

@@ -50,7 +50,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 		if (!istype(H))
 			boutput(holder.owner, "Your target must be human!")
 			return 1
-		holder.owner.visible_message("<span style=\"color:red\"><b>[holder.owner] begins to cast a spell on [target]!</b></span>")
+		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [target]!</b></span>")
 		if (do_mob(holder.owner, target, 20))
 			holder.owner.say("YORAF UHRY") // AN EMAL? PAL EMORF? TURAN SPHORM?
 			..()
@@ -61,20 +61,20 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 			smoke.start()
 
 			if (H.traitHolder.hasTrait("training_chaplain"))
-				boutput(holder.owner, "<span style='color:red'>[H] has divine protection from magic.</span>")
-				H.visible_message("<span style='color:red'>The spell has no effect on [H]!</span>")
+				boutput(holder.owner, "<span class='alert'>[H] has divine protection from magic.</span>")
+				H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
 				return
 
 			if (iswizard(H))
-				H.visible_message("<span style='color:red'>The spell has no effect on [H]!</span>")
+				H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
 				return
 
 			if (check_target_immunity( H ))
-				H.visible_message("<span style='color:red'>[H] seems to be warded from the effects!</span>")
+				H.visible_message("<span class='alert'>[H] seems to be warded from the effects!</span>")
 				return 1
 
 			if (H.mind && (H.mind.assigned_role != "Animal") || (!H.mind || !H.client))
-				boutput(H, "<span style='color:red'><B>You feel your flesh painfully ripped apart and reformed into something else!</B></span>")
+				boutput(H, "<span class='alert'><B>You feel your flesh painfully ripped apart and reformed into something else!</B></span>")
 				if (H.mind)
 					H.mind.assigned_role = "Animal"
 				H.emote("scream", 0)

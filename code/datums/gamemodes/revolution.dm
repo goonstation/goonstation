@@ -20,6 +20,7 @@
 	var/win_check_freq = 30 SECONDS //frequency of checks on the win conditions
 	var/round_limit = 21000 // 35 minutes (see post_setup)
 	var/endthisshit = 0
+	do_antag_random_spawns = 0
 
 /datum/game_mode/revolution/extended
 	name = "extended revolution"
@@ -42,7 +43,7 @@
 		rev_number = 3
 	else
 		rev_number = revs_possible.len
-	
+
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
 		if (!token_players.len)
@@ -66,8 +67,8 @@
 	var/list/heads = get_living_heads()
 
 	if(!head_revolutionaries || !heads)
-		boutput(world, "<B><span style=\"color:red\">Not enough players for revolution game mode. Restarting world in 5 seconds.</span></B>")
-		sleep(50)
+		boutput(world, "<B><span class='alert'>Not enough players for revolution game mode. Restarting world in 5 seconds.</span></B>")
+		sleep(5 SECONDS)
 		Reboot_server()
 		return
 
@@ -84,7 +85,7 @@
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/obj_count = 1
-		boutput(rev_mind.current, "<span style=\"color:blue\">You are a member of the revolutionaries' leadership!</span>")
+		boutput(rev_mind.current, "<span class='notice'>You are a member of the revolutionaries' leadership!</span>")
 		for(var/datum/objective/objective in rev_mind.objectives)
 			boutput(rev_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
@@ -187,7 +188,7 @@
 
 /datum/game_mode/revolution/proc/add_revolutionary(datum/mind/rev_mind)
 	.= 0
-	if (!rev_mind.current || (rev_mind.current && !rev_mind.current.client))
+	if (!rev_mind?.current || (rev_mind.current && !rev_mind.current.client))
 		return 0
 
 	var/list/uncons = src.get_unconvertables()
@@ -206,7 +207,7 @@
 
 /datum/game_mode/revolution/proc/remove_revolutionary(datum/mind/rev_mind)
 	.= 0
-	if (!rev_mind.current)
+	if (!rev_mind?.current)
 		return 0
 
 	if (rev_mind in revolutionaries)
@@ -265,17 +266,23 @@
 /datum/game_mode/revolution/proc/get_possible_revolutionaries()
 	var/list/candidates = list()
 
-	for(var/mob/new_player/player in mobs)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
 		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
+		if ((player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
 			if(player.client.preferences.be_revhead)
 				candidates += player.mind
 
 	if(candidates.len < 1)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_revhead set to yes, so we're adding players who don't want to be rev leaders to the pool.")
-		for(var/mob/new_player/player in mobs)
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player)) continue
+
 			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
+			if ((player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 
 	if(candidates.len < 1)
@@ -412,11 +419,11 @@
 
 	var/text = ""
 	if(finished == 1)
-		boutput(world, "<span style=\"color:red\"><FONT size = 3><B> The heads of staff were killed or abandoned the [station_or_ship()]! The revolutionaries win!</B></FONT></span>")
+		boutput(world, "<span class='alert'><FONT size = 3><B> The heads of staff were killed or abandoned the [station_or_ship()]! The revolutionaries win!</B></FONT></span>")
 	else if(finished == 2)
-		boutput(world, "<span style=\"color:red\"><FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT></span>")
+		boutput(world, "<span class='alert'><FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT></span>")
 	else if(finished == 3)
-		boutput(world, "<span style=\"color:red\"><FONT size = 3><B> Everyone was terminated! CentCom wins!</B></FONT></span>")
+		boutput(world, "<span class='alert'><FONT size = 3><B> Everyone was terminated! CentCom wins!</B></FONT></span>")
 
 #ifdef DATALOGGER
 	switch(finished)
@@ -494,7 +501,7 @@
 	name = "revolutionary sign"
 	desc = "A sign bearing revolutionary propaganda. Good for picketing."
 
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "revsign"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "revsign"
@@ -504,11 +511,35 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = EQUIPPED_WHILE_HELD
 	force = 7
-	stamina_damage = 25
-	stamina_cost = 14
+	stamina_damage = 30
+	stamina_cost = 15
 	stamina_crit_chance = 10
 	hitsound = 'sound/impact_sounds/Wood_Hit_1.ogg'
 
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_LARGE
+		processing_items.Add(src)
+
+	disposing()
+		..()
+		processing_items.Remove(src)
+
+	process()
+		..()
+		if (ismob(src.loc))
+			var/mob/owner = src.loc
+			if (owner.mind && ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
+				var/datum/game_mode/revolution/R = ticker.mode
+
+				if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
+					var/found = 0
+					for (var/datum/mind/M in R.head_revolutionaries)
+						if (M.current && ishuman(M.current))
+							if (get_dist(owner,M.current) <= 5)
+								for (var/obj/item/revolutionary_sign/RS in M.current.equipped_list(check_for_magtractor = 0))
+									found = 1
+									break
+					if (found)
+						owner.changeStatus("revspirit", 20 SECONDS)

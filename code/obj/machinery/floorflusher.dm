@@ -175,12 +175,12 @@
 	relaymove(mob/user as mob)
 		if(user.stat || src.flushing)
 			return
-		boutput(user, "<span style=\"color:red\">It's too deep. You can't climb out.</span>")
+		boutput(user, "<span class='alert'>It's too deep. You can't climb out.</span>")
 		return
 
 	// ai cannot interface.
 	attack_ai(mob/user as mob)
-		boutput(user, "<span style=\"color:red\">You cannot interface with this device.</span>")
+		boutput(user, "<span class='alert'>You cannot interface with this device.</span>")
 
 	// human interact with machine
 	attack_hand(mob/user as mob)
@@ -188,7 +188,7 @@
 		if (open != 1)
 			return
 		if(status & BROKEN)
-			user.machine = null
+			src.remove_dialog(user)
 			return
 
 		//fall in hilariously
@@ -228,8 +228,6 @@
 		if(status & BROKEN)			// nothing can happen if broken
 			return
 
-		src.updateDialog()
-
 		if(open && flush)	// flush can happen even without power, must be open first
 			flush()
 
@@ -255,9 +253,9 @@
 
 		air_contents.zero() // empty gas
 
-		sleep(10)
+		sleep(1 SECOND)
 		playsound(src, "sound/machines/disposalflush.ogg", 50, 0, 0)
-		sleep(5) // wait for animation to finish
+		sleep(0.5 SECONDS) // wait for animation to finish
 
 
 		H.start(src) // start the holder processing movement
@@ -356,8 +354,6 @@
 	process()
 		if(status & BROKEN)			// nothing can happen if broken
 			return
-
-		src.updateDialog()
 
 		if(open && flush)	// flush can happen even without power, must be open first
 			flush()

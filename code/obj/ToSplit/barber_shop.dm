@@ -6,8 +6,9 @@
 /obj/item/clothing/head/bald_cap
 	name = "bald cap"
 	desc = "You can't tell the difference, Honest!"
-	icon_state= "baldcap"
-	item_state= "baldcap"
+	icon_state = "baldcap"
+	item_state = "baldcap"
+	seal_hair = 1
 
 /obj/item/scissors
 	name = "scissors"
@@ -16,7 +17,7 @@
 	icon_state = "scissors"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SNIPPING
-	force = 6.0
+	force = 8.0
 	w_class = 1.0
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
@@ -29,15 +30,16 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/double)
+		AddComponent(/datum/component/transfer_on_attack)
+		BLOCK_KNIFE
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -63,15 +65,15 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/double)
+		BLOCK_KNIFE
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -101,12 +103,17 @@
 	on_reagent_change()
 		src.icon_state = "tonic[src.reagents.total_volume ? "1" : "0"]"
 
-/obj/stool/barber_chair
+/obj/stool/barber_chair //there shouldn't be any of these, here in case there's a secret map that has one, replace with /obj/stool/chair/comfy/barber_chair if you see one
+	name = "You shouldn't see me!"
+	desc = "You shouldn't be looking at this thing!"
+
+/obj/stool/chair/comfy/barber_chair
 	name = "barber chair"
-	desc = "Chair where hair can be cut"
-	icon = 'icons/obj/barber_shop.dmi'
+	desc = "A special chair designed for haircutting. You don't feel like any other chair would be good enough, it HAS to be one like this. You don't know why."
 	icon_state = "barberchair"
 	anchored = 1
+	arm_icon_state = "arm-barber"
+	parts_type = /obj/item/furniture_parts/barber_chair
 
 /obj/barber_pole
 	name = "barber pole"
@@ -116,76 +123,6 @@
 	anchored = 1
 	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
 
-///////////////////////////////////////////
-///////////Barber Chair Code///////////////
-///////////////////////////////////////////
-/obj/stool/barber_chair/MouseDrop_T(mob/M as mob, mob/user as mob)
-	if (!ticker)
-		boutput(user, "You can't buckle anyone in before the game starts.")
-		return
-	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat))
-		return
-	if (M == usr)
-		user.visible_message("<span style=\"color:blue\">[M] buckles in!</span>", "<span style=\"color:blue\">You buckle yourself in.</span>")
-	else
-		user.visible_message("<span style=\"color:blue\">[M] is buckled in by [user].</span>", "<span style=\"color:blue\">You buckle in [M].</span>")
-	M.anchored = 1
-	M.buckled = src
-	M.set_loc(src.loc)
-	src.add_fingerprint(user)
-	playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
-	M.setStatus("buckled", duration = INFINITE_STATUS)
-	return
-
-/obj/stool/barber_chair/attack_hand(mob/user as mob)
-	for(var/mob/M in src.loc)
-		if (M.buckled)
-			if (M != user)
-				user.visible_message("<span style=\"color:blue\">[M] is unbuckled by [user].</span>", "<span style=\"color:blue\">You unbuckle [M].</span>")
-			else
-				user.visible_message("<span style=\"color:blue\">[M] unbuckles.</span>", "<span style=\"color:blue\">You unbuckle.</span>")
-			M.anchored = 0
-			M.buckled = null
-			src.add_fingerprint(user)
-			playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
-	return
-
-/obj/stool/barber_chair/ex_act(severity)
-	for(var/mob/M in src.loc)
-		if(M.buckled == src)
-			M.buckled = null
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(5))
-				qdel(src)
-				return
-	return
-
-/obj/stool/barber_chair/blob_act(var/power)
-	if(prob(power * 2.5))
-		for(var/mob/M in src.loc)
-			if(M.buckled == src)
-				M.buckled = null
-		qdel(src)
-/*
-/obj/stool/barber_chair/verb/rotate()
-	set src in oview(1)
-	set category = "Local"
-
-	src.dir = turn(src.dir, 90)
-	if (src.dir == NORTH)
-		src.layer = FLY_LAYER
-	else
-		src.layer = OBJ_LAYER
-	return
-*/
 ///////////////////////////////////////////////////
 //////Hair Dye Bottle Code					///////
 ///////////////////////////////////////////////////
@@ -195,25 +132,25 @@
 		..()
 		return
 	if(src.empty)
-		boutput(user, "<span style='color:red'>\The [src] is empty!</span>")
-	else //if(istype(M.buckled, /obj/stool/barber_chair))
+		boutput(user, "<span class='alert'>\The [src] is empty!</span>")
+	else //if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
 		var/mob/living/carbon/human/H = M
 		if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES)))
 			// you can't stab someone in the eyes wearing a mask! - please do not stab people in the eyes with a dye bottle tia
-			boutput(user, "<span style='color:blue'>You're going to need to remove that mask/helmet first.</span>")
+			boutput(user, "<span class='hint'>You're going to need to remove that mask/helmet first.</span>")
 			return
 		/*
 		var/turf/T = M.loc
 		var/turf/TM = user.loc
-		boutput(user, "<span style=\"color:blue\">You begin dying [M]'s hair.</span>")
-		boutput(M, "<span style=\"color:blue\">[user] begins dying your hair.</span>")
-		sleep(30)
+		boutput(user, "<span class='notice'>You begin dying [M]'s hair.</span>")
+		boutput(M, "<span class='notice'>[user] begins dying your hair.</span>")
+		sleep(3 SECONDS)
 		if(M.loc == T && TM.loc == user.loc  && (user.equipped() == src || issilicon(user)))
 			return
 		*/
 		user.tri_message("[user] dyes [M]'s hair.",\
-		user, "<span style='color:blue'>You dye [M]'s hair.</span>",\
-		M, "<span style='color:blue'>[user] dyes your hair.</span>")
+		user, "<span class='notice'>You dye [M]'s hair.</span>",\
+		M, "<span class='notice'>[user] dyes your hair.</span>")
 		M.bioHolder.mobAppearance.customization_first_color = src.customization_first_color
 		M.bioHolder.mobAppearance.customization_second_color = src.customization_first_color
 		M.set_face_icon_dirty()
@@ -222,7 +159,7 @@
 		src.empty = 1
 		src.icon_state= "dye-e"
 	//else
-	//	boutput(user, "<span style=\"color:red\">They need to be in a barber chair!</span>")
+	//	boutput(user, "<span class='alert'>They need to be in a barber chair!</span>")
 
 /////////////////////////////////////////////////////
 //////Scissors Code								/////
@@ -236,16 +173,15 @@
 		return
 
 	if (src.reagents && src.reagents.total_volume)
-		logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
-		src.reagents.trans_to(M,5-(5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1))))
+		logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 	else
-		logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
+		logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
 
 	if (!snip_surgery(M, user))
 		return ..()
 	else
 		if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-			src.reagents.trans_to(M,5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1)))
+			src.reagents.trans_to(M,5)
 		return
 
 
@@ -256,25 +192,25 @@
 		return 0
 
 	if (user == M)
-		boutput(user, "<span style=\"color:red\">You can't cut your own hair!</span>")
+		boutput(user, "<span class='alert'>You can't cut your own hair!</span>")
 		return 0
-	if(istype(M.buckled, /obj/stool/barber_chair))
+	if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
 
 		var/mob/living/carbon/human/H = M
 		if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 			// you can't stab someone in the eyes wearing a mask!
-			boutput(user, "<span style=\"color:blue\">You're going to need to remove that mask/helmet/glasses first.</span>")
+			boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
 			return 0
 
 		if(M.bioHolder.mobAppearance.customization_first == "None")
-			boutput(user, "<span style=\"color:red\">There is nothing to cut!</span>")
+			boutput(user, "<span class='alert'>There is nothing to cut!</span>")
 			return 0
 
 		var/new_style = input(user, "Please select style", "Style")  as null|anything in customization_styles + customization_styles_gimmick
 
 		if (new_style)
 			if(M.bioHolder.mobAppearance.customization_first == "Balding" && new_style != "None")
-				boutput(user, "<span style=\"color:red\">Not enough hair!</span>")
+				boutput(user, "<span class='alert'>Not enough hair!</span>")
 				return 0
 
 		if(!new_style)
@@ -283,10 +219,10 @@
 		var/turf/T = M.loc
 		var/turf/TM = user.loc
 		user.tri_message("[user] begins cutting [M]'s hair.",\
-		user, "<span style='color:blue'>You begin cutting [M]'s hair.</span>",\
-		M, "<span style='color:blue'>[user] begins cutting your hair.</span>")
+		user, "<span class='notice'>You begin cutting [M]'s hair.</span>",\
+		M, "<span class='notice'>[user] begins cutting your hair.</span>")
 		playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
-		sleep(70)
+		sleep(7 SECONDS)
 		if(M.loc == T && TM.loc == user.loc  && (user.equipped() == src || issilicon(user)))
 			return  0
 
@@ -296,8 +232,8 @@
 
 		M.bioHolder.mobAppearance.customization_first = new_style
 		user.tri_message("[user] cuts [M]'s hair.",\
-		M, "<span style='color:blue'>[user] cuts your hair.</span>",\
-		user, "<span style='color:blue'>You cut [M]'s hair.</span>")
+		M, "<span class='notice'>[user] cuts your hair.</span>",\
+		user, "<span class='notice'>You cut [M]'s hair.</span>")
 
 		M.cust_one_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
@@ -314,14 +250,14 @@
 		return
 
 	if( issilicon(M))
-		boutput(user, "<span style=\"color:red\">Shave a robot? Shave a robot!?? SHAVE A ROBOT?!?!??</span>")
+		boutput(user, "<span class='alert'>Shave a robot? Shave a robot!?? SHAVE A ROBOT?!?!??</span>")
 		return
 
 	if(M.cust_two_state == "wiz")
 		if (user == M)
-			boutput(user, "<span style=\"color:red\">No!!! This is the worst idea you've ever had!</span>")
+			boutput(user, "<span class='alert'>No!!! This is the worst idea you've ever had!</span>")
 			return
-		src.visible_message("<span style=\"color:red\"><b>[user]</b> quickly shaves off [M]'s beard!</span>")
+		src.visible_message("<span class='alert'><b>[user]</b> quickly shaves off [M]'s beard!</span>")
 		M.bioHolder.AddEffect("arcane_shame", timeleft = 120)
 		M.bioHolder.mobAppearance.customization_second = "None"
 		M.cust_two_state = "None"
@@ -329,17 +265,17 @@
 		M.emote("cry")
 		return
 
-	if(istype(M.buckled, /obj/stool/barber_chair))
+	if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
 
 		var/mob/living/carbon/human/H = M
 		if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 			// you can't stab someone in the eyes wearing a mask!
-			boutput(user, "<span style=\"color:blue\">You're going to need to remove that mask/helmet/glasses first.</span>")
+			boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
 			return
 
 
 		if(M.bioHolder.mobAppearance.customization_second == "None")
-			boutput(user, "<span style=\"color:red\">There is nothing to shave!</span>")
+			boutput(user, "<span class='alert'>There is nothing to shave!</span>")
 			return
 
 		var/new_style = input(user, "Please select facial style", "Facial Style")  as null|anything in customization_styles + customization_styles_gimmick
@@ -350,30 +286,30 @@
 			var/list/full = list("Goatee", "Full Beard", "Long Beard")
 
 			if((new_style in full) && (!(M.bioHolder.mobAppearance.customization_second in full)))
-				boutput(user, "<span style=\"color:red\">[M] doesn't have enough facial hair!</span>")
+				boutput(user, "<span class='alert'>[M] doesn't have enough facial hair!</span>")
 				return
 
 			if((new_style in beards) && (M.bioHolder.mobAppearance.customization_second in mustaches))
-				boutput(user, "<span style=\"color:red\">[M] doesn't have a beard!</span>")
+				boutput(user, "<span class='alert'>[M] doesn't have a beard!</span>")
 				return
 
 			if((new_style in mustaches) && (M.bioHolder.mobAppearance.customization_second in beards))
-				boutput(user, "<span style=\"color:red\">[M] doesn't have a mustache!</span>")
+				boutput(user, "<span class='alert'>[M] doesn't have a mustache!</span>")
 				return
 
 		var/turf/T = M.loc
 		var/turf/TM = user.loc
-		boutput(user, "<span style=\"color:blue\">You begin shaving [M].</span>")
-		boutput(M, "<span style=\"color:blue\">[user] begins shaving you.</span>")
+		boutput(user, "<span class='notice'>You begin shaving [M].</span>")
+		boutput(M, "<span class='notice'>[user] begins shaving you.</span>")
 		//playsound(src.loc, "Scissor.ogg", 100, 1)
-		sleep(70)
+		sleep(7 SECONDS)
 		if(M.loc == T && TM.loc == user.loc  && (user.equipped() == src || issilicon(user)))
 			return
 
 
 		M.bioHolder.mobAppearance.customization_second = new_style
-		boutput(M, "<span style=\"color:blue\">[user] shaves your face</span>")
-		boutput(user, "<span style=\"color:blue\">You shave [M]'s face.</span>")
+		boutput(M, "<span class='notice'>[user] shaves your face</span>")
+		boutput(user, "<span class='notice'>You shave [M]'s face.</span>")
 
 		M.cust_two_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
 		M.set_face_icon_dirty()
@@ -428,7 +364,7 @@
 	attack_hand(mob/user as mob)
 		if(status & BROKEN)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>Dye Bottle Dispenser Unit</B><BR><HR><BR>"
 
@@ -449,9 +385,9 @@
 	attackby(obj/item/W, mob/user as mob)
 		if(istype(W, /obj/item/dye_bottle))
 			if(src.bottle)
-				boutput(user, "<span style=\"color:blue\">The dispenser already has a dye bottle in it.</span>")
+				boutput(user, "<span class='notice'>The dispenser already has a dye bottle in it.</span>")
 			else
-				boutput(user, "<span style=\"color:blue\">You insert the dye bottle into the dispenser.</span>")
+				boutput(user, "<span class='notice'>You insert the dye bottle into the dispenser.</span>")
 				if(W)
 					user.drop_item(W)
 					W.set_loc(src)
@@ -467,11 +403,11 @@
 		if(usr.stat || usr.restrained())
 			return
 		if (isAI(usr))
-			boutput(usr, "<span style=\"color:red\">You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
+			boutput(usr, "<span class='alert'>You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
 			return
 
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if (href_list["eject"])
 				if(src.bottle)
@@ -495,7 +431,7 @@
 
 			src.add_fingerprint(usr)
 			for(var/mob/M in viewers(1, src))
-				if ((M.client && M.machine == src))
+				if (M.using_dialog_of(src))
 					src.attack_hand(M)
 		else
 			usr.Browse(null, "window=dye_dispenser")

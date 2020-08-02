@@ -67,6 +67,7 @@
 		var/obj/gross = pick(src.stomach_process)
 		src.stomach_process -= gross
 		gross.loc = src.loc
+		return gross
 
 
 
@@ -304,7 +305,7 @@
 		T = get_step(T,owner.dir)
 		var/list/affected_turfs = getline(owner, T)
 
-		owner.visible_message("<span style=\"color:red\"><b>[owner] burps a stream of fire!</b></span>")
+		owner.visible_message("<span class='alert'><b>[owner] burps a stream of fire!</b></span>")
 		playsound(owner.loc, "sound/effects/mag_fireballlaunch.ogg", 30, 0)
 
 		var/turf/currentturf
@@ -333,6 +334,17 @@
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
+	onAdd(optional)
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_EXPLOPROT, src, 1)
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			REMOVE_MOB_PROPERTY(M, PROP_EXPLOPROT, src)
 
 /datum/statusEffect/disease_resist
 	id = "food_disease_resist"

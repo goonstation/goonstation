@@ -9,8 +9,8 @@
 		selection = unpool(/obj/adventurepuzzle/marker)
 		color_rgb = input("Color", "Color", "#ffffff") as color
 		key_name = input("Remote name", "Remote name", "remote control") as text
-		boutput(usr, "<span style=\"color:blue\">Left click to place remotes, right click triggerables to (de)select them for automatic assignment to the keys. Ctrl+click anywhere to finish.</span>")
-		boutput(usr, "<span style=\"color:blue\">NOTE: Select stuff first, then make keys for extra comfort!</span>")
+		boutput(usr, "<span class='notice'>Left click to place remotes, right click triggerables to (de)select them for automatic assignment to the keys. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, "<span class='notice'>NOTE: Select stuff first, then make keys for extra comfort!</span>")
 
 	proc/clear_selections()
 		for (var/obj/O in selected_triggerable)
@@ -20,6 +20,7 @@
 	disposing()
 		clear_selections()
 		pool(selection)
+		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if (pa.Find("left"))
@@ -48,7 +49,7 @@
 						selected_triggerable += object
 						selected_triggerable[object] = act
 					else
-						boutput(usr, "<span style=\"color:red\">ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(usr, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
 
 /obj/item/adventurepuzzle/triggerer/remotecontrol
 	name = "remote control"

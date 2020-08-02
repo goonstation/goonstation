@@ -260,7 +260,7 @@
 								src.header_temp = null
 								message_server("command=mail&args=get [index_number]") //Request mail
 								src.menu = -1
-								sleep(8)
+								sleep(0.8 SECONDS)
 								if (istype(mail_temp))
 									var/dat = ""
 									var/end_max = max( min(mail_temp.len, max_lines) - 8, 0)
@@ -279,7 +279,7 @@
 									return
 
 								src.print_text("Error retrieving mail.")
-								sleep(10)
+								sleep(1 SECOND)
 								src.menu = MENU_MAIL_INDEX
 								src.print_text(mainmenu_text())
 								return
@@ -289,7 +289,7 @@
 
 								src.mail_index = null
 								message_server("command=mail&args=index")
-								sleep(8)
+								sleep(0.8 SECONDS)
 								if (istype(src.mail_index))
 									src.master.temp = null
 									src.print_text(mailbox_text())
@@ -297,7 +297,7 @@
 									return
 
 								src.print_text("Unable to refresh mailbox.")
-								sleep(10)
+								sleep(1 SECOND)
 								src.menu = MENU_MAIL_INDEX
 								src.print_text(mainmenu_text())
 								return
@@ -306,7 +306,7 @@
 								src.mail_temp = null
 								message_server("command=mail&args=get [index_number]") //Request mail
 								src.menu = -1
-								sleep(8)
+								sleep(0.8 SECONDS)
 								if (istype(mail_temp))
 									src.print_text("Please enter new target address. \"AddressName--MailGroup\"")
 									src.menu = MENU_EDIT
@@ -314,7 +314,7 @@
 									return
 
 								src.print_text("Error retrieving mail.")
-								sleep(10)
+								sleep(1 SECOND)
 								src.menu = MENU_MAIL_INDEX
 								src.print_text(mainmenu_text())
 								return
@@ -322,7 +322,7 @@
 								src.mail_temp = null
 								message_server("command=mail&args=get [index_number]")
 								src.menu = -1
-								sleep(8)
+								sleep(0.8 SECONDS)
 								if (istype(mail_temp))
 									src.print_text("Please enter body text, \"!send\" to send,<br>\"!del\" to remove last line or JUST 0 to return.")
 									if (src.mail_temp)
@@ -332,7 +332,7 @@
 									return
 
 								src.print_text("Error retrieving mail.")
-								sleep(10)
+								sleep(1 SECOND)
 								src.menu = MENU_MAIL_INDEX
 								src.print_text(mainmenu_text())
 								return
@@ -464,7 +464,7 @@
 
 									src.mail_index = null
 									message_server("command=mail&args=index")
-									sleep(8)
+									sleep(0.8 SECONDS)
 									if (istype(src.mail_index))
 										src.master.temp = null
 										src.print_text(mailbox_text())
@@ -472,7 +472,7 @@
 										return
 
 									src.print_text("Unable to refresh mailbox.")
-									sleep(10)
+									sleep(1 SECOND)
 									src.menu = MENU_MAIL_INDEX
 									src.print_text(mainmenu_text())
 									return
@@ -542,7 +542,7 @@
 
 							src.mail_index = null
 							message_server("command=mail&args=index")
-							sleep(8)
+							sleep(0.8 SECONDS)
 							if (istype(src.mail_index))
 								src.master.temp = null
 								src.print_text(mailbox_text())
@@ -550,7 +550,7 @@
 								return
 
 						src.print_text("Unable to refresh mailbox.")
-						sleep(10)
+						sleep(1 SECOND)
 						src.menu = MENU_MAIL_INDEX
 						src.print_text(mainmenu_text())
 						return
@@ -694,7 +694,7 @@ SUBJECT: [ckeyEx(headerList["subj"]) ? copytext(uppertext(headerList["subj"]), 1
 
 			src.peripheral_command("transmit", signal, "\ref[netCard]")
 			if (delayCaller)
-				sleep(8)
+				sleep(0.8 SECONDS)
 				return 0
 
 			return 0
@@ -735,7 +735,7 @@ SUBJECT: [ckeyEx(headerList["subj"]) ? copytext(uppertext(headerList["subj"]), 1
 			src.peripheral_command("ping", null, "\ref[netCard]")
 
 			if (delayCaller)
-				sleep(8)
+				sleep(0.8 SECONDS)
 				return (potential_server_netid == null)
 
 			return 0

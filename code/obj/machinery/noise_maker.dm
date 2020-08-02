@@ -20,7 +20,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/noise_switch/attackby(obj/item/W, mob/user)
-	user.visible_message("<span style=\"color:red\">The [src.name] has been hit with the [W.name] by [user.name]!</span>", "<span style=\"color:red\">You hit the [src.name] with your [W.name]!</span>")
+	user.visible_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
 
 
 /obj/machinery/noise_switch/process()
@@ -48,15 +48,15 @@
 		if(broken)
 			broken = 0
 			icon_state = "nm n +o"
-			user.visible_message("<span style=\"color:red\">The [src.name] has been connected by [user.name]!</span>", "<span style=\"color:red\">You connect the [src.name]!</span>")
+			user.visible_message("<span class='alert'>The [src.name] has been connected by [user.name]!</span>", "<span class='alert'>You connect the [src.name]!</span>")
 		else
 			broken = 1
 			icon_state = "nm n -o"
-			user.visible_message("<span style=\"color:red\">The [src.name] has been disconnected by [user.name]!</span>", "<span style=\"color:red\">You disconnect the [src.name]!</span>")
+			user.visible_message("<span class='alert'>The [src.name] has been disconnected by [user.name]!</span>", "<span class='alert'>You disconnect the [src.name]!</span>")
 
 	else
 		src.add_fingerprint(user)
-		user.visible_message("<span style=\"color:red\">The [src.name] has been hit with the [W.name] by [user.name]!</span>", "<span style=\"color:red\">You hit the [src.name] with your [W.name]!</span>")
+		user.visible_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
 
 //Add when it gets emagged it perma shuts it off
 

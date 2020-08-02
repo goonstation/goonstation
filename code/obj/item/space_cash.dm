@@ -3,7 +3,7 @@
 	name = "1 credit"
 	real_name = "credit"
 	desc = "You gotta have money."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "cashgreen"
 	uses_multiple_icon_states = 1
 	opacity = 0
@@ -21,8 +21,8 @@
 	amount = 1
 	max_stack = 1000000
 	stack_type = /obj/item/spacecash // so all cash types can stack iwth each other
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	module_research = list("efficiency" = 1)
 	module_research_type = /obj/item/spacecash
@@ -77,13 +77,13 @@
 		src.name = "[src.amount == src.max_stack ? "1000000" : src.amount] [name_prefix(null, 1)][src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style='color:blue'>[user] is stacking cash!</span>")
+		user.visible_message("<span class='notice'>[user] is stacking cash!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style='color:blue'>You finish stacking cash.</span>")
+		boutput(user, "<span class='notice'>You finish stacking cash.</span>")
 
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style='color:red'>You need another stack!</span>")
+		boutput(user, "<span class='alert'>You need another stack!</span>")
 
 	attackby(var/obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/spacecash) && src.amount < src.max_stack)
@@ -91,7 +91,7 @@
 				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
 				return
 
-			user.visible_message("<span style='color:blue'>[user] stacks some cash.</span>")
+			user.visible_message("<span class='notice'>[user] stacks some cash.</span>")
 			stack_item(I)
 		else
 			..(I, user)
@@ -101,7 +101,7 @@
 			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
 			if (amt && src.loc == user && !user.equipped())
 				if (amt > src.amount || amt < 1)
-					boutput(user, "<span style='color:red'>You wish!</span>")
+					boutput(user, "<span class='alert'>You wish!</span>")
 					return
 				change_stack_amount( 0 - amt )
 				var/obj/item/spacecash/young_money = unpool(/obj/item/spacecash)
@@ -204,7 +204,7 @@
 			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
 			if (amt)
 				if (amt > src.amount || amt < 1)
-					boutput(user, "<span style='color:red'>You wish!</span>")
+					boutput(user, "<span class='alert'>You wish!</span>")
 					return
 
 				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
@@ -229,7 +229,7 @@
 		amount = rand(1,10000)
 		name = "money bag"
 		desc = "Loadsamoney!"
-		icon = 'icons/obj/items.dmi'
+		icon = 'icons/obj/items/items.dmi'
 		icon_state = "moneybag"
 		item_state = "moneybag"
 		inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -239,7 +239,7 @@
 		amount = rand(1,10000)
 		name = "money bag"
 		desc = "Loadsamoney!"
-		icon = 'icons/obj/items.dmi'
+		icon = 'icons/obj/items/items.dmi'
 		icon_state = "moneybag"
 		item_state = "moneybag"
 		inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -251,7 +251,7 @@
 
 /obj/item/spacebux // Not space cash. Actual spacebux. Wow.
 	name = "\improper Spacebux token"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spacebux_gray"
 	desc = "A Spacebux token, neat! You can insert this into an ATM to add it to your account."
 
@@ -288,6 +288,7 @@
 		set_amt(amt)
 
 	proc/set_amt(var/amt = 1 as num)
+		tooltip_rebuild = 1
 		src.amount = amt
 		src.update_stack_appearance()
 
@@ -345,17 +346,17 @@
 			src.desc = initial(src.desc)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style='color:blue'>[user] is stacking spacebux!</span>")
+		user.visible_message("<span class='notice'>[user] is stacking spacebux!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style='color:blue'>You finish stacking spacebux.</span>")
+		boutput(user, "<span class='notice'>You finish stacking spacebux.</span>")
 
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style='color:red'>You need another stack!</span>")
+		boutput(user, "<span class='alert'>You need another stack!</span>")
 
 	attackby(var/obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/spacebux) && src.spent == 0)
-			user.visible_message("<span style='color:blue'>[user] stacks some spacebux.</span>")
+			user.visible_message("<span class='notice'>[user] stacks some spacebux.</span>")
 			stack_item(I)
 		else
 			..(I, user)
@@ -373,7 +374,7 @@
 			var/amt = round(input("How much spacebux do you want to split from the token?") as null|num)
 			if (amt && src.loc == user && !user.equipped())
 				if (amt > src.amount || amt < 1)
-					boutput(user, "<span style='color:red'>You wish!</span>")
+					boutput(user, "<span class='alert'>You wish!</span>")
 					return
 				change_stack_amount( 0 - amt )
 				var/obj/item/spacebux/new_token = new

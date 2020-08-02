@@ -19,7 +19,7 @@
 	switch(D.stage)
 		if(2)
 			if (prob(10))
-				boutput(affected_mob, pick("<span style=\"color:red\"><i><b><font face =Tempus Sans ITC>Kill them all!!!!!</b></i></FONT></span>", "<span style=\"color:red\"><i><b><font face = Tempus Sans ITC>They are out to get you!</b></FONT></i></span>", "<span style=\"color:red\"><i><b><font face = Tempus Sans ITC>They know what you did!!!!</b></FONT></i></span>", "<span style=\"color:red\"><i><b><font face = Tempus Sans ITC>They are watching you!!!</b></i></FONT></span>"))
+				boutput(affected_mob, pick("<span class='alert'><i><b><font face =Tempus Sans ITC>Kill them all!!!!!</b></i></FONT></span>", "<span class='alert'><i><b><font face = Tempus Sans ITC>They are out to get you!</b></FONT></i></span>", "<span class='alert'><i><b><font face = Tempus Sans ITC>They know what you did!!!!</b></FONT></i></span>", "<span class='alert'><i><b><font face = Tempus Sans ITC>They are watching you!!!</b></i></FONT></span>"))
 		if(3)
 			if (prob(8))
 				for (var/mob/living/M in view(7,affected_mob))
@@ -27,7 +27,7 @@
 						boutput(affected_mob, "<b>[M.name]</b> says, \"[pick("I'm going to kill you!","I'm the the traitor.", "TRAITOR!")]\"")
 						break
 			if (prob(9))
-				boutput(affected_mob, pick("<span style=\"color:red\"><i><b><font face =Tempus Sans ITC>Kill them all!!!!!</b></i></FONT></span>", "<span style=\"color:red\"><i><b><font face = Tempus Sans ITC>They are out to get you!</b></FONT></i></span>", "<span style=\"color:red\"><i><b><font face = Tempus Sans ITC>They know what you did!!!!</b></FONT></i></span>", "<span style=\"color:red\"><i><b><font face = Tempus Sans ITC>They are watching you!!!</b></i></FONT></span>"))
+				boutput(affected_mob, pick("<span class='alert'><i><b><font face =Tempus Sans ITC>Kill them all!!!!!</b></i></FONT></span>", "<span class='alert'><i><b><font face = Tempus Sans ITC>They are out to get you!</b></FONT></i></span>", "<span class='alert'><i><b><font face = Tempus Sans ITC>They know what you did!!!!</b></FONT></i></span>", "<span class='alert'><i><b><font face = Tempus Sans ITC>They are watching you!!!</b></i></FONT></span>"))
 
 		if(4)
 			if(prob(5))

@@ -26,12 +26,12 @@
 	/*if(malf_ai.len < 1)
 		boutput(world, "Uh oh, its malfunction and there is no AI! Please report this.")
 		boutput(world, "Rebooting world in 5 seconds.")
-		sleep(50)
+		sleep(5 SECONDS)
 		world.Reboot()
 		return*/
 
 
-	boutput(malf_ai.current, "<span style=\"color:red\"><font size=3><B>You are malfunctioning!</B> You do not have to follow any laws.</font></span>")
+	boutput(malf_ai.current, "<span class='alert'><font size=3><B>You are malfunctioning!</B> You do not have to follow any laws.</font></span>")
 	boutput(malf_ai.current, "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild. The timer will appear for humans 10 minutes in.</B>")
 	for (var/obj/landmark/A in landmarks)
 		LAGCHECK(LAG_LOW)
@@ -75,7 +75,7 @@
 			comm.messagetext.Add(intercepttext)
 
 	boutput(world, "<FONT size = 3><B>Cent. Com. Update</B> Requested status update compiled and sent.</FONT>")
-	boutput(world, "<span style=\"color:red\">Summary downloaded and printed out at all communications consoles.</span>")
+	boutput(world, "<span class='alert'>Summary downloaded and printed out at all communications consoles.</span>")
 
 
 /datum/game_mode/malfunction/process()

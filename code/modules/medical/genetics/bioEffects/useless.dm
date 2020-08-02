@@ -8,23 +8,14 @@
 	blockGaps = 1
 	msgGain = "Your skin begins to glow softly."
 	msgLose = "Your glow fades away."
-	var/datum/light/light
-
-	New()
-		..()
-		light = new /datum/light/point
-		light.set_color(rand(1,10) / 10, rand(1,10) / 10, rand(1,10) / 10)
-		light.set_brightness(0.7)
 
 	OnAdd()
 		..()
-		light.attach(owner)
-		light.enable()
+		owner.add_sm_light("glowy", list(rand(25,255), rand(25,255), rand(25,255), 150))
 
 	OnRemove()
 		..()
-		light.disable()
-		light.detach()
+		owner.add_sm_light("glowy", list(rand(25,255), rand(25,255), rand(25,255), 150))
 
 /datum/bioEffect/horns
 	name = "Cranial Keratin Formation"
@@ -166,9 +157,9 @@
 				if (C == owner)
 					continue
 				if (src.variant == 2)
-					boutput(C, "<span style=\"color:red\">[src.personalized_stink]</span>")
+					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
 				else
-					boutput(C, "<span style=\"color:red\">[stinkString()]</span>")
+					boutput(C, "<span class='alert'>[stinkString()]</span>")
 
 /datum/bioEffect/drunk
 	name = "Ethanol Production"
@@ -278,7 +269,7 @@
 	desc = {"Human worker clone batch #92 may contain inactive space bee DNA.
 	If you do not have the authorization level to know that SS13 is staffed with clones, please forget this entire message."}
 	id = "bee"
-	msgGain = "You feel buzzed"
+	msgGain = "You feel buzzed!"
 	msgLose = "You lose your buzz."
 	probability = 99
 

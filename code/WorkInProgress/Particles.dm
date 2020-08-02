@@ -96,7 +96,7 @@ var/datum/particleMaster/particleMaster = new
 			LAGCHECK(LAG_MED)
 
 		if (count <= 0)
-			location.temp_flags &= ~HAS_PARTICLESYSTEM
+			location?.temp_flags &= ~HAS_PARTICLESYSTEM
 		//mbc : lazy remove location has_particlesystem_target flag below in particle system Die() proc. Not 100% reliable but i dont wanna do another search for target.
 
 
@@ -107,7 +107,7 @@ var/datum/particleMaster/particleMaster = new
 			var/count = 1
 			for (var/datum/particleSystem/system in particleSystems)
 				if (!(count++ % allowed_particles_per_tick))
-					sleep(1)
+					sleep(0.1 SECONDS)
 
 				if (!istype(system.location))
 					system.state = PS_FINISHED

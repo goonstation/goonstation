@@ -29,6 +29,7 @@
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
 	attack_hand(mob/user as mob)
+		user.lastattacked = src
 		src.ArtifactTouched(user)
 		return
 
@@ -36,6 +37,7 @@
 		return attack_hand(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		user.lastattacked = src
 		if (src.Artifact_attackby(W,user))
 			..()
 
@@ -44,13 +46,12 @@
 		..()
 
 	examine()
-		set src in oview()
-		boutput(usr, "You have no idea what this thing is!")
+		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
 		if (istext(A.examine_hint))
-			boutput(usr, "[A.examine_hint]")
+			. += A.examine_hint
 
 	ex_act(severity)
 		switch(severity)
@@ -168,13 +169,12 @@
 		..()
 
 	examine()
-		set src in oview()
-		boutput(usr, "You have no idea what this thing is!")
+		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
 		if (istext(A.examine_hint))
-			boutput(usr, "[A.examine_hint]")
+			. += A.examine_hint
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -312,13 +312,12 @@
 		..()
 
 	examine()
-		set src in oview()
-		boutput(usr, "You have no idea what this thing is!")
+		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
 		if (istext(A.examine_hint))
-			boutput(usr, "[A.examine_hint]")
+			. += A.examine_hint
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -332,7 +331,7 @@
 	New(var/loc,var/forceartitype = null,var/cinematic = 0)
 		var/turf/T = get_turf(src)
 		if (cinematic)
-			T.visible_message("<span style=\"color:red\"><b>An artifact suddenly warps into existence!</b></span>")
+			T.visible_message("<span class='alert'><b>An artifact suddenly warps into existence!</b></span>")
 			playsound(T,"sound/effects/teleport.ogg",50,1)
 			var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
 			swirl.set_loc(T)

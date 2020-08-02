@@ -14,6 +14,7 @@ var/const/effectTypeFood = 4
 	var/desc = "" //Visible description of the effect.
 	var/researched_desc = null // You get this in mutation research if you've activated the effect
 	var/datum/bioEffect/global_instance = null // bioeffectlist version of this effect
+	var/datum/bioEffect/power/global_instance_power = null //just a power casted version of global instance
 	var/research_level = 0
 	// 0 = not, 1 = in progress, 2 = done, 3 = activated
 	var/research_finish_time = 0
@@ -79,13 +80,19 @@ var/const/effectTypeFood = 4
 	New(var/for_global_list = 0)
 		if (!for_global_list)
 			global_instance = bioEffectList[src.id]
+			if (istype(global_instance, /datum/bioEffect/power))
+				global_instance_power = global_instance
 		dnaBlocks = new/datum/dnaBlocks(src)
 		return ..()
 
 	disposing()
 		if(!removed)
 			src.OnRemove()
+		holder = null
 		owner = null
+		if(dnaBlocks)
+			dnaBlocks.dispose()
+		dnaBlocks = null
 		..()
 
 	proc/OnAdd()     //Called when the effect is added.
@@ -103,11 +110,6 @@ var/const/effectTypeFood = 4
 				var/mob/living/L = owner
 				L.UpdateOverlays(null, id)
 		return
-
-	Del()
-		if(!removed)
-			src.OnRemove()
-		..()
 
 	proc/OnMobDraw() //Called when the overlays for the mob are drawn. Children should NOT run when this returns 1
 		return removed
@@ -145,6 +147,12 @@ var/const/effectTypeFood = 4
 		owner = holder
 		return ..()
 
+	disposing()
+		owner = null
+		blockList = null
+		blockListCurr = null
+		..()
+
 	proc/sequenceCorrect()
 		if(blockList.len != blockListCurr.len)
 			//Things went completely and entirely wrong and everything is broken HALP.
@@ -176,9 +184,11 @@ var/const/effectTypeFood = 4
 		for(var/datum/basePair/bp in blockListCurr)
 			if(prob(33))
 				if(prob(50))
-					bp.bpp1 = "X"
+					bp.bpp1 = "?"
 				else
-					bp.bpp2 = "X"
+					bp.bpp2 = "?"
+				bp.style = "X"
+
 
 		var/list/gapList = new/list()
 		//Make sure you don't have more gaps than basepairs or youll get an error.
@@ -187,8 +197,9 @@ var/const/effectTypeFood = 4
 		for(var/i=0, i<owner.blockGaps, i++)
 			var/datum/basePair/bp = pick(blockListCurr - gapList)
 			gapList.Add(bp)
-			bp.bpp1 = "X"
-			bp.bpp2 = "X"
+			bp.bpp1 = "?"
+			bp.bpp2 = "?"
+			bp.style = "X"
 
 		for(var/i=0, i<owner.lockedGaps, i++)
 			if (!prob(owner.lockProb))
@@ -212,8 +223,9 @@ var/const/effectTypeFood = 4
 					if(31 to 50) diff = 4
 					if(51 to INFINITY) diff = 5
 
-			bp.bpp1 = "Unk[diff]"
-			bp.bpp2 = "Unk[diff]"
+			bp.bpp1 = "?"
+			bp.bpp2 = "?"
+			bp.style = "[diff]"
 			bp.marker = "locked"
 
 		return sequenceCorrect()
@@ -241,12 +253,14 @@ var/const/effectTypeFood = 4
 			sprite_state = "white"
 		for(var/datum/basePair/bp in blockListCurr)
 			bp.marker = sprite_state
+			bp.style = ""
 		return
 
 /datum/basePair
 	var/bpp1 = ""
 	var/bpp2 = ""
 	var/marker = "green"
+	var/style = ""
 	var/lockcode = ""
 	var/locktries = 0
 
@@ -260,11 +274,11 @@ var/const/effectTypeFood = 4
 		var/mob/living/user = usr
 
 		if (!istype(user) || !istype(owner))
-			boutput(user, "<span style=\"color:red\">Oh christ something's gone completely batshit. Report this to a coder.</span>")
+			boutput(user, "<span class='alert'>Oh christ something's gone completely batshit. Report this to a coder.</span>")
 			return
 
 		if (!owner.cooldowncheck())
-			boutput(user, "<span style=\"color:red\">That ability is on cooldown for [round((owner.last_cast - world.time) / 10)] seconds.</span>")
+			boutput(user, "<span class='alert'>That ability is on cooldown for [round((owner.last_cast - world.time) / 10)] seconds.</span>")
 			return
 
 		if (!owner.targeted)
@@ -323,7 +337,7 @@ var/const/effectTypeFood = 4
 		if (can_act_check && !can_act(owner, needs_hands))
 			return 999
 		if (last_cast > world.time)
-			boutput(holder.owner, "<span style=\"color:red\">That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds.</span>")
+			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds.</span>")
 			return 999
 
 		if (has_misfire)
@@ -356,7 +370,7 @@ var/const/effectTypeFood = 4
 		if (!linked_power)
 			return 1
 		if (ismob(target))
-			logTheThing("combat", owner, target, "used the [linked_power.name] power on %target%.")
+			logTheThing("combat", owner, target, "used the [linked_power.name] power on [constructTarget(target,"combat")].")
 		else if (target)
 			logTheThing("combat", owner, null, "used the [linked_power.name] power on [target].")
 		else
@@ -369,7 +383,7 @@ var/const/effectTypeFood = 4
 		if (!linked_power)
 			return 1
 		if (ismob(target))
-			logTheThing("combat", owner, target, "misfired the [linked_power.name] power on %target%.")
+			logTheThing("combat", owner, target, "misfired the [linked_power.name] power on [constructTarget(target,"combat")].")
 		else if (target)
 			logTheThing("combat", owner, null, "misfired the [linked_power.name] power on [target].")
 		else

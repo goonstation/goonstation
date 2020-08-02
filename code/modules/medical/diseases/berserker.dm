@@ -12,7 +12,7 @@
 	if (..())
 		return
 	if (affected_mob.reagents.has_reagent("THC"))
-		boutput(affected_mob, "<span style=\"color:blue\">You mellow out.</span>")
+		boutput(affected_mob, "<span class='notice'>You mellow out.</span>")
 		affected_mob.cure_disease(D)
 		return
 	switch(D.stage)
@@ -28,7 +28,7 @@
 				affected_mob.say(speak)
 			if (prob(15))
 				for(var/mob/O in viewers(affected_mob, null))
-					O.show_message(text("<span style=\"color:red\"><B>[] twitches violently!</B></span>", affected_mob), 1)
+					O.show_message(text("<span class='alert'><B>[] twitches violently!</B></span>", affected_mob), 1)
 				affected_mob.drop_item()
 				affected_mob.hand = !affected_mob.hand
 				affected_mob.drop_item()
@@ -36,20 +36,20 @@
 			if (prob(33))
 				if (!affected_mob.canmove)
 					for(var/mob/O in viewers(affected_mob, null))
-						O.show_message(text("<span style=\"color:red\"><B>[] spasms and twitches!</B></span>", affected_mob), 1)
+						O.show_message(text("<span class='alert'><B>[] spasms and twitches!</B></span>", affected_mob), 1)
 					return
 				for (var/mob/living/carbon/M in range(1,affected_mob))
 					for(var/mob/O in viewers(affected_mob, null))
-						O.show_message(text("<span style=\"color:red\"><B>[] thrashes around violently!</B></span>", affected_mob), 1)
+						O.show_message(text("<span class='alert'><B>[] thrashes around violently!</B></span>", affected_mob), 1)
 					if (M == affected_mob) continue
 					var/damage = rand(1, 5)
 					if (prob(80))
 						playsound(affected_mob.loc, "punch", 25, 1, -1)
 						for(var/mob/O in viewers(affected_mob, null))
-							O.show_message(text("<span style=\"color:red\"><B>[] hits [] with their thrashing!</B></span>", affected_mob, M), 1)
+							O.show_message(text("<span class='alert'><B>[] hits [] with their thrashing!</B></span>", affected_mob, M), 1)
 						random_brute_damage(M, damage,1)
 					else
 						playsound(affected_mob.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
 						for(var/mob/O in viewers(affected_mob, null))
-							O.show_message(text("<span style=\"color:red\"><B>[] fails to hit [] with their thrashing!</B></span>", affected_mob, M), 1)
+							O.show_message(text("<span class='alert'><B>[] fails to hit [] with their thrashing!</B></span>", affected_mob, M), 1)
 						return

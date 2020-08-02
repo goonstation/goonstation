@@ -50,7 +50,7 @@
 		dir = d
 		passenger << 'sound/effects/bamf.ogg'
 		//playsound(src.loc, "sound/effects/bamf.ogg", 100, 0)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		passenger << 'sound/effects/flameswoosh.ogg'
 		//playsound(src.loc, "sound/effects/flameswoosh.ogg", 100, 0)
 		ion_trail.start()

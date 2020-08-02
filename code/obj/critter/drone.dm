@@ -49,33 +49,32 @@
 		src.oldtarget_name = newtarget.name
 		if (alertsound1 || alertsound2)
 			playsound(src.loc, ismob(newtarget) ? alertsound2 : alertsound1, 55, 1)
-		src.visible_message("<span style=\"color:red\"><b>[src]</b> starts chasing [src.target]!</span>")
+		src.visible_message("<span class='alert'><b>[src]</b> starts chasing [src.target]!</span>")
 		task = "chasing"
 
 	Bump(atom/movable/AM)
-		..()
-		if(!smashes_shit) return
+		if(smashes_shit)
+			if(isobj(AM))
+				for(var/type in do_not_smash)
+					if(istype(AM, type)) return
+				var/smashed_shit = 1
 
-		if(isobj(AM))
-			for(var/type in do_not_smash)
-				if(istype(AM, type)) return
-			var/smashed_shit = 1
+				if(istype(AM, /obj/window))
+					AM:health = 0
+					AM:smash()
+				else if(istype(AM,/obj/grille))
+					AM:damage_blunt(30)
+				else if(istype(AM, /obj/table))
+					AM.meteorhit()
+				else if(istype(AM, /obj/foamedmetal))
+					AM.dispose()
+				else
+					AM.meteorhit()
 
-			if(istype(AM, /obj/window))
-				AM:health = 0
-				AM:smash()
-			else if(istype(AM,/obj/grille))
-				AM:damage_blunt(30)
-			else if(istype(AM, /obj/table))
-				AM.meteorhit()
-			else if(istype(AM, /obj/foamedmetal))
-				AM.dispose()
-			else
-				AM.meteorhit()
-
-			if(smashed_shit)
-				playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
-				src.visible_message("<span style=\"color:red\"><B>[src]</B> smashes into \the [AM]!</span>")
+				if(smashed_shit)
+					playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
+					src.visible_message("<span class='alert'><B>[src]</B> smashes into \the [AM]!</span>")
+			..()
 
 
 	seek_target()
@@ -181,7 +180,7 @@
 		if(target)
 			src.attacking = 1
 			//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> fires at [M]!</span>")
+			src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -202,7 +201,7 @@
 		if(target)
 			src.attacking = 1
 			//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> fires at [M]!</span>")
+			src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -239,46 +238,10 @@
 		if(target == start)
 			return
 
-		SPAWN_DBG(-1)
-			if (!current_projectile)
-				current_projectile = new projectile_type()
-			for (var/i = 0, i < (max(1,current_projectile.shot_number)), i++) //ARRRRGHHH WHY ISNT THIS USING THE NORMAL PROJECTILE SHOT PROCS
-				var/obj/projectile/A = unpool(/obj/projectile)
-				if(!A)	return
-				A.set_loc(src.loc)
-				A.proj_data = current_projectile
-				A.proj_data.master = A
-				A.set_icon()
-				A.power = A.proj_data.power
-				if(src.current_projectile.shot_sound)
-					playsound(src, src.current_projectile.shot_sound, 60)
-
-				if (!istype(target, /turf))
-					A.die()
-					return
-				A.target = target
-
-				if(istype(target, /obj/machinery/cruiser))
-					A.yo = (target:y + 2) - start:y
-					A.xo = (target:x + 2) - start:x
-				else
-					A.yo = target:y - start:y
-					A.xo = target:x - start:x
-
-
-				if (projectile_spread)
-					if (projectile_spread < 0)
-						projectile_spread = -projectile_spread
-					var/spread = rand(projectile_spread * 10) / 10
-					A.rotateDirection(prob(50) ? spread : -spread)
-
-				A.shooter = src
-				src.dir = get_dir(src, target)
-				SPAWN_DBG( 0 )
-					A.process()
-
-				if (current_projectile.shot_delay)
-					sleep(current_projectile.shot_delay)
+		if(istype(target, /obj/machinery/cruiser))
+			shoot_projectile_ST_pixel_spread(src, current_projectile, target, 64, 64, projectile_spread)
+		else
+			shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0, projectile_spread)
 		return
 
 	process() // override so drones don't just loaf all fuckin day
@@ -677,7 +640,7 @@
 		ChaseAttack(atom/M)
 			if(target && !attacking)
 				attacking = 1
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> charges at [M]!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> charges at [M]!</span>")
 				walk_to(src, src.target,1,4)
 				var/tturf = get_turf(M)
 				Shoot(tturf, src.loc, src)
@@ -689,7 +652,7 @@
 			if(target && !attacking)
 				attacking = 1
 				//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> hits [M]!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> hits [M]!</span>")
 
 				var/tturf = get_turf(M)
 				Shoot(tturf, src.loc, src)
@@ -847,27 +810,14 @@
 				playsound(src,"sound/machines/signal.ogg", 60, 0)
 			return
 
-
-
 		Shoot(var/target, var/start, var/user, var/bullet = 0)
 			if(target == start)
 				return
 
-
 			src.dir = get_dir(src, target)
 
-			var/obj/projectile/P1 =	new/obj/projectile(src.loc)
-			var/obj/projectile/P2 =	new/obj/projectile(src.loc)
-			P1.proj_data = new current_projectile.type
-			P2.proj_data = new current_projectile.type
-			P1.set_icon()
-			P2.set_icon()
-			P1.shooter = src
-			P2.shooter = src
-			P1.target = target
-			P2.target = target
-			if(src.current_projectile.shot_sound)
-				playsound(src.loc, src.current_projectile.shot_sound, 60)
+			var/obj/projectile/P1 =	initialize_projectile(src.loc, current_projectile, 0, 0, src)
+			var/obj/projectile/P2 =	initialize_projectile(src.loc, current_projectile, 0, 0, src)
 
 			switch(src.dir) // linked fire, directional offsets so they don't hit the ship itself // these need more work still
 				if(NORTH)
@@ -877,6 +827,8 @@
 					P2.xo = 0
 					P1.set_loc(locate(src.x, src.y+2, src.z))
 					P2.set_loc(locate(src.x+2,src.y+2, src.z))
+					P1.orig_turf = P1.loc //our orig_turf was set in initialize_projectile() but that was before we moved it to the side of the ship
+					P2.orig_turf = P2.loc
 				if(EAST)
 					P1.yo = 0
 					P1.xo = 96
@@ -884,6 +836,8 @@
 					P2.xo = 96
 					P1.set_loc(locate(src.x+2,src.y+2,src.z))
 					P2.set_loc(locate(src.x+2,src.y,src.z))
+					P1.orig_turf = P1.loc
+					P2.orig_turf = P2.loc
 				if(WEST)
 					P1.yo = 0
 					P1.xo = -96
@@ -891,6 +845,8 @@
 					P2.xo = -96
 					P1.set_loc(locate(src.x,src.y, src.z))
 					P2.set_loc(locate(src.x,src.y+2, src.z))
+					P1.orig_turf = P1.loc
+					P2.orig_turf = P2.loc
 				else
 					P1.yo = -96
 					P1.xo = 0
@@ -898,13 +854,13 @@
 					P2.xo = 0
 					P1.set_loc(locate(src.x+2,src.y, src.z))
 					P2.set_loc(locate(src.x, src.y, src.z))
+					P1.orig_turf = P1.loc
+					P2.orig_turf = P2.loc
 
 			SPAWN_DBG(0)
-				P1.process()
+				P1.launch() // FIRE!
 			SPAWN_DBG(0)
-				P2.process()
-
-			return
+				P2.launch()
 
 		New()
 			..()
@@ -972,22 +928,8 @@
 
 		src.dir = get_dir(src, target)
 
-		var/obj/projectile/P1 = unpool(/obj/projectile/precursor_sphere)
-		var/obj/projectile/P2 = unpool(/obj/projectile/precursor_sphere)
-		P1.loc = src.loc
-		P2.loc = P1.loc
-		P1.proj_data = new current_projectile.type
-		P2.proj_data = new current_projectile.type
-		P1.power = P1.proj_data.power
-		P2.power = P2.proj_data.power
-		P1.set_icon()
-		P2.set_icon()
-		P1.shooter = src
-		P2.shooter = src
-		P1.target = target
-		P2.target = target
-		if(src.current_projectile.shot_sound)
-			playsound(src.loc, src.current_projectile.shot_sound, 60)
+		var/obj/projectile/P1 = initialize_projectile(src.loc, current_projectile, 0, 0, src)
+		var/obj/projectile/P2 = initialize_projectile(src.loc, current_projectile, 0, 0, src)
 
 		switch(src.dir) // linked fire, directional offsets so they don't hit the ship itself // these need more work still
 			if(NORTH)
@@ -997,6 +939,8 @@
 				P2.xo = 0
 				P1.set_loc(locate(src.x, src.y+2, src.z))
 				P2.set_loc(locate(src.x+2,src.y+2, src.z))
+				P1.orig_turf = P1.loc //our orig_turf was set in initialize_projectile() but that was before we moved it to the side of the ship
+				P2.orig_turf = P2.loc
 			if(EAST)
 				P1.yo = 0
 				P1.xo = 96
@@ -1004,6 +948,8 @@
 				P2.xo = 96
 				P1.set_loc(locate(src.x+2,src.y+2,src.z))
 				P2.set_loc(locate(src.x+2,src.y,src.z))
+				P1.orig_turf = P1.loc
+				P2.orig_turf = P2.loc
 			if(WEST)
 				P1.yo = 0
 				P1.xo = -96
@@ -1011,6 +957,8 @@
 				P2.xo = -96
 				P1.set_loc(locate(src.x,src.y, src.z))
 				P2.set_loc(locate(src.x,src.y+2, src.z))
+				P1.orig_turf = P1.loc
+				P2.orig_turf = P2.loc
 			else
 				P1.yo = -96
 				P1.xo = 0
@@ -1018,12 +966,13 @@
 				P2.xo = 0
 				P1.set_loc(locate(src.x+2,src.y, src.z))
 				P2.set_loc(locate(src.x, src.y, src.z))
+				P1.orig_turf = P1.loc
+				P2.orig_turf = P2.loc
 
 		SPAWN_DBG(0)
-			P1.process()
+			P1.launch()
 		SPAWN_DBG(0)
-			P2.process()
-
+			P2.launch()
 
 	proc/elec_zap()
 		playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
@@ -1034,7 +983,7 @@
 
 			poorSoul << sound('sound/effects/electric_shock.ogg', volume=50)
 			random_burn_damage(poorSoul, 45)
-			boutput(poorSoul, "<span style=\"color:red\"><B>You feel a powerful shock course through your body!</B></span>")
+			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
 			poorSoul:Virus_ShockCure(poorSoul, 100)
 			poorSoul:shock_cyberheart(100)
@@ -1063,11 +1012,13 @@
 			for (var/obj/O in lineObjs)
 				pool(O)
 
-
 	New()
 		..()
+		#if ASS_JAM
+		name = "X Æ Y-[rand(10,15)]"
+		#else
 		name = "Battledrone Y-[rand(1,5)]"
-		return
+		#endif
 
 	CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 		if(dying) return
@@ -1115,61 +1066,45 @@
 
 		src.dir = get_dir(src, target)
 
-		var/obj/projectile/sphere = unpool(/obj/projectile/precursor_sphere)
-		sphere.loc = src.loc
-		sphere.proj_data = new sphere_projectile.type
-		sphere.set_icon()
-		sphere.shooter = src
-		sphere.target = target
-		if(src.current_projectile.shot_sound)
-			playsound(src.loc, src.current_projectile.shot_sound, 60)
+		var/obj/projectile/sphere = initialize_projectile(src.loc, sphere_projectile, 0, 0, src)
 
 		switch(src.dir)
 			if(NORTH)
 				sphere.yo = 96
 				sphere.xo = 0
-				sphere.set_loc(locate(src.x, src.y+2, src.z))
+				sphere.set_loc(locate(src.x+1, src.y+2, src.z))
+				sphere.orig_turf = sphere.loc
 			if(EAST)
 				sphere.yo = 0
 				sphere.xo = 96
-				sphere.set_loc(locate(src.x+2,src.y+2,src.z))
+				sphere.set_loc(locate(src.x+2,src.y+1,src.z))
+				sphere.orig_turf = sphere.loc
 			if(WEST)
 				sphere.yo = 0
 				sphere.xo = -96
-				sphere.set_loc(locate(src.x,src.y, src.z))
+				sphere.set_loc(locate(src.x,src.y+1, src.z))
+				sphere.orig_turf = sphere.loc
 			else
 				sphere.yo = -96
 				sphere.xo = 0
-				sphere.set_loc(locate(src.x+2,src.y, src.z))
+				sphere.set_loc(locate(src.x+1,src.y, src.z))
+				sphere.orig_turf = sphere.loc
 
 		SPAWN_DBG(0)
-			sphere.process()
+			sphere.launch()
 
 		if (bounds_dist(src, target) >= 2*32) // dont murder ourself with explosives
-			var/obj/projectile/P1 = unpool(/obj/projectile)
-			var/obj/projectile/P2 = unpool(/obj/projectile)
-			P1.loc = sphere.loc
-			P2.loc = sphere.loc
-			P1.proj_data = new current_projectile.type
-			P2.proj_data = new current_projectile.type
-			P1.set_icon()
-			P2.set_icon()
-			P1.shooter = src
-			P2.shooter = src
-			P1.target = target
-			P2.target = target
-
-			P1.yo = sphere.yo
-			P1.xo = sphere.xo
+			var/obj/projectile/P1 = initialize_projectile(src.loc, current_projectile, sphere.xo, sphere.yo, src)
+			var/obj/projectile/P2 = initialize_projectile(src.loc, current_projectile, sphere.xo, sphere.yo, src)
 			P1.set_loc(sphere.loc)
-			P2.yo = sphere.yo
-			P2.xo = sphere.xo
 			P2.set_loc(sphere.loc)
+			P1.orig_turf = P1.loc
+			P2.orig_turf = P2.loc
 
 			SPAWN_DBG(0)
-				P1.process()
+				P1.launch()
 			SPAWN_DBG(0)
-				P2.process()
+				P2.launch()
 
 
 	/*proc/elec_zap()
@@ -1181,7 +1116,7 @@
 
 			poorSoul << sound('sound/effects/electric_shock.ogg', volume=50)
 			random_burn_damage(poorSoul, 45)
-			boutput(poorSoul, "<span style=\"color:red\"><B>You feel a powerful shock course through your body!</B></span>")
+			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
 			poorSoul:Virus_ShockCure(poorSoul, 100)
 			poorSoul:shock_cyberheart(100)
@@ -1335,5 +1270,4 @@
 			task = "sleeping"
 			src.health = 0
 			src.CritterDeath()
-
 

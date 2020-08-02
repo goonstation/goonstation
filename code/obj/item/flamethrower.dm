@@ -8,7 +8,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 /obj/item/flamethrower
 	name = "flamethrower"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "flamethrower_no_oxy_no_fuel"
 	item_state = "flamethrower0"
@@ -33,10 +33,14 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	var/obj/item/reagent_containers/food/drinks/fueltank/part5 = null
 	contraband = 5 //Heh
 	m_amt = 500
-	stamina_damage = 5
-	stamina_cost = 5
+	stamina_damage = 15
+	stamina_cost = 15
 	stamina_crit_chance = 1
 	move_triggered = 1
+
+	New()
+		..()
+		BLOCK_LARGE
 
 /obj/item/flamethrower/loaded/
 	icon_state = "flamethrower_oxy_fuel"
@@ -152,7 +156,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 	if (istype(W, /obj/item/device/igniter))
 		if (src.loc != user)
-			boutput(user, "<span style=\"color:red\">You need to be holding [src] to work on it!</span>")
+			boutput(user, "<span class='alert'>You need to be holding [src] to work on it!</span>")
 			return
 		var/obj/item/device/igniter/I = W
 		if (!( I.status ))
@@ -202,7 +206,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		qdel(src)
 		return
 	if (isscrewingtool(W))
-		user.show_message("<span style=\"color:blue\">The igniter is now secured!</span>", 1)
+		user.show_message("<span class='notice'>The igniter is now secured!</span>", 1)
 		var/obj/item/flamethrower/R = new /obj/item/flamethrower(src.loc)
 		var/obj/item/assembly/w_r_ignite/S = src
 		R.part1 = S.part1
@@ -246,14 +250,14 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		return
 	if (istype(W,/obj/item/tank/air) || istype(W,/obj/item/tank/oxygen))
 		if(src.part4)
-			boutput(user, "<span style=\"color:red\">There already is an air tank loaded in the flamethrower!</span>")
+			boutput(user, "<span class='alert'>There already is an air tank loaded in the flamethrower!</span>")
 			return
 		src.part4 = W
 		W.set_loc(src)
 		user.u_equip(W)
 		lit = 0
 		force = 3
-		damtype = "brute"
+		hit_type = DAMAGE_BLUNT
 		var/fuel = "_no_fuel"
 		if(src.part5)
 			fuel = "_fuel"
@@ -261,14 +265,14 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 	if (istype(W,/obj/item/reagent_containers/food/drinks/fueltank))
 		if(src.part5)
-			boutput(user, "<span style=\"color:red\">There already is a fuel tank loaded in the flamethrower!</span>")
+			boutput(user, "<span class='alert'>There already is a fuel tank loaded in the flamethrower!</span>")
 			return
 		src.part5 = W
 		W.set_loc(src)
 		user.u_equip(W)
 		lit = 0
 		force = 3
-		damtype = "brute"
+		hit_type = DAMAGE_BLUNT
 		var/oxy = "_no_oxy"
 		if(src.part4)
 			oxy = "_oxy"
@@ -301,7 +305,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		S.part3 = null
 		//S = null
 		qdel(S)
-		boutput(user, "<span style=\"color:blue\">The igniter is now unsecured!</span>")
+		boutput(user, "<span class='notice'>The igniter is now unsecured!</span>")
 
 
 	else	return	..()
@@ -316,12 +320,12 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 /obj/item/flamethrower/Topic(href,href_list[])
 	if (href_list["close"])
-		usr.machine = null
+		src.remove_dialog(usr)
 		usr.Browse(null, "window=flamethrower")
 		return
 	if(usr.stat || usr.restrained() || usr.lying || src.loc != usr)
 		return
-	usr.machine = src
+	src.add_dialog(usr)
 	if (href_list["light"])
 		if(!src.part4 || !src.part5)	return
 		lit = !(lit)
@@ -329,13 +333,14 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			icon_state = "flamethrower_ignite_on"
 			item_state = "flamethrower1"
 			force = 10
-			damtype = "fire"
+			hit_type = DAMAGE_BURN
 			if (!(src in processing_items))
 				processing_items.Add(src)
 		else
 			icon_state = "flamethrower_oxy_fuel"
 			force = 3
-			damtype = "brute"
+			hit_type = DAMAGE_BLUNT
+		tooltip_rebuild = 1
 	if (href_list["removeair"])
 		if(!src.part4)	return
 		var/obj/item/tank/A = src.part4
@@ -344,13 +349,13 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		src.part4 = null
 		lit = 0
 		force = 3
-		damtype = "brute"
+		hit_type = DAMAGE_BLUNT
 		var/fuel = "_no_fuel"
 		if(src.part5)
 			fuel = "_fuel"
 		icon_state = "flamethrower_no_oxy[fuel]"
 		item_state = "flamethrower0"
-		usr.machine = null
+		src.remove_dialog(usr)
 		usr.Browse(null, "window=flamethrower")
 	if (href_list["removefuel"])
 		if(!src.part5)	return
@@ -360,33 +365,32 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		src.part5 = null
 		lit = 0
 		force = 3
-		damtype = "brute"
+		hit_type = DAMAGE_BLUNT
 		var/oxy = "_no_oxy"
 		if(src.part4)
 			oxy = "_oxy"
 		icon_state = "flamethrower[oxy]_no_fuel"
 		item_state = "flamethrower0"
-		usr.machine = null
+		src.remove_dialog(usr)
 		usr.Browse(null, "window=flamethrower")
 	if (href_list["mode"])
 		mode = text2num(href_list["mode"])
-	for(var/mob/M in viewers(1, src.loc))
-		if ((M.client && M.machine == src))
-			src.attack_self(M)
+
+	src.updateDialog()
 	return
 
 
 /obj/item/flamethrower/attack_self(mob/user as mob)
 	if(user.stat || user.restrained() || user.lying)
 		return
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = text("<TT><B>Flamethrower")
 	if(src.part4 && src.part5)
 		dat += text("(<A HREF='?src=\ref[src];light=1'>[lit ? "<font color='red'>Lit</font>" : "Unlit"]</a>)</B><BR>")
 	else
 		dat += text("</B><BR>")
 	if (src.part4)
-		dat += text("<br>Air Tank Pressure: [src.part4.air_contents.return_pressure()] (<A HREF='?src=\ref[src];removeair=1'>Remove Air Tank</A>)<BR>")
+		dat += text("<br>Air Tank Pressure: [MIXTURE_PRESSURE(src.part4.air_contents)] (<A HREF='?src=\ref[src];removeair=1'>Remove Air Tank</A>)<BR>")
 	else
 		dat += text("<br>No Air Tank Attached!<BR>")
 	if(src.part5)
@@ -433,7 +437,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	var/reagentperturf
 
 	if (part5.reagents.total_volume < 5)
-		boutput(usr, "<span style=\"color:red\">The fuel tank is empty.</span>")
+		boutput(usr, "<span class='alert'>The fuel tank is empty.</span>")
 		operating = 0
 		return
 
@@ -474,7 +478,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		//Too little pressure to spray
 		var/datum/gas_mixture/environment = currentturf.return_air()
 		if(!part4 ||!part4.air_contents || !environment) break
-		if(environment.return_pressure() > part4.air_contents.return_pressure())
+		if(MIXTURE_PRESSURE(environment) > MIXTURE_PRESSURE(part4.air_contents))
 			if(!previousturf && length(turflist)>1)
 				break
 			reagentperturf = reagentlefttotransfer
@@ -508,23 +512,20 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		reagentperturf += increment
 		if(lit)
 			//currentturf.hotspot_expose(spray_temperature,2)
-			currentturf.reagents.set_reagent_temp(spray_temperature)
-			currentturf.reagents.temperature_react()
+			currentturf.reagents.set_reagent_temp(spray_temperature, TRUE)
 			spray_temperature = max(0,min(spray_temperature - temp_loss_per_tile, 700))
 
 		var/logString = log_reagents(part5)
 		for (var/mob/living/carbon/human/theMob in currentturf.contents)
-			logTheThing("combat", usr, theMob, "blasts %target% with a flamethrower [logString] at [log_loc(theMob)].")
+			logTheThing("combat", usr, theMob, "blasts [constructTarget(theMob,"combat")] with a flamethrower [logString] at [log_loc(theMob)].")
 			mobHitList += "[key_name(theMob)], "
 
 		if(halt)
 			break
-		sleep(1)
+		sleep(0.1 SECONDS)
 
 	operating = 0
-	for(var/mob/M in viewers(1, src.loc))
-		if ((M.client && M.machine == src))
-			src.attack_self(M)
+	src.updateSelfDialog()
 	return 1
 
 /obj/item/flamethrower/proc/spray_turf(turf/target,var/transferamt)

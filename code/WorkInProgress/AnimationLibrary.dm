@@ -148,17 +148,45 @@
 	src.attack_particle.filters = filter (type="blur", size=0.2)
 	src.attack_particle.filters += filter (type="drop_shadow", x=1, y=-1, size=0.7)
 
+	src.sprint_particle = new /obj/particle/attack/sprint //don't use pooling for these particles
 
 /obj/particle/attack
 
 	disposing() //kinda slow but whatever, block that gc ok
 		for (var/mob/M in mobs)
 			if (M.attack_particle == src)
-				M.attack_particle = 0
+				M.attack_particle = null
+			if (M.sprint_particle == src)
+				M.sprint_particle = null
 		..()
 
+	sprint
+		icon = 'icons/mob/mob.dmi'
+		icon_state = "sprint_cloud"
+		layer = MOB_LAYER_BASE - 0.1
+		appearance_flags = TILE_BOUND
 
-/mob/var/obj/particle/attack/attack_particle = 0
+	muzzleflash
+		icon = 'icons/mob/mob.dmi'
+		alpha = 255
+		plane = PLANE_OVERLAY_EFFECTS
+
+		unpooled()
+			..()
+			src.alpha = 255
+			src.pixel_x = 0
+			src.pixel_y = 0
+
+		pooled()
+			..()
+
+
+
+/mob/var/obj/particle/attack/attack_particle
+/mob/var/obj/particle/attack/sprint/sprint_particle
+
+
+
 
 ///obj/attackby(var/obj/item/I as obj, mob/user as mob)
 //	attack_particle(user,src)
@@ -246,7 +274,7 @@
 
 		animate(M.attack_particle, transform = t_size, time = 6, easing = BOUNCE_EASING)
 		animate(pixel_x = (diff_x*32) + target.pixel_x, pixel_y = (diff_y*32)  + target.pixel_y, time = 2, easing = BOUNCE_EASING,  flags = ANIMATION_PARALLEL)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		//animate(M.attack_particle, alpha = 0, time = 2, flags = ANIMATION_PARALLEL)
 		M.attack_particle.alpha = 0
 
@@ -256,40 +284,38 @@
 	if (!thing || !target) return
 	var/diff_x = target.x
 	var/diff_y = target.y
-	SPAWN_DBG(0)
-		if (target && thing) //I want these to be recent, but sometimes they can be deleted during course of a spawn
-			diff_x = diff_x - thing.x
-			diff_y = diff_y - thing.y
+	if (target && thing) //I want these to be recent, but sometimes they can be deleted during course of a spawn
+		diff_x = diff_x - thing.x
+		diff_y = diff_y - thing.y
 
-		if (ismob(thing))
-			var/mob/M = thing
+	if (ismob(thing))
+		var/mob/M = thing
 
-			if (!M || !M.attack_particle) //ZeWaka: Fix for Cannot modify null.icon.
-				return
+		if (!M || !M.attack_particle) //ZeWaka: Fix for Cannot modify null.icon.
+			return
 
-			var/obj/item/I = target
-			if (I && !isgrab(I))
-				M.attack_particle.icon = I.icon
-				M.attack_particle.icon_state = I.icon_state
-			else
-				M.attack_particle.icon = 'icons/mob/mob.dmi'
-				M.attack_particle.icon_state = "[M.a_intent]"
+		var/obj/item/I = target
+		if (I && !isgrab(I))
+			M.attack_particle.icon = I.icon
+			M.attack_particle.icon_state = I.icon_state
+		else
+			M.attack_particle.icon = 'icons/mob/mob.dmi'
+			M.attack_particle.icon_state = "[M.a_intent]"
 
-			M.attack_particle.alpha = 200
-			M.attack_particle.loc = thing.loc
-			M.attack_particle.pixel_x = I.pixel_x + (diff_x*32)
-			M.attack_particle.pixel_y = I.pixel_y + (diff_y*32)
+		M.attack_particle.alpha = 200
+		M.attack_particle.loc = thing.loc
+		M.attack_particle.pixel_x = I.pixel_x + (diff_x*32)
+		M.attack_particle.pixel_y = I.pixel_y + (diff_y*32)
 
-			var/matrix/start = matrix()//(I.transform)
-			M.attack_particle.transform = start
-			var/matrix/t_size = matrix()
-			t_size.Scale(0.3,0.3)
-			t_size.Turn(rand(-40,40))
+		var/matrix/start = matrix()//(I.transform)
+		M.attack_particle.transform = start
+		var/matrix/t_size = matrix()
+		t_size.Scale(0.3,0.3)
+		t_size.Turn(rand(-40,40))
 
-			animate(M.attack_particle, pixel_x = M.get_hand_pixel_x(), pixel_y = M.get_hand_pixel_y(), time = 1, easing = LINEAR_EASING)
-			animate(transform = t_size, time = 1, easing = LINEAR_EASING,  flags = ANIMATION_PARALLEL)
-			SPAWN_DBG(1 DECI SECOND)
-				animate(M.attack_particle, alpha = 0, time = 1, flags = ANIMATION_PARALLEL)
+		animate(M.attack_particle, pixel_x = M.get_hand_pixel_x(), pixel_y = M.get_hand_pixel_y(), time = 1, easing = LINEAR_EASING)
+		animate(transform = t_size, time = 1, easing = LINEAR_EASING,  flags = ANIMATION_PARALLEL)
+		animate(alpha = 0, time = 1)
 
 
 /proc/pull_particle(var/mob/M, var/atom/target)
@@ -325,7 +351,7 @@
 		t_size.Turn(rand(-40,40))
 
 		animate(M.attack_particle, pixel_x = M.get_hand_pixel_x(), pixel_y = M.get_hand_pixel_y(), time = 2, easing = LINEAR_EASING)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		M.attack_particle.alpha = 0
 
 
@@ -363,9 +389,178 @@
 		t_size.Turn(rand(-40,40))
 
 		animate(M.attack_particle, pixel_x = I.pixel_x + (diff_x*32), pixel_y = I.pixel_y + (diff_y*32), time = 2, easing = LINEAR_EASING)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		M.attack_particle.alpha = 0
 
+
+/proc/block_begin(var/mob/M)
+	if (!M || !M.attack_particle) return
+
+	M.attack_particle.invisibility = M.invisibility
+	M.last_interact_particle = world.time
+
+	M.attack_particle.icon = 'icons/mob/mob.dmi'
+	M.attack_particle.icon_state = "block"
+
+	M.attack_particle.alpha = 255
+	M.attack_particle.loc = M.loc
+	M.attack_particle.pixel_x = 0
+	M.attack_particle.pixel_y = 0
+
+	var/matrix/start = matrix()
+	start.Scale(0.3,0.3)
+	start.Turn(rand(-45,45))
+	M.attack_particle.transform = start
+	var/matrix/t_size = matrix()
+
+	animate(M.attack_particle, transform = t_size, time = 2, easing = BOUNCE_EASING)
+	SPAWN_DBG(5)
+		M.attack_particle.alpha = 0
+
+/proc/block_spark(var/mob/M)
+	if (!M || !M.attack_particle) return
+
+	M.attack_particle.invisibility = M.invisibility
+	M.last_interact_particle = world.time
+
+	M.attack_particle.icon = 'icons/mob/mob.dmi'
+	if (M.attack_particle.icon_state == "block_spark")
+		flick("block_spark",M.attack_particle)
+	M.attack_particle.icon_state = "block_spark"
+
+	M.attack_particle.alpha = 255
+	M.attack_particle.loc = M.loc
+	M.attack_particle.pixel_x = 0
+	M.attack_particle.pixel_y = 0
+
+	M.attack_particle.transform.Turn(rand(0,360))
+
+	SPAWN_DBG(10)
+		M.attack_particle.alpha = 0
+
+proc/fuckup_attack_particle(var/mob/M)
+	SPAWN_DBG(1)
+		if (!M || !M.attack_particle) return
+		var/r = rand(0,360)
+		var/x = cos(r)
+		var/y = sin(r)
+		x *= 22
+		y *= 22
+		animate(M.attack_particle, pixel_x = M.attack_particle.pixel_x + x , pixel_y = M.attack_particle.pixel_y + y, time = 5, easing = BOUNCE_EASING, flags = ANIMATION_END_NOW)
+
+proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim)
+	if (!M || !origin || !target || !muzzle_anim) return
+
+	var/offset = 22 //amt of pixels the muzzle flash sprite is offset the shooting mob by
+	var/firing_angle = get_angle(origin, target)
+	var/firing_dir = angle_to_dir(firing_angle)
+
+	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
+
+	switch(firing_dir) //so we apply the correct offset
+		if (NORTH)
+			muzzleflash.pixel_y = 32
+		if (SOUTH)
+			muzzleflash.pixel_y = -32
+		if (EAST)
+			muzzleflash.pixel_x = offset
+		if (WEST)
+			muzzleflash.pixel_x = -offset
+		if (NORTHEAST) //diags look a little weird but what can you do
+			muzzleflash.pixel_y = offset
+			muzzleflash.pixel_x = offset
+		if (NORTHWEST)
+			muzzleflash.pixel_y = offset
+			muzzleflash.pixel_x = -offset
+		if (SOUTHEAST)
+			muzzleflash.pixel_y = -offset
+			muzzleflash.pixel_x = offset
+		if (SOUTHWEST)
+			muzzleflash.pixel_y = -offset
+			muzzleflash.pixel_x = -offset
+
+
+	muzzleflash.Turn(firing_angle)
+	muzzleflash.layer = MOB_INHAND_LAYER
+	muzzleflash.set_loc(M)
+	M.vis_contents.Add(muzzleflash)
+	if (muzzleflash.icon_state == muzzle_anim)
+		flick(muzzle_anim,muzzleflash)
+	muzzleflash.icon_state = muzzle_anim
+
+	SPAWN_DBG(0.6 SECONDS)
+		M.vis_contents.Remove(muzzleflash)
+		pool(muzzleflash)
+
+proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim)
+	if (!A || firing_angle == null || !muzzle_anim) return
+
+	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
+	muzzleflash.pixel_y = cos(firing_angle) * 22
+	muzzleflash.pixel_x = sin(firing_angle) * 22
+
+	muzzleflash.Turn(firing_angle)
+	muzzleflash.layer = A.layer
+	muzzleflash.set_loc(A)
+	A.vis_contents.Add(muzzleflash)
+	if (muzzleflash.icon_state == muzzle_anim)
+		flick(muzzle_anim,muzzleflash)
+	muzzleflash.icon_state = muzzle_anim
+
+	SPAWN_DBG(0.6 SECONDS)
+		A.vis_contents.Remove(muzzleflash)
+		pool(muzzleflash)
+
+
+
+/proc/sprint_particle(var/mob/M, var/turf/T = null)
+	if (!M || !M.sprint_particle) return
+	if (T)
+		M.sprint_particle.loc = T
+	else
+		M.sprint_particle.loc = M.loc
+
+	M.sprint_particle.dir = null
+	if (M.sprint_particle.icon_state == "sprint_cloud")
+		flick("sprint_cloud",M.sprint_particle)
+	M.sprint_particle.icon_state = "sprint_cloud"
+
+
+	SPAWN_DBG(6)
+		if (M.sprint_particle.loc == T)
+			M.sprint_particle.loc = null
+
+/proc/sprint_particle_small(var/mob/M, var/turf/T = null, var/direct = null)
+	if (!M || !M.sprint_particle) return
+	if (T)
+		M.sprint_particle.loc = T
+	else
+		M.sprint_particle.loc = M.loc
+
+	M.sprint_particle.dir = direct
+	if (M.sprint_particle.icon_state == "sprint_cloud_small")
+		flick("sprint_cloud_small",M.sprint_particle)
+	M.sprint_particle.icon_state = "sprint_cloud_small"
+
+	SPAWN_DBG(4)
+		if (M.sprint_particle.loc == T)
+			M.sprint_particle.loc = null
+
+/proc/sprint_particle_tiny(var/mob/M, var/turf/T = null, var/direct = null)
+	if (!M || !M.sprint_particle) return
+	if (T)
+		M.sprint_particle.loc = T
+	else
+		M.sprint_particle.loc = M.loc
+
+	M.sprint_particle.dir = direct
+	if (M.sprint_particle.icon_state == "sprint_cloud_tiny")
+		flick("sprint_cloud_tiny",M.sprint_particle)
+	M.sprint_particle.icon_state = "sprint_cloud_tiny"
+
+	SPAWN_DBG(3)
+		if (M.sprint_particle.loc == T)
+			M.sprint_particle.loc = null
 
 /proc/attack_twitch(var/atom/A)
 	if (!istype(A) || istype(A, /mob/living/object))
@@ -467,10 +662,10 @@
 		A.pixel_x += rand(-3,3)
 		A.pixel_y += rand(-1,1)
 
-		sleep(2)
+		sleep(0.2 SECONDS)
 
 		//Look i know this check looks janky. that's because IT IS. violent_twitch is ONLY called for disorient. okay. this stops it fucking up rest animation
-		if (!A.hasStatus("weakened") && !A.hasStatus("paralysis"))
+		if (!A.hasStatus(list("weakened", "paralysis")))
 			A.transform = start
 		A.pixel_x = old_x
 		A.pixel_y = old_y
@@ -491,7 +686,7 @@
 
 			A.pixel_x = rand(-3,3)
 			A.pixel_y = rand(-2,2)
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 		animate(A, pixel_x = 0, pixel_y = 0, transform = null, time = 1, easing = LINEAR_EASING)
 
@@ -587,7 +782,7 @@
 		do_loops--
 		animate(A, transform = M, pixel_z = A.pixel_z + 12, alpha = A.alpha - 17, time = 1, loop = 1, easing = LINEAR_EASING)
 		M.Scale(1.2,1.2)
-		sleep(1)
+		sleep(0.1 SECONDS)
 	A.alpha = 0
 
 /proc/animate_fading_leap_down(var/atom/A)
@@ -600,7 +795,7 @@
 		do_loops--
 		animate(A, transform = M, pixel_z = A.pixel_z - 12, alpha = A.alpha + 17, time = 1, loop = 1, easing = LINEAR_EASING)
 		M.Scale(0.8,0.8)
-		sleep(1)
+		sleep(0.1 SECONDS)
 	animate(A, transform = M, pixel_z = 0, alpha = 255, time = 1, loop = 1, easing = LINEAR_EASING)
 
 /proc/animate_shake(var/atom/A,var/amount = 5,var/x_severity = 2,var/y_severity = 2, var/return_x = 0, var/return_y = 0)
@@ -938,7 +1133,7 @@
 /proc/shrink_teleport(var/atom/teleporter)
 	var/matrix/M = matrix(0.1, 0.1, MATRIX_SCALE)
 	animate(teleporter, transform = M, pixel_y = 6, time = 4, alpha = 255, easing = SINE_EASING|EASE_OUT)
-	sleep(2)
+	sleep(0.2 SECONDS)
 	animate(teleporter, transform = null, time = 9, alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
 	//HAXXX sorry - kyle
 	if (istype(teleporter, /mob/dead/observer))
@@ -963,7 +1158,7 @@
 /proc/leaving_animation(var/atom/A)
 	animate(A, transform = matrix(0.1, 1, MATRIX_SCALE), time = 5, alpha = 255, easing = QUAD_EASING)
 	animate(time = 10, pixel_y = 512, easing = CUBIC_EASING)
-	sleep(15)
+	sleep(1.5 SECONDS)
 
 /proc/heavenly_spawn(var/obj/A)
 	var/obj/heavenly_light/lightbeam = new /obj/heavenly_light
@@ -980,11 +1175,11 @@
 	animate(A,alpha=255,time=45)
 	SPAWN_DBG(45)
 		animate(A, pixel_y = 0, time = 120, easing = SINE_EASING)
-		sleep(120)
+		sleep(12 SECONDS)
 		A.anchored = was_anchored
 		A.layer = oldlayer
 		animate(lightbeam,alpha = 0, time=15)
-		sleep(15)
+		sleep(1.5 SECONDS)
 		qdel(lightbeam)
 
 /obj/heavenly_light
@@ -998,6 +1193,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	var/fade_time = time / 2
 	target.filters += filter(type = "layer", blend_mode = BLEND_INSET_OVERLAY, icon = scanline_icon, color = color + "00")
 	var/filter = target.filters[target.filters.len]
+	if(!filter) return
 	animate(filter, y = -28, easing = QUAD_EASING, time = time)
 	// animate(y = 0, easing = QUAD_EASING, time = time / 2) // TODO: add multiple passes option later
 	animate(color = color + alpha_hex, time = fade_time, flags = ANIMATION_PARALLEL, easing = QUAD_EASING | EASE_IN)
@@ -1015,6 +1211,133 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 			wiggle--
 			A.pixel_x = rand(-3,3)
 			A.pixel_y = rand(-3,3)
-			sleep(1)
+			sleep(0.1 SECONDS)
 		A.pixel_x = 0
 		A.pixel_y = 0
+
+/obj/overlay/tile_effect/fake_fullbright
+	icon = 'icons/effects/white.dmi'
+	plane = PLANE_LIGHTING
+	layer = LIGHTING_LAYER_FULLBRIGHT
+	blend_mode = BLEND_OVERLAY
+
+/obj/overlay/tile_effect/sliding_turf
+	mouse_opacity = 0
+	New(turf/T)
+		. = ..()
+		src.icon = T.icon
+		src.icon_state = T.icon_state
+		src.dir = T.dir
+		src.color = T.color
+		src.layer = T.layer - 1
+		src.plane = T.plane
+
+
+/proc/animate_turf_slideout(turf/T, new_turf_type, dir, time)
+	var/image/orig = image(T.icon, T.icon_state, dir=T.dir)
+	var/was_fullbright = T.fullbright
+	orig.color = T.color
+	orig.appearance_flags |= RESET_TRANSFORM
+	T.ReplaceWith(new_turf_type)
+	T.underlays += orig
+	T.layer--
+	switch(dir)
+		if(WEST)
+			T.transform = list(1, 0, 32, 0, 1, 0)
+		if(EAST)
+			T.transform = list(1, 0, -32, 0, 1, 0)
+		if(SOUTH)
+			T.transform = list(1, 0, 0, 0, 1, 32)
+		if(NORTH)
+			T.transform = list(1, 0, 0, 0, 1, -32)
+	animate(T, transform=list(1, 0, 0, 0, 1, 0), time=time)
+	if(was_fullbright) // eww
+		var/obj/full_light = new/obj/overlay/tile_effect/fake_fullbright(T)
+		full_light.color = orig.color
+		var/list/trans
+		switch(dir)
+			if(WEST)
+				trans = list(0, 0, -16, 0, 1, 0)
+			if(EAST)
+				trans = list(0, 0, 16, 0, 1, 0)
+			if(SOUTH)
+				trans = list(1, 0, 0, 0, 0, -16)
+			if(NORTH)
+				trans = list(1, 0, 0, 0, 0, 16)
+		animate(full_light, transform=trans, time=time)
+
+/proc/animate_turf_slideout_cleanup(turf/T)
+	T.layer++
+	T.underlays.Cut()
+	var/obj/overlay/tile_effect/fake_fullbright/full_light = locate() in T
+	if(full_light)
+		qdel(full_light)
+
+
+/proc/animate_turf_slidein(turf/T, new_turf_type, dir, time)
+	var/obj/overlay/tile_effect/sliding_turf/slide = new(T)
+	var/had_fullbright = T.fullbright
+	T.ReplaceWith(new_turf_type)
+	T.layer -= 2
+	var/list/tr
+	switch(dir)
+		if(WEST)
+			tr = list(1, 0, -32, 0, 1, 0)
+		if(EAST)
+			tr = list(1, 0, 32, 0, 1, 0)
+		if(SOUTH)
+			tr = list(1, 0, 0, 0, 1, -32)
+		if(NORTH)
+			tr = list(1, 0, 0, 0, 1, 32)
+	animate(slide, transform=tr, time=time)
+	if(!had_fullbright && T.fullbright) // eww
+		T.fullbright = 0
+		T.overlays -= /image/fullbright
+		T.RL_Init() // turning off fullbright
+		var/obj/full_light = new/obj/overlay/tile_effect/fake_fullbright(T)
+		full_light.color = T.color
+		switch(dir)
+			if(WEST)
+				full_light.transform = list(0, 0, 16, 0, 1, 0)
+			if(EAST)
+				full_light.transform = list(0, 0, -16, 0, 1, 0)
+			if(SOUTH)
+				full_light.transform = list(1, 0, 0, 0, 0, 16)
+			if(NORTH)
+				full_light.transform = list(1, 0, 0, 0, 0, -16)
+		animate(full_light, transform=matrix(), time=time)
+
+/proc/animate_turf_slidein_cleanup(turf/T)
+	T.layer += 2
+	T.underlays.Cut()
+	var/obj/overlay/tile_effect/fake_fullbright/full_light = locate() in T
+	if(full_light)
+		qdel(full_light)
+	var/obj/overlay/tile_effect/sliding_turf/slide = locate() in T
+	if(slide)
+		qdel(slide)
+	if(initial(T.fullbright))
+		T.fullbright = 1
+		T.overlays += /image/fullbright
+		T.RL_Init()
+
+/proc/animate_open_from_floor(atom/A, time=1 SECOND, self_contained=1)
+	A.filters += filter(type="alpha", icon='icons/effects/white.dmi', x=16)
+	A.filters += filter(type="alpha", icon='icons/effects/black.dmi', x=-16) // has to be a different dmi because byond
+	animate(A.filters[A.filters.len], x=0, time=time, easing=CUBIC_EASING | EASE_IN)
+	animate(A.filters[A.filters.len - 1], x=0, time=time, easing=CUBIC_EASING | EASE_IN, flags=ANIMATION_PARALLEL)
+	if(self_contained) // assume we're starting from being invisible
+		A.alpha = 255
+	if(self_contained)
+		SPAWN_DBG(time)
+			A.filters.len -= 2
+
+/proc/animate_close_into_floor(atom/A, time=1 SECOND, self_contained=1)
+	A.filters += filter(type="alpha", icon='icons/effects/white.dmi', x=0)
+	A.filters += filter(type="alpha", icon='icons/effects/black.dmi', x=0) // has to be a different dmi because byond
+	animate(A.filters[A.filters.len], x=-16, time=time, easing=CUBIC_EASING | EASE_IN)
+	animate(A.filters[A.filters.len - 1], x=16, time=time, easing=CUBIC_EASING | EASE_IN, flags=ANIMATION_PARALLEL)
+	if(self_contained)
+		SPAWN_DBG(time)
+			A.filters.len -= 2
+			A.alpha = 0

@@ -21,17 +21,17 @@ Click on the secondary adventure button to begin your adventure journey!<br>
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!submode)
-			boutput(usr, "<span style=\"color:red\">Select an adventure mode first.</span>")
+			boutput(usr, "<span class='alert'>Select an adventure mode first.</span>")
 			return
 		submode.click_left(object, ctrl, alt, shift)
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		if (!submode)
-			boutput(usr, "<span style=\"color:red\">Select an adventure mode first.</span>")
+			boutput(usr, "<span class='alert'>Select an adventure mode first.</span>")
 			return
 		submode.click_right(object, ctrl, alt, shift)
 	click_raw(var/atom/object, location, control, params)
 		if (!submode)
-			boutput(usr, "<span style=\"color:red\">Select an adventure mode first.</span>")
+			boutput(usr, "<span class='alert'>Select an adventure mode first.</span>")
 			return
 		submode.click_raw(object, location, control, params)
 

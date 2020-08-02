@@ -55,13 +55,13 @@ datum/controller/radio
 
 /*
 mob/verb/listfreq()
-	boutput(world, "<span style=\"color:blue\">registered devices:</span>")
+	boutput(world, "<span class='notice'>registered devices:</span>")
 	for(var/fn in radio_controller.frequencies)
 		var/datum/radio_frequency/f = radio_controller.return_frequency(fn)
-		boutput(world, "<span style=\"color:blue\">[fn]</span>")
+		boutput(world, "<span class='notice'>[fn]</span>")
 		for(var/obj/o in f.devices)
-			boutput(world, "<span style=\"color:blue\">>[o]</span>")
-	boutput(world, "<span style=\"color:blue\">end</span>")
+			boutput(world, "<span class='notice'>>[o]</span>")
+	boutput(world, "<span class='notice'>end</span>")
 */
 
 

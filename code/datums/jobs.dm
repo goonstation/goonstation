@@ -4,6 +4,7 @@
 	var/linkcolor = "#0FF"
 	var/wages = 0
 	var/limit = -1
+	var/add_to_manifest = 1
 	var/no_late_join = 0
 	var/no_jobban_from_this_job = 0
 	var/allow_traitors = 1
@@ -18,7 +19,9 @@
 	var/recieves_miranda = 0
 	var/recieves_implant = null //Will be a path.
 	var/receives_disk = 0
-	var/announce_on_join = 0
+	var/receives_badge = 0
+	var/announce_on_join = 0 // that's the head of staff announcement thing
+	var/radio_announcement = 1 // that's the latejoin announcement thing
 	var/list/alt_names = list()
 	var/slot_head = null
 	var/slot_mask = null
@@ -28,6 +31,7 @@
 	var/slot_suit = null
 	var/slot_jump = null
 	var/slot_card = /obj/item/card/id
+	var/spawn_id = 1 // will override slot_card if 1
 	var/slot_glov = null
 	var/slot_foot = null
 	var/slot_back = /obj/item/storage/backpack
@@ -40,6 +44,7 @@
 	var/list/items_in_belt = list() // works the same as above but is for jobs that spawn with a belt that can hold things
 	var/list/access = list(access_fuck_all) // Please define in global get_access() proc (access.dm), so it can also be used by bots etc.
 	var/mob/living/mob_type = /mob/living/carbon/human
+	var/datum/mutantrace/starting_mutantrace = null
 	var/change_name_on_spawn = 0
 	var/special_spawn_location = 0
 	var/spawn_x = 0
@@ -63,23 +68,32 @@
 				M.mind.miranda = "You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you."
 
 		SPAWN_DBG(0)
-			if (recieves_implant && ispath(recieves_implant) && ishuman(M))
+			if (recieves_implant && ispath(recieves_implant))
 				var/mob/living/carbon/human/H = M
-				var/obj/item/implant/I = new recieves_implant(H)
+				var/obj/item/implant/I = new recieves_implant(M)
 				I.implanted = 1
-				H.implant.Add(I)
-				I.implanted(H)
-				if (receives_disk)
+				if(ishuman(M)) H.implant.Add(I)
+				I.implanted(M)
+				if (receives_disk && ishuman(M))
 					if (istype(H.back, /obj/item/storage))
 						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back
 						if (D)
 							D.data["imp"] = "\ref[I]"
 
-			if (iscritter(M))
+			var/give_access_implant = ismobcritter(M)
+			if(!spawn_id && (access.len > 0 || access.len == 1 && access[1] != access_fuck_all))
+				give_access_implant = 1
+			if (give_access_implant)
 				var/obj/item/implant/access/I = new /obj/item/implant/access(M)
 				I.access.access = src.access.Copy()
+				I.owner = M
 				I.uses = -1
 				I.set_loc(M)
+				I.implanted = 1
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					H.implant.Add(I)
+				I.implanted(M)
 
 			if (src.special_spawn_location && !no_special_spawn)
 				M.loc = locate(spawn_x,spawn_y,spawn_z)
@@ -89,6 +103,10 @@
 				if (picklist && picklist.len >= 1)
 					for(var/pick in picklist)
 						M.bioHolder.AddEffect(pick)
+
+			if (ishuman(M) && src.starting_mutantrace)
+				var/mob/living/carbon/human/H = M
+				H.set_mutantrace(src.starting_mutantrace)
 
 			if (src.objective)
 				var/datum/objective/newObjective = spawn_miscreant ? new /datum/objective/miscreant : new /datum/objective/crew
@@ -143,6 +161,16 @@
 	New()
 		..()
 		src.access = get_all_accesses()
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+#if ASS_JAM
+		if(prob(5))
+			M.unequip_all()
+			M.tommyize_reshape()
+#endif
 
 	derelict
 		//name = "NT-SO Commander"
@@ -201,39 +229,51 @@
 	name = "Head of Security"
 	limit = 1
 	wages = 350
+#if ASS_JAM
+	requires_whitelist = 0
+	high_priority_job = 1
+	change_name_on_spawn = 1
+#else
 	requires_whitelist = 1
+#endif
 	recieves_miranda = 1
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	receives_disk = 1
+	receives_badge = 1
 	recieves_implant = /obj/item/implant/health/security
+
 
 #ifdef SUBMARINE_MAP
 	slot_jump = /obj/item/clothing/under/rank/head_of_securityold/fancy_alt
 	slot_suit = /obj/item/clothing/suit/armor/hoscape
 	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/gun/energy/taser_gun
-	slot_poc1 = /obj/item/device/pda2/hos
+	slot_belt = /obj/item/device/pda2/hos
+	slot_poc1 = /obj/item/requisition_token/security
+	slot_poc2 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_foot = /obj/item/clothing/shoes/swat
 	slot_head = /obj/item/clothing/head/helmet/HoS
 	slot_ears = /obj/item/device/radio/headset/command/hos
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
-	items_in_backpack = list(/obj/item/storage/box/security_starter_kit) // Don't make them spawn with a full backpack again, please.
+
 
 #else
 	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/gun/energy/taser_gun
-	slot_poc1 = /obj/item/device/pda2/hos
+	slot_belt = /obj/item/device/pda2/hos
+	slot_poc1 = /obj/item/requisition_token/security
+	slot_poc2 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_jump = /obj/item/clothing/under/rank/head_of_securityold
 	slot_suit = /obj/item/clothing/suit/armor/vest
 	slot_foot = /obj/item/clothing/shoes/swat
 	slot_head = /obj/item/clothing/head/helmet/HoS
 	slot_ears = /obj/item/device/radio/headset/command/hos
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
-	items_in_backpack = list(/obj/item/storage/box/security_starter_kit) // Don't make them spawn with a full backpack again, please.
 #endif
+
+	items_in_backpack = list(/obj/item/gun/energy/taser_gun)
+
 
 	New()
 		..()
@@ -356,7 +396,7 @@
 	slot_suit = /obj/item/clothing/suit/labcoat
 	slot_ears = /obj/item/device/radio/headset/command/md
 	slot_eyes = /obj/item/clothing/glasses/healthgoggles/upgraded
-	items_in_backpack = list(/obj/item/device/flash)
+	items_in_backpack = list(/obj/item/device/flash, /obj/item/robodefibrillator)
 
 	New()
 		..()
@@ -415,6 +455,7 @@
 	cant_spawn_as_rev = 1
 	recieves_implant = /obj/item/implant/health/security
 	receives_disk = 1
+	receives_badge = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/security
 	slot_jump = /obj/item/clothing/under/rank/security
@@ -423,7 +464,8 @@
 	slot_foot = /obj/item/clothing/shoes/swat
 	slot_ears =  /obj/item/device/radio/headset/security
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
-	items_in_backpack = list(/obj/item/storage/box/security_starter_kit) // Don't make them spawn with a full backpack again, please.
+	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
+	slot_poc2 = /obj/item/requisition_token/security
 
 	New()
 		..()
@@ -460,6 +502,7 @@
 	limit = 1
 	wages = 150
 	//allow_traitors = 0
+	receives_badge = 1
 	cant_spawn_as_rev = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/storage/belt/security/shoulder_holster
@@ -562,7 +605,7 @@
 	slot_ears = /obj/item/device/radio/headset/medical
 	slot_eyes = /obj/item/clothing/glasses/healthgoggles
 	slot_poc1 = /obj/item/paper/book/pocketguide/medical
-	items_in_backpack = list(/obj/item/crowbar) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
+	items_in_backpack = list(/obj/item/crowbar, /obj/item/robodefibrillator) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
 	// 2018: guaranteed air tanks now spawn in boxes (depending on backpack type) to save room
 
 	New()
@@ -682,11 +725,12 @@
 	wages = 150
 
 	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/device/pda2/mechanic
+	slot_belt = /obj/item/storage/belt/utility/prepared
 	slot_jump = /obj/item/clothing/under/rank/mechanic
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_lhan = /obj/item/storage/toolbox/electrical/mechanic_spawn
 	slot_glov = /obj/item/clothing/gloves/yellow
+	slot_poc1 = /obj/item/device/pda2/mechanic
 	slot_ears = /obj/item/device/radio/headset/engineer
 
 	New()
@@ -703,12 +747,12 @@
 #endif
 	wages = 200
 	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/device/pda2/engine
+	slot_belt = /obj/item/storage/belt/utility/prepared
 	slot_jump = /obj/item/clothing/under/rank/engineer
 	slot_foot = /obj/item/clothing/shoes/orange
-	slot_lhan = /obj/item/storage/toolbox/mechanical
+	slot_lhan = /obj/item/storage/toolbox/mechanical/engineer_spawn
 	slot_glov = /obj/item/clothing/gloves/yellow
-	slot_poc1 = /obj/item/device/t_scanner
+	slot_poc1 = /obj/item/device/pda2/engine
 	slot_ears = /obj/item/device/radio/headset/engineer
 
 	New()
@@ -771,6 +815,7 @@
 	slot_suit = /obj/item/clothing/suit/armor/vest
 	slot_ears = /obj/item/device/radio/headset/civilian
 	slot_poc1 = /obj/item/paper/book/pocketguide/bartending
+	slot_lhan = /obj/item/reagent_containers/food/drinks/cocktailshaker
 	items_in_backpack = list(/obj/item/gun/kinetic/riotgun)
 
 	New()
@@ -786,7 +831,11 @@
 
 /datum/job/civilian/botanist
 	name = "Botanist"
+	#ifdef MAP_OVERRIDE_DONUT3
+	limit = 7
+	#else
 	limit = 5
+	#endif
 	wages = 100
 	slot_belt = /obj/item/device/pda2/botanist
 	slot_jump = /obj/item/clothing/under/rank/hydroponics
@@ -805,7 +854,7 @@
 	wages = 100
 	slot_belt = /obj/item/device/pda2/janitor
 	slot_jump = /obj/item/clothing/under/rank/janitor
-	slot_foot = /obj/item/clothing/shoes/black
+	slot_foot = /obj/item/clothing/shoes/galoshes
 	slot_ears = /obj/item/device/radio/headset/civilian
 
 	New()
@@ -821,6 +870,7 @@
 	slot_belt = /obj/item/device/pda2/chaplain
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_ears = /obj/item/device/radio/headset/civilian
+	slot_lhan = /obj/item/storage/bible/loaded
 
 	New()
 		..()
@@ -851,16 +901,14 @@
 
 /datum/job/civilian/clown
 	name = "Clown"
+	limit = 1
 	wages = 1000
-	needs_college = 1
 	linkcolor = "#FF99FF"
 	slot_back = null
 	slot_belt = /obj/item/storage/fanny/funny
 	slot_mask = /obj/item/clothing/mask/clown_hat
-	slot_head = /obj/item/clothing/head/graduation_cap
 	slot_jump = /obj/item/clothing/under/misc/clown
 	slot_foot = /obj/item/clothing/shoes/clown_shoes
-	slot_rhan = /obj/item/toy/diploma
 	slot_lhan = /obj/item/instrument/bikehorn
 	slot_poc1 = /obj/item/device/pda2/clown
 	slot_poc2 = /obj/item/reagent_containers/food/snacks/plant/banana
@@ -967,6 +1015,7 @@
 	slot_suit = /obj/item/clothing/suit/labcoat
 	slot_ears = /obj/item/device/radio/headset/command/md
 	slot_rhan = /obj/item/storage/firstaid/docbag
+
 	New()
 		..()
 		src.access = get_access("Head Surgeon")
@@ -1001,13 +1050,15 @@
 	wages = 250
 	allow_traitors = 0
 	cant_spawn_as_rev = 1
+	receives_badge = 1
 	recieves_miranda = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/security
 	slot_jump = /obj/item/clothing/under/misc/vice
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_ears =  /obj/item/device/radio/headset/security
-	items_in_backpack = list(/obj/item/storage/box/security_starter_kit) // Don't make them spawn with a full backpack again, please.
+	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
+	slot_poc2 = /obj/item/requisition_token/security
 
 	New()
 		..()
@@ -1365,12 +1416,7 @@
 	name = "Test Subject"
 	slot_jump = /obj/item/clothing/under/shorts
 	change_name_on_spawn = 1
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.set_mutantrace(/datum/mutantrace/monkey)
+	starting_mutantrace = /datum/mutantrace/monkey
 
 /datum/job/special/random/musician
 	name = "Musician"
@@ -1987,6 +2033,7 @@
 	slot_foot = null
 	slot_back = null
 	slot_belt = null
+	spawn_id = 0
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -1998,9 +2045,37 @@
 		else
 			M.real_name = "Syndicate Agent"
 
+		bad_traitorify(M, "Syndicate Agent")
+
 		equip_syndicate(M)
 		return
 
+/datum/job/special/syndicate_weak
+	linkcolor = "#880000"
+	name = "Junior Syndicate Operative"
+	limit = 0
+	slot_back = /obj/item/storage/backpack/satchel
+	slot_belt = null
+	slot_jump = /obj/item/clothing/under/misc/syndicate
+	slot_suit = /obj/item/clothing/suit/armor/vest
+	slot_head = /obj/item/clothing/head/helmet/swat
+	slot_foot = /obj/item/clothing/shoes/swat
+	slot_ears =  null
+	slot_mask = /obj/item/clothing/mask/breath
+	slot_card = null		///obj/item/card/id/
+	slot_poc1 = /obj/item/reagent_containers/pill/tox
+	slot_poc2 = /obj/item/storage/pouch/bullet_9mm
+	slot_lhan = null
+	slot_rhan = /obj/item/gun/kinetic/pistol
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		bad_traitorify(M, "Syndicate Agent")
+
+/datum/job/special/syndicate_weak/no_ammo
+	name = "Poorly Equipped Junior Syndicate Operative"
+	slot_poc2 = null
+	slot_poc1 = null
 // hidden jobs for nt-so vs syndicate spec-ops
 
 /datum/job/special/syndicate_specialist
@@ -2037,15 +2112,16 @@
 	special_spawn_location = 0
 #else
 	special_spawn_location = 1
-	spawn_x = 145
-	spawn_y = 284
-	spawn_z = 4
+	spawn_x = 96
+	spawn_y = 272
+	spawn_z = 2
 #endif
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
 		if (!M)
 			return
+		bad_traitorify(M, "Syndicate Agent")
 		M.show_text("<b>The assault has begun! Head over to the station and kill any and all Nanotrasen personnel you encounter!</b>", "red")
 
 
@@ -2058,12 +2134,12 @@
 	cant_spawn_as_rev = 1
 	recieves_implant = /obj/item/implant/health
 	slot_back = /obj/item/storage/backpack/NT
-	slot_belt = /obj/item/gun/kinetic/pistol
+	slot_belt = /obj/item/storage/belt/security
 	slot_jump = /obj/item/clothing/under/misc/turds
 	slot_suit = /obj/item/clothing/suit/space/ntso
 	slot_head = /obj/item/clothing/head/helmet/space/ntso
 	slot_foot = /obj/item/clothing/shoes/swat
-	slot_ears =  /obj/item/device/radio/headset/command/captain //needs their own secret channel
+	slot_ears = /obj/item/device/radio/headset/command/nt //needs their own secret channel
 	slot_mask = /obj/item/clothing/mask/breath
 	slot_card = /obj/item/card/id/command
 	slot_poc1 = /obj/item/spacecash/fivehundred
@@ -2072,7 +2148,8 @@
 							/obj/item/device/pda2/heads,
 							/obj/item/old_grenade/stinger/frag,
 							/obj/item/storage/firstaid/regular,
-							/obj/item/storage/pouch/powercell_medium)
+							/obj/item/storage/pouch/powercell_medium,
+							/obj/item/gun/kinetic/pistol)
 
 	New()
 		..()
@@ -2095,14 +2172,16 @@
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
+	receives_badge = 1
 	recieves_implant = /obj/item/implant/health
 	slot_back = /obj/item/storage/backpack/NT
-	slot_belt = /obj/item/gun/kinetic/clock_188
+	slot_belt = /obj/item/storage/belt/security
 	slot_jump = /obj/item/clothing/under/misc/turds
 	slot_suit = /obj/item/clothing/suit/space/ntso
 	slot_head = /obj/item/clothing/head/helmet/space/ntso
 	slot_foot = /obj/item/clothing/shoes/swat
-	slot_ears =  /obj/item/device/radio/headset/command/captain //needs their own secret channel
+	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
+	slot_ears =  /obj/item/device/radio/headset/command/nt //needs their own secret channel
 	slot_mask = /obj/item/clothing/mask/breath
 	slot_card = /obj/item/card/id/command
 
@@ -2110,7 +2189,9 @@
 	slot_poc2 = /obj/item/spacecash/fivehundred
 	items_in_backpack = list(/obj/item/device/pda2/heads,
 							/obj/item/storage/firstaid/regular,
-							/obj/item/storage/pouch/clock)
+							/obj/item/storage/pouch/clock,
+							/obj/item/gun/kinetic/clock_188,
+							/obj/item/requisition_token/security)
 
 	New()
 		..()
@@ -2169,8 +2250,13 @@
 /datum/job/special/meatcube
 	name = "Meatcube"
 	linkcolor = "#FF0000"
+#if ASS_JAM
+	announce_on_join = 1
+	limit = 300
+#else
 	limit = 0
 	allow_traitors = 0
+#endif
 	slot_ears = null
 	slot_card = null
 	slot_back = null

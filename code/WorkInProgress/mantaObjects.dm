@@ -33,7 +33,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		mantaBubbles.Add(src)
 		return ..()
 
-	Del()
+	disposing()
 		mantaBubbles.Remove(src)
 		return ..()
 
@@ -91,32 +91,32 @@ var/obj/manta_speed_lever/mantaLever = null
 		if(diff < 0) diff += 864000 //Wrapping protection.
 
 		if (locked == 1)
-			user.show_text("<span style='color:red'><b>You must first unlock the lever console with an ID to be able to use it.</b></span>")
+			user.show_text("<span class='alert'><b>You must first unlock the lever console with an ID to be able to use it.</b></span>")
 			return
 
 		if(mantaIsBroken() && !on)
-			user.show_text("<span style='color:red'><b>Too many propellers are damaged; you can not move NSS Manta.</b></span>")
+			user.show_text("<span class='alert'><b>Too many propellers are damaged; you can not move NSS Manta.</b></span>")
 			return
 
 		if(diff > 3000)
 			lastuse = world.timeofday
 			if(on)
-				user.show_text("<span style='color:blue'><b>You turn off the propellers.</b></span>")
+				user.show_text("<span class='notice'><b>You turn off the propellers.</b></span>")
 				on = 0
 				updateIcon()
 				command_alert("Attention, NSS Manta is slowing down to a halt. Shutting down propellers.", "NSS Manta Movement Computer")
 				mantaSetMove(on)
 			else
-				user.show_text("<span style='color:blue'><b>You turn on the propellers.</b></span>")
+				user.show_text("<span class='notice'><b>You turn on the propellers.</b></span>")
 				on = 1
 				world << 'sound/effects/mantamoving.ogg'
-				sleep(70)
+				sleep(7 SECONDS)
 				updateIcon()
 				command_alert("Attention, firing up propellers.  NSS Manta will be on the move shortly.", "NSS Manta Movement Computer")
 				mantaSetMove(on)
 			return
 		else
-			user.show_text("<span style='color:red'><b>The engine is still busy.</b></span>")
+			user.show_text("<span class='alert'><b>The engine is still busy.</b></span>")
 
 
 	attack_ai(mob/user as mob)
@@ -131,7 +131,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				src.locked = !src.locked
 				updateIcon()
 			else
-				boutput(user, "<span style=\"color:red\">Access denied.</span>")
+				boutput(user, "<span class='alert'>Access denied.</span>")
 		else
 			..()
 
@@ -160,6 +160,7 @@ var/obj/manta_speed_lever/mantaLever = null
 /proc/mantaSetMove(var/moving=1, var/doShake=1)
 
 	if(mantaIsBroken() && moving == 1) //If too many are broken and we want to move, nope out. This is just an extra safety.
+		mantaMoving = 0
 		return
 
 	if(doShake)
@@ -206,7 +207,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		on = 1
 		return .
 
-	Del()
+	disposing()
 		mantaPropellers.Remove(src)
 		return ..()
 
@@ -256,7 +257,7 @@ var/obj/manta_speed_lever/mantaLever = null
 					return
 				for(var/mob/M in oviewers())
 					if(M.client)
-						boutput(M, "<span style=\"color:red\">You hear a grinding sound!</span>")
+						boutput(M, "<span class='alert'>You hear a grinding sound!</span>")
 				var/obj/item/scrap/S = new(get_turf(src))
 				S.blood = bblood
 				S.set_components(tm_amt,tg_amt,tw_amt)
@@ -287,7 +288,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				if (istype(I, /obj/item/cable_coil))
 					actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 60), user)
 			if(5)
-				if (istype(I, /obj/item/weldingtool) && I:welding)
+				if (isweldingtool(I) && I:try_weld(user,0,-1,0,0))
 					actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 50), user)
 			if(6)
 				if (istool(I, TOOL_WRENCHING))
@@ -301,7 +302,7 @@ var/obj/manta_speed_lever/mantaLever = null
 					if (S.amount >= 5)
 						actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 50), user)
 			if(9)
-				if (istype(I, /obj/item/weldingtool) && I:welding)
+				if (isweldingtool(I) && I:try_weld(user,0,-1,0,0))
 					actions.start(new /datum/action/bar/icon/propeller_fix(src, I, 50), user)
 
 
@@ -443,24 +444,24 @@ var/obj/manta_speed_lever/mantaLever = null
 		. = ..()
 		update_icon()
 
-	Del()
+	disposing()
 		mantaJunctionbox.Remove(src)
 		return ..()
 
 	attack_hand(mob/user as mob)
 		if (isAI(usr))
-			boutput(user, "<span style=\"color:red\">You'd touch the door, if only you had hands.</span>")
+			boutput(user, "<span class='alert'>You'd touch the door, if only you had hands.</span>")
 			return
 		if (broken == 1)
 			user.shock(src, rand(5000, 15000), "chest", 1)
 		if (!src.open)
 			src.open = 1
 			update_icon()
-			user.show_text("<span style='color:blue'><b>You open junction box's outer door.</b></span>")
+			user.show_text("<span class='notice'><b>You open junction box's outer door.</b></span>")
 		else
 			src.open = 0
 			update_icon()
-			user.show_text("<span style='color:blue'><b>You close junction box's outer door.</b></span>")
+			user.show_text("<span class='notice'><b>You close junction box's outer door.</b></span>")
 
 	attackby(var/obj/item/I as obj, var/mob/user as mob)
 		if (broken == 1 && open == 1)
@@ -690,7 +691,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
@@ -702,7 +703,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	attack_hand(mob/user as mob)
 		if(busy) return
 		if(get_dist(usr, src) > 1 || usr.z != src.z) return
-		user.machine = src
+		src.add_dialog(user)
 		add_fingerprint(user)
 		busy = 1
 		flick("englrt1", src)
@@ -730,14 +731,18 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/item/hosmedal
 	name = "war medal"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	icon_state = "hosmedal"
 	item_state = "hosmedal"
 
+	New()
+		..()
+		BLOCK_BOOK
+
 /obj/item/rddiploma
 	name = "RD's diploma"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	desc = ".. Upon closer inspection this degree seems to be fake! Who could have guessed!"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	icon_state = "rddiploma"
@@ -745,14 +750,14 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/item/mdlicense
 	name = "MD's medical license"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	icon_state = "mdlicense"
 	item_state = "mdlicense"
 
 /obj/item/firstbill
 	name = "HoP's first bill"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "hopbill"
 
 //CONSTRUCTION WORKER STUFF//
@@ -767,6 +772,10 @@ var/obj/manta_speed_lever/mantaLever = null
 	click_delay = 30
 	force = 50
 
+	New()
+		..()
+		BLOCK_ROD
+
 /obj/item/constructioncone
 	desc = "Caution!"
 	name = "construction cone"
@@ -779,7 +788,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 	stamina_damage = 15
-	stamina_cost = 15
+	stamina_cost = 8
 	stamina_crit_chance = 10
 
 /obj/effect/boommarker
@@ -821,11 +830,11 @@ var/obj/manta_speed_lever/mantaLever = null
 		if (drop_type && issnippingtool(W))
 			var/obj/item/drop = new drop_type
 			drop.set_loc(src.loc)
-			src.visible_message("<span style=\"color:red\">[user] cuts down [src].</span>")
+			src.visible_message("<span class='alert'>[user] cuts down [src].</span>")
 			qdel(src)
 		..()
 
-	Del()
+	disposing()
 		mantaPlants.Remove(src)
 		return ..()
 
@@ -928,7 +937,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		on = 1
 		return .
 
-	Del()
+	disposing()
 		mantaTiles.Remove(src)
 		return ..()
 
@@ -1008,78 +1017,78 @@ var/obj/manta_speed_lever/mantaLever = null
 		..()
 		if (propeller.repairstate == 1)
 			playsound(get_turf(propeller), "sound/items/Ratchet.ogg", 50, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins to loosen the outer bolts.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins to loosen the outer bolts.</span>")
 		if (propeller.repairstate == 2)
 			playsound(get_turf(propeller), "sound/items/Screwdriver.ogg", 50, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins to unscrew the casings screws..</span>")
+			owner.visible_message("<span class='notice'>[owner] begins to unscrew the casings screws..</span>")
 		if (propeller.repairstate == 3)
-			owner.visible_message("<span style='color:blue'>[owner] begins prying the outer casing.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins prying the outer casing.</span>")
 			playsound(get_turf(propeller), "sound/items/Crowbar.ogg", 60, 1)
 		if (propeller.repairstate == 4)
 			playsound(get_turf(propeller), "sound/impact_sounds/Generic_Stab_1.ogg", 60, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins reconnecting and replacing the damaged cables.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins reconnecting and replacing the damaged cables.</span>")
 		if (propeller.repairstate == 5)
 			playsound(get_turf(propeller), "sound/items/Welder.ogg", 50, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins to weld the connection points and soldering the control board.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins to weld the connection points and soldering the control board.</span>")
 		if (propeller.repairstate == 6)
 			playsound(get_turf(propeller), "sound/items/Ratchet.ogg", 60, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins securing the bolts to the casing.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins securing the bolts to the casing.</span>")
 		if (propeller.repairstate == 7)
 			playsound(get_turf(propeller), "sound/items/Screwdriver.ogg", 50, 1)
-			owner.visible_message("<span style='color:blue'>[owner] places the casing back on and begins securing the casing and its screws back on.</span>")
+			owner.visible_message("<span class='notice'>[owner] places the casing back on and begins securing the casing and its screws back on.</span>")
 		if (propeller.repairstate == 8)
 			playsound(get_turf(propeller), "sound/items/Deconstruct.ogg", 50, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins constructing replacements for the propellers..</span>")
+			owner.visible_message("<span class='notice'>[owner] begins constructing replacements for the propellers..</span>")
 		if (propeller.repairstate == 9)
 			playsound(get_turf(propeller), "sound/items/Welder.ogg", 60, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins to weld the replacement propellers on.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins to weld the replacement propellers on.</span>")
 	onEnd()
 		..()
 		if (propeller.repairstate == 1)
 			propeller.repairstate = 2
-			boutput(owner, "<span style='color:blue'>You remove the bolts.</span>")
+			boutput(owner, "<span class='notice'>You remove the bolts.</span>")
 			playsound(get_turf(propeller), "sound/items/Deconstruct.ogg", 80, 1)
 			propeller.desc = "It's totaled, the securing bolts are off, just have to unscrew the casing screws now."
 			return
 		if (propeller.repairstate == 2)
 			propeller.repairstate = 3
-			boutput(owner, "<span style='color:blue'>You remove the screws.</span>")
+			boutput(owner, "<span class='notice'>You remove the screws.</span>")
 			playsound(get_turf(propeller), "sound/items/Deconstruct.ogg", 80, 1)
 			propeller.desc = "It's totaled. The casing looks like it can be pried off now."
 			return
 		if (propeller.repairstate == 3)
 			propeller.repairstate = 4
-			boutput(owner, "<span style='color:blue'>You pry the outer casing off.</span>")
+			boutput(owner, "<span class='notice'>You pry the outer casing off.</span>")
 			playsound(get_turf(propeller), "sound/items/Deconstruct.ogg", 80, 1)
 			propeller.desc = "It's totaled. The casing's off and the motor wiring is exposed, might need replacing."
 			return
 		if (propeller.repairstate == 4)
 			propeller.repairstate = 5
-			boutput(owner, "<span style='color:blue'>You reconnect the damaged cables and re-wire the propellers internal motor.</span>")
+			boutput(owner, "<span class='notice'>You reconnect the damaged cables and re-wire the propellers internal motor.</span>")
 			playsound(get_turf(propeller), "sound/items/Deconstruct.ogg", 80, 1)
 			propeller.desc = "It's totaled. The wiring connectors needs to be welded onto the motor now."
 			return
 		if (propeller.repairstate == 5)
 			propeller.repairstate = 6
-			boutput(owner, "<span style='color:blue'>You finish welding the points and the board.</span>")
+			boutput(owner, "<span class='notice'>You finish welding the points and the board.</span>")
 			playsound(get_turf(propeller), "sound/items/Deconstruct.ogg", 80, 1)
 			propeller.desc = "It's partially fixed. the wiring looks good, better secure it with bolts before moving on."
 			return
 		if (propeller.repairstate == 6)
 			propeller.repairstate = 7
-			boutput(owner, "<span style='color:blue'>You secure the bolts back to the casing.</span>")
+			boutput(owner, "<span class='notice'>You secure the bolts back to the casing.</span>")
 			playsound(get_turf(propeller), "sound/items/Deconstruct.ogg", 80, 1)
 			propeller.desc = "It's partially fixed. the wiring looks good, better secure it with screws before moving on.."
 			return
 		if (propeller.repairstate == 7)
 			propeller.repairstate = 8
-			boutput(owner, "<span style='color:blue'>You finish placing the casing back on and successfully attach it with screws.</span>")
+			boutput(owner, "<span class='notice'>You finish placing the casing back on and successfully attach it with screws.</span>")
 			playsound(get_turf(propeller), "sound/items/Deconstruct.ogg", 80, 1)
 			propeller.desc = "It's partially fixed.The casing's closed, but the propellers are mangled, will probably need 5 sheets of metal to weld on a replacement."
 			return
 		if (propeller.repairstate == 8)
 			propeller.repairstate = 9
-			boutput(owner, "<span style='color:blue'>You finish building the replacement propellers.</span>")
+			boutput(owner, "<span class='notice'>You finish building the replacement propellers.</span>")
 			playsound(get_turf(propeller), "sound/items/Deconstruct.ogg", 80, 1)
 			propeller.desc = "It's nearly fixed. The replacement propellers are ready, just have to weld them on now."
 			if (the_tool != null)
@@ -1091,7 +1100,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		if (propeller.repairstate == 9)
 			propeller.repairstate = 0
 			propeller.broken = 0
-			boutput(owner, "<span style='color:blue'>You finish welding  the replacement propellers,the propeller is again in working condition.</span>")
+			boutput(owner, "<span class='notice'>You finish welding  the replacement propellers,the propeller is again in working condition.</span>")
 			playsound(get_turf(propeller), "sound/items/Deconstruct.ogg", 80, 1)
 			propeller.health = 100
 			mantaPropellers.Add(src)
@@ -1147,41 +1156,41 @@ var/obj/manta_speed_lever/mantaLever = null
 		..()
 		if (box.repairstate == 1)
 			playsound(get_turf(box), "sound/items/Screwdriver.ogg", 100, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins to unscrew the casings screws.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins to unscrew the casings screws.</span>")
 		if (box.repairstate == 2)
 			playsound(get_turf(box), "sound/items/Wirecutter.ogg", 100, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins cutting out the damaged cables.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins cutting out the damaged cables.</span>")
 		if (box.repairstate == 3)
 			playsound(get_turf(box), "sound/impact_sounds/Generic_Stab_1.ogg", 60, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins reconnecting and replacing the damaged cables.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins reconnecting and replacing the damaged cables.</span>")
 		if (box.repairstate == 4)
 			playsound(get_turf(box), "sound/items/Wirecutter.ogg", 100, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins cutting out the excess bits of cable.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins cutting out the excess bits of cable.</span>")
 		if (box.repairstate == 5)
 			playsound(get_turf(box), "sound/items/Screwdriver.ogg", 100, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins to screw the casings screws back on.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins to screw the casings screws back on.</span>")
 	onEnd()
 		..()
 		if (box.repairstate == 1)
 			box.repairstate = 2
-			boutput(owner, "<span style='color:blue'>You successfully remove the screws.</span>")
+			boutput(owner, "<span class='notice'>You successfully remove the screws.</span>")
 			playsound(get_turf(box), "sound/items/Deconstruct.ogg", 80, 1)
 			box.desc = "Perhaps you should cut out the damaged wires?"
 			return
 		if (box.repairstate == 2)
-			boutput(owner, "<span style='color:blue'>You cut out the damaged cables. </span>")
+			boutput(owner, "<span class='notice'>You cut out the damaged cables. </span>")
 			playsound(get_turf(box), "sound/items/Deconstruct.ogg", 80, 1)
 			box.repairstate = 3
 			box.desc = "You should reconnect the damaged wires by adding some new wire."
 			return
 		if (box.repairstate == 3)
 			box.repairstate = 4
-			boutput(owner, "<span style='color:blue'>You reconnect the damaged cables and re-wire the junction box.</span>")
+			boutput(owner, "<span class='notice'>You reconnect the damaged cables and re-wire the junction box.</span>")
 			playsound(get_turf(box), "sound/items/Deconstruct.ogg", 80, 1)
 			box.desc = "You should maybe cut off the excess bits of cable out."
 			return
 		if (box.repairstate == 4)
-			boutput(owner, "<span style='color:blue'>You cut out excess bits of cable.</span>")
+			boutput(owner, "<span class='notice'>You cut out excess bits of cable.</span>")
 			playsound(get_turf(box), "sound/items/Deconstruct.ogg", 80, 1)
 			box.repairstate = 5
 			box.desc = "Alright, that should do it. Just have to screw the casing back on now."
@@ -1189,7 +1198,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		if (box.repairstate == 5)
 			box.repairstate = 0
 			box.broken = 0
-			boutput(owner, "<span style='color:blue'>You successfully screw the casing back on.</span>")
+			boutput(owner, "<span class='notice'>You successfully screw the casing back on.</span>")
 			playsound(get_turf(box), "sound/items/Deconstruct.ogg", 80, 1)
 			mantaJunctionbox.Add(src)
 			box.desc = "An electrical junction box is an enclosure housing electrical connections, to protect the connections and provide a safety barrier."
@@ -1239,41 +1248,41 @@ var/obj/manta_speed_lever/mantaLever = null
 		..()
 		if (magnet.repairstate == 1)
 			playsound(get_turf(magnet), "sound/items/Screwdriver.ogg", 100, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins to unscrew the casings screws.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins to unscrew the casings screws.</span>")
 		if (magnet.repairstate == 2)
 			playsound(get_turf(magnet), "sound/items/Wirecutter.ogg", 100, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins cutting out the damaged cables.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins cutting out the damaged cables.</span>")
 		if (magnet.repairstate == 3)
 			playsound(get_turf(magnet), "sound/impact_sounds/Generic_Stab_1.ogg", 60, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins reconnecting and replacing the damaged cables.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins reconnecting and replacing the damaged cables.</span>")
 		if (magnet.repairstate == 4)
 			playsound(get_turf(magnet), "sound/items/Wirecutter.ogg", 100, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins cutting out the excess bits of cable.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins cutting out the excess bits of cable.</span>")
 		if (magnet.repairstate == 5)
 			playsound(get_turf(magnet), "sound/items/Screwdriver.ogg", 100, 1)
-			owner.visible_message("<span style='color:blue'>[owner] begins to screw the casings screws back on.</span>")
+			owner.visible_message("<span class='notice'>[owner] begins to screw the casings screws back on.</span>")
 	onEnd()
 		..()
 		if (magnet.repairstate == 1)
 			magnet.repairstate = 2
-			boutput(owner, "<span style='color:blue'>You successfully remove the screws.</span>")
+			boutput(owner, "<span class='notice'>You successfully remove the screws.</span>")
 			playsound(get_turf(magnet), "sound/items/Deconstruct.ogg", 80, 1)
 			magnet.desc = "Perhaps you should cut out the damaged wires?"
 			return
 		if (magnet.repairstate == 2)
-			boutput(owner, "<span style='color:blue'>You cut out the damaged cables. </span>")
+			boutput(owner, "<span class='notice'>You cut out the damaged cables. </span>")
 			playsound(get_turf(magnet), "sound/items/Deconstruct.ogg", 80, 1)
 			magnet.repairstate = 3
 			magnet.desc = "You should reconnect the damaged wires by adding some new wire."
 			return
 		if (magnet.repairstate == 3)
 			magnet.repairstate = 4
-			boutput(owner, "<span style='color:blue'>You reconnect the damaged cables and re-wire the junction box.</span>")
+			boutput(owner, "<span class='notice'>You reconnect the damaged cables and re-wire the junction box.</span>")
 			playsound(get_turf(magnet), "sound/items/Deconstruct.ogg", 80, 1)
 			magnet.desc = "You should maybe cut off the excess bits of cable out."
 			return
 		if (magnet.repairstate == 4)
-			boutput(owner, "<span style='color:blue'>You cut out excess bits of cable.</span>")
+			boutput(owner, "<span class='notice'>You cut out excess bits of cable.</span>")
 			playsound(get_turf(magnet), "sound/items/Deconstruct.ogg", 80, 1)
 			magnet.repairstate = 5
 			magnet.desc = "Alright, that should do it. Just have to screw the casing back on now."
@@ -1282,7 +1291,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			magnet.repairstate = 0
 			magnet.broken = 0
 			magnet.icon_state = "magbeacon"
-			boutput(owner, "<span style='color:blue'>You successfully screw the casing back on.</span>")
+			boutput(owner, "<span class='notice'>You successfully screw the casing back on.</span>")
 			playsound(get_turf(magnet), "sound/items/Deconstruct.ogg", 80, 1)
 			MagneticTether = 1
 			magnet.health = 100
@@ -1307,7 +1316,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (random_events.announce_events)
 				command_alert("Communication link has been established with Oshan Laboratory through backkup channel. Communications should be restored to normal aboard NSS Manta.", "Communications Restored")
 			else
-				message_admins("<span style=\"color:blue\">Manta Comms event ceasing.</span>")
+				message_admins("<span class='internal'>Manta Comms event ceasing.</span>")
 
 
 /datum/random_event/major/electricmalfunction
@@ -1339,7 +1348,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			var/obj/machinery/mantapropulsion/big/P = eligible[rand(1,eligible.len)]
 			P.Breakdown()
 			eligible.Remove(P)
-			sleep(10)
+			sleep(1 SECOND)
 
 		new /obj/effect/boommarker(bigboommark)
 #endif
@@ -1514,7 +1523,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return
 	if (used == 0)
 		if(istype(W, /obj/item/parts/human_parts/arm/right/polaris))
-			user.visible_message("<span style=\"color:blue\">The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
+			user.visible_message("<span class='notice'>The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
 			playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
 			for (var/obj/machinery/door/airlock/M in doors)
 				if (M.id == src.id)
@@ -1532,7 +1541,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.limbs && (istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/polaris)))
-				user.visible_message("<span style=\"color:blue\">The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
+				user.visible_message("<span class='notice'>The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
 
 				for (var/obj/machinery/door/poddoor/M in doors)
 					if (M.id == src.id)
@@ -1546,9 +1555,9 @@ var/obj/manta_speed_lever/mantaLever = null
 							M.operating = -1
 							used = 1
 			else
-				boutput(user, "<span style=\"color:red\">Invalid biometric profile. Access denied.</span>")
+				boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
 	else
-		boutput(user, "<span style=\"color:red\">The door has already been opened. It looks like the mechanism has jammed for good.</span>")
+		boutput(user, "<span class='alert'>The door has already been opened. It looks like the mechanism has jammed for good.</span>")
 
 /obj/machinery/reliquaryscout
 	name = "????"
@@ -1567,7 +1576,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	process()
 		for(var/mob/living/carbon/human/H in oview(11,src))
-			src.visible_message("<span style='color:red'>[src] spots [H], and rapidly speeds off into the trench.</span>")
+			src.visible_message("<span class='alert'>[src] spots [H], and rapidly speeds off into the trench.</span>")
 			playsound(src.loc, "sound/misc/ancientbot_beep1.ogg", 80, 1)
 			SPAWN_DBG(2 SECONDS)
 				flick("scoutbot_teleport", src)
@@ -1596,7 +1605,7 @@ var/obj/manta_speed_lever/mantaLever = null
 /obj/item/broken_egun
 	name = "broken energy gun"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "broken_egun"
 	desc = "Its a gun that has two modes, stun and kill, although this one is nowhere near working condition."
 	item_state = "energy"
@@ -1605,7 +1614,7 @@ var/obj/manta_speed_lever/mantaLever = null
 /obj/item/blackbox
 	name = "flight recorder of NSS Polaris"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "blackbox"
 	desc = "A flight recorder is an electronic recording device placed in an spacecraft for the purpose of facilitating the investigation of accidents and incidents. Someone from Nanotrasen would surely want to see this."
 	item_state = "electropack"
@@ -1674,7 +1683,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				var/mob/living/carbon/human/H = M
 				if (H.wear_mask && H.head && H.shoes && H.w_uniform)
 					if (istype(H.head, /obj/item/clothing/head/jester) && istype(H.wear_mask, /obj/item/clothing/mask/jester) && istype(H.shoes, /obj/item/clothing/shoes/jester) && istype(H.w_uniform, /obj/item/clothing/under/gimmick/jester))
-						triggerer.visible_message("<span style=\"color:red\">A hidden compartment opens up, revealing a hatch and a ladder.</span>")
+						triggerer.visible_message("<span class='alert'>A hidden compartment opens up, revealing a hatch and a ladder.</span>")
 						playsound(src.loc, "sound/effects/polaris_crateopening.ogg", 90, 1,1)
 						new /obj/ladder/vaultladder(get_turf(src))
 						triggered = 1

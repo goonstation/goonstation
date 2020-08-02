@@ -60,6 +60,7 @@
 	var/attacker = null // used for defensive tracking
 	var/angertext = "charges at" // comes between critter name and target name
 	var/pet_text = "pets"
+	var/post_pet_text = null
 	var/death_text = "%src% dies!"
 	var/atk_text = "bites"
 	var/chase_text = "leaps on"
@@ -81,6 +82,7 @@
 	var/generic = 1 // if yes, critter can be randomized a bit
 	var/max_quality = 100
 	var/min_quality = -100
+	var/is_pet = null // if null gets determined based on capitalization, 0 = not pet, 1 = pet, 2 = command pet
 
 	var/can_revive = 1 // resurrectable with strange reagent
 
@@ -98,18 +100,17 @@
 	var/mob/living/corpse_target = null
 
 	var/area/registered_area = null //the area this critter is registered in
-
-	/////////////////////////////////////////////////////////////
-	// INTRUDER VARS AND PROCS
-	var/selected = 0
-	/////////////////////////////////////////////////////////////
+	var/parent = null			//the mob or obj/critter that is the progenitor of this critter. Currently only set via hatched eggs
+#if ASS_JAM //timestop stuff
+	var/paused = FALSE
+#endif
 
 	proc/tokenized_message(var/message, var/target)
 		if (!message || !length(message))
 			return
 		var/msg = replacetext(message, "%src%", "<b>[src]</b>")
-		msg = replacetext(msg, "%target%", "[target]")
-		src.visible_message("<span style='color:red'>[msg]</span>")
+		msg = replacetext(msg, "[constructTarget(target,"combat")]", "[target]")
+		src.visible_message("<span class='alert'>[msg]</span>")
 
 	proc/report_spawn()
 		if (!report_state)
@@ -166,6 +167,10 @@
 
 	proc/wake_from_hibernation()
 		if(task != "hibernating") return
+#if ASS_JAM //timestop stuff
+		if(paused)
+			return
+#endif
 		//DEBUG_MESSAGE("[src] woke from hibernation at [showCoords(src.x, src.y, src.z)] in [registered_area ? registered_area.name : "nowhere"] due to [usr ? usr : "some mysterious fucking reason"]")
 		//Ok, now we look to see if we should get murdlin'
 		task = "sleeping"
@@ -190,14 +195,21 @@
 			//DEBUG_MESSAGE("[src] started hibernating at [showCoords(src.x, src.y, src.z)] in [registered_area ? registered_area.name : "nowhere"].")
 			//critters -= src //Stop processing this critter
 
+#if ASS_JAM //timestop stuff
+	HasProximity(atom/movable/AM as mob|obj)
+		if(task == "hibernating" && ismob(AM) && !paused)
+			var/mob/living/M = AM
+			if(M.client) wake_from_hibernation()
 
+		..()
+#else
 	HasProximity(atom/movable/AM as mob|obj)
 		if(task == "hibernating" && ismob(AM))
 			var/mob/living/M = AM
 			if(M.client) wake_from_hibernation()
 
 		..()
-
+#endif
 	set_loc(var/atom/newloc)
 		..()
 		wake_from_hibernation() //Critters hibernate lightly enough to wake up when moved
@@ -224,10 +236,10 @@
 
 					src.skinresult = null
 
-					user.visible_message("<span style=\"color:red\">[user] skins [src].</span>","You skin [src].")
+					user.visible_message("<span class='alert'>[user] skins [src].</span>","You skin [src].")
 
-			if (src.butcherable && (istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/knife_butcher)))
-				user.visible_message("<span style=\"color:red\">[user] butchers [src].[src.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]","You butcher [src].</span>")
+			if (src.butcherable && (istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/knife/butcher)))
+				user.visible_message("<span class='alert'>[user] butchers [src].[src.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]","You butcher [src].</span>")
 
 				var/i = rand(2,4)
 				var/transfer = src.reagents.total_volume / i
@@ -263,7 +275,12 @@
 			damage_type = ME.damtype
 		else
 			attack_force = W.force
-			damage_type = W.damtype
+			switch(W.hit_type)
+				if (DAMAGE_BURN)
+					damage_type = "fire"
+				else
+					damage_type = "brute"
+
 
 		//Simplified weapon properties for critters. Fuck this shit.
 		if(W.getProperty("searing"))
@@ -280,24 +297,28 @@
 			SPAWN_DBG(0)
 				var/frenzy = W.getProperty("frenzy")
 				W.click_delay -= frenzy
-				sleep(30)
+				sleep(3 SECONDS)
 				W.click_delay += frenzy
 		///////////////////////////
 
 		if (!attack_force)
 			return
-
+#if ASS_JAM //timestop stuff
+		if (src.sleeping && !src.paused)
+			sleeping = 0
+			on_wake()
+#else
 		if (src.sleeping)
 			sleeping = 0
 			on_wake()
-
+#endif
 		switch(damage_type)
 			if("fire")
-				src.health -= attack_force * (src.firevuln + W.getProperty("piercing")) //Extremely half assed piercing for critters
+				src.health -= attack_force * max(1,(src.firevuln + W.getProperty("piercing")/100)) //Extremely half assed piercing for critters
 			if("brute")
-				src.health -= attack_force * (src.brutevuln + W.getProperty("piercing"))
+				src.health -= attack_force * max(1,(src.brutevuln + W.getProperty("piercing")/100))
 			else
-				src.health -= attack_force * (src.miscvuln + W.getProperty("piercing"))
+				src.health -= attack_force * max(1,(src.miscvuln + W.getProperty("piercing")/100))
 
 		if (src.alive && src.health <= 0) src.CritterDeath()
 
@@ -318,40 +339,55 @@
 				if (prob(50 - attack_force))
 					return
 				else
-					src.visible_message("<span style=\"color:red\"><b>[src]</b> flinches!</span>")
+					src.visible_message("<span class='alert'><b>[src]</b> flinches!</span>")
 			src.target = user
 			src.oldtarget_name = user.name
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> [src.angertext] [user.name]!</span>")
+			src.visible_message("<span class='alert'><b>[src]</b> [src.angertext] [user.name]!</span>")
 			src.task = "chasing"
 			on_grump()
 
-
+#if ASS_JAM //timestop stuff
+	proc/on_damaged(mob/user)
+		if(registered_area && !paused) //In case some butt fiddles with a hibernating critter
+			registered_area.wake_critters()
+		return
+#else
 	proc/on_damaged(mob/user)
 		if(registered_area) //In case some butt fiddles with a hibernating critter
 			registered_area.wake_critters()
 		return
-
+#endif
+#if ASS_JAM //timestop stuff
+	proc/on_pet()
+		if(registered_area && !paused) //In case some nice person fiddles with a hibernating critter
+			registered_area.wake_critters()
+		return
+#else
 	proc/on_pet()
 		if(registered_area) //In case some nice person fiddles with a hibernating critter
 			registered_area.wake_critters()
 		return
-
+#endif
 	attack_hand(var/mob/user as mob)
 		..()
 		if (!src.alive)
 			..()
 			return
-
+#if ASS_JAM //timestop stuff
+		if (src.sleeping && !src.paused)
+			sleeping = 0
+			on_wake()
+#else
 		if (src.sleeping)
 			sleeping = 0
 			on_wake()
-
+#endif
 		user.lastattacked = src
 		attack_particle(user,src)
 
 		if (user.a_intent == INTENT_HARM)
 			src.health -= rand(1,2) * src.brutevuln
-			src.visible_message("<span style=\"color:red\"><b>[user]</b> punches [src]!</span>")
+			src.visible_message("<span class='alert'><b>[user]</b> punches [src]!</span>")
 			playsound(src.loc, pick('sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_3.ogg','sound/impact_sounds/Generic_Punch_4.ogg','sound/impact_sounds/Generic_Punch_5.ogg'), 100, 1)
 			attack_twitch(user)
 			hit_twitch(src)
@@ -365,20 +401,25 @@
 					if (prob(50))
 						return
 					else
-						src.visible_message("<span style=\"color:red\"><b>[src]</b> flinches!</span>")
+						src.visible_message("<span class='alert'><b>[src]</b> flinches!</span>")
 				src.target = user
 				src.oldtarget_name = user.name
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> [src.angertext] [user.name]!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> [src.angertext] [user.name]!</span>")
 				src.task = "chasing"
 				on_grump()
 		else
 			var/pet_verb = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
-			src.visible_message("<span style=\"color:blue\"><b>[user]</b> [pet_verb] [src]!</span>", 1)
+			var/post_pet_verb = islist(src.post_pet_text) ? pick(src.post_pet_text) : src.post_pet_text
+			src.visible_message("<span class='notice'><b>[user]</b> [pet_verb] [src]![post_pet_verb]</span>", 1)
 			on_pet()
 
 	proc/patrol_step()
 		if (!mobile)
 			return
+#if ASS_JAM //timestop stuff
+		if(paused)
+			return
+#endif
 		var/turf/moveto = locate(src.x + rand(-1,1),src.y + rand(-1, 1),src.z)
 		if(isturf(moveto) && !moveto.density) patrol_to(moveto)
 		if(src.aggressive) seek_target()
@@ -392,24 +433,25 @@
 		step_to(src, towhat)
 
 	Bump(M as mob|obj)
-		SPAWN_DBG(0)
-			if (istype(M, /obj/machinery/door/))
-				var/obj/machinery/door/D = M
-				D.Bumped(src) // Doesn't call that automatically for some inexplicable reason.
-			else if ((isliving(M)) && (!src.anchored))
-				src.set_loc(M:loc)
-				src.frustration = 0
-			return
-		return
+		if (istype(M, /obj/machinery/door/))
+			var/obj/machinery/door/D = M
+			D.Bumped(src) // Doesn't call that automatically for some inexplicable reason.
+		else if ((isliving(M)) && (!src.anchored))
+			src.set_loc(M:loc)
+			src.frustration = 0
 
 	bullet_act(var/obj/projectile/P)
 		var/damage = 0
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
-
+#if ASS_JAM //timestop stuff
+		if (src.sleeping && !src.paused)
+			sleeping = 0
+			on_wake()
+#else
 		if (src.sleeping)
 			sleeping = 0
 			on_wake()
-
+#endif
 		if(src.material) src.material.triggerOnBullet(src, src, P)
 
 		switch(P.proj_data.damage_type)
@@ -429,10 +471,15 @@
 			src.CritterDeath()
 
 	ex_act(severity)
+#if ASS_JAM //timestop stuff
+		if (src.sleeping && !src.paused)
+			sleeping = 0
+			on_wake()
+#else
 		if (src.sleeping)
 			sleeping = 0
 			on_wake()
-
+#endif
 		on_damaged()
 
 		switch(severity)
@@ -474,6 +521,10 @@
 		if (!mobile)
 			task = "thinking"
 			return
+#if ASS_JAM //timestop stuff
+		if(paused)
+			return
+#endif
 		if (src.loc == followed_path_retry_target)
 			logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter arrived at target location.")
 			task = "thinking"
@@ -510,13 +561,20 @@
 				step_to(src, nextturf)
 				followed_path -= nextturf
 		if (!follow_path_blindly)
+#if ASS_JAM //timestop stuff
+			if(paused)
+				return
+#endif
 			seek_target()
 
 	proc/do_wake_check(var/force = 0)
 		if(!force && sleeping-- > 0) return
 
 		var/waking = 0
-
+#if ASS_JAM //timestop stuff
+		if(paused)
+			return
+#endif
 		for (var/client/C)
 			var/mob/M = C.mob
 			if (M && src.z == M.z && get_dist(src,M) <= 10)
@@ -551,8 +609,10 @@
 		if(!force && sleep_check-- > 0) return
 
 		var/stay_awake = 0
-
-
+#if ASS_JAM //timestop stuff
+		if(paused)
+			return
+#endif
 		for (var/client/C)
 			var/mob/M = C.mob
 			if (M && src.z == M.z && get_dist(src,M) <= 10)
@@ -616,9 +676,13 @@
 					src.last_found = world.time
 					src.frustration = 0
 					src.task = "thinking"
+#if ASS_JAM //timestop stuff
+					if (mobile && !paused)
+						walk_to(src,0)
+#else
 					if (mobile)
 						walk_to(src,0)
-
+#endif
 				var/atom/current_target
 				if (src.target)
 					current_target = src.target
@@ -646,6 +710,7 @@
 							walk_to(src, current_target,1,4)
 							if ((get_dist(src, current_target)) >= (olddist))
 								src.frustration++
+								step_towards(src, current_target, 4)
 							else
 								src.frustration = 0
 						else
@@ -657,6 +722,10 @@
 					src.task = "thinking"
 
 			if ("chasing food")
+#if ASS_JAM //timestop stuff
+				if(src.paused)
+					return
+#endif
 				if (!src.chases_food || src.food_target == null)
 					src.task = "thinking"
 				else if (get_dist(src, src.food_target) <= src.attack_range)
@@ -665,12 +734,20 @@
 					walk_to(src, src.food_target,1,4)
 
 			if ("eating")
+#if ASS_JAM //timestop stuff
+				if(src.paused)
+					return
+#endif
 				if (get_dist(src, src.food_target) > src.attack_range)
 					src.task = "chasing"// food"
 				else
 					src.task = "eating2"
 
 			if ("eating2")
+#if ASS_JAM //timestop stuff
+				if(src.paused)
+					return
+#endif
 				if (get_dist(src, src.food_target) > src.attack_range)
 					src.task = "chasing"// food"
 				else
@@ -689,6 +766,10 @@
 						src.health += src.health_gain_from_food
 
 			if ("chasing corpse")
+#if ASS_JAM //timestop stuff
+				if(src.paused)
+					return
+#endif
 				if (!src.scavenger || src.corpse_target == null)
 					src.task = "thinking"
 				else if (get_dist(src, src.corpse_target) <= src.attack_range)
@@ -697,6 +778,10 @@
 					walk_to(src, src.corpse_target,1,4)
 
 			if ("scavenging")
+#if ASS_JAM //timestop stuff
+				if(src.paused)
+					return
+#endif
 				if (!src.scavenger || src.corpse_target == null)
 					src.task = "thinking"
 				if (get_dist(src, src.corpse_target) > src.attack_range)
@@ -715,11 +800,15 @@
 							src.task = "thinking"
 							src.corpse_target = null
 						if (3)
-							src.visible_message("<span style=\"color:red\"><b>[src]</b> has eaten most of the flesh from [src.corpse_target]'s bones!")
+							src.visible_message("<span class='alert'><b>[src]</b> has eaten most of the flesh from [src.corpse_target]'s bones!")
 						if (2)
-							src.visible_message("<span style=\"color:red\"><b>[src]</b> has eaten enough of [src.corpse_target] that their bones are showing!")
+							src.visible_message("<span class='alert'><b>[src]</b> has eaten enough of [src.corpse_target] that their bones are showing!")
 
 			if ("attacking")
+#if ASS_JAM //timestop stuff
+				if(src.paused)
+					return
+#endif
 				// see if he got away
 				if ((get_dist(src, src.target) > src.attack_range) || ((src.target:loc != src.target_lastloc)))
 					src.anchored = initial(src.anchored)
@@ -756,15 +845,25 @@
 						src.attacking = 0
 						src.task = "chasing"
 			if ("wandering")
+#if ASS_JAM //timestop stuff
+				if(paused)
+					return
+#endif
 				patrol_step()
 		return 1
 
 
-	New()
+	New(loc)
 		if(!src.reagents) src.create_reagents(100)
 		wander_check = rand(5,20)
 		critters += src
 		report_spawn()
+		if(isnull(src.is_pet))
+			src.is_pet = !generic && (copytext(src.name, 1, 2) in uppercase_letters)
+		if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
+			src.is_pet = 0
+		if(src.is_pet)
+			pets += src
 		if(generic)
 			src.quality = rand(min_quality,max_quality)
 			var/nickname = getCritterQuality(src.quality)
@@ -777,6 +876,8 @@
 		critters -= src
 		if(registered_area)
 			registered_area.registered_critters -= src
+		if(src.is_pet)
+			pets -= src
 		..()
 
 	proc/seek_target()
@@ -801,7 +902,7 @@
 				src.task = "thinking"
 			if (visible.len)
 				src.corpse_target = visible[1]
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> eyes [src.corpse_target.name] hungrily!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> eyes [src.corpse_target.name] hungrily!</span>")
 				src.task = "chasing"// corpse"
 
 		if (src.chases_food)
@@ -849,7 +950,13 @@
 		return 1
 
 	proc/CritterDeath()
+		SHOULD_CALL_PARENT(TRUE)
 		if (!src.alive) return
+
+		#ifdef COMSIG_OBJ_CRITTER_DEATH
+		SEND_SIGNAL(src, COMSIG_OBJ_CRITTER_DEATH)
+		#endif
+
 		if (!dead_state)
 			src.icon_state = "[initial(src.icon_state)]-dead"
 		else
@@ -857,14 +964,18 @@
 		src.alive = 0
 		src.anchored = 0
 		src.set_density(0)
-		walk_to(src,0)
+		walk_to(src,0) //halt walking
 		report_death()
 		src.tokenized_message(death_text)
 
 	proc/ChaseAttack(mob/M)
+#if ASS_JAM //timestop stuff
+		if(src.paused)
+			return
+#endif
 		src.visible_message("<span class='combat'><B>[src]</B> [src.chase_text] [src.target]!</span>")
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		//playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 
@@ -876,8 +987,8 @@
 			src.visible_message("<span class='combat'><B>[src]</B> [src.atk_text] [src.target]!</span>")
 			random_brute_damage(src.target, src.atk_brute_amt,1)
 			random_burn_damage(src.target, src.atk_burn_amt)
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		SPAWN_DBG(src.atk_delay)
 			src.attacking = 0
@@ -931,6 +1042,10 @@
 	proc/Shoot(var/target, var/start, var/user, var/bullet = 0)
 		if(target == start)
 			return
+#if ASS_JAM //timestop stuff
+		if(paused)
+			return
+#endif
 	//	playsound(user, "mp5gunshot.ogg", 100, 1)
 	/*	if(bullet == 0)
 			A = new /obj/bullet/mpbullet( user:loc )
@@ -957,6 +1072,7 @@
 	var/critter_type = null
 	var/warm_count = 10 // how many times you gotta warm it before it hatches
 	var/critter_reagent = null
+	var/parent = null
 	rand_pos = 1
 
 	New()
@@ -988,9 +1104,9 @@
 
 			src.critter_name = t
 
-		else if ((istype(W, /obj/item/weldingtool) && W:welding) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on) || W.burning || W.hit_type == DAMAGE_BURN) // jesus motherfucking christ
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> warms [src] with [W].</span>",\
-			"<span style=\"color:red\">You warm [src] with [W].</span>")
+		else if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on) || W.burning || W.hit_type == DAMAGE_BURN) // jesus motherfucking christ
+			user.visible_message("<span class='alert'><b>[user]</b> warms [src] with [W].</span>",\
+			"<span class='alert'>You warm [src] with [W].</span>")
 			src.warm_count -= 2
 			src.warm_count = max(src.warm_count, 0)
 			src.hatch_check(0, user)
@@ -1006,7 +1122,8 @@
 		src.warm_count = max(src.warm_count, 0)
 		src.hatch_check(0, user)
 
-	throw_impact(var/turf/T)
+	throw_impact(var/atom/A)
+		var/turf/T = get_turf(A)
 		//..() <- Fuck off mom, I'm 25 and I do what I want =I
 		src.hatch_check(1, null, T)
 
@@ -1026,15 +1143,15 @@
 
 			SPAWN_DBG(0)
 				if (shouldThrow && T)
-					src.visible_message("<span style=\"color:red\">[src] splats onto the floor messily!</span>")
+					src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
 					playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 				else
 					var/hatch_wiggle_counter = rand(3,8)
 					while (hatch_wiggle_counter-- > 0)
 						src.pixel_x++
-						sleep(2)
+						sleep(0.2 SECONDS)
 						src.pixel_x--
-						sleep(10)
+						sleep(1 SECOND)
 					src.visible_message("[src] hatches!")
 
 				if (!ispath(critter_type))
@@ -1046,16 +1163,58 @@
 						qdel(src)
 						return
 
-				var/obj/critter/newCritter = new critter_type(T ? T : get_turf(src))
+				var/obj/critter/newCritter = new critter_type(T ? T : get_turf(src), src.parent)
 
 				if (critter_name)
 					newCritter.name = critter_name
 
 				if (shouldThrow && T)
 					newCritter.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
+				
+				//hack. Clownspider queens keep track of their babies.
+				if (istype(src.parent, /mob/living/critter/spider/clownqueen))
+					var/mob/living/critter/spider/clownqueen/queen = src.parent
+					if (islist(queen.babies))
+						queen.babies += newCritter
 
-				sleep(1)
+				sleep(0.1 SECONDS)
 				qdel(src)
 				return
 		else
 			return
+
+/obj/critter/proc/revive_critter()
+	usr_admin_only
+	var/obj/critter/C = src
+	if (!istype(C, /obj/critter))
+		boutput(src, "[C] isn't a critter! How did you even get here?!")
+		return
+
+	if (!C.alive || C.health <= 0)
+		C.health = initial(C.health)
+		C.alive = 1
+		C.icon_state = copytext(C.icon_state, 1, -5) // if people aren't being weird about the icons it should just remove the "-dead"
+		C.set_density(initial(C.density))
+		C.on_revive()
+		C.visible_message("<span class='alert'>[C] seems to rise from the dead!</span>")
+		logTheThing("admin", src, null, "revived [C] (critter).")
+		message_admins("[key_name(src)] revived [C] (critter)!")
+	else
+		boutput(src, "[C] isn't dead, you goof!")
+		return
+
+/obj/critter/proc/kill_critter()
+	usr_admin_only
+	var/obj/critter/C = src
+	if (!istype(C, /obj/critter))
+		boutput(src, "[C] isn't a critter! How did you even get here?!")
+		return
+
+	if (C.alive)
+		C.health = 0
+		C.CritterDeath()
+		logTheThing("admin", src, null, "killed [C] (critter).")
+		message_admins("[key_name(src)] killed [C] (critter)!")
+	else
+		boutput(src, "[C] isn't alive, you goof!")
+		return

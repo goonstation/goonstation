@@ -246,10 +246,10 @@ proc/split_into_photo_rows(var/list/datum/mind/chars, var/max_per_row)
 	for(var/datum/mind/M in chars)
 		if(isdead(M.current) || inafterlife(M.current)) //  Add em!
 			// Err do they have a death photo?
-			if(M.death_icon)
-				arrangement[row].Add(M.death_icon)
-			else // ye gods what happened to you.
-				arrangement[row].Add(pick(icon('icons/misc/halloween.dmi',"tombstone"),icon('icons/obj/large_storage.dmi',"coffin")))
+			//if(M.death_icon)
+			//	arrangement[row].Add(M.death_icon)
+			//else // ye gods what happened to you.
+			//	arrangement[row].Add(pick(icon('icons/misc/halloween.dmi',"tombstone"),icon('icons/obj/large_storage.dmi',"coffin")))
 		else // God job you managed to not die
 			continue
 

@@ -79,7 +79,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 
 		while(current_state < GAME_STATE_FINISHED)
-			sleep(60)
+			sleep(6 SECONDS)
 
 			if(prob(10) && fxlist)
 				S = sound(file=pick(fxlist), volume=50)
@@ -160,7 +160,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	HasEntered(atom/A)
 		reagents.reaction(A, TOUCH, 2)
 		if (prob(50) && isliving(A))
-			boutput(A, pick("<span style=\"color:red\">This stings!</span>", "<span style=\"color:red\">Oh jesus this burns!!</span>", "<span style=\"color:red\">ow ow OW OW OW OW</span>", "<span style=\"color:red\">oh cripes this isn't the fun kind of acid</span>", "<span style=\"color:red\">ow OW OUCH FUCK OW</span>"))
+			boutput(A, pick("<span class='alert'>This stings!</span>", "<span class='alert'>Oh jesus this burns!!</span>", "<span class='alert'>ow ow OW OW OW OW</span>", "<span class='alert'>oh cripes this isn't the fun kind of acid</span>", "<span class='alert'>ow OW OUCH FUCK OW</span>"))
 			if (ishuman(A) && prob(80))
 				A:emote("scream")
 		return
@@ -188,10 +188,10 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	attackby(obj/item/O as obj, mob/user as mob)
 		if (src.alive && O.force)
 			src.health -= O.force / 4
-			src.visible_message("<span style=\"color:red\"><b>[user] bops [src] with [O]!</b></span>")
+			src.visible_message("<span class='alert'><b>[user] bops [src] with [O]!</b></span>")
 			if (src.health <= 0)
 				src.alive = 0
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> dies!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>")
 				src.icon_state = "light-dead"
 				light.disable()
 
@@ -218,6 +218,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	firevuln = 0.15
 	angertext = "bares jagged fangs at"
 	generic = 0
+	is_pet = 0
 
 
 	floor
@@ -237,7 +238,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 		attackby(obj/item/O as obj, mob/user as mob)
 			if (src.alive && ispryingtool(O))
-				user.visible_message("<span style=\"color:red\"><b>[user] jabs [src] with [O]!</b></span>", "<span style=\"color:red\">You jab [src] with [O] and begin to pull!  Hold on!</span>")
+				user.visible_message("<span class='alert'><b>[user] jabs [src] with [O]!</b></span>", "<span class='alert'>You jab [src] with [O] and begin to pull!  Hold on!</span>")
 				if (do_after(user, 20))
 					playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 					gibs(src.loc)
@@ -264,7 +265,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	CritterAttack(mob/M)
 		if(ismob(M))
 			src.attacking = 1
-			src.visible_message("<span style=\"color:red\"><B>[src]</B> chomps down on [M]!</span>")
+			src.visible_message("<span class='alert'><B>[src]</B> chomps down on [M]!</span>")
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
 			random_brute_damage(M, rand(10,35), 1)
 			SPAWN_DBG(1 SECOND)
@@ -345,12 +346,8 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 
 	CritterDeath()
 		if (!src.alive) return
-		src.icon_state = "meatboss_dead"
-		src.alive = 0
-		src.anchored = 1
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> dies!")
-
+		..()
+		src.icon_state = "meatboss_dead" // why can't you just use a - like everyone else
 
 	ai_think()
 		if(task == "chasing")
@@ -393,7 +390,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 			return
 
 		src.attacking = 1
-		src.visible_message("<span style=\"color:red\">[src] slaps [M] with a meaty tendril!</span>")
+		src.visible_message("<span class='alert'>[src] slaps [M] with a meaty tendril!</span>")
 		playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 		M.changeStatus("weakened", 10 SECONDS)
 		random_brute_damage(M, 10, 1)
@@ -491,6 +488,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 
 /obj/critter/blobman/meaty_martha
 	generic = 0
+	death_text = "%src% collapses into viscera..."
 
 	New()
 		..()
@@ -501,8 +499,8 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 		. = target_missing_limb(M)
 		if ((. == "r_arm" || . == "l_arm") && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			src.visible_message("<span style=\"color:red\"><b>[src] latches onto [M]'s stump!!</b></span>")
-			boutput(M, "<span style=\"color:red\">OH FUCK OH FUCK GET IT OFF GET IT OFF IT STINGS!</span>")
+			src.visible_message("<span class='alert'><b>[src] latches onto [M]'s stump!!</b></span>")
+			boutput(M, "<span class='alert'>OH FUCK OH FUCK GET IT OFF GET IT OFF IT STINGS!</span>")
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
 			M.emote("scream")
 			M.changeStatus("stunned", 2 SECONDS)
@@ -524,7 +522,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 			qdel(src)
 
 		else
-			src.visible_message("<span style=\"color:red\"><B>[src]</B> smacks against [M]!</span>")
+			src.visible_message("<span class='alert'><B>[src]</B> smacks against [M]!</span>")
 			src.set_loc(M.loc)
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
 			if(iscarbon(M))
@@ -534,7 +532,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 
 	CritterDeath()
 		if (!src.alive) return
-		src.visible_message("<b>[src]</b> collapses into viscera...")
+		..()
 		if (src.loc)
 			gibs(src.loc)
 		qdel(src)
@@ -916,7 +914,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 
 	Topic(href, href_list)
 		if (href_list["command"] == "eject")
-			boutput(usr, "<span style=\"color:red\">You can't get it open, it's all overgrown!</span>")
+			boutput(usr, "<span class='alert'>You can't get it open, it's all overgrown!</span>")
 			return
 		else
 			return ..()
@@ -947,7 +945,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 		..()
 
 		src.code = ""
-		. = "[num2hex(rand(4096, 65535))]"
+		. = "[num2hex(rand(4096, 65535), 0)]"
 		for (var/i = 1, i < 5, i++)
 			switch (copytext(., i, i+1))
 				if ("c","C")
@@ -966,14 +964,14 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 			return
 
 		if (locked)
-			boutput(usr, "<span style=\"color:red\">It's locked!</span>")
+			boutput(usr, "<span class='alert'>It's locked!</span>")
 			return
 
 		src.deploy(usr)
 		return
 
 	attack_self(mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		add_fingerprint(user)
 		return show_lock_panel(user)
 
@@ -1125,16 +1123,16 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 				if (locked)
 					locked = 0
 					src.icon_state = "cheget_unlocked"
-					src.visible_message("<span style=\"color:red\">[src]'s lock mechanism clicks unlocked.</span>")
+					src.visible_message("<span class='alert'>[src]'s lock mechanism clicks unlocked.</span>")
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
 					if (prob(50))
-						src.visible_message("<span style=\"color:red\">[src] emits a happy bleep.</span>")
+						src.visible_message("<span class='alert'>[src] emits a happy bleep.</span>")
 						playsound(src.loc, "sound/machines/cheget_goodbloop.ogg", 30, 1)
 
 				else
 					locked = 1
 					src.icon_state = "cheget_closed"
-					src.visible_message("<span style=\"color:red\">[src]'s lock mechanism clunks locked.</span>")
+					src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
 			else if (href_list["enter"] == "")
 				if (locked)
@@ -1142,7 +1140,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 				locked = 1
 				src.icon_state = "cheget_closed"
 
-				src.visible_message("<span style=\"color:red\">[src]'s lock mechanism clunks locked.</span>")
+				src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
 
 			else
@@ -1153,7 +1151,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 						if (cmptext( copytext(href_list["enter"], i,i+1), copytext(src.code, i, i+1)))
 							any_of_them_right++
 
-					src.visible_message("<span style=\"color:red\">[src] emits a[(any_of_them_right > 1) ? "couple" : null] grumpy boop[(any_of_them_right > 1) ? "s" : null].</span>")
+					src.visible_message("<span class='alert'>[src] emits a[(any_of_them_right > 1) ? "couple" : null] grumpy boop[(any_of_them_right > 1) ? "s" : null].</span>")
 					playsound(src.loc, "sound/machines/cheget_grumpbloop.ogg", 30, 1)
 
 /obj/machinery/computer3/luggable/cheget
@@ -1232,11 +1230,11 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 			return
 
 		if(src.host)
-			usr.machine = src.host
+			src.host.add_dialog(usr)
 
 		if(href_list["key"] && istype(usr.equipped(), /obj/item/device/key))
-			boutput(usr, "<span style=\"color:red\">It doesn't fit.  Must be the wrong key.</span>")
-			host.visible_message("<span style=\"color:red\">[src.loc] emits a grumpy boop.</span>")
+			boutput(usr, "<span class='alert'>It doesn't fit.  Must be the wrong key.</span>")
+			host.visible_message("<span class='alert'>[src.loc] emits a grumpy boop.</span>")
 			playsound(src.loc, "sound/machines/cheget_grumpbloop.ogg", 30, 1)
 
 		return
@@ -1265,7 +1263,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 			return
 
 		if(src.host)
-			usr.machine = src.host
+			src.host.add_dialog(usr)
 
 		if(href_list["key"])
 			if(istype(usr.equipped(), /obj/item/device/key/cheget) && !src.inserted_key)
@@ -1273,36 +1271,36 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 				usr.drop_item()
 				C.set_loc(src)
 				src.inserted_key = C
-				boutput(usr, "<span style=\"color:blue\">You insert the key and turn it.</span>")
+				boutput(usr, "<span class='notice'>You insert the key and turn it.</span>")
 				playsound(host.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
 				SPAWN_DBG(1 SECOND)
 					if(src.inserted_key)
-						host.visible_message("<span style=\"color:red\">[host] emits a satisfied boop and a little green light comes on.</span>")
+						host.visible_message("<span class='alert'>[host] emits a satisfied boop and a little green light comes on.</span>")
 						playsound(host.loc, 'sound/machines/cheget_goodbloop.ogg', 30, 1)
 						var/datum/signal/authSignal = get_free_signal()
 						authSignal.data = list("authcode"="\ref[src]")
 						send_command("key_auth", authSignal)
 
 			else if(istype(usr.equipped(), /obj/item/device/key))
-				boutput(usr, "<span style=\"color:red\">It doesn't fit.  Must be the wrong key.</span>")
-				host.visible_message("<span style=\"color:red\">[host] emits a grumpy boop.</span>")
+				boutput(usr, "<span class='alert'>It doesn't fit.  Must be the wrong key.</span>")
+				host.visible_message("<span class='alert'>[host] emits a grumpy boop.</span>")
 				playsound(host.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
 
 		else if (href_list["eject_key"])
 			if(src.inserted_key)
-				boutput(usr, "<span style=\"color:blue\">You turn the key and pull it out of the lock. The green light turns off.</span>")
+				boutput(usr, "<span class='notice'>You turn the key and pull it out of the lock. The green light turns off.</span>")
 				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 30, 1)
 				src.inserted_key.set_loc(get_turf(src.loc))
 				src.inserted_key = null
 				SPAWN_DBG(1 SECOND)
 					if(!src.inserted_key)
-						host.visible_message("<span style=\"color:red\">[host] emits a dour boop and a small red light flickers on.</span>")
+						host.visible_message("<span class='alert'>[host] emits a dour boop and a small red light flickers on.</span>")
 						playsound(host.loc, 'sound/machines/cheget_sadbloop.ogg', 30, 1)
 						var/datum/signal/deauthSignal = get_free_signal()
 						deauthSignal.data = list("authcode"="\ref[src]")
 						send_command("key_deauth", deauthSignal)
 			else
-				boutput(usr, "<span style=\"color:red\">You reach to remove the key from the computer... only to find it missing! Where did it go? ...mysterious.</span>")
+				boutput(usr, "<span class='alert'>You reach to remove the key from the computer... only to find it missing! Where did it go? ...mysterious.</span>")
 
 		host.updateUsrDialog()
 
@@ -1328,27 +1326,27 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 	attackby(obj/item/O as obj, mob/user as mob)
 		if (istype(O, /obj/item/device/key))
 			if (opened)
-				boutput(user, "<span style=\"color:red\">It's already been used, ok.</span>")
+				boutput(user, "<span class='alert'>It's already been used, ok.</span>")
 				return
 
 			if (findtext(O.name, "onyx"))
 				opened = 1
-				user.visible_message("<span style=\"color:red\"><b>[user] inserts [O] into [src]!</b></span>")
+				user.visible_message("<span class='alert'><b>[user] inserts [O] into [src]!</b></span>")
 				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
 				qdel(O)
 
-				src.visible_message("<span style=\"color:red\">Something pops out of [src]!</span>")
+				src.visible_message("<span class='alert'>Something pops out of [src]!</span>")
 				new /obj/item/skull/crystal(get_turf(src))
 
 			else
-				boutput(user, "<span style=\"color:red\">It doesn't fit.  Dang.</span>")
+				boutput(user, "<span class='alert'>It doesn't fit.  Dang.</span>")
 				return
 
 		else if (istype(O, /obj/item/iomoon_key))
-			boutput(user, "<span style=\"color:red\">Okay, that isn't the right answer to this puzzle either.<br>Good thinking, though!</span>")
+			boutput(user, "<span class='alert'>Okay, that isn't the right answer to this puzzle either.<br>Good thinking, though!</span>")
 
 		else if (istype(O, /obj/item/reagent_containers/food/snacks/pie/lime))
-			boutput(user, "<span style=\"color:red\">You can just barely hear a hollow voice say \"ugh.\"[prob(20) ? " Phillip Farmer??" : null]</span>")
+			boutput(user, "<span class='alert'>You can just barely hear a hollow voice say \"ugh.\"[prob(20) ? " Phillip Farmer??" : null]</span>")
 
 		else
 			return ..()
@@ -1393,7 +1391,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands())
 			return
 
-		user.visible_message("<span style=\"color:red\">[user] presses against [src].</span>", "<span style=\"color:red\">You press against [src].  Ew.</span>")
+		user.visible_message("<span class='alert'>[user] presses against [src].</span>", "<span class='alert'>You press against [src].  Ew.</span>")
 		return toggle()
 
 	proc
@@ -1422,7 +1420,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 				src.icon_state = "ganglion_blink_slow"
 				SPAWN_DBG ((timer - 3) * 10)
 					src.icon_state = "ganglion_blink_fast"
-					sleep(30)
+					sleep(3 SECONDS)
 					src.deactivate()
 
 			else
@@ -1516,15 +1514,15 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 		flick("fangdoorc1",src)
 		for (var/mob/living/L in src.loc)
 			if (prob(10))
-				boutput(L, "<span style=\"color:blue\">You just barely slip by the clenching teeth unharmed!</span>")
+				boutput(L, "<span class='notice'>You just barely slip by the clenching teeth unharmed!</span>")
 			else if (prob(80))
-				L.visible_message("<span style=\"color:red\"><b>[src] slams shut on [L]!</b></span>")
+				L.visible_message("<span class='alert'><b>[src] slams shut on [L]!</b></span>")
 				if (ishuman(L))
 					L:sever_limb(pick("l_arm", "r_arm", "L_leg", "r_leg"))
 				else
 					random_brute_damage(L, 25, 1)
 			else
-				L.visible_message("<span style=\"color:red\"><b>[L] is gored by [src]!</b></span>", "<span style=\"color:red\"><b>OH SHIT</b></span>")
+				L.visible_message("<span class='alert'><b>[L] is gored by [src]!</b></span>", "<span class='alert'><b>OH SHIT</b></span>")
 				playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
 				L.gib()
 
@@ -1622,7 +1620,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 
 	pickup(var/mob/user)
 		if (ishuman(user))
-			boutput(user, "<span style=\"color:red\">[src] clamps down on your arm!  Mercy sakes!</span>")
+			boutput(user, "<span class='alert'>[src] clamps down on your arm!  Mercy sakes!</span>")
 			src.w_class = 10
 		return ..()
 
@@ -1638,7 +1636,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 
 		if((last_shot + 15) <= world.time)
 			if (user.health <= 0)
-				boutput(usr, "<span style=\"color:red\">You try to fire, but just feel woozy, bolts of pain shooting up your arm.</span>")
+				boutput(usr, "<span class='alert'>You try to fire, but just feel woozy, bolts of pain shooting up your arm.</span>")
 				return
 
 			last_shot = world.time
@@ -1654,7 +1652,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 			random_brute_damage(user, rand(5,15))
 			playsound(T, "sound/impact_sounds/Flesh_Break_1.ogg", 40, 1)
 
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> blasts a lump of flesh at [target]!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> blasts a lump of flesh at [target]!</span>")
 			if (prob(15))
 				user.emote("scream")
 

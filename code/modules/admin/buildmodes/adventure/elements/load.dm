@@ -5,7 +5,7 @@
 
 	initialize()
 		//savename = input("Save file name", "Save file name", "save") as text
-		boutput(usr, "<span style=\"color:blue\">Left click the bottom left corner of the area to fill with the saved structure. </span>")
+		boutput(usr, "<span class='notice'>Left click the bottom left corner of the area to fill with the saved structure. </span>")
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if (pa.Find("left"))
@@ -17,7 +17,7 @@
 				if (fexists("adventure/ADV_LOAD_[usr.client.ckey]"))
 					fdel("adventure/ADV_LOAD_[usr.client.ckey]")
 				if (pasting)
-					boutput(usr, "<span style=\"color:red\">Already loading.</span>")
+					boutput(usr, "<span class='alert'>Already loading.</span>")
 					return
 				pasting = 1
 				var/datum/puzzlewizard/load/this = src
@@ -56,7 +56,7 @@
 				F << null
 				F.ImportText("/", file2text(target))
 				if (!F)
-					boutput(usr, "<span style=\"color:red\">Import failed.</span>")
+					boutput(usr, "<span class='alert'>Import failed.</span>")
 					pasting = 0
 					return
 				var/basex = T.x
@@ -72,19 +72,19 @@
 				if (!version)
 					version = 1
 				if (!w || !h)
-					boutput(usr, "<span style=\"color:red\">Size error: [w]x[h]</span>")
+					boutput(usr, "<span class='alert'>Size error: [w]x[h]</span>")
 					return
 				if (T.z == 0)
-					boutput(usr, "<span style=\"color:red\">Spatial error: cannot paste onto Z 0 (how the actual fuck did you manage to get this error???)</span>")
+					boutput(usr, "<span class='alert'>Spatial error: cannot paste onto Z 0 (how the actual fuck did you manage to get this error???)</span>")
 					return
 				if (!locate(basex + w, basey + h, T.z))
-					boutput(usr, "<span style=\"color:red\">Spatial error: the pasted area ([w]x[h]) will not fit on the map.</span>")
+					boutput(usr, "<span class='alert'>Spatial error: the pasted area ([w]x[h]) will not fit on the map.</span>")
 				if (alert("This action will paste an area of [w]x[h]. Are you sure you wish to proceed?",, "Yes", "No") == "No")
 					this.pasting = 0
-					boutput(usr, "<span style=\"color:red\">Aborting paste.</span>")
+					boutput(usr, "<span class='alert'>Aborting paste.</span>")
 					return
 				message_admins("[key_name(usr)] initiated loading an adventure (size: [w]x[h], estimated pasting duration: [w*h/10] seconds).")
-				boutput(usr, "<span style=\"color:blue\">Beginning paste. DO NOT TOUCH THE AFFECTED AREA. Or do. Something might go wrong. I don't know. Who cares.</span>")
+				boutput(usr, "<span class='notice'>Beginning paste. DO NOT TOUCH THE AFFECTED AREA. Or do. Something might go wrong. I don't know. Who cares.</span>")
 				var/datum/sandbox/sandbox = new /datum/sandbox()
 				sandbox.context["version"] = version
 				SPAWN_DBG(0)
@@ -98,23 +98,36 @@
 							var/base = "[relx].[rely]"
 							var/ttype
 							var/turf/Q
+
+							var/correct_path = 1
 							if (version < 2)
 								F["[base].TURF"] >> ttype
-								Q = new ttype(locate(cx, cy, cz))
-								F["[base].TURF.dir"] >> Q.dir
+								if (ispath(ttype))
+									Q = locate(cx, cy, cz)
+									Q.ReplaceWith(ttype, keep_old_material=0, force=1)
+									F["[base].TURF.dir"] >> Q.dir
+								else
+									correct_path = 0
+									boutput(usr, "<span class='alert'>Error: Invalid turf type [F.ExportText("[base].TURF")] in [base].TURF</span>")
 							else
 								F["[base].TURF.type"] >> ttype
-								Q = new ttype(locate(cx, cy, cz))
-								Q.deserialize(F, "[base].TURF", sandbox)
-							F["[base].TURF.tag"] >> Q.tag
-							if (!Q.dir)
-								Q.dir = SOUTH
-							new /area/adventure(Q)
-							blink(Q)
+								if (ispath(ttype))
+									Q = locate(cx, cy, cz)
+									Q.ReplaceWith(ttype, keep_old_material=0, force=1)
+									Q.deserialize(F, "[base].TURF", sandbox)
+								else
+									correct_path = 0
+									boutput(usr, "<span class='alert'>Error: Invalid turf type [F.ExportText("[base].TURF.type")] in [base].TURF.type</span>")
+							if (correct_path)
+								F["[base].TURF.tag"] >> Q.tag
+								if (!Q.dir)
+									Q.dir = SOUTH
+								new /area/adventure(Q)
+								blink(Q)
 							workgroup_curr++
 							if (workgroup_curr >= workgroup_size)
 								workgroup_curr = 0
-								sleep(1)
+								sleep(0.1 SECONDS)
 					for (var/cy = basey, cy < basey + h, cy++)
 						var/rely = cy - basey
 						for (var/cx = basex, cx < basex + w, cx++)
@@ -127,24 +140,26 @@
 								var/objt
 								var/obj/O
 								F["[base].OBJ.[objid].type"] >> objt
-								O = new objt()
-								O.set_loc(Q)
-								O.flags |= ISADVENTURE
-								var/result = O:deserialize(F, "[base].OBJ.[objid]", sandbox)
-								if (!istype(O, /obj/critter))
-									if (result & DESERIALIZE_NEED_POSTPROCESS)
-										PP += O
+								if (ispath(objt))
+									O = new objt(Q)
+									O.flags |= ISADVENTURE
+									var/result = O:deserialize(F, "[base].OBJ.[objid]", sandbox)
+									if (!istype(O, /obj/critter))
+										if (result & DESERIALIZE_NEED_POSTPROCESS)
+											PP += O
+								else
+									boutput(usr, "<span class='alert'>Error: Invalid object type [F.ExportText("[base].OBJ.[objid].type")] in [base].OBJ.[objid].type</span>")
 							blink(Q)
 							workgroup_curr++
 							if (workgroup_curr >= workgroup_size)
 								workgroup_curr = 0
-								sleep(1)
+								sleep(0.1 SECONDS)
 					for (var/obj/O in PP)
 						O:deserialize_postprocess()
 					if (this)
 						this.pasting = 0
 					if (usr && usr.client)
-						boutput(usr, "<span style=\"color:blue\">Pasting finished. Fixing lights.</span>")
+						boutput(usr, "<span class='notice'>Pasting finished. Fixing lights.</span>")
 						if (fexists("ADV_LOAD_[usr.client.ckey]"))
 							fdel("ADV_LOAD_[usr.client.ckey]")
 					message_admins("Adventure/loader: loading initiated by [paster] is finalizing.")
@@ -160,5 +175,5 @@
 						workgroup_curr++
 						if (workgroup_curr >= workgroup_size)
 							workgroup_curr = 0
-							sleep(1)
+							sleep(0.1 SECONDS)
 					message_admins("Adventure/loader: loading initiated by [paster] is complete.")

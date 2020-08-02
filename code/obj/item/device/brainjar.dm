@@ -19,13 +19,13 @@
 	New()
 		..()
 
-		overlays_list["wires"] = new /icon('icons/obj/device.dmi', "bjwires")
-		overlays_list["radio"] = new /icon('icons/obj/device.dmi', "bjradio")
-		overlays_list["analyzer"] = new /icon('icons/obj/device.dmi', "bjhealthanalyzer")
-		overlays_list["head_01"] = new /icon('icons/obj/device.dmi', "head-nobrain")
-		overlays_list["head_00"] = new /icon('icons/obj/device.dmi', "head-nobrain-unpow")
-		overlays_list["head_11"] = new /icon('icons/obj/device.dmi', "head-brain")
-		overlays_list["head_10"] = new /icon('icons/obj/device.dmi', "head-brain-unpow")
+		overlays_list["wires"] = new /icon('icons/obj/items/device.dmi', "bjwires")
+		overlays_list["radio"] = new /icon('icons/obj/items/device.dmi', "bjradio")
+		overlays_list["analyzer"] = new /icon('icons/obj/items/device.dmi', "bjhealthanalyzer")
+		overlays_list["head_01"] = new /icon('icons/obj/items/device.dmi', "head-nobrain")
+		overlays_list["head_00"] = new /icon('icons/obj/items/device.dmi', "head-nobrain-unpow")
+		overlays_list["head_11"] = new /icon('icons/obj/items/device.dmi', "head-brain")
+		overlays_list["head_10"] = new /icon('icons/obj/items/device.dmi', "head-brain-unpow")
 
 		controller = new(src)
 		controller.container = src
@@ -192,7 +192,7 @@
 				B.set_loc(src)
 				B.owner.transfer_to(controller)
 				user.show_text("You install \the [B] in \the [src].", "blue")
-				logTheThing("combat", user, controller, "installs %target% into a brain assembly!")
+				logTheThing("combat", user, controller, "installs [constructTarget(controller,"combat")] into a brain assembly!")
 				update_icon()
 			else
 				user.show_text("This brain seems unfit to use in the assembly.", "red")
@@ -318,7 +318,7 @@
 			det.failsafe_engage()
 
 			if(timing)
-				AIviewers(get_turf(src)) << "<span style=\"color:red\"><B>The [src] accelerates the priming process! <I>There are only 10 seconds left!!</I></B></span>"
+				AIviewers(get_turf(src)) << "<span class='alert'><B>The [src] accelerates the priming process! <I>There are only 10 seconds left!!</I></B></span>"
 
 /obj/item/device/brainjar/proc/detonate_tank_transfer_valve()
 	set name = "Detonate bomb!"
@@ -327,7 +327,7 @@
 	set src = usr.loc
 
 	if(!istype(src.master, /obj/item/device/transfer_valve))
-		boutput(usr, "<span style='color:red;'>Interface failure with the valve controls!</span>")
+		boutput(usr, "<span class='alert'>Interface failure with the valve controls!</span>")
 		return
 
 	var/obj/item/device/transfer_valve/TV = src.master

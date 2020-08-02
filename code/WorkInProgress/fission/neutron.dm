@@ -60,19 +60,19 @@
 				W.set_loc(src)
 				W.dropped()
 				// Letting everyone around know
-				boutput(user, "<span style=\"color:red\">You insert the [W] into the [src].</span>")
+				boutput(user, "<span class='alert'>You insert the [W] into the [src].</span>")
 				for(var/mob/M in AIviewers(src))
 					if(M == user)	continue
-					M.show_message("<span style=\"color:red\">[user.name] inserts the [W] into the [src].</span>")
+					M.show_message("<span class='alert'>[user.name] inserts the [W] into the [src].</span>")
 				return
 			else
-				boutput(user, "<span style=\"color:red\">No more rods can fit into the neutron injector.</span>")
+				boutput(user, "<span class='alert'>No more rods can fit into the neutron injector.</span>")
 		else
 			src.add_fingerprint(user)
-			boutput(user, "<span style=\"color:red\">You hit the [src.name] with your [W.name]!</span>")
+			boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
 			for(var/mob/M in AIviewers(src))
 				if(M == user)	continue
-				M.show_message("<span style=\"color:red\">The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+				M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
 
 // Neutron
 /datum/projectile/neutron

@@ -10,7 +10,7 @@
 client/proc/open_dj_panel()
 	set name = "DJ Panel"
 	set desc = "Get your groove on!" //"funny function names???? first you use the WRONG INDENT STYLE and now this????" --that fuckhead on the forums
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	if (!isadmin(src) && !src.non_admin_dj)
 		boutput(src, "Only administrators or those with access may use this command.")
 		return
@@ -50,11 +50,11 @@ chui/window/dj_panel //global panel
 		switch(id)
 			if("changevol")
 				var/volnum = (input(who, "Please enter a volume:", "Please enter a volume. Default: 50.", "") as num) //have to do this otherwise multiple input boxes
-				SetVar("set_volume", CLAMP(volnum, 0, 100))
+				SetVar("set_volume", clamp(volnum, 0, 100))
 				return
 			if("changefreq")
 				var/freqnum = (input(who, "Please enter a frequency. Default : 1. Use negatives to play in reverse.", "Pitch?", "") as num) //ditto
-				SetVar("set_freq", CLAMP(freqnum, -99, 99))
+				SetVar("set_freq", clamp(freqnum, -99, 99))
 				return
 			if("changefile")
 				loaded_song = (input(who, "Upload a file:", "File Uploader - No 50MB songs!", "") as sound|null)
@@ -66,7 +66,7 @@ chui/window/dj_panel //global panel
 				return
 			if ("toggleanndj")
 				who.djmode = !who.djmode
-				boutput(who, "<span style=\"color:blue\">DJ mode now [(who.djmode ? "On" : "Off")].</span>")
+				boutput(who, "<span class='notice'>DJ mode now [(who.djmode ? "On" : "Off")].</span>")
 
 				logTheThing("admin", who, null, "set their DJ mode to [(who.djmode ? "On" : "Off")]")
 				logTheThing("diary", who, null, "set their DJ mode to [(who.djmode ? "On" : "Off")]", "admin")
@@ -125,8 +125,8 @@ proc/toggledj(var/client/C, var/client/who)
 		C.verbs -= /client/proc/cmd_dectalk
 		C.verbs -= /client/proc/open_dj_panel
 
-	logTheThing("admin", who, C, "has [C.non_admin_dj ? "given" : "removed"] the ability for %target% to DJ and use dectalk.")
-	logTheThing("diary", who, C, "has [C.non_admin_dj ? "given" : "removed"] the ability for %target% to DJ and use dectalk.", "admin")
+	logTheThing("admin", who, C, "has [C.non_admin_dj ? "given" : "removed"] the ability for [constructTarget(C,"admin")] to DJ and use dectalk.")
+	logTheThing("diary", who, C, "has [C.non_admin_dj ? "given" : "removed"] the ability for [constructTarget(C,"diary")] to DJ and use dectalk.", "admin")
 	message_admins("[key_name(who)] has [C.non_admin_dj ? "given" : "removed"] the ability for [key_name(C)] to DJ and use dectalk.")
-	boutput(C, "<span style=\"color:red\"><b>You [C.non_admin_dj ? "can now" : "no longer can"] DJ with the 'DJ Panel' and use text2speech with 'Dectalk' commands under 'Special Verbs'.</b></span>")
+	boutput(C, "<span class='alert'><b>You [C.non_admin_dj ? "can now" : "no longer can"] DJ with the 'DJ Panel' and use text2speech with 'Dectalk' commands under 'Special Verbs'.</b></span>")
 	return

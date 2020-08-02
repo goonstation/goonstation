@@ -13,6 +13,7 @@
 	var/corrode_resist = 0
 	var/temp_resist = 0
 	var/shock_when_entered = 1
+	text = "<font color=#aaa>+"
 	anchored = 1
 	flags = FPRINT | CONDUCT | USEDELAY
 	pressure_resistance = 5*ONE_ATMOSPHERE
@@ -50,6 +51,36 @@
 		cross //HEY YOU! YEAH, YOU LOOKING AT THIS. Use these for the corners of your catwalks!
 			name = "catwalk surface" //Or I'll murder you since you are making things ugly on purpose.
 			icon_state = "catwalk_cross" //(Statement does not apply when you actually want to use the other ones.)
+
+		jen // ^^ no i made my own because i am epic
+			name = "maintenance catwalk"
+			icon_state = "catwalk_jen"
+			desc = "This looks marginally more safe than the ones outside, at least..."
+			layer = PIPE_LAYER + 0.01
+
+			attack_hand(obj/M, mob/user)
+				return 0
+
+			attackby(obj/item/W, mob/user)
+				if (issnippingtool(W))
+					..()
+				else
+					src.loc.attackby(user.equipped(), user)
+
+			reagent_act(var/reagent_id,var/volume)
+				..()
+
+			side
+				icon_state = "catwalk_jen_side"
+
+			inner
+				icon_state = "catwalk_jen_inner"
+
+			fourcorners
+				icon_state = "catwalk_jen_4corner"
+
+			twosides
+				icon_state = "catwalk_jen_2sides"
 
 	onMaterialChanged()
 		..()
@@ -195,14 +226,14 @@
 
 	hitby(AM as mob|obj)
 		..()
-		src.visible_message("<span style=\"color:red\"><B>[src] was hit by [AM].</B></span>")
+		src.visible_message("<span class='alert'><B>[src] was hit by [AM].</B></span>")
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 		if (ismob(AM))
 			damage_blunt(5)
 		else if (isobj(AM))
 			var/obj/O = AM
 			if (O.throwforce)
-				damage_blunt(max(0.5, O.throwforce / blunt_resist)) // we don't want people screaming right through these and you can still get through them by kicking/cutting/etc
+				damage_blunt(blunt_resist ? max(0.5, O.throwforce / blunt_resist) : 0.5) // we don't want people screaming right through these and you can still get through them by kicking/cutting/etc
 		return
 
 	attack_hand(mob/user)
@@ -217,7 +248,7 @@
 				damage = 10
 				text = "smashes [src] with incredible strength"
 
-			src.visible_message("<span style=\"color:red\"><b>[user]</b> [text]!</span>")
+			src.visible_message("<span class='alert'><b>[user]</b> [text]!</span>")
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 
 			if (dam_type == "slashing")
@@ -231,9 +262,9 @@
 		if (ispulsingtool(W) || istype(W, /obj/item/device/t_scanner))
 			var/net = get_connection()
 			if(!net)
-				boutput(user, "<span style=\"color:blue\">No electrical current detected.</span>")
+				boutput(user, "<span class='notice'>No electrical current detected.</span>")
 			else
-				boutput(user, "<span style=\"color:red\">CAUTION: Dangerous electrical current detected.</span>")
+				boutput(user, "<span class='alert'>CAUTION: Dangerous electrical current detected.</span>")
 			return
 
 		else if(istype(W, /obj/item/sheet/))
@@ -316,24 +347,25 @@
 
 		if (issnippingtool(W))
 			damage_slashing(src.health_max)
-			src.visible_message("<span style=\"color:red\"><b>[usr]</b> cuts apart the [src] with [W].</span>")
+			src.visible_message("<span class='alert'><b>[usr]</b> cuts apart the [src] with [W].</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 
 		else if (isscrewingtool(W) && (istype(src.loc, /turf/simulated) || src.anchored))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !( src.anchored )
-			src.visible_message("<span style=\"color:red\"><b>[usr]</b> [src.anchored ? "fastens" : "unfastens"] [src].</span>")
+			src.visible_message("<span class='alert'><b>[usr]</b> [src.anchored ? "fastens" : "unfastens"] [src].</span>")
 			return
 
 		else
 			user.lastattacked = src
 			attack_particle(user,src)
-			src.visible_message("<span style=\"color:red\"><b>[usr]</b> attacks [src] with [W].</span>")
+			src.visible_message("<span class='alert'><b>[usr]</b> attacks [src] with [W].</span>")
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
-			switch(W.damtype)
-				if("fire")
+
+			switch(W.hit_type)
+				if(DAMAGE_BURN)
 					damage_heat(W.force)
-				if("brute")
+				else
 					damage_blunt(W.force * 0.5)
 		return
 

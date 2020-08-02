@@ -182,6 +182,7 @@
 
 // for use with the wizard spell prismatic_spray
 /datum/projectile/artifact/prismatic_projectile
+	is_magical = 1
 
 	New()
 		..()

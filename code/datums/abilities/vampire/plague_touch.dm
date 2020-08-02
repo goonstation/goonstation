@@ -40,12 +40,12 @@
 		var/mob/living/L = target
 
 		//playsound(M.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-		//M.visible_message("<span style=\"color:blue\">[M] shakes [L], trying to wake them up!</span>")
+		//M.visible_message("<span class='notice'>[M] shakes [L], trying to wake them up!</span>")
 		M.shake_awake(target)
 		L.add_fingerprint(M) // Why not leave some forensic evidence?
 		if (!(L.bioHolder && L.traitHolder.hasTrait("training_chaplain")))
 			L.contract_disease(/datum/ailment/disease/vamplague, null, null, 1) // path, name, strain, bypass resist
 
 		if (istype(H)) H.blood_tracking_output(src.pointCost)
-		logTheThing("combat", M, L, "uses diseased touch on %target% at [log_loc(M)].")
+		logTheThing("combat", M, L, "uses diseased touch on [constructTarget(L,"combat")] at [log_loc(M)].")
 		return 0

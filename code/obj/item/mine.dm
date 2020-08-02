@@ -6,7 +6,7 @@
 	density = 0
 	anchored = 1
 	layer = OBJ_LAYER
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mine"
 	is_syndicate = 1
 	mats = 6
@@ -28,10 +28,9 @@
 		return
 
 	examine()
-		..()
+		. = ..()
 		if (src.suppress_flavourtext != 1)
-			boutput(usr, "It appears to be [src.armed == 1 ? "armed" : "disarmed"].")
-		return
+			. += "It appears to be [src.armed == 1 ? "armed" : "disarmed"]."
 
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)
@@ -149,9 +148,7 @@
 			return
 		src.used_up = 1
 
-		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(3, 1, src)
-		s.start()
+		elecflash(src)
 
 		src.custom_stuff(M)
 		src.log_me(M)
@@ -186,8 +183,8 @@
 	proc/log_me(var/atom/M, var/mob/T)
 		if (!src || !istype(src))
 			return
-
-		logTheThing("bombing", M && ismob(M) ? M : null, T && ismob(T) ? T : null, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting %target%." : "."] Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		var/logtarget = (T && ismob(T) ? T : null)
+		logTheThing("bombing", M && ismob(M) ? M : null, logtarget, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting [constructTarget(logtarget,"bombing")]." : "."] Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 		return
 
 /obj/item/mine/radiation
@@ -289,7 +286,7 @@
 		if (!src || !istype(src))
 			return
 
-		src.visible_message("<span style=\"color:red\">[src] bursts[pick(" like an overripe melon!", " like an impacted bowel!", " like a balloon filled with blood!", "!", "!")]</span>")
+		src.visible_message("<span class='alert'>[src] bursts[pick(" like an overripe melon!", " like an impacted bowel!", " like a balloon filled with blood!", "!", "!")]</span>")
 		gibs(src.loc)
 		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
 

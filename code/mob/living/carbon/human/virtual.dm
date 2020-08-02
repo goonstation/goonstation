@@ -26,7 +26,7 @@
 		if (!escape_vr)
 			var/area/A = get_area(src)
 			if ((T && !(T.z == 2)) || (A && !A.virtual))
-				boutput(src, "<span style=\"color:red\">Is this virtual?  Is this real?? <b>YOUR MIND CANNOT TAKE THIS METAPHYSICAL CALAMITY</b></span>")
+				boutput(src, "<span class='alert'>Is this virtual?  Is this real?? <b>YOUR MIND CANNOT TAKE THIS METAPHYSICAL CALAMITY</b></span>")
 				src.gib()
 				return
 
@@ -78,7 +78,7 @@
 
 		. = src.say_dead(message, 1)
 
-	emote(var/act, var/voluntary = 0)
+	emote(var/act, var/voluntary = 0, var/emoteTarget = null)
 		if(isghost)
 			if (findtext(act, " ", 1, null))
 				var/t1 = findtext(act, " ", 1, null)

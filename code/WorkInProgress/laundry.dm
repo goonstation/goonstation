@@ -108,7 +108,7 @@
 	for (amt, amt>0, amt--)
 		src.pixel_x = rand(-2,2)
 		src.pixel_y = rand(-2,2)
-		sleep(1)
+		sleep(0.1 SECONDS)
 	src.pixel_x = orig_x
 	src.pixel_y = orig_y
 	return 1

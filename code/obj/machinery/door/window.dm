@@ -91,7 +91,7 @@
 		if (src.operating != -1)
 			return 0
 		src.operating = 0
-		sleep(6)
+		sleep(0.6 SECONDS)
 		close()
 		return 1
 

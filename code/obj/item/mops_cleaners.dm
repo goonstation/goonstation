@@ -14,10 +14,12 @@ WET FLOOR SIGN
 	icon_state = "cleaner"
 	item_state = "cleaner"
 	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK
+	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	throwforce = 3
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 10
+	tooltip_flags = REBUILD_DIST | REBUILD_SPECTRO
 
 /obj/item/spraybottle/New()
 	var/datum/reagents/R = new/datum/reagents(100) // cogwerks - lowered from 1000 (what the hell) to 100
@@ -33,11 +35,10 @@ WET FLOOR SIGN
 		reagents = R
 		R.my_atom = src
 		R.add_reagent("luminol", 100)
+
 	examine()
-		set src in usr
-		boutput(usr, "[bicon(src)] [src.reagents.total_volume] units of luminol left!")
-		..()
-		return
+		. = ..()
+		. += "[bicon(src)] [src.reagents.total_volume] units of luminol left!"
 
 /obj/item/spraybottle/cleaner/
 	name = "cleaner bottle"
@@ -98,7 +99,7 @@ WET FLOOR SIGN
 					src.set_loc(T)
 					clean(direction)
 					src.dir = direction
-			sleep(2)
+			sleep(0.2 SECONDS)
 		vanish()
 		return
 
@@ -180,7 +181,7 @@ WET FLOOR SIGN
 	if (!isturf(user.loc)) // Hi, I'm hiding in a closet like a wuss while spraying people with death chems risk-free.
 		return
 	if (src.reagents.total_volume < 1)
-		boutput(user, "<span style='color:blue'>The spray bottle is empty!</span>")
+		boutput(user, "<span class='notice'>The spray bottle is empty!</span>")
 		return
 
 	if(src.reagents.has_reagent("water") || src.reagents.has_reagent("cleaner"))
@@ -206,28 +207,24 @@ WET FLOOR SIGN
 					continue
 				D.reagents.reaction(T)
 				if (ismob(T))
-					logTheThing("combat", user, T, "'s spray hits %target% [log_reagents] at [log_loc(user)].")
+					logTheThing("combat", user, T, "'s spray hits [constructTarget(T,"combat")] [log_reagents] at [log_loc(user)].")
 				D.reagents.remove_any(1)
 			if (!D.reagents.total_volume)
 				break
-			sleep(3)
+			sleep(0.3 SECONDS)
 		qdel(D)
 	var/turf/logTurf = get_turf(D)
-	logTheThing("combat", user, logTurf, "sprays [src] at %target% [log_reagents] at [log_loc(user)].")
+	logTheThing("combat", user, logTurf, "sprays [src] at [constructTarget(logTurf,"combat")] [log_reagents] at [log_loc(user)].")
 
 	return
 
-/obj/item/spraybottle/get_desc()
-	..()
-	. += "<br><span style='color:blue'>It contains:</span>"
-	if (!reagents)
-		. += "<br><span style=\"color:blue\">Nothing.</span>"
+/obj/item/spraybottle/get_desc(dist, mob/user)
+	if (dist > 2)
 		return
-	if (reagents.reagent_list.len)
-		for (var/datum/reagent/R in reagents.reagent_list)
-			. += "<br><span style='color:blue'>[R.volume] units of [R.name]</span>"
-	else
-		. += "<br><span style=\"color:blue\">Nothing.</span>"
+	if (!reagents)
+		return
+	. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
+	return
 
 // MOP
 
@@ -245,7 +242,7 @@ WET FLOOR SIGN
 	throw_range = 10
 	w_class = 3.0
 	flags = FPRINT | TABLEPASS
-	stamina_damage = 35
+	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 10
 
@@ -256,25 +253,24 @@ WET FLOOR SIGN
 	R.my_atom = src
 	src.setItemSpecial(/datum/item_special/rangestab)
 	START_TRACKING
+	BLOCK_ROD
 
 /obj/item/mop/disposing()
 	. = ..()
 	STOP_TRACKING
 
 /obj/item/mop/examine()
-	set src in view()
-	set category = "Local"
-	..()
+	. = ..()
 	if(reagents && reagents.total_volume)
-		boutput(usr, "<span style=\"color:blue\">[src] is wet!</span>")
+		. += "<span class='notice'>[src] is wet!</span>"
 
 /obj/item/mop/afterattack(atom/A, mob/user as mob)
 	if ((src.reagents.total_volume < 1 || mopcount >= 9) && !istype(A, /obj/fluid))
-		boutput(user, "<span style=\"color:blue\">Your mop is dry!</span>", group = "mop")
+		boutput(user, "<span class='notice'>Your mop is dry!</span>", group = "mop")
 		return
 
 	if (istype(A, /turf/simulated) || istype(A, /obj/decal/cleanable) || istype(A, /obj/fluid))
-		//user.visible_message("<span style=\"color:red\"><B>[user] begins to clean [A].</B></span>")
+		//user.visible_message("<span class='alert'><B>[user] begins to clean [A].</B></span>")
 		actions.start(new/datum/action/bar/icon/mop_thing(src,A), user)
 	return
 
@@ -332,11 +328,11 @@ WET FLOOR SIGN
 
 	afterattack(atom/A, mob/user as mob)
 		if (src.reagents.total_volume < 1 || mopcount >= 5)
-			boutput(user, "<span style=\"color:blue\">Your mop is dry!</span>")
+			boutput(user, "<span class='notice'>Your mop is dry!</span>")
 			return
 
 		if (istype(A, /turf) || istype(A, /obj/decal/cleanable))
-			user.visible_message("<span style=\"color:red\"><B>[user] begins to clean [A]</B></span>")
+			user.visible_message("<span class='alert'><B>[user] begins to clean [A]</B></span>")
 			var/turf/U = get_turf(A)
 
 			if (do_after(user, 40))
@@ -432,17 +428,15 @@ WET FLOOR SIGN
 	..()
 
 /obj/item/sponge/examine()
-	set src in view()
-	set category = "Local"
-	..()
+	. = ..()
 	if(reagents && reagents.total_volume)
-		boutput(usr, "<span style=\"color:blue\">The sponge is wet!</span>")
+		. += "<span class='notice'>[src] is wet!</span>"
 
 /obj/item/sponge/attack_self(mob/user as mob)
 	if(spam_flag)
 		return
 	var/turf/location = get_turf(user)
-	user.visible_message("<span style='color:blue'>[user] wrings out [src].</span>")
+	user.visible_message("<span class='notice'>[user] wrings out [src].</span>")
 	spam_flag = 1
 	if (location)
 		src.reagents.reaction(location, TOUCH, src.reagents.total_volume)
@@ -455,7 +449,7 @@ WET FLOOR SIGN
 
 /obj/item/sponge/attackby(obj/item/W as obj, mob/user as mob)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
-		user.visible_message("<span style='color:blue'>[user] cuts [src] into the shape of... cheese?</span>")
+		user.visible_message("<span class='notice'>[user] cuts [src] into the shape of... cheese?</span>")
 		if(src.loc == user)
 			user.u_equip(src)
 		src.set_loc(user)
@@ -468,10 +462,10 @@ WET FLOOR SIGN
 	if(hit && ishuman(hit))
 		if(prob(hit_face_prob))
 			var/mob/living/carbon/human/DUDE = hit
-			hit.visible_message("<span style='color:red'><b>[src] hits [DUDE] squarely in the face!</b></span>")
+			hit.visible_message("<span class='alert'><b>[src] hits [DUDE] squarely in the face!</b></span>")
 			playsound(DUDE.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 			if(DUDE.wear_mask || (DUDE.head && DUDE.head.c_flags & COVERSEYES))
-				boutput(DUDE, "<span style='color:red'>Your headgear protects you! PHEW!!!</span>")
+				boutput(DUDE, "<span class='alert'>Your headgear protects you! PHEW!!!</span>")
 				SPAWN_DBG(1 DECI SECOND) src.reagents.clear_reagents()
 				return
 			src.reagents.reaction(DUDE, TOUCH)
@@ -514,7 +508,7 @@ WET FLOOR SIGN
 				choices += "Wet"
 
 		if (!choices.len)
-			boutput(user, "<span style='color:blue'>You can't think of anything to do with [src].</span>")
+			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
 			return
 
 		var/selection
@@ -545,11 +539,11 @@ WET FLOOR SIGN
 					else
 						F.removed()
 					user.visible_message("[user] soaks up [F] with [src].",\
-					"<span style='color:blue'>You soak up [F] with [src].</span>")
+					"<span class='notice'>You soak up [F] with [src].</span>")
 				else
 					target.reagents.trans_to(src, 15)
 					user.visible_message("[user] soaks up the mess on [target] with [src].",\
-					"<span style='color:blue'>You soak up the mess on [target] with [src].</span>")
+					"<span class='notice'>You soak up the mess on [target] with [src].</span>")
 
 				JOB_XP(user, "Janitor", 1)
 				return
@@ -559,7 +553,7 @@ WET FLOOR SIGN
 					return
 				var/turf/simulated/T = target
 				user.visible_message("[user] dries up [T] with [src].",\
-				"<span style='color:blue'>You dry up [T] with [src].</span>")
+				"<span class='notice'>You dry up [T] with [src].</span>")
 				JOB_XP(user, "Janitor", 1)
 				src.reagents.add_reagent("water", rand(5,15))
 				T.wet = 0
@@ -567,7 +561,7 @@ WET FLOOR SIGN
 
 			if ("Wipe down")
 				user.visible_message("[user] wipes down [target] with [src].",\
-				"<span style='color:blue'>You wipe down [target] with [src].</span>")
+				"<span class='notice'>You wipe down [target] with [src].</span>")
 				if (src.reagents.has_reagent("water"))
 					target.clean_forensic()
 				src.reagents.reaction(target, TOUCH, 5)
@@ -578,14 +572,14 @@ WET FLOOR SIGN
 				return
 
 			if ("Wring out")
-				user.visible_message("<span style='color:red'>[user] wrings [src] out into [target].</span>")
+				user.visible_message("<span class='alert'>[user] wrings [src] out into [target].</span>")
 				if (target.reagents)
 					src.reagents.trans_to(target, src.reagents.total_volume)
 				return
 
 			if ("Wet")
 				var/fill_amt = (src.reagents.maximum_volume - src.reagents.total_volume)
-				user.visible_message("<span style='color:red'>[user] wets [src] in [target].</span>")
+				user.visible_message("<span class='alert'>[user] wets [src] in [target].</span>")
 				if (target.reagents)
 					target.reagents.trans_to(src, fill_amt)
 				else
@@ -598,8 +592,8 @@ WET FLOOR SIGN
 /obj/item/sponge/cheese
 	name = "cheese-shaped sponge"
 	desc = "Wait a minute! This isn't cheese..."
-	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
-	icon_state = "cheese-sponge"
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "sponge-cheese"
 	item_state = "sponge"
 
 
@@ -616,8 +610,12 @@ WET FLOOR SIGN
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 	stamina_damage = 15
-	stamina_cost = 15
+	stamina_cost = 4
 	stamina_crit_chance = 10
+
+	New()
+		..()
+		BLOCK_SOFT
 
 	dropped()
 		JOB_XP(usr, "Janitor", 2)
@@ -646,10 +644,7 @@ WET FLOOR SIGN
 			return
 		..()
 
-	pull()
-		set src in oview(1)
-		set category = "Local"
-		var/mob/living/user = usr
+	pull(var/mob/user)
 		if (!istype(user))
 			return
 		if(user.key != ownerKey && ownerKey != null)

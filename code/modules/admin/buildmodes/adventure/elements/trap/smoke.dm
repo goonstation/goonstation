@@ -5,7 +5,7 @@
 	initialize()
 		..()
 		reagent = input("What reagent to smoke? (reagent id)", "Reagent", "lube")
-		boutput(usr, "<span style=\"color:blue\">Left click to place trap. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, "<span class='notice'>Left click to place trap. Ctrl+click anywhere to finish.</span>")
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if (pa.Find("left"))

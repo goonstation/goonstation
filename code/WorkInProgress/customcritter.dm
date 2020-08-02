@@ -19,7 +19,7 @@
 	boutput(F, null)
 	F.ImportText("/", file2text(target))
 	if (!F)
-		boutput(usr, "<span style=\"color:red\">Import failed.</span>")
+		boutput(usr, "<span class='alert'>Import failed.</span>")
 	else
 		var/datum/sandbox/S = new()
 		var/obj/critter/custom/template = new()
@@ -167,13 +167,10 @@
 				random_burn_damage(src.target, damage)
 			if ("toxin")
 				M.take_toxin_damage(damage)
-				M.updatehealth()
 			if ("suffocation")
 				M.take_oxygen_deprivation(damage)
-				M.updatehealth()
 			if ("radiation")
 				M.changeStatus("radiation", damage*10, 3)
-				M.updatehealth()
 
 	CritterAttack(mob/N)
 		if (!melee)
@@ -193,19 +190,16 @@
 	CritterDeath()
 		if (!src.alive)
 			return
-		//src.icon_state += "-dead"
-		src.alive = 0
-		src.anchored = 0
-		src.set_density(0)
+		..()
 		loot_table.drop()
 		if (dead_change_icon)
 			icon = dead_icon
 			icon_state = dead_icon_state
-		tokenized_message(death_text, null)
+		else // ughh, admins and their custom critters
+			src.icon_state = replacetext(src.icon_state, "-dead", "") //can't assume it's going to have a dead state...
 		play_optional_sound(death_sound)
 		if (on_death)
 			on_death.doOnDeath()
-		walk_to(src,0)
 
 	clone()
 		var/obj/critter/custom/C = ..()
@@ -348,14 +342,14 @@
 
 	proc/blank(var/mob/M)
 		if (!M.client)
-			boutput(M, "<span style=\"color:red\">Hello.</span>")
+			boutput(M, "<span class='alert'>Hello.</span>")
 			return 0
 		// look I think it's okay if you maybe let non-admins access this sometimes
 		/*if (!M.client.holder)
-			boutput(M, "<span style=\"color:red\">What are you doing here?</span>")
+			boutput(M, "<span class='alert'>What are you doing here?</span>")
 			return 0
 		if (M.client.holder.level < LEVEL_PA)
-			boutput(M, "<span style=\"color:red\">You must be at least PA to use this.</span>")
+			boutput(M, "<span class='alert'>You must be at least PA to use this.</span>")
 			return 0*/
 		var/key = M.ckey
 		if (!(key in critterCreators))
@@ -1546,7 +1540,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 					stattype = null
 					template = temp
 				else
-					boutput(usr, "<span style=\"color:red\">Loading failed.</span>")
+					boutput(usr, "<span class='alert'>Loading failed.</span>")
 			if ("spawn_text")
 				spawn_text = configurer.getText("spawn text", spawn_text)
 		configurer.sound_router(list("abilconf" = which), "abilconf", "spawn_sound", src, "spawn_sound")
@@ -1613,7 +1607,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			previous += M
 		SPAWN_DBG(0)
 			while (chain_depth > 0)
-				sleep(2)
+				sleep(0.2 SECONDS)
 				curr_W /= 2
 				chain_depth--
 				var/previous_copy = previous.Copy()
@@ -1919,7 +1913,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			F << null
 			F.ImportText("/", file2text(target))
 			if (!F)
-				boutput(usr, "<span style=\"color:red\">Import failed.</span>")
+				boutput(usr, "<span class='alert'>Import failed.</span>")
 			else
 				var/datum/sandbox/S = new()
 				template = new()
@@ -1932,15 +1926,15 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			if (!(template.name in critter_creator_controller.activeCritterTypes))
 				critter_creator_controller.activeCritterTypes += template.name
 			critter_creator_controller.activeCritterTypes[template.name] = template.clone()
-			boutput(usr, "<span style=\"color:blue\">Critter current state saved as [template.name]</span>")
+			boutput(usr, "<span class='notice'>Critter current state saved as [template.name]</span>")
 		else if (href_list["roundload"])
 			if (critter_creator_controller.activeCritterTypes.len)
 				var/cname = input("Which critter?", "Which critter?", null) in critter_creator_controller.activeCritterTypes
 				var/obj/critter/custom/CR = critter_creator_controller.activeCritterTypes[cname]
 				template = CR.clone()
-				boutput(usr, "<span style=\"color:blue\">Loaded [template.name].</span>")
+				boutput(usr, "<span class='notice'>Loaded [template.name].</span>")
 			else
-				boutput(usr, "<span style=\"color:red\">Nothing saved yet.</span>")
+				boutput(usr, "<span class='alert'>Nothing saved yet.</span>")
 
 		sound_router(href_list, "sounds", "anger_sound", template, "anger_sound")
 		sound_router(href_list, "sounds", "chase_sound", template, "chase_sound")
@@ -2113,7 +2107,7 @@ td.title { font-size: 1.4em; font-weight: bold; text-align: center; }
 
 /client/proc/critter_creator_debug()
 	set name = "Critter Creator (WIP)"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set hidden = 0
 
 	var/datum/critterCreator/CR = critter_creator_controller.getCreator(src.mob)

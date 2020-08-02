@@ -58,6 +58,7 @@
 	name = "plasma spore"
 	desc = "A barely intelligent colony of organisms. Very volatile."
 	icon_state = "spore"
+	death_text = "%src% ruptures and explodes!"
 	density = 1
 	health = 1
 	aggressive = 0
@@ -71,8 +72,7 @@
 	flying = 1
 
 	CritterDeath()
-		src.visible_message("<b>[src]</b> ruptures and explodes!")
-		src.alive = 0
+		..()
 		var/turf/T = get_turf(src.loc)
 		if(T)
 			T.hotspot_expose(700,125)
@@ -541,8 +541,8 @@
 	CritterAttack(mob/M)
 		if (!src.alive) return
 		src.attacking = 1
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		if(!M.stat)
 			M.visible_message("<span class='combat'><B>[src]</B> pummels [src.target] mercilessly!</span>")
@@ -571,7 +571,7 @@
 				src.health = initial(src.health)
 				src.icon_state = initial(src.icon_state)
 				for(var/mob/O in viewers(src, null))
-					O.show_message("<span style=\"color:red\"><b>[src]</b> re-assembles and is ready to fight once more!</span>")
+					O.show_message("<span class='alert'><b>[src]</b> re-assembles and is ready to fight once more!</span>")
 		return
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/skeleton
@@ -795,8 +795,8 @@
 			random_brute_damage(src.target, rand(4,8),1)
 			SPAWN_DBG(2.5 SECONDS)
 				src.attacking = 0
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		return
 
@@ -1053,6 +1053,9 @@
 	name = "???"
 	desc = "What the hell is that?"
 	icon_state = "ancientrobot"
+	dead_state = "ancientrobot" // fades away
+	death_text = "%src% fades away."
+	post_pet_text = " For some reason! Not like that's weird or anything!"
 	invisibility = 10
 	health = 30
 	firevuln = 0
@@ -1066,13 +1069,10 @@
 	var/boredom_countdown = 0
 
 	CritterDeath()
-		src.visible_message("<b>[src]</b> fades away.")
-		src.alive = 0
-		walk_to(src,0)
+		..()
 		flick("ancientrobot-disappear",src)
-		src.invisibility = 10
-		critters -= src
-		src.dispose()
+		SPAWN_DBG(16) //maybe let the animation actually play
+			qdel(src)
 
 	seek_target()
 		src.anchored = 0
@@ -1092,42 +1092,12 @@
 			break
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
-
-		if (!src.alive)
-			..()
-			return
-		switch(W.damtype)
-			if("fire")
-				src.health -= W.force * src.firevuln
-			if("brute")
-				src.health -= W.force * src.brutevuln
-
-		if (src.alive && src.health <= 0) src.CritterDeath()
-
+		..()
 		src.boredom_countdown = rand(5,10)
-		src.target = user
-		src.oldtarget_name = user.name
-		src.task = "chasing"
 
 	attack_hand(var/mob/user as mob)
-
-		if (!src.alive)
-			..()
-			return
-		if (user.a_intent == "harm")
-			src.health -= rand(1,2) * src.brutevuln
-			for(var/mob/O in viewers(src, null))
-				O.show_message("<span class='combat'><b>[user]</b> punches [src]!</span>", 1)
-			playsound(src.loc, "punch", 50, 1)
-			if (src.alive && src.health <= 0) src.CritterDeath()
-
-			src.boredom_countdown = rand(5,10)
-			src.target = user
-			src.oldtarget_name = user.name
-			src.task = "chasing"
-		else
-			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!<br>For some reason! Not like that's weird or anything!</span>", 1)
-
+		..()
+		src.boredom_countdown = rand(5,10)
 
 	ChaseAttack(mob/M)
 		return
@@ -1192,7 +1162,7 @@
 
 		if (M.lying)
 			src.speak( pick("No! Get up! Please, get up!", "Not again! Not again! I need you!", "Please! Please get up! Please!", "I don't want to be alone again!") )
-			src.visible_message("<span style=\"color:blue\">[src] shakes [M] trying to wake them up!</span>")
+			src.visible_message("<span class='notice'>[src] shakes [M] trying to wake them up!</span>")
 			boutput(M, "<span class='combat'><b>It burns!</b></span>")
 			M.TakeDamage("chest", 0, rand(5,15))
 		else
@@ -1200,8 +1170,8 @@
 			src.visible_message("<span class='combat'><B>[src]</B> grabs at [M]'s arm!</span>")
 			boutput(M, "<span class='combat'><b>It burns!</b></span>")
 			M.TakeDamage("chest", 0, rand(5,15))
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (isliving(M))
+			var/mob/living/H = M
 			H.was_harmed(src)
 		SPAWN_DBG(6 SECONDS)
 			src.attacking = 0
@@ -1217,9 +1187,8 @@
 		return ..()
 
 	CritterDeath()
+		..()
 		speak( pick("There...is...nothing...","It's dark.  Oh god, oh god, it's dark.","Thank you.","Oh wow. Oh wow. Oh wow.") )
-		src.icon_state = "crunched-dead"
-		src.alive = 0
 		SPAWN_DBG(1.5 SECONDS)
 			qdel(src)
 
@@ -1427,7 +1396,7 @@
 
 	proc/contents_check()
 		if(!src.allow_empty && !src.contents.len)
-			src.visible_message("<span style=\"color:blue\"><B>[src]</B> realizes that its material essence is missing and vanishes in a puff of logic!</span>")
+			src.visible_message("<span class='notice'><B>[src]</B> realizes that its material essence is missing and vanishes in a puff of logic!</span>")
 			qdel(src)
 
 	CritterAttack(mob/M)

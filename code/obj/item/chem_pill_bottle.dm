@@ -3,8 +3,8 @@
 	icon_state = "pill_canister"
 	icon = 'icons/obj/chemical.dmi'
 	w_class = 2.0
-	stamina_damage = 3
-	stamina_cost = 3
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 1
 	rand_pos = 1
 
@@ -57,7 +57,7 @@
 
 					src.reagents_internal.trans_to(P,src.pvol)
 					if (P && P.reagents)
-						P.color_overlay = image('icons/obj/pills.dmi', "pill0")
+						P.color_overlay = image('icons/obj/items/pills.dmi', "pill0")
 						P.color_overlay.color = src.average
 						P.color_overlay.alpha = P.color_overlay_alpha
 						P.overlays += P.color_overlay
@@ -80,7 +80,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			W.dropped()
-			boutput(user, "<span style=\"color:blue\">You put [W] in [src].</span>")
+			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
 			rebuild_desc()
 		else ..()
 
@@ -94,12 +94,12 @@
 				P = src.create_pill()
 				i--
 			if (src.pcount + src.contents.len > 0)
-				boutput(user, "<span style=\"color:blue\">You tip out a bunch of pills from [src] into [T].</span>")
+				boutput(user, "<span class='notice'>You tip out a bunch of pills from [src] into [T].</span>")
 			else
-				boutput(user, "<span style=\"color:blue\">You tip out all the pills from [src] into [T].</span>")
+				boutput(user, "<span class='notice'>You tip out all the pills from [src] into [T].</span>")
 			rebuild_desc()
 		else
-			boutput(user, "<span style=\"color:red\">It's empty.</span>")
+			boutput(user, "<span class='alert'>It's empty.</span>")
 			return
 
 	attack_hand(mob/user as mob)
@@ -110,7 +110,7 @@
 				boutput(user, "You take [P] from [src].")
 				rebuild_desc()
 			else
-				boutput(user, "<span style=\"color:red\">It's empty.</span>")
+				boutput(user, "<span class='alert'>It's empty.</span>")
 				return
 
 		else
@@ -126,7 +126,7 @@
 			user.show_text("\The [src] can't hold anything but pills!", "red")
 			return
 
-		user.visible_message("<span style=\"color:blue\">[user] begins quickly filling [src]!</span>")
+		user.visible_message("<span class='notice'>[user] begins quickly filling [src]!</span>")
 		var/staystill = user.loc
 		for (var/obj/item/reagent_containers/pill/P in view(1,user))
 			if (P in user)
@@ -134,7 +134,7 @@
 			P.set_loc(src)
 			P.dropped()
 			src.rebuild_desc()
-			sleep(2)
+			sleep(0.2 SECONDS)
 			if (user.loc != staystill)
 				break
-		boutput(user, "<span style=\"color:blue\">You finish filling [src]!</span>")
+		boutput(user, "<span class='notice'>You finish filling [src]!</span>")

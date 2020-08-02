@@ -954,9 +954,17 @@
 	icon_state = "suitG"
 	item_state = "suitG"
 
+	blue
+		icon_state = "suit-capB"
+		item_state = "suit-capB"
+
 	dress
 		icon_state = "suitG-dress"
 		item_state = "suitG-dress"
+
+	dress/blue
+		icon_state = "suit-capB-dress"
+		item_state = "suit-capB-dress"
 
 /obj/item/clothing/under/suit/hop
 	name = "\improper Head of Personnel's suit"
@@ -1088,7 +1096,7 @@
 			if ("Rip up")
 				boutput(user, "You begin ripping up [src].")
 				if (!do_after(user, 30))
-					boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				else
 					for (var/i=3, i>0, i--)
@@ -1103,7 +1111,7 @@
 		if (issnippingtool(W))
 			boutput(user, "You begin cutting up [src].")
 			if (!do_after(user, 30))
-				boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
+				boutput(user, "<span class='alert'>You were interrupted!</span>")
 				return
 			else
 				for (var/i=3, i>0, i--)
@@ -1151,13 +1159,13 @@
 // Gimmick Jumpsuits
 
 /obj/item/clothing/under/gimmick
-	name = "asian schoolgirl's uniform"
+	name = "sailor uniform"
 	desc = "What's with these guys?! It's like one of my Japanese animes!"
 	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/jumpsuits/worn_js_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
-	icon_state = "schoolgirl"
-	item_state = "schoolgirl"
+	icon_state = "sailor"
+	item_state = "sailor"
 
 /obj/item/clothing/under/gimmick/psyche
 	name = "psychedelic jumpsuit"

@@ -19,9 +19,9 @@
 		return
 	if (M.buckled)	return
 	if (M == usr)
-		user.visible_message("<span style=\"color:blue\">[M] buckles in!</span>", "<span style=\"color:blue\">You buckle yourself in.</span>")
+		user.visible_message("<span class='notice'>[M] buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
 	else
-		user.visible_message("<span style=\"color:blue\">[M] is buckled in by [user].</span>", "<span style=\"color:blue\">You buckle in [M].</span>")
+		user.visible_message("<span class='notice'>[M] is buckled in by [user].</span>", "<span class='notice'>You buckle in [M].</span>")
 	M.anchored = 1
 	M.buckled = src
 	M.set_loc(src.loc)
@@ -35,10 +35,10 @@
 	for(var/mob/M in src.loc)
 		if (M.buckled)
 			if (M != user)
-				user.visible_message("<span style=\"color:blue\">[M] is unbuckled by [user].</span>", "<span style=\"color:blue\">You unbuckle [M].</span>")
+				user.visible_message("<span class='notice'>[M] is unbuckled by [user].</span>", "<span class='notice'>You unbuckle [M].</span>")
 			else
-				user.visible_message("<span style=\"color:blue\">[M] unbuckles.</span>", "<span style=\"color:blue\">You unbuckle.</span>")
-			M.anchored = 0
+				user.visible_message("<span class='notice'>[M] unbuckles.</span>", "<span class='notice'>You unbuckle.</span>")
+			reset_anchored(M)
 			M.buckled = null
 			src.add_fingerprint(user)
 			playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
@@ -50,10 +50,10 @@
 
 	src.imp = new/obj/item/implant/antirev(src)
 
-	M.visible_message("<span style=\"color:red\">[M] has been implanted by the [src].</span>")
+	M.visible_message("<span class='alert'>[M] has been implanted by the [src].</span>")
 
 
-	logTheThing("combat", M, "has implanted %target% with a [src.imp] implant ([src.imp.type]) at [log_loc(M)].")
+	logTheThing("combat", usr, M, "has implanted [constructTarget(M,"combat")] with a [src.imp] implant ([src.imp.type]) at [log_loc(M)].")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.implant.Add(src.imp)

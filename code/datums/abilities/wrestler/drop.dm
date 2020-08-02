@@ -31,7 +31,7 @@
 			return 1
 
 		if(check_target_immunity( target ))
-			M.visible_message("<span style='color:red'>You seem to attack [target]!</span>")
+			M.visible_message("<span class='alert'>You seem to attack [target]!</span>")
 			return 1
 
 		if (!target.lying)
@@ -42,7 +42,7 @@
 			for (var/obj/item/cloaking_device/I in M)
 				if (I.active)
 					I.deactivate(M)
-					M.visible_message("<span style=\"color:blue\"><b>[M]'s cloak is disrupted!</b></span>")
+					M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
 
 		var/obj/surface = null
 		var/turf/ST = null
@@ -62,7 +62,7 @@
 
 		if (surface && (ST && isturf(ST)))
 			M.set_loc(ST)
-			M.visible_message("<span style=\"color:red\"><B>[M] climbs onto [surface]!</b></span>")
+			M.visible_message("<span class='alert'><B>[M] climbs onto [surface]!</b></span>")
 			M.pixel_y = 10
 			falling = 1
 			sleep (10)
@@ -75,8 +75,8 @@
 
 			if ((falling == 0 && get_dist(M, target) > src.max_range) || (falling == 1 && get_dist(M, target) > (src.max_range + 1))) // We climbed onto stuff.
 				M.pixel_y = 0
-				if (falling == 1)
-					M.visible_message("<span style=\"color:red\"><B>...and dives head-first into the ground, ouch!</b></span>")
+				if (falling == 1 && !fake)
+					M.visible_message("<span class='alert'><B>...and dives head-first into the ground, ouch!</b></span>")
 					M.TakeDamageAccountArmor("head", 15, 0, 0, DAMAGE_BLUNT)
 					M.changeStatus("weakened", 3 SECONDS)
 					M.force_laydown_standup()
@@ -97,24 +97,25 @@
 
 			M.set_loc(target.loc)
 
-			M.visible_message("<span style=\"color:red\"><B>[M] [pick_string("wrestling_belt.txt", "drop")] [target]!</B></span>")
+			M.visible_message("<span class='alert'><B>[M] [pick_string("wrestling_belt.txt", "drop")] [target]!</B></span>")
 			playsound(M.loc, "swing_hit", 50, 1)
 			M.emote("scream")
 
-			if (falling == 1)
-				if (prob(33) || isdead(target))
-					target.ex_act(3)
+			if (!fake)
+				if (falling == 1)
+					if (prob(33) || isdead(target))
+						target.ex_act(3)
+					else
+						random_brute_damage(target, 25, 1)
 				else
-					random_brute_damage(target, 25, 1)
-			else
-				random_brute_damage(target, 15, 1)
+					random_brute_damage(target, 15, 1)
 
 			target.changeStatus("weakened", 1 SECOND)
 			target.changeStatus("stunned", 2 SECONDS)
 			target.force_laydown_standup()
 
 			M.pixel_y = 0
-			logTheThing("combat", M, target, "uses the drop wrestling move on %target% at [log_loc(M)].")
+			logTheThing("combat", M, target, "uses the [fake ? "fake " : ""]drop wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 
 		else
 			if (M)
@@ -123,5 +124,5 @@
 		return 0
 
 
-
-
+/datum/targetable/wrestler/drop/fake
+	fake = 1

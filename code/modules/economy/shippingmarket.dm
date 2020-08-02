@@ -155,6 +155,9 @@
 							qdel(O)
 						duckets += add
 						break
+					else if (istype(O, /obj/item/spacecash))
+						duckets += O:amount
+						pool(O)
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
 			for(var/obj/O in sell_crate.contents)
 				for (var/datum/commodity/C in commodities_list)
@@ -169,6 +172,9 @@
 							qdel(O)
 						duckets += add
 						break
+					else if (istype(O, /obj/item/spacecash))
+						duckets += O:amount
+						pool(O)
 		qdel(sell_crate)
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
@@ -176,10 +182,10 @@
 		if(scan && account)
 			wagesystem.shipping_budget += duckets / 2
 			account.fields["current_money"] += duckets / 2
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment. Splitting half of profits with [scan.registered].")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment. Splitting half of profits with [scan.registered].")
 		else
 			wagesystem.shipping_budget += duckets
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment.")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment.")
 
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
@@ -209,10 +215,22 @@
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [S.name].")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [S.name].")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		transmit_connection.post_signal(null, pdaSignal)
 
+
+#if ASS_JAM
+		if(prob(5))
+			var/list/turf/viable_turfs = get_area_turfs(/area/station/quartermaster/cargobay)
+			if(!viable_turfs.len)
+				viable_turfs = get_area_turfs(/area/station/quartermaster)
+			if(viable_turfs.len)
+				var/turf/ass_spawn = pick(viable_turfs)
+				S.set_loc(ass_spawn)
+				heavenly_spawn(S)
+				return
+#endif
 		for(var/obj/machinery/door/poddoor/P in doors)
 			if (P.id == "qm_dock")
 				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
@@ -228,14 +246,14 @@
 // Debugging and admin verbs (mostly coder)
 
 /client/proc/cmd_modify_market_variables()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Edit Market Variables"
 
 	if (shippingmarket == null) boutput(src, "UH OH!")
 	else src.debug_variables(shippingmarket)
 
 /client/proc/BK_finance_debug()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Financial Info"
 	set desc = "Shows budget variables and current market prices."
 
@@ -276,7 +294,7 @@
 	usr.Browse(dat, "window=budgetdebug;size=400x400")
 
 /client/proc/BK_alter_funds()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Alter Budget"
 	set desc = "Add to or subtract from a budget."
 
@@ -297,7 +315,7 @@
 			wagesystem.research_budget += amount
 			if (wagesystem.research_budget < 0) wagesystem.research_budget = 0
 		else
-			boutput(usr, "<span style=\"color:red\">Whatever you did, it didn't work.</span>")
+			boutput(usr, "<span class='alert'>Whatever you did, it didn't work.</span>")
 			return
 
 #undef SUPPLY_OPEN_TIME

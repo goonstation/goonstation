@@ -150,7 +150,7 @@ obj/machinery/computer/airtunnel/attack_ai(user as mob)
 		return
 
 	var/dat = "<HTML><BODY><TT><B>Air Tunnel Controls</B><BR>"
-	user.machine = src
+	src.add_dialog(user)
 	if (SS13_airtunnel.operating == 1)
 		dat += "<B>Status:</B> RETRACTING<BR>"
 	else
@@ -225,7 +225,7 @@ obj/machinery/computer/airtunnel/attack_ai(user as mob)
 		return
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr))))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["retract"])
 			SS13_airtunnel.retract()
 		else if (href_list["stop"])
@@ -291,10 +291,10 @@ obj/machinery/computer/airtunnel/attack_ai(user as mob)
 	if(..())
 		return
 	if ((!( src.d1 ) || !( src.d2 )))
-		boutput(usr, "<span style=\"color:red\">Error: Cannot interface with door security!</span>")
+		boutput(usr, "<span class='alert'>Error: Cannot interface with door security!</span>")
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr))))
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["card"])
 			if (src.scan)
 				src.scan.set_loc(src.loc)
@@ -333,7 +333,7 @@ obj/machinery/computer/airtunnel/attack_ai(user as mob)
 					if (!( src.d1.density ))
 						src.d1.close()
 						return
-					sleep(1)
+					sleep(0.1 SECONDS)
 					SPAWN_DBG( 0 )
 						if (!( src.d2.density ))
 							src.d2.close()
@@ -345,7 +345,7 @@ obj/machinery/computer/airtunnel/attack_ai(user as mob)
 						if (src.d1.density)
 							src.d1.open()
 						return
-					sleep(1)
+					sleep(0.1 SECONDS)
 					SPAWN_DBG( 0 )
 						if (src.d2.density)
 							src.d2.open()
@@ -414,7 +414,7 @@ obj/machinery/computer/airtunnel/attack_ai(user as mob)
 						A.current.deployed = 1
 					else
 						src.operating = 0
-			sleep(20)
+			sleep(2 SECONDS)
 		return
 
 /datum/air_tunnel/proc/retract()
@@ -440,5 +440,5 @@ obj/machinery/computer/airtunnel/attack_ai(user as mob)
 				for(var/obj/move/airtunnel/connector/A in src.connectors)
 					if (!( A.current.move_right() ))
 						src.operating = 0
-			sleep(20)
+			sleep(2 SECONDS)
 		return

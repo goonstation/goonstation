@@ -14,7 +14,7 @@
 				M.weakened = max(8, M.weakened)
 
 				if (M.client)
-					M.show_message("<span style=\"color:blue\">You slipped on the floor!</span>")
+					M.show_message("<span class='notice'>You slipped on the floor!</span>")
 
 				playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
 

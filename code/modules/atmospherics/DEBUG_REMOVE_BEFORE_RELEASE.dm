@@ -49,7 +49,7 @@ obj/item/tank
 		adjust_mixture(temperature as num, target_toxin_pressure as num, target_oxygen_pressure as num)
 			set src in world
 			if(!air_contents)
-				boutput(usr, "<span style=\"color:red\">ERROR: no gas_mixture associated with this tank</span>")
+				boutput(usr, "<span class='alert'>ERROR: no gas_mixture associated with this tank</span>")
 				return null
 
 			air_contents.temperature = temperature
@@ -75,7 +75,7 @@ turf/simulated/floor
 				else
 					boutput(usr, "Space Borders: None")
 			else
-				boutput(usr, "<span style=\"color:blue\">[x],[y] has no parent air group.</span>")
+				boutput(usr, "<span class='notice'>[x],[y] has no parent air group.</span>")
 
 	verb
 		create_wall()
@@ -331,7 +331,7 @@ obj/machinery/atmospherics
 				set src in world
 				set category = "Minor"
 
-				boutput(world, "<span style=\"color:blue\">[x],[y]</span>")
+				boutput(world, "<span class='notice'>[x],[y]</span>")
 				boutput(world, "network 1: [network_node1.normal_members.len], [network_node1.line_members.len]")
 				for(var/obj/O in network_node1.normal_members)
 					boutput(world, "member: [O.x], [O.y]")
@@ -352,8 +352,8 @@ obj/machinery/atmospherics
 
 				if(parent)
 					boutput(usr, "[x],[y] is in a pipeline with [parent.members.len] members ([parent.edges.len] edges)! Volume: [parent.air.volume]")
-					boutput(usr, "Pressure: [parent.air.return_pressure()], Temperature: [parent.air.temperature]")
-					boutput(usr, "[parent.air.oxygen], [parent.air.toxins], [parent.air.nitrogen], [parent.air.carbon_dioxide] .. [parent.alert_pressure]")
+					boutput(usr, "Pressure: [MIXTURE_PRESSURE(parent.air)], Temperature: [parent.air.temperature]")
+					boutput(usr, "[MOLES_REPORT(parent.air)] .. [parent.alert_pressure]")
 mob
 	verb
 		flag_all_pipe_networks()
@@ -407,8 +407,8 @@ turf/simulated
 			set src in world
 			set category = "Minor"
 			var/datum/gas_mixture/GM = return_air()
-			boutput(usr, "<span style=\"color:blue\">@[x],[y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(active_hotspot)?("<span style=\"color:red\">BURNING</span>"):(null)]")
-			if(GM.trace_gases && GM.trace_gases.len)
+			boutput(usr, "<span class='notice'>@[x],[y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] w [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(active_hotspot)?("<span class='alert'>BURNING</span>"):(null)]")
+			if(length(GM.trace_gases))
 				for(var/datum/gas/trace_gas in GM.trace_gases)
 					boutput(usr, "[trace_gas.type]: [trace_gas.moles]")
 
@@ -477,7 +477,7 @@ obj/indicator
 					return "error"
 				return "[round(GM.nitrogen/MOLES_CELLSTANDARD*10+0.5)]"
 			else
-				return "[round((GM.total_moles())/MOLES_CELLSTANDARD*10+0.5)]"
+				return "[round((TOTAL_MOLES(GM))/MOLES_CELLSTANDARD*10+0.5)]"
 
 
 	Click()
@@ -516,7 +516,7 @@ mob
 
 		fire_report()
 			set category = "Debug"
-			boutput(usr, "<span style=\"color:red\"><b>Fire Report</b></span>")
+			boutput(usr, "<span class='alert'><b>Fire Report</b></span>")
 			for(var/obj/hotspot/flame in world)
 				boutput(usr, "[flame.x],[flame.y]: [flame.temperature]K, [flame.volume] L - [flame.loc:air:temperature]")
 

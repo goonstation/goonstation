@@ -18,7 +18,7 @@ Contains:
 
 /obj/item/assembly
 	name = "assembly"
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/items/assemblies.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "assembly"
 	var/status = 0.0
@@ -26,6 +26,7 @@ Contains:
 	w_class = 3.0
 	throw_speed = 4
 	throw_range = 10
+	force = 2
 	stamina_damage = 10
 	stamina_cost = 10
 	var/force_dud = 0
@@ -95,9 +96,7 @@ Contains:
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		if (src.part1)
 			src.part1.set_loc(T)
 			src.part1.master = null
@@ -182,16 +181,16 @@ Contains:
 	if (isscrewingtool(W))
 		src.status = !(src.status)
 		if (src.status)
-			user.show_message("<span style=\"color:blue\">The timer is now secured!</span>", 1)
+			user.show_message("<span class='notice'>The timer is now secured!</span>", 1)
 		else
-			user.show_message("<span style=\"color:blue\">The timer is now unsecured!</span>", 1)
+			user.show_message("<span class='notice'>The timer is now unsecured!</span>", 1)
 		src.part2.status = src.status
 		src.add_fingerprint(user)
 		return
 
 /obj/item/assembly/time_ignite/c_state(n)
 	if(!src.part3 && !src.part5)
-		src.icon = 'icons/obj/assemblies.dmi'
+		src.icon = 'icons/obj/items/assemblies.dmi'
 		src.icon_state = text("timer-igniter[n]")
 		src.overlays = null
 		src.underlays = null
@@ -201,14 +200,14 @@ Contains:
 		src.icon_state = part5.icon_state
 		src.overlays = null
 		src.underlays = null
-		src.overlays += image('icons/obj/assemblies.dmi', "timeignite_overlay[n]", layer = FLOAT_LAYER)
+		src.overlays += image('icons/obj/items/assemblies.dmi', "timeignite_overlay[n]", layer = FLOAT_LAYER)
 		src.name = "Timer/Igniter/Pipebomb Assembly"
 	else
 		src.icon = part3.icon
 		src.icon_state = part3.icon_state
 		src.overlays = null
 		src.underlays = null
-		src.overlays += image('icons/obj/assemblies.dmi', "timeignite_overlay[n]", layer = FLOAT_LAYER)
+		src.overlays += image('icons/obj/items/assemblies.dmi', "timeignite_overlay[n]", layer = FLOAT_LAYER)
 		src.underlays += part3.underlays
 		src.name = "Timer/Igniter/Beaker Assembly"
 	return
@@ -226,8 +225,8 @@ Contains:
 		src.part3.attack_hand(usr)
 		src.part3 = null
 		src.c_state(src.part1.timing)
-		boutput(usr, "<span style=\"color:blue\">You remove the timer/igniter assembly from the beaker.</span>")
-	else boutput(usr, "<span style=\"color:red\">That doesn't have a beaker attached to it!</span>")
+		boutput(usr, "<span class='notice'>You remove the timer/igniter assembly from the beaker.</span>")
+	else boutput(usr, "<span class='alert'>That doesn't have a beaker attached to it!</span>")
 
 
 /////////////////////////////// Proximity/igniter /////////////////////////////////////
@@ -287,7 +286,7 @@ Contains:
 
 /obj/item/assembly/prox_ignite/c_state(n)
 	if(!src.part3 && !src.part5)
-		src.icon = 'icons/obj/assemblies.dmi'
+		src.icon = 'icons/obj/items/assemblies.dmi'
 		src.icon_state = text("prox-igniter[n]")
 		src.overlays = null
 		src.underlays = null
@@ -297,14 +296,14 @@ Contains:
 		src.icon_state = part5.icon_state
 		src.overlays = null
 		src.underlays = null
-		src.overlays += image('icons/obj/assemblies.dmi', "proxignite_overlay[n]", layer = FLOAT_LAYER)
+		src.overlays += image('icons/obj/items/assemblies.dmi', "proxignite_overlay[n]", layer = FLOAT_LAYER)
 		src.name = "Proximity/Igniter/Pipebomb Assembly"
 	else
 		src.icon = part3.icon
 		src.icon_state = part3.icon_state
 		src.overlays = null
 		src.underlays = null
-		src.overlays += image('icons/obj/assemblies.dmi', "proxignite_overlay[n]", layer = FLOAT_LAYER)
+		src.overlays += image('icons/obj/items/assemblies.dmi', "proxignite_overlay[n]", layer = FLOAT_LAYER)
 		src.underlays += part3.underlays
 		src.name = "Proximity/Igniter/Beaker Assembly"
 	return
@@ -313,9 +312,7 @@ Contains:
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		if (part1)
 			src.part1.set_loc(T)
 			src.part1.master = null
@@ -406,9 +403,9 @@ Contains:
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span style=\"color:blue\">The proximity sensor is now secured! The igniter now works!</span>", 1)
+		user.show_message("<span class='notice'>The proximity sensor is now secured! The igniter now works!</span>", 1)
 	else
-		user.show_message("<span style=\"color:blue\">The proximity sensor is now unsecured! The igniter will not work.</span>", 1)
+		user.show_message("<span class='notice'>The proximity sensor is now unsecured! The igniter will not work.</span>", 1)
 	src.part2.status = src.status
 	src.add_fingerprint(user)
 
@@ -447,8 +444,8 @@ Contains:
 		src.part3.attack_hand(usr)
 		src.part3 = null
 		src.c_state(src.part1.timing)
-		boutput(usr, "<span style=\"color:blue\">You remove the Proximity/Igniter assembly from the beaker.</span>")
-	else boutput(usr, "<span style=\"color:red\">That doesn't have a beaker attached to it!</span>")
+		boutput(usr, "<span class='notice'>You remove the Proximity/Igniter assembly from the beaker.</span>")
+	else boutput(usr, "<span class='alert'>That doesn't have a beaker attached to it!</span>")
 
 /////////////////////////////////////// Remote signaller/igniter //////////////////////////////////////
 
@@ -492,9 +489,7 @@ Contains:
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		if (part1)
 			src.part1.set_loc(T)
 			src.part1.master = null
@@ -561,8 +556,8 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
-			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
+			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 		return
@@ -575,8 +570,8 @@ Contains:
 			W.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
-			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
+			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 
@@ -584,9 +579,9 @@ Contains:
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span style=\"color:blue\">The radio is now secured! The igniter now works!</span>", 1)
+		user.show_message("<span class='notice'>The radio is now secured! The igniter now works!</span>", 1)
 	else
-		user.show_message("<span style=\"color:blue\">The radio is now unsecured! The igniter will not work.</span>", 1)
+		user.show_message("<span class='notice'>The radio is now unsecured! The igniter will not work.</span>", 1)
 	src.part2.status = src.status
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
@@ -626,12 +621,12 @@ Contains:
 		src.part3.attack_hand(usr)
 		src.part3 = null
 		src.c_state()
-		boutput(usr, "<span style=\"color:blue\">You remove the radio/igniter assembly from the beaker.</span>")
-	else boutput(usr, "<span style=\"color:red\">That doesn't have a beaker attached to it!</span>")
+		boutput(usr, "<span class='notice'>You remove the radio/igniter assembly from the beaker.</span>")
+	else boutput(usr, "<span class='alert'>That doesn't have a beaker attached to it!</span>")
 
 /obj/item/assembly/rad_ignite/c_state()
 	if(!src.part3 && !src.part5)
-		src.icon = 'icons/obj/assemblies.dmi'
+		src.icon = 'icons/obj/items/assemblies.dmi'
 		src.icon_state = text("radio-igniter")
 		src.overlays = null
 		src.underlays = null
@@ -641,14 +636,14 @@ Contains:
 		src.icon_state = part5.icon_state
 		src.overlays = null
 		src.underlays = null
-		src.overlays += image('icons/obj/assemblies.dmi', "radignite_overlay", layer = FLOAT_LAYER)
+		src.overlays += image('icons/obj/items/assemblies.dmi', "radignite_overlay", layer = FLOAT_LAYER)
 		src.name = "Radio/Igniter/Pipebomb Assembly"
 	else
 		src.icon = part3.icon
 		src.icon_state = part3.icon_state
 		src.overlays = null
 		src.underlays = null
-		src.overlays += image('icons/obj/assemblies.dmi', "radignite_overlay", layer = FLOAT_LAYER)
+		src.overlays += image('icons/obj/items/assemblies.dmi', "radignite_overlay", layer = FLOAT_LAYER)
 		src.underlays += part3.underlays
 		src.name = "Radio/Igniter/Beaker Assembly"
 	return
@@ -680,9 +675,7 @@ Contains:
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		src.part1.set_loc(T)
 		src.part2.set_loc(T)
 		src.part1.master = null
@@ -696,9 +689,9 @@ Contains:
 	if (isscrewingtool(W))
 		src.status = !(src.status)
 		if (src.status)
-			user.show_message("<span style=\"color:blue\">The analyzer is now secured!</span>", 1)
+			user.show_message("<span class='notice'>The analyzer is now secured!</span>", 1)
 		else
-			user.show_message("<span style=\"color:blue\">The analyzer is now unsecured!</span>", 1)
+			user.show_message("<span class='notice'>The analyzer is now unsecured!</span>", 1)
 		src.part2.status = src.status
 		src.add_fingerprint(user)
 	return
@@ -734,17 +727,12 @@ Contains:
 	return
 
 obj/item/assembly/radio_horn/attack_self(mob/user as mob)
-
 	src.part1.attack_self(user)
 	src.add_fingerprint(user)
 	return
 
 obj/item/assembly/radio_horn/receive_signal()
-	if (part2.spam_flag == 0)
-		part2.spam_flag = 1
-		playsound(src.loc, islist(part2.sounds_instrument) ? pick(part2.sounds_instrument) : part2.sounds_instrument, part2.volume, part2.randomized_pitch)
-		SPAWN_DBG(part2.spam_timer)
-			part2.spam_flag = 0
+	part2.play_note(rand(1,part2.sounds_instrument.len), user = null)
 	return
 
 /////////////////////////////////////////////////////// Remote signaller/timer /////////////////////////////////////
@@ -770,9 +758,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		src.part1.set_loc(T)
 		src.part2.set_loc(T)
 		src.part1.master = null
@@ -786,9 +772,9 @@ obj/item/assembly/radio_horn/receive_signal()
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span style=\"color:blue\">The signaler is now secured!</span>", 1)
+		user.show_message("<span class='notice'>The signaler is now secured!</span>", 1)
 	else
-		user.show_message("<span style=\"color:blue\">The signaler is now unsecured!</span>", 1)
+		user.show_message("<span class='notice'>The signaler is now unsecured!</span>", 1)
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
 	return
@@ -841,9 +827,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		src.part1.set_loc(T)
 		src.part2.set_loc(T)
 		src.part1.master = null
@@ -857,9 +841,9 @@ obj/item/assembly/radio_horn/receive_signal()
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span style=\"color:blue\">The proximity sensor is now secured!</span>", 1)
+		user.show_message("<span class='notice'>The proximity sensor is now secured!</span>", 1)
 	else
-		user.show_message("<span style=\"color:blue\">The proximity sensor is now unsecured!</span>", 1)
+		user.show_message("<span class='notice'>The proximity sensor is now unsecured!</span>", 1)
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
 	return

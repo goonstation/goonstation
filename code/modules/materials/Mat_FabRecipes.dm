@@ -526,16 +526,19 @@
 
 	build(amount, var/obj/machinery/nanofab/owner)
 		for(var/i=0, i<amount, i++)
-			var/obj/item/device/light/flashlight/newObj = new()
 			var/obj/item/lensObj = getObjectByPartName("Lens")
 			var/obj/item/casingObj = getObjectByPartName("Casing")
-			if(casingObj && casingObj.material && lensObj && lensObj.material)
+			var/obj/item/device/light/flashlight/newObj
+			if(lensObj?.material)
+				var/R = GetRedPart(lensObj.material.color) / 255
+				var/G = GetGreenPart(lensObj.material.color) / 255
+				var/B = GetBluePart(lensObj.material.color) / 255
+				newObj = new(null, R, G, B)
+			else
+				newObj = new
+			if(casingObj && casingObj.material)
 				newObj.setMaterial(casingObj.material)
 				newObj.desc = newObj.desc + " It has a [lensObj.material.name] lens."
-				newObj.col_r = GetRedPart(lensObj.material.color) / 255
-				newObj.col_g = GetGreenPart(lensObj.material.color) / 255
-				newObj.col_b = GetBluePart(lensObj.material.color) / 255
-				newObj.light.set_color(newObj.col_r, newObj.col_g, newObj.col_b)
 
 			newObj.set_loc(getOutputLocation(owner))
 		return
@@ -650,7 +653,7 @@
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
-			return
+		return
 
 /datum/matfab_recipe/cell_large
 	name = "Large energy cell"
@@ -669,7 +672,7 @@
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
-			return
+		return
 
 /datum/matfab_recipe/infusion
 	name = "Infusion"
@@ -727,7 +730,7 @@
 			new_rod.setMaterial(fuel_1.material)
 			new_rod.sv_ratio = 1.22
 			new_rod.set_loc(getOutputLocation(owner))
-			return
+		return
 
 /datum/matfab_recipe/fuel_rod_4
 	name = "Advanced Nuclear Fuel Rod"

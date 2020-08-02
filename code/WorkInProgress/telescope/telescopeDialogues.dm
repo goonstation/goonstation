@@ -154,11 +154,6 @@
 		onActivate(var/client/C)
 			if(!special_places.Find("Geminorum V"))
 				special_places.Add("Geminorum V")
-				var/datum/computer/file/coords/CO = new()
-				CO.destx = 255
-				CO.desty = 3
-				CO.destz = 2
-				special_places["Geminorum V"] = CO
 			return
 
 		canShow(var/client/C)
@@ -188,11 +183,6 @@
 		onActivate(var/client/C)
 			if(!special_places.Find("Hidden Workshop"))
 				special_places.Add("Hidden Workshop")
-				var/datum/computer/file/coords/CO = new()
-				CO.destx = 58
-				CO.desty = 72
-				CO.destz = 2
-				special_places["Hidden Workshop"] = CO
 			return
 
 		canShow(var/client/C)

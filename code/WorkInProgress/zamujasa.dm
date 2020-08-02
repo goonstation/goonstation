@@ -11,8 +11,8 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (issnippingtool(W))
 			logTheThing("station", user, null, "cut the don't-cut-this wire and got ghosted/disconnected as a result.")
-			//boutput(user, "<span style=\"color:red\">You snip the ca</span>")
-			user.visible_message("[user] nearly snips the cable with \the [W], but suddenly freezes in place just before it cuts!", "<span style=\"color:red\">You snip the ca</span>")
+			//boutput(user, "<span class='alert'>You snip the ca</span>")
+			user.visible_message("[user] nearly snips the cable with \the [W], but suddenly freezes in place just before it cuts!", "<span class='alert'>You snip the ca</span>")
 			var/client/C = user.client
 			user.ghostize()
 			del(C)
@@ -26,7 +26,7 @@
 /obj/item/device/speechtotext
 	name = "dumb microphone"
 	desc = "This is really stupid."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
 
@@ -272,7 +272,7 @@
 		if (score == -1)
 			return ..()
 
-		boutput(user, "<span style=\"color:blue\">[src] mulches up [W].</span>")
+		boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
 		user.u_equip(W)
 		W.dropped()
 		mulch_item(W, score)
@@ -352,19 +352,19 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!isliving(user))
-			boutput(user, "<span style=\"color:red\">Excuse me you are dead, get your gross dead hands off that!</span>")
+			boutput(user, "<span class='alert'>Excuse me you are dead, get your gross dead hands off that!</span>")
 			return
 		if (get_dist(user,src) > 1)
-			boutput(user, "<span style=\"color:red\">You need to move closer to [src] to do that.</span>")
+			boutput(user, "<span class='alert'>You need to move closer to [src] to do that.</span>")
 			return
 		if (get_dist(O,src) > 1 || get_dist(O,user) > 1)
-			boutput(user, "<span style=\"color:red\">[O] is too far away to load into [src]!</span>")
+			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
 			return
 
 		var/score = 0
 		if (get_item_value(O) != -1)
 			var/MT = start_scoring()
-			user.visible_message("<span style=\"color:blue\">[user] begins quickly stuffing things into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing things into [src]!</span>")
 			var/staystill = user.loc
 
 			for(var/obj/item/P in view(1,user))
@@ -375,16 +375,16 @@
 				score += addscore
 				mulch_item(P, addscore)
 				update_score(MT, score)
-				sleep(1)
+				sleep(0.1 SECONDS)
 
-			boutput(user, "<span style=\"color:blue\">You finish stuffing things into [src]!</span>")
+			boutput(user, "<span class='notice'>You finish stuffing things into [src]!</span>")
 			finish_scoring(MT)
 		else ..()
 
 /obj/death_button/clean_gunsim
 	name = "button that will clean the murderbox"
 	desc = "push this to clean the murderbox and probably not get killed. takes a minute."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "cleanbot1"
 
 	var/area/sim/gunsim/gunsim
@@ -406,7 +406,17 @@
 
 		SPAWN_DBG(0)
 			for (var/obj/item/I in gunsim)
-				qdel(I)
+				if(istype(I, /obj/item/device/radio/intercom)) //lets not delete the intercoms inside shall we?
+					continue
+				else
+					qdel(I)
+
+			for (var/atom/S in gunsim)
+				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery/bot) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy))
+					qdel(S)
+
+
+/*
 			for (var/obj/storage/S in gunsim)
 				qdel(S)
 			for (var/obj/artifact/A in gunsim)
@@ -417,13 +427,37 @@
 				qdel(B)
 			for (var/obj/decal/D in gunsim)
 				qdel(D)
-
+*/
 		SPAWN_DBG(60 SECONDS)
 			active = 0
 			alpha = 255
 			icon_state = "cleanbot1"
 
 
+/obj/death_button/create_dummy
+	name = "Button that creates a test dummy"
+	desc = "click this to create a test dummy"
+	icon = 'icons/mob/human.dmi'
+	icon_state = "ghost"
+	var/active = 0
+	alpha = 255
+
+	attack_hand(mob/user as mob)
+		if (active)
+			boutput(user, "did you already kill the dummy? either way wait a bit!")
+			return
+
+		active = 1
+		alpha = 128
+		boutput(user, "Spawning target dummy, stand by") //no need to be rude
+
+		new /mob/living/carbon/human/tdummy(locate(src.x+1, src.y, src.z))
+		//T.x = src.x + 1 // move it to the right
+
+
+		SPAWN_DBG(10 SECONDS)
+			active = 0
+			alpha = 255
 
 
 /proc/fancy_pressure_bar(var/pressure, var/max_pressure, var/width = 300)
@@ -432,7 +466,7 @@
 	var/bar_bg_color = "#000000"
 	var/bar_color = "#00cc00"
 	var/bar_width = clamp(pct, 0, 1)
-	if (pct > 1)
+	if (pct > 1.01)
 		bar_width = clamp((pressure / (max_pressure * 10)), 0, 1)
 		bar_bg_color = "#b00000"
 		bar_color = "#ffff00"
@@ -627,7 +661,8 @@
 
 	disposing()
 		UnsubscribeProcess()
-	
+		..()
+
 	process()
 		if (src.last_count != runtime_count)
 			src.last_count = runtime_count
@@ -637,6 +672,86 @@
 			src.maptext_x = -100
 			src.maptext_width = 232
 			src.maptext_y = 34
-		
+
+	ex_act()
+		return
+
+
+
+/obj/machinery/maptext_monitor
+	name = "maptext monitor doodad"
+	desc = "This thing reports the value something else has, automatically! Wow!"
+	icon = null
+	anchored = 2
+	density = 0
+
+	var/datum/monitored = null
+	var/monitored_var = null
+	var/monitored_list = null
+	var/monitored_ref = null
+	var/last_value = null
+	var/display_mode = null
+	var/maptext_prefix = "<span class='c'>"
+	var/maptext_suffix = "</span>"
+	var/ding_on_change = 0
+	var/ding_sound = "sound/machines/ping.ogg"
+
+	New()
+		src.maptext_x = -100
+		src.maptext_width = 232
+		src.maptext_height = 64
+		SubscribeToProcess()
+		src.process()
+
+	disposing()
+		UnsubscribeProcess()
+		..()
+
+	process()
+		if (src.monitored_ref)
+			var/datum/thing = locate(src.monitored_ref)
+			if (thing)
+				src.monitored = thing
+			src.monitored_ref = null
+
+		if (monitored)
+			if (monitored.pooled || monitored.qdeled)
+				// The thing we were watching was deleted/removed! Welp.
+				monitored = null
+				return
+
+			if (!src.monitored_list && !src.monitored_var)
+				return
+			try
+				var/current_value
+				if (src.monitored_list && !src.monitored_var)
+					var/list/monlist = monitored.vars[src.monitored_list]
+					current_value = monlist.len
+				else if (src.monitored_list)
+					current_value = monitored.vars[src.monitored_list][src.monitored_var]
+				else
+					current_value = monitored.vars[monitored_var]
+
+				if (current_value != last_value)
+					src.maptext = "[maptext_prefix][format_value(current_value)][maptext_suffix]"
+					src.last_value = current_value
+					if (src.ding_on_change)
+						playsound(src, src.ding_sound, 33, 0)
+			catch(var/exception/e)
+				src.maptext = "(Err: [e])"
+
+
+	proc/format_value(var/val)
+		switch (src.display_mode)
+			if ("power")
+				return engineering_notation(val)
+			if ("percent")
+				return (val * 100)
+			if ("temperature")
+				return "[val - T0C]&deg;C"
+
+		return val
+
+
 	ex_act()
 		return

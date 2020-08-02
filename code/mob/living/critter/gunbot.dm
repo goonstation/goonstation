@@ -6,7 +6,7 @@
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mars_sec_bot"
 	custom_gib_handler = /proc/robogibs
-	hand_count = 2
+	hand_count = 3
 	can_throw = 0
 	can_grab = 0
 	can_disarm = 0
@@ -19,6 +19,7 @@
 	metabolizes = 0
 
 	death(var/gibbed)
+		..(gibbed, 0)
 		if (!gibbed)
 			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
@@ -27,7 +28,6 @@
 		else
 			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
-			..()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -67,6 +67,13 @@
 		HH.can_hold_items = 0
 		HH.can_attack = 0
 		HH.can_range_attack = 1
+
+		HH = hands[3]
+		HH.limb = new /datum/limb/small_critter/med
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "gunbothand"
+		HH.limb_name = "gunbot hands"
 
 	setup_healths()
 		add_hh_robot(-75, 75, 1)

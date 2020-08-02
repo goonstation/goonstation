@@ -138,10 +138,10 @@
 				src.deactivate()
 			else
 				src.activate()
-			message_admins("<span style=\"color:blue\">[key_name(user)] [src.active ? "activated" : "deactivated"] shields</span>")
+			message_admins("<span class='internal'>[key_name(user)] [src.active ? "activated" : "deactivated"] shields</span>")
 			logTheThing("station", null, null, "[key_name(user)] [src.active ? "activated" : "deactivated"] shields")
 		else
-			user.show_text("<span style='color:red'><b>That is still not ready to be used again.</b></span>")
+			user.show_text("<span class='alert'><b>That is still not ready to be used again.</b></span>")
 
 	proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
 		if (!src.link || !target_id)
@@ -306,7 +306,7 @@
 
 				if (!src.gen_net_id)
 					src.detect_generator()
-					sleep(8)
+					sleep(0.8 SECONDS)
 					if (!src.gen_net_id)
 						src.print_text("<b>Error:</b> Unable to detect generator.  Please check network cabling.")
 						return
@@ -322,7 +322,7 @@
 
 				if (!src.gen_net_id)
 					src.detect_generator()
-					sleep(8)
+					sleep(0.8 SECONDS)
 					if (!src.gen_net_id)
 						src.print_text("<b>Error:</b> Unable to detect generator.  Please check network cabling.")
 						return
@@ -398,15 +398,15 @@
 
 					if ("sgen_actvd")
 						src.print_text("<b>Alert:</b> Shield generator activated.")
-						if (master && master.current_user)
-							message_admins("<span style=\"color:blue\">[key_name(master.current_user)] activated shields</span>")
-							logTheThing("station", null, null, "[key_name(master.current_user)] activated shields")
+						if (usr)
+							message_admins("<span class='internal'>[key_name(usr)] activated shields</span>")
+							logTheThing("station", null, null, "[key_name(usr)] activated shields")
 
 					if ("sgen_dactvd")
 						src.print_text("<b>Alert:</b> Shield generator deactivated.")
-						if (master && master.current_user)
-							message_admins("<span style=\"color:blue\">[key_name(master.current_user)] deactivated shields</span>")
-							logTheThing("station", null, null, "[key_name(master.current_user)] deactivated shields")
+						if (usr)
+							message_admins("<span class='internal'>[key_name(usr)] deactivated shields</span>")
+							logTheThing("station", null, null, "[key_name(usr)] deactivated shields")
 				return
 		return
 

@@ -167,7 +167,8 @@ var/global/list/atomTooltips = new()
 
 		//Some stuff relies on currently-viewed-machine being set
 		if (src.owner.mob)
-			src.owner.mob.machine = thing
+			if (isobj(thing))
+				thing:add_dialog(src.owner.mob)
 
 		if (clickTip.visible)
 			//Clicktip is currently showing, just update it
@@ -352,6 +353,8 @@ var/global/list/atomTooltips = new()
 				extra += "left"
 			if (options["flags"] & TOOLTIP_CENTER)
 				extra += "center"
+			if (options["flags"] & TOOLTIP_TOP2)
+				extra += "top2"
 
 			params["flags"] = extra
 			//src.specialFlags = extra
@@ -423,11 +426,8 @@ var/global/list/atomTooltips = new()
 
 	proc/detachMachine()
 		if (src.owner && src.owner.mob)
-			if (src.owner.mob.machine && istype(src.owner.mob.machine, /obj/machinery))
-				src.owner.mob.machine.current_user = null
-
-			src.owner.mob.machine = null
-
+			if (src.A && isobj(src.A))
+				src.A:remove_dialog(src.owner.mob)
 
 	proc/closeHandler()
 		if (!src.hasCloseHandler) return 0
@@ -449,7 +449,7 @@ var/global/list/atomTooltips = new()
 /client/proc/cmd_tooltip_debug()
 	set name = "Debug Tooltips"
 	set desc = "Returns the amount of tooltips in existence everywhere"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 	admin_only
 
@@ -520,7 +520,7 @@ var/global/list/atomTooltips = new()
 
 
 //Hides click-toggle tooltips on player movement
-/mob/OnMove()
+/mob/OnMove(source = null)
 	..()
 
 	if (usr && src.client && src.client.tooltipHolder)

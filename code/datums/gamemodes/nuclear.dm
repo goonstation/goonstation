@@ -11,11 +11,17 @@
 	var/agent_radiofreq = 0 //:h for syndies, randomized per round
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
+#if ASS_JAM
+	var/const/agents_possible = 30 // on ass jam theres up to 30 nukies to compensate for the warcrime of the kinetitech
+#else
 	var/const/agents_possible = 6 //If we ever need more syndicate agents. cogwerks - raised from 5
+#endif
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/token_players_assigned = 0
+
+	do_antag_random_spawns = 0
 
 /datum/game_mode/nuclear/announce()
 	boutput(world, "<B>The current game mode is - Nuclear Emergency!</B>")
@@ -26,20 +32,26 @@
 	var/list/possible_syndicates = list()
 
 	if (!the_spawn)
-		boutput(world, "<span style='color:red'><b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b></span>")
+		boutput(world, "<span class='alert'><b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b></span>")
 		return 0
 
 	var/num_players = 0
-	for (var/mob/new_player/player in mobs)
-		if (player.client && player.ready)
-			num_players++
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
 
+		if (player.ready)
+			num_players++
+#if ASS_JAM
+	var/num_synds = max(1, min(round(num_players / 3), agents_possible))
+#else
 	var/num_synds = max(1, min(round(num_players / 4), agents_possible))
+#endif
 
 	possible_syndicates = get_possible_syndicates(num_synds)
 
 	if (!islist(possible_syndicates) || possible_syndicates.len < 1)
-		boutput(world, "<span style='color:red'><b>ERROR: couldn't assign any players as Syndicate operatives, aborting nuke round pre-setup.</b></span>")
+		boutput(world, "<span class='alert'><b>ERROR: couldn't assign any players as Syndicate operatives, aborting nuke round pre-setup.</b></span>")
 		return 0
 
 	// I wandered in and made things hopefully a bit easier to work with since we have multiple maps now - Haine
@@ -59,6 +71,18 @@
 			"the net cafe" = list(/area/station/crew_quarters/info),
 			"the artifact lab" = list(/area/station/science/artifact),
 			"the genetics lab" = list(/area/station/medical/research))
+
+		else if (ismap("DONUT3"))
+			target_locations = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
+			"inner engineering (surrounding the singularity, not in it)" = list(/area/station/engine/inner),
+			"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
+			"the inner hall of the medbay" = list(/area/station/medical/medbay),
+			"the main hallway in research" = list(/area/station/science),
+			"the chapel" = list(/area/station/chapel/main),
+			"the escape hallway" = list(/area/station/hallway/secondary/exit),
+			"the Research Director's office" = list(/area/station/crew_quarters/hor),
+			"the Chief Engineer's office" = list(/area/station/engine/engineering/ce),
+			"the kitchen" = list(/area/station/crew_quarters/kitchen))
 
 		else if (ismap("DESTINY") || ismap("CLARION"))
 			target_locations = list("the main security room" = list(/area/station/security/main),
@@ -87,31 +111,37 @@
 
 	if (!islist(target_locations) || !target_locations.len)
 		target_locations = list("the station (anywhere)" = list(/area/station))
-		message_admins("<span style ='color:red'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
+		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
 		logTheThing("debug", null, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
 
 #if ASS_JAM
 	var/station_only = prob(40)
 	target_locations = list()
 	for(var/area/A in world)
+		var/has_turfs = 0
+		for (var/turf/T in A)
+			has_turfs = 1
+			break
+		if(!has_turfs)
+			break
 		if(station_only && !istype(A, /area/station))
 			continue
 		if(!(A.name in target_locations))
-			target_locations[A.name] = list(A)
+			target_locations[A.name] = list(A.type)
 		else
-			target_locations[A.name].Add(A)
+			target_locations[A.name].Add(A.type)
 #endif
 
 	target_location_name = pick(target_locations)
 	if (!target_location_name)
-		boutput(world, "<span style='color:red'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
-		message_admins("<span style ='color:red'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area name)!")
+		boutput(world, "<span class='alert'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
+		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area name)!")
 		return 0
 
 	target_location_type = target_locations[target_location_name]
 	if (!target_location_type)
-		boutput(world, "<span style='color:red'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
-		message_admins("<span style ='color:red'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area type)!")
+		boutput(world, "<span class='alert'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
+		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area type)!")
 		return 0
 
 	// now that we've done everything that could cause the round to fail to start (in this proc, at least), we can deal with antag tokens
@@ -143,9 +173,11 @@
 	var/obj/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
 
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
-	//var/agent_callsigns = list("Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliett", "Kilo", "Lima", "Mike", "November", "Oscar", "Papa", "Quebec", "Romeo", "Sierra", "Tango", "Uniform", "Victor", "Whiskey", "X-ray", "Yankee", "Zulu")
-	var/agent_callsigns = list("Axe", "Baselard", "Cutlass", "Dagger", "Estoc", "Falchion", "Gladius", "Hatchet", "Ice-pick", "Javelin", "Katana", "Longsword", "Machete", "Nodachi", "Odachi", "Partisan", "Quarterstaff", "Rapier", "Scimitar", "Tomahawk", "Uchigatana", "Voulge", "Warhammer", "Xiphos", "Yumi", "Zweihander")
 	var/leader_selected = 0
+
+	var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons")
+	//Alphabetical agent callsign lists are delcared here, seperated in to catagories.
+	var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
 
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_spawn = pick(syndicatestart) // So they don't all spawn on the same tile.
@@ -154,7 +186,7 @@
 		bestow_objective(synd_mind,/datum/objective/specialist/nuclear)
 
 		var/obj_count = 1
-		boutput(synd_mind.current, "<span style=\"color:blue\">You are a [syndicate_name()] agent!</span>")
+		boutput(synd_mind.current, "<span class='notice'>You are a [syndicate_name()] agent!</span>")
 		for(var/datum/objective/objective in synd_mind.objectives)
 			boutput(synd_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
@@ -173,11 +205,11 @@
 				new /obj/item/pinpointer/disk(synd_mind.current.loc)
 			leader_selected = 1
 		else
-			var/callsign = pick(agent_callsigns)
+			var/callsign = pick(callsign_list)
 			synd_mind.current.real_name = "[syndicate_name()] Operative [callsign]" //new naming scheme
-			agent_callsigns -= callsign
+			callsign_list -= callsign
 			equip_syndicate(synd_mind.current, 0)
-		boutput(synd_mind.current, "<span style=\"color:red\">Your headset allows you to communicate on the syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
+		boutput(synd_mind.current, "<span class='alert'>Your headset allows you to communicate on the syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
 
 		synd_mind.current.antagonist_overlay_refresh(1, 0)
 		SHOW_NUKEOP_TIPS(synd_mind.current)
@@ -231,7 +263,7 @@
 			// Minor Syndicate Victory - crew escaped but bomb was armed and counting down
 			finished = -1
 			return 1
-		if ((!the_bomb || (the_bomb && !the_bomb.armed)))
+		if ((!the_bomb || the_bomb.disposed || (the_bomb && !the_bomb.armed)))
 			if (all_operatives_dead())
 				// Major Station Victory - bombing averted, all operatives dead/captured
 				finished = 2
@@ -244,7 +276,7 @@
 	if (no_automatic_ending)
 		return 0
 
-	if (the_bomb && the_bomb.armed && the_bomb.det_time)
+	if (the_bomb && the_bomb.armed && the_bomb.det_time && !the_bomb.disposed)
 		// don't end the game if the bomb is armed and counting, even if the ops are all dead
 		return 0
 
@@ -255,7 +287,7 @@
 
 	// Minor or major Station Victory - bombing averted in any case.
 	if (src.bomb_check_timestamp && world.time > src.bomb_check_timestamp + 300)
-		if (!src.the_bomb || !istype(src.the_bomb, /obj/machinery/nuclearbomb))
+		if (!src.the_bomb || src.the_bomb.disposed || !istype(src.the_bomb, /obj/machinery/nuclearbomb))
 			if (src.all_operatives_dead())
 				finished = 2
 			else
@@ -294,6 +326,17 @@
 			game_stats.Increment("traitorloss")
 #endif
 
+	if(finished > 0)
+		var/value = world.load_intra_round_value("nukie_loss")
+		if(isnull(value))
+			value = 0
+		world.save_intra_round_value("nukie_loss", value + 1)
+	else if(finished < 0)
+		var/value = world.load_intra_round_value("nukie_win")
+		if(isnull(value))
+			value = 0
+		world.save_intra_round_value("nukie_win", value + 1)
+
 	for(var/datum/mind/M in syndicates)
 		var/syndtext = ""
 		if(M.current) syndtext += "<B>[M.key] played [M.current.real_name].</B> "
@@ -321,11 +364,8 @@
 	var/opdeathcount = 0
 	for(var/datum/mind/M in syndicates)
 		opcount++
-		if(!M.current || isdead(M.current) || inafterlife(M.current))
+		if(!M.current || isdead(M.current) || inafterlife(M.current) || isVRghost(M.current) || issilicon(M.current) || isghostcritter(M.current))
 			opdeathcount++ // If they're dead
-			continue
-		else if(isrobot(M.current) || issmallanimal(M.current))
-			opdeathcount++
 			continue
 
 		var/turf/T = get_turf(M.current)
@@ -342,17 +382,23 @@
 /datum/game_mode/nuclear/proc/get_possible_syndicates(minimum_syndicates=1)
 	var/list/candidates = list()
 
-	for(var/mob/new_player/player in mobs)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
 		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
+		if ((player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
 			if(player.client.preferences.be_syndicate)
 				candidates += player.mind
 
 	if(candidates.len < minimum_syndicates)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_syndicate set to yes, including players who don't want to be syndicates in the pool.")
-		for(var/mob/new_player/player in mobs)
+		for(var/client/C)
+			var/mob/new_player/player = C.mob
+			if (!istype(player)) continue
 			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
+
+			if ((player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 
 				if ((minimum_syndicates > 1) && (candidates.len >= minimum_syndicates))

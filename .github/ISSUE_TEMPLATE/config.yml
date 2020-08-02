@@ -1,0 +1,7 @@
+contact_links:
+  - name: Report an Exploit
+    url: https://forum.ss13.co/forumdisplay.php?fid=29
+    about: Please report exploits on our forum.
+  - name: Request a Feature
+    url: https://forum.ss13.co/forumdisplay.php?fid=8
+    about: Please request features on our forum.

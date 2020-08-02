@@ -11,7 +11,7 @@
 
 /datum/game_mode/waldo/announce()
 	boutput(world, "<B>The current game mode is - Waldo!</B>")
-	boutput(world, "<B><span style=\"color:red\">A man named Waldo</span> is likely to be somewhere on the station. You must find him (And beware of any of his compatriots!)</B>")
+	boutput(world, "<B><span class='alert'>A man named Waldo</span> is likely to be somewhere on the station. You must find him (And beware of any of his compatriots!)</B>")
 
 /datum/game_mode/waldo/pre_setup()
 	var/list/possible_waldos = get_possible_waldos()
@@ -58,7 +58,7 @@
 					waldo.special_role = "wizard"
 			waldo.current.resistances += list(/datum/ailment/disease/dnaspread, /datum/ailment/disease/clowning_around, /datum/ailment/disease/cluwneing_around, /datum/ailment/disease/enobola, /datum/ailment/disease/robotic_transformation)
 			if(wizardstart.len == 0)
-				boutput(waldo.current, "<B><span style=\"color:red\">A starting location for you could not be found, please report this bug!</span></B>")
+				boutput(waldo.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 			else
 				var/starting_loc = pick(wizardstart)
 				waldo.current.set_loc(starting_loc)
@@ -111,13 +111,13 @@
 				waldo.objectives += escape_objective
 			switch(waldo.special_role)
 				if("waldo")
-					boutput(waldo.current, "<B><span style=\"color:red\">You are Waldo!</span></B>")
+					boutput(waldo.current, "<B><span class='alert'>You are Waldo!</span></B>")
 					waldo.current.real_name = "Waldo"
 				if("odlaw")
-					boutput(waldo.current, "<B><span style=\"color:red\">You are Odlaw!</span></B>")
+					boutput(waldo.current, "<B><span class='alert'>You are Odlaw!</span></B>")
 					waldo.current.real_name = "Odlaw"
 				if("wizard")
-					boutput(waldo.current, "<B><span style=\"color:red\">You are Wizard Whitebeard!</span></B>")
+					boutput(waldo.current, "<B><span class='alert'>You are Wizard Whitebeard!</span></B>")
 					waldo.current.real_name = "Wizard Whitebeard"
 			equip_waldo(waldo.current)
 			boutput(waldo.current, "<B>You have come to [station_name()] to carry out the following tasks:</B>")
@@ -128,7 +128,7 @@
 				obj_count++
 
 			if(waldo.special_role == "waldo")
-				boutput(waldo.current, "<span style=\"color:red\"><B><font size=3>WARNING: Being away from the station (ie. in space) will decrement your stealth points! Stay alive on the station!</font></B></span>")
+				boutput(waldo.current, "<span class='alert'><B><font size=3>WARNING: Being away from the station (ie. in space) will decrement your stealth points! Stay alive on the station!</font></B></span>")
 			k++
 //			var/I = image(antag_wizard, loc = waldo.current)
 //			waldo.current.client.images += I
@@ -313,10 +313,10 @@
 		wizcount++
 		if(!W.current || isdead(W.current)) wizdeathcount++
 	if (wizcount == wizdeathcount)
-		if (wizcount >= 2) boutput(world, "<span style=\"color:red\"><FONT size=3><B>Waldo and friends have been killed by the crew!</B></FONT></span>")
-		else boutput(world, "<span style=\"color:red\"><FONT size=3><B>Waldo has been killed by the crew!</B></FONT></span>")
+		if (wizcount >= 2) boutput(world, "<span class='alert'><FONT size=3><B>Waldo and friends have been killed by the crew!</B></FONT></span>")
+		else boutput(world, "<span class='alert'><FONT size=3><B>Waldo has been killed by the crew!</B></FONT></span>")
 	else
-		boutput(world, "<span style=\"color:red\"><font size=3><b>Waldo and friends have survived their stay at [station_name()]!</b></font></span>")
+		boutput(world, "<span class='alert'><font size=3><b>Waldo and friends have survived their stay at [station_name()]!</b></font></span>")
 
 	var/waldo_name
 #ifdef DATALOGGER
@@ -333,9 +333,9 @@
 
 		for(var/datum/objective/objective in W.objectives)
 			if(objective.check_completion())
-				boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span style=\"color:green\"><B>Success</B></span>")
+				boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span class='success'><B>Success</B></span>")
 			else
-				boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span style=\"color:red\">Failed</span>")
+				boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span class='alert'>Failed</span>")
 #ifdef DATALOGGER
 				waldowin = 0
 #endif

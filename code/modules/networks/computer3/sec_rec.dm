@@ -50,7 +50,7 @@
 
 	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
 	var/setup_logdump_name = "seclog" //What name do we give our logdump textfile?
-	var/setup_mailgroup = "security" //The PDA mailgroup used when alerting security pdas to an arrest set.
+	var/setup_mailgroup = MGD_SECURITY //The PDA mailgroup used when alerting security pdas to an arrest set.
 	var/setup_mail_freq = 1149 //Which frequency do we transmit PDA alerts on?
 
 	initialize() //Forms "SECMATE" ascii art. Oh boy.
@@ -178,7 +178,7 @@
 					if ("2")
 						src.menu = -1
 						message_server("command=print&args=index")
-						sleep(8)
+						sleep(0.8 SECONDS)
 						var/dat = "Known Printers:"
 						if (!src.known_printers || !src.known_printers.len)
 							dat += "<br> \[__] No printers known."
@@ -223,7 +223,7 @@
 					var/datum/data/record/G = new /datum/data/record(  )
 					G.fields["name"] = "New Record"
 					G.fields["full_name"] = "New Record"
-					G.fields["id"] = "[add_zero(num2hex(rand(1, 1.6777215E7)), 6)]"
+					G.fields["id"] = "[num2hex(rand(1, 1.6777215E7), 6)]"
 					G.fields["rank"] = "Unassigned"
 					G.fields["sex"] = "Other"
 					G.fields["age"] = "Unknown"
@@ -901,7 +901,7 @@
 
 			src.peripheral_command("transmit", signal, "\ref[netCard]")
 			if (delayCaller)
-				sleep(8)
+				sleep(0.8 SECONDS)
 				return 0
 
 			return 0
@@ -935,7 +935,7 @@
 			src.peripheral_command("ping", null, "\ref[netCard]")
 
 			if (delayCaller)
-				sleep(8)
+				sleep(0.8 SECONDS)
 				return (potential_server_netid == null)
 
 			return 0

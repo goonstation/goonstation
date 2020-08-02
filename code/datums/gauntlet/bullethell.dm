@@ -94,7 +94,7 @@
 
 	anchored = 1
 	density = 1
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "secbot1"
 
 	var/datum/action/bar/bullethell/healthbar //Hack.
@@ -266,9 +266,10 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		var/damtype = DT_NORMAL
-		if (W.damtype == "burn" || W.damtype == "fire")
+
+		if (W.hit_type == DAMAGE_BURN)
 			damtype = DT_BURN
-		else if (W.hit_type == DAMAGE_CUT)
+		else if (W.hit_type == DAMAGE_CUT || W.hit_type == DAMAGE_STAB)
 			damtype = DT_PIERCE
 		take_damage(W.force, damtype)
 		..()

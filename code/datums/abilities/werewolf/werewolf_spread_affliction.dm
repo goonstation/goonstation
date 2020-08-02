@@ -31,7 +31,7 @@
 		if (target.canmove)
 			boutput(M, __red("[target] is moving around too much."))
 			return 1
-		logTheThing("combat", M, target, "starts to afflict %target% at [log_loc(M)].")
+		logTheThing("combat", M, target, "starts to afflict [constructTarget(target,"combat")] at [log_loc(M)].")
 		actions.start(new/datum/action/bar/private/icon/werewolf_spread_affliction(target, src), M)
 		return 0
 /datum/action/bar/private/icon/werewolf_spread_affliction
@@ -60,7 +60,7 @@
 			return
 		A.locked = 1
 		playsound(M.loc, pick('sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-		M.visible_message("<span style=\"color:red\"><B>[M] lunges at [target]!</b></span>")
+		M.visible_message("<span class='alert'><B>[M] lunges at [target]!</b></span>")
 	onUpdate()
 		..()
 		var/mob/living/M = owner
@@ -129,7 +129,7 @@
 						HH.werewolf_transform(0, 0) // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
 						remove_antag(M, null, 0, 1)
 						boutput(W, __red("You passed your terribly affliction onto [HH]! You are no longer a werewolf!"))
-						logTheThing("combat", M, target, "turns %target% into a werewolf at [log_loc(M)].")
+						logTheThing("combat", M, target, "turns [constructTarget(target,"combat")] into a werewolf at [log_loc(M)].")
 		if (A && istype(A))
 			A.locked = 0
 	onInterrupt()

@@ -19,19 +19,6 @@
 	is_spacefaring()
 		return 1
 
-	Life(parent)
-		if (..(parent))
-			return 1
-
-		if (src.client)
-			src.antagonist_overlay_refresh(0, 0)
-
-		if (!src.abilityHolder)
-			src.abilityHolder = new /datum/abilityHolder/zoldorf(src)
-
-		else if (src.health < src.max_health)
-			src.health++
-
 	ex_act(severity)
 		return
 
@@ -48,13 +35,13 @@
 		..()*/
 
 	click(atom/target)
-		target.examine()
+		src.examine_verb(target)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		return 1
 
 	say_understands(var/other)
-	
+
 		if (isAI(other))
 			return 1
 
@@ -147,7 +134,7 @@
 
 			if (src.mind)
 				mind.transfer_to(originalmob)
-			
+
 			originalmob.set_loc(src.loc)
 		else
 			var/mob/dead/observer/o = src.ghostize()

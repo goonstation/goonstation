@@ -5,7 +5,7 @@
 
 	initialize()
 		selection = unpool(/obj/adventurepuzzle/marker)
-		boutput(usr, "<span style=\"color:blue\">Select a target location with right click, then left click to place portals. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, "<span class='notice'>Select a target location with right click, then left click to place portals. Ctrl+click anywhere to finish.</span>")
 
 	proc/clear_selection()
 		if (!selection)
@@ -16,11 +16,12 @@
 
 	disposing()
 		clear_selection()
+		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if (pa.Find("left"))
 			if (!target)
-				boutput(usr, "<span style=\"color:red\">Select a target first!</span>")
+				boutput(usr, "<span class='alert'>Select a target first!</span>")
 			var/turf/T = get_turf(object)
 			if (pa.Find("ctrl"))
 				finished = 1
@@ -36,7 +37,7 @@
 					target.overlays -= selection
 				target = T
 				target.overlays += selection
-				boutput(usr, "<span style=\"color:blue\">Target set.</span>")
+				boutput(usr, "<span class='notice'>Target set.</span>")
 
 /obj/perm_portal
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)

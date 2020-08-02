@@ -47,7 +47,7 @@
 			if ("scream", "clak")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), "sound/items/Scissor.ogg", 80, 1)
-					return "<span style='color:red'>[src] claks!</span>"
+					return "<span class='alert'>[src] claks!</span>"
 		return null
 
 	specific_emote_type(var/act)

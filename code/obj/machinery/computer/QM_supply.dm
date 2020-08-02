@@ -1,3 +1,10 @@
+/datum/rockbox_globals
+	var/const/rockbox_standard_fee = 5
+	var/rockbox_client_fee_min = 1
+	var/rockbox_client_fee_pct = 10
+	var/rockbox_premium_purchased = 0
+
+var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 
 /proc/build_qm_categories()
 	QM_CategoryList.Cut()
@@ -95,7 +102,7 @@
 			qdel(sell_crate)
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Notification: Pathogen sample crate delivered to the CDC.")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: Pathogen sample crate delivered to the CDC.")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
 			transmit_connection.post_signal(null, pdaSignal)
@@ -138,7 +145,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
 		if(user)
-			boutput(user, "<span style=\"color:blue\">Special supplies unlocked.</span>")
+			boutput(user, "<span class='notice'>Special supplies unlocked.</span>")
 		src.hacked = 1
 		return 1
 	return 0
@@ -147,7 +154,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	if(!hacked)
 		return 0
 	if(user)
-		boutput(user, "<span style=\"color:blue\">Treacherous supplies removed.</span>")
+		boutput(user, "<span class='notice'>Treacherous supplies removed.</span>")
 	src.hacked = 0
 	return 1
 
@@ -159,14 +166,14 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))
-		boutput(user, "<span style=\"color:red\">Access Denied.</span>")
+		boutput(user, "<span class='alert'>Access Denied.</span>")
 		return
 
 	if(..())
 		return
 
 	var/timer = shippingmarket.get_market_timeleft()
-	user.machine = src
+	src.add_dialog(user)
 	post_signal("supply")
 	var/HTML
 
@@ -366,6 +373,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			<br>
 			Contact CDC &middot;
 			Traders
+			RockBox Controls
 		</div>
 	</div>
 	<div id="topBar">
@@ -380,7 +388,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			<a href='[topicLink("viewmarket")]'>Shipping Market</a>
 			<br>
 			<a href='[topicLink("contact_cdc")]'>Contact CDC</a> &bull;
-			<a href='[topicLink("trader_list")]'>Traders</a>
+			<a href='[topicLink("trader_list")]'>Traders</a> &bull;
+			<a href='[topicLink("rockbox_controls")]'>Rockbox Controls</a>
 		</div>
 	</div>
 
@@ -446,7 +455,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			var/one_cost = analysis.cure_cost
 			var/five_cost = analysis.cure_cost * 4
 			var/ten_cost = analysis.cure_cost * 7
-			src.temp += "<tr><td><b>[analysis.assoc_pathogen.name]</b><td><a href='?src=\ref[src];batch_cure=\ref[analysis];count=1'>1 batch for [one_cost] credits</a></td>td><a href='?src=\ref[src];batch_cure=\ref[analysis];count=5'>5 batches for [five_cost] credits</a></td>td><a href='?src=\ref[src];batch_cure=\ref[analysis];count=10'>10 batches for [ten_cost] credits</a></td></tr>"
+			src.temp += "<tr><td><b>[analysis.assoc_pathogen.name]</b><td><a href='[topicLink("batch_cure", "\ref[analysis]", list(count = "1"))]'>1 batch for [one_cost] credits</a></td><td><a href='[topicLink("batch_cure", "\ref[analysis]", list(count = "5"))]'>5 batches for [five_cost] credits</a></td><td><a href='[topicLink("batch_cure", "\ref[analysis]", list(count = "10"))]'>10 batches for [ten_cost] credits</a></td></tr>"
 			src.temp += "<tr><td colspan='4' style='font-style:italic'>[analysis.desc]</td></tr>"
 			src.temp += "<tr><td colspan='4'>&nbsp;</td></tr>"
 		src.temp += "</table><br>"
@@ -596,13 +605,52 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		return .
 
+	rockbox_controls(subaction, href_list)
+		switch (subaction)
+			if (null, "list")
+				. = {"<h2>Rockbox™ Ore Cloud Storage Service Settings:</h2><ul><br>
+					<B>Rockbox™ Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our <A href='[topicLink("rockbox_controls", "premium_service")]'>Premium Service</A> to remove this fee!)" : ""]<BR>
+					<B>Client Quartermaster Transaction Fee:</B> <A href='[topicLink("rockbox_controls", "fee_pct")]'>[rockbox_globals.rockbox_client_fee_pct]%</A><BR>
+					<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> <A href='[topicLink("rockbox_controls", "fee_min")]'>$[rockbox_globals.rockbox_client_fee_min]</A><BR>
+					</ul>"}
+
+				return
+
+			if ("premium_service")
+				var/response = ""
+				response = alert(usr,"Would you like to purchase the Rockbox™ Premium Service for 10000 Credits?",,"Yes","No")
+				if(response == "Yes")
+					if(wagesystem.shipping_budget >= 10000)
+						wagesystem.shipping_budget -= 10000
+						rockbox_globals.rockbox_premium_purchased = 1
+						. = {"Congratulations on your purchase of RockBox™ Premium!"}
+					else
+						. = {"Not enough money in the budget!"}
+
+
+			if ("fee_pct")
+				var/fee_pct = null
+				fee_pct = input(usr,"What fee percent would you like to set? (Min 0)","Fee Percent per Transaction:",null) as num
+				fee_pct = max(0,fee_pct)
+				rockbox_globals.rockbox_client_fee_pct = fee_pct
+				. = {"Fee Percent per Transaction is now [rockbox_globals.rockbox_client_fee_pct]%"}
+
+			if ("fee_min")
+				var/fee_min = null
+				fee_min = input(usr,"What fee min would you like to set? (Min 0)","Minimum Fee per Transaction in Credits:",) as num
+				fee_min = max(0,fee_min)
+				rockbox_globals.rockbox_client_fee_min = fee_min
+				. = {"Minimum Fee per Transaction is now $[rockbox_globals.rockbox_client_fee_min]"}
+
+		return
+
 
 /obj/machinery/computer/supplycomp/Topic(href, href_list)
 	if(..())
 		return
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+		src.add_dialog(usr)
 
 	var/subaction = (href_list["subaction"] ? href_list["subaction"] : null)
 
@@ -616,6 +664,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		if ("requests")
 			src.temp = requests(subaction, href_list)
 
+		if("rockbox_controls")
+			src.temp = rockbox_controls(subaction,href_list)
 
 		if ("viewmarket")
 			if(shippingmarket.last_market_update != last_market_update) //Okay, the market has updated and we need a new price list
@@ -645,14 +695,14 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		if ("contact_cdc")
 			if (signal_loss >= 75)
-				boutput(usr, "<span style=\"color:red\">Severe signal interference is preventing contact with the CDC.</span>")
+				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
 			set_cdc()
 			last_cdc_message = null
 
 		if ("req_biohazard_crate")
 			if (signal_loss >= 75)
-				boutput(usr, "<span style=\"color:red\">Severe signal interference is preventing contact with the CDC.</span>")
+				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
 			if (ticker.round_elapsed_ticks < QM_CDC.next_crate)
 				last_cdc_message = "<span style=\"color:red; font-style: italic\">We are fresh out of crates right now to send you. Check back in [(QM_CDC.next_crate - ticker.round_elapsed_ticks)] seconds!</span>"
@@ -668,7 +718,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		if ("cdc_analyze")
 			if (signal_loss >= 75)
-				boutput(usr, "<span style=\"color:red\">Severe signal interference is preventing contact with the CDC.</span>")
+				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
 			src.temp = "<B>Center for Disease Control communication line</B><HR>"
 			src.temp += "<i>These are the unanalyzed samples we have from you, [station_name].</i><br><br>"
@@ -681,14 +731,14 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		if ("cdc_analyze_me")
 			if (signal_loss >= 75)
-				boutput(usr, "<span style=\"color:red\">Severe signal interference is preventing contact with the CDC.</span>")
+				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
 			if (QM_CDC.last_switch > ticker.round_elapsed_ticks - 300)
 				last_cdc_message = "<span style=\"color:red; font-style: italic\">We just switched projects. Hold on for a bit.</span>"
 			else if (wagesystem.shipping_budget < 100)
 				last_cdc_message = "<span style=\"color:red; font-style: italic\">You cannot afford to start a new analysis.</span>"
 			else
-				var/datum/cdc_contact_analysis/C = locate(href_list["cdc_analyze_me"])
+				var/datum/cdc_contact_analysis/C = locate(subaction)
 				if (!(C in QM_CDC.ready_to_analyze))
 					last_cdc_message = "<span style=\"color:red; font-style: italic\">That's not ready to analyze right now.</span>"
 				else
@@ -711,9 +761,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		if ("batch_cure")
 			if (signal_loss >= 75)
-				boutput(usr, "<span style=\"color:red\">Severe signal interference is preventing contact with the CDC.</span>")
+				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
-			var/datum/cdc_contact_analysis/C = locate(href_list["batch_cure"])
+			var/datum/cdc_contact_analysis/C = locate(subaction)
 			if (!(C in QM_CDC.completed_analysis))
 				last_cdc_message = "<span style=\"color:red; font-style: italic\">That's not ready to be cured yet.</span>"
 			var/count = text2num(href_list["count"])
@@ -741,10 +791,10 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		if ("trader_list")
 			if (!shippingmarket.active_traders.len)
-				boutput(usr, "<span style=\"color:red\">No traders detected in communications range.</span>")
+				boutput(usr, "<span class='alert'>No traders detected in communications range.</span>")
 				return
 			if (signal_loss >= 75)
-				boutput(usr, "<span style=\"color:red\">Severe signal interference is preventing contact with trader vessels.</span>")
+				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with trader vessels.</span>")
 				return
 
 			src.temp = "<h2>Available Traders</h2><br><div style='text-align: center;'>"
@@ -806,7 +856,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				total_stuff_in_cart += cartcom.amount
 
 			if (total_stuff_in_cart >= buy_cap)
-				boutput(usr, "<span style=\"color:red\">You may only have a maximum of [buy_cap] items in your shopping cart. You have already reached that limit.</span>")
+				boutput(usr, "<span class='alert'>You may only have a maximum of [buy_cap] items in your shopping cart. You have already reached that limit.</span>")
 				return
 
 			src.in_dialogue_box = 1
@@ -818,7 +868,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				howmany = C.amount
 
 			if (howmany + total_stuff_in_cart > buy_cap)
-				boutput(usr, "<span style=\"color:red\">You may only have a maximum of [buy_cap] items in your shopping cart. This order would exceed that limit.</span>")
+				boutput(usr, "<span class='alert'>You may only have a maximum of [buy_cap] items in your shopping cart. This order would exceed that limit.</span>")
 				src.in_dialogue_box = 0
 				return
 
@@ -854,7 +904,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			var/haggling = input("Suggest a new lower price.", "Haggle", null, null)  as null|num
 			if (haggling < 1)
 				// yeah sure let's reduce the barter into negative numbers, herp derp
-				boutput(usr, "<span style=\"color:red\">That doesn't even make any sense!</span>")
+				boutput(usr, "<span class='alert'>That doesn't even make any sense!</span>")
 				src.in_dialogue_box = 0
 				return
 			T.haggle(C,haggling,1)
@@ -884,7 +934,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			var/haggling = input("Suggest a new higher price.", "Haggle", null, null)  as null|num
 			if (haggling < 1)
 				// yeah sure let's reduce the barter into negative numbers, herp derp
-				boutput(usr, "<span style=\"color:red\">That doesn't even make any sense!</span>")
+				boutput(usr, "<span class='alert'>That doesn't even make any sense!</span>")
 				src.in_dialogue_box = 0
 				return
 			T.haggle(C,haggling,0)
@@ -924,7 +974,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				return
 
 			if (!T.shopping_cart.len)
-				boutput(usr, "<span style=\"color:red\">There's nothing in the shopping cart to buy!</span>")
+				boutput(usr, "<span class='alert'>There's nothing in the shopping cart to buy!</span>")
 				return
 
 			var/cart_cost = 0
@@ -941,7 +991,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				logTheThing("debug", null, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
 
 			if (total_cart_amount > buy_cap)
-				boutput(usr, "<span style=\"color:red\">There are too many items in the cart. You may only order [buy_cap] items at a time.</span>")
+				boutput(usr, "<span class='alert'>There are too many items in the cart. You may only order [buy_cap] items at a time.</span>")
 			else
 				if (wagesystem.shipping_budget < cart_cost)
 					T.current_message = pick(T.dialogue_cant_afford_that)
@@ -1129,10 +1179,10 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 /obj/machinery/computer/supplycomp/proc/commodity_sanity_check(var/datum/commodity/C)
 	if (!C)
-		boutput(usr, "<span style=\"color:red\">Something has gone wrong trying to access this commodity! Report this please!</span>")
+		boutput(usr, "<span class='alert'>Something has gone wrong trying to access this commodity! Report this please!</span>")
 		return 0
 	if (!istype(C,/datum/commodity/))
-		boutput(usr, "<span style=\"color:red\">Something has gone wrong trying to access this commodity! Report this please!</span>")
+		boutput(usr, "<span class='alert'>Something has gone wrong trying to access this commodity! Report this please!</span>")
 		return 0
 	return 1
 

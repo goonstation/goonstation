@@ -18,7 +18,7 @@
 /obj/item/disk/data/cartridge
 	name = "\improper PDA cartridge"
 	desc = "A data cartridge for PDAs."
-	icon = 'icons/obj/pda.dmi'
+	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "cart-blank"
 	item_state = "electronic"
 	file_amount = 32

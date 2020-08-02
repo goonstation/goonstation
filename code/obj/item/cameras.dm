@@ -1,19 +1,19 @@
 /obj/item/storage/photo_album
 	name = "Photo album"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "album"
 	item_state = "briefcase"
 
 /obj/item/storage/photo_album/attackby(obj/item/W as obj, mob/user as mob)
 	if (!istype(W,/obj/item/photo))
-		boutput(user, "<span style=\"color:red\">You can only put photos in a photo album.</span>")
+		boutput(user, "<span class='alert'>You can only put photos in a photo album.</span>")
 		return
 
 	return ..()
 
 /obj/item/camera_test
 	name = "camera"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	desc = "A reusable polaroid camera."
 	icon_state = "camera"
 	item_state = "electropack"
@@ -39,9 +39,8 @@
 
 
 	examine()
-		..()
-		boutput(usr, "There are [src.pictures_left < 0 ? "a whole lot of" : src.pictures_left] pictures left!")
-		return
+		. = ..()
+		. += "There are [src.pictures_left < 0 ? "a whole lot of" : src.pictures_left] pictures left!"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/camera_film))
@@ -81,11 +80,17 @@
 	desc = "There's some sort of faint writing etched into the casing."
 	takes_voodoo_pics = 1
 
+	ultimate
+		name = "soul-binding camera"
+		desc = "No one cam should have all this power."
+		takes_voodoo_pics = 2
+
 /obj/item/camera_film
 	name = "film cartridge"
 	desc = "A replacement film cartridge for an instant camera."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "camera_film"
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
 	w_class = 2.0
 	mats = 10
@@ -97,22 +102,23 @@
 		mats = 15
 
 	examine()
-		..()
-		boutput(usr, "It is good for [src.pictures] pictures.")
-		return
+		. = ..()
+		. += "It is good for [src.pictures] pictures."
 
 
 /obj/item/photo
 	name = "photo"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "photo"
-	item_state = "clipboard"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	item_state = "paper"
 	w_class = 1.0
 	var/image/fullImage
 	var/icon/fullIcon
 	var/list/signed = list()
 	var/written = null
 	var/image/my_writing = null
+	tooltip_flags = REBUILD_DIST
 
 	New(location, var/image/IM, var/icon/IC, var/nname, var/ndesc)
 		..(location)
@@ -157,6 +163,7 @@
 				signature.layer = OBJ_LAYER + 0.01
 				src.overlays += signature
 				signed += "<span style='color: [P.font_color]'>[t]</span>"
+				tooltip_rebuild = 1
 			else if (signwrite == "write")
 				var/image/writing = image(icon='icons/misc/photo_writing.dmi',icon_state="[signwrite]")
 				writing.color = P.font_color
@@ -167,7 +174,7 @@
 				else
 					src.overlays -= src.my_writing
 					written = "[src.written] <span style='color: [P.font_color]'>[t]</span>"
-
+				tooltip_rebuild = 1
 				src.my_writing = writing
 				src.overlays += writing
 		return
@@ -175,22 +182,33 @@
 
 /obj/item/photo/voodoo //kubius: voodoo "doll" photograph
 	var/mob/cursed_dude = null //set at photo creation
-	var/enchant_power = 66 //how long the photo's magic lasts, negative values make it infinite
+	var/enchant_power = 13 //how long the photo's magic lasts, negative values make it infinite
+	var/enchant_delay = 0 //rolling counter to prevent spam utilization
+	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 
 	//farting is handled in human.dm
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (enchant_power && cursed_dude && istype(cursed_dude, /mob))
+		if (enchant_power && world.time > src.enchant_delay && cursed_dude && istype(cursed_dude, /mob))
 			cursed_dude.attackby(W,user)
+			src.enchant_delay = world.time + COMBAT_CLICK_DELAY
 			if(enchant_power > 0) enchant_power--
 		else
 			..()
+		if(enchant_power == 0)
+			boutput(user,"<span class='alert'><b>[src]</b> crumbles away to dust!</span>")
+			qdel(src)
 		return
 
 	throw_begin(atom/target)
-		if (enchant_power && cursed_dude && istype(cursed_dude, /mob))
+		if (enchant_power && world.time > src.enchant_delay && cursed_dude && ismob(cursed_dude))
+			cursed_dude.visible_message("<span class='alert'><b>[cursed_dude] is violently thrown by an unseen force!</b></span>")
 			cursed_dude.throw_at(get_edge_cheap(src, get_dir(src, target)), 20, 1)
+			src.enchant_delay = world.time + COMBAT_CLICK_DELAY
 			if(enchant_power > 0) enchant_power--
+		if(enchant_power == 0)
+			src.visible_message("<span class='alert'><b>[src]</b> crumbles away to dust!</span>")
+			qdel(src)
 		return ..(target)
 
 
@@ -222,7 +240,7 @@
 	if (src.pictures_left > 0)
 		src.pictures_left = max(0, src.pictures_left - 1)
 		if (user)
-			boutput(user, "<span style='color:blue'>[pictures_left] photos left.</span>")
+			boutput(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	can_use = 0
 	SPAWN_DBG (50)
 		if (src)
@@ -347,6 +365,8 @@
 	if(src.takes_voodoo_pics)
 		P = new/obj/item/photo/voodoo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
 		P:cursed_dude = deafnote //kubius: using runtime eval because non-voodoo photos don't have a cursed_dude var
+		if(src.takes_voodoo_pics == 2) //unlimited photo uses
+			P:enchant_power = -1
 	else
 		P = new/obj/item/photo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
 

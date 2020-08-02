@@ -66,7 +66,7 @@
 			N.flash(3 SECONDS)
 			if(N.client)
 				shake_camera(N, 6, 4)
-		O.visible_message("<span style=\"color:red\"><b>With a blinding light [O] vanishes, leaving its contents behind.</b></span>")
+		O.visible_message("<span class='alert'><b>With a blinding light [O] vanishes, leaving its contents behind.</b></span>")
 		playsound(O.loc, "sound/effects/warp2.ogg", 50, 1)
 		artifact_controls.artifacts -= src
 		qdel(O)

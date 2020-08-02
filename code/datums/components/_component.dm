@@ -238,6 +238,8 @@
   * * sig_typeor_types Signal string key or list of signal keys to stop listening to specifically
   */
 /datum/proc/UnregisterSignal(datum/target, sig_type_or_types)
+	if (!target)
+		return
 	var/list/lookup = target.comp_lookup
 	if(!signal_procs || !signal_procs[target] || !lookup)
 		return
@@ -579,3 +581,8 @@
 
 /datum/proc/AdminAddComponent(...)
 	_AddComponent(args)
+
+//for being appended to tooltips.    //Never iterate over all components on an item when making a tooltip, at least until someone refactors my code -Tarmunora
+/datum/component/proc/getTooltipDesc()
+	SHOULD_CALL_PARENT(1)
+	return list()

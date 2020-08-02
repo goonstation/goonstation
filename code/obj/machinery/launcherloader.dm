@@ -39,7 +39,7 @@
 		operating = 1
 		flick("launcher_loader_1",src)
 		playsound(src, "sound/effects/pump.ogg",50, 1)
-		sleep(3)
+		sleep(0.3 SECONDS)
 		for(var/atom/movable/AM in src.loc)
 			if(AM.anchored || AM == src) continue
 			if(trash && AM.delivery_destination != "Disposals")
@@ -81,7 +81,7 @@
 			if(drive) activate()
 
 	HasEntered(atom/A)
-		if (isobserver(A) || isintangible(A) || iswraith(A)) return
+		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
 		return_if_overlay_or_effect(A)
 		activate()
 
@@ -140,7 +140,7 @@
 
 		flick("amdl_1",src)
 		playsound(src, "sound/effects/pump.ogg",50, 1)
-		sleep(3)
+		sleep(0.3 SECONDS)
 
 		for(var/atom/movable/AM2 in src.loc)
 			if(AM2.anchored || AM2 == src) continue
@@ -174,7 +174,7 @@
 			if(drive) activate()
 
 	HasEntered(atom/A)
-		if (isobserver(A) || isintangible(A) || iswraith(A)) return
+		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
 
 		if (!trigger_when_no_match)
 			var/atom/movable/AM = A
@@ -281,14 +281,14 @@
 /obj/machinery/cargo_router/oshan_north
 	trigger_when_no_match = 0
 	New()
-		destinations = list("North" = NORTH)
+		destinations = list("North" = NORTH, "South" = EAST)
 		default_direction = NORTH
 		..()
 
 /obj/machinery/cargo_router/oshan_south
 	trigger_when_no_match = 0
 	New()
-		destinations = list("South" = SOUTH)
+		destinations = list("South" = SOUTH, "North" = WEST)
 		default_direction = SOUTH
 		..()
 
@@ -320,7 +320,7 @@
 
 		dat += "<BR><b><A href='?src=\ref[src];add=1'>Add Tag</A></b>"
 
-		user.machine = src
+		src.add_dialog(user)
 		user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x400")
 		onclose(user, "bc_computer_[src]")
 		return
@@ -329,18 +329,18 @@
 	attackby(var/obj/item/I as obj, user as mob)
 		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
-			boutput(user, "<span style=\"color:blue\">You swipe the ID card.</span>")
+			boutput(user, "<span class='notice'>You swipe the ID card.</span>")
 			account = FindBankAccountByName(I:registered)
 			if(account)
 				var/enterpin = input(user, "Please enter your PIN number.", "Order Console", 0) as null|num
 				if (enterpin == I:pin)
-					boutput(user, "<span style=\"color:blue\">Card authorized.</span>")
+					boutput(user, "<span class='notice'>Card authorized.</span>")
 					src.scan = I
 				else
-					boutput(user, "<span style=\"color:red\">Pin number incorrect.</span>")
+					boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 					src.scan = null
 			else
-				boutput(user, "<span style=\"color:red\">No bank account associated with this ID found.</span>")
+				boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 				src.scan = null
 		else src.attack_hand(user)
 		return
@@ -353,7 +353,7 @@
 		if (href_list["print"] && !printing)
 			printing = 1
 			playsound(src.loc, "sound/machines/printer_thermal.ogg", 50, 0)
-			sleep(28)
+			sleep(2.8 SECONDS)
 			var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
 			var/dest = strip_html(href_list["print"], 64)
 			B.name = "Barcode Sticker ([dest])"
@@ -396,7 +396,7 @@
 
 		//dat += "<BR><b><A href='?src=\ref[src];add=1'>Add Tag</A></b>"
 
-		user.machine = src
+		src.add_dialog(user)
 		// Attempting to diagnose an infinite window refresh I can't duplicate, reverting the display style back to plain HTML to see what results that gets me.
 		// Hooray for having a playerbase to test shit on
 		//user.Browse(dat, "title=Barcode Computer;window=bc_computer_[src];size=300x400")
@@ -410,12 +410,17 @@
 
 	destinations = list("North","South")
 
+/obj/machinery/computer/barcode/qm/donut3
+	name = "Barcode Computer"
+	desc = "Used to print barcode stickers for the off-station merchants."
+	destinations = list()
 
 /obj/item/sticker/barcode
 	name = "barcode sticker"
 	desc = "A barcode sticker used in the cargo routing system."
 	icon = 'icons/obj/delivery.dmi'
 	icon_state = "barcode"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 
 	var/destination = "QM Dock"
@@ -429,16 +434,16 @@
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob, reach, params)
 		if(get_dist(get_turf(target), get_turf(src)) <= 1 && istype(target, /atom/movable))
-			if(target==loc && target != usr) return //Backpack or something
+			if(target==loc && target != user) return //Backpack or something
 			target:delivery_destination = destination
-			usr.visible_message("<span style=\"color:blue\">[usr] sticks a [src.name] on [target].</span>")
+			user.visible_message("<span class='notice'>[user] sticks a [src.name] on [target].</span>")
 			user.u_equip(src)
 			if(istype(target, /obj/storage/crate))
 				if (scan && account)
 					var/obj/storage/crate/C = target
 					C.scan = src.scan
 					C.account = src.account
-					boutput(usr, "<span style=\"color:blue\">[target] has been marked with your account routing information.</span>")
+					boutput(user, "<span class='notice'>[target] has been marked with your account routing information.</span>")
 					C.desc = "[C] belongs to [scan.registered]."
 				var/obj/storage/crate/C = target
 				C.update_icon()

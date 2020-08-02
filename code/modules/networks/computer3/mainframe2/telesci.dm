@@ -91,16 +91,15 @@ proc/is_teleportation_allowed(var/turf/T)
 		return
 
 	examine()
-		set src in view()
-		..()
+		. = ..()
 		if (!src.host_id)
-			boutput(usr, "<span style=\"color:red\">The [src.name]'s \"disconnected from host\" light is flashing.</span>")
+			. += "<span class='alert'>The [src.name]'s \"disconnected from host\" light is flashing.</span>"
 
 	attack_hand(mob/user as mob)
 		if(..())
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<html><head><title>Telepad</title></head><body>"
 
@@ -129,7 +128,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 		if (href_list["reset"])
 			if(last_reset && (last_reset + NETWORK_MACHINE_RESET_DELAY >= world.time))
 				return
@@ -224,8 +223,6 @@ proc/is_teleportation_allowed(var/turf/T)
 						src.realx = round(  max(0, min(coords.destx, world.maxx+1)) )
 						src.realy = round(  max(0, min(coords.desty, world.maxy+1)) )
 						src.realz = round(  max(0, min(coords.destz, world.maxz+1)) )
-						signal.data_file = null
-						pool(coords)
 						message_host("command=ack")
 
 					if ("send")
@@ -248,12 +245,12 @@ proc/is_teleportation_allowed(var/turf/T)
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
-								sleep(10)
+								sleep(1 SECOND)
 								src.send(turfcheck)
-							sleep(5)
+							sleep(0.5 SECONDS)
 
 							src.icon_state = "pad0"
-							sleep(10)
+							sleep(1 SECOND)
 
 							recharging = 0
 
@@ -272,18 +269,18 @@ proc/is_teleportation_allowed(var/turf/T)
 									src.message_host("command=nack&cause=bad[turfcheck & 1 ? "x" : null][turfcheck & 2 ? "y" : null][turfcheck & 4 ? "z" : null]")
 								else
 									src.message_host("command=nack&cause=badxyz")
-								sleep(10)
+								sleep(1 SECOND)
 								src.badreceive()
 							else if(!is_teleportation_allowed(turfcheck))
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
-								sleep(10)
+								sleep(1 SECOND)
 								src.receive(turfcheck)
-							sleep(5)
+							sleep(0.5 SECONDS)
 
 							src.icon_state = "pad0"
-							sleep(10)
+							sleep(1 SECOND)
 
 							recharging = 0
 
@@ -317,9 +314,9 @@ proc/is_teleportation_allowed(var/turf/T)
 							if (coords.can_cheat || (is_teleportation_allowed(endturf) && is_teleportation_allowed(sourceturf)))
 								src.receive(sourceturf)
 								SPAWN_DBG(0)
-									sleep(10)
+									sleep(1 SECOND)
 									recharging = 0
-									sleep(40)
+									sleep(4 SECONDS)
 									src.send(endturf)
 								message_host("command=ack")
 
@@ -361,18 +358,18 @@ proc/is_teleportation_allowed(var/turf/T)
 									src.message_host("command=nack&cause=bad[turfcheck & 1 ? "x" : null][turfcheck & 2 ? "y" : null][turfcheck & 4 ? "z" : null]")
 								else
 									src.message_host("command=nack&cause=badxyz")
-								sleep(10)
+								sleep(1 SECOND)
 								src.badreceive()
 							else if(!is_teleportation_allowed(turfcheck))
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
-								sleep(10)
+								sleep(1 SECOND)
 								src.doubleportal(turfcheck)
-							sleep(5)
+							sleep(0.5 SECONDS)
 
 							src.icon_state = "pad0"
-							sleep(10)
+							sleep(1 SECOND)
 
 							recharging = 0
 
@@ -392,7 +389,7 @@ proc/is_teleportation_allowed(var/turf/T)
 									var/turf/simulated/T = scanTurf
 									if(T.active_hotspot)
 										burning = 1
-								message_host("command=scan_reply&o2=[GM.oxygen]&tox=[GM.toxins]&n2=[GM.nitrogen]&co2=[GM.carbon_dioxide]&temp=[GM.temperature]&pressure=[GM.return_pressure()][(burning)?("&burning=1"):(null)]")
+								message_host("command=scan_reply&[MOLES_REPORT_PACKET(GM)]temp=[GM.temperature]&pressure=[MIXTURE_PRESSURE(GM)][(burning)?("&burning=1"):(null)]")
 							else
 								message_host("command=scan_reply&cause=noatmos")
 
@@ -491,7 +488,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (stuff.len)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
-				logTheThing("station", usr, which, "sent %target% to [showCoords(target.x, target.y, target.z)] from [showCoords(src.x, src.y, src.z)] with a telepad")
+				logTheThing("station", usr, which, "sent [constructTarget(which,"station")] to [showCoords(target.x, target.y, target.z)] from [showCoords(src.x, src.y, src.z)] with a telepad")
 			which.set_loc(target)
 
 		showswirl(src.loc)
@@ -500,7 +497,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		leaveresidual(target)
 		use_power(1500)
 		if(prob(2) && prob(2))
-			src.visible_message("<span style=\"color:red\">The console emits a loud pop and an acrid smell fills the air!</span>")
+			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
@@ -521,7 +518,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (stuff.len)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
-				logTheThing("station", usr, which, "received %target% from [showCoords(which.x, which.y, which.z)] to [showCoords(src.x, src.y, src.z)] with a telepad")
+				logTheThing("station", usr, which, "received [constructTarget(which,"station")] from [showCoords(which.x, which.y, which.z)] to [showCoords(src.x, src.y, src.z)] with a telepad")
 			which.set_loc(src.loc)
 		showswirl(src.loc)
 		leaveresidual(src.loc)
@@ -529,7 +526,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		leaveresidual(receiveturf)
 		use_power(1500)
 		if(prob(2) && prob(2))
-			src.visible_message("<span style=\"color:red\">The console emits a loud pop and an acrid smell fills the air!</span>")
+			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
@@ -553,17 +550,17 @@ proc/is_teleportation_allowed(var/turf/T)
 		for(var/atom/movable/O in send)
 			O.set_loc(target)
 			if(ismob(O))
-				logTheThing("station", usr, O, "sent %target% to [showCoords(target.x, target.y, target.z)] from [showCoords(src.x, src.y, src.z)] with a telepad")
+				logTheThing("station", usr, O, "sent [constructTarget(O,"station")] to [showCoords(target.x, target.y, target.z)] from [showCoords(src.x, src.y, src.z)] with a telepad")
 
 		for(var/atom/movable/O in receive)
 			if(ismob(O))
-				logTheThing("station", usr, O, "received %target% from [showCoords(O.x, O.y, O.z)] to [showCoords(src.x, src.y, src.z)] with a telepad")
+				logTheThing("station", usr, O, "received [constructTarget(O,"station")] from [showCoords(O.x, O.y, O.z)] to [showCoords(src.x, src.y, src.z)] with a telepad")
 			O.set_loc(src.loc)
 		showswirl(src.loc)
 		showswirl(target)
 		use_power(500000)
 		if(prob(2))
-			src.visible_message("<span style=\"color:red\">The console emits a loud pop and an acrid smell fills the air!</span>")
+			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
@@ -613,7 +610,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			if("")
 				return
 			if("flash")
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span style=\"color:red\">A bright flash emnates from the [src]!</span>", 1)
+				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>A bright flash emnates from the [src]!</span>", 1)
 				playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 				for (var/mob/N in viewers(src, null))
 					if (get_dist(N, src) <= 6)
@@ -622,7 +619,7 @@ proc/is_teleportation_allowed(var/turf/T)
 						shake_camera(N, 6, 4)
 				return
 			if("buzz")
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span style=\"color:red\">You hear a loud buzz coming from the [src]!</span>", 1)
+				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>You hear a loud buzz coming from the [src]!</span>", 1)
 				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
 				return
 			if("scatter") //stolen from hand tele, heh
@@ -643,17 +640,17 @@ proc/is_teleportation_allowed(var/turf/T)
 			if("ignite")
 				for(var/mob/living/carbon/M in src.loc)
 					M.update_burning(30)
-					boutput(M, "<span style=\"color:red\">You catch fire!</span>")
+					boutput(M, "<span class='alert'>You catch fire!</span>")
 				return
 			if("chill")
 				for(var/mob/living/carbon/M in src.loc)
 					M.bodytemperature -= 100
-					boutput(M, "<span style=\"color:red\">You feel colder!</span>")
+					boutput(M, "<span class='alert'>You feel colder!</span>")
 				return
 			if("tempblind")
 				for(var/mob/living/carbon/M in src.loc)
 					M.take_eye_damage(10, 1)
-					boutput(M, "<span style=\"color:red\">You can't see anything!</span>")
+					boutput(M, "<span class='alert'>You can't see anything!</span>")
 				return
 			if("minormutate")
 				for(var/mob/living/carbon/M in src.loc)
@@ -677,11 +674,11 @@ proc/is_teleportation_allowed(var/turf/T)
 						T.reagents = R
 						R.my_atom = T
 					T.reagents.add_reagent("radium", 20)
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span style=\"color:red\">The area surrounding the [src] begins to glow bright green!</span>", 1)
+				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>The area surrounding the [src] begins to glow bright green!</span>", 1)
 				return
 			if("fire")
 				fireflash(src.loc, 6) // cogwerks - lowered from 8, too laggy
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span style=\"color:red\">A huge wave of fire explodes out from the [src]!</span>", 1)
+				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>A huge wave of fire explodes out from the [src]!</span>", 1)
 				return
 			if("widescatter")
 				var/list/turfs = new
@@ -701,7 +698,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			if("brute")
 				for(var/mob/living/M in src.loc)
 					M.TakeDamage("chest", rand(20,30), 0)
-					boutput(M, "<span style=\"color:red\">You feel like you're being pulled apart!</span>")
+					boutput(M, "<span class='alert'>You feel like you're being pulled apart!</span>")
 				return
 			if("gib")
 				for(var/mob/living/M in src.loc)
@@ -718,7 +715,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			if("mutatearea")
 				for(var/mob/living/carbon/M in orange(5,src.loc))
 					M:bioHolder:RandomEffect("bad")
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span style=\"color:red\">A bright green pulse emnates from the [src]!</span>", 1)
+				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>A bright green pulse emnates from the [src]!</span>", 1)
 				return
 			if("explosion")
 				explosion(src, src.loc, 0, 0, 5, 10)
@@ -758,7 +755,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("tinyfire")
 				fireflash(src.loc, 3)
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span style=\"color:red\">The area surrounding the [src] bursts into flame!</span>", 1)
+				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
 				var/summon = pick("maneater","killertomato","bee","golem","magiczombie","mimic")
@@ -866,6 +863,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 	New()
 		..()
+		START_TRACKING
 		SPAWN_DBG(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
@@ -875,6 +873,10 @@ proc/is_teleportation_allowed(var/turf/T)
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.link = test_link
 					src.link.master = src
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	receive_signal(datum/signal/signal)
 		if(status & (NOPOWER|BROKEN) || !src.link)
@@ -1014,7 +1016,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			dat += "<br>Linked Pad Number: <a href='?src=\ref[src];setpad=1'>[src.padNum]</a><br>"
 			dat += net_switch_html()
 
-		user.machine = src
+		src.add_dialog(user)
 		user.Browse(dat, "window=t_computer;size=400x600")
 		onclose(user, "t_computer")
 		return
@@ -1034,7 +1036,7 @@ proc/is_teleportation_allowed(var/turf/T)
 	updateUsrDialog(var/updateReadout)
 		var/list/nearby = viewers(1, src)
 		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
+			if (M.using_dialog_of(src))
 				if (updateReadout)
 					M << output(url_encode(src.readout), "t_computer.browser:updateReadout")
 				else
@@ -1042,7 +1044,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		if (issilicon(usr))
 			if (!(usr in nearby))
-				if (usr.client && usr.machine==src)
+				if (usr.using_dialog_of(src))
 					if (updateReadout)
 						usr << output(url_encode(src.readout), "t_computer.browser:updateReadout")
 					else
@@ -1052,12 +1054,12 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (..(href, href_list))
 			return
 
-		usr.machine = src
-		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, 5)
+		src.add_dialog(usr)
+		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 
 		if (href_list["scan"])
 			if (!host_id)
-				boutput(usr, "<span style=\"color:red\">Error: No host connection!</span>")
+				boutput(usr, "<span class='alert'>Error: No host connection!</span>")
 				return
 
 			if (coord_update_flag)
@@ -1112,7 +1114,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		if (href_list["addbookmark"])
 			if(bookmarks.len >= max_bookmarks)
-				boutput(usr, "<span style=\"color:red\">Maximum number of Bookmarks reached.</span>")
+				boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
 				return
 			var/datum/teleporter_bookmark/bm = new
 			var/title = input(usr,"Enter name:","Name","New Bookmark") as text
@@ -1124,7 +1126,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			bm.z = ztarget
 			bookmarks.Add(bm)
 			src.updateUsrDialog()
-			playsound(src.loc, "keyboard", 50, 1, 5)
+			playsound(src.loc, "keyboard", 50, 1, -15)
 			return
 
 		if (href_list["setpad"])
@@ -1204,7 +1206,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		else if (href_list["send"])
 			if (!host_id)
-				boutput(usr, "<span style=\"color:red\">Error: No host connection!</span>")
+				boutput(usr, "<span class='alert'>Error: No host connection!</span>")
 				return
 
 			if (coord_update_flag)
@@ -1217,7 +1219,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		else if (href_list["receive"])
 			if (!host_id)
-				boutput(usr, "<span style=\"color:red\">Error: No host connection!</span>")
+				boutput(usr, "<span class='alert'>Error: No host connection!</span>")
 				return
 
 			if (coord_update_flag)

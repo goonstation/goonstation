@@ -38,11 +38,11 @@
 
 
 		if(!AnItem)
-			boutput(holder.owner, "<span style=\"color:red\">You must be holding a container in your hand.</span>")
+			boutput(holder.owner, "<span class='alert'>You must be holding a container in your hand.</span>")
 			return 1 // No cooldown when it fails.
 
 		if(!TheReagents)
-			boutput(holder.owner, "<span style=\"color:red\">You have no material to convert into a golem.</span>")
+			boutput(holder.owner, "<span class='alert'>You have no material to convert into a golem.</span>")
 			return 1
 
 
@@ -60,6 +60,6 @@
 
 		qdel(TheReagents)
 		qdel(AnItem)
-		boutput(holder.owner, "<span style=\"color:blue\">You conjure up [TheGolem]!</span>")
-		holder.owner.visible_message("<span style=\"color:red\">[holder.owner] conjures up [TheGolem]!</span>")
+		boutput(holder.owner, "<span class='notice'>You conjure up [TheGolem]!</span>")
+		holder.owner.visible_message("<span class='alert'>[holder.owner] conjures up [TheGolem]!</span>")
 		playsound(holder.owner.loc, "sound/effects/mag_golem.ogg", 25, 1, -1)

@@ -45,10 +45,10 @@
       playsound(src.loc, pick("sound/machines/ArtifactMar1.ogg", "sound/machines/ArtifactMar2.ogg"), 60, 1)
       icon_state = "seed_active"
       active = 1
-      user.visible_message("<span style='color:blue;'><b>[user]</b> activates the seed!</span>", "<span style='color:blue;'>You activate the seed!</span>")
+      user.visible_message("<span class='notice'><b>[user]</b> activates the seed!</span>", "<span class='notice'>You activate the seed!</span>")
       src.martianDesc = "It's active. Apply to the ground to form a new structure."
   else
-    boutput(user, "<span style='color:red;'>You have no idea how to use this!</span>")
+    boutput(user, "<span class='alert'>You have no idea how to use this!</span>")
 
 /obj/item/martianSeed/proc/plant(var/turf/T=null)
   if(!T)
@@ -115,5 +115,5 @@
         new spawn_path(src.loc)
         src.icon_state = "seed_dead"
         flick("seed_burst", src)
-        sleep(100)
+        sleep(10 SECONDS)
         qdel(src)

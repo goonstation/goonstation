@@ -16,7 +16,7 @@
 				bulb = null
 				src.updateicon()
 			else
-				boutput(user, "<span style=\"color:blue\">You fold up the tripod.</span>")
+				boutput(user, "<span class='notice'>You fold up the tripod.</span>")
 				var/obj/item/tripod/I = new()
 				if (src.material)
 					I.setMaterial(src.material)

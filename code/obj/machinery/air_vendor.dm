@@ -53,7 +53,7 @@ obj/machinery/air_vendor
 		return round(src.target_pressure * src.holding.air_contents.volume * src.air_cost)
 
 	proc/fill()
-		if(!holding || !scan) return
+		if(!holding) return
 		gas_prototype.volume = holding.air_contents.volume
 		gas_prototype.temperature = T20C
 
@@ -65,7 +65,7 @@ obj/machinery/air_vendor
 		if (istype(W, /obj/item/spacecash))
 			src.credits += W.amount
 			W.amount = 0
-			boutput(user, "<span style=\"color:blue\">You insert [W].</span>")
+			boutput(user, "<span class='notice'>You insert [W].</span>")
 			user.u_equip(W)
 			W.dropped()
 			pool(W)
@@ -89,27 +89,27 @@ obj/machinery/air_vendor
 	proc/scan_card(var/obj/item/card/id/card as obj, var/mob/user as mob)
 		if (!card || !user)
 			return
-		boutput(user, "<span style=\"color:blue\">You swipe [card].</span>")
+		boutput(user, "<span class='notice'>You swipe [card].</span>")
 		var/datum/data/record/account = null
 		account = FindBankAccountByName(card.registered)
 		if (account)
 			var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
 			if (enterpin == card.pin)
-				boutput(user, "<span style=\"color:blue\">Card authorized.</span>")
+				boutput(user, "<span class='notice'>Card authorized.</span>")
 				src.scan = card
 			else
-				boutput(user, "<span style=\"color:red\">Pin number incorrect.</span>")
+				boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 				src.scan = null
 		else
-			boutput(user, "<span style=\"color:red\">No bank account associated with this ID found.</span>")
+			boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 			src.scan = null
 		src.updateUsrDialog()
 
 	attack_hand(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		var/html = ""
 		html += "<TT><b>Welcome!</b><br>"
-		html += "<b>Current balance: [src.credits] credits</b><br>"
+		html += "<b>Current balance: <a href='byond://?src=\ref[src];return_credits=1'>[src.credits] credits</a></b><br>"
 		if (src.scan)
 			var/datum/data/record/account = null
 			account = FindBankAccountByName(src.scan.registered)
@@ -119,7 +119,7 @@ obj/machinery/air_vendor
 			html += "<b>Current ID:</b> None<br>"
 		if(src.holding)
 			html += "<font color = 'blue'>Current tank:</font> <a href='?src=\ref[src];eject=1'>[holding]</a><br />"
-			html += "<font color = 'red'>Pressure:</font> [holding.air_contents.return_pressure()] kPa<br />"
+			html += "<font color = 'red'>Pressure:</font> [MIXTURE_PRESSURE(holding.air_contents)] kPa<br />"
 		else
 			html += "<font color = 'blue'>Current tank:</font> none<br />"
 
@@ -135,7 +135,7 @@ obj/machinery/air_vendor
 		if (usr.stat || usr.restrained())
 			return
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-			usr.machine = src
+			src.add_dialog(usr)
 			src.add_fingerprint(usr)
 
 			if(href_list["eject"])
@@ -158,7 +158,7 @@ obj/machinery/air_vendor
 					if(credits > cost)
 						src.credits -= cost
 						src.fill()
-						boutput(usr, "<span style=\"color:blue\">You fill up the [src.holding].</span>")
+						boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
 						src.updateUsrDialog()
 						return
 					else if(scan)
@@ -166,12 +166,22 @@ obj/machinery/air_vendor
 						if (account && account.fields["current_money"] > cost)
 							account.fields["current_money"] -= cost
 							src.fill()
-							boutput(usr, "<span style=\"color:blue\">You fill up the [src.holding].</span>")
+							boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
 							src.updateUsrDialog()
 							return
-					boutput(usr, "<span style=\"color:red\">Insufficient funds.</span>")
+					boutput(usr, "<span class='alert'>Insufficient funds.</span>")
 				else
-					boutput(usr, "<span style=\"color:red\">There is no tank to fill up!</span>")
+					boutput(usr, "<span class='alert'>There is no tank to fill up!</span>")
+
+			if (href_list["return_credits"])
+				if (src.credits > 0)
+					var/obj/item/spacecash/returned = unpool(/obj/item/spacecash)
+					returned.setup(src.loc, src.credits)
+
+					usr.put_in_hand_or_eject(returned)
+					src.credits = 0
+					boutput(usr, "<span class='notice'>You receive [returned].</span>")
+
 			src.updateUsrDialog()
 			src.add_fingerprint(usr)
 			update_icon()

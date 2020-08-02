@@ -148,7 +148,7 @@
 		return html
 
 	Topic(href, href_list)
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if(href_list["cell"])
 			var/i = text2num(href_list["r"])

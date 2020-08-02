@@ -5,7 +5,7 @@
 //How much of a punch this has, tends to be seconds/damage before any resist
 	power = 20
 //How much ammo this costs
-	cost = 15
+	cost = 25
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
@@ -17,6 +17,8 @@
 	sname = "stun"
 //file location for the sound you want it to play
 	shot_sound = 'sound/weapons/Taser.ogg'
+//should the sound have extra range?
+	shot_sound_extrarange = 5
 //How many projectiles should be fired, each will cost the full cost
 	shot_number = 1
 //What is our damage type
@@ -56,6 +58,18 @@ toxic - poisons
 				H.changeStatus("stunned", power)
 		return*/
 
+/datum/projectile/energy_bolt/bouncy
+	name = "ricochet energy bolt"
+	var/max_bounce_count = 1
+	var/allow_headon_bounce = 0
+	var/reflect_on_nondense_hits = 0
+
+	on_hit(atom/hit, direction, obj/projectile/P)
+		if (!ismob(hit))
+			if (shoot_reflected_bounce(P, hit, max_bounce_count, allow_headon_bounce, reflect_on_nondense_hits))
+				elecflash(get_turf(P),radius=0, power=2, exclude_center = 0)
+		..()
+
 /datum/projectile/heavyion
 	name = "ion bolt"
 	icon = 'icons/obj/projectiles.dmi'
@@ -89,7 +103,7 @@ toxic - poisons
 
 /datum/projectile/energy_bolt/burst
 	shot_number = 3
-	cost = 50
+	cost = 75
 	sname = "burst stun"
 
 
@@ -113,9 +127,10 @@ toxic - poisons
 		return
 
 /datum/projectile/energy_bolt/tasershotgun //Projectile for Azungar's taser shotgun.
+	cost = 10
 	power = 15
-	dissipation_delay = 4
-	dissipation_rate = 5
+	dissipation_delay = 1
+	dissipation_rate = 2
 	icon_state = "spark"
 
 //////////// VUVUZELA
@@ -219,6 +234,7 @@ toxic - poisons
 /datum/projectile/energy_bolt/aoe
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "detain-projectile"
+	sname = "detain"
 	power = 20
 	cost = 50
 	dissipation_rate = 5
@@ -227,11 +243,9 @@ toxic - poisons
 	color_green = 165
 	color_blue = 0
 	max_range = 7 //slight range boost
-	var/hit = 0				//This hit var and the on_hit on_end nonsense was to make it so that if it hits a guy, the explosion starts on them and not one tile before, but if it hits a wall, it explodes on the floor tile in front of it
-
+	damage_type = D_SPECIAL
 
 	on_hit(atom/O, angle, var/obj/projectile/P)
-
 		//lets make getting hit by the projectile a bit worse than getting the shockwave
 		//tasers have changed in production code, I'm not really sure what value is good to give it here...
 		if (isliving(O))
@@ -239,17 +253,10 @@ toxic - poisons
 			L.changeStatus("slowed", 2 SECONDS)
 			L.do_disorient(stamina_damage = 2*P.power, weakened = 0, stunned = 0, disorient = P.power, remove_stamina_below_zero = 0)
 			L.emote("twitch_v")
-
-
-		hit = 1
-
 		detonate(O, P)
 
-	//do AOE stuff. This is not on on_hit because this effect should trigger when the projectile reaches the end of its distance OR hits things.
-	on_end(var/obj/projectile/O)
-		//if we hit a mob or something, that will handle the detonation, we don't need to do it on_end
-		if (!hit)
-			detonate(O, O)
+	on_max_range_die(obj/projectile/O)
+		detonate(O, O)
 
 	proc/detonate(atom/O, var/obj/projectile/P)
 		if (istype(O, /obj/projectile))
@@ -300,7 +307,11 @@ toxic - poisons
 	shot_sound = 'sound/weapons/Taser.ogg'
 	damage_type = D_ENERGY
 	hit_ground_chance = 30
-	brightness = 0
+	brightness = 1
+	color_red = 0.18
+	color_green = 0.2
+	color_blue = 1
+
 	disruption = 8
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
@@ -314,8 +325,8 @@ toxic - poisons
 		// var/dir = angle2dir(angle)
 		var/dir = get_dir(O.shooter, hit)
 		var/pow = O.power
-		O.die()
 		if (ishuman(hit))
+			O.die()
 			var/mob/living/carbon/human/H = hit
 			H.do_disorient(stamina_damage = pow*3, weakened = 0, stunned = 0, disorient = pow*4, remove_stamina_below_zero = 0)
 			H.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)

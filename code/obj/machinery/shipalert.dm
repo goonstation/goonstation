@@ -40,7 +40,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 			user.visible_message("[user] picks up \the [hammer]", "You pick up \the [hammer]")
 		if (1)
 			//no effect punch
-			out(user, "<span style='color: red'>The glass casing is too strong for your puny hands!</span>")
+			out(user, "<span class='alert'>The glass casing is too strong for your puny hands!</span>")
 		if (2)
 			//activate
 			if (src.working) return
@@ -55,7 +55,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 		if (istype(W, /obj/item/tinyhammer))
 			//break glass
 			var/area/T = get_turf(src)
-			T.visible_message("<span style=\"color:red\">[src]'s glass housing shatters!</span>")
+			T.visible_message("<span class='alert'>[src]'s glass housing shatters!</span>")
 			playsound(T, pick("sound/impact_sounds/Glass_Shatter_1.ogg","sound/impact_sounds/Glass_Shatter_2.ogg","sound/impact_sounds/Glass_Shatter_3.ogg"), 100, 1)
 			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
 			G.set_loc(get_turf(user))
@@ -63,7 +63,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 			src.icon_state = "shipalert2"
 		else
 			//no effect
-			out(user, "<span style='color: red'>\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing</span>")
+			out(user, "<span class='alert'>\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing</span>")
 
 /obj/machinery/shipalert/proc/toggleActivate(mob/user as mob)
 	if (!user)
@@ -119,7 +119,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 
 /obj/item/tinyhammer
 	name = "teeny tiny hammer"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "tinyhammer"
 	item_state = "tinyhammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -130,6 +130,6 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 	m_amt = 50
 	desc = "Like a normal hammer, but teeny."
 	stamina_damage = 33
-	stamina_cost = 25
+	stamina_cost = 18
 	stamina_crit_chance = 10
 	module_research = list("tools" = 4, "metals" = 2)

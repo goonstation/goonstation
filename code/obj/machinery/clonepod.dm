@@ -1,7 +1,7 @@
 #define MEAT_NEEDED_TO_CLONE	16
 #define MAXIMUM_MEAT_LEVEL		100
 #define DEFAULT_MEAT_USED_PER_TICK 0.6
-#define DEFAULT_SPEED_BONUS 1
+#define DEFAULT_SPEED_BONUS 1.5
 
 #define MEAT_LOW_LEVEL	MAXIMUM_MEAT_LEVEL * 0.15
 
@@ -14,7 +14,6 @@
 	density = 1
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
-	req_access = list(access_medlab) //For premature unlocking.
 	object_flags = CAN_REPROGRAM_ACCESS
 	mats = 15
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
@@ -37,7 +36,7 @@
 	var/is_speedy = 0 // Speed module installed?
 	var/is_efficient = 0 // Efficiency module installed?
 
-	var/gen_analysis = 1 //Are we analysing the genes while reassembling the duder? (read: Do we work faster or do we give a material bonus?)
+	var/gen_analysis = 0 //Are we analysing the genes while reassembling the duder? (read: Do we work faster or do we give a material bonus?)
 	var/gen_bonus = 1 //Normal generation speed
 	var/speed_bonus = DEFAULT_SPEED_BONUS // Multiplier that can be modified by modules
 
@@ -46,8 +45,7 @@
 	var/failed_tick_counter = 0 // goes up while someone is stuck in there and there's not enough meat to clone them, after so many ticks they'll get dumped out
 
 	var/message = null
-	var/mailgroup = "medbay"
-	var/mailgroup2 = "medresearch"
+	var/list/mailgroups
 	var/net_id = null
 	var/pdafrequency = 1149
 	var/datum/radio_frequency/pda_connection
@@ -58,6 +56,9 @@
 
 	New()
 		..()
+		req_access = list(access_medlab) //For premature unlocking.
+		mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
+
 		var/datum/reagents/R = new/datum/reagents(100)
 		reagents = R
 		R.my_atom = src
@@ -78,8 +79,15 @@
 				src.net_id = generate_net_id(src)
 
 	disposing()
+		mailgroups.len = 0
 		radio_controller.remove_object(src, "[pdafrequency]")
 		genResearch.clonepods.Remove(src) //Bye bye
+		connected.pod1 = null
+		connected?.scanner?.pods -= src
+		connected = null
+		if(occupant)
+			occupant.set_loc(src.loc)
+		occupant = null
 		..()
 
 	proc/send_pda_message(var/msg)
@@ -87,8 +95,10 @@
 			msg = src.message
 		else if (!msg)
 			return
+		if(!pda_connection)
+			return
 
-		if (msg && mailgroup && pda_connection)
+		for(var/mailgroup in mailgroups)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.transmission_method = TRANSMISSION_RADIO
@@ -102,19 +112,6 @@
 
 			pda_connection.post_signal(src, newsignal)
 
-		if (msg && mailgroup2 && pda_connection)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CLONEPOD-MAILBOT"
-			newsignal.data["message"] = "[msg]"
-
-			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup2
-			newsignal.data["sender"] = src.net_id
-
-			pda_connection.post_signal(src, newsignal)
 
 /obj/machinery/clonepod/attack_ai(mob/user as mob)
 	return attack_hand(user)
@@ -132,9 +129,9 @@
 	boutput(user, "Biomatter reserves are [round( 100 * (src.meat_level / MAXIMUM_MEAT_LEVEL) )]% full.")
 
 	if (src.meat_level <= 0)
-		boutput(user, "<span style='color:red'>Alert: Biomatter reserves depleted.</span>")
+		boutput(user, "<span class='alert'>Alert: Biomatter reserves depleted.</span>")
 	else if (src.meat_level <= MEAT_LOW_LEVEL)
-		boutput(user, "<span style='color:red'>Alert: Biomatter reserves low.</span>")
+		boutput(user, "<span class='alert'>Alert: Biomatter reserves low.</span>")
 
 	return
 
@@ -174,11 +171,13 @@
 
 	if (istype(oldholder))
 		oldholder.clone_generation++
-		src.occupant.bioHolder.CopyOther( oldholder )
+		src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = gen_analysis)
 	else
 		logTheThing("debug", null, null, "<b>Cloning:</b> growclone([english_list(args)]) with invalid holder.")
 
 	if (istype(oldabilities))
+		// @TODO @BUG: Things with abilities that should lose them (eg zombie clones) keep their zombie abilities.
+		// Maybe not a bug? idk.
 		src.occupant.abilityHolder = oldabilities // This should already be a copy.
 		src.occupant.abilityHolder.transferOwnership(src.occupant) //mbc : fixed clone removing abilities bug!
 		src.occupant.abilityHolder.remove_unlocks()
@@ -200,15 +199,14 @@
 	src.occupant.take_oxygen_deprivation(40)
 	src.occupant.take_brain_damage(90)
 	src.occupant.changeStatus("paralysis", 60)
-	src.occupant.bioHolder.AddEffect("premature_clone")
 	if(src.occupant.bioHolder.clone_generation > 1)
 		src.occupant.setStatus("maxhealth-", null, -((src.occupant.bioHolder.clone_generation - 1) * 15))
 		//src.occupant.max_health -= (src.occupant.bioHolder.clone_generation - 1) * 15 //Genetic degradation! Oh no!!
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
 	src.occupant.health = (src.occupant.get_brute_damage() + src.occupant.get_toxin_damage() + src.occupant.get_oxygen_deprivation())
 
-	boutput(src.occupant, "<span style='color:blue'><b>Clone generation process initiated.</b></span>")
-	boutput(src.occupant, "<span style='color:blue'>This will take a moment, please hold.</span>")
+	boutput(src.occupant, "<span class='notice'><b>Clone generation process initiated.</b></span>")
+	boutput(src.occupant, "<span class='notice'>This will take a moment, please hold.</span>")
 
 	if (clonename)
 		if (prob(10))
@@ -217,6 +215,7 @@
 			src.occupant.real_name = clonename
 	else
 		src.occupant.real_name = "clone"  //No null names!!
+	src.occupant.name = src.occupant.real_name
 
 	if ((mindref) && (istype(mindref))) //Move that mind over!!
 		mindref.transfer_to(src.occupant)
@@ -234,7 +233,7 @@
 
 	// -- End mode specific stuff
 
-	logTheThing("combat", usr, src.occupant, "starts cloning %target% at [log_loc(src)].")
+	logTheThing("combat", usr, src.occupant, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
 
 	if (isobserver(ghost))
 		qdel(ghost) //Don't leave ghosts everywhere!!
@@ -248,7 +247,7 @@
  		// No need to check near as much with a standard implant, as the cloned person is dead and is therefore enslavable upon cloning.
  		// How did this happen. Why is someone cloning you as a slave to yourself. WHO KNOWS?!
 		if(implant_master == src.occupant)
-			boutput(src.occupant, "<span style=\"color:red\">You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
+			boutput(src.occupant, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
 		else
 			if (src.occupant.mind && ticker.mode)
 				if (!src.occupant.mind.special_role)
@@ -256,17 +255,17 @@
 				if (!(src.occupant.mind in ticker.mode.Agimmicks))
 					ticker.mode.Agimmicks += src.occupant.mind
 				src.occupant.mind.master = implant_master.ckey
- 			boutput(src.occupant, "<h2><span style=\"color:red\">You feel an unwavering loyalty to [implant_master.real_name]! You feel you must obey \his every order! Do not tell anyone about this unless your master tells you to!</span></h2>")
+ 			boutput(src.occupant, "<h2><span class='alert'>You feel an unwavering loyalty to [implant_master.real_name]! You feel you must obey \his every order! Do not tell anyone about this unless your master tells you to!</span></h2>")
 			SHOW_MINDSLAVE_TIPS(src.occupant)
  	// Someone is having their brain zapped. 75% chance of them being de-antagged if they were one
 	//MBC todo : logging. This shouldn't be an issue thoug because the mindwipe doesn't even appear ingame (yet?)
 	if(mindwipe)
 		if(prob(75))
 			SHOW_MINDWIPE_TIPS(src.occupant)
-			boutput(src.occupant, "<h2><span style=\"color:red\">You have awakened with a new outlook on life!</span></h2>")
+			boutput(src.occupant, "<h2><span class='alert'>You have awakened with a new outlook on life!</span></h2>")
 			src.occupant.mind.memory = "You cannot seem to remember much from before you were cloned. Weird!<BR>"
 		else
-			boutput(src.occupant, "<span style=\"color:red\">You feel your memories fading away, but you manage to hang on to them!</span>")
+			boutput(src.occupant, "<span class='alert'>You feel your memories fading away, but you manage to hang on to them!</span>")
  	// Lucky person - they get a power on cloning!
 	if (src.BE)
 		src.occupant.bioHolder.AddEffectInstance(BE,1)
@@ -275,6 +274,7 @@
 	previous_heal = src.occupant.health
 	src.attempting = 0
 	src.operating = 1
+	// effectively "(1 + (!gen_analysis * 0.15)) * speed_bonus" (cash-4-clones is never on)
 	src.gen_bonus = src.healing_multiplier()
 	return 1
 
@@ -325,7 +325,6 @@
 			return
 
 		else if (src.occupant.health < src.heal_level)
-			src.failed_tick_counter = 0
 
 			src.occupant.changeStatus("paralysis", 60)
 
@@ -333,7 +332,8 @@
 			src.occupant.HealDamage("All", 1 * gen_bonus, 1 * gen_bonus)
 
 			//At this rate one clone takes about 95 seconds to produce.(with heal_level 90)
-			src.occupant.take_toxin_damage(-0.5 * gen_bonus)
+			// Zamujasa: changed -0.5 to -1; consistently the slowest type to heal
+			src.occupant.take_toxin_damage(-1 * gen_bonus)
 
 			//Premature clones may have brain damage.
 			src.occupant.take_brain_damage(-2 * gen_bonus)
@@ -361,13 +361,17 @@
 			if (!src.meat_level)
 				src.connected_message("Additional biomatter required to continue.")
 				src.send_pda_message("Low Biomatter")
-				src.visible_message("<span style='color:red'>[src] emits an urgent boop!</span>")
+				src.visible_message("<span class='alert'>[src] emits an urgent boop!</span>")
 				playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
-				src.failed_tick_counter ++
+				src.failed_tick_counter = 1
 
 			use_power(7500) //This might need tweaking.
 
 			var/heal_delta = (src.occupant.health - previous_heal)
+			if(heal_delta <= 0)
+				src.failed_tick_counter++
+			else
+				src.failed_tick_counter = 0
 			previous_heal = src.occupant.health
 			if (heal_delta <= 0 && src.occupant.health > 50 && !eject_wait)
 				src.connected_message("Cloning Process Complete.")
@@ -414,12 +418,12 @@
 		W = W:ID_card
 	if (istype(W, /obj/item/card/id))
 		if (!src.check_access(W))
-			boutput(user, "<span style='color:red'>Access Denied.</span>")
+			boutput(user, "<span class='alert'>Access Denied.</span>")
 			return
 		if ((!src.locked) || (isnull(src.occupant)))
 			return
 		if ((src.occupant.health < -20) && (!isdead(src.occupant)))
-			boutput(user, "<span style='color:red'>Access Refused.</span>")
+			boutput(user, "<span class='alert'>Access Refused.</span>")
 			return
 		else
 			src.locked = 0
@@ -430,14 +434,14 @@
 		return
 	else if (istype(W, /obj/item/cloneModule/speedyclone)) // speed module
 		if(is_speedy)
-			boutput(user,"<span style=\"color:red\">There's already a speed booster in the slot!</span>")
+			boutput(user,"<span class='alert'>There's already a speed booster in the slot!</span>")
 			return
 		if(operating)
-			boutput(user,"<span style=\"color:red\">The cloning pod emits an angry boop!</span>")
+			boutput(user,"<span class='alert'>The cloning pod emits an angry boop!</span>")
 			return
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		logTheThing("combat", src, user, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
-		speed_bonus += 1
+		speed_bonus *= 2
 		meat_used_per_tick *= 3
 		is_speedy = 1
 		user.drop_item()
@@ -446,10 +450,10 @@
 
 	else if (istype(W, /obj/item/cloneModule/efficientclone)) // efficiency module
 		if(is_efficient)
-			boutput(user,"<span style=\"color:red\">There's already an efficiency booster in the slot!</span>")
+			boutput(user,"<span class='alert'>There's already an efficiency booster in the slot!</span>")
 			return
 		if(operating)
-			boutput(user,"<span style=\"color:red\">The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
+			boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 			return
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		logTheThing("combat", src, user, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
@@ -461,7 +465,7 @@
 
 	else if (istype(W, /obj/item/cloneModule/mindslave_module)) // Time to re enact the clone wars
 		if(operating)
-			boutput(user,"<span style=\"color:red\">The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
+			boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 			return
 		logTheThing("combat", src, user, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 		cloneslave = 1
@@ -478,19 +482,19 @@
 
 	else if(istype(W, /obj/item/screwdriver) && cloneslave == 1) // Wait nevermind the clone wars were a terrible idea
 		if(src.occupant)
-			boutput(user, "<space style=\"color:red\">You must wait for the current cloning cycle to finish before you can remove the mindslave module.</span>")
+			boutput(user, "<space class='alert'>You must wait for the current cloning cycle to finish before you can remove the mindslave module.</span>")
 			return
-		boutput(user, "<span style=\"color:blue\">You begin detatching the mindslave cloning module...</span>")
+		boutput(user, "<span class='notice'>You begin detatching the mindslave cloning module...</span>")
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user,50))
 			new /obj/item/cloneModule/mindslave_module( src.loc )
 			cloneslave = 0
 			implant_master = null
-			boutput(user,"<span style=\"color:red\">The mindslave cloning module falls to the floor with a dull thunk </span>")
+			boutput(user,"<span class='alert'>The mindslave cloning module falls to the floor with a dull thunk </span>")
 			playsound(src.loc, "sound/effects/thunk.ogg", 50, 0)
 			light.disable()
 		else
-			boutput(user,"<span style=\"color:red\">You were interrupted!</span>")
+			boutput(user,"<span class='alert'>You were interrupted!</span>")
 		return
 
 	else
@@ -552,14 +556,10 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 	for (var/obj/O in src)
 		O.set_loc(get_turf(src))
 
-	if ((src.occupant.health >= heal_level - 50) && src.occupant.bioHolder) // this seems to often not work right, changing 20 to 50
-		src.occupant.bioHolder.RemoveEffect("premature_clone")
-		src.occupant.update_face()
-		src.occupant.update_body()
-		src.occupant.update_clothing()
+	if ((src.occupant.health < heal_level - 50) && src.occupant.bioHolder) // this seems to often not work right, changing 20 to 50
+		src.occupant.bioHolder.AddEffect("premature_clone")
 	if (src.occupant.get_oxygen_deprivation())
 		src.occupant.take_oxygen_deprivation(-INFINITY)
-		src.occupant.updatehealth()
 
 	if (src.occupant.losebreath) // STOP FUCKING SUFFOCATING GOD DAMN
 		src.occupant.losebreath = 0
@@ -645,7 +645,8 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 	var/list/pods = null // cloning pods we're tied to
 	var/id = null // if this isn't null, we'll only look for pods with this ID
 	var/pod_range = 4 // if we don't have an ID, we look for pods in orange(this value)
-	var/process_timer = 0
+	var/process_timer = 0	// how long this shit is running for
+	var/process_per_tick = 0	// how much shit it will output per tick
 	var/mob/living/occupant = null
 	var/list/meats = list() //Meat that we want to reclaim.
 	var/max_meat = 7 //To be honest, I added the meat reclamation thing in part because I wanted a "max_meat" var.
@@ -701,22 +702,27 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 		return
 
 	process()
-		if (process_timer-- < 1)
+		process_timer--
+		if (process_timer > 0)
+			// Add reagents for this tick
+			src.reagents.add_reagent("blood", 2 * process_per_tick)
+			src.reagents.add_reagent("meat_slurry", 2 * process_per_tick)
+			if (prob(2))
+				src.reagents.add_reagent("beff", 1 * process_per_tick)
+
+		if (src.reagents.total_volume && islist(src.pods) && pods.len)
+			// Distribute reagents to cloning pods nearby
+			// Changed from before to distribute while grinding rather than all at once
+			// give an equal amount of reagents to each pod that happens to be around
+			var/volume_to_share = (src.reagents.total_volume / max(pods.len, 1))
+			for (var/obj/machinery/clonepod/pod in src.pods)
+				src.reagents.trans_to(pod, volume_to_share)
+				DEBUG_MESSAGE("[src].reagents.trans_to([pod] [log_loc(pod)], [src.reagents.total_volume]/[max(pods.len, 1)])")
+
+		if (process_timer <= 0)
 			UnsubscribeProcess()
 			update_icon(1)
-			DEBUG_MESSAGE("[src].reagents.total_volume on completion of cycle: [src.reagents.total_volume]")
 
-			if (islist(src.pods) && pods.len && src.reagents.total_volume)
-				for (var/obj/machinery/clonepod/pod in src.pods)
-					src.reagents.trans_to(pod, (src.reagents.total_volume / max(pods.len, 1))) // give an equal amount of reagents to each pod that happens to be around
-					DEBUG_MESSAGE("[src].reagents.trans_to([pod] [log_loc(pod)], [src.reagents.total_volume]/[max(pods.len, 1)])")
-			return
-
-		var/mult = src.upgraded ? 2 : 1
-		src.reagents.add_reagent("blood", 2 * mult)
-		src.reagents.add_reagent("meat_slurry", 2 * mult)
-		if (prob(2))
-			src.reagents.add_reagent("beff", 1 * mult)
 		return
 
 	on_reagent_change()
@@ -725,7 +731,7 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
 			if (user)
-				boutput(user, "<span style='color:blue'>You override the reclaimer's safety mechanism.</span>")
+				boutput(user, "<span class='notice'>You override the reclaimer's safety mechanism.</span>")
 			logTheThing("combat", user, "emagged [src] at [log_loc(src)].")
 			emagged = 1
 			return 1
@@ -739,28 +745,28 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 			return 0
 		emagged = 0
 		if (user)
-			boutput(user, "<span style ='color:blue'>You repair the reclaimer's safety mechanism.</span>")
+			boutput(user, "<span class='notice'>You repair the reclaimer's safety mechanism.</span>")
 		return 1
 
 	attack_hand(mob/user as mob)
 		interact_particle(user,src)
 
 		if (src.process_timer > 0)
-			boutput(user, "<span style='color:red'>The [src.name] is already running!</span>")
+			boutput(user, "<span class='alert'>The [src.name] is already running!</span>")
 			return
 
 		if (!src.meats.len && !src.occupant)
-			boutput(user, "<span style='color:red'>There is nothing loaded to reclaim!</span>")
+			boutput(user, "<span class='alert'>There is nothing loaded to reclaim!</span>")
 			return
 
 		if (src.occupant && src.occupant.loc != src)
 			src.occupant = null
-			boutput(user, "<span style='color:red'>There is nothing loaded to reclaim!</span>")
+			boutput(user, "<span class='alert'>There is nothing loaded to reclaim!</span>")
 			return
 
 		user.visible_message("<b>[user]</b> activates [src]!", "You activate [src].")
 		if (istype(src.occupant))
-			logTheThing("combat", user, src.occupant, "activated [src.name] with %target% ([isdead(src.occupant) ? "dead" : "alive"]) inside at [log_loc(src)].")
+			logTheThing("combat", user, src.occupant, "activated [src.name] with [constructTarget(src.occupant,"combat")] ([isdead(src.occupant) ? "dead" : "alive"]) inside at [log_loc(src)].")
 			if (!isdead(src.occupant))
 				message_admins("[key_name(user)] activated [src.name] with [key_name(src.occupant, 1)] ([isdead(src.occupant) ? "dead" : "alive"]) inside at [log_loc(src)].")
 		src.start_cycle()
@@ -768,6 +774,10 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 
 	proc/start_cycle()
 		src.find_pods()
+
+		// how much we will be producing
+		var/process_total = 0
+
 		if (istype(src.occupant))
 			src.occupant.death(1)
 			var/humanOccupant = (ishuman(src.occupant) && !ismonkey(src.occupant))
@@ -777,12 +787,40 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 				qdel(src.occupant)
 			else
 				qdel(src.occupant)
+			src.occupant = null
 
-			var/mult = src.upgraded ? rand(2,4) : rand(4,8)
-			src.process_timer = (humanOccupant ? 2 : 1)// * (rand(4,8) - (2 * decomp))
-			src.process_timer *= (mult - (2 * decomp))
-			DEBUG_MESSAGE("[src] process_timer calced as [src.process_timer] (upgraded [src.upgraded], mult [mult], humanOccupant [humanOccupant])")
-			DEBUG_MESSAGE("[src] rough end result of cycle: [(src.process_timer * (src.upgraded ? 8 : 4))]u + up to [(src.process_timer * (src.upgraded ? 2 : 1))]u")
+			// Old table of cloner values --
+			// grinder used to count down and added either x or x + 2 depending on upgrade
+			// now uses varying amounts of things! i guess!
+			// here is the old code and a table of how the timer was calculated:
+			// var/mult = src.upgraded ? rand(2,4) : rand(4,8)
+			// src.process_timer = (humanOccupant ? 2 : 1)
+			// src.process_timer *= (mult - (2 * decomp))
+			// ------------------------------------------------
+			// process_timer    ____speedy|normal__________
+			// mult>              2   3   4   5   6   7   8  (note: speedy would increase
+			// Decomp stage  0    4   6   8  10  12  14  16   reagent production by * 2)
+			//               1    0   2   4   6   8  10  12
+			//               2   -4  -2   0   2   4   6   8  (slightly decomposed bodies
+			//               3   -8  -6  -4  -2   0   2   4   became worthless with
+			//               4  -12 -10  -8  -6  -4  -2   0   speedy grinder upgrade)
+			// total reagents: process_timer * (speedy ? 2 : 1)
+			// this effectively means/meant that the speedy upgrade was faster,
+			// but otherwise objectively worse if you had decomposed corpses
+
+			// attempting to rewrite this to be better or at least different, i guess
+			// First, how much are we going to get from this?
+			//                        rand  human   decomp        total
+			// Human, no decomposure: (5~8) * 2 * (4.5 / 4.5) =  10 ~ 16
+			// Human, stage 1:        (5~8) * 2 * (3.5 / 4.5) = 8.8 ~12.4
+			// Human, stage 2:        (5~8) * 2 * (2.5 / 4.5) = 5.5 ~ 7.7
+			// Human, stage 3:        (5~8) * 2 * (1.5 / 4.5) = 3.3 ~ 5.3
+			// Human, stage 4:        (5~8) * 2 * (0.5 / 4.5) = 1.1 ~ 1.7
+			// Non-human monkey:      (5~8) * 1 * (4.5 / 4.5) =   5 ~ 8
+			process_total += rand(5, 8) * (humanOccupant ? 2 : 1) * ((4.5 - decomp) / 4.5)
+
+			//DEBUG_MESSAGE("[src] process_timer calced as [src.process_timer] (upgraded [src.upgraded], mult [mult], humanOccupant [humanOccupant])")
+			//DEBUG_MESSAGE("[src] rough end result of cycle: [(src.process_timer * (src.upgraded ? 8 : 4))]u + up to [(src.process_timer * (src.upgraded ? 2 : 1))]u")
 
 		if (src.meats.len)
 			for (var/obj/item/theMeat in src.meats)
@@ -791,9 +829,23 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 					theMeat.reagents.trans_to(src, src.upgraded ? 10 : 5)
 
 				qdel(theMeat)
-				src.process_timer += (src.upgraded ? 1 : 2)
+				// Each bit of meat adds 2 units
+				process_total += 2
 
 			src.meats.len = 0
+
+		// process_timer = total * 0.8 or 0.4 (rounded up) - slightly faster than before
+		// normal:
+		// 8 * 2 (human) =    16 units
+		// 16 * 0.8 = 12.8 -> 13 ticks
+		// 16 / 13 =           1.2307 per tick
+		// upgraded:
+		// 8 * 2 =            16 units
+		// 16 * 0.4 = 6.4 ->   7 ticks
+		// 16 / 7 =            2.2857 per tick
+		// end result is that they produce the same amounts, the upgrade just does it faster
+		src.process_timer = ceil(process_total * (src.upgraded ? 0.4 : 0.8))
+		src.process_per_tick = process_total / process_timer
 
 		src.update_icon(1)
 		SubscribeToProcess()
@@ -801,7 +853,7 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 	attackby(obj/item/grab/G as obj, mob/user as mob)
 		if (istype(G, /obj/item/grinder_upgrade))
 			if (src.upgraded)
-				boutput(user, "<span style='color:red'>There is already an upgrade card installed.</span>")
+				boutput(user, "<span class='alert'>There is already an upgrade card installed.</span>")
 				return
 			user.visible_message("[user] installs [G] into [src].", "You install [G] into [src].")
 			src.upgraded = 1
@@ -809,11 +861,11 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 			qdel(G)
 			return
 		if (src.process_timer > 0)
-			boutput(user, "<span style='color:red'>The [src.name] is still running, hold your horses!</span>")
+			boutput(user, "<span class='alert'>The [src.name] is still running, hold your horses!</span>")
 			return
 		if (istype(G, /obj/item/reagent_containers/food/snacks/ingredient/meat) || (istype(G, /obj/item/reagent_containers/food) && (findtext(G.name, "meat")||findtext(G.name,"bacon"))) || (istype(G, /obj/item/parts/human_parts)) || istype(G, /obj/item/clothing/head/butt) || istype(G, /obj/item/organ) || istype(G,/obj/item/raw_material/martian))
 			if (src.meats.len >= src.max_meat)
-				boutput(user, "<span style='color:red'>There is already enough meat in there! You should not exceed the maximum safe meat level!</span>")
+				boutput(user, "<span class='alert'>There is already enough meat in there! You should not exceed the maximum safe meat level!</span>")
 				return
 
 			if (G.contents && G.contents.len > 0)
@@ -836,14 +888,14 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 			return
 
 		else if (!istype(G) || !iscarbon(G.affecting))
-			boutput(user, "<span style='color:red'>This item is not suitable for [src].</span>")
+			boutput(user, "<span class='alert'>This item is not suitable for [src].</span>")
 			return
 		if (src.occupant)
-			boutput(user, "<span style='color:red'>There is already somebody in there.</span>")
+			boutput(user, "<span class='alert'>There is already somebody in there.</span>")
 			return
 
 		else if (G && G.affecting && !src.emagged && !isdead(G.affecting) && !ismonkey(G.affecting))
-			user.visible_message("<span style='color:red'>[user] tries to stuff [G.affecting] into [src], but it beeps angrily as the safety overrides engage!</span>")
+			user.visible_message("<span class='alert'>[user] tries to stuff [G.affecting] into [src], but it beeps angrily as the safety overrides engage!</span>")
 			return
 
 		src.add_fingerprint(user)
@@ -894,7 +946,7 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 		if (src.process_timer > 0)
 			return 0
 
-		src.visible_message("<span style='color:red'><b>[user] climbs into [src] and turns it on!</b></span>")
+		src.visible_message("<span class='alert'><b>[user] climbs into [src] and turns it on!</b></span>")
 
 		user.unequip_all()
 		user.set_loc(src)
@@ -940,12 +992,12 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 
 	onStart()
 		..()
-		owner.visible_message("<span style='color:red'><b>[owner] starts to put [target] into [grinder]!</b></span>")
+		owner.visible_message("<span class='alert'><b>[owner] starts to put [target] into [grinder]!</b></span>")
 
 	onEnd()
 		..()
-		owner.visible_message("<span style='color:red'><b>[owner] stuffs [target] into [grinder]!</b></span>")
-		logTheThing("combat", owner, target, "forced %target% ([isdead(target) ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
+		owner.visible_message("<span class='alert'><b>[owner] stuffs [target] into [grinder]!</b></span>")
+		logTheThing("combat", owner, target, "forced [constructTarget(target,"combat")] ([isdead(target) ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
 		if (!isdead(target))
 			message_admins("[key_name(owner)] forced [key_name(target, 1)] ([target == 2 ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
 		if (grinder.auto_strip && !grinder.emagged)

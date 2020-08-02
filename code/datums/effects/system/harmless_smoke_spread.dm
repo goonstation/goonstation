@@ -46,7 +46,7 @@
 				else
 					direction = pick(alldirs)
 			for(var/j=0, j<pick(0,1,1,1,2,2,2,3), j++)
-				sleep(10)
+				sleep(1 SECOND)
 				step(smoke,direction)
 			SPAWN_DBG(75+rand(10,30))
 				if (smoke)

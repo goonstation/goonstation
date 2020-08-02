@@ -1,5 +1,8 @@
 // Robotics Stuff
 
+/**
+ * @deprecated
+ */
 /obj/submachine/robomoduler
 	name = "Module Rewriter"
 	desc = "A device used to rewrite robotic and cybernetic software modules."
@@ -16,7 +19,7 @@
 		return src.attack_hand(user)
 
 	attack_hand(var/mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		if (!src.working)
 			var/dat = {"<B>Module Rewriter</B><BR>
 			<HR><BR>
@@ -108,37 +111,35 @@
 /obj/item/robojumper
 	name = "Cell Cables"
 	desc = "Used by Engineering Cyborgs for emergency recharging of APCs."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "robojumper-plus"
 	var/positive = 1 //boolean, if positive, then you will charge an APC with your cell, if negative, you will take charge from apc
 
 	attack_self(var/mob/user as mob)
 		positive = !positive
 		icon_state = "robojumper-[positive? "plus": "minus"]"
-		boutput(user, "<span style=\"color:red\">The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"].</span>")
+		boutput(user, "<span class='alert'>The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"].</span>")
 
 /obj/item/atmosporter
 	name = "Atmospherics Transporter"
 	desc = "Used by Atmospherics Cyborgs for convenient transport of siphons and tanks."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bedbin"
 	var/capacity = 2
 
 	attack_self(var/mob/user as mob)
-		if (src.contents.len == 0) boutput(user, "<span style=\"color:red\">You have nothing stored!</span>")
+		if (src.contents.len == 0) boutput(user, "<span class='alert'>You have nothing stored!</span>")
 		else
 			var/selection = input("What do you want to drop?", "Atmos Transporter", null, null) as null|anything in src.contents
 			if(!selection) return
 			selection:set_loc(user.loc)
 			selection:contained = 0
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, user)
-			s.start()
+			elecflash(user)
 
 /obj/item/robot_chemaster
 	name = "Mini-ChemMaster"
 	desc = "A cybernetic tool designed for chemistry cyborgs to do their work with. Use a beaker on it to begin."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "minichem"
 	flags = NOSPLASH
 	var/working = 0
@@ -148,10 +149,10 @@
 		var/obj/item/reagent_containers/glass/B = W
 
 		if(!B.reagents.reagent_list.len || B.reagents.total_volume < 1)
-			boutput(user, "<span style=\"color:red\">That beaker is empty! There are no reagents for the [src.name] to process!</span>")
+			boutput(user, "<span class='alert'>That beaker is empty! There are no reagents for the [src.name] to process!</span>")
 			return
 		if (working)
-			boutput(user, "<span style=\"color:red\">Chemmaster is working, be patient</span>")
+			boutput(user, "<span class='alert'>Chemmaster is working, be patient</span>")
 			return
 
 		working = 1
@@ -257,7 +258,7 @@
 				var/mob/living/silicon/robot/R = user
 				if (R.cell) R.cell.charge -= 100
 			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-			user.visible_message("<span style=\"color:blue\">[user] dispenses a [src.vend_this]!</span>", "<span style=\"color:blue\">You dispense a [src.vend_this]!</span>")
+			user.visible_message("<span class='notice'>[user] dispenses a [src.vend_this]!</span>", "<span class='notice'>You dispense a [src.vend_this]!</span>")
 			src.last_use = world.time
 			return
 
@@ -292,10 +293,11 @@ ported and crapped up by: haine
 /obj/item/reagent_containers/food/drinks/juicer
 	name = "\improper Juice-O-Matic 3000"
 	desc = "It's the Juice-O-Matic 3000! The pinicle of juicing technology! A revolutionary new juicing system!"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "juicer"
 	amount_per_transfer_from_this = 10
 	initial_volume = 200
+	tooltip_flags = REBUILD_DIST
 
 	afterattack(obj/target, mob/user)
 		if (get_dist(user, src) > 1 || get_dist(user, target) > 1)
@@ -356,7 +358,7 @@ ported and crapped up by: haine
 /obj/item/borghose
 	name = "\improper Nutriant Hose 3000" // Name of the Module
 	desc = "A nutriant hose for hydroponics work." // Description that shows up when examined
-	icon = 'icons/obj/device.dmi' // Icon, just using a green cable coil for now.
+	icon = 'icons/obj/items/device.dmi' // Icon, just using a green cable coil for now.
 	icon_state = "nutrient"
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	var/amt_to_transfer = 10  // How much it transfers at once.
@@ -369,6 +371,7 @@ ported and crapped up by: haine
 	var/list/hydro_reagent_names = list() // the tank creation proc adds the names of the above reagents to this list
 	var/list/tanks = list() // what tanks we have
 	var/obj/item/reagent_containers/borghose_tank/active_tank = null // what tank is active
+	tooltip_flags = REBUILD_DIST //if anyone implements this, add some rebuilds
 
 	New() // So this goes through and adds all the reagents to the hose on creation. Pretty good for expandability.
 		..()

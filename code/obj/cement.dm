@@ -30,28 +30,28 @@
 		if(istype(A, /mob))
 			var/mob/M = A
 			M.setStatus("slowed", 5, optional = 4)
-			boutput(M, "<span style=\"color:red\">Running through the wet concrete is slowing you down...</span>")
+			boutput(M, "<span class='alert'>Running through the wet concrete is slowing you down...</span>")
 
 	attack_hand(var/mob/user)
 		if (health <= 0)
-			user.visible_message("<span style=\"color:red\">[user] breaks apart the lump of wet concrete with their bare hands!</span>")
+			user.visible_message("<span class='alert'>[user] breaks apart the lump of wet concrete with their bare hands!</span>")
 			qdel(src)
 			return
 		health--
 		if (health <= 0)
-			user.visible_message("<span style=\"color:red\">[user] breaks apart the lump of wet concrete with their bare hands!</span>")
+			user.visible_message("<span class='alert'>[user] breaks apart the lump of wet concrete with their bare hands!</span>")
 			qdel(src)
 			return
 		..()
 
 	attackby(var/obj/item/I, var/mob/user)
 		if (health <= 0)
-			user.visible_message("<span style=\"color:red\">[user] breaks apart the lump of wet concrete!!</span>")
+			user.visible_message("<span class='alert'>[user] breaks apart the lump of wet concrete!!</span>")
 			qdel(src)
 			return
 		health -= 2
 		if (health <= 0)
-			user.visible_message("<span style=\"color:red\">[user] breaks apart the lump of wet concrete!</span>")
+			user.visible_message("<span class='alert'>[user] breaks apart the lump of wet concrete!</span>")
 			qdel(src)
 			return
 		..()
@@ -116,10 +116,10 @@
 		src.add_fingerprint(user)
 		user.lastattacked = src
 		if (user.bioHolder.HasEffect("hulk") && (prob(100 - strength*20))) //hulk smash
-			user.visible_message("<span style=\"color:red\">[user] smashes through the concrete wall! OH YEAH!!!</span>")
+			user.visible_message("<span class='alert'>[user] smashes through the concrete wall! OH YEAH!!!</span>")
 			qdel(src)
 		else
-			boutput(user, "<span style=\"color:red\">You hit the concrete wall and really hurt your hand!</span>")
+			boutput(user, "<span class='alert'>You hit the concrete wall and really hurt your hand!</span>")
 			playsound(src.loc, "sound/impact_sounds/Generic_Punch_[rand(1,4)]", 50, 1)
 			random_brute_damage(user, 5)
 		return
@@ -128,13 +128,13 @@
 		src.add_fingerprint(user)
 		user.lastattacked = src
 		if (health <= 0)
-			user.visible_message( "<span style=\"color:red\">[user] smashes through the concrete wall.</span>", "<span style=\"color:blue\">You smash through the concrete wall with \the [I].</span>")
+			user.visible_message( "<span class='alert'>[user] smashes through the concrete wall.</span>", "<span class='notice'>You smash through the concrete wall with \the [I].</span>")
 			playsound(src.loc, "sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
 			qdel(src)
 			return
 		health -= I.force
 		if (health <= 0)
-			user.visible_message( "<span style=\"color:red\">[user] smashes through the concrete wall.</span>", "<span style=\"color:blue\">You smash through the concrete wall with \the [I].</span>")
+			user.visible_message( "<span class='alert'>[user] smashes through the concrete wall.</span>", "<span class='notice'>You smash through the concrete wall with \the [I].</span>")
 			playsound(src.loc, "sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
 			qdel(src)
 			return
@@ -162,4 +162,4 @@
 			return
 		if (health / max_health >= 0)
 			. += "The wall is almost in pieces."
-			return 
+			return

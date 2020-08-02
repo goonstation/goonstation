@@ -9,7 +9,7 @@
 	mats = 6
 
 	attack_self(mob/user as mob)
-		user.machine = src
+		src.add_dialog(user)
 		user.unlock_medal("Peeping Tom", 1)
 
 		var/list/L = list()

@@ -15,7 +15,7 @@ var $messages, $subOptions, $contextMenu, $filterMessages, $playMusic;
 var opts = {
     //General
     'messageCount': 0, //A count...of messages...
-    'messageLimit': 2053, //A limit...for the messages...
+    'messageLimit': 4000, //A limit...for the messages...
     'scrollSnapTolerance': 20, //If within x pixels of bottom
     'clickTolerance': 10, //Keep focus if outside x pixels of mousedown position on mouseup
     'popups': 0, //Amount of popups opened ever
@@ -54,7 +54,15 @@ var opts = {
     //Client Connection Data
     'clientDataLimit': 5,
     'clientData': [],
+
+    // Theme stuff
+    'currentTheme': 'theme-default',
 };
+
+var themes = { // "css-class": "Option name"
+    "theme-default": "Windows 3.1 (default)",
+    "theme-dark": "Dark",
+}
 
 //Polyfill for fucking date now because of course IE8 and below don't support it
 if (!Date.now) {
@@ -258,8 +266,8 @@ function output(message, group) {
 
     //Pop the top message off if history limit reached
     if (opts.messageCount >= opts.messageLimit) {
-        $messages.children('div.entry:first-child').remove();
-        opts.messageCount--; //I guess the count should only ever equal the limit
+        $messages.children('div.entry:nth-child(-n+' + opts.messageLimit / 2 + ')').remove();
+        opts.messageCount -= opts.messageLimit / 2; //I guess the count should only ever equal the limit
     }
 
     var $lastEntry = $messages.children('.entry').last();
@@ -378,6 +386,15 @@ function changeMode(mode) {
     }
 }
 
+
+function changeTheme(theme) {
+    var body = $('body');
+    body.removeClass(opts.currentTheme);
+    body.addClass(theme);
+    opts.currentTheme = theme;
+    setCookie('theme', theme, 365);
+}
+
 function handleClientData(ckey, ip, compid) {
     //byond sends player info to here
     var currentData = {'ckey': ckey, 'ip': ip, 'compid': compid};
@@ -456,6 +473,8 @@ function ehjaxCallback(data) {
             } else {
                 handleClientData(data.clientData.ckey, data.clientData.ip, data.clientData.compid);
             }
+        } else if (data.changeTheme) {
+            changeTheme(data.changeTheme);
         } else if (data.loadAdminCode) {
             if (opts.adminLoaded) {return;}
             var adminCode = data.loadAdminCode;
@@ -488,8 +507,8 @@ function ehjaxCallback(data) {
 
                     $playMusic.attr('src', data.playMusic);
                     var music = $playMusic.get(0);
-                    music.volume = data.volume;
-                    if (music.paused) {
+                    music.volume = data.volume * 0.3; /*   Added the multiplier here because youtube is consistently   */
+                    if (music.paused) {								/* louder than admin music, which makes people lower the volume. */
                         music.play();
                     }
                 } catch (e) {
@@ -554,7 +573,7 @@ $(function() {
         return;
     }
     readyCalled = true;
-    
+
     $messages = $('#messages');
     $subOptions = $('#subOptions');
     $playMusic = $('#play-music');
@@ -597,6 +616,7 @@ $(function() {
         'spingDisabled': getCookie('pingdisabled'),
         'shighlightTerms': getCookie('highlightterms'),
         'shighlightColor': getCookie('highlightcolor'),
+        'stheme': getCookie('theme'),
     };
 
     if (savedConfig.sfontSize) {
@@ -627,6 +647,13 @@ $(function() {
     if (savedConfig.shighlightColor) {
         opts.highlightColor = savedConfig.shighlightColor;
         output('<span class="internal boldnshit">Loaded highlight color of: '+savedConfig.shighlightColor+'</span>');
+    }
+    if (savedConfig.stheme) {
+        var body = $('body');
+        body.removeClass(opts.currentTheme);
+        body.addClass(savedConfig.stheme);
+        opts.currentTheme = savedConfig.stheme;
+        output('<span class="internal boldnshit">Loaded theme setting of: '+themes[savedConfig.stheme]+'</span>');
     }
 
     (function() {
@@ -841,6 +868,22 @@ $(function() {
         var font = $(this).attr('data-font');
         $messages.css('font-family', font);
         setCookie('fonttype', font, 365);
+    });
+
+    $('#chooseTheme').click(function(e) {
+        if ($('.popup .changeTheme').is(':visible')) {return;}
+        var popupContent = '<div class="head">Change Theme</div><div id="changeTheme" class="changeTheme">';
+        $.each(themes, function(themeclass, themename) {
+          popupContent = popupContent + '<a href="#" data-theme="'+themeclass+'">'+themename+'</a>';
+        })
+
+        popupContent = popupContent + '</div>';
+        createPopup(popupContent, 200);
+    });
+
+    $('body').on('click', '#changeTheme a', function(e) {
+        var theme = $(this).attr('data-theme');
+        changeTheme(theme);
     });
 
     $('#togglePing').click(function(e) {

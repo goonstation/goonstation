@@ -51,6 +51,7 @@ var/global
 	icon/hopIcon = icon('icons/mob/16.dmi',"hop",SOUTH,1)
 	icon/hosIcon = icon('icons/mob/16.dmi',"hos",SOUTH,1)
 	icon/clownIcon = icon('icons/mob/16.dmi',"clown",SOUTH,1)
+	icon/ntIcon = icon('icons/mob/16.dmi',"nt",SOUTH,1)
 
 	turf/buzztile = null
 
@@ -61,14 +62,17 @@ var/global
 	obj/screen/renderSourceHolder
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
 	list/image/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
+	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
 	list/cameras = list()
 	list/clients = list()
 	list/mobs = list()
+	list/ai_mobs = list()
 	list/AIs = list() //sorry, quicker loop through when we searching for AIs
 	list/doors = list()
 	list/allcables = list()
 	list/atmos_machines = list() // need another list to pull atmos machines out of the main machine loop and in with the pipe networks
 	list/processing_items = list()
+	list/health_update_queue = list()
 	list/processing_fluid_groups = list()
 	list/processing_fluid_spreads = list()
 	list/processing_fluid_drains = list()
@@ -80,6 +84,7 @@ var/global
 
 	//list/total_deletes = list() //List of things totally deleted
 	list/critters = list()
+	list/pets = list() //station pets
 	list/ghost_drones = list()
 	list/muted_keys = list()
 
@@ -130,6 +135,8 @@ var/global
 
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
+	footstep_extrarange = 0 // lol same (modified hackily in mobs.dm to avoid lag from sound at high player coutns)
+
 	list/cursors_selection = list("Default" = 'icons/cursors/target/default.dmi',
 	"Red" = 'icons/cursors/target/red.dmi',
 	"Green" = 'icons/cursors/target/green.dmi',
@@ -147,41 +154,11 @@ var/global
 	"Old" = 'icons/mob/hud_human.dmi',
 	"Classic" = 'icons/mob/hud_human_classic.dmi',
 	"Mithril" = 'icons/mob/hud_human_quilty.dmi',
-	"Colorblind" = 'icons/mob/hud_human_new_colorblind.dmi')
+	"Colorblind" = 'icons/mob/hud_human_new_colorblind.dmi',
+	"Vaporized" = 'icons/mob/hud_human_vapor.dmi')
 
 	list/customization_styles = list("None" = "none",
-	"Balding" = "balding",
-	"Tonsure" = "tonsure",
-	"Buzzcut" = "cut",
-	"Trimmed" = "short",
-	"Bangs" = "bangs",
-	"Combed" = "combed_s",
-	"Mohawk" = "mohawk",
-	"Mohawk: Fade from End" = "mohawkFT",
-	"Mohawk: Fade from Root" = "mohawkFB",
-	"Mohawk: Stripes" = "mohawkS",
-	"Flat Top" = "flattop",
-	"Pompadour" = "pomp",
-	"Pompadour: Greaser Shine" = "pompS",
-	"Temsik" = "temsik",
-	"Ponytail" = "ponytail",
-	"Mullet" = "long",
-	"Emo" = "emo",
-	"Emo: Highlight" = "emoH",
-	"Bun" = "bun",
-	"Bieber" = "bieb",
-	"Bowl Cut" = "bowl",
-	"Parted Hair" = "part",
-	"Einstein" = "einstein",
-	"Einstein: Alternating" = "einalt",
-	"Clown" = "clown",
-	"Clown: Top" = "clownT",
-	"Clown: Middle Band" = "clownM",
-	"Clown: Bottom" = "clownB",
-	"Draped" = "shoulders",
-	"Bedhead" = "bedhead",
-	"Dreadlocks" = "dreads",
-	"Dreadlocks: Alternating" = "dreadsA",
+	/*Short*/
 	"Afro" = "afro",
 	"Afro: Left Half" = "afroHR",
 	"Afro: Right Half" = "afroHL",
@@ -197,94 +174,136 @@ var/global
 	"Afro: SW Corner" = "afroCSW",
 	"Afro: Tall Stripes" = "afroSV",
 	"Afro: Long Stripes" = "afroSH",
-	"Long Braid" = "longbraid",
-	"Very Long" = "vlong",
-	"Hairmetal" = "80s",
-	"Hairmetal: Faded" = "80sfade",
-	"Glammetal" = "glammetal",
-	"Glammetal: Faded" = "glammetalO",
-	"Kingmetal" = "king-of-rock-and-roll",
-	"Scraggly" = "scraggly",
-	"Fabio" = "fabio",
-	"Right Half-Shaved" = "halfshavedL",
-	"Left Half-Shaved" = "halfshavedR",
-	"Long Half-Shaved" = "halfshaved_s",
-	"High Ponytail" = "spud",
-	"Low Ponytail" = "band",
-	"High Flat Top" = "charioteers",
-	"Double Braids" = "indian",
-	"Shoulder Drape" = "pulledf",
-	"Punky Flip" = "shortflip",
-	"Pigtails" = "pig",
-	"Low Pigtails" = "lowpig",
-	"Mini Pigtails" = "minipig",
-	"Mid-Back Length" = "midb",
-	"Split-Tails" = "twotail",
-	"Double Buns" = "doublebun",
-	"Shimada" = "geisha_s",
+	"Balding" = "balding",
+	"Bangs" = "bangs",
+	"Bieber" = "bieb",
 	"Bobcut" = "bobcut",
 	"Bobcut Alt" = "baum_s",
+	"Bowl Cut" = "bowl",
+	"Buzzcut" = "cut",
+	"Clown" = "clown",
+	"Clown: Top" = "clownT",
+	"Clown: Middle Band" = "clownM",
+	"Clown: Bottom" = "clownB",
+	"Combed" = "combed_s",
 	"Combed Bob" = "combedbob_s",
-	"Shoulder Length" = "shoulderl",
-	"Shoulder-Length Mess" = "slightlymessy_s",
-	"Pulled Back" = "pulledb",
 	"Choppy Short" = "chop_short",
-	"Long and Froofy" = "froofy_long",
-	"Mermaid" = "mermaid",
-	"Captor" = "sakura",
-	"Sage" = "sage",
-	"Fun Bun" = "fun_bun",
-	"Croft" = "croft",
+	"Einstein" = "einstein",
+	"Einstein: Alternating" = "einalt",
+	"Emo" = "emo",
+	"Emo: Highlight" = "emoH",
+	"Flat Top" = "flattop",
+	"Hair Streak" = "streak",
+	"Mohawk" = "mohawk",
+	"Mohawk: Fade from End" = "mohawkFT",
+	"Mohawk: Fade from Root" = "mohawkFB",
+	"Mohawk: Stripes" = "mohawkS",
+	"Mullet" = "long",
+	"Parted Hair" = "part",
+	"Pompadour" = "pomp",
+	"Pompadour: Greaser Shine" = "pompS",
+	"Punky Flip" = "shortflip",
+	"Temsik" = "temsik",
+	"Tonsure" = "tonsure",
+	"Trimmed" = "short",
+	/*Long*/
+	"Bang: Left" = "chub2_s",
+	"Bang: Right" = "chub_s",
+	"Bedhead" = "bedhead",
 	"Disheveled" = "disheveled",
-	"Mid-Length Curl" = "bluntbangs_s",
+	"Double-Part" = "doublepart",
+	"Draped" = "shoulders",
+	"Dreadlocks" = "dreads",
+	"Dreadlocks: Alternating" = "dreadsA",
+	"Fabio" = "fabio",
+	"Glammetal" = "glammetal",
+	"Glammetal: Faded" = "glammetalO",
+	"Hairmetal" = "80s",
+	"Hairmetal: Faded" = "80sfade",
+	"Half-Shaved: Left" = "halfshavedR",
+	"Half-Shaved: Long" = "halfshaved_s",
+	"Half-Shaved: Right" = "halfshavedL",
+	"Kingmetal" = "king-of-rock-and-roll",
+	"Long and Froofy" = "froofy_long",
+	"Long Braid" = "longbraid",
 	"Long Flip" = "longsidepart_s",
+	"Pulled Back" = "pulledb",
+	"Sage" = "sage",
+	"Scraggly" = "scraggly",
+	"Shoulder Drape" = "pulledf",
+	"Shoulder-Length" = "shoulderl",
+	"Shoulder-Length Mess" = "slightlymessy_s",
+	"Mermaid" = "mermaid",
+	"Mid-Back Length" = "midb",
+	"Mid-Length Curl" = "bluntbangs_s",
+	"Very Long" = "vlong",
+	/*Hair Up (Ponytails, buns, etc.)*/
+	"Bun" = "bun",
+	"Captor" = "sakura",
+	"Croft" = "croft",
+	"Double Braids" = "indian",
+	"Double Buns" = "doublebun",
+	"Drill" = "drill",
+	"Fun Bun" = "fun_bun",
+	"High Flat Top" = "charioteers",
+	"High Ponytail" = "spud",
+	"Low Pigtails" = "lowpig",
+	"Low Ponytail" = "band",
+	"Mini Pigtails" = "minipig",
+	"Pigtails" = "pig",
+	"Ponytail" = "ponytail",
+	"Shimada" = "geisha_s",
+	"Split-Tails" = "twotail",
 	"Wavy Ponytail" = "wavy_tail",
-	"Chaplin" = "chaplin",
-	"Selleck" = "selleck",
-	"Watson" = "watson",
-	"Old Nick" = "devil",
+	/*Moustaches*/
 	"Biker" = "fu",
-	"Twirly" = "villain",
+	"Chaplin" = "chaplin",
 	"Dali" = "dali",
 	"Hogan" = "hogan",
-	"Van Dyke" = "vandyke",
-	"Hipster" = "hip",
+	"Old Nick" = "devil",
 	"Robotnik" = "robo",
-	"Elvis" = "elvis",
-	"Goatee" = "gt",
-	"Chinstrap" = "chin",
-	"Neckbeard" = "neckbeard",
+	"Selleck" = "selleck",
+	"Twirly" = "villain",
+	"Van Dyke" = "vandyke",
+	"Watson" = "watson",
+	/*Beards*/
 	"Abe" = "abe",
-	"Full Beard" = "fullbeard",
+	"Beard Streaks" = "bstreak",
 	"Braided Beard" = "braided",
-	"Puffy Beard" = "puffbeard",
+	"Chinstrap" = "chin",
+	"Full Beard" = "fullbeard",
+	"Goatee" = "gt",
+	"Hipster" = "hip",
 	"Long Beard" = "longbeard",
+	"Neckbeard" = "neckbeard",
+	"Puffy Beard" = "puffbeard",
 	"Tramp" = "tramp",
 	"Tramp: Beard Stains" = "trampstains",
+	/*Sideburns*/
+	"Elvis" = "elvis",
+	/*Eyebrows*/
 	"Eyebrows" = "eyebrows",
 	"Huge Eyebrows" = "thufir",
-	"Hair Streak" = "streak",
-	"Beard Streaks" = "bstreak",
-	"Right Bang" = "chub_s",
-	"Left Bang" = "chub2_s",
+	/*Makeup*/
 	"Eyeshadow" = "eyeshadow",
 	"Lipstick" = "lipstick",
-	"Heterochromia Left" = "hetcroL",
-	"Heterochromia Right" = "hetcroR")
+	/*Biological*/
+	"Heterochromia: Left" = "hetcroL",
+	"Heterochromia: Right" = "hetcroR")
 
-	list/customization_styles_gimmick = list("Goku" = "goku",
-	"Homer" = "homer",
+	list/customization_styles_gimmick = list("Afro: Alternating Halves" = "afroHA",
+	"Afro: Rainbow" = "afroRB",
 	"Bart" = "bart",
-	"Jetson" = "jetson",
-	"X-COM Rookie" = "xcom",
-	"Zapped" = "zapped",
-	"Rainbow Afro" = "afroRB",
+	"Elegant Wave" = "ewave_s",
 	"Flame Hair" = "flames",
+	"Goku" = "goku",
+	"Homer" = "homer",
+	"Jetson" = "jetson",
 	"Sailor Moon" = "sailor_moon",
 	"Sakura" = "sakura",
-	"Elegant Wave" = "ewave_s",
 	"Wizard" = "wiz",
-	"Afro: Alternating Halves" = "afroHA")
+	"X-COM Rookie" = "xcom",
+	"Zapped" = "zapped")
 
 	list/underwear_styles = list("No Underwear" = "none",
 	"Briefs" = "briefs",
@@ -425,6 +444,7 @@ var/global
 	soundpref_override = 0
 
 	diary = null
+	diary_name = null
 	hublog = null
 	game_version = "Goon Station 13 (r" + vcs_revision + ")"
 
@@ -440,6 +460,7 @@ var/global
 	dooc_allowed = 1
 	player_capa = 0
 	player_cap = 55
+	player_cap_grace = list()
 	traitor_scaling = 1
 	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
@@ -512,6 +533,7 @@ var/global
 		"pathology" = list (  ),
 		"deleted" = list (  ),
 		"vehicle" = list (  ),
+		"tgui" = list (), //me 2
 		"audit" = list()//im a rebel, i refuse to add that gross SPACING
 	)
 	savefile/compid_file 	//The file holding computer ID information
@@ -519,6 +541,7 @@ var/global
 	list/admins = list(  )
 	list/onlineAdmins = list(  )
 	list/whitelistCkeys = list(  )
+	list/bypassCapCkeys = list(  )
 	list/shuttles = list(  )
 	list/reg_dna = list(  )
 //	list/traitobj = list(  )
@@ -648,7 +671,7 @@ var/global
 	list/reagents_cache = list()
 
 	// if you want stuff to not be spawnable by the list or buildmode, put it in here:
-	list/do_not_spawn = list("/obj/bhole","/obj/item/old_grenade/gravaton","/mob/living/carbon/human/krampus")
+	list/do_not_spawn = list("/obj/bhole","/obj/item/old_grenade/graviton","/mob/living/carbon/human/krampus")
 
 	// list of miscreants since mode is irrelevant
 	list/miscreants = list()
@@ -657,31 +680,31 @@ var/global
 	list/reincarnated_critters = list()
 
 	// Antag overlays for admin ghosts, Syndieborgs and the like (Convair880).
-	antag_generic = mutable_appearance('icons/mob/antag_overlays.dmi', "generic")
-	antag_syndieborg = mutable_appearance('icons/mob/antag_overlays.dmi', "syndieborg")
-	antag_traitor = mutable_appearance('icons/mob/antag_overlays.dmi', "traitor")
-	antag_changeling = mutable_appearance('icons/mob/antag_overlays.dmi', "changeling")
-	antag_wizard = mutable_appearance('icons/mob/antag_overlays.dmi', "wizard")
-	antag_vampire = mutable_appearance('icons/mob/antag_overlays.dmi', "vampire")
-	antag_hunter = mutable_appearance('icons/mob/antag_overlays.dmi', "hunter")
-	antag_werewolf = mutable_appearance('icons/mob/antag_overlays.dmi', "werewolf")
-	antag_emagged = mutable_appearance('icons/mob/antag_overlays.dmi', "emagged")
-	antag_mindslave = mutable_appearance('icons/mob/antag_overlays.dmi', "mindslave")
-	antag_vampthrall = mutable_appearance('icons/mob/antag_overlays.dmi', "vampthrall")
-	antag_head = mutable_appearance('icons/mob/antag_overlays.dmi', "head")
-	antag_rev = mutable_appearance('icons/mob/antag_overlays.dmi', "rev")
-	antag_revhead = mutable_appearance('icons/mob/antag_overlays.dmi', "rev_head")
-	antag_syndicate = mutable_appearance('icons/mob/antag_overlays.dmi', "syndicate")
-	antag_spyleader = mutable_appearance('icons/mob/antag_overlays.dmi', "spy")
-	antag_spyslave = mutable_appearance('icons/mob/antag_overlays.dmi', "spyslave")
-	antag_gang = mutable_appearance('icons/mob/antag_overlays.dmi', "gang")
-	antag_gang_leader = mutable_appearance('icons/mob/antag_overlays.dmi', "gang_head")
-	antag_grinch = mutable_appearance('icons/mob/antag_overlays.dmi', "grinch")
-	antag_wraith = mutable_appearance('icons/mob/antag_overlays.dmi', "wraith")
-	antag_omnitraitor = mutable_appearance('icons/mob/antag_overlays.dmi', "omnitraitor")
-	antag_blob = mutable_appearance('icons/mob/antag_overlays.dmi', "blob")
-	antag_wrestler = mutable_appearance('icons/mob/antag_overlays.dmi', "wrestler")
-	antag_spy_theft = mutable_appearance('icons/mob/antag_overlays.dmi', "spy_thief")
+	antag_generic = image('icons/mob/antag_overlays.dmi', icon_state = "generic")
+	antag_syndieborg = image('icons/mob/antag_overlays.dmi', icon_state = "syndieborg")
+	antag_traitor = image('icons/mob/antag_overlays.dmi', icon_state = "traitor")
+	antag_changeling = image('icons/mob/antag_overlays.dmi', icon_state = "changeling")
+	antag_wizard = image('icons/mob/antag_overlays.dmi', icon_state = "wizard")
+	antag_vampire = image('icons/mob/antag_overlays.dmi', icon_state = "vampire")
+	antag_hunter = image('icons/mob/antag_overlays.dmi', icon_state = "hunter")
+	antag_werewolf = image('icons/mob/antag_overlays.dmi', icon_state = "werewolf")
+	antag_emagged = image('icons/mob/antag_overlays.dmi', icon_state = "emagged")
+	antag_mindslave = image('icons/mob/antag_overlays.dmi', icon_state = "mindslave")
+	antag_vampthrall = image('icons/mob/antag_overlays.dmi', icon_state = "vampthrall")
+	antag_head = image('icons/mob/antag_overlays.dmi', icon_state = "head")
+	antag_rev = image('icons/mob/antag_overlays.dmi', icon_state = "rev")
+	antag_revhead = image('icons/mob/antag_overlays.dmi', icon_state = "rev_head")
+	antag_syndicate = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
+	antag_spyleader = image('icons/mob/antag_overlays.dmi', icon_state = "spy")
+	antag_spyslave = image('icons/mob/antag_overlays.dmi', icon_state = "spyslave")
+	antag_gang = image('icons/mob/antag_overlays.dmi', icon_state = "gang")
+	antag_gang_leader = image('icons/mob/antag_overlays.dmi', icon_state = "gang_head")
+	antag_grinch = image('icons/mob/antag_overlays.dmi', icon_state = "grinch")
+	antag_wraith = image('icons/mob/antag_overlays.dmi', icon_state = "wraith")
+	antag_omnitraitor = image('icons/mob/antag_overlays.dmi', icon_state = "omnitraitor")
+	antag_blob = image('icons/mob/antag_overlays.dmi', icon_state = "blob")
+	antag_wrestler = image('icons/mob/antag_overlays.dmi', icon_state = "wrestler")
+	antag_spy_theft = image('icons/mob/antag_overlays.dmi', icon_state = "spy_thief")
 
 	//SpyGuy: Oh my fucking god the QM shit. *cry *wail *sob *weep *vomit *scream
 	list/datum/supply_packs/qm_supply_cache = list()
@@ -734,12 +757,6 @@ var/global
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("credits","bux","tokens","cash","dollars","tokens","dollarydoos","tickets","souls","doubloons","Pesos","Rubles","Rupees")]"
 
-var/global/mentorhelp_text_color = "#CC0066"
-/proc/set_mentorhelp_color(var/new_color as color)
-	if (!new_color)
-		new_color = input(usr, "Select Mentorhelp color", "Selection", mentorhelp_text_color) as null|color
-	if (new_color)
-		mentorhelp_text_color = new_color
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])
@@ -782,4 +799,25 @@ var/global/mentorhelp_text_color = "#CC0066"
 			C.images -= globalImages[key]
 		globalImages[key] = null
 		globalImages.Remove(key)
+	return
+
+/proc/addAIImage(var/image/I, var/key)
+	if(I && length(key))
+		aiImages[key] = I
+		for(var/mob/M in AIs)
+			if (M.client)
+				M << I
+		return I
+	return null
+
+/proc/getAIImage(var/key)
+	if(length(key) && aiImages[key]) return aiImages[key]
+	else return null
+
+/proc/removeAIImage(var/key)
+	if(length(key) && aiImages[key])
+		for(var/client/C in clients)
+			C.images -= aiImages[key]
+		aiImages[key] = null
+		aiImages.Remove(key)
 	return

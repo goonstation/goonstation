@@ -3,13 +3,15 @@
 // All the player specific info should be handled directly in mob/stat().
 //I know its really ugly ok i'm sorry
 
+#define saveStat(key, value) stats[key] = value
+
 /datum/mob_stat_thinker
 	var/last_update = 0
 	var/update_interval = 11
 	var/is_construction_mode = 0
 
 	var/list/stats = list()
-	var/list/statNames = list("Map:","Next Map:","Vote Link:","Map Vote Time:","Map Vote Spacer","Game Mode:","Time To Start:","Server Load:","Shift Time Spacer","Shift Time:","Shuttle")
+	var/list/statNames = list("Map:","Next Map:","Map Vote Link:","Map Vote Time:","Map Vote Spacer","Vote Link:","Vote Time:","Vote Spacer","Game Mode:","Time To Start:","Server Load:","Shift Time Spacer","Shift Time:","Shuttle")
 	//above : ORDER IS IMPORANT
 
 	New()
@@ -17,21 +19,18 @@
 		//this shit is kind of messy to read but it is Quicker than repopulating the list each update()
 		stats["Map:"] = 0
 		stats["Next Map:"] = 0
-		stats["Vote Link:"] = 0
+		stats["Map Vote Link:"] = 0
 		stats["Map Vote Time:"] = 0
 		stats["Map Vote Spacer"] = -1
+		stats["Vote Link:"] = 0
+		stats["Vote Time:"] = 0
+		stats["Vote Spacer"] = -1
 		stats["Game Mode:"] = 0
 		stats["Time To Start:"] = 0
 		stats["Server Load:"] = 0
 		stats["Shift Time Spacer"] = -1
 		stats["Shift Time:"] = 0
 		stats["Shuttle:"] = 0
-
-		src.update()
-
-	//Todo : Save on proc calls by just doing this operation inline
-	proc/saveStat(var/a, var/b = 0)
-		stats[a] = b
 
 	proc/update()
 		last_update = world.time
@@ -66,13 +65,22 @@
 				saveStat("Next Map:", nextMap)
 
 			if (mapSwitcher.playersVoting)
-				saveStat("Vote Link:",mapVoteLinkStat)
+				saveStat("Map Vote Link:",mapVoteLinkStat)
 
 				if (mapSwitcher.voteCurrentDuration)
-					saveStat("Map Vote Time:", "([round(((mapSwitcher.voteStartedAt + mapSwitcher.voteCurrentDuration) - world.time) / 10)] seconds remaining, [mapSwitcher.playerVotes.len] vote[mapSwitcher.playerVotes.len != 1 ? "s" : ""])")
+					saveStat("Map Vote Time:", "([round(((mapSwitcher.voteStartedAt + mapSwitcher.voteCurrentDuration + PREGAME_LOBBY_TICKS) - world.time) / 10)] seconds remaining, [map_vote_holder.voters] vote[map_vote_holder.voters != 1 ? "s" : ""])")
 			else
-				stats["Vote Link:"] = 0
+				stats["Map Vote Link:"] = 0
 				stats["Map Vote Time:"] = 0
+
+		if (!isnull(vote_manager) && vote_manager.active_vote)
+			saveStat("Vote Link:",newVoteLinkStat)
+			saveStat("Vote Time:", "([round(((vote_manager.active_vote.vote_started + vote_manager.active_vote.vote_length) - world.time) / 10)] seconds remaining, [vote_manager.active_vote.voted_ckey.len] vote[vote_manager.active_vote.voted_ckey.len != 1 ? "s" : ""])")
+			stats["Vote Spacer"] = -1
+		else
+			stats["Vote Link:"] = 0
+			stats["Vote Time:"] = 0
+			stats["Vote Spacer"] = 0
 
 		if (ticker)
 			saveStat("Game Mode:",ticker.hide_mode ? "secret" : "[master_mode]")
@@ -140,10 +148,14 @@ var/global/datum/mob_stat_thinker/mobStat = new
 		if (world.time - mobStat.last_update > mobStat.update_interval)
 			mobStat.update()
 
+		/*
+
 		if (mobStat.stats["Map Vote Time:"])
 			var/vote = mapSwitcher.playerVotes[src.client.ckey]
 			if (vote)
 				stat ("Your vote: ","[vote]")
+
+		*/
 
 		//MBC : Copy paste for life : This is the same loop as below basically. (I don't want to check admin holder each and every loop iteration for non-admins! I'd rather the code look like shit.
 
@@ -223,3 +235,5 @@ var/global/datum/mob_stat_thinker/mobStat = new
 
 	if (is_near_colosseum())
 		colosseum_controller.Stat()
+
+#undef saveStat

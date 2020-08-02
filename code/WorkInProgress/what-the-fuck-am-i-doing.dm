@@ -19,12 +19,12 @@
 				return
 
 			if (isdead(H))
-				src.visible_message("<span style=\"color:red\">[src] spits out a dead corpse.</span>")
+				src.visible_message("<span class='alert'>[src] spits out a dead corpse.</span>")
 				src.eject_occupant()
 				return
 
 			if(H.health <= -180 && prob(25))
-				src.visible_message("<span style=\"color:red\">[src] spits out a near lifeless corpse.</span>")
+				src.visible_message("<span class='alert'>[src] spits out a near lifeless corpse.</span>")
 				src.eject_occupant()
 				return
 
@@ -33,17 +33,17 @@
 			playsound(get_turf(src), pick('sound/machines/mixer.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg','sound/effects/brrp.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/pump.ogg','sound/effects/syringeproj.ogg'), 100, 1)
 
 			if (prob(5))
-				visible_message("<span style=\"color:red\">[H] pukes their guts out!</span>")
+				visible_message("<span class='alert'>[H] pukes their guts out!</span>")
 				for (var/turf/T in range(src, rand(1, 3)))
 					playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 					make_cleanable( /obj/decal/cleanable/blood/gibs,T)
 
 				if (prob(5) && H.organHolder && H.organHolder.heart)
 					H.organHolder.drop_organ("heart")
-					H.visible_message("<span style=\"color:red\"><b>Wait, is that their heart!?</b></span>")
+					H.visible_message("<span class='alert'><b>Wait, is that their heart!?</b></span>")
 
 			if (prob(15))
-				visible_message("<span style=\"color:red\">[src] sprays vomit all around itself!</span>")
+				visible_message("<span class='alert'>[src] sprays vomit all around itself!</span>")
 				for (var/turf/T in range(src, rand(1, 3)))
 					playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 					if (prob(5))
@@ -54,15 +54,15 @@
 			if (prob(25))
 				for (var/mob/O in viewers(src, null))
 					if (O != occupant)
-						O.show_message("<span style=\"color:red\"><b>[occupant]</b> is puking over and over! It's all slimy and stringy. Oh god.</span>", 1)
+						O.show_message("<span class='alert'><b>[occupant]</b> is puking over and over! It's all slimy and stringy. Oh god.</span>", 1)
 						if (prob(66) && ishuman(O))
-							O.show_message("<span style=\"color:red\">You feel [pick("<b>really</b>", "")] ill from watching that.</span>")
+							O.show_message("<span class='alert'>You feel [pick("<b>really</b>", "")] ill from watching that.</span>")
 							for (var/mob/V in viewers(O, null))
-								V.show_message("<span style=\"color:red\">[O] pukes all over \himself!</span>", 1)
+								V.show_message("<span class='alert'>[O] pukes all over \himself!</span>", 1)
 								O.vomit()
 
 			if (prob(30))
-				boutput(H, "<span style=\"color:red\">You [pick("have a gut-wrenching sensation", "feel horribly sick", "feel like you're going to throw up", "feel like you're going to puke")]</span>")
+				boutput(H, "<span class='alert'>You [pick("have a gut-wrenching sensation", "feel horribly sick", "feel like you're going to throw up", "feel like you're going to puke")]</span>")
 
 			if (prob(40))
 				H.emote("scream")
@@ -73,13 +73,13 @@
 
 
 	relaymove(mob/user as mob)
-		boutput(user, "<span style=\"color:red\">You're trapped inside!</span>")
+		boutput(user, "<span class='alert'>You're trapped inside!</span>")
 		return
 
 	attackby(var/obj/item/I as obj, var/mob/user as mob)
 
 		if (!isliving(user))
-			boutput(user, "<span style=\"color:red\">You're dead! Quit that!</span>")
+			boutput(user, "<span class='alert'>You're dead! Quit that!</span>")
 			return
 
 		if(istype(I, /obj/item/grab))
@@ -89,22 +89,22 @@
 				return
 
 			if (src.occupant)
-				boutput(user, "<span style=\"color:red\">\the [src] already has a victim!</span>")
+				boutput(user, "<span class='alert'>\the [src] already has a victim!</span>")
 				return
 
 			if (!ishuman(G.affecting))
-				boutput(user, "<span style=\"color:red\">You can't put a non-human in there, you idiot!</span>")
+				boutput(user, "<span class='alert'>You can't put a non-human in there, you idiot!</span>")
 				return
 
 			var/mob/living/carbon/human/H = G.affecting
 			var/mob/living/L = user
 
 			if (isdead(H))
-				boutput(user, "<span style=\"color:red\">[H] is dead and cannot be forced to puke.</span>")
+				boutput(user, "<span class='alert'>[H] is dead and cannot be forced to puke.</span>")
 				return
 
 			if (isghostdrone(L))
-				boutput(user, "<span style=\"color:red\">You can't put a non-human in there, you idiot!</span>")
+				boutput(user, "<span class='alert'>You can't put a non-human in there, you idiot!</span>")
 				return
 
 			if (L.pulling == H)
@@ -160,11 +160,11 @@
 			return
 
 		if (!ishuman(src))
-			boutput(usr, "<span style=\"color:red\">You're not a human, you can't put yourself in there!</span>")
+			boutput(usr, "<span class='alert'>You're not a human, you can't put yourself in there!</span>")
 			return
 
 		if (src.occupant)
-			boutput(usr, "<span style=\"color:red\">It's already occupied.</span>")
+			boutput(usr, "<span class='alert'>It's already occupied.</span>")
 			return
 
 		src.add_fingerprint(usr)

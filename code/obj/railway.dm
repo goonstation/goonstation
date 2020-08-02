@@ -302,7 +302,7 @@
 					if (O == src || istype(O, /obj/railway) || !O.density)
 						continue
 					if (O.anchored && !magically_destructive)
-						visible_message("<span style=\"color:red\">[src] bumps against [O].</span>")
+						visible_message("<span class='alert'>[src] bumps against [O].</span>")
 						moving_dir = 0
 						on_end_path()
 						return
@@ -333,7 +333,7 @@
 			var/knock_dir = get_dir(from_t, dest_t)
 			for (var/mob/living/M in dest_t)
 				M.TakeDamageAccountArmor("chest", src.road_rage_force, 0)
-				M.visible_message("<span style=\"color:red\"><b>[M] was hit by [src]!</b></span>", "<span style=\"color:red\"><b>You were hit by [src]!</b></span>")
+				M.visible_message("<span class='alert'><b>[M] was hit by [src]!</b></span>", "<span class='alert'><b>You were hit by [src]!</b></span>")
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 				SPAWN_DBG(0)
 					M.throw_at(get_edge_target_turf(M, knock_dir), 10, 2)
@@ -342,11 +342,11 @@
 					continue
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 				if (O.anchored && magically_destructive)
-					visible_message("<span style=\"color:red\"><b>[src] crashes into [O].</b></span>")
+					visible_message("<span class='alert'><b>[src] crashes into [O].</b></span>")
 					qdel(O)
 				else if (!O.anchored)
 					SPAWN_DBG(0)
-						visible_message("<span style=\"color:red\"><b>[O] was hit by [src]!</b></span>")
+						visible_message("<span class='alert'><b>[O] was hit by [src]!</b></span>")
 						O.throw_at(get_edge_target_turf(O, knock_dir), 10, 2)
 
 
@@ -385,7 +385,7 @@
 				var/dump_dir = turn(dir, dump_angle)
 				var/turf/T = get_step(loc, dump_dir)
 				for (var/atom/movable/AM in src)
-					visible_message("<span style='color:blue'><b>[src] dumps out [AM].</b></span>")
+					visible_message("<span class='notice'><b>[src] dumps out [AM].</b></span>")
 					AM.set_loc(T)
 
 		on_end_path()

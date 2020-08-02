@@ -41,7 +41,7 @@
 			switch(mode_sel)
 				if ("Reset Piano") //reset piano B)
 					reset_piano()
-					src.visible_message("<span style=\"color:red\">[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] grumbles and shuts down completely.</span>")
+					src.visible_message("<span class='alert'>[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] grumbles and shuts down completely.</span>")
 					return
 
 				if ("Toggle Looping") //self explanatory, sets whether or not the piano should be looping
@@ -50,17 +50,17 @@
 					else if (is_looping == 1)
 						is_looping = 0
 					else
-						src.visible_message("<span style=\"color:red\">[user] tries to stick \the [W] into a slot on \the [src], but it doesn't seem to want to fit.")
+						src.visible_message("<span class='alert'>[user] tries to stick \the [W] into a slot on \the [src], but it doesn't seem to want to fit.")
 						return
-					src.visible_message("<span style=\"color:red\">[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] seems different now.")
+					src.visible_message("<span class='alert'>[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] seems different now.")
 
 				if ("Adjust Timing") //adjusts tempo
 					var/time_sel = input("Input a custom tempo from 0.25 to 0.5 BPS", "Tempo Control") as num
 					if (time_sel < 0.25 || time_sel > 0.5)
-						src.visible_message("<span style=\"color:red\">The mechanical workings of [src] emit a horrible din for several seconds before \the [src] shuts down.")
+						src.visible_message("<span class='alert'>The mechanical workings of [src] emit a horrible din for several seconds before \the [src] shuts down.")
 						return
 					timing = time_sel
-					src.visible_message("<span style=\"color:red\">[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] rumbles indifferently.")
+					src.visible_message("<span class='alert'>[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] rumbles indifferently.")
 
 		else if (istype(W, /obj/item/screwdriver)) //unanchoring piano
 			if (anchored)
@@ -113,35 +113,35 @@
 			if (is_looping == 2)
 				boutput(user, "There's no wires to snip!")
 				return
-			user.visible_message("<span style=\"color:red\">[user] looks for the looping control wire...</span>", "You look for the looping control wire...")
+			user.visible_message("<span class='alert'>[user] looks for the looping control wire...</span>", "You look for the looping control wire...")
 			if (!do_after(user, 70) || is_looping == 2)
 				return
 			is_looping = 2
 			playsound(user, "sound/items/Wirecutter.ogg", 65, 1)
-			user.visible_message("<span style=\"color:red\">[user] snips the looping control wire!</span>", "You snip the looping control wire!")
+			user.visible_message("<span class='alert'>[user] snips the looping control wire!</span>", "You snip the looping control wire!")
 
 		else if (istype(W, /obj/item/device/multitool)) //resetting piano the hard way
 			if (panel_exposed == 0)
 				..()
 				return
-			user.visible_message("<span style=\"color:red\">[user] starts pulsing random wires in the piano.</span>", "You start pulsing random wires in the piano.")
+			user.visible_message("<span class='alert'>[user] starts pulsing random wires in the piano.</span>", "You start pulsing random wires in the piano.")
 			if (!do_after(user, 30))
 				return
-			user.visible_message("<span style=\"color:red\">[user] pulsed a bunch of wires in the piano!</span>", "You pulsed some wires in the piano!")
+			user.visible_message("<span class='alert'>[user] pulsed a bunch of wires in the piano!</span>", "You pulsed some wires in the piano!")
 			reset_piano()
 		else
 			..()
 
 	attack_hand(var/mob/user as mob)
 		if (is_busy)
-			src.visible_message("<span style=\"color:red\">\The [src] emits an angry beep!</span>")
+			src.visible_message("<span class='alert'>\The [src] emits an angry beep!</span>")
 			return
 		var/mode_sel = input("Which mode would you like?", "Mode Select") as null|anything in list("Choose Notes", "Play Song")
 		if (mode_sel == "Choose Notes")
 			note_input = ""
 			note_input = input("Write out the notes you want to be played.", "Composition Menu", note_input)
 			if (length(note_input) > 2048)//still room to get long piano songs in, but not too crazy
-				src.visible_message("<span style=\"color:red\">\The [src] makes an angry whirring noise and shuts down.</span>")
+				src.visible_message("<span class='alert'>\The [src] makes an angry whirring noise and shuts down.</span>")
 				return
 			clean_input(note_input) //if updating input order to have a different order, update build_notes to reflect that order
 			build_notes(piano_notes)
@@ -158,10 +158,10 @@
 		if (usr.stat)
 			return
 		if (!allowChange(usr))
-			boutput(usr, "<span style=\"color:red\">You can't link pianos without a multitool!</span>")
+			boutput(usr, "<span class='alert'>You can't link pianos without a multitool!</span>")
 			return
 		if (O.is_busy || is_busy)
-			boutput(usr, "<span style=\"color:red\">You can't link a busy piano!</span>")
+			boutput(usr, "<span class='alert'>You can't link a busy piano!</span>")
 		if (O.panel_exposed && panel_exposed)
 			usr.visible_message("[usr] links the pianos.", "You link the pianos!")
 			add_piano(O)
@@ -183,7 +183,7 @@
 	proc/clean_input(var/list/input) //breaks our big input string into chunks
 		is_busy = 1
 		piano_notes = list()
-//		src.visible_message("<span style=\"color:blue\">\The [src] starts humming and rattling as it processes!</span>")
+//		src.visible_message("<span class='notice'>\The [src] starts humming and rattling as it processes!</span>")
 		var/list/split_input = splittext("[note_input]", "|")
 		for (var/string in split_input)
 			if (string)
@@ -233,7 +233,7 @@
 	proc/ready_piano(var/is_linked) //final checks to make sure stuff is right, gets notes into a compiled form for easy playsounding
 		is_busy = 1
 		if (note_volumes.len + note_octaves.len - note_names.len - note_accidentals.len)
-			src.visible_message("<span style=\"color:red\">\The [src] makes a grumpy ratchetting noise and shuts down!</span>")
+			src.visible_message("<span class='alert'>\The [src] makes a grumpy ratchetting noise and shuts down!</span>")
 			is_busy = 0
 			update_icon(0)
 		song_length = note_names.len
@@ -245,11 +245,11 @@
 			var/string = "sound/piano/"
 			string += "[compiled_notes[i]].ogg"
 			if (!(string in soundCache))
-				src.visible_message("<span style=\"color:red\">\The [src] makes an atrocious racket and beeps [i] times.</span>")
+				src.visible_message("<span class='alert'>\The [src] makes an atrocious racket and beeps [i] times.</span>")
 				is_busy = 0
 				update_icon(0)
 				return
-		src.visible_message("<span style=\"color:blue\">\The [src] starts playing music!</span>")
+		src.visible_message("<span class='notice'>\The [src] starts playing music!</span>")
 		update_icon(1)
 		if (is_linked)
 			play_notes(0)
@@ -270,7 +270,7 @@
 					return
 				is_busy = 0
 				curr_note = 0
-				src.visible_message("<span style=\"color:blue\">\The [src] stops playing music.</span>")
+				src.visible_message("<span class='notice'>\The [src] stops playing music.</span>")
 				update_icon(0)
 				return
 			sleep((timing * 10)) //to get delay into 10ths of a second
@@ -324,4 +324,4 @@
 		new /obj/item/paper/book/player_piano(get_turf(src))
 		items_claimed = 1
 		src.visible_message("\The [src] spills out a key and a booklet! Nifty!")
-		src.desc = "A piano that can take raw text and turn it into music! The future is now! The free user essentials box has been raided!" //jaaaaaaaank 
+		src.desc = "A piano that can take raw text and turn it into music! The future is now! The free user essentials box has been raided!" //jaaaaaaaank

@@ -97,7 +97,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		M.visible_message("<span style=\"color:red\"><B>[M] stabs [target] with their sharp fingers!</B></span>")
+		M.visible_message("<span class='alert'><B>[M] stabs [target] with their sharp fingers!</B></span>")
 		boutput(M, __blue("You begin to pump your [pick("polluted","spooky","bad","gross","icky","evil","necrotic")] blood into [target]'s chest."))
 		boutput(target, __red("You feel cold . . ."))
 
@@ -166,7 +166,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		M.visible_message("<span style=\"color:red\"><B>[M] bites [target]!</B></span>")
+		M.visible_message("<span class='alert'><B>[M] bites [target]!</B></span>")
 		boutput(M, __blue("You begin to pump your polluted blood into [target]'s [issilicon(target) ? "serial port" : "neck"]."))
 		if (issilicon(target))
 			boutput(target, __red("New device found. Attempting plug & play configuration."))
@@ -250,7 +250,7 @@
 		target.vamp_beingbitten = 0
 
 		boutput(M, __blue("[target] has been enslaved and is now your thrall."))
-		logTheThing("combat", M, target, "enthralled %target%, making them a loyal mindslave at [log_loc(M)].")
+		logTheThing("combat", M, target, "enthralled [constructTarget(target,"combat")], making them a loyal mindslave at [log_loc(M)].")
 
 	onInterrupt()
 		..()
