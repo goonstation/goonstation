@@ -1168,7 +1168,7 @@
 		item_state = "cat-purple"
 
 /obj/item/clothing/head/pokervisor
-	name = "Green Visor"
+	name = "green visor"
 	desc = "Do both gambling and accounting with style."
 	icon_state = "pokervis"
 	item_state = "pokervis"
