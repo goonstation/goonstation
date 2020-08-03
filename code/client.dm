@@ -772,6 +772,30 @@ var/global/curr_day = null
 	set name = "Ping"
 	boutput(usr, "Pong")
 
+/client/verb/changeServer(var/server as text)
+	set name = "Change Server"
+	set hidden = 1
+	var/serverURL
+	var/serverName
+	switch (server)
+		if (1, "rp")
+			serverName = "Goonstation Roleplay"
+			serverURL = "byond://goon1.goonhub.com:26100"
+		if (2, "main")
+			serverName = "Goonstation"
+			serverURL = "byond://goon2.goonhub.com:26200"
+		if (3, "main2")
+			serverName = "Goonstation Roleplay Overflow"
+			serverURL = "byond://goon3.goonhub.com:26300"
+		if (4, "main3")
+			serverName = "Goonstation Overflow"
+			serverURL = "byond://goon4.goonhub.com:26400"
+
+	if (serverURL)
+		boutput(usr, "You are being redirected to [serverName]...")
+		usr << link(serverURL)
+
+
 /*
 /client/verb/Newcastcycle()
 	set hidden = 1
