@@ -39,7 +39,127 @@
 	var/litfam //is the cake lit (candle)
 	var/datum/light/light
 
-	//Light stuffs :D
+	//DEV - COMMENT EVERYTHING
+
+	/*_______*/
+	/*Utility*/
+	/*‾‾‾‾‾‾‾*/
+
+	proc/build_cake(var/obj/item/cake_transfer,var/mob/user,var/mode,var/layer_tag,var/replacetext)//cake_transfer : passes a reference to the cake that we are building //mode : 1 or 2 : cake or slice //layer_tag : reference used with slicing //decompiles a full cake into slices or other cakes
+		if((mode<1) || (mode>2))
+			return
+		var/staticiterator = src.overlays.len
+		var/toggleswitch
+		var/slices
+		var/candle //cute little wax stick that people light on fire for their own enjoyment <3
+		var/obj/item/reagent_containers/food/snacks/cake/custom/cake
+		if(istype(cake_transfer,/obj/item/reagent_containers/food/snacks/cake/custom))
+			cake = cake_transfer
+		for(var/i=1,i<=staticiterator,i++)
+			if(mode == 1)
+				if("[src.overlay_refs[i]]" == "base")
+					continue
+				if(("[src.overlay_refs[i]]" == "second") || ("[src.overlay_refs[i]]" == "third"))
+					if(("[src.overlay_refs[i]]" == "second") && (src.clayer == 2))
+						toggleswitch = 1
+						cake.amount = src.amount2
+						src.amount2 = 0
+					else if(("[src.overlay_refs[i]]" == "third") && (src.clayer == 3))
+						toggleswitch = 1
+						cake.amount = src.amount3
+						src.amount3 = 0
+					if(toggleswitch)
+						var/image/stack = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-overlay")
+						stack.color = (src.GetOverlayImage(src.overlay_refs[i])).color
+						cake.UpdateOverlays(stack,"base")
+						src.ClearSpecificOverlays("[src.overlay_refs[i]]")
+						staticiterator--
+						i--
+						continue
+				if(toggleswitch)
+					var/tag
+					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
+					if(src.clayer == 2)
+						tag = replacetext("[src.overlay_refs[i]]","2","1")
+					else if(src.clayer == 3)
+						tag = replacetext("[src.overlay_refs[i]]","3","1")
+					var/image/newoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',"[tag]")
+					if(buffer.color)
+						newoverlay.color = buffer.color
+					cake.UpdateOverlays(newoverlay,"[tag]")
+					src.ClearSpecificOverlays("[src.overlay_refs[i]]")
+					staticiterator--
+					i--
+					continue
+			else if(mode == 2)
+				if("[src.overlay_refs[i]]" == layer_tag) //if it finds the identifying tag for the current layer (base,second,third) it flips the toggle and starts pulling overlays
+					toggleswitch = 1
+					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
+					var/image/slicecolor = new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-overlay")
+					if(buffer.color)
+						slicecolor.color = buffer.color
+					cake.UpdateOverlays(slicecolor,"base") //setting the base overlay of the temporary slice object
+					src.ClearSpecificOverlays(layer_tag)
+					staticiterator--
+					i--
+					continue
+				if(toggleswitch) //after setting the base layer, all subsequent overlays are registered as toppings and applied to the slice
+					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
+					var/toppingpath = replacetext("[src.overlay_refs[i]]","[replacetext]","slice")
+
+					if((toppingpath == "slice-candle") || (toppingpath == "slice-candle_lit")) //special case for candles :D
+						if(toppingpath == "slice-candle")
+							candle = 1
+						else
+							candle = 2
+							src.ClearSpecificOverlays("[src.overlay_refs[i]]")
+							staticiterator--
+							i--
+						continue
+
+					var/image/toppingimage = new /image('icons/obj/foodNdrink/food_dessert.dmi',"[toppingpath]")
+					if(buffer.color)
+						toppingimage.color = buffer.color
+					cake.UpdateOverlays(toppingimage,toppingpath)
+					src.ClearSpecificOverlays("[src.overlay_refs[i]]")
+					staticiterator--
+					i--
+			else
+				break
+
+		if(src.amount > 10)
+			src.amount -= 10
+			switch(src.clayer)
+				if(2)
+					src.amount2 = 0
+				if(3)
+					src.amount3 = 0
+			if(mode == 1)
+				cake.amount = 10
+			else
+				slices = 10
+		else if((mode == 2) && (src.clayer == 1))
+			slices = src.amount
+		else
+			qdel(cake) //this will happen if someone eats a cake without slicing it and the amount math has to recalculate past an entire layer (i.e. someone takes 11 bites)
+			boutput(user, "<span style=\"color:red\"><b>OH NO! The cake was a lie!</b></span>")
+			src.clayer--
+			src.reagents.maximum_volume -= 100
+			return
+
+		src.reagents.maximum_volume -= 100
+		if(mode == 2)
+			return list(slices,candle)
+		else
+			src.clayer--
+
+	proc/search_overlays() //search for an overlay within the cake structure //DEV - possibly unneeded
+		return
+
+
+	/*_______________*/
+	/*Light stuffs :D*/
+	/*‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾*/
 	New()
 		..()
 		light = new /datum/light/point
@@ -61,6 +181,7 @@
 		if (!src)
 			return
 		if (!src.litfam)
+			src.firesource = 1
 			src.litfam = 1
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
@@ -68,6 +189,7 @@
 			if (!(src in processing_items))
 				processing_items.Add(src)
 
+			//DEV - procify layer searching for readability
 			for(var/i=1,i<=src.overlays.len,i++) //searching for an unlit candle overlay, updating it, the enabling the light
 				if(src.sliced && ("[src.overlay_refs[i]]" == "slice-candle"))
 					src.ClearSpecificOverlays("[src.overlay_refs[i]]")
@@ -82,6 +204,7 @@
 	proc/put_out(var/mob/user as mob)
 		if (!src) return
 		if (src.litfam)
+			src.firesource = 0
 			src.litfam = 0
 			hit_type = DAMAGE_BLUNT
 			src.force = 0
@@ -102,7 +225,7 @@
 			var/replacetext
 			var/obj/item/reagent_containers/food/snacks/cake/custom/s = new /obj/item/reagent_containers/food/snacks/cake/custom //temporary reference item to paste overlays onto child items
 			var/slices
-			var/candle //cute little wax stick that people light on fire for their own enjoyment <3
+			var/candle
 			switch(src.clayer) //checking the current layer of the cake
 				if(1)
 					layer_tag = "base" //the tag of the future overlay
@@ -116,57 +239,10 @@
 					layer_tag = "third"
 					replacetext = "cake3"
 					slices = src.amount3
-			var/staticiterator = src.overlays.len //declaring the length of the for loop outside the loop as a variable for removing elements from a list while iterating through it
-			var/toggleswitch //a trigger variabe that tells the for loop when to start doing the overlay layer_tag when it reaches the current cake layer
-			for(var/i=1,i<=staticiterator,i++)
-				if("[src.overlay_refs[i]]" == layer_tag) //if it finds the identifying tag for the current layer (base,second,third) it flips the toggle and starts pulling overlays
-					toggleswitch = 1
-					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
-					var/image/slicecolor = new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-overlay")
-					if(buffer.color)
-						slicecolor.color = buffer.color
-					s.UpdateOverlays(slicecolor,"base") //setting the base overlay of the temporary slice object
-					src.ClearSpecificOverlays(layer_tag)
-					staticiterator--
-					i--
-					continue
-				if(toggleswitch) //after setting the base layer, all subsequent overlays are registered as toppings and applied to the slice
-					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
-					var/toppingpath = replacetext("[src.overlay_refs[i]]","[replacetext]","slice")
-					if((toppingpath == "slice-candle") || (toppingpath == "slice-candle_lit")) //special case for candles :D
-						if(toppingpath == "slice-candle")
-							candle = 1
-						else
-							candle = 2
-							src.ClearSpecificOverlays("[src.overlay_refs[i]]")
-							staticiterator--
-							i--
-						continue
-					var/image/toppingimage = new /image('icons/obj/foodNdrink/food_dessert.dmi',"[toppingpath]")
-					if(buffer.color)
-						toppingimage.color = buffer.color
-					s.UpdateOverlays(toppingimage,toppingpath)
-					src.ClearSpecificOverlays("[src.overlay_refs[i]]")
-					staticiterator--
-					i--
 
-			if(src.amount > 10) //math for making sure there isnt any amount duplication within cakes as people stack, unstack, and slice
-				src.amount -= 10
-				switch(src.clayer)
-					if(2)
-						src.amount2 = 0
-					if(3)
-						src.amount3 = 0
-				slices = 10
-			else if(src.clayer == 1)
-				slices = src.amount
-			else
-				qdel(s)
-				boutput(user, "<span style=\"color:red\"><b>OH NO! The cake was a lie!</b></span>")
-				src.clayer--
-				src.reagents.maximum_volume -= 100
-				return
-			src.reagents.maximum_volume -= 100
+			var/list/returns = build_cake(s,user,2,layer_tag,replacetext)
+			slices = returns[1]
+			candle = returns[2]
 
 			var/transferamount = (src.amount/src.clayer)/slices //amount of reagent to transfer to slices
 			for(var/i=1,i<=slices,i++) //generating child slices of the parent template
@@ -205,11 +281,10 @@
 			else
 				src.clayer--
 			return
-		else if((!(src.litfam)) && (((istype(W,/obj/item/weldingtool) && W:welding)) || (istype(W, /obj/item/device/igniter))) || \
-		(((istype(W, /obj/item/match)) || (istype(W, /obj/item/device/light/candle)) || (istype(W, /obj/item/clothing/head/cakehat)) || (istype(W, /obj/item/device/light/zippo))) && (W:on))) //we don't talk about this......
-			src.light() //so basically...if the cake doesnt have a light source AND ([the weapon is a welding tool and on, or an igniter] OR [its a bunch of other things AND those things are on])
+		else if(!(src.litfam) && (W.firesource))
+			src.light()
 
-		switch(W.type) //this is where the mess starts...
+		switch(W.type) //this is where the mess starts... //DEV - procify as much as possible to make adding new cake toppings easier
 			if(/obj/item/reagent_containers/food/drinks/drinkingglass/icing) //handling for frosting overlays. they have a color, so theyre handled a bit differently
 				if(!(W.reagents.total_volume >= 25))
 					boutput(user, "<span style=\"color:red\">The icing tube isn't full enough to frost the cake!</span>")
@@ -360,11 +435,11 @@
 			..()
 
 	attack_hand(mob/user as mob)
-		if((user.a_intent == INTENT_GRAB) && (src.clayer >1)) //removing layers from cakes. most of the code is similar to slicing, but its unique enough to remain separate
+		if((user.a_intent == INTENT_GRAB) && (src.clayer >1)) //removing layers from cakes.
 			var/obj/item/reagent_containers/food/snacks/cake/custom/s = new /obj/item/reagent_containers/food/snacks/cake/custom
 
-			var/switchtoggle
-			var/staticiterator = src.overlays.len
+			//var/switchtoggle
+			//var/staticiterator = src.overlays.len
 			src.reagents.trans_to(s,(src.reagents.total_volume/3))
 			for(var/i=1,i<=src.food_effects.len,i++)
 				if(src.food_effects[i] in s.food_effects)
@@ -372,58 +447,8 @@
 				s.food_effects += src.food_effects[i]
 			s.quality = src.quality
 			s.food_color = src.food_color
-			for(var/i=1,i<=staticiterator,i++)
-				if("[src.overlay_refs[i]]" == "base")
-					continue
-				if(("[src.overlay_refs[i]]" == "second") || ("[src.overlay_refs[i]]" == "third"))
-					if(("[src.overlay_refs[i]]" == "second") && (src.clayer == 2))
-						switchtoggle = 1
-						s.amount = src.amount2
-						src.amount2 = 0
-					else if(("[src.overlay_refs[i]]" == "third") && (src.clayer == 3))
-						switchtoggle = 1
-						s.amount = src.amount3
-						src.amount3 = 0
-					if(switchtoggle)
-						var/image/stack = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-overlay")
-						stack.color = (src.GetOverlayImage(src.overlay_refs[i])).color
-						s.UpdateOverlays(stack,"base")
-						src.ClearSpecificOverlays("[src.overlay_refs[i]]")
-						staticiterator--
-						i--
-						continue
-				if(!switchtoggle)
-					continue
-				var/tag
-				var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
-				if(src.clayer == 2)
-					tag = replacetext("[src.overlay_refs[i]]","2","1")
-				else if(src.clayer == 3)
-					tag = replacetext("[src.overlay_refs[i]]","3","1")
-				var/image/newoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',"[tag]")
-				if(buffer.color)
-					newoverlay.color = buffer.color
-				s.UpdateOverlays(newoverlay,"[tag]")
-				src.ClearSpecificOverlays("[src.overlay_refs[i]]")
-				staticiterator--
-				i--
 
-			if(src.amount > 10)
-				s.amount = 10
-				src.amount -= 10
-				switch(src.clayer)
-					if(2)
-						src.amount2 = 0
-					if(3)
-						src.amount3 = 0
-			else
-				qdel(s) //this will happen if someone eats a cake without slicing it and the amount math has to recalculate past an entire layer (i.e. someone takes 11 bites)
-				boutput(user, "<span style=\"color:red\"><b>OH NO! The cake was a lie!</b></span>")
-				src.clayer--
-				src.reagents.maximum_volume -= 100
-				return
-			src.clayer--
-			src.reagents.maximum_volume -= 100
+			build_cake(s,user,1)
 
 			if(istype(user,/mob/living/carbon/human))
 				user.put_in_hand_or_drop(s)
@@ -449,7 +474,7 @@
 					blowout = 1
 					break
 			if(blowout)
-				src.put_out() //tab in
+				src.put_out()
 				user.visible_message("<b>[user.name]</b> blows out the candle!")
 			else
 				..()

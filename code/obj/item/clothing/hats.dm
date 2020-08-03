@@ -173,6 +173,7 @@
 			src.on = !src.on
 
 		if (src.on)
+			src.firesource = 1
 			src.force = 10
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
@@ -180,6 +181,7 @@
 			if (!(src in processing_items))
 				processing_items.Add(src)
 		else
+			src.firesource = 0
 			src.force = 3
 			src.hit_type = DAMAGE_BLUNT
 			src.icon_state = "cakehat0"

@@ -1,79 +1,74 @@
 /obj/item
+	/*_____*/
+	/*Basic*/
+	/*‾‾‾‾‾*/
 	name = "item"
 	icon = 'icons/obj/items/items.dmi'
 	text = ""
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
-	var/force = null
 	var/item_state = null
-	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
-	throwforce = 1//4
-	var/r_speed = 1.0
-	var/health = 4 // burn faster
-	var/burn_point = 15000  // this already exists but nothing uses it???
-	var/burn_possible = 1 //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
-	//MBC : im shit. change burn_possible to '2' if you want it to pool itself instead of qdeling when burned
-
-	var/burn_output = 1500 //how hot should it burn
-	var/burn_type = 0 // 0 = ash, 1 = melt
-	var/burning = null
-	var/burning_last_process = 0
-	var/hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
-	var/w_class = 3.0 // how big they are, determines if they can fit in backpacks and pockets and the like
-	p_class = 1.5 // how hard they are to pull around, determines how much something slows you down while pulling it
-	var/cant_self_remove = 0 //Can't remove from non-hand slots
-	var/cant_other_remove = 0 //Can't be removed from non-hand slots by others
-	var/cant_drop = 0 //Cant' be removed in general. I guess.
-
-	flags = FPRINT | TABLEPASS
-	var/tool_flags = 0
-	var/c_flags = null
-	var/tooltip_flags = null
-	var/item_function_flags = null
-
-	pressure_resistance = 50
-	var/obj/item/master = null
-	var/amount = 1
-	var/max_stack = 1
-	var/stack_type = null // if null, only current type. otherwise uses this
-	var/contraband = 0 //If nonzero, bots consider this a thing people shouldn't be carrying without authorization
-	var/hide_attack = 0 //If 1, hide the attack animation + particles. Used for hiding attacks with silenced .22 and sleepy pen
-						//If 2, play the attack animation but hide the attack particles.
-
-	var/needOnMouseMove = 0 //If 1, we check all the stuff required for onMouseMove for this. Leave this off unless required. Might cause extra lag.
-
 	var/image/wear_image = null
 	var/wear_image_icon = 'icons/mob/belt.dmi'
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 
-	var/equipped_in_slot = null // null if not equipped, otherwise contains the slot in which it is
+	/*_______*/
+	/*Burning*/
+	/*‾‾‾‾‾‾‾*/
+	var/burn_possible = 1 //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
+	//MBC : im shit. change burn_possible to '2' if you want it to pool itself instead of qdeling when burned
+	var/burning = null
+	var/health = 4 //burn faster
+	var/burn_point = 15000  //this already exists but nothing uses it???
+	var/burn_output = 1500 //how hot should it burn
+	var/burn_type = 0 //0 = ash, 1 = melt
+	var/burning_last_process = 0
+	var/firesource = 0 //0 or 1 : dictates whether or not the item can be used as a valid source of fire
 
-	var/arm_icon = "" //set to an icon state in human.dmi minus _s/_l and l_arm_/r_arm_ to allow use as an arm
-	var/over_clothes = 0 //draw over clothes when used as a limb
-	var/override_attack_hand = 1 //when used as an arm, attack with item rather than using attack_hand
-	var/can_hold_items = 0 //when used as an arm, can it hold things?
+	/*______*/
+	/*Combat*/
+	/*‾‾‾‾‾‾*/
+	var/force = null
+	var/hit_type = DAMAGE_BLUNT //for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
+	throwforce = 1//4
+	var/r_speed = 1.0
+	var/hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 
 	var/stamina_damage = STAMINA_ITEM_DMG //amount of stamina removed from target per hit.
 	var/stamina_cost = STAMINA_ITEM_COST  //amount of stamina removed from USER per hit. This cant bring you below 10 points and you will not be able to attack if it would.
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE //Crit chance when attacking with this.
-
-	var/list/module_research = null//list()
-	var/module_research_type = null
-	var/module_research_no_diminish = 0
-
-	var/edible = 0 // can you eat the thing?
-
-	var/duration_put    = -1 //If set to something other than -1 these will control
-	var/duration_remove = -1 //how long it takes to remove or put the item onto a person. 1/10ths of a second.
-
-	var/rand_pos = 0
-	var/useInnerItem = 0 //Should this item use a contained item (in contents) to attack with instead?
-	var/obj/item/holding = null
-
-	var/two_handed = 0 //Requires both hands. Do not change while equipped. Use proc for that (TBI)
 	var/click_delay = DEFAULT_CLICK_DELAY //Delay before next click after using this.
 	var/combat_click_delay = COMBAT_CLICK_DELAY
+
+	var/datum/item_special/special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
+	var/hide_attack = 0 //If 1, hide the attack animation + particles. Used for hiding attacks with silenced .22 and sleepy pen
+						//If 2, play the attack animation but hide the attack particles.
+	var/can_disarm = 0
+	var/useInnerItem = 0 //Should this item use a contained item (in contents) to attack with instead?
+
+	var/obj/item/grab/chokehold = null
+	var/obj/item/grab/special_grab = null
+
+	/*_________*/
+	/*Inventory*/
+	/*‾‾‾‾‾‾‾‾‾*/
+	var/pickup_sfx = 0 //if null, we auto-pick from a list based on w_class
+	var/w_class = 3.0 //how big they are, determines if they can fit in backpacks and pockets and the like
+	p_class = 1.5 //how hard they are to pull around, determines how much something slows you down while pulling it
+
+	var/cant_self_remove = 0 //Can't remove from non-hand slots
+	var/cant_other_remove = 0 //Can't be removed from non-hand slots by others
+	var/cant_drop = 0 //Cant' be removed in general. I guess.
+
+	var/amount = 1
+	var/max_stack = 1
+	var/stack_type = null //if null, only current type. otherwise uses this
+
+	var/equipped_in_slot = null //null if not equipped, otherwise contains the slot in which it is
+	var/two_handed = 0 //Requires both hands. Do not change while equipped. Use proc for that (TBI)
+	var/duration_put    = -1 //If set to something other than -1 these will control
+	var/duration_remove = -1 //how long it takes to remove or put the item onto a person. 1/10ths of a second.
 
 	var/showTooltip = 1
 	var/showTooltipDesc = 1
@@ -84,22 +79,40 @@
 	var/tmp/lastTooltipUser = null
 	var/tmp/lastTooltipSpectro = null
 	var/tmp/tooltip_rebuild = 1
-	var/rarity = ITEM_RARITY_COMMON //Just a little thing to indicate item rarity. RPG fluff.
 
-	var/datum/item_special/special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
-
-	var/pickup_sfx = 0 //if null, we auto-pick from a list based on w_class
-
-	var/can_disarm = 0
+	/*_____*/
+	/*Flags*/
+	/*‾‾‾‾‾*/
+	flags = FPRINT | TABLEPASS
+	var/tool_flags = 0
+	var/c_flags = null
+	var/tooltip_flags = null
+	var/item_function_flags = null
 
 	var/block_hearing_when_worn = HEARING_NORMAL
-	 //fuck me mbc why you do this | | ok i did it to reduce type checking in a proc that gets called A LOT and idk what else to do ok help
-
-
-	var/obj/item/grab/chokehold = null
-	var/obj/item/grab/special_grab = null
-
+	//fuck me mbc why you do this | | ok i did it to reduce type checking in a proc that gets called A LOT and idk what else to do ok help
 	var/block_vision = 0 //cannot see when worn
+	var/needOnMouseMove = 0 //If 1, we check all the stuff required for onMouseMove for this. Leave this off unless required. Might cause extra lag.
+	var/contraband = 0 //If nonzero, bots consider this a thing people shouldn't be carrying without authorization
+	var/edible = 0 // can you eat the thing?
+
+	/*_____*/
+	/*Other*/
+	/*‾‾‾‾‾*/
+	var/arm_icon = "" //set to an icon state in human.dmi minus _s/_l and l_arm_/r_arm_ to allow use as an arm
+	var/over_clothes = 0 //draw over clothes when used as a limb
+	var/override_attack_hand = 1 //when used as an arm, attack with item rather than using attack_hand
+	var/can_hold_items = 0 //when used as an arm, can it hold things?
+
+	var/list/module_research = null//list()
+	var/module_research_type = null
+	var/module_research_no_diminish = 0
+
+	var/rand_pos = 0
+	var/obj/item/holding = null
+	var/rarity = ITEM_RARITY_COMMON //Just a little thing to indicate item rarity. RPG fluff.
+	pressure_resistance = 50
+	var/obj/item/master = null
 
 	proc/setTwoHanded(var/twohanded = 1) //This is the safe way of changing 2-handed-ness at runtime. Use this please.
 		if(ismob(src.loc))
@@ -453,6 +466,7 @@
 	if (!src.burning)
 		src.visible_message("<span class='alert'>[src] catches on fire!</span>")
 		src.burning = 1
+		src.firesource = 1
 		if (src.burn_output >= 1000)
 			src.overlays += image('icons/effects/fire.dmi', "2old")
 		else
@@ -732,7 +746,7 @@
 	if (src.material)
 		src.material.triggerTemp(src ,1500)
 	if (src.burn_possible && src.burn_point <= 1500)
-		if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || (istype(W, /obj/item/device/igniter)) || (istype(W, /obj/item/device/light/zippo) && W:on) || (istype(W, /obj/item/match) && (W:on > 0)) || W.burning)
+		if (W.firesource)
 			src.combust()
 		else
 			..(W, user)
@@ -1451,4 +1465,7 @@
 		src.equipped(user, user.get_slot_from_item(src))
 
 /obj/item/proc/intent_switch_trigger(mob/user)
+	return
+
+/obj/item/proc/firesource_interact() //usually called after interacting with an object on attack and using the if(firesource) check. This can be used to, for instance, decrase the fuel of a welding tool after lighting a candle.
 	return
