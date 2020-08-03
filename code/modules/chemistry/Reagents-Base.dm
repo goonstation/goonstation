@@ -777,7 +777,7 @@ datum
 				src = null
 				if(istype(O))
 					if(O.burning && prob(80))
-						O.burning = 0
+						O.combust_ended()
 					else if(istype(O, /obj/item/toy/sponge_capsule))
 						var/obj/item/toy/sponge_capsule/S = O
 						S.add_water()

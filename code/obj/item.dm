@@ -459,18 +459,15 @@
 		the_dir = turn(the_dir,45)
 */
 
-/obj/item/proc/combust_ended()
-	processing_items.Remove(src)
-
 /obj/item/proc/combust() // cogwerks- flammable items project
 	if (!src.burning)
 		src.visible_message("<span class='alert'>[src] catches on fire!</span>")
 		src.burning = 1
 		src.firesource = 1
 		if (src.burn_output >= 1000)
-			src.overlays += image('icons/effects/fire.dmi', "2old")
+			UpdateOverlays(image('icons/effects/fire.dmi', "2old"),"burn_overlay")
 		else
-			src.overlays += image('icons/effects/fire.dmi', "1old")
+			UpdateOverlays(image('icons/effects/fire.dmi', "1old"),"burn_overlay")
 		processing_items.Add(src)
 		/*if (src.reagents && src.reagents.reagent_list && src.reagents.reagent_list.len)
 
@@ -509,6 +506,13 @@
 						step(C,my_dir)
 						C.expose()
 				the_dir = turn(the_dir,45) */
+
+/obj/item/proc/combust_ended()
+	processing_items.Remove(src)
+	burning = null
+	firesource = 0
+	ClearSpecificOverlays("burn_overlay")
+	name = "[pick("charred","burned","scorched")] [name]"
 
 /obj/item/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if (src.burn_possible && !src.burning)

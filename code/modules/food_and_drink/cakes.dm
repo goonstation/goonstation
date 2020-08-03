@@ -177,7 +177,7 @@
 			if (src.loc != user)
 				light.attach(src)
 
-	proc/light(var/mob/user as mob, var/message as text)
+	proc/ignite(var/mob/user as mob, var/message as text)
 		if (!src)
 			return
 		if (!src.litfam)
@@ -258,7 +258,7 @@
 					candle = 0
 					if(src.litfam) //light update
 						src.put_out()
-						schild.light()
+						schild.ignite()
 				src.reagents.trans_to(schild,transferamount) //setting up the other properties of the slice
 				schild.pixel_x = rand(-6, 6)
 				schild.pixel_y = rand(-6, 6)
@@ -282,7 +282,7 @@
 				src.clayer--
 			return
 		else if(!(src.litfam) && (W.firesource))
-			src.light()
+			src.ignite()
 			W.firesource_interact()
 
 		switch(W.type) //this is where the mess starts... //DEV - procify as much as possible to make adding new cake toppings easier
@@ -417,7 +417,7 @@
 							newoverlay.color = buffer.color
 						src.UpdateOverlays(newoverlay,"[tag]")
 					if(c.litfam)
-						src.light()
+						src.ignite()
 					qdel(c)
 				else
 					return
@@ -430,7 +430,7 @@
 			user.u_equip(W)
 			qdel(W)
 			if(pendinglight)
-				src.light()
+				src.ignite()
 			return
 		else
 			..()
@@ -457,7 +457,7 @@
 				s.set_loc(get_turf(user))
 			if(src.litfam)
 				src.put_out()
-				s.light()
+				s.ignite()
 		else if(user.a_intent == INTENT_DISARM) //blowing out candles
 			//check for candle
 			var/blowout
