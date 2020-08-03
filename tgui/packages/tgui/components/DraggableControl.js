@@ -9,8 +9,6 @@ import { pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { AnimatedNumber } from './AnimatedNumber';
 
-const DEFAULT_UPDATE_RATE = 400;
-
 /**
  * Reduces screen offset to a single number based on the matrix provided.
  */
@@ -74,7 +72,7 @@ export class DraggableControl extends Component {
         if (dragging && onDrag) {
           onDrag(e, value);
         }
-      }, this.props.updateRate || DEFAULT_UPDATE_RATE);
+      }, 500);
       document.addEventListener('mousemove', this.handleDragMove);
       document.addEventListener('mouseup', this.handleDragEnd);
     };

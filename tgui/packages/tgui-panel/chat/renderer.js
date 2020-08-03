@@ -89,10 +89,10 @@ class ChatRenderer {
     /** @type {HTMLElement} */
     this.scrollNode = null;
     this.scrollTracking = true;
-    this.handleScroll = type => {
-      const node = this.scrollNode;
-      const height = node.scrollHeight;
-      const bottom = node.scrollTop + node.offsetHeight;
+    this.handleScroll = () => {
+      const height = this.scrollNode.scrollHeight;
+      const bottom = this.scrollNode.scrollTop
+        + this.scrollNode.offsetHeight;
       const scrollTracking = (
         Math.abs(height - bottom) < SCROLL_EPSILON_PX
       );
@@ -100,11 +100,6 @@ class ChatRenderer {
         this.scrollTracking = scrollTracking;
         this.events.emit('scrollTrackingChanged', scrollTracking);
         logger.debug('tracking', this.scrollTracking);
-      }
-    };
-    this.ensureScrollTracking = () => {
-      if (this.scrollTracking) {
-        this.scrollToBottom();
       }
     };
     // Periodic message pruning
@@ -123,9 +118,7 @@ class ChatRenderer {
     // Find scrollable parent
     this.scrollNode = findNearestScrollableParent(this.rootNode);
     this.scrollNode.addEventListener('scroll', this.handleScroll);
-    setImmediate(() => {
-      this.scrollToBottom();
-    });
+    this.scrollToBottom();
     // Flush the queue
     if (this.queue.length > 0) {
       this.processBatch(this.queue);
@@ -256,7 +249,7 @@ class ChatRenderer {
       const message = messages[i];
       this.rootNode.removeChild(message.node);
     }
-    logger.log(`pruned ${fromIndex} messages`);
+    logger.debug(`pruned ${fromIndex} messages`);
   }
 }
 

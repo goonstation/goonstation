@@ -199,7 +199,6 @@ const handlePassthrough = (e, eventType) => {
   if (byondKeyCode) {
     const macro = BYOND_MACROS[byondKeyCode];
     if (macro) {
-      Byond.winset('map', { focus: true });
       return macro();
     }
     if (eventType === 'keydown' && !keyState[keyCode]) {
@@ -222,7 +221,7 @@ export const releaseHeldKeys = () => {
     const byondKeyCode = keyCodeToByond(keyCode);
     if (byondKeyCode && keyState[keyCode]) {
       keyState[keyCode] = false;
-      logger.debug(`releasing keys (.keyup)  "${byondKeyCode}"`);
+      logger.debug(`.keyup "${byondKeyCode}"`);
       Byond.command(`.keyup "${byondKeyCode}"`);
     }
   }

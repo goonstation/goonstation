@@ -18,11 +18,6 @@ export const settingsMiddleware = store => {
         if (!settings) {
           return;
         }
-        if (!settings.version) {
-          // Ignore previous settings, start clean.
-          storage.clear();
-          return;
-        }
         // Set client theme
         const { theme } = settings;
         if (theme) {

@@ -8,25 +8,14 @@
  * @license MIT
  */
 
-const FPS = 60;
-const FRAME_DURATION = 1000 / FPS;
-
-// True if Performance API is supported
-const supportsPerf = !!window.performance?.now;
-// High precision markers
-let hpMarkersByName = {};
-// Low precision markers
-let lpMarkersByName = {};
+let markersByLabel = {};
 
 /**
  * Marks a certain spot in the code for later measurements.
  */
-const mark = (name, timestamp) => {
+const mark = (label, timestamp) => {
   if (process.env.NODE_ENV !== 'production') {
-    if (supportsPerf && !timestamp) {
-      hpMarkersByName[name] = performance.now();
-    }
-    lpMarkersByName[name] = timestamp || Date.now();
+    markersByLabel[label] = timestamp || Date.now();
   }
 };
 
@@ -35,23 +24,18 @@ const mark = (name, timestamp) => {
  *
  * Use logger.log() to print the measurement.
  */
-const measure = (markerNameA, markerNameB) => {
+const measure = (markerA, markerB) => {
   if (process.env.NODE_ENV !== 'production') {
-    let markerA = hpMarkersByName[markerNameA];
-    let markerB = hpMarkersByName[markerNameB];
-    if (!markerA || !markerB) {
-      markerA = lpMarkersByName[markerNameA];
-      markerB = lpMarkersByName[markerNameB];
-    }
-    const duration = Math.abs(markerB - markerA);
-    return formatDuration(duration);
+    return timeDiff(
+      markersByLabel[markerA],
+      markersByLabel[markerB]);
   }
 };
 
-const formatDuration = duration => {
-  const durationInFrames = duration / FRAME_DURATION;
-  return duration.toFixed(duration < 10 ? 1 : 0) + 'ms '
-    + '(' + durationInFrames.toFixed(2) + ' frames)';
+const timeDiff = (startedAt, finishedAt) => {
+  const diff = Math.abs(finishedAt - startedAt);
+  const diffFrames = (diff / 16.6667).toFixed(2);
+  return `${diff}ms (${diffFrames} frames)`;
 };
 
 export const perf = {

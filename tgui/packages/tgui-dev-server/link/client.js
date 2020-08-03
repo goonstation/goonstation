@@ -37,7 +37,7 @@ if (process.env.NODE_ENV !== 'production') {
   window.onunload = () => socket && socket.close();
 }
 
-export const subscribe = fn => subscribers.push(fn);
+const subscribe = fn => subscribers.push(fn);
 
 /**
  * A json serializer which handles circular references and other junk.
@@ -91,7 +91,7 @@ const serializeObject = obj => {
   return json;
 };
 
-export const sendMessage = msg => {
+const sendRawMessage = msg => {
   if (process.env.NODE_ENV !== 'production') {
     const json = serializeObject(msg);
     // Send message using WebSocket
@@ -122,7 +122,7 @@ export const sendMessage = msg => {
 export const sendLogEntry = (level, ns, ...args) => {
   if (process.env.NODE_ENV !== 'production') {
     try {
-      sendMessage({
+      sendRawMessage({
         type: 'log',
         payload: {
           level,
