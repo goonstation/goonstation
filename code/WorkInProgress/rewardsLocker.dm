@@ -55,6 +55,36 @@
 			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: [prev2])"
 			activator.set_clothing_icon_dirty()
 
+		else if (istype(activator.back, /obj/item/storage/backpack/captain))
+			if (activator.back.icon_state == "capbackpack")
+				var/obj/item/storage/backpack/M = activator.back
+				var/prev3 = M.name
+				M.icon = 'icons/obj/items/storage.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_general.dmi'
+				M.wear_image_icon = 'icons/mob/back.dmi'
+				if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+				M.icon_state = "capsatchel"
+				M.item_state = "capbackpack"
+				M.name = "Captains Satchel"
+				M.real_name = "Captains Satchel"
+				M.desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev3])"
+				activator.set_clothing_icon_dirty()
+			else
+				var/obj/item/storage/backpack/M = activator.back
+				var/prev3 = M.name
+				M.icon = 'icons/obj/items/storage.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_general.dmi'
+				M.wear_image_icon = 'icons/mob/back.dmi'
+				if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+				M.icon_state = "capsatchel_blue"
+				M.item_state = "capbackpack_blue"
+				M.name = "Captains Satchel"
+				M.real_name = "Captains Satchel"
+				M.desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev3])"
+				activator.set_clothing_icon_dirty()
+
 		else if (istype(activator.back, /obj/item/storage/backpack))
 			var/obj/item/storage/backpack/M = activator.back
 			var/prev3 = M.name
@@ -466,7 +496,7 @@
 
 /datum/achievementReward/ntso_commander
 	title = "(Skin set) NT-SO Commander Uniform"
-	desc = "Will change the skin of captain hats, captain armor/spacesuits and captain uniforms."
+	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, sabres and captain uniforms."
 	required_medal = "Icarus"
 	once_per_round = 0
 
@@ -539,6 +569,23 @@
 					if (M.item_state == "scabbard-cap1")
 						qdel(M)
 						H.equip_if_possible(new /obj/item/katana_sheath/captain/blue(H), H.slot_belt)
+
+			if (H.back)
+				if (istype(H.back, /obj/item/storage/backpack/captain))
+					if (H.back.icon_state == "capbackpack")
+						var/obj/item/storage/backpack/captain/M = activator.back
+						var/prev = M.name
+						M.icon_state = "capbackpack_blue"
+						M.item_state = "capbackpack_blue"
+						M.desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev])"
+						H.set_clothing_icon_dirty()
+				if (istype(H.back, /obj/item/storage/backpack/satchel/captain)|| H.back.icon_state == "capsatchel")
+					var/obj/item/storage/backpack/satchel/captain/M = activator.back
+					var/prev = M.name
+					M.icon_state = "capsatchel_blue"
+					M.item_state = "capsatchel_blue"
+					M.desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
 		return
 
 // I don't like this being tied to Nero
