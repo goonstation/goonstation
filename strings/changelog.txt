@@ -1,4 +1,13 @@
 
+(t)sun aug 02 20
+(u)Moonlol
+(p)1555
+(e)⚖|balance
+(*)All maps apart from Cog2, Donut 3, Horizon and Oshan cannot be voted past 80 players.
+(u)Kubius
+(p)1681
+(e)🗺|mapping
+(+)Kondaru is now equipped with a JaniTech Vendor.
 (t)sat aug 01 20
 (u)Emcee-Gore
 (p)1650

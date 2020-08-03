@@ -449,7 +449,7 @@
 
 /datum/plantmutation/fungus/cloak
 	name = "Cloaked Panellus"
-	iconmod = "Cloak"
+	iconmod = "FungusCloak"
 	crop = /obj/item/reagent_containers/food/snacks/mushroom/cloak
 	PTrange = list(null,10) //low potency
 	CZrange = list(25,null) // high crop size
