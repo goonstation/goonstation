@@ -348,7 +348,7 @@
 					organ_list["tail"] = tail
 			else	// You're still getting a tail
 			*/
-			src.tail = new /obj/item/organ/tail/lizard(src.donor, src) // We'll fix it in post
+			src.tail = new /obj/item/organ/tail/human(src.donor, src) // We'll fix it in post
 			organ_list["tail"] = tail
 
 	//input organ = string value of organ_list assoc list

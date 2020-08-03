@@ -32,7 +32,7 @@
 	var/icon_beard = null
 	var/icon_override_static = 0 // does this look different enough from a default human to warrant a static icon of its own?
 
-	var/tail = null // What tail do we have? Or are supposed to have?
+	var/tail = NO_TAIL // What tail do we have? Or are supposed to have?
 	var/obj/item/organ/tail/tail_organ = /obj/item/organ/tail/human	// What type of tail are we supposed to have?
 
 	var/head_offset = 0 // affects pixel_y of clothes
@@ -201,8 +201,7 @@
 						limb.holder = M
 						limb.remove_stage = 0
 
-
-			fix_tail(M)
+			set_tail(M, src.tail)
 			M.update_face()
 			M.update_body()
 
@@ -301,20 +300,49 @@
 						H.assign_gimmick_skull() // We might have to update the skull (Convair880).
 
 			mob.set_clothing_icon_dirty()
+			set_tail(mob, src.tail)
 			src.mob = null
 
 		..()
 		return
 
-	proc/fix_tail(var/mob/living/carbon/human/Tf)
-		if(ishuman(Tf))
-			if(Tf.organHolder && Tf.organHolder.tail)
-				if(src.tail_organ && Tf.mutantrace.tail_organ)
-					Tf.organHolder.tail = new Tf.mutantrace.tail_organ(Tf.organHolder.donor, Tf)
-					Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
-				else
-					Tf.organHolder.tail = new /obj/item/organ/tail/human(Tf.organHolder.donor, Tf)
-					Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
+	proc/set_tail(var/mob/living/carbon/human/Tf as mob, var/tailnum as num)
+		if(!ishuman(Tf) || tailnum > ROACH_TAIL || tailnum < NO_TAIL)
+			return 0
+
+		if(Tf.organHolder)	// dump the old tail, if they have one
+			Tf.organHolder.tail = null
+
+		switch(tailnum)	// Mutantraces come with a free, new tail
+			if (NO_TAIL)	// technically you have a tail, its just imaginary
+				Tf.organHolder.tail = new /obj/item/organ/tail/human(Tf, Tf.organHolder)
+				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
+			if (MONKEY_TAIL)
+				Tf.organHolder.tail = new /obj/item/organ/tail/monkey(Tf, Tf.organHolder)
+				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
+			if (LIZARD_TAIL)
+				Tf.organHolder.tail = new /obj/item/organ/tail/lizard(Tf, Tf.organHolder)
+				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
+			if (COW_TAIL)
+				Tf.organHolder.tail = new /obj/item/organ/tail/cow(Tf, Tf.organHolder)
+				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
+			if (WEREWOLF_TAIL)
+				Tf.organHolder.tail = new /obj/item/organ/tail/wolf(Tf, Tf.organHolder)
+				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
+			if (SKELETON_TAIL)
+				Tf.organHolder.tail = new /obj/item/organ/tail/bone(Tf, Tf.organHolder)
+				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
+			if (SEAMONKEY_TAIL)
+				Tf.organHolder.tail = new /obj/item/organ/tail/seamonkey(Tf, Tf.organHolder)
+				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
+			if (CAT_TAIL)
+				Tf.organHolder.tail = new /obj/item/organ/tail/cat(Tf, Tf.organHolder)
+				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
+			if (ROACH_TAIL)
+				Tf.organHolder.tail = new /obj/item/organ/tail/roach(Tf, Tf.organHolder)
+				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
+
+		Tf.update_body()
 
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
@@ -473,7 +501,7 @@
 		..()
 
 		if(ishuman(mob))
-			fix_tail(mob)
+			set_tail(mob, src.tail)
 			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
 
 			detail_1 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-1", layer = MOB_LIMB_LAYER+0.1)
@@ -707,7 +735,7 @@
 	New(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(M))
-			fix_tail(M)
+			set_tail(M, src.tail)
 			M.mob_flags |= IS_BONER
 
 	disposing()
@@ -837,7 +865,7 @@
 	New()
 		..()
 		if (mob)
-			fix_tail(mob)
+			set_tail(mob, src.tail)
 			mob.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
 			mob.add_stam_mod_regen("werewolf", 9) //mbc : these increase as they feast now. reduced!
 			mob.add_stun_resist_mod("werewolf", 40)
@@ -990,7 +1018,7 @@
 
 	New(var/mob/living/carbon/human/M)
 		if (M)
-			fix_tail(M)
+			set_tail(M, src.tail)
 			if (M.flags & TABLEPASS)
 				had_tablepass = 1
 			else
@@ -1184,6 +1212,10 @@
 	tail = SEAMONKEY_TAIL
 	tail_organ = /obj/item/organ/tail/seamonkey
 
+	New()
+		..()
+		set_tail(mob, src.tail)
+
 /datum/mutantrace/martian
 	name = "martian"
 	icon_state = "martian"
@@ -1280,6 +1312,11 @@
 	tail = ROACH_TAIL
 	tail_organ = /obj/item/organ/tail/roach
 
+	New()
+		..()
+		set_tail(mob, src.tail)
+		mob.blood_color = "#AEB555"
+
 	say_verb()
 		return "clicks"
 
@@ -1296,6 +1333,10 @@
 	firevuln = 1.5 // very flammable catthings
 	tail = CAT_TAIL
 	tail_organ = /obj/item/organ/tail/cat
+
+	New()
+		..()
+		set_tail(mob, src.tail)
 
 	say_verb()
 		return "meows"
@@ -1603,7 +1644,7 @@
 	New(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(mob))
-
+			set_tail(mob, src.tail)
 			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
 
 			detail_1 = image('icons/effects/genetics.dmi', icon_state="cow_detail-1", layer = MOB_LIMB_LAYER+0.1)
@@ -1615,7 +1656,7 @@
 			mob.update_face()
 			mob.update_body()
 			mob.update_clothing()
-			fix_tail(mob)
+
 
 			H.blood_id = "milk"
 			H.blood_color = "FFFFFF"
