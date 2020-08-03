@@ -436,6 +436,7 @@
 			take_bleeding_damage(target, null, 8, DAMAGE_STAB)
 			if (head_material)
 				head_material.triggerOnAttack(src, user, target)
+			return 1
 		else
 			var/obj/item/I = target
 			if (istype(I) && I.is_open_container() == 1 && I.reagents)
@@ -581,7 +582,7 @@
 					B.material.triggerOnAttack(B, null, A)
 				B.arrow.reagents.reaction(A, 2)
 				B.arrow.reagents.trans_to(A, B.arrow.reagents.total_volume)
-			take_bleeding_damage(A, null, round(src.power / 3), src.hit_type)
+			take_bleeding_damage(A, null, round(src.power / 2), src.hit_type)
 
 
 /obj/item/gun/bow
@@ -631,13 +632,21 @@
 		else
 			..()
 
+
+
 	attack(var/mob/target, var/mob/user)
 		user.lastattacked = target
 		target.lastattacker = user
 		target.lastattackertime = world.time
 
-		if(isliving(target) && aim)
-			src.shoot_point_blank(target, user)
+
+	//absolutely useless as an attack but removing it causes bugs, replaced fire point blank which had issues with the way arrow damage is calculated.
+		if(isliving(target))
+			if(loaded)
+				if(loaded.afterattack(target,user,1))
+					loaded =null;//arrow isnt consumed otherwise, for some inexplicable reason.
+			else
+				boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")
 		else
 			..()
 
@@ -645,6 +654,7 @@
 			game_stats.Increment("violence")
 	#endif
 			return
+
 	/*
 	onMouseDown(atom/target,location,control,params)
 		var/mob/user = usr
@@ -679,7 +689,7 @@
 		var/default_power = 20
 		if(loaded.head_material)
 			if(loaded.head_material.hasProperty("hard"))
-				current_projectile.power = round(20+loaded.head_material.getProperty("hard") / 4) //40hard ~ 15dmg, 80hard ~ 30dmg note this has now been modified by anacroniser for it to be 30 and 40 respectively
+				current_projectile.power = round(20+loaded.head_material.getProperty("hard") / 2.6) //20-50 damage with 0 and 80 hardness(approximately)
 			else
 				current_projectile.power = default_power
 		else
@@ -697,16 +707,18 @@
 			boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")
 			return 1
 		*/
+
 		if (!aim)
 			//var/list/parameters = params2list(params)
 			if(ismob(target.loc) || istype(target, /obj/screen)) return
-			if (!aim && !loaded)
+			if (!loaded)//removed redundant check
 				loadFromQuiver(user)
 				if(loaded)
 					boutput(user, "<span class='alert'>You load an arrow from the quiver.</span>")
 				return
-
-			if (!aim && loaded)
+			if(reach)
+				return
+			if (loaded)
 				aim = new(user, src)
 				actions.start(aim, user)
 		else
