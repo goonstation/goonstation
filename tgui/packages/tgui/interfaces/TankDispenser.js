@@ -12,8 +12,8 @@ export const TankDispenser = (props, context) => {
   const { act, data } = useBackend(context);
   return (
     <Window
-      width={275}
-      height={106}>
+      width={280}
+      height={110}>
       <Window.Content>
         <Section>
           <LabeledList>
