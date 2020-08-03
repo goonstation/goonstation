@@ -313,6 +313,10 @@
 
 			else if (W.burning)
 				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+
+			else if (W.firesource)
+				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W].</span>")
+				W.firesource_interact()
 		else
 			return ..()
 

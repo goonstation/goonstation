@@ -198,6 +198,10 @@
 			return ..()
 		return
 
+	firesource_interact()
+		if (reagents.get_reagent_amount("fuel"))
+			reagents.remove_reagent("fuel", 1)
+
 	process()
 		if(!welding)
 			processing_items.Remove(src)

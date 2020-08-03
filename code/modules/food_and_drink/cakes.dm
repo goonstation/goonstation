@@ -283,6 +283,7 @@
 			return
 		else if(!(src.litfam) && (W.firesource))
 			src.light()
+			W.firesource_interact()
 
 		switch(W.type) //this is where the mess starts... //DEV - procify as much as possible to make adding new cake toppings easier
 			if(/obj/item/reagent_containers/food/drinks/drinkingglass/icing) //handling for frosting overlays. they have a color, so theyre handled a bit differently

@@ -163,6 +163,10 @@
 			else if (W.burning)
 				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
 				return
+			else if (W.firesource)
+				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W].</span>")
+				W.firesource_interact()
+				return
 			else
 				return ..()
 		else
@@ -1188,6 +1192,10 @@
 		if (exposed_temperature > 1000)
 			return ..()
 		return
+
+	firesource_interact()
+		if (!infinite_fuel && reagents.get_reagent_amount("fuel"))
+			reagents.remove_reagent("fuel", 1)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
