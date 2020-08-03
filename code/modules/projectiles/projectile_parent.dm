@@ -1043,6 +1043,8 @@ datum/projectile/snowball
 					play_shot_sound = FALSE //anti-ear destruction
 				else if (abs(P.shooter.x - reflector.x) == 2 && (P.shooter.y == reflector.y))
 					play_shot_sound = FALSE //anti-ear destruction
+		else
+			return
 
 	/*
 		* We have to calculate our incidence each time
