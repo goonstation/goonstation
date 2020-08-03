@@ -20,41 +20,12 @@
 
 		add_commodity(new /datum/commodity/goldbar(src))
 
-		for(var/commodity_path in typesof(/datum/commodity))
-			if("[commodity_path]" == "/datum/commodity/goldbar") // gross hack, sorry not sorry!
-				continue
+		for (var/commodity_path in (typesof(/datum/commodity) - /datum/commodity/goldbar))
 			var/datum/commodity/C = new commodity_path(src)
 			if(C.onmarket)
 				add_commodity(C)
 			else
 				qdel(C)
-
-		/*
-		add_commodity(new /datum/commodity/produce(src))
-		add_commodity(new /datum/commodity/meat(src))
-		add_commodity(new /datum/commodity/herbs(src))
-		add_commodity(new /datum/commodity/honey(src))
-		add_commodity(new /datum/commodity/sheet(src))
-		add_commodity(new /datum/commodity/mat_bar(src))
-		add_commodity(new /datum/commodity/robotics(src))
-		add_commodity(new /datum/commodity/electronics(src))
-		add_commodity(new /datum/commodity/ore/mauxite(src))
-		add_commodity(new /datum/commodity/ore/pharosium(src))
-		add_commodity(new /datum/commodity/ore/molitz(src))
-		add_commodity(new /datum/commodity/ore/char(src))
-		add_commodity(new /datum/commodity/ore/cobryl(src))
-		add_commodity(new /datum/commodity/ore/bohrum(src))
-		add_commodity(new /datum/commodity/ore/claretine(src))
-		add_commodity(new /datum/commodity/ore/erebite(src))
-		add_commodity(new /datum/commodity/ore/cerenkite(src))
-		add_commodity(new /datum/commodity/ore/plasmastone(src))
-		add_commodity(new /datum/commodity/ore/syreline(src))
-		add_commodity(new /datum/commodity/ore/uqill(src))
-		add_commodity(new /datum/commodity/ore/telecrystal(src))
-		add_commodity(new /datum/commodity/ore/fibrilith(src))
-		add_commodity(new /datum/commodity/synthmodule(src))
-		add_commodity(new /datum/commodity/goldbar(src))
-		*/
 
 		var/list/unique_traders = list(/datum/trader/gragg,/datum/trader/josh,/datum/trader/pianzi_hundan,
 		/datum/trader/vurdalak,/datum/trader/buford)
