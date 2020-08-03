@@ -1,4 +1,11 @@
 
+(t)mon aug 03 20
+(u)Superlagg
+(p)1463
+(e)🆕🎨|feature, sprites
+(*)Guardbuddies can now use guns!
+(*)Traitor RDs can order an ammo fabricator for their Guardbuddies!
+(+)You can also swap out or remove Guardbuddy tools on the fly!
 (t)sun aug 02 20
 (u)Moonlol
 (p)1555
