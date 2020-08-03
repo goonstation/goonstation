@@ -1033,15 +1033,15 @@ datum/projectile/snowball
 			if ((P.shooter.x == reflector.x) || (P.shooter.y == reflector.y))
 				return
 		if (PROJ_HEADON_BOUNCE) // no rapid head-on bounce
-			if (abs(P.shooter.x - reflector.x) == 0 && abs(P.shooter.y - reflector.y) == 2)
+			if ((P.shooter.x == reflector.x) && abs(P.shooter.y - reflector.y) == 2)
 				return
-			else if (abs(P.shooter.x - reflector.x) == 2 && abs(P.shooter.y - reflector.y) == 0)
+			else if (abs(P.shooter.x - reflector.x) == 2 && (P.shooter.y == reflector.y))
 				return
 		if (PROJ_RAPID_HEADON_BOUNCE)
 			if (P.proj_data.shot_sound)
-				if (abs(P.shooter.x - reflector.x) == 0 && abs(P.shooter.y - reflector.y) == 2)
+				if ((P.shooter.x == reflector.x) && abs(P.shooter.y - reflector.y) == 2)
 					play_shot_sound = FALSE //anti-ear destruction
-				else if (abs(P.shooter.x - reflector.x) == 2 && abs(P.shooter.y - reflector.y) == 0)
+				else if (abs(P.shooter.x - reflector.x) == 2 && (P.shooter.y == reflector.y))
 					play_shot_sound = FALSE //anti-ear destruction
 
 	/*
