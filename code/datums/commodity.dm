@@ -1987,6 +1987,9 @@
 
 ///// costume kits
 
+/datum/commodity/costume
+	onmarket = 0
+
 /datum/commodity/costume/bee
 	comname = "Bee Costume"
 	comtype = /obj/item/storage/box/costume/bee
@@ -2105,6 +2108,7 @@
 	comname = "box of balloons"
 	comtype = /obj/item/storage/box/balloonbox
 	desc = "A box full of colorful balloons!  Neat!"
+	onmarket = 0
 	price = 50
 	baseprice = 50
 	upperfluc = 100
@@ -2114,6 +2118,7 @@
 	comname = "box of crayons"
 	comtype = /obj/item/storage/box/crayon
 	desc = "A box of colorful crayons! Lovely!"
+	onmarket = 0
 	price = 50
 	baseprice = 50
 	upperfluc = 100
@@ -2182,6 +2187,7 @@
 /datum/commodity/largeartifact
 	comname = "Large Artifact"
 	comtype = null
+	onmarket = 0
 	price = 2000
 	baseprice = 2000
 	upperfluc = 1500
@@ -2190,6 +2196,7 @@
 /datum/commodity/smallartifact
 	comname = "Handheld Artifact"
 	comtype = null
+	onmarket = 0
 	price = 400
 	baseprice = 400
 	upperfluc = 400

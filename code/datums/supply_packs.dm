@@ -356,12 +356,11 @@
 	cost = 450
 	containertype = /obj/storage/secure/crate/bee
 	containername = "Honey Production Kit"
-	access = access_hydro
+	access = null
 	create(var/sp, var/mob/creator)
 		var/obj/storage/secure/crate/bee/beez=..()
 		for(var/obj/item/bee_egg_carton/carton in beez)
 			carton.ourEgg.blog = "ordered by [key_name(creator)]|"
-		beez.req_access.len = 0
 		return beez
 
 /datum/supply_packs/chemical
