@@ -440,6 +440,7 @@
 	force = 7.0
 	caliber = 0.355
 	max_ammo_capacity = 18
+	auto_eject = 1
 
 	New()
 		if (prob(30))
@@ -965,7 +966,7 @@
 	force = 5
 	caliber = 0.308
 	max_ammo_capacity = 100
-	auto_eject = 0
+	auto_eject = 1
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	object_flags = NO_ARM_ATTACH
