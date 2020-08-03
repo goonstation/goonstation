@@ -70,7 +70,7 @@
 			for(var/subasset in g.subassets)
 				handle_cdn_asset(get_assets(subasset), inline_styles, inline_scripts)
 		else
-			handle_cdn_asset(get_assets(asset), inline_styles, inline_scripts)
+			handle_cdn_asset(get_assets(asset.type), inline_styles, inline_scripts)
 
 	html = replacetextEx(html, "<!-- tgui:styles -->", inline_styles.Join())
 	html = replacetextEx(html, "<!-- tgui:scripts -->", inline_scripts.Join())
