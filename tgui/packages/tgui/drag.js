@@ -83,7 +83,7 @@ const touchRecents = (recents, touchedItem, limit = 50) => {
   return [nextRecents, trimmedItem];
 };
 
-export const storeWindowGeometry = async () => {
+export const storeWindowGeometry = windowKey => {
   logger.log('storing geometry');
   const geometry = {
     pos: getWindowPosition(),
@@ -92,7 +92,7 @@ export const storeWindowGeometry = async () => {
   storage.set(windowKey, geometry);
   // Update the list of stored geometries
   const [geometries, trimmedKey] = touchRecents(
-    await storage.get('geometries') || [],
+    storage.get('geometries') || [],
     windowKey);
   if (trimmedKey) {
     storage.remove(trimmedKey);
@@ -100,9 +100,9 @@ export const storeWindowGeometry = async () => {
   storage.set('geometries', geometries);
 };
 
-export const recallWindowGeometry = async (options = {}) => {
+export const recallWindowGeometry = async (windowKey, options = {}) => {
   // Only recall geometry in fancy mode
-  const geometry = options.fancy && await storage.get(windowKey);
+  const geometry = options.fancy && storage.get(windowKey);
   if (geometry) {
     logger.log('recalled geometry:', geometry);
   }
@@ -189,7 +189,7 @@ const dragEndHandler = event => {
   document.removeEventListener('mousemove', dragMoveHandler);
   document.removeEventListener('mouseup', dragEndHandler);
   dragging = false;
-  storeWindowGeometry();
+  storeWindowGeometry(windowKey);
 };
 
 const dragMoveHandler = event => {
@@ -225,7 +225,7 @@ const resizeEndHandler = event => {
   document.removeEventListener('mousemove', resizeMoveHandler);
   document.removeEventListener('mouseup', resizeEndHandler);
   resizing = false;
-  storeWindowGeometry();
+  storeWindowGeometry(windowKey);
 };
 
 const resizeMoveHandler = event => {

@@ -4,15 +4,14 @@
  * @license MIT
  */
 
-import { canRender, classes } from 'common/react';
+import { classes } from 'common/react';
 import { computeBoxClassName, computeBoxProps } from './Box';
-import { Icon } from './Icon';
+import { Button } from './Button';
 
 export const Tabs = props => {
   const {
     className,
     vertical,
-    fluid,
     children,
     ...rest
   } = props;
@@ -23,12 +22,13 @@ export const Tabs = props => {
         vertical
           ? 'Tabs--vertical'
           : 'Tabs--horizontal',
-        fluid && 'Tabs--fluid',
         className,
         computeBoxClassName(rest),
       ])}
       {...computeBoxProps(rest)}>
-      {children}
+      <div className="Tabs__tabBox">
+        {children}
+      </div>
     </div>
   );
 };
@@ -37,42 +37,20 @@ const Tab = props => {
   const {
     className,
     selected,
-    color,
-    icon,
-    leftSlot,
-    rightSlot,
-    children,
+    altSelection,
     ...rest
   } = props;
   return (
-    <div
+    <Button
       className={classes([
-        'Tab',
-        'Tabs__Tab',
-        'Tab--color--' + color,
-        selected && 'Tab--selected',
+        'Tabs__tab',
+        selected && 'Tabs__tab--selected',
+        altSelection && selected && 'Tabs__tab--altSelection',
         className,
-        ...computeBoxClassName(rest),
       ])}
-      {...computeBoxProps(rest)}>
-      {canRender(leftSlot) && (
-        <div className="Tab__left">
-          {leftSlot}
-        </div>
-      ) || !!icon && (
-        <div className="Tab__left">
-          <Icon name={icon} />
-        </div>
-      )}
-      <div className="Tab__text">
-        {children}
-      </div>
-      {canRender(rightSlot) && (
-        <div className="Tab__right">
-          {rightSlot}
-        </div>
-      )}
-    </div>
+      selected={!altSelection && selected}
+      color="transparent"
+      {...rest} />
   );
 };
 

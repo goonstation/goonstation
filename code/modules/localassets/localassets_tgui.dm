@@ -1,5 +1,5 @@
 
-// This file is designed to hold all the core tgui assets we need to possibly send to people.
+// This file is designed to hold all the tgui assets we need to possibly send to people.
 
 /// Group for tgui assets
 /datum/asset/group/base_tgui
@@ -8,19 +8,7 @@
 		/datum/asset/basic/fontawesome
 	)
 
-/// Common tgui assets
-/datum/asset/basic/tgui_common
-	local_assets = list(
-		"tgui-common.chunk.js",
-	)
-
-	init()
-		. = ..()
-		url_map = list(
-			"tgui/tgui-common.chunk.js" = "[resource("tgui/tgui-common.chunk.js")]",
-		)
-
-/// Normal base window tgui assets
+/// Base tgui assets
 /datum/asset/basic/tgui
 	local_assets = list(
 		"tgui.bundle.js",
@@ -32,21 +20,6 @@
 		url_map = list(
 			"tgui/tgui.bundle.js" = "[resource("tgui/tgui.bundle.js")]",
 			"tgui/tgui.bundle.css" = "[resource("tgui/tgui.bundle.css")]"
-		)
-
-// !! NOT IMPLEMENTED ON THE CDN/BROWSERASSETS, ADD THE SYMLINKS IF YOU WANT THIS !!
-/// tgui panel specific assets
-/datum/asset/basic/tgui_panel
-	local_assets = list(
-		"tgui-panel.bundle.js",
-		"tgui-panel.bundle.css"
-	)
-
-	init()
-		. = ..()
-		url_map = list(
-			"tgui/tgui-panel.bundle.js" = "[resource("tgui/tgui-panel.bundle.js")]",
-			"tgui/tgui-panel.bundle.css" = "[resource("tgui/tgui-panel.bundle.css")]"
 		)
 
 /// Fontawesome assets
