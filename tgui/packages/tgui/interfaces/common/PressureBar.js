@@ -5,7 +5,7 @@ import { Box, ProgressBar, AnimatedNumber } from '../../components';
 export const PressureBar = props => {
   const {
     pressure,
-    max_pressure,
+    maxPressure,
     ...rest
   } = props;
 
@@ -15,7 +15,7 @@ export const PressureBar = props => {
   const barColorDanger = "yellow";
 
   const barColor = () => {
-    if ((pressure / max_pressure) > 1) {
+    if ((pressure / maxPressure) > 1) {
       return barColorDanger;
     } else {
       return barColorSafe;
@@ -23,7 +23,7 @@ export const PressureBar = props => {
   };
 
   const bgColor = () => {
-    if ((pressure / max_pressure) > 1) {
+    if ((pressure / maxPressure) > 1) {
       return bgColorDanger;
     } else {
       return bgColorSafe;
@@ -31,10 +31,10 @@ export const PressureBar = props => {
   };
 
   const pct = () => {
-    if (pressure / max_pressure > 1) {
-      return pressure / (max_pressure * 10);
+    if (pressure / maxPressure > 1) {
+      return pressure / (maxPressure * 10);
     } else {
-      return pressure / max_pressure;
+      return pressure / maxPressure;
     }
   };
 

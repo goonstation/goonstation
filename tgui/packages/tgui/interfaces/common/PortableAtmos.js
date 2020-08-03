@@ -3,15 +3,12 @@ import { Fragment } from 'inferno';
 import { Box, Section, LabeledList, Button, AnimatedNumber } from '../../components';
 import { PressureBar } from './PressureBar';
 
-export const PortableBasicInfo = (props, context) => {
-  const { act, data } = useBackend(context);
-
+export const PortableBasicInfo = props => {
   const {
     connected,
-    holding = null,
     pressure,
-    max_pressure,
-  } = data;
+    maxPressure,
+  } = props;
 
   return (
     <Section
@@ -30,17 +27,17 @@ export const PortableBasicInfo = (props, context) => {
       <br />
       <PressureBar
         pressure={pressure}
-        max_pressure={max_pressure} />
+        maxPressure={maxPressure} />
     </Section>
   );
 };
 
-export const PortableHoldingTank = (props, context) => {
-  const { act, data } = useBackend(context);
+export const PortableHoldingTank = props => {
 
   const {
     holding,
-  } = data;
+    onEjectTank,
+  } = props;
 
   return (
     <Section
@@ -51,7 +48,7 @@ export const PortableHoldingTank = (props, context) => {
           icon="eject"
           content="Eject"
           disabled={!holding}
-          onClick={() => act('eject-tank')} />
+          onClick={() => onEjectTank()} />
       )}>
       {holding ? (
         <Fragment>
@@ -68,7 +65,7 @@ export const PortableHoldingTank = (props, context) => {
           <br />
           <PressureBar
             pressure={holding.pressure}
-            max_pressure={holding.max_pressure} />
+            maxPressure={holding.maxPressure} />
         </Fragment>
       ) : (
         <Box color="average">

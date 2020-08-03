@@ -238,11 +238,11 @@ Contains:
 
 /obj/item/tank/ui_data(mob/user)
 	var/list/data = list()
-	data["max_pressure"] = 10 * ONE_ATMOSPHERE
 	data["pressure"] = MIXTURE_PRESSURE(air_contents)
-	data["valve_open"] = using_internal()
-	data["release_pressure"] = distribute_pressure
-	data["max_release"] = TANK_MAX_RELEASE_PRESSURE
+	data["maxPressure"] = 10 * ONE_ATMOSPHERE
+	data["valveIsOpen"] = using_internal()
+	data["releasePressure"] = distribute_pressure
+	data["maxRelease"] = TANK_MAX_RELEASE_PRESSURE
 
 	return data
 
@@ -254,9 +254,9 @@ Contains:
 			toggle_valve()
 			. = TRUE
 		if("set-pressure")
-			var/target_pressure = params["release_pressure"]
-			if(target_pressure && isnum(target_pressure))
-				set_release_pressure(params["release_pressure"])
+			var/target_pressure = params["releasePressure"]
+			if(isnum(target_pressure))
+				set_release_pressure(params["releasePressure"])
 				. = TRUE
 
 ////////////////////////////////////////////////////////////

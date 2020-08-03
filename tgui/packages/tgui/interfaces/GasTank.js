@@ -3,7 +3,6 @@ import { Fragment } from 'inferno';
 import { Box, Section, LabeledList, Button, AnimatedNumber } from '../components';
 import { Window } from '../layouts';
 import { PressureBar } from './common/PressureBar';
-import { GasTankInfo } from './common/GasTankInfo';
 import { ReleaseValve } from './common/ReleaseValve';
 
 export const GasTank = (props, context) => {
@@ -11,26 +10,66 @@ export const GasTank = (props, context) => {
 
   const {
     pressure,
-    max_pressure,
-    valve_open,
-    release_pressure,
-    max_release,
+    maxPressure,
+    valveIsOpen,
+    releasePressure,
+    maxRelease,
   } = data;
+
+  const handleSetPressure = releasePressure => {
+    act('set-pressure', {
+      releasePressure,
+    });
+  };
+
+  const handleToggleValve = () => {
+    act('toggle-valve');
+  };
 
   return (
     <Window width={400} height={250}>
       <Window.Content>
         <Section title="Status">
-          <GasTankInfo pressure={pressure} max_pressure={max_pressure} />
+          <GasTankInfo
+            pressure={pressure}
+            maxPressure={maxPressure} />
         </Section>
         <Section>
           <ReleaseValve
-            valve_open={valve_open}
-            release_pressure={release_pressure}
-            max_release={max_release} />
+            valveIsOpen={valveIsOpen}
+            releasePressure={releasePressure}
+            maxRelease={maxRelease}
+            onToggleValve={handleToggleValve}
+            onSetPressure={handleSetPressure} />
         </Section>
+        <Button label="durrr" />
       </Window.Content>
     </Window>
   );
 
+};
+
+export const GasTankInfo = props => {
+  const {
+    pressure,
+    maxPressure,
+  } = props;
+
+  return (
+    <Fragment>
+      <Box pb="1em">
+        <Box inline color="label">
+          Pressure:
+        </Box>
+        <Box inline mx="1em">
+          <AnimatedNumber
+            value={pressure} />
+          {' kPa'}
+        </Box>
+      </Box>
+      <Box>
+        <PressureBar pressure={pressure} maxPressure={maxPressure} />
+      </Box>
+    </Fragment>
+  );
 };

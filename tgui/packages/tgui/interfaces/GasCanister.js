@@ -1,39 +1,99 @@
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section, NoticeBox, Box, Icon, ProgressBar, NumberInput, AnimatedNumber, LabeledControls, Flex } from '../components';
+import { Fragment } from 'inferno';
+import { Button, LabeledList, Section, NoticeBox, Box, Icon, ProgressBar, NumberInput, AnimatedNumber, LabeledControls, Flex, Divider } from '../components';
 import { Window } from '../layouts';
 import { PortableBasicInfo, PortableHoldingTank } from './common/PortableAtmos';
 import { ReleaseValve } from './common/ReleaseValve';
 
 export const GasCanister = (props, context) => {
-  const { data } = useBackend(context);
+  const { act, data } = useBackend(context);
+
   const {
+    connected,
     holding,
-    has_valve,
-    valve_open,
-    release_pressure,
-    min_release,
-    max_release,
+    hasValve,
+    valveIsOpen,
+    pressure,
+    maxPressure,
+    releasePressure,
+    minRelease,
+    maxRelease,
     detonator,
   } = data;
+
+  const handleSetPressure = releasePressure => {
+    act('set-pressure', {
+      releasePressure,
+    });
+  };
+
+  const handleToggleValve = () => {
+    act('toggle-valve');
+  };
+
+  const handleEjectTank = () => {
+    act('eject-tank');
+  };
+
   return (
     <Window
-      key={holding}
       width={400}
-      height={holding ? 370 : 330}>
+      height={370}>
       <Window.Content>
-        <PortableBasicInfo />
+        <PortableBasicInfo
+          connected={connected}
+          pressure={pressure}
+          maxPressure={maxPressure} />
         <Section>
-          { has_valve
+          { hasValve
             && <ReleaseValve
-              valve_open={valve_open}
-              release_pressure={release_pressure}
-              min_release={min_release}
-              max_release={max_release} />}
+              valveIsOpen={valveIsOpen}
+              releasePressure={releasePressure}
+              minRelease={minRelease}
+              maxRelease={maxRelease}
+              onToggleValve={handleToggleValve}
+              onSetPressure={handleSetPressure} />}
         </Section>
-        <PortableHoldingTank />
+        { !detonator && <PortableHoldingTank
+          holding={holding}
+          onEjectTank={handleEjectTank} /> }
+        { detonator && <Detonator /> }
       </Window.Content>
     </Window>
   );
 };
 
+const Detonator = props => {
+  return (
+    <DetonatorUtility />
+  );
+};
 
+
+const DetonatorUtility = props => {
+  const {
+    isAnchored,
+    trigger,
+    safetyIsOn,
+    isPrimed,
+  } = props;
+
+  return (
+    <Section>
+      <LabeledList>
+        <LabeledList.Item label="Anchor Status">
+          d
+        </LabeledList.Item>
+        <LabeledList.Item label="Trigger">
+          d
+        </LabeledList.Item>
+        <LabeledList.Item label="Safety">
+          d
+        </LabeledList.Item>
+        <LabeledList.Item label="Arming">
+          d
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
+  );
+};

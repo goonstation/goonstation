@@ -1,43 +1,37 @@
-import { useBackend } from '../../backend';
 import { NumberInput, LabeledList, Button } from '../../components';
 
-export const ReleaseValve = (props, context) => {
-  const { act, data } = useBackend(context);
+export const ReleaseValve = props => {
 
   const {
-    valve_open,
-    release_pressure = 0,
-    min_release = 0,
-    max_release = 0,
+    valveIsOpen,
+    releasePressure = 0,
+    minRelease = 0,
+    maxRelease = 0,
+    onToggleValve,
+    onSetPressure,
   } = props;
 
   return (
     <LabeledList>
       <LabeledList.Item label="Release valve">
         <Button
-          content={valve_open ? 'Open' : 'Closed'}
-          color={valve_open ? 'average' : 'default'}
-          onClick={() => act('toggle-valve')} />
+          content={valveIsOpen ? 'Open' : 'Closed'}
+          color={valveIsOpen ? 'average' : 'default'}
+          onClick={() => onToggleValve()} />
       </LabeledList.Item>
       <LabeledList.Item label="Release pressure">
         <Button
-          onClick={() => act('set-pressure', {
-            release_pressure: min_release,
-          })}
+          onClick={() => onSetPressure(minRelease)}
           content="Min" />
         <NumberInput
           animated
           width="85px"
-          value={release_pressure}
-          minValue={min_release}
-          maxValue={max_release}
-          onChange={(e, target_pressure) => act('set-pressure', {
-            release_pressure: target_pressure,
-          })} />
+          value={releasePressure}
+          minValue={minRelease}
+          maxValue={maxRelease}
+          onChange={(e, targetPressure) => onSetPressure(targetPressure)} />
         <Button
-          onClick={() => act('set-pressure', {
-            release_pressure: max_release,
-          })}
+          onClick={() => onSetPressure(maxRelease)}
           content="Max" />
       </LabeledList.Item>
     </LabeledList>

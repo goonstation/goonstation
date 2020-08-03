@@ -1,6 +1,3 @@
-#define MAX_RELEASE_PRESSURE 10*ONE_ATMOSPHERE
-#define MIN_RELEASE_PRESSURE ONE_ATMOSPHERE/10
-
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
 	icon = 'icons/obj/atmospherics/atmos.dmi'
@@ -381,23 +378,25 @@
 /obj/machinery/portable_atmospherics/canister/ui_data(mob/user)
 	var/list/data = list()
 	data["pressure"] = MIXTURE_PRESSURE(air_contents)
-	data["max_pressure"] = maximum_pressure
+	data["maxPressure"] = maximum_pressure
 	data["connected"] = connected_port ? TRUE : FALSE
-	data["release_pressure"] = release_pressure
-	data["min_release"] = PORTABLE_ATMOS_MIN_RELEASE_PRESSURE
-	data["max_release"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
-	data["valve_open"] = valve_open
-	data["has_valve"] = has_valve ? TRUE : FALSE
+	data["releasePressure"] = release_pressure
+	data["minRelease"] = PORTABLE_ATMOS_MIN_RELEASE_PRESSURE
+	data["maxRelease"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
+	data["valveIsOpen"] = valve_open
+	data["hasValve"] = has_valve ? TRUE : FALSE
 
-	data["holding"] = null // need to tell the client it doesn't exist
+	data["holding"] = null // need to explicitly tell the client it doesn't exist
 	if(holding)
 		data["holding"] = list()
 		data["holding"]["name"] = holding.name
 		data["holding"]["pressure"] = MIXTURE_PRESSURE(holding.air_contents)
-		data["holding"]["max_pressure"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE //not really, but having the big green bar fill up all the way feels really good doesn't it
+		data["holding"]["maxPressure"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE //not really, but having the big green bar fill up all the way feels really good doesn't it
 
+	data["detonator"] = null // need to explicitly tell the client it doesn't exist
 	if(det)
 		data["detonator"] = list()
+		data["detonator"]["colors"] = det.WireColors
 
 	return data
 
@@ -410,16 +409,10 @@
 				toggle_valve()
 				. = TRUE
 		if("set-pressure")
-			var/target_pressure = params["release_pressure"]
-			if(target_pressure && isnum(target_pressure))
+			var/target_pressure = params["releasePressure"]
+			if(isnum(target_pressure))
 				set_release_pressure(target_pressure)
 				. = TRUE
-		if("set-max-pressure")
-			set_release_pressure(MAX_RELEASE_PRESSURE)
-			. = TRUE
-		if("set-min-pressure")
-			set_release_pressure(MIN_RELEASE_PRESSURE)
-			. = TRUE
 		if("eject-tank")
 			eject_tank()
 			. = TRUE
@@ -601,7 +594,7 @@
 				src.det.leaking()
 
 /obj/machinery/portable_atmospherics/canister/proc/set_release_pressure(var/pressure as num)
-	release_pressure = clamp(pressure, MIN_RELEASE_PRESSURE, MAX_RELEASE_PRESSURE)
+	release_pressure = clamp(pressure, PORTABLE_ATMOS_MIN_RELEASE_PRESSURE, PORTABLE_ATMOS_MAX_RELEASE_PRESSURE)
 
 /obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
 	if(..())
