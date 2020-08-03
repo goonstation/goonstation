@@ -61,7 +61,7 @@ toxic - poisons
 /datum/projectile/energy_bolt/bouncy
 	name = "ricochet energy bolt"
 	var/max_bounce_count = 1
-	var/reflect_on_nondense_hits = 0
+	var/reflect_on_nondense_hits = FALSE
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if (!ismob(hit))
