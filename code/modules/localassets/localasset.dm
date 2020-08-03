@@ -25,8 +25,8 @@ ABSTRACT_TYPE(/datum/asset)
 /// Basic assets
 ABSTRACT_TYPE(/datum/asset/basic)
 /datum/asset/basic
-	var/local_assets = list()
-	var/url_map = list()
+	var/local_assets = list() // List of entries with form "filename" (gets shit into cache)
+	var/url_map = list() // List of entries with form "browserasset-path" = "url"
 
 	deliver(client)
 		. = send_assets(client, local_assets)

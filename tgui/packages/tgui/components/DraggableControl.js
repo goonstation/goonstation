@@ -225,7 +225,16 @@ export class DraggableControl extends Component {
             value = e.target.value;
           }
           else {
-            value = clamp(e.target.value, minValue, maxValue);
+            value = clamp(
+              parseFloat(e.target.value),
+              minValue,
+              maxValue);
+            if (Number.isNaN(value)) {
+              this.setState({
+                editing: false,
+              });
+              return;
+            }
           }
           this.setState({
             editing: false,
@@ -246,7 +255,16 @@ export class DraggableControl extends Component {
               value = e.target.value;
             }
             else {
-              value = clamp(e.target.value, minValue, maxValue);
+              value = clamp(
+                parseFloat(e.target.value),
+                minValue,
+                maxValue);
+              if (Number.isNaN(value)) {
+                this.setState({
+                  editing: false,
+                });
+                return;
+              }
             }
             this.setState({
               editing: false,
