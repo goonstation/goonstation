@@ -15579,6 +15579,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
+/obj/item/reagent_containers/food/drinks/espressocup,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aJm" = (
