@@ -300,7 +300,6 @@
 						H.assign_gimmick_skull() // We might have to update the skull (Convair880).
 
 			mob.set_clothing_icon_dirty()
-			set_tail(mob, src.tail)
 			src.mob = null
 
 		..()
@@ -312,6 +311,10 @@
 
 		if(Tf.organHolder)	// dump the old tail, if they have one
 			Tf.organHolder.tail = null
+
+		for(var/obj/item/organ/tail/hidden_secret_tails in Tf.contents)	// Cus mutants love to hoard tails in their mob
+			if(istype(hidden_secret_tails, /obj/item/organ/tail))
+				qdel(hidden_secret_tails)	// Please stop exploding into tails
 
 		switch(tailnum)	// Mutantraces come with a free, new tail
 			if (NO_TAIL)	// technically you have a tail, its just imaginary
@@ -343,6 +346,7 @@
 				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
 
 		Tf.update_body()
+		return 1
 
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"

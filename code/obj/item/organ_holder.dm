@@ -338,17 +338,7 @@
 			src.appendix = new /obj/item/organ/appendix(src.donor, src)
 			organ_list["appendix"] = appendix
 		if (!src.tail)
-		/*	if(ishuman(src.donor))
-				var/mob/living/carbon/human/H = src.donor
-				if (H && H.mutantrace.tail_organ)
-					src.tail = new H.mutantrace.tail_organ(src.donor, src)
-					organ_list["tail"] = tail
-				else	// regular old nonexistant human tail
-					src.tail = new /obj/item/organ/tail/human(src.donor, src)
-					organ_list["tail"] = tail
-			else	// You're still getting a tail
-			*/
-			src.tail = new /obj/item/organ/tail/human(src.donor, src) // We'll fix it in post
+			src.tail = new /obj/item/organ/tail/human(src.donor, src)
 			organ_list["tail"] = tail
 
 	//input organ = string value of organ_list assoc list

@@ -2,7 +2,7 @@
 	name = "tail"
 	organ_name = "tail"
 	organ_holder_name = "tail"
-	organ_holder_location = "chest"	// Chest-ish
+	organ_holder_location = "tail"
 	organ_holder_required_op_stage = 3.0	// Cant just slap a tail on a human
 	edible = 0	// dont eat pant
 	var/icon_piece_1 = null	// For setting up the icon if its in multiple pieces
