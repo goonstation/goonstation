@@ -316,7 +316,7 @@ ABSTRACT_TYPE(/datum/objective/crew/mechanic)
 			if(mechanic_controls.scanned_items.len > 9) return 1
 			else return 0
 	teleporter
-		explanation_text = "Ensure that there are at least two teleporters on the station level at the end of the round, excluding the science teleporter."
+		explanation_text = "Ensure that there are at least two functioning command teleporter consoles, complete with portal generators and portal rings, on the station level at the end of the round."
 		medal_name = "It's not 'Door to Heaven'"
 		check_completion()
 			var/telecount = 0
