@@ -291,10 +291,12 @@ var/global/client/ff_debugger = null
 			if ((forget != obstacle))
 				if(obstacle.event_handler_flags & USE_CANPASS)
 					if(!obstacle.CanPass(mover, cturf, 1, 0))
+
 						mover.Bump(obstacle, 1)
 						return 0
 				else //cheaper, skip proc call lol lol
 					if (obstacle.density)
+
 						mover.Bump(obstacle,1)
 						return 0
 	return 1 //Nothing found to block so return success!
