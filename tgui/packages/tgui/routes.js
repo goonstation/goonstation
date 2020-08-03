@@ -33,8 +33,7 @@ const SuspendedWindow = () => {
   );
 };
 
-export const getRoutedComponent = store => {
-  const state = store.getState();
+export const getRoutedComponent = state => {
   const { suspended, config } = selectBackend(state);
   if (suspended) {
     return SuspendedWindow;
@@ -43,7 +42,7 @@ export const getRoutedComponent = store => {
     const debug = selectDebug(state);
     // Show a kitchen sink
     if (debug.kitchenSink) {
-      return require('./debug').KitchenSink;
+      return require('./debug/KitchenSink').KitchenSink;
     }
   }
   const name = config?.interface;

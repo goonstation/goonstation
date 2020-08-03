@@ -95,14 +95,6 @@ const NO_PASSTHROUGH_KEYS = [
   KEY_F12,
 ];
 
-/**
- * Fixed BYOND macros, that hopefully will never change on the server.
- */
-const BYOND_MACROS = {
-  T: () => Byond.command('Say'),
-  O: () => Byond.command('OOC'),
-};
-
 // Tracks the "pressed" state of keys
 const keyState = {};
 
@@ -127,34 +119,6 @@ const createHotkeyString = (ctrlKey, altKey, shiftKey, keyCode) => {
     str += '[' + keyCode + ']';
   }
   return str;
-};
-
-const keyCodeToByond = keyCode => {
-  if (keyCode === 16) return 'Shift';
-  if (keyCode === 17) return 'Ctrl';
-  if (keyCode === 18) return 'Alt';
-  if (keyCode === 33) return 'Northeast';
-  if (keyCode === 34) return 'Southeast';
-  if (keyCode === 35) return 'Southwest';
-  if (keyCode === 36) return 'Northwest';
-  if (keyCode === 37) return 'West';
-  if (keyCode === 38) return 'North';
-  if (keyCode === 39) return 'East';
-  if (keyCode === 40) return 'South';
-  if (keyCode === 45) return 'Insert';
-  if (keyCode === 46) return 'Delete';
-  if (keyCode >= 48 && keyCode <= 57 || keyCode >= 65 && keyCode <= 90) {
-    return String.fromCharCode(keyCode);
-  }
-  if (keyCode >= 96 && keyCode <= 105) {
-    return 'Numpad' + (keyCode - 96);
-  }
-  if (keyCode >= 112 && keyCode <= 123) {
-    return 'F' + (keyCode - 111);
-  }
-  if (keyCode === 188) return ',';
-  if (keyCode === 189) return '-';
-  if (keyCode === 190) return '.';
 };
 
 /**
@@ -195,21 +159,13 @@ const handlePassthrough = (e, eventType) => {
     return;
   }
   // Send this keypress to BYOND
-  const byondKeyCode = keyCodeToByond(keyCode);
-  if (byondKeyCode) {
-    const macro = BYOND_MACROS[byondKeyCode];
-    if (macro) {
-      Byond.winset('map', { focus: true });
-      return macro();
-    }
-    if (eventType === 'keydown' && !keyState[keyCode]) {
-      logger.debug(`.keydown "${byondKeyCode}"`);
-      return Byond.command(`.keydown "${byondKeyCode}"`);
-    }
-    if (eventType === 'keyup' && keyState[keyCode]) {
-      logger.debug(`.keyup "${byondKeyCode}"`);
-      return Byond.command(`.keyup "${byondKeyCode}"`);
-    }
+  if (eventType === 'keydown' && !keyState[keyCode]) {
+    logger.debug('passthrough', eventType, keyData);
+    return Byond.topic({ __keydown: keyCode });
+  }
+  if (eventType === 'keyup' && keyState[keyCode]) {
+    logger.debug('passthrough', eventType, keyData);
+    return Byond.topic({ __keyup: keyCode });
   }
 };
 
@@ -219,11 +175,10 @@ const handlePassthrough = (e, eventType) => {
  */
 export const releaseHeldKeys = () => {
   for (let keyCode of Object.keys(keyState)) {
-    const byondKeyCode = keyCodeToByond(keyCode);
-    if (byondKeyCode && keyState[keyCode]) {
+    if (keyState[keyCode]) {
+      logger.log(`releasing [${keyCode}] key`);
       keyState[keyCode] = false;
-      logger.debug(`releasing keys (.keyup)  "${byondKeyCode}"`);
-      Byond.command(`.keyup "${byondKeyCode}"`);
+      Byond.topic({ __keyup: keyCode });
     }
   }
 };

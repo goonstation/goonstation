@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-export { Layout } from './Layout';
+export { Layout, refocusLayout } from './Layout';
 export { NtosWindow } from './NtosWindow';
-export { Pane } from './Pane';
 export { Window } from './Window';

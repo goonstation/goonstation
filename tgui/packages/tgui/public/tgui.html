@@ -9,6 +9,8 @@
 
 <!-- Early setup -->
 <script type="text/javascript">
+// Mark the beginning of initialization
+window.__inception__ = new Date().getTime();
 // Read window id into a global
 window.__windowId__ = document
   .getElementById('tgui:windowId')
@@ -44,8 +46,7 @@ window.Byond = (function () {
   // Basic checks to detect whether this page runs in BYOND
   var isByond = tridentVersion !== null
     && location.hostname === '127.0.0.1'
-    && location.pathname.indexOf('/tmp') === 0
-    && location.search !== '?external';
+    && location.pathname.indexOf('/tmp') === 0;
 
   // Version constants
   Byond.IS_BYOND = isByond;
@@ -56,19 +57,6 @@ window.Byond = (function () {
 
   // Callbacks for asynchronous calls
   Byond.__callbacks__ = [];
-
-  // Reviver for BYOND JSON
-  // IE8: No reviver for you!
-  // See: https://stackoverflow.com/questions/1288962
-  var byondJsonReviver;
-  if (!Byond.IS_LTE_IE8) {
-    byondJsonReviver = function (key, value) {
-      if (typeof value === 'object' && value !== null && value.__number__) {
-        return parseFloat(value.__number__);
-      }
-      return value;
-    };
-  }
 
   // Makes a BYOND call
   // See: https://secure.byond.com/docs/ref/skinparams.html
@@ -158,15 +146,6 @@ window.Byond = (function () {
     return Byond.call('winset', props);
   };
 
-  Byond.parseJson = function (json) {
-    try {
-      return JSON.parse(json, byondJsonReviver);
-    }
-    catch (err) {
-      throw new Error('JSON parsing error: ' + (err && err.message));
-    }
-  };
-
   return Byond;
 })();
 
@@ -181,8 +160,8 @@ window.onerror = function (msg, url, line, col, error) {
       stack += ':' + col;
     }
   }
-  // Augment the stack
-  stack = window.__augmentStack__(stack, error);
+  // Append user agent info
+  stack += '\nUser Agent: ' + navigator.userAgent;
   // Print error to the page
   var errorRoot = document.getElementById('FatalError');
   var errorStack = document.getElementById('FatalError__stack');
@@ -206,6 +185,11 @@ window.onerror = function (msg, url, line, col, error) {
   };
   setFatalErrorGeometry();
   setInterval(setFatalErrorGeometry, 1000);
+  // Use a hook that comes with the bundle to augment the stack
+  // and send errors to a local dev server (if using a development build).
+  if (window.__logger__) {
+    stack = window.__logger__.fatal(error, stack);
+  }
   // Send logs to the game server
   Byond.topic({
     tgui: 1,
@@ -219,11 +203,6 @@ window.onerror = function (msg, url, line, col, error) {
   window.update = function () {};
   // Prevent default action
   return true;
-};
-
-// Helper for augmenting stack traces on fatal errors
-window.__augmentStack__ = function (stack, error) {
-  return stack + '\nUser Agent: ' + navigator.userAgent;
 };
 
 // Early initialization

@@ -5,10 +5,10 @@
 
 @use '../base.scss';
 
-$background-color: base.$color-bg !default;
+$color-background: base.$color-bg !default;
 
 .Modal {
-  background-color: $background-color;
+  background-color: $color-background;
   max-width: calc(100% - 1rem);
   padding: 1rem;
 }

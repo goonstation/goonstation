@@ -50,7 +50,6 @@ Flex.defaultHooks = pureComponentHooks;
 export const computeFlexItemProps = props => {
   const {
     className,
-    style,
     grow,
     order,
     shrink,
@@ -67,7 +66,7 @@ export const computeFlexItemProps = props => {
       className,
     ]),
     style: {
-      ...style,
+      ...rest.style,
       'flex-grow': grow,
       'flex-shrink': shrink,
       'flex-basis': unit(basis),
