@@ -108,10 +108,6 @@
 				src.donor_name = src.donor.name
 				src.name = "[src.donor_name]'s [initial(src.name)]"
 			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
-			if (src.donor.bioHolder.mobAppearance)	// Get the colors here so they dont change later, ie reattached on someone else
-				var/datum/appearanceHolder/aH = src.donor.bioHolder.mobAppearance
-				src.organ_color_1 = organ_fix_colors(aH.customization_first_color)
-				src.organ_color_2 = organ_fix_colors(aH.customization_second_color)
 		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
 
 

@@ -33,7 +33,7 @@
 	var/icon_override_static = 0 // does this look different enough from a default human to warrant a static icon of its own?
 
 	var/tail = null // What tail do we have? Or are supposed to have?
-	var/tail_organ = /obj/item/organ/tail/human	// What type of tail are we supposed to have?
+	var/obj/item/organ/tail/tail_organ = /obj/item/organ/tail/human	// What type of tail are we supposed to have?
 
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
@@ -306,14 +306,15 @@
 		..()
 		return
 
-	proc/fix_tail(var/mob/living/tail_fix)
-		if(ishuman(tail_fix))
-			var/mob/living/carbon/human/Tf = tail_fix
-			if (Tf.organHolder && (Tf.organHolder.tail != Tf.mutantrace.tail_organ))
-				Tf.organHolder.tail = null	// Toss the old tail
-				Tf.organHolder.organ_list["tail"] = null
-				Tf.organHolder.tail = new Tf.mutantrace.tail_organ(Tf.organHolder.donor, Tf)
-				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
+	proc/fix_tail(var/mob/living/carbon/human/Tf)
+		if(ishuman(Tf))
+			if(Tf.organHolder && Tf.organHolder.tail)
+				if(src.tail_organ && Tf.mutantrace.tail_organ)
+					Tf.organHolder.tail = new Tf.mutantrace.tail_organ(Tf.organHolder.donor, Tf)
+					Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
+				else
+					Tf.organHolder.tail = new /obj/item/organ/tail/human(Tf.organHolder.donor, Tf)
+					Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
 
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"

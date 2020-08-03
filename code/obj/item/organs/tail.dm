@@ -60,6 +60,11 @@
 
 	New()
 		..()
+		if (src.donor.bioHolder.mobAppearance)	// Get the colors here so they dont change later, ie reattached on someone else
+			var/datum/appearanceHolder/aH = src.donor.bioHolder.mobAppearance
+			src.organ_color_1 = organ_fix_colors(aH.customization_first_color)
+			src.organ_color_2 = organ_fix_colors(aH.customization_second_color)
+
 		src.organ_image_under_suit_1 = image('icons/effects/genetics.dmi', icon_state="lizard_under_suit_1", layer = MOB_LIMB_LAYER-0.3)
 		src.organ_image_under_suit_2 = image('icons/effects/genetics.dmi', icon_state="lizard_under_suit_2", layer = MOB_LIMB_LAYER-0.25)
 		src.organ_image_over_suit = image('icons/effects/genetics.dmi', icon_state="lizard_over_suit", layer = MOB_LAYER_BASE+0.3)
