@@ -14,9 +14,12 @@
 /code/datums/gamemodes/gangwar.dm @Kyle2143
 /code/procs/jobprocs.dm @Kyle2143
 
+# Mordent (mordent-goonstation)
+/code/modules/robotics/ @mordent-goonstation
+
 # ZeWaka
 *.md @ZeWaka
-/tgui/ @ZeWaka
 # /maps/ @ZeWaka
 
 # Multiple Owners
+/tgui/ @mordent-goonstation @ZeWaka
