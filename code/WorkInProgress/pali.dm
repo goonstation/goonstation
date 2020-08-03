@@ -258,7 +258,7 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
 	SPAWN_DBG(4 SECONDS)
 		if(text_id == text.unique_id)
 			text.bump_up(invis=1)
-			sleep(3 SECONDS)
+			sleep(0.5 SECONDS)
 			pool(text)
 	return text
 
