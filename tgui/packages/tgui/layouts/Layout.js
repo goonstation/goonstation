@@ -42,13 +42,11 @@ class LayoutContent extends Component {
   componentDidMount() {
     const node = this.ref.current;
     node.addEventListener('mouseenter', this.refocusLayout);
-    node.addEventListener('click', this.refocusLayout);
   }
 
   componentWillUnmount() {
     const node = this.ref.current;
     node.removeEventListener('mouseenter', this.refocusLayout);
-    node.removeEventListener('click', this.refocusLayout);
   }
 
   render() {
