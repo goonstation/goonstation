@@ -25,8 +25,8 @@
 
 	//A bad version of the robutsec... For now.
 	on_life(var/mult = 1)
-		if (src.get_damage() < FAIL_DAMAGE && prob(10))
-			donor.reagents.add_reagent(pick("saline", "salbutamol", "salicylic_acid", "charcoal"), 4 * mult)
+		if (src.get_damage() < FAIL_DAMAGE && prob(10 * mult))
+			donor.reagents.add_reagent(pick("saline", "salbutamol", "salicylic_acid", "charcoal"), 4)
 
 		if(emagged && !broken && donor.health < 0) //emagged and we're in crit
 			src.take_damage(200, 200, 200)
