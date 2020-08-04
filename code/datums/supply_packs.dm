@@ -225,14 +225,14 @@
 	containertype = /obj/storage/crate/freezer
 	containername = "Catering: Condiment Crate"
 
-/datum/supply_packs/electrical4
-	name = "Electrical Supplies Crate - 4 pack"
-	desc = "x4 Cabling Box (28 cable coils total)"
+/datum/supply_packs/electrical
+	name = "Electrical Supplies Crate - 2 pack"
+	desc = "x2 Cabling Box (14 cable coils total)"
 	category = "Basic Materials"
-	contains = list(/obj/item/storage/box/cablesbox = 4)
-	cost = 1000
+	contains = list(/obj/item/storage/box/cablesbox = 2)
+	cost = 2000
 	containertype = /obj/storage/crate
-	containername = "Electrical Supplies Crate - 4 pack"
+	containername = "Electrical Supplies Crate - 2 pack"
 
 /datum/supply_packs/engineering
 	name = "Engineering Crate"
