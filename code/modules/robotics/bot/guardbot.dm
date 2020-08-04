@@ -85,7 +85,7 @@
 				src.master = null
 			//dispose()
 			return 0
-		
+
 		return 0
 
 //The Robot.
@@ -137,21 +137,21 @@
 	var/flashlight_red = 0.1
 	var/flashlight_green = 0.4
 	var/flashlight_blue = 0.1
-	
+
 	////////////////////// GUN STUFF -V
 	// Lifted from secbot!
 	var/global/list/budgun_whitelist = list(/obj/item/gun/energy/tasershotgun,\
 											/obj/item/gun/energy/taser_gun,\
 											/obj/item/gun/energy/vuvuzela_gun,\
 											/obj/item/gun/energy/wavegun,\
-											/obj/item/gun/energy/lawbringer) 
+											/obj/item/gun/energy/pulse_rifle)
 
 	var/shotcount = 0		// Number of times it shoots when it should, modded by emag state
 	var/gun = null			// What's the name of our robot's gun? Used in the chat window!
 	var/obeygunlaw = 1		// Does our bot follow the gun whitelist?
 	var/obj/item/gun/budgun = null	// the gun, actually important
 	var/hasgun = 0			// So our robot only gets one gun
-	var/toollock = 1		// Gotta unlock the tool port to swap it	
+	var/toollock = 1		// Gotta unlock the tool port to swap it
 	var/gunlocklock = 0		// Traitor mods prevent guntheft
 	var/ammofab = 0			// Is the Ammofabricator installed?
 	var/obj/item/gun/setup_gun = null	// Lets spawn with a gun
@@ -367,7 +367,7 @@
 				src.tool = new setup_default_tool_path
 				src.tool.set_loc(src)
 				src.tool.master = src
-				
+
 			if(setup_gun && !src.budgun)
 				src.budgun = new setup_gun
 				src.budgun.set_loc(src)
@@ -497,7 +497,7 @@
 			if (src.task)
 				src.task.task_input("treated")
 			return
-		
+
 		// Hacky traitor modules
 		// The Ammofab
 		else if (istype(W, /obj/item/device/guardbot_module/ammofab))
@@ -513,14 +513,15 @@
 					boutput(user, "<span class='alert'>The BulletBuddy snakes a metallic tendril up [src]'s arm, tightening itself around their hand!</span>")
 					boutput(user, "<span class='alert'>The tendril extends into the magazine port of [src]'s gun, welding itself in place!</span>")
 					src.gunlocklock = 1
-		
+					src.obeygunlaw = 0
+
 		// Hotswap tools on the fly!
 		else if (istype(W, /obj/item/device/guardbot_tool) && !src.budgun)
 			var/turf/Tdurg = get_turf(src)
 			if (locked)
 				boutput(user, "<span class='alert'>The tool port is locked!</span>")
 			// Set tool to be W, delete guntool so we dont end up with a zillion of em
-			else if (src.tool.tool_id == "GUN")	
+			else if (src.tool.tool_id == "GUN")
 				user.visible_message("<b>[user]</b> inserts the [W] into [src].","You insert the [W] into [src].")
 				qdel(src.tool)
 				src.tool = W
@@ -534,7 +535,7 @@
 				src.tool.master = src
 				W.set_loc(src)
 				user.u_equip(W)
-		
+
 		//Give em a gun, if they don't already have one
 		//Not a hotswap, only if there's no gun and no tool
 		else if (istype(W, /obj/item/gun) && !src.budgun && (src.tool.tool_id == "GUN"))
@@ -543,7 +544,7 @@
 				legalweapon = 1
 			if (!legalweapon && obeygunlaw)
 				src.visible_message("<span class='alert'>[src] refuses to wield an unauthorized weapon!</span>", "<span class='alert'>[src] graciously refuses your [W].</span>")
-			else if (legalweapon && obeygunlaw)					
+			else if (legalweapon && obeygunlaw)
 				W.set_loc(src)
 				src.budgun = W
 				src.budgun.master = src
@@ -552,7 +553,7 @@
 				src.visible_message("<span class='alert'>[user] gives [src] [his_or_her(user)] [gun]!</span>", "<span class='alert'>You give your [gun] to [src]!</span>")
 				src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)
 				user.u_equip(W)
-			else 
+			else
 				W.set_loc(src)
 				src.budgun = W
 				src.budgun.master = src
@@ -561,7 +562,7 @@
 				src.visible_message("<span class='alert'>[src] snatches the [gun] from [user], wielding it in its cold, dead weapon mount!</span>", "<span class='alert'>[src] snatches the [gun] from your grip and plugs it into its weapon mount!</span>")
 				src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)
 				user.u_equip(W)
-				
+
 		else if (ispryingtool(W) && (src.budgun || src.tool))
 			var/turf/Tdurg = get_turf(src)
 			if (src.budgun && (src.tool.tool_id == "GUN"))
@@ -583,7 +584,7 @@
 					src.tool = src.gunt
 			else if (src.tool && (src.tool.tool_id == "GUN"))
 				boutput(user, "<span class='alert'>There's no tool to remove!</span>")
-		
+
 		else if (istype(W, /obj/item/device/guardbot_tool/gun))
 			boutput(user, "You try to insert the metaphysical representation of a nonexistant tool that is used as a phantom talisman to comfort Guardbuddies and prevent them from falling into deep existential ennui when they find themselves lacking a proper tool into [name], but they seem to already have one. This prompts you to wonder, briefly, how you even got this thing.")
 
@@ -975,7 +976,7 @@
 					while(shotcount > 0 && target)
 						budgun.shoot(get_turf(target), get_turf(src), src)
 						shotcount--
-					
+
 					if (istype(src.budgun, /obj/item/gun/kinetic))
 						var/obj/item/gun/kinetic/shootgun = src.budgun
 						if (ammofab)	// Can we build our own ammo?
@@ -986,10 +987,10 @@
 					else if (istype(src.budgun, /obj/item/gun/energy))
 						var/obj/item/gun/energy/pewgun = src.budgun
 						if (pewgun.cell && (pewgun.cell.charge < pewgun.cell.max_charge))
-							if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL)) 
+							if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL))
 								cell.charge -= (pewgun.cell.max_charge - pewgun.cell.charge)
 								pewgun.cell.charge = pewgun.cell.max_charge
-					
+
 					src.visible_message("<span class='alert'><b>[src] fires its [gun] at [target]!</b></span>")
 
 					src.overlays -= image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)
@@ -1020,7 +1021,7 @@
 					src.update_icon()				// Update now, we're kind of on a deadline
 					SPAWN_DBG(3 SECONDS)
 						src.set_emotion("sad")		// Still kinda sad that someone would bully a defenseless little rectangle.
-						src.update_icon()				
+						src.update_icon()
 			else if(src.tool && (src.tool.tool_id != "GUN"))
 				var/is_ranged = get_dist(src, target) > 1
 				src.tool.bot_attack(target, src, is_ranged, lethal)
@@ -1135,9 +1136,9 @@
 					<tr><td><font color=white>[power_readout]</font></td></tr></table><br>"}
 
 			dat += "Current Tool: [src.tool.tool_id == "GUN" ? "NONE" : src.tool.tool_id]<br>"
-			
+
 			dat += "Current Gun: [src.budgun ? src.budgun.name : "NONE"]<br>"
-			
+
 			if(src.gunlocklock)
 				dat += "Gun Mount: <font color=red>JAMMED!</font><br>"
 			else
@@ -1182,7 +1183,7 @@
 				hat_image.pixel_y = hat_y_offset
 				src.underlays = list(hat_image)
 				src.hat_shown = 1
-				
+
 			if (src.budgun)
 				src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)
 
@@ -1235,7 +1236,7 @@
 				src.wakeup()
 
 			return
-		
+
 		if(src.reply_wait)
 			src.reply_wait--
 
@@ -1270,7 +1271,7 @@
 				return 1
 
 			return 0
-			
+
 	//phantom Gun tool
 	gun
 		name = "Weapon handling chipset"
@@ -1527,7 +1528,7 @@
 
 	ammofab
 		name = "BulletBuddy ammo fabrication kit"
-		desc = "A miniature fabricator designed to fit inside a PR-6S Guardbuddy and provide for it an inexhaustible supply of kinetic ammunition, at the expense of the bot's built-in battery charge. When attaches, this device welds itself to the bot, and if it detects a weapon in the bot's grip, it'll weld itself to that as well."
+		desc = "A miniature fabricator designed to fit inside a PR-6S Guardbuddy and provide for it an inexhaustible supply of kinetic ammunition, at the expense of the bot's built-in battery charge. When attached, this device welds itself to the bot, and if it detects a weapon in the bot's grip, it'll weld itself to that as well."
 		icon_state = "press_forbidden"
 		tool_id = "AMMOFAB - if you see this, please tell Superlagg their thing broke =0"
 
@@ -3432,7 +3433,7 @@
 			newbot.tool = new /obj/item/device/guardbot_tool/gun
 			newbot.tool.set_loc(newbot)
 			newbot.tool.master = newbot
-			
+
 			newbot.locked = 0
 
 			if(src.created_model_task)
@@ -4039,7 +4040,7 @@
 		dat += "Current Tool: [src.tool ? src.tool.tool_id : "NONE"]<br>"
 
 		dat += "Current Gun: [src.budgun ? src.budgun.name : "NONE"]<br>"
-		
+
 		if(src.gunlocklock)
 			dat += "Gun Mount: <font color=red>JAMMED!</font><br>"
 		else
