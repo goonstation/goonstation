@@ -13,6 +13,7 @@
 	var/custom_cell_max_capacity = null // Is there a limit as to what power cell (in PU) we can use?
 	var/wait_cycle = 0 // Using a self-charging cell should auto-update the gun's sprite.
 	var/can_swap_cell = 1
+	muzzle_flash = null
 
 	New()
 		if (!cell)
@@ -282,6 +283,7 @@
 	force = 7.0
 	desc = "A gun that produces a harmful phaser bolt, causing substantial damage."
 	module_research = list("weapons" = 4, "energy" = 4)
+	muzzle_flash = "muzzle_flash_phaser"
 
 	New()
 		cell = new/obj/item/ammo/power_cell/med_power
@@ -317,6 +319,7 @@
 	hide_attack = 1
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
 	module_research = list("medicine" = 2, "science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10)
+	muzzle_flash = null
 
 	New()
 		current_projectile = new/datum/projectile/rad_bolt
@@ -535,6 +538,7 @@
 	m_amt = 4000
 	force = 6.0
 	module_research = list("weapons" = 2, "energy" = 2, "miniaturization" = 3)
+	muzzle_flash = "muzzle_flash_wavep"
 
 	New()
 		current_projectile = new/datum/projectile/wavegun
@@ -551,12 +555,15 @@
 			if(current_projectile.type == /datum/projectile/wavegun)
 				src.icon_state = "wavegun[ratio]"
 				item_state = "wave"
+				muzzle_flash = "muzzle_flash_wavep"
 			else if (current_projectile.type == /datum/projectile/wavegun/transverse)
 				src.icon_state = "wavegun_green[ratio]"
 				item_state = "wave-g"
+				muzzle_flash = "muzzle_flash_waveg"
 			else
 				src.icon_state = "wavegun_emp[ratio]"
 				item_state = "wave-emp"
+				muzzle_flash = "muzzle_flash_waveb"
 
 	attack_self(mob/user as mob)
 		..()
@@ -722,6 +729,7 @@
 	throw_range = 10
 	mats = 0
 	module_research = list("weapons" = 1, "energy" = 5, "science" = 10)
+	muzzle_flash = "muzzle_flash_waveg"
 
 	New()
 		cell = new/obj/item/ammo/power_cell/med_power
@@ -1034,7 +1042,7 @@
 	item_state = "bullpup"
 	uses_multiple_icon_states = 1
 	force = 5.0
-	muzzle_flash = null
+	muzzle_flash = "muzzle_flash_plaser"
 
 	New()
 		..()
@@ -1175,6 +1183,7 @@
 	can_dual_wield = 0
 	two_handed = 1
 	desc = "A gun that produces a harmful laser, causing substantial damage."
+	muzzle_flash = "muzzle_flash_laser"
 
 	New()
 		cell = new/obj/item/ammo/power_cell/med_power
@@ -1212,6 +1221,7 @@
 	var/image/indicator_display = null
 	rechargeable = 0
 	can_swap_cell = 0
+	muzzle_flash = "muzzle_flash_elec"
 
 	New(var/mob/M)
 		cell = new/obj/item/ammo/power_cell/self_charging/lawbringer
@@ -1373,20 +1383,28 @@
 
 			if(current_projectile.type == /datum/projectile/energy_bolt/aoe)			//detain - yellow
 				indicator_display.color = "#FFFF00"
+				muzzle_flash = "muzzle_flash_elec"
 			else if (current_projectile.type == /datum/projectile/bullet/revolver_38)			//execute - cyan
 				indicator_display.color = "#00FFFF"
+				muzzle_flash = "muzzle_flash"
 			else if (current_projectile.type == /datum/projectile/bullet/smoke)			//smokeshot - dark-blue
 				indicator_display.color = "#0000FF"
+				muzzle_flash = "muzzle_flash"
 			else if (current_projectile.type == /datum/projectile/bullet/tranq_dart/law_giver)	//knockout - green
 				indicator_display.color = "#008000"
+				muzzle_flash = null
 			else if (current_projectile.type == /datum/projectile/bullet/flare)			//hotshot - red
 				indicator_display.color = "#FF0000"
+				muzzle_flash = null
 			else if (current_projectile.type == /datum/projectile/bullet/aex/lawbringer)	//bigshot - purple
 				indicator_display.color = "#551A8B"
+				muzzle_flash = null
 			else if (current_projectile.type == /datum/projectile/bullet/clownshot)		//clownshot - pink
 				indicator_display.color = "#FFC0CB"
+				muzzle_flash = null
 			else if (current_projectile.type == /datum/projectile/energy_bolt/pulse)		//clownshot - pink
 				indicator_display.color = "#EEEEFF"
+				muzzle_flash = "muzzle_flash_bluezap"
 			else
 				indicator_display.color = "#000000"				//default, should never reach. make it black
 			src.overlays += indicator_display

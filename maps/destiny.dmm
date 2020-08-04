@@ -5203,7 +5203,6 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/stool/chair/office,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -45331,6 +45330,11 @@
 /obj/machinery/vending/janitor,
 /turf/simulated/floor,
 /area/station/janitor)
+"gly" = (
+/obj/cable,
+/obj/machinery/photocopier,
+/turf/simulated/floor,
+/area/station/crew_quarters/lounge_starboard)
 "jor" = (
 /obj/cable{
 	d1 = 1;
@@ -91987,7 +91991,7 @@ ajm
 ajx
 ajF
 ajJ
-ajU
+gly
 aiK
 akm
 aku

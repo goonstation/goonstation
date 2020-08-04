@@ -165,6 +165,7 @@
 						for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
 							flick("[src.icon_tag]_fire",src)
 							sleep(src.current_projectile.shot_delay)
+							muzzle_flash_any(src, get_angle(src,target), "muzzle_flash")
 					shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
 
 

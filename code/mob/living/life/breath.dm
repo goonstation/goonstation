@@ -94,7 +94,7 @@
 		//if (istype(loc, /obj/machinery/clonepod)) return
 
 		if (owner.reagents)
-			if (owner.reagents.has_reagent("lexorin")) return
+			if (owner.reagents.has_reagent("lexorin") || HAS_MOB_PROPERTY(owner, PROP_REBREATHING)) return
 
 		// Changelings generally can't take OXY/LOSEBREATH damage...except when they do.
 		// And because they're excluded from the breathing procs, said damage didn't heal

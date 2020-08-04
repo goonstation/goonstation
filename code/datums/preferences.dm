@@ -846,6 +846,10 @@ $(function() {
 		traitPreferences.updateTraits(user)
 		LAGCHECK(LAG_MED)
 
+		//Mob has been deleted or client been deleted
+		if (!user || !user.client)
+			return
+
 		var/list/dat = list()
 		for (var/x in data_cache)
 			dat += data_cache[x]

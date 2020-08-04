@@ -118,6 +118,10 @@ Note that in Windows, you have to go through Advanced System Settings,
 System Properties and then open Environment Variables window to do the
 same thing. You may need to reboot after this.
 
+**`Script error.` on CDN-originating .js files**
+
+Add `crossorigin="anonymous"` to the script tags in your downloaded tgui-window-x.html file found in your BYOND cache.
+
 ## Developer Tools
 
 When developing with `tgui-dev-server`, you will have access to certain

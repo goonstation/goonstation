@@ -33,7 +33,7 @@ export const computeFlexProps = props => {
     style: {
       ...rest.style,
       'flex-direction': direction,
-      'flex-wrap': wrap,
+      'flex-wrap': wrap === true ? 'wrap' : wrap,
       'align-items': align,
       'justify-content': justify,
     },
@@ -50,6 +50,7 @@ Flex.defaultHooks = pureComponentHooks;
 export const computeFlexItemProps = props => {
   const {
     className,
+    style,
     grow,
     order,
     shrink,
@@ -66,7 +67,7 @@ export const computeFlexItemProps = props => {
       className,
     ]),
     style: {
-      ...rest.style,
+      ...style,
       'flex-grow': grow,
       'flex-shrink': shrink,
       'flex-basis': unit(basis),
