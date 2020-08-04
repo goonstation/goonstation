@@ -1,5 +1,11 @@
 
 (t)tue aug 04 20
+(u)Superlagg
+(p)1702
+(e)🐛|bug
+(+)Lawbringer removed from Guardbuddy gun whitelist.
+(+)Pulse rifle added to Guardbuddy gun whitelist.
+(+)Guardbuddy traitor ammo fabricator now disables the bot's gun whitelist.
 (u)UrsulaMajor
 (p)1686
 (e)⚖🆕🎨|balance, feature, sprites
