@@ -1296,7 +1296,7 @@
 	initial_volume = 120
 	shard_amt = 2
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing //icing tube path and usage update
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing
 	name = "icing tube"
 	desc = "Used to put icing on cakes."
 	icon = 'icons/obj/foodNdrink/food.dmi'
