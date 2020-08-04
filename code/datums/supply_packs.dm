@@ -221,7 +221,7 @@
 					/obj/item/reagent_containers/food/snacks/condiment/syrup = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/honey = 2)
-	cost = 250
+	cost = 450
 	containertype = /obj/storage/crate/freezer
 	containername = "Catering: Condiment Crate"
 
@@ -355,9 +355,8 @@
 	category = "Civilian Department"
 	contains = list(/obj/item/bee_egg_carton = 5)
 	cost = 450
-	containertype = /obj/storage/secure/crate/bee
+	containertype = /obj/storage/crate/bee
 	containername = "Honey Production Kit"
-	access = null
 	create(var/sp, var/mob/creator)
 		var/obj/storage/secure/crate/bee/beez=..()
 		for(var/obj/item/bee_egg_carton/carton in beez)
