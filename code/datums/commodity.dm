@@ -617,7 +617,7 @@
 
 /datum/commodity/drugs/cannabis
 	comname = "Cannabis"
-	comtype = /obj/item/plant/herb/cannabis/spawnable
+	comtype = /obj/item/plant/herb/cannabis
 	price = 150
 	baseprice = 150
 	upperfluc = 100
@@ -625,7 +625,7 @@
 
 /datum/commodity/drugs/cannabis_mega
 	comname = "Rainbow Cannabis"
-	comtype = /obj/item/plant/herb/cannabis/mega/spawnable
+	comtype = /obj/item/plant/herb/cannabis/mega
 	price = 700
 	baseprice = 700
 	upperfluc = 500
@@ -633,7 +633,7 @@
 
 /datum/commodity/drugs/cannabis_white
 	comname = "White Cannabis"
-	comtype = /obj/item/plant/herb/cannabis/white/spawnable
+	comtype = /obj/item/plant/herb/cannabis/white
 	price = 450
 	baseprice = 450
 	upperfluc = 200
@@ -641,7 +641,7 @@
 
 /datum/commodity/drugs/cannabis_omega
 	comname = "Omega Cannabis"
-	comtype = /obj/item/plant/herb/cannabis/omega/spawnable
+	comtype = /obj/item/plant/herb/cannabis/omega
 	price = 2500
 	baseprice = 2500
 	upperfluc = 2000

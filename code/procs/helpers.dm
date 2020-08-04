@@ -2581,4 +2581,40 @@ proc/client_has_cap_grace(var/client/C)
 	if (C.ckey in player_cap_grace)
 		.= (player_cap_grace[C.ckey] > TIME)
 
+proc/issubtype(var/T1, var/T2)
+	.= ispath(T1, T2) || ispath(T2, T1)
+/*
+this proc only finds the maximal subtype (i.e. the most subby) in a list if
+for all list elements T1 and T2, issubtype(T1, T2) is true
 
+*/
+proc/maximal_subtype(var/list/L)
+	.= null
+	if (L.len >= 1 && ispath(L[1]))
+		.= L[1]
+	// Looking for the type which is a child of all other types
+	if (L.len > 1)
+		var/i = 1
+		while (i <= L.len)
+			var/ispaths[L.len]
+			var/j = 1
+			var/x1
+			var/x2
+			while (j <= L.len)
+				x1 = L[i]
+				x2 = L[j]
+				ispaths[j] = ispath(x1, x2)
+				j += 1
+			if (all(ispaths))
+				.= x1
+				i = L.len+1
+			else
+				i += 1
+
+proc/all(var/list/L)
+	.= TRUE
+	if (L.len > 1)
+		var/i = 1
+		while((i <= L.len) && . )
+			.= . && L[i]
+			i += 1
