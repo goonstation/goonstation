@@ -1,5 +1,52 @@
 
+(t)tue aug 04 20
+(u)Superlagg
+(p)1702
+(e)🐛|bug
+(+)Lawbringer removed from Guardbuddy gun whitelist.
+(+)Pulse rifle added to Guardbuddy gun whitelist.
+(+)Guardbuddy traitor ammo fabricator now disables the bot's gun whitelist.
+(u)UrsulaMajor
+(p)1686
+(e)⚖🆕🎨|balance, feature, sprites
+(*)15 new supplypacks added to the QM Buylist that will let them replace critical station infrastructure
+(*)Major QM Rebalancing concerning the sale of produce, ore, and material pieces
+(+)Refactored how commodities determine if they can be sold for cash on the general market
+(t)mon aug 03 20
+(u)Superlagg
+(p)1463
+(e)🆕🎨|feature, sprites
+(*)Guardbuddies can now use guns!
+(*)Traitor RDs can order an ammo fabricator for their Guardbuddies!
+(+)You can also swap out or remove Guardbuddy tools on the fly!
+(t)sun aug 02 20
+(u)Moonlol
+(p)1555
+(e)⚖|balance
+(*)All maps apart from Cog2, Donut 3, Horizon and Oshan cannot be voted past 80 players.
+(u)Kubius
+(p)1681
+(e)🗺|mapping
+(+)Kondaru is now equipped with a JaniTech Vendor.
+(t)sat aug 01 20
+(u)Emcee-Gore
+(p)1650
+(e)🗺|mapping
+(+)Added Photocopiers to (Oshan, CogMap2, Manta, Horizon and Destiny).
+(u)Comradef191
+(p)1655
+(e)🗺|mapping
+(+)Slightly Improved Radiator Coverage in the Cogmap1 Engineering Burnchamber
+(t)fri jul 31 20
+(u)Flaborized
+(p)1659
+(e)🆕🎨|feature, sprites
+(*)Added a new cosmetic HUD option to character setup, "vaporized".
 (t)thu jul 30 20
+(u)zjdtmkhzt
+(p)1589
+(e)🆕|feature
+(+)You can now use a Voltron to travel through active phone calls. Just use it while holding the phone handset in your other hand!
 (u)Kubius
 (p)1663
 (e)🐛🗺|bug, mapping

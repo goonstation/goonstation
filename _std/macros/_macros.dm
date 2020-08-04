@@ -16,88 +16,10 @@ var/list/detailed_spawn_dbg = list()
 #define SPAWN_DBG(x) spawn(x)
 #endif
 
-// i think its slightly faster to do this with compiler macros instead of procs. i might be a moron, not sure - drsingh
-// it is. no comment on the moron bit. -- marq
 #define isclient(x) istype(x, /client)
 #define ismind(x) istype(x, /datum/mind)
-#define ismob(x) istype(x, /mob)
-#define isobserver(x) istype(x, /mob/dead)
-#define isadminghost(x) x.client && x.client.holder && rank_to_level(x.client.holder.rank) >= LEVEL_MOD && (istype(x, /mob/dead/observer) || istype(x, /mob/dead/target_observer)) // For antag overlays.
-
-#define isliving(x) istype(x, /mob/living)
-
-#define iscarbon(x) istype(x, /mob/living/carbon)
-#define ismonkey(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/monkey))
-#define ishuman(x) istype(x, /mob/living/carbon/human)
-#define iscritter(x) istype(x, /obj/critter)
-#define isintangible(x) istype(x, /mob/living/intangible)
-#define ismobcritter(x) istype(x, /mob/living/critter)
-
-#define issilicon(x) istype(x, /mob/living/silicon)
-#define isrobot(x) istype(x, /mob/living/silicon/robot)
-#define ishivebot(x) istype(x, /mob/living/silicon/hivebot)
-#define ismainframe(x) istype(x, /mob/living/silicon/hive_mainframe)
-#define isAI(x) (istype(x, /mob/living/silicon/ai) || istype (x, /mob/dead/aieye))
-#define isAIeye(x) istype (x, /mob/dead/aieye)
-#define isshell(x) istype(x, /mob/living/silicon/hivebot/eyebot)//istype(x, /mob/living/silicon/shell)
-#define isdrone(x) istype(x, /mob/living/silicon/hivebot/drone)
-#define isghostdrone(x) istype(x, /mob/living/silicon/ghostdrone)
-
-#define iscube(x) (istype(x, /mob/living/carbon/cube))
-#define isvirtual(x) istype(x, /mob/living/carbon/human/virtual)
-#define isVRghost(x) (istype(x, /mob/living/carbon/human/virtual) && x:isghost)
-#define issmallanimal(x) istype(x, /mob/living/critter/small_animal)
-#define isghostcritter(x) (istype(x, /mob/living/critter) && x:ghost_spawned)
-#define ishelpermouse(x) (istype(x, /mob/living/critter/small_animal/mouse/weak/mentor))//mentor and admin mice
-
-// I'm grump that we don't already have these so I'm adding them.  will we use all of them? probably not.  but we have them. - Haine
-// Hi, Marquesas here. Eliminating all ':' would be nice. Can we do that somehow? Thanks.
-
-// Macros with abilityHolder or mutantrace defines are used for more than antagonist checks, so don't replace them with mind.special_role.
-#define istraitor(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == "traitor")
-#define ischangeling(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/changeling) != null)
-#define isabomination(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/abomination))
-#define isnukeop(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == "nukeop")
-#define isvampire(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && x:get_ability_holder(/datum/abilityHolder/vampire) != null)
-#define isvampiriczombie(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/vampiric_zombie) != null)
-#define iswizard(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && x:get_ability_holder(/datum/abilityHolder/wizard) != null)
-#define ishunter(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/hunter))
-#define iswerewolf(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/werewolf))
-#define iswrestler(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && x:get_ability_holder(/datum/abilityHolder/wrestler) != null)
-#define iswraith(x) istype(x, /mob/wraith)
-#define isblob(x) istype(x, /mob/living/intangible/blob_overmind)
-#define isspythief(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == "spy_thief")
-
-// Why the separate mask check? NPCs don't use assigned_role and we still wanna play the cluwne-specific sound effects.
-#define iscluwne(x) ((x?.job == "Cluwne") || istype(x.wear_mask, /obj/item/clothing/mask/cursedclown_hat))
-#define ishorse(x) (istype(x, /mob/living/carbon/human) && ((x.mind?.assigned_role == "Horse") || istype(x.wear_mask, /obj/item/clothing/mask/horse_mask/cursed)))
-#define isdiabolical(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:diabolical == 1)
-#define iswelder(x) istype(x, /mob/living/carbon/human/welder)
-#define ismartian(x) (istype(x, /mob/living/critter/martian) || (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/martian)))
-#define isprematureclone(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/premature_clone))
-#define iskudzuman(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/kudzu))
 
 #define ishellbanned(x) x?.client?.hellbanned
-
-#ifdef UNDERWATER_MAP
-#define isrestrictedz(z) ((z) == 2 || (z) == 3  || (z) == 4)
-#define isghostrestrictedz(z) (isrestrictedz(z) || (z) == 5)
-#else
-#define isrestrictedz(z) ((z) == 2 || (z) == 4)
-#define isghostrestrictedz(z) (isrestrictedz(z))
-#endif
-
-#define isitem(x) istype(x, /obj/item)
-
-#define istool(x,y) (isitem(x) && (x:tool_flags & (y)))
-#define iscuttingtool(x) (istool(x, TOOL_CUTTING))
-#define ispulsingtool(x) (istool(x, TOOL_PULSING))
-#define ispryingtool(x) (istool(x, TOOL_PRYING))
-#define isscrewingtool(x) (istool(x, TOOL_SCREWING) || (istype(x, /obj/item/reagent_containers) && x:reagents:has_reagent("screwdriver")) ) //the joke is too good
-#define issnippingtool(x) (istool(x, TOOL_SNIPPING))
-#define iswrenchingtool(x) (istool(x, TOOL_WRENCHING))
-#define ischoppingtool(x) (istool(x, TOOL_CHOPPING))
-#define isweldingtool(x) (istool(x, TOOL_WELDING))
 
 #define isalcoholresistant(x) ((x.bioHolder && x.bioHolder.HasEffect("resist_alcohol")) || (x.traitHolder && x.traitHolder.hasTrait("training_drinker")))
 
@@ -126,15 +48,11 @@ var/list/detailed_spawn_dbg = list()
 #define issimulatedturf(x) istype(x, /turf/simulated)
 #define isfloor(x) (istype(x, /turf/simulated/floor) || istype(x, /turf/unsimulated/floor))
 #define isrwall(x) (istype(x,/turf/simulated/wall/r_wall)||istype(x,/turf/simulated/wall/auto/reinforced)||istype(x,/turf/unsimulated/wall/auto/reinforced)||istype(x,/turf/simulated/wall/false_wall/reinforced))
-#define in_centcom(x) (isarea(x) ? x?:is_centcom : get_step(x, 0)?.loc:is_centcom)
 
 #define GET_MANHATTAN_DIST(A, B) ((!(A) || !(B)) ? 0 : abs((A).x - (B).x) + abs((A).y - (B).y))
 #define DIST_CHECK(A, B, range) (get_dist(A, B) <= (range) && get_step(A, 0).z == get_step(B, 0).z)
 
 #define return_if_overlay_or_effect(x) if (istype(x, /obj/overlay) || istype(x, /obj/effects)) return
-
-// maps
-#define ismap(x) (map_setting == x)
 
 // because fuck remembering what stat means every single time
 #define isalive(x) (ismob(x) && x.stat == 0)
@@ -182,11 +100,6 @@ var/list/detailed_spawn_dbg = list()
 	actually_spam_the_chat()
 */
 
-//some reliquary stuff - azungar
-
-#define isreliquary(x) (istype(x, /mob/living/critter/reliquary) || istype(x, /mob/living/critter/reliquarymonstrosity) || istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/reliquary_soldier))
-
-
 //used for pods
 #define BOARD_DIST_ALLOWED(M,V) ( ((V.bound_width > world.icon_size || V.bound_height > world.icon_size) && (M.x > V.x || M.y > V.y) && (get_dist(M, V) <= 2) ) || (get_dist(M, V) <= 1) )
 
@@ -208,9 +121,6 @@ else{\
 while(FALSE)
 
 
-#define area_space_nopower(x) (x.type == /area || x.type == /area/allowGenerate || x.type == /area/allowGenerate/trench) //areas where we will skip searching for shit like APCs and that do not have innate power
-												 //blahhh i think faster than istypes
-
 #define ADD_STATUS_LIMIT(target, group, value)\
 	do { \
 		if (length(target.statusLimits)) { \
@@ -224,3 +134,12 @@ while(FALSE)
 	do { \
 		target.statusLimits -= group;\
 	} while (0)
+
+
+/// isnum() returns TRUE for NaN. Also, NaN != NaN. Checkmate, BYOND.
+#define isnan(x) ( (x) != (x) )
+
+#define isinf(x) (isnum((x)) && (((x) == text2num("inf")) || ((x) == text2num("-inf"))))
+
+/// NaN isn't a number, damn it. Infinity is a problem too.
+#define isnum_safe(x) ( isnum((x)) && !isnan((x)) && !isinf((x)) ) //By ike709

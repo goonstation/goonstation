@@ -1604,7 +1604,7 @@
 	name = "Northeast Area"
 	})
 "adR" = (
-/obj/item/c_tube,
+/obj/landmark/artifact,
 /turf/simulated/floor/plating,
 /area/station/storage{
 	do_not_irradiate = 1;
@@ -28515,10 +28515,6 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bmW" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
 /obj/machinery/light/small,
 /obj/storage/closet/wardrobe/black/formalwear,
 /turf/simulated/floor/carpet/grime,
@@ -31230,6 +31226,11 @@
 /area/station/medical/medbooth)
 "btG" = (
 /obj/health_scanner/floor,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/blue/side{
 	dir = 8
 	},
@@ -32198,11 +32199,6 @@
 	},
 /area/station/medical/medbooth)
 "bvX" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
 /obj/machinery/navbeacon{
 	codes_txt = "tour;next_tour=tour3;desc=In the event of minor to moderate injuries, you can stop by this convenient booth instead of going all the way to Medbay.";
 	freq = 1443;
@@ -32479,7 +32475,7 @@
 "bwC" = (
 /obj/machinery/computer/security/wooden_tv,
 /obj/machinery/light_switch/north,
-/turf/simulated/floor/specialroom/arcade,
+/turf/simulated/floor/darkblue,
 /area/station/janitor)
 "bwD" = (
 /obj/stool/bed,
@@ -32495,7 +32491,7 @@
 /obj/landmark/start{
 	name = "Janitor"
 	},
-/turf/simulated/floor/specialroom/arcade,
+/turf/simulated/floor/darkblue,
 /area/station/janitor)
 "bwE" = (
 /obj/machinery/disposal/mail/autoname/janitor,
@@ -32505,7 +32501,7 @@
 	name = "Desk Control";
 	pixel_y = 28
 	},
-/turf/simulated/floor/specialroom/arcade,
+/turf/simulated/floor/darkblue,
 /area/station/janitor)
 "bwF" = (
 /obj/machinery/disposal,
@@ -32514,7 +32510,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/specialroom/arcade,
+/turf/simulated/floor/darkblue,
 /area/station/janitor)
 "bwG" = (
 /obj/machinery/light{
@@ -33363,6 +33359,11 @@
 /obj/stool/chair/blue{
 	dir = 4
 	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/blue/side{
 	dir = 8
 	},
@@ -33647,7 +33648,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
-/turf/simulated/floor/specialroom/arcade,
+/turf/simulated/floor/darkblue,
 /area/station/janitor)
 "bza" = (
 /obj/disposalpipe/segment/mail/vertical,
@@ -34065,14 +34066,14 @@
 /area/station/janitor)
 "bzZ" = (
 /obj/storage/closet/biohazard,
-/turf/simulated/floor/specialroom/arcade,
+/turf/simulated/floor/darkblue,
 /area/station/janitor)
 "bAa" = (
 /obj/storage/closet/janitor,
 /obj/machinery/light,
 /obj/item/sponge,
 /obj/item/sponge,
-/turf/simulated/floor/specialroom/arcade,
+/turf/simulated/floor/darkblue,
 /area/station/janitor)
 "bAb" = (
 /obj/rack,
@@ -34082,7 +34083,7 @@
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
-/turf/simulated/floor/specialroom/arcade,
+/turf/simulated/floor/darkblue,
 /area/station/janitor)
 "bAc" = (
 /obj/rack,
@@ -34091,7 +34092,7 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/spraybottle/cleaner,
 /obj/item/reagent_containers/glass/bucket,
-/turf/simulated/floor/specialroom/arcade,
+/turf/simulated/floor/darkblue,
 /area/station/janitor)
 "bAd" = (
 /obj/table/reinforced/auto,
@@ -34110,7 +34111,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
-/turf/simulated/floor/specialroom/arcade,
+/turf/simulated/floor/darkblue,
 /area/station/janitor)
 "bAe" = (
 /obj/cable{
@@ -49298,6 +49299,7 @@
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor/bluewhite,
 /area/station/science/lab)
 "cgs" = (
@@ -50379,6 +50381,7 @@
 	})
 "cjf" = (
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/landmark/artifact,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost{
 	name = "Indigo Rye"
@@ -54353,6 +54356,10 @@
 	icon_state = "engine_caution_east"
 	},
 /area/station/hallway/secondary/exit)
+"eCr" = (
+/obj/item/c_tube,
+/turf/simulated/floor/plating,
+/area/station/maintenance/NEmaint)
 "eCu" = (
 /obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/plating,
@@ -56613,6 +56620,10 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
+"sWh" = (
+/obj/landmark/artifact,
+/turf/simulated/floor/plating/airless/asteroid/dark,
+/area)
 "tan" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/supernorn,
@@ -57206,6 +57217,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
+"xvH" = (
+/obj/machinery/vending/janitor,
+/turf/simulated/floor/darkblue,
+/area/station/janitor)
 "xzv" = (
 /obj/machinery/computer/tanning,
 /turf/simulated/wall/auto/supernorn,
@@ -73269,7 +73284,7 @@ aaa
 aaa
 aac
 aac
-aac
+sWh
 aac
 aac
 ciA
@@ -95558,7 +95573,7 @@ brz
 bsW
 buu
 bvz
-bvz
+xvH
 bxN
 byV
 bvz
@@ -116637,7 +116652,7 @@ afp
 adv
 aha
 aij
-aeA
+eCr
 akf
 adM
 aaa

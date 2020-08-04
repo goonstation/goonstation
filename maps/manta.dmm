@@ -17126,14 +17126,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
-"aML" = (
-/obj/table/glass/reinforced/auto,
-/obj/item/clipboard,
-/obj/item/paper_bin,
-/obj/item/pen/pencil,
-/obj/disposalpipe/segment,
-/turf/simulated/floor/carpet/grime,
-/area/station/communications/communicationsbedroom)
 "aMM" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -45526,6 +45518,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/chemistry)
+"jMM" = (
+/obj/machinery/photocopier,
+/turf/simulated/floor/carpet/grime,
+/area/station/communications/communicationsbedroom)
 "keQ" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 6;
@@ -46112,6 +46108,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
+"uhU" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/clipboard,
+/obj/item/paper_bin,
+/obj/item/pen/pencil,
+/turf/simulated/floor/carpet/grime,
+/area/station/communications/communicationsbedroom)
 "uFt" = (
 /obj/decal/tile_edge/line/green{
 	color = "#e7c88c";
@@ -84034,8 +84037,8 @@ aNR
 aaL
 acE
 aEU
-aSF
-aSF
+jMM
+uhU
 aSF
 aUH
 avP
@@ -84639,7 +84642,7 @@ aIX
 acE
 aEU
 aJk
-aML
+aMO
 aMO
 aUJ
 avP
