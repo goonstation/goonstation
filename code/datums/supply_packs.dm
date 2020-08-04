@@ -270,16 +270,17 @@
 
 /datum/supply_packs/medicalchems
 	name = "Medical: Medical Reservoir Crate"
-	desc = "x4 Assorted reservoir tanks, x2 Sedative bottles, x2 Hyposprays, x1 Syringe Kit"
+	desc = "x4 Assorted reservoir tanks, x2 Sedative bottles, x2 Hyposprays, 2x Automenders, x1 Syringe Kit"
 	category = "Medical Department"
 	contains = list(/obj/item/reagent_containers/glass/beaker/large/antitox,
 					/obj/item/reagent_containers/glass/beaker/large/epinephrine,
 					/obj/item/reagent_containers/food/drinks/reserve/brute,
 					/obj/item/reagent_containers/food/drinks/reserve/burn,
 					/obj/item/reagent_containers/glass/bottle/morphine = 2,
+					/obj/item/reagent_containers/mender = 2,
 					/obj/item/reagent_containers/hypospray = 2,
 					/obj/item/storage/box/syringes)
-	cost = 1500
+	cost = 1750
 	containertype = /obj/storage/crate/medical
 	containername = "Medical Crate"
 
@@ -1287,11 +1288,12 @@
 */
 /datum/supply_packs/complex/manufacturer_kit
 	name = "Manufacturer Kit"
-	desc = "Frames: 1x General Manufacturer, 1x Mining Manufacturer, 1x Gas Extractor, 1x Reclaimer"
+	desc = "Frames: 1x General Manufacturer, 1x Mining Manufacturer, 1x Gas Extractor, 1x Clothing Manufacturer, 1x Reclaimer"
 	category = "Engineering Department"
 	frames = list(/obj/machinery/manufacturer/general,
 					/obj/machinery/manufacturer/mining,
 					/obj/machinery/manufacturer/gas,
+					/obj/machinery/manufacturer/uniform,
 					/obj/machinery/portable_reclaimer)
 	cost = 8000
 	containertype = /obj/storage/crate
@@ -1484,6 +1486,7 @@
 					/obj/item/scalpel = 2,
 					/obj/item/circular_saw = 2,
 					/obj/item/hemostat,
+					/obj/item/scissors/surgical_scissors,
 					/obj/item/suture,
 					/obj/item/surgical_spoon)
 	frames = list(/obj/machinery/manufacturer/medical,
@@ -1510,18 +1513,25 @@
 
 /datum/supply_packs/complex/genetics_kit
 	name = "Genetics kit"
-	desc = "Circuitboards: 1x DNA Modifier, 1x Cloning Console, Frames: 1x Cloning Scanner, 1x Cloning Pod, 1x Reclaimer, 1x DNA Scanner"
+	desc = "Circuitboards: 1x DNA Modifier, 1x DNA Scanner"
 	category = "Medical Department"
-	contains = list(/obj/item/circuitboard/genetics,
-					/obj/item/circuitboard/cloning)
-	frames = list(/obj/machinery/clone_scanner,
-					/obj/machinery/clonepod,
-					/obj/machinery/clonegrinder,
-					/obj/machinery/genetics_scanner)
-	cost = 50000
+	contains = list(/obj/item/circuitboard/genetics)
+	frames = list(/obj/machinery/genetics_scanner)
+	cost = 30000
 	containertype = /obj/storage/crate
 	containername = "Genetics kit"
 
+/datum/supply_packs/complex/cloner_kit
+	name = "Cloning kit"
+	desc = "Circuitboards: 1x Cloning Console, Frames: 1x Cloning Scanner, 1x Cloning Pod, 1x Enzymatic Reclaimer"
+	category = "Medical Department"
+	contains = list(/obj/item/circuitboard/cloning)
+	frames = list(/obj/machinery/clone_scanner,
+					/obj/machinery/clonepod,
+					/obj/machinery/clonegrinder)
+	cost = 30000
+	containertype = /obj/storage/crate
+	containername = "Cloning kit"
 
 /datum/supply_packs/bureaucrat
 	name = "Bureaucracy Supply Crate"
