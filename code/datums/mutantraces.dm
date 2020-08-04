@@ -33,7 +33,6 @@
 	var/icon_override_static = 0 // does this look different enough from a default human to warrant a static icon of its own?
 
 	var/tail = NO_TAIL // What tail do we have? Or are supposed to have?
-	var/obj/item/organ/tail/tail_organ = /obj/item/organ/tail/human	// What type of tail are we supposed to have?
 
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
@@ -314,11 +313,11 @@
 
 		for(var/obj/item/organ/tail/hidden_secret_tails in Tf.contents)	// Cus mutants love to hoard tails in their mob
 			if(istype(hidden_secret_tails, /obj/item/organ/tail))
-				qdel(hidden_secret_tails)	// Please stop exploding into tails
+				qdel(hidden_secret_tails)	// Please stop exploding into tails (thank you)
 
 		switch(tailnum)	// Mutantraces come with a free, new tail
-			if (NO_TAIL)	// technically you have a tail, its just imaginary
-				Tf.organHolder.tail = new /obj/item/organ/tail/human(Tf, Tf.organHolder)
+			if (NO_TAIL)	// technically you have a tail, its just invisible
+				Tf.organHolder.tail = new /obj/item/organ/tail/bone(Tf, Tf.organHolder)
 				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
 			if (MONKEY_TAIL)
 				Tf.organHolder.tail = new /obj/item/organ/tail/monkey(Tf, Tf.organHolder)
@@ -499,7 +498,6 @@
 	override_attack = 0
 	voice_override = "lizard"
 	tail = LIZARD_TAIL
-	tail_organ = /obj/item/organ/tail/lizard
 
 	New(var/mob/living/carbon/human/H)
 		..()
@@ -734,7 +732,6 @@
 	icon_override_static = 1
 	voice_override = "skelly"
 	tail = SKELETON_TAIL
-	tail_organ = /obj/item/organ/tail/bone
 
 	New(var/mob/living/carbon/human/M)
 		..()
@@ -864,7 +861,6 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/werewolf
 	ignore_missing_limbs = 0
 	tail = WEREWOLF_TAIL
-	tail_organ = /obj/item/organ/tail/wolf
 
 	New()
 		..()
@@ -1018,7 +1014,6 @@
 	var/had_tablepass = 0
 	var/table_hide = 0
 	tail = MONKEY_TAIL
-	tail_organ = /obj/item/organ/tail/monkey
 
 	New(var/mob/living/carbon/human/M)
 		if (M)
@@ -1214,7 +1209,6 @@
 	icon_state = "seamonkey"
 	aquatic = 1
 	tail = SEAMONKEY_TAIL
-	tail_organ = /obj/item/organ/tail/seamonkey
 
 	New()
 		..()
@@ -1314,7 +1308,6 @@
 	icon_override_static = 1
 	override_attack = 0
 	tail = ROACH_TAIL
-	tail_organ = /obj/item/organ/tail/roach
 
 	New()
 		..()
@@ -1336,7 +1329,6 @@
 	override_attack = 0
 	firevuln = 1.5 // very flammable catthings
 	tail = CAT_TAIL
-	tail_organ = /obj/item/organ/tail/cat
 
 	New()
 		..()
@@ -1643,7 +1635,6 @@
 	override_attack = 0
 	voice_override = "cow"
 	tail = COW_TAIL
-	tail_organ = /obj/item/organ/tail/cow
 
 	New(var/mob/living/carbon/human/H)
 		..()

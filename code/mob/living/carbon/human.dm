@@ -2644,7 +2644,7 @@
 				ret += organHolder.intestines
 		if (organHolder.tail)
 			processed += organHolder.tail
-			if (prob(75) && organHolder.tail.loc == src && !istype(organHolder.tail, /obj/item/organ/tail/human))
+			if (prob(75) && organHolder.tail.loc == src)
 				ret += organHolder.tail
 		if (prob(50))
 			var/obj/item/clothing/head/wig/W = create_wig()

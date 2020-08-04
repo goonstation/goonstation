@@ -2,11 +2,12 @@
 	name = "tail"
 	organ_name = "tail"
 	organ_holder_name = "tail"
-	organ_holder_location = "tail"
-	organ_holder_required_op_stage = 3.0	// Cant just slap a tail on a human
+	organ_holder_location = "chest"	// chest-ish
+	organ_holder_required_op_stage = 11.0
 	edible = 0	// dont eat pant
 	var/icon_piece_1 = null	// For setting up the icon if its in multiple pieces
 	var/icon_piece_2 = null
+	var/failure_ability = "clumsy"	// The organ failure ability associated with this organ.
 
 	proc/update_tail_icon()
 		if (!src.icon_piece_1 && !src.icon_piece_2)
@@ -31,6 +32,77 @@
 
 		src.icon = tail_icon
 
+	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		/* Overrides parent function to handle special case for tails. */
+		var/mob/living/carbon/human/H = M
+		if (!src.can_attach_organ(H, user))
+			return 0
+
+		var/attachment_successful = 0
+		var/boned = 0	// Tailbones just kind of pop into place
+	//	var/human_monkeytail = 0	// If a human's getting a monkey tail
+	//	var/monkey_humantail = 0	// If a monkey's getting a human tail
+
+		if ((src.type == /obj/item/organ/tail/monkey && !ismonkey(H)) || (src.type != /obj/item/organ/tail/monkey && ismonkey(H)))	// If we are trying to attach a monkey tail to a non-monkey
+			boutput(user, "That [src] doesn't fit there!")	// I'll make it work it later
+			return 0
+
+		if (!H.organHolder.tail && H.mutantrace && H.mutantrace == /datum/mutantrace/skeleton)
+			attachment_successful = 1 // Just slap that tailbone in place, its fine
+			boned = 1	// No need to sew it up
+
+			var/fluff = pick("slap", "shove", "place", "press", "jam")
+
+			if(src.type == /obj/item/organ/tail/bone)
+				H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "press" ? "es" : "s"] the coccygeal coruna of [src] onto the apex of [H == user ? "[his_or_her(H)]" : "[H]'s"] sacrum![prob(1) ? " The tailbone wiggles happily." : ""]</span>",\
+				user, "<span class='alert'>You [fluff] the coccygeal coruna of [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum![prob(1) ? " The tailbone wiggles happily." : ""]</span>",\
+				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] the coccygeal coruna of [src] onto the apex of your sacrum![prob(1) ? " Your tailbone wiggles happily." : ""]</span>")
+			else	// Any other tail
+			//	H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "press" ? "es" : "s"] [src] onto the apex of [H == user ? "[his_or_her(H)]" : "[H]'s"] sacrum!</span>",\
+			//	user, "<span class='alert'>You [fluff] [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum!</span>",\
+			//	H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] [src] onto the apex of your sacrum!</span>")
+				boutput(user, "That [src] is way too meaty to fit there!")	// I'll make it work it later
+
+		else if (!H.organHolder.tail && H.organHolder.chest.op_stage >= 11.0)
+			attachment_successful = 1
+
+			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
+
+			H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] up against [H == user ? "[his_or_her(H)]" : "[H]'s"] sacrum!</span>",\
+			user, "<span class='alert'>You [fluff] [src] up against [user == H ? "your" : "[H]'s"] sacrum!</span>",\
+			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] up against your sacrum!</span>")
+
+		if (attachment_successful)
+			if (user.find_in_hand(src))
+				user.u_equip(src)
+			H.organHolder.receive_organ(src, "tail", 3.0)
+			if (boned)
+				H.organHolder.tail.op_stage = 0.0
+			else
+				H.organHolder.tail.op_stage = 11.0
+			H.update_body()
+			H.bioHolder.RemoveEffect(src.failure_ability)
+			return 1
+
+		return 0
+
+	on_life(var/mult = 1)
+		if (!..())
+			return 0
+		if (src.get_damage() >= FAIL_DAMAGE && src.donor.mutantrace) // Humans dont need tails to not be clumsy idiots
+			donor.bioHolder.AddEffect(src.failure_ability, 0, 0, 0, 1)
+		return 1
+
+	on_removal()
+		if (src.failure_ability && src.donor.bioHolder && src.donor.mutantrace)
+			src.donor.bioHolder.AddEffect(src.failure_ability, 0, 0, 0, 1)
+
+	on_broken(var/mult = 1)
+		if(prob(2) && src.donor.mutantrace)
+			src.donor.change_misstep_chance(10)
+			src.donor.bioHolder.AddEffect(failure_ability)
+
+/* Turns out a human tailbone'll work just fine?
 /obj/item/organ/tail/human	// some dummy tail that doesnt exist cus not everyone has a tail
 	name = "human tail"
 	desc = "Humans don't have tails... do they? They don't and you shouldn't be seeing this."
@@ -38,11 +110,12 @@
 
 	on_removal()
 		qdel(src)	// Humans dont have tails!
-
+*/
 /obj/item/organ/tail/monkey
 	name = "monkey tail"
 	desc = "A long, slender tail."
 	icon_state = "tail-monkey"
+	edible = 0
 
 	New()
 		..()
@@ -84,6 +157,7 @@
 	name = "cow tail"
 	desc = "A short, brush-like tail."
 	icon_state = "tail-cow"
+	edible = 0
 
 	New()
 		..()
@@ -95,6 +169,9 @@
 	name = "wolf tail"
 	desc = "A long, fluffy tail."
 	icon_state = "tail-wolf"
+	MAX_DAMAGE = 250	// Robust tail for a robust antag
+	FAIL_DAMAGE = 240
+	edible = 0
 
 	New()
 		..()
@@ -108,6 +185,8 @@
 	icon_state = "tail-bone"
 	created_decal = null
 	made_from = "bone"	// clak clak
+	created_decal = null	// just a piece of bone
+	edible = 0
 
 	New()
 		..()
@@ -119,6 +198,7 @@
 	name = "seamonkey tail"
 	desc = "A long, scaled tail."
 	icon_state = "tail-seamonkey"
+	edible = 0
 
 	New()
 		..()
@@ -130,6 +210,7 @@
 	name = "cat tail"
 	desc = "A long, furry tail."
 	icon_state = "tail-cat"
+	edible = 0
 
 	New()
 		..()
@@ -142,6 +223,7 @@
 	desc = "A large insect behind."
 	icon_state = "tail-roach"
 	made_from = "chitin"
+	edible = 1 // ew
 
 	New()
 		..()

@@ -505,9 +505,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 /* ---------- SCALPEL - BUTT ---------- */
 	if (surgeon.zone_sel.selecting == "chest")
-		if (surgeon.a_intent == INTENT_DISARM && patient.organHolder.tail)
-			switch (patient.organHolder.tail.op_stage)
-				if(1.0)
+		if (surgeon.a_intent == INTENT_DISARM)
+			switch (patient.organHolder.chest.op_stage)
+				if(10.0)
 					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
@@ -516,11 +516,15 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
 
-					if(istype(patient.organHolder.tail, /obj/item/organ/tail/human))
+					if(istype(patient.organHolder.tail, /obj/item/organ/tail/bone)) // Has tail, is tailbone
 						patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts through the tissue covering [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] tailbone with [src]!</span>",\
 						surgeon, "<span class='alert'>You cut through the tissue covering [surgeon == patient ? "your" : "[patient]'s"] tailbone with [src]!</span>",\
 						patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] through the tissue covering your tailbone with [src]!</span>")
-					else
+					else if (!patient.organHolder.tail)	// Doesnt have tail at all, likely removed earlier
+						patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts away the connective tissue between [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] skin and [his_or_her(patient)] sacrum with [src]!</span>",\
+						surgeon, "<span class='alert'>You cut away the connective tissue between [surgeon == patient ? "your" : "[patient]'s"] skin and [surgeon == patient ? "your" : "[his_or_her(patient)]"] sacrum with [src]!</span>",\
+						patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] away the connective tissue between your skin and your sacrum with [src]!</span>")
+					else	// Has tail hopefully
 						patient.tri_message("<span class='alert'><b>[surgeon]</b> severs the tendons and ligaments connecting [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] tail to [his_or_her(patient)] spine with [src]!</span>",\
 						surgeon, "<span class='alert'>You sever the tendons and ligaments connecting [surgeon == patient ? "your" : "[patient]'s"] tail to [surgeon == patient ? "your" : "[his_or_her(patient)]"] spine with [src]!</span>",\
 						patient, "<span class='alert'>[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] the tendons and ligaments connecting your tail to your spine with [src]!</span>")
@@ -530,7 +534,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					patient.organHolder.tail.op_stage = 2.0
+					patient.organHolder.chest.op_stage = 11.0
 					return 1
 
 
@@ -715,7 +719,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			remove spleen = 	cut -> snip -> cut
 			remove kidneys = 	cut -> cut -> snip -> Right/Left hands for removing R/L kidneys
 			remove heart = 0.0 cut -> 5.0 saw -> 8.0 cut -> 9.0 saw
-			remove tail = disarm 0.0 snip -> 11.0 cut -> 12.0 snip
+			remove tail = disarm 0.0 snip -> 10.0 cut -> 11.0 snip
+				except skeletons with bone tails, just disarm-poke em with some scissors
 			*note, for lungs/kidneys R/L hand use only matters for last cut
 		*/
 
@@ -1345,10 +1350,26 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SUTURE - CHEST ---------- */
 
 	else if (surgeon.zone_sel.selecting == "chest")
-		if (patient.organHolder.chest && patient.organHolder.chest.op_stage > 0.0)
+		if (patient.organHolder.chest && patient.organHolder.chest.op_stage > 0.0 && patient.organHolder.chest.op_stage < 10.0)
 			patient.tri_message("<span class='notice'><b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest closed with [src].</span>",\
 			surgeon, "<span class='notice'>You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] chest closed with [src].</span>",\
 			patient, "<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your chest closed with [src].</span>")
+
+			patient.organHolder.chest.op_stage = 0.0
+			patient.TakeDamage("chest", 2, 0)
+			if (patient.bleeding)
+				repair_bleeding_damage(patient, 50, rand(1,3))
+			return 1
+
+		else if (patient.organHolder.chest && patient.organHolder.chest.op_stage >= 10.0)
+			if (patient.organHolder.tail && istype(patient.organHolder.tail, /obj/item/organ/tail)) // If tail, then sew it on
+				patient.tri_message("<span class='notice'><b>[surgeon]</b> sews [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] tail into place with [src].</span>",\
+				surgeon, "<span class='notice'>You sew [surgeon == patient ? "your" : "[patient]'s"] tail into place with [src].</span>",\
+				patient, "<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] your tail into place with [src].</span>")
+			else
+				patient.tri_message("<span class='notice'><b>[surgeon]</b> sews the incision just above [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt closed with [src].</span>",\
+				surgeon, "<span class='notice'>You sew the incision just above [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src].</span>",\
+				patient, "<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision just above your butt closed with [src].</span>")
 
 			patient.organHolder.chest.op_stage = 0.0
 			patient.TakeDamage("chest", 2, 0)
@@ -1721,18 +1742,30 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 /* ---------- SNIP - chest ---------- */
 	if (surgeon.zone_sel.selecting == "chest")
-		if (surgeon.a_intent == INTENT_DISARM && patient.organHolder.tail)
-			switch (patient.organHolder.tail.op_stage)
+		if (surgeon.a_intent == INTENT_DISARM)
+			if (istype(patient.mutantrace, /datum/mutantrace/skeleton) && istype(patient.organHolder.tail, /obj/item/organ/tail/bone))
+				playsound(get_turf(patient), "sound/items/Crowbar.ogg", 50, 1)	// Dont really need much surgery to remove a bone from a skeleton
+
+				if(istype(patient.organHolder.tail, /obj/item/organ/tail/bone))
+					patient.tri_message("<span class='alert'><b>[surgeon]</b> jams one end of the [src] between [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] sacrum and coccyx and pries [his_or_her(patient)] tailbone free!</span>",\
+					surgeon, "<span class='alert'>You jam one end of the [src] between [surgeon == patient ? "your" : "[patient]'s"] sacrum and coccyx and pries [his_or_her(patient)] tailbone free!</span>",\
+					patient, "<span class='alert'>[patient == surgeon ? "You jam" : "<b>[surgeon]</b> jams"] one end of the [src] between your sacrum and coccyx and pry tailbone free!</span>")
+
+				if (patient.organHolder.tail)
+					logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s skeleton tail with [src].")
+				patient.organHolder.drop_organ("tail")
+				return 1
+
+			switch (patient.organHolder.chest.op_stage)
 				if(0.0)
 					playsound(get_turf(patient), "sound/items/Scissor.ogg", 50, 1)
-
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 						patient.TakeDamage("torso", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
 
-					if(istype(patient.organHolder.tail, /obj/item/organ/tail/human))
+					if(istype(patient.organHolder.tail, /obj/item/organ/tail/bone) || !patient.organHolder.tail)
 						patient.tri_message("<span class='alert'><b>[surgeon]</b> snips the skin across the top of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt with [src]!</span>",\
 						surgeon, "<span class='alert'>You snip the skin across the top of [surgeon == patient ? "your" : "[patient]'s"] butt with [src]!</span>",\
 						patient, "<span class='alert'>[patient == surgeon ? "You snip" : "<b>[surgeon]</b> snips"] the skin across the top of your butt with [src]!</span>")
@@ -1746,10 +1779,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
 						surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					patient.organHolder.tail.op_stage = 1.0
+					patient.organHolder.chest.op_stage = 10.0
 					return 1
 
-				if(2.0)
+				if(11.0)
 					playsound(get_turf(patient), "sound/items/Scissor.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
@@ -1758,10 +1791,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
 
-					if(istype(patient.organHolder.tail, /obj/item/organ/tail/human))
-						patient.tri_message("<span class='alert'><b>[surgeon]</b> snips away the rest of the skin above [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt with [src]!</span>",\
-						surgeon, "<span class='alert'>You snip away the rest of the skin above [surgeon == patient ? "your" : "[patient]'s"] butt with [src]!</span>",\
-						patient, "<span class='alert'>[patient == surgeon ? "You snip" : "<b>[surgeon]</b> snips"] away the rest of the skin above your butt with [src]!</span>")
+					if(istype(patient.organHolder.tail, /obj/item/organ/tail/bone) || !patient.organHolder.tail)
+						patient.tri_message("<span class='alert'><b>[surgeon]</b> snips away the last few connections holding [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] tailbone in place with [src]!</span>",\
+						surgeon, "<span class='alert'>You snip away the last few connections holding [surgeon == patient ? "your" : "[patient]'s"] tailbone in place with [src]!</span>",\
+						patient, "<span class='alert'>[patient == surgeon ? "You snip" : "<b>[surgeon]</b> snips"] away the last few connections holding your tailbone in place with [src]!</span>")
 					else
 						patient.tri_message("<span class='alert'><b>[surgeon]</b> snips away the last few remaining strings of flesh attaching [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] tail to [his_or_her(patient)] lower body with [src]!</span>",\
 						surgeon, "<span class='alert'>You snip away the last few remaining strings of flesh attaching [surgeon == patient ? "your" : "[patient]'s"] tail to [surgeon == patient ? "your" : "[his_or_her(patient)]"] lower body with [src]!</span>",\
