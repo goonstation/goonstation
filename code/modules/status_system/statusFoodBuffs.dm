@@ -302,7 +302,8 @@
 	proc/cast()
 
 		var/turf/T = get_step(owner,owner.dir)
-		T = get_step(T,owner.dir)
+		while(get_dist(owner,T) < range)
+			T = get_step(T,owner.dir)
 		var/list/affected_turfs = getline(owner, T)
 
 		owner.visible_message("<span class='alert'><b>[owner] burps a stream of fire!</b></span>")
@@ -325,6 +326,9 @@
 
 		//reduce duration
 		src.duration -= min(durationLoss,src.duration)
+		if(src.duration <= 0)
+			if(src.owner)
+				src.owner.delStatus(src)
 
 /datum/statusEffect/explosion_resist
 	id = "food_explosion_resist"
