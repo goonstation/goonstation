@@ -40,8 +40,6 @@
 	var/litfam //is the cake lit (candle)
 	var/datum/light/light
 
-	//DEV - COMMENT EVERYTHING
-
 	/*_______*/
 	/*Utility*/
 	/*‾‾‾‾‾‾‾*/
@@ -79,7 +77,7 @@
 
 	proc/frost_cake(var/obj/item/reagent_containers/food/drinks/drinkingglass/icing/tube,var/mob/user)
 		if(!(tube.reagents.total_volume >= 25))
-			boutput(user, "<span style=\"color:red\">The icing tube isn't full enough to frost the cake!</span>")
+			user.show_text("The icing tube isn't full enough to frost the cake!","red")
 			return
 		var/frostingtype
 		frostingtype = input("Which frosting style would you like?", "Frosting Style", null) as null|anything in frostingstyles
@@ -109,9 +107,9 @@
 
 	proc/slice_cake(var/obj/item/W,var/mob/user)
 		if (src.sliced == 1)
-			boutput(user, "<span class='alert'>This has already been sliced.</span>")
+			user.show_text("This cake has already been sliced!","red")
 			return
-		boutput(user, "<span class='notice'>You cut the cake into slices.</span>")
+		user.show_text("You cut the cake into slices.")
 		var/layer_tag
 		var/replacetext
 		var/obj/item/reagent_containers/food/snacks/cake/custom/s = new /obj/item/reagent_containers/food/snacks/cake/custom //temporary reference item to paste overlays onto child items
@@ -204,7 +202,7 @@
 				src.ClearSpecificOverlays("[src.overlay_refs[i]]")
 				var/obj/item/device/light/candle/can = new /obj/item/device/light/candle/small
 				can.set_loc(get_turf(src.loc))
-				boutput(user,"<span style=\"color:red\"><b>The candle pops off! Oh no!</b></span>")
+				user.show_text("<b>The candle pops off! Oh no!</b>","red")
 				cake_candle = 0
 				if(src.litfam)
 					src.put_out()
@@ -345,7 +343,7 @@
 			slices = src.amount
 		else
 			qdel(cake) //this will happen if someone eats a cake without slicing it and the amount math has to recalculate past an entire layer (i.e. someone takes 11 bites)
-			boutput(user, "<span style=\"color:red\"><b>OH NO! The cake was a lie!</b></span>")
+			user.show_text("<b>OH NO! The cake was a lie!</b>","red")
 			src.clayer--
 			src.reagents.maximum_volume -= 100
 			return
@@ -501,7 +499,7 @@
 	attack(mob/M as mob, mob/user as mob, def_zone) //nom nom nom
 		if (!src.sliced)
 			if (user == M)
-				boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
+				user.show_text("You can't just cram that in your mouth, you greedy beast!","red")
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 				return
 			else
@@ -578,7 +576,7 @@
 
 	on_finish(mob/eater)
 		..()
-		boutput(eater, "<span class='alert'>It's so hard it breaks one of your teeth AND it tastes disgusting! Why would you ever eat this?</span>")
+		eater.show_text("It's so hard it breaks one of your teeth AND it tastes disgusting! Why would you ever eat this?","red")
 		random_brute_damage(eater, 3)
 		eater.emote("scream")
 		return
@@ -621,9 +619,9 @@
 /obj/item/cake_item/attack(target as mob, mob/user as mob)
 	var/iteminside = src.contents.len
 	if(!iteminside)
-		boutput(user, "<span class='alert'>The cake crumbles away!</span>")
+		user.show_text("The cake crumbles away!","red")
 		qdel(src)
-	boutput(user, "<span class='notice'>You bite down on something odd! You open up the cake...</span>")
+	user.show_text("You bite down on something odd! You open up the cake...","red")
 	for(var/obj/item/I in src.contents)
 		I.set_loc(user.loc)
 		I.add_fingerprint(user)

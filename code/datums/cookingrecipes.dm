@@ -1184,35 +1184,36 @@
 	output = null
 
 	specialOutput(var/obj/submachine/ourCooker)
-		if (!ourCooker)
+		if(!ourCooker)
 			return null
 
 		var/obj/item/reagent_containers/food/snacks/cake/batter/docakeitem = locate() in ourCooker.contents
-		if (!istype( docakeitem ))
-			return null
+		/*if (!istype( docakeitem ))
+			return null*/
 
-		var/obj/item/reagent_containers/food/snacks/S = docakeitem.custom_item
+		var/obj/item/reagent_containers/food/snacks/S
+		if(docakeitem.custom_item)
+			S = docakeitem.custom_item
 		var/obj/item/reagent_containers/food/snacks/cake/custom/B = new /obj/item/reagent_containers/food/snacks/cake/custom(ourCooker)
 		var/image/overlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-overlay")
-		B.food_color = S ? S.food_color : "#F0F0F0"
+		B.food_color = S ? S.food_color : "#CC8555"
 		overlay.color = B.food_color
 		overlay.alpha = 255
 		B.UpdateOverlays(image(overlay),"base")
-		if (S)
+		if(S)
 			S.reagents.trans_to(B, 50)
 			if(S.real_name)
 				B.name = "[S.real_name] cake"
-
+				for(var/i=1,i<=S.food_effects.len,i++)
+					if(S.food_effects[i] in B.food_effects)
+						continue
+					B.food_effects += S.food_effects[i]
 			else
 				B.name = "[S.name] cake"
 		else
-			B.name = "[rand(50) ? "yellow" : "white"] cake"
+			B.name = "plain cake"
 
 		B.desc = "Mmm! A delicious-looking [B.name]!"
-		for(var/i=1,i<=S.food_effects.len,i++)
-			if(S.food_effects[i] in B.food_effects)
-				continue
-			B.food_effects += S.food_effects[i]
 		return B
 
 
@@ -1251,7 +1252,7 @@
 
 				batter.custom_item = I
 				I.set_loc(batter)
-				batter.name = "uncooked [I:real_name ? I:real_name : I.name] cake"
+				batter.name = "[I:real_name ? I:real_name : I.name] cake batter"
 				for (var/obj/M in ourCooker.contents)
 					qdel(M)
 

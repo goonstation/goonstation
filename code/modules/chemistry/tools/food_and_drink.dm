@@ -1321,6 +1321,12 @@
 	throw_impact(var/turf/T)
 		return
 
+	ex_act(severity)
+		qdel(src)
+
+	attack_self(var/mob/user as mob)
+		return
+
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style
 	rand_pos = 1
 	New()
