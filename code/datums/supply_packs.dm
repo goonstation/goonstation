@@ -1247,7 +1247,7 @@
 	frames = list(/obj/machinery/rkit,
 					/obj/machinery/manufacturer/mechanic,
 					/obj/machinery/portable_reclaimer)
-	cost = 1000
+	cost = 35000
 	containertype = /obj/storage/crate
 	containername = "Mechanics Reconstruction Kit"
 
@@ -1320,7 +1320,7 @@
 	desc = "Frames: 1x Ship Component Fabricator, 1x Reclaimer"
 	frames = list(/obj/machinery/manufacturer/hangar,
 					/obj/machinery/portable_reclaimer)
-	cost = 60000
+	cost = 5000
 	containertype = /obj/storage/crate
 	containername = "Pod Production Kit"
 
@@ -1353,9 +1353,9 @@
 	category = "Engineering Department"
 	frames = list(/obj/smes_spawner,
 					/obj/machinery/power/furnace = 2)
-	cost = 40000
+	cost = 20000
 	containertype = /obj/storage/crate
-	containername = "AI Kit"
+	containername = "Power Kit"
 
 /datum/supply_packs/complex/mainframe_kit
 	name = "Computer Core Kit"
