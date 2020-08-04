@@ -1572,7 +1572,7 @@
 	slot_card = /obj/item/card/id/research
 	slot_belt = /obj/item/device/pda2/medical
 	slot_foot = /obj/item/clothing/shoes/brown
-	slot_jump = /obj/item/clothing/under/shirt_pants_b
+	slot_jump = /obj/item/clothing/under/shirt_pants
 	slot_suit = /obj/item/clothing/suit/labcoat
 	slot_ears = /obj/item/device/radio/headset/medical
 	items_in_backpack = list(/obj/item/storage/box/beakerbox, /obj/item/storage/pill_bottle/cyberpunk)
@@ -1606,7 +1606,7 @@
 #endif
 	slot_ears = /obj/item/device/radio/headset/command/radio_show_host
 	slot_eyes = /obj/item/clothing/glasses/regular
-	slot_jump = /obj/item/clothing/under/shirt_pants_b
+	slot_jump = /obj/item/clothing/under/shirt_pants
 	slot_card = /obj/item/card/id/civilian
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_back = /obj/item/storage/backpack/satchel
@@ -1628,7 +1628,7 @@
 	slot_card = /obj/item/card/id/research
 	slot_belt = /obj/item/device/pda2/medical
 	slot_foot = /obj/item/clothing/shoes/brown
-	slot_jump = /obj/item/clothing/under/shirt_pants_b
+	slot_jump = /obj/item/clothing/under/shirt_pants
 	slot_suit = /obj/item/clothing/suit/labcoat
 	slot_ears = /obj/item/device/radio/headset/medical
 	slot_poc1 = /obj/item/reagent_containers/food/drinks/tea
@@ -1897,7 +1897,7 @@
 	change_name_on_spawn = 1
 	slot_ears = /obj/item/device/radio/headset/command/captain
 	slot_eyes = /obj/item/clothing/glasses/regular/ecto/goggles
-	slot_jump = /obj/item/clothing/under/shirt_pants_b
+	slot_jump = /obj/item/clothing/under/shirt_pants
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_back = /obj/item/storage/backpack/satchel
 	slot_belt = /obj/item/device/pda2

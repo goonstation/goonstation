@@ -153,73 +153,73 @@
 //Formal
 
 /datum/clothingbooth_item/shirtandpantsblack
-	name = "Shirt And Black Pants"
+	name = "Shirt and Black Pants"
 	path = /obj/item/clothing/under/shirt_pants_b
 	category = "Formal"
 	cost = 100
 
 /datum/clothingbooth_item/shirtandpantsblack_redtie
-	name = "Shirt And Black Pants With Red Tie"
+	name = "Shirt and Black Pants with Red Tie"
 	path = /obj/item/clothing/under/shirt_pants_b/redtie
 	category = "Formal"
 	cost = 100
 
 /datum/clothingbooth_item/shirtandpantsblack_blacktie
-	name = "Shirt And Black Pants With Black Tie"
+	name = "Shirt and Black Pants with Black Tie"
 	path = /obj/item/clothing/under/shirt_pants_b/blacktie
 	category = "Formal"
 	cost = 100
 
 /datum/clothingbooth_item/shirtandpantsblack_bluetie
-	name = "Shirt And Black Pants With Blue Tie"
+	name = "Shirt and Black Pants with Blue Tie"
 	path = /obj/item/clothing/under/shirt_pants_b/bluetie
 	category = "Formal"
 	cost = 100
 
 /datum/clothingbooth_item/shirtandpantsbrown
-	name = "Shirt And Brown Pants"
+	name = "Shirt and Brown Pants"
 	path = /obj/item/clothing/under/shirt_pants_br
 	category = "Formal"
 	cost = 100
 
 /datum/clothingbooth_item/shirtandpantsbrown_redtie
-	name = "Shirt And Brown Pants With Red Tie"
+	name = "Shirt and Brown Pants with Red Tie"
 	path = /obj/item/clothing/under/shirt_pants_br/redtie
 	category = "Formal"
 	cost = 100
 
 /datum/clothingbooth_item/shirtandpantsbrown_blacktie
-	name = "Shirt And Brown Pants With Black Tie"
+	name = "Shirt and Brown Pants with Black Tie"
 	path = /obj/item/clothing/under/shirt_pants_br/blacktie
 	category = "Formal"
 	cost = 100
 
 /datum/clothingbooth_item/shirtandpantsbrown_bluetie
-	name = "Shirt And Brown Pants With Blue Tie"
+	name = "Shirt and Brown Pants with Blue Tie"
 	path = /obj/item/clothing/under/shirt_pants_br/bluetie
 	category = "Formal"
 	cost = 100
 
 /datum/clothingbooth_item/shirtandpantswhite
-	name = "Shirt And White Pants"
+	name = "Shirt and White Pants"
 	path = /obj/item/clothing/under/shirt_pants_w
 	category = "Formal"
 	cost = 100
 
 /datum/clothingbooth_item/shirtandpantswhite_redtie
-	name = "Shirt And White Pants With Red Tie"
+	name = "Shirt and White Pants with Red Tie"
 	path = /obj/item/clothing/under/shirt_pants_w/redtie
 	category = "Formal"
 	cost = 100
 
 /datum/clothingbooth_item/shirtandpantswhite_blacktie
-	name = "Shirt And White Pants With Black Tie"
+	name = "Shirt and White Pants with Black Tie"
 	path = /obj/item/clothing/under/shirt_pants_w/blacktie
 	category = "Formal"
 	cost = 100
 
 /datum/clothingbooth_item/shirtandpantswhite_bluetie
-	name = "Shirt And White Pants With White Tie"
+	name = "Shirt and White Pants with White Tie"
 	path = /obj/item/clothing/under/shirt_pants_w/bluetie
 	category = "Formal"
 	cost = 100
@@ -338,7 +338,7 @@
 	cost = 250
 
 /datum/clothingbooth_item/johhnycoat
-	name = "Overcoat And Scarf"
+	name = "Overcoat and Scarf"
 	path = /obj/item/clothing/suit/johnny_coat
 	category = "Jackets"
 	cost = 150
@@ -608,7 +608,6 @@
 	name = "Cowboy Hat"
 	category = "Headwear"
 	cost = 75
-
 
 /datum/clothingbooth_item/pokervisor
 	path = /obj/item/clothing/head/pokervisor

@@ -909,7 +909,7 @@
 		src.icon_state = "shirt_n_pant-[pick("b", "br", "w")][pick("", "_tie-r", "_tie-b", "_tie-bl")]"
 		src.item_state = "[src.icon_state]"
 
-//Black Pants
+// Black Pants
 /obj/item/clothing/under/shirt_pants_b
 	name = "shirt and black pants"
 	desc = "A button-down shirt and some black pants."
@@ -936,7 +936,7 @@
 	icon_state = "shirt_n_pant-b_tie-bl"
 	item_state = "shirt_n_pant-b_tie-bl"
 
-//Brown Pants
+// Brown Pants
 /obj/item/clothing/under/shirt_pants_br
 	name = "shirt and brown pants"
 	desc = "A button-down shirt and some brown pants."
@@ -963,7 +963,7 @@
 	icon_state = "shirt_n_pant-br_tie-bl"
 	item_state = "shirt_n_pant-br_tie-bl"
 
-//White Pants
+// White Pants
 /obj/item/clothing/under/shirt_pants_w
 	name = "shirt and white pants"
 	desc = "A button-down shirt and some white pants."
