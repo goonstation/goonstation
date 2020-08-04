@@ -352,6 +352,10 @@
 		else
 			return 0
 
+	// This proc converts a hex color value ("#420CAB") to an RGB list
+	// Clamps each of the RGB values between 50 and 190
+	// Then converts it back to a hex color value
+	// So we cant make our organs look *too* stupid through character settings
 	proc/organ_fix_colors(var/hex)
 		var/list/L = hex_to_rgb_list(hex)
 		for (var/i in L)

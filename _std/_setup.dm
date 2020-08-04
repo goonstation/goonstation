@@ -1151,15 +1151,15 @@ var/ZLOG_START_TIME
 #define RAILING_FASTEN 2
 
 //tail defines
-#define NO_TAIL 0
-#define MONKEY_TAIL 1
-#define LIZARD_TAIL 2
-#define COW_TAIL 3
-#define WEREWOLF_TAIL 4
-#define SKELETON_TAIL 5	// tailbone *shrug*
-#define SEAMONKEY_TAIL 6
-#define CAT_TAIL 7
-#define ROACH_TAIL 8
+#define TAIL_NONE 0
+#define TAIL_MONKEY 1
+#define TAIL_LIZARD 2
+#define TAIL_COW 3
+#define TAIL_WEREWOLF 4
+#define TAIL_SKELETON 5	// tailbone *shrug*
+#define TAIL_SEAMONKEY 6
+#define TAIL_CAT 7
+#define TAIL_ROACH 8
 
 //Auditing
 //Whether or not a potentially suspicious action gets denied by the code.

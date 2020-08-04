@@ -32,7 +32,7 @@
 	var/icon_beard = null
 	var/icon_override_static = 0 // does this look different enough from a default human to warrant a static icon of its own?
 
-	var/tail = NO_TAIL // What tail do we have? Or are supposed to have?
+	var/tail = TAIL_NONE // What tail do we have? Or are supposed to have?
 
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
@@ -304,46 +304,52 @@
 		..()
 		return
 
-	proc/set_tail(var/mob/living/carbon/human/Tf as mob, var/tailnum as num)
-		if(!ishuman(Tf) || tailnum > ROACH_TAIL || tailnum < NO_TAIL)
+	// Removes the mob's current tail (if any) and replaces it with the tail specified
+	// Third var determines if we drop the tail (0) or banish it to the shadow realm (1)
+	// Defaults to just dropping it on the ground
+	proc/set_tail(var/mob/living/carbon/human/Tf as mob, var/tailnum as num, var/deletail as num)
+		if(!ishuman(Tf) || tailnum > TAIL_ROACH || tailnum < TAIL_NONE)
 			return 0
 
-		if(Tf.organHolder)	// dump the old tail, if they have one
-			Tf.organHolder.tail = null
+		if(Tf.mutantrace.tail == tailnum)
+			return 0 // We're already that thing!
 
+		if(Tf.organHolder.tail)	// dump the old tail, if they have one
+			if(deletail)
+				Tf.organHolder.tail = null
+			else
+				if(tailnum > TAIL_NONE)
+					Tf.visible_message("<span class='notice'>[Tf]'s tail falls off, and a new one appears in its place!</span>", "<span class='notice'>Your tail falls off, and a new one appears in its place!</span>")
+				Tf.organHolder.drop_organ("tail")
+
+		//shit this might drop all the tails in your inventory
 		for(var/obj/item/organ/tail/hidden_secret_tails in Tf.contents)	// Cus mutants love to hoard tails in their mob
 			if(istype(hidden_secret_tails, /obj/item/organ/tail))
-				qdel(hidden_secret_tails)	// Please stop exploding into tails (thank you)
+				hidden_secret_tails.set_loc(Tf.loc)
+				hidden_secret_tails.dropped(Tf)
+				hidden_secret_tails.layer = initial(hidden_secret_tails.layer)
 
 		switch(tailnum)	// Mutantraces come with a free, new tail
-			if (NO_TAIL)	// technically you have a tail, its just invisible
+			if (TAIL_NONE)	// technically you have a tail, its just invisible
 				Tf.organHolder.tail = new /obj/item/organ/tail/bone(Tf, Tf.organHolder)
-				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
-			if (MONKEY_TAIL)
+			if (TAIL_MONKEY)
 				Tf.organHolder.tail = new /obj/item/organ/tail/monkey(Tf, Tf.organHolder)
-				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
-			if (LIZARD_TAIL)
+			if (TAIL_LIZARD)
 				Tf.organHolder.tail = new /obj/item/organ/tail/lizard(Tf, Tf.organHolder)
-				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
-			if (COW_TAIL)
+			if (TAIL_COW)
 				Tf.organHolder.tail = new /obj/item/organ/tail/cow(Tf, Tf.organHolder)
-				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
-			if (WEREWOLF_TAIL)
+			if (TAIL_WEREWOLF)
 				Tf.organHolder.tail = new /obj/item/organ/tail/wolf(Tf, Tf.organHolder)
-				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
-			if (SKELETON_TAIL)
+			if (TAIL_SKELETON)
 				Tf.organHolder.tail = new /obj/item/organ/tail/bone(Tf, Tf.organHolder)
-				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
-			if (SEAMONKEY_TAIL)
+			if (TAIL_SEAMONKEY)
 				Tf.organHolder.tail = new /obj/item/organ/tail/seamonkey(Tf, Tf.organHolder)
-				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
-			if (CAT_TAIL)
+			if (TAIL_CAT)
 				Tf.organHolder.tail = new /obj/item/organ/tail/cat(Tf, Tf.organHolder)
-				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
-			if (ROACH_TAIL)
+			if (TAIL_ROACH)
 				Tf.organHolder.tail = new /obj/item/organ/tail/roach(Tf, Tf.organHolder)
-				Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
 
+		Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
 		Tf.update_body()
 		return 1
 
@@ -497,7 +503,7 @@
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "lizard"
-	tail = LIZARD_TAIL
+	tail = TAIL_LIZARD
 
 	New(var/mob/living/carbon/human/H)
 		..()
@@ -731,7 +737,7 @@
 	icon_state = "skeleton"
 	icon_override_static = 1
 	voice_override = "skelly"
-	tail = SKELETON_TAIL
+	tail = TAIL_SKELETON
 
 	New(var/mob/living/carbon/human/M)
 		..()
@@ -860,7 +866,7 @@
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/werewolf
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/werewolf
 	ignore_missing_limbs = 0
-	tail = WEREWOLF_TAIL
+	tail = TAIL_WEREWOLF
 
 	New()
 		..()
@@ -1013,7 +1019,7 @@
 	var/sound_monkeyscream = 'sound/voice/screams/monkey_scream.ogg'
 	var/had_tablepass = 0
 	var/table_hide = 0
-	tail = MONKEY_TAIL
+	tail = TAIL_MONKEY
 
 	New(var/mob/living/carbon/human/M)
 		if (M)
@@ -1208,7 +1214,7 @@
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = "seamonkey"
 	aquatic = 1
-	tail = SEAMONKEY_TAIL
+	tail = TAIL_SEAMONKEY
 
 	New()
 		..()
@@ -1307,12 +1313,11 @@
 	icon_state = "roach"
 	icon_override_static = 1
 	override_attack = 0
-	tail = ROACH_TAIL
+	tail = TAIL_ROACH
 
 	New()
 		..()
 		set_tail(mob, src.tail)
-		mob.blood_color = "#AEB555"
 
 	say_verb()
 		return "clicks"
@@ -1328,7 +1333,7 @@
 	jerk = 1
 	override_attack = 0
 	firevuln = 1.5 // very flammable catthings
-	tail = CAT_TAIL
+	tail = TAIL_CAT
 
 	New()
 		..()
@@ -1634,7 +1639,7 @@
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "cow"
-	tail = COW_TAIL
+	tail = TAIL_COW
 
 	New(var/mob/living/carbon/human/H)
 		..()
