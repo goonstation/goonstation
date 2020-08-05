@@ -1239,15 +1239,6 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	var/output_this_string
 	output_this_string = tail_iconstate + (human_getting_monkey_tail ? "-human" : "-monkey")
 	return output_this_string
-	/*
-	else if (human_getting_monkey_tail)
-		output_this_string = tail_iconstate + "-human"
-		return output_this_string
-
-	else if (monkey_getting_human_tail)
-		output_this_string = tail_iconstate + "-monkey"
-		return output_this_string
-	*/
 
 #if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
 /mob/living/carbon/human/UpdateDamage()

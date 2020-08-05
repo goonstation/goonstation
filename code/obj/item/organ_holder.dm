@@ -1069,6 +1069,7 @@
 				newtail.set_loc(src.donor)
 				newtail.holder = src
 				organ_list["tail"] = newtail
+				src.donor.update_body()
 				success = 1
 
 		if (success)

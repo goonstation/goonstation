@@ -20,11 +20,6 @@
 		var/icon/tail_icon = null
 		tail_icon = new /icon(src.icon, src.icon_state)
 
-		if(!src.organ_color_1)
-			src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
-		if(!src.organ_color_2)
-			src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
-
 		if (src.icon_piece_1)
 			var/icon/icon_1 = new /icon(src.icon, src.icon_piece_1)
 			icon_1.Blend(src.organ_color_1, ICON_MULTIPLY)
@@ -132,6 +127,10 @@
 
 	New()
 		..()
+		// This tail accepts hairstyle colors!
+		// Gotta force in some random colors first, otherwise new stock tails are colorless!
+		src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
+		src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
 		if (src.donor.bioHolder.mobAppearance)	// Get the colors here so they dont change later, ie reattached on someone else
 			var/datum/appearanceHolder/aH = src.donor.bioHolder.mobAppearance
 			src.organ_color_1 = organ_fix_colors(aH.customization_first_color)
@@ -140,12 +139,7 @@
 		src.organ_image_under_suit_1 = "lizard_under_suit_1"
 		src.organ_image_under_suit_2 = "lizard_under_suit_2"
 		src.organ_image_over_suit = "lizard_over_suit"
-		// This tail accepts hairstyle colors!
-		// If we dont have any colors, make some up
-		if(!src.organ_color_1)
-			src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
-		if(!organ_color_2)
-			src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
+
 		// Colorize (and build) organ item
 		src.update_tail_icon()
 
@@ -159,7 +153,7 @@
 		..()
 		src.organ_image_under_suit_1 = "cow_under_suit"
 		src.organ_image_under_suit_2 = null
-		src.organ_image_over_suit = "cow_over_suit"
+		src.organ_image_over_suit = "cow_over_suit_1"
 
 /obj/item/organ/tail/wolf
 	name = "wolf tail"

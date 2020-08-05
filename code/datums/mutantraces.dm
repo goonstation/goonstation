@@ -1629,7 +1629,7 @@
 			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
 
 			detail_1 = image('icons/effects/genetics.dmi', icon_state="cow_detail-1", layer = MOB_LIMB_LAYER+0.1)
-			detail_2 = image('icons/effects/genetics.dmi', icon_state="cow_over_suit_2", layer =  MOB_LAYER_BASE+0.3)
+			detail_2 = image('icons/effects/genetics.dmi', icon_state="cow_over_suit_2", layer = MOB_LAYER_BASE+0.3)
 
 
 			hex_to_rgb_list(aH.customization_first_color)
