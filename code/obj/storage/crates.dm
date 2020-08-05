@@ -258,6 +258,26 @@
 		..()
 		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
 
+/obj/storage/crate/bee
+	name = "Bee crate"
+	desc = "A crate with a picture of a bee on it. Buzz."
+	icon_state = "beecrate"
+	density = 1
+	icon_opened = "beecrateopen"
+	icon_closed = "beecrate"
+
+	loaded
+		spawn_contents = list(/obj/item/bee_egg_carton = 5)
+
+		var/blog = ""
+
+		make_my_stuff()
+			.=..()
+			if (.)
+				for(var/obj/item/bee_egg_carton/carton in src)
+					carton.ourEgg.blog += blog
+				return 1
+
 // New crates woo. (Gannets)
 
 /obj/storage/crate/packing

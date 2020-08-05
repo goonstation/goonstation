@@ -1,7 +1,10 @@
-(t)mon jul 24
+(t)tue aug 04 20
+(u)Zamujasa
+(*)Player notes now show multiline data properly. Maybe. I didn't test this. vOv
+(t)mon jul 24 20
 (u)Sovexe
 (*)New Ability Management Panel accesible in player options and tilde menu.
-(t)thu jul 23
+(t)thu jul 23 20
 (u)Sovexe
 (*)Added the meowitzer.
 (t)fri jul 17 20
