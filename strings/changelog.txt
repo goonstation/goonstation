@@ -1,5 +1,9 @@
 
 (t)wed aug 05 20
+(u)zjdtmkhzt
+(p)1553
+(e)⚖⛔|balance, removal
+(+)Portable flashers will no longer destroy some objects on their tile when triggering.
 (u)Flaborized
 (p)1611
 (e)🎨|sprites
