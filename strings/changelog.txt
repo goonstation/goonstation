@@ -1,5 +1,9 @@
 
 (t)wed aug 05 20
+(u)adharainspace
+(p)1672
+(e)🆕|feature
+(+)explosions should more consistently blow up stuff like kitchen equipment.
 (u)Comradef191
 (p)1684
 (e)🗺|mapping
