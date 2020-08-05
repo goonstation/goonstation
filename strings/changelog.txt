@@ -1,5 +1,10 @@
 
 (t)wed aug 05 20
+(u)Comradef191
+(p)1684
+(e)🗺|mapping
+(*)Moved the cables ontop of the pipes in Cogmap 1 Engineering, now going through the TEG chamber instead of atop the Hot Loop Intake pipes.
+(+)Removed some unneeded wiring from Cogmap 1 Engineering Gas Storage.
 (u)Tarmunora
 (p)1693
 (e)🐛|bug
