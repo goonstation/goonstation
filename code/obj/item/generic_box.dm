@@ -7,6 +7,7 @@
 	force = 1
 	throwforce = 1
 	w_class = 2
+	inventory_counter_enabled = 1
 	var/contained_item = /obj/item/sticker/gold_star
 	var/item_amount = -1 // how many of thing to start with, -1 for infinite
 	var/max_item_amount = -1 // how many can the thing hold total, -1 for infinite
@@ -261,6 +262,7 @@
 				for (var/obj/item/thing in src.contents)
 					if (istype(thing, src.contained_item))
 						src.item_amount++
+			src.inventory_counter.update_number(src.item_amount)
 
 	get_desc()
 		if (src.item_amount > 15 || src.item_amount == -1)
@@ -408,6 +410,7 @@
 			return 0
 
 	proc/update_icon()
+		src.inventory_counter.update_number(src.item_amount)
 		if (src.open && !src.item_amount)
 			src.icon_state = src.icon_empty
 		else if (src.open && src.item_amount)

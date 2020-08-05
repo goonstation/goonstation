@@ -1,4 +1,9 @@
-
+(t)wed aug 05 20
+(u)Zamujasa
+(e)🆕|feature
+(*)Some items will now show a quantity number when held in your hands. Metal sheets, cable, glass, money, some other tools.
+(*)These may not always update correctly or on time, though, but it should help cut down on constantly examining items.
+(*)Note that this does not apply when they're in your inventory; only when in your hands. Code limitation right now. Oh well.
 (t)tue aug 04 20
 (u)Superlagg
 (p)1702
