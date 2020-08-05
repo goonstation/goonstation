@@ -226,8 +226,9 @@
 					src.reagents.maximum_volume += 100
 					src.amount += 10
 				var/image/stack = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-overlay")
-				stack.color = (c.GetOverlayImage(c.overlay_refs[i])).color
-				src.UpdateOverlays(stack,"[overlay_layer]")
+				var/image/ov_image = c.GetOverlayImage(c.overlay_refs[i])
+				stack.color = ov_image.color
+				src.UpdateOverlays(stack, overlay_layer)
 				continue
 			var/image/buffer = c.GetOverlayImage("[c.overlay_refs[i]]") //generating the topping reference from the original cake to be stacked
 			var/list/tag
@@ -318,7 +319,7 @@
 							i--
 						continue
 
-					var/image/toppingimage = new /image('icons/obj/foodNdrink/food_dessert.dmi',"[toppingpath]")
+					var/image/toppingimage = new /image('icons/obj/foodNdrink/food_dessert.dmi',toppingpath)
 					if(buffer.color)
 						toppingimage.color = buffer.color
 					cake.UpdateOverlays(toppingimage,toppingpath)
@@ -440,7 +441,7 @@
 			//adding topping overlays to the cake. Yay :D
 			if(src.sliced) //if you add a topping to a sliced cake, it updates the icon_state to the sliced version.
 				topping = replacetext(topping,"cake[clayer]","slice")
-			if(topping && !(src.GetOverlayImage("[topping]"))) //actually adding the topping overlay to the cake
+			if(topping && !(src.GetOverlayImage(topping))) //actually adding the topping overlay to the cake
 				var/image/toppingoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',topping)
 				toppingoverlay.alpha = 255
 				src.UpdateOverlays(toppingoverlay,topping)
