@@ -31,9 +31,10 @@
 	var/list/organ_abilities = null
 
 	// So we can have an organ have a visible counterpart while inside someone, like a tail or some kind of krang
-	var/image/organ_image_over_suit = null		// Shows up over our suit, usually while the mob is facing north
-	var/image/organ_image_under_suit_1 = null	// Shows up under our suit, usually while the mob is facing anywhere else
-	var/image/organ_image_under_suit_2 = null	// If our organ needs another picture, usually for another coloration
+	var/organ_image_icon = null		// The icon group we'll be using, such as 'icons/effects/genetics.dmi'
+	var/organ_image_over_suit = null		// Shows up over our suit, usually while the mob is facing north
+	var/organ_image_under_suit_1 = null	// Shows up under our suit, usually while the mob is facing anywhere else
+	var/organ_image_under_suit_2 = null	// If our organ needs another picture, usually for another coloration
 	// Course all of those details can be on whatever layer you want, since they're defined in full by the organ
 	// The organ colors are inherited from the mob's hairstyle.
 	var/organ_color_1 = null		// Typically used to colorize the organ image, set in new()

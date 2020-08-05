@@ -200,7 +200,6 @@
 						limb.holder = M
 						limb.remove_stage = 0
 
-			set_tail(M, src.tail)
 			M.update_face()
 			M.update_body()
 
@@ -311,23 +310,18 @@
 		if(!ishuman(Tf) || tailnum > TAIL_ROACH || tailnum < TAIL_NONE)
 			return 0
 
-		if(Tf.mutantrace.tail == tailnum)
-			return 0 // We're already that thing!
-
 		if(Tf.organHolder.tail)	// dump the old tail, if they have one
 			if(deletail)
 				Tf.organHolder.tail = null
+				//shit this might drop all the tails in your inventory
+				for(var/obj/item/organ/tail/hidden_secret_tails in Tf.contents)	// Cus mutants love to hoard tails in their mob
+					if(istype(hidden_secret_tails, /obj/item/organ/tail))
+						hidden_secret_tails.set_loc(Tf.loc)
+						hidden_secret_tails.dropped(Tf)
+						hidden_secret_tails.layer = initial(hidden_secret_tails.layer)
 			else
-				if(tailnum > TAIL_NONE)
-					Tf.visible_message("<span class='notice'>[Tf]'s tail falls off, and a new one appears in its place!</span>", "<span class='notice'>Your tail falls off, and a new one appears in its place!</span>")
+				// Tf.visible_message("<span class='notice'>[Tf]'s tail falls off, and a new one appears in its place!</span>", "<span class='notice'>Your tail falls off, and a new one appears in its place!</span>")
 				Tf.organHolder.drop_organ("tail")
-
-		//shit this might drop all the tails in your inventory
-		for(var/obj/item/organ/tail/hidden_secret_tails in Tf.contents)	// Cus mutants love to hoard tails in their mob
-			if(istype(hidden_secret_tails, /obj/item/organ/tail))
-				hidden_secret_tails.set_loc(Tf.loc)
-				hidden_secret_tails.dropped(Tf)
-				hidden_secret_tails.layer = initial(hidden_secret_tails.layer)
 
 		switch(tailnum)	// Mutantraces come with a free, new tail
 			if (TAIL_NONE)	// technically you have a tail, its just invisible

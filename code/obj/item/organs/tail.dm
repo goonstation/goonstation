@@ -5,10 +5,15 @@
 	organ_holder_location = "chest"	// chest-ish
 	organ_holder_required_op_stage = 11.0
 	edible = 0	// dont eat pant
+	organ_image_icon = 'icons/effects/genetics.dmi'
 	var/icon_piece_1 = null	// For setting up the icon if its in multiple pieces
 	var/icon_piece_2 = null
 	var/failure_ability = "clumsy"	// The organ failure ability associated with this organ.
+	var/human_getting_monkeytail = 0	// If a human's getting a monkey tail
+	var/monkey_getting_humantail = 0	// If a monkey's getting a human tail
 
+	//Assembles the tail organ item sprite icon thing from multiple separate iconstates
+	//Used when a tail organ has a bunch of different colors its supposed to be
 	proc/update_tail_icon()
 		if (!src.icon_piece_1 && !src.icon_piece_2)
 			return	// Nothing really there to update
@@ -40,12 +45,16 @@
 
 		var/attachment_successful = 0
 		var/boned = 0	// Tailbones just kind of pop into place
-	//	var/human_monkeytail = 0	// If a human's getting a monkey tail
-	//	var/monkey_humantail = 0	// If a monkey's getting a human tail
 
-		if ((src.type == /obj/item/organ/tail/monkey && !ismonkey(H)) || (src.type != /obj/item/organ/tail/monkey && ismonkey(H)))	// If we are trying to attach a monkey tail to a non-monkey
-			boutput(user, "That [src] doesn't fit there!")	// I'll make it work it later
-			return 0
+		if (src.type == /obj/item/organ/tail/monkey && !ismonkey(H))	// If we are trying to attach a monkey tail to a non-monkey
+			src.human_getting_monkeytail = 1
+			src.monkey_getting_humantail = 0
+		else if(src.type != /obj/item/organ/tail/monkey && ismonkey(H))	// If we are trying to attach a non-monkey tail to a monkey
+			src.human_getting_monkeytail = 0
+			src.monkey_getting_humantail = 1
+		else	// Tail is going to someone with a natively compatible butt-height
+			src.human_getting_monkeytail = 0
+			src.monkey_getting_humantail = 0
 
 		if (!H.organHolder.tail && H.mutantrace && H.mutantrace == /datum/mutantrace/skeleton)
 			attachment_successful = 1 // Just slap that tailbone in place, its fine
@@ -58,10 +67,9 @@
 				user, "<span class='alert'>You [fluff] the coccygeal coruna of [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum![prob(1) ? " The tailbone wiggles happily." : ""]</span>",\
 				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] the coccygeal coruna of [src] onto the apex of your sacrum![prob(1) ? " Your tailbone wiggles happily." : ""]</span>")
 			else	// Any other tail
-			//	H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "press" ? "es" : "s"] [src] onto the apex of [H == user ? "[his_or_her(H)]" : "[H]'s"] sacrum!</span>",\
-			//	user, "<span class='alert'>You [fluff] [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum!</span>",\
-			//	H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] [src] onto the apex of your sacrum!</span>")
-				boutput(user, "That [src] is way too meaty to fit there!")	// I'll make it work it later
+				H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "press" ? "es" : "s"] [src] onto the apex of [H == user ? "[his_or_her(H)]" : "[H]'s"] sacrum!</span>",\
+				user, "<span class='alert'>You [fluff] [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum!</span>",\
+				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] [src] onto the apex of your sacrum!</span>")
 
 		else if (!H.organHolder.tail && H.organHolder.chest.op_stage >= 11.0)
 			attachment_successful = 1
@@ -102,15 +110,6 @@
 			src.donor.change_misstep_chance(10)
 			src.donor.bioHolder.AddEffect(failure_ability)
 
-/* Turns out a human tailbone'll work just fine?
-/obj/item/organ/tail/human	// some dummy tail that doesnt exist cus not everyone has a tail
-	name = "human tail"
-	desc = "Humans don't have tails... do they? They don't and you shouldn't be seeing this."
-	organ_name = "tail"
-
-	on_removal()
-		qdel(src)	// Humans dont have tails!
-*/
 /obj/item/organ/tail/monkey
 	name = "monkey tail"
 	desc = "A long, slender tail."
@@ -119,9 +118,9 @@
 
 	New()
 		..()
-		src.organ_image_under_suit_1 = image('icons/effects/genetics.dmi', icon_state="monkey_under_suit", layer = MOB_LIMB_LAYER-0.3)
+		src.organ_image_under_suit_1 = "monkey_under_suit"
 		src.organ_image_under_suit_2 = null
-		src.organ_image_over_suit = image('icons/effects/genetics.dmi', icon_state="monkey_over_suit", layer = MOB_LAYER_BASE+0.3)
+		src.organ_image_over_suit = "monkey_over_suit"
 
 /obj/item/organ/tail/lizard
 	name = "lizard tail"
@@ -138,19 +137,16 @@
 			src.organ_color_1 = organ_fix_colors(aH.customization_first_color)
 			src.organ_color_2 = organ_fix_colors(aH.customization_second_color)
 
-		src.organ_image_under_suit_1 = image('icons/effects/genetics.dmi', icon_state="lizard_under_suit_1", layer = MOB_LIMB_LAYER-0.3)
-		src.organ_image_under_suit_2 = image('icons/effects/genetics.dmi', icon_state="lizard_under_suit_2", layer = MOB_LIMB_LAYER-0.25)
-		src.organ_image_over_suit = image('icons/effects/genetics.dmi', icon_state="lizard_over_suit", layer = MOB_LAYER_BASE+0.3)
+		src.organ_image_under_suit_1 = "lizard_under_suit_1"
+		src.organ_image_under_suit_2 = "lizard_under_suit_2"
+		src.organ_image_over_suit = "lizard_over_suit"
 		// This tail accepts hairstyle colors!
 		// If we dont have any colors, make some up
 		if(!src.organ_color_1)
 			src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
 		if(!organ_color_2)
 			src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
-		// Apply those colors
-		src.organ_image_under_suit_1.color = organ_color_1
-		src.organ_image_under_suit_2.color = organ_color_2
-		src.organ_image_over_suit.color = organ_color_1
+		// Colorize (and build) organ item
 		src.update_tail_icon()
 
 /obj/item/organ/tail/cow
@@ -161,9 +157,9 @@
 
 	New()
 		..()
-		src.organ_image_under_suit_1 = image('icons/effects/genetics.dmi', icon_state="cow_under_suit", layer = MOB_LIMB_LAYER-0.3)
+		src.organ_image_under_suit_1 = "cow_under_suit"
 		src.organ_image_under_suit_2 = null
-		src.organ_image_over_suit = image('icons/effects/genetics.dmi', icon_state="cow_over_suit", layer = MOB_LAYER_BASE+0.3)
+		src.organ_image_over_suit = "cow_over_suit"
 
 /obj/item/organ/tail/wolf
 	name = "wolf tail"
@@ -175,9 +171,9 @@
 
 	New()
 		..()
-		src.organ_image_under_suit_1 = image('icons/effects/genetics.dmi', icon_state="wolf_under_suit", layer = MOB_LIMB_LAYER-0.3)
+		src.organ_image_under_suit_1 = "wolf_under_suit"
 		src.organ_image_under_suit_2 = null
-		src.organ_image_over_suit = image('icons/effects/genetics.dmi', icon_state="wolf_over_suit", layer = MOB_LAYER_BASE+0.3)
+		src.organ_image_over_suit = "wolf_over_suit"
 
 /obj/item/organ/tail/bone
 	name = "tailbone"
@@ -202,9 +198,9 @@
 
 	New()
 		..()
-		src.organ_image_under_suit_1 = image('icons/effects/genetics.dmi', icon_state="seamonkey_under_suit", layer = MOB_LIMB_LAYER-0.3)
+		src.organ_image_under_suit_1 = "seamonkey_under_suit"
 		src.organ_image_under_suit_2 = null
-		src.organ_image_over_suit = image('icons/effects/genetics.dmi', icon_state="seamonkey_over_suit", layer = MOB_LAYER_BASE+0.3)
+		src.organ_image_over_suit = "seamonkey_over_suit"
 
 /obj/item/organ/tail/cat
 	name = "cat tail"
@@ -214,9 +210,9 @@
 
 	New()
 		..()
-		src.organ_image_under_suit_1 = image('icons/effects/genetics.dmi', icon_state="cat_under_suit", layer = MOB_LIMB_LAYER-0.3)
+		src.organ_image_under_suit_1 = "cat_under_suit"
 		src.organ_image_under_suit_2 = null
-		src.organ_image_over_suit = image('icons/effects/genetics.dmi', icon_state="cat_over_suit", layer = MOB_LAYER_BASE+0.3)
+		src.organ_image_over_suit = "cat_over_suit"
 
 /obj/item/organ/tail/roach
 	name = "roach abdomen"
@@ -227,6 +223,6 @@
 
 	New()
 		..()
-		src.organ_image_under_suit_1 = image('icons/effects/genetics.dmi', icon_state="roach_under_suit", layer = MOB_LIMB_LAYER-0.3)
+		src.organ_image_under_suit_1 = "roach_under_suit"
 		src.organ_image_under_suit_2 = null
-		src.organ_image_over_suit = image('icons/effects/genetics.dmi', icon_state="roach_over_suit", layer = MOB_LAYER_BASE+0.3)
+		src.organ_image_over_suit = "roach_over_suit"
