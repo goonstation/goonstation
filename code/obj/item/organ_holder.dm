@@ -338,7 +338,7 @@
 			src.appendix = new /obj/item/organ/appendix(src.donor, src)
 			organ_list["appendix"] = appendix
 		if (!src.tail)
-			src.tail = new /obj/item/organ/tail/bone(src.donor, src)
+			src.tail = null	// Humans dont have tailbones, fun fact
 			organ_list["tail"] = tail
 
 	//input organ = string value of organ_list assoc list

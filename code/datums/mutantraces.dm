@@ -328,8 +328,8 @@
 				Tf.organHolder.drop_organ("tail")
 
 		switch(tailnum)	// Mutantraces come with a free, new tail
-			if (TAIL_NONE)	// technically you have a tail, its just invisible
-				Tf.organHolder.tail = new /obj/item/organ/tail/bone(Tf, Tf.organHolder)
+			if (TAIL_NONE)	// Unless you shouldn't have one
+				Tf.organHolder.tail = null
 			if (TAIL_MONKEY)
 				Tf.organHolder.tail = new /obj/item/organ/tail/monkey(Tf, Tf.organHolder)
 			if (TAIL_LIZARD)
