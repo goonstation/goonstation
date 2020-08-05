@@ -1,4 +1,10 @@
 
+(t)wed aug 05 20
+(u)Anachroniser
+(p)1660
+(e)⚖🆕|balance, feature
+(*)QoL and usability changes to bows.
+(*)Buffs to bow effectiveness
 (t)tue aug 04 20
 (u)Superlagg
 (p)1702
