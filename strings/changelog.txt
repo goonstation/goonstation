@@ -1,5 +1,9 @@
 
 (t)wed aug 05 20
+(u)Tarmunora
+(p)1693
+(e)🐛|bug
+(+)Cryoxadone will now properly heat the patient based on damage healed.
 (u)Anachroniser
 (p)1660
 (e)⚖🆕|balance, feature
