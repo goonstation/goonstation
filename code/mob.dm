@@ -1166,8 +1166,6 @@
 			if (W)
 				W.layer = initial(W.layer)
 
-			var/turf/T = get_turf(src.loc)
-			T.Entered(W)
 			u_equip(W)
 			.= 1
 		else
