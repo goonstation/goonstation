@@ -46,7 +46,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/charge_up = 0 //Does this gun have a charge up time and how long is it? 0 = normal instant shots.
 	var/shoot_delay = 4
 
-	var/muzzle_flash = "muzzle_flash" //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
+	var/muzzle_flash = null //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
 	var/list/muzzle_flash_simplelight_color
 
 	buildTooltipContent()

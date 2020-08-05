@@ -492,6 +492,26 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 		M.vis_contents.Remove(muzzleflash)
 		pool(muzzleflash)
 
+proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim)
+	if (!A || firing_angle == null || !muzzle_anim) return
+
+	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
+	muzzleflash.pixel_y = cos(firing_angle) * 22
+	muzzleflash.pixel_x = sin(firing_angle) * 22
+
+	muzzleflash.Turn(firing_angle)
+	muzzleflash.layer = A.layer
+	muzzleflash.set_loc(A)
+	A.vis_contents.Add(muzzleflash)
+	if (muzzleflash.icon_state == muzzle_anim)
+		flick(muzzle_anim,muzzleflash)
+	muzzleflash.icon_state = muzzle_anim
+
+	SPAWN_DBG(0.6 SECONDS)
+		A.vis_contents.Remove(muzzleflash)
+		pool(muzzleflash)
+
+
 
 /proc/sprint_particle(var/mob/M, var/turf/T = null)
 	if (!M || !M.sprint_particle) return

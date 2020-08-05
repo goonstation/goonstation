@@ -148,7 +148,7 @@
 /obj/chat_maptext_holder
 	appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
 	mouse_opacity = 0
-	var/list/lines = list() // a queue sure would be nice
+	var/list/image/chat_maptext/lines = list() // a queue sure would be nice
 
 	disposing()
 		for(var/image/chat_maptext/I in src.lines)
@@ -174,7 +174,7 @@
 	maptext_height = 48
 	alpha = 0
 	icon = null
-	appearance_flags = 0
+	appearance_flags = PIXEL_SCALE
 	var/unique_id
 	var/measured_height = 8
 
@@ -192,6 +192,7 @@
 		src.icon = initial(src.icon)
 		src.appearance_flags = initial(src.appearance_flags)
 		src.measured_height = initial(src.measured_height)
+		src.transform = null
 		for(var/client/C in src.visible_to)
 			C.images -= src
 		src.visible_to = list()
@@ -240,20 +241,24 @@
 proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
 	var/image/chat_maptext/text = unpool(/image/chat_maptext)
 	animate(text, maptext_y = 28, time = 0.01) // this shouldn't be necessary but it keeps breaking without it
+	msg = copytext(msg, 1, 128) // 4 lines, seems fine to me
+	text.maptext = "<span class='pixel c ol' style=\"[style]\">[msg]</span>"
 	if(istype(target, /mob/living))
 		var/mob/living/L = target
 		text.loc = L.chat_text
+		if(length(L.chat_text.lines) && L.chat_text.lines[length(L.chat_text.lines)].maptext == text.maptext)
+			L.chat_text.lines[length(L.chat_text.lines)].transform *= 1.05
+			pool(text)
+			return null
 		L.chat_text.lines.Add(text)
 	else // hmm?
 		text.loc = target
-	msg = copytext(msg, 1, 128) // 4 lines, seems fine to me
-	text.maptext = "<span class='pixel c ol' style=\"[style]\">[msg]</span>"
 	animate(text, alpha = alpha, maptext_y = 34, time = 4, flags = ANIMATION_END_NOW)
 	var/text_id = text.unique_id
 	SPAWN_DBG(4 SECONDS)
 		if(text_id == text.unique_id)
 			text.bump_up(invis=1)
-			sleep(3 SECONDS)
+			sleep(0.5 SECONDS)
 			pool(text)
 	return text
 

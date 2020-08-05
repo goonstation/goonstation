@@ -230,6 +230,8 @@ var/list/admin_verbs = list(
 		/client/proc/admin_set_ai_vox,
 		/client/proc/cmd_makeshittyweapon,
 		/client/proc/rspawn_panel,
+		/client/proc/cmd_admin_manageabils,
+		/client/proc/create_all_wizard_rings,
 
 		// moved up from admin
 		//client/proc/cmd_admin_delete,
@@ -1813,8 +1815,12 @@ var/list/fun_images = list()
 
 
 	if (parameters["right"])
-		var/list/atoms = list(get_turf(A))
-		for(var/thing in get_turf(A))
+		var/turf/clicked_turf = get_turf(A)
+		var/x_shift = round(text2num(parameters["icon-x"]) / 32)
+		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
+		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
+		var/list/atoms = list(clicked_turf)
+		for(var/thing in clicked_turf)
 			var/atom/atom = thing
 			atoms += atom
 		if (atoms.len)
@@ -1846,6 +1852,8 @@ var/list/fun_images = list()
 			C.admin_follow_mobject(A)
 		if("Check Bioeffects")
 			C.cmd_admin_checkbioeffect(A)
+		if("Manage Abilities")
+			C.cmd_admin_manageabils(A)
 		if("Add Reagents")
 			C.addreagents(A)
 		if("Check Reagents")

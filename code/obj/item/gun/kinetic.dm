@@ -15,6 +15,8 @@
 	var/allowReverseReload = 1 //Use gun on ammo to reload
 	var/allowDropReload = 1    //Drag&Drop ammo onto gun to reload
 
+	muzzle_flash = "muzzle_flash"
+
 	// caliber list: update as needed
 	// 0.22 - pistols
 	// 0.308 - rifles
@@ -438,6 +440,7 @@
 	force = 7.0
 	caliber = 0.355
 	max_ammo_capacity = 18
+	auto_eject = 1
 
 	New()
 		if (prob(30))
@@ -718,7 +721,7 @@
 	contraband = 7
 	caliber = 1.57
 	max_ammo_capacity = 1
-	muzzle_flash = null
+	muzzle_flash = "muzzle_flash_launch"
 
 	New()
 		ammo = new/obj/item/ammo/bullets/smoke/single
@@ -759,7 +762,7 @@
 	max_ammo_capacity = 1
 	can_dual_wield = 0
 	two_handed = 1
-	muzzle_flash = null
+	muzzle_flash = "muzzle_flash_launch"
 
 	New()
 		ammo = new /obj/item/ammo/bullets/rpg
@@ -805,7 +808,7 @@
 	icon_state = "airzooka"
 	max_ammo_capacity = 10
 	caliber = 4.6 // I rolled a dice
-	muzzle_flash = null
+	muzzle_flash = "muzzle_flash_launch"
 
 	New()
 		ammo = new/obj/item/ammo/bullets/airzooka
@@ -963,7 +966,7 @@
 	force = 5
 	caliber = 0.308
 	max_ammo_capacity = 100
-	auto_eject = 0
+	auto_eject = 1
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	object_flags = NO_ARM_ATTACH
@@ -986,6 +989,41 @@
 	setupProperties()
 		..()
 		setProperty("movespeed", 0.5)
+
+
+/obj/item/gun/kinetic/cannon
+	name = "M20-CV tactical cannon"
+	desc = "A shortened conversion of a 20mm military cannon. Slow but enormously powerful."
+	icon = 'icons/obj/64x32.dmi'
+	icon_state = "cannon"
+	item_state = "cannon"
+	wear_image_icon = 'icons/mob/back.dmi'
+	force = 10
+	caliber = 0.787
+	max_ammo_capacity = 1
+	auto_eject = 1
+
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
+	object_flags = NO_ARM_ATTACH
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+
+	can_dual_wield = 0
+
+	slowdown = 5
+	slowdown_time = 10
+
+	two_handed = 1
+	w_class = 4
+	muzzle_flash = "muzzle_flash_launch"
+
+	New()
+		ammo = new/obj/item/ammo/bullets/cannon/single
+		current_projectile = new/datum/projectile/bullet/cannon
+		..()
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 0.3)
 
 // demo
 /obj/item/gun/kinetic/grenade_launcher
@@ -1285,7 +1323,7 @@
 	max_ammo_capacity = 1
 	can_dual_wield = 0
 	two_handed = 1
-	muzzle_flash = null
+	muzzle_flash = "muzzle_flash_launch"
 
 	New()
 		ammo = new /obj/item/ammo/bullets/antisingularity

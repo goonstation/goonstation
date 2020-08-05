@@ -5,29 +5,15 @@
  */
 
 import { classes } from 'common/react';
-import { computeBoxProps, computeBoxClassName } from '../components/Box';
-
-/**
- * Brings Layout__content DOM element back to focus.
- *
- * Commonly used to keep the content scrollable in IE.
- */
-export const refocusLayout = () => {
-  // IE8: Focus method is seemingly fucked.
-  if (Byond.IS_LTE_IE8) {
-    return;
-  }
-  const element = document.getElementById('Layout__content');
-  if (element) {
-    element.focus();
-  }
-};
+import { Component, createRef } from 'inferno';
+import { computeBoxClassName, computeBoxProps } from '../components/Box';
 
 export const Layout = props => {
   const {
     className,
     theme = 'nanotrasen',
     children,
+    ...rest
   } = props;
   return (
     <div className={'theme-' + theme}>
@@ -35,33 +21,57 @@ export const Layout = props => {
         className={classes([
           'Layout',
           className,
-        ])}>
+          ...computeBoxClassName(rest),
+        ])}
+        {...computeBoxProps(rest)}>
         {children}
       </div>
     </div>
   );
 };
 
-const LayoutContent = props => {
-  const {
-    className,
-    scrollable,
-    children,
-    ...rest
-  } = props;
-  return (
-    <div
-      id="Layout__content"
-      className={classes([
-        'Layout__content',
-        scrollable && 'Layout__content--scrollable',
-        className,
-        ...computeBoxClassName(rest),
-      ])}
-      {...computeBoxProps(rest)}>
-      {children}
-    </div>
-  );
-};
+class LayoutContent extends Component {
+  constructor() {
+    super();
+    this.ref = createRef();
+    this.refocusLayout = () => {
+      this.ref.current.focus();
+    };
+  }
+
+  componentDidMount() {
+    const node = this.ref.current;
+    node.addEventListener('mouseenter', this.refocusLayout);
+    node.addEventListener('click', this.refocusLayout);
+  }
+
+  componentWillUnmount() {
+    const node = this.ref.current;
+    node.removeEventListener('mouseenter', this.refocusLayout);
+    node.removeEventListener('click', this.refocusLayout);
+  }
+
+  render() {
+    const {
+      className,
+      scrollable,
+      children,
+      ...rest
+    } = this.props;
+    return (
+      <div
+        ref={this.ref}
+        className={classes([
+          'Layout__content',
+          scrollable && 'Layout__content--scrollable',
+          className,
+          ...computeBoxClassName(rest),
+        ])}
+        {...computeBoxProps(rest)}>
+        {children}
+      </div>
+    );
+  }
+}
 
 Layout.Content = LayoutContent;
