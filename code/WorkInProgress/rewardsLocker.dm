@@ -797,6 +797,7 @@
 	title = "(Fancy Gib) Plague of Blood"
 	desc = "You're gonna get ripped to shreds, probably."
 	required_medal = "Original Sin"
+	once_per_round = 0
 
 	rewardActivate(var/mob/activator)
 		if (isdead(activator))

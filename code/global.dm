@@ -12,7 +12,7 @@ var/global/list/queue_stat_list = list()
 #endif
 
 // dumb, bad
-var/list/extra_resources = list('code/pressstart2p.ttf', 'ibmvga9.ttf', 'inhumanbb.ttf')
+var/list/extra_resources = list('code/pressstart2p.ttf', 'ibmvga9.ttf', 'inhumanbb.ttf', 'xfont.ttf')
 // Press Start 2P - 6px
 // PxPlus IBM VGA9 - 12px
 //Inhuman BB - 12px
@@ -60,6 +60,7 @@ var/global
 	list/list/by_type = list()
 
 	obj/screen/renderSourceHolder
+	obj/overlay/zamujasa/round_start_countdown/game_start_countdown	// Countdown clock for round start
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
 	list/image/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
 	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
@@ -596,6 +597,7 @@ var/global
 #endif
 	list/shittybills = list()
 	list/johnbills = list()
+	list/otherbills = list()
 	list/tourguides = list()
 	list/npcmonkeypals = list()
 	list/teleport_jammers = list()

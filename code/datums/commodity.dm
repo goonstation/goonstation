@@ -4,8 +4,8 @@
 	var/comtype = null // Type Path of the item on the market
 	var/price = 0 // Current selling price for this commodity
 	var/baseprice = 0 // Baseline selling price for this commodity
-	var/onmarket = 1 // Whether this item is currently being accepted for sale
-	var/indemand = 0 // Whether this item is currently being bought at a high price
+	var/onmarket = 0 // Whether this item is currently being accepted for sale on the shipping market
+	var/indemand = 0 // Whether this item is currently being bought at a high price on the market
 	var/upperfluc = 0 // Highest this item's price can raise in one shift
 	var/lowerfluc = 0 // Lowest this item's price can drop in one shift (negative numbers only)
 	var/desc = "item" //Description for item
@@ -47,6 +47,7 @@
 	comtype = /obj/item/parts/robot_parts
 	desc_buy = "The Omega Mining Corporation is expanding its operations and is in need of some robot parts"
 	desc_buy_demand = "Cyborgs have revolted in the Lambada Quadrant, they are in desprate need of some more robot parts"
+	onmarket = 1
 	price = 65
 	baseprice = 65
 	upperfluc = 30
@@ -55,6 +56,7 @@
 /datum/commodity/produce
 	comname = "Fresh Produce"
 	comtype = /obj/item/reagent_containers/food/snacks/plant
+	onmarket = 1
 	price = 50
 	baseprice = 50
 	upperfluc = 25
@@ -63,6 +65,7 @@
 /datum/commodity/meat
 	comname = "Meat"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/meat
+	onmarket = 1
 	price = 50
 	baseprice = 50
 	upperfluc = 25
@@ -71,6 +74,7 @@
 /datum/commodity/herbs
 	comname = "Medical Herbs"
 	comtype = /obj/item/plant/herb
+	onmarket = 1
 	price = 75
 	baseprice = 75
 	upperfluc = 50
@@ -80,57 +84,69 @@
 	comname = "Space Honey"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/honey
 	desc_buy = "Meagre nectar yields this year have made honey imports desirable to space-bee hives."
-	price = 100
-	baseprice = 100
-	upperfluc = 50
+	onmarket = 1
+	price = 200
+	baseprice = 200
+	upperfluc = 100
 	lowerfluc = -50
 
 /datum/commodity/sheet
 	comname = "Material Sheets"
 	comtype = /obj/item/sheet
 	desc = "High-quality material sheets."
+	onmarket = 1
 	price = 7 // no more scamming
 	baseprice = 7
+	upperfluc = 3
+	lowerfluc = -3
 /// pathology
 
 /datum/commodity/mat_bar
 	comname = "Material Bar"
 	comtype = /obj/item/material_piece
 	desc = "A Material Bar of some type."
+	desc_buy = "The Promethus Consortium is currently gathering resources for a research project and is willing to buy this item"
+	desc_buy_demand = "The colony on Regus X has had their main power reactor break down and need this item for repairs"
 	onmarket = 1
-	price = 2
-	baseprice = 2
-	upperfluc = 2
-	lowerfluc = -1
+	price = 70
+	baseprice = 70
+	upperfluc = 30
+	lowerfluc = -30
 
 /datum/commodity/ore // because QMs keep scamming the system, I am lowering the base price of ore way down - cogwerks
-	comname = "ore"
-	comtype = null
+	comname = "Rock"
+	comtype = /obj/item/raw_material
 	desc = "An ore that has various practical uses in manufacturing and research."
 	desc_buy = "The Promethus Consortium is currently gathering resources for a research project and is willing to buy this item"
 	desc_buy_demand = "The colony on Regus X has had their main power reactor break down and need this item for repairs"
-	price = 2
-	baseprice = 2
-	upperfluc = 2
-	lowerfluc = -1
+	onmarket = 0
+	price = 70 // because it's no longer possible to scam this system in this way, i am raising the base price of ore way up - urs
+	baseprice = 70
+	upperfluc = 30
+	lowerfluc = -30
 
 /datum/commodity/ore/mauxite
 	comname = "Mauxite"
 	comtype = /obj/item/raw_material/mauxite
+	onmarket = 1
 /datum/commodity/mat_bar/mauxite
 	comname = "Mauxite Bar"
 	comtype = /obj/item/material_piece/mauxite
+	onmarket = 0
 
 /datum/commodity/ore/pharosium
 	comname = "Pharosium"
 	comtype = /obj/item/raw_material/pharosium
+	onmarket = 1
 /datum/commodity/mat_bar/pharosium
 	comname = "Pharosium Bar"
 	comtype = /obj/item/material_piece/pharosium
+	onmarket = 0
 
 /datum/commodity/ore/char
 	comname = "Char"
 	comtype = /obj/item/raw_material/char
+	onmarket = 1
 	price = 35
 	baseprice = 35
 	upperfluc = 50
@@ -138,6 +154,7 @@
 /datum/commodity/mat_bar/char
 	comname = "Char Bar"
 	comtype = /obj/item/material_piece/char
+	onmarket = 0
 	price = 35
 	baseprice = 35
 	upperfluc = 50
@@ -146,13 +163,16 @@
 /datum/commodity/ore/molitz
 	comname = "Molitz"
 	comtype = /obj/item/raw_material/molitz
+	onmarket = 1
 /datum/commodity/mat_bar/molitz
 	comname = "Molitz Bar"
 	comtype = /obj/item/material_piece/molitz
+	onmarket = 0
 
 /datum/commodity/ore/cobryl
 	comname = "Cobryl"
 	comtype = /obj/item/raw_material/cobryl
+	onmarket = 1
 	price = 200
 	baseprice = 200
 	upperfluc = 200
@@ -160,6 +180,7 @@
 /datum/commodity/mat_bar/cobryl
 	comname = "Cobryl Bar"
 	comtype = /obj/item/material_piece/cobryl
+	onmarket = 0
 	price = 200
 	baseprice = 200
 	upperfluc = 200
@@ -168,6 +189,7 @@
 /datum/commodity/ore/uqill
 	comname = "Uqill"
 	comtype = /obj/item/raw_material/uqill
+	onmarket = 1
 	price = 750
 	baseprice = 750
 	upperfluc = 1000
@@ -175,6 +197,7 @@
 /datum/commodity/mat_bar/uqill
 	comname = "Uqill Bar"
 	comtype = /obj/item/material_piece/uqill
+	onmarket = 0
 	price = 750
 	baseprice = 750
 	upperfluc = 1000
@@ -184,6 +207,7 @@
 	comname = "Telecrystal"
 	comtype = /obj/item/raw_material/telecrystal
 	desc = "A large unprocessed telecrystal, a gemstone with space-warping properties."
+	onmarket = 1
 	price = 1000
 	baseprice = 1000
 	upperfluc = 1000
@@ -191,6 +215,7 @@
 /datum/commodity/mat_bar/telecrystal
 	comname = "Telecrystal Block"
 	comtype = /obj/item/material_piece/telecrystal
+	onmarket = 0
 	price = 1000
 	baseprice = 1000
 	upperfluc = 1000
@@ -199,13 +224,16 @@
 /datum/commodity/ore/fibrilith // why is this worth a ton of money?? dropping the value to further upset QMs
 	comname = "Fibrilith"
 	comtype = /obj/item/raw_material/fibrilith
+	onmarket = 1
 /datum/commodity/mat_bar/fibrilith
 	comname = "Fibrilith Block"
 	comtype = /obj/item/material_piece/fibrilith
+	onmarket = 0
 
 /datum/commodity/ore/koshmarite
 	comname = "Koshmarite"
 	comtype = /obj/item/raw_material/eldritch
+	onmarket = 1
 	price = 100
 	baseprice = 100
 	upperfluc = 100
@@ -213,6 +241,7 @@
 /datum/commodity/mat_bar/koshmarite
 	comname = "Koshmarite Block"
 	comtype = /obj/item/material_piece/koshmarite
+	onmarket = 0
 	price = 100
 	baseprice = 100
 	upperfluc = 100
@@ -221,6 +250,7 @@
 /datum/commodity/ore/viscerite
 	comname = "Viscerite"
 	comtype = /obj/item/raw_material/martian
+	onmarket = 1
 	price = 100
 	baseprice = 100
 	upperfluc = 100
@@ -228,6 +258,7 @@
 /datum/commodity/mat_bar/viscerite
 	comname = "Viscerite Block"
 	comtype = /obj/item/material_piece/viscerite
+	onmarket = 0
 	price = 100
 	baseprice = 100
 	upperfluc = 100
@@ -236,6 +267,7 @@
 /datum/commodity/ore/bohrum
 	comname = "Bohrum"
 	comtype = /obj/item/raw_material/bohrum
+	onmarket = 1
 	price = 200
 	baseprice = 200
 	upperfluc = 200
@@ -243,6 +275,7 @@
 /datum/commodity/mat_bar/bohrum
 	comname = "Bohrum Bar"
 	comtype = /obj/item/material_piece/bohrum
+	onmarket = 0
 	price = 200
 	baseprice = 200
 	upperfluc = 200
@@ -251,6 +284,7 @@
 /datum/commodity/ore/claretine
 	comname = "Claretine"
 	comtype = /obj/item/raw_material/claretine
+	onmarket = 1
 	price = 350
 	baseprice = 350
 	upperfluc = 200
@@ -258,6 +292,7 @@
 /datum/commodity/mat_bar/claretine
 	comname = "Claretine Bar"
 	comtype = /obj/item/material_piece/claretine
+	onmarket = 0
 	price = 350
 	baseprice = 350
 	upperfluc = 200
@@ -266,6 +301,7 @@
 /datum/commodity/ore/erebite
 	comname = "Erebite"
 	comtype = /obj/item/raw_material/erebite
+	onmarket = 1
 	price = 650
 	baseprice = 650
 	upperfluc = 200
@@ -273,6 +309,7 @@
 /datum/commodity/mat_bar/erebite
 	comname = "Erebite Bar"
 	comtype = /obj/item/material_piece/erebite
+	onmarket = 0
 	price = 650
 	baseprice = 650
 	upperfluc = 200
@@ -281,6 +318,7 @@
 /datum/commodity/ore/cerenkite
 	comname = "Cerenkite"
 	comtype = /obj/item/raw_material/cerenkite
+	onmarket = 1
 	price = 480
 	baseprice = 480
 	upperfluc = 200
@@ -288,6 +326,7 @@
 /datum/commodity/mat_bar/cerenkite
 	comname = "Cerenkite Bar"
 	comtype = /obj/item/material_piece/cerenkite
+	onmarket = 0
 	price = 650
 	baseprice = 650
 	upperfluc = 200
@@ -296,6 +335,7 @@
 /datum/commodity/ore/plasmastone
 	comname = "Plasmastone"
 	comtype = /obj/item/raw_material/plasmastone
+	onmarket = 1
 	price = 550
 	baseprice = 550
 	upperfluc = 200
@@ -303,6 +343,7 @@
 /datum/commodity/mat_bar/plasmastone
 	comname = "Plasmastone Bar"
 	comtype = /obj/item/material_piece/plasmastone
+	onmarket = 0
 	price = 550
 	baseprice = 550
 	upperfluc = 200
@@ -311,6 +352,7 @@
 /datum/commodity/ore/syreline
 	comname = "Syreline"
 	comtype = /obj/item/raw_material/syreline
+	onmarket = 1
 	price = 800
 	baseprice = 800
 	upperfluc = 1000
@@ -318,6 +360,7 @@
 /datum/commodity/mat_bar/syreline
 	comname = "Syreline Bar"
 	comtype = /obj/item/material_piece/syreline
+	onmarket = 0
 	price = 800
 	baseprice = 800
 	upperfluc = 1000
@@ -326,6 +369,7 @@
 /datum/commodity/ore/gold
 	comname = "Gold Nugget"
 	comtype = /obj/item/raw_material/gold
+	onmarket = 1
 	price = 3500
 	baseprice = 3500
 	upperfluc = 5000
@@ -335,15 +379,16 @@
 /datum/commodity/goldbar
 	comname = "Gold Bullion"
 	comtype = /obj/item/material_piece/gold
+	onmarket = 1
 	price = 35000
 	baseprice = 35000
 	upperfluc = 50000
 	lowerfluc = -25000
-	onmarket = 1
 
 /datum/commodity/laser_gun
 	comname = "Laser Gun"
 	comtype =  /obj/item/gun/energy/laser_gun
+	onmarket = 0
 	desc = "A laser gun. Pew pew."
 	price = 2000
 	baseprice = 2000
@@ -354,6 +399,7 @@
 	comname = "Pen"
 	comtype = /obj/item/pen
 	desc = "A useful writing tool."
+	onmarket = 0
 	price = 10
 	baseprice = 10
 	upperfluc = 5
@@ -363,6 +409,7 @@
 	comname = "Medicator Tool Module"
 	comtype = /obj/item/device/guardbot_tool/medicator
 	desc = "A 'Medicator' syringe launcher module for PR-6S Guardbuddies. These things are actually outlawed on Earth."
+	onmarket = 0
 	price = 75
 	baseprice = 75
 	upperfluc = 20
@@ -372,6 +419,7 @@
 	comname = "Smoker Tool Module"
 	comtype = /obj/item/device/guardbot_tool/smoker
 	desc = "A riot-control gas module for PR-6S Guardbuddies."
+	onmarket = 0
 	price = 250
 	baseprice = 250
 	upperfluc = 40
@@ -381,6 +429,7 @@
 	comname = "Flash Tool Module"
 	comtype = /obj/item/device/guardbot_tool/flash
 	desc = "A flash module for PR-6S Guardbuddies."
+	onmarket = 0
 	price = 75
 	baseprice = 75
 	upperfluc = 20
@@ -390,6 +439,7 @@
 	comname = "Taser Tool Module"
 	comtype = /obj/item/device/guardbot_tool/taser
 	desc = "A taser module for PR-6S Guardbuddies."
+	onmarket = 0
 	price = 175
 	baseprice = 75
 	upperfluc = 20
@@ -399,6 +449,7 @@
 	comname = "Guardbot Construction Kit"
 	comtype = /obj/item/storage/box/guardbot_kit
 	desc = "A useful kit for building guardbuddies. All you need is a module!"
+	onmarket = 0
 	price = 100
 	baseprice = 100
 	upperfluc = 50
@@ -408,6 +459,7 @@
 	comname = "Boogiebot"
 	comtype = /obj/critter/boogiebot
 	desc = "The latest in boogie technology!"
+	onmarket = 0
 	price = 5000
 	baseprice = 5000
 	upperfluc = 500
@@ -419,16 +471,17 @@
 	comname = "Fuel Tank"
 	comtype = /obj/item/tank/plasma
 	desc = "A small tank of plasma. Use with caution."
+	onmarket = 0
 	price = 250
 	baseprice = 250
 	upperfluc = 50
 	lowerfluc = -50
-	onmarket = 0
 
 /datum/commodity/royaljelly
 	comname = "Royal Jelly"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly
 	desc = "A sample of royal jelly, a nutritive compound for bee larvae."
+	onmarket = 0
 	price = 200
 	baseprice = 200
 	upperfluc = 200
@@ -438,6 +491,7 @@
 /datum/commodity/beeegg
 	comname = "Bee Egg"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/egg/bee
+	onmarket = 0
 	desc = "A space bee egg.  Space bees hatch from these."
 	price = 75
 	baseprice = 75
@@ -449,6 +503,7 @@
 	comname = "Irregular Egg"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy
 	desc = "This batch of space bee eggs exhibits a minor irregularity that kept it out of normal distribution channels."
+	onmarket = 0
 	price = 75
 	baseprice = 75
 	upperfluc = 10
@@ -459,6 +514,7 @@
 	comname = "Bee Kibble"
 	comtype = /obj/item/reagent_containers/food/snacks/beefood
 	desc = "Essentially cereal for bees.  Tastes pretty good, provided that you are a bee."
+	onmarket = 0
 	price = 50
 	baseprice = 50
 	upperfluc = 10
@@ -1931,6 +1987,9 @@
 
 ///// costume kits
 
+/datum/commodity/costume
+	onmarket = 0
+
 /datum/commodity/costume/bee
 	comname = "Bee Costume"
 	comtype = /obj/item/storage/box/costume/bee
@@ -2049,6 +2108,7 @@
 	comname = "box of balloons"
 	comtype = /obj/item/storage/box/balloonbox
 	desc = "A box full of colorful balloons!  Neat!"
+	onmarket = 0
 	price = 50
 	baseprice = 50
 	upperfluc = 100
@@ -2058,6 +2118,7 @@
 	comname = "box of crayons"
 	comtype = /obj/item/storage/box/crayon
 	desc = "A box of colorful crayons! Lovely!"
+	onmarket = 0
 	price = 50
 	baseprice = 50
 	upperfluc = 100
@@ -2077,58 +2138,48 @@
 /datum/commodity/synthmodule/vaccine
 	comname = "Synth-O-Matic vaccine module"
 	comtype = /obj/item/synthmodule/vaccine
-	onmarket = 1
 
 /datum/commodity/synthmodule/upgrader
 	comname = "Synth-O-Matic efficiency module"
 	comtype = /obj/item/synthmodule/upgrader
-	onmarket = 1
 
 /datum/commodity/synthmodule/assistant
 	comname = "Synth-O-Matic assistant module"
 	comtype = /obj/item/synthmodule/assistant
-	onmarket = 1
 
 /datum/commodity/synthmodule/synthesizer
 	comname = "Synth-O-Matic synthesizer module"
 	comtype = /obj/item/synthmodule/synthesizer
-	onmarket = 1
 
 /datum/commodity/synthmodule/virii
 	comname = "Synth-O-Matic virus module"
 	comtype = /obj/item/synthmodule/virii
-	onmarket = 1
 
 /datum/commodity/synthmodule/bacteria
 	comname = "Synth-O-Matic bacterium module"
 	comtype = /obj/item/synthmodule/bacteria
-	onmarket = 1
 
 /datum/commodity/synthmodule/fungi
 	comname = "Synth-O-Matic fungus module"
 	comtype = /obj/item/synthmodule/fungi
-	onmarket = 1
 
 /datum/commodity/synthmodule/parasite
 	comname = "Synth-O-Matic parasite module"
 	comtype = /obj/item/synthmodule/parasite
-	onmarket = 1
 
 /datum/commodity/synthmodule/gmcell
 	comname = "Synth-O-Matic great mutatis cell module"
 	comtype = /obj/item/synthmodule/gmcell
-	onmarket = 1
 
 /datum/commodity/synthmodule/radiation
 	comname = "Synth-O-Matic irradiation module"
 	comtype = /obj/item/synthmodule/radiation
-	onmarket = 1
 
 /datum/commodity/pathogensample
 	comname = "Pathogen sample"
 	comtype = /obj/item/reagent_containers/glass/vial/prepared
 	desc = "A sample of pathogen. Probably stolen from a lab somewhere. Handle with care."
-	onmarket = 1
+	onmarket = 0
 	price = 700
 	upperfluc = 500
 	lowerfluc = -500
@@ -2136,6 +2187,7 @@
 /datum/commodity/largeartifact
 	comname = "Large Artifact"
 	comtype = null
+	onmarket = 0
 	price = 2000
 	baseprice = 2000
 	upperfluc = 1500
@@ -2144,6 +2196,7 @@
 /datum/commodity/smallartifact
 	comname = "Handheld Artifact"
 	comtype = null
+	onmarket = 0
 	price = 400
 	baseprice = 400
 	upperfluc = 400
@@ -2162,7 +2215,6 @@
 	comname = "Advanced Videocard"
 	comtype = /obj/item/peripheral/videocard
 	desc_buy = "We're aware your computers can't handle this peripheral. We can find a use for it."
-	onmarket = 1
 	price = 400
 	upperfluc = 100
 	lowerfluc = -100
@@ -2171,7 +2223,6 @@
 	comname = "Feather"
 	comtype = /obj/item/feather
 	desc_buy = "Low material value, but it reminds us of the Source. We find these comforting."
-	onmarket = 1
 	price = 20
 	upperfluc = 10
 	lowerfluc = -10
@@ -2180,7 +2231,6 @@
 	comname = "Electronic Components"
 	comtype = /obj/item/electronics
 	desc_buy = "The aggressive drones of this space have useful innards."
-	onmarket = 1
 	price = 100
 	upperfluc = 50
 	lowerfluc = -50
@@ -2189,7 +2239,6 @@
 	comname = "Brain"
 	comtype = /obj/item/organ/brain
 	desc_buy = "We are experimenting with new cognitive microstructures. Specimens for research are appreciated."
-	onmarket = 1
 	price = 1000
 	upperfluc = 500
 	lowerfluc = -500
@@ -2198,7 +2247,6 @@
 	comname = "Bee Egg"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/egg/bee
 	desc_buy = "These creatures have a fascinating genetic structure. Specimens for research are appreciated."
-	onmarket = 1
 	price = 50
 	upperfluc = 25
 	lowerfluc = -25
@@ -2207,7 +2255,6 @@
 	comname = "Creature Egg"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter
 	desc_buy = "We are interested in novel biological structures within this region of space. Specimens for research are appreciated."
-	onmarket = 1
 	price = 100
 	upperfluc = 50
 	lowerfluc = -50
@@ -2216,7 +2263,6 @@
 	comname = "Regular Egg"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/egg
 	desc_buy = "Eggs are delicious and a good source of nutrients for growing flockdrones."
-	onmarket = 1
 	price = 10
 	upperfluc = 5
 	lowerfluc = -5
@@ -2225,7 +2271,6 @@
 	comname = "Material Piece"
 	comtype = /obj/item/material_piece
 	desc_buy = "We are not selective. Any processed material is acceptable."
-	onmarket = 1
 	price = 50
 	upperfluc = 40
 	lowerfluc = -40
@@ -2234,7 +2279,6 @@
 	comname = "Raw Material Piece"
 	comtype = /obj/item/raw_material
 	desc_buy = "We are not selective. Any raw material is acceptable."
-	onmarket = 1
 	price = 40
 	upperfluc = 30
 	lowerfluc = -30
@@ -2247,7 +2291,6 @@
 	comname = "Flocktable"
 	comtype = /obj/item/furniture_parts/table/flock
 	desc = "A processing subsystem of obsolete design with a perfectly flat surface. Good for placing things."
-	onmarket = 1
 	price = 200
 	upperfluc = 100
 	lowerfluc = -100
@@ -2256,7 +2299,6 @@
 	comname = "Flockchair"
 	comtype = /obj/item/furniture_parts/flock_chair
 	desc = "Prior to our mass-energy conversion technology, we used these chambers to charge our drones. Now padded with feather-down cushions for comfort."
-	onmarket = 1
 	price = 350
 	upperfluc = 175
 	lowerfluc =  -175
@@ -2265,7 +2307,6 @@
 	comname = "Gnesis"
 	comtype = /obj/item/material_piece/gnesis
 	desc = "Our mind and matter, filled with stoic and resolute intent."
-	onmarket = 1
 	price = 2000
 	upperfluc = 1500
 	lowerfluc = -1500
@@ -2274,7 +2315,6 @@
 	comname = "Translucent Gnesis"
 	comtype = /obj/item/material_piece/gnesisglass
 	desc = "Our mind and matter, filled with open and honest intent."
-	onmarket = 1
 	price = 3000
 	upperfluc = 2500
 	lowerfluc = -2500
@@ -2283,7 +2323,6 @@
 	comname = "Flocknugget"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock
 	desc = "Apparently this is a delicacy. We did not know your kind can stomach metallic crystal."
-	onmarket = 1
 	price = 30
 	upperfluc = 15
 	lowerfluc = -15
@@ -2292,7 +2331,6 @@
 	comname = "Processing Core"
 	comtype = /obj/item/organ/brain/flockdrone
 	desc = "We are loathe to part with our processing cores, but we can be convinced with enough credits."
-	onmarket = 1
 	price = 5000
 	upperfluc = 4500
 	lowerfluc = -4500
@@ -2301,7 +2339,6 @@
 	comname = "Fluid Cache"
 	comtype = /obj/item/reagent_containers/gnesis
 	desc = "A sealed container with a fluid form of our matter, filled with indecision. We wish you the very best in figuring out how to extract the fluid."
-	onmarket = 1
 	price = 4000
 	upperfluc = 2000
 	lowerfluc = -2000
@@ -2310,7 +2347,6 @@
 	comname = "Flockburger"
 	comtype = /obj/item/reagent_containers/food/snacks/burger/flockburger
 	desc = "We have found a new use for completely irrecoverable processing cores. We cannot currently offer fries with that. We've changed the recipe after some complaints from our customers."
-	onmarket = 1
 	price = 60
 	upperfluc = 30
 	lowerfluc = -30
@@ -2319,7 +2355,6 @@
 	comname = "Flockblocker Telejammer"
 	comtype = /obj/item/device/flockblocker
 	desc = "A handheld teleportation jammer powered by the universe's contempt for those who attempt to bend space to their whim."
-	onmarket = 1
 	price = 300000
 	upperfluc = 15000
 	lowerfluc = -15000
@@ -2328,7 +2363,6 @@
 	comname = "Incapacitor"
 	comtype = /obj/item/gun/energy/flock
 	desc = "We have tried to replicate our pacification technology in a form your kind can use. There may be some issues."
-	onmarket = 1
 	price = 30000
 	upperfluc = 12500
 	lowerfluc = -12500
@@ -2336,6 +2370,9 @@
 /////////////////////////////////
 ///////skeleton trader //////////
 /////////////////////////////////
+
+/datum/commodity/hat
+	onmarket = 0
 
 /datum/commodity/hat/bandana
 	comname = "Bandana"
@@ -2435,6 +2472,9 @@
 
 ////////////////////////////////////////////////
 
+/datum/commodity/clothing
+	onmarket = 0
+
 /datum/commodity/clothing/psyche
 	comname = "Psychedelic jumpsuit"
 	comtype = /obj/item/clothing/under/gimmick/psyche
@@ -2466,6 +2506,7 @@
 	comname = "Cheese Sandwich grenade"
 	comtype = /obj/item/old_grenade/banana/cheese_sandwich
 	desc = "Contains only one type of cheese, unfortunately."
+	onmarket = 0
 	price = 2500
 	baseprice = 2500
 	upperfluc = 500
@@ -2475,6 +2516,7 @@
 	comname = "Banana Corndog grenade"
 	comtype = /obj/item/old_grenade/banana/banana_corndog
 	desc = "A very space efficient party pleaser. No ketchup or mustard included."
+	onmarket = 0
 	price = 3000
 	baseprice = 3000
 	upperfluc = 500
@@ -2484,6 +2526,7 @@
 	comname = "Go-Kart"
 	comtype = /obj/racing_clowncar/kart
 	desc = "They just don't make the same quality go-karts anymore. Get this relic while you can."
+	onmarket = 0
 	price = 30000
 	baseprice = 30000
 	upperfluc = 10000
@@ -2493,6 +2536,7 @@
 	comname = "Fancy Car"
 	comtype = /obj/machinery/vehicle/tank/car/rusty
 	desc = "Might need some TLC, but a discount ride is a discount ride."
+	onmarket = 0
 	price = 55000
 	upperfluc = 10000
 	lowerfluc = -5000
@@ -2501,6 +2545,7 @@
 	comname = "Menthol Cigarettes"
 	comtype = /obj/item/clothing/mask/cigarette/menthol
 	desc = "Gotta get some minty smokes."
+	onmarket = 0
 	price = 500
 	baseprice = 500
 	upperfluc = 200
@@ -2510,6 +2555,7 @@
 	comname = "Pro Puffs"
 	comtype = /obj/item/clothing/mask/cigarette/propuffs
 	desc = "These flavors are are gold."
+	onmarket = 0
 	price = 600
 	baseprice = 600
 	upperfluc = 200
@@ -2520,6 +2566,7 @@
 	comname = "Donk Co. brand Airzooka"
 	comtype = /obj/item/gun/kinetic/airzooka
 	desc = "A high tech air deploying and transportation device produced by Donk Co!"
+	onmarket = 0
 	price = 5000
 	baseprice = 5000
 	upperfluc = 500
@@ -2529,6 +2576,7 @@
 	comname = "Airzooka Replacement Bag"
 	comtype = /obj/item/ammo/bullets/airzooka
 	desc = "A replacement bag for your Donk Co brand Airzooka!"
+	onmarket = 0
 	price = 500
 	baseprice = 500
 	upperfluc = 100
@@ -2538,6 +2586,7 @@
 	comname = "Airzooka Replacement Bag: Xtreme Edition"
 	comtype = /obj/item/ammo/bullets/airzooka/bad
 	desc = "A replacement bag for your Donk Co brand Airzooka, now with plasma lining!"
+	onmarket = 0
 	price = 3000
 	baseprice = 500
 	upperfluc = 500
@@ -2547,6 +2596,7 @@
 	comname = "Owl Eggs"
 	desc = "We are currently accepting donations of Owl Eggs for the exhibits! isn't that hootastic?"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl
+	onmarket = 0
 	price = 150
 	baseprice = 50
 	upperfluc = 25
@@ -2556,6 +2606,7 @@
 	comname = "Daily Special"
 	comtype = null
 	desc = "We are now authorized to begin importing fashion accessories for our customers!"
+	onmarket = 0
 	price = 1000
 	baseprice = 800
 	upperfluc = 200
@@ -2565,6 +2616,7 @@
 	comname = "box of crayons"
 	comtype = /obj/item/storage/box/crayon
 	desc = "Donkola brand color sticks! FDA approved to not cause sudden cell death since 2032!"
+	onmarket = 0
 	price = 250
 	baseprice = 50
 	upperfluc = 100
@@ -2574,6 +2626,7 @@
 	comname = "Poppies"
 	desc = "In respect of those lost during the colonization of the frontier, we are now offering poppies."
 	comtype = /obj/item/plant/herb/poppy
+	onmarket = 0
 	price = 350
 	baseprice = 350
 	upperfluc = 200
@@ -2583,6 +2636,7 @@
 	comtype = /obj/item/pod/paintjob/owl
 	comname = "Limited Edition Owlery Brand Pod Painting Kit"
 	desc = "Now you can represent your love for the Owls by painting your Space Pod in our signature colors!"
+	onmarket = 0
 	price = 10050
 	baseprice = 550
 	upperfluc = 200
@@ -2592,6 +2646,7 @@
 	comname = "High Explosive Torpedo"
 	comtype = /obj/torpedo_tray/hiexp_loaded
 	desc = "A highly explosive torpedo, ready for your sick, destructive needs."
+	onmarket = 0
 	price = 10000
 	baseprice = 10000
 	upperfluc = 5000
@@ -2601,6 +2656,7 @@
 	comname = "Sketchy press upgrade"
 	desc = "This looks like a bootlegged printing press upgrade."
 	comtype = /obj/item/press_upgrade/forbidden
+	onmarket = 0
 	price = 2000
 	baseprice = 2000
 	upperfluc = 1700
