@@ -709,6 +709,11 @@ proc/default_frequency_color(freq)
 #define D_TOXIC 48
 #define D_SPECIAL 128
 
+//Projectile reflection defines
+#define PROJ_NO_HEADON_BOUNCE 1
+#define PROJ_HEADON_BOUNCE 2
+#define PROJ_RAPID_HEADON_BOUNCE 3
+
 //Missing limb flags
 #define LIMB_LEFT_ARM 1
 #define LIMB_RIGHT_ARM 2
