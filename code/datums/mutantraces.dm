@@ -202,7 +202,7 @@
 
 			M.update_face()
 			M.update_body()
-
+			set_tail(mob, src.tail)
 
 			if (M.bioHolder && M.bioHolder.mobAppearance)
 				M.bioHolder.mobAppearance.UpdateMob()
@@ -290,8 +290,11 @@
 				detail_3 = null
 				detail_over_suit = null
 
+				if(H.organHolder.tail)	// dump the old tail, if they have one
+					H.organHolder.tail = null
 				H.set_face_icon_dirty()
 				H.set_body_icon_dirty()
+				H.update_body()
 
 				SPAWN_DBG (25) // Don't remove.
 					if (H && H.organHolder && H.organHolder.skull) // check for H.organHolder as well so we don't get null.skull runtimes
@@ -320,7 +323,8 @@
 						hidden_secret_tails.dropped(Tf)
 						hidden_secret_tails.layer = initial(hidden_secret_tails.layer)
 			else
-				// Tf.visible_message("<span class='notice'>[Tf]'s tail falls off, and a new one appears in its place!</span>", "<span class='notice'>Your tail falls off, and a new one appears in its place!</span>")
+				if (!istype(Tf.organHolder.tail, /obj/item/organ/tail/bone))
+					Tf.visible_message("<span class='notice'>[Tf]'s tail falls off, and a new one appears in its place!</span>", "<span class='notice'>Your tail falls off, and a new one appears in its place!</span>")
 				Tf.organHolder.drop_organ("tail")
 
 		switch(tailnum)	// Mutantraces come with a free, new tail
@@ -503,7 +507,6 @@
 		..()
 
 		if(ishuman(mob))
-			set_tail(mob, src.tail)
 			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
 
 			detail_1 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-1", layer = MOB_LIMB_LAYER+0.1)
@@ -736,7 +739,6 @@
 	New(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(M))
-			set_tail(M, src.tail)
 			M.mob_flags |= IS_BONER
 
 	disposing()
@@ -865,7 +867,6 @@
 	New()
 		..()
 		if (mob)
-			set_tail(mob, src.tail)
 			mob.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
 			mob.add_stam_mod_regen("werewolf", 9) //mbc : these increase as they feast now. reduced!
 			mob.add_stun_resist_mod("werewolf", 40)
@@ -1017,7 +1018,6 @@
 
 	New(var/mob/living/carbon/human/M)
 		if (M)
-			set_tail(M, src.tail)
 			if (M.flags & TABLEPASS)
 				had_tablepass = 1
 			else
@@ -1210,10 +1210,6 @@
 	aquatic = 1
 	tail = TAIL_SEAMONKEY
 
-	New()
-		..()
-		set_tail(mob, src.tail)
-
 /datum/mutantrace/martian
 	name = "martian"
 	icon_state = "martian"
@@ -1309,10 +1305,6 @@
 	override_attack = 0
 	tail = TAIL_ROACH
 
-	New()
-		..()
-		set_tail(mob, src.tail)
-
 	say_verb()
 		return "clicks"
 
@@ -1328,10 +1320,6 @@
 	override_attack = 0
 	firevuln = 1.5 // very flammable catthings
 	tail = TAIL_CAT
-
-	New()
-		..()
-		set_tail(mob, src.tail)
 
 	say_verb()
 		return "meows"
@@ -1638,10 +1626,11 @@
 	New(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(mob))
-			set_tail(mob, src.tail)
 			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
 
 			detail_1 = image('icons/effects/genetics.dmi', icon_state="cow_detail-1", layer = MOB_LIMB_LAYER+0.1)
+			detail_2 = image('icons/effects/genetics.dmi', icon_state="cow_over_suit_2", layer =  MOB_LAYER_BASE+0.3)
+
 
 			hex_to_rgb_list(aH.customization_first_color)
 

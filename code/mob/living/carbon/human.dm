@@ -2890,13 +2890,18 @@
 	else
 		return 0
 
-/mob/living/carbon/human/set_mutantrace(var/mutantrace_type)
+/mob/living/carbon/human/set_mutantrace(var/mutantrace_type, var/remove_tail)
 
 	//Clean up the old mutantrace
 	if (src.organHolder && src.organHolder.head && src.organHolder.head.donor == src)
 		src.organHolder.head.donor_mutantrace = null
-	if (src.organHolder && src.organHolder.tail && src.organHolder.tail.donor == src)
-		src.organHolder.tail = null
+
+	if(remove_tail)	// To prevent round-start tail-havers from dropping tailbones they shouldn't've had
+		if (src.organHolder && src.organHolder.tail)
+			src.organHolder.tail = null
+			for(var/obj/item/organ/tail/hidden_secret_tails in src.contents)	// Cus mutants love to hoard tails in their mob
+				if(istype(hidden_secret_tails, /obj/item/organ/tail))
+					qdel(hidden_secret_tails)
 
 	if(src.mutantrace != null)
 		qdel(src.mutantrace) // so that disposing() runs and removes mutant traits
