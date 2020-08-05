@@ -32,7 +32,7 @@
 	initial_volume = 100
 	w_class = 4.0
 	var/sliced = 0
-	var/list/frostingstyles = list("classic","top swirls","bottom swirls","spirals","rose spirals")
+	var/static/list/frostingstyles = list("classic","top swirls","bottom swirls","spirals","rose spirals")
 	var/clayer = 1
 	var/amount2 //holds the amount of slices in cake 2 (not entirely, but its used for a bit of math later)
 	var/amount3 //same for cake 3
@@ -95,13 +95,13 @@
 					tag = "cake[clayer]-spiral"
 				if("rose spirals")
 					tag = "cake[src.clayer]-spiral_rose"
-			if(!src.GetOverlayImage("[tag]"))
+			if(!src.GetOverlayImage(tag))
 				if(src.sliced)
-					tag = replacetext("[tag]","cake[clayer]","slice")
-				var/image/frostingoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',"[tag]")
+					tag = replacetext(tag,"cake[clayer]","slice")
+				var/image/frostingoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',tag)
 				frostingoverlay.color = average.to_rgba()
 				frostingoverlay.alpha = 255
-				src.UpdateOverlays(frostingoverlay,"[tag]")
+				src.UpdateOverlays(frostingoverlay,tag)
 				tube.reagents.trans_to(src,25)
 
 
@@ -153,10 +153,10 @@
 			src.reagents.trans_to(schild,transferamount) //setting up the other properties of the slice
 			schild.pixel_x = rand(-6, 6)
 			schild.pixel_y = rand(-6, 6)
-			for(var/b=1,b<=src.food_effects.len,b++)
-				if(src.food_effects[b] in schild.food_effects)
+			for(var/food_effect in src.food_effects)
+				if(food_effect in schild.food_effects)
 					continue
-				schild.food_effects += src.food_effects[b]
+				schild.food_effects += food_effect
 			schild.w_class = 1
 			schild.quality = src.quality
 			schild.name = "slice of [src.name]"
@@ -188,10 +188,10 @@
 		src.amount += 10
 		c.reagents.trans_to(src,c.reagents.total_volume)
 
-		for(var/i=1,i<=c.food_effects.len,i++) //adding food effects to the src that arent already present
-			if(c.food_effects[i] in src.food_effects)
+		for(var/food_effect in c.food_effects) //adding food effects to the src that arent already present
+			if(food_effect in src.food_effects)
 				continue
-			src.food_effects += c.food_effects[i]
+			src.food_effects += food_effect
 
 		var/singlecake //logging the clayer before changing it later
 		if(c.clayer == 1)
@@ -237,10 +237,10 @@
 				tag = replacetext("[c.overlay_refs[i]]","1","3")
 			else
 				tag = replacetext("[c.overlay_refs[i]]","2","3")
-			var/image/newoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',"[tag]")
+			var/image/newoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',tag)
 			if(buffer.color)
 				newoverlay.color = buffer.color
-			src.UpdateOverlays(newoverlay,"[tag]")
+			src.UpdateOverlays(newoverlay,tag)
 		if(c.litfam)
 			src.ignite()
 		qdel(c)
@@ -284,10 +284,10 @@
 						tag = replacetext("[src.overlay_refs[i]]","2","1")
 					else if(src.clayer == 3)
 						tag = replacetext("[src.overlay_refs[i]]","3","1")
-					var/image/newoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',"[tag]")
+					var/image/newoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',tag)
 					if(buffer.color)
 						newoverlay.color = buffer.color
-					cake.UpdateOverlays(newoverlay,"[tag]")
+					cake.UpdateOverlays(newoverlay,tag)
 					src.ClearSpecificOverlays("[src.overlay_refs[i]]")
 					staticiterator--
 					i--
@@ -439,11 +439,11 @@
 
 			//adding topping overlays to the cake. Yay :D
 			if(src.sliced) //if you add a topping to a sliced cake, it updates the icon_state to the sliced version.
-				topping = replacetext("[topping]","cake[clayer]","slice")
+				topping = replacetext(topping,"cake[clayer]","slice")
 			if(topping && !(src.GetOverlayImage("[topping]"))) //actually adding the topping overlay to the cake
-				var/image/toppingoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',"[topping]")
+				var/image/toppingoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',topping)
 				toppingoverlay.alpha = 255
-				src.UpdateOverlays(toppingoverlay,"[topping]")
+				src.UpdateOverlays(toppingoverlay,topping)
 				user.u_equip(W)
 				qdel(W)
 				if(pendinglight)

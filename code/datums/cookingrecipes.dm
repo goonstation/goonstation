@@ -1199,15 +1199,15 @@
 		B.food_color = S ? S.food_color : "#CC8555"
 		overlay.color = B.food_color
 		overlay.alpha = 255
-		B.UpdateOverlays(image(overlay),"base")
+		B.UpdateOverlays(overlay,"base")
 		if(S)
 			S.reagents.trans_to(B, 50)
 			if(S.real_name)
 				B.name = "[S.real_name] cake"
-				for(var/i=1,i<=S.food_effects.len,i++)
-					if(S.food_effects[i] in B.food_effects)
+				for(var/food_effect in S.food_effects)
+					if(food_effect in B.food_effects)
 						continue
-					B.food_effects += S.food_effects[i]
+					B.food_effects += food_effect
 			else
 				B.name = "[S.name] cake"
 		else
