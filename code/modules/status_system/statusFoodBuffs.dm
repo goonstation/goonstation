@@ -303,7 +303,7 @@
 
 		var/turf/T = get_step(owner,owner.dir)
 		var/whileexit = 1
-		while(get_dist(owner,T) < range && whileexit < 20)
+		while((get_dist(owner,T) < range) && (whileexit < 20))
 			T = get_step(T,owner.dir)
 			whileexit += 1
 		var/list/affected_turfs = getline(owner, T)
