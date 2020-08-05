@@ -12,7 +12,7 @@ var/global/the_automaton = null
 	aggressive = 0
 	defensive = 0
 	wanderer = 0
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 0.5
@@ -51,7 +51,7 @@ var/global/the_automaton = null
 		atkcarbon = 1
 		atksilicon = 1
 		wanderer = 1
-		opensdoors = 1
+		opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 
 	CritterAttack(mob/M)
 		playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
