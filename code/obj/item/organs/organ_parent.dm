@@ -30,16 +30,6 @@
 	var/datum/organHolder/holder = null
 	var/list/organ_abilities = null
 
-	// So we can have an organ have a visible counterpart while inside someone, like a tail or some kind of krang
-	var/organ_image_icon = null		// The icon group we'll be using, such as 'icons/effects/genetics.dmi'
-	var/organ_image_over_suit = null		// Shows up over our suit, usually while the mob is facing north
-	var/organ_image_under_suit_1 = null	// Shows up under our suit, usually while the mob is facing anywhere else
-	var/organ_image_under_suit_2 = null	// If our organ needs another picture, usually for another coloration
-	// Course all of those details can be on whatever layer you want, since they're defined in full by the organ
-	// The organ colors are inherited from the mob's hairstyle.
-	var/organ_color_1 = null		// Typically used to colorize the organ image, set in new()
-	var/organ_color_2 = null		// Might also be usable to color organs if their owner has funky colored blood. Shrug.
-
 	var/op_stage = 0.0
 	var/brute_dam = 0
 	var/burn_dam = 0
@@ -354,15 +344,3 @@
 			for (var/abil in src.organ_abilities)
 				src.add_ability(A, abil)
 		src.broken = 0
-
-	// This proc converts a hex color value ("#420CAB") to an RGB list
-	// Clamps each of the RGB values between 50 and 190
-	// So we cant make our organs look *too* stupid through character settings
-	proc/organ_fix_colors(var/hex)
-		var/list/L = hex_to_rgb_list(hex)
-		for (var/i in L)
-			L[i] = min(L[i], 190)
-			L[i] = max(L[i], 50)
-		if (L.len == 3)
-			return rgb(L["r"], L["g"], L["b"])
-		return rgb(22, 210, 22)
