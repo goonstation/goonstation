@@ -128,13 +128,14 @@
 	New()
 		..()
 		// This tail accepts hairstyle colors!
-		// Gotta force in some random colors first, otherwise new stock tails are colorless!
-		src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
-		src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
-		if (src.donor.bioHolder.mobAppearance)	// Get the colors here so they dont change later, ie reattached on someone else
-			var/datum/appearanceHolder/aH = src.donor.bioHolder.mobAppearance
+		var/mob/living/carbon/human/M = src.donor
+		if (M && ishuman(M))	// Get the colors here so they dont change later, ie reattached on someone else
+			var/datum/appearanceHolder/aH = M.bioHolder.mobAppearance
 			src.organ_color_1 = organ_fix_colors(aH.customization_first_color)
 			src.organ_color_2 = organ_fix_colors(aH.customization_second_color)
+		else	// Just throw some colors in there or something
+			src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
+			src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
 
 		src.organ_image_under_suit_1 = "lizard_under_suit_1"
 		src.organ_image_under_suit_2 = "lizard_under_suit_2"
