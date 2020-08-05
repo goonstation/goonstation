@@ -305,6 +305,13 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	welded_icon_state = "2_welded"
 	req_access = null
 
+/obj/machinery/door/airlock/pyro/mining
+	icon_state = "mining_closed"
+	icon_base = "mining"
+	panel_icon_state = "2_panel_open"
+	welded_icon_state = "2_welded"
+	req_access = null
+
 /obj/machinery/door/airlock/pyro/maintenance
 	name = "maintenance access"
 	icon_state = "maint_closed"
@@ -427,6 +434,16 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		if (src.density)
 			src.autoclose = 0
 		..(user)
+
+/obj/machinery/door/airlock/pyro/glass/windoor/alt
+	icon_state = "windoor2_closed"
+	icon_base = "windoor2"
+	panel_icon_state = "windoor2"
+	welded_icon_state = "windoor2_weld"
+	sound_airlock = 'sound/machines/windowdoor.ogg'
+	has_panel = 0
+	has_crush = 0
+	layer = 3.5
 
 /obj/machinery/door/airlock/pyro/sci_alt
 	icon_state = "sci_closed"
