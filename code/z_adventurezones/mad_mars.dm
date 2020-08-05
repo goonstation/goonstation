@@ -311,7 +311,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 0
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 1
@@ -693,7 +693,7 @@
 	desc = "A 2030's-era security robot. Uh oh."
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mars_sec_bot"
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atksilicon = 1
 	var/overheat = 0
 	var/datum/projectile/my_bullet = new/datum/projectile/bullet/revolver_38
