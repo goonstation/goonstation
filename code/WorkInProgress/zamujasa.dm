@@ -842,6 +842,7 @@ Read the rules, don't grief, and have fun!</div>"}
 		maptext_x = -34
 		maptext_y = 1
 		mouse_opacity = 0
+		maptext = ""
 
 	proc/update_text(var/text)
 		maptext = {"<span class="vb r pixel sh">[text]</span>"}
