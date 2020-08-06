@@ -7,7 +7,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	density = 0
@@ -76,7 +76,7 @@
 	aggressive = 0
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 0.65
@@ -409,7 +409,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -542,7 +542,7 @@
 	icon_state = "clownspider_queen"
 	health = 100
 	aggressive = 1
-	opensdoors =1 //clever girl
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY //clever girl
 	venom1 = "rainbow fluid"
 	death_text ="%src% explodes into technicolor gore!"
 	encase_in_web = 2

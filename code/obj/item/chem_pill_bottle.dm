@@ -7,7 +7,7 @@
 	stamina_cost = 0
 	stamina_crit_chance = 1
 	rand_pos = 1
-
+	inventory_counter_enabled = 1
 	var/pname
 	var/pvol
 	var/pcount
@@ -70,10 +70,13 @@
 		var/totalpills = src.pcount + src.contents.len
 		if(totalpills > 15)
 			src.desc = "A [src.pname] pill bottle. There are too many to count."
+			src.inventory_counter.update_text("**")
 		else if (totalpills <= 0)
 			src.desc = "A [src.pname] pill bottle. It looks empty."
+			src.inventory_counter.update_number(0)
 		else
 			src.desc = "A [src.pname] pill bottle. There [totalpills==1? "is [totalpills] pill." : "are [totalpills] pills." ]"
+			src.inventory_counter.update_number(totalpills)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/pill))

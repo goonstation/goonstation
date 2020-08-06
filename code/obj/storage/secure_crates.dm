@@ -92,12 +92,12 @@
 		/obj/item/chem_grenade/sarin = 3)
 
 /obj/storage/secure/crate/bee
-	name = "Bee crate"
-	desc = "A crate with a picture of a bee on it. Buzz."
+	name = "Secure Bee crate"
+	desc = "A secure crate with a picture of a bee on it. Buzz."
 	icon_state = "beecrate"
 	density = 1
-	icon_opened = "beecrateopen"
-	icon_closed = "beecrate"
+	icon_opened = "beecrateopen-secure"
+	icon_closed = "beecrate-secure"
 
 	loaded
 		req_access = list(access_hydro)

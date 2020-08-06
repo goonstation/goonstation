@@ -85,6 +85,19 @@
 				S.satchel_updateicon()
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
+		if (istype(I,/obj/item/storage/))
+			var/action = input(user, "What do you want to do with [I]?") as null|anything in list("Empty it into the chute","Place it in the Chute")
+			if (!in_range(src, user))
+				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
+				return
+			if (action == "Empty it into the chute")
+				var/obj/item/storage/S = I
+				for(var/obj/item/O in S)
+					O.set_loc(src)
+					S.hud.remove_object(O)
+				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
+				return
+			if (isnull(action)) return
 		var/obj/item/magtractor/mag
 		if (istype(I.loc, /obj/item/magtractor))
 			mag = I.loc
