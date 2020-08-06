@@ -283,9 +283,9 @@
 				sellitem = /obj/item/electronics
 			if(ispath(sellitem, /obj/item/parts/robot_parts))
 				sellitem = /obj/item/parts/robot_parts
-			var/goods_buy_types[0]
+			var/list/goods_buy_types
 			for(var/datum/commodity/N in goods_buy)
-				if (ispath(src.sellitem.type, N.comtype))
+				if (istype(src.sellitem, N.comtype))
 					goods_buy_types[N.comtype] = N.price
 			if (goods_buy_types.len >= 1)
 				var/goods_type = maximal_subtype(goods_buy_types)
