@@ -827,3 +827,42 @@ Read the rules, don't grief, and have fun!</div>"}
 
 	proc/update_status(var/message)
 		src.maptext = "<span class='c ol vga vt'>Setting up game...\n<span style='color: #aaaaaa;'>[message]</span></span>"
+
+
+
+/obj/overlay/inventory_counter
+	name = "inventory amount counter"
+	invisibility = 101
+	plane = PLANE_HUD
+	layer = HUD_LAYER_3
+	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+
+	New()
+		maptext_width = 64
+		maptext_x = -34
+		maptext_y = 1
+		mouse_opacity = 0
+		maptext = ""
+
+	proc/update_text(var/text)
+		maptext = {"<span class="vb r pixel sh">[text]</span>"}
+
+	proc/update_number(var/number)
+		maptext = {"<span class="vb r xfont sh"[number == 0 ? " style='color: #ff6666;'" : ""]>[number >= 100000 ? "[round(number / 1000)]K" : round(number)]</span>"}
+
+	proc/update_percent(var/current, var/maximum)
+		if (!maximum)
+			// no dividing by zero
+			src.update_number(current)
+			return
+		maptext = {"<span class="vb r xfont sh"[current == 0 ? " style='color: #ff6666;'" : ""]>[round(current / maximum * 100)]%</span>"}
+
+	proc/hide_count()
+		invisibility = 101
+
+	proc/show_count()
+		invisibility = 0
+
+	pooled()
+		src.maptext = ""
+		src.invisibility = 101
