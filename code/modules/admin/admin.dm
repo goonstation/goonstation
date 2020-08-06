@@ -4623,6 +4623,7 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set desc="(object path) Spawn an object. But all fancy-like"
 	set name="Spawn-Heavenly"
+	admin_only
 	if(!object)
 		return
 	if (usr.client.holder.level >= LEVEL_PA)
