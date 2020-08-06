@@ -4639,6 +4639,28 @@ var/global/noir = 0
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 		return
 
+/datum/admins/proc/supplydrop_spawn_obj(var/obj/object as text)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set desc="(object path) Spawn an object. But all fancy-like"
+	set name="Spawn-Supplydrop"
+	if(!object)
+		return
+	if (usr.client.holder.level >= LEVEL_PA)
+		var/chosen = get_one_match(object)
+		var/preDropTime = 3 SECONDS
+
+		if (chosen)
+			//var/obj/A = new chosen()
+			//A.set_loc(usr.loc)
+			//heavenly_spawn(A)
+			new/obj/effect/supplymarker/safe(usr.loc, preDropTime, chosen)
+			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
+			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
+
+	else
+		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		return
+
 /datum/admins/proc/show_chatbans(var/client/C)//do not use this as an example of how to write DM please.
 	if( !C.cloud_available() )
 		alert( "Failed to communicate to Goonhub." )

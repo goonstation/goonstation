@@ -31,13 +31,20 @@
 	anchored = 1
 	pixel_x = -16
 	pixel_y = -16
+	var/gib_mobs = TRUE
 
-	New(var/atom/location, var/preDropTime = 100)
+	New(var/atom/location, var/preDropTime = 100, var/obj_path)
 		src.loc = location
 		SPAWN_DBG(preDropTime)
-			new/obj/effect/supplydrop(src.loc)
+			if (gib_mobs)
+				new/obj/effect/supplydrop(src.loc, obj_path)
+			else
+				new/obj/effect/supplydrop/safe(src.loc, obj_path)
 			qdel(src)
 		..()
+
+/obj/effect/supplymarker/safe
+	gib_mobs = FALSE
 
 /obj/effect/supplydrop
 	name = "supply drop"
@@ -49,7 +56,7 @@
 	var/dropTime = 30
 	var/gib_mobs = TRUE
 
-	New()
+	New(atom/loc, var/obj_path)
 		pixel_y = 480
 		animate(src, pixel_y = 0, time = dropTime)
 		playsound(src.loc, 'sound/effects/flameswoosh.ogg', 100, 0)
@@ -61,7 +68,7 @@
 				if(gib_mobs && M.loc == src.loc)
 					M.gib(1, 1)
 			sleep(0.5 SECONDS)
-			new/obj/lootbox(src.loc)
+			new/obj/lootbox(src.loc, obj_path)
 			qdel(src)
 		..()
 
@@ -92,9 +99,11 @@
 	anchored = 0
 	density = 1
 	opacity = 0
+	var/obj_path
 
-	New()
+	New(atom/loc, var/obj_path_arg)
 		filters += filter(type="drop_shadow", x=0, y=0, size=5, offset=0, color=rgb(240,202,133))
+		obj_path = obj_path_arg
 		return ..()
 
 	attack_hand(mob/user as mob)
@@ -103,12 +112,12 @@
 		set_density(0)
 		icon_state = "attachecase_open"
 		filters = list()
-		lootbox(user)
+		lootbox(user, obj_path)
 		return
 
-/proc/lootbox(var/mob/user)
+/proc/lootbox(var/mob/user, var/obj_path)
 	var/mob/living/carbon/human/H = user
-	if(istype(H)) H.hud.add_screen(new/obj/screen/lootcrateicon/crate(user))
+	if(istype(H)) H.hud.add_screen(new/obj/screen/lootcrateicon/crate(user, obj_path))
 	return
 
 /proc/makeRandomLootTrash()
@@ -248,6 +257,11 @@
 	crate
 		icon_state = "lootb0"
 		var/opened = 0
+		var/obj_path = null
+
+		New(atom/loc, var/obj_path_arg)
+			obj_path = obj_path_arg
+			..()
 
 		clicked(list/params)
 			if(opened)
@@ -261,7 +275,11 @@
 
 			SPAWN_DBG(2 SECONDS)
 				var/mob/living/carbon/human/H = usr
-				var/obj/item/I = makeRandomLootTrash()
+				var/obj/item/I = null
+				if (obj_path)
+					I = new obj_path()
+				else
+					I = makeRandomLootTrash()
 				if(istype(H))
 					var/obj/screen/lootcrateicon/background/B = new/obj/screen/lootcrateicon/background(src)
 					var/obj/screen/lootcrateicon/sparks/S = new/obj/screen/lootcrateicon/sparks(src)
