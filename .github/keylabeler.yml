@@ -1,11 +1,11 @@
-# Number of labels to fetch (optional). Defaults to 20.
-numLabels: 40
-
 # Determines if we search the title (optional). Defaults to true.
 matchTitle: false
 
 # Determines if we search the body (optional). Defaults to true.
 matchBody: true
+
+# Determines if label matching is case sensitive (optional). Defaults to true.
+caseSensitive: false
 
 # Explicit keyword mappings to labels. Form of match:label. Required.
 labelMappings:
@@ -43,6 +43,8 @@ labelMappings:
     "[REWORK]": rework
     "[SECRET]": secret
     "[STYLE]": style
+    "[TGUI]": tgui
+    "[UI]": tgui
     "[TOOLS]": tooling
     "[TOOLING]": tooling
     "[WIP]": WIP

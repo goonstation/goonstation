@@ -160,14 +160,14 @@
 /datum/commodity/trader/generic/anyfood
 	comname = "Food"
 	comtype = /obj/item/reagent_containers/food/snacks
-	price_boundary = list(50,120)
+	price_boundary = list(50,80)
 	possible_names = list("We're ferrying food to the outer colonies, so sell us any extra you have.",
 	"An accident has lost us most of our food supplies, so we're willing to buy any you may have.")
 
 /datum/commodity/trader/generic/herbs
 	comname = "Medical Herbs"
 	comtype = /obj/item/plant/herb/
-	price_boundary = list(60,160)
+	price_boundary = list(75,160)
 	possible_names = list("I'll buy any medical herbs you may have.",
 	"I need to restock on medical herbs. I'm willing to buy them from you for a good price.")
 

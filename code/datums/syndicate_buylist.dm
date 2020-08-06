@@ -851,6 +851,15 @@ This is basically useless for anyone but miners.
 	job = list("Geneticist", "Medical Doctor", "Medical Director")
 	blockedmode = list(/datum/game_mode/revolution)
 
+/datum/syndicate_buylist/traitor/buddy_ammofab
+	name = "Guardbuddy Ammo Replicator"
+	item = /obj/item/device/guardbot_module/ammofab
+	cost = 4
+	vr_allowed = 0
+	desc = "A device that allows PR-6S Guardbuddy units to use their internal charge to replenish kinetic ammunition."
+	job = list("Research Director")
+	blockedmode = list(/datum/game_mode/revolution)
+
 /datum/syndicate_buylist/traitor/wiretap
 	name = "Wiretap Radio Upgrade"
 	item = /obj/item/device/radio_upgrade

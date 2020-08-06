@@ -872,7 +872,7 @@
 	else
 		src.ion_trail.stop()
 */
-/obj/machinery/vehicle/proc/eject(mob/ejectee as mob)
+/obj/machinery/vehicle/proc/eject(mob/ejectee as mob, actually_eject = 1)
 	if (!ejectee || ejectee.loc != src)
 		return
 
@@ -901,7 +901,8 @@
 	var/location = locate(x_coord, y_coord, z_coord)
 	var/atom/movable/EJ = ejectee		// stops ejectee floating off in the direction they last moved
 	EJ.last_move = null
-	ejectee.set_loc(location)
+	if(actually_eject)
+		ejectee.set_loc(location)
 
 	//ejectee.remove_shipcrewmember_powers(src.weapon_class)
 	ejectee.reset_keymap()

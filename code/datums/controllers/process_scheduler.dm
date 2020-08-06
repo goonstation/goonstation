@@ -138,6 +138,11 @@ var/global/datum/controller/processScheduler/processScheduler
 		queued.len = 0
 
 /datum/controller/processScheduler/proc/addProcess(var/datum/controller/process/process)
+	// zamu here, sorry for making this dumb thing
+	if (game_start_countdown)
+		var/procname = copytext("[process.type]", findlasttext("[process.type]", "/", -1) + 1)
+		game_start_countdown.update_status("Starting [procname]")
+
 	processes.Add(process)
 	process.idle()
 	idle.Add(process)

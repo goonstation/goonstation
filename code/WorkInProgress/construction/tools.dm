@@ -441,7 +441,7 @@
 	var/icons = list("floors" = 'icons/turf/construction_floors.dmi', "walls" = 'icons/turf/construction_walls.dmi')
 	var/marker_class = list("floors" = /obj/plan_marker/floor, "walls" = /obj/plan_marker/wall)
 	var/selected = "floor"
-	var/pod_turf = 0
+	// var/pod_turf = 0
 	var/turf_op = 0
 
 	attack_self(mob/user as mob)
@@ -460,10 +460,10 @@
 			states += "* AUTO *"
 		states += icon_states(icons[mode])
 		selected = input("What kind?", "Marking", states[1]) in states
-		if (mode == "floors" && findtext(selected, "catwalk") != 0)
-			pod_turf = 1
-		else
-			pod_turf = 0
+		// if (mode == "floors" && findtext(selected, "catwalk") != 0)
+		// 	pod_turf = 1
+		// else
+		// 	pod_turf = 0
 		if (mode == "floors" || (mode == "walls" && findtext(selected, "window") != 0))
 			turf_op = 0
 		else
@@ -489,8 +489,8 @@
 			var/class = marker_class[mode]
 			old = new class(T, selected)
 			old.dir = get_dir(user, T)
-			if (pod_turf)
-				old:allows_vehicles = 1
+			// if (pod_turf)
+			// 	old:allows_vehicles = 1
 			old.turf_op = turf_op
 			old:check()
 		boutput(user, "<span class='notice'>Done.</span>")
@@ -764,6 +764,6 @@
 			T.icon = src.icon
 			T.icon_state = src.icon_state
 			T.dir = src.dir
-			T:allows_vehicles = src.allows_vehicles
+			// T:allows_vehicles = src.allows_vehicles
 			src.loc = null
 			qdel(src)

@@ -21,6 +21,7 @@
 	stamina_crit_chance = 35
 	module_research = list("tools" = 5, "science" = 1)
 	rand_pos = 1
+	inventory_counter_enabled = 1
 	var/list/banned_reagents = list("vomit",
 	"blackpowder",
 	"blood",
@@ -51,6 +52,7 @@
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("ff-foam", 100)
+	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 	BLOCK_TANK
 
 /obj/item/extinguisher/get_desc(dist)
@@ -81,6 +83,7 @@
 	if ( istype(target, /obj/reagent_dispensers) && get_dist(src,target) <= 1)
 		var/obj/o = target
 		o.reagents.trans_to(src, 75)
+		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 		boutput(user, "<span class='notice'>Extinguisher refilled...</span>")
 		playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 		user.lastattacked = target
@@ -156,6 +159,7 @@
 				W.set_loc( get_turf(src) )
 				var/turf/my_target = pick(the_targets)
 				W.spray_at(my_target, src.reagents, try_connect_fluid = 1)
+				src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
 		if (istype(usr.loc, /turf/space))
 			user.inertia_dir = get_dir(target, user)

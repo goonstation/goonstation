@@ -61,24 +61,24 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #endif
 #endif
 
-	var/obj/overlay/countdown_clock = new/obj/overlay()
-	if (lobby_titlecard)
-		countdown_clock.x = lobby_titlecard.x + 7
-		countdown_clock.y = lobby_titlecard.y + 2
-		countdown_clock.z = lobby_titlecard.z
-		countdown_clock.layer = lobby_titlecard.layer + 1
-	else
-		// oops
-		countdown_clock.x = 7
-		countdown_clock.y = 2
-		countdown_clock.z = 1
-		countdown_clock.layer = 1
+	// var/obj/overlay/game_start_countdown = new/obj/overlay()
+	// if (lobby_titlecard)
+	// 	game_start_countdown.x = lobby_titlecard.x + 14
+	// 	game_start_countdown.y = lobby_titlecard.y + 0
+	// 	game_start_countdown.z = lobby_titlecard.z
+	// 	game_start_countdown.layer = lobby_titlecard.layer + 1
+	// else
+	// 	// oops
+	// 	game_start_countdown.x = 7
+	// 	game_start_countdown.y = 2
+	// 	game_start_countdown.z = 1
+	// 	game_start_countdown.layer = 1
 
-	countdown_clock.maptext = ""
-	countdown_clock.maptext_width = 320
-	countdown_clock.maptext_x = -(320 / 2) + 16
-	countdown_clock.maptext_height = 320
-	countdown_clock.plane = 100
+	// game_start_countdown.maptext = ""
+	// game_start_countdown.maptext_width = 320
+	// game_start_countdown.maptext_x = -(320 / 2) + 16
+	// game_start_countdown.maptext_height = 320
+	// game_start_countdown.plane = 100
 
 
 	pregame_timeleft = PREGAME_LOBBY_TICKS
@@ -108,26 +108,15 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		sleep(1 SECOND)
 		if (!game_start_delayed)
 			pregame_timeleft--
-			if (countdown_clock)
-				// just in case some nerd deletes it or it otherwise goes away
-				var/timeLeftColor
-				switch (pregame_timeleft)
-					if (90 to INFINITY)
-						timeLeftColor = "#33dd33"
-					if (60 to 90)
-						timeLeftColor = "#ffff00"
-					if (30 to 60)
-						timeLeftColor = "#ffb400"
-					if (0 to 30)
-						timeLeftColor = "#ff6666"
-				countdown_clock.maptext = "<span class='c ol vga vb'>Round begins in<br><span style='color: [timeLeftColor]; font-size: 36px;'>[pregame_timeleft]</span></span>"
-		else if(countdown_clock)
-			countdown_clock.maptext = "<span class='c ol vga vb'>Round begins in<br><span style='color: #888888; font-size: 36px;'>soon</span></span>"
+			if (game_start_countdown)
+				game_start_countdown.update_time(pregame_timeleft)
+		else if(game_start_countdown)
+			game_start_countdown.update_time(-1)
 
 
 		if(pregame_timeleft <= 0)
 			current_state = GAME_STATE_SETTING_UP
-			qdel(countdown_clock)
+			qdel(game_start_countdown)
 
 	SPAWN_DBG(0) setup()
 
