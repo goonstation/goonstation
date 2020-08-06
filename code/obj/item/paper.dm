@@ -694,6 +694,24 @@ Only trained personnel should operate station systems. Follow all procedures car
 	</ul>
 	"}
 
+/obj/item/paper/neonlining
+	name = "paper - How to properly install official Nanotrasen neon lining"
+	icon_state = "paper"
+	info = {"<center><h2>How to properly install official Nanotrasen neon lining</h2></center>
+	<h3>Product description</h3><hr>
+	Ever wanted to spice up your bar? Build a meditation room? Enhance the station halls in case of an emergency? Then this official Nanotrasen neon lining are what you need. Now with color change modules!<hr>
+	<h3>Modifying the neon lining</h3><hr>
+	<ul style='list-style-type:disc'>
+		<li>1) A wrench can be used to change the shape of the lining. Currently only 6 shapes officially supported.</li>
+		<li>2) To turn an already attached piece of lining back into a coil, carefully use a crowbar to detach it from the it's attachment point.</li>
+		<li>3) Apply a standard multitool to change the pattern of the lining. If upon changing shape the pattern's value is higher than the maximum for that shape, the value gets automatically reset to 0.</li>
+		<li>4) As this version is designed to be more flexible and compact, the lining feeds only on an internal power source. Due to this the only way to turn it off/on is to cut/mend the wires that connect to said power source.</li>
+		<li>5) To adjust the lining's rotation, simply unscrew it from it's attachment point. The lining will automatically snap to the next available rotation and screw itself into a new attachment point.</li>
+		<li>6) Due to safety concerns caused by our previous prototype of the product, the color change modules are only active when the lining is detached and thus in a coil.</li>
+		<li>7) There have been reports that when the lining is in the short line shape, using a multitool to change the pattern sometimes triggers the movement function of it's rotation program. This essentially shifts the lining a bit. We understand that this might be a bit unintuitive, but since this isn't hazardous we have no intentions of fixing it.</li>
+	</ul>
+	"}
+
 /obj/item/paper/manta_polarisnote
 	name = "paper - Note to myself"
 	icon_state = "paper"

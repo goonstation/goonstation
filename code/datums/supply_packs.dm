@@ -116,6 +116,14 @@
 	containertype = /obj/storage/crate
 	containername = "Paint Crate"
 
+/datum/supply_packs/neon_lining
+	name = "Neon Lining Crate"
+	desc = "For intellectuals that value the aesthetic of the past."
+	contains = list(/obj/item/neon_lining/shipped, /obj/item/paper/neonlining)
+	cost = 2000
+	containertype = /obj/storage/crate
+	containername = "Neon Lining Crate"
+
 /datum/supply_packs/metal200
 	name = "200 Metal Sheets"
 	desc = "x200 Metal Sheets"
@@ -1175,7 +1183,7 @@
 	containername = "Telecrystal Resupply Pack"
 
 /datum/supply_packs/antisingularity
-	name = "Anti-Singularity  Pack"
+	name = "Anti-Singularity Pack"
 	desc = "Everything that the crew needs to take down a rogue singularity."
 	category = "Engineering Department"
 	contains = list(/obj/item/paper/antisingularity,/obj/item/ammo/bullets/antisingularity = 5,/obj/item/gun/kinetic/antisingularity)
