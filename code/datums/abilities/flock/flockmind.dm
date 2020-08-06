@@ -331,5 +331,5 @@
 			structurewantedtype = /obj/flock_structure/collector
 			resourcecost = 200
 	if(structurewantedtype)
-		var/mob/living/intangible/flock/flockmind/F = holder.owner
+		var/mob/living/intangible/flock/F = holder.owner
 		F.createstructure(structurewantedtype, resourcecost)

@@ -150,6 +150,3 @@
 	ghost_notifier.send_notification(src, src, /datum/ghost_notification/respawn/flockdrone)
 	boutput(src, "<span class='notice'>Partitioning initiated. Stand by.</span>")
 
-/mob/living/intangible/flock/flockmind/proc/createstructure(var/T, var/resources = 0)
-	//todo check for flocktile underneath flockmind cheers
-	new/obj/flock_structure/ghost(src.loc, T, src.flock, resources)
