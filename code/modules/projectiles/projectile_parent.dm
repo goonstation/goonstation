@@ -53,6 +53,7 @@
 	var/list/hitlist = list() //list of atoms collided with this tick
 	var/reflectcount = 0
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
+	var/is_detonating = 0//to start modeling fuses
 #if ASS_JAM
 	var/projectile_paused = FALSE //for time stopping
 #endif
@@ -714,6 +715,9 @@ datum/projectile/bullet/autocannon/plasma_orb
 	impact_range = 8
 
 datum/projectile/bullet/autocannon/huge
+	impact_range = 8
+
+datum/projectile/bullet/cannon
 	impact_range = 8
 
 datum/projectile/bullet/glitch
