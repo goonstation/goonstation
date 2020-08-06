@@ -9,11 +9,12 @@
 	var/maxitems = 50
 	var/list/allowed = list(/obj/item/)
 	var/itemstring = "items"
+	inventory_counter_enabled = 1
 
 
 	New()
-		src.satchel_updateicon()
 		..()
+		src.satchel_updateicon()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		var/proceed = 0
@@ -162,6 +163,7 @@
 				src.overlays += image('icons/obj/items/items.dmi', "satcounter5")
 
 		signal_event("icon_updated")
+		src.inventory_counter?.update_number(src.contents.len)
 
 	get_desc()
 		return "It contains [src.contents.len]/[src.maxitems] [src.itemstring]."

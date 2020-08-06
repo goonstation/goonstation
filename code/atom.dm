@@ -877,12 +877,6 @@
 		if(src:client && src:client:player && src:client:player:shamecubed)
 			loc = src:client:player:shamecubed
 			return
-		var/mob/SM = src
-		if (!(SM.client && SM.client.holder))
-			if (istype(newloc, /turf/unsimulated))
-				var/turf/unsimulated/T = newloc
-				if (T.density)
-					return
 
 	if (isturf(loc))
 		loc.Exited(src, newloc)

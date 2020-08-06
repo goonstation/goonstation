@@ -1224,12 +1224,12 @@
 		playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		for (var/i=src.shard_amt, i > 0, i--)
 			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-			G.set_loc(T)
+			G.set_loc(src.loc)
 		if (src.in_glass)
-			src.in_glass.set_loc(T)
+			src.in_glass.set_loc(src.loc)
 			src.in_glass = null
 		if (src.wedge)
-			src.wedge.set_loc(T)
+			src.wedge.set_loc(src.loc)
 			src.wedge = null
 		qdel(src)
 
@@ -1520,7 +1520,7 @@
 		playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		for (var/i=src.shard_amt, i > 0, i--)
 			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-			G.set_loc(T)
+			G.set_loc(src.loc)
 		qdel(src)
 
 	throw_impact(var/atom/A)
