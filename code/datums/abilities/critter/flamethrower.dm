@@ -51,5 +51,6 @@
 
 	throwing
 		desc = "Blast targets backwards with flames."
+		icon_state = "fire_e_flamethrower"
 		throws = 1
 		heat = T0C + 60

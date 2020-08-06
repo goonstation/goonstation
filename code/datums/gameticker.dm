@@ -61,6 +61,26 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #endif
 #endif
 
+	// var/obj/overlay/game_start_countdown = new/obj/overlay()
+	// if (lobby_titlecard)
+	// 	game_start_countdown.x = lobby_titlecard.x + 14
+	// 	game_start_countdown.y = lobby_titlecard.y + 0
+	// 	game_start_countdown.z = lobby_titlecard.z
+	// 	game_start_countdown.layer = lobby_titlecard.layer + 1
+	// else
+	// 	// oops
+	// 	game_start_countdown.x = 7
+	// 	game_start_countdown.y = 2
+	// 	game_start_countdown.z = 1
+	// 	game_start_countdown.layer = 1
+
+	// game_start_countdown.maptext = ""
+	// game_start_countdown.maptext_width = 320
+	// game_start_countdown.maptext_x = -(320 / 2) + 16
+	// game_start_countdown.maptext_height = 320
+	// game_start_countdown.plane = 100
+
+
 	pregame_timeleft = PREGAME_LOBBY_TICKS
 	boutput(world, "<B><FONT style='notice'>Welcome to the pre-game lobby!</FONT></B>")
 	boutput(world, "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds")
@@ -88,9 +108,15 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		sleep(1 SECOND)
 		if (!game_start_delayed)
 			pregame_timeleft--
+			if (game_start_countdown)
+				game_start_countdown.update_time(pregame_timeleft)
+		else if(game_start_countdown)
+			game_start_countdown.update_time(-1)
+
 
 		if(pregame_timeleft <= 0)
 			current_state = GAME_STATE_SETTING_UP
+			qdel(game_start_countdown)
 
 	SPAWN_DBG(0) setup()
 
@@ -432,10 +458,21 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				boutput(world, "<span class='bold notice'>A new round will begin soon.</span>")
 
-				sleep(60 SECONDS)
-				//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] one minute delay, game should restart now")
+				var/datum/hud/roundend/roundend_countdown = new()
 
+				for (var/client/C in clients)
+					roundend_countdown.add_client(C)
+
+				var/roundend_time = 60
+				while (roundend_time >= 0)
+					roundend_countdown.update_time(roundend_time)
+					sleep(1 SECONDS)
+					roundend_time--
+
+				//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] one minute delay, game should restart now")
 				if (game_end_delayed == 1)
+					roundend_countdown.update_delayed()
+
 					message_admins("<span class='internal>Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]. Remove the delay for an immediate restart.</span>")
 					game_end_delayed = 2
 					var/ircmsg[] = new()
@@ -596,8 +633,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		escape_possible = 0
 
 	var/time = world.time
+
+	logTheThing("debug", null, null, "Revving up the spacebux loop...")
+
 	for(var/mob/player in mobs)
-		if (player.client && player.mind && !player.mind.joined_observer && !istype(player,/mob/new_player))
+		if (player && player.client && player.mind && !player.mind.joined_observer && !istype(player,/mob/new_player))
+			logTheThing("debug", null, null, "Iterating on [player.client]")
 			//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] spacebux calc start: [player.mind.ckey]")
 
 			var/chui/window/earn_spacebux/bank_earnings = new
@@ -663,8 +704,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				bank_earnings.escaped = 0
 				player_dead = 1
 
-
-
 			//handle traitors
 			if (player.mind && ticker.mode.traitors.Find(player.mind))
 				earnings = job_wage
@@ -722,8 +761,17 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					bank_earnings.new_balance = player.client.persistent_bank
 					bank_earnings.Subscribe( player.client )
 
-		for(var/obj/bookshelf/persistent/P in by_type[/obj/bookshelf/persistent]) //make the bookshelf save its contents
-			P.build_curr_contents()
+
+	logTheThing("debug", null, null, "Done with spacebux")
+
+	for(var/obj/bookshelf/persistent/P in by_type[/obj/bookshelf/persistent]) //make the bookshelf save its contents
+		P.build_curr_contents()
+
+	logTheThing("debug", null, null, "Done with books")
+
+	award_archived_round_xp()
+
+	logTheThing("debug", null, null, "Spawned XP")
 
 	SPAWN_DBG(0)
 		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] creds/new")
@@ -744,6 +792,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] done showing tickets/scores")
 
+	logTheThing("debug", null, null, "Did credits")
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] finished spacebux updates")
 

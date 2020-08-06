@@ -176,7 +176,7 @@ datum/controller/pathogen
 							var/datum/suppressant/S = src.path_to_suppressant[spath]
 							types += S.name
 							types[S.name] = S
-						var/chosen = input("Which suppresant?", "Suppressant", types[1]) in types
+						var/chosen = input("Which suppressant?", "Suppressant", types[1]) in types
 						P.suppressant = types[chosen]
 						P.desc = "[P.suppressant.color] dodecahedrical [P.body_type.plural]"
 

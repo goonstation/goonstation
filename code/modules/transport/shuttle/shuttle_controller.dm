@@ -264,23 +264,21 @@ datum/shuttle_controller
 						if (particle_spawn)
 							particle_spawn.start_particles()
 
-						SPAWN_DBG(0)
-							var/shuttle_dir = map_settings ? map_settings.escape_dir : EAST // default to cog2 direction because EH
-							for (var/obj/landmark/L in escape_pod_success)
-								if (L.dir != shuttle_dir)
-									escape_pod_success -= L //leave behind only landmarks that match our dir
+						var/shuttle_dir = map_settings ? map_settings.escape_dir : EAST // default to cog2 direction because EH
+						for (var/obj/landmark/L in escape_pod_success)
+							if (L.dir != shuttle_dir)
+								escape_pod_success -= L //leave behind only landmarks that match our dir
 
-
-							DEBUG_MESSAGE("Now moving shuttle!")
-							start_location.move_contents_to(end_location, map_turf)
-							for (var/turf/O in end_location)
-								if (istype(O, map_turf))
-									O.ReplaceWith(transit_turf, force=1)
-							DEBUG_MESSAGE("Done moving shuttle!")
-							settimeleft(SHUTTLETRANSITTIME)
-							boutput(world, "<B>The Emergency Shuttle has left for CentCom! It will arrive in [timeleft()/60] minute[s_es(timeleft()/60)]!</B>")
-							world << csound("sound/misc/shuttle_enroute.ogg")
-							//online = 0
+						DEBUG_MESSAGE("Now moving shuttle!")
+						start_location.move_contents_to(end_location, map_turf)
+						for (var/turf/O in end_location)
+							if (istype(O, map_turf))
+								O.ReplaceWith(transit_turf, force=1)
+						DEBUG_MESSAGE("Done moving shuttle!")
+						settimeleft(SHUTTLETRANSITTIME)
+						boutput(world, "<B>The Emergency Shuttle has left for CentCom! It will arrive in [timeleft()/60] minute[s_es(timeleft()/60)]!</B>")
+						world << csound("sound/misc/shuttle_enroute.ogg")
+						//online = 0
 
 						return 1
 

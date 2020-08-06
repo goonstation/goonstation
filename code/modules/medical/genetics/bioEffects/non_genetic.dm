@@ -66,7 +66,7 @@
 
 	OnMobDraw()
 		if (ishuman(owner) && !owner:decomp_stage)
-			owner:body_standing:overlays += image('icons/mob/human.dmi', "decomp1")
+			owner:body_standing:overlays += image('icons/mob/human_decomp.dmi', "decomp1")
 		return
 
 	OnAdd()

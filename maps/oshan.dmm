@@ -9841,9 +9841,14 @@
 "avO" = (
 /obj/machinery/light/incandescent/greenish,
 /obj/disposalpipe/segment/mail,
+/obj/machinery/photocopier,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge)
 "avP" = (
+/obj/table/auto,
+/obj/item/paper_bin{
+	pixel_y = 6
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge)
 "avQ" = (
@@ -32097,6 +32102,7 @@
 	dir = 4;
 	icon_state = "xtra_bigstripe-edge"
 	},
+/obj/machinery/manufacturer/qm,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "bxC" = (
@@ -37919,6 +37925,7 @@
 /area/station/crew_quarters/radio)
 "bLC" = (
 /obj/machinery/light/incandescent/warm,
+/obj/machinery/photocopier,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio)
 "bLD" = (

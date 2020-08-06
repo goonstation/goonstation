@@ -1,7 +1,7 @@
 /datum/targetable/critter/fire_sprint
 	name = "Fire Form"
 	desc = "While active : Hold Sprint key to maintain Fire Form. You will leave a trail of flames while in use. This ability will depend on stamina just like normal sprint."
-	icon_state = "template"
+	icon_state = "fire_e_sprint"
 	targeted = 0
 	target_nodamage_check = 0
 	max_range = 0

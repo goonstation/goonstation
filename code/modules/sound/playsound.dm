@@ -16,7 +16,8 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	uploaded_sound.priority = 254
 	uploaded_sound.channel = admin_sound_channel
 	uploaded_sound.frequency = freq
-
+	uploaded_sound.environment = -1
+	uploaded_sound.echo = -1
 	if (!vol)
 		return
 
@@ -50,6 +51,8 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		music_sound.frequency = 1
 	else
 		music_sound.frequency = freq
+	music_sound.environment = -1
+	music_sound.echo = -1
 
 	SPAWN_DBG(0)
 		var/admin_key = admin_key(src)
@@ -82,7 +85,8 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	music_sound.repeat = 0
 	music_sound.priority = 254
 	music_sound.channel = 1013 // This probably works?
-
+	music_sound.environment = -1
+	music_sound.echo = -1
 	SPAWN_DBG(0)
 		for (var/client/C in clients)
 			LAGCHECK(LAG_LOW)

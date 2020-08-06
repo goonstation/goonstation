@@ -269,13 +269,13 @@
 	degrade_to = "toxification"
 	icon_state  = "tox_res"
 
-	OnLife()
-		if(..()) return
-		var/mob/living/L = owner
-		if (isdead(L))
-			return
-		if (L.reagents)
-			L.reagents.remove_any(remove_per_tick)
+	OnAdd()
+		. = ..()
+		APPLY_MOB_PROPERTY(owner, PROP_CHEM_PURGE, src.type, remove_per_tick)
+
+	OnRemove()
+		. = ..()
+		REMOVE_MOB_PROPERTY(owner, PROP_CHEM_PURGE, src.type)
 
 /////////////
 // Stealth //

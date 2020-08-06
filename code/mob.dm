@@ -553,7 +553,7 @@
 					tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 					src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
 					return
-			if(tmob.reagents.get_reagent_amount("flubber") + src.reagents.get_reagent_amount("flubber") > 0)
+			if(tmob.reagents && tmob.reagents.get_reagent_amount("flubber") + src.reagents.get_reagent_amount("flubber") > 0)
 				if(src.next_spammable_chem_reaction_time > world.time || tmob.next_spammable_chem_reaction_time > world.time)
 					src.now_pushing = 0
 					return
@@ -723,6 +723,10 @@
 /mob/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
 	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
 		use_movement_controller = null
+
+	if(istype(src.loc, /obj/machinery/vehicle/) && src.loc != new_loc)
+		var/obj/machinery/vehicle/V = src.loc
+		V.eject(src, actually_eject = 0)
 
 	. = ..(new_loc)
 	src.loc_pixel_x = new_pixel_x
@@ -996,7 +1000,7 @@
 		src.health -= max(0, burn)
 
 /mob/proc/TakeDamageAccountArmor(zone, brute, burn, tox, damage_type)
-	TakeDamage(zone, brute-get_melee_protection(zone,damage_type), burn-get_melee_protection(zone,damage_type))
+	TakeDamage(zone, brute - get_melee_protection(zone,damage_type), burn - get_melee_protection(zone,damage_type))
 
 /mob/proc/HealDamage(zone, brute, burn, tox)
 	health += max(0, brute)
@@ -1166,8 +1170,6 @@
 			if (W)
 				W.layer = initial(W.layer)
 
-			var/turf/T = get_turf(src.loc)
-			T.Entered(W)
 			u_equip(W)
 			.= 1
 		else

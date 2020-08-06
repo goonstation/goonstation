@@ -1,6 +1,6 @@
 /obj/item/roboupgrade/teleport
 	name = "cyborg teleporter upgrade"
-	desc = "A personal teleportation device that allows a cyborg to transport itself instantly."
+	desc = "A personal teleportation device that allows a cyborg to transport itself instantly to any teleporter beacon."
 	icon_state = "up-teleport"
 	active = 1
 	drainrate = 250

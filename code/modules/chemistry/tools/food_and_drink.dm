@@ -146,12 +146,8 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/kitchen/utensil/fork) || istype(W,/obj/item/kitchen/utensil/spoon))
 			if (prob(20) && (istype(W,/obj/item/kitchen/utensil/fork/plastic) || istype(W,/obj/item/kitchen/utensil/spoon/plastic)))
-				var/obj/item/kitchen/utensil/spoon/plastic/S = W
-				if(istype(S))
-					S.break_spoon(user)
-				var/obj/item/kitchen/utensil/fork/plastic/F = W
-				if(istype(F))
-					F.break_fork(user)
+				var/obj/item/kitchen/utensil/S = W
+				S.break_utensil(user)
 				user.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
 				return
 
@@ -200,7 +196,7 @@
 						// basically, the fork in their left hand will always be chosen
 						// I guess people in space are all left handed
 						for (var/obj/item/kitchen/utensil/fork/plastic/F in user.equipped_list(check_for_magtractor = 0))
-							F.break_fork(M)
+							F.break_utensil(M)
 							M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
 							return
 					if (src.needspoon && !user.find_type_in_hand(/obj/item/kitchen/utensil/spoon))
@@ -212,7 +208,7 @@
 						// basically, the fork in their left hand will always be chosen
 						// I guess people in space are all left handed
 						for (var/obj/item/kitchen/utensil/spoon/plastic/S in user.equipped_list(check_for_magtractor = 0))
-							S.break_spoon(M)
+							S.break_utensil(M)
 							M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
 							return
 
@@ -410,7 +406,7 @@
 				src.reagents.reaction(owner, INGEST, src.reagents.total_volume)
 				src.did_react = 1
 
-			src.reagents.trans_to(owner, process_rate)
+			src.reagents.trans_to(owner, process_rate, HAS_MOB_PROPERTY(owner, PROP_DIGESTION_EFFICIENCY) ? GET_MOB_PROPERTY(owner, PROP_DIGESTION_EFFICIENCY) : 1)
 
 			if (src.reagents.total_volume <= 0)
 				owner.stomach_process -= src
@@ -1228,12 +1224,12 @@
 		playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		for (var/i=src.shard_amt, i > 0, i--)
 			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-			G.set_loc(T)
+			G.set_loc(src.loc)
 		if (src.in_glass)
-			src.in_glass.set_loc(T)
+			src.in_glass.set_loc(src.loc)
 			src.in_glass = null
 		if (src.wedge)
-			src.wedge.set_loc(T)
+			src.wedge.set_loc(src.loc)
 			src.wedge = null
 		qdel(src)
 
@@ -1532,7 +1528,7 @@
 		playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		for (var/i=src.shard_amt, i > 0, i--)
 			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-			G.set_loc(T)
+			G.set_loc(src.loc)
 		qdel(src)
 
 	throw_impact(var/atom/A)

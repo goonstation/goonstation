@@ -1237,7 +1237,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 							R.updateicon()
 				src.verbs += /mob/living/carbon/human/machoman/verb/macho_meteor
 */
-	emote(var/act)
+	emote(var/act, var/emoteTarget = null)
 		switch(act)
 			if ("scream")
 				if (src.mind && src.mind.special_role && src.mind.special_role == "faustian macho man")
@@ -1269,7 +1269,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1

@@ -410,6 +410,8 @@
 	proc/ShootProjectiles(var/mob/user, var/datum/projectile/PROJ, var/shoot_dir)
 		var/obj/projectile/P = shoot_projectile_DIR(src, PROJ, shoot_dir)
 		P.mob_shooter = user
+		if (src.m_w_system?.muzzle_flash)
+			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
 
 	bullet_act(var/obj/projectile/P)
 		if(P.shooter == src)
@@ -870,7 +872,7 @@
 	else
 		src.ion_trail.stop()
 */
-/obj/machinery/vehicle/proc/eject(mob/ejectee as mob)
+/obj/machinery/vehicle/proc/eject(mob/ejectee as mob, actually_eject = 1)
 	if (!ejectee || ejectee.loc != src)
 		return
 
@@ -899,7 +901,8 @@
 	var/location = locate(x_coord, y_coord, z_coord)
 	var/atom/movable/EJ = ejectee		// stops ejectee floating off in the direction they last moved
 	EJ.last_move = null
-	ejectee.set_loc(location)
+	if(actually_eject)
+		ejectee.set_loc(location)
 
 	//ejectee.remove_shipcrewmember_powers(src.weapon_class)
 	ejectee.reset_keymap()

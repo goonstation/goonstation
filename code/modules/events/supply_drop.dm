@@ -47,6 +47,7 @@
 	anchored = 1
 	plane = PLANE_FLOCKVISION
 	var/dropTime = 30
+	var/gib_mobs = TRUE
 
 	New()
 		pixel_y = 480
@@ -57,12 +58,15 @@
 			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 			for(var/mob/M in view(7, src.loc))
 				shake_camera(M, 20, 1)
-				if(M.loc == src.loc)
+				if(gib_mobs && M.loc == src.loc)
 					M.gib(1, 1)
 			sleep(0.5 SECONDS)
 			new/obj/lootbox(src.loc)
 			qdel(src)
 		..()
+
+/obj/effect/supplydrop/safe
+	gib_mobs = FALSE
 
 /obj/effect/supplyexplosion
 	name = ""

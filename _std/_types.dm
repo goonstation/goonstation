@@ -6,7 +6,7 @@
 /*
 usage:
 
-ABSTRACT_TYPE(/datum/atest)
+ABSTRACT_TYPE(/datum/test)
 /datum/test
 /datum/test/child
 

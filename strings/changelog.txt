@@ -1,4 +1,215 @@
-
+(t)wed aug 05 20
+(u)Zamujasa
+(e)🆕|feature
+(*)Some items will now show a quantity number when held in your hands. Metal sheets, cable, glass, money, some other tools.
+(*)These may not always update correctly or on time, though, but it should help cut down on constantly examining items.
+(*)Note that this does not apply when they're in your inventory; only when in your hands. Code limitation right now. Oh well.
+(u)zjdtmkhzt
+(p)1553
+(e)⚖⛔|balance, removal
+(+)Portable flashers will no longer destroy some objects on their tile when triggering.
+(u)Flaborized
+(p)1611
+(e)🎨|sprites
+(+)Resprited manual valves, air injectors and pipe meters.
+(u)adharainspace
+(p)1672
+(e)🆕|feature
+(+)explosions should more consistently blow up stuff like kitchen equipment.
+(u)Comradef191
+(p)1684
+(e)🗺|mapping
+(*)Moved the cables ontop of the pipes in Cogmap 1 Engineering, now going through the TEG chamber instead of atop the Hot Loop Intake pipes.
+(+)Removed some unneeded wiring from Cogmap 1 Engineering Gas Storage.
+(u)Tarmunora
+(p)1693
+(e)🐛|bug
+(+)Cryoxadone will now properly heat the patient based on damage healed.
+(u)Anachroniser
+(p)1660
+(e)⚖🆕|balance, feature
+(*)QoL and usability changes to bows.
+(*)Buffs to bow effectiveness
+(t)tue aug 04 20
+(u)Superlagg
+(p)1702
+(e)🐛|bug
+(+)Lawbringer removed from Guardbuddy gun whitelist.
+(+)Pulse rifle added to Guardbuddy gun whitelist.
+(+)Guardbuddy traitor ammo fabricator now disables the bot's gun whitelist.
+(u)UrsulaMajor
+(p)1686
+(e)⚖🆕🎨|balance, feature, sprites
+(*)15 new supplypacks added to the QM Buylist that will let them replace critical station infrastructure
+(*)Major QM Rebalancing concerning the sale of produce, ore, and material pieces
+(+)Refactored how commodities determine if they can be sold for cash on the general market
+(t)mon aug 03 20
+(u)Superlagg
+(p)1463
+(e)🆕🎨|feature, sprites
+(*)Guardbuddies can now use guns!
+(*)Traitor RDs can order an ammo fabricator for their Guardbuddies!
+(+)You can also swap out or remove Guardbuddy tools on the fly!
+(t)sun aug 02 20
+(u)Moonlol
+(p)1555
+(e)⚖|balance
+(*)All maps apart from Cog2, Donut 3, Horizon and Oshan cannot be voted past 80 players.
+(u)Kubius
+(p)1681
+(e)🗺|mapping
+(+)Kondaru is now equipped with a JaniTech Vendor.
+(t)sat aug 01 20
+(u)Emcee-Gore
+(p)1650
+(e)🗺|mapping
+(+)Added Photocopiers to (Oshan, CogMap2, Manta, Horizon and Destiny).
+(u)Comradef191
+(p)1655
+(e)🗺|mapping
+(+)Slightly Improved Radiator Coverage in the Cogmap1 Engineering Burnchamber
+(t)fri jul 31 20
+(u)Flaborized
+(p)1659
+(e)🆕🎨|feature, sprites
+(*)Added a new cosmetic HUD option to character setup, "vaporized".
+(t)thu jul 30 20
+(u)zjdtmkhzt
+(p)1589
+(e)🆕|feature
+(+)You can now use a Voltron to travel through active phone calls. Just use it while holding the phone handset in your other hand!
+(u)Kubius
+(p)1663
+(e)🐛🗺|bug, mapping
+(+)More Fleet fixes to make the map slightly closer to bearable.
+(t)tue jul 28 20
+(u)Kubius
+(p)1629
+(e)🆕🗺|feature, mapping
+(+)Kondaru fix batch, inc. go board, photocopiers, luigi board, spooky asteroids.
+(t)mon jul 27 20
+(u)MarkNstein
+(p)1487
+(e)🗺|mapping
+(*)Cog1: Pathology now has proper pharmacy equipment: Reagent heater and glass recycler.
+(*)Cog2: Medical reception desk is now also a pharmacy.
+(u)Tarmunora
+(p)1466
+(e)⚖🐛|balance, bug
+(+)Nitro inside humans is no longer stable.
+(u)Tarmunora
+(p)1534
+(e)⚖🆕🔄🎨|balance, feature, rework, sprites
+(*)Reworked most cyberorgans and their emagged effects - notably removed blanket stamina buffs from cyberorgans
+(u)Nebulacrity
+(p)1609
+(e)|
+(+)Updated portal sprites.
+(t)sun jul 26 20
+(u)kyle
+(e)⚖|balance
+(*)Activating genes in the genetics console via the base-pair matching game now nets materials, chromosomes, and decryptors for humans like activators do... Probably, this is a pain to test so I assume it works.
+(t)sat jul 25 20
+(u)ZeWaka
+(p)1542
+(e)🆕🔄|feature, rework
+(*)Ported the tgui interface system from tgstation. If you encounter weird interaction or ui bugs, please report them with the bug report button on the top right!
+(*)Much credit given to StyleMistake, spookydonut, actioninja, neersighted, and Faerdan for making this possible.
+(+)Atmos Tank Dispensers now use a fancy tgui interface.
+(u)mbc
+(e)🆕🎨|feature, sprites
+(*)New muzzle flash animations for taser, laser, advanced laser, phaser, wavegun, some launchers and others. Also improved muzzle flash visibility in general.
+(+)Fixed bug where glasses weren't correctly applying vision color mods.
+(u)Flaborized
+(p)1594
+(e)🎨|sprites
+(+)Resprited the AK-477
+(t)fri jul 24 20
+(u)Kyle and Flaborized
+(p)1574
+(e)🆕🎨|feature, sprites
+(+)Wizard spell rings. Currently admin only. Sprites by flab, obviously.
+(u)mbc
+(*)New HUD highlights for humans to indicate where items may be placed, which hand(s) an item would go into, and making the intents/drop buttons more clear on the default hud.
+(*)You can toggle off the item ghosts that appear on mouse-over using the Game panel on the top left menu.
+(u)BatElite
+(p)1514
+(e)🎨|sprites
+(*)New cyborg upgrade sprites.
+(u)Superlagg
+(p)1526
+(e)🆕|feature
+(*)Zip guns now explode one shot later than they used to.
+(t)thu jul 23 20
+(u)MarkNstein
+(p)1536
+(e)🔄|rework
+(*)Action(bar)s will no longer reset upon successive attempts.
+(u)mbc
+(p)1584
+(e)🆕|feature
+(*)Handspider can now pick up items but moves slowly and cannot sprint while doing so. Legworm has more stamina, can throw items by clicking on them, and fixed writhe ability (was stunning the legworm much longer than it should). Eyespider can move faster. Buttcrab farts can block line of sight.
+(t)wed jul 22 20
+(u)mbc
+(+)QOL stuff for the hud - you can now mousedrag from slot to slot without directly clicking the item and see tooltips without pixel perfect hovering. Also slots enlarge slightly to let you know they will accept a held item. Doesnt work for containers hud yet.
+(u)Zamujasa
+(e)🔄|rework
+(*)Tweaked some parameters of how the cloner and grinder work. May speed up cloning and make it less likely to get stuck in the cloner for long periods of time.
+(u)Chickenish
+(p)1507
+(e)🆕|feature
+(+)Added a suicide for the Portable Reclaimer, it's quite cubular.
+(u)Kyle and BatElite
+(p)1563
+(e)🐛🆕🎨|bug, feature, sprites
+(+)Clownspiders now protect their momma when attacked.
+(+)Fire Elemental/Clown/Cluwne spider ability button sprites added by BatElite.
+(u)MarkNstein
+(p)1428
+(e)🆕|feature
+(+)Miners now get PDA notifications of RockBox™ sales.
+(u)Carbadox
+(p)1458
+(e)🆕🗺|feature, mapping
+(*)Added the crate manufactor to Atlas, Clarion, Destiny, Cog1, Cog2, Horizon and Oshan
+(u)AwkwardDryad
+(p)1179
+(e)🆕🎨|feature, sprites
+(*)Added chopsticks and premium plastic silverware
+(t)tue jul 21 20
+(u)CodeDude
+(p)1566
+(e)|
+(*)Added soft soft pizza to the game - a tasty drink found in soda machines!
+(+)Made some small sprite changes to the base pizza sprite.
+(t)mon jul 20 20
+(u)Zamujasa
+(e)🆕|feature
+(*)A countdown timer until the round starts has been added to the title screen. A similar countdown appears wen a round is ending.
+(u)mbc
+(p)1559
+(e)|
+(*)Added sounds for when you are in space. Differences from normal sounds include : very limited range + muffled with limited reverb
+(u)RichardGere
+(p)1535
+(e)⚖|balance
+(+)Bulky items no longer fit into a patient's chest. Some exceptions apply.
+(u)zjdtmkhzt
+(p)1552
+(e)|
+(+)Fixed bug where chemmaster would sometimes lose reagents when making patches between 15 and 20 units in size.
+(t)sun jul 19 20
+(u)Zamujasa
+(e)🔄|rework
+(*)The Genetics "dissolve" power no longer instantly kills you if it isn't synchronized. Instead, you drop all your equipment. Misfires drop a random organ instead. Hopefully not one of the important ones.
+(u)zjdtmkhzt
+(p)1465
+(e)🆕🔄|feature, rework
+(*)Changed pathogen manipulator UI bigly, pathology is still disabled, but you can look at it and be sad.
+(u)RichardGere
+(p)1532
+(e)|
+(+)Fixed an issue that prevented possessed csabers from being able to attack.
 (t)sat jul 18 20
 (u)MarkNstein
 (p)1416

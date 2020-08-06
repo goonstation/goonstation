@@ -2424,6 +2424,31 @@ proc/angle_to_dir(angle)
 		else
 			.= SOUTH
 
+proc/dir_to_angle(dir)
+	.= 0
+	switch(dir)
+		if(NORTH)
+			.= 0
+		if(NORTHEAST)
+			.= 45
+		if(EAST)
+			.= 90
+		if(SOUTHEAST)
+			.= 135
+		if(SOUTH)
+			.= 180
+		if(SOUTHWEST)
+			.= 225
+		if(WEST)
+			.= 270
+		if(NORTHWEST)
+			.= 315
+
+proc/angle_to_vector(ang)
+	.= list()
+	. += cos(ang)
+	. += sin(ang)
+
 /**
   * Removes non-whitelisted reagents from the reagents of TA
   * user: the mob that adds a reagent to an atom that has a reagent whitelist
@@ -2442,11 +2467,14 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 			TA.reagents.del_reagent(reagent_id)
 			found = 1
 	if (found)
-		if (user)
-			boutput(user, "[custom_message]") // haine: done -> //TODO: using usr in procs is evil shame on you
+		if(user)
+			boutput(user, "[custom_message]")
 		else if (ismob(TA.loc))
 			var/mob/M = TA.loc
 			boutput(M, "[custom_message]")
+		else if(ismob(usr))
+			 // some procs don't know user, for instance because they are in on_reagent_change
+			boutput(usr, "[custom_message]")
 		else
 			TA.visible_message("[custom_message]")
 
