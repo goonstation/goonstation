@@ -1,5 +1,30 @@
-
 (t)wed aug 05 20
+(u)Zamujasa
+(e)🆕|feature
+(*)Some items will now show a quantity number when held in your hands. Metal sheets, cable, glass, money, some other tools.
+(*)These may not always update correctly or on time, though, but it should help cut down on constantly examining items.
+(*)Note that this does not apply when they're in your inventory; only when in your hands. Code limitation right now. Oh well.
+(u)zjdtmkhzt
+(p)1553
+(e)⚖⛔|balance, removal
+(+)Portable flashers will no longer destroy some objects on their tile when triggering.
+(u)Flaborized
+(p)1611
+(e)🎨|sprites
+(+)Resprited manual valves, air injectors and pipe meters.
+(u)adharainspace
+(p)1672
+(e)🆕|feature
+(+)explosions should more consistently blow up stuff like kitchen equipment.
+(u)Comradef191
+(p)1684
+(e)🗺|mapping
+(*)Moved the cables ontop of the pipes in Cogmap 1 Engineering, now going through the TEG chamber instead of atop the Hot Loop Intake pipes.
+(+)Removed some unneeded wiring from Cogmap 1 Engineering Gas Storage.
+(u)Tarmunora
+(p)1693
+(e)🐛|bug
+(+)Cryoxadone will now properly heat the patient based on damage healed.
 (u)Anachroniser
 (p)1660
 (e)⚖🆕|balance, feature
