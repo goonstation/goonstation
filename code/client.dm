@@ -65,6 +65,8 @@
 
 	var/login_success = 0
 
+	var/glasses_tint
+
 	perspective = EYE_PERSPECTIVE
 	// please ignore this for now thanks in advance - drsingh
 #ifdef PROC_LOGGING
@@ -527,6 +529,9 @@
 		ignore_sound_flags |= SOUND_VOX
 
 	src.reputations = new(src)
+
+	// Set glasses tint
+	glasses_tint = winget( src, "menu.set_tint", "is-checked" )
 
 	if(src.holder && src.holder.level >= LEVEL_CODER)
 		src.control_freak = 0
@@ -1074,6 +1079,12 @@ var/global/curr_day = null
 	set name ="apply-depth-shadow"
 
 	apply_depth_filter() //see _plane.dm
+
+/client/verb/apply_glasses_tint()
+	set hidden = 1
+	set name ="apply-glasses-tint"
+
+	glasses_tint = !glasses_tint
 
 /client/proc/set_view_size(var/x, var/y)
 	//These maximum values make for a near-fullscreen game view at 32x32 tile size, 1920x1080 monitor resolution.
