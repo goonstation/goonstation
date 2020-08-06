@@ -1651,7 +1651,9 @@ var/list/mechanics_telepads = new/list()
 				logTheThing("pdamsg", usr, null, "sends a PDA message <b>[input.signal]</b> using a wifi component at [log_loc(src)].")
 		if(input.data_file)
 			sendsig.data_file = input.data_file.copy_file()
-		SPAWN_DBG(0) src.radio_connection.post_signal(src, sendsig, src.range)
+		SPAWN_DBG(0) 
+			playsound(get_turf(src), "sound/machines/modem.ogg", 50, 0, 0)
+			src.radio_connection.post_signal(src, sendsig, src.range)
 
 		animate_flash_color_fill(src,"#FF0000",2, 2)
 		return
@@ -1673,6 +1675,7 @@ var/list/mechanics_telepads = new/list()
 				pingsignal.transmission_method = TRANSMISSION_RADIO
 
 				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+					playsound(get_turf(src), "sound/machines/modem.ogg", 50, 0, 0)
 					src.radio_connection.post_signal(src, pingsignal, src.range)
 
 			if(forward_all)
