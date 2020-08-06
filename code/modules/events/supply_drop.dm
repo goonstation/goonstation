@@ -71,7 +71,8 @@
 			if (obj_path && no_lootbox)
 				new obj_path(src.loc)
 			else if (no_lootbox)
-				makeRandomLootTrash().set_loc(src.loc)
+				var/atom/movable/AM = makeRandomLootTrash()
+				AM.set_loc(src.loc)
 			else
 				new/obj/lootbox(src.loc, obj_path)
 			qdel(src)
@@ -280,25 +281,25 @@
 
 			SPAWN_DBG(2 SECONDS)
 				var/mob/living/carbon/human/H = usr
-				var/obj/item/I = null
+				var/atom/movable/AM = null
 				if (obj_path)
-					I = new obj_path()
+					AM = new obj_path()
 				else
-					I = makeRandomLootTrash()
+					AM = makeRandomLootTrash()
 				if(istype(H))
 					var/obj/screen/lootcrateicon/background/B = new/obj/screen/lootcrateicon/background(src)
 					var/obj/screen/lootcrateicon/sparks/S = new/obj/screen/lootcrateicon/sparks(src)
 					var/obj/screen/lootcratepreview/P = new/obj/screen/lootcratepreview(src)
-					P.icon = I.icon
-					P.icon_state = I.icon_state
-					P.color = I.color
+					P.icon = AM.icon
+					P.icon_state = AM.icon_state
+					P.color = AM.color
 					H.hud.add_screen(B)
 					H.hud.add_screen(S)
 					H.hud.add_screen(P)
 
-					if (ishuman(usr) && I)
+					if (ishuman(usr) && AM)
 						var/mob/living/carbon/human/dude = usr
-						dude.put_in_hand_or_drop(I)
+						dude.put_in_hand_or_drop(AM)
 
 					SPAWN_DBG(2.5 SECONDS)
 						del(B)
