@@ -33,13 +33,13 @@
 	pixel_y = -16
 	var/gib_mobs = TRUE
 
-	New(var/atom/location, var/preDropTime = 100, var/obj_path)
+	New(var/atom/location, var/preDropTime = 100, var/obj_path, var/no_lootbox)
 		src.loc = location
 		SPAWN_DBG(preDropTime)
 			if (gib_mobs)
-				new/obj/effect/supplydrop(src.loc, obj_path)
+				new/obj/effect/supplydrop(src.loc, obj_path, no_lootbox)
 			else
-				new/obj/effect/supplydrop/safe(src.loc, obj_path)
+				new/obj/effect/supplydrop/safe(src.loc, obj_path, no_lootbox)
 			qdel(src)
 		..()
 
@@ -56,7 +56,7 @@
 	var/dropTime = 30
 	var/gib_mobs = TRUE
 
-	New(atom/loc, var/obj_path)
+	New(atom/loc, var/obj_path, var/no_lootbox)
 		pixel_y = 480
 		animate(src, pixel_y = 0, time = dropTime)
 		playsound(src.loc, 'sound/effects/flameswoosh.ogg', 100, 0)
@@ -68,7 +68,12 @@
 				if(gib_mobs && M.loc == src.loc)
 					M.gib(1, 1)
 			sleep(0.5 SECONDS)
-			new/obj/lootbox(src.loc, obj_path)
+			if (obj_path && no_lootbox)
+				new obj_path(src.loc)
+			else if (no_lootbox)
+				makeRandomLootTrash().set_loc(src.loc)
+			else
+				new/obj/lootbox(src.loc, obj_path)
 			qdel(src)
 		..()
 

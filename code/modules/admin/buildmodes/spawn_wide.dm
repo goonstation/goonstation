@@ -23,7 +23,7 @@ change the direction of created objects.<br>
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if(ctrl)
-			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "None", "Fancy and Inefficient yet Laggy Telepad", "Supplydrop")) || cinematic
+			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "None", "Fancy and Inefficient yet Laggy Telepad", "Supplydrop", "Supplydrop (no lootbox)")) || cinematic
 			return
 		if(alt)
 			delete_area = !delete_area
@@ -140,6 +140,10 @@ change the direction of created objects.<br>
 						SPAWN_DBG(rand(0, min(area_of_block*5, 200)))
 							if (ispath(objpath, /atom/movable))
 								new/obj/effect/supplymarker/safe(Q, 3 SECONDS, objpath)
+					if("Supplydrop (no lootbox)")
+						SPAWN_DBG(rand(0, min(area_of_block*5, 200)))
+							if (ispath(objpath, /atom/movable))
+								new/obj/effect/supplymarker/safe(Q, 3 SECONDS, objpath, TRUE)
 					else
 						var/atom/A = 0
 						if(ispath(objpath, /turf))
