@@ -28,6 +28,9 @@
 
 	var/icon/head_icon = null
 
+	var/icon_piece_1 = null	// For setting up the icon if its in multiple pieces
+	var/icon_piece_2 = null
+
 	// equipped items - they use the same slot names because eh.
 	var/obj/item/clothing/head/head = null
 	var/obj/item/clothing/ears/ears = null
@@ -295,3 +298,77 @@
 			return 1
 		else
 			return 0
+
+/obj/item/organ/head/monkey
+	name = "monkey head"
+	desc = "A long, slender head."
+	icon_state = "head-monkey"
+	edible = 0
+
+/obj/item/organ/head/lizard
+	name = "lizard head"
+	desc = "A long, scaled head."
+	icon_state = "lizard"	// This is just the meat bit
+	icon_piece_1 = "head-lizard-detail-1"
+	icon_piece_2 = "head-lizard-detail-2"
+	edible = 1	// ew
+
+/* 	New()
+		..()
+		// This head accepts hairstyle colors!
+		var/mob/living/carbon/human/M = src.donor
+		if (M && ishuman(M))	// Get the colors here so they dont change later, ie reattached on someone else
+			var/datum/appearanceHolder/aH = M.bioHolder.mobAppearance
+			src.organ_color_1 = organ_fix_colors(aH.customization_first_color)
+			src.organ_color_2 = organ_fix_colors(aH.customization_second_color)
+		else	// Just throw some colors in there or something
+			src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
+			src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
+
+		// Colorize (and build) organ item
+		src.update_tail_icon() */
+
+/obj/item/organ/head/cow
+	name = "cow head"
+	desc = "A short, brush-like head."
+	icon_state = "cow"
+	edible = 0
+
+// add horns here
+
+/obj/item/organ/head/wolf
+	name = "wolf head"
+	desc = "A long, fluffy head."
+	icon_state = "werewolf"
+	MAX_DAMAGE = 250	// Robust head for a robust antag
+	FAIL_DAMAGE = 240
+	edible = 0
+
+/obj/item/organ/head/bone
+	name = "tailbone"
+	desc = "A short piece of bone."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "skull"	// please dont drop another skull
+	created_decal = null
+	made_from = "bone"	// clak clak
+	created_decal = null	// just a piece of bone
+	edible = 0
+
+/obj/item/organ/head/seamonkey
+	name = "seamonkey head"
+	desc = "A long, scaled head."
+	icon_state = "seamonkey"
+	edible = 0
+
+/obj/item/organ/head/cat
+	name = "cat head"
+	desc = "A long, furry head."
+	icon_state = "head-cat"
+	edible = 0
+
+/obj/item/organ/head/roach
+	name = "roach abdomen"
+	desc = "A large insect behind."
+	icon_state = "roach"
+	made_from = "chitin"
+	edible = 1 // ew
