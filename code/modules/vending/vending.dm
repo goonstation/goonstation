@@ -585,8 +585,6 @@
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/mechanicbook, 30)
-		product_list += new/datum/data/vending_product(/obj/item/storage/mechanics/housing_large,6)
-		product_list += new/datum/data/vending_product(/obj/item/storage/mechanics/housing_handheld,4)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/andcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/math, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/button, 30)
@@ -1289,6 +1287,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/goboard, 1, cost=100)
 		product_list += new/datum/data/vending_product(/obj/item/gobowl/b, 1, cost=50)
 		product_list += new/datum/data/vending_product(/obj/item/gobowl/w, 1, cost=50)
+		
 /obj/machinery/vending/clothing
 	name = "FancyPantsCo Sew-O-Matic"
 	desc = "A clothing vendor."
