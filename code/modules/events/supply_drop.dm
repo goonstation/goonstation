@@ -71,8 +71,7 @@
 			if (obj_path && no_lootbox)
 				new obj_path(src.loc)
 			else if (no_lootbox)
-				var/atom/movable/AM = makeRandomLootTrash()
-				AM.set_loc(src.loc)
+				makeRandomLootTrash().set_loc(src.loc)
 			else
 				new/obj/lootbox(src.loc, obj_path)
 			qdel(src)
@@ -127,6 +126,7 @@
 	return
 
 /proc/makeRandomLootTrash()
+	RETURN_TYPE(/atom/movable)
 	var/obj/item/I = null
 	var/list/permittedItemPaths = list(/obj/item/clothing)
 	var/pickedClothingPath = pick(typesof(pick(permittedItemPaths)))
