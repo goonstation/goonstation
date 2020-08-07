@@ -156,8 +156,6 @@
 			boutput(activator, "<span class='alert'>Unable to redeem... you need to have a large beaker in your hands.</span>")
 			return
 
-		return
-
 /datum/achievementReward/red_bucket
 	title = "(Skin) Red Bucket"
 	desc = "Requires you to be holding a bucket."
