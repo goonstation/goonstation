@@ -531,7 +531,7 @@
 	src.reputations = new(src)
 
 	// Set glasses tint
-	glasses_tint = winget( src, "menu.set_tint", "is-checked" )
+	glasses_tint = winget( src, "menu.set_tint", "is-checked" ) == "true"
 
 	if(src.holder && src.holder.level >= LEVEL_CODER)
 		src.control_freak = 0
