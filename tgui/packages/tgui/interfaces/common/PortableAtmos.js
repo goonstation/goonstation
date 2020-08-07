@@ -24,7 +24,6 @@ export const PortableBasicInfo = props => {
           {connected ? 'Connected' : 'Not Connected'}
         </LabeledList.Item>
       </LabeledList>
-      <br />
       <PressureBar
         pressure={pressure}
         maxPressure={maxPressure} />
@@ -62,7 +61,6 @@ export const PortableHoldingTank = props => {
               {' kPa'}
             </LabeledList.Item>
           </LabeledList>
-          <br />
           <PressureBar
             pressure={holding.pressure}
             maxPressure={holding.maxPressure} />

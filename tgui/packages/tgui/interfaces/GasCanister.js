@@ -37,7 +37,8 @@ export const GasCanister = (props, context) => {
 
   return (
     <Window
-      width={400}
+      key={holding}
+      width={holding ? 700 : 400}
       height={370}>
       <Window.Content>
         <PortableBasicInfo
@@ -64,6 +65,14 @@ export const GasCanister = (props, context) => {
 };
 
 const Detonator = props => {
+  const {
+    isAnchored,
+    trigger,
+    safetyIsOn,
+    isPrimed,
+    wireColors,
+  } = props;
+
   return (
     <DetonatorUtility />
   );

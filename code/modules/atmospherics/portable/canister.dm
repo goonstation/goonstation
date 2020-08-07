@@ -396,7 +396,10 @@
 	data["detonator"] = null // need to explicitly tell the client it doesn't exist
 	if(det)
 		data["detonator"] = list()
-		data["detonator"]["colors"] = det.WireColors
+		data["detonator"]["wireColors"] = det.WireColors
+		data["detonator"]["safetyIsOn"] = det.safety
+		data["detonator"]["isAnchored"] = anchored
+		data["detonator"]["isPrimed"] = det.part_fs.timing ? TRUE : FALSE
 
 	return data
 
