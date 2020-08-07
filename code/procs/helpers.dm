@@ -2586,12 +2586,12 @@ proc/client_has_cap_grace(var/client/C)
 this proc finds the maximal subtype (i.e. the most subby) in a list of types
 */
 proc/maximal_subtype(var/list/L)
-	if (!length(L))
-    return null
-  . = L[1]
-  for(var/t in L)
-    if (ispath(t, .))
-      . = t
-    else if (!ispath(., t))
-      return null // paths in L aren't linearly ordered
-
+	if (!(length(L)))
+		.= null
+	else
+		.= L[1]
+		for (var/t in L)
+			if (ispath(t, .))
+				.= t
+			else if (!(ispath(., t)))
+				return null // paths in L aren't linearly ordered
