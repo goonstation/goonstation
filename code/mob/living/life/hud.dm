@@ -33,36 +33,33 @@
 			var/color_mod_r = 255
 			var/color_mod_g = 255
 			var/color_mod_b = 255
-
-			if (istype(human_owner.glasses))
-				color_mod_r *= human_owner.glasses.color_r
-				color_mod_g *= human_owner.glasses.color_g
-				color_mod_b *= human_owner.glasses.color_b
-			if (istype(human_owner.wear_mask))
-				color_mod_r *= human_owner.wear_mask.color_r
-				color_mod_g *= human_owner.wear_mask.color_g
-				color_mod_b *= human_owner.wear_mask.color_b
-			if (istype(human_owner.head))
-				color_mod_r *= human_owner.head.color_r
-				color_mod_g *= human_owner.head.color_g
-				color_mod_b *= human_owner.head.color_b
-			var/obj/item/organ/eye/L_E = human_owner.get_organ("left_eye")
-			if (istype(L_E))
-				color_mod_r *= L_E.color_r
-				color_mod_g *= L_E.color_g
-				color_mod_b *= L_E.color_b
-			var/obj/item/organ/eye/R_E = human_owner.get_organ("right_eye")
-			if (istype(R_E))
-				color_mod_r *= R_E.color_r
-				color_mod_g *= R_E.color_g
-				color_mod_b *= R_E.color_b
-
-			var/item_exception = false // This is where to put specific exceptions that don't fit under nottint
-			var/brightness_exception = color_mod_r == color_mod_g && color_mod_g == color_mod_b && color_mod_b == color_mod_r
+			if ( human_owner.client.view_tint )
+				if (istype(human_owner.glasses))
+					color_mod_r *= human_owner.glasses.color_r
+					color_mod_g *= human_owner.glasses.color_g
+					color_mod_b *= human_owner.glasses.color_b
+				if (istype(human_owner.wear_mask))
+					color_mod_r *= human_owner.wear_mask.color_r
+					color_mod_g *= human_owner.wear_mask.color_g
+					color_mod_b *= human_owner.wear_mask.color_b
+				if (istype(human_owner.head))
+					color_mod_r *= human_owner.head.color_r
+					color_mod_g *= human_owner.head.color_g
+					color_mod_b *= human_owner.head.color_b
+				var/obj/item/organ/eye/L_E = human_owner.get_organ("left_eye")
+				if (istype(L_E))
+					color_mod_r *= L_E.color_r
+					color_mod_g *= L_E.color_g
+					color_mod_b *= L_E.color_b
+				var/obj/item/organ/eye/R_E = human_owner.get_organ("right_eye")
+				if (istype(R_E))
+					color_mod_r *= R_E.color_r
+					color_mod_g *= R_E.color_g
+					color_mod_b *= R_E.color_b
 
 			if (human_owner.druggy)
 				human_owner.vision.animate_color_mod(rgb(rand(0, 255), rand(0, 255), rand(0, 255)), 15)
-			else if (human_owner.client.view_tint || item_exception || brightness_exception)
+			else
 				human_owner.vision.set_color_mod(rgb(color_mod_r, color_mod_g, color_mod_b))
 
 			if (istype(human_owner.glasses, /obj/item/clothing/glasses/healthgoggles))
