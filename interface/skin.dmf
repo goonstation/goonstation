@@ -332,8 +332,8 @@ menu "menu"
 		can-check = true
 		saved-params = "is-checked"
 	elem "set_tint"
-		name = "&Glasses Tint"
-		command = "apply-glasses-tint"
+		name = "&View Tint"
+		command = "apply-view-tint"
 		category = "&Effects"
 		is-checked = true
 		can-check = true

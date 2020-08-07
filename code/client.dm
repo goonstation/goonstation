@@ -65,7 +65,7 @@
 
 	var/login_success = 0
 
-	var/glasses_tint
+	var/view_tint
 
 	perspective = EYE_PERSPECTIVE
 	// please ignore this for now thanks in advance - drsingh
@@ -530,8 +530,8 @@
 
 	src.reputations = new(src)
 
-	// Set glasses tint
-	glasses_tint = winget( src, "menu.set_tint", "is-checked" ) == "true"
+	// Set view tint
+	view_tint = winget( src, "menu.set_tint", "is-checked" ) == "true"
 
 	if(src.holder && src.holder.level >= LEVEL_CODER)
 		src.control_freak = 0
@@ -1080,11 +1080,11 @@ var/global/curr_day = null
 
 	apply_depth_filter() //see _plane.dm
 
-/client/verb/apply_glasses_tint()
+/client/verb/apply_view_tint()
 	set hidden = 1
-	set name ="apply-glasses-tint"
+	set name ="apply-view-tint"
 
-	glasses_tint = !glasses_tint
+	view_tint = !view_tint
 
 /client/proc/set_view_size(var/x, var/y)
 	//These maximum values make for a near-fullscreen game view at 32x32 tile size, 1920x1080 monitor resolution.

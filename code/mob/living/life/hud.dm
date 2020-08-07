@@ -33,7 +33,7 @@
 			var/color_mod_r = 255
 			var/color_mod_g = 255
 			var/color_mod_b = 255
-			if ( human_owner.client.glasses_tint )
+			if ( human_owner.client.view_tint )
 				if (istype(human_owner.glasses))
 					color_mod_r *= human_owner.glasses.color_r
 					color_mod_g *= human_owner.glasses.color_g
