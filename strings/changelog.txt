@@ -1,3 +1,6 @@
+(t)thu aug 06 20
+(u)Zamujasa
+(*)Medal rewards that fail to redeem due to not having the required items will no longer be disabled, so you can redeem them properly later.
 (t)wed aug 05 20
 (u)Zamujasa
 (e)🆕|feature
