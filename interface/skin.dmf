@@ -744,7 +744,7 @@ window "mainwindow"
 		saved-params = "pos;size;is-minimized;is-maximized"
 		on-size = "window-resize-event"
 		is-maximized = true
-		icon = 'icons\\ss13_64.png'
+		icon = 'icons\\goon_64.png'
 		macro = "base_macro"
 		menu = "menu"
 	elem "mainvsplit"
