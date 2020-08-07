@@ -329,21 +329,39 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
 		if(prob(50))
 			if(istype(attacked) && !isrestrictedz(attacked.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
-				. = get_turf(pick(orange(8, attacked)))
-				if (isturf(.))
-					attacked.visible_message("<span class='alert'>[attacked] is warped away!</span>")
-					boutput(attacked, "<span class='alert'>You suddenly teleport ...</span>")
-					attacked.set_loc(.)
+				if(istype(attacked.loc, /obj/machinery/vehicle/)) // Lord knows how you'd manage to get attacked while *inside* a vehicle, but better safe than sorry.
+					var/obj/machinery/vehicle/V = attacked.loc
+					. = get_turf(pick(orange(8, V)))
+					if (isturf(.))
+						V.eject(attacked)
+						attacked.visible_message("<span class='alert'>[attacked] is warped away!</span>")
+						boutput(attacked, "<span class='alert'>You suddenly teleport ...</span>")
+						attacked.set_loc(.)
+				else
+					. = get_turf(pick(orange(8, attacked)))
+					if (isturf(.))
+						attacked.visible_message("<span class='alert'>[attacked] is warped away!</span>")
+						boutput(attacked, "<span class='alert'>You suddenly teleport ...</span>")
+						attacked.set_loc(.)
 		return
 
 /datum/materialProc/telecrystal_life
 	execute(var/mob/M, var/obj/item/I)
 		if(prob(5) && M && !isrestrictedz(M.z))
-			. = get_turf(pick(orange(8, M)))
-			if (isturf(.))
-				M.visible_message("<span class='alert'>[M] is warped away!</span>")
-				boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
-				M.set_loc(.)
+			if(istype(M.loc, /obj/machinery/vehicle/))
+				var/obj/machinery/vehicle/V = M.loc
+				. = get_turf(pick(orange(8, V)))
+				if (isturf(.))
+					V.eject(M)
+					M.visible_message("<span class='alert'>[M] is warped away!</span>")
+					boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
+					M.set_loc(.)
+			else
+				. = get_turf(pick(orange(8, M)))
+				if (isturf(.))
+					M.visible_message("<span class='alert'>[M] is warped away!</span>")
+					boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
+					M.set_loc(.)
 		return
 
 /datum/materialProc/plasmastone
@@ -463,7 +481,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)
 		return
-		
+
 /datum/materialProc/soulsteel_add
 	execute(var/atom/owner)
 		owner.event_handler_flags |= USE_HASENTERED
