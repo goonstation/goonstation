@@ -283,14 +283,13 @@
 				sellitem = /obj/item/electronics
 			if(ispath(sellitem, /obj/item/parts/robot_parts))
 				sellitem = /obj/item/parts/robot_parts
-			var/goods_buy_types[0]
-			var/goods_buy_types_only[0]
+			var/list/goods_buy_types
+			goods_buy_types = new /list(0)
 			for(var/datum/commodity/N in goods_buy)
 				if (istype(src.sellitem, N.comtype))
 					goods_buy_types[N.comtype] = N.price
-					goods_buy_types_only += N.comtype
 			if (goods_buy_types.len >= 1)
-				var/goods_type = maximal_subtype(goods_buy_types_only)
+				var/goods_type = maximal_subtype(goods_buy_types)
 				var/datum/data/record/account = null
 				account = FindBankAccountByName(src.scan.registered)
 				if (!account)
