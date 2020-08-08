@@ -724,6 +724,9 @@
 	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
 		use_movement_controller = null
 
+	if(istype(src.loc, /obj/machinery/vehicle/) && src.loc != new_loc)
+		var/obj/machinery/vehicle/V = src.loc
+		V.eject(src)
 
 	. = ..(new_loc)
 	src.loc_pixel_x = new_pixel_x

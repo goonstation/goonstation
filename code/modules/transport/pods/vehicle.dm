@@ -857,6 +857,7 @@
 		return
 
 	src.eject(usr)
+	src.place_at_pod(usr)
 /*
 	if (usr.loc != src)
 		return
@@ -872,7 +873,7 @@
 	else
 		src.ion_trail.stop()
 */
-/obj/machinery/vehicle/proc/eject(mob/ejectee as mob)
+/obj/machinery/vehicle/proc/eject(mob/ejectee as mob) // Call place_at_pod after this if you're not intending to call set_loc on the ejectee yourself
 	if (!ejectee || ejectee.loc != src)
 		return
 
@@ -883,6 +884,23 @@
 
 	src.passengers--
 
+
+
+	//ejectee.remove_shipcrewmember_powers(src.weapon_class)
+	ejectee.reset_keymap()
+	ejectee.recheck_keys()
+	if(src.pilot == ejectee)
+		src.pilot = null
+	if(passengers)
+		find_pilot()
+	else
+		src.ion_trail.stop()
+
+
+
+	logTheThing("vehicle", ejectee, src.name, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
+
+/obj/machinery/vehicle/proc/place_at_pod(mob/ejectee as mob)
 	// Assert facing direction for eject location offset
 	var/x_offset = 0
 	var/y_offset = 0
@@ -903,23 +921,12 @@
 	EJ.last_move = null
 	ejectee.set_loc(location)
 
-	//ejectee.remove_shipcrewmember_powers(src.weapon_class)
-	ejectee.reset_keymap()
-	ejectee.recheck_keys()
-	if(src.pilot == ejectee)
-		src.pilot = null
-	if(passengers)
-		find_pilot()
-	else
-		src.ion_trail.stop()
-
 	for (var/obj/item/I in src)
 		if ( (I in src.components) || I == src.atmostank || I == src.fueltank || I == src.intercom)
 			continue
 
 		I.set_loc(location)
 
-	logTheThing("vehicle", ejectee, src.name, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
 
 ///////////////////////////////////////////////////////////////////////
 /////////Board Code  (also eject code lol)		//////////////////////
@@ -1004,13 +1011,16 @@
 	for(var/mob/M in src) // nobody likes losing a pod to a dead pilot
 		if (!dead_only)
 			eject(M)
+			place_at_pod(M)
 			boutput(user, "<span class='alert'>You yank [M] out of [src].</span>")
 		else
 			if(M.stat || !M.client)
 				eject(M)
+				place_at_pod(M)
 				boutput(user, "<span class='alert'>You pull [M] out of [src].</span>")
 			else if(!isliving(M))
 				eject(M)
+				place_at_pod(M)
 				boutput(user, "<span class='alert'>You scrape [M] out of [src].</span>")
 
 	for(var/obj/decal/cleanable/O in src)
@@ -1143,6 +1153,7 @@
 		boutput(M, "<span class='alert'><b>You are ejected from [src]!</b></span>")
 		logTheThing("vehicle", M, src.name, "is ejected from pod: <b>[constructTarget(src.name,"vehicle")]</b> when it blew up!")
 		src.eject(M)
+		place_at_pod(M)
 		//var/atom/target = get_edge_target_turf(M,pick(alldirs))
 		//SPAWN_DBG(0)
 		//M.throw_at(target, 10, 2)
