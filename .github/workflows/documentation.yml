@@ -6,7 +6,7 @@ on:
   push:
     branches: master
 
-job:
+jobs:
   documentation:
     name: Code Documentation
     runs-on: ubuntu-latest
