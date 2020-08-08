@@ -4050,25 +4050,28 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "ajp" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/security{
 	aiControlDisabled = 1;
 	name = "Armory";
-	req_access_txt = "37"
+	req_access = null
 	},
+/obj/access_spawn/hos,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/security/armory)
 "ajq" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/security{
 	aiControlDisabled = 1;
 	name = "Armory";
-	req_access_txt = "37"
+	req_access = null;
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment/ejection,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/hos,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/security/armory)
 "ajr" = (
@@ -4323,16 +4326,16 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/checkpoint/arrivals)
 "ajY" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/security{
 	name = "Arrivals Desk";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/arrivals)
 "ajZ" = (
@@ -4460,7 +4463,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Sollitary Cell";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -4470,6 +4473,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/delivery,
 /area/station/security/brig)
 "ako" = (
@@ -4515,13 +4519,10 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "aks" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Brig Dock";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 4;
@@ -4538,6 +4539,8 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/access_spawn/security,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/routingdepot/security)
 "akt" = (
@@ -7557,19 +7560,18 @@
 	},
 /area/station/hangar/sec)
 "arB" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
 	name = "Secure Dock";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/security,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "arC" = (
@@ -7621,17 +7623,16 @@
 /turf/simulated/floor/bot,
 /area/station/security/brig)
 "arH" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Brig";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10
 	},
+/obj/access_spawn/security,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/brig)
 "arI" = (
@@ -9956,16 +9957,16 @@
 "awU" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Brig Visitation Area";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/door/firedoor/pyro,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/security/secwing)
 "awV" = (
@@ -10478,10 +10479,10 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "axZ" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/security{
 	name = "Defendant Stand"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/security/main)
 "aya" = (
@@ -10588,15 +10589,13 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
 	name = "Interrogation Room";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment/transport,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "aym" = (
@@ -10668,11 +10667,10 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Brig";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
+/obj/access_spawn/security,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/brig)
 "ayr" = (
@@ -11261,11 +11259,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/westsolar)
 "azG" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/security{
 	name = "Interrogation Room";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "azH" = (
@@ -12065,8 +12063,9 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
 	name = "External Access";
-	req_access_txt = "12"
+	req_access_txt = null
 	},
+/obj/access_spawn/engineering,
 /turf/simulated/floor/plating,
 /area/station/maintenance/westsolar)
 "aBq" = (
@@ -12526,11 +12525,10 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
 	name = "External Access";
-	req_access_txt = "12"
+	req_access_txt = null
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
+/obj/access_spawn/engineering,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/westsolar)
 "aCq" = (
@@ -12605,19 +12603,17 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
 	name = "Interrogation Room";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "aCA" = (
@@ -13963,7 +13959,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/westsolar)
 "aFe" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -13976,30 +13971,23 @@
 	name = "Interrogation Room";
 	opacity = 0
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/security/main)
-"aFf" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/obj/securearea{
-	pixel_y = -4
-	},
-/turf/simulated/floor,
 /area/station/security/main)
 "aFg" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Brig";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
+/obj/access_spawn/security,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/security/main)
 "aFh" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Brig";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -14007,15 +13995,16 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/access_spawn/security,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/security/main)
 "aFi" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/auto,
 /obj/securearea{
 	pixel_y = -4
 	},
-/obj/window/auto/reinforced,
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/security/main)
 "aFj" = (
 /obj/table/reinforced/auto,
@@ -14762,11 +14751,11 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/secwing)
 "aGL" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/security{
 	name = "Brig Visitation Area";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/security/secwing)
 "aGM" = (
@@ -15112,8 +15101,10 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Locker Room";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
+/obj/access_spawn/security,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/main)
 "aHE" = (
@@ -16361,11 +16352,13 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Locker Room";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/security,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/main)
 "aKg" = (
@@ -17549,11 +17542,11 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
 	name = "Bridge Maintenance";
-	req_access_txt = "19"
+	req_access = null;
+	req_access_txt = null
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
+/obj/access_spawn/heads,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aMC" = (
@@ -17666,19 +17659,19 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/main)
 "aMN" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/plasticflaps{
 	layer = 3
 	},
 /obj/machinery/door/airlock/pyro/security{
 	name = "Secure Transport";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/security/secwing)
 "aMO" = (
@@ -18348,17 +18341,15 @@
 /obj/plasticflaps{
 	layer = 3
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
 	name = "Secure Transport";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "aOa" = (
@@ -18719,7 +18710,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -18730,6 +18720,8 @@
 /obj/machinery/door/airlock/pyro/command{
 	name = "Radio Room"
 	},
+/obj/access_spawn/heads,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aOM" = (
@@ -19354,9 +19346,6 @@
 /turf/simulated/floor,
 /area/station/bridge)
 "aPU" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -19368,8 +19357,10 @@
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
 	name = "Head of Security";
-	req_access_txt = "37"
+	req_access = null
 	},
+/obj/access_spawn/hos,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/hos)
 "aPV" = (
@@ -19386,14 +19377,13 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
 	name = "Head of Security";
-	req_access_txt = "37"
+	req_access = null
 	},
+/obj/access_spawn/hos,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/hos)
 "aPY" = (
@@ -19508,13 +19498,10 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/central)
 "aQm" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Security Office";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -19523,6 +19510,8 @@
 	dir = 4;
 	pixel_x = -20
 	},
+/obj/access_spawn/security,
+/obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/secwing)
 "aQn" = (
@@ -21821,6 +21810,7 @@
 	dir = 4;
 	name = "Bridge"
 	},
+/obj/access_spawn/heads,
 /turf/simulated/floor,
 /area/station/bridge)
 "aVu" = (
@@ -21844,9 +21834,6 @@
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4;
 	name = "Bridge"
@@ -21864,6 +21851,8 @@
 	dir = 4;
 	pixel_x = -20
 	},
+/obj/access_spawn/heads,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/bridge)
 "aVw" = (
@@ -22370,12 +22359,10 @@
 	dir = 4;
 	name = "Bridge"
 	},
+/obj/access_spawn/heads,
 /turf/simulated/floor,
 /area/station/bridge)
 "aWI" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -22397,6 +22384,8 @@
 	dir = 4;
 	pixel_x = -20
 	},
+/obj/access_spawn/heads,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/bridge)
 "aWJ" = (
@@ -23718,11 +23707,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/command{
 	name = "Teleport Access";
-	req_access_txt = "17"
+	req_access_txt = null
 	},
+/obj/access_spawn/teleporter,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "aZq" = (
@@ -24440,9 +24430,6 @@
 /turf/simulated/floor,
 /area/station/bridge)
 "baY" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -24454,7 +24441,8 @@
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	name = "Head of Personnel";
-	req_access_txt = "55"
+	req_access = null;
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -24464,6 +24452,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/head_of_personnel,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/crew_quarters/heads)
 "baZ" = (
@@ -24851,7 +24841,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -24861,8 +24850,11 @@
 	},
 /obj/machinery/door/airlock/pyro/command{
 	name = "Captain's Quarters";
-	req_access_txt = "20"
+	req_access = null;
+	req_access_txt = null
 	},
+/obj/access_spawn/captain,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/captain)
 "bbR" = (
@@ -25529,9 +25521,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "bde" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -25540,8 +25529,11 @@
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	name = "Head of Personnel";
-	req_access_txt = "55"
+	req_access = null;
+	req_access_txt = null
 	},
+/obj/access_spawn/head_of_personnel,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "bdf" = (
@@ -25642,17 +25634,15 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
 	name = "Customs";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint)
 "bdm" = (
@@ -27368,13 +27358,14 @@
 /area/station/crew_quarters/captain)
 "bgI" = (
 /obj/machinery/door/window/southleft{
-	req_access_txt = "20"
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/access_spawn/captain,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "bgJ" = (
@@ -29554,14 +29545,14 @@
 /turf/simulated/floor/caution/east,
 /area/station/crew_quarters/market)
 "blI" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	name = "E.V.A.";
-	req_access_txt = "18"
+	req_access = null;
+	req_access_txt = null
 	},
+/obj/access_spawn/eva,
+/obj/firedoor_spawn,
 /turf/simulated/floor/bot,
 /area/station/ai_monitored/storage/eva)
 "blJ" = (
@@ -30654,13 +30645,11 @@
 /turf/simulated/floor/orangeblack,
 /area/station/ai_monitored/storage/eva)
 "bnV" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	name = "E.V.A.";
-	req_access_txt = "18"
+	req_access = null;
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 4;
@@ -30670,6 +30659,8 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9
 	},
+/obj/access_spawn/eva,
+/obj/firedoor_spawn,
 /turf/simulated/floor/bot,
 /area/station/maintenance/maintcentral)
 "bnW" = (
@@ -30694,9 +30685,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/maintcentral)
 "bnY" = (
@@ -49896,13 +49885,13 @@
 /area/station/hallway/primary/south)
 "cbs" = (
 /obj/table/reinforced/auto,
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/cashreg{
 	name = "bail payment device"
 	},
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/cargo)
 "cbt" = (
@@ -50641,10 +50630,9 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "cdh" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/security{
 	name = "Security Checkpoint";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -50657,6 +50645,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/access_spawn/security,
+/obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/cargo)
 "cdi" = (
@@ -52476,11 +52466,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/SEmaint)
 "chx" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Mini-Brig";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/checkpoint/cargo)
 "chy" = (
@@ -93887,7 +93877,7 @@ awK
 awK
 awK
 aDW
-aFf
+aFi
 aGD
 avd
 aJf
