@@ -15,6 +15,7 @@
 	var/original_DNA = null
 	var/original_fprints = null
 	var/show_on_examine = 0
+	var/limbs_processed = 0
 
 	take_damage(brute, burn, tox, damage_type, disallow_limb_loss)
 		if (brute <= 0 && burn <= 0)// && tox <= 0)
@@ -85,9 +86,10 @@
 			SPAWN_DBG(2 SECONDS)
 				if (new_holder && istype(new_holder))
 					name = "[new_holder.real_name]'s [initial(name)]"
-		SPAWN_DBG(2)
-			colorize_limb_icon()
-			set_skin_tone()
+			SPAWN_DBG(2 DECI SECONDS)
+				colorize_limb_icon()
+				set_skin_tone()
+				limb_headcount()
 
 	disposing()
 		if(src.bones)
@@ -102,9 +104,9 @@
 			return
 		var/this_skin_tone = src.skin_tone
 		if (src.lyingImage)
-			src.lyingImage.color = skin_tone
+			src.lyingImage.color = this_skin_tone
 		if (src.standImage)
-			src.standImage.color = skin_tone
+			src.standImage.color = this_skin_tone
 
 	getMobIcon(var/lying)
 		. = ..()
@@ -165,6 +167,19 @@
 				src.original_fprints = src.original_holder.bioHolder.uid_hash
 		return ..()
 
+	proc/limb_headcount()	// Problem: human mob skintone isnt available immediately when limbs are created
+		src.limbs_processed ++	// Solution: delay limb skintone checks by a split second, getting the right color!
+		if (src.limbs_processed >= 4) // Problem: This delays skin coloration until *after* the mob's already update_body()ed
+			holder.update_body()	// Solution: call update_body() 4 more times per player spawn
+			src.limbs_processed = 0	// Problem: That's stupid
+		else if (src.limbs_processed == 1)	// Solution: Make something that update_body()s after 4 limb additions
+			SPAWN_DBG(1 SECOND)	// Problem: What if less than 4 limbs are added?
+				if (!src.limbs_processed)	// Solution: Just update_body() anyway
+					return
+				else
+					holder.update_body()	// Problem: this is still stupid
+
+
 	proc/fix_colors(var/hex)
 		var/list/L = hex_to_rgb_list(hex)
 		for (var/i in L)
@@ -175,18 +190,13 @@
 		return rgb(22, 210, 22)
 
 	proc/colorize_limb_icon()
-		boutput(world, "COLORIZE LIMB ICON CALLED ON [src]")
 		if (!src.skintoned)
-			boutput(world, "[src] NOT SKINTONED")
 			return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
 		var/blend_color = null
 		if (src.original_holder && ismob(src.original_holder) && src.original_holder.bioHolder && src.original_holder.bioHolder.mobAppearance) // If we started life attached to someone, we'll have a color
-			boutput(world, "ORIGICNAL HOLDER SKIN TONE = [src.original_holder.bioHolder.mobAppearance.s_tone]")
-			boutput(world, "HOLDER SKIN TONE = [src.holder.bioHolder.mobAppearance.s_tone]")
 			if (src.skin_tone_override)
 				var/datum/appearanceHolder/aH = src.original_holder.bioHolder.mobAppearance
 				blend_color = fix_colors(aH.customization_first_color)
-				boutput(world, "LIZARD TONE = [src.skin_tone], BLEND = [blend_color]")
 			else
 				src.skin_tone = src.original_holder.bioHolder.mobAppearance.s_tone
 				blend_color = src.skin_tone	// So it can be overwritten if the limb has special skin_coloring features
@@ -206,7 +216,6 @@
 
 		src.icon = limb_icon
 		src.skin_tone = blend_color
-		boutput(world, "SKIN TONE SET IN COLORIZE IS: [src.skin_tone]")
 
 /obj/item/parts/human_parts/arm
 	name = "placeholder item (don't use this!)"

@@ -878,7 +878,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 
 				if (src.organHolder && src.organHolder.head)
 					human_head_image.icon_state = "head"
-					if (src.organHolder.head && my_mutant.special_head)
+					if (src.organHolder.head && my_mutant?.special_head)
 						var/obj/item/organ/head/our_head = src.organHolder.head
 						human_head_image.icon = our_head.icon
 						if (!our_head.icon_piece_1)

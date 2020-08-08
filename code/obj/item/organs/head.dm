@@ -118,7 +118,7 @@
 		if (!src.donor || !src.donor_appearance)
 			return // vOv
 
-		if (src.donor_mutantrace)
+		if (src.donor_mutantrace && !src.donor_mutantrace.special_head)
 			src.head_icon = new /icon(src.icon, src.donor_mutantrace.icon_state)
 		else
 			src.head_icon = new /icon(src.icon, src.icon_state)
