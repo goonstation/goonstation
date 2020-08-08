@@ -5319,7 +5319,6 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "ami" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -5327,8 +5326,11 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	name = "Catering Storage";
-	req_access_txt = "25|28"
+	req_access_txt = null
 	},
+/obj/access_spawn/bar,
+/obj/access_spawn/kitchen,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "amj" = (
@@ -6832,14 +6834,14 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "apM" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
 	name = "Catering Storage";
-	req_access_txt = "25|28"
+	req_access_txt = null
 	},
+/obj/access_spawn/bar,
+/obj/access_spawn/kitchen,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/catering)
 "apN" = (
@@ -7293,11 +7295,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/cafeteria)
 "aqS" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro{
 	name = "Kitchen";
-	req_access_txt = "28"
+	req_access_txt = null
 	},
+/obj/access_spawn/kitchen,
+/obj/firedoor_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/cafeteria)
 "aqT" = (
@@ -7309,14 +7312,13 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aqU" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
 	name = "Kitchen";
-	req_access_txt = "28"
+	req_access_txt = null
 	},
+/obj/access_spawn/kitchen,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "aqV" = (
@@ -8026,14 +8028,13 @@
 	name = "Tool Storage"
 	})
 "asE" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
 	name = "Hydroponics";
-	req_access_txt = "35"
+	req_access_txt = null
 	},
+/obj/access_spawn/hydro,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/east)
 "asF" = (
@@ -8445,8 +8446,10 @@
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
 	name = "Bar";
-	req_access_txt = "25|28"
+	req_access_txt = null
 	},
+/obj/access_spawn/bar,
+/obj/access_spawn/kitchen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "atC" = (
@@ -8490,8 +8493,9 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Meat Locker";
-	req_access_txt = "28"
+	req_access_txt = null
 	},
+/obj/access_spawn/kitchen,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "atH" = (
@@ -9125,15 +9129,16 @@
 	},
 /area/station/crew_quarters/pool)
 "avf" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro{
 	name = "Hydroponics Storage";
-	req_access_txt = "35"
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment/produce,
+/obj/access_spawn/hydro,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hydroponics/lobby)
 "avg" = (
@@ -9519,14 +9524,13 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "awc" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
 	name = "Bar";
-	req_access_txt = "25"
+	req_access_txt = null
 	},
+/obj/access_spawn/bar,
+/obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/cafeteria)
 "awd" = (
@@ -9549,14 +9553,13 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
 	name = "Bar";
-	req_access_txt = "25"
+	req_access_txt = null
 	},
+/obj/access_spawn/bar,
+/obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
 "awg" = (
@@ -10398,17 +10401,16 @@
 /turf/simulated/floor,
 /area/station/hydroponics/lobby)
 "axP" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Biodome";
-	req_access_txt = "35"
+	req_access_txt = null
 	},
+/obj/access_spawn/hydro,
+/obj/firedoor_spawn,
 /turf/simulated/floor/green,
 /area/station/hydroponics)
 "axQ" = (
@@ -10933,7 +10935,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/emergency)
 "ayV" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/disposalpipe/segment,
 /obj/cable{
 	d1 = 1;
@@ -10942,8 +10943,11 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	name = "Catering Storage";
-	req_access_txt = "25|28"
+	req_access_txt = null
 	},
+/obj/access_spawn/bar,
+/obj/access_spawn/kitchen,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/storage/emergency)
 "ayW" = (
@@ -11078,17 +11082,16 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Biodome";
-	req_access_txt = "35"
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/access_spawn/hydro,
+/obj/firedoor_spawn,
 /turf/simulated/floor/green,
 /area/station/hydroponics)
 "azk" = (
@@ -12424,7 +12427,6 @@
 	name = "Tool Storage"
 	})
 "aCg" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -12434,6 +12436,7 @@
 	name = "Tool Storage";
 	req_access_txt = null
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/storage/auxillary{
 	name = "Tool Storage"
@@ -12492,7 +12495,6 @@
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
 "aCl" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -12500,8 +12502,10 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	name = "Hydroponics";
-	req_access_txt = "35"
+	req_access_txt = null
 	},
+/obj/access_spawn/hydro,
+/obj/firedoor_spawn,
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
 "aCm" = (
@@ -13740,8 +13744,10 @@
 "aED" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Bar";
-	req_access_txt = "25|28"
+	req_access_txt = null
 	},
+/obj/access_spawn/bar,
+/obj/access_spawn/kitchen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "aEE" = (
@@ -25877,11 +25883,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/disposal)
 "bdJ" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/classic{
 	name = "Recycling Room";
-	req_access_txt = "12"
+	req_access_txt = null
 	},
+/obj/access_spawn/maint,
+/obj/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "bdK" = (
@@ -26304,13 +26311,14 @@
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
 	name = "Custodial Closet";
-	req_access_txt = "26"
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/janitor,
 /turf/simulated/floor/grime,
 /area/station/janitor)
 "beD" = (
@@ -26762,13 +26770,14 @@
 /area/station/maintenance/disposal)
 "bfu" = (
 /obj/machinery/door/airlock/pyro/classic{
-	req_access_txt = "12"
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor,
 /area/station/maintenance/disposal)
 "bfv" = (
@@ -27309,17 +27318,16 @@
 	},
 /area/station/janitor)
 "bgz" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4;
 	name = "Recycling Room";
-	req_access_txt = "26"
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
+/obj/access_spawn/janitor,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/janitor)
 "bgA" = (
@@ -28045,8 +28053,9 @@
 "bif" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4;
-	req_access_txt = "12"
+	req_access_txt = null
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor,
 /area/station/maintenance/disposal)
 "big" = (
@@ -28980,7 +28989,7 @@
 /area/station/maintenance/disposal)
 "bkg" = (
 /obj/machinery/door/airlock/pyro/classic{
-	req_access_txt = "12"
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 1;
@@ -28988,6 +28997,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/morgue,
+/obj/access_spawn/maint,
 /turf/simulated/floor,
 /area/station/maintenance/disposal)
 "bkh" = (
@@ -31195,7 +31205,7 @@
 "boR" = (
 /obj/machinery/door/airlock/pyro/classic{
 	name = "Emergency Airbridge Access";
-	req_access_txt = "12"
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 1;
@@ -31203,6 +31213,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/morgue,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "boS" = (
