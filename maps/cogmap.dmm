@@ -12207,11 +12207,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/secwing)
-"aBB" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/central)
 "aBC" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass,
@@ -17303,8 +17298,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aLO" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/maintcentral)
 "aLP" = (
@@ -21335,7 +21329,6 @@
 	},
 /area/station/bridge)
 "aUf" = (
-/obj/grille/steel,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -21348,7 +21341,7 @@
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
-/obj/window/auto/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "aUg" = (
@@ -23292,7 +23285,6 @@
 /turf/simulated/floor/grey/side,
 /area/station/bridge)
 "aYd" = (
-/obj/grille/steel,
 /obj/cable,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -23302,7 +23294,7 @@
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
-/obj/window/auto/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "aYe" = (
@@ -39368,11 +39360,6 @@
 "bFr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/qm)
-"bFs" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/hangar/qm)
 "bFt" = (
 /obj/cable,
 /obj/cable{
@@ -45141,12 +45128,11 @@
 /turf/simulated/floor/caution/south,
 /area/station/science/lab)
 "bQT" = (
-/obj/grille/steel,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/window/auto/crystal/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2{
 	dir = 4
 	},
@@ -48105,12 +48091,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"bWW" = (
-/obj/grille/steel,
-/obj/disposalpipe/segment/transport,
-/obj/window/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/south)
 "bWX" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/bot,
@@ -48570,10 +48550,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bXZ" = (
-/obj/grille/steel,
 /obj/disposalpipe/segment/transport,
-/obj/window/auto/reinforced,
-/turf/simulated/floor/black,
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "bYa" = (
 /obj/machinery/vending/cola/red,
@@ -49409,8 +49388,7 @@
 	name = "Supply Lobby"
 	})
 "bZQ" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
@@ -99623,7 +99601,7 @@ bRk
 bSP
 bUj
 bVw
-bWW
+bXZ
 bXZ
 bZE
 ceJ
@@ -101680,7 +101658,7 @@ aaa
 aaa
 aaa
 aah
-aBB
+bUk
 aWV
 aYj
 aZo
@@ -101982,7 +101960,7 @@ aaa
 aaa
 aaa
 aah
-aBB
+bUk
 aWW
 aYk
 aZp
@@ -102284,7 +102262,7 @@ aaa
 aaa
 aaa
 aah
-aBB
+bUk
 aWV
 aYj
 aZo
@@ -121356,7 +121334,7 @@ bFr
 bGj
 bGX
 bHP
-bFs
+ceH
 bJN
 bKX
 bMA
