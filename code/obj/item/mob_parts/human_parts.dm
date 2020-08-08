@@ -86,10 +86,15 @@
 			SPAWN_DBG(2 SECONDS)
 				if (new_holder && istype(new_holder))
 					name = "[new_holder.real_name]'s [initial(name)]"
+		if (src.skintoned)
 			SPAWN_DBG(2 DECI SECONDS)
 				colorize_limb_icon()
 				set_skin_tone()
 				limb_headcount()
+		else
+			colorize_limb_icon()
+			set_skin_tone()
+			limb_headcount()
 
 	disposing()
 		if(src.bones)
@@ -194,28 +199,31 @@
 			return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
 		var/blend_color = null
 		if (src.original_holder && ismob(src.original_holder) && src.original_holder.bioHolder && src.original_holder.bioHolder.mobAppearance) // If we started life attached to someone, we'll have a color
-			if (src.skin_tone_override)
-				var/datum/appearanceHolder/aH = src.original_holder.bioHolder.mobAppearance
-				blend_color = fix_colors(aH.customization_first_color)
-			else
-				src.skin_tone = src.original_holder.bioHolder.mobAppearance.s_tone
-				blend_color = src.skin_tone	// So it can be overwritten if the limb has special skin_coloring features
+			SPAWN_DBG(2)
+				if (src.skin_tone_override)
+					var/datum/appearanceHolder/aH = src.original_holder.bioHolder.mobAppearance
+					src.skin_tone = fix_colors(aH.customization_first_color)
+				else
+					src.skin_tone = src.original_holder.bioHolder.mobAppearance.s_tone
+				set_limb_icon_coloration()
+			return
 		else
 			if (src.skin_tone_override)
-				blend_color = rgb(rand(50,190), rand(50,190), rand(50,190))	// If lizlimbs havent been colored, color them
+				src.skin_tone = rgb(rand(50,190), rand(50,190), rand(50,190))	// If lizlimbs havent been colored, color them
 			else
-				var/some_default_color = pick(standard_skintones)
-				blend_color = standard_skintones[some_default_color]
+				blend_color = pick(standard_skintones)
+				src.skin_tone = standard_skintones[blend_color]
+		set_limb_icon_coloration()
 
+	proc/set_limb_icon_coloration()
 		// All skintoned limbs get a cool not-affected-by-coloration bloody stump!
 		var/icon/limb_icon = new /icon(src.icon, "[src.icon_state]")	// Preferably a grayscale image
-		limb_icon.Blend(blend_color, ICON_MULTIPLY)
+		limb_icon.Blend(src.skin_tone, ICON_MULTIPLY)
 
 		var/icon/limb_icon_overlay = new /icon(src.icon, "[src.icon_state]_blood") // Preferably blood-colored
 		limb_icon.Blend(limb_icon_overlay, ICON_OVERLAY)
 
 		src.icon = limb_icon
-		src.skin_tone = blend_color
 
 /obj/item/parts/human_parts/arm
 	name = "placeholder item (don't use this!)"
