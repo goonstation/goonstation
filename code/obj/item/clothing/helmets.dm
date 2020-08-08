@@ -508,6 +508,9 @@
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
 
+	unequipped(var/mob/living/user)
+		..()
+		user.removeOverlayComposition(/datum/overlayComposition/welding_mask)
 
 /obj/item/clothing/head/helmet/welding/abilities = list(/obj/ability_button/mask_toggle)
 
