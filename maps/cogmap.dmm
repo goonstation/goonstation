@@ -42852,12 +42852,12 @@
 	id_tag = "tox_airlock_exterior";
 	locked = 1;
 	name = "Toxins Research Access";
-	req_access_txt = "7"
+	req_access_txt = null
 	},
+/obj/access_spawn/tox,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "bMH" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass{
 	autoclose = 0;
 	frequency = 1449;
@@ -42865,8 +42865,10 @@
 	id_tag = "tox_airlock_exterior";
 	locked = 1;
 	name = "Toxins Research Access";
-	req_access_txt = "7"
+	req_access_txt = null
 	},
+/obj/access_spawn/tox,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "bMI" = (
@@ -42886,7 +42888,6 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "bMK" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 1
@@ -43035,9 +43036,6 @@
 	},
 /area/station/science/teleporter)
 "bMZ" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
 	id = "scienceteleporter";
@@ -43047,8 +43045,10 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Teleporter Pad";
-	req_access_txt = "8"
+	req_access_txt = null
 	},
+/obj/access_spawn/tox,
+/obj/firedoor_spawn,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "bNa" = (
@@ -43083,9 +43083,6 @@
 	},
 /area/station/science/teleporter)
 "bNd" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
 	id = "scienceteleporter2";
@@ -43095,9 +43092,10 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Teleporter Pad";
-	req_access_txt = "0"
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment/transport,
+/obj/firedoor_spawn,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "bNe" = (
@@ -44353,14 +44351,16 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/medical{
 	name = "Teleporter Control Room";
-	req_access_txt = "8"
+	req_access = null;
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/access_spawn/tox,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/science/teleporter)
 "bPN" = (
@@ -45784,19 +45784,19 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bSC" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	name = "Research Director's Office";
-	req_access_txt = "19"
+	req_access = null;
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/research_director,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bSD" = (
@@ -45923,11 +45923,12 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Research Sector";
-	req_access_txt = "24"
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/access_spawn/research,
 /turf/simulated/floor/purple,
 /area/station/science)
 "bSN" = (
@@ -45969,8 +45970,9 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Research Sector";
-	req_access_txt = "24"
+	req_access_txt = null
 	},
+/obj/access_spawn/research,
 /turf/simulated/floor/purple,
 /area/station/science)
 "bSQ" = (
@@ -47062,18 +47064,18 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/science)
 "bVu" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 1
-	},
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "Guardbot Depot";
-	req_access_txt = "8"
+	req_access = null;
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/access_spawn/research,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/science)
 "bVv" = (
@@ -48775,19 +48777,19 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "bYW" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
 	name = "Gas Storage";
-	req_access_txt = "8"
+	req_access = null;
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/tox_storage,
+/obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/science/storage)
 "bYX" = (
@@ -48819,19 +48821,19 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "bZb" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
 	name = "Mixing Room";
-	req_access_txt = "8"
+	req_access = null;
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/tox,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/science/lab)
 "bZc" = (
@@ -48848,19 +48850,19 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "bZd" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
 	name = "Mixing Room";
-	req_access_txt = "8"
+	req_access = null;
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/tox,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/science)
 "bZe" = (
@@ -51512,13 +51514,11 @@
 /turf/simulated/floor,
 /area/station/engine/ptl)
 "cfs" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
 	name = "Artifact Lab";
-	req_access_txt = "8"
+	req_access = null;
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 4;
@@ -51530,6 +51530,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/tox_storage,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/science/artifact)
 "cft" = (
@@ -53964,7 +53966,7 @@
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
 	name = "Emergency Storage";
-	req_access_txt = "0"
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 4;
@@ -54537,11 +54539,11 @@
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
 	name = "Science Hangar";
-	req_access_txt = "8"
+	req_access = null;
+	req_access_txt = null
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
+/obj/access_spawn/tox_storage,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/hangar/science)
 "clP" = (
@@ -55063,7 +55065,8 @@
 "cna" = (
 /obj/machinery/door/airlock/pyro/medical{
 	name = "Test Chamber Access";
-	req_access_txt = "33"
+	req_access = null;
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 1;
@@ -55071,6 +55074,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/access_spawn/chemistry,
 /turf/simulated/floor/plating,
 /area/station/science)
 "cnb" = (
@@ -55088,10 +55092,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/chemistry)
 "cnf" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/medical{
 	name = "Chemistry Department Access";
-	req_access_txt = "33"
+	req_access = null;
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 1;
@@ -55099,6 +55103,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/access_spawn/chemistry,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/chemistry)
 "cng" = (
@@ -55582,9 +55588,11 @@
 "coc" = (
 /obj/machinery/door/airlock/pyro/medical{
 	name = "Science Hangar";
-	req_access_txt = "8"
+	req_access = null;
+	req_access_txt = null
 	},
-/obj/machinery/door/firedoor/pyro,
+/obj/access_spawn/tox_storage,
+/obj/firedoor_spawn,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "cod" = (
@@ -56840,9 +56848,7 @@
 	},
 /obj/item/storage/box/beakerbox,
 /obj/item/reagent_containers/glass/beaker/large,
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/chemistry)
 "cqA" = (
@@ -58150,14 +58156,14 @@
 	},
 /area/station/testchamber)
 "ctc" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
 	name = "Test Chamber Access";
-	req_access_txt = "33"
+	req_access = null;
+	req_access_txt = null
 	},
+/obj/access_spawn/chemistry,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/chemistry)
 "ctd" = (
@@ -58209,19 +58215,19 @@
 	},
 /area/station/chemistry)
 "cti" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
 	name = "Loading Dock";
-	req_access_txt = "33"
+	req_access = null;
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/chemistry,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery/white,
 /area/station/chemistry)
 "ctj" = (
@@ -58252,14 +58258,13 @@
 /turf/simulated/floor/delivery/white,
 /area/station/routingdepot/medsci)
 "ctm" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Loading Dock";
-	req_access_txt = "5"
+	req_access_txt = null
 	},
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery/white,
 /area/station/medical/medbay)
 "ctn" = (
@@ -58499,9 +58504,6 @@
 	},
 /area/station/testchamber)
 "ctS" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -58516,8 +58518,10 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Test Chamber";
-	req_access_txt = "7"
+	req_access_txt = null
 	},
+/obj/access_spawn/tox,
+/obj/firedoor_spawn,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -58908,9 +58912,6 @@
 	},
 /area/station/testchamber)
 "cuL" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -58922,7 +58923,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Test Chamber";
-	req_access_txt = "7"
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -58932,6 +58933,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/tox,
+/obj/firedoor_spawn,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
