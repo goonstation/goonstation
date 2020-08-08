@@ -12432,7 +12432,7 @@
 	},
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "Tool Storage";
-	req_access_txt = "12"
+	req_access_txt = null
 	},
 /turf/simulated/floor/yellow,
 /area/station/storage/auxillary{
@@ -13754,7 +13754,6 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "aEG" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Emergency Storage"
 	},
@@ -13763,13 +13762,14 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/storage/emergency)
 "aEH" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Emergency Storage"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/storage/emergency)
 "aEI" = (
@@ -16214,11 +16214,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Medical Booth";
-	req_access_txt = "5"
+	req_access_txt = null
 	},
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbooth)
 "aJN" = (
@@ -16306,8 +16307,9 @@
 	},
 /obj/machinery/door/window/westleft{
 	name = "Chapel Mass Driver";
-	req_access_txt = "22"
+	req_access_txt = null
 	},
+/obj/access_spawn/chapel_office,
 /turf/simulated/floor/plating,
 /area/station/chapel/main)
 "aJY" = (
@@ -20446,6 +20448,9 @@
 /area/station/crew_quarters/jazz)
 "aSs" = (
 /obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "aSt" = (
@@ -20541,20 +20546,22 @@
 "aSE" = (
 /obj/machinery/door/window/northleft{
 	name = "Chaplain's Office";
-	req_access_txt = "22"
+	req_access_txt = null
 	},
+/obj/access_spawn/chapel_office,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "aSF" = (
 /obj/machinery/door/window/northright{
 	name = "Chaplain's Office";
-	req_access_txt = "22"
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/access_spawn/chapel_office,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "aSG" = (
@@ -21580,7 +21587,7 @@
 	autoclose = 0;
 	dir = 4;
 	name = "Confession Booth (Chaplain)";
-	req_access_txt = "22"
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 4;
@@ -21590,6 +21597,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/access_spawn/chapel_office,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "aUX" = (
@@ -22149,17 +22157,17 @@
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
 	name = "Detective";
-	req_access_txt = "4"
+	req_access = null;
+	req_access_txt = null
 	},
 /obj/decal/cleanable/ash,
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/forensics,
+/obj/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/security/detectives_office)
 "aWi" = (
@@ -22206,14 +22214,13 @@
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aWo" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
 	name = "Crematorium";
-	req_access_txt = "22"
+	req_access_txt = null
 	},
+/obj/access_spawn/chapel_office,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aWp" = (
@@ -22875,11 +22882,11 @@
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
 	name = "Detective";
-	req_access_txt = "4"
+	req_access = null;
+	req_access_txt = null
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
+/obj/access_spawn/forensics,
+/obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aXy" = (
@@ -23837,11 +23844,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/detectives_office)
 "aZB" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro{
 	name = "Crematorium";
-	req_access_txt = "27"
+	req_access_txt = null
 	},
+/obj/access_spawn/crematorium,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aZC" = (
