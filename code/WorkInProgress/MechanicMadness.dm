@@ -150,7 +150,7 @@
 			else if(src.open)
 				// ugly warning, the istype() is 1 when there's a trigger in the container\
 				//	it subtracts 1 from the list of contents when there's a trigger \
-					doing arithmatic on bools is probably not good!
+				//	doing arithmatic on bools is probably not good!
 				var/has_trigger = istype(locate(/obj/item/mechanics/trigger/trigger) in src.contents,/obj/item/mechanics/trigger/trigger)
 				var/len_contents = src.contents.len - has_trigger
 				boutput(world,"[has_trigger ? "has trigger" : ""] [len_contents] len")
