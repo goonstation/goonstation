@@ -51,6 +51,7 @@
 #endif
 	var/stamina_based_stun_amount = 130 // Amount of stamina drained.
 	var/can_swap_cell = 1
+	var/beepsky_held_this = 0 // Did a certain validhunter hold this?
 
 
 	New()

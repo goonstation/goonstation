@@ -1077,7 +1077,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			B.process_charges(-INFINITY)
 			if (src.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || src.is_beepsky == IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON)	// Holding Beepsky's baton doesnt make you him, but it does mean you're holding his baton
 				B.name = "Beepsky's stun baton"
-				B.contraband = 5 // Just as a flag so we can know if this baton used to be Beepsky's. Maybe secbots just dont like people walking around with his sidearm vOv
+				B.beepsky_held_this = 1 // Just as a flag so we can know if this baton used to be Beepsky's. Maybe secbots just dont like people walking around with his sidearm vOv
 		else
 			new loot_baton_type(Tsec)
 
@@ -1200,6 +1200,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 	else if (istype(W, /obj/item/baton/) && src.build_step >= 3)
 		if (istype(W, /obj/item/baton/beepsky))	// If we used Beepsky's dropped baton
+			var/obj/item/baton/Y = W
 			if (src.is_dead_beepsky)							// on Beepsky's corpse
 				boutput(user, "You return Officer Beepsky his trusty baton, reassembling the Securitron! Beep boop.")
 				new /obj/machinery/bot/secbot/beepsky(get_turf(src))
@@ -1214,7 +1215,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				S.name = src.created_name		// We get an upgraded securitron
 				S.attack_per_step = 2				// 25% chance to attack_on_move, as opposed to 75%
 				S.loot_baton_type = W.type	// So we can drop it all over again.
-				if (W.contraband != 4)
+				if (Y.beepsky_held_this == 1)
 					S.is_beepsky = IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON	// So we drop Beepsky's baton, and not just some generic secbot one
 				else
 					S.is_beepsky = IS_NOT_BEEPSKY_BUT_HAS_A_GENERIC_SPECIAL_BATON // So we drop some generic secboton
