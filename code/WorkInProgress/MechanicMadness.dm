@@ -9,6 +9,7 @@
 #define CABINET_CAPACITY 23
 #define HANDHELD_CAPACITY 6
 #define WIFI_NOISE_COOLDOWN 5 SECONDS
+#define WIFI_NOISE_VOLUME 30
 #define LIGHT_UP_HOUSING SPAWN_DBG(0) src.light_up_housing()
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
@@ -104,7 +105,6 @@
 			src.does_not_open_in_pocket=src.open
 			src.open=!src.open
 			playsound(src.loc,'sound/items/screwdriver.ogg',50)
-			boutput(user,"<span class='notice'>You [src.open ? "unsecure" : "secure"] the [src]'s cover</span>")
 			if(!src.open) 
 				src.close_storage_menus()
 			else
@@ -151,8 +151,9 @@
 				// ugly warning, the istype() is 1 when there's a trigger in the container\
 					it subtracts 1 from the list of contents when there's a trigger \
 					doing arithmatic on bools is probably not good!
-				var/has_trigger = istype(/obj/item/mechanics/trigger/trigger in src.contents,/obj/item/mechanics/trigger/trigger)
+				var/has_trigger = istype(locate(/obj/item/mechanics/trigger/trigger) in src.contents,/obj/item/mechanics/trigger/trigger)
 				var/len_contents = src.contents.len - has_trigger
+				boutput(world,"[has_trigger ? "has trigger" : ""] [len_contents] len")
 				if(src.num_f_icons && len_contents)
 					src.icon_state=initial(src.icon_state)+"_f[min(src.num_f_icons-1,round((len_contents*src.num_f_icons)/(src.slots-has_trigger)))]"
 				else
@@ -371,7 +372,7 @@ var/list/mechanics_telepads = new/list()
 		light_up_housing( ) // are we in a housing? if so, tell it to light up
 			var/obj/item/storage/mechanics/the_container = src.loc
 			if(istype(the_container,/obj/item/storage/mechanics)) // wew lad i hope this compiles
-				SPAWN_DBG(0) the_container.light_up()
+				the_container.light_up()
 			return
 
 	process()
@@ -1757,7 +1758,7 @@ var/list/mechanics_telepads = new/list()
 		SPAWN_DBG(0)
 			if(src.noise_enabled)
 				src.noise_enabled = false
-				playsound(get_turf(src), "sound/machines/modem.ogg", 50, 0, 0)
+				playsound(get_turf(src), "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
 				SPAWN_DBG(WIFI_NOISE_COOLDOWN)
 					src.noise_enabled = true
 			src.radio_connection.post_signal(src, sendsig, src.range)
@@ -1784,7 +1785,7 @@ var/list/mechanics_telepads = new/list()
 				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
 						src.noise_enabled = false
-						playsound(get_turf(src), "sound/machines/modem.ogg", 50, 0, 0)
+						playsound(get_turf(src), "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
 						SPAWN_DBG(WIFI_NOISE_COOLDOWN)
 							src.noise_enabled = true
 					src.radio_connection.post_signal(src, pingsignal, src.range)
@@ -1823,7 +1824,7 @@ var/list/mechanics_telepads = new/list()
 		return
 
 #undef WIFI_NOISE_COOLDOWN
-
+#undef WIFI_NOISE_VOLUME
 /obj/item/mechanics/selectcomp
 	name = "Selection Component"
 	desc = ""
