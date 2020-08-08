@@ -453,3 +453,13 @@
 		definitions.Add(insanity)
 
 		return ..()
+
+/datum/overlayComposition/welding_mask
+	New()
+		var/datum/overlayDefinition/welding_mask = new()
+		welding_mask.d_icon = 'icons/effects/overlays/welding_mask.dmi'
+		welding_mask.d_icon_state = "welding_mask"
+		welding_mask.d_blend_mode = BLEND_ADD
+		definitions.Add(welding_mask)
+
+		return ..()

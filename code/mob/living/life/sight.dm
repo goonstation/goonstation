@@ -191,4 +191,12 @@
 							human_owner.see_in_dark++
 						human_owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (human_owner.client?.widescreen))
 
+			// Welding Mask
+			else if (istype(human_owner.head, /obj/item/clothing/head/helmet/welding))
+				var/obj/item/clothing/head/helmet/welding/weldmask = human_owner.head
+				// Create empty square in center, black everything else
+				if(weldmask.up)
+					human_owner.removeOverlayComposition(/datum/overlayComposition/welding_mask)
+				else
+					human_owner.addOverlayComposition(/datum/overlayComposition/welding_mask)
 		..()
