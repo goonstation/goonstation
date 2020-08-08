@@ -5,6 +5,8 @@
 	item_state = "buildpipe"
 	flags = FPRINT | ONBELT | TABLEPASS
 	override_attack_hand = 0
+	var/skin_tone = "#FFFFFF"
+	var/skin_tone_override = 0
 	var/slot = null // which part of the person or robot suit does it go on???????
 	var/streak_decal = /obj/decal/cleanable/blood // what streaks everywhere when it's cut off?
 	var/streak_descriptor = "bloody" //bloody, oily, etc
@@ -14,7 +16,7 @@
 	var/side = "left" //used for streak direction
 	var/remove_stage = 0 //2 will fall off, 3 is removed
 	var/no_icon = 0 //if the only icon is above the clothes layer ie. in the handlistPart list
-	var/skintoned = 1 // is this affected by human skin tones?
+	var/skintoned = 1 // is this affected by human skin tones? Also if the severed limb uses a separate bloody-stump icon layered on top
 	var/easy_attach = 0 //Attachable without surgery?
 
 	var/decomp_affected = 1 // set to 1 if this limb has decomposition icons
@@ -23,12 +25,12 @@
 
 	var/mob/living/holder = null
 
-	var/image/standImage
-	var/image/lyingImage
-	var/partIcon = 'icons/mob/human.dmi'
+	var/image/standImage	// Used by getMobIcon to pass off to update_body. Typically holds image(the_limb's_icon, "[src.slot]")
+	var/image/lyingImage	// Appears to be unused, since we just rotate the sprite through animagic
+	var/partIcon = 'icons/mob/human.dmi'	// The icon the mob sprite uses when attached, change if the limb's icon isnt in 'icons/mob/human.dmi'
 	var/partDecompIcon = 'icons/mob/human_decomp.dmi'
-	var/handlistPart
-	var/partlistPart
+	var/handlistPart	// Used by getHandIconState to determine the attached-to-mob-sprite hand sprite
+	var/partlistPart	// Ditto, but for foot sprites, presumably
 	var/datum/bone/bones = null // for medical crap
 	var/brute_dam = 0
 	var/burn_dam = 0
@@ -108,8 +110,8 @@
 		else
 			remove_stage = 3
 		object.loc = src.holder.loc
-		if(hasvar(object,"skin_tone"))
-			object:skin_tone = holder.bioHolder.mobAppearance.s_tone
+/* 		if(hasvar(object,"skin_tone"))
+			object:skin_tone = holder.bioHolder.mobAppearance.s_tone */
 
 		//https://forum.ss13.co/showthread.php?tid=1774
 		//object.name = "[src.holder.real_name]'s [initial(object.name)]"
@@ -164,8 +166,8 @@
 
 		object.loc = src.holder.loc
 		var/direction = src.holder.dir
-		if(hasvar(object,"skin_tone"))
-			object:skin_tone = holder.bioHolder.mobAppearance.s_tone
+/* 		if(hasvar(object,"skin_tone")) // handled by limb itself
+			object:skin_tone = holder.bioHolder.mobAppearance.s_tone */
 
 		//https://forum.ss13.co/showthread.php?tid=1774
 		//object.name = "[src.holder.real_name]'s [initial(object.name)]" //Luis Smith's Dr. Kay's Luis Smith's Sailor Dave's Left Arm

@@ -4,7 +4,6 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "arm-left"
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
-	var/skin_tone = "#FFCC99"
 	var/mob/living/original_holder = null
 	force = 6
 	stamina_damage = 40
@@ -71,23 +70,24 @@
 
 	New(mob/new_holder)
 		..()
-		holder = new_holder
-		original_holder = new_holder
-		if(!src.bones)
-			src.bones = new /datum/bone(src)
-		src.bones.donor = new_holder
-		src.bones.parent_organ = "[src.name]"
-		src.setMaterial(getMaterial("bone"), appearance = 0, setname = 0)
+		if (ismob(new_holder))
+			holder = new_holder
+			original_holder = new_holder
+			if(!src.bones)
+				src.bones = new /datum/bone(src)
+			src.bones.donor = new_holder
+			src.bones.parent_organ = "[src.name]"
+			src.setMaterial(getMaterial("bone"), appearance = 0, setname = 0)
 
-		src.add_fingerprint(holder)
-		//https://forum.ss13.co/showthread.php?tid=1774
-		// zam note - removing this again.
-		SPAWN_DBG(2 SECONDS)
-			if (new_holder && istype(new_holder))
-				name = "[new_holder.real_name]'s [initial(name)]"
-
-		set_skin_tone()
-
+			src.add_fingerprint(holder)
+			//https://forum.ss13.co/showthread.php?tid=1774
+			// zam note - removing this again.
+			SPAWN_DBG(2 SECONDS)
+				if (new_holder && istype(new_holder))
+					name = "[new_holder.real_name]'s [initial(name)]"
+		SPAWN_DBG(2)
+			colorize_limb_icon()
+			set_skin_tone()
 
 	disposing()
 		if(src.bones)
@@ -100,9 +100,7 @@
 	proc/set_skin_tone()
 		if (!skintoned)
 			return
-		if (holder && ismob(holder) && holder.bioHolder && holder.bioHolder.mobAppearance)
-			skin_tone = holder.bioHolder.mobAppearance.s_tone
-
+		var/this_skin_tone = src.skin_tone
 		if (src.lyingImage)
 			src.lyingImage.color = skin_tone
 		if (src.standImage)
@@ -111,7 +109,7 @@
 	getMobIcon(var/lying)
 		. = ..()
 		if (skintoned)
-			var/newrgb = skin_tone
+			var/newrgb = src.skin_tone
 			if (src.lyingImage)
 				src.lyingImage.color = newrgb
 			if (src.standImage)
@@ -166,6 +164,49 @@
 				src.original_DNA = src.original_holder.bioHolder.Uid
 				src.original_fprints = src.original_holder.bioHolder.uid_hash
 		return ..()
+
+	proc/fix_colors(var/hex)
+		var/list/L = hex_to_rgb_list(hex)
+		for (var/i in L)
+			L[i] = min(L[i], 190)
+			L[i] = max(L[i], 50)
+		if (L.len == 3)
+			return rgb(L["r"], L["g"], L["b"])
+		return rgb(22, 210, 22)
+
+	proc/colorize_limb_icon()
+		boutput(world, "COLORIZE LIMB ICON CALLED ON [src]")
+		if (!src.skintoned)
+			boutput(world, "[src] NOT SKINTONED")
+			return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
+		var/blend_color = null
+		if (src.original_holder && ismob(src.original_holder) && src.original_holder.bioHolder && src.original_holder.bioHolder.mobAppearance) // If we started life attached to someone, we'll have a color
+			boutput(world, "ORIGICNAL HOLDER SKIN TONE = [src.original_holder.bioHolder.mobAppearance.s_tone]")
+			boutput(world, "HOLDER SKIN TONE = [src.holder.bioHolder.mobAppearance.s_tone]")
+			if (src.skin_tone_override)
+				var/datum/appearanceHolder/aH = src.original_holder.bioHolder.mobAppearance
+				blend_color = fix_colors(aH.customization_first_color)
+				boutput(world, "LIZARD TONE = [src.skin_tone], BLEND = [blend_color]")
+			else
+				src.skin_tone = src.original_holder.bioHolder.mobAppearance.s_tone
+				blend_color = src.skin_tone	// So it can be overwritten if the limb has special skin_coloring features
+		else
+			if (src.skin_tone_override)
+				blend_color = rgb(rand(50,190), rand(50,190), rand(50,190))	// If lizlimbs havent been colored, color them
+			else
+				var/some_default_color = pick(standard_skintones)
+				blend_color = standard_skintones[some_default_color]
+
+		// All skintoned limbs get a cool not-affected-by-coloration bloody stump!
+		var/icon/limb_icon = new /icon(src.icon, "[src.icon_state]")	// Preferably a grayscale image
+		limb_icon.Blend(blend_color, ICON_MULTIPLY)
+
+		var/icon/limb_icon_overlay = new /icon(src.icon, "[src.icon_state]_blood") // Preferably blood-colored
+		limb_icon.Blend(limb_icon_overlay, ICON_OVERLAY)
+
+		src.icon = limb_icon
+		src.skin_tone = blend_color
+		boutput(world, "SKIN TONE SET IN COLORIZE IS: [src.skin_tone]")
 
 /obj/item/parts/human_parts/arm
 	name = "placeholder item (don't use this!)"
@@ -567,6 +608,7 @@
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
+	skintoned = 0
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/wendigo
@@ -591,6 +633,7 @@
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
+	skintoned = 0
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/wendigo
@@ -616,6 +659,7 @@
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
+	skintoned = 0
 	streak_descriptor = "bloody"
 	override_attack_hand = 1
 	limb_type = /datum/limb/hot
@@ -635,6 +679,7 @@
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
+	skintoned = 0
 	streak_descriptor = "bloody"
 	override_attack_hand = 1
 	limb_type = /datum/limb/hot
@@ -654,7 +699,7 @@
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
-	skintoned = 1
+	skintoned = 0
 	streak_descriptor = "bearly"
 	override_attack_hand = 1
 	limb_type = /datum/limb/bear
@@ -681,7 +726,7 @@
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
-	skintoned = 1
+	skintoned = 0
 	streak_descriptor = "bearly"
 	override_attack_hand = 1
 	limb_type = /datum/limb/bear
@@ -708,6 +753,7 @@
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
+	skintoned = 0
 	handlistPart = "l_hand_plant"
 	var/name_thing = "plant"
 	show_on_examine = 1
@@ -732,6 +778,7 @@
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
+	skintoned = 0
 	handlistPart = "r_hand_plant"
 	var/name_thing = "plant"
 	show_on_examine = 1
@@ -756,6 +803,7 @@
 	slot = "l_leg"
 	side = "left"
 	decomp_affected = 0
+	skintoned = 0
 	partlistPart = "l_foot_plant"
 	var/name_thing = "plant"
 	show_on_examine = 1
@@ -780,6 +828,7 @@
 	slot = "r_leg"
 	side = "right"
 	decomp_affected = 0
+	skintoned = 0
 	partlistPart = "r_foot_plant"
 	var/name_thing = "plant"
 	show_on_examine = 1
@@ -873,56 +922,6 @@
 		src.standImage = image('icons/mob/human.dmi', "[src.slot]_abomination")
 		return standImage
 
-/obj/item/parts/human_parts/arm/left/werewolf
-	name = "left werewolf arm"
-	desc = "Huh, lots of fur and very sharp claws."
-	icon_state = "arm_left_werewolf"
-	slot = "l_arm"
-	side = "left"
-	decomp_affected = 0
-	skintoned = 0
-	override_attack_hand = 1
-	limb_type = /datum/limb/abomination/werewolf
-	handlistPart = "l_hand_werewolf"
-	show_on_examine = 1
-
-	New(var/atom/holder)
-		if (holder != null)
-			set_loc(holder)
-		..()
-
-	getMobIcon(var/lying, var/decomp_stage = 0)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_werewolf")
-		return standImage
-
-/obj/item/parts/human_parts/arm/right/werewolf
-	name = "right werewolf arm"
-	desc = "Huh, lots of fur and very sharp claws."
-	icon_state = "arm_right_werewolf"
-	slot = "r_arm"
-	side = "right"
-	decomp_affected = 0
-	skintoned = 0
-	override_attack_hand = 1
-	limb_type = /datum/limb/abomination/werewolf
-	handlistPart = "r_hand_werewolf"
-	show_on_examine = 1
-
-	New(var/atom/holder)
-		if (holder != null)
-			set_loc(holder)
-		..()
-
-	getMobIcon(var/lying, var/decomp_stage = 0)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_werewolf")
-		return standImage
-
 /obj/item/parts/human_parts/arm/left/hunter
 	name = "left hunter arm"
 	desc = "A muscular and strong arm."
@@ -979,6 +978,7 @@
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
+	skintoned = 0
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/claw
@@ -1004,6 +1004,7 @@
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
+	skintoned = 0
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/claw
@@ -1030,6 +1031,7 @@ obj/item/parts/human_parts/arm/right/stone
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
+	skintoned = 0
 	handlistPart = "r_hand_stone"
 	var/name_thing = "stone"
 	show_on_examine = 1
@@ -1053,6 +1055,7 @@ obj/item/parts/human_parts/arm/right/stone
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
+	skintoned = 0
 	handlistPart = "l_hand_stone"
 	var/name_thing = "stone"
 	show_on_examine = 1
@@ -1076,6 +1079,7 @@ obj/item/parts/human_parts/arm/right/stone
 	slot = "l_leg"
 	side = "left"
 	decomp_affected = 0
+	skintoned = 0
 	partlistPart = "l_foot_stone"
 	var/name_thing = "stone"
 	show_on_examine = 1
@@ -1099,6 +1103,7 @@ obj/item/parts/human_parts/arm/right/stone
 	slot = "r_leg"
 	side = "right"
 	decomp_affected = 0
+	skintoned = 0
 	partlistPart = "r_foot_stone"
 	var/name_thing = "stone"
 	show_on_examine = 1
@@ -1123,6 +1128,7 @@ obj/item/parts/human_parts/arm/right/reliquary
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
+	skintoned = 0
 	handlistPart = "hand_right_reli"
 	var/name_thing = "reli"
 	show_on_examine = 1
@@ -1146,6 +1152,7 @@ obj/item/parts/human_parts/arm/right/reliquary
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
+	skintoned = 0
 	handlistPart = "hand_left_reli"
 	var/name_thing = "reli"
 	show_on_examine = 1
@@ -1168,6 +1175,7 @@ obj/item/parts/human_parts/arm/right/reliquary
 	slot = "r_leg"
 	side = "right"
 	decomp_affected = 0
+	skintoned = 0
 	partlistPart = "foot_right_reli"
 	var/name_thing = "reli"
 	show_on_examine = 1
@@ -1192,6 +1200,7 @@ obj/item/parts/human_parts/arm/right/reliquary
 	slot = "l_leg"
 	side = "left"
 	decomp_affected = 0
+	skintoned = 0
 	partlistPart = "foot_left_reli"
 	var/name_thing = "reli"
 	show_on_examine = 1
@@ -1208,3 +1217,419 @@ obj/item/parts/human_parts/arm/right/reliquary
 		current_decomp_stage_s = decomp_stage
 		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
 		return standImage
+
+////// MUTANT PARENT PARTS //////
+/obj/item/parts/human_parts/arm/mutant
+	name = "left mutant arm -please don't use!"
+	desc = "An arm that definitely does not look human."
+	icon = 'icons/mob/cow.dmi'
+	partIcon = 'icons/mob/cow.dmi'
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+	decomp_affected = 0
+	skintoned = 0
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+
+	getMobIcon(var/lying, var/decomp_stage = 0)
+		src.standImage = image(src.partIcon, "[src.slot]")
+		return standImage
+
+/obj/item/parts/human_parts/leg/mutant
+	name = "left mutant leg -please don't use!"
+	desc = "A leg that definitely does not look human."
+	icon = 'icons/mob/cow.dmi'
+	partIcon = 'icons/mob/cow.dmi'
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+	skintoned = 0
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+
+	getMobIcon(var/lying, var/decomp_stage = 0)
+		src.standImage = image(src.partIcon, "[src.slot]")
+		return standImage
+
+//// COW LIMBS ////
+///// PARENT  /////
+
+/obj/item/parts/human_parts/arm/mutant/cow
+	icon = 'icons/mob/cow.dmi'
+	partIcon = 'icons/mob/cow.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/cow
+	icon = 'icons/mob/cow.dmi'
+	partIcon = 'icons/mob/cow.dmi'
+
+//// LIMBS ////
+/obj/item/parts/human_parts/arm/mutant/cow/left
+	name = "left cow arm"
+	desc = "A cow's left arm. Moo."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/cow/right
+	name = "right cow arm"
+	desc = "A cow's right arm. Oom."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/cow/left
+	name = "left cow leg"
+	desc = "A cow's left leg. Shanked a bit too hard, presumably."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/cow/right
+	name = "right cow leg"
+	desc = "A cow's right leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+	New(var/atom/holder)
+		. = ..()
+		if(prob(1))
+			src.desc += " Bears the brand of a legendary roleplayer."
+
+//// LIZARD LIMBS ////
+//////  PARENT  //////
+
+/obj/item/parts/human_parts/arm/mutant/lizard
+	icon = 'icons/mob/lizard.dmi'
+	partIcon = 'icons/mob/lizard.dmi'
+	skintoned = 1
+	skin_tone_override = 1
+
+/* 	New(var/atom/holder)
+		..()
+		if(ishuman(holder))
+			var/mob/living/carbon/human/A = holder
+			if (A?.bioHolder?.mobAppearance)
+				var/datum/appearanceHolder/aH = A.bioHolder.mobAppearance
+				src.skin_tone = fix_colors(aH.customization_first_color)
+				boutput(world, "LIZARD TONE = [src.skin_tone], BLEND = [blend_color]")
+		colorize_limb_icon()
+		boutput(world, "LIZARD ICON = [src.icon], [src.icon_state]") */
+
+/obj/item/parts/human_parts/leg/mutant/lizard
+	icon = 'icons/mob/lizard.dmi'
+	partIcon = 'icons/mob/lizard.dmi'
+	skintoned = 1
+	skin_tone_override = 1
+
+/* 	New(var/atom/holder)
+		..()
+		if(ishuman(holder))
+			var/mob/living/carbon/human/A = holder
+			if (A?.bioHolder?.mobAppearance)
+				var/datum/appearanceHolder/aH = A.bioHolder.mobAppearance
+				src.skin_tone = fix_colors(aH.customization_first_color)
+		colorize_limb_icon() */
+
+////// ACTUAL LIZARD LIMBS //////
+/obj/item/parts/human_parts/arm/mutant/lizard/left
+	name = "left lizard arm"
+	desc = "A lizard'sss left arm."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/lizard/right
+	name = "right lizard arm"
+	desc = "A lizard'ssss right arm."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/lizard/left
+	name = "left lizard leg"
+	desc = "A lizard'ss left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/lizard/right
+	name = "right lizard leg"
+	desc = "A lizard'sssss right leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+//// AMPHIBIAN LIMBS ////
+//////  PARENT  //////
+
+/obj/item/parts/human_parts/arm/mutant/amphibian
+	icon = 'icons/mob/amphibian.dmi'
+	partIcon = 'icons/mob/amphibian.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/amphibian
+	icon = 'icons/mob/amphibian.dmi'
+	partIcon = 'icons/mob/amphibian.dmi'
+
+////// ACTUAL AMPHIBIAN LIMBS //////
+/obj/item/parts/human_parts/arm/mutant/amphibian/left
+	name = "left amphibian arm"
+	desc = "A amphibian's left arm. Croak."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/amphibian/right
+	name = "right amphibian arm"
+	desc = "A amphibian's right arm. Froak."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/amphibian/left
+	name = "left amphibian leg"
+	desc = "A amphibian's left leg. Croak."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/amphibian/right
+	name = "right amphibian leg"
+	desc = "A amphibian's right leg. Froak"
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+//// SHELTERFROG LIMBS ////
+//////  PARENT  //////
+
+/obj/item/parts/human_parts/arm/mutant/shelterfrog
+	icon = 'icons/mob/shelterfrog.dmi'
+	partIcon = 'icons/mob/shelterfrog.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/shelterfrog
+	icon = 'icons/mob/shelterfrog.dmi'
+	partIcon = 'icons/mob/shelterfrog.dmi'
+
+////// ACTUAL SHELTERFROG LIMBS //////
+/obj/item/parts/human_parts/arm/mutant/shelterfrog/left
+	name = "left shelterfrog arm"
+	desc = "A shelterfrog's left arm. CroOak."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/shelterfrog/right
+	name = "right shelterfrog arm"
+	desc = "A shelterfrog's right arm. FrOoOoak."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/shelterfrog/left
+	name = "left shelterfrog leg"
+	desc = "A shelterfrog's left leg. CroOoOk."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/shelterfrog/right
+	name = "right shelterfrog leg"
+	desc = "A shelterfrog's right leg. FroOoak"
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+//// ROACH LIMBS ////
+//////  PARENT  //////
+
+/obj/item/parts/human_parts/arm/mutant/roach
+	icon = 'icons/mob/roach.dmi'
+	partIcon = 'icons/mob/roach.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/roach
+	icon = 'icons/mob/roach.dmi'
+	partIcon = 'icons/mob/roach.dmi'
+
+////// ACTUAL ROACH LIMBS //////
+/obj/item/parts/human_parts/arm/mutant/roach/left
+	name = "left roach arm"
+	desc = "An enormous insect's left arm. Ew."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/roach/right
+	name = "right roach arm"
+	desc = "An enormous insect's right arm. Ew."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/roach/left
+	name = "left roach leg"
+	desc = "An enormous insect's left leg. Ew."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/roach/right
+	name = "right roach leg"
+	desc = "An enormous insect's right leg. Ew"
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+//// CAT LIMBS ////
+//////  PARENT  //////
+
+/obj/item/parts/human_parts/arm/mutant/cat
+	icon = 'icons/mob/cat.dmi'
+	partIcon = 'icons/mob/cat.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/cat
+	icon = 'icons/mob/cat.dmi'
+	partIcon = 'icons/mob/cat.dmi'
+
+////// ACTUAL CAT LIMBS //////
+/obj/item/parts/human_parts/arm/mutant/cat/left
+	name = "left cat arm"
+	desc = "A cat's left arm. Meow."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/cat/right
+	name = "right cat arm"
+	desc = "A cat's right arm. =3"
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/cat/left
+	name = "left cat leg"
+	desc = "A cat's left leg. =0w0="
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/cat/right
+	name = "right cat leg"
+	desc = "A cat's right leg. Mrow."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+
+//// WEREWOLF LIMBS ////
+////// PARENT	//////////
+/obj/item/parts/human_parts/leg/mutant/werewolf
+	icon = 'icons/mob/werewolf.dmi'
+	partIcon = 'icons/mob/werewolf.dmi'
+
+/obj/item/parts/human_parts/arm/mutant/werewolf
+	icon = 'icons/mob/werewolf.dmi'
+	partIcon = 'icons/mob/werewolf.dmi'
+
+//// THE ACTUAL WOLFLIMBS ////
+/obj/item/parts/human_parts/leg/mutant/werewolf/left
+	name = "left werewolf leg"
+	desc = "Huh, lots of fur and very sharp claws."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/werewolf/right
+	name = "right werewolf leg"
+	desc = "Huh, lots of fur and very sharp claws."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+/obj/item/parts/human_parts/arm/mutant/werewolf/left
+	name = "left werewolf arm"
+	desc = "Huh, lots of fur and very sharp claws."
+	icon = 'icons/mob/werewolf.dmi'
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+	decomp_affected = 0
+	skintoned = 0
+	override_attack_hand = 1
+	limb_type = /datum/limb/abomination/werewolf
+	show_on_examine = 1
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+
+/obj/item/parts/human_parts/arm/mutant/werewolf/right
+	name = "right werewolf arm"
+	desc = "Huh, lots of fur and very sharp claws."
+	icon = 'icons/mob/werewolf.dmi'
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	decomp_affected = 0
+	skintoned = 0
+	override_attack_hand = 1
+	limb_type = /datum/limb/abomination/werewolf
+	handlistPart = "hand_right"
+	show_on_examine = 1
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()

@@ -16,7 +16,7 @@
 								// but they must explicitly specify if they're overriding via this var
 	var/override_language = null // set to a language ID to replace the language of the human
 	var/understood_languages = list() // additional understood languages (in addition to override_language if set, or english if not)
-	var/allow_fat = 0			// whether fat icons/disabilities are used
+	var/allow_fat = 0			// whether fat icons/disabilities are used.
 	var/uses_special_head = 0	// unused
 	var/human_compatible = 1	// if 1, allows human diseases and dna injectors to affect this mutantrace
 	var/uses_human_clothes = 1	// if 0, can only wear clothes listed in an item's compatible_species var
@@ -27,10 +27,15 @@
 	var/jerk = 0				// Should robots arrest these by default?
 
 	var/icon = 'icons/effects/genetics.dmi'
-	var/icon_state = "epileptic"
+	var/icon_state = "blank_c"
 	var/icon_head = null
 	var/icon_beard = null
 	var/icon_override_static = 0 // does this look different enough from a default human to warrant a static icon of its own?
+
+	var/special_head = null	// The special head we're going to use, if any
+	var/built_from_pieces = 0	// Is this mutant drawn limb-by-limb?
+	var/mutant_folder = null	// Look in this folder for all the limbs
+	var/colorful = 0	// If at least some of us is colorized through haircolor settings (and it isnt hair)
 
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
@@ -61,6 +66,7 @@
 
 	var/anchor_to_floor = 0
 
+	var/image/skincolor	// Set a color to a blank icon, update_body'll color the torso and groin this color!
 	var/image/detail_1
 	var/image/detail_2
 	var/image/detail_3
@@ -198,7 +204,14 @@
 						limb.holder = M
 						limb.remove_stage = 0
 
-
+			//////////////HEAD//////////////////
+			if (src.special_head)
+				if (M.organHolder)
+					var/obj/item/organ/head/head = new src.special_head(M, M.organHolder)
+					if (istype(head))
+						M.organHolder.head = null
+						M.organHolder.head = head
+						M.organHolder.organ_list["head"] = head
 
 			M.update_face()
 			M.update_body()
@@ -284,6 +297,14 @@
 							limb.holder = H
 							limb.remove_stage = 0
 
+				if (src.special_head)
+					if (H.organHolder)
+						var/obj/item/organ/head/head = new /obj/item/parts/human_parts/leg/left(H, H.organHolder)
+						if (istype(head))
+							H.organHolder.head = null
+							H.organHolder.head = head
+							H.organHolder.organ_list["head"] = head
+
 				detail_1 = null
 				detail_2 = null
 				detail_3 = null
@@ -366,6 +387,7 @@
 
 /datum/mutantrace/flashy
 	name = "flashy"
+	icon_state = "epileptic"
 	override_eyes = 0
 	override_hair = 0
 	override_beard = 0
@@ -447,32 +469,32 @@
 /datum/mutantrace/lizard
 	name = "lizard"
 	// icon_state = "lizard"
-	icon_state = "lizard"
-	icon_override_static = 1
+	icon_override_static = 0
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "lizard"
+	special_head = /obj/item/organ/head/lizard
+	mutant_folder = 'icons/mob/lizard.dmi'
+	built_from_pieces = 1
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/lizard/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/lizard/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/left
 
 	New(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(mob))
 			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
 
-			detail_1 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-1", layer = MOB_LIMB_LAYER+0.1)
-			detail_2 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-2", layer = MOB_LIMB_LAYER+0.2)
-			detail_3 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-3", layer = MOB_LIMB_LAYER+0.3)
+			skincolor = image('icons/effects/genetics.dmi', "blank_c")
+			detail_1 = image('icons/mob/lizard.dmi', icon_state="lizard_detail-1", layer = MOB_LAYER_BASE+0.5)	// Belly coloration. Second color
 			detail_over_suit = image('icons/effects/genetics.dmi', icon_state="lizard_over_suit", layer = MOB_LAYER_BASE+0.3)
 
 			hex_to_rgb_list(aH.customization_first_color)
 
-			detail_1.color = fix_colors(aH.customization_first_color)
-			detail_2.color = fix_colors(aH.customization_second_color)
-			detail_3.color = fix_colors(aH.customization_third_color)
+			skincolor.color = fix_colors(aH.customization_first_color)
+			detail_1.color = fix_colors(aH.customization_second_color)
 			detail_over_suit.color = fix_colors(aH.customization_first_color)
-
-			// detail_1.color = aH.customization_first_color
-			// detail_2.color = aH.customization_second_color
-			// detail_3.color = aH.customization_third_color
 
 			mob.update_face()
 			mob.update_body()
@@ -801,17 +823,22 @@
 
 /datum/mutantrace/werewolf
 	name = "werewolf"
-	icon_state = "werewolf"
-	icon_override_static = 1
+	// icon_state = "werewolf"
+	icon_override_static = 0
 	human_compatible = 0
 	uses_human_clothes = 0
 	head_offset = -1
 	var/original_name
 	jerk = 1
 	override_attack = 0
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/werewolf
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/werewolf
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/werewolf/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/werewolf/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/werewolf/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/werewolf/left
 	ignore_missing_limbs = 0
+	built_from_pieces = 1
+	mutant_folder = 'icons/mob/werewolf.dmi'
+	special_head = /obj/item/organ/head/wolf
 
 	New()
 		..()
@@ -952,6 +979,7 @@
 	head_offset = -9
 	hand_offset = -5
 	body_offset = -7
+	special_head = /obj/item/organ/head/monkey
 //	uses_human_clothes = 0 // Guess they can keep that ability for now (Convair880).
 	human_compatible = 0
 	exclusive_language = 1
@@ -1247,9 +1275,16 @@
 
 /datum/mutantrace/roach
 	name = "roach"
-	icon_state = "roach"
-	icon_override_static = 1
+	//icon_state = "roach"
+	icon_override_static = 0
 	override_attack = 0
+	mutant_folder = 'icons/mob/roach.dmi'
+	special_head = /obj/item/organ/head/roach
+	built_from_pieces = 1
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/roach/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/roach/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/left
 
 	say_verb()
 		return "clicks"
@@ -1260,11 +1295,18 @@
 
 /datum/mutantrace/cat // we have the sprites so ~why not add them~? (I fully expect to get shit for this)
 	name = "cat"
-	icon_state = "cat"
-	icon_override_static = 1
+//	icon_state = "cat"
+	icon_override_static = 0
 	jerk = 1
 	override_attack = 0
 	firevuln = 1.5 // very flammable catthings
+	built_from_pieces = 1
+	mutant_folder = 'icons/mob/cat.dmi'
+	special_head = /obj/item/organ/head/cat
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/left
 
 	say_verb()
 		return "meows"
@@ -1276,8 +1318,8 @@
 
 /datum/mutantrace/amphibian
 	name = "amphibian"
-	icon_state = "amphibian"
-	icon_override_static = 1
+	//icon_state = "amphibian"
+	icon_override_static = 0
 	firevuln = 1.3
 	brutevuln = 0.7
 	human_compatible = 0
@@ -1291,6 +1333,14 @@
 	allow_fat = 1
 	movement_modifier = /datum/movement_modifier/amphibian
 	var/original_blood_color = null
+	built_from_pieces = 1
+	mutant_folder = 'icons/mob/amphibian.dmi'
+	special_head = /obj/item/organ/head/frog
+	built_from_pieces = 1
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/left
 
 	say_verb()
 		return "croaks"
@@ -1343,11 +1393,18 @@
 
 /datum/mutantrace/amphibian/shelter
 	name = "Shelter Amphibian"
-	icon_state = "shelter"
+	// icon_state = "shelter"
 	allow_fat = 0
 	human_compatible = 1
 	jerk = 0
 	var/permanent = 0
+	built_from_pieces = 1
+	mutant_folder = 'icons/mob/shelterfrog.dmi'
+	special_head = /obj/item/organ/head/shelter
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/shelterfrog/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/shelterfrog/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/shelterfrog/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/shelterfrog/left
 
 	New()
 		..()
@@ -1561,11 +1618,19 @@
 
 /datum/mutantrace/cow
 	name = "cow"
-	icon_state = "cow"
-	icon_override_static = 1
+//	icon_state = "cow"
+	icon_override_static = 0
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "cow"
+	built_from_pieces = 1
+	colorful = 1 // the horns, just one customization entry
+	mutant_folder = 'icons/mob/cow.dmi'
+	special_head = /obj/item/organ/head/cow
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/left
 
 	New(var/mob/living/carbon/human/H)
 		..()

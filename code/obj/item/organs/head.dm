@@ -28,8 +28,9 @@
 
 	var/icon/head_icon = null
 
-	var/icon_piece_1 = null	// For setting up the icon if its in multiple pieces
-	var/icon_piece_2 = null
+	var/icon/icon_piece_1 = null	// If our head has an extra colorful *thing*
+	var/icon_piece_1_color = null	// Colorizes the extra colorful *thing*
+	var/icon_skin_color = null		// If we're overriding the base skin color with another skin color
 
 	// equipped items - they use the same slot names because eh.
 	var/obj/item/clothing/head/head = null
@@ -158,7 +159,22 @@
 			d_icon.Blend(dcol, ICON_MULTIPLY)
 			src.head_icon.Blend(d_icon, ICON_OVERLAY)
 
-		src.icon = src.head_icon
+		if (src.icon_piece_1)
+			var/icon/new_head_icon = new /icon(src.icon, src.icon_state)
+
+			if (!src.icon_skin_color)
+				src.icon_piece_1_color = rgb(rand(50,190), rand(50,190), rand(50,190))
+			new_head_icon.Blend(src.icon_piece_1_color, ICON_MULTIPLY)
+
+			if (!src.icon_piece_1_color)
+				src.icon_piece_1_color = rgb(rand(50,190), rand(50,190), rand(50,190))
+			var/icon/icon_1 = new /icon(src.icon, src.icon_piece_1)
+			icon_1.Blend(src.icon_piece_1_color, ICON_MULTIPLY)
+			new_head_icon.Blend(icon_1, ICON_OVERLAY)
+
+			src.icon = new_head_icon
+		else
+			src.icon = src.head_icon
 
 	proc/update_headgear_image()
 		src.overlays = null
@@ -301,74 +317,77 @@
 
 /obj/item/organ/head/monkey
 	name = "monkey head"
-	desc = "A long, slender head."
-	icon_state = "head-monkey"
-	edible = 0
+	desc = "The last thing a geneticist sees before they die."
+	icon_state = "monkey"
 
 /obj/item/organ/head/lizard
 	name = "lizard head"
-	desc = "A long, scaled head."
-	icon_state = "lizard"	// This is just the meat bit
-	icon_piece_1 = "head-lizard-detail-1"
-	icon_piece_2 = "head-lizard-detail-2"
-	edible = 1	// ew
+	desc = "Well, sssshit."
+	icon = 'icons/mob/lizard.dmi'
+	icon_state = "head-detail1"
+	icon_piece_1 = "head-detail2"
 
-/* 	New()
+	New()
 		..()
 		// This head accepts hairstyle colors!
 		var/mob/living/carbon/human/M = src.donor
 		if (M && ishuman(M))	// Get the colors here so they dont change later, ie reattached on someone else
 			var/datum/appearanceHolder/aH = M.bioHolder.mobAppearance
-			src.organ_color_1 = organ_fix_colors(aH.customization_first_color)
-			src.organ_color_2 = organ_fix_colors(aH.customization_second_color)
+			src.icon_skin_color = organ_fix_colors(aH.customization_first_color)
+			src.icon_piece_1_color = organ_fix_colors(aH.customization_second_color)
 		else	// Just throw some colors in there or something
-			src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
-			src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
-
-		// Colorize (and build) organ item
-		src.update_tail_icon() */
+			src.icon_skin_color = rgb(rand(50,190), rand(50,190), rand(50,190))
+			src.icon_piece_1_color = rgb(rand(50,190), rand(50,190), rand(50,190))
+		update_icon()
+		M.update_body()
 
 /obj/item/organ/head/cow
 	name = "cow head"
-	desc = "A short, brush-like head."
-	icon_state = "cow"
-	edible = 0
+	desc = "They're not dead, they're just a really good roleplayer."
+	icon = 'icons/mob/cow.dmi'
+	icon_piece_1 = "head-detail1"
 
-// add horns here
+	New()
+		..()
+		// This head accepts hairstyle colors!
+		var/mob/living/carbon/human/M = src.donor
+		if (M && ishuman(M))	// Get the colors here so they dont change later, ie reattached on someone else
+			var/datum/appearanceHolder/aH = M.bioHolder.mobAppearance
+			src.icon_skin_color = "#FFFFFF"	// So our head doesn't look any stranger than it should
+			src.icon_piece_1_color = organ_fix_colors(aH.customization_first_color)
+		else	// Just throw some colors in there or something
+			src.icon_piece_1_color = rgb(rand(50,190), rand(50,190), rand(50,190))
+		update_icon()
+		M.update_body()
 
 /obj/item/organ/head/wolf
 	name = "wolf head"
-	desc = "A long, fluffy head."
-	icon_state = "werewolf"
+	desc = "Definitely not a good boy."
+	icon = 'icons/mob/werewolf.dmi'
 	MAX_DAMAGE = 250	// Robust head for a robust antag
 	FAIL_DAMAGE = 240
-	edible = 0
 
-/obj/item/organ/head/bone
-	name = "tailbone"
-	desc = "A short piece of bone."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "skull"	// please dont drop another skull
-	created_decal = null
-	made_from = "bone"	// clak clak
-	created_decal = null	// just a piece of bone
-	edible = 0
-
-/obj/item/organ/head/seamonkey
+/* /obj/item/organ/head/seamonkey
 	name = "seamonkey head"
-	desc = "A long, scaled head."
-	icon_state = "seamonkey"
-	edible = 0
+	desc = "The last thing an assistant sees when they fall into the trench. Aside from all the robots." */
 
 /obj/item/organ/head/cat
 	name = "cat head"
-	desc = "A long, furry head."
-	icon_state = "head-cat"
-	edible = 0
+	desc = "Me-youch."
+	icon = 'icons/mob/cat.dmi'
 
 /obj/item/organ/head/roach
 	name = "roach abdomen"
 	desc = "A large insect behind."
-	icon_state = "roach"
+	icon = 'icons/mob/roach.dmi'
 	made_from = "chitin"
-	edible = 1 // ew
+
+/obj/item/organ/head/frog
+	name = "frog head"
+	desc = "Croak."
+	icon = 'icons/mob/amphibian.dmi'
+
+/obj/item/organ/head/shelter
+	name = "shelterfrog head"
+	desc = "CroOoOoOooak."
+	icon = 'icons/mob/shelterfrog.dmi'
