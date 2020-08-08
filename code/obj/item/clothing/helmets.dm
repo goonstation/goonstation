@@ -500,13 +500,20 @@
 		setProperty("meleeprot_head", 2)
 		setProperty("disorient_resist_eye", 100)
 
-	proc/flip_down()
+	proc/flip_down(var/mob/user)
 		setProperty("meleeprot_head", 2)
 		setProperty("disorient_resist_eye", 100)
+		user.addOverlayComposition(/datum/overlayComposition/welding_mask)
 
-	proc/flip_up()
+	proc/flip_up(var/mob/user)
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
+		user.removeOverlayComposition(/datum/overlayComposition/welding_mask)
+
+	equipped(var/mob/user, var/slot)
+		..()
+		if (!up)
+			user.addOverlayComposition(/datum/overlayComposition/welding_mask)
 
 	unequipped(var/mob/living/user)
 		..()

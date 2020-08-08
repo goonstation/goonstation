@@ -127,7 +127,7 @@
 			the_mob.set_clothing_icon_dirty()
 			icon_state = "weldup"
 
-			W.flip_down()
+			W.flip_down(the_mob)
 		else
 			W.up = !W.up
 			W.see_face = !W.see_face
@@ -139,7 +139,7 @@
 			the_mob.set_clothing_icon_dirty()
 			icon_state = "welddown"
 
-			W.flip_up()
+			W.flip_up(the_mob)
 		..()
 
 
