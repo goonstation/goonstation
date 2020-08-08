@@ -62,7 +62,6 @@
 	var/extra_try_timestamp = 0
 
 	var/last_blob_life_tick = 0 //needed for mult to properly work for blob abilities
-	var/last_blob_life_mult = 0 //in a perfect world i wouldnt need this, but i gotta make the stat panel reflect reality
 
 	proc/start_tutorial()
 		if (tutorial)
@@ -184,7 +183,6 @@
 					N.UpdateOverlays(null, "reflectivity")
 
 		src.last_blob_life_tick = TIME
-		src.last_blob_life_mult = mult
 
 	death()
 		//death was called but the player isnt playing this blob anymore
