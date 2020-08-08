@@ -21,7 +21,7 @@
 			user.show_text("You add water to the rice to make sticky rice!", "blue")
 			new /obj/item/reagent_containers/food/snacks/ingredient/sticky_rice(src.loc)
 			qdel(W)
-		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/) || istype(W, /obj/item/reagent_containers/balloon/))
+		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/) || istype(W, /obj/item/reagent_containers/balloon/) || istype(W, /obj/item/soup_pot))
 			var/fill = W.reagents.maximum_volume
 			if (fill == W.reagents.total_volume)
 				user.show_text("[W] is too full already.", "red")
