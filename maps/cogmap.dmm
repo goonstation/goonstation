@@ -12165,6 +12165,21 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/secwing)
+"aBB" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/station/mining)
 "aBC" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
@@ -38476,9 +38491,8 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "bDR" = (
+/obj/wingrille_spawn/auto,
 /obj/securearea,
-/obj/grille/steel,
-/obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "bDS" = (
@@ -39554,14 +39568,14 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 8
-	},
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
 	name = "Cargo Office";
-	req_access_txt = "31"
+	req_access = null;
+	req_access_txt = null
 	},
+/obj/access_spawn/cargo,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bGe" = (
@@ -44167,13 +44181,10 @@
 /turf/simulated/floor/caution/north,
 /area/station/quartermaster/office)
 "bPs" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
 	name = "External Access";
-	req_access_txt = "31"
+	req_access_txt = null
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -44183,6 +44194,8 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/access_spawn/cargo,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "bPt" = (
@@ -44750,7 +44763,7 @@
 "bQB" = (
 /obj/machinery/door/window/northleft{
 	name = "Cargo Office";
-	req_access_txt = "31"
+	req_access_txt = null
 	},
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -44758,6 +44771,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/cargo,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
@@ -45539,9 +45553,10 @@
 /obj/machinery/door/window/northleft{
 	dir = 2;
 	name = "Cargo Office";
-	req_access_txt = "31"
+	req_access_txt = null
 	},
 /obj/machinery/cashreg,
+/obj/access_spawn/cargo,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
@@ -47555,11 +47570,13 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Mining";
-	req_access_txt = "50"
+	req_access = null;
+	req_access_txt = null
 	},
+/obj/access_spawn/mining,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/mining)
 "bWl" = (
@@ -48619,19 +48636,19 @@
 	name = "Supply Lobby"
 	})
 "bYG" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
 	name = "Mining";
-	req_access_txt = "50"
+	req_access = null;
+	req_access_txt = null
 	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/mining,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/mining)
 "bYH" = (
@@ -49917,13 +49934,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining)
 "cbv" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/yellow/side{
+/turf/simulated/floor/yellow/corner{
 	dir = 8
 	},
 /area/station/mining)
@@ -50645,7 +50656,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/access_spawn/security,
 /obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/cargo)
@@ -51402,14 +51412,16 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/external{
-	req_access_txt = "50"
+	req_access_txt = null
 	},
+/obj/access_spawn/mining,
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
 "cfh" = (
 /obj/machinery/door/airlock/pyro/external{
-	req_access_txt = "50"
+	req_access_txt = null
 	},
+/obj/access_spawn/mining,
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
 "cfi" = (
@@ -51960,9 +51972,8 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
+/obj/access_spawn/mining,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/mining)
 "cgu" = (
@@ -52533,9 +52544,8 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
+/obj/access_spawn/mining,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/mining)
 "chD" = (
@@ -53035,11 +53045,13 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "Tech Storage";
-	req_access_txt = "23"
+	req_access = null;
+	req_access_txt = null
 	},
+/obj/access_spawn/tech_storage,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "ciK" = (
@@ -54470,25 +54482,27 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining)
 "clF" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/external{
-	req_access_txt = "50"
+	req_access_txt = null
 	},
+/obj/access_spawn/mining,
+/obj/firedoor_spawn,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
 /area/station/mining)
 "clG" = (
-/obj/machinery/door/firedoor/pyro,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/external{
-	req_access_txt = "50"
+	req_access_txt = null
 	},
+/obj/access_spawn/mining,
+/obj/firedoor_spawn,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -55511,11 +55525,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/junction{
+	dir = 8;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/yellow/side{
-	dir = 10
+	dir = 8
 	},
 /area/station/mining)
 "cnV" = (
@@ -55528,9 +55543,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/yellow/corner{
-	dir = 8
-	},
+/turf/simulated/floor,
 /area/station/mining)
 "cnW" = (
 /obj/cable{
@@ -57189,10 +57202,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Solar Substation"
+	name = "Solar Substation";
+	req_access = null
 	},
+/obj/access_spawn/engineering,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southsolar)
 "cri" = (
@@ -57335,11 +57350,10 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
 	name = "External Access";
-	req_access_txt = "13;40"
+	req_access_txt = null
 	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
+/obj/access_spawn/engineering,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southsolar)
 "crz" = (
@@ -57624,8 +57638,9 @@
 	},
 /obj/machinery/door/airlock/pyro/external{
 	name = "External Access";
-	req_access_txt = "13;40"
+	req_access_txt = null
 	},
+/obj/access_spawn/engineering,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southsolar)
 "csd" = (
@@ -121157,8 +121172,8 @@ ccy
 ccy
 cnT
 bUZ
+bUZ
 aaG
-aaa
 aaa
 aaa
 aaa
@@ -121458,7 +121473,7 @@ cke
 clE
 cmO
 cnU
-bUZ
+aBB
 bLE
 bMf
 bMf
