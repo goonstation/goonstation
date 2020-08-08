@@ -1,3 +1,13 @@
+
+(t)sat aug 08 20
+(u)Chickenish
+(p)1705
+(e)🐛|bug
+(+)Chili burps are now working closer to as intended.
+(u)Kubius
+(p)1743
+(e)🗺|mapping
+(+)Kondaru's export driver door now has an override button.
 (t)thu aug 06 20
 (u)Zamujasa
 (*)Medal rewards that fail to redeem due to not having the required items will no longer be disabled, so you can redeem them properly later.
