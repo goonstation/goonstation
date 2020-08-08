@@ -74,6 +74,33 @@
 	damage_slashing()
 	damage_blunt()
 
+/turf/simulated/floor/shuttle/exterior
+	name = "ship plating"
+	icon_state = "ship_ext"
+	icon = 'icons/turf/shuttle.dmi'
+	turf_flags = MOB_STEP
+	allows_vehicles = 1
+	oxygen = 0.001
+	nitrogen = 0.001
+	temperature = TCMB
+
+	attackby()
+	attack_hand()
+	hitby()
+	reagent_act()
+	bullet_act()
+	ex_act()
+	blob_act()
+	meteorhit()
+	damage_heat()
+	damage_corrosive()
+	damage_piercing()
+	damage_slashing()
+	damage_blunt()
+
+	decoration
+		icon_state = "ship_ext_plating"
+
 
 /turf/simulated/wall/auto/shuttle
 	icon = 'icons/turf/walls_shuttle.dmi'

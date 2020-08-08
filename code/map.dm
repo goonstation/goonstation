@@ -36,7 +36,8 @@ var/global/list/mapNames = list(
 	"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,				"MaxPlayersAllowed" = 30),
 	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 30),
 	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 80),
-	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = ASS_JAM)
+	"Wrestlemap" = 		list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = ASS_JAM),
+	"Viator" = 	        list("id" = "VIATOR", 		"settings" = "viator",           "playerPickable" = 1)
 )
 
 /obj/landmark/map
@@ -344,6 +345,45 @@ var/global/list/mapNames = list(
 		"that snazzy-lookin' sports bar up front" = list(/area/station/crew_quarters/fitness),
 		"the main medical bay room" = list(/area/station/medical/medbay),
 		"the research artifact lounge" = list(/area/station/science/artifact))
+
+/datum/map_settings/viator
+	name = "VIATOR"
+	display_name = "NSS Viator"
+	goonhub_map = "https://goatse.info"
+	style = "ship"
+	dir_fore = SOUTH
+	arrivals_type = MAP_SPAWN_SHUTTLE
+	escape_dir = WEST
+	auto_windows = 1
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+
+	escape_centcom = /area/shuttle/escape/centcom/donut2
+	escape_transit = /area/shuttle/escape/transit/donut2
+	escape_station = /area/shuttle/escape/station/donut2
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/donut2
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/donut2
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/donut2
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/donut2	
+
+	valid_nuke_targets = list("the security armory" = list(/area/station/security/armory),
+		"the research sector" = list(/area/station/science),
+		"the cargo bay" = list(/area/station/quartermaster/office),
+		"the mining refinery" = list(/area/station/mining/refinery),
+		"the thermo-electric generator controlroom" = list(/area/station/engine/monitoring),
+		"the bar" = list(/area/station/crew_quarters/bar),
+		"monkey storage" = list(/area/station/medical/dome),
+		"toxins gas storage" = list(/area/station/science/storage),
+		"the artifact lab" = list(/area/station/science/artifact),
+		"the robotics lab" = list(/area/station/medical/robotics))
 
 /datum/map_settings/manta
 	name = "MANTA"

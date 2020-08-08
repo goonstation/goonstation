@@ -28,6 +28,11 @@
 	seaheater
 		icon_state = "seaheater"
 
+/obj/machinery/shuttle/engine/best_propulsion
+	name = "propulsion unit"
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "best_propulsion"
+
 /obj/machinery/shuttle/engine/platform
 	name = "platform"
 	icon_state = "platform"
