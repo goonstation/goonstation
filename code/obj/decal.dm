@@ -672,7 +672,7 @@ obj/decal/fakeobjects/teleport_pad
 	
 /obj/decal/tile_edge/floorguide/hop
 	name = "Head Of Personnel Navigation Guide"
-	desc = "The head of personnel's office is in this direction."
+	desc = "The Head of Personnel's office is in this direction."
 	icon_state = "guide_hop"
 	
 /obj/decal/tile_edge/floorguide/ai
