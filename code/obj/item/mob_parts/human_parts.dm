@@ -172,7 +172,7 @@
 				src.original_fprints = src.original_holder.bioHolder.uid_hash
 		return ..()
 
-	proc/limb_headcount()	// Problem: human mob skintone isnt available immediately when limbs are created
+	// Takes a hex color ("#420DAB"), makes it an RGB list (66, 13, 171), clamps the vals (66, 50, 171), then turns it back into hex ("#4232AB") and sends that
 		src.limbs_processed ++	// Solution: delay limb skintone checks by a split second, getting the right color!
 		if (src.limbs_processed >= 4) // Problem: This delays skin coloration until *after* the mob's already update_body()ed
 			holder.update_body()	// Solution: call update_body() 4 more times per player spawn
@@ -194,20 +194,20 @@
 			return rgb(L["r"], L["g"], L["b"])
 		return rgb(22, 210, 22)
 
-	proc/colorize_limb_icon()
+	proc/colorize_limb_icon()	// Actually just sets the skin tone, the limbs are colorized elsewhere
 		if (!src.skintoned)
 			return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
+		var/mob/living/carbon/human/M
+		if(ishuman(src.original_holder))
+			M = src.original_holder
 		var/blend_color = null
-		if (src.original_holder && ismob(src.original_holder) && src.original_holder.bioHolder && src.original_holder.bioHolder.mobAppearance) // If we started life attached to someone, we'll have a color
-			SPAWN_DBG(2)
-				if (src.skin_tone_override)
-					var/datum/appearanceHolder/aH = src.original_holder.bioHolder.mobAppearance
-					src.skin_tone = fix_colors(aH.customization_first_color)
-				else
-					src.skin_tone = src.original_holder.bioHolder.mobAppearance.s_tone
-				set_limb_icon_coloration()
-			return
-		else
+		if (M?.AH_we_spawned_with) // If we started life attached to someone, we'll have a color
+			var/datum/appearanceHolder/aH = M.AH_we_spawned_with
+			if (src.skin_tone_override)
+				src.skin_tone = fix_colors(aH.customization_first_color)
+			else
+				src.skin_tone = aH.s_tone
+		else	// This is going to look *weird* if these somehow spawn on a mob
 			if (src.skin_tone_override)
 				src.skin_tone = rgb(rand(50,190), rand(50,190), rand(50,190))	// If lizlimbs havent been colored, color them
 			else
@@ -215,7 +215,7 @@
 				src.skin_tone = standard_skintones[blend_color]
 		set_limb_icon_coloration()
 
-	proc/set_limb_icon_coloration()
+	proc/set_limb_icon_coloration()	// Actually colorizes the limb with the skin tone
 		// All skintoned limbs get a cool not-affected-by-coloration bloody stump!
 		var/icon/limb_icon = new /icon(src.icon, "[src.icon_state]")	// Preferably a grayscale image
 		limb_icon.Blend(src.skin_tone, ICON_MULTIPLY)

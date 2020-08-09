@@ -911,7 +911,6 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 						var/limb_skin_tone = "#FFFFFF"	// So we dont stomp on any limbs that arent supposed to be colorful
 						if (limb.skintoned && limb.skin_tone)	// Get the limb's stored skin tone, if its skintoned and has a skin_tone
 							limb_skin_tone = limb.skin_tone	// So the limb's hand/foot gets the color too, when/if we get there
-							boutput(world, "UPDATE_ICON: [limb] SKINTONE IS [limb_skin_tone], LIMB_PIC IS [limb_pic], [limb_pic.color]")
 						limb_pic.color = limb_skin_tone
 						src.body_standing.overlays += limb_pic
 
