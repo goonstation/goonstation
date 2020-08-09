@@ -24,7 +24,7 @@
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab
 
-	var/lining_item_color = 0
+	var/lining_item_color = "blue"
 
 	New(loc, length = STARTLINING)
 		src.amount = length
@@ -75,12 +75,7 @@
 		return
 
 	proc/updateicon()
-		if (lining_item_color == 0)
-			set_icon_state("item_blue")
-		else if (lining_item_color == 1)
-			set_icon_state("item_pink")
-		else if (lining_item_color == 2)
-			set_icon_state("item_yellow")
+		set_icon_state("item_[lining_item_color]")
 		return
 
 /obj/item/neon_lining/cut
@@ -99,26 +94,18 @@
 		..(loc, 20)
 
 /obj/item/neon_lining/attack_self(mob/user as mob)
-	if (lining_item_color > -1 && lining_item_color < 2)
-		lining_item_color++
+	if (lining_item_color == "blue")
+		lining_item_color = "pink"
+	else if (lining_item_color == "pink")
+		lining_item_color = "yellow"
 	else
-		lining_item_color = 0
-	boutput(user, "You change the [base_name]'s color.")
+		lining_item_color = "blue"
+	boutput(user, "You change the [base_name]'s color to [lining_item_color].")
 	updateicon()
 	return
 
-/obj/item/neon_lining/examine()
-	if (amount == 1)
-		. = list("A short piece of [base_name].")
-	else
-		. = list("A coil of [base_name]. There's [amount] length[s_es(amount)] of lining in the coil.")
-
-	if (lining_item_color == 0)
-		. += "It is blue."
-	if (lining_item_color == 1)
-		. += "It is pink."
-	if (lining_item_color == 2)
-		. += "It is yellow."
+/obj/item/neon_lining/get_desc()
+	return " There's [amount] length[s_es(amount)] left. It is [lining_item_color]."
 
 /obj/item/neon_lining/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && src.amount > 1)
