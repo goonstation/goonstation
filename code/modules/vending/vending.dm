@@ -1784,7 +1784,7 @@
 						playsound(src.loc, S, 50, 0)
 
 				if (src.pay)
-					if (src.acceptcard && src.scan && account)
+					if (src.acceptcard && account)
 						account.fields["current_money"] -= R.product_cost
 					else
 						src.credit -= R.product_cost
