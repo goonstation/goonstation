@@ -47,6 +47,8 @@
 		return
 	switch(action)
 		if ("insert_card")
+			if (src.scan)
+				return TRUE
 			var/obj/O = usr.equipped()
 			if (istype(O, /obj/item/card/id))
 				boutput(usr, "<span class='notice'>You insert your ID card.</span>")
@@ -76,7 +78,7 @@
 		if("eject")
 			if(!src.scan)
 				return TRUE // jerks doing that "hide in a chute to glitch auto-update windows out" exploit caused a wall of runtime errors
-			src.scan.set_loc(get_turf(src))
+			usr.put_in_hand_or_eject(src.scan)
 			src.scan = null
 			src.working = FALSE
 			src.icon_state = "slots-off" // just in case, some fucker broke it earlier
