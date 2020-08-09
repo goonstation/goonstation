@@ -521,7 +521,7 @@
 
 		for (var/mt in cyborg_modules)
 			var/obj/item/robot_module/M = new mt
-			for (var/obj/item/I in M.modules)
+			for (var/obj/item/I in M.tools)
 				var/datum/module_tech/T = locate_item(I)
 				if (T)
 					unlock_now(T)
@@ -802,14 +802,14 @@ var/global/datum/module_research_controller/module_control = new
 					else
 						module_control.data_points -= t_cost
 						var/obj/item/robot_module/R = modules[1]
-						for (var/obj/O in R.modules)
+						for (var/obj/O in R.tools)
 							qdel(O)
-						R.modules.len = 0
+						R.tools.len = 0
 						for (var/i = 1, i <= current_module.len, i++)
 							var/datum/module_tech/T = current_module[i]
 							var/obj/O = new T.item_path()
 							O.loc = R
-							R.modules += O
+							R.tools += O
 						modules -= R
 						R.loc = get_turf(src)
 						R.name = module_name
