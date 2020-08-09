@@ -38,7 +38,7 @@
 		I.set_loc(src)
 		LAZYLISTADD(src.modules, I)
 		boutput(user, "<span class=\"notice\">You insert [I] into the [src].</span>")
-		// UI will update next cycle
+		tgui_process.update_uis(src)
 	else
 		src.attack_hand(user)
 

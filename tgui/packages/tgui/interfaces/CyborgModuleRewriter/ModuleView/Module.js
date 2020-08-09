@@ -41,7 +41,7 @@ const Module = props => {
 
   return (
     <>
-      <Section title="Reset">
+      <Section title="Preset">
         {
           resetOptions.map(resetOption => {
             const {

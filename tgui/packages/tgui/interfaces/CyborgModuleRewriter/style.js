@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { block, element } from '../../util/bem';
+import { block, element } from 'common/bem';
 
 export const BlockCn = 'cyborg-module-rewriter-interface';
 
