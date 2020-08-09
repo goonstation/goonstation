@@ -1,5 +1,9 @@
 
 (t)sun aug 09 20
+(u)Jawns
+(p)1744
+(e)🐛|bug
+(+)Cyborg cooking privileges revoked (for their own tools).
 (u)Carbadox
 (p)1748
 (e)🆕|feature
