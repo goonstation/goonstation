@@ -71,7 +71,7 @@
 		selectedModuleData = list()
 		selectedModuleData["ref"] = "\ref[src.selectedModule]"
 		var/list/selectedModuleToolsData = list()
-		for (var/obj/item/tool in src.selectedModule.modules)
+		for (var/obj/item/tool in src.selectedModule.tools)
 			var/list/toolData = list()
 			toolData["name"] = tool.name
 			toolData["ref"] = "\ref[tool]"
@@ -164,14 +164,14 @@
 					else if (module == src.selectedModule)
 						var/obj/item/tool = locate(toolRef) in module
 						if (tool)
-							var/toolIndex = module.modules.Find(tool)
+							var/toolIndex = module.tools.Find(tool)
 							switch (dir)
 								if ("down")
-									if (toolIndex > 0 && toolIndex < module.modules.len)
-										module.modules.Swap(toolIndex, toolIndex + 1)
+									if (toolIndex > 0 && toolIndex < module.tools.len)
+										module.tools.Swap(toolIndex, toolIndex + 1)
 								if ("up")
 									if (toolIndex >= 2)
-										module.modules.Swap(toolIndex, toolIndex - 1)
+										module.tools.Swap(toolIndex, toolIndex - 1)
 			. = TRUE
 
 		if ("tool-remove")
@@ -184,8 +184,8 @@
 						// sanity check, tidy up modules list if not in the machine for some reason
 						LAZYLISTREMOVE(src.modules, module)
 					else if (module == src.selectedModule)
-						var/obj/item/tool = locate(toolRef) in module.modules
+						var/obj/item/tool = locate(toolRef) in module.tools
 						if (tool)
-							module.modules -= tool
+							module.tools -= tool
 							qdel(tool)
 			. = TRUE
