@@ -1,4 +1,9 @@
 
+(t)sun aug 09 20
+(u)Carbadox
+(p)1748
+(e)🆕|feature
+(+)Chaplain can now earn Job XP by Bible Healing/Smiting
 (t)sat aug 08 20
 (u)Mordent
 (p)1691
