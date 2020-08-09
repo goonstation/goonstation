@@ -183,8 +183,8 @@
 		if(ishuman(src.original_holder))
 			M = src.original_holder
 		var/blend_color = null
-		if (M?.AH_we_spawned_with) // If we started life attached to someone, we'll have a color
-			var/datum/appearanceHolder/aH = M.AH_we_spawned_with
+		if (M?.AH_we_spawned_with || M?.bioHolder?.mobAppearance?.s_tone) // If we started life attached to someone, we'll have a color
+			var/datum/appearanceHolder/aH = M?.bioHolder?.mobAppearance?.s_tone ? M.bioHolder.mobAppearance : M.AH_we_spawned_with
 			if (src.skin_tone_override)
 				src.skin_tone = fix_colors(aH.customization_first_color)
 			else
