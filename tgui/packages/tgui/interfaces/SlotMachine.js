@@ -7,7 +7,7 @@ import { useBackend } from '../backend';
 import { Box, Button, NoticeBox, Divider, BlockQuote, Icon } from '../components';
 import { Window } from '../layouts';
 
-export const SlotMachine = context => {
+export const SlotMachine = (props, context) => {
   const { data } = useBackend(context);
   const { scannedCard, busy } = data;
   return (
@@ -33,7 +33,7 @@ export const SlotMachine = context => {
   );
 };
 
-const InsertCard = context => {
+const InsertCard = (props, context) => {
   const { act } = useBackend(context);
   return (
     <Box>
@@ -48,7 +48,7 @@ const InsertCard = context => {
   );
 };
 
-const SlotWindow = context => {
+const SlotWindow = (props, context) => {
   const { act, data } = useBackend(context);
   const { scannedCard, money, plays } = data;
 
