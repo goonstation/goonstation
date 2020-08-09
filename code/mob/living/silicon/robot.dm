@@ -39,7 +39,7 @@
 	var/next_cache = 0
 	var/stat_cache = list(0, 0, "")
 
-//3 Modules can be activated at any one time.
+	// 3 tools can be activated at any one time.
 	var/module_active = null
 	var/list/module_states = list(null,null,null)
 
@@ -1759,7 +1759,7 @@
 				if (isitem(I))
 					var/obj/item/IT = I
 					IT.dropped(src) // Handle light datums and the like.
-				if (I in module.modules)
+				if (I in module.tools)
 					I.loc = module
 				else
 					qdel(I)
@@ -1980,7 +1980,7 @@
 
 			dat += "<BR><B>Available Equipment</B><BR>"
 
-			for (var/obj in src.module.modules)
+			for (var/obj in src.module.tools)
 				if(src.activated(obj)) dat += text("[obj]: <B>Equipped</B><BR>")
 				else dat += text("[obj]: <A HREF=?src=\ref[src];act=\ref[obj]>Equip</A><BR>")
 		else dat += "<B>No Module Installed</B><BR>"
