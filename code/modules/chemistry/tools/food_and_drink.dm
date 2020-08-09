@@ -1250,8 +1250,8 @@
 
 		if(too_drunk || maybe_too_tipsy || maybe_too_clumsy)
 			C.visible_message("[C.name] was too energetic, and threw the [src.name] backwards instead of chugging it!")
-			C.u_equip(src)
 			src.set_loc(get_turf(C))
+			C.u_equip(src)
 			var/target = get_steps(C, turn(C.dir, 180), 7) //7 tiles seems appropriate.
 			src.throw_at(target, 7, 1)
 			if (!C.hasStatus("weakened"))
