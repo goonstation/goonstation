@@ -63015,6 +63015,16 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/engine/gas)
+"mjO" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred1"
+	},
+/area/station/chapel/main)
 "msz" = (
 /obj/lattice,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -63076,6 +63086,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
+"nuk" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "qmin"
+	},
+/turf/space,
+/area)
 "nvq" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "7"
@@ -120402,7 +120419,7 @@ aIO
 aJT
 aLf
 aMo
-aNv
+mjO
 aMo
 aLf
 aJT
@@ -123776,9 +123793,9 @@ aaa
 aaa
 aah
 aaa
-aaj
-aaa
-aaj
+aah
+nuk
+aah
 cxB
 bLc
 bLc
@@ -124078,9 +124095,9 @@ aaa
 aaa
 aah
 aaa
-aaa
-aaa
-aaa
+aag
+bHU
+aaG
 bJU
 bLc
 bLc
@@ -124380,9 +124397,9 @@ aaa
 aaa
 aah
 aaa
+aaj
 aaa
-aaa
-aaa
+aaj
 bJU
 bFr
 bMF
