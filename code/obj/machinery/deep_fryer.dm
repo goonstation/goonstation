@@ -27,7 +27,7 @@
 		if (isghostdrone(user) || isAI(user))
 			boutput(usr, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
-		if (issilicon(user) && W.loc == user) //For borg held items
+		if (W.cant_drop) //For borg held items
 			user.show_text("You can't put that in [src] when it's attached to you!", "red")
 			return
 		if (src.fryitem)

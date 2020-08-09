@@ -92,7 +92,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		else //Otherwise bad luck!!
 			boutput(user, "It's dirty!")
 			return
-	else if (issilicon(user) && O.loc == user) //For borg held items, if the microwave is clean and functioning
+	else if (O.cant_drop) //For borg held items, if the microwave is clean and functioning
 		user.show_text("You can't put that in [src] when it's attached to you!", "red")
 	else if(istype(O,/obj/item/dice))
 		var/obj/item/dice/die = O
