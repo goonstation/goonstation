@@ -167,18 +167,6 @@
 		return ..()
 
 	// Takes a hex color ("#420DAB"), makes it an RGB list (66, 13, 171), clamps the vals (66, 50, 171), then turns it back into hex ("#4232AB") and sends that
-		src.limbs_processed ++	// Solution: delay limb skintone checks by a split second, getting the right color!
-		if (src.limbs_processed >= 4) // Problem: This delays skin coloration until *after* the mob's already update_body()ed
-			holder.update_body()	// Solution: call update_body() 4 more times per player spawn
-			src.limbs_processed = 0	// Problem: That's stupid
-		else if (src.limbs_processed == 1)	// Solution: Make something that update_body()s after 4 limb additions
-			SPAWN_DBG(1 SECOND)	// Problem: What if less than 4 limbs are added?
-				if (!src.limbs_processed)	// Solution: Just update_body() anyway
-					return
-				else
-					holder.update_body()	// Problem: this is still stupid
-
-
 	proc/fix_colors(var/hex)
 		var/list/L = hex_to_rgb_list(hex)
 		for (var/i in L)
