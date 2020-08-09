@@ -99,19 +99,23 @@
 
 /obj/machinery/light_switch/north
 	name = "N light switch"
-	pixel_y = 24
+	pixel_y = 28
+	dir = NORTH
 
 /obj/machinery/light_switch/east
 	name = "E light switch"
-	pixel_x = 24
+	pixel_x = 28
+	dir = EAST
 
 /obj/machinery/light_switch/south
 	name = "S light switch"
-	pixel_y = -24
+	pixel_y = -28
+	dir = SOUTH
 
 /obj/machinery/light_switch/west
 	name = "W light switch"
-	pixel_x = -24
+	pixel_x = -28
+	dir = WEST
 
 /obj/machinery/light_switch/auto
 	name = "light switch"
@@ -133,3 +137,45 @@
 					break
 			T = null
 		..()
+
+/obj/machinery/light_switch/auto_offset 
+	name = "light switch"
+
+	proc/auto_offset() 
+		if (src.dir == NORTH)
+			src.pixel_y = 26
+			src.pixel_x = 0
+		else if (src.dir == SOUTH)
+			src.pixel_y = -26
+			src.pixel_x = 0
+		else if (src.dir == EAST)
+			src.pixel_x = 26
+			src.pixel_y = 0
+		else if (src.dir == WEST)
+			src.pixel_x = -26
+			src.pixel_y = 0
+
+	New()
+		..()
+		auto_offset()
+
+/obj/machinery/light_switch/auto_offset_jen // special variant for jen walls
+	name = "light switch"
+
+	proc/auto_offset() 
+		if (src.dir == NORTH)
+			src.pixel_y = 28
+			src.pixel_x = 0
+		else if (src.dir == SOUTH)
+			src.pixel_y = -18
+			src.pixel_x = 0
+		else if (src.dir == EAST)
+			src.pixel_x = 24
+			src.pixel_y = 0
+		else if (src.dir == WEST)
+			src.pixel_x = -24
+			src.pixel_y = 0
+
+	New()
+		..()
+		auto_offset()

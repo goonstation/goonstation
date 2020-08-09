@@ -376,7 +376,7 @@ var/global/list/mapNames = list(
 
 	valid_nuke_targets = list("the security armory" = list(/area/station/security/armory),
 		"the research sector" = list(/area/station/science),
-		"the cargo bay" = list(/area/station/quartermaster/office),
+		"the cargo bay" = list(/area/station/quartermaster/cargobay),
 		"the mining refinery" = list(/area/station/mining/refinery),
 		"the thermo-electric generator controlroom" = list(/area/station/engine/monitoring),
 		"the bar" = list(/area/station/crew_quarters/bar),

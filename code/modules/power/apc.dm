@@ -70,6 +70,34 @@ var/zapLimiter = 0
 	var/debug = 0
 	mats = 10
 	mechanics_type_override = /obj/machinery/power/apc
+
+	auto_offset // auto offset variant for the lazy mappers
+		
+		proc/auto_offset() 
+			if (src.dir == NORTH)
+				src.pixel_y = 30
+				src.pixel_x = 0
+			else if (src.dir == SOUTH)
+				src.pixel_y = -22
+				src.pixel_x = 0
+			else if (src.dir == EAST)
+				src.pixel_x = 22
+				src.pixel_y = 0
+			else if (src.dir == WEST)
+				src.pixel_x = -22
+				src.pixel_y = 0
+
+		New()
+			..()
+			auto_offset()
+
+		nopoweralert
+			noalerts = 1
+		noaicontrol
+			noalerts = 1
+			aidisabled = 1
+
+
 	autoname_north
 		name = "Autoname N APC"
 		dir = NORTH

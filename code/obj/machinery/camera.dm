@@ -32,6 +32,46 @@
 	var/oldx = 0
 	var/oldy = 0
 
+	auto_offset // auto offset variant for the lazy mappers
+		
+		proc/auto_offset() 
+			if (src.dir == NORTH || src.dir == SOUTHWEST)
+				src.pixel_y = 0
+				src.pixel_x = 0
+			else if (src.dir == SOUTH || src.dir == SOUTHEAST)
+				src.pixel_y = 21
+				src.pixel_x = 0
+			else if (src.dir == EAST || src.dir == NORTHEAST)
+				src.pixel_x = -10
+				src.pixel_y = 0
+			else if (src.dir == WEST || src.dir == NORTHWEST)
+				src.pixel_x = 10
+				src.pixel_y = 0
+
+		New()
+			..()
+			auto_offset()
+
+	auto_offset_jen // special variant for jen walls
+
+		proc/auto_offset() 
+			if (src.dir == NORTH || src.dir == SOUTHWEST)
+				src.pixel_y = 0
+				src.pixel_x = 0
+			else if (src.dir == SOUTH || src.dir == SOUTHEAST)
+				src.pixel_y = 24
+				src.pixel_x = 0
+			else if (src.dir == EAST || src.dir == NORTHEAST)
+				src.pixel_x = -12
+				src.pixel_y = 0
+			else if (src.dir == WEST || src.dir == NORTHWEST)
+				src.pixel_x = 12
+				src.pixel_y = 0
+
+		New()
+			..()
+			auto_offset()
+
 /obj/machinery/camera/process()
 	.=..()
 	if(!isturf(src.loc)) //This will end up removing coverage if camera is inside a thing.

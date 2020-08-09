@@ -145,6 +145,106 @@
 	initialize()
 		set_frequency(frequency)
 
+/obj/item/device/radio/intercom/auto_offset // even more mapper-friendly... do we even need a jen walls variant?
+
+	proc/auto_offset() 
+		if (src.dir == NORTH)
+			src.pixel_y = -28
+			src.pixel_x = 0
+		else if (src.dir == SOUTH)
+			src.pixel_y = 22
+			src.pixel_x = 0
+		else if (src.dir == EAST)
+			src.pixel_x = -21
+			src.pixel_y = 0
+		else if (src.dir == WEST)
+			src.pixel_x = 21
+			src.pixel_y = 0
+
+	New()
+		..()
+		auto_offset()
+
+	medical
+		name = "Medical Intercom"
+		frequency = R_FREQ_INTERCOM_MEDICAL
+		broadcasting = 0
+		device_color = "#0050FF"
+
+		initialize()
+			set_frequency(frequency)
+
+	security
+		name = "Security Intercom"			
+		frequency = R_FREQ_INTERCOM_SECURITY
+		broadcasting = 0
+		device_color = "#FF2000"
+
+		initialize()
+			set_frequency(frequency)
+
+	brig
+		name = "Brig Intercom"
+		frequency = R_FREQ_INTERCOM_BRIG
+		broadcasting = 0
+		device_color = "#FF5000"
+
+		initialize()
+			set_frequency(frequency)
+
+	science
+		name = "Research Intercom"
+		frequency = R_FREQ_INTERCOM_RESEARCH
+		broadcasting = 0
+		device_color = "#153E9E"
+
+		initialize()
+			set_frequency(frequency)
+
+	engineering
+		name = "Engineering Intercom"
+		frequency = R_FREQ_INTERCOM_ENGINEERING
+		broadcasting = 0
+		device_color = "#BBBB00"
+
+		initialize()
+			set_frequency(frequency)
+
+	cargo
+		name = "Cargo Intercom"
+		frequency = R_FREQ_INTERCOM_CARGO
+		broadcasting = 0
+		device_color = "#9A8B0D"
+
+		initialize()
+			set_frequency(frequency)
+
+	catering
+		name = "Catering Intercom"
+		frequency = R_FREQ_INTERCOM_CATERING
+		broadcasting = 0
+		device_color = "#C16082"
+
+		initialize()
+			set_frequency(frequency)
+
+	AI
+		name = "AI Intercom"
+		frequency = R_FREQ_INTERCOM_AI
+		broadcasting = 1
+		device_color = "#333399"
+
+		initialize()
+			set_frequency(frequency)
+
+	bridge
+		name = "Bridge Intercom"
+		frequency = R_FREQ_INTERCOM_BRIDGE
+		broadcasting = 1
+		device_color = "#339933"
+
+		initialize()
+			set_frequency(frequency)
 
 ////// adventure area intercoms
 

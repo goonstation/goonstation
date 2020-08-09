@@ -86,7 +86,17 @@
 				else
 					R.add_reagent(src.reagent_normal, 50)
 
-				src.toggle_power(1)
+				if (on)
+					src.toggle_power(1)
+				else
+					src.anchored = 0
+					src.target = null
+					src.icon_state = "[icon_state_base][src.on]"
+					src.path = null
+					src.targets_invalid = list() // Turf vs decal when emagged, so we gotta clear it.
+					src.lubed_turfs = list()
+					src.clear_invalid_targets = world.time
+				
 		return
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)

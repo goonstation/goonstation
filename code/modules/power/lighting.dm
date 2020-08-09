@@ -151,10 +151,50 @@
 								src.pixel_y = 24
 							else
 								src.pixel_y = 21
+						else if (dir == SOUTH)
+							src.pixel_y = 0
 						break
 				T = null
 
+	auto_offset // auto offset variant of tube lights for the lazy mappers
+		
+		proc/auto_offset() 
+			if (src.dir == NORTH)
+				src.pixel_y = 21
+				src.pixel_x = 0
+			else if (src.dir == SOUTH)
+				src.pixel_y = -21
+				src.pixel_x = 0
+			else if (src.dir == EAST)
+				src.pixel_x = 10
+				src.pixel_y = 0
+			else if (src.dir == WEST)
+				src.pixel_x = -10
+				src.pixel_y = 0
 
+		New()
+			..()
+			auto_offset()
+
+	auto_offset_jen // special variant for jen walls
+
+		proc/auto_offset() 
+			if (src.dir == NORTH)
+				src.pixel_y = 24
+				src.pixel_x = 0
+			else if (src.dir == SOUTH)
+				src.pixel_y = 0
+				src.pixel_x = 0
+			else if (src.dir == EAST)
+				src.pixel_x = 12
+				src.pixel_y = 0
+			else if (src.dir == WEST)
+				src.pixel_x = -12
+				src.pixel_y = 0
+
+		New()
+			..()
+			auto_offset()
 
 //big standing lamps
 /obj/machinery/light/blamp
@@ -215,6 +255,46 @@
 		very
 			name = "very harsh incandescent light bulb"
 			light_type = /obj/item/light/bulb/harsh/very
+
+	auto_offset // auto offset variant of bulb lights for the lazy mappers
+		
+		proc/auto_offset() 
+			if (src.dir == NORTH)
+				src.pixel_y = 21
+				src.pixel_x = 0
+			else if (src.dir == SOUTH)
+				src.pixel_y = -21
+				src.pixel_x = 0
+			else if (src.dir == EAST)
+				src.pixel_x = 10
+				src.pixel_y = 0
+			else if (src.dir == WEST)
+				src.pixel_x = -10
+				src.pixel_y = 0
+
+		New()
+			..()
+			auto_offset()
+
+	auto_offset_jen // special variant for jen walls
+
+		proc/auto_offset() 
+			if (src.dir == NORTH)
+				src.pixel_y = 24
+				src.pixel_x = 0
+			else if (src.dir == SOUTH)
+				src.pixel_y = 0
+				src.pixel_x = 0
+			else if (src.dir == EAST)
+				src.pixel_x = 12
+				src.pixel_y = 0
+			else if (src.dir == WEST)
+				src.pixel_x = -12
+				src.pixel_y = 0
+
+		New()
+			..()
+			auto_offset()
 
 	//The only difference between these small lights and others are that these automatically stick to walls! Wow!!
 	sticky
