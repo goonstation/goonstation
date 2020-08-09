@@ -724,6 +724,10 @@
 	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
 		use_movement_controller = null
 
+	if(istype(src.loc, /obj/machinery/vehicle/) && src.loc != new_loc)
+		var/obj/machinery/vehicle/V = src.loc
+		V.eject(src, actually_eject = 0)
+
 	. = ..(new_loc)
 	src.loc_pixel_x = new_pixel_x
 	src.loc_pixel_y = new_pixel_y
@@ -996,7 +1000,7 @@
 		src.health -= max(0, burn)
 
 /mob/proc/TakeDamageAccountArmor(zone, brute, burn, tox, damage_type)
-	TakeDamage(zone, brute-get_melee_protection(zone,damage_type), burn-get_melee_protection(zone,damage_type))
+	TakeDamage(zone, brute - get_melee_protection(zone,damage_type), burn - get_melee_protection(zone,damage_type))
 
 /mob/proc/HealDamage(zone, brute, burn, tox)
 	health += max(0, brute)
@@ -1166,8 +1170,6 @@
 			if (W)
 				W.layer = initial(W.layer)
 
-			var/turf/T = get_turf(src.loc)
-			T.Entered(W)
 			u_equip(W)
 			.= 1
 		else

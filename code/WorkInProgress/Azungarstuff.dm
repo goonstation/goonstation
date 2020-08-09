@@ -787,7 +787,7 @@
 	atkcarbon = 1
 	atksilicon = 1
 	brutevuln = 0.7
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	seekrange = 5
 	flying = 1
 	density = 1 // so lasers can hit them
@@ -1189,7 +1189,7 @@
 	atkcarbon = 1
 	atksilicon = 1
 	brutevuln = 0.7
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	seekrange = 5
 	flying = 1
 	density = 1 // so lasers can hit them

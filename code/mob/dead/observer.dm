@@ -411,6 +411,7 @@
 /mob/dead/observer/Logout()
 	..()
 	if(last_client)
+		health_shown = 0
 		last_client.images.Remove(health_mon_icons)
 
 	if(!src.key && delete_on_logout)

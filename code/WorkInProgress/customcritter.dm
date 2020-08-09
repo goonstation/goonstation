@@ -1981,17 +1981,17 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	proc/show_interface(var/mob/M)
 		if (!template)
 			create_template()
-		var/output = "<html><head><style>"
-		output += {"
-body { font-family: monospace; white-space: pre-wrap; font-size: 0.5em; }
-table { width: 100%; text-align: left; border: none; border-spacing: 0; border-collapse: collapse; }
-tr { border:none; }
-td { border:none; vertical-align: top; }
-th.half, td.half { width: 50%; }
-td.title { font-size: 1.4em; font-weight: bold; text-align: center; }
-.subtitle { font-size: 1.2em; font-weight: bold; }
-.attribute-name { font-weight: bold; }
-.active { font-weight: bold; }
+		var/output = {"
+	<style type='text/css'>
+		body { font-family: Consolas, monospace; white-space: pre-wrap; }
+		table { width: 100%; text-align: left; border: none; border-spacing: 0; border-collapse: collapse; font-size: 110%; }
+		tr { border:none; }
+		td { border:none; vertical-align: top; }
+		th.half, td.half { width: 50%; }
+		td.title { font-size: 1.4em; font-weight: bold; text-align: center; }
+		.subtitle { font-size: 1.2em; font-weight: bold; }
+		.attribute-name { font-weight: bold; }
+		.active { font-weight: bold; }
 		"}
 		output += "</style></head><body>"
 		output += "<table><tr><td colspan='2' class='title'>Critter creation kit</td></tr>"

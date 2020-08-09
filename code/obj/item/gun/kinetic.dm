@@ -258,6 +258,11 @@
 		icon_state = "shotgun_gray"
 		desc = "An gray shotgun shell."
 
+	cannon
+		icon_state = "rifle"
+		desc = "A cannon shell."
+		w_class = 2
+
 	grenade
 		w_class = 2
 		icon_state = "40mm"
@@ -440,6 +445,7 @@
 	force = 7.0
 	caliber = 0.355
 	max_ammo_capacity = 18
+	auto_eject = 1
 
 	New()
 		if (prob(30))
@@ -896,10 +902,16 @@
 		current_projectile = new/datum/projectile/special/spreader/buckshot_burst/
 		..()
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+/*  //  how about not putting a goddamn irl suicide threat into the game??? fuck this content
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 /obj/item/gun/kinetic/tactical_shotgun/oblivion //"I've a gun named Oblivion that'll take all the pain away.. All our pain away..."
 	name = "Oblivion"
 	New()
 		return
+
+*/ /////////////////////////////////////////////////////////////////////////////////////////
 
 // assault
 /obj/item/gun/kinetic/assault_rifle
@@ -965,7 +977,7 @@
 	force = 5
 	caliber = 0.308
 	max_ammo_capacity = 100
-	auto_eject = 0
+	auto_eject = 1
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	object_flags = NO_ARM_ATTACH
@@ -988,6 +1000,44 @@
 	setupProperties()
 		..()
 		setProperty("movespeed", 0.5)
+
+
+/obj/item/gun/kinetic/cannon
+	name = "M20-CV tactical cannon"
+	desc = "A shortened conversion of a 20mm military cannon. Slow but enormously powerful."
+	icon = 'icons/obj/64x32.dmi'
+	icon_state = "cannon"
+	item_state = "cannon"
+	wear_image_icon = 'icons/mob/back.dmi'
+	force = 10
+	caliber = 0.787
+	max_ammo_capacity = 1
+	auto_eject = 1
+
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
+	object_flags = NO_ARM_ATTACH
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+
+	can_dual_wield = 0
+
+	slowdown = 10
+	slowdown_time = 15
+
+	two_handed = 1
+	w_class = 4
+	muzzle_flash = "muzzle_flash_launch"
+
+
+	New()
+		ammo = new/obj/item/ammo/bullets/cannon/single
+		current_projectile = new/datum/projectile/bullet/cannon
+		..()
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 0.3)
+
+
 
 // demo
 /obj/item/gun/kinetic/grenade_launcher
@@ -1242,6 +1292,45 @@
 			src.addOverlayComposition(/datum/overlayComposition/sniper_scope)
 		playsound(get_turf(src), "sound/weapons/scope.ogg", 50, 1)
 		break
+
+
+// WIP //////////////////////////////////
+/*/obj/item/gun/kinetic/sniper/antimateriel
+	name = "M20-S antimateriel cannon"
+	desc = "A ruthlessly powerful rifle chambered for a 20mm cannon round. Built to destroy vehicles and infrastructure at range."
+	icon = 'icons/obj/64x32.dmi'
+	icon_state = "antimateriel"
+	item_state = "cannon"
+	wear_image_icon = 'icons/mob/back.dmi'
+	force = 10
+	caliber = 0.787
+	max_ammo_capacity = 5
+	auto_eject = 1
+
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
+	object_flags = NO_ARM_ATTACH
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+
+	can_dual_wield = 0
+
+	slowdown = 5
+	slowdown_time = 10
+
+	two_handed = 1
+	w_class = 4
+	muzzle_flash = "muzzle_flash_launch"
+
+
+	New()
+		ammo = new/obj/item/ammo/bullets/cannon
+		current_projectile = new/datum/projectile/bullet/cannon
+		snipermove = new/datum/movement_controller/sniper_look()
+		..()
+
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 0.3)*/
 
 /obj/item/gun/kinetic/flintlockpistol
 	name = "flintlock pistol"

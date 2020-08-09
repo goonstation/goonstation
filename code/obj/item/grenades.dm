@@ -1514,6 +1514,27 @@ PIPE BOMBS + CONSTRUCTION
 			if (!M.stat)
 				M.emote("scream")
 
+
+/turf/proc/throw_shrapnel(var/T, var/sqstrength, var/shrapnel_range)
+	for (var/mob/living/carbon/human/M in view(T, shrapnel_range))
+		if(check_target_immunity(M)) continue
+		M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
+		if (M.get_ranged_protection()>=1.5)
+			boutput(M, "<span class='alert'><b>Your armor blocks the shrapnel!</b></span>")
+		else
+			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
+			implanted.owner = M
+			M.implant += implanted
+			implanted.implanted(M, null, 25 * sqstrength)
+			boutput(M, "<span class='alert'><b>You are struck by shrapnel!</b></span>")
+			if (!M.stat)
+				M.emote("scream")
+
+
+
+
+
+
 /obj/proc/blowthefuckup(var/strength = 1, var/delete = 1) // dropping this to object-level so that I can use it for other things
 	var/T = get_turf(src)
 	src.visible_message("<span class='alert'>[src] explodes!</span>")
@@ -1549,3 +1570,15 @@ PIPE BOMBS + CONSTRUCTION
 
 	explosion_new(src, T, strength, 1)
 	src.gib()
+
+/turf/proc/blowthefuckup(var/strength = 1, var/delete = 1) // simulate spalling damage. could use a new sprite though
+	var/T = get_turf(src)
+	src.visible_message("<span class='alert'>[src] explodes!</span>")
+	var/sqstrength = sqrt(strength)
+	var/shrapnel_range = 3 + sqstrength
+	if (strength >= 1)
+		src.throw_shrapnel(T, sqstrength, shrapnel_range)
+	new /obj/effects/explosion/tiny_baby (src.loc)
+	explosion_new(src, T, strength, 1)
+	if (delete)
+		qdel(src)

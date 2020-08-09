@@ -206,9 +206,8 @@
 /obj/item/Bump(mob/M as mob)
 	if (src.throwing)
 		var/lt = src.throwing
-		SPAWN_DBG( 0 ) //responsible for race conditions in throw code that this ugly fix exists for! i'm very afraid to remove this!!!
-			src.throwing = lt //throw_at has long since set throwing back to 0 at the end, so lets do this so that our parent can use throwing pproperly ugh
-			..()
+		src.throwing = lt //throw_at has long since set throwing back to 0 at the end, so lets do this so that our parent can use throwing pproperly ugh
+	..()
 	return
 
 /atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)

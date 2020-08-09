@@ -38,6 +38,7 @@
 	// 0.38 - detective
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
+	// 0.787 - 20mm cannon round
 	// 1.57 - 40mm grenade shell
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 
@@ -617,6 +618,24 @@
 	caliber = 0.72
 	icon_dynamic = 0
 	icon_empty = "12-0"
+
+	single
+		amount_left = 1
+		max_amount = 1
+
+
+/obj/item/ammo/bullets/cannon
+	sname = "20mm APHE"
+	name = "20mm APHE shells"
+	amount_left = 5
+	max_amount = 5
+	icon_state = "40mmR"
+	ammo_type = new/datum/projectile/bullet/cannon
+	caliber = 0.787
+	w_class = 2
+	icon_dynamic = 1
+	icon_empty = "40mmR-0"
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 	single
 		amount_left = 1

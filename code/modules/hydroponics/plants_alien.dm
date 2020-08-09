@@ -290,6 +290,8 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 
 /datum/plant/crystal
 	name = "Crystal"
+	plant_icon = 'icons/obj/hydroponics/plants_alien.dmi'
+	sprite = "Crystal"
 	starthealth = 50
 	growtime = 300
 	harvtime = 600
