@@ -55,6 +55,13 @@
 		return (calcTotal() >= 0)
 
 	proc/updateTraits(var/mob/user)
+
+		// Not passed a user, try to gracefully recover.
+		if (!user)
+			user = usr
+			if (!user)
+				return
+
 		if(!winexists(user, "traitssetup_[user.ckey]"))
 			winclone(user, "traitssetup", "traitssetup_[user.ckey]")
 
@@ -655,15 +662,14 @@
 			var/mob/living/carbon/human/H = owner
 			H.max_health = 150
 			H.health = 150
-			H.brainloss = 60
+			H.take_brain_damage(60)
 		return
 
 	onLife(var/mob/owner) //Just to be safe.
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			H.max_health = 150
-			if(H.brainloss < 60)
-				H.brainloss = 60
+			if(H.get_brain_damage() < 60)
+				H.take_brain_damage(60-H.get_brain_damage())
 		return
 
 /obj/trait/athletic
@@ -1003,5 +1009,4 @@
 	id = "allears"
 	points = 1
 	isPositive = 0
-
 

@@ -356,7 +356,6 @@
 			src.time = 0
 			src.timing = 0
 			last_tick = 0
-		src.updateDialog()
 		last_tick = world.time
 	else
 		last_tick = 0

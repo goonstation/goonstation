@@ -43,22 +43,20 @@
 		updateHealth(prevHealth)
 		return
 	proc/updateHealth(var/prevHealth)
-		/*
+
 		if(_health <= 0)
 			onDestroy()
-		else
+/*		else
 			if((_health > 75) && !(prevHealth > 75))
-				UpdateOverlays(null, "damage")
+				//UpdateOverlays(null, "damage")
 			else if((_health <= 75 && _health > 50) && !(prevHealth <= 75 && prevHealth > 50))
-				setTexture("damage1", BLEND_MULTIPLY, "damage")
+				//setTexture("damage1", BLEND_MULTIPLY, "damage")
 			else if((_health <= 50 && _health > 25) && !(prevHealth <= 50 && prevHealth > 25))
-				setTexture("damage2", BLEND_MULTIPLY, "damage")
+				//setTexture("damage2", BLEND_MULTIPLY, "damage")
 			else if((_health <= 25) && !(prevHealth <= 25))
-				setTexture("damage3", BLEND_MULTIPLY, "damage")
-		*/
-		return
+				//setTexture("damage3", BLEND_MULTIPLY, "damage")
+		return*/
 	proc/onDestroy()
-		src.visible_message("<span class='alert'><b>[src] is destroyed.</b></span>")
 		qdel(src)
 		return
 
@@ -71,7 +69,7 @@
 			src.material.triggerExp(src, severity)
 		switch(severity)
 			if(1.0)
-				changeHealth(-95)
+				changeHealth(-100)
 				return
 			if(2.0)
 				changeHealth(-70)
@@ -493,7 +491,11 @@
 /obj/proc/place_on(obj/item/W as obj, mob/user as mob, params)
 	if (W && !issilicon(user)) // no ghost drones should not be able to do this either, not just borgs
 		if (user && !(W.cant_drop))
+			var/dirbuffer //*hmmpf* it's not like im a hacky coder or anything... (＃￣^￣)
+			dirbuffer = W.dir //though actually this will preserve item rotation when placed on tables so they don't rotate when placed. (this is a niche bug with silverware, but I thought I might as well stop it from happening with other things <3)
 			user.drop_item()
+			if(W.dir != dirbuffer)
+				W.dir = dirbuffer
 			if (W && W.loc)
 				W.set_loc(src.loc)
 				if (islist(params) && params["icon-y"] && params["icon-x"])

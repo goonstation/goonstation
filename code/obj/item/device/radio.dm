@@ -758,7 +758,7 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 		var/mob/M = src.loc
 		if (src == M.back)
 			M.show_message("<span class='alert'><B>You feel a sharp shock!</B></span>")
-			logTheThing("signalers", usr, M, "signalled an electropack worn by %target% at [log_loc(M)].") // Added (Convair880).
+			logTheThing("signalers", usr, M, "signalled an electropack worn by [constructTarget(M,"signalers")] at [log_loc(M)].") // Added (Convair880).
 			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				if((M.mind in ticker.mode:revolutionaries) && !(M.mind in ticker.mode:head_revolutionaries) && prob(20))
 					ticker.mode:remove_revolutionary(M.mind)
@@ -1080,6 +1080,19 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	rand_pos = 0
 	density = 0
 	desc = "A Loudspeaker."
+
+	New()
+		//..()
+		if(src.pixel_x == 0 && src.pixel_y == 0)
+			switch(src.dir)
+				if(NORTH)
+					pixel_y = -14
+				if(SOUTH)
+					pixel_y = 32
+				if(EAST)
+					pixel_x = -21
+				if(WEST)
+					pixel_x = 21
 
 	north
 		dir = NORTH

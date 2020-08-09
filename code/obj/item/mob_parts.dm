@@ -152,7 +152,7 @@
 			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 
 		if (user)
-			logTheThing("admin", user, src.holder, "severed %target%'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
+			logTheThing("admin", user, src.holder, "severed [constructTarget(src.holder,"admin")]'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
 
 		var/obj/item/object = src
 		if(remove_object)

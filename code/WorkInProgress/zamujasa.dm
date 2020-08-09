@@ -466,7 +466,7 @@
 	var/bar_bg_color = "#000000"
 	var/bar_color = "#00cc00"
 	var/bar_width = clamp(pct, 0, 1)
-	if (pct > 1)
+	if (pct > 1.01)
 		bar_width = clamp((pressure / (max_pressure * 10)), 0, 1)
 		bar_bg_color = "#b00000"
 		bar_color = "#ffff00"
@@ -675,3 +675,194 @@
 
 	ex_act()
 		return
+
+
+
+/obj/machinery/maptext_monitor
+	name = "maptext monitor doodad"
+	desc = "This thing reports the value something else has, automatically! Wow!"
+	icon = null
+	anchored = 2
+	density = 0
+
+	var/datum/monitored = null
+	var/monitored_var = null
+	var/monitored_list = null
+	var/monitored_ref = null
+	var/last_value = null
+	var/display_mode = null
+	var/maptext_prefix = "<span class='c pixel sh'>Value:\n<span class='vga'>"
+	var/maptext_suffix = "</span></span>"
+	var/ding_on_change = 0
+	var/ding_sound = "sound/machines/ping.ogg"
+	var/update_delay = null
+
+	New()
+		src.maptext_x = -100
+		src.maptext_width = 232
+		src.maptext_height = 64
+		SubscribeToProcess()
+		src.process()
+
+	disposing()
+		UnsubscribeProcess()
+		..()
+
+	process()
+		src.update_monitor()
+		if (src.update_delay)
+			UnsubscribeProcess()
+			SPAWN_DBG(0)
+				while (src.update_delay)
+					src.update_monitor()
+					sleep(update_delay)
+
+				SubscribeToProcess()
+
+	proc/update_monitor()
+		if (src.monitored_ref)
+			var/datum/thing = locate(src.monitored_ref)
+			if (thing)
+				src.monitored = thing
+			src.monitored_ref = null
+
+		if (monitored)
+			if (monitored.pooled || monitored.qdeled)
+				// The thing we were watching was deleted/removed! Welp.
+				monitored = null
+				return
+
+			if (!src.monitored_list && !src.monitored_var)
+				return
+			try
+				var/current_value
+				if (src.monitored_list && !src.monitored_var)
+					var/list/monlist = monitored.vars[src.monitored_list]
+					current_value = monlist.len
+				else if (src.monitored_list)
+					current_value = monitored.vars[src.monitored_list][src.monitored_var]
+				else
+					current_value = monitored.vars[monitored_var]
+
+				if (current_value != last_value)
+					src.maptext = "[maptext_prefix][format_value(current_value)][maptext_suffix]"
+					src.last_value = current_value
+					if (src.ding_on_change)
+						playsound(src, src.ding_sound, 33, 0)
+			catch(var/exception/e)
+				src.maptext = "(Err: [e])"
+
+
+	proc/format_value(var/val)
+		switch (src.display_mode)
+			if ("power")
+				return engineering_notation(val)
+			if ("percent")
+				return (val * 100)
+			if ("temperature")
+				return "[val - T0C]&deg;C"
+			if ("round")
+				return round(val)
+
+		return val
+
+
+	ex_act()
+		return
+
+
+
+/obj/overlay/zamujasa/help_text
+	name = "new player tutorial maptext"
+
+	New()
+		src.maptext_x = -100
+		src.maptext_height = 64
+		src.maptext_width = 232
+		src.plane = 100
+		src.anchored = 2
+		src.mouse_opacity = 1
+		src.maptext = {"<div class='c pixel sh' style="background: #00000080;"><strong>-- Welcome to Goonstation! --</strong>
+New? <a href="https://mini.xkeeper.net/ss13/tutorial/" style="color: #8888ff; font-weight: bold;" clss="ol">Click here for a tutorial!</a>
+Ask mentors for help with <strong>F3</strong>
+Contact admins with <strong>F1</strong>
+Read the rules, don't grief, and have fun!</div>"}
+
+
+/obj/overlay/zamujasa/round_start_countdown
+	New()
+		if (lobby_titlecard)
+			src.x = lobby_titlecard.x + 14
+			src.y = lobby_titlecard.y + 0
+			src.z = lobby_titlecard.z
+			src.layer = lobby_titlecard.layer + 1
+		else
+			// oops
+			src.x = 7
+			src.y = 2
+			src.z = 1
+			src.layer = 1
+
+		src.maptext = ""
+		src.maptext_width = 320
+		src.maptext_x = -(320 / 2) + 16
+		src.maptext_height = 96
+		src.plane = 100
+
+	proc/update_time(var/time)
+		if (time >= 0)
+			var/timeLeftColor
+			switch (time)
+				if (90 to INFINITY)
+					timeLeftColor = "#33dd33"
+				if (60 to 90)
+					timeLeftColor = "#ffff00"
+				if (30 to 60)
+					timeLeftColor = "#ffb400"
+				if (0 to 30)
+					timeLeftColor = "#ff6666"
+			src.maptext = "<span class='c ol vga vt'>Round begins in<br><span style='color: [timeLeftColor]; font-size: 36px;'>[time]</span></span>"
+		else
+			src.maptext = "<span class='c ol vga vt'>Round begins<br><span style='color: #aaaaaa; font-size: 36px;'>soon</span></span>"
+
+	proc/update_status(var/message)
+		src.maptext = "<span class='c ol vga vt'>Setting up game...\n<span style='color: #aaaaaa;'>[message]</span></span>"
+
+
+
+/obj/overlay/inventory_counter
+	name = "inventory amount counter"
+	invisibility = 101
+	plane = PLANE_HUD
+	layer = HUD_LAYER_3
+	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+
+	New()
+		maptext_width = 64
+		maptext_x = -34
+		maptext_y = 1
+		mouse_opacity = 0
+		maptext = ""
+
+	proc/update_text(var/text)
+		maptext = {"<span class="vb r pixel sh">[text]</span>"}
+
+	proc/update_number(var/number)
+		maptext = {"<span class="vb r xfont sh"[number == 0 ? " style='color: #ff6666;'" : ""]>[number >= 100000 ? "[round(number / 1000)]K" : round(number)]</span>"}
+
+	proc/update_percent(var/current, var/maximum)
+		if (!maximum)
+			// no dividing by zero
+			src.update_number(current)
+			return
+		maptext = {"<span class="vb r xfont sh"[current == 0 ? " style='color: #ff6666;'" : ""]>[round(current / maximum * 100)]%</span>"}
+
+	proc/hide_count()
+		invisibility = 101
+
+	proc/show_count()
+		invisibility = 0
+
+	pooled()
+		src.maptext = ""
+		src.invisibility = 101

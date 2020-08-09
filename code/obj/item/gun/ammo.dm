@@ -38,6 +38,7 @@
 	// 0.38 - detective
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
+	// 0.787 - 20mm cannon round
 	// 1.57 - 40mm grenade shell
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 
@@ -622,6 +623,24 @@
 		amount_left = 1
 		max_amount = 1
 
+
+/obj/item/ammo/bullets/cannon
+	sname = "20mm APHE"
+	name = "20mm APHE shells"
+	amount_left = 5
+	max_amount = 5
+	icon_state = "40mmR"
+	ammo_type = new/datum/projectile/bullet/cannon
+	caliber = 0.787
+	w_class = 2
+	icon_dynamic = 1
+	icon_empty = "40mmR-0"
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+	single
+		amount_left = 1
+		max_amount = 1
+
 /obj/item/ammo/bullets/autocannon
 	sname = "40mm HE"
 	name = "40mm HE shells"
@@ -1133,3 +1152,24 @@
 	ammo_type = new /datum/projectile/special/spawner/gun
 	caliber = 3 //idk what caliber to actually make it but apparently its diameter of the tube so i figure it should be 3 inches????
 	delete_on_reload = 1
+
+/obj/item/ammo/bullets/meowitzer
+	sname = "meowitzer"
+	name = "meowitzer"
+	desc = "A box containg a single meowitzer. It's shaking violently and feels warm to the touch. You probably don't want to be anywhere near this when it goes off. Wait is that a cat?"
+	icon_state = "lmg_ammo"
+	icon_empty = "lmg_ammo-0"
+	amount_left = 1
+	max_amount = 1
+	ammo_type = new/datum/projectile/special/meowitzer
+	caliber = 20
+	w_class = 3
+
+
+/obj/item/ammo/bullets/meowitzer/inert
+	sname = "inert meowitzer"
+	name = "inert meowitzer"
+	desc = "A box containg a single inert meowitzer. It appears to be softly purring. Wait is that a cat?"
+	ammo_type = new/datum/projectile/special/meowitzer/inert
+
+

@@ -14,5 +14,5 @@ datum/controller/process/particles
 
 	// regular timing doesn't really apply since particles abuse the shit out of spawn and sleep
 	tickDetail()
-		return "particle types: [master.particleTypes.len], particle systems: [master.particleSystems.len]<br>"
+		boutput(usr, "<b>Particles:</b>types: [master.particleTypes.len], systems: [master.particleSystems.len]<br>")
 

@@ -85,6 +85,19 @@
 				S.satchel_updateicon()
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
+		if (istype(I,/obj/item/storage/))
+			var/action = input(user, "What do you want to do with [I]?") as null|anything in list("Empty it into the chute","Place it in the Chute")
+			if (!in_range(src, user))
+				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
+				return
+			if (action == "Empty it into the chute")
+				var/obj/item/storage/S = I
+				for(var/obj/item/O in S)
+					O.set_loc(src)
+					S.hud.remove_object(O)
+				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
+				return
+			if (isnull(action)) return
 		var/obj/item/magtractor/mag
 		if (istype(I.loc, /obj/item/magtractor))
 			mag = I.loc
@@ -102,7 +115,7 @@
 				GM.set_loc(src)
 				user.visible_message("<span class='alert'><b>[user.name] stuffs [GM.name] into [src]!</b></span>")
 				qdel(G)
-				logTheThing("combat", user, GM, "places %target% into [src] at [log_loc(src)].")
+				logTheThing("combat", user, GM, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
 				actions.interrupt(G.affecting, INTERRUPT_MOVE)
 				actions.interrupt(user, INTERRUPT_ACT)
 		else
@@ -144,7 +157,7 @@
 		else if(target != user && !user.restrained() && Q == target.loc)
 			msg = "[user.name] stuffs [target.name] into the [src]!"
 			boutput(user, "You stuff [target.name] into the [src]!")
-			logTheThing("combat", user, target, "places %target% into [src] at [log_loc(src)].")
+			logTheThing("combat", user, target, "places [constructTarget(target,"combat")] into [src] at [log_loc(src)].")
 		else
 			return
 		actions.interrupt(target, INTERRUPT_MOVE)
@@ -679,7 +692,7 @@
 
 	MouseDrop_T(mob/target, mob/user)
 		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.hasStatus(list("weakened", "paralysis", "stunned")) || isAI(user) || isAI(target) || isghostcritter(user))
-			return 
+			return
 		..()
 		flush = 1
 

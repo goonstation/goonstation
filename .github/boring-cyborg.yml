@@ -10,7 +10,7 @@ labelPRBasedOnFilePath:
   mapping:
     - maps/**/*
     - '**/*.dmm'
-    
+
   # Add 'sound' label to any changes within 'sound' folder or any subfolders
   sound:
     - sound/**/*
@@ -23,3 +23,7 @@ labelPRBasedOnFilePath:
   # Add 'github' label to any changes to the .github folder or any subfolders
   github:
     - .github/**/*
+
+  # Add 'tgui' label to any changes to the tgui folder or any subfolders
+  tgui:
+    - tgui/**/*

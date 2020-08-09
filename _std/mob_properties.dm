@@ -163,7 +163,7 @@ To remove:
 */
 
 #define PROP_CANTMOVE(x) x("cantmove", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
-
+#define PROP_CANTSPRINT(x) x("cantsprint", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 //armour properties
 #define PROP_MELEEPROT_HEAD(x) x("meleeprot_head", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
 #define PROP_MELEEPROT_BODY(x) x("meleeprot_body", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
@@ -174,6 +174,10 @@ To remove:
 #define PROP_EXPLOPROT(x) x("exploprot", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
 #define PROP_REFLECTPROT(x) x("reflection", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 #define PROP_SPECTRO(x) x("spectrovision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
+#define PROP_METABOLIC_RATE(x) x("chem_metabolism", APPLY_MOB_PROPERTY_PRODUCT, REMOVE_MOB_PROPERTY_PRODUCT)
+#define PROP_DIGESTION_EFFICIENCY(x) x("digestion_efficiency", APPLY_MOB_PROPERTY_PRODUCT, REMOVE_MOB_PROPERTY_PRODUCT)
+#define PROP_CHEM_PURGE(x) x("chem_purging", APPLY_MOB_PROPERTY_SUM, REMOVE_MOB_PROPERTY_SUM)
+#define PROP_REBREATHING(x) x("rebreathing", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 
 
 // In lieu of comments, these are the indexes used for list access in the macros below.
@@ -286,6 +290,42 @@ To remove:
 			} \
 		} \
 	} while (0)
+
+#define APPLY_MOB_PROPERTY_PRODUCT(target, property, source, value) \
+	do { \
+		var/list/_L = target.mob_properties; \
+		var/_V = value; \
+		var/_S = source; \
+		if (_L[property]) { \
+			if (_L[property][MOB_PROPERTY_SOURCES_LIST][_S]) { \
+				_L[property][MOB_PROPERTY_ACTIVE_VALUE] /= _L[property][MOB_PROPERTY_SOURCES_LIST][_S]; \
+				_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
+				_L[property][MOB_PROPERTY_ACTIVE_VALUE] *= _V; \
+			} else { \
+				_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
+				_L[property][MOB_PROPERTY_ACTIVE_VALUE] *= _V; \
+			} \
+		} else { \
+			_L[property] = list(_V, list()); \
+			_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
+		} \
+	} while (0)
+
+#define REMOVE_MOB_PROPERTY_PRODUCT(target, property, source) \
+	do { \
+		var/list/_L = target.mob_properties; \
+		var/_S = source; \
+		if (_L[property]) { \
+			if (_L[property][MOB_PROPERTY_SOURCES_LIST][_S]) { \
+				_L[property][MOB_PROPERTY_ACTIVE_VALUE] /= _L[property][MOB_PROPERTY_SOURCES_LIST][_S]; \
+				_L[property][MOB_PROPERTY_SOURCES_LIST] -= _S; \
+			} \
+			if (!length(_L[property][MOB_PROPERTY_SOURCES_LIST])) { \
+				_L -= property; \
+			} \
+		} \
+	} while (0)
+
 
 #define APPLY_MOB_PROPERTY_PRIORITY(target, property, source, value, priority) \
 	do { \

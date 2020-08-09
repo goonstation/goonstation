@@ -253,7 +253,7 @@
 					boutput(src, pick("<span class='alert'>You're not in the mood to grab that.</span>", "<span class='alert'>You don't feel like doing that.</span>"))
 					return
 
-	logTheThing("combat", src, target, "grabs %target% at [log_loc(src)].")
+	logTheThing("combat", src, target, "grabs [constructTarget(target,"combat")] at [log_loc(src)].")
 
 	if (target)
 		target.add_fingerprint(src) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit (Convair880).
@@ -555,7 +555,7 @@
 		src.lastattacked = target
 		target.lastattacker = src
 		target.lastattackertime = world.time
-		logTheThing("combat", src, target, "touches %target% with stun gloves at [log_loc(src)].")
+		logTheThing("combat", src, target, "touches [constructTarget(target,"combat")] with stun gloves at [log_loc(src)].")
 		target.add_fingerprint(src) // Some as the other 'empty hand' melee attacks (Convair880).
 		src.unlock_medal("High Five!", 1)
 
@@ -670,7 +670,7 @@
 	if (!target.canmove && target.lying)
 		msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 		msgs.base_attack_message = "<span class='alert'><B>[src] [src.kickMessage] [target]!</B></span>"
-		msgs.logs = list("[src.kickMessage] %target%")
+		msgs.logs = list("[src.kickMessage] [constructTarget(target,"combat")]")
 		if (ishuman(src))
 			var/mob/living/carbon/human/H = src
 			if (H.shoes)
@@ -780,7 +780,7 @@
 		random_brute_damage(target, damage)
 		target.UpdateDamageIcon()
 
-	logTheThing("combat", user, target, "punches %target% at [log_loc(user)].")
+	logTheThing("combat", user, target, "punches [constructTarget(target,"combat")] at [log_loc(user)].")
 	return
 
 /////////////////////////////////////////////////////// attackResult datum ////////////////////////////////////////
@@ -792,7 +792,7 @@
 	var/list/visible_target = list()
 	var/list/show_self = list()
 	var/list/show_target = list()
-	var/list/logs = list("punches %target%")
+	var/list/logs = null
 	var/list/after_effects = list()
 
 	// the message to play to the target
@@ -827,10 +827,7 @@
 		visible_target.Cut()
 		show_self.Cut()
 		show_target.Cut()
-		if (istype(src, /datum/attackResults/disarm))
-			logs = list("disarms %target%")
-		else
-			logs = list("punches %target%")
+		logs = null
 		played_sound = null
 		base_attack_message = null
 		stamina_self = 0
@@ -903,6 +900,12 @@
 				target.show_message(message, group = msg_group)
 
 		if (!(suppress & SUPPRESS_LOGS))
+			if (!length(logs))
+				if (istype(src, /datum/attackResults/disarm))
+					logs = list("disarms [constructTarget(target,"combat")]")
+				else
+					logs = list("punches [constructTarget(target,"combat")]")
+
 			for (var/message in logs)
 				logTheThing("combat", owner, target, "[message] at [log_loc(owner)].")
 
@@ -1038,7 +1041,7 @@
 									if (owner in viewers(7,M.current))
 										M.current.changeStatus("mutiny", 10 SECONDS)
 
-				if(target.health < 0)
+				if(target.client && target.health < 0) //Only do rev stuff if they have a client and are low health
 					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
 						if (R.add_revolutionary(target.mind))
 							target.HealDamage("All", max(30 - target.health,0), 0)
@@ -1050,7 +1053,7 @@
 		clear(null)
 
 /datum/attackResults/disarm
-	logs = list("disarms %target%")
+	logs = null //list("disarms [constructTarget(src,"diary")]") //handled above
 
 ////////////////////////////////////////////////////////// Targeting checks ////////////////////////////////////
 
@@ -1335,7 +1338,7 @@
 		src.lastattacked = target
 		target.lastattacker = src
 		target.lastattackertime = world.time
-		logTheThing("combat", src, target, "attacks %target% with energy claws at [log_loc(src)].")
+		logTheThing("combat", src, target, "attacks [constructTarget(target,"combat")] with energy claws at [log_loc(src)].")
 		target.add_fingerprint(src) // Some as the other 'empty hand' melee attacks (Convair880).
 
 	if (ishuman(target))

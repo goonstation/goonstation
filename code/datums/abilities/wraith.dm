@@ -395,7 +395,7 @@
 			L.aggressive = 1
 			L.atkcarbon = 1
 			L.atksilicon = 1
-			L.opensdoors = 1
+			L.opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 			L.stunprob = 15
 			L.original_object = O
 			animate_levitate(L, -1, 30)
@@ -576,7 +576,7 @@
 				return 1
 			else
 				var/message = html_encode(input("What would you like to whisper to [target]?", "Whisper", "") as text)
-				logTheThing("say", usr, target, "WRAITH WHISPER TO %target%: [message]")
+				logTheThing("say", usr, target, "WRAITH WHISPER TO [constructTarget(target,"say")]: [message]")
 				message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
 				boutput(usr, "<b>You whisper to [target]:</b> [message]")
 				boutput(target, "<b>A netherworldly voice whispers into your ears... </b> [message]")

@@ -31,12 +31,14 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          tools/ci/install_build_tools.sh
           tools/ci/install_spaceman_dmm.sh dreamchecker
           touch +secret/__secret.dme
 
       - name: Misc Checks
         run: |
           tools/ci/check_filedirs.sh goonstation.dme
+          tools/ci/build_tgui.sh
           tools/ci/check_grep.sh
 
       - name: Run Linter
@@ -212,7 +214,7 @@ jobs:
           tools/ci/dm.sh -DTRAVISBUILDING -DTRAVIS_SUB goonstation.dme > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
 
       - name: Annotate Errors
-        uses: yogstation13/add-annotations-github-action@master
+        uses: zewaka/add-annotations-github-action@master
         with:
           check_name: "Run Linters"
           linter_output_path: 'output-annotations.txt'

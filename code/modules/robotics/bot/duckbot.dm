@@ -106,6 +106,6 @@
 	src.on = 0
 	for(var/mob/O in hearers(src, null))
 		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	elecflash(src, power=2)
+	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
 	return

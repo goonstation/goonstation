@@ -200,7 +200,7 @@
 	Topic(href, href_list)
 		if (..(href, href_list))
 			return 1
-		playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, 5)
+		playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, -15)
 
 	attack_hand(var/mob/user)
 		..()
@@ -533,7 +533,7 @@
 					t1 = copytext(html_encode(t1), 1, MAX_MESSAGE_LEN)
 					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)))) return
 					R.fields["job"] = t1
-					playsound(src.loc, "keyboard", 50, 1, 5)
+					playsound(src.loc, "keyboard", 50, 1, -15)
 				else if(href_list["Fwage"])
 					var/datum/data/record/R = locate(href_list["Fwage"])
 					var/t1 = input("Please input wage:", "Secure. records", R.fields["wage"], null)  as null|num

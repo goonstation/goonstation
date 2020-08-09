@@ -678,7 +678,7 @@
 		if (!src || !occupant || !ismob(occupant) || !action)
 			return
 
-		logTheThing("station", user, occupant, "[action] [src] with %target% inside at [log_loc(src)].")
+		logTheThing("station", user, occupant, "[action] [src] with [constructTarget(occupant,"station")] inside at [log_loc(src)].")
 		return
 
 	verb/toggle_verb()

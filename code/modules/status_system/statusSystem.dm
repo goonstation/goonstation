@@ -132,6 +132,7 @@ var/list/statusGroupLimits = list("Food"=4)
 
 /atom
 	var/list/statusEffects = null //List of status effects.
+	var/list/statusLimits //only instantiated if we actually need it
 
 	proc/updateStatusUi() //Stub. Override for objects that need to update their ui with status information.
 		return
@@ -173,11 +174,12 @@ var/list/statusGroupLimits = list("Food"=4)
 
 			var/groupFull = 0
 			var/groupCount = 0
-			if(globalInstance.exclusiveGroup != "" && statusGroupLimits.Find(globalInstance.exclusiveGroup))
+			var/list/groupLimits = (length(src.statusLimits) ? src.statusLimits | statusGroupLimits : statusGroupLimits)
+			if(globalInstance.exclusiveGroup != "" && groupLimits.Find(globalInstance.exclusiveGroup))
 				for(var/datum/statusEffect/status in statusEffects)
 					if(status.exclusiveGroup == globalInstance.exclusiveGroup && status.id != statusId)
 						groupCount++
-				if(groupCount >= statusGroupLimits[globalInstance.exclusiveGroup])
+				if(groupCount >= groupLimits[globalInstance.exclusiveGroup])
 					groupFull = 1
 
 			if(globalInstance.unique) //unique, easy.
@@ -1147,6 +1149,12 @@ var/list/statusGroupLimits = list("Food"=4)
 		onAdd(var/optional=null)
 			if (isliving(owner))
 				L = owner
+				if (L.getStatusDuration("burning"))
+					if (!actions.hasAction(L, "fire_roll"))
+						L.last_resist = world.time + 25
+						actions.start(new/datum/action/fire_roll(), L)
+					else
+						return
 			else
 				owner.delStatus("resting")
 

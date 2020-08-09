@@ -413,7 +413,7 @@
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your left arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_arm]!</b></span>")
 				if (user)
-					logTheThing("admin", user, src.holder, "replaced %target%'s left arm with [new_type]")
+					logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s left arm with [new_type]")
 				. ++
 
 			if (target == "both_arms" || target == "r_arm")
@@ -429,7 +429,7 @@
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your right arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_arm]!</b></span>")
 				if (user)
-					logTheThing("admin", user, src.holder, "replaced %target%'s right arm with [new_type]")
+					logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s right arm with [new_type]")
 				. ++
 
 			if (target == "both_legs" || target == "l_leg")
@@ -440,7 +440,7 @@
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your left leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_leg]!</b></span>")
 					if (user)
-						logTheThing("admin", user, src.holder, "replaced %target%'s left leg with [new_type]")
+						logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s left leg with [new_type]")
 					. ++
 
 			if (target == "both_legs" || target == "r_leg")
@@ -451,7 +451,7 @@
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your right leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_leg]!</b></span>")
 					if (user)
-						logTheThing("admin", user, src.holder, "replaced %target%'s right leg with [new_type]")
+						logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s right leg with [new_type]")
 					. ++
 			if (.)
 				src.holder.set_body_icon_dirty()
@@ -755,7 +755,11 @@
 
 	if (!antag_removal && src.spell_soulguard)
 		boutput(src, "<span class='notice'>Your Soulguard enchantment activates and saves you...</span>")
-		reappear_turf = pick(wizardstart)
+		//soulguard ring puts you in the same spot
+		if(istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport))
+			reappear_turf = get_turf(src)
+		else
+			reappear_turf = pick(wizardstart)
 
 	////////////////Set up the new body./////////////////
 
@@ -989,7 +993,7 @@
 			src.visible_message("<span class='alert'>[src] throws [I].</span>")
 		if (iscarbon(I))
 			var/mob/living/carbon/C = I
-			logTheThing("combat", src, C, "throws %target% at [log_loc(src)].")
+			logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] at [log_loc(src)].")
 			if ( ishuman(C) && !C.getStatusDuration("weakened"))
 				C.changeStatus("weakened", 1 SECOND)
 		else
@@ -1125,6 +1129,8 @@
 	for (var/obj/O in contents)
 		if (O.move_triggered)
 			O.move_trigger(src, ev)
+	if(reagents)
+		reagents.move_trigger(src, ev)
 	for (var/atom in statusEffects)
 		var/datum/statusEffect/S = atom
 		if (S && S.move_triggered)
@@ -2264,7 +2270,7 @@
 	for (var/organ_slot in src.organHolder.organ_list)
 		var/obj/item/organ/O = src.organHolder.organ_list[organ_slot]
 		if(istype(O))
-			O.broken = 0
+			O.unbreakme()
 	if (!src.organHolder)
 		src.organHolder = new(src)
 	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye"))
@@ -3096,14 +3102,14 @@
 					else
 						src.footstep += steps
 					if (src.footstep == 0)
-						playsound(NewLoc, NewLoc.active_liquid.step_sound, 50, 1)
+						playsound(NewLoc, NewLoc.active_liquid.step_sound, 50, 1, extrarange = footstep_extrarange)
 				else
 					if (src.footstep >= 2)
 						src.footstep = 0
 					else
 						src.footstep += steps
 					if (src.footstep == 0)
-						playsound(NewLoc, NewLoc.active_liquid.step_sound, 20, 1)
+						playsound(NewLoc, NewLoc.active_liquid.step_sound, 20, 1, extrarange = footstep_extrarange)
 		else if (src.shoes && src.shoes.step_sound && src.shoes.step_lots)
 			if (src.m_intent == "run")
 				if (src.footstep >= 2)
@@ -3111,9 +3117,9 @@
 				else
 					src.footstep += steps
 				if (src.footstep == 0)
-					playsound(NewLoc, src.shoes.step_sound, 50, 1)
+					playsound(NewLoc, src.shoes.step_sound, 50, 1, extrarange = footstep_extrarange)
 			else
-				playsound(NewLoc, src.shoes.step_sound, 20, 1)
+				playsound(NewLoc, src.shoes.step_sound, 20, 1, extrarange = footstep_extrarange)
 
 		else
 			src.footstep += steps

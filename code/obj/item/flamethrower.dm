@@ -517,7 +517,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 		var/logString = log_reagents(part5)
 		for (var/mob/living/carbon/human/theMob in currentturf.contents)
-			logTheThing("combat", usr, theMob, "blasts %target% with a flamethrower [logString] at [log_loc(theMob)].")
+			logTheThing("combat", usr, theMob, "blasts [constructTarget(theMob,"combat")] with a flamethrower [logString] at [log_loc(theMob)].")
 			mobHitList += "[key_name(theMob)], "
 
 		if(halt)

@@ -26,12 +26,15 @@
 	stamina_crit_chance = 5
 	module_research = list("tools" = 4, "metals" = 1, "fuels" = 5)
 	rand_pos = 1
+	inventory_counter_enabled = 1
 
 	New()
+		..()
 		var/datum/reagents/R = new/datum/reagents(20)
 		reagents = R
 		R.my_atom = src
 		R.add_reagent("fuel", 20)
+		src.inventory_counter.update_number(get_fuel())
 
 		src.setItemSpecial(/datum/item_special/flame)
 		return
@@ -142,6 +145,7 @@
 		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && get_dist(src,O) <= 1)
 			if (O.reagents.total_volume)
 				O.reagents.trans_to(src, 20)
+				src.inventory_counter.update_number(get_fuel())
 				boutput(user, "<span class='notice'>Welder refueled</span>")
 				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 			else
@@ -227,6 +231,7 @@
 		amount = min(get_fuel(), amount)
 		if (reagents)
 			reagents.remove_reagent("fuel", amount)
+		src.inventory_counter.update_number(get_fuel())
 		return
 
 	proc/eyecheck(mob/user as mob)

@@ -319,7 +319,7 @@
 
 		// Added (Convair880).
 		if (ismob(src.loc))
-			logTheThing("bombing", null, src.loc, "A trick cigarette (held/equipped by %target%) explodes at [log_loc(src)].")
+			logTheThing("bombing", null, src.loc, "A trick cigarette (held/equipped by [constructTarget(src.loc,"bombing")]) explodes at [log_loc(src)].")
 		else
 			logTheThing("bombing", src.fingerprintslast, null, "A trick cigarette explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
 
@@ -1176,6 +1176,11 @@
 					processing_items.Remove(src)
 				return
 			//sleep(1 SECOND)
+
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		if (exposed_temperature > 1000)
+			return ..()
+		return
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

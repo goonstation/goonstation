@@ -5,14 +5,16 @@
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1 //Uncomment this to just skip everything possible and get into the game asap.
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1 // uncomment this to use atlas as the single map. will horribly break things but speeds up compile/boot times.
 
-#define SKIP_FEA_SETUP 0 //Skip atmos setup
-#define SKIP_Z5_SETUP 0 //Skip z5 gen
-
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
 #define SKIP_FEA_SETUP 1
 #define SKIP_Z5_SETUP 1
 #define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME 1 //Skip changelogs
 #define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO 1 //Automatically ready up and start the game ASAP. No input required.
+#endif
+
+#ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
+#define SKIP_FEA_SETUP 0 //Skip atmos setup
+#define SKIP_Z5_SETUP 0 //Skip z5 gen
 #endif
 
 // Server side profiler stuff for when you want to profile how laggy the game is
@@ -78,6 +80,8 @@
 #define OVERLOAD_PLAYERCOUNT 95 //when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
 #define OSHAN_LIGHT_OVERLOAD 18 //when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
 #define SLOW_LIFE_PLAYERCOUNT 65 //whenn pcount is >= this number, slow Life() processing a bit
+#define SLOWEST_LIFE_PLAYERCOUNT 85 //whenn pcount is >= this number, slow Life() processing a lot
+
 
 #define DEFAULT_CLICK_DELAY MIN_TICKLAG //used to be 1
 #define COMBAT_CLICK_DELAY 10
@@ -91,6 +95,7 @@
 #define TOOLTIP_RIGHT 2
 #define TOOLTIP_LEFT 4
 #define TOOLTIP_CENTER 8
+#define TOOLTIP_TOP2 16
 
 #define TOOLTIP_ALWAYS 1
 #define TOOLTIP_NEVER 2
@@ -191,26 +196,27 @@
 #define MINING_Z 5
 
 //FLAGS BITMASK
-#define ONBACK 1			// can be put in back slot
-#define TABLEPASS 2			// can pass by a table or rack
-#define NODRIFT 4			// thing doesn't drift in space
-#define USEDELAY 8			// put this on either a thing you don't want to be hit rapidly, or a thing you don't want people to hit other stuff rapidly with
-#define EXTRADELAY 16		// 1 second extra delay on use
-#define NOSHIELD 32			// weapon not affected by shield. MBC also put this flag on cloak/shield device to minimize istype checking, so consider this more SHIELD_ACT (rename? idk)
-#define CONDUCT 64			// conducts electricity (metal etc.)
-#define ONBELT 128			// can be put in belt slot
-#define FPRINT 256			// takes a fingerprint
-#define ON_BORDER 512		// item has priority to check when entering or leaving
-#define DOORPASS 1024		// can pass through a closed door
-#define TALK_INTO_HAND 2048		//automagically talk into this object when a human is holding it (Phone handset!)
-#define OPENCONTAINER	4096	// is an open container for chemistry purposes
-#define ISADVENTURE 8192        // is an atom spawned in an adventure area
-#define NOSPLASH 16384  		//No beaker etc. splashing. For Chem machines etc.
-#define SUPPRESSATTACK 32768 	//No attack when hitting stuff with this item.
-#define FLUID_SUBMERGE 65536	//gets an overlay when submerged in fluid
-#define IS_PERSPECTIVE_FLUID 131072	//gets a perspective overlay from adjacent fluids
-#define ALWAYS_SOLID_FLUID 262144	//specifically note this object as solid
-#define HAS_EQUIP_CLICK 524288 //Calls equipment_click from hand_range_attack on items worn with this flag set.
+#define ONBACK							 (1<<0)	// can be put in back slot
+#define TABLEPASS						 (1<<1)	// can pass by a table or rack
+#define NODRIFT							 (1<<2)	// thing doesn't drift in space
+#define USEDELAY						 (1<<3)	// put this on either a thing you don't want to be hit rapidly, or a thing you don't want people to hit other stuff rapidly with
+#define EXTRADELAY					 (1<<4)	// 1 second extra delay on use
+#define NOSHIELD						 (1<<5)	// weapon not affected by shield. MBC also put this flag on cloak/shield device to minimize istype checking, so consider this more SHIELD_ACT (rename? idk)
+#define CONDUCT							 (1<<6)	// conducts electricity (metal etc.)
+#define ONBELT							 (1<<7)	// can be put in belt slot
+#define FPRINT							 (1<<8)	// takes a fingerprint
+#define ON_BORDER						 (1<<9)	// item has priority to check when entering or leaving
+#define DOORPASS						 (1<<10)// can pass through a closed door
+#define TALK_INTO_HAND 			 (1<<11)//automagically talk into this object when a human is holding it (Phone handset!)
+#define OPENCONTAINER				 (1<<12)// is an open container for chemistry purposes
+#define ISADVENTURE 				 (1<<13)// is an atom spawned in an adventure area
+#define NOSPLASH 						 (1<<13)//No beaker etc. splashing. For Chem machines etc.
+#define SUPPRESSATTACK 			 (1<<14)//No attack when hitting stuff with this item.
+#define FLUID_SUBMERGE 			 (1<<15)//gets an overlay when submerged in fluid
+#define IS_PERSPECTIVE_FLUID (1<<16)//gets a perspective overlay from adjacent fluids
+#define ALWAYS_SOLID_FLUID	 (1<<17)//specifically note this object as solid
+#define HAS_EQUIP_CLICK			 (1<<18)//Calls equipment_click from hand_range_attack on items worn with this flag set.
+#define TGUI_INTERACTIVE		 (1<<19)//Has the possibility for a TGUI interface
 
 //Item function flags
 #define USE_INTENT_SWITCH_TRIGGER 1 //apply to an item's flags to use the item's intent_switch_trigger() proc. This will be called when intent is switched while this item is in hand.
@@ -314,6 +320,7 @@
 #define IMMUNE_SINGULARITY_INACTIVE 512
 #define IS_TRINKET 1024 		//used for trinkets GC
 #define IS_FARTABLE 2048
+#define NO_MOUSEDROP_QOL 4096 //overrides the click drag mousedrop pickup QOL kinda stuff
 //TBD the rest
 
 //temp_flags lol for atoms and im gonna be constantly adding and removing these
@@ -341,11 +348,12 @@
 #define IGNORE_SHIFT_CLICK_MODIFIER 2048 //shift+click doesn't retrigger a SHIFT keypress - use for mobs that sprint on shift and not on mobs that use shfit for bolting doors etc
 #define LIGHTWEIGHT_AI_MOB 4096		//not a part of the normal 'mobs' list so it wont show up in searches for observe admin etc, has its own slowed update rate on Life() etc
 #define USR_DIALOG_UPDATES_RANGE 8192	//updateusrdialog will consider this mob as being able to 'attack_ai' and update its ui at range
+#define MAT_TRIGGER_LIFE 16384 //do some extra shit in life to trigger mats onlife
 
 //object_flags
-#define BOTS_DIRBLOCK 1	//bot considers this solid object that can be opened with a Bump() in pathfinding DirBlockedWithAccess
-#define NO_ARM_ATTACH 2	//illegal for arm attaching
-#define CAN_REPROGRAM_ACCESS 4	//access gun can reprog
+#define BOTS_DIRBLOCK 			 (1<<0)	//bot considers this solid object that can be opened with a Bump() in pathfinding DirBlockedWithAccess
+#define NO_ARM_ATTACH 			 (1<<1)	//illegal for arm attaching
+#define CAN_REPROGRAM_ACCESS (1<<2)	//access gun can reprog
 
 //deconstruction_flags
 #define DECON_NONE 0
@@ -701,6 +709,11 @@ proc/default_frequency_color(freq)
 #define D_TOXIC 48
 #define D_SPECIAL 128
 
+//Projectile reflection defines
+#define PROJ_NO_HEADON_BOUNCE 1
+#define PROJ_HEADON_BOUNCE 2
+#define PROJ_RAPID_HEADON_BOUNCE 3
+
 //Missing limb flags
 #define LIMB_LEFT_ARM 1
 #define LIMB_RIGHT_ARM 2
@@ -716,7 +729,7 @@ proc/default_frequency_color(freq)
 #define BASE_SPEED_SUSTAINED 1.5
 #define RUN_SCALING 0.12
 #define RUN_SCALING_LYING 0.2
-#define RUN_SCALING_STAGGER 0.5
+#define RUN_SCALING_STAGGER 0.64
 #define WALK_DELAY_ADD 0.8
 
 //stamina config
@@ -750,7 +763,7 @@ proc/default_frequency_color(freq)
 #define SUSTAINED_RUN_REQ 8				//how many tiles to start sustained run
 
 //This is a bad solution. Optimally this should scale.
-#define STAMINA_MIN_WEIGHT_CLASS 2 	    //Minimum weightclass (w_class) of an item that allows for knock-outs and critical hits.
+#define STAMINA_MIN_WEIGHT_CLASS 0 	    //Minimum weightclass (w_class) of an item that allows for knock-outs and critical hits.
 
 //This is the last resort option for the RNG lovers.
 #define STAMINA_STUN_ON_CRIT 0          //Getting crit stuns the affected person for a short moment?
@@ -969,7 +982,7 @@ proc/default_frequency_color(freq)
 
 //Short macro that will give TRG, XP amount if they have the appropriate job.
 //JOB_XP(someMobHere, "Clown", 5) //Would give someMobHere 5xp if they are a clown.
-#define JOB_XP(TRG, JOB, XP) if(ismob(TRG) && TRG:job == JOB && TRG:key) award_xp(TRG:key, JOB, XP)
+#define JOB_XP(TRG, JOB, XP) if(ismob(TRG) && TRG:job == JOB && TRG:key) award_xp_and_archive(TRG:key, JOB, XP)
 
 //0.2, 25, 100, 225, 400, 625 ... 7=1225,10=2500,20=10000,30=22500,50=62500,100=250000
 //Say a round lasts 60 minutes. Level 5 should take 2 hours. ??
@@ -1027,7 +1040,7 @@ proc/default_frequency_color(freq)
 #ifdef RP_MODE
 #define ASS_JAM 0
 #elif BUILD_TIME_DAY == 13
-#define ASS_JAM 1
+#define ASS_JAM 0
 #else
 #define ASS_JAM 0
 #endif
@@ -1141,6 +1154,11 @@ var/ZLOG_START_TIME
 #define RAILING_DISASSEMBLE 0
 #define RAILING_UNFASTEN 1
 #define RAILING_FASTEN 2
+
+//critter defines
+#define OBJ_CRITTER_OPENS_DOORS_NONE 0
+#define OBJ_CRITTER_OPENS_DOORS_PUBLIC 1
+#define OBJ_CRITTER_OPENS_DOORS_ANY 2
 
 //Auditing
 //Whether or not a potentially suspicious action gets denied by the code.

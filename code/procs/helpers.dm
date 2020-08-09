@@ -1920,15 +1920,15 @@ proc/countJob(rank)
 		if ("mslave")
 			switch (removal_type)
 				if ("expired")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has worn off.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
 				if ("surgery")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) was removed surgically.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
 				if ("override")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) was overridden by a different implant.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
 				if ("death")
-					logTheThing("combat", M, mymaster, "(implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
+					logTheThing("combat", M, mymaster, "(implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
 				else
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has vanished mysteriously.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has vanished mysteriously.")
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
@@ -1939,9 +1939,9 @@ proc/countJob(rank)
 		if ("vthrall")
 			switch (removal_type)
 				if ("death")
-					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has died, removing vampire thrall status.")
+					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing vampire thrall status.")
 				else
-					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has been freed mysteriously, removing vampire thrall status.")
+					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing vampire thrall status.")
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
@@ -1953,15 +1953,15 @@ proc/countJob(rank)
 		if ("otherslave")
 			switch (removal_type)
 				if ("expired")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has worn off.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
 				if ("surgery")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) was removed surgically.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
 				if ("override")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "%target%" : "*NOKEYFOUND*"]) was overridden by a different implant.")
+					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
 				if ("death")
-					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
+					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
 				else
-					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "%target%" : "*NOKEYFOUND*"]) has been freed mysteriously, removing mindslave status.")
+					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing mindslave status.")
 
 			// Fix for mindslaved traitors etc losing their antagonist status.
 			if (M.mind && (M.mind.special_role == "spyslave"))
@@ -2424,6 +2424,31 @@ proc/angle_to_dir(angle)
 		else
 			.= SOUTH
 
+proc/dir_to_angle(dir)
+	.= 0
+	switch(dir)
+		if(NORTH)
+			.= 0
+		if(NORTHEAST)
+			.= 45
+		if(EAST)
+			.= 90
+		if(SOUTHEAST)
+			.= 135
+		if(SOUTH)
+			.= 180
+		if(SOUTHWEST)
+			.= 225
+		if(WEST)
+			.= 270
+		if(NORTHWEST)
+			.= 315
+
+proc/angle_to_vector(ang)
+	.= list()
+	. += cos(ang)
+	. += sin(ang)
+
 /**
   * Removes non-whitelisted reagents from the reagents of TA
   * user: the mob that adds a reagent to an atom that has a reagent whitelist
@@ -2442,11 +2467,14 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 			TA.reagents.del_reagent(reagent_id)
 			found = 1
 	if (found)
-		if (user)
-			boutput(user, "[custom_message]") // haine: done -> //TODO: using usr in procs is evil shame on you
+		if(user)
+			boutput(user, "[custom_message]")
 		else if (ismob(TA.loc))
 			var/mob/M = TA.loc
 			boutput(M, "[custom_message]")
+		else if(ismob(usr))
+			 // some procs don't know user, for instance because they are in on_reagent_change
+			boutput(usr, "[custom_message]")
 		else
 			TA.visible_message("[custom_message]")
 
@@ -2543,3 +2571,14 @@ proc/total_clients_for_cap()
 			var/client/CC = C
 			if (!CC.holder)
 				.++
+
+	for (var/C in player_cap_grace)
+		if (player_cap_grace[C] > TIME)
+			.++
+
+
+proc/client_has_cap_grace(var/client/C)
+	if (C.ckey in player_cap_grace)
+		.= (player_cap_grace[C.ckey] > TIME)
+
+

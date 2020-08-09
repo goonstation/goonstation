@@ -39,7 +39,7 @@
 	var/next_cache = 0
 	var/stat_cache = list(0, 0, "")
 
-//3 Modules can be activated at any one time.
+	// 3 tools can be activated at any one time.
 	var/module_active = null
 	var/list/module_states = list(null,null,null)
 
@@ -1376,7 +1376,7 @@
 			var/action = input("What do you want to do?", "Cyborg Maintenance") as null|anything in available_actions
 			if (!action)
 				return
-			if (get_dist(src.loc,user.loc) > 1 && (!src.bioHolder || !src.bioHolder.HasEffect("telekinesis")))
+			if (get_dist(src.loc,user.loc) > 1 && !src.bioHolder?.HasEffect("telekinesis"))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
 
@@ -1390,7 +1390,7 @@
 						return
 
 					src.visible_message("<span class='alert'>[user] removes [src]'s AI interface!</span>")
-					logTheThing("combat", user, src, "removes %target%'s ai_interface at [log_loc(src)].")
+					logTheThing("combat", user, src, "removes [constructTarget(src,"combat")]'s ai_interface at [log_loc(src)].")
 
 					src.uneq_active()
 					for (var/obj/item/roboupgrade/UPGR in src.contents)
@@ -1436,7 +1436,7 @@
 					user.put_in_hand_or_drop(src.cell)
 					user.show_text("You remove [src.cell] from [src].", "red")
 					src.show_text("Your power cell was removed!", "red")
-					logTheThing("combat", user, src, "removes %target%'s power cell at [log_loc(src)].") // Renders them mute and helpless (Convair880).
+					logTheThing("combat", user, src, "removes [constructTarget(src,"combat")]'s power cell at [log_loc(src)].") // Renders them mute and helpless (Convair880).
 					cell.add_fingerprint(user)
 					cell.updateicon()
 					src.cell = null
@@ -1484,7 +1484,7 @@
 
 		if (user)
 			src.visible_message("<span class='alert'>[user] removes [src]'s brain!</span>")
-			logTheThing("combat", user, src, "removes %target%'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
+			logTheThing("combat", user, src, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
 		else
 			src.visible_message("<span class='alert'>[src]'s brain is ejected from its head!</span>")
 			playsound(get_turf(src), "sound/misc/boing/[rand(1,6)].ogg", 40, 1)
@@ -1759,7 +1759,7 @@
 				if (isitem(I))
 					var/obj/item/IT = I
 					IT.dropped(src) // Handle light datums and the like.
-				if (I in module.modules)
+				if (I in module.tools)
 					I.loc = module
 				else
 					qdel(I)
@@ -1980,7 +1980,7 @@
 
 			dat += "<BR><B>Available Equipment</B><BR>"
 
-			for (var/obj in src.module.modules)
+			for (var/obj in src.module.tools)
 				if(src.activated(obj)) dat += text("[obj]: <B>Equipped</B><BR>")
 				else dat += text("[obj]: <A HREF=?src=\ref[src];act=\ref[obj]>Equip</A><BR>")
 		else dat += "<B>No Module Installed</B><BR>"

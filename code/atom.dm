@@ -84,7 +84,6 @@
 /atom
 	layer = TURF_LAYER
 	plane = PLANE_DEFAULT
-	var/datum/mechanics_holder/mechanics = null
 	var/level = 2
 	var/flags = FPRINT
 	var/event_handler_flags = 0
@@ -207,9 +206,6 @@
 		if (!isnull(reagents))
 			qdel(reagents)
 			reagents = null
-		if (!isnull(mechanics))
-			qdel(mechanics)
-			mechanics = null
 		if (temp_flags & (HAS_PARTICLESYSTEM | HAS_PARTICLESYSTEM_TARGET))
 			particleMaster.ClearSystemRefs(src)
 		if (temp_flags & (HAS_BAD_SMOKE))
@@ -282,14 +278,6 @@
 			src.loc.handle_event(event, src)
 
 	proc/handle_event(var/event, var/sender) //This is sort of like a version of Topic that is not for browsing.
-		return
-
-	//Called AFTER the material of the object was changed.
-	proc/onMaterialChanged()
-		if(istype(src.material))
-			explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_resistance
-			explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_protection
-			if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 50)) flags |= CONDUCT
 		return
 
 	proc/serialize_icon(var/savefile/F, var/path, var/datum/sandbox/sandbox)
@@ -706,6 +694,8 @@
 	return
 
 /atom/proc/attack_hand(mob/user as mob)
+	if (flags & TGUI_INTERACTIVE)
+		return ui_interact(user)
 	return
 
 /atom/proc/attack_ai(mob/user as mob)
@@ -842,6 +832,13 @@
 /atom/proc/Bumped(AM as mob|obj)
 	return
 
+/atom/proc/contains(var/atom/A)
+	if(!A)
+		return 0
+	for(var/atom/location = A.loc, location, location = location.loc)
+		if(location == src)
+			return 1
+
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
 	SPAWN_DBG( 0 )
 		if ((A && yes)) //wtf
@@ -880,12 +877,6 @@
 		if(src:client && src:client:player && src:client:player:shamecubed)
 			loc = src:client:player:shamecubed
 			return
-		var/mob/SM = src
-		if (!(SM.client && SM.client.holder))
-			if (istype(newloc, /turf/unsimulated))
-				var/turf/unsimulated/T = newloc
-				if (T.density)
-					return
 
 	if (isturf(loc))
 		loc.Exited(src, newloc)
@@ -961,7 +952,7 @@
 	//It is probably important that we update this as density changes immediately. I don't think it breaks anything currently if we dont, but still important for future.
 	if (src.density != newdensity)
 		if (isturf(src.loc))
-			if (!src.event_handler_flags & USE_CANPASS)
+			if (!(src.event_handler_flags & USE_CANPASS))
 				if(newdensity == 1)
 					var/turf/T = src.loc
 					if (T)

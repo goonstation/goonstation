@@ -114,6 +114,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_death_confetti,
 		/client/proc/cmd_admin_unhandcuff,
 		/client/proc/admin_toggle_lighting,
+		/client/proc/cmd_admin_managebioeffect,
 
 		/client/proc/debug_deletions,
 
@@ -230,6 +231,8 @@ var/list/admin_verbs = list(
 		/client/proc/admin_set_ai_vox,
 		/client/proc/cmd_makeshittyweapon,
 		/client/proc/rspawn_panel,
+		/client/proc/cmd_admin_manageabils,
+		/client/proc/create_all_wizard_rings,
 
 		// moved up from admin
 		//client/proc/cmd_admin_delete,
@@ -466,7 +469,7 @@ var/list/special_pa_observing_verbs = list(
 		var/client/C = who[chosen]
 		C.screen += A
 		boutput(usr, "<span class='notice'>Successful.</span>")
-		logTheThing("admin", usr, C.mob, "added [A] to %target%'s screen.")
+		logTheThing("admin", usr, C.mob, "added [A] to [constructTarget(C.mob,"admin")]'s screen.")
 */
 /client/proc/update_admins(var/rank)
 	if(!src.holder)
@@ -773,13 +776,13 @@ var/list/special_pa_observing_verbs = list(
 	if (!oocban_isbanned(target))
 		oocban_fullban(target)
 		message_admins("[key_name(src)] has banned [key_name(target)] from OOC")
-		logTheThing("admin", usr, target, "Banned %target% from OOC")
-		logTheThing("diary", usr, target, "Banned %target% from OOC", "admin")
+		logTheThing("admin", usr, target, "Banned [constructTarget(target,"admin")] from OOC")
+		logTheThing("diary", usr, target, "Banned [constructTarget(target,"diary")] from OOC", "admin")
 	else
 		oocban_unban(selection)
 		message_admins("[key_name(src)] has unbanned [key_name(target)] from OOC")
-		logTheThing("admin", usr, target, "Unbanned %target% from OOC")
-		logTheThing("diary", usr, target, "Unbanned %target% from OOC", "admin")
+		logTheThing("admin", usr, target, "Unbanned [constructTarget(target,"admin")] from OOC")
+		logTheThing("diary", usr, target, "Unbanned [constructTarget(target,"diary")] from OOC", "admin")
 
 /client/proc/warn(var/mob/M in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -845,8 +848,8 @@ var/list/fun_images = list()
 	if(!M.client)
 		alert("[M] is logged out, so you should probably ban them!")
 		return
-	logTheThing("admin", src, M, "forced %target% to view the rules")
-	logTheThing("diary", src, M, "forced %target% to view the rules", "admin")
+	logTheThing("admin", src, M, "forced [constructTarget(M,"admin")] to view the rules")
+	logTheThing("diary", src, M, "forced [constructTarget(M,"diary")] to view the rules", "admin")
 	message_admins("[key_name(src)] forced [key_name(M)] to view the rules.")
 	M << csound("sound/misc/klaxon.ogg")
 	boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
@@ -973,8 +976,8 @@ var/list/fun_images = list()
 		if (S.dependent && S.mainframe && isAI(S.mainframe))
 			qdel(S.mainframe) // Delete mainframe if it's an AI-controlled robot.
 
-	logTheThing("admin", src, M, "has made %target% a human.")
-	logTheThing("diary", src, M, "has made %target% a human.", "admin")
+	logTheThing("admin", src, M, "has made [constructTarget(M,"admin")] a human.")
+	logTheThing("diary", src, M, "has made [constructTarget(M,"diary")] a human.", "admin")
 	message_admins("[key_name(src)] has made [key_name(M)] a human.")
 
 	if (send_to_arrival_shuttle == 1)
@@ -1391,8 +1394,8 @@ var/list/fun_images = list()
 		CritterPet.atkcarbon = 0
 		CritterPet.atksilicon = 0
 
-	logTheThing("admin", usr ? usr : src, M, "gave %target% a pet [pet_path]!")
-	logTheThing("diary", usr ? usr : src, M, "gave %target% a pet [pet_path]!", "admin")
+	logTheThing("admin", usr ? usr : src, M, "gave [constructTarget(M,"admin")] a pet [pet_path]!")
+	logTheThing("diary", usr ? usr : src, M, "gave [constructTarget(M,"diary")] a pet [pet_path]!", "admin")
 	message_admins("[key_name(usr ? usr : src)] gave [M] a pet [pet_path]!")
 
 /client/proc/cmd_give_pets()
@@ -1516,8 +1519,9 @@ var/list/fun_images = list()
 
 	M.remove()
 
-	logTheThing("admin", src, C ? C : M, "removed %target% from existence!")
-	logTheThing("diary", src, C ? C : M, "removed %target% from existence!", "admin")
+	var/Target = C ? C : M
+	logTheThing("admin", src, Target, "removed [constructTarget(Target,"admin")] from existence!")
+	logTheThing("diary", src, Target, "removed [constructTarget(Target,"diary")] from existence!", "admin")
 	message_admins("[key_name(src)] removed [key_name(C ? C : M)] from existence!")
 
 /client/proc/cmd_change_map()
@@ -1812,8 +1816,12 @@ var/list/fun_images = list()
 
 
 	if (parameters["right"])
-		var/list/atoms = list(get_turf(A))
-		for(var/thing in get_turf(A))
+		var/turf/clicked_turf = get_turf(A)
+		var/x_shift = round(text2num(parameters["icon-x"]) / 32)
+		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
+		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
+		var/list/atoms = list(clicked_turf)
+		for(var/thing in clicked_turf)
 			var/atom/atom = thing
 			atoms += atom
 		if (atoms.len)
@@ -1843,8 +1851,10 @@ var/list/fun_images = list()
 			C.cmd_admin_get_mobject(A)
 		if("Follow Thing")
 			C.admin_follow_mobject(A)
-		if("Check Bioeffects")
-			C.cmd_admin_checkbioeffect(A)
+		if("Manage Bioeffects")
+			C.cmd_admin_managebioeffect(A)
+		if("Manage Abilities")
+			C.cmd_admin_manageabils(A)
 		if("Add Reagents")
 			C.addreagents(A)
 		if("Check Reagents")

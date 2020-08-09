@@ -13,9 +13,8 @@
 	var/obj/item/card/id/scan = null
 
 	New()
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("activate", "activateinput")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activateinput")
 		..()
 
 	proc/activateinput(var/datum/mechanicsMessage/inp) //make this work some day.
@@ -154,7 +153,7 @@
 					O.show_message(text("<span class='subtle'><b>[]</b> says, 'Thank you for playing!'</span>", src), 1)
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
-		if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("machineUsed"))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"machineUsed")
 		return
 
 /obj/submachine/slot_machine_manta
@@ -172,9 +171,8 @@
 	var/obj/item/card/id/scan = null
 
 	New()
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("activate", "activateinput")
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activateinput")
 		..()
 
 	proc/activateinput(var/datum/mechanicsMessage/inp) //make this work some day.
@@ -313,7 +311,7 @@
 					O.show_message(text("<span class='subtle'><b>[]</b> says, 'Thank you for playing!'</span>", src), 1)
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
-		if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("machineUsed"))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"machineUsed")
 		return
 
 /obj/submachine/slot_machine/cursed
@@ -321,12 +319,6 @@
 	desc = "Gambling for the damned."
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "slots-off"
-
-	New()
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("activate", "activateinput")
-		..()
 
 	attack_hand(var/mob/user as mob)
 		src.add_dialog(user)
@@ -397,7 +389,7 @@
 					updateUsrDialog()
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
-		if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("machineUsed"))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"machineUsed")
 		return
 
 /obj/submachine/slot_machine/cash
@@ -406,12 +398,6 @@
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "slots-off"
 	var/play_money = 0
-
-	New()
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("activate", "activateinput")
-		..()
 
 	attackby(var/obj/item/I as obj, user as mob)
 		if(istype(I, /obj/item/spacecash/))
@@ -532,5 +518,5 @@
 					O.show_message(text("<span class='subtle'><b>[]</b> says, 'Thank you for playing!'</span>", src), 1)
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
-		if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("machineUsed"))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"machineUsed")
 		return

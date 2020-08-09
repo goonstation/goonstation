@@ -7,7 +7,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 0
 	firevuln = 2
@@ -29,6 +29,7 @@
 			if (iscarbon(C) && !src.atkcarbon) continue
 			if (issilicon(C) && !src.atksilicon) continue
 			if (C.job == "Botanist") continue
+			if (iskudzuman(C)) continue
 			if (C.health < 0) continue
 			if (C in src.friends) continue
 			if (iscarbon(C) && src.atkcarbon) src.attack = 1
@@ -94,7 +95,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 2
@@ -113,6 +114,7 @@
 			if (iscarbon(C) && !src.atkcarbon) continue
 			if (issilicon(C) && !src.atksilicon) continue
 			if (C.health < 0) continue
+			if (iskudzuman(C)) continue
 			if (C in src.friends) continue
 			if (C.name == src.attacker) src.attack = 1
 			if (iscarbon(C) && src.atkcarbon) src.attack = 1

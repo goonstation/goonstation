@@ -1,5 +1,5 @@
 // rest in peace the_very_holy_global_bible_list_amen (??? - 2020)
-var/list/bible_contents = list()
+var/global/list/bible_contents = list()
 
 /obj/item/storage/bible
 	name = "bible"
@@ -29,13 +29,14 @@ var/list/bible_contents = list()
 		..()
 		STOP_TRACKING
 
-	proc/bless(mob/M as mob)
+	proc/bless(mob/M as mob, var/mob/user)
 		if (isvampire(M) || iswraith(M) || M.bioHolder.HasEffect("revenant"))
 			M.visible_message("<span class='alert'><B>[M] burns!</span>", 1)
 			var/zone = "chest"
 			if (usr.zone_sel)
 				zone = usr.zone_sel.selecting
 			M.TakeDamage(zone, 0, heal_amt)
+			JOB_XP(user, "Chaplain", 2)
 		else
 			var/mob/living/H = M
 			if( istype(H) )
@@ -45,6 +46,7 @@ var/list/bible_contents = list()
 				if( prob(25) )
 					H.cure_disease_by_path(/datum/ailment/disability/clumsy/cluwne)
 			M.HealDamage("All", heal_amt, heal_amt)
+			JOB_XP(user, "Chaplain", 2)
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/storage/bible))
@@ -72,31 +74,31 @@ var/list/bible_contents = list()
 
 		if (iswraith(M) || (M.bioHolder && M.bioHolder.HasEffect("revenant")))
 			M.visible_message("<span class='alert'><B>[user] smites [M] with the [src]!</B></span>")
-			bless(M)
+			bless(M, user)
 			boutput(M, "<span_class='alert'><B>IT BURNS!</B></span>")
 			if (narrator_mode)
 				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 			else
 				playsound(src.loc, "punch", 25, 1, -1)
-			logTheThing("combat", user, M, "biblically smote %target%")
+			logTheThing("combat", user, M, "biblically smote [constructTarget(M,"combat")]")
 
 		else if (!isdead(M))
 			var/mob/H = M
 			// ******* Check
 			if ((ishuman(H) && prob(60)))
-				bless(M)
+				bless(M, user)
 				M.visible_message("<span class='alert'><B>[user] heals [M] with the power of Christ!</B></span>")
 				boutput(M, "<span class='alert'>May the power of Christ compel you to be healed!</span>")
 				if (narrator_mode)
 					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 				else
 					playsound(src.loc, "punch", 25, 1, -1)
-				logTheThing("combat", user, M, "biblically healed %target%")
+				logTheThing("combat", user, M, "biblically healed [constructTarget(M,"combat")]")
 			else
 				if (ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
 					M.take_brain_damage(10)
 					boutput(M, "<span class='alert'>You feel dazed from the blow to the head.</span>")
-				logTheThing("combat", user, M, "biblically injured %target%")
+				logTheThing("combat", user, M, "biblically injured [constructTarget(M,"combat")]")
 				M.visible_message("<span class='alert'><B>[user] beats [M] over the head with [src]!</B></span>")
 				if (narrator_mode)
 					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
@@ -128,6 +130,11 @@ var/list/bible_contents = list()
 		for (var/obj/item/storage/S in bible_contents)
 			L += S.get_all_contents()
 		return L
+
+	contains(var/atom/A)
+		if(!A)
+			return 0
+		return (A in bible_contents)
 
 	add_contents(obj/item/I)
 		bible_contents += I

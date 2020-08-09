@@ -1071,7 +1071,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		if (prob(50))
 			new /obj/item/parts/robot_parts/arm/left(Tsec)
 
-		elecflash(src, power=2)
+		elecflash(src, radius=1, power=3, exclude_center = 0)
 		qdel(src)
 
 
@@ -1130,7 +1130,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					master.frustration++
 					sleep(delay)
 					continue
-				master.path -= master.path[1]
+				master?.path -= master?.path[1]
 				sleep(delay)
 
 			if (master)

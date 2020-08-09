@@ -165,7 +165,7 @@
 					if (target != user)
 						for (var/mob/O in AIviewers(world.view, user))
 							O.show_message(text("<span class='alert'><B>[] is trying to inject []!</B></span>", user, target), 1)
-						logTheThing("combat", user, target, "tries to inject %target% with a syringe [log_reagents(src)] at [log_loc(user)].")
+						logTheThing("combat", user, target, "tries to inject [constructTarget(target,"combat")] with a syringe [log_reagents(src)] at [log_loc(user)].")
 
 						if (!do_mob(user, target))
 							if (user && ismob(user))
@@ -190,7 +190,7 @@
 
 				SPAWN_DBG (5)
 					if (src && src.reagents && target && target.reagents)
-						logTheThing("combat", user, target, "injects %target% with a syringe [log_reagents(src)] at [log_loc(user)].")
+						logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with a syringe [log_reagents(src)] at [log_loc(user)].")
 						// Convair880: Seems more efficient than separate calls. I believe this shouldn't clutter up the logs, as the number of targets you can inject is limited.
 						// Also wraps up injecting food (advertised in the 'Tip of the Day' list) and transferring chems to other containers (i.e. brought in line with beakers and droppers).
 

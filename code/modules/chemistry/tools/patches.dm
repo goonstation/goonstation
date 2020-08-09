@@ -120,7 +120,7 @@
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
 				M.visible_message("<span class='alert'>[src] lands on [M] sticky side down!</span>")
-				logTheThing("combat", M, usr, "is stuck by a patch [log_reagents(src)] thrown by %target% at [log_loc(M)].")
+				logTheThing("combat", M, usr, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(M)].")
 				apply_to(M,usr)
 				attach_sticker_manual(M)
 
@@ -145,7 +145,7 @@
 				if (medical == 0)
 					user.visible_message("<span class='alert'><b>[user]</b> is trying to stick [src] to [M]'s arm!</span>",\
 					"<span class='alert'>You try to stick [src] to [M]'s arm!</span>")
-					logTheThing("combat", user, M, "tries to apply a patch [log_reagents(src)] to %target% at [log_loc(user)].")
+					logTheThing("combat", user, M, "tries to apply a patch [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
 
 					if (!do_mob(user, M))
 						if (user && ismob(user))
@@ -173,7 +173,7 @@
 							H.patchesused ++
 						JOB_XP(user, "Medical Doctor", 1)
 
-			logTheThing("combat", user, M, "applies a patch to %target% [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, M, "applies a patch to [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
 			src.clamp_reagents()
 
@@ -529,7 +529,7 @@
 				if (M.health < 90)
 					JOB_XP(user, "Medical Doctor", 2)
 
-			logTheThing("combat", user, M, "begins automending %target% [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, M, "begins automending [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 			begin_application(M,user=user)
 			return 1
 
@@ -556,7 +556,7 @@
 				var/datum/reagents/R = new
 				reagents.copy_to(R)
 				R.trans_to(M, use_volume_adjusted/2)
-			logTheThing("combat", user, M, " automends %target% [log_reagents(src)] at [log_loc(user)].")
+			logTheThing("combat", user, M, " automends [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
 			playsound(get_turf(src), pick(sfx), 50, 1)
 
@@ -611,7 +611,11 @@
 		if(get_dist(user, target) > 1 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		src.loopStart()
+		return
 
+	loopStart()
+		..()
 		if (!M.reagents || M.reagents.total_volume <= 0)
 			user.show_text("[M] is empty.", "red")
 			interrupt(INTERRUPT_ALWAYS)
@@ -627,8 +631,8 @@
 		M.apply_to(target,user, multiply, silent = (looped >= 1))
 
 	onEnd()
-		..()
 		if(get_dist(user, target) > 1 || user == null || target == null)
+			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -636,7 +640,9 @@
 		if (!M.tampered)
 			target.updatehealth() //I hate this, but we actually need the health on time here.
 			if (health_temp == target.health)
+				..()
 				user.show_text("[M] is finished healing and powers down automatically.", "blue")
 				return
-
-		actions.start(new/datum/action/bar/icon/automender_apply(user, M, target, looped + 1), user)
+		
+		looped++
+		src.onRestart()

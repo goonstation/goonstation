@@ -329,8 +329,9 @@
 			if ("M. Fortuna's House of Fortune") sound_fx_1 = 'sound/ambience/spooky/MFortuna.ogg'
 			#ifdef SUBMARINE_MAP
 			else sound_fx_1 = pick(ambience_submarine)
-			#endif
+			#else
 			else sound_fx_1 = pick(ambience_general)
+			#endif
 
 	proc/add_light(var/obj/machinery/light/L)
 		if (!light_manager)
@@ -1137,7 +1138,7 @@
 	name = "Water Treatment Facility"
 	icon_state = "purple"
 
-/area/station/bee_sanctuary
+/area/bee_sanctuary
 	name = "Bee Sanctuary"
 	icon_state = "purple"
 

@@ -705,7 +705,7 @@
 */
 	proc/display_alert(var/alert_message) //Add alert overlay and beep
 		if (alert_message)
-			playsound(get_turf(src), "sound/machines/twobeep.ogg", 50, 1)
+			playsound(get_turf(src), "sound/machines/twobeep.ogg", 35, 1)
 
 			for (var/atom in mobs)
 				if (!atom) break
@@ -827,7 +827,7 @@
 		return ..()
 	var/mob/living/silicon/ai/ai = loc
 	if (ai.deployed_to_eyecam)
-		ai.eyecam << sound('sound/machines/twobeep.ogg', volume=50)
+		ai.eyecam << sound('sound/machines/twobeep.ogg', volume=35)
 		ai.eyecam.show_message(message)
 	if (ismob(ai.deployed_shell))
 		var/mob/M = ai.deployed_shell

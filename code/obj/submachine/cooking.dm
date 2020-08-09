@@ -386,14 +386,14 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/butterburger(src)
 			src.recipes += new /datum/cookingrecipe/cheeseburger_m(src)
 			src.recipes += new /datum/cookingrecipe/cheeseburger(src)
+			src.recipes += new /datum/cookingrecipe/tikiburger(src)
+			src.recipes += new /datum/cookingrecipe/luauburger(src)
+			src.recipes += new /datum/cookingrecipe/coconutburger(src)
 			src.recipes += new /datum/cookingrecipe/humanburger(src)
 			src.recipes += new /datum/cookingrecipe/monkeyburger(src)
 			src.recipes += new /datum/cookingrecipe/synthburger(src)
 			src.recipes += new /datum/cookingrecipe/baconburger(src)
 			src.recipes += new /datum/cookingrecipe/mysteryburger(src)
-			src.recipes += new /datum/cookingrecipe/tikiburger(src)
-			src.recipes += new /datum/cookingrecipe/coconutburger(src)
-			src.recipes += new /datum/cookingrecipe/luauburger(src)
 			src.recipes += new /datum/cookingrecipe/buttburger(src)
 			src.recipes += new /datum/cookingrecipe/heartburger(src)
 			src.recipes += new /datum/cookingrecipe/flockburger(src)
@@ -713,6 +713,9 @@ table#cooktime a#start {
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isghostdrone(user))
 			boutput(usr, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+			return
+		if (W.cant_drop) //For borg held items
+			user.show_text("You can't put that in [src] when it's attached to you!", "red")
 			return
 		if (src.working)
 			boutput(usr, "<span class='alert'>It's already on! Putting a new thing in could result in a collapse of the cooking waveform into a really lousy eigenstate, like a vending machine chili dog.</span>")

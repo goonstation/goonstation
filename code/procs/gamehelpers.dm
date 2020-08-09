@@ -127,7 +127,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 						qdel(O)
 
 				return 1
-		if (istype(source, /obj/machinery) && isAI(user))
+		else if (istype(source, /obj/machinery) && isAI(user))
 			return 1
 
 	return 0 //not in range and not telekinetic
@@ -287,12 +287,12 @@ var/obj/item/dummy/click_dummy = new
 	if (iscluwne(H))
 		message = honk(message)
 		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
-			playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 70, 0, 0, H.get_age_pitch())
+			playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
 			H.last_cluwne_noise = world.time
 	if (ishorse(H))
 		message = neigh(message)
 		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
-			playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 70, 0, 0, H.get_age_pitch())
+			playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
 			H.last_cluwne_noise = world.time
 
 	if ((H.reagents && H.reagents.get_reagent_amount("ethanol") > 30 && !isdead(H)) || H.traitHolder.hasTrait("alcoholic"))
