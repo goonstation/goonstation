@@ -344,7 +344,7 @@
 
 /obj/ability_button/pda_open
 	name = "Open The PDA Interface"
-	icon_state = "pda1"
+	icon_state = "pda5"
 
 	execute_ability()
 		var/obj/item/device/pda2/P = the_item

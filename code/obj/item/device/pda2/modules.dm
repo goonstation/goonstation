@@ -67,18 +67,29 @@
 		return
 
 	proc/add_abilities_to_host()
+		var/flashlight_found = FALSE
 		if (src.host && islist(src.ability_buttons) && src.ability_buttons.len)
 			for (var/obj/ability_button/B in src.ability_buttons)
 				if (!islist(src.host.ability_buttons))
 					src.host.ability_buttons = list()
-				if (!src.host.ability_buttons.Find(B))
+				if (!(B in src.host.ability_buttons))
+					if(istype(B, /obj/ability_button/pda_flashlight_toggle))
+						flashlight_found = TRUE
 					src.host.ability_buttons.Add(B)
 					if (src.host.the_mob)
 						src.host.the_mob.item_abilities.Add(B)
+			if(flashlight_found)
+				for(var/obj/ability_button/pda_open/PO in src.host.ability_buttons)
+					src.host.ability_buttons.Remove(PO)
+					if (src.host.the_mob)
+						src.host.the_mob.item_abilities.Remove(PO)
+			else
+				var/obj/ability_button/NB = new /obj/ability_button/pda_open
+				src.ability_buttons |= NB
 			if (src.host.the_mob)
 				src.host.the_mob.need_update_item_abilities = 1
 				src.host.the_mob.update_item_abilities()
-
+		
 	proc/remove_abilities_from_host()
 		if (src.host && islist(src.host.ability_buttons) && src.host.ability_buttons.len && islist(src.ability_buttons) && src.ability_buttons.len)
 			for (var/obj/ability_button/B in src.ability_buttons)
@@ -221,7 +232,7 @@
 
 /obj/ability_button/pda_flashlight_toggle
 	name = "Toggle PDA Flashlight"
-	icon_state = "pda0"
+	icon_state = "pda3"
 
 	execute_ability()
 		var/obj/item/device/pda_module/flashlight/J = the_item
