@@ -68,14 +68,16 @@ export const GasCanister = (props, context) => {
         <PortableBasicInfo
           connected={connected}
           pressure={pressure}
-          maxPressure={maxPressure} />
-        { hasValve && <ReleaseValve
-          valveIsOpen={valveIsOpen}
-          releasePressure={releasePressure}
-          minRelease={minRelease}
-          maxRelease={maxRelease}
-          onToggleValve={handleToggleValve}
-          onSetPressure={handleSetPressure} />}
+          maxPressure={maxPressure}>
+          <Divider />
+          { hasValve && <ReleaseValve
+            valveIsOpen={valveIsOpen}
+            releasePressure={releasePressure}
+            minRelease={minRelease}
+            maxRelease={maxRelease}
+            onToggleValve={handleToggleValve}
+            onSetPressure={handleSetPressure} />}
+        </PortableBasicInfo>
         { !detonator && <PortableHoldingTank
           holding={holding}
           onEjectTank={handleEjectTank} /> }
@@ -108,12 +110,13 @@ const Detonator = props => {
   } = props;
 
   return (
-    <Fragment>
+    <Section title="Detonator">
       <DetonatorWires
         wireNames={wireNames}
         wireStatus={wireStatus}
         time={time}
         onWireInteract={onWireInteract} />
+      <Divider />
       <DetonatorUtility
         isAnchored={isAnchored}
         safetyIsOn={safetyIsOn}
@@ -121,7 +124,7 @@ const Detonator = props => {
         onToggleAnchor={onToggleAnchor}
         onToggleSafety={onToggleSafety}
         onPrimeDetonator={onPrimeDetonator} />
-    </Fragment>
+    </Section>
   );
 };
 
@@ -133,37 +136,34 @@ const DetonatorWires = props => {
     onWireInteract,
   } = props;
 
-
   return (
-    <Section title="Detonator">
-      <Flex>
-        <Flex.Item>
-          <LabeledList>
-            { wireNames.map((entry, i) => (
-              <LabeledList.Item
-                key={entry + i}
-                label={entry}>
-                { (wireStatus && wireStatus[i]) ? (
-                  <Fragment>
-                    <Button
-                      onClick={() => onWireInteract(i, "cut")}>
-                      Cut
-                    </Button>
-                    <Button
-                      onClick={() => onWireInteract(i, "pulse")}>
-                      Pulse
-                    </Button>
-                  </Fragment>)
-                  : <Box color="average">Cut</Box> }
-              </LabeledList.Item>
-            ))}
-          </LabeledList>
-        </Flex.Item>
-        <Flex.Item mr={5} mt={2} >
-          <DetonatorTimer time={time} />
-        </Flex.Item>
-      </Flex>
-    </Section>
+    <Flex>
+      <Flex.Item>
+        <LabeledList>
+          { wireNames.map((entry, i) => (
+            <LabeledList.Item
+              key={entry + i}
+              label={entry}>
+              { (wireStatus && wireStatus[i]) ? (
+                <Fragment>
+                  <Button
+                    onClick={() => onWireInteract(i, "cut")}>
+                    Cut
+                  </Button>
+                  <Button
+                    onClick={() => onWireInteract(i, "pulse")}>
+                    Pulse
+                  </Button>
+                </Fragment>)
+                : <Box color="average">Cut</Box> }
+            </LabeledList.Item>
+          ))}
+        </LabeledList>
+      </Flex.Item>
+      <Flex.Item mr={5} mt={2} >
+        <DetonatorTimer time={time} />
+      </Flex.Item>
+    </Flex>
   );
 };
 
@@ -174,9 +174,8 @@ const DetonatorTimer = props => {
     let seconds = Math.floor(time % 60);
     let minutes = Math.floor((time - seconds) / 60);
     if (time <= 0) {
-      return `OH:GOD`;
+      return `BO:OM`;
     }
-
     if (seconds < 10) {
       seconds = `0${seconds}`;
     }
@@ -198,20 +197,24 @@ const DetonatorTimer = props => {
   };
 
   return (
-    <Fragment>
-      <Box
-        p={1}
-        textAlign="center"
-        backgroundColor="black"
-        color={TimeColor()}
-        maxWidth="100px"
-        fontSize="19px">
-        <AnimatedNumber
-          value={time}
-          format={() => FormatTime()} />
-      </Box>
-      <Button mt={1}>Set Timer</Button>
-    </Fragment>
+    <Flex direction="column" align="center">
+      <Flex.Item>
+        <Box
+          p={1}
+          textAlign="center"
+          backgroundColor="black"
+          color={TimeColor()}
+          maxWidth="100px"
+          fontSize="19px">
+          <AnimatedNumber
+            value={time}
+            format={() => FormatTime()} />
+        </Box>
+      </Flex.Item>
+      <Flex.Item>
+        <Button mt={1}>Set Timer</Button>
+      </Flex.Item>
+    </Flex>
   );
 };
 
@@ -228,7 +231,7 @@ const DetonatorUtility = props => {
 
   const armingStatus = () => {
     if (safetyIsOn) {
-      return ("The safety is on therefore you cannot prime the bomb.");
+      return ("The safety is on, therefore, you cannot prime the bomb.");
     } else if (!safetyIsOn && !isPrimed) {
       return (
         <Button
@@ -242,34 +245,32 @@ const DetonatorUtility = props => {
   };
 
   return (
-    <Section>
-      <LabeledList>
-        <LabeledList.Item
-          label="Anchor Status">
-          { isAnchored
-            ? "Anchored. There are no controls for undoing this."
-            : <Button
-              content="Anchor"
-              onClick={() => onToggleAnchor()} />}
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Trigger">
-          d
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Safety">
-          { safetyIsOn
-            ? <Button
-              color="average"
-              content="Turn Off"
-              onClick={() => onToggleSafety()} />
-            : <Box color="average">Off</Box> }
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Arming">
-          { armingStatus() }
-        </LabeledList.Item>
-      </LabeledList>
-    </Section>
+    <LabeledList>
+      <LabeledList.Item
+        label="Anchor Status">
+        { isAnchored
+          ? "Anchored. There are no controls for undoing this."
+          : <Button
+            content="Anchor"
+            onClick={() => onToggleAnchor()} />}
+      </LabeledList.Item>
+      <LabeledList.Item
+        label="Trigger">
+        put shit here
+      </LabeledList.Item>
+      <LabeledList.Item
+        label="Safety">
+        { safetyIsOn
+          ? <Button
+            color="average"
+            content="Turn Off"
+            onClick={() => onToggleSafety()} />
+          : <Box color="average">Off</Box> }
+      </LabeledList.Item>
+      <LabeledList.Item
+        label="Arming">
+        { armingStatus() }
+      </LabeledList.Item>
+    </LabeledList>
   );
 };

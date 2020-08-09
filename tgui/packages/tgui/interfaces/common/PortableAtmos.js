@@ -8,6 +8,7 @@ export const PortableBasicInfo = props => {
     connected,
     pressure,
     maxPressure,
+    children,
   } = props;
 
   return (
@@ -24,11 +25,12 @@ export const PortableBasicInfo = props => {
           {connected ? 'Connected' : 'Not Connected'}
         </LabeledList.Item>
       </LabeledList>
-      <Box maxWidth="400px">
+      <Box maxWidth="400px" mt={1}>
         <PressureBar
           pressure={pressure}
           maxPressure={maxPressure} />
       </Box>
+      {children}
     </Section>
   );
 };
