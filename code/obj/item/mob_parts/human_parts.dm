@@ -87,14 +87,8 @@
 				if (new_holder && istype(new_holder))
 					name = "[new_holder.real_name]'s [initial(name)]"
 		if (src.skintoned)
-			SPAWN_DBG(2 DECI SECONDS)
-				colorize_limb_icon()
-				set_skin_tone()
-				limb_headcount()
-		else
 			colorize_limb_icon()
 			set_skin_tone()
-			limb_headcount()
 
 	disposing()
 		if(src.bones)
