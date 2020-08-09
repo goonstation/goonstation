@@ -709,6 +709,11 @@ proc/default_frequency_color(freq)
 #define D_TOXIC 48
 #define D_SPECIAL 128
 
+//Projectile reflection defines
+#define PROJ_NO_HEADON_BOUNCE 1
+#define PROJ_HEADON_BOUNCE 2
+#define PROJ_RAPID_HEADON_BOUNCE 3
+
 //Missing limb flags
 #define LIMB_LEFT_ARM 1
 #define LIMB_RIGHT_ARM 2
@@ -1149,6 +1154,11 @@ var/ZLOG_START_TIME
 #define RAILING_DISASSEMBLE 0
 #define RAILING_UNFASTEN 1
 #define RAILING_FASTEN 2
+
+//critter defines
+#define OBJ_CRITTER_OPENS_DOORS_NONE 0
+#define OBJ_CRITTER_OPENS_DOORS_PUBLIC 1
+#define OBJ_CRITTER_OPENS_DOORS_ANY 2
 
 //Auditing
 //Whether or not a potentially suspicious action gets denied by the code.

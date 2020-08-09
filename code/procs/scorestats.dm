@@ -111,7 +111,15 @@ var/datum/score_tracker/score_tracker
 			//LAGCHECK(LAG_LOW)
 
 		score_power_outages = get_percentage_of_fraction_and_whole(apcs_powered,apc_count)
-		score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,station_areas)
+
+		if (istype(ticker?.mode, /datum/game_mode/nuclear)) //Since the nuke doesn't actually blow up in time
+			var/datum/game_mode/nuclear/N = ticker.mode
+			if (N.nuke_detonated)
+				score_structural_damage = 0
+			else
+				score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,station_areas)
+		else
+			score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,station_areas)
 
 		score_power_outages = clamp(score_power_outages,0,100)
 		score_structural_damage = clamp(score_structural_damage,0,100)

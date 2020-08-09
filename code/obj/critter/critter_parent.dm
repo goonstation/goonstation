@@ -30,7 +30,7 @@
 	var/aggressive = 0
 	var/defensive = 0
 	var/wanderer = 1
-	var/opensdoors = 0
+	var/opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	var/frustration = 0
 	var/last_found = null
 	var/target = null

@@ -36,8 +36,8 @@ module.exports = (env = {}, argv) => {
     },
     output: {
       path: argv.useTmpFolder
-        ? path.resolve(__dirname, './public/.tmp')
-        : path.resolve(__dirname, './public'),
+        ? path.resolve(__dirname, '../../../browserassets/tgui/.tmp')
+        : path.resolve(__dirname, '../../../browserassets/tgui'),
       filename: '[name].bundle.js',
       chunkFilename: '[name].chunk.js',
     },
