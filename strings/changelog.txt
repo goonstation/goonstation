@@ -1,5 +1,9 @@
 
 (t)sat aug 08 20
+(u)Mordent
+(p)1691
+(e)🆕📄|feature, tgui
+(+)Cyborg module rewriter UI updated, now allows multiple modules to be inserted.
 (u)Chickenish
 (p)1705
 (e)🐛|bug
