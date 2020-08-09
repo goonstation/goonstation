@@ -1,4 +1,4 @@
-import { NumberInput, LabeledList, Button } from '../../components';
+import { NumberInput, LabeledList, Button, Section } from '../../components';
 
 export const ReleaseValve = props => {
 
@@ -12,29 +12,31 @@ export const ReleaseValve = props => {
   } = props;
 
   return (
-    <LabeledList>
-      <LabeledList.Item label="Release valve">
-        <Button
-          content={valveIsOpen ? 'Open' : 'Closed'}
-          color={valveIsOpen ? 'average' : 'default'}
-          onClick={() => onToggleValve()} />
-      </LabeledList.Item>
-      <LabeledList.Item label="Release pressure">
-        <Button
-          onClick={() => onSetPressure(minRelease)}
-          content="Min" />
-        <NumberInput
-          animated
-          width="85px"
-          value={releasePressure}
-          minValue={minRelease}
-          maxValue={maxRelease}
-          onChange={(e, targetPressure) => onSetPressure(targetPressure)} />
-        <Button
-          onClick={() => onSetPressure(maxRelease)}
-          content="Max" />
-      </LabeledList.Item>
-    </LabeledList>
+    <Section>
+      <LabeledList>
+        <LabeledList.Item label="Release valve">
+          <Button
+            content={valveIsOpen ? 'Open' : 'Closed'}
+            color={valveIsOpen ? 'average' : 'default'}
+            onClick={() => onToggleValve()} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Release pressure">
+          <Button
+            onClick={() => onSetPressure(minRelease)}
+            content="Min" />
+          <NumberInput
+            animated
+            width="85px"
+            value={releasePressure}
+            minValue={minRelease}
+            maxValue={maxRelease}
+            onChange={(e, targetPressure) => onSetPressure(targetPressure)} />
+          <Button
+            onClick={() => onSetPressure(maxRelease)}
+            content="Max" />
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
   );
 
 };

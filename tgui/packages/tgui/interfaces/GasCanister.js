@@ -4,6 +4,7 @@ import { Button, LabeledList, Section, NoticeBox, Box, Icon, ProgressBar, Number
 import { Window } from '../layouts';
 import { PortableBasicInfo, PortableHoldingTank } from './common/PortableAtmos';
 import { ReleaseValve } from './common/ReleaseValve';
+import { FlexItem } from '../components/Flex';
 
 export const GasCanister = (props, context) => {
   const { act, data } = useBackend(context);
@@ -22,43 +23,68 @@ export const GasCanister = (props, context) => {
   } = data;
 
   const handleSetPressure = releasePressure => {
-    act('set-pressure', {
+    act("set-pressure", {
       releasePressure,
     });
   };
 
   const handleToggleValve = () => {
-    act('toggle-valve');
+    act("toggle-valve");
   };
 
   const handleEjectTank = () => {
-    act('eject-tank');
+    act("eject-tank");
   };
+
+  const handleWireInteract = (index, toolAction) => {
+    act("wire-interact", {
+      toolAction,
+      index,
+    });
+  };
+
+  const handleToggleAnchor = () => {
+    act("anchor");
+  };
+
+  const handleToggleSafety = () => {
+    act("safety");
+  };
+
+  const handlePrimeDetonator = () => {
+    act("prime");
+  };
+
+  // avoids unnecessary re-renders of the entire window every update
+  let detonatorView = !!(detonator);
 
   return (
     <Window
-      key={holding}
-      width={holding ? 700 : 400}
-      height={370}>
+      resizable
+      key={detonatorView}
+      width={detonatorView ? 550 : 400}
+      height={detonatorView ? 550 : 370}>
       <Window.Content>
         <PortableBasicInfo
           connected={connected}
           pressure={pressure}
           maxPressure={maxPressure} />
-        <Section>
-          { hasValve
-            && <ReleaseValve
-              valveIsOpen={valveIsOpen}
-              releasePressure={releasePressure}
-              minRelease={minRelease}
-              maxRelease={maxRelease}
-              onToggleValve={handleToggleValve}
-              onSetPressure={handleSetPressure} />}
-        </Section>
+        { hasValve && <ReleaseValve
+          valveIsOpen={valveIsOpen}
+          releasePressure={releasePressure}
+          minRelease={minRelease}
+          maxRelease={maxRelease}
+          onToggleValve={handleToggleValve}
+          onSetPressure={handleSetPressure} />}
         { !detonator && <PortableHoldingTank
           holding={holding}
           onEjectTank={handleEjectTank} /> }
-        { detonator && <Detonator /> }
+        { detonator && <Detonator
+          detonator={detonator}
+          onToggleAnchor={handleToggleAnchor}
+          onToggleSafety={handleToggleSafety}
+          onWireInteract={handleWireInteract}
+          onPrimeDetonator={handlePrimeDetonator} /> }
       </Window.Content>
     </Window>
   );
@@ -66,18 +92,128 @@ export const GasCanister = (props, context) => {
 
 const Detonator = props => {
   const {
-    isAnchored,
-    trigger,
-    safetyIsOn,
-    isPrimed,
-    wireColors,
+    detonator: {
+      time,
+      isAnchored,
+      trigger,
+      safetyIsOn,
+      isPrimed,
+      wireNames,
+      wireStatus,
+    },
+    onToggleAnchor,
+    onToggleSafety,
+    onWireInteract,
+    onPrimeDetonator,
   } = props;
 
   return (
-    <DetonatorUtility />
+    <Fragment>
+      <DetonatorWires
+        wireNames={wireNames}
+        wireStatus={wireStatus}
+        time={time}
+        onWireInteract={onWireInteract} />
+      <DetonatorUtility
+        isAnchored={isAnchored}
+        safetyIsOn={safetyIsOn}
+        isPrimed={isPrimed}
+        onToggleAnchor={onToggleAnchor}
+        onToggleSafety={onToggleSafety}
+        onPrimeDetonator={onPrimeDetonator} />
+    </Fragment>
   );
 };
 
+const DetonatorWires = props => {
+  const {
+    wireNames,
+    wireStatus,
+    time,
+    onWireInteract,
+  } = props;
+
+
+  return (
+    <Section title="Detonator">
+      <Flex>
+        <Flex.Item>
+          <LabeledList>
+            { wireNames.map((entry, i) => (
+              <LabeledList.Item
+                key={entry + i}
+                label={entry}>
+                { (wireStatus && wireStatus[i]) ? (
+                  <Fragment>
+                    <Button
+                      onClick={() => onWireInteract(i, "cut")}>
+                      Cut
+                    </Button>
+                    <Button
+                      onClick={() => onWireInteract(i, "pulse")}>
+                      Pulse
+                    </Button>
+                  </Fragment>)
+                  : <Box color="average">Cut</Box> }
+              </LabeledList.Item>
+            ))}
+          </LabeledList>
+        </Flex.Item>
+        <Flex.Item mr={5} mt={2} >
+          <DetonatorTimer time={time} />
+        </Flex.Item>
+      </Flex>
+    </Section>
+  );
+};
+
+const DetonatorTimer = props => {
+  const { time } = props;
+
+  const FormatTime = () => {
+    let seconds = Math.floor(time % 60);
+    let minutes = Math.floor((time - seconds) / 60);
+    if (time <= 0) {
+      return `OH:GOD`;
+    }
+
+    if (seconds < 10) {
+      seconds = `0${seconds}`;
+    }
+    if (minutes < 10) {
+      minutes = `0${minutes}`;
+    }
+
+    return `${minutes}:${seconds}`;
+  };
+
+  const TimeColor = () => {
+    if (time <= 0) {
+      return "red";
+    } else if (time < 15) {
+      return "orange";
+    } else {
+      return "green";
+    }
+  };
+
+  return (
+    <Fragment>
+      <Box
+        p={1}
+        textAlign="center"
+        backgroundColor="black"
+        color={TimeColor()}
+        maxWidth="100px"
+        fontSize="19px">
+        <AnimatedNumber
+          value={time}
+          format={() => FormatTime()} />
+      </Box>
+      <Button mt={1}>Set Timer</Button>
+    </Fragment>
+  );
+};
 
 const DetonatorUtility = props => {
   const {
@@ -85,22 +221,53 @@ const DetonatorUtility = props => {
     trigger,
     safetyIsOn,
     isPrimed,
+    onToggleAnchor,
+    onToggleSafety,
+    onPrimeDetonator,
   } = props;
+
+  const armingStatus = () => {
+    if (safetyIsOn) {
+      return ("The safety is on therefore you cannot prime the bomb.");
+    } else if (!safetyIsOn && !isPrimed) {
+      return (
+        <Button
+          color="danger"
+          content="Prime"
+          onClick={() => onPrimeDetonator()} />);
+    } else {
+      return (
+        <Box bold color="red">PRIMED</Box>);
+    }
+  };
 
   return (
     <Section>
       <LabeledList>
-        <LabeledList.Item label="Anchor Status">
+        <LabeledList.Item
+          label="Anchor Status">
+          { isAnchored
+            ? "Anchored. There are no controls for undoing this."
+            : <Button
+              content="Anchor"
+              onClick={() => onToggleAnchor()} />}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Trigger">
           d
         </LabeledList.Item>
-        <LabeledList.Item label="Trigger">
-          d
+        <LabeledList.Item
+          label="Safety">
+          { safetyIsOn
+            ? <Button
+              color="average"
+              content="Turn Off"
+              onClick={() => onToggleSafety()} />
+            : <Box color="average">Off</Box> }
         </LabeledList.Item>
-        <LabeledList.Item label="Safety">
-          d
-        </LabeledList.Item>
-        <LabeledList.Item label="Arming">
-          d
+        <LabeledList.Item
+          label="Arming">
+          { armingStatus() }
         </LabeledList.Item>
       </LabeledList>
     </Section>

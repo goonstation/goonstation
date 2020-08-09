@@ -132,6 +132,7 @@
 		return 1
 
 	if (src.health <= 10)
+		tgui_process.close_uis(src)
 		message_admins("[src] was destructively opened, emptying contents at [log_loc(src)]. See station logs for atmos readout.")
 		logTheThing("station", null, null, "[src] [log_atmos(src)] was destructively opened, emptying contents at [log_loc(src)].")
 
@@ -258,6 +259,12 @@
 	healthcheck()
 	return
 
+/obj/machinery/portable_atmospherics/canister/eject_tank()
+	..()
+	if(valve_open && !connected_port)
+		message_admins("[key_name(usr)] removed a tank from [src], opening it into the air at [log_loc(src)]. See station logs for atmos readout.")
+		logTheThing("station", usr, null, "removed a tank from [src] [log_atmos(src)], opening it into the air at [log_loc(src)].")
+
 /obj/machinery/portable_atmospherics/canister/proc/rupture() // cogwerks- high pressure tank explosions
 	if (src.det)
 		del(src.det) //Otherwise canister bombs detonate after rupture
@@ -340,6 +347,8 @@
 				src.det.builtBy = usr
 				logTheThing("bombing", user, null, "builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
 				message_admins("[key_name(user)] builds a canister bomb at [log_loc(src)]. See bombing logs for atmos readout.")
+				tgui_process.update_uis(src)
+				src.update_icon()
 	else if (src.det && istype(W, /obj/item/tank))
 		user.show_message("<span class='alert'>You cannot insert a tank, as the slot is shut closed by the detonator assembly.</span>")
 	else if (src.det && W && istool(W, TOOL_PULSING | TOOL_SNIPPING))
@@ -376,30 +385,35 @@
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/ui_data(mob/user)
+	if(src.destroyed)
+		return
+
 	var/list/data = list()
-	data["pressure"] = MIXTURE_PRESSURE(air_contents)
-	data["maxPressure"] = maximum_pressure
-	data["connected"] = connected_port ? TRUE : FALSE
-	data["releasePressure"] = release_pressure
+	data["pressure"] = MIXTURE_PRESSURE(src.air_contents)
+	data["maxPressure"] = src.maximum_pressure
+	data["connected"] = src.connected_port ? TRUE : FALSE
+	data["releasePressure"] = src.release_pressure
 	data["minRelease"] = PORTABLE_ATMOS_MIN_RELEASE_PRESSURE
 	data["maxRelease"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
-	data["valveIsOpen"] = valve_open
-	data["hasValve"] = has_valve ? TRUE : FALSE
+	data["valveIsOpen"] = src.valve_open
+	data["hasValve"] = src.has_valve ? TRUE : FALSE
 
-	data["holding"] = null // need to explicitly tell the client it doesn't exist
-	if(holding)
+	data["holding"] = null // need to explicitly tell the client it doesn't exist so it renders properly
+	if(src.holding)
 		data["holding"] = list()
-		data["holding"]["name"] = holding.name
-		data["holding"]["pressure"] = MIXTURE_PRESSURE(holding.air_contents)
-		data["holding"]["maxPressure"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE //not really, but having the big green bar fill up all the way feels really good doesn't it
+		data["holding"]["name"] = src.holding.name
+		data["holding"]["pressure"] = MIXTURE_PRESSURE(src.holding.air_contents)
+		data["holding"]["maxPressure"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
 
-	data["detonator"] = null // need to explicitly tell the client it doesn't exist
-	if(det)
+	data["detonator"] = null
+	if(src.det)
 		data["detonator"] = list()
-		data["detonator"]["wireColors"] = det.WireColors
-		data["detonator"]["safetyIsOn"] = det.safety
-		data["detonator"]["isAnchored"] = anchored
-		data["detonator"]["isPrimed"] = det.part_fs.timing ? TRUE : FALSE
+		data["detonator"]["wireNames"] = src.det.WireNames
+		data["detonator"]["wireStatus"] = src.det.WireStatus
+		data["detonator"]["safetyIsOn"] = src.det.safety
+		data["detonator"]["isAnchored"] = src.anchored
+		data["detonator"]["isPrimed"] = src.det.part_fs.timing ? TRUE : FALSE
+		data["detonator"]["time"] = src.det.part_fs.time
 
 	return data
 
@@ -419,6 +433,30 @@
 		if("eject-tank")
 			eject_tank()
 			. = TRUE
+		if("anchor")
+			if(!src.anchored)
+				src.anchored = 1
+				src.visible_message("<B><font color=#B7410E>A loud click is heard from the bottom of the canister, securing itself.</font></B>")
+				playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+				. = TRUE
+		if("safety")
+			src.det.safety = 0
+			src.overlay_state = "overlay_safety_off"
+			. = TRUE
+		if("prime")
+			src.det.failsafe_engage()
+			. = TRUE
+		if("wire-interact")
+			var/tool = null
+			switch(params["toolAction"])
+				if("cut")
+					tool = TOOL_SNIPPING
+				if("pulse")
+					tool = TOOL_PULSING
+			var/index = params["index"]
+			var/mob/user = usr
+			if(isnum(index) && tool && istype(user))
+				src.det_wires_interact(tool, index+1, user)
 
 /obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob, var/new_ui = TRUE)
 	if(new_ui)
@@ -586,18 +624,87 @@
 	return
 
 /obj/machinery/portable_atmospherics/canister/proc/toggle_valve()
-	valve_open = !valve_open
+	src.valve_open = !(src.valve_open)
 	if (!src.holding && !src.connected_port)
 		logTheThing("station", usr, null, "[valve_open ? "opened [src] into" : "closed [src] from"] the air [log_atmos(src)] at [log_loc(src)].")
 		playsound(src.loc, "sound/effects/valve_creak.ogg", 50, 1)
 		playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
-		if (valve_open)
+		if (src.valve_open)
 			message_admins("[key_name(usr)] opened [src] into the air at [log_loc(src)]. See station logs for atmos readout.")
 			if (src.det)
 				src.det.leaking()
 
 /obj/machinery/portable_atmospherics/canister/proc/set_release_pressure(var/pressure as num)
-	release_pressure = clamp(pressure, PORTABLE_ATMOS_MIN_RELEASE_PRESSURE, PORTABLE_ATMOS_MAX_RELEASE_PRESSURE)
+	playsound(src.loc, "sound/effects/valve_creak.ogg", 20, 1)
+	src.release_pressure = clamp(pressure, PORTABLE_ATMOS_MIN_RELEASE_PRESSURE, PORTABLE_ATMOS_MAX_RELEASE_PRESSURE)
+
+/obj/machinery/portable_atmospherics/canister/proc/det_wires_interact(var/tool, var/which_wire as num, var/mob/user)
+	if(!src.det || (which_wire <= 0 || which_wire > src.det.WireFunctions.len))
+		return
+
+	if(tool == TOOL_SNIPPING)
+		if(!user.find_tool_in_hand(tool))
+			usr.show_message("<span class='alert'>You need to have a snipping tool equipped for this.</span>")
+		else
+			if(src.det.shocked)
+				var/mob/living/carbon/human/H = user
+				H.show_message("<span class='alert'>You tried to cut a wire on the bomb, but got burned by it.</span>")
+				H.TakeDamage("chest", 0, 30)
+				H.changeStatus("stunned", 150)
+			else
+				src.visible_message("<b><font color=#B7410E>[user.name] cuts the [src.det.WireNames[which_wire]] on the detonator.</font></b>")
+				switch(src.det.WireFunctions[which_wire])
+					if("detonate")
+						playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
+						playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
+						src.visible_message("<B><font color=#B7410E>The failsafe timer beeps three times before going quiet forever.</font></B>")
+						SPAWN_DBG(0)
+							src.det.detonate()
+					if("defuse")
+						playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
+						src.visible_message("<B><font color=#32CD32>The detonator assembly emits a sighing, fading beep. The bomb has been disarmed.</font></B>")
+						src.det.defused = 1
+					if("safety")
+						if (!src.det.safety)
+							src.visible_message("<B><font color=#B7410E>Nothing appears to happen.</font></B>")
+						else
+							playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+							src.visible_message("<B><font color=#B7410E>An unsettling click signals that the safety disengages.</font></B>")
+							src.det.safety = 0
+							src.det.failsafe_engage()
+					if("losetime")
+						src.det.failsafe_engage()
+						playsound(src.loc, "sound/machines/twobeep.ogg", 50, 1)
+						if (src.det.part_fs.time > 7)
+							src.det.part_fs.time -= 7
+						else
+							src.det.part_fs.time = 2
+							src.visible_message("<B><font color=#B7410E>The failsafe beeps rapidly for two moments. The external display indicates that the timer has reduced to [src.det.part_fs.time] seconds.</font></B>")
+					if("mobility")
+						src.det.failsafe_engage()
+						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+						if (anchored)
+							src.visible_message("<B><font color=#B7410E>A faint click is heard from inside the canister, but the effect is not immediately apparent.</font></B>")
+						else
+							anchored = 1
+							src.visible_message("<B><font color=#B7410E>A loud click is heard from the bottom of the canister, securing itself.</font></B>")
+					if("leak")
+						src.det.failsafe_engage()
+						src.has_valve = 0
+						src.valve_open = 1
+						src.release_pressure = 10 * ONE_ATMOSPHERE
+						src.visible_message("<B><font color=#B7410E>An electric buzz is heard before the release valve flies off the canister.</font></B>")
+						playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
+						src.det.leaking()
+					else
+						src.det.failsafe_engage()
+						if (src.det.part_fs.timing)
+							var/obj/item/attachment = src.det.WireFunctions[which_wire]
+							attachment.detonator_act("cut", src.det)
+
+				src.det.WireStatus[which_wire] = 0
+	else if(tool == TOOL_PULSING)
+		return
 
 /obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
 	if(..())

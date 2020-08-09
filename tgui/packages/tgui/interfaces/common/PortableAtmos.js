@@ -24,9 +24,11 @@ export const PortableBasicInfo = props => {
           {connected ? 'Connected' : 'Not Connected'}
         </LabeledList.Item>
       </LabeledList>
-      <PressureBar
-        pressure={pressure}
-        maxPressure={maxPressure} />
+      <Box maxWidth="400px">
+        <PressureBar
+          pressure={pressure}
+          maxPressure={maxPressure} />
+      </Box>
     </Section>
   );
 };
@@ -61,9 +63,11 @@ export const PortableHoldingTank = props => {
               {' kPa'}
             </LabeledList.Item>
           </LabeledList>
-          <PressureBar
-            pressure={holding.pressure}
-            maxPressure={holding.maxPressure} />
+          <Box maxWidth="400px">
+            <PressureBar
+              pressure={holding.pressure}
+              maxPressure={holding.maxPressure} />
+          </Box>
         </Fragment>
       ) : (
         <Box color="average">

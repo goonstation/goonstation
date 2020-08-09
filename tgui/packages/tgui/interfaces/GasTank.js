@@ -27,21 +27,23 @@ export const GasTank = (props, context) => {
   };
 
   return (
-    <Window width={400} height={250}>
+    <Window
+      resizable
+      width={400}
+      height={250}>
       <Window.Content>
-        <Section title="Status">
+        <Section
+          title="Status">
           <GasTankInfo
             pressure={pressure}
             maxPressure={maxPressure} />
         </Section>
-        <Section>
-          <ReleaseValve
-            valveIsOpen={valveIsOpen}
-            releasePressure={releasePressure}
-            maxRelease={maxRelease}
-            onToggleValve={handleToggleValve}
-            onSetPressure={handleSetPressure} />
-        </Section>
+        <ReleaseValve
+          valveIsOpen={valveIsOpen}
+          releasePressure={releasePressure}
+          maxRelease={maxRelease}
+          onToggleValve={handleToggleValve}
+          onSetPressure={handleSetPressure} />
         <Button label="durrr" />
       </Window.Content>
     </Window>
@@ -57,18 +59,26 @@ export const GasTankInfo = props => {
 
   return (
     <Fragment>
-      <Box pb="1em">
-        <Box inline color="label">
+      <Box
+        pb="1em">
+        <Box
+          inline
+          color="label">
           Pressure:
         </Box>
-        <Box inline mx="1em">
+        <Box
+          inline
+          mx="1em">
           <AnimatedNumber
             value={pressure} />
           {' kPa'}
         </Box>
       </Box>
-      <Box>
-        <PressureBar pressure={pressure} maxPressure={maxPressure} />
+      <Box
+        maxWidth="400px">
+        <PressureBar
+          pressure={pressure}
+          maxPressure={maxPressure} />
       </Box>
     </Fragment>
   );
