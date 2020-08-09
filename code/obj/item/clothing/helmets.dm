@@ -490,9 +490,9 @@
 	m_amt = 3000
 	g_amt = 1000
 	var/up = 0
-	color_r = 0.5 // darken
-	color_g = 0.5
-	color_b = 0.5
+	color_r = 0.75 // darken
+	color_g = 0.75
+	color_b = 0.75
 	var/nodarken = 0
 
 	setupProperties()
