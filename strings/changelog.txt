@@ -1,6 +1,10 @@
 
 (t)sun aug 09 20
 (u)Jawns
+(p)1763
+(e)🐛|bug
+(+)Vending machines no longer erroneously take from machine credit instead of account
+(u)Jawns
 (p)1744
 (e)🐛|bug
 (+)Cyborg cooking privileges revoked (for their own tools).
