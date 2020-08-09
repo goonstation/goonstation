@@ -1,5 +1,9 @@
 
 (t)sun aug 09 20
+(u)Moonlol
+(p)1755
+(e)🆕🗺|feature, mapping
+(+)Adds janivend to oshan's janitorial closet.
 (u)Jawns
 (p)1763
 (e)🐛|bug
