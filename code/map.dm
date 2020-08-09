@@ -349,7 +349,7 @@ var/global/list/mapNames = list(
 /datum/map_settings/viator
 	name = "VIATOR"
 	display_name = "NSS Viator"
-	goonhub_map = "https://goatse.info"
+	goonhub_map = "google.com"
 	style = "ship"
 	dir_fore = SOUTH
 	arrivals_type = MAP_SPAWN_SHUTTLE
