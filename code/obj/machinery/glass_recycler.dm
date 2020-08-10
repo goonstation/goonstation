@@ -45,7 +45,7 @@
 					var/obj/item/reagent_containers/food/drinks/bottle/B = W
 					if (!B.broken) glass_amt += 1
 			else
-				glass_amt += 1
+				glass_amt += W.amount
 			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 			user.u_equip(W)
 
