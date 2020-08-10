@@ -1617,7 +1617,7 @@
 	attack_self(mob/user)
 		if (src.reagents.total_volume > 0)
 			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
-			playsound(get_turf(src), "sound/items/CocktailShake.ogg", 50, 1, -6)
+			playsound(get_turf(src), "sound/items/CocktailShake.ogg", 25, 1, -6)
 			sleep (0.3 SECONDS)
 			src.reagents.inert = 0
 			src.reagents.handle_reactions()
