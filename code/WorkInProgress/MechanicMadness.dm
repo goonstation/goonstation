@@ -30,19 +30,19 @@
 	var/can_be_anchored=false
 	custom_suicide=true
 	New()
-		..()		
+		..()
 		src.light = new /datum/light/point
 		src.light.attach(src)
 		src.light.set_color(1,0,1)
 		if (!(src in processing_items))
 			processing_items.Add(src)
-	
+
 	hear_talk(mob/M as mob, msg, real_name, lang_id) // hack to make microphones work
 		for(var/obj/item/mechanics/miccomp/mic in src.contents)
 			mic.hear_talk(M,msg,real_name,lang_id)
 		return
 	process()
-		if (src.light_time>0) 
+		if (src.light_time>0)
 			src.light_time--
 			src.updateIcon()
 			return
@@ -105,7 +105,7 @@
 			src.does_not_open_in_pocket=src.open
 			src.open=!src.open
 			playsound(src.loc,'sound/items/screwdriver.ogg',50)
-			if(!src.open) 
+			if(!src.open)
 				src.close_storage_menus()
 			else
 				src.light_time=0
@@ -153,7 +153,6 @@
 				//	doing arithmatic on bools is probably not good!
 				var/has_trigger = istype(locate(/obj/item/mechanics/trigger/trigger) in src.contents,/obj/item/mechanics/trigger/trigger)
 				var/len_contents = src.contents.len - has_trigger
-				boutput(world,"[has_trigger ? "has trigger" : ""] [len_contents] len")
 				if(src.num_f_icons && len_contents)
 					src.icon_state=initial(src.icon_state)+"_f[min(src.num_f_icons-1,round((len_contents*src.num_f_icons)/(src.slots-has_trigger)))]"
 				else
@@ -362,7 +361,7 @@ var/list/mechanics_telepads = new/list()
 
 
 	proc
-	
+
 		cutParticles()
 			if(length(particles))
 				for(var/datum/particleSystem/mechanic/M in particles)
