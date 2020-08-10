@@ -12,10 +12,6 @@
 (p)1744
 (e)🐛|bug
 (+)Cyborg cooking privileges revoked (for their own tools).
-(u)Carbadox
-(p)1748
-(e)🆕|feature
-(+)Chaplain can now earn Job XP by Bible Healing/Smiting
 (t)sat aug 08 20
 (u)Mordent
 (p)1691
