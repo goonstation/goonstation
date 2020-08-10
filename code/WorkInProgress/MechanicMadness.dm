@@ -695,6 +695,7 @@ var/list/mechanics_telepads = new/list()
 	icon_state = "comp_tprint"
 	cooldown_time = 5 SECONDS
 	var/paper_name = "thermal paper"
+	cabinet_banned = true
 
 	New()
 		..()
