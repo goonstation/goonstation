@@ -325,6 +325,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				entering.set_loc(.)
 		return
 
+/proc/random_turf_from_center(var/atom/center, var/radius_x = 0, var radius_y = 0)
+	if (!center)
+		return
+	return location(center.loc.x + rand(-radius_x, radius_x), center.loc.y + rand(-radius_y, radius_y), center.loc.z)
+
 /datum/materialProc/telecrystal_onattack
 	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
 		if(prob(50))

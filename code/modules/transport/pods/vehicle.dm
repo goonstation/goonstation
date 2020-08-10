@@ -872,7 +872,7 @@
 	else
 		src.ion_trail.stop()
 */
-/obj/machinery/vehicle/proc/eject(mob/ejectee as mob) // Call leave_pod after this if you're not intending to call set_loc on the ejectee yourself
+/obj/machinery/vehicle/proc/eject(mob/ejectee as mob) // Call leave_pod if you're having the mob leave the vehicle normally, otherwise use set_loc and it'll call this for you.
 	if (!ejectee || ejectee.loc != src)
 		return
 
