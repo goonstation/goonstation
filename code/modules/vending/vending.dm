@@ -1289,7 +1289,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/goboard, 1, cost=100)
 		product_list += new/datum/data/vending_product(/obj/item/gobowl/b, 1, cost=50)
 		product_list += new/datum/data/vending_product(/obj/item/gobowl/w, 1, cost=50)
-
+		
 /obj/machinery/vending/clothing
 	name = "FancyPantsCo Sew-O-Matic"
 	desc = "A clothing vendor."
@@ -1784,7 +1784,7 @@
 						playsound(src.loc, S, 50, 0)
 
 				if (src.pay)
-					if (src.acceptcard && src.scan && account)
+					if (src.acceptcard && account)
 						account.fields["current_money"] -= R.product_cost
 					else
 						src.credit -= R.product_cost

@@ -429,6 +429,7 @@
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	var/splash_all_contents = 1
 	doants = 0
+	var/can_recycle = 1
 
 	New()
 		..()
@@ -1607,6 +1608,7 @@
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "GannetsCocktailer"
 	initial_volume = 120
+	can_recycle = 0
 
 	New()
 		..()
@@ -1615,7 +1617,7 @@
 	attack_self(mob/user)
 		if (src.reagents.total_volume > 0)
 			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
-			playsound(get_turf(src), "sound/items/CocktailShake.ogg", 50, 1, -6)
+			playsound(get_turf(src), "sound/items/CocktailShake.ogg", 25, 1, -6)
 			sleep (0.3 SECONDS)
 			src.reagents.inert = 0
 			src.reagents.handle_reactions()

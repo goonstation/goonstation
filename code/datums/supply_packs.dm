@@ -196,15 +196,15 @@
 					/obj/item/reagent_containers/food/snacks/plant/banana = 2,
 					/obj/item/reagent_containers/food/snacks/plant/carrot = 2,
 					/obj/item/reagent_containers/food/snacks/plant/corn = 2,
-					/obj/item/reagent_containers/food/snacks/plant/garlic,
+					/obj/item/reagent_containers/food/snacks/plant/garlic = 1,
 					/obj/item/reagent_containers/food/snacks/plant/lettuce = 2,
-					/obj/item/reagent_containers/food/snacks/plant/tomato = 4,
+					/obj/item/reagent_containers/food/snacks/plant/tomato = 3,
 					/obj/item/reagent_containers/food/snacks/plant/potato = 2,
 					/obj/item/reagent_containers/food/snacks/plant/onion,
 					/obj/item/reagent_containers/food/snacks/plant/lime,
 					/obj/item/reagent_containers/food/snacks/plant/lemon,
 					/obj/item/reagent_containers/food/snacks/plant/orange)
-	cost = 1050
+	cost = 1500
 	containertype = /obj/storage/crate/freezer
 	containername = "Catering: Fresh Produce Crate"
 
@@ -221,18 +221,18 @@
 					/obj/item/reagent_containers/food/snacks/condiment/syrup = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/honey = 2)
-	cost = 250
+	cost = 450
 	containertype = /obj/storage/crate/freezer
 	containername = "Catering: Condiment Crate"
 
-/datum/supply_packs/electrical4
-	name = "Electrical Supplies Crate - 4 pack"
-	desc = "x4 Cabling Box (28 cable coils total)"
+/datum/supply_packs/electrical
+	name = "Electrical Supplies Crate - 2 pack"
+	desc = "x2 Cabling Box (14 cable coils total)"
 	category = "Basic Materials"
-	contains = list(/obj/item/storage/box/cablesbox = 4)
-	cost = 1000
+	contains = list(/obj/item/storage/box/cablesbox = 2)
+	cost = 2000
 	containertype = /obj/storage/crate
-	containername = "Electrical Supplies Crate - 4 pack"
+	containername = "Electrical Supplies Crate - 2 pack"
 
 /datum/supply_packs/engineering
 	name = "Engineering Crate"
@@ -270,16 +270,17 @@
 
 /datum/supply_packs/medicalchems
 	name = "Medical: Medical Reservoir Crate"
-	desc = "x4 Assorted reservoir tanks, x2 Sedative bottles, x2 Hyposprays, x1 Syringe Kit"
+	desc = "x4 Assorted reservoir tanks, x2 Sedative bottles, x2 Hyposprays, 2x Automenders, x1 Syringe Kit"
 	category = "Medical Department"
 	contains = list(/obj/item/reagent_containers/glass/beaker/large/antitox,
 					/obj/item/reagent_containers/glass/beaker/large/epinephrine,
 					/obj/item/reagent_containers/food/drinks/reserve/brute,
 					/obj/item/reagent_containers/food/drinks/reserve/burn,
 					/obj/item/reagent_containers/glass/bottle/morphine = 2,
+					/obj/item/reagent_containers/mender = 2,
 					/obj/item/reagent_containers/hypospray = 2,
 					/obj/item/storage/box/syringes)
-	cost = 1500
+	cost = 1750
 	containertype = /obj/storage/crate/medical
 	containername = "Medical Crate"
 
@@ -336,8 +337,8 @@
 					/obj/item/breaching_charge/mining = 3)
 	cost = 500
 	containertype = /obj/storage/secure/crate/plasma
-	containername = "Mining Equipment Crate (Cardlocked \[Mining])"
-	access = access_mining
+	containername = "Mining Equipment Crate"
+	access = null
 
 /datum/supply_packs/monkey4
 	name = "Lab Monkey Crate - 4 pack"
@@ -354,9 +355,8 @@
 	category = "Civilian Department"
 	contains = list(/obj/item/bee_egg_carton = 5)
 	cost = 450
-	containertype = /obj/storage/secure/crate/bee
-	containername = "Honey Production Kit (Cardlocked \[Hydroponics])"
-	access = access_hydro
+	containertype = /obj/storage/crate/bee
+	containername = "Honey Production Kit"
 	create(var/sp, var/mob/creator)
 		var/obj/storage/secure/crate/bee/beez=..()
 		for(var/obj/item/bee_egg_carton/carton in beez)
@@ -1188,11 +1188,11 @@
 /* ================================================= */
 
 /datum/supply_packs/complex
-	hidden = 1
+	hidden = 0
 	var/list/blueprints = list()
 	var/list/frames = list()
 
-	create(var/spawnpoint)
+	create(var/spawnpoint,var/mob/creator)
 		var/atom/movable/A = ..()
 		if (!A)
 			// TODO: spawn a new crate instead of just returning?
@@ -1236,6 +1236,8 @@
 				F.secured = 2
 				F.icon_state = "dbox"
 
+		return A
+
 /datum/supply_packs/complex/electronics_kit
 	name = "Mechanics Reconstruction Kit"
 	desc = "1x Ruckingenur frame, 1x Manufacturer frame, 1x reclaimer frame, 1x device analyzer, 1x soldering iron"
@@ -1245,7 +1247,7 @@
 	frames = list(/obj/machinery/rkit,
 					/obj/machinery/manufacturer/mechanic,
 					/obj/machinery/portable_reclaimer)
-	cost = 1000
+	cost = 35000
 	containertype = /obj/storage/crate
 	containername = "Mechanics Reconstruction Kit"
 
@@ -1285,11 +1287,12 @@
 */
 /datum/supply_packs/complex/manufacturer_kit
 	name = "Manufacturer Kit"
-	desc = "Frames: 1x General Manufacturer, 1x Mining Manufacturer, 1x Gas Extractor, 1x Reclaimer"
+	desc = "Frames: 1x General Manufacturer, 1x Mining Manufacturer, 1x Gas Extractor, 1x Clothing Manufacturer, 1x Reclaimer"
 	category = "Engineering Department"
 	frames = list(/obj/machinery/manufacturer/general,
 					/obj/machinery/manufacturer/mining,
 					/obj/machinery/manufacturer/gas,
+					/obj/machinery/manufacturer/uniform,
 					/obj/machinery/portable_reclaimer)
 	cost = 8000
 	containertype = /obj/storage/crate
@@ -1299,6 +1302,7 @@
 	name = "Cargo Bay Kit"
 	desc = "Contains a higher tier of cargo computer, allowed access to the full NT catalog.<br>1x Cargo Teleporter, Frames: 1x Commerce Computer, 1x Incoming supply pad, 1x Outgoing supply pad, 1x Cargo Teleporter pad, 1x Recharger"
 	category = "Engineering Department"
+	hidden = 1
 	contains = list(/obj/item/paper/cargo_instructions,
 					/obj/item/cargotele)
 	frames = list(/obj/machinery/computer/special_supply/commerce,
@@ -1316,7 +1320,7 @@
 	desc = "Frames: 1x Ship Component Fabricator, 1x Reclaimer"
 	frames = list(/obj/machinery/manufacturer/hangar,
 					/obj/machinery/portable_reclaimer)
-	cost = 60000
+	cost = 5000
 	containertype = /obj/storage/crate
 	containername = "Pod Production Kit"
 
@@ -1327,6 +1331,7 @@
 					/obj/machinery/turretid/computer,
 					/obj/machinery/camera = 2)
 	cost = 40000
+	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "Defense Turret Kit"
 
@@ -1338,6 +1343,7 @@
 					/obj/machinery/turretid/computer,
 					/obj/machinery/camera = 2)
 	cost = 100000
+	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "AI Kit"
 
@@ -1347,9 +1353,9 @@
 	category = "Engineering Department"
 	frames = list(/obj/smes_spawner,
 					/obj/machinery/power/furnace = 2)
-	cost = 40000
+	cost = 20000
 	containertype = /obj/storage/crate
-	containername = "AI Kit"
+	containername = "Power Kit"
 
 /datum/supply_packs/complex/mainframe_kit
 	name = "Computer Core Kit"
@@ -1364,6 +1370,7 @@
 					/obj/machinery/power/data_terminal = 3,
 					/obj/machinery/vending/computer3)
 	cost = 150000
+	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "Computer Core Kit"
 
@@ -1442,6 +1449,7 @@
 					/obj/machinery/networked/telepad,
 					/obj/machinery/power/data_terminal = 2)
 	cost = 40000
+	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "Telescience"
 
@@ -1451,6 +1459,7 @@
 	category = "Security Department"
 	frames = list(/obj/machinery/camera = 5)
 	cost = 1000
+	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "Security Camera"
 
@@ -1476,6 +1485,7 @@
 					/obj/item/scalpel = 2,
 					/obj/item/circular_saw = 2,
 					/obj/item/hemostat,
+					/obj/item/scissors/surgical_scissors,
 					/obj/item/suture,
 					/obj/item/surgical_spoon)
 	frames = list(/obj/machinery/manufacturer/medical,
@@ -1502,18 +1512,25 @@
 
 /datum/supply_packs/complex/genetics_kit
 	name = "Genetics kit"
-	desc = "Circuitboards: 1x DNA Modifier, 1x Cloning Console, Frames: 1x Cloning Scanner, 1x Cloning Pod, 1x Reclaimer, 1x DNA Scanner"
+	desc = "Circuitboards: 1x DNA Modifier, 1x DNA Scanner"
 	category = "Medical Department"
-	contains = list(/obj/item/circuitboard/genetics,
-					/obj/item/circuitboard/cloning)
-	frames = list(/obj/machinery/clone_scanner,
-					/obj/machinery/clonepod,
-					/obj/machinery/clonegrinder,
-					/obj/machinery/genetics_scanner)
-	cost = 50000
+	contains = list(/obj/item/circuitboard/genetics)
+	frames = list(/obj/machinery/genetics_scanner)
+	cost = 30000
 	containertype = /obj/storage/crate
 	containername = "Genetics kit"
 
+/datum/supply_packs/complex/cloner_kit
+	name = "Cloning kit"
+	desc = "Circuitboards: 1x Cloning Console, Frames: 1x Cloning Scanner, 1x Cloning Pod, 1x Enzymatic Reclaimer"
+	category = "Medical Department"
+	contains = list(/obj/item/circuitboard/cloning)
+	frames = list(/obj/machinery/clone_scanner,
+					/obj/machinery/clonepod,
+					/obj/machinery/clonegrinder)
+	cost = 30000
+	containertype = /obj/storage/crate
+	containername = "Cloning kit"
 
 /datum/supply_packs/bureaucrat
 	name = "Bureaucracy Supply Crate"

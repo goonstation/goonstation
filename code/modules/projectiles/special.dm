@@ -398,23 +398,21 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/explosive_hits = 1
 	var/explosion_power = 30
 	var/hit_sound = 'sound/voice/animal/cat.ogg'
+	var/last_sound_time = 0 // anti-ear destruction
 	var/max_bounce_count = 50
-	var/allow_headon_bounce = 1
 
 	on_hit(atom/A, direction, projectile)
-		shoot_reflected_bounce(projectile, A, max_bounce_count, allow_headon_bounce)
+		shoot_reflected_bounce(projectile, A, max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
 		var/turf/T = get_turf(A)
-		playsound(A, hit_sound, 60, 1)
+
+		//prevent playing all 50 sounds at once on rapid bounce
+		if(world.time >= last_sound_time + 1 DECI SECOND)
+			last_sound_time = world.time
+			playsound(A, hit_sound, 60, 1)
 
 		if (explosive_hits)
-			SPAWN_DBG(1 DECI SECOND)
-				for(var/mob/living/M in mobs)
-					shake_camera(M, 2, 1)
-
 			SPAWN_DBG(0)
 				explosion_new(projectile, T, explosion_power, 1)
-			if(prob(50))
-				playsound(A, hit_sound, 60, 1)
 		return
 
 /datum/projectile/special/meowitzer/inert

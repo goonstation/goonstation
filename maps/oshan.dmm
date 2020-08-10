@@ -2666,7 +2666,7 @@
 	icon_state = "line2"
 	},
 /obj/item/device/radio/intercom/medical,
-/turf/simulated/floor/purplewhite,
+/turf/simulated/floor/purplewhite/corner,
 /area/station/medical/cdc)
 "afC" = (
 /obj/machinery/door/airlock/pyro/sci_alt,
@@ -2698,7 +2698,7 @@
 	tag = ""
 	},
 /obj/machinery/pathogen_manipulator,
-/turf/simulated/floor/purple,
+/turf/simulated/floor/purplewhite,
 /area/station/medical/cdc)
 "afF" = (
 /obj/decal/tile_edge/line/green{
@@ -2847,7 +2847,7 @@
 	icon_state = "line2"
 	},
 /obj/machinery/light/incandescent/harsh,
-/turf/simulated/floor/purplewhite,
+/turf/simulated/floor/purplewhite/corner,
 /area/station/medical/cdc)
 "afV" = (
 /obj/cable{
@@ -2865,7 +2865,9 @@
 	pixel_x = -22;
 	pixel_y = 32
 	},
-/turf/simulated/floor/purple,
+/turf/simulated/floor/purplewhite{
+	dir = 6
+	},
 /area/station/medical/cdc)
 "afW" = (
 /obj/cable{
@@ -3030,7 +3032,7 @@
 /obj/table/reinforced/chemistry/auto,
 /obj/item/storage/box/syringes,
 /obj/item/storage/box/beakerbox,
-/turf/simulated/floor/purplewhite,
+/turf/simulated/floor/purplewhite/corner,
 /area/station/medical/cdc)
 "agp" = (
 /obj/decal/tile_edge/line/green{
@@ -3040,7 +3042,9 @@
 /obj/table/reinforced/chemistry/auto,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
-/turf/simulated/floor/purple,
+/turf/simulated/floor/purplewhite{
+	dir = 6
+	},
 /area/station/medical/cdc)
 "agq" = (
 /obj/disposalpipe/segment{
@@ -3062,7 +3066,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/purplewhite{
-	dir = 1
+	dir = 9
 	},
 /area/station/medical/cdc)
 "ags" = (
@@ -3074,7 +3078,9 @@
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
 	},
-/turf/simulated/floor/purple,
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
 /area/station/medical/cdc)
 "agt" = (
 /obj/decal/tile_edge/line/green{
@@ -3185,7 +3191,9 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/turf/simulated/floor/purplewhite,
+/turf/simulated/floor/purplewhite/corner{
+	dir = 8
+	},
 /area/station/medical/cdc)
 "agH" = (
 /obj/decal/tile_edge/line/green{
@@ -3225,7 +3233,7 @@
 /obj/item/reagent_containers/glass/petridish,
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/dropper/mechanical,
-/turf/simulated/floor/purplewhite{
+/turf/simulated/floor/purplewhite/corner{
 	dir = 1
 	},
 /area/station/medical/cdc)
@@ -46677,7 +46685,8 @@
 /area/station/engine/power)
 "cjC" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
+	dir = 4;
+	req_access = null
 	},
 /obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
@@ -47662,6 +47671,10 @@
 "qPg" = (
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"qTt" = (
+/obj/machinery/vending/janitor,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -82015,7 +82028,7 @@ aHC
 aIf
 aIE
 aIX
-aID
+qTt
 aJT
 aKi
 aKH

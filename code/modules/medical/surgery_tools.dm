@@ -1561,6 +1561,7 @@ keeping this here because I want to make something else with it eventually
 		return
 
 	proc/attach(obj/item/I as obj)
+		if(I.anchored) return
 		src.attached_objs.Add(I) // attach the item to the table
 		I.glide_size = 0 // required for smooth movement with the tray
 		// register for pickup, register for being pulled off the table, register for item deletion while attached to table

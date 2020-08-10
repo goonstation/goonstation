@@ -53,6 +53,7 @@
 	var/list/hitlist = list() //list of atoms collided with this tick
 	var/reflectcount = 0
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
+	var/is_detonating = 0//to start modeling fuses
 #if ASS_JAM
 	var/projectile_paused = FALSE //for time stopping
 #endif
@@ -716,6 +717,9 @@ datum/projectile/bullet/autocannon/plasma_orb
 datum/projectile/bullet/autocannon/huge
 	impact_range = 8
 
+datum/projectile/bullet/cannon
+	impact_range = 8
+
 datum/projectile/bullet/glitch
 	impact_range = 4
 
@@ -924,7 +928,7 @@ datum/projectile/snowball
 		P.rotateDirection(prob(50) ? spread : -spread)
 	return P
 
-/proc/initialize_projectile(var/turf/S, var/datum/projectile/DATA, var/xo, var/yo, var/shooter = null, var/turf/remote_sound_source)
+/proc/initialize_projectile(var/turf/S, var/datum/projectile/DATA, var/xo, var/yo, var/shooter = null, var/turf/remote_sound_source, var/play_shot_sound = TRUE)
 	if (!S)
 		return
 	var/obj/projectile/P = unpool(/obj/projectile)
@@ -946,13 +950,14 @@ datum/projectile/snowball
 	if(remote_sound_source)
 		shooter = remote_sound_source
 
-	if (narrator_mode)
-		playsound(S, 'sound/vox/shoot.ogg', 50, 1)
-	else if(DATA.shot_sound && DATA.shot_volume && shooter)
-		playsound(S, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange)
-		if (isobj(shooter))
-			for (var/mob/M in shooter)
-				M << sound(DATA.shot_sound, volume=DATA.shot_volume)
+	if (play_shot_sound)
+		if (narrator_mode)
+			playsound(S, 'sound/vox/shoot.ogg', 50, 1)
+		else if(DATA.shot_sound && DATA.shot_volume && shooter)
+			playsound(S, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange)
+			if (isobj(shooter))
+				for (var/mob/M in shooter)
+					M << sound(DATA.shot_sound, volume=DATA.shot_volume)
 
 #ifdef DATALOGGER
 	if (game_stats && istype(game_stats))
@@ -1018,18 +1023,32 @@ datum/projectile/snowball
  * So I made my own proc, but left the old one in place just in case -- Sovexe
  * var/reflect_on_nondense_hits - flag for handling hitting objects that let bullets pass through like secbots, rather than duplicating projectiles
  */
-/proc/shoot_reflected_bounce(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3, var/allow_headon_bounce = 0, var/reflect_on_nondense_hits = 0)
+/proc/shoot_reflected_bounce(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3, var/mode = PROJ_RAPID_HEADON_BOUNCE, var/reflect_on_nondense_hits = FALSE)
+	if (!P || !reflector)
+		return
+
 	if(P.reflectcount >= max_reflects)
 		return
 
-	if (allow_headon_bounce)
-		//stop breaking the world you fuck!
-		if (abs(P.shooter.x - reflector.x) == 0 && abs(P.shooter.y - reflector.y) == 2)
+	var/play_shot_sound = TRUE
+
+	switch (mode)
+		if (PROJ_NO_HEADON_BOUNCE) //no head-on bounce
+			if ((P.shooter.x == reflector.x) || (P.shooter.y == reflector.y))
+				return
+		if (PROJ_HEADON_BOUNCE) // no rapid head-on bounce
+			if ((P.shooter.x == reflector.x) && abs(P.shooter.y - reflector.y) == 2)
+				return
+			else if (abs(P.shooter.x - reflector.x) == 2 && (P.shooter.y == reflector.y))
+				return
+		if (PROJ_RAPID_HEADON_BOUNCE)
+			if (P.proj_data.shot_sound)
+				if ((P.shooter.x == reflector.x) && abs(P.shooter.y - reflector.y) == 2)
+					play_shot_sound = FALSE //anti-ear destruction
+				else if (abs(P.shooter.x - reflector.x) == 2 && (P.shooter.y == reflector.y))
+					play_shot_sound = FALSE //anti-ear destruction
+		else
 			return
-		else if (abs(P.shooter.x - reflector.x) == 2 && abs(P.shooter.y - reflector.y) == 0)
-			return
-	else if (abs(P.shooter.x - reflector.x) == 0 || abs(P.shooter.y - reflector.y) == 0)
-		return //no headon bounces
 
 	/*
 		* We have to calculate our incidence each time
@@ -1075,7 +1094,7 @@ datum/projectile/snowball
 		return // unknown error
 
 	//spawns the new projectile in the same location as the existing one, not inside the hit thing
-	var/obj/projectile/Q = initialize_projectile(get_turf(P), P.proj_data, rx, ry, reflector)
+	var/obj/projectile/Q = initialize_projectile(get_turf(P), P.proj_data, rx, ry, reflector, play_shot_sound = play_shot_sound)
 	if (!Q)
 		return
 	Q.reflectcount = P.reflectcount + 1

@@ -44,7 +44,7 @@
 	content = R.Replace(content, "[deletelinkpre]$1[deletelinkpost]")
 
 	var/dat = "<h1>Player Notes for <b>[player]</b></h1><HR><br><A href='?src=\ref[src];action=notes2;target=[player];type=add'>Add Note</A><br><HR>"
-	dat += content
+	dat += replacetext(content, "\n", "<br>")
 	usr.Browse(dat, "window=notesp;size=875x400;title=Notes for [player]")
 
 

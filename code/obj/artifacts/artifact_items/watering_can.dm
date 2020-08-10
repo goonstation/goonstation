@@ -163,7 +163,7 @@
 
 /datum/artifact/watercan
 	associated_object = /obj/item/reagent_containers/glass/wateringcan/artifact
-	rarity_class = 1
+	rarity_class = 2 // modified from 1 as part of art tweak
 	validtypes = list("martian","wizard","precursor")
 	min_triggers = 0
 	max_triggers = 0

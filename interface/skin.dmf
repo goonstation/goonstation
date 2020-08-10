@@ -744,7 +744,7 @@ window "mainwindow"
 		saved-params = "pos;size;is-minimized;is-maximized"
 		on-size = "window-resize-event"
 		is-maximized = true
-		icon = 'icons\\ss13_64.png'
+		icon = 'icons\\goon_64.png'
 		macro = "base_macro"
 		menu = "menu"
 	elem "mainvsplit"
@@ -838,7 +838,7 @@ window "mapwindow"
 		saved-params = "icon-size"
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
-		style = "body { font-family: 'Verdana'; font-size: 7px; }\n.vga { font-family: 'PxPlus IBM VGA9'; font-size: 12px; } .ps2p { font-family: 'Press Start 2P'; font-size: 6px; }\n.pixel { font-family: 'Small Fonts'; font-size: 7px; }\n.ol{ -dm-text-outline: 1px black; }\n.sh { text-shadow: 1px 1px 0 black; }\n.l { text-align: left; }\n.c { text-align: center; }\n.r { text-align: right; }\n.vt { vertical-align: top; }\n.vm { vertical-align: middle; }\n.vb { vertical-align: bottom; }\n.reliq { font-family: 'Inhuman BB'; font-size: 12px; }"
+		style = "body { font-family: 'Verdana'; font-size: 7px; }\n.vga { font-family: 'PxPlus IBM VGA9'; font-size: 12px; } .ps2p { font-family: 'Press Start 2P'; font-size: 6px; }\n.pixel { font-family: 'Small Fonts'; font-size: 7px; }\n.xfont { font-family: 'XFont 6x9'; font-size: 6px; }\n.ol{ -dm-text-outline: 1px black; }\n.sh { text-shadow: 1px 1px 0 black; }\n.l { text-align: left; }\n.c { text-align: center; }\n.r { text-align: right; }\n.vt { vertical-align: top; }\n.vm { vertical-align: middle; }\n.vb { vertical-align: bottom; }\n.reliq { font-family: 'Inhuman BB'; font-size: 12px; }"
 	elem "mapSizeHelper"
 		type = BROWSER
 		pos = 0,0

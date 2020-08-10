@@ -358,6 +358,13 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	welded_icon_state = "2_welded"
 	req_access = null
 
+/obj/machinery/door/airlock/pyro/mining
+	icon_state = "mining_closed"
+	icon_base = "mining"
+	panel_icon_state = "2_panel_open"
+	welded_icon_state = "2_welded"
+	req_access = null
+
 /obj/machinery/door/airlock/pyro/maintenance
 	name = "maintenance access"
 	icon_state = "maint_closed"
@@ -434,6 +441,31 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon_base = "sec_glass"
 	req_access = list(access_security)
 
+/obj/machinery/door/airlock/pyro/glass/med 
+	icon_state = "med_glass_closed"
+	icon_base = "med_glass"
+	req_access = null
+
+/obj/machinery/door/airlock/pyro/glass/sci
+	icon_state = "sci_glass_closed"
+	icon_base = "sci_glass"
+	req_access = null
+
+/obj/machinery/door/airlock/pyro/glass/toxins
+	icon_state = "toxins_glass_closed"
+	icon_base = "toxins_glass"
+	req_access = null
+
+/obj/machinery/door/airlock/pyro/glass/mining
+	icon_state = "mining_glass_closed"
+	icon_base = "mining_glass"
+	req_access = null
+
+/obj/machinery/door/airlock/pyro/glass/botany
+	icon_state = "botany_glass_closed"
+	icon_base = "botany_glass"
+	req_access = null
+
 /obj/machinery/door/airlock/pyro/classic
 	icon_state = "old_closed"
 	icon_base = "old"
@@ -479,7 +511,13 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	welded_icon_state = "2_welded"
 	req_access = null
 
-
+/obj/machinery/door/airlock/pyro/toxins_alt
+	icon_state = "toxins2_closed"
+	icon_base = "toxins2"
+	panel_icon_state = "2_panel_open"
+	welded_icon_state = "2_welded"
+	req_access = null
+	
 /obj/machinery/door/airlock/gannets
 	name = "airlock"
 	icon = 'icons/obj/doors/destiny.dmi'
