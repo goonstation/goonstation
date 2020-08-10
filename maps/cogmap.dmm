@@ -37578,11 +37578,17 @@
 	dir = 8;
 	level = 2
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bBF" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "5-8"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -63539,6 +63545,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"qIA" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4;
+	level = 2
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "qOp" = (
 /obj/machinery/light{
 	dir = 8;
@@ -63725,6 +63741,17 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"vli" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "vlS" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 1;
@@ -63766,6 +63793,15 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
+"vBu" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "vEb" = (
 /obj/machinery/atmospherics/unary/furnace_connector{
 	dir = 8
@@ -63817,6 +63853,15 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
+"wSv" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-10"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "wTq" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -63824,6 +63869,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"wVz" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "xKG" = (
 /obj/machinery/light{
 	dir = 8
@@ -110841,7 +110895,7 @@ bxY
 bwk
 bwk
 bwk
-bwk
+wVz
 bBC
 byE
 bvf
@@ -111144,7 +111198,7 @@ bxN
 ezG
 bxN
 bwd
-bwT
+vBu
 bCu
 bvf
 bEt
@@ -111446,7 +111500,7 @@ bxO
 byI
 bzM
 bHb
-bBD
+qIA
 bBD
 bDy
 luH
@@ -111748,7 +111802,7 @@ bCn
 byJ
 bzN
 bAI
-bwf
+vli
 bCv
 bDz
 bEr
@@ -112653,7 +112707,7 @@ bBG
 bxS
 bCB
 bwk
-bwk
+wSv
 cbd
 byH
 bvf
