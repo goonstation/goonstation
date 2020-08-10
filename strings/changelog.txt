@@ -1,5 +1,10 @@
 
 (t)mon aug 10 20
+(u)Phyvo
+(p)1583
+(e)⚖|balance
+(*)Rebalanced artifact probabilities to make better artifacts more common.
+(+)Buffed these artifact types: mining tools, energy guns, power generators.
 (u)system86
 (p)1257
 (e)🆕🎨|feature, sprites
