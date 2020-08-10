@@ -2,7 +2,7 @@
 // TODO: move to /modules/robotics
 
 /obj/item/robojumper
-	name = "Cell Cables"
+	name = "cell cables"
 	desc = "Used by cyborgs for emergency recharging of APCs."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "robojumper-plus"
@@ -14,7 +14,7 @@
 		boutput(user, "<span class='alert'>The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"].</span>")
 
 /obj/item/atmosporter
-	name = "Atmospherics Transporter"
+	name = "atmospherics transporter"
 	desc = "Used by cyborgs for convenient transport of siphons and tanks."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "atmosporter"
@@ -27,20 +27,20 @@
 			if(!selection) return
 			if (istype(selection, /obj/machinery/fluid_canister))
 				var/obj/machinery/fluid_canister/S = selection
-				S.set_loc(user.loc)
+				S.set_loc(get_turf(user.loc))
 				S.contained = 0
 			else if (istype(selection, /obj/machinery/portable_atmospherics))
 				var/obj/machinery/portable_atmospherics/S = selection
-				S.set_loc(user.loc)
+				S.set_loc(get_turf(user.loc))
 				S.contained = 0
 			else return //no sparks for unintended items
 			elecflash(user)
 
 
 
-/obj/item/borg_lamp_manufacturer
-	name = "Miniaturized Lamp Manufacturer"
-	desc = "A small manufacturing unit for cyborgs to produce and (re)place lamps in existing fittings."
+/obj/item/lamp_manufacturer
+	name = "miniaturized lamp manufacturer"
+	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "borglampman-white"
 	var/prefix = "borglampman"
@@ -95,7 +95,7 @@
 
 
 /obj/item/robot_chemaster
-	name = "Mini-ChemMaster"
+	name = "mini-ChemMaster"
 	desc = "A cybernetic tool designed for chemistry cyborgs to do their work with. Use a beaker on it to begin."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "minichem"
@@ -158,7 +158,7 @@
 		working = 0
 
 /obj/item/robot_foodsynthesizer
-	name = "Food Synthesizer"
+	name = "food synthesizer"
 	desc = "A portable food synthesizer."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "synthesizer"

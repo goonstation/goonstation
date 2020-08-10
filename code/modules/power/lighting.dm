@@ -559,13 +559,13 @@
 
 /obj/machinery/light/attackby(obj/item/W, mob/user)
 
-	if (istype(W, /obj/item/borg_lamp_manufacturer)) //deliberately placed above the borg check
+	if (istype(W, /obj/item/lamp_manufacturer)) //deliberately placed above the borg check
 
 		if (removable_bulb == 0)
 			boutput(user, "This fitting isn't user-serviceable.")
 			return
 
-		var/obj/item/borg_lamp_manufacturer/M = W
+		var/obj/item/lamp_manufacturer/M = W
 		var/obj/item/light/L = null
 		if (fitting == "tube")
 			L = new M.dispensing_tube()
@@ -592,15 +592,9 @@
 		rigger = L.rigger
 		light.set_color(L.color_r, L.color_g, L.color_b)
 		qdel(L)
-
-		on = has_power()
 		update()
-		if(on && rigged)
-			if (rigger)
-				message_admins("[key_name(rigger)]'s rigged bulb exploded in [src.loc.loc], [showCoords(src.x, src.y, src.z)].")
-				logTheThing("combat", rigger, null, "'s rigged bulb exploded in [rigger.loc.loc] ([showCoords(src.x, src.y, src.z)])")
-			explode()
-		elecflash(user)
+		if (!isghostdrone(user)) // Same as ghostdrone RCDs, no sparks
+			elecflash(user)
 		return
 
 
