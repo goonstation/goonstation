@@ -309,7 +309,7 @@
 				for (var/mob/N in AIviewers(usr, null))
 					if (N.client)
 						shake_camera(N, 4, 1, 0.5)
-			if(istype(H.mutantrace, /datum/mutantrace/monkey))
+			if(ismonkey(H))
 				actions.start(new /datum/action/bar/icon/railing_jump/table_jump(user, src), user)
 		return
 
@@ -361,7 +361,7 @@
 		if(!ismonkey(AM))
 			return
 		var/mob/living/carbon/human/M = AM
-		if(M.stat)
+		if(!isalive(M))
 			return
 		actions.start(new /datum/action/bar/icon/railing_jump/table_jump(M, src), M)
 
