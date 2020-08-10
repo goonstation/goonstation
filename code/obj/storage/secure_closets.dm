@@ -504,7 +504,9 @@
 	/obj/item/electronics/scanner,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/electronics/soldering,
-	/obj/item/deconstructor)
+	/obj/item/deconstructor,
+	/obj/item/storage/mechanics/housing_large=2,
+	/obj/item/storage/mechanics/housing_handheld=1)
 
 /obj/storage/secure/closet/engineering/atmos
 	name = "\improper Atmospheric Technician's locker"
