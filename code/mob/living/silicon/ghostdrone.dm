@@ -72,8 +72,9 @@
 		//Attach shit to tools
 		src.tools = list(
 			new /obj/item/magtractor(src),
-			new /obj/item/tool/omnitool(src),
+			new /obj/item/tool/omnitool/silicon(src),
 			new /obj/item/rcd/safe(src),
+			new /obj/item/lamp_manufacturer(src),
 			new /obj/item/device/analyzer/atmospheric(src),
 			new /obj/item/device/t_scanner(src),
 			new /obj/item/electronics/soldering(src),

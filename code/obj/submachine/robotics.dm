@@ -2,8 +2,8 @@
 // TODO: move to /modules/robotics
 
 /obj/item/robojumper
-	name = "Cell Cables"
-	desc = "Used by Engineering Cyborgs for emergency recharging of APCs."
+	name = "cell cables"
+	desc = "Used by cyborgs for emergency recharging of APCs."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "robojumper-plus"
 	var/positive = 1 //boolean, if positive, then you will charge an APC with your cell, if negative, you will take charge from apc
@@ -14,23 +14,91 @@
 		boutput(user, "<span class='alert'>The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"].</span>")
 
 /obj/item/atmosporter
-	name = "Atmospherics Transporter"
-	desc = "Used by Atmospherics Cyborgs for convenient transport of siphons and tanks."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "bedbin"
+	name = "atmospherics transporter"
+	desc = "Used for convenient transport of siphons and tanks."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "atmosporter"
 	var/capacity = 2
 
 	attack_self(var/mob/user as mob)
 		if (src.contents.len == 0) boutput(user, "<span class='alert'>You have nothing stored!</span>")
 		else
-			var/selection = input("What do you want to drop?", "Atmos Transporter", null, null) as null|anything in src.contents
+			if (user.loc != get_turf(user.loc))
+				boutput(user, "<span class='alert'>You're in too small a space to drop anything!</span>")
+				return
+			var/selection = input("What do you want to drop?", "Atmospherics Transporter", null, null) as null|anything in src.contents
 			if(!selection) return
-			selection:set_loc(user.loc)
-			selection:contained = 0
+			if (istype(selection, /obj/machinery/fluid_canister))
+				var/obj/machinery/fluid_canister/S = selection
+				S.set_loc(get_turf(user.loc))
+				S.contained = 0
+			else if (istype(selection, /obj/machinery/portable_atmospherics))
+				var/obj/machinery/portable_atmospherics/S = selection
+				S.set_loc(get_turf(user.loc))
+				S.contained = 0
+			else return //no sparks for unintended items
 			elecflash(user)
 
+
+
+/obj/item/lamp_manufacturer
+	name = "miniaturized lamp manufacturer"
+	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "borglampman-white"
+	var/prefix = "borglampman"
+
+	var/cost_broken = 50 //For broken/burned lamps (the old lamp gets recycled in the tool)
+	var/cost_empty = 75
+	var/setting = "white"
+	var/dispensing_tube = /obj/item/light/tube
+	var/dispensing_bulb = /obj/item/light/bulb
+
+	attack_self(var/mob/user as mob)
+		switch (src.setting) //This should be relatively easily expandable I think
+			if ("white")
+				setting = "red"
+				dispensing_tube = /obj/item/light/tube/red
+				dispensing_bulb = /obj/item/light/bulb/red
+			if ("red")
+				setting = "yellow"
+				dispensing_tube = /obj/item/light/tube/yellow
+				dispensing_bulb = /obj/item/light/bulb/yellow
+			if ("yellow")
+				setting = "green"
+				dispensing_tube = /obj/item/light/tube/green
+				dispensing_bulb = /obj/item/light/bulb/green
+			if ("green")
+				setting = "cyan"
+				dispensing_tube = /obj/item/light/tube/cyan
+				dispensing_bulb = /obj/item/light/bulb/cyan
+			if ("cyan")
+				setting = "blue"
+				dispensing_tube = /obj/item/light/tube/blue
+				dispensing_bulb = /obj/item/light/bulb/blue
+			if ("blue")
+				setting = "purple"
+				dispensing_tube = /obj/item/light/tube/purple
+				dispensing_bulb = /obj/item/light/bulb/purple
+			if ("purple")
+				setting = "blacklight"
+				dispensing_tube = /obj/item/light/tube/blacklight
+				dispensing_bulb = /obj/item/light/bulb/blacklight
+			if ("blacklight")
+				setting = "white"
+				dispensing_tube = /obj/item/light/tube
+				dispensing_bulb = /obj/item/light/bulb
+		set_icon_state("[prefix]-[setting]")
+		tooltip_rebuild = 1
+
+
+	get_desc()
+		. = "It is currently set to dispense [setting] lamps."
+
+
+
 /obj/item/robot_chemaster
-	name = "Mini-ChemMaster"
+	name = "mini-ChemMaster"
 	desc = "A cybernetic tool designed for chemistry cyborgs to do their work with. Use a beaker on it to begin."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "minichem"
@@ -93,7 +161,7 @@
 		working = 0
 
 /obj/item/robot_foodsynthesizer
-	name = "Food Synthesizer"
+	name = "food synthesizer"
 	desc = "A portable food synthesizer."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "synthesizer"
