@@ -1,5 +1,9 @@
 
 (t)mon aug 10 20
+(u)system86
+(p)1257
+(e)🆕🎨|feature, sprites
+(*)Added MechComp component containers- they hold your mechcomp (and can be portable!)
 (u)Superlagg
 (p)1627
 (e)🆕|feature
