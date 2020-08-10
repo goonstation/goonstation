@@ -4650,12 +4650,10 @@ var/global/noir = 0
 		var/preDropTime = 3 SECONDS
 
 		if (chosen)
-			//var/obj/A = new chosen()
-			//A.set_loc(usr.loc)
-			//heavenly_spawn(A)
-			new/obj/effect/supplymarker/safe(usr.loc, preDropTime, chosen)
-			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
-			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
+			var/turf/T = get_turf(usr)
+			new/obj/effect/supplymarker/safe(T, preDropTime, chosen)
+			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
