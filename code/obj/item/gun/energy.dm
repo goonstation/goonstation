@@ -1271,11 +1271,10 @@
 			src.talk_into(M, msg, null, real_name, lang_id)
 
 	//can only handle one name at a time, if it's more it doesn't do anything
-	talk_into(mob/M as mob, msg, real_name, lang_id, var/buddy_command_override)
+	talk_into(mob/M as mob, msg, real_name, lang_id)
 		//Do I need to check for this? I can't imagine why anyone would pass the wrong var here...
 		if (!islist(msg))
-			if (!buddy_command_override)
-				return
+			return
 
 		//only work if the voice is the same as the voice of your owner fingerprints.
 		if (ishuman(M))
@@ -1296,9 +1295,7 @@
 
 		var/text = msg[1]
 		text = sanitize_talk(text)
-		if (buddy_command_override)
-			text = buddy_command_override
-		if (fingerprints_can_shoot(M) || buddy_command_override)
+		if (fingerprints_can_shoot(M))
 			switch(text)
 				if ("detain")
 					current_projectile = projectiles["detain"]
