@@ -41,7 +41,7 @@ var/datum/action_controller/actions
 			interrupt(owner, INTERRUPT_ACTION)
 			for(var/datum/action/OA in running[owner])
 				//Meant to catch users starting the same action twice, and saving the first-attempt from deletion
-				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE) 
+				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE)
 					OA.onResume()
 					qdel(A)
 					return OA
@@ -395,6 +395,7 @@ var/datum/action_controller/actions
 		R.setMaterial(mat)
 		if (istype(R))
 			R.amount = amount
+			R.inventory_counter?.update_number(R.amount)
 		R.dir = owner.dir
 		sheet.consume_sheets(cost)
 		if (sheet2 && cost2)

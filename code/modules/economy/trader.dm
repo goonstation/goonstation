@@ -1318,3 +1318,64 @@
 		pickupdialogue = "Here you are."
 
 		pickupdialoguefailure = "No."
+
+
+
+/*
+
+/obj/npc/trader/flexx
+	icon = 'icons/obj/64.dmi'
+	icon_state = "flexx"
+	picture = "flexx.png"
+	name = "Flexx"
+	trader_area = "/area/flexx_trader"
+	angrynope = "Not cool, champ!"
+	whotext = "Yo, buddy, name's Flexx. Whaddup?"
+
+	New()
+		..()
+		/////////////////////////////////////////////////////////
+		//// sell list //////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		src.goods_sell += new /datum/commodity/hat/bandana(src)
+		src.goods_sell += new /datum/commodity/hat/beret(src)
+		src.goods_sell += new /datum/commodity/hat/spacehelmet(src)
+		src.goods_sell += new /datum/commodity/hat/spacehelmet/red(src)
+		src.goods_sell += new /datum/commodity/hat/pinkwizard(src)
+		src.goods_sell += new /datum/commodity/hat/purplebutt(src)
+		src.goods_sell += new /datum/commodity/hat/dailyspecial(src)
+		src.goods_sell += new /datum/commodity/hat/laurels(src)
+		src.goods_sell += new /datum/commodity/tech/laptop(src)
+		/////////////////////////////////////////////////////////
+		//// buy list ///////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		src.goods_buy += new /datum/commodity/contraband/hosberet(src)
+		/////////////////////////////////////////////////////////
+
+		greeting= {"Hello there, space-faring friend."}
+
+		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
+
+		sell_dialogue = "What can I relieve you of?"
+
+		buy_dialogue = "What would you like to purchase?"
+
+		successful_purchase_dialogue = list("Lovely, lovely.",
+			"Enjoy.",
+			"Cheers.")
+
+		failed_sale_dialogue = list("I'm not interested in that.",
+			"Don't you have anything else?")
+
+		successful_sale_dialogue = list("Sounds good to me.",
+			"Sure, I'll take it.")
+
+		failed_purchase_dialogue = list("You're a bit lacking in funds.",
+			"Take a second look at my prices.")
+
+		pickupdialogue = "Here are your things."
+
+		pickupdialoguefailure = "I don't believe you've bought anything yet."
+
+
+*/

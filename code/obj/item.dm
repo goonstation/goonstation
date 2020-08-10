@@ -101,6 +101,10 @@
 
 	var/block_vision = 0 //cannot see when worn
 
+	// Inventory count display. Call create_inventory_counter in New()
+	var/inventory_counter_enabled = 0
+	var/obj/overlay/inventory_counter/inventory_counter = null
+
 	proc/setTwoHanded(var/twohanded = 1) //This is the safe way of changing 2-handed-ness at runtime. Use this please.
 		if(ismob(src.loc))
 			var/mob/L = src.loc
@@ -244,6 +248,12 @@
 		if (!src.pixel_y) // same as above
 			src.pixel_y = rand(-8,8)
 	src.setItemSpecial(/datum/item_special/simple)
+
+	if (inventory_counter_enabled)
+		src.create_inventory_counter()
+		if (src.amount != 1)
+			// this is a gross hack to make things not just show "1" by default
+			src.inventory_counter.update_number(src.amount)
 	..()
 
 /obj/item/unpooled()
@@ -256,6 +266,10 @@
 		else
 			src.overlays -= image('icons/effects/fire.dmi', "1old")
 	src.burning = 0
+
+	if (inventory_counter_enabled)
+		src.inventory_counter = unpool(/obj/overlay/inventory_counter)
+		src.inventory_counter.update_number(src.amount)
 
 /obj/item/pooled()
 	src.amount = 0
@@ -271,6 +285,10 @@
 	if (ismob(src.loc))
 		var/mob/M = src.loc
 		M.u_equip(src)
+
+	if (src.inventory_counter)
+		pool(src.inventory_counter)
+		src.inventory_counter = null
 
 	..()
 
@@ -509,9 +527,18 @@
 
 /obj/item/proc/change_stack_amount(var/diff)
 	amount += diff
+	if (!inventory_counter)
+		create_inventory_counter()
+	inventory_counter.update_number(amount)
 	if (amount > 0)
 		update_stack_appearance()
-	else
+	else if (!issilicon(usr))
+		// Zamu change - added if (!issilicon(usr))
+		// I have no idea if this matters - issilicon() is used in other places to prevent
+		// dropping or deleting items in some places.
+		// good thing I have no clue what I'm doing
+		// Potential issue for later: may end up not deleting external-to-player stacks
+		// maybe check for src.loc = usr? ???
 		SPAWN_DBG(0)
 			usr.u_equip(src)
 			pool(src)
@@ -1338,6 +1365,9 @@
 	// Clean up circular references
 	disposing_abilities()
 	setItemSpecial(null)
+	if (src.inventory_counter)
+		pool(src.inventory_counter)
+		src.inventory_counter = null
 
 	if(istype(src.loc, /obj/item/storage))
 		var/obj/item/storage/storage = src.loc
@@ -1413,6 +1443,10 @@
 				possible_mob_holder.drop_item()
 				possible_mob_holder.hand = !possible_mob_holder.hand
 
+/obj/item/proc/create_inventory_counter()
+	src.inventory_counter = unpool(/obj/overlay/inventory_counter)
+	src.vis_contents += src.inventory_counter
+
 /obj/item/proc/dropped(mob/user)
 	if (user)
 		src.dir = user.dir
@@ -1431,7 +1465,8 @@
 			B.OnDrop()
 	hide_buttons()
 	clear_mob()
-
+	if (src.inventory_counter)
+		src.inventory_counter.hide_count()
 	if (special_grab || chokehold)
 		drop_grab()
 	return
@@ -1447,6 +1482,8 @@
 		src.material.triggerPickup(user, src)
 	set_mob(user)
 	show_buttons()
+	if (src.inventory_counter)
+		src.inventory_counter.show_count()
 	if (src.c_flags & EQUIPPED_WHILE_HELD)
 		src.equipped(user, user.get_slot_from_item(src))
 

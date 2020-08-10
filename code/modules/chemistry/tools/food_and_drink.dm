@@ -429,6 +429,7 @@
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	var/splash_all_contents = 1
 	doants = 0
+	var/can_recycle = 1
 
 	New()
 		..()
@@ -1607,6 +1608,7 @@
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "GannetsCocktailer"
 	initial_volume = 120
+	can_recycle = 0
 
 	New()
 		..()

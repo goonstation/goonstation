@@ -424,8 +424,8 @@
 
 	attack_self(mob/user as mob)
 		playsound(get_turf(src), "sound/items/penclick.ogg", 30, 1)
-		user.visible_message("<b>[user]</b> flicks [src.on ? "on" : "off"] the [src].")
 		src.on = !src.on
+		user.visible_message("<b>[user]</b> flicks [src.on ? "on" : "off"] the [src].")
 		if (src.on)
 			set_icon_state(src.icon_on)
 			src.light.enable()

@@ -14,7 +14,7 @@ export const UI_CLOSE = -1;
 export const COLORS = {
   // Department colors
   department: {
-    captain: '#548b54', // [GOONSTATION-CHANGE]
+    captain: '#548b55', // [GOONSTATION-CHANGE]
     security: '#e74c3c',
     medbay: '#3498db',
     science: '#9b59b6',
