@@ -1,5 +1,9 @@
 
 (t)mon aug 10 20
+(u)nüke
+(p)1698
+(e)🎨|sprites
+(+)Added 8 new pyro airlock variants.
 (u)Carbadox
 (p)1620
 (e)🆕🗺|feature, mapping
