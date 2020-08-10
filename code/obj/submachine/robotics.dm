@@ -15,7 +15,7 @@
 
 /obj/item/atmosporter
 	name = "atmospherics transporter"
-	desc = "Used by cyborgs for convenient transport of siphons and tanks."
+	desc = "Used for convenient transport of siphons and tanks."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "atmosporter"
 	var/capacity = 2
@@ -23,7 +23,10 @@
 	attack_self(var/mob/user as mob)
 		if (src.contents.len == 0) boutput(user, "<span class='alert'>You have nothing stored!</span>")
 		else
-			var/selection = input("What do you want to drop?", "Atmos Transporter", null, null) as null|anything in src.contents
+			if (user.loc != get_turf(user.loc))
+				boutput(user, "<span class='alert'>You're in too small a space to drop anything!</span>")
+				return
+			var/selection = input("What do you want to drop?", "Atmospherics Transporter", null, null) as null|anything in src.contents
 			if(!selection) return
 			if (istype(selection, /obj/machinery/fluid_canister))
 				var/obj/machinery/fluid_canister/S = selection
