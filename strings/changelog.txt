@@ -1,5 +1,10 @@
 
 (t)mon aug 10 20
+(u)Carbadox
+(p)1620
+(e)🆕🗺|feature, mapping
+(+)Added new items to the clothing booth, namely to the accessories, casual, costumes, formal, jackets and the new headwear section.
+(+)Added Clothing Booth to manta
 (u)Phyvo
 (p)1583
 (e)⚖|balance
