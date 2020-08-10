@@ -1,5 +1,10 @@
 
 (t)mon aug 10 20
+(u)Superlagg
+(p)1627
+(e)🆕|feature
+(*)Beepsky now drops his own personal stun baton, and he can now be properly rebuilt when he dies.
+(+)Beepsky's baton can be used to build other non-Beepsky securitrons, granting them some of his robustness.
 (u)nüke
 (p)1700
 (e)🎨|sprites
