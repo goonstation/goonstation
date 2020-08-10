@@ -104,6 +104,7 @@ var/list/detailed_spawn_dbg = list()
 #define isfeathertile(x) (istype(x, /turf/simulated/floor/feather) || istype(x, /turf/simulated/wall/auto/feather))
 #define isflock(x) (istype(x, /mob/living/intangible/flock) || istype(x, /mob/living/critter/flock))
 #define isflockstructure(x) (istype(x, /obj/flock_structure))
+#define getneighbours(x) (list(get_step(x, NORTH), get_step(x, EAST), get_step(x, SOUTH), get_step(x, WEST)))
 
 // pick strings from cache-- code/procs/string_cache.dm
 #define pick_string(filename, key) pick(strings(filename, key))

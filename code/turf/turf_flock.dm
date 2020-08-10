@@ -167,15 +167,28 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //start of flocktilegroup stuff
 
+/*
+/proc/adjacenttiles(var/turf/t)
+	. = list() //???
+	for(var/d in cardinal)
+		message_admins("thingle")
+		. += get_step(t, d)
+*/
+
+
+
 /turf/simulated/floor/feather/proc/initializegroup() //make a new group
 	group = new/datum/flock_tile_group
 	group.addtile(src)
 
-/turf/simulated/floor/feather/proc/checknearby()
+/turf/simulated/floor/feather/proc/checknearby()//handles merging groups through something i should change soon, it currently makes a third group and merges the surrounding groups into that, i should ideally merge the smaller group(s) into the largest.
 	var/list/tiles = list() //list of tile groups found
-	for(var/turf/simulated/floor/feather/F in orange(1, src))//check for nearby flocktiles
+//	for(var/turf/simulated/floor/feather/F in orange(1, src))//check for nearby flocktiles
+	for(var/turf/simulated/floor/feather/F in getneighbours(get_turf(src)))//check for nearby flocktiles
+		message_admins("thing looped")
 		if(F.group)
 			tiles |= F.group
+			message_admins("[F.group] is added")
 	if(tiles.len == 1)
 		src.group = tiles[1] //set it to the group found.
 		src.group.addtile(src)
@@ -196,12 +209,42 @@
 	else
 		return null
 
+/*
+for(var/d in list(0, NORTH, EAST, SOUTH, WEST))
+    var/turf/T = get_step(src.loc, d)
+    var/obj/item/gnome/GNOME = locate() in T
+    if(GNOME)
+       return GNOME
+*/
+
+
+
+
+/turf/simulated/floor/feather/proc/splitgroup()
+	var/list/tiles = list() //list of tile groups found
+	var/count = 0 //how many tiles
+	var/turf/simulated/floor/feather/F
+	for(F in orange(1, src)) //nearby flocktiles
+		if(F.group)//does it have a flocktile group associated?
+			count++
+			tiles |= F.group
+//at this point we have looked if there are any nearby groups
+	if(count == 0)//if there are no tiles/no grouped tiles just null and do nothing
+		F.group = null
+		return
+
+//fail safe for if there are more then 1 group, there really shouldnt be but better be safe then sorry
+//hnng i need big brain juice now help
+//	for(var/datum/flock_tile_group/f in tiles)
+		//do thing
+
+
+
 
 
 
 //end of flocktilegroup stuff
 ////////////////////////////////////////////////////////////////////////////////////////
-
 
 /turf/simulated/wall/auto/feather
 	name = "weird glowing wall"
