@@ -29,14 +29,13 @@ var/global/list/bible_contents = list()
 		..()
 		STOP_TRACKING
 
-	proc/bless(mob/M as mob, var/mob/user)
+	proc/bless(mob/M as mob)
 		if (isvampire(M) || iswraith(M) || M.bioHolder.HasEffect("revenant"))
 			M.visible_message("<span class='alert'><B>[M] burns!</span>", 1)
 			var/zone = "chest"
 			if (usr.zone_sel)
 				zone = usr.zone_sel.selecting
 			M.TakeDamage(zone, 0, heal_amt)
-			JOB_XP(user, "Chaplain", 2)
 		else
 			var/mob/living/H = M
 			if( istype(H) )
@@ -46,7 +45,6 @@ var/global/list/bible_contents = list()
 				if( prob(25) )
 					H.cure_disease_by_path(/datum/ailment/disability/clumsy/cluwne)
 			M.HealDamage("All", heal_amt, heal_amt)
-			JOB_XP(user, "Chaplain", 2)
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/storage/bible))
@@ -74,7 +72,7 @@ var/global/list/bible_contents = list()
 
 		if (iswraith(M) || (M.bioHolder && M.bioHolder.HasEffect("revenant")))
 			M.visible_message("<span class='alert'><B>[user] smites [M] with the [src]!</B></span>")
-			bless(M, user)
+			bless(M)
 			boutput(M, "<span_class='alert'><B>IT BURNS!</B></span>")
 			if (narrator_mode)
 				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
@@ -86,7 +84,7 @@ var/global/list/bible_contents = list()
 			var/mob/H = M
 			// ******* Check
 			if ((ishuman(H) && prob(60)))
-				bless(M, user)
+				bless(M)
 				M.visible_message("<span class='alert'><B>[user] heals [M] with the power of Christ!</B></span>")
 				boutput(M, "<span class='alert'>May the power of Christ compel you to be healed!</span>")
 				if (narrator_mode)

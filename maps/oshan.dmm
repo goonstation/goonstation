@@ -47671,6 +47671,10 @@
 "qPg" = (
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"qTt" = (
+/obj/machinery/vending/janitor,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -82024,7 +82028,7 @@ aHC
 aIf
 aIE
 aIX
-aID
+qTt
 aJT
 aKi
 aKH
