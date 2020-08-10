@@ -93,7 +93,7 @@
 
 
 	get_desc()
-		. += "It is currently set to dispense [setting] lamps."
+		. = "It is currently set to dispense [setting] lamps."
 
 
 

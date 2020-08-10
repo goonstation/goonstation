@@ -587,9 +587,6 @@
 		light_name = L.name
 		light_status = L.light_status
 		boutput(user, "You insert a [L.name].")
-		breakprob = L.breakprob
-		rigged = L.rigged
-		rigger = L.rigger
 		light.set_color(L.color_r, L.color_g, L.color_b)
 		qdel(L)
 		update()
