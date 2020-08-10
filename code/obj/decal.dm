@@ -669,6 +669,21 @@ obj/decal/fakeobjects/teleport_pad
 	name = "QM Navigation Guide"
 	desc = "The quartermaster is in this direction."
 	icon_state = "guide_qm"
+	
+/obj/decal/tile_edge/floorguide/hop
+	name = "Head Of Personnel Navigation Guide"
+	desc = "The Head of Personnel's office is in this direction."
+	icon_state = "guide_hop"
+	
+/obj/decal/tile_edge/floorguide/ai
+	name = "AI Navigation Guide"
+	desc = "The AI core is in this direction."
+	icon_state = "guide_ai"
+
+/obj/decal/tile_edge/floorguide/catering
+	name = "Catering Navigation Guide"
+	desc = "Catering is in this direction."
+	icon_state = "guide_catering"
 
 /obj/decal/tile_edge/floorguide/arrow_e
 	name = "Directional Navigation Guide"
