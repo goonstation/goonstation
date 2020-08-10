@@ -177,10 +177,10 @@
 	var/gunt = new /obj/item/device/guardbot_tool/gun	// We give this to Buddies lacking a module so they don't get self-conscious about lacking a module
 	var/arrest_target = null	// uhh
 	var/lethal = 0				// uhhh
+	var/said_dumb_things = 0	// So we say that thing about spacelaw once...ish
 	var/slept_through_becoming_the_law = 0 // If we gave em a lawbringer and they were fast asleep
 	var/slept_through_laser_class = 0	// If we gave em a gun that can shoot lasers and they were fast asleep
 	var/bang = 0 	// So we don't have to keep doing istype(src.budgun, /obj/item/bang_gun) every time we want to shoot
-	var/hold_your_horses = 0	// I'm doing a thing, give me a moment
 	//
 	////////////////////// GUN STUFF -^
 
@@ -553,13 +553,11 @@
 					DeceptionCheck(W, user, "removegun")
 				else
 					DropTheThing("gun", null, 1)
-			if (src.tool && (src.tool.tool_id != "GUN"))
+			else if (src.tool)
 				if (src.locked)
 					DeceptionCheck(W, user, "removetool")
 				else
 					DropTheThing("tool", null, 1)
-			else if (src.tool && (src.tool.tool_id == "GUN"))
-				speak("It looks like you're trying to remove my tool module! Well... someone beat you to it.")
 
 		else
 			switch(W.hit_type)
@@ -580,7 +578,6 @@
 			return	// Eguns and laser-shooters only, please!
 		if (!src.on || src.idle)
 			src.slept_through_laser_class = 1	// y'know, whenever you get a chance
-		if (src.hold_your_horses)
 			return
 		var/fluffbud = pick("small", "cute", "handsome", "adorable", "lovable", "lovely")
 		var/budfluff = pick("Thinktronic Data System", "rectangular device",\
@@ -607,7 +604,7 @@
 				speak("[(src.slept_through_laser_class || !user) ? "" : "Thank you, [user]! "]Oh... but article-[(rand(1,6))] subsection-[rand(1,32764)] of Spacelaw prohibits any [fluffbud] [budfluff] from wielding a Class-[pick("A", "B","C", "D")] laser weapon.")
 				SPAWN_DBG(1 SECOND)
 					speak("Oh! This weapon has a stun setting! That makes it [pick("A-OK", "totally fine", "well within certain loopholes of the law")] for me to use!")
-					src.budgun.current_projectile = new/datum/projectile/laser
+					src.budgun.current_projectile = new/datum/projectile/energy_bolt
 					src.budgun.update_icon()
 		else
 			if (src.budgun.current_projectile == /datum/projectile/energy_bolt) // Hopefully doesn't trigger on anything other than an egun
@@ -617,14 +614,19 @@
 					src.budgun.current_projectile = new/datum/projectile/laser
 					src.budgun.update_icon()
 			else	// Should be fine even if their gun isn't an egun
+				if (src.said_dumb_things)
+					return
+				src.said_dumb_things = 1
+				SPAWN_DBG(15 SECONDS)
+					src.said_dumb_things = 0
 				speak("[user ? "Thank you, [user]! Oh... but a" : "A"]rticle-[rand(1,6)] subsection-[rand(1,32764)] of Spacelaw prohibits any [fluffbud] [budfluff] from wielding a Class-[pick("A", "B","C", "D")] laser weapon.")
-				SPAWN_DBG(1 SECOND)
+				SPAWN_DBG(2 SECONDS)
 					if (user)
 						speak("But, you wouldn't say that I'm [fluffbud], would you?")
 					else
 						speak("But hey, the law's for [pick("chumps", "the spacebirds", "losers")], right?")
 					if (prob(25))
-						SPAWN_DBG(1 SECOND)
+						SPAWN_DBG(2 SECONDS)
 							if(user)
 								speak("Right?")
 							else
@@ -642,7 +644,7 @@
 	proc/BeTheLaw(var/obj/item/gun/energy/lawbringer/W, var/loose = 0)
 		if (!istype(W, /obj/item/gun/energy/lawbringer) || !src.budgun)
 			src.slept_through_becoming_the_law = 0 // If we were going to be the law before, we ain't now.
-			return // How did you get here?
+			return
 		if (!src.on || src.idle)	// Let's not wake em up just to say some dumb shit
 			src.slept_through_becoming_the_law = 1	// They can do it on their own time
 			return
@@ -672,93 +674,60 @@
 												"Yay! I get to be the law!",\
 												"Time for crime... to stop!",\
 												"If only [istype(src, /obj/machinery/bot/guardbot/ranger) ? "I could see myself" : "Ol' Harner could see me"] now!")
-		speak(saytheline)	//owner_prints
+		speak(saytheline)
 		var/local_ordinance = null
 		if(loose)
 			local_ordinance = pick("execute", "hotshot", "clown")
 		else
-			local_ordinance = pick("clown", "detain", "pulse", "knockout", "smoke")
+			local_ordinance = pick("clownshot", "detain", "pulse", "knockout", "smokeshot")
+		src.budgun.talk_into(null, null, null, null, local_ordinance)
+		if(!loose)
+			src.visible_message(dothevoice)
 		switch (local_ordinance)
 			if ("clown")
-				src.budgun.current_projectile = src.budgun.projectiles["clownshot"]
-				SPAWN_DBG(1 SECOND)
-					if (!loose)
-						src.visible_message(dothevoice)
-					speak(loose ? "CLOWN." : "Clownshot!")
-					src.budgun.item_state = "lawg-clownshot"
-					playsound(src, "sound/vox/clown.ogg", 30)
+				speak(loose ? "CLOWN." : "Clownshot!")
 			if ("detain")
-				src.budgun.current_projectile = src.budgun.projectiles["detain"]
-				SPAWN_DBG(1 SECOND)
-					src.visible_message(dothevoice)
-					speak("Detain!")
-					src.budgun.item_state = "lawg-detain"
-					playsound(src, "sound/vox/detain.ogg", 30)
+				speak("Detain!")
 			if ("pulse")
-				src.budgun.current_projectile = src.budgun.projectiles["pulse"]
-				SPAWN_DBG(1 SECOND)
-					src.visible_message(dothevoice)
-					speak("Detain!")
-					src.budgun.item_state = "lawg-pulse"
-					playsound(src, "sound/vox/push.ogg", 30)
+				speak("Pulse!")
 			if ("knockout")
-				src.budgun.current_projectile = src.budgun.projectiles["knockout"]
-				SPAWN_DBG(1 SECOND)
-					src.visible_message(dothevoice)
-					speak("Detain!")
-					src.budgun.item_state = "lawg-knockout"
-					playsound(src, "sound/vox/sleep.ogg", 30)
+				speak("Knockout!")
 			if ("smoke")
-				src.budgun.current_projectile = src.budgun.projectiles["smokeshot"]
-				SPAWN_DBG(1 SECOND)
-					src.visible_message(dothevoice)
-					speak("Smokeshot!")
-					src.budgun.item_state = "lawg-smoke"
-					playsound(src, "sound/vox/smoke.ogg", 30)
+				speak("Smokeshot!")
 			if ("execute")
-				src.budgun.current_projectile = src.budgun.projectiles["execute"]
-				SPAWN_DBG(1 SECOND)
-					speak("EXTERMINATE.")
-					src.budgun.item_state = "lawg-execute"
-					playsound(src, "sound/vox/exterminate.ogg", 30)
+				speak("EXTERMINATE.")
 			if ("hotshot")
-				src.budgun.current_projectile = src.budgun.projectiles["hotshot"]
-				SPAWN_DBG(1 SECOND)
-					speak("HOTSHOT.")
-					src.budgun.item_state = "lawg-hotshot"
-					playsound(src, "sound/vox/hot.ogg", 30)
+				speak("HOTSHOT.")
 		src.budgun.update_icon()
+		src.slept_through_becoming_the_law = 0
 		return
 
 	proc/GunSux()
 		if (!istype(src.budgun, /obj/item/bang_gun) || !src.budgun || !src.on || src.idle)
 			return
-		if (src.hold_your_horses)
-			return
-		src.hold_your_horses = 1
 		var/actiontext1 = pick(" looks shocked for a moment",\
 													 " laughs nervously",\
 													 "<b>'s</b> expression turns from horror to embarassment")
 		var/actiontext2 = pick("throws its [src.budgun] down",\
 													 "tosses its [src.budgun] aside",\
 													 "places the [src.budgun] on the ground")
-		src.visible_message("<b>[src.name]</b>[actiontext1], then [actiontext2][pick("!" , ", hoping nobody noticed.")]")
-		set_emotion(pick("screaming", "look", "angry", "sad"))
 		src.update_icon()
-		SPAWN_DBG(1 SECOND)
+		SPAWN_DBG(2 SECONDS)
+			src.visible_message("<b>[src.name]</b>[actiontext1], then [actiontext2][pick("!" , ", hoping nobody noticed.")]")
+			set_emotion(pick("screaming", "look", "angry", "sad"))
+			src.update_icon()
 			DropTheThing("gun", null, 0, 0)
 			src.locked = 0
 			src.gunlocklock = 0
-			src.hold_your_horses = 0
 
 	proc/IllegalBotMod(var/module as text|null, var/user)
 		var/dropgun = 0
 		switch(module)
-
 			if ("ammofab")
 				src.ammofab = 1
 				src.obeygunlaw = 0
 				src.gunlocklock = 1
+
 		if (src.budgun && src.ammofab) // if they didn't have a gun when ammofabbed
 			src.locked = 1	// Then do all the fun stuff n fluff
 			if (user)
@@ -790,9 +759,6 @@
 			deceptioncheck_passed = 1
 			if (just_checking)
 				return 1
-		if (src.hold_your_horses)
-			boutput(user, "[src] is busy, give them a moment to finish up whatever it is they're doing.")
-			return
 		var/shiftTime = 0
 		if (ticker?.round_elapsed_ticks)
 			shiftTime = ticker.round_elapsed_ticks / 600
@@ -802,13 +768,11 @@
 			if ("togglelock")
 				speak("Sorry, only people authorized by Thinktronic Data Systems may access my controls and accessories.")
 				if (deceptioncheck_passed)
-					src.hold_your_horses = 1
 					src.locked = !src.locked
-					SPAWN_DBG(5 DECI SECONDS)
+					SPAWN_DBG(2 SECONDS)
 						speak(its_the_rd)
 						speak(long_day)
 						speak("Okay, everything's [src.locked ? "locked" : "unlocked"] now!")
-						src.hold_your_horses = 0
 					return 1
 				else
 					return 0
@@ -817,14 +781,12 @@
 					user.visible_message("<b>[user]</b> tries to pry the tool out of [src], but it's locked firmly in place!","You try to pry the gun off of [src]'s gun mount, but it's locked firmly in place!")
 			 	speak("Sorry, only people authorized by Thinktronic Data Systems may modify my accessories.")
 				if (deceptioncheck_passed && src.tool.tool_id)
-					src.hold_your_horses = 1
 					src.locked = 0
-					SPAWN_DBG(5 DECI SECONDS)
+					SPAWN_DBG(2 SECONDS)
 						speak(its_the_rd)
 						speak(long_day)
 						DropTheThing("tool", null, 0)
 						speak("Alright, my [src.tool]'s all popped out. I've also unlocked everything, just in case!")
-						src.hold_your_horses = 0
 					return 1
 				else
 					return 0
@@ -833,14 +795,12 @@
 					user.visible_message("<b>[user]</b> tries to pry the gun off of [src]'s gun mount, but it's locked firmly in place!","You try to pry the gun off of [src]'s gun mount, but it's locked firmly in place!")
 			 	speak("Sorry, only people authorized by Thinktronic Data Systems may steal my defensive weapon system.")
 				if (deceptioncheck_passed)
-					src.hold_your_horses = 1
 					src.locked = 0
-					SPAWN_DBG(5 DECI SECONDS)
+					SPAWN_DBG(2 SECONDS)
 						speak(its_the_rd)
 						speak(long_day)
 						DropTheThing("gun", null, 0)
 						speak("There you go, I've placed my [src.budgun] on the ground. I've also unlocked my tool and gun mounts, just in case you wanted to give me a new one. Please.")
-						src.hold_your_horses = 0
 					return 1
 				else
 					return 0
@@ -849,7 +809,7 @@
 				return 0
 
 	proc/DropTheThing(obj/item/thing as text, mob/user as mob|null, var/by_force = 0, var/announce_it = 1)
-		if (!thing || !(src.budgun && src.tool))
+		if (!thing)
 			return // Drop what, exactly?
 
 		var/turf/Tdurg = get_turf(src)
@@ -863,29 +823,32 @@
 				else if (announce_it)
 					src.visible_message("[src] drops the [src.budgun].")
 				src.budgun.set_loc(Tdurg)
-				src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)
 				src.budgun = null
 				src.hasgun = 0
 				src.gun = null
 				src.bang = 0
+				update_icon()
 				return
 			if ("tool")
-				if (by_force && user)
+				if (src.tool.tool_id == "GUN")
+					if (announce_it)
+						speak("It looks like you're trying to remove my tool module! Well... someone beat you to it.")
+					else
+						return
+				else if (by_force && user)
 					src.visible_message("<span class='alert'>[user] pries the [src.tool] out of [src]'s tool port!</span>", "<span class='alert'>You pry the [src.tool] out of [src]'s tool port!</span>")
 					set_emotion("sad")
 					update_icon()
 				else if (announce_it)
 					src.visible_message("[src] drops the [src.tool].")
 				src.tool.set_loc(Tdurg)
+				src.tool = null
 				src.tool = src.gunt
 				return
 
 	proc/GrabTheThing(obj/item/Q as obj, mob/user as mob|null)	// Equipping and hotswapping things
-		if (!Q || (src.hold_your_horses && !user))
+		if (!Q)
 			return // Equip what, now?
-		else if (src.hold_your_horses)
-			boutput(user, "[src] is busy, give them a moment to finish up whatever it is they're doing.")
-			return
 
 		if (istype(Q, /obj/item/device/guardbot_tool/gun))
 			boutput(user, "You try to insert the this thing, a metaphysical representation of a nonexistant tool that is used as a phantom talisman \
@@ -895,7 +858,6 @@
 
 		var/turf/Tdurg = get_turf(src)
 
-		src.hold_your_horses = 1
 		var/fluffbud = pick("small", "cute", "handsome", "adorable", "lovable", "lovely")
 		var/budfluff = pick("Thinktronic Data System", "rectangular device",\
 											 "robot under warranty", "ambulatory home appliance")
@@ -925,6 +887,9 @@
 			if("gun")
 				var/legalweapon = 0
 				var/weirdgimmickgun = 1
+				if(!src.on || src.idle)
+					boutput(user, "You try to give that to [src], but its hand doesn't even try to hold it. Must be asleep.")
+					return
 				if (src.budgun)	// oh no, we already have a gun!
 					if (locked)
 						if(!DeceptionCheck(null, user, "removegun")) // Try to drop it, and if we failed, success! Tell them how they failed!
@@ -959,36 +924,39 @@
 																"<span class='alert'>[src] snatches the [Q] from your grip and plugs it into its weapon mount!</span>")
 					else
 						src.visible_message("<span class='alert'>[src] snatches the [Q], wielding it in its cold, dead weapon mount!</span>")
+					if (src.said_dumb_things)
+						return
+					src.said_dumb_things = 1
+					SPAWN_DBG(15 SECONDS)
+						src.said_dumb_things = 0
 					speak("Article-[(rand(1,6))] subsection-[rand(1,32764)] of Spacelaw prohibits any [fluffbud] [budfluff] from wielding a Class-[pick("A", "B","C", "D")] laser weapon.")
-					SPAWN_DBG(1 SECOND)
-						if (user)
-							speak("But, you wouldn't say that I'm [fluffbud], would you?")
-						else
-							speak("But hey, the law's for [pick("chumps", "the spacebirds", "losers")], right?")
-						if (prob(25))
-							SPAWN_DBG(1 SECOND)
-								if(user)
-									speak("Right?")
-								else
-									speak("Cus I'd say I'm more [fluffbad1] [fluffbad2].")
-								src.hold_your_horses = 0
-								if (prob(25))
-									SPAWN_DBG(10 SECONDS)
-										if (src?.on)	// Are they even still alive or something
-											if(user)
-												speak("Yeah. I'm right. Heck the law. Heck the law for real!")
-											else
-												speak("Yup. That's me. Definitely [fluffbad1] [fluffbad2] through and through.")
-						else
-							src.hold_your_horses = 0
-							return
+					SPAWN_DBG(2 SECOND)
+						if (src?.on)
+							if (user)
+								speak("But, you wouldn't say that I'm [fluffbud], would you?")
+							else
+								speak("But hey, the law's for [pick("chumps", "the spacebirds", "losers")], right?")
+							if (prob(25))
+								SPAWN_DBG(2 SECONDS)
+									if (src?.on)
+										if(user)
+											speak("Right?")
+										else
+											speak("Cus I'd say I'm more [fluffbad1] [fluffbad2].")
+										if (prob(25))
+											SPAWN_DBG(10 SECONDS)
+												if (src?.on)	// Are they even still alive or something
+													if(user)
+														speak("Yeah. I'm right. Heck the law. Heck the law for real!")
+													else
+														speak("Yup. That's me. Definitely [fluffbad1] [fluffbad2] through and through.")
 				// Enough fluffing around, fork over the gun
 				Q.set_loc(src)
 				src.budgun = Q
 				src.budgun.master = src
 				src.hasgun = 1
 				src.gun = budgun.name
-				src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)
+				src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = -2, pixel_y = -4)
 				user.u_equip(Q)
 				IllegalBotMod(null, user)
 				if(istype(Q, /obj/item/gun/energy/lawbringer))
@@ -998,13 +966,12 @@
 				else if (istype(src.budgun, /obj/item/bang_gun))
 					src.bang = 1
 			if ("tool")
-				if (src.budgun) // Have gun, can't tool
-					if (src.locked)
-						if(!DeceptionCheck(null, user, "removegun"))
-							speak("That's a neat tool module you have there! But I'm holding a gun, and the combined mass and power draw of both a gun <I>and</I> a tool module would definitely fry my drive train and void my warranty.")
-							return
-					else
-						DropTheThing("gun", null, 0, 1)
+				if (src.budgun && src.locked) // Have gun, can't tool
+					if(!DeceptionCheck(null, user, "removegun"))
+						speak("That's a neat tool module you have there! But I'm holding a gun, and the combined mass and power draw of both a gun <I>and</I> a tool module would definitely fry my drive train and void my warranty.")
+						return
+				else if (src.budgun && !src.locked)
+					DropTheThing("gun", null, 0, 1)
 			 	if (!src.budgun) // No gun, or we just dropped our old gun
 					if(src.tool.tool_id == "GUN") // AKA, no tool
 						if (src.locked)
@@ -1087,8 +1054,6 @@
 
 		src.updateUsrDialog()
 		return
-
-	///////////////////////PROCESS WAS HERE
 
 	receive_signal(datum/signal/signal, receive_method, receive_param)
 		if(!src.on || src.stunned)
