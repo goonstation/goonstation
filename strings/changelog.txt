@@ -1,4 +1,9 @@
 
+(t)mon aug 10 20
+(u)nüke
+(p)1700
+(e)🎨|sprites
+(+)Updated floor guide decals and added 3 new floor guide icons.
 (t)sun aug 09 20
 (u)Moonlol
 (p)1755
