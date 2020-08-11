@@ -1,5 +1,12 @@
 
 (t)tue aug 11 20
+(u)Comradef191
+(p)1753
+(e)🗺|mapping
+(*)Added Atmospherics Forcefields to Cogmap 1, located at the hanger bays and Cargo Routers.
+(+)Revamped Engineering Access on Cogmap 1; Engineers no longer have direct access to the AI Upload Foyer, Engineering Storage and Engineering Dock moved to 'Engineering Storage' Access rather than 'Engineering Engine', Engineering Power Room & both substations now use 'Engineering Power' Access rather than 'Engineering Engine' & the entrance to Engineering no longer requires Engineering Engine access
+(+)Mining is no longer publicly accessible via space! Use the disposals chute in the Mining Shuttle Dock if needed!
+(+)QM Cargo Intake extended by two tiles
 (u)makkipakki
 (p)1785
 (e)🐛|bug
