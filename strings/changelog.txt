@@ -1,5 +1,9 @@
 
 (t)tue aug 11 20
+(u)Kubius
+(p)1721
+(e)🆕|feature
+(*)You can now buy yacht dice score sheets at card vendors. Dice sold separately.
 (u)Comradef191
 (p)1753
 (e)🗺|mapping
