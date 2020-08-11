@@ -145,6 +145,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	efrem/name = "Office of Vaughn Moon"
 	sovexe/name = "Office of Sov Extant"
 	enakai/name = "Office of Enakai"
+	hukhukhuk/name = "Office of HukHukHuk"
 
 /area/centcom/lobby
 	name = "NT Offices Lobby"
