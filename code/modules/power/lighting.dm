@@ -592,6 +592,7 @@
 		boutput(user, "You insert a [L.name].")
 		light.set_color(L.color_r, L.color_g, L.color_b)
 		qdel(L)
+		on = has_power()
 		update()
 		if (!isghostdrone(user)) // Same as ghostdrone RCDs, no sparks
 			elecflash(user)
