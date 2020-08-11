@@ -201,7 +201,7 @@
 	var/setup_spawn_dock = 0 //Spawn a docking station where we are.
 	var/setup_charge_maximum = 1500 //Max charge of internal cell.  1500 ~25 minutes
 	var/setup_charge_percentage = 90 //Percentage charge of internal cell
-	var/setup_default_tool_path = /obj/item/device/guardbot_tool/gun //Starting tool.
+	var/setup_default_tool_path = /obj/item/device/guardbot_tool/flash //Starting tool.
 #ifdef HALLOWEEN
 	var/setup_default_startup_task = /datum/computer/file/guardbot_task/security/halloween
 #else
