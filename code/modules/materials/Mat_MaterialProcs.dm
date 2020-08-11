@@ -318,53 +318,30 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/telecrystal_entered
 	execute(var/atom/owner, var/atom/movable/entering)
 		if(prob(50) && owner && isturf(owner) && !isrestrictedz(owner.z))
-			. = get_turf(pick(orange(2, owner)))
-			if (isturf(.))
-				entering.visible_message("<span class='alert'>[entering] is warped away!</span>")
-				boutput(entering, "<span class='alert'>You suddenly teleport ...</span>")
-				entering.set_loc(.)
+			. = get_offset_target_turf(get_turf(entering), rand(-2, 2), rand(-2, 2))
+			entering.visible_message("<span class='alert'>[entering] is warped away!</span>")
+			boutput(entering, "<span class='alert'>You suddenly teleport ...</span>")
+			entering.set_loc(.)
 		return
 
-/proc/random_turf_from_center(var/atom/center, var/radius_x = 0, var radius_y = 0)
-	if (!center)
-		return
-	return location(center.loc.x + rand(-radius_x, radius_x), center.loc.y + rand(-radius_y, radius_y), center.loc.z)
 
 /datum/materialProc/telecrystal_onattack
 	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
 		if(prob(50))
 			if(istype(attacked) && !isrestrictedz(attacked.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
-				if(istype(attacked.loc, /obj/machinery/vehicle/)) // Lord knows how you'd manage to get attacked while *inside* a vehicle, but better safe than sorry.
-					var/obj/machinery/vehicle/V = attacked.loc
-					. = get_turf(pick(orange(8, V)))
-					if (isturf(.))
-						attacked.visible_message("<span class='alert'>[attacked] is warped away!</span>")
-						boutput(attacked, "<span class='alert'>You suddenly teleport ...</span>")
-						attacked.set_loc(.)
-				else
-					. = get_turf(pick(orange(8, attacked)))
-					if (isturf(.))
-						attacked.visible_message("<span class='alert'>[attacked] is warped away!</span>")
-						boutput(attacked, "<span class='alert'>You suddenly teleport ...</span>")
-						attacked.set_loc(.)
+				. = get_offset_target_turf(get_turf(attacked), rand(-8, 8), rand(-8, 8))
+				attacked.visible_message("<span class='alert'>[attacked] is warped away!</span>")
+				boutput(attacked, "<span class='alert'>You suddenly teleport ...</span>")
+				attacked.set_loc(.)
 		return
 
 /datum/materialProc/telecrystal_life
 	execute(var/mob/M, var/obj/item/I)
 		if(prob(5) && M && !isrestrictedz(M.z))
-			if(istype(M.loc, /obj/machinery/vehicle/))
-				var/obj/machinery/vehicle/V = M.loc
-				. = get_turf(pick(orange(8, V)))
-				if (isturf(.))
-					M.visible_message("<span class='alert'>[M] is warped away!</span>")
-					boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
-					M.set_loc(.)
-			else
-				. = get_turf(pick(orange(8, M)))
-				if (isturf(.))
-					M.visible_message("<span class='alert'>[M] is warped away!</span>")
-					boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
-					M.set_loc(.)
+			. = get_offset_target_turf(get_turf(M), rand(-8, 8), rand(-8, 8))
+			M.visible_message("<span class='alert'>[M] is warped away!</span>")
+			boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
+			M.set_loc(.)
 		return
 
 /datum/materialProc/plasmastone
