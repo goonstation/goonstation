@@ -150,7 +150,6 @@
 											/obj/item/gun/kinetic/meowitzer/inert,\
 											/obj/item/gun/russianrevolver,\
 											/obj/item/gun/energy/egun,\
-											/obj/item/gun/energy/crabgun,\
 											/obj/item/gun/energy/ghost,\
 											/obj/item/gun/energy/owl_safe,\
 											/obj/item/gun/energy/frog,\
