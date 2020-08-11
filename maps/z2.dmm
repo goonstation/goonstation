@@ -75469,7 +75469,7 @@
 	pixel_x = -32
 	},
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hokie)
+/area/centcom/offices/ines)
 "dzN" = (
 /obj/decal/garland{
 	pixel_y = 32
@@ -75478,7 +75478,7 @@
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hokie)
+/area/centcom/offices/ines)
 "dzO" = (
 /obj/disposalpipe/segment,
 /obj/table/reinforced/bar/auto{
@@ -75687,10 +75687,10 @@
 	lock_dir = 8
 	},
 /turf/unsimulated/floor/black,
-/area/centcom/offices/hokie)
+/area/centcom/offices/ines)
 "dAt" = (
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hokie)
+/area/centcom/offices/ines)
 "dAu" = (
 /obj/decal/fakeobjects{
 	icon = 'icons/misc/old_or_unused.dmi';
@@ -75698,13 +75698,13 @@
 	name = "spacemas tree"
 	},
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hokie)
+/area/centcom/offices/ines)
 "dAv" = (
 /obj/stool/chair/comfy/purple{
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hokie)
+/area/centcom/offices/ines)
 "dAw" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -75907,11 +75907,11 @@
 	pixel_y = -9
 	},
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hokie)
+/area/centcom/offices/ines)
 "dAT" = (
 /obj/machinery/bot/guardbot/xmas,
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hokie)
+/area/centcom/offices/ines)
 "dAU" = (
 /obj/machinery/light,
 /obj/item/reagent_containers/food/drinks/cola/random,
@@ -75936,7 +75936,7 @@
 	pixel_y = -12
 	},
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hokie)
+/area/centcom/offices/ines)
 "dAV" = (
 /turf/unsimulated/wall{
 	dir = 6;
@@ -82762,7 +82762,7 @@
 /area/centcom/offices/zamujasa)
 "dRP" = (
 /obj/admin_plaque{
-	name = "Hokie's Office";
+	name = "Ines's Office";
 	pixel_x = -32
 	},
 /turf/unsimulated/floor{
@@ -83889,7 +83889,7 @@
 	pixel_y = 13
 	},
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hokie)
+/area/centcom/offices/ines)
 "kcN" = (
 /obj/stool/chair/couch/green{
 	dir = 9;
