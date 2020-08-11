@@ -16,7 +16,8 @@
 */
 
 /obj/machinery/computer/attack_hand(mob/user as mob)
-	if(!user.literate)
+	. = ..()
+	if (!user.literate)
 		boutput(user, "<span class='alert'>You don't know how to read or write, operating a computer isn't going to work!</span>")
 		return 1
 

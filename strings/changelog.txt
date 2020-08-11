@@ -1,5 +1,59 @@
 
+(t)mon aug 10 20
+(u)MarkNstein
+(p)1759
+(e)🆕|feature
+(*)You can now chug drinks by click-dragging them onto your sprite from your hand.
+(u)BatElite
+(p)1665
+(e)🆕🎨|feature, sprites
+(*)Engineering and civilian cyborgs and ghostdrones now have a tool to replace lamps in fittings.
+(+)New sprites for the cyborg omnitool and atmospherics transporter. The latter now accepts fluid canisters for ocean map breaches.
+(u)nüke
+(p)1698
+(e)🎨|sprites
+(+)Added 8 new pyro airlock variants.
+(u)Carbadox
+(p)1620
+(e)🆕🗺|feature, mapping
+(+)Added new items to the clothing booth, namely to the accessories, casual, costumes, formal, jackets and the new headwear section.
+(+)Added Clothing Booth to manta
+(u)Phyvo
+(p)1583
+(e)⚖|balance
+(*)Rebalanced artifact probabilities to make better artifacts more common.
+(+)Buffed these artifact types: mining tools, energy guns, power generators.
+(u)system86
+(p)1257
+(e)🆕🎨|feature, sprites
+(*)Added MechComp component containers- they hold your mechcomp (and can be portable!)
+(u)Superlagg
+(p)1627
+(e)🆕|feature
+(*)Beepsky now drops his own personal stun baton, and he can now be properly rebuilt when he dies.
+(+)Beepsky's baton can be used to build other non-Beepsky securitrons, granting them some of his robustness.
+(u)nüke
+(p)1700
+(e)🎨|sprites
+(+)Updated floor guide decals and added 3 new floor guide icons.
+(t)sun aug 09 20
+(u)Moonlol
+(p)1755
+(e)🆕🗺|feature, mapping
+(+)Adds janivend to oshan's janitorial closet.
+(u)Jawns
+(p)1763
+(e)🐛|bug
+(+)Vending machines no longer erroneously take from machine credit instead of account
+(u)Jawns
+(p)1744
+(e)🐛|bug
+(+)Cyborg cooking privileges revoked (for their own tools).
 (t)sat aug 08 20
+(u)Mordent
+(p)1691
+(e)🆕📄|feature, tgui
+(+)Cyborg module rewriter UI updated, now allows multiple modules to be inserted.
 (u)Chickenish
 (p)1705
 (e)🐛|bug

@@ -698,11 +698,11 @@ toxic - poisons
 		..()
 
 		SPAWN_DBG(0)
-			hit.setTexture()
+			//hit.setTexture()
 
 			var/turf/T = get_turf(hit)
 			new /obj/effects/rendersparks (T)
-			var/impact = clamp(2,3, proj.pierces_left % 4)
+			var/impact = clamp(1,3, proj.pierces_left % 4)
 			if(proj.pierces_left <= 1 )
 				new /obj/effects/explosion/dangerous(T)
 				new /obj/effects/explosion/dangerous(get_step(T, dirflag))
@@ -712,34 +712,42 @@ toxic - poisons
 
 			if(hit && ismob(hit))
 				var/mob/living/M = hit
-				var/throw_range = 4
+				var/throw_range = 10
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				SPAWN_DBG(0)
 					if(!M.stat)
 						M.emote("scream")
-					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
+					M.throw_at(target, throw_range, 2, throw_type = THROW_GUNIMPACT)
 
-					if(proj.pierces_left >= 4 && proj.power >= 135)
-						M.blowthefuckup(1)
-					else if (ishuman(M) && M.organHolder)
+					if (ishuman(M) && M.organHolder)
 						var/mob/living/carbon/human/H = M
 						var/targetorgan
 						for (var/i in 1 to 3)
-							targetorgan = pick("head","skull","left_lung", "heart","right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+							targetorgan = pick("left_lung", "heart", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
 							H.organHolder.damage_organ(proj.power/H.get_ranged_protection(), 0, 0,  targetorgan)
+					M.ex_act(impact)
+
 
 
 			if(hit && isobj(hit))
 				var/obj/O = hit
 				O.throw_shrapnel(T, 1, 1)
-				O.ex_act(impact)
+
+				if(istype(hit, /obj/machinery/door))
+					var/obj/machinery/door/D = hit
+					if(!D.cant_emag)
+						D.take_damage(D.health) //fuck up doors without needing ex_act(1)
+
+				else if(istype(hit, /obj/window))
+					var/obj/window/W = hit
+					W.smash()
+
+				else
+					O.ex_act(impact)
 
 			if(hit && isturf(hit))
 				T.throw_shrapnel(T, 1, 1)
-				if(proj.pierces_left >= 4 && proj.power >= 135)
-					T.blowthefuckup(1)
-				else
-					T.ex_act(impact)
+				T.ex_act(2)
 
 
 

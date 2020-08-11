@@ -429,6 +429,7 @@
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	var/splash_all_contents = 1
 	doants = 0
+	var/can_recycle = 1
 
 	New()
 		..()
@@ -1233,9 +1234,102 @@
 			src.wedge = null
 		qdel(src)
 
+	MouseDrop(atom/over_object)
+		..()
+		if(!(usr == over_object)) return
+		if(!istype(usr, /mob/living/carbon)) return
+		var/mob/living/carbon/C = usr
+		
+		var/maybe_too_clumsy = FALSE
+		var/maybe_too_tipsy = FALSE
+		var/too_drunk = FALSE
+		if(C.bioHolder) 
+			maybe_too_clumsy = C.bioHolder.HasEffect("clumsy") && prob(50)
+		if(C.reagents.reagent_list["ethanol"])
+			maybe_too_tipsy = (C.reagents.reagent_list["ethanol"].volume >= 50) && prob(50)
+			too_drunk = C.reagents.reagent_list["ethanol"].volume >= 150
+
+		if(too_drunk || maybe_too_tipsy || maybe_too_clumsy)
+			C.visible_message("[C.name] was too energetic, and threw the [src.name] backwards instead of chugging it!")
+			src.set_loc(get_turf(C))
+			C.u_equip(src)
+			var/target = get_steps(C, turn(C.dir, 180), 7) //7 tiles seems appropriate.
+			src.throw_at(target, 7, 1)
+			if (!C.hasStatus("weakened"))
+				//Make them fall over, they lost their balance.
+				C.changeStatus("weakened", 2 SECONDS)
+		else 
+			actions.start(new /datum/action/bar/icon/drinkingglass_chug(C, src), C)
+		return
+
 	throw_impact(var/atom/A)
 		..()
 		src.smash(A)
+		
+//this action accepts a target that is not the owner, incase we want to allow forced chugging.
+/datum/action/bar/icon/drinkingglass_chug
+	duration = 0.5 SECONDS
+	id = "drinkingglass chugging"
+	var/mob/glassholder
+	var/mob/target
+	var/obj/item/reagent_containers/food/drinks/drinkingglass/glass
+
+	New(mob/Target, obj/item/reagent_containers/food/drinks/drinkingglass/Glass)
+		target= Target
+		glass = Glass
+		icon = glass.icon
+		icon_state = glass.icon_state
+		return
+
+	proc/checkContinue()
+		if (glass.reagents.total_volume <= 0 || !isalive(glassholder) || !glassholder.find_in_hand(glass))
+			return FALSE
+		return TRUE
+
+	onStart()
+		..()
+		glassholder = src.owner
+		loopStart()
+		if(glassholder == target)
+			glassholder.visible_message("[glassholder.name] starts chugging the [glass.name]!")
+		else
+			glassholder.visible_message("[glassholder.name] starts forcing [target.name] to chug the [glass.name]!")
+		logTheThing("combat", glassholder, target, "[glassholder == target ? "starts chugging from" : "makes [constructTarget(target,"combat")] chug from"] [glass] [log_reagents(glass)] at [log_loc(target)].")
+		return
+
+	loopStart()
+		..()
+		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
+		return
+	
+	onUpdate()
+		..()
+		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
+		return
+
+	onInterrupt(flag)
+		..()
+		target.visible_message("[target.name] couldn't drink everything in the [glass.name].")
+	
+	onEnd()
+	
+		if (glass.reagents.total_volume) //Take a sip
+			glass.reagents.reaction(target, INGEST, glass.gulp_size)
+			glass.reagents.trans_to(target, min(glass.reagents.total_volume, glass.gulp_size))
+			playsound(target.loc,"sound/items/drink.ogg", rand(10,50), 1)
+			target.urine += 0.1
+			eat_twitch(target)
+
+		if(glass.reagents.total_volume <= 0)
+			..()
+			target.visible_message("[target.name] chugged everything in the [glass.name]!")
+		else if(!checkContinue())
+			..()
+			target.visible_message("[target.name] stops chugging.")
+		else
+			onRestart()
+		return
+
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
@@ -1607,6 +1701,7 @@
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "GannetsCocktailer"
 	initial_volume = 120
+	can_recycle = 0
 
 	New()
 		..()
@@ -1615,7 +1710,7 @@
 	attack_self(mob/user)
 		if (src.reagents.total_volume > 0)
 			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
-			playsound(get_turf(src), "sound/items/CocktailShake.ogg", 50, 1, -6)
+			playsound(get_turf(src), "sound/items/CocktailShake.ogg", 25, 1, -6)
 			sleep (0.3 SECONDS)
 			src.reagents.inert = 0
 			src.reagents.handle_reactions()

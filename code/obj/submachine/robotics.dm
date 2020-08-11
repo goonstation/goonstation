@@ -1,116 +1,9 @@
 // Robotics Stuff
-
-/**
- * @deprecated
- */
-/obj/submachine/robomoduler
-	name = "Module Rewriter"
-	desc = "A device used to rewrite robotic and cybernetic software modules."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "moduler-off"
-	anchored = 1
-	density = 1
-	mats = 15
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	var/working = 0
-	var/modules = 0
-
-	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
-
-	attack_hand(var/mob/user as mob)
-		src.add_dialog(user)
-		if (!src.working)
-			var/dat = {"<B>Module Rewriter</B><BR>
-			<HR><BR>
-			<B>Modules Available:</B> [modules]<BR>
-			<HR><BR>
-			<A href='?src=\ref[src];module=civilian'>Write Civilian Module<BR>
-			<A href='?src=\ref[src];module=engineering'>Write Engineering Module<BR>
-			<A href='?src=\ref[src];module=mining'>Write Mining Module<BR>
-			<A href='?src=\ref[src];module=medical'>Write Medical Module<BR>
-			<A href='?src=\ref[src];module=chemistry'>Write Chemistry Module<BR>
-			<A href='?src=\ref[src];module=brobocop'>Write Brobocop Module<BR>"}
-			if (ticker && ticker.mode)
-				if (istype(ticker.mode, /datum/game_mode/construction))
-					dat += "<A href='?src=\ref[src];module=construction'>Write Construction Worker Module</A><BR>"
-			user.Browse(dat, "window=mwriter;size=400x500")
-			onclose(user, "mwriter")
-		else
-			var/dat = {"<B>Module Rewriter</B><BR>
-			<HR><BR>
-			<B>Modules Available:</B> [modules]<BR>
-			<HR><BR>
-			The Rewriter is currently busy!"}
-			user.Browse(dat, "window=mwriter;size=400x500")
-			onclose(user, "mwriter")
-
-		return
-
-	Topic(href, href_list)
-		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
-			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
-			return
-		if (src.working)
-			usr.show_text("[src] is currently busy.", "red")
-			return
-
-		if (href_list["module"])
-			if (src.modules < 1)
-				for (var/mob/O in hearers(src, null))
-					O.show_message(text("<b>[]</b> states, 'No modules available for write.'", src), 1)
-				return
-
-			src.working = 1
-			var/output = null
-
-			switch (href_list["module"])
-				if ("civilian") output = /obj/item/robot_module/civilian
-				if ("medical") output = /obj/item/robot_module/medical
-				if ("engineering") output = /obj/item/robot_module/engineering
-				if ("mining") output = /obj/item/robot_module/mining
-				if ("chemistry") output = /obj/item/robot_module/chemistry
-				if ("brobocop") output = /obj/item/robot_module/brobocop
-				if ("construction")
-					if (ticker && ticker.mode)
-						if (istype(ticker.mode, /datum/game_mode/construction))
-							output = /obj/item/robot_module/construction_worker
-						else
-							output = /obj/item/robot_module/engineering
-					else
-						output = /obj/item/robot_module/engineering
-
-			src.icon_state = "moduler-on"
-			src.updateUsrDialog()
-			playsound(src.loc, 'sound/machines/pc_process.ogg', 50, 1)
-			SPAWN_DBG (50)
-				if (src)
-					src.working = 0
-					src.icon_state = "moduler-off"
-					new output(src.loc)
-					if (src.modules > 0)
-						src.modules = max(0, src.modules - 1)
-					for (var/mob/O in hearers(src, null))
-						O.show_message(text("<b>[]</b> states, 'Work complete.'", src), 1)
-					src.updateUsrDialog()
-
-		return
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/robot_module/) && !issilicon(user))
-			boutput(user, "You insert the module.")
-			user.u_equip(W)
-			W.set_loc(src)
-			src.modules = max(0, src.modules + 1)
-			qdel(W)
-
-		else ..()
-		return
+// TODO: move to /modules/robotics
 
 /obj/item/robojumper
-	name = "Cell Cables"
-	desc = "Used by Engineering Cyborgs for emergency recharging of APCs."
+	name = "cell cables"
+	desc = "Used by cyborgs for emergency recharging of APCs."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "robojumper-plus"
 	var/positive = 1 //boolean, if positive, then you will charge an APC with your cell, if negative, you will take charge from apc
@@ -121,23 +14,91 @@
 		boutput(user, "<span class='alert'>The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"].</span>")
 
 /obj/item/atmosporter
-	name = "Atmospherics Transporter"
-	desc = "Used by Atmospherics Cyborgs for convenient transport of siphons and tanks."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "bedbin"
+	name = "atmospherics transporter"
+	desc = "Used for convenient transport of siphons and tanks."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "atmosporter"
 	var/capacity = 2
 
 	attack_self(var/mob/user as mob)
 		if (src.contents.len == 0) boutput(user, "<span class='alert'>You have nothing stored!</span>")
 		else
-			var/selection = input("What do you want to drop?", "Atmos Transporter", null, null) as null|anything in src.contents
+			if (user.loc != get_turf(user.loc))
+				boutput(user, "<span class='alert'>You're in too small a space to drop anything!</span>")
+				return
+			var/selection = input("What do you want to drop?", "Atmospherics Transporter", null, null) as null|anything in src.contents
 			if(!selection) return
-			selection:set_loc(user.loc)
-			selection:contained = 0
+			if (istype(selection, /obj/machinery/fluid_canister))
+				var/obj/machinery/fluid_canister/S = selection
+				S.set_loc(get_turf(user.loc))
+				S.contained = 0
+			else if (istype(selection, /obj/machinery/portable_atmospherics))
+				var/obj/machinery/portable_atmospherics/S = selection
+				S.set_loc(get_turf(user.loc))
+				S.contained = 0
+			else return //no sparks for unintended items
 			elecflash(user)
 
+
+
+/obj/item/lamp_manufacturer
+	name = "miniaturized lamp manufacturer"
+	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "borglampman-white"
+	var/prefix = "borglampman"
+
+	var/cost_broken = 50 //For broken/burned lamps (the old lamp gets recycled in the tool)
+	var/cost_empty = 75
+	var/setting = "white"
+	var/dispensing_tube = /obj/item/light/tube
+	var/dispensing_bulb = /obj/item/light/bulb
+
+	attack_self(var/mob/user as mob)
+		switch (src.setting) //This should be relatively easily expandable I think
+			if ("white")
+				setting = "red"
+				dispensing_tube = /obj/item/light/tube/red
+				dispensing_bulb = /obj/item/light/bulb/red
+			if ("red")
+				setting = "yellow"
+				dispensing_tube = /obj/item/light/tube/yellow
+				dispensing_bulb = /obj/item/light/bulb/yellow
+			if ("yellow")
+				setting = "green"
+				dispensing_tube = /obj/item/light/tube/green
+				dispensing_bulb = /obj/item/light/bulb/green
+			if ("green")
+				setting = "cyan"
+				dispensing_tube = /obj/item/light/tube/cyan
+				dispensing_bulb = /obj/item/light/bulb/cyan
+			if ("cyan")
+				setting = "blue"
+				dispensing_tube = /obj/item/light/tube/blue
+				dispensing_bulb = /obj/item/light/bulb/blue
+			if ("blue")
+				setting = "purple"
+				dispensing_tube = /obj/item/light/tube/purple
+				dispensing_bulb = /obj/item/light/bulb/purple
+			if ("purple")
+				setting = "blacklight"
+				dispensing_tube = /obj/item/light/tube/blacklight
+				dispensing_bulb = /obj/item/light/bulb/blacklight
+			if ("blacklight")
+				setting = "white"
+				dispensing_tube = /obj/item/light/tube
+				dispensing_bulb = /obj/item/light/bulb
+		set_icon_state("[prefix]-[setting]")
+		tooltip_rebuild = 1
+
+
+	get_desc()
+		. = "It is currently set to dispense [setting] lamps."
+
+
+
 /obj/item/robot_chemaster
-	name = "Mini-ChemMaster"
+	name = "mini-ChemMaster"
 	desc = "A cybernetic tool designed for chemistry cyborgs to do their work with. Use a beaker on it to begin."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "minichem"
@@ -200,7 +161,7 @@
 		working = 0
 
 /obj/item/robot_foodsynthesizer
-	name = "Food Synthesizer"
+	name = "food synthesizer"
 	desc = "A portable food synthesizer."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "synthesizer"
