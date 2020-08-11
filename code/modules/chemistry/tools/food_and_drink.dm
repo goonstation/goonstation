@@ -1533,6 +1533,14 @@
 		item_state = "dan_mug"
 		initial_volume = 120
 
+	dan_drunk
+		name = "odd mug"
+		desc = "A nondescript ceramic mug. Something about it seems a bit strange."
+		icon_state = "dan_mug"
+		item_state = "dan_mug"
+		initial_volume = 120
+		initial_reagents = list("coffee" = 80, "vodka" = 40)
+
 /obj/item/reagent_containers/food/drinks/mug/random_color
 	New()
 		..()

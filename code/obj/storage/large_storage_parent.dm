@@ -19,6 +19,7 @@
 	throwforce = 10
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	p_class = 2.5
+	var/intact_frame = 1 //Variable to create crates and fridges which cannot be closed anymore.
 	var/secure = 0
 	var/personal = 0
 	var/registered = null
@@ -518,6 +519,9 @@
 		if (!src.can_close())
 			visible_message("<span class='alert'>[src] can't close; looks like it's too full!</span>")
 			return 0
+		if (!src.intact_frame())
+			visible_message("<span class='alter'>[src] can't close; the door is completely bend out of shape!</span>")
+			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_open())
 			visible_message("<span class='alert'>It won't budge!</span>")
@@ -591,6 +595,11 @@
 				return 0
 		return 1
 
+	proc/intact_frame()
+		if (!src.intact_frame)
+			return 0
+		return 1
+
 	proc/dump_contents(var/mob/user)
 		if(src.spawn_contents && make_my_stuff()) //Make the stuff when the locker is first opened.
 			spawn_contents = null
@@ -612,6 +621,10 @@
 		if (user)
 			return src.open(null,user)
 		return src.open()
+
+	proc/unlock()
+		if (src.locked)
+			src.locked = !src.locked
 
 	proc/bust_out()
 		if (src.health)
