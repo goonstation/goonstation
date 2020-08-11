@@ -35,8 +35,6 @@
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for tails. */
 		var/mob/living/carbon/human/H = M
-		if (!src.can_attach_organ(H, user))
-			return 0
 
 		var/attachment_successful = 0
 		var/boned = 0	// Tailbones just kind of pop into place
@@ -51,13 +49,13 @@
 			src.human_getting_monkeytail = 0
 			src.monkey_getting_humantail = 0
 
-		if (!H.organHolder.tail && H.mutantrace && H.mutantrace == /datum/mutantrace/skeleton)
+		if (!H.organHolder.tail && istype(H.mutantrace, /datum/mutantrace/skeleton))
 			attachment_successful = 1 // Just slap that tailbone in place, its fine
 			boned = 1	// No need to sew it up
 
 			var/fluff = pick("slap", "shove", "place", "press", "jam")
 
-			if(src.type == /obj/item/organ/tail/bone)
+			if(istype(src, /obj/item/organ/tail/bone))
 				H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "press" ? "es" : "s"] the coccygeal coruna of [src] onto the apex of [H == user ? "[his_or_her(H)]" : "[H]'s"] sacrum![prob(1) ? " The tailbone wiggles happily." : ""]</span>",\
 				user, "<span class='alert'>You [fluff] the coccygeal coruna of [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum![prob(1) ? " The tailbone wiggles happily." : ""]</span>",\
 				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] the coccygeal coruna of [src] onto the apex of your sacrum![prob(1) ? " Your tailbone wiggles happily." : ""]</span>")
@@ -66,7 +64,7 @@
 				user, "<span class='alert'>You [fluff] [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum!</span>",\
 				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] [src] onto the apex of your sacrum!</span>")
 
-		else if (!H.organHolder.tail && H.organHolder.chest.op_stage >= 11.0)
+		else if (!H.organHolder.tail && H.organHolder.chest.op_stage >= 11.0 && src.can_attach_organ(H, user))
 			attachment_successful = 1
 
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")

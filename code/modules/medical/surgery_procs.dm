@@ -2038,5 +2038,63 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 		else
 			return 0
+
+////////////////////////////////////////////////////////////////////
+
+/* ================================ */
+/* ------------ CROWBAR ----------- */
+/* ================================ */
+
+/obj/item/proc/pry_surgery(var/mob/living/carbon/human/patient as mob, var/mob/living/surgeon as mob)
+	if (!surgeryCheck(patient, surgeon))
+		return 0
+
+	if (!patient.organHolder)
+		return 0
+
+	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
+		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> fumbles and clubs [him_or_her(surgeon)]self upside the head with [src]!</span>", \
+		"<span class='alert'>You fumble and club yourself in the head with [src]!</span>")
+		patient.changeStatus("weakened", 4)
+
+		JOB_XP(surgeon, "Clown", 1)
+		var/damage = rand(5, 15)
+		random_brute_damage(surgeon, damage)
+		return 1
+
+	src.add_fingerprint(surgeon)
+
+	// fluff2 is for things that do more damage: smacking an artery is included in the choices
+	//var/fluff = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches")
+	//var/fluff2 = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches", " smacks an artery")
+
+	//var/screw_up_prob = calc_screw_up_prob(patient, surgeon)
+
+	//Crowbarring is a lot safer than other types of surgery. Is it because the crowbar is a pretty lousy weaspon? Yes, it is
+	//var/damage_low = calc_surgery_damage(surgeon, screw_up_prob, rand(1,2)/*, src.adj1, src.adj2*/)
+	//var/damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(3,4)/*, src.adj1, src.adj2*/)
+
+	DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon])</b>")
+
+
+/* ---------- crowbar - chest ---------- */
+	if (surgeon.zone_sel.selecting == "chest")
+		if (istype(patient.mutantrace, /datum/mutantrace/skeleton))
+			playsound(get_turf(patient), "sound/items/Crowbar.ogg", 50, 1)	// Dont really need much surgery to remove a bone from a skeleton
+
+			if(istype(patient.organHolder.tail, /obj/item/organ/tail/bone))
+				patient.tri_message("<span class='alert'><b>[surgeon]</b> jams one end of the [src] between [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] sacrum and coccyx and pries [his_or_her(patient)] tailbone free!</span>",\
+				surgeon, "<span class='alert'>You jam one end of the [src] between [surgeon == patient ? "your" : "[patient]'s"] sacrum and coccyx and pries [his_or_her(patient)] tailbone free!</span>",\
+				patient, "<span class='alert'>[patient == surgeon ? "You jam" : "<b>[surgeon]</b> jams"] one end of the [src] between your sacrum and coccyx and pry your tailbone free!</span>")
+			else
+				patient.tri_message("<span class='alert'><b>[surgeon]</b> jams one end of the [src] just below [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!</span>",\
+				surgeon, "<span class='alert'>You jam one end of the [src] just below [surgeon == patient ? "your" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!</span>",\
+				patient, "<span class='alert'>[patient == surgeon ? "You jam" : "<b>[surgeon]</b> jams"] one end of the [src] just below your sacrum and [patient == surgeon ? "pry" : "pries"] your tail off!</span>")
+
+			if (patient.organHolder.tail)
+				logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s skeleton tail with [src].")
+			patient.organHolder.drop_organ("tail")
+			return 1
+
 	else
 		return 0
