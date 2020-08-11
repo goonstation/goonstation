@@ -1,5 +1,11 @@
 
 (t)tue aug 11 20
+(u)Emcee-Gore
+(p)1537
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added Honkys Clownspider Farm to the Z5 mining level generation in space.
+(*)Added Discount Dan's delivery asteroid to the Z5 mining level generation in space.
+(+)Added Discount Dan's crates and a Discount Dan's beret.
 (u)Kubius
 (p)1721
 (e)🆕|feature
