@@ -15,8 +15,10 @@ export const PortableBasicInfo = props => {
     <Section
       title="Status">
       <LabeledList>
-        <LabeledList.Item label="Pressure">
-          <AnimatedNumber value={pressure} />
+        <LabeledList.Item
+          label="Pressure">
+          <AnimatedNumber
+            value={pressure} />
           {' kPa'}
         </LabeledList.Item>
         <LabeledList.Item
@@ -25,7 +27,9 @@ export const PortableBasicInfo = props => {
           {connected ? 'Connected' : 'Not Connected'}
         </LabeledList.Item>
       </LabeledList>
-      <Box maxWidth="400px" mt={1}>
+      <Box
+        maxWidth="400px"
+        mt={1}>
         <PressureBar
           pressure={pressure}
           maxPressure={maxPressure} />
@@ -56,23 +60,27 @@ export const PortableHoldingTank = props => {
       {holding ? (
         <Fragment>
           <LabeledList>
-            <LabeledList.Item label="Label">
+            <LabeledList.Item
+              label="Label">
               {holding.name}
             </LabeledList.Item>
-            <LabeledList.Item label="Pressure">
+            <LabeledList.Item
+              label="Pressure">
               <AnimatedNumber
                 value={holding.pressure} />
               {' kPa'}
             </LabeledList.Item>
           </LabeledList>
-          <Box maxWidth="400px">
+          <Box
+            maxWidth="400px">
             <PressureBar
               pressure={holding.pressure}
               maxPressure={holding.maxPressure} />
           </Box>
         </Fragment>
       ) : (
-        <Box color="average">
+        <Box
+          color="average">
           No holding tank
         </Box>
       )}

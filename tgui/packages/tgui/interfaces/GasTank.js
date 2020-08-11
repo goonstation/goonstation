@@ -44,7 +44,6 @@ export const GasTank = (props, context) => {
           maxRelease={maxRelease}
           onToggleValve={handleToggleValve}
           onSetPressure={handleSetPressure} />
-        <Button label="durrr" />
       </Window.Content>
     </Window>
   );

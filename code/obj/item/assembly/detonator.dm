@@ -304,6 +304,7 @@
 /obj/item/assembly/detonator/proc/failsafe_engage()
 	if (src.part_fs.timing)
 		return
+	src.safety = 0
 	src.part_fs.timing = 1
 	src.part_fs.c_state(1)
 	if (!(src in processing_items))

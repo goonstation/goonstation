@@ -55,6 +55,14 @@ export const GasCanister = (props, context) => {
     act("prime");
   };
 
+  const handleTriggerActivate = () => {
+    act("trigger");
+  };
+
+  const handleSetTimer = () => {
+    act("timer");
+  };
+
   // avoids unnecessary re-renders of the entire window every update
   let detonatorView = !!(detonator);
 
@@ -63,7 +71,7 @@ export const GasCanister = (props, context) => {
       resizable
       key={detonatorView}
       width={detonatorView ? 550 : 400}
-      height={detonatorView ? 550 : 370}>
+      height={detonatorView ? 700 : 370}>
       <Window.Content>
         <PortableBasicInfo
           connected={connected}
@@ -86,7 +94,9 @@ export const GasCanister = (props, context) => {
           onToggleAnchor={handleToggleAnchor}
           onToggleSafety={handleToggleSafety}
           onWireInteract={handleWireInteract}
-          onPrimeDetonator={handlePrimeDetonator} /> }
+          onPrimeDetonator={handlePrimeDetonator}
+          onTriggerActivate={handleTriggerActivate}
+          onSetTimer={handleSetTimer} /> }
       </Window.Content>
     </Window>
   );
@@ -94,46 +104,41 @@ export const GasCanister = (props, context) => {
 
 const Detonator = props => {
   const {
-    detonator: {
-      time,
-      isAnchored,
-      trigger,
-      safetyIsOn,
-      isPrimed,
-      wireNames,
-      wireStatus,
-    },
+    detonator,
     onToggleAnchor,
     onToggleSafety,
     onWireInteract,
     onPrimeDetonator,
+    onTriggerActivate,
+    onSetTimer,
   } = props;
 
   return (
     <Section title="Detonator">
       <DetonatorWires
-        wireNames={wireNames}
-        wireStatus={wireStatus}
-        time={time}
-        onWireInteract={onWireInteract} />
+        detonator={detonator}
+        onWireInteract={onWireInteract}
+        onSetTimer={onSetTimer} />
       <Divider />
       <DetonatorUtility
-        isAnchored={isAnchored}
-        safetyIsOn={safetyIsOn}
-        isPrimed={isPrimed}
+        detonator={detonator}
         onToggleAnchor={onToggleAnchor}
         onToggleSafety={onToggleSafety}
-        onPrimeDetonator={onPrimeDetonator} />
+        onPrimeDetonator={onPrimeDetonator}
+        onTriggerActivate={onTriggerActivate} />
     </Section>
   );
 };
 
 const DetonatorWires = props => {
   const {
-    wireNames,
-    wireStatus,
-    time,
+    detonator: {
+      wireNames,
+      wireStatus,
+      time,
+    },
     onWireInteract,
+    onSetTimer,
   } = props;
 
   return (
@@ -147,11 +152,11 @@ const DetonatorWires = props => {
               { (wireStatus && wireStatus[i]) ? (
                 <Fragment>
                   <Button
-                    onClick={() => onWireInteract(i, "cut")}>
+                    onClick={() => onWireInteract("cut", i)}>
                     Cut
                   </Button>
                   <Button
-                    onClick={() => onWireInteract(i, "pulse")}>
+                    onClick={() => onWireInteract("pulse", i)}>
                     Pulse
                   </Button>
                 </Fragment>)
@@ -160,59 +165,16 @@ const DetonatorWires = props => {
           ))}
         </LabeledList>
       </Flex.Item>
-      <Flex.Item mr={5} mt={2} >
-        <DetonatorTimer time={time} />
-      </Flex.Item>
-    </Flex>
-  );
-};
-
-const DetonatorTimer = props => {
-  const { time } = props;
-
-  const FormatTime = () => {
-    let seconds = Math.floor(time % 60);
-    let minutes = Math.floor((time - seconds) / 60);
-    if (time <= 0) {
-      return `BO:OM`;
-    }
-    if (seconds < 10) {
-      seconds = `0${seconds}`;
-    }
-    if (minutes < 10) {
-      minutes = `0${minutes}`;
-    }
-
-    return `${minutes}:${seconds}`;
-  };
-
-  const TimeColor = () => {
-    if (time <= 0) {
-      return "red";
-    } else if (time < 15) {
-      return "orange";
-    } else {
-      return "green";
-    }
-  };
-
-  return (
-    <Flex direction="column" align="center">
-      <Flex.Item>
-        <Box
-          p={1}
-          textAlign="center"
-          backgroundColor="black"
-          color={TimeColor()}
-          maxWidth="100px"
-          fontSize="19px">
-          <AnimatedNumber
-            value={time}
-            format={() => FormatTime()} />
-        </Box>
-      </Flex.Item>
-      <Flex.Item>
-        <Button mt={1}>Set Timer</Button>
+      <Flex.Item
+        mr={5}
+        mt={2} >
+        <DetonatorTimer
+          time={time} />
+        <Button
+          mt={1}
+          onClick={() => onSetTimer()}>
+          Set Timer
+        </Button>
       </Flex.Item>
     </Flex>
   );
@@ -220,13 +182,17 @@ const DetonatorTimer = props => {
 
 const DetonatorUtility = props => {
   const {
-    isAnchored,
-    trigger,
-    safetyIsOn,
-    isPrimed,
+    detonator: {
+      isAnchored,
+      trigger,
+      safetyIsOn,
+      isPrimed,
+      attachments,
+    },
     onToggleAnchor,
     onToggleSafety,
     onPrimeDetonator,
+    onTriggerActivate,
   } = props;
 
   const armingStatus = () => {
@@ -240,7 +206,11 @@ const DetonatorUtility = props => {
           onClick={() => onPrimeDetonator()} />);
     } else {
       return (
-        <Box bold color="red">PRIMED</Box>);
+        <Box
+          bold
+          color="red">
+          PRIMED
+        </Box>);
     }
   };
 
@@ -256,7 +226,9 @@ const DetonatorUtility = props => {
       </LabeledList.Item>
       <LabeledList.Item
         label="Trigger">
-        put shit here
+        <Button
+          content={trigger}
+          onClick={() => onTriggerActivate()} />
       </LabeledList.Item>
       <LabeledList.Item
         label="Safety">
@@ -271,6 +243,63 @@ const DetonatorUtility = props => {
         label="Arming">
         { armingStatus() }
       </LabeledList.Item>
+      <LabeledList.Item label="Attachments">
+        { attachments.map((entry, i) => (
+          <Fragment key={entry + i}>
+            { attachments[i] }
+            <br />
+          </Fragment>
+        ))}
+      </LabeledList.Item>
     </LabeledList>
+  );
+};
+
+const DetonatorTimer = props => {
+  const {
+    time,
+    warningThreshold = 15,
+    dangerThreshold = 0,
+    explosionMessage = "BO:OM",
+  } = props;
+
+  const FormatTime = () => {
+    let seconds = Math.floor(time % 60);
+    let minutes = Math.floor((time - seconds) / 60);
+    if (time <= 0) {
+      return explosionMessage;
+    }
+    if (seconds < 10) {
+      seconds = `0${seconds}`;
+    }
+    if (minutes < 10) {
+      minutes = `0${minutes}`;
+    }
+
+    return `${minutes}:${seconds}`;
+  };
+
+  const TimeColor = () => {
+    if (time <= dangerThreshold) {
+      return "red";
+    } else if (time <= warningThreshold) {
+      return "orange";
+    } else {
+      return "green";
+    }
+  };
+
+  return (
+    <Box
+      p={1}
+      textAlign="center"
+      backgroundColor="black"
+      color={TimeColor()}
+      maxWidth="100px"
+      fontSize="19px">
+      <AnimatedNumber
+        value={time}
+        format={() => FormatTime()} />
+    </Box>
   );
 };

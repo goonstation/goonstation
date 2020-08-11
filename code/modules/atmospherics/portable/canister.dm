@@ -415,6 +415,23 @@
 		data["detonator"]["isPrimed"] = src.det.part_fs.timing ? TRUE : FALSE
 		data["detonator"]["time"] = src.det.part_fs.time
 
+		data["detonator"]["attachments"] = null
+		if(src.det.attachments)
+			data["detonator"]["attachments"] = list()
+			for(var/obj/item/I in src.det.attachments)
+				data["detonator"]["attachments"] += "There is \an [I] wired onto the assembly as an attachment."
+
+		data["detonator"]["trigger"] = null
+		if(src.det.trigger)
+			data["detonator"]["trigger"] = src.det.trigger.name
+
+	return data
+
+/obj/machinery/portable_atmospherics/canister/ui_static_data(mob/user)
+	if(src.destroyed)
+		return
+
+	var/list/data = list()
 	return data
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
@@ -446,6 +463,13 @@
 		if("prime")
 			src.det.failsafe_engage()
 			. = TRUE
+		if("trigger")
+			src.det.trigger.attack_self(usr)
+			. = TRUE
+		if("timer")
+			if(!src.det.part_fs.timing)
+				src.det.part_fs.attack_self(usr)
+				. = TRUE
 		if("wire-interact")
 			var/tool = null
 			switch(params["toolAction"])
@@ -457,6 +481,7 @@
 			var/mob/user = usr
 			if(isnum(index) && tool && istype(user))
 				src.det_wires_interact(tool, index+1, user)
+				. = TRUE
 
 /obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob, var/new_ui = TRUE)
 	if(new_ui)
@@ -704,6 +729,88 @@
 
 				src.det.WireStatus[which_wire] = 0
 	else if(tool == TOOL_PULSING)
+		if (!usr.find_tool_in_hand(TOOL_PULSING))
+			usr.show_message("<span class='alert'>You need to have a multitool or similar equipped for this.</span>")
+		else
+			if (src.det.shocked)
+				var/mob/living/carbon/human/H = usr
+				H.show_message("<span class='alert'>You tried to pulse a wire on the bomb, but got burned by it.</span>")
+				H.TakeDamage("chest", 0, 30)
+				H.changeStatus("stunned", 150)
+				H.UpdateDamageIcon()
+			else
+				src.visible_message("<b><font color=#B7410E>[usr.name] pulses the [src.det.WireNames[which_wire]] on the detonator.</font></b>")
+				switch (src.det.WireFunctions[which_wire])
+					if ("detonate")
+						if (src.det.part_fs.timing)
+							playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
+							if (src.det.part_fs.time > 7)
+								src.det.part_fs.time = 7
+								src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes loudly and sets itself to 7 seconds.</font></B>")
+							else
+								src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes refusingly before going quiet forever.</font></B>")
+								SPAWN_DBG(0)
+									src.det.detonate()
+						else
+							src.det.failsafe_engage()
+							src.det.part_fs.time = rand(8,14)
+							playsound(src.loc, "sound/machines/pod_alarm.ogg", 50, 1)
+							src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes loudly and activates. You have [src.det.part_fs.time] seconds to act.</font></B>")
+					if ("defuse")
+						src.det.failsafe_engage()
+						if (src.det.grant)
+							src.det.part_fs.time += 5
+							playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
+							src.visible_message("<B><font color=#B7410E>The detonator assembly emits a reassuring noise. You notice that the failsafe timer has increased to [src.det.part_fs.time] seconds.</font></B>")
+							src.det.grant = 0
+						else
+							playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 1)
+							src.visible_message("<B><font color=#B7410E>The detonator assembly emits a sinister noise, but there are no apparent changes visible externally.</font></B>")
+					if ("safety")
+						playsound(src.loc, "sound/machines/twobeep.ogg", 50, 1)
+						if (!src.det.safety)
+							src.visible_message("<B><font color=#B7410E>The display flashes with no apparent outside effect.</font></B>")
+						else
+							src.visible_message("<B><font color=#B7410E>An unsettling click signals that the safety disengages.</font></B>")
+							src.det.safety = 0
+					if ("losetime")
+						src.det.failsafe_engage()
+						src.det.shocked = 1
+						var/losttime = rand(2,5)
+						src.visible_message("<B><font color=#B7410E>The bomb buzzes oddly, emitting electric sparks. It would be a bad idea to touch any wires for the next [losttime] seconds.</font></B>")
+						playsound(src.loc, "sparks", 75, 1, -1)
+						elecflash(src,power = 2)
+						SPAWN_DBG(10 * losttime)
+							src.det.shocked = 0
+							src.visible_message("<B><font color=#B7410E>The buzzing stops, and the countdown continues.</font></B>")
+					if ("mobility")
+						src.det.failsafe_engage()
+						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+						if (anchored)
+							anchored = 0
+							src.visible_message("<B><font color=#B7410E>A loud click is heard from the inside the canister, unsecuring itself.</font></B>")
+						else
+							anchored = 1
+							src.visible_message("<B><font color=#B7410E>A loud click is heard from the bottom of the canister, securing itself.</font></B>")
+					if ("leak")
+						src.det.failsafe_engage()
+						playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
+						if (prob(min(src.det.leaks * 8, 100)))
+							has_valve = 0
+							valve_open = 1
+							release_pressure = 10 * ONE_ATMOSPHERE
+							src.visible_message("<B><font color=#B7410E>An electric buzz is heard before the release valve flies off the canister.</font></B>")
+						else
+							valve_open = 1
+							release_pressure = min(10, src.det.leaks + 1) * ONE_ATMOSPHERE
+							src.visible_message("<B><font color=#B7410E>The release valve rumbles a bit, leaking some of the gas into the air.</font></B>")
+						src.det.leaking()
+						src.det.leaks++
+					else
+						src.det.failsafe_engage()
+						if (src.det.part_fs.timing)
+							var/obj/item/attachment = src.det.WireFunctions[which_wire]
+							attachment.detonator_act("pulse", src.det)
 		return
 
 /obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
