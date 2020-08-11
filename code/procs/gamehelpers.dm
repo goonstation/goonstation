@@ -251,10 +251,7 @@ var/obj/item/dummy/click_dummy = new
 //A little wrapper around format_net_id to account for non-null tag values
 /proc/generate_net_id(var/atom/the_atom)
 	if(!the_atom) return
-	var/tag_holder = the_atom.tag
-	the_atom.tag = null //So we generate from internal ref id
 	. = format_net_id("\ref[the_atom]")
-	the_atom.tag = tag_holder
 
 /proc/can_act(var/mob/M, var/include_cuffs = 1)
 	if(!M) return 0 //Please pass the M, I need a sprinkle of it on my potatoes.
