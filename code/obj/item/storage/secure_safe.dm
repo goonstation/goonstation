@@ -570,6 +570,48 @@
 		- <i>[iou_name]</i>"}
 		return
 
+/obj/item/storage/secure/ssafe/theorangeroom
+	configure_mode = 0
+	random_code = 1
+
+	New()
+		..()
+		var/loot = rand(1,2)
+		switch (loot)
+			if (1)
+				new /obj/item/storage/pill_bottle/cyberpunk(src)
+				new /obj/item/storage/pill_bottle/ipecac(src)
+				new /obj/item/gun/kinetic/pistol(src)
+				new /obj/item/paper/orangeroomsafe(src)
+			if (2)
+				new /obj/item/storage/pill_bottle/bathsalts(src)
+				new /obj/item/reagent_containers/pill/crank(src)
+				new /obj/item/reagent_containers/patch/LSD(src)
+				new /obj/item/paint_can/random(src)
+				var/obj/item/spacecash/random/tourist/S = unpool(/obj/item/spacecash/random/tourist)
+				S.setup(src)
+
+/obj/item/paper/orangeroomsafe
+	name = "Bon voyage!"
+
+	New()
+		..()
+		src.icon_state = "thermal_paper"
+		src.desc = "This piece of paper has been scribbled on with focused elegance."
+		src.info = {"<center><h2>Goodbye boredom!</h2></center>
+		<hr>
+		Today is my first day abboard this vessel and oh wow! I would have never guessed that I'd be the lucky bastard to get to sleep the first shift.
+		<br>
+		<br>
+		Joffrey is working the engine and making sure that we don't blow up and that curious computer in the cockpit brings us to where we gotta go.
+		<br>
+		Certainly checking out if the nearest NanoTrasen station is doing well is not a hard job at all.
+		<br>
+		For most of the day we simply twiddle our thumbs and kick back.
+		<br>
+		<br>
+		<i>I think I'll take a good nights sleep and relax with my personal goodies. :)</i>"}
+
 /obj/item/storage/secure/ssafe/theblindpig
 	configure_mode = 0
 	random_code = 1

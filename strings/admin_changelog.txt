@@ -1,3 +1,6 @@
+(t)tue aug 11 20
+(u)pali
+(*)Admin Interact (~ + click) is now also accessible from View Variables.
 (t)wed aug 05 20
 (u)Sovexe
 (*)Added new command Spawn-Supplydrop along with a Supplydrop cinematic effect for build mode spawning.

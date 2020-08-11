@@ -40,7 +40,6 @@ You will need these programs to start developing in tgui:
 - [Node v12.13+](https://nodejs.org/en/download/)
 - [Yarn v1.19+](https://yarnpkg.com/en/docs/install)
 - Some kind of terminal, whether it in be a Unix-like environment, or a Windows one.
-- **A git version that supports symlinks.** If using Git for Windows, be sure to *install* it with symlink support!
 
 ## Usage
 

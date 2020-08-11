@@ -1,4 +1,31 @@
 
+(t)tue aug 11 20
+(u)Emcee-Gore
+(p)1537
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added Honkys Clownspider Farm to the Z5 mining level generation in space.
+(*)Added Discount Dan's delivery asteroid to the Z5 mining level generation in space.
+(+)Added Discount Dan's crates and a Discount Dan's beret.
+(u)Kubius
+(p)1721
+(e)🆕|feature
+(*)You can now buy yacht dice score sheets at card vendors. Dice sold separately.
+(u)Comradef191
+(p)1753
+(e)🗺|mapping
+(*)Added Atmospherics Forcefields to Cogmap 1, located at the hanger bays and Cargo Routers.
+(+)Revamped Engineering Access on Cogmap 1; Engineers no longer have direct access to the AI Upload Foyer, Engineering Storage and Engineering Dock moved to 'Engineering Storage' Access rather than 'Engineering Engine', Engineering Power Room & both substations now use 'Engineering Power' Access rather than 'Engineering Engine' & the entrance to Engineering no longer requires Engineering Engine access
+(+)Mining is no longer publicly accessible via space! Use the disposals chute in the Mining Shuttle Dock if needed!
+(+)QM Cargo Intake extended by two tiles
+(u)makkipakki
+(p)1785
+(e)🐛|bug
+(*)Made ghost drones emit a coloured glow like they used to!
+(u)adharainspace
+(p)1758
+(e)⚖|balance
+(*)fixed an oversight that made it so blobs generated biopoints slower than intended.
+(+)blobs now have a small starting biopoint cap increase
 (t)mon aug 10 20
 (u)MarkNstein
 (p)1759

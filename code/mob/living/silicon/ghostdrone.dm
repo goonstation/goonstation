@@ -60,8 +60,6 @@
 		var/obj/item/cell/cerenkite/charged/CELL = new /obj/item/cell/cerenkite/charged(src)
 		src.cell = CELL
 
-		src.add_sm_light("ghostdrone\ref[src]", list(255,255,255,0.4 * 255), directional = 1)
-
 
 		src.health = src.max_health
 		src.botcard.access = list(access_maint_tunnels, access_ghostdrone, access_engineering,access_external_airlocks,
@@ -274,10 +272,7 @@
 
 		if (length(color) == 7) //Set our luminosity color, if valid
 			var/colors = GetColors(src.faceColor)
-			colors[1] = colors[1] / 255
-			colors[2] = colors[2] / 255
-			colors[3] = colors[3] / 255
-			src.add_sm_light("ghostdrone\ref[src]", list(colors[1],colors[2],colors[3],0.4 * 255), directional = 1)
+			src.add_sm_light("ghostdrone\ref[src]", list(colors[1],colors[2],colors[3],0.4 * 255))
 
 
 
@@ -324,7 +319,7 @@
 				src.icon_state = "g_drone-dead"
 
 			if (!isdead(src))
-				src.add_sm_light("ghostdrone\ref[src]", list(0.94*255,0.88*255,0.12*255,0.4 * 255), directional = 1)
+				src.add_sm_light("ghostdrone\ref[src]", list(0.94*255,0.88*255,0.12*255,0.4 * 255))
 			UpdateOverlays(null, "face")
 			UpdateOverlays(null, "hoverDiscs")
 			animate(src) //stop bumble animation

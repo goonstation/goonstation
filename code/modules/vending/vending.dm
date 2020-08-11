@@ -1277,6 +1277,7 @@
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/card_manual, 10, cost=1)
+		product_list += new/datum/data/vending_product(/obj/item/paper/yachtdice, 20, cost=2)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/trading, 5, cost=60)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/booster, 20, cost=20)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/suit, 10, cost=15)
