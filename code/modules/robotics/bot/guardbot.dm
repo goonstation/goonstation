@@ -434,7 +434,6 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if(!user || !E) return 0
 
-		src.shotcount = 2
 		if (src.idle || !src.on)
 			if (!src.emagged)
 				boutput(user, "You wave \the [E] in front of [src]'s blank screen. It responds with a small puff of smoke.")
@@ -1236,7 +1235,6 @@
 			return
 
 		src.emagged = 1
-		src.shotcount = 2
 		src.visible_message("<span class='alert'><b>[src.name]</b> buzzes oddly!</span>")
 		qdel(src.model_task)
 		src.model_task = new /datum/computer/file/guardbot_task/security/crazy
