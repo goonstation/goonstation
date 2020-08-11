@@ -1,5 +1,9 @@
 
 (t)tue aug 11 20
+(u)makkipakki
+(p)1785
+(e)🐛|bug
+(*)Made ghost drones emit a coloured glow like they used to!
 (u)adharainspace
 (p)1758
 (e)⚖|balance
