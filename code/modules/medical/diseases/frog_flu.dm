@@ -29,7 +29,6 @@
 			if(prob(2))
 				boutput(affected_mob, "<span class='alert'>You feel your body contort.</span>")
 		if(4)
-			var/turf/T = get_turf(affected_mob)
 			boutput(affected_mob, "<span class='alert'>You feel your physical form condensing into something small and green... What?</span>")
 			affected_mob.visible_message("<span class='alert'><b>[affected_mob] transforms!</b></span>")
 			affected_mob.unequip_all()
