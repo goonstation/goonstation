@@ -97,7 +97,7 @@
 	layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = 0
-	req_access = list(access_heads, access_tox, access_tox_storage, access_research, access_chemistry)
+	req_access = list(access_heads)
 	on = 1
 	var/idle = 0 //Sleeping on the job??
 	var/stunned = 0 //Are we stunned?
@@ -479,7 +479,7 @@
 				"Yeah I'm going to need a signed permission slip from your mother first",\
 				"No way, you'll hurt [pick("me", "yourself")]!", "No nerds allowed!",\
 				"You're not the boss of me!", "Couldn't even if I wanted to!"))
-			else if ((src.allowed(user) || user?.mind.assigned_role == "Clown") && !src.gunlocklock)
+			else if ((src.allowed(user)) && !src.gunlocklock)
 				src.locked = !src.locked
 				speak("Okay, my control panel and equipment locks are now [src.locked ? "enabled!" : "disabled!"]")
 			else
@@ -791,7 +791,7 @@
 		var/deceptioncheck_passed = 0
 		var/turf/TdurgTrick = get_turf(src)
 
-		if (!src.gunlocklock && (user?.mind.assigned_role == "Research Director" || user?.mind.assigned_role == "Clown" || (user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/rank/research_director))))
+		if (!src.gunlocklock && (user?.mind.assigned_role == "Research Director" || (user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/rank/research_director))))
 			deceptioncheck_passed = 1
 			if (just_checking)
 				return 1
@@ -1493,12 +1493,12 @@
 							if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL))
 								cell.charge -= (pewgun.cell.max_charge - pewgun.cell.charge)
 								pewgun.cell.charge = pewgun.cell.max_charge
-					else if (istype(src.budgun, /obj/item/gun/bling_blaster))	// It prints MONEY
-						var/obj/item/gun/bling_blaster/funds = src.budgun
-						if (funds.cash_amt && (funds.cash_amt < funds.cash_max))
-							if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL))
-								cell.charge -= (funds.cash_max - funds.cash_amt)
-								funds.cash_amt = funds.cash_max
+					else if (istype(src.budgun, /obj/item/gun/bling_blaster) && ammofab)	// Ammo is ammo, even if its money
+						var/obj/item/gun/bling_blaster/funds = src.budgun	// not sure why you'd do this, but it's an option, so functionality
+						if (funds.cash_amt && (funds.cash_amt < funds.cash_max))	// I mean you can't even make much (if any) money off of this
+							if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL))	// maybe you'd get lucky and the buddy'll shoot some diamonds
+								cell.charge -= (funds.cash_max - funds.cash_amt)	// but on average, the payout is crap and takes forever and you have to keep charging the bot
+								funds.cash_amt = funds.cash_max	// so i figured if you really want to do this, go for it
 
 
 					src.visible_message("<span class='alert'><b>[src] fires its [gun] at [target]!</b></span>")
