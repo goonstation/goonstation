@@ -1,5 +1,9 @@
 
 (t)mon aug 10 20
+(u)MarkNstein
+(p)1759
+(e)🆕|feature
+(*)You can now chug drinks by click-dragging them onto your sprite from your hand.
 (u)BatElite
 (p)1665
 (e)🆕🎨|feature, sprites
