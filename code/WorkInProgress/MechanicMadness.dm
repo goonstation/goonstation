@@ -1689,6 +1689,7 @@ var/list/mechanics_telepads = new/list()
 		. += {"<br><span class='notice'>[forward_all ? "Sending full unprocessed Signals.":"Sending only processed sendmsg and pda Message Signals."]<br>
 		[only_directed ? "Only reacting to Messages directed at this Component.":"Reacting to ALL Messages received."]<br>
 		Current Frequency: [frequency]<br>
+		Current Transmission Range: [range ? range : "MAX"]<br>
 		Current NetID: [net_id]</span>"}
 
 	New()
@@ -1698,6 +1699,7 @@ var/list/mechanics_telepads = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency","setFreqManually")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle NetID Filtering","toggleAddressFiltering")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Forward All","toggleForwardAll")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Transmission Range","setRange")
 
 		if(radio_controller)
 			set_frequency(frequency)
@@ -1726,6 +1728,17 @@ var/list/mechanics_telepads = new/list()
 		boutput(user, "[forward_all ? "Now forwarding all Radio Messages as they are.":"Now processing only sendmsg and normal PDA messages."]")
 		tooltip_rebuild = 1
 		return 1
+
+	proc/setRange(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user, "Set transmission range (use 0 for max range):", "Range setting", range) as num
+		if (!in_range(src, user) || user.stat)
+			return 0
+		if (!isnull(inp))
+			range = inp
+			boutput(user, "Range set to [range]")
+			tooltip_rebuild = 1
+			return 1
+		return 0
 
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		if(level == 2) return
