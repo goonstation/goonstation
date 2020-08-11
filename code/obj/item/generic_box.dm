@@ -7,7 +7,10 @@
 	force = 1
 	throwforce = 1
 	w_class = 2
+	inventory_counter_enabled = 1
 	var/contained_item = /obj/item/sticker/gold_star
+	var/list/contained_items = null
+	var/contained_items_proc = 0
 	var/item_amount = -1 // how many of thing to start with, -1 for infinite
 	var/max_item_amount = -1 // how many can the thing hold total, -1 for infinite
 	var/open = 0
@@ -105,7 +108,7 @@
 	assorted
 		name = "box of assorted things"
 		desc = "Wow! A marvel of technology, this box doesn't store just ONE item, but an assortment of items! The future really is here."
-		var/list/contained_items = list()
+		contained_items_proc = 1
 
 		stickers
 			icon_state = "sticker_box_assorted"
@@ -115,8 +118,9 @@
 			name = "box of assorted stickers"
 			desc = "Oh my god.. ALL THE STICKERS! ALL IN ONE PLACE? WHAT CAN THIS MEAN!!!"
 
-			New()
+			set_contained_items()
 				contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy
+
 			robot//this type sticks things by clicking on them with a cooldown
 				name = "box shaped sticker dispenser"
 				New()
@@ -145,7 +149,7 @@
 				item_amount = 10
 				max_item_amount = 10
 
-				New()
+				set_contained_items()
 					contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
 
 		ornaments
@@ -156,21 +160,15 @@
 			icon_open = "xmas_box-open"
 			icon_empty = "xmas_box-open"
 
-			New()
+			set_contained_items()
 				contained_items = typesof(/obj/item/sticker/xmas_ornament)
 
 			ornaments_limited
 				item_amount = 10
 				max_item_amount = 10
 
-				New()
+				set_contained_items()
 					contained_items = typesof(/obj/item/sticker/xmas_ornament)
-
-		New()
-			SPAWN_DBG( 10 )
-				if( !contained_items.len )
-					logTheThing("debug", src, null, "has no items in it! Oh no!")
-					qdel( src )
 
 		take_from()
 			if( !contained_items.len )
@@ -252,15 +250,20 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
-			if (!ispath(src.contained_item))
-				logTheThing("debug", src, null, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
-				qdel(src)
-				return
-			else if (src.item_amount == 0 && src.contents.len) // count if we already have things inside!
-				for (var/obj/item/thing in src.contents)
-					if (istype(thing, src.contained_item))
-						src.item_amount++
+		if (src.contained_items_proc)
+			src.set_contained_items()
+			src.inventory_counter.update_number(src.item_amount)
+		else
+			SPAWN_DBG(1 SECOND)
+				if (!ispath(src.contained_item))
+					logTheThing("debug", src, null, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
+					qdel(src)
+					return
+				else if (src.item_amount == 0 && src.contents.len) // count if we already have things inside!
+					for (var/obj/item/thing in src.contents)
+						if (istype(thing, src.contained_item))
+							src.item_amount++
+				src.inventory_counter.update_number(src.item_amount)
 
 	get_desc()
 		if (src.item_amount > 15 || src.item_amount == -1)
@@ -357,6 +360,9 @@
 				break
 		boutput(user, "<span class='notice'>You finish filling [src]!</span>")
 
+
+	proc/set_contained_items()
+
 	proc/take_from()
 		var/obj/item/myItem = locate(src.contained_item) in src
 		if (myItem)
@@ -408,6 +414,7 @@
 			return 0
 
 	proc/update_icon()
+		src.inventory_counter.update_number(src.item_amount)
 		if (src.open && !src.item_amount)
 			src.icon_state = src.icon_empty
 		else if (src.open && src.item_amount)

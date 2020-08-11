@@ -30,8 +30,9 @@
 
 	New()
 		..()
+		// Previously generated a super lame amount of power from 5 KW to 5 MW. Let's make things... INTERESTING? Maybe 500 KW to 500 MW will be more interesting.
 		gen_level = rand(1,10) // levels from 1-10
-		gen_rate = 5000 * 1.0715 ** ((gen_level-1)*10 + rand(0,10)) // max 4.99MW
+		gen_rate = 500000 * 1.0715 ** ((gen_level-1)*10 + rand(0,10))
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())

@@ -244,9 +244,7 @@
 	duration = -1
 	var/obj/item/gun/bow/bow = null
 	var/progress = 0
-	var/direction = 1
-	var/progression = 0.18
-	var/linger = 15
+	var/progression = 0.34
 	var/moved = 0
 
 	New(var/mob/M, var/obj/item/gun/bow/B)
@@ -271,58 +269,20 @@
 		..()
 
 	interrupt(var/flag)
-		var/mob/mowner = owner
-		if(flag == INTERRUPT_MOVE && mowner.m_intent == "walk")
-			bar.color = "#FF0000"
-			switch (direction)
-				if (-1)
-					progress = max(0, progress - 4 * progression)
-					progression += 0.035
-					if (!progress)
-						state = ACTIONSTATE_FINISH
-				if (0)
-					linger = max(linger - 4, 0)
-					if (linger)
-						direction = 1
-						progress = max(0, progress - 4 * progression)
-						moved = 1
-					else
-						direction = -1
-						moved = 0
-				if (1)
-					moved = 2
-					linger = max(0, linger - 2)
-					progress = max(0, progress - 3 * progression)
-					if (!linger)
-						direction = -1
-						moved = 0
+		if(flag == INTERRUPT_MOVE)
+			moved = 1
 			return
 		..()
 
+
 	onUpdate()
-		if (!progress && direction == -1)
-			state = ACTIONSTATE_FINISH
-			return
 		if (moved)
-			moved--
-			linger = max(0, linger - 1)
-			if (linger <= 0)
-				direction = -1
-				moved = 0
-			return
-		switch (direction)
-			if (-1)
-				progress = max(0, progress - progression)
-				if (!progress)
-					state = ACTIONSTATE_FINISH
-			if (0)
-				linger--
-				if (linger <= 0)
-					direction = -1
-			if (1)
-				progress = min(1, progress + progression)
-				if (progress == 1)
-					direction = 0
+			progress += (progression/2)
+		else
+			progress +=progression
+		progress = min(1,progress)
+		moved = 0
+
 		var/complete = progress
 		bar.color = "#0000FF"
 		bar.transform = matrix(complete, 1, MATRIX_SCALE)
@@ -476,6 +436,7 @@
 			take_bleeding_damage(target, null, 8, DAMAGE_STAB)
 			if (head_material)
 				head_material.triggerOnAttack(src, user, target)
+			return 1
 		else
 			var/obj/item/I = target
 			if (istype(I) && I.is_open_container() == 1 && I.reagents)
@@ -523,7 +484,7 @@
 	icon_state = "quiver-0"
 	wear_image_icon = 'icons/mob/back.dmi'
 	item_state = "quiver"
-	flags = FPRINT | TABLEPASS | ONBACK
+	flags = FPRINT | TABLEPASS | ONBACK | ONBELT
 
 	attackby(var/obj/item/arrow/I, var/mob/user)
 		if (!istype(I))
@@ -602,7 +563,7 @@
 /datum/projectile/arrow
 	name = "arrow"
 	power = 17
-	dissipation_delay = 4
+	dissipation_delay = 12
 	dissipation_rate = 5
 	shot_sound = 'sound/effects/bow_fire.ogg'
 	damage_type = D_KINETIC
@@ -621,7 +582,7 @@
 					B.material.triggerOnAttack(B, null, A)
 				B.arrow.reagents.reaction(A, 2)
 				B.arrow.reagents.trans_to(A, B.arrow.reagents.total_volume)
-			take_bleeding_damage(A, null, round(src.power / 3), src.hit_type)
+			take_bleeding_damage(A, null, round(src.power / 2), src.hit_type)
 
 
 /obj/item/gun/bow
@@ -649,6 +610,14 @@
 					I.loc = src
 					overlays += I
 					Q.updateApperance()
+			if(istype(H.belt, /obj/item/quiver))
+				var/obj/item/quiver/Q = H.belt
+				var/obj/item/arrow/I = Q.getArrow(user)
+				if(I)
+					loaded = I
+					I.loc = src
+					overlays += I
+					Q.updateApperance()
 		return
 
 	attack_hand(var/mob/user)
@@ -663,13 +632,21 @@
 		else
 			..()
 
+
+
 	attack(var/mob/target, var/mob/user)
 		user.lastattacked = target
 		target.lastattacker = user
 		target.lastattackertime = world.time
 
-		if(isliving(target) && aim)
-			src.shoot_point_blank(target, user)
+
+	//absolutely useless as an attack but removing it causes bugs, replaced fire point blank which had issues with the way arrow damage is calculated.
+		if(isliving(target))
+			if(loaded)
+				if(loaded.afterattack(target,user,1))
+					loaded =null;//arrow isnt consumed otherwise, for some inexplicable reason.
+			else
+				boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")
 		else
 			..()
 
@@ -677,6 +654,7 @@
 			game_stats.Increment("violence")
 	#endif
 			return
+
 	/*
 	onMouseDown(atom/target,location,control,params)
 		var/mob/user = usr
@@ -708,10 +686,10 @@
 		loaded.set_loc(A)
 		current_projectile.implanted = A
 		current_projectile.material = copyMaterial(loaded.head_material)
-		var/default_power = 12
+		var/default_power = 20
 		if(loaded.head_material)
 			if(loaded.head_material.hasProperty("hard"))
-				current_projectile.power = round(loaded.head_material.getProperty("hard") / 2.6) //40hard ~ 15dmg, 80hard ~ 30dmg
+				current_projectile.power = round(20+loaded.head_material.getProperty("hard") / 2.6) //20-50 damage with 0 and 80 hardness(approximately)
 			else
 				current_projectile.power = default_power
 		else
@@ -724,17 +702,23 @@
 		return loaded != null
 
 	pixelaction(atom/target, params, mob/user, reach)
+		/*
 		if (!loaded)
 			boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")
 			return 1
+		*/
 
 		if (!aim)
 			//var/list/parameters = params2list(params)
 			if(ismob(target.loc) || istype(target, /obj/screen)) return
-			if (!aim && !loaded)
+			if (!loaded)//removed redundant check
 				loadFromQuiver(user)
-
-			if (!aim && loaded)
+				if(loaded)
+					boutput(user, "<span class='alert'>You load an arrow from the quiver.</span>")
+				return
+			if(reach)
+				return
+			if (loaded)
 				aim = new(user, src)
 				actions.start(aim, user)
 		else

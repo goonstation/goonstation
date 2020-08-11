@@ -271,3 +271,9 @@
 		reagents = R
 		R.my_atom = src
 		R.add_reagent("fuel", 20)
+
+
+
+/obj/item/tool/omnitool/silicon
+	prefix = "silicon-omnitool"
+	desc = "A set of tools on telescopic arms. It's the robotic future!"

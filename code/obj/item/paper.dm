@@ -135,8 +135,11 @@
 	return 1
 
 /obj/item/paper/attack_self(mob/user as mob)
-	if (alert("What would you like to do with [src]?",,"Fold","Nothing") == "Nothing")
+	var/menuchoice = alert("What would you like to do with [src]?",,"Fold","Read","Nothing")
+	if (menuchoice == "Nothing")
 		return
+	else if (menuchoice == "Read")
+		src.examine(user)
 	else
 		var/fold = alert("What would you like to fold [src] into?",,"Paper hat","Paper plane","Paper ball")
 		var/obj/item/paper/P = src

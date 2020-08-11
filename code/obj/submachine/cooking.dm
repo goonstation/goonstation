@@ -714,6 +714,9 @@ table#cooktime a#start {
 		if (isghostdrone(user))
 			boutput(usr, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
+		if (W.cant_drop) //For borg held items
+			user.show_text("You can't put that in [src] when it's attached to you!", "red")
+			return
 		if (src.working)
 			boutput(usr, "<span class='alert'>It's already on! Putting a new thing in could result in a collapse of the cooking waveform into a really lousy eigenstate, like a vending machine chili dog.</span>")
 			return

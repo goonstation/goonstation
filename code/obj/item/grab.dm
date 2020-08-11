@@ -88,7 +88,7 @@
 
 	set_loc() //never ever ever ever!!!
 		..()
-		if (src.loc && src.loc == get_turf(src.loc))
+		if (src.loc && !istype(src.loc, /mob))
 			set_loc(null)
 
 	dropped()
