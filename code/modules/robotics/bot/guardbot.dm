@@ -1017,7 +1017,7 @@
 								speak("That's a neat tool module you have there! Maybe you could get someone on this station's science team to install it for you!")
 								return	// welp
 							else // No tool?
-								speak("That's a neat tool module you have there! But... my accessory lock is engaged, and I can't just unlock it for anybody.[prob(25 ? " Seriously, I can't![prob(25 ? " Ask the superuser to check line 805 of the Robuddy source code if you don't believe me!" : "")]" : "")]")
+								speak("That's a neat tool module you have there! But... my accessory lock is engaged, and I can't just unlock it for anybody.[prob(25 ? " Seriously, I can't! Ask the superuser to check line 805 of the Robuddy source code if you don't believe me!" : "")]")
 								speak("If you really want to give me a tool module, and I really want you to, go find a member of the station's science team. Almost 60% sure the Research Director authorized them to unlock me.")
 								return
 					else
@@ -1482,7 +1482,7 @@
 							sleep(5)	// please dont fuck anything up
 					if (istype(src.budgun, /obj/item/gun/kinetic))
 						var/obj/item/gun/kinetic/shootgun = src.budgun
-						if (ammofab)	// Can we build our own ammo?
+						if (ammofab || istype(src.budgun, /obj/item/gun/kinetic/meowitzer/inert))	// Can we build our own ammo?
 						//	if (shootgun?.ammo?.max_amount && (shootgun.ammo.amount_left <= 1 || ((shootgun.ammo.amount_left - shootgun.current_projectile.cost) <= 0))) // was making this useless with guns that you'd actually want to use it, like the AK. Wouldnt even reload!
 							if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL) && ((cell.charge - ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 0.75))) > (GUARDBOT_LOWPOWER_ALERT_LEVEL)))	// *scream
 								cell.charge -= ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 0.75))
@@ -1502,9 +1502,7 @@
 
 
 					src.visible_message("<span class='alert'><b>[src] fires its [gun] at [target]!</b></span>")
-
-					src.overlays -= image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)
-					src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = 2, pixel_y = 4)	// Update the held gun sprite
+					update_icon()
 				else if(!src.budgun)
 					var/r = rand(1,9)
 					switch(r)
