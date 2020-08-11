@@ -484,11 +484,11 @@
 				. = TRUE
 
 /obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob, var/new_ui = TRUE)
-	if(new_ui)
-		return ..()
-
 	if (src.destroyed)
 		return
+
+	if(new_ui)
+		return ..()
 
 	src.add_dialog(user)
 	var/holding_text
