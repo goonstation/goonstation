@@ -98,7 +98,7 @@
 	if(holder.owner)
 		for (var/atom in pods_and_cruisers)
 			var/atom/A = atom
-			if (!DIST_CHECK(holder.owner, A, 6))
+			if (DIST_CHECK(holder.owner, A, 6))
 				holder.current_task = src.escape
 				src.escape.reset()
 
