@@ -72,7 +72,8 @@ export const PortableHoldingTank = props => {
             </LabeledList.Item>
           </LabeledList>
           <Box
-            maxWidth="400px">
+            maxWidth="400px"
+            mt={1}>
             <PressureBar
               pressure={holding.pressure}
               maxPressure={holding.maxPressure} />
