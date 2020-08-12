@@ -1201,7 +1201,7 @@
 	proc/ShootTheGun(var/target as mob|turf|null, var/thing2shoot as null)
 		if (!target) // if no target, then pick something!
 			if (!thing2shoot || !istype(thing2shoot, /datum/projectile/))
-				if(src.budgun.current_projectile)
+				if(src?.budgun?.current_projectile)
 					thing2shoot = src.budgun.current_projectile
 				else
 					thing2shoot = new/datum/projectile/bullet/revolver_38/stunners
