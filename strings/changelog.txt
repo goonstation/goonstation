@@ -1,5 +1,9 @@
 
 (t)wed aug 12 20
+(u)Carbadox
+(p)1750
+(e)🆕|feature
+(+)Added DIY Holy Water kit to Chaplains locker. Contains 3 bottles of wine and 3 bottles of mercury alongside a holy water container
 (u)Nebulacrity
 (p)1731
 (e)🆕🎨|feature, sprites
