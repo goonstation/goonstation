@@ -83494,14 +83494,15 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
 "eey" = (
-/obj/admin_plaque,
+/obj/admin_plaque{
+	name = "HukHukHuk's Office"
+	},
 /turf/unsimulated/wall{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwall"
 	},
 /area/centcom/offices{
-	icon_state = "blue";
-	name = "HukHukHuk's Office"
+	icon_state = "blue"
 	})
 "esx" = (
 /obj/indestructible/shuttle_corner{
