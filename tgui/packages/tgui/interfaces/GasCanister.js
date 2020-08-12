@@ -20,6 +20,7 @@ export const GasCanister = (props, context) => {
     minRelease,
     maxRelease,
     detonator,
+    detonatorAttachments,
   } = data;
 
   const handleSetPressure = releasePressure => {
@@ -93,6 +94,7 @@ export const GasCanister = (props, context) => {
           onEjectTank={handleEjectTank} />) }
         { detonator && (<Detonator
           detonator={detonator}
+          detonatorAttachments={detonatorAttachments}
           onToggleAnchor={handleToggleAnchor}
           onToggleSafety={handleToggleSafety}
           onWireInteract={handleWireInteract}

@@ -239,7 +239,7 @@ Contains:
 /obj/item/tank/ui_data(mob/user)
 	var/list/data = list()
 	data["pressure"] = MIXTURE_PRESSURE(air_contents)
-	data["maxPressure"] = 10 * ONE_ATMOSPHERE
+	data["maxPressure"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
 	data["valveIsOpen"] = using_internal()
 	data["releasePressure"] = distribute_pressure
 	data["maxRelease"] = TANK_MAX_RELEASE_PRESSURE
@@ -258,6 +258,15 @@ Contains:
 			if(isnum(target_pressure))
 				set_release_pressure(params["releasePressure"])
 				. = TRUE
+
+/obj/item/tank/ui_state(mob/user)
+	return tgui_physical_state
+
+/obj/item/tank/ui_status(mob/user)
+  return min(
+		tgui_physical_state.can_use_topic(src, user),
+		tgui_not_incapacitated_state.can_use_topic(src, user)
+	)
 
 ////////////////////////////////////////////////////////////
 

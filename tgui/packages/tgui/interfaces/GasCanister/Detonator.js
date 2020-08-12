@@ -5,6 +5,7 @@ import { DetonatorTimer } from './DetonatorTimer';
 export const Detonator = props => {
   const {
     detonator,
+    detonatorAttachments,
     onToggleAnchor,
     onToggleSafety,
     onWireInteract,
@@ -23,6 +24,7 @@ export const Detonator = props => {
       <Divider />
       <DetonatorUtility
         detonator={detonator}
+        detonatorAttachments={detonatorAttachments}
         onToggleAnchor={onToggleAnchor}
         onToggleSafety={onToggleSafety}
         onPrimeDetonator={onPrimeDetonator}
@@ -90,8 +92,8 @@ const DetonatorUtility = props => {
       trigger,
       safetyIsOn,
       isPrimed,
-      attachments,
     },
+    detonatorAttachments,
     onToggleAnchor,
     onToggleSafety,
     onPrimeDetonator,
@@ -149,10 +151,10 @@ const DetonatorUtility = props => {
         { armingStatus() }
       </LabeledList.Item>
       <LabeledList.Item label="Attachments">
-        {attachments.length > 0 ? (
-          attachments.map((entry, i) => (
+        {detonatorAttachments.length > 0 ? (
+          detonatorAttachments.map((entry, i) => (
             <Fragment key={entry + i}>
-              { attachments[i] }
+              { detonatorAttachments[i] }
               <br />
             </Fragment>
           )))

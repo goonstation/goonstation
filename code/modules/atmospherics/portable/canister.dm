@@ -383,9 +383,6 @@
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/ui_data(mob/user)
-	if(src.destroyed)
-		return
-
 	var/list/data = list()
 	data["pressure"] = MIXTURE_PRESSURE(src.air_contents)
 	data["maxPressure"] = src.maximum_pressure
@@ -413,12 +410,6 @@
 		data["detonator"]["isPrimed"] = src.det.part_fs.timing ? TRUE : FALSE
 		data["detonator"]["time"] = src.det.part_fs.time
 
-		data["detonator"]["attachments"] = null
-		if(src.det.attachments)
-			data["detonator"]["attachments"] = list()
-			for(var/obj/item/I in src.det.attachments)
-				data["detonator"]["attachments"] += "There is \an [I] wired onto the assembly as an attachment."
-
 		data["detonator"]["trigger"] = null
 		if(src.det.trigger)
 			data["detonator"]["trigger"] = src.det.trigger.name
@@ -426,14 +417,23 @@
 	return data
 
 /obj/machinery/portable_atmospherics/canister/ui_static_data(mob/user)
-	if(src.destroyed)
-		return
+	var/list/static_data = list()
 
-	var/list/data = list()
-	return data
+	if(src?.det?.attachments)
+		static_data["detonatorAttachments"] = list()
+		for(var/obj/item/I in src.det.attachments)
+			static_data["detonatorAttachments"] += "There is \an [I] wired onto the assembly as an attachment."
 
-/obj/submachine/slot_machine/ui_state(mob/user)
+	return static_data
+
+/obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
 	return tgui_physical_state
+
+/obj/machinery/portable_atmospherics/canister/ui_status(mob/user)
+  return min(
+		tgui_physical_state.can_use_topic(src, user),
+		tgui_not_incapacitated_state.can_use_topic(src, user)
+	)
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
 	if(..())
@@ -559,7 +559,7 @@
 						src.det.failsafe_engage()
 						src.has_valve = 0
 						src.valve_open = 1
-						src.release_pressure = 10 * ONE_ATMOSPHERE
+						src.release_pressure = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
 						src.visible_message("<B><font color=#B7410E>An electric buzz is heard before the release valve flies off the canister.</font></B>")
 						playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
 						src.det.leaking()
@@ -640,11 +640,11 @@
 						if (prob(min(src.det.leaks * 8, 100)))
 							has_valve = 0
 							valve_open = 1
-							release_pressure = 10 * ONE_ATMOSPHERE
+							release_pressure = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
 							src.visible_message("<B><font color=#B7410E>An electric buzz is heard before the release valve flies off the canister.</font></B>")
 						else
 							valve_open = 1
-							release_pressure = min(10, src.det.leaks + 1) * ONE_ATMOSPHERE
+							release_pressure = min(PORTABLE_ATMOS_MAX_RELEASE_PRESSURE, (src.det.leaks + 1) * ONE_ATMOSPHERE)
 							src.visible_message("<B><font color=#B7410E>The release valve rumbles a bit, leaking some of the gas into the air.</font></B>")
 						src.det.leaking()
 						src.det.leaks++
