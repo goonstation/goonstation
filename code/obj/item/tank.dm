@@ -70,8 +70,7 @@ Contains:
 		if (!(src.air_contents))
 			return
 
-		if (flags & TGUI_INTERACTIVE)
-			return ui_interact(user)
+		return ui_interact(user)
 
 	remove_air(amount)
 		return air_contents.remove(amount)
