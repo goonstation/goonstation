@@ -432,6 +432,9 @@
 	var/list/data = list()
 	return data
 
+/obj/submachine/slot_machine/ui_state(mob/user)
+	return tgui_physical_state
+
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
 	if(..())
 		return

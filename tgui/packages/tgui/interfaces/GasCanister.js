@@ -1,4 +1,5 @@
 import { useBackend } from '../backend';
+import { Fragment } from 'inferno';
 import { Divider } from '../components';
 import { Window } from '../layouts';
 import { PortableBasicInfo, PortableHoldingTank } from './common/PortableAtmos';
@@ -62,41 +63,42 @@ export const GasCanister = (props, context) => {
     act("timer");
   };
 
-  // avoids unnecessary re-renders of the entire window every update
-  // compared to just using 'detonator' as key
-  let detonatorView = !!(detonator);
+  let hasDetonator = !!(detonator);
 
   return (
     <Window
       resizable
-      key={detonatorView}
-      width={detonatorView ? 550 : 400}
-      height={detonatorView ? 700 : 370}>
+      key={hasDetonator}
+      width={hasDetonator ? 550 : 400}
+      height={hasDetonator ? 670 : 370}>
       <Window.Content>
         <PortableBasicInfo
           connected={connected}
           pressure={pressure}
           maxPressure={maxPressure}>
-          <Divider />
-          { hasValve && <ReleaseValve
-            valveIsOpen={valveIsOpen}
-            releasePressure={releasePressure}
-            minRelease={minRelease}
-            maxRelease={maxRelease}
-            onToggleValve={handleToggleValve}
-            onSetPressure={handleSetPressure} />}
+          { !!(hasValve) && (
+            <Fragment>
+              <Divider />
+              <ReleaseValve
+                valveIsOpen={valveIsOpen}
+                releasePressure={releasePressure}
+                minRelease={minRelease}
+                maxRelease={maxRelease}
+                onToggleValve={handleToggleValve}
+                onSetPressure={handleSetPressure} />
+            </Fragment>)}
         </PortableBasicInfo>
-        { !detonator && <PortableHoldingTank
+        { !detonator && (<PortableHoldingTank
           holding={holding}
-          onEjectTank={handleEjectTank} /> }
-        { detonator && <Detonator
+          onEjectTank={handleEjectTank} />) }
+        { detonator && (<Detonator
           detonator={detonator}
           onToggleAnchor={handleToggleAnchor}
           onToggleSafety={handleToggleSafety}
           onWireInteract={handleWireInteract}
           onPrimeDetonator={handlePrimeDetonator}
           onTriggerActivate={handleTriggerActivate}
-          onSetTimer={handleSetTimer} /> }
+          onSetTimer={handleSetTimer} />) }
       </Window.Content>
     </Window>
   );

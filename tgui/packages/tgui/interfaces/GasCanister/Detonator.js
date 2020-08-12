@@ -14,7 +14,8 @@ export const Detonator = props => {
   } = props;
 
   return (
-    <Section title="Detonator">
+    <Section
+      title="Detonator">
       <DetonatorWires
         detonator={detonator}
         onWireInteract={onWireInteract}
@@ -146,7 +147,7 @@ const DetonatorUtility = props => {
         { armingStatus() }
       </LabeledList.Item>
       <LabeledList.Item label="Attachments">
-        {attachments.len > 0 ? (
+        {attachments.length > 0 ? (
           attachments.map((entry, i) => (
             <Fragment key={entry + i}>
               { attachments[i] }

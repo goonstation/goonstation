@@ -28,9 +28,8 @@ export const GasTank = (props, context) => {
 
   return (
     <Window
-      resizable
       width={400}
-      height={250}>
+      height={220}>
       <Window.Content>
         <Section
           title="Status">
@@ -38,12 +37,14 @@ export const GasTank = (props, context) => {
             pressure={pressure}
             maxPressure={maxPressure} />
         </Section>
-        <ReleaseValve
-          valveIsOpen={valveIsOpen}
-          releasePressure={releasePressure}
-          maxRelease={maxRelease}
-          onToggleValve={handleToggleValve}
-          onSetPressure={handleSetPressure} />
+        <Section>
+          <ReleaseValve
+            valveIsOpen={valveIsOpen}
+            releasePressure={releasePressure}
+            maxRelease={maxRelease}
+            onToggleValve={handleToggleValve}
+            onSetPressure={handleSetPressure} />
+        </Section>
       </Window.Content>
     </Window>
   );
