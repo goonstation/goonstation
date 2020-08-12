@@ -6,7 +6,6 @@ export const PressureBar = props => {
   const {
     pressure,
     maxPressure,
-    ...rest
   } = props;
 
   const bgColorSafe = "black";
@@ -39,8 +38,12 @@ export const PressureBar = props => {
   };
 
   return (
-    <Box danger p={0.5} backgroundColor={bgColor()}>
-      <ProgressBar color={barColor()} value={pct()}>
+    <Box
+      danger p={0.5}
+      backgroundColor={bgColor()}>
+      <ProgressBar
+        color={barColor()}
+        value={pct()}>
         <AnimatedNumber
           value={pressure}
           format={value => (Math.floor(value * 100) / 100) + " kPa"}
