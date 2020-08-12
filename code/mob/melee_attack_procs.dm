@@ -968,7 +968,7 @@
 						target.OnMove(owner)
 			else
 				target.deliver_move_trigger("bump")
-
+		else
 #ifdef DATALOGGER
 			game_stats.Increment("violence")
 #endif
