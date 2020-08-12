@@ -1,4 +1,9 @@
 
+(t)wed aug 12 20
+(u)BatElite
+(p)1791
+(e)🎨|sprites
+(+)Loose cyborg parts now match how they look on borgs.
 (t)tue aug 11 20
 (u)Flaborized
 (p)1694
