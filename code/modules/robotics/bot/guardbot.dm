@@ -365,6 +365,9 @@
 
 	New()
 		..()
+#ifdef ASS_JAM
+		src.lawbringer_alwaysbigshot = 1
+#endif
 		if(src.on)
 			src.warm_boot = 1
 #ifdef HALLOWEEN
