@@ -622,7 +622,7 @@
 	/obj/item/clothing/head/turban,\
 	/obj/item/clothing/shoes/sandal,\
 	/obj/item/clothing/suit/flockcultist,\
-	/obj/item/reagent_containers/glass/bottle/holywater)
+	/obj/item/storage/box/holywaterkit)
 
 /* =================== */
 /* ----- Fridges ----- */
