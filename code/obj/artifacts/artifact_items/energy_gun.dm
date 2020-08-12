@@ -95,8 +95,14 @@
 		..()
 		bullet = new/datum/projectile/artifact
 		bullet.randomise()
+		// artifact tweak buff, people said guns were useless compared to their cells
+		// the next 3 lines override the randomize(). Doing this instead of editting randomize to avoid changing prismatic spray.
+		bullet.power = rand(15,35) // randomise puts it between 2 and 50, let's make it less variable
+		bullet.dissipation_rate = rand(1,bullet.power)
+		bullet.cost = rand(35,100) // randomise puts it at 50-150
+
 		integrity = rand(50, 100)
-		integrity_loss = rand(1, 7)
+		integrity_loss = rand(1, 3) // was rand(1,7)
 		react_xray[3] = integrity
 
 	proc/ReduceHealth(var/obj/item/gun/energy/artifact/O)

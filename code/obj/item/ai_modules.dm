@@ -250,6 +250,8 @@ AI MODULES
 		ticker.centralized_ai_laws.set_zeroth_law("")
 		ticker.centralized_ai_laws.clear_supplied_laws()
 		for (var/mob/living/silicon/S in mobs)
+			if (isghostdrone(S))
+				return
 			LAGCHECK(LAG_LOW)
 			if (isAI(S) && isdead(S))
 				setalive(S)

@@ -38846,6 +38846,7 @@
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/research_horizontal/vertical,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
@@ -48359,6 +48360,13 @@
 /obj/machinery/door_control{
 	id = "qm_dock";
 	name = "Import Hatch Override";
+	pixel_x = -2;
+	pixel_y = 28
+	},
+/obj/machinery/door_control{
+	id = "manualshipping";
+	name = "Export Hatch Override";
+	pixel_x = 9;
 	pixel_y = 28
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -48391,6 +48399,7 @@
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/medbay_horizontal/vertical,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
@@ -49946,6 +49955,7 @@
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
@@ -49972,6 +49982,7 @@
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
@@ -105270,7 +105281,7 @@ bXk
 cer
 coj
 cnW
-acO
+aaa
 aaa
 aaa
 aaa
@@ -105572,7 +105583,7 @@ cdt
 ces
 cfl
 cfY
-acO
+aaa
 aaa
 aaa
 aaa

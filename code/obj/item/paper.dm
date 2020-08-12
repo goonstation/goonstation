@@ -135,8 +135,11 @@
 	return 1
 
 /obj/item/paper/attack_self(mob/user as mob)
-	if (alert("What would you like to do with [src]?",,"Fold","Nothing") == "Nothing")
+	var/menuchoice = alert("What would you like to do with [src]?",,"Fold","Read","Nothing")
+	if (menuchoice == "Nothing")
 		return
+	else if (menuchoice == "Read")
+		src.examine(user)
 	else
 		var/fold = alert("What would you like to fold [src] into?",,"Paper hat","Paper plane","Paper ball")
 		var/obj/item/paper/P = src
@@ -755,6 +758,51 @@ Only trained personnel should operate station systems. Follow all procedures car
 	</ul>
 	We hope that you have found this pamphlet enlightening and we hope to receive your sample soon!<hr>
 	Remember, only you can prevent deadly pathogens!
+	"}
+
+/obj/item/paper/shipping_precautions
+	name = "Read this and check the cargo!"
+	icon_state = "paper_caution_bloody"
+	desc = "An ordinary notice about shipping procedures...stained with blood?"
+	info = {"<center><h2>Warning</h2></center>
+	<hr>
+	<h3>Discount Dan contracts you - a healthy and breathing human being to deliver this cargo safely to the nearest Discount Dans fabrication center!</h3>
+	<br>
+	<br>
+	<br>
+	So read carefully and heed the precautions! Keep the fridges closed! All of them! Do not look inside...and if you happen to hear any clawing, grumbling, or cries for help...<b>ignore them</b>!
+	<br>
+	<br>
+	The freight is extremely valuable! Any light or human flesh exposed to said cargo will cost your pal Discount Dan an arm, a leg and a space-tastic lawsuit!
+	<br>
+	<br>
+	Remain cautious - because it's what's necessary!
+	"}
+
+/obj/item/paper/dreamy_rhyme
+	name = "Space-Rhymes"
+	icon_state = "thermal_paper"
+	desc = "Scibbled rhymes...and thoughts."
+	info = {" Space duck, I do not give a...I do not give anything about luck, shrug, puck, quack
+	<br>
+	<br>
+	<br>
+	<b>Yeah! Yo! Here the quick rhymer goes, clowns convulse!
+	<br>
+	<br>
+	Soon enough your mimes go fold, like a piece of paper!
+	<br>
+	<br>
+	This Emcee did not just meet ya'his thoughts created a - whole universe!
+	<br>
+	<br>
+	Spitting lines like liquid fire as he converse!
+	<br>
+	<br>
+	Transfer ideas from word to mind; not just half-assed like some damn pantomime!
+	<br>
+	<br>
+	Never behind the crime, A-grades as janitor...oh so fine!</b>
 	"}
 
 /obj/item/paper/fortune

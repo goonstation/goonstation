@@ -395,7 +395,7 @@
 			L.aggressive = 1
 			L.atkcarbon = 1
 			L.atksilicon = 1
-			L.opensdoors = 1
+			L.opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 			L.stunprob = 15
 			L.original_object = O
 			animate_levitate(L, -1, 30)

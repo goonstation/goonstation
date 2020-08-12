@@ -646,49 +646,72 @@
 		..()
 		if ((usr.stat || usr.restrained()))
 			return
-		if (usr.contents.Find(src))
-			src.add_dialog(usr)
-			if (href_list["pen"])
-				if (src.pen)
-					usr.put_in_hand_or_drop(src.pen)
-					src.pen = null
-					src.add_fingerprint(usr)
-					src.update()
-			else if (href_list["remove"])
-				var/obj/item/P = locate(href_list["remove"])
-				if (P && P.loc == src)
-					usr.put_in_hand_or_drop(P)
-					src.add_fingerprint(usr)
-					src.update()
-			else if (href_list["write"])
+
+		if (!usr.contents.Find(src))
+			return
+
+		src.add_dialog(usr)
+		if (href_list["pen"])
+			if (src.pen)
+				usr.put_in_hand_or_drop(src.pen)
+				src.pen = null
+				src.update()
+
+		else if (href_list["remove"])
+			var/obj/item/P = locate(href_list["remove"])
+			if (P && P.loc == src)
+				usr.put_in_hand_or_drop(P)
+				src.update()
+
+		else if (href_list["read"])
+			var/obj/item/paper/P = locate(href_list["read"])
+			if ((P && P.loc == src))
+				if (!( ishuman(usr) ))
+					usr.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, stars(P.info)), text("window=[]", P.name))
+					onclose(usr, "[P.name]")
+				else
+					usr.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, P.info), text("window=[]", P.name))
+					onclose(usr, "[P.name]")
+
+		else//Stuff that involves writing from here on down
+			if(!usr.literate)
+				boutput(usr, "<span class='alert'>You don't know how to write.</span>")
+				return
+			var/obj/item/pen/available_pen = null
+			if (istype(usr.r_hand, /obj/item/pen))
+				available_pen = usr.r_hand
+			else if (istype(usr.l_hand, /obj/item/pen))
+				available_pen = usr.l_hand
+			else if (istype(src.pen, /obj/item/pen))
+				available_pen = src.pen
+			else
+				boutput(usr, "<span class='alert'>You need a pen for that.</span>")
+				return
+
+			if (href_list["write"])
 				var/obj/item/P = locate(href_list["write"])
 				if ((P && P.loc == src))
-					if (istype(usr.r_hand, /obj/item/pen))
-						P.attackby(usr.r_hand, usr)
-					else
-						if (istype(usr.l_hand, /obj/item/pen))
-							P.attackby(usr.l_hand, usr)
-						else
-							if (istype(src.pen, /obj/item/pen))
-								P.attackby(src.pen, usr)
-				src.add_fingerprint(usr)
-			else if (href_list["read"])
-				var/obj/item/paper/P = locate(href_list["read"])
-				if ((P && P.loc == src))
-					if (!( ishuman(usr) ))
-						usr.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, stars(P.info)), text("window=[]", P.name))
-						onclose(usr, "[P.name]")
-					else
-						usr.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, P.info), text("window=[]", P.name))
-						onclose(usr, "[P.name]")
+					P.attackby(available_pen, usr)
+
 			else if (href_list["title"])
+				if (istype(available_pen, /obj/item/pen/odd))
+					boutput(usr, "<span class='alert'>Try as you might, you fail to write anything sensible.</span>")
+					src.add_fingerprint(usr)
+					return
 				var/obj/item/P = locate(href_list["title"])
 				if (P && P.loc == src)
-					P.attack_self(usr)
+					var/str = copytext(html_encode(input(usr,"What do you want to title this?","Title document","") as null|text), 1, 32)
+					if (str == null || length(str) == 0)
+						return
+					if (length(str) > 30)
+						boutput(usr, "<span class='alert'>A title that long will never catch on!</span>") //We're actually checking because titles above a certain length get clipped, but where's the fun in that
+						return
+					if(url_regex && url_regex.Find(str))
+						return
+					P.name = str
 
-				src.add_fingerprint(usr)
-
-			src.updateSelfDialog()
+		src.add_fingerprint(usr)
+		src.updateSelfDialog()
 		return
 
 	attack_hand(mob/user as mob)
@@ -750,6 +773,8 @@
 	desc = "A folder for holding papers!"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "folder" //futureproofed icons baby
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	item_state = "folder"
 	w_class = 2.0
 	throwforce = 0
 	w_class = 3.0

@@ -33780,6 +33780,7 @@
 /turf/simulated/floor/greenblack/corner,
 /area/station/crewquarters/garbagegarbs)
 "bvz" = (
+/obj/machinery/clothingbooth,
 /turf/simulated/floor/greenblack,
 /area/station/crewquarters/garbagegarbs)
 "bvA" = (
@@ -39159,13 +39160,6 @@
 /obj/machinery/disposal_pipedispenser/mobile,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
-"bHV" = (
-/obj/machinery/clothingbooth,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/crewquarters/garbagegarbs)
 "bHW" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -81058,7 +81052,7 @@ bsn
 bEr
 bFD
 bui
-bHV
+bHW
 bIJ
 aBj
 bJY

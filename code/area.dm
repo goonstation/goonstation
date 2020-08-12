@@ -1028,6 +1028,15 @@
 	name = "Tech Outpost"
 	icon_state = "storage"
 
+/////////////////////// Gore's Z5 Space generation areas
+/area/prefab/discount_dans_asteroid
+	name = "Discount Dans delivery asteroid"
+	icon_state = "orange"
+
+/area/prefab/clown_nest
+	name = "Honky Gibbersons Clownspider farm"
+	icon_state = "orange"
+
 /////////////////////// Sealab trench areas
 
 /area/shuttle/sea_elevator_room

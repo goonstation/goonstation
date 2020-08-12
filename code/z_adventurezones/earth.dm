@@ -107,7 +107,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	bubs/name = "Office of bubs"
 	mbc/name = "Office of Dotty Spud"
 	pope/name = "Office of Popecrunch"
-	hokie/name = "Office of Hokie"
+	ines/name = "Office of Ines"
 	shotgunbill/name = "Office of Shotgunbill"
 	burntcornmuffin/name = "Office of BurntCornMuffin"
 	grayshift/name = "Office of Grayshift"
@@ -145,6 +145,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	efrem/name = "Office of Vaughn Moon"
 	sovexe/name = "Office of Sov Extant"
 	enakai/name = "Office of Enakai"
+	hukhukhuk/name = "Office of HukHukHuk"
 
 /area/centcom/lobby
 	name = "NT Offices Lobby"

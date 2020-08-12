@@ -625,14 +625,14 @@
 
 
 /obj/item/ammo/bullets/cannon
-	sname = "20mm AP"
-	name = "20mm AP shells"
+	sname = "20mm APHE"
+	name = "20mm APHE shells"
 	amount_left = 5
 	max_amount = 5
 	icon_state = "40mmR"
 	ammo_type = new/datum/projectile/bullet/cannon
 	caliber = 0.787
-	w_class = 3
+	w_class = 2
 	icon_dynamic = 1
 	icon_empty = "40mmR-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
