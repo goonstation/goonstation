@@ -9,7 +9,7 @@
 	robot_talk_understand = 2
 	var/glitchy_speak = 0
 
-//3 Modules can be activated at any one time.
+	// 3 tools can be activated at any one time.
 	var/obj/item/robot_module/module = null
 	var/module_active = null
 	var/list/module_states = list(null,null,null)
@@ -679,7 +679,7 @@
 	hud.update_active_tool()
 
 /mob/living/silicon/hivebot/click(atom/target, list/params)
-	if ((target in src.module.modules) && !(target in src.module_states))
+	if ((target in src.module.tools) && !(target in src.module_states))
 		for (var/i = 1; i <= 3; i++)
 			if (!src.module_states[i])
 				src.module_states[i] = target

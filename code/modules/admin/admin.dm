@@ -1109,7 +1109,7 @@ var/global/noir = 0
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to transform a player.")
 
-		if ("checkbioeffect")
+		if ("managebioeffect")
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 
@@ -1117,12 +1117,19 @@ var/global/noir = 0
 					alert("You may only use this secret on human mobs.")
 					return
 
-				usr.client.cmd_admin_checkbioeffect(M)
+				usr.client.cmd_admin_managebioeffect(M)
 
 			else
-				alert("You need to be at least a Secondary Administrator to check the bioeffects of a player.")
+				alert("You need to be at least a Secondary Administrator to manage the bioeffects of a player.")
 
-		if ("checkbioeffect_remove")
+		if ("managebioeffect_debug_vars")
+			if (src.level >= LEVEL_PA)
+				var/datum/bioEffect/B = locate(href_list["bioeffect"])
+				usr.client.debug_variables(B)
+			else
+				alert("You must be at least a Primary Administrator to view variables!")
+
+		if ("managebioeffect_remove")
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 
@@ -1130,14 +1137,14 @@ var/global/noir = 0
 					alert("You may only use this secret on human mobs.")
 					return
 				M.bioHolder.RemoveEffect(href_list["bioeffect"])
-				usr.client.cmd_admin_checkbioeffect(M)
+				usr.client.cmd_admin_managebioeffect(M)
 
 				message_admins("[key_name(usr)] removed the [href_list["bioeffect"]] bio-effect from [key_name(M)].")
 			else
 				alert("You need to be at least a Secondary Administrator to remove the bioeffects of a player.")
 				return
 
-		if("checkbioeffect_alter_stable")
+		if("managebioeffect_alter_stable")
 			if(src.level >= LEVEL_SA)
 				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
 				BE.altered = 1
@@ -1148,11 +1155,11 @@ var/global/noir = 0
 					BE.holder.genetic_stability = max(0, BE.holder.genetic_stability += BE.stability_loss) //update mob stability
 					BE.stability_loss = 0
 
-				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+				usr.client.cmd_admin_managebioeffect(BE.holder.owner)
 			else
 				return
 
-		if("checkbioeffect_alter_reinforce")
+		if("managebioeffect_alter_reinforce")
 			if(src.level >= LEVEL_SA)
 				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
 				BE.altered = 1
@@ -1161,11 +1168,11 @@ var/global/noir = 0
 				else
 					BE.curable_by_mutadone = 1
 
-				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+				usr.client.cmd_admin_managebioeffect(BE.holder.owner)
 			else
 				return
 
-		if("checkbioeffect_alter_power_boost")
+		if("managebioeffect_alter_power_boost")
 			if(src.level >= LEVEL_SA)
 				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
 				BE.altered = 1
@@ -1177,11 +1184,11 @@ var/global/noir = 0
 				else
 					return
 
-				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+				usr.client.cmd_admin_managebioeffect(BE.holder.owner)
 			else
 				return
 
-		if("checkbioeffect_alter_sync")
+		if("managebioeffect_alter_sync")
 			if(src.level >= LEVEL_SA)
 				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
 				BE.altered = 1
@@ -1193,10 +1200,10 @@ var/global/noir = 0
 				else
 					return
 
-				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+				usr.client.cmd_admin_managebioeffect(BE.holder.owner)
 			else
 				return
-		if("checkbioeffect_alter_cooldown")
+		if("managebioeffect_alter_cooldown")
 			if(src.level >= LEVEL_SA)
 				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
 				BE.altered = 1
@@ -1210,11 +1217,11 @@ var/global/noir = 0
 						BE.cooldown = round(input)
 				else
 					return
-				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+				usr.client.cmd_admin_managebioeffect(BE.holder.owner)
 			else
 				return
 
-		if ("checkbioeffect_chromosome")
+		if ("managebioeffect_chromosome")
 			if(src.level >= LEVEL_SA)
 				var/list/applicable_chromosomes = null
 				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
@@ -1228,63 +1235,63 @@ var/global/noir = 0
 					return
 
 				//ask the user what they want to add
-				switch (input(usr, "Select a chromosome", "Check Bioeffects Splice") as null|anything in applicable_chromosomes)
+				switch (input(usr, "Select a chromosome", "Manage Bioeffects Splice") as null|anything in applicable_chromosomes)
 					if ("Stabilizer")
-						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						if (BE.altered) managebioeffect_chromosome_clean(BE)
 						BE.holder.genetic_stability = max(0, BE.holder.genetic_stability += BE.stability_loss) //update mob stability
 						BE.stability_loss = 0
 						BE.name = "Stabilized " + BE.name
 						BE.altered = 1
 					if ("Reinforcer")
-						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						if (BE.altered) managebioeffect_chromosome_clean(BE)
 						BE.curable_by_mutadone = 0
 						BE.name = "Reinforced " + BE.name
 						BE.altered = 1
 					if ("Weakener")
-						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						if (BE.altered) managebioeffect_chromosome_clean(BE)
 						BE.reclaim_fail = 0
 						BE.reclaim_mats *= 2
 						BE.name = "Weakened " + BE.name
 						BE.altered = 1
 					if ("Camouflager")
-						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						if (BE.altered) managebioeffect_chromosome_clean(BE)
 						BE.msgGain = ""
 						BE.msgLose = ""
 						BE.name = "Camouflaged " + BE.name
 						BE.altered = 1
 					if ("Power Booster")
-						if (P.altered) checkbioeffect_chromosome_clean(P)
+						if (P.altered) managebioeffect_chromosome_clean(P)
 						P.power = 1
 						P.name = "Empowered " + P.name
 						P.altered = 1
 					if ("Energy Booster")
-						if (P.altered) checkbioeffect_chromosome_clean(P)
+						if (P.altered) managebioeffect_chromosome_clean(P)
 						if(P.cooldown != 0)
 							P.cooldown /= 2
 						P.name = "Energized " + P.name
 						P.altered = 1
 					if ("Synchronizer")
-						if (P.altered) checkbioeffect_chromosome_clean(P)
+						if (P.altered) managebioeffect_chromosome_clean(P)
 						P.safety = 1
 						P.name = "Synchronized " + P.name
 						P.altered = 1
 					if ("Custom") //build your own chromosome!
-						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						if (BE.altered) managebioeffect_chromosome_clean(BE)
 						BE.altered = 1
-						var/prefix = input(usr, "Enter a custom name for your chromosome", "Check Bioeffects Splice")
+						var/prefix = input(usr, "Enter a custom name for your chromosome", "Manage Bioeffects Splice")
 						if (prefix)
 							BE.name = "[prefix] " + BE.name
 					if ("REMOVE CHROMOSOME")
-						if (BE.altered) checkbioeffect_chromosome_clean(BE)
+						if (BE.altered) managebioeffect_chromosome_clean(BE)
 					else //user cancelled do nothing
 						return
-				usr.client.cmd_admin_checkbioeffect(BE.holder.owner)
+				usr.client.cmd_admin_managebioeffect(BE.holder.owner)
 				return
 
 			else
 				alert("You need to be at least a Secondary Administrator to modify the bioeffects of a player.")
 
-		if ("checkbioeffect_add")
+		if ("managebioeffect_add")
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 				if (!ishuman(M))
@@ -1295,19 +1302,19 @@ var/global/noir = 0
 				var/datum/bioEffect/BE = text2path("[input]")
 				if (BE)
 					M.bioHolder.AddEffect(initial(BE.id))
-					usr.client.cmd_admin_checkbioeffect(M)
+					usr.client.cmd_admin_managebioeffect(M)
 					message_admins("[key_name(usr)] added the [initial(BE.id)] bio-effect to [key_name(M)].")
 			else
 				alert("You need to be at least a Secondary Administrator to add bioeffects to a player.")
 
-		if ("checkbioeffect_refresh")
+		if ("managebioeffect_refresh")
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
-				usr.client.cmd_admin_checkbioeffect(M)
+				usr.client.cmd_admin_managebioeffect(M)
 			else
-				alert("You need to be at least a Secondary Administrator to check the bioeffects of a player.")
+				alert("You need to be at least a Secondary Administrator to manage the bioeffects of a player.")
 
-		if ("checkbioeffect_alter_genetic_stability")
+		if ("managebioeffect_alter_genetic_stability")
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 				var/input = input(usr, "Enter a new genetic stability for the target", "Alter Genetic Stability", M.bioHolder.genetic_stability) as null|num
@@ -1317,7 +1324,7 @@ var/global/noir = 0
 					M.bioHolder.genetic_stability = 0
 				else
 					M.bioHolder.genetic_stability = round(input)
-				usr.client.cmd_admin_checkbioeffect(M)
+				usr.client.cmd_admin_managebioeffect(M)
 			else
 				alert("You need to be at least a Secondary Administrator to modify the genetic stability of a player.")
 
@@ -3411,6 +3418,10 @@ var/global/noir = 0
 			else
 				alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 
+		if ("view_logs_web")
+			if ((src.level >= LEVEL_MOD) && !src.tempmin)
+				usr << link("https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]")
+
 		if ("view_logs")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
 				var/gettxt
@@ -4057,6 +4068,7 @@ var/global/noir = 0
 		dat += "</div>"
 
 	dat += {"<hr><div class='optionGroup' style='border-color:#77DD77'><b class='title' style='background:#77DD77'>Logs</b>
+				<b><A href='?src=\ref[src];action=view_logs_web'>View all logs - web version</A></b><BR>
 				<A href='?src=\ref[src];action=view_logs;type=all_logs_string'>Search all Logs</A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=speech_log'>Speech Log </A>
 				<A href='?src=\ref[src];action=view_logs;type=speech_log_string'><small>(Search)</small></A><BR>
@@ -4138,14 +4150,16 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsfun;type=fartyparty'>Farty Party All The Time</A><BR>
 		"}
 
+	dat += "</div>"
+
 	if (src.level >= LEVEL_ADMIN || (src.level == LEVEL_SA && usr.client.holder.state == 2))
 		dat += {"<hr><div class='optionGroup' style='border-color:#92BB78'><b class='title' style='background:#92BB78'>Roleplaying Panel</b>
 					<A href='?src=\ref[src];action=secretsfun;type=shakecamera'>Apply camera shake</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=creepifystation'>Creepify station</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=command_report_zalgo'>Command Report (Zalgo)</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=command_report_void'>Command Report (Void)</A><BR>
-					<A href='?src=\ref[src];action=secretsfun;type=reliquarystation_wandf'>DO NOT PRESS</A><BR>
-					<A href='?src=\ref[src];action=secretsfun;type=reliquarystation_tdcc'>DO NOT PRESS</A><BR>
+					<A href='?src=\ref[src];action=secretsfun;type=reliquarystation_wandf'>reliquary station "wandf" </A><BR>
+					<A href='?src=\ref[src];action=secretsfun;type=reliquarystation_tdcc'>reliquary station "tdcc" </A><BR>
 				"}
 
 	dat += "</div>"
@@ -4223,12 +4237,12 @@ var/global/noir = 0
 		boutput(world, "<b>The game start has been delayed.</b>")
 		logTheThing("admin", usr, null, "delayed the game start.")
 		logTheThing("diary", usr, null, "delayed the game start.", "admin")
-		message_admins("<span class='internal>[usr.key] has delayed the game start.</span>")
+		message_admins("<span class='internal'>[usr.key] has delayed the game start.</span>")
 	else
 		boutput(world, "<b>The game will start soon.</b>")
 		logTheThing("admin", usr, null, "removed the game start delay.")
 		logTheThing("diary", usr, null, "removed the game start delay.", "admin")
-		message_admins("<span class='internal>[usr.key] has removed the game start delay.</span>")
+		message_admins("<span class='internal'>[usr.key] has removed the game start delay.</span>")
 
 /datum/admins/proc/delay_end()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
@@ -4238,7 +4252,7 @@ var/global/noir = 0
 	if (game_end_delayed == 2)
 		logTheThing("admin", usr, null, "removed the restart delay and triggered an immediate restart.")
 		logTheThing("diary", usr, null, "removed the restart delay and triggered an immediate restart.", "admin")
-		message_admins("<span class='internal>[usr.key] removed the restart delay and triggered an immediate restart.</span>")
+		message_admins("<span class='internal'>[usr.key] removed the restart delay and triggered an immediate restart.</span>")
 		ircbot.event("roundend")
 		Reboot_server()
 
@@ -4623,10 +4637,31 @@ var/global/noir = 0
 
 		if (chosen)
 			var/obj/A = new chosen()
-			A.set_loc(usr.loc)
+			var/turf/T = get_turf(usr)
+			A.set_loc(T)
 			heavenly_spawn(A)
-			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
-			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
+			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
+
+	else
+		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		return
+
+/datum/admins/proc/supplydrop_spawn_obj(var/obj/object as text)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set desc="(object path) Spawn an object. But all fancy-like"
+	set name="Spawn-Supplydrop"
+	if(!object)
+		return
+	if (usr.client.holder.level >= LEVEL_PA)
+		var/chosen = get_one_match(object)
+		var/preDropTime = 3 SECONDS
+
+		if (chosen)
+			var/turf/T = get_turf(usr)
+			new/obj/effect/supplymarker/safe(T, preDropTime, chosen)
+			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
@@ -4653,7 +4688,7 @@ var/global/noir = 0
 
 	usr.Browse(built, "window=chatban;size=500x100")
 
-/datum/admins/proc/checkbioeffect_chromosome_clean(var/datum/bioEffect/BE)
+/datum/admins/proc/managebioeffect_chromosome_clean(var/datum/bioEffect/BE)
 //cleanse a bioeffect
 	var/datum/bioEffect/power/P = null
 	BE.altered = 0
@@ -4672,12 +4707,18 @@ var/global/noir = 0
 		P.cooldown = P.global_instance_power.cooldown
 		P.safety = P.global_instance_power.safety
 
-/client/proc/cmd_admin_checkbioeffect(var/mob/M)
+/client/proc/cmd_admin_managebioeffect(var/mob/M in mobs)
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Manage Bioeffects"
+	set desc = "Select a mob to manage its bioeffects."
+	set popup_menu = 0
+	admin_only
+
 	var/list/dat = list()
 	dat += {"
 		<html>
 		<head>
-		<title>Check Bioeffects</title>
+		<title>Manage Bioeffects</title>
 		<style>
 		table {
 			border:1px solid #4CAF50;
@@ -4719,9 +4760,9 @@ var/global/noir = 0
 		</head>
 		<body>
 		<h3>Bioeffects of [M.name]
-		<a href='?src=\ref[src.holder];action=checkbioeffect_refresh;target=\ref[M];origin=bioeffect_check' class="button">&#x1F504;</a></h3>
-		<h4>(Stability: <a href='?src=\ref[src.holder];action=checkbioeffect_alter_genetic_stability;target=\ref[M];origin=bioeffect_check'>[M.bioHolder.genetic_stability]</a>)
-		<a href='?src=\ref[src.holder];action=checkbioeffect_add;target=\ref[M];origin=bioeffect_check' class="button">&#x2795;</a></h4>
+		<a href='?src=\ref[src.holder];action=managebioeffect_refresh;target=\ref[M];origin=bioeffect_manage' class="button">&#x1F504;</a></h3>
+		<h4>(Stability: <a href='?src=\ref[src.holder];action=managebioeffect_alter_genetic_stability;target=\ref[M];origin=bioeffect_manage'>[M.bioHolder.genetic_stability]</a>)
+		<a href='?src=\ref[src.holder];action=managebioeffect_add;target=\ref[M];origin=bioeffect_manage' class="button">&#x2795;</a></h4>
 		<table>
 			<tr>
 				<th>Remove</th>
@@ -4763,18 +4804,18 @@ var/global/noir = 0
 
 		dat += {"
 			<tr>
-				<td><a href='?src=\ref[src.holder];action=checkbioeffect_remove;target=\ref[M];bioeffect=[B.id];origin=bioeffect_check'>remove</a></td>
+				<td><a href='?src=\ref[src.holder];action=managebioeffect_remove;target=\ref[M];bioeffect=[B.id];origin=bioeffect_manage'>remove</a></td>
 				<td>[B.id]</td>
-				<td>[B.name]</td>
-				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_stable;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[is_stable ? "&#x2714;" : "&#x274C;"]</a></td>
-				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_reinforce;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[is_reinforced ? "&#x2714;" : "&#x274C;"]</a></td>
-				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_power_boost;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[isnull(is_power_boosted) ? "&#x26D4;" : (is_power_boosted ? "&#x2714;" : "&#x274C;")]</a></td>
-				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_sync;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[isnull(is_synced) ? "&#x26D4;" : (is_synced ? "&#x2714;" : "&#x274C;")]</a></td>
-				<td><a href='?src=\ref[src.holder];action=checkbioeffect_alter_cooldown;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>[isnull(cooldown) ? "&#x26D4;" : cooldown]</a></td>
-				<td><a href='?src=\ref[src.holder];action=checkbioeffect_chromosome;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_check'>Splice</a></td>
+				<td><a href='?src=\ref[src.holder];action=managebioeffect_debug_vars;bioeffect=\ref[B];origin=bioeffect_manage'>[B.name]</a></td>
+				<td><a href='?src=\ref[src.holder];action=managebioeffect_alter_stable;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_manage'>[is_stable ? "&#x2714;" : "&#x274C;"]</a></td>
+				<td><a href='?src=\ref[src.holder];action=managebioeffect_alter_reinforce;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_manage'>[is_reinforced ? "&#x2714;" : "&#x274C;"]</a></td>
+				<td><a href='?src=\ref[src.holder];action=managebioeffect_alter_power_boost;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_manage'>[isnull(is_power_boosted) ? "&#x26D4;" : (is_power_boosted ? "&#x2714;" : "&#x274C;")]</a></td>
+				<td><a href='?src=\ref[src.holder];action=managebioeffect_alter_sync;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_manage'>[isnull(is_synced) ? "&#x26D4;" : (is_synced ? "&#x2714;" : "&#x274C;")]</a></td>
+				<td><a href='?src=\ref[src.holder];action=managebioeffect_alter_cooldown;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_manage'>[isnull(cooldown) ? "&#x26D4;" : cooldown]</a></td>
+				<td><a href='?src=\ref[src.holder];action=managebioeffect_chromosome;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_manage'>Splice</a></td>
 			</tr>"}
 	dat += "</table></body></html>"
-	usr.Browse(dat.Join(),"window=bioeffect_check;size=900x400")
+	usr.Browse(dat.Join(),"window=bioeffect_manage;size=900x400")
 
 /client/proc/cmd_admin_manageabils(var/mob/M in mobs)
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)

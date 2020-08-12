@@ -86,7 +86,7 @@
 			H.take_toxin_damage(1)
 
 //stolen from the admin button because I know fuck all about pathogens - Kyle
-/datum/ailment/disease/appendicitis/proc/add_pathogens(var/mob/living/A, var/amount)
+proc/add_pathogens(var/mob/living/A, var/amount)
 	if (!A || !A.reagents)
 		return 0
 

@@ -102,7 +102,7 @@
 
 			tool_selector_tools.len = 0
 			var/i = 0
-			for (var/obj/item/tool in master.module.modules)
+			for (var/obj/item/tool in master.module.tools)
 				if (!(tool in master.module_states))
 					tool_selector_tools += tool
 					tool.screen_loc = "CENTER+2:16, SOUTH+[1+i]"

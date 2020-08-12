@@ -40,7 +40,6 @@ You will need these programs to start developing in tgui:
 - [Node v12.13+](https://nodejs.org/en/download/)
 - [Yarn v1.19+](https://yarnpkg.com/en/docs/install)
 - Some kind of terminal, whether it in be a Unix-like environment, or a Windows one.
-- **A git version that supports symlinks.** If using Git for Windows, be sure to *install* it with symlink support!
 
 ## Usage
 
@@ -117,6 +116,10 @@ bin/tgui --dev
 Note that in Windows, you have to go through Advanced System Settings,
 System Properties and then open Environment Variables window to do the
 same thing. You may need to reboot after this.
+
+**`Script error.` on CDN-originating .js files**
+
+Add `crossorigin="anonymous"` to the script tags in your downloaded tgui-window-x.html file found in your BYOND cache.
 
 ## Developer Tools
 

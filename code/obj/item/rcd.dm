@@ -56,6 +56,7 @@ Broken RCD + Effects
 	stamina_crit_chance = 5
 	module_research = list("tools" = 8, "engineering" = 8, "devices" = 3, "efficiency" = 5)
 	module_research_type = /obj/item/rcd
+	inventory_counter_enabled = 1
 
 	// Borgs/drones can't really use matter units.
 	// (matter cost) x (this) = (power cell charge used)
@@ -108,16 +109,9 @@ Broken RCD + Effects
 		. += "mode."
 
 	New()
+		..()
 		src.update_icon()
 		return
-
-	pickup(mob/M)
-		..()
-		src.update_maptext()
-
-	dropped(mob/M)
-		src.maptext = null
-		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/rcd_ammo))
@@ -139,8 +133,6 @@ Broken RCD + Effects
 			src.update_icon()
 			playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
 			boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter-units.")
-			if (src.maptext)
-				src.update_maptext()
 			return
 
 	attack_self(mob/user as mob)
@@ -169,7 +161,6 @@ Broken RCD + Effects
 		// Gonna change this so it doesn't shit sparks when mode switched
 		// Just that it does it only after actually doing something
 		//src.shitSparks()
-		src.update_maptext()
 		src.update_icon()
 		return
 
@@ -340,15 +331,6 @@ Broken RCD + Effects
 			return
 		elecflash(src)
 
-	proc/update_maptext()
-		if (!src.matter)
-			src.maptext = null
-			return
-
-		src.maptext_x = -2
-		src.maptext_y = 1
-		src.maptext = {"<span class="vb r pixel sh">[src.matter]</span></span>"}
-
 	proc/ammo_check(mob/user as mob, var/checkamt = 0)
 		if (issilicon(user))
 			var/mob/living/silicon/S = user
@@ -384,7 +366,6 @@ Broken RCD + Effects
 		if ((!delay || do_after(user, delay)) && ammo_check(user, ammo))
 			ammo_consume(user, ammo)
 			playsound(get_turf(src), "sound/items/Deconstruct.ogg", 50, 1)
-			src.update_maptext()
 			shitSparks()
 			src.working_on -= target
 			return 1
@@ -440,6 +421,9 @@ Broken RCD + Effects
 
 		var/image/I = SafeGetOverlayImage("mode", src.icon, "[mode]-[ammo_amt]")
 		src.UpdateOverlays(I, "mode")
+
+		if (!issilicon(usr))
+			src.inventory_counter.update_number(matter)
 
 ///////////////////
 //NORMAL VARIANTS//

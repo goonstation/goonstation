@@ -114,6 +114,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_death_confetti,
 		/client/proc/cmd_admin_unhandcuff,
 		/client/proc/admin_toggle_lighting,
+		/client/proc/cmd_admin_managebioeffect,
 
 		/client/proc/debug_deletions,
 
@@ -259,6 +260,7 @@ var/list/admin_verbs = list(
 		/client/proc/show_admin_lag_hacks,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
+		/datum/admins/proc/supplydrop_spawn_obj,
 
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
@@ -1815,8 +1817,12 @@ var/list/fun_images = list()
 
 
 	if (parameters["right"])
-		var/list/atoms = list(get_turf(A))
-		for(var/thing in get_turf(A))
+		var/turf/clicked_turf = get_turf(A)
+		var/x_shift = round(text2num(parameters["icon-x"]) / 32)
+		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
+		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
+		var/list/atoms = list(clicked_turf)
+		for(var/thing in clicked_turf)
 			var/atom/atom = thing
 			atoms += atom
 		if (atoms.len)
@@ -1846,8 +1852,8 @@ var/list/fun_images = list()
 			C.cmd_admin_get_mobject(A)
 		if("Follow Thing")
 			C.admin_follow_mobject(A)
-		if("Check Bioeffects")
-			C.cmd_admin_checkbioeffect(A)
+		if("Manage Bioeffects")
+			C.cmd_admin_managebioeffect(A)
 		if("Manage Abilities")
 			C.cmd_admin_manageabils(A)
 		if("Add Reagents")

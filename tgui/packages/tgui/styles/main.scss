@@ -41,6 +41,7 @@
 
 // Interfaces
 @include meta.load-css('./interfaces/CameraConsole.scss');
+@include meta.load-css('./interfaces/CyborgModuleRewriter.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');
