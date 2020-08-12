@@ -341,6 +341,7 @@ h1.alert, h2.alert {color: #000000;}
 body.theme-dark { background-color: #23272a; color: #dfdfcf; }
 body.theme-dark .regular { color: #dfdfcf; }
 body.theme-dark .mhelp {color: #e75ae0;}
+body.theme-dark .ahelp {color:  #de7d0b;}
 body.theme-dark .notice { color: #7996ff; }
 body.theme-dark .hint { color: #7996ff; }
 body.theme-dark .internal { color: #92b4ff; }
@@ -392,7 +393,7 @@ body.theme-dark  {
 	scrollbar-arrow-color: #808080;
 }
 
-body.theme-dark .admin {color: #6e93ff;}
+body.theme-dark .admin {color: #ecc300;}
 body.theme-dark .adminMsgWrap {color: #cb79d4;}
 body.theme-dark .gfartooc {color: #60c4e6;}
 body.theme-dark .gfartlooc {color: #92cbdf;}
