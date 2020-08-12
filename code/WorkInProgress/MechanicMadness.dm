@@ -1679,7 +1679,8 @@ var/list/mechanics_telepads = new/list()
 
 	var/net_id = null //What is our ID on the network?
 	var/last_ping = 0
-	var/range = 0
+	var/range = 64
+	var/maxrange = 64
 
 	var/noise_enabled = true
 	var/frequency = 1419
@@ -1689,7 +1690,7 @@ var/list/mechanics_telepads = new/list()
 		. += {"<br><span class='notice'>[forward_all ? "Sending full unprocessed Signals.":"Sending only processed sendmsg and pda Message Signals."]<br>
 		[only_directed ? "Only reacting to Messages directed at this Component.":"Reacting to ALL Messages received."]<br>
 		Current Frequency: [frequency]<br>
-		Current Transmission Range: [range ? range : "MAX"]<br>
+		Current Transmission Range: [range]<br>
 		Current NetID: [net_id]</span>"}
 
 	New()
@@ -1730,11 +1731,11 @@ var/list/mechanics_telepads = new/list()
 		return 1
 
 	proc/setRange(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user, "Set transmission range (use 0 for max range):", "Range setting", range) as num
+		var/inp = input(user, "Set transmission range:", "Range setting", range) as num
 		if (!in_range(src, user) || user.stat)
 			return 0
 		if (!isnull(inp))
-			range = inp
+			range = max(1, min(inp, maxrange))
 			boutput(user, "Range set to [range]")
 			tooltip_rebuild = 1
 			return 1
