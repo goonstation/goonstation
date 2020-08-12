@@ -11,7 +11,7 @@
 	icon_state = "circ1-off"
 	var/obj/machinery/power/generatorTemp/generator = null
 
-	var/side = LEFT_CIRCULATOR // 1=left 2=right
+	var/side = null // 1=left 2=right
 	var/last_pressure_delta = 0
 
 	anchored = 1.0
@@ -66,7 +66,6 @@
 		return 1
 
 /obj/machinery/atmospherics/binary/circulatorTemp/right
-	side = RIGHT_CIRCULATOR
 	icon_state = "circ2-off"
 	name = "cold gas circulator"
 
@@ -162,7 +161,9 @@
 				src.status |= BROKEN
 
 			src.circ1?.generator = src
+			src.circ1?.side = LEFT_CIRCULATOR
 			src.circ2?.generator = src
+			src.circ2?.side = RIGHT_CIRCULATOR
 
 			updateicon()
 
