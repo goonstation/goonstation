@@ -68,11 +68,13 @@ dmm_suite
 		var /list/gridLevels = list()
 		var /regex/grid = regex(@{"\(([0-9]*),([0-9]*),([0-9]*)\) = \{"\n((?:\l*\n)*)"\}"}, "g")
 		var /list/coordShifts = list()
+		var/maxZFound = 1
 		while(grid.Find(gridText))
 			gridLevels.Add(copytext(grid.group[4], 1, -1)) // Strip last \n
 			coordShifts.Add(list(list(grid.group[1], grid.group[2], grid.group[3])))
+			maxZFound = max(maxZFound, text2num(grid.group[3]))
 		// Create all Atoms at map location, from model key
-		world.maxz = max(world.maxz, coordZ+gridLevels.len-1)
+		world.maxz = max(world.maxz, coordZ+maxZFound-1)
 		for(var/posZ = 1 to gridLevels.len)
 			var zGrid = gridLevels[posZ]
 			// Reverse Y coordinate
