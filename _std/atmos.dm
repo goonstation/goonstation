@@ -68,7 +68,7 @@
 #define TANK_FRAGMENT_PRESSURE	(50.*ONE_ATMOSPHERE) // Boom 3x3 base explosion
 #define TANK_FRAGMENT_SCALE	    (10.*ONE_ATMOSPHERE) // +1 for each SCALE kPa aboe threshold
 
-#define TANK_MIN_RELEASE_PRESSURE 0 // for now
+#define TANK_MIN_RELEASE_PRESSURE 0
 #define TANK_MAX_RELEASE_PRESSURE	(3*ONE_ATMOSPHERE)
 
 // portable atmos properties
