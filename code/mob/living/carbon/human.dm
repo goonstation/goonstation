@@ -2885,25 +2885,19 @@
 /mob/living/carbon/human/set_mutantrace(var/mutantrace_type)
 
 	//Clean up the old mutantrace
-	if (src.organHolder && src.organHolder.head && src.organHolder.head.donor == src)
-		src.organHolder.head.donor_mutantrace = null
+/* 	if (src.organHolder && src.organHolder.head && src.organHolder.head.donor == src)
+		src.organHolder.head.donor_mutantrace = null */ // handled by head
 
 	if(src.mutantrace != null)
 		qdel(src.mutantrace) // so that disposing() runs and removes mutant traits
 		. = 1
-
 	if(ispath(mutantrace_type, /datum/mutantrace) )	//Set a new mutantrace only if passed one
 		src.mutantrace = new mutantrace_type(src)
 		. = 1
-
-	if(.) //If the mutantrace was changed do all the usual icon updates
-		if(src.organHolder && src.organHolder.head && src.organHolder.head.donor == src)
-			src.organHolder.head.donor_mutantrace = src.mutantrace
-			src.organHolder.head.update_icon()
+	if(.)
 		src.set_face_icon_dirty()
 		src.set_body_icon_dirty()
 		src.get_static_image()
-
 
 		if (src.bioHolder && src.bioHolder.mobAppearance)
 			src.bioHolder.mobAppearance.UpdateMob()

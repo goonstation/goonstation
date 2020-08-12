@@ -881,9 +881,6 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 					if (src.organHolder.head && my_mutant?.special_head)
 						var/obj/item/organ/head/our_head = src.organHolder.head
 						human_head_image.icon = our_head.icon
-						if (!our_head.icon_piece_1)
-							human_head_image.icon_state = "[our_head.icon_state]"
-						human_head_image.color = "#ffffff"	// Coloration's handled in the head organ
 					else if (src.organHolder.head.donor_appearance && src.organHolder.head.donor_appearance.s_tone != skin_tone)
 						var/h_skin_tone = src.organHolder.head.donor_appearance.s_tone
 						human_head_image.color = h_skin_tone
@@ -1236,13 +1233,13 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 
 			human_image.color = "#fff"
 
-	if (my_mutant)	// Draw the rest of the overlays
-		if (!my_mutant.built_from_pieces)	// If they arent built frm pieces, just use the icon they set
+	if (src.mutantrace)	// Draw the rest of the overlays
+		if (!src.mutantrace.built_from_pieces)	// If they arent built frm pieces, just use the icon they set
 			src.body_standing.overlays += image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)
-		src.body_standing.overlays += mutantrace.detail_1
-		src.body_standing.overlays += mutantrace.detail_2	// unused, for now
-		src.body_standing.overlays += mutantrace.detail_3	// unused, for now
-		src.body_standing.overlays += mutantrace.detail_over_suit	// used by lizards so that when they're facing upwards their tail doesn't look awkward.
+		if(src.mutantrace.detail_1)
+			src.body_standing.overlays += mutantrace.detail_1
+		if(src.mutantrace.detail_over_suit)
+			src.body_standing.overlays += mutantrace.detail_over_suit	// used by lizards so that when they're facing upwards their tail doesn't look awkward.
 
 
 #if ASS_JAM

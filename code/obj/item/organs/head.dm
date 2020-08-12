@@ -28,9 +28,7 @@
 
 	var/icon/head_icon = null
 
-	var/icon/icon_piece_1 = null	// If our head has an extra colorful *thing*
-	var/icon_piece_1_color = null	// Colorizes the extra colorful *thing*
-	var/icon_skin_color = null		// If we're overriding the base skin color with another skin color
+	var/extra_special_head_rendering_instructions = 0	// if our head is extra special and needs extra special head rendering instructions
 
 	// equipped items - they use the same slot names because eh.
 	var/obj/item/clothing/head/head = null
@@ -49,12 +47,8 @@
 				src.bones.name = "skull"
 				if (src.donor.bioHolder && src.donor.bioHolder.mobAppearance)
 					src.donor_appearance = src.donor.bioHolder.mobAppearance
-
 				else //The heck?
 					src.donor_appearance = new(src)
-
-				if (src.donor.mutantrace)
-					src.donor_mutantrace = src.donor.mutantrace
 				src.update_icon()
 			src.pixel_y = rand(-20,-8)
 			src.pixel_x = rand(-8,8)
@@ -118,12 +112,39 @@
 		if (!src.donor || !src.donor_appearance)
 			return // vOv
 
-		if (src.donor_mutantrace && !src.donor_mutantrace.special_head)
-			src.head_icon = new /icon(src.icon, src.donor_mutantrace.icon_state)
-		else
-			src.head_icon = new /icon(src.icon, src.icon_state)
+		if (src.donor.bioHolder && src.donor.bioHolder.mobAppearance)
+			src.donor_appearance = src.donor.bioHolder.mobAppearance
+		else // ...?
+			src.donor_appearance = new(src)
 
-		if (!src.donor_mutantrace || !src.donor_mutantrace.override_skintone)
+		if (src.donor.mutantrace)
+			src.donor_mutantrace = src.donor.mutantrace
+
+		src.head_icon = null
+		src.head_icon = new /icon(src.icon, src.icon_state)
+
+		if(src.extra_special_head_rendering_instructions)
+			switch(src.extra_special_head_rendering_instructions)
+				if ("lizard")
+					var/icon/new_head_icon = new /icon(src.icon, src.icon_state)
+					new_head_icon.Blend(src.GetMutantColors(1), ICON_MULTIPLY)
+
+					var/icon/head_icon_detail = new /icon(src.icon, "head-detail_1")
+					head_icon_detail.Blend(src.GetMutantColors(2), ICON_MULTIPLY)
+					new_head_icon.Blend(head_icon_detail, ICON_OVERLAY)
+
+					src.head_icon = new_head_icon
+
+				if ("cow")
+					var/icon/new_head_icon = new /icon(src.icon, src.icon_state)
+
+					var/icon/head_icon_detail = new /icon(src.icon, "head-detail_1")
+					head_icon_detail.Blend(src.GetMutantColors(1), ICON_MULTIPLY)
+					new_head_icon.Blend(head_icon_detail, ICON_OVERLAY)
+
+					src.head_icon = new_head_icon
+
+		if (!src.donor_mutantrace || !src.donor_mutantrace.override_skintone && !src.extra_special_head_rendering_instructions)
 			if (src.donor_appearance.s_tone)
 				src.head_icon.Blend(src.donor_appearance.s_tone, ICON_MULTIPLY)
 
@@ -159,22 +180,7 @@
 			d_icon.Blend(dcol, ICON_MULTIPLY)
 			src.head_icon.Blend(d_icon, ICON_OVERLAY)
 
-		if (src.icon_piece_1)
-			var/icon/new_head_icon = new /icon(src.icon, src.icon_state)
-
-			if (!src.icon_skin_color)
-				src.icon_piece_1_color = rgb(rand(50,190), rand(50,190), rand(50,190))
-			new_head_icon.Blend(src.icon_piece_1_color, ICON_MULTIPLY)
-
-			if (!src.icon_piece_1_color)
-				src.icon_piece_1_color = rgb(rand(50,190), rand(50,190), rand(50,190))
-			var/icon/icon_1 = new /icon(src.icon, src.icon_piece_1)
-			icon_1.Blend(src.icon_piece_1_color, ICON_MULTIPLY)
-			new_head_icon.Blend(icon_1, ICON_OVERLAY)
-
-			src.icon = new_head_icon
-		else
-			src.icon = src.head_icon
+		src.icon = src.head_icon
 
 	proc/update_headgear_image()
 		src.overlays = null
@@ -190,6 +196,23 @@
 
 		if (src.head && src.head.wear_image_icon)
 			src.overlays += image(src.head.wear_image_icon, src.head.icon_state)
+
+	proc/GetMutantColors(var/which_one as num)
+		var/mob/living/carbon/human/M = src.donor
+		var/datum/appearanceHolder/aH = null
+		if (M?.bioHolder?.mobAppearance)
+			aH = M.bioHolder.mobAppearance
+		switch (which_one)
+			if(1)
+				if (aH)
+					return organ_fix_colors(aH.customization_first_color)
+				else
+					return rgb(rand(50,190), rand(50,190), rand(50,190))
+			if(2)
+				if (aH)
+					return organ_fix_colors(aH.customization_second_color)
+				else
+					return rgb(rand(50,190), rand(50,190), rand(50,190))
 
 	do_missing()
 		..()
@@ -315,79 +338,77 @@
 		else
 			return 0
 
-/obj/item/organ/head/monkey
-	name = "monkey head"
-	desc = "The last thing a geneticist sees before they die."
-	icon_state = "monkey"
+	proc/MakeMutantHead(var/mutant_race as num, var/my_mutant_race)
+		if(ispath(my_mutant_race, /datum/mutantrace))
+			src.donor_mutantrace = my_mutant_race
 
-/obj/item/organ/head/lizard
-	name = "lizard head"
-	desc = "Well, sssshit."
-	icon = 'icons/mob/lizard.dmi'
-	icon_state = "head-detail1"
-	icon_piece_1 = "head-detail2"
+		src.name = "head"
+		src.desc = "Well, shit."
+		src.icon = 'icons/mob/human_head.dmi'
+		src.icon_state = "head"
+		src.organ_holder_required_op_stage = 0.0
+		src.scalp_op_stage = 0.0
+		src.extra_special_head_rendering_instructions = 0
 
-	New()
-		..()
-		// This head accepts hairstyle colors!
-		var/mob/living/carbon/human/M = src.donor
-		if (M && ishuman(M))	// Get the colors here so they dont change later, ie reattached on someone else
-			var/datum/appearanceHolder/aH = M.bioHolder.mobAppearance
-			src.icon_skin_color = organ_fix_colors(aH.customization_first_color)
-			src.icon_piece_1_color = organ_fix_colors(aH.customization_second_color)
-		else	// Just throw some colors in there or something
-			src.icon_skin_color = rgb(rand(50,190), rand(50,190), rand(50,190))
-			src.icon_piece_1_color = rgb(rand(50,190), rand(50,190), rand(50,190))
-		update_icon()
-		M.update_body()
+		switch(mutant_race)	// I mean they all do the same thing
+			if(HEAD_HUMAN)
+				src.name = "[src.donor_name]'s head"
 
-/obj/item/organ/head/cow
-	name = "cow head"
-	desc = "They're not dead, they're just a really good roleplayer."
-	icon = 'icons/mob/cow.dmi'
-	icon_piece_1 = "head-detail1"
+			if(HEAD_MONKEY)
+				src.name = "[src.donor_name]'s monkey head"
+				src.desc = "The last thing a geneticist sees before they die."
+				src.icon_state = "monkey"
 
-	New()
-		..()
-		// This head accepts hairstyle colors!
-		var/mob/living/carbon/human/M = src.donor
-		if (M && ishuman(M))	// Get the colors here so they dont change later, ie reattached on someone else
-			var/datum/appearanceHolder/aH = M.bioHolder.mobAppearance
-			src.icon_skin_color = "#FFFFFF"	// So our head doesn't look any stranger than it should
-			src.icon_piece_1_color = organ_fix_colors(aH.customization_first_color)
-		else	// Just throw some colors in there or something
-			src.icon_piece_1_color = rgb(rand(50,190), rand(50,190), rand(50,190))
-		update_icon()
-		M.update_body()
+			if(HEAD_LIZARD)
+				src.name = "[src.donor_name]'s lizard head"
+				src.desc = "Well, sssshit."
+				src.icon = 'icons/mob/lizard.dmi'
+				src.extra_special_head_rendering_instructions = "lizard"
 
-/obj/item/organ/head/wolf
-	name = "wolf head"
-	desc = "Definitely not a good boy."
-	icon = 'icons/mob/werewolf.dmi'
-	MAX_DAMAGE = 250	// Robust head for a robust antag
-	FAIL_DAMAGE = 240
+			if(HEAD_COW)
+				src.name = "[src.donor_name]'s cow head"
+				src.desc = "They're not dead, they're just a really good roleplayer."
+				src.icon = 'icons/mob/cow.dmi'
+				src.extra_special_head_rendering_instructions = "cow"
 
-/* /obj/item/organ/head/seamonkey
-	name = "seamonkey head"
-	desc = "The last thing an assistant sees when they fall into the trench. Aside from all the robots." */
+			if(HEAD_WEREWOLF)
+				src.name = "[src.donor_name]'s wolf head"
+				src.desc = "Definitely not a good boy."
+				src.icon = 'icons/mob/werewolf.dmi'
+				src.MAX_DAMAGE = 250	// Robust head for a robust antag
+				src.FAIL_DAMAGE = 240
 
-/obj/item/organ/head/cat
-	name = "cat head"
-	desc = "Me-youch."
-	icon = 'icons/mob/cat.dmi'
+			if(HEAD_SKELETON)
+				src.name = "[src.donor_name]'s bony head"
+				src.desc = "...does that skull have another skull inside it?"
+				src.icon = 'icons/obj/surgery.dmi'
+				src.icon_state = "skull"
 
-/obj/item/organ/head/roach
-	name = "roach abdomen"
-	desc = "A large insect behind."
-	icon = 'icons/mob/roach.dmi'
-	made_from = "chitin"
+			if(HEAD_SEAMONKEY)
+				src.name = "[src.donor_name]'s seamonkey head"
+				src.desc = "The last thing an assistant sees when they fall into the trench. Aside from all the robots."
+				src.icon_state = "monkey"
 
-/obj/item/organ/head/frog
-	name = "frog head"
-	desc = "Croak."
-	icon = 'icons/mob/amphibian.dmi'
+			if(HEAD_CAT)
+				src.name = "[src.donor_name]'s cat head"
+				src.desc = "Me-youch."
+				src.icon = 'icons/mob/cat.dmi'
 
-/obj/item/organ/head/shelter
-	name = "shelterfrog head"
-	desc = "CroOoOoOooak."
-	icon = 'icons/mob/shelterfrog.dmi'
+			if(HEAD_ROACH)
+				src.name = "[src.donor_name]'s roach head"
+				src.desc = "Not the biggest bug you'll seen today, nor the last."
+				src.icon = 'icons/mob/roach.dmi'
+				src.made_from = "chitin"
+
+			if(HEAD_FROG)
+				src.name = "[src.donor_name]'s frog head"
+				src.desc = "Croak."
+				src.icon = 'icons/mob/amphibian.dmi'
+
+			if(HEAD_SHELTER)
+				src.name = "[src.donor_name]'s shelterfrog head"
+				src.desc = "CroOoOoOooak."
+				src.icon = 'icons/mob/shelterfrog.dmi'
+
+		src.update_icon()
+		src.donor.update_body()

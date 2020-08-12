@@ -207,11 +207,7 @@
 			//////////////HEAD//////////////////
 			if (src.special_head)
 				if (M.organHolder)
-					var/obj/item/organ/head/head = new src.special_head(M, M.organHolder)
-					if (istype(head))
-						M.organHolder.head = null
-						M.organHolder.head = head
-						M.organHolder.organ_list["head"] = head
+					M.organHolder.head.MakeMutantHead(src.special_head, M.mutantrace)
 
 			M.update_face()
 			M.update_body()
@@ -296,14 +292,10 @@
 							H.limbs.l_leg = limb
 							limb.holder = H
 							limb.remove_stage = 0
-
+			//////////////HEAD//////////////////
 				if (src.special_head)
 					if (H.organHolder)
-						var/obj/item/organ/head/head = new /obj/item/parts/human_parts/leg/left(H, H.organHolder)
-						if (istype(head))
-							H.organHolder.head = null
-							H.organHolder.head = head
-							H.organHolder.organ_list["head"] = head
+						H.organHolder.head.MakeMutantHead(HEAD_HUMAN)
 
 				detail_1 = null
 				detail_2 = null
@@ -472,8 +464,9 @@
 	icon_override_static = 0
 	allow_fat = 1
 	override_attack = 0
+	override_eyes = 1
 	voice_override = "lizard"
-	special_head = /obj/item/organ/head/lizard
+	special_head = HEAD_LIZARD
 	mutant_folder = 'icons/mob/lizard.dmi'
 	built_from_pieces = 1
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/lizard/right
@@ -487,7 +480,7 @@
 			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
 
 			skincolor = image('icons/effects/genetics.dmi', "blank_c")
-			detail_1 = image('icons/mob/lizard.dmi', icon_state="lizard_detail-1", layer = MOB_LAYER_BASE+0.5)	// Belly coloration. Second color
+			detail_1 = image('icons/mob/lizard.dmi', icon_state="lizard_detail-1", layer = MOB_LIMB_LAYER+0.9)	// Belly coloration. Second color
 			detail_over_suit = image('icons/effects/genetics.dmi', icon_state="lizard_over_suit", layer = MOB_LAYER_BASE+0.3)
 
 			hex_to_rgb_list(aH.customization_first_color)
@@ -838,7 +831,7 @@
 	ignore_missing_limbs = 0
 	built_from_pieces = 1
 	mutant_folder = 'icons/mob/werewolf.dmi'
-	special_head = /obj/item/organ/head/wolf
+	special_head = HEAD_WEREWOLF
 
 	New()
 		..()
@@ -979,7 +972,7 @@
 	head_offset = -9
 	hand_offset = -5
 	body_offset = -7
-	special_head = /obj/item/organ/head/monkey
+	special_head = HEAD_MONKEY
 //	uses_human_clothes = 0 // Guess they can keep that ability for now (Convair880).
 	human_compatible = 0
 	exclusive_language = 1
@@ -1279,7 +1272,7 @@
 	icon_override_static = 0
 	override_attack = 0
 	mutant_folder = 'icons/mob/roach.dmi'
-	special_head = /obj/item/organ/head/roach
+	special_head = HEAD_ROACH
 	built_from_pieces = 1
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/roach/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/roach/left
@@ -1302,7 +1295,7 @@
 	firevuln = 1.5 // very flammable catthings
 	built_from_pieces = 1
 	mutant_folder = 'icons/mob/cat.dmi'
-	special_head = /obj/item/organ/head/cat
+	special_head = HEAD_CAT
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/right
@@ -1335,7 +1328,7 @@
 	var/original_blood_color = null
 	built_from_pieces = 1
 	mutant_folder = 'icons/mob/amphibian.dmi'
-	special_head = /obj/item/organ/head/frog
+	special_head = HEAD_FROG
 	built_from_pieces = 1
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/left
@@ -1400,7 +1393,7 @@
 	var/permanent = 0
 	built_from_pieces = 1
 	mutant_folder = 'icons/mob/shelterfrog.dmi'
-	special_head = /obj/item/organ/head/shelter
+	special_head = HEAD_SHELTER
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/shelterfrog/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/shelterfrog/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/shelterfrog/right
@@ -1626,7 +1619,7 @@
 	built_from_pieces = 1
 	colorful = 1 // the horns, just one customization entry
 	mutant_folder = 'icons/mob/cow.dmi'
-	special_head = /obj/item/organ/head/cow
+	special_head = HEAD_COW
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right
@@ -1635,15 +1628,6 @@
 	New(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(mob))
-			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
-
-			detail_1 = image('icons/effects/genetics.dmi', icon_state="cow_detail-1", layer = MOB_LIMB_LAYER+0.1)
-			detail_over_suit = image('icons/effects/genetics.dmi', icon_state="cow_over_suit", layer = MOB_LAYER_BASE+0.3)
-
-			hex_to_rgb_list(aH.customization_first_color)
-
-			detail_1.color = fix_colors(aH.customization_first_color)
-
 			mob.update_face()
 			mob.update_body()
 			mob.update_clothing()
@@ -1658,16 +1642,6 @@
 			H.blood_id = initial(H.blood_id)
 			H.blood_color = initial(H.blood_color)
 		..()
-
-
-	proc/fix_colors(var/hex)
-		var/list/L = hex_to_rgb_list(hex)
-		for (var/i in L)
-			L[i] = min(L[i], 190)
-			L[i] = max(L[i], 50)
-		if (L.len == 3)
-			return rgb(L["r"], L["g"], L["b"])
-		return rgb(22, 210, 22)
 
 	say_filter(var/message)
 		.= replacetext(message, "cow", "human")
