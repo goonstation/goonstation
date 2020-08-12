@@ -182,6 +182,7 @@
 	var/gun_x_offset = -1 // gun pic x offset
 	var/gun_y_offset = 8 // gun pic y offset
 	var/lawbringer_state = null // because the law just has to be *difficult*. determines what lights to draw on the lawbringer if it has one
+	var/lawbringer_alwaysbigshot = 0 // varedit this to 1 if you want the Buddy to always go infinite-ammo bigshot. this is a bad idea
 	//
 	////////////////////// GUN STUFF -^
 
@@ -453,17 +454,15 @@
 		else
 			boutput(user, "You show \the [E] to [src]! They give you a knowing grin.")
 			set_emotion("smug")
-			update_icon()
 		src.emagged = 1
 		if (src.obeygunlaw)
 			src.obeygunlaw = 0
 			if (src.idle || !src.on)
 				SPAWN_DBG(1 SECOND)
 					boutput(user, "[src] looks confused for a moment.")
-					set_emotion("look")
 		if (src.budgun)
 			if(istype(src.budgun, /obj/item/gun/energy/lawbringer))
-				BeTheLaw(1, 0)
+				BeTheLaw(1, 0, src.lawbringer_alwaysbigshot)
 			if(istype(src.budgun, /obj/item/gun/energy/egun))
 				CheckSafety(src.budgun, 1, user)
 		return 1
@@ -638,7 +637,7 @@
 		if (src.slept_through_laser_class)
 			src.slept_through_laser_class = 0
 
-	proc/BeTheLaw(var/loose = 0, var/bigshot = 0)
+	proc/BeTheLaw(var/loose = 0, var/changemode = 0, var/bigshot = 0)
 		if (!istype(src.budgun, /obj/item/gun/energy/lawbringer))
 			src.slept_through_becoming_the_law = 0 // If we were going to be the law before, we ain't now.
 			return
@@ -672,14 +671,25 @@
 												"Yay! I get to be the law!",\
 												"Time for crime... to stop!",\
 												"If only [istype(src, /obj/machinery/bot/guardbot/ranger) ? "I could see myself" : "Ol' Harner could see me"] now!")
-		speak(saytheline)	//owner_prints
+		if (!changemode)
+			speak(saytheline)	//owner_prints
 		var/local_ordinance = null
-		if (bigshot)
-			local_ordinance = "bigshot"
-		else if(loose)
-			local_ordinance = pick("execute", "hotshot", "clown")
-		else
-			local_ordinance = pick("clown", "detain", "pulse", "knockout", "smoke")
+		var/changemode_tries = 3 // you get three tries to pick a mode that isnt the one you have
+		while(local_ordinance == null && changemode_tries > 0) // please dont fuck things up
+			if (bigshot)
+				local_ordinance = "bigshot"
+			else if(loose)
+				local_ordinance = pick("execute", "hotshot", "clown")
+			else
+				local_ordinance = pick("clown", "detain", "pulse", "knockout", "smoke")
+			if(changemode)
+				if (local_ordinance == src.lawbringer_state)
+					local_ordinance = null
+					changemode_tries --
+				else
+					break
+			else
+				break
 		src.lawbringer_state = local_ordinance
 		switch (local_ordinance)
 			if ("clown")
@@ -703,29 +713,34 @@
 					playsound(src, "sound/vox/push.ogg", 30)
 			if ("knockout")
 				src.budgun.current_projectile = new/datum/projectile/bullet/tranq_dart/law_giver
+				src.budgun.current_projectile.cost = 60
 				SPAWN_DBG(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Knockout!")
 					playsound(src, "sound/vox/sleep.ogg", 30)
 			if ("smoke")
 				src.budgun.current_projectile = new/datum/projectile/bullet/smoke
+				src.budgun.current_projectile.cost = 50
 				SPAWN_DBG(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Smokeshot!")
 					playsound(src, "sound/vox/smoke.ogg", 30)
 			if ("execute")
 				src.budgun.current_projectile = new/datum/projectile/bullet/revolver_38
+				src.budgun.current_projectile.cost = 30
 				SPAWN_DBG(1 SECOND)
 					speak("EXTERMINATE.")
 					playsound(src, "sound/vox/exterminate.ogg", 30)
 			if ("hotshot")
 				src.budgun.current_projectile = new/datum/projectile/bullet/flare
+				src.budgun.current_projectile.cost = 60
 				SPAWN_DBG(1 SECOND)
 					speak("HOTSHOT.")
 					playsound(src, "sound/vox/hot.ogg", 30)
 			if ("bigshot")	// impossible to get to without admin intervention
 				src.budgun.current_projectile = new/datum/projectile/bullet/aex/lawbringer
-				SPAWN_DBG(1 SECOND) // just call proc BeTheLaw(1, 1) on a Buddy with a lawbringer and it should work
+				src.budgun.current_projectile.cost = 170
+				SPAWN_DBG(1 SECOND) // just call proc BeTheLaw(1, 0, 1) on a Buddy with a lawbringer and it should work
 					speak("HIGH EXPLOSIVE.")
 					playsound(src, "sound/vox/high.ogg", 50)
 					sleep(0.4 SECONDS)
@@ -749,7 +764,6 @@
 		SPAWN_DBG(2 SECONDS)
 			src.visible_message("<b>[src.name]</b>[actiontext1], then [actiontext2][pick("!" , ", hoping nobody noticed.")]")
 			set_emotion(pick("screaming", "look", "angry", "sad"))
-			src.update_icon()
 			DropTheThing("gun", null, 0, 0, TdurgSux)
 			src.locked = 0
 			src.gunlocklock = 0
@@ -872,7 +886,6 @@
 				if (by_force && user)
 					src.visible_message("<span class='alert'>[user] pries the [src.budgun] from [src]'s cold, metal hand!</span>", "<span class='alert'>You pry the [src.budgun] from [src]'s cold, metal hand.</span>")
 					set_emotion("sad")
-					update_icon()
 				else if (announce_it)
 					src.visible_message("[src] drops the [src.budgun].")
 				src.budgun.set_loc(Tdurg)
@@ -889,7 +902,6 @@
 				else if (by_force && user)
 					src.visible_message("<span class='alert'>[user] pries the [src.tool] out of [src]'s tool port!</span>", "<span class='alert'>You pry the [src.tool] out of [src]'s tool port!</span>")
 					set_emotion("sad")
-					update_icon()
 				else if (announce_it)
 					src.visible_message("[src] drops the [src.tool].")
 				src.tool.set_loc(Tdurg)
@@ -1003,7 +1015,7 @@
 				update_icon()
 				IllegalBotMod(null, user)	// Time to see if our mods want to do anything with this gun
 				if(istype(Q, /obj/item/gun/energy/lawbringer))
-					BeTheLaw(src.emagged, 0)
+					BeTheLaw(src.emagged, 0, src.lawbringer_alwaysbigshot)
 				else if(istype(Q, /obj/item/gun/energy/egun))
 					CheckSafety(src.budgun, src.emagged, user)
 
@@ -1064,20 +1076,14 @@
 				src.visible_message("<span class='alert'><B>BOOM!</B> [src] shoots itself right in its dumb face and explodes!</span>")
 				src.explode()
 			else
-				var/list/mob/nearby_dorks = list()
-				for (var/mob/living/D in oview(7, src))
-					nearby_dorks.Add(D)
-				if(nearby_dorks.len > 0)
-					var/griffed = pick(nearby_dorks)
-					shoot_projectile_ST_pixel(src, new/datum/projectile/bullet/revolver_38/stunners, griffed)
-					src.visible_message("<span class='alert'><B>BOOM!</B> [src] misses its head... screen... thing, sending the bullet flying at [griffed]!</span>")
-					if(ishuman(griffed))
-						SPAWN_DBG(3 SECONDS)
-							src.visible_message("[src] gasps!")
-							speak(pick("Sorry!", "Are you okay?", "Whoops!", "Heads up!", "Oh no!"))
+				var/griffed = ShootTheGun()
+				src.visible_message("<span class='alert'><B>BOOM!</B> [src] misses its head... screen... thing, sending the bullet flying at [griffed]!</span>")
+				if (ishuman(griffed))
+					SPAWN_DBG(3 SECONDS)
+						src.visible_message("[src] gasps!")
+						speak(pick("Sorry!", "Are you okay?", "Whoops!", "Heads up!", "Oh no!"))
 				else
-					var/random_direction = get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5))
-					shoot_projectile_ST_pixel(src, new/datum/projectile/bullet/revolver_38/stunners, random_direction)
+					ShootTheGun()
 					src.visible_message("<span class='alert'><B>BOOM!</B> [src] misses its head... screen... thing, sending the bullet flying!</span>")
 		if(bar_gun.shotsLeft > 1)
 			bar_gun.shotsLeft--
@@ -1086,6 +1092,136 @@
 
 		if (bar_gun.shotsLeft == 0)
 			DropTheThing("gun", null, 0, 1, TdurgBar, 1)
+
+	proc/DoAmmofab()
+		if(!src.budgun || !src.ammofab || !src.cell)
+			return 0 // uhh
+
+		if (istype(src.budgun, /obj/item/gun/kinetic))
+			var/obj/item/gun/kinetic/shootgun = src.budgun	// first check if we have enough charge to reload
+			if (src?.cell?.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL && ((cell.charge - ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 0.75))) > (GUARDBOT_LOWPOWER_ALERT_LEVEL)))	// *scream
+				cell.charge -= ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 0.75))
+				shootgun.ammo.amount_left = shootgun.ammo.max_amount
+				return 1 // good2shoot!
+			else if (CheckMagCellWhatever())	// if not, do we have enough ammo to shoot?
+				return 1 // still good2shoot!
+			else
+				return DischargeAndTakeANap()
+		else if (istype(src.budgun, /obj/item/gun/bling_blaster) && ammofab)	// Ammo is ammo, even if its money
+			var/obj/item/gun/bling_blaster/funds = src.budgun	// not sure why you'd do this, but it's an option, so functionality
+			if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL)) // I mean you can't even make much (if any) money off of this
+				cell.charge -= (funds.cash_max - funds.cash_amt)	// maybe you'd get lucky and the buddy'll shoot some diamonds
+				funds.cash_amt = funds.cash_max		// but on average, the payout is crap and takes forever and you have to keep charging the bot
+				return 1 // good2shoot!
+			else if (CheckMagCellWhatever()) // so i figured if you really want to do this, go for it
+				return 1 // still good2shoot!
+			else // Otherwise, drain the cell enough to force the Buddy to go recharge
+				DischargeAndTakeANap()
+		else // if its called on anything else
+			return CheckMagCellWhatever() // just toss it over the fence, let CheckMagCellWhatever worry about it
+
+	proc/CheckMagCellWhatever()
+		if(!src.budgun || !src.cell)
+			return 0 // fingerguns arent good2shoot yet
+
+		if (istype(src.budgun, /obj/item/gun/kinetic/meowitzer/inert)) // cats4days
+			var/obj/item/gun/kinetic/meowgun = src.budgun
+			meowgun.ammo.amount_left = meowgun.ammo.max_amount
+			return 1 // mew2meow!
+
+		if (istype(src.budgun, /obj/item/gun/bling_blaster))
+			var/obj/item/gun/bling_blaster/cash_gun = src.budgun
+			if (cash_gun.cash_max)
+				if (cash_gun.cash_amt >= cash_gun.shot_cost)
+					return 1 // totally cash!
+				else
+					return 0 // totally not cash!
+			else // i blame haine
+				return 0
+
+		if (istype(src.budgun, /obj/item/gun/kinetic))
+			var/obj/item/gun/kinetic/shootgun = src.budgun
+			if (shootgun.ammo) // is our gun even loaded with anything?
+				if (shootgun.ammo.amount_left >= shootgun.current_projectile.cost)
+					return 1 // good2shoot!
+				else
+					return 0 // until we can fire an incomplete burst, our gun isnt good2shoot
+			else // no?
+				return 0 // huh
+
+		else if (istype(src.budgun, /obj/item/gun/energy))
+			var/obj/item/gun/energy/pewgun = src.budgun
+			if(pewgun.cell) // did we remember to load our energygun?
+				if (pewgun.cell.charge >= pewgun.current_projectile.cost) // okay cool we can shoot!
+					return 1
+				else if(istype(pewgun.cell, /obj/item/ammo/power_cell/self_charging)) // oh no we cant, but do we recharge?
+					if(istype(src.budgun, /obj/item/gun/energy/lawbringer)) // is it one of those funky guns with multiple settings?
+						BeTheLaw(src.emagged, 1, src.lawbringer_alwaysbigshot) // see if we can change modes and try again
+						return 0 // then try again later
+					else
+						return 0 // ditto
+				else // oh no we cant!
+					return 0
+			else
+				return 0 // maybe try putting batteries in it next time
+
+	proc/ChargeUrLaser()
+		if(!src.budgun || !src.cell || !istype(src.budgun, /obj/item/gun/energy))
+			return 0 // keep your fingers out of the charger
+
+		if (istype(src.budgun, /obj/item/gun/energy))
+			var/obj/item/gun/energy/charge_me = src.budgun
+			if(istype(charge_me.cell, /obj/item/ammo/power_cell/self_charging)) // Oh a self-charger?
+				return 0 // cant touch that, sorry
+			else if (charge_me.cell.charge < charge_me.cell.max_charge) // is our gun not full?
+				if (src.cell.charge > (GUARDBOT_LOWPOWER_ALERT_LEVEL - 10 + (charge_me.cell.max_charge - charge_me.cell.charge))) // Can we charge it without tanking our battery?
+					src.cell.charge -= (charge_me.cell.max_charge - charge_me.cell.charge) // discharge us
+					charge_me.cell.charge = charge_me.cell.max_charge // recharge it
+					return 1 // and we're good2shoot
+				else if (CheckMagCellWhatever()) // is there enough charge left in the gun?
+					return 0 // cool, but we're not gonna charge it
+				else // welp
+					return DischargeAndTakeANap()
+			else // gun's full or something?
+				return 1 // cool beans
+
+	proc/DischargeAndTakeANap()
+		if(!src.budgun || !src.cell)
+			return 0 // dont go2bed yet
+
+		if (src.cell.charge <= GUARDBOT_LOWPOWER_ALERT_LEVEL - 10) //... if it isnt low enough already
+			return 0 // not good2shoot, likely going to go recharge now
+		else
+			src.cell.charge = GUARDBOT_LOWPOWER_ALERT_LEVEL - 10 // go recharge
+			return 0 // not good2shoot, and I sure hope it goes to recharge
+
+	proc/ShootTheGun(var/target as mob|turf|null, var/thing2shoot as null)
+		if (!target) // if no target, then pick something!
+			if (!thing2shoot || !istype(thing2shoot, /datum/projectile/))
+				if(src.budgun.current_projectile)
+					thing2shoot = src.budgun.current_projectile
+				else
+					thing2shoot = new/datum/projectile/bullet/revolver_38/stunners
+			var/list/mob/nearby_dorks = list()
+			for (var/mob/living/D in oview(7, src))
+				nearby_dorks.Add(D)
+			if(nearby_dorks.len > 0)
+				var/griffed = pick(nearby_dorks)
+				shoot_projectile_ST_pixel(src, thing2shoot, griffed)
+				return griffed
+			else
+				var/random_direction = get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5))
+				shoot_projectile_ST_pixel(src, thing2shoot, random_direction)
+
+		var/target_turf = get_turf(target)
+		var/my_turf = get_turf(src)
+		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
+		while(burst > 0 && target)
+			budgun.shoot(target_turf, my_turf, src)
+			burst--
+			if (burst)
+				sleep(5)	// please dont fuck anything up
+		return 1
 
 	get_desc(dist)
 		..()
@@ -1251,7 +1387,7 @@
 			src.set_emotion("look")
 
 		if(istype(src.budgun, /obj/item/gun/energy/lawbringer))
-			BeTheLaw(src.emagged, 0)
+			BeTheLaw(src.emagged, 0, src.lawbringer_alwaysbigshot)
 		if(istype(src.budgun, /obj/item/gun/energy/egun))
 			CheckSafety(src.budgun, 1)
 		return
@@ -1268,7 +1404,7 @@
 			src.mover.master = null
 			//qdel(src.mover)
 			src.mover = null
-		if(allow_big_explosion && cell && (cell.charge / cell.maxcharge > 0.85) && prob(25))
+		if((allow_big_explosion && cell && (cell.charge / cell.maxcharge > 0.85) && prob(25)) || istype(src.cell, /obj/item/cell/erebite))
 			src.invisibility = 100
 			var/obj/overlay/Ov = new/obj/overlay(T)
 			Ov.anchored = 1
@@ -1317,7 +1453,10 @@
 				qdel(src)
 
 			T.hotspot_expose(800,125)
-			explosion(src, T, -1, -1, 2, 3)
+			if (istype(src.cell, /obj/item/cell/erebite))
+				explosion(src, T, 0, 1, 2, 2)
+			else
+				explosion(src, T, -1, -1, 2, 3)
 
 		else
 			if(src.tool.tool_id == "GUN")
@@ -1471,34 +1610,14 @@
 				else if(istype(src.budgun, /obj/item/gun/russianrevolver))
 					BarGun()
 				else if(src.budgun)
-					var/burst = shotcount	// TODO: Make rapidfire exist, then work.
-					while(burst > 0 && target)
-						budgun.shoot(get_turf(target), get_turf(src), src)
-						burst--
-						if (burst)
-							sleep(5)	// please dont fuck anything up
-					if (istype(src.budgun, /obj/item/gun/kinetic))
-						var/obj/item/gun/kinetic/shootgun = src.budgun
-						if (ammofab || istype(src.budgun, /obj/item/gun/kinetic/meowitzer/inert))	// Can we build our own ammo?
-						//	if (shootgun?.ammo?.max_amount && (shootgun.ammo.amount_left <= 1 || ((shootgun.ammo.amount_left - shootgun.current_projectile.cost) <= 0))) // was making this useless with guns that you'd actually want to use it, like the AK. Wouldnt even reload!
-							if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL) && ((cell.charge - ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 0.75))) > (GUARDBOT_LOWPOWER_ALERT_LEVEL)))	// *scream
-								cell.charge -= ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 0.75))
-								shootgun.ammo.amount_left = shootgun.ammo.max_amount
-					else if (istype(src.budgun, /obj/item/gun/energy))
-						var/obj/item/gun/energy/pewgun = src.budgun
-						if (pewgun.cell && (pewgun.cell.charge < pewgun.cell.max_charge))
-							if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL))
-								cell.charge -= (pewgun.cell.max_charge - pewgun.cell.charge)
-								pewgun.cell.charge = pewgun.cell.max_charge
-					else if (istype(src.budgun, /obj/item/gun/bling_blaster) && ammofab)	// Ammo is ammo, even if its money
-						var/obj/item/gun/bling_blaster/funds = src.budgun	// not sure why you'd do this, but it's an option, so functionality
-						if (funds.cash_amt && (funds.cash_amt < funds.cash_max))	// I mean you can't even make much (if any) money off of this
-							if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL))	// maybe you'd get lucky and the buddy'll shoot some diamonds
-								cell.charge -= (funds.cash_max - funds.cash_amt)	// but on average, the payout is crap and takes forever and you have to keep charging the bot
-								funds.cash_amt = funds.cash_max	// so i figured if you really want to do this, go for it
-
-
-					src.visible_message("<span class='alert'><b>[src] fires its [gun] at [target]!</b></span>")
+					if (DoAmmofab() || CheckMagCellWhatever())
+						ShootTheGun(target)
+						src.visible_message("<span class='alert'><B>[src] fires [src.budgun] at [target]!</B></span>")
+					else
+						playsound(src, "sound/weapons/Gunclick.ogg", 60, 1)
+					if (ChargeUrLaser())
+						SPAWN_DBG(1 SECOND)
+							elecflash(get_turf(src), 1, power=1, exclude_center = 0)
 					update_icon()
 				else if(!src.budgun)
 					var/r = rand(1,9)
@@ -1523,10 +1642,8 @@
 							src.speak("ERROR: Unable to prosecute beatdown.arrest_target!")
 					src.set_emotion("screaming")	// *scream
 					src.remove_current_task()		// welp
-					src.update_icon()				// Update now, we're kind of on a deadline
 					SPAWN_DBG(3 SECONDS)
 						src.set_emotion("sad")		// Still kinda sad that someone would bully a defenseless little rectangle.
-						src.update_icon()
 			else if(src.tool && (src.tool.tool_id != "GUN"))
 				var/is_ranged = get_dist(src, target) > 1
 				src.tool.bot_attack(target, src, is_ranged, lethal)
@@ -1610,11 +1727,8 @@
 			src.emotion = new_emotion
 			if (src.hat || src.costume_icon || src.bedsheet)
 				src.overlays = list((src.costume_icon ? src.costume_icon : null), (src.bedsheet ? image(src.icon, "bhat-ghost[src.bedsheet]") : null))
-/*
-			else
-				src.overlays.len = 0 //Clear overlays so it will update on update_icon call
-				src.hat_shown = 0
-*/
+			update_icon() // just update the darn icon
+
 		interacted(mob/user as mob)
 			var/dat = "<tt><B>PR-6S Guardbuddy v1.4</B></tt><br><br>"
 
@@ -1768,7 +1882,7 @@
 			src.reply_wait--
 
 		if(src.on && !src.idle && src.slept_through_becoming_the_law)	// Oh you're awake now?
-			BeTheLaw(src.emagged, 0)	// Go be the law, sleepyhead
+			BeTheLaw(src.emagged, 0, src.lawbringer_alwaysbigshot)	// Go be the law, sleepyhead
 		if(src.on && !src.idle && src.slept_through_laser_class)	// Rise and shine, buddy
 			CheckSafety(src.budgun, src.emagged)	// Look at your gun!
 
