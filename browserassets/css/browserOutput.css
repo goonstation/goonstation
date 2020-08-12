@@ -265,6 +265,7 @@ a.popt {text-decoration: none;}
 .regular { color: #000000; }
 .internal { color: #002fff; }
 .mhelp {color: #CC0066;}
+.ahelp {color: #0000ff;}
 .success {color: green;}
 .hint {color: #0000ff;}
 .notice {color: #0000ff;}
