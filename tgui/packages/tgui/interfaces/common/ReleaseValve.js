@@ -25,7 +25,7 @@ export const ReleaseValve = props => {
           content="Min" />
         <NumberInput
           animated
-          width="85px"
+          width="7em"
           value={releasePressure}
           minValue={minRelease}
           maxValue={maxRelease}
