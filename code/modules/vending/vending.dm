@@ -950,7 +950,7 @@
 
 	onUpdate()
 		..()
-		if(get_dist(src.owner, src.vendor) > 1 || src.vendor == null || src.owner == null)
+		if(DIST_CHECK(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -960,7 +960,7 @@
 
 	onStart()
 		..()
-		if(get_dist(src.owner, src.vendor) > 1 || src.vendor == null || src.owner == null)
+		if(DIST_CHECK(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1629,25 +1629,7 @@
 					src.vending_HTML += "<BR>This machine only takes credit bills."
 
 			src.vending_HTML += "</TT>"
-/*
-	attack_hand(mob/user as mob)
-		if (status & (NOPOWER|BROKEN))
-			return
-		var/dat
-		if(pizcooking)
-			dat += "<TT><B>Cooking your pizza, please wait!</B></TT><BR>"
-		else
-			dat += "<TT><B>PizzaVend 0.5b</B></TT><BR>"
-			if(emagged)
-				dat += "<BR><B>Available Credits:</B> CREDIT CALCULATION ERROR<BR>"
-			else
-				dat += "<BR><B>Available Credits:</B> $[src.credit]<BR>"
-			dat += "Topping - <A href='?src=\ref[src];picktopping=1'>[piztopping]</A><BR>"
-			dat += "<A href='?src=\ref[src];cook=1'>Cook!</A><BR>"
-		user.Browse("<HEAD><TITLE>Pizza Vendor</TITLE></HEAD>[dat]", "window=pizzavend")
-		onclose(user, "pizzavend")
-		return
-*/
+
 	Topic(href, href_list)
 		if(..())
 			return
