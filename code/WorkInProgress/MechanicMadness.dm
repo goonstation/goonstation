@@ -1680,7 +1680,7 @@ var/list/mechanics_telepads = new/list()
 	var/net_id = null //What is our ID on the network?
 	var/last_ping = 0
 	var/range = 64
-	var/maxrange = 64
+	var/const/maxrange = 64
 
 	var/noise_enabled = true
 	var/frequency = 1419
