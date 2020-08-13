@@ -14854,15 +14854,16 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor/pyro,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
 	autoclose = 0;
 	density = 0;
+	dir = 4;
 	frequency = 1449;
-	icon_state = "door_open";
+	icon_state = "airlock_open";
 	id_tag = "dc_hydro_door";
 	locked = 1;
 	name = "Grove Module Airlock";
-	opacity = 0
+	opacity = 1
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/hydroponics)
@@ -15081,15 +15082,16 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor/pyro,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/pyro/external{
 	autoclose = 0;
 	density = 0;
+	dir = 4;
 	frequency = 1449;
-	icon_state = "door_open";
+	icon_state = "airlock_open";
 	id_tag = "dc_hydro_door";
 	locked = 1;
 	name = "Grove Module Airlock";
-	opacity = 0
+	opacity = 1
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/hydroponics/lobby)
@@ -33687,6 +33689,15 @@
 /obj/access_spawn/ai_upload,
 /turf/simulated/floor/black/side,
 /area/station/turret_protected/ai)
+"kSN" = (
+/obj/machinery/computer/riotgear{
+	dir = 8;
+	pixel_x = 32
+	},
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/brig)
 "uJW" = (
 /obj/cable{
 	d1 = 4;
@@ -60642,7 +60653,7 @@ bnI
 beV
 bfj
 bfj
-bfj
+kSN
 btf
 bpn
 bcS
