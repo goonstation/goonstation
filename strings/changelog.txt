@@ -1,5 +1,22 @@
 
+(t)wed aug 12 20
+(u)Carbadox
+(p)1750
+(e)🆕|feature
+(+)Added DIY Holy Water kit to Chaplains locker. Contains 3 bottles of wine and 3 bottles of mercury alongside a holy water container
+(u)Nebulacrity
+(p)1731
+(e)🆕🎨|feature, sprites
+(*)Nanotrasen brand neon lining is now available for purchase by the public!
+(u)BatElite
+(p)1791
+(e)🎨|sprites
+(+)Loose cyborg parts now match how they look on borgs.
 (t)tue aug 11 20
+(u)Flaborized
+(p)1694
+(e)🎨|sprites
+(+)Resprited captain's spacesuit, added captain's backpack.
 (u)Emcee-Gore
 (p)1537
 (e)🆕🗺🎨|feature, mapping, sprites

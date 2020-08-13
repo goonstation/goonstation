@@ -1175,6 +1175,7 @@ PIPE BOMBS + CONSTRUCTION
 					avg_volatility += R.volatility * R.volume / src.reagents.total_volume
 
 				qdel(src.reagents)
+				src.reagents = null
 				if (avg_volatility < 1) // B A D.
 					src.strength = 0
 				else

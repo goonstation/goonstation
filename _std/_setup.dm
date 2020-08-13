@@ -1040,13 +1040,13 @@ proc/default_frequency_color(freq)
 #ifdef RP_MODE
 #define ASS_JAM 0
 #elif BUILD_TIME_DAY == 13
-#define ASS_JAM 0
+#define ASS_JAM 1
 #else
 #define ASS_JAM 0
 #endif
 
 // time for johns madden
-#define FOOTBALL_MODE 0
+#define FOOTBALL_MODE 1
 
 
 #if ASS_JAM
