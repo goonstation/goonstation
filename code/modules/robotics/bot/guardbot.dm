@@ -1157,7 +1157,7 @@
 			if(pewgun.cell) // did we remember to load our energygun?
 				if (pewgun.cell.charge >= pewgun.current_projectile.cost) // okay cool we can shoot!
 					return 1
-				else if(istype(pewgun.cell, /obj/item/ammo/power_cell/self_charging)) // oh no we cant, but do we recharge?
+				else if(!pewgun.rechargeable) // oh no we cant, but can we recharge it?
 					if(istype(src.budgun, /obj/item/gun/energy/lawbringer)) // is it one of those funky guns with multiple settings?
 						BeTheLaw(src.emagged, 1, src.lawbringer_alwaysbigshot) // see if we can change modes and try again
 						return 0 // then try again later
