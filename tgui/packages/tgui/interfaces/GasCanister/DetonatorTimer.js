@@ -1,4 +1,5 @@
 import { Box, AnimatedNumber } from '../../components';
+import { formatTime } from '../../format';
 
 export const DetonatorTimer = props => {
   const {
@@ -8,23 +9,7 @@ export const DetonatorTimer = props => {
     explosionMessage = "BO:OM",
   } = props;
 
-  const FormatTime = () => {
-    let seconds = Math.floor(time % 60);
-    let minutes = Math.floor((time - seconds) / 60);
-    if (time <= 0) {
-      return explosionMessage;
-    }
-    if (seconds < 10) {
-      seconds = `0${seconds}`;
-    }
-    if (minutes < 10) {
-      minutes = `0${minutes}`;
-    }
-
-    return `${minutes}:${seconds}`;
-  };
-
-  const TimeColor = () => {
+  const timeColor = () => {
     if (time <= dangerThreshold) {
       return "red";
     } else if (time <= warningThreshold) {
@@ -39,12 +24,12 @@ export const DetonatorTimer = props => {
       p={1}
       textAlign="center"
       backgroundColor="black"
-      color={TimeColor()}
+      color={timeColor()}
       maxWidth="100px"
       fontSize="19px">
       <AnimatedNumber
         value={time}
-        format={() => FormatTime()} />
+        format={value => formatTime(value, explosionMessage)} />
     </Box>
   );
 };

@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { Fragment } from 'inferno';
-import { Divider } from '../components';
+import { Divider, Box } from '../components';
 import { Window } from '../layouts';
 import { PortableBasicInfo, PortableHoldingTank } from './common/PortableAtmos';
 import { ReleaseValve } from './common/ReleaseValve';
@@ -77,17 +77,18 @@ export const GasCanister = (props, context) => {
           connected={connected}
           pressure={pressure}
           maxPressure={maxPressure}>
-          { !!(hasValve) && (
-            <Fragment>
-              <Divider />
+          <Fragment>
+            <Divider />
+            { hasValve ? (
               <ReleaseValve
                 valveIsOpen={valveIsOpen}
                 releasePressure={releasePressure}
                 minRelease={minRelease}
                 maxRelease={maxRelease}
                 onToggleValve={handleToggleValve}
-                onSetPressure={handleSetPressure} />
-            </Fragment>)}
+                onSetPressure={handleSetPressure} />)
+              : <Box color="average">The release valve is missing.</Box> }
+          </Fragment>
         </PortableBasicInfo>
         { !detonator && (<PortableHoldingTank
           holding={holding}

@@ -30,7 +30,7 @@ export const PressureBar = props => {
   };
 
   const pct = () => {
-    if (pressure / maxPressure > 1) {
+    if ((pressure / maxPressure) > 1) {
       return pressure / (maxPressure * 10);
     } else {
       return pressure / maxPressure;

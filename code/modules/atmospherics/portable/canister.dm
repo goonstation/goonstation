@@ -440,14 +440,11 @@
 		return
 	switch(action)
 		if("toggle-valve")
-			if(has_valve)
-				toggle_valve()
-				. = TRUE
+			. = toggle_valve()
 		if("set-pressure")
 			var/target_pressure = params["releasePressure"]
 			if(isnum(target_pressure))
-				set_release_pressure(target_pressure)
-				. = TRUE
+				. = set_release_pressure(target_pressure)
 		if("eject-tank")
 			eject_tank()
 			. = TRUE
@@ -491,6 +488,9 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/canister/proc/toggle_valve()
+	if(!src.has_valve)
+		return
+
 	src.valve_open = !(src.valve_open)
 	if (!src.holding && !src.connected_port)
 		logTheThing("station", usr, null, "[valve_open ? "opened [src] into" : "closed [src] from"] the air [log_atmos(src)] at [log_loc(src)].")
@@ -500,10 +500,15 @@
 			message_admins("[key_name(usr)] opened [src] into the air at [log_loc(src)]. See station logs for atmos readout.")
 			if (src.det)
 				src.det.leaking()
+	return 0
 
 /obj/machinery/portable_atmospherics/canister/proc/set_release_pressure(var/pressure as num)
+	if(!src.has_valve)
+		return 1
+
 	playsound(src.loc, "sound/effects/valve_creak.ogg", 20, 1)
 	src.release_pressure = clamp(pressure, PORTABLE_ATMOS_MIN_RELEASE_PRESSURE, PORTABLE_ATMOS_MAX_RELEASE_PRESSURE)
+	return 0
 
 /obj/machinery/portable_atmospherics/canister/proc/det_wires_interact(var/tool, var/which_wire as num, var/mob/user)
 	if(!src.det || (which_wire <= 0 || which_wire > src.det.WireFunctions.len))
