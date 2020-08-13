@@ -1,5 +1,5 @@
 import { Fragment } from 'inferno';
-import { Button, LabeledList, Section, Box, Flex, Divider, Icon } from '../../components';
+import { Button, LabeledList, Section, Box, Flex, Divider } from '../../components';
 import { DetonatorTimer } from './DetonatorTimer';
 
 export const Detonator = props => {
@@ -58,15 +58,13 @@ const DetonatorWires = props => {
                 { (wireStatus && wireStatus[i]) ? (
                   <Fragment>
                     <Button
-                      onClick={() => onWireInteract("cut", i)}>
-                      <Icon name="cut" />
-                      Cut
-                    </Button>
+                      icon="cut"
+                      content="Cut"
+                      onClick={() => onWireInteract("cut", i)} />
                     <Button
-                      onClick={() => onWireInteract("pulse", i)}>
-                      <Icon name="bolt" />
-                      Pulse
-                    </Button>
+                      icon="bolt"
+                      content="Pulse"
+                      onClick={() => onWireInteract("pulse", i)} />
                   </Fragment>)
                   : (
                     <Box
@@ -93,9 +91,9 @@ const DetonatorWires = props => {
             <Button
               mt={1}
               disabled={isPrimed}
-              onClick={() => onSetTimer()}>
-              <Icon name="clock" />Timer
-            </Button>
+              icon="clock"
+              content="Timer"
+              onClick={() => onSetTimer()} />
           </Flex.Item>
         </Flex>
       </Flex.Item>
@@ -125,9 +123,9 @@ const DetonatorUtility = props => {
       return (
         <Button
           color="danger"
-          onClick={() => onPrimeDetonator()} >
-          <Icon name="bomb" />Prime
-        </Button>);
+          icon="bomb"
+          content="Prime"
+          onClick={() => onPrimeDetonator()} />);
     } else {
       return (
         <Box
@@ -146,9 +144,9 @@ const DetonatorUtility = props => {
           ? "Anchored. There are no controls for undoing this."
           : (
             <Button
-              onClick={() => onToggleAnchor()} >
-              <Icon name="anchor" />Anchor
-            </Button>)}
+              icon="anchor"
+              content="anchor"
+              onClick={() => onToggleAnchor()} />)}
       </LabeledList.Item>
       <LabeledList.Item
         label="Trigger">
@@ -166,9 +164,9 @@ const DetonatorUtility = props => {
           ? (
             <Button
               color="average"
-              onClick={() => onToggleSafety()} >
-              <Icon name="power-off" />Turn Off
-            </Button>)
+              icon="power-off"
+              content="Turn Off"
+              onClick={() => onToggleSafety()} />)
           : <Box color="average">Off</Box> }
       </LabeledList.Item>
       <LabeledList.Item
