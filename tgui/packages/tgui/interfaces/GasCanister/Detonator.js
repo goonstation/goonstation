@@ -145,7 +145,7 @@ const DetonatorUtility = props => {
           : (
             <Button
               icon="anchor"
-              content="anchor"
+              content="Anchor"
               onClick={() => onToggleAnchor()} />)}
       </LabeledList.Item>
       <LabeledList.Item
