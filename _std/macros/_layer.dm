@@ -16,6 +16,7 @@
 
 // Mob clothing and effect layers
 #define MOB_LAYER_BASE 		4
+#define MOB_OVERSUIT_LAYER (MOB_LAYER_BASE+0.3)	// For mutant tails when facing north
 #define MOB_OVERLAY_BASE	FLOAT_LAYER
 #define MOB_EFFECT_LAYER 	(MOB_OVERLAY_BASE-1)	// FLOAT_LAYER
 #define MOB_HANDCUFF_LAYER 	(MOB_OVERLAY_BASE-2)
@@ -34,6 +35,9 @@
 #define MOB_CLOTHING_LAYER 	(MOB_OVERLAY_BASE-15)
 #define MOB_UNDERWEAR_LAYER (MOB_OVERLAY_BASE-16)
 #define MOB_DAMAGE_LAYER 	(MOB_OVERLAY_BASE-17)
+#define MOB_DETAIL_LAYER1 	(MOB_OVERLAY_BASE-17.1)
+#define MOB_DETAIL_LAYER2 	(MOB_OVERLAY_BASE-17.2)
+#define MOB_DETAIL_LAYER3 	(MOB_OVERLAY_BASE-17.3)
 #define MOB_LIMB_LAYER 		(MOB_OVERLAY_BASE-18)
 
 // Some effects were defined on layer 10, some on layer 20... Lets unify this...

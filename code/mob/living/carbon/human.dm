@@ -57,6 +57,7 @@
 	var/obj/item/chest_item = null	// Item stored in chest cavity
 	var/chest_item_sewn = 0			// Item is sewn in or is loose
 
+	var/cust_icon = 'icons/mob/human_hair.dmi'	// icon for hair, in case we want something else
 	var/cust_one_state = "short"
 	var/cust_two_state = "None"
 	var/cust_three_state = "none"
@@ -149,11 +150,6 @@
 /mob/living/carbon/human/New()
 	default_static_icon = human_static_base_idiocy_bullshit_crap // FUCK
 	. = ..()
-
-	image_eyes = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
-	image_cust_one = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
-	image_cust_two = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
-	image_cust_three = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
 
 	var/datum/reagents/R = new/datum/reagents(330)
 	reagents = R
@@ -2886,18 +2882,27 @@
 
 	//Clean up the old mutantrace
 /* 	if (src.organHolder && src.organHolder.head && src.organHolder.head.donor == src)
-		src.organHolder.head.donor_mutantrace = null */ // handled by head
+		src.organHolder.head.donor_mutantrace = null */
 
 	if(src.mutantrace != null)
 		qdel(src.mutantrace) // so that disposing() runs and removes mutant traits
 		. = 1
+
 	if(ispath(mutantrace_type, /datum/mutantrace) )	//Set a new mutantrace only if passed one
 		src.mutantrace = new mutantrace_type(src)
 		. = 1
-	if(.)
+
+	if(.) //If the mutantrace was changed do all the usual icon updates
+/* 		if(src.organHolder && src.organHolder.head && src.organHolder.head.donor == src)
+			src.organHolder.head.donor_mutantrace = src.mutantrace */
+		if (src?.mutantrace?.special_head)
+			if (src.organHolder)
+				src.organHolder.head.MakeMutantHead(src.mutantrace.special_head)
+			src.organHolder.head.update_icon()
 		src.set_face_icon_dirty()
 		src.set_body_icon_dirty()
 		src.get_static_image()
+
 
 		if (src.bioHolder && src.bioHolder.mobAppearance)
 			src.bioHolder.mobAppearance.UpdateMob()

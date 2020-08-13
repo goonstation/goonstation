@@ -16,18 +16,35 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 /datum/appearanceHolder
 	//Holds all the appearance information.
+	var/mob_appearance_flags = (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_HUMAN_HEAD | BUILT_FROM_PIECES)
+	var/mob_color_flags = (DETAIL_1_USES_PREF_COLOR_1 | DETAIL_2_USES_PREF_COLOR_2 | DETAIL_3_USES_PREF_COLOR_3 | OVERSUIT_USES_PREF_COLOR_1)
+
+	var/body_icon = 'icons/mob/human.dmi'
+
+	var/customization_icon = 'icons/mob/human_hair.dmi'
+	var/customization_icon_special = 'icons/mob/human_hair.dmi'
+
 	var/customization_first_color = "#101010"
 	var/customization_first = "Trimmed"
+	var/customization_first_special = "None"
 
 	var/customization_second_color = "#101010"
 	var/customization_second = "None"
+	var/customization_second_special = "None"
 
 	var/customization_third_color = "#101010"
 	var/customization_third = "None"
+	var/customization_third_special = "None"
+
+	var/mob_detail_1
+	var/mob_detail_2
+	var/mob_detail_3
+	var/mob_oversuit
 
 	var/e_color = "#101010"
 
 	var/s_tone = "#FFCC99"
+
 	// Standard tone reference:
 	// FAD7D0 - Albino
 	// FFCC99 - White
@@ -75,20 +92,48 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/list/voicetypes = list("One" = "1","Two" = "2","Three" = "3","Four" = "4")
 
-	New()
+	New(var/mob/quick_owner)
 		..()
 		voicetype = RANDOM_HUMAN_VOICE
+		var/list/hair_list = customization_styles + customization_styles_gimmick
+		if (quick_owner) // gotta store fast and bioeffect.New() too slow
+			src.owner = quick_owner
+
+		if (src.owner)
+			if(ishuman(src.owner))
+				var/mob/living/carbon/human/H = src.owner
+				if (mob_appearance_flags & HAS_HUMAN_HAIR)
+					H.cust_one_state = hair_list[customization_first]
+					H.cust_two_state = hair_list[customization_second]
+					H.cust_three_state = hair_list[customization_third]
+				if (mob_appearance_flags & HAS_SPECIAL_HAIR)
+					H.cust_one_state = hair_list[customization_first_special]
+					H.cust_two_state = hair_list[customization_second_special]
+					H.cust_three_state = hair_list[customization_third_special]
+				else //no hair
+					H.cust_one_state = hair_list["None"]
+					H.cust_two_state = hair_list["None"]
+					H.cust_three_state = hair_list["None"]
 
 	proc/CopyOther(var/datum/appearanceHolder/toCopy)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
+		mob_appearance_flags = toCopy.mob_appearance_flags
+		mob_color_flags = toCopy.mob_color_flags
+
+		customization_icon = toCopy.customization_icon
+		customization_icon_special = toCopy.customization_icon_special
+
 		customization_first_color = toCopy.customization_first_color
 		customization_first = toCopy.customization_first
+		customization_first_special = toCopy.customization_first_special
 
 		customization_second_color = toCopy.customization_second_color
 		customization_second = toCopy.customization_second
+		customization_second_special = toCopy.customization_second_special
 
 		customization_third_color = toCopy.customization_third_color
 		customization_third = toCopy.customization_third
+		customization_third_special = toCopy.customization_third_special
 
 		e_color = toCopy.e_color
 
@@ -165,15 +210,23 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/UpdateMob() //Rebuild the appearance of the mob from the settings in this holder.
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-
 			var/list/hair_list = customization_styles + customization_styles_gimmick
-			H.cust_one_state = hair_list[customization_first]
 
-			var/list/beard_list = customization_styles + customization_styles_gimmick
-			H.cust_two_state = beard_list[customization_second]
-
-			var/list/detail_list = customization_styles + customization_styles_gimmick
-			H.cust_three_state = detail_list[customization_third]
+			if (mob_appearance_flags & HAS_HUMAN_HAIR)
+				H.cust_icon = customization_icon
+				H.cust_one_state = hair_list[customization_first]
+				H.cust_two_state = hair_list[customization_second]
+				H.cust_three_state = hair_list[customization_third]
+			if (mob_appearance_flags & HAS_SPECIAL_HAIR)
+				H.cust_icon = customization_icon_special
+				H.cust_one_state = hair_list[customization_first_special]
+				H.cust_two_state = hair_list[customization_second_special]
+				H.cust_three_state = hair_list[customization_third_special]
+			else //no hair
+				H.cust_icon = customization_icon
+				H.cust_one_state = hair_list["None"]
+				H.cust_two_state = hair_list["None"]
+				H.cust_three_state = hair_list["None"]
 
 			H.gender = src.gender
 			H.update_face()
@@ -214,7 +267,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		Uid = CreateUid()
 		uid_hash = md5(Uid)
 		bioUids[Uid] = 1
-		mobAppearance = new/datum/appearanceHolder()
+		mobAppearance = new/datum/appearanceHolder(owner)
 
 		mobAppearance.owner = owner
 		mobAppearance.parentHolder = src

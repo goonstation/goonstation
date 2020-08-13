@@ -55,20 +55,20 @@
 
 	src.update_face()
 	if (src.organHolder && src.organHolder.head)
-		if (!src.mutantrace || !src.mutantrace.override_eyes)
+		if (!src.mutantrace)
 			UpdateOverlays(image_eyes, "eyes")
 		else
 			UpdateOverlays(null, "eyes")
 
-		if (!seal_hair && (!src.mutantrace || !src.mutantrace.override_hair))
+		if (!seal_hair && (!src.mutantrace))
 			UpdateOverlays(image_cust_one, "cust_one")
 		else
 			UpdateOverlays(null, "cust_one")
-		if (!seal_hair && (!src.mutantrace || !src.mutantrace.override_detail))
+		if (!seal_hair && (!src.mutantrace))
 			UpdateOverlays(image_cust_two, "cust_two")
 		else
 			UpdateOverlays(null, "cust_two")
-		if (!seal_hair && (!src.mutantrace || !src.mutantrace.override_beard))
+		if (!seal_hair && (!src.mutantrace))
 			UpdateOverlays(image_cust_three, "cust_three")
 		else
 			UpdateOverlays(null, "cust_three")
@@ -672,50 +672,46 @@
 
 /mob/living/carbon/human/update_face()
 	..()
-
-	if (src.organHolder && !src.organHolder.head)
-		image_eyes.icon_state = "bald"
-		image_cust_one.icon_state = "bald"
-		image_cust_two.icon_state = "bald"
-		image_cust_three.icon_state = "bald"
-		return
-
 	if (!src.bioHolder)
 		return // fuck u
 
 	var/datum/appearanceHolder/aH = src.bioHolder.mobAppearance
-	var/datum/mutantrace/m_race = src.mutantrace
-	if (src.organHolder && src.organHolder.head && src.organHolder.head.donor != src) // gaaaaaaaaaahhhhh
-		if (src.organHolder.head.donor_appearance)
-			aH = src.organHolder.head.donor_appearance
-		if (src.organHolder.head.donor_mutantrace)
-			m_race = src.organHolder.head.donor_mutantrace
+	if (aH.mob_appearance_flags & HAS_NO_HEAD)
+		return // lol
 
-	if (!m_race || !m_race.override_eyes)
-		image_eyes.icon_state = "eyes"
-		image_eyes.color = aH.e_color
+	var/obj/item/organ/head/my_head
+	if (src?.organHolder?.head)
+		my_head = src.organHolder.head
+	else
+		return // all done!
 
-	if (!m_race || !m_race.override_hair || src.head && src.head.seal_hair)
-		cust_one_state = customization_styles[aH.customization_first]
-		if (!cust_one_state)
-			cust_one_state = customization_styles_gimmick[aH.customization_first]
-		image_cust_one.icon_state = src.cust_one_state
-		image_cust_one.color = aH.customization_first_color
+	if (aH.mob_appearance_flags & ~HAS_NO_EYES)
+		image_eyes = my_head.head_image_eyes	// eyes are stored in the head
 
-	if (!m_race || !m_race.override_beard)
-		cust_two_state = customization_styles[aH.customization_second]
-		if (!cust_two_state)
-			cust_two_state = customization_styles_gimmick[aH.customization_second]
-		image_cust_two.icon_state = src.cust_two_state
-		image_cust_two.color = aH.customization_second_color
+	if (aH.mob_appearance_flags & HAS_NO_HAIR)
+		return
 
-	if (!m_race || !m_race.override_detail)
-		cust_three_state = customization_styles[aH.customization_third]
-		if (!cust_three_state)
-			cust_three_state = customization_styles_gimmick[aH.customization_third]
-		image_cust_three.icon_state = src.cust_three_state
-		image_cust_three.color = aH.customization_third_color
+	if (my_head.head_image_cust_one)
+		image_cust_one = my_head.head_image_cust_one
 
+	if (my_head.head_image_cust_two)
+		image_cust_two = my_head.head_image_cust_two
+
+	if (my_head.head_image_cust_three)
+		image_cust_three = my_head.head_image_cust_three
+
+	var/list/hair_list = customization_styles + customization_styles_gimmick
+	var/first_custom = aH.customization_first
+	var/second_custom = aH.customization_second
+	var/third_custom = aH.customization_third
+	if (aH.mob_appearance_flags & HAS_SPECIAL_HAIR)
+		first_custom = aH.customization_first_special
+		second_custom = aH.customization_second_special
+		third_custom = aH.customization_third_special
+
+	cust_one_state = hair_list[first_custom]
+	cust_two_state = hair_list[second_custom]
+	cust_three_state = hair_list[third_custom]
 
 /mob/living/carbon/human/update_burning_icon(var/force_remove=0, var/datum/statusEffect/simpledot/burning/B = 0)
 	if (!B)
@@ -823,15 +819,15 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 /mob/living/carbon/human/update_body()
 	..()
 
-	var/datum/mutantrace/my_mutant = null
-	if(ishuman(src) && src.mutantrace)
-		my_mutant = src.mutantrace
+	var/datum/appearanceHolder/AHOLD = null
+	if (src?.bioHolder?.mobAppearance)
+		AHOLD = src.bioHolder.mobAppearance
+	else	// otherwise you're gonna explode into a shower of runtimes
+		return
 
 	var/file
-	if (my_mutant && my_mutant.built_from_pieces && !src.decomp_stage)
-		file = my_mutant.mutant_folder
-	else if (!src.decomp_stage)
-		file = 'icons/mob/human.dmi'
+	if (!src.decomp_stage)
+		file = AHOLD.body_icon
 	else
 		file = 'icons/mob/human_decomp.dmi'
 
@@ -844,39 +840,92 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	src.body_standing = image('icons/mob/human_decomp.dmi', "blank", MOB_LIMB_LAYER)
 	src.hands_standing = image('icons/mob/human_decomp.dmi', "blank", MOB_HAND_LAYER1)
 	*/
-	if (!my_mutant || my_mutant?.built_from_pieces)
-		if ((src.bioHolder && !src.bioHolder.HasEffect("fat")) || (src.bioHolder && src.bioHolder.HasEffect("fat") && my_mutant?.built_from_pieces) || src.decomp_stage)
+	if (AHOLD.mob_appearance_flags & BUILT_FROM_PIECES) // Everyone who isnt a static_icon
+		if ((src.bioHolder && !src.bioHolder.HasEffect("fat")) || (src.bioHolder && src.bioHolder.HasEffect("fat") && (AHOLD.mob_appearance_flags & IS_MUTANT)) || src.decomp_stage)
+			human_image.icon = AHOLD.body_icon
 			var/gender_t = null
-			human_image = image('icons/mob/human.dmi')	// Just a precaution
-			if (my_mutant?.built_from_pieces)
-				gender_t = "m"	// So far, none of the mutants are terribly dimorphic
-				human_image.icon = my_mutant.mutant_folder	// Gets us our mutant torso and such
+			if (AHOLD.mob_appearance_flags & IS_MUTANT) // So far, none of the mutants are terribly dimorphic
+				gender_t = "m" // and i doubt they ever will be
 			else
 				gender_t = src.gender == FEMALE ? "f" : "m"
 
 			var/skin_tone = "#777777"
-			var/mutant_skin_tone = null
-			if (src.bioHolder && src.bioHolder.mobAppearance)
-				skin_tone = src.bioHolder.mobAppearance.s_tone
-				if(my_mutant)
-					if(my_mutant.skincolor)
-						mutant_skin_tone = my_mutant.skincolor.color
-					else if (!my_mutant.skincolor)
-						mutant_skin_tone = "#FFFFFF"	// Preserve their true coloration
+			if(AHOLD.mob_appearance_flags & HAS_NO_SKINTONE)
+				skin_tone = "#FFFFFF"	// Preserve their true coloration
+			else if (AHOLD.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
+				if (AHOLD.mob_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
+					skin_tone = AHOLD.customization_first_color
+				else if (AHOLD.mob_appearance_flags & SKINTONE_USES_PREF_COLOR_2)
+					skin_tone = AHOLD.customization_second_color
+				else if (AHOLD.mob_appearance_flags & SKINTONE_USES_PREF_COLOR_3)
+					skin_tone = AHOLD.customization_third_color
+			else	// normal-ass skintone
+				skin_tone = AHOLD.s_tone
 			human_image.color = skin_tone
 			human_decomp_image.color = skin_tone
 
 			if (!src.decomp_stage)
 				human_image.icon_state = "chest_[gender_t]"
-				if (mutant_skin_tone)
-					human_image.color = mutant_skin_tone
-				src.body_standing.overlays += human_image
-				human_image.icon_state = "groin_[gender_t]"
-				if (mutant_skin_tone)
-					human_image.color = mutant_skin_tone
 				src.body_standing.overlays += human_image
 
+				human_image.icon_state = "groin_[gender_t]"
+				src.body_standing.overlays += human_image
+
+				// all this shit goes on the torso anyway
+				var/layer_before = human_image.layer
+				if(AHOLD.mob_appearance_flags & HAS_EXTRA_DETAILS)
+					if(AHOLD.mob_detail_1)
+						var/color1 = AHOLD.customization_first_color
+						// why youd ever need this is beyond me
+						if (AHOLD.mob_color_flags & DETAIL_1_USES_PREF_COLOR_2)
+							color1 = AHOLD.customization_second_color
+						else if (AHOLD.mob_color_flags & DETAIL_1_USES_PREF_COLOR_2)
+							color1 = AHOLD.customization_third_color
+						human_image.icon_state = AHOLD.mob_detail_1
+						human_image.layer = MOB_DETAIL_LAYER1
+						human_image.color = color1
+						src.body_standing.overlays += human_image
+
+					if(AHOLD.mob_detail_2)	// currently unused
+						var/color2 = AHOLD.customization_second_color
+						if (AHOLD.mob_color_flags & DETAIL_2_USES_PREF_COLOR_1)
+							color2 = AHOLD.customization_first_color
+						else if (AHOLD.mob_color_flags & DETAIL_2_USES_PREF_COLOR_3)
+							color2 = AHOLD.customization_third_color
+						human_image.icon_state = AHOLD.mob_detail_2
+						human_image.layer = MOB_DETAIL_LAYER2
+						human_image.color = color2
+						src.body_standing.overlays += human_image
+
+					if(AHOLD.mob_detail_3)	// also currently unused
+						var/color3 = AHOLD.customization_third_color	// perfect opportunity for some sparkledogs
+						if (AHOLD.mob_color_flags & DETAIL_3_USES_PREF_COLOR_1)
+							color3 = AHOLD.customization_first_color
+						else if (AHOLD.mob_color_flags & DETAIL_3_USES_PREF_COLOR_2)
+							color3 = AHOLD.customization_second_color
+						// why i needed this is beyond me
+						human_image.icon_state = AHOLD.mob_detail_3
+						human_image.layer = MOB_DETAIL_LAYER3
+						human_image.color = color3
+						src.body_standing.overlays += human_image
+
+					if(AHOLD.mob_oversuit)
+						var/overcolor = AHOLD.customization_first_color
+						if (AHOLD.mob_color_flags & OVERSUIT_USES_PREF_COLOR_2)
+							overcolor = AHOLD.customization_second_color
+						else if (AHOLD.mob_color_flags & OVERSUIT_USES_PREF_COLOR_3)
+							overcolor = AHOLD.customization_third_color
+						human_image.icon_state = AHOLD.mob_oversuit
+						human_image.layer = MOB_OVERSUIT_LAYER
+						human_image.color = overcolor
+						src.body_standing.overlays += human_image
+
+				human_image.layer = layer_before
 				if (src.organHolder && src.organHolder.head)
+					var/obj/item/organ/head/our_head = src.organHolder.head
+					human_head_image = our_head.head_image // head data is stored in the head
+					src.body_standing.overlays += human_head_image
+					/*
 					human_head_image.icon_state = "head"
 					if (src.organHolder.head && my_mutant?.special_head)
 						var/obj/item/organ/head/our_head = src.organHolder.head
@@ -886,7 +935,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 						human_head_image.color = h_skin_tone
 					else
 						human_head_image.color = skin_tone
-					src.body_standing.overlays += human_head_image
+					src.body_standing.overlays += human_head_image */
 
 			else
 				human_decomp_image.icon_state = "body_decomp[src.decomp_stage]"
@@ -979,18 +1028,6 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 									src.hands_standing.layer = MOB_HAND_LAYER1
 									src.hands_standing.overlays += human_image
 									human_image.layer = oldlayer
-/* 								else
-										var/oldlayer = human_untoned_image.layer // ugh
-										human_untoned_image.layer = MOB_HAND_LAYER1
-										human_untoned_image.icon = handlimb_icon
-										human_untoned_image.icon_state = hand_icon_s
-										if (limb?.limb_detail_1?.color) // Inherit that limb's built-in color
-											human_untoned_image.color = limb.limb_detail_1.color
-										else if (mutant_skin_tone)
-											human_untoned_image.color = mutant_skin_tone
-										src.hands_standing.layer = MOB_HAND_LAYER1
-										src.hands_standing.overlays += human_untoned_image
-										human_untoned_image.layer = oldlayer */
 								else
 									var/image/I = hand_icon_s
 									I.layer = MOB_LAYER_BASE
@@ -1012,18 +1049,6 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 									src.body_standing.overlays += human_image
 									if (oldlayer)
 										human_image.layer = oldlayer
-/* 								else
-										human_untoned_image.icon = limb.partIcon
-										human_untoned_image.icon_state = part_icon_s
-										if (mutant_skin_tone)
-											human_untoned_image.color = mutant_skin_tone
-										var/oldlayer
-										if (sleeveless && (limb.slot == "l_arm" || limb.slot == "r_arm"))
-											oldlayer = human_untoned_image.layer // ugh
-											human_untoned_image.layer = MOB_HAND_LAYER1
-										src.body_standing.overlays += human_untoned_image
-										if (oldlayer)
-											human_untoned_image.layer = oldlayer */
 								else
 									var/image/I = part_icon_s
 									I.layer = MOB_LAYER_BASE
@@ -1059,9 +1084,9 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 					heart_image.icon_state = src.organHolder.heart.body_image
 					src.body_standing.overlays += heart_image
 
-			if (src.bioHolder.mobAppearance.underwear && src.decomp_stage < 3)
-				undies_image.icon_state = underwear_styles[src.bioHolder.mobAppearance.underwear]
-				undies_image.color = src.bioHolder.mobAppearance.u_color
+			if (AHOLD.underwear && src.decomp_stage < 3)
+				undies_image.icon_state = underwear_styles[AHOLD.underwear]
+				undies_image.color = AHOLD.u_color
 				src.body_standing.overlays += undies_image
 
 			if (src.bandaged.len > 0)
@@ -1082,8 +1107,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				juggle_image.icon_state = "juggle"
 				src.body_standing.overlays += juggle_image
 
-		else
-			var/skin_tone = src.bioHolder.mobAppearance.s_tone
+		else // is fat
+			var/skin_tone = AHOLD.s_tone
 			human_image.color = skin_tone
 			human_image.icon_state = "fatbody"
 			src.body_standing.overlays += human_image
@@ -1100,9 +1125,9 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				human_head_image.icon_state = "head_reli"
 				human_head_image.color = null
 				src.body_standing.overlays += human_head_image
-				if (src.organHolder.head.donor_mutantrace)
+/* 				if (src.organHolder.head.donor_mutantrace)
 					human_head_image.icon_state = "[src.organHolder.head.donor_mutantrace.icon_state]"
-					src.body_standing.overlays += human_head_image
+					src.body_standing.overlays += human_head_image */
 			if (src.limbs)
 				var/sleeveless = 1
 				if (istype(src.w_uniform, /obj/item/clothing) && !(src.w_uniform.c_flags & SLEEVELESS))
@@ -1232,15 +1257,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 							src.body_standing.overlays += human_image
 
 			human_image.color = "#fff"
-
-	if (src.mutantrace)	// Draw the rest of the overlays
-		if (!src.mutantrace.built_from_pieces)	// If they arent built frm pieces, just use the icon they set
-			src.body_standing.overlays += image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)
-		if(src.mutantrace.detail_1)
-			src.body_standing.overlays += mutantrace.detail_1
-		if(src.mutantrace.detail_over_suit)
-			src.body_standing.overlays += mutantrace.detail_over_suit	// used by lizards so that when they're facing upwards their tail doesn't look awkward.
-
+		else if (AHOLD.mob_appearance_flags & IS_MUTANT && !AHOLD.mob_appearance_flags & BUILT_FROM_PIECES)	// here's a picture of a fucked up human
+			src.body_standing.overlays += image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)	// this picture is you
 
 #if ASS_JAM
 	src.maptext_y = 32
