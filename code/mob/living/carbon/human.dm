@@ -2895,10 +2895,6 @@
 	if(.) //If the mutantrace was changed do all the usual icon updates
 /* 		if(src.organHolder && src.organHolder.head && src.organHolder.head.donor == src)
 			src.organHolder.head.donor_mutantrace = src.mutantrace */
-		if (src?.mutantrace?.special_head)
-			if (src.organHolder)
-				src.organHolder.head.MakeMutantHead(src.mutantrace.special_head)
-			src.organHolder.head.update_icon()
 		src.set_face_icon_dirty()
 		src.set_body_icon_dirty()
 		src.get_static_image()

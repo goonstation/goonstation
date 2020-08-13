@@ -10,10 +10,12 @@
 
 	// dump as much visual data into the appearance holder as possible
 	var/datum/appearanceHolder/AH
-	var/mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_HAIR_COLORED_DETAILS | HAS_NO_EYES | HAS_NO_HEAD)
+	var/mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_NO_HEAD)
 	// This should be a normal-ish human:
 	// (IS_MUTANT | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_HUMAN_HEAD)
-	var/mutant_color_flags = (DETAIL_1_USES_PREF_COLOR_1 | DETAIL_2_USES_PREF_COLOR_2 | DETAIL_3_USES_PREF_COLOR_3 | OVERSUIT_USES_PREF_COLOR_1)
+	var/mutant_color_flags = (HAS_UNUSED_HAIR_COLOR | HEAD_HAS_OWN_COLORS)
+	// if you want to use all the details, plus oversuit =
+	// (DETAIL_1 | DETAIL_2 | DETAIL_3 | OVERSUIT_USES_PREF_COLOR_1)
 
 	// set to 1 to override the limb attack actions. Mutantraces may use the limb action within custom_attack(),
 	var/override_attack = 1	// but they must explicitly specify if they're overriding via this var
@@ -221,7 +223,9 @@
 						limb.remove_stage = 0
 
 			//////////////HEAD//////////////////
-
+			if (src.special_head)
+				if (M.organHolder)
+					M.organHolder.head.MakeMutantHead(src.special_head)
 			M.update_face()
 			M.update_body()
 
@@ -337,7 +341,6 @@
 	hand_offset = -1
 	body_offset = -8
 	voice_override = "bloop"
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_HAIR_COLORED_DETAILS | HAS_NO_EYES | HAS_NO_HEAD)
 
 	say_verb()
 		return pick("burbles", "gurgles", "blurbs", "gloops")
@@ -349,7 +352,6 @@
 	uses_human_clothes = 0
 	head_offset = -7
 	voice_override = "bloop"
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_HAIR_COLORED_DETAILS | HAS_NO_EYES | HAS_NO_HEAD)
 
 	movement_modifier = /datum/movement_modifier/flubber
 
@@ -392,7 +394,7 @@
 /datum/mutantrace/flashy
 	name = "flashy"
 	icon_state = "epileptic"
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS)
 	override_attack = 0
 
 /datum/mutantrace/virtual
@@ -416,7 +418,7 @@
 /datum/mutantrace/blank
 	name = "blank"
 	icon_state = "blank"
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_NO_EYES | HAS_NO_HEAD)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_NO_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS)
 	override_attack = 0
 
 /datum/mutantrace/grey
@@ -424,7 +426,7 @@
 	icon_state = "grey"
 	voice_name = "grey"
 	voice_message = "hums"
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_NO_EYES | HAS_NO_HEAD)
+
 	exclusive_language = 1
 	jerk = 1
 	var/original_blood_color = null
@@ -465,13 +467,13 @@
 	icon_state = "lizard"
 	allow_fat = 1
 	override_attack = 0
-	mutant_appearance_flags = (IS_MUTANT | HAS_SPECIAL_SKINTONE | HAS_SPECIAL_HAIR | HAS_HAIR_COLORED_DETAILS | HAS_HUMAN_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | HAS_A_TAIL)
-	mutant_color_flags = (DETAIL_1_USES_PREF_COLOR_2 | DETAIL_2_USES_PREF_COLOR_2 | DETAIL_3_USES_PREF_COLOR_3 | SKINTONE_USES_PREF_COLOR_1)
+	mutant_appearance_flags = (IS_MUTANT | HAS_SPECIAL_SKINTONE | HAS_HUMAN_EYES | HAS_SPECIAL_HEAD | HAS_DETAIL_HAIR | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | HAS_A_TAIL | HAS_SPECIAL_HEAD)
+	mutant_color_flags = (DETAIL_2 | HAS_HAIR_COLORED_DETAILS | SKINTONE_USES_PREF_COLOR_1 | FIX_COLORS)
 	voice_override = "lizard"
 	special_head = HEAD_LIZARD
 	mutant_folder = 'icons/mob/lizard.dmi'
-	special_hair_1 = "head-detail_1"
-	detail_1 = "lizard-detail_1"
+	special_hair_2 = "head-detail_1"
+	detail_2 = "lizard-detail_1"
 	detail_over_suit = "lizard_over_suit"
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/lizard/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/lizard/left
@@ -481,25 +483,11 @@
 	New(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(H))
-			var/datum/appearanceHolder/aH = H.bioHolder.mobAppearance
-			aH.customization_first_color = fix_colors(aH.customization_first_color)
-			aH.customization_second_color = fix_colors(aH.customization_second_color)
-			aH.customization_third_color = fix_colors(aH.customization_third_color)
-
 			H.organHolder.head.update_icon()
 
 			H.update_face()
 			H.update_body()
 			H.update_clothing()
-
-	proc/fix_colors(var/hex)
-		var/list/L = hex_to_rgb_list(hex)
-		for (var/i in L)
-			L[i] = min(L[i], 190)
-			L[i] = max(L[i], 50)
-		if (L.len == 3)
-			return rgb(L["r"], L["g"], L["b"])
-		return rgb(22, 210, 22)
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
@@ -694,7 +682,7 @@
 	icon = 'icons/mob/human.dmi'
 	icon_state = "skeleton"
 	voice_override = "skelly"
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_NO_EYES | HAS_NO_HEAD)
+
 
 
 	New(var/mob/living/carbon/human/M)
@@ -716,7 +704,7 @@
 /datum/mutantrace/nostalgic
 	name = "Homo nostalgius"
 	icon_state = "oldhuman"
-	mutant_appearance_flags = (IS_MUTANT | HAS_HUMAN_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_NO_EYES | HAS_NO_HEAD)
+	mutant_appearance_flags = (IS_MUTANT | HAS_HUMAN_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_NO_HEAD)
 	override_attack = 0
 
 
@@ -733,7 +721,7 @@
 	ignore_missing_limbs = 1 //OVERRIDE_ARM_L | OVERRIDE_ARM_R
 	anchor_to_floor = 1
 	movement_modifier = /datum/movement_modifier/abomination
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_NO_EYES | HAS_NO_HEAD)
+
 
 	var/last_drain = 0
 	var/drains_dna_on_life = 1
@@ -822,7 +810,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/werewolf/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/werewolf/left
 	ignore_missing_limbs = 0
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
 	mutant_folder = 'icons/mob/werewolf.dmi'
 	special_head = HEAD_WEREWOLF
 
@@ -911,7 +899,7 @@
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/hunter
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/hunter
 	ignore_missing_limbs = 0
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_NO_EYES | HAS_NO_HEAD)
+
 
 	// Gave them a minor stamina boost (Convair880).
 	New(var/mob/living/carbon/human/M)
@@ -940,7 +928,7 @@
 	override_attack = 0
 	aquatic = 1
 	voice_override = "blub"
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_NO_EYES | HAS_NO_HEAD)
+
 
 	say_verb()
 		return "glubs"
@@ -952,7 +940,7 @@
 	hand_offset = -2
 	body_offset = -3
 	override_attack = 0
-	mutant_appearance_flags = (IS_MUTANT | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD)
+	mutant_appearance_flags = (IS_MUTANT | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS)
 
 
 /datum/mutantrace/monkey
@@ -971,7 +959,7 @@
 	override_language = "monkey"
 	understood_languages = list("english")
 	clothing_icon_override = 'icons/mob/monkey.dmi'
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_HUMAN_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_HUMAN_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
 	var/sound_monkeyscream = 'sound/voice/screams/monkey_scream.ogg'
 	var/had_tablepass = 0
 	var/table_hide = 0
@@ -1175,7 +1163,7 @@
 	human_compatible = 0
 	uses_human_clothes = 0
 	override_language = "martian"
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_NO_EYES | HAS_NO_HEAD)
+
 
 
 /datum/mutantrace/stupidbaby
@@ -1184,7 +1172,7 @@
 	human_compatible = 0
 	uses_human_clothes = 0
 	jerk = 1
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_NO_EYES | HAS_NO_HEAD)
+
 	New()
 		..()
 		if(mob)
@@ -1237,7 +1225,7 @@
 	name = "mutilated"
 	icon_state = "gross"
 	override_attack = 0
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_NO_EYES | HAS_NO_HEAD)
+
 
 	say_verb()
 		return "shrieks"
@@ -1246,7 +1234,7 @@
 	name = "humanoid"
 	icon_state = "faceless"
 	override_attack = 0
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_NO_EYES | HAS_NO_HEAD)
+
 
 	say_verb()
 		return "murmurs"
@@ -1254,7 +1242,7 @@
 /datum/mutantrace/cyclops
 	name = "cyclops"
 	icon_state = "cyclops"
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_NO_EYES | HAS_NO_HEAD)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_NO_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS)
 
 
 /datum/mutantrace/roach
@@ -1267,7 +1255,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/roach/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/left
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
 
 
 	say_verb()
@@ -1289,7 +1277,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/left
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
 
 	say_verb()
 		return "meows"
@@ -1321,7 +1309,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/left
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
 
 
 	say_verb()
@@ -1386,7 +1374,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/shelterfrog/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/shelterfrog/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/shelterfrog/left
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
 
 
 	New()
@@ -1507,7 +1495,7 @@
 /datum/mutantrace/reliquary_soldier
 	name = "reliquary_soldier"
 	override_attack = 0
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_UNUSED_HAIR_COLOR | HAS_NO_EYES | HAS_HUMAN_HEAD | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_HUMAN_HEAD | BUILT_FROM_PIECES)
 
 	override_language = null
 	understood_languages = list("english")
@@ -1604,7 +1592,9 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/left
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_SPECIAL_HAIR | HAS_HAIR_COLORED_DETAILS | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES | HAS_A_TAIL)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_DETAIL_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES | HAS_A_TAIL)
+	mutant_color_flags = (HAS_HAIR_COLORED_DETAILS | HEAD_HAS_OWN_COLORS)
+
 
 	New(var/mob/living/carbon/human/H)
 		..()

@@ -689,29 +689,25 @@
 		image_eyes = my_head.head_image_eyes	// eyes are stored in the head
 
 	if (aH.mob_appearance_flags & HAS_NO_HAIR)
-		return
+		return // the rest is just hair rendering, so we can stop here
+
+	if (my_head.our_hair_icon)
+		cust_icon = my_head.our_hair_icon
+	else
+		cust_icon = 'icons/mob/human_hair.dmi'
 
 	if (my_head.head_image_cust_one)
 		image_cust_one = my_head.head_image_cust_one
+		cust_one_state = my_head.head_image_cust_one.icon_state
 
 	if (my_head.head_image_cust_two)
 		image_cust_two = my_head.head_image_cust_two
+		cust_two_state = my_head.head_image_cust_two.icon_state
 
 	if (my_head.head_image_cust_three)
 		image_cust_three = my_head.head_image_cust_three
+		cust_three_state = my_head.head_image_cust_three.icon_state
 
-	var/list/hair_list = customization_styles + customization_styles_gimmick
-	var/first_custom = aH.customization_first
-	var/second_custom = aH.customization_second
-	var/third_custom = aH.customization_third
-	if (aH.mob_appearance_flags & HAS_SPECIAL_HAIR)
-		first_custom = aH.customization_first_special
-		second_custom = aH.customization_second_special
-		third_custom = aH.customization_third_special
-
-	cust_one_state = hair_list[first_custom]
-	cust_two_state = hair_list[second_custom]
-	cust_three_state = hair_list[third_custom]
 
 /mob/living/carbon/human/update_burning_icon(var/force_remove=0, var/datum/statusEffect/simpledot/burning/B = 0)
 	if (!B)
@@ -853,11 +849,11 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 			if(AHOLD.mob_appearance_flags & HAS_NO_SKINTONE)
 				skin_tone = "#FFFFFF"	// Preserve their true coloration
 			else if (AHOLD.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
-				if (AHOLD.mob_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
+				if (AHOLD.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
 					skin_tone = AHOLD.customization_first_color
-				else if (AHOLD.mob_appearance_flags & SKINTONE_USES_PREF_COLOR_2)
+				else if (AHOLD.mob_color_flags & SKINTONE_USES_PREF_COLOR_2)
 					skin_tone = AHOLD.customization_second_color
-				else if (AHOLD.mob_appearance_flags & SKINTONE_USES_PREF_COLOR_3)
+				else if (AHOLD.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
 					skin_tone = AHOLD.customization_third_color
 			else	// normal-ass skintone
 				skin_tone = AHOLD.s_tone
@@ -874,51 +870,34 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				// all this shit goes on the torso anyway
 				var/layer_before = human_image.layer
 				if(AHOLD.mob_appearance_flags & HAS_EXTRA_DETAILS)
-					if(AHOLD.mob_detail_1)
-						var/color1 = AHOLD.customization_first_color
-						// why youd ever need this is beyond me
-						if (AHOLD.mob_color_flags & DETAIL_1_USES_PREF_COLOR_2)
-							color1 = AHOLD.customization_second_color
-						else if (AHOLD.mob_color_flags & DETAIL_1_USES_PREF_COLOR_2)
-							color1 = AHOLD.customization_third_color
+					if(AHOLD.mob_color_flags & DETAIL_1)
 						human_image.icon_state = AHOLD.mob_detail_1
 						human_image.layer = MOB_DETAIL_LAYER1
-						human_image.color = color1
+						human_image.color = AHOLD.customization_first_color
 						src.body_standing.overlays += human_image
 
-					if(AHOLD.mob_detail_2)	// currently unused
-						var/color2 = AHOLD.customization_second_color
-						if (AHOLD.mob_color_flags & DETAIL_2_USES_PREF_COLOR_1)
-							color2 = AHOLD.customization_first_color
-						else if (AHOLD.mob_color_flags & DETAIL_2_USES_PREF_COLOR_3)
-							color2 = AHOLD.customization_third_color
+					if(AHOLD.mob_color_flags & DETAIL_2)
 						human_image.icon_state = AHOLD.mob_detail_2
 						human_image.layer = MOB_DETAIL_LAYER2
-						human_image.color = color2
+						human_image.color = AHOLD.customization_second_color
 						src.body_standing.overlays += human_image
 
-					if(AHOLD.mob_detail_3)	// also currently unused
-						var/color3 = AHOLD.customization_third_color	// perfect opportunity for some sparkledogs
-						if (AHOLD.mob_color_flags & DETAIL_3_USES_PREF_COLOR_1)
-							color3 = AHOLD.customization_first_color
-						else if (AHOLD.mob_color_flags & DETAIL_3_USES_PREF_COLOR_2)
-							color3 = AHOLD.customization_second_color
-						// why i needed this is beyond me
+					if(AHOLD.mob_color_flags & DETAIL_3)
 						human_image.icon_state = AHOLD.mob_detail_3
 						human_image.layer = MOB_DETAIL_LAYER3
-						human_image.color = color3
+						human_image.color = AHOLD.customization_second_color
 						src.body_standing.overlays += human_image
 
-					if(AHOLD.mob_oversuit)
-						var/overcolor = AHOLD.customization_first_color
-						if (AHOLD.mob_color_flags & OVERSUIT_USES_PREF_COLOR_2)
-							overcolor = AHOLD.customization_second_color
-						else if (AHOLD.mob_color_flags & OVERSUIT_USES_PREF_COLOR_3)
-							overcolor = AHOLD.customization_third_color
-						human_image.icon_state = AHOLD.mob_oversuit
-						human_image.layer = MOB_OVERSUIT_LAYER
-						human_image.color = overcolor
-						src.body_standing.overlays += human_image
+				if(AHOLD.mob_appearance_flags & HAS_A_TAIL)
+					var/overcolor = AHOLD.customization_first_color
+					if (AHOLD.mob_color_flags & OVERSUIT_USES_PREF_COLOR_2)
+						overcolor = AHOLD.customization_second_color
+					else if (AHOLD.mob_color_flags & OVERSUIT_USES_PREF_COLOR_3)
+						overcolor = AHOLD.customization_third_color
+					human_image.icon_state = AHOLD.mob_oversuit
+					human_image.layer = MOB_OVERSUIT_LAYER
+					human_image.color = overcolor
+					src.body_standing.overlays += human_image
 
 				human_image.layer = layer_before
 				if (src.organHolder && src.organHolder.head)
