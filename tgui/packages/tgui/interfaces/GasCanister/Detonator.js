@@ -74,12 +74,12 @@ const DetonatorWires = props => {
         mt={2} >
         <DetonatorTimer
           time={time} />
-        {!(isPrimed) && (
-          <Button
-            mt={1}
-            onClick={() => onSetTimer()}>
-            Set Timer
-          </Button>)}
+        <Button
+          mt={1}
+          disabled={isPrimed}
+          onClick={() => onSetTimer()}>
+          Set Timer
+        </Button>
       </Flex.Item>
     </Flex>
   );
