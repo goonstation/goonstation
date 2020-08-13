@@ -22314,10 +22314,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/unpowered/wood{
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 4;
 	name = "The Snip"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
 "aVo" = (
 /obj/cable{
@@ -22341,11 +22342,14 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
 "aVq" = (
-/obj/machinery/door/unpowered/wood,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 4;
+	name = "The Snip"
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/barber_shop)
@@ -22618,10 +22622,11 @@
 	},
 /area/station/crew_quarters/bar)
 "aWc" = (
-/obj/machinery/door/unpowered/wood{
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 4;
 	name = "The Snip"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
 "aWd" = (
 /turf/simulated/floor/wood/two,
@@ -33403,7 +33408,7 @@
 	icon_state = "intact";
 	tag = "icon-intact (EAST)"
 	},
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
@@ -33426,11 +33431,11 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/heads)
 "btw" = (
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "btx" = (
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "bty" = (
