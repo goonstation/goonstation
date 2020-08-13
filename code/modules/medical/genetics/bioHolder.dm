@@ -46,6 +46,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/e_color = "#101010"
 
 	var/s_tone = "#FFCC99"
+	var/s_tone_special = "#FFCC99" // mutantraces change this, so they don't mess up the original color
 
 	// Standard tone reference:
 	// FAD7D0 - Albino
@@ -227,10 +228,17 @@ var/list/datum/bioEffect/mutini_effects = list()
 				H.cust_three_state = hair_list["None"]
 
 			if (mob_color_flags & FIX_COLORS)
-				customization_first_color = fix_colors(customization_first_color)
-				customization_second_color = fix_colors(customization_second_color)
-				customization_third_color = fix_colors(customization_third_color)
+				src.customization_first_color = fix_colors(src.customization_first_color)
+				src.customization_second_color = fix_colors(src.customization_second_color)
+				src.customization_third_color = fix_colors(src.customization_third_color)
 
+			if (src.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
+				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
+					src.s_tone_special = src.customization_first_color
+				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_2)
+					src.s_tone_special = src.customization_second_color
+				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
+					src.s_tone_special = src.customization_third_color
 
 			H.gender = src.gender
 			H.update_face()

@@ -67,7 +67,6 @@
 
 	var/anchor_to_floor = 0
 
-	var/image/skincolor	// Set a color to a blank icon, update_body'll color the torso and groin this color!
 	var/image/detail_1
 	var/image/detail_2
 	var/image/detail_3
@@ -109,7 +108,7 @@
 		if (movement_modifier)
 			APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
 		if(ishuman(M))
-			if(M.bioHolder.mobAppearance)	// yeah just dump a bunch of datum crap into another datum
+			if(M.bioHolder.mobAppearance)	// i mean its called an appearance holder for a reason
 				AH = M.bioHolder.mobAppearance
 				AH.mob_appearance_flags = src.mutant_appearance_flags
 				AH.mob_color_flags = src.mutant_color_flags
@@ -122,6 +121,17 @@
 				AH.mob_detail_2 = detail_2
 				AH.mob_detail_3 = detail_3
 				AH.mob_oversuit = detail_over_suit
+				if (mutant_color_flags & FIX_COLORS)
+					AH.customization_first_color = fix_colors(AH.customization_first_color)
+					AH.customization_second_color = fix_colors(AH.customization_second_color)
+					AH.customization_third_color = fix_colors(AH.customization_third_color)
+				if (src.mutant_appearance_flags & HAS_SPECIAL_SKINTONE)
+					if (src.mutant_color_flags & SKINTONE_USES_PREF_COLOR_1)
+						AH.s_tone_special = AH.customization_first_color
+					if (src.mutant_color_flags & SKINTONE_USES_PREF_COLOR_2)
+						AH.s_tone_special = AH.customization_second_color
+					if (src.mutant_color_flags & SKINTONE_USES_PREF_COLOR_3)
+						AH.s_tone_special = AH.customization_third_color
 			src.mob = M
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for(var/obj/item/clothing/W in restricted)
@@ -331,6 +341,15 @@
 
 		..()
 		return
+
+	proc/fix_colors(var/hex)
+		var/list/L = hex_to_rgb_list(hex)
+		for (var/i in L)
+			L[i] = min(L[i], 190)
+			L[i] = max(L[i], 50)
+		if (L.len == 3)
+			return rgb(L["r"], L["g"], L["b"])
+		return rgb(22, 210, 22)
 
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"

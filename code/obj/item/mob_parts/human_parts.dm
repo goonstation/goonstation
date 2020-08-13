@@ -166,16 +166,6 @@
 				src.original_fprints = src.original_holder.bioHolder.uid_hash
 		return ..()
 
-	// Takes a hex color ("#420DAB"), makes it an RGB list (66, 13, 171), clamps the vals (66, 50, 171), then turns it back into hex ("#4232AB") and sends that
-	proc/fix_colors(var/hex)
-		var/list/L = hex_to_rgb_list(hex)
-		for (var/i in L)
-			L[i] = min(L[i], 190)
-			L[i] = max(L[i], 50)
-		if (L.len == 3)
-			return rgb(L["r"], L["g"], L["b"])
-		return rgb(22, 210, 22)
-
 	proc/colorize_limb_icon()	// Actually just sets the skin tone, the limbs are colorized elsewhere
 		if (!src.skintoned)
 			return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
@@ -183,14 +173,23 @@
 		if(ishuman(src.original_holder))
 			M = src.original_holder
 		var/blend_color = null
-		if (M?.AH_we_spawned_with || M?.bioHolder?.mobAppearance?.s_tone) // If we started life attached to someone, we'll have a color
-			var/datum/appearanceHolder/aH = M?.bioHolder?.mobAppearance?.s_tone ? M.bioHolder.mobAppearance : M.AH_we_spawned_with
-			if (src.skin_tone_override)
-				src.skin_tone = fix_colors(aH.customization_first_color)
-			else
-				src.skin_tone = aH.s_tone
+		var/has_aH = 0
+		var/datum/appearanceHolder/AHLIMB
+		if (M.AH_we_spawned_with)
+			AHLIMB = M.AH_we_spawned_with
+			has_aH = 1
+		else if (M.bioHolder?.mobAppearance)
+			AHLIMB = M.bioHolder.mobAppearance
+			has_aH = 1
+		if (has_aH)
+			if(AHLIMB.mob_appearance_flags & HAS_NO_SKINTONE)
+				skin_tone = "#FFFFFF"	// Preserve their true coloration
+			else if (AHLIMB.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
+				skin_tone = AHLIMB.s_tone_special
+			else	// normal-ass skintone
+				skin_tone = AHLIMB.s_tone
 		else	// This is going to look *weird* if these somehow spawn on a mob
-			if (src.skin_tone_override)
+			if (istype(src, /obj/item/parts/human_parts/arm/mutant/lizard) || istype(src, /obj/item/parts/human_parts/arm/mutant/lizard))
 				src.skin_tone = rgb(rand(50,190), rand(50,190), rand(50,190))	// If lizlimbs havent been colored, color them
 			else
 				blend_color = pick(standard_skintones)
@@ -198,6 +197,8 @@
 		set_limb_icon_coloration()
 
 	proc/set_limb_icon_coloration()	// Actually colorizes the limb with the skin tone
+		if (!src.skintoned)
+			return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
 		// All skintoned limbs get a cool not-affected-by-coloration bloody stump!
 		var/icon/limb_icon = new /icon(src.icon, "[src.icon_state]")	// Preferably a grayscale image
 		limb_icon.Blend(src.skin_tone, ICON_MULTIPLY)
@@ -1318,33 +1319,11 @@ obj/item/parts/human_parts/arm/right/reliquary
 	icon = 'icons/mob/lizard.dmi'
 	partIcon = 'icons/mob/lizard.dmi'
 	skintoned = 1
-	skin_tone_override = 1
-
-/* 	New(var/atom/holder)
-		..()
-		if(ishuman(holder))
-			var/mob/living/carbon/human/A = holder
-			if (A?.bioHolder?.mobAppearance)
-				var/datum/appearanceHolder/aH = A.bioHolder.mobAppearance
-				src.skin_tone = fix_colors(aH.customization_first_color)
-				boutput(world, "LIZARD TONE = [src.skin_tone], BLEND = [blend_color]")
-		colorize_limb_icon()
-		boutput(world, "LIZARD ICON = [src.icon], [src.icon_state]") */
 
 /obj/item/parts/human_parts/leg/mutant/lizard
 	icon = 'icons/mob/lizard.dmi'
 	partIcon = 'icons/mob/lizard.dmi'
 	skintoned = 1
-	skin_tone_override = 1
-
-/* 	New(var/atom/holder)
-		..()
-		if(ishuman(holder))
-			var/mob/living/carbon/human/A = holder
-			if (A?.bioHolder?.mobAppearance)
-				var/datum/appearanceHolder/aH = A.bioHolder.mobAppearance
-				src.skin_tone = fix_colors(aH.customization_first_color)
-		colorize_limb_icon() */
 
 ////// ACTUAL LIZARD LIMBS //////
 /obj/item/parts/human_parts/arm/mutant/lizard/left

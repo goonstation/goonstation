@@ -6,7 +6,6 @@
 	flags = FPRINT | ONBELT | TABLEPASS
 	override_attack_hand = 0
 	var/skin_tone = "#FFFFFF"
-	var/skin_tone_override = 0
 	var/slot = null // which part of the person or robot suit does it go on???????
 	var/streak_decal = /obj/decal/cleanable/blood // what streaks everywhere when it's cut off?
 	var/streak_descriptor = "bloody" //bloody, oily, etc

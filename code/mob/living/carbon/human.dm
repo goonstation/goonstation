@@ -135,6 +135,8 @@
 
 	var/datum/simsHolder/sims = null
 
+	var/underpants_override = 0 // forces the mob to wear underpants, even if their flags tell them not to
+
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r", "nosepick")
 

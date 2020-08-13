@@ -836,6 +836,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	src.body_standing = image('icons/mob/human_decomp.dmi', "blank", MOB_LIMB_LAYER)
 	src.hands_standing = image('icons/mob/human_decomp.dmi', "blank", MOB_HAND_LAYER1)
 	*/
+	// if the image data can be stored in the thing it's trying to draw, store it there
+	// that way, we can make the thing look like the thing without a bunch of dynamic guesswork
 	if (AHOLD.mob_appearance_flags & BUILT_FROM_PIECES) // Everyone who isnt a static_icon
 		if ((src.bioHolder && !src.bioHolder.HasEffect("fat")) || (src.bioHolder && src.bioHolder.HasEffect("fat") && (AHOLD.mob_appearance_flags & IS_MUTANT)) || src.decomp_stage)
 			human_image.icon = AHOLD.body_icon
@@ -849,12 +851,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 			if(AHOLD.mob_appearance_flags & HAS_NO_SKINTONE)
 				skin_tone = "#FFFFFF"	// Preserve their true coloration
 			else if (AHOLD.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
-				if (AHOLD.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
-					skin_tone = AHOLD.customization_first_color
-				else if (AHOLD.mob_color_flags & SKINTONE_USES_PREF_COLOR_2)
-					skin_tone = AHOLD.customization_second_color
-				else if (AHOLD.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
-					skin_tone = AHOLD.customization_third_color
+				skin_tone = AHOLD.s_tone_special
 			else	// normal-ass skintone
 				skin_tone = AHOLD.s_tone
 			human_image.color = skin_tone
@@ -1063,7 +1060,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 					heart_image.icon_state = src.organHolder.heart.body_image
 					src.body_standing.overlays += heart_image
 
-			if (AHOLD.underwear && src.decomp_stage < 3)
+			if (src.decomp_stage < 3 && ((AHOLD.underwear && AHOLD.mob_appearance_flags & WEARS_UNDERPANTS) || src.underpants_override)) // no more bikini werewolves
 				undies_image.icon_state = underwear_styles[AHOLD.underwear]
 				undies_image.color = AHOLD.u_color
 				src.body_standing.overlays += undies_image
