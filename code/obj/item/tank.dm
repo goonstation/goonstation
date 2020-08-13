@@ -18,7 +18,7 @@ Contains:
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK
+	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | TGUI_INTERACTIVE
 
 	pressure_resistance = ONE_ATMOSPHERE*5
 
@@ -35,7 +35,6 @@ Contains:
 		src.air_contents = unpool(/datum/gas_mixture)
 		src.air_contents.volume = 70 //liters
 		src.air_contents.temperature = T20C
-		src.flags |= TGUI_INTERACTIVE
 		if (!(src in processing_items))
 			processing_items.Add(src)
 		BLOCK_TANK
