@@ -489,7 +489,7 @@
 
 /obj/machinery/portable_atmospherics/canister/proc/toggle_valve()
 	if(!src.has_valve)
-		return
+		return FALSE
 
 	src.valve_open = !(src.valve_open)
 	if (!src.holding && !src.connected_port)
@@ -500,15 +500,15 @@
 			message_admins("[key_name(usr)] opened [src] into the air at [log_loc(src)]. See station logs for atmos readout.")
 			if (src.det)
 				src.det.leaking()
-	return 0
+	return TRUE
 
 /obj/machinery/portable_atmospherics/canister/proc/set_release_pressure(var/pressure as num)
 	if(!src.has_valve)
-		return 1
+		return FALSE
 
 	playsound(src.loc, "sound/effects/valve_creak.ogg", 20, 1)
 	src.release_pressure = clamp(pressure, PORTABLE_ATMOS_MIN_RELEASE_PRESSURE, PORTABLE_ATMOS_MAX_RELEASE_PRESSURE)
-	return 0
+	return TRUE
 
 /obj/machinery/portable_atmospherics/canister/proc/det_wires_interact(var/tool, var/which_wire as num, var/mob/user)
 	if(!src.det || (which_wire <= 0 || which_wire > src.det.WireFunctions.len))
