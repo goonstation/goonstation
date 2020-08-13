@@ -2535,7 +2535,8 @@
 "afx" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance{
-	name = "Cargo Maintenance"
+	name = "Cargo Maintenance";
+	req_access = null
 	},
 /obj/access_spawn/cargo,
 /turf/simulated/floor/plating,
@@ -5032,7 +5033,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/maintenance,
+/obj/machinery/door/airlock/pyro/maintenance{
+	req_access = null
+	},
 /obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/NWmaint)
@@ -5999,7 +6002,8 @@
 "amX" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance{
-	name = "Cargo Maintenance"
+	name = "Cargo Maintenance";
+	req_access = null
 	},
 /obj/access_spawn/cargo,
 /turf/simulated/floor/plating,
@@ -14212,8 +14216,8 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
-	icon_state = "maint_closed";
-	name = "Robotics Storage"
+	name = "Robotics Storage";
+	req_access = null
 	},
 /obj/access_spawn/robotics,
 /turf/simulated/floor,
@@ -14614,10 +14618,10 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
-	icon_state = "maint_closed";
-	name = "Med-Sci Maintenance"
+	name = "Med-Sci Maintenance";
+	req_access = null
 	},
-/obj/access_spawn/morgue,
+/obj/access_spawn/medlab,
 /turf/simulated/floor/black,
 /area/station/medical/research)
 "aFX" = (
@@ -15636,7 +15640,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/maintenance{
-	name = "Engineering Maintenance"
+	name = "Engineering Maintenance";
+	req_access = null
 	},
 /obj/access_spawn/engineering,
 /turf/simulated/floor/plating,
@@ -16135,7 +16140,8 @@
 "aIP" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance{
-	name = "Med-Sci Maintenance"
+	name = "Med-Sci Maintenance";
+	req_access = null
 	},
 /obj/access_spawn/medlab,
 /turf/simulated/floor/plating,
@@ -18225,8 +18231,8 @@
 	},
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
-	icon_state = "com_closed";
-	name = "Cheif Engineer"
+	name = "Cheif Engineer";
+	req_access = null
 	},
 /obj/access_spawn/engineering_chief,
 /turf/simulated/floor,
@@ -19049,7 +19055,8 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance{
-	name = "Engineering Maintenance"
+	name = "Engineering Maintenance";
+	req_access = null
 	},
 /obj/access_spawn/engineering,
 /turf/simulated/floor/plating,
@@ -19865,7 +19872,8 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance{
-	name = "Botany Maintenance"
+	name = "Botany Maintenance";
+	req_access = null
 	},
 /obj/access_spawn/hydro,
 /turf/simulated/floor/plating,
@@ -20888,8 +20896,8 @@
 	},
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	icon_state = "eng_closed";
-	name = "Mining"
+	name = "Mining";
+	req_access = null
 	},
 /obj/access_spawn/mining,
 /turf/simulated/floor,
@@ -21304,8 +21312,8 @@
 	},
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	icon_state = "eng_closed";
-	name = "Mining"
+	name = "Mining";
+	req_access = null
 	},
 /obj/access_spawn/mining,
 /turf/simulated/floor,
