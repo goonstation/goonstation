@@ -2251,13 +2251,8 @@
 /datum/job/special/meatcube
 	name = "Meatcube"
 	linkcolor = "#FF0000"
-#if ASS_JAM
-	announce_on_join = 1
-	limit = 300
-#else
 	limit = 0
 	allow_traitors = 0
-#endif
 	slot_ears = null
 	slot_card = null
 	slot_back = null
