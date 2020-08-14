@@ -1,4 +1,9 @@
+/* IMPORTANT NOTES ABOUT THE APPEARANCE HOLDER
+   Hi, auntie Lagg here to explain you how the Appearance Holder makes people look different!
+	 Just about everything visual that isnt already defined in a specific bodypart is defined here
+	 Skin tone,
 
+ */
 var/list/bioUids = new/list() //Global list of all uids and their respective mobs
 
 var/numbersAndLetters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q",
@@ -19,8 +24,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/mob_appearance_flags = (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_HUMAN_HEAD | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
 	var/mob_color_flags = (HAS_HAIR_COLORED_HAIR)
 
-	var/body_icon = 'icons/mob/human.dmi'
-	var/body_icon_state = "skeleton"
+	var/body_icon = 'icons/mob/human.dmi'	// tells update_body() which DMI to use for rendering the chest/groin, torso-details, and oversuit tails
+	var/body_icon_state = "skeleton"	// for mutant races that are rendered using a static icon
 	var/head_icon = 'icons/mob/human_head.dmi'
 	var/head_kind = HEAD_HUMAN	// gets fed into the head for it to set it up, if it should be different
 
@@ -115,6 +120,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mob_appearance_flags = toCopy.mob_appearance_flags
 		mob_color_flags = toCopy.mob_color_flags
 
+		body_icon = toCopy.body_icon
+		body_icon_state = toCopy.body_icon_state
+		head_icon = toCopy.head_icon
+		head_kind = toCopy.head_kind
+
 		customization_icon = toCopy.customization_icon
 		customization_icon_special = toCopy.customization_icon_special
 
@@ -130,9 +140,15 @@ var/list/datum/bioEffect/mutini_effects = list()
 		customization_third = toCopy.customization_third
 		customization_third_special = toCopy.customization_third_special
 
+		mob_detail_1 = toCopy.mob_detail_1
+		mob_detail_2 = toCopy.mob_detail_2
+		mob_detail_3 = toCopy.mob_detail_3
+		mob_oversuit = toCopy.mob_oversuit
+
 		e_color = toCopy.e_color
 
 		s_tone = toCopy.s_tone
+		s_tone_special = toCopy.s_tone_special
 
 		underwear = toCopy.underwear
 		u_color = toCopy.u_color
