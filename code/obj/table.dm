@@ -368,11 +368,14 @@
 //Replacement for monkies walking through tables: They now parkour over them.
 //Note: Max count of tables traversable is 2 more than the iteration limit
 /datum/action/bar/icon/railing_jump/table_jump
+	var/const/throw_range = 7
+	var/const/iteration_limit = 5
+
 	getLandingLoc()
 		var/iteration = 0
 		var/turf/target = get_step(the_railing, ownerMob.dir)
 		var/obj/table/maybe_table = locate(/obj/table) in target
-		while(maybe_table && iteration < 5)
+		while(maybe_table && iteration < iteration_limit)
 			iteration++
 			target = get_step(target, ownerMob.dir)
 			maybe_table = locate(/obj/table) in target
@@ -380,21 +383,22 @@
 		return target
 
 	sendOwner()
-		var/throw_speed = 0.5
+		var/const/throw_speed = 0.5
 		if (istype(ownerMob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/M = ownerMob
 			if (!(M.flags & TABLEPASS))
 				var/tables_traveled = duration/(1 SECONDS)
 				SPAWN_DBG((tables_traveled/throw_speed) DECI SECONDS)
-					M.flags &= !TABLEPASS		
+					M.flags &= !TABLEPASS
 			M.flags ^= TABLEPASS
 
-		ownerMob.throw_at(jump_target, 7, throw_speed)
-		for(var/mob/O in AIviewers(ownerMob))
+		ownerMob.throw_at(jump_target, throw_range, throw_speed)
+		for(var/O in AIviewers(ownerMob))
+			var/mob/M = O //inherently typed list
 			var/the_text = "[ownerMob] jumps over [the_railing]."
 			if (is_athletic_jump) // athletic jumps are more athletic!!
 				the_text = "[ownerMob] swooces right over [the_railing]!"
-			O.show_text("[the_text]", "red")
+			M.show_text("[the_text]", "red")
 		logTheThing("combat", ownerMob, the_railing, "[is_athletic_jump ? "leaps over %the_railing% with [his_or_her(ownerMob)] athletic trait" : "crawls over %the_railing%"].")
 
 /* ======================================== */
