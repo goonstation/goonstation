@@ -229,9 +229,9 @@
 			if (src.carrier)
 				src.carrier.vis_contents -= indicator
 
-	dispose()
-		SHOULD_NOT_OVERRIDE(FALSE)
-		CRASH("YOU CAN'T DELETE THE FOOTBALL! YOU WILL REGRET THIS!")
+	disposing()
+		SHOULD_CALL_PARENT(FALSE)
+		return // CRASH("YOU CAN'T DELETE THE FOOTBALL! YOU WILL REGRET THIS!")
 
 	throw_impact(atom/hit_atom)
 		if (hit_atom)
