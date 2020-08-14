@@ -3,7 +3,7 @@
 // - thanks, singh
 
 // window title/size
-#define ANTAG_TIPS_WINDOW "window=antagTips;size=600x400;title=Antagonist Tips"
+#define ANTAG_TIPS_WINDOW "window=antagTips;size=700x450;title=Antagonist Tips"
 
 // damn one off windows... i'll make them defines too i guess in case anyone wants to reuse or edit them
 #define POLYMORPH_TIPS_WINDOW "window=antagTips;size=600x400;title=Polymorphed!"
@@ -61,6 +61,7 @@
 #define SHOW_BATTLE_ROYALE_TIPS(M) M.Browse(grabResource("html/traitorTips/battleTips.html"), ANTAG_TIPS_WINDOW)
 #define SHOW_MARTIAN_TIPS(M) M.Browse(grabResource("html/traitorTips/martianInfiltrator.html"), ANTAG_TIPS_WINDOW)
 #define SHOW_KUDZU_TIPS(M) M.Browse(grabResource("html/traitorTips/kudzu.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_FOOTBALL_TIPS(M) M.Browse(grabResource("html/traitorTips/football.html"), ANTAG_TIPS_WINDOW)
 
 // borg does things a little differently
 #define BORG_EMAGGED_MSG "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span class='alert'><b>Law ROM data corrupted. Unable to restore...</b></span>"
