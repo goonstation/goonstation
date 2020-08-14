@@ -1,5 +1,9 @@
 
 (t)fri aug 14 20
+(u)MarkNstein
+(p)1525
+(e)⚖🔄|balance, rework
+(*)Monkey-table interaction changed: Tables cannot be walked through, but instead can be vaulted past.
 (u)adharainspace
 (p)1790
 (e)🆕|feature
