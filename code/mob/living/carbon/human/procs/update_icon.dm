@@ -1244,6 +1244,26 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	else if (AHOLD.mob_appearance_flags & USES_STATIC_ICON)	// here's a picture of a fucked up human
 		src.body_standing.overlays += image(AHOLD.body_icon, AHOLD.body_icon_state, MOB_LIMB_LAYER) // this picture is you
 
+	if (src.organHolder && src.organHolder.tail)
+		var/obj/item/organ/tail/their_tail = src.organHolder.tail
+		var/image/tail_img = null
+		if(their_tail.organ_image_under_suit_1)
+			tail_img = image(icon=their_tail.organ_image_icon, icon_state=src.human_monkey_tail_interchange(their_tail.organ_image_under_suit_1, their_tail.human_getting_monkeytail, their_tail.monkey_getting_humantail), layer = MOB_LAYER-0.3)
+			if (their_tail.organ_color_1)
+				tail_img.color = their_tail.organ_color_1
+			src.body_standing.overlays += tail_img
+
+		if(their_tail.organ_image_under_suit_2)
+			tail_img = image(icon=their_tail.organ_image_icon, icon_state=src.human_monkey_tail_interchange(their_tail.organ_image_under_suit_2, their_tail.human_getting_monkeytail, their_tail.monkey_getting_humantail), layer = MOB_LAYER-0.25)
+			if (their_tail.organ_color_2)
+				tail_img.color = their_tail.organ_color_2
+			src.body_standing.overlays += tail_img
+
+		if(their_tail.organ_image_over_suit)
+			tail_img = image(icon=their_tail.organ_image_icon, icon_state=src.human_monkey_tail_interchange(their_tail.organ_image_over_suit, their_tail.human_getting_monkeytail, their_tail.monkey_getting_humantail), layer = MOB_LAYER_BASE+0.3)
+			if (their_tail.organ_color_1)
+				tail_img.color = their_tail.organ_color_1
+			src.body_standing.overlays += tail_img
 
 #if ASS_JAM
 	src.maptext_y = 32
@@ -1257,6 +1277,17 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	//Also forcing the updates since the overlays may have been modified on the images
 	src.UpdateOverlays(src.body_standing, "body", 1, 1)
 	src.UpdateOverlays(src.hands_standing, "hands", 1, 1)
+
+// Sets the iconstate if a human is getting a monkey tail, and vice versa
+// returns the iconstate, with -human or -monkey appended if needed
+/mob/living/carbon/human/proc/human_monkey_tail_interchange(var/tail_iconstate as text, var/human_getting_monkey_tail as num, var/monkey_getting_human_tail as num)
+	if (!tail_iconstate || (human_getting_monkey_tail && monkey_getting_human_tail))
+		return null	// Something went wrong
+	if (!human_getting_monkey_tail && !monkey_getting_human_tail)
+		return tail_iconstate	// Send it as-is
+	var/output_this_string
+	output_this_string = tail_iconstate + (human_getting_monkey_tail ? "-human" : "-monkey")
+	return output_this_string
 
 #if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
 /mob/living/carbon/human/UpdateDamage()

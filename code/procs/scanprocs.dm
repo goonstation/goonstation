@@ -161,6 +161,7 @@
 				organ_data1 += organ_health_scan("spleen", H, obfuscate)
 				organ_data1 += organ_health_scan("pancreas", H, obfuscate)
 				organ_data1 += organ_health_scan("appendix", H, obfuscate)
+				organ_data1 += organ_health_scan("tail", H, obfuscate)
 
 				//Don't give organ readings for Vamps.
 				if (organ_data1 && !isvampire(H))

@@ -1155,6 +1155,17 @@ var/ZLOG_START_TIME
 #define RAILING_UNFASTEN 1
 #define RAILING_FASTEN 2
 
+//tail defines
+#define TAIL_NONE 0
+#define TAIL_MONKEY 1
+#define TAIL_LIZARD 2
+#define TAIL_COW 3
+#define TAIL_WEREWOLF 4
+#define TAIL_SKELETON 5	// tailbone *shrug*
+#define TAIL_SEAMONKEY 6
+#define TAIL_CAT 7
+#define TAIL_ROACH 8
+
 //critter defines
 #define OBJ_CRITTER_OPENS_DOORS_NONE 0
 #define OBJ_CRITTER_OPENS_DOORS_PUBLIC 1

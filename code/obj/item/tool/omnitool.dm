@@ -43,6 +43,11 @@
 		if (new_mode)
 			src.change_mode(new_mode, user)
 
+	attack(mob/living/carbon/M as mob, mob/user as mob)
+		if (src.omni_mode == "prying")
+			if (!pry_surgery(M, user))
+				return ..()
+
 	get_desc(var/dist)
 		if (dist < 3)
 			. = "<span class='notice'>It is currently set to [src.omni_mode] mode.</span>"

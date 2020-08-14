@@ -80,6 +80,12 @@
 
 	var/datum/mutantrace/mutantrace = null
 
+	var/image/tail_detail_1	= null
+	var/image/tail_detail_2 = null
+	var/image/tail_detail_3 = null
+	var/image/tail_under_suit = null
+	var/image/tail_over_suit = null
+
 	var/emagged = 0 //What the hell is wrong with me?
 	var/spiders = 0 // SPIDERS
 	var/makeup = null // for when you wanna look pretty
@@ -2639,6 +2645,10 @@
 			processed += organHolder.intestines
 			if (prob(25) && organHolder.intestines.loc == src)
 				ret += organHolder.intestines
+		if (organHolder.tail)
+			processed += organHolder.tail
+			if (prob(75) && organHolder.tail.loc == src)
+				ret += organHolder.tail
 		if (prob(50))
 			var/obj/item/clothing/head/wig/W = create_wig()
 			if (W)
@@ -2883,11 +2893,18 @@
 	else
 		return 0
 
-/mob/living/carbon/human/set_mutantrace(var/mutantrace_type)
+/mob/living/carbon/human/set_mutantrace(var/mutantrace_type, var/remove_tail)
 
 	//Clean up the old mutantrace
 /* 	if (src.organHolder && src.organHolder.head && src.organHolder.head.donor == src)
 		src.organHolder.head.donor_mutantrace = null */
+
+	if(remove_tail)	// To prevent round-start tail-havers from dropping tailbones they shouldn't've had
+		if (src.organHolder && src.organHolder.tail)
+			src.organHolder.tail = null
+			for(var/obj/item/organ/tail/hidden_secret_tails in src.contents)	// Cus mutants love to hoard tails in their mob
+				if(istype(hidden_secret_tails, /obj/item/organ/tail))
+					qdel(hidden_secret_tails)
 
 	if(src.mutantrace != null)
 		qdel(src.mutantrace) // so that disposing() runs and removes mutant traits

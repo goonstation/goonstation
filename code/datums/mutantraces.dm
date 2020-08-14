@@ -38,6 +38,8 @@
 	var/special_head = null	// The special head we're going to use, if any
 	var/mutant_folder = 'icons/effects/genetics.dmi'	// Look in this folder for all the limbs
 
+	var/tail = TAIL_NONE // What tail do we have? Or are supposed to have?
+
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
 	var/body_offset = 0
@@ -245,6 +247,7 @@
 
 			M.update_face()
 			M.update_body()
+			set_tail(mob, src.tail)
 
 			if (M.bioHolder && M.bioHolder.mobAppearance)
 				M.bioHolder.mobAppearance.UpdateMob()
@@ -343,8 +346,11 @@
 				detail_3 = null
 				detail_over_suit = null
 
+				if(H.organHolder.tail)	// dump the old tail, if they have one
+					H.organHolder.tail = null
 				H.set_face_icon_dirty()
 				H.set_body_icon_dirty()
+				H.update_body()
 
 				SPAWN_DBG (25) // Don't remove.
 					if (H && H.organHolder && H.organHolder.skull) // check for H.organHolder as well so we don't get null.skull runtimes
@@ -364,6 +370,51 @@
 		if (L.len == 3)
 			return rgb(L["r"], L["g"], L["b"])
 		return rgb(22, 210, 22)
+
+	// Removes the mob's current tail (if any) and replaces it with the tail specified
+	// Third var determines if we drop the tail (0) or banish it to the shadow realm (1)
+	// Defaults to just dropping it on the ground
+	proc/set_tail(var/mob/living/carbon/human/Tf as mob, var/tailnum as num, var/deletail as num)
+		if(!ishuman(Tf) || tailnum > TAIL_ROACH || tailnum < TAIL_NONE)
+			return 0
+
+		if(Tf.organHolder.tail)	// dump the old tail, if they have one
+			if(deletail)
+				Tf.organHolder.tail = null
+				//shit this might drop all the tails in your inventory
+				for(var/obj/item/organ/tail/hidden_secret_tails in Tf.contents)	// Cus mutants love to hoard tails in their mob
+					if(istype(hidden_secret_tails, /obj/item/organ/tail))
+						hidden_secret_tails.set_loc(Tf.loc)
+						hidden_secret_tails.dropped(Tf)
+						hidden_secret_tails.layer = initial(hidden_secret_tails.layer)
+			else
+				if (!istype(Tf.organHolder.tail, /obj/item/organ/tail/bone))
+					Tf.visible_message("<span class='notice'>[Tf]'s tail falls off, and a new one appears in its place!</span>", "<span class='notice'>Your tail falls off, and a new one appears in its place!</span>")
+				Tf.organHolder.drop_organ("tail")
+
+		switch(tailnum)	// Mutantraces come with a free, new tail
+			if (TAIL_NONE)	// Unless you shouldn't have one
+				Tf.organHolder.tail = null
+			if (TAIL_MONKEY)
+				Tf.organHolder.tail = new /obj/item/organ/tail/monkey(Tf, Tf.organHolder)
+			if (TAIL_LIZARD)
+				Tf.organHolder.tail = new /obj/item/organ/tail/lizard(Tf, Tf.organHolder)
+			if (TAIL_COW)
+				Tf.organHolder.tail = new /obj/item/organ/tail/cow(Tf, Tf.organHolder)
+			if (TAIL_WEREWOLF)
+				Tf.organHolder.tail = new /obj/item/organ/tail/wolf(Tf, Tf.organHolder)
+			if (TAIL_SKELETON)
+				Tf.organHolder.tail = new /obj/item/organ/tail/bone(Tf, Tf.organHolder)
+			if (TAIL_SEAMONKEY)
+				Tf.organHolder.tail = new /obj/item/organ/tail/seamonkey(Tf, Tf.organHolder)
+			if (TAIL_CAT)
+				Tf.organHolder.tail = new /obj/item/organ/tail/cat(Tf, Tf.organHolder)
+			if (TAIL_ROACH)
+				Tf.organHolder.tail = new /obj/item/organ/tail/roach(Tf, Tf.organHolder)
+
+		Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
+		Tf.update_body()
+		return 1
 
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
@@ -505,6 +556,7 @@
 	mutant_appearance_flags = (IS_MUTANT | HAS_SPECIAL_SKINTONE | HAS_HUMAN_EYES | HAS_SPECIAL_HEAD | HAS_DETAIL_HAIR | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | HAS_A_TAIL | HAS_SPECIAL_HEAD)
 	mutant_color_flags = (DETAIL_2 | HAS_HAIR_COLORED_DETAILS | SKINTONE_USES_PREF_COLOR_1 | FIX_COLORS)
 	voice_override = "lizard"
+	tail = TAIL_LIZARD
 	special_head = HEAD_LIZARD
 	mutant_folder = 'icons/mob/lizard.dmi'
 	special_hair_3 = "head-detail_1"
@@ -718,6 +770,7 @@
 	mutant_folder = 'icons/mob/human.dmi'
 	icon_state = "skeleton"
 	voice_override = "skelly"
+	tail = TAIL_SKELETON
 
 
 
@@ -849,6 +902,7 @@
 	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
 	mutant_folder = 'icons/mob/werewolf.dmi'
 	special_head = HEAD_WEREWOLF
+	tail = TAIL_WEREWOLF
 
 	New()
 		..()
@@ -1000,6 +1054,7 @@
 	var/sound_monkeyscream = 'sound/voice/screams/monkey_scream.ogg'
 	var/had_tablepass = 0
 	var/table_hide = 0
+	tail = TAIL_MONKEY
 
 	New(var/mob/living/carbon/human/M)
 		if (M)
@@ -1194,6 +1249,7 @@
 	mutant_folder = 'icons/mob/monkey.dmi'
 	icon_state = "seamonkey"
 	aquatic = 1
+	tail = TAIL_SEAMONKEY
 
 /datum/mutantrace/martian
 	name = "martian"
@@ -1288,6 +1344,7 @@
 	name = "roach"
 	icon_state = "roach"
 	override_attack = 0
+	tail = TAIL_ROACH
 	mutant_folder = 'icons/mob/roach.dmi'
 	special_head = HEAD_ROACH
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/roach/right
@@ -1310,6 +1367,7 @@
 	jerk = 1
 	override_attack = 0
 	firevuln = 1.5 // very flammable catthings
+	tail = TAIL_CAT
 	mutant_folder = 'icons/mob/cat.dmi'
 	special_head = HEAD_CAT
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/right
@@ -1624,6 +1682,7 @@
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "cow"
+	tail = TAIL_COW
 	mutant_folder = 'icons/mob/cow.dmi'
 	special_head = HEAD_COW
 	special_hair_1 = "head-detail1"
@@ -1642,6 +1701,7 @@
 			mob.update_face()
 			mob.update_body()
 			mob.update_clothing()
+
 
 			H.blood_id = "milk"
 			H.blood_color = "FFFFFF"
