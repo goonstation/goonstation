@@ -229,9 +229,9 @@
 			if (src.carrier)
 				src.carrier.vis_contents -= indicator
 
-	disposing()
-		// the football refuses to be deleted so easily.
-		return
+	dispose()
+		SHOULD_NOT_OVERRIDE(FALSE)
+		CRASH("YOU CAN'T DELETE THE FOOTBALL! YOU WILL REGRET THIS!")
 
 	throw_impact(atom/hit_atom)
 		if (hit_atom)

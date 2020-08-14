@@ -143,7 +143,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 		if (the_football)
 			if (ismob(the_football.loc))
 				var/mob/M = the_football.loc
-				M.u_equip(the_football)
+				M.drop_item(the_football)
 
 			the_football.blowthefuckup(100, delete = 0)
 			the_football.invisibility = 101
