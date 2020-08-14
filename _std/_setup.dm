@@ -1040,7 +1040,7 @@ proc/default_frequency_color(freq)
 #ifdef RP_MODE
 #define ASS_JAM 0
 #elif BUILD_TIME_DAY == 13
-#define ASS_JAM 1
+#define ASS_JAM 0
 #else
 #define ASS_JAM 0
 #endif
