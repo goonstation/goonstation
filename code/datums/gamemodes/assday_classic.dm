@@ -4,8 +4,8 @@
 *
 */
 /datum/game_mode/assday
-	name = "ass day"
-	config_tag = "assday"
+	name = "Everyone-Is-A-Traitor Mode"
+	config_tag = "everyone-is-a-traitor"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list("traitor","changeling","wraith")
 

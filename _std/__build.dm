@@ -118,7 +118,8 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define XMAS 1
 //#define CANADADAY 1
 //#define FOOTBALL_MODE 1
-// see below for ASS_JAM
+
+//#define ASS_JAM_ENABLED 1 // BUT YOU ALSO GOTTA SET BUILD_TIME_DAY TO 13 BELOW!!!
 
 
 var/global/vcs_revision = "1"

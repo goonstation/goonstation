@@ -648,6 +648,20 @@
 				namecounts[name] = 1
 			creatures[name] = N.the_bomb
 
+
+	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+		var/datum/game_mode/football/F = ticker.mode
+		if (F.the_football && istype(F.the_football, /obj/item/football/the_big_one))
+			var/name = "THE FOOTBALL"
+			if (name in names)
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
+			else
+				names.Add(name)
+				namecounts[name] = 1
+			creatures[name] = F.the_football
+
+
 	for (var/X in by_type[/obj/observable])
 		var/obj/observable/O = X
 		LAGCHECK(LAG_LOW)
@@ -726,9 +740,13 @@
 		if(!istype(O))
 			creatures -= name
 		else
-			var/turf/T = get_turf(O)
-			if(!T || isghostrestrictedz(T.z))
-				creatures -= name
+			// let people observe these regardless of where they are. who cares
+			// there's probably a way to do this better (some bots have no-camera mode for example)
+			// which would work but someone else can fix it later. jhon madden
+			if (!istype(O, /obj/machinery/nuclearbomb) && !istype(O, /obj/item/football/the_big_one))
+				var/turf/T = get_turf(O)
+				if(!T || isghostrestrictedz(T.z))
+					creatures -= name
 
 	eye_name = input("Please, select a target!", "Observe", null, null) as null|anything in creatures
 

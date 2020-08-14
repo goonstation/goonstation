@@ -559,12 +559,52 @@
 
 /obj/machinery/light/attackby(obj/item/W, mob/user)
 
+	if (istype(W, /obj/item/lamp_manufacturer)) //deliberately placed above the borg check
+
+		if (removable_bulb == 0)
+			boutput(user, "This fitting isn't user-serviceable.")
+			return
+
+		var/obj/item/lamp_manufacturer/M = W
+		var/obj/item/light/L = null
+		if (fitting == "tube")
+			L = new M.dispensing_tube()
+		else
+			L = new M.dispensing_bulb()
+		if (light_status == LIGHT_OK && light_name == L.name) //light_name because I want this to be able to replace working lights with different colours
+			boutput(user, "This fitting already has an identical lamp.")
+			qdel(L)
+			return //Stop borgs from making more sparks than necessary
+
+		if (issilicon(user)) //Not that non-silicons should have these
+			var/mob/living/silicon/S = user
+			if (S.cell)
+				if (light_status == LIGHT_EMPTY)
+					S.cell.charge -= M.cost_empty
+				else
+					S.cell.charge -= M.cost_broken
+
+		light_name = L.name
+		light_status = L.light_status
+		breakprob = 0
+		rigged = FALSE
+		rigger = null
+		boutput(user, "You insert a [L.name].")
+		light.set_color(L.color_r, L.color_g, L.color_b)
+		qdel(L)
+		update()
+		if (!isghostdrone(user)) // Same as ghostdrone RCDs, no sparks
+			elecflash(user)
+		return
+
+
 	if (issilicon(user) && !isghostdrone(user))
 		return
 		/*if (isghostdrone(user))
 			return src.attack_hand(user)
 		else
 			return*/
+
 
 	// see if there's a magtractor involved and if so save it for later as mag
 	var/obj/item/magtractor/mag

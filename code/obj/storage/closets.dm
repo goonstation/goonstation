@@ -266,6 +266,10 @@
 			B8.pixel_y = 6
 			B8.pixel_x = 0
 
+			var/obj/item/folder/B9 = new /obj/item/folder(src)
+			B9.pixel_y = 0
+			B9.pixel_x = 6
+
 			return 1
 
 //A closet that traps you when you step onto it!

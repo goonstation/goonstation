@@ -329,13 +329,15 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = "milk"
+	var/canbequilty = 1
 
 	New()
 		..()
-		if( prob(10) )
-			name = "Quilty Farms Milk"
-			desc = "For ages 1[pick("0","8")] and under."
-			icon_state = "milk_quilty"
+		if(canbequilty == 1)
+			if( prob(10))
+				name = "Quilty Farms Milk"
+				desc = "For ages 1[pick("0","8")] and under."
+				icon_state = "milk_quilty"
 
 /obj/item/reagent_containers/food/drinks/milk/rancid
 	name = "Rancid Space Milk"
@@ -344,6 +346,24 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("milk"=25,"toxin"=25)
+
+/obj/item/reagent_containers/food/drinks/milk/clownspider
+	name = "Honkey Gibbersons - Clownspider Milk"
+	desc = "A bottle of really - really colorful milk? The smell is sweet and looking at this envokes the same thrill as wanting to drink paint!"
+	icon_state = "milk"
+	heal_amt = 1
+	initial_volume = 50
+	initial_reagents = list("rainbow fluid" = 7, "milk" = 19)
+	canbequilty = 0
+
+/obj/item/reagent_containers/food/drinks/milk/cluwnespider
+	name = "Honkey Gibbersons - Cluwnespider Milk"
+	desc = "A bottle of ... oh no! Do not look at it! Better never drink this colorful milk?!"
+	icon_state = "milk"
+	heal_amt = 1
+	initial_volume = 50
+	initial_reagents = list("painbow fluid" = 13, "milk" = 20)
+	canbequilty = 0
 
 /obj/item/reagent_containers/food/drinks/milk/soy
 	name = "Creaca's Space Soy Milk"

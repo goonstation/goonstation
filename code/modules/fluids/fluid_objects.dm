@@ -230,6 +230,8 @@
 	var/slurping = 0
 	var/pissing = 0
 
+	var/contained = 0
+
 	var/static/image/overlay_image = image('icons/obj/fluid.dmi')
 
 	New()
@@ -261,6 +263,7 @@
 		..()
 
 	process()
+		if(contained) return
 		if (slurping)
 			if (src.reagents.total_volume < bladder)
 				var/turf/T = get_turf(src)
@@ -356,7 +359,16 @@
 		onclose(user, "fluid_canister")
 		return
 
-
+/obj/machinery/fluid_canister/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/atmosporter))
+		var/obj/item/atmosporter/porter = W
+		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
+		else
+			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
+			src.contained = 1
+			src.set_loc(W)
+			elecflash(user)
+	..()
 ///////////////////
 //////canister/////
 ///////////////////

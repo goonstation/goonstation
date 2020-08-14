@@ -144,6 +144,7 @@
 		R.my_atom = src
 
 /datum/artifact/bomb/chemical
+	associated_object = /obj/artifact/bomb/chemical
 	explode_delay = 0
 	react_xray = list(5,65,20,11,"HOLLOW")
 	validtypes = list("ancient","martian","eldritch","precursor")

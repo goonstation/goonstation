@@ -24,7 +24,10 @@ var
 /datum/proc/pooled(var/pooltype)
 	dispose()
 	if(istype(src, /atom/movable))
-		src:set_loc(null)
+		var/atom/movable/AM = src
+		AM.set_loc(null)
+		AM.transform = null
+		animate(AM)
 	// If this thing went through the delete queue and was rescued by the pool mechanism, we should reset the qdeled flag.
 	qdeled = 0
 	pooled = 1
