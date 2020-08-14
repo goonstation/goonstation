@@ -1829,10 +1829,6 @@ var/list/mechanics_telepads = new/list()
 		icon_state = "[under_floor ? "u":""]comp_radiosig"
 		return
 
-/obj/item/mechanics/wificomp/super
-	range = 999
-	maxrange = 999
-
 #undef WIFI_NOISE_COOLDOWN
 #undef WIFI_NOISE_VOLUME
 /obj/item/mechanics/selectcomp
