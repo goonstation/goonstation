@@ -1046,7 +1046,7 @@ proc/default_frequency_color(freq)
 #endif
 
 // time for johns madden
-#define FOOTBALL_MODE 0
+#define FOOTBALL_MODE 1
 
 
 #if ASS_JAM
