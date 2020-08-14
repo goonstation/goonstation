@@ -149,13 +149,14 @@
 					</div>
 					<div class='l'>Bioeffects<a href='?src=\ref[src];action=secretsfun;type=bioeffect_help'>*</a></div>
 					<div class='r'>
-						<a href='[playeropt_link(M, "checkbioeffect")]'>Check</a> &bull;
+						<a href='[playeropt_link(M, "managebioeffect")]'>Manage</a> &bull;
 						<a href='[playeropt_link(M, "addbioeffect")]'>Add</a> &bull;
 						<a href='[playeropt_link(M, "removebioeffect")]'>Remove</a>
 					</div>
 					"}]
 					<div class='l'>Abilities</div>
 					<div class='r'>
+						<a href='[playeropt_link(M, "manageabils")]'>Manage</a> &bull;
 						<a href='[playeropt_link(M, "addabil")]'>Add</a> &bull;
 						<a href='[playeropt_link(M, "removeabil")]'>Remove</a> &bull;
 						<a href='[playeropt_link(M, "abilholder")]'>New Holder</a>
@@ -365,6 +366,6 @@
 	if (src.level == LEVEL_ADMIN)
 		windowHeight = "550"
 	else if (src.level == LEVEL_CODER)
-		windowHeight = "600"
+		windowHeight = "754"	//weird number, but for chui screen, it removes the scrolling.
 
 	usr.Browse(dat, "window=adminplayeropts[M.ckey];size=600x[windowHeight]")

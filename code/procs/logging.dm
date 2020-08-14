@@ -14,8 +14,9 @@ Example out of game log call:
 #define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
 #define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
 
-var/global/roundLog_name = "data/logs/full/[time2text(world.realtime, "YYYY-MM-DD-hh-mm")].html"
-var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-DD-hh-mm")].html")
+var/global/roundLog_date = time2text(world.realtime, "YYYY-MM-DD-hh-mm")
+var/global/roundLog_name = "data/logs/full/[roundLog_date].html"
+var/global/roundLog = file(roundLog_name)
 var/global/disable_log_lists = 0
 
 
@@ -110,6 +111,20 @@ var/global/disable_log_lists = 0
 
 /proc/logDiary(text)
 	WRITE_LOG(diary_name, "[text]")
+
+/* tgui logging */
+/proc/log_tgui(user_or_client, text)
+	var/entry = "tgui: "
+	if(!user_or_client)
+		entry += "no user"
+	else if(istype(user_or_client, /mob))
+		var/mob/user = user_or_client
+		entry += "[user.ckey] (as [user])"
+	else if(istype(user_or_client, /client))
+		var/client/client = user_or_client
+		entry += "[client.ckey]"
+	entry += " | [text]\n"
+	WRITE_LOG(roundLog_name, entry)
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
 /proc/shutdown_logging()

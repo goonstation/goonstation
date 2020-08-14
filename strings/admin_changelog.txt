@@ -1,3 +1,21 @@
+(t)tue aug 11 20
+(u)pali
+(*)Admin Interact (~ + click) is now also accessible from View Variables.
+(t)wed aug 05 20
+(u)Sovexe
+(*)Added new command Spawn-Supplydrop along with a Supplydrop cinematic effect for build mode spawning.
+(t)tue aug 04 20
+(u)Zamujasa
+(*)Player notes now show multiline data properly. Maybe. I didn't test this. vOv
+(t)mon jul 24 20
+(u)Sovexe
+(*)New Ability Management Panel accesible in player options and tilde menu.
+(t)thu jul 23 20
+(u)Sovexe
+(*)Added the meowitzer.
+(t)fri jul 17 20
+(u)Kyle
+(*)Add button in secrets panel to add an ability to a selected mob or to all mobs. You can specify all humans or all mob/living. Also, fixed issue with trying to add abilities to abilityholder Composites that did not have any abilityHolders inside it.
 (t)tue jul 14 20
 (u)Sovexe
 (*)Updated Respawn-Panel to handle spawning antagonist players, plus minor UI improvements.

@@ -504,7 +504,9 @@
 	/obj/item/electronics/scanner,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/electronics/soldering,
-	/obj/item/deconstructor)
+	/obj/item/deconstructor,
+	/obj/item/storage/mechanics/housing_large=2,
+	/obj/item/storage/mechanics/housing_handheld=1)
 
 /obj/storage/secure/closet/engineering/atmos
 	name = "\improper Atmospheric Technician's locker"
@@ -620,7 +622,7 @@
 	/obj/item/clothing/head/turban,\
 	/obj/item/clothing/shoes/sandal,\
 	/obj/item/clothing/suit/flockcultist,\
-	/obj/item/reagent_containers/glass/bottle/holywater)
+	/obj/item/storage/box/holywaterkit)
 
 /* =================== */
 /* ----- Fridges ----- */
@@ -634,6 +636,16 @@
 	icon_greenlight = "fridge-greenlight"
 	icon_redlight = "fridge-redlight"
 	icon_sparks = "fridge-sparks"
+	intact_frame = 1
+
+/obj/storage/secure/closet/fridge/opened
+	New()
+		..()
+		name = "busted refrigerator"
+		desc = "The newest cooling technology...now with - oh god! What happened to the poor door?!"
+		intact_frame = 0
+		unlock()
+		toggle()
 
 /obj/storage/secure/closet/fridge/kitchen
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 5,/obj/item/storage/box/cookie_tin)

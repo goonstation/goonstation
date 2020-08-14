@@ -1021,7 +1021,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			C.health *= health_multiplier
 			C.aggressive = 1
 			C.defensive = 1
-			C.opensdoors = 0
+			C.opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 			if (ev)
 				ev.onSpawn(C)
 			count--

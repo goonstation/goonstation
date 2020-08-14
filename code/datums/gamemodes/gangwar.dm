@@ -19,18 +19,12 @@
 	var/list/under_list = list()
 	var/list/headwear_list = list()
 
-#ifdef RP_MODE
-	var/const/setup_min_teams = 1
-	var/const/setup_max_teams = 2 //Maybe make this one?
-	var/current_max_gang_members = 3 //maximum number of gang members, not including the leader
-#else
 	var/const/setup_min_teams = 3
 	var/const/setup_max_teams = 5
-	var/current_max_gang_members = 5 //maximum number of gang members, not including the leader
-#endif
-
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
+
+	var/current_max_gang_members = 5 //maximum number of gang members, not including the leader
 	//var/const/absolute_max_gang_members = 9
 
 	var/list/potential_hot_zones = null
@@ -61,13 +55,7 @@
 		if (!istype(player)) continue
 		if(player.ready) num_players++
 
-#ifdef RP_MODE
-	//Using ternary since we're just choosing between 1 and 2 teams
-	var/num_teams = (num_players > 35) ? setup_max_teams : setup_min_teams
-	//var/num_teams = clamp(round((num_players-6) / 9), setup_min_teams, setup_max_teams) //third team at 29 pop
-#else
-	var/num_teams = clamp(round(num_players / 9), setup_min_teams, setup_max_teams) //1 gang per 9 players
-#endif
+	var/num_teams = max(setup_min_teams, min(round((num_players) / 9), setup_max_teams)) //1 gang per 9 players
 
 	var/list/leaders_possible = get_possible_leaders(num_teams)
 	if (num_teams > leaders_possible.len)

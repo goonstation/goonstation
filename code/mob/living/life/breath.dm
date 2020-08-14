@@ -3,7 +3,6 @@
 	var/breathtimer = 0
 	var/breathstate = 0
 
-
 	//consider these temporary...hopefully
 	proc/update_oxy(var/on)
 		if (human_owner)
@@ -20,6 +19,9 @@
 	process(var/datum/gas_mixture/environment)
 		if(isdead(owner))
 			return ..()
+
+		life_pause_check = 1
+
 		//special (read: stupid) manual breathing stuff. weird numbers are so that messages don't pop up at the same time as manual blinking ones every time
 		if (manualbreathing && human_owner)
 			breathtimer++
@@ -46,12 +48,15 @@
 			breathe(environment)
 
 		if (istype(owner.loc, /obj/))
+			life_pause_check = 9999
 			var/obj/location_as_object = owner.loc
 			location_as_object.handle_internal_lifeform(owner, 0)
 		..()
 
 	proc/breathe(datum/gas_mixture/environment)
 		var/mult = get_multiplier()
+
+		life_pause_check = 2
 
 		var/atom/underwater = 0
 		if (isturf(owner.loc))
@@ -84,10 +89,12 @@
 			return // no breathing inside possessed objects
 		else if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			return
+
+		life_pause_check = 3
 		//if (istype(loc, /obj/machinery/clonepod)) return
 
 		if (owner.reagents)
-			if (owner.reagents.has_reagent("lexorin")) return
+			if (owner.reagents.has_reagent("lexorin") || HAS_MOB_PROPERTY(owner, PROP_REBREATHING)) return
 
 		// Changelings generally can't take OXY/LOSEBREATH damage...except when they do.
 		// And because they're excluded from the breathing procs, said damage didn't heal
@@ -102,6 +109,8 @@
 			if (owner.get_oxygen_deprivation())
 				owner.take_oxygen_deprivation(-50 * mult)
 			return
+
+		life_pause_check = 4
 
 		if (underwater)
 			if (human_owner?.mutantrace && human_owner?.mutantrace.aquatic)
@@ -118,8 +127,11 @@
 		if (owner.grabbed_by && owner.grabbed_by.len)
 			breath = get_breath_grabbed_by(BREATH_VOLUME)
 
+		life_pause_check = 5
+
 		if (!breath)
 			if (owner.losebreath>0) //Suffocating so do not take a breath
+				life_pause_check = 6
 				owner.losebreath -= (1.3 * mult)
 				owner.losebreath = max(owner.losebreath,0)
 				if (prob(75)) //High chance of gasping for air
@@ -133,6 +145,7 @@
 				if (owner.losebreath <= 0)
 					boutput(owner, "<span class='notice'>You catch your breath.</span>")
 			else
+				life_pause_check = 7
 				//First, check for air from internal atmosphere (using an air tank and mask generally)
 				breath = get_breath_from_internal(BREATH_VOLUME)
 
@@ -155,6 +168,7 @@
 		handle_breath(breath, underwater, mult = mult)
 
 		if (breath)
+			life_pause_check = 8888
 			owner.loc.assume_air(breath)
 
 
@@ -185,6 +199,7 @@
 
 	proc/handle_breath(datum/gas_mixture/breath, var/atom/underwater = 0, var/mult = 1) //'underwater' really applies for any reagent that gets deep enough. but what ever
 		if (owner.nodamage) return
+		life_pause_check = 8
 		var/area/A = get_area(owner)
 		if( A && A.sanctuary )
 			return
@@ -211,6 +226,8 @@
 
 		if (owner.health < 0 || (human_owner?.organHolder && human_owner?.organHolder.get_working_lung_amt() == 0)) //We aren't breathing.
 			return 0
+
+		life_pause_check = 9
 
 		var/has_cyberlungs = (human_owner?.organHolder && (human_owner.organHolder.left_lung && human_owner.organHolder.right_lung) && (human_owner.organHolder.left_lung.robotic && human_owner.organHolder.right_lung.robotic)) //gotta prevent null pointers...
 		var/safe_oxygen_min = 17 // Minimum safe partial pressure of O2, in kPa
@@ -239,6 +256,9 @@
 			safe_co2_max = 18
 			safe_toxins_max = 5		//making it a lot higher than regular, because even doubling the regular value is pitifully low. This is still reasonably low, but it might be noticable
 
+
+		life_pause_check = 10
+
 		if (O2_pp < safe_oxygen_min) 			// Too little oxygen
 			if (prob(20))
 				if (underwater)
@@ -263,6 +283,8 @@
 		breath.oxygen -= oxygen_used
 		breath.carbon_dioxide += oxygen_used
 
+		life_pause_check = 11
+
 		if (CO2_pp > safe_co2_max)
 			if (!owner.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 				owner.co2overloadtime = world.time
@@ -273,9 +295,10 @@
 					owner.take_oxygen_deprivation(7 * mult)
 			if (prob(20)) // Lets give them some chance to know somethings not right though I guess.
 				owner.emote("cough")
-
 		else
 			owner.co2overloadtime = 0
+
+		life_pause_check = 12
 
 		if (Toxins_pp > safe_toxins_max) // Too much toxins
 			var/ratio = breath.toxins/safe_toxins_max
@@ -295,6 +318,8 @@
 					if (prob(20))
 						owner.emote(pick("giggle", "laugh"))
 
+		life_pause_check = 13
+
 		var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
 		if (prob(15) && (FARD_pp > fart_smell_min))
 			boutput(owner, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
@@ -313,6 +338,8 @@
 			if (!has_cyberlungs)
 				for (var/datum/gas/rad_particles/RV in breath.trace_gases)
 					owner.changeStatus("radiation", RV.moles, 2 SECONDS)
+
+		life_pause_check = 14
 
 		if (human_owner)
 			if (breath.temperature > min(human_owner.organHolder.left_lung ? human_owner.organHolder.left_lung.temp_tolerance : INFINITY, human_owner.organHolder.right_lung ? human_owner.organHolder.right_lung.temp_tolerance : INFINITY) && !human_owner.is_heat_resistant()) // Hot air hurts :(

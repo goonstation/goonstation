@@ -383,9 +383,40 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(prob(50))
 			world << sound('sound/effects/creaking_metal1.ogg', volume = 60)
 
+// A weapon by Sovexe
+/datum/projectile/special/meowitzer //what have I done
+	shot_sound = 'sound/misc/boing/6.ogg'
+	name  = "meowitzer"
+	sname  = "meowitzer"
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "cat1"
+	dissipation_delay = 75
+	dissipation_rate = 300
+	projectile_speed = 20
+	cost = 1
 
+	var/explosive_hits = 1
+	var/explosion_power = 30
+	var/hit_sound = 'sound/voice/animal/cat.ogg'
+	var/last_sound_time = 0 // anti-ear destruction
+	var/max_bounce_count = 50
 
+	on_hit(atom/A, direction, projectile)
+		shoot_reflected_bounce(projectile, A, max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
+		var/turf/T = get_turf(A)
 
+		//prevent playing all 50 sounds at once on rapid bounce
+		if(world.time >= last_sound_time + 1 DECI SECOND)
+			last_sound_time = world.time
+			playsound(A, hit_sound, 60, 1)
+
+		if (explosive_hits)
+			SPAWN_DBG(0)
+				explosion_new(projectile, T, explosion_power, 1)
+		return
+
+/datum/projectile/special/meowitzer/inert
+	explosive_hits = 0
 
 /datum/projectile/special/spewer
 	name = "volatile bolt"

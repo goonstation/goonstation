@@ -82,6 +82,10 @@
 //When a mob dies
 #define COMSIG_MOB_DEATH "mob_death"
 
+#define COMSIG_MOB_PICKUP "mob_pickup"
+
+#define COMSIG_MOB_DROPPED "mob_drop"
+
 //attack_X signals
 /// Attacking wiht an item in-hand
 #define COMSIG_ATTACKBY "attackby"
@@ -103,7 +107,7 @@
 /// Connect two mechcomp devices together
 #define COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL "mechcomp_allow_manual_sigset"
 /// Remove all connected devices
-#define COMSIG_MECHCOMP_RM_ALL_CONNECTIONS "mechcomp_remove_all_connections" 
+#define COMSIG_MECHCOMP_RM_ALL_CONNECTIONS "mechcomp_remove_all_connections"
 /// Passing the signal of a message to all connected mechcomp devices for handling (message will be instatiated by the component)
 #define COMSIG_MECHCOMP_TRANSMIT_SIGNAL "mechcomp_transmit_signal"
 /// Passing a message to all connected mechcomp devices for handling
@@ -117,9 +121,11 @@
 /// Remove [the caller] from the list of transmitting devices
 #define _COMSIG_MECHCOMP_RM_INCOMING "_mechcomp_remove_incoming"
 /// Remove [the caller] from the list of receiving devices
-#define _COMSIG_MECHCOMP_RM_OUTGOING "_mechcomp_remove_outgoing"     
+#define _COMSIG_MECHCOMP_RM_OUTGOING "_mechcomp_remove_outgoing"
 /// Return the component's outgoing connections
 #define _COMSIG_MECHCOMP_GET_OUTGOING "_mechcomp_get_outgoing_connections"
+/// Return the component's incoming connections
+#define _COMSIG_MECHCOMP_GET_INCOMING "_mechcomp_get_incoming_connections"
 /// Begin to connect two mechcomp devices together
 #define _COMSIG_MECHCOMP_DROPCONNECT "_mechcomp_drop_connect"
 /// Connect one MechComp compatible device as a receiver to a trigger. (This is meant to be a private method)

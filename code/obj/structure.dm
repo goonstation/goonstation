@@ -195,8 +195,11 @@ obj/structure/ex_act(severity)
 				// drsingh attempted fix for Cannot read null.amount
 				if (S != null)
 					S.amount -= 2
-					if(S.amount <= 0)
+					if (S.amount <= 0)
 						qdel(W)
+					else
+						S.inventory_counter.update_number(S.amount)
+
 				qdel(src)
 		return
 

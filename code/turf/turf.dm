@@ -291,10 +291,12 @@ var/global/client/ff_debugger = null
 			if ((forget != obstacle))
 				if(obstacle.event_handler_flags & USE_CANPASS)
 					if(!obstacle.CanPass(mover, cturf, 1, 0))
+
 						mover.Bump(obstacle, 1)
 						return 0
 				else //cheaper, skip proc call lol lol
 					if (obstacle.density)
+
 						mover.Bump(obstacle,1)
 						return 0
 	return 1 //Nothing found to block so return success!
@@ -874,11 +876,33 @@ var/global/client/ff_debugger = null
 
 	proc/encourage()
 		var/obj/overlay/clickable = new/obj/overlay(src)
-		clickable.maptext = "<span class='ol c ps2p'>Hello! We are experiencing more load than usual. <br><a href='byond://goon3.goonhub.com:26300'>click here to join Goonstation Overflow (Smoother game, RP flavor).</a> </span>"
-		clickable.maptext_width = 300
-		clickable.maptext_height = 300
+
+		// This is gross. I'm sorry.
+		var/list/servers = list()
+		servers["main"]		= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main'>Goonstation</a>"}
+		servers["main3"]	= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main3'>Goonstation Overflow</a>"}
+		servers["rp"]		= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "rp'>Goonstation Roleplay</a>"}
+		servers["main2"]	= {"<a style='color: #88f;' href='byond://winset?command=Change-Server "main2'>Goonstation Roleplay Overflow</a></span>"}
+
+		var/serverList = ""
+		for (var/serverId in servers)
+			if (serverId == config.server_id)
+				continue
+			serverList += "\n[servers[serverId]]"
+
+		clickable.maptext = {"<span class='ol vga'>
+Welcome to Goonstation!
+New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
+Have questions? Ask mentors with \[F3]!
+Need an admin? Message us with \[F1].
+
+Other Goonstation servers:[serverList]"}
+		clickable.maptext_width = 600
+		clickable.maptext_height = 400
 		clickable.plane = 100
 		clickable.layer = src.layer + 1
+		clickable.x -= 3
+
 
 	proc/educate()
 		maptext = "<span class='ol c ps2p'>Hello! Press F3 to ask for help. You can change game settings using the file menu on the top left, and see our wiki + maps by clicking the buttons on the top right.</span>"

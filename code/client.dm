@@ -100,6 +100,8 @@
 
 	var/admin_intent = 0
 
+	var/hand_ghosts = 1 //pickup ghosts inhand
+
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
 		logTheThing("audit", src, target, message)
@@ -226,6 +228,11 @@
 		if (src)
 			del(src)
 		return
+
+	if (world.time < 7 SECONDS)
+		if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
+			if (!(src.ckey in whitelistCkeys))
+				sleep(3 SECONDS) //silly wait period bandaid so clients arent booted before whitelist load (probably)
 
 	//We're limiting connected players to a whitelist of ckeys (but let active admins in)
 	if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
@@ -508,6 +515,9 @@
 	else
 		src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
 
+	//game stuf
+	hand_ghosts = winget( src, "menu.use_hand_ghosts", "is-checked" ) == "true"
+
 	//sound
 	if (winget( src, "menu.speech_sounds", "is-checked" ) == "true")
 		ignore_sound_flags |= SOUND_SPEECH
@@ -673,7 +683,7 @@
 	return player.mentor
 
 /client/proc/can_see_mentor_pms()
-	return (player.mentor || src.holder) && player.see_mentor_pms
+	return (src.player?.mentor || src.holder) && src.player?.see_mentor_pms
 
 var/global/curr_year = null
 var/global/curr_month = null
@@ -762,6 +772,30 @@ var/global/curr_day = null
 	set name = "Ping"
 	boutput(usr, "Pong")
 
+/client/verb/changeServer(var/server as text)
+	set name = "Change Server"
+	set hidden = 1
+	var/serverURL
+	var/serverName
+	switch (server)
+		if (1, "rp")
+			serverName = "Goonstation Roleplay"
+			serverURL = "byond://goon1.goonhub.com:26100"
+		if (2, "main")
+			serverName = "Goonstation"
+			serverURL = "byond://goon2.goonhub.com:26200"
+		if (3, "main2")
+			serverName = "Goonstation Roleplay Overflow"
+			serverURL = "byond://goon3.goonhub.com:26300"
+		if (4, "main3")
+			serverName = "Goonstation Overflow"
+			serverURL = "byond://goon4.goonhub.com:26400"
+
+	if (serverURL)
+		boutput(usr, "You are being redirected to [serverName]...")
+		usr << link(serverURL)
+
+
 /*
 /client/verb/Newcastcycle()
 	set hidden = 1
@@ -790,6 +824,10 @@ var/global/curr_day = null
 
 /client/Topic(href, href_list)
 	if (!usr || isnull(usr.client))
+		return
+
+	// Tgui Topic middleware
+	if(tgui_Topic(href_list))
 		return
 
 	var/mob/M
@@ -854,6 +892,7 @@ var/global/curr_day = null
 			ircbot.export("mentorpm", ircmsg)
 
 			//we don't use message_admins here because the sender/receiver might get it too
+			var/mentormsg = "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>"
 			for (var/client/C)
 				if (C.can_see_mentor_pms() && C.key != usr.key)
 					if (C.holder)
@@ -862,7 +901,7 @@ var/global/curr_day = null
 						else //Message admins
 							boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 					else //Message mentors
-						boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+						boutput(C, mentormsg)
 
 		if ("mentor_msg")
 			if (M)
@@ -902,6 +941,7 @@ var/global/curr_day = null
 				ircmsg["msg"] = html_decode(t)
 				ircbot.export("mentorpm", ircmsg)
 
+				var/mentormsg = "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>"
 				for (var/client/C)
 					if (C.can_see_mentor_pms() && C.key != usr.key && (M && C.key != M.key))
 						if (C.holder)
@@ -910,7 +950,7 @@ var/global/curr_day = null
 							else
 								boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]/[M.real_name] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 						else
-							boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+							boutput(C, mentormsg)
 
 		if ("mach_close")
 			var/window = href_list["window"]
@@ -1209,6 +1249,12 @@ var/global/curr_day = null
 		src.ignore_sound_flags &= ~SOUND_VOX
 	else
 		src.ignore_sound_flags |= SOUND_VOX
+
+
+/client/verb/set_hand_ghosts()
+	set hidden = 1
+	set name = "set-hand-ghosts"
+	hand_ghosts = winget( src, "menu.use_hand_ghosts", "is-checked" ) == "true"
 
 //These size helpers are invisible browser windows that help with getting client screen dimensions
 /client/proc/initSizeHelpers()

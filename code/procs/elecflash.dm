@@ -36,7 +36,7 @@ var/global/mutable_appearance/elecflash_ma = null
 
 	if (exclude_center) // copy paste its a little faster ok!
 		for (var/turf/T in oview(radius,center_turf))
-			if (T.active_liquid?.group && radius + power > 1)
+			if (T.active_liquid && T.active_liquid.group && radius + power > 1)
 				if (!(T.active_liquid.group in fluid_groups_touched))
 					fluid_groups_touched += T.active_liquid.group
 					chain_to |= T.active_liquid.get_connected_fluid_members(power * 9.5 * (1-(T.active_liquid.group.avg_viscosity/T.active_liquid.group.max_viscosity)))
@@ -45,7 +45,7 @@ var/global/mutable_appearance/elecflash_ma = null
 				chain_to += T
 	else	// copy paste also!
 		for (var/turf/T in view(radius,center_turf))
-			if (T.active_liquid?.group && radius + power > 1)
+			if (T.active_liquid && T.active_liquid.group && radius + power > 1)
 				if (!(T.active_liquid.group in fluid_groups_touched))
 					fluid_groups_touched += T.active_liquid.group
 					chain_to |= T.active_liquid.get_connected_fluid_members(power * 9.5 * (1-(T.active_liquid.group.avg_viscosity/T.active_liquid.group.max_viscosity)))
@@ -57,7 +57,7 @@ var/global/mutable_appearance/elecflash_ma = null
 		for (var/turf/T in oview(1,center_turf))
 			if (prob(25))
 				//copy paste
-				if (T.active_liquid?.group && radius + power > 1)
+				if (T.active_liquid && T.active_liquid.group && radius + power > 1)
 					if (!(T.active_liquid.group in fluid_groups_touched))
 						fluid_groups_touched += T.active_liquid.group
 						chain_to |= T.active_liquid.get_connected_fluid_members(power * 9.5 * (1-(T.active_liquid.group.avg_viscosity/T.active_liquid.group.max_viscosity)))
@@ -109,5 +109,8 @@ var/global/mutable_appearance/elecflash_ma = null
 		if (src.bioHolder.HasEffect("resist_electric"))
 			boutput(src, "<span class='notice'>You feel electricity spark across you harmlessly!</span>")
 			return 0
-		src.do_disorient(stamina_damage = 15 + power * 8, weakened = 1 SECONDS + (power * (0.1 SECONDS)), stunned = 0, paralysis = 0, disorient = (power * (0.5 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
+		if (power <= 2 && src.hasStatus("weakened"))
+			src.do_disorient(stamina_damage = 15 + power * 8, weakened = 0, stunned = 0, paralysis = 0, disorient = (power * (0.5 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
+		else
+			src.do_disorient(stamina_damage = 15 + power * 8, weakened = 1 SECONDS + (power * (0.1 SECONDS)), stunned = 0, paralysis = 0, disorient = (power * (0.5 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
 		src.TakeDamage("chest", 0, rand(0,1.00) * power * 0.2, damage_type=DAMAGE_BURN)

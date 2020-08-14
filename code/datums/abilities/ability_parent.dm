@@ -668,7 +668,8 @@
 				var/mob/living/carbon/human/H = M
 				abilityHud = H.hud
 
-		abilityHud.add_object(src)
+		if (abilityHud) //BAD BAD, this shouldnt happen but somehow it do
+			abilityHud.add_object(src)
 		/*
 		abilityHud.remove_object(src.cd_tens)
 		abilityHud.remove_object(src.cd_secs)
@@ -825,6 +826,7 @@
 		theme = null // for wire's tooltips, it's about time this got varized
 		tooltip_flags = null
 
+	//DON'T OVERRIDE THIS. OVERRIDE onAttach()!
 	New(datum/abilityHolder/holder)
 		..()
 		src.holder = holder
@@ -860,6 +862,7 @@
 			if(interrupt_action_bars) actions.interrupt(holder.owner, INTERRUPT_ACT)
 			return
 
+		//Use this when you need to do something at the start of the ability where you need the holder or the mob owner of the holder. DO NOT change New()
 		onAttach(var/datum/abilityHolder/H)
 			if (src.start_on_cooldown)
 				doCooldown()
@@ -1039,6 +1042,7 @@
 		holders = null
 		..()
 
+	//return holder on success, null on fail
 	proc/addHolder(holderType)
 		for (var/datum/abilityHolder/H in holders)
 			if (H.type == holderType)
@@ -1050,7 +1054,9 @@
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.hud?.update_ability_hotbar()
+		return holders[holders.len]
 
+	//return holder on success, null on fail
 	proc/addHolderInstance(var/datum/abilityHolder/N)
 		for (var/datum/abilityHolder/H in holders)
 			if (H == N)
@@ -1064,6 +1070,7 @@
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.hud?.update_ability_hotbar()
+		return holders[holders.len]
 
 	proc/removeHolder(holderType)
 		for (var/datum/abilityHolder/H in holders)
@@ -1193,25 +1200,28 @@
 			H.resumeAllAbilities()
 
 	addAbility(var/abilityType)
-		if (!holders.len)
-			return
+		//why was this? Weird
+		// if (!holders.len)
+		// 	return
 		if (istext(abilityType))
 			abilityType = text2path(abilityType)
 		if (!ispath(abilityType))
 			return
-		var/datum/targetable/A = new abilityType
-		for (var/datum/abilityHolder/H in holders)
-			if (istype(H, A.preferred_holder_type))
-				A.holder = H
-				H.abilities += A
-				A.onAttach(H)
-				//H.updateButtons()
-				return A
-		var/datum/abilityHolder/X = holders[1]
-		A.holder = X
-		X.abilities += A
-		//X.updateButtons()
-		A.onAttach(X)
+
+		var/datum/targetable/tmp_A = new abilityType(src)
+
+		if (holders.len)
+			for (var/datum/abilityHolder/H in holders)
+				if (istype(H, tmp_A.preferred_holder_type))
+					return H.addAbility(abilityType)
+
+		var/datum/targetable/A = new abilityType(src)
+		var/datum/abilityHolder/X
+		if (holders.len)
+			X = holders[1]
+		else
+			X = src.addHolder(A.preferred_holder_type)
+		A = X.addAbility(abilityType)
 
 		src.updateButtons()
 		return A

@@ -41,3 +41,24 @@
 				M.ai.enabled = 1
 			M.set_loc(src.loc)
 		qdel(src)
+
+
+	spawner
+		var/spawntype = null
+
+
+		HasProximity(atom/movable/AM)
+			if (spawntype)
+				new spawntype(src)
+				spawntype = null
+			..()
+
+		trilobite
+			spawntype = /mob/living/critter/small_animal/trilobite/ai_controlled
+
+		pikaia
+			spawntype = /mob/living/critter/small_animal/pikaia/ai_controlled
+
+
+///obj/overlay/tile_effect/cracks/trilobite
+///obj/overlay/tile_effect/cracks/pikaia

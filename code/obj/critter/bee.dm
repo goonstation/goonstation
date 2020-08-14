@@ -10,7 +10,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 0.5
@@ -1380,7 +1380,7 @@
 	seekrange = 6
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 1
@@ -1672,7 +1672,7 @@
 
 	moon
 		name = "moon egg"
-		desc = "DAMU AK SIN"
+		desc = "DUMU NANNA AK"
 		icon_state = "moonbee_egg"
 		bee_name = "moon larva"
 
@@ -1681,7 +1681,7 @@
 			SPAWN_DBG (20)
 				if (derelict_mode)
 					name = "sun egg"
-					desc = "DAMU AK UTU"
+					desc = "DUMU UTU AK"
 					icon_state = "sunbee_egg"
 					bee_name = "sun larva"
 
@@ -1846,7 +1846,7 @@
 	aggressive = 0
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 0.8

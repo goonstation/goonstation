@@ -270,6 +270,7 @@
 	return ..()
 
 /mob/living/projCanHit(datum/projectile/P)
+	if (!P) return 0
 	if (!src.lying || (src:lying && prob(P.hit_ground_chance))) return 1
 	return 0
 
@@ -966,7 +967,7 @@
 	var/list/processed = list()
 
 	var/image/chat_maptext/chat_text = null
-	if (!message_range && speechpopups)
+	if (!message_range && speechpopups && src.chat_text)
 		//new /obj/maptext_junk/speech(src, msg = messages[1], style = src.speechpopupstyle) // sorry, Zamu
 		if(!last_heard_name || src.get_heard_name() != src.last_heard_name)
 			var/num = hex2num(copytext(md5(src.get_heard_name()), 1, 7))
@@ -981,10 +982,11 @@
 			T = get_step(T, EAST)
 		*/
 		chat_text = make_chat_maptext(src, messages[1], "color: [src.last_chat_color];" + src.speechpopupstyle)
-		chat_text.measure(src.client)
-		for(var/image/chat_maptext/I in src.chat_text.lines)
-			if(I != chat_text)
-				I.bump_up(chat_text.measured_height)
+		if(chat_text)
+			chat_text.measure(src.client)
+			for(var/image/chat_maptext/I in src.chat_text.lines)
+				if(I != chat_text)
+					I.bump_up(chat_text.measured_height)
 
 	var/rendered = null
 	if (length(heard_a))
@@ -1182,6 +1184,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			thing = src.l_hand
 		else if (src.r_hand)
 			thing = src.r_hand
+
+		if (!thing)
+			return
 
 	//passing grab theoretically could be a mechanic but needs some annoying fixed - swapping around assailant and item grab handling an stuff probably
 	if(istype(thing,/obj/item/grab))
@@ -1611,7 +1616,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 				if (src.loc != last || force_puff) //ugly check to prevent stationary sprint weirds
 					sprint_particle(src, last)
-					playsound(src.loc,"sound/effects/sprint_puff.ogg", 25, 1)
+					playsound(src.loc,"sound/effects/sprint_puff.ogg", 29, 1,extrarange = -4)
 
 // cogwerks - fix for soulguard and revive
 /mob/living/proc/remove_ailments()
@@ -1640,13 +1645,14 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/oldbloss = get_brute_damage()
 	var/oldfloss = get_burn_damage()
 	..()
-	var/newbloss = get_brute_damage()
-	var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
-	if (reagents)
-		reagents.physical_shock((newbloss - oldbloss) * 0.15)
+	SPAWN_DBG(0.1 SECONDS) //fix race condition
+		var/newbloss = get_brute_damage()
+		var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
+		if (reagents)
+			reagents.physical_shock((newbloss - oldbloss) * 0.15)
 
-	if ((damage > 0) || W.force)
-		src.was_harmed(M, W)
+		if ((damage > 0) || W.force)
+			src.was_harmed(M, W)
 
 
 /mob/living/shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
