@@ -1039,8 +1039,8 @@ proc/default_frequency_color(freq)
 //Ass Jam! enables a bunch of wacky and not-good features. BUILD LOCALLY!!!
 #ifdef RP_MODE
 #define ASS_JAM 0
-#elif BUILD_TIME_DAY == 13
-#define ASS_JAM 0
+#elif BUILD_TIME_DAY == 13 && defined(ASS_JAM_ENABLED)
+#define ASS_JAM 1
 #else
 #define ASS_JAM 0
 #endif
