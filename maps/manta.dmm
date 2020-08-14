@@ -45411,6 +45411,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chemistry)
+"ikz" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/grime,
+/area/diner/hangar)
 "ivY" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -123706,7 +123710,7 @@ agA
 agU
 agU
 agU
-agU
+ikz
 vYn
 ibY
 sdW
