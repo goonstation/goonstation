@@ -66547,7 +66547,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/disposal/mail/small,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "cPq" = (
