@@ -326,7 +326,7 @@
 		icon_state = icon_up
 		return
 
-// Put these into Mechanic
+// Put these into Mechanic's locker
 /obj/item/electronics/frame/mech_cabinet
 	name = "Component Cabinet frame"
 	store_type = /obj/item/storage/mechanics/housing_large
