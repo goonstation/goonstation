@@ -950,7 +950,7 @@
 
 	onUpdate()
 		..()
-		if(DIST_CHECK(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
+		if(!DIST_CHECK(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -960,7 +960,7 @@
 
 	onStart()
 		..()
-		if(DIST_CHECK(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
+		if(!DIST_CHECK(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
