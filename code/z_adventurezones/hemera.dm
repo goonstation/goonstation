@@ -346,6 +346,15 @@ Obsidian Crown
 			processing = 0
 			return
 
+		if(isrestrictedz(host.z) && prob(0.5))
+			hear_voidSpeak("...the sun...", "<small>", "</small>")
+		var/area/A = get_area(src)
+		if(A.type == /area/solarium && prob(3))
+			if(prob(10))
+				hear_voidSpeak("Let them touch the sun.")
+			else
+				hear_voidSpeak("THE SUN")
+
 		if (armor_paired)
 			if (armor_paired < 4 && prob(15))
 				switch (armor_paired++)
@@ -355,15 +364,6 @@ Obsidian Crown
 						hear_voidSpeak("How wonderous!  Our newest friend shares our appetite for adventure!  I dub thee \"Journeyman.\"")
 					if (3)
 						hear_voidSpeak("How lucky you are, Friend, how truly blessed!  Companions guarding your form entirely from the risks of the material!")
-
-		if(isrestrictedz(host.z) && prob(0.5))
-			hear_voidSpeak("...the sun...", "<small>", "</small>")
-		var/area/A = get_area(src)
-		if(A.type == /area/solarium && prob(3))
-			if(prob(10))
-				hear_voidSpeak("Let them touch the sun.")
-			else
-				hear_voidSpeak("THE SUN")
 
 		else if (ishuman(host) && istype(host:wear_suit, /obj/item/clothing/suit/armor/ancient))
 			armor_paired = 1
