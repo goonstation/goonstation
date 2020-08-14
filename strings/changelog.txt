@@ -1,5 +1,23 @@
 
+(t)fri aug 14 20
+(u)adharainspace
+(p)1790
+(e)🆕|feature
+(*)you can now fix tipped over vending machines by hitting them with a crowbar!
+(t)thu aug 13 20
+(u)UrsulaMajor
+(p)1806
+(e)🆕🗺|feature, mapping
+(+)John's Bus now stops at the sea diner near Manta
 (t)wed aug 12 20
+(u)Zamujasa
+(e)🆕|feature
+(*)Football mode has been improved.
+(*)New players in Football Mode get a popup explaining how the game works!
+(*)Football players regenerate health extremely quickly.
+(*)You can now observe the football with "Observe Objects". Useful if you're dead!
+(*)The timing of respawn waves has been shortened from 2 minutes with 30 second waves to 1 minute and 15 second waves.
+(*)The scoreboard is no longer vulnerable to explosions.
 (u)Carbadox
 (p)1750
 (e)🆕|feature
