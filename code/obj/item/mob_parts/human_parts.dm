@@ -69,7 +69,7 @@
 
 		return
 
-	New(mob/new_holder)
+	New(mob/new_holder, var/datum/appearanceHolder/AHolAlmostThere)
 		..()
 		if (ismob(new_holder))
 			holder = new_holder
@@ -87,7 +87,7 @@
 				if (new_holder && istype(new_holder))
 					name = "[new_holder.real_name]'s [initial(name)]"
 		if (src.skintoned)
-			colorize_limb_icon()
+			colorize_limb_icon(AHolAlmostThere)
 			set_skin_tone()
 
 	disposing()
@@ -166,7 +166,7 @@
 				src.original_fprints = src.original_holder.bioHolder.uid_hash
 		return ..()
 
-	proc/colorize_limb_icon()	// Actually just sets the skin tone, the limbs are colorized elsewhere
+	proc/colorize_limb_icon(var/datum/appearanceHolder/AHolFinalDestination)	// Actually just sets the skin tone, the limbs are colorized elsewhere
 		if (!src.skintoned)
 			return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
 		var/mob/living/carbon/human/M
@@ -175,19 +175,19 @@
 		var/blend_color = null
 		var/has_aH = 0
 		var/datum/appearanceHolder/AHLIMB
-		if (M.AH_we_spawned_with)
-			AHLIMB = M.AH_we_spawned_with
+		if (AHolFinalDestination)
+			AHLIMB = AHolFinalDestination
 			has_aH = 1
 		else if (M.bioHolder?.mobAppearance)
 			AHLIMB = M.bioHolder.mobAppearance
 			has_aH = 1
 		if (has_aH)
-			if(AHLIMB.mob_appearance_flags & HAS_NO_SKINTONE)
-				skin_tone = "#FFFFFF"	// Preserve their true coloration
+			if(AHLIMB.mob_appearance_flags & HAS_HUMAN_SKINTONE)
+				skin_tone = AHLIMB.s_tone	// Preserve their true coloration
 			else if (AHLIMB.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
 				skin_tone = AHLIMB.s_tone_special
-			else	// normal-ass skintone
-				skin_tone = AHLIMB.s_tone
+			else if (AHLIMB.mob_appearance_flags & HAS_NO_SKINTONE)
+				skin_tone = "#FFFFFF"
 		else	// This is going to look *weird* if these somehow spawn on a mob
 			if (istype(src, /obj/item/parts/human_parts/arm/mutant/lizard) || istype(src, /obj/item/parts/human_parts/arm/mutant/lizard))
 				src.skin_tone = rgb(rand(50,190), rand(50,190), rand(50,190))	// If lizlimbs havent been colored, color them

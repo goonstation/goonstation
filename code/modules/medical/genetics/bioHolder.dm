@@ -16,10 +16,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 /datum/appearanceHolder
 	//Holds all the appearance information.
-	var/mob_appearance_flags = (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_HUMAN_HEAD | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
+	var/mob_appearance_flags = (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_HUMAN_HEAD | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
 	var/mob_color_flags = (HAS_HAIR_COLORED_HAIR)
 
 	var/body_icon = 'icons/mob/human.dmi'
+	var/body_icon_state = "skeleton"
 	var/head_icon = 'icons/mob/human_head.dmi'
 	var/head_kind = HEAD_HUMAN	// gets fed into the head for it to set it up, if it should be different
 
@@ -42,6 +43,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/mob_detail_2
 	var/mob_detail_3
 	var/mob_oversuit
+
 
 	var/e_color = "#101010"
 

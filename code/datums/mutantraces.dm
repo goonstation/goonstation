@@ -10,7 +10,7 @@
 
 	// dump as much visual data into the appearance holder as possible
 	var/datum/appearanceHolder/AH
-	var/mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_NO_HEAD)
+	var/mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 	// This should be a normal-ish human:
 	// (IS_MUTANT | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_HUMAN_HEAD)
 	var/mutant_color_flags = (HAS_UNUSED_HAIR_COLOR | HEAD_HAS_OWN_COLORS)
@@ -108,7 +108,7 @@
 		if (movement_modifier)
 			APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
 		if(ishuman(M))
-			if(M.bioHolder.mobAppearance)	// i mean its called an appearance holder for a reason
+			if(M.bioHolder.mobAppearance)	// i mean its called appearance holder for a reason
 				AH = M.bioHolder.mobAppearance
 				AH.mob_appearance_flags = src.mutant_appearance_flags
 				AH.mob_color_flags = src.mutant_color_flags
@@ -117,10 +117,13 @@
 				AH.customization_third_special = src.special_hair_3
 				AH.customization_icon_special = src.mutant_folder
 				AH.body_icon = src.mutant_folder
+				AH.body_icon_state = src.icon_state
 				AH.mob_detail_1 = detail_1
 				AH.mob_detail_2 = detail_2
 				AH.mob_detail_3 = detail_3
 				AH.mob_oversuit = detail_over_suit
+				if (src.mutant_appearance_flags & HAS_SPECIAL_HEAD)
+					AH.head_icon = src.mutant_folder
 				if (mutant_color_flags & FIX_COLORS)
 					AH.customization_first_color = fix_colors(AH.customization_first_color)
 					AH.customization_second_color = fix_colors(AH.customization_second_color)
@@ -233,9 +236,13 @@
 						limb.remove_stage = 0
 
 			//////////////HEAD//////////////////
-			if (src.special_head)
-				if (M.organHolder)
+
+			if (M.organHolder)
+				if (src.special_head)
 					M.organHolder.head.MakeMutantHead(src.special_head)
+				else
+					M.organHolder.head.MakeMutantHead(HEAD_HUMAN)	// for now at least
+
 			M.update_face()
 			M.update_body()
 
@@ -277,6 +284,14 @@
 				H.image_cust_one.pixel_y = initial(H.image_cust_one.pixel_y)
 				H.image_cust_two.pixel_y = initial(H.image_cust_two.pixel_y)
 				H.image_cust_three.pixel_y = initial(H.image_cust_three.pixel_y)
+
+				if(H.bioHolder.mobAppearance)	// okay reset everything to roughly human
+					AH = H.bioHolder.mobAppearance
+					AH.mob_appearance_flags = (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_HUMAN_HEAD | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
+					AH.mob_color_flags = (HAS_HAIR_COLORED_HAIR)
+					AH.body_icon = 'icons/mob/human.dmi'
+					AH.head_icon = 'icons/mob/human_head.dmi'
+					AH.s_tone_special = AH.s_tone
 
 				// And the other way around (Convair880).
 				if (src.r_limb_arm_type_mutantrace)
@@ -320,9 +335,8 @@
 							limb.holder = H
 							limb.remove_stage = 0
 			//////////////HEAD//////////////////
-				if (src.special_head)
-					if (H.organHolder)
-						H.organHolder.head.MakeMutantHead(HEAD_HUMAN)
+				if (H.organHolder)
+					H.organHolder.head.MakeMutantHead(HEAD_HUMAN)
 
 				detail_1 = null
 				detail_2 = null
@@ -354,6 +368,7 @@
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
 	icon = 'icons/mob/blob_ambassador.dmi'
+	mutant_folder = 'icons/mob/blob_ambassador.dmi'
 	icon_state = "blob"
 	human_compatible = 0
 	uses_human_clothes = 0
@@ -367,6 +382,7 @@
 /datum/mutantrace/flubber
 	name = "flubber"
 	icon = 'icons/mob/flubber.dmi'
+	mutant_folder = 'icons/mob/flubber.dmi'
 	icon_state = "flubber"
 	uses_human_clothes = 0
 	head_offset = -7
@@ -413,14 +429,14 @@
 /datum/mutantrace/flashy
 	name = "flashy"
 	icon_state = "epileptic"
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS | USES_STATIC_ICON)
 	override_attack = 0
 
 /datum/mutantrace/virtual
 	name = "virtual"
 	icon_state = "virtual"
 	override_attack = 0
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 
 
 	New(var/mob/living/carbon/human/H)
@@ -437,7 +453,7 @@
 /datum/mutantrace/blank
 	name = "blank"
 	icon_state = "blank"
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_NO_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_NO_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS | USES_STATIC_ICON)
 	override_attack = 0
 
 /datum/mutantrace/grey
@@ -491,8 +507,8 @@
 	voice_override = "lizard"
 	special_head = HEAD_LIZARD
 	mutant_folder = 'icons/mob/lizard.dmi'
-	special_hair_2 = "head-detail_1"
-	detail_2 = "lizard-detail_1"
+	special_hair_3 = "head-detail_1"
+	detail_2 = "lizard_detail-1"
 	detail_over_suit = "lizard_over_suit"
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/lizard/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/lizard/left
@@ -518,7 +534,7 @@
 /datum/mutantrace/zombie
 	name = "zombie"
 	icon_state = "zombie"
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_NO_EYES | HAS_NO_HEAD)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 	jerk = 1
 	movement_modifier = /datum/movement_modifier/zombie
 
@@ -632,7 +648,7 @@
 /datum/mutantrace/vamp_zombie
 	name = "vampiric zombie"
 	icon_state = "vamp_zombie"
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_NO_EYES | HAS_NO_HEAD)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 	jerk = 1
 
 	var/blood_points = 0
@@ -699,6 +715,7 @@
 /datum/mutantrace/skeleton
 	name = "skeleton"
 	icon = 'icons/mob/human.dmi'
+	mutant_folder = 'icons/mob/human.dmi'
 	icon_state = "skeleton"
 	voice_override = "skelly"
 
@@ -723,7 +740,7 @@
 /datum/mutantrace/nostalgic
 	name = "Homo nostalgius"
 	icon_state = "oldhuman"
-	mutant_appearance_flags = (IS_MUTANT | HAS_HUMAN_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_NO_HEAD)
+	mutant_appearance_flags = (IS_MUTANT | HAS_HUMAN_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 	override_attack = 0
 
 
@@ -959,12 +976,13 @@
 	hand_offset = -2
 	body_offset = -3
 	override_attack = 0
-	mutant_appearance_flags = (IS_MUTANT | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS)
+	mutant_appearance_flags = (IS_MUTANT | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS | USES_STATIC_ICON)
 
 
 /datum/mutantrace/monkey
 	name = "monkey"
 	icon = 'icons/mob/monkey.dmi'
+	mutant_folder = 'icons/mob/monkey.dmi'
 	icon_state = "monkey"
 	head_offset = -9
 	hand_offset = -5
@@ -1173,6 +1191,7 @@
 /datum/mutantrace/monkey/seamonkey
 	name = "sea monkey"
 	icon = 'icons/mob/monkey.dmi'
+	mutant_folder = 'icons/mob/monkey.dmi'
 	icon_state = "seamonkey"
 	aquatic = 1
 
@@ -1206,10 +1225,11 @@
 /datum/mutantrace/premature_clone
 	name = "premature clone"
 	icon = 'icons/mob/human.dmi'
+	mutant_folder = 'icons/mob/human.dmi'
 	icon_state = "mutant3"
 	human_compatible = 1
 	uses_human_clothes = 1
-	mutant_appearance_flags = (IS_MUTANT | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD)
+	mutant_appearance_flags = (IS_MUTANT | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 
 
 	New()
@@ -1261,7 +1281,7 @@
 /datum/mutantrace/cyclops
 	name = "cyclops"
 	icon_state = "cyclops"
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_NO_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_NO_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS | USES_STATIC_ICON)
 
 
 /datum/mutantrace/roach
@@ -1607,6 +1627,7 @@
 	mutant_folder = 'icons/mob/cow.dmi'
 	special_head = HEAD_COW
 	special_hair_1 = "head-detail1"
+	detail_over_suit = "cow_over_suit"
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right

@@ -130,12 +130,13 @@
 			var/list/hair_list = customization_styles + customization_styles_gimmick
 			// dump the head appearance data into the head
 			// setup skintone and mess with it as per colorflags
-			if (AHead.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
-				src.skintone = AHead.customization_first_color
-			else if (AHead.mob_color_flags & SKINTONE_USES_PREF_COLOR_2)
-				src.skintone = AHead.customization_second_color
-			else if (AHead.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
-				src.skintone = AHead.customization_third_color
+			if (src.donor_appearance.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
+				if (AHead.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
+					src.skintone = AHead.customization_first_color
+				else if (AHead.mob_color_flags & SKINTONE_USES_PREF_COLOR_2)
+					src.skintone = AHead.customization_second_color
+				else if (AHead.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
+					src.skintone = AHead.customization_third_color
 			else
 				src.skintone = AHead.s_tone
 
@@ -174,7 +175,7 @@
 
 				src.head_image_cust_one.color = AHead.customization_first_color
 				src.head_image_cust_two.color = AHead.customization_second_color
-				src.head_image_cust_three.color = AHead.customization_second_color
+				src.head_image_cust_three.color = AHead.customization_third_color
 
 			else // no hair
 				src.head_image_cust_one = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)

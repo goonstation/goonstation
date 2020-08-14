@@ -12,7 +12,7 @@
 #define HEAD_SHELTER 10
 
 //appearance bitflags cus im tired of tracking down a million different vars that rarely do what they should
-#define IS_MUTANT								1	// Log shit if this is set but the mutantrace isnt. why does this even happen.
+#define IS_MUTANT								1	// so far just makes fat mutants render as male
 
 #define HAS_HUMAN_SKINTONE			2	// Skin tone determined through the usual route
 #define HAS_SPECIAL_SKINTONE		4	// Skin tone defined some other way
@@ -22,10 +22,10 @@
 #define HAS_HUMAN_HAIR					16 // Hair sprites are roughly what you set in the prefs
 #define HAS_SPECIAL_HAIR				32 // Hair sprites are there, but they're supposed to be different. Like a lizard head thing or cow horns
 #define HAS_DETAIL_HAIR					64 // Hair sprites are there, but they're supposed to be different. Like a lizard head thing or cow horns
-#define HAS_NO_HAIR							2048 // Please don't render hair on my wolves it looks too cute
+#define HAS_NO_HAIR							128 // Please don't render hair on my wolves it looks too cute
 
-#define HAS_HUMAN_EYES					4096 // We have normal human eyes of human color where human eyes tend to be
-#define HAS_SPECIAL_EYES				8192 //	We have different eyes of different color probably somewhere else
+#define HAS_HUMAN_EYES					256 // We have normal human eyes of human color where human eyes tend to be
+#define HAS_SPECIAL_EYES				512 //	We have different eyes of different color probably somewhere else
 #define HAS_NO_EYES							16384 // We have no eyes and yet must see (cus they're baked into the sprite or something)
 
 #define HAS_HUMAN_HEAD					32768	// Head is roughly human-shaped with no additional features
@@ -36,6 +36,7 @@
 #define HAS_EXTRA_DETAILS				1048576	// Has a non-head something in their detail slot they want to show off, like lizard splotches
 #define HAS_A_TAIL							2097152	// Has a tail, so give em an oversuit
 #define WEARS_UNDERPANTS				4194304	// Draw underwear on them. also works on mutants, for the most part
+#define USES_STATIC_ICON				8388608	// Mob's body is drawn using a single, flat image and not several flat images
 
 //non-hairstyle body accessory bitflags
 //corresponds to the color settings in user prefs

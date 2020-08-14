@@ -234,7 +234,7 @@
 	New(mob/new_holder)
 		..()
 		holder = new_holder
-		if (holder) create()
+		if (holder) create(holder.AH_we_spawned_with)
 
 	disposing()
 		if (l_arm)
@@ -252,11 +252,14 @@
 		holder = null
 		..()
 
-	proc/create()
-		if (!l_arm) l_arm = new /obj/item/parts/human_parts/arm/left(holder)
-		if (!r_arm) r_arm = new /obj/item/parts/human_parts/arm/right(holder)
-		if (!l_leg) l_leg = new /obj/item/parts/human_parts/leg/left(holder)
-		if (!r_leg) r_leg = new /obj/item/parts/human_parts/leg/right(holder)
+	proc/create(var/datum/appearanceHolder/AHolLimb)
+		var/datum/appearanceHolder/AH_spawn = null
+		if (AHolLimb)
+			AH_spawn = AHolLimb
+		if (!l_arm) l_arm = new /obj/item/parts/human_parts/arm/left(holder, AH_spawn)
+		if (!r_arm) r_arm = new /obj/item/parts/human_parts/arm/right(holder, AH_spawn)
+		if (!l_leg) l_leg = new /obj/item/parts/human_parts/leg/left(holder, AH_spawn)
+		if (!r_leg) r_leg = new /obj/item/parts/human_parts/leg/right(holder, AH_spawn)
 		SPAWN_DBG(5 SECONDS)
 			if (holder && (!l_arm || !r_arm || !l_leg || !r_leg))
 				logTheThing("debug", holder, null, "<B>SpyGuy/Limbs:</B> [src] is missing limbs after creation for some reason - recreating.")

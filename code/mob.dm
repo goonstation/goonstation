@@ -232,9 +232,8 @@
 
 // mob procs
 /mob/New(var/loc, var/datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
+	src.AH_we_spawned_with = AH_passthru
 	src.loc = loc
-	if (istype(AH_passthru, /datum/appearanceHolder/))
-		src.AH_we_spawned_with = AH_passthru
 	hallucinations = new
 	organs = new
 	grabbed_by = new
