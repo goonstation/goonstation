@@ -2809,6 +2809,7 @@
 /area/station/maintenance/disposal)
 "ahM" = (
 /obj/item/device/light/glowstick,
+/obj/machinery/recharge_station,
 /turf/simulated/floor/plating,
 /area/station/maintenance/NEmaint)
 "ahN" = (
@@ -5017,22 +5018,23 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/main)
 "amI" = (
-/obj/machinery/door/unpowered/wood{
+/obj/disposalpipe/segment,
+/obj/machinery/door/unpowered/wood/pyro{
 	autoclose = 0;
 	name = "Confession Booth"
 	},
-/obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/chapel/main)
 "amJ" = (
-/obj/machinery/door/unpowered/wood{
-	autoclose = 0;
-	name = "Confession Booth (Chaplain)";
-	req_access_txt = "22"
-	},
 /obj/cable{
 	icon_state = "2-9"
 	},
+/obj/machinery/door/unpowered/wood/pyro{
+	autoclose = 0;
+	name = "Confession Booth (Chaplain)";
+	req_access_txt = null
+	},
+/obj/access_spawn/chapel_office,
 /turf/simulated/floor/black,
 /area/station/chapel/main)
 "amK" = (
@@ -6931,7 +6933,8 @@
 "arT" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
-	dir = 8 frequency = 1447
+	dir = 8;
+	frequency = 1447
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -27655,6 +27658,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/SEmaint)
+"gfL" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/SWmaint)
 "gfM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -28359,6 +28366,10 @@
 	tag = "icon-0,6"
 	},
 /area/station/crew_quarters/fitness)
+"joQ" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/SEmaint)
 "jrr" = (
 /obj/cable,
 /obj/cable{
@@ -29266,6 +29277,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"ogC" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "okt" = (
 /obj/cable{
 	icon_state = "4-10"
@@ -29531,6 +29546,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/SWmaint)
+"pnN" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/NWmaint)
 "psc" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -52417,7 +52439,7 @@ anr
 alv
 aos
 azS
-pVr
+pnN
 alV
 alv
 azv
@@ -54521,7 +54543,7 @@ qnk
 bbf
 aLo
 bcf
-aLo
+gfL
 aLn
 aLo
 aLo
@@ -59484,7 +59506,7 @@ aDd
 tAr
 hvS
 asM
-asM
+ogC
 aFR
 aGJ
 aGC
@@ -60423,7 +60445,7 @@ gLY
 aKK
 bbW
 bco
-aKK
+joQ
 aKN
 bdt
 bdt
