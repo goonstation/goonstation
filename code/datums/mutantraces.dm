@@ -48,13 +48,6 @@
 	var/l_limb_arm_type_mutantrace = null
 	var/r_limb_leg_type_mutantrace = null
 	var/l_limb_leg_type_mutantrace = null
-
-
-	//This stuff is for robot_parts, the stuff above is for human_parts
-	var/r_robolimb_arm_type_mutantrace = null // Should we get custom arms? Dispose() replaces them with normal human arms.
-	var/l_robolimb_arm_type_mutantrace = null
-	var/r_robolimb_leg_type_mutantrace = null
-	var/l_robolimb_leg_type_mutantrace = null
 	var/ignore_missing_limbs = 0 // Replace both arms regardless of mob status (new and dispose).
 
 	var/firevuln = 1 //Scales damage, just like critters.
@@ -65,14 +58,16 @@
 
 	var/voice_override = 0
 
-	var/mob/living/carbon/human/mob = null
+	var/mob/living/carbon/human/mob = null	// ...is this the owner?
 
 	var/anchor_to_floor = 0
 
 	var/image/detail_1
 	var/image/detail_2
 	var/image/detail_3
-	var/image/detail_over_suit
+	var/image/detail_over_suit_1
+	var/image/detail_over_suit_2
+	var/image/detail_over_suit_3
 
 	var/image/special_hair_1
 	var/image/special_hair_2
@@ -107,36 +102,9 @@
 
 	New(var/mob/living/carbon/human/M)
 		..()
-		if (movement_modifier)
-			APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
 		if(ishuman(M))
-			if(M.bioHolder.mobAppearance)	// i mean its called appearance holder for a reason
-				AH = M.bioHolder.mobAppearance
-				AH.mob_appearance_flags = src.mutant_appearance_flags
-				AH.mob_color_flags = src.mutant_color_flags
-				AH.customization_first_special = src.special_hair_1
-				AH.customization_second_special = src.special_hair_2
-				AH.customization_third_special = src.special_hair_3
-				AH.customization_icon_special = src.mutant_folder
-				AH.body_icon = src.mutant_folder
-				AH.body_icon_state = src.icon_state
-				AH.mob_detail_1 = detail_1
-				AH.mob_detail_2 = detail_2
-				AH.mob_detail_3 = detail_3
-				AH.mob_oversuit = detail_over_suit
-				if (src.mutant_appearance_flags & HAS_SPECIAL_HEAD)
-					AH.head_icon = src.mutant_folder
-				if (mutant_color_flags & FIX_COLORS)
-					AH.customization_first_color = fix_colors(AH.customization_first_color)
-					AH.customization_second_color = fix_colors(AH.customization_second_color)
-					AH.customization_third_color = fix_colors(AH.customization_third_color)
-				if (src.mutant_appearance_flags & HAS_SPECIAL_SKINTONE)
-					if (src.mutant_color_flags & SKINTONE_USES_PREF_COLOR_1)
-						AH.s_tone_special = AH.customization_first_color
-					if (src.mutant_color_flags & SKINTONE_USES_PREF_COLOR_2)
-						AH.s_tone_special = AH.customization_second_color
-					if (src.mutant_color_flags & SKINTONE_USES_PREF_COLOR_3)
-						AH.s_tone_special = AH.customization_third_color
+			AppearanceSetter(M, "set")
+			LimbSetter(M, "set")
 			src.mob = M
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for(var/obj/item/clothing/W in restricted)
@@ -154,108 +122,11 @@
 			M.image_cust_two.pixel_y = src.head_offset
 			M.image_cust_three.pixel_y = src.head_offset
 
-			// Replacement for custom_attack() of several mutantraces, which used an entire copy of
-			// pre-stamina melee code. They do the same stuff with more flexible limb datums (Convair880).
-			if (src.r_limb_arm_type_mutantrace)
-				if (M.limbs.r_arm || src.ignore_missing_limbs == 1)
-					var/obj/item/parts/human_parts/arm/limb = new src.r_limb_arm_type_mutantrace(M)
-					if (istype(limb))
-						qdel(M.limbs.r_arm)
-						limb.quality = 0.5
-						M.limbs.r_arm = limb
-						limb.holder = M
-						limb.remove_stage = 0
-
-			if (src.r_robolimb_arm_type_mutantrace)
-				if (M.limbs.r_arm || src.ignore_missing_limbs == 1)
-					var/obj/item/parts/robot_parts/arm/limb = new src.r_robolimb_arm_type_mutantrace(M)
-					if (istype(limb))
-						qdel(M.limbs.r_arm)
-						limb.quality = 0.5
-						M.limbs.r_arm = limb
-						limb.holder = M
-						limb.remove_stage = 0
-
-			if (src.l_limb_arm_type_mutantrace)
-				if (M.limbs.l_arm || src.ignore_missing_limbs == 1)
-					var/obj/item/parts/human_parts/arm/limb = new src.l_limb_arm_type_mutantrace(M)
-					if (istype(limb))
-						qdel(M.limbs.l_arm)
-						limb.quality = 0.5
-						M.limbs.l_arm = limb
-						limb.holder = M
-						limb.remove_stage = 0
-
-			if (src.l_robolimb_arm_type_mutantrace)
-				if (M.limbs.l_arm || src.ignore_missing_limbs == 1)
-					var/obj/item/parts/robot_parts/arm/limb = new src.l_robolimb_arm_type_mutantrace(M)
-					if (istype(limb))
-						qdel(M.limbs.l_arm)
-						limb.quality = 0.5
-						M.limbs.l_arm = limb
-						limb.holder = M
-						limb.remove_stage = 0
-
-			//////////////LEGS//////////////////
-			if (src.r_limb_leg_type_mutantrace)
-				if (M.limbs.r_leg || src.ignore_missing_limbs == 1)
-					var/obj/item/parts/human_parts/leg/limb = new src.r_limb_leg_type_mutantrace(M)
-					if (istype(limb))
-						qdel(M.limbs.r_leg)
-						limb.quality = 0.5
-						M.limbs.r_leg = limb
-						limb.holder = M
-						limb.remove_stage = 0
-
-			if (src.r_robolimb_leg_type_mutantrace)
-				if (M.limbs.r_leg || src.ignore_missing_limbs == 1)
-					var/obj/item/parts/robot_parts/leg/limb = new src.r_robolimb_leg_type_mutantrace(M)
-					if (istype(limb))
-						qdel(M.limbs.r_leg)
-						limb.quality = 0.5
-						M.limbs.r_leg = limb
-						limb.holder = M
-						limb.remove_stage = 0
-
-			if (src.l_limb_leg_type_mutantrace)
-				if (M.limbs.l_leg || src.ignore_missing_limbs == 1)
-					var/obj/item/parts/human_parts/leg/limb = new src.l_limb_leg_type_mutantrace(M)
-					if (istype(limb))
-						qdel(M.limbs.l_leg)
-						limb.quality = 0.5
-						M.limbs.l_leg = limb
-						limb.holder = M
-						limb.remove_stage = 0
-
-			if (src.l_robolimb_leg_type_mutantrace)
-				if (M.limbs.l_leg || src.ignore_missing_limbs == 1)
-					var/obj/item/parts/robot_parts/leg/limb = new src.l_robolimb_leg_type_mutantrace(M)
-					if (istype(limb))
-						qdel(M.limbs.l_leg)
-						limb.quality = 0.5
-						M.limbs.l_leg = limb
-						limb.holder = M
-						limb.remove_stage = 0
-
-			//////////////HEAD//////////////////
-
-			if (M.organHolder)
-				if (src.special_head)
-					M.organHolder.head.MakeMutantHead(src.special_head)
-				else
-					M.organHolder.head.MakeMutantHead(HEAD_HUMAN)	// for now at least
-
-			M.update_face()
-			M.update_body()
-			set_tail(mob, src.tail)
-
-			if (M.bioHolder && M.bioHolder.mobAppearance)
-				M.bioHolder.mobAppearance.UpdateMob()
-
 			SPAWN_DBG (25) // Don't remove.
 				if (M && M.organHolder && M.organHolder.skull)
 					M.assign_gimmick_skull() // For hunters (Convair880).
-
+			if (movement_modifier) // down here cus it causes runtimes
+				APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
 		else
 			src.dispose()
 		return
@@ -265,10 +136,6 @@
 			mob.mutantrace = null
 			mob.set_face_icon_dirty()
 			mob.set_body_icon_dirty()
-
-			if (movement_modifier)
-				REMOVE_MOVEMENT_MODIFIER(mob, movement_modifier, src.type)
-
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for (var/obj/item/clothing/W in restricted)
 				if (istype(W,/obj/item/clothing))
@@ -280,7 +147,6 @@
 						W.set_loc(mob.loc)
 						W.dropped(mob)
 						W.layer = initial(W.layer)
-
 			if (ishuman(mob))
 				var/mob/living/carbon/human/H = mob
 				H.image_eyes.pixel_y = initial(H.image_eyes.pixel_y)
@@ -288,79 +154,185 @@
 				H.image_cust_two.pixel_y = initial(H.image_cust_two.pixel_y)
 				H.image_cust_three.pixel_y = initial(H.image_cust_three.pixel_y)
 
-				if(H.bioHolder.mobAppearance)	// okay reset everything to roughly human
-					AH = H.bioHolder.mobAppearance
-					AH.mob_appearance_flags = (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_HUMAN_HEAD | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
-					AH.mob_color_flags = (HAS_HAIR_COLORED_HAIR)
-					AH.body_icon = 'icons/mob/human.dmi'
-					AH.head_icon = 'icons/mob/human_head.dmi'
-					AH.s_tone_special = AH.s_tone
-
-				// And the other way around (Convair880).
-				if (src.r_limb_arm_type_mutantrace)
-					if (H.limbs.r_arm || src.ignore_missing_limbs == 1)
-						var/obj/item/parts/human_parts/arm/limb = new /obj/item/parts/human_parts/arm/right(H)
-						if (istype(limb))
-							qdel(H.limbs.r_arm)
-							limb.quality = 0.5
-							H.limbs.r_arm = limb
-							limb.holder = H
-							limb.remove_stage = 0
-
-				if (src.l_limb_arm_type_mutantrace)
-					if (H.limbs.l_arm || src.ignore_missing_limbs == 1)
-						var/obj/item/parts/human_parts/arm/limb = new /obj/item/parts/human_parts/arm/left(H)
-						if (istype(limb))
-							qdel(H.limbs.l_arm)
-							limb.quality = 0.5
-							H.limbs.l_arm = limb
-							limb.holder = H
-							limb.remove_stage = 0
-
-			//////////////LEGS//////////////////
-				if (src.r_limb_leg_type_mutantrace)
-					if (H.limbs.r_leg || src.ignore_missing_limbs == 1)
-						var/obj/item/parts/human_parts/leg/limb = new /obj/item/parts/human_parts/leg/right(H)
-						if (istype(limb))
-							qdel(H.limbs.r_leg)
-							limb.quality = 0.5
-							H.limbs.r_leg = limb
-							limb.holder = H
-							limb.remove_stage = 0
-
-				if (src.l_limb_leg_type_mutantrace)
-					if (H.limbs.l_leg || src.ignore_missing_limbs == 1)
-						var/obj/item/parts/human_parts/leg/limb = new /obj/item/parts/human_parts/leg/left(H)
-						if (istype(limb))
-							qdel(H.limbs.l_leg)
-							limb.quality = 0.5
-							H.limbs.l_leg = limb
-							limb.holder = H
-							limb.remove_stage = 0
-			//////////////HEAD//////////////////
-				if (H.organHolder)
-					H.organHolder.head.MakeMutantHead(HEAD_HUMAN)
-
-				detail_1 = null
-				detail_2 = null
-				detail_3 = null
-				detail_over_suit = null
-
-				if(H.organHolder.tail)	// dump the old tail, if they have one
-					H.organHolder.tail = null
-				H.set_face_icon_dirty()
-				H.set_body_icon_dirty()
-				H.update_body()
+				AppearanceSetter(H, "reset")
+				LimbSetter(H, "reset")
 
 				SPAWN_DBG (25) // Don't remove.
 					if (H && H.organHolder && H.organHolder.skull) // check for H.organHolder as well so we don't get null.skull runtimes
 						H.assign_gimmick_skull() // We might have to update the skull (Convair880).
+
+			if (movement_modifier) // causes runtimes, so its down here now
+				REMOVE_MOVEMENT_MODIFIER(mob, movement_modifier, src.type)
 
 			mob.set_clothing_icon_dirty()
 			src.mob = null
 
 		..()
 		return
+
+	proc/AppearanceSetter(var/mob/living/carbon/human/Q, var/mode as text)
+		if(!ishuman(Q) || !(Q?.bioHolder?.mobAppearance))
+			return // please dont call set_mutantrace on a non-human non-appearanceholder
+
+		src.AH = Q.bioHolder.mobAppearance // i mean its called appearance holder for a reason
+
+		switch(mode)
+			if("set")
+				AH.mob_appearance_flags = src.mutant_appearance_flags
+				AH.mob_color_flags = src.mutant_color_flags
+				AH.customization_first_special = src.special_hair_1
+				AH.customization_second_special = src.special_hair_2
+				AH.customization_third_special = src.special_hair_3
+				AH.customization_icon_special = src.mutant_folder
+				AH.body_icon = src.mutant_folder
+				AH.body_icon_state = src.icon_state
+				AH.mob_detail_1 = detail_1
+				AH.mob_detail_2 = detail_2
+				AH.mob_detail_3 = detail_3
+				AH.mob_oversuit_1 = detail_over_suit_1
+				AH.mob_oversuit_2 = detail_over_suit_2
+				AH.mob_oversuit_3 = detail_over_suit_3
+				if (src.mutant_appearance_flags & HAS_SPECIAL_HEAD)
+					AH.head_icon = src.mutant_folder
+				if (mutant_color_flags & FIX_COLORS)
+					AH.customization_first_color = fix_colors(AH.customization_first_color)
+					AH.customization_second_color = fix_colors(AH.customization_second_color)
+					AH.customization_third_color = fix_colors(AH.customization_third_color)
+				if (src.mutant_appearance_flags & HAS_SPECIAL_SKINTONE)
+					if (src.mutant_color_flags & SKINTONE_USES_PREF_COLOR_1)
+						AH.s_tone_special = AH.customization_first_color
+					if (src.mutant_color_flags & SKINTONE_USES_PREF_COLOR_2)
+						AH.s_tone_special = AH.customization_second_color
+					if (src.mutant_color_flags & SKINTONE_USES_PREF_COLOR_3)
+						AH.s_tone_special = AH.customization_third_color
+				AH.UpdateMob()
+			if("reset")
+				AH.mob_appearance_flags = (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_HUMAN_HEAD | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
+				AH.mob_color_flags = (HAS_HAIR_COLORED_HAIR)
+				AH.body_icon = 'icons/mob/human.dmi'
+				AH.head_icon = 'icons/mob/human_head.dmi'
+				AH.s_tone_special = AH.s_tone
+				AH.customization_icon = 'icons/mob/human_hair.dmi'
+				AH.customization_first_special = AH.customization_first
+				AH.customization_second_special = AH.customization_second
+				AH.customization_third_special = AH.customization_third
+				AH.mob_detail_1 = null
+				AH.mob_detail_2 = null
+				AH.mob_detail_3 = null
+				AH.mob_oversuit_1 = null
+				AH.mob_oversuit_2 = null
+				AH.mob_oversuit_3 = null
+				detail_1 = null
+				detail_2 = null
+				detail_3 = null
+				detail_over_suit_1 = null
+				detail_over_suit_2 = null
+				detail_over_suit_3 = null
+				special_hair_1 = null
+				special_hair_2 = null
+				special_hair_3 = null
+				AH.UpdateMob()
+
+	proc/LimbSetter(var/mob/living/carbon/human/L, var/mode as text)
+		if(!ishuman(L) || !(L.organHolder))
+			return // you and what army
+
+		switch(mode)
+			if("set")
+				//////////////ARMS//////////////////
+				if (src.r_limb_arm_type_mutantrace)
+					if (L.limbs.r_arm || src.ignore_missing_limbs == 1)
+						var/obj/item/parts/human_parts/arm/limb = new src.r_limb_arm_type_mutantrace(L)
+						if (istype(limb))
+							qdel(L.limbs.r_arm)
+							limb.quality = 0.5
+							L.limbs.r_arm = limb
+							limb.holder = L
+							limb.remove_stage = 0
+
+				if (src.l_limb_arm_type_mutantrace)
+					if (L.limbs.l_arm || src.ignore_missing_limbs == 1)
+						var/obj/item/parts/human_parts/arm/limb = new src.l_limb_arm_type_mutantrace(L)
+						if (istype(limb))
+							qdel(L.limbs.l_arm)
+							limb.quality = 0.5
+							L.limbs.l_arm = limb
+							limb.holder = L
+							limb.remove_stage = 0
+
+				//////////////LEGS//////////////////
+				if (src.r_limb_leg_type_mutantrace)
+					if (L.limbs.r_leg || src.ignore_missing_limbs == 1)
+						var/obj/item/parts/human_parts/leg/limb = new src.r_limb_leg_type_mutantrace(L)
+						if (istype(limb))
+							qdel(L.limbs.r_leg)
+							limb.quality = 0.5
+							L.limbs.r_leg = limb
+							limb.holder = L
+							limb.remove_stage = 0
+
+				if (src.l_limb_leg_type_mutantrace)
+					if (L.limbs.l_leg || src.ignore_missing_limbs == 1)
+						var/obj/item/parts/human_parts/leg/limb = new src.l_limb_leg_type_mutantrace(L)
+						if (istype(limb))
+							qdel(L.limbs.l_leg)
+							limb.quality = 0.5
+							L.limbs.l_leg = limb
+							limb.holder = L
+							limb.remove_stage = 0
+
+				//////////////HEAD//////////////////
+				if (src.special_head)
+					L.organHolder.head.MakeMutantHead(src.special_head)
+				//tail
+				set_tail(L, src.tail, 0)
+
+			if ("reset")
+				// And the other way around (Convair880).
+				if (src.r_limb_arm_type_mutantrace)
+					if (L.limbs.r_arm || src.ignore_missing_limbs == 1)
+						var/obj/item/parts/human_parts/arm/limb = new /obj/item/parts/human_parts/arm/right(L)
+						if (istype(limb))
+							qdel(L.limbs.r_arm)
+							limb.quality = 0.5
+							L.limbs.r_arm = limb
+							limb.holder = L
+							limb.remove_stage = 0
+
+				if (src.l_limb_arm_type_mutantrace)
+					if (L.limbs.l_arm || src.ignore_missing_limbs == 1)
+						var/obj/item/parts/human_parts/arm/limb = new /obj/item/parts/human_parts/arm/left(L)
+						if (istype(limb))
+							qdel(L.limbs.l_arm)
+							limb.quality = 0.5
+							L.limbs.l_arm = limb
+							limb.holder = L
+							limb.remove_stage = 0
+
+				//////////////LEGS//////////////////
+				if (src.r_limb_leg_type_mutantrace)
+					if (L.limbs.r_leg || src.ignore_missing_limbs == 1)
+						var/obj/item/parts/human_parts/leg/limb = new /obj/item/parts/human_parts/leg/right(L)
+						if (istype(limb))
+							qdel(L.limbs.r_leg)
+							limb.quality = 0.5
+							L.limbs.r_leg = limb
+							limb.holder = L
+							limb.remove_stage = 0
+
+				if (src.l_limb_leg_type_mutantrace)
+					if (L.limbs.l_leg || src.ignore_missing_limbs == 1)
+						var/obj/item/parts/human_parts/leg/limb = new /obj/item/parts/human_parts/leg/left(L)
+						if (istype(limb))
+							qdel(L.limbs.l_leg)
+							limb.quality = 0.5
+							L.limbs.l_leg = limb
+							limb.holder = L
+							limb.remove_stage = 0
+				//////////////HEAD//////////////////
+				L.organHolder.head.MakeMutantHead(HEAD_HUMAN)
+				//tail
+				set_tail(L, TAIL_NONE, 0)
 
 	proc/fix_colors(var/hex)
 		var/list/L = hex_to_rgb_list(hex)
@@ -380,13 +352,14 @@
 
 		if(Tf.organHolder.tail)	// dump the old tail, if they have one
 			if(deletail)
-				Tf.organHolder.tail = null
+				qdel(Tf.organHolder.tail)
+		/*	Tf.organHolder.tail = null
 				//shit this might drop all the tails in your inventory
 				for(var/obj/item/organ/tail/hidden_secret_tails in Tf.contents)	// Cus mutants love to hoard tails in their mob
 					if(istype(hidden_secret_tails, /obj/item/organ/tail))
 						hidden_secret_tails.set_loc(Tf.loc)
 						hidden_secret_tails.dropped(Tf)
-						hidden_secret_tails.layer = initial(hidden_secret_tails.layer)
+						hidden_secret_tails.layer = initial(hidden_secret_tails.layer) */
 			else
 				if (!istype(Tf.organHolder.tail, /obj/item/organ/tail/bone))
 					Tf.visible_message("<span class='notice'>[Tf]'s tail falls off, and a new one appears in its place!</span>", "<span class='notice'>Your tail falls off, and a new one appears in its place!</span>")
@@ -413,7 +386,6 @@
 				Tf.organHolder.tail = new /obj/item/organ/tail/roach(Tf, Tf.organHolder)
 
 		Tf.organHolder.organ_list["tail"] = Tf.organHolder.tail
-		Tf.update_body()
 		return 1
 
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
@@ -561,7 +533,6 @@
 	mutant_folder = 'icons/mob/lizard.dmi'
 	special_hair_3 = "head-detail_1"
 	detail_2 = "lizard_detail-1"
-	detail_over_suit = "lizard_over_suit"
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/lizard/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/lizard/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/right
@@ -810,7 +781,6 @@
 	ignore_missing_limbs = 1 //OVERRIDE_ARM_L | OVERRIDE_ARM_R
 	anchor_to_floor = 1
 	movement_modifier = /datum/movement_modifier/abomination
-
 
 	var/last_drain = 0
 	var/drains_dna_on_life = 1
@@ -1604,10 +1574,10 @@
 
 	icon_state = "blank_c"
 
-	r_robolimb_arm_type_mutantrace = /obj/item/parts/robot_parts/arm/right/reliquary
-	l_robolimb_arm_type_mutantrace = /obj/item/parts/robot_parts/arm/left/reliquary
-	r_robolimb_leg_type_mutantrace = /obj/item/parts/robot_parts/leg/right/reliquary
-	l_robolimb_leg_type_mutantrace = /obj/item/parts/robot_parts/leg/left/reliquary
+	r_limb_arm_type_mutantrace = /obj/item/parts/robot_parts/arm/right/reliquary
+	l_limb_arm_type_mutantrace = /obj/item/parts/robot_parts/arm/left/reliquary
+	r_limb_leg_type_mutantrace = /obj/item/parts/robot_parts/leg/right/reliquary
+	l_limb_leg_type_mutantrace = /obj/item/parts/robot_parts/leg/left/reliquary
 	ignore_missing_limbs = 1
 
 	firevuln = 0.5
@@ -1686,13 +1656,13 @@
 	mutant_folder = 'icons/mob/cow.dmi'
 	special_head = HEAD_COW
 	special_hair_1 = "head-detail1"
-	detail_over_suit = "cow_over_suit"
+	detail_over_suit_1 = "cow_over_suit"
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/left
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_DETAIL_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES | HAS_A_TAIL)
-	mutant_color_flags = (HAS_HAIR_COLORED_DETAILS | HEAD_HAS_OWN_COLORS)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_DETAIL_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES | HAS_A_TAIL | HAS_EXTRA_DETAILS)
+	mutant_color_flags = (HAS_HAIR_COLORED_DETAILS | HEAD_HAS_OWN_COLORS | DETAIL_OVERSUIT_1)
 
 
 	New(var/mob/living/carbon/human/H)

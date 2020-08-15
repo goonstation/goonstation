@@ -2079,7 +2079,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 /* ---------- crowbar - chest ---------- */
 	if (surgeon.zone_sel.selecting == "chest")
-		if (istype(patient.mutantrace, /datum/mutantrace/skeleton))
+		if (patient.mob_flags & IS_BONER)
 			playsound(get_turf(patient), "sound/items/Crowbar.ogg", 50, 1)	// Dont really need much surgery to remove a bone from a skeleton
 
 			if(istype(patient.organHolder.tail, /obj/item/organ/tail/bone))

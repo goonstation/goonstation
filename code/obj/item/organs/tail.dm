@@ -1,36 +1,40 @@
+// Severed tail images go in 'icons/obj/surgery.dmi'
+// on-mob tail images are defined by organ_image_icon
+// both severed and on-mob tail icon_states are defined by just icon_state
+// try to keep the names the same, or everything breaks
 /obj/item/organ/tail
 	name = "tail"
 	organ_name = "tail"
 	organ_holder_name = "tail"
 	organ_holder_location = "chest"	// chest-ish
 	organ_holder_required_op_stage = 11.0
-	edible = 0	// dont eat pant
-	organ_image_icon = 'icons/effects/genetics.dmi'
+	edible = 0	// doesn't seem to prevent people from eating organs. Might be cus they're made of meat?
+	organ_image_icon = 'icons/mob/werewolf.dmi' // please keep your on-mob tail icon_states with the rest of your mob's sprites
+	icon_state = "tail-wolf"
+	made_from = "bone"	// clak clak stop eating my hack
+	var/colorful = 0 // if we need to colorize it
+	var/multipart_icon = 0 // if we need to run update_tail_icon
 	var/icon_piece_1 = null	// For setting up the icon if its in multiple pieces
-	var/icon_piece_2 = null
+	var/icon_piece_2 = null	// Only modifies the dropped icon
 	var/failure_ability = "clumsy"	// The organ failure ability associated with this organ.
 	var/human_getting_monkeytail = 0	// If a human's getting a monkey tail
 	var/monkey_getting_humantail = 0	// If a monkey's getting a human tail
+	// vv these get sent to update_body(). no sense having it calculate all this shit multiple times
+	var/image/tail_image_1
+	var/image/tail_image_2
+	var/image/tail_image_oversuit
 
-	//Assembles the tail organ item sprite icon thing from multiple separate iconstates
-	//Used when a tail organ has a bunch of different colors its supposed to be
-	proc/update_tail_icon()
-		if (!src.icon_piece_1 && !src.icon_piece_2)
-			return	// Nothing really there to update
-		var/icon/tail_icon = null
-		tail_icon = new /icon(src.icon, src.icon_state)
-
-		if (src.icon_piece_1)
-			var/icon/icon_1 = new /icon(src.icon, src.icon_piece_1)
-			icon_1.Blend(src.organ_color_1, ICON_MULTIPLY)
-			tail_icon.Blend(icon_1, ICON_OVERLAY)
-
-		if (src.icon_piece_2)
-			var/icon/icon_2 = new /icon(src.icon, src.icon_piece_2)
-			icon_2.Blend(src.organ_color_2, ICON_MULTIPLY)
-			tail_icon.Blend(icon_2, ICON_OVERLAY)
-
-		src.icon = tail_icon
+	New()
+		..()
+		if(src.colorful) // Set us some colors
+			if (src.donor && ishuman(src.donor))	// Get the colors here so they dont change later, ie reattached on someone else
+				src.organ_color_1 = organ_fix_colors(src.donor_AH.customization_first_color)
+				src.organ_color_2 = organ_fix_colors(src.donor_AH.customization_second_color)
+			else	// Just throw some colors in there or something
+				src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
+				src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
+		build_mob_tail_image()
+		update_tail_icon()
 
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for tails. */
@@ -49,7 +53,7 @@
 			src.human_getting_monkeytail = 0
 			src.monkey_getting_humantail = 0
 
-		if (!H.organHolder.tail && istype(H.mutantrace, /datum/mutantrace/skeleton))
+		if (!H.organHolder.tail && H.mob_flags & IS_BONER)
 			attachment_successful = 1 // Just slap that tailbone in place, its fine
 			boned = 1	// No need to sew it up
 
@@ -90,30 +94,87 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() >= FAIL_DAMAGE && src.donor.mutantrace) // Humans dont need tails to not be clumsy idiots
+		if (src.get_damage() >= FAIL_DAMAGE && src.donor_AH.mob_appearance_flags & HAS_A_TAIL) // Only tail-havers get clumsy without a tail
 			donor.bioHolder.AddEffect(src.failure_ability, 0, 0, 0, 1)
 		return 1
 
 	on_removal()
-		if (src.failure_ability && src.donor.bioHolder && src.donor.mutantrace)
+		if (src.failure_ability && src.donor_AH.mob_appearance_flags & HAS_A_TAIL)
 			src.donor.bioHolder.AddEffect(src.failure_ability, 0, 0, 0, 1)
 
 	on_broken(var/mult = 1)
-		if(prob(2) && src.donor.mutantrace)
+		if(prob(2) && src.donor_AH.mob_appearance_flags & HAS_A_TAIL)
 			src.donor.change_misstep_chance(10)
 			src.donor.bioHolder.AddEffect(failure_ability)
+
+	// builds the mob tail image, the one that gets displayed on the mob when attached
+	proc/build_mob_tail_image() // lets mash em all into one image with overlays n shit, like the head, but on the ass
+		var/humonkey = src.human_monkey_tail_interchange(src.organ_image_under_suit_1, src.human_getting_monkeytail, src.monkey_getting_humantail)
+		var/image/tail_temp_image = image(icon=src.organ_image_icon, icon_state=humonkey, layer = MOB_TAIL_LAYER1)
+		if (src.organ_color_1)
+			tail_temp_image.color = src.organ_color_1
+		src.tail_image_1 = tail_temp_image
+
+		if(src.organ_image_under_suit_2)
+			humonkey = src.human_monkey_tail_interchange(src.organ_image_under_suit_2, src.human_getting_monkeytail, src.monkey_getting_humantail)
+			tail_temp_image = image(icon=src.organ_image_icon, icon_state=humonkey, layer = MOB_TAIL_LAYER2)
+			if (src.organ_color_2)
+				tail_temp_image.color = src.organ_color_2
+			src.tail_image_2 = tail_temp_image
+
+		if(src.organ_image_over_suit)
+			humonkey = src.human_monkey_tail_interchange(src.organ_image_over_suit, src.human_getting_monkeytail, src.monkey_getting_humantail)
+			tail_temp_image = image(icon=src.organ_image_icon, icon_state=humonkey, layer = MOB_OVERSUIT_LAYER1)
+			if (src.organ_color_1)
+				tail_temp_image.color = src.organ_color_1
+			src.tail_image_oversuit = tail_temp_image
+
+	proc/human_monkey_tail_interchange(var/tail_iconstate as text, var/human_getting_monkey_tail as num, var/monkey_getting_human_tail as num)
+		if (!tail_iconstate || (human_getting_monkey_tail && monkey_getting_human_tail))
+			logTheThing("debug", src, null, "HumanMonkeyTailInterchange fucked up. tail_iconstate = [tail_iconstate], [human_getting_monkey_tail] && [monkey_getting_human_tail]. call lagg")
+			return null	// Something went wrong
+		if (!human_getting_monkey_tail && !monkey_getting_human_tail)	// tail's going to the right place
+			return tail_iconstate	// Send it as-is
+		var/output_this_string
+		output_this_string = tail_iconstate + (human_getting_monkey_tail ? "-human" : "-monkey")
+		return output_this_string
+
+	//Assembles the tail organ item sprite icon thing from multiple separate iconstates
+	//Used when a tail organ has a bunch of different colors its supposed to be
+	proc/update_tail_icon()
+		if (!src.icon_piece_1 && !src.icon_piece_2)
+			return	// Nothing really there to update
+		var/icon/tail_icon = null
+		tail_icon = new /icon(src.icon, src.icon_state)
+
+		if(src.colorful) // if its colorful, but we dont have all the colors...
+			if(!src.organ_color_1) // ...make some up!
+				src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
+			if(!src.organ_color_2)
+				src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
+
+		if (src.icon_piece_1)
+			var/icon/icon_1 = new /icon(src.icon, src.icon_piece_1)
+			icon_1.Blend(src.organ_color_1, ICON_MULTIPLY)
+			tail_icon.Blend(icon_1, ICON_OVERLAY)
+
+		if (src.icon_piece_2)
+			var/icon/icon_2 = new /icon(src.icon, src.icon_piece_2)
+			icon_2.Blend(src.organ_color_2, ICON_MULTIPLY)
+			tail_icon.Blend(icon_2, ICON_OVERLAY)
+
+		src.icon = tail_icon
+
 
 /obj/item/organ/tail/monkey
 	name = "monkey tail"
 	desc = "A long, slender tail."
 	icon_state = "tail-monkey"
+	organ_image_icon = 'icons/mob/monkey.dmi'
 	edible = 0
-
-	New()
-		..()
-		src.organ_image_under_suit_1 = "monkey_under_suit"
-		src.organ_image_under_suit_2 = null
-		src.organ_image_over_suit = "monkey_over_suit"
+	organ_image_under_suit_1 = "monkey_under_suit"
+	organ_image_under_suit_2 = null
+	organ_image_over_suit = "monkey_over_suit"
 
 /obj/item/organ/tail/lizard
 	name = "lizard tail"
@@ -121,101 +182,72 @@
 	icon_state = "tail-lizard"	// This is just the meat bit
 	icon_piece_1 = "tail-lizard-detail-1"
 	icon_piece_2 = "tail-lizard-detail-2"
-	edible = 1	// ew
-
-	New()
-		..()
-		// This tail accepts hairstyle colors!
-		var/mob/living/carbon/human/M = src.donor
-		if (M && ishuman(M))	// Get the colors here so they dont change later, ie reattached on someone else
-			var/datum/appearanceHolder/aH = M.bioHolder.mobAppearance
-			src.organ_color_1 = organ_fix_colors(aH.customization_first_color)
-			src.organ_color_2 = organ_fix_colors(aH.customization_second_color)
-		else	// Just throw some colors in there or something
-			src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
-			src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
-
-		src.organ_image_under_suit_1 = "lizard_under_suit_1"
-		src.organ_image_under_suit_2 = "lizard_under_suit_2"
-		src.organ_image_over_suit = "lizard_over_suit"
-
-		// Colorize (and build) organ item
-		src.update_tail_icon()
+	organ_image_icon = 'icons/mob/lizard.dmi'
+	organ_image_under_suit_1 = "lizard_under_suit_1"
+	organ_image_under_suit_2 = "lizard_under_suit_2"
+	organ_image_over_suit = "lizard_over_suit"
+	colorful = 1
+	multipart_icon = 1
 
 /obj/item/organ/tail/cow
 	name = "cow tail"
 	desc = "A short, brush-like tail."
 	icon_state = "tail-cow"
+	organ_image_icon = 'icons/mob/cow.dmi'
 	edible = 0
-
-	New()
-		..()
-		src.organ_image_under_suit_1 = "cow_under_suit"
-		src.organ_image_under_suit_2 = null
-		src.organ_image_over_suit = "cow_over_suit_1"
+	organ_image_under_suit_1 = "cow_under_suit"
+	organ_image_under_suit_2 = null
+	organ_image_over_suit = "cow_over_suit_1"	// just the tail, no nose
 
 /obj/item/organ/tail/wolf
 	name = "wolf tail"
 	desc = "A long, fluffy tail."
 	icon_state = "tail-wolf"
+	organ_image_icon = 'icons/mob/werewolf.dmi'
 	MAX_DAMAGE = 250	// Robust tail for a robust antag
 	FAIL_DAMAGE = 240
 	edible = 0
-
-	New()
-		..()
-		src.organ_image_under_suit_1 = "wolf_under_suit"
-		src.organ_image_under_suit_2 = null
-		src.organ_image_over_suit = "wolf_over_suit"
+	organ_image_under_suit_1 = "wolf_under_suit"
+	organ_image_under_suit_2 = null
+	organ_image_over_suit = "wolf_over_suit"
 
 /obj/item/organ/tail/bone
 	name = "tailbone"
 	desc = "A short piece of bone."
 	icon_state = "tail-bone"
-	created_decal = null
-	made_from = "bone"	// clak clak
+	organ_image_icon = 'icons/mob/human.dmi'
 	created_decal = null	// just a piece of bone
 	edible = 0
-
-	New()
-		..()
-		src.organ_image_under_suit_1 = null
-		src.organ_image_under_suit_2 = null
-		src.organ_image_over_suit = null
+	organ_image_under_suit_1 = null
+	organ_image_under_suit_2 = null
+	organ_image_over_suit = null
 
 /obj/item/organ/tail/seamonkey
 	name = "seamonkey tail"
 	desc = "A long, scaled tail."
 	icon_state = "tail-seamonkey"
+	organ_image_icon = 'icons/mob/monkey.dmi'
 	edible = 0
-
-	New()
-		..()
-		src.organ_image_under_suit_1 = "seamonkey_under_suit"
-		src.organ_image_under_suit_2 = null
-		src.organ_image_over_suit = "seamonkey_over_suit"
+	organ_image_under_suit_1 = "seamonkey_under_suit"
+	organ_image_under_suit_2 = null
+	organ_image_over_suit = "seamonkey_over_suit"
 
 /obj/item/organ/tail/cat
 	name = "cat tail"
 	desc = "A long, furry tail."
 	icon_state = "tail-cat"
+	organ_image_icon = 'icons/mob/cat.dmi'
 	edible = 0
-
-	New()
-		..()
-		src.organ_image_under_suit_1 = "cat_under_suit"
-		src.organ_image_under_suit_2 = null
-		src.organ_image_over_suit = "cat_over_suit"
+	organ_image_under_suit_1 = "cat_under_suit"
+	organ_image_under_suit_2 = null
+	organ_image_over_suit = "cat_over_suit"
 
 /obj/item/organ/tail/roach
 	name = "roach abdomen"
 	desc = "A large insect behind."
 	icon_state = "tail-roach"
+	organ_image_icon = 'icons/mob/roach.dmi'
 	made_from = "chitin"
-	edible = 1 // ew
-
-	New()
-		..()
-		src.organ_image_under_suit_1 = "roach_under_suit"
-		src.organ_image_under_suit_2 = null
-		src.organ_image_over_suit = "roach_over_suit"
+	organ_image_under_suit_1 = "roach_under_suit"
+	organ_image_under_suit_2 = null
+	organ_image_over_suit = "roach_over_suit"

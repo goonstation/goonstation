@@ -26,17 +26,17 @@
 
 #define HAS_HUMAN_EYES					256 // We have normal human eyes of human color where human eyes tend to be
 #define HAS_SPECIAL_EYES				512 //	We have different eyes of different color probably somewhere else
-#define HAS_NO_EYES							16384 // We have no eyes and yet must see (cus they're baked into the sprite or something)
+#define HAS_NO_EYES							1024 // We have no eyes and yet must see (cus they're baked into the sprite or something)
 
-#define HAS_HUMAN_HEAD					32768	// Head is roughly human-shaped with no additional features
-#define HAS_SPECIAL_HEAD				131072	// Head is shaped differently, but otherwise just a head
-#define HAS_NO_HEAD							262144	// Don't show their head, its already baked into their icon override
+#define HAS_HUMAN_HEAD					2048	// Head is roughly human-shaped with no additional features
+#define HAS_SPECIAL_HEAD				4096	// Head is shaped differently, but otherwise just a head
+#define HAS_NO_HEAD							8192	// Don't show their head, its already baked into their icon override
 
-#define BUILT_FROM_PIECES				524288	// Use humanlike body rendering process, otherwise use a static icon or something
-#define HAS_EXTRA_DETAILS				1048576	// Has a non-head something in their detail slot they want to show off, like lizard splotches
-#define HAS_A_TAIL							2097152	// Has a tail, so give em an oversuit
-#define WEARS_UNDERPANTS				4194304	// Draw underwear on them. also works on mutants, for the most part
-#define USES_STATIC_ICON				8388608	// Mob's body is drawn using a single, flat image and not several flat images
+#define BUILT_FROM_PIECES				16384	// Use humanlike body rendering process, otherwise use a static icon or something
+#define HAS_EXTRA_DETAILS				32768	// Has a non-head something in their detail slot they want to show off, like lizard splotches. non-tail oversuits count!
+#define HAS_A_TAIL							65536	// Has a tail. used for checking if tail loss should cause clumsines
+#define WEARS_UNDERPANTS				131072	// Draw underwear on them. can be overridden with human var underpants_override. dont actually do this though
+#define USES_STATIC_ICON				262144	// Mob's body is drawn using a single, flat image and not several flat images slapped together
 
 //non-hairstyle body accessory bitflags
 //corresponds to the color settings in user prefs
@@ -49,13 +49,13 @@
 #define HAS_HAIR_COLORED_DETAILS	32	// Hair color is used to determine the color of certain non-hair things. Like horns or scales
 #define HAS_UNUSED_HAIR_COLOR			64	// Hair color isnt used for anything :/ unused
 
-#define OVERSUIT_USES_PREF_COLOR_1		128		//
-#define OVERSUIT_USES_PREF_COLOR_2		256		//
-#define OVERSUIT_USES_PREF_COLOR_3		512		//
+#define DETAIL_OVERSUIT_1		128		// Has a detail that goes over the suit, like a cute little enormous cow muzzle
+#define DETAIL_OVERSUIT_2		256		// currently unused
+#define DETAIL_OVERSUIT_IS_COLORFUL		512		// The oversuit is colorful, otherwise don't color it. Defaults to first customization color
 
 #define SKINTONE_USES_PREF_COLOR_1		1024	//
-#define SKINTONE_USES_PREF_COLOR_2		2048	//
-#define SKINTONE_USES_PREF_COLOR_3		4096	//
+#define SKINTONE_USES_PREF_COLOR_2		2048	// unused... for now
+#define SKINTONE_USES_PREF_COLOR_3		4096	// unused... for now
 
 #define FIX_COLORS										8192	// Clamp customization RBG vals between 50 and 190, lizard-style
 #define	HEAD_HAS_OWN_COLORS						16384	// our head has its own colors that would look weird if tinted

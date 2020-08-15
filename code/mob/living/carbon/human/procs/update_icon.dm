@@ -680,6 +680,17 @@
 	if (!src.bioHolder)
 		return // fuck u
 
+	image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
+	cust_one_state = "none"
+
+	image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
+	cust_two_state = "none"
+
+	image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
+	cust_three_state = "none"
+
+	image_eyes = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
+
 	var/obj/item/organ/head/my_head
 	if (src?.organHolder?.head)
 		my_head = src.organHolder.head
@@ -687,26 +698,17 @@
 		return // all done!
 
 	var/datum/appearanceHolder/aH = src.bioHolder.mobAppearance
+	if (aH.mob_appearance_flags & ~HAS_NO_EYES)
+		image_eyes = my_head.head_image_eyes	// eyes are stored in the hea
+
 	if (aH.mob_appearance_flags & HAS_NO_HEAD || aH.mob_appearance_flags & HAS_NO_HAIR) // stop making blobs so *hairy*
-		image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
-		cust_one_state = "none"
-
-		image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
-		cust_two_state = "none"
-
-		image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
-		cust_three_state = "none"
-
-	if (aH.mob_appearance_flags & HAS_NO_EYES)
-		image_eyes = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
-		return // cool all done!
-	else
-		image_eyes = my_head.head_image_eyes	// eyes are stored in the head
+		return
 
 	if (my_head.our_hair_icon)
 		cust_icon = my_head.our_hair_icon
 	else
 		cust_icon = 'icons/mob/human_hair.dmi'
+
 
 	if (my_head.head_image_cust_one)
 		image_cust_one = my_head.head_image_cust_one
@@ -833,125 +835,303 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	else	// otherwise you're gonna explode into a shower of runtimes
 		return
 
-	var/file
-	if (AHOLD.mob_appearance_flags & USES_STATIC_ICON)
-		file = 'icons/mob/human.dmi' // stop turning everyone into some weird phantom human thing
-	else if (!src.decomp_stage)
-		file = AHOLD.body_icon
+	if (AHOLD.mob_appearance_flags & USES_STATIC_ICON) // here's a picture of a fucked up human
+		src.body_standing = image(AHOLD.body_icon, AHOLD.body_icon_state, MOB_LIMB_LAYER) // this picture is you
+		src.hands_standing = image('icons/mob/human.dmi', "blank", MOB_HAND_LAYER1)
+
 	else
-		file = 'icons/mob/human_decomp.dmi'
+		var/file
+		if (!src.decomp_stage)
+			file = AHOLD.body_icon
+		else
+			file = 'icons/mob/human_decomp.dmi'
 
 
-	src.body_standing = SafeGetOverlayImage("body", file, "blank", MOB_LIMB_LAYER) // image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
-	src.body_standing.overlays.len = 0
-	src.hands_standing = SafeGetOverlayImage("hands", file, "blank", MOB_HAND_LAYER1) //image('icons/mob/human.dmi', "blank", MOB_HAND_LAYER1)
-	src.hands_standing.overlays.len = 0
+		src.body_standing = SafeGetOverlayImage("body", file, "blank", MOB_LIMB_LAYER) // image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
+		src.body_standing.overlays.len = 0
+		src.hands_standing = SafeGetOverlayImage("hands", file, "blank", MOB_HAND_LAYER1) //image('icons/mob/human.dmi', "blank", MOB_HAND_LAYER1)
+		src.hands_standing.overlays.len = 0
 
-	/*
-	src.body_standing = image('icons/mob/human_decomp.dmi', "blank", MOB_LIMB_LAYER)
-	src.hands_standing = image('icons/mob/human_decomp.dmi', "blank", MOB_HAND_LAYER1)
-	*/
-	// if the image data can be stored in the thing it's trying to draw, store it there
-	// that way, we can make the thing look like the thing without a bunch of dynamic guesswork
-	if (AHOLD.mob_appearance_flags & BUILT_FROM_PIECES) // Everyone who isnt a static_icon
-		if ((src.bioHolder && !src.bioHolder.HasEffect("fat")) || (src.bioHolder && src.bioHolder.HasEffect("fat") && (AHOLD.mob_appearance_flags & IS_MUTANT)) || src.decomp_stage)
-			human_image.icon = AHOLD.body_icon
-			var/gender_t = null
-			if (AHOLD.mob_appearance_flags & IS_MUTANT) // So far, none of the mutants are terribly dimorphic
-				gender_t = "m" // and i doubt they ever will be
-			else
-				gender_t = src.gender == FEMALE ? "f" : "m"
+		// if the image data can be stored in the thing it's trying to draw, store it there
+		// that way, we can make the thing look like the thing without a bunch of dynamic guesswork
+		if (AHOLD.mob_appearance_flags & BUILT_FROM_PIECES) // Everyone who isnt a static_icon
+			if ((src.bioHolder && !src.bioHolder.HasEffect("fat")) || (src.bioHolder && src.bioHolder.HasEffect("fat") && (AHOLD.mob_appearance_flags & IS_MUTANT)) || src.decomp_stage)
+				human_image.icon = AHOLD.body_icon
+				human_image.layer = MOB_LIMB_LAYER // why was this never defined before
+				var/gender_t = null
+				if (AHOLD.mob_appearance_flags & IS_MUTANT) // So far, none of the mutants are terribly dimorphic
+					gender_t = "m" // and i doubt they ever will be
+				else
+					gender_t = src.gender == FEMALE ? "f" : "m"
 
-			var/skin_tone = "#777777"
-			if(AHOLD.mob_appearance_flags & HAS_NO_SKINTONE)
-				skin_tone = "#FFFFFF"	// Preserve their true coloration
-			else if (AHOLD.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
-				skin_tone = AHOLD.s_tone_special
-			else	// normal-ass skintone
-				skin_tone = AHOLD.s_tone
-			human_image.color = skin_tone
-			human_decomp_image.color = skin_tone
+				var/skin_tone = "#777777"
+				if(AHOLD.mob_appearance_flags & HAS_NO_SKINTONE)
+					skin_tone = "#FFFFFF"	// Preserve their true coloration
+				else if (AHOLD.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
+					skin_tone = AHOLD.s_tone_special
+				else	// normal-ass skintone
+					skin_tone = AHOLD.s_tone
+				human_image.color = skin_tone
+				human_decomp_image.color = skin_tone
 
-			if (!src.decomp_stage)
-				human_image.icon_state = "chest_[gender_t]"
-				src.body_standing.overlays += human_image
+				if (!src.decomp_stage)
+					human_image.icon_state = "chest_[gender_t]"
+					src.body_standing.overlays += human_image
 
-				human_image.icon_state = "groin_[gender_t]"
-				src.body_standing.overlays += human_image
+					human_image.icon_state = "groin_[gender_t]"
+					src.body_standing.overlays += human_image
 
-				// all this shit goes on the torso anyway
-				if(AHOLD.mob_appearance_flags & HAS_EXTRA_DETAILS)
-					var/image/detail_temp = image(icon = 'icons/mob/human.dmi', icon_state = "invis", )
-					if(AHOLD.mob_color_flags & DETAIL_1)
-						detail_temp = image(icon = AHOLD.body_icon, icon_state = AHOLD.mob_detail_1, layer = FLOAT_LAYER)
-						detail_temp.color = AHOLD.customization_first_color
-						src.body_standing.overlays += detail_temp
+					// all this shit goes on the torso anyway
+					if(AHOLD.mob_appearance_flags & HAS_EXTRA_DETAILS)
+						if(AHOLD.mob_color_flags & DETAIL_1)
+							human_detail_1.icon = AHOLD.body_icon
+							human_detail_1.icon_state = AHOLD.mob_detail_1
+							human_detail_1.layer = MOB_DETAIL_LAYER1
+							human_detail_1.color = AHOLD.customization_first_color
+							src.body_standing.overlays += human_detail_1
 
-					if(AHOLD.mob_color_flags & DETAIL_2)
-						detail_temp = image(icon = AHOLD.body_icon, icon_state = AHOLD.mob_detail_2, layer = FLOAT_LAYER)
-						detail_temp.color = AHOLD.customization_second_color
-						src.body_standing.overlays += detail_temp
+						if(AHOLD.mob_color_flags & DETAIL_2)
+							human_detail_2.icon = AHOLD.body_icon
+							human_detail_2.icon_state = AHOLD.mob_detail_2
+							human_detail_2.layer = MOB_DETAIL_LAYER1
+							human_detail_2.color = AHOLD.customization_second_color
+							src.body_standing.overlays += human_detail_2
 
-					if(AHOLD.mob_color_flags & DETAIL_3)
-						detail_temp = image(icon = AHOLD.body_icon, icon_state = AHOLD.mob_detail_3, layer = FLOAT_LAYER)
-						detail_temp.color = AHOLD.customization_third_color
-						src.body_standing.overlays += detail_temp
+						if(AHOLD.mob_color_flags & DETAIL_3)
+							human_detail_3.icon = AHOLD.body_icon
+							human_detail_3.icon_state = AHOLD.mob_detail_3
+							human_detail_3.layer = MOB_DETAIL_LAYER1
+							human_detail_3.color = AHOLD.customization_third_color
+							src.body_standing.overlays += human_detail_3
 
-				if(AHOLD.mob_appearance_flags & HAS_A_TAIL)
-					var/overcolor = AHOLD.customization_first_color
-					var/image/oversuit_temp
-					if (AHOLD.mob_color_flags & OVERSUIT_USES_PREF_COLOR_2)
-						overcolor = AHOLD.customization_second_color
-					else if (AHOLD.mob_color_flags & OVERSUIT_USES_PREF_COLOR_3)
-						overcolor = AHOLD.customization_third_color
-					oversuit_temp = image(icon = AHOLD.body_icon, icon_state = AHOLD.mob_oversuit, layer = FLOAT_LAYER)
-					oversuit_temp.color = overcolor
-					src.body_standing.overlays += oversuit_temp
+						if(AHOLD.mob_color_flags & DETAIL_OVERSUIT_1)	// need more oversuits? Make more of these!
+							human_tail_image_oversuit_1 = image(icon = AHOLD.body_icon, icon_state = AHOLD.mob_oversuit_1, layer = MOB_OVERSUIT_LAYER1)
+							if(AHOLD.mob_color_flags & DETAIL_OVERSUIT_IS_COLORFUL)
+								human_tail_image_oversuit_1.color = AHOLD.customization_first_color
+							else
+								human_tail_image_oversuit_1.color = "#FFFFFF"
+							src.body_standing.overlays += human_tail_image_oversuit_1
 
-				if (src.organHolder && src.organHolder.head)
-					var/obj/item/organ/head/our_head = src.organHolder.head
-					human_head_image = our_head.head_image // head data is stored in the head
-					src.body_standing.overlays += human_head_image
-					/*
-					human_head_image.icon_state = "head"
-					if (src.organHolder.head && my_mutant?.special_head)
+					if (src.organHolder && src.organHolder.head)
 						var/obj/item/organ/head/our_head = src.organHolder.head
-						human_head_image.icon = our_head.icon
-					else if (src.organHolder.head.donor_appearance && src.organHolder.head.donor_appearance.s_tone != skin_tone)
-						var/h_skin_tone = src.organHolder.head.donor_appearance.s_tone
-						human_head_image.color = h_skin_tone
-					else
-						human_head_image.color = skin_tone
-					src.body_standing.overlays += human_head_image */
+						human_head_image = our_head.head_image // head data is stored in the head
+						src.body_standing.overlays += human_head_image
 
-			else
-				human_decomp_image.icon_state = "body_decomp[src.decomp_stage]"
-				src.body_standing.overlays += human_decomp_image
+					if (src.organHolder && src.organHolder.tail)
+						var/obj/item/organ/tail/our_tail = src.organHolder.tail
+						human_tail_image_1 = our_tail.tail_image_1 // tail data is stored in the tail
+						src.body_standing.overlays += human_tail_image_1 // handles under suit
+
+						human_tail_image_2 = our_tail.tail_image_2 // tail data is stored in the tail
+						src.body_standing.overlays += human_tail_image_2 // handles under suit
+
+						human_tail_image_oversuit_1 = our_tail.tail_image_oversuit // tail data is stored in the tail
+						human_tail_image_oversuit_1.layer = FLOAT_LAYER // FUCK YOU
+						src.body_standing.overlays += human_tail_image_oversuit_1 // handles under suit
+
+				else
+					human_decomp_image.icon_state = "body_decomp[src.decomp_stage]"
+					src.body_standing.overlays += human_decomp_image
+
+				if (src.limbs)
+					src.limbs.reset_stone()
+
+					var/sleeveless = 1
+					if (istype(src.w_uniform, /obj/item/clothing) && !(src.w_uniform.c_flags & SLEEVELESS))
+						sleeveless = 0
+					if (istype(src.wear_suit, /obj/item/clothing) && !(src.wear_suit.c_flags & SLEEVELESS))
+						sleeveless = 0
+
+					for (var/name in update_body_limbs) // this is awful
+						var/obj/item/parts/human_parts/limb = src.limbs.vars[name]
+						if (limb)
+							var/image/limb_pic = limb.getMobIcon(0, src.decomp_stage)	// The limb, not the hand/foot
+							var/limb_skin_tone = "#FFFFFF"	// So we dont stomp on any limbs that arent supposed to be colorful
+							if (limb.skintoned && limb.skin_tone)	// Get the limb's stored skin tone, if its skintoned and has a skin_tone
+								limb_skin_tone = limb.skin_tone	// So the limb's hand/foot gets the color too, when/if we get there
+							limb_pic.color = limb_skin_tone
+							src.body_standing.overlays += limb_pic
+
+							var/hand_icon_s = limb.getHandIconState(0, src.decomp_stage)
+
+							var/part_icon_s = limb.getPartIconState(0, src.decomp_stage)
+
+							var/handlimb_icon = limb.getAttachmentIcon(src.decomp_stage)
+
+							if (limb.decomp_affected && src.decomp_stage)
+								if (hand_icon_s) //isicon
+									if (istext(hand_icon_s))
+										if (limb.skintoned)
+											var/oldlayer = human_decomp_image.layer // ugh
+											human_decomp_image.layer = MOB_HAND_LAYER1
+											human_decomp_image.icon_state = hand_icon_s
+											src.hands_standing.layer = MOB_HAND_LAYER1
+											src.hands_standing.overlays += human_decomp_image
+											human_decomp_image.layer = oldlayer
+										else
+											var/oldlayer = human_untoned_decomp_image.layer // ugh
+											human_untoned_decomp_image.layer = MOB_HAND_LAYER1
+											human_untoned_decomp_image.icon_state = hand_icon_s
+											src.hands_standing.layer = MOB_HAND_LAYER1
+											src.hands_standing.overlays += human_untoned_decomp_image
+											human_untoned_decomp_image.layer = oldlayer
+									else
+										var/image/I = hand_icon_s
+										I.layer = MOB_LAYER_BASE
+										if (limb.skintoned)
+											I.color = human_decomp_image.color
+										src.hands_standing.layer = MOB_LAYER_BASE
+										src.hands_standing.overlays += I
+
+								if (part_icon_s)
+									if (istext(part_icon_s))
+										if (limb.skintoned)
+											human_decomp_image.icon_state = part_icon_s
+											var/oldlayer
+											if (sleeveless && (limb.slot == "l_arm" || limb.slot == "r_arm"))
+												oldlayer = human_decomp_image.layer // ugh
+												human_decomp_image.layer = MOB_HAND_LAYER1
+											src.body_standing.overlays += human_decomp_image
+											if (oldlayer)
+												human_decomp_image.layer = oldlayer
+										else
+											human_untoned_decomp_image.icon_state = part_icon_s
+											var/oldlayer
+											if (sleeveless && (limb.slot == "l_arm" || limb.slot == "r_arm"))
+												oldlayer = human_untoned_decomp_image.layer // ugh
+												human_untoned_decomp_image.layer = MOB_HAND_LAYER1
+											src.body_standing.overlays += human_untoned_decomp_image
+											if (oldlayer)
+												human_untoned_decomp_image.layer = oldlayer
+									else
+										var/image/I = part_icon_s
+										I.layer = MOB_LAYER_BASE
+										if (limb.skintoned)
+											I.color = human_decomp_image.color
+										src.body_standing.overlays += I
+							else
+								if (hand_icon_s)
+									if (istext(hand_icon_s))
+										var/oldlayer = human_image.layer // ugh
+										human_image.layer = MOB_HAND_LAYER1
+										human_image.icon = handlimb_icon
+										human_image.icon_state = hand_icon_s
+										human_image.color = limb_skin_tone
+										src.hands_standing.layer = MOB_HAND_LAYER1
+										src.hands_standing.overlays += human_image
+										human_image.layer = oldlayer
+									else
+										var/image/I = hand_icon_s
+										I.layer = MOB_LAYER_BASE
+										I.icon = handlimb_icon
+										I.icon_state = hand_icon_s
+										I.color = limb_skin_tone
+										src.hands_standing.layer = MOB_LAYER_BASE
+										src.hands_standing.overlays += I
+
+								if (part_icon_s)
+									if (istext(part_icon_s))
+										human_image.icon = limb.partIcon
+										human_image.icon_state = part_icon_s
+										human_image.color = limb_skin_tone
+										var/oldlayer
+										if (sleeveless && (limb.slot == "l_arm" || limb.slot == "r_arm"))
+											oldlayer = human_image.layer // ugh
+											human_image.layer = MOB_HAND_LAYER1
+										src.body_standing.overlays += human_image
+										if (oldlayer)
+											human_image.layer = oldlayer
+									else
+										var/image/I = part_icon_s
+										I.layer = MOB_LAYER_BASE
+										I.color = limb_skin_tone
+										src.body_standing.overlays += I
+						else	// Handles stumps
+							var/stump = update_body_limbs[name]
+							if (src.decomp_stage)
+								var/decomp = "_decomp[src.decomp_stage]"
+								human_decomp_image.icon_state = "[stump][decomp]"
+								src.body_standing.overlays += human_decomp_image
+							else
+								human_image.icon_state = "[stump]"
+								src.body_standing.overlays += human_image
+
+				human_image.color = "#fff"
+
+				if (src.organHolder && src.organHolder.heart)
+					if (src.organHolder.heart.robotic)
+						heart_image.icon_state = "roboheart"
+						src.body_standing.overlays += heart_image
+
+					if (src.organHolder.heart.emagged)
+						heart_emagged_image.layer = FLOAT_LAYER
+						heart_emagged_image.icon_state = "roboheart_emagged"
+						src.body_standing.overlays += heart_emagged_image
+
+					if (src.organHolder.heart.synthetic)
+						heart_image.icon_state = "synthheart"
+						src.body_standing.overlays += heart_image
+
+					if (!isnull(src.organHolder.heart.body_image))
+						heart_image.icon_state = src.organHolder.heart.body_image
+						src.body_standing.overlays += heart_image
+
+				if (src.decomp_stage < 3 && ((AHOLD.underwear && AHOLD.mob_appearance_flags & WEARS_UNDERPANTS) || src.underpants_override)) // no more bikini werewolves
+					undies_image.icon_state = underwear_styles[AHOLD.underwear]
+					undies_image.color = AHOLD.u_color
+					src.body_standing.overlays += undies_image
+
+				if (src.bandaged.len > 0)
+					for (var/part in src.bandaged)
+						bandage_image.icon_state = "bandage-[part]"
+						src.body_standing.overlays += bandage_image
+
+				if (src.spiders)
+					spider_image.icon_state = "spiders"
+					src.body_standing.overlays += spider_image
+
+				if (src.makeup && src.makeup_color)
+					makeup_image.icon_state = "lipstick[src.makeup]" // 1 if normal, 2 if you kinda jacked up your application
+					makeup_image.color = src.makeup_color
+					src.body_standing.overlays += makeup_image
+
+				if (src.juggling())
+					juggle_image.icon_state = "juggle"
+					src.body_standing.overlays += juggle_image
+
+			else // is fat
+				var/skin_tone = AHOLD.s_tone
+				human_image.color = skin_tone
+				human_image.icon_state = "fatbody"
+				src.body_standing.overlays += human_image
+				human_image.color = "#fff"
+		else if (src.mob_flags & IS_RELIQUARY_SOLDIER) // can probably be folded into the main body update thing
+			var/list/reli_update_body_limbs = list("r_arm" = "stump_arm_right_reli", "l_arm" = "stump_arm_left_reli", "r_leg" = "stump_leg_right_reli", "l_leg" = "stump_leg_left_reli")
+			human_image.icon_state = "chest_reli"
+			src.body_standing.overlays += human_image
+			human_image.icon_state = "groin_reli"
+			src.body_standing.overlays += human_image
+			human_image.color = null
+			if (src.organHolder && src.organHolder.head)
+				human_head_image.icon_state = "head_reli"
+				human_head_image.color = null
+				src.body_standing.overlays += human_head_image
 
 			if (src.limbs)
-				src.limbs.reset_stone()
-
 				var/sleeveless = 1
 				if (istype(src.w_uniform, /obj/item/clothing) && !(src.w_uniform.c_flags & SLEEVELESS))
 					sleeveless = 0
 				if (istype(src.wear_suit, /obj/item/clothing) && !(src.wear_suit.c_flags & SLEEVELESS))
 					sleeveless = 0
 
-				for (var/name in update_body_limbs) // this is awful
+				for (var/name in reli_update_body_limbs)
 					var/obj/item/parts/human_parts/limb = src.limbs.vars[name]
 					if (limb)
-						var/image/limb_pic = limb.getMobIcon(0, src.decomp_stage)	// The limb, not the hand/foot
-						var/limb_skin_tone = "#FFFFFF"	// So we dont stomp on any limbs that arent supposed to be colorful
-						if (limb.skintoned && limb.skin_tone)	// Get the limb's stored skin tone, if its skintoned and has a skin_tone
-							limb_skin_tone = limb.skin_tone	// So the limb's hand/foot gets the color too, when/if we get there
-						limb_pic.color = limb_skin_tone
-						src.body_standing.overlays += limb_pic
+						src.body_standing.overlays += limb.getMobIcon(0, src.decomp_stage)
 
 						var/hand_icon_s = limb.getHandIconState(0, src.decomp_stage)
 
 						var/part_icon_s = limb.getPartIconState(0, src.decomp_stage)
-
-						var/handlimb_icon = limb.getAttachmentIcon(src.decomp_stage)
 
 						if (limb.decomp_affected && src.decomp_stage)
 							if (hand_icon_s) //isicon
@@ -1007,42 +1187,56 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 						else
 							if (hand_icon_s)
 								if (istext(hand_icon_s))
-									var/oldlayer = human_image.layer // ugh
-									human_image.layer = MOB_HAND_LAYER1
-									human_image.icon = handlimb_icon
-									human_image.icon_state = hand_icon_s
-									human_image.color = limb_skin_tone
-									src.hands_standing.layer = MOB_HAND_LAYER1
-									src.hands_standing.overlays += human_image
-									human_image.layer = oldlayer
+									if (limb.skintoned)
+										var/oldlayer = human_image.layer // ugh
+										human_image.layer = MOB_HAND_LAYER1
+										human_image.icon_state = hand_icon_s
+										src.hands_standing.layer = MOB_HAND_LAYER1
+										src.hands_standing.overlays += human_image
+										human_image.layer = oldlayer
+									else
+										var/oldlayer = human_untoned_image.layer // ugh
+										human_untoned_image.layer = MOB_HAND_LAYER1
+										human_untoned_image.icon_state = hand_icon_s
+										src.hands_standing.layer = MOB_HAND_LAYER1
+										src.hands_standing.overlays += human_untoned_image
+										human_untoned_image.layer = oldlayer
 								else
 									var/image/I = hand_icon_s
 									I.layer = MOB_LAYER_BASE
-									I.icon = handlimb_icon
-									I.icon_state = hand_icon_s
-									I.color = limb_skin_tone
+									if (limb.skintoned)
+										I.color = human_image.color
 									src.hands_standing.layer = MOB_LAYER_BASE
 									src.hands_standing.overlays += I
 
 							if (part_icon_s)
 								if (istext(part_icon_s))
-									human_image.icon = limb.partIcon
-									human_image.icon_state = part_icon_s
-									human_image.color = limb_skin_tone
-									var/oldlayer
-									if (sleeveless && (limb.slot == "l_arm" || limb.slot == "r_arm"))
-										oldlayer = human_image.layer // ugh
-										human_image.layer = MOB_HAND_LAYER1
-									src.body_standing.overlays += human_image
-									if (oldlayer)
-										human_image.layer = oldlayer
+									if (limb.skintoned)
+										human_image.icon_state = part_icon_s
+										var/oldlayer
+										if (sleeveless && (limb.slot == "l_arm" || limb.slot == "r_arm"))
+											oldlayer = human_image.layer // ugh
+											human_image.layer = MOB_HAND_LAYER1
+										src.body_standing.overlays += human_image
+										if (oldlayer)
+											human_image.layer = oldlayer
+									else
+										human_untoned_image.icon_state = part_icon_s
+										var/oldlayer
+										if (sleeveless && (limb.slot == "l_arm" || limb.slot == "r_arm"))
+											oldlayer = human_untoned_image.layer // ugh
+											human_untoned_image.layer = MOB_HAND_LAYER1
+										src.body_standing.overlays += human_untoned_image
+										if (oldlayer)
+											human_untoned_image.layer = oldlayer
 								else
 									var/image/I = part_icon_s
 									I.layer = MOB_LAYER_BASE
-									I.color = limb_skin_tone
+									if (limb.skintoned)
+										I.color = human_decomp_image.color
 									src.body_standing.overlays += I
-					else	// Handles stumps
-						var/stump = update_body_limbs[name]
+					else
+						var/stump = reli_update_body_limbs[name]
 						if (src.decomp_stage)
 							var/decomp = "_decomp[src.decomp_stage]"
 							human_decomp_image.icon_state = "[stump][decomp]"
@@ -1051,219 +1245,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 							human_image.icon_state = "[stump]"
 							src.body_standing.overlays += human_image
 
-			human_image.color = "#fff"
-
-			if (src.organHolder && src.organHolder.heart)
-				if (src.organHolder.heart.robotic)
-					heart_image.icon_state = "roboheart"
-					src.body_standing.overlays += heart_image
-
-				if (src.organHolder.heart.emagged)
-					heart_emagged_image.layer = FLOAT_LAYER
-					heart_emagged_image.icon_state = "roboheart_emagged"
-					src.body_standing.overlays += heart_emagged_image
-
-				if (src.organHolder.heart.synthetic)
-					heart_image.icon_state = "synthheart"
-					src.body_standing.overlays += heart_image
-
-				if (!isnull(src.organHolder.heart.body_image))
-					heart_image.icon_state = src.organHolder.heart.body_image
-					src.body_standing.overlays += heart_image
-
-			if (src.decomp_stage < 3 && ((AHOLD.underwear && AHOLD.mob_appearance_flags & WEARS_UNDERPANTS) || src.underpants_override)) // no more bikini werewolves
-				undies_image.icon_state = underwear_styles[AHOLD.underwear]
-				undies_image.color = AHOLD.u_color
-				src.body_standing.overlays += undies_image
-
-			if (src.bandaged.len > 0)
-				for (var/part in src.bandaged)
-					bandage_image.icon_state = "bandage-[part]"
-					src.body_standing.overlays += bandage_image
-
-			if (src.spiders)
-				spider_image.icon_state = "spiders"
-				src.body_standing.overlays += spider_image
-
-			if (src.makeup && src.makeup_color)
-				makeup_image.icon_state = "lipstick[src.makeup]" // 1 if normal, 2 if you kinda jacked up your application
-				makeup_image.color = src.makeup_color
-				src.body_standing.overlays += makeup_image
-
-			if (src.juggling())
-				juggle_image.icon_state = "juggle"
-				src.body_standing.overlays += juggle_image
-
-		else // is fat
-			var/skin_tone = AHOLD.s_tone
-			human_image.color = skin_tone
-			human_image.icon_state = "fatbody"
-			src.body_standing.overlays += human_image
-			human_image.color = "#fff"
-	else if (src.mob_flags & IS_RELIQUARY_SOLDIER)
-		var/list/reli_update_body_limbs = list("r_arm" = "stump_arm_right_reli", "l_arm" = "stump_arm_left_reli", "r_leg" = "stump_leg_right_reli", "l_leg" = "stump_leg_left_reli")
-		human_image.icon_state = "chest_reli"
-		src.body_standing.overlays += human_image
-		human_image.icon_state = "groin_reli"
-		src.body_standing.overlays += human_image
-		human_image.color = null
-		if (src.organHolder && src.organHolder.head)
-			human_head_image.icon_state = "head_reli"
-			human_head_image.color = null
-			src.body_standing.overlays += human_head_image
-
-		if (src.limbs)
-			var/sleeveless = 1
-			if (istype(src.w_uniform, /obj/item/clothing) && !(src.w_uniform.c_flags & SLEEVELESS))
-				sleeveless = 0
-			if (istype(src.wear_suit, /obj/item/clothing) && !(src.wear_suit.c_flags & SLEEVELESS))
-				sleeveless = 0
-
-			for (var/name in reli_update_body_limbs)
-				var/obj/item/parts/human_parts/limb = src.limbs.vars[name]
-				if (limb)
-					src.body_standing.overlays += limb.getMobIcon(0, src.decomp_stage)
-
-					var/hand_icon_s = limb.getHandIconState(0, src.decomp_stage)
-
-					var/part_icon_s = limb.getPartIconState(0, src.decomp_stage)
-
-					if (limb.decomp_affected && src.decomp_stage)
-						if (hand_icon_s) //isicon
-							if (istext(hand_icon_s))
-								if (limb.skintoned)
-									var/oldlayer = human_decomp_image.layer // ugh
-									human_decomp_image.layer = MOB_HAND_LAYER1
-									human_decomp_image.icon_state = hand_icon_s
-									src.hands_standing.layer = MOB_HAND_LAYER1
-									src.hands_standing.overlays += human_decomp_image
-									human_decomp_image.layer = oldlayer
-								else
-									var/oldlayer = human_untoned_decomp_image.layer // ugh
-									human_untoned_decomp_image.layer = MOB_HAND_LAYER1
-									human_untoned_decomp_image.icon_state = hand_icon_s
-									src.hands_standing.layer = MOB_HAND_LAYER1
-									src.hands_standing.overlays += human_untoned_decomp_image
-									human_untoned_decomp_image.layer = oldlayer
-							else
-								var/image/I = hand_icon_s
-								I.layer = MOB_LAYER_BASE
-								if (limb.skintoned)
-									I.color = human_decomp_image.color
-								src.hands_standing.layer = MOB_LAYER_BASE
-								src.hands_standing.overlays += I
-
-						if (part_icon_s)
-							if (istext(part_icon_s))
-								if (limb.skintoned)
-									human_decomp_image.icon_state = part_icon_s
-									var/oldlayer
-									if (sleeveless && (limb.slot == "l_arm" || limb.slot == "r_arm"))
-										oldlayer = human_decomp_image.layer // ugh
-										human_decomp_image.layer = MOB_HAND_LAYER1
-									src.body_standing.overlays += human_decomp_image
-									if (oldlayer)
-										human_decomp_image.layer = oldlayer
-								else
-									human_untoned_decomp_image.icon_state = part_icon_s
-									var/oldlayer
-									if (sleeveless && (limb.slot == "l_arm" || limb.slot == "r_arm"))
-										oldlayer = human_untoned_decomp_image.layer // ugh
-										human_untoned_decomp_image.layer = MOB_HAND_LAYER1
-									src.body_standing.overlays += human_untoned_decomp_image
-									if (oldlayer)
-										human_untoned_decomp_image.layer = oldlayer
-							else
-								var/image/I = part_icon_s
-								I.layer = MOB_LAYER_BASE
-								if (limb.skintoned)
-									I.color = human_decomp_image.color
-								src.body_standing.overlays += I
-					else
-						if (hand_icon_s)
-							if (istext(hand_icon_s))
-								if (limb.skintoned)
-									var/oldlayer = human_image.layer // ugh
-									human_image.layer = MOB_HAND_LAYER1
-									human_image.icon_state = hand_icon_s
-									src.hands_standing.layer = MOB_HAND_LAYER1
-									src.hands_standing.overlays += human_image
-									human_image.layer = oldlayer
-								else
-									var/oldlayer = human_untoned_image.layer // ugh
-									human_untoned_image.layer = MOB_HAND_LAYER1
-									human_untoned_image.icon_state = hand_icon_s
-									src.hands_standing.layer = MOB_HAND_LAYER1
-									src.hands_standing.overlays += human_untoned_image
-									human_untoned_image.layer = oldlayer
-							else
-								var/image/I = hand_icon_s
-								I.layer = MOB_LAYER_BASE
-								if (limb.skintoned)
-									I.color = human_image.color
-								src.hands_standing.layer = MOB_LAYER_BASE
-								src.hands_standing.overlays += I
-
-						if (part_icon_s)
-							if (istext(part_icon_s))
-								if (limb.skintoned)
-									human_image.icon_state = part_icon_s
-									var/oldlayer
-									if (sleeveless && (limb.slot == "l_arm" || limb.slot == "r_arm"))
-										oldlayer = human_image.layer // ugh
-										human_image.layer = MOB_HAND_LAYER1
-									src.body_standing.overlays += human_image
-									if (oldlayer)
-										human_image.layer = oldlayer
-								else
-									human_untoned_image.icon_state = part_icon_s
-									var/oldlayer
-									if (sleeveless && (limb.slot == "l_arm" || limb.slot == "r_arm"))
-										oldlayer = human_untoned_image.layer // ugh
-										human_untoned_image.layer = MOB_HAND_LAYER1
-									src.body_standing.overlays += human_untoned_image
-									if (oldlayer)
-										human_untoned_image.layer = oldlayer
-							else
-								var/image/I = part_icon_s
-								I.layer = MOB_LAYER_BASE
-								if (limb.skintoned)
-									I.color = human_decomp_image.color
-								src.body_standing.overlays += I
-				else
-					var/stump = reli_update_body_limbs[name]
-					if (src.decomp_stage)
-						var/decomp = "_decomp[src.decomp_stage]"
-						human_decomp_image.icon_state = "[stump][decomp]"
-						src.body_standing.overlays += human_decomp_image
-					else
-						human_image.icon_state = "[stump]"
-						src.body_standing.overlays += human_image
-
-			human_image.color = "#fff"
-	else if (AHOLD.mob_appearance_flags & USES_STATIC_ICON)	// here's a picture of a fucked up human
-		src.body_standing.overlays += image(AHOLD.body_icon, AHOLD.body_icon_state, MOB_LIMB_LAYER) // this picture is you
-
-	if (src.organHolder && src.organHolder.tail)
-		var/obj/item/organ/tail/their_tail = src.organHolder.tail
-		var/image/tail_img = null
-		if(their_tail.organ_image_under_suit_1)
-			tail_img = image(icon=their_tail.organ_image_icon, icon_state=src.human_monkey_tail_interchange(their_tail.organ_image_under_suit_1, their_tail.human_getting_monkeytail, their_tail.monkey_getting_humantail), layer = MOB_LAYER-0.3)
-			if (their_tail.organ_color_1)
-				tail_img.color = their_tail.organ_color_1
-			src.body_standing.overlays += tail_img
-
-		if(their_tail.organ_image_under_suit_2)
-			tail_img = image(icon=their_tail.organ_image_icon, icon_state=src.human_monkey_tail_interchange(their_tail.organ_image_under_suit_2, their_tail.human_getting_monkeytail, their_tail.monkey_getting_humantail), layer = MOB_LAYER-0.25)
-			if (their_tail.organ_color_2)
-				tail_img.color = their_tail.organ_color_2
-			src.body_standing.overlays += tail_img
-
-		if(their_tail.organ_image_over_suit)
-			tail_img = image(icon=their_tail.organ_image_icon, icon_state=src.human_monkey_tail_interchange(their_tail.organ_image_over_suit, their_tail.human_getting_monkeytail, their_tail.monkey_getting_humantail), layer = MOB_LAYER_BASE+0.3)
-			if (their_tail.organ_color_1)
-				tail_img.color = their_tail.organ_color_1
-			src.body_standing.overlays += tail_img
+				human_image.color = "#fff"
 
 #if ASS_JAM
 	src.maptext_y = 32
@@ -1277,17 +1259,6 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	//Also forcing the updates since the overlays may have been modified on the images
 	src.UpdateOverlays(src.body_standing, "body", 1, 1)
 	src.UpdateOverlays(src.hands_standing, "hands", 1, 1)
-
-// Sets the iconstate if a human is getting a monkey tail, and vice versa
-// returns the iconstate, with -human or -monkey appended if needed
-/mob/living/carbon/human/proc/human_monkey_tail_interchange(var/tail_iconstate as text, var/human_getting_monkey_tail as num, var/monkey_getting_human_tail as num)
-	if (!tail_iconstate || (human_getting_monkey_tail && monkey_getting_human_tail))
-		return null	// Something went wrong
-	if (!human_getting_monkey_tail && !monkey_getting_human_tail)
-		return tail_iconstate	// Send it as-is
-	var/output_this_string
-	output_this_string = tail_iconstate + (human_getting_monkey_tail ? "-human" : "-monkey")
-	return output_this_string
 
 #if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
 /mob/living/carbon/human/UpdateDamage()

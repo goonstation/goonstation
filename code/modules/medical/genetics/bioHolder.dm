@@ -1,7 +1,17 @@
 /* IMPORTANT NOTES ABOUT THE APPEARANCE HOLDER
    Hi, auntie Lagg here to explain you how the Appearance Holder makes people look different!
 	 Just about everything visual that isnt already defined in a specific bodypart is defined here
-	 Skin tone,
+	 Skin tone, hair / detail colors and styles
+
+	 If your mob uses a different skintone than the one defined by client prefs,
+	 swap the mob_appearance_flags HAS_HUMAN_SKINTONE with HAS_SPECIAL_SKINTONE
+	 and set the skintone in s_tone_special. The body renderer will handle the rest!
+	 This way, if we for whatever reason return to something with human skintone
+	 We can just swap the flags and we'll use our old skintone!
+
+	 more info about appearance and color flags in _std/macrow/_appearace.dm
+	 if your mob is a mutantrace, it'll set the flags here with what's defined by the mutantrace
+	 and hopefully reset them to default human
 
  */
 var/list/bioUids = new/list() //Global list of all uids and their respective mobs
@@ -44,13 +54,16 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/customization_third = "None"
 	var/customization_third_special = "None"
 
-	var/mob_detail_1
-	var/mob_detail_2
-	var/mob_detail_3
-	var/mob_oversuit
+	var/mob_detail_1	// For torso details
+	var/mob_detail_2	// Such as that lizard splotch
+	var/mob_detail_3	// And... that's about it right now
 
+	var/mob_oversuit_1	// For non-tail oversuit details
+	var/mob_oversuit_2	// Like a big muzzle thing that shows through suits
+	var/mob_oversuit_3	// Tail oversuits are defined in tail.dm
 
 	var/e_color = "#101010"
+	var/e_color_special = "#101010"
 
 	var/s_tone = "#FFCC99"
 	var/s_tone_special = "#FFCC99" // mutantraces change this, so they don't mess up the original color
@@ -143,9 +156,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mob_detail_1 = toCopy.mob_detail_1
 		mob_detail_2 = toCopy.mob_detail_2
 		mob_detail_3 = toCopy.mob_detail_3
-		mob_oversuit = toCopy.mob_oversuit
+
+		mob_oversuit_1 = toCopy.mob_oversuit_1
+		mob_oversuit_2 = toCopy.mob_oversuit_2
+		mob_oversuit_3 = toCopy.mob_oversuit_3
 
 		e_color = toCopy.e_color
+		e_color_special = toCopy.e_color_special
 
 		s_tone = toCopy.s_tone
 		s_tone_special = toCopy.s_tone_special
@@ -221,29 +238,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/UpdateMob() //Rebuild the appearance of the mob from the settings in this holder.
 		if (ishuman(owner))
 
-			var/mob/living/carbon/human/H = owner
-			var/list/hair_list = customization_styles + customization_styles_gimmick
-
-			if (mob_appearance_flags & HAS_HUMAN_HAIR)	// normal-ass hair
-				H.cust_icon = customization_icon // note, don't change this if you want the hair to come from somewhere else
-				H.cust_one_state = hair_list[customization_first]
-				H.cust_two_state = hair_list[customization_second]
-				H.cust_three_state = hair_list[customization_third]
-			else if (mob_appearance_flags & HAS_SPECIAL_HAIR)	// hair, but different
-				H.cust_icon = customization_icon_special // if you want to, change this, and keep em all together or something
-				H.cust_one_state = hair_list[customization_first_special]	// maybe something like an alt-style of the hairs?
-				H.cust_two_state = hair_list[customization_second_special] // without cluttering up the default icon?
-				H.cust_three_state = hair_list[customization_third_special] // currently unused, could be useful i guess
-			else if (mob_appearance_flags & HAS_DETAIL_HAIR)	// "hair" used for non-hair things
-				H.cust_icon = head_icon // this non-hair is kept in the head's icon
-				H.cust_one_state = src.customization_first_special	// could be done with HAS_SPECIAL_HAIR, but...
-				H.cust_two_state = src.customization_second_special	// that would mean sticking all the mutant hairdos in the Global Hair List
-				H.cust_three_state = src.customization_third_special	// then manually forbidding any non-correct-mutants from picking them
-			else  //no hair							// ^^ and hoping, HOPING they pick the right icon. plus the lists only carry icon_states, so whatevs
-				H.cust_icon = customization_icon // note, don't change this if you want the hair to come from somewhere else
-				H.cust_one_state = hair_list["None"]
-				H.cust_two_state = hair_list["None"]
-				H.cust_three_state = hair_list["None"]
+			var/mob/living/carbon/human/H = owner	// hair is handled by the head, applied by update_face
 
 			if (mob_color_flags & FIX_COLORS)
 				src.customization_first_color = fix_colors(src.customization_first_color)
@@ -258,8 +253,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
 					src.s_tone_special = src.customization_third_color
 
+			if(H?.organHolder?.head) // lots of things call this to change hairstyles, but the visuals are done by the head
+				H.organHolder.head.update_icon() // so, lets do that then
+			else
+				H.update_face() // wont get called if they dont have a head. probably wont do anything anyway, but best to be safe
+
 			H.gender = src.gender
-			H.update_face()
+
 			H.update_body()
 			H.update_clothing()
 

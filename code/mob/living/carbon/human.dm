@@ -80,12 +80,6 @@
 
 	var/datum/mutantrace/mutantrace = null
 
-	var/image/tail_detail_1	= null
-	var/image/tail_detail_2 = null
-	var/image/tail_detail_3 = null
-	var/image/tail_under_suit = null
-	var/image/tail_over_suit = null
-
 	var/emagged = 0 //What the hell is wrong with me?
 	var/spiders = 0 // SPIDERS
 	var/makeup = null // for when you wanna look pretty
@@ -114,6 +108,12 @@
 
 	var/static/image/human_image = image('icons/mob/human.dmi')
 	var/static/image/human_head_image = image('icons/mob/human_head.dmi')
+	var/static/image/human_tail_image_1 = image('icons/mob/human.dmi', "blank", layer = MOB_TAIL_LAYER1)
+	var/static/image/human_tail_image_2 = image('icons/mob/human.dmi', "blank", layer = MOB_TAIL_LAYER2)
+	var/static/image/human_tail_image_oversuit_1 = image('icons/mob/human.dmi', "blank", layer = MOB_OVERSUIT_LAYER1)
+	var/static/image/human_detail_1 = image('icons/mob/human.dmi', "blank", layer = MOB_DETAIL_LAYER1)
+	var/static/image/human_detail_2 = image('icons/mob/human.dmi', "blank", layer = MOB_DETAIL_LAYER2)
+	var/static/image/human_detail_3 = image('icons/mob/human.dmi', "blank", layer = MOB_DETAIL_LAYER3)
 	var/static/image/human_untoned_image = image('icons/mob/human.dmi')
 	var/static/image/human_decomp_image = image('icons/mob/human_decomp.dmi')
 	var/static/image/human_untoned_decomp_image = image('icons/mob/human.dmi')
@@ -2893,18 +2893,7 @@
 	else
 		return 0
 
-/mob/living/carbon/human/set_mutantrace(var/mutantrace_type, var/remove_tail)
-
-	//Clean up the old mutantrace
-/* 	if (src.organHolder && src.organHolder.head && src.organHolder.head.donor == src)
-		src.organHolder.head.donor_mutantrace = null */
-
-	if(remove_tail)	// To prevent round-start tail-havers from dropping tailbones they shouldn't've had
-		if (src.organHolder && src.organHolder.tail)
-			src.organHolder.tail = null
-			for(var/obj/item/organ/tail/hidden_secret_tails in src.contents)	// Cus mutants love to hoard tails in their mob
-				if(istype(hidden_secret_tails, /obj/item/organ/tail))
-					qdel(hidden_secret_tails)
+/mob/living/carbon/human/set_mutantrace(var/mutantrace_type)
 
 	if(src.mutantrace != null)
 		qdel(src.mutantrace) // so that disposing() runs and removes mutant traits
@@ -2914,19 +2903,13 @@
 		src.mutantrace = new mutantrace_type(src)
 		. = 1
 
-	if(.) //If the mutantrace was changed do all the usual icon updates
-/* 		if(src.organHolder && src.organHolder.head && src.organHolder.head.donor == src)
-			src.organHolder.head.donor_mutantrace = src.mutantrace */
-		src.set_face_icon_dirty()
-		src.set_body_icon_dirty()
+	if(.)
+		/* src.set_face_icon_dirty()
+		src.set_body_icon_dirty() */
 		src.get_static_image()
-
-
-		if (src.bioHolder && src.bioHolder.mobAppearance)
-			src.bioHolder.mobAppearance.UpdateMob()
-		else
-			src.update_body()
-			src.update_clothing()
+	else // updates are called by the mutantrace datum. lets not call it a million times
+		src.update_body()
+		src.update_clothing()
 
 /mob/living/carbon/human/verb/change_hud_style()
 	set name = "Change HUD Style"

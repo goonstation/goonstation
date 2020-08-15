@@ -126,86 +126,86 @@
 			src.overlays = null	// we'll make some new ones
 		if (src.donor_appearance.mob_appearance_flags & HAS_NO_HEAD)
 			src.icon = icon('icons/mob/human.dmi', "invis") // cant just delete the head, but i could do the next best thing
+		// even without a head, we need to update everything. otherwise shamblers get hair and *ruin everything*
+		var/list/hair_list = customization_styles + customization_styles_gimmick
+		// dump the head appearance data into the head
+		// setup skintone and mess with it as per colorflags
+		if (src.donor_appearance.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
+			if (AHead.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
+				src.skintone = AHead.customization_first_color
+			else if (AHead.mob_color_flags & SKINTONE_USES_PREF_COLOR_2)
+				src.skintone = AHead.customization_second_color
+			else if (AHead.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
+				src.skintone = AHead.customization_third_color
 		else
-			var/list/hair_list = customization_styles + customization_styles_gimmick
-			// dump the head appearance data into the head
-			// setup skintone and mess with it as per colorflags
-			if (src.donor_appearance.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
-				if (AHead.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
-					src.skintone = AHead.customization_first_color
-				else if (AHead.mob_color_flags & SKINTONE_USES_PREF_COLOR_2)
-					src.skintone = AHead.customization_second_color
-				else if (AHead.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
-					src.skintone = AHead.customization_third_color
-			else
-				src.skintone = AHead.s_tone
+			src.skintone = AHead.s_tone
 
-			//get and install eyes, if any // special eyes not implemented yet
-			if (AHead.mob_appearance_flags & HAS_HUMAN_EYES)
-				src.head_image_eyes = image('icons/mob/human_hair.dmi', "eyes", layer = MOB_FACE_LAYER)
-			else if (AHead.mob_appearance_flags & HAS_NO_EYES)
-				src.head_image_eyes = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
-			src.head_image_eyes.color = AHead.e_color
+		//get and install eyes, if any // special eyes not implemented yet
+		if (AHead.mob_appearance_flags & HAS_HUMAN_EYES)
+			src.head_image_eyes = image('icons/mob/human_hair.dmi', "eyes", layer = MOB_FACE_LAYER)
+		else if (AHead.mob_appearance_flags & HAS_NO_EYES)
+			src.head_image_eyes = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
+		src.head_image_eyes.color = AHead.e_color
 
-			// Set up the hair icon
-			if (AHead.mob_appearance_flags & ~HAS_NO_HAIR) // if theys doesnt has no hair
-				if (AHead.mob_appearance_flags & HAS_HUMAN_HAIR) // which is to say they have hair
-					our_hair_icon = AHead.customization_icon
-				else if (AHead.mob_appearance_flags & HAS_SPECIAL_HAIR) // or special hair
-					our_hair_icon = AHead.customization_icon_special
-				else if (AHead.mob_appearance_flags & HAS_DETAIL_HAIR) // or hair that isnt really hair but applied the same way
-					our_hair_icon = AHead.head_icon
-				src.head_image_cust_one = image(icon = our_hair_icon, layer = MOB_HAIR_LAYER2)
-				src.head_image_cust_two = image(icon = our_hair_icon, layer = MOB_HAIR_LAYER2)
-				src.head_image_cust_three = image(icon = our_hair_icon, layer = MOB_HAIR_LAYER2)
+		// Set up the hair icon
+		if (AHead.mob_appearance_flags & ~HAS_NO_HAIR) // if theys doesnt has no hair
+			if (AHead.mob_appearance_flags & HAS_HUMAN_HAIR) // which is to say they have hair
+				our_hair_icon = AHead.customization_icon
+			else if (AHead.mob_appearance_flags & HAS_SPECIAL_HAIR) // or special hair
+				our_hair_icon = AHead.customization_icon_special
+			else if (AHead.mob_appearance_flags & HAS_DETAIL_HAIR) // or hair that isnt really hair but applied the same way
+				our_hair_icon = AHead.head_icon
+			src.head_image_cust_one = image(icon = our_hair_icon, layer = MOB_HAIR_LAYER2)
+			src.head_image_cust_two = image(icon = our_hair_icon, layer = MOB_HAIR_LAYER2)
+			src.head_image_cust_three = image(icon = our_hair_icon, layer = MOB_HAIR_LAYER2)
 
-				// Set up the hair state
-				if (AHead.mob_appearance_flags & HAS_HUMAN_HAIR)
-					src.head_image_cust_one.icon_state = hair_list[AHead.customization_first]
-					src.head_image_cust_two.icon_state = hair_list[AHead.customization_second]
-					src.head_image_cust_three.icon_state = hair_list[AHead.customization_third]
-				else if (AHead.mob_appearance_flags & HAS_SPECIAL_HAIR)
-					src.head_image_cust_one.icon_state = hair_list[AHead.customization_first_special]
-					src.head_image_cust_two.icon_state = hair_list[AHead.customization_second_special]
-					src.head_image_cust_three.icon_state = hair_list[AHead.customization_third_special]
-				else if (AHead.mob_appearance_flags & HAS_DETAIL_HAIR) // no list to pick from, defined by mutantraces
-					src.head_image_cust_one.icon_state = AHead.customization_first_special
-					src.head_image_cust_two.icon_state = AHead.customization_second_special
-					src.head_image_cust_three.icon_state = AHead.customization_third_special
+			// Set up the hair state
+			if (AHead.mob_appearance_flags & HAS_HUMAN_HAIR)
+				src.head_image_cust_one.icon_state = hair_list[AHead.customization_first]
+				src.head_image_cust_two.icon_state = hair_list[AHead.customization_second]
+				src.head_image_cust_three.icon_state = hair_list[AHead.customization_third]
+			else if (AHead.mob_appearance_flags & HAS_SPECIAL_HAIR)
+				src.head_image_cust_one.icon_state = hair_list[AHead.customization_first_special]
+				src.head_image_cust_two.icon_state = hair_list[AHead.customization_second_special]
+				src.head_image_cust_three.icon_state = hair_list[AHead.customization_third_special]
+			else if (AHead.mob_appearance_flags & HAS_DETAIL_HAIR) // no list to pick from, defined by mutantraces
+				src.head_image_cust_one.icon_state = AHead.customization_first_special
+				src.head_image_cust_two.icon_state = AHead.customization_second_special
+				src.head_image_cust_three.icon_state = AHead.customization_third_special
 
-				src.head_image_cust_one.color = AHead.customization_first_color
-				src.head_image_cust_two.color = AHead.customization_second_color
-				src.head_image_cust_three.color = AHead.customization_third_color
+			src.head_image_cust_one.color = AHead.customization_first_color
+			src.head_image_cust_two.color = AHead.customization_second_color
+			src.head_image_cust_three.color = AHead.customization_third_color
 
-			else // no hair
-				src.head_image_cust_one = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
-				src.head_image_cust_two = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
-				src.head_image_cust_three = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
+		else // no hair
+			src.head_image_cust_one = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
+			src.head_image_cust_two = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
+			src.head_image_cust_three = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 
-			//okay everything's loaded, lets build the head
-			// heads come in two pieces, the icon and the image
-			// the icon is what the dropped item looks like
-			// and gets shit overlaid on it to resemble how it looked on the previous owner
-			// the image gets shipped bare to update_icon.dmi to be colored and face'd
-			if (AHead.mob_appearance_flags & HAS_HUMAN_HEAD)
-				src.head_image = image(src.icon, src.icon_state)
-			else if (AHead.mob_appearance_flags & HAS_SPECIAL_HEAD)
-				src.head_image = image(AHead.body_icon, "head")
+		//okay everything's loaded, lets build the head
+		// heads come in two pieces, the icon and the image
+		// the icon is what the dropped item looks like
+		// and gets shit overlaid on it to resemble how it looked on the previous owner
+		// the image gets shipped bare to update_icon.dmi to be colored and face'd
+		if (AHead.mob_appearance_flags & HAS_HUMAN_HEAD)
+			src.head_image = image(src.icon, src.icon_state)
+		else if (AHead.mob_appearance_flags & HAS_SPECIAL_HEAD)
+			src.head_image = image(AHead.body_icon, "head")
 
-			if(AHead.mob_appearance_flags & HEAD_HAS_OWN_COLORS)
-				src.head_image.color = "#FFFFFF"	// wolves, not sparkledogs
-			else
-				src.head_image.color = src.skintone
+		if(AHead.mob_color_flags & HEAD_HAS_OWN_COLORS)
+			src.head_image.color = "#FFFFFF"	// wolves, not sparkledogs
+		else
+			src.head_image.color = src.skintone
 
-			var/icon/h_icon = new /icon(head_image.icon, head_image.icon_state)
-			h_icon.Blend(src.skintone, ICON_MULTIPLY)	// colorize the icon we're gonna drop
-			src.icon = h_icon
+		var/icon/h_icon = new /icon(head_image.icon, head_image.icon_state)
+		h_icon.Blend(src.skintone, ICON_MULTIPLY)	// colorize the icon we're gonna drop
+		src.icon = h_icon
 
-			// put our features on the head we'll drop
-			src.overlays += src.head_image_eyes
-			src.overlays += src.head_image_cust_one
-			src.overlays += src.head_image_cust_two
-			src.overlays += src.head_image_cust_three
+		// put our features on the head we'll drop
+		src.overlays += src.head_image_eyes
+		src.overlays += src.head_image_cust_one
+		src.overlays += src.head_image_cust_two
+		src.overlays += src.head_image_cust_three
 
 		src.donor.update_face()
 		src.donor.update_body()
@@ -224,23 +224,6 @@
 
 		if (src.head && src.head.wear_image_icon)
 			src.overlays += image(src.head.wear_image_icon, src.head.icon_state)
-
-	proc/GetMutantColors(var/which_one as num)
-		var/mob/living/carbon/human/M = src.donor
-		var/datum/appearanceHolder/aH = null
-		if (M?.bioHolder?.mobAppearance)
-			aH = M.bioHolder.mobAppearance
-		switch (which_one)
-			if(1)
-				if (aH)
-					return organ_fix_colors(aH.customization_first_color)
-				else
-					return rgb(rand(50,190), rand(50,190), rand(50,190))
-			if(2)
-				if (aH)
-					return organ_fix_colors(aH.customization_second_color)
-				else
-					return rgb(rand(50,190), rand(50,190), rand(50,190))
 
 	do_missing()
 		..()
@@ -411,10 +394,10 @@
 				src.icon = 'icons/obj/surgery.dmi'
 				src.icon_state = "skull"
 
-			/* if(HEAD_SEAMONKEY)
+			if(HEAD_SEAMONKEY)
 				src.name = "[src.donor_name]'s seamonkey head"
 				src.desc = "The last thing an assistant sees when they fall into the trench. Aside from all the robots."
-				src.icon_state = "monkey" */
+				src.icon_state = "monkey"
 
 			if(HEAD_CAT)
 				src.name = "[src.donor_name]'s cat head"
@@ -425,19 +408,16 @@
 				src.name = "[src.donor_name]'s roach head"
 				src.desc = "Not the biggest bug you'll seen today, nor the last."
 				src.icon = 'icons/mob/roach.dmi'
-//				src.head_image = image('icons/mob/roach.dmi', "head")
 				src.made_from = "chitin"
 
 			if(HEAD_FROG)
 				src.name = "[src.donor_name]'s frog head"
 				src.desc = "Croak."
 				src.icon = 'icons/mob/amphibian.dmi'
-//				src.head_image = image('icons/mob/amphibian.dmi', "head")
 
 			if(HEAD_SHELTER)
 				src.name = "[src.donor_name]'s shelterfrog head"
 				src.desc = "CroOoOoOooak."
 				src.icon = 'icons/mob/shelterfrog.dmi'
-//				src.head_image = image('icons/mob/shelterfrog.dmi', "head")
 
-		src.update_icon()
+		src.update_icon()	// so our head actually looks like the thing its supposed to be
