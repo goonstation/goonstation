@@ -41,11 +41,14 @@
 
 
 /turf/simulated/floor/feather/proc/process()
-	var/msg = "[group.id]<br>"
-	msg += "[group.size]<br>"
-	msg += "[group.power]<br>"
+	if(!group)
+		maptext = ""
+	else
+		var/msg = "[group.id]<br>"
+		msg += "[group.size]<br>"
+		msg += "[group.power]<br>"
 
-	maptext = "<span class='ps2p l vt ol' style=\"font-size: 6px;\">[msg] </span>"
+		maptext = "<span class='ps2p l vt ol' style=\"font-size: 6px;\">[msg] </span>"
 
 /turf/simulated/floor/feather/disposing()
 	processing_items -= src
@@ -95,6 +98,9 @@
 	off()
 	icon_state = "floor-broken"
 	broken = 1
+	src.group.removetile(src)
+	src.group = null
+	splitgroup()
 	for(var/obj/flock_structure/f in get_turf(src))
 		if(f.usesgroups)
 			f.group.removestructure(f)
@@ -153,6 +159,7 @@
 	src.health = initial(health)
 	src.name = initial(name)
 	src.desc = initial(desc)
+	if(isnull(src.group)) checknearby() //check for groups to join
 	for(var/obj/flock_structure/f in get_turf(src))
 		if(f.usesgroups)
 			f.group = src.group
@@ -179,73 +186,164 @@
 
 /turf/simulated/floor/feather/proc/initializegroup() //make a new group
 	group = new/datum/flock_tile_group
+	message_admins("new group created with id [group.id].")
 	group.addtile(src)
 
-/turf/simulated/floor/feather/proc/checknearby()//handles merging groups through something i should change soon, it currently makes a third group and merges the surrounding groups into that, i should ideally merge the smaller group(s) into the largest.
+/turf/simulated/floor/feather/proc/checknearby(var/newgroup = 0)//handles merging groups
 	var/list/tiles = list() //list of tile groups found
-//	for(var/turf/simulated/floor/feather/F in orange(1, src))//check for nearby flocktiles
-	for(var/turf/simulated/floor/feather/F in getneighbours(get_turf(src)))//check for nearby flocktiles
+	var/datum/flock_tile_group/largestgroup = null //largest group
+	var/max_group_size = 0
+	for(var/turf/simulated/floor/feather/F in getneighbours(src))//check for nearby flocktiles
 		message_admins("thing looped")
-		if(F.group)
+		if(F.group && !F.broken)
+			if(F.group.size > max_group_size)
+				max_group_size = F.group.size
+				largestgroup = F.group
 			tiles |= F.group
-			message_admins("[F.group] is added")
+			message_admins("[F.group] is added, its id is [F.group.id], ["\ref[src]"]")
 	if(tiles.len == 1)
 		src.group = tiles[1] //set it to the group found.
 		src.group.addtile(src)
 	else if(tiles.len > 1) //if there is more then one, then join the largest (add merging functionality here later)
-		var/datum/flock_tile_group/newone = new //the "third" group
 		for(var/datum/flock_tile_group/FUCK in tiles)
-			newone.powergen += FUCK.powergen
-			newone.poweruse += FUCK.poweruse
+			if(FUCK == largestgroup) continue
+			largestgroup.powergen += FUCK.powergen
+			largestgroup.poweruse += FUCK.poweruse
 			for(var/turf/simulated/floor/feather/F in FUCK.members)
-				F.group = newone
-				newone.addtile(F)
+				F.group = largestgroup
+				largestgroup.addtile(F)
 			for(var/obj/flock_structure/f in FUCK.connected)
-				f.group = newone
-				newone.addstructure(f)
+				f.group = largestgroup
+				largestgroup.addstructure(f)
 			qdel(FUCK)
-		src.group = newone
-		newone.addtile(src)
+		src.group = largestgroup
+		largestgroup.addtile(src)
+
 	else
-		return null
-
-/*
-for(var/d in list(0, NORTH, EAST, SOUTH, WEST))
-    var/turf/T = get_step(src.loc, d)
-    var/obj/item/gnome/GNOME = locate() in T
-    if(GNOME)
-       return GNOME
-*/
-
-
-
+		if(newgroup)
+			src.initializegroup()
+		else return null
 
 /turf/simulated/floor/feather/proc/splitgroup()
 	var/list/tiles = list() //list of tile groups found
 	var/count = 0 //how many tiles
 	var/turf/simulated/floor/feather/F
-	for(F in orange(1, src)) //nearby flocktiles
+	for(F in getneighbours(get_turf(src))) //nearby flocktiles
 		if(F.group)//does it have a flocktile group associated?
+/*			if(F.group.size > max_group_size)
+				max_group_size = F.group.size
+				largestgroup = F.group*/
 			count++
 			tiles |= F.group
 //at this point we have looked if there are any nearby groups
-	if(count == 0)//if there are no tiles/no grouped tiles just null and do nothing
-		F.group = null
+	if(tiles.len == 0 || count == 1)//if there are no tiles/no grouped tiles just null and do nothing. OR if there is just one tile nearby theres no sense in splitting
+		src.group = null
 		return
 
-//fail safe for if there are more then 1 group, there really shouldnt be but better be safe then sorry
-//hnng i need big brain juice now help
-//	for(var/datum/flock_tile_group/f in tiles)
-		//do thing
+	if(tiles.len > 0 && count > 1)//is there atleast one group? and is there atleast 2 tiles nearby to split?
+		F = null//reuse vars
+
+//TODO: fail safe for if there are more then 1 group.
+//	message_admins("[src] is src in this uhh file htingy yes")
+//	src.group.members &= bfs(pick(F in orange(1, src)))
+
+		var/list/largestgroup = list() //largest group
+		var/max_group_size = 0
+		var/list/northgroup = list()
+		var/list/westgroup = list()
+		var/list/eastgroup = list()
+		var/list/southgroup = list()
+		var/list/currenttiles = list()//current tiles being checked
+		for(var/d in cardinal)
+			F = get_step(src, d)
+			if(!istype(F)) continue
+			currenttiles = bfs(F)
+			switch(d)
+				if(NORTH)
+					if(currenttiles.len > max_group_size)
+						largestgroup = currenttiles
+						max_group_size = currenttiles.len
+						continue
+					northgroup = currenttiles
+					message_admins("[northgroup.len] north got pingled")
+				if(WEST)
+					if(currenttiles.len > max_group_size)
+						largestgroup = currenttiles
+						max_group_size = currenttiles.len
+						continue
+					westgroup = currenttiles
+					message_admins("[westgroup.len] west  got pingled")
+				if(EAST)
+					if(currenttiles.len > max_group_size)
+						largestgroup = currenttiles
+						max_group_size = currenttiles.len
+						continue
+					eastgroup = currenttiles
+					message_admins("[eastgroup.len] east got pingled")
+				if(SOUTH)
+					if(currenttiles.len > max_group_size)
+						largestgroup = currenttiles
+						max_group_size = currenttiles.len
+						continue
+					southgroup = currenttiles
+					message_admins("[southgroup.len] south got pingled")
+		for(var/l in list(northgroup, westgroup, eastgroup, southgroup))
+			message_admins("[l:len] is L's len.")
+		for(var/turf/simulated/floor/feather/l in list(northgroup, westgroup, eastgroup, southgroup))
+			if(isnull(l)) continue
+			message_admins("[l] is l in the largestgroup thingy")
+			largestgroup ^= l
+			message_admins("[largestgroup] is largest group. [largestgroup.len] is .len of the group")
+			for(var/thing in largestgroup)
+				message_admins("[thing] is thing in largestgroup")
+		for(var/turf/simulated/floor/feather/f in largestgroup)
+			message_admins("[f] is f and [f.group.id] is F.group")
+			f.group.removetile(f)
+			f.group = null
+			f.checknearby(1)
+
+// TODO: currently MASSIVE problem, it does the thing on a random group in range and not on the largest, FIX ASAP.
+// also fix the excluded groups not nulling the group, and not making their own
 
 
+turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by richardgere(god bless)
+	var/list/queue = list()
+	var/list/visited = list()
+	var/turf/current = null
+
+	if(!istype(start, /turf/simulated/floor/feather))
+		return //dont bother if it SOMEHOW gets called on a non flock turf
+	// start node
+	queue += start
+	visited[start] = TRUE
+
+	while(true)
+		// dequeue
+		current = queue[1]
+		queue -= current
+
+		// enqueue
+		for(var/dir in cardinal)
+			var/next_turf = get_step(current, dir)
+			if(!visited[next_turf] && istype(next_turf, /turf/simulated/floor/feather))
+				var/turf/simulated/floor/feather/f = next_turf
+				if(f.broken) continue//skip broken tiles
+				queue += get_step(current, dir)
+				visited[next_turf] = TRUE
+
+		if(queue.len == 0) break
 
 
-
+	return visited
 
 //end of flocktilegroup stuff
 ////////////////////////////////////////////////////////////////////////////////////////
-
+/*
+	for(var/f in visited) //deref the stuff
+		visited -= f
+		locate(f)
+		output += f
+*/
 /turf/simulated/wall/auto/feather
 	name = "weird glowing wall"
 	desc = "You can feel it thrumming and pulsing."

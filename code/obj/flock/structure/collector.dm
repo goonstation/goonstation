@@ -40,6 +40,17 @@
 	var/turf/simulated/floor/feather/floor
 	if(istype(myturf, /turf/simulated/floor/feather))
 		connectedto += myturf //add the turf underneath
+
+/*
+	for(var/d in cardinal)//for every direction in cardinals
+		while(true)
+			var/turf/simulated/floor/feather/F = get_step(src.loc, d)
+			if(!istype(F)) break //if its not a flock tile just stop,
+			else//this is an else of the above if (the istype one) statement
+				tilesfound |= F
+*/
+//TODO:replace the mess below with this thing above
+
 	//north first
 	var/turftocheck = get_step(myturf, NORTH)
 	distance++
