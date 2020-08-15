@@ -17,6 +17,7 @@
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 5
+	inventory_counter_enabled = 1
 
 	proc
 		update_icon()
@@ -68,6 +69,7 @@
 	var/sound_load = 'sound/weapons/gunload_light.ogg'
 
 	New()
+		..()
 		SPAWN_DBG(2 SECONDS)
 			src.update_icon() // So we get dynamic updates right off the bat. Screw static descs.
 		return
@@ -259,6 +261,7 @@
 	update_icon()
 		if (src.amount_left < 0)
 			src.amount_left = 0
+		inventory_counter.update_number(src.amount_left)
 
 	// src.desc = text("There are [] [] bullet\s left!", src.amount_left, (ammo_type.material && istype(ammo_type, /datum/material/metal/silver)))
 		src.desc = "There are [src.amount_left][ammo_type.material && istype(ammo_type, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
@@ -761,6 +764,7 @@
 		return ..()
 
 	update_icon()
+		inventory_counter.update_number(src.amount_left)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if (AMMO.has_grenade != 0)
 			src.icon_state = "40mmR"
@@ -857,9 +861,9 @@
 		return
 
 	New()
+		..()
 		update_icon()
 		desc = "A power cell that holds a max of [src.max_charge]PU. Can be inserted into any energy gun, even tasers!"
-		..()
 
 	disposing()
 		if (src in processing_items)
@@ -871,6 +875,7 @@
 		return
 
 	update_icon()
+		inventory_counter.update_percent(src.charge, src.max_charge)
 		if (src.artifact || src.unusualCell) return
 		overlays = null
 		var/ratio = src.charge / src.max_charge

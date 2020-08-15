@@ -7,7 +7,7 @@ mob/verb/checkrewards()
 	set name = "Check Job Rewards"
 	set category = "Commands"
 	var/txt = input(usr, "Which job? (Case sensitive)","Check Job Rewards", src.job)
-	if(txt == null || lentext(txt) == 0) txt = src.job
+	if(txt == null || length(txt) == 0) txt = src.job
 	showJobRewards(txt)
 	return
 
@@ -75,7 +75,7 @@ mob/verb/checkrewards()
 			var/str = ""
 			for(var/X in rewardDatum.required_levels)
 				str += "[X] [rewardDatum.required_levels[X]],"
-			str = copytext(str,1,lentext(str))
+			str = copytext(str,1,length(str))
 			winset(usr, "winjobrewards_[usr.ckey].lblrewarddesc", "text=\"[rewardDatum.desc] | Required levels: [str]\"")
 		return
 

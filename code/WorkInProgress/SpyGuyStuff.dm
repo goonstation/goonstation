@@ -283,7 +283,7 @@ proc/Create_Tommyname()
 		var/hash = md5("AReally[id]ShittySalt")
 		var/listPos = calc_start_point(hash)
 
-		for(var/i=1, i <= lentext(hash), i+=2)
+		for(var/i=1, i <= length(hash), i+=2)
 			var/block = copytext(hash, i, i+2)
 			if (isnull(base["[listPos]"]))
 				base["[listPos]"] = hex2num(block)
@@ -294,7 +294,7 @@ proc/Create_Tommyname()
 
 	//So is this
 	proc/calc_start_point(var/hash)
-		for(var/i = 1; i <= lentext(hash); i++)
+		for(var/i = 1; i <= length(hash); i++)
 			var/temp = copytext(hash, i, i+1)
 			temp = hex2num(temp)
 			. += temp

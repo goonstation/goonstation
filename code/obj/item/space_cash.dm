@@ -31,9 +31,9 @@
 	var/default_max_amount = 0
 
 	New(var/atom/loc, var/amt = 1 as num)
-		..(loc)
 		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
 		src.amount = max(amt,default_amount) //take higher
+		..(loc)
 		src.update_stack_appearance()
 
 	proc/setup(var/atom/L, var/amt = 1 as num)

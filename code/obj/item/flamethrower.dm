@@ -19,6 +19,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	throw_speed = 1
 	throw_range = 5
 	w_class = 4
+	inventory_counter_enabled = 1
 	var/mode = 1
 	var/processing = 0
 	var/operating = 0
@@ -90,24 +91,24 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	part2 = new /obj/item/rods
 	part3 = new /obj/item/device/igniter
 
-/obj/item/flamethrower/loaded/New()
-	part1 = new /obj/item/weldingtool
-	part2 = new /obj/item/rods
-	part3 = new /obj/item/device/igniter
-	part4 = new /obj/item/tank/oxygen
-	part5 = new /obj/item/reagent_containers/food/drinks/fueltank
-
 /obj/item/flamethrower/New()
 	part1 = new /obj/item/weldingtool
 	part2 = new /obj/item/rods
 	part3 = new /obj/item/device/igniter
+	..()
+	if (part5)
+		inventory_counter.update_percent(src.part5.reagents.total_volume, src.part5.reagents.maximum_volume)
+	setItemSpecial(null)
+
+/obj/item/flamethrower/loaded/New()
+	if (!part5)
+		part5 = new /obj/item/reagent_containers/food/drinks/fueltank
+	part4 = new /obj/item/tank/oxygen
+	..()
 
 /obj/item/flamethrower/loaded/napalm/New()
-	part1 = new /obj/item/weldingtool
-	part2 = new /obj/item/rods
-	part3 = new /obj/item/device/igniter
-	part4 = new /obj/item/tank/oxygen
 	part5 = new /obj/item/reagent_containers/food/drinks/fueltank/napalm
+	..()
 
 /obj/item/assembly/weld_rod/disposing()
 	//src.part1 = null
@@ -519,6 +520,8 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		for (var/mob/living/carbon/human/theMob in currentturf.contents)
 			logTheThing("combat", usr, theMob, "blasts [constructTarget(theMob,"combat")] with a flamethrower [logString] at [log_loc(theMob)].")
 			mobHitList += "[key_name(theMob)], "
+
+		inventory_counter.update_percent(src.part5.reagents.total_volume, src.part5.reagents.maximum_volume)
 
 		if(halt)
 			break
