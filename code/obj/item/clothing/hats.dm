@@ -994,6 +994,12 @@
 		icon_state = "sunhatg"
 		item_state = "sunhatg"
 
+	stunhatr
+		stunready = 1
+		uses = 1
+		icon_state = "sunhatr-stun"
+		item_state = "sunhatr-stun"
+
 	examine()
 		. = ..()
 		if (src.stunready)
