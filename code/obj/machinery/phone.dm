@@ -54,7 +54,7 @@
 
 		if(isnull(src.phone_id))
 			var/temp_name = src.name
-			if(temp_name == initial(src.name))
+			if(temp_name == initial(src.name) && location)
 				temp_name = location.name
 			var/name_counter = 1
 			for(var/obj/machinery/phone/M in phonelist)
