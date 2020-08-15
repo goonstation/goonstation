@@ -22,6 +22,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 	var/time_next_state = 15 SECONDS
 	var/obj/item/football/the_big_one/the_football = null
 	var/last_tick = 0
+	var/obj/overlay/zamujasa/football_wave_timer/wave_timer
 	var/list/obj/decal/big_number/clock_num
 	var/list/obj/decal/big_number/red_num
 	var/list/obj/decal/big_number/blue_num
@@ -46,7 +47,10 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 		clock_num = list(locate("football_clock1000"), locate("football_clock100"), locate("football_clock10"), locate("football_clock1"))
 		red_num = list(locate("football_red100"), locate("football_red10"), locate("football_red1"))
 		blue_num = list(locate("football_blue100"), locate("football_blue10"), locate("football_blue1"))
-
+		wave_timer = new(get_turf(clock_num[2]))
+		wave_timer.x += 1
+		wave_timer.y += 3
+		// gross i do not care
 		return 1
 
 
@@ -74,24 +78,26 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 							boutput(world, "<b>The next possession begins now!</b>")
 							src.put_me_in_coach()
 							src.game_state = FOOTBALL_INGAME
-							src.time_next_state = 2 MINUTES
+							src.time_next_state = 1 MINUTES
 							if (!the_football)
 								the_football = new /obj/item/football/the_big_one()
 							the_football.set_loc(pick(football_spawns["football"]))
+							the_football.invisibility = 0
 
 					if (FOOTBALL_INGAME)
 						time_left -= delta
 						src.update_game_clock()
 						if (src.time_next_state < 0)
-							boutput(world, "Respawning dead players. Next wave in thirty seconds...")
+							boutput(world, "Respawning dead players. Next wave in fifteen seconds...")
 							// people in the lockers go into the game, dead people go to the lockers
 							src.put_me_in_coach()
 							src.reset_players()
-							src.time_next_state = 30 SECONDS
+							src.time_next_state = 15 SECONDS
 						if (!the_football || the_football.qdeled)
 							boutput(world, "how the hell did you clowns lose the goddamn football?????? what the fuck. respawning it at midfield!")
 							the_football = new /obj/item/football/the_big_one()
 							the_football.set_loc(pick(football_spawns["football"]))
+						src.wave_timer.update_timer(time_next_state / 10)
 
 						// update timer
 						// idk occasionally respawn people
@@ -128,15 +134,24 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 
 		src.time_next_state = 5 SECONDS
 		src.game_state = FOOTBALL_POSTSCORE
-		boutput(world, "<h1>[points == 6 ? "Touchdown!" : "Toss in."]</h1><h2>Team [uppertext(team)] scores! [points] point\s.</h2> Next possession in 30 seconds...")
+		src.wave_timer.update_timer(-1)
+		boutput(world, "<h1>[points == 6 ? "Touchdown!" : "Toss in."]</h1><h2>Team [uppertext(team)] scores! [points] point\s.<br>RED [src.score_red] - BLUE [src.score_blue]</h2> Next possession in 30 seconds...")
 		update_scoreboard()
 		sleep(0.5 SECONDS)
 		the_football.visible_message("\The [src] registers the endzone and detonates!")
-		sleep(0.5 SECONDS)
+		sleep(1 SECONDS)
 		if (the_football)
-			the_football.blowthefuckup(100)
-			qdel(the_football)
-			the_football = null
+			if (ismob(the_football.loc))
+				var/mob/M = the_football.loc
+				M.drop_item(the_football)
+
+			the_football.blowthefuckup(100, delete = 0)
+			the_football.invisibility = 101
+			SPAWN_DBG(3 SECONDS)
+				the_football.invisibility = 0
+				the_football.set_loc(pick(football_spawns["football"]))
+			//qdel(the_football)
+			//the_football = null
 
 	proc/update_scoreboard()
 		src.update_score_numbers(red_num, score_red)
@@ -166,10 +181,10 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 
 
 	declare_completion()
-		boutput(world,"<h1>FINISH!</h1><h2>Red team: [score_red] point\s</h2><h2>Blue team: [score_blue] point\s</h2>Thanks for playing this gimmick I guess, see you next time")
+		boutput(world,"<h1>FINISH!</h1><h2>Red team: [score_red] point\s</h2><h2>Blue team: [score_blue] point\s</h2>Thanks for playing this gimmick I guess, see you next time??")
 		update_game_clock()
 		update_scoreboard()
-		the_football.blowthefuckup(200)
+		the_football.blowthefuckup(500)
 
 	process()
 		..()
@@ -181,7 +196,12 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 				if (player.current && ishuman(player.current))
 					if (istype(get_area(player.current), /area/football/staging))
 						player.current.set_loc(pick(football_spawns["[team]field"]))
-
+						var/datum/bioEffect/regenerator/super/BE = player.current.bioHolder.AddEffect("regenerator_super", magical = 1)
+						if (BE)
+							// Space Footballers are actually virtual, don't tell anyone.
+							// This keeps them from keeling over because the sprint does damage.
+							// Normally I added stimulants but stims give stun resist buffs.
+							BE.heal_per_tick = 100
 
 	proc/init_player(mob/M, var/team = 0, var/is_new = 0)
 		var/mob/living/carbon/human/footballer = M
@@ -195,6 +215,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			return
 
 		if (is_new)
+			SHOW_FOOTBALL_TIPS(footballer)
 			if (football_players["blue"].len == football_players["red"].len)
 				team = pick("red", "blue")
 			else if (football_players["blue"].len < football_players["red"].len)
@@ -212,6 +233,9 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 		I.icon = 'icons/obj/items/card.dmi'
 		I.icon_state = "fingerprint0"
 		I.desc = "A tag for indicating what team you're on. Doesn't really matter."
+		I.cant_self_remove = 1
+		I.cant_other_remove = 1
+
 		if (team == "blue")
 			footballer.equip_if_possible(new /obj/item/clothing/suit/armor/football(footballer), footballer.slot_wear_suit)
 			footballer.equip_if_possible(new /obj/item/clothing/head/helmet/football(footballer), footballer.slot_head)

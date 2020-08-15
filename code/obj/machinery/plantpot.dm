@@ -969,7 +969,7 @@
 		var/getitem = null
 		var/dont_rename_crop = false
 		// Figure out what crop we use - the base crop or a mutation crop.
-		if(growing.crop)
+		if(growing.crop || MUT?.crop)
 			if(MUT)
 				if(MUT.crop)
 					getitem = MUT.crop
@@ -1251,7 +1251,7 @@
 			// +10: if HP >= 400% w/ 30% chance
 			// Mutations can add or remove this, of course
 			// @TODO adjust this later, this is just to fix runtimes and make it slightly consistent
-			if (base_quality_score >= 1 && prob(20))
+			if (base_quality_score >= 1 && prob(10))
 				if (base_quality_score >= 11)
 					JOB_XP(user, "Botanist", 2)
 				else

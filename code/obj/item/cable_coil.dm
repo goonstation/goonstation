@@ -28,6 +28,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	rand_pos = 1
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab
+	inventory_counter_enabled = 1
 
 	var/datum/material/insulator = null
 	var/datum/material/conductor = null
@@ -125,6 +126,8 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			set_icon_state("coil[iconmod]")
 			base_name = "[namemod]cable coil"
 		updateName()
+		inventory_counter?.update_number(amount)
+
 
 /obj/item/cable_coil/cut
 	icon_state = "coil2"

@@ -205,6 +205,8 @@
 			html += " &middot; <a href='byond://?src=\ref[src];GiveSpecial=\ref[D]'>Give Special</a>"
 	if (A)
 		html += "<br><a href='byond://?src=\ref[src];CreatePoster=\ref[D]'>Create Poster</a>"
+		html += "&middot; <a href='byond://?src=\ref[src];Vars=\ref[A];varToEdit=maptext'>Edit Maptext</a>"
+		html += "&middot; <a href='byond://?src=\ref[src];AdminInteract=\ref[D]'>Interact</a>"
 
 	if (istype(D,/obj/critter))
 		html += "<br> &middot; <a href='byond://?src=\ref[src];KillCritter=\ref[D]'>Kill Critter</a>"
@@ -556,6 +558,14 @@
 			src.generate_poster(A)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to create poster all rude-like.")
+		return
+	if (href_list["AdminInteract"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_SA)
+			var/atom/A = locate(href_list["AdminInteract"])
+			src.mob.admin_interact(A, list())
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to admin-interact all rude-like.")
 		return
 	if (href_list["Possess"])
 		usr_admin_only

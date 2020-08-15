@@ -694,6 +694,8 @@
 	return
 
 /atom/proc/attack_hand(mob/user as mob)
+	if (flags & TGUI_INTERACTIVE)
+		return ui_interact(user)
 	return
 
 /atom/proc/attack_ai(mob/user as mob)
@@ -830,6 +832,13 @@
 /atom/proc/Bumped(AM as mob|obj)
 	return
 
+/atom/proc/contains(var/atom/A)
+	if(!A)
+		return 0
+	for(var/atom/location = A.loc, location, location = location.loc)
+		if(location == src)
+			return 1
+
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
 	SPAWN_DBG( 0 )
 		if ((A && yes)) //wtf
@@ -868,12 +877,6 @@
 		if(src:client && src:client:player && src:client:player:shamecubed)
 			loc = src:client:player:shamecubed
 			return
-		var/mob/SM = src
-		if (!(SM.client && SM.client.holder))
-			if (istype(newloc, /turf/unsimulated))
-				var/turf/unsimulated/T = newloc
-				if (T.density)
-					return
 
 	if (isturf(loc))
 		loc.Exited(src, newloc)

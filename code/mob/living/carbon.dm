@@ -179,7 +179,7 @@
 
 	src.brainloss = max(0,min(src.brainloss + amount,120))
 
-	if (src.brainloss >= 120)
+	if (src.brainloss >= 120 && isalive(src))
 		// instant death, we can assume a brain this damaged is no longer able to support life
 		src.visible_message("<span class='alert'><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
 		src.death()

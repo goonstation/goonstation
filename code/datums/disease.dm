@@ -561,7 +561,7 @@
 			src.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
 		if (prob(numLow))
 			boutput(src, "<span class='alert'><B>Your cyberheart shuts down!</B></span>")
-			src.organHolder.heart.broken = 1
+			src.organHolder.heart.breakme()
 			src.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
 	else if (src.organHolder.heart && src.organHolder.heart.robotic && !src.organHolder.heart.emagged && !src.organHolder.heart.broken)
 		src.add_stam_mod_regen("heart_shock", 1)

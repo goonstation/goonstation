@@ -8,7 +8,7 @@
 	desc = ""
 	icon = 'icons/obj/networked.dmi'
 	icon_state = "generic-p"
-
+	cabinet_banned = 1 // non-functional, abuse potential. B&
 	var/net_id = null
 	var/host_id = null //Who are we connected to?(If we have a single host)
 	var/old_host_id = null //Were we previously connected to someone?  Do we care?

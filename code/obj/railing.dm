@@ -167,10 +167,13 @@
 					is_athletic_jump = 1
 		if (The_Railing)
 			the_railing = The_Railing
-			if (get_dist(ownerMob, the_railing) == 0)
-				jump_target = get_step(the_railing, the_railing.dir)
-			else
-				jump_target = get_turf(the_railing)
+			jump_target = getLandingLoc()
+
+	proc/getLandingLoc()
+		if (get_dist(ownerMob, the_railing) == 0)
+			return get_step(the_railing, the_railing.dir)
+		else
+			return get_turf(the_railing)
 
 	onUpdate()
 		..()
@@ -232,6 +235,9 @@
 			return
 
 		// otherwise, the user jumps over without issue!
+		sendOwner()
+
+	proc/sendOwner()
 		ownerMob.set_loc(jump_target)
 		for(var/mob/O in AIviewers(ownerMob))
 			var/the_text = null

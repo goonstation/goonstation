@@ -1,6 +1,6 @@
 /obj/item/roboupgrade/healthgoggles
 	name = "cyborg ProDoc scanner upgrade"
-	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
+	desc = "An advanced sensor array that allows a cyborg to quickly determine the physical condition of organic life."
 	icon_state = "up-prodoc"
 	drainrate = 5
 

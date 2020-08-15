@@ -1,6 +1,6 @@
 /obj/item/roboupgrade/speed
 	name = "cyborg speed upgrade"
-	desc = "A booster unit that safely allows cyborgs to move at high speed."
+	desc = "A booster unit that safely allows a cyborg to move at high speed."
 	icon_state = "up-speed"
 	drainrate = 100
 	borg_overlay = "up-speed"

@@ -1,17 +1,30 @@
 //node1, air1, network1 correspond to input
 //node2, air2, network2 correspond to output
 //
+#define LEFT_CIRCULATOR 1
+#define RIGHT_CIRCULATOR 2
+
 /obj/machinery/atmospherics/binary/circulatorTemp
 	name = "hot gas circulator"
 	desc = "It's the gas circulator of a thermoeletric generator."
 	icon = 'icons/obj/atmospherics/pipes.dmi'
 	icon_state = "circ1-off"
+	var/obj/machinery/power/generatorTemp/generator = null
 
-	var/side = 1 // 1=left 2=right
+	var/side = null // 1=left 2=right
 	var/last_pressure_delta = 0
 
 	anchored = 1.0
 	density = 1
+
+	disposing()
+		switch (side)
+			if (LEFT_CIRCULATOR)
+				src.generator?.circ1 = null
+			if (RIGHT_CIRCULATOR)
+				src.generator?.circ2 = null
+		src.generator = null
+		..()
 
 	proc/return_transfer_air()
 		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
@@ -53,7 +66,6 @@
 		return 1
 
 /obj/machinery/atmospherics/binary/circulatorTemp/right
-	side = 2
 	icon_state = "circ2-off"
 	name = "cold gas circulator"
 
@@ -143,12 +155,24 @@
 		window = new(src)
 
 		SPAWN_DBG(0.5 SECONDS)
-			circ1 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,WEST)
-			circ2 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,EAST)
-			if(!circ1 || !circ2)
-				status |= BROKEN
+			src.circ1 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,WEST)
+			src.circ2 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,EAST)
+			if(!src.circ1 || !src.circ2)
+				src.status |= BROKEN
+
+			src.circ1?.generator = src
+			src.circ1?.side = LEFT_CIRCULATOR
+			src.circ2?.generator = src
+			src.circ2?.side = RIGHT_CIRCULATOR
 
 			updateicon()
+
+	disposing()
+		src.circ1?.generator = null
+		src.circ1 = null
+		src.circ2?.generator = null
+		src.circ2 = null
+		..()
 
 	proc/updateicon()
 
@@ -756,3 +780,5 @@
 #undef PUMP_POWERLEVEL_3
 #undef PUMP_POWERLEVEL_4
 #undef PUMP_POWERLEVEL_5
+#undef LEFT_CIRCULATOR
+#undef RIGHT_CIRCULATOR

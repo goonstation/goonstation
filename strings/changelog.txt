@@ -1,5 +1,283 @@
 
+(t)fri aug 14 20
+(u)MarkNstein
+(p)1525
+(e)⚖🔄|balance, rework
+(*)Monkey-table interaction changed: Tables cannot be walked through, but instead can be vaulted past.
+(u)adharainspace
+(p)1790
+(e)🆕|feature
+(*)you can now fix tipped over vending machines by hitting them with a crowbar!
+(t)thu aug 13 20
+(u)UrsulaMajor
+(p)1806
+(e)🆕🗺|feature, mapping
+(+)John's Bus now stops at the sea diner near Manta
+(t)wed aug 12 20
+(u)Zamujasa
+(e)🆕|feature
+(*)Football mode has been improved.
+(*)New players in Football Mode get a popup explaining how the game works!
+(*)Football players regenerate health extremely quickly.
+(*)You can now observe the football with "Observe Objects". Useful if you're dead!
+(*)The timing of respawn waves has been shortened from 2 minutes with 30 second waves to 1 minute and 15 second waves.
+(*)The scoreboard is no longer vulnerable to explosions.
+(u)Carbadox
+(p)1750
+(e)🆕|feature
+(+)Added DIY Holy Water kit to Chaplains locker. Contains 3 bottles of wine and 3 bottles of mercury alongside a holy water container
+(u)Nebulacrity
+(p)1731
+(e)🆕🎨|feature, sprites
+(*)Nanotrasen brand neon lining is now available for purchase by the public!
+(u)BatElite
+(p)1791
+(e)🎨|sprites
+(+)Loose cyborg parts now match how they look on borgs.
+(t)tue aug 11 20
+(u)Flaborized
+(p)1694
+(e)🎨|sprites
+(+)Resprited captain's spacesuit, added captain's backpack.
+(u)Emcee-Gore
+(p)1537
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added Honkys Clownspider Farm to the Z5 mining level generation in space.
+(*)Added Discount Dan's delivery asteroid to the Z5 mining level generation in space.
+(+)Added Discount Dan's crates and a Discount Dan's beret.
+(u)Kubius
+(p)1721
+(e)🆕|feature
+(*)You can now buy yacht dice score sheets at card vendors. Dice sold separately.
+(u)Comradef191
+(p)1753
+(e)🗺|mapping
+(*)Added Atmospherics Forcefields to Cogmap 1, located at the hanger bays and Cargo Routers.
+(+)Revamped Engineering Access on Cogmap 1; Engineers no longer have direct access to the AI Upload Foyer, Engineering Storage and Engineering Dock moved to 'Engineering Storage' Access rather than 'Engineering Engine', Engineering Power Room & both substations now use 'Engineering Power' Access rather than 'Engineering Engine' & the entrance to Engineering no longer requires Engineering Engine access
+(+)Mining is no longer publicly accessible via space! Use the disposals chute in the Mining Shuttle Dock if needed!
+(+)QM Cargo Intake extended by two tiles
+(u)makkipakki
+(p)1785
+(e)🐛|bug
+(*)Made ghost drones emit a coloured glow like they used to!
+(u)adharainspace
+(p)1758
+(e)⚖|balance
+(*)fixed an oversight that made it so blobs generated biopoints slower than intended.
+(+)blobs now have a small starting biopoint cap increase
+(t)mon aug 10 20
+(u)MarkNstein
+(p)1759
+(e)🆕|feature
+(*)You can now chug drinks by click-dragging them onto your sprite from your hand.
+(u)BatElite
+(p)1665
+(e)🆕🎨|feature, sprites
+(*)Engineering and civilian cyborgs and ghostdrones now have a tool to replace lamps in fittings.
+(+)New sprites for the cyborg omnitool and atmospherics transporter. The latter now accepts fluid canisters for ocean map breaches.
+(u)nüke
+(p)1698
+(e)🎨|sprites
+(+)Added 8 new pyro airlock variants.
+(u)Carbadox
+(p)1620
+(e)🆕🗺|feature, mapping
+(+)Added new items to the clothing booth, namely to the accessories, casual, costumes, formal, jackets and the new headwear section.
+(+)Added Clothing Booth to manta
+(u)Phyvo
+(p)1583
+(e)⚖|balance
+(*)Rebalanced artifact probabilities to make better artifacts more common.
+(+)Buffed these artifact types: mining tools, energy guns, power generators.
+(u)system86
+(p)1257
+(e)🆕🎨|feature, sprites
+(*)Added MechComp component containers- they hold your mechcomp (and can be portable!)
+(u)Superlagg
+(p)1627
+(e)🆕|feature
+(*)Beepsky now drops his own personal stun baton, and he can now be properly rebuilt when he dies.
+(+)Beepsky's baton can be used to build other non-Beepsky securitrons, granting them some of his robustness.
+(u)nüke
+(p)1700
+(e)🎨|sprites
+(+)Updated floor guide decals and added 3 new floor guide icons.
+(t)sun aug 09 20
+(u)Moonlol
+(p)1755
+(e)🆕🗺|feature, mapping
+(+)Adds janivend to oshan's janitorial closet.
+(u)Jawns
+(p)1763
+(e)🐛|bug
+(+)Vending machines no longer erroneously take from machine credit instead of account
+(u)Jawns
+(p)1744
+(e)🐛|bug
+(+)Cyborg cooking privileges revoked (for their own tools).
+(t)sat aug 08 20
+(u)Mordent
+(p)1691
+(e)🆕📄|feature, tgui
+(+)Cyborg module rewriter UI updated, now allows multiple modules to be inserted.
+(u)Chickenish
+(p)1705
+(e)🐛|bug
+(+)Chili burps are now working closer to as intended.
+(u)Kubius
+(p)1743
+(e)🗺|mapping
+(+)Kondaru's export driver door now has an override button.
+(t)thu aug 06 20
+(u)Zamujasa
+(*)Medal rewards that fail to redeem due to not having the required items will no longer be disabled, so you can redeem them properly later.
+(t)wed aug 05 20
+(u)Zamujasa
+(e)🆕|feature
+(*)Some items will now show a quantity number when held in your hands. Metal sheets, cable, glass, money, some other tools.
+(*)These may not always update correctly or on time, though, but it should help cut down on constantly examining items.
+(*)Note that this does not apply when they're in your inventory; only when in your hands. Code limitation right now. Oh well.
+(u)zjdtmkhzt
+(p)1553
+(e)⚖⛔|balance, removal
+(+)Portable flashers will no longer destroy some objects on their tile when triggering.
+(u)Flaborized
+(p)1611
+(e)🎨|sprites
+(+)Resprited manual valves, air injectors and pipe meters.
+(u)adharainspace
+(p)1672
+(e)🆕|feature
+(+)explosions should more consistently blow up stuff like kitchen equipment.
+(u)Comradef191
+(p)1684
+(e)🗺|mapping
+(*)Moved the cables ontop of the pipes in Cogmap 1 Engineering, now going through the TEG chamber instead of atop the Hot Loop Intake pipes.
+(+)Removed some unneeded wiring from Cogmap 1 Engineering Gas Storage.
+(u)Tarmunora
+(p)1693
+(e)🐛|bug
+(+)Cryoxadone will now properly heat the patient based on damage healed.
+(u)Anachroniser
+(p)1660
+(e)⚖🆕|balance, feature
+(*)QoL and usability changes to bows.
+(*)Buffs to bow effectiveness
+(t)tue aug 04 20
+(u)Superlagg
+(p)1702
+(e)🐛|bug
+(+)Lawbringer removed from Guardbuddy gun whitelist.
+(+)Pulse rifle added to Guardbuddy gun whitelist.
+(+)Guardbuddy traitor ammo fabricator now disables the bot's gun whitelist.
+(u)UrsulaMajor
+(p)1686
+(e)⚖🆕🎨|balance, feature, sprites
+(*)15 new supplypacks added to the QM Buylist that will let them replace critical station infrastructure
+(*)Major QM Rebalancing concerning the sale of produce, ore, and material pieces
+(+)Refactored how commodities determine if they can be sold for cash on the general market
+(t)mon aug 03 20
+(u)Superlagg
+(p)1463
+(e)🆕🎨|feature, sprites
+(*)Guardbuddies can now use guns!
+(*)Traitor RDs can order an ammo fabricator for their Guardbuddies!
+(+)You can also swap out or remove Guardbuddy tools on the fly!
+(t)sun aug 02 20
+(u)Moonlol
+(p)1555
+(e)⚖|balance
+(*)All maps apart from Cog2, Donut 3, Horizon and Oshan cannot be voted past 80 players.
+(u)Kubius
+(p)1681
+(e)🗺|mapping
+(+)Kondaru is now equipped with a JaniTech Vendor.
+(t)sat aug 01 20
+(u)Emcee-Gore
+(p)1650
+(e)🗺|mapping
+(+)Added Photocopiers to (Oshan, CogMap2, Manta, Horizon and Destiny).
+(u)Comradef191
+(p)1655
+(e)🗺|mapping
+(+)Slightly Improved Radiator Coverage in the Cogmap1 Engineering Burnchamber
+(t)fri jul 31 20
+(u)Flaborized
+(p)1659
+(e)🆕🎨|feature, sprites
+(*)Added a new cosmetic HUD option to character setup, "vaporized".
+(t)thu jul 30 20
+(u)zjdtmkhzt
+(p)1589
+(e)🆕|feature
+(+)You can now use a Voltron to travel through active phone calls. Just use it while holding the phone handset in your other hand!
+(u)Kubius
+(p)1663
+(e)🐛🗺|bug, mapping
+(+)More Fleet fixes to make the map slightly closer to bearable.
+(t)tue jul 28 20
+(u)Kubius
+(p)1629
+(e)🆕🗺|feature, mapping
+(+)Kondaru fix batch, inc. go board, photocopiers, luigi board, spooky asteroids.
+(t)mon jul 27 20
+(u)MarkNstein
+(p)1487
+(e)🗺|mapping
+(*)Cog1: Pathology now has proper pharmacy equipment: Reagent heater and glass recycler.
+(*)Cog2: Medical reception desk is now also a pharmacy.
+(u)Tarmunora
+(p)1466
+(e)⚖🐛|balance, bug
+(+)Nitro inside humans is no longer stable.
+(u)Tarmunora
+(p)1534
+(e)⚖🆕🔄🎨|balance, feature, rework, sprites
+(*)Reworked most cyberorgans and their emagged effects - notably removed blanket stamina buffs from cyberorgans
+(u)Nebulacrity
+(p)1609
+(e)|
+(+)Updated portal sprites.
+(t)sun jul 26 20
+(u)kyle
+(e)⚖|balance
+(*)Activating genes in the genetics console via the base-pair matching game now nets materials, chromosomes, and decryptors for humans like activators do... Probably, this is a pain to test so I assume it works.
+(t)sat jul 25 20
+(u)ZeWaka
+(p)1542
+(e)🆕🔄|feature, rework
+(*)Ported the tgui interface system from tgstation. If you encounter weird interaction or ui bugs, please report them with the bug report button on the top right!
+(*)Much credit given to StyleMistake, spookydonut, actioninja, neersighted, and Faerdan for making this possible.
+(+)Atmos Tank Dispensers now use a fancy tgui interface.
+(u)mbc
+(e)🆕🎨|feature, sprites
+(*)New muzzle flash animations for taser, laser, advanced laser, phaser, wavegun, some launchers and others. Also improved muzzle flash visibility in general.
+(+)Fixed bug where glasses weren't correctly applying vision color mods.
+(u)Flaborized
+(p)1594
+(e)🎨|sprites
+(+)Resprited the AK-477
+(t)fri jul 24 20
+(u)Kyle and Flaborized
+(p)1574
+(e)🆕🎨|feature, sprites
+(+)Wizard spell rings. Currently admin only. Sprites by flab, obviously.
+(u)mbc
+(*)New HUD highlights for humans to indicate where items may be placed, which hand(s) an item would go into, and making the intents/drop buttons more clear on the default hud.
+(*)You can toggle off the item ghosts that appear on mouse-over using the Game panel on the top left menu.
+(u)BatElite
+(p)1514
+(e)🎨|sprites
+(*)New cyborg upgrade sprites.
+(u)Superlagg
+(p)1526
+(e)🆕|feature
+(*)Zip guns now explode one shot later than they used to.
 (t)thu jul 23 20
+(u)MarkNstein
+(p)1536
+(e)🔄|rework
+(*)Action(bar)s will no longer reset upon successive attempts.
 (u)mbc
 (p)1584
 (e)🆕|feature

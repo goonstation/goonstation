@@ -199,8 +199,7 @@ datum
 						var/mob/living/carbon/human/HH = M
 						if (HH.organHolder && HH.organHolder.liver)			//Hax here, lazy. currently only organ is liver. fix when adding others. -kyle
 							if (HH.organHolder.liver.robotic)
-								HH.organHolder.heal_organ(1*mult, 1*mult, 2*mult, "liver")
-								M.take_toxin_damage(-1.5 * mult)
+								M.take_toxin_damage(-liver_damage * 3 * mult)
 							else
 								HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
 					..()
