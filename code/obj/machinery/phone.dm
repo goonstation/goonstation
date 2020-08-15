@@ -60,7 +60,7 @@
 			for(var/obj/machinery/phone/M in phonelist)
 				if(M.phone_id && M.phone_id == temp_name)
 					name_counter++
-			if(name_count > 1)
+			if(name_counter > 1)
 				temp_name = "[temp_name] [name_counter]"
 			src.phone_id = temp_name
 
