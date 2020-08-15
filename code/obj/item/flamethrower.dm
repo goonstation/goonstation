@@ -108,7 +108,8 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	New()
 		. = ..()
 		gastank = new /obj/item/tank/jetpack/backtank(src.loc)
-		gastank.linkedflamer = src
+		var/obj/item/tank/jetpack/backtank/B = gastank
+		B.linkedflamer = src
 	
 	get_reagsource(mob/user)
 		if(gastank in user.get_equipped_items())
@@ -117,8 +118,9 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			boutput(user, "<span class='alert'>You need to be wearing this flamer's backtank to fire it!,</span>")
 		
 	disposing()
-		if(gastank)
-			gastank.linkedflamer = null
+		if(istype(gastank, /obj/item/tank/jetpack/backtank/))
+			var/obj/item/tank/jetpack/backtank/B = gastank
+			B.linkedflamer = null
 		..()
 		
 
