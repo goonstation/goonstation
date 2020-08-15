@@ -1,4 +1,9 @@
 
+(t)sat aug 15 20
+(u)glassofmilk
+(p)1809
+(e)🆕|feature
+(+)Replace Component Cabinets in Mechanic's lockers with frames to save space
 (t)fri aug 14 20
 (u)Zamujasa
 (*)Turned on Oshan's lag generator.
