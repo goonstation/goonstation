@@ -52,18 +52,19 @@
 		src.overlays += image('icons/obj/machines/phones.dmi',"[dialicon]")
 		// Generate a name for the phone.
 
-		var/temp_name = src.name
-		if(temp_name == initial(src.name))
-			temp_name = location.name
-		var/name_counter = 1
-		for(var/obj/machinery/phone/M in phonelist)
-			if(M.phone_id && M.phone_id == temp_name)
-				name_counter++
-				temp_name = "[base_name] [name_counter]"
+		if(isnull(src.phone_id))
+			var/temp_name = src.name
+			if(temp_name == initial(src.name))
+				temp_name = location.name
+			var/name_counter = 1
+			for(var/obj/machinery/phone/M in phonelist)
+				if(M.phone_id && M.phone_id == temp_name)
+					name_counter++
+			if(name_count > 1)
+				temp_name = "[temp_name] [name_counter]"
+			src.phone_id = temp_name
 
-		src.phone_id = temp_name
-
-		src.desc += " There is a small label on the phone that reads \"[temp_name]\""
+		src.desc += " There is a small label on the phone that reads \"[src.phone_id]\""
 
 		phonelist.Add(src)
 
