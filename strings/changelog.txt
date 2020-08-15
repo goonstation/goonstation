@@ -1,5 +1,9 @@
 
 (t)fri aug 14 20
+(u)Kubius
+(p)1811
+(e)🆕🗺|feature, mapping
+(+)Miscellaneous Kondaru improvements, primarily more stuff in maintenance.
 (u)MarkNstein
 (p)1525
 (e)⚖🔄|balance, rework
