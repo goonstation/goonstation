@@ -478,7 +478,7 @@
 /mob/dead/observer/proc/reenter_corpse()
 	set category = null
 	set name = "Re-enter Corpse"
-	if(!corpse)
+	if(!corpse || corpse.disposed)
 		alert("You don't have a corpse!")
 		return
 	if(src.client && src.client.holder && src.client.holder.state == 2)
