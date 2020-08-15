@@ -1627,6 +1627,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\warcrimes.dm"
 #include "code\WorkInProgress\what-the-fuck-am-i-doing.dm"
 #include "code\WorkInProgress\WiresStuff.dm"
+#include "code\WorkInProgress\wizardset.dm"
 #include "code\WorkInProgress\zamujasa.dm"
 #include "code\WorkInProgress\ZeWakasStuff.dm"
 #include "code\WorkInProgress\construction\event_controller.dm"
