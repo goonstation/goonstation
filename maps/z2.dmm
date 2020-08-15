@@ -83482,6 +83482,16 @@
 /obj/machinery/door/airlock/pyro/security,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
+"ecr" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/stool/chair/comfy/blue{
+	dir = 4;
+	tag = "icon-chair_comfy-blue (EAST)"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/tarmunora)
 "ecu" = (
 /obj/table/wood/auto/desk{
 	icon_state = "2"
@@ -83588,6 +83598,13 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
+"fmD" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/tarmunora)
 "fob" = (
 /obj/stool/chair/yellow{
 	dir = 8
@@ -83603,6 +83620,9 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/escape/centcom/donut3)
+"fQJ" = (
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/tarmunora)
 "fQS" = (
 /obj/stool/chair/comfy/shuttle,
 /obj/machinery/light{
@@ -83640,6 +83660,18 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"ggw" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/bottle/rum,
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = -9;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/tarmunora)
 "gjY" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
@@ -83667,6 +83699,11 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
+"gVc" = (
+/obj/machinery/light,
+/obj/decal/cleanable/paper,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/tarmunora)
 "gZG" = (
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/shuttle{
@@ -83860,6 +83897,15 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"jNl" = (
+/obj/table/wood/auto,
+/obj/item/gun/energy/wavegun,
+/obj/item/clothing/head/sunhat/stunhatr{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/tarmunora)
 "jSc" = (
 /obj/decal/stage_edge{
 	layer = 2.8;
@@ -84061,6 +84107,11 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
+"lYt" = (
+/obj/table/wood/auto,
+/obj/machinery/computer3/generic/personal,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/tarmunora)
 "maI" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3dir"
@@ -84155,6 +84206,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
+"noa" = (
+/obj/decal/cleanable/paper,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/tarmunora)
 "nte" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor2{
 	desc = "It's over Enakai";
@@ -84256,6 +84311,17 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/cogmap2)
+"oIM" = (
+/obj/admin_plaque{
+	name = "yass's Office"
+	},
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwall"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "oKo" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
@@ -84553,6 +84619,38 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
+"rJe" = (
+/obj/storage/crate/bin/lostandfound{
+	desc = "Just what it sounds like.";
+	name = "suggestion box";
+	spawn_contents = null
+	},
+/obj/item/paper{
+	name = "more guns";
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/paper{
+	name = "cool hats";
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/paper{
+	name = "catgirls?";
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/paper{
+	name = "actually read these suggetions for once"
+	},
+/obj/item/paper{
+	name = "less guns";
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/decal/cleanable/paper,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/tarmunora)
 "rMc" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -160474,9 +160572,9 @@ dzA
 dRT
 dRW
 dvw
-dvW
-dvW
-dwZ
+noa
+rJe
+gVc
 dvw
 dEM
 dES
@@ -160776,9 +160874,9 @@ dzA
 dzA
 dRY
 dvw
-dvW
-dvW
-dvW
+noa
+noa
+noa
 dvw
 dEN
 dER
@@ -161078,9 +161176,9 @@ dRR
 dRU
 dzA
 dvw
-dvX
-dvW
-dvW
+ecr
+fQJ
+jNl
 dvw
 dRJ
 dEQ
@@ -161380,9 +161478,9 @@ dRS
 dzA
 dzA
 dvw
-dvW
-dvW
-dvW
+lYt
+fQJ
+ggw
 dvw
 dEP
 dER
@@ -161682,8 +161780,8 @@ dDP
 dRV
 dDP
 dvP
-dvV
-dwA
+oIM
+fmD
 dDP
 dAV
 dvy
