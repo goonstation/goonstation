@@ -130,7 +130,7 @@
 				qdel(S)
 			var/obj/item/assembly/weld_rod/F = new /obj/item/assembly/weld_rod( user )
 			src.set_loc(F)
-			F.part1 = src
+			F.welder = src
 			user.u_equip(src)
 			user.put_in_hand_or_drop(F)
 			R.master = F
@@ -138,7 +138,7 @@
 			src.layer = initial(src.layer)
 			user.u_equip(src)
 			src.set_loc(F)
-			F.part2 = R
+			F.rod = R
 			src.add_fingerprint(user)
 
 	afterattack(obj/O as obj, mob/user as mob)

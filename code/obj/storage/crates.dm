@@ -431,7 +431,7 @@
 	pyro
 		name = "Class Crate - Firebrand"
 		desc = "A crate containing a Specialist Operative loadout."
-		spawn_contents = list(/obj/item/flamethrower/loaded/napalm,
+		spawn_contents = list(/obj/item/flamethrower/assembled/loaded/napalm,
 		/obj/item/fireaxe,
 		/obj/item/reagent_containers/food/drinks/fueltank/napalm = 2,
 		/obj/item/storage/grenade_pouch/incendiary,

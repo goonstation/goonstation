@@ -19621,7 +19621,7 @@
 /obj/item/storage/box/QM_grenadekit_security,
 /obj/item/storage/box/QM_grenadekit_experimentalweapons,
 /obj/item/storage/box/flaregun,
-/obj/item/flamethrower/loaded,
+/obj/item/flamethrower/assembled/loaded,
 /obj/item/gun/energy/phaser_gun,
 /obj/item/gun/energy/phaser_gun,
 /obj/item/gun/energy/phaser_gun,
