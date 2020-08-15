@@ -2962,7 +2962,7 @@ var/list/mechanics_telepads = new/list()
 		var/list/inputList = params2list(input.signal)
 		var/added = 0
 		for (var/inputKey in inputList)
-			if (isnull(inputList[inputKey]) || inputList[inputKey] == "") continue
+			if (isnull(inputList[inputKey]) || inputList[inputKey] == "" || (islist(inputList[inputKey]) && inputList[inputKey][1] == "")) continue
 			var/list/inputValue = islist(inputList[inputKey]) ? inputList[inputKey] : list(inputList[inputKey])
 			if (mode == 0) // Mutable
 				if (isnull(map[inputKey])) map.Add(inputKey)
