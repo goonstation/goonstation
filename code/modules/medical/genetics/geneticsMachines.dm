@@ -1062,7 +1062,7 @@ var/list/genetics_computers = list()
 	// 				boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> No automatic decryptions available.</span>")
 	// 				return
 
-	// 		if(lentext(code) != lentext(bp.lockcode))
+	// 		if(length(code) != length(bp.lockcode))
 	// 			boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Invalid code length.</span>")
 	// 			return
 	// 		if (code == bp.lockcode)
@@ -1082,7 +1082,7 @@ var/list/genetics_computers = list()
 	// 				boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Decryption failed. Base pair encryption code has mutated.</span>")
 	// 			else
 	// 				bp.locktries--
-	// 				var/length = lentext(bp.lockcode)
+	// 				var/length = length(bp.lockcode)
 
 	// 				var/list/lockcode_list = list()
 	// 				for(var/i=0,i < length,i++)
@@ -1795,7 +1795,7 @@ var/list/genetics_computers = list()
 				boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> No automatic decryptions available.</span>")
 				return
 
-		if(lentext(code) != lentext(bp.lockcode))
+		if(length(code) != length(bp.lockcode))
 			boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Invalid code length.</span>")
 			return
 		if (code == bp.lockcode)
@@ -1815,7 +1815,7 @@ var/list/genetics_computers = list()
 				boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Decryption failed. Base pair encryption code has mutated.</span>")
 			else
 				bp.locktries--
-				var/length = lentext(bp.lockcode)
+				var/length = length(bp.lockcode)
 
 				var/list/lockcode_list = list()
 				for(var/i=0,i < length,i++)

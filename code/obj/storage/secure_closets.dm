@@ -505,7 +505,7 @@
 	/obj/item/clothing/glasses/meson,
 	/obj/item/electronics/soldering,
 	/obj/item/deconstructor,
-	/obj/item/storage/mechanics/housing_large=2,
+	/obj/item/electronics/frame/mech_cabinet=2,
 	/obj/item/storage/mechanics/housing_handheld=1)
 
 /obj/storage/secure/closet/engineering/atmos

@@ -148,7 +148,7 @@ datum/pathogendna
 	proc/explode()
 		var/list/ret = new/list()
 		var/pos = 1
-		while (pos < lentext(seqsplice))
+		while (pos < length(seqsplice))
 			if (copytext(seqsplice, pos, pos + 1) != "|")
 				ret += copytext(seqsplice, pos, pos + 3)
 				pos += 3

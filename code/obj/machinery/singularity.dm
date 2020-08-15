@@ -142,7 +142,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			grav_pull = 8
 
 /obj/machinery/the_singularity/proc/eat()
-	for (var/X in orange(grav_pull,get_turf(src)))
+	var/turf/center = get_step(src, NORTHEAST) // loc = bottom left corner of the 3x3 actual singulo
+	for (var/X in orange(grav_pull, center))
 		LAGCHECK(LAG_LOW)
 		if (!X)
 			continue
