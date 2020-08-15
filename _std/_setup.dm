@@ -69,23 +69,23 @@
 #define DIALOGUE_HOLD 2
 
 #define TIME_DILATION_ENABLED 1
-#define MIN_TICKLAG 0.4 //min value ticklag can be
-#define OVERLOADED_WORLD_TICKLAG 1 //max value ticklag can be
-#define TICKLAG_DILATION_INC 0.2 //how much to increase by when appropriate
-#define TICKLAG_DILATION_DEC 0.2 //how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
-#define TICKLAG_DILATION_THRESHOLD 5 //these values dont make sense to you? read the math in gameticker
-#define TICKLAG_NORMALIZATION_THRESHOLD 0.3 //these values dont make sense to you? read the math in gameticker
+#define MIN_TICKLAG 0.4 /// min value ticklag can be
+#define OVERLOADED_WORLD_TICKLAG 1 /// max value ticklag can be
+#define TICKLAG_DILATION_INC 0.2 /// how ticklag much to increase by when appropriate
+#define TICKLAG_DILATION_DEC 0.2 /// how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
+#define TICKLAG_DILATION_THRESHOLD 5 // these values dont make sense to you? read the math in gameticker
+#define TICKLAG_NORMALIZATION_THRESHOLD 0.3 // these values dont make sense to you? read the math in gameticker
 #define TICKLAG_DILATE_INTERVAL 20
 
-#define OVERLOAD_PLAYERCOUNT 95 //when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
-#define OSHAN_LIGHT_OVERLOAD 18 //when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
-#define SLOW_LIFE_PLAYERCOUNT 65 //whenn pcount is >= this number, slow Life() processing a bit
-#define SLOWEST_LIFE_PLAYERCOUNT 85 //whenn pcount is >= this number, slow Life() processing a lot
+#define OVERLOAD_PLAYERCOUNT 95 /// when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
+#define OSHAN_LIGHT_OVERLOAD 18 /// when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
+#define SLOW_LIFE_PLAYERCOUNT 65 /// whenn pcount is >= this number, slow Life() processing a bit
+#define SLOWEST_LIFE_PLAYERCOUNT 85 /// whenn pcount is >= this number, slow Life() processing a lot
 
 
 #define DEFAULT_CLICK_DELAY MIN_TICKLAG //used to be 1
 #define COMBAT_CLICK_DELAY 10
-#define CLICK_GRACE_WINDOW 0//2.5
+#define CLICK_GRACE_WINDOW 0 //2.5
 
 #define COMBAT_BLOCK_DELAY (2)
 
@@ -160,7 +160,6 @@
 #define MIN_EFFECTIVE_RAD 3 //How many rads after resistances before it actually does anything. Example: This is set to 3, someone takes rad damage that is reduced to 2 by resistances. Nothing happens as its below the min. of 3.
 #define FIRE_DAMAGE_MODIFIER 0.0215 //Higher values result in more external fire damage to the skin (default 0.0215)
 #define AIR_DAMAGE_MODIFIER 2.025 //More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
-#define INFINITY 1e31 //closer then enough
 
 //#define nround(x, n) round(x, 10 ** n)
 //#define floor(x) round(x)
@@ -172,8 +171,6 @@
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN 1024
 #define MOB_NAME_MAX_LENGTH 50
-
-
 
 #define T0C 273.15					// 0degC
 #define T20C 293.15					// 20degC
@@ -1084,7 +1081,7 @@ proc/default_frequency_color(freq)
 #define ASS_JAM 0
 #endif
 
-// time for johns madden
+/// time for johns madden
 #define FOOTBALL_MODE 1
 
 
@@ -1112,7 +1109,7 @@ var/ZLOG_START_TIME
 #define CRITTER_REACTION_LIMIT 50
 #define CRITTER_REACTION_CHECK(x) if (x++ > CRITTER_REACTION_LIMIT) return
 
-//Activates the viscontents warps
+/// Activates the viscontents warps
 #define NON_EUCLIDEAN 1
 
 #define CURRENT_SPACE_YEAR 2053
@@ -1124,63 +1121,11 @@ var/ZLOG_START_TIME
 #define DEFAULT_RESPAWN_TIME 18000
 #define RESPAWNS_ENABLED 0
 
-#if DM_BUILD > 1490
-#define lentext length
-#endif
-
 #define VOLUME_CHANNEL_MASTER 0
 #define VOLUME_CHANNEL_GAME 1
 #define VOLUME_CHANNEL_AMBIENT 2
 #define VOLUME_CHANNEL_RADIO 3
 #define VOLUME_CHANNEL_ADMIN 4
-
-//ex:  var/time = 10 SECONDS
-#define SECONDS *10
-#define MINUTES *600
-#define HOURS *36000
-
-#define SECOND SECONDS
-#define MINUTE MINUTES
-#define HOUR HOURS
-
-#define WATTS *1
-#define METERS *1
-#define KILOGRAMS *1
-#define AMPERES *1
-#define KELVIN *1
-#define MOLES *1
-#define CANDELAS *1
-
-#define WATT WATTS
-#define METER METERS
-#define KILOGRAM KILOGRAMS
-#define AMPERE AMPERES
-#define AMP AMPERES
-#define AMPS AMPERES
-#define MOLE MOLES
-#define CANDELA CANDELAS
-
-#define YOTTA *(10**24)
-#define ZETTA *(10**21)
-#define EXA   *(10**18)
-#define PETA  *(10**15)
-#define TERA  *(10**12)
-#define GIGA  *(10**9)
-#define MEGA  *(10**6)
-#define KILO  *(10**3)
-#define HECTO *(10**2)
-#define DEKA  *(10**1)
-
-#define DECI  *(10**-1)
-#define CENTI *(10**-2)
-#define MILLI *(10**-3)
-#define MICRO *(10**-6)
-#define NANO  *(10**-9)
-#define PICO  *(10**-12)
-#define FEMTO *(10**-15)
-#define ATTO  *(10**-18)
-#define ZEPTO *(10**-21)
-#define YOCTO *(10**-24)
 
 //table defines
 #define TABLE_DISASSEMBLE 0
