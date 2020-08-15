@@ -1,5 +1,9 @@
 
 (t)fri aug 14 20
+(u)Zamujasa
+(*)Turned on Oshan's lag generator.
+(*)If it's *too* laggy, it'll be turned off again.
+(*)Also, I hope you aren't afraid of the dark.
 (u)Kubius
 (p)1811
 (e)🆕🗺|feature, mapping

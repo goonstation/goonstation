@@ -601,7 +601,7 @@ var/f_color_selector_handler/F_Color_Selector
 	build_qm_categories()
 
 	#if SKIP_Z5_SETUP == 0
-	UPDATE_TITLE_STATUS("Buliding mining level")
+	UPDATE_TITLE_STATUS("Building mining level")
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
 	#endif
