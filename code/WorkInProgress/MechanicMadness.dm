@@ -1348,7 +1348,7 @@ var/list/mechanics_telepads = new/list()
 
 		if(!R) return
 
-		if(input.signal in R)
+		if(R.Find(input.signal))
 			if(replacesignal)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,input)
 			else
