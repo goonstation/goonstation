@@ -101,7 +101,7 @@
 	src.group.removetile(src)
 	src.group = null
 	splitgroup()
-	for(var/obj/flock_structure/f in get_turf(src))
+	for(var/obj/flock_structure/f in src)
 		if(f.usesgroups)
 			f.group.removestructure(f)
 			f.group = null
@@ -186,7 +186,6 @@
 
 /turf/simulated/floor/feather/proc/initializegroup() //make a new group
 	group = new/datum/flock_tile_group
-	message_admins("new group created with id [group.id].")
 	group.addtile(src)
 
 /turf/simulated/floor/feather/proc/checknearby(var/newgroup = 0)//handles merging groups
@@ -194,13 +193,11 @@
 	var/datum/flock_tile_group/largestgroup = null //largest group
 	var/max_group_size = 0
 	for(var/turf/simulated/floor/feather/F in getneighbours(src))//check for nearby flocktiles
-		message_admins("thing looped")
 		if(F.group && !F.broken)
 			if(F.group.size > max_group_size)
 				max_group_size = F.group.size
 				largestgroup = F.group
 			tiles |= F.group
-			message_admins("[F.group] is added, its id is [F.group.id], ["\ref[src]"]")
 	if(tiles.len == 1)
 		src.group = tiles[1] //set it to the group found.
 		src.group.addtile(src)
@@ -225,82 +222,32 @@
 		else return null
 
 /turf/simulated/floor/feather/proc/splitgroup()
-	var/list/tiles = list() //list of tile groups found
+	var/list/groups = list() //list of tile groups found
 	var/count = 0 //how many tiles
 	var/turf/simulated/floor/feather/F
 	for(F in getneighbours(get_turf(src))) //nearby flocktiles
 		if(F.group)//does it have a flocktile group associated?
-/*			if(F.group.size > max_group_size)
-				max_group_size = F.group.size
-				largestgroup = F.group*/
 			count++
-			tiles |= F.group
+			groups |= F.group
 //at this point we have looked if there are any nearby groups
-	if(tiles.len == 0 || count == 1)//if there are no tiles/no grouped tiles just null and do nothing. OR if there is just one tile nearby theres no sense in splitting
-		src.group = null
+	if(groups.len == 0 || count == 1)//if there are no tiles/no grouped tiles just null and do nothing. OR if there is just one tile nearby theres no sense in splitting
 		return
 
-	if(tiles.len > 0 && count > 1)//is there atleast one group? and is there atleast 2 tiles nearby to split?
+	if(groups.len > 0 && count > 1)//is there atleast one group? and is there atleast 2 tiles nearby to split?
 		F = null//reuse vars
 
 //TODO: fail safe for if there are more then 1 group.
-//	message_admins("[src] is src in this uhh file htingy yes")
-//	src.group.members &= bfs(pick(F in orange(1, src)))
-
-		var/list/largestgroup = list() //largest group
-		var/max_group_size = 0
-		var/list/northgroup = list()
-		var/list/westgroup = list()
-		var/list/eastgroup = list()
-		var/list/southgroup = list()
-		var/list/currenttiles = list()//current tiles being checked
-		for(var/d in cardinal)
-			F = get_step(src, d)
-			if(!istype(F)) continue
-			currenttiles = bfs(F)
-			switch(d)
-				if(NORTH)
-					if(currenttiles.len > max_group_size)
-						largestgroup = currenttiles
-						max_group_size = currenttiles.len
-						continue
-					northgroup = currenttiles
-					message_admins("[northgroup.len] north got pingled")
-				if(WEST)
-					if(currenttiles.len > max_group_size)
-						largestgroup = currenttiles
-						max_group_size = currenttiles.len
-						continue
-					westgroup = currenttiles
-					message_admins("[westgroup.len] west  got pingled")
-				if(EAST)
-					if(currenttiles.len > max_group_size)
-						largestgroup = currenttiles
-						max_group_size = currenttiles.len
-						continue
-					eastgroup = currenttiles
-					message_admins("[eastgroup.len] east got pingled")
-				if(SOUTH)
-					if(currenttiles.len > max_group_size)
-						largestgroup = currenttiles
-						max_group_size = currenttiles.len
-						continue
-					southgroup = currenttiles
-					message_admins("[southgroup.len] south got pingled")
-		for(var/l in list(northgroup, westgroup, eastgroup, southgroup))
-			message_admins("[l:len] is L's len.")
-		for(var/turf/simulated/floor/feather/l in list(northgroup, westgroup, eastgroup, southgroup))
-			if(isnull(l)) continue
-			message_admins("[l] is l in the largestgroup thingy")
-			largestgroup ^= l
-			message_admins("[largestgroup] is largest group. [largestgroup.len] is .len of the group")
-			for(var/thing in largestgroup)
-				message_admins("[thing] is thing in largestgroup")
-		for(var/turf/simulated/floor/feather/f in largestgroup)
-			message_admins("[f] is f and [f.group.id] is F.group")
-			f.group.removetile(f)
-			f.group = null
-			f.checknearby(1)
+		var/datum/flock_tile_group/oldgroup = groups[1]//there *really* should only be one group.
+		for(F in getneighbours(get_turf(src)))
+			if(F.group == oldgroup)
+				var/list/listotiles = bfs(F)
+				var/datum/flock_tile_group/newgroup = new
+				for(F in listotiles)
+					F.group.removetile(F)
+					F.group = newgroup
+					F.group.addtile(F)
+					for(var/obj/flock_structure/s in F)
+						s.groupcheck()
 
 // TODO: currently MASSIVE problem, it does the thing on a random group in range and not on the largest, FIX ASAP.
 // also fix the excluded groups not nulling the group, and not making their own
