@@ -509,6 +509,19 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabSizeX = 20
 		prefabSizeY = 15
 
+	clown_nest // Gores abandoned Clown-Federation Outpost
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_clown_nest.dmm"
+		prefabSizeX = 30
+		prefabSizeY = 30
+
+	dans_asteroid // Discount Dans Delivery Asteroid featuring advanced cooling technology
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_dans_asteroid.dmm"
+		prefabSizeX = 37
+		prefabSizeY = 48
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit

@@ -2666,7 +2666,7 @@
 	icon_state = "line2"
 	},
 /obj/item/device/radio/intercom/medical,
-/turf/simulated/floor/purplewhite,
+/turf/simulated/floor/purplewhite/corner,
 /area/station/medical/cdc)
 "afC" = (
 /obj/machinery/door/airlock/pyro/sci_alt,
@@ -2698,7 +2698,7 @@
 	tag = ""
 	},
 /obj/machinery/pathogen_manipulator,
-/turf/simulated/floor/purple,
+/turf/simulated/floor/purplewhite,
 /area/station/medical/cdc)
 "afF" = (
 /obj/decal/tile_edge/line/green{
@@ -2847,7 +2847,7 @@
 	icon_state = "line2"
 	},
 /obj/machinery/light/incandescent/harsh,
-/turf/simulated/floor/purplewhite,
+/turf/simulated/floor/purplewhite/corner,
 /area/station/medical/cdc)
 "afV" = (
 /obj/cable{
@@ -2865,7 +2865,9 @@
 	pixel_x = -22;
 	pixel_y = 32
 	},
-/turf/simulated/floor/purple,
+/turf/simulated/floor/purplewhite{
+	dir = 6
+	},
 /area/station/medical/cdc)
 "afW" = (
 /obj/cable{
@@ -3030,7 +3032,7 @@
 /obj/table/reinforced/chemistry/auto,
 /obj/item/storage/box/syringes,
 /obj/item/storage/box/beakerbox,
-/turf/simulated/floor/purplewhite,
+/turf/simulated/floor/purplewhite/corner,
 /area/station/medical/cdc)
 "agp" = (
 /obj/decal/tile_edge/line/green{
@@ -3040,7 +3042,9 @@
 /obj/table/reinforced/chemistry/auto,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
-/turf/simulated/floor/purple,
+/turf/simulated/floor/purplewhite{
+	dir = 6
+	},
 /area/station/medical/cdc)
 "agq" = (
 /obj/disposalpipe/segment{
@@ -3062,7 +3066,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/purplewhite{
-	dir = 1
+	dir = 9
 	},
 /area/station/medical/cdc)
 "ags" = (
@@ -3074,7 +3078,9 @@
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
 	},
-/turf/simulated/floor/purple,
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
 /area/station/medical/cdc)
 "agt" = (
 /obj/decal/tile_edge/line/green{
@@ -3185,7 +3191,9 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/turf/simulated/floor/purplewhite,
+/turf/simulated/floor/purplewhite/corner{
+	dir = 8
+	},
 /area/station/medical/cdc)
 "agH" = (
 /obj/decal/tile_edge/line/green{
@@ -3225,7 +3233,7 @@
 /obj/item/reagent_containers/glass/petridish,
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/dropper/mechanical,
-/turf/simulated/floor/purplewhite{
+/turf/simulated/floor/purplewhite/corner{
 	dir = 1
 	},
 /area/station/medical/cdc)
@@ -6624,9 +6632,6 @@
 	icon_state = "yellowblack"
 	},
 /area/station/crew_quarters/quartersA)
-"aov" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
 "aow" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Chapel Office"
@@ -6635,13 +6640,13 @@
 /obj/disposalpipe/segment/mail,
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aox" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aoy" = (
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/segment,
@@ -7058,33 +7063,33 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "apr" = (
 /obj/stool,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aps" = (
 /obj/table/wood/auto,
 /obj/item/card_box/tarot,
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "apt" = (
 /obj/stool,
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "apu" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "apv" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "apw" = (
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -7621,24 +7626,21 @@
 "aqF" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aqG" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aqH" = (
 /turf/simulated/wall/false_wall,
-/area/station/chapel/main/main)
-"aqI" = (
-/turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aqJ" = (
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aqK" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -8148,7 +8150,7 @@
 "arT" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "arU" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
@@ -8156,7 +8158,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "arV" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
@@ -8164,7 +8166,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "arW" = (
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/segment,
@@ -9317,7 +9319,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "auF" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/specialroom/chapel{
@@ -46677,7 +46679,8 @@
 /area/station/engine/power)
 "cjC" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
+	dir = 4;
+	req_access = null
 	},
 /obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
@@ -47662,6 +47665,10 @@
 "qPg" = (
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"qTt" = (
+/obj/machinery/vending/janitor,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -81387,10 +81394,10 @@ akX
 akX
 akX
 akX
-aov
-aov
-aov
-aov
+ahY
+ahY
+ahY
+ahY
 ati
 auy
 avN
@@ -81689,10 +81696,10 @@ akX
 acg
 amH
 anF
-aov
+ahY
 apq
 aqF
-aov
+ahY
 atj
 auz
 atj
@@ -82015,7 +82022,7 @@ aHC
 aIf
 aIE
 aIX
-aID
+qTt
 aJT
 aKi
 aKH
@@ -82293,10 +82300,10 @@ akX
 alP
 amJ
 anH
-aov
+ahY
 aps
 aqH
-aov
+ahY
 aCJ
 auB
 avP
@@ -82595,10 +82602,10 @@ akX
 alQ
 amK
 anI
-aov
+ahY
 apt
-aqI
-aov
+aiL
+ahY
 atm
 auC
 avQ
@@ -83199,14 +83206,14 @@ akX
 aco
 amN
 aco
-aov
+ahY
 apv
-aov
+ahY
 arV
 aox
 auE
-aov
-aov
+ahY
+ahY
 bem
 azq
 aAw

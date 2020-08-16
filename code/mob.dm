@@ -726,7 +726,7 @@
 
 	if(istype(src.loc, /obj/machinery/vehicle/) && src.loc != new_loc)
 		var/obj/machinery/vehicle/V = src.loc
-		V.eject(src, actually_eject = 0)
+		V.eject(src)
 
 	. = ..(new_loc)
 	src.loc_pixel_x = new_pixel_x

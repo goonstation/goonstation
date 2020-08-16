@@ -34,6 +34,22 @@
 	icon_state = "Syndiebackpack"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+/obj/item/storage/backpack/captain
+	name = "Captain's Backpack"
+	desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
+	icon_state = "capbackpack"
+	item_state = "capbackpack"
+
+	blue
+		desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold."
+		icon_state = "capbackpack_blue"
+		item_state = "capbackpack_blue"
+
+	red
+		desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold."
+		icon_state = "capbackpack_red"
+		item_state = "capbackpack_red"
+
 /obj/item/storage/backpack/syndie/tactical
 	name = "tactical assault rucksack"
 	desc = "A military backpack made of high density fabric, designed to fit a wide array of tools for comprehensive storage support."
@@ -57,6 +73,19 @@
 	desc = "A stylish red, evil, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on an operative's back."
 	icon_state = "Syndiesatchel"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
+/obj/item/storage/backpack/satchel/captain
+	name = "Captain's Satchel"
+	desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
+	icon_state = "capsatchel"
+
+	blue
+		desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold."
+		icon_state = "capsatchel_blue"
+
+	red
+		desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold."
+		icon_state = "capsatchel_red"
 
 /obj/item/storage/backpack/satchel/medic
 	name = "medic's satchel"

@@ -7,9 +7,19 @@ datum/controller/process/items
 	setup()
 		name = "Item"
 		schedule_interval = 29
-
+		// this probably lags some but it helps give the sign to people that the game
+		// is in fact still doing something, which i feel is important
+		// plus i like watching number go up
+		var/itemcount = 0
+		var/lasttime = 0
 		for(var/obj/object in world)
 			object.initialize()
+			itemcount++
+			if (game_start_countdown)
+				if (lasttime != world.timeofday)
+					lasttime = world.timeofday
+					game_start_countdown.update_status("Initializing items\n([itemcount])")
+
 			LAGCHECK(LAG_HIGH)
 
 		detailed_count = new

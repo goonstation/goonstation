@@ -546,6 +546,8 @@
 	layer = TURF_LAYER + 0.1 // it should basically be part of a turf
 	plane = PLANE_FLOOR // hence, they should be on the same plane!
 
+	ex_act(severity)
+		return
 
 
 /area/football
@@ -772,6 +774,26 @@
 
 
 
+
+/obj/overlay/zamujasa/football_wave_timer
+	name = "football wave countdown"
+
+	New()
+		src.maptext_x = -100
+		src.maptext_height = 64
+		src.maptext_width = 232
+		src.plane = 100
+		src.anchored = 2
+		src.mouse_opacity = 1
+
+	proc/update_timer(var/num)
+		if (num == -1)
+			src.maptext = ""
+		else
+			src.maptext = {"<span class='c pixel sh'>Next spawn wave in\n<span class='vga'>[round(num)]</span> seconds</span>"}
+
+
+
 /obj/overlay/zamujasa/help_text
 	name = "new player tutorial maptext"
 
@@ -842,6 +864,7 @@ Read the rules, don't grief, and have fun!</div>"}
 		maptext_x = -34
 		maptext_y = 1
 		mouse_opacity = 0
+		maptext = ""
 
 	proc/update_text(var/text)
 		maptext = {"<span class="vb r pixel sh">[text]</span>"}

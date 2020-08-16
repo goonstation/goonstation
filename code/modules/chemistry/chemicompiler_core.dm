@@ -235,7 +235,7 @@
 
 /datum/chemicompiler_core/proc/parseCBF(var/string, var/button)
 	var/list/tokens = list(">", "<", "+", "-", ".",",", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@","#")
-	var/l = lentext(string)
+	var/l = length(string)
 	var/list/inst = new
 	var/token
 
@@ -375,7 +375,7 @@
 
 			if(data.len < dp + 1)
 				data.len = dp + 1
-			if(lentext(textBuffer) > 80)
+			if(length(textBuffer) > 80)
 				output += "[textBuffer]<br>"
 				textBuffer = ""
 				updatePanel()

@@ -1,3 +1,9 @@
+(t)tue aug 11 20
+(u)pali
+(*)Admin Interact (~ + click) is now also accessible from View Variables.
+(t)wed aug 05 20
+(u)Sovexe
+(*)Added new command Spawn-Supplydrop along with a Supplydrop cinematic effect for build mode spawning.
 (t)tue aug 04 20
 (u)Zamujasa
 (*)Player notes now show multiline data properly. Maybe. I didn't test this. vOv

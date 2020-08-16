@@ -288,6 +288,7 @@
 
 	if (src.inventory_counter)
 		pool(src.inventory_counter)
+		src.inventory_counter = null
 
 	..()
 
@@ -1366,6 +1367,7 @@
 	setItemSpecial(null)
 	if (src.inventory_counter)
 		pool(src.inventory_counter)
+		src.inventory_counter = null
 
 	if(istype(src.loc, /obj/item/storage))
 		var/obj/item/storage/storage = src.loc

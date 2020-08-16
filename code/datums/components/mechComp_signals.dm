@@ -94,6 +94,7 @@
 	RegisterSignal(parent, list(_COMSIG_MECHCOMP_RM_OUTGOING), .proc/removeOutgoing)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_ALL_CONNECTIONS), .proc/WipeConnections)
 	RegisterSignal(parent, list(_COMSIG_MECHCOMP_GET_OUTGOING), .proc/getOutgoing)
+	RegisterSignal(parent, list(_COMSIG_MECHCOMP_GET_INCOMING), .proc/getIncoming)
 	RegisterSignal(parent, list(_COMSIG_MECHCOMP_DROPCONNECT), .proc/dropConnect)
 	RegisterSignal(parent, list(_COMSIG_MECHCOMP_LINK), .proc/link_devices)
 	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_CONFIG), .proc/addConfig)
@@ -113,6 +114,7 @@
 	_COMSIG_MECHCOMP_RM_OUTGOING,\
 	COMSIG_MECHCOMP_RM_ALL_CONNECTIONS,\
 	_COMSIG_MECHCOMP_GET_OUTGOING,\
+	_COMSIG_MECHCOMP_GET_INCOMING,\
 	_COMSIG_MECHCOMP_DROPCONNECT,\
 	_COMSIG_MECHCOMP_LINK,\
 	COMSIG_MECHCOMP_ADD_CONFIG,\
@@ -148,6 +150,11 @@
 //Give the caller a copied list of our outgoing connections.
 /datum/component/mechanics_holder/proc/getOutgoing(var/comsig_target, var/list/outout)
 	outout[1] = src.connected_outgoing
+	return
+
+//Give the caller a copied list of our incoming connections.
+/datum/component/mechanics_holder/proc/getIncoming(var/comsig_target, var/list/outin)
+	outin[1] = src.connected_incoming
 	return
 
 //Fire the stored default signal.
@@ -209,13 +216,25 @@
 	return ret
 
 //Called when a component is dragged onto another one.
-/datum/component/mechanics_holder/proc/dropConnect(var/comsig_target, atom/A, mob/user)
+/datum/component/mechanics_holder/proc/dropConnect(atom/comsig_target, atom/A, mob/user)
 	if(!A || A == parent || user.stat || !isliving(user) || (SEND_SIGNAL(A,_COMSIG_MECHCOMP_COMPATIBLE) != 1))  //ZeWaka: Fix for null.mechanics
 		return
 
 	if (!user.find_tool_in_hand(TOOL_PULSING))
 		boutput(user, "<span class='alert'>[MECHFAILSTRING]</span>")
 		return
+
+	//Need to use comsig_target instead of parent, to access .loc
+	if(A.loc != comsig_target.loc) //If these aren't sharing a container
+		var/obj/item/storage/mechanics/cabinet = null
+		if(istype(comsig_target.loc, /obj/item/storage/mechanics))
+			cabinet = comsig_target.loc
+		if(istype(A.loc, /obj/item/storage/mechanics))
+			cabinet = A.loc
+		if(cabinet)
+			if(!cabinet.anchored)
+				boutput(user,"<span class='alert'>Cannot create connection through an unsecured component housing</span>")
+				return
 	
 	if(get_dist(parent, A) > SQUARE_TILE_WIDTH)
 		boutput(user, "<span class='alert'>Components need to be within a range of 14 meters to connect.</span>")
@@ -288,7 +307,7 @@
 						boutput(user, "Signal set to [inp]")
 					return COMSIGBIT_ATTACKBY_COMPLETE
 				if(DC_ALL)
-					WipeConnections()
+					WipeConnections()					
 					if(istype(parent, /atom))
 						var/atom/AP = parent
 						boutput(user, "<span class='notice'>You disconnect [AP.name].</span>")
