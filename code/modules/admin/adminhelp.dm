@@ -62,6 +62,23 @@
 		gib(client.mob)
 		return
 
+	var/mob/dead/target_observer/mentor_mouse_observer/mmouse = locate() in src
+	if(mmouse) // mouse in your pocket takes precedence over mhelps
+		var/msg = input("Please enter your whispers to the mouse:") as null|text
+		msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN)
+		var/class = mmouse.is_admin ? "adminooc" : "mhelp"
+		boutput(mmouse, "<span class='[class]'><b>[client.mob]</b> whispers: \"<i>[msg]</i>\"</span>")
+		boutput(client.mob, "<span class='[class]'>You whisper to \the [mmouse]: \"<i>[msg]</i>\"</span>")
+		for (var/client/C)
+			if (C.holder)
+				if (C.player_mode || C == client || C == mmouse.client)
+					continue
+				else
+					var/rendered = "<span class='[class]'><b>[mmouse.is_admin ? "A" : "M"]MOUSEWHISPER: [key_name(client.mob,0,0,1)]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span> <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>"
+					boutput(C,  "<span class='adminHearing' data-ctx='[C.chatOutput.ctxFlag]'>[rendered]</span>")
+		logTheThing("diary", client.mob, null, "([mmouse.is_admin ? "A" : "M"]MOUSEWHISPER): [msg]", "say")
+		return
+
 	if (client.cloud_available() && client.cloud_get("mentorhelp_banner"))
 		boutput(client.mob, "You have been banned from using this command.")
 		return
