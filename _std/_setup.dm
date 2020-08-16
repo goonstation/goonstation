@@ -1166,6 +1166,9 @@ var/ZLOG_START_TIME
 //Logged whenever you try to View Variables a thing
 #define AUDIT_VIEW_VARIABLES (1 << 1)
 
+//Color matrices		// vv Values modified from those obtained from https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
+#define MATRIX_PROTANOPIA 0.55,0.45,0.000,0.55,0.45,0.000,0.000,0.25,1.0,0.0,0.0,0.0
+
 //PATHOLOGY REMOVAL
 //#define CREATE_PATHOGENS 1
 

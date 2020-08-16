@@ -597,30 +597,19 @@
 	msgGain = "Everything starts looking a lot more yellow."
 	msgLose = "You notice a few extra colors."
 	probability = 99
-	var/old_client_color
 	icon_state  = "bad"
-	var/list/colorblindnessMatrix = list(\
-		0.55,0.45,0.000,
-		0.55,0.45,0.000,
-		0.000,0.25,1.0,
-		0.0, 0.0, 0.0)	// Values modified from those obtained from https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
-
+	var/list/protanopia_matrix = list(MATRIX_PROTANOPIA)
 
 	OnAdd()
 		src.removed = 0
-		if(owner.client)
-			src.old_client_color = owner.client.color
-			owner.client.color = colorblindnessMatrix
+		APPLY_MOB_PROPERTY(owner, PROP_PROTANOPIA, src)
+		owner.client?.color = list(protanopia_matrix)
 		return
-
-	OnLife()
-		if(owner.client && owner.client.color != src.colorblindnessMatrix)
-			owner.client.color = colorblindnessMatrix
 
 	OnRemove()
 		src.removed = 1
-		if(owner.client)
-			owner.client.color = src.old_client_color
+		REMOVE_MOB_PROPERTY(owner, PROP_PROTANOPIA, src)
+		owner.client?.color = null
 		return
 
 /datum/bioEffect/emoter/screamer
