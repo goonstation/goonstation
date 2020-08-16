@@ -2451,14 +2451,14 @@
 		if(part == "l_leg" || update_all)
 			if(src.part_leg_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if(src.part_leg_l.slot == "leg_both") i_leg_l = image('icons/mob/robots.dmi', "leg-" + src.part_leg_l.appearanceString)
-				else i_leg_l = image('icons/mob/robots.dmi', "legL-" + src.part_leg_l.appearanceString)
+				else i_leg_l = image('icons/mob/robots.dmi', "l_leg-" + src.part_leg_l.appearanceString)
 				if(color_matrix) src.internal_paint_part(i_leg_l, color_matrix)
 			else
 				i_leg_l = null
 		if(part == "r_leg" || update_all)
 			if(src.part_leg_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if(src.part_leg_r.slot == "leg_both") i_leg_r = image('icons/mob/robots.dmi', "leg-" + src.part_leg_r.appearanceString)
-				else i_leg_r = image('icons/mob/robots.dmi', "legR-" + src.part_leg_r.appearanceString)
+				else i_leg_r = image('icons/mob/robots.dmi', "r_leg-" + src.part_leg_r.appearanceString)
 				if(color_matrix) src.internal_paint_part(i_leg_r, color_matrix)
 			else
 				i_leg_r = null
@@ -2466,14 +2466,14 @@
 		if(part == "l_arm" || update_all)
 			if(src.part_arm_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if(src.part_arm_l.slot == "arm_both") i_arm_l = image('icons/mob/robots.dmi', "arm-" + src.part_arm_l.appearanceString)
-				else i_arm_l = image('icons/mob/robots.dmi', "armL-" + src.part_arm_l.appearanceString)
+				else i_arm_l = image('icons/mob/robots.dmi', "l_arm-" + src.part_arm_l.appearanceString)
 				if(color_matrix) src.internal_paint_part(i_arm_l, color_matrix)
 			else
 				i_arm_l = null
 		if(part == "r_arm" || update_all)
 			if(src.part_arm_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if(src.part_arm_r.slot == "arm_both") i_arm_r = image('icons/mob/robots.dmi', "arm-" + src.part_arm_r.appearanceString)
-				else i_arm_r = image('icons/mob/robots.dmi', "armR-" + src.part_arm_r.appearanceString)
+				else i_arm_r = image('icons/mob/robots.dmi', "r_arm-" + src.part_arm_r.appearanceString)
 				if(color_matrix) src.internal_paint_part(i_arm_r, color_matrix)
 			else
 				i_arm_r = null

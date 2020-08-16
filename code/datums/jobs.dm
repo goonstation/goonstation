@@ -149,6 +149,7 @@
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_card = /obj/item/card/id/gold
 	slot_belt = /obj/item/device/pda2/captain
+	slot_back = /obj/item/storage/backpack/captain
 	slot_jump = /obj/item/clothing/under/rank/captain
 	slot_suit = /obj/item/clothing/suit/armor/captain
 	slot_foot = /obj/item/clothing/shoes/swat
@@ -2250,13 +2251,8 @@
 /datum/job/special/meatcube
 	name = "Meatcube"
 	linkcolor = "#FF0000"
-#if ASS_JAM
-	announce_on_join = 1
-	limit = 300
-#else
 	limit = 0
 	allow_traitors = 0
-#endif
 	slot_ears = null
 	slot_card = null
 	slot_back = null

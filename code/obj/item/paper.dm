@@ -697,6 +697,24 @@ Only trained personnel should operate station systems. Follow all procedures car
 	</ul>
 	"}
 
+/obj/item/paper/neonlining
+	name = "paper - How to properly install official Nanotrasen neon lining"
+	icon_state = "paper"
+	info = {"<center><h2>How to properly install official Nanotrasen neon lining</h2></center>
+	<h3>Product description</h3><hr>
+	Ever wanted to spice up your bar? Build a meditation room? Enhance the station halls in case of an emergency? Then this official Nanotrasen neon lining are what you need. Now with color change modules!<hr>
+	<h3>Modifying the neon lining</h3><hr>
+	<ul style='list-style-type:disc'>
+		<li>1) A wrench can be used to change the shape of the lining. Currently only 6 shapes officially supported.</li>
+		<li>2) To turn an already attached piece of lining back into a coil, carefully use a crowbar to detach it from the it's attachment point.</li>
+		<li>3) Apply a standard multitool to change the pattern of the lining. If upon changing shape the pattern's value is higher than the maximum for that shape, the value gets automatically reset to 0.</li>
+		<li>4) As this version is designed to be more flexible and compact, the lining feeds only on an internal power source. Due to this the only way to turn it off/on is to cut/mend the wires that connect to said power source.</li>
+		<li>5) To adjust the lining's rotation, simply unscrew it from it's attachment point. The lining will automatically snap to the next available rotation and screw itself into a new attachment point.</li>
+		<li>6) Due to safety concerns caused by our previous prototype of the product, the color change modules are only active when the lining is detached and thus in a coil.</li>
+		<li>7) There have been reports that when the lining is in the short line shape, using a multitool to change the pattern sometimes triggers the movement function of it's rotation program. This essentially shifts the lining a bit. We understand that this might be a bit unintuitive, but since this isn't hazardous we have no intentions of fixing it.</li>
+	</ul>
+	"}
+
 /obj/item/paper/manta_polarisnote
 	name = "paper - Note to myself"
 	icon_state = "paper"
@@ -758,6 +776,51 @@ Only trained personnel should operate station systems. Follow all procedures car
 	</ul>
 	We hope that you have found this pamphlet enlightening and we hope to receive your sample soon!<hr>
 	Remember, only you can prevent deadly pathogens!
+	"}
+
+/obj/item/paper/shipping_precautions
+	name = "Read this and check the cargo!"
+	icon_state = "paper_caution_bloody"
+	desc = "An ordinary notice about shipping procedures...stained with blood?"
+	info = {"<center><h2>Warning</h2></center>
+	<hr>
+	<h3>Discount Dan contracts you - a healthy and breathing human being to deliver this cargo safely to the nearest Discount Dans fabrication center!</h3>
+	<br>
+	<br>
+	<br>
+	So read carefully and heed the precautions! Keep the fridges closed! All of them! Do not look inside...and if you happen to hear any clawing, grumbling, or cries for help...<b>ignore them</b>!
+	<br>
+	<br>
+	The freight is extremely valuable! Any light or human flesh exposed to said cargo will cost your pal Discount Dan an arm, a leg and a space-tastic lawsuit!
+	<br>
+	<br>
+	Remain cautious - because it's what's necessary!
+	"}
+
+/obj/item/paper/dreamy_rhyme
+	name = "Space-Rhymes"
+	icon_state = "thermal_paper"
+	desc = "Scibbled rhymes...and thoughts."
+	info = {" Space duck, I do not give a...I do not give anything about luck, shrug, puck, quack
+	<br>
+	<br>
+	<br>
+	<b>Yeah! Yo! Here the quick rhymer goes, clowns convulse!
+	<br>
+	<br>
+	Soon enough your mimes go fold, like a piece of paper!
+	<br>
+	<br>
+	This Emcee did not just meet ya'his thoughts created a - whole universe!
+	<br>
+	<br>
+	Spitting lines like liquid fire as he converse!
+	<br>
+	<br>
+	Transfer ideas from word to mind; not just half-assed like some damn pantomime!
+	<br>
+	<br>
+	Never behind the crime, A-grades as janitor...oh so fine!</b>
 	"}
 
 /obj/item/paper/fortune

@@ -273,7 +273,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		E.holder = src
 		E.activated_from_pool = 1
 		E.OnAdd()
-		if(lentext(E.msgGain) > 0)
+		if(length(E.msgGain) > 0)
 			if (E.isBad)
 				boutput(owner, "<span class='alert'>[E.msgGain]</span>")
 			else
@@ -525,7 +525,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if (do_stability)
 				src.genetic_stability -= newEffect.stability_loss
 				src.genetic_stability = max(0,src.genetic_stability)
-			if(owner && lentext(newEffect.msgGain) > 0)
+			if(owner && length(newEffect.msgGain) > 0)
 				if (newEffect.isBad)
 					boutput(owner, "<span class='alert'>[newEffect.msgGain]</span>")
 				else
@@ -548,7 +548,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (do_stability)
 			src.genetic_stability -= BE.stability_loss
 			src.genetic_stability = max(0,src.genetic_stability)
-		if(lentext(BE.msgGain) > 0)
+		if(length(BE.msgGain) > 0)
 			if (BE.isBad)
 				boutput(owner, "<span class='alert'>[BE.msgGain]</span>")
 			else
@@ -568,7 +568,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				src.genetic_stability = max(0,src.genetic_stability)
 			D.activated_from_pool = 0 //Fix for bug causing infinitely exploitable stability gain / loss
 
-			if(owner && lentext(D.msgLose) > 0)
+			if(owner && length(D.msgLose) > 0)
 				if (D.isBad)
 					boutput(owner, "<span class='notice'>[D.msgLose]</span>")
 				else

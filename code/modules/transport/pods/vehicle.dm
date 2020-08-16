@@ -856,7 +856,7 @@
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
-	src.eject(usr)
+	src.leave_pod(usr)
 /*
 	if (usr.loc != src)
 		return
@@ -872,7 +872,7 @@
 	else
 		src.ion_trail.stop()
 */
-/obj/machinery/vehicle/proc/eject(mob/ejectee as mob, actually_eject = 1)
+/obj/machinery/vehicle/proc/eject(mob/ejectee as mob) // Call leave_pod if you're having the mob leave the vehicle normally, otherwise use set_loc and it'll call this for you.
 	if (!ejectee || ejectee.loc != src)
 		return
 
@@ -883,7 +883,25 @@
 
 	src.passengers--
 
+	//ejectee.remove_shipcrewmember_powers(src.weapon_class)
+	ejectee.reset_keymap()
+	ejectee.recheck_keys()
+	if(src.pilot == ejectee)
+		src.pilot = null
+	if(passengers)
+		find_pilot()
+	else
+		src.ion_trail.stop()
+
+
+
+	logTheThing("vehicle", ejectee, src.name, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
+
+/obj/machinery/vehicle/proc/leave_pod(mob/ejectee as mob)
 	// Assert facing direction for eject location offset
+	if (!ejectee || ejectee.loc != src)
+		return
+
 	var/x_offset = 0
 	var/y_offset = 0
 	if (bound_width == 64 && bound_height == 64)	// ensure it is a 2x2 pod
@@ -901,18 +919,7 @@
 	var/location = locate(x_coord, y_coord, z_coord)
 	var/atom/movable/EJ = ejectee		// stops ejectee floating off in the direction they last moved
 	EJ.last_move = null
-	if(actually_eject)
-		ejectee.set_loc(location)
-
-	//ejectee.remove_shipcrewmember_powers(src.weapon_class)
-	ejectee.reset_keymap()
-	ejectee.recheck_keys()
-	if(src.pilot == ejectee)
-		src.pilot = null
-	if(passengers)
-		find_pilot()
-	else
-		src.ion_trail.stop()
+	ejectee.set_loc(location) // set_loc will call eject()
 
 	for (var/obj/item/I in src)
 		if ( (I in src.components) || I == src.atmostank || I == src.fueltank || I == src.intercom)
@@ -920,7 +927,6 @@
 
 		I.set_loc(location)
 
-	logTheThing("vehicle", ejectee, src.name, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
 
 ///////////////////////////////////////////////////////////////////////
 /////////Board Code  (also eject code lol)		//////////////////////
@@ -1004,14 +1010,14 @@
 /obj/machinery/vehicle/proc/eject_pod(var/mob/user, var/dead_only = 0)
 	for(var/mob/M in src) // nobody likes losing a pod to a dead pilot
 		if (!dead_only)
-			eject(M)
+			leave_pod(M)
 			boutput(user, "<span class='alert'>You yank [M] out of [src].</span>")
 		else
 			if(M.stat || !M.client)
-				eject(M)
+				leave_pod(M)
 				boutput(user, "<span class='alert'>You pull [M] out of [src].</span>")
 			else if(!isliving(M))
-				eject(M)
+				leave_pod(M)
 				boutput(user, "<span class='alert'>You scrape [M] out of [src].</span>")
 
 	for(var/obj/decal/cleanable/O in src)
@@ -1143,7 +1149,8 @@
 	for(var/mob/M in src)
 		boutput(M, "<span class='alert'><b>You are ejected from [src]!</b></span>")
 		logTheThing("vehicle", M, src.name, "is ejected from pod: <b>[constructTarget(src.name,"vehicle")]</b> when it blew up!")
-		src.eject(M)
+
+		src.leave_pod(M)
 		//var/atom/target = get_edge_target_turf(M,pick(alldirs))
 		//SPAWN_DBG(0)
 		//M.throw_at(target, 10, 2)

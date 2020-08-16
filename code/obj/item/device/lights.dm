@@ -201,6 +201,19 @@
 			else
 				user.visible_message("<span class='notice'><b>[user]</b> [pick("fiddles", "faffs around", "goofs around", "fusses", "messes")] with [src].</span>")
 
+/obj/item/device/light/glowstick/green_on
+	base_state = "glowstick-green"
+	icon_state = "glowstick-green0"
+	name = "emergency glowstick"
+	desc = "For emergency use only. Not for use in illegal lightswitch raves."
+	col_r = 0.0
+	col_g = 0.9
+	col_b = 0.1
+	color_name = "green"
+	New()
+		..()
+		turnon()
+
 /obj/item/device/light/glowstick/white
 	base_state = "glowstick-white"
 	icon_state = "glowstick-white0"

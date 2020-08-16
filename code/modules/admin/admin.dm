@@ -4237,12 +4237,12 @@ var/global/noir = 0
 		boutput(world, "<b>The game start has been delayed.</b>")
 		logTheThing("admin", usr, null, "delayed the game start.")
 		logTheThing("diary", usr, null, "delayed the game start.", "admin")
-		message_admins("<span class='internal>[usr.key] has delayed the game start.</span>")
+		message_admins("<span class='internal'>[usr.key] has delayed the game start.</span>")
 	else
 		boutput(world, "<b>The game will start soon.</b>")
 		logTheThing("admin", usr, null, "removed the game start delay.")
 		logTheThing("diary", usr, null, "removed the game start delay.", "admin")
-		message_admins("<span class='internal>[usr.key] has removed the game start delay.</span>")
+		message_admins("<span class='internal'>[usr.key] has removed the game start delay.</span>")
 
 /datum/admins/proc/delay_end()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
@@ -4252,7 +4252,7 @@ var/global/noir = 0
 	if (game_end_delayed == 2)
 		logTheThing("admin", usr, null, "removed the restart delay and triggered an immediate restart.")
 		logTheThing("diary", usr, null, "removed the restart delay and triggered an immediate restart.", "admin")
-		message_admins("<span class='internal>[usr.key] removed the restart delay and triggered an immediate restart.</span>")
+		message_admins("<span class='internal'>[usr.key] removed the restart delay and triggered an immediate restart.</span>")
 		ircbot.event("roundend")
 		Reboot_server()
 

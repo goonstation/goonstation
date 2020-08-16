@@ -968,7 +968,7 @@
 						target.OnMove(owner)
 			else
 				target.deliver_move_trigger("bump")
-
+		else
 #ifdef DATALOGGER
 			game_stats.Increment("violence")
 #endif
@@ -1041,7 +1041,7 @@
 									if (owner in viewers(7,M.current))
 										M.current.changeStatus("mutiny", 10 SECONDS)
 
-				if(target.client && target.health < 0) //Only do rev stuff if they have a client and are low health
+				if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
 					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
 						if (R.add_revolutionary(target.mind))
 							target.HealDamage("All", max(30 - target.health,0), 0)

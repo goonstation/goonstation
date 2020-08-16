@@ -199,1193 +199,6 @@
 		else
 			return src.loc
 
-
-/obj/machinery/vending/coffee
-	name = "coffee machine"
-	desc = "A Robust Coffee vending machine."
-	pay = 1
-	vend_delay = 15
-	icon_state = "coffee"
-	icon_vend = "coffee-vend"
-	icon_panel = "coffee-panel"
-	lr = 1
-	lg = 0.88
-	lb = 0.3
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/coffee, 25, cost=7)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/tea, 10, cost=6)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/xmas, 10, cost=10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/chickensoup, 10, cost=8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/weightloss_shake, 10, cost=15)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/covfefe, 10, cost=20, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola, rand(1, 6), cost=5, hidden=1)
-
-/obj/machinery/vending/snack
-	name = "snack machine"
-	desc = "Tasty treats for crewman eats."
-	pay = 1
-	icon_state = "snack"
-	icon_panel = "snack-panel"
-	slogan_list = list("Try our new nougat bar!",
-	"Twice the calories for half the price!",
-	"Fill the gap in your stomach right now!",
-	"A fresh delight is only a bite away!",
-	"We feature Discount Dan's Noodle Soups!")
-	lr = 1
-	lg = 0.4
-	lb = 0.4
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/candy, 10, cost=4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/chips, 10, cost=4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, 10, cost=4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/fries, 10, cost=4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/noodlecup, 10, cost=8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/burrito, 10, cost=10)
-		product_list += new/datum/data/vending_product(/obj/item/popsicle, 5, cost=5)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/plasticpackage, 10, cost=1)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/fork/plastic, 10, cost=10)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/spoon/plastic, 10, cost=10)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife/plastic, 10, cost=10)
-		product_list += new/datum/data/vending_product(/obj/item/tvdinner, 10, cost=20)
-
-
-/obj/machinery/vending/cigarette
-	name = "cigarette machine"
-	desc = "If you want to get cancer, might as well do it in style!"
-	pay = 1
-	vend_delay = 10
-	icon_state = "cigs"
-	icon_panel = "cigs-panel"
-	slogan_list = list("Space cigs taste good like a cigarette should!",
-	"I'd rather toolbox than switch.",
-	"Smoke!",
-	"Don't believe the reports - smoke today!")
-	lr = 0.55
-	lg = 1
-	lb = 0.5
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/cigpacket, 20, cost=15)
-		product_list += new/datum/data/vending_product(/obj/item/cigpacket/nicofree, 10, cost=20)
-		product_list += new/datum/data/vending_product(/obj/item/cigpacket/menthol, 10, cost=20)
-		product_list += new/datum/data/vending_product(/obj/item/cigpacket/propuffs, 10, cost=30)
-		product_list += new/datum/data/vending_product(/obj/item/cigpacket/cigarillo, 10, cost=9)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/nicotine, 10, cost=20)
-		product_list += new/datum/data/vending_product(/obj/item/matchbook, 7, cost=5)
-		product_list += new/datum/data/vending_product(/obj/item/device/light/zippo, 5, cost=35)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape, 10, cost=130)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ecig_refill_cartridge, 20, cost=150)
-
-		product_list += new/datum/data/vending_product(/obj/item/device/igniter, rand(1, 6), hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/cigpacket/random, rand(0, 1), hidden=1, cost=420)
-		product_list += new/datum/data/vending_product(/obj/item/cigpacket/cigarillo/juicer, rand(6, 9), hidden=1, cost=69)
-
-/obj/machinery/vending/medical
-	name = "NanoMed Plus"
-	desc = "Medical drug dispenser."
-	icon_state = "med"
-	icon_panel = "standard-panel"
-	icon_deny = "med-deny"
-	req_access_txt = "5"
-	mats = 10
-	acceptcard = 0
-	window_size = "400x675"
-	lr = 1
-	lg = 0.88
-	lb = 0.88
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 12)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/bruise, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/burn, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender/brute, 3)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender/burn, 3)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antitoxin, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/epinephrine, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/morphine, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antihistamine, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/aspirin, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antirad, 3)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/saline, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/atropine, 3)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/synaptizine, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/eyedrops, 2)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/antiviral, 6)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/insulin, 6)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/synaptizine, 6)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/calomel, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/heparin, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/proconvertin, 6)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/filgrastim, 8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/salbutamol, 8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mannitol, 8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mutadone, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/ipecac, 8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 2, cost=50)
-		product_list += new/datum/data/vending_product(/obj/item/bandage, 4)
-		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 4)
-		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_upgrade, 4)
-		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_organ_upgrade, 3)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/medical_surgery_guide, 2)
-
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/sulfonal, rand(1, 2), hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/pancuronium, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/LSD, rand(1, 6), hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape/medical, 1, hidden=1, cost=400)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/bath_bomb, rand(7, 13), hidden=1, cost=100)
-
-/obj/machinery/vending/medical_public
-	name = "Public MiniMed"
-	desc = "Medical supplies for everyone! Almost nearly as good as what the professionals use, kinda!"
-	pay = 1
-	vend_delay = 10
-	icon_state = "pubmed"
-	icon_panel = "pubmed-panel"
-	slogan_list = list("It pays to be safe!",
-	"It's safest to pay!",
-	"We've gone green! Now using 100% recycled materials!",
-	"Address all complaints about Public MiniMed services to FILE NOT FOUND for a swift response.",
-	"Now 80% sterilized!",
-	"There is a 1000 credit fine for bleeding on this machine.",
-	"Are you or a loved one currently dying? Consider Discount Dan's burial solutions!",
-	"ERROR: Item \"Stimpack\" not found!",
-	"Please, be considerate! Do not block access to the machine with your bloodied carcass.",
-	"Please contact your insurance provider for details on reduced payment options for this machine!")
-	window_size = "400x500"
-
-	lr = 1
-	lg = 0.88
-	lb = 0.88
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/mini/bruise, 5, cost=70)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/mini/burn, 5, cost=70)
-		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 2, cost=80)
-		product_list += new/datum/data/vending_product(/obj/item/bandage, 5, cost=55)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/charcoal, 5, cost=95)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/epinephrine, 5, cost=150)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/spaceacillin, 2, cost=110)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/antihistamine, 2, cost=70)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 2, cost=70)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/salicylic_acid, 10, cost=75)
-
-		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_upgrade, rand(0, 2), hidden=1, cost=25)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/mini/synthflesh, rand(0, 5), hidden=1, cost=125)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape/medical, 1, hidden=1, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/bath_bomb, rand(2, 5), hidden=1, cost=100)
-		if (prob(5))
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/bathsalts, 1, hidden=1, cost=140)
-
-		if (prob(15))
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/coffee, rand(1,5), hidden=1, cost=2)
-		else
-			slogan_list += "ERROR: OUT OF COFFEE!"
-
-/obj/machinery/vending/security
-	name = "SecTech"
-	desc = "A security equipment vendor."
-	icon_state = "sec"
-	icon_panel = "standard-panel"
-	icon_deny = "sec-deny"
-	req_access_txt = "1"
-	acceptcard = 0
-
-	lr = 1
-	lg = 0.8
-	lb = 0.9
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/handcuffs/guardbot, 16)
-		product_list += new/datum/data/vending_product(/obj/item/handcuffs, 8)
-		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 5)
-		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/fog, 5)
-		product_list += new/datum/data/vending_product(/obj/item/device/flash, 4)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/hardhat/security, 4)
-		product_list += new/datum/data/vending_product(/obj/item/device/pda2/security, 2)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 2)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 2)
-		product_list += new/datum/data/vending_product(/obj/item/implantcase/antirev, 3)
-#ifdef RP_MODE
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/space_law, 1)
-#endif
-		product_list += new/datum/data/vending_product(/obj/item/device/flash/turbo, rand(1, 6), hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
-
-/obj/machinery/vending/security_ammo //ass jam time yes
-#if ASS_JAM
-	name = "Kinetitech"
-	desc = "A restricted weapon vendor, banned by the Space Geneva Convention in 2036 for being a 'warcrime'. Where the hell did the Head of Security find this?"
-	mats = 6669 //Yes its not traitor restricted, but good luck getting more of these. If you manage to get this, you deserve it
-#else
-	name = "AmmoTech"
-	desc = "A restricted ammunition vendor."
-#endif
-	icon_state = "sec"
-	icon_panel = "standard-panel"
-	icon_deny = "sec-deny"
-	req_access_txt = "37"
-	acceptcard = 0
-#if !ASS_JAM
-	is_syndicate = 1 // okay enough piles of spes ammo for any mechanic
-#endif
-	lr = 1
-	lg = 0.8
-	lb = 0.9
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 6)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, 2)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 3)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO,3)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/flare, 3)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/smoke, 3)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 3)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 3)
-#if ASS_JAM
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/ak47, 6)
-		product_list += new/datum/data/vending_product(/obj/item/gun/energy/tommy_gun, 6)
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/tactical_shotgun, 6)
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/hunting_rifle, 6)
-		product_list += new/datum/data/vending_product(/obj/item/baton/classic, 6)
-		product_list += new/datum/data/vending_product(/obj/item/gun/energy/egun, 6)
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/riot40mm, 6)
-		if(prob(10))
-			product_list += new/datum/data/vending_product(/obj/item/gun/energy/howitzer, 1)
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/detectiverevolver, 6)
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/clock_188, 200)
-		product_list += new/datum/data/vending_product(/obj/item/storage/pouch, 6)
-		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/stinger, 10)
-		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/frag, 10)
-		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/high_explosive, 10)
-		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/incendiary, 10)
-		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/smoke, 10)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/ak47, 20)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/aex, 20)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12, 40)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/rifle_3006, 20)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/bullet_9mm, 60)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 9999999)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 120)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, 40)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 60)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/flare, 60)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/smoke, 60)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 60)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 60)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/autocannon/seeker, 20)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/autocannon/knocker,20)
-
-#else
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
-#endif
-/obj/machinery/vending/cola
-	name = "soda machine"
-	pay = 1
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola, rand(1, 6), cost=5, hidden = 1)
-		product_list += new/datum/data/vending_product(/obj/item/canned_laughter, rand(1,5), cost=5,hidden=1)
-		if(prob(25))
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/softsoft_pizza, rand(1, 3), cost=10, hidden = 1)
-
-	red
-		icon_state = "robust"
-		icon_panel = "robust-panel"
-		slogan_list = list("Drink Robust-Eez, the classic robustness tonic!",
-		"A Dr. Pubber a day keeps the boredom away!",
-		"Cool, refreshing Lime-Aid - it's good for you!",
-		"Grones Soda! Where has your bottle been today?",
-		"Decirprevo. The sophisticate's bottled water.")
-
-		lr = 1
-		lg = 0.4
-		lb = 0.4
-
-		create_products()
-			..()
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/red, 10, cost=8)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/pink, 10, cost=8)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/lime, 10, cost=12)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/grones, 10, cost=12)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/bottledwater, 10, cost=10)
-			product_list += new/datum/data/vending_product("/obj/item/reagent_containers/food/drinks/cola/random", 10, cost=12) //does this even work??
-
-	blue
-		icon_state = "grife"
-		icon_panel = "grife-panel"
-		slogan_list = list("Grife-O - the soda of a space generation!",
-		"The taste of nature!",
-		"Spooky Dan's - it's altogether ooky!",
-		"Everyone can see Orange-Aid is best!",
-		"Decirprevo. The sophisticate's bottled water.")
-
-		lr = 0.5
-		lg = 0.5
-		lb = 1
-
-		create_products()
-			..()
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/blue, 10, cost=7)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/orange, 10, cost=7)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/spooky, 10, cost=12)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/spooky2,10, cost=12)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/bottledwater, 10, cost=10)
-			product_list += new/datum/data/vending_product("/obj/item/reagent_containers/food/drinks/cola/random", 10, cost=12)
-
-/obj/machinery/vending/electronics
-	name = "ElecTek Vendomaticotron"
-	desc = "Dispenses electronics equipment."
-	icon_state = "generic"
-	icon_panel = "generic-panel"
-	acceptcard = 0
-	slogan_list = list("Stop fussing about in boxes, use ElecTek!",
-	"Now with boards 100% of the time!",
-	"No carbs!",
-	"Now with 50% extra inventory!")
-
-	lr = 1
-	lg = 0.88
-	lb = 0.3
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/electronics/battery, 30)
-		product_list += new/datum/data/vending_product(/obj/item/electronics/board, 30)
-		product_list += new/datum/data/vending_product(/obj/item/electronics/fuse, 30)
-		product_list += new/datum/data/vending_product(/obj/item/electronics/switc, 30)
-		product_list += new/datum/data/vending_product(/obj/item/electronics/keypad, 30)
-		product_list += new/datum/data/vending_product(/obj/item/electronics/screen, 30)
-		product_list += new/datum/data/vending_product(/obj/item/electronics/capacitor, 30)
-		product_list += new/datum/data/vending_product(/obj/item/electronics/buzzer, 30)
-		product_list += new/datum/data/vending_product(/obj/item/electronics/resistor, 30)
-		product_list += new/datum/data/vending_product(/obj/item/electronics/bulb, 30)
-		product_list += new/datum/data/vending_product(/obj/item/electronics/relay, 30)
-
-/obj/machinery/vending/mechanics
-	name = "MechComp Dispenser"
-	desc = "Dispenses electronics equipment."
-	icon_state = "generic"
-	icon_panel = "generic-panel"
-	acceptcard = 0
-	pay = 0
-
-	lr = 1
-	lg = 0.88
-	lb = 0.3
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/mechanicbook, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/andcomp, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/math, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/button, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/buttonPanel, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/mc14500, 30)
-		product_list += new/datum/data/vending_product(/obj/disposalconstruct/mechanics, 10)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/pausecomp, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/dispatchcomp, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/gunholder/recharging, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/filecomp, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/flushcomp, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/accelerator, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/gunholder, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/hscan, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/instrumentPlayer, 10)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/ledcomp, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/miccomp, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/orcomp, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/pscan, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/cashmoney, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/networkcomp, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/pressureSensor, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/radioscanner, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/regfind, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/regreplace, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/relaycomp, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/selectcomp, 30)
-		product_list += new/datum/data/vending_product(/obj/disposalconstruct/mechanics_sensor, 10)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigbuilder, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigcheckcomp, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/synthcomp, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/telecomp, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/thprint, 10)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/togglecomp, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/triplaser, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/wificomp, 30)
-		product_list += new/datum/data/vending_product(/obj/item/mechanics/wifisplit, 30)
-
-/obj/machinery/vending/computer3
-	name = "CompTech"
-	desc = "A computer equipment vendor."
-	icon_state = "comp"
-	icon_panel = "standard-panel"
-	icon_off = "standard-off"
-	icon_broken = "standard-broken"
-	icon_fallen = "standard-fallen"
-	acceptcard = 0
-
-	lr = 1
-	lg = 0.9
-	lb = 0.1
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/motherboard, 8)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/fixed_disk, 8)
-		//product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/computer3boot, 4)
-		product_list += new/datum/data/vending_product(/obj/item/peripheral/card_scanner, 8)
-		product_list += new/datum/data/vending_product(/obj/item/peripheral/network/powernet_card, 4)
-
-		product_list += new/datum/data/vending_product(/obj/item/peripheral/drive, rand(1, 6), hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/peripheral/drive/cart_reader, rand(1, 6), hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/peripheral/prize_vendor, rand(1, 6), hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/peripheral/network/radio, rand(1, 6), hidden=1)
-
-//cogwerks- adding a floppy disk vendor
-/obj/machinery/vending/floppy
-	name = "SoftTech"
-	desc = "A computer software vendor."
-	icon_state = "software"
-	icon_panel = "standard-panel"
-	icon_off = "standard-off"
-	icon_broken = "standard-broken"
-	icon_fallen = "standard-fallen"
-	pay = 1
-	acceptcard = 1
-	slogan_list = list("Remember to read the EULA!",
-	"Don't copy that floppy!",
-	"Welcome to the information age!")
-
-	lr = 0.03
-	lg = 1
-	lb = 0.2
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/computer3boot, 6, cost=60)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/terminal_os, 6, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/network_progs, 4, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/medical_progs, 2, cost=35)
-
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/security_progs, 2, cost=100, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/communications, 2, cost=200, hidden=1)
-
-/obj/machinery/vending/pda //cogwerks: vendor to clean up the pile of PDA carts a bit
-	name = "CartyParty"
-	desc = "A PDA cartridge vendor."
-	icon_state = "pda"
-	icon_panel = "standard-panel"
-	icon_off = "standard-off"
-	icon_broken = "standard-broken"
-	icon_fallen = "standard-fallen"
-	pay = 1
-	acceptcard = 1
-	slogan_list = list("Convenient and feature-packed!",
-	"For the busy jet-setting businessperson on the go!",
-	"-CHECKSUM FAILURE | STACK OVERFLOW - CONSULT YOUR TECHN-WONK")
-
-	lr = 0.4
-	lg = 0.4
-	lb = 1
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/device/pda2, 10, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/atmos, 2, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/mechanic, 2, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/quartermaster, 2, cost=50)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/medical, 2, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/genetics, 2, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/toxins, 2, cost=50)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/botanist, 2, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/janitor, 2, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/engineer, 2, cost=70)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/diagnostics, 2, cost=70)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/game_codebreaker, 4, cost=25)
-		product_list += new/datum/data/vending_product(/obj/item/device/pda_module/flashlight/high_power, 2, cost=100)
-
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/security, 1, cost=80, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/head, 1, cost=100, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/clown, 1, cost=200, hidden=1)
-
-/obj/machinery/vending/book //cogwerks: eventually this oughta have some of the wiki job guides available in it
-	name = "Books4u"
-	desc = "A printed text vendor."
-	icon_state = "books"
-	icon_panel = "standard-panel"
-	icon_off = "standard-off"
-	icon_broken = "standard-broken"
-	icon_fallen = "standard-fallen"
-	pay = 1
-	acceptcard = 1
-	slogan_list = list("Read a book today!",
-	"Educate thyself!",
-	"Book Club meeting in the Chapel, every Thursday!")
-
-	lr = 0.2
-	lg = 1
-	lb = 0.03
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/paper/engine, 2, cost=20)
-		product_list += new/datum/data/vending_product(/obj/item/paper/Toxin, 2, cost=20)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/cookbook, 2, cost=30)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/dwainedummies, 2, cost=60)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/guardbot_guide, 2, cost=50)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/hydroponicsguide, 2, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/monster_manual, 2, cost=30)
-		product_list += new/datum/data/vending_product(/obj/item/paper/Cloning, 2, cost=30)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/medical_guide, 2, cost=30)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/minerals, 2, cost=10)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/player_piano, 2, cost=10)
-
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/the_trial, 1, cost=80, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/critter_compendium, 1, cost=100, hidden=1)
-
-/obj/machinery/vending/kitchen
-	name = "FoodTech"
-	desc = "Food storage unit."
-	icon_state = "food"
-	icon_panel = "standard-panel"
-	icon_off = "standard-off"
-	icon_broken = "standard-broken"
-	icon_fallen = "standard-fallen"
-	req_access_txt = "28"
-	acceptcard = 0
-
-	lr = 1
-	lg = 0.88
-	lb = 0.3
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/chefhat, 2)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/chef, 2)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/apron,2)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/souschefhat, 2)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/souschef, 2)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/fork, 10)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife, 10)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/spoon, 10)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/chopsticks_package, 5)
-		product_list += new/datum/data/vending_product(/obj/item/plate/tray, 3)
-		product_list += new/datum/data/vending_product(/obj/surgery_tray/kitchen_island, 2)
-		product_list += new/datum/data/vending_product(/obj/item/ladle, 1)
-		product_list += new/datum/data/vending_product(/obj/item/soup_pot, 1)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/rollingpin, 2)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife/cleaver, 1)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife/pizza_cutter, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bowl, 10)
-		product_list += new/datum/data/vending_product(/obj/item/plate, 10)
-		product_list += new/datum/data/vending_product(/obj/item/matchbook, 3)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ice_cream_cone, 20)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/oatmeal, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/flour, 20)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/rice, 20)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/sugar, 20)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/butter, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/spaghetti, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/meatball, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/syrup, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/mayo, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/ketchup, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/tomato, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/apple, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/lettuce, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/potato, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/corn, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/seaweed, 10)
-
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/breakfast, rand(2, 4), hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/snack_cake, rand(1, 3), hidden=1)
-
-//Somewhere out in the vast nothingness of space, a chef (and an admin) is crying.
-
-/obj/machinery/vending/pizza
-	name = "pizza vending machine"
-	icon_state = "pizza"
-	desc = "A vending machine that serves... pizza?"
-	var/pizcooking = 0
-	var/piztopping = "plain"
-	anchored = 0
-	acceptcard = 0
-	pay = 1
-	credit = 100
-	slogan_list = list("A revolution in the pizza industry!",
-	"Prepared in moments!",
-	"I'm a chef who works 24 hours a day!")
-
-	lr = 1
-	lg = 0.6
-	lb = 0.2
-
-	generate_vending_HTML()
-		src.vending_HTML = "<TT><B>PizzaVend 0.5b</B></TT><BR>"
-
-		if (src.pizcooking)
-			src.vending_HTML += "<TT><B>Cooking your pizza, please wait!</B></TT><BR>"
-		else
-			src.vending_HTML += "Topping - <A href='?src=\ref[src];picktopping=1'>[piztopping]</A><BR>"
-			src.vending_HTML += "<A href='?src=\ref[src];cook=1'>Cook!</A><BR>"
-
-			if (src.pay)
-				src.vending_HTML += "<BR><B>Available Credits:</B> [src.emagged ? "CREDIT CALCULATION ERROR" : "$[src.credit]"] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
-				if (!src.acceptcard)
-					src.vending_HTML += "<BR>This machine only takes credit bills."
-
-			src.vending_HTML += "</TT>"
-/*
-	attack_hand(mob/user as mob)
-		if (status & (NOPOWER|BROKEN))
-			return
-		var/dat
-		if(pizcooking)
-			dat += "<TT><B>Cooking your pizza, please wait!</B></TT><BR>"
-		else
-			dat += "<TT><B>PizzaVend 0.5b</B></TT><BR>"
-			if(emagged)
-				dat += "<BR><B>Available Credits:</B> CREDIT CALCULATION ERROR<BR>"
-			else
-				dat += "<BR><B>Available Credits:</B> $[src.credit]<BR>"
-			dat += "Topping - <A href='?src=\ref[src];picktopping=1'>[piztopping]</A><BR>"
-			dat += "<A href='?src=\ref[src];cook=1'>Cook!</A><BR>"
-		user.Browse("<HEAD><TITLE>Pizza Vendor</TITLE></HEAD>[dat]", "window=pizzavend")
-		onclose(user, "pizzavend")
-		return
-*/
-	Topic(href, href_list)
-		if(..())
-			return
-
-		if (status & (NOPOWER|BROKEN))
-			return
-
-		if (usr.contents.Find(src) || in_range(src, usr) && istype(src.loc, /turf))
-			src.add_dialog(usr)
-			if (href_list["cook"])
-				if(!pizcooking)
-					if((credit < 50)&&(!emagged))
-						boutput(usr, "<span class='alert'>Insufficient funds!</span>") // no money? get out
-						return
-					if(!emagged)
-						credit -= 50
-					pizcooking = 1
-					icon_state = "pizza-vend"
-					src.generate_HTML(1)
-					updateUsrDialog()
-					sleep(20 SECONDS)
-					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1, -1)
-					var/obj/item/reagent_containers/food/snacks/pizza/P = new /obj/item/reagent_containers/food/snacks/pizza(src.loc)
-					P.quality = 0.6
-					P.heal_amt = 2
-					P.desc = "A typical [piztopping] pizza."
-					P.name = "[piztopping] pizza"
-					sleep(0.2)
-					if(piztopping != "plain")
-						switch(piztopping)
-							if("meatball") P.topping_color ="#663300"
-							if("mushroom") P.topping_color ="#CFCFCF"
-							if("pepperoni") P.topping_color ="#C90E0E"
-						P.topping = 1
-						P.add_topping(0)
-
-					if (!(status & (NOPOWER|BROKEN)))
-						icon_state = "pizza"
-
-					pizcooking = 0
-					src.generate_HTML(1)
-			if(href_list["picktopping"])
-				switch(piztopping)
-					if("plain") piztopping = "meatball"
-					if("meatball") piztopping = "mushroom"
-					if("mushroom") piztopping = "pepperoni"
-					if("pepperoni") piztopping = "plain"
-				src.generate_HTML(1)
-			add_fingerprint(usr)
-			updateUsrDialog()
-		return
-
-/obj/machinery/vending/monkey
-	name = "ValuChimp"
-	desc = "More fun than a barrel of monkeys! Monkeys may or may not be synthflesh replicas, may or may not contain partially-hydrogenated banana oil."
-	icon_state = "monkey"
-	icon_panel = "standard-panel"
-	// monkey vendor has slightly special broken/etc sprites so it doesn't just inherit the standard set  :)
-	acceptcard = 0
-	mats = 0 // >:I
-	slogan_list = list("My monkeys are too strong for you, traveler!")
-	slogan_chance = 1
-
-	lr = 1
-	lg = 0.88
-	lb = 0.3
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/mob/living/carbon/human/npc/monkey, rand(10, 15))
-
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/banana, rand(1,20), hidden=1)
-
-/obj/machinery/vending/magivend
-	name = "MagiVend"
-	desc = "A magic vending machine."
-	icon_state = "wiz"
-	icon_panel = "standard-panel"
-	acceptcard = 0
-	slogan_list = list("Sling spells the proper way with MagiVend!",
-	"Be your own Houdini! Use MagiVend!")
-
-	vend_delay = 15
-	vend_reply = "Have an enchanted evening!"
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard, 1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe, 1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/sandal, 1)
-		product_list += new/datum/data/vending_product(/obj/item/staff, 2)
-
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/red, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/red, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/purple, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/purple, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/green, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/green, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/witch, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/necro, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/necro, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/staff/crystal, 1)
-
-/obj/machinery/vending/standard
-	desc = "A standard vending machine."
-	icon_state = "standard"
-	icon_panel = "standard-panel"
-	acceptcard = 0
-	slogan_list = list("Please make your selection.")
-
-	lr = 1
-	lg = 0.81
-	lb = 0.81
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/device/prox_sensor, 8)
-		product_list += new/datum/data/vending_product(/obj/item/device/igniter, 8)
-		product_list += new/datum/data/vending_product(/obj/item/device/radio/signaler, 8)
-		product_list += new/datum/data/vending_product(/obj/item/wirecutters, 1)
-		product_list += new/datum/data/vending_product(/obj/item/device/timer, 8)
-		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/atmosanalyzer_upgrade, 3)
-		product_list += new/datum/data/vending_product(/obj/item/pressure_crystal, 5)
-		product_list += new/datum/data/vending_product(/obj/item/device/pressure_sensor, 2)
-
-		product_list += new/datum/data/vending_product(/obj/item/device/light/flashlight, rand(1, 6), hidden=1)
-		//product_list += new/datum/data/vending_product(/obj/item/device/timer, rand(1, 6), hidden=1)
-
-
-
-/obj/machinery/vending/hydroponics
-	name = "GardenGear"
-	desc = "A vendor for Hydroponics related equipment."
-	acceptcard = 0
-
-	lr = 0.5
-	lg = 1
-	lb = 0.2
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/wateringcan, 5)
-		product_list += new/datum/data/vending_product(/obj/item/plantanalyzer, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/compostbag, 5)
-		product_list += new/datum/data/vending_product(/obj/item/saw, 3)
-		product_list += new/datum/data/vending_product(/obj/item/gardentrowel, 5)
-		product_list += new/datum/data/vending_product(/obj/item/satchel/hydro, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/weedkiller, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/mutriant, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/groboost, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/topcrop, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/powerplant, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/fruitful, 5)
-		product_list += new/datum/data/vending_product(/obj/decorative_pot, 5)
-
-		product_list += new/datum/data/vending_product(/obj/item/seedplanter/hidden, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/seed/grass, rand(3, 6), hidden=1)
-		if (prob(25))
-			product_list += new/datum/data/vending_product(/obj/item/seed/alien, 1, hidden=1)
-
-/obj/machinery/vending/hydroponics/mean_solarium_bullshit
-	mechanics_type_override = /obj/machinery/vending/hydroponics
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/device/key/cheget,1, 954, 1)
-
-/obj/machinery/vending/fortune
-#ifdef HALLOWEEN
-	name = "Necromancer Zoldorf"
-	icon_state = "hfortuneteller"
-	icon_vend = "hfortuneteller-vend"
-	pay = 1
-	acceptcard = 1
-	slogan_list = list("Ha ha ha ha ha!",
-	"I am the great wizard Zoldorf!",
-	"Learn your fate!")
-	var/sound_riff = 'sound/machines/fortune_riff.ogg'
-	var/sound_riff_broken = 'sound/machines/fortune_riff_broken.ogg'
-	var/sound_greeting = 'sound/machines/fortune_greeting.ogg'
-	var/sound_greeting_broken = 'sound/machines/fortune_greeting_broken.ogg'
-	var/sound_laugh = 'sound/machines/fortune_laugh.ogg'
-	var/sound_laugh_broken = 'sound/machines/fortune_laugh_broken.ogg'
-	var/sound_ding = 'sound/machines/ding.ogg'
-	var/list/sounds_working = list('sound/misc/automaton_scratch.ogg','sound/machines/mixer.ogg')
-	var/list/sounds_broken = list('sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
-
-	lr = 0.3
-	lg = 0.3
-	lb = 1
-#else
-	name = "Zoldorf"
-	desc = "A horrid old fortune-telling machine."
-	icon_state = "fortuneteller"
-	icon_vend = "fortuneteller-vend"
-	pay = 1
-	acceptcard = 1
-	slogan_list = list("Ha ha ha ha ha!",
-	"I am the great wizard Zoldorf!",
-	"Learn your fate!")
-	var/sound_riff = 'sound/machines/fortune_riff.ogg'
-	var/sound_riff_broken = 'sound/machines/fortune_riff_broken.ogg'
-	var/sound_greeting = 'sound/machines/fortune_greeting.ogg'
-	var/sound_greeting_broken = 'sound/machines/fortune_greeting_broken.ogg'
-	var/sound_laugh = 'sound/machines/fortune_laugh.ogg'
-	var/sound_laugh_broken = 'sound/machines/fortune_laugh_broken.ogg'
-	var/sound_ding = 'sound/machines/ding.ogg'
-	var/list/sounds_working = list('sound/misc/automaton_scratch.ogg','sound/machines/mixer.ogg')
-	var/list/sounds_broken = list('sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
-
-	lr = 0.3
-	lg = 0.3
-	lb = 1
-#endif
-	New()
-		..()
-		light.set_color(0.8, 0.4, 1)
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/paper/thermal/fortune, 25, cost=10)
-		product_list += new/datum/data/vending_product(/obj/item/playing_cards/tarot, 5, cost=25)
-		product_list += new/datum/data/vending_product(/obj/item/paper/card_manual, 5, cost=1)
-		product_list += new/datum/data/vending_product(/obj/item/zolscroll, 100, cost=100, hidden=1) //weird burrito
-
-	prevend_effect()
-		if(src.seconds_electrified || src.extended_inventory)
-			src.visible_message("<span class='notice'>[src] wakes up!</span>")
-			playsound(src.loc, sound_riff_broken, 60, 1)
-			sleep(2 SECONDS)
-			playsound(src.loc, sound_greeting_broken, 65, 1)
-			if (src.icon_vend)
-				flick(src.icon_vend,src)
-			speak("F*!@$*(9HZZZZ9**###!")
-			sleep(2.5 SECONDS)
-			src.visible_message("<span class='notice'>[src] spasms violently!</span>")
-			playsound(src.loc, pick(sounds_broken), 40, 1)
-			if (src.icon_vend)
-				flick(src.icon_vend,src)
-			sleep(1 SECOND)
-			src.visible_message("<span class='notice'>[src] makes an obscene gesture!</b></span>")
-			playsound(src.loc, pick(sounds_broken), 40, 1)
-			if (src.icon_vend)
-				flick(src.icon_vend,src)
-			sleep(1.5 SECONDS)
-			playsound(src.loc, sound_laugh_broken, 65, 1)
-			speak("AHHH#######!")
-
-		else
-			src.visible_message("<span class='notice'>[src] wakes up!</span>")
-			playsound(src.loc, sound_riff, 60, 1)
-			sleep(2 SECONDS)
-			playsound(src.loc, sound_greeting, 65, 1)
-			if (src.icon_vend)
-				flick(src.icon_vend,src)
-			speak("The great wizard Zoldorf is here!")
-			sleep(2.5 SECONDS)
-			src.visible_message("<span class='notice'>[src] rocks back and forth!</span>")
-			playsound(src.loc, pick(sounds_working), 40, 1)
-			if (src.icon_vend)
-				flick(src.icon_vend,src)
-			sleep(1 SECOND)
-			src.visible_message("<span class='notice'>[src] makes a mystical gesture!</b></span>")
-			playsound(src.loc, pick(sounds_working), 40, 1)
-			if (src.icon_vend)
-				flick(src.icon_vend,src)
-			sleep(1.5 SECONDS)
-			playsound(src.loc, sound_laugh, 65, 1)
-			speak("Ha ha ha ha ha!")
-
-		return
-
-	postvend_effect()
-		playsound(src.loc, sound_ding, 50, 1)
-		return
-
-	fall(mob/living/carbon/victim)
-		playsound(src.loc, sound_laugh, 65, 1)
-		speak("Ha ha ha ha ha!")
-		..()
-		return
-
-	shock(mob/user, prb)
-		// Zap the fuck out of the user but don't prevent them from vending, because
-		// fucked up Zoldorf is good and I miss seeing it.
-		..()
-		return 0
-
-	electrocute(mob/user, netnum)
-		..()
-		playsound(src.loc, sound_laugh, 65, 1)
-		speak("Ha ha ha ha ha!")
-		return
-
-	attackby(obj/item/weapon as obj, mob/user as mob) //pretty much just player zoldorf stuffs :)
-		if((istype(weapon, /obj/item/zolscroll)) && istype(user,/mob/living/carbon/human) && (src.z == 1))
-			var/obj/item/zolscroll/scroll = weapon
-			var/mob/living/carbon/human/h = user
-			if(h.unkillable)
-				boutput(user,"<span class='alert'><b>Your soul is shielded and cannot be sold!</b></span>")
-				return
-			if(scroll.icon_state != "signed")
-				boutput(h, "<span class='alert'>It doesn't seem to be signed yet.</span>")
-				return
-			if(scroll.signer == h.real_name)
-				var/obj/machinery/playerzoldorf/pz = new /obj/machinery/playerzoldorf
-				pz.credits = src.credit
-				if(the_zoldorf.len)
-					if(the_zoldorf[1].homebooth)
-						//var/obj/booth = the_zoldorf[1].homebooth
-						boutput(h, "<span class='alert'><b>There can only be one!</b></span>") // Maybe add a way to point where the booth is if people are being jerks
-					else
-						pz.booth(h,src.loc,scroll)
-						qdel(src)
-				else
-					pz.booth(h,src.loc,scroll)
-					qdel(src)
-			else
-				user.visible_message("<span class='alert'><b>[h.name] tries to sell [scroll.signer]'s soul to [src]! How dare they...</b></span>","<span class='alert'><b>You can only sell your own soul!</b></span>")
-		else
-			..()
-
-/obj/machinery/vending/alcohol
-	name = "Cap'n Bubs' Booze-O-Mat"
-	desc = "A vending machine filled with various kinds of alcoholic beverages and things for fancying up drinks."
-	icon_state = "capnbubs"
-	icon_panel = "capnbubs-panel"
-	slogan_list = list("hm hm",
-	"Liquor - get it in ya!",
-	"I am the liquor",
-	"I don't always drink, but when I do, I sell the rights to my likeness")
-
-	lr = 1
-	lg = 0.3
-	lb = 0.95
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/beer, 6)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/fancy_beer, 6)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/vodka, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/tequila, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/wine, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/cider, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/mead, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/gin, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/rum, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/champagne, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/bojackson, 1)
-		product_list += new/datum/data/vending_product(/obj/item/storage/box/cocktail_umbrellas, 4)
-		product_list += new/datum/data/vending_product(/obj/item/storage/box/cocktail_doodads, 4)
-		product_list += new/datum/data/vending_product(/obj/item/storage/box/fruit_wedges, 1)
-		product_list += new/datum/data/vending_product(/obj/item/shaker/salt, 1)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cocktailshaker, 1)
-
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, hidden=1)
-
-/obj/machinery/vending/chem
-	name = "ChemDepot"
-	desc = "Some odd machine that dispenses little vials and packets of chemicals for exorbitant amounts of money. Is this thing even working right?"
-	icon_state = "chem"
-	icon_panel = "standard-panel"
-	icon_off = "standard-off"
-	icon_broken = "standard-broken"
-	icon_fallen = "standard-fallen"
-	glitchy_slogans = 1
-	pay = 1
-	acceptcard = 1
-	slogan_list = list("Hello!",
-	"Please state the item you wish to purchase.",
-	"Many goods at reasonable prices.",
-	"Please step right up!",
-	"Greetings!",
-	"Thank you for your interest in VENDOR NAME's goods!")
-
-	lr = 1
-	lg = 0.3
-	lb = 0.95
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vending/vial/random, 1, cost = rand(1000, 10000))
-		var/lock1 = rand(1, 9)
-		for (var/i = 0, i < lock1, i++) // this entire thing is just random luck
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vending/vial/random, 1, cost = rand(1000, 10000))
-
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vending/bag/random, 1, cost = rand(1000, 10000))
-		var/lock2 = rand(1, 9)
-		for (var/i = 0, i < lock2, i++) // so we'll add a random amount to each machine
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vending/bag/random, 1, cost = rand(1000, 10000))
-
-		product_list += new/datum/data/vending_product(/obj/item/cigpacket/random, 1, cost = rand(1000, 10000), hidden=1)
-		var/lock3 = rand(1, 9)
-		for (var/i = 0, i < lock3, i++)
-			product_list += new/datum/data/vending_product(/obj/item/cigpacket/random, 1, cost = rand(1000, 10000), hidden=1)
-
-/obj/machinery/vending/cards
-	name = "card machine"
-	desc = "A machine that sells various kinds of cards, notably Spacemen the Grifening trading cards!"
-	pay = 1
-	vend_delay = 10
-	icon_state = "card"
-	icon_panel = "card-panel"
-
-	lr = 1
-	lg = 0.4
-	lb = 0.7
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/paper/card_manual, 10, cost=1)
-		product_list += new/datum/data/vending_product(/obj/item/card_box/trading, 5, cost=60)
-		product_list += new/datum/data/vending_product(/obj/item/card_box/booster, 20, cost=20)
-		product_list += new/datum/data/vending_product(/obj/item/card_box/suit, 10, cost=15)
-		product_list += new/datum/data/vending_product(/obj/item/card_box/tarot, 5, cost=25)
-		product_list += new/datum/data/vending_product(/obj/item/card_box/hanafuda, 5, cost=298)
-		product_list += new/datum/data/vending_product(/obj/item/card_box/storage, 5, cost=10)
-		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicebox, 5, cost=150)
-		product_list += new/datum/data/vending_product(/obj/item/storage/dicepouch, 5, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicecup, 5, cost=10)
-		product_list += new/datum/data/vending_product(/obj/item/goboard, 1, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/gobowl/b, 1, cost=50)
-		product_list += new/datum/data/vending_product(/obj/item/gobowl/w, 1, cost=50)
-		
-/obj/machinery/vending/clothing
-	name = "FancyPantsCo Sew-O-Matic"
-	desc = "A clothing vendor."
-	icon_state = "clothes"
-	icon_vend = "clothes-vend"
-	icon_panel = "standard-panel"
-	icon_off = "standard-off"
-	icon_broken = "standard-broken"
-	icon_fallen = "standard-fallen"
-	pay = 1
-	acceptcard = 1
-	vend_delay = 20
-	slogan_list = list("Look snappy in seconds!",
-	"Style over substance.")
-
-	prevend_effect()
-		playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
-		return
-
-	postvend_effect()
-		playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-		return
-
-	create_products()
-		..()
-		//for (var/j in typesof(/obj/item/clothing/under/color)) // alla dem
-			//product_list += new/datum/data/vending_product([j], 5, cost=50)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/yoga, 5, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/yoga/red, 5, cost=40)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/dress, 5, cost=200)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/dress/red, 5, cost=250)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/dress/hawaiian, 5, cost=300)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/heels/black, 5, cost=120)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/heels/red, 5, cost=120)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/poncho, 2, cost=30)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/lshirt, 2, cost=60)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/jacket/design/tan, 2, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/jacket/design/maroon, 2, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/jacket/design/magenta, 2, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/jacket/design/mint, 2, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/jacket/design/cerulean, 2, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/jacket/design/navy, 2, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/jacket/design/indigo, 2, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/jacket/design/grey, 2, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/dressb, 2, cost=300)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/sunhat, 2, cost=200)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/white, 3, cost = 200)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/gray, 3, cost = 200)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/black, 3, cost = 200)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/red, 3, cost = 200)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/orange, 3, cost = 200)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/yellow, 3, cost = 200)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/green, 3, cost = 200)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/blue, 3, cost = 200)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/purple, 3, cost = 200)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/pokervisor, 3, cost = 150)
-
-
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/yoga/communist, 1, cost=80, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/rando, 1, cost=160, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/gimmick/wedding_dress, 1, cost=5000, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/veil, 1, 80, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/heels, 1, 150, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/tuxedo_jacket, 1, cost=250, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/bartender/tuxedo, 1, cost=80, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/dress_shoes, 1, cost=130, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/ring/gold, 2, cost=200, hidden=1)
-
-/obj/machinery/vending/janitor
-	name = "JaniTech Vendor"
-	desc = "One stop shop for all your custodial needs."
-	icon_state = "janitor"
-	icon_panel = "standard-panel"
-	icon_deny = "null"
-	pay = 1
-	acceptcard = 1
-	mats = 10
-	window_size = "400x475"
-
-	create_products()
-		..()
-		product_list += new/datum/data/vending_product(/obj/item/mop, 5)
-		product_list += new/datum/data/vending_product(/obj/item/sponge, 4)
-		product_list += new/datum/data/vending_product(/obj/item/spraybottle/cleaner, 3)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bucket, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/cleaner, 4)
-		product_list += new/datum/data/vending_product(/obj/item/storage/box/trash_bags, 8)
-		product_list += new/datum/data/vending_product(/obj/item/storage/box/biohazard_bags, 8)
-		product_list += new/datum/data/vending_product(/obj/item/storage/box/mousetraps, 4)
-		product_list += new/datum/data/vending_product(/obj/item/caution, 10)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/long, 2)
-
-		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/cleaner, 2, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
-
-//obj/machinery/vending
 #define WIRE_EXTEND 1
 #define WIRE_SCANID 2
 #define WIRE_SHOCK 3
@@ -1607,6 +420,12 @@
 		return
 	else if (ispulsingtool(W))
 		return src.attack_hand(user)
+
+	else if (ispryingtool(W))
+		if (src.status & BROKEN) //if the vendor is broken
+			//action bar is defined at the end of these procs
+			actions.start(new /datum/action/bar/icon/right_vendor(src), user)
+			return
 
 	if (istype(W, /obj/item/vending/restock_cartridge))
 		//check if cartridge type matches the vending machine
@@ -2116,7 +935,1218 @@
 		return 1
 	return 0
 
+/datum/action/bar/icon/right_vendor //This is used when you try to remove someone elses handcuffs.
+	duration = 5 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "right_vendor"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "crowbar"
+	var/obj/machinery/vending/vendor = null
+
+	New(vending_machine, var/Owner)
+		src.vendor = vending_machine
+		src.owner = Owner
+		..()
+
+	onUpdate()
+		..()
+		if(!DIST_CHECK(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if(!(src.vendor.status & BROKEN)) //it somehow got fixed while making it go upright??
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(!DIST_CHECK(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		for(var/mob/M in AIviewers(src.owner))
+			M.show_message("<span class='notice'><B>[src.owner] starts trying to pry \the [src.vendor] back up...</B></span>", 1)
+
+	onEnd()
+		..()
+		if(src.owner && vendor && (src.vendor.status & BROKEN))
+			src.vendor.can_fall = 1
+			src.vendor.layer = initial(src.vendor.layer)
+			src.vendor.anchored = 1
+			src.vendor.status &= ~BROKEN
+			src.vendor.power_change()
+
+			for(var/mob/M in AIviewers(src.owner))
+				M.show_message("<span class='notice'><B>[src.owner] manages to stand \the [src.vendor] back upright!</B></span>", 1)
+
 #undef WIRE_EXTEND
 #undef WIRE_SCANID
 #undef WIRE_SHOCK
 #undef WIRE_SHOOTINV
+
+/obj/machinery/vending/coffee
+	name = "coffee machine"
+	desc = "A Robust Coffee vending machine."
+	pay = 1
+	vend_delay = 15
+	icon_state = "coffee"
+	icon_vend = "coffee-vend"
+	icon_panel = "coffee-panel"
+	lr = 1
+	lg = 0.88
+	lb = 0.3
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/coffee, 25, cost=7)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/tea, 10, cost=6)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/xmas, 10, cost=10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/chickensoup, 10, cost=8)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/weightloss_shake, 10, cost=15)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/covfefe, 10, cost=20, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola, rand(1, 6), cost=5, hidden=1)
+
+/obj/machinery/vending/snack
+	name = "snack machine"
+	desc = "Tasty treats for crewman eats."
+	pay = 1
+	icon_state = "snack"
+	icon_panel = "snack-panel"
+	slogan_list = list("Try our new nougat bar!",
+	"Twice the calories for half the price!",
+	"Fill the gap in your stomach right now!",
+	"A fresh delight is only a bite away!",
+	"We feature Discount Dan's Noodle Soups!")
+	lr = 1
+	lg = 0.4
+	lb = 0.4
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/candy, 10, cost=4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/chips, 10, cost=4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, 10, cost=4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/fries, 10, cost=4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/noodlecup, 10, cost=8)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/burrito, 10, cost=10)
+		product_list += new/datum/data/vending_product(/obj/item/popsicle, 5, cost=5)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/plasticpackage, 10, cost=1)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/fork/plastic, 10, cost=10)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/spoon/plastic, 10, cost=10)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife/plastic, 10, cost=10)
+		product_list += new/datum/data/vending_product(/obj/item/tvdinner, 10, cost=20)
+
+
+/obj/machinery/vending/cigarette
+	name = "cigarette machine"
+	desc = "If you want to get cancer, might as well do it in style!"
+	pay = 1
+	vend_delay = 10
+	icon_state = "cigs"
+	icon_panel = "cigs-panel"
+	slogan_list = list("Space cigs taste good like a cigarette should!",
+	"I'd rather toolbox than switch.",
+	"Smoke!",
+	"Don't believe the reports - smoke today!")
+	lr = 0.55
+	lg = 1
+	lb = 0.5
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/cigpacket, 20, cost=15)
+		product_list += new/datum/data/vending_product(/obj/item/cigpacket/nicofree, 10, cost=20)
+		product_list += new/datum/data/vending_product(/obj/item/cigpacket/menthol, 10, cost=20)
+		product_list += new/datum/data/vending_product(/obj/item/cigpacket/propuffs, 10, cost=30)
+		product_list += new/datum/data/vending_product(/obj/item/cigpacket/cigarillo, 10, cost=9)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/nicotine, 10, cost=20)
+		product_list += new/datum/data/vending_product(/obj/item/matchbook, 7, cost=5)
+		product_list += new/datum/data/vending_product(/obj/item/device/light/zippo, 5, cost=35)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape, 10, cost=130)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ecig_refill_cartridge, 20, cost=150)
+
+		product_list += new/datum/data/vending_product(/obj/item/device/igniter, rand(1, 6), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/cigpacket/random, rand(0, 1), hidden=1, cost=420)
+		product_list += new/datum/data/vending_product(/obj/item/cigpacket/cigarillo/juicer, rand(6, 9), hidden=1, cost=69)
+
+/obj/machinery/vending/medical
+	name = "NanoMed Plus"
+	desc = "Medical drug dispenser."
+	icon_state = "med"
+	icon_panel = "standard-panel"
+	icon_deny = "med-deny"
+	req_access_txt = "5"
+	mats = 10
+	acceptcard = 0
+	window_size = "400x675"
+	lr = 1
+	lg = 0.88
+	lb = 0.88
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 12)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/bruise, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/burn, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender/brute, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/mender/burn, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antitoxin, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/epinephrine, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/morphine, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antihistamine, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/aspirin, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antirad, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/saline, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/atropine, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/synaptizine, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/eyedrops, 2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/antiviral, 6)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/insulin, 6)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/synaptizine, 6)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/calomel, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/heparin, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/proconvertin, 6)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/filgrastim, 8)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/salbutamol, 8)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mannitol, 8)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mutadone, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/ipecac, 8)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 2, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/bandage, 4)
+		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 4)
+		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_upgrade, 4)
+		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_organ_upgrade, 3)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/medical_surgery_guide, 2)
+
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/sulfonal, rand(1, 2), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/pancuronium, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/LSD, rand(1, 6), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape/medical, 1, hidden=1, cost=400)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/bath_bomb, rand(7, 13), hidden=1, cost=100)
+
+/obj/machinery/vending/medical_public
+	name = "Public MiniMed"
+	desc = "Medical supplies for everyone! Almost nearly as good as what the professionals use, kinda!"
+	pay = 1
+	vend_delay = 10
+	icon_state = "pubmed"
+	icon_panel = "pubmed-panel"
+	slogan_list = list("It pays to be safe!",
+	"It's safest to pay!",
+	"We've gone green! Now using 100% recycled materials!",
+	"Address all complaints about Public MiniMed services to FILE NOT FOUND for a swift response.",
+	"Now 80% sterilized!",
+	"There is a 1000 credit fine for bleeding on this machine.",
+	"Are you or a loved one currently dying? Consider Discount Dan's burial solutions!",
+	"ERROR: Item \"Stimpack\" not found!",
+	"Please, be considerate! Do not block access to the machine with your bloodied carcass.",
+	"Please contact your insurance provider for details on reduced payment options for this machine!")
+	window_size = "400x500"
+
+	lr = 1
+	lg = 0.88
+	lb = 0.88
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/mini/bruise, 5, cost=70)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/mini/burn, 5, cost=70)
+		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 2, cost=80)
+		product_list += new/datum/data/vending_product(/obj/item/bandage, 5, cost=55)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/charcoal, 5, cost=95)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/epinephrine, 5, cost=150)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/spaceacillin, 2, cost=110)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/antihistamine, 2, cost=70)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 2, cost=70)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/salicylic_acid, 10, cost=75)
+		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_upgrade, rand(0, 2), hidden=1, cost=25)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/mini/synthflesh, rand(0, 5), hidden=1, cost=125)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape/medical, 1, hidden=1, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/bath_bomb, rand(2, 5), hidden=1, cost=100)
+		if (prob(5))
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/bathsalts, 1, hidden=1, cost=140)
+
+		if (prob(15))
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/coffee, rand(1,5), hidden=1, cost=2)
+		else
+			slogan_list += "ERROR: OUT OF COFFEE!"
+
+/obj/machinery/vending/security
+	name = "SecTech"
+	desc = "A security equipment vendor."
+	icon_state = "sec"
+	icon_panel = "standard-panel"
+	icon_deny = "sec-deny"
+	req_access_txt = "1"
+	acceptcard = 0
+
+	lr = 1
+	lg = 0.8
+	lb = 0.9
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/handcuffs/guardbot, 16)
+		product_list += new/datum/data/vending_product(/obj/item/handcuffs, 8)
+		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 5)
+		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/fog, 5)
+		product_list += new/datum/data/vending_product(/obj/item/device/flash, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/hardhat/security, 4)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/security, 2)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 2)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 2)
+		product_list += new/datum/data/vending_product(/obj/item/implantcase/antirev, 3)
+#ifdef RP_MODE
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/space_law, 1)
+#endif
+		product_list += new/datum/data/vending_product(/obj/item/device/flash/turbo, rand(1, 6), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
+
+/obj/machinery/vending/security_ammo //ass jam time yes
+#if ASS_JAM
+	name = "Kinetitech"
+	desc = "A restricted weapon vendor, banned by the Space Geneva Convention in 2036 for being a 'warcrime'. Where the hell did the Head of Security find this?"
+	mats = 6669 //Yes its not traitor restricted, but good luck getting more of these. If you manage to get this, you deserve it
+#else
+	name = "AmmoTech"
+	desc = "A restricted ammunition vendor."
+#endif
+	icon_state = "sec"
+	icon_panel = "standard-panel"
+	icon_deny = "sec-deny"
+	req_access_txt = "37"
+	acceptcard = 0
+#if !ASS_JAM
+	is_syndicate = 1 // okay enough piles of spes ammo for any mechanic
+#endif
+	lr = 1
+	lg = 0.8
+	lb = 0.9
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 6)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, 2)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 3)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO,3)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/flare, 3)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/smoke, 3)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 3)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 3)
+#if ASS_JAM
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/ak47, 6)
+		product_list += new/datum/data/vending_product(/obj/item/gun/energy/tommy_gun, 6)
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/tactical_shotgun, 6)
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/hunting_rifle, 6)
+		product_list += new/datum/data/vending_product(/obj/item/baton/classic, 6)
+		product_list += new/datum/data/vending_product(/obj/item/gun/energy/egun, 6)
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/riot40mm, 6)
+		if(prob(10))
+			product_list += new/datum/data/vending_product(/obj/item/gun/energy/howitzer, 1)
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/detectiverevolver, 6)
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/clock_188, 200)
+		product_list += new/datum/data/vending_product(/obj/item/storage/pouch, 6)
+		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/stinger, 10)
+		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/frag, 10)
+		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/high_explosive, 10)
+		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/incendiary, 10)
+		product_list += new/datum/data/vending_product(/obj/item/storage/grenade_pouch/smoke, 10)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/ak47, 20)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/aex, 20)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12, 40)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/rifle_3006, 20)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/bullet_9mm, 60)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 9999999)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 120)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, 40)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 60)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/flare, 60)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/smoke, 60)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 60)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 60)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/autocannon/seeker, 20)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/autocannon/knocker,20)
+
+#else
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
+#endif
+/obj/machinery/vending/cola
+	name = "soda machine"
+	pay = 1
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola, rand(1, 6), cost=5, hidden = 1)
+		product_list += new/datum/data/vending_product(/obj/item/canned_laughter, rand(1,5), cost=5,hidden=1)
+		if(prob(25))
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/softsoft_pizza, rand(1, 3), cost=10, hidden = 1)
+
+	red
+		icon_state = "robust"
+		icon_panel = "robust-panel"
+		slogan_list = list("Drink Robust-Eez, the classic robustness tonic!",
+		"A Dr. Pubber a day keeps the boredom away!",
+		"Cool, refreshing Lime-Aid - it's good for you!",
+		"Grones Soda! Where has your bottle been today?",
+		"Decirprevo. The sophisticate's bottled water.")
+
+		lr = 1
+		lg = 0.4
+		lb = 0.4
+
+		create_products()
+			..()
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/red, 10, cost=8)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/pink, 10, cost=8)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/lime, 10, cost=12)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/grones, 10, cost=12)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/bottledwater, 10, cost=10)
+			product_list += new/datum/data/vending_product("/obj/item/reagent_containers/food/drinks/cola/random", 10, cost=12) //does this even work??
+
+	blue
+		icon_state = "grife"
+		icon_panel = "grife-panel"
+		slogan_list = list("Grife-O - the soda of a space generation!",
+		"The taste of nature!",
+		"Spooky Dan's - it's altogether ooky!",
+		"Everyone can see Orange-Aid is best!",
+		"Decirprevo. The sophisticate's bottled water.")
+
+		lr = 0.5
+		lg = 0.5
+		lb = 1
+
+		create_products()
+			..()
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/blue, 10, cost=7)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/orange, 10, cost=7)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/spooky, 10, cost=12)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/spooky2,10, cost=12)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/bottledwater, 10, cost=10)
+			product_list += new/datum/data/vending_product("/obj/item/reagent_containers/food/drinks/cola/random", 10, cost=12)
+
+/obj/machinery/vending/electronics
+	name = "ElecTek Vendomaticotron"
+	desc = "Dispenses electronics equipment."
+	icon_state = "generic"
+	icon_panel = "generic-panel"
+	acceptcard = 0
+	slogan_list = list("Stop fussing about in boxes, use ElecTek!",
+	"Now with boards 100% of the time!",
+	"No carbs!",
+	"Now with 50% extra inventory!")
+
+	lr = 1
+	lg = 0.88
+	lb = 0.3
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/electronics/battery, 30)
+		product_list += new/datum/data/vending_product(/obj/item/electronics/board, 30)
+		product_list += new/datum/data/vending_product(/obj/item/electronics/fuse, 30)
+		product_list += new/datum/data/vending_product(/obj/item/electronics/switc, 30)
+		product_list += new/datum/data/vending_product(/obj/item/electronics/keypad, 30)
+		product_list += new/datum/data/vending_product(/obj/item/electronics/screen, 30)
+		product_list += new/datum/data/vending_product(/obj/item/electronics/capacitor, 30)
+		product_list += new/datum/data/vending_product(/obj/item/electronics/buzzer, 30)
+		product_list += new/datum/data/vending_product(/obj/item/electronics/resistor, 30)
+		product_list += new/datum/data/vending_product(/obj/item/electronics/bulb, 30)
+		product_list += new/datum/data/vending_product(/obj/item/electronics/relay, 30)
+
+/obj/machinery/vending/mechanics
+	name = "MechComp Dispenser"
+	desc = "Dispenses electronics equipment."
+	icon_state = "generic"
+	icon_panel = "generic-panel"
+	acceptcard = 0
+	pay = 0
+
+	lr = 1
+	lg = 0.88
+	lb = 0.3
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/mechanicbook, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/andcomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/math, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/button, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/buttonPanel, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/mc14500, 30)
+		product_list += new/datum/data/vending_product(/obj/disposalconstruct/mechanics, 10)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/pausecomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/dispatchcomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/gunholder/recharging, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/filecomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/flushcomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/accelerator, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/gunholder, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/hscan, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/instrumentPlayer, 10)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/ledcomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/miccomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/orcomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/pscan, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/cashmoney, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/networkcomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/pressureSensor, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/radioscanner, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/regfind, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/regreplace, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/relaycomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/selectcomp, 30)
+		product_list += new/datum/data/vending_product(/obj/disposalconstruct/mechanics_sensor, 10)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigbuilder, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigcheckcomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/synthcomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/telecomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/thprint, 10)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/togglecomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/triplaser, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/wificomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/wifisplit, 30)
+
+/obj/machinery/vending/computer3
+	name = "CompTech"
+	desc = "A computer equipment vendor."
+	icon_state = "comp"
+	icon_panel = "standard-panel"
+	icon_off = "standard-off"
+	icon_broken = "standard-broken"
+	icon_fallen = "standard-fallen"
+	acceptcard = 0
+
+	lr = 1
+	lg = 0.9
+	lb = 0.1
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/motherboard, 8)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/fixed_disk, 8)
+		//product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/computer3boot, 4)
+		product_list += new/datum/data/vending_product(/obj/item/peripheral/card_scanner, 8)
+		product_list += new/datum/data/vending_product(/obj/item/peripheral/network/powernet_card, 4)
+
+		product_list += new/datum/data/vending_product(/obj/item/peripheral/drive, rand(1, 6), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/peripheral/drive/cart_reader, rand(1, 6), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/peripheral/prize_vendor, rand(1, 6), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/peripheral/network/radio, rand(1, 6), hidden=1)
+
+//cogwerks- adding a floppy disk vendor
+/obj/machinery/vending/floppy
+	name = "SoftTech"
+	desc = "A computer software vendor."
+	icon_state = "software"
+	icon_panel = "standard-panel"
+	icon_off = "standard-off"
+	icon_broken = "standard-broken"
+	icon_fallen = "standard-fallen"
+	pay = 1
+	acceptcard = 1
+	slogan_list = list("Remember to read the EULA!",
+	"Don't copy that floppy!",
+	"Welcome to the information age!")
+
+	lr = 0.03
+	lg = 1
+	lb = 0.2
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/computer3boot, 6, cost=60)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/terminal_os, 6, cost=40)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/network_progs, 4, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/medical_progs, 2, cost=35)
+
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/security_progs, 2, cost=100, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/communications, 2, cost=200, hidden=1)
+
+/obj/machinery/vending/pda //cogwerks: vendor to clean up the pile of PDA carts a bit
+	name = "CartyParty"
+	desc = "A PDA cartridge vendor."
+	icon_state = "pda"
+	icon_panel = "standard-panel"
+	icon_off = "standard-off"
+	icon_broken = "standard-broken"
+	icon_fallen = "standard-fallen"
+	pay = 1
+	acceptcard = 1
+	slogan_list = list("Convenient and feature-packed!",
+	"For the busy jet-setting businessperson on the go!",
+	"-CHECKSUM FAILURE | STACK OVERFLOW - CONSULT YOUR TECHN-WONK")
+
+	lr = 0.4
+	lg = 0.4
+	lb = 1
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2, 10, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/atmos, 2, cost=40)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/mechanic, 2, cost=40)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/quartermaster, 2, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/medical, 2, cost=40)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/genetics, 2, cost=40)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/toxins, 2, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/botanist, 2, cost=40)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/janitor, 2, cost=40)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/engineer, 2, cost=70)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/diagnostics, 2, cost=70)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/game_codebreaker, 4, cost=25)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda_module/flashlight/high_power, 2, cost=100)
+
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/security, 1, cost=80, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/head, 1, cost=100, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/clown, 1, cost=200, hidden=1)
+
+/obj/machinery/vending/book //cogwerks: eventually this oughta have some of the wiki job guides available in it
+	name = "Books4u"
+	desc = "A printed text vendor."
+	icon_state = "books"
+	icon_panel = "standard-panel"
+	icon_off = "standard-off"
+	icon_broken = "standard-broken"
+	icon_fallen = "standard-fallen"
+	pay = 1
+	acceptcard = 1
+	slogan_list = list("Read a book today!",
+	"Educate thyself!",
+	"Book Club meeting in the Chapel, every Thursday!")
+
+	lr = 0.2
+	lg = 1
+	lb = 0.03
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/paper/engine, 2, cost=20)
+		product_list += new/datum/data/vending_product(/obj/item/paper/Toxin, 2, cost=20)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/cookbook, 2, cost=30)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/dwainedummies, 2, cost=60)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/guardbot_guide, 2, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/hydroponicsguide, 2, cost=40)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/monster_manual, 2, cost=30)
+		product_list += new/datum/data/vending_product(/obj/item/paper/Cloning, 2, cost=30)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/medical_guide, 2, cost=30)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/minerals, 2, cost=10)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/player_piano, 2, cost=10)
+
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/the_trial, 1, cost=80, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/critter_compendium, 1, cost=100, hidden=1)
+
+/obj/machinery/vending/kitchen
+	name = "FoodTech"
+	desc = "Food storage unit."
+	icon_state = "food"
+	icon_panel = "standard-panel"
+	icon_off = "standard-off"
+	icon_broken = "standard-broken"
+	icon_fallen = "standard-fallen"
+	req_access_txt = "28"
+	acceptcard = 0
+
+	lr = 1
+	lg = 0.88
+	lb = 0.3
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/chefhat, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/chef, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/apron,2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/souschefhat, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/souschef, 2)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/fork, 10)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife, 10)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/spoon, 10)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/chopsticks_package, 5)
+		product_list += new/datum/data/vending_product(/obj/item/plate/tray, 3)
+		product_list += new/datum/data/vending_product(/obj/surgery_tray/kitchen_island, 2)
+		product_list += new/datum/data/vending_product(/obj/item/ladle, 1)
+		product_list += new/datum/data/vending_product(/obj/item/soup_pot, 1)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/rollingpin, 2)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife/cleaver, 1)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife/pizza_cutter, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bowl, 10)
+		product_list += new/datum/data/vending_product(/obj/item/plate, 10)
+		product_list += new/datum/data/vending_product(/obj/item/matchbook, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ice_cream_cone, 20)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/oatmeal, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/flour, 20)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/rice, 20)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/sugar, 20)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/butter, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/spaghetti, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/meatball, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/syrup, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/mayo, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/ketchup, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/tomato, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/apple, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/lettuce, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/potato, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/corn, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/seaweed, 10)
+
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/breakfast, rand(2, 4), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/snack_cake, rand(1, 3), hidden=1)
+
+//Somewhere out in the vast nothingness of space, a chef (and an admin) is crying.
+
+/obj/machinery/vending/pizza
+	name = "pizza vending machine"
+	icon_state = "pizza"
+	desc = "A vending machine that serves... pizza?"
+	var/pizcooking = 0
+	var/piztopping = "plain"
+	anchored = 0
+	acceptcard = 0
+	pay = 1
+	credit = 100
+	slogan_list = list("A revolution in the pizza industry!",
+	"Prepared in moments!",
+	"I'm a chef who works 24 hours a day!")
+
+	lr = 1
+	lg = 0.6
+	lb = 0.2
+
+	generate_vending_HTML()
+		src.vending_HTML = "<TT><B>PizzaVend 0.5b</B></TT><BR>"
+
+		if (src.pizcooking)
+			src.vending_HTML += "<TT><B>Cooking your pizza, please wait!</B></TT><BR>"
+		else
+			src.vending_HTML += "Topping - <A href='?src=\ref[src];picktopping=1'>[piztopping]</A><BR>"
+			src.vending_HTML += "<A href='?src=\ref[src];cook=1'>Cook!</A><BR>"
+
+			if (src.pay)
+				src.vending_HTML += "<BR><B>Available Credits:</B> [src.emagged ? "CREDIT CALCULATION ERROR" : "$[src.credit]"] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
+				if (!src.acceptcard)
+					src.vending_HTML += "<BR>This machine only takes credit bills."
+
+			src.vending_HTML += "</TT>"
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if (status & (NOPOWER|BROKEN))
+			return
+
+		if (usr.contents.Find(src) || in_range(src, usr) && istype(src.loc, /turf))
+			src.add_dialog(usr)
+			if (href_list["cook"])
+				if(!pizcooking)
+					if((credit < 50)&&(!emagged))
+						boutput(usr, "<span class='alert'>Insufficient funds!</span>") // no money? get out
+						return
+					if(!emagged)
+						credit -= 50
+					pizcooking = 1
+					icon_state = "pizza-vend"
+					src.generate_HTML(1)
+					updateUsrDialog()
+					sleep(20 SECONDS)
+					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1, -1)
+					var/obj/item/reagent_containers/food/snacks/pizza/P = new /obj/item/reagent_containers/food/snacks/pizza(src.loc)
+					P.quality = 0.6
+					P.heal_amt = 2
+					P.desc = "A typical [piztopping] pizza."
+					P.name = "[piztopping] pizza"
+					sleep(0.2)
+					if(piztopping != "plain")
+						switch(piztopping)
+							if("meatball") P.topping_color ="#663300"
+							if("mushroom") P.topping_color ="#CFCFCF"
+							if("pepperoni") P.topping_color ="#C90E0E"
+						P.topping = 1
+						P.add_topping(0)
+
+					if (!(status & (NOPOWER|BROKEN)))
+						icon_state = "pizza"
+
+					pizcooking = 0
+					src.generate_HTML(1)
+			if(href_list["picktopping"])
+				switch(piztopping)
+					if("plain") piztopping = "meatball"
+					if("meatball") piztopping = "mushroom"
+					if("mushroom") piztopping = "pepperoni"
+					if("pepperoni") piztopping = "plain"
+				src.generate_HTML(1)
+			add_fingerprint(usr)
+			updateUsrDialog()
+		return
+
+/obj/machinery/vending/monkey
+	name = "ValuChimp"
+	desc = "More fun than a barrel of monkeys! Monkeys may or may not be synthflesh replicas, may or may not contain partially-hydrogenated banana oil."
+	icon_state = "monkey"
+	icon_panel = "standard-panel"
+	// monkey vendor has slightly special broken/etc sprites so it doesn't just inherit the standard set  :)
+	acceptcard = 0
+	mats = 0 // >:I
+	slogan_list = list("My monkeys are too strong for you, traveler!")
+	slogan_chance = 1
+
+	lr = 1
+	lg = 0.88
+	lb = 0.3
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/mob/living/carbon/human/npc/monkey, rand(10, 15))
+
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/banana, rand(1,20), hidden=1)
+
+/obj/machinery/vending/magivend
+	name = "MagiVend"
+	desc = "A magic vending machine."
+	icon_state = "wiz"
+	icon_panel = "standard-panel"
+	acceptcard = 0
+	slogan_list = list("Sling spells the proper way with MagiVend!",
+	"Be your own Houdini! Use MagiVend!")
+
+	vend_delay = 15
+	vend_reply = "Have an enchanted evening!"
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/sandal, 1)
+		product_list += new/datum/data/vending_product(/obj/item/staff, 2)
+
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/red, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/red, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/purple, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/purple, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/green, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/green, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/witch, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/necro, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/necro, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/staff/crystal, 1)
+
+/obj/machinery/vending/standard
+	desc = "A standard vending machine."
+	icon_state = "standard"
+	icon_panel = "standard-panel"
+	acceptcard = 0
+	slogan_list = list("Please make your selection.")
+
+	lr = 1
+	lg = 0.81
+	lb = 0.81
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/device/prox_sensor, 8)
+		product_list += new/datum/data/vending_product(/obj/item/device/igniter, 8)
+		product_list += new/datum/data/vending_product(/obj/item/device/radio/signaler, 8)
+		product_list += new/datum/data/vending_product(/obj/item/wirecutters, 1)
+		product_list += new/datum/data/vending_product(/obj/item/device/timer, 8)
+		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/atmosanalyzer_upgrade, 3)
+		product_list += new/datum/data/vending_product(/obj/item/pressure_crystal, 5)
+		product_list += new/datum/data/vending_product(/obj/item/device/pressure_sensor, 2)
+
+		product_list += new/datum/data/vending_product(/obj/item/device/light/flashlight, rand(1, 6), hidden=1)
+		//product_list += new/datum/data/vending_product(/obj/item/device/timer, rand(1, 6), hidden=1)
+
+
+
+/obj/machinery/vending/hydroponics
+	name = "GardenGear"
+	desc = "A vendor for Hydroponics related equipment."
+	acceptcard = 0
+
+	lr = 0.5
+	lg = 1
+	lb = 0.2
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/wateringcan, 5)
+		product_list += new/datum/data/vending_product(/obj/item/plantanalyzer, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/compostbag, 5)
+		product_list += new/datum/data/vending_product(/obj/item/saw, 3)
+		product_list += new/datum/data/vending_product(/obj/item/gardentrowel, 5)
+		product_list += new/datum/data/vending_product(/obj/item/satchel/hydro, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/weedkiller, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/mutriant, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/groboost, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/topcrop, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/powerplant, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/fruitful, 5)
+		product_list += new/datum/data/vending_product(/obj/decorative_pot, 5)
+
+		product_list += new/datum/data/vending_product(/obj/item/seedplanter/hidden, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/seed/grass, rand(3, 6), hidden=1)
+		if (prob(25))
+			product_list += new/datum/data/vending_product(/obj/item/seed/alien, 1, hidden=1)
+
+/obj/machinery/vending/hydroponics/mean_solarium_bullshit
+	mechanics_type_override = /obj/machinery/vending/hydroponics
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/device/key/cheget,1, 954, 1)
+
+/obj/machinery/vending/fortune
+#ifdef HALLOWEEN
+	name = "Necromancer Zoldorf"
+	icon_state = "hfortuneteller"
+	icon_vend = "hfortuneteller-vend"
+	pay = 1
+	acceptcard = 1
+	slogan_list = list("Ha ha ha ha ha!",
+	"I am the great wizard Zoldorf!",
+	"Learn your fate!")
+	var/sound_riff = 'sound/machines/fortune_riff.ogg'
+	var/sound_riff_broken = 'sound/machines/fortune_riff_broken.ogg'
+	var/sound_greeting = 'sound/machines/fortune_greeting.ogg'
+	var/sound_greeting_broken = 'sound/machines/fortune_greeting_broken.ogg'
+	var/sound_laugh = 'sound/machines/fortune_laugh.ogg'
+	var/sound_laugh_broken = 'sound/machines/fortune_laugh_broken.ogg'
+	var/sound_ding = 'sound/machines/ding.ogg'
+	var/list/sounds_working = list('sound/misc/automaton_scratch.ogg','sound/machines/mixer.ogg')
+	var/list/sounds_broken = list('sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
+
+	lr = 0.3
+	lg = 0.3
+	lb = 1
+#else
+	name = "Zoldorf"
+	desc = "A horrid old fortune-telling machine."
+	icon_state = "fortuneteller"
+	icon_vend = "fortuneteller-vend"
+	pay = 1
+	acceptcard = 1
+	slogan_list = list("Ha ha ha ha ha!",
+	"I am the great wizard Zoldorf!",
+	"Learn your fate!")
+	var/sound_riff = 'sound/machines/fortune_riff.ogg'
+	var/sound_riff_broken = 'sound/machines/fortune_riff_broken.ogg'
+	var/sound_greeting = 'sound/machines/fortune_greeting.ogg'
+	var/sound_greeting_broken = 'sound/machines/fortune_greeting_broken.ogg'
+	var/sound_laugh = 'sound/machines/fortune_laugh.ogg'
+	var/sound_laugh_broken = 'sound/machines/fortune_laugh_broken.ogg'
+	var/sound_ding = 'sound/machines/ding.ogg'
+	var/list/sounds_working = list('sound/misc/automaton_scratch.ogg','sound/machines/mixer.ogg')
+	var/list/sounds_broken = list('sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
+
+	lr = 0.3
+	lg = 0.3
+	lb = 1
+#endif
+	New()
+		..()
+		light.set_color(0.8, 0.4, 1)
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/paper/thermal/fortune, 25, cost=10)
+		product_list += new/datum/data/vending_product(/obj/item/playing_cards/tarot, 5, cost=25)
+		product_list += new/datum/data/vending_product(/obj/item/paper/card_manual, 5, cost=1)
+		product_list += new/datum/data/vending_product(/obj/item/zolscroll, 100, cost=100, hidden=1) //weird burrito
+
+	prevend_effect()
+		if(src.seconds_electrified || src.extended_inventory)
+			src.visible_message("<span class='notice'>[src] wakes up!</span>")
+			playsound(src.loc, sound_riff_broken, 60, 1)
+			sleep(2 SECONDS)
+			playsound(src.loc, sound_greeting_broken, 65, 1)
+			if (src.icon_vend)
+				flick(src.icon_vend,src)
+			speak("F*!@$*(9HZZZZ9**###!")
+			sleep(2.5 SECONDS)
+			src.visible_message("<span class='notice'>[src] spasms violently!</span>")
+			playsound(src.loc, pick(sounds_broken), 40, 1)
+			if (src.icon_vend)
+				flick(src.icon_vend,src)
+			sleep(1 SECOND)
+			src.visible_message("<span class='notice'>[src] makes an obscene gesture!</b></span>")
+			playsound(src.loc, pick(sounds_broken), 40, 1)
+			if (src.icon_vend)
+				flick(src.icon_vend,src)
+			sleep(1.5 SECONDS)
+			playsound(src.loc, sound_laugh_broken, 65, 1)
+			speak("AHHH#######!")
+
+		else
+			src.visible_message("<span class='notice'>[src] wakes up!</span>")
+			playsound(src.loc, sound_riff, 60, 1)
+			sleep(2 SECONDS)
+			playsound(src.loc, sound_greeting, 65, 1)
+			if (src.icon_vend)
+				flick(src.icon_vend,src)
+			speak("The great wizard Zoldorf is here!")
+			sleep(2.5 SECONDS)
+			src.visible_message("<span class='notice'>[src] rocks back and forth!</span>")
+			playsound(src.loc, pick(sounds_working), 40, 1)
+			if (src.icon_vend)
+				flick(src.icon_vend,src)
+			sleep(1 SECOND)
+			src.visible_message("<span class='notice'>[src] makes a mystical gesture!</b></span>")
+			playsound(src.loc, pick(sounds_working), 40, 1)
+			if (src.icon_vend)
+				flick(src.icon_vend,src)
+			sleep(1.5 SECONDS)
+			playsound(src.loc, sound_laugh, 65, 1)
+			speak("Ha ha ha ha ha!")
+
+		return
+
+	postvend_effect()
+		playsound(src.loc, sound_ding, 50, 1)
+		return
+
+	fall(mob/living/carbon/victim)
+		playsound(src.loc, sound_laugh, 65, 1)
+		speak("Ha ha ha ha ha!")
+		..()
+		return
+
+	shock(mob/user, prb)
+		// Zap the fuck out of the user but don't prevent them from vending, because
+		// fucked up Zoldorf is good and I miss seeing it.
+		..()
+		return 0
+
+	electrocute(mob/user, netnum)
+		..()
+		playsound(src.loc, sound_laugh, 65, 1)
+		speak("Ha ha ha ha ha!")
+		return
+
+	attackby(obj/item/weapon as obj, mob/user as mob) //pretty much just player zoldorf stuffs :)
+		if((istype(weapon, /obj/item/zolscroll)) && istype(user,/mob/living/carbon/human) && (src.z == 1))
+			var/obj/item/zolscroll/scroll = weapon
+			var/mob/living/carbon/human/h = user
+			if(h.unkillable)
+				boutput(user,"<span class='alert'><b>Your soul is shielded and cannot be sold!</b></span>")
+				return
+			if(scroll.icon_state != "signed")
+				boutput(h, "<span class='alert'>It doesn't seem to be signed yet.</span>")
+				return
+			if(scroll.signer == h.real_name)
+				var/obj/machinery/playerzoldorf/pz = new /obj/machinery/playerzoldorf
+				pz.credits = src.credit
+				if(the_zoldorf.len)
+					if(the_zoldorf[1].homebooth)
+						//var/obj/booth = the_zoldorf[1].homebooth
+						boutput(h, "<span class='alert'><b>There can only be one!</b></span>") // Maybe add a way to point where the booth is if people are being jerks
+					else
+						pz.booth(h,src.loc,scroll)
+						qdel(src)
+				else
+					pz.booth(h,src.loc,scroll)
+					qdel(src)
+			else
+				user.visible_message("<span class='alert'><b>[h.name] tries to sell [scroll.signer]'s soul to [src]! How dare they...</b></span>","<span class='alert'><b>You can only sell your own soul!</b></span>")
+		else
+			..()
+
+/obj/machinery/vending/alcohol
+	name = "Cap'n Bubs' Booze-O-Mat"
+	desc = "A vending machine filled with various kinds of alcoholic beverages and things for fancying up drinks."
+	icon_state = "capnbubs"
+	icon_panel = "capnbubs-panel"
+	slogan_list = list("hm hm",
+	"Liquor - get it in ya!",
+	"I am the liquor",
+	"I don't always drink, but when I do, I sell the rights to my likeness")
+
+	lr = 1
+	lg = 0.3
+	lb = 0.95
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/beer, 6)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/fancy_beer, 6)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/vodka, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/tequila, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/wine, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/cider, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/mead, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/gin, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/rum, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/champagne, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/bojackson, 1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/cocktail_umbrellas, 4)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/cocktail_doodads, 4)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/fruit_wedges, 1)
+		product_list += new/datum/data/vending_product(/obj/item/shaker/salt, 1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cocktailshaker, 1)
+
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, hidden=1)
+
+/obj/machinery/vending/chem
+	name = "ChemDepot"
+	desc = "Some odd machine that dispenses little vials and packets of chemicals for exorbitant amounts of money. Is this thing even working right?"
+	icon_state = "chem"
+	icon_panel = "standard-panel"
+	icon_off = "standard-off"
+	icon_broken = "standard-broken"
+	icon_fallen = "standard-fallen"
+	glitchy_slogans = 1
+	pay = 1
+	acceptcard = 1
+	slogan_list = list("Hello!",
+	"Please state the item you wish to purchase.",
+	"Many goods at reasonable prices.",
+	"Please step right up!",
+	"Greetings!",
+	"Thank you for your interest in VENDOR NAME's goods!")
+
+	lr = 1
+	lg = 0.3
+	lb = 0.95
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vending/vial/random, 1, cost = rand(1000, 10000))
+		var/lock1 = rand(1, 9)
+		for (var/i = 0, i < lock1, i++) // this entire thing is just random luck
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vending/vial/random, 1, cost = rand(1000, 10000))
+
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vending/bag/random, 1, cost = rand(1000, 10000))
+		var/lock2 = rand(1, 9)
+		for (var/i = 0, i < lock2, i++) // so we'll add a random amount to each machine
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vending/bag/random, 1, cost = rand(1000, 10000))
+
+		product_list += new/datum/data/vending_product(/obj/item/cigpacket/random, 1, cost = rand(1000, 10000), hidden=1)
+		var/lock3 = rand(1, 9)
+		for (var/i = 0, i < lock3, i++)
+			product_list += new/datum/data/vending_product(/obj/item/cigpacket/random, 1, cost = rand(1000, 10000), hidden=1)
+
+/obj/machinery/vending/cards
+	name = "card machine"
+	desc = "A machine that sells various kinds of cards, notably Spacemen the Grifening trading cards!"
+	pay = 1
+	vend_delay = 10
+	icon_state = "card"
+	icon_panel = "card-panel"
+
+	lr = 1
+	lg = 0.4
+	lb = 0.7
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/paper/card_manual, 10, cost=1)
+		product_list += new/datum/data/vending_product(/obj/item/paper/yachtdice, 20, cost=2)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/trading, 5, cost=60)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/booster, 20, cost=20)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/suit, 10, cost=15)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/tarot, 5, cost=25)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/hanafuda, 5, cost=298)
+		product_list += new/datum/data/vending_product(/obj/item/card_box/storage, 5, cost=10)
+		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicebox, 5, cost=150)
+		product_list += new/datum/data/vending_product(/obj/item/storage/dicepouch, 5, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicecup, 5, cost=10)
+		product_list += new/datum/data/vending_product(/obj/item/goboard, 1, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/gobowl/b, 1, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/gobowl/w, 1, cost=50)
+
+/obj/machinery/vending/clothing
+	name = "FancyPantsCo Sew-O-Matic"
+	desc = "A clothing vendor."
+	icon_state = "clothes"
+	icon_vend = "clothes-vend"
+	icon_panel = "standard-panel"
+	icon_off = "standard-off"
+	icon_broken = "standard-broken"
+	icon_fallen = "standard-fallen"
+	pay = 1
+	acceptcard = 1
+	vend_delay = 20
+	slogan_list = list("Look snappy in seconds!",
+	"Style over substance.")
+
+	prevend_effect()
+		playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
+		return
+
+	postvend_effect()
+		playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+		return
+
+	create_products()
+		..()
+		//for (var/j in typesof(/obj/item/clothing/under/color)) // alla dem
+			//product_list += new/datum/data/vending_product([j], 5, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/yoga, 5, cost=40)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/yoga/red, 5, cost=40)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/dress, 5, cost=200)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/dress/red, 5, cost=250)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/dress/hawaiian, 5, cost=300)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/heels/black, 5, cost=120)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/heels/red, 5, cost=120)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/poncho, 2, cost=30)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/lshirt, 2, cost=60)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/jacket/design/tan, 2, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/jacket/design/maroon, 2, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/jacket/design/magenta, 2, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/jacket/design/mint, 2, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/jacket/design/cerulean, 2, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/jacket/design/navy, 2, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/jacket/design/indigo, 2, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/jacket/design/grey, 2, cost=100)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/dressb, 2, cost=300)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/sunhat, 2, cost=200)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/white, 3, cost = 200)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/gray, 3, cost = 200)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/black, 3, cost = 200)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/red, 3, cost = 200)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/orange, 3, cost = 200)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/yellow, 3, cost = 200)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/green, 3, cost = 200)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/blue, 3, cost = 200)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nyan/purple, 3, cost = 200)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/pokervisor, 3, cost = 150)
+
+
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/yoga/communist, 1, cost=80, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/rando, 1, cost=160, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/gimmick/wedding_dress, 1, cost=5000, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/veil, 1, 80, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/heels, 1, 150, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/tuxedo_jacket, 1, cost=250, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/bartender/tuxedo, 1, cost=80, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/dress_shoes, 1, cost=130, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/ring/gold, 2, cost=200, hidden=1)
+
+/obj/machinery/vending/janitor
+	name = "JaniTech Vendor"
+	desc = "One stop shop for all your custodial needs."
+	icon_state = "janitor"
+	icon_panel = "standard-panel"
+	icon_deny = "null"
+	pay = 1
+	acceptcard = 1
+	mats = 10
+	window_size = "400x475"
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/mop, 5)
+		product_list += new/datum/data/vending_product(/obj/item/sponge, 4)
+		product_list += new/datum/data/vending_product(/obj/item/spraybottle/cleaner, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bucket, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/cleaner, 4)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/trash_bags, 8)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/biohazard_bags, 8)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/mousetraps, 4)
+		product_list += new/datum/data/vending_product(/obj/item/caution, 10)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/long, 2)
+
+		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/cleaner, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
