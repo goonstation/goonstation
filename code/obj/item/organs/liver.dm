@@ -32,3 +32,37 @@
 	robotic = 1
 	edible = 0
 	mats = 6
+	var/overloading = 0
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		organ_abilities = list(/datum/targetable/organAbility/liverdetox)
+
+	demag(mob/user)
+		..()
+		organ_abilities = initial(organ_abilities)
+
+	on_life(var/mult = 1)
+		if(!..())
+			return 0
+		if(overloading)
+			if(donor.reagents.get_reagent_amount("ethanol") >= 5 * mult)
+				donor.reagents.remove_reagent("ethanol", 5 * mult)
+				donor.reagents.add_reagent("omnizine", 0.4 * mult)
+				src.take_damage(0, 0, 3 * mult)
+			else
+				donor.reagents.remove_reagent("ethanol", 5 * mult)
+				if(prob(20))
+					boutput(donor, "<span class='alert'>You feel painfully sober.</span>")
+				else if(prob(25)) //20% total 
+					boutput(donor, "<span class='alert'>You feel a burning in your liver!</span>")
+					src.take_damage(2 * mult, 2 * mult, 0)
+		return 1
+
+	breakme()
+		. = ..()
+		overloading = 0
+
+	on_removal()
+		. = ..()
+		overloading = 0

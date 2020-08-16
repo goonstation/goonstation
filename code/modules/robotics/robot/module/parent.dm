@@ -7,8 +7,7 @@
 	item_state = "electronic"
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | CONDUCT
-	// TODO: refactor name to /var/list/tools
-	var/list/modules = list()
+	var/list/tools = list()
 	var/mod_hudicon = "unknown"
 	var/cosmetic_mods = null
 	var/include_common_tools = TRUE
@@ -41,7 +40,7 @@
 		var/obj/item/I = adding_contents
 		I.cant_drop = 1
 		I.set_loc(src)
-		src.modules += I
+		src.tools += I
 		return I
 	if (ispath(adding_contents, /obj/item))
 		// handle adding tool by path (instantiate)

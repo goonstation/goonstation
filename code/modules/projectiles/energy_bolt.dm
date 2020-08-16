@@ -61,12 +61,11 @@ toxic - poisons
 /datum/projectile/energy_bolt/bouncy
 	name = "ricochet energy bolt"
 	var/max_bounce_count = 1
-	var/allow_headon_bounce = 0
-	var/reflect_on_nondense_hits = 0
+	var/reflect_on_nondense_hits = FALSE
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if (!ismob(hit))
-			if (shoot_reflected_bounce(P, hit, max_bounce_count, allow_headon_bounce, reflect_on_nondense_hits))
+			if (shoot_reflected_bounce(P, hit, max_bounce_count, PROJ_NO_HEADON_BOUNCE, reflect_on_nondense_hits))
 				elecflash(get_turf(P),radius=0, power=2, exclude_center = 0)
 		..()
 

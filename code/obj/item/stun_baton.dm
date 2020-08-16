@@ -51,6 +51,7 @@
 #endif
 	var/stamina_based_stun_amount = 130 // Amount of stamina drained.
 	var/can_swap_cell = 1
+	var/beepsky_held_this = 0 // Did a certain validhunter hold this?
 
 
 	New()
@@ -422,6 +423,10 @@
 
 /obj/item/baton/secbot
 	uses_charges = 0
+
+/obj/item/baton/beepsky
+	name = "securitron stun baton"
+	desc = "A stun baton that's been modified to be used more effectively by security robots. There's a small parallel port on the bottom of the handle."
 
 /obj/item/baton/stamina
 	stamina_based_stun = 1

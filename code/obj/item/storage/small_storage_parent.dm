@@ -102,7 +102,7 @@
 			return 0
 		.= 1
 		if (W.cant_drop)
-			return
+			return -1
 		if (islist(src.can_hold) && src.can_hold.len)
 			var/ok = 0
 			if (src.in_list_or_max && W.w_class <= src.max_wclass)

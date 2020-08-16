@@ -75,7 +75,10 @@
 	opened_at = world.time
 	window.acquire_lock(src)
 	if(!window.is_ready())
-		window.initialize(inline_assets = list(get_assets(/datum/asset/group/base_tgui)))
+		window.initialize(inline_assets = list(
+			get_assets(/datum/asset/basic/tgui_common),
+			get_assets(/datum/asset/group/base_tgui)
+			))
 	else
 		window.send_message("ping")
 	for(var/datum/asset/asset in src_object.ui_assets(user))
@@ -193,9 +196,13 @@
 			"fancy" = user.client.preferences.tgui_fancy,
 			"locked" = user.client.preferences.tgui_lock,
 		),
+		"client" = list(
+			"ckey" = user.client.ckey,
+			"address" = user.client.address,
+			"computer_id" = user.client.computer_id,
+		),
 		"user" = list(
 			"name" = "[user]",
-			"ckey" = "[user.ckey]",
 			"observer" = isobserver(user),
 		),
 	)

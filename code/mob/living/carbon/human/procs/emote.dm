@@ -253,6 +253,11 @@
 						src.expel_fart_gas(oxyplasmafart)
 
 						src.stamina_stun()
+						fartcount++
+						if(fartcount == 69 || fartcount == 420)
+							var/obj/item/paper/grillnasium/fartnasium_recruitment/flyer/F = new(get_turf(src))
+							src.put_in_hand_or_drop(F)
+							src.visible_message("<b>[src]</B> farts out a... wait is this viral marketing?")
 		#ifdef DATALOGGER
 						game_stats.Increment("farts")
 		#endif
@@ -2085,10 +2090,11 @@
 		SPAWN_DBG(0) //blind stab at a life() hang - REMOVE LATER
 			if (speechpopups && src.chat_text)
 				chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
-				chat_text.measure(src.client)
-				for(var/image/chat_maptext/I in src.chat_text.lines)
-					if(I != chat_text)
-						I.bump_up(chat_text.measured_height)
+				if(chat_text)
+					chat_text.measure(src.client)
+					for(var/image/chat_maptext/I in src.chat_text.lines)
+						if(I != chat_text)
+							I.bump_up(chat_text.measured_height)
 
 			if (message)
 				logTheThing("say", src, null, "EMOTE: [message]")

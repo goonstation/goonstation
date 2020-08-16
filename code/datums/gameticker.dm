@@ -61,32 +61,32 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #endif
 #endif
 
-	var/obj/overlay/countdown_clock = new/obj/overlay()
-	if (lobby_titlecard)
-		countdown_clock.x = lobby_titlecard.x + 7
-		countdown_clock.y = lobby_titlecard.y + 2
-		countdown_clock.z = lobby_titlecard.z
-		countdown_clock.layer = lobby_titlecard.layer + 1
-	else
-		// oops
-		countdown_clock.x = 7
-		countdown_clock.y = 2
-		countdown_clock.z = 1
-		countdown_clock.layer = 1
+	// var/obj/overlay/game_start_countdown = new/obj/overlay()
+	// if (lobby_titlecard)
+	// 	game_start_countdown.x = lobby_titlecard.x + 14
+	// 	game_start_countdown.y = lobby_titlecard.y + 0
+	// 	game_start_countdown.z = lobby_titlecard.z
+	// 	game_start_countdown.layer = lobby_titlecard.layer + 1
+	// else
+	// 	// oops
+	// 	game_start_countdown.x = 7
+	// 	game_start_countdown.y = 2
+	// 	game_start_countdown.z = 1
+	// 	game_start_countdown.layer = 1
 
-	countdown_clock.maptext = ""
-	countdown_clock.maptext_width = 320
-	countdown_clock.maptext_x = -(320 / 2) + 16
-	countdown_clock.maptext_height = 320
-	countdown_clock.plane = 100
+	// game_start_countdown.maptext = ""
+	// game_start_countdown.maptext_width = 320
+	// game_start_countdown.maptext_x = -(320 / 2) + 16
+	// game_start_countdown.maptext_height = 320
+	// game_start_countdown.plane = 100
 
 
 	pregame_timeleft = PREGAME_LOBBY_TICKS
 	boutput(world, "<B><FONT style='notice'>Welcome to the pre-game lobby!</FONT></B>")
 	boutput(world, "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds")
 	#if ASS_JAM
-	vote_manager.active_vote = new/datum/vote_new/mode("assday")
-	boutput(world, "<B>ASS JAM: Ass Day Classic vote has been started: [newVoteLinkStat.chat_link()] (120 seconds remaining)<br>(or click on the Status map as you do for map votes)</B>")
+	vote_manager.active_vote = new/datum/vote_new/mode("everyone-is-a-traitor")
+	boutput(world, "<B>ASS JAM: Everyone-Is-A-Traitor Mode vote has been started: [newVoteLinkStat.chat_link()] (120 seconds remaining)<br>(or click on the Status map as you do for map votes)</B>")
 	#endif
 
 	// let's try doing this here, yoloooo
@@ -108,26 +108,15 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		sleep(1 SECOND)
 		if (!game_start_delayed)
 			pregame_timeleft--
-			if (countdown_clock)
-				// just in case some nerd deletes it or it otherwise goes away
-				var/timeLeftColor
-				switch (pregame_timeleft)
-					if (90 to INFINITY)
-						timeLeftColor = "#33dd33"
-					if (60 to 90)
-						timeLeftColor = "#ffff00"
-					if (30 to 60)
-						timeLeftColor = "#ffb400"
-					if (0 to 30)
-						timeLeftColor = "#ff6666"
-				countdown_clock.maptext = "<span class='c ol vga vb'>Round begins in<br><span style='color: [timeLeftColor]; font-size: 36px;'>[pregame_timeleft]</span></span>"
-		else if(countdown_clock)
-			countdown_clock.maptext = "<span class='c ol vga vb'>Round begins in<br><span style='color: #888888; font-size: 36px;'>soon</span></span>"
+			if (game_start_countdown)
+				game_start_countdown.update_time(pregame_timeleft)
+		else if(game_start_countdown)
+			game_start_countdown.update_time(-1)
 
 
 		if(pregame_timeleft <= 0)
 			current_state = GAME_STATE_SETTING_UP
-			qdel(countdown_clock)
+			qdel(game_start_countdown)
 
 	SPAWN_DBG(0) setup()
 
@@ -484,7 +473,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				if (game_end_delayed == 1)
 					roundend_countdown.update_delayed()
 
-					message_admins("<span class='internal>Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]. Remove the delay for an immediate restart.</span>")
+					message_admins("<span class='internal'>Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]. Remove the delay for an immediate restart.</span>")
 					game_end_delayed = 2
 					var/ircmsg[] = new()
 					ircmsg["msg"] = "Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]."

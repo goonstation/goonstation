@@ -566,7 +566,7 @@
 				src.temp = "Illegal move."
 				src.master.updateSelfDialog()
 				return
-			if(lentext(attempt) != lentext(src.solution))
+			if(length(attempt) != length(src.solution))
 				src.temp = "Illegal move."
 				src.master.updateSelfDialog()
 				return
@@ -580,7 +580,7 @@
 				else
 					src.attempts--
 
-					var/length = lentext(src.solution)
+					var/length = length(src.solution)
 
 					var/list/lockcode_list = list()
 					for(var/i=0,i < length,i++)

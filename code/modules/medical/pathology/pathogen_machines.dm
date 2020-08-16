@@ -491,8 +491,8 @@
 				var/sourceEnd = length(P.explode())
 				src.manip.sel_source_lptr = sourceEnd
 				src.manip.sel_source_rptr = sourceEnd
-		tOut = lentext(tOut) > 0 ? "\"[tOut]\"" : "null"
-		sOut = lentext(sOut) > 0 ? "\"[sOut]\"" : "null"
+		tOut = length(tOut) > 0 ? "\"[tOut]\"" : "null"
+		sOut = length(sOut) > 0 ? "\"[sOut]\"" : "null"
 
 		gui.sendToSubscribers({"{"splice":{"source":[sOut],"target":[tOut],"pred":[predictive_data],"selSource":{"lptr_index":[src.manip.sel_source_lptr], "rptr_index":[src.manip.sel_source_rptr]},"selTarget":{"lptr_index":[src.manip.sel_target_lptr], "rptr_index":[src.manip.sel_target_rptr]},"selected":[src.manip.splicesource]}}"}, "setUIState")
 
@@ -576,7 +576,7 @@
 				sendAnalysisData()
 
 		if (href_list["analysisappend"])
-			if (lentext(src.manip.analysis) >= 15)
+			if (length(src.manip.analysis) >= 15)
 				return
 
 			var/id = text2num(href_list["analysisappend"])
@@ -594,7 +594,7 @@
 		if (href_list["analysisdo"])
 			if (!src.manip.analysis)
 				return
-			var/tlen = lentext(src.manip.analysis)
+			var/tlen = length(src.manip.analysis)
 			if (tlen < 3)
 				return
 			var/analyzed = src.manip.analysis
@@ -623,11 +623,11 @@
 			for (var/i = 1, i <= bits, i++)
 				var/curr = copytext(analyzed, (i - 1) * 3 + 1, i * 3 + 1)
 				acc += curr
-				var/acc_len = lentext(acc)
+				var/acc_len = length(acc)
 				var/total = 0
 				var/match = 0
 				for (var/dna in pathogen_controller.UID_to_symptom)
-					var/dnalen = lentext(dna)
+					var/dnalen = length(dna)
 					if (dnalen >= acc_len)
 						total++
 						if (dnalen == acc_len)

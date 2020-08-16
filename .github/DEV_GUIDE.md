@@ -134,7 +134,11 @@ If you are on a version of BYOND different from the one specified in buildByond.
 
 Alternative solution is to press `ctrl+shift+B` and then select the build task by hitting enter. This one does not automatically make you an administrator in-game so you will need to edit the config/admins.txt file by adding a `yourckey - Host` line there. Just make sure you don't commit this file later!
 
-<!--- TODO: Troubleshooting for non-existing task? --->
+:::info
+If an error popup with an error message of "Could not find the task 'dm: build - goonstation.dme'." shows up, one possible cause is that a VS Code Workspace is confusing things. If this is the case, close your current workspace (`File` -> `Close Workspace`) then use the `Open Folder` option to select the `goonstation` folder and try to build again.
+
+You can use a VS Code Workspace, but should do via Open Folder to select the `goonstation` folder then `File` -> `Save Workspace As...` rather than `Add Folder to Workspace`.
+:::
 
 ![](https://i.imgur.com/mXSjfC2.png)
 
@@ -377,3 +381,5 @@ git rebase master
 Yogstation for making an amazing guide that this is based on, found [here](https://forums.yogstation.net/index.php?threads/release-the-gitkraken-how-to-make-your-first-pull-request.15099/).
 
 /TG/station for for their [contribution guide](https://github.com/tgstation/tgstation/blob/master/.github/CONTRIBUTING.md), which was invaluable.
+
+[//]: # (This file is licensed under CC-BY-NC-SA 3.0 and the ISC licenses.)

@@ -214,7 +214,7 @@ jobs:
           tools/ci/dm.sh -DTRAVISBUILDING -DTRAVIS_SUB goonstation.dme > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
 
       - name: Annotate Errors
-        uses: yogstation13/add-annotations-github-action@master
+        uses: zewaka/add-annotations-github-action@master
         with:
           check_name: "Run Linters"
           linter_output_path: 'output-annotations.txt'
