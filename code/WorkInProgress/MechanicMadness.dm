@@ -2970,6 +2970,7 @@ var/list/mechanics_telepads = new/list()
 				added = 1
 			else if (mode == 1) // Immutable
 				if (!isnull(map[inputKey])) continue
+				map.Add(inputKey)
 				map[inputKey] = inputValue[1]
 				added = 1
 			else // List
