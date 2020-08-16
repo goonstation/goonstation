@@ -827,15 +827,9 @@
 			var/duration = 3000
 			var/datum/ailment_data/disease/D = mob.find_ailment_by_type(/datum/ailment/disease/lycanthropy/)
 
-			var/list/dogVisionColorMatrix = list(\
-				0.55,0.45,0.000,
-				0.55,0.45,0.000,
-				0.000,0.25,1.0,
-				0.0, 0.0, 0.0)	// Values modified from those obtained from https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
 			if(mob.client)
-				src.old_client_color = mob.client.color
-				mob.client.color = dogVisionColorMatrix
-				mob.bioHolder.AddEffect("accent_scoob")
+				mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
+				mob.bioHolder.AddEffect("accent_scoob", null, null, 0, 1)
 
 			if(D)
 				D.cycles++
@@ -851,7 +845,7 @@
 			mob.remove_stam_mod_regen("werewolf")
 			mob.remove_stun_resist_mod("werewolf")
 			mob.max_health -= 30
-			mob.client.color = src.old_client_color
+			mob.bioHolder.RemoveEffect("protanopia")
 			mob.bioHolder.RemoveEffect("accent_scoob")
 
 			if (!isnull(src.original_name))
