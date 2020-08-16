@@ -116,35 +116,33 @@
 				. += "<br><span class='alert'>[src] is twitching ever so slightly.</span>"
 
 	if (src.organHolder)
-		var/datum/organHolder/oH = src.organHolder
-
-		if (oH.head)
+		if (src.organHolder.head)
 			if (((src.wear_mask && src.wear_mask.see_face) || !src.wear_mask) && ((src.head && src.head.see_face) || !src.head))
-				if (!oH.skull)
+				if (!src.organHolder.skull)
 					. += "<br><span class='alert'><B>[src.name] no longer has a skull in [t_his] head, [t_his] face is just empty skin mush!</B></span>"
 
-				if (!oH.right_eye && !oH.left_eye)
+				if (!src.organHolder.right_eye && !src.organHolder.left_eye)
 					. += "<br><span class='alert'><B>[src.name]'s eyes are missing!</B></span>"
 				else
-					if (!oH.left_eye)
+					if (!src.organHolder.left_eye)
 						. += "<br><span class='alert'><B>[src.name]'s left eye is missing!</B></span>"
-					else if (oH.left_eye.show_on_examine)
-						. += "<br><span class='notice'>[src.name] has [bicon(oH.left_eye)] \an [oH.left_eye.organ_name] in their left eye socket.</span>"
-					if (!oH.right_eye)
+					else if (src.organHolder.left_eye.show_on_examine)
+						. += "<br><span class='notice'>[src.name] has [bicon(src.organHolder.left_eye)] \an [src.organHolder.left_eye.organ_name] in their left eye socket.</span>"
+					if (!src.organHolder.right_eye)
 						. += "<br><span class='alert'><B>[src.name]'s right eye is missing!</B></span>"
-					else if (oH.right_eye.show_on_examine)
-						. += "<br><span class='notice'>[src.name] has [bicon(oH.right_eye)] \an [oH.right_eye.organ_name] in their right eye socket.</span>"
+					else if (src.organHolder.right_eye.show_on_examine)
+						. += "<br><span class='notice'>[src.name] has [bicon(src.organHolder.right_eye)] \an [src.organHolder.right_eye.organ_name] in their right eye socket.</span>"
 
 				if (src.organHolder.head.scalp_op_stage > 0)
 					if (src.organHolder.head.scalp_op_stage >= 5.0)
-						if (!oH.skull)
+						if (!src.organHolder.skull)
 							. += "<br><span class='alert'><B>There's a gaping hole in [src.name]'s head and [t_his] skull is gone!</B></span>"
-						else if (!oH.brain)
+						else if (!src.organHolder.brain)
 							. += "<br><span class='alert'><B>There's a gaping hole in [src.name]'s head and [t_his] brain is gone!</B></span>"
 						else
 							. += "<br><span class='alert'><B>There's a gaping hole in [src.name]'s head!</B></span>"
 					else if (src.organHolder.head.scalp_op_stage >= 4.0)
-						if (!oH.brain)
+						if (!src.organHolder.brain)
 							. += "<br><span class='alert'><B>[src.name]'s head has been cut open and [t_his] brain is gone!</B></span>"
 						else
 							. += "<br><span class='alert'><B>[src.name]'s head has been cut open!</B></span>"
@@ -160,7 +158,7 @@
 		else
 			. += "<br><span class='alert'><B>[src.name] has been decapitated!</B></span>"
 
-		if (src.organHolder.chest.op_stage > 0.0)
+		if (src.organHolder.chest)
 			if (src.organHolder.chest.op_stage >= 9.0)
 				if (src.organHolder.heart)
 					. += "<br><span class='alert'><B>[src.name]'s chest is cut wide open!</B></span>"
@@ -168,6 +166,8 @@
 					. += "<br><span class='alert'><B>[src.name]'s chest is cut wide open and [t_his] heart has been removed!</B></span>"
 			else
 				. += "<br><span class='alert'><B>[src.name] has an indeterminate number of small surgical scars on [t_his] chest!</B></span>"
+		else
+			. += "<br><span class='alert'><B>[src.name]'s entire chest is missing!</B></span>"
 
 		if (src.butt_op_stage > 0)
 			if (src.butt_op_stage >= 4)
