@@ -1,4 +1,9 @@
 
+(t)sun aug 16 20
+(u)Tarmunora
+(p)1793
+(e)⚖|balance
+(+)Adjusted nitroglycerin explosions.
 (t)sat aug 15 20
 (u)Jawns
 (p)1709
