@@ -252,6 +252,8 @@
 			if(confirm)
 				src.ghostize()
 				qdel(src)
+			else
+				return
 		else if(prob(5))
 			src.show_text("You strain really hard. I mean, like, really, REALLY hard but you still can't become a ghost!", "blue")
 		else
