@@ -2519,7 +2519,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		else
 			M.visible_message("\The [src] jumps into [M]'s pocket.", "\The [src] jumps into your pocket.")
 		boutput(M, "You can click on the status effect in the top right to kick the mouse out.")
-		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket and can talk to them and click on their screen to ping in the place where you're clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
+		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket and can talk to them and click on their screen to ping in the place where you're ctrl+clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
 		var/mob/dead/target_observer/mentor_mouse_observer/obs = new(M, src.is_admin)
 		obs.set_observe_target(M)
 		obs.my_mouse = src
