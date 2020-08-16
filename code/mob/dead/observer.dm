@@ -249,7 +249,7 @@
 	if(!isdead(src))
 		if (src.hibernating == 1)
 			var/confirm = alert("Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", "Yes", "No")
-			if(confirm)
+			if(confirm == "Yes")
 				src.ghostize()
 				qdel(src)
 			else
