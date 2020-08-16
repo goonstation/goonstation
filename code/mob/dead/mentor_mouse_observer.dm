@@ -26,6 +26,9 @@
 		if (!islist(params))
 			params = params2list(params)
 
+		if(!params["ctrl"]) // mouse ping is now ctrl+click
+			return ..()
+
 		src.the_guy << src.ping
 		src << src.ping
 
