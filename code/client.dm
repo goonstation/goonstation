@@ -56,6 +56,7 @@
 	var/antag_tokens //Number of antagonist tokens available to the player
 	var/using_antag_token = 0 //Set when the player readies up at round start, and opts to redeem a token.
 
+	var/persistent_bank_valid = FALSE
 	var/persistent_bank = 0 //cross-round persistent cash value (is increased as a function of job paycheck + station score)
 	var/persistent_bank_item = 0 //Name of a bank item that may have persisted from a previous round. (Using name because I'm assuming saving a string is better than saving a whole datum)
 
@@ -618,6 +619,9 @@
 	//var/bank = 0
 	//PB[ckey] >> bank
 	//if (!bank)
+
+	persistent_bank_valid = cloud_available()
+
 	persistent_bank = cloud_get( "persistent_bank" ) ? text2num(cloud_get( "persistent_bank" )) : 0
 	//	return
 	//else
@@ -666,6 +670,10 @@
 
 //MBC TODO : DO SOME LOGGING ON ADD_TO_BANK() AND TRY_BANK_PURCHASE()
 /client/proc/add_to_bank(amt as num)
+	if(!persistent_bank_valid)
+		load_persistent_bank()
+		if(!persistent_bank_valid)
+			return
 	var/new_bank_value = persistent_bank + amt
 	src.set_persistent_bank(new_bank_value)
 
