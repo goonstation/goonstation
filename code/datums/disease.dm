@@ -99,7 +99,7 @@
 
 		..()
 
-	proc/stage_act()
+	proc/stage_act(var/mult)
 		if (!affected_mob || disposed)
 			return 1
 
@@ -110,7 +110,8 @@
 		if (stage > master.max_stages)
 			stage = master.max_stages
 
-		if (prob(stage_prob) && stage < master.max_stages)
+		if (prob(stage_prob * mult) && stage < master.max_stages)
+			boutput(world, "[stage_prob * mult]")
 			stage++
 
 		master.stage_act(affected_mob,src)
