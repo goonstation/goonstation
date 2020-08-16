@@ -118,9 +118,17 @@ const AnnounceActive = (props, context) => {
   }
 };
 
+const formatDoublePercent = value => toFixed(value * 2) + '%';
+const formatHundredPercent = value => toFixed(value * 100) + '%';
+
 const KnobZone = (props, context) => {
   const { act, data } = useBackend(context);
   const { loadedSound, volume, frequency } = data;
+
+  const setVolume = (e, value) => act('set-volume', { volume: value });
+  const resetVolume = act('set-volume', { volume: "reset" });
+  const setFreq = (e, value) => act('set-freq', { frequency: value });
+  const resetFreq = act('set-freq', { frequency: "reset" });
 
   return (
     <Box>
@@ -131,12 +139,8 @@ const KnobZone = (props, context) => {
             value={volume}
             minValue={0}
             maxValue={100}
-            format={value => {
-              return toFixed(value * 2) + '%';
-            }}
-            onDrag={(e, value) => act('set-volume', {
-              volume: value,
-            })}
+            format={formatDoublePercent}
+            onDrag={setVolume}
           />
         </LabeledControls.Item>
         <LabeledControls.Item>
@@ -149,20 +153,14 @@ const KnobZone = (props, context) => {
               bad: [0, 100],
             }}
             value={volume}
-            format={value => {
-              return toFixed(value * 2) + '%';
-            }}
-            onDrag={(e, value) => act('set-volume', {
-              volume: value,
-            })}
+            format={formatDoublePercent}
+            onDrag={setVolume}
           />
           <Button
             icon="sync-alt"
             top="0.3em"
             content="Reset"
-            onClick={() => act('set-volume', {
-              volume: "reset",
-            })}
+            onClick={resetVolume}
           />
         </LabeledControls.Item>
         <LabeledControls.Item label="Frequency">
@@ -172,12 +170,8 @@ const KnobZone = (props, context) => {
             step={0.1}
             minValue={-100}
             maxValue={100}
-            format={value => {
-              return toFixed(value * 100) + '%';
-            }}
-            onDrag={(e, value) => act('set-freq', {
-              frequency: value,
-            })}
+            format={formatHundredPercent}
+            onDrag={setFreq}
           />
         </LabeledControls.Item>
         <LabeledControls.Item>
@@ -193,20 +187,14 @@ const KnobZone = (props, context) => {
               bad: [-100, 100],
             }}
             value={frequency}
-            format={value => {
-              return toFixed(value * 100) + '%';
-            }}
-            onDrag={(e, value) => act('set-freq', {
-              frequency: value,
-            })}
+            format={formatHundredPercent}
+            onDrag={setFreq}
           />
           <Button
             icon="sync-alt"
             top="0.3em"
             content="Reset"
-            onClick={() => act('set-freq', {
-              frequency: "reset",
-            })}
+            onClick={resetFreq}
           />
         </LabeledControls.Item>
       </LabeledControls>
