@@ -199,6 +199,15 @@ todo: add more small animals!
 		HH.limb_name = "teeth"					// name for the dummy holder
 		HH.can_hold_items = 0
 
+	attackby(obj/item/I, mob/M)
+		if(istype(I, /obj/item/reagent_containers/food/snacks/ingredient/cheese) && ishuman(M))
+			src.visible_message("[M] feeds \the [src] some [I].", "[M] feeds you some [I].")
+			for(var/damage_type in src.healthlist)
+				var/datum/healthHolder/hh = src.healthlist[damage_type]
+				hh.HealDamage(5)
+			return
+		. = ..()
+
 /mob/living/critter/small_animal/mouse/weak
 	health_brute = 2
 	health_burn = 2
