@@ -14,9 +14,33 @@
 
 	New()
 		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activateinput")
 		..()
 
 /* INTERFACE */
+
+	proc/activateinput(var/datum/mechanicsMessage/inp)
+		playSlots(null)
+
+	proc/playSlots(datum/tgui/ui)
+		if (src.working || !src.scan)
+			return TRUE
+		if (src.scan.money < 20)
+			src.visible_message("<span class='subtle'><b>[src]</b> says, 'Insufficient money to play!'</span>")
+			return TRUE
+		src.scan.money -= 20
+		src.plays++
+		src.working = 1
+		src.icon_state = "slots-on"
+
+		playsound(get_turf(src), "sound/machines/ding.ogg", 50, 1)
+		. = TRUE
+		if (ui)
+			ui_interact(usr, ui)
+		SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
+			money_roll()
+			src.working = 0
+			src.icon_state = "slots-off"
 
 /obj/submachine/slot_machine/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -57,23 +81,7 @@
 				src.scan = O
 				. = TRUE
 		if ("play")
-			if (src.working || !src.scan)
-				return TRUE
-			if (src.scan.money < 20)
-				src.visible_message("<span class='subtle'><b>[src]</b> says, 'Insufficient money to play!'</span>")
-				return TRUE
-			src.scan.money -= 20
-			src.plays++
-			src.working = 1
-			src.icon_state = "slots-on"
-
-			playsound(get_turf(src), "sound/machines/ding.ogg", 50, 1)
-			. = TRUE
-			ui_interact(usr, ui)
-			SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
-				money_roll()
-				src.working = 0
-				src.icon_state = "slots-off"
+			return playSlots(ui)
 
 		if("eject")
 			if(!src.scan)
@@ -163,16 +171,6 @@
 	var/plays = 0
 	var/working = 0
 	var/obj/item/card/id/scan = null
-
-	New()
-		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activateinput")
-		..()
-
-	proc/activateinput(var/datum/mechanicsMessage/inp) //make this work some day.
-		//var/list/reflist = list("ops")
-		//Topic(null,
-		return
 
 	attackby(var/obj/item/I as obj, user as mob)
 		if(istype(I, /obj/item/card/id))
