@@ -22,6 +22,10 @@
 		src.ping.layer = HUD_LAYER_3
 		src.ping.plane = PLANE_HUD
 
+	process_move(keys)
+		if(alert(src, "Are you sure you want to leave?", "Hop out of the pocket", "Yes", "No") == "Yes")
+			..()
+
 	click(atom/target, params) // TODO spam delay
 		if (!islist(params))
 			params = params2list(params)
