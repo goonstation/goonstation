@@ -15,10 +15,9 @@
 		boutput(client.mob, "You have been banned from using this command.")
 		return
 
-	if(client.last_adminhelp > (world.timeofday - ADMINHELP_DELAY))
-		if(abs(world.timeofday - client.last_adminhelp) < 1000) // some midnight rollover protection b/c byond is fucking stupid
-			boutput(src, "You must wait [round((client.last_adminhelp + ADMINHELP_DELAY - world.timeofday)/10)] seconds before requesting help again.")
-			return
+	if(ON_COOLDOWN(client.player, "ahelp", ADMINHELP_DELAY))
+		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
+		return
 
 	var/msg = input("Please enter your help request to admins:") as null|text
 
@@ -31,8 +30,6 @@
 		karma_update(1, "SIN", client.mob)
 
 //	for_no_raisin(client.mob, msg)
-
-	if (client) client.last_adminhelp = world.timeofday
 
 	for (var/client/C)
 		if (C.holder)
@@ -69,10 +66,9 @@
 		boutput(client.mob, "You have been banned from using this command.")
 		return
 
-	if(client.last_adminhelp > (world.timeofday - ADMINHELP_DELAY))
-		if(abs(world.timeofday - client.last_adminhelp) < 1000) // some midnight rollover protection b/c byond is fucking stupid
-			boutput(client.mob, "You must wait [round((client.last_adminhelp + ADMINHELP_DELAY - world.timeofday)/10)] seconds before requesting help again.")
-			return
+	if(ON_COOLDOWN(client.player, "ahelp", ADMINHELP_DELAY))
+		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
+		return
 
 	var/msg = input("Please enter your help request to mentors:") as null|text
 
@@ -83,8 +79,6 @@
 
 	if (client && client.ismuted())
 		return
-
-	client.last_adminhelp = world.timeofday
 
 
 	for (var/client/C)
@@ -128,10 +122,9 @@
 		gib(client.mob)
 		return
 
-	if(client.last_adminhelp > (world.timeofday - ADMINHELP_DELAY))
-		if(abs(world.timeofday - client.last_adminhelp) < 1000) // some midnight rollover protection b/c byond is fucking stupid
-			boutput(client.mob, "You must wait [round((client.last_adminhelp + ADMINHELP_DELAY - world.timeofday)/10)] seconds before requesting help again.")
-			return
+	if(ON_COOLDOWN(client.player, "ahelp", ADMINHELP_DELAY))
+		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
+		return
 
 	if(!msg)
 		msg = input("Please enter your prayer to any gods that may be listening - be careful what you wish for as the gods may be the vengeful sort!") as null|text
@@ -144,7 +137,6 @@
 	if (client.mob.mind)
 		karma_update(1, "SIN", src)
 
-	client.last_adminhelp = world.timeofday
 	boutput(client.mob, "<B>You whisper a silent prayer,</B> <I>\"[msg]\"</I>")
 	logTheThing("admin_help", client.mob, null, "PRAYER: [msg]")
 	logTheThing("diary", client.mob, null, "PRAYER: [msg]", "ahelp")
