@@ -164,7 +164,7 @@
 					. += "<br><span class='alert'><B>[src.name]'s chest is cut wide open!</B></span>"
 				else
 					. += "<br><span class='alert'><B>[src.name]'s chest is cut wide open and [t_his] heart has been removed!</B></span>"
-			else
+			else if(src.organHolder.chest.op_stage > 0.0)
 				. += "<br><span class='alert'><B>[src.name] has an indeterminate number of small surgical scars on [t_his] chest!</B></span>"
 		else
 			. += "<br><span class='alert'><B>[src.name]'s entire chest is missing!</B></span>"
