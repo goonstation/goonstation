@@ -918,6 +918,16 @@ $(function() {
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
 				src.jobs_unwanted += J.name
 				continue
+			if (J.rounds_needed_to_play)
+				if (user.client)
+					var/ckey = user.client.ckey
+					var/list/response = null
+					try
+						response = apiHandler.queryAPI("playerInfo/get", list("ckey" = ckey), forceResponse = 1)
+					catch
+					if (response && (response["participated"]) < J.rounds_needed_to_play) //if theyve played less rounds than the job needs, unwanted it
+						src.jobs_unwanted += J.name
+						continue
 			src.jobs_med_priority += J.name
 		return
 
@@ -932,6 +942,16 @@ $(function() {
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
 				src.jobs_unwanted += J.name
 				continue
+			if (J.rounds_needed_to_play)
+				if (user.client)
+					var/ckey = user.client.ckey
+					var/list/response = null
+					try
+						response = apiHandler.queryAPI("playerInfo/get", list("ckey" = ckey), forceResponse = 1)
+					catch
+					if (response && (response["participated"]) < J.rounds_needed_to_play) //if theyve played less rounds than the job needs, unwanted it
+						src.jobs_unwanted += J.name
+						continue
 			src.jobs_low_priority += J.name
 		return
 
@@ -960,6 +980,16 @@ $(function() {
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
 				src.jobs_unwanted += J.name
 				continue
+			if (J.rounds_needed_to_play) //do the less expensive check first
+				if (user.client)
+					var/ckey = user.client.ckey
+					var/list/response = null
+					try
+						response = apiHandler.queryAPI("playerInfo/get", list("ckey" = ckey), forceResponse = 1)
+					catch
+					if (response && (response["participated"]) < J.rounds_needed_to_play) //if theyve played less rounds than the job needs, unwanted it
+						src.jobs_unwanted += J.name
+						continue
 			src.jobs_low_priority += J.name
 		return
 
@@ -1070,6 +1100,16 @@ $(function() {
 				boutput(user, "<span class='alert'><b>You are no longer allowed to play [J_Fav.name]. It has been removed from your Favorite slot.</span>")
 				src.jobs_unwanted += J_Fav.name
 				src.job_favorite = null
+			else if (J_Fav.rounds_needed_to_play)
+				if (user.client)
+					var/ckey = user.client.ckey
+					var/list/response = null
+					try
+						response = apiHandler.queryAPI("playerInfo/get", list("ckey" = ckey), forceResponse = 1)
+					catch
+					if (response && (response["participated"]) < J_Fav.rounds_needed_to_play) //if theyve played less rounds than the job needs, unwanted it
+						src.jobs_unwanted += J_Fav.name
+						src.job_favorite = null
 			else
 				HTML += " <a href=\"byond://?src=\ref[src];preferences=1;occ=1;job=[J_Fav.name];level=0\" style='font-weight: bold; color: [J_Fav.linkcolor];'>[J_Fav.name]</a>"
 
@@ -1205,6 +1245,21 @@ $(function() {
 					if (3) src.jobs_low_priority -= job
 				src.jobs_unwanted += job
 			return
+
+		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
+		if (temp_job.rounds_needed_to_play)
+			if (user.client)
+				var/ckey = user.client.ckey
+				var/list/response = null
+				try
+					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = ckey), forceResponse = 1)
+				catch
+				if (response && (response["participated"]) < temp_job.rounds_needed_to_play) //if theyve played less rounds than the job needs, unwanted it
+					switch(occ)
+						if (1) src.job_favorite = null
+						if (2) src.jobs_med_priority -= job
+						if (3) src.jobs_low_priority -= job
+					src.jobs_unwanted += job
 
 		src.antispam = 1
 
