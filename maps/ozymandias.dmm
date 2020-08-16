@@ -1129,7 +1129,6 @@
 /obj/machinery/bot/guardbot/gunner,
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/grey/side{
@@ -2454,7 +2453,6 @@
 /obj/machinery/bot/guardbot/ranger,
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-4"
 	},
 /obj/machinery/light{
@@ -2611,9 +2609,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
-	icon_state = "0-4";
-	pixel_y = 0
+	icon_state = "0-4"
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -17095,7 +17091,6 @@
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west/nopoweralert,
@@ -17560,7 +17555,6 @@
 /area/station/atmos/hookups/north)
 "iAB" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/solar/west,
@@ -17578,9 +17572,7 @@
 	name = "Containment Field Generator"
 	},
 /obj/cable{
-	d2 = 8;
-	icon_state = "0-4";
-	pixel_y = 0
+	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/airless,
@@ -18873,7 +18865,6 @@
 /obj/machinery/bot/guardbot/syringe,
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-4"
 	},
 /obj/machinery/bot/guardbot,
@@ -24489,9 +24480,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
-	icon_state = "0-4";
-	pixel_y = 0
+	icon_state = "0-4"
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -26005,7 +25994,6 @@
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-4"
 	},
 /obj/cable{
@@ -26060,9 +26048,7 @@
 "muX" = (
 /obj/cable,
 /obj/cable{
-	d2 = 8;
-	icon_state = "0-4";
-	pixel_y = 0
+	icon_state = "0-4"
 	},
 /obj/cable{
 	icon_state = "0-8"
@@ -28210,7 +28196,6 @@
 	icon_state = "0-8"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -28872,7 +28857,6 @@
 	icon_state = "0-8"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -43538,7 +43522,6 @@
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-4"
 	},
 /obj/cable{
@@ -45966,9 +45949,7 @@
 	dir = 1
 	},
 /obj/cable{
-	d2 = 8;
-	icon_state = "0-4";
-	pixel_y = 0
+	icon_state = "0-4"
 	},
 /obj/cable{
 	d2 = 8;
@@ -48204,7 +48185,6 @@
 /obj/machinery/guardbot_dock,
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/grey/side{
