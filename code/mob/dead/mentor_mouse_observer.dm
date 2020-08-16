@@ -103,6 +103,9 @@
 		boutput(src, rendered)
 		boutput(src.the_guy, rendered)
 
+	emote(act, voluntary=0)
+		src.my_mouse.emote(act, voluntary)
+
 	stop_observing()
 		boot()
 
