@@ -294,6 +294,9 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 
 	CritterAttack(mob/M)
 		if (ismob(M))
+			if(istype(M, /mob/living/critter/small_animal/mouse/weak/mentor) && prob(90))
+				src.visible_message("<span class='combat'><B>[src]</B> tries to bite [src.target] but \the [src.target] dodges nimbly!</span>")
+				return
 			src.attacking = 1
 			var/attackCount = (src.catnip ? rand(4,8) : 1)
 			while (attackCount-- > 0)
