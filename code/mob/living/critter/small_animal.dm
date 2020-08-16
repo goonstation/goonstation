@@ -2468,6 +2468,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "mouse-mentor"
 	icon_state_dead = "mouse-mentor-dead"
 	var/icon_state_exclaim = "mouse-mentor-exclaim"
+	health_brute = 35
+	health_burn = 35
 
 	New()
 		..()
