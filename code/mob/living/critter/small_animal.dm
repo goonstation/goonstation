@@ -205,6 +205,7 @@ todo: add more small animals!
 			for(var/damage_type in src.healthlist)
 				var/datum/healthHolder/hh = src.healthlist[damage_type]
 				hh.HealDamage(5)
+			qdel(I)
 			return
 		. = ..()
 
