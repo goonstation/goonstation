@@ -2474,8 +2474,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		/*src.fur_color = "#c486ec"
 		src.eye_color = "#000000"
 		src.setup_overlays()*/
-		var/list/valid_adjectives = list("cute", "adorable", "nerdy", "small", "large", "grody", "tiny", "chubby", "smelly", "fluffy", "bewildered", "confused", "bouncy", "tired", "purple", "squeaky", "sneaky", "friendly", "helpful", "quick", "champion", "muscular", "heroic", "space federation wrestling champion", "brainy", "hungry", "chatty", "awesome", "humongous", "wise", "worried")
-		src.real_name = "[pick(valid_adjectives)] [src.name]"
+		src.real_name = "[pick_string("mentor_mice_prefixes.txt", "mentor_mouse_prefix")] [src.name]"
 		src.name = src.real_name
 
 	setup_overlays()
