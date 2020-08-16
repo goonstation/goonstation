@@ -36,6 +36,7 @@
 	var/icon_state = "blank_c"
 
 	var/special_head = null	// The special head we're going to use, if any
+	var/special_head_state = "head"	// The state of the head we're using
 	var/mutant_folder = 'icons/effects/genetics.dmi'	// Look in this folder for all the limbs
 
 	var/tail = TAIL_NONE // What tail do we have? Or are supposed to have?
@@ -177,13 +178,16 @@
 		src.AH = Q.bioHolder.mobAppearance // i mean its called appearance holder for a reason
 
 		switch(mode)
-			if("set")
+			if("set")	// upload everything, the appearance flags'll determine what gets used
 				AH.mob_appearance_flags = src.mutant_appearance_flags
 				AH.mob_color_flags = src.mutant_color_flags
 				AH.customization_first_special = src.special_hair_1
 				AH.customization_second_special = src.special_hair_2
 				AH.customization_third_special = src.special_hair_3
 				AH.customization_icon_special = src.mutant_folder
+				AH.customization_first_color_special = AH.customization_first_color
+				AH.customization_second_color_special = AH.customization_second_color
+				AH.customization_third_color_special = AH.customization_third_color
 				AH.body_icon = src.mutant_folder
 				AH.body_icon_state = src.icon_state
 				AH.mob_detail_1 = detail_1
@@ -194,23 +198,14 @@
 				AH.mob_oversuit_3 = detail_over_suit_3
 				if (src.mutant_appearance_flags & HAS_SPECIAL_HEAD)
 					AH.head_icon = src.mutant_folder
-				if (mutant_color_flags & FIX_COLORS)
-					AH.customization_first_color = fix_colors(AH.customization_first_color)
-					AH.customization_second_color = fix_colors(AH.customization_second_color)
-					AH.customization_third_color = fix_colors(AH.customization_third_color)
-				if (src.mutant_appearance_flags & HAS_SPECIAL_SKINTONE)
-					if (src.mutant_color_flags & SKINTONE_USES_PREF_COLOR_1)
-						AH.s_tone_special = AH.customization_first_color
-					if (src.mutant_color_flags & SKINTONE_USES_PREF_COLOR_2)
-						AH.s_tone_special = AH.customization_second_color
-					if (src.mutant_color_flags & SKINTONE_USES_PREF_COLOR_3)
-						AH.s_tone_special = AH.customization_third_color
 				AH.UpdateMob()
 			if("reset")
 				AH.mob_appearance_flags = (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_HUMAN_HEAD | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
 				AH.mob_color_flags = (HAS_HAIR_COLORED_HAIR)
 				AH.body_icon = 'icons/mob/human.dmi'
+				AH.body_icon_state = "skeleton"
 				AH.head_icon = 'icons/mob/human_head.dmi'
+				AH.head_icon_state = "head"
 				AH.s_tone_special = AH.s_tone
 				AH.customization_icon = 'icons/mob/human_hair.dmi'
 				AH.customization_first_special = AH.customization_first
@@ -537,15 +532,6 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/lizard/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/left
-
-	New(var/mob/living/carbon/human/H)
-		..()
-		if(ishuman(H))
-			H.organHolder.head.update_icon()
-
-			H.update_face()
-			H.update_body()
-			H.update_clothing()
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
@@ -1012,6 +998,7 @@
 	hand_offset = -5
 	body_offset = -7
 	special_head = HEAD_MONKEY
+	special_head_state = "monkey"
 	//	uses_human_clothes = 0 // Guess they can keep that ability for now (Convair880).
 	human_compatible = 0
 	exclusive_language = 1

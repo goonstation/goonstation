@@ -680,46 +680,37 @@
 	if (!src.bioHolder)
 		return // fuck u
 
-	image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
-	cust_one_state = "none"
-
-	image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
-	cust_two_state = "none"
-
-	image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
-	cust_three_state = "none"
-
-	image_eyes = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
-
-	var/obj/item/organ/head/my_head
+	//then put in the stuff from the head
+	var/obj/item/organ/head/my_head 
 	if (src?.organHolder?.head)
 		my_head = src.organHolder.head
 	else
-		return // all done!
+		image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
+		cust_one_state = "none"
 
-	var/datum/appearanceHolder/aH = src.bioHolder.mobAppearance
-	if (aH.mob_appearance_flags & ~HAS_NO_EYES)
-		image_eyes = my_head.head_image_eyes	// eyes are stored in the hea
+		image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
+		cust_two_state = "none"
 
-	if (aH.mob_appearance_flags & HAS_NO_HEAD || aH.mob_appearance_flags & HAS_NO_HAIR) // stop making blobs so *hairy*
-		return
+		image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
+		cust_three_state = "none"
 
-	if (my_head.our_hair_icon)
-		cust_icon = my_head.our_hair_icon
-	else
-		cust_icon = 'icons/mob/human_hair.dmi'
+		image_eyes = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
 
+	image_eyes = my_head.head_image_eyes
+	image_cust_one = my_head.head_image_cust_one
+	image_cust_two = my_head.head_image_cust_two
+	image_cust_three = my_head.head_image_cust_three
 
-	if (my_head.head_image_cust_one)
-		image_cust_one = my_head.head_image_cust_one
+	if(my_head.head_image_cust_one)
+		cust_icon = my_head.head_image_cust_one.icon
+
+	if(my_head.head_image_cust_one)
 		cust_one_state = my_head.head_image_cust_one.icon_state
 
-	if (my_head.head_image_cust_two)
-		image_cust_two = my_head.head_image_cust_two
+	if(my_head.head_image_cust_one)
 		cust_two_state = my_head.head_image_cust_two.icon_state
 
-	if (my_head.head_image_cust_three)
-		image_cust_three = my_head.head_image_cust_three
+	if(my_head.head_image_cust_one)
 		cust_three_state = my_head.head_image_cust_three.icon_state
 
 
@@ -851,6 +842,9 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 		src.body_standing.overlays.len = 0
 		src.hands_standing = SafeGetOverlayImage("hands", file, "blank", MOB_HAND_LAYER1) //image('icons/mob/human.dmi', "blank", MOB_HAND_LAYER1)
 		src.hands_standing.overlays.len = 0
+		src.tail_standing = SafeGetOverlayImage("tail", 'icons/mob/human.dmi', "blank", MOB_LIMB_LAYER) // image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
+		src.tail_standing.overlays.len = 0
+
 
 		// if the image data can be stored in the thing it's trying to draw, store it there
 		// that way, we can make the thing look like the thing without a bunch of dynamic guesswork
@@ -884,50 +878,45 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 					// all this shit goes on the torso anyway
 					if(AHOLD.mob_appearance_flags & HAS_EXTRA_DETAILS)
 						if(AHOLD.mob_color_flags & DETAIL_1)
-							human_detail_1.icon = AHOLD.body_icon
-							human_detail_1.icon_state = AHOLD.mob_detail_1
-							human_detail_1.layer = MOB_DETAIL_LAYER1
-							human_detail_1.color = AHOLD.customization_first_color
-							src.body_standing.overlays += human_detail_1
+							human_image = image(AHOLD.body_icon, AHOLD.mob_detail_1, MOB_DETAIL_LAYER1)
+							human_image.color = AHOLD.customization_first_color
+							src.body_standing.overlays += human_image
 
 						if(AHOLD.mob_color_flags & DETAIL_2)
-							human_detail_2.icon = AHOLD.body_icon
-							human_detail_2.icon_state = AHOLD.mob_detail_2
-							human_detail_2.layer = MOB_DETAIL_LAYER1
-							human_detail_2.color = AHOLD.customization_second_color
-							src.body_standing.overlays += human_detail_2
+							human_image = image(AHOLD.body_icon, AHOLD.mob_detail_2, MOB_DETAIL_LAYER1)
+							human_image.color = AHOLD.customization_second_color
+							src.body_standing.overlays += human_image
 
 						if(AHOLD.mob_color_flags & DETAIL_3)
-							human_detail_3.icon = AHOLD.body_icon
-							human_detail_3.icon_state = AHOLD.mob_detail_3
-							human_detail_3.layer = MOB_DETAIL_LAYER1
-							human_detail_3.color = AHOLD.customization_third_color
-							src.body_standing.overlays += human_detail_3
+							human_image = image(AHOLD.body_icon, AHOLD.mob_detail_3, MOB_DETAIL_LAYER1)
+							human_image.color = AHOLD.customization_third_color
+							src.body_standing.overlays += human_image
 
 						if(AHOLD.mob_color_flags & DETAIL_OVERSUIT_1)	// need more oversuits? Make more of these!
-							human_tail_image_oversuit_1 = image(icon = AHOLD.body_icon, icon_state = AHOLD.mob_oversuit_1, layer = MOB_OVERSUIT_LAYER1)
+							human_image = image(icon = AHOLD.body_icon, icon_state = AHOLD.mob_oversuit_1, layer = MOB_OVERSUIT_LAYER1)
 							if(AHOLD.mob_color_flags & DETAIL_OVERSUIT_IS_COLORFUL)
-								human_tail_image_oversuit_1.color = AHOLD.customization_first_color
+								human_image.color = AHOLD.customization_first_color
 							else
-								human_tail_image_oversuit_1.color = "#FFFFFF"
-							src.body_standing.overlays += human_tail_image_oversuit_1
+								human_image.color = "#FFFFFF"
+							src.body_standing.overlays += human_image
 
-					if (src.organHolder && src.organHolder.head)
+					if (src.organHolder && src.organHolder.head && AHOLD.mob_appearance_flags & ~HAS_NO_HEAD)
 						var/obj/item/organ/head/our_head = src.organHolder.head
 						human_head_image = our_head.head_image // head data is stored in the head
 						src.body_standing.overlays += human_head_image
 
 					if (src.organHolder && src.organHolder.tail)
-						var/obj/item/organ/tail/our_tail = src.organHolder.tail
-						human_tail_image_1 = our_tail.tail_image_1 // tail data is stored in the tail
-						src.body_standing.overlays += human_tail_image_1 // handles under suit
+						var/obj/item/organ/tail/our_tail = src.organHolder.tail // visual tail data is stored in the tail
+						human_tail_image = our_tail.tail_image_1 
+						src.body_standing.overlays += human_tail_image 
 
-						human_tail_image_2 = our_tail.tail_image_2 // tail data is stored in the tail
-						src.body_standing.overlays += human_tail_image_2 // handles under suit
+						human_tail_image = our_tail.tail_image_2 // maybe our tail has multiple parts, like lizards
+						src.body_standing.overlays += human_tail_image
 
-						human_tail_image_oversuit_1 = our_tail.tail_image_oversuit // tail data is stored in the tail
-						human_tail_image_oversuit_1.layer = FLOAT_LAYER // FUCK YOU
-						src.body_standing.overlays += human_tail_image_oversuit_1 // handles under suit
+						human_tail_image = our_tail.tail_image_oversuit // oversuit tail, shown when facing north, for more seeable tails
+						src.tail_standing.overlays += human_tail_image // handles over suit
+					else
+						UpdateOverlays(null, "tail")
 
 				else
 					human_decomp_image.icon_state = "body_decomp[src.decomp_stage]"
@@ -1259,6 +1248,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	//Also forcing the updates since the overlays may have been modified on the images
 	src.UpdateOverlays(src.body_standing, "body", 1, 1)
 	src.UpdateOverlays(src.hands_standing, "hands", 1, 1)
+	src.UpdateOverlays(src.tail_standing, "tail", 1, 1) // i blame pali for giving me this power
 
 #if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
 /mob/living/carbon/human/UpdateDamage()

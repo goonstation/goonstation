@@ -37,20 +37,23 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/body_icon = 'icons/mob/human.dmi'	// tells update_body() which DMI to use for rendering the chest/groin, torso-details, and oversuit tails
 	var/body_icon_state = "skeleton"	// for mutant races that are rendered using a static icon
 	var/head_icon = 'icons/mob/human_head.dmi'
-	var/head_kind = HEAD_HUMAN	// gets fed into the head for it to set it up, if it should be different
+	var/head_icon_state = "head"	// if our head's state isnt "head"
 
 	var/customization_icon = 'icons/mob/human_hair.dmi'
 	var/customization_icon_special = 'icons/mob/human_hair.dmi'
 
 	var/customization_first_color = "#101010"
+	var/customization_first_color_special = "#101010"
 	var/customization_first = "Trimmed"
 	var/customization_first_special = "None"
 
 	var/customization_second_color = "#101010"
+	var/customization_second_color_special = "#101010"
 	var/customization_second = "None"
 	var/customization_second_special = "None"
 
 	var/customization_third_color = "#101010"
+	var/customization_third_color_special = "#101010"
 	var/customization_third = "None"
 	var/customization_third_special = "None"
 
@@ -136,19 +139,22 @@ var/list/datum/bioEffect/mutini_effects = list()
 		body_icon = toCopy.body_icon
 		body_icon_state = toCopy.body_icon_state
 		head_icon = toCopy.head_icon
-		head_kind = toCopy.head_kind
+		head_icon_state = toCopy.head_icon_state
 
 		customization_icon = toCopy.customization_icon
 		customization_icon_special = toCopy.customization_icon_special
 
+		customization_first_color_special = toCopy.customization_first_color_special
 		customization_first_color = toCopy.customization_first_color
 		customization_first = toCopy.customization_first
 		customization_first_special = toCopy.customization_first_special
 
+		customization_second_color_special = toCopy.customization_second_color_special
 		customization_second_color = toCopy.customization_second_color
 		customization_second = toCopy.customization_second
 		customization_second_special = toCopy.customization_second_special
 
+		customization_third_color_special = toCopy.customization_third_color_special
 		customization_third_color = toCopy.customization_third_color
 		customization_third = toCopy.customization_third
 		customization_third_special = toCopy.customization_third_special
@@ -190,6 +196,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	// Disabling this for now as I have no idea how to fit it into hex strings
 	// I'm help -Spy
+	// TODO: make this work
 	proc/StaggeredCopyOther(var/datum/appearanceHolder/toCopy, var/progress = 1)
 		var/adjust_denominator = 11 - progress
 
@@ -240,23 +247,20 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 			var/mob/living/carbon/human/H = owner	// hair is handled by the head, applied by update_face
 
-			if (mob_color_flags & FIX_COLORS)
-				src.customization_first_color = fix_colors(src.customization_first_color)
-				src.customization_second_color = fix_colors(src.customization_second_color)
-				src.customization_third_color = fix_colors(src.customization_third_color)
+			if (src.mob_color_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
+				src.customization_first_color_special = fix_colors(src.customization_first_color)
+				src.customization_second_color_special = fix_colors(src.customization_second_color)
+				src.customization_third_color_special = fix_colors(src.customization_third_color)
 
 			if (src.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
 				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
-					src.s_tone_special = src.customization_first_color
+					src.s_tone_special = src.customization_first_color_special
 				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_2)
-					src.s_tone_special = src.customization_second_color
+					src.s_tone_special = src.customization_second_color_special
 				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
-					src.s_tone_special = src.customization_third_color
+					src.s_tone_special = src.customization_third_color_special
 
-			if(H?.organHolder?.head) // lots of things call this to change hairstyles, but the visuals are done by the head
-				H.organHolder.head.update_icon() // so, lets do that then
-			else
-				H.update_face() // wont get called if they dont have a head. probably wont do anything anyway, but best to be safe
+			H.update_face() // wont get called if they dont have a head. probably wont do anything anyway, but best to be safe
 
 			H.gender = src.gender
 

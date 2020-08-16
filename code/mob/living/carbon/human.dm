@@ -34,6 +34,7 @@
 	var/clothing_dirty = 0
 
 	var/image/body_standing = null
+	var/image/tail_standing = null
 	var/image/fire_standing = null
 	//var/image/face_standing = null
 	var/image/hands_standing = null
@@ -108,12 +109,8 @@
 
 	var/static/image/human_image = image('icons/mob/human.dmi')
 	var/static/image/human_head_image = image('icons/mob/human_head.dmi')
-	var/static/image/human_tail_image_1 = image('icons/mob/human.dmi', "blank", layer = MOB_TAIL_LAYER1)
-	var/static/image/human_tail_image_2 = image('icons/mob/human.dmi', "blank", layer = MOB_TAIL_LAYER2)
-	var/static/image/human_tail_image_oversuit_1 = image('icons/mob/human.dmi', "blank", layer = MOB_OVERSUIT_LAYER1)
-	var/static/image/human_detail_1 = image('icons/mob/human.dmi', "blank", layer = MOB_DETAIL_LAYER1)
-	var/static/image/human_detail_2 = image('icons/mob/human.dmi', "blank", layer = MOB_DETAIL_LAYER2)
-	var/static/image/human_detail_3 = image('icons/mob/human.dmi', "blank", layer = MOB_DETAIL_LAYER3)
+	var/static/image/human_detail_image = image('icons/mob/human.dmi')
+	var/static/image/human_tail_image = image('icons/mob/human.dmi')
 	var/static/image/human_untoned_image = image('icons/mob/human.dmi')
 	var/static/image/human_decomp_image = image('icons/mob/human_decomp.dmi')
 	var/static/image/human_untoned_decomp_image = image('icons/mob/human.dmi')
