@@ -20,7 +20,7 @@ export const Search = props => {
   } = props;
   const handleSearch = (e, value) => {
     onSearch(value);
-  }
+  };
   return (
     <div>
       <Input
@@ -44,8 +44,8 @@ export const Search = props => {
               selectedOption && option === selectedOption && 'Button--selected',
             ])}
             onClick={() => onSelect(option)}>
-              {option}
-            </div>
+            {option}
+          </div>
         ))}
       </Section>
     </div>

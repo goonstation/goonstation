@@ -50,7 +50,9 @@ export const DisposalChute = (props, context) => {
                 onClick={() => act('rescanDest')}
               />
             </Box>
-            <DestinationSearch destinations={destinations} destinationTag={destinationTag} />
+            <DestinationSearch
+              destinations={destinations}
+              destinationTag={destinationTag} />
           </>
         )}
       </Window.Content>
@@ -67,8 +69,8 @@ const PumpStatus = (props, context) => {
       info={mode===DisposalChuteState.Off}
       danger={mode===DisposalChuteState.Charging}
       success={mode===DisposalChuteState.Charged}
-      textAlign="center"
-    >
+      textAlign="center">
+
       Pump Status: {mode===DisposalChuteState.Charged ? 'Ready' : (mode===DisposalChuteState.Charging ? 'Pressurizing' : 'Inactive')}
     </NoticeBox>
   );
@@ -99,7 +101,7 @@ const EjectButton = (props, context) => {
         content="Eject Contents"
         icon="eject"
         onClick={() => act('eject')} />
-   </Box>
+    </Box>
   );
 };
 
