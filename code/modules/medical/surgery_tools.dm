@@ -491,7 +491,7 @@ CONTAINS:
 			else
 				speak("Lethal dysrhythmia detected. Patient is still in cardiac arrest!")
 			patient.Virus_ShockCure(35)	// so it doesnt have a 100% chance to cure roboTF
-			src.setStatus("defibbed", 12 )
+			src.setStatus("defibbed", user == patient ? 6 : 12 )
 
 			if (ishuman(patient)) //remove later when we give nonhumans pathogen / organ response?
 				var/mob/living/carbon/human/H = patient
