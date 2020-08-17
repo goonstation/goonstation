@@ -131,7 +131,7 @@ const ToggleHandle = (props, context) => {
   const { destinations, flush } = data;
   return (
     <Box mb="0.5em">
-      <strong>Disposal Handle </strong>
+      <strong>Chute Handle </strong>
       <Button
         icon={destinations ? "envelope" : "trash-alt"}
         content={flush ? "Engaged" : "Disengaged"}
