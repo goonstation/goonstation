@@ -1,5 +1,14 @@
 
+(t)sun aug 16 20
+(u)Tarmunora
+(p)1793
+(e)⚖|balance
+(+)Adjusted nitroglycerin explosions.
 (t)sat aug 15 20
+(u)Jawns
+(p)1709
+(e)⚖🐛|balance, bug
+(+)Sketchy D-5 now takes both grown and crate weed
 (u)glassofmilk
 (p)1809
 (e)🆕|feature
