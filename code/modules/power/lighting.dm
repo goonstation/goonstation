@@ -541,11 +541,12 @@
 	if(!user || user.stat)
 		return
 
+	if (!inserted_lamp)
+		. += "The [fitting] has been removed."
+		return
 	switch(current_lamp.light_status)
 		if(LIGHT_OK)
 			. += "It is turned [on? "on" : "off"]."
-		if(LIGHT_EMPTY)
-			. += "The [fitting] has been removed."
 		if(LIGHT_BURNED)
 			. += "The [fitting] is burnt out."
 		if(LIGHT_BROKEN)
@@ -602,7 +603,7 @@
 		if (issilicon(user)) //Not that non-silicons should have these
 			var/mob/living/silicon/S = user
 			if (S.cell)
-				if (current_lamp.light_status == LIGHT_EMPTY)
+				if (!inserted_lamp)
 					S.cell.charge -= M.cost_empty
 				else
 					S.cell.charge -= M.cost_broken
@@ -638,30 +639,9 @@
 			boutput(user, "This type of light requires a [fitting].")
 			return
 
-		// attempt to break the light
-
-	else if(current_lamp.light_status != LIGHT_BROKEN && current_lamp.light_status != LIGHT_EMPTY)
-
-
-		if(prob(1+W.force * 5))
-
-			boutput(user, "You hit the light, and it smashes!")
-			logTheThing("station", user, null, "smashes a light at [log_loc(src)]")
-			for(var/mob/M in AIviewers(src))
-				if(M == user)
-					continue
-				M.show_message("[user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
-			if(on && (W.flags & CONDUCT))
-				if(!user.bioHolder.HasEffect("resist_electric"))
-					src.electrocute(user, 50, null, 20000)
-			broken()
-
-
-		else
-			boutput(user, "You hit the light!")
 
 	// attempt to stick weapon into light socket
-	else if(current_lamp.light_status == LIGHT_EMPTY)
+	else if(!inserted_lamp)
 		if (isscrewingtool(W))
 			if (has_power())
 				boutput(user, "That's not safe with the power on!")
@@ -685,6 +665,27 @@
 			if(!user.bioHolder.HasEffect("resist_electric"))
 				src.electrocute(user, 75, null, 20000)
 				elecflash(src,radius = 1, power = 2, exclude_center = 1)
+
+	// attempt to break the light
+	else if(current_lamp.light_status != LIGHT_BROKEN)
+
+
+		if(prob(1+W.force * 5))
+
+			boutput(user, "You hit the light, and it smashes!")
+			logTheThing("station", user, null, "smashes a light at [log_loc(src)]")
+			for(var/mob/M in AIviewers(src))
+				if(M == user)
+					continue
+				M.show_message("[user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
+			if(on && (W.flags & CONDUCT))
+				if(!user.bioHolder.HasEffect("resist_electric"))
+					src.electrocute(user, 50, null, 20000)
+			broken()
+
+
+		else
+			boutput(user, "You hit the light!")
 
 
 // returns whether this light has power
