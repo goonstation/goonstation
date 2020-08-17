@@ -18,6 +18,8 @@ obj/machinery/atmospherics/binary/pump
 
 	name = "Gas pump"
 	desc = "A pump"
+	layer = PIPE_MACHINE_LAYER
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/on = 0
 	var/target_pressure = ONE_ATMOSPHERE

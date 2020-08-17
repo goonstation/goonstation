@@ -3160,6 +3160,8 @@ var/global/noir = 0
 						src.owner:debug_variables(world)
 					if("globals")
 						src.owner:debug_variables("GLOB")
+					if("globalprocs")
+						src.owner:show_proc_list(null)
 			else
 				alert("You need to be at least a Coder to use debugging secrets.")
 
@@ -4063,6 +4065,7 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsdebug;type=overlaysrem'>(Remove)</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=world'>World</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=globals'>Global Variables</A>
+					<A href='?src=\ref[src];action=secretsdebug;type=globalprocs'>Global Procs</A>
 				"}
 
 		dat += "</div>"

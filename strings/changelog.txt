@@ -1,4 +1,13 @@
 
+(t)mon aug 17 20
+(u)UUID
+(p)1847
+(e)🐛|bug
+(*)Humans are once again allowed to voluntarily enter the port-a-puke.
+(u)pali
+(p)1839
+(e)🐛|bug
+(*)Mentor mouse ping hotkey is now ctrl+click and players can whisper back using F3 if they have a mouse in their pocket. Other misc mentor mouse improvements.
 (t)sun aug 16 20
 (u)Tarmunora
 (p)1793

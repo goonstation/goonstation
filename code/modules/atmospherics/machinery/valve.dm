@@ -5,7 +5,8 @@ obj/machinery/atmospherics/valve
 	desc = "A pipe valve"
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
-	layer = PIPE_LAYER
+	layer = PIPE_MACHINE_LAYER
+	plane = PLANE_NOSHADOW_BELOW
 	var/open = 0
 	var/high_risk = 0 //Does this valve have enough grief potential that the admins should be messaged when this is opened?
 	var/obj/machinery/atmospherics/node1

@@ -22,7 +22,6 @@
 	var/only_local_looc = 0
 	var/deadchatoff = 0
 	var/local_deadchat = 0
-	var/last_adminhelp = 0
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0

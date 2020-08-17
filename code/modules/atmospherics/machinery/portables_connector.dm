@@ -5,6 +5,8 @@
 	desc = "For connecting portables devices related to atmospherics control."
 	dir = SOUTH
 	initialize_directions = SOUTH
+	layer = PIPE_MACHINE_LAYER
+	plane = PLANE_NOSHADOW_BELOW
 	var/obj/machinery/portable_atmospherics/connected_device
 	var/obj/machinery/atmospherics/node
 	var/datum/pipe_network/network
