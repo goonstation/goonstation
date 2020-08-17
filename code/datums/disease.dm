@@ -38,7 +38,7 @@
 	proc/on_infection(var/mob/living/affected_mob,var/datum/ailment_data/D)
 		return
 
-	// This is still subject to serious change. For now wit's mostly a mockup.
+	// This is still subject to serious change. For now it's mostly a mockup.
 	// Determines things that may happen during a surgery for different ailments
 	// requiring a surgeon's intervention. Currently used for the parasites.
 	// Returns a true value if the surgery was successful.
