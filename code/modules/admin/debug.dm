@@ -300,18 +300,25 @@ var/global/debug_messages = 0
 			target = null
 	doCallProc(target)
 
-/proc/doCallProc(target = null)
+/proc/doCallProc(target = null, procname = null) // also accepts actual proc
 	var/returnval = null
-	var/procname = input("Procpath (ex. bust_lights)","path:", null) as null|text
+	if(isnull(procname))
+		procname = input("Procpath (ex. bust_lights)","path:", null) as null|text
 	if (isnull(procname))
 		return
 
 	var/list/listargs = get_proccall_arglist()
 
-	if(copytext(procname, 1, 6) == "proc/")
-		procname = copytext(procname, 6)
-	else if(copytext(procname, 1, 7) == "/proc/")
-		procname = copytext(procname, 7)
+	var/list/name_list
+
+	if(istext(procname))
+		if(copytext(procname, 1, 6) == "proc/")
+			procname = copytext(procname, 6)
+		else if(copytext(procname, 1, 7) == "/proc/")
+			procname = copytext(procname, 7)
+		name_list = list(procname, "proc/" + procname, "/proc/" + procname, "verb/" + procname)
+	else // is an actual proc, not a name
+		name_list = list(procname)
 
 	if(target)
 		boutput(usr, "<span class='notice'>Calling '[procname]' with [islist(listargs) ? listargs.len : "0"] arguments on '[target]'</span>")
@@ -319,7 +326,7 @@ var/global/debug_messages = 0
 		boutput(usr, "<span class='notice'>Calling '[procname]' with [islist(listargs) ? listargs.len : "0"] arguments</span>")
 
 	var/success = FALSE
-	for(var/actual_proc in list(procname, "proc/" + procname, "/proc/" + procname))
+	for(var/actual_proc in name_list)
 		try
 			if (target)
 				if(islist(listargs) && listargs.len)
