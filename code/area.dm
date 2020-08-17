@@ -78,11 +78,11 @@
 
 	/// don't irradiate this place!!
 	var/do_not_irradiate = 1
-		/*! Definitely DO NOT var-edit areas in the map editor because it apparently causes individual tiles
-		* to become detached from the parent area. Example: APCs belonging to medbay or whatever that are in
-		* adjacent maintenance tunnels, not in the same room they're powering. If you set the d_n_i flag,
-		* it will render them useless.
-		*/
+			/*! Definitely DO NOT var-edit areas in the map editor because it apparently causes individual tiles
+			* to become detached from the parent area. Example: APCs belonging to medbay or whatever that are in
+			* adjacent maintenance tunnels, not in the same room they're powering. If you set the d_n_i flag,
+			* it will render them useless.
+			*/
 
 	/// gang that owns this area in gang mode
 	var/datum/gang/gang_owners = null
@@ -3249,9 +3249,9 @@ area/station/security/visitation
 /**
   * Determines is an area is powered or not.
 	*
-  * chan - the power channel, possibilities: (EQUIP, LIGHT, ENVIRON)
+  * * chan - the power channel, possibilities: (EQUIP, LIGHT, ENVIRON)
 	*
-  * return true if the area has power to given channel, false otherwise, null if channel was not specified
+  * * return true if the area has power to given channel, false otherwise, null if channel was not specified
   */
 /area/proc/powered(chan)
 	if(!requires_power)
@@ -3278,7 +3278,7 @@ area/station/security/visitation
 /**
   * Returns the current usage of the specified channel
 	*
-  * required - chan - the power channel, possibilities: (EQUIP, LIGHT, ENVIRON, TOTAL)
+  * * required - chan - the power channel, possibilities: (EQUIP, LIGHT, ENVIRON, TOTAL)
   */
 /area/proc/usage(chan)
 	switch(chan)
@@ -3302,9 +3302,9 @@ area/station/security/visitation
 /**
   * Uses the specified ammount of power for the specified channel
   *
-  * required - amount - the amt. of power to use
+  * * required - amount - the amt. of power to use
 	*
-  * required - chan - the power channel, possibilities: (EQUIP, LIGHT, ENVIRON)
+  * * required - chan - the power channel, possibilities: (EQUIP, LIGHT, ENVIRON)
   */
 /area/proc/use_power(amount, chan)
 
