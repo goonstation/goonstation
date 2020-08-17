@@ -93,7 +93,7 @@ const DetonatorWires = props => {
               disabled={isPrimed}
               icon="clock"
               content="Timer"
-              onClick={() => onSetTimer()} />
+              onClick={onSetTimer} />
           </Flex.Item>
         </Flex>
       </Flex.Item>
@@ -116,7 +116,7 @@ const DetonatorUtility = props => {
     onTriggerActivate,
   } = props;
 
-  const armingStatus = () => {
+  const renderArmingStatus = () => {
     if (safetyIsOn) {
       return ("The safety is on, therefore, you cannot prime the bomb.");
     } else if (!safetyIsOn && !isPrimed) {
@@ -125,7 +125,7 @@ const DetonatorUtility = props => {
           color="danger"
           icon="bomb"
           content="Prime"
-          onClick={() => onPrimeDetonator()} />);
+          onClick={onPrimeDetonator} />);
     } else {
       return (
         <Box
@@ -146,13 +146,13 @@ const DetonatorUtility = props => {
             <Button
               icon="anchor"
               content="Anchor"
-              onClick={() => onToggleAnchor()} />)}
+              onClick={onToggleAnchor} />)}
       </LabeledList.Item>
       <LabeledList.Item
         label="Trigger">
         {trigger ? (
           <Button
-            onClick={() => onTriggerActivate()} >
+            onClick={onTriggerActivate} >
             {trigger}
           </Button>)
           : "There is no trigger attached."}
@@ -166,12 +166,12 @@ const DetonatorUtility = props => {
               color="average"
               icon="power-off"
               content="Turn Off"
-              onClick={() => onToggleSafety()} />)
+              onClick={onToggleSafety} />)
           : <Box color="average">Off</Box> }
       </LabeledList.Item>
       <LabeledList.Item
         label="Arming">
-        { armingStatus() }
+        { renderArmingStatus() }
       </LabeledList.Item>
       <LabeledList.Item label="Attachments">
         {detonatorAttachments && detonatorAttachments.length > 0 ? (

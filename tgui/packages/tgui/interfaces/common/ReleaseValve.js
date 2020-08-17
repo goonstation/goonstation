@@ -17,7 +17,7 @@ export const ReleaseValve = props => {
         <Button
           content={valveIsOpen ? 'Open' : 'Closed'}
           color={valveIsOpen ? 'average' : 'default'}
-          onClick={() => onToggleValve()} />
+          onClick={onToggleValve} />
       </LabeledList.Item>
       <LabeledList.Item label="Release pressure">
         <Button

@@ -26,7 +26,7 @@ export const DetonatorTimer = props => {
       backgroundColor="black"
       color={timeColor()}
       maxWidth="100px"
-      fontSize="19px">
+      fontSize="20px">
       <AnimatedNumber
         value={time}
         format={value => formatTime(value, explosionMessage)} />
