@@ -281,7 +281,7 @@
 				continue
 			value++
 		for (var/obj/machinery/light/L in src.contents)
-			if (L.light_status != 0) //See LIGHT_OK
+			if (L.current_lamp.light_status != 0) //See LIGHT_OK
 				continue
 			value++
 		for (var/obj/window/W in src.contents)
