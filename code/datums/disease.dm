@@ -38,7 +38,7 @@
 	proc/on_infection(var/mob/living/affected_mob,var/datum/ailment_data/D)
 		return
 
-	// This is still subject to serious change. For now it's mostly a mockup.
+	// This is still subject to serious change. For now wit's mostly a mockup.
 	// Determines things that may happen during a surgery for different ailments
 	// requiring a surgeon's intervention. Currently used for the parasites.
 	// Returns a true value if the surgery was successful.
@@ -111,7 +111,6 @@
 			stage = master.max_stages
 
 		if (prob(stage_prob * mult) && stage < master.max_stages)
-			boutput(world, "[stage_prob * mult]")
 			stage++
 
 		master.stage_act(affected_mob,src)
@@ -152,7 +151,7 @@
 	var/develop_resist = 0 // can you develop a resistance to this?
 	var/cycles = 0         // does this disease have a cyclical nature? if so, how many cycles have elapsed?
 
-	stage_act()
+	stage_act(var/mult)
 		if (!affected_mob || disposed)
 			return 1
 
@@ -171,7 +170,7 @@
 		var/advance_prob = stage_prob
 		if (state == "Acute")
 			advance_prob *= 2
-		advance_prob = max(0,min(advance_prob,100))
+		advance_prob = clamp((advance_prob * mult), 0, 100)
 
 		if (prob(advance_prob))
 			if (state == "Remissive")
@@ -259,7 +258,7 @@
 		src.cure = master.cure
 		src.was_setup = 1
 
-	stage_act()
+	stage_act(var/mult)
 		if (!affected_mob)
 			return
 
@@ -277,7 +276,7 @@
 		if (stage > master.max_stages)
 			stage = master.max_stages
 
-		if (prob(stage_prob) && stage < master.max_stages)
+		if (prob(stage_prob * mult) && stage < master.max_stages)
 			stage++
 
 
