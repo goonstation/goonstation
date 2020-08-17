@@ -629,6 +629,7 @@
 	density = 0
 	opacity = 0
 	anchored = 1
+	plane = PLANE_NOSHADOW_ABOVE
 
 	deconstruct_flags = DECON_MULTITOOL
 

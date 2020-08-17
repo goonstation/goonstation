@@ -21,6 +21,7 @@ var/zapLimiter = 0
 	name = "area power controller"
 	icon_state = "apc0"
 	anchored = 1
+	plane = PLANE_NOSHADOW_ABOVE
 	req_access = list(access_engineering_power)
 	object_flags = CAN_REPROGRAM_ACCESS
 	netnum = -1		// set so that APCs aren't found as powernet nodes
