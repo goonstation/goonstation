@@ -7,7 +7,7 @@
   *
   * The world /New() is the root of where a round itself begins
   */
-world
+/world
 	mob = /mob/new_player
 
 	#ifdef MOVING_SUB_MAP //Defined in the map-specific .dm configuration file.
