@@ -16,15 +16,23 @@
 
 /// Base area definition
 /area
-	var/tmp/active = FALSE //! TRUE if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
-	var/list/population = list() //Who is here (ditto)
+
+	/// TRUE if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
+	var/tmp/active = FALSE
+
+	//Who is here (ditto)
+	var/list/population = list()
+
 	var/tmp/fire = null
 	var/atmos = 1
 	var/poweralm = 1
 	var/skip_sims = 0
 	var/tmp/sims_score = 100
 	var/virtual = 0
-	var/is_centcom = 0 //! for escape checks
+
+	/// for escape checks
+	var/is_centcom = 0
+
 	var/gencolor
 	level = null
 	#ifdef UNDERWATER_MAP
@@ -40,6 +48,8 @@
 	mat_changedesc = 0
 	text = ""
 	var/lightswitch = 1
+
+	/// If the area is on a restricted z leve, this controls if people can eat within it. (The reason for this might shock you!)
 	var/may_eat_here_in_restricted_z = FALSE
 
 	var/eject = null
@@ -55,23 +65,37 @@
 	var/tmp/used_environ = 0
 	var/expandable = 1
 
-	var/irradiated = 0 // space blowouts use this, should always be 0
-	var/permarads = 0 // Blowouts don't set irradiated on this area back to zero.
-	var/do_not_irradiate = 1 /// don't irradiate this place!!
-	// Definitely DO NOT var-edit areas in the map editor because it apparently causes individual tiles
-	// to become detached from the parent area. Example: APCs belonging to medbay or whatever that are in
-	// adjacent maintenance tunnels, not in the same room they're powering. If you set the d_n_i flag,
-	// it will render them useless.
+	/// space blowouts use this, should always be 0
+	var/irradiated = 0
 
-	var/datum/gang/gang_owners = null //! gang that owns this area in gang mode
-	var/gang_base = 0 //! is this a gang's base (uncaptureable)?
-	var/being_captured = null //! for gang mode
+	// Blowouts don't set irradiated on this area back to zero.
+	var/permarads = 0
 
-	var/filler_turf = null		//! if set, replacewithspace in this area instead replaces with this turf type
+	/// don't irradiate this place!!
+	var/do_not_irradiate = 1
+	/*! Definitely DO NOT var-edit areas in the map editor because it apparently causes individual tiles
+	 * to become detached from the parent area. Example: APCs belonging to medbay or whatever that are in
+	 * adjacent maintenance tunnels, not in the same room they're powering. If you set the d_n_i flag,
+	 * it will render them useless.
+	 */
 
-	var/teleport_blocked = 0 //! Cannot teleport into this area without some explicit set_loc thing. 1 for most things, 2 for definitely everything.
+	/// gang that owns this area in gang mode
+	var/datum/gang/gang_owners = null
 
-	var/workplace = 0 //! Do people work here?
+	/// is this a gang's base (uncaptureable)?
+	var/gang_base = 0
+
+	/// Is the area currently being captured/tagged in gang mode
+	var/being_captured = null
+
+	/// if set, replacewithspace in this area instead replaces with this turf type
+	var/filler_turf = null
+
+	/// Cannot teleport into this area without some explicit set_loc thing. 1 for most things, 2 for definitely everything.
+	var/teleport_blocked = 0
+
+	/// Do people work here?
+	var/workplace = 0
 
 	var/list/obj/critter/registered_critters = list()
 	var/waking_critters = 0
@@ -83,15 +107,27 @@
 	var/tmp/played_fx_1 = 0
 	var/tmp/played_fx_2 = 0
 	var/sound_group = null
-	var/sound_environment = 1 //default environment for sounds - see sound datum vars documentation for the presets.
 
-	var/sanctuary = 0 //! set to TRUE to inhibit attacks in this area.
-	var/blocked   = 0 //! set to TRUE to inhibit entrance into this area, may not work completely yet.
-	var/blocked_waypoint //! if set and a blocked person makes their way into here via Bad Ways, they'll be teleported here instead of nullspace. use a path!
+	/// default environment for sounds - see sound datum vars documentation for the presets.
+	var/sound_environment = 1
+
+	/// set to TRUE to inhibit attacks in this area.
+	var/sanctuary = 0
+
+	/// set to TRUE to inhibit entrance into this area, may not work completely yet.
+	var/blocked = 0
+
+	/// if set and a blocked person makes their way into here via Bad Ways, they'll be teleported here instead of nullspace. use a path!
+
+	var/blocked_waypoint
 	var/list/blockedTimers
-	var/storming = 0 //! for Battle Royale gamemode
+
+	/// for Battle Royale gamemode
+	var/storming = 0
 
 	var/obj/machinery/light_area_manager/light_manager = 0
+
+	/// Local list of obj/machines found in the area
 	var/list/machines = list()
 
 	proc/CanEnter(var/atom/movable/A)
