@@ -6938,9 +6938,6 @@
 	icon_state = "yellowblack"
 	},
 /area/station/crew_quarters/quartersA)
-"aov" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
 "aow" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Chapel Office"
@@ -6949,13 +6946,13 @@
 /obj/disposalpipe/segment/mail,
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aox" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aoy" = (
 /obj/disposalpipe/segment,
 /obj/machinery/firealarm{
@@ -7397,12 +7394,12 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "apr" = (
 /obj/stool,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aps" = (
 /obj/table/wood/auto,
 /obj/item/card_box/tarot,
@@ -7412,7 +7409,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "apt" = (
 /obj/stool,
 /obj/decal/garland{
@@ -7421,7 +7418,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "apu" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -7432,14 +7429,14 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "apv" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8;
 	icon_state = "wood1"
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "apw" = (
 /obj/stool/chair/office{
 	icon_state = "office_chair";
@@ -7981,24 +7978,21 @@
 "aqF" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aqG" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aqH" = (
 /turf/simulated/wall/false_wall,
-/area/station/chapel/main/main)
-"aqI" = (
-/turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aqJ" = (
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "aqK" = (
 /obj/item/a_gift/festive,
 /turf/simulated/floor/snow/snowball,
@@ -8517,7 +8511,7 @@
 "arT" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "arU" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
@@ -8525,7 +8519,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "arV" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
@@ -8533,7 +8527,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "arW" = (
 /obj/xmastree,
 /turf/simulated/floor/snow/snowball,
@@ -9739,7 +9733,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/main/main)
+/area/station/chapel/main)
 "auF" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
@@ -16711,12 +16705,12 @@
 	pixel_y = 16
 	},
 /turf/simulated/floor/sanitary/blue{
-	dir = 
+	dir =
 	},
 /area/station/chemistry)
 "aKc" = (
 /turf/simulated/floor/sanitary/blue{
-	dir = 
+	dir =
 	},
 /area/station/chemistry)
 "aKd" = (
@@ -16885,14 +16879,14 @@
 "aKy" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary/blue{
-	dir = 
+	dir =
 	},
 /area/station/chemistry)
 "aKz" = (
 /obj/machinery/drainage,
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/sanitary/blue{
-	dir = 
+	dir =
 	},
 /area/station/chemistry)
 "aKA" = (
@@ -81396,10 +81390,10 @@ akX
 akX
 akX
 akX
-aov
-aov
-aov
-aov
+ahY
+ahY
+ahY
+ahY
 ati
 auy
 avN
@@ -81698,10 +81692,10 @@ akX
 acg
 amH
 anF
-aov
+ahY
 apq
 aqF
-aov
+ahY
 atj
 auz
 atj
@@ -82302,10 +82296,10 @@ akX
 alP
 amJ
 anH
-aov
+ahY
 aps
 aqH
-aov
+ahY
 aCJ
 auB
 avP
@@ -82604,10 +82598,10 @@ akX
 alQ
 amK
 anI
-aov
+ahY
 apt
-aqI
-aov
+aiL
+ahY
 atm
 auC
 avQ
@@ -83208,14 +83202,14 @@ akX
 aco
 amN
 aco
-aov
+ahY
 apv
-aov
+ahY
 arV
 aox
 auE
-aov
-aov
+ahY
+ahY
 bem
 azq
 aAw

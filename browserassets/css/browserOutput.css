@@ -265,6 +265,7 @@ a.popt {text-decoration: none;}
 .regular { color: #000000; }
 .internal { color: #002fff; }
 .mhelp {color: #CC0066;}
+.ahelp {color: #0000ff;}
 .success {color: green;}
 .hint {color: #0000ff;}
 .notice {color: #0000ff;}
@@ -341,6 +342,7 @@ h1.alert, h2.alert {color: #000000;}
 body.theme-dark { background-color: #23272a; color: #dfdfcf; }
 body.theme-dark .regular { color: #dfdfcf; }
 body.theme-dark .mhelp {color: #e75ae0;}
+body.theme-dark .ahelp {color:  #ffa135;}
 body.theme-dark .notice { color: #7996ff; }
 body.theme-dark .hint { color: #7996ff; }
 body.theme-dark .internal { color: #92b4ff; }
@@ -392,7 +394,7 @@ body.theme-dark  {
 	scrollbar-arrow-color: #808080;
 }
 
-body.theme-dark .admin {color: #6e93ff;}
+body.theme-dark .admin {color: #ecc300;}
 body.theme-dark .adminMsgWrap {color: #cb79d4;}
 body.theme-dark .gfartooc {color: #60c4e6;}
 body.theme-dark .gfartlooc {color: #92cbdf;}

@@ -208,6 +208,7 @@ var/obj/item/dummy/click_dummy = new
 
 
 /proc/get_viewing_AIs(center = null, distance = 7)
+	RETURN_TYPE(/list/mob)
 	. = list()
 
 	var/turf/T = get_turf(center)

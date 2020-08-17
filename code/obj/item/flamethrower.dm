@@ -18,6 +18,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	throw_speed = 1
 	throw_range = 5
 	w_class = 4
+	inventory_counter_enabled = 1
 	var/mode = 1
 	var/processing = 0
 	var/operating = 0
@@ -37,7 +38,11 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		return null
 
 	New()
+		..()
 		BLOCK_LARGE
+		if (fueltank)
+			inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
+		setItemSpecial(null)
 
 /obj/item/flamethrower/assembled
 	name = "flamethrower"
@@ -57,25 +62,25 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	var/obj/item/device/igniter/igniter = null
 	var/obj/item/reagent_containers/food/drinks/fueltank/fueltank = null
 
-	
 	get_reagsource()
 		return fueltank?.reagents
 
 /obj/item/tank/jetpack/backtank
 	name = "PANIKPANIKBACKTANNK"
+	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | OPENCONTAINER
 	var/obj/item/flamethrower/backtank/linkedflamer
 
 	New()
 		..()
-		flags |= OPENCONTAINER
 		var/datum/reagents/R = new/datum/reagents(4000)
 		reagents = R
 		R.my_atom = src
+		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
+
 
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
 			reagents.move_trigger(M, kindof)
-
 
 	MouseDrop(over_object, src_location, over_location)
 		..()
@@ -97,32 +102,30 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 				return
 		else
 			boutput(usr, "<span class='alert'>There's nothing inside to drain!</span>")
-	
+
 	disposing()
 		if(linkedflamer)
 			linkedflamer.gastank = null
 		..()
-		
-		
+
 /obj/item/flamethrower/backtank
 	New()
-		. = ..()
+		..()
 		gastank = new /obj/item/tank/jetpack/backtank(src.loc)
 		var/obj/item/tank/jetpack/backtank/B = gastank
 		B.linkedflamer = src
-	
+
 	get_reagsource(mob/user)
 		if(gastank in user.get_equipped_items())
 			return gastank?.reagents
 		else
 			boutput(user, "<span class='alert'>You need to be wearing this flamer's backtank to fire it!,</span>")
-		
+
 	disposing()
 		if(istype(gastank, /obj/item/tank/jetpack/backtank/))
 			var/obj/item/tank/jetpack/backtank/B = gastank
 			B.linkedflamer = null
 		..()
-		
 
 /obj/item/flamethrower/assembled/loaded/
 	icon_state = "flamethrower_oxy_fuel"
@@ -172,24 +175,21 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	rod = new /obj/item/rods
 	igniter = new /obj/item/device/igniter
 
-/obj/item/flamethrower/assembled/loaded/New()
-	welder = new /obj/item/weldingtool
-	rod = new /obj/item/rods
-	igniter = new /obj/item/device/igniter
-	gastank = new /obj/item/tank/oxygen
-	fueltank = new /obj/item/reagent_containers/food/drinks/fueltank
-
 /obj/item/flamethrower/assembled/New()
 	welder = new /obj/item/weldingtool
 	rod = new /obj/item/rods
 	igniter = new /obj/item/device/igniter
+	..()
+
+/obj/item/flamethrower/assembled/loaded/New()
+	if(!fueltank)
+		fueltank = new /obj/item/reagent_containers/food/drinks/fueltank
+	gastank = new /obj/item/tank/oxygen
+	..()
 
 /obj/item/flamethrower/assembled/loaded/napalm/New()
-	welder = new /obj/item/weldingtool
-	rod = new /obj/item/rods
-	igniter = new /obj/item/device/igniter
-	gastank = new /obj/item/tank/oxygen
 	fueltank = new /obj/item/reagent_containers/food/drinks/fueltank/napalm
+	..()
 
 /obj/item/assembly/weld_rod/disposing()
 	//src.welder = null
@@ -605,6 +605,8 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		for (var/mob/living/carbon/human/theMob in currentturf.contents)
 			logTheThing("combat", usr, theMob, "blasts [constructTarget(theMob,"combat")] with a flamethrower [logString] at [log_loc(theMob)].")
 			mobHitList += "[key_name(theMob)], "
+
+		inventory_counter.update_percent(src.part5.reagents.total_volume, src.part5.reagents.maximum_volume)
 
 		if(halt)
 			break

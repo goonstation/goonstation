@@ -875,7 +875,7 @@
 
 /datum/achievementReward/bloodflood
 	title = "(Fancy Gib) Plague of Blood"
-	desc = "You're gonna get ripped to shreds, probably."
+	desc = "This will cleanse you of Original Sin (permanently)."
 	required_medal = "Original Sin"
 	// once_per_round = 0
 
@@ -901,7 +901,7 @@
 		if (L?.traitHolder?.hasTrait("hemophilia"))
 			blood_mult = blood_mult + 3
 		T.fluid_react_single(blood_id,blood_mult * blood_amount)
-		var/result = world.ClearMedal("Original Sin", activator)
+		var/result = world.ClearMedal("Original Sin", activator, config.medal_hub, config.medal_password)
 		logTheThing("combat", activator, null, "Activated the blood flood gib reward thing (Original Sin)")
 		if (result)
 			boutput(activator, "<span class='alert'>You feel your soul cleansed of sin.</span>")

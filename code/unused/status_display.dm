@@ -89,7 +89,7 @@
 // 						displayloc = "ETA "
 
 // 					var/displaytime = get_shuttle_timer()
-// 					if(lentext(displaytime) > 5)
+// 					if(length(displaytime) > 5)
 // 						displaytime = "**~**"
 
 // 					update_display_lines(displayloc, displaytime)
@@ -103,7 +103,7 @@
 // 				var/disp2
 // 				if(supply_shuttle_moving)
 // 					disp1 = get_supply_shuttle_timer()
-// 					if(lentext(disp1) > 5)
+// 					if(length(disp1) > 5)
 // 						disp1 = "**~**"
 // 					disp2 = null
 
@@ -126,14 +126,14 @@
 // 					line1 = message1
 // 				else
 // 					line1 = copytext(message1+message1, index1, index1+5)
-// 					if(index1++ > (lentext(message1)))
+// 					if(index1++ > (length(message1)))
 // 						index1 = 1
 
 // 				if(!index2)
 // 					line2 = message2
 // 				else
 // 					line2 = copytext(message2+message2, index2, index2+5)
-// 					if(index2++ > (lentext(message2)))
+// 					if(index2++ > (length(message2)))
 // 						index2 = 1
 
 // 				update_display(line1, line2)
@@ -156,14 +156,14 @@
 
 // 	proc/set_message(var/m1, var/m2)
 // 		if(m1)
-// 			index1 = (lentext(m1) > 5)
+// 			index1 = (length(m1) > 5)
 // 			message1 = uppertext(m1)
 // 		else
 // 			message1 = ""
 // 			index1 = 0
 
 // 		if(m2)
-// 			index2 = (lentext(m2) > 5)
+// 			index2 = (length(m2) > 5)
 // 			message2 = uppertext(m2)
 // 		else
 // 			message2 = null
@@ -179,15 +179,15 @@
 // 	proc/calculate_message_images()
 // 		text_ticker.len = 0
 
-// 		var/target = max(lentext(message1), lentext(message2))
+// 		var/target = max(length(message1), length(message2))
 
 // 		//No sense repeatedly concatenating the message
 // 		var/dmessage1 = ""
-// 		if(lentext(message1)>MAX_LEN)
+// 		if(length(message1)>MAX_LEN)
 // 			dmessage1 = message1+message1
 
 // 		var/dmessage2 = ""
-// 		if(lentext(message2)>MAX_LEN)
+// 		if(length(message2)>MAX_LEN)
 // 			dmessage2 = message2+message2
 
 // 		for(var/I = 1; I <= target; I++)
@@ -195,13 +195,13 @@
 // 			var/line2
 // 			var/image/temp = image('icons/obj/status_display.dmi')
 // 			if(dmessage1)	//If there is a double message then line1 > MAX_LEN
-// 				var/len = lentext(message1)
+// 				var/len = length(message1)
 // 				line1 = copytext(dmessage1, (I % len)+1 , ((I % len) + MAX_LEN ) + 1)
 // 			else
 // 				line1 = message1
 
 // 			if(dmessage2) //If there is a double message then line1 > MAX_LEN
-// 				var/len = lentext(message2)
+// 				var/len = length(message2)
 // 				line2 = copytext(dmessage2, (I % len)+1 , ((I + MAX_LEN) % len) + 1)
 // 			else //Otherwise show entire message
 // 				line2 = message2
@@ -224,14 +224,14 @@
 // 			line1 = message1
 // 		else
 // 			line1 = copytext(message1+message1, index1, index1+5)
-// 			if(index1++ > (lentext(message1)))
+// 			if(index1++ > (length(message1)))
 // 				index1 = 1
 
 // 		if(!index2)
 // 			line2 = message2
 // 		else
 // 			line2 = copytext(message2+message2, index2, index2+5)
-// 			if(index2++ > (lentext(message2)))
+// 			if(index2++ > (length(message2)))
 // 				index2 = 1
 // 		*/
 
@@ -296,7 +296,7 @@
 // 	proc/texticon(var/tn, var/px = 0, var/py = 0)
 // 		if(!temp_image) temp_image = image('icons/obj/status_display.dmi', "blank")
 
-// 		var/len = lentext(tn)
+// 		var/len = length(tn)
 
 // 		temp_image.overlays.Cut()
 // 		for(var/d = 1 to len)

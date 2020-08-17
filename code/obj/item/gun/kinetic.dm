@@ -31,6 +31,7 @@
 		if(silenced)
 			current_projectile.shot_sound = 'sound/machines/click.ogg'
 		..()
+		src.update_icon()
 
 	examine()
 		. = ..()
@@ -45,6 +46,10 @@
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
+		if (src.ammo)
+			inventory_counter.update_number(src.ammo.amount_left)
+		else
+			inventory_counter.update_text("-")
 		return 0
 
 	canshoot()
@@ -364,6 +369,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (src.ammo.amount_left < 1)
 			src.icon_state = "faith-empty"
 		else
@@ -465,6 +471,7 @@
 			spread_angle = 0
 
 	update_icon()
+		..()
 		if (src.item_state == "clock-188-black")
 			if (src.ammo.amount_left < 1)
 				src.icon_state = "clock-188-black_empty"
@@ -674,6 +681,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (src.ammo.amount_left < 1)
 			src.icon_state = "silenced_empty"
 		else
@@ -777,6 +785,7 @@
 		return
 
 	update_icon()
+		..()
 		if (src.ammo.amount_left < 1)
 			src.icon_state = "rpg7_empty"
 			src.item_state = "rpg7_empty"
@@ -818,6 +827,7 @@
 	New()
 		ammo = new/obj/item/ammo/bullets/airzooka
 		current_projectile = new/datum/projectile/bullet/airzooka
+		..()
 
 /obj/item/gun/kinetic/smg //testing keelin's continuous fire POC
 	name = "submachine gun"
@@ -858,6 +868,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (src.ammo.amount_left < 1)
 			src.icon_state = "9mm_pistol_empty"
 		else
