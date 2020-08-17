@@ -64,17 +64,10 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 /obj/item/tank/jetpack/backtank
 	name = "fuelpack"
 	icon_state = "syndflametank"
+	desc = "A back mounted fueltank/jetpack system for use with a tactical flamethrower."
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | OPENCONTAINER
 	var/obj/item/flamethrower/backtank/linkedflamer
 	inventory_counter_enabled = 1
-
-	on_reagent_change(add)
-		..()
-		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
-
-	equipped(mob/user, slot)
-		..()
-		inventory_counter?.show_count()
 
 	New()
 		..()
@@ -83,6 +76,35 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		R.my_atom = src
 		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
+	on_reagent_change(add)
+		..()
+		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
+
+	equipped(mob/user, slot)
+		..()
+		inventory_counter?.show_count()
+	get_desc()
+		. = ..()
+		if(linkedflamer && (linkedflamer in src.contents))
+			. += " There is a flamethrower stowed neatly away in a compartment."
+
+	attackby(obj/item/W, mob/user)
+		if(src.loc == user && linkedflamer && W == linkedflamer)
+			boutput(user, "<span class='notice'>You stow the the [W] into your fuelpack.</span>")
+			user.u_equip(W)
+			W.set_loc(src)
+			tooltip_rebuild = 1
+		else
+			..()
+
+	attack_hand(mob/user)
+		if(src.loc == user && linkedflamer && (linkedflamer in src.contents))
+			boutput(user, "<span class='notice'>You retrieve the [linkedflamer] from your fuelpack.</span>")
+			user.put_in_hand_or_drop(linkedflamer)
+			tooltip_rebuild = 1
+		else
+			..()
+
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
 			reagents.move_trigger(M, kindof)
@@ -90,15 +112,28 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	toggle()
 		src.on = !( src.on )
 		if(src.on)
-			boutput(usr, "<span class='notice'>The jetpack is now on</span>")
+			boutput(usr, "<span class='notice'>The fuelpack's integrated jetpack is now on</span>")
 		else
-			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
+			boutput(usr, "<span class='notice'>The fuelpack's integrated jetpack is now off</span>")
 		return
 
 	MouseDrop(over_object, src_location, over_location)
 		..()
 		if(!isliving(usr))
 			return
+		var/obj/screen/hud/S = over_object
+		if (istype(S)) //for if we have a flamer attached
+			if (!usr.restrained() && !usr.stat && src.loc == usr)
+				if (S.id == "rhand")
+					if (!usr.r_hand)
+						usr.u_equip(src)
+						usr.put_in_hand(src, 0)
+				else
+					if (S.id == "lhand")
+						if (!usr.l_hand)
+							usr.u_equip(src)
+							usr.put_in_hand(src, 1)
+				return
 
 		if(get_dist(src, usr) > 1)
 			boutput(usr, "<span class='alert'>You need to be closer to empty \the [src] out!</span>")
@@ -122,8 +157,12 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		..()
 
 /obj/item/flamethrower/backtank
+	name = "tactical flamethrower"
+	desc = "A military-grade flamethrower, supplied with fuel and propellant from a back-mounted fuelpack."
 	icon_state = "syndthrower_0"
-	item_state = "syndthrower"
+	item_state = "syndthrower_0"
+	uses_multiple_icon_states = 1
+	force = 6
 	two_handed = 1
 
 	New()
@@ -136,7 +175,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		if(gastank in user.get_equipped_items())
 			return gastank?.reagents
 		else
-			boutput(user, "<span class='alert'>You need to be wearing this flamer's backtank to fire it!,</span>")
+			boutput(user, "<span class='alert'>You need to be wearing this flamer's fuelpack to fire it!</span>")
 
 	disposing()
 		if(istype(gastank, /obj/item/tank/jetpack/backtank/))
@@ -522,9 +561,20 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	return
 
 /obj/item/flamethrower/backtank/attack_self(mob/user as mob)
-	src.lit = !src.lit
-	boutput(world, "toggles flamer [lit?"ON":"OFF"]")
+	lit = !(lit)
+	boutput(user, "<span class='notice'>The [src] is now [lit?"lit":"unlit"]</span>")
+	if(lit)
+		force = 12
+		hit_type = DAMAGE_BURN
+		if (!(src in processing_items))
+			processing_items.Add(src)
+	else
+		force = 6
+		hit_type = DAMAGE_BLUNT
 	icon_state = "syndthrower_[lit]"
+	item_state = "syndthrower_[lit]"
+	user.update_inhands()
+	tooltip_rebuild = 1
 
 // gets this from turf.dm turf/dblclick
 /obj/item/flamethrower/proc/flame_turf(var/list/turflist, var/mob/user, var/atom/target) //Passing user and target for logging purposes
@@ -647,6 +697,8 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		rem_ratio = 0.02
 	if (mode == 3)
 		rem_ratio = 0.03
+	if(istype(src, /obj/item/flamethrower/backtank))
+		rem_ratio = 0.0033 //otherwise we run through our air way too quickly
 	var/datum/gas_mixture/air_transfer = gastank.air_contents.remove_ratio(rem_ratio)
 	target.assume_air(air_transfer)
 
