@@ -137,7 +137,7 @@ const ToggleHandle = (props, context) => {
         content={flush ? "Engaged" : "Disengaged"}
         onClick={() => act('toggleHandle')}
       />
-     </Box>
+    </Box>
   );
 };
 
@@ -151,7 +151,9 @@ const DestinationSearch = (props, context) => {
   const handleSelectDestination = destination => act('select-destination', {
     destination,
   });
-  const filteredDestinations = destinations.filter(destination => destination.includes(searchText));
+  const filteredDestinations = (
+    destinations.filter(destination => destination.includes(searchText))
+  );
   return (
     <Search
       currentSearch={searchText}
