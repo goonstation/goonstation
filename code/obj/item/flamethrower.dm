@@ -18,7 +18,6 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	throw_speed = 1
 	throw_range = 5
 	w_class = 4
-	inventory_counter_enabled = 1
 	var/mode = 1
 	var/processing = 0
 	var/operating = 0
@@ -40,8 +39,6 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	New()
 		..()
 		BLOCK_LARGE
-		if (fueltank)
-			inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
 		setItemSpecial(null)
 
 /obj/item/flamethrower/assembled
@@ -61,6 +58,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	var/obj/item/rods/rod = null
 	var/obj/item/device/igniter/igniter = null
 	var/obj/item/reagent_containers/food/drinks/fueltank/fueltank = null
+	inventory_counter_enabled = 1
 
 	get_reagsource()
 		return fueltank?.reagents
@@ -69,6 +67,15 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	name = "PANIKPANIKBACKTANNK"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | OPENCONTAINER
 	var/obj/item/flamethrower/backtank/linkedflamer
+	inventory_counter_enabled = 1
+
+	on_reagent_change(add)
+		..()
+		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
+
+	equipped(mob/user, slot)
+		..()
+		inventory_counter?.show_count()
 
 	New()
 		..()
@@ -176,10 +183,12 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	igniter = new /obj/item/device/igniter
 
 /obj/item/flamethrower/assembled/New()
+	..()
 	welder = new /obj/item/weldingtool
 	rod = new /obj/item/rods
 	igniter = new /obj/item/device/igniter
-	..()
+	if (fueltank)
+		inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
 
 /obj/item/flamethrower/assembled/loaded/New()
 	if(!fueltank)
@@ -606,7 +615,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			logTheThing("combat", usr, theMob, "blasts [constructTarget(theMob,"combat")] with a flamethrower [logString] at [log_loc(theMob)].")
 			mobHitList += "[key_name(theMob)], "
 
-		inventory_counter.update_percent(src.part5.reagents.total_volume, src.part5.reagents.maximum_volume)
+		inventory_counter?.update_percent(reagsource.total_volume, reagsource.maximum_volume)
 
 		if(halt)
 			break
