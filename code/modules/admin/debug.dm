@@ -302,26 +302,52 @@ var/global/debug_messages = 0
 
 /proc/doCallProc(target = null)
 	var/returnval = null
-	var/procname = input("Procpath (ex. /proc/bust_lights)","path:", null) as null|text
+	var/procname = input("Procpath (ex. bust_lights)","path:", null) as null|text
 	if (isnull(procname))
 		return
 
 	var/list/listargs = get_proccall_arglist()
 
-	if (target)
+	if(copytext(procname, 1, 6) == "proc/")
+		procname = copytext(procname, 6)
+	else if(copytext(procname, 1, 7) == "/proc/")
+		procname = copytext(procname, 7)
+
+	if(target)
 		boutput(usr, "<span class='notice'>Calling '[procname]' with [islist(listargs) ? listargs.len : "0"] arguments on '[target]'</span>")
-		if(islist(listargs) && listargs.len)
-			returnval = call(target,procname)(arglist(listargs))
-		else
-			returnval = call(target,procname)()
 	else
 		boutput(usr, "<span class='notice'>Calling '[procname]' with [islist(listargs) ? listargs.len : "0"] arguments</span>")
-		if(islist(listargs) && listargs.len)
-			returnval = call(procname)(arglist(listargs))
-		else
-			returnval = call(procname)()
 
-	boutput(usr, "<span class='notice'>Proc returned: [json_encode(returnval)]</span>")
+	var/success = FALSE
+	for(var/actual_proc in list(procname, "proc/" + procname, "/proc/" + procname))
+		try
+			if (target)
+				if(islist(listargs) && listargs.len)
+					returnval = call(target,actual_proc)(arglist(listargs))
+				else
+					returnval = call(target,actual_proc)()
+			else
+				if(islist(listargs) && listargs.len)
+					returnval = call(actual_proc)(arglist(listargs))
+				else
+					returnval = call(actual_proc)()
+			success = TRUE
+			break
+		catch(var/exception/e)
+			if(e.name != "bad proc" && copytext(e.name, 1, 15) != "undefined proc") // fuck u byond
+				boutput(usr, "<span class='alert'>Exception occured! <a style='color: #88f;' href='byond://winset?command=View-Runtimes'>View Runtimes</a></span>")
+				throw e
+
+	if(!success)
+		boutput(usr, "<span class='alert'>Proc [procname] not found!</span>")
+		return
+
+	var/pretty_returnval = returnval
+	if(istype(returnval, /datum) || istype(returnval, /client))
+		pretty_returnval = "<a href='byond://?src=\ref[usr.client];Refresh=\ref[returnval]'>[returnval] \ref[returnval]</a>"
+	else
+		pretty_returnval = json_encode(returnval)
+	boutput(usr, "<span class='notice'>Proc returned: [pretty_returnval]</span>")
 	return
 
 /proc/get_proccall_arglist()
