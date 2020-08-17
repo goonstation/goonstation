@@ -9,22 +9,19 @@ export const DetonatorTimer = props => {
     explosionMessage = "BO:OM",
   } = props;
 
-  const timeColor = () => {
-    if (time <= dangerThreshold) {
-      return "red";
-    } else if (time <= warningThreshold) {
-      return "orange";
-    } else {
-      return "green";
-    }
-  };
+  let timeColor = "green";
+  if (time <= dangerThreshold) {
+    timeColor = "red";
+  } else if (time <= warningThreshold) {
+    timeColor = "orange";
+  }
 
   return (
     <Box
       p={1}
       textAlign="center"
       backgroundColor="black"
-      color={timeColor()}
+      color={timeColor}
       maxWidth="100px"
       fontSize="20px">
       <AnimatedNumber
