@@ -159,7 +159,7 @@
 		if (!isalive(usr))
 			return
 
-		if (!ishuman(src))
+		if (!ishuman(usr))
 			boutput(usr, "<span class='alert'>You're not a human, you can't put yourself in there!</span>")
 			return
 
