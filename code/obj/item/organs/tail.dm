@@ -12,6 +12,7 @@
 	organ_image_icon = 'icons/mob/werewolf.dmi' // please keep your on-mob tail icon_states with the rest of your mob's sprites
 	icon_state = "tail-wolf"
 	made_from = "bone"	// clak clak stop eating my hack
+	var/tail_num = TAIL_NONE
 	var/colorful = 0 // if we need to colorize it
 	var/multipart_icon = 0 // if we need to run update_tail_icon
 	var/icon_piece_1 = null	// For setting up the icon if its in multiple pieces
@@ -172,6 +173,7 @@
 	icon_state = "tail-monkey"
 	organ_image_icon = 'icons/mob/monkey.dmi'
 	edible = 0
+	tail_num = TAIL_MONKEY
 	organ_image_under_suit_1 = "monkey_under_suit"
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "monkey_over_suit"
@@ -186,6 +188,7 @@
 	organ_image_under_suit_1 = "lizard_under_suit_1"
 	organ_image_under_suit_2 = "lizard_under_suit_2"
 	organ_image_over_suit = "lizard_over_suit"
+	tail_num = TAIL_LIZARD
 	colorful = 1
 	multipart_icon = 1
 
@@ -195,6 +198,7 @@
 	icon_state = "tail-cow"
 	organ_image_icon = 'icons/mob/cow.dmi'
 	edible = 0
+	tail_num = TAIL_COW
 	organ_image_under_suit_1 = "cow_under_suit"
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "cow_over_suit_1"	// just the tail, no nose
@@ -207,6 +211,7 @@
 	MAX_DAMAGE = 250	// Robust tail for a robust antag
 	FAIL_DAMAGE = 240
 	edible = 0
+	tail_num = TAIL_WEREWOLF
 	organ_image_under_suit_1 = "wolf_under_suit"
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "wolf_over_suit"
@@ -217,6 +222,7 @@
 	icon_state = "tail-bone"
 	organ_image_icon = 'icons/mob/human.dmi'
 	created_decal = null	// just a piece of bone
+	tail_num = TAIL_SKELETON
 	edible = 0
 	organ_image_under_suit_1 = null
 	organ_image_under_suit_2 = null
@@ -227,6 +233,7 @@
 	desc = "A long, scaled tail."
 	icon_state = "tail-seamonkey"
 	organ_image_icon = 'icons/mob/monkey.dmi'
+	tail_num = TAIL_SEAMONKEY
 	edible = 0
 	organ_image_under_suit_1 = "seamonkey_under_suit"
 	organ_image_under_suit_2 = null
@@ -237,6 +244,7 @@
 	desc = "A long, furry tail."
 	icon_state = "tail-cat"
 	organ_image_icon = 'icons/mob/cat.dmi'
+	tail_num = TAIL_CAT
 	edible = 0
 	organ_image_under_suit_1 = "cat_under_suit"
 	organ_image_under_suit_2 = null
@@ -247,6 +255,7 @@
 	desc = "A large insect behind."
 	icon_state = "tail-roach"
 	organ_image_icon = 'icons/mob/roach.dmi'
+	tail_num = TAIL_ROACH
 	made_from = "chitin"
 	organ_image_under_suit_1 = "roach_under_suit"
 	organ_image_under_suit_2 = null

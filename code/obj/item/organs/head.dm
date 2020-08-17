@@ -26,7 +26,6 @@
 	var/datum/appearanceHolder/donor_appearance = null
 
 	var/image/head_image = null 
-	var/icon/head_organ_icon = null 
 	var/our_hair_icon = 'icons/mob/human_hair.dmi'
 
 	var/image/head_image_eyes = null
@@ -192,7 +191,7 @@
 			src.head_image_cust_two = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 			src.head_image_cust_three = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 
-		//okay everything's loaded, lets build the head
+/* 		//okay everything's loaded, lets build the head
 			src.head_organ_icon = new /icon(AHead.head_icon, AHead.head_icon_state)
 
 			src.head_organ_icon.Blend(src.skintone, ICON_MULTIPLY)
@@ -226,13 +225,22 @@
 			src.head_organ_icon.Blend(d_icon, ICON_OVERLAY)
 
 		src.icon = src.head_organ_icon
-		// end of all this is for the dropped head
+		// end of all this is for the dropped head 
+		*/
+
+		// dropped head will be constructed on-drop.
 
 		src.donor.update_face()
 		src.donor.update_body()
 
-	proc/update_headgear_image()
+	proc/update_head_image() // The thing that actually shows up when dropped
 		src.overlays = null
+
+		src.overlays += src.head_image
+		src.overlays += src.head_image_eyes
+		src.overlays += src.head_image_cust_one
+		src.overlays += src.head_image_cust_two
+		src.overlays += src.head_image_cust_three
 
 		if (src.glasses && src.glasses.wear_image_icon)
 			src.overlays += image(src.glasses.wear_image_icon, src.glasses.icon_state)

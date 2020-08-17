@@ -167,7 +167,7 @@
 		return ..()
 
 	proc/colorize_limb_icon(var/datum/appearanceHolder/AHolFinalDestination)	// Actually just sets the skin tone, the limbs are colorized elsewhere
-		if (!src.skintoned)
+		if (!src.skintoned)	// ^^ also used by lings!
 			return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
 		var/mob/living/carbon/human/M
 		if(ishuman(src.original_holder))

@@ -48,13 +48,13 @@
 		"butt"="/obj/item/clothing/head/butt",
 		"tail"="/obj/item/organ/tail")
 
-	New(var/mob/living/L)
+	New(var/mob/living/L, var/ling)
 		..()
 		if (!ishuman(L))
 			return
 		if (istype(L))
 			src.donor = L
-		if (src.donor)
+		if (src.donor && !ling) // so changers just get the datum and not a metric fuckton of organs
 			src.create_organs()
 
 	disposing()
@@ -457,7 +457,7 @@
 						W.set_loc(myHead)
 						myHead.wear_mask = W
 				myHead.set_loc(location)
-				myHead.update_headgear_image()
+				myHead.update_head_image()
 				myHead.on_removal()
 				myHead.holder = null
 				src.head = null
@@ -1139,6 +1139,31 @@
 					donor.remove_stam_mod_max("double_lung_removal")
 					lungs_changed = 2
 
+	proc/CopyOther(var/datum/organHolder/toCopy)
+		donor = toCopy.donor
+		head = toCopy.head
+		skull = toCopy.skull
+		brain = toCopy.brain
+		left_eye = toCopy.left_eye
+		right_eye = toCopy.right_eye
+		chest = toCopy.chest
+		heart = toCopy.heart
+		left_lung = toCopy.left_lung
+		right_lung = toCopy.right_lung
+		butt = toCopy.butt
+		left_kidney = toCopy.left_kidney
+		right_kidney = toCopy.right_kidney
+		liver = toCopy.liver
+		spleen = toCopy.spleen
+		pancreas = toCopy.pancreas
+		stomach = toCopy.stomach
+		intestines = toCopy.intestines
+		appendix = toCopy.appendix
+		tail = toCopy.tail
+		organ_list = toCopy.organ_list
+		organ_type_list = toCopy.organ_type_list
+		return src
+
 /*=================================*/
 /*---------- Human Procs ----------*/
 /*=================================*/
@@ -1182,8 +1207,6 @@
 /*=================================*/
 /*---------- Critter Stuff --------*/
 /*=================================*/
-
-
 
 /datum/organHolder/critter //for the animals. same stuff as human, but with a brain as the only organ
 

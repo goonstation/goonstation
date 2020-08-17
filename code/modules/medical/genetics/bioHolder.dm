@@ -65,6 +65,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/mob_oversuit_2	// Like a big muzzle thing that shows through suits
 	var/mob_oversuit_3	// Tail oversuits are defined in tail.dm
 
+	var/mutant_race = null	// for limb-making purposes, like lings
+
 	var/e_color = "#101010"
 	var/e_color_special = "#101010"
 
@@ -166,6 +168,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mob_oversuit_1 = toCopy.mob_oversuit_1
 		mob_oversuit_2 = toCopy.mob_oversuit_2
 		mob_oversuit_3 = toCopy.mob_oversuit_3
+
+		mutant_race = toCopy.mutant_race
 
 		e_color = toCopy.e_color
 		e_color_special = toCopy.e_color_special

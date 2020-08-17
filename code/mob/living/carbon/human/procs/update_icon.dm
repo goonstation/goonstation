@@ -85,7 +85,7 @@
 		UpdateOverlays(null, "cust_two")
 		UpdateOverlays(null, "cust_three")
 
-// Uniform
+	// Uniform
 	if (src.w_uniform)
 		if (src.bioHolder && bioHolder.HasEffect("fat") && !(src.w_uniform.c_flags & ONESIZEFITSALL))
 			boutput(src, "<span class='alert'>You burst out of the [src.w_uniform.name]!</span>")
@@ -684,35 +684,35 @@
 	var/obj/item/organ/head/my_head 
 	if (src?.organHolder?.head)
 		my_head = src.organHolder.head
+
+	if(my_head?.our_hair_icon)
+		cust_icon = my_head.our_hair_icon
+
+	if(my_head?.head_image_eyes)
+		image_eyes = my_head.head_image_eyes
+	else
+		image_eyes = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
+
+	if(my_head?.head_image_cust_one)
+		image_cust_one = my_head.head_image_cust_one
+		cust_one_state = my_head.head_image_cust_one.icon_state
 	else
 		image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
 		cust_one_state = "none"
 
+	if(my_head?.head_image_cust_two)
+		image_cust_two = my_head.head_image_cust_two
+		cust_two_state = my_head.head_image_cust_two.icon_state
+	else
 		image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
 		cust_two_state = "none"
 
+	if(my_head?.head_image_cust_three)
+		image_cust_three = my_head.head_image_cust_three
+		cust_three_state = my_head.head_image_cust_three.icon_state
+	else
 		image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
 		cust_three_state = "none"
-
-		image_eyes = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
-
-	image_eyes = my_head.head_image_eyes
-	image_cust_one = my_head.head_image_cust_one
-	image_cust_two = my_head.head_image_cust_two
-	image_cust_three = my_head.head_image_cust_three
-
-	if(my_head.head_image_cust_one)
-		cust_icon = my_head.head_image_cust_one.icon
-
-	if(my_head.head_image_cust_one)
-		cust_one_state = my_head.head_image_cust_one.icon_state
-
-	if(my_head.head_image_cust_one)
-		cust_two_state = my_head.head_image_cust_two.icon_state
-
-	if(my_head.head_image_cust_one)
-		cust_three_state = my_head.head_image_cust_three.icon_state
-
 
 /mob/living/carbon/human/update_burning_icon(var/force_remove=0, var/datum/statusEffect/simpledot/burning/B = 0)
 	if (!B)
@@ -842,8 +842,12 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 		src.body_standing.overlays.len = 0
 		src.hands_standing = SafeGetOverlayImage("hands", file, "blank", MOB_HAND_LAYER1) //image('icons/mob/human.dmi', "blank", MOB_HAND_LAYER1)
 		src.hands_standing.overlays.len = 0
-		src.tail_standing = SafeGetOverlayImage("tail", 'icons/mob/human.dmi', "blank", MOB_LIMB_LAYER) // image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
+		src.tail_standing = SafeGetOverlayImage("tail", 'icons/mob/human.dmi', "blank", MOB_TAIL_LAYER1) // image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
 		src.tail_standing.overlays.len = 0
+		src.tail_standing_oversuit = SafeGetOverlayImage("tail_oversuit", 'icons/mob/human.dmi', "blank", MOB_OVERSUIT_LAYER1) // image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
+		src.tail_standing_oversuit.overlays.len = 0
+		src.detail_standing_oversuit = SafeGetOverlayImage("detail_oversuit", 'icons/mob/human.dmi', "blank", MOB_OVERSUIT_LAYER1) // image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
+		src.detail_standing_oversuit.overlays.len = 0
 
 
 		// if the image data can be stored in the thing it's trying to draw, store it there
@@ -879,26 +883,28 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 					if(AHOLD.mob_appearance_flags & HAS_EXTRA_DETAILS)
 						if(AHOLD.mob_color_flags & DETAIL_1)
 							human_image = image(AHOLD.body_icon, AHOLD.mob_detail_1, MOB_DETAIL_LAYER1)
-							human_image.color = AHOLD.customization_first_color
+							human_image.color = AHOLD.customization_first_color_special
 							src.body_standing.overlays += human_image
 
 						if(AHOLD.mob_color_flags & DETAIL_2)
 							human_image = image(AHOLD.body_icon, AHOLD.mob_detail_2, MOB_DETAIL_LAYER1)
-							human_image.color = AHOLD.customization_second_color
+							human_image.color = AHOLD.customization_second_color_special
 							src.body_standing.overlays += human_image
 
 						if(AHOLD.mob_color_flags & DETAIL_3)
 							human_image = image(AHOLD.body_icon, AHOLD.mob_detail_3, MOB_DETAIL_LAYER1)
-							human_image.color = AHOLD.customization_third_color
+							human_image.color = AHOLD.customization_third_color_special
 							src.body_standing.overlays += human_image
 
 						if(AHOLD.mob_color_flags & DETAIL_OVERSUIT_1)	// need more oversuits? Make more of these!
-							human_image = image(icon = AHOLD.body_icon, icon_state = AHOLD.mob_oversuit_1, layer = MOB_OVERSUIT_LAYER1)
+							human_detail_image = image(icon = AHOLD.body_icon, icon_state = AHOLD.mob_oversuit_1, layer = MOB_OVERSUIT_LAYER1)
 							if(AHOLD.mob_color_flags & DETAIL_OVERSUIT_IS_COLORFUL)
-								human_image.color = AHOLD.customization_first_color
+								human_detail_image.color = AHOLD.customization_first_color_special
 							else
-								human_image.color = "#FFFFFF"
-							src.body_standing.overlays += human_image
+								human_detail_image.color = "#FFFFFF"
+							src.detail_standing_oversuit.overlays += human_detail_image
+						else
+							UpdateOverlays(null, "detail_oversuit")
 
 					if (src.organHolder && src.organHolder.head && AHOLD.mob_appearance_flags & ~HAS_NO_HEAD)
 						var/obj/item/organ/head/our_head = src.organHolder.head
@@ -908,15 +914,16 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 					if (src.organHolder && src.organHolder.tail)
 						var/obj/item/organ/tail/our_tail = src.organHolder.tail // visual tail data is stored in the tail
 						human_tail_image = our_tail.tail_image_1 
-						src.body_standing.overlays += human_tail_image 
+						src.tail_standing.overlays += human_tail_image 
 
 						human_tail_image = our_tail.tail_image_2 // maybe our tail has multiple parts, like lizards
-						src.body_standing.overlays += human_tail_image
+						src.tail_standing.overlays += human_tail_image
 
 						human_tail_image = our_tail.tail_image_oversuit // oversuit tail, shown when facing north, for more seeable tails
-						src.tail_standing.overlays += human_tail_image // handles over suit
+						src.tail_standing_oversuit.overlays += human_tail_image // handles over suit
 					else
 						UpdateOverlays(null, "tail")
+						UpdateOverlays(null, "tail_oversuit")
 
 				else
 					human_decomp_image.icon_state = "body_decomp[src.decomp_stage]"
@@ -1087,6 +1094,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				if (src.juggling())
 					juggle_image.icon_state = "juggle"
 					src.body_standing.overlays += juggle_image
+					
 
 			else // is fat
 				var/skin_tone = AHOLD.s_tone
@@ -1249,6 +1257,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	src.UpdateOverlays(src.body_standing, "body", 1, 1)
 	src.UpdateOverlays(src.hands_standing, "hands", 1, 1)
 	src.UpdateOverlays(src.tail_standing, "tail", 1, 1) // i blame pali for giving me this power
+	src.UpdateOverlays(src.tail_standing_oversuit, "tail_oversuit", 1, 1)
+	src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
 
 #if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
 /mob/living/carbon/human/UpdateDamage()

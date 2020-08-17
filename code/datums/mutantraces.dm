@@ -185,9 +185,15 @@
 				AH.customization_second_special = src.special_hair_2
 				AH.customization_third_special = src.special_hair_3
 				AH.customization_icon_special = src.mutant_folder
-				AH.customization_first_color_special = AH.customization_first_color
-				AH.customization_second_color_special = AH.customization_second_color
-				AH.customization_third_color_special = AH.customization_third_color
+				if (src.mutant_color_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
+					AH.customization_first_color_special = fix_colors(AH.customization_first_color)
+					AH.customization_second_color_special = fix_colors(AH.customization_second_color)
+					AH.customization_third_color_special = fix_colors(AH.customization_third_color)
+				else
+					AH.customization_first_color_special = AH.customization_first_color
+					AH.customization_second_color_special = AH.customization_second_color
+					AH.customization_third_color_special = AH.customization_third_color
+				AH.mutant_race = src
 				AH.body_icon = src.mutant_folder
 				AH.body_icon_state = src.icon_state
 				AH.mob_detail_1 = detail_1
@@ -217,6 +223,7 @@
 				AH.mob_oversuit_1 = null
 				AH.mob_oversuit_2 = null
 				AH.mob_oversuit_3 = null
+				AH.mutant_race = null
 				detail_1 = null
 				detail_2 = null
 				detail_3 = null

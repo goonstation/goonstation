@@ -35,6 +35,8 @@
 
 	var/image/body_standing = null
 	var/image/tail_standing = null
+	var/image/tail_standing_oversuit = null
+	var/image/detail_standing_oversuit = null
 	var/image/fire_standing = null
 	//var/image/face_standing = null
 	var/image/hands_standing = null
@@ -234,10 +236,10 @@
 	var/l_leg_bleed = 0
 	var/r_leg_bleed = 0
 
-	New(mob/new_holder)
+	New(mob/new_holder, var/ling) // to prevent lings from spawning a shitload of limbs in unspeakable locations
 		..()
 		holder = new_holder
-		if (holder) create(holder.AH_we_spawned_with)
+		if (holder && !ling) create(holder.AH_we_spawned_with)
 
 	disposing()
 		if (l_arm)
@@ -255,24 +257,67 @@
 		holder = null
 		..()
 
-	proc/create(var/datum/appearanceHolder/AHolLimb)
+	proc/create(var/datum/appearanceHolder/AHolLimb, var/mob/living/carbon/human/ling, var/which_limbs, var/list/what_limbs)
 		var/datum/appearanceHolder/AH_spawn = null
+		var/mob/living/carbon/human/limb_holder = holder
+		var/obj/item/parts/human_parts/arm/left_arm = null
+		var/obj/item/parts/human_parts/arm/right_arm = null
+		var/obj/item/parts/human_parts/leg/left_leg = null
+		var/obj/item/parts/human_parts/leg/right_leg = null
+		if(what_limbs)
+			left_arm = what_limbs[0]
+			right_arm = what_limbs[1]
+			left_leg = what_limbs[2]
+			right_leg = what_limbs[3]
+		if(ling)
+			limb_holder = ling
 		if (AHolLimb)
 			AH_spawn = AHolLimb
-		if (!l_arm) l_arm = new /obj/item/parts/human_parts/arm/left(holder, AH_spawn)
-		if (!r_arm) r_arm = new /obj/item/parts/human_parts/arm/right(holder, AH_spawn)
-		if (!l_leg) l_leg = new /obj/item/parts/human_parts/leg/left(holder, AH_spawn)
-		if (!r_leg) r_leg = new /obj/item/parts/human_parts/leg/right(holder, AH_spawn)
-		SPAWN_DBG(5 SECONDS)
-			if (holder && (!l_arm || !r_arm || !l_leg || !r_leg))
-				logTheThing("debug", holder, null, "<B>SpyGuy/Limbs:</B> [src] is missing limbs after creation for some reason - recreating.")
-				create()
-				if (holder)
-					// fix for "Cannot execute null.update body()".when mob is deleted too quickly after creation
-					holder.update_body()
-					if (holder.client)
-						holder.next_move = world.time + 7
-						//Fix for not being able to move after you got new limbs.
+
+		if(ling && which_limbs) // delete mundane limbs, drop the more interesting ones
+			if(which_limbs & LIMB_LEFT_ARM)
+				if (src.l_arm.type == /obj/item/parts/human_parts/arm/left || istype(src.l_arm, /obj/item/parts/human_parts/arm/mutant))
+					qdel(src.l_arm)
+				else
+					src.l_arm.remove(0)
+				l_arm = new left_arm(limb_holder, AH_spawn)
+			if(which_limbs & LIMB_RIGHT_ARM)
+				if (src.r_arm.type == /obj/item/parts/human_parts/arm/right || istype(src.r_arm, /obj/item/parts/human_parts/arm/mutant))
+					qdel(src.r_arm)
+				else
+					src.l_arm.remove(0)
+				r_arm = new right_arm(limb_holder, AH_spawn)
+			if(which_limbs & LIMB_LEFT_LEG)
+				if (src.l_leg.type == /obj/item/parts/human_parts/leg/left || istype(src.l_leg, /obj/item/parts/human_parts/leg/mutant))
+					qdel(src.l_leg)
+				else
+					src.l_leg.remove(0)
+				l_leg = new left_leg(limb_holder, AH_spawn)
+			if(which_limbs & LIMB_RIGHT_LEG)
+				if (src.r_leg.type == /obj/item/parts/human_parts/leg/right || istype(src.r_leg, /obj/item/parts/human_parts/leg/mutant))
+					qdel(src.r_leg)
+				else
+					src.r_leg.remove(0)
+				r_leg = new right_leg(limb_holder, AH_spawn)
+		else if (!ling)
+			if (!l_arm) 
+				l_arm = new /obj/item/parts/human_parts/arm/left(limb_holder, AH_spawn)
+			if (!r_arm) 
+				r_arm = new /obj/item/parts/human_parts/arm/right(limb_holder, AH_spawn)
+			if (!l_leg) 
+				l_leg = new /obj/item/parts/human_parts/leg/left(limb_holder, AH_spawn)
+			if (!r_leg) 
+				r_leg = new /obj/item/parts/human_parts/leg/right(limb_holder, AH_spawn)
+			SPAWN_DBG(5 SECONDS)
+				if (holder && (!l_arm || !r_arm || !l_leg || !r_leg))
+					logTheThing("debug", holder, null, "<B>SpyGuy/Limbs:</B> [src] is missing limbs after creation for some reason - recreating.")
+					create(AHolLimb, ling, which_limbs)
+					if (holder)
+						// fix for "Cannot execute null.update body()".when mob is deleted too quickly after creation
+						holder.update_body()
+						if (holder.client)
+							holder.next_move = world.time + 7
+							//Fix for not being able to move after you got new limbs.
 
 	proc/mend(var/howmany = 4)
 		if (!holder)
@@ -461,6 +506,16 @@
 				src.holder.set_body_icon_dirty()
 			return
 		return 0
+
+	proc/CopyOther(var/datum/human_limbs/toCopy)
+		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
+		holder = toCopy.holder
+
+		l_arm = toCopy.l_arm
+		r_arm = toCopy.r_arm
+		l_leg = toCopy.l_leg
+		r_leg = toCopy.r_leg
+		return src
 
 /mob/living/carbon/human/proc/is_vampire()
 	return get_ability_holder(/datum/abilityHolder/vampire)
