@@ -45,8 +45,6 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	name = "flamethrower"
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	icon_state = "flamethrower_no_oxy_no_fuel"
-	item_state = "flamethrower0"
 	desc = "You are a firestarter!"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
 	force = 3.0
@@ -64,7 +62,8 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		return fueltank?.reagents
 
 /obj/item/tank/jetpack/backtank
-	name = "PANIKPANIKBACKTANNK"
+	name = "fuelpack"
+	icon_state = "syndflametank"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | OPENCONTAINER
 	var/obj/item/flamethrower/backtank/linkedflamer
 	inventory_counter_enabled = 1
@@ -84,10 +83,17 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		R.my_atom = src
 		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
-
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
 			reagents.move_trigger(M, kindof)
+
+	toggle()
+		src.on = !( src.on )
+		if(src.on)
+			boutput(usr, "<span class='notice'>The jetpack is now on</span>")
+		else
+			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
+		return
 
 	MouseDrop(over_object, src_location, over_location)
 		..()
@@ -116,6 +122,10 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		..()
 
 /obj/item/flamethrower/backtank
+	icon_state = "syndthrower_0"
+	item_state = "syndthrower"
+	two_handed = 1
+
 	New()
 		..()
 		gastank = new /obj/item/tank/jetpack/backtank(src.loc)
@@ -133,6 +143,11 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			var/obj/item/tank/jetpack/backtank/B = gastank
 			B.linkedflamer = null
 		..()
+
+/obj/item/flamethrower/backtank/napalm
+	New()
+		..()
+		gastank.reagents.add_reagent("napalm_goo", 4000)
 
 /obj/item/flamethrower/assembled/loaded/
 	icon_state = "flamethrower_oxy_fuel"
@@ -509,6 +524,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 /obj/item/flamethrower/backtank/attack_self(mob/user as mob)
 	src.lit = !src.lit
 	boutput(world, "toggles flamer [lit?"ON":"OFF"]")
+	icon_state = "syndthrower_[lit]"
 
 // gets this from turf.dm turf/dblclick
 /obj/item/flamethrower/proc/flame_turf(var/list/turflist, var/mob/user, var/atom/target) //Passing user and target for logging purposes
