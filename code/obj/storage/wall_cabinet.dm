@@ -209,58 +209,6 @@
 		else
 			src.icon_state = "clothingrack"
 
-	attackby(obj/item/W as obj, mob/user as mob, params, obj/item/storage/T as obj) // T for transfer - transferring items from one storage obj to another
-		if (W.cant_drop)
-			return
-		if (islist(src.can_hold) && src.can_hold.len)
-			var/ok = 0
-			if (src.in_list_or_max && W.w_class <= src.max_wclass)
-				ok = 1
-			else
-				for (var/A in src.can_hold)
-					if (ispath(A) && istype(W, A))
-						ok = 1
-			if (!ok)
-				boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")
-				return
-
-		else if (W.w_class > src.max_wclass)
-			boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
-			return
-
-		var/list/my_contents = src.get_contents()
-		if (my_contents.len >= slots)
-			boutput(user, "<span class='alert'>[src] is full!</span>")
-			return 0
-
-		var/atom/checkloc = src.loc // no infinite loops for you
-		while (checkloc && !isturf(src.loc))
-			if (checkloc == W) // nope
-				//Hi hello this used to gib the user and create an actual 5x5 explosion on their tile
-				//Turns out this condition can be met and reliably reproduced by players!
-				//Lets not give players the ability to fucking explode at will eh
-				return
-			checkloc = checkloc.loc
-
-		if (T && istype(T, /obj/item/storage))
-			src.add_contents(W)
-			T.hud.remove_item(W)
-			update_icon()
-		else
-			user.u_equip(W)
-			W.dropped(user)
-			src.add_contents(W)
-		hud.add_item(W)
-		update_icon()
-		add_fingerprint(user)
-		animate_storage_rustle(src)
-		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span class='notice'>[user] has added [W] to [src]!</span>", "<span class='notice'>You have added [W] to [src].</span>")
-		playsound(src.loc, "rustle", 50, 1, -5)
-		return
-
-
-
 /obj/item/storage/wall/clothingrack/dresses
 	spawn_contents = list(/obj/item/clothing/under/suit/red/dress = 1,
 	/obj/item/clothing/under/suit/purple/dress = 1,
@@ -387,56 +335,6 @@ obj/item/storage/wall/clothingrack/hatrack
 		else
 			src.icon_state = "toolshelf"
 
-	attackby(obj/item/W as obj, mob/user as mob, params, obj/item/storage/T as obj) // T for transfer - transferring items from one storage obj to another
-		if (W.cant_drop)
-			return
-		if (islist(src.can_hold) && src.can_hold.len)
-			var/ok = 0
-			if (src.in_list_or_max && W.w_class <= src.max_wclass)
-				ok = 1
-			else
-				for (var/A in src.can_hold)
-					if (ispath(A) && istype(W, A))
-						ok = 1
-			if (!ok)
-				boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")
-				return
-
-		else if (W.w_class > src.max_wclass)
-			boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
-			return
-
-		var/list/my_contents = src.get_contents()
-		if (my_contents.len >= slots)
-			boutput(user, "<span class='alert'>[src] is full!</span>")
-			return 0
-
-		var/atom/checkloc = src.loc // no infinite loops for you
-		while (checkloc && !isturf(src.loc))
-			if (checkloc == W) // nope
-				//Hi hello this used to gib the user and create an actual 5x5 explosion on their tile
-				//Turns out this condition can be met and reliably reproduced by players!
-				//Lets not give players the ability to fucking explode at will eh
-				return
-			checkloc = checkloc.loc
-
-		if (T && istype(T, /obj/item/storage))
-			src.add_contents(W)
-			T.hud.remove_item(W)
-			update_icon()
-		else
-			user.u_equip(W)
-			W.dropped(user)
-			src.add_contents(W)
-		hud.add_item(W)
-		update_icon()
-		add_fingerprint(user)
-		animate_storage_rustle(src)
-		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span class='notice'>[user] has added [W] to [src]!</span>", "<span class='notice'>You have added [W] to [src].</span>")
-		playsound(src.loc, "rustle", 50, 1, -5)
-		return
-
 /obj/item/storage/wall/mineralshelf
 	name = "mineral shelf"
 	icon = 'icons/obj/64x64.dmi'
@@ -460,53 +358,3 @@ obj/item/storage/wall/clothingrack/hatrack
 			src.icon_state = "shelf"
 		else
 			src.icon_state = "mineralshelf"
-
-	attackby(obj/item/W as obj, mob/user as mob, params, obj/item/storage/T as obj) // T for transfer - transferring items from one storage obj to another
-		if (W.cant_drop)
-			return
-		if (islist(src.can_hold) && src.can_hold.len)
-			var/ok = 0
-			if (src.in_list_or_max && W.w_class <= src.max_wclass)
-				ok = 1
-			else
-				for (var/A in src.can_hold)
-					if (ispath(A) && istype(W, A))
-						ok = 1
-			if (!ok)
-				boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")
-				return
-
-		else if (W.w_class > src.max_wclass)
-			boutput(user, "<span class='alert'>[W] won't fit into [src]!</span>")
-			return
-
-		var/list/my_contents = src.get_contents()
-		if (my_contents.len >= slots)
-			boutput(user, "<span class='alert'>[src] is full!</span>")
-			return 0
-
-		var/atom/checkloc = src.loc // no infinite loops for you
-		while (checkloc && !isturf(src.loc))
-			if (checkloc == W) // nope
-				//Hi hello this used to gib the user and create an actual 5x5 explosion on their tile
-				//Turns out this condition can be met and reliably reproduced by players!
-				//Lets not give players the ability to fucking explode at will eh
-				return
-			checkloc = checkloc.loc
-
-		if (T && istype(T, /obj/item/storage))
-			src.add_contents(W)
-			T.hud.remove_item(W)
-			update_icon()
-		else
-			user.u_equip(W)
-			W.dropped(user)
-			src.add_contents(W)
-		hud.add_item(W)
-		update_icon()
-		add_fingerprint(user)
-		animate_storage_rustle(src)
-		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span class='notice'>[user] has added [W] to [src]!</span>", "<span class='notice'>You have added [W] to [src].</span>")
-		playsound(src.loc, "rustle", 50, 1, -5)
-		return
