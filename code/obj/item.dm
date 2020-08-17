@@ -1487,3 +1487,19 @@
 
 /obj/item/proc/intent_switch_trigger(mob/user)
 	return
+
+/obj/item/proc/knife_fluff(var/type_of_knife, var/tool_mode_on)
+	var/cool_grip_adj = pick("a sick", "a wicked", "a deadly", "a menacing", "an edgy", "a tacticool", "a sweaty", "an awkward")
+	var/cool_grip1 = pick("combat", "fightlord", "guerilla", "hidden", "space", "syndie", "double-reverse", "\"triple-dog-dare-ya\"", "stain-buster's")
+	var/cool_grip2a = pick("blade", "cyber", "street", "assistant", "comedy", "butcher", "edge", "beast", "heck", "crud", "")
+	var/cool_grip2b = pick("master", "slayer", "fighter", "militia", "space", "syndie", "lord", "blaster", "beef", "tyrannosaurus")
+	var/cool_grip3 = pick("[wheredWeSeeIt][pick("once", "once or twice")]", "just came up with", "didn't know you could do")
+	var/wheredWeSeeIt = pick("you've seen the clown do", "you've seen the captain do", "you've seen a large dog do", "you've seen the head of security do",\
+														"you've seen someone in a red spacesuit do", "you've seen a floating [src] do", "you've seen on TV",\
+														"you've seen one of the diner [pick("dudes", "dorks", "dopes")] do", "you've seen just about every assistant do")
+	switch(type_of_knife)
+		if("barber razor" || "barber scissors")
+			if(tool_mode_on)
+				boutput(user, "<span class='hint'>You change your grip on the [src] to one that'll cut the recipient's hair, and not hopefully their throat.</span>")
+			else
+				boutput(user, "<span class='alert'>You wield the [src] with [cool_grip_adj] [cool_grip1] [cool_grip2a][cool_grip2b] [pick("style", "grip")] that [cool_grip3]! It makes it just about impossible to cut hair!</span>")

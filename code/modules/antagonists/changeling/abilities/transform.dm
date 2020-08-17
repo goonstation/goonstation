@@ -175,7 +175,7 @@
 			C.organHolder.head.head_image_cust_two = E.head.head_image_cust_two
 			C.organHolder.head.head_image_cust_three = E.head.head_image_cust_three
 			C.organHolder.head.skintone = E.head.skintone
-		else // what did you DO to them??
+		else // what did you DO to them?? whatever, just make whatever their head would've looked like
 			C.organHolder.head.update_icon() // vOv try to call this after the ling got their new bioholder
 		C.update_face()
 		C.update_body()

@@ -681,7 +681,7 @@
 		return // fuck u
 
 	//then put in the stuff from the head
-	var/obj/item/organ/head/my_head 
+	var/obj/item/organ/head/my_head
 	if (src?.organHolder?.head)
 		my_head = src.organHolder.head
 
@@ -842,11 +842,11 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 		src.body_standing.overlays.len = 0
 		src.hands_standing = SafeGetOverlayImage("hands", file, "blank", MOB_HAND_LAYER1) //image('icons/mob/human.dmi', "blank", MOB_HAND_LAYER1)
 		src.hands_standing.overlays.len = 0
-		src.tail_standing = SafeGetOverlayImage("tail", 'icons/mob/human.dmi', "blank", MOB_TAIL_LAYER1) // image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
+		src.tail_standing = SafeGetOverlayImage("tail", 'icons/mob/human.dmi', "blank", MOB_TAIL_LAYER1)
 		src.tail_standing.overlays.len = 0
-		src.tail_standing_oversuit = SafeGetOverlayImage("tail_oversuit", 'icons/mob/human.dmi', "blank", MOB_OVERSUIT_LAYER1) // image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
+		src.tail_standing_oversuit = SafeGetOverlayImage("tail_oversuit", 'icons/mob/human.dmi', "blank", MOB_OVERSUIT_LAYER1)
 		src.tail_standing_oversuit.overlays.len = 0
-		src.detail_standing_oversuit = SafeGetOverlayImage("detail_oversuit", 'icons/mob/human.dmi', "blank", MOB_OVERSUIT_LAYER1) // image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
+		src.detail_standing_oversuit = SafeGetOverlayImage("detail_oversuit", 'icons/mob/human.dmi', "blank", MOB_OVERSUIT_LAYER2)
 		src.detail_standing_oversuit.overlays.len = 0
 
 
@@ -903,7 +903,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 							else
 								human_detail_image.color = "#FFFFFF"
 							src.detail_standing_oversuit.overlays += human_detail_image
-						else
+							UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit")
+						else // ^^ up here because peoples' bodies turn invisible if it down there with the rest of em
 							UpdateOverlays(null, "detail_oversuit")
 
 					if (src.organHolder && src.organHolder.head && AHOLD.mob_appearance_flags & ~HAS_NO_HEAD)
@@ -913,8 +914,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 
 					if (src.organHolder && src.organHolder.tail)
 						var/obj/item/organ/tail/our_tail = src.organHolder.tail // visual tail data is stored in the tail
-						human_tail_image = our_tail.tail_image_1 
-						src.tail_standing.overlays += human_tail_image 
+						human_tail_image = our_tail.tail_image_1
+						src.tail_standing.overlays += human_tail_image
 
 						human_tail_image = our_tail.tail_image_2 // maybe our tail has multiple parts, like lizards
 						src.tail_standing.overlays += human_tail_image
@@ -1094,7 +1095,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				if (src.juggling())
 					juggle_image.icon_state = "juggle"
 					src.body_standing.overlays += juggle_image
-					
+
 
 			else // is fat
 				var/skin_tone = AHOLD.s_tone
@@ -1258,7 +1259,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	src.UpdateOverlays(src.hands_standing, "hands", 1, 1)
 	src.UpdateOverlays(src.tail_standing, "tail", 1, 1) // i blame pali for giving me this power
 	src.UpdateOverlays(src.tail_standing_oversuit, "tail_oversuit", 1, 1)
-	src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
+	//src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
 
 #if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
 /mob/living/carbon/human/UpdateDamage()

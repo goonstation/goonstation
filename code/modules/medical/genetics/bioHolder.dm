@@ -251,11 +251,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 			var/mob/living/carbon/human/H = owner	// hair is handled by the head, applied by update_face
 
-			if (src.mob_color_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
-				src.customization_first_color_special = fix_colors(src.customization_first_color)
-				src.customization_second_color_special = fix_colors(src.customization_second_color)
-				src.customization_third_color_special = fix_colors(src.customization_third_color)
-
 			if (src.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
 				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
 					src.s_tone_special = src.customization_first_color_special
