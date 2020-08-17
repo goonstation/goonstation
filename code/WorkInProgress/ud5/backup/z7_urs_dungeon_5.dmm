@@ -828,7 +828,7 @@
 "pV" = (/obj/storage/secure/closet/personal,/obj/item/storage/box/clothing/chief_engineer,/obj/item/device/light/zippo,/turf/unsimulated/floor/blue,/area/adventure/urs_dungeon)
 "pW" = (/obj/table/wood/round,/obj/item/paper{icon_state = "paper"; info = "If anyone ever finds this, please tell me mom that I knew I should have been a lion tamer instead of a security guard."; name = "To whom it may concern"},/turf/unsimulated/floor/blue,/area/adventure/urs_dungeon)
 "pX" = (/obj/storage/secure/closet/personal,/obj/item/storage/box/clothing/captain,/obj/item/fiddle,/turf/unsimulated/floor/darkblue,/area/adventure/urs_dungeon)
-"pY" = (/obj/storage/secure/closet/personal,/obj/item/storage/box/clothing,/obj/item/flamethrower,/turf/unsimulated/floor/blue,/area/adventure/urs_dungeon)
+"pY" = (/obj/storage/secure/closet/personal,/obj/item/storage/box/clothing,/obj/item/flamethrower/assembled,/turf/unsimulated/floor/blue,/area/adventure/urs_dungeon)
 "pZ" = (/obj/storage/secure/closet/personal,/obj/item/storage/box/clothing,/obj/item/storage/box/cocktail_umbrellas,/obj/item/storage/box/cocktail_doodads,/obj/item/storage/box/beer,/turf/unsimulated/floor/blue,/area/adventure/urs_dungeon)
 "qa" = (/obj/storage/secure/closet/personal,/obj/item/storage/box/clothing,/obj/item/whistle,/turf/unsimulated/floor/blue,/area/adventure/urs_dungeon)
 "qb" = (/obj/storage/secure/closet/personal,/obj/item/storage/box/clothing,/obj/item/gnomechompski{name = "Gnelf Cnophski"},/turf/unsimulated/floor/blue/corner,/area/adventure/urs_dungeon)
