@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
 import { Fragment } from 'inferno';
-import { Box, Section, LabeledList, Button, AnimatedNumber } from '../components';
+import { useBackend } from '../backend';
+import { Box, Section, AnimatedNumber } from '../components';
 import { Window } from '../layouts';
 import { PressureBar } from './common/PressureBar';
 import { ReleaseValve } from './common/ReleaseValve';

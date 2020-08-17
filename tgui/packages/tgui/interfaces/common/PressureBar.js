@@ -1,7 +1,5 @@
 import { Box, ProgressBar, AnimatedNumber } from '../../components';
 
-
-
 export const PressureBar = props => {
   const {
     pressure,

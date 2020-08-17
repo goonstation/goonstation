@@ -1,4 +1,3 @@
-import { useBackend } from '../../backend';
 import { Fragment } from 'inferno';
 import { Box, Section, LabeledList, Button, AnimatedNumber } from '../../components';
 import { PressureBar } from './PressureBar';
