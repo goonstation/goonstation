@@ -14,7 +14,12 @@
 
 #define SIMS_DETAILED_SCOREKEEPING
 
-/// Base area definition
+
+/**
+  * # area
+  *
+  * A grouping of tiles into a logical space. The sworn enemy of mappers.
+  */
 /area
 
 	/// TRUE if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
@@ -73,11 +78,11 @@
 
 	/// don't irradiate this place!!
 	var/do_not_irradiate = 1
-	/*! Definitely DO NOT var-edit areas in the map editor because it apparently causes individual tiles
-	 * to become detached from the parent area. Example: APCs belonging to medbay or whatever that are in
-	 * adjacent maintenance tunnels, not in the same room they're powering. If you set the d_n_i flag,
-	 * it will render them useless.
-	 */
+		/*! Definitely DO NOT var-edit areas in the map editor because it apparently causes individual tiles
+		* to become detached from the parent area. Example: APCs belonging to medbay or whatever that are in
+		* adjacent maintenance tunnels, not in the same room they're powering. If you set the d_n_i flag,
+		* it will render them useless.
+		*/
 
 	/// gang that owns this area in gang mode
 	var/datum/gang/gang_owners = null
@@ -501,10 +506,10 @@
 	filler_turf = "/turf/unsimulated/nicegrass/random"
 
 /** Shuttle Areas
- *
- * These are shuttle areas, they must contain two areas in a subgroup if you want
- * to move a shuttle from one place to another. Look at escape shuttle for example.
- */
+  *
+  * These are shuttle areas, they must contain two areas in a subgroup if you want
+  * to move a shuttle from one place to another. Look at escape shuttle for example.
+  */
 /area/shuttle //DO NOT TURN THE RL_Lighting STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 #ifdef HALLOWEEN
 	alpha = 128
@@ -3139,8 +3144,8 @@ area/station/security/visitation
 
 
 /**
- * Base area/New() definition
- */
+	* Called when an area first loads
+  */
 /area/New()
 	src.icon = 'icons/effects/alert.dmi'
 	src.layer = EFFECTS_LAYER_BASE
@@ -3166,8 +3171,8 @@ area/station/security/visitation
 		src.power_change()		// all machines set to current power level, also updates lighting icon
 
 /**
- * Causes a power alert in the area. Notifies AIs.
- */
+  * Causes a power alert in the area. Notifies AIs.
+  */
 /area/proc/poweralert(var/state, var/source)
 	if (state != poweralm)
 		poweralm = state
@@ -3184,8 +3189,8 @@ area/station/security/visitation
 
 
 /**
- * Causes a fire alert in the area if there is not one already set. Notifies AIs.
- */
+  * Causes a fire alert in the area if there is not one already set. Notifies AIs.
+  */
 /area/proc/firealert()
 	if(src.name == "Space" || src.name == "Ocean") //no fire alarms in space
 		return
@@ -3208,8 +3213,8 @@ area/station/security/visitation
 			LAGCHECK(LAG_HIGH)
 
 /**
- * Resets the fire alert in the area. Notifies AIs.
- */
+  * Resets the fire alert in the area. Notifies AIs.
+  */
 /area/proc/firereset()
 	if (src.fire)
 		src.fire = 0
@@ -3227,8 +3232,8 @@ area/station/security/visitation
 			LAGCHECK(LAG_HIGH)
 
 /**
- * Updates the icon of the area. Mainly used for flashing it red or blue. See: old party lights
- */
+  * Updates the icon of the area. Mainly used for flashing it red or blue. See: old party lights
+  */
 /area/proc/updateicon()
 	if ((fire || eject) && power_environ)
 		if(fire && !eject)
@@ -3242,10 +3247,12 @@ area/station/security/visitation
 		icon_state = null
 
 /**
- * Determines is an area is powered or not.
- * chan - the power channel, possibilities: (EQUIP, LIGHT, ENVIRON)
- * return true if the area has power to given channel, false otherwise, null if channel was not specified
- */
+  * Determines is an area is powered or not.
+	*
+  * chan - the power channel, possibilities: (EQUIP, LIGHT, ENVIRON)
+	*
+  * return true if the area has power to given channel, false otherwise, null if channel was not specified
+  */
 /area/proc/powered(chan)
 	if(!requires_power)
 		return TRUE
@@ -3259,8 +3266,8 @@ area/station/security/visitation
 	return null
 
 /**
- * Called when power status changes. Updates machinery and the icon of the area.
- */
+  * Called when power status changes. Updates machinery and the icon of the area.
+  */
 /area/proc/power_change()
 	for(var/X in src.machines)	// for each machine in the area
 		var/obj/machinery/M = X
@@ -3269,9 +3276,10 @@ area/station/security/visitation
 	updateicon()
 
 /**
- * Returns the current usage of the specified channel
- * required - chan - the power channel, possibilities: (EQUIP, LIGHT, ENVIRON, TOTAL)
- */
+  * Returns the current usage of the specified channel
+	*
+  * required - chan - the power channel, possibilities: (EQUIP, LIGHT, ENVIRON, TOTAL)
+  */
 /area/proc/usage(chan)
 	switch(chan)
 		if(LIGHT)
@@ -3284,19 +3292,20 @@ area/station/security/visitation
 			. = used_light + used_equip + used_environ
 
 /**
- * sets all current usage of power to 0
- */
+  * sets all current usage of power to 0
+  */
 /area/proc/clear_usage()
 	used_equip = 0
 	used_light = 0
 	used_environ = 0
 
 /**
- * Uses the specified ammount of power for the specified channel
- *
- * required - amount - the amt. of power to use
- * required - chan - the power channel, possibilities: (EQUIP, LIGHT, ENVIRON)
- */
+  * Uses the specified ammount of power for the specified channel
+  *
+  * required - amount - the amt. of power to use
+	*
+  * required - chan - the power channel, possibilities: (EQUIP, LIGHT, ENVIRON)
+  */
 /area/proc/use_power(amount, chan)
 
 	switch(chan)
