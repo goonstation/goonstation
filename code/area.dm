@@ -76,13 +76,18 @@
 	// Blowouts don't set irradiated on this area back to zero.
 	var/permarads = 0
 
-	/// don't irradiate this place!!
+	/**
+	  * Don't irradiate this place during the blowout event
+		*
+		* Definitely DO NOT var-edit areas in the map editor because it apparently causes individual tiles
+		* to become detached from the parent area.
+		*
+		* Example: APCs belonging to medbay or whatever that are in adjacent maintenance tunnels,
+		* not in the same room they're powering.
+		*
+		* If you set the d_n_i flag, it will render them useless.
+		*/
 	var/do_not_irradiate = 1
-			/*! Definitely DO NOT var-edit areas in the map editor because it apparently causes individual tiles
-			* to become detached from the parent area. Example: APCs belonging to medbay or whatever that are in
-			* adjacent maintenance tunnels, not in the same room they're powering. If you set the d_n_i flag,
-			* it will render them useless.
-			*/
 
 	/// gang that owns this area in gang mode
 	var/datum/gang/gang_owners = null
