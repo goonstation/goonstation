@@ -7,6 +7,9 @@
 #define HAIR_2_FUCKED 2
 #define HAIR_3_FUCKED 4
 #define EYES_FUCKED 8
+#define BARBERY_FAILURE 0	// if barbering is not successful and does not display a message
+#define BARBERY_SUCCESSFUL 1 // if barbering is successful, don't attack em
+#define BARBERY_RESOLVABLE 2 // if barbering is not successful, but gives a message
 
 /obj/item/clothing/head/wig
 	name = "toupée"
@@ -44,18 +47,21 @@
 		BLOCK_KNIFE
 
 	attack(mob/M as mob, mob/user as mob)
-		if(do_barbery)
-			if(scissor_action(M, user))
-				return
-			else
-				..()
+		if(scissor_action(M, user))
+			return
 		else
 			..()
 
 	attack_self(mob/user)
 		. = ..()
-		src.do_barbery = !src.do_barbery
-		knife_fluff(user)
+		toggle_force_use_as_tool(user, 0)
+
+	dropped()
+		toggle_force_use_as_tool(null, 1, 1)
+
+	throw_begin(atom/target)
+		toggle_force_use_as_tool(null, 1, 1)
+		return ..(target)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -92,18 +98,21 @@
 		BLOCK_KNIFE
 
 	attack(mob/M as mob, mob/user as mob)
-		if(do_barbery)
-			if(razor_action(M, user))
-				return
-			else
-				..()
+		if(razor_action(M, user))
+			return
 		else
 			..()
 
 	attack_self(mob/user)
 		. = ..()
-		src.do_barbery = !src.do_barbery
-		knife_fluff(user)
+		toggle_force_use_as_tool(user, 0)
+
+	dropped()
+		toggle_force_use_as_tool(null, 1, 1)
+
+	throw_begin(atom/target)
+		toggle_force_use_as_tool(null, 1, 1)
+		return ..(target)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -186,7 +195,7 @@
 	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
 
 
-/obj/item/proc/dye_hair(mob/living/carbon/human/M as mob, mob/user as mob, obj/item/dye_bottle/bottle as obj)
+/obj/item/dye_bottle/proc/dye_hair(mob/living/carbon/human/M as mob, mob/user as mob, obj/item/dye_bottle/bottle as obj)
 	if(!ishuman(M) || !user.mind)	return 0
 	if(!istype(src, /obj/item/dye_bottle))
 		boutput(user, "Hi! The thing you're using is trying to dye someone's hair, despite it not being a thing that's supposed to do that!")
@@ -207,41 +216,41 @@
 		var/result_msg1 = "[user] dyes [M]'s hair."
 		var/result_msg2 = "<span class='notice'>You dye [M]'s hair.</span>"
 		var/result_msg3 = "<span class='notice'>[user] dyes your hair.</span>"
-		var/is_barber = user.mind.assigned_role == "Barber" ? 1 : 0
-		var/fuckedyourshitup = 0
+		var/is_barber = user.mind.assigned_role == "Barber"
+		var/passed_dye_roll = 1
 
 		if(user.bioHolder.HasEffect("clumsy" && prob(40)))
-			var/degreetowhichwefuckedtheirshitup = 0
+			var/recolor_these_hair_layers_instead = 0
 			var/mob/living/carbon/human/famtofuckup = null
-			fuckedyourshitup = 1
+			passed_dye_roll = 0
 			if(prob(33))
-				degreetowhichwefuckedtheirshitup |= HAIR_1_FUCKED
+				recolor_these_hair_layers_instead |= HAIR_1_FUCKED
 			if(prob(33))
-				degreetowhichwefuckedtheirshitup |= HAIR_2_FUCKED
+				recolor_these_hair_layers_instead |= HAIR_2_FUCKED
 			if(prob(33))
-				degreetowhichwefuckedtheirshitup |= HAIR_3_FUCKED
+				recolor_these_hair_layers_instead |= HAIR_3_FUCKED
 			if(prob(33))
-				degreetowhichwefuckedtheirshitup |= EYES_FUCKED
+				recolor_these_hair_layers_instead |= EYES_FUCKED
 			if (ishuman(user) && prob(50)) // dye your own hair, idiot
 				user.visible_message("[user] slips and dumps the [src] onto [his_or_her(user)] own head!")
 				famtofuckup = user
 			else // dye their hair, idiot
 				user.visible_message("[user] slips and dumps the [src] all over [M]'s head!")
 				famtofuckup = M
-			if (degreetowhichwefuckedtheirshitup & HAIR_1_FUCKED)
+			if (recolor_these_hair_layers_instead & HAIR_1_FUCKED)
 				famtofuckup.bioHolder.mobAppearance.customization_first_color = bottle.customization_first_color
-			if (degreetowhichwefuckedtheirshitup & HAIR_2_FUCKED)
+			if (recolor_these_hair_layers_instead & HAIR_2_FUCKED)
 				famtofuckup.bioHolder.mobAppearance.customization_second_color = bottle.customization_first_color
-			if (degreetowhichwefuckedtheirshitup & HAIR_3_FUCKED)
+			if (recolor_these_hair_layers_instead & HAIR_3_FUCKED)
 				famtofuckup.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
-			if (degreetowhichwefuckedtheirshitup & EYES_FUCKED)
+			if (recolor_these_hair_layers_instead & EYES_FUCKED)
 				famtofuckup.bioHolder.mobAppearance.e_color = bottle.customization_first_color
 				famtofuckup.emote("scream")
 			boutput(user, "And now you're out of dye. Well done.")
 			src.uses_left = 0
 			src.icon_state= "dye-e"
 
-		if(!fuckedyourshitup)
+		if(passed_dye_roll)
 			switch(bottle.hair_group)
 				if(HAIR_1)
 					if(is_barber || prob(60))
@@ -439,88 +448,67 @@
 
 
 // Barber stuff
-/obj/item/proc/knife_fluff(mob/user)
-	if(!user)
-		return // a knife flipping itself around can never be cool. Or execute this without runtimes.
-	// this doesn't change what the item actually does, just barfs a bunch of stuff.
-	var/cool_grip3 = "[pick(src.wheredWeSeeIt)] [pick("once", "once or twice")]"
-	var/be_discrete = 1
-	if (user.a_intent == INTENT_HARM)
-		be_discrete = 0
-	if(src.do_barbery)
-		if(be_discrete == 0)
-			user.visible_message("[user] assumes a proper haircutter's grip on the [src].",\
-														"You change your grip on the [src] to one that'll cut someone's hair, and not hopefully their throat. Unless you're trying to do surgery.")
-		else
-			boutput(user, "<span class='hint'>You change your grip on the [src] to one that'll cut someone's hair, and not hopefully their throat. Unless you're trying to do surgery.</span>")
-	else
-		if(be_discrete == 0)
-			user.visible_message("[user] wields the [src] a with [pick(cool_grip_adj)] [pick(cool_grip1)] [pick(cool_grip2a)][pick(cool_grip2b)] [pick("style", "grip")] that they probably [pick(cool_grip3)]!",\
-														"You wield the [src] with [pick(cool_grip_adj)] [pick(cool_grip1)] [pick(cool_grip2a)][pick(cool_grip2b)] [pick("style", "grip")] that you [pick(cool_grip3)]! It makes it just about impossible to cut hair or do surgery!")
-		else
-			boutput(user, "<span class='alert'>You wield the [src] with [pick(cool_grip_adj)] [pick(cool_grip1)] [pick(cool_grip2a)][pick(cool_grip2b)] [pick("style", "grip")] that you [pick(cool_grip3)]! It makes it just about impossible to cut hair or do surgery!</span>")
-
-/obj/item/proc/scissor_action(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
-	if (src.do_barbery)
-		if (src.remove_bandage(M, user))
-			return 1
-		if (snip_surgery(M, user))
-			return 1
-		if (do_haircut(M, user))
-			return 1
+/obj/item/scissors/proc/scissor_action(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
+	if (src.remove_bandage(M, user))
 		return 1
-	else
-		if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-			src.reagents.trans_to(M,5)
-			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
-		return 0
-
-
-/obj/item/proc/razor_action(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
-	if (src.do_barbery)
-		if(scalpel_surgery(M,user))
-			return 1
-		do_shave(M, user)
+	if (snip_surgery(M, user))
 		return 1
-	else
-		if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-			src.reagents.trans_to(M,5)
-			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
-		return 0
+	var/cut_result = do_haircut(M, user)
+	if (cut_result == BARBERY_SUCCESSFUL)
+		return 1
+	if (src.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
+		if (cut_result == BARBERY_FAILURE) // failure doesnt return a message, less-than-successes do
+			boutput(user, "<span class='notice'>You poke [M] with your [src]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
+		return 1
+	if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
+		src.reagents.trans_to(M,5)
+		logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
+	return
 
+
+/obj/item/razor_blade/proc/razor_action(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
+	if (scalpel_surgery(M, user))
+		return 1
+	var/shave_result = do_shave(M, user)
+	if (shave_result == BARBERY_SUCCESSFUL)
+		return 1
+	if (src.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
+		if (shave_result == BARBERY_FAILURE) // failure doesnt return a message, less-than-successes do
+			boutput(user, "<span class='notice'>You poke [M] with your [src]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
+		return 1
+	if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
+		src.reagents.trans_to(M,5)
+		logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
+	return
 
 /obj/item/proc/do_shave(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
-	if(!M || !user)
-		return 0 // Who's cutting whose hair, now?
-
-	if(user.zone_sel.selecting != "head")
-		boutput(user, "You poke [M] with your [src]. You'll need to aim for [M]'s head to cut their hair. Or change your grip if you want to cut anything else.")
-		return 0
-
-	if(!ishuman(M))
-		boutput(user, "You don't know how to shave that! At least without cutting its face off.")
-		return 0
+	if(!M || !user || (user.a_intent != INTENT_HELP && !src.force_use_as_tool))
+		return BARBERY_FAILURE // Who's cutting whose hair, now?
 
 	var/mob/living/carbon/human/H = M
 	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
 		boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
-		return 0
+		return BARBERY_RESOLVABLE
 
 	if(M.bioHolder.mobAppearance.customization_second == "None")
-		boutput(user, "<span class='alert'>You can't get a closer shave than that!</span> At least not with <i>this</i> grip!")
-		return 0
+		boutput(user, "<span class='alert'>You can't get a closer shave than that!</span>")
+		return BARBERY_RESOLVABLE
 
 	if(issilicon(M))
 		boutput(user, "<span class='alert'>Shave a robot? Shave a robot!?? SHAVE A ROBOT?!?!??</span>")
-		return 0
+		return BARBERY_RESOLVABLE
+
+	if(!ishuman(M))
+		boutput(user, "You don't know how to shave that! At least without cutting its face off.")
+		return BARBERY_RESOLVABLE
 
 	if(iswizard(M))
 		if (user == M)
 			boutput(user, "<span style='font-size: 1.5em; font-weight:bold; color:red'>And just what do you think you're doing?</span>\
 							<br>It took you <span class='alert'>years</span> to grow that <span style='font-family: Dancing Script, cursive;'>majestic</span> thing!\
 							<br>To even <span style='font-family: Dancing Script, cursive;'>fathom</span> an existence without it fills the [voidSpeak("void")] where your soul used to be with <span class='alert'>RAGE.</span>")
-			return 0
+			return BARBERY_RESOLVABLE
 		src.visible_message("<span class='alert'><b>[user]</b> quickly shaves off [M]'s beard!</span>")
 		M.bioHolder.AddEffect("arcane_shame", timeleft = 120)
 		M.bioHolder.mobAppearance.customization_second = "None"
@@ -528,11 +516,11 @@
 		M.set_face_icon_dirty()
 		M.emote("cry")
 		M.emote("scream")
-		return 1
+		return BARBERY_SUCCESSFUL
 
 
 	if(!mutant_barber_fluff(M, user, "shave"))
-		return 0
+		return BARBERY_RESOLVABLE
 	var/list/mustaches =list("Watson", "Chaplin", "Selleck", "Van Dyke", "Hogan")
 	var/list/beards  = list("Neckbeard", "Elvis", "Abe", "Chinstrap", "Hipster", "Wizard")
 	var/list/full = list("Goatee", "Full Beard", "Long Beard")
@@ -541,77 +529,65 @@
 
 		if((new_style in full) && (!(M.bioHolder.mobAppearance.customization_second in full)))
 			boutput(user, "<span class='alert'>[M] doesn't have enough facial hair!</span>")
-			return 0
+			return BARBERY_RESOLVABLE
 
 		if((new_style in beards) && (M.bioHolder.mobAppearance.customization_second in mustaches))
 			boutput(user, "<span class='alert'>[M] doesn't have a beard!</span>")
-			return 0
+			return BARBERY_RESOLVABLE
 
 		if((new_style in mustaches) && (M.bioHolder.mobAppearance.customization_second in beards))
 			boutput(user, "<span class='alert'>[M] doesn't have a mustache!</span>")
-			return 0
+			return BARBERY_RESOLVABLE
+	else
+		boutput(user, "Never mind.")
+		return BARBERY_SUCCESSFUL
 
-	var/our_barbery_conditions = get_barbery_conditions(M, user)
-	var/degree_of_success = 0 // 0 - 3, 0 being failure, 3 being catastrophic hair success
-	if(prob(our_barbery_conditions))
-		degree_of_success = 3
-	else // oh no we fucked up!
-		degree_of_success = clamp(0,round((our_barbery_conditions / 30) - 1), 2)
-	//and then just jam all the vars into the action bar and let it handle the rest!
-	actions.start(new/datum/action/bar/shave(M, user, degree_of_success, new_style), user)
-	return 1
+	actions.start(new/datum/action/bar/shave(M, user, get_barbery_conditions(M, user), new_style), user)
+	return BARBERY_SUCCESSFUL
 
 /obj/item/proc/do_haircut(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
-	if(!M || !user)
-		return 0 // Who's cutting whose hair, now?
-
-	if(user.zone_sel.selecting != "head")
-		boutput(user, "You poke [M] with your [src]. You'll need to aim for [M]'s head to cut their hair. Or change your grip if you want to cut anything else.")
-		return 0
+	if(!M || !user || (user.a_intent != INTENT_HELP && !src.force_use_as_tool))
+		return BARBERY_FAILURE // Who's cutting whose hair, now?
 
 	var/mob/living/carbon/human/H = M
 	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
 		boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
-		return 0
+		return BARBERY_RESOLVABLE
 
 	if(M.bioHolder.mobAppearance.customization_first == "None")
 		boutput(user, "<span class='alert'>There is nothing to cut!</span>")
-		return 0
+		return BARBERY_RESOLVABLE
 
 	if(!mutant_barber_fluff(M, user, "haircut"))
-		return 0
+		return BARBERY_SUCCESSFUL
 
 	var/new_style = input(user, "Please select style", "Style")  as null|anything in customization_styles + customization_styles_gimmick
 
 	if (new_style)
 		if(M.bioHolder.mobAppearance.customization_first == "Balding" && new_style != "None")
 			boutput(user, "<span class='alert'>Not enough hair!</span>")
-			return 0
+			return BARBERY_SUCCESSFUL
 
 	if(!new_style)
-		return 0
+		boutput(user, "Never mind.")
+		return BARBERY_SUCCESSFUL
 
-	var/our_barbery_conditions = get_barbery_conditions(M, user)
-	var/degree_of_success = 0 // 0 - 3, 0 being failure, 3 being catastrophic hair success
-	if(prob(our_barbery_conditions))
-		degree_of_success = 3
-	else // oh no we fucked up!
-		degree_of_success = (our_barbery_conditions % 3) - 1
-	//and then just jam all the vars into the action bar and let it handle the rest!
-	actions.start(new/datum/action/bar/haircut(M, user, degree_of_success, new_style), user)
-	return 1
+	actions.start(new/datum/action/bar/haircut(M, user, get_barbery_conditions(M, user), new_style), user)
+	return BARBERY_SUCCESSFUL
 
 /proc/get_barbery_conditions(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
+	if(!ishuman(M))
+		return 0 // shouldn't happen, but just in case someone manages to shave a rat or something
 	var/barbery_conditions = 0
 	// let's see how ideal the haircutting conditions are
 	if(M.stat || issilicon(user))
-		barbery_conditions = 100
+		return 100
 	else
 		if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
 			barbery_conditions += 30
 
-		if(get_area(M) == /area/station/crew_quarters/barber_shop)
+		if(istype(get_area(M), /area/station/crew_quarters/barber_shop))
 			if(get_area(M) == get_area(user))
 				barbery_conditions += 30
 			else	// you should ideally be in the same room as whoever's hair you're cutting
@@ -623,27 +599,45 @@
 		if(ishuman(user))
 			if(istype(user.w_uniform, /obj/item/clothing/under/misc/barber))
 				barbery_conditions += 30
-			if(user.mind.assigned_role == "Barber") // 60% chance just for being you, 90 if you're wearing pants
-				barbery_conditions += 30
-				barbery_conditions *= 2
-			else if(M == user)
-				barbery_conditions *= 0.5
-			if(user.bioHolder.HasEffect("clumsy"))
-				barbery_conditions *= 0.3
 			if(user.jitteriness && !M.jitteriness) // your jitteriness kind of... syncs up
 				barbery_conditions -= 20
-			if(M == user)
-				barbery_conditions *= 0.5
+			if(user.mind.assigned_role == "Barber") // 60% chance just for being you, 90 if you're wearing pants
+				barbery_conditions += 60
+			else if(M == user)
+				barbery_conditions -= 30
+			if(user.bioHolder.HasEffect("clumsy"))
+				barbery_conditions -= 20
 
-	barbery_conditions = clamp(barbery_conditions, 1, 100)
-	return (barbery_conditions)
+	var/degree_of_success = 0 // 0 - 3, 0 being failure, 3 being catastrophic hair success
+	if(prob(clamp(barbery_conditions, 10, 100)))
+		degree_of_success = 3
+	else // oh no we fucked up!
+		if(prob(50))
+			degree_of_success = 2
+		else
+			degree_of_success = rand(0,1)
+	//and then just jam all the vars into the action bar and let it handle the rest!
+
+	return degree_of_success
 
 /obj/item/proc/mutant_barber_fluff(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob, var/barbery_type)
 	if (!M || !user)
 		return null
 
-	if(!M.mutantrace)
-		return 1 // sure go try cutting their hair, probably human
+	if(!ishuman(M))
+		if(issilicon(M))
+			if(barbery_type == "haircut")
+				playsound(M, "sound/items/Scissor.ogg", 100, 1)
+				user.tri_message("[user] waves [his_or_her(user)] scissors around [M]'s [isAI(M) ? "core" : "metallic upper housing"], snipping at nothing!",\
+											M, "[user] snips [his_or_her(user)] scissors around your [isAI(M) ? "core" : "head"].",\
+									user, "You snip at a piece of lint stuck in a seam on [M]'s [isAI(M) ? "core" : "head"] plates.")
+			else
+				user.tri_message("[user] slides [his_or_her(user)] razor scross [M]'s [isAI(M) ? "screen" : "cold metal face analogue"], cutting at nothing!",\
+											M, "[user] slides [his_or_her(user)] razor across [isAI(M) ? "your screen" : "the front of your head"].",\
+									user, "You shave off a small patch of [isAI(M) ? "dust stuck to [M]'s screen" : "rust on [M]'s face"].")
+		return 0 // runtimes violate law 1, probably
+	else if(!M.mutantrace)
+		return 1 // is human, not mutant, should be fine
 	else
 		var/datum/mutantrace/mutant = M.mutantrace.name
 		var/datum/mutantrace/mutant_us = "human"
@@ -834,7 +828,37 @@
 				boutput(user, "You're not quite sure what that is, but decide to cut its hair anyway. If it has any.")
 	return 1
 
+// this proc is supposed to make certain tools less accidentally deadly for inexperienced players to use
+// when force_use_as_tool is set, all intents will try to do their tool-thing, and if it can't, return a message saying they're using it wrong
+// if not set, help intent will still attempt tool, but you'll shank them if it doesn't work out
+/obj/item/proc/toggle_force_use_as_tool(mob/user, var/be_quiet = 1, var/quiet_reset)
+	if(quiet_reset)
+		src.force_use_as_tool = 0
+		src.dir = SOUTH
+		return
+	src.force_use_as_tool = !src.force_use_as_tool
+	if (src.force_use_as_tool)
+		src.dir = WEST
+	else
+		src.dir = SOUTH
+	if(be_quiet || !user)
+		return
 
+	var/list/cool_grip_adj = list("a sick", "a wicked", "a deadly", "a menacing", "an edgy", "a tacticool", "a sweaty", "an awkward")
+	var/list/cool_grip1 = list("combat", "fightlord", "guerilla", "hidden", "space", "syndie", "double-reverse", "\"triple-dog-dare-ya\"", "stain-buster's")
+	var/list/cool_grip2a = list("blade", "cyber", "street", "assistant", "comedy", "butcher", "edge", "beast", "heck", "crud", "ass")
+	var/list/cool_grip2b = list("master", "slayer", "fighter", "militia", "space", "syndie", "lord", "blaster", "beef", "tyrannosaurus")
+	var/list/wheredWeSeeIt = list("saw the clown do", "saw the captain do", "saw the head of security do",\
+														"saw someone in a red spacesuit do", "saw a floating saw do", "saw on TV",\
+														"saw one of the diner dudes do", "saw just about every assistant do")
+	var/cool_grip3 = "[pick(wheredWeSeeIt)] [pick("once", "once or twice")]"
+
+	if(src.force_use_as_tool)
+		user.visible_message("[user] assumes a less hostile grip on the [src].",\
+													"You change your grip on the [src], so as to use it more as a tool than a weapon.")
+	else
+		user.visible_message("[user] wields the [src] a with [pick(cool_grip_adj)] [pick(cool_grip1)] [pick(cool_grip2a)][pick(cool_grip2b)] [pick("style", "grip")] that they probably [pick(cool_grip3)]!",\
+													"You wield the [src] with [pick(cool_grip_adj)] [pick(cool_grip1)] [pick(cool_grip2a)][pick(cool_grip2b)] [pick("style", "grip")] that you [pick(cool_grip3)]! It makes it just about impossible to use as a tool!")
 /datum/action/bar/haircut
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -855,6 +879,18 @@
 		M, "<span class='notice'>[user] begins cutting your hair.</span>")
 		playsound(user, "sound/items/Scissor.ogg", 100, 1)
 		..()
+
+	onUpdate()
+		..()
+		if(get_dist(owner, M) > 1 || M == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(get_dist(owner, M) > 1 || M == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 	onEnd()
 		var/list/hair_list = customization_styles + customization_styles_gimmick
@@ -928,6 +964,18 @@
 		M, "<span class='notice'>[user] begins shaving you.</span>")
 		..()
 
+	onUpdate()
+		..()
+		if(get_dist(owner, M) > 1 || M == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(get_dist(owner, M) > 1 || M == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 	onEnd()
 		var/list/mustaches =list("Watson", "Chaplin", "Selleck", "Van Dyke", "Hogan")
 		var/list/beards  = list("Neckbeard", "Elvis", "Abe", "Chinstrap", "Hipster", "Wizard")
@@ -988,3 +1036,6 @@
 #undef HAIR_2_FUCKED
 #undef HAIR_3_FUCKED
 #undef EYES_FUCKED
+#undef BARBERY_FAILURE
+#undef BARBERY_SUCCESSFUL
+#undef BARBERY_RESOLVABLE
