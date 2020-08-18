@@ -712,8 +712,10 @@
 		JOB_XP(src, "Clown", 10)
 
 		if (src.hasStatus("drunk"))
-			istype(src.equipped(), /item/device/light/glowstick)
-				src.unlock_medal("Party hard", 1)
+			if(locate(/obj/item/device/light/glowstick) in src.contents)
+				for(var/turf/T in view(2, src.loc))
+					if(locate(/obj/neon_lining) in T.contents)
+						src.unlock_medal("Party hard", 1)
 
 	ticker.mode.check_win()
 
