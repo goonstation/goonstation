@@ -57,6 +57,7 @@
 		toggle_force_use_as_tool(user, 0)
 
 	dropped()
+		. = ..()
 		toggle_force_use_as_tool(null, 1, 1)
 
 	throw_begin(atom/target)
@@ -109,6 +110,7 @@
 
 	dropped()
 		toggle_force_use_as_tool(null, 1, 1)
+		. = ..()
 
 	throw_begin(atom/target)
 		toggle_force_use_as_tool(null, 1, 1)
