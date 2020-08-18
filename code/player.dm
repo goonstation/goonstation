@@ -52,7 +52,7 @@
 
 	/// returns the number of rounds that the player has played by joining in at roundstart
 	proc/get_rounds_participated()
-		if ((isnull(src.rounds_participated))) //if the stats havent been cached yet
+		if (isnull(src.rounds_participated)) //if the stats havent been cached yet
 			if (!src.cache_round_stats()) //if trying to set them fails
 				return null
 		else
@@ -60,7 +60,7 @@
 
 	/// returns the number of rounds that the player has at least joined the lobby in
 	proc/get_rounds_seen()
-		if ((isnull(src.rounds_seen))) //if the stats havent been cached yet
+		if (isnull(src.rounds_seen)) //if the stats havent been cached yet
 			if (!src.cache_round_stats()) //if trying to set them fails
 				return null
 		else
