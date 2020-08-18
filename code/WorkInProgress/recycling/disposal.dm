@@ -203,6 +203,7 @@
 	dir = 0				// dir will contain dominant direction for junction pipes
 	var/health = 10 	// health points 0-10
 	layer = DISPOSAL_PIPE_LAYER
+	plane = PLANE_FLOOR
 	var/base_icon_state	// initial icon state on map
 	var/list/mail_tag = null // Tag of mail group for switching pipes
 

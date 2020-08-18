@@ -26037,7 +26037,6 @@
 /obj/grille/steel,
 /obj/item/basketball{
 	desc = "Something beautiful overwhelms you when you look at this ball.";
-	layer = 9;
 	name = "barkley's basketball"
 	},
 /obj/decal/poster/wallsign/gym,
