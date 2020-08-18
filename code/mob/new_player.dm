@@ -275,15 +275,10 @@ mob/new_player
 				return 0
 		if (JOB.needs_college && !src.has_medal("Unlike the director, I went to college"))
 			return 0
-		if (JOB.rounds_needed_to_play)
-			if (src.client)
-				var/ckey = src.client.ckey
-				var/list/response = null
-				try
-					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = ckey), forceResponse = 1)
-				catch
-				if (response && (response["participated"]) < JOB.rounds_needed_to_play) //if theyve played less rounds than the job needs, they cant do it
-					return 0
+		if (JOB.rounds_needed_to_play && (src.client && src.client.player))
+			var/list/response = src.client.player.get_round_stats() //if this list is null, the api query failed, so we just let it happen
+			if (response && response["participated"] < JOB.rounds_needed_to_play) //they havent played enough rounds!
+				return 0
 		if (JOB.limit < 0 || countJob(JOB.name) < JOB.limit)
 			return 1
 		return 0
