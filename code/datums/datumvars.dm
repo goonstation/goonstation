@@ -7,7 +7,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "View Global Variable"
 
-	if( !src.holder || src.holder.level < LEVEL_CODER )
+	if( !src.holder || src.holder.level < LEVEL_ADMIN)
 		boutput( src, "<span class='alert'>Get down from there!!</span>" )
 		return
 	if (!S)
@@ -174,12 +174,13 @@
 
 	html += "<hr>"
 
-	if (src.holder.level >= LEVEL_CODER && D != "GLOB")
-		html += "<a href='byond://?src=\ref[src];CallProc=\ref[D]'>Call Proc</a>"
-		html += " &middot; <a href='byond://?src=\ref[src];ListProcs=\ref[D]'>List Procs</a>"
-		html += " &middot; <a href='byond://?src=\ref[src];ViewReferences=\ref[D]'>View References</a>"
-		html += "<br>"
+	html += "<a href='byond://?src=\ref[src];CallProc=\ref[D]'>Call Proc</a>"
+	html += " &middot; <a href='byond://?src=\ref[src];ListProcs=\ref[D]'>List Procs</a>"
 
+	if (src.holder.level >= LEVEL_CODER && D != "GLOB")
+		html += " &middot; <a href='byond://?src=\ref[src];ViewReferences=\ref[D]'>View References</a>"
+
+	html += "<br>"
 	html += {"<a href='byond://?src=\ref[src];Refresh=\ref[D]'>Refresh</a>"}
 
 	if (A)
@@ -307,7 +308,7 @@
 	html += "<tr>"
 	if (level == 0)
 		html += "<td class='nowrap'>"
-		html += debug_variable_link(name, fullvar, (istype(value, /datum) && src.holder.level >= LEVEL_CODER) ? 1 : 0)
+		html += debug_variable_link(name, fullvar, 1)
 		html += "</td>"
 
 	html += "<th>"
@@ -449,7 +450,7 @@
 		return
 	if (href_list["CallProc"])
 		usr_admin_only
-		if(holder && src.holder.level >= LEVEL_CODER)
+		if(holder && src.holder.level >= LEVEL_ADMIN)
 			var/target = href_list["CallProc"] == "global" ? null : locate(href_list["CallProc"])
 			if("proc_ref" in href_list)
 				doCallProc(target, locate(href_list["proc_ref"]))
@@ -460,7 +461,7 @@
 		return
 	if (href_list["ListProcs"])
 		usr_admin_only
-		if(holder && src.holder.level >= LEVEL_CODER)
+		if(holder && src.holder.level >= LEVEL_ADMIN)
 			var/target = href_list["CallProc"] == "global" ? null : locate(href_list["ListProcs"])
 			src.show_proc_list(target)
 		else

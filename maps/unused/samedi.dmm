@@ -34782,7 +34782,6 @@
 /obj/machinery/light,
 /obj/item/basketball{
 	desc = "Something beautiful overwhelms you when you look at this ball.";
-	layer = 9;
 	name = "barkley's basketball"
 	},
 /turf/simulated/floor/specialroom/gym/alt,

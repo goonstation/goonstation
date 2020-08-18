@@ -151,6 +151,7 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "arrow"
 	layer = EFFECTS_LAYER_1
+	plane = PLANE_HUD
 	anchored = 1
 
 /* - Replaced by functional version: /obj/item/instrument/large/jukebox

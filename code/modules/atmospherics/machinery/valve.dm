@@ -120,9 +120,9 @@ obj/machinery/atmospherics/valve
 
 	New()
 		switch(dir)
-			if(NORTH || SOUTH)
+			if(NORTH, SOUTH)
 				initialize_directions = NORTH|SOUTH
-			if(EAST || WEST)
+			if(EAST, WEST)
 				initialize_directions = EAST|WEST
 
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
