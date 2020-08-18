@@ -327,6 +327,7 @@
 	brightness = 0.5
 	light_type = /obj/item/light/bulb
 	allowed_type = /obj/item/light/bulb
+	plane = PLANE_NOSHADOW_BELOW
 	on = 1
 	wallmounted = 0
 	removable_bulb = 0
