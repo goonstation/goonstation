@@ -4,10 +4,8 @@ proc/generate_procs_by_type()
 	if(!isnull(procs_by_type)) // don't want to rebuild twice if someone is really spamming this
 		return
 	procs_by_type = list()
-	var/list/padding = list("00000", "0000", "000", "00", "0", "")
 	for(var/subaddr=0; TRUE; subaddr++)
-		var/hexsubaddr = num2text(subaddr, 1, 16)
-		var/addr = "\[0x26[padding[length(hexsubaddr)]][hexsubaddr]\]" // 26 is the prefix used by procs for ref
+		var/addr = BUILD_ADDR("26", subaddr) // 26 is the type id used by procs for ref
 		var/pr = locate(addr)
 		if(!pr)
 			break
