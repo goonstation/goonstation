@@ -30,10 +30,12 @@
 	var/c_flags = null
 	var/tooltip_flags = null
 	var/item_function_flags = null
+	var/do_barbery = 0
 
 	pressure_resistance = 50
 	var/obj/item/master = null
 	var/amount = 1
+	var/uses_left
 	var/max_stack = 1
 	var/stack_type = null // if null, only current type. otherwise uses this
 	var/contraband = 0 //If nonzero, bots consider this a thing people shouldn't be carrying without authorization
@@ -104,6 +106,16 @@
 	// Inventory count display. Call create_inventory_counter in New()
 	var/inventory_counter_enabled = 0
 	var/obj/overlay/inventory_counter/inventory_counter = null
+
+	// bunch of knife fluff so we dont keep rebuilding lists every time we frick around with a knife
+	var/no_fluff_spam_pls = 0
+	var/list/cool_grip_adj = list("a sick", "a wicked", "a deadly", "a menacing", "an edgy", "a tacticool", "a sweaty", "an awkward")
+	var/list/cool_grip1 = list("combat", "fightlord", "guerilla", "hidden", "space", "syndie", "double-reverse", "\"triple-dog-dare-ya\"", "stain-buster's")
+	var/list/cool_grip2a = list("blade", "cyber", "street", "assistant", "comedy", "butcher", "edge", "beast", "heck", "crud", "ass")
+	var/list/cool_grip2b = list("master", "slayer", "fighter", "militia", "space", "syndie", "lord", "blaster", "beef", "tyrannosaurus")
+	var/list/wheredWeSeeIt = list("saw the clown do", "saw the captain do", "saw a large dog do", "saw the head of security do",\
+														"saw someone in a red spacesuit do", "saw a floating saw do", "saw on TV",\
+														"saw one of the diner dudes do", "saw just about every assistant do")
 
 	proc/setTwoHanded(var/twohanded = 1) //This is the safe way of changing 2-handed-ness at runtime. Use this please.
 		if(ismob(src.loc))
