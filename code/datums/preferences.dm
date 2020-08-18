@@ -920,7 +920,7 @@ $(function() {
 				continue
 			if (J.rounds_needed_to_play && (user.client && user.client.player))
 				var/round_num = user.client.player.get_rounds_participated() //if this list is null, the api query failed, so we just let it happen
-				if (isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
+				if (!isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
 					src.jobs_unwanted += J.name
 					continue
 			src.jobs_med_priority += J.name
