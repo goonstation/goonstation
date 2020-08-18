@@ -7,7 +7,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "View Global Variable"
 
-	if( !src.holder || src.holder.level < LEVEL_CODER )
+	if( !src.holder || src.holder.level < LEVEL_ADMIN)
 		boutput( src, "<span class='alert'>Get down from there!!</span>" )
 		return
 	if (!S)
@@ -63,7 +63,8 @@
 
 	if (src.holder.level >= LEVEL_CODER)
 		html += " &middot; <a href='byond://?src=\ref[src];CallProc=\ref[V]'>Call Proc</a>"
-	usr << browse(html, "window=variables\ref[V];size=600x400")
+		html += " &middot; <a href='byond://?src=\ref[src];ListProcs=\ref[V]'>List Procs</a>"
+	usr.Browse(html, "window=variables\ref[V];size=600x400")
 
 /client/proc/debug_variables(datum/D in world) // causes GC to lock up for a few minutes, the other option is to use atom/D but that doesn't autocomplete in the command bar
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -171,14 +172,16 @@
 		else
 			html += "<em>(null)</em>"
 
+	html += "<hr>"
 
-	html += {"	<hr>
-	<a href='byond://?src=\ref[src];Refresh=\ref[D]'>Refresh</a>
-"}
+	html += "<a href='byond://?src=\ref[src];CallProc=\ref[D]'>Call Proc</a>"
+	html += " &middot; <a href='byond://?src=\ref[src];ListProcs=\ref[D]'>List Procs</a>"
 
 	if (src.holder.level >= LEVEL_CODER && D != "GLOB")
-		html += " &middot; <a href='byond://?src=\ref[src];CallProc=\ref[D]'>Call Proc</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];ViewReferences=\ref[D]'>View References</a>"
+
+	html += "<br>"
+	html += {"<a href='byond://?src=\ref[src];Refresh=\ref[D]'>Refresh</a>"}
 
 	if (A)
 		html += " &middot; <a href='byond://?src=\ref[src];JumpToThing=\ref[D]'>Jump To</a>"
@@ -191,7 +194,7 @@
 	html += "<br><a href='byond://?src=\ref[src];Delete=\ref[D]'>Delete</a>"
 	html += " &middot; <a href='byond://?src=\ref[src];HardDelete=\ref[D]'>Hard Delete</a>"
 	if (A || istype(D, /image))
-		html += " &middot; <a href='byond://?src=\ref[src];Display=\ref[D]'>Display In Chat (slow!)</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];Display=\ref[D]'>Display In Chat</a>"
 
 	if (isobj(D))
 		html += "<br><a href='byond://?src=\ref[src];CheckReactions=\ref[D]'>Check Possible Reactions</a>"
@@ -226,7 +229,7 @@
 </html>
 "}
 
-	usr << browse(html.Join(), "window=variables\ref[D];size=600x400")
+	usr.Browse(html.Join(), "window=variables\ref[D];size=600x400")
 
 	return
 
@@ -305,7 +308,7 @@
 	html += "<tr>"
 	if (level == 0)
 		html += "<td class='nowrap'>"
-		html += debug_variable_link(name, fullvar, (istype(value, /datum) && src.holder.level >= LEVEL_CODER) ? 1 : 0)
+		html += debug_variable_link(name, fullvar, 1)
 		html += "</td>"
 
 	html += "<th>"
@@ -447,8 +450,20 @@
 		return
 	if (href_list["CallProc"])
 		usr_admin_only
-		if(holder && src.holder.level >= LEVEL_CODER)
-			doCallProc(locate(href_list["CallProc"]))
+		if(holder && src.holder.level >= LEVEL_ADMIN)
+			var/target = href_list["CallProc"] == "global" ? null : locate(href_list["CallProc"])
+			if("proc_ref" in href_list)
+				doCallProc(target, locate(href_list["proc_ref"]))
+			else
+				doCallProc(target)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to call a proc on something all rude-like.")
+		return
+	if (href_list["ListProcs"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_ADMIN)
+			var/target = href_list["CallProc"] == "global" ? null : locate(href_list["ListProcs"])
+			src.show_proc_list(target)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to call a proc on something all rude-like.")
 		return
@@ -482,7 +497,7 @@
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/fname = "varview_preview_[href_list["Display"]]_[world.timeofday].png"
 			src << browse_rsc(getFlatIcon(locate(href_list["Display"])), fname)
-			sleep(0.1 SECONDS)
+			sleep(0.4 SECONDS)
 			boutput(src, {"<img src="[fname]" style="-ms-interpolation-mode: nearest-neighbor;zoom:200%;">"})
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to display a flat icon of something all rude-like.")

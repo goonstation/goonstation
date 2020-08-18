@@ -534,6 +534,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\badmin_link.dm"
 #include "code\modules\admin\bans.dm"
 #include "code\modules\admin\bomb_monitor.dm"
+#include "code\modules\admin\call_proc_menu.dm"
 #include "code\modules\admin\create.dm"
 #include "code\modules\admin\deadsay.dm"
 #include "code\modules\admin\debug.dm"

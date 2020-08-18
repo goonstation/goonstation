@@ -5,20 +5,7 @@ var/global/list/file_cache
 proc/rebuild_file_cache()
 	file_cache = list()
 	for(var/i = 0 to 16 ** 6)
-		var/addr = num2text(i, 0, 16)
-		switch(length(addr))
-			if(1)
-				addr = "\[0xc00000[addr]\]"
-			if(2)
-				addr = "\[0xc0000[addr]\]"
-			if(3)
-				addr = "\[0xc000[addr]\]"
-			if(4)
-				addr = "\[0xc00[addr]\]"
-			if(5)
-				addr = "\[0xc0[addr]\]"
-			if(6)
-				addr = "\[0xc[addr]\]"
+		var/addr = BUILD_ADDR("c", i) // c = cache
 		var/cached_file = locate(addr)
 		if(!cached_file)
 			return

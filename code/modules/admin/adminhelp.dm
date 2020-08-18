@@ -15,10 +15,9 @@
 		boutput(client.mob, "You have been banned from using this command.")
 		return
 
-	if(client.last_adminhelp > (world.timeofday - ADMINHELP_DELAY))
-		if(abs(world.timeofday - client.last_adminhelp) < 1000) // some midnight rollover protection b/c byond is fucking stupid
-			boutput(src, "You must wait [round((client.last_adminhelp + ADMINHELP_DELAY - world.timeofday)/10)] seconds before requesting help again.")
-			return
+	if(ON_COOLDOWN(client.player, "ahelp", ADMINHELP_DELAY))
+		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
+		return
 
 	var/msg = input("Please enter your help request to admins:") as null|text
 
@@ -31,8 +30,6 @@
 		karma_update(1, "SIN", client.mob)
 
 //	for_no_raisin(client.mob, msg)
-
-	if (client) client.last_adminhelp = world.timeofday
 
 	for (var/client/C)
 		if (C.holder)
@@ -65,14 +62,30 @@
 		gib(client.mob)
 		return
 
+	var/mob/dead/target_observer/mentor_mouse_observer/mmouse = locate() in src
+	if(mmouse) // mouse in your pocket takes precedence over mhelps
+		var/msg = input("Please enter your whispers to the mouse:") as null|text
+		msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN)
+		var/class = mmouse.is_admin ? "adminooc" : "mhelp"
+		boutput(mmouse, "<span class='[class]'><b>[client.mob]</b> whispers: \"<i>[msg]</i>\"</span>")
+		boutput(client.mob, "<span class='[class]'>You whisper to \the [mmouse]: \"<i>[msg]</i>\"</span>")
+		for (var/client/C)
+			if (C.holder)
+				if (C.player_mode || C == client || C == mmouse.client)
+					continue
+				else
+					var/rendered = "<span class='[class]'><b>[mmouse.is_admin ? "A" : "M"]MOUSEWHISPER: [key_name(client.mob,0,0,1)]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span> <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>"
+					boutput(C,  "<span class='adminHearing' data-ctx='[C.chatOutput.ctxFlag]'>[rendered]</span>")
+		logTheThing("diary", client.mob, null, "([mmouse.is_admin ? "A" : "M"]MOUSEWHISPER): [msg]", "say")
+		return
+
 	if (client.cloud_available() && client.cloud_get("mentorhelp_banner"))
 		boutput(client.mob, "You have been banned from using this command.")
 		return
 
-	if(client.last_adminhelp > (world.timeofday - ADMINHELP_DELAY))
-		if(abs(world.timeofday - client.last_adminhelp) < 1000) // some midnight rollover protection b/c byond is fucking stupid
-			boutput(client.mob, "You must wait [round((client.last_adminhelp + ADMINHELP_DELAY - world.timeofday)/10)] seconds before requesting help again.")
-			return
+	if(ON_COOLDOWN(client.player, "ahelp", ADMINHELP_DELAY))
+		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
+		return
 
 	var/msg = input("Please enter your help request to mentors:") as null|text
 
@@ -83,8 +96,6 @@
 
 	if (client && client.ismuted())
 		return
-
-	client.last_adminhelp = world.timeofday
 
 
 	for (var/client/C)
@@ -128,10 +139,9 @@
 		gib(client.mob)
 		return
 
-	if(client.last_adminhelp > (world.timeofday - ADMINHELP_DELAY))
-		if(abs(world.timeofday - client.last_adminhelp) < 1000) // some midnight rollover protection b/c byond is fucking stupid
-			boutput(client.mob, "You must wait [round((client.last_adminhelp + ADMINHELP_DELAY - world.timeofday)/10)] seconds before requesting help again.")
-			return
+	if(ON_COOLDOWN(client.player, "ahelp", ADMINHELP_DELAY))
+		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
+		return
 
 	if(!msg)
 		msg = input("Please enter your prayer to any gods that may be listening - be careful what you wish for as the gods may be the vengeful sort!") as null|text
@@ -144,7 +154,6 @@
 	if (client.mob.mind)
 		karma_update(1, "SIN", src)
 
-	client.last_adminhelp = world.timeofday
 	boutput(client.mob, "<B>You whisper a silent prayer,</B> <I>\"[msg]\"</I>")
 	logTheThing("admin_help", client.mob, null, "PRAYER: [msg]")
 	logTheThing("diary", client.mob, null, "PRAYER: [msg]", "ahelp")
