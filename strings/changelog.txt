@@ -1,4 +1,9 @@
 
+(t)tue aug 18 20
+(u)Marksman2539
+(p)1858
+(e)🐛🗺|bug, mapping
+(+)Horizon armory is now accessible.
 (t)mon aug 17 20
 (u)Comradef191
 (p)1824
