@@ -50,6 +50,22 @@
 		else
 			return list("participated" = src.rounds_participated, "seen" = src.rounds_seen)
 
+	/// returns the number of rounds that the player has played by joining in at roundstart
+	proc/get_rounds_participated()
+		if ((isnull(src.rounds_participated))) //if the stats havent been cached yet
+			if (!src.cache_round_stats()) //if trying to set them fails
+				return null
+		else
+			return src.rounds_participated
+
+	/// returns the number of rounds that the player has at least joined the lobby in
+	proc/get_rounds_seen()
+		if ((isnull(src.rounds_seen))) //if the stats havent been cached yet
+			if (!src.cache_round_stats()) //if trying to set them fails
+				return null
+		else
+			return src.rounds_seen
+
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)
 	var/datum/player/player = locate("player-[ckey(key)]")

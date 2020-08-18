@@ -276,8 +276,8 @@ mob/new_player
 		if (JOB.needs_college && !src.has_medal("Unlike the director, I went to college"))
 			return 0
 		if (JOB.rounds_needed_to_play && (src.client && src.client.player))
-			var/list/response = src.client.player.get_round_stats() //if this list is null, the api query failed, so we just let it happen
-			if (response && response["participated"] < JOB.rounds_needed_to_play) //they havent played enough rounds!
+			var/round_num = src.client.player.get_rounds_participated()
+			if (!isnull(round_num) && round_num < JOB.rounds_needed_to_play) //they havent played enough rounds!
 				return 0
 		if (JOB.limit < 0 || countJob(JOB.name) < JOB.limit)
 			return 1

@@ -919,8 +919,8 @@ $(function() {
 				src.jobs_unwanted += J.name
 				continue
 			if (J.rounds_needed_to_play && (user.client && user.client.player))
-				var/list/response = user.client.player.get_round_stats() //if this list is null, the api query failed, so we just let it happen
-				if (response && response["participated"] < J.rounds_needed_to_play) //they havent played enough rounds!
+				var/round_num = user.client.player.get_rounds_participated() //if this list is null, the api query failed, so we just let it happen
+				if (isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
 					src.jobs_unwanted += J.name
 					continue
 			src.jobs_med_priority += J.name
@@ -938,8 +938,8 @@ $(function() {
 				src.jobs_unwanted += J.name
 				continue
 			if (J.rounds_needed_to_play && (user.client && user.client.player))
-				var/list/response = user.client.player.get_round_stats() //if this list is null, the api query failed, so we just let it happen
-				if (response && response["participated"] < J.rounds_needed_to_play) //they havent played enough rounds!
+				var/round_num = user.client.player.get_rounds_participated()
+				if (!isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
 					src.jobs_unwanted += J.name
 					continue
 			src.jobs_low_priority += J.name
@@ -971,8 +971,8 @@ $(function() {
 				src.jobs_unwanted += J.name
 				continue
 			if (J.rounds_needed_to_play && (user.client && user.client.player))
-				var/list/response = user.client.player.get_round_stats() //if this list is null, the api query failed, so we just let it happen
-				if (response && response["participated"] < J.rounds_needed_to_play) //they havent played enough rounds!
+				var/round_num = user.client.player.get_rounds_participated()
+				if (!isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
 					src.jobs_unwanted += J.name
 					continue
 			src.jobs_low_priority += J.name
@@ -1086,9 +1086,9 @@ $(function() {
 				src.jobs_unwanted += J_Fav.name
 				src.job_favorite = null
 			else if (J_Fav.rounds_needed_to_play && (user.client && user.client.player))
-				var/list/response = user.client.player.get_round_stats() //if this list is null, the api query failed, so we just let it happen
-				if (response && response["participated"] < J_Fav.rounds_needed_to_play) //they havent played enough rounds!
-					boutput(user, "<span class='alert'><b>You cannot play [J_Fav.name].</b> You've only played </b>[response["participated"]]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b></span>")
+				var/round_num = user.client.player.get_rounds_participated()
+				if (!isnull(round_num) && round_num < J_Fav.rounds_needed_to_play) //they havent played enough rounds!
+					boutput(user, "<span class='alert'><b>You cannot play [J_Fav.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b></span>")
 					src.jobs_unwanted += J_Fav.name
 					src.job_favorite = null
 			else
@@ -1229,15 +1229,16 @@ $(function() {
 
 		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
 		if (temp_job.rounds_needed_to_play && (user.client && user.client.player))
-			var/list/response = user.client.player.get_round_stats() //if this list is null, the api query failed, so we just let it happen
-			if (response && response["participated"] < temp_job.rounds_needed_to_play) //they havent played enough rounds!
-				boutput(user, "<span class='alert'><b>You cannot play [temp_job.name].</b> You've only played </b>[response["participated"]]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b></span>")
+			var/round_num = user.client.player.get_rounds_participated()
+			if (!isnull(round_num) && round_num < temp_job.rounds_needed_to_play) //they havent played enough rounds!
+				boutput(user, "<span class='alert'><b>You cannot play [temp_job.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b></span>")
 				if (occ != 4)
 					switch(occ)
 						if (1) src.job_favorite = null
 						if (2) src.jobs_med_priority -= job
 						if (3) src.jobs_low_priority -= job
 					src.jobs_unwanted += job
+				return
 
 		src.antispam = 1
 
