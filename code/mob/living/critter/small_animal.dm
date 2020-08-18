@@ -2602,6 +2602,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.into_pocket(M, 0)
 		else
 			return ..()
+	
+	understands_language(language)
+		if(language == "animal") // by default admin mice speak english but we want them to understand animal-ese
+			return 1
+		return ..()
 
 /mob/living/critter/small_animal/crab
 	name = "crab"
