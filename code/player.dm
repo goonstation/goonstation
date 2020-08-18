@@ -61,4 +61,3 @@
 	if (!player)
 		player = new(key)
 	return player
-
