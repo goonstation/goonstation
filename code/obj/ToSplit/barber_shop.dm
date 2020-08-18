@@ -556,7 +556,7 @@
 	if(prob(our_barbery_conditions))
 		degree_of_success = 3
 	else // oh no we fucked up!
-		degree_of_success = (our_barbery_conditions % 3) - 1
+		degree_of_success = clamp(0,round((our_barbery_conditions / 30) - 1), 2)
 	//and then just jam all the vars into the action bar and let it handle the rest!
 	actions.start(new/datum/action/bar/shave(M, user, degree_of_success, new_style), user)
 	return 1
