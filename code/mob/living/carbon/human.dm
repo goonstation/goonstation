@@ -711,6 +711,10 @@
 			src.unlock_medal("Black and Blue", 1)
 		JOB_XP(src, "Clown", 10)
 
+		if (src.hasStatus("drunk"))
+			istype(src.equipped(), /item/device/light/glowstick)
+				src.unlock_medal("Party hard", 1)
+
 	ticker.mode.check_win()
 
 #ifdef RESTART_WHEN_ALL_DEAD
