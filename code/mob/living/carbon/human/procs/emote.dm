@@ -67,7 +67,7 @@
 							var/mob/living/critter/small_animal/opossum/P = poss
 							if (P.playing_dead) // already out
 								continue
-							if(!DIST_CHECK(P, src, 4))
+							if(!IN_RANGE(P, src, 4))
 								continue
 							P.play_dead(rand(20,40)) // shorter than the regular "death" stun
 					else
