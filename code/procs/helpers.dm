@@ -2606,5 +2606,5 @@ proc/weighted_pick(list/choices)
 	for(var/key in choices)
 		running_total += choices[key]
 		if(weighted_num <= running_total)
-			return choices[key]
+			return key
 	return
