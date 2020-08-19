@@ -1,5 +1,9 @@
 
 (t)wed aug 19 20
+(u)Tarmunora
+(p)1850
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added tactical flamethrower for nukeop firebrands! Sprites by Schwick
 (u)Aft2001
 (p)1852
 (e)🆕🎨|feature, sprites
