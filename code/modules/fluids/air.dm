@@ -90,6 +90,7 @@ var/list/ban_from_airborne_fluid = list()
 		blocked_perspective_objects["[dir]"] = 0
 		src.loc = null
 		my_depth_level = 0
+		..()
 
 	unpooled()
 		if (isturf(src.loc))
