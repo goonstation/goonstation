@@ -1,6 +1,10 @@
 
 (t)wed aug 19 20
 (u)adharainspace
+(p)1874
+(e)|
+(*)adds a 20 rounds played requirement to be a ghostdrone
+(u)adharainspace
 (p)1832
 (e)🆕|feature
 (*)adds a 13 round timegate to security.
