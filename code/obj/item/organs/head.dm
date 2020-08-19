@@ -25,7 +25,7 @@
 
 	var/datum/appearanceHolder/donor_appearance = null
 
-	var/image/head_image = null 
+	var/image/head_image = null
 	var/our_hair_icon = 'icons/mob/human_hair.dmi'
 
 	var/image/head_image_eyes = null
@@ -225,7 +225,7 @@
 			src.head_organ_icon.Blend(d_icon, ICON_OVERLAY)
 
 		src.icon = src.head_organ_icon
-		// end of all this is for the dropped head 
+		// end of all this is for the dropped head
 		*/
 
 		// dropped head will be constructed on-drop.
@@ -393,54 +393,52 @@
 			if(HEAD_MONKEY)
 				src.name = "[src.donor_name]'s monkey head"
 				src.desc = "The last thing a geneticist sees before they die."
-				// src.icon_state = "monkey"
 
 			if(HEAD_LIZARD)
 				src.name = "[src.donor_name]'s lizard head"
 				src.desc = "Well, sssshit."
-				// src.icon = 'icons/mob/lizard.dmi'
 
 			if(HEAD_COW)
 				src.name = "[src.donor_name]'s cow head"
 				src.desc = "They're not dead, they're just a really good roleplayer."
-				// src.icon = 'icons/mob/cow.dmi'
 
 			if(HEAD_WEREWOLF)
 				src.name = "[src.donor_name]'s wolf head"
 				src.desc = "Definitely not a good boy."
-				// src.icon = 'icons/mob/werewolf.dmi'
 				src.MAX_DAMAGE = 250	// Robust head for a robust antag
 				src.FAIL_DAMAGE = 240
 
 			if(HEAD_SKELETON)
 				src.name = "[src.donor_name]'s bony head"
 				src.desc = "...does that skull have another skull inside it?"
-				// src.icon_state = "skeleton"
 
 			if(HEAD_SEAMONKEY)
 				src.name = "[src.donor_name]'s seamonkey head"
 				src.desc = "The last thing an assistant sees when they fall into the trench. Aside from all the robots."
-				// src.icon_state = "monkey"
 
 			if(HEAD_CAT)
 				src.name = "[src.donor_name]'s cat head"
 				src.desc = "Me-youch."
-				// src.icon = 'icons/mob/cat.dmi'
 
 			if(HEAD_ROACH)
 				src.name = "[src.donor_name]'s roach head"
 				src.desc = "Not the biggest bug you'll seen today, nor the last."
-				// src.icon = 'icons/mob/roach.dmi'
 				src.made_from = "chitin"
 
 			if(HEAD_FROG)
 				src.name = "[src.donor_name]'s frog head"
 				src.desc = "Croak."
-				// src.icon = 'icons/mob/amphibian.dmi'
 
 			if(HEAD_SHELTER)
 				src.name = "[src.donor_name]'s shelterfrog head"
 				src.desc = "CroOoOoOooak."
-				// src.icon = 'icons/mob/shelterfrog.dmi'
+
+			if(HEAD_VAMPZOMBIE)
+				src.name = "[src.donor_name]'s zombie head"
+				src.desc = "Deader than undead."
+
+			if(HEAD_RELI)
+				src.name = "[src.donor_name]'s synthetic head"
+				src.desc = "Half stone, half tofu, all unfinished."
 
 		src.update_icon()	// so our head actually looks like the thing its supposed to be

@@ -15,7 +15,7 @@
 	var/original_DNA = null
 	var/original_fprints = null
 	var/show_on_examine = 0
-	var/limbs_processed = 0
+	var/monkey_only = 0
 
 	take_damage(brute, burn, tox, damage_type, disallow_limb_loss)
 		if (brute <= 0 && burn <= 0)// && tox <= 0)
@@ -1124,12 +1124,12 @@ obj/item/parts/human_parts/arm/right/stone
 obj/item/parts/human_parts/arm/right/reliquary
 	name = "synthetic right arm"
 	desc = "A right arm. Looks like it's made out of stone. How is that even possible?"
-	icon_state = "r_arm_reli"
+	icon_state = "r_arm"
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
 	skintoned = 0
-	handlistPart = "hand_right_reli"
+	handlistPart = "hand_right"
 	var/name_thing = "reli"
 	show_on_examine = 1
 
@@ -1148,12 +1148,12 @@ obj/item/parts/human_parts/arm/right/reliquary
 /obj/item/parts/human_parts/arm/left/reliquary
 	name = "synthetic left arm"
 	desc = "A left arm. Looks like a rope composed of vines. And tofu??"
-	icon_state = "l_arm_reli"
+	icon_state = "l_arm"
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
 	skintoned = 0
-	handlistPart = "hand_left_reli"
+	handlistPart = "hand_left"
 	var/name_thing = "reli"
 	show_on_examine = 1
 
@@ -1171,12 +1171,12 @@ obj/item/parts/human_parts/arm/right/reliquary
 /obj/item/parts/human_parts/leg/right/reliquary
 	name = "synthetic right leg"
 	desc = "A right leg. Looks like a rope composed of vines. And tofu??"
-	icon_state = "r_leg_reli"
+	icon_state = "r_leg"
 	slot = "r_leg"
 	side = "right"
 	decomp_affected = 0
 	skintoned = 0
-	partlistPart = "foot_right_reli"
+	partlistPart = "foot_right"
 	var/name_thing = "reli"
 	show_on_examine = 1
 	easy_attach = 1
@@ -1196,12 +1196,12 @@ obj/item/parts/human_parts/arm/right/reliquary
 /obj/item/parts/human_parts/leg/left/reliquary
 	name = "synthetic right leg"
 	desc = "A right leg. Looks like a rope composed of vines. And tofu??"
-	icon_state = "l_leg_reli"
+	icon_state = "l_leg"
 	slot = "l_leg"
 	side = "left"
 	decomp_affected = 0
 	skintoned = 0
-	partlistPart = "foot_left_reli"
+	partlistPart = "foot_left"
 	var/name_thing = "reli"
 	show_on_examine = 1
 	easy_attach = 1
@@ -1611,3 +1611,192 @@ obj/item/parts/human_parts/arm/right/reliquary
 		if (holder != null)
 			set_loc(holder)
 		..()
+//// VAMPIRE ZOMBIE LIMBS ////
+///// PARENT /////
+
+/obj/item/parts/human_parts/arm/mutant/vampzombie
+	icon = 'icons/mob/vamp_zombie.dmi'
+	partIcon = 'icons/mob/vamp_zombie.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/vampzombie
+	icon = 'icons/mob/vamp_zombie.dmi'
+	partIcon = 'icons/mob/vamp_zombie.dmi'
+
+//// LIMBS ////
+/obj/item/parts/human_parts/arm/mutant/vampzombie/left
+	name = "left zombie arm"
+	desc = "A monkey's left arm."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/vampzombie/right
+	name = "right zombie arm"
+	desc = "A zombie's right arm."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/vampzombie/left
+	name = "left zombie leg"
+	desc = "A zombie's left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/vampzombie/right
+	name = "right zombie leg"
+	desc = "A zombie's right leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+//// SKELETON LIMBS ////
+///// PARENT /////
+
+/obj/item/parts/human_parts/arm/mutant/skeleton
+	icon = 'icons/mob/skeleton.dmi'
+	partIcon = 'icons/mob/skeleton.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/skeleton
+	icon = 'icons/mob/skeleton.dmi'
+	partIcon = 'icons/mob/skeleton.dmi'
+
+//// LIMBS ////
+/obj/item/parts/human_parts/arm/mutant/skeleton/left
+	name = "left skeleton arm"
+	desc = "A skeletal left arm. Spooky."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/skeleton/right
+	name = "right skeleton arm"
+	desc = "A skeletal right arm. Humerus."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/skeleton/left
+	name = "left skeleton leg"
+	desc = "A skeletal left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/skeleton/right
+	name = "right skeleton leg"
+	desc = "A skeletal right leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+//// MONKEY LIMBS ////
+///// PARENT /////
+
+/obj/item/parts/human_parts/arm/mutant/monkey
+	icon = 'icons/mob/monkey.dmi'
+	partIcon = 'icons/mob/monkey.dmi'
+	monkey_only = 1
+
+/obj/item/parts/human_parts/leg/mutant/monkey
+	icon = 'icons/mob/monkey.dmi'
+	partIcon = 'icons/mob/monkey.dmi'
+	monkey_only = 1
+
+
+//// LIMBS ////
+/obj/item/parts/human_parts/arm/mutant/monkey/left
+	name = "left monkey arm"
+	desc = "A monkey's left arm."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/monkey/right
+	name = "right monkey arm"
+	desc = "A monkey's right arm."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/monkey/left
+	name = "left monkey leg"
+	desc = "A monkey's left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/monkey/right
+	name = "right monkey leg"
+	desc = "A monkey's right leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+//// SEA MONKEY LIMBS ////
+///// PARENT /////
+
+/obj/item/parts/human_parts/arm/mutant/seamonkey
+	icon = 'icons/mob/seamonkey.dmi'
+	partIcon = 'icons/mob/seamonkey.dmi'
+	monkey_only = 1
+
+/obj/item/parts/human_parts/leg/mutant/seamonkey
+	icon = 'icons/mob/seamonkey.dmi'
+	partIcon = 'icons/mob/seamonkey.dmi'
+	monkey_only = 1
+
+
+//// LIMBS ////
+/obj/item/parts/human_parts/arm/mutant/seamonkey/left
+	name = "left seamonkey arm"
+	desc = "A seamonkey's left arm."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/seamonkey/right
+	name = "right seamonkey arm"
+	desc = "A seamonkey's right arm."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/seamonkey/left
+	name = "left seamonkey leg"
+	desc = "A seamonkey's left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/seamonkey/right
+	name = "right seamonkey leg"
+	desc = "A seamonkey's right leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"

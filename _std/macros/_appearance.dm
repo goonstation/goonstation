@@ -10,6 +10,8 @@
 #define HEAD_ROACH 8
 #define HEAD_FROG 9
 #define HEAD_SHELTER 10
+#define HEAD_VAMPZOMBIE 11
+#define HEAD_RELI 12
 
 //appearance bitflags cus im tired of tracking down a million different vars that rarely do what they should
 #define IS_MUTANT								1	// so far just makes fat mutants render as male

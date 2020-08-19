@@ -664,7 +664,13 @@
 /datum/mutantrace/vamp_zombie
 	name = "vampiric zombie"
 	icon_state = "vamp_zombie"
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vamp_zombie/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vamp_zombie/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vamp_zombie/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vamp_zombie/left
+	mutant_folder = 'icons/mob/vamp_zombie.dmi'
+	special_head = HEAD_VAMPZOMBIE
 	jerk = 1
 
 	var/blood_points = 0
@@ -1014,6 +1020,10 @@
 	override_language = "monkey"
 	understood_languages = list("english")
 	clothing_icon_override = 'icons/mob/monkey.dmi'
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/monkey/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/monkey/left
 	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_HUMAN_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
 	var/sound_monkeyscream = 'sound/voice/screams/monkey_scream.ogg'
 	var/had_tablepass = 0
@@ -1210,9 +1220,13 @@
 /datum/mutantrace/monkey/seamonkey
 	name = "sea monkey"
 	icon = 'icons/mob/monkey.dmi'
-	mutant_folder = 'icons/mob/monkey.dmi'
+	mutant_folder = 'icons/mob/seamonkey.dmi'
 	icon_state = "seamonkey"
 	aquatic = 1
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/monkey/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/monkey/left
 	tail = TAIL_SEAMONKEY
 
 /datum/mutantrace/martian
@@ -1556,7 +1570,8 @@
 /datum/mutantrace/reliquary_soldier
 	name = "reliquary_soldier"
 	override_attack = 0
-	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_HUMAN_HEAD | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
+	special_head = HEAD_RELI
 
 	override_language = null
 	understood_languages = list("english")
