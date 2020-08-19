@@ -282,6 +282,12 @@
 	crop_suffix	= " root"
 	desc = "A tough and waxy root. It is well-regarded as an ingredient in burn salve."
 	icon_state = "commol"
+	
+/obj/item/plant/herb/ipecacuanha
+	name = "ipecacuanha root"
+	crop_suffix	= " root"
+	desc = "This thick root is covered in abnormal ammounts of bark. A powerful emetic can be extracted."
+	icon_state = "ipecacuanha"
 
 /obj/item/plant/herb/sassafras
 	name = "sassafras root"
