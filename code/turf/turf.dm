@@ -62,7 +62,11 @@ var/global/client/ff_debugger = null
 
 	var/turf_flags = 0
 
-	disposing()
+	disposing() // DOES NOT GET CALLED ON TURFS!!!
+		SHOULD_NOT_OVERRIDE(TRUE)
+		..()
+
+	Del()
 		if (cameras && cameras.len)
 			for (var/obj/machinery/camera/C in cameras)
 				C.coveredTiles -= src

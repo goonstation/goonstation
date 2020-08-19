@@ -31,7 +31,7 @@
 	generate_worldgen()
 		src.update_icon()
 
-	disposing()
+	Del()
 		src.RL_SetSprite(null)
 		..()
 
@@ -562,7 +562,7 @@
 	generate_worldgen()
 		src.update_icon()
 
-	disposing()
+	Del()
 		src.RL_SetSprite(null)
 		..()
 

@@ -210,7 +210,7 @@ turf
 						if(istype(target))
 							air_master.queue_update_tile(target)
 
-		disposing()
+		Del()
 			if(air_master)
 				if(parent)
 					air_master.queue_update_group(parent)
