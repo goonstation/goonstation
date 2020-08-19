@@ -1087,6 +1087,14 @@
 	name = "Honky Gibbersons Clownspider farm"
 	icon_state = "orange"
 
+/area/prefab/drug_den
+	name = "Space Drug Den"
+	icon_state = "orange"
+
+/area/prefab/drug_den/party
+	name ="Drug Den"
+	icon_state = "purple"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
