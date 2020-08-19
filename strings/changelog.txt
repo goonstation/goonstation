@@ -1,5 +1,9 @@
 
 (t)wed aug 19 20
+(u)adharainspace
+(p)1832
+(e)🆕|feature
+(*)adds a 13 round timegate to security.
 (u)Tarmunora
 (p)1850
 (e)🆕🗺🎨|feature, mapping, sprites
