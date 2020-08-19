@@ -58,7 +58,7 @@
 							var/obj/critter/opossum/responsePossum = poss
 							if (!responsePossum.alive)
 								continue
-							if(!DIST_CHECK(responsePossum, src, 4))
+							if(!IN_RANGE(responsePossum, src, 4))
 								continue
 							if (possumMax-- < 0)
 								break

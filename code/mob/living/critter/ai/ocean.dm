@@ -42,7 +42,7 @@
 /datum/aiTask/timed/targeted/trilobite/frustration_check()
 	.= 0
 	if (holder)
-		if (!DIST_CHECK(holder.owner, holder.target, target_range))
+		if (!IN_RANGE(holder.owner, holder.target, target_range))
 			return 1
 
 		if (ismob(holder.target))
@@ -98,7 +98,7 @@
 	if(holder.owner)
 		for (var/atom in pods_and_cruisers)
 			var/atom/A = atom
-			if (DIST_CHECK(holder.owner, A, 6))
+			if (IN_RANGE(holder.owner, A, 6))
 				holder.current_task = src.escape
 				src.escape.reset()
 
@@ -123,7 +123,7 @@
 
 /datum/aiTask/timed/targeted/escape_vehicles/frustration_check()
 	.= 0
-	if (DIST_CHECK(holder.owner, holder.target, target_range/2))
+	if (IN_RANGE(holder.owner, holder.target, target_range/2))
 		return 1
 
 /datum/aiTask/timed/targeted/escape_vehicles/on_tick()
@@ -146,7 +146,7 @@
 	if(holder.owner)
 		for (var/atom in pods_and_cruisers)
 			var/atom/A = atom
-			if (DIST_CHECK(holder.owner, A, target_range))
+			if (IN_RANGE(holder.owner, A, target_range))
 				targets += A
 	return targets
 
@@ -173,7 +173,7 @@
 
 /datum/aiTask/timed/targeted/flee_and_shoot/frustration_check()
 	.= 0
-	if (!DIST_CHECK(holder.owner, holder.target, target_range))
+	if (!IN_RANGE(holder.owner, holder.target, target_range))
 		return 1
 
 	if (ismob(holder.target))
@@ -226,7 +226,7 @@
 	if(holder.owner)
 		for (var/atom in pods_and_cruisers)
 			var/atom/A = atom
-			if (DIST_CHECK(holder.owner, A, 6))
+			if (IN_RANGE(holder.owner, A, 6))
 				targets += A
 		for(var/mob/living/M in view(target_range, holder.owner))
 			if(isalive(M) && !ismobcritter(M))
@@ -279,7 +279,7 @@
 
 /datum/aiTask/timed/targeted/pikaia/frustration_check()
 	.= 0
-	if (!DIST_CHECK(holder.owner, holder.target, target_range))
+	if (!IN_RANGE(holder.owner, holder.target, target_range))
 		return 1
 
 	if (ismob(holder.target))
@@ -351,7 +351,7 @@
 	if(holder.owner)
 		for (var/atom in pods_and_cruisers)
 			var/atom/A = atom
-			if (DIST_CHECK(holder.owner, A, 6))
+			if (IN_RANGE(holder.owner, A, 6))
 				targets += A
 
 		for(var/mob/living/M in view(target_range, holder.owner))
