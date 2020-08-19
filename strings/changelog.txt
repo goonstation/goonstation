@@ -1,6 +1,13 @@
 
 (t)wed aug 19 20
 (u)Emcee-Gore
+(p)1822
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Added a cozy drug den to the Z5 generation! Beware of space madness!
+(+)Added the discount sleepy pen.
+(+)Added more rabid mice.
+(+)Lowered maximum rockworm prefab spawns.
+(u)Emcee-Gore
 (p)1829
 (e)🆕|feature
 (+)Added a Spacemen the Grifening rulebook to the appropriate vending machine.
