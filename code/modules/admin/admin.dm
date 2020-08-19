@@ -1905,11 +1905,11 @@ var/global/noir = 0
 
 			//they're nothing so turn them into a traitor!
 			if(ishuman(M) || isAI(M) || isrobot(M) || ismobcritter(M))
-				var/traitorize = "Cancel"
-				traitorize = alert("Is not a traitor, make Traitor?", "Traitor", "Yes", "Cancel")
-				if(traitorize == "Cancel")
+				var/antagonize = "Cancel"
+				antagonize = alert("Is not an antagonist, make antagonist?", "antagonist", "Yes", "Cancel")
+				if(antagonize == "Cancel")
 					return
-				if(traitorize == "Yes")
+				if(antagonize == "Yes")
 					if (issilicon(M))
 						evilize(M, "traitor")
 					else if (ismobcritter(M))
