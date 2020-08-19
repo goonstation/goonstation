@@ -1,6 +1,10 @@
 
 (t)wed aug 19 20
 (u)Emcee-Gore
+(p)1823
+(e)⚖|balance
+(+)Increased prefab generation for Z5.
+(u)Emcee-Gore
 (p)1822
 (e)⚖🆕🗺🎨|balance, feature, mapping, sprites
 (*)Added a cozy drug den to the Z5 generation! Beware of space madness!
