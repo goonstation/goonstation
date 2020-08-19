@@ -289,6 +289,12 @@
 	desc = "This thick root is covered in abnormal ammounts of bark. A powerful emetic can be extracted from it."
 	icon_state = "ipecacuanha"
 
+/obj/item/plant/herb/ipecacuanha/invigorating
+	name = "ipecacuanha root"
+	crop_suffix	= " root"
+	desc = "This thick root is covered in abnormal ammounts of bark. A powerful emetic can be extracted from it. This one is strangely veinous"
+	icon_state = "ipecacuanhainvigorating"
+
 /obj/item/plant/herb/ipecacuanha/bilious
 	name = "ipecacuanha root"
 	crop_suffix = " root"
