@@ -352,7 +352,7 @@
 	crop = /obj/item/plant/herb/ipecacuanha/bilious
 	assoc_reagents = list("vomit","sewage","bitters")
 	chance = 10
-	var/special_proc_override = 1
+	special_proc_override = 1
 	
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
