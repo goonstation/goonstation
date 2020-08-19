@@ -43045,7 +43045,7 @@
 /obj/item/gun/kinetic/flaregun,
 /obj/item/ammo/bullets/flare,
 /obj/item/ammo/bullets/flare,
-/obj/item/flamethrower/loaded,
+/obj/item/flamethrower/assembled/loaded,
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/redblack{
 	dir = 1

@@ -121,7 +121,7 @@
 			if(!ok)
 				return
 		// First filter out everything we don't want to refill or empty quickly.
-		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/reagent_dispensers) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/item/reagent_containers/mender))
+		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/reagent_dispensers) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/item/reagent_containers/mender) && !istype(over_object, /obj/item/tank/jetpack/backtank))
 			return ..()
 
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))
