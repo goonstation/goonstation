@@ -282,7 +282,7 @@
 	crop_suffix	= " root"
 	desc = "A tough and waxy root. It is well-regarded as an ingredient in burn salve."
 	icon_state = "commol"
-	
+
 /obj/item/plant/herb/ipecacuanha
 	name = "ipecacuanha root"
 	crop_suffix	= " root"
