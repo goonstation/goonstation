@@ -14,7 +14,7 @@
 /obj/item/coin/attack_self(mob/user as mob)
 	boutput(user, "<span class='notice'>You flip the coin</span>")
 	SPAWN_DBG(1 SECOND)
-	flip()
+		flip()
 
 /obj/item/coin/throw_impact(atom/hit_atom)
 	..(hit_atom)
