@@ -17,6 +17,7 @@
 	var/no_icon = 0 //if the only icon is above the clothes layer ie. in the handlistPart list
 	var/skintoned = 1 // is this affected by human skin tones? Also if the severed limb uses a separate bloody-stump icon layered on top
 	var/easy_attach = 0 //Attachable without surgery?
+	var/fits_monkey = 0 // Most limbs look just awful on a monkey, and those limbs even worse on a human
 
 	var/decomp_affected = 1 // set to 1 if this limb has decomposition icons
 	var/current_decomp_stage_l = -1
@@ -165,8 +166,6 @@
 
 		object.loc = src.holder.loc
 		var/direction = src.holder.dir
-/* 		if(hasvar(object,"skin_tone")) // handled by limb itself
-			object:skin_tone = holder.bioHolder.mobAppearance.s_tone */
 
 		//https://forum.ss13.co/showthread.php?tid=1774
 		//object.name = "[src.holder.real_name]'s [initial(object.name)]" //Luis Smith's Dr. Kay's Luis Smith's Sailor Dave's Left Arm
@@ -242,6 +241,14 @@
 
 			attachee.limbs.l_leg = src
 			attachee.limbs.r_leg = src
+
+		if(src.fits_monkey && !ismonkey(attachee))
+			boutput(attacher, "<span class='alert'>[src] is far too small to fit on [attachee.name]!</span>")
+			return ..()
+		else if (!src.fits_monkey && ismonkey(attachee))
+			boutput(attacher, "<span class='alert'>[src] is way too big to fit on [attachee.name]!</span>")
+			return ..()
+
 		src.holder = attachee
 		attacher.remove_item(src)
 		src.layer = initial(src.layer)

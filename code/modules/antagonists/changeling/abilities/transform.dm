@@ -92,91 +92,61 @@
 			boutput(holder.owner, __blue("We change our mind."))
 			return 1
 
-		var/datum/bioHolder/D = H.absorbed_dna[target_name]
-		var/datum/organHolder/E = H.absorbed_organholder[target_name]
-
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner] transforms!</B></span>"))
 		logTheThing("combat", holder.owner, target_name, "transforms into [target_name] as a changeling [log_loc(holder.owner)].")
 		var/mob/living/carbon/human/C = holder.owner
+		var/datum/bioHolder/D = H.absorbed_dna[target_name]
+		var/datum/mutantrace/what_they_were = D.mobAppearance.mutant_race
+		C.bioHolder.CopyOther(D)
 
 		// now we need to swap out our limbs with whatever they had
 		// cus limb appearance is stored in the limb and whatnot
-		// let's see what limbs we have
-		var/datum/mutantrace/what_they_were = D.mobAppearance.mutant_race
-		var/datum/mutantrace/what_you_are = C.mutantrace
-		var/we_have_these_limbs = 0
-		var/list/what_they_should_have = list()
 
-		if (C.limbs.l_arm)
-			we_have_these_limbs |= LIMB_LEFT_ARM
-		if (C.limbs.r_arm)
-			we_have_these_limbs |= LIMB_RIGHT_ARM
-		if (C.limbs.l_leg)
-			we_have_these_limbs |= LIMB_LEFT_LEG
-		if (C.limbs.r_leg)
-			we_have_these_limbs |= LIMB_RIGHT_LEG
+		var/list/limbs_to_check = list(C.limbs.l_arm, C.limbs.r_arm, C.limbs.l_leg, C.limbs.r_leg)
+		var/list/human_limbs = list(/obj/item/parts/human_parts/arm/left, /obj/item/parts/human_parts/arm/right, /obj/item/parts/human_parts/leg/left, /obj/item/parts/human_parts/leg/right)
+		var/list/limbs_to_add = list()
 
-		// let's see if they were missing anything, and if so, generate the kind of limb they should've had
-		// 0 = l_arm, 1 = r_arm, 2 = l_leg, 3 = r_leg
-		if (what_you_are == what_they_were)	// transforming within mutant race, maybe we can just recolor what we have
-			if (!what_you_are || what_you_are == /datum/mutantrace/lizard) // aka, human or lizard
-				var/obj/item/parts/human_parts/thislimb
-				if(C.limbs.l_arm)
-					thislimb = C.limbs.l_arm
-					thislimb.colorize_limb_icon(D)
-				if(C.limbs.r_arm)
-					thislimb = C.limbs.r_arm
-					thislimb.colorize_limb_icon(D)
-				if(C.limbs.l_leg)
-					thislimb = C.limbs.l_leg
-					thislimb.colorize_limb_icon(D)
-				if(C.limbs.r_leg)
-					thislimb = C.limbs.r_leg
-					thislimb.colorize_limb_icon(D)
-		else // okay then lets build a list of what limbs you should have
-			if(what_they_were?.l_limb_arm_type_mutantrace)
-				what_they_should_have += what_they_were.l_limb_arm_type_mutantrace
-			else
-				what_they_should_have += /obj/item/parts/human_parts/arm/left
+		if (what_they_were?.limb_list) // setup the limbs we should have based on their DNA
+			limbs_to_add = what_they_were.limb_list
+		else // they're human or don't have any special limbs, okay neat
+			limbs_to_add = human_limbs
 
-			if(what_they_were?.r_limb_arm_type_mutantrace)
-				what_they_should_have += what_they_were.r_limb_arm_type_mutantrace
-			else
-				what_they_should_have += /obj/item/parts/human_parts/arm/right
-
-			if(what_they_were?.l_limb_leg_type_mutantrace)
-				what_they_should_have += what_they_were.l_limb_leg_type_mutantrace
-			else
-				what_they_should_have += /obj/item/parts/human_parts/leg/left
-
-			if(what_they_were?.r_limb_leg_type_mutantrace)
-				what_they_should_have += what_they_were.r_limb_leg_type_mutantrace
-			else
-				what_they_should_have += /obj/item/parts/human_parts/leg/right
-
-		// now lets order our bodyparts
-		C.limbs.create(C.bioHolder.mobAppearance, C, we_have_these_limbs, what_they_should_have)
+		var/limb_list_index = 0
+		for(var/obj/item/parts/limb in limbs_to_check)
+			limb_list_index ++	// no index skipping, please
+			if (limb_list_index > 4)
+				break
+			if(!limb) // we're missing that limb, and tf isnt gonna help that
+				continue
+			if (istype(limb, /obj/item/parts/human_parts/)) // will probably overwrite anything that isnt robot arms
+				var/obj/item/parts/add_this_limb = limbs_to_add[limb_list_index]
+				if(!add_this_limb)
+					add_this_limb = human_limbs[limb_list_index]
+				limb.delete() // we dont care about mundane limbs. Plus we can just tf into a wolf to get werewolf arms anyway
+				switch (limb_list_index)
+					if (1)
+						C.limbs.l_arm = new add_this_limb(C, D.mobAppearance)
+					if (2)
+						C.limbs.r_arm = new add_this_limb(C, D.mobAppearance)
+					if (3)
+						C.limbs.l_leg = new add_this_limb(C, D.mobAppearance)
+					if (4)
+						C.limbs.r_leg = new add_this_limb(C, D.mobAppearance)
+			else // Special limbs, like robot stuff
+				continue // let's keep those
 
 		// if they had a tail, you get one too
-		var/obj/item/organ/tail/tail2get
-		if(E.tail)	// dump the old tail, if they have one
+		if(C.organHolder.tail)
 			qdel(C.organHolder.tail)
-			tail2get = E.tail.type
-			C.organHolder.tail = new tail2get(C, C.organHolder)
+			C.organHolder.tail = null
+			C.organHolder.organ_list["tail"] = null
+		if(what_they_were?.tail_type)	// dump the old tail, if they have one
+			var/obj/item/organ/tail/newtail = what_they_were.tail_type
+			C.organHolder.tail = new newtail(C, C.organHolder)
+			C.organHolder.organ_list["tail"] = newtail
 		C.real_name = target_name
-		C.bioHolder.CopyOther(D)
-		//C.limbs.CopyOther(F)
-		//C.organHolder.CopyOther(E)
 		C.bioHolder.RemoveEffect("husk")
-		if (E.head) // please be a head
-			C.organHolder.head.head_image = E.head.head_image
-			C.organHolder.head.head_image_eyes = E.head.head_image_eyes
-			C.organHolder.head.head_image_cust_one = E.head.head_image_cust_one
-			C.organHolder.head.head_image_cust_two = E.head.head_image_cust_two
-			C.organHolder.head.head_image_cust_three = E.head.head_image_cust_three
-			C.organHolder.head.skintone = E.head.skintone
-		else // what did you DO to them?? whatever, just make whatever their head would've looked like
-			C.organHolder.head.update_icon() // vOv try to call this after the ling got their new bioholder
+		C.organHolder.head.update_icon()
 		C.update_face()
 		C.update_body()
 		C.update_clothing()

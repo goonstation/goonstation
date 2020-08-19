@@ -11,12 +11,10 @@
 		blood_image = image('icons/effects/blood.dmi')
 
 	// lol
-	var/datum/appearanceHolder/AH_clothes
 	var/head_offset = 0
 	var/hand_offset = 0
 	var/body_offset = 0
 	var/list/override_states = null
-	var/seal_hair = (src.head && src.head.seal_hair)
 
 	if (src.mutantrace)
 		head_offset = src.mutantrace.head_offset
@@ -24,9 +22,6 @@
 		body_offset = src.mutantrace.body_offset
 		if (src.mutantrace.clothing_icon_override)
 			override_states = icon_states(src.mutantrace.clothing_icon_override, 1)
-
-	if(src?.bioHolder?.mobAppearance)
-		AH_clothes = src.bioHolder.mobAppearance
 
 	src.update_lying()
 
@@ -57,33 +52,6 @@
 	UpdateOverlays(src.fire_standing, "fire")
 
 	src.update_face()
-	if (src.organHolder && src.organHolder.head)
-		if (AH_clothes.mob_appearance_flags & ~HAS_NO_EYES)
-			UpdateOverlays(image_eyes, "eyes")
-		else
-			UpdateOverlays(null, "eyes")
-
-		if (!seal_hair && (AH_clothes.mob_appearance_flags & ~HAS_NO_HAIR))
-			UpdateOverlays(image_cust_one, "cust_one")
-		else
-			UpdateOverlays(null, "cust_one")
-
-		if (!seal_hair && (AH_clothes.mob_appearance_flags & ~HAS_NO_HAIR))
-			UpdateOverlays(image_cust_two, "cust_two")
-		else
-			UpdateOverlays(null, "cust_two")
-
-		if (!seal_hair && (AH_clothes.mob_appearance_flags & ~HAS_NO_HAIR))
-			UpdateOverlays(image_cust_three, "cust_three")
-		else
-			UpdateOverlays(null, "cust_three")
-
-
-	else
-		UpdateOverlays(null, "eyes")
-		UpdateOverlays(null, "cust_one")
-		UpdateOverlays(null, "cust_two")
-		UpdateOverlays(null, "cust_three")
 
 	// Uniform
 	if (src.w_uniform)
@@ -680,39 +648,38 @@
 	if (!src.bioHolder)
 		return // fuck u
 
-	//then put in the stuff from the head
+	src.hair_standing = SafeGetOverlayImage("hair", 'icons/mob/human_hair.dmi', "none", MOB_HAIR_LAYER1) // image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
+	src.hair_standing.overlays.len = 0
+
+	var/seal_hair = (src.head && src.head.seal_hair)
 	var/obj/item/organ/head/my_head
 	if (src?.organHolder?.head)
 		my_head = src.organHolder.head
 
-	if(my_head?.our_hair_icon)
 		cust_icon = my_head.our_hair_icon
-
-	if(my_head?.head_image_eyes)
 		image_eyes = my_head.head_image_eyes
-	else
-		image_eyes = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
+		src.hair_standing.overlays += image_eyes
 
-	if(my_head?.head_image_cust_one)
-		image_cust_one = my_head.head_image_cust_one
-		cust_one_state = my_head.head_image_cust_one.icon_state
-	else
-		image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
-		cust_one_state = "none"
+		if (!seal_hair)
+			image_cust_one = my_head.head_image_cust_one
+			cust_one_state = my_head.head_image_cust_one.icon_state
+			src.hair_standing.overlays += image_cust_one
 
-	if(my_head?.head_image_cust_two)
-		image_cust_two = my_head.head_image_cust_two
-		cust_two_state = my_head.head_image_cust_two.icon_state
-	else
-		image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
-		cust_two_state = "none"
+		if (!seal_hair)
+			image_cust_two = my_head.head_image_cust_two
+			cust_two_state = my_head.head_image_cust_two.icon_state
+			src.hair_standing.overlays += image_cust_two
 
-	if(my_head?.head_image_cust_three)
-		image_cust_three = my_head.head_image_cust_three
-		cust_three_state = my_head.head_image_cust_three.icon_state
+		if (!seal_hair)
+			image_cust_three = my_head.head_image_cust_three
+			cust_three_state = my_head.head_image_cust_three.icon_state
+			src.hair_standing.overlays += image_cust_three
+
+		UpdateOverlays(hair_standing, "hair", 1, 1)
+
 	else
-		image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = "none")
-		cust_three_state = "none"
+		UpdateOverlays(null, "hair", 1, 1)
+
 
 /mob/living/carbon/human/update_burning_icon(var/force_remove=0, var/datum/statusEffect/simpledot/burning/B = 0)
 	if (!B)
@@ -1117,7 +1084,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	src.UpdateOverlays(src.hands_standing, "hands", 1, 1)
 	src.UpdateOverlays(src.tail_standing, "tail", 1, 1) // i blame pali for giving me this power
 	src.UpdateOverlays(src.tail_standing_oversuit, "tail_oversuit", 1, 1)
-	//src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
+	src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
 
 #if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
 /mob/living/carbon/human/UpdateDamage()

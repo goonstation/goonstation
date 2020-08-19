@@ -40,11 +40,13 @@
 	var/mutant_folder = 'icons/effects/genetics.dmi'	// Look in this folder for all the limbs
 
 	var/tail = TAIL_NONE // What tail do we have? Or are supposed to have?
+	var/tail_type = null
 
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
 	var/body_offset = 0
 
+	var/list/limb_list = list()
 	var/r_limb_arm_type_mutantrace = null // Should we get custom arms? Dispose() replaces them with normal human arms.
 	var/l_limb_arm_type_mutantrace = null
 	var/r_limb_leg_type_mutantrace = null
@@ -106,6 +108,7 @@
 		if(ishuman(M))
 			AppearanceSetter(M, "set")
 			LimbSetter(M, "set")
+			src.limb_list.Add(l_limb_arm_type_mutantrace, r_limb_arm_type_mutantrace, l_limb_leg_type_mutantrace, r_limb_leg_type_mutantrace)
 			src.mob = M
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for(var/obj/item/clothing/W in restricted)
@@ -157,6 +160,7 @@
 
 				AppearanceSetter(H, "reset")
 				LimbSetter(H, "reset")
+				qdel(src.limb_list)
 
 				SPAWN_DBG (25) // Don't remove.
 					if (H && H.organHolder && H.organHolder.skull) // check for H.organHolder as well so we don't get null.skull runtimes
@@ -355,13 +359,6 @@
 		if(Tf.organHolder.tail)	// dump the old tail, if they have one
 			if(deletail)
 				qdel(Tf.organHolder.tail)
-		/*	Tf.organHolder.tail = null
-				//shit this might drop all the tails in your inventory
-				for(var/obj/item/organ/tail/hidden_secret_tails in Tf.contents)	// Cus mutants love to hoard tails in their mob
-					if(istype(hidden_secret_tails, /obj/item/organ/tail))
-						hidden_secret_tails.set_loc(Tf.loc)
-						hidden_secret_tails.dropped(Tf)
-						hidden_secret_tails.layer = initial(hidden_secret_tails.layer) */
 			else
 				if (!istype(Tf.organHolder.tail, /obj/item/organ/tail/bone))
 					Tf.visible_message("<span class='notice'>[Tf]'s tail falls off, and a new one appears in its place!</span>", "<span class='notice'>Your tail falls off, and a new one appears in its place!</span>")
@@ -532,6 +529,7 @@
 	voice_override = "lizard"
 	tail = TAIL_LIZARD
 	special_head = HEAD_LIZARD
+	tail_type = /obj/item/organ/tail/lizard
 	mutant_folder = 'icons/mob/lizard.dmi'
 	special_hair_3 = "head-detail_1"
 	detail_2 = "lizard_detail-1"
@@ -736,12 +734,18 @@
 
 /datum/mutantrace/skeleton
 	name = "skeleton"
-	icon = 'icons/mob/human.dmi'
-	mutant_folder = 'icons/mob/human.dmi'
+	icon = 'icons/mob/skeleton.dmi'
+	mutant_folder = 'icons/mob/skeleton.dmi'
 	icon_state = "skeleton"
 	voice_override = "skelly"
 	tail = TAIL_SKELETON
-
+	tail_type = /obj/item/organ/tail/bone
+	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/skeleton/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/skeleton/left
+	special_head = HEAD_SKELETON
 
 
 	New(var/mob/living/carbon/human/M)
@@ -872,6 +876,7 @@
 	mutant_folder = 'icons/mob/werewolf.dmi'
 	special_head = HEAD_WEREWOLF
 	tail = TAIL_WEREWOLF
+	tail_type = /obj/item/organ/tail/wolf
 
 	New()
 		..()
@@ -1029,6 +1034,7 @@
 	var/had_tablepass = 0
 	var/table_hide = 0
 	tail = TAIL_MONKEY
+	tail_type = /obj/item/organ/tail/monkey
 
 	New(var/mob/living/carbon/human/M)
 		if (M)
@@ -1228,6 +1234,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/monkey/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/monkey/left
 	tail = TAIL_SEAMONKEY
+	tail_type = /obj/item/organ/tail/seamonkey
 
 /datum/mutantrace/martian
 	name = "martian"
@@ -1323,6 +1330,7 @@
 	icon_state = "roach"
 	override_attack = 0
 	tail = TAIL_ROACH
+	tail_type = /obj/item/organ/tail/roach
 	mutant_folder = 'icons/mob/roach.dmi'
 	special_head = HEAD_ROACH
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/roach/right
@@ -1346,6 +1354,7 @@
 	override_attack = 0
 	firevuln = 1.5 // very flammable catthings
 	tail = TAIL_CAT
+	tail_type = /obj/item/organ/tail/cat
 	mutant_folder = 'icons/mob/cat.dmi'
 	special_head = HEAD_CAT
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/right
@@ -1662,6 +1671,7 @@
 	override_attack = 0
 	voice_override = "cow"
 	tail = TAIL_COW
+	tail_type = /obj/item/organ/tail/cow
 	mutant_folder = 'icons/mob/cow.dmi'
 	special_head = HEAD_COW
 	special_hair_1 = "head-detail1"

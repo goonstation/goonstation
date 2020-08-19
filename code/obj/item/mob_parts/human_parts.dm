@@ -15,7 +15,6 @@
 	var/original_DNA = null
 	var/original_fprints = null
 	var/show_on_examine = 0
-	var/monkey_only = 0
 
 	take_damage(brute, burn, tox, damage_type, disallow_limb_loss)
 		if (brute <= 0 && burn <= 0)// && tox <= 0)
@@ -87,8 +86,19 @@
 				if (new_holder && istype(new_holder))
 					name = "[new_holder.real_name]'s [initial(name)]"
 		if (src.skintoned)
-			colorize_limb_icon(AHolAlmostThere)
-			set_skin_tone()
+			if (AHolAlmostThere)
+				colorize_limb_icon(AHolAlmostThere)
+				set_skin_tone()
+			else if(holder)	//
+				SPAWN_DBG(1 SECOND)
+					colorize_limb_icon(AHolAlmostThere)
+					set_skin_tone()
+					holder.set_body_icon_dirty()
+					holder.set_face_icon_dirty()
+					holder.set_clothing_icon_dirty()
+			else
+				colorize_limb_icon()
+				set_skin_tone()
 
 	disposing()
 		if(src.bones)
@@ -175,7 +185,7 @@
 		var/blend_color = null
 		var/has_aH = 0
 		var/datum/appearanceHolder/AHLIMB
-		if (AHolFinalDestination)
+		if (istype(AHolFinalDestination))
 			AHLIMB = AHolFinalDestination
 			has_aH = 1
 		else if (M.bioHolder?.mobAppearance)
@@ -1220,7 +1230,7 @@ obj/item/parts/human_parts/arm/right/reliquary
 
 ////// MUTANT PARENT PARTS //////
 /obj/item/parts/human_parts/arm/mutant
-	name = "left mutant arm -please don't use!"
+	name = "left mutant arm"
 	desc = "An arm that definitely does not look human."
 	icon = 'icons/mob/cow.dmi'
 	partIcon = 'icons/mob/cow.dmi'
@@ -1241,7 +1251,7 @@ obj/item/parts/human_parts/arm/right/reliquary
 		return standImage
 
 /obj/item/parts/human_parts/leg/mutant
-	name = "left mutant leg -please don't use!"
+	name = "left mutant leg!"
 	desc = "A leg that definitely does not look human."
 	icon = 'icons/mob/cow.dmi'
 	partIcon = 'icons/mob/cow.dmi'
@@ -1614,24 +1624,24 @@ obj/item/parts/human_parts/arm/right/reliquary
 //// VAMPIRE ZOMBIE LIMBS ////
 ///// PARENT /////
 
-/obj/item/parts/human_parts/arm/mutant/vampzombie
+/obj/item/parts/human_parts/arm/mutant/vamp_zombie
 	icon = 'icons/mob/vamp_zombie.dmi'
 	partIcon = 'icons/mob/vamp_zombie.dmi'
 
-/obj/item/parts/human_parts/leg/mutant/vampzombie
+/obj/item/parts/human_parts/leg/mutant/vamp_zombie
 	icon = 'icons/mob/vamp_zombie.dmi'
 	partIcon = 'icons/mob/vamp_zombie.dmi'
 
 //// LIMBS ////
-/obj/item/parts/human_parts/arm/mutant/vampzombie/left
+/obj/item/parts/human_parts/arm/mutant/vamp_zombie/left
 	name = "left zombie arm"
-	desc = "A monkey's left arm."
+	desc = "A zombie's left arm."
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
 	handlistPart = "hand_left"
 
-/obj/item/parts/human_parts/arm/mutant/vampzombie/right
+/obj/item/parts/human_parts/arm/mutant/vamp_zombie/right
 	name = "right zombie arm"
 	desc = "A zombie's right arm."
 	icon_state = "arm_right"
@@ -1639,7 +1649,7 @@ obj/item/parts/human_parts/arm/right/reliquary
 	side = "right"
 	handlistPart = "hand_right"
 
-/obj/item/parts/human_parts/leg/mutant/vampzombie/left
+/obj/item/parts/human_parts/leg/mutant/vamp_zombie/left
 	name = "left zombie leg"
 	desc = "A zombie's left leg."
 	icon_state = "leg_left"
@@ -1648,7 +1658,7 @@ obj/item/parts/human_parts/arm/right/reliquary
 	partlistPart = "foot_left"
 	step_image_state = "footprintsL"
 
-/obj/item/parts/human_parts/leg/mutant/vampzombie/right
+/obj/item/parts/human_parts/leg/mutant/vamp_zombie/right
 	name = "right zombie leg"
 	desc = "A zombie's right leg."
 	icon_state = "leg_right"
@@ -1709,12 +1719,12 @@ obj/item/parts/human_parts/arm/right/reliquary
 /obj/item/parts/human_parts/arm/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'
 	partIcon = 'icons/mob/monkey.dmi'
-	monkey_only = 1
+	fits_monkey = 1
 
 /obj/item/parts/human_parts/leg/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'
 	partIcon = 'icons/mob/monkey.dmi'
-	monkey_only = 1
+	fits_monkey = 1
 
 
 //// LIMBS ////
@@ -1758,12 +1768,12 @@ obj/item/parts/human_parts/arm/right/reliquary
 /obj/item/parts/human_parts/arm/mutant/seamonkey
 	icon = 'icons/mob/seamonkey.dmi'
 	partIcon = 'icons/mob/seamonkey.dmi'
-	monkey_only = 1
+	fits_monkey = 1
 
 /obj/item/parts/human_parts/leg/mutant/seamonkey
 	icon = 'icons/mob/seamonkey.dmi'
 	partIcon = 'icons/mob/seamonkey.dmi'
-	monkey_only = 1
+	fits_monkey = 1
 
 
 //// LIMBS ////

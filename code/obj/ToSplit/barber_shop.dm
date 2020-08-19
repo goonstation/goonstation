@@ -1,9 +1,3 @@
-#define HAIR_1 1
-#define HAIR_2 2
-#define HAIR_3 3
-#define ALL_HAIR 4
-#define EYES 5
-
 /obj/item/clothing/head/wig
 	name = "toupée"
 	desc = "You can't tell the difference, Honest!"
@@ -67,17 +61,11 @@
 	throw_range = 5
 	m_amt = 10000
 	g_amt = 5000
-	var/do_barbery = 0
 
 	New()
 		..()
-		src.setItemSpecial(/datum/item_special/double) // should be doable even in barbermode
+		src.setItemSpecial(/datum/item_special/double)
 		BLOCK_KNIFE
-
-	attack_hand(mob/user)
-		. = ..()
-		src.do_barbery = !src.do_barbery
-		knife_fluff("barber razor", src.do_barbery)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -100,24 +88,6 @@
 	//Default Colors
 	var/customization_first_color = "#FFFFFF"
 	var/empty = 1
-	var/hair_group = 1
-
-	attack_hand(mob/user)
-		. = ..()
-		src.hair_group = hair_group >= 5 ? 1 : hairgroup + 1
-		var/which_part
-			switch (hair_group)
-				if (HAIR_1)
-					which_part = "first group of hair"
-				if (HAIR_2)
-					which_part = "middle group of hair"
-				if (HAIR_3)
-					which_part = "last group of hair"
-				if (ALL_HAIR)
-					which_part = "entire coiffure"
-				if (EYES)
-					which_part = "eyes"
-		boutput(user, "<span class='hint'>You change your grip on the [src] to one that'll aim for the recipient's [which_part].</span>")
 
 /obj/item/reagent_containers/food/drinks/hairgrowth
 	name = "\improper EZ-Hairgrowth"
@@ -153,26 +123,31 @@
 	anchored = 1
 	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
 
-/////////////////////////////////
-//////Hair Dye Bottle Code///////
-/////////////////////////////////
+///////////////////////////////////////////////////
+//////Hair Dye Bottle Code					///////
+///////////////////////////////////////////////////
 /obj/item/dye_bottle/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	if(!ishuman(M))	return
 	if(user.zone_sel.selecting != "head" || user.a_intent != "help")
 		..()
 		return
-	if(!M?.organHolder?.head)
-		boutput(user, "<span class='alert'>[M] has no head, and likely no hair to dye!</span>")
 	if(src.empty)
 		boutput(user, "<span class='alert'>\The [src] is empty!</span>")
 	else //if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
 		var/mob/living/carbon/human/H = M
-		var/datum/appearanceHolder/AHair = M.bioHolder.mobAppearance
 		if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES)))
 			// you can't stab someone in the eyes wearing a mask! - please do not stab people in the eyes with a dye bottle tia
 			boutput(user, "<span class='hint'>You're going to need to remove that mask/helmet first.</span>")
 			return
-
+		/*
+		var/turf/T = M.loc
+		var/turf/TM = user.loc
+		boutput(user, "<span class='notice'>You begin dying [M]'s hair.</span>")
+		boutput(M, "<span class='notice'>[user] begins dying your hair.</span>")
+		sleep(3 SECONDS)
+		if(M.loc == T && TM.loc == user.loc  && (user.equipped() == src || issilicon(user)))
+			return
+		*/
 		user.tri_message("[user] dyes [M]'s hair.",\
 		user, "<span class='notice'>You dye [M]'s hair.</span>",\
 		M, "<span class='notice'>[user] dyes your hair.</span>")
@@ -462,9 +437,3 @@
 			usr.Browse(null, "window=dye_dispenser")
 			return
 		return
-
-#undef HAIR_1
-#undef HAIR_2
-#undef HAIR_3
-#undef ALL_HAIR
-#undef EYES

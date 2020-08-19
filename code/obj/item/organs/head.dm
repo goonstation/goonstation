@@ -50,11 +50,13 @@
 				src.bones.donor = src.donor
 				src.bones.parent_organ = src.organ_name
 				src.bones.name = "skull"
-				if (src.donor.bioHolder && src.donor.bioHolder.mobAppearance)
+				if (src.donor?.bioHolder?.mobAppearance)
 					src.donor_appearance = src.donor.bioHolder.mobAppearance
 					src.update_icon(0)
 				else //The heck?
 					src.update_icon(1)
+			else
+				src.update_icon(1)
 			src.pixel_y = rand(-20,-8)
 			src.pixel_x = rand(-8,8)
 
@@ -118,11 +120,15 @@
 	//it will cause the head to be rebuilt from the mob's appearanceholder!
 	//use alter_features to change someone's hairstyle or something (it doesnt exist yet, just a note tho)
 	proc/update_icon(var/makeshitup) // should only happen once, maybe again if they change mutant race
-		if (!src.donor || !src.donor_appearance)
-			return // vOv
+		var/datum/appearanceHolder/AHead = null
 
-		// we're getting just about everything from here:
-		var/datum/appearanceHolder/AHead = src.donor_appearance
+		if(!src.donor_appearance || makeshitup || !src.donor)
+			AHead = new/datum/appearanceHolder()
+			randomize_look(AHead, 0, 0, 0, 0, 0, 0)
+			src.donor_appearance = AHead
+		else
+			// we're getting just about everything from here:
+			AHead = src.donor_appearance
 
 		// setup skintone and mess with it as per appearance and color flags
 		if (AHead.mob_appearance_flags & HAS_HUMAN_SKINTONE)
@@ -191,47 +197,11 @@
 			src.head_image_cust_two = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 			src.head_image_cust_three = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 
-/* 		//okay everything's loaded, lets build the head
-			src.head_organ_icon = new /icon(AHead.head_icon, AHead.head_icon_state)
-
-			src.head_organ_icon.Blend(src.skintone, ICON_MULTIPLY)
-
-			var/icon/e_icon = new /icon(src.head_image_eyes.icon, src.head_image_eyes.icon_state)
-			var/ecol = src.head_image_eyes.color
-			if (!ecol || length(ecol) > 7)
-				ecol = "#000000"
-			e_icon.Blend(ecol, ICON_MULTIPLY)
-			src.head_organ_icon.Blend(e_icon, ICON_OVERLAY)
-
-			var/icon/h_icon = new /icon(src.head_image_cust_one.icon, src.head_image_cust_one.icon_state)
-			var/hcol = src.head_image_cust_one.color
-			if (!hcol || length(hcol) > 7)
-				hcol = "#000000"
-			h_icon.Blend(hcol, ICON_MULTIPLY)
-			src.head_organ_icon.Blend(h_icon, ICON_OVERLAY)
-
-			var/icon/f_icon = new /icon(src.head_image_cust_two.icon, src.head_image_cust_two.icon_state)
-			var/fcol = src.head_image_cust_two.color
-			if (!fcol || length(fcol) > 7)
-				fcol = "#000000"
-			f_icon.Blend(fcol, ICON_MULTIPLY)
-			src.head_organ_icon.Blend(f_icon, ICON_OVERLAY)
-
-			var/icon/d_icon = new /icon(src.head_image_cust_three.icon, src.head_image_cust_three.icon_state)
-			var/dcol = src.head_image_cust_three.color
-			if (!dcol || length(dcol) > 7)
-				dcol = "#000000"
-			d_icon.Blend(dcol, ICON_MULTIPLY)
-			src.head_organ_icon.Blend(d_icon, ICON_OVERLAY)
-
-		src.icon = src.head_organ_icon
-		// end of all this is for the dropped head
-		*/
-
-		// dropped head will be constructed on-drop.
-
-		src.donor.update_face()
-		src.donor.update_body()
+		if (!src.donor) // maybe someone spawned us in? Construct the dropped thing
+			update_head_image()
+		else
+			src.donor.update_face()
+			src.donor.update_body()
 
 	proc/update_head_image() // The thing that actually shows up when dropped
 		src.overlays = null

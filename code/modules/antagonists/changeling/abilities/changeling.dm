@@ -83,8 +83,6 @@
 	tabName = "Changeling"
 	notEnoughPointsMessage = "<span class='alert'>We are not strong enough to do this.</span>"
 	var/list/absorbed_dna = list()
-	var/list/absorbed_organholder = list()	// heads and tails
-	var/list/absorbed_limbholder = list()
 	var/in_fakedeath = 0
 	var/absorbtions = 0
 	var/list/hivemind = list()
@@ -100,14 +98,6 @@
 			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(M)
 			originalBHolder.CopyOther(M.bioHolder)
 			absorbed_dna = list("[M.name]" = originalBHolder)
-
-			var/datum/organHolder/originalOHolder = new/datum/organHolder(M, 1)
-			originalOHolder.CopyOther(M.organHolder)
-			absorbed_organholder = list("[M.name]" = originalOHolder)
-
-			var/datum/human_limbs/originalLHolder = new/datum/human_limbs(M, 1)
-			originalLHolder.CopyOther(M.limbs)
-			absorbed_limbholder = list("[M.name]" = originalLHolder)
 
 	proc/addDna(var/mob/living/carbon/human/M, var/headspider_override = 0)
 		var/datum/abilityHolder/changeling/O = M.get_ability_holder(/datum/abilityHolder/changeling)
@@ -126,12 +116,6 @@
 				src.absorbed_dna[D] = O.absorbed_dna[D]
 				src.absorbtions++
 
-			for(var/E in O.absorbed_organholder)
-				src.absorbed_organholder[E] = O.absorbed_organholder[E]
-
-			for(var/F in O.absorbed_limbholder)
-				src.absorbed_limbholder[F] = O.absorbed_limbholder[F]
-
 			O.absorbed_dna = list()
 			O.points = 0
 
@@ -140,34 +124,12 @@
 			O.hivemind = list()
 
 		/* LAGG NOTE:
-			with the new limb changes n shit, Lings'll need to be able to alter the following:
-			their limbs
-			their head
-			their tail
-			
-			hm. get a list of the succ'd target's limbs and organs, replace whatever u have with those?
-				ifn they aint robobullshit 
-			limbs, get list of the limbs they had, and if you have em, transform em into theirs
-				or the ones they shouldve had, so you dont get free bear arms or something
-				
-			succ a werewolf and get to be a shitty werewolf
-			
-			mutant races store their data in the appholder. their tail and head in their organholder
-			their limbs in... whatever the fuck holds them. why arent limbs an organ 
-			tailsnake, strangles people and attaches themselves to peoples butts and makes it hard to do stuff */	
+			tailsnake, strangles people and attaches themselves to peoples butts and makes it hard to do stuff */
 
 		else
-			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(M) 
+			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(M)
 			originalBHolder.CopyOther(M.bioHolder)
 			src.absorbed_dna[M.real_name] = originalBHolder
-
-			var/datum/organHolder/originalOHolder = new/datum/organHolder(M, 1)
-			originalOHolder.CopyOther(M.organHolder)
-			src.absorbed_organholder[M.real_name] = originalOHolder
-
-			var/datum/human_limbs/originalLHolder = new/datum/human_limbs(M, 1)
-			originalLHolder.CopyOther(M.limbs)
-			src.absorbed_limbholder[M.real_name] = originalLHolder
 
 			if (headspider_override != 1)
 				src.points += M.dna_to_absorb

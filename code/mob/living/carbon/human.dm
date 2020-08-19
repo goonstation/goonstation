@@ -34,6 +34,7 @@
 	var/clothing_dirty = 0
 
 	var/image/body_standing = null
+	var/image/hair_standing = null
 	var/image/tail_standing = null
 	var/image/tail_standing_oversuit = null
 	var/image/detail_standing_oversuit = null
@@ -113,6 +114,7 @@
 	var/static/image/human_head_image = image('icons/mob/human_head.dmi')
 	var/static/image/human_detail_image = image('icons/mob/human.dmi', layer = MOB_OVERSUIT_LAYER2)
 	var/static/image/human_tail_image = image('icons/mob/human.dmi')
+	var/static/image/human_hair_image = image('icons/mob/human_hair.dmi')
 	var/static/image/human_untoned_image = image('icons/mob/human.dmi')
 	var/static/image/human_decomp_image = image('icons/mob/human_decomp.dmi')
 	var/static/image/human_untoned_decomp_image = image('icons/mob/human.dmi')
@@ -257,67 +259,21 @@
 		holder = null
 		..()
 
-	proc/create(var/datum/appearanceHolder/AHolLimb, var/mob/living/carbon/human/ling, var/which_limbs, var/list/what_limbs)
-		var/datum/appearanceHolder/AH_spawn = null
-		var/mob/living/carbon/human/limb_holder = holder
-		var/obj/item/parts/human_parts/arm/left_arm = null
-		var/obj/item/parts/human_parts/arm/right_arm = null
-		var/obj/item/parts/human_parts/leg/left_leg = null
-		var/obj/item/parts/human_parts/leg/right_leg = null
-		if(what_limbs)
-			left_arm = what_limbs[0]
-			right_arm = what_limbs[1]
-			left_leg = what_limbs[2]
-			right_leg = what_limbs[3]
-		if(ling)
-			limb_holder = ling
-		if (AHolLimb)
-			AH_spawn = AHolLimb
-
-		if(ling && which_limbs) // delete mundane limbs, drop the more interesting ones
-			if(which_limbs & LIMB_LEFT_ARM)
-				if (src.l_arm.type == /obj/item/parts/human_parts/arm/left || istype(src.l_arm, /obj/item/parts/human_parts/arm/mutant))
-					qdel(src.l_arm)
-				else
-					src.l_arm.remove(0)
-				l_arm = new left_arm(limb_holder, AH_spawn)
-			if(which_limbs & LIMB_RIGHT_ARM)
-				if (src.r_arm.type == /obj/item/parts/human_parts/arm/right || istype(src.r_arm, /obj/item/parts/human_parts/arm/mutant))
-					qdel(src.r_arm)
-				else
-					src.l_arm.remove(0)
-				r_arm = new right_arm(limb_holder, AH_spawn)
-			if(which_limbs & LIMB_LEFT_LEG)
-				if (src.l_leg.type == /obj/item/parts/human_parts/leg/left || istype(src.l_leg, /obj/item/parts/human_parts/leg/mutant))
-					qdel(src.l_leg)
-				else
-					src.l_leg.remove(0)
-				l_leg = new left_leg(limb_holder, AH_spawn)
-			if(which_limbs & LIMB_RIGHT_LEG)
-				if (src.r_leg.type == /obj/item/parts/human_parts/leg/right || istype(src.r_leg, /obj/item/parts/human_parts/leg/mutant))
-					qdel(src.r_leg)
-				else
-					src.r_leg.remove(0)
-				r_leg = new right_leg(limb_holder, AH_spawn)
-		else if (!ling)
-			if (!l_arm)
-				l_arm = new /obj/item/parts/human_parts/arm/left(limb_holder, AH_spawn)
-			if (!r_arm)
-				r_arm = new /obj/item/parts/human_parts/arm/right(limb_holder, AH_spawn)
-			if (!l_leg)
-				l_leg = new /obj/item/parts/human_parts/leg/left(limb_holder, AH_spawn)
-			if (!r_leg)
-				r_leg = new /obj/item/parts/human_parts/leg/right(limb_holder, AH_spawn)
-			SPAWN_DBG(5 SECONDS)
-				if (holder && (!l_arm || !r_arm || !l_leg || !r_leg))
-					logTheThing("debug", holder, null, "<B>SpyGuy/Limbs:</B> [src] is missing limbs after creation for some reason - recreating.")
-					create(AHolLimb, ling, which_limbs)
-					if (holder)
-						// fix for "Cannot execute null.update body()".when mob is deleted too quickly after creation
-						holder.update_body()
-						if (holder.client)
-							holder.next_move = world.time + 7
-							//Fix for not being able to move after you got new limbs.
+	proc/create(var/datum/appearanceHolder/AHolLimb)
+		if (!l_arm) l_arm = new /obj/item/parts/human_parts/arm/left(holder, AHolLimb)
+		if (!r_arm) r_arm = new /obj/item/parts/human_parts/arm/right(holder, AHolLimb)
+		if (!l_leg) l_leg = new /obj/item/parts/human_parts/leg/left(holder, AHolLimb)
+		if (!r_leg) r_leg = new /obj/item/parts/human_parts/leg/right(holder, AHolLimb)
+		SPAWN_DBG(5 SECONDS)
+			if (holder && (!l_arm || !r_arm || !l_leg || !r_leg))
+				logTheThing("debug", holder, null, "<B>SpyGuy/Limbs:</B> [src] is missing limbs after creation for some reason - recreating.")
+				create(AHolLimb)
+				if (holder)
+					// fix for "Cannot execute null.update body()".when mob is deleted too quickly after creation
+					holder.update_body()
+					if (holder.client)
+						holder.next_move = world.time + 7
+						//Fix for not being able to move after you got new limbs.
 
 	proc/mend(var/howmany = 4)
 		if (!holder)
@@ -507,15 +463,7 @@
 			return
 		return 0
 
-	proc/CopyOther(var/datum/human_limbs/toCopy)
-		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
-		holder = toCopy.holder
 
-		l_arm = toCopy.l_arm
-		r_arm = toCopy.r_arm
-		l_leg = toCopy.l_leg
-		r_leg = toCopy.r_leg
-		return src
 
 /mob/living/carbon/human/proc/is_vampire()
 	return get_ability_holder(/datum/abilityHolder/vampire)

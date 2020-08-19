@@ -95,12 +95,12 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() >= FAIL_DAMAGE && src.donor_AH.mob_appearance_flags & HAS_A_TAIL) // Only tail-havers get clumsy without a tail
+		if (src.get_damage() >= FAIL_DAMAGE && src.donor_AH.mob_appearance_flags & HAS_A_TAIL && !ischangeling(src.donor)) // Only tail-havers get clumsy without a tail
 			donor.bioHolder.AddEffect(src.failure_ability, 0, 0, 0, 1)
 		return 1
 
 	on_removal()
-		if (src.failure_ability && src.donor_AH.mob_appearance_flags & HAS_A_TAIL)
+		if (src.failure_ability && src.donor_AH.mob_appearance_flags & HAS_A_TAIL && !ischangeling(src.donor))
 			src.donor.bioHolder.AddEffect(src.failure_ability, 0, 0, 0, 1)
 
 	on_broken(var/mult = 1)

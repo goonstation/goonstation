@@ -12,7 +12,7 @@
 
 	var/datum/abilityHolder/abilityHolder = null
 	var/datum/bioHolder/bioHolder = null
-	var/datum/appearanceHolder/AH_we_spawned_with = null
+	var/datum/appearanceHolder/AH_we_spawned_with = null	// Used to colorize things that need to be colorized before the player notices they aren't
 
 	var/targeting_ability = null
 
