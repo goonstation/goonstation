@@ -3270,7 +3270,7 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 /obj/item/paper/book/grifening
 	name = "Spacemen the Grifening rulebook"
 	desc = "A book outlining the rules of the stations favorite nerd trading-card-game Spacemen the Grifening."
-	icon_state = "necronomicon"
+	icon_state = "sbook"
 	info = {"<center><h2>Spacemen the Grifening</h2></center><hr>
 	<h3>Foreword:</h3>
 	<i>Be greeted by sugary soft-drinks and spooky cultists! You are now officially a </i><b>Nerd</b><i> but do not be afraid! You can indulge in the endless fun of collectible card-games like this one!</i>
