@@ -12,7 +12,6 @@
 (p)1852
 (e)🆕🎨|feature, sprites
 (+)Adds 1 new status option for AI, "Text", which is a scrolling text screen. Your AI color will change the color of the lines
-(+)Also has a *flip animation! Technically!
 (u)Emcee-Gore
 (p)1823
 (e)⚖|balance
@@ -21,8 +20,6 @@
 (p)1822
 (e)⚖🆕🗺🎨|balance, feature, mapping, sprites
 (*)Added a cozy drug den to the Z5 generation! Beware of space madness!
-(+)Added the discount sleepy pen.
-(+)Added more rabid mice.
 (+)Lowered maximum rockworm prefab spawns.
 (u)Emcee-Gore
 (p)1829
