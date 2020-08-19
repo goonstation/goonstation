@@ -363,6 +363,7 @@
 		if (prob(10))
 				POT.reagents.add_reagent("vomit", rand(5,10))
 
+
 /datum/plantmutation/ipecacuanha/invigorating
 	name = "Invigorating Ipecacuanha"
 	name_prefix = "Invigorating "
