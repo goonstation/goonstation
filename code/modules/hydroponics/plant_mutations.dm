@@ -361,7 +361,7 @@
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		if (prob(10))
-				POT.reagents.add_reagent("vomit", rand(5,10))
+			POT.reagents.add_reagent("vomit", rand(5,10))
 
 
 /datum/plantmutation/ipecacuanha/invigorating
