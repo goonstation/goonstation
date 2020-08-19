@@ -352,6 +352,16 @@
 	crop = /obj/item/plant/herb/ipecacuanha/bilious
 	assoc_reagents = list("vomit","sewage","bitters")
 	chance = 10
+	var/special_proc_override = 1
+	
+	HYPspecial_proc(var/obj/machinery/plantpot/POT)
+		..()
+		if (.) return
+		var/datum/plant/P = POT.current
+		var/datum/plantgenes/DNA = POT.plantgenes
+
+		if (prob(10))
+				POT.reagents.add_reagent("vomit", rand(5,10))
 
 /datum/plantmutation/ipecacuanha/invigorating
 	name = "Invigorating Ipecacuanha"
