@@ -3330,7 +3330,7 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 		<li>3) Cards which are face-down on the table can surprise your opponent!</li>
 		<li>4) Just because a creature died and has to be put on your discard pile does not mean it is out of the game yet!</li>
 		<li>5) Keep some dice nearby. Some cards might require a bit of luck!</li>
-		<li>6) Buy more cards! Spent your cash!</li>
+		<li>6) Buy more cards! Spend your cash!</li>
 	</ul>"}
 
 /obj/item/paper/book/ratbook
