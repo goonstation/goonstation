@@ -160,7 +160,7 @@
 
 		src.net_id = generate_net_id(src)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN_DBG(1 SECONDS)
 
 			if(!src.link)
 				var/turf/T = get_turf(src)
