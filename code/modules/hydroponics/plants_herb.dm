@@ -233,4 +233,4 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	nectarlevel = 5
 	commuts = list(/datum/plant_gene_strain/resistance_drought,/datum/plant_gene_strain/yield/stunted)
 	assoc_reagents = list("ipecac")
-	
+	mutations = list(/datum/plantmutation/ipecacuanha/bilious,/datum/plantmutation/ipecacuanha/invigorating)
