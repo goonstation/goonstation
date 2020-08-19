@@ -348,6 +348,7 @@
 /datum/plantmutation/ipecacuanha/bilious
 	name = "Bilious Ipecacuanha"
 	name_prefix = "Bilious "
+	crop = /obj/item/plant/ipecacuanha/bilious
 	iconmod = "IpecacuanhaBilious"
 	assoc_reagents = list("vomit","sewage","bitters")
 	chance = 10
