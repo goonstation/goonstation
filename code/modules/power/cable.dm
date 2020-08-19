@@ -71,7 +71,7 @@
 	//var/image/cableimg = null
 	//^ is unnecessary, i think
 	layer = CABLE_LAYER
-	plane = PLANE_DEFAULT
+	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
 	text = ""
 

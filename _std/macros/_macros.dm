@@ -143,3 +143,7 @@ while(FALSE)
 
 /// NaN isn't a number, damn it. Infinity is a problem too.
 #define isnum_safe(x) ( isnum((x)) && !isnan((x)) && !isinf((x)) ) //By ike709
+
+
+var/global/list/addr_padding = list("00000", "0000", "000", "00", "0", "")
+#define BUILD_ADDR(TYPE_ID, NUM) "\[0x[TYPE_ID][addr_padding[length(num2text(NUM, 0, 16))]][num2text(NUM, 0, 16)]\]"

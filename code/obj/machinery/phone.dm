@@ -16,7 +16,6 @@
 	var/obj/machinery/phone/linked = null
 	var/ringing = 0
 	var/answered = 0
-	var/location = null
 	var/last_ring = 0
 	var/connected = 1
 	var/emagged = 0
@@ -35,35 +34,37 @@
 	New()
 		..() // Set up power usage, subscribe to loop, yada yada yada
 		src.icon_state = "[phoneicon]"
-		src.location = get_area(src)
+		var/area/location = get_area(src)
 
 		// Give the phone an appropriate departmental color. Jesus christ thats fancy.
-		if(istype(src.location,/area/station/security))
+		if(istype(location,/area/station/security))
 			src.color = "#ff0000"
-		else if(istype(src.location,/area/station/bridge))
+		else if(istype(location,/area/station/bridge))
 			src.color = "#00aa00"
-		else if(istype(src.location, /area/station/engine) || istype(src.location, /area/station/quartermaster) || istype(src.location, /area/station/mining))
+		else if(istype(location, /area/station/engine) || istype(location, /area/station/quartermaster) || istype(location, /area/station/mining))
 			src.color = "#aaaa00"
-		else if(istype(src.location, /area/station/science) || istype(src.location, /area/station/chemistry))
+		else if(istype(location, /area/station/science) || istype(location, /area/station/chemistry))
 			src.color = "#9933ff"
-		else if(istype(src.location, /area/station/medical))
+		else if(istype(location, /area/station/medical))
 			src.color = "#0000ff"
 		else
 			src.color = "#663300"
 		src.overlays += image('icons/obj/machines/phones.dmi',"[dialicon]")
 		// Generate a name for the phone.
-		var/area/my_area = get_area(src)
-		var/base_name = my_area.name // tentative name
-		var/temp_name = base_name
-		var/name_counter = 1
-		for(var/obj/machinery/phone/M in phonelist)
-			if(M.phone_id && M.phone_id == temp_name)
-				name_counter++
-				temp_name = "[base_name] [name_counter]"
 
-		src.phone_id = temp_name
+		if(isnull(src.phone_id))
+			var/temp_name = src.name
+			if(temp_name == initial(src.name) && location)
+				temp_name = location.name
+			var/name_counter = 1
+			for(var/obj/machinery/phone/M in phonelist)
+				if(M.phone_id && M.phone_id == temp_name)
+					name_counter++
+			if(name_counter > 1)
+				temp_name = "[temp_name] [name_counter]"
+			src.phone_id = temp_name
 
-		src.desc += " There is a small label on the phone that reads \"[temp_name]\""
+		src.desc += " There is a small label on the phone that reads \"[src.phone_id]\""
 
 		phonelist.Add(src)
 

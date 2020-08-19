@@ -441,6 +441,10 @@ var/global/list/playersSeen = list()
 				server = "rp"
 			if ("Main")
 				server = "main"
+			if ("Roleplay Overflow")
+				server = "main2"
+			if ("Main Overflow")
+				server = "main3"
 		data["server"] = server
 
 		var/ban_time = input(usr,"How long will the ban be? (select Custom to alter existing duration)","Ban") as null|anything in list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","One Month","Permanent","Custom")

@@ -326,7 +326,13 @@
 		icon_state = icon_up
 		return
 
-
+// Put these into Mechanic's locker
+/obj/item/electronics/frame/mech_cabinet
+	name = "Component Cabinet frame"
+	store_type = /obj/item/storage/mechanics/housing_large
+	viewstat = 2
+	secured = 2
+	icon_state = "dbox"
 
 
 //Global list of telepads so we don't have to loop through the entire world aaaahhh.
@@ -338,6 +344,7 @@ var/list/mechanics_telepads = new/list()
 	icon_state = "comp_unk"
 	item_state = "swat_suit"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	plane = PLANE_NOSHADOW_BELOW
 	w_class = 1.0
 	level = 2
 	var/cabinet_banned = false // whether or not this component is prevented from being anchored in cabinets
@@ -696,6 +703,7 @@ var/list/mechanics_telepads = new/list()
 	cooldown_time = 5 SECONDS
 	var/paper_name = "thermal paper"
 	cabinet_banned = true
+	plane = PLANE_DEFAULT
 
 	New()
 		..()
@@ -1342,7 +1350,7 @@ var/list/mechanics_telepads = new/list()
 
 		if(!R) return
 
-		if(input.signal in R)
+		if(R.Find(input.signal))
 			if(replacesignal)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,input)
 			else
@@ -2483,6 +2491,7 @@ var/list/mechanics_telepads = new/list()
 	icon_state = "comp_button"
 	var/icon_up = "comp_button"
 	var/icon_down = "comp_button1"
+	plane = PLANE_DEFAULT
 	density = 1
 
 	New()
@@ -2491,6 +2500,7 @@ var/list/mechanics_telepads = new/list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return 1
+		if(ispulsingtool(W)) return // Don't press the button with a multitool, it brings up the config menu instead
 		return attack_hand(user)
 
 	attack_hand(mob/user as mob)

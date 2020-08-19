@@ -1,5 +1,50 @@
 
+(t)tue aug 18 20
+(u)adharainspace
+(p)1851
+(e)🆕|feature
+(*)fixes an oversight that made diseases (like avian flu) much slower than intended.
+(u)Marksman2539
+(p)1858
+(e)🐛🗺|bug, mapping
+(+)Horizon armory is now accessible.
+(t)mon aug 17 20
+(u)Comradef191
+(p)1824
+(e)🗺|mapping
+(+)Completely rewired Mushroom Station, Moved the Hanger & Re-Added the Arrivals Shuttle.
+(+)Mushroom Station now has a few Cyborg Docking Stations scattered around Maintenance.
+(u)UUID
+(p)1847
+(e)🐛|bug
+(*)Humans are once again allowed to voluntarily enter the port-a-puke.
+(u)pali
+(p)1839
+(e)🐛|bug
+(*)Mentor mouse ping hotkey is now ctrl+click and players can whisper back using F3 if they have a mouse in their pocket. Other misc mentor mouse improvements.
+(t)sun aug 16 20
+(u)Tarmunora
+(p)1793
+(e)⚖|balance
+(+)Adjusted nitroglycerin explosions.
+(t)sat aug 15 20
+(u)Jawns
+(p)1709
+(e)⚖🐛|balance, bug
+(+)Sketchy D-5 now takes both grown and crate weed
+(u)glassofmilk
+(p)1809
+(e)🆕|feature
+(+)Replace Component Cabinets in Mechanic's lockers with frames to save space
 (t)fri aug 14 20
+(u)Zamujasa
+(*)Turned on Oshan's lag generator.
+(*)If it's *too* laggy, it'll be turned off again.
+(*)Also, I hope you aren't afraid of the dark.
+(u)Kubius
+(p)1811
+(e)🆕🗺|feature, mapping
+(+)Miscellaneous Kondaru improvements, primarily more stuff in maintenance.
 (u)MarkNstein
 (p)1525
 (e)⚖🔄|balance, rework

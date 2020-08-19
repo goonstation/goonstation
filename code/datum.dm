@@ -20,7 +20,7 @@ var/global/list/deletedObjects = new
 	..()
 #endif
 
-// called when a variable is admin-edited
+/// called when a variable is admin-edited
 /datum/proc/onVarChanged(variable, oldval, newval)
 
 // so we can check if something we have a ref to is pool() or not
