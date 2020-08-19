@@ -354,7 +354,7 @@
 	chance = 10
 	var/special_proc_override = 1
 	
-	HYPspecial_proc(var/obj/machinery/plantpot/POT)
+	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
 		if (.) return
 		var/datum/plant/P = POT.current
