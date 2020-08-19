@@ -350,6 +350,7 @@
 	name_prefix = "Bilious "
 	crop = /obj/item/plant/ipecacuanha/bilious
 	iconmod = "IpecacuanhaBilious"
+	crop = /obj/item/plant/herb/ipecacuanha/bilious
 	assoc_reagents = list("vomit","sewage","bitters")
 	chance = 10
 
@@ -357,6 +358,7 @@
 	name = "Invigorating Ipecacuanha"
 	name_prefix = "Invigorating "
 	iconmod = "IpecacuanhaInvigorating"
+	crop = /obj/item/plant/herb/ipecacuanha/invigorating
 	assoc_reagents = list("synaptizine")
 	chance = 10
 
