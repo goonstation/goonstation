@@ -863,7 +863,7 @@
 "UD" = (
 /obj/table/auto,
 /obj/machinery/phone{
-	location = null
+	name = "Drug Den"
 	},
 /obj/item/clothing/mask/cigarette/dryjoint{
 	pixel_x = 2;
