@@ -1,6 +1,10 @@
 
 (t)wed aug 19 20
 (u)adharainspace
+(p)1876
+(e)🐛|bug
+(*)manta should be able to start/stop effectively now, instead of being broken.
+(u)adharainspace
 (p)1874
 (e)|
 (*)adds a 20 rounds played requirement to be a ghostdrone
