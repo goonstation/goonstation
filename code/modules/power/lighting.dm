@@ -105,7 +105,6 @@
 		..()
 		inserted_lamp = new light_type()
 		current_lamp = inserted_lamp
-		current_lamp.loc = src
 		if (src.loc.z == 1)
 			stationLights += src
 
@@ -120,6 +119,7 @@
 
 		if (inserted_lamp)
 			qdel(inserted_lamp)
+			inserted_lamp = null
 
 		var/area/A = get_area(src)
 		if (A)
@@ -574,7 +574,7 @@
 	boutput(user, "You insert a [newlamp.name].")
 	inserted_lamp = newlamp
 	current_lamp = inserted_lamp
-	current_lamp.loc = src
+	current_lamp.set_loc(null)
 	light.set_color(current_lamp.color_r, current_lamp.color_g, current_lamp.color_b)
 	on = has_power()
 	update()
