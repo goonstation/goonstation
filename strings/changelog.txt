@@ -1,5 +1,9 @@
 
 (t)tue aug 18 20
+(u)adharainspace
+(p)1851
+(e)🆕|feature
+(*)fixes an oversight that made diseases (like avian flu) much slower than intended.
 (u)Marksman2539
 (p)1858
 (e)🐛🗺|bug, mapping
