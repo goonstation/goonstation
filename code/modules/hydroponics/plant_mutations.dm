@@ -359,10 +359,8 @@
 		if (.) return
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		var/vomitleak_prob = max(0,min(100, DNA.potency / 2))
-
-		if (prob(vomitleak_prob))
-			POT.reagents.add_reagent("vomit", rand(5,10))
+		if (prob(10))
+			POT.reagents.add_reagent("vomit", rand((5*DNA.potency),(10*DNA.potency)))
 
 
 /datum/plantmutation/ipecacuanha/invigorating
