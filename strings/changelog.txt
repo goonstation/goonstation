@@ -1,5 +1,10 @@
 
 (t)wed aug 19 20
+(u)Aft2001
+(p)1852
+(e)🆕🎨|feature, sprites
+(+)Adds 1 new status option for AI, "Text", which is a scrolling text screen. Your AI color will change the color of the lines
+(+)Also has a *flip animation! Technically!
 (u)Emcee-Gore
 (p)1823
 (e)⚖|balance
