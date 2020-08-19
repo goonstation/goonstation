@@ -3791,8 +3791,8 @@
 		if (I.w_class < 4)
 			if (src.contents.len < src.setup_max_objects)
 				if(I.cant_drop)
-				return
-			if (mag)
+					return
+				if (mag)
 					mag.dropItem(0)
 				else
 					user.drop_item()
