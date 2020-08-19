@@ -8,6 +8,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Sad" = "ai_sad",\
 	"Mad" = "ai_mad",\
 	"BSOD" = "ai_bsod",\
+	"Text" = "ai_text",\
 	"Blank" = "ai_off")
 
 /mob/living/silicon/ai
