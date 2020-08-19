@@ -15,6 +15,7 @@
 	boutput(user, "<span class='notice'>You flip the coin</span>")
 	SPAWN_DBG(1 SECOND)
 		src.set_loc(user.loc)
+		user.u_equip(src)
 		playsound(src.loc, "sound/items/coindrop.ogg", 100, 1)
 		flip()
 
