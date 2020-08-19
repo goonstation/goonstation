@@ -2825,12 +2825,16 @@ var/list/mechanics_telepads = new/list()
 	proc/fire(var/datum/mechanicsMessage/input)
 		if (level == 2 || !isReady() || !instrument) return
 		LIGHT_UP_HOUSING
-		unReady(delay)
 		var/signum = text2num(input.signal)
-		if (signum &&((signum >= 0.4 && signum <= 2) ||(signum <= -0.4 && signum >= -2) || pitchUnlocked))
+		if (signum &&((signum >= 0.1 && signum <= 2) ||(signum <= -0.1 && signum >= -2) || pitchUnlocked))
+			var/mod_delay = delay
+			if(abs(signum) < 1)
+				mod_delay /= abs(signum)
+			unReady(mod_delay)
 			flick("comp_instrument1", src)
 			playsound(get_turf(src), sounds, volume, 0, 0, signum)
 		else
+			unReady(delay)
 			flick("comp_instrument1", src)
 			playsound(get_turf(src), sounds, volume, 1)
 			return
