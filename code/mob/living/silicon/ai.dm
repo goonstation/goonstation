@@ -364,6 +364,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.verbs += /mob/living/silicon/ai/verb/access_internal_radio
 				src.verbs += /mob/living/silicon/ai/verb/access_internal_pda
 				src.verbs += /mob/living/silicon/ai/proc/ai_colorchange
+				src.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 				src.job = "AI"
 				if (src.mind)
 					src.mind.assigned_role = "AI"
@@ -2074,7 +2075,7 @@ proc/get_mobs_trackable_by_AI()
 		message_admins("[key_name(src)] has created an AI intercom announcement: \"[output]\"")
 
 
-/mob/living/silicon/ai/verb/ai_station_announcement()
+/mob/living/silicon/ai/proc/ai_station_announcement()
 	set name = "AI Station Announcement"
 	set desc = "Makes a station announcement."
 	set category = "AI Commands"
