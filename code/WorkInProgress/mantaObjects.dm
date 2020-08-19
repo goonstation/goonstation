@@ -937,7 +937,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		on = 1
 		return .
 
-	disposing()
+	Del()
 		mantaTiles.Remove(src)
 		return ..()
 
