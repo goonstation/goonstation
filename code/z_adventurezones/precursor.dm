@@ -553,7 +553,7 @@
 			if(src.active) return
 
 			switch(function)
-				if("projectile" || null) // copied from singularity emitter code
+				if("projectile", null) // copied from singularity emitter code
 					src.animate_effect()
 					shoot_projectile_DIR(src, plaser, dir)
 					src.visible_message("<span class='alert'><b>[src]</b> fires a bolt of energy!</span>")

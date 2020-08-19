@@ -85,8 +85,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	boutput(world, "<B><FONT style='notice'>Welcome to the pre-game lobby!</FONT></B>")
 	boutput(world, "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds")
 	#if ASS_JAM
-	vote_manager.active_vote = new/datum/vote_new/mode("assday")
-	boutput(world, "<B>ASS JAM: Ass Day Classic vote has been started: [newVoteLinkStat.chat_link()] (120 seconds remaining)<br>(or click on the Status map as you do for map votes)</B>")
+	vote_manager.active_vote = new/datum/vote_new/mode("everyone-is-a-traitor")
+	boutput(world, "<B>ASS JAM: Everyone-Is-A-Traitor Mode vote has been started: [newVoteLinkStat.chat_link()] (120 seconds remaining)<br>(or click on the Status map as you do for map votes)</B>")
 	#endif
 
 	// let's try doing this here, yoloooo
@@ -473,7 +473,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				if (game_end_delayed == 1)
 					roundend_countdown.update_delayed()
 
-					message_admins("<span class='internal>Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]. Remove the delay for an immediate restart.</span>")
+					message_admins("<span class='internal'>Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]. Remove the delay for an immediate restart.</span>")
 					game_end_delayed = 2
 					var/ircmsg[] = new()
 					ircmsg["msg"] = "Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]."

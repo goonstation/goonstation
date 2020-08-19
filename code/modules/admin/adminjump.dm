@@ -157,10 +157,11 @@
 			boutput(src, "Unable to find any turf in that area.")
 			return
 
-		M.set_loc(pick(turfs))
-		logTheThing("admin", usr, M, "sent [constructTarget(M,"admin")] to [A] ([showCoords(A.x, A.y, A.z)] in [get_area(A)])")
-		logTheThing("diary", usr, M, "sent [constructTarget(M,"diary")] to [A] ([showCoords(A.x, A.y, A.z)] in [get_area(A)])", "admin")
-		message_admins("[key_name(usr)] teleported [key_name(M)] to [A] ([showCoords(A.x, A.y, A.z)] in [get_area(A)])")
+		var/turf/T = pick(turfs)
+		M.set_loc(T)
+		logTheThing("admin", usr, M, "sent [constructTarget(M,"admin")] to [A] ([showCoords(T.x, T.y, T.z)] in [get_area(A)])")
+		logTheThing("diary", usr, M, "sent [constructTarget(M,"diary")] to [A] ([showCoords(T.x, T.y, T.z)] in [get_area(A)])", "admin")
+		message_admins("[key_name(usr)] teleported [key_name(M)] to [A] ([showCoords(T.x, T.y, T.z)] in [get_area(A)])")
 	else
 		alert("Admin jumping disabled")
 

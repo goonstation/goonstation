@@ -30,19 +30,16 @@
 
 	var/rarityroll = 1
 
+// artifact tweak. rarity 1 now contains garbage artifacts so that it's easier to control how much garbage science sees.
 	switch(rand(1,100))
-		if (63 to 88)
+		if (36 to 80) 		// 45%. 4% chance for a particular level 2 art.
 			rarityroll = 2
-			// 1 in 25
-		if (89 to 99)
+		if (81 to 95) 		// 15%. With current art list this means 2% chance of a certain level 3 art
 			rarityroll = 3
-			// 1 in 10
-		if (100)
+		if (96 to 100) 		// 5%. With current art list this means 1% chance of a certain level 4 art. 2 of the 5 are bombs...
 			rarityroll = 4
-			// 1 in 100
-		else
+		else 							// 35%. 4% chance for a particular garbage level 1 art.
 			rarityroll = 1
-			// 1 in 62
 
 	var/list/selection_pool = list()
 

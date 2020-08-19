@@ -24,7 +24,7 @@
 		if (istype(W, /turf/unsimulated/wall/adaptive))
 			W:adapt()
 
-	disposing()
+	Del()
 		var/turf/N = locate(x, y+1, z)
 		var/turf/S = locate(x, y-1, z)
 		var/turf/W = locate(x-1, y, z)
@@ -172,7 +172,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		if (id)
 			wizard_zone_controller.triggerables += src
 
-	disposing()
+	Del()
 		qdel(opener)
 		..()
 
@@ -235,7 +235,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		if (istype(W, /turf/unsimulated/wall/adaptive))
 			W:adapt()
 
-	disposing()
+	Del()
 		var/turf/N = locate(x, y+1, z)
 		var/turf/S = locate(x, y-1, z)
 		var/turf/W = locate(x-1, y, z)

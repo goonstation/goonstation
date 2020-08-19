@@ -567,6 +567,10 @@
 	set name = "Enter Ghostdrone Queue"
 	set category = "Ghost"
 
+	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
+		return
+
 	var/obj/machinery/ghost_catcher/catcher = null
 	if(length(by_type[/obj/machinery/ghost_catcher]))
 		catcher = by_type[/obj/machinery/ghost_catcher][1]
@@ -583,6 +587,9 @@
 	set name = "Enter VR"
 	set category = "Ghost"
 
+	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+		boutput(usr, "Sorry, respawn options aren't availbale during football mode.")
+		return
 	if (usr && istype(usr, /mob/dead/observer))
 		var/obj/machinery/sim/vr_bed/vr_bed = locate(/obj/machinery/sim/vr_bed)
 		vr_bed.log_in(usr)
@@ -599,6 +606,10 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	// has the game started?
 	if(!ticker || !ticker.mode)
 		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
+		return
+
+	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
 		return
 
 	// get the mind
@@ -698,6 +709,9 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(!ticker || !ticker.mode)
 		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
 		return
+	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
+		return
 
 	// get the mind
 	var/datum/mind/mind = src.mind
@@ -787,7 +801,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	src = null
 	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor/admin, spawnpoint)
 	C.mind.assigned_role = "Animal"
-	C.say_language = "animal"
+	// C.say_language = "animal"
 	C.literate = 1
 	C.ghost_spawned = 1
 	C.original_name = selfmob.real_name
@@ -804,6 +818,9 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	set category = null
 
 	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
+		return
+	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
 		return
 	var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
 

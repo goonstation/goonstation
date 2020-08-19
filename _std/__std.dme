@@ -13,6 +13,7 @@
 #include "defines\_admin.dm"
 #include "defines\_input.dm"
 #include "defines\_jobs.dm"
+#include "defines\_units.dm"
 #include "_types.dm"
 #include "atmos.dm"
 #include "color.dm"

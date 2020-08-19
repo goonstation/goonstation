@@ -900,7 +900,6 @@
 /obj/item/clothing/under/shirt_pants
 	name = "shirt and pants"
 	desc = "A button-down shirt and some pants."
-	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
 	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 	icon_state = "shirt_n_pant-b"
 	item_state = "shirt_n_pant-b"
@@ -909,6 +908,87 @@
 		..()
 		src.icon_state = "shirt_n_pant-[pick("b", "br", "w")][pick("", "_tie-r", "_tie-b", "_tie-bl")]"
 		src.item_state = "[src.icon_state]"
+
+// Black Pants
+/obj/item/clothing/under/shirt_pants_b
+	name = "shirt and black pants"
+	desc = "A button-down shirt and some black pants."
+	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	icon_state = "shirt_n_pant-b"
+	item_state = "shirt_n_pant-b"
+
+/obj/item/clothing/under/shirt_pants_b/redtie
+	name = "shirt and black pants with a red tie"
+	desc = "A button-down shirt, some black pants and a red tie."
+	icon_state = "shirt_n_pant-b_tie-r"
+	item_state = "shirt_n_pant-b_tie-r"
+
+/obj/item/clothing/under/shirt_pants_b/blacktie
+	name = "shirt and black pants with a black tie"
+	desc = "A button-down shirt, some black pants and a black tie."
+	icon_state = "shirt_n_pant-b_tie-b"
+	item_state = "shirt_n_pant-b_tie-b"
+
+/obj/item/clothing/under/shirt_pants_b/bluetie
+	name = "shirt and black pants with a blue tie"
+	desc = "A button-down shirt, some black pants and a blue tie."
+	icon_state = "shirt_n_pant-b_tie-bl"
+	item_state = "shirt_n_pant-b_tie-bl"
+
+// Brown Pants
+/obj/item/clothing/under/shirt_pants_br
+	name = "shirt and brown pants"
+	desc = "A button-down shirt and some brown pants."
+	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	icon_state = "shirt_n_pant-br"
+	item_state = "shirt_n_pant-br"
+
+/obj/item/clothing/under/shirt_pants_br/redtie
+	name = "shirt and brown pants with a red tie"
+	desc = "A button-down shirt, some brown pants and a red tie."
+	icon_state = "shirt_n_pant-br_tie-r"
+	item_state = "shirt_n_pant-br_tie-r"
+
+/obj/item/clothing/under/shirt_pants_br/blacktie
+	name = "shirt and brown pants with a black tie"
+	desc = "A button-down shirt, some brown pants and a black tie."
+	icon_state = "shirt_n_pant-br_tie-b"
+	item_state = "shirt_n_pant-br_tie-b"
+
+/obj/item/clothing/under/shirt_pants_br/bluetie
+	name = "shirt and brown pants with a blue tie"
+	desc = "A button-down shirt, some black pants and a blue tie."
+	icon_state = "shirt_n_pant-br_tie-bl"
+	item_state = "shirt_n_pant-br_tie-bl"
+
+// White Pants
+/obj/item/clothing/under/shirt_pants_w
+	name = "shirt and white pants"
+	desc = "A button-down shirt and some white pants."
+	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	icon_state = "shirt_n_pant-w"
+	item_state = "shirt_n_pant-w"
+
+/obj/item/clothing/under/shirt_pants_w/redtie
+	name = "shirt and white pants"
+	desc = "A button-down shirt and some white pants and red tie."
+	icon_state = "shirt_n_pant-w_tie-r"
+	item_state = "shirt_n_pant-w_tie-r"
+
+/obj/item/clothing/under/shirt_pants_w/blacktie
+	name = "shirt and white pants"
+	desc = "A button-down shirt and some white pants and black tie."
+	icon_state = "shirt_n_pant-w_tie-b"
+	item_state = "shirt_n_pant-w_tie-b"
+
+/obj/item/clothing/under/shirt_pants_w/bluetie
+	name = "shirt and white pants"
+	desc = "A button-down shirt and some white pants and blue tie."
+	icon_state = "shirt_n_pant-w_tie-bl"
+	item_state = "shirt_n_pant-w_tie-bl"
 
 // Suits
 

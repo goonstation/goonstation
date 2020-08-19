@@ -297,6 +297,8 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
 		sleep(0.5 SECONDS)
 		critter_spam()
 
+/obj/hellportal/ex_act(severity) // avoid void_break self-destruction
+
 /obj/hellportal/proc/critter_spam()
 	for(var/I = 1 to src.number_left)
 		var/atom/zomb = new src.critter_type(src.loc)

@@ -176,7 +176,7 @@
 
 
 /obj/item/football/the_big_one
-	name = "football"
+	name = "\improper SAFL football"
 	desc = "The official football of the Space American Football League. There's some insignia on it for Space Bowl LXXXVII."
 	custom_suicide = 0
 	c_flags = EQUIPPED_WHILE_HELD
@@ -230,11 +230,8 @@
 				src.carrier.vis_contents -= indicator
 
 	disposing()
-		if (indicator)
-			if (src.carrier)
-				src.carrier.vis_contents -= indicator
-			src.indicator = null
-		..()
+		SHOULD_CALL_PARENT(FALSE)
+		return // CRASH("YOU CAN'T DELETE THE FOOTBALL! YOU WILL REGRET THIS!")
 
 	throw_impact(atom/hit_atom)
 		if (hit_atom)
@@ -249,7 +246,8 @@
 
 		..()
 
-
+	ex_act(severity)
+		return
 
 /obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
 	src.icon_state = "football_air"

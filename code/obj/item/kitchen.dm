@@ -636,7 +636,10 @@ TRAYS
 		return "[food_desc]"
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/plate) && !istype(W, /obj/item/plate/tray))
+		if(istype(W, /obj/item/plate) && !istype(W, /obj/item/plate/tray) && W.type == src.type)
+			if(length(src.contents) || length(W.contents))
+				user.visible_message("<b>[user]</b> tries to stack plates but there's food on them.","You try to stack plates but there's food on them.")
+				return
 			qdel(W)
 			src.set_loc(user)
 			user.put_in_hand_or_drop(new /obj/item/platestack)

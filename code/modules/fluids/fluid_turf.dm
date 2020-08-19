@@ -21,7 +21,7 @@
 	pathable = 0
 	mat_changename = 0
 	mat_changedesc = 0
-	fullbright = 1
+	fullbright = 0
 	luminosity = 1
 	intact = 0 //allow wire laying
 	throw_unlimited = 0
@@ -265,7 +265,7 @@
 	generateLight = 0
 
 	color = OCEAN_COLOR
-	fullbright = 1
+	// fullbright = 1
 
 	edge
 		icon_state = "pit_wall"
