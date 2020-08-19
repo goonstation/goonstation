@@ -3897,8 +3897,8 @@
 				return
 			else
 				if(I.cant_drop)
-				return
-			if (mag)
+					return
+				if (mag)
 					mag.dropItem(0)
 				else
 					user.drop_item()
