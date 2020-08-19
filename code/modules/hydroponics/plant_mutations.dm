@@ -357,10 +357,11 @@
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
 		if (.) return
-		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (prob(10))
+		var/thud_prob = max(0,min(100, DNA.potency / 2))
+
+		if (prob(thud_prob))
 			POT.reagents.add_reagent("vomit", rand(5,10))
 
 
