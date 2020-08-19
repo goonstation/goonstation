@@ -525,7 +525,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 	drug_den // A highly cozy hideout in space; take out the stress - eat some mice sandwiches.
 		maxNum = 1
-		probability = 30
+		probability = 40
 		prefabPath = "assets/maps/prefabs/prefab_drug_den.dmm"
 		prefabSizeX = 32
 		prefabSizeY = 27
