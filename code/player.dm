@@ -38,8 +38,8 @@
 			return 0
 		if (!response)
 			return 0
-		src.rounds_participated = response["participated"]
-		src.rounds_seen = response["seen"]
+		src.rounds_participated = text2num(response["participated"])
+		src.rounds_seen = text2num(response["seen"])
 		return 1
 
 	/// returns an assoc list of cached player stats (please update this proc when adding more player stat vars)
