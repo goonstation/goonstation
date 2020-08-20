@@ -603,7 +603,7 @@
 	OnAdd()
 		src.removed = 0
 		APPLY_MOB_PROPERTY(owner, PROP_PROTANOPIA, src)
-		owner.client?.color = list(protanopia_matrix)
+		owner.client?.color = protanopia_matrix
 		return
 
 	OnRemove()

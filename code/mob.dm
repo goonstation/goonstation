@@ -486,8 +486,7 @@
 		illumplane.alpha = 255
 
 	if(HAS_MOB_PROPERTY(src, PROP_PROTANOPIA))
-		var/list/protanopia_matrix = list(MATRIX_PROTANOPIA)
-		src.client?.color = list(protanopia_matrix)
+		src.client?.color = list(MATRIX_PROTANOPIA)
 
 	return
 
