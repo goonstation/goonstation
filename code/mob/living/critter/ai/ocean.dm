@@ -42,8 +42,7 @@
 /datum/aiTask/timed/targeted/trilobite/frustration_check()
 	.= 0
 	if (holder)
-		var/dist = get_dist(holder.owner, holder.target)
-		if (dist > target_range)
+		if (!IN_RANGE(holder.owner, holder.target, target_range))
 			return 1
 
 		if (ismob(holder.target))
@@ -65,7 +64,7 @@
 			var/list/possible = get_targets()
 			if (possible.len)
 				holder.target = pick(possible)
-	if(holder.target)
+	if(holder.target && holder.target.z == holder.owner.z)
 		var/mob/living/M = holder.target
 		if(!isalive(M))
 			holder.target = null
@@ -99,7 +98,7 @@
 	if(holder.owner)
 		for (var/atom in pods_and_cruisers)
 			var/atom/A = atom
-			if (A && holder.owner.z == A.z && get_dist(holder.owner,A) <= 6)
+			if (IN_RANGE(holder.owner, A, 6))
 				holder.current_task = src.escape
 				src.escape.reset()
 
@@ -124,8 +123,7 @@
 
 /datum/aiTask/timed/targeted/escape_vehicles/frustration_check()
 	.= 0
-	var/dist = get_dist(holder.owner, holder.target)
-	if (dist <= target_range/2)
+	if (IN_RANGE(holder.owner, holder.target, target_range/2))
 		return 1
 
 /datum/aiTask/timed/targeted/escape_vehicles/on_tick()
@@ -148,7 +146,7 @@
 	if(holder.owner)
 		for (var/atom in pods_and_cruisers)
 			var/atom/A = atom
-			if (A && holder.owner.z == A.z && get_dist(holder.owner,A) < target_range)
+			if (IN_RANGE(holder.owner, A, target_range))
 				targets += A
 	return targets
 
@@ -175,8 +173,7 @@
 
 /datum/aiTask/timed/targeted/flee_and_shoot/frustration_check()
 	.= 0
-	var/dist = get_dist(holder.owner, holder.target)
-	if (dist >= target_range)
+	if (!IN_RANGE(holder.owner, holder.target, target_range))
 		return 1
 
 	if (ismob(holder.target))
@@ -196,7 +193,7 @@
 		if (!holder.target)
 			holder.wait()
 
-	if(holder.target)
+	if(holder.target && holder.target.z == holder.owner.z)
 		if (ismob(holder.target))
 			var/mob/living/M = holder.target
 			if(!isalive(M))
@@ -229,7 +226,7 @@
 	if(holder.owner)
 		for (var/atom in pods_and_cruisers)
 			var/atom/A = atom
-			if (A && holder.owner.z == A.z && get_dist(holder.owner,A) <= 6)
+			if (IN_RANGE(holder.owner, A, 6))
 				targets += A
 		for(var/mob/living/M in view(target_range, holder.owner))
 			if(isalive(M) && !ismobcritter(M))
@@ -282,8 +279,7 @@
 
 /datum/aiTask/timed/targeted/pikaia/frustration_check()
 	.= 0
-	var/dist = get_dist(holder.owner, holder.target)
-	if (dist > target_range)
+	if (!IN_RANGE(holder.owner, holder.target, target_range))
 		return 1
 
 	if (ismob(holder.target))
@@ -305,7 +301,7 @@
 			var/list/possible = get_targets()
 			if (possible.len)
 				holder.target = pick(possible)
-	if(holder.target)
+	if(holder.target && holder.target.z == holder.owner.z)
 		var/dist = get_dist(holder.owner, holder.target)
 		if (dist >= 1)
 			if (prob(80))
@@ -355,7 +351,7 @@
 	if(holder.owner)
 		for (var/atom in pods_and_cruisers)
 			var/atom/A = atom
-			if (A && holder.owner.z == A.z && get_dist(holder.owner,A) <= 6)
+			if (IN_RANGE(holder.owner, A, 6))
 				targets += A
 
 		for(var/mob/living/M in view(target_range, holder.owner))

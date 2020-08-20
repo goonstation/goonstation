@@ -160,7 +160,7 @@
 
 		src.net_id = generate_net_id(src)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN_DBG(1 SECONDS)
 
 			if(!src.link)
 				var/turf/T = get_turf(src)
@@ -3790,6 +3790,8 @@
 
 		if (I.w_class < 4)
 			if (src.contents.len < src.setup_max_objects)
+				if(I.cant_drop)
+					return
 				if (mag)
 					mag.dropItem(0)
 				else
@@ -3894,12 +3896,16 @@
 				boutput(user, "<span class='alert'>There's already something on the stand!</span>")
 				return
 			else
+				if(I.cant_drop)
+					return
 				if (mag)
 					mag.dropItem(0)
 				else
 					user.drop_item()
 				I.set_loc(src.loc)
 		else
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -4046,6 +4052,8 @@
 				return
 
 		if (!src.contents.len)
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -4212,6 +4220,8 @@
 				return
 
 		if (!src.contents.len)
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -4429,6 +4439,8 @@
 		if (locate(/obj/) in src.loc.contents)
 			..()
 		else
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else

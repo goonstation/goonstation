@@ -55248,7 +55248,7 @@
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/Owlmait)
 "cEX" = (
-/obj/item/flamethrower/loaded,
+/obj/item/flamethrower/assembled/loaded,
 /obj/item/clothing/suit/fire/armored,
 /obj/item/clothing/head/helmet/welding,
 /obj/storage/secure/crate/weapon/confiscated_items{

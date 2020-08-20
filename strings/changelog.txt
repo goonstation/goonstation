@@ -1,4 +1,66 @@
 
+(t)wed aug 19 20
+(u)adharainspace
+(p)1876
+(e)🐛|bug
+(*)manta should be able to start/stop effectively now, instead of being broken.
+(u)adharainspace
+(p)1874
+(e)|
+(*)adds a 20 rounds played requirement to be a ghostdrone
+(u)adharainspace
+(p)1832
+(e)🆕|feature
+(*)adds a 13 round timegate to security.
+(u)Tarmunora
+(p)1850
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added tactical flamethrower for nukeop firebrands! Sprites by Schwick
+(u)Aft2001
+(p)1852
+(e)🆕🎨|feature, sprites
+(+)Adds 1 new status option for AI, "Text", which is a scrolling text screen. Your AI color will change the color of the lines
+(u)Emcee-Gore
+(p)1823
+(e)⚖|balance
+(+)Increased prefab generation for Z5.
+(u)Emcee-Gore
+(p)1822
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Added a cozy drug den to the Z5 generation! Beware of space madness!
+(+)Lowered maximum rockworm prefab spawns.
+(u)Emcee-Gore
+(p)1829
+(e)🆕|feature
+(+)Added a Spacemen the Grifening rulebook to the appropriate vending machine.
+(t)tue aug 18 20
+(u)adharainspace
+(p)1851
+(e)🆕|feature
+(*)fixes an oversight that made diseases (like avian flu) much slower than intended.
+(u)Marksman2539
+(p)1858
+(e)🐛🗺|bug, mapping
+(+)Horizon armory is now accessible.
+(t)mon aug 17 20
+(u)Comradef191
+(p)1824
+(e)🗺|mapping
+(+)Completely rewired Mushroom Station, Moved the Hanger & Re-Added the Arrivals Shuttle.
+(+)Mushroom Station now has a few Cyborg Docking Stations scattered around Maintenance.
+(u)UUID
+(p)1847
+(e)🐛|bug
+(*)Humans are once again allowed to voluntarily enter the port-a-puke.
+(u)pali
+(p)1839
+(e)🐛|bug
+(*)Mentor mouse ping hotkey is now ctrl+click and players can whisper back using F3 if they have a mouse in their pocket. Other misc mentor mouse improvements.
+(t)sun aug 16 20
+(u)Tarmunora
+(p)1793
+(e)⚖|balance
+(+)Adjusted nitroglycerin explosions.
 (t)sat aug 15 20
 (u)Jawns
 (p)1709

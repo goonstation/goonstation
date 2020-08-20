@@ -291,6 +291,7 @@
 	stops_space_move = 1
 	anchored = 1.0
 	layer = LATTICE_LAYER
+	plane = PLANE_FLOOR
 	//	flags = CONDUCT
 	text = "<font color=#333>+"
 

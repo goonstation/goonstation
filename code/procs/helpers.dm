@@ -2022,21 +2022,19 @@ proc/countJob(rank)
   * A universal ckey -> mob reference lookup proc, adapted from whois() (Convair880).
   */
 /proc/whois_ckey_to_mob_reference(target as text, exact=1)
-	if (isnull(target))
-		return 0
+	if(isnull(target))
+		return
 	target = ckey(target)
-	var/mob/our_mob
-	for (var/mob/M in mobs)
-		if (!isnull(M.ckey) && M.ckey == target)
-			our_mob = M
-			break
-	if(!our_mob && !exact)
-		for (var/mob/M in mobs)
-			if (!isnull(M.ckey) && findtext(M.ckey, target))
-				our_mob = M
-				break
-	if (our_mob) return our_mob
-	else return 0
+	for(var/client/C) // exact match first
+		if(C.ckey == target)
+			return C.mob
+	if(!exact)
+		for(var/client/C) // prefix match second
+			if(copytext(C.ckey, 1, length(target) + 1) == target)
+				return C.mob
+		for(var/client/C) // substring match third
+			if (findtext(C.ckey, target))
+				return C.mob
 
 /**
   * Returns random hex value of length given
@@ -2595,3 +2593,18 @@ proc/maximal_subtype(var/list/L)
 				.= t
 			else if (!(ispath(., t)))
 				return null // paths in L aren't linearly ordered
+
+/**
+ * Takes associative list of the form list(thing = weight), returns weighted random choice of keys based on weights.
+ */
+proc/weighted_pick(list/choices)
+	var/total = 0
+	for(var/key in choices)
+		total += choices[key]
+	var/weighted_num = rand(1, total)
+	var/running_total = 0
+	for(var/key in choices)
+		running_total += choices[key]
+		if(weighted_num <= running_total)
+			return key
+	return

@@ -65,7 +65,7 @@
 				reagents.temperature_reagents(exposed_temperature, exposed_volume)
 
 	MouseDrop(atom/over_object as obj)
-		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister))
+		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister) && !istype(over_object, /obj/item/tank/jetpack/backtank))
 			return ..()
 
 		if (get_dist(usr, src) > 1 || get_dist(usr, over_object) > 1)

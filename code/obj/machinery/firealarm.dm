@@ -6,7 +6,7 @@
 	name = "Fire Alarm"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
-	plane = PLANE_NOSHADOW_BELOW
+	plane = PLANE_NOSHADOW_ABOVE
 	deconstruct_flags = DECON_WIRECUTTERS | DECON_MULTITOOL
 	machine_registry_idx = MACHINES_FIREALARMS
 	var/alarm_frequency = "1437"

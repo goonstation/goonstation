@@ -762,6 +762,7 @@
 			qdeled = 0// L   U    L
 
 	set_loc()
+		SHOULD_CALL_PARENT(FALSE)
 		loc = initialPos
 		return
 

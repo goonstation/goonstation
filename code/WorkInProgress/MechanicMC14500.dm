@@ -30,6 +30,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 	name = "Control Unit"
 	icon = 'icons/obj/networked.dmi'
 	icon_state = "genericsmall0"
+	plane = PLANE_DEFAULT
 	var/ROM = ""
 	var/ioPins = 1 //Bitfield. Low byte is IO, high byte is internal memory flags, lowest bit is read as complement of RR
 	var/RR = 0 //Result register.  It's the accumulator.  Look, motorola picked these names.

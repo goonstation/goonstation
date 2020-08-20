@@ -734,7 +734,7 @@ About the new airlock wires panel:
 	var/wireIndex = airlockWireColorToIndex[wireColor]
 	wires &= ~wireFlag
 	switch(wireIndex)
-		if(AIRLOCK_WIRE_MAIN_POWER1 || AIRLOCK_WIRE_MAIN_POWER2)
+		if(AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2)
 			//Cutting either one disables the main door power, but unless backup power is also cut, the backup power re-powers the door in 10 seconds. While unpowered, the door may be crowbarred open, but bolts-raising will not work. Cutting these wires may electocute the user.
 			src.loseMainPower()
 			SPAWN_DBG(1 DECI SECOND)
@@ -747,7 +747,7 @@ About the new airlock wires panel:
 				logTheThing("station",usr,null,"[usr] has bolted a door at [log_loc(src)].")
 			update_icon()
 			src.updateUsrDialog()
-		if (AIRLOCK_WIRE_BACKUP_POWER1 || AIRLOCK_WIRE_BACKUP_POWER2)
+		if (AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			//Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
 			src.loseBackupPower()
 			SPAWN_DBG(1 DECI SECOND)
@@ -779,13 +779,13 @@ About the new airlock wires panel:
 	var/wireIndex = airlockWireColorToIndex[wireColor] //not used in this function
 	wires |= wireFlag
 	switch(wireIndex)
-		if(AIRLOCK_WIRE_MAIN_POWER1 || AIRLOCK_WIRE_MAIN_POWER2)
+		if(AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2)
 			if ((!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)) && (!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)))
 				src.regainMainPower()
 				SPAWN_DBG(1 DECI SECOND)
 					src.shock(usr, 50)
 				src.updateUsrDialog()
-		if (AIRLOCK_WIRE_BACKUP_POWER1 || AIRLOCK_WIRE_BACKUP_POWER2)
+		if (AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			if ((!src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER1)) && (!src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER2)))
 				src.regainBackupPower()
 				SPAWN_DBG(1 DECI SECOND)

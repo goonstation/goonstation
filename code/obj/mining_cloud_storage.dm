@@ -83,7 +83,7 @@
 			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
 			return
 
-		if(!DIST_CHECK(O, user, 1))
+		if(!IN_RANGE(O, user, 1))
 			boutput(user, "<span class='alert'>You are too far away!</span>")
 			return
 

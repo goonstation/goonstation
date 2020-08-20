@@ -1,5 +1,13 @@
-//START BASIC WORLD DEFINES
-world
+/**
+  * # World
+  *
+  * If you think this Universe is bad, you should see some of the others. ~ Philip K. Dick
+  *
+  * The byond world object stores some basic byond level config, and has a few hub specific procs for managing hub visiblity
+  *
+  * The world /New() is the root of where a round itself begins
+  */
+/world
 	mob = /mob/new_player
 
 	#ifdef MOVING_SUB_MAP //Defined in the map-specific .dm configuration file.
@@ -13,8 +21,6 @@ world
 	area = /area
 
 	view = "15x15"
-
-//END BASIC WORLD DEFINES
 
 
 //Let's clarify something. I don't know if it needs clarifying, but here I go anyways.
@@ -512,11 +518,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 	mapSwitcher = new()
 
-	//is_it_ass_day() // ASS DAY!
-	// Ass Day is set at compile time now, not runtime
-
-	//create_random_station() //--Disabled because it's making initial geometry stuff take forever. Feel free to re-enable it if it's just throwing off the time count and not actually adding workload.
-
 	Z_LOG_DEBUG("World/Init", "Telemanager setup...")
 	tele_man = new()
 	tele_man.setup()
@@ -772,12 +773,17 @@ var/f_color_selector_handler/F_Color_Selector
 	if (abandon_allowed)
 		features += "respawn allowed"
 
-	//if (config && config.allow_ai)
-	//	features += "AI"
+	if (abandon_allowed)
+		features += "respawn allowed"
+
+#if ASS_JAM
+	features += "Ass Jam"
+#endif
 
 	var/n = 0
-	for (var/client/C)
-		n++
+	for (var/client/C in clients)
+		if (C)
+			n++
 
 	if (n > 1)
 		features += "~[n] players"
