@@ -55,7 +55,7 @@
 
 // various others
 #define SHOW_GRINCH_TIPS(M) M.Browse(grabResource("html/traitorTips/grinchTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_HUNTER_TIPS(M) M.Browse(grabResource("html/traitorTips/hunterTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_HUNTER_TIPS(M) M.Browse(grabResource("html/traitorTips/predatorTips.html"), ANTAG_TIPS_WINDOW)
 #define SHOW_WEREWOLF_TIPS(M) M.Browse(grabResource("html/traitorTips/werewolfTips.html"), ANTAG_TIPS_WINDOW)
 #define SHOW_WRESTLER_TIPS(M) M.Browse(grabResource("html/traitorTips/wrestlerTips.html"), ANTAG_TIPS_WINDOW)
 #define SHOW_BATTLE_ROYALE_TIPS(M) M.Browse(grabResource("html/traitorTips/battleTips.html"), ANTAG_TIPS_WINDOW)
