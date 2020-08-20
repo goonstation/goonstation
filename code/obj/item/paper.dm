@@ -823,6 +823,15 @@ Only trained personnel should operate station systems. Follow all procedures car
 	Never behind the crime, A-grades as janitor...oh so fine!</b>
 	"}
 
+/obj/item/paper/mice_problem
+	name = "Fucking space-rats!"
+	icon_state = "paper"
+	desc = "A scribbled note - created with burning rage."
+	info = {"<center><h3>MICE?!</h3></center>
+	<hr>
+	<i>Ey! Yo! What the hell? You think you can take a day off - relax - and then these hungry n'angry food pirates come along! Damn Thompson McGreasy; unable to close his trash-pod he arrived in. Now we gotta deal with some mutant mice problem!</i>
+	"}
+
 /obj/item/paper/fortune
 	name = "fortune"
 	info = {"<center>YOUR FORTUNE</center>"}

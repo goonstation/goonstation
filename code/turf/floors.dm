@@ -1607,7 +1607,7 @@
 		if(I)
 			if(istype(I,/obj/item/cable_coil))
 				var/obj/item/cable_coil/C = I
-				if((get_dist(user,F)<2) & (get_dist(user,src)<2))
+				if((get_dist(user,F)<2) && (get_dist(user,src)<2))
 					C.move_callback(user, F, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////

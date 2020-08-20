@@ -82,11 +82,7 @@ var/list/observers = list()
 		return
 
 	process_move(keys)
-		if (istype(src,/mob/dead/target_observer))
-			var/mob/dead/target_observer/O = src
-			O.stop_observing()
-			return
-		. = ..()
+		src.stop_observing()
 
 	apply_camera(client/C)
 		var/mob/living/M = src.target

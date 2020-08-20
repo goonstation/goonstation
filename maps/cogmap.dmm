@@ -11190,7 +11190,7 @@
 /obj/storage/secure/crate/plasma/armory/anti_biological{
 	req_access = null
 	},
-/obj/item/flamethrower/loaded,
+/obj/item/flamethrower/assembled/loaded,
 /obj/access_spawn/sec_lockers,
 /turf/simulated/floor/bot,
 /area/station/security/brig)
@@ -12231,7 +12231,6 @@
 /obj/grille/steel,
 /obj/item/basketball{
 	desc = "Something beautiful overwhelms you when you look at this ball.";
-	layer = 9;
 	name = "barkley's basketball"
 	},
 /obj/decal/poster/wallsign/gym,

@@ -53,6 +53,7 @@
 	var/bio_effects = null
 	var/objective = null
 	var/spawn_miscreant = 0
+	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
 
 	New()
 		..()
@@ -467,6 +468,7 @@
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_poc2 = /obj/item/requisition_token/security
+	rounds_needed_to_play = 13 //ss13, and also seems like a good number to go with
 
 	New()
 		..()

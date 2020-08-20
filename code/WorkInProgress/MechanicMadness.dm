@@ -344,6 +344,7 @@ var/list/mechanics_telepads = new/list()
 	icon_state = "comp_unk"
 	item_state = "swat_suit"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	plane = PLANE_NOSHADOW_BELOW
 	w_class = 1.0
 	level = 2
 	var/cabinet_banned = false // whether or not this component is prevented from being anchored in cabinets
@@ -702,6 +703,7 @@ var/list/mechanics_telepads = new/list()
 	cooldown_time = 5 SECONDS
 	var/paper_name = "thermal paper"
 	cabinet_banned = true
+	plane = PLANE_DEFAULT
 
 	New()
 		..()
@@ -2489,6 +2491,7 @@ var/list/mechanics_telepads = new/list()
 	icon_state = "comp_button"
 	var/icon_up = "comp_button"
 	var/icon_down = "comp_button1"
+	plane = PLANE_DEFAULT
 	density = 1
 
 	New()
@@ -2822,12 +2825,16 @@ var/list/mechanics_telepads = new/list()
 	proc/fire(var/datum/mechanicsMessage/input)
 		if (level == 2 || !isReady() || !instrument) return
 		LIGHT_UP_HOUSING
-		unReady(delay)
 		var/signum = text2num(input.signal)
-		if (signum &&((signum >= 0.4 && signum <= 2) ||(signum <= -0.4 && signum >= -2) || pitchUnlocked))
+		if (signum &&((signum >= 0.1 && signum <= 2) ||(signum <= -0.1 && signum >= -2) || pitchUnlocked))
+			var/mod_delay = delay
+			if(abs(signum) < 1)
+				mod_delay /= abs(signum)
+			unReady(mod_delay)
 			flick("comp_instrument1", src)
 			playsound(get_turf(src), sounds, volume, 0, 0, signum)
 		else
+			unReady(delay)
 			flick("comp_instrument1", src)
 			playsound(get_turf(src), sounds, volume, 1)
 			return

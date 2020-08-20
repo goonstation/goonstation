@@ -34,8 +34,8 @@
 
 			if (prob(5))
 				visible_message("<span class='alert'>[H] pukes their guts out!</span>")
+				playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				for (var/turf/T in range(src, rand(1, 3)))
-					playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 					make_cleanable( /obj/decal/cleanable/blood/gibs,T)
 
 				if (prob(5) && H.organHolder && H.organHolder.heart)
@@ -44,8 +44,8 @@
 
 			if (prob(15))
 				visible_message("<span class='alert'>[src] sprays vomit all around itself!</span>")
+				playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				for (var/turf/T in range(src, rand(1, 3)))
-					playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 					if (prob(5))
 						make_cleanable( /obj/decal/cleanable/greenpuke,T)
 					else
@@ -159,7 +159,7 @@
 		if (!isalive(usr))
 			return
 
-		if (!ishuman(src))
+		if (!ishuman(usr))
 			boutput(usr, "<span class='alert'>You're not a human, you can't put yourself in there!</span>")
 			return
 

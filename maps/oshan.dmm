@@ -30319,7 +30319,6 @@
 /obj/decal/poster/wallsign/gym,
 /obj/item/basketball{
 	desc = "Something beautiful overwhelms you when you look at this ball.";
-	layer = 9;
 	name = "barkley's basketball"
 	},
 /turf/simulated/floor,
@@ -43046,7 +43045,7 @@
 /obj/item/gun/kinetic/flaregun,
 /obj/item/ammo/bullets/flare,
 /obj/item/ammo/bullets/flare,
-/obj/item/flamethrower/loaded,
+/obj/item/flamethrower/assembled/loaded,
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/redblack{
 	dir = 1

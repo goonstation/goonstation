@@ -246,7 +246,7 @@
 			else
 				the_text = "[ownerMob] pulls [himself_or_herself(ownerMob)] over [the_railing]."
 			O.show_text("[the_text]", "red")
-		logTheThing("combat", ownerMob, the_railing, "[is_athletic_jump ? "leaps over %the_railing% with [his_or_her(ownerMob)] athletic trait" : "crawls over %the_railing%"].")
+		logTheThing("combat", ownerMob, the_railing, "[is_athletic_jump ? "leaps over [the_railing] with [his_or_her(ownerMob)] athletic trait" : "crawls over [the_railing]"].")
 
 
 /datum/action/bar/icon/railing_tool_interact
@@ -295,7 +295,7 @@
 			return
 		if (!tool)
 			interrupt(INTERRUPT_ALWAYS)
-			logTheThing("debug", src, the_railing, "tried to interact with %the_railing% using a null tool... somehow.")
+			logTheThing("debug", src, the_railing, "tried to interact with [the_railing] using a null tool... somehow.")
 			return
 		var/verbing = "doing something to"
 		switch (interaction)
@@ -330,5 +330,5 @@
 				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] [verbens] [the_railing].", "red")
-			logTheThing("station", ownerMob, the_railing, "[verbens] %the_railing%.")
+			logTheThing("station", ownerMob, the_railing, "[verbens] [the_railing].")
 

@@ -170,6 +170,9 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	for(var/A in mantaTiles)
 		var/turf/space/fluid/manta/T = A
+		if (!istype(T))
+			mantaTiles.Remove(T)
+			continue
 		T.setScroll(moving)
 	for(var/A in mantaBubbles)
 		var/obj/O = A
@@ -937,7 +940,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		on = 1
 		return .
 
-	disposing()
+	Del()
 		mantaTiles.Remove(src)
 		return ..()
 

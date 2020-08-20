@@ -331,6 +331,10 @@ var/list/admin_verbs = list(
 		/client/proc/ghostdroneAll,
 		/client/proc/showPregameHTML,
 
+		/client/proc/call_proc,
+		/client/proc/call_proc_all,
+		/client/proc/debug_global_variable,
+
 		// /client/proc/admin_airborne_fluid,
 		// /client/proc/replace_space,
 #ifdef IMAGE_DEL_DEBUG
@@ -1910,7 +1914,10 @@ var/list/fun_images = list()
 			C.getturftelesci(A)
 
 		if ("Possess")
-			possess(A)
+			if(istype(A, /mob))
+				possessmob(A)
+			else
+				possess(A)
 		if ("Create Poster")
 			C.generate_poster(A)
 
