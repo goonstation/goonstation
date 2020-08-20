@@ -302,6 +302,7 @@
 			ClearAllOverlays()
 			mode = DISPOSAL_CHUTE_OFF
 			flush = 0
+			power_usage = 0
 			return
 
 		// flush handle

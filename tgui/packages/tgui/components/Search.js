@@ -12,6 +12,7 @@ import { Section } from './Section';
 export const Search = props => {
   const {
     autoFocus,
+    className,
     currentSearch,
     onSearch,
     onSelect,
