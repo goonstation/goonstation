@@ -49,6 +49,7 @@
 
 	ui_act(action, params)
 		. = ..()
+		// if action handled by parent type (disposal chute), no need to handle here
 		if (.)
 			return .
 		switch (action)
