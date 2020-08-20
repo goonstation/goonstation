@@ -706,7 +706,7 @@
 			playsound(get_turf(src), "sound/machines/twobeep.ogg", 35, 1)
 
 			for (var/atom in mobs)
-				if (!atom) break
+				if (!atom) continue
 				var/mob/O = atom
 				if (get_dist(get_turf(src),O) <= 3)
 					O.show_message(text("[bicon(src)] *[alert_message]*"))

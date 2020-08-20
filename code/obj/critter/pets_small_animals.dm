@@ -74,6 +74,17 @@
 			src.atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)
 			src.atk_disease_prob = 10
 			src.atkcarbon = 1
+
+/obj/critter/mouse/mad
+	name = "rabid space mouse"
+	desc = "A mouth-foaming cheese and flesh eating mouse. In space."
+	health = 10
+	chases_food = 0
+	feed_text = "squeaks viciously!"
+	atk_delay = 10
+	atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)
+	atk_disease_prob = 35
+	atkcarbon = 1
 /*
 	CritterAttack(mob/living/M)
 		src.attacking = 1

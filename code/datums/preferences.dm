@@ -918,6 +918,11 @@ $(function() {
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
 				src.jobs_unwanted += J.name
 				continue
+			if (J.rounds_needed_to_play && (user.client && user.client.player))
+				var/round_num = user.client.player.get_rounds_participated() //if this list is null, the api query failed, so we just let it happen
+				if (!isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
+					src.jobs_unwanted += J.name
+					continue
 			src.jobs_med_priority += J.name
 		return
 
@@ -932,6 +937,11 @@ $(function() {
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
 				src.jobs_unwanted += J.name
 				continue
+			if (J.rounds_needed_to_play && (user.client && user.client.player))
+				var/round_num = user.client.player.get_rounds_participated()
+				if (!isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
+					src.jobs_unwanted += J.name
+					continue
 			src.jobs_low_priority += J.name
 		return
 
@@ -960,6 +970,11 @@ $(function() {
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
 				src.jobs_unwanted += J.name
 				continue
+			if (J.rounds_needed_to_play && (user.client && user.client.player))
+				var/round_num = user.client.player.get_rounds_participated()
+				if (!isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
+					src.jobs_unwanted += J.name
+					continue
 			src.jobs_low_priority += J.name
 		return
 
@@ -1067,9 +1082,15 @@ $(function() {
 			if (!J_Fav)
 				HTML += " Favorite Job not found!"
 			else if (jobban_isbanned(user,J_Fav.name) || (J_Fav.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J_Fav.requires_whitelist && !NT.Find(ckey(user.mind.key))))
-				boutput(user, "<span class='alert'><b>You are no longer allowed to play [J_Fav.name]. It has been removed from your Favorite slot.</span>")
+				boutput(user, "<span class='alert'><b>You are no longer allowed to play [J_Fav.name]. It has been removed from your Favorite slot.</b></span>")
 				src.jobs_unwanted += J_Fav.name
 				src.job_favorite = null
+			else if (J_Fav.rounds_needed_to_play && (user.client && user.client.player))
+				var/round_num = user.client.player.get_rounds_participated()
+				if (!isnull(round_num) && round_num < J_Fav.rounds_needed_to_play) //they havent played enough rounds!
+					boutput(user, "<span class='alert'><b>You cannot play [J_Fav.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b></span>")
+					src.jobs_unwanted += J_Fav.name
+					src.job_favorite = null
 			else
 				HTML += " <a href=\"byond://?src=\ref[src];preferences=1;occ=1;job=[J_Fav.name];level=0\" style='font-weight: bold; color: [J_Fav.linkcolor];'>[J_Fav.name]</a>"
 
@@ -1205,6 +1226,19 @@ $(function() {
 					if (3) src.jobs_low_priority -= job
 				src.jobs_unwanted += job
 			return
+
+		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
+		if (temp_job.rounds_needed_to_play && (user.client && user.client.player))
+			var/round_num = user.client.player.get_rounds_participated()
+			if (!isnull(round_num) && round_num < temp_job.rounds_needed_to_play) //they havent played enough rounds!
+				boutput(user, "<span class='alert'><b>You cannot play [temp_job.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b></span>")
+				if (occ != 4)
+					switch(occ)
+						if (1) src.job_favorite = null
+						if (2) src.jobs_med_priority -= job
+						if (3) src.jobs_low_priority -= job
+					src.jobs_unwanted += job
+				return
 
 		src.antispam = 1
 

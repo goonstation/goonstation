@@ -1,4 +1,38 @@
 
+(t)wed aug 19 20
+(u)adharainspace
+(p)1876
+(e)🐛|bug
+(*)manta should be able to start/stop effectively now, instead of being broken.
+(u)adharainspace
+(p)1874
+(e)|
+(*)adds a 20 rounds played requirement to be a ghostdrone
+(u)adharainspace
+(p)1832
+(e)🆕|feature
+(*)adds a 13 round timegate to security.
+(u)Tarmunora
+(p)1850
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added tactical flamethrower for nukeop firebrands! Sprites by Schwick
+(u)Aft2001
+(p)1852
+(e)🆕🎨|feature, sprites
+(+)Adds 1 new status option for AI, "Text", which is a scrolling text screen. Your AI color will change the color of the lines
+(u)Emcee-Gore
+(p)1823
+(e)⚖|balance
+(+)Increased prefab generation for Z5.
+(u)Emcee-Gore
+(p)1822
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Added a cozy drug den to the Z5 generation! Beware of space madness!
+(+)Lowered maximum rockworm prefab spawns.
+(u)Emcee-Gore
+(p)1829
+(e)🆕|feature
+(+)Added a Spacemen the Grifening rulebook to the appropriate vending machine.
 (t)tue aug 18 20
 (u)adharainspace
 (p)1851
