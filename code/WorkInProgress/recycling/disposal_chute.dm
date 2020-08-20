@@ -466,7 +466,7 @@
 	suicide(var/mob/living/carbon/human/user as mob)
 		if (!istype(user) || !src.user_can_suicide(user))
 			return 0
-		if (src.mode != DISPOSAL_CHUTE_CHARGED)//!hasvar(user,"organHolder")) I will END YOU
+		if (src.mode != DISPOSAL_CHUTE_CHARGED)
 			return 0
 
 		user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and pulls the flush!</b></span>")

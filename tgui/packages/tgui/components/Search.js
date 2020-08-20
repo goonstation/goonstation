@@ -11,6 +11,7 @@ import { Section } from './Section';
 
 export const Search = props => {
   const {
+    autoFocus,
     currentSearch,
     onSearch,
     onSelect,
@@ -24,7 +25,7 @@ export const Search = props => {
   return (
     <div>
       <Input
-        autoFocus
+        autoFocus={autoFocus}
         fluid
         mb={1}
         placeholder={placeholder}

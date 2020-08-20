@@ -156,6 +156,7 @@ const DestinationSearch = (props, context) => {
   );
   return (
     <Search
+      autoFocus
       currentSearch={searchText}
       onSearch={setSearchText}
       onSelect={handleSelectDestination}
