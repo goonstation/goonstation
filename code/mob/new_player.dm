@@ -386,7 +386,6 @@ mob/new_player
 					ticker.minds += character.mind
 				logTheThing("debug", character, null, "<b>Late join:</b> assigned job: [JOB.name]")
 				//latejoin participation stuff
-				boutput(world, "tried to log participation")
 #ifdef RP_MODE
 				var/max_participate_time = 80 MINUTES
 #endif
