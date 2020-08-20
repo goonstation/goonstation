@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2020
+ * @author Sovexe (https://github.com/Sovexe)
+ * @license ISC
+ */
+
 import { useBackend } from '../backend';
 import { Box, Button, ColorBox, Divider, Knob, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
