@@ -19,7 +19,7 @@ export const PowerTransmissionLaser = (props, context) => {
         <InputControls />
         <OutputControls />
         <NoticeBox success>
-          Earned Credits : {lifetimeEarnings} Credits
+          Earned Credits : {Math.floor(lifetimeEarnings)} Credits
         </NoticeBox>
       </Window.Content>
     </Window>
