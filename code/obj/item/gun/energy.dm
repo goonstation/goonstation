@@ -14,6 +14,7 @@
 	var/wait_cycle = 0 // Using a self-charging cell should auto-update the gun's sprite.
 	var/can_swap_cell = 1
 	muzzle_flash = null
+	inventory_counter_enabled = 1
 
 	New()
 		if (!cell)
@@ -21,6 +22,7 @@
 		if (!(src in processing_items)) // No self-charging cell? Will be kicked out after the first tick (Convair880).
 			processing_items.Add(src)
 		..()
+		update_icon()
 
 	disposing()
 		if (src in processing_items)
@@ -40,6 +42,10 @@
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
+		if (src.cell)
+			inventory_counter.update_percent(src.cell.charge, src.cell.max_charge)
+		else
+			inventory_counter.update_text("-")
 		return 0
 
 	emp_act()
@@ -184,6 +190,7 @@
 				src.icon_state = "taserburst[ratio]"
 			else if(current_projectile.type == /datum/projectile/energy_bolt)
 				src.icon_state = "taser[ratio]"
+		..()
 
 	attack_self()
 		..()
@@ -211,6 +218,7 @@
 			ratio = round(ratio, 0.25) * 100
 			if(current_projectile.type == /datum/projectile/energy_bolt/bouncy)
 				src.icon_state = "taser[ratio]"
+		..()
 
 /////////////////////////////////////LASERGUN
 /obj/item/gun/energy/laser_gun
@@ -245,6 +253,7 @@
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "laser[ratio]"
 			return
+		..()
 
 ////////////////////////////////////// Antique laser gun
 // Part of a mini-quest thing (see displaycase.dm). Typically, the gun's properties (cell, projectile)
@@ -267,6 +276,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (src.cell)
 			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
 			var/ratio = min(1, src.cell.charge / maxCharge)
@@ -292,6 +302,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -327,6 +338,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			if(src.cell.charge >= 37) //this makes it only enter its "final" sprite when it's actually able to fire, if you change the amount of charge regen or max charge the bow has, make this number one charge increment before full charge
 				set_icon_state("crossbow")
@@ -356,6 +368,7 @@
 		projectiles = list(current_projectile,new/datum/projectile/laser)
 		..()
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -399,6 +412,7 @@
 		projectiles = list(current_projectile,new/datum/projectile/laser/ntburst)
 		..()
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -434,6 +448,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -463,6 +478,7 @@
 		projectiles = list(current_projectile)
 		..()
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -521,6 +537,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (src.cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.20) * 100
@@ -549,6 +566,7 @@
 	// Flaborized has made a lovely new wavegun sprite! - Gannets
 	// Flaborized has made even more wavegun sprites!
 	update_icon()
+		..()
 		if (src.cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -587,6 +605,7 @@
 		..()
 
 	update_icon()
+		..()
 		return
 
 	shoot(var/target,var/start,var/mob/user)
@@ -621,6 +640,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (!cell)
 			icon_state = "teleport"
 			return
@@ -778,6 +798,7 @@
 
 
 	update_icon()
+		..()
 		if (src.cell)
 			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
 			var/ratio = min(1, src.cell.charge / maxCharge)
@@ -830,6 +851,7 @@
 
 
 	update_icon()
+		..()
 		if (src.cell)
 			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
 			var/ratio = min(1, src.cell.charge / maxCharge)
@@ -856,6 +878,7 @@
 
 
 	update_icon()
+		..()
 		if (src.cell)
 			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
 			var/ratio = min(1, src.cell.charge / maxCharge)
@@ -939,6 +962,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -959,6 +983,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -979,9 +1004,6 @@
 		projectiles = list(current_projectile,new/datum/projectile/bullet/frog/getout)
 		..()
 
-	update_icon()
-		return
-
 
 ///////////////////////////////////////Shrink Ray
 /obj/item/gun/energy/shrinkray
@@ -997,6 +1019,7 @@
 		projectiles = list(current_projectile)
 		..()
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -1025,9 +1048,6 @@
 		projectiles = list(new/datum/projectile/bullet/glitch/gun)
 		..()
 
-	update_icon()
-		return
-
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		if (canshoot()) // No more attack messages for empty guns (Convair880).
 			playsound(user, "sound/weapons/DSBFG.ogg", 75)
@@ -1051,6 +1071,7 @@
 		projectiles = list(new/datum/projectile/laser/pred)
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -1192,6 +1213,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			//Wire: Fix for Division by zero runtime
 			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
@@ -1370,6 +1392,7 @@
 
 	//all gun modes use the same base sprite icon "lawbringer0" depending on the current projectile/current mode, we apply a coloured overlay to it.
 	update_icon()
+		..()
 		src.icon_state = "[old ? "old-" : ""]lawbringer0"
 		src.overlays = null
 
@@ -1489,6 +1512,7 @@
 		projectiles = list(new/datum/projectile/energy_bolt/pulse)
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100

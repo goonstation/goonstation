@@ -1905,11 +1905,11 @@ var/global/noir = 0
 
 			//they're nothing so turn them into a traitor!
 			if(ishuman(M) || isAI(M) || isrobot(M) || ismobcritter(M))
-				var/traitorize = "Cancel"
-				traitorize = alert("Is not a traitor, make Traitor?", "Traitor", "Yes", "Cancel")
-				if(traitorize == "Cancel")
+				var/antagonize = "Cancel"
+				antagonize = alert("Is not an antagonist, make antagonist?", "antagonist", "Yes", "Cancel")
+				if(antagonize == "Cancel")
 					return
-				if(traitorize == "Yes")
+				if(antagonize == "Yes")
 					if (issilicon(M))
 						evilize(M, "traitor")
 					else if (ismobcritter(M))
@@ -1976,13 +1976,13 @@ var/global/noir = 0
 				if (src.level >= LEVEL_CODER)
 					dat += {"
 							<A href='?src=\ref[src];action=chgadlvl;type=Coder;target=\ref[C]'>Coder</A><BR>
-							<A href='?src=\ref[src];action=chgadlvl;type=Administrator;target=\ref[C]'>Administrator</A><BR>
 							"}
 				if (src.level >= LEVEL_ADMIN)
+					dat += "<A href='?src=\ref[src];action=chgadlvl;type=Administrator;target=\ref[C]'>Administrator</A><BR>"
 					dat += "<A href='?src=\ref[src];action=chgadlvl;type=Primary Administrator;target=\ref[C]'>Primary Administrator</A><BR>"
 				if (src.level >= LEVEL_PA)
 					dat += {"
-							<A href='?src=\ref[src];action=chgadlvl;type=Administrator;target=\ref[C]'>Administrator</A><BR>
+							<A href='?src=\ref[src];action=chgadlvl;type=Intermediate Administrator;target=\ref[C]'>Intermediate Administrator</A><BR>
 							<A href='?src=\ref[src];action=chgadlvl;type=Secondary Administrator;target=\ref[C]'>Secondary Administrator</A><BR>
 							<A href='?src=\ref[src];action=chgadlvl;type=Moderator;target=\ref[C]'>Moderator</A><BR>
 							<A href='?src=\ref[src];action=chgadlvl;type=Ayn Rand%27s Armpit;target=\ref[C]'>Ayn Rand's Armpit</A><BR>
@@ -3160,6 +3160,8 @@ var/global/noir = 0
 						src.owner:debug_variables(world)
 					if("globals")
 						src.owner:debug_variables("GLOB")
+					if("globalprocs")
+						src.owner:show_proc_list(null)
 			else
 				alert("You need to be at least a Coder to use debugging secrets.")
 
@@ -3417,6 +3419,10 @@ var/global/noir = 0
 				return
 			else
 				alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+
+		if ("view_logs_web")
+			if ((src.level >= LEVEL_MOD) && !src.tempmin)
+				usr << link("https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]")
 
 		if ("view_logs")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
@@ -4059,11 +4065,13 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsdebug;type=overlaysrem'>(Remove)</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=world'>World</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=globals'>Global Variables</A>
+					<A href='?src=\ref[src];action=secretsdebug;type=globalprocs'>Global Procs</A>
 				"}
 
 		dat += "</div>"
 
 	dat += {"<hr><div class='optionGroup' style='border-color:#77DD77'><b class='title' style='background:#77DD77'>Logs</b>
+				<b><A href='?src=\ref[src];action=view_logs_web'>View all logs - web version</A></b><BR>
 				<A href='?src=\ref[src];action=view_logs;type=all_logs_string'>Search all Logs</A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=speech_log'>Speech Log </A>
 				<A href='?src=\ref[src];action=view_logs;type=speech_log_string'><small>(Search)</small></A><BR>
@@ -4145,14 +4153,16 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsfun;type=fartyparty'>Farty Party All The Time</A><BR>
 		"}
 
+	dat += "</div>"
+
 	if (src.level >= LEVEL_ADMIN || (src.level == LEVEL_SA && usr.client.holder.state == 2))
 		dat += {"<hr><div class='optionGroup' style='border-color:#92BB78'><b class='title' style='background:#92BB78'>Roleplaying Panel</b>
 					<A href='?src=\ref[src];action=secretsfun;type=shakecamera'>Apply camera shake</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=creepifystation'>Creepify station</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=command_report_zalgo'>Command Report (Zalgo)</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=command_report_void'>Command Report (Void)</A><BR>
-					<A href='?src=\ref[src];action=secretsfun;type=reliquarystation_wandf'>DO NOT PRESS</A><BR>
-					<A href='?src=\ref[src];action=secretsfun;type=reliquarystation_tdcc'>DO NOT PRESS</A><BR>
+					<A href='?src=\ref[src];action=secretsfun;type=reliquarystation_wandf'>reliquary station "wandf" </A><BR>
+					<A href='?src=\ref[src];action=secretsfun;type=reliquarystation_tdcc'>reliquary station "tdcc" </A><BR>
 				"}
 
 	dat += "</div>"
@@ -4230,12 +4240,12 @@ var/global/noir = 0
 		boutput(world, "<b>The game start has been delayed.</b>")
 		logTheThing("admin", usr, null, "delayed the game start.")
 		logTheThing("diary", usr, null, "delayed the game start.", "admin")
-		message_admins("<span class='internal>[usr.key] has delayed the game start.</span>")
+		message_admins("<span class='internal'>[usr.key] has delayed the game start.</span>")
 	else
 		boutput(world, "<b>The game will start soon.</b>")
 		logTheThing("admin", usr, null, "removed the game start delay.")
 		logTheThing("diary", usr, null, "removed the game start delay.", "admin")
-		message_admins("<span class='internal>[usr.key] has removed the game start delay.</span>")
+		message_admins("<span class='internal'>[usr.key] has removed the game start delay.</span>")
 
 /datum/admins/proc/delay_end()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
@@ -4245,7 +4255,7 @@ var/global/noir = 0
 	if (game_end_delayed == 2)
 		logTheThing("admin", usr, null, "removed the restart delay and triggered an immediate restart.")
 		logTheThing("diary", usr, null, "removed the restart delay and triggered an immediate restart.", "admin")
-		message_admins("<span class='internal>[usr.key] removed the restart delay and triggered an immediate restart.</span>")
+		message_admins("<span class='internal'>[usr.key] removed the restart delay and triggered an immediate restart.</span>")
 		ircbot.event("roundend")
 		Reboot_server()
 
@@ -4630,10 +4640,31 @@ var/global/noir = 0
 
 		if (chosen)
 			var/obj/A = new chosen()
-			A.set_loc(usr.loc)
+			var/turf/T = get_turf(usr)
+			A.set_loc(T)
 			heavenly_spawn(A)
-			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
-			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
+			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
+
+	else
+		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		return
+
+/datum/admins/proc/supplydrop_spawn_obj(var/obj/object as text)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set desc="(object path) Spawn an object. But all fancy-like"
+	set name="Spawn-Supplydrop"
+	if(!object)
+		return
+	if (usr.client.holder.level >= LEVEL_PA)
+		var/chosen = get_one_match(object)
+		var/preDropTime = 3 SECONDS
+
+		if (chosen)
+			var/turf/T = get_turf(usr)
+			new/obj/effect/supplymarker/safe(T, preDropTime, chosen)
+			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)

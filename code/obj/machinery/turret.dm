@@ -340,7 +340,7 @@
 	icon_state = "ai3"
 	anchored = 1
 	density = 0
-	plane = PLANE_NOSHADOW_BELOW
+	plane = PLANE_NOSHADOW_ABOVE
 	var/enabled = 1
 	var/lethal = 0
 	var/locked = 1

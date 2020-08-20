@@ -1141,6 +1141,10 @@
 			return list()
 		else
 			return ..()
+	
+	attack_self(mob/user)
+		. = ..()
+		src.examine(user)
 
 	attack_hand(mob/user as mob)
 		if (!src.anchored)

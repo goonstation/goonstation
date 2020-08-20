@@ -172,7 +172,6 @@
 	for(var/mob/dead/aieye/E in src.contents)
 		E.cancel_camera()
 
-	observers.len = 0
 	if (src.static_image)
 		mob_static_icons.Remove(src.static_image)
 		src.static_image = null

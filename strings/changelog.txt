@@ -1,3 +1,215 @@
+
+(t)wed aug 19 20
+(u)adharainspace
+(p)1876
+(e)🐛|bug
+(*)manta should be able to start/stop effectively now, instead of being broken.
+(u)adharainspace
+(p)1874
+(e)|
+(*)adds a 20 rounds played requirement to be a ghostdrone
+(u)adharainspace
+(p)1832
+(e)🆕|feature
+(*)adds a 13 round timegate to security.
+(u)Tarmunora
+(p)1850
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added tactical flamethrower for nukeop firebrands! Sprites by Schwick
+(u)Aft2001
+(p)1852
+(e)🆕🎨|feature, sprites
+(+)Adds 1 new status option for AI, "Text", which is a scrolling text screen. Your AI color will change the color of the lines
+(u)Emcee-Gore
+(p)1823
+(e)⚖|balance
+(+)Increased prefab generation for Z5.
+(u)Emcee-Gore
+(p)1822
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Added a cozy drug den to the Z5 generation! Beware of space madness!
+(+)Lowered maximum rockworm prefab spawns.
+(u)Emcee-Gore
+(p)1829
+(e)🆕|feature
+(+)Added a Spacemen the Grifening rulebook to the appropriate vending machine.
+(t)tue aug 18 20
+(u)adharainspace
+(p)1851
+(e)🆕|feature
+(*)fixes an oversight that made diseases (like avian flu) much slower than intended.
+(u)Marksman2539
+(p)1858
+(e)🐛🗺|bug, mapping
+(+)Horizon armory is now accessible.
+(t)mon aug 17 20
+(u)Comradef191
+(p)1824
+(e)🗺|mapping
+(+)Completely rewired Mushroom Station, Moved the Hanger & Re-Added the Arrivals Shuttle.
+(+)Mushroom Station now has a few Cyborg Docking Stations scattered around Maintenance.
+(u)UUID
+(p)1847
+(e)🐛|bug
+(*)Humans are once again allowed to voluntarily enter the port-a-puke.
+(u)pali
+(p)1839
+(e)🐛|bug
+(*)Mentor mouse ping hotkey is now ctrl+click and players can whisper back using F3 if they have a mouse in their pocket. Other misc mentor mouse improvements.
+(t)sun aug 16 20
+(u)Tarmunora
+(p)1793
+(e)⚖|balance
+(+)Adjusted nitroglycerin explosions.
+(t)sat aug 15 20
+(u)Jawns
+(p)1709
+(e)⚖🐛|balance, bug
+(+)Sketchy D-5 now takes both grown and crate weed
+(u)glassofmilk
+(p)1809
+(e)🆕|feature
+(+)Replace Component Cabinets in Mechanic's lockers with frames to save space
+(t)fri aug 14 20
+(u)Zamujasa
+(*)Turned on Oshan's lag generator.
+(*)If it's *too* laggy, it'll be turned off again.
+(*)Also, I hope you aren't afraid of the dark.
+(u)Kubius
+(p)1811
+(e)🆕🗺|feature, mapping
+(+)Miscellaneous Kondaru improvements, primarily more stuff in maintenance.
+(u)MarkNstein
+(p)1525
+(e)⚖🔄|balance, rework
+(*)Monkey-table interaction changed: Tables cannot be walked through, but instead can be vaulted past.
+(u)adharainspace
+(p)1790
+(e)🆕|feature
+(*)you can now fix tipped over vending machines by hitting them with a crowbar!
+(t)thu aug 13 20
+(u)UrsulaMajor
+(p)1806
+(e)🆕🗺|feature, mapping
+(+)John's Bus now stops at the sea diner near Manta
+(t)wed aug 12 20
+(u)Zamujasa
+(e)🆕|feature
+(*)Football mode has been improved.
+(*)New players in Football Mode get a popup explaining how the game works!
+(*)Football players regenerate health extremely quickly.
+(*)You can now observe the football with "Observe Objects". Useful if you're dead!
+(*)The timing of respawn waves has been shortened from 2 minutes with 30 second waves to 1 minute and 15 second waves.
+(*)The scoreboard is no longer vulnerable to explosions.
+(u)Carbadox
+(p)1750
+(e)🆕|feature
+(+)Added DIY Holy Water kit to Chaplains locker. Contains 3 bottles of wine and 3 bottles of mercury alongside a holy water container
+(u)Nebulacrity
+(p)1731
+(e)🆕🎨|feature, sprites
+(*)Nanotrasen brand neon lining is now available for purchase by the public!
+(u)BatElite
+(p)1791
+(e)🎨|sprites
+(+)Loose cyborg parts now match how they look on borgs.
+(t)tue aug 11 20
+(u)Flaborized
+(p)1694
+(e)🎨|sprites
+(+)Resprited captain's spacesuit, added captain's backpack.
+(u)Emcee-Gore
+(p)1537
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added Honkys Clownspider Farm to the Z5 mining level generation in space.
+(*)Added Discount Dan's delivery asteroid to the Z5 mining level generation in space.
+(+)Added Discount Dan's crates and a Discount Dan's beret.
+(u)Kubius
+(p)1721
+(e)🆕|feature
+(*)You can now buy yacht dice score sheets at card vendors. Dice sold separately.
+(u)Comradef191
+(p)1753
+(e)🗺|mapping
+(*)Added Atmospherics Forcefields to Cogmap 1, located at the hanger bays and Cargo Routers.
+(+)Revamped Engineering Access on Cogmap 1; Engineers no longer have direct access to the AI Upload Foyer, Engineering Storage and Engineering Dock moved to 'Engineering Storage' Access rather than 'Engineering Engine', Engineering Power Room & both substations now use 'Engineering Power' Access rather than 'Engineering Engine' & the entrance to Engineering no longer requires Engineering Engine access
+(+)Mining is no longer publicly accessible via space! Use the disposals chute in the Mining Shuttle Dock if needed!
+(+)QM Cargo Intake extended by two tiles
+(u)makkipakki
+(p)1785
+(e)🐛|bug
+(*)Made ghost drones emit a coloured glow like they used to!
+(u)adharainspace
+(p)1758
+(e)⚖|balance
+(*)fixed an oversight that made it so blobs generated biopoints slower than intended.
+(+)blobs now have a small starting biopoint cap increase
+(t)mon aug 10 20
+(u)MarkNstein
+(p)1759
+(e)🆕|feature
+(*)You can now chug drinks by click-dragging them onto your sprite from your hand.
+(u)BatElite
+(p)1665
+(e)🆕🎨|feature, sprites
+(*)Engineering and civilian cyborgs and ghostdrones now have a tool to replace lamps in fittings.
+(+)New sprites for the cyborg omnitool and atmospherics transporter. The latter now accepts fluid canisters for ocean map breaches.
+(u)nüke
+(p)1698
+(e)🎨|sprites
+(+)Added 8 new pyro airlock variants.
+(u)Carbadox
+(p)1620
+(e)🆕🗺|feature, mapping
+(+)Added new items to the clothing booth, namely to the accessories, casual, costumes, formal, jackets and the new headwear section.
+(+)Added Clothing Booth to manta
+(u)Phyvo
+(p)1583
+(e)⚖|balance
+(*)Rebalanced artifact probabilities to make better artifacts more common.
+(+)Buffed these artifact types: mining tools, energy guns, power generators.
+(u)system86
+(p)1257
+(e)🆕🎨|feature, sprites
+(*)Added MechComp component containers- they hold your mechcomp (and can be portable!)
+(u)Superlagg
+(p)1627
+(e)🆕|feature
+(*)Beepsky now drops his own personal stun baton, and he can now be properly rebuilt when he dies.
+(+)Beepsky's baton can be used to build other non-Beepsky securitrons, granting them some of his robustness.
+(u)nüke
+(p)1700
+(e)🎨|sprites
+(+)Updated floor guide decals and added 3 new floor guide icons.
+(t)sun aug 09 20
+(u)Moonlol
+(p)1755
+(e)🆕🗺|feature, mapping
+(+)Adds janivend to oshan's janitorial closet.
+(u)Jawns
+(p)1763
+(e)🐛|bug
+(+)Vending machines no longer erroneously take from machine credit instead of account
+(u)Jawns
+(p)1744
+(e)🐛|bug
+(+)Cyborg cooking privileges revoked (for their own tools).
+(t)sat aug 08 20
+(u)Mordent
+(p)1691
+(e)🆕📄|feature, tgui
+(+)Cyborg module rewriter UI updated, now allows multiple modules to be inserted.
+(u)Chickenish
+(p)1705
+(e)🐛|bug
+(+)Chili burps are now working closer to as intended.
+(u)Kubius
+(p)1743
+(e)🗺|mapping
+(+)Kondaru's export driver door now has an override button.
+(t)thu aug 06 20
+(u)Zamujasa
+(*)Medal rewards that fail to redeem due to not having the required items will no longer be disabled, so you can redeem them properly later.
 (t)wed aug 05 20
 (u)Zamujasa
 (e)🆕|feature

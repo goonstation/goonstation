@@ -1315,7 +1315,8 @@
 	desc = "A jumpsuit with a cute frog pattern on it. Get it? <i>Jump</i>suit? Ribbit!"
 	icon_state = "frogsuit"
 	item_state = "lightgreen"
-
+	c_flags = ONESIZEFITSALL // Fix to stop frog suit + obese infinite looping. RemoveEffect would loop through the obesity code back to unequipped over 5 procs total.
+													 //	(The loop goes unequipped->RemoveEffect->UpdateMob->update_clothing->u_equip->unequipped if you're courageous enough to fix it properly. I think that's not be the only way it could loop either.) -BatElite
 	equipped(var/mob/user, var/slot)
 		if (slot == SLOT_W_UNIFORM && user.bioHolder)
 			user.bioHolder.AddEffect("jumpy_suit", 0, 0, 0, 1) // id, variant, time left, do stability, magical

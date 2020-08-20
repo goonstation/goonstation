@@ -66,7 +66,7 @@
 		anti_biological
 			name = "anti-biological crate"
 			spawn_contents = list(/obj/item/storage/box/flaregun = 2,\
-			/obj/item/flamethrower/loaded = 2)
+			/obj/item/flamethrower/assembled/loaded = 2)
 
 /obj/storage/secure/crate/gear
 	desc = "A secure gear crate."

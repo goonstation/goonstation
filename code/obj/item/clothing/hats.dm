@@ -994,6 +994,12 @@
 		icon_state = "sunhatg"
 		item_state = "sunhatg"
 
+	stunhatr
+		stunready = 1
+		uses = 1
+		icon_state = "sunhatr-stun"
+		item_state = "sunhatr-stun"
+
 	examine()
 		. = ..()
 		if (src.stunready)
@@ -1178,3 +1184,9 @@
 	desc = "Hey, kid. You did it. Despite everything, you persevered. I'm proud of you."
 	icon_state = "graduation_cap"
 	item_state = "graduation_cap"
+
+/obj/item/clothing/head/danberet
+	name = "Discount Dan's beret"
+	desc = "A highly advanced textile experience!"
+	icon_state = "danberet"
+	item_state = "danberet"

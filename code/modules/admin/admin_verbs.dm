@@ -260,6 +260,7 @@ var/list/admin_verbs = list(
 		/client/proc/show_admin_lag_hacks,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
+		/datum/admins/proc/supplydrop_spawn_obj,
 
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
@@ -329,6 +330,10 @@ var/list/admin_verbs = list(
 		/client/proc/dereplace_space,
 		/client/proc/ghostdroneAll,
 		/client/proc/showPregameHTML,
+
+		/client/proc/call_proc,
+		/client/proc/call_proc_all,
+		/client/proc/debug_global_variable,
 
 		// /client/proc/admin_airborne_fluid,
 		// /client/proc/replace_space,
@@ -1909,7 +1914,10 @@ var/list/fun_images = list()
 			C.getturftelesci(A)
 
 		if ("Possess")
-			possess(A)
+			if(istype(A, /mob))
+				possessmob(A)
+			else
+				possess(A)
 		if ("Create Poster")
 			C.generate_poster(A)
 

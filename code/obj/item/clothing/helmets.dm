@@ -68,7 +68,7 @@
 	item_state = "s_helmet"
 	var/on = 0
 
-	var/datum/component/holdertargeting/simple_light/light_dir
+	var/datum/component/holdertargeting/medium_directional_light/light_dir
 
 	New()
 		..()

@@ -9,6 +9,7 @@
 	desc = "An underfloor wiring terminal for power equipment"
 	level = 1
 	layer = FLOOR_EQUIP_LAYER1
+	plane = PLANE_NOSHADOW_BELOW
 	var/obj/machinery/power/master = null
 	anchored = 1
 	directwired = 0		// must have a cable on same turf connecting to terminal
@@ -78,6 +79,7 @@
 	desc = "An underfloor connection point for power line communication equipment."
 	level = 1
 	layer = FLOOR_EQUIP_LAYER1
+	plane = PLANE_NOSHADOW_BELOW
 	anchored = 1
 	directwired = 0
 	use_datanet = 1

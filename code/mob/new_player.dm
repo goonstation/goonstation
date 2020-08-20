@@ -275,6 +275,10 @@ mob/new_player
 				return 0
 		if (JOB.needs_college && !src.has_medal("Unlike the director, I went to college"))
 			return 0
+		if (JOB.rounds_needed_to_play && (src.client && src.client.player))
+			var/round_num = src.client.player.get_rounds_participated()
+			if (!isnull(round_num) && round_num < JOB.rounds_needed_to_play) //they havent played enough rounds!
+				return 0
 		if (JOB.limit < 0 || countJob(JOB.name) < JOB.limit)
 			return 1
 		return 0

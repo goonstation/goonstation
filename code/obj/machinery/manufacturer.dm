@@ -560,7 +560,7 @@
 
 			if (href_list["search"])
 				src.search = input("Enter text to search for in schematics.","Manufacturing Unit") as null|text
-				if (lentext(src.search) == 0)
+				if (length(src.search) == 0)
 					src.search = null
 
 			if (href_list["category"])

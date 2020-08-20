@@ -3267,6 +3267,71 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 	<li>It should be noted that torpedoes are extremely fragile and no force should be applied to them. Enough force will lead to the torpedo flying off into the direction it's facing which is extremely undesirable inside NSS Manta.</li>
 	"}
 
+/obj/item/paper/book/grifening
+	name = "Spacemen the Grifening rulebook"
+	desc = "A book outlining the rules of the stations favorite nerd trading-card-game Spacemen the Grifening."
+	icon_state = "sbook"
+	info = {"<center><h2>Spacemen the Grifening</h2></center><hr>
+	<h3>Foreword:</h3>
+	<i>Be greeted by sugary soft-drinks and spooky cultists! You are now officially a </i><b>Nerd</b><i> but do not be afraid! You can indulge in the endless fun of collectible card-games like this one!</i>
+	<br>
+	<br>
+	Spacemen the Grifening is a 2 player party-game; well worth the fun!
+	The machine that spit out this wonderful piece of literature can sell you a few booster packs or a starter set to get going! Feel free to buy a deck and begin immediately!
+	<br>
+	<br>
+	With more experience you can even create your own deck - feel free to experiment and start your own tournament!
+	<hr>
+	<h3>Rules:</h3>
+	<ul style='list-style-type:disc'>
+		<li><b>At Game Start</b>
+			<ul style='list-style-type:circle'>
+				<li>Each player initially has 100 HP. Normally, the player who loses all of their HP loses. There are additional ways to win.</li>
+				<br>
+				<li>Both players stock up their hand with <i>3</i> cards. The person taking the first turn has to draw another card according to the following Draw Phase.</li>
+				<br>
+			</ul>
+		</li>
+		<li><b>Draw Phase</b>
+			<ul style='list-style-type:circle'>
+				<li>Draw one card unless otherwise specified.</li>
+				<br>
+			</ul>
+		</li>
+		<li><b>Main Phase</b>
+			<ul style='list-style-type:circle'>
+				<li>Play any amount of effect and equipment cards - you may also play up to 1 creature card.</li>
+				<br>
+				<li>You may have up to 5 effect, equipment and creature cards on your side of field at any given time. There must be only 1 area card on the table; playing a new area card discards the previous one.</li>
+				<br>
+			</ul>
+		</li>
+		<li><b>Battle Phase</b>
+			<ul style='list-style-type:circle'>
+				<li>Each creature on your side of the field may attack up to once unless incapacitated or otherwise prevented by an effect. No cards may be played after the beginning of battle phase unless allowed by a special effect, but face down cards may be activated.</li>
+				<br>
+				<li>A creature is defeated in normal battle if its <i>DEF is lower than the ATK</i> of the attacking creature. The difference is then subtracted from the HP of the player whose creature was defeated.</li>
+				<br>
+				<li>If the attack fails <i>(DEF is higher than the attacker's ATK)</i>, then the difference is subtracted from the HP of the attacker, and additionally, if the <i>ATK of the defender is higher than the DEF of the attacker</i>, the attacker is defeated.</li>
+				<br>
+			</ul>
+		<li><b>Important Game Information</b>
+			<ul style='list-style-type:circle'>
+				<li>Each player must play with a minimum of 40 and a maximum of 80 cards.</li>
+				<br>
+				<li>If a player must draw and is out of cards to draw, that player loses.</li>
+				<br>
+			</ul>
+		</li>
+	<h3>Tips:</h3><hr>
+	<ul style='list-style-type:disc'>
+		<li>1) There are themed sets of cards that work great in combination with one another! Try to build your deck around that!</li>
+		<li>2) Tap your equipment, effect or even the boards area card to differenciate between creatures!</li>
+		<li>3) Cards which are face-down on the table can surprise your opponent!</li>
+		<li>4) Just because a creature died and has to be put on your discard pile does not mean it is out of the game yet!</li>
+		<li>5) Keep some dice nearby. Some cards might require a bit of luck!</li>
+		<li>6) Buy more cards! Spend your cash!</li>
+	</ul>"}
 
 /obj/item/paper/book/ratbook
 	name = "chewed and mangled book"

@@ -211,6 +211,9 @@ datum/light
 				if (SHOULD_QUEUE)
 					light_update_queue.queue(src)
 					dirty_flags |= D_COLOR
+					r_des = red
+					g_des = green
+					b_des = blue
 					return
 
 				var/strip_gen = ++RL_Generation

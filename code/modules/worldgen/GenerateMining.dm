@@ -431,7 +431,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabSizeY = 19
 
 	rockworms
-		maxNum = 10
+		maxNum = 4 // It was at 10 ... and there was a good chance that most of the prefabs on Z5 were this ugly mess. We need less of that. Way less. So here ya'go.
 		probability = 100
 		prefabPath = "assets/maps/prefabs/prefab_rockworms.dmm"
 		prefabSizeX = 5
@@ -509,6 +509,26 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabSizeX = 20
 		prefabSizeY = 15
 
+	clown_nest // Gores abandoned Clown-Federation Outpost
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_clown_nest.dmm"
+		prefabSizeX = 30
+		prefabSizeY = 30
+
+	dans_asteroid // Discount Dans Delivery Asteroid featuring advanced cooling technology
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_dans_asteroid.dmm"
+		prefabSizeX = 37
+		prefabSizeY = 48
+
+	drug_den // A highly cozy hideout in space; take out the stress - eat some mice sandwiches.
+		maxNum = 1
+		probability = 40
+		prefabPath = "assets/maps/prefabs/prefab_drug_den.dmm"
+		prefabSizeX = 32
+		prefabSizeY = 27
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit

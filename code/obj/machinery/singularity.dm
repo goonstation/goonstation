@@ -142,7 +142,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			grav_pull = 8
 
 /obj/machinery/the_singularity/proc/eat()
-	for (var/X in orange(grav_pull,get_turf(src)))
+	for (var/X in orange(grav_pull, src.get_center()))
 		LAGCHECK(LAG_LOW)
 		if (!X)
 			continue
@@ -156,7 +156,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				continue
 
 		if (!isarea(X))
-			if (get_dist(src, X) <= 2) // why was this a switch before ffs
+			if (get_dist(src.get_center(), X) <= 2) // why was this a switch before ffs
 				src.Bumped(A)
 				if (A && A.qdeled)
 					A = null
@@ -249,6 +249,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	src.energy += gain
 
+/obj/machinery/the_singularity/proc/get_center()
+	. = get_turf(src)
+	. = get_step(., NORTHEAST)
+
 /obj/machinery/the_singularity/attackby(var/obj/item/I as obj, var/mob/user as mob)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/C = I
@@ -284,7 +288,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return
 
 /obj/machinery/the_singularity/proc/Toxmob()
-	for (var/mob/living/carbon/M in orange(7, src))
+
+	for (var/mob/living/carbon/M in orange(7, src.get_center()))
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.wear_suit)
@@ -294,7 +299,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		M.show_text("You feel odd.", "red")
 
 /obj/machinery/the_singularity/proc/Mezzer()
-	for (var/mob/living/carbon/M in oviewers(8, get_turf(src)))
+
+	for (var/mob/living/carbon/M in oviewers(8, src.get_center()))
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (istype(H.glasses,/obj/item/clothing/glasses/meson))
@@ -305,11 +311,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		"<B>You look directly into [src]!<br><span class='alert'>You feel weak!</span></B>")
 
 /obj/machinery/the_singularity/proc/BHolerip()
-	for (var/turf/T in orange(6,get_turf(src)))
+
+	for (var/turf/T in orange(6, src.get_center()))
 		LAGCHECK(LAG_LOW)
 		if (prob(70))
 			continue
-		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (get_dist(src,T) == 4 || get_dist(src,T) == 5)) // I'm very tired and this is the least dumb thing I can make of what was here for now
+		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (get_dist(src.get_center(),T) == 4 || get_dist(src.get_center(),T) == 5)) // I'm very tired and this is the least dumb thing I can make of what was here for now
 			if (T.turf_flags & IS_TYPE_SIMULATED)
 				if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))
 					var/turf/simulated/floor/F = T
@@ -337,7 +344,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	return
 
 /obj/machinery/the_singularity/proc/Zzzzap()///Pulled from wizard spells might edit later
-	var/turf/T = get_turf(src)
+	var/turf/T = src.get_center()
 
 	var/obj/overlay/pulse = new/obj/overlay(T)
 	pulse.icon = 'icons/effects/effects.dmi'
@@ -473,6 +480,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				src.cleanup(2)
 				src.cleanup(4)
 				src.cleanup(8)
+				for(var/dir in cardinal)
+					src.UpdateOverlays(null, "field_start_[dir]")
+					src.UpdateOverlays(null, "field_end_[dir]")
 
 /obj/machinery/field_generator/proc/setup_field(var/NSEW = 0)
 	var/turf/T = src.loc
@@ -507,6 +517,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(isnull(G))
 		return
+
+	src.UpdateOverlays(image('icons/obj/singularity.dmi', "Contain_F_Start", dir=NSEW, layer=(dir == NORTH ? src.layer - 1 : FLOAT_LAYER)), "field_start_[NSEW]")
+	G.UpdateOverlays(image('icons/obj/singularity.dmi', "Contain_F_End", dir=NSEW, layer=(dir == SOUTH ? src.layer - 1 : FLOAT_LAYER)), "field_end_[NSEW]")
 
 	T2 = src.loc
 
@@ -621,6 +634,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/turf/T = src.loc
 	var/turf/T2 = src.loc
 
+	src.UpdateOverlays(null, "field_start_[NSEW]")
+
 	for(var/dist = 0, dist <= 9, dist += 1) // checks out to 8 tiles away for fields
 		T = get_step(T2, NSEW)
 		T2 = T
@@ -630,6 +645,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		if(locate(/obj/machinery/field_generator) in T)
 			G = (locate(/obj/machinery/field_generator) in T)
+			G.UpdateOverlays(null, "field_end_[NSEW]")
 			if(!G.active)
 				break
 
@@ -1693,7 +1709,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 							display:table-cell;
 							color:#0A0;
 							font-weight:bold;
-							text-align:center;
+							text-align:src.get_center();
 							vertical-align:middle;
 							border:3px solid #222;
 							background-color:#111;
@@ -1706,7 +1722,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 							display:table-cell;
 							color:#0A0;
 							font-weight:bold;
-							text-align:center;
+							text-align:src.get_center();
 							vertical-align:middle;
 							border:3px solid #222;
 							background-color:#111;
@@ -1741,7 +1757,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 						*/
 
 						.timer_table {
-							text-align:center;
+							text-align:src.get_center();
 							vertical-align:middle;
 							width:200px;
 						}

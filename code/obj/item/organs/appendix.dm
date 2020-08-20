@@ -10,7 +10,7 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() >= FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+		if (src.get_damage() >= FAIL_DAMAGE && prob(src.get_damage() * 0.2) && !robotic)
 			donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
@@ -25,8 +25,11 @@
 
 	//A bad version of the robutsec... For now.
 	on_life(var/mult = 1)
-		if (src.get_damage() < FAIL_DAMAGE && prob(10))
-			donor.reagents.add_reagent(pick("saline", "salbutamol", "salicylic_acid", "charcoal"), 4 * mult)
+		if (!..())
+			return 0
+		if (src.get_damage() < FAIL_DAMAGE && prob(10 * mult))
+			var/reagID = pick("saline", "salbutamol", "salicylic_acid", "charcoal")
+			donor.reagents.add_reagent(reagID, reagID == "salicyclic_acid" ? 3 : 4) //salicyclic has very low depletion, reduce chances of overdose
 
 		if(emagged && !broken && donor.health < 0) //emagged and we're in crit
 			src.take_damage(200, 200, 200)

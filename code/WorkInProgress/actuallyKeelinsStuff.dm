@@ -448,7 +448,7 @@ Returns:
 	if(trgX && trgY && trgZ)
 		var/startTime = world.timeofday
 		var/dmm_suite/D = new/dmm_suite()
-		if(loaded && lentext(loaded))
+		if(loaded && length(loaded))
 			usr.loc = locate(trgX,trgY,trgZ)
 			D.read_map(loaded,trgX,trgY,trgZ)
 			boutput(usr, "<span class='alert'>LOADED '[mapPath]' IN [((world.timeofday - startTime)/10)] SEC</span>")
