@@ -4,7 +4,6 @@ import { Window } from '../layouts';
 
 export const PowerTransmissionLaser = (props, context) => {
   const { data } = useBackend(context);
-  // Extract `health` and `color` variables from the `data` object.
   const {
     lifetimeEarnings,
     name,
@@ -64,13 +63,14 @@ const Status = (props, context) => {
           label="Charging Status"
           labelColor="white"
           textAlign="right">
-          {isCharging ? "Online " : "Offline "}
+          {isCharging ? 'Online ' : 'Offline '}
           <ColorBox
-            color={isCharging ? "green" : "red"} />
+            color={isCharging ? 'green' : 'red'} />
         </LabeledList.Item>
       </LabeledList>
       <Divider />
-      <Box mb="0.5em"
+      <Box
+        mb="0.5em"
         bold>
         Power Grid Saturation
       </Box>
@@ -93,9 +93,9 @@ const Status = (props, context) => {
           label="Laser Status"
           labelColor="white"
           textAlign="right">
-          {isFiring ? "Online " : "Offline "}
+          {isFiring ? 'Online ' : 'Offline '}
           <ColorBox
-            color={isFiring ? "green" : "red"} />
+            color={isFiring ? 'green' : 'red'} />
         </LabeledList.Item>
       </LabeledList>
     </Section>
@@ -117,8 +117,8 @@ const InputControls = (props, context) => {
         <strong>Charging Circuit </strong>
         <Button
           icon="power-off"
-          content={chargingEnabled ? "Enabled" : "Disabled"}
-          color={chargingEnabled ? "green" : "red"}
+          content={chargingEnabled ? 'Enabled' : 'Disabled'}
+          color={chargingEnabled ? 'green' : 'red'}
           onClick={() => act('toggleInput')} />
       </Box>
       <Box mb="0.5em">
@@ -134,23 +134,23 @@ const InputControls = (props, context) => {
           value={inputNumber}
           onDrag={(e, setInput) => act('setInput', { setInput })} />
         <Button
-          content={"W"}
+          content={'W'}
           selected={inputMultiplier===1}
           onClick={() => act('inputW')} />
         <Button
-          content={"kW"}
+          content={'kW'}
           selected={inputMultiplier===10**3}
           onClick={() => act('inputkW')} />
         <Button
-          content={"MW"}
+          content={'MW'}
           selected={inputMultiplier===10**6}
           onClick={() => act('inputMW')} />
         <Button
-          content={"GW"}
+          content={'GW'}
           selected={inputMultiplier===10**9}
           onClick={() => act('inputGW')} />
         <Button
-          content={"TW"}
+          content={'TW'}
           selected={inputMultiplier===10**12}
           onClick={() => act('inputTW')} />
       </Box>
@@ -173,8 +173,8 @@ const OutputControls = (props, context) => {
         <strong>Laser Circuit </strong>
         <Button
           icon="power-off"
-          content={laserEnabled ? "Enabled" : "Disabled"}
-          color={laserEnabled ? "green" : "red"}
+          content={laserEnabled ? 'Enabled' : 'Disabled'}
+          color={laserEnabled ? 'green' : 'red'}
           onClick={() => act('toggleOutput')} />
       </Box>
       <Box mb="0.5em">
@@ -190,15 +190,15 @@ const OutputControls = (props, context) => {
           value={outputNumber}
           onDrag={(e, setOutput) => act('setOutput', { setOutput })} />
         <Button
-          content={"MW"}
+          content={'MW'}
           selected={outputMultiplier===10**6}
           onClick={() => act('outputMW')} />
         <Button
-          content={"GW"}
+          content={'GW'}
           selected={outputMultiplier===10**9}
           onClick={() => act('outputGW')} />
         <Button
-          content={"TW"}
+          content={'TW'}
           selected={outputMultiplier===10**12}
           onClick={() => act('outputTW')} />
       </Box>
