@@ -31,7 +31,7 @@ turf/simulated/floor/chess
 		..()
 		chessboard += src
 
-	disposing()
+	Del()
 		chessboard -= src
 		..()
 
@@ -43,7 +43,7 @@ turf/unsimulated/floor/chess
 		..()
 		chessboard += src
 
-	disposing()
+	Del()
 		chessboard -= src
 		..()
 

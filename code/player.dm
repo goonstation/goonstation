@@ -33,7 +33,7 @@
 	proc/cache_round_stats()
 		var/list/response = null
 		try
-			response = apiHandler.queryAPI("playerInfo/get", list("ckey" = src.key), forceResponse = 1)
+			response = apiHandler.queryAPI("playerInfo/get", list("ckey" = ckey(src.key)), forceResponse = 1)
 		catch
 			return 0
 		if (!response)
