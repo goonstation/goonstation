@@ -133,6 +133,14 @@
 	dir = 8
 	},
 /area/station/hydroponics)
+"acQ" = (
+/obj/machinery/computer/ordercomp{
+	dir = 8
+	},
+/turf/simulated/floor/yellow/checker,
+/area/station/routingdepot/catering{
+	name = "Catering Router"
+	})
 "adn" = (
 /turf/simulated/shuttle/wall/corner{
 	dir = 1
@@ -9040,7 +9048,7 @@
 /area/station/crew_quarters/hor)
 "deX" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/yellow/checker,
+/turf/simulated/floor/delivery,
 /area/station/routingdepot/catering{
 	name = "Catering Router"
 	})
@@ -14163,6 +14171,12 @@
 	id = "endp_min";
 	name = "Cargo Door"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/mining/refinery)
 "fal" = (
@@ -16949,9 +16963,17 @@
 /turf/simulated/floor/wood/seven,
 /area/station/aviary)
 "gcJ" = (
-/obj/machinery/cargo_router/ozy/qm_mid,
-/turf/simulated/floor/airless/plating,
-/area)
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/computer/barcode/ozy{
+	dir = 8
+	},
+/turf/simulated/floor/yellow/checker,
+/area/station/routingdepot/catering{
+	name = "Catering Router"
+	})
 "gcU" = (
 /obj/stool/bench/sauna{
 	dir = 1
@@ -18616,6 +18638,12 @@
 	id = "endp_min";
 	name = "Cargo Door"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/mining/refinery)
 "gIq" = (
@@ -19712,7 +19740,7 @@
 	operating = 1
 	},
 /obj/machinery/light/small,
-/turf/simulated/floor/yellow/checker,
+/turf/simulated/floor/caution/northsouth,
 /area/station/routingdepot/catering{
 	name = "Catering Router"
 	})
@@ -22893,6 +22921,17 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"igG" = (
+/obj/machinery/conveyor{
+	name = "cargo belt - south";
+	operating = 1
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/airless/plating,
+/area)
 "igH" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25942,6 +25981,16 @@
 /obj/machinery/light,
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/south)
+"jgM" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/yellow/checker,
+/area/station/routingdepot/airbridge{
+	name = "Vessel Dock Router"
+	})
 "jgV" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/cable{
@@ -27754,6 +27803,11 @@
 	id = "endp_ves";
 	name = "Cargo Door Control";
 	pixel_x = -24
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/routingdepot/airbridge{
@@ -35053,7 +35107,7 @@
 	operating = 1
 	},
 /obj/disposalpipe/segment/food,
-/turf/simulated/floor/yellow/checker,
+/turf/simulated/floor/caution/northsouth,
 /area/station/routingdepot/catering{
 	name = "Catering Router"
 	})
@@ -35406,7 +35460,8 @@
 "moH" = (
 /obj/disposaloutlet/west,
 /obj/disposalpipe/trunk/east,
-/turf/simulated/floor/yellow/checker,
+/obj/machinery/light/small,
+/turf/simulated/floor/caution/northsouth,
 /area/station/routingdepot/catering{
 	name = "Catering Router"
 	})
@@ -41353,6 +41408,7 @@
 "osY" = (
 /obj/table/reinforced/auto,
 /obj/item/hand_labeler,
+/obj/machinery/light,
 /turf/simulated/floor/yellow/checker,
 /area/station/routingdepot/airbridge{
 	name = "Vessel Dock Router"
@@ -45220,6 +45276,17 @@
 /turf/simulated/floor/blue/checker,
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
+	})
+"pPG" = (
+/obj/storage/crate,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/yellow/checker,
+/area/station/routingdepot/airbridge{
+	name = "Vessel Dock Router"
 	})
 "pPS" = (
 /obj/storage/secure/closet/personal,
@@ -55866,6 +55933,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
+"tqj" = (
+/obj/machinery/cargo_router/ozy/qm_mid,
+/turf/simulated/floor/airless/plating,
+/area)
 "tqm" = (
 /obj/stool/chair/comfy{
 	dir = 1
@@ -69013,7 +69084,7 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/turf/simulated/floor/yellow/checker,
+/turf/simulated/floor/caution/northsouth,
 /area/station/routingdepot/catering{
 	name = "Catering Router"
 	})
@@ -84992,12 +85063,12 @@ aJu
 aJu
 aJu
 aJu
-mcw
+ePM
 akv
 oZN
 mcw
 mcw
-mcw
+ePM
 aJu
 aJu
 aJu
@@ -85511,7 +85582,7 @@ aJu
 pXM
 pEm
 sPA
-pEm
+sPA
 ybQ
 xNB
 uRf
@@ -86003,9 +86074,9 @@ aJu
 aJu
 aJu
 aJu
-aJu
+krb
 rDN
-bQu
+igG
 krb
 rDN
 ePM
@@ -86199,14 +86270,14 @@ ath
 ath
 ath
 ath
-mcw
+ePM
 bQu
 mAH
 mcw
 mcw
 lqE
 mcw
-mcw
+ePM
 aJu
 aJu
 aJu
@@ -86305,7 +86376,7 @@ ath
 ath
 ath
 ath
-ath
+bQu
 bQu
 mAH
 akv
@@ -109864,13 +109935,13 @@ vjD
 aJu
 aJu
 ljU
-tcI
+pPG
 hEy
 vxr
 lYc
 vxr
 tOn
-vxr
+jgM
 ljU
 aJu
 aJu
@@ -119142,9 +119213,9 @@ wvA
 dHl
 xPX
 soz
-dJa
+gcJ
 cSW
-cSW
+acQ
 ydf
 ebN
 sYV
@@ -129735,7 +129806,7 @@ ath
 ath
 ath
 clU
-mcw
+ePM
 bQu
 krb
 vml
@@ -130641,7 +130712,7 @@ aJu
 aJu
 aJu
 fdT
-mcw
+rDN
 krb
 mAH
 vml
@@ -130943,8 +131014,8 @@ aJu
 aJu
 aJu
 fdT
-rDN
-krb
+lqE
+tqj
 mAH
 vml
 aJu
@@ -131245,8 +131316,8 @@ ath
 ath
 ath
 clU
-lqE
-gcJ
+vOf
+krb
 mAH
 vml
 aJu
@@ -131547,7 +131618,7 @@ aJu
 aJu
 aJu
 fdT
-vOf
+mcw
 krb
 mAH
 vml
@@ -131849,7 +131920,7 @@ aJu
 aJu
 aJu
 fdT
-mcw
+ePM
 krb
 mAH
 vml
@@ -132452,8 +132523,8 @@ aJu
 aJu
 aJu
 aJu
-fdT
-mcw
+krb
+rDN
 krb
 mAH
 rDN
@@ -132754,8 +132825,8 @@ ath
 ath
 ath
 ath
-gwD
-mcw
+bQu
+bQu
 bQu
 eih
 lqE
@@ -133057,7 +133128,7 @@ aJu
 aJu
 aJu
 aJu
-mcw
+ePM
 mAH
 mcw
 fUB
@@ -133403,7 +133474,7 @@ mar
 mar
 mar
 mar
-ePM
+mcw
 wal
 viA
 lBl
