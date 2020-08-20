@@ -1,3 +1,9 @@
+(t)mon aug 17 20
+(u)pali
+(*)Proc calling is now available to Administrator rank.
+(*)View Variables now doesn't scroll up every time you edit a var.
+(*)Calling procs is now a bit more user friendly (it tells you when the proc doesn't exist, no need to remember whether to prefix with `proc/` or not, return value is shown better, it tells you when an exception happens).
+(*)View Variables now has a List Procs button that shows you a clickable list of all procs of that object. First time it gets built it might take some time (and maybe cause some lag). Game Panel has a button to look at global procs.
 (t)tue aug 11 20
 (u)pali
 (*)Admin Interact (~ + click) is now also accessible from View Variables.

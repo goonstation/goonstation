@@ -74,6 +74,17 @@
 			src.atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)
 			src.atk_disease_prob = 10
 			src.atkcarbon = 1
+
+/obj/critter/mouse/mad
+	name = "rabid space mouse"
+	desc = "A mouth-foaming cheese and flesh eating mouse. In space."
+	health = 10
+	chases_food = 0
+	feed_text = "squeaks viciously!"
+	atk_delay = 10
+	atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)
+	atk_disease_prob = 35
+	atkcarbon = 1
 /*
 	CritterAttack(mob/living/M)
 		src.attacking = 1
@@ -293,20 +304,22 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 			..()
 
 	CritterAttack(mob/M)
-		if (ismob(M))
-			src.attacking = 1
-			var/attackCount = (src.catnip ? rand(4,8) : 1)
-			while (attackCount-- > 0)
-				src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-				if (ismob(M))
-					random_brute_damage(src.target, 3,1)
-				else if (istype(M, /obj/critter)) //robust cat simulation.
-					var/obj/critter/C = src.target
-					C.health -= 2
-					if (C.health <= 0 && C.alive)
-						C.CritterDeath()
-						src.attacking = 0
-				sleep(0.2 SECONDS)
+		if(istype(M, /mob/living/critter/small_animal/mouse/weak/mentor) && prob(90))
+			src.visible_message("<span class='combat'><B>[src]</B> tries to bite [src.target] but \the [src.target] dodges nimbly!</span>")
+			return
+		src.attacking = 1
+		var/attackCount = (src.catnip ? rand(4,8) : 1)
+		while (attackCount-- > 0)
+			src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
+			if (ismob(M))
+				random_brute_damage(src.target, 3,1)
+			else if (istype(M, /obj/critter)) //robust cat simulation.
+				var/obj/critter/C = src.target
+				C.health -= 2
+				if (C.health <= 0 && C.alive)
+					C.CritterDeath()
+					src.attacking = 0
+			sleep(0.2 SECONDS)
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)

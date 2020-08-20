@@ -402,6 +402,13 @@
 		set name = "Show Alerts"
 		if(mainframe)
 			mainframe.ai_alerts()
+	
+	verb/ai_station_announcement()
+		set name = "AI Station Announcement"
+		set desc = "Makes a station announcement."
+		set category = "AI Commands"
+		if(mainframe)
+			mainframe.ai_station_announcement()
 
 //---TURF---//
 /turf/var/image/aiImage

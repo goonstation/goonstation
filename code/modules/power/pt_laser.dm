@@ -464,7 +464,7 @@
 	desc = "A powerful laser beam."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ptl_beam"
-	anchored = 1
+	anchored = 2
 	density = 0
 	luminosity = 1
 	invisibility = 101
@@ -499,6 +499,9 @@
 						source.affecting_mobs.Add(L)
 
 	..()
+
+/obj/lpt_laser/ex_act(severity)
+	return
 
 /obj/lpt_laser/HasEntered(var/atom/movable/AM)
 	if (src.active && isliving(AM) && !isintangible(AM))

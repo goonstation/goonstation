@@ -74,7 +74,7 @@
 		if (prob(5) || sounds_instrument.len == 1)
 			if (src.dog_bark)
 				for (var/obj/critter/dog/george/G in by_type[/obj/critter/dog/george])
-					if (DIST_CHECK(G, T, 6) && prob(60))
+					if (IN_RANGE(G, T, 6) && prob(60))
 						G.howl()
 
 			src.post_play_effect(user)

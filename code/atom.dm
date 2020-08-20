@@ -81,6 +81,11 @@
 	F["[base].f"] >> f
 	return new /matrix(a,b,c,d,e,f)
 
+/**
+  * The base type for nearly all physical objects in SS13
+	*
+  * Lots of functionality resides in this type.
+  */
 /atom
 	layer = TURF_LAYER
 	plane = PLANE_DEFAULT
@@ -90,15 +95,21 @@
 	var/tmp/temp_flags = 0
 	var/tmp/last_bumped = 0
 	var/shrunk = 0
-	var/texture_size = 0  //Override for the texture size used by setTexture.
-	var/open_to_sound = 0	//If hear_talk is triggered on this object, make my contents hear_talk as well
+
+	/// Override for the texture size used by setTexture.
+	var/texture_size = 0
+
+	/// If hear_talk is triggered on this object, make my contents hear_talk as well
+	var/open_to_sound = 0
+
 	var/interesting = ""
 	var/stops_space_move = 0
 
-	//Gets the atoms name with all the ugly prefixes things remove
+	/// Gets the atoms name with all the ugly prefixes things remove
 	proc/clean_name()
 		return strip_special(name)
-	//Same as above, but encoded too since everything ever uses HTML in the game.
+
+	/// clean_name(), but encoded too since everything ever uses HTML in the game.
 	proc/safe_name()
 		return html_encode(strip_special(name))
 
@@ -189,18 +200,21 @@
 
 /* -------------------- end name stuff -------------------- */
 
-	var/mat_changename = 1 //Change the name of this atom when a material is applied?
-	var/mat_changedesc = 1 //Change the desc of this atom when a material is applied?
-	var/mat_changeappearance = 1 //Change the appearance of this atom when a material is applied?
+	/// Change the name of this atom when a material is applied?
+	var/mat_changename = 1
+
+	/// Change the desc of this atom when a material is applied?
+	var/mat_changedesc = 1
+
+	/// Change the appearance of this atom when a material is applied?
+	var/mat_changeappearance = 1
 
 	var/explosion_resistance = 0
 	var/explosion_protection = 0 //Reduces damage from explosions
 
-	///Chemistry.
+	/// Chemistry.
 	var/datum/reagents/reagents = null
 
-	//var/chem_is_open_container = 0
-	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	disposing()
 		material = null
 		if (!isnull(reagents))
@@ -219,7 +233,6 @@
 				src.delStatus(effect)
 			src.statusEffects = null
 		..()
-	///Chemistry.
 
 	proc/Turn(var/rot)
 		src.transform = matrix(src.transform, rot, MATRIX_ROTATE)
@@ -240,9 +253,11 @@
 	proc/return_air()
 		return null
 
-// Convenience proc to see if a container is open for chemistry handling
-// returns true if open
-// false if closed
+/**
+  * Convenience proc to see if a container is open for chemistry handling
+	*
+  * * returns true if open, false if closed
+	*/
 	proc/is_open_container()
 		return flags & OPENCONTAINER
 
@@ -273,29 +288,29 @@
 			boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>")
 			return
 
-	proc/signal_event(var/event) // Right now, we only signal our container
-		if(src.loc)
-			src.loc.handle_event(event, src)
+/atom/proc/signal_event(var/event) // Right now, we only signal our container
+	if(src.loc)
+		src.loc.handle_event(event, src)
 
-	proc/handle_event(var/event, var/sender) //This is sort of like a version of Topic that is not for browsing.
-		return
+/atom/proc/handle_event(var/event, var/sender) //This is sort of like a version of Topic that is not for browsing.
+	return
 
-	proc/serialize_icon(var/savefile/F, var/path, var/datum/sandbox/sandbox)
-		icon_serializer(F, path, sandbox, icon, icon_state)
+/atom/proc/serialize_icon(var/savefile/F, var/path, var/datum/sandbox/sandbox)
+	icon_serializer(F, path, sandbox, icon, icon_state)
 
-	proc/deserialize_icon(var/savefile/F, path, var/datum/sandbox/sandbox)
-		var/datum/iconDeserializerData/IDS = icon_deserializer(F, path, sandbox, icon, icon_state)
-		icon = IDS.icon
-		icon_state = IDS.icon_state
+/atom/proc/deserialize_icon(var/savefile/F, path, var/datum/sandbox/sandbox)
+	var/datum/iconDeserializerData/IDS = icon_deserializer(F, path, sandbox, icon, icon_state)
+	icon = IDS.icon
+	icon_state = IDS.icon_state
 
-	proc/serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
-		return
+/atom/proc/serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
+	return
 
-	proc/deserialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
-		return DESERIALIZE_NOT_IMPLEMENTED
+/atom/proc/deserialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
+	return DESERIALIZE_NOT_IMPLEMENTED
 
-	proc/deserialize_postprocess()
-		return
+/atom/proc/deserialize_postprocess()
+	return
 
 /atom/proc/ex_act(var/severity=0,var/last_touched=0)
 	return
@@ -353,10 +368,12 @@
 /atom/proc/set_icon_state(var/new_state)
 	src.icon_state = new_state
 	signal_event("icon_updated")
+
 /*
 /atom/MouseEntered()
 	usr << output("[src.name]", "atom_label")
 */
+
 /atom/movable/overlay/attackby(a, b)
 	//Wire note: hascall check below added as fix for: undefined proc or verb /datum/targetable/changeling/monkey/attackby() (lmao)
 	if (src.master && hascall(src.master, "attackby"))
@@ -396,7 +413,6 @@
 	var/turf/last_turf = 0
 	var/last_move = null
 	var/anchored = 0
-	// var/elevation = 2    - not used anywhere
 	var/move_speed = 10
 	var/l_move_time = 1
 	var/throwing = 0
@@ -409,9 +425,15 @@
 	var/soundproofing = 5
 	appearance_flags = LONG_GLIDE | PIXEL_SCALE
 	var/l_spd = 0
-	var/list/attached_objs = null //List of attached objects. Objects in this list will follow this atom around as it moves. --SOMEPOTATO: THIS MAKES ME UNCOMFORTABLE
-	var/no_gravity = 0 //Continue moving until a wall or solid object is hit.
-	var/p_class = 2.5 // how much it slows you down while pulling it, changed this from w_class because that's gunna cause issues with items that shouldn't fit in backpacks but also shouldn't slow you down to pull (sorry grayshift)
+
+	/// List of attached objects. Objects in this list will follow this atom around as it moves.
+	var/list/attached_objs = null
+
+	/// Continue moving until a wall or solid object is hit.
+	var/no_gravity = 0
+
+	/// how much it slows you down while pulling it, changed this from w_class because that's gunna cause issues with items that shouldn't fit in backpacks but also shouldn't slow you down to pull (sorry grayshift)
+	var/p_class = 2.5
 
 
 //some more of these event handler flag things are handled in set_loc far below . . .
@@ -446,31 +468,6 @@
 	src.attached_objs?.Cut()
 	src.attached_objs = null
 
-
-//mbc comment out becausae im pretty sure this caused issuesss!
-/*
-	if (isturf(src.loc))
-		if (src.event_handler_flags & USE_CHECKEXIT)
-			var/turf/T = src.loc
-			if (T)
-				T.checkingexit = max(T.checkingexit-1, 0)
-		if (src.event_handler_flags & USE_CANPASS || src.density)
-			var/turf/T = src.loc
-			if (T)
-				if (bound_width + bound_height > 64)
-					for(var/turf/BT in bounds(src))
-						BT.checkingcanpass = max(BT.checkingcanpass-1, 0)
-				else
-					T.checkingcanpass = max(T.checkingcanpass-1, 0)
-		if (src.event_handler_flags & USE_HASENTERED)
-			var/turf/T = src.loc
-			if (T)
-				T.checkinghasentered = max(T.checkinghasentered-1, 0)
-		if (src.event_handler_flags & USE_PROXIMITY)
-			var/turf/T = src.loc
-			if (T)
-				T.checkinghasproximity = max(T.checkinghasproximity-1, 0)
-	*/
 	last_turf = src.loc // instead rely on set_loc to clear last_turf
 	set_loc(null)
 	..()
@@ -598,8 +595,10 @@
 			update_mdir_light_visibility(direct)
 
 
-//called once per player-invoked move, regardless of diagonal etc
-//called via pulls and mob steps
+/**
+  * called once per player-invoked move, regardless of diagonal etc
+  * called via pulls and mob steps
+	*/
 /atom/movable/proc/OnMove(source = null)
 
 /atom/movable/proc/pull()
@@ -651,8 +650,10 @@
 
 /atom/proc/get_desc(dist)
 
-// a proc to completely override the standard formatting for examine text
-// to prevent more copy paste -- cirr
+/**
+  * a proc to completely override the standard formatting for examine text
+	* to prevent more copy paste
+	*/
 /atom/proc/special_desc(dist, mob/user)
 	return null
 
@@ -864,12 +865,15 @@
 	return
 
 
-// this handles RL_Lighting for luminous atoms and some child types override it for extra stuff
-// like the 2x2 pod camera. fixes that bug where you go through a warp portal but your camera doesn't update
-//
-// there are lots of old places in the code that set loc directly.
-// ignore them they'll be fixed later, please use this proc in the future
+/**
+  * this handles RL_Lighting for luminous atoms and some child types override it for extra stuff
+  * like the 2x2 pod camera. fixes that bug where you go through a warp portal but your camera doesn't update
+  *
+  * there are lots of old places in the code that set loc directly.
+	* ignore them they'll be fixed later, please use this proc in the future
+  */
 /atom/movable/proc/set_loc(var/newloc as turf|mob|obj in world)
+	SHOULD_CALL_PARENT(TRUE)
 	if (loc == newloc)
 		return src
 
@@ -993,21 +997,29 @@
 
 // standardized damage procs
 
-/atom/proc/damage_blunt(var/amount)
+/// Does x blunt damage to the atom
+/atom/proc/damage_blunt(amount)
 
-/atom/proc/damage_piercing(var/amount)
+/// Does x piercing damage to the atom
+/atom/proc/damage_piercing(amount)
 
-/atom/proc/damage_slashing(var/amount)
+/// Does x slashing damage to the atom
+/atom/proc/damage_slashing(amount)
 
-/atom/proc/damage_corrosive(var/amount)
+/// Does x corrosive damage to the atom
+/atom/proc/damage_corrosive(amount)
 
-/atom/proc/damage_electricity(var/amount)
+/// Does x electricity damage to the atom
+/atom/proc/damage_electricity(amount)
 
-/atom/proc/damage_radiation(var/amount)
+/// Does x radiation damage to the atom
+/atom/proc/damage_radiation(amount)
 
-/atom/proc/damage_heat(var/amount)
+/// does x heat damage to the atom
+/atom/proc/damage_heat(amount)
 
-/atom/proc/damage_cold(var/amount)
+/// Does x cold damage to the atom
+/atom/proc/damage_cold(amount)
 
 /proc/scaleatomall()
 	var/scalex = input(usr,"X Scale","1 normal, 2 double etc","1") as num

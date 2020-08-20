@@ -1582,7 +1582,7 @@
 /area/station/security/armory)
 "adP" = (
 /obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/flamethrower/loaded,
+/obj/item/flamethrower/assembled/loaded,
 /turf/simulated/floor/caution/west,
 /area/station/security/armory)
 "adQ" = (
@@ -27062,7 +27062,6 @@
 /obj/grille/steel,
 /obj/item/basketball{
 	desc = "Something beautiful overwhelms you when you look at this ball.";
-	layer = 9;
 	name = "barkley's basketball"
 	},
 /obj/decal/poster/wallsign/gym,

@@ -888,3 +888,4 @@ Read the rules, don't grief, and have fun!</div>"}
 	pooled()
 		src.maptext = ""
 		src.invisibility = 101
+		..()

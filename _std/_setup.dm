@@ -148,8 +148,8 @@
 #define AST_NUMPREFABS 18     //How many prefabs to place. It'll try it's hardest to place this many at the very least. You're basically guaranteed this amount of prefabs.
 #define AST_NUMPREFABSEXTRA 6//Up to how many extra prefabs to place randomly. You might or might not get these extra ones.
 #else
-#define AST_NUMPREFABS 5     //How many prefabs to place. It'll try it's hardest to place this many at the very least. You're basically guaranteed this amount of prefabs.
-#define AST_NUMPREFABSEXTRA 3//Up to how many extra prefabs to place randomly. You might or might not get these extra ones.
+#define AST_NUMPREFABS 11     //How many prefabs to place. It'll try it's hardest to place this many at the very least. You're basically guaranteed this amount of prefabs.
+#define AST_NUMPREFABSEXTRA 5//Up to how many extra prefabs to place randomly. You might or might not get these extra ones.
 #endif
 
 #define AST_MAPSEEDBORDER 10 //Min distance from map edge for seeds.

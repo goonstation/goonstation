@@ -48335,7 +48335,7 @@
 	icon_state = "line1"
 	},
 /obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/flamethrower/loaded,
+/obj/item/flamethrower/assembled/loaded,
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "bMO" = (
