@@ -110,10 +110,3 @@ export const formatDb = value => {
   }
   return sign + formatted + ' dB';
 };
-
-/**
- * Truncates a string with an ellipsis after n characters. Default is 25.
- */
-export const truncate = (str, n = 25) => {
-  return (str.length > n) ? str.substr(0, n-1) + '…' : str;
-};
