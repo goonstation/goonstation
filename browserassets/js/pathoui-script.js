@@ -340,25 +340,9 @@
 
 	function updateManipReady() {
 		var bReady = true;
-
-		if(!loadedDna || loadedDna.isSplicing) {
-			setAnnunciator("#aMutSample", true);
-			bReady=false;
-		} else {
-			setAnnunciator("#aMutSample", false);
-		}
-		if(exposedSlot > 0) {
-			setAnnunciator("#aMutOpen", true);
-			bReady=false;
-		} else {
-			setAnnunciator("#aMutOpen", false);
-		}
 		manipBusy = manipBusy && bReady; //Can't be busy if it's not ready.
 		setButtonEnabled("#manipHolder .button", bReady);
 		bReady = bReady && !manipBusy;	//Can't be ready if it's busy
-		setAnnunciator("#aMutRdy", bReady);
-		setAnnunciator("#aMutIrr", manipBusy);
-
 	}
 
 
@@ -1608,6 +1592,11 @@
 		return 0;
 	}
 
+	function updateStatManipButtons()
+	{
+
+	};
+
 	function setButtonEnabled(jqSel, bEnable) {
 		var btn = $(jqSel);
 		if(!btn.hasClass("button")) {
@@ -1617,7 +1606,6 @@
 			btn.removeClass("button-disabled");
 		} else {
 			safeAddClass(btn, "button-disabled");
-
 		}
 	};
 	remoteHandlers.setUIState = setUIState;

@@ -782,7 +782,7 @@ datum/pathogen
 	var/list/carriers = list()						// A list of carriers to this pathogen. Currently unused.
 	var/list/effects = list()						// A list of symptoms exhibited by those infected with this pathogen.
 	var/stage										// The current stage of the pathogen.
-	var/advance_speed								// The speed at which this pathogen advances stages. An advance speed of N means a flat N/10% chance to advance each tick.
+	var/advance_speed								// The speed at which this pathogen advances stages. An advance speed of N means a flat N/100% chance to advance each tick.
 	var/base_mutation								// Currently unused.
 	var/datum/microbody/body_type					// The body type of the pathogen, which determines the capacity, maximum stat points, activity, and
 	var/mob/infected								// The mob that is infected with this pathogen.
@@ -1058,43 +1058,15 @@ datum/pathogen
 				return src.add_new_symptom(pathogen_controller.l_vr)
 
 	proc/process()
-		// disease_act()    // this is handled in the life loop instead
-		/*					// I think the radiation mutation stuff might not be quite finished, seeing as the cooldown isn't actually checked afaics
-		if (rads)			// so I'll just hold off on enabling it for now
-			if (rads < 1)
-				rads = 0
-			else
-				rads /= 2
-		if (infected)
-			var/mob/living/carbon/human/M = infected
-			if (istype(M))
-				var/rad = M.getStatusDuration("radiation")
-				rads += rad
-				if (M.reagents)
-					var/datum/reagent/R = M.reagents.get_reagent("mutagen")
-					if (istype(R))
-						rads += R.volume
-		if (rads && suppressed <= 0)
-			if (prob(rads))
-				logTheThing("pathology", infected, null, "'s infection of [name] mutated due to radiation levels of [rads].")
-				mutate()
-				rad_mutate_cooldown = 26
-		*/
 		if (ticked)
 			ticked = 0
 			suppressed = 0
-		/*
-		if (rad_mutate_cooldown > 0)
-			rad_mutate_cooldown--
-		else if (rad_mutate_cooldown < 0) //??
-			rad_mutate_cooldown = 0
-		*/
 
 	// handles pathogen advancing or receding in stage and also being cured
 	proc/progress_pathogen()
 		if (!cooldown)
 			if (in_remission)
-				if (prob(abs(advance_speed)))
+				if (prob(advance_speed/10))
 					if (stage == 1)
 						infected.cured(src)
 					else
@@ -1104,18 +1076,11 @@ datum/pathogen
 				var/result = suppressant.suppress_act(src)
 				if (suppressed == 0)
 					suppressed = result
-			if (advance_speed > 0)
-				if (prob(min(advance_speed, 4)))
+			if (advance_speed)
+				if (prob(advance_speed/10))
 					if (suppressed < 1)
 						advance()
 					else if (stage > 3)
-						reduce()
-			else if (advance_speed < 0)
-				if (suppressed == -1)
-					if (prob(4))
-						advance()
-				else
-					if (prob(-advance_speed))
 						reduce()
 			if (suppressed > 0)
 				if (curable_by_suppression && prob(curable_by_suppression))

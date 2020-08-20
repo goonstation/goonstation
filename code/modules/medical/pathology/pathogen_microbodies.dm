@@ -64,6 +64,9 @@ datum/microbody
 	// The amount of sequences worth of symptoms the microbody can support. -1 is unlimited
 	var/seqMax = -1
 
+	// The maximum amount of points that can be spread over the various stats
+	var/maxStats = 100
+
 	disposing()
 		SHOULD_CALL_PARENT(FALSE) //Looks like these should never be deleted.
 		CRASH("ALERT MICROBODY IS BEING DELETED")
