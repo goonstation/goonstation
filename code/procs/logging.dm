@@ -123,7 +123,7 @@ var/global/disable_log_lists = 0
 	else if(istype(user_or_client, /client))
 		var/client/client = user_or_client
 		entry += "[client.ckey]"
-	entry += " | [text]\n"
+	entry += " | [text]<br>"
 	WRITE_LOG(roundLog_name, entry)
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
