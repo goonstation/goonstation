@@ -1,6 +1,14 @@
 obj/structure
 	icon = 'icons/obj/structures.dmi'
 
+	New()
+		..()
+		var/turf/T = get_turf(src)
+		var/obj/structure/S = locate(/obj/structure) in T
+		if (S != src)
+			src.visible_message("<span class='alert'>\The [src] couldn't be built because there's \a [S] there already.</span>")
+			qdel(src)
+
 	girder
 		icon_state = "girder"
 		anchored = 1
