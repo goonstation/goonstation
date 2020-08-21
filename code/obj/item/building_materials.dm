@@ -771,9 +771,9 @@ MATERIAL
 			var/turf/T = usr.loc
 			SPAWN_DBG(1.5 SECONDS)
 				if (T == usr.loc && !usr.getStatusDuration("weakened") && !usr.getStatusDuration("stunned"))
-					src.consume_rods(2)
 					var/atom/G = new /obj/grille(usr.loc)
 					G.setMaterial(src.material)
+					src.consume_rods(2)
 					logTheThing("station", usr, null, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(usr)].")
 		src.add_fingerprint(user)
 		return
