@@ -581,13 +581,28 @@ TRAYS
 				F.throw_at(pick(throw_targets), 5, 1)
 
 	proc/unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
-		attack_particle(user,M)
-		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
-		M.changeStatus("weakened", 2 SECONDS)
-		M.force_laydown_standup()
-		playsound(get_turf(src), "sound/impact_sounds/plate_break.ogg", 50, 1)
-
 		var/turf/shardturf = get_turf(M)
+		var/headprotected = 0
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if (H.head && H.head.c_flags)
+				headprotected = 1
+		if (headprotected)
+			M.visible_message("<span class='alert'><b>[user]</b> uselessly breaks the plate over [M]'s head, but they were wearing a helmet!</span>")
+		else
+			M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
+			M.changeStatus("weakened", 2 SECONDS)
+			M.force_laydown_standup()
+		attack_particle(user,M)
+		SPAWN_DBG(0)
+		for (var/i in 1 to 2)
+			var/obj/O = unpool(/obj/item/raw_material/shard/glass)
+			O.set_loc(shardturf)
+			if(src.material)
+				O.setMaterial(copyMaterial(src.material))
+			O.throw_at(get_offset_target_turf(shardturf, rand(-4,4), rand(-4,4)), 7, 1)
+		playsound(get_turf(src), "sound/impact_sounds/plate_break.ogg", 50, 1)
+		qdel(src)
 
 		if(src.cant_drop == 1)
 			var/mob/living/carbon/human/H = user
