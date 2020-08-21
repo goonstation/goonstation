@@ -528,14 +528,14 @@
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/rods)
 	time = 3
-	create = 5
 	category = "Resource"
 	apply_material = 1
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A)
 		..()
-		var/obj/item/sheet/S = A
+		var/obj/item/sheet/S = A // this way they are instantly stacked rather than just 2 rods
 		S.amount = 2
+		S.inventory_counter.update_number(S.amount)
 
 /datum/manufacture/atmos_can
 	name = "Portable Gas Canister"
