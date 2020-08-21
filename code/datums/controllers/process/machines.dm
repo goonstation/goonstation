@@ -78,7 +78,6 @@ datum/controller/process/machines
 				var/t = world.time
 		#endif
 				mult = clamp(TIME - machine.last_process, machine.base_tick_spacing*(2**(machine.processing_tier-1)), machine.cap_base_tick_spacing*(2**(machine.processing_tier-1))) / (machine.base_tick_spacing*(2**(machine.processing_tier-1)))
-				logTheThing("ooc", machine, null, "Mult is [mult]. Time is [TIME]. T-LP is [TIME - machine.last_process]. [machine.base_tick_spacing*(2**(machine.processing_tier-1))], [machine.cap_base_tick_spacing*(2**(machine.processing_tier-1))]")
 				machine.process(mult)
 				machine.last_process = TIME
 		#ifdef MACHINE_PROCESSING_DEBUG
