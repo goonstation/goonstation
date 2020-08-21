@@ -2944,17 +2944,30 @@ var/list/mechanics_telepads = new/list()
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set mode", "setMode")
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "add association", "addItemManual")
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "remove association", "removeItemManual")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "view all associations", "getMapAsString")
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "clear all associations", "clear")
 
 	get_desc()
 		. += {"<br><span class='notice'>Mode: [mode == 0 ? "Mutable" : mode == 1 ? "Immutable" : "List"]<br>
-		[getMapAsString()]</span>"}
+		[getDescAssociations()]</span>"}
 
-	proc/getMapAsString()
+	proc/getDescAssociations()
+		var/list/mapLines = new/list()
+		var/endloop = min(10, map.len)
+		for (var/i = 1 to endloop)
+			if (!isnull(map[i]))
+				var/key = map[i]
+				var/val = map[key]
+				mapLines.Add("[key]: [val]")
+		if (map.len > 10)
+			mapLines.Add("Use a multitool to view all associations")
+		return length(mapLines) ? mapLines.Join("<br>") : ""
+
+	proc/getMapAsString(obj/item/W as obj, mob/user as mob)
 		var/list/mapLines = new/list()
 		for (var/key in map)
 			mapLines.Add("[key]: [map[key]]")
-		return length(mapLines) ? mapLines.Join("<br>") : ""
+		boutput(user, "[length(mapLines) ? mapLines.Join("<br>") : ""]")
 
 	proc/addItems(var/datum/mechanicsMessage/input)
 		if (level == 2 || !input) return
