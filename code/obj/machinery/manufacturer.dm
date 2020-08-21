@@ -156,13 +156,15 @@
 	process()
 		if (status & NOPOWER)
 			return
+		var/mult = get_machine_multiplier()
+		last_process = TIME
 
-		power_usage = src.powconsumption + 200
+		power_usage = src.powconsumption + 200 * mult
 		..()
 		if (src.mode == "working")
 			if (src.malfunction && prob(8))
 				src.flip_out()
-			src.timeleft -= src.speed * 2
+			src.timeleft -= src.speed * 2 * mult
 			use_power(src.powconsumption)
 			if (src.timeleft < 1)
 				src.output_loop(src.queue[1])

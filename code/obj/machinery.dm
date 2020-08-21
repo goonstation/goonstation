@@ -23,12 +23,12 @@
 	var/tmp/processing_tier = PROCESSING_EIGHTH
 	var/tmp/current_processing_tier
 	var/tmp/machine_registry_idx // List index for misc. machines registry, used in loops where machines of a specific type are needed
-	var/base_tick_spacing = 1 // Machines proc every 1*(2^tier-1) seconds. Or something like that.
-	var/cap_base_tick_spacing = 10
+	var/base_tick_spacing = 6 // Machines proc every 1*(2^tier-1) seconds. Or something like that.
+	var/cap_base_tick_spacing = 60
 	var/last_process = 0
 
 /obj/machinery/proc/get_machine_multiplier()
-	.= clamp(TIME - last_process, base_tick_spacing*(2^processing_tier-1), cap_base_tick_spacing*(2^processing_tier-1)) / base_tick_spacing*(2^processing_tier-1)
+	.= clamp(TIME - last_process, base_tick_spacing*(2**(processing_tier-1)), cap_base_tick_spacing*(2**(processing_tier-1))) / base_tick_spacing*(2**(processing_tier-1))
 	// New() and disposing() add and remove machines from the global "machines" list
 	// This list is used to call the process() proc for all machines ~1 per second during a round
 
@@ -84,6 +84,7 @@
 		if (!(status & NOPOWER) && wire_powered)
 			use_power(power_usage, power_channel)
 			power_credit = power_usage
+
 	last_process = TIME
 
 /obj/machinery/proc/gib(atom/location)
