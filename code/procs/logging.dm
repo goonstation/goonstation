@@ -18,7 +18,7 @@ var/global/roundLog_date = time2text(world.realtime, "YYYY-MM-DD-hh-mm")
 var/global/roundLog_name = "data/logs/full/[roundLog_date].html"
 var/global/roundLog = file(roundLog_name)
 var/global/disable_log_lists = 0
-
+var/global/first_adminhelp_happened = 0
 
 /proc/logTheThing(type, source, target, text, diaryType)
 	var/diaryLogging
