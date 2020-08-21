@@ -1808,6 +1808,7 @@
 		/datum/manufacture/multitool,
 		/datum/manufacture/metal,
 		/datum/manufacture/metalR,
+		/datum/manufacture/rods2,
 		/datum/manufacture/glass,
 		/datum/manufacture/glassR,
 		/datum/manufacture/atmos_can,

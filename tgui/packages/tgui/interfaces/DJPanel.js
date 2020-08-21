@@ -126,9 +126,9 @@ const KnobZone = (props, context) => {
   const { loadedSound, volume, frequency } = data;
 
   const setVolume = (e, value) => act('set-volume', { volume: value });
-  const resetVolume = act('set-volume', { volume: "reset" });
+  const resetVolume = (e, value) => act('set-volume', { volume: "reset" });
   const setFreq = (e, value) => act('set-freq', { frequency: value });
-  const resetFreq = act('set-freq', { frequency: "reset" });
+  const resetFreq = (e, value) => act('set-freq', { frequency: "reset" });
 
   return (
     <Box>
