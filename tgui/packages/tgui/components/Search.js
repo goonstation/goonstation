@@ -24,7 +24,7 @@ export const Search = props => {
     onSearch(value);
   };
   return (
-    <div>
+    <div className={className}>
       <Input
         autoFocus={autoFocus}
         fluid
