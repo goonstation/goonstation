@@ -23,8 +23,8 @@
 	var/tmp/processing_tier = PROCESSING_EIGHTH
 	var/tmp/current_processing_tier
 	var/tmp/machine_registry_idx // List index for misc. machines registry, used in loops where machines of a specific type are needed
-	var/const/base_tick_spacing = 10 // Machines proc every 1*(2^tier-1) seconds. Or something like that.
-	var/const/cap_base_tick_spacing = 300 //
+	var/base_tick_spacing = 1 // Machines proc every 1*(2^tier-1) seconds. Or something like that.
+	var/cap_base_tick_spacing = 10
 	var/last_process = 0
 
 /obj/machinery/proc/get_machine_multiplier()
@@ -84,6 +84,7 @@
 		if (!(status & NOPOWER) && wire_powered)
 			use_power(power_usage, power_channel)
 			power_credit = power_usage
+	last_process = TIME
 
 /obj/machinery/proc/gib(atom/location)
 	if (!location) return
