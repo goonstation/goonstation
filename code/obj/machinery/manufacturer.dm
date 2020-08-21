@@ -153,11 +153,9 @@
 			if(3)
 				. += "<span class='alert'>It's partially dismantled. To deconstruct it, use a wrench. To repair it, add some cable.</span>"
 
-	process()
+	process(var/mult)
 		if (status & NOPOWER)
 			return
-		var/mult = get_machine_multiplier()
-		last_process = TIME
 
 		power_usage = src.powconsumption + 200 * mult
 		..()

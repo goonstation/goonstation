@@ -5,6 +5,7 @@ datum/controller/process/machines
 	var/tmp/list/powernets
 	var/tmp/list/atmos_machines
 	var/tmp/ticker = 0
+	var/mult
 
 	setup()
 		name = "Machine"
@@ -68,6 +69,7 @@ datum/controller/process/machines
 
 		for (var/i in 1 to PROCESSING_MAX_IN_USE)
 			var/list/machlist = src.machines[i]
+
 			for(var/X in machlist[(src.ticker % (1<<(i-1)))+1])
 				if(!X) continue
 				var/obj/machinery/machine = X
@@ -75,7 +77,10 @@ datum/controller/process/machines
 		#ifdef MACHINE_PROCESSING_DEBUG
 				var/t = world.time
 		#endif
-				machine.process()
+				mult = clamp(TIME - machine.last_process, machine.base_tick_spacing*(2**(machine.processing_tier-1)), machine.cap_base_tick_spacing*(2**(machine.processing_tier-1))) / (machine.base_tick_spacing*(2**(machine.processing_tier-1)))
+				logTheThing("ooc", machine, null, "Mult is [mult]. Time is [TIME]. T-LP is [TIME - machine.last_process]. [machine.base_tick_spacing*(2**(machine.processing_tier-1))], [machine.cap_base_tick_spacing*(2**(machine.processing_tier-1))]")
+				machine.process(mult)
+				machine.last_process = TIME
 		#ifdef MACHINE_PROCESSING_DEBUG
 				register_machine_time(machine, world.time - t)
 		#endif

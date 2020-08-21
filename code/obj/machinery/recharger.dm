@@ -100,7 +100,6 @@ obj/machinery/recharger
 
 	if(to_charge)
 		SubscribeToProcess()
-		last_process = TIME
 
 		user.drop_item()
 		to_charge.set_loc(src)
@@ -147,7 +146,7 @@ obj/machinery/recharger
 		src.icon_state = sprite_error
 
 
-/obj/machinery/recharger/process()
+/obj/machinery/recharger/process(var/mult)
 	// what the fuck
 	// why
 	// why the fuck
@@ -158,7 +157,6 @@ obj/machinery/recharger
 	// WHO DID THIS
 	// WHY DID YOU DO THIS
 	// die
-	var/mult = get_machine_multiplier() // sorry jeez
 	if(status & NOPOWER)
 		src.icon_state = sprite_empty
 		update_icon()
