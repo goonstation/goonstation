@@ -101,6 +101,7 @@ datum/mind
 		if (current)
 			if(current.client)
 				current.removeOverlaysClient(current.client)
+				tgui_process.on_transfer(current, new_character)
 			current.mind = null
 
 		new_character.mind = src
