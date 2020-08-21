@@ -162,7 +162,7 @@
 		if (src.mode == "working")
 			if (src.malfunction && prob(8))
 				src.flip_out()
-			src.timeleft -= src.speed * 2 * mult
+			src.timeleft -= src.speed * 4.4 * mult
 			use_power(src.powconsumption)
 			if (src.timeleft < 1)
 				src.output_loop(src.queue[1])
