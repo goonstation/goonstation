@@ -1251,7 +1251,7 @@
 	if (!user)
 		return
 	if (ispryingtool(C))
-		boutput(user, "<span class='alert'>You can't pry apart reinforced flooring! You'll have to disassemble it instead.</span>")
+		boutput(user, "<span class='alert'>You can't pry apart reinforced flooring! You'll have to loosen it with a welder or wrench instead.</span>")
 		return
 	if (istype(C, /obj/item/pen))
 		var/obj/item/pen/P = C
