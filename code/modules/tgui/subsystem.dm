@@ -115,7 +115,7 @@
  * return datum/tgui The found UI.
  */
 /datum/controller/process/tgui/proc/get_open_ui(mob/user, datum/src_object)
-	var/key = "\ref[src_object]"
+	var/key = "\ref[src_object]" // REF doesn't exist |GOONSTATION-CHANGE|
 	// No UIs opened for this src_object
 	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
 		return null
@@ -136,7 +136,7 @@
  */
 /datum/controller/process/tgui/proc/update_uis(datum/src_object)
 	var/count = 0
-	var/key = "\ref[src_object]"
+	var/key = "\ref[src_object]" // REF doesn't exist |GOONSTATION-CHANGE|
 	// No UIs opened for this src_object
 	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
 		return count
@@ -158,7 +158,7 @@
  */
 /datum/controller/process/tgui/proc/close_uis(datum/src_object)
 	var/count = 0
-	var/key = "\ref[src_object]"
+	var/key = "\ref[src_object]" // REF doesn't exist |GOONSTATION-CHANGE|
 	// No UIs opened for this src_object
 	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
 		return count
@@ -234,7 +234,7 @@
  * required ui datum/tgui The UI to be added.
  */
 /datum/controller/process/tgui/proc/on_open(datum/tgui/ui)
-	var/key = "\ref[ui.src_object]"
+	var/key = "\ref[ui.src_object]" // REF doesn't exist |GOONSTATION-CHANGE|
 	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
 		open_uis_by_src[key] = list()
 	ui.user.tgui_open_uis |= ui
@@ -252,7 +252,7 @@
  * return bool If the UI was removed or not.
  */
 /datum/controller/process/tgui/proc/on_close(datum/tgui/ui)
-	var/key = "\ref[ui.src_object]"
+	var/key = "\ref[ui.src_object]" // REF doesn't exist |GOONSTATION-CHANGE|
 	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
 		return FALSE
 	// Remove it from the list of processing UIs.
