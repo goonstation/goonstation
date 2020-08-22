@@ -594,15 +594,7 @@ TRAYS
 			M.changeStatus("weakened", 2 SECONDS)
 			M.force_laydown_standup()
 		attack_particle(user,M)
-		SPAWN_DBG(0)
-		for (var/i in 1 to 2)
-			var/obj/O = unpool(/obj/item/raw_material/shard/glass)
-			O.set_loc(shardturf)
-			if(src.material)
-				O.setMaterial(copyMaterial(src.material))
-			O.throw_at(get_offset_target_turf(shardturf, rand(-4,4), rand(-4,4)), 7, 1)
 		playsound(get_turf(src), "sound/impact_sounds/plate_break.ogg", 50, 1)
-		qdel(src)
 
 		if(src.cant_drop == 1)
 			var/mob/living/carbon/human/H = user
