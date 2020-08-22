@@ -705,9 +705,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				player_dead = 1
 
 			//handle traitors
-			if (player.mind && ticker.mode.traitors.Find(player.mind))
+			var/list/all_the_baddies = ticker.mode.traitors + ticker.mode.token_players + ticker.mode.Agimmicks + ticker.mode.former_antagonists
+			if (player.mind && ticker.mode.traitors.Find(player.mind)) // Roundstart people get the full bonus
 				earnings = job_wage
 				bank_earnings.badguy = 1
+				player_dead = 0
+			else if (istype(player.loc, /obj/cryotron) || player.mind && all_the_baddies.Find(player.mind)) // Cryo'd or was a baddie at any point? Keep your shit, but you don't get the extra bux
 				player_dead = 0
 			//some might not actually have a wage
 			if (isnukeop(player) ||  (isblob(player) && (player.mind && player.mind.special_role == "blob")) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == "wizard")) )
