@@ -34,6 +34,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/corpse,\
 	new /datum/bank_purchaseable/space_diner,\
 	new /datum/bank_purchaseable/mail_order,\
+	new /datum/bank_purchaseable/lunchbox,\
 
 	new /datum/bank_purchaseable/critter_respawn,\
 	new /datum/bank_purchaseable/golden_ghost,\
@@ -511,6 +512,19 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					H.back.icon_state = "NTbackpack"
 					return 1
 				return 0
+
+	lunchbox
+		name = "Lunchbox"
+		cost = 600
+
+		Create(var/mob/living/M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				var/obj/item/storage/lunchbox/L = pick(childrentypesof(/obj/item/storage/lunchbox))
+				if ((!H.l_hand && H.equip_if_possible(new L(H), H.slot_l_hand)) || (!H.r_hand && H.equip_if_possible(new L(H), H.slot_r_hand)) || (istype(H.back, /obj/item/storage) && H.equip_if_possible(new L(H), H.slot_in_backpack)))
+					return 1
+			return 0
+
 
 	/////////////////////////////////////
 	//CLOTHING (FITS HUMAN AND CYBORGS)//
