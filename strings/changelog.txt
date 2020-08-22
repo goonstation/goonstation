@@ -1,4 +1,9 @@
 
+(t)sat aug 22 20
+(u)Superlagg
+(p)1894
+(e)⚖|balance
+(+)X-Drones are now much more expensive to manufacture.
 (t)thu aug 20 20
 (u)zjdtmkhzt
 (p)1883
