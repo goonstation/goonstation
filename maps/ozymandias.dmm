@@ -1683,6 +1683,14 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - Warrens";
+	network = "Warrens";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/SWmaint)
 "aER" = (
@@ -2728,6 +2736,14 @@
 	pixel_y = 21
 	},
 /obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - Warrens";
+	network = "Warrens";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/plating/airless/random,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -3970,6 +3986,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/se)
+"bvE" = (
+/obj/lattice{
+	dir = 2;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
+/turf/space,
+/area)
 "bwd" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
 /area/station/medical/staff)
@@ -5088,8 +5114,10 @@
 /turf/simulated/floor/carpet/red/standard/edge/se,
 /area/station/security/detectives_office)
 "bRw" = (
-/obj/warp_beacon/catering,
 /obj/lattice,
+/obj/warp_beacon{
+	name = "unregistered warp beacon"
+	},
 /turf/space,
 /area)
 "bRy" = (
@@ -5161,6 +5189,13 @@
 /area/station/engine/storage)
 "bTA" = (
 /obj/storage/cart/trash,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "bTC" = (
@@ -5344,6 +5379,7 @@
 /obj/decal/tile_edge/floorguide/arrow_s{
 	dir = 8
 	},
+/obj/machinery/light,
 /turf/simulated/floor/escape/corner{
 	dir = 8
 	},
@@ -5557,6 +5593,10 @@
 /obj/item/decoration/ashtray,
 /obj/disposalpipe/segment/transport{
 	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
@@ -6898,6 +6938,21 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/engine/engineering/ce)
+"cAq" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - Warrens";
+	network = "Warrens";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/space,
+/area)
 "cAy" = (
 /obj/stool/chair{
 	dir = 8
@@ -8781,6 +8836,14 @@
 /obj/stool/chair{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - Warrens";
+	network = "Warrens";
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -9815,6 +9878,14 @@
 /obj/item/hemostat,
 /obj/item/scissors/surgical_scissors,
 /obj/item/staple_gun,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - Warrens";
+	network = "Warrens";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/white/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -9998,6 +10069,11 @@
 /obj/decal/cleanable/dirt,
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
@@ -11423,6 +11499,11 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/valve,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/core)
 "egI" = (
@@ -11789,6 +11870,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/se)
+"eny" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - Warrens";
+	network = "Warrens";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/space,
+/area)
 "enB" = (
 /obj/decal/stage_edge/alt,
 /obj/machinery/manufacturer/uniform,
@@ -13972,6 +14064,14 @@
 "fbj" = (
 /turf/simulated/floor/blue,
 /area/station/medical/staff)
+"fbn" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/core)
 "fbq" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -16689,6 +16789,15 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/medical/breakroom)
+"geY" = (
+/obj/machinery/portable_atmospherics/pump,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/green/checker,
+/area/station/storage/emergency2)
 "gfx" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -18102,6 +18211,13 @@
 "gBU" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "gBX" = (
@@ -18132,6 +18248,7 @@
 	pixel_y = 6
 	},
 /obj/item/pen/pencil,
+/obj/machinery/light,
 /turf/simulated/floor/grime,
 /area/station/security/brig/cell_block)
 "gBZ" = (
@@ -18859,6 +18976,10 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "gPF" = (
@@ -19091,10 +19212,6 @@
 "gUh" = (
 /obj/stool/chair{
 	dir = 4
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
 	},
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -20989,6 +21106,9 @@
 /obj/stool/chair/office/yellow{
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -21292,6 +21412,16 @@
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"hJf" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/obj/lattice{
+	dir = 2;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area)
 "hJh" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
@@ -22513,6 +22643,11 @@
 /obj/table/auto,
 /obj/item/clothing/glasses/spectro,
 /obj/item/storage/firstaid/regular,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/green/checker,
 /area/station/storage/emergency2)
 "ihh" = (
@@ -23287,11 +23422,6 @@
 "iwV" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/table/reinforced/auto,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
 /obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor/grime,
 /area/station/security/brig/cell_block)
@@ -24903,6 +25033,15 @@
 /obj/machinery/meter,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"jbi" = (
+/obj/machinery/shieldgenerator/meteorshield,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/green/checker,
+/area/station/storage/emergency2)
 "jbx" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/north,
@@ -25896,6 +26035,13 @@
 	},
 /obj/machinery/light/small,
 /obj/disposalpipe/segment/bent/west,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - Warrens";
+	network = "Warrens";
+	tag = ""
+	},
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -26014,6 +26160,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/NEmaint)
+"juw" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - Warrens";
+	network = "Warrens";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/SWmaint)
 "juy" = (
 /obj/grille/catwalk,
 /obj/machinery/magnet_chassis{
@@ -26447,6 +26605,10 @@
 /area/station/quartermaster/cargobay)
 "jBE" = (
 /obj/machinery/atmospherics/binary/circulatorTemp/right,
+/obj/machinery/light/small/warm/very{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor/circuit/off,
 /area/station/engine/core)
 "jBK" = (
@@ -26505,6 +26667,11 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/valve,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/core)
 "jCz" = (
@@ -26744,6 +26911,14 @@
 	color_r = 0.5;
 	invisibility = 101;
 	name = "glow - YELLOW"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - Warrens";
+	network = "Warrens";
+	pixel_y = 20;
+	tag = ""
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction2{
@@ -29446,11 +29621,6 @@
 	name = "Communications Centre"
 	})
 "kCl" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
 /obj/machinery/atmospherics/pipe/manifold/overfloor/west,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -29660,14 +29830,11 @@
 	},
 /area/station/solar/west)
 "kGi" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/manifold/overfloor/east,
-/turf/simulated/floor/engine,
-/area/station/engine/core)
+/turf/space,
+/area)
 "kGk" = (
 /obj/machinery/computer/announcement{
 	dir = 4;
@@ -29707,6 +29874,15 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"kHa" = (
+/obj/machinery/atmospherics/valve{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "kHj" = (
 /obj/table/reinforced/auto,
 /obj/machinery/phone,
@@ -30798,6 +30974,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/NEmaint)
+"laW" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Honkington's Abode"
+	})
 "laX" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -32483,6 +32667,9 @@
 	name = "East Hallway Restroom"
 	})
 "lGq" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 5
 	},
@@ -32517,6 +32704,9 @@
 	on = 1;
 	target_pressure = 2000
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/core)
 "lGT" = (
@@ -32537,6 +32727,9 @@
 "lGW" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "lHa" = (
@@ -32770,7 +32963,7 @@
 /area/station/hallway/primary/west)
 "lKv" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/caution/corner/nw,
 /area/station/engine/coldloop)
@@ -35001,6 +35194,20 @@
 /area/station/bridge{
 	name = "Bridge Command Center"
 	})
+"mum" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "garbage";
+	operating = 1
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/disposal)
 "muo" = (
 /obj/machinery/light{
 	dir = 8;
@@ -35107,6 +35314,9 @@
 	},
 /area/station/security/armory)
 "mvD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/core)
 "mvU" = (
@@ -38051,6 +38261,14 @@
 "nAR" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/brute,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - Warrens";
+	network = "Warrens";
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -38391,6 +38609,12 @@
 "nGu" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
+"nGB" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/circuit/off,
+/area/station/engine/core)
 "nGC" = (
 /obj/decal/boxingrope{
 	dir = 8
@@ -39136,6 +39360,23 @@
 	dir = 8
 	},
 /area/station/hallway/primary/north)
+"nTG" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - Warrens";
+	network = "Warrens";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/engine,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "nTH" = (
 /obj/table/reinforced/auto,
 /obj/machinery/espresso_machine,
@@ -39411,7 +39652,6 @@
 	dir = 4;
 	tag = "icon-chair (EAST)"
 	},
-/obj/machinery/light,
 /turf/simulated/floor/grime,
 /area/station/security/brig/cell_block)
 "nZh" = (
@@ -41890,6 +42130,23 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/chapel/office)
+"oQM" = (
+/obj/machinery/power/furnace,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - Warrens";
+	network = "Warrens";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/plating/random,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "oQR" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/gloves/boxing{
@@ -45977,6 +46234,9 @@
 "qqG" = (
 /obj/table/reinforced/auto,
 /obj/machinery/phone,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/core)
 "qqM" = (
@@ -47775,8 +48035,10 @@
 	},
 /area/station/hallway/secondary/west)
 "qVo" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 5
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
 	},
 /turf/space,
 /area)
@@ -49016,6 +49278,10 @@
 /area/station/medical/medbay/lobby)
 "rqx" = (
 /obj/machinery/atmospherics/binary/circulatorTemp,
+/obj/machinery/light/small/warm/very{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/simulated/floor/circuit/off,
 /area/station/engine/core)
 "rqB" = (
@@ -50247,6 +50513,11 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "rMZ" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Honkington's Abode"
@@ -51231,6 +51502,16 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/grey,
 /area/station/chapel/main)
+"sbd" = (
+/obj/lattice{
+	dir = 2;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/turf/space,
+/area)
 "sbg" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment/brig{
@@ -51238,6 +51519,14 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig/cell_block)
+"sbn" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/turf/space,
+/area)
 "sbo" = (
 /obj/disposalpipe/segment/brig,
 /obj/machinery/light/emergency{
@@ -52231,6 +52520,9 @@
 /area/station/security/hos)
 "suq" = (
 /obj/machinery/power/generatorTemp,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/circuit/off,
 /area/station/engine/core)
 "suy" = (
@@ -56996,6 +57288,11 @@
 "tQM" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
 /turf/simulated/floor/grime,
 /area/station/security/brig/cell_block)
 "tQN" = (
@@ -57888,7 +58185,7 @@
 	})
 "uho" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 6
+	dir = 5
 	},
 /turf/space,
 /area)
@@ -58241,6 +58538,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/se)
+"umO" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/coldloop)
 "une" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -61726,6 +62030,18 @@
 /obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"vqi" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - Warrens";
+	network = "Warrens";
+	tag = ""
+	},
+/turf/simulated/floor/plating/airless/random,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "vqm" = (
 /turf/simulated/floor/black,
 /area/station/crewquarters/garbagegarbs)
@@ -62263,6 +62579,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
+"vyK" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - Warrens";
+	network = "Warrens";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/space,
+/area)
 "vyQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -65737,6 +66064,13 @@
 /obj/item/seed/cannabis,
 /obj/item/seed/cannabis,
 /obj/decal/cleanable/dirt,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - Warrens";
+	network = "Warrens";
+	tag = ""
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/SWmaint)
 "wBx" = (
@@ -67747,10 +68081,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/secondary/exit)
 "xhK" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
 /obj/machinery/disposal/mail/autoname/security/detective,
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/wood/eight,
@@ -69093,11 +69423,6 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "xAY" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -69978,6 +70303,21 @@
 	},
 /turf/simulated/floor/yellow/checker,
 /area/station/mining/refinery)
+"xOd" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/computer/security{
+	dir = 4;
+	network = "Warrens"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Honkington's Abode"
+	})
 "xOl" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4
@@ -96544,7 +96884,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+vyK
 aJu
 wCE
 wCE
@@ -97466,7 +97806,7 @@ juM
 yiY
 yiY
 fXG
-aJu
+eny
 aJu
 aJu
 aJu
@@ -98351,7 +98691,7 @@ wPd
 rQi
 aJu
 fXG
-xHs
+nTG
 wGG
 wGG
 wGG
@@ -99273,7 +99613,7 @@ aJu
 aJu
 tpT
 xNf
-xNf
+vqi
 fXG
 fXG
 fXG
@@ -100157,7 +100497,7 @@ aJu
 aJu
 aJu
 fXG
-kTQ
+oQM
 onn
 gtE
 jjZ
@@ -100759,7 +101099,7 @@ aJu
 aJu
 acs
 mxo
-btR
+mxo
 fXG
 sqR
 ybN
@@ -102609,7 +102949,7 @@ sQE
 fkW
 ucM
 wfZ
-xGX
+cAq
 aJu
 aJu
 wqf
@@ -103503,13 +103843,13 @@ xLw
 fcl
 tKz
 mSO
-onL
+xOd
 mOT
 qcw
 qcw
 utx
 wvY
-nOL
+mum
 wfZ
 uwU
 teD
@@ -104107,7 +104447,7 @@ sFi
 dfk
 ptq
 dEo
-rMZ
+laW
 gxJ
 aks
 tKz
@@ -105913,7 +106253,7 @@ ygf
 rqt
 grJ
 ygf
-rwQ
+juw
 grJ
 grJ
 ygf
@@ -119801,7 +120141,7 @@ wdE
 jWs
 jWs
 lND
-usS
+geY
 usS
 rbi
 rZu
@@ -120100,7 +120440,7 @@ nSQ
 pbn
 llY
 wdE
-jWs
+jbi
 jWs
 hQD
 usS
@@ -120713,7 +121053,7 @@ wdE
 scd
 xKr
 uQC
-xFP
+tzo
 tUh
 aJu
 aJu
@@ -121809,7 +122149,7 @@ xAT
 wsE
 dIf
 yfC
-dIf
+tgg
 xMS
 xMS
 lEf
@@ -123621,7 +123961,7 @@ xoQ
 xSa
 xdT
 jVy
-dIf
+tgg
 vct
 tnl
 uNO
@@ -124038,10 +124378,10 @@ uQC
 mGE
 bXG
 tUh
-qRP
+ylt
 ylt
 iNz
-ylt
+qRP
 ylt
 ylt
 ylt
@@ -124308,7 +124648,7 @@ rEN
 xOy
 lBf
 gHT
-wVG
+qzC
 tzw
 xtI
 ybc
@@ -124947,7 +125287,7 @@ tUh
 vFa
 dNA
 dNA
-kMm
+dNA
 dNA
 vFa
 dNA
@@ -125862,7 +126202,7 @@ xqT
 xqT
 xqT
 xGd
-xEp
+xkJ
 mGE
 mGE
 tzo
@@ -137183,7 +137523,7 @@ hud
 imq
 rNK
 suq
-rNK
+nGB
 mvD
 qqG
 hBI
@@ -137488,7 +137828,7 @@ jBE
 btZ
 kCS
 eWH
-rRq
+fbn
 qTx
 iPS
 aJu
@@ -138394,7 +138734,7 @@ jCW
 kel
 gWQ
 ldV
-hud
+kHa
 mgC
 mFW
 ath
@@ -138694,7 +139034,7 @@ itR
 ghB
 jED
 ker
-kGi
+aFN
 hud
 lGW
 mgj
@@ -138998,7 +139338,7 @@ jFu
 tMz
 sWk
 sWk
-sWk
+umO
 tMz
 tMz
 tMz
@@ -141103,18 +141443,18 @@ aJu
 aJu
 aJu
 aJu
-uho
-vrB
+wqf
+kGi
 vms
 cVS
-vrB
-vrB
-vrB
+sbn
 vrB
 vrB
 qVo
-aJu
-aJu
+vrB
+vrB
+uho
+wqf
 aJu
 aJu
 bNR
@@ -141405,18 +141745,18 @@ aJu
 aJu
 aJu
 aJu
+wqf
 ykV
-uho
-vrB
+kGi
 vrB
 qVo
 uho
-vrB
-vrB
+kGi
 qVo
+vrB
+uho
 ykV
-aJu
-aJu
+wqf
 aJu
 aJu
 aJu
@@ -141707,21 +142047,21 @@ aJu
 aJu
 aJu
 aJu
-ykV
-ykV
-aJu
-aJu
-ykV
-ykV
-aJu
-aJu
-ykV
-ykV
-aJu
-aJu
-aJu
-aJu
-aJu
+fdT
+hJf
+hJf
+ath
+wCE
+hJf
+hJf
+wCE
+ath
+hJf
+hJf
+wCE
+ath
+ath
+ath
 bNR
 bNR
 qHq
@@ -142009,22 +142349,22 @@ aJu
 aJu
 aJu
 aJu
+wqf
 ykV
 ykV
 aJu
+wqf
+ykV
+ykV
+wqf
 aJu
 ykV
 ykV
-aJu
-aJu
-ykV
-ykV
+wqf
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
+wqf
 aJu
 aJu
 aJu
@@ -142311,26 +142651,26 @@ aJu
 aJu
 aJu
 aJu
-cVS
-vms
-aJu
-aJu
-cVS
-vms
-aJu
-aJu
-cVS
-vms
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-fdT
+eYW
+sbd
+bvE
+ath
+ygY
+sbd
+bvE
+ygY
+ath
+sbd
+bvE
+ygY
+ath
+ath
+ath
+ygY
+ath
+ath
+ath
+wCE
 rFS
 rFS
 rFS
