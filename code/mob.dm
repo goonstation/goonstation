@@ -491,6 +491,8 @@
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
 
+	tgui_process?.on_logout(src)
+
 	if (src.last_client && !src.key) // lets see if not removing the HUD from disconnecting players helps with the crashes
 		for (var/datum/hud/hud in src.huds)
 			hud.remove_client(src.last_client)
