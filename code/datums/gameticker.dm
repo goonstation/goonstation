@@ -516,6 +516,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if(isalive(P) && in_centcom(P)) pets_rescued++
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] Processing end-of-round generic medals")
+	var/list/all_the_baddies = ticker.mode.traitors + ticker.mode.token_players + ticker.mode.Agimmicks + ticker.mode.former_antagonists
 	for(var/mob/living/player in mobs)
 		if (player.client)
 			if (!isdead(player))
@@ -705,7 +706,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				player_dead = 1
 
 			//handle traitors
-			var/list/all_the_baddies = ticker.mode.traitors + ticker.mode.token_players + ticker.mode.Agimmicks + ticker.mode.former_antagonists
 			if (player.mind && ticker.mode.traitors.Find(player.mind)) // Roundstart people get the full bonus
 				earnings = job_wage
 				bank_earnings.badguy = 1
