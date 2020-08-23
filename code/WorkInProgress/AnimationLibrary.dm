@@ -478,8 +478,10 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		muzzle_simple_light.color = muzzle_light_color
 		muzzleflash.overlays += muzzle_simple_light
 
-	muzzleflash.Translate(0, offset)
-	muzzleflash.Turn(firing_angle)
+	var/matrix/mat = new
+	mat.Translate(0, offset)
+	mat.Turn(firing_angle)
+	muzzleflash.transform = mat
 	muzzleflash.layer = A.layer
 	muzzleflash.set_loc(A)
 	A.vis_contents.Add(muzzleflash)
