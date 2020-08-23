@@ -1,5 +1,9 @@
 
 (t)sun aug 23 20
+(u)adharainspace
+(p)1887
+(e)🆕|feature
+(*)what counts as round participation should be more consistent now.
 (u)Michaellaneous
 (p)1912
 (e)🗺|mapping
