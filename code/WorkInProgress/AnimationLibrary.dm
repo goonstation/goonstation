@@ -174,8 +174,6 @@
 		unpooled()
 			..()
 			src.alpha = 255
-			src.pixel_x = 0
-			src.pixel_y = 0
 
 		pooled()
 			..()
@@ -477,7 +475,6 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		muzzle_light_color = default_muzzle_flash_colors[muzzle_anim]
 	muzzleflash.overlays.Cut()
 	if(muzzle_light_color)
-		muzzle_simple_light.alpha = 255 // alpha can get overriden if #RRGGBBAA but would otherwise stay at the old value with #RRGGBB
 		muzzle_simple_light.color = muzzle_light_color
 		muzzleflash.overlays += muzzle_simple_light
 
