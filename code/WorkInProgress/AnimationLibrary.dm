@@ -463,12 +463,10 @@ var/global/list/default_muzzle_flash_colors = list(
 	"muzzle_flash_waveb" = "#87BBE380"
 )
 
-proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim, var/muzzle_light_color=null)
+proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim, var/muzzle_light_color=null, var/offset=22)
 	if (!M || !origin || !target || !muzzle_anim) return
 
-	var/offset = 22 //amt of pixels the muzzle flash sprite is offset the shooting mob by
 	var/firing_angle = get_angle(origin, target)
-	var/firing_dir = angle_to_dir(firing_angle)
 
 	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
 
@@ -480,29 +478,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 		muzzle_simple_light.color = muzzle_light_color
 		muzzleflash.overlays += muzzle_simple_light
 
-	switch(firing_dir) //so we apply the correct offset
-		if (NORTH)
-			muzzleflash.pixel_y = 32
-		if (SOUTH)
-			muzzleflash.pixel_y = -32
-		if (EAST)
-			muzzleflash.pixel_x = offset
-		if (WEST)
-			muzzleflash.pixel_x = -offset
-		if (NORTHEAST) //diags look a little weird but what can you do
-			muzzleflash.pixel_y = offset
-			muzzleflash.pixel_x = offset
-		if (NORTHWEST)
-			muzzleflash.pixel_y = offset
-			muzzleflash.pixel_x = -offset
-		if (SOUTHEAST)
-			muzzleflash.pixel_y = -offset
-			muzzleflash.pixel_x = offset
-		if (SOUTHWEST)
-			muzzleflash.pixel_y = -offset
-			muzzleflash.pixel_x = -offset
-
-
+	muzzleflash.Translate(0, offset)
 	muzzleflash.Turn(firing_angle)
 	muzzleflash.layer = MOB_INHAND_LAYER
 	muzzleflash.set_loc(M)
