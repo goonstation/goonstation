@@ -465,35 +465,8 @@ var/global/list/default_muzzle_flash_colors = list(
 
 proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim, var/muzzle_light_color=null, var/offset=22)
 	if (!M || !origin || !target || !muzzle_anim) return
-
 	var/firing_angle = get_angle(origin, target)
-
-	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
-
-	if(isnull(muzzle_light_color))
-		muzzle_light_color = default_muzzle_flash_colors[muzzle_anim]
-	muzzleflash.overlays.Cut()
-	if(muzzle_light_color)
-		muzzle_simple_light.alpha = 255 // alpha can get overriden if #RRGGBBAA but would otherwise stay at the old value with #RRGGBB
-		muzzle_simple_light.color = muzzle_light_color
-		muzzleflash.overlays += muzzle_simple_light
-
-	muzzleflash.Translate(0, offset)
-	muzzleflash.Turn(firing_angle)
-	muzzleflash.layer = MOB_INHAND_LAYER
-	muzzleflash.set_loc(M)
-	M.vis_contents.Add(muzzleflash)
-	muzzleflash.icon_state = muzzle_anim
-	flick(muzzle_anim, muzzleflash)
-
-	muzzleflash.alpha = 0
-	animate(muzzleflash, alpha=255, easing=SINE_EASING, time=0.1 SECONDS)
-	animate(time=0.3 SECONDS)
-	animate(alpha=0, easing=SINE_EASING, time=0.2 SECONDS)
-
-	SPAWN_DBG(0.6 SECONDS)
-		M.vis_contents.Remove(muzzleflash)
-		pool(muzzleflash)
+	muzzle_flash_any(M, firing_angle, muzzle_anim, muzzle_light_color, offset)
 
 proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=22)
 	if (!A || firing_angle == null || !muzzle_anim) return
