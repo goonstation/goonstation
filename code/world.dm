@@ -544,6 +544,22 @@ var/f_color_selector_handler/F_Color_Selector
 	processScheduler = new /datum/controller/processScheduler
 	processScheduler.deferSetupFor(/datum/controller/process/ticker)
 	processSchedulerView = new /datum/processSchedulerView
+	var/datum/controller/process/tgui/tgui_process = processScheduler.addNowSkipSetup(/datum/controller/process/tgui)
+	var/datum/controller/process/ticker/ticker_process = processScheduler.addNowSkipSetup(/datum/controller/process/ticker)
+	tgui_process.setup()
+	ticker_process.setup()
+
+
+	/*
+	// Init tgui process so you can use UIs immediately
+	var/datum/controller/process/tgui/early_tgui_init = new()
+	early_tgui_init.setup()
+
+	// what if we do this for the gameticker too
+	ticker = new()
+	SPAWN_DBG(0)
+		ticker.pregame()
+	*/
 
 	Z_LOG_DEBUG("World/Init", "Building area sims scores...")
 	if (global_sims_mode)
