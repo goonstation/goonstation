@@ -90,7 +90,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BUILDING GOAL
-// targets: priority tiles, fetched from holder.owner:flock (with casting)
+// targets: priority tiles, fetched from holder.owner.flock (with casting)
 //			or, if they're not available, whatever's available nearby
 // precondition: 20 resources
 /datum/aiTask/sequence/goalbased/build
@@ -166,7 +166,7 @@
 			var/mob/living/critter/flock/drone/F = holder.owner
 			if(F && F.set_hand(2)) // nanite spray
 				sleep(0.2 SECONDS)
-				holder.owner:dir = get_dir(holder.owner, holder.target)
+				holder.owner.dir = get_dir(holder.owner, holder.target)
 				F.hand_attack(build_target)
 				has_started = 1
 
@@ -239,7 +239,7 @@
 		if(F && T && get_dist(holder.owner, holder.target) <= 1)
 			if(F.set_hand(2)) // nanite spray
 				sleep(0.2 SECONDS)
-				holder.owner:dir = get_dir(holder.owner, holder.target)
+				holder.owner.dir = get_dir(holder.owner, holder.target)
 				F.hand_attack(T)
 				has_started = 1
 
@@ -454,7 +454,7 @@
 		return 1
 
 /datum/aiTask/succeedable/harvest/succeeded()
-	return holder.owner:find_in_equipment(holder.target)
+	return holder.owner.find_in_equipment(holder.target)
 
 /datum/aiTask/succeedable/harvest/on_tick()
 	var/obj/item/harvest_target = holder.target
@@ -485,7 +485,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FLOCKDRONE-SPECIFIC SHOOT TASK
 // ho boy
-// so within this timed task, look through valid targets in holder.owner:flock
+// so within this timed task, look through valid targets in holder.owner.flock
 // pick a target within range and shoot at them if they're not already stunned
 /datum/aiTask/timed/targeted/flockdrone_shoot
 	name = "shooting"
@@ -497,11 +497,13 @@
 	var/run_range = 3
 	var/list/dummy_params = list("icon-x" = 16, "icon-y" = 16)
 
+
 /datum/aiTask/timed/targeted/flockdrone_shoot/evaluate()
 	return weight * score_target(get_best_target(get_targets()))
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/on_tick()
-	walk_to(holder.owner, 0)
+	var/mob/living/critter/owncritter = holder.owner
+	walk_to(owncritter, 0)
 	if(!holder.target)
 		holder.target = get_best_target(get_targets())
 	if(holder.target)
@@ -512,25 +514,25 @@
 			holder.target = get_best_target(get_targets())
 			if(!holder.target)
 				return // try again next tick
-		var/dist = get_dist(holder.owner, holder.target)
+		var/dist = get_dist(owncritter, holder.target)
 		if(dist > target_range)
 			holder.target = get_best_target(get_targets())
 		else if(dist > shoot_range)
-			walk_to(holder.owner, holder.target, 1, 4)
+			walk_to(owncritter, holder.target, 1, 4)
 		else
-			if(holder.owner:active_hand != 3) // stunner
-				holder.owner:set_hand(3)
+			if(owncritter.active_hand != 3) // stunner
+				owncritter.set_hand(3)
 				sleep(0.2 SECONDS)
-			holder.owner:dir = get_dir(holder.owner, holder.target)
-			holder.owner:hand_attack(holder.target, dummy_params)
+			owncritter.dir = get_dir(owncritter, holder.target)
+			owncritter.hand_attack(holder.target, dummy_params)
 			if(dist < run_range)
 				// RUN
-				walk_away(holder.owner, holder.target, 1, 4)
+				walk_away(owncritter, holder.target, 1, 4)
 			else if(prob(30))
 				// ROBUST DODGE
-				walk(holder.owner, 0)
+				walk(owncritter, 0)
 				sleep(0.2 SECONDS)
-				walk_rand(holder.owner, 1, 4)
+				walk_rand(owncritter, 1, 4)
 
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/get_targets()
@@ -566,7 +568,8 @@
 	return precondition() * weight * score_target(get_best_target(get_targets()))
 
 /datum/aiTask/timed/targeted/flockdrone_capture/on_tick()
-	walk_to(holder.owner, 0)
+	var/mob/living/critter/owncritter = holder.owner
+	walk_to(owncritter, 0)
 	if(!holder.target)
 		holder.target = get_best_target(get_targets())
 	if(holder.target)
@@ -577,20 +580,20 @@
 			holder.target = get_best_target(get_targets())
 			if(!holder.target)
 				return // try again next tick
-		var/dist = get_dist(holder.owner, holder.target)
+		var/dist = get_dist(owncritter, holder.target)
 		if(dist > target_range)
 			holder.target = get_best_target(get_targets())
 		else if(dist > 1)
-			walk_to(holder.owner, holder.target, 1, 4)
-		else if(!actions.hasAction(holder.owner, "flock_entomb")) // let's not keep interrupting our own action
-			if(holder.owner:active_hand != 2) // nanite spray
-				holder.owner:set_hand(2)
+			walk_to(owncritter, holder.target, 1, 4)
+		else if(!actions.hasAction(owncritter, "flock_entomb")) // let's not keep interrupting our own action
+			if(owncritter.active_hand != 2) // nanite spray
+				owncritter.set_hand(2)
 				sleep(0.2 SECONDS)
-				holder.owner:a_intent = INTENT_DISARM
-				holder.owner:hud.update_intent()
+				owncritter.a_intent = INTENT_DISARM
+				owncritter.hud.update_intent()
 				sleep(0.1 SECONDS)
-			holder.owner:dir = get_dir(holder.owner, holder.target)
-			holder.owner:hand_attack(holder.target)
+			owncritter.dir = get_dir(owncritter, holder.target)
+			owncritter.hand_attack(holder.target)
 
 /datum/aiTask/timed/targeted/flockdrone_capture/get_targets()
 	var/list/targets = list()
@@ -665,7 +668,7 @@
 		if(F && T && get_dist(holder.owner, holder.target) <= 1)
 			if(F.set_hand(2)) // nanite spray
 				sleep(0.2 SECONDS)
-				holder.owner:dir = get_dir(holder.owner, holder.target)
+				holder.owner.dir = get_dir(holder.owner, holder.target)
 				F.hand_attack(T)
 				has_started = 1
 

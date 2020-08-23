@@ -1,0 +1,1 @@
+/datum/aiHolder/npc
