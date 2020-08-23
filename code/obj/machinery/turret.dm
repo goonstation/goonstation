@@ -476,10 +476,10 @@
 		else
 			icon_state = "ai0"
 
-	var/area/area = get_turf(src)
-	if (!istype(area))
-		logTheThing("debug", null, null, "Turret badly positioned.")
-		return
+		var/area/area = get_turf(src)
+		if (!istype(area))
+			logTheThing("debug", null, null, "Turret badly positioned.")
+			return
 		turretsExist = 0
 		for (var/obj/machinery/turret/aTurret in get_area_all_atoms(area))
 			aTurret.setState(enabled, lethal)
