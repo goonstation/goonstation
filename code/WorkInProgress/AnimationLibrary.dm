@@ -507,9 +507,13 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	muzzleflash.layer = MOB_INHAND_LAYER
 	muzzleflash.set_loc(M)
 	M.vis_contents.Add(muzzleflash)
-	if (muzzleflash.icon_state == muzzle_anim)
-		flick(muzzle_anim,muzzleflash)
 	muzzleflash.icon_state = muzzle_anim
+	flick(muzzle_anim, muzzleflash)
+
+	muzzleflash.alpha = 0
+	animate(muzzleflash, alpha=255, easing=SINE_EASING, time=0.1 SECONDS)
+	animate(time=0.3 SECONDS)
+	animate(alpha=0, easing=SINE_EASING, time=0.2 SECONDS)
 
 	SPAWN_DBG(0.6 SECONDS)
 		M.vis_contents.Remove(muzzleflash)
@@ -534,9 +538,13 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	muzzleflash.layer = A.layer
 	muzzleflash.set_loc(A)
 	A.vis_contents.Add(muzzleflash)
-	if (muzzleflash.icon_state == muzzle_anim)
-		flick(muzzle_anim,muzzleflash)
 	muzzleflash.icon_state = muzzle_anim
+	flick(muzzle_anim, muzzleflash)
+
+	muzzleflash.alpha = 0
+	animate(muzzleflash, alpha=255, easing=SINE_EASING, time=0.1 SECONDS)
+	animate(time=0.3 SECONDS)
+	animate(alpha=0, easing=SINE_EASING, time=0.2 SECONDS)
 
 	SPAWN_DBG(0.6 SECONDS)
 		A.vis_contents.Remove(muzzleflash)
