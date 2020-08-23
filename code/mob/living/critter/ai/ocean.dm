@@ -19,8 +19,8 @@
 
 	tick()
 		..()
-		if (holder.owner.abilityHolder && !holder.owner.equipped())
-			var/datum/targetable/critter/bury_hide/BH = holder.owner.abilityHolder.getAbility(/datum/targetable/critter/bury_hide)
+		if (holder.owner:abilityHolder && !holder.owner:equipped())
+			var/datum/targetable/critter/bury_hide/BH = holder.owner:abilityHolder.getAbility(/datum/targetable/critter/bury_hide)
 			if (BH)
 				BH.cast(get_turf(holder.owner))
 
@@ -64,7 +64,7 @@
 			var/list/possible = get_targets()
 			if (possible.len)
 				holder.target = pick(possible)
-	if(holder.target && holder.target.z == holder.owner.z)
+	if(holder.target && holder.target.z == holder.owner:z)
 		var/mob/living/M = holder.target
 		if(!isalive(M))
 			holder.target = null
@@ -79,17 +79,17 @@
 
 		if (dist < 4)
 			if (M.equipped())
-				holder.owner.a_intent = prob(66) ? INTENT_DISARM : INTENT_HARM
+				holder.owner:a_intent = prob(66) ? INTENT_DISARM : INTENT_HARM
 			else
-				holder.owner.a_intent = INTENT_HARM
+				holder.owner:a_intent = INTENT_HARM
 
-			holder.owner.hud.update_intent()
-			holder.owner.dir = get_dir(holder.owner, M)
+			holder.owner:hud.update_intent()
+			holder.owner:dir = get_dir(holder.owner, M)
 
 			var/list/params = list()
 			params["left"] = 1
 			params["ai"] = 1
-			holder.owner.hand_range_attack(M, params)
+			holder.owner:hand_range_attack(M, params)
 
 	..()
 
@@ -193,7 +193,7 @@
 		if (!holder.target)
 			holder.wait()
 
-	if(holder.target && holder.target.z == holder.owner.z)
+	if(holder.target && holder.target.z == holder.owner:z)
 		if (ismob(holder.target))
 			var/mob/living/M = holder.target
 			if(!isalive(M))
@@ -209,15 +209,15 @@
 
 		holder.move_away(holder.target,target_range)
 
-		holder.owner.a_intent = INTENT_HARM
+		holder.owner:a_intent = INTENT_HARM
 
-		holder.owner.hud.update_intent()
-		holder.owner.dir = get_dir(holder.owner, holder.target)
+		holder.owner:hud.update_intent()
+		holder.owner:dir = get_dir(holder.owner, holder.target)
 
 		var/list/params = list()
 		params["left"] = 1
 		params["ai"] = 1
-		holder.owner.hand_range_attack(holder.target, params)
+		holder.owner:hand_range_attack(holder.target, params)
 
 	..()
 
@@ -260,8 +260,8 @@
 
 	tick()
 		..()
-		if (holder.owner.abilityHolder)
-			var/datum/targetable/critter/bury_hide/BH = holder.owner.abilityHolder.getAbility(/datum/targetable/critter/bury_hide)
+		if (holder.owner:abilityHolder)
+			var/datum/targetable/critter/bury_hide/BH = holder.owner:abilityHolder.getAbility(/datum/targetable/critter/bury_hide)
 			BH.cast(get_turf(holder.owner))
 
 /datum/aiTask/timed/targeted/pikaia
@@ -301,7 +301,7 @@
 			var/list/possible = get_targets()
 			if (possible.len)
 				holder.target = pick(possible)
-	if(holder.target && holder.target.z == holder.owner.z)
+	if(holder.target && holder.target.z == holder.owner:z)
 		var/dist = get_dist(holder.owner, holder.target)
 		if (dist >= 1)
 			if (prob(80))
@@ -319,28 +319,28 @@
 				if(!holder.target)
 					return ..() // try again next tick
 			if (dist <= 1)
-				holder.owner.a_intent = INTENT_GRAB
-				holder.owner.hud.update_intent()
-				holder.owner.dir = get_dir(holder.owner, M)
+				holder.owner:a_intent = INTENT_GRAB
+				holder.owner:hud.update_intent()
+				holder.owner:dir = get_dir(holder.owner, M)
 
 				var/list/params = list()
 				params["left"] = 1
 
-				if (!holder.owner.equipped())
-					holder.owner.hand_attack(M, params)
+				if (!holder.owner:equipped())
+					holder.owner:hand_attack(M, params)
 				else
-					var/obj/item/grab/G = holder.owner.equipped()
+					var/obj/item/grab/G = holder.owner:equipped()
 					if (istype(G))
 						if (G.affecting == null || G.assailant == null || G.disposed) //ugly safety
-							holder.owner.drop_item()
+							holder.owner:drop_item()
 
 						if (G.state <= GRAB_PASSIVE)
 							G.attack_self(holder.owner)
 						else
-							holder.owner.emote("flip")
+							holder.owner:emote("flip")
 							holder.move_away(holder.target,1)
 					else
-						holder.owner.drop_item()
+						holder.owner:drop_item()
 		else
 			holder.move_circ(holder.target,target_range+8)
 

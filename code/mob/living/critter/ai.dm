@@ -1,7 +1,7 @@
 var/list/ai_move_scheduled = list()
 
 /datum/aiHolder
-	var/mob/living/critter/owner = null
+	var/mob/living/owner = null // walking this back to a very high parent, use : for your procs i guess.
 	var/atom/target = null // the simplest blackboard ever
 	var/datum/aiTask/current_task = null  // what the critter is currently doing
 	var/datum/aiTask/default_task = null  // what behavior the critter will fall back on
