@@ -119,6 +119,8 @@ MATERIAL
 			var/obj/item/sheet/new_stack = new /obj/item/sheet(get_turf(usr))
 			if(src.material)
 				new_stack.setMaterial(src.material)
+			if (src.reinforcement)
+				new_stack.set_reinforcement(src.reinforcement)
 			new_stack.amount = splitnum
 			new_stack.attack_hand(user)
 			new_stack.add_fingerprint(user)

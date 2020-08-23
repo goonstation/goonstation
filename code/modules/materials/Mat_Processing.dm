@@ -629,7 +629,7 @@
 					src.visible_message("<span class='notice'>[user] puts [W] into [src]</span>")
 					user.drop_item()
 					components.Add(W)
-					W.loc = src
+					W.set_loc(src)
 					playsound(src.loc, sound_thunk, 40, 1)
 				else
 					boutput(user, "<span class='alert'>The smelter is already filled to capacity!</span>")

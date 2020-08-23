@@ -225,7 +225,7 @@
 				. = ..()
 			if (src.item.loc != src)
 				if (isturf(src.item.loc))
-					src.item.loc = src
+					src.item.set_loc(src)
 				else
 					src.death(0)
 

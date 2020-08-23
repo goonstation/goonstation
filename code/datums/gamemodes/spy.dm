@@ -178,7 +178,7 @@
 		text = ""
 		if(leader_mind.current)
 			text += "[leader_mind.current.real_name]"
-			var/turf/T = get_turf_loc(leader_mind.current)
+			var/turf/T = get_turf(leader_mind.current)
 			if(isdead(leader_mind.current))
 				text += " (Dead)"
 			else

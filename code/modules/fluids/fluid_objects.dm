@@ -449,7 +449,7 @@
 			L.linked_ladder.linked_ladder = L
 
 			user.drop_item()
-			src.loc = L
+			src.set_loc(L)
 			L.og_ladder_item = src
 			L.linked_ladder.og_ladder_item = src
 

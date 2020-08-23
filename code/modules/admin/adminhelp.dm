@@ -27,7 +27,7 @@
 		return
 
 	if (client.mob.mind)
-		karma_update(1, "SIN", client.mob)
+		client.mob.add_karma(-1)
 
 //	for_no_raisin(client.mob, msg)
 
@@ -161,7 +161,7 @@
 		return
 
 	if (client.mob.mind)
-		karma_update(1, "SIN", src)
+		src.add_karma(-1)
 
 	boutput(client.mob, "<B>You whisper a silent prayer,</B> <I>\"[msg]\"</I>")
 	logTheThing("admin_help", client.mob, null, "PRAYER: [msg]")

@@ -89,7 +89,7 @@
 
 		if (NewLoc)
 			dir = get_dir(loc, NewLoc)
-			src.loc = (NewLoc) //src.set_loc(NewLoc) we don't wanna refresh last_range here and as fas as i can tell there's no reason we Need set_loc
+			src.set_loc(NewLoc) //src.set_loc(NewLoc) we don't wanna refresh last_range here and as fas as i can tell there's no reason we Need set_loc
 		else
 
 			dir = direct

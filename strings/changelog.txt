@@ -1,4 +1,18 @@
 
+(t)sun aug 23 20
+(u)adharainspace
+(p)1887
+(e)🆕|feature
+(*)what counts as round participation should be more consistent now.
+(u)Michaellaneous
+(p)1912
+(e)🗺|mapping
+(+)Oshan - Removed duplicate items already present in adventure chest.
+(t)sat aug 22 20
+(u)Superlagg
+(p)1894
+(e)⚖|balance
+(+)X-Drones are now much more expensive to manufacture.
 (t)thu aug 20 20
 (u)zjdtmkhzt
 (p)1883

@@ -138,7 +138,6 @@
 	ex_act(var/severity)
 		switch(severity)
 			if(1,2)
-				loc = null
 				qdel(src)
 			else
 				src.take_damage(45)

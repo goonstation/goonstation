@@ -1760,7 +1760,7 @@
 					var/obj/item/IT = I
 					IT.dropped(src) // Handle light datums and the like.
 				if (I in module.tools)
-					I.loc = module
+					I.set_loc(module)
 				else
 					qdel(I)
 			src.module_active = null

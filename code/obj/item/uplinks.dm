@@ -697,7 +697,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					return 0
 				B.claimed = 1
 				for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item
-					M.loc = get_turf(delivery)
+					M.set_loc(get_turf(delivery))
 				if (istype(delivery.loc, /mob))
 					var/mob/M = delivery.loc
 					if (istype(delivery,/obj/item/parts/human_parts) && ishuman(M))

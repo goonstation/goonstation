@@ -250,7 +250,6 @@
 					for (var/obj/critter/C in gauntlet)
 						if (!C.alive)
 							showswirl(get_turf(C))
-							C.loc = null
 							qdel(C)
 						else
 							live++
