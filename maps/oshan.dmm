@@ -13183,18 +13183,6 @@
 /area/station/science/teleporter)
 "aDD" = (
 /obj/storage/crate/adventure,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/sandwich/pb,
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom"
-	},
-/obj/item/paper/book/critter_compendium,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 5
 	},
