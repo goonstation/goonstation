@@ -1158,3 +1158,10 @@ var/ZLOG_START_TIME
 	#define SERVER_SIDE_PROFILING 1
 #endif
 #endif
+
+// i_dont_want_to_make_a_whole_new_file_for_one_goddamned_define.jpg
+#ifdef RP_MODE
+#define MAX_PARTICIPATE_TIME 80 MINUTES //the maximum shift time before it doesnt count as "participating" in the round
+#else
+#define MAX_PARTICIPATE_TIME 40 MINUTES //ditto above
+#endif

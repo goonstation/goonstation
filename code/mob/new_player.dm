@@ -385,13 +385,8 @@ mob/new_player
 					logTheThing("debug", character, null, "<b>Late join:</b> added player to ticker.minds.")
 					ticker.minds += character.mind
 				logTheThing("debug", character, null, "<b>Late join:</b> assigned job: [JOB.name]")
-				//latejoin participation stuff
-				var/max_participate_time = 40 MINUTES
-#ifdef RP_MODE
-				max_participate_time = 80 MINUTES
-#endif
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
-				if (character.mind.ckey && (ticker.round_elapsed_ticks <= max_participate_time) && !emergency_shuttle.online)
+				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
 					participationRecorder.record(character.mind.ckey)
 			SPAWN_DBG (0)
 				qdel(src)
