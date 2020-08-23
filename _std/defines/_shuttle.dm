@@ -9,6 +9,7 @@
 
 // these define the time taken for the shuttle to get to SS13
 // and the time before it leaves again
-#define SHUTTLEARRIVETIME 6 MINUTES
-#define SHUTTLELEAVETIME 2 MINUTES
-#define SHUTTLETRANSITTIME 2 MINUTES
+// you might be asking "why /10?" the answer is that shuttle code uses seconds as a base unit and I'm too tired to refactor it
+#define SHUTTLEARRIVETIME (6 MINUTES / 10)
+#define SHUTTLELEAVETIME (2 MINUTES / 10)
+#define SHUTTLETRANSITTIME (2 MINUTES / 10)
