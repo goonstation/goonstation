@@ -62,6 +62,10 @@
 #define COMSIG_ITEM_DROPPED "itm_drop"
 /// When an item is used to attack a mob
 #define COMSIG_ITEM_ATTACK_POST "itm_atk_post"
+/// When an item is used to perform barbery
+#define COMSIG_ITEM_BARBER "itm_barber"
+/// When an item is asked to toggle tool-only mode
+#define COMSIG_ITEM_TOGGLE_TOOLONLY "itm_toggle_toolonly"
 
 // blocking signals
 /// After  an item block is set up
