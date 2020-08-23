@@ -85,7 +85,8 @@
 	src.icon = null
 	src.invisibility = 101
 	for(var/t in src.organs)
-		qdel(src.organs[text("[]", t)])
+		qdel(src.organs[t])
+		src.organs[t] = null
 
 	return ..()
 
