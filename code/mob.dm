@@ -2879,3 +2879,6 @@
 	if (items.len)
 		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
 		A.interact(src)
+
+/mob/proc/add_karma(how_much)
+	src?.mind.add_karma(how_much)

@@ -438,7 +438,7 @@
 		if (M.reagents)
 			M.reagents.add_reagent("histamine", 12)
 			M.reagents.add_reagent("toxin", 2)
-			karma_update(1, "SAINT", M)
+			M.add_karma(1)
 
 /obj/critter/spacebee/angry
 	name = "angry space wasp"
