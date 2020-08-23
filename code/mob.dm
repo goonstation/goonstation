@@ -291,7 +291,7 @@
 		TO.ghostize()
 
 	for(var/mob/m in src) //just in case...
-		m.loc = src.loc
+		m.set_loc(src.loc)
 		m.ghostize()
 
 	if (ghost && ghost.corpse == src)
@@ -908,8 +908,7 @@
 			return I
 
 /mob/dead/unequip_all(var/delete_stuff=0)
-	var/obj/ecto = new/obj/item/reagent_containers/food/snacks/ectoplasm
-	ecto.loc = src.loc
+	new/obj/item/reagent_containers/food/snacks/ectoplasm(src.loc)
 
 /mob/proc/get_unequippable()
 	return

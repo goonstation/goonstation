@@ -117,7 +117,7 @@ var/list/genescanner_addresses = list()
 		src.go_in(M)
 
 		for(var/obj/O in src)
-			O.loc = src.loc
+			O.set_loc(src.loc)
 
 		src.add_fingerprint(usr)
 

@@ -35,7 +35,7 @@ proc/qdel(var/datum/O)
 		if (current_state >= GAME_STATE_PLAYING)
 			O.dispose(qdel_instead=0)
 			if (istype(O, /atom/movable))
-				O:loc = null
+				O:set_loc(null)
 
 			if (isloc(O) && O:contents:len > 0)
 				for (var/C in O:contents)

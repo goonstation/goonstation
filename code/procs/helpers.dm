@@ -94,7 +94,7 @@ var/global/obj/flashDummy
 
 /proc/arcFlashTurf(var/atom/from, var/turf/target, var/wattage)
 	var/obj/O = getFlashDummy()
-	O.loc = target
+	O.set_loc(target)
 	playsound(target, "sound/effects/elec_bigzap.ogg", 30, 1)
 
 	var/list/affected = DrawLine(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
@@ -118,7 +118,7 @@ var/global/obj/flashDummy
 		elecflashpower = 2
 
 	elecflash(target,power = elecflashpower)
-	O.loc = null
+	O.set_loc(null)
 
 /proc/arcFlash(var/atom/from, var/atom/target, var/wattage)
 	playsound(target, "sound/effects/elec_bigzap.ogg", 30, 1)
@@ -850,16 +850,6 @@ proc/get_angle(atom/a, atom/b)
 	if(src && src.mob)
 		src.mob.remove_dialogs()
 	return
-
-/proc/get_turf_loc(var/atom/movable/M) //gets the location of the turf that the mob is on, or what the mob is in is on, etc
-	//in case they're in a closet or sleeper or something
-	if (!M) return null
-	var/atom/loc = M.loc
-	while(!istype(loc, /turf/))
-		if (!loc)
-			break
-		loc = loc.loc
-	return loc
 
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver

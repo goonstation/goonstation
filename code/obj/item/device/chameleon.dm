@@ -153,12 +153,12 @@
 			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
 			for (var/atom/movable/A in cham)
 				A.set_loc(get_turf(cham))
-			cham.loc = src
+			cham.set_loc(src)
 			boutput(usr, "<span class='notice'>You deactivate the [src].</span>")
-			anim.loc = get_turf(src)
+			anim.set_loc(get_turf(src))
 			flick("emppulse",anim)
 			SPAWN_DBG (8)
-				anim.loc = src //Back in the box with ye
+				anim.set_loc(src)
 		else
 			if (istype(src.loc, /obj/dummy/chameleon)) //No recursive chameleon projectors!!
 				boutput(usr, "<span class='alert'>As your finger nears the power button, time seems to slow, and a strange silence falls.  You reconsider turning on a second projector.</span>")
@@ -171,10 +171,10 @@
 			src.active = 1
 
 			boutput(usr, "<span class='notice'>You activate the [src].</span>")
-			anim.loc = get_turf(src)
+			anim.set_loc(get_turf(src))
 			flick("emppulse",anim)
 			SPAWN_DBG (8)
-				anim.loc = src //Back in the box with ye
+				anim.set_loc(src)
 
 	proc/disrupt()
 		if (active)
@@ -182,7 +182,7 @@
 			elecflash(src)
 			for (var/atom/movable/A in cham)
 				A.set_loc(get_turf(cham))
-			cham.loc = src
+			cham.set_loc(src)
 			can_use = 0
 			tooltip_rebuild = 1
 			SPAWN_DBG (100)

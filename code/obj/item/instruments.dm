@@ -561,12 +561,12 @@
 		var/obj/item/reagent_containers/food/snacks/ectoplasm/soul_stuff = new (some_poor_fucker.loc)
 
 		if (istype(ghost_to_toss))
-			ghost_to_toss.loc = soul_stuff
+			ghost_to_toss.set_loc(soul_stuff)
 
 		soul_stuff.throw_at(T, 10, 1)
 		SPAWN_DBG (10)
 			if (soul_stuff && ghost_to_toss)
-				ghost_to_toss.loc = soul_stuff.loc
+				ghost_to_toss.set_loc(soul_stuff.loc)
 
 		some_poor_fucker.throw_at(T, 1, 1)
 		some_poor_fucker.changeStatus("weakened", 2 SECONDS)

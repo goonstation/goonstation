@@ -2184,11 +2184,8 @@
 		animate(left_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		animate(right_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		sleep(0.5 SECONDS)
-		torso.loc = null
 		qdel(torso)
-		right_arm.loc = null
 		qdel(right_arm)
-		left_arm.loc = null
 		qdel(left_arm)
 		REMOVE_MOB_PROPERTY(H, PROP_CANTMOVE, "dabbify")
 		H.update_canmove()

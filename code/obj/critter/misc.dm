@@ -36,7 +36,7 @@
 		playsound(src.loc, "sound/effects/suck.ogg", 40, 1, -1, 0.6)
 		SPAWN_DBG (100) //Give time for people to butcher it if they want.
 			if (!src.disposed && src.loc && original_object)
-				original_object.loc = src.loc
+				original_object.set_loc(src.loc)
 				original_object = null
 				qdel(src)
 		return ..()

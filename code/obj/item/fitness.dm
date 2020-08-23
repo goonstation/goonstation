@@ -116,7 +116,7 @@
 			var/obj/decal/W = new /obj/decal/
 			W.icon = 'icons/obj/stationobjs.dmi'
 			W.icon_state = "fitnessweight-w"
-			W.loc = loc
+			W.set_loc(loc)
 			W.anchored = 1
 			W.layer = MOB_LAYER_BASE+1
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
