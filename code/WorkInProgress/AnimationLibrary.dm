@@ -495,12 +495,10 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 		M.vis_contents.Remove(muzzleflash)
 		pool(muzzleflash)
 
-proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color)
+proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=22)
 	if (!A || firing_angle == null || !muzzle_anim) return
 
 	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
-	muzzleflash.pixel_y = cos(firing_angle) * 22
-	muzzleflash.pixel_x = sin(firing_angle) * 22
 
 	if(isnull(muzzle_light_color))
 		muzzle_light_color = default_muzzle_flash_colors[muzzle_anim]
@@ -510,6 +508,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		muzzle_simple_light.color = muzzle_light_color
 		muzzleflash.overlays += muzzle_simple_light
 
+	muzzleflash.Translate(0, offset)
 	muzzleflash.Turn(firing_angle)
 	muzzleflash.layer = A.layer
 	muzzleflash.set_loc(A)
