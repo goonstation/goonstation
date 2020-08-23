@@ -549,18 +549,6 @@ var/f_color_selector_handler/F_Color_Selector
 	tgui_process.setup()
 	ticker_process.setup()
 
-
-	/*
-	// Init tgui process so you can use UIs immediately
-	var/datum/controller/process/tgui/early_tgui_init = new()
-	early_tgui_init.setup()
-
-	// what if we do this for the gameticker too
-	ticker = new()
-	SPAWN_DBG(0)
-		ticker.pregame()
-	*/
-
 	Z_LOG_DEBUG("World/Init", "Building area sims scores...")
 	if (global_sims_mode)
 		for (var/area/Ar in world)
