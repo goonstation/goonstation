@@ -448,7 +448,22 @@ proc/fuckup_attack_particle(var/mob/M)
 		y *= 22
 		animate(M.attack_particle, pixel_x = M.attack_particle.pixel_x + x , pixel_y = M.attack_particle.pixel_y + y, time = 5, easing = BOUNCE_EASING, flags = ANIMATION_END_NOW)
 
-proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim)
+var/global/obj/overlay/simple_light/muzzle_simple_light = new	/obj/overlay/simple_light{appearance_flags = RESET_COLOR | RESET_TRANSFORM | NO_CLIENT_COLOR | KEEP_APART}
+
+var/global/list/default_muzzle_flash_colors = list(
+	"muzzle_flash" = "#FFEE9980",
+	"muzzle_flash_laser" = "#FF333380",
+	"muzzle_flash_elec" = "#FFC80080",
+	"muzzle_flash_bluezap" = "#00FFFF80",
+	"muzzle_flash_plaser" = "#00A9FB80",
+	"muzzle_flash_phaser" = "#F41C2080",
+	"muzzle_flash_launch" = "#FFFFFF50",
+	"muzzle_flash_wavep" = "#B3234E80",
+	"muzzle_flash_waveg" = "#33CC0080",
+	"muzzle_flash_waveb" = "#87BBE380"
+)
+
+proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim, var/muzzle_light_color=null)
 	if (!M || !origin || !target || !muzzle_anim) return
 
 	var/offset = 22 //amt of pixels the muzzle flash sprite is offset the shooting mob by
@@ -456,6 +471,14 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	var/firing_dir = angle_to_dir(firing_angle)
 
 	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
+
+	if(isnull(muzzle_light_color))
+		muzzle_light_color = default_muzzle_flash_colors[muzzle_anim]
+	muzzleflash.overlays.Cut()
+	if(muzzle_light_color)
+		muzzle_simple_light.alpha = 255 // alpha can get overriden if #RRGGBBAA but would otherwise stay at the old value with #RRGGBB
+		muzzle_simple_light.color = muzzle_light_color
+		muzzleflash.overlays += muzzle_simple_light
 
 	switch(firing_dir) //so we apply the correct offset
 		if (NORTH)
@@ -492,12 +515,20 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 		M.vis_contents.Remove(muzzleflash)
 		pool(muzzleflash)
 
-proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim)
+proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color)
 	if (!A || firing_angle == null || !muzzle_anim) return
 
 	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
 	muzzleflash.pixel_y = cos(firing_angle) * 22
 	muzzleflash.pixel_x = sin(firing_angle) * 22
+
+	if(isnull(muzzle_light_color))
+		muzzle_light_color = default_muzzle_flash_colors[muzzle_anim]
+	muzzleflash.overlays.Cut()
+	if(muzzle_light_color)
+		muzzle_simple_light.alpha = 255 // alpha can get overriden if #RRGGBBAA but would otherwise stay at the old value with #RRGGBB
+		muzzle_simple_light.color = muzzle_light_color
+		muzzleflash.overlays += muzzle_simple_light
 
 	muzzleflash.Turn(firing_angle)
 	muzzleflash.layer = A.layer
