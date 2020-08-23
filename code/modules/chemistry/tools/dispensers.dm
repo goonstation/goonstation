@@ -562,6 +562,37 @@
 			return ..()
 
 
+/obj/reagent_dispensers/still/shittystill
+	name = "shitty still"
+	desc = "Looks like it some sort of makeshift distillery, made out of salvaged parts."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "still"
+	amount_per_transfer_from_this = 25
+	var/list/random_reagents_list = list("barium","flourine","lithium","magnesium","mercury",\
+"oxygen","phosphorus","plasma","potassium","radium","silver","sugar","hydrogen")
+
+	brew(var/obj/item/W as obj, mob/user as mob)
+		if (!W || !(istype(W,/obj/item/reagent_containers/food) || istype(W, /obj/item/plant)))
+			return 0
+
+		if (!W:brewable || !W:brew_result)
+			return 0
+
+		if (istype(W,/obj/item/reagent_containers/food/snacks/snack_cake) || istype(W,/obj/item/reagent_containers/food/snacks/burrito))
+			user.show_text("No way man, you'll clog the pipes with that stuff!", "red")
+			return 0
+
+		if (islist(W:brew_result) && W:brew_result:len)
+			for (var/i in W:brew_result)
+				src.reagents.add_reagent(i, 10)
+				src.reagents.add_reagent(random_reagents_list, 10)
+		else
+			src.reagents.add_reagent(W:brew_result, 20)
+			src.reagents.add_reagent(pick(random_reagents_list), 20)
+
+		src.visible_message("<span class='notice'>[src] brews up [W]!</span>")
+		return 1
+
 /* ==================================================== */
 /* --------------- Water Cooler Bottle ---------------- */
 /* ==================================================== */
