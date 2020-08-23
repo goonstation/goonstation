@@ -15389,8 +15389,6 @@
 /area/station/security/main)
 "aHn" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "aHo" = (

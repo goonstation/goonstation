@@ -39269,9 +39269,6 @@
 "bnQ" = (
 /obj/window/reinforced/east,
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},

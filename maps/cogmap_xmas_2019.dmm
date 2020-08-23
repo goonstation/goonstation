@@ -280,7 +280,7 @@
 "aaR" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -14934,8 +14934,6 @@
 /area/station/security/main)
 "aGP" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "aGQ" = (
@@ -26403,7 +26401,7 @@
 /area/station/crew_quarters/heads)
 "bdO" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	d1 = 4;
@@ -27799,7 +27797,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
@@ -29002,7 +29000,7 @@
 "biX" = (
 /obj/machinery/space_heater,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/purple/side{
 	dir = 5
@@ -42582,7 +42580,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	d1 = 1;
@@ -44653,7 +44651,7 @@
 	icon_state = "1-8"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
@@ -55899,7 +55897,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4

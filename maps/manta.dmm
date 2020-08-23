@@ -21451,7 +21451,6 @@
 	pixel_y = 26;
 	text = "NF"
 	},
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},

@@ -27562,8 +27562,6 @@
 	})
 "oNR" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor,
 /area/station/security/main)
 "oSZ" = (
