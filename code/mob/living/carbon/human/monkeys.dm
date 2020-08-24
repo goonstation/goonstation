@@ -11,7 +11,7 @@
 				src.bioHolder.AddEffect("monkey")
 				src.get_static_image()
 				if (src.name == "monkey" || !src.name)
-					src.name = pick(monkey_names)
+					src.name = pick_string_autokey("names/monkey.txt")
 				src.real_name = src.name
 
 // special monkeys.
@@ -120,7 +120,7 @@
 				src.cust_one_state = "None"
 				src.bioHolder.AddEffect("monkey")
 				if (src.name == "monkey" || !src.name)
-					src.name = pick(monkey_names)
+					src.name = pick_string_autokey("names/monkey.txt")
 				src.real_name = src.name
 
 	disposing()
@@ -362,7 +362,7 @@
 				src.bioHolder.AddEffect("seamonkey")
 				src.get_static_image()
 				if (src.name == "sea monkey" || !src.name)
-					src.name = pick(monkey_names)
+					src.name = pick_string_autokey("names/monkey.txt")
 				src.real_name = src.name
 
 

@@ -1,4 +1,4 @@
-catnames@=
+names@=
 	Gary@,Mittens@,Mr. Jingles@,Rex@,Jasmine@,Litterbox
 	Reginald@,Poosycat@,Dr. Purrsworthy@,Lt. Scratches@,Michael Catson
 	Fluffy@,Mr. Purrfect@,Lord Furstooth@,Lion-O@,Johnathan@,Gary Catglitter

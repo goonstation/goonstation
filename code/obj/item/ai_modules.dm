@@ -272,7 +272,7 @@ AI MODULES
 
 	get_law_text()
 		if (is_blank_string(lawTarget)) //no blank names allowed
-			lawTarget = pick(ai_names)
+			lawTarget = pick_string_autokey("names/ai.txt")
 			return lawTarget
 		return lawTarget
 
@@ -280,7 +280,7 @@ AI MODULES
 		return "It currently reads \"[lawTarget]\"."
 
 	attack_self(var/mob/user)
-		input_law_info(user, "Rename", "What will the AI be renamed to?", pick(ai_names))
+		input_law_info(user, "Rename", "What will the AI be renamed to?", pick_string_autokey("names/ai.txt"))
 		lawTarget = replacetext(copytext(html_encode(lawTarget),1, 128), "http:","")
 
 	install(obj/machinery/computer/aiupload/comp)

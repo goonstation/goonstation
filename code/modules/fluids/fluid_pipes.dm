@@ -176,7 +176,7 @@ proc/make_fluid_networks()
 		return
 	do
 		DEBUG_MESSAGE("Creating fluid network. Root node is at [log_loc(root)].")
-		var/datum/flow_network/network = new /datum/flow_network(root)
+		new /datum/flow_network(root)
 		root = find_unvisited_node()
 	while(root)
 

@@ -84,8 +84,8 @@
 
 	for(var/datum/mind/wizard in src.traitors)
 		var/randomname
-		if (wizard.current.gender == "female") randomname = wiz_female.len ? pick(wiz_female) : "Witch"
-		else randomname = wiz_male.len ? pick(wiz_male) : "Wizard"
+		if (wizard.current.gender == "female") randomname = pick_string_autokey("names/wizard_female.txt")
+		else randomname = pick_string_autokey("names/wizard_male.txt")
 		SPAWN_DBG(0)
 			var/newname = adminscrub(input(wizard.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname) as text)
 

@@ -656,7 +656,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		..()
 		SPAWN_DBG(0)
 			src.gender = "male"
-			src.real_name = pick("Slick", "Fast", "Frugal", "Thrifty", "Clever", "Shifty") + " " + pick(first_names_male)
+			src.real_name = pick("Slick", "Fast", "Frugal", "Thrifty", "Clever", "Shifty") + " " + pick_string_autokey("names/first_male.txt")
 			src.equip_new_if_possible(/obj/item/clothing/shoes/black, slot_shoes)
 			src.equip_new_if_possible(/obj/item/clothing/under/gimmick/merchant, slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/suit/merchant, slot_wear_suit)

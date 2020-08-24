@@ -2119,7 +2119,7 @@ proc/get_mobs_trackable_by_AI()
 	vox_help(src)
 
 /mob/living/silicon/ai/choose_name(var/retries = 3)
-	var/randomname = pick(ai_names)
+	var/randomname = pick_string_autokey("names/ai.txt")
 	var/newname
 	for (retries, retries > 0, retries--)
 		newname = input(src, "You are an AI. Would you like to change your name to something else?", "Name Change", randomname) as null|text

@@ -237,7 +237,7 @@
 			src.is_pet = 1
 		..()
 		if (src.randomize_cat)
-			src.name = pick_string("names/cats.txt", "catnames")
+			src.name = pick_string_autokey("names/cats.txt")
 
 #ifdef HALLOWEEN
 			src.cattype = 3 //Black cats for halloween.
@@ -439,7 +439,7 @@
 	desc = "Although this cat is vegan, it's still a carnivore."
 
 	New()
-		name = pick(cat_names)
+		name = pick_string_autokey("names/cats.txt")
 		..()
 
 /obj/critter/dog/george

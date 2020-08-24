@@ -25,6 +25,8 @@ var/global/list/string_cache
 					string_cache[filename][stringsList[1]] = stringsList[2] // Its a single string!
 		else
 			CRASH("file not found: strings/[filename]")
+	if(isnull(key) && (filename in string_cache) && length(string_cache[filename]) == 1) // if only one key we can omit it
+		key = string_cache[filename][1]
 	if((filename in string_cache) && (key in string_cache[filename]))
 		return string_cache[filename][key]
 	else if (accept_absent) //Don't crash, just return null. It's fine. Honest

@@ -240,9 +240,9 @@
 
 				var/randomname
 				if (traitor.current.gender == "female")
-					randomname = wiz_female.len ? pick(wiz_female) : "Witch"
+					randomname = pick_string_autokey("names/wizard_female.txt")
 				else
-					randomname = wiz_male.len ? pick(wiz_male) : "Wizard"
+					randomname = pick_string_autokey("names/wizard_male.txt")
 
 				SPAWN_DBG (0)
 					var/newname = input(traitor.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname)
