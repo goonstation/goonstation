@@ -334,10 +334,6 @@
 	secured = 2
 	icon_state = "dbox"
 
-
-//Global list of telepads so we don't have to loop through the entire world aaaahhh.
-var/list/mechanics_telepads = new/list()
-
 /obj/item/mechanics
 	name = "testhing"
 	icon = 'icons/misc/mechanicsExpansion.dmi'
@@ -2170,14 +2166,14 @@ var/list/mechanics_telepads = new/list()
 
 	New()
 		..()
-		mechanics_telepads.Add(src)
+		START_TRACKING
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activate")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"setID", "setidmsg")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Teleporter ID","setID")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Send-only Mode","toggleSendOnly")
 
 	disposing()
-		mechanics_telepads.Remove(src)
+		STOP_TRACKING
 		return ..()
 
 	proc/setID(obj/item/W as obj, mob/user as mob)
@@ -2219,7 +2215,7 @@ var/list/mechanics_telepads = new/list()
 		playsound(src.loc, "sound/mksounds/boost.ogg", 50, 1)
 		var/list/destinations = new/list()
 
-		for(var/obj/item/mechanics/telecomp/T in mechanics_telepads)
+		for(var/obj/item/mechanics/telecomp/T in by_type[/obj/item/mechanics/telecomp])
 			if(T == src || T.level == 2 || !isturf(T.loc)  || isrestrictedz(T.z)|| T.send_only) continue
 
 #ifdef UNDERWATER_MAP

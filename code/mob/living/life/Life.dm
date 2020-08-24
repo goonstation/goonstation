@@ -1,5 +1,3 @@
-var/global/life_pause_check = 0
-
 /datum/lifeprocess
 	var/mob/living/owner
 	var/last_process = 0
@@ -183,7 +181,6 @@ var/global/life_pause_check = 0
 
 	var/life_time_passed = max(tick_spacing, TIME - last_life_tick)
 
-	life_pause_check = 0
 	// Jewel's attempted fix for: null.return_air()
 	// These objects should be garbage collected the next tick, so it's not too bad if it's not breathing I think? I might be totallly wrong here.
 	if (loc)

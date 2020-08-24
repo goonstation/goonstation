@@ -327,7 +327,7 @@
 					else
 						lifeforms++
 						lifelist += C.name
-		for(var/obj/O in lockers_and_crates)
+		for(var/obj/O in by_type[/obj/storage])
 			if ((ship.z == O.z) && get_dist(ship.loc, O) <= src.seekrange/2)
 				for (var/mob/living/M in O.contents)
 					lifeforms++

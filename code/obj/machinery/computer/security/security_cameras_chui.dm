@@ -12,7 +12,7 @@ chui/window/security_cameras
 	GetBody()
 		var/list/L = list()
 		var/bool = 1
-		for (var/obj/machinery/camera/C in cameras)
+		for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 			if (bool)
 				owner.current = C
 				bool = 0

@@ -306,14 +306,10 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			return ..()
 
 	proc/update_meat_head_dialog(var/new_text)
-		if (!new_text || !length(ckey(new_text)) || !main_meat_head)
+		if (!new_text || !length(ckey(new_text)))
 			return
-
+		var/obj/critter/monster_door/meat_head/main_meat_head = by_type[/obj/critter/monster_door/meat_head][1]
 		main_meat_head.update_meat_head_dialog(new_text)
-
-var/global/obj/critter/monster_door/main_meat_head = null
-var/global/list/default_meat_head_dialog = list("hello hello", "... it's not viral, it's some kind of ... stress ... hello", "what is that ...", "... hurts ...",
-"...FACILITY IS ON RED ALERT...","...why...","...proper safety precautions were not....","...is it...", "...this isn't...")
 
 #define MEATHEAD_MAX_CUSTOM_UTTERANCES 32
 
@@ -331,18 +327,20 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 	bound_height = 64
 	bound_width = 64
 	angertext = "shakes and wobbles furiously at"
-	var/list/dialog = list()
+	var/list/dialog = null
 	var/obj/item/clothing/head/hat = null
 	var/static/list/meathead_noises = list('sound/misc/meat_gargle.ogg', 'sound/misc/meat_hork.ogg', 'sound/misc/meat_plop.ogg', 'sound/misc/meat_splat.ogg')
+	var/static/list/default_meat_head_dialog = list("hello hello", "... it's not viral, it's some kind of ... stress ... hello", "what is that ...", "... hurts ...",
+"...FACILITY IS ON RED ALERT...","...why...","...proper safety precautions were not....","...is it...", "...this isn't...")
 
 	New()
 		..()
-		if (default_meat_head_dialog)
-			dialog += default_meat_head_dialog.Copy()
+		dialog = default_meat_head_dialog.Copy()
+		START_TRACKING
 
-		SPAWN_DBG (20)
-			if (!main_meat_head)
-				main_meat_head = src
+	disposing()
+		STOP_TRACKING
+		..()
 
 	CritterDeath()
 		if (!src.alive) return
@@ -538,9 +536,9 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 		qdel(src)
 
 	proc/update_meat_head_dialog(var/new_text)
-		if (!new_text || !length(ckey(new_text)) || !main_meat_head)
+		if (!new_text || !length(ckey(new_text)))
 			return
-
+		var/obj/critter/monster_door/meat_head/main_meat_head = by_type[/obj/critter/monster_door/meat_head][1]
 		main_meat_head.update_meat_head_dialog(new_text)
 
 	proc/target_missing_limb(mob/living/carbon/human/testhuman)

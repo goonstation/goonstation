@@ -27,7 +27,7 @@
 
 	New()
 		..()
-		src.real_name = "[pick(BOOZE_prefixes)] [pick(BEER_suffixes)]"
+		src.real_name = "[pick_string("chemistry_tools.txt", "BOOZE_prefixes")] [pick_string("chemistry_tools.txt", "BEER_suffixes")]"
 		src.UpdateName()
 		bottle_style = pick("clear", "black", "barf", "brown", "red", "orange", "yellow", "green", "cyan", "blue", "purple")
 		label = pick("alcohol1","alcohol2","alcohol3","alcohol4","alcohol5","alcohol6","alcohol7")
@@ -37,25 +37,16 @@
 
 		while (flavors > 0)
 			flavors--
-			reagents.add_reagent(pick(BOOZE_flavors),rand(1,3))
+			reagents.add_reagent(pick_string("chemistry_tools.txt", "BOOZE_flavors"), rand(1,3))
 
 		while (adulterants > 0)
 			adulterants--
-			reagents.add_reagent(pick(CYBERPUNK_drug_adulterants), rand(1,3))
+			reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_adulterants"), rand(1,3))
 
 		update_icon()
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
-
-///////////
-
-/var/list/BOOZE_prefixes = strings("chemistry_tools.txt", "BOOZE_prefixes")
-/var/list/WINE_suffixes = strings("chemistry_tools.txt", "WINE_suffixes")
-/var/list/BEER_suffixes = strings("chemistry_tools.txt", "BEER_suffixes")
-/var/list/BOOZE_flavors = strings("chemistry_tools.txt", "BOOZE_flavors")
-
-////////////
 
 /obj/item/reagent_containers/food/drinks/bottle/wine
 	name = "Wine"
@@ -88,7 +79,7 @@
 
 	New()
 		..()
-		src.real_name = "[pick(BOOZE_prefixes)] [pick(WINE_suffixes)]"
+		src.real_name = "[pick_string("chemistry_tools.txt", "BOOZE_prefixes")] [pick_string("chemistry_tools.txt", "WINE_suffixes")]"
 		src.UpdateName()
 		bottle_style = "vermouth[pick("C", "R", "O", "Y", "", "A", "B", "P")]" // clear, red, orange, green, aqua, blue, purple
 
@@ -102,7 +93,7 @@
 
 		while (flavors > 0)
 			flavors--
-			reagents.add_reagent(pick(BOOZE_flavors),rand(2,5))
+			reagents.add_reagent(pick_string("chemistry_tools.txt", "BOOZE_flavors"), rand(2,5))
 
 		while (adulterants > 0)
 			adulterants--

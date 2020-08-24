@@ -1,11 +1,7 @@
 var/datum/dynamicQueue/delete_queue = new /datum/dynamicQueue(100) //List of items that want to be deleted
 
 var/list/datum/delete_queue_2[DELQUEUE_SIZE][0]
-var/datum/delqueue_pos = 1
-
-// hi i fucked up this file p bad. if it ends up being as bad as
-// it looks pls do "git revert (whatever hash this has)"
-// otherwise this will stink up everything forever
+var/delqueue_pos = 1
 
 /**
  * qdel
@@ -16,19 +12,6 @@ var/datum/delqueue_pos = 1
 proc/qdel(var/datum/O)
 	if(!O)
 		return
-
-	/*
-	// debugging is a nightmare and i want to die
-	var/mob/fuck = O
-	if (istype(fuck))
-		if (fuck.client)
-			Z_LOG_ERROR("qdel", "Hey asshole you're trying to qdel a mob (\ref[fuck] [fuck]) that still has a client ([fuck.client])! What the fuck do you think you're doing???")
-			CRASH("Trying to qdel a mob ([fuck]) that still has a client ([fuck.client])")
-		else
-			Z_LOG_WARN("qdel", "Deleting a mob (\ref[fuck] [fuck]) (no client)")
-			spawn(-1)
-				CRASH("Deleting a mob (\ref[fuck] [fuck]) (no client)")
-	*/
 
 	if (istype(O))
 		// only queue deletions if the round is running, otherwise the queue isn't being processed

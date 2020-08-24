@@ -478,8 +478,9 @@
 	src.need_update_item_abilities = 1
 	src.antagonist_overlay_refresh(1, 0)
 
-	if (ass_day)
+#if ASS_JAM
 		ass_day_popup(src)
+#endif
 
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
@@ -2604,11 +2605,11 @@
 /proc/random_name(var/gen = MALE)
 	var/return_name
 	if (gen == MALE)
-		return_name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
+		return_name = capitalize(pick_string_autokey("names/first_male.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 	else if (gen == FEMALE)
-		return_name = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
+		return_name = capitalize(pick_string_autokey("names/first_female.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 	else
-		return_name = capitalize(pick(first_names_male + first_names_female) + " " + capitalize(pick(last_names)))
+		return_name = capitalize(pick_string_autokey("names/first_[prob(50)?"fe":""]male.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 	return return_name
 
 /mob/OnMove(source = null)
