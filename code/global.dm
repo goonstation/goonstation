@@ -577,7 +577,6 @@ var/global
 	list/shittybills = list()
 	list/johnbills = list()
 	list/otherbills = list()
-	list/tourguides = list()
 	list/npcmonkeypals = list()
 	list/teleport_jammers = list()
 

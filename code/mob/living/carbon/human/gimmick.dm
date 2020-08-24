@@ -502,7 +502,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	proc/speak()
 		SPAWN_DBG(0)
 
-			var/obj/machinery/bot/guardbot/old/tourguide/murray = pick(tourguides)
+			var/obj/machinery/bot/guardbot/old/tourguide/murray = pick(by_type[/obj/machinery/bot/guardbot/old/tourguide])
 			if (murray && get_dist(src,murray) > 7)
 				murray = null
 			if (istype(murray))

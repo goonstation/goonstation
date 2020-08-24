@@ -239,7 +239,7 @@ var/list/JOHN_grilladvice = strings("johnbill.txt", "grilladvice")
 		SPAWN_DBG(0)
 			var/list/grills = list()
 
-			var/obj/machinery/bot/guardbot/old/tourguide/murray = pick(tourguides)
+			var/obj/machinery/bot/guardbot/old/tourguide/murray = pick(by_type[/obj/machinery/bot/guardbot/old/tourguide])
 			if (murray && get_dist(src,murray) > 7)
 				murray = null
 			if (istype(murray))
