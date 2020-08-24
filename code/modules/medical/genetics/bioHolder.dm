@@ -220,7 +220,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mobAppearance.parentHolder = src
 
 		if(owner)
-			reg_dna[Uid] = owner:real_name
 			ownerName = owner:real_name
 
 		BuildEffectPool()

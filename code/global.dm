@@ -495,7 +495,6 @@ var/global
 	list/onlineAdmins = list(  )
 	list/whitelistCkeys = list(  )
 	list/bypassCapCkeys = list(  )
-	list/reg_dna = list(  )
 	list/warned_keys = list()	// tracking warnings per round, i guess
 
 	datum/dj_panel/dj_panel = new()
