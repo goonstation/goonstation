@@ -3,10 +3,6 @@
 	By Firebarrage
 */
 
-
-
-var/global/list/datum/flow_network/all_fluid_networks = list()
-
 /obj/fluid_pipe
 	name = "fluid pipe"
 	desc = "A pipe. For fluids."
@@ -181,7 +177,6 @@ proc/make_fluid_networks()
 	do
 		DEBUG_MESSAGE("Creating fluid network. Root node is at [log_loc(root)].")
 		var/datum/flow_network/network = new /datum/flow_network(root)
-		all_fluid_networks.Add(network)
 		root = find_unvisited_node()
 	while(root)
 
@@ -204,6 +199,7 @@ proc/find_unvisited_node()
 	New(var/obj/fluid_pipe/root)
 		..()
 		pipe_cont.net = src
+		START_TRACKING
 		DEBUG_MESSAGE("Constructing fluid pipe network")
 		nodes = DFS(root)
 		for(var/obj/fluid_pipe/N in nodes)
@@ -223,6 +219,10 @@ proc/find_unvisited_node()
 				edges += "([adj.loc.x], [adj.loc.y]), "
 			edges += "\]"
 			DEBUG_MESSAGE(edges)
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 	proc/clear_DFS_flags()
 		for(var/obj/fluid_pipe/FN in nodes)

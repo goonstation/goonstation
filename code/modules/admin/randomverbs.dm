@@ -14,9 +14,9 @@
 	set name = "Print Flow Networks"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	DEBUG_MESSAGE("Dumping flow network refs")
-	for(var/datum/flow_network/network in all_fluid_networks)
+	for(var/datum/flow_network/network in by_type[/datum/flow_network])
 		DEBUG_MESSAGE_VARDBG("[showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)]", network)
-	for(var/datum/flow_network/network in all_fluid_networks)
+	for(var/datum/flow_network/network in by_type[/datum/flow_network])
 		DEBUG_MESSAGE("Printing flow network rooted at [showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)] (\ref[network])")
 		// Clear DFS flags
 		network.clear_DFS_flags()
