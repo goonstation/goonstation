@@ -85,7 +85,8 @@
 	src.icon = null
 	src.invisibility = 101
 	for(var/t in src.organs)
-		qdel(src.organs[text("[]", t)])
+		qdel(src.organs[t])
+		src.organs[t] = null
 
 	return ..()
 
@@ -151,6 +152,7 @@
 	O.verbs += /mob/living/silicon/ai/verb/access_internal_radio
 	O.verbs += /mob/living/silicon/ai/verb/access_internal_pda
 	O.verbs += /mob/living/silicon/ai/proc/ai_colorchange
+	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 	O.job = "AI"
 
 	SPAWN_DBG(0)
