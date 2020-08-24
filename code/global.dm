@@ -118,8 +118,6 @@ var/global
 
 	list/nervous_mobs = list()
 
-	list/comm_dishes = list()
-
 	list/conveyor_switches = list()
 
 	already_a_dominic = 0 // no just shut up right now, I don't care

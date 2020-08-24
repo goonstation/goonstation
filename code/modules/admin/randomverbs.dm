@@ -468,7 +468,7 @@
 */
 
 	if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-		for (var/obj/machinery/communications_dish/C in comm_dishes)
+		for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 			C.add_centcom_report("[command_name()] Update", input)
 
 		var/sound_to_play = "sound/misc/announcement_1.ogg"
