@@ -431,9 +431,6 @@ var/global
 	special_respawning = 1
 	abandon_allowed = 1
 	enter_allowed = 1
-	shuttle_frozen = 0
-	shuttle_left = 0
-	turd_location = 0
 	johnbus_location = 1
 	johnbus_destination = 0
 	johnbus_active = 0
