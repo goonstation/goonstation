@@ -14,29 +14,13 @@ var/global/list/landmarks = list()
 
 /obj/landmark/cruiser_entrance
 
-/obj/landmark/alterations
-	name = "alterations"
-
-/obj/landmark/miniworld
-	name = "worldsetup"
-	var/id = 0
-
 /obj/landmark/escape_pod_succ
 	name = "escape_pod_success"
 	icon_state = "xp"
 
-/obj/landmark/miniworld/w1
-
-/obj/landmark/miniworld/w2
-
-/obj/landmark/miniworld/w3
-
-/obj/landmark/miniworld/w4
-
 /obj/landmark/New()
 	..()
 	src.tag = "landmark*[src.name]"
-	//src.invisibility = 101
 
 	switch(src.name)
 		if ("monkey")
