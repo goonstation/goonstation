@@ -481,7 +481,7 @@ datum
 				if (volume < 5 || istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility) return
 				O.visible_message("<span class='alert'>The [O] comes to life!</span>")
 				var/obj/critter/livingobj/L = new/obj/critter/livingobj(O.loc)
-				O.loc = L
+				O.set_loc(L)
 				L.name = "Living [O.name]"
 				L.desc = "[O.desc]. It appears to be alive!"
 				L.overlays += O
@@ -2004,7 +2004,7 @@ datum
 						if(prob(1)) // i hate you all, players
 							H.visible_message("<span class='alert bold'>[H] is torn apart from the inside as some weird floaty thing rips its way out of their body! Holy fuck!!</span>")
 							var/mob/living/critter/flock/bit/B = new()
-							B.loc = get_turf(H)
+							B.set_loc(get_turf(H))
 							H.gib()
 					else
 						// DO SPOOKY THINGS

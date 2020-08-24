@@ -291,7 +291,7 @@
 		TO.ghostize()
 
 	for(var/mob/m in src) //just in case...
-		m.loc = src.loc
+		m.set_loc(src.loc)
 		m.ghostize()
 
 	if (ghost && ghost.corpse == src)
@@ -490,6 +490,8 @@
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
+
+	tgui_process?.on_logout(src)
 
 	if (src.last_client && !src.key) // lets see if not removing the HUD from disconnecting players helps with the crashes
 		for (var/datum/hud/hud in src.huds)
@@ -906,8 +908,7 @@
 			return I
 
 /mob/dead/unequip_all(var/delete_stuff=0)
-	var/obj/ecto = new/obj/item/reagent_containers/food/snacks/ectoplasm
-	ecto.loc = src.loc
+	new/obj/item/reagent_containers/food/snacks/ectoplasm(src.loc)
 
 /mob/proc/get_unequippable()
 	return
@@ -2878,3 +2879,6 @@
 	if (items.len)
 		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
 		A.interact(src)
+
+/mob/proc/add_karma(how_much)
+	src?.mind.add_karma(how_much)

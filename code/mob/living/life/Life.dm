@@ -419,7 +419,7 @@ var/global/life_pause_check = 0
 
 	if (src.item && src.item.loc != src) //ZeWaka: Fix for null.loc
 		if (isturf(src.item.loc))
-			src.item.loc = src
+			src.item.set_loc(src)
 		else
 			src.death(0)
 
@@ -513,7 +513,7 @@ var/global/life_pause_check = 0
 		if (src.mind.stealth_objective)
 			for (var/datum/objective/O in src.mind.objectives)
 				if (istype(O, /datum/objective/specialist/stealth))
-					var/turf/T = get_turf_loc(src)
+					var/turf/T = get_turf(src)
 					if (T && isturf(T) && (istype(T, /turf/space) || T.loc.name == "Space" || T.loc.name == "Ocean" || T.z != 1))
 						O:score = max(0, O:score - 1)
 						if (prob(20))

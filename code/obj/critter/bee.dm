@@ -350,7 +350,7 @@
 			if (src.alive)
 				if (user.a_intent == INTENT_HELP)
 					src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
-					karma_update(1, "SAINT", user)
+					user.add_karma(1)
 
 					if (masked == 1)
 						src.visible_message("<span class='alert'>[src]'s halloween mask falls off!<br>[src] stares at the fallen mask for a moment, then buzzes wearily.</span>")
@@ -368,7 +368,7 @@
 							user.visible_message("<span class='notice'>[src] hugs [user] back!</span>", "<span class='notice'>[src] hugs you back!</span>")
 							if (user.reagents)
 								user.reagents.add_reagent("hugs", 10)
-							karma_update(2, "SAINT", user)
+							user.add_karma(2)
 
 					return
 			else
@@ -1086,7 +1086,7 @@
 		modify_christmas_cheer(-5)
 		var/mob/M = src.lastattacker
 		if (M)
-			karma_update(5, "SIN", M)
+			M.add_karma(-5)
 		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src))
 			if(fellow_bee.alive)
 				fellow_bee.aggressive = 1
@@ -1150,7 +1150,7 @@
 		if (istype(W, /obj/item/reagent_containers/food/snacks))
 			if(findtext(W.name,"bee") && !istype(W, /obj/item/reagent_containers/food/snacks/beefood)) // You just know somebody will do this
 				src.visible_message("<b>[src]</b> buzzes in a repulsed manner!", 1)
-				karma_update(1, "SIN", user)
+				user.add_karma(-1)
 
 				if (user != src.target)
 					walk_away(src,user,10,1)
@@ -1547,7 +1547,7 @@
 			src.visible_message("<b>[src]</b> squeals in a SCOLDED MANNER.")
 
 		else
-			karma_update(1, "SIN", user)
+			user.add_karma(-1)
 			..()
 
 	CritterDeath()

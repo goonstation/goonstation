@@ -658,7 +658,7 @@ CONTAINS:
 	proc/put_back_defib(var/mob/living/M)
 		if (src.defib)
 			M.drop_item(defib)
-			src.defib.loc = src
+			src.defib.set_loc(src)
 			src.defib.parent = null
 		if (islist(M.move_laying))
 			M.move_laying -= src.defib

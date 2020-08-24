@@ -573,6 +573,7 @@
 		droploot = /obj/item/spacecash/buttcoin // replace with railgun if that's ever safe enough to hand out? idk
 		attack_cooldown = 50
 		smashes_shit = 1
+		mats = 96
 
 		Shoot(var/atom/target, var/start, var/user, var/bullet = 0)
 			if(target == start)

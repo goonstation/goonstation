@@ -181,7 +181,7 @@ For hairball DynAssemblies see: jonescity.dm
 	onEnd()
 		..()
 		for (var/obj/O in assembly.contents)
-			O.loc = get_turf(assembly)
+			O.set_loc(get_turf(assembly))
 		user.u_equip(assembly)
 		boutput(user, "<span class='alert'>You have unsecured \the [assembly]!</span>")
 		qdel(assembly)

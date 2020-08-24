@@ -977,12 +977,6 @@ proc/default_frequency_color(freq)
 #define SHIP_ALERT_GOOD 0
 #define SHIP_ALERT_BAD 1
 
-// where you at, dawg, where you where you at, shuttle_controller.dm
-#define SHUTTLE_LOC_CENTCOM 0
-#define SHUTTLE_LOC_STATION 1
-#define SHUTTLE_LOC_TRANSIT 1.5
-#define SHUTTLE_LOC_RETURNED 2
-
 //moved from guardbot.dm because i wanna use this list of buddy hats on some critters
 #define BUDDY_HATS list("detective","hoscap","hardhat","hosberet","ntberet","chef","souschef","captain","centcom","centcom-red","tophat","ptophat","mjhat","plunger","cakehat0","cakehat1","butt","santa","yellow","blue","red","green","black","white","psyche","wizard","wizardred","wizardpurple","witch","obcrown","macrown","safari","dolan","viking","mailcap","bikercap","paper","apprentice","chavcap","policehelm","captain-fancy","rank-fancy","mime_beret","mime_bowler")
 
@@ -1163,4 +1157,11 @@ var/ZLOG_START_TIME
 #ifndef SERVER_SIDE_PROFILING
 	#define SERVER_SIDE_PROFILING 1
 #endif
+#endif
+
+// i_dont_want_to_make_a_whole_new_file_for_one_goddamned_define.jpg
+#ifdef RP_MODE
+#define MAX_PARTICIPATE_TIME 80 MINUTES //the maximum shift time before it doesnt count as "participating" in the round
+#else
+#define MAX_PARTICIPATE_TIME 40 MINUTES //ditto above
 #endif

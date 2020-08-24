@@ -814,7 +814,7 @@ Read the rules, don't grief, and have fun!</div>"}
 /obj/overlay/zamujasa/round_start_countdown
 	New()
 		if (lobby_titlecard)
-			src.x = lobby_titlecard.x + 14
+			src.x = lobby_titlecard.x + 13
 			src.y = lobby_titlecard.y + 0
 			src.z = lobby_titlecard.z
 			src.layer = lobby_titlecard.layer + 1
@@ -828,27 +828,52 @@ Read the rules, don't grief, and have fun!</div>"}
 		src.maptext = ""
 		src.maptext_width = 320
 		src.maptext_x = -(320 / 2) + 16
-		src.maptext_height = 96
+		src.maptext_height = 48
 		src.plane = 100
 
-	proc/update_time(var/time)
-		if (time >= 0)
-			var/timeLeftColor
-			switch (time)
-				if (90 to INFINITY)
-					timeLeftColor = "#33dd33"
-				if (60 to 90)
-					timeLeftColor = "#ffff00"
-				if (30 to 60)
-					timeLeftColor = "#ffb400"
-				if (0 to 30)
-					timeLeftColor = "#ff6666"
-			src.maptext = "<span class='c ol vga vt'>Round begins in<br><span style='color: [timeLeftColor]; font-size: 36px;'>[time]</span></span>"
-		else
-			src.maptext = "<span class='c ol vga vt'>Round begins<br><span style='color: #aaaaaa; font-size: 36px;'>soon</span></span>"
 
 	proc/update_status(var/message)
-		src.maptext = "<span class='c ol vga vt'>Setting up game...\n<span style='color: #aaaaaa;'>[message]</span></span>"
+		if (message)
+			src.maptext = "<span class='c ol vga vt'>Setting up game...\n<span style='color: #aaaaaa;'>[message]</span></span>"
+		else
+			src.maptext = ""
+
+	timer
+		New()
+			if (lobby_titlecard)
+				src.x = lobby_titlecard.x + 13
+				src.y = lobby_titlecard.y + 1
+				src.z = lobby_titlecard.z
+				src.layer = lobby_titlecard.layer + 1
+			else
+				// oops
+				src.x = 7
+				src.y = 1
+				src.z = 1
+				src.layer = 1
+
+			src.maptext = ""
+			src.maptext_width = 320
+			src.maptext_x = -(320 / 2) + 16
+			src.maptext_height = 96
+			src.plane = 100
+
+		proc/update_time(var/time)
+			if (time >= 0)
+				var/timeLeftColor
+				switch (time)
+					if (90 to INFINITY)
+						timeLeftColor = "#33dd33"
+					if (60 to 90)
+						timeLeftColor = "#ffff00"
+					if (30 to 60)
+						timeLeftColor = "#ffb400"
+					if (0 to 30)
+						timeLeftColor = "#ff6666"
+				src.maptext = "<span class='c ol vga vt'>Round begins in<br><span style='color: [timeLeftColor]; font-size: 36px;'>[time]</span></span>"
+			else
+				src.maptext = "<span class='c ol vga vt'>Round begins<br><span style='color: #aaaaaa; font-size: 36px;'>soon</span></span>"
+
 
 
 

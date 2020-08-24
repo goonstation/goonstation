@@ -106,7 +106,7 @@ var/global/derelict_mode = 0
 			boutput(that_asshole, "<span class='alert'>Frankly, it doesn't look as tasty when it's broken. You have no appetite for that.</span>")
 			return
 		src.visible_message("<span class='alert'><b>[that_asshole] devours the server!<br>OH GOD WHAT</b></span>")
-		src.loc = null
+		src.set_loc(null)
 		world.save_intra_round_value("somebody_ate_the_fucking_thing", 1)
 		breakdown()
 		SPAWN_DBG(5 SECONDS)

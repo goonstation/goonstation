@@ -461,7 +461,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		if (istype(W, /obj/item/orb))
 			if (!O)
 				O = W
-				O.loc = src
+				O.set_loc(src)
 				user.u_equip(O)
 				if (user.client)
 					user.client.screen -= O
@@ -724,7 +724,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 				boutput(user, "<span class='notice'>You place the crystal into the socket.</span>")
 				crystal = W
 				user.u_equip(W)
-				W.loc = src
+				W.set_loc(src)
 				user.client.screen -= W
 				apply_crystal()
 			else
@@ -816,7 +816,6 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 
 	disposing()
 		if (effect_overlay)
-			effect_overlay.loc = null
 			qdel(effect_overlay)
 			effect_overlay = null
 		..()

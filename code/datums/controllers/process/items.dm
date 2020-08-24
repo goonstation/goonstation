@@ -12,13 +12,19 @@ datum/controller/process/items
 		// plus i like watching number go up
 		var/itemcount = 0
 		var/lasttime = 0
+
+		// Zamu here -- I checked and this doesn't even register as 1 on a timeofday check
+		var/totalcount = 0
+		for(var/obj/object in world)
+			totalcount++
+
 		for(var/obj/object in world)
 			object.initialize()
 			itemcount++
 			if (game_start_countdown)
 				if (lasttime != world.timeofday)
 					lasttime = world.timeofday
-					game_start_countdown.update_status("Initializing items\n([itemcount])")
+					game_start_countdown.update_status("Initializing items\n([itemcount], [round(itemcount / totalcount * 100)]%)")
 
 			LAGCHECK(LAG_HIGH)
 
