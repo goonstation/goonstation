@@ -1,5 +1,3 @@
-var/datum/swapMaster/swapMaster = new()
-
 /obj/swapAreaEntry
 	name = "entry point"
 	icon = 'icons/obj/stationobjs.dmi'
