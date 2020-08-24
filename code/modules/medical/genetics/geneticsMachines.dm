@@ -478,13 +478,13 @@ var/list/genetics_computers = list()
 		if(globalInstance != null)
 			var/name_string = "Unknown Mutation"
 			var/desc_string = "Research on a non-active instance of this gene is required."
-			if (globalInstance.research_level == 3)
+			if (globalInstance.research_level == EFFECT_RESEARCH_ACTIVATED)
 				name_string = globalInstance.name
 				desc_string = globalInstance.desc
-			else if (globalInstance.research_level == 2)
+			else if (globalInstance.research_level == EFFECT_RESEARCH_DONE)
 				name_string = E.name
 				desc_string = E.desc
-			else if (globalInstance.research_level == 1)
+			else if (globalInstance.research_level == EFFECT_RESEARCH_IN_PROGRESS)
 				desc_string = "Research on this gene is currently in progress."
 
 			html_list += "<p><b>[name_string]</b><br>[desc_string]</p>"
@@ -519,13 +519,13 @@ var/list/genetics_computers = list()
 		if(globalInstance != null)
 			var/name_string = "Unknown Mutation"
 			var/desc_string = "Research on a non-active instance of this gene is required."
-			if (globalInstance.research_level == 3)
+			if (globalInstance.research_level == EFFECT_RESEARCH_ACTIVATED)
 				name_string = globalInstance.name
 				desc_string = globalInstance.desc
-			else if (globalInstance.research_level == 2)
+			else if (globalInstance.research_level == EFFECT_RESEARCH_DONE)
 				name_string = E.name
 				desc_string = E.desc
-			else if (globalInstance.research_level == 1)
+			else if (globalInstance.research_level == EFFECT_RESEARCH_IN_PROGRESS)
 				desc_string = "Research on this gene is currently in progress."
 
 			html_list += "<p><b>[name_string]</b><br>[desc_string]</p>"
@@ -664,7 +664,7 @@ var/list/genetics_computers = list()
 				var/datum/bioEffect/NEWBE = new GR.result(src)
 				saved_mutations += NEWBE
 				var/datum/bioEffect/GBE = NEWBE.get_global_instance()
-				GBE.research_level = max(GBE.research_level,3) // counts as researching it
+				GBE.research_level = max(GBE.research_level, EFFECT_RESEARCH_ACTIVATED) // counts as researching it
 				for (var/X in combining)
 					saved_mutations -= X
 					combining -= X
@@ -1362,11 +1362,11 @@ var/list/genetics_computers = list()
 				var/datum/bioEffect/BE
 				for(var/X in bioEffectList)
 					BE = bioEffectList[X]
-					if (!BE.scanner_visibility || BE.research_level < 2)
+					if (!BE.scanner_visibility || BE.research_level < EFFECT_RESEARCH_DONE)
 						continue
-					if (BE.research_level == 2)
+					if (BE.research_level == EFFECT_RESEARCH_DONE)
 						html_list += "- <a href=\"javascript:goBYOND('researched_mutation=\ref[BE]')\">[BE.name]</a><br>"
-					else if (BE.research_level == 3)
+					else if (BE.research_level == EFFECT_RESEARCH_ACTIVATED)
 						html_list += "* <a href=\"javascript:goBYOND('researched_mutation=\ref[BE]')\">[BE.name]</a><br>"
 				html_list += "</p>"
 
@@ -1472,7 +1472,7 @@ var/list/genetics_computers = list()
 				var/datum/bioEffect/BE
 				for (var/X in bioEffectList)
 					BE = bioEffectList[X]
-					if (BE.effectType == effectTypeMutantRace && BE.research_level >= 2 && BE.mutantrace_option)
+					if (BE.effectType == EFFECT_TYPE_MUTANTRACE && BE.research_level >= 2 && BE.mutantrace_option)
 						options += BE
 					else continue
 

@@ -211,13 +211,13 @@ var/datum/geneticsResearchManager/genResearch = new()
 	onBegin()
 		global_instance = GetBioeffectFromGlobalListByID(mutation_id)
 		global_instance.research_finish_time = world.time + researchTime
-		global_instance.research_level = max(global_instance.research_level,1)
+		global_instance.research_level = max(global_instance.research_level, EFFECT_RESEARCH_IN_PROGRESS)
 		return
 
 	onFinish()
 		..()
 		if (global_instance.research_level < 2)
-			global_instance.research_level = max(global_instance.research_level,2)
+			global_instance.research_level = max(global_instance.research_level, EFFECT_RESEARCH_DONE)
 			genResearch.mutations_researched++
 		return
 

@@ -2409,8 +2409,8 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if ( (method==TOUCH && prob(33)) || method==INGEST)
-					if(M.bioHolder.HasAnyEffect(effectTypePower) && prob(4))
-						M.bioHolder.RemoveAllEffects(effectTypePower)
+					if(M.bioHolder.HasAnyEffect(EFFECT_TYPE_POWER) && prob(4))
+						M.bioHolder.RemoveAllEffects(EFFECT_TYPE_POWER)
 						boutput(M, "You feel plain.")
 				return
 
