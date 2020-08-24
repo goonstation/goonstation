@@ -82,7 +82,6 @@ var/global
 	//list/total_deletes = list() //List of things totally deleted
 	list/critters = list()
 	list/pets = list() //station pets
-	list/ghost_drones = list()
 	list/muted_keys = list()
 
 	server_start_time = 0
