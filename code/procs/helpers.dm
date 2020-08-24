@@ -2598,3 +2598,9 @@ proc/weighted_pick(list/choices)
 		if(weighted_num <= running_total)
 			return key
 	return
+
+proc/keep_truthy(some_list)
+	. = list()
+	for(var/x in some_list)
+		if(x)
+			. += x
