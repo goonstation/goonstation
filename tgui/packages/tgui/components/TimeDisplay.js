@@ -60,7 +60,7 @@ export class TimeDisplay extends Component {
     return { value: nextProps.value };
   }
 
-  defaultFormat(value) {
+  static defaultFormat(value) {
     const seconds = toFixed(Math.floor((value/10) % 60)).padStart(2, "0");
     const minutes = toFixed(Math.floor((value/(10*60)) % 60)).padStart(2, "0");
     const hours = toFixed(Math.floor((value/(10*60*60)) % 24)).padStart(2, "0");

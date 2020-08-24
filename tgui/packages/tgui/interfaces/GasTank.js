@@ -60,7 +60,7 @@ export const GasTankInfo = props => {
   return (
     <Fragment>
       <Box
-        pb="1em">
+        pb={1}>
         <Box
           inline
           color="label">
@@ -68,7 +68,7 @@ export const GasTankInfo = props => {
         </Box>
         <Box
           inline
-          mx="1em">
+          mx={1}>
           <AnimatedNumber
             value={pressure} />
           {' kPa'}

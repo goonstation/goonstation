@@ -11,37 +11,31 @@ export const PressureBar = props => {
   const barColorSafe = "green";
   const barColorDanger = "yellow";
 
-  const barColor = () => {
-    if ((pressure / maxPressure) > 1) {
-      return barColorDanger;
-    } else {
-      return barColorSafe;
-    }
-  };
 
-  const bgColor = () => {
-    if ((pressure / maxPressure) > 1) {
-      return bgColorDanger;
-    } else {
-      return bgColorSafe;
-    }
-  };
-
-  const pct = () => {
-    if ((pressure / maxPressure) > 1) {
-      return pressure / (maxPressure * 10);
-    } else {
-      return pressure / maxPressure;
-    }
-  };
+  const barColor = (
+    (pressure / maxPressure) > 1
+      ? barColorDanger
+      : barColorSafe
+  );
+  const bgColor = (
+    (pressure / maxPressure) > 1
+      ? bgColorDanger
+      : bgColorSafe
+  );
+  const pct = (
+    (pressure / maxPressure) > 1
+      ? pressure / (maxPressure * 10)
+      : pressure / maxPressure
+  );
 
   return (
     <Box
-      danger p={0.5}
-      backgroundColor={bgColor()}>
+      danger
+      p={0.5}
+      backgroundColor={bgColor}>
       <ProgressBar
-        color={barColor()}
-        value={pct()}>
+        color={barColor}
+        value={pct}>
         <AnimatedNumber
           value={pressure}
           format={value => (Math.floor(value * 100) / 100) + " kPa"}

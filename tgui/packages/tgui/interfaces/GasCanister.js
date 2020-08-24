@@ -66,7 +66,7 @@ export const GasCanister = (props, context) => {
     });
   };
 
-  let hasDetonator = !!(detonator);
+  const hasDetonator = !!(detonator);
 
   return (
     <Window
@@ -92,18 +92,23 @@ export const GasCanister = (props, context) => {
               : <Box color="average">The release valve is missing.</Box> }
           </Fragment>
         </PortableBasicInfo>
-        { detonator ? (<Detonator
-          detonator={detonator}
-          detonatorAttachments={detonatorAttachments}
-          onToggleAnchor={handleToggleAnchor}
-          onToggleSafety={handleToggleSafety}
-          onWireInteract={handleWireInteract}
-          onPrimeDetonator={handlePrimeDetonator}
-          onTriggerActivate={handleTriggerActivate}
-          onSetTimer={handleSetTimer} />)
-          : (<PortableHoldingTank
-            holding={holding}
-            onEjectTank={handleEjectTank} />)}
+        {
+          detonator
+            ? (<Detonator
+              detonator={detonator}
+              detonatorAttachments={detonatorAttachments}
+              onToggleAnchor={handleToggleAnchor}
+              onToggleSafety={handleToggleSafety}
+              onWireInteract={handleWireInteract}
+              onPrimeDetonator={handlePrimeDetonator}
+              onTriggerActivate={handleTriggerActivate}
+              onSetTimer={handleSetTimer} />
+            )
+            : (<PortableHoldingTank
+              holding={holding}
+              onEjectTank={handleEjectTank} />
+            )
+        }
       </Window.Content>
     </Window>
   );

@@ -40,7 +40,7 @@ const DetonatorWires = props => {
       wireStatus,
       time,
       isPrimed,
-    },
+    } = {},
     onWireInteract,
     onSetTimer,
   } = props;
@@ -78,7 +78,7 @@ const DetonatorWires = props => {
         </LabeledList>
       </Flex.Item>
       <Flex.Item
-        mr={5}
+        mr={2}
         mt={2} >
         <Flex
           direction="column"
@@ -123,7 +123,7 @@ const DetonatorUtility = props => {
       trigger,
       safetyIsOn,
       isPrimed,
-    },
+    } = {},
     detonatorAttachments,
     onToggleAnchor,
     onToggleSafety,
@@ -154,7 +154,7 @@ const DetonatorUtility = props => {
   return (
     <LabeledList>
       <LabeledList.Item
-        className="utility-list-item"
+        className="gas-canister-detonator-utility__list-item"
         label="Anchor Status">
         { isAnchored
           ? "Anchored. There are no controls for undoing this."
@@ -165,7 +165,7 @@ const DetonatorUtility = props => {
               onClick={onToggleAnchor} />)}
       </LabeledList.Item>
       <LabeledList.Item
-        className="utility-list-item"
+        className="gas-canister-detonator-utility__list-item"
         label="Trigger">
         {trigger ? (
           <Button
@@ -176,7 +176,7 @@ const DetonatorUtility = props => {
 
       </LabeledList.Item>
       <LabeledList.Item
-        className="utility-list-item"
+        className="gas-canister-detonator-utility__list-item"
         label="Safety">
         { safetyIsOn
           ? (
@@ -188,17 +188,17 @@ const DetonatorUtility = props => {
           : <Box color="average">Off</Box> }
       </LabeledList.Item>
       <LabeledList.Item
-        className="utility-list-item"
+        className="gas-canister-detonator-utility__list-item"
         label="Arming">
         { renderArmingStatus() }
       </LabeledList.Item>
       <LabeledList.Item
         label="Attachments"
-        className="utility-list-item">
+        className="gas-canister-detonator-utility__list-item">
         {detonatorAttachments && detonatorAttachments.length > 0 ? (
           detonatorAttachments.map((entry, i) => (
             <Box
-              className="attachment-item"
+              className="gas-canister-detonator-utility__attachment-item"
               key={entry + i}>
               { detonatorAttachments[i] }
             </Box>
