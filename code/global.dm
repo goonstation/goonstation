@@ -522,7 +522,6 @@ var/global
 	list/blobstart = list()
 	list/kudzustart = list()
 	list/peststart = list()
-	list/blobs = list()
 	list/wormholeturfs = list()
 	list/halloweenspawn = list()
 	list/telesci = list() // special turfs from map landmarks to always allow telescience to access
