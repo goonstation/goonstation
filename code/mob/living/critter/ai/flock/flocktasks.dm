@@ -12,7 +12,7 @@
 /datum/aiTask/prioritizer/flock/on_tick()
 	if(isdead(holder.owner))
 		holder.enabled = 0
-	walk(holder.owner, 0) // STOP RUNNING AROUND YOU'RE SUPPOSED TO BE DEAD
+		walk(holder.owner, 0) // STOP RUNNING AROUND YOU'RE SUPPOSED TO BE DEAD
 
 /datum/aiTask/prioritizer/flock/on_reset()
 	..()

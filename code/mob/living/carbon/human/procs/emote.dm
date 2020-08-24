@@ -593,8 +593,8 @@
 						SPAWN_DBG(1 SECOND)
 							hat.set_loc(src.loc)
 							src.head = null
-							src.gib()
 							src.add_karma(-10)
+							src.gib()
 					else if (istype(src.head, /obj/item/clothing/head) && !istype(src.head, /obj/item/clothing/head/fedora))
 						src.show_text("This hat just isn't [pick("fancy", "suave", "manly", "sexerific", "majestic", "euphoric")] enough for that!", "red")
 						//maptext_out = "<I>tips hat</I>"
