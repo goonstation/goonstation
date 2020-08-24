@@ -89,7 +89,7 @@
 	else
 		icon_state = "[casecolor]"
 		if (overlay_state)
-			if (src.det.part_fs.timing && !src.det.safety && !src.det.defused)
+			if (src.det && src.det.part_fs.timing && !src.det.safety && !src.det.defused)
 				if (src.det.part_fs.time > 5)
 					bomb_dmi.icon_state = "overlay_ticking"
 					UpdateOverlays(bomb_dmi, "canbomb")
