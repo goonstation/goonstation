@@ -1,5 +1,9 @@
 
 (t)mon aug 24 20
+(u)zjdtmkhzt
+(p)1920
+(e)🆕|feature
+(+)The pitcher in the artifact lab should now actually scale its power properly for force artifacts.
 (u)pali
 (p)1913
 (e)🆕|feature
