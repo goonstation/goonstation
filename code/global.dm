@@ -33,26 +33,6 @@ var/global
 	obj/overlay/w2master = null
 	obj/overlay/w3master = null
 
-	icon/aiIcon = icon('icons/mob/16.dmi',"ai",SOUTH,1) //Used for AI chat icon.
-	icon/roboIcon = icon('icons/mob/16.dmi',"robo",SOUTH,1)
-	icon/headIcon = icon('icons/mob/16.dmi',"head",SOUTH,1)
-	icon/sciIcon = icon('icons/mob/16.dmi',"sci",SOUTH,1)
-	icon/medIcon = icon('icons/mob/16.dmi',"med",SOUTH,1)
-	icon/engIcon = icon('icons/mob/16.dmi',"eng",SOUTH,1)
-	icon/secIcon = icon('icons/mob/16.dmi',"sec",SOUTH,1)
-	icon/qmIcon = icon('icons/mob/16.dmi',"qm",SOUTH,1)
-	icon/civIcon = icon('icons/mob/16.dmi',"civ",SOUTH,1)
-	icon/syndieIcon = icon('icons/mob/16.dmi',"syndie",SOUTH,1)
-	icon/syndiebossIcon = icon('icons/mob/16.dmi',"syndieboss",SOUTH,1)
-	icon/capIcon = icon('icons/mob/16.dmi',"cap",SOUTH,1)
-	icon/rdIcon = icon('icons/mob/16.dmi',"rd",SOUTH,1)
-	icon/mdIcon = icon('icons/mob/16.dmi',"md",SOUTH,1)
-	icon/ceIcon = icon('icons/mob/16.dmi',"ce",SOUTH,1)
-	icon/hopIcon = icon('icons/mob/16.dmi',"hop",SOUTH,1)
-	icon/hosIcon = icon('icons/mob/16.dmi',"hos",SOUTH,1)
-	icon/clownIcon = icon('icons/mob/16.dmi',"clown",SOUTH,1)
-	icon/ntIcon = icon('icons/mob/16.dmi',"nt",SOUTH,1)
-
 	turf/buzztile = null
 
 	//obj/hud/main_hud1 = null
