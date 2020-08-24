@@ -68,7 +68,7 @@ var/global/client/ff_debugger = null
 
 	Del()
 		if (cameras && cameras.len)
-			for (var/obj/machinery/camera/C in cameras)
+			for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 				C.coveredTiles -= src
 		cameras = null
 		..()
