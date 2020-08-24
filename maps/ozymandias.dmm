@@ -1205,7 +1205,6 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "atH" = (
-/obj/machinery/networked/test_apparatus/xraymachine,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -1216,6 +1215,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/networked/test_apparatus/heater,
 /turf/simulated/floor/caution/west,
 /area/station/science/artifact)
 "atI" = (
@@ -14967,11 +14967,10 @@
 	name = "Hydroponics Storeroom"
 	})
 "eEx" = (
-/obj/machinery/networked/teleconsole,
-/obj/cable{
-	icon_state = "0-4"
+/obj/table/reinforced/auto,
+/obj/item/device/radio/intercom/science{
+	pixel_y = -1
 	},
-/obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "eEF" = (
@@ -19359,6 +19358,9 @@
 /area/station/engine/engineering)
 "fYY" = (
 /obj/storage/secure/closet/command/hos,
+/obj/decal/poster/wallsign/medal{
+	pixel_y = 26
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -21519,9 +21521,17 @@
 /turf/simulated/floor/blue,
 /area/station/science/lab)
 "gDW" = (
-/obj/decal/poster/wallsign/medal,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/hos)
+/obj/machinery/computer3/terminal/zeta{
+	dir = 4;
+	setup_os_string = "ZETA_MAINFRAME"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/caution/north,
+/area/station/science/artifact)
 "gEa" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -35125,15 +35135,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment1)
-"kJi" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/engine,
-/area/station/science/teleporter)
 "kJk" = (
 /turf/simulated/floor/stairs/wide{
 	dir = 4
@@ -68066,7 +68067,6 @@
 	name = "Genetic Research"
 	})
 "ujQ" = (
-/obj/machinery/networked/test_apparatus/heater,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -68077,6 +68077,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/networked/test_apparatus/xraymachine,
 /turf/simulated/floor/caution/west,
 /area/station/science/artifact)
 "ujS" = (
@@ -77793,14 +77794,14 @@
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/south)
 "wJS" = (
-/obj/machinery/camera/television{
-	c_tag = "xray testing";
-	name = "camera - xray testing"
-	},
 /obj/machinery/door_control{
 	id = "artlabshield";
 	name = "Artifact Testing Shields";
 	pixel_x = -23
+	},
+/obj/machinery/camera/television{
+	c_tag = "thermal testing";
+	name = "camera - thermal testing"
 	},
 /turf/simulated/floor/caution/corner/nw,
 /area/station/science/artifact)
@@ -83362,6 +83363,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/caution/north,
 /area/station/science/artifact)
 "yhh" = (
@@ -83572,8 +83578,8 @@
 /area/station/chapel/office)
 "ykr" = (
 /obj/machinery/camera/television{
-	c_tag = "thermal testing";
-	name = "camera - thermal testing"
+	c_tag = "xray testing";
+	name = "camera - xray testing"
 	},
 /turf/simulated/floor/caution/corner/nw,
 /area/station/science/artifact)
@@ -120416,7 +120422,7 @@ vBU
 yaW
 kHX
 xLb
-svM
+gDW
 jTq
 yaW
 sVn
@@ -124351,7 +124357,7 @@ btg
 alU
 alU
 lZy
-kJi
+abO
 abO
 tHF
 dNJ
@@ -130441,7 +130447,7 @@ wdG
 ula
 pmd
 qmP
-gDW
+uUI
 fYY
 kCZ
 mbc
