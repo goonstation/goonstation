@@ -769,7 +769,7 @@
 		else
 			W.z = 1
 	else
-		W.set_loc(pick(latejoin))
+		W.set_loc(pick_landmark("latejoin"))
 
 	if (src.mind)
 		src.mind.transfer_to(W)

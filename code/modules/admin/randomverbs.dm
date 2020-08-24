@@ -48,7 +48,7 @@
 			if (!M || !ismob(M))
 				return
 
-			var/ASLoc = latejoin.len ? pick(latejoin) : locate(1, 1, 1)
+			var/ASLoc = pick_landmark("latejoin", locate(1, 1, 1))
 			if (ASLoc)
 				M.set_loc(ASLoc)
 

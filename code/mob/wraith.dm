@@ -153,7 +153,7 @@
 		if (deaths < 2)
 			boutput(src, "<span class='alert'><b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b></span>")
 			src.justdied = 1
-			src.set_loc(pick(latejoin))
+			src.set_loc(pick_landmark("latejoin"))
 			SPAWN_DBG(15 SECONDS) //15 seconds
 				src.justdied = 0
 		else

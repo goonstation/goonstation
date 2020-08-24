@@ -169,7 +169,7 @@
 		var/role = null
 		var/objective_path = null
 		var/send_to = 1 // 1: arrival shuttle | 2: wizard shuttle
-		var/ASLoc = latejoin.len ? pick(latejoin) : null
+		var/ASLoc = pick_landmark("latejoin")
 		var/WSLoc = wizardstart.len ? pick(wizardstart) : null
 		var/failed = 0
 

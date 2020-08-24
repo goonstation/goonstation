@@ -493,7 +493,6 @@ var/global
 	list/syndicatestart = list()
 	list/battle_royale_spawn = list()
 	list/newplayer_start = list()
-	list/latejoin = list()
 	list/rp_latejoin = list()
 	list/observer_start = list()
 	list/clownstart = list()

@@ -533,10 +533,7 @@
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
-	//sanctuary = 1//waka waka bang bang
 	teleport_blocked = 2
-	//blocked = 1
-	//blocked_waypoint = /obj/landmark/block_waypoint/shuttle
 
 /area/shuttle/arrival/pre_game
 	icon_state = "shuttle2"

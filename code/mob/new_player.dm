@@ -326,7 +326,7 @@ mob/new_player
 				if (istype(starting_loc))
 					starting_loc.add_person_to_queue(character, JOB)
 				else
-					starting_loc = latejoin.len ? pick(latejoin) : locate(1, 1, 1)
+					starting_loc = pick_landmark("latejoin", locate(1, 1, 1))
 					character.set_loc(starting_loc)
 			else if (map_settings && map_settings.arrivals_type == MAP_SPAWN_MISSILE)
 				var/list/spawns = list()
@@ -351,7 +351,7 @@ mob/new_player
 				battlemode.battle_shuttle_spawn(character.mind)
 			else
 				var/starting_loc = null
-				starting_loc = latejoin.len ? pick(latejoin) : locate(1, 1, 1)
+				starting_loc = pick_landmark("latejoin", locate(1, 1, 1))
 				character.set_loc(starting_loc)
 
 			if (isliving(character))
@@ -601,14 +601,14 @@ a.latejoin-card:hover {
 
 		src.spawning = 1
 
-		if(latejoin.len == 0)
+		if(!("landmark" in landmarks))
 			// the middle of the map is GeNeRaLlY part of the actual station. moreso than 1,1,1 at least
 			var/midx = round(world.maxx / 2)
 			var/midy = round(world.maxy / 2)
 			boutput(world, "No latejoin landmarks placed, dumping [src] to ([midx], [midy], 1)")
 			src.set_loc(locate(midx,midy,1))
 		else
-			src.set_loc(pick(latejoin))
+			src.set_loc(pick_landmark("latejoin"))
 
 		var/mob/new_character = null
 		if (J)

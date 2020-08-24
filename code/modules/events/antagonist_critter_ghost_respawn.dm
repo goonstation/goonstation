@@ -152,7 +152,7 @@
 			EV += (clownstart + monkeystart + blobstart + kudzustart)
 
 			if(!EV.len)
-				EV += latejoin
+				EV += landmarks["latejoin"]
 				if (!EV.len)
 					message_admins("Pests event couldn't find a pest landmark!")
 					cleanup_event()

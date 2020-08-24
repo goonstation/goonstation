@@ -74,7 +74,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 	// Respawn player.
 	var/mob/L
-	var/ASLoc = latejoin.len ? pick(latejoin) : null // picking from an empty list causes a runtime
+	var/ASLoc = pick_landmark("latejoin")
 	var/WSLoc = wizardstart.len ? pick(wizardstart) : null
 
 	if (!ASLoc)

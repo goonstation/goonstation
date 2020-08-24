@@ -153,7 +153,7 @@ datum/v_space
 			else
 				var/mob/dead/observer/O = user.ghostize()
 				if (O)
-					var/arrival_loc = pick(latejoin)
+					var/arrival_loc = pick_landmark("latejoin")
 					O.real_name = user.isghost
 					O.name = O.real_name
 					O.set_loc(arrival_loc)
