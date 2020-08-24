@@ -33691,6 +33691,10 @@
 /obj/table/reinforced/auto,
 /obj/window/crystal/reinforced/north,
 /obj/machinery/light_switch/west,
+/obj/machinery/defib_mount{
+	pixel_x = 2;
+	pixel_y = -4
+	},
 /obj/item/paper/Port_A_Brig,
 /obj/item/remote/porter/port_a_brig,
 /obj/window/crystal/reinforced/north,

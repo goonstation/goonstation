@@ -46561,6 +46561,9 @@
 	icon_state = "1-2"
 	},
 /obj/table/reinforced/auto,
+/obj/machinery/defib_mount{
+	pixel_y = 3
+	},
 /obj/random_item_spawner/med_kit,
 /turf/simulated/floor/red/side,
 /area/station/security/main)

@@ -14549,6 +14549,10 @@
 "eaL" = (
 /obj/machinery/light/incandescent/warm,
 /obj/table/auto,
+/obj/machinery/defib_mount{
+	pixel_x = 2;
+	pixel_y = 2
+	},
 /obj/random_item_spawner/med_kit,
 /obj/item/device/analyzer/healthanalyzer{
 	pixel_x = -4;

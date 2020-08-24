@@ -23427,6 +23427,9 @@
 /area/station/security/secoffquarters)
 "baU" = (
 /obj/table/reinforced/auto,
+/obj/machinery/defib_mount{
+	pixel_y = 2
+	},
 /obj/item/storage/firstaid,
 /obj/item/storage/firstaid/brute{
 	pixel_y = 4
