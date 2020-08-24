@@ -38011,10 +38011,9 @@
 	},
 /area/sim/racing_track)
 "bMV" = (
-/obj/landmark/start,
-/obj/landmark/start{
-	name = "shit"
-	},
+/obj/landmark{
+	name = "new_player"
+},
 /turf/unsimulated/floor/setpieces/gauntlet{
 	desc = "Everything begins right here.";
 	icon_state = "gauntfloorHearts";

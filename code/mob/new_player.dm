@@ -42,22 +42,8 @@ mob/new_player
 			keyd = mind.key
 
 		new_player_panel()
-		var/starting_loc
-		if (newplayer_start.len > 0)
-			starting_loc = pick(newplayer_start)
-		else
-			starting_loc = locate(1,1,1)
-		src.set_loc(starting_loc)
+		src.set_loc(pick_landmark("new_player", locate(1,1,1)))
 		src.sight |= SEE_TURFS
-		var/list/watch_locations = list()
-		for(var/obj/landmark/landmark in landmarks)//world)
-			if(landmark.tag == "landmark*new_player")
-				watch_locations += landmark.loc
-
-			LAGCHECK(LAG_REALTIME)
-
-		if(watch_locations.len>0)
-			src.set_loc(pick(watch_locations))
 
 		if (src.ckey && !adminspawned)
 			if (spawned_in_keys.Find("[src.ckey]"))
