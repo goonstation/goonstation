@@ -34,6 +34,7 @@ export const PressureBar = props => {
       p={0.5}
       backgroundColor={bgColor}>
       <ProgressBar
+        className="port-atmos-pressure-bar__text"
         color={barColor}
         value={pct}>
         <AnimatedNumber
