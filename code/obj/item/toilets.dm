@@ -65,8 +65,6 @@ TOILET
 				if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z) || (istype(T.loc,/area) && T.loc:teleport_blocked))
 					continue
 				destinations.Add(T)
-			else
-				destinations.Add(src)
 
 			if (destinations.len)
 				var/atom/picked = pick(destinations)
