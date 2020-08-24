@@ -26,11 +26,9 @@ var/global
 	lagcheck_enabled = 0
 
 	datum/datacore/data_core = null
+
 	obj/overlay/plmaster = null
 	obj/overlay/slmaster = null
-	obj/overlay/w1master = null
-	obj/overlay/w2master = null
-	obj/overlay/w3master = null
 
 	turf/buzztile = null
 
