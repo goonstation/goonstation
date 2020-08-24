@@ -600,9 +600,6 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		if (radio_controller && istype(radio_controller) && radio_controller.active_jammers.Find(src))
 			radio_controller.active_jammers.Remove(src)
 		..()
-
-var/global/list/tracking_beacons = list() // things were looping through world to find these so let's just stop doing that and have this shit add itself to a global list instead maybe
-
 /obj/item/device/radio/beacon
 	name = "tracking beacon"
 	icon_state = "beacon"
@@ -612,14 +609,10 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 
 /obj/item/device/radio/beacon/New()
 	..()
-	SPAWN_DBG(0)
-		if (!islist(tracking_beacons))
-			tracking_beacons = list()
-		tracking_beacons.Add(src)
+	START_TRACKING
 
 /obj/item/device/radio/beacon/disposing()
-	if (islist(tracking_beacons))
-		tracking_beacons.Remove(src)
+	STOP_TRACKING
 	..()
 
 /obj/item/device/radio/beacon/hear_talk()

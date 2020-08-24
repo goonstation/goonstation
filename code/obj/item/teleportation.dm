@@ -51,7 +51,7 @@ Frequency:
 			if (sr)
 				src.temp += "<B>Located Beacons:</B><BR>"
 
-				for(var/obj/item/device/radio/beacon/W in tracking_beacons)//world)
+				for(var/obj/item/device/radio/beacon/W in by_type[/obj/item/device/radio/beacon])
 					LAGCHECK(LAG_LOW)
 					if (istype(src, /obj/item/locator/jones) && istype(W, /obj/item/device/radio/beacon/jones)) //For Jones City
 						src.temp += "Unknown Location-[W.x], [W.y], [W.z]<BR>"

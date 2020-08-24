@@ -18,7 +18,7 @@
 	var/list/L = list()
 	var/list/areaindex = list()
 
-	for (var/obj/item/device/radio/beacon/R in tracking_beacons)
+	for (var/obj/item/device/radio/beacon/R in by_type[/obj/item/device/radio/beacon])
 		if (!istype(R, /obj/item/device/radio/beacon/jones))
 			LAGCHECK(LAG_LOW)
 			var/turf/T = find_loc(R)
