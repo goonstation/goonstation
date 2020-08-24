@@ -1,6 +1,10 @@
 
 (t)mon aug 24 20
 (u)Michaellaneous
+(p)1919
+(e)|
+(+)Added logic to allow bowls to be recycled
+(u)Michaellaneous
 (p)1915
 (e)🗺|mapping
 (+)Added siren helmets to gimmick wardrobe and removed the hardcoded items from maps
