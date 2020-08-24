@@ -598,7 +598,6 @@ var/global
 	list/datum/powernet/powernets = null
 
 	Debug = 0	// global debug switch
-	Debug2 = 0
 
 	shuttlecoming = 0
 
