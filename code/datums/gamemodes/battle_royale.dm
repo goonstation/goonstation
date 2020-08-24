@@ -3,7 +3,6 @@
 */
 
 var/global/area/current_battle_spawn = null
-var/global/list/battle_equipment = null
 var/global/list/datum/mind/battle_pass_holders = list()
 
 #define TIME_BETWEEN_SHUTTLE_MOVES 50
