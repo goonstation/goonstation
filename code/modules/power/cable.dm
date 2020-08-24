@@ -156,7 +156,6 @@
 			var/datum/powernet/PN = powernets[netnum]
 			PN.cut_cable(src)									// updated the powernets
 	else
-		if(Debug) logDiary("Defered cable deletion at [x],[y]: #[netnum]")
 		defer_powernet_rebuild = 2
 
 		if(netnum && powernets && powernets.len >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
