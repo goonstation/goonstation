@@ -1,5 +1,9 @@
 
 (t)sun aug 23 20
+(u)Zamujasa
+(*)Updated the round setup stuff. The countdown now starts immediately, and the game setup takes place while the countdown is running. This means rounds start about 2-3 minutes faster on average.
+(*)Map voting is enabled with 60 seconds left on the countdown rather than after setup completes.
+(*)If setup hasn't finished yet, the countdown will automatically stop at 30 seconds until it finishes.
 (u)adharainspace
 (p)1887
 (e)🆕|feature
