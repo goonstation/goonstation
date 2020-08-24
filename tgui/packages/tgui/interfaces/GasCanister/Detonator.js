@@ -93,22 +93,22 @@ const DetonatorWires = props => {
               mt={1}
               disabled={isPrimed}
               icon="fast-backward"
-              onClick={() => onSetTimer(time - 30)} />
+              onClick={() => onSetTimer(time - 300)} />
             <Button
               mt={1}
               disabled={isPrimed}
               icon="backward"
-              onClick={() => onSetTimer(time - 1)} />
+              onClick={() => onSetTimer(time - 10)} />
             <Button
               mt={1}
               disabled={isPrimed}
               icon="forward"
-              onClick={() => onSetTimer(time + 1)} />
+              onClick={() => onSetTimer(time + 10)} />
             <Button
               mt={1}
               disabled={isPrimed}
               icon="fast-forward"
-              onClick={() => onSetTimer(time + 30)} />
+              onClick={() => onSetTimer(time + 300)} />
           </Flex.Item>
         </Flex>
       </Flex.Item>

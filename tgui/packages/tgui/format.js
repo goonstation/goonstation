@@ -112,17 +112,17 @@ export const formatDb = value => {
 };
 
 /**
- * Formats time in seconds as a string in the minutes:seconds format.
- * @param time the time to format, in seconds
+ * Formats time as a string in the minutes:seconds format.
+ * @param time the time to format, in tenths of a second
  * @param msg an optional message to display if time <= 0
- * @example formatTime(69)
+ * @example formatTime(690)
  * //returns `01:09`
  * @example formatTime(0, 'BO:OM')
  * //returns `BO:OM`
  */
 export const formatTime = (time, msg = "") => {
-  let seconds = Math.floor(time % 60);
-  let minutes = Math.floor((time - seconds) / 60);
+  let seconds = Math.floor((time / 10) % 60);
+  let minutes = Math.floor(((time / 10) - seconds) / 60);
   if (time <= 0 && msg !== "") {
     return msg;
   }

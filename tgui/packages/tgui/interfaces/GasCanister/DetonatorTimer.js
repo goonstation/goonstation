@@ -5,8 +5,8 @@ export const DetonatorTimer = props => {
   const {
     time,
     isPrimed,
-    warningThreshold = 30,
-    dangerThreshold = 10,
+    warningThreshold = 300,
+    dangerThreshold = 100,
     explosionMessage = "BO:OM",
   } = props;
 
@@ -23,7 +23,8 @@ export const DetonatorTimer = props => {
       textAlign="center"
       backgroundColor="black"
       color={timeColor}
-      maxWidth="100px"
+      maxWidth="90px"
+      width="90px"
       fontSize="20px">
       <TimeDisplay
         value={time}

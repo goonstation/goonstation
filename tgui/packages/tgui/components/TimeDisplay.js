@@ -74,6 +74,7 @@ export class TimeDisplay extends Component {
     if (!isSafeNumber(val)) {
       return this.state.value || null;
     }
+
     if (this.props.format) {
       return this.props.format(val);
     } else {

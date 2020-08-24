@@ -409,7 +409,7 @@
 		data["detonator"]["safetyIsOn"] = src.det.safety
 		data["detonator"]["isAnchored"] = src.anchored
 		data["detonator"]["isPrimed"] = src.det.part_fs.timing ? TRUE : FALSE
-		data["detonator"]["time"] = src.det.part_fs.time
+		data["detonator"]["time"] = src.det.part_fs.time * 10 // using tenths of a second on the client
 
 		data["detonator"]["trigger"] = null
 		if(src.det.trigger)
@@ -469,7 +469,7 @@
 			if(!src.det.part_fs.timing)
 				var/new_time = params["newTime"]
 				if(isnum(new_time))
-					src.det.part_fs.set_time(new_time)
+					src.det.part_fs.set_time(new_time/10)
 					. = TRUE
 		if("wire-interact")
 			var/tool = null
