@@ -433,7 +433,6 @@ var/global
 	hublog = null
 	game_version = "Goon Station 13 (r" + vcs_revision + ")"
 
-	going = 1.0
 	master_mode = "traitor"
 
 	host = null
