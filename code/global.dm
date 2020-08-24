@@ -555,7 +555,6 @@ var/global
 	list/blobs = list()
 	list/wormholeturfs = list()
 	list/halloweenspawn = list()
-	list/nuclear_auths = list()
 	list/telesci = list() // special turfs from map landmarks to always allow telescience to access
 						  // telesci landmarks add a 3z3 area centered on themselves to this list
 	list/icefall = list() // list of locations for people to fall if they enter the deep abyss on the ice moon
