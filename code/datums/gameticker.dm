@@ -163,7 +163,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	ooc_allowed = 0
 	boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #else
-	if (it_is_ass_day || istype(src.mode, /datum/game_mode/construction))
+	if (ASS_JAM || istype(src.mode, /datum/game_mode/construction))
 		looc_allowed = 1
 		boutput(world, "<B>LOOC has been automatically enabled.</B>")
 	else
@@ -712,8 +712,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					earnings += 100; // ALL CREW OBJECTIVE SBUX BONUS
 					bank_earnings.all_objs = 100
 
-			if (it_is_ass_day)
+#if ASS_JAM
 				earnings *= 2
+#endif
 
 			//pilot's bonus check and reward
 			var/pilot_bonus = 500 //for receipt
