@@ -74,7 +74,7 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-	for (var/obj/item/implant/tracking/I in tracking_implants)//world)
+	for (var/obj/item/implant/tracking/I in by_type[/obj/item/implant/tracking])
 		LAGCHECK(LAG_LOW)
 		if (!I.implanted || !ismob(I.loc))
 			continue

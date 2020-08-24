@@ -72,7 +72,7 @@ Frequency:
 							src.temp += "[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for (var/obj/item/implant/tracking/W in tracking_implants)//world)
+				for (var/obj/item/implant/tracking/W in by_type[/obj/item/implant/tracking])
 					LAGCHECK(LAG_LOW)
 					if (W.frequency == src.frequency)
 						if (!W.implanted || !ismob(W.loc))
