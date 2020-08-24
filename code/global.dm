@@ -597,8 +597,6 @@ var/global
 
 	list/datum/powernet/powernets = null
 
-	shuttlecoming = 0
-
 	join_motd = null
 	rules = null
 	forceblob = 0
