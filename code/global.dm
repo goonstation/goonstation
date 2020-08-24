@@ -456,7 +456,6 @@ var/global
 	blowout = 0
 	farty_party = 0
 	deep_farting = 0
-	ass_day = 0
 
 	turf/unsimulated/wall/titlecard/lobby_titlecard
 
