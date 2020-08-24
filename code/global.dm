@@ -108,8 +108,6 @@ var/global
 
 	list/traitList = list() //List of trait objects
 
-	//IRC_alerted_keys = list()
-
 	list/spawned_in_keys = list() //Player keys that have played this round, to prevent that "jerk gets deleted by a bug, gets to respawn" thing.
 
 	list/random_pod_codes = list() // if /obj/random_pod_spawner exists on the map, this will be filled with refs to the pods they make, and people joining up will have a chance to start with the unlock code in their memory
@@ -123,9 +121,6 @@ var/global
 	list/comm_dishes = list()
 
 	list/conveyor_switches = list()
-
-
-	//list/disposed_things_that_dont_work = list()
 
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
