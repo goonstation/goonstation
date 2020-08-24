@@ -2060,8 +2060,6 @@ var/global/noir = 0
 							removed_paths += dirty_path
 						else if (!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
 							removed_paths += dirty_path
-						else if (dirty_path in do_not_spawn && src.level < LEVEL_PA)
-							removed_paths += dirty_path
 						else if (ispath(path, /mob) && src.level < LEVEL_PA)
 							removed_paths += dirty_path
 						else
