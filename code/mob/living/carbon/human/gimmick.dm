@@ -592,12 +592,12 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 									else if (prob(50))
 										MJ.say("Oh yeah, sure [src], I remember. I do.")
 									else
-										MJ.say("Sounds a lot like [pick(JOHN_stories)], doesn't it?")
+										MJ.say("Sounds a lot like [pick_string("johnbill.txt", "stories")], doesn't it?")
 								if (9)
 									if (prob(30))
 										MJ.say("Only once, in college, and I didn't inhale.")
 									else
-										MJ.say("Nah, I'd rather [pick(JOHN_verbs)].")
+										MJ.say("Nah, I'd rather [pick_string("johnbill.txt", "verbs")].")
 								else
 									MJ.speak()
 
@@ -613,7 +613,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
 			SPAWN_DBG(1 SECOND)
-				say("Yep, can't wait to go on that trip! That [pick(JOHN_insults)] oughta be here soon!")
+				say("Yep, can't wait to go on that trip! That [pick_string("johnbill.txt", "insults")] oughta be here soon!")
 			return
 		if (istype(W, /obj/item/ursium/U))
 			say("These things are everywhere. Got anything more exotic?")
@@ -643,7 +643,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			var/mob/living/carbon/human/john/J = JB
 			if (get_dist(J,src) <= 7)
 				if((!J.ai_active) || prob(25))
-					J.say("That's my brother, you [pick(JOHN_insults)]!")
+					J.say("That's my brother, you [pick_string("johnbill.txt", "insults")]!")
 				J.target = M
 				J.ai_set_active(1)
 				J.a_intent = INTENT_HARM
@@ -872,14 +872,14 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		if(isdead(src))
 			return
 		if (prob(30))
-			say(pick("Hey you better back off [pick(JOHN_insults)]- I'm busy.","You feelin lucky, [pick(JOHN_insults)]?"))
+			say(pick("Hey you better back off [pick_string("johnbill.txt", "insults")]- I'm busy.","You feelin lucky, [pick_string("johnbill.txt", "insults")]?"))
 
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/tug/invoice))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
 			SPAWN_DBG(1 SECOND)
-				say(pick("Brudder, I did that job months ago. Fuck outta here with that.","Oh come on, quit wastin my time [pick(JOHN_insults)]."))
+				say(pick("Brudder, I did that job months ago. Fuck outta here with that.","Oh come on, quit wastin my time [pick_string("johnbill.txt", "insults")]."))
 			return
 		..()
 
