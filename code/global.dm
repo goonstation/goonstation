@@ -542,7 +542,6 @@ var/global
 	datum/wage_system/wagesystem
 	datum/shipping_market/shippingmarket
 
-	datum/station_state/start_state = null
 	datum/configuration/config = null
 	datum/sun/sun = null
 
