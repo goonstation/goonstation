@@ -1,4 +1,9 @@
 
+(t)mon aug 24 20
+(u)Michaellaneous
+(p)1917
+(e)|
+(+)removed unecessary includes
 (t)sun aug 23 20
 (u)Zamujasa
 (*)Updated the round setup stuff. The countdown now starts immediately, and the game setup takes place while the countdown is running. This means rounds start about 2-3 minutes faster on average.
