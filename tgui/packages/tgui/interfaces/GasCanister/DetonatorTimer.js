@@ -1,9 +1,10 @@
-import { Box, AnimatedNumber } from '../../components';
+import { Box, TimeDisplay } from '../../components';
 import { formatTime } from '../../format';
 
 export const DetonatorTimer = props => {
   const {
     time,
+    isPrimed,
     warningThreshold = 30,
     dangerThreshold = 10,
     explosionMessage = "BO:OM",
@@ -24,8 +25,9 @@ export const DetonatorTimer = props => {
       color={timeColor}
       maxWidth="100px"
       fontSize="20px">
-      <AnimatedNumber
+      <TimeDisplay
         value={time}
+        timing={isPrimed}
         format={value => formatTime(value, explosionMessage)} />
     </Box>
   );

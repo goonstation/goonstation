@@ -349,13 +349,14 @@
 				src.update_icon()
 	else if (src.det && istype(W, /obj/item/tank))
 		user.show_message("<span class='alert'>You cannot insert a tank, as the slot is shut closed by the detonator assembly.</span>")
+		return
 	else if (src.det && W && istool(W, TOOL_PULSING | TOOL_SNIPPING))
 		src.attack_hand(user)
 
-	if (istype(W, /obj/item/cargotele))
+	else if (istype(W, /obj/item/cargotele))
 		W:cargoteleport(src, user)
 		return
-	if(istype(W, /obj/item/atmosporter))
+	else if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
 		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
 		else if (src.anchored) boutput(user, "<span class='alert'>\The [src] is attached!</span>")
@@ -364,7 +365,7 @@
 			src.contained = 1
 			src.set_loc(W)
 			elecflash(src)
-	if(!iswrenchingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2))
+	else if(!iswrenchingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2))
 		src.visible_message("<span class='alert'>[user] hits the [src] with a [W]!</span>")
 		logTheThing("combat", user, null, "attacked [src] [log_atmos(src)] with [W] at [log_loc(src)].")
 		src.health -= W.force
@@ -422,7 +423,7 @@
 	if(src?.det?.attachments)
 		static_data["detonatorAttachments"] = list()
 		for(var/obj/item/I in src.det.attachments)
-			static_data["detonatorAttachments"] += "There is \an [I] wired onto the assembly as an attachment."
+			static_data["detonatorAttachments"] += I.name
 
 	return static_data
 
@@ -466,8 +467,10 @@
 			. = TRUE
 		if("timer")
 			if(!src.det.part_fs.timing)
-				src.det.part_fs.attack_self(usr)
-				. = TRUE
+				var/new_time = params["newTime"]
+				if(isnum(new_time))
+					src.det.part_fs.set_time(new_time)
+					. = TRUE
 		if("wire-interact")
 			var/tool = null
 			switch(params["toolAction"])

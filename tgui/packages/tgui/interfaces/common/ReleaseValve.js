@@ -1,4 +1,4 @@
-import { NumberInput, LabeledList, Button, Section } from '../../components';
+import { NumberInput, LabeledList, Button } from '../../components';
 
 export const ReleaseValve = props => {
 

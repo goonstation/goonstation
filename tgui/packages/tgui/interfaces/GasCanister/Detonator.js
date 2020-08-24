@@ -85,15 +85,30 @@ const DetonatorWires = props => {
           align="center">
           <Flex.Item>
             <DetonatorTimer
-              time={time} />
+              time={time}
+              isPrimed={isPrimed} />
           </Flex.Item>
           <Flex.Item>
             <Button
               mt={1}
               disabled={isPrimed}
-              icon="clock"
-              content="Timer"
-              onClick={onSetTimer} />
+              icon="fast-backward"
+              onClick={() => onSetTimer(time - 30)} />
+            <Button
+              mt={1}
+              disabled={isPrimed}
+              icon="backward"
+              onClick={() => onSetTimer(time - 1)} />
+            <Button
+              mt={1}
+              disabled={isPrimed}
+              icon="forward"
+              onClick={() => onSetTimer(time + 1)} />
+            <Button
+              mt={1}
+              disabled={isPrimed}
+              icon="fast-forward"
+              onClick={() => onSetTimer(time + 30)} />
           </Flex.Item>
         </Flex>
       </Flex.Item>
@@ -139,6 +154,7 @@ const DetonatorUtility = props => {
   return (
     <LabeledList>
       <LabeledList.Item
+        className="utility-list-item"
         label="Anchor Status">
         { isAnchored
           ? "Anchored. There are no controls for undoing this."
@@ -149,6 +165,7 @@ const DetonatorUtility = props => {
               onClick={onToggleAnchor} />)}
       </LabeledList.Item>
       <LabeledList.Item
+        className="utility-list-item"
         label="Trigger">
         {trigger ? (
           <Button
@@ -159,6 +176,7 @@ const DetonatorUtility = props => {
 
       </LabeledList.Item>
       <LabeledList.Item
+        className="utility-list-item"
         label="Safety">
         { safetyIsOn
           ? (
@@ -170,16 +188,20 @@ const DetonatorUtility = props => {
           : <Box color="average">Off</Box> }
       </LabeledList.Item>
       <LabeledList.Item
+        className="utility-list-item"
         label="Arming">
         { renderArmingStatus() }
       </LabeledList.Item>
-      <LabeledList.Item label="Attachments">
+      <LabeledList.Item
+        label="Attachments"
+        className="utility-list-item">
         {detonatorAttachments && detonatorAttachments.length > 0 ? (
           detonatorAttachments.map((entry, i) => (
-            <Fragment key={entry + i}>
+            <Box
+              className="attachment-item"
+              key={entry + i}>
               { detonatorAttachments[i] }
-              <br />
-            </Fragment>
+            </Box>
           )))
           : "There are no additional attachments to the detonator."}
       </LabeledList.Item>
