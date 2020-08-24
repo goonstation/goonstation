@@ -11,26 +11,6 @@ var/global/debug_messages = 0
 	logTheThing("diary", usr, null, "toggled debug messages [debug_messages ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled debug messages [debug_messages ? "on" : "off"]")
 
-/client/proc/Debug2()
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	set name = "Debug-Game"
-	admin_only
-	if(src.holder.rank == "Coder")
-		Debug2 = !Debug2
-
-		boutput(src, "Debugging [Debug2 ? "On" : "Off"]")
-		logTheThing("admin", src, null, "toggled debugging to [Debug2]")
-		logTheThing("diary", src, null, "toggled debugging to [Debug2]", "admin")
-	else if(src.holder.rank == "Host")
-		Debug2 = !Debug2
-
-		boutput(src, "Debugging [Debug2 ? "On" : "Off"]")
-		logTheThing("admin", src, null, "toggled debugging to [Debug2]")
-		logTheThing("diary", src, null, "toggled debugging to [Debug2]", "admin")
-	else
-		alert("Coders only baby")
-		return
-
 /client/proc/debug_deletions()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Deletions"
