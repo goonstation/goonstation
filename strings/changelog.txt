@@ -1,6 +1,10 @@
 
 (t)mon aug 24 20
 (u)Michaellaneous
+(p)1915
+(e)🗺|mapping
+(+)Added siren helmets to gimmick wardrobe and removed the hardcoded items from maps
+(u)Michaellaneous
 (p)1917
 (e)|
 (+)removed unecessary includes
