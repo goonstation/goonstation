@@ -151,7 +151,7 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 					return 1
 			return 0
 	ptl
-		explanation_text = "Earn at least a million credits via the PTL"
+		explanation_text = "Earn at least a million credits via the PTL."
 		medal_name = "1.21 Jiggawatts"
 		check_completion()
 			for(var/obj/machinery/power/pt_laser/P in machine_registry[MACHINES_POWER])
