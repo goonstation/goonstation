@@ -164,7 +164,7 @@
 	flags = FPRINT | TABLEPASS
 	//Default Colors
 	var/customization_first_color = "#FFFFFF"
-	uses_left = 3
+	var/uses_left
 	var/hair_group = 1
 
 	attack(mob/M as mob, mob/user as mob)

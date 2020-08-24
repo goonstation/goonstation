@@ -35,7 +35,6 @@
 	pressure_resistance = 50
 	var/obj/item/master = null
 	var/amount = 1
-	var/uses_left
 	var/max_stack = 1
 	var/stack_type = null // if null, only current type. otherwise uses this
 	var/contraband = 0 //If nonzero, bots consider this a thing people shouldn't be carrying without authorization
