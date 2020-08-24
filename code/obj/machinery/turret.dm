@@ -383,7 +383,7 @@
 			return
 
 	src.add_dialog(user)
-	var/area/area = get_turf(src)
+	var/area/area = get_area(src)
 	if (!istype(area))
 		logTheThing("debug", null, null, "Turret badly positioned.")
 		return
@@ -476,7 +476,7 @@
 		else
 			icon_state = "ai0"
 
-		var/area/area = get_turf(src)
+		var/area/area = get_area(src)
 		if (!istype(area))
 			logTheThing("debug", null, null, "Turret badly positioned.")
 			return
