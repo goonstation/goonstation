@@ -929,7 +929,7 @@ var/global/debug_camera_paths = 0
 
 proc/display_camera_paths()
 	remove_camera_paths() //Clean up any old ones laying around before displaying this
-	for (var/obj/machinery/camera/C in cameras)
+	for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 		if (C.c_north)
 			camera_path_list.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(C.loc, C.c_north.loc)))
 
