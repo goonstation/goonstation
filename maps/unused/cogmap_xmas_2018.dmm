@@ -270,7 +270,7 @@
 "aaS" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -14952,8 +14952,6 @@
 /area/station/security/main)
 "aGw" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "aGx" = (
@@ -26409,7 +26407,7 @@
 /area/station/crew_quarters/heads)
 "bdh" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -27769,7 +27767,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
@@ -29000,7 +28998,7 @@
 "biq" = (
 /obj/machinery/space_heater,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/purple/side{
 	dir = 5
@@ -43231,7 +43229,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	d1 = 1;
@@ -45334,7 +45332,7 @@
 	icon_state = "1-8"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
@@ -56948,7 +56946,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
