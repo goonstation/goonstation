@@ -485,8 +485,9 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	muzzleflash.layer = A.layer
 	muzzleflash.set_loc(A)
 	A.vis_contents.Add(muzzleflash)
+	if (muzzleflash.icon_state == muzzle_anim)
+		flick(muzzle_anim,muzzleflash)
 	muzzleflash.icon_state = muzzle_anim
-	flick(muzzle_anim, muzzleflash)
 
 	animate(time=0.4 SECONDS)
 	animate(alpha=0, easing=SINE_EASING, time=0.2 SECONDS)
