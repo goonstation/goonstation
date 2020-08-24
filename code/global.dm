@@ -118,8 +118,6 @@ var/global
 
 	list/spacePushList = list()
 
-	list/bad_smoke_list = list()
-
 	list/nervous_mobs = list()
 
 	list/comm_dishes = list()
