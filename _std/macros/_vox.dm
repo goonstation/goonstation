@@ -213,7 +213,7 @@ proc/vox_play(var/input, var/user, var/pitch = 1)
 		if(!voxsounds[t])
 			if (findtext(t, "<") == 1 || findtext(t, ">") == 1)
 				var/down = (findtext(t, "<") == 1)
-				pitch += (down ? -0.05 : 0.05) * lentext(t)
+				pitch += (down ? -0.05 : 0.05) * length(t)
 				if (pitch == 0)
 					pitch += down ? -0.05 : 0.05
 				pitch = min(pitch,98)

@@ -826,7 +826,7 @@
 			if(numReq && isnum(numReq) && numReq >= 1)
 				var/isFinish = 0
 				isFinish = copytext(A,1,2) == "!"
-				if(isFinish) A = copytext(A,2,lentext(A)+1)
+				if(isFinish) A = copytext(A,2,length(A)+1)
 				var/datum/matfab_part/P = null
 				switch(lowertext(A))
 					if("metal")

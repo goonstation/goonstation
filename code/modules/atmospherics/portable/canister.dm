@@ -335,7 +335,7 @@
 			if (Det.det_state != 4)
 				user.show_message("<span class='alert'>The assembly is incomplete.</span>")
 			else
-				Det.loc = src
+				Det.set_loc(src)
 				Det.master = src
 				Det.layer = initial(W.layer)
 				user.u_equip(Det)

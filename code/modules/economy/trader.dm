@@ -283,27 +283,32 @@
 				sellitem = /obj/item/electronics
 			if(ispath(sellitem, /obj/item/parts/robot_parts))
 				sellitem = /obj/item/parts/robot_parts
+			var/list/goods_buy_types
+			goods_buy_types = new /list(0)
 			for(var/datum/commodity/N in goods_buy)
-				if(N.comtype == src.sellitem.type)
-					var/datum/data/record/account = null
-					account = FindBankAccountByName(src.scan.registered)
-					if (!account)
-						src.temp = {" [src] looks slightly agitated when he realizes there is no bank account associated with the ID card.<BR>
-									<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
-						src.add_fingerprint(usr)
-						src.updateUsrDialog()
-						return
-					else
-						doing_a_thing = 1
-						src.temp = pick(src.successful_sale_dialogue) + "<BR>"
-						src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
-						qdel (src.sellitem)
-						src.sellitem = null
-						account.fields["current_money"] += N.price
-						src.add_fingerprint(usr)
-						src.updateUsrDialog()
-						doing_a_thing = 0
-						return
+				if (istype(src.sellitem, N.comtype))
+					goods_buy_types[N.comtype] = N.price
+			if (goods_buy_types.len >= 1)
+				var/goods_type = maximal_subtype(goods_buy_types)
+				var/datum/data/record/account = null
+				account = FindBankAccountByName(src.scan.registered)
+				if (!account)
+					src.temp = {" [src] looks slightly agitated when he realizes there is no bank account associated with the ID card.<BR>
+								<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
+					src.add_fingerprint(usr)
+					src.updateUsrDialog()
+					return
+				else
+					doing_a_thing = 1
+					src.temp = pick(src.successful_sale_dialogue) + "<BR>"
+					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
+					qdel (src.sellitem)
+					src.sellitem = null
+					account.fields["current_money"] += goods_buy_types[goods_type]
+					src.add_fingerprint(usr)
+					src.updateUsrDialog()
+					doing_a_thing = 0
+					return
 			src.temp = {"[pick(failed_sale_dialogue)]<BR>
 						<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
 
@@ -998,7 +1003,7 @@
 			for(var/mob/M in AIviewers(src))
 				boutput(M, "<B>[src.name]</B> buzzes excitedly! \"BZZ?? BZZ!!\"")
 				M.unlock_medal("Bombini is missing!", 1)
-				karma_update(15, "SAINT", src)
+				M.add_karma(15) // This line originally tried to give the karma to Bombini. Definitely a bug but I like to imagine that she just managed to pickpocket your karma or something.
 			user.u_equip(W)
 			qdel(W)
 		else

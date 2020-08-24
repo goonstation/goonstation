@@ -326,7 +326,7 @@
 						T.active_liquid.group.join(src)
 					else
 						F.loc:active_liquid = 0
-						F.loc = T
+						F.set_loc(T)
 						T.active_liquid = F
 					break
 		else

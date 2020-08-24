@@ -47,6 +47,7 @@
 		desc = "This doesn't look very safe at all!"
 		layer = CATWALK_LAYER
 		shock_when_entered = 0
+		plane = PLANE_FLOOR
 
 		cross //HEY YOU! YEAH, YOU LOOKING AT THIS. Use these for the corners of your catwalks!
 			name = "catwalk surface" //Or I'll murder you since you are making things ugly on purpose.

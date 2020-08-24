@@ -493,7 +493,6 @@ Contains:
 			return
 
 		var/turf/ground_zero = get_turf(loc)
-		loc = null
 
 		if(air_contents.temperature > (T0C + 400))
 			strength = fuel_moles/15

@@ -164,7 +164,7 @@
 	src.visible_message("<span class='alert'><b>[src] is busted!</b></span>","<span class='alert'>You are demateralized into a state of further death!</span>")
 
 	if (wig)
-		wig.loc = src.loc
+		wig.set_loc(src.loc)
 	new /obj/item/reagent_containers/food/snacks/ectoplasm(get_turf(src))
 	overlays.len = 0
 	log_shot(P,src)
@@ -249,9 +249,11 @@
 	if(!isdead(src))
 		if (src.hibernating == 1)
 			var/confirm = alert("Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", "Yes", "No")
-			if(confirm)
+			if(confirm == "Yes")
 				src.ghostize()
 				qdel(src)
+			else
+				return
 		else if(prob(5))
 			src.show_text("You strain really hard. I mean, like, really, REALLY hard but you still can't become a ghost!", "blue")
 		else
@@ -478,7 +480,7 @@
 /mob/dead/observer/proc/reenter_corpse()
 	set category = null
 	set name = "Re-enter Corpse"
-	if(!corpse)
+	if(!corpse || corpse.disposed)
 		alert("You don't have a corpse!")
 		return
 	if(src.client && src.client.holder && src.client.holder.state == 2)
@@ -648,6 +650,20 @@
 				namecounts[name] = 1
 			creatures[name] = N.the_bomb
 
+
+	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+		var/datum/game_mode/football/F = ticker.mode
+		if (F.the_football && istype(F.the_football, /obj/item/football/the_big_one))
+			var/name = "THE FOOTBALL"
+			if (name in names)
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
+			else
+				names.Add(name)
+				namecounts[name] = 1
+			creatures[name] = F.the_football
+
+
 	for (var/X in by_type[/obj/observable])
 		var/obj/observable/O = X
 		LAGCHECK(LAG_LOW)
@@ -726,9 +742,13 @@
 		if(!istype(O))
 			creatures -= name
 		else
-			var/turf/T = get_turf(O)
-			if(!T || isghostrestrictedz(T.z))
-				creatures -= name
+			// let people observe these regardless of where they are. who cares
+			// there's probably a way to do this better (some bots have no-camera mode for example)
+			// which would work but someone else can fix it later. jhon madden
+			if (!istype(O, /obj/machinery/nuclearbomb) && !istype(O, /obj/item/football/the_big_one))
+				var/turf/T = get_turf(O)
+				if(!T || isghostrestrictedz(T.z))
+					creatures -= name
 
 	eye_name = input("Please, select a target!", "Observe", null, null) as null|anything in creatures
 

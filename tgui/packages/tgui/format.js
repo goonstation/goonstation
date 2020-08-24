@@ -135,3 +135,9 @@ export const formatTime = (time, msg = "") => {
 
   return `${minutes}:${seconds}`;
 };
+/**
+ * Truncates a string with an ellipsis after n characters. Default is 25.
+ */
+export const truncate = (str, n = 25) => {
+  return (str.length > n) ? str.substr(0, n-1) + '…' : str;
+};

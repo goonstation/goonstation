@@ -235,9 +235,9 @@
 	Move(var/turf/NewLoc, direct)
 		if (loc)
 			if (!isturf(loc) && !density)
-				loc = get_turf(loc)
+				src.set_loc(get_turf(loc))
 		else
-			loc = locate(1,1,1)
+			src.set_loc(locate(1,1,1))
 
 		if(!canmove) return
 
@@ -279,23 +279,23 @@
 
 				if (!src.density || vertical.Enter(src))
 					vert = 1
-					loc = vertical
+					src.set_loc(vertical)
 					if (!src.density || NewLoc.Enter(src))
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in vertical)
 							if (istype(A)) salted = 1
 							if (salted) break
-					loc = oldloc
+					src.set_loc(oldloc)
 
 				if (!src.density || horizontal.Enter(src))
 					horiz = 1
-					loc = horizontal
+					src.set_loc(horizontal)
 					if (!src.density || NewLoc.Enter(src))
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in horizontal)
 							if (istype(A)) salted = 1
 							if (salted) break
-					loc = oldloc
+					src.set_loc(oldloc)
 
 				if (blocked)
 					if (horiz)
@@ -591,11 +591,7 @@
 			W.mind.key = key
 			W.mind.current = W
 			ticker.minds += W.mind
-		src.loc = null
-
-		var/this = src
-		src = null
-		qdel(this)
+		qdel(src)
 
 		//W.addAllAbilities()
 		boutput(W, "<B>You are a wraith! Terrorize the mortals and drive them into releasing their life essence!</B>")

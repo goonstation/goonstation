@@ -94,7 +94,7 @@ var/global/obj/flashDummy
 
 /proc/arcFlashTurf(var/atom/from, var/turf/target, var/wattage)
 	var/obj/O = getFlashDummy()
-	O.loc = target
+	O.set_loc(target)
 	playsound(target, "sound/effects/elec_bigzap.ogg", 30, 1)
 
 	var/list/affected = DrawLine(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
@@ -118,7 +118,7 @@ var/global/obj/flashDummy
 		elecflashpower = 2
 
 	elecflash(target,power = elecflashpower)
-	O.loc = null
+	O.set_loc(null)
 
 /proc/arcFlash(var/atom/from, var/atom/target, var/wattage)
 	playsound(target, "sound/effects/elec_bigzap.ogg", 30, 1)
@@ -850,16 +850,6 @@ proc/get_angle(atom/a, atom/b)
 	if(src && src.mob)
 		src.mob.remove_dialogs()
 	return
-
-/proc/get_turf_loc(var/atom/movable/M) //gets the location of the turf that the mob is on, or what the mob is in is on, etc
-	//in case they're in a closet or sleeper or something
-	if (!M) return null
-	var/atom/loc = M.loc
-	while(!istype(loc, /turf/))
-		if (!loc)
-			break
-		loc = loc.loc
-	return loc
 
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver
@@ -2022,21 +2012,19 @@ proc/countJob(rank)
   * A universal ckey -> mob reference lookup proc, adapted from whois() (Convair880).
   */
 /proc/whois_ckey_to_mob_reference(target as text, exact=1)
-	if (isnull(target))
-		return 0
+	if(isnull(target))
+		return
 	target = ckey(target)
-	var/mob/our_mob
-	for (var/mob/M in mobs)
-		if (!isnull(M.ckey) && M.ckey == target)
-			our_mob = M
-			break
-	if(!our_mob && !exact)
-		for (var/mob/M in mobs)
-			if (!isnull(M.ckey) && findtext(M.ckey, target))
-				our_mob = M
-				break
-	if (our_mob) return our_mob
-	else return 0
+	for(var/client/C) // exact match first
+		if(C.ckey == target)
+			return C.mob
+	if(!exact)
+		for(var/client/C) // prefix match second
+			if(copytext(C.ckey, 1, length(target) + 1) == target)
+				return C.mob
+		for(var/client/C) // substring match third
+			if (findtext(C.ckey, target))
+				return C.mob
 
 /**
   * Returns random hex value of length given
@@ -2582,3 +2570,31 @@ proc/client_has_cap_grace(var/client/C)
 		.= (player_cap_grace[C.ckey] > TIME)
 
 
+/*
+this proc finds the maximal subtype (i.e. the most subby) in a list of types
+*/
+proc/maximal_subtype(var/list/L)
+	if (!(length(L)))
+		.= null
+	else
+		.= L[1]
+		for (var/t in L)
+			if (ispath(t, .))
+				.= t
+			else if (!(ispath(., t)))
+				return null // paths in L aren't linearly ordered
+
+/**
+ * Takes associative list of the form list(thing = weight), returns weighted random choice of keys based on weights.
+ */
+proc/weighted_pick(list/choices)
+	var/total = 0
+	for(var/key in choices)
+		total += choices[key]
+	var/weighted_num = rand(1, total)
+	var/running_total = 0
+	for(var/key in choices)
+		running_total += choices[key]
+		if(weighted_num <= running_total)
+			return key
+	return

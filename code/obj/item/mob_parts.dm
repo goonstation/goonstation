@@ -107,7 +107,7 @@
 			object.cant_drop = initial(object.cant_drop)
 		else
 			remove_stage = 3
-		object.loc = src.holder.loc
+		object.set_loc(src.holder.loc)
 		if(hasvar(object,"skin_tone"))
 			object:skin_tone = holder.bioHolder.mobAppearance.s_tone
 
@@ -162,7 +162,7 @@
 		else
 			remove_stage = 3
 
-		object.loc = src.holder.loc
+		object.set_loc(src.holder.loc)
 		var/direction = src.holder.dir
 		if(hasvar(object,"skin_tone"))
 			object:skin_tone = holder.bioHolder.mobAppearance.s_tone

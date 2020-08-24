@@ -226,7 +226,7 @@
 		var/obj/item/grab/block/G = new /obj/item/grab/block(I, src)
 		G.affecting = src
 		src.grabbed_by += G
-		G.loc = I
+		G.set_loc(I)
 
 		I.chokehold = G
 		I.chokehold.post_item_setup()
@@ -303,7 +303,7 @@
 		G.assailant = src
 		G.affecting = target
 		target.grabbed_by += G
-		G.loc = grab_item
+		G.set_loc(grab_item)
 		.= G
 
 	for (var/obj/item/grab/block/G in target.equipped_list(check_for_magtractor = 0)) //being grabbed breaks a block
@@ -1041,7 +1041,7 @@
 									if (owner in viewers(7,M.current))
 										M.current.changeStatus("mutiny", 10 SECONDS)
 
-				if(target.client && target.health < 0) //Only do rev stuff if they have a client and are low health
+				if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
 					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
 						if (R.add_revolutionary(target.mind))
 							target.HealDamage("All", max(30 - target.health,0), 0)

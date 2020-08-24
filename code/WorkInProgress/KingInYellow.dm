@@ -37,7 +37,7 @@
 
 	New(var/atom/location, var/atom/trg)
 		if(trg != null)
-			loc = location
+			set_loc(location)
 			effect = image('icons/effects/effects.dmi', src, "ykingvanish", 4)
 			trg << effect
 			SPAWN_DBG(0.3 SECONDS)	qdel(src)
@@ -54,7 +54,7 @@
 	var/created = null
 
 	New(var/atom/location, var/atom/trg)
-		loc = location
+		set_loc(location)
 		target = trg
 		created = world.time
 		showimg = image('icons/misc/critter.dmi', src, "kingyellow", 3)

@@ -609,7 +609,7 @@
 		return ismob(C) && !isdead(C) && (!owner || C.mind != owner) && src.loc != C
 
 /mob/living/critter/changeling/headspider/proc/infect_target(mob/M)
-	if(ishuman(M))
+	if(ishuman(M) && isalive(M))
 		var/mob/living/carbon/human/H = M
 		src.set_loc(H.loc)
 		random_brute_damage(H, 10)

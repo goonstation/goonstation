@@ -3,6 +3,7 @@
 	icon = 'icons/obj/atmospherics/meter.dmi'
 	icon_state = "meterX"
 	var/obj/machinery/atmospherics/pipe/target = null
+	plane = PLANE_NOSHADOW_BELOW
 	anchored = 1.0
 	var/frequency = 0
 	var/id

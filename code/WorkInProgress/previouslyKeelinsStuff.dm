@@ -244,7 +244,7 @@ var/reverse_mode = 0
 
 /proc/reverse_text(var/string)
 	var/new_string=""
-	for(var/i=lentext(string)+1, i>0, i--)
+	for(var/i=length(string)+1, i>0, i--)
 		new_string += copytext(string,i,i+1)
 	return new_string
 

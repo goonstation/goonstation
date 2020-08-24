@@ -125,10 +125,10 @@
 		src.transmit_connection = null
 
 		for (var/obj/O in src.contents)
-			O.loc = src.loc
+			O.set_loc(src.loc)
 		for (var/mob/M in src.contents)
 			// unlikely as this is to happen we might as well make sure everything is purged
-			M.loc = src.loc
+			M.set_loc(src.loc)
 
 		..()
 
@@ -560,7 +560,7 @@
 
 			if (href_list["search"])
 				src.search = input("Enter text to search for in schematics.","Manufacturing Unit") as null|text
-				if (lentext(src.search) == 0)
+				if (length(src.search) == 0)
 					src.search = null
 
 			if (href_list["category"])
@@ -1808,6 +1808,7 @@
 		/datum/manufacture/multitool,
 		/datum/manufacture/metal,
 		/datum/manufacture/metalR,
+		/datum/manufacture/rods2,
 		/datum/manufacture/glass,
 		/datum/manufacture/glassR,
 		/datum/manufacture/atmos_can,

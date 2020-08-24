@@ -83,7 +83,7 @@
 			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
 			return
 
-		if(!DIST_CHECK(O, user, 1))
+		if(!IN_RANGE(O, user, 1))
 			boutput(user, "<span class='alert'>You are too far away!</span>")
 			return
 
@@ -189,7 +189,7 @@
 			R.set_loc(src)
 			for(R.amount,R.amount > 0, R.amount--)
 				var/obj/item/raw_material/new_mat = unpool(R.type)
-				new_mat.loc = src
+				new_mat.set_loc(src)
 				amount_loaded++
 			if (user && R)
 				user.u_equip(R)

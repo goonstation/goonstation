@@ -967,7 +967,7 @@
 	name = "Anti-Biological Hazard Supplies"
 	desc = " A couple of tools for combatting rogue biological lifeforms."
 	category = "Security Department"
-	contains = list(/obj/item/flamethrower/loaded,
+	contains = list(/obj/item/flamethrower/assembled/loaded,
 					/obj/item/storage/box/flaregun)
 	cost = 7000
 	containertype = /obj/storage/secure/crate

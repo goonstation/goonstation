@@ -34,7 +34,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [uploaded_sound.channel]")
 			if (src.djmode || src.non_admin_dj)
 				boutput(C, "<span class=\"medal\"><b>[admin_key] played:</b></span> <span class='notice'>[S]</span>")
-		move_admin_sound_channel()
+		dj_panel.move_admin_sound_channel()
 
 /client/proc/play_music_real(S as sound, var/freq as num)
 	if (!config.allow_admin_sounds)
@@ -73,7 +73,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 			C << music_sound
 			boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [music_sound.channel] with volume [music_sound.volume]")
-		move_admin_sound_channel()
+		dj_panel.move_admin_sound_channel()
 	logTheThing("admin", src, null, "started loading music [S]")
 	logTheThing("diary", src, null, "started loading music [S]", "admin")
 	message_admins("[key_name(src)] started loading music [S]")
@@ -285,30 +285,6 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	//DEBUG_MESSAGE("Muting sound channel [stopsound.channel] for [src]")
 	SPAWN_DBG(5 SECONDS)
 		src.verbs += /client/verb/stop_all_sounds
-
-/proc/move_admin_sound_channel(var/opposite = 0)
-	if (opposite)
-		if (admin_sound_channel > 1014)
-			//DEBUG_MESSAGE("Increasing admin_sound_channel from [admin_sound_channel] to [(admin_sound_channel+1)]")
-			admin_sound_channel--
-			admin_dj.SetVar("admin_channel", admin_sound_channel)
-			//DEBUG_MESSAGE("admin_sound_channel now [admin_sound_channel]")
-		else //At 1014, set it bring it up 10.
-			//DEBUG_MESSAGE("Resetting admin_sound_channel from [admin_sound_channel]")
-			admin_sound_channel = 1024
-			admin_dj.SetVar("admin_channel", 1024)
-			//DEBUG_MESSAGE("admin_sound_channel now [admin_sound_channel]")
-	else
-		if (admin_sound_channel < 1024)
-			//DEBUG_MESSAGE("Increasing admin_sound_channel from [admin_sound_channel] to [(admin_sound_channel+1)]")
-			admin_sound_channel++
-			admin_dj.SetVar("admin_channel", admin_sound_channel)
-			//DEBUG_MESSAGE("admin_sound_channel now [admin_sound_channel]")
-		else //At 1024, set it back down 10.
-			//DEBUG_MESSAGE("Resetting admin_sound_channel from [admin_sound_channel]")
-			admin_sound_channel = 1014
-			admin_dj.SetVar("admin_channel", 1014)
-			//DEBUG_MESSAGE("admin_sound_channel now [admin_sound_channel]")
 
 /client/proc/play_youtube_audio()
 	if (!config.youtube_audio_key)
