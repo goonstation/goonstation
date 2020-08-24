@@ -670,8 +670,6 @@ var/global
 	"l_leg" = "left leg",
 	"r_leg" = "right leg")
 
-	switchMap = null
-
 	transparentColor = "#ff00e4"
 
 	pregameHTML = null
