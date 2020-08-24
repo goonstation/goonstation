@@ -118,8 +118,6 @@ var/global
 
 	list/nervous_mobs = list()
 
-	list/conveyor_switches = list()
-
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
 	footstep_extrarange = 0 // lol same (modified hackily in mobs.dm to avoid lag from sound at high player coutns)
