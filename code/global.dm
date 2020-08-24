@@ -35,8 +35,6 @@ var/global
 
 	turf/buzztile = null
 
-	//obj/hud/main_hud1 = null
-
 	list/list/by_type = list() // contains lists of objects indexed by their type based on START_TRACKING / STOP_TRACKING
 
 	obj/screen/renderSourceHolder
@@ -59,7 +57,6 @@ var/global
 	datum/hotspot_controller/hotspot_controller = new
 		//items that ask to be called every cycle
 
-	//list/total_deletes = list() //List of things totally deleted
 	list/critters = list()
 	list/pets = list() //station pets
 	list/muted_keys = list()
@@ -467,9 +464,6 @@ var/global
 	total_souls_sold = 0
 	total_souls_value = 0
 
-	/*total_corrupted_terrain = 0
-	total_corruptible_terrain = 0*/
-
 	///////////////
 	//Radio network passwords
 	netpass_security = null
@@ -507,7 +501,6 @@ var/global
 	list/whitelistCkeys = list(  )
 	list/bypassCapCkeys = list(  )
 	list/reg_dna = list(  )
-//	list/traitobj = list(  )
 	list/warned_keys = list()	// tracking warnings per round, i guess
 
 	datum/dj_panel/dj_panel = new()
