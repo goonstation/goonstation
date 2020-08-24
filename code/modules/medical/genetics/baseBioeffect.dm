@@ -86,6 +86,9 @@ var/const/effectTypeFood = 4
 		return ..()
 
 	disposing()
+		if(src.holder)
+			src.holder.RemovePoolEffect(src)
+			src.holder.RemoveEffect(src.id)
 		if(!removed)
 			src.OnRemove()
 		holder = null
