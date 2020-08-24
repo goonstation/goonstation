@@ -67,7 +67,6 @@ var/global
 	list/clients = list()
 	list/mobs = list()
 	list/ai_mobs = list()
-	list/allcables = list()
 	list/atmos_machines = list() // need another list to pull atmos machines out of the main machine loop and in with the pipe networks
 	list/processing_items = list()
 	list/health_update_queue = list()

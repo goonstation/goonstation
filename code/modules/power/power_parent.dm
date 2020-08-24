@@ -84,7 +84,7 @@ var/makingpowernetssince = 0
 	var/netcount = 0
 	powernets = list()
 
-	for(var/obj/cable/PC in allcables)
+	for(var/obj/cable/PC in by_type[/obj/cable])
 		PC.netnum = 0
 	LAGCHECK(LAG_MED)
 
@@ -93,7 +93,7 @@ var/makingpowernetssince = 0
 			M.netnum = 0
 	LAGCHECK(LAG_MED)
 
-	for(var/obj/cable/PC in allcables)
+	for(var/obj/cable/PC in by_type[/obj/cable])
 		if(!PC.netnum)
 			if(Debug) world.log << "Starting mpn at [PC.x],[PC.y] ([PC.d1]/[PC.d2]) #[netcount]"
 			powernet_nextlink(PC, ++netcount)
@@ -107,7 +107,7 @@ var/makingpowernetssince = 0
 		powernets += PN
 		PN.number = L
 
-	for(var/obj/cable/C in allcables)
+	for(var/obj/cable/C in by_type[/obj/cable])
 		if(!C.netnum) continue
 		var/datum/powernet/PN = powernets[C.netnum]
 		PN.cables += C

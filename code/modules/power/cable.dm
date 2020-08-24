@@ -146,7 +146,7 @@
 	else
 		applyCableMaterials(src, getMaterial(insulator_default), getMaterial(condcutor_default))
 
-	allcables += src
+	START_TRACKING
 
 /obj/cable/disposing()		// called when a cable is deleted
 
@@ -165,7 +165,7 @@
 	insulator.owner = null
 	conductor.owner = null
 
-	allcables -= src
+	STOP_TRACKING
 
 	..()													// then go ahead and delete the cable
 
