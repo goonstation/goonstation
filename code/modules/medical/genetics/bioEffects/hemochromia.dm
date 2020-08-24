@@ -74,6 +74,7 @@
 	lockedTries = 12
 	stability_loss = 5
 	occur_in_genepools = 0
+	research_level = 2
 
 /datum/bioEffect/hemochromia/bronze
 	name = "Hemochromia Type-B"
@@ -89,6 +90,7 @@
 	lockedTries = 12
 	stability_loss = 5
 	occur_in_genepools = 0
+	research_level = 2
 
 /datum/bioEffect/hemochromia/gold
 	name = "Hemochromia Type-G"
@@ -104,6 +106,7 @@
 	lockedTries = 12
 	stability_loss = 5
 	occur_in_genepools = 0
+	research_level = 2
 
 /datum/bioEffect/hemochromia/lime
 	name = "Hemochromia Type-L"
@@ -119,6 +122,7 @@
 	lockedTries = 12
 	stability_loss = 5
 	occur_in_genepools = 0
+	research_level = 2
 
 /datum/bioEffect/hemochromia/olive
 	name = "Hemochromia Type-O"
@@ -134,6 +138,7 @@
 	lockedTries = 12
 	stability_loss = 5
 	occur_in_genepools = 0
+	research_level = 2
 
 /datum/bioEffect/hemochromia/jade
 	name = "Hemochromia Type-J"
@@ -149,6 +154,7 @@
 	lockedTries = 12
 	stability_loss = 5
 	occur_in_genepools = 0
+	research_level = 2
 
 /datum/bioEffect/hemochromia/teal
 	name = "Hemochromia Type-T"
@@ -164,6 +170,7 @@
 	lockedTries = 12
 	stability_loss = 5
 	occur_in_genepools = 0
+	research_level = 2
 
 /datum/bioEffect/hemochromia/cobalt
 	name = "Hemochromia Type-C"
@@ -179,6 +186,7 @@
 	lockedTries = 12
 	stability_loss = 5
 	occur_in_genepools = 0
+	research_level = 2
 
 /datum/bioEffect/hemochromia/indigo
 	name = "Hemochromia Type-I"
@@ -194,6 +202,7 @@
 	lockedTries = 12
 	stability_loss = 5
 	occur_in_genepools = 0
+	research_level = 2
 
 /datum/bioEffect/hemochromia/purple
 	name = "Hemochromia Type-P"
@@ -209,6 +218,7 @@
 	lockedTries = 12
 	stability_loss = 5
 	occur_in_genepools = 0
+	research_level = 2
 
 /datum/bioEffect/hemochromia/violet
 	name = "Hemochromia Type-V"
@@ -224,6 +234,7 @@
 	lockedTries = 12
 	stability_loss = 5
 	occur_in_genepools = 0
+	research_level = 2
 
 /datum/bioEffect/hemochromia/fuschia
 	name = "Hemochromia Type-F"
@@ -239,3 +250,4 @@
 	lockedTries = 12
 	stability_loss = 5
 	occur_in_genepools = 0
+	research_level = 2
