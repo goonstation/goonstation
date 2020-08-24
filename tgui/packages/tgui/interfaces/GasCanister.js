@@ -71,7 +71,6 @@ export const GasCanister = (props, context) => {
   return (
     <Window
       resizable
-      key={hasDetonator}
       width={hasDetonator ? 550 : 400}
       height={hasDetonator ? 680 : 370}>
       <Window.Content>
