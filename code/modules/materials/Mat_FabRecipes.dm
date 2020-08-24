@@ -262,7 +262,7 @@
 	category = "Components"
 
 	New()
-		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Arrowhead"; required_amount = 1} ())
+		required_parts.Add(new/datum/matfab_part/metalorcrystalororganic {part_name = "Arrowhead"; required_amount = 1} ())
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -280,7 +280,7 @@
 	category = "Weapons"
 
 	New()
-		required_parts.Add(new/datum/matfab_part/metal {part_name = "Shaft"; required_amount = 3} ())
+		required_parts.Add(new/datum/matfab_part/metalororganic {part_name = "Shaft"; required_amount = 3} ())
 		required_parts.Add(new/datum/matfab_part/arrowhead {part_name = "Head"; required_amount = 1} ())
 		..()
 
@@ -304,7 +304,7 @@
 
 	New()
 		required_parts.Add(new/datum/matfab_part/arrowhead {part_name = "Arrowhead"; required_amount = 1} ())
-		required_parts.Add(new/datum/matfab_part/metal {part_name = "Shaft"; required_amount = 1} ())
+		required_parts.Add(new/datum/matfab_part/metalororganic {part_name = "Shaft"; required_amount = 1} ())
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
