@@ -60,7 +60,7 @@
 
 		// No need for a fancy setup here.
 		if (src.antagonist_type == "Blob (AI)")
-			var/BS = blobstart.len ? pick(blobstart) : null
+			var/BS = pick_landmark(LANDMARK_BLOBSTART)
 			if (BS)
 				new /mob/living/intangible/blob_overmind/ai(BS)
 				message_admins("Antagonist Spawn spawned an AI blob at [log_loc(BS)].")
@@ -169,7 +169,7 @@
 		var/role = null
 		var/objective_path = null
 		var/send_to = 1 // 1: arrival shuttle | 2: wizard shuttle
-		var/ASLoc = pick_landmark("latejoin")
+		var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 		var/WSLoc = wizardstart.len ? pick(wizardstart) : null
 		var/failed = 0
 

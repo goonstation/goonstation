@@ -4,7 +4,7 @@
 		return
 
 	var/currentLoc = src.loc
-	var/ASLoc = pick_landmark("latejoin")
+	var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 
 	// They could be in a pod or whatever, which would have unfortunate results when respawned.
 	if (!isturf(src.loc))
@@ -176,7 +176,7 @@
 	if (!(T && isturf(T)))
 		T = get_turf(src)
 	/*if (!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/ASLoc = pick_landmark("latejoin")
+		var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 		if (ASLoc)
 			W.set_loc(ASLoc)
 		else
@@ -413,7 +413,7 @@
 
 		var/turf/T = get_turf(src)
 		if (!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
-			var/ASLoc = pick_landmark("latejoin")
+			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 			if (ASLoc)
 				W.set_loc(ASLoc)
 			else
@@ -497,7 +497,7 @@
 	W.life_timer = life
 
 	if (!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/ASLoc = pick_landmark("latejoin")
+		var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 		if (ASLoc)
 			W.set_loc(ASLoc)
 		else
@@ -637,19 +637,10 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 			return
 		// you can be an animal
 		// get spawnpoints
-		var/list/spawns = list()
-		for(var/obj/landmark/L in landmarks)
-			if (L.name == "peststart")
-				spawns.Add(L.loc)
-			LAGCHECK(LAG_LOW)
-		var/turf/spawnpoint = get_turf(src)
-		if(spawns.len >= 1)
-			spawnpoint = pick(spawns)
-		else
-			spawnpoint = pick_landmark("latejoin", spawnpoint)
-		// be critter
 
-
+		var/turf/spawnpoint = pick_landmark(LANDMARK_PESTSTART)
+		if(!spawnpoint)
+			spawnpoint = pick_landmark("latejoin", get_turf(src))
 		src.make_ghost_critter(spawnpoint)
 
 
@@ -936,7 +927,7 @@ var/respawn_arena_enabled = 0
 		else
 			O.z = 1
 	else
-		O.set_loc(pick_landmark("latejoin"))
+		O.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 	if (src.mind)
 		src.mind.transfer_to(O)

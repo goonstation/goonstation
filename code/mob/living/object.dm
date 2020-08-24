@@ -50,7 +50,7 @@
 				var/turf/T = get_turf(loc)
 				if (!T)
 					logTheThing("admin", usr, null, "additionally, no turf could be found at creation loc [loc]")
-					var/ASLoc = pick_landmark("latejoin")
+					var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 					if (ASLoc)
 						src.set_loc(ASLoc)
 					else

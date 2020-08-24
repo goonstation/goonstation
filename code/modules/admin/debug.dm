@@ -683,7 +683,7 @@ body
 	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail")
 	switch (selected)
 		if ("Disco Inferno")
-			for (var/turf/T in blobstart)
+			for (var/turf/T in landmarks[LANDMARK_BLOBSTART])
 				var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
 				gas.toxins = 10000
 				gas.oxygen = 10000

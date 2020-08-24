@@ -487,7 +487,6 @@ var/global
 
 	datum/dj_panel/dj_panel = new()
 
-	list/monkeystart = list()
 	list/wizardstart = list()
 	list/predstart = list()
 	list/syndicatestart = list()
@@ -495,16 +494,12 @@ var/global
 	list/newplayer_start = list()
 	list/rp_latejoin = list()
 	list/observer_start = list()
-	list/clownstart = list()
 	list/prisonwarp = list()	//prisoners go to these
 	//list/mazewarp = list()
 	list/tdome1 = list()
 	list/tdome2 = list()
 	list/prisonsecuritywarp = list()	//prison security goes to these
 	list/prisonwarped = list()	//list of players already warped
-	list/blobstart = list()
-	list/kudzustart = list()
-	list/peststart = list()
 	list/wormholeturfs = list()
 	list/halloweenspawn = list()
 	list/telesci = list() // special turfs from map landmarks to always allow telescience to access

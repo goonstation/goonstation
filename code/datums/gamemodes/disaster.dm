@@ -51,13 +51,9 @@
 
 	if(derelict_mode)
 		SPAWN_DBG(1 SECOND)
-			var/list/CORPSES = list()
+			var/list/CORPSES = landmarks[LANDMARK_PESTSTART]
 			var/list/JUNK = list()
 			JUNK = halloweenspawn.Copy()
-			for(var/obj/landmark/S in landmarks)//world)
-				if (S.name == "peststart")
-					CORPSES.Add(S.loc)
-				LAGCHECK(LAG_LOW)
 			if(CORPSES.len)
 				for(var/turf/T in CORPSES)
 					var/obj/decal/skeleton/S = new/obj/decal/skeleton(T)

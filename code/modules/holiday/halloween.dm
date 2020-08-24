@@ -173,7 +173,7 @@
 		return
 
 	proc/telehop()
-		var/turf/T = pick(blobstart)
+		var/turf/T = pick_landmark(LANDMARK_BLOBSTART)
 		if(T)
 			src.visible_message("<span class='alert'>[src] disappears!</span>")
 			playsound(src.loc,"sound/effects/singsuck.ogg", 100, 1)

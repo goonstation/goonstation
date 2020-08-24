@@ -331,7 +331,7 @@
 				while((locate(/mob) in T) && tries--)
 				src.set_loc(T)
 		else
-			src.set_loc(pick_landmark("latejoin"))
+			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 	else
 		src.unlock_medal("Fish", 1)
 

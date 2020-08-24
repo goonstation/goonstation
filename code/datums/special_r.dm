@@ -86,7 +86,7 @@ datum/special_respawn
 			else
 				player = src.find_player("a person")
 			if(player)
-				var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(pick_landmark("latejoin"))
+				var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(pick_landmark(LANDMARK_LATEJOIN))
 				if(!player.mind)
 					player.mind = new (player)
 				player.mind.transfer_to(M)
@@ -111,7 +111,7 @@ datum/special_respawn
 			else
 				player = src.find_player("a person")
 			if(player)
-				var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(pick_landmark("latejoin"))
+				var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(pick_landmark(LANDMARK_LATEJOIN))
 				SPAWN_DBG(0)
 					M.JobEquipSpawned(job.name)
 
@@ -134,7 +134,7 @@ datum/special_respawn
 		for(var/c = 0, c < number, c++)
 			var/mob/player = find_player("a person")
 			if(player)
-				var/mob/M = new blType(pick_landmark("latejoin"))
+				var/mob/M = new blType(pick_landmark(LANDMARK_LATEJOIN))
 				if(!player.mind)
 
 					player.mind = new (player)
