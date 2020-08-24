@@ -567,9 +567,10 @@
 	desc = "Looks like it some sort of makeshift distillery, made out of salvaged parts."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shittystill"
-	amount_per_transfer_from_this = 25
+	amount_per_transfer_from_this = 20
 	var/list/random_reagents_list = list("barium","flourine","lithium","magnesium","mercury",\
-"oxygen","phosphorus","plasma","potassium","radium","silver","sugar","hydrogen")
+"oxygen","phosphorus","plasma","potassium","radium","silver","sugar","hydrogen","water",\
+"carbon","chlorine","sulfur","calcium","iron","ethanol")
 
 	brew(var/obj/item/W as obj, mob/user as mob)
 		if (!W || !(istype(W,/obj/item/reagent_containers/food) || istype(W, /obj/item/plant)))
