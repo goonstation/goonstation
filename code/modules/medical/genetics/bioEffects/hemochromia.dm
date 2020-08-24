@@ -22,29 +22,31 @@
 
 			if(prob(12))
 				if(!istype(H.loc, /obj/machinery/genetics_scanner))
-					if(H.bioHolder.HasEffectInEither(var/datum/bioEffect/hemochromia))
+					if(H.bioHolder.HasEffectInEither(/datum/bioEffect/hemochromia))
 						boutput(owner, "<span class='alert'>You already have hemochromia! Deleting Type-U instance.</span>") //Debug message. Delete it later, future me.
 						qdel(src)
-					if(4 => rand(13))
+					if(4 >= rand(13))
 						typeRange = 8 //Placeholder for the name-based thing. Delete later.
 						//Name-based thing here.
 						boutput(owner, "<span class='alert'>Fate remembers your assigned color.</span>") //Debug message. Delete it later, future me.
 					else
 						typeRange = rand(1,12)
 						boutput(owner, "<span class='alert'>Fate is blind sometimes.</span>") //Debug message. Delete it later, future me.
+					var/datum/bioEffect/NEW = null
 					switch(typeRange)
-						if(2) var/datum/bioEffect/NEW = new BE.type(hemochromia/bronze)					
-						if(3) var/datum/bioEffect/NEW = new BE.type(hemochromia/gold)					
-						if(4) var/datum/bioEffect/NEW = new BE.type(hemochromia/lime)					
-						if(5) var/datum/bioEffect/NEW = new BE.type(hemochromia/olive)					
-						if(6) var/datum/bioEffect/NEW = new BE.type(hemochromia/jade)					
-						if(7) var/datum/bioEffect/NEW = new BE.type(hemochromia/teal)					
-						if(8) var/datum/bioEffect/NEW = new BE.type(hemochromia/cobalt)					
-						if(9) var/datum/bioEffect/NEW = new BE.type(hemochromia/indigo)					
-						if(10) var/datum/bioEffect/NEW = new BE.type(hemochromia/purple)					
-						if(11) var/datum/bioEffect/NEW = new BE.type(hemochromia/violet)					
-						if(12) var/datum/bioEffect/NEW = new BE.type(hemochromia/fuschia)
-						else var/datum/bioEffect/NEW = new BE.type(hemochromia/rust)
+						if(2) NEW = new /datum/bioEffect/hemochromia/bronze()
+						//if(3) NEW = new BE.type(/datum/bioEffect/hemochromia/gold)
+						if(3) NEW = new /datum/bioEffect/hemochromia/gold()
+						if(4) NEW = new /datum/bioEffect/hemochromia/lime()
+						if(5) NEW = new /datum/bioEffect/hemochromia/olive()
+						if(6) NEW = new /datum/bioEffect/hemochromia/jade()
+						if(7) NEW = new /datum/bioEffect/hemochromia/teal()
+						if(8) NEW = new /datum/bioEffect/hemochromia/cobalt()
+						if(9) NEW = new /datum/bioEffect/hemochromia/indigo()
+						if(10) NEW = new /datum/bioEffect/hemochromia/purple()
+						if(11) NEW = new /datum/bioEffect/hemochromia/violet()
+						if(12) NEW = new /datum/bioEffect/hemochromia/fuschia()
+						else NEW = new /datum/bioEffect/hemochromia/rust()
 
 					boutput(owner, "<span class='alert'>Stable hemochromia instance applied. Type number: [typeRange].</span>") //Debug message. Delete it later, future me.
 					H.bioHolder.AddEffectInstance(NEW,1)
