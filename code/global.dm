@@ -388,7 +388,6 @@ var/global
 
 	skipupdate = 0
 	///////////////
-	event = 0
 	//blobevent = 0
 	///////////////
 
