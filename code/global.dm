@@ -433,7 +433,6 @@ var/global
 	toggles_enabled = 1
 	announce_banlogin = 1
 	announce_jobbans = 0
-	station_creepified = 0
 
 
 	outpost_destroyed = 0
