@@ -86,7 +86,7 @@
 			logTheThing("admin", null, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
 			message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
 
-		for(var/mob/living/silicon/ai/M in AIs)
+		for(var/mob/living/silicon/ai/M in by_type[/mob/living/silicon/ai])
 			if (M.deployed_to_eyecam && M.eyecam)
 				M.eyecam.return_mainframe()
 			if(!isdead(M) && M.see_in_dark != 0)

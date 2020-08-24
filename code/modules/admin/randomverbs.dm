@@ -2074,7 +2074,7 @@ var/global/night_mode_enabled = 0
 			logTheThing("admin", src, null, "granted VOX access to all AIs!")
 			logTheThing("diary", src, null, "granted VOX access to all AIs!", "admin")
 			boutput(world, "<B>The AI may now use VOX!</B>")
-			for(var/mob/living/silicon/ai/AI in AIs)
+			for(var/mob/living/silicon/ai/AI in by_type[/mob/living/silicon/ai])
 				AI.cancel_camera()
 				AI.verbs += /mob/living/silicon/ai/proc/ai_vox_announcement
 				AI.verbs += /mob/living/silicon/ai/proc/ai_vox_help
@@ -2086,7 +2086,7 @@ var/global/night_mode_enabled = 0
 			logTheThing("admin", src, null, "revoked VOX access from all AIs!")
 			logTheThing("diary", src, null, "revoked VOX access from all AIs!", "admin")
 			boutput(world, "<B>The AI may no longer use VOX!</B>")
-			for(var/mob/living/silicon/ai/AI in AIs)
+			for(var/mob/living/silicon/ai/AI in by_type[/mob/living/silicon/ai])
 				AI.cancel_camera()
 				AI.verbs -= /mob/living/silicon/ai/proc/ai_vox_announcement
 				AI.verbs -= /mob/living/silicon/ai/proc/ai_vox_help

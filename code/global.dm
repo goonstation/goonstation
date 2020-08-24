@@ -805,7 +805,7 @@ var/global
 /proc/addAIImage(var/image/I, var/key)
 	if(I && length(key))
 		aiImages[key] = I
-		for(var/mob/M in AIs)
+		for(var/mob/M in by_type[/mob/living/silicon/ai])
 			if (M.client)
 				M << I
 		return I

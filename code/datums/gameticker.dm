@@ -579,7 +579,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	boutput(world, score_tracker.heisenhat_stats())
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] ai law display")
-	for (var/mob/living/silicon/ai/aiPlayer in AIs)
+	for (var/mob/living/silicon/ai/aiPlayer in by_type[/mob/living/silicon/ai])
 		if (!isdead(aiPlayer))
 			boutput(world, "<b>The AI, [aiPlayer.name] ([aiPlayer.get_message_mob().key]) had the following laws at the end of the game:</b>")
 		else

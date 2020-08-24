@@ -146,12 +146,12 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	return 0
 
 /mob/living/silicon/ai/disposing()
+	STOP_TRACKING
 	..()
-	AIs.Remove(src)
 
 /mob/living/silicon/ai/New(loc, var/empty = 0)
 	..(loc)
-	AIs.Add(src)
+	START_TRACKING
 
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
