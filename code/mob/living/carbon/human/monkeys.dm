@@ -113,7 +113,7 @@
 
 	New()
 		..()
-		npcmonkeypals += src
+		START_TRACKING
 		SPAWN_DBG(0.5 SECONDS)
 			if (!src.disposed)
 				src.bioHolder.mobAppearance.customization_first = "None"
@@ -124,7 +124,7 @@
 				src.real_name = src.name
 
 	disposing()
-		npcmonkeypals -= src
+		STOP_TRACKING
 		..()
 
 	ai_action()
@@ -154,7 +154,7 @@
 		if (prob(40))
 			src.emote("scream")
 		var/pals = 0
-		for (var/mob/living/carbon/human/npc/monkey/pal in npcmonkeypals)
+		for (var/mob/living/carbon/human/npc/monkey/pal in by_type[/mob/living/carbon/human/npc/monkey])
 			if (get_dist(src, pal) > 7)
 				continue
 			if (pals >= 5)
