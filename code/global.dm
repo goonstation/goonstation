@@ -384,11 +384,6 @@ var/global
 	"Yesteryear",
 	"Zeyada")
 
-	skipupdate = 0
-	///////////////
-	//blobevent = 0
-	///////////////
-
 	//april fools
 	manualbreathing = 0
 	manualblinking = 0
