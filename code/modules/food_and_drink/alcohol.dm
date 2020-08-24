@@ -41,7 +41,7 @@
 
 		while (adulterants > 0)
 			adulterants--
-			reagents.add_reagent(pick(CYBERPUNK_drug_adulterants), rand(1,3))
+			reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_adulterants"), rand(1,3))
 
 		update_icon()
 
