@@ -282,8 +282,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		O.set_clothing_icon_dirty()
 		return
 
-var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev","Puffles","Boop","Akiak","Willy","Aga","Snuffles","Tonaph","Suortin","Anana","Ananas","Pineapple","Munchkin","Asiaq","Niko","Roman","Chu","Corazon")
-
 /obj/critter/sealpup
 	name = "space seal pup"
 	desc = "A seal pup, in space, aww."
@@ -302,7 +300,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 
 	New()
 		..()
-		src.name = pick(seal_names)
+		src.name = pick_string_autokey("names/seals.txt")
 
 	CritterDeath()
 		if (!src.alive) return

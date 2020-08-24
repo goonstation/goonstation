@@ -97,9 +97,9 @@
 				return
 		//oh boy time to move
 		playsound(src.loc,"sound/misc/gnomechuckle.ogg" ,50,1)
-		var/obj/crate = lockers_and_crates[rand(lockers_and_crates.len + 1)]
+		var/obj/crate = pick(by_type[/obj/storage])
 		while(crate.z != 1)
-			crate = lockers_and_crates[rand(lockers_and_crates.len + 1)]
+			crate = pick(by_type[/obj/storage])
 		src.set_loc(crate)
 
 

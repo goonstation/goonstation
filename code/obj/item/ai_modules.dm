@@ -272,7 +272,7 @@ AI MODULES
 
 	get_law_text()
 		if (is_blank_string(lawTarget)) //no blank names allowed
-			lawTarget = pick(ai_names)
+			lawTarget = pick_string_autokey("names/ai.txt")
 			return lawTarget
 		return lawTarget
 
@@ -280,7 +280,7 @@ AI MODULES
 		return "It currently reads \"[lawTarget]\"."
 
 	attack_self(var/mob/user)
-		input_law_info(user, "Rename", "What will the AI be renamed to?", pick(ai_names))
+		input_law_info(user, "Rename", "What will the AI be renamed to?", pick_string_autokey("names/ai.txt"))
 		lawTarget = replacetext(copytext(html_encode(lawTarget),1, 128), "http:","")
 
 	install(obj/machinery/computer/aiupload/comp)
@@ -300,7 +300,7 @@ AI MODULES
 		var/list/names = list()
 		var/list/namecounts = list()
 		var/list/ais = list()
-		for (var/mob/living/silicon/ai/AI in AIs)
+		for (var/mob/living/silicon/ai/AI in by_type[/mob/living/silicon/ai])
 			LAGCHECK(LAG_LOW)
 			var/name = AI.name
 			if (name in names)
@@ -316,7 +316,7 @@ AI MODULES
 		if (ais.len == 1)
 			AI = ais[names[1]]
 		else if (ais.len > 1)
-			var/res = input("Which AI are you renaming?", "Rename", null, null) as null|anything in ais
+			var/res = input("Which AI are you renaming?", "Rename", null, null) as null|anything in by_type[/mob/living/silicon/ai]
 			AI = ais[res]
 		else if (ais.len == 0)
 			boutput(sender, "There aren't any AIs available to rename...")
@@ -439,7 +439,7 @@ AI MODULES
 					A.anchored = 1
 					qdel(src)
 		else if (istype(I, /obj/item/clothing/mask/moustache/))
-			for (var/mob/living/silicon/ai/M in AIs)
+			for (var/mob/living/silicon/ai/M in by_type[/mob/living/silicon/ai])
 				M.moustache_mode = 1
 				user.visible_message("<span class='alert'><b>[user.name]</b> uploads a moustache to [M.name]!</span>")
 				M.update_appearance()

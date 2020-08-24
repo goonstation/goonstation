@@ -30,7 +30,7 @@
 	w_class = 2.0
 	mats = 3
 
-	var/bicon_override = 0
+	var/icon_override = 0
 
 	var/const
 		WIRE_SIGNAL = 1 //sends a signal, like to set off a bomb or electrocute someone
@@ -234,51 +234,18 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		real_name = new_name
 		voice_name = new_name
 
-/obj/item/device/radio/proc/radio_bicon(var/mob/user)
-	.= 0
+/obj/item/device/radio/proc/radio_icon(var/mob/user)
 	if (isAI(user))
-		.= bicon(aiIcon)
+		.= "ai"
 	else if (isrobot(user))
-		.= bicon(roboIcon)
-	else if (bicon_override)
-		if (bicon_override == "head")
-			.= bicon(headIcon)
-		else if (bicon_override == "sci")
-			.= bicon(sciIcon)
-		else if (bicon_override == "med")
-			.= bicon(medIcon)
-		else if (bicon_override == "eng")
-			.= bicon(engIcon)
-		else if (bicon_override == "sec")
-			.= bicon(secIcon)
-		else if (bicon_override == "qm")
-			.= bicon(qmIcon)
-		else if (bicon_override == "ai")
-			.= bicon(aiIcon)
-		else if (bicon_override == "syndie")
-			.= bicon(syndieIcon)
-		else if (bicon_override == "syndieboss")
-			.= bicon(syndiebossIcon)
-		else if (bicon_override == "cap")
-			.= bicon(capIcon)
-		else if (bicon_override == "rd")
-			.= bicon(rdIcon)
-		else if (bicon_override == "md")
-			.= bicon(mdIcon)
-		else if (bicon_override == "ce")
-			.= bicon(ceIcon)
-		else if (bicon_override == "hop")
-			.= bicon(hopIcon)
-		else if (bicon_override == "hos")
-			.= bicon(hosIcon)
-		else if (bicon_override == "clown")
-			.= bicon(clownIcon)
-		else if (bicon_override == "nt")
-			.= bicon(ntIcon)
-		else
-			.= bicon(civIcon)
+		.= "robo"
+	else if (icon_override)
+		.= icon_override
+
+	if(.)
+		. = {"<img style=\"position: relative; left: -1px; bottom: -3px;\" class=\"icon misc\" src="[resource("images/radio_icons/[.].png")]">"}
 	else
-		.= bicon(src)
+		return bicon(src)
 
 /obj/item/device/radio/talk_into(mob/M as mob, messages, secure, real_name, lang_id)
 	// According to a pair of DEBUG calls set up for testing, no radio jammer check for the src radio was performed.
@@ -434,9 +401,9 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			css_style = " style='color: [textColor]'"
 		var/part_a
 		if (ismob(M) && M.mind)
-			part_a = "[radio_bicon(M)]<span class='radio[classes]'[css_style]><span class='name' data-ctx='\ref[M.mind]'>"
+			part_a = "[radio_icon(M)]<span class='radio[classes]'[css_style]><span class='name' data-ctx='\ref[M.mind]'>"
 		else
-			part_a = "[radio_bicon(M)]<span class='radio[classes]'[css_style]><span class='name'>"
+			part_a = "[radio_icon(M)]<span class='radio[classes]'[css_style]><span class='name'>"
 		var/part_b = "</span><b> \[[format_frequency(display_freq)]\]</b> <span class='message'>"
 		var/part_c = "</span></span>"
 
@@ -633,9 +600,6 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		if (radio_controller && istype(radio_controller) && radio_controller.active_jammers.Find(src))
 			radio_controller.active_jammers.Remove(src)
 		..()
-
-var/global/list/tracking_beacons = list() // things were looping through world to find these so let's just stop doing that and have this shit add itself to a global list instead maybe
-
 /obj/item/device/radio/beacon
 	name = "tracking beacon"
 	icon_state = "beacon"
@@ -645,14 +609,10 @@ var/global/list/tracking_beacons = list() // things were looping through world t
 
 /obj/item/device/radio/beacon/New()
 	..()
-	SPAWN_DBG(0)
-		if (!islist(tracking_beacons))
-			tracking_beacons = list()
-		tracking_beacons.Add(src)
+	START_TRACKING
 
 /obj/item/device/radio/beacon/disposing()
-	if (islist(tracking_beacons))
-		tracking_beacons.Remove(src)
+	STOP_TRACKING
 	..()
 
 /obj/item/device/radio/beacon/hear_talk()

@@ -64,26 +64,7 @@ var/fartcount = 0
 		setProperty("heatprot", 0)
 		setProperty("conductivity", 1)
 
-
-var/list/JOHN_greetings = strings("johnbill.txt", "greetings")
-var/list/JOHN_rude = strings("johnbill.txt", "rude")
-var/list/JOHN_insults = strings("johnbill.txt", "insults")
-var/list/JOHN_people = strings("johnbill.txt", "people")
-var/list/JOHN_question = strings("johnbill.txt", "question")
-var/list/JOHN_item = strings("johnbill.txt", "item")
-var/list/JOHN_drugs = strings("johnbill.txt", "drugs")
-var/list/JOHN_nouns = strings("johnbill.txt", "nouns")
-var/list/JOHN_verbs = strings("johnbill.txt", "verbs")
-var/list/JOHN_stories = strings("johnbill.txt", "stories1") + strings("johnbill.txt", "stories2") + strings("johnbill.txt", "stories3")
-var/list/JOHN_doMiss = strings("johnbill.txt", "domiss")
-var/list/JOHN_dontMiss = strings("johnbill.txt", "dontmiss")
-var/list/JOHN_friends = strings("johnbill.txt", "friends")
-var/list/JOHN_friendActions = strings("johnbill.txt", "friendsactions")
-var/list/JOHN_emotes = strings("johnbill.txt", "emotes")
-var/list/JOHN_deadguy = strings("johnbill.txt", "deadguy")
-var/list/JOHN_murray = strings("johnbill.txt", "murraycompliment")
-var/list/JOHN_grilladvice = strings("johnbill.txt", "grilladvice")
-
+#define JOHN_PICK(WHAT) pick_string("johnbill.txt", WHAT)
 
 // all of john's area specific lines here
 /area/var/john_talk = null
@@ -214,7 +195,7 @@ var/list/JOHN_grilladvice = strings("johnbill.txt", "grilladvice")
 			if(prob(20) && src.canmove && isturf(src.loc))
 				step(src, pick(NORTH, SOUTH, EAST, WEST))
 			if(prob(2))
-				SPAWN_DBG(0) emote(pick(JOHN_emotes))
+				SPAWN_DBG(0) emote(JOHN_PICK("emotes"))
 			if(prob(15))
 				snacktime()
 			var/area/A = get_area(src)
@@ -239,11 +220,11 @@ var/list/JOHN_grilladvice = strings("johnbill.txt", "grilladvice")
 		SPAWN_DBG(0)
 			var/list/grills = list()
 
-			var/obj/machinery/bot/guardbot/old/tourguide/murray = pick(tourguides)
+			var/obj/machinery/bot/guardbot/old/tourguide/murray = pick(by_type[/obj/machinery/bot/guardbot/old/tourguide])
 			if (murray && get_dist(src,murray) > 7)
 				murray = null
 			if (istype(murray))
-				if (!findtext(murray.name, "murray"))
+				if (!findtext(murray.name, "murraycompliment"))
 					murray = null
 
 			var/area/A = get_area(src)
@@ -273,16 +254,16 @@ var/list/JOHN_grilladvice = strings("johnbill.txt", "grilladvice")
 						if (0 to 15)
 							say("Yep, \the [G.grillitem] needs a little more time.")
 						if (16 to 49)
-							say("[pick(JOHN_rude)], [pick(JOHN_grilladvice)] [G.grillitem].")
+							say("[JOHN_PICK("rude")], [JOHN_PICK("grilladvice")] [G.grillitem].")
 						if (50 to 59)
 							say("Whoa! \The [G.grillitem] is cooked to perfection! Lemme get that for ya!")
 							G.eject_food()
 						else
-							say("Good fuckin' job [pick(JOHN_insults)], you burnt it.")
+							say("Good fuckin' job [JOHN_PICK("insults")], you burnt it.")
 				else
 					if (G.grilltemp >= 200 + T0C)
 						if(prob(70))
-							say("That there ol' [G] looks about ready for a [pick(JOHN_drugs)]-seasoned steak!")
+							say("That there ol' [G] looks about ready for a [JOHN_PICK("drugs")]-seasoned steak!")
 						else
 							say("That [G] is hot! Who's grillin' ?")
 					else
@@ -290,14 +271,14 @@ var/list/JOHN_grilladvice = strings("johnbill.txt", "grilladvice")
 
 			else if(prob(40) && dead_mobs && dead_mobs.len > 0) //SpyGuy for undefined var/len (what the heck)
 				var/mob/M = pick(dead_mobs)
-				say("[pick(JOHN_deadguy)] [M.name]...")
+				say("[JOHN_PICK("deadguy")] [M.name]...")
 			else if (alive_mobs.len > 0)
 				if (murray && !greeted_murray)
 					greeted_murray = 1
-					say("[pick(JOHN_greetings)] Murray! How's it [pick(JOHN_verbs)]?")
+					say("[JOHN_PICK("greetings")] Murray! How's it [JOHN_PICK("verbs")]?")
 					SPAWN_DBG(rand(20,40))
 						if (murray && murray.on && !murray.idle)
-							murray.speak("Hi, John! It's [pick(JOHN_murray)] to see you here, of all places.")
+							murray.speak("Hi, John! It's [JOHN_PICK("murraycompliment")] to see you here, of all places.")
 
 				else
 					var/mob/M = pick(alive_mobs)
@@ -305,40 +286,40 @@ var/list/JOHN_grilladvice = strings("johnbill.txt", "grilladvice")
 
 					switch(speech_type)
 						if(1)
-							say("[pick(JOHN_greetings)] [M.name].")
+							say("[JOHN_PICK("greetings")] [M.name].")
 
 						if(2)
-							say("[pick(JOHN_question)] you lookin' at, [pick(JOHN_insults)]?")
+							say("[JOHN_PICK("question")] you lookin' at, [JOHN_PICK("insults")]?")
 
 						if(3)
-							say("You a [pick(JOHN_people)]?")
+							say("You a [JOHN_PICK("people")]?")
 
 						if(4)
-							say("[pick(JOHN_rude)], gimme yer [pick(JOHN_item)].")
+							say("[JOHN_PICK("rude")], gimme yer [JOHN_PICK("item")].")
 
 						if(5)
-							say("Got a light, [pick(JOHN_insults)]?")
+							say("Got a light, [JOHN_PICK("insults")]?")
 
 						if(6)
-							say("Nice [pick(JOHN_nouns)], [pick(JOHN_insults)].")
+							say("Nice [JOHN_PICK("nouns")], [JOHN_PICK("insults")].")
 
 						if(7)
-							say("Got any [pick(JOHN_drugs)]?")
+							say("Got any [JOHN_PICK("drugs")]?")
 
 						if(8)
-							say("I ever tell you 'bout [pick(JOHN_stories)]?")
+							say("I ever tell you 'bout [JOHN_PICK("stories")]?")
 
 						if(9)
-							say("You [pick(JOHN_verbs)]?")
+							say("You [JOHN_PICK("verbs")]?")
 
 						if(10)
 							if (prob(50))
-								say("Man, I sure miss [pick(JOHN_doMiss)].")
+								say("Man, I sure miss [JOHN_PICK("domiss")].")
 							else
-								say("Man, I sure don't miss [pick(JOHN_dontMiss)].")
+								say("Man, I sure don't miss [JOHN_PICK("dontmiss")].")
 
 						if(11)
-							say("I think my [pick(JOHN_friends)] [pick(JOHN_friendActions)].")
+							say("I think my [JOHN_PICK("friends")] [JOHN_PICK("friendactions")].")
 
 					if (prob(25) && shittybills.len > 0)
 						SPAWN_DBG(3.5 SECONDS)
@@ -347,10 +328,10 @@ var/list/JOHN_grilladvice = strings("johnbill.txt", "grilladvice")
 								if (4)
 									MB.say("You borrowed mine fifty years ago, and I never got it back.")
 								if (7)
-									MB.say("If I had any, I wouldn't share it with ya [pick(BILL_insults)].")
+									MB.say("If I had any, I wouldn't share it with ya [pick_string("shittybill.txt", "insults")].")
 								if (8)
 									if (prob(2))
-										MB.say("One of these days, you oughta. I don't believe it for a second but let's hear it, [pick(BILL_people)].")
+										MB.say("One of these days, you oughta. I don't believe it for a second but let's hear it, [pick_string("shittybill.txt", "people")].")
 									else if (prob(6))
 										MB.say("No way, [src].")
 									else
@@ -370,14 +351,14 @@ var/list/JOHN_grilladvice = strings("johnbill.txt", "grilladvice")
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
 			SPAWN_DBG(1 SECOND)
-				say("One of them [pick(JOHN_people)] folks from the station helped us raise the cash. Lil bro been dreamin bout it fer years.")
+				say("One of them [JOHN_PICK("people")] folks from the station helped us raise the cash. Lil bro been dreamin bout it fer years.")
 			return
 		#ifdef SECRETS_ENABLED
 		if (istype(W, /obj/item/paper/grillnasium/fartnasium_recruitment))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
 			SPAWN_DBG(1 SECOND)
-				say("Well hot dog! [pick(JOHN_insults)], you wouldn't believe it but I use to work there!")
+				say("Well hot dog! [JOHN_PICK("insults")], you wouldn't believe it but I use to work there!")
 				johnbill_shuttle_fartnasium_active = 1
 				sleep(2 SECONDS)
 				say("Yer dag right we can go Juicin around in there! Pack yer shit we're doin a B&E ! ! ! ")
@@ -395,7 +376,7 @@ var/list/JOHN_grilladvice = strings("johnbill.txt", "grilladvice")
 
 			SPAWN_DBG(1 DECI SECOND)
 				say("Oh? [W] eh?")
-				say(pick("No kiddin' fer me?","I guess I could go fer a quick one yeah!","Oh dang dang dang! Haven't had one of these babies in a while!","Well I never get tired of those!","You're offering this to me? Don't mind if i do, [pick(JOHN_people)]"))
+				say(pick("No kiddin' fer me?","I guess I could go fer a quick one yeah!","Oh dang dang dang! Haven't had one of these babies in a while!","Well I never get tired of those!","You're offering this to me? Don't mind if i do, [JOHN_PICK("people")]"))
 				src.a_intent = INTENT_HELP // pacify a juicer with food, obviously
 				src.target = null
 				src.ai_state = 0
@@ -459,7 +440,7 @@ var/list/JOHN_grilladvice = strings("johnbill.txt", "grilladvice")
 			var/mob/living/carbon/human/biker/S = SB
 			if (get_dist(S,src) <= 7)
 				if(!(S.ai_active) || (prob(25)))
-					S.say("That's my brother, you [pick(JOHN_insults)]!")
+					S.say("That's my brother, you [JOHN_PICK("insults")]!")
 				S.target = M
 				S.ai_set_active(1)
 				S.a_intent = INTENT_HARM
@@ -863,3 +844,4 @@ Urs' Hauntdog critter
 
 
 
+#undef JOHN_PICK

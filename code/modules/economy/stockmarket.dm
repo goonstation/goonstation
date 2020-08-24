@@ -98,11 +98,11 @@ proc/list_frozen()
 	proc/generateAuthorName()
 		switch(rand(1,3))
 			if (1)
-				return "[consonant()]. [pick(last_names)]"
+				return "[consonant()]. [pick_string_autokey("names/last.txt")]"
 			if (2)
-				return "[prob(50) ? pick(first_names_male) : pick(first_names_female)] [consonant()].[prob(50) ? "[consonant()]. " : null] [pick(last_names)]"
+				return "[prob(50) ? pick_string_autokey("names/first_male.txt") : pick_string_autokey("names/first_female.txt")] [consonant()].[prob(50) ? "[consonant()]. " : null] [pick_string_autokey("names/last.txt")]"
 			if (3)
-				return "[prob(50) ? pick(first_names_male) : pick(first_names_female)] \"[prob(50) ? pick(first_names_male) : pick(first_names_female)]\" [pick(last_names)]"
+				return "[prob(50) ? pick_string_autokey("names/first_male.txt") : pick_string_autokey("names/first_female.txt")] \"[prob(50) ? pick_string_autokey("names/first_male.txt") : pick_string_autokey("names/first_female.txt")]\" [pick_string_autokey("names/last.txt")]"
 
 	proc/formatSpacetime()
 		var/ticksc = round(ticks/100)
@@ -301,7 +301,7 @@ proc/list_frozen()
 		transition()
 			switch (phase_id)
 				if (0)
-					tname = "[female ? pick(first_names_female) : pick(first_names_male)] [pick(last_names)]"
+					tname = "[female ? pick_string_autokey("names/first_female.txt") : pick_string_autokey("names/first_male.txt")] [pick_string_autokey("names/last.txt")]"
 					next_phase = ticker.round_elapsed_ticks + rand(300, 600) * 10
 					var/datum/article/A = generateArrestArticle()
 					if (!A.opinion)
