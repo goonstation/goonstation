@@ -21597,7 +21597,6 @@
 	},
 /area/station/hallway/secondary/entry)
 "aXv" = (
-/obj/landmark/block_waypoint/shuttle,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
 	},
