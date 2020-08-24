@@ -421,7 +421,6 @@ var/global
 	pull_slowing = 0
 	suicide_allowed = 1
 	dna_ident = 1
-	special_respawning = 1
 	abandon_allowed = 1
 	enter_allowed = 1
 	johnbus_location = 1
