@@ -10,8 +10,6 @@
 #define GENETICS_EMITTERS 3
 #define GENETICS_RECLAIMER 4
 
-var/list/genetics_computers = list()
-
 /obj/machinery/computer/genetics
 	name = "genetics console"
 	icon = 'icons/obj/computer.dmi'
@@ -42,7 +40,7 @@ var/list/genetics_computers = list()
 
 /obj/machinery/computer/genetics/New()
 	..()
-	genetics_computers += src
+	START_TRACKING
 	SPAWN_DBG(0.5 SECONDS)
 		src.scanner = locate(/obj/machinery/genetics_scanner, orange(1,src))
 		return
@@ -56,7 +54,7 @@ var/list/genetics_computers = list()
 
 
 /obj/machinery/computer/genetics/disposing()
-	genetics_computers -= src
+	STOP_TRACKING
 	..()
 
 
@@ -756,7 +754,7 @@ var/list/genetics_computers = list()
 		var/booth_effect_desc = input(usr, "Please enter a product description.", "$$$", "") as null|text
 		booth_effect_desc = strip_html(booth_effect_desc,280)
 
-		for (var/obj/machinery/genetics_booth/GB in genetics_computers)
+		for (var/obj/machinery/genetics_booth/GB in by_type[/obj/machinery/genetics_booth])
 			var/already_has = 0
 			for (var/datum/geneboothproduct/P in GB.offered_genes)
 				if (P.id == E.id)
