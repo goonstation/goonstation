@@ -1,5 +1,9 @@
 
 (t)tue aug 25 20
+(u)Tarmunora
+(p)1942
+(e)⚖|balance
+(+)Changed suplexing to interrupt some action bars, notably shambler devour
 (u)Superlagg
 (p)1900
 (e)🆕|feature
