@@ -1,5 +1,9 @@
 
 (t)tue aug 25 20
+(u)ThePotato97
+(p)1846
+(e)|
+(+)Fixed the Infravision trait.
 (u)Michaellaneous
 (p)1918
 (e)⚖|balance
