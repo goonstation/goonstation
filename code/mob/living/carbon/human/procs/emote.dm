@@ -1529,7 +1529,7 @@
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
-
+					var/combatflip = 0
 					//TODO: space flipping
 					//if ((!src.restrained()) && (!src.lying) && (istype(src.loc, /turf/space)))
 					//	message = "<B>[src]</B> does a flip!"
@@ -1625,6 +1625,7 @@
 									logTheThing("combat", src, G.affecting, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
 									M.lastattacker = src
 									M.lastattackertime = world.time
+									combatflip = 1
 									if (iswrestler(src))
 										if (prob(50))
 											M.ex_act(3) // this is hilariously overpowered, but WHATEVER!!!
@@ -1684,7 +1685,7 @@
 										if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))
 											src.remove_stamina(STAMINA_FLIP_COST)
 											src.stamina_stun()
-
+										combatflip = 1
 										message = "<span class='alert'><B>[src]</B> flips into [M]!</span>"
 										logTheThing("combat", src, M, "flips into [constructTarget(M,"combat")]")
 										src.changeStatus("weakened", 6 SECONDS)
@@ -1697,7 +1698,8 @@
 									else
 										message = "<B>[src]</B> flips in [M]'s general direction."
 									break
-
+					if(combatflip)
+						actions.interrupt(src, INTERRUPT_ACT)
 					if (src.lying)
 						message = "<B>[src]</B> flops on the floor like a fish."
 					// If there is a chest item, see if its reagents can be dumped into the body
