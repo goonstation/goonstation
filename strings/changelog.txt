@@ -1,5 +1,9 @@
 
 (t)tue aug 25 20
+(u)Janonas
+(p)1873
+(e)🆕🎨|feature, sprites
+(*)Added a new botany plant, Ipecacuanha - use it to create a powerful emetic!
 (u)Kubius
 (p)1943
 (e)🗺|mapping
