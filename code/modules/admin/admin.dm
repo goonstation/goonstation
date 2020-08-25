@@ -826,10 +826,10 @@ var/global/noir = 0
 				var/team
 				var/type = href_list["type"]
 				if (type == "1")
-					M.set_loc(pick(tdome1))
+					M.set_loc(pick_landmark(LANDMARK_THUNDERDOME_1))
 					team = "Team 1"
 				else if (type == "2")
-					M.set_loc(pick(tdome2))
+					M.set_loc(pick_landmark(LANDMARK_THUNDERDOME_2))
 					team = "Team 2"
 
 				logTheThing("admin", usr, M, "sent [constructTarget(M,"admin")] to the thunderdome. ([team])")

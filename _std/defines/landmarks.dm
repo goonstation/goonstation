@@ -10,3 +10,5 @@
 #define LANDMARK_TWITCHY_BILL_RESPAWN "shitty_bill_respawn"
 #define LANDMARK_PRISONWARP "prisonwarp"
 #define LANDMARK_PRISONSECURITYWARP "prisonsecuritywarp"
+#define LANDMARK_THUNDERDOME_1 "tdome1"
+#define LANDMARK_THUNDERDOME_2 "tdome2"
