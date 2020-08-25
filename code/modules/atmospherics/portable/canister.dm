@@ -262,8 +262,7 @@
 /obj/machinery/portable_atmospherics/canister/eject_tank()
 	..()
 	if(valve_open && !connected_port)
-		message_admins("[key_name(usr)] removed a tank from [src], opening it into the air at [log_loc(src)]. See station logs for atmos readout.")
-		logTheThing("station", usr, null, "removed a tank from [src] [log_atmos(src)], opening it into the air at [log_loc(src)].")
+		toggle_valve() // auto closing valves from the future
 
 /obj/machinery/portable_atmospherics/canister/proc/rupture() // cogwerks- high pressure tank explosions
 	if (src.det)
@@ -498,8 +497,8 @@
 	if (!src.holding && !src.connected_port)
 		logTheThing("station", usr, null, "[valve_open ? "opened [src] into" : "closed [src] from"] the air [log_atmos(src)] at [log_loc(src)].")
 		playsound(src.loc, "sound/effects/valve_creak.ogg", 50, 1)
-		playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
 		if (src.valve_open)
+			playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
 			message_admins("[key_name(usr)] opened [src] into the air at [log_loc(src)]. See station logs for atmos readout.")
 			if (src.det)
 				src.det.leaking()
