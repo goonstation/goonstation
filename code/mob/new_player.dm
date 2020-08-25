@@ -312,7 +312,7 @@ mob/new_player
 				if (istype(starting_loc))
 					starting_loc.add_person_to_queue(character, JOB)
 				else
-					starting_loc = pick_landmark("latejoin", locate(1, 1, 1))
+					starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(1, 1, 1))
 					character.set_loc(starting_loc)
 			else if (map_settings && map_settings.arrivals_type == MAP_SPAWN_MISSILE)
 				var/list/spawns = list()
@@ -336,7 +336,7 @@ mob/new_player
 				battlemode.battle_shuttle_spawn(character.mind)
 			else
 				var/starting_loc = null
-				starting_loc = pick_landmark("latejoin", locate(1, 1, 1))
+				starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(1, 1, 1))
 				character.set_loc(starting_loc)
 
 			if (isliving(character))
