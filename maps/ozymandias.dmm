@@ -70099,22 +70099,12 @@
 	},
 /area/shuttle/arrival/station)
 "uLm" = (
-/obj/table/reinforced/auto,
-/obj/item/shaker/salt,
-/obj/item/shaker/pepper{
-	pixel_x = 3
-	},
-/obj/item/shaker/mustard{
-	pixel_x = -6
-	},
-/obj/item/shaker/ketchup{
-	pixel_x = 6
-	},
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "uLq" = (
