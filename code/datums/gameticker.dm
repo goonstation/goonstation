@@ -507,6 +507,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if(isalive(P) && in_centcom(P)) pets_rescued++
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] Processing end-of-round generic medals")
+	var/list/all_the_baddies = ticker.mode.traitors + ticker.mode.token_players + ticker.mode.Agimmicks + ticker.mode.former_antagonists
 	for(var/mob/living/player in mobs)
 		if (player.client)
 			if (!isdead(player))
@@ -657,23 +658,23 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			//check if escaped
 			//if we are dead - get the location of our corpse
 			var/player_body_escaped = in_centcom(player)
-			var/player_dead = isdead(player) || isVRghost(player) || isghostcritter(player)
+			var/player_loses_held_item = isdead(player) || isVRghost(player) || isghostcritter(player)
 			if (istype(player,/mob/dead/observer))
-				player_dead = 1
+				player_loses_held_item = 1
 				var/mob/dead/observer/O = player
 				if (O.corpse)
 					player_body_escaped = in_centcom(O.corpse)
 				else
 					player_body_escaped = 0
 			else if (istype(player,/mob/dead/target_observer))
-				player_dead = 1
+				player_loses_held_item = 1
 				var/mob/dead/target_observer/O = player
 				if (O.corpse)
 					player_body_escaped = in_centcom(O.corpse)
 				else
 					player_body_escaped = 0
 			else if (isghostdrone(player))
-				player_dead = 1
+				player_loses_held_item = 1
 				player_body_escaped = 0
 
 			//AI doesn't need to escape
@@ -681,25 +682,27 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				player_body_escaped = 1
 				if (isAIeye(player))
 					var/mob/dead/aieye/E = player
-					player_dead = isdead(E.mainframe)
+					player_loses_held_item = isdead(E.mainframe)
 
 			if (!escape_possible)
 				player_body_escaped = 1
 				if (istype(mode, /datum/game_mode/nuclear)) //bleh the nuke thing kills everyone
-					player_dead = 0
+					player_loses_held_item = 0
 
 			if (player_body_escaped)
 				bank_earnings.escaped = 1
 			else
 				earnings = (earnings/4)
 				bank_earnings.escaped = 0
-				player_dead = 1
+				player_loses_held_item = 1
 
 			//handle traitors
-			if (player.mind && ticker.mode.traitors.Find(player.mind))
+			if (player.mind && ticker.mode.traitors.Find(player.mind)) // Roundstart people get the full bonus
 				earnings = job_wage
 				bank_earnings.badguy = 1
-				player_dead = 0
+				player_loses_held_item = 0
+			else if (istype(player.loc, /obj/cryotron) || player.mind && all_the_baddies.Find(player.mind)) // Cryo'd or was a baddie at any point? Keep your shit, but you don't get the extra bux
+				player_loses_held_item = 0
 			//some might not actually have a wage
 			if (isnukeop(player) ||  (isblob(player) && (player.mind && player.mind.special_role == "blob")) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == "wizard")) )
 				bank_earnings.wage_base = 0 //only effects the end of round display
@@ -744,7 +747,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					// Fix for persistent_bank-is-NaN bug
 					if (player.client.persistent_bank != player.client.persistent_bank)
 						player.client.set_persistent_bank(50000)
-					if (player_dead)
+					if (player_loses_held_item)
 						player.client.set_last_purchase(0)
 
 					bank_earnings.pilot_bonus = pilot_bonus

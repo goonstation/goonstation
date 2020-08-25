@@ -550,6 +550,15 @@
 	isPositive = 1
 	category = "trinkets"
 
+/obj/trait/lunchbox
+	name = "Lunchbox (-1) \[Trinkets\]"
+	cleanName = "Lunchbox"
+	desc = "Start your shift with a cute little lunchbox, packed with all your favourite foods!"
+	id = "lunchbox"
+	points = -1
+	isPositive = 1
+	category = "trinkets"
+
 // Skill - Undetermined Border
 
 /obj/trait/smoothtalker
