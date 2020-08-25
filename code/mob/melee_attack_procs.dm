@@ -303,7 +303,7 @@
 		G.assailant = src
 		G.affecting = target
 		target.grabbed_by += G
-		G.loc - grab_item
+		G.loc -= grab_item
 		.= G
 
 	for (var/obj/item/grab/block/G in target.equipped_list(check_for_magtractor = 0)) //being grabbed breaks a block
