@@ -5,7 +5,7 @@
 /////////////////////////////////////////////
 
 proc/ClearBadsmokeRefs(var/atom/A)
-	for (var/datum/effects/system/bad_smoke_spread/BS in bad_smoke_list)
+	for (var/datum/effects/system/bad_smoke_spread/BS in by_type[/datum/effects/system/bad_smoke_spread])
 		if (BS.holder == A)
 			BS.holder = null
 
@@ -20,7 +20,7 @@ proc/ClearBadsmokeRefs(var/atom/A)
 
 	New()
 		..()
-		bad_smoke_list += src
+		START_TRACKING
 
 /datum/effects/system/bad_smoke_spread/proc/set_up(n = 5, c = 0, loca, direct, color)
 	if(n > 20)
@@ -41,7 +41,7 @@ proc/ClearBadsmokeRefs(var/atom/A)
 	holder.temp_flags |= HAS_BAD_SMOKE
 
 /datum/effects/system/bad_smoke_spread/disposing()
-	bad_smoke_list -= src
+	STOP_TRACKING
 	if (holder)
 		holder.temp_flags &= ~HAS_BAD_SMOKE
 	holder = null

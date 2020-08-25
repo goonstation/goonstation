@@ -339,8 +339,6 @@ THROWING DARTS
 		source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
 		boutput(source, "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
 
-var/global/list/tracking_implants = list() // things were looping through world to find these so let's just stop doing that and have this shit add itself to a global list instead maybe
-
 /obj/item/implant/tracking
 	name = "tracking implant"
 	//life_tick_energy = 0.1
@@ -349,19 +347,10 @@ var/global/list/tracking_implants = list() // things were looping through world 
 
 	New()
 		..()
-		SPAWN_DBG(0)
-			if (!islist(tracking_implants))
-				tracking_implants = list()
-			tracking_implants.Add(src)
+		START_TRACKING
 
 	disposing()
-		..()
-		if (islist(tracking_implants))
-			tracking_implants.Remove(src)
-
-	disposing()
-		if (islist(tracking_implants))
-			tracking_implants.Remove(src)
+		STOP_TRACKING
 		..()
 
 /** Deprecated **/

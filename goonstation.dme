@@ -402,7 +402,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\webelements\textarea.dm"
 #include "code\datums\webelements\title.dm"
 #include "code\lists\jobs.dm"
-#include "code\lists\names.dm"
 #include "code\lists\nt.dm"
 #include "code\lists\tips.dm"
 #include "code\mob\dead.dm"

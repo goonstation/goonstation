@@ -84,8 +84,8 @@
 
 	for(var/datum/mind/wizard in src.traitors)
 		var/randomname
-		if (wizard.current.gender == "female") randomname = wiz_female.len ? pick(wiz_female) : "Witch"
-		else randomname = wiz_male.len ? pick(wiz_male) : "Wizard"
+		if (wizard.current.gender == "female") randomname = pick_string_autokey("names/wizard_female.txt")
+		else randomname = pick_string_autokey("names/wizard_male.txt")
 		SPAWN_DBG(0)
 			var/newname = adminscrub(input(wizard.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname) as text)
 
@@ -158,7 +158,7 @@
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
 */
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")

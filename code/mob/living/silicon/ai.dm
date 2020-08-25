@@ -146,12 +146,12 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	return 0
 
 /mob/living/silicon/ai/disposing()
+	STOP_TRACKING
 	..()
-	AIs.Remove(src)
 
 /mob/living/silicon/ai/New(loc, var/empty = 0)
 	..(loc)
-	AIs.Add(src)
+	START_TRACKING
 
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
@@ -1621,7 +1621,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if(alert("Are you sure?",,"Yes","No") == "Yes")
-		for(var/obj/machinery/door/airlock/D in doors)
+		for(var/obj/machinery/door/airlock/D in by_type[/obj/machinery/door])
 			if (D.z == 1 && D.canAIControl() && D.secondsElectrified != 0 )
 				D.secondsElectrified = 0
 				count++
@@ -1643,7 +1643,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 
 	if(alert("Are you sure?",,"Yes","No") == "Yes")
-		for(var/obj/machinery/door/airlock/D in doors)
+		for(var/obj/machinery/door/airlock/D in by_type[/obj/machinery/door])
 			if (D.z == 1 && D.canAIControl() && D.locked && D.arePowerSystemsOn())
 				D.locked = 0
 				D.update_icon()
@@ -2119,7 +2119,7 @@ proc/get_mobs_trackable_by_AI()
 	vox_help(src)
 
 /mob/living/silicon/ai/choose_name(var/retries = 3)
-	var/randomname = pick(ai_names)
+	var/randomname = pick_string_autokey("names/ai.txt")
 	var/newname
 	for (retries, retries > 0, retries--)
 		newname = input(src, "You are an AI. Would you like to change your name to something else?", "Name Change", randomname) as null|text

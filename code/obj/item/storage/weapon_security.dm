@@ -308,7 +308,7 @@
 	New()
 		..()
 		var/gender = prob(50) ? 0 : 1
-		var/name = gender ? pick(first_names_female) : pick(first_names_male)
+		var/name = gender ? pick_string_autokey("names/first_female.txt") : pick_string_autokey("names/first_male.txt")
 
 		src.info = {"<TT>Hey, you.<BR>
 		Look, we got this thing cheap from some Russkie. So let me write this down for you clearly:<BR><B><font color=red size=4>IT. AIN'T. SAFE.</font></B><BR>
@@ -316,7 +316,7 @@
 		[name] tested this fucking gun and it blew [gender ? "her" : "his"] goddamn brains out. I dunno why we're even sending this shit to you.<BR>
 		<B>Don't use it. Fuck.</B><BR>
 		<BR>
-		<I>/[prob(50)? pick(first_names_male):pick(first_names_female)]</I>
+		<I>/[prob(50)? pick_string_autokey("names/first_male.txt"):pick_string_autokey("names/first_female.txt")]</I>
 		"}
 
 /obj/item/storage/box/costume/safari

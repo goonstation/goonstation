@@ -33,31 +33,6 @@
 	desc = "It's gnot what you were expecting..."
 	icon_state = "chompskey"
 
-var/list/rkey_adjectives = list("burning", "searing","alien","old", "ancient","ethereal", "shining", "secret", "hidden", "dull", "prismatic", "crystaline", "eldritch", "strange", "odd", "buzzing", "mysterious", "great", "rusted", "broken", "glowing", "floating", "mystical", "magic")
-var/list/rkey_nouns = list("dragon", "master", "wizard's", "yendor's", "solarium", "automaton's", "bee's", "shitty bill's", "captain's", "jones'", "void", "ghost", "skeleton")
-var/list/rkey_materials = list("bronze","crystal", "metal", "iron", "mauxite", "pharosium", "char", "molitz", "cobryl", "cytine", "uqill", "bohrum", "claretine", "erebite", "cerenkite", "plasmastone", "syreline", "gold", "silver", "copper", "titanium", "unobtanium")
-var/list/rkey_keynames = list("key","passkey", "latchkey", "opener", "rune-key")
-var/list/rkey_ofwhat = list("of unlocking", "of the yellow king", "of magic", "of kings", "of a thousand locks", "of doom", "of evil", "of the forge", "of the sun", "of fire")
-
-var/list/rkey_descfluff = list(\
-"You are not sure what this Key could be used for.",\
-"The key feels slightly warm.",\
-"The key feels cold.",\
-"The key feels strange.",\
-"Its very light.",\
-"It somehow frightens you.",\
-"It almost seems alive.",\
-"There is a small red fish engraved on it.",\
-"There is a small sun engraved on it.",\
-"It has an engraving of a man wearing a strange mask.",\
-"There is a tiny robot symbol on it.",\
-"It menaces with spikes of bread.",\
-"The key feels very smooth.",\
-"It glows faintly.",\
-"There are small red blotches on it. It almost looks like blood.",\
-"You notice light warping around the key.",\
-)
-
 /obj/item/device/key/random
 	name = ""
 	desc = "You are not sure what this key is for."
@@ -77,23 +52,23 @@ var/list/rkey_descfluff = list(\
 
 		switch (pick(prob(100);1, prob(40);2, prob(15);3))
 			if (1) //adjective only
-				part1 = pick(rkey_adjectives)
+				part1 = pick_string("random_key.txt", "adjectives")
 			if (2) //noun only
-				part1 = pick(rkey_nouns)
+				part1 = pick_string("random_key.txt", "nouns")
 			if (3) //adjective and noun
-				part1 = "[pick(rkey_adjectives)] [pick(rkey_nouns)]"
+				part1 = "[pick_string("random_key.txt", "adjectives")] [pick_string("random_key.txt", "nouns")]"
 
 		if (prob(50)) //add material?
-			part2 = "[pick(rkey_materials)] "
+			part2 = "[pick_string("random_key.txt", "materials")] "
 
-		part3 = pick(rkey_keynames) //pick name for key
+		part3 = pick_string("random_key.txt", "keynames") //pick name for key
 
 		if (prob(5)) //add more fluff?
-			part4 = " [pick(rkey_ofwhat)]"
+			part4 = " [pick_string("random_key.txt", "ofwhat")]"
 
 		name = "[part1] [part2][part3][part4]"
 
-		desc = "\A [part1] key. [length(part2) ? "It is made of [part2]. ":""][prob(5) ? pick(rkey_descfluff):""]"
+		desc = "\A [part1] key. [length(part2) ? "It is made of [part2]. ":""][prob(5) ? pick_string("random_key.txt", "descfluff"):""]"
 
 		color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
