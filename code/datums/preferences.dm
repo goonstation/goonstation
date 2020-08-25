@@ -12,6 +12,7 @@ datum/preferences
 	var/age = 30
 	var/pin = null
 	var/blType = "A+"
+	var/species = "Human"
 
 	var/flavor_text // I'm gunna regret this aren't I
 	// These notes are put in the datacore records on the start of the round
@@ -145,6 +146,15 @@ datum/preferences
 			namecheck[i] = capitalize(namecheck[i])
 		real_name = jointext(namecheck, " ")
 */
+	proc/fix_colors(var/hex)
+		var/list/L = hex_to_rgb_list(hex)
+		for (var/i in L)
+			L[i] = min(L[i], 190)
+			L[i] = max(L[i], 50)
+		if (L.len == 3)
+			return rgb(L["r"], L["g"], L["b"])
+		return rgb(22, 210, 22)
+
 	proc/update_preview_icon()
 		//qdel(src.preview_icon)
 		if (!AH)
@@ -152,12 +162,40 @@ datum/preferences
 			return
 
 		src.preview_icon = null
-
-		src.preview_icon = new /icon('icons/mob/human.dmi', "body_[src.gender == MALE ? "m" : "f"]", "dir" = src.spessman_direction)
+		var/datum/mutantrace/pick_species = list_of_species[src.species]
+		if(src.species == "Human")
+			src.preview_icon = new /icon('icons/mob/human.dmi', "body_[src.gender == MALE ? "m" : "f"]", "dir" = src.spessman_direction)
+		else
+			src.preview_icon = new /icon(pick_species.icon, pick_species.icon_state, "dir" = src.spessman_direction)
 
 		// Skin tone
-		if (AH.s_tone)
+		if (AH.s_tone && src.species == "Human")
 			src.preview_icon.Blend(AH.s_tone, ICON_MULTIPLY)
+
+		var/hairicon = 'icons/mob/human_hair.dmi'
+		var/customization_first_r = customization_styles[AH.customization_first]
+		var/customization_second_r = customization_styles[AH.customization_second]
+		var/customization_third_r = customization_styles[AH.customization_third]
+
+		if (!customization_first_r)
+			customization_first_r = "None"
+		if (!customization_second_r)
+			customization_second_r = "None"
+		if (!customization_third_r)
+			customization_third_r = "none"
+
+		if (src.species != "Human")
+			hairicon = pick_species.icon
+			if (pick_species?.override_hair)
+				if (pick_species?.detail_1)
+					customization_first_r = pick_species.detail_1.icon_state
+			if (pick_species?.override_beard)
+				if (pick_species?.detail_2)
+					customization_second_r = pick_species.detail_2.icon_state
+			if (pick_species?.override_detail)
+				if (pick_species?.detail_3)
+					customization_third_r = pick_species.detail_3.icon_state
+			if (pick_species?.override_eyes)
 
 		var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = "eyes", "dir" = src.spessman_direction)
 		if (is_valid_color_string(AH.e_color))
@@ -165,42 +203,46 @@ datum/preferences
 		else
 			eyes_s.Blend("#101010", ICON_MULTIPLY)
 
-		var/customization_first_r = customization_styles[AH.customization_first]
-		if (!customization_first_r)
-			customization_first_r = "None"
-
-		var/customization_second_r = customization_styles[AH.customization_second]
-		if (!customization_second_r)
-			customization_second_r = "None"
-
-		var/customization_third_r = customization_styles[AH.customization_third]
-		if (!customization_third_r)
-			customization_third_r = "none"
-
-		var/icon/hair_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_first_r, "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.customization_first_color))
-			hair_s.Blend(AH.customization_first_color, ICON_MULTIPLY)
+		var/icon/hair_s = new/icon("icon" = hairicon, "icon_state" = customization_first_r, "dir" = src.spessman_direction)
+		var/first_color_string = AH.customization_first_color
+		if (src.species == "Lizard" || src.species == "Cow")
+			first_color_string = fix_colors(AH.customization_first_color)
+		else if (pick_species?.override_skintone)
+			first_color_string = "#FFFFFF"
+		if (is_valid_color_string(first_color_string))
+			hair_s.Blend(first_color_string, ICON_MULTIPLY)
 		else
 			hair_s.Blend("#101010", ICON_MULTIPLY)
 
-		var/icon/facial_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_second_r, "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.customization_second_color))
-			facial_s.Blend(AH.customization_second_color, ICON_MULTIPLY)
+		var/icon/facial_s = new/icon("icon" = hairicon, "icon_state" = customization_second_r, "dir" = src.spessman_direction)
+		var/second_color_string = AH.customization_second_color
+		if (src.species == "Lizard")
+			second_color_string = fix_colors(AH.customization_second_color)
+		else if (pick_species?.override_skintone)
+			second_color_string = "#FFFFFF"
+		if (is_valid_color_string(second_color_string))
+			facial_s.Blend(second_color_string, ICON_MULTIPLY)
 		else
 			facial_s.Blend("#101010", ICON_MULTIPLY)
 
-		var/icon/detail_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_third_r, "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.customization_third_color))
-			detail_s.Blend(AH.customization_third_color, ICON_MULTIPLY)
+		var/icon/detail_s = new/icon("icon" = hairicon, "icon_state" = customization_third_r, "dir" = src.spessman_direction)
+		var/third_color_string = AH.customization_third_color
+		if (src.species == "Lizard")
+			third_color_string = fix_colors(AH.customization_third_color)
+		else if (pick_species?.override_skintone)
+			third_color_string = "#FFFFFF"
+		if (is_valid_color_string(third_color_string))
+			detail_s.Blend(third_color_string, ICON_MULTIPLY)
 		else
 			detail_s.Blend("#101010", ICON_MULTIPLY)
 
 		var/underwear_style = underwear_styles[AH.underwear]
 		var/icon/underwear_s = new/icon("icon" = 'icons/mob/human_underwear.dmi', "icon_state" = "[underwear_style]", "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.u_color))
-			underwear_s.Blend(AH.u_color, ICON_MULTIPLY)
+		if(src.species == "Human")
+			if (is_valid_color_string(AH.u_color))
+				underwear_s.Blend(AH.u_color, ICON_MULTIPLY)
 
-		eyes_s.Blend(underwear_s, ICON_OVERLAY)
+			eyes_s.Blend(underwear_s, ICON_OVERLAY)
 		eyes_s.Blend(hair_s, ICON_OVERLAY)
 		eyes_s.Blend(facial_s, ICON_OVERLAY)
 		eyes_s.Blend(detail_s, ICON_OVERLAY)
@@ -230,11 +272,11 @@ datum/preferences
 		if (!data_cache)
 			data_cache = list("script" = null,"css" = null,"profile_name" = null,"character_name" = null,"gender" = null,"age_blood" = null,\
 								"bank" = null,"flavortext" = null,"security_note" = null,"medical_note" = null,"occupation" = null,"traits" = null,\
-								"fartsound" = null,"screamsound" = null,"chatsound" = null,"skintone" = null,"eyecolor" = null,"hair_top" = null,"hair_mid" = null,"hair_bottom" = null,\
+								"fartsound" = null,"screamsound" = null,"chatsound" = null,"skintone" = null, "species" = 1,"eyecolor" = null,"hair_top" = null,"hair_mid" = null,"hair_bottom" = null,\
 								"underwear" = null,"randomize" = null,"font_size" = null,"messages" = null,"hud" = null,"tooltips" = null, "tgui" = null,"popups" = null,"controls" = null,"map"=null)
 			rebuild_data = list("script" = 1,"css" = 1,"profile_name" = 1,"character_name" = 1,"gender" = 1,"age_blood" = 1,\
 								"bank" = 1,"flavortext" = 1,"security_note" = 1,"medical_note" = 1,"occupation" = 1,"traits" = 1,\
-								"fartsound" = 1,"screamsound" = 1,"chatsound" = 1,"skintone" = 1,"eyecolor" = 1,"hair_top" = 1,"hair_mid" = 1,"hair_bottom" = 1,\
+								"fartsound" = 1,"screamsound" = 1,"chatsound" = 1,"skintone" = 1, "species" = 1,"eyecolor" = 1,"hair_top" = 1,"hair_mid" = 1,"hair_bottom" = 1,\
 								"underwear" = 1,"randomize" = 1,"font_size" = 1,"messages" = 1,"hud" = 1,"tooltips" = 1, "tgui" = 1, "popups" = 1,"controls" = 1,"map"=1)
 		if (!profile_cache)
 			profile_cache = list()
@@ -636,6 +678,18 @@ $(function() {
 			data_cache["eyecolor"] = {"
 	<tr>
 		<th>
+			Species<span class="info-thing" title="Your character's species. Note that robots and the AI might not consider you human if you set this to something other than human!">?</span>
+		</th>
+		<td>
+			[generate_select_table("species", AH.spawn_species, species)]
+		</td>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["species"])
+			rebuild_data["species"] = 0
+			data_cache["species"] = {"
+	<tr>
+		<th>
 			Eye Color<span class="info-thing" title="Your character's eye color. You can use one of the detail slots for heterochromia.">?</span>
 		</th>
 		<td>
@@ -898,6 +952,12 @@ $(function() {
 				rebuild_data["hair_top"] = 1
 				if (AH.customization_third != href_list["style"])
 					AH.customization_third = href_list["style"]
+					changed = 1
+
+			else if (table_id == "species")
+				rebuild_data["species"] = 1
+				if (AH.spawn_species != href_list["style"])
+					AH.spawn_species = href_list["style"]
 					changed = 1
 
 			if (changed)

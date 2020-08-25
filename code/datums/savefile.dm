@@ -50,6 +50,7 @@
 		F["[profileNum]_voicetype"] << AH.voicetype
 		F["[profileNum]_random_blood"] << src.random_blood
 		F["[profileNum]_blood_type"] << src.blType
+		F["[profileNum]_species"] << src.species
 
 		// Records
 		F["[profileNum]_pin"] << src.pin
@@ -203,6 +204,7 @@
 		F["[profileNum]_voicetype"] >> AH.voicetype
 		F["[profileNum]_random_blood"] >> src.random_blood
 		F["[profileNum]_blood_type"] >> src.blType
+		F["[profileNum]_species"] >> src.species
 
 		// Records
 		F["[profileNum]_pin"] >> src.pin
