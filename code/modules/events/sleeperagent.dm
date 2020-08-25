@@ -114,7 +114,7 @@
 
 	proc/awaken_sleeper_agent(var/mob/living/carbon/human/H)
 		var/list/eligible_objectives = list()
-		eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
+		eligible_objectives = typesof(/datum/objective_set/traitor) + typesof(/datum/objective/escape/) - /datum/objective/regular/
 		var/num_objectives = rand(1,3)
 		var/datum/objective/new_objective = null
 		for(var/i = 0, i < num_objectives, i++)
