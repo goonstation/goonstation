@@ -9822,7 +9822,7 @@
 /area/station/crew_quarters/quarters)
 "atm" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -27454,7 +27454,7 @@
 /area/station/crew_quarters/juryroom)
 "bcc" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/juryroom)
@@ -27790,7 +27790,7 @@
 "bcM" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -31251,7 +31251,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
@@ -47866,9 +47866,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless,
 /area)
 "bWG" = (
@@ -52736,9 +52734,7 @@
 /turf/simulated/wall/asteroid,
 /area)
 "chj" = (
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area)
 "chk" = (

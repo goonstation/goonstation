@@ -3695,7 +3695,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /obj/machinery/light_switch/west,
@@ -17332,7 +17332,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor{
@@ -19395,7 +19395,7 @@
 /turf/simulated/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aSw" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/pool/no_animate,
@@ -21076,7 +21076,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
 "aWl" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor/wood{
@@ -38229,7 +38229,7 @@
 	icon_state = "1-8"
 	},
 /obj/disposalpipe/segment,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor/blueblack{
@@ -49731,7 +49731,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /turf/simulated/floor/caution/north{
@@ -53864,7 +53864,7 @@
 "cmM" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/telepad,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /obj/cable{
@@ -56428,7 +56428,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor/plating,
@@ -73243,7 +73243,7 @@
 	},
 /area/station/medical/dome)
 "dda" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
@@ -73839,7 +73839,7 @@
 	},
 /area/station/medical/dome)
 "deF" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/disposalpipe/segment/transport{
@@ -74105,7 +74105,7 @@
 	layer = 10;
 	name = "palm tree"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass{
@@ -74285,7 +74285,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/cdc)
 "dfJ" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass{
@@ -74539,7 +74539,7 @@
 	layer = 10;
 	name = "palm tree"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass{

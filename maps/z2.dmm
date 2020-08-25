@@ -53210,7 +53210,7 @@
 /obj/machinery/computer/shuttle_bus/embedded/south{
 	plane = -94
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "john_bill"
 	},
 /turf/simulated/floor/shuttle{
@@ -61582,7 +61582,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/landmark/viscontents_spawn{
@@ -68969,7 +68969,7 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "dhV" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_syndicate"
 	},
 /obj/cable{

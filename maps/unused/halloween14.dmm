@@ -19344,7 +19344,7 @@
 	icon_state = "on";
 	on = 1
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor/engine/vacuum,
@@ -73806,7 +73806,7 @@
 	},
 /area/syndicate_station)
 "cWn" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_syndicate"
 	},
 /turf/simulated/floor/shuttle{
@@ -79460,9 +79460,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless,
 /area)
 "dip" = (
@@ -80522,9 +80520,7 @@
 /area/salyut)
 "dkE" = (
 /obj/decal/fakeobjects/lightbulb_broken,
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},

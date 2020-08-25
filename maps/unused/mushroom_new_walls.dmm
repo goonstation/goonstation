@@ -1848,7 +1848,7 @@
 	},
 /area/station/hangar/main)
 "afo" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /obj/machinery/light{
@@ -16367,7 +16367,7 @@
 /area/station/crew_quarters/cafeteria)
 "aRC" = (
 /obj/table/reinforced/bar/auto,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor{
@@ -23137,9 +23137,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "bkk" = (
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -24277,7 +24275,7 @@
 	},
 /area/station/security/brig)
 "bnK" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /obj/cable{
@@ -24289,7 +24287,7 @@
 	},
 /area/station/crew_quarters/pool)
 "bnL" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/light,
@@ -24664,7 +24662,7 @@
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "boX" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass,
@@ -24706,7 +24704,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/research)
 "bpd" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /obj/cable{
@@ -24717,7 +24715,7 @@
 	},
 /area/station/engine/inner)
 "bpe" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor/black,
@@ -25949,7 +25947,7 @@
 	},
 /area/station/turret_protected/Zeta)
 "bsF" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor/wood/two,
@@ -25972,13 +25970,13 @@
 	},
 /area/station/mining/magnet)
 "bsH" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
 "bsI" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /obj/cable,
@@ -26083,13 +26081,13 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters)
 "bsS" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor,
 /area/station/hydroponics)
 "bsT" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor/engine,
@@ -27828,7 +27826,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "gWu" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/cable{

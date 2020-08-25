@@ -3170,7 +3170,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/medical/cdc)
 "agO" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/leafy,
@@ -3231,7 +3231,7 @@
 /area/station/medical/cdc)
 "agV" = (
 /obj/window/reinforced/west,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/leafy,
@@ -3447,7 +3447,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/medical/cdc)
 "ahw" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/light{
@@ -4621,7 +4621,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/medical/research)
 "ajV" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/leafy,
@@ -10324,7 +10324,7 @@
 	},
 /area/station/chapel/main)
 "axw" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor{
@@ -14455,7 +14455,7 @@
 /area/station/hallway/primary/east)
 "aHT" = (
 /obj/table/auto,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor/wood/two,
@@ -19302,7 +19302,7 @@
 /area/station/maintenance/south)
 "aTr" = (
 /obj/table/reinforced/auto,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor{
@@ -24602,7 +24602,7 @@
 	c_tag = "Jury Box";
 	dir = 4
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/leafy,
@@ -26919,7 +26919,7 @@
 /turf/simulated/floor,
 /area/station/atmos)
 "bkn" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor,
@@ -27077,7 +27077,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/black,
@@ -31184,7 +31184,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor,
@@ -34794,7 +34794,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/leafy,
@@ -34854,7 +34854,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/science)
 "bBr" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/leafy,
@@ -34905,7 +34905,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/leafy,
@@ -35036,7 +35036,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/chemistry)
 "bBQ" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/leafy,
@@ -35109,7 +35109,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/leafy,

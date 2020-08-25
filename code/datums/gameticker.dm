@@ -232,20 +232,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if (prob(spawnchance))
 				Artifact_Spawn(T)
 
-		var/list/lootspawn = list()
-		for(var/obj/landmark/S in landmarks)//world)
-			if (S.name == "Loot spawn")
-				lootspawn.Add(S.loc)
-			LAGCHECK(LAG_LOW)
-		if(lootspawn.len)
-			var/lootamt = rand(5,15)
-			while(lootamt > 0)
-				LAGCHECK(LAG_LOW)
-				var/lootloc = lootspawn.len ? pick(lootspawn) : null
-				if (lootloc && prob(75))
-					new/obj/storage/crate/loot(lootloc)
-				--lootamt
-
 		shippingmarket.get_market_timeleft()
 
 		logTheThing("ooc", null, null, "<b>Current round begins</b>")

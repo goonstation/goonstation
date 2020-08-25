@@ -2276,7 +2276,7 @@
 "aeF" = (
 /obj/rack,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/market)
@@ -2624,7 +2624,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint)
@@ -3486,7 +3486,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/janitor)
@@ -3530,7 +3530,7 @@
 /area/maintenance/fsmaint)
 "agU" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
@@ -4160,7 +4160,7 @@
 /obj/item/storage/mousetraps,
 /obj/item/storage/mousetraps,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/grime,
 /area/janitor)
@@ -5887,7 +5887,7 @@
 /area/quartermaster/storage)
 "alp" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -8649,7 +8649,7 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -10816,7 +10816,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/maintenance/east)
@@ -46956,9 +46956,7 @@
 /turf/simulated/shuttle/wall,
 /area/derelict/salyut)
 "bPg" = (
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -47091,9 +47089,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -47339,9 +47335,7 @@
 	d2 = 4
 	},
 /obj/decal/fakeobjects/lightbulb_broken,
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -51626,9 +51620,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless,
 /area)
 "bYZ" = (
@@ -52810,9 +52802,7 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/caution/north,
 /area/ab_res{
 	name = "Research Outpost Zeta"
@@ -55878,9 +55868,7 @@
 	name = "S light switch";
 	pixel_y = -24
 	},
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/white,
 /area/ab_res{
 	name = "Research Outpost Zeta"
@@ -64088,9 +64076,7 @@
 /turf/simulated/wall/asteroid,
 /area)
 "cwo" = (
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area)
 "cwp" = (

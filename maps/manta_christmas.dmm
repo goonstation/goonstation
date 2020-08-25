@@ -1744,7 +1744,7 @@
 /obj/stool/chair/wooden{
 	dir = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "shitty_bill"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -1911,7 +1911,7 @@
 /area/diner/kitchen)
 "aez" = (
 /obj/stool/chair/wooden,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "don_glab"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -1960,7 +1960,7 @@
 /area/diner/kitchen)
 "aeH" = (
 /obj/stool/bar,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "father_jack"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -20907,7 +20907,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /turf/simulated/floor,
@@ -23667,7 +23667,7 @@
 	},
 /area/station/medical/research)
 "aXZ" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/cable{
@@ -24058,7 +24058,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/research)
 "aYL" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/cable{
@@ -24362,7 +24362,7 @@
 /turf/simulated/floor/green,
 /area/station/medical/research)
 "aZs" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass{
@@ -24370,7 +24370,7 @@
 	},
 /area/station/medical/research)
 "aZt" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/shrub,

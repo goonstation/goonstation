@@ -122,6 +122,70 @@ var/global/list/job_start_locations = list()
 		src.data = src.spawnchance
 		..()
 
+/obj/landmark/spawner
+	name = "spawner"
+	add_to_landmarks = FALSE
+	deleted_on_start = FALSE
+	var/type_to_spawn = null
+	var/spawnchance = 100
+	var/static/list/name_to_type = list(
+		"shitty_bill" = /mob/living/carbon/human/biker,
+		"john_bill" = /mob/living/carbon/human/john,
+		"big_yank" = /mob/living/carbon/human/big_yank,
+		"father_jack" = /mob/living/carbon/human/fatherjack,
+		"don_glab" = /mob/living/carbon/human/don_glab,
+		"monkeyspawn_normal" = /mob/living/carbon/human/npc/monkey,
+		"monkeyspawn_albert" = /mob/living/carbon/human/npc/monkey/albert,
+		"monkeyspawn_rathen" = /mob/living/carbon/human/npc/monkey/mr_rathen,
+		"monkeyspawn_mrmuggles" = /mob/living/carbon/human/npc/monkey/mr_muggles,
+		"monkeyspawn_mrsmuggles" = /mob/living/carbon/human/npc/monkey/mrs_muggles,
+		"monkeyspawn_syndicate" = /mob/living/carbon/human/npc/monkey/von_braun,
+		"monkeyspawn_horse" = /mob/living/carbon/human/npc/monkey/horse,
+		"monkeyspawn_krimpus" = /mob/living/carbon/human/npc/monkey/krimpus,
+		"monkeyspawn_tanhony" = /mob/living/carbon/human/npc/monkey/tanhony,
+		"monkeyspawn_stirstir" = /mob/living/carbon/human/npc/monkey/stirstir,
+		"seamonkeyspawn" = /mob/living/carbon/human/npc/monkey/sea,
+		"seamonkeyspawn_gang" = /mob/living/carbon/human/npc/monkey/sea/gang,
+		"seamonkeyspawn_gang_gun" = /mob/living/carbon/human/npc/monkey/sea/gang_gun,
+		"seamonkeyspawn_rich" = /mob/living/carbon/human/npc/monkey/sea/rich,
+		"seamonkeyspawn_lab" = /mob/living/carbon/human/npc/monkey/sea/lab,
+		"waiter" = /mob/living/carbon/human/waiter,
+		"monkeyspawn_inside" = /mob/living/carbon/human/npc/monkey
+	)
+
+	New()
+		if(current_state >= GAME_STATE_WORLD_INIT && prob(spawnchance))
+			SPAWN_DBG(6 SECONDS) // bluh, replace with some `initialize` variant later when someone makes it (needs to work with dmm loader)
+				initialize()
+		..()
+
+	initialize()
+		if(prob(spawnchance))
+			spawn_the_thing()
+		..()
+
+	proc/spawn_the_thing()
+		if(isnull(src.type_to_spawn))
+			src.type_to_spawn = name_to_type[src.name]
+		if(isnull(src.type_to_spawn))
+			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
+		new type_to_spawn(src.loc)
+		qdel(src)
+
+/obj/landmark/spawner/inside
+	New()
+		var/obj/storage/S = locate() in src.loc
+		src.set_loc(S)
+		..()
+
+/obj/landmark/spawner/inside/monkey
+	name = "monkeyspawn_inside"
+
+/obj/landmark/spawner/loot
+	name = "Loot spawn"
+	type_to_spawn = /obj/storage/crate/loot
+	spawnchance = 75
+
 // LONG RANGE TELEPORTER
 // consider refactoring to be associative the other way around later
 

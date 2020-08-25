@@ -436,7 +436,7 @@ var/global/debug_messages = 0
 		var/mob/living/carbon/human/H = M
 		var/turf/new_loc
 		if (job_start_locations["AI"])
-			new_loc pick(job_start_locations["AI"])
+			new_loc = pick(job_start_locations["AI"])
 		if (new_loc)
 			boutput(M, "<span class='notice'><B>You have been teleported to your new starting location!</B></span>")
 			M.set_loc(new_loc)
