@@ -3,17 +3,19 @@
  * This needs to be this way, otherwise DM freaks out about .dm inclusions not inside //BEGIN_INCLUDE
  */
 
-#include "__build.dm"
-#include "_metamacros.dm"
+#include "__build.dm" //this controls how a lot of our defines and macros and code is compiled, so it absolutely needs to be the first
+#include "_metamacros.dm" //this has some structural helpers that a lot of other macros/defines use, so it needs to be near the start
+#include "defines\__units.dm" //this has some unit defines that a lot of other macros/defines use, so it needs to go near the start too
 #include "_accessLevels.dm"
 #include "_mapDefines.dm"
 #include "_setup.dm"
 #include "macros\_macros.dm"
 #include "macros\spaceman_dmm.dm"
 #include "defines\_admin.dm"
+#include "defines\_bioeffect.dm"
 #include "defines\_input.dm"
 #include "defines\_jobs.dm"
-#include "defines\_units.dm"
+#include "defines\_shuttle.dm"
 #include "_types.dm"
 #include "atmos.dm"
 #include "color.dm"

@@ -57,7 +57,7 @@ mob/new_player
 			LAGCHECK(LAG_REALTIME)
 
 		if(watch_locations.len>0)
-			loc = pick(watch_locations)
+			src.set_loc(pick(watch_locations))
 
 		if (src.ckey && !adminspawned)
 			if (spawned_in_keys.Find("[src.ckey]"))
@@ -334,7 +334,7 @@ mob/new_player
 					spawns += L
 				var/obj/landmark/latejoin_missile/L = pick(spawns)
 				var/obj/arrival_missile/M = unpool(/obj/arrival_missile)
-				M.loc = L.loc
+				M.set_loc(L.loc)
 				SPAWN_DBG(0) M.lunch(character, L.dir)
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
 				var/datum/game_mode/battle_royale/battlemode = ticker.mode
@@ -385,7 +385,9 @@ mob/new_player
 					logTheThing("debug", character, null, "<b>Late join:</b> added player to ticker.minds.")
 					ticker.minds += character.mind
 				logTheThing("debug", character, null, "<b>Late join:</b> assigned job: [JOB.name]")
-
+				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
+				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
+					participationRecorder.record(character.mind.ckey)
 			SPAWN_DBG (0)
 				qdel(src)
 

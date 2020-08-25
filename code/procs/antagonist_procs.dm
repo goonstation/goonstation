@@ -197,7 +197,7 @@
 		loc = "in your backpack"
 		if (traitor_mob.equip_if_possible(R, traitor_mob.slot_in_backpack) == 0)
 			loc = "on the floor"
-			R.loc = get_turf(traitor_mob)
+			R.set_loc(get_turf(traitor_mob))
 
 	if (istype(R, /obj/item/device/pda2))
 		var/obj/item/device/pda2/P = R

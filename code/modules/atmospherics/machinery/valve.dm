@@ -152,8 +152,6 @@ obj/machinery/atmospherics/valve
 		return null
 
 	disposing()
-		loc = null
-
 		if(node1)
 			node1.disconnect(src)
 			if (network_node1)
@@ -432,8 +430,6 @@ obj/machinery/atmospherics/manifold_valve
 		return null
 
 	disposing()
-		loc = null
-
 		if(node1)
 			node1.disconnect(src)
 			if (network_node1)

@@ -1013,7 +1013,6 @@
 /obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/decal/mule/beacon,
 /obj/item/clothing/gloves/fingerless,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/black,
 /turf/simulated/floor/black,
 /area/station/security/equipment)
@@ -12510,7 +12509,6 @@
 /obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/decal/mule/beacon,
 /obj/item/clothing/gloves/fingerless,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "dnG" = (
@@ -17163,7 +17161,6 @@
 	dir = 1
 	},
 /obj/item/clothing/gloves/fingerless,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "eJu" = (

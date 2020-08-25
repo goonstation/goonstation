@@ -24,6 +24,10 @@
 		atmos_machines.Add(src)
 		..()
 
+	disposing()
+		atmos_machines.Remove(src)
+		..()
+
 	proc/process()
 		if(!src.open) return
 		var/turf/simulated/T = get_turf(src)
@@ -60,6 +64,10 @@
 
 	New()
 		atmos_machines.Add(src)
+		..()
+
+	disposing()
+		atmos_machines.Remove(src)
 		..()
 
 	proc/process()

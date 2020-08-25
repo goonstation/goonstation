@@ -290,7 +290,7 @@
 		tray_obj = new/obj/torpedo_tube_tray(get_step(src, SOUTH))
 		tray_obj.parent = src
 		if(loaded)
-			loaded.loc = tray_obj.loc
+			loaded.set_loc(tray_obj.loc)
 			loaded = null
 		rebuildOverlays()
 		return
@@ -475,7 +475,7 @@
 	proc/add(var/obj/torpedo/T)
 		if(loaded) return
 		if(!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, T)) return
-		T.loc = src
+		T.set_loc(src)
 		src.loaded = T
 		changeIcon()
 		return

@@ -39,8 +39,8 @@
 
 	event_effect()
 		..()
-		var/obj/machinery/junctionbox/J = mantaJunctionbox[rand(1,mantaJunctionbox.len)]
-		if (J.broken == 1)
+		var/obj/machinery/junctionbox/J = pick(by_type[/obj/machinery/junctionbox])
+		if (J.broken)
 			return
 		J.Breakdown()
 #endif

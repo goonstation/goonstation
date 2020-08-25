@@ -11,7 +11,7 @@
 	can_research = 0
 	can_make_injector = 0
 	reclaim_fail = 100
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 
 	//Moved special job stuff (chaplain, medical) over to traits system.
 
@@ -22,7 +22,7 @@
 	id = "arcane_shame"
 	msgGain = "You feel shameful. Also bald."
 	msgLose = "Your shame fades. Now you feel only righteous anger!"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	can_copy = 0
 
@@ -40,7 +40,7 @@
 	name = "Husk"
 	desc = "Subject appears to have been drained of all fluids."
 	id = "husk"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	can_copy = 0
 
@@ -60,7 +60,7 @@
 	name = "Eaten"
 	desc = "Subject appears to have been partially consumed."
 	id = "eaten"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	can_copy = 0
 
@@ -81,7 +81,7 @@
 	name = "Consumed"
 	desc = "Most of their flesh has been chewed off."
 	id = "consumed"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	can_copy = 0
 
 /datum/bioEffect/hidden/zombie
@@ -89,7 +89,7 @@
 	name = "Necrotic Degeneration"
 	desc = "Subject's cellular structure is degenerating due to sub-lethal necrosis."
 	id = "zombie"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	isBad = 1
 	can_copy = 0
 	msgGain = "You begin to rot."
@@ -115,7 +115,7 @@
 	name = "Stunted Genetics"
 	desc = "Genetic abnormalities possibly resulting from incomplete development in a cloning pod."
 	id = "premature_clone"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	isBad = 1
 	can_copy = 0
 	msgGain = "You don't feel quite right."
@@ -160,7 +160,7 @@
 	name = "Poor Hygiene"
 	desc = "This guy needs a shower, stat!"
 	id = "sims_stinky"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	can_copy = 0
 	curable_by_mutadone = 0
@@ -189,7 +189,7 @@
 /datum/bioEffect/hidden/magnetic
 	name = "magnetic charge parent"
 	desc = "This shouldn't be used."
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	can_copy = 0
 	curable_by_mutadone = 0
@@ -237,7 +237,7 @@
 	desc = "This person is charged with a strong negative magnetic field."
 	id = "magnets_neg"
 	msgGain = "You notice odd blue static sparking on your skin."
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 
 	OnAdd()
 		if (ishuman(owner))

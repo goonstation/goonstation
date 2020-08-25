@@ -383,13 +383,10 @@
 			return
 
 	src.add_dialog(user)
-	var/loc = src.loc
-	if (istype(loc, /turf))
-		loc = loc:loc
-	if (!istype(loc, /area))
-		logTheThing("debug", null, null, "Turret badly positioned - loc.loc is [loc].")
+	var/area/area = get_area(src)
+	if (!istype(area))
+		logTheThing("debug", null, null, "Turret badly positioned.")
 		return
-	var/area/area = loc
 	var/t = "<TT><B>Turret Control Panel</B> ([area.name])<HR>"
 
 	if(!src.emagged && turretsExist)
@@ -479,13 +476,10 @@
 		else
 			icon_state = "ai0"
 
-		var/loc = src.loc
-		if (istype(loc, /turf))
-			loc = loc:loc
-		if (!istype(loc, /area))
-			logTheThing("debug", null, null, "Turret badly positioned - loc.loc is [loc].")
+		var/area/area = get_area(src)
+		if (!istype(area))
+			logTheThing("debug", null, null, "Turret badly positioned.")
 			return
-		var/area/area = loc
 		turretsExist = 0
 		for (var/obj/machinery/turret/aTurret in get_area_all_atoms(area))
 			aTurret.setState(enabled, lethal)

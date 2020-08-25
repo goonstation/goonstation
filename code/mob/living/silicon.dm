@@ -415,7 +415,7 @@ td {
 				show_interface(usr.client, D)
 				return
 			D.tools += current
-			current.loc = D
+			current.set_loc(D)
 			current = null
 			boutput(usr, "<span class='notice'>Added item to module!</span>")
 		show_interface(usr.client, D)

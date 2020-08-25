@@ -34,7 +34,6 @@ var/list/observers = list()
 			my_ghost.set_loc(get_turf(src))
 		my_ghost = null
 		target = null
-		src.loc = null
 
 
 		for (var/datum/hud/H in huds)
@@ -59,7 +58,6 @@ var/list/observers = list()
 			my_ghost.set_loc(get_turf(src))
 		my_ghost = null
 		target = null
-		src.loc = null
 
 		..()
 
@@ -118,7 +116,7 @@ var/list/observers = list()
 			return
 		//Let's have a proc so as to make it easier to reassign an observer.
 		src.target = target
-		loc = target
+		src.set_loc(target)
 
 		set_eye(target)
 

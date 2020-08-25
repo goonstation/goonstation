@@ -141,7 +141,7 @@
 				actions.stopId("magpickerhold", master)
 			var/obj/item/O = master.tools[content_id]
 			master.active_tool = O
-			O.loc = master
+			O.set_loc(master)
 			O.pickup(master) // Handle light datums and the like.
 			set_active_tool(1)
 			update_equipment()

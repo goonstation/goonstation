@@ -287,10 +287,10 @@
 
 			while(primaries > 0)
 				primaries--
-				src.reagents.add_reagent(pick(CYBERPUNK_drug_primaries), 6)
+				src.reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_primaries"), 6)
 			while(adulterants > 0)
 				adulterants--
-				src.reagents.add_reagent(pick(CYBERPUNK_drug_adulterants), 3)
+				src.reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_adulterants"), 3)
 
 
 	custom_suicide = 1

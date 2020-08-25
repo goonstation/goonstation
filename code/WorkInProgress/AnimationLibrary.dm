@@ -174,8 +174,6 @@
 		unpooled()
 			..()
 			src.alpha = 255
-			src.pixel_x = 0
-			src.pixel_y = 0
 
 		pooled()
 			..()
@@ -448,64 +446,51 @@ proc/fuckup_attack_particle(var/mob/M)
 		y *= 22
 		animate(M.attack_particle, pixel_x = M.attack_particle.pixel_x + x , pixel_y = M.attack_particle.pixel_y + y, time = 5, easing = BOUNCE_EASING, flags = ANIMATION_END_NOW)
 
-proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim)
+var/global/obj/overlay/simple_light/muzzle_simple_light = new	/obj/overlay/simple_light{appearance_flags = RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART}
+
+var/global/list/default_muzzle_flash_colors = list(
+	"muzzle_flash" = "#FFEE9980",
+	"muzzle_flash_laser" = "#FF333380",
+	"muzzle_flash_elec" = "#FFC80080",
+	"muzzle_flash_bluezap" = "#00FFFF80",
+	"muzzle_flash_plaser" = "#00A9FB80",
+	"muzzle_flash_phaser" = "#F41C2080",
+	"muzzle_flash_launch" = "#FFFFFF50",
+	"muzzle_flash_wavep" = "#B3234E80",
+	"muzzle_flash_waveg" = "#33CC0080",
+	"muzzle_flash_waveb" = "#87BBE380"
+)
+
+proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, var/muzzle_anim, var/muzzle_light_color=null, var/offset=25)
 	if (!M || !origin || !target || !muzzle_anim) return
-
-	var/offset = 22 //amt of pixels the muzzle flash sprite is offset the shooting mob by
 	var/firing_angle = get_angle(origin, target)
-	var/firing_dir = angle_to_dir(firing_angle)
+	muzzle_flash_any(M, firing_angle, muzzle_anim, muzzle_light_color, offset)
 
-	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
-
-	switch(firing_dir) //so we apply the correct offset
-		if (NORTH)
-			muzzleflash.pixel_y = 32
-		if (SOUTH)
-			muzzleflash.pixel_y = -32
-		if (EAST)
-			muzzleflash.pixel_x = offset
-		if (WEST)
-			muzzleflash.pixel_x = -offset
-		if (NORTHEAST) //diags look a little weird but what can you do
-			muzzleflash.pixel_y = offset
-			muzzleflash.pixel_x = offset
-		if (NORTHWEST)
-			muzzleflash.pixel_y = offset
-			muzzleflash.pixel_x = -offset
-		if (SOUTHEAST)
-			muzzleflash.pixel_y = -offset
-			muzzleflash.pixel_x = offset
-		if (SOUTHWEST)
-			muzzleflash.pixel_y = -offset
-			muzzleflash.pixel_x = -offset
-
-
-	muzzleflash.Turn(firing_angle)
-	muzzleflash.layer = MOB_INHAND_LAYER
-	muzzleflash.set_loc(M)
-	M.vis_contents.Add(muzzleflash)
-	if (muzzleflash.icon_state == muzzle_anim)
-		flick(muzzle_anim,muzzleflash)
-	muzzleflash.icon_state = muzzle_anim
-
-	SPAWN_DBG(0.6 SECONDS)
-		M.vis_contents.Remove(muzzleflash)
-		pool(muzzleflash)
-
-proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim)
+proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=25)
 	if (!A || firing_angle == null || !muzzle_anim) return
 
 	var/obj/particle/attack/muzzleflash/muzzleflash = unpool(/obj/particle/attack/muzzleflash)
-	muzzleflash.pixel_y = cos(firing_angle) * 22
-	muzzleflash.pixel_x = sin(firing_angle) * 22
 
-	muzzleflash.Turn(firing_angle)
+	if(isnull(muzzle_light_color))
+		muzzle_light_color = default_muzzle_flash_colors[muzzle_anim]
+	muzzleflash.overlays.Cut()
+	if(muzzle_light_color)
+		muzzle_simple_light.color = muzzle_light_color
+		muzzleflash.overlays += muzzle_simple_light
+
+	var/matrix/mat = new
+	mat.Translate(0, offset)
+	mat.Turn(firing_angle)
+	muzzleflash.transform = mat
 	muzzleflash.layer = A.layer
 	muzzleflash.set_loc(A)
 	A.vis_contents.Add(muzzleflash)
 	if (muzzleflash.icon_state == muzzle_anim)
 		flick(muzzle_anim,muzzleflash)
 	muzzleflash.icon_state = muzzle_anim
+
+	animate(muzzleflash, time=0.4 SECONDS)
+	animate(alpha=0, easing=SINE_EASING, time=0.2 SECONDS)
 
 	SPAWN_DBG(0.6 SECONDS)
 		A.vis_contents.Remove(muzzleflash)

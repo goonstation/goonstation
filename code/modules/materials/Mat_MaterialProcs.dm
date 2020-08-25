@@ -435,7 +435,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
 		if (prob(20))
 			boutput(attacker, "<span class='alert'>[owner] slips right out of your hand!</span>")
-			owner.loc = attacker.loc
+			owner.set_loc(attacker.loc)
 			owner.dropped()
 		return
 
