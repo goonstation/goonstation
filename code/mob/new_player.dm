@@ -55,7 +55,7 @@ mob/new_player
 
 					close_spawn_windows()
 					boutput(src, "<span class='notice'>Now teleporting.</span>")
-					var/ASLoc = pick(observer_start)
+					var/ASLoc = pick_landmark(LANDMARK_OBSERVER)
 					if (ASLoc)
 						observer.set_loc(ASLoc)
 					else
@@ -180,7 +180,7 @@ mob/new_player
 
 				close_spawn_windows()
 				boutput(src, "<span class='notice'>Now teleporting.</span>")
-				var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+				var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 				if (ASLoc)
 					observer.set_loc(ASLoc)
 				else
@@ -822,7 +822,7 @@ a.latejoin-card:hover {
 
 			close_spawn_windows()
 			boutput(src, "<span class='notice'>Now teleporting.</span>")
-			var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (ASLoc)
 				observer.set_loc(ASLoc)
 			observer.apply_looks_of(client)

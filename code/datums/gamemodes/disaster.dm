@@ -40,11 +40,8 @@
 
 
 /datum/game_mode/disaster/post_setup()
-
-//	boutput(world, "disaster loaded :I")
 	for(var/datum/mind/wraith in Agimmicks)
-		var/wraith_spawn = observer_start.len ? pick(observer_start) : locate(150, 150, 1)
-		wraith.current.set_loc(wraith_spawn)
+		wraith.current.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 		generate_wraith_objectives(wraith)
 
 	emergency_shuttle.disabled = 1 //Disable the shuttle temporarily.

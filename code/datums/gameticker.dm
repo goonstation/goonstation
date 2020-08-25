@@ -320,7 +320,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					player.close_spawn_windows()
 					var/mob/wraith/W = player.make_wraith()
 					if (W)
-						W.set_loc(pick(observer_start))
+						W.set_loc(pick_landmark(LANDMARK_OBSERVER))
 						logTheThing("debug", W, null, "<b>Late join</b>: assigned antagonist role: wraith.")
 						antagWeighter.record(role = "wraith", ckey = W.ckey)
 
@@ -328,7 +328,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					player.close_spawn_windows()
 					var/mob/living/intangible/blob_overmind/B = player.make_blob()
 					if (B)
-						B.set_loc(pick(observer_start))
+						B.set_loc(pick_landmark(LANDMARK_OBSERVER))
 						logTheThing("debug", B, null, "<b>Late join</b>: assigned antagonist role: blob.")
 						antagWeighter.record(role = "blob", ckey = B.ckey)
 
@@ -336,7 +336,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					player.close_spawn_windows()
 					var/mob/living/intangible/flock/flockmind/F = player.make_flockmind()
 					if (F)
-						F.set_loc(pick(observer_start))
+						F.set_loc(pick_landmark(LANDMARK_OBSERVER))
 						logTheThing("debug", F, null, "<b>Late join</b>: assigned antagonist role: flockmind.")
 						antagWeighter.record(role = "flockmind", ckey = F.ckey)
 

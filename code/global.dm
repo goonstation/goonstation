@@ -490,7 +490,6 @@ var/global
 	list/battle_royale_spawn = list()
 	list/newplayer_start = list()
 	list/rp_latejoin = list()
-	list/observer_start = list()
 	list/prisonwarp = list()	//prisoners go to these
 	//list/mazewarp = list()
 	list/tdome1 = list()

@@ -60,7 +60,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 	Finish()
 		if (..())
-			bowner.set_loc(pick(observer_start))
+			bowner.set_loc(pick_landmark(LANDMARK_OBSERVER))
 			bowner.bio_points_max_bonus = initial(bowner.bio_points_max_bonus)
 			bowner.started = 0
 			for (var/obj/blob/B in bowner.blobs)
