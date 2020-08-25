@@ -1,5 +1,9 @@
 
 (t)tue aug 25 20
+(u)glassofmilk
+(p)1826
+(e)🆕🎨|feature, sprites
+(*)Added the new Association Component - a MechComp piece that stores key/value pairs
 (u)Tarmunora
 (p)1942
 (e)⚖|balance
