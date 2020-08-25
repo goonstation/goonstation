@@ -226,7 +226,7 @@
 		var/obj/item/grab/block/G = new /obj/item/grab/block(I, src)
 		G.affecting = src
 		src.grabbed_by += G
-		G.set_loc(I)
+		G.loc = I
 
 		I.chokehold = G
 		I.chokehold.post_item_setup()
@@ -303,7 +303,7 @@
 		G.assailant = src
 		G.affecting = target
 		target.grabbed_by += G
-		G.set_loc(grab_item)
+		G.loc = grab_item
 		.= G
 
 	for (var/obj/item/grab/block/G in target.equipped_list(check_for_magtractor = 0)) //being grabbed breaks a block
