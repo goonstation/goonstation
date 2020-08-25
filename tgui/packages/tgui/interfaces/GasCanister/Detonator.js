@@ -134,7 +134,7 @@ const DetonatorUtility = props => {
   const renderArmingStatus = () => {
     if (safetyIsOn) {
       return ("The safety is on, therefore, you cannot prime the bomb.");
-    } else if (!safetyIsOn && !isPrimed) {
+    } else if (!isPrimed) {
       return (
         <Button
           color="danger"

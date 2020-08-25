@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Divider, Box } from '../components';
 import { Window } from '../layouts';
@@ -78,34 +77,42 @@ export const GasCanister = (props, context) => {
           connected={connected}
           pressure={pressure}
           maxPressure={maxPressure}>
-          <Fragment>
-            <Divider />
-            { hasValve ? (
-              <ReleaseValve
-                valveIsOpen={valveIsOpen}
-                releasePressure={releasePressure}
-                minRelease={minRelease}
-                maxRelease={maxRelease}
-                onToggleValve={handleToggleValve}
-                onSetPressure={handleSetPressure} />)
-              : <Box color="average">The release valve is missing.</Box> }
-          </Fragment>
+          <Divider />
+          {
+            hasValve
+              ? (
+                <ReleaseValve
+                  valveIsOpen={valveIsOpen}
+                  releasePressure={releasePressure}
+                  minRelease={minRelease}
+                  maxRelease={maxRelease}
+                  onToggleValve={handleToggleValve}
+                  onSetPressure={handleSetPressure} />
+              )
+              : (
+                <Box
+                  color="average">The release valve is missing.
+                </Box>
+              )
+          }
         </PortableBasicInfo>
         {
           detonator
-            ? (<Detonator
-              detonator={detonator}
-              detonatorAttachments={detonatorAttachments}
-              onToggleAnchor={handleToggleAnchor}
-              onToggleSafety={handleToggleSafety}
-              onWireInteract={handleWireInteract}
-              onPrimeDetonator={handlePrimeDetonator}
-              onTriggerActivate={handleTriggerActivate}
-              onSetTimer={handleSetTimer} />
+            ? (
+              <Detonator
+                detonator={detonator}
+                detonatorAttachments={detonatorAttachments}
+                onToggleAnchor={handleToggleAnchor}
+                onToggleSafety={handleToggleSafety}
+                onWireInteract={handleWireInteract}
+                onPrimeDetonator={handlePrimeDetonator}
+                onTriggerActivate={handleTriggerActivate}
+                onSetTimer={handleSetTimer} />
             )
-            : (<PortableHoldingTank
-              holding={holding}
-              onEjectTank={handleEjectTank} />
+            : (
+              <PortableHoldingTank
+                holding={holding}
+                onEjectTank={handleEjectTank} />
             )
         }
       </Window.Content>

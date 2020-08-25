@@ -43,6 +43,7 @@
 @include meta.load-css('./interfaces/CameraConsole.scss');
 @include meta.load-css('./interfaces/CyborgModuleRewriter.scss');
 @include meta.load-css('./interfaces/GasCanister.scss');
+@include meta.load-css('./interfaces/PortableAtmos.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');
