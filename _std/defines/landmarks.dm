@@ -8,6 +8,7 @@
 #define LANDMARK_BLOBSTART "blobstart"
 #define LANDMARK_KUDZUSTART "kudzustart"
 #define LANDMARK_OBSERVER "Observer-Start"
+#define LANDMARK_HALLOWEED_SPAWN "halloween spawn"
 
 // off-station landmarks
 

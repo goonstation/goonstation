@@ -489,7 +489,6 @@ var/global
 
 	list/prisonwarped = list()	//list of players already warped
 	list/wormholeturfs = list()
-	list/halloweenspawn = list()
 	bioele_accidents = 0
 	bioele_shifts_since_accident = 0
 

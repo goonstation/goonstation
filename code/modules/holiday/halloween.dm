@@ -27,18 +27,6 @@
 //deathbutton to deathbutton.dm
 
 /*
- *	HALLOWEEN LANDMARK
- */
-/obj/landmark/halloween
-	name = "halloween spawn"
-
-	New()
-		..()
-		if(istype(src.loc, /turf))
-			halloweenspawn.Add(src.loc)
-		qdel(src)
-
-/*
  *	DEATH PLAQUE
  */
 
