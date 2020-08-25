@@ -25,7 +25,6 @@
 	var/electrified = 0
 	var/accept_blueprints = 1
 	var/page = 0 // temporary measure, i want a better UI for this =(
-	var/retain_output_internally = -1
 	var/dismantle_stage = 0
 	var/output_cap = 20
 	// 0 is =>, 1 is ==
@@ -237,6 +236,47 @@
 					return
 
 		src.add_dialog(user)
+
+		var/HTML = {"
+		<title>[src.name]</title>
+		<style type='text/css'>
+			table {
+				border-collapse: collapse;
+				}
+			.outline td, .outline tr {
+				border: 1px solid black;
+			}
+
+			img, a img {
+				border: 0;
+				}
+
+			.product {
+				display: block;
+				float: left;
+				width: 20em;
+				padding: 0.25em 0.5em;
+				border-radius: 5px;
+				background: #eee;
+				margin: 0.5em;
+				}
+			.product .time {
+				float: right;
+				}
+			.product .icon {
+				float: left;
+				}
+			.product.disabled {
+				background: #ddd;
+				color: #555;
+			}
+			.mat-missing {
+				color: red;
+			}
+		</style>
+		"}
+
+
 		var/list/dat = list("<B>[src.name]</B>")
 
 		if (src.panelopen || isAI(user))
@@ -274,7 +314,7 @@
 
 		if (status & BROKEN || status & NOPOWER)
 			dat = "The screen is blank."
-			user.Browse(dat, "window=manufact;size=400x500")
+			user.Browse(dat, "window=manufact;size=750x500")
 			onclose(user, "manufact")
 			return
 
@@ -324,97 +364,66 @@
 			if(istext(src.category))
 				dat += " <small>(Filter: \"[html_encode(src.category)]\")</small>"
 
-			dat += "<small>"
-			if (src.category != "Downloaded")
-				for(var/datum/manufacture/A in src.available)
-					var/list/mats_used = get_materials_needed(A)
+			// ------------------------------------------------------------------
+			// - Temporary comment so I can find this later                     -
+			// ------------------------------------------------------------------
 
-					if (istext(src.search) && !findtext(A.name, src.search, 1, null))
-						continue
-					else if (istext(src.category) && src.category != A.category)
-						continue
+			// Get the list of stuff we can print ...
+			var/list/products = src.available + src.download
+			if (src.hacked)
+				products += src.hidden
 
-					if (mats_used.len < A.item_paths.len)
-						dat += "<BR><font color = 'red'><b><u>[A.name]</u></b></font> "		//change this name to red if can't be made
-					else
-						dat += "<BR><A href='?src=\ref[src];disp=\ref[A]'><b><u>[A.name]</u></b></A> "
-
-					if (istext(A.category))
-						dat += "([A.category])"
-					dat += "<br>"
-
-					for (var/i in 1 to A.item_paths.len)
-						if (i != 1) dat += ", "
-						if (mats_used[A.item_paths[i]])
-							dat += "[A.item_amounts[i]] [A.item_names[i]]"
-						else
-							dat += "<font color = 'red'>[A.item_amounts[i]] [A.item_names[i]]</font>"		//change this line to red if missing mats
-
-					if (A.time == 0 || src.speed == 0)
-						dat += "<br><b>Time:</b> ERROR<br>"
-					else
-						dat += "<br><b>Time:</b> [round((A.time / src.speed))] Seconds<br>"
-
-				if (src.hacked)
-					for(var/datum/manufacture/A in src.hidden)
-						var/list/mats_used = get_materials_needed(A)
-
-						if (istext(src.search) && !findtext(A.name, src.search, 1, null))
-							continue
-						else if (istext(src.category) && src.category != A.category)
-							continue
-
-						if (mats_used.len < A.item_paths.len)
-							dat += "<BR><font color = 'red'><b><u>[A.name]</u></b></font> "
-						else
-							dat += "<BR><A href='?src=\ref[src];disp=\ref[A]'><b><u>[A.name]</u></b></A> "
-
-						if (istext(A.category))
-							dat += "([A.category]) "
-						dat += "(Secret)<br>"
-
-						for (var/i in 1 to A.item_paths.len)
-							if (i != 1) dat += ", "
-							if (mats_used[A.item_paths[i]])
-								dat += "[A.item_amounts[i]] [A.item_names[i]]"
-							else
-								dat += "<font color = 'red'>[A.item_amounts[i]] [A.item_names[i]]</font>"		//change this line to red if missing mats
-
-						if (A.time == 0 || src.speed == 0)
-							dat += "<br><b>Time:</b> ERROR<br>"
-						else
-							dat += "<br><b>Time:</b> [round((A.time / src.speed))] Seconds<br>"
-
-			for(var/datum/manufacture/A in src.download)
+			// Then make it
+			var/can_be_made = 0
+			for(var/datum/manufacture/A in products)
 				var/list/mats_used = get_materials_needed(A)
 
 				if (istext(src.search) && !findtext(A.name, src.search, 1, null))
 					continue
-				else if (istext(src.category))
-					if (src.category != "Downloaded" && src.category != A.category)
-						continue
+				else if (istext(src.category) && src.category != A.category)
+					continue
 
-				if (mats_used.len < A.item_paths.len)
-					dat += "<BR><font color = 'red'><b><u>[A.name]</u></b></font> "
-				else
-					dat += "<BR><A href='?src=\ref[src];disp=\ref[A]'><b><u>[A.name]</u></b></A> "
+				// if (A.item_outputs)
+				// 	dat += "\icon[A.item_outputs[1]]"
 
-				if (istext(A.category))
-					dat += "([A.category]) "
-				dat += "(Downloaded)<br>"
+				can_be_made = (mats_used.len >= A.item_paths.len)
+				// if (mats_used.len < A.item_paths.len)
+				// 	dat += "<BR><font color = 'red'><b><u>[A.name]</u></b></font> "		//change this name to red if can't be made
+				// else
+				// 	dat += "<BR><A href='?src=\ref[src];disp=\ref[A]'><b><u>[A.name]</u></b></A> "
+
+				// if (istext(A.category))
+				// 	dat += "([A.category])"
+				// dat += "<br>"
+
+				var/icon_text = ""
+				if (A.item_outputs)
+					var/icon_rsc = getItemIcon(A.item_outputs[1])
+					user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+					icon_text = "<img class='icon' src='[icon_rsc]'>"
+
+				dat += {"
+		<a class='product[can_be_made ? "" : " disabled"]'>
+			<span class='time'>[A.time && src.speed ? round((A.time / src.speed)) : "??"] &#9201;</span>
+			[icon_text]
+			<strong>[A.name]</strong>
+				"}
 
 				for (var/i in 1 to A.item_paths.len)
-					if (i != 1) dat += ", "
-					if (mats_used[A.item_paths[i]])
-						dat += "[A.item_amounts[i]] [A.item_names[i]]"
-					else
-						dat += "<font color = 'red'>[A.item_amounts[i]] [A.item_names[i]]</font>"		//change this line to red if missing mats
+					// if (i != 1) dat += ", "
+					dat += {"
+					<br><span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]] [A.item_names[i]]</span>
+					"}
+					// if (mats_used[A.item_paths[i]])
+					// 	dat += "[A.item_amounts[i]] [A.item_names[i]]"
+					// else
+					// 	dat += "<font color = 'red'>[A.item_amounts[i]] [A.item_names[i]]</font>"		//change this line to red if missing mats
 
-				if (A.time == 0 || src.speed == 0)
-					dat += "<br><b>Time:</b> ERROR<br>"
-				else
-					dat += "<br><b>Time:</b> [round((A.time / src.speed))] Seconds<br>"
-			dat += "</small>"
+				// if (A.time == 0 || src.speed == 0)
+				// 	dat += "<br><b>Time:</b> ERROR<br>"
+				// else
+				// 	dat += "<br><b>Time:</b> [round((A.time / src.speed))] Seconds<br>"
+				dat += {"</a>"}
 
 
 		else if (page == 1)
@@ -444,7 +453,7 @@
 
 		dat += "<hr>"
 
-		user.Browse(dat.Join(), "window=manufact;size=450x500")
+		user.Browse(HTML + dat.Join(), "window=manufact;size=800x500")
 		onclose(user, "manufact")
 
 		interact_particle(user,src)
@@ -551,12 +560,6 @@
 
 			if (href_list["repeat"])
 				src.repeat = !src.repeat
-
-			if (href_list["internalize"])
-				if (src.retain_output_internally < 0)
-					boutput(usr, "<span class='alert'>This unit does not feature that function.</span>")
-				else
-					src.retain_output_internally = !src.retain_output_internally
 
 			if (href_list["search"])
 				src.search = input("Enter text to search for in schematics.","Manufacturing Unit") as null|text
@@ -1518,25 +1521,47 @@
 			src.UpdateOverlays(null, "panel")
 
 	proc/build_material_list()
-		var/list/dat = list("<b>Available Materials & Reagents:</b><small><br>")
+		var/list/dat = list()
+		dat += {"
+<table>
+	<thead>
+		<tr><th colspan='2'>Loaded Materials</th></tr>
+	</thead>
+	<tbody>
+		"}
 		for(var/mat_id in src.resource_amounts)
 			var/datum/material/mat = getMaterial(mat_id)
-			dat += "<A href='?src=\ref[src];eject=[mat_id]'><B>[mat]:</B></A> [src.resource_amounts[mat_id]]<br>"
+			dat += {"
+		<tr>
+			<td><a href='?src=\ref[src];eject=[mat_id]'>[mat]</a></td>
+			<td style='text-align: right;'>[src.resource_amounts[mat_id]]</td>
+		</tr>
+			"}
 		if (dat.len == 1)
-			dat += "No materials currently loaded.<br>"
+			dat += {"
+		<tr>
+			<td colspan='2' style='text-align: center;'>No materials loaded.</td>
+		</tr>
+			"}
 
-		var/reag_list = ""
 		for(var/current_id in src.reagents.reagent_list)
 			var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
-			dat += "[reag_list ? "<br>" : " "][current_reagent.volume] units of <A href='?src=\ref[src];flush=[current_reagent.name]'>[current_reagent.name]</a><br>"
+			dat += {"
+		<tr>
+			<td><a href='?src=\ref[src];flush=[current_reagent.name]'>[current_reagent.name]</a></td>
+			<td style='text-align: right;'>[current_reagent.volume] units</td>
+		</tr>
+			"}
 
-		dat += reag_list
-		dat += "</small>"
+			dat += {"
+	</tbody>
+</table>
+			"}
 
 		return dat.Join()
 
 	proc/build_control_panel()
-		var/list/dat = list("<small>")
+		var/list/dat = list()
 
 		if (src.page == 1)
 			dat += "<br><u><A href='?src=\ref[src];page=0'>Production List</A> | <b>Queue:</b> [src.queue.len]</u>"
@@ -1549,21 +1574,9 @@
 			dat += "<br><b>Current Production:</b> None"
 
 		dat += "<HR>"
-
 		dat += "<b><A href='?src=\ref[src];speed=1'>Speed:</A></b> [src.speed]"
-
-		if (src.repeat == 1)
-			dat += " | <A href='?src=\ref[src];repeat=1'><b>Repeat: On</b></A>"
-		else
-			dat += " | <A href='?src=\ref[src];repeat=1'><b>Repeat: Off</b></A>"
-
+		dat += " | <A href='?src=\ref[src];repeat=1'><b>Repeat: [src.repeat ? "On" : "Off"]</b></A>"
 		dat += "<br>"
-
-		if (src.retain_output_internally >= 0)
-			if (src.retain_output_internally == 1)
-				dat += "<A href='?src=\ref[src];internalize=1'><b>Store outputs internally: Yes</b></A>"
-			else
-				dat += "<A href='?src=\ref[src];internalize=1'><b>Store outputs internally: No</b></A>"
 
 		dat += "<br>"
 
