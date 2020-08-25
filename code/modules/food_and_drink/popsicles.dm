@@ -37,7 +37,7 @@
 			user.put_in_hand_or_drop(P)
 			if(prob(8))
 				P.melt(user)
-			dispose(src)
+			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/popsicle
 	name = "popsicle"
@@ -121,7 +121,7 @@
 		src.reagents.reaction(get_turf(src))
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
-		dispose(src)
+		qdel(src)
 		var/obj/item/stick/S = new
 		user.put_in_hand_or_drop(S)
 		return
