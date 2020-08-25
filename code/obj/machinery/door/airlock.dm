@@ -9,6 +9,8 @@
 #define AIRLOCK_WIRE_ELECTRIFY 9
 #define AIRLOCK_WIRE_SAFETY 10
 
+#define PACKET_SECURITY_COUNTER_MOD 100
+
 /*
 	New methods:
 	pulse - sends a pulse into a wire for hacking purposes
@@ -102,6 +104,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 	var/no_access = 0
 
+	var/packet_security_counter = 0
+
 	autoclose = 1
 	power_usage = 50
 	operation_time = 6
@@ -112,6 +116,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		if(!isrestrictedz(src.z))
 			var/area/station/A = get_area(src)
 			src.name = A.name
+		src.packet_security_counter = rand(0, PACKET_SECURITY_COUNTER_MOD - 1)
 		START_TRACKING
 
 	disposing()
@@ -382,7 +387,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon_base = "sec_glass"
 	req_access = list(access_security)
 
-/obj/machinery/door/airlock/pyro/glass/med 
+/obj/machinery/door/airlock/pyro/glass/med
 	icon_state = "med_glass_closed"
 	icon_base = "med_glass"
 	req_access = null
@@ -458,7 +463,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
 	req_access = null
-	
+
 /obj/machinery/door/airlock/gannets
 	name = "airlock"
 	icon = 'icons/obj/doors/destiny.dmi'
@@ -1697,7 +1702,8 @@ obj/machinery/door/airlock
 			else if (!id_tag || id_tag != signal.data["tag"])
 				return
 
-		if (aiControlDisabled > 0 || cant_emag)
+		var/counter = text2num(signal.data["verif"])
+		if (aiControlDisabled > 0 || cant_emag || counter != src.packet_security_counter)
 			var/datum/signal/rejectsignal = get_free_signal()
 			rejectsignal.source = src
 			rejectsignal.data["address_1"] = signal.data["sender"]
@@ -1760,7 +1766,7 @@ obj/machinery/door/airlock
 			else
 				return
 
-	proc/send_status(userid,target)
+	proc/send_status(userid,target,send_counter=FALSE)
 		if(radio_connection)
 			var/datum/signal/signal = get_free_signal()
 			signal.transmission_method = 1 //radio signal
@@ -1776,6 +1782,8 @@ obj/machinery/door/airlock
 				signal.data["address_1"] = target
 			signal.data["door_status"] = density?("closed"):("open")
 			signal.data["lock_status"] = locked?("locked"):("unlocked")
+			if(send_counter)
+				signal.data["verif"] = src.packet_security_counter
 
 			radio_connection.post_signal(src, signal, radiorange)
 
@@ -1813,8 +1821,9 @@ obj/machinery/door/airlock
 				else if (C.wear_id && C.wear_id:registered)
 					user_name = C.wear_id:registered
 
-			send_status(user_name)
+			send_status(user_name, send_counter=TRUE)
 			src.last_update_time = ticker.round_elapsed_ticks
+		src.packet_security_counter = (src.packet_security_counter + 1) % PACKET_SECURITY_COUNTER_MOD
 
 	close(surpress_send, is_auto = 0)
 		. = ..()
@@ -1970,3 +1979,5 @@ obj/machinery/door/airlock
 						if (src.secondsElectrified<0)
 							src.secondsElectrified = 0
 						sleep(1 SECOND)
+
+#undef PACKET_SECURITY_COUNTER_MOD
