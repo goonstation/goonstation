@@ -592,7 +592,7 @@
 	name = "Protanopia"
 	desc = "Selectively inhibits the L-cones in the subject's eyes, causing red-green colorblindness."
 	id = "protanopia"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "Everything starts looking a lot more yellow."
 	msgLose = "You notice a few extra colors."
