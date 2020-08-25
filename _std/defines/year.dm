@@ -1,0 +1,1 @@
+#define CURRENT_SPACE_YEAR 2053
