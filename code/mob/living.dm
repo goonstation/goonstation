@@ -223,7 +223,7 @@
 		<strong>You may be revived if someone clones you.</strong>
 		<br>Otherwise, you'll have to wait for the next round.
 		<br>
-		<br>There's still plenty to do, even while dead!
+		<br>There's still plenty to do, even while dead! Click the "Become a Ghost" button and you'll be free to select any of the provided below options.
 		<br><strong><a href='byond://winset?command=Afterlife-Bar'>Visit the Afterlife Bar</a> &bull; <a href='byond://winset?command=Enter-VR'>Enter Virtual Reality</a>
 			<br><a href='byond://winset?command=Enter-Ghostdrone-Queue'>Become a Ghost Drone</a> &bull; <a href='byond://winset?command=Respawn-as-Animal'>Become a Critter</a></strong>
 		</div>
