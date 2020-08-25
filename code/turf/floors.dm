@@ -1712,8 +1712,7 @@
 			M.changeStatus("paralysis", 70)
 			SPAWN_DBG(0)
 				playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
-		T.contents += A
-		T.Entered(A)
+		A.set_loc(T)
 		return
 
 /turf/unsimulated/floor/setpieces

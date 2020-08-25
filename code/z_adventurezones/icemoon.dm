@@ -35,8 +35,7 @@ Contents:
 					else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch())
 				random_brute_damage(M, 33)
 				M.changeStatus("stunned", 10 SECONDS)
-			T.contents += A
-			T.Entered(A)
+			A.set_loc(T)
 			return
 		else ..()
 
