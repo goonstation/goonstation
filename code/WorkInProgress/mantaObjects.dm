@@ -1619,6 +1619,10 @@ var/obj/manta_speed_lever/mantaLever = null
 	Entered(atom/A as mob|obj)
 		if (isobserver(A) || isintangible(A))
 			return ..()
+		if(ismovable(A))
+			var/atom/movable/AM = A
+			if(AM.anchored)
+				return ..()
 
 		var/turf/T = pick_landmark(LANDMARK_FALL_POLARIS)
 		if(T)
