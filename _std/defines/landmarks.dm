@@ -10,6 +10,8 @@
 #define LANDMARK_OBSERVER "Observer-Start"
 #define LANDMARK_HALLOWEED_SPAWN "halloween spawn"
 #define LANDMARK_BUBS_BEE_JOB "bubsbeejob"
+#define LANDMARK_MAGNET_CENTER "magnet_center"
+#define MANDMARK_MAGNET_SHIELD "magnet_shield"
 
 // nukies
 

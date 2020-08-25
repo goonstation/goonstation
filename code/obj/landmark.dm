@@ -75,11 +75,11 @@ var/global/list/job_start_locations = list()
 	add_to_landmarks = FALSE
 
 /obj/landmark/magnet_center
-	name = "magnet_center"
+	name = LANDMARK_MAGNET_CENTER
 	icon_state = "x"
 
 /obj/landmark/magnet_shield
-	name = "magnet_shield"
+	name = LANDMARK_MAGNET_SHIELD
 	icon_state = "x"
 
 /obj/landmark/latejoin_missile
