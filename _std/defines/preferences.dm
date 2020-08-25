@@ -1,0 +1,5 @@
+#define NAME_CHAR_MAX 16
+#define NAME_CHAR_MIN 2
+#define FLAVOR_CHAR_LIMIT 256
+
+#define FULLNAME_MAX 50

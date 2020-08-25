@@ -11,3 +11,9 @@
 #define KEY_OPEN      0x0200
 #define KEY_BOLT      0x0400
 #define KEY_SHOCK     0x0800
+
+//input keystates
+#define MODIFIER_NONE   0x0000
+#define MODIFIER_SHIFT  0x0001
+#define MODIFIER_ALT    0x0002
+#define MODIFIER_CTRL   0x0004
