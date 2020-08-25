@@ -2932,6 +2932,148 @@
 		if(. == .)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
+/obj/item/mechanics/association
+	name = "Association Component"
+	desc = ""
+	icon_state = "comp_ass"
+	var/list/map
+	var/mode = 0 // 0=Mutable, 1=Immutable, 2=List
+
+	New()
+		..()
+		map = list()
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "add association(s)", "addItems")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "remove association", "removeItem")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "send value", "sendValue")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set mode", "setMode")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "add association", "addItemManual")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "remove association", "removeItemManual")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "view all associations", "getMapAsString")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "clear all associations", "clear")
+
+	get_desc()
+		. += {"<br><span class='notice'>Mode: [mode == 0 ? "Mutable" : mode == 1 ? "Immutable" : "List"]<br>
+		[getDescAssociations()]</span>"}
+
+	proc/getDescAssociations()
+		var/list/mapLines = new/list()
+		var/endloop = min(10, map.len)
+		for (var/i = 1 to endloop)
+			if (!isnull(map[i]))
+				var/key = map[i]
+				var/val = map[key]
+				mapLines.Add("[key]: [val]")
+		if (map.len > 10)
+			mapLines.Add("Use a multitool to view all associations")
+		return length(mapLines) ? mapLines.Join("<br>") : ""
+
+	proc/getMapAsString(obj/item/W as obj, mob/user as mob)
+		var/list/mapLines = new/list()
+		for (var/key in map)
+			mapLines.Add("[key]: [map[key]]")
+		boutput(user, "[length(mapLines) ? mapLines.Join("<br>") : ""]")
+
+	proc/addItems(var/datum/mechanicsMessage/input)
+		if (level == 2 || !input) return
+		LIGHT_UP_HOUSING
+		var/list/inputList = params2list(input.signal)
+		var/added = 0
+		for (var/inputKey in inputList)
+			if (isnull(inputList[inputKey]) || inputList[inputKey] == "" || (islist(inputList[inputKey]) && inputList[inputKey][1] == "")) continue
+			var/list/inputValue = islist(inputList[inputKey]) ? inputList[inputKey] : list(inputList[inputKey])
+			if (mode == 0) // Mutable
+				if (isnull(map[inputKey])) map.Add(inputKey)
+				map[inputKey] = inputValue[1]
+				added = 1
+			else if (mode == 1) // Immutable
+				if (!isnull(map[inputKey])) continue
+				map.Add(inputKey)
+				map[inputKey] = inputValue[1]
+				added = 1
+			else // List
+				if (isnull(map[inputKey]))
+					map.Add(inputKey)
+					map[inputKey] = inputValue.Join(",")
+				else
+					map[inputKey] = "[map[inputKey]],[inputValue.Join(",")]"
+				added = 1
+
+		if (added)
+			animate_flash_color_fill(src,"#00FF00",2, 2)
+			tooltip_rebuild = 1
+
+	proc/removeItem(var/datum/mechanicsMessage/input)
+		if (level == 2 || !input) return
+		LIGHT_UP_HOUSING
+		if (isnull(map[input.signal])) return
+		map.Remove(input.signal)
+		animate_flash_color_fill(src,"#00FF00",2, 2)
+		tooltip_rebuild = 1
+
+	proc/sendValue(var/datum/mechanicsMessage/input)
+		if (level == 2 || !input) return
+		LIGHT_UP_HOUSING
+		if (isnull(map[input.signal])) return
+		input.signal = map[input.signal]
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
+		animate_flash_color_fill(src,"#00FF00",2, 2)
+
+	proc/setMode(obj/item/W as obj, mob/user as mob)
+		var/input = input(user, "Set mode", "Association Component") in list("Mutable", "Immutable", "List", "*CANCEL*")
+		if (!in_range(src, user) || user.stat) return 0
+		if (!input || input == "*CANCEL*") return 0
+		mode = input == "Mutable" ? 0 : input == "Immutable" ? 1 : 2
+		boutput(user, "Mode set to [input]")
+		tooltip_rebuild = 1
+		return 1
+
+	proc/addItemManual(obj/item/W as obj, mob/user as mob)
+		var/inputKey = input(user, "Add key", "Association Component") as text
+		if (isnull(inputKey)) return 0
+		var/inputValue = input(user, "Add value", "Association Component") as text
+		if (isnull(inputKey)) return 0
+		if (!in_range(src, user) || user.stat) return 0
+		if (mode == 0) // Mutable
+			if (isnull(map[inputKey])) map.Add(inputKey)
+			map[inputKey] = inputValue
+		else if (mode == 1) // Immutable
+			if (!isnull(map[inputKey]))
+				boutput(user, "IMMUTABLE MODE ERROR: An association already exists for that key")
+				return 0
+			map.Add(inputKey)
+			map[inputKey] = inputValue
+		else // List
+			if (isnull(map[inputKey]))
+				map.Add(inputKey)
+				map[inputKey] = inputValue
+			else
+				map[inputKey] = "[map[inputKey]],[inputValue]"
+		boutput(user, "Set value of [inputKey] to [map[inputKey]]")
+		tooltip_rebuild = 1
+		return 1
+
+	proc/removeItemManual(obj/item/W as obj, mob/user as mob)
+		if (!length(map))
+			boutput(user, "<span class='alert'>[src] has no associations - there's nothing to remove!</span>")
+			return 0
+		var/input = input(user, "Remove association", "Association Component") in map + "*CANCEL*"
+		if (!in_range(src, user) || user.stat) return 0
+		if (!input || input == "*CANCEL*") return 0
+		var/removedValue = map[input]
+		map.Remove(input)
+		boutput(user, "Removed key [input] and value [removedValue]")
+		tooltip_rebuild = 1
+		return 1
+
+	proc/clear(obj/item/W as obj, mob/user as mob)
+		map.Cut()
+		boutput(user, "Associations map cleared")
+		return 1
+
+	updateIcon()
+		icon_state = "[under_floor ? "u" : ""]comp_ass"
+		return
+
 /obj/mecharrow
 	name = ""
 	icon = 'icons/misc/mechanicsExpansion.dmi'
