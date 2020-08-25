@@ -7,3 +7,4 @@
 #define LANDMARK_SYNDICATE "Syndicate-Spawn"
 #define LANDMARK_SYNDICATE_BOSS "SR Syndicate-Spawn"
 #define LANDMARK_OBSERVER "Observer-Start"
+#define LANDMARK_TWITCHY_BILL_RESPAWN "shitty_bill_respawn"

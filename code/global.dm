@@ -514,9 +514,6 @@ var/global
 	list/escape_pod_success = list() // escape pods flying to the shuttle
 	list/polarisfall = list() // list of locations for people to fall if they enter the deep in the trench
 
-#ifdef TWITCH_BOT_ALLOWED
-	list/billspawn = list() // shitty bill twitch bot respawn
-#endif
 	list/shittybills = list()
 	list/johnbills = list()
 	list/otherbills = list()

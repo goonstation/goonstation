@@ -419,11 +419,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 							twitch_mob = C.mob
 
 				if (twitch_mob && isdead(twitch_mob))
-					var/mob/living/carbon/human/biker/newbody = 0
-					if (!billspawn.len)
-						newbody = new/mob/living/carbon/human/biker(get_turf(twitch_mob))
-					else
-						newbody = new/mob/living/carbon/human/biker(pick(billspawn))
+					var/mob/living/carbon/human/biker/newbody =  = new(pick_landmark(LANDMARK_TWITCHY_BILL_RESPAWN, get_turf(twitch_mob)))
 
 					if (newbody)
 						twitch_mob.mind.transfer_to(newbody)
