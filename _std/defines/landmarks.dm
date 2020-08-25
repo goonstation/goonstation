@@ -34,6 +34,9 @@
 #define LANDMARK_BATTLE_ROYALE_SPAWN "battle-royale-spawn"
 #define LANDMARK_ESCAPE_POD_SUCCESS "escape_pod_success"
 #define LANDMARK_ASS_ARENA_SPAWN "ass_arena_spawn"
+#define LANDMARK_MALF_GEAR_CLOSET "Malf-Gear-Closet"
+#define LANDMARK_AI_SAT "AI-Sat"
+#define LANDMARK_TELEPORT_SCROLL "Teleport-Scroll"
 
 // VR networks
 

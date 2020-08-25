@@ -35,14 +35,9 @@
 
 /datum/game_mode/waldo/post_setup()
 	var/num_waldos = waldos.len
-	for (var/obj/landmark/A in landmarks)
-		LAGCHECK(LAG_LOW)
-		if (A.name == "Teleport-Scroll")
-			var/scrollcount
-			for (scrollcount = num_waldos, scrollcount > 0, scrollcount--)
-				new /obj/item/teleportation_scroll(A.loc)
-			A.dispose()
-			continue
+	for(var/turf/T in landmarks[LANDMARK_TELEPORT_SCROLL])
+		for(var/scrollcount in 1 to num_waldos)
+			new /obj/item/teleportation_scroll(T)
 	var/k = 1
 	for(var/datum/mind/waldo in waldos)
 		if(!waldo || !istype(waldo))
