@@ -584,7 +584,7 @@ a.latejoin-card:hover {
 
 		src.spawning = 1
 
-		if(!("landmark" in landmarks))
+		if(!(LANDMARK_LATEJOIN in landmarks))
 			// the middle of the map is GeNeRaLlY part of the actual station. moreso than 1,1,1 at least
 			var/midx = round(world.maxx / 2)
 			var/midy = round(world.maxy / 2)
