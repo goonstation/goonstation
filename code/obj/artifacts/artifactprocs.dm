@@ -163,6 +163,8 @@
 	if (!src.ArtifactSanityCheck())
 		return 1
 	var/datum/artifact/A = src.artifact
+	if(A.internal_name)
+		src.name = A.internal_name
 	if (A.activated)
 		return 1
 	if (A.triggers.len < 1 && !A.automatic_activation)
@@ -338,7 +340,7 @@
 	var/datum/artifact/A = src.artifact
 
 	// Possible stimuli = force, elec, radiate, heat
-	switch(A.artitype)
+	switch(A.artitype.name)
 		if("martian") // biotech, so anything that'd probably kill a living thing works on them too
 			if(stimtype == "force")
 				if (strength >= 30)
@@ -450,7 +452,7 @@
 
 	var/turf/T = get_turf(src)
 	if (istype(T,/turf/))
-		switch(A.artitype)
+		switch(A.artitype.name)
 			if("ancient")
 				T.visible_message("<span class='alert'><B>[src] sparks and sputters violently before falling apart!</B></span>")
 			if("martian")
@@ -480,7 +482,7 @@
 		return
 	var/datum/artifact/A = src.artifact
 
-	if (A.artitype == "eldritch")
+	if (A.artitype.name == "eldritch")
 		faultprob *= 2 // eldritch artifacts fucking hate you and are twice as likely to go faulty
 	faultprob = max(0,min(faultprob,100))
 
