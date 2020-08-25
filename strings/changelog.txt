@@ -1,6 +1,10 @@
 
 (t)tue aug 25 20
 (u)Superlagg
+(p)1900
+(e)🆕|feature
+(+)You now keep your held item if you were an antag at any point in the round, or you finish the round in the cryotron.
+(u)Superlagg
 (p)1831
 (e)⚖🆕|balance, feature
 (*)Werewolves now talk and see like a dog.
