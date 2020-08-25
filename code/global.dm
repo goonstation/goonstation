@@ -493,8 +493,6 @@ var/global
 	list/prisonwarped = list()	//list of players already warped
 	list/wormholeturfs = list()
 	list/halloweenspawn = list()
-	list/telesci = list() // special turfs from map landmarks to always allow telescience to access
-						  // telesci landmarks add a 3z3 area centered on themselves to this list
 	list/icefall = list() // list of locations for people to fall if they enter the deep abyss on the ice moon
 	list/iceelefall = list() // list of locations for people to fall if they enter the ice moon elevator shaft
 	list/deepfall = list() // list of locations for people to fall into the precursor pit area

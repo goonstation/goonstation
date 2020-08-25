@@ -12,3 +12,4 @@
 #define LANDMARK_PRISONSECURITYWARP "prisonsecuritywarp"
 #define LANDMARK_THUNDERDOME_1 "tdome1"
 #define LANDMARK_THUNDERDOME_2 "tdome2"
+#define LANDMARK_TELESCI "telesci"
