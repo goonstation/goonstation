@@ -74535,6 +74535,7 @@
 	name = "autoname - SS13";
 	pixel_y = 20
 	},
+/obj/item/cloneModule/genepowermodule,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
