@@ -497,13 +497,12 @@
 			//1 am to 9 am cst is a little offset from the Real Bubs Jobtime
 			//of course, this is tied to the server's local time so G4 will be different
 			if (. >= 1 && . < 9)
-				var/obj/landmark/bubs_bee_job = locate("landmark*bubsbeejob")
-				if (istype(bubs_bee_job))
+				var/turf/T = pick_landmark(LANDMARK_BUBS_BEE_JOB)
+				if (istype(T))
 					src.hat = new /obj/item/clothing/head/flatcap (src)
 					src.hat_that_bee(src.hat)
 					src.update_icon()
-
-					src.set_loc(get_turf(bubs_bee_job))
+					src.set_loc(T)
 
 			return 1
 

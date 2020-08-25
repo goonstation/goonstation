@@ -167,9 +167,6 @@
 	return 1
 
 /datum/game_mode/nuclear/post_setup()
-	var/obj/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
-	var/obj/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
-
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
 	var/leader_selected = 0
 
@@ -213,32 +210,16 @@
 		synd_mind.current.antagonist_overlay_refresh(1, 0)
 		SHOW_NUKEOP_TIPS(synd_mind.current)
 
-	if(nuke_spawn)
-		the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
+	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
+	new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
 
-	if(closet_spawn)
-		new /obj/storage/closet/syndicate/nuclear(closet_spawn.loc)
-
-	for (var/obj/landmark/A in landmarks)//world)
-		LAGCHECK(LAG_LOW)
-		if (A.name == "Syndicate-Gear-Closet")
-			new /obj/storage/closet/syndicate/personal(A.loc)
-			A.dispose()
-			continue
-
-		if (A.name == "Syndicate-Bomb")
-			new /obj/spawner/newbomb/timer/syndicate(A.loc)
-			A.dispose()
-			continue
-
-		if (A.name == "Breaching-Charges")
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			A.dispose()
-			continue
+	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_GEAR_CLOSET])
+		new /obj/storage/closet/syndicate/personal(T)
+	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BOMB])
+	new /obj/spawner/newbomb/timer/syndicate(pick_landmark(LANDMARK_SYNDICATE_BOMB))
+	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BREACHING_CHARGES])
+		for(var/i = 1 to 5)
+			new /obj/item/breaching_charge/thermite(T)
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()

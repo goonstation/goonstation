@@ -9,12 +9,21 @@
 #define LANDMARK_KUDZUSTART "kudzustart"
 #define LANDMARK_OBSERVER "Observer-Start"
 #define LANDMARK_HALLOWEED_SPAWN "halloween spawn"
+#define LANDMARK_BUBS_BEE_JOB "bubsbeejob"
 
-// off-station landmarks
+// off-station
+
+#define LANDMARK_VR_BOMB "bombtest-bomb" //Landmark where the ~vr bomb~ spawns.
+
+// nukies
 
 #define LANDMARK_SYNDICATE "Syndicate-Spawn"
 #define LANDMARK_SYNDICATE_BOSS "SR Syndicate-Spawn"
-#define LANDMARK_TELESCI "telesci" // allowed turfs for telesci
+#define LANDMARK_NUCLEAR_BOMB "Nuclear-Bomb"
+#define LANDMARK_NUCLEAR_CLOSET "Nuclear-Closet"
+#define LANDMARK_SYNDICATE_GEAR_CLOSET "Syndicate-Gear-Closet"
+#define LANDMARK_SYNDICATE_BOMB "Syndicate-Bomb"
+#define LANDMARK_SYNDICATE_BREACHING_CHARGES "Breaching-Charges"
 
 // misc and unused
 
@@ -41,4 +50,5 @@
 
 // misc adventure zone stuff
 
+#define LANDMARK_TELESCI "telesci" // allowed turfs for telesci
 #define LANDMARK_SAMOSTREL_WARP "samostrel"
