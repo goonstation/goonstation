@@ -7741,6 +7741,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/landmark/halloween,
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
 	},
@@ -8345,6 +8346,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "ath" = (
+/obj/landmark/halloween,
 /turf/simulated/floor/escape/corner{
 	dir = 8
 	},
@@ -9837,12 +9839,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "awK" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	name = "Teleporter"
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Teleporter";
+	req_access = null
 	},
 /obj/access_spawn/teleporter,
 /obj/firedoor_spawn,
@@ -9879,7 +9882,8 @@
 "awP" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
-	name = "Teleporter"
+	name = "Teleporter";
+	req_access = null
 	},
 /obj/access_spawn/teleporter,
 /obj/firedoor_spawn,
@@ -17709,6 +17713,7 @@
 /obj/item/pen,
 /obj/item/clipboard,
 /obj/item/hand_labeler,
+/obj/item/cloneModule/genepowermodule,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -21721,6 +21726,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/landmark/halloween,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aWY" = (
@@ -21758,6 +21764,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/landmark/halloween,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aXd" = (
@@ -29964,13 +29971,13 @@
 /area/station/medical/medbay/lobby)
 "bqk" = (
 /obj/table/auto,
-/obj/random_item_spawner/medicine,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/item/robodefibrillator,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "bql" = (
@@ -35338,6 +35345,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/landmark/halloween,
 /turf/simulated/floor/escape/corner{
 	dir = 1
 	},
@@ -36089,6 +36097,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/landmark/halloween,
 /turf/simulated/floor/escape{
 	dir = 8
 	},
@@ -39157,11 +39166,7 @@
 /area/station/quartermaster/office)
 "bKR" = (
 /obj/machinery/light_switch/east,
-/obj/storage/secure/closet/engineering{
-	name = "\improper Quartermaster's locker";
-	req_access = null;
-	req_access_txt = "31"
-	},
+/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -39700,11 +39705,7 @@
 	pixel_x = 26;
 	pixel_y = 1
 	},
-/obj/storage/secure/closet/engineering{
-	name = "\improper Quartermaster's locker";
-	req_access = null;
-	req_access_txt = "31"
-	},
+/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -48323,6 +48324,7 @@
 	},
 /area/station/crew_quarters/market)
 "ceb" = (
+/obj/landmark/halloween,
 /turf/simulated/floor{
 	icon_state = "L4"
 	},
@@ -48360,6 +48362,7 @@
 	},
 /area/station/crew_quarters/market)
 "ceh" = (
+/obj/landmark/halloween,
 /turf/simulated/floor{
 	icon_state = "L16"
 	},
@@ -54112,6 +54115,16 @@
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
+"cIc" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/landmark/halloween,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "cIl" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4
@@ -54196,6 +54209,10 @@
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"dii" = (
+/obj/landmark/halloween,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "diS" = (
 /obj/machinery/light{
 	dir = 1;
@@ -54349,6 +54366,7 @@
 /obj/item/furniture_parts/wheelchair,
 /obj/item/furniture_parts/surgery_tray,
 /obj/item/furniture_parts/IVstand,
+/obj/item/robodefibrillator,
 /turf/simulated/floor/white/grime,
 /area/station/hangar{
 	name = "Medical Hangar"
@@ -54572,6 +54590,13 @@
 /obj/item/staple_gun,
 /turf/simulated/floor/caution/east,
 /area/station/medical/robotics)
+"fkO" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/halloween,
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "fld" = (
 /obj/decal/cleanable/dirt,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -54662,6 +54687,13 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"fGA" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/landmark/halloween,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "fIF" = (
 /obj/submachine/cargopad{
 	name = "Utility Room Pad"
@@ -54733,6 +54765,11 @@
 	dir = 4
 	},
 /area/station/maintenance/SEmaint)
+"gbf" = (
+/obj/disposalpipe/segment/mail/vertical,
+/obj/landmark/halloween,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "gda" = (
 /obj/machinery/air_vendor,
 /turf/simulated/floor/blue/side{
@@ -55022,6 +55059,10 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/west)
+"hVr" = (
+/obj/landmark/halloween,
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "ica" = (
 /obj/grille/steel,
 /turf/space,
@@ -55964,6 +56005,11 @@
 /obj/critter/cat/jones,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/bridge)
+"nDM" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/landmark/halloween,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "nGr" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -56098,6 +56144,11 @@
 	dir = 8
 	},
 /area/station/testchamber)
+"owG" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/landmark/halloween,
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
 "oyG" = (
 /obj/item/clothing/glasses/blindfold,
 /turf/simulated/floor/engine/vacuum,
@@ -56203,6 +56254,15 @@
 /obj/disposalpipe/trunk/east,
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/west)
+"pfK" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/landmark/halloween,
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "pfT" = (
 /obj/machinery/vehicle/escape_pod{
 	dir = 4
@@ -56273,6 +56333,16 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
+"prI" = (
+/obj/disposalpipe/segment/morgue,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/landmark/halloween,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "pso" = (
 /obj/disposalpipe/segment/transport,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -56439,6 +56509,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"qKY" = (
+/obj/landmark/halloween,
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "qYI" = (
 /obj/machinery/door/airlock/pyro/medical{
 	name = "Robotics";
@@ -56834,6 +56908,10 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
+"sLF" = (
+/obj/landmark/halloween,
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
 "sMt" = (
 /obj/landmark{
 	name = "monkeyspawn_mrsmuggles"
@@ -57136,6 +57214,15 @@
 	},
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/west)
+"uQF" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/halloween,
+/turf/simulated/floor/engine{
+	icon_state = "engine_caution_we"
+	},
+/area/station/hallway/primary/west)
 "uSz" = (
 /obj/disposalpipe/segment/brig{
 	dir = 2;
@@ -57358,6 +57445,11 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/exit)
+"whk" = (
+/obj/disposalpipe/segment/vertical,
+/obj/landmark/halloween,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "wio" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -57518,6 +57610,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"xmF" = (
+/obj/disposalpipe/segment/vertical,
+/obj/landmark/halloween,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "xnq" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport,
@@ -95609,7 +95706,7 @@ bGm
 bFj
 cam
 bHu
-bJa
+owG
 bKw
 bLM
 bMN
@@ -97429,7 +97526,7 @@ bHz
 bHz
 bHz
 bHz
-bHz
+sLF
 bHz
 bHz
 bHz
@@ -97681,7 +97778,7 @@ aHo
 aKp
 aLD
 aMC
-aMC
+xmF
 aMC
 aPz
 aMC
@@ -97691,6 +97788,7 @@ awR
 awR
 awR
 awR
+dii
 awR
 awR
 awR
@@ -97699,8 +97797,7 @@ awR
 awR
 awR
 awR
-awR
-awR
+dii
 awR
 bjX
 bld
@@ -98011,7 +98108,7 @@ bnS
 bph
 bph
 brF
-bta
+prI
 bta
 bta
 bta
@@ -98267,7 +98364,7 @@ aqD
 arB
 asH
 atU
-auI
+gbf
 auI
 auI
 auI
@@ -98276,7 +98373,7 @@ auI
 auI
 aBO
 auI
-auI
+gbf
 aFa
 aGh
 aHq
@@ -101285,7 +101382,7 @@ aov
 apB
 ack
 arJ
-asM
+cIc
 atX
 auL
 avL
@@ -103155,7 +103252,7 @@ bzh
 bBj
 bCm
 bCq
-bDA
+fGA
 bFw
 bGv
 bHQ
@@ -103994,7 +104091,7 @@ aei
 agF
 ahE
 aiB
-ahE
+uQF
 ahE
 ahE
 ahE
@@ -107080,7 +107177,7 @@ buH
 bAq
 bBo
 bCv
-bDA
+fGA
 bEw
 bFH
 bGz
@@ -108533,7 +108630,7 @@ akJ
 apP
 aqO
 asd
-atd
+pfK
 aum
 auV
 awc
@@ -110949,7 +111046,7 @@ aoK
 apV
 adK
 asa
-atd
+pfK
 aum
 aLL
 awj
@@ -111610,7 +111707,7 @@ bqM
 bpC
 boq
 bCz
-bDA
+fGA
 bEB
 bFO
 bGN
@@ -113978,7 +114075,7 @@ asa
 asa
 asa
 asa
-asa
+qKY
 asa
 asa
 asa
@@ -114589,7 +114686,7 @@ aCF
 aCF
 aCF
 aIH
-aJE
+fkO
 aKP
 aLS
 aNc
@@ -114899,7 +114996,7 @@ aNY
 aNY
 aPO
 aNY
-aNY
+hVr
 aNY
 aTO
 aNY
@@ -114909,7 +115006,7 @@ aXU
 aYN
 aZW
 bbe
-bcl
+nDM
 bdu
 bbe
 bbe
@@ -114919,7 +115016,7 @@ bjd
 bbe
 bbe
 bnc
-bou
+whk
 bou
 bqT
 bsi
@@ -115810,7 +115907,7 @@ aTe
 aKQ
 aKQ
 aVG
-aNY
+hVr
 aXX
 aYQ
 dvx
@@ -123966,7 +124063,7 @@ aUM
 aVU
 aWZ
 aYg
-aNY
+hVr
 bau
 aNY
 bcE
