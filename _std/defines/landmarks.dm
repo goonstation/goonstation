@@ -9,7 +9,7 @@
 #define LANDMARK_BLOBSTART "blobstart"
 #define LANDMARK_KUDZUSTART "kudzustart"
 #define LANDMARK_OBSERVER "Observer-Start"
-#define LANDMARK_HALLOWEED_SPAWN "halloween spawn"
+#define LANDMARK_HALLOWEEN_SPAWN "halloween spawn"
 #define LANDMARK_BUBS_BEE_JOB "bubsbeejob"
 #define LANDMARK_MAGNET_CENTER "magnet_center"
 #define LANDMARK_MAGNET_SHIELD "magnet_shield"

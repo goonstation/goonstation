@@ -49,7 +49,7 @@
 	if(derelict_mode)
 		SPAWN_DBG(1 SECOND)
 			var/list/CORPSES = landmarks[LANDMARK_PESTSTART]
-			var/list/JUNK = landmarks[LANDMARK_HALLOWEED_SPAWN]
+			var/list/JUNK = landmarks[LANDMARK_HALLOWEEN_SPAWN]
 			for(var/turf/T in CORPSES)
 				var/obj/decal/skeleton/S = new/obj/decal/skeleton(T)
 				S.name = "corpse"

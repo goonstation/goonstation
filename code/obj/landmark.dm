@@ -69,7 +69,7 @@ var/global/list/job_start_locations = list()
 	name = LANDMARK_TUTORIAL_START
 
 /obj/landmark/halloween
-	name = LANDMARK_HALLOWEED_SPAWN
+	name = LANDMARK_HALLOWEEN_SPAWN
 
 /obj/landmark/asteroid_spawn_blocker //Blocks the creation of an asteroid on this tile, as you would expect
 	name = "asteroid blocker"
