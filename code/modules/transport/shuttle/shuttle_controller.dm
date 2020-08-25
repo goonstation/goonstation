@@ -257,9 +257,9 @@ datum/shuttle_controller
 							particle_spawn.start_particles()
 
 						var/shuttle_dir = map_settings ? map_settings.escape_dir : EAST // default to cog2 direction because EH
-						for (var/obj/landmark/L in escape_pod_success)
-							if (L.dir != shuttle_dir)
-								escape_pod_success -= L //leave behind only landmarks that match our dir
+						for (var/turf/T in landmarks[LANDMARK_ESCAPE_POD_SUCCESS])
+							if (landmarks[LANDMARK_ESCAPE_POD_SUCCESS][T] != shuttle_dir)
+								landmarks[LANDMARK_ESCAPE_POD_SUCCESS] -= T //leave behind only landmarks that match our dir
 
 						DEBUG_MESSAGE("Now moving shuttle!")
 						start_location.move_contents_to(end_location, map_turf)

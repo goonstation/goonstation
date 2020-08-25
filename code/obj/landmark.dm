@@ -14,6 +14,7 @@ proc/pick_landmark(name, default=null)
 	invisibility = 101
 	var/deleted_on_start = TRUE
 	var/add_to_landmarks = TRUE
+	var/data = null // data to associatively save with the landmark
 
 	ex_act()
 		return
@@ -24,7 +25,7 @@ proc/pick_landmark(name, default=null)
 			landmarks = list()
 		if(!landmarks[src.name])
 			landmarks[src.name] = list()
-		landmarks[src.name] += src.loc
+		landmarks[src.name][src.loc] = src.data
 	if(src.deleted_on_start)
 		qdel(src)
 	else
@@ -55,6 +56,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/escape_pod_succ
 	name = "escape_pod_success"
 	icon_state = "xp"
+	New()
+		src.data = src.dir // save dir
+		..()
 
 /obj/landmark/tutorial_start
 	name = "tutorial_start_marker"
@@ -63,6 +67,7 @@ var/global/list/job_start_locations = list()
 	name = "asteroid blocker"
 	icon_state = "x4"
 	deleted_on_start = FALSE
+	add_to_landmarks = FALSE
 
 /obj/landmark/magnet_center
 	name = "magnet_center"

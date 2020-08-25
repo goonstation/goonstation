@@ -23,6 +23,7 @@
 #define LANDMARK_THUNDERDOME_1 "tdome1"
 #define LANDMARK_THUNDERDOME_2 "tdome2"
 #define LANDMARK_BATTLE_ROYALE_SPAWN "battle-royale-spawn"
+#define LANDMARK_ESCAPE_POD_SUCCESS "escape_pod_success"
 
 // falling down holes
 

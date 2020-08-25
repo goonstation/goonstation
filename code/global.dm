@@ -493,7 +493,6 @@ var/global
 	list/halloweenspawn = list()
 	bioele_accidents = 0
 	bioele_shifts_since_accident = 0
-	list/escape_pod_success = list() // escape pods flying to the shuttle
 
 	list/shittybills = list()
 	list/johnbills = list()
