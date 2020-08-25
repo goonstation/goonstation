@@ -114,8 +114,6 @@ var/global/list/job_start_locations = list()
 		T.interesting = src.interesting
 		..()
 
-// Artifact Infrastructure Procs
-
 /obj/landmark/artifact
 	name = LANDMARK_ARTIFACT_SPAWN
 	icon_state = "x3"

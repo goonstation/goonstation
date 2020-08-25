@@ -4606,7 +4606,7 @@
 /obj/disposalpipe/junction{
 	icon_state = "pipe-j2"
 	},
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/quartersB)
 "akk" = (
@@ -57102,7 +57102,7 @@
 /obj/item/clothing/mask/balaclava,
 /obj/item/storage/pill_bottle/cyberpunk,
 /obj/storage/crate,
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
 /turf/simulated/floor/plating/scorched,
 /area/station/storage/warehouse)
 "ctL" = (
@@ -75359,11 +75359,11 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area)
 "dhW" = (
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
 /turf/simulated/floor/plating/airless/asteroid,
 /area)
 "dhX" = (
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/simulated/floor/plating/airless/asteroid,
 /area)
 "dhY" = (

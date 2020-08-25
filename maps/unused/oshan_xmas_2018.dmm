@@ -10791,7 +10791,7 @@
 	pixel_y = 5
 	},
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -14756,7 +14756,7 @@
 "aFP" = (
 /obj/storage/secure/closet/research/chemical,
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/decal/garland{
 	dir = 6;
@@ -20744,7 +20744,7 @@
 /area/station/engine/inner)
 "aTm" = (
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
@@ -20756,7 +20756,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /turf/simulated/floor/yellow/checker{
 	icon_state = "yellowchecker";
@@ -21947,8 +21947,8 @@
 /obj/item/fish/salmon,
 /obj/item/fish/salmon,
 /obj/item/fish/salmon,
-/obj/landmark/artifact/cannabis_seed,
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
+/obj/item/seed/cannabis,
 /turf/simulated/martian/floor,
 /area)
 "aWJ" = (
@@ -32004,7 +32004,7 @@
 "bup" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -32017,7 +32017,7 @@
 "buq" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/security{
-	
+
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -32030,7 +32030,7 @@
 "bur" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/machinery/light/incandescent/warm,
 /obj/decal/xmas_lights{
@@ -32044,7 +32044,7 @@
 "bus" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -39740,7 +39740,7 @@
 /turf/simulated/floor/bot,
 /area/station/security/checkpoint/sec_foyer)
 "bMk" = (
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/simulated/floor/grass,
 /area)
 "bMl" = (
@@ -40477,7 +40477,7 @@
 	icon_state = "shrub";
 	dir = 10
 	},
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /obj/item/seed/cannabis,
 /obj/item/seed/cannabis,
 /turf/simulated/floor/black,
@@ -44304,7 +44304,7 @@
 /area/station/security/brig)
 "bXr" = (
 /obj/item/device/radio/intercom/security{
-	
+
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
@@ -45568,7 +45568,7 @@
 	icon_state = "gangtag22";
 	pixel_x = 28
 	},
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
 /obj/machinery/light/incandescent/small{
 	icon_state = "bulb1";
 	dir = 4

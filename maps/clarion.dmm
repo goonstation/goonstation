@@ -1006,7 +1006,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/maintenance/NEmaint)
 "acy" = (
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
 /obj/table/wood/auto,
 /obj/item/decoration/ashtray{
 	butts = 5;

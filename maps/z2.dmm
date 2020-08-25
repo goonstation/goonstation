@@ -16198,18 +16198,18 @@
 /area/crater/biodome/north)
 "aLZ" = (
 /obj/table/reinforced/auto,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /obj/spacevine{
 	density = 1;
 	icon_state = "vine-med1"
 	},
 /obj/item/injector_belt,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
 "aMa" = (
 /obj/table/reinforced/auto,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /obj/item/reagent_containers/glass/compostbag,
 /obj/spacevine{
 	density = 1;
@@ -16263,7 +16263,7 @@
 /area/crater/biodome/north)
 "aMf" = (
 /obj/table/reinforced/auto,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /obj/item/reagent_containers/glass/wateringcan,
 /obj/spacevine{
 	density = 1;
@@ -16273,8 +16273,8 @@
 /area/crater/biodome/north)
 "aMg" = (
 /obj/table/reinforced/auto,
-/obj/landmark/artifact/seed,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
+/obj/item/seed/alien,
 /obj/item/satchel/hydro,
 /obj/spacevine{
 	density = 1;
@@ -22705,7 +22705,7 @@
 "bcI" = (
 /obj/table/reinforced/auto,
 /obj/item/plantanalyzer,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/south)
 "bcJ" = (
@@ -22718,7 +22718,7 @@
 /area/crater/biodome/south)
 "bcK" = (
 /obj/table/reinforced/auto,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/south)
 "bcL" = (

@@ -240,7 +240,7 @@
 "eF" = (/obj/window/cubicle{dir = 1},/obj/machinery/door/window/eastleft,/obj/decal/cleanable/blood/splatter,/obj/item/brick,/obj/item/storage/toilet{dir = 4},/turf/simulated/floor/damaged2,/area/diner/bathroom)
 "eG" = (/obj/machinery/light/small,/obj/decal/cleanable/dirt,/obj/table/wood/round/auto,/obj/item/kitchen/utensil/fork/plastic,/obj/item/kitchen/utensil/knife/plastic,/obj/item/kitchen/utensil/spoon/plastic,/obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti,/turf/simulated/floor/carpet/green/fancy/edge/east,/area/diner/motel/observatory)
 "eH" = (/obj/storage/secure/closet/personal,/turf/simulated/floor/carpet/grime,/area/diner/motel)
-"eI" = (/obj/submachine/chef_sink/chem_sink{dir = 1},/obj/landmark/artifact/cannabis_seed,/turf/simulated/floor/scorched2,/area/diner/bathroom)
+"eI" = (/obj/submachine/chef_sink/chem_sink{dir = 1},/obj/item/seed/cannabis,/turf/simulated/floor/scorched2,/area/diner/bathroom)
 "eJ" = (/turf/simulated/floor/black/grime,/area/diner/hallway/docking)
 "eK" = (/obj/decal/fakeobjects/shuttlethruster{dir = 1; icon_state = "alt_propulsion"},/turf/space,/area/shuttle/mining/space)
 "eL" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/shuttle/mining/space)

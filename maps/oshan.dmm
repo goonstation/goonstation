@@ -21070,8 +21070,8 @@
 /obj/item/fish/salmon,
 /obj/item/fish/salmon,
 /obj/item/fish/salmon,
-/obj/landmark/artifact/cannabis_seed,
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
+/obj/item/seed/cannabis,
 /turf/simulated/martian/floor,
 /area)
 "aWJ" = (
@@ -38132,7 +38132,7 @@
 /turf/simulated/floor/bot,
 /area/station/security/checkpoint/sec_foyer)
 "bMk" = (
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/simulated/floor/grass,
 /area)
 "bMl" = (
@@ -38859,7 +38859,7 @@
 /obj/shrub{
 	dir = 10
 	},
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /obj/item/seed/cannabis,
 /obj/item/seed/cannabis,
 /turf/simulated/floor/black,
@@ -43877,7 +43877,7 @@
 	icon_state = "gangtag22";
 	pixel_x = 28
 	},
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
 /obj/machinery/light/incandescent/small{
 	dir = 4
 	},

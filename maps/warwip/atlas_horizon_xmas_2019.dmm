@@ -66874,7 +66874,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/simulated/floor,
 /area/station/storage/emergency2{
 	name = "Hilarious Storage B"
@@ -70828,7 +70828,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/listeningpost/power)
 "dbX" = (
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
 /turf/simulated/floor/shuttlebay,
 /area/listeningpost/power)
 "dbY" = (
