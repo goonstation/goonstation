@@ -6643,7 +6643,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/bridge)
 "rH" = (
-/obj/item/instrument/large/jukebox,
+/obj/submachine/record_player/jukebox,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "rI" = (

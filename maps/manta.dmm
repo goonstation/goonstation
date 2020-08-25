@@ -1646,7 +1646,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/bee_trader)
 "adC" = (
-/obj/item/instrument/large/jukebox,
+/obj/submachine/record_player/jukebox,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "adD" = (
@@ -30693,7 +30693,7 @@
 	dir = 1;
 	icon_state = "frug1"
 	},
-/obj/item/instrument/large/jukebox,
+/obj/submachine/record_player/jukebox,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -39951,7 +39951,7 @@
 /turf/simulated/floor/wood/six,
 /area/station/security/detectives_office_manta)
 "bJZ" = (
-/obj/item/instrument/large/jukebox,
+/obj/submachine/record_player/jukebox,
 /turf/simulated/floor/wood/six,
 /area/station/security/detectives_office_manta)
 "bKa" = (

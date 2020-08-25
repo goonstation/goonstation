@@ -2887,7 +2887,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "agi" = (
-/obj/item/instrument/large/jukebox{
+/obj/submachine/record_player/jukebox{
 	pixel_x = 2
 	},
 /obj/decal/glow{

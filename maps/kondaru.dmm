@@ -12985,7 +12985,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/station/maintenance/inner)
 "aDy" = (
-/obj/item/instrument/large/jukebox,
+/obj/submachine/record_player/jukebox,
 /turf/simulated/floor/carpet/red/fancy/narrow/ne,
 /area/station/maintenance/inner)
 "aDz" = (

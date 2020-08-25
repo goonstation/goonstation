@@ -1328,7 +1328,7 @@
 "azB" = (/obj/disposalpipe/segment/transport{dir = 4},/turf/simulated/floor/carpet/purple/fancy,/area/station/crew_quarters/quartersB)
 "azC" = (/obj/disposalpipe/segment/transport{dir = 4},/turf/simulated/floor/carpet/purple/fancy/edge/east,/area/station/crew_quarters/quartersB)
 "azD" = (/obj/disposalpipe/segment/transport{dir = 4},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/quartersB)
-"azE" = (/obj/disposalpipe/segment/transport{dir = 4},/obj/item/instrument/large/jukebox,/obj/decal/glow{brightness = 3; color_b = 0.2; color_g = 0.45; color_r = 0.5; invisibility = 101; name = "glow - YELLOW"},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/quartersB)
+"azE" = (/obj/disposalpipe/segment/transport{dir = 4},/obj/submachine/record_player/jukebox,/obj/decal/glow{brightness = 3; color_b = 0.2; color_g = 0.45; color_r = 0.5; invisibility = 101; name = "glow - YELLOW"},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/quartersB)
 "azF" = (/obj/disposalpipe/segment/transport{dir = 4},/obj/stool/chair/wooden,/obj/landmark/start{name = "Staff Assistant"},/turf/simulated/floor/white/checker{dir = 6},/area/station/crew_quarters/quartersB)
 "azG" = (/obj/disposalpipe/trunk{dir = 8},/obj/machinery/disposal/transport{name = "transport chute - Fore"},/turf/simulated/floor/white/checker{dir = 6},/area/station/crew_quarters/quartersB)
 "azH" = (/obj/grille/steel,/obj/window/auto/reinforced,/turf/simulated/floor/plating,/area/station/medical/breakroom)

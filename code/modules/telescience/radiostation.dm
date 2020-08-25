@@ -229,6 +229,27 @@
 	else
 		..()
 
+/obj/submachine/record_player/jukebox
+	name = "old jukebox"
+	desc = "A vintage jukebox. It looks like this one has been modified to play vinyl records."
+	anchored = 1
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "jukebox"
+
+/obj/submachine/record_player/jukebox/attackby(obj/item/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/record))
+		if(has_record)
+			boutput(user, "The record player already has a record inside!")
+		else if(!is_playing)
+			boutput(user, "You insert the record into the record player.")
+			src.visible_message("<span class='notice'><b>[user] inserts the record into the record player.</b></span>")
+			user.drop_item()
+			W.set_loc(src)
+			src.record_inside = W
+			src.has_record = 1
+			src.is_playing = 1
+			playsound(src,record_inside.song, 50, extrarange = -1)
+
 /obj/submachine/record_player/attack_hand(mob/user as mob)
 	if(has_record)
 		if(!is_playing)

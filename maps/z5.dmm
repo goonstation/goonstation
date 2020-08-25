@@ -339,7 +339,7 @@
 "gA" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/snacks/condiment/syrup,/turf/simulated/floor/carpet{icon_state = "red2"},/area/diner/dining)
 "gB" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/snacks/pancake,/turf/simulated/floor/carpet{icon_state = "red2"},/area/diner/dining)
 "gC" = (/obj/lattice{dir = 1; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
-"gD" = (/obj/item/instrument/large/jukebox,/turf/simulated/floor/carpet{icon_state = "red2"},/area/diner/dining)
+"gD" = (/obj/submachine/record_player/jukebox,/turf/simulated/floor/carpet{icon_state = "red2"},/area/diner/dining)
 "gE" = (/obj/table/reinforced/bar/auto,/obj/machinery/light,/obj/item/kitchen/utensil/fork,/turf/simulated/floor/carpet{icon_state = "red2"},/area/diner/dining)
 "gF" = (/obj/table/reinforced/bar/auto,/obj/item/plate,/obj/item/reagent_containers/food/snacks/onion_slice,/obj/item/reagent_containers/food/snacks/onion_slice,/turf/simulated/floor/carpet{icon_state = "red2"},/area/diner/dining)
 "gG" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/carpet{icon_state = "red2"},/area/diner/dining)

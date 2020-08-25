@@ -5976,7 +5976,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/item/instrument/large/jukebox,
+/obj/submachine/record_player/jukebox,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -7531,7 +7531,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "bTd" = (
-/obj/item/instrument/large/jukebox,
+/obj/submachine/record_player/jukebox,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "bTA" = (
@@ -36677,7 +36677,7 @@
 	},
 /area/station/chapel/main)
 "kXm" = (
-/obj/item/instrument/large/jukebox,
+/obj/submachine/record_player/jukebox,
 /obj/machinery/light/small/sticky,
 /turf/simulated/floor/specialroom/bar,
 /area/station/wreckage{

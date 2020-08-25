@@ -23722,7 +23722,7 @@
 	},
 /area/station/crew_quarters/jazz)
 "aZw" = (
-/obj/item/instrument/large/jukebox,
+/obj/submachine/record_player/jukebox,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.2;

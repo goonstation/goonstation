@@ -39246,7 +39246,7 @@
 /turf/simulated/floor/bot,
 /area/station/quartermaster)
 "bPk" = (
-/obj/item/instrument/large/jukebox,
+/obj/submachine/record_player/jukebox,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
 "bPl" = (
@@ -43771,7 +43771,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "caK" = (
-/obj/item/instrument/large/jukebox,
+/obj/submachine/record_player/jukebox,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "caL" = (

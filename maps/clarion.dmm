@@ -18293,7 +18293,7 @@
 	dir = 9;
 	icon_state = "line1"
 	},
-/obj/item/instrument/large/jukebox,
+/obj/submachine/record_player/jukebox,
 /obj/decal/tile_edge/line/blue{
 	dir = 8;
 	icon_state = "line1"
