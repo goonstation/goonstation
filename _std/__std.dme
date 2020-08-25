@@ -6,6 +6,10 @@
 #include "__build.dm" //this controls how a lot of our defines and macros and code is compiled, so it absolutely needs to be the first
 #include "macros\_metamacros.dm" //this has some structural helpers that a lot of other macros/defines use, so it needs to be near the start
 #include "defines\_units.dm" //this has some unit defines that a lot of other macros/defines use, so it needs to go near the start too
+#include "macros\macros.dm" //this has to be near the start because of course it does. will dejank in the future.
+#include "defines\obj.dm" //ditto above
+#include "defines\lagcheck.dm" //ditto above
+#include "defines\item.dm" //ditto above
 #include "color.dm"
 #include "datum.dm"
 #include "machinery.dm"
@@ -15,8 +19,9 @@
 #include "pathfinding.dm"
 #include "setup.dm"
 #include "text.dm"
+#include "tgs.config.dm" //this needs to be above tgs.dm in the compile order, ugh. can we fix this?
 #include "tgs.dm"
-#include "tgs.config.dm"
+#include "tgui.dm"
 #include "types.dm"
 #include "defines\accessLevels.dm"
 #include "defines\actions.dm"
@@ -39,10 +44,10 @@
 #include "defines\fluid_pipes.dm"
 #include "defines\hearing.dm"
 #include "defines\input.dm"
-#include "defines\item.dm"
+//#include "defines\item.dm" //temporarily moved up in the compile order because of PATHFINDING.DM AGAIN!!!! UGGHGHGHGHGHGHHG!!!
 #include "defines\item_rarity.dm"
 #include "defines\jobs.dm"
-#include "defines\lagcheck.dm"
+//#include "defines\lagcheck.dm" //temporarily moved up in the compile order because of course a pathfinding.dm uses it. UGHHHHHHHH!
 #include "defines\lightcycles.dm"
 #include "defines\materials.dm"
 #include "defines\message_lengths.dm"
@@ -50,7 +55,7 @@
 #include "defines\mob.dm"
 #include "defines\mob_damage.dm"
 #include "defines\movement.dm"
-#include "defines\obj.dm"
+//#include "defines\obj.dm" //temporarily moved up in the compile order, because pathfinding.dm relies on it. because of course. UGHHH
 #include "defines\ocean_generation.dm"
 #include "defines\participation.dm"
 #include "defines\pathology.dm"
@@ -84,7 +89,7 @@
 #include "macros\job_xp.dm"
 #include "macros\layer.dm"
 #include "macros\list.dm"
-#include "macros\macros.dm"
+//#include "macros\macros.dm" temporarily moved up in the compile order, because of course random crap is in here, UGH
 #include "macros\maps.dm"
 #include "macros\mob_properties.dm"
 #include "macros\movement_modifiers.dm"
