@@ -1,0 +1,2 @@
+#define SHIP_ALERT_GOOD 0
+#define SHIP_ALERT_BAD 1
