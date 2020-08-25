@@ -1896,10 +1896,10 @@
 /datum/commodity/medical/firstaidC
 	comname = "First Aid Kit - Critical"
 	comtype = /obj/item/storage/firstaid/crit
-	price = 2000
-	baseprice = 2000
-	upperfluc = 500
-	lowerfluc = -700
+	price = 10000
+	baseprice = 10000
+	upperfluc = 2000
+	lowerfluc = -2000
 
 /datum/commodity/medical/injectorPent
 	comname = "Auto-Injector - Pentetic Acid"

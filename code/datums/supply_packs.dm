@@ -263,8 +263,7 @@
 					/obj/item/storage/firstaid/fire = 2,
 					/obj/item/storage/firstaid/toxin = 2,
 					/obj/item/storage/firstaid/oxygen,
-					/obj/item/storage/firstaid/brain,
-					/obj/item/storage/firstaid/crit)
+					/obj/item/storage/firstaid/brain)
 	cost = 1000
 	containertype = /obj/storage/crate/medical
 	containername = "Medical: First Aid Crate"
