@@ -22,6 +22,7 @@
 #define LANDMARK_PRISONSECURITYWARP "prisonsecuritywarp"
 #define LANDMARK_THUNDERDOME_1 "tdome1"
 #define LANDMARK_THUNDERDOME_2 "tdome2"
+#define LANDMARK_BATTLE_ROYALE_SPAWN "battle-royale-spawn"
 
 // falling down holes
 
@@ -35,3 +36,7 @@
 #define LANDMARK_FALL_MOON_HEMERA "moonfall_hemera" // Hemera lunar office elevator shaft
 #define LANDMARK_FALL_MOON_MUSEUM "moonfall_museum" // Lunar museum elevator shaft
 #define LANDMARK_FALL_SEA "seafall" // Oshan trench elevator
+
+// misc adventure zone stuff
+
+#define LANDMARK_SAMOSTREL_WARP "samostrel"

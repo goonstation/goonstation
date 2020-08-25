@@ -327,8 +327,7 @@ mob/new_player
 				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
 					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate, but you are not considered one of the contestants!</h3>")
 					return AttemptLateSpawn(new /datum/job/special/tourist)
-				var/starting_loc = pick(battle_royale_spawn)
-				character.set_loc(starting_loc)
+				character.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 				equip_battler(character)
 				character.mind.assigned_role = "MODE"
 				character.mind.special_role = "battler"
