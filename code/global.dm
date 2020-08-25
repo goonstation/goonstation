@@ -487,9 +487,6 @@ var/global
 
 	datum/dj_panel/dj_panel = new()
 
-	list/wizardstart = list()
-	list/predstart = list()
-	list/syndicatestart = list()
 	list/battle_royale_spawn = list()
 	list/newplayer_start = list()
 	list/rp_latejoin = list()

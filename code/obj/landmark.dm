@@ -47,6 +47,7 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/start/latejoin
 	name = "latejoin"
+	add_to_landmarks = TRUE
 
 /obj/landmark/cruiser_entrance
 	name = "cruiser_entrance"

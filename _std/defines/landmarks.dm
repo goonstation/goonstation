@@ -4,3 +4,5 @@
 #define LANDMARK_MONKEY "monkey"
 #define LANDMARK_BLOBSTART "blobstart"
 #define LANDMARK_KUDZUSTART "kudzustart"
+#define LANDMARK_SYNDICATE "Syndicate-Spawn"
+#define LANDMARK_SYNDICATE_BOSS "SR Syndicate-Spawn"

@@ -28,10 +28,9 @@
 	boutput(world, "<B>[syndicate_name()] operatives are approaching [station_name(1)]! They intend to destroy the [station_or_ship()] with a nuclear warhead.</B>")
 
 /datum/game_mode/nuclear/pre_setup()
-	var/the_spawn = syndicatestart && islist(syndicatestart) && syndicatestart.len ? pick(syndicatestart) : null
 	var/list/possible_syndicates = list()
 
-	if (!the_spawn)
+	if (!landmarks[LANDMARK_SYNDICATE])
 		boutput(world, "<span class='alert'><b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b></span>")
 		return 0
 
@@ -168,7 +167,6 @@
 	return 1
 
 /datum/game_mode/nuclear/post_setup()
-	var/synd_spawn = pick(syndicatestart)
 	var/obj/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
 	var/obj/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
 
@@ -180,9 +178,6 @@
 	var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
 
 	for(var/datum/mind/synd_mind in syndicates)
-		synd_spawn = pick(syndicatestart) // So they don't all spawn on the same tile.
-		synd_mind.current.set_loc(synd_spawn)
-
 		bestow_objective(synd_mind,/datum/objective/specialist/nuclear)
 
 		var/obj_count = 1
@@ -195,6 +190,9 @@
 		boutput(synd_mind.current, "We have identified a major structural weakness in the [station_or_ship()]'s design. Arm the bomb in <B>[src.target_location_name]</B> to obliterate [station_name(1)].")
 
 		if(!leader_selected)
+			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE_BOSS))
+			if(!synd_mind.current.loc)
+				synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 			equip_syndicate(synd_mind.current, 1)
 			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, target_location_name)
@@ -205,6 +203,7 @@
 				new /obj/item/pinpointer/disk(synd_mind.current.loc)
 			leader_selected = 1
 		else
+			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			var/callsign = pick(callsign_list)
 			synd_mind.current.real_name = "[syndicate_name()] Operative [callsign]" //new naming scheme
 			callsign_list -= callsign

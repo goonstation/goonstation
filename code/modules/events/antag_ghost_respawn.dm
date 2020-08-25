@@ -170,7 +170,7 @@
 		var/objective_path = null
 		var/send_to = 1 // 1: arrival shuttle | 2: wizard shuttle
 		var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
-		var/WSLoc = wizardstart.len ? pick(wizardstart) : null
+		var/WSLoc = job_start_locations["wizard"] ? pick(job_start_locations["wizard"]) : null
 		var/failed = 0
 
 		switch (src.antagonist_type)

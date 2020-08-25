@@ -57,11 +57,10 @@
 				if(3)
 					waldo.special_role = "wizard"
 			waldo.current.resistances += list(/datum/ailment/disease/dnaspread, /datum/ailment/disease/clowning_around, /datum/ailment/disease/cluwneing_around, /datum/ailment/disease/enobola, /datum/ailment/disease/robotic_transformation)
-			if(wizardstart.len == 0)
+			if(!job_start_locations["wizard"])
 				boutput(waldo.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 			else
-				var/starting_loc = pick(wizardstart)
-				waldo.current.set_loc(starting_loc)
+				waldo.current.set_loc(pick(job_start_locations["wizard"]))
 			if(waldo.special_role in list("odlaw", "wizard"))
 				switch(rand(1,100))
 					if(1 to 30)

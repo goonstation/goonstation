@@ -33,13 +33,13 @@ datum/special_respawn
 
 	proc/spawn_syndies(var/number = 3)
 		var/r_number = 0
-		var/B = pick(syndicatestart)
+		var/B = pick_landmark(LANDMARK_SYNDICATE)
 
 		if(!B)	return
 		for(var/c = 0, c < number, c++)
 			var/player = find_player("a syndicate agent")
 			if(player)
-				var/check = spawn_character_human("[syndicate_name()] Operative #[c+1]",player,B,"syndie")
+				var/check = spawn_character_human("[syndicate_name()] Operative #[c+1]", player, pick_landmark(LANDMARK_SYNDICATE), "syndie")
 				if(!check)
 					break
 				r_number ++
@@ -47,8 +47,7 @@ datum/special_respawn
 					if(player && !player:client)
 						qdel(player)
 
-		for (var/obj/landmark/A in landmarks)//world)
-			LAGCHECK(LAG_LOW)
+		for (var/obj/landmark/A in landmarks)
 			if (A.name == "Syndicate-Gear-Closet")
 				new /obj/storage/closet/syndicate/personal(A.loc)
 				A.dispose()
