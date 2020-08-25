@@ -15,6 +15,7 @@ proc/pick_landmark(name, default=null)
 	var/deleted_on_start = TRUE
 	var/add_to_landmarks = TRUE
 	var/data = null // data to associatively save with the landmark
+	var/name_override = null
 
 	ex_act()
 		return
@@ -23,9 +24,10 @@ proc/pick_landmark(name, default=null)
 	if(src.add_to_landmarks)
 		if(!landmarks)
 			landmarks = list()
-		if(!landmarks[src.name])
-			landmarks[src.name] = list()
-		landmarks[src.name][src.loc] = src.data
+		var/name = src.name_override ? src.name_override : src.name
+		if(!landmarks[name])
+			landmarks[name] = list()
+		landmarks[name][src.loc] = src.data
 	if(src.deleted_on_start)
 		qdel(src)
 	else
