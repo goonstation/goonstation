@@ -11,10 +11,6 @@
 #define LANDMARK_HALLOWEED_SPAWN "halloween spawn"
 #define LANDMARK_BUBS_BEE_JOB "bubsbeejob"
 
-// off-station
-
-#define LANDMARK_VR_BOMB "bombtest-bomb" //Landmark where the ~vr bomb~ spawns.
-
 // nukies
 
 #define LANDMARK_SYNDICATE "Syndicate-Spawn"
@@ -34,6 +30,8 @@
 #define LANDMARK_THUNDERDOME_2 "tdome2"
 #define LANDMARK_BATTLE_ROYALE_SPAWN "battle-royale-spawn"
 #define LANDMARK_ESCAPE_POD_SUCCESS "escape_pod_success"
+#define LANDMARK_VR_BOMB "bombtest-bomb" //Landmark where the ~vr bomb~ spawns.
+#define LANDMARK_ASS_ARENA_SPAWN "ass_arena_spawn"
 
 // falling down holes
 

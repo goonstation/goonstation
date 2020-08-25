@@ -49,14 +49,14 @@ var/global/list/job_start_locations = list()
 		..()
 
 /obj/landmark/start/latejoin
-	name = "latejoin"
+	name = LANDMARK_LATEJOIN
 	add_to_landmarks = TRUE
 
 /obj/landmark/cruiser_entrance
 	name = "cruiser_entrance"
 
 /obj/landmark/escape_pod_succ
-	name = "escape_pod_success"
+	name = LANDMARK_ESCAPE_POD_SUCCESS
 	icon_state = "xp"
 	New()
 		src.data = src.dir // save dir
@@ -66,7 +66,7 @@ var/global/list/job_start_locations = list()
 	name = "tutorial_start_marker"
 
 /obj/landmark/halloween
-	name = "halloween spawn"
+	name = LANDMARK_HALLOWEED_SPAWN
 
 /obj/landmark/asteroid_spawn_blocker //Blocks the creation of an asteroid on this tile, as you would expect
 	name = "asteroid blocker"
@@ -87,18 +87,12 @@ var/global/list/job_start_locations = list()
 	icon_state = "x"
 	dir = NORTH
 
-/*
-	New()
-		latejoin += src.loc
-		..()
-*/
-
 	north
 		name = "missile latejoin spawn marker (north)"
 		dir = NORTH
 
 /obj/landmark/ass_arena_spawn
-	name = "ass_arena_spawn"
+	name = LANDMARK_ASS_ARENA_SPAWN
 	icon_state = "x"
 
 obj/landmark/interesting

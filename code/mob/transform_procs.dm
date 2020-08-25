@@ -859,7 +859,6 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	return
 
-var/list/ass_arena_spawn = list()
 var/respawn_arena_enabled = 0
 /mob/dead/observer/verb/go_to_respawn_arena()
 	set name = "Fight for your life"
