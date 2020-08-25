@@ -417,7 +417,7 @@
 			src.online = !src.online
 			. = TRUE
 		if("setOutput")
-			src.output_number = clamp(params["setOutput"], 0, 999)
+			src.output_number = clamp(params["setOutput"], 1, 999)
 			src.output = src.output_number * src.output_multi
 			. = TRUE
 		if("outputMW")
