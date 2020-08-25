@@ -1774,7 +1774,7 @@
 				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
 					return ..()
 
-				var/turf/T = pick_landmark(LNADMARK_FALL_DEEP)
+				var/turf/T = pick_landmark(LANDMARK_FALL_DEEP)
 				if(T)
 					fall_to(T, A)
 					return
