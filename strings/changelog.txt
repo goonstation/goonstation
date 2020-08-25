@@ -1,5 +1,9 @@
 
 (t)tue aug 25 20
+(u)Michaellaneous
+(p)1918
+(e)⚖|balance
+(+)Medium and small spiders now can't grab people anymore.
 (u)Jawns
 (p)1927
 (e)🐛|bug
