@@ -182,7 +182,11 @@
 	var/gun_x_offset = -1 // gun pic x offset
 	var/gun_y_offset = 8 // gun pic y offset
 	var/lawbringer_state = null // because the law just has to be *difficult*. determines what lights to draw on the lawbringer if it has one
+#if ASS_JAM
+	var/lawbringer_alwaysbigshot = 1
+#else
 	var/lawbringer_alwaysbigshot = 0 // varedit this to 1 if you want the Buddy to always go infinite-ammo bigshot. this is a bad idea
+#endif
 	//
 	////////////////////// GUN STUFF -^
 
@@ -365,9 +369,6 @@
 
 	New()
 		..()
-#ifdef ASS_JAM
-		src.lawbringer_alwaysbigshot = 1
-#endif
 		if(src.on)
 			src.warm_boot = 1
 #ifdef HALLOWEEN
@@ -448,10 +449,10 @@
 				boutput(user, "You show \the [E] to [src]! They are super impressed!")
 				SPAWN_DBG(1 SECOND)
 					boutput(user, "Like, really REALLY impressed.  They probably think you're some kind of celebrity or something.")
-					SPAWN_DBG(1 SECOND)
-						boutput(user, "Or the president. The president of space.")
-						SPAWN_DBG(1 SECOND)
-							boutput(user, "In fact they're so impressed that it shorts out their Spacelaw circuits![pick("", " Whoops.")]")
+					sleep(1 SECOND)
+					boutput(user, "Or the president. The president of space.")
+					sleep(1 SECOND)
+					boutput(user, "In fact they're so impressed that it shorts out their Spacelaw circuits![pick("", " Whoops.")]")
 			else
 				boutput(user, "You show \the [E] to [src]! They become so impressed that [pick("they start smelling like burnt circuitry", "you hear a small pop come from inside their casing")].")
 		else
@@ -625,18 +626,18 @@
 				else
 					speak("But hey, the law's for [pick("chumps", "the spacebirds", "losers")], right?")
 				if (prob(25))
-					SPAWN_DBG(2 SECONDS)
-						if(user)
-							speak("Right?")
-						else
-							speak("Cus I'd say I'm more [fluffbad1] [fluffbad2].")
-						if (prob(25))
-							SPAWN_DBG(10 SECONDS)
-								if (src?.on)	// Are they even still alive or something
-									if(user)
-										speak("Yeah. I'm right. Heck the law. Heck the law for real!")
-									else
-										speak("Yup. That's me. Definitely [fluffbad1] [fluffbad2] through and through.")
+					sleep(2 SECONDS)
+					if(user)
+						speak("Cus I'd say I'm more [fluffbad1] [fluffbad2].")
+					else
+						speak("Right?")
+					if (prob(25))
+						sleep(10 SECONDS)
+						if (src?.on)	// Are they even still alive or something
+							if(user)
+								speak("Yup. That's me. Definitely [fluffbad1] [fluffbad2] through and through.")
+							else
+								speak("Yeah. I'm right. Heck the law. Heck the law for real!")
 		if (src.slept_through_laser_class)
 			src.slept_through_laser_class = 0
 
