@@ -2846,11 +2846,11 @@
 
 		New()
 			..()
-			tourguides += src
+			START_TRACKING
 
 		disposing()
+			STOP_TRACKING
 			..()
-			tourguides -= src
 
 
 

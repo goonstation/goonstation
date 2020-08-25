@@ -894,7 +894,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 	attack_hand(mob/user as mob)
 		if(symbol != null)
-			symbol.loc = src.loc
+			symbol.set_loc(src.loc)
 			symbol = null
 			overlays.Cut()
 			boutput(usr, "<span class='notice'>You remove the Symbol.</span>")
@@ -904,7 +904,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if(istype(W,/obj/item/alchemy/symbol) && symbol == null)
 			user.drop_item()
 			symbol = W
-			symbol.loc = src
+			symbol.set_loc(src)
 			overlays += symbol
 			boutput(usr, "<span class='notice'>You put the Symbol in the Circle.</span>")
 		return
@@ -978,7 +978,7 @@ SYNDICATE DRONE FACTORY AREAS
 		for(var/A in childrentypesof(/obj/item/alchemy/symbol))
 			types += A
 
-		loc = location
+		set_loc(location)
 		north = new(locate(src.loc.x + 2, src.loc.y + 3, src.loc.z))
 		var/ntype = pick(types)
 

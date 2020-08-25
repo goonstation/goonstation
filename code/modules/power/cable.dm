@@ -146,7 +146,7 @@
 	else
 		applyCableMaterials(src, getMaterial(insulator_default), getMaterial(condcutor_default))
 
-	allcables += src
+	START_TRACKING
 
 /obj/cable/disposing()		// called when a cable is deleted
 
@@ -156,7 +156,6 @@
 			var/datum/powernet/PN = powernets[netnum]
 			PN.cut_cable(src)									// updated the powernets
 	else
-		if(Debug) logDiary("Defered cable deletion at [x],[y]: #[netnum]")
 		defer_powernet_rebuild = 2
 
 		if(netnum && powernets && powernets.len >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
@@ -165,7 +164,7 @@
 	insulator.owner = null
 	conductor.owner = null
 
-	allcables -= src
+	STOP_TRACKING
 
 	..()													// then go ahead and delete the cable
 

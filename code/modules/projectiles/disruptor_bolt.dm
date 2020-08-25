@@ -36,6 +36,10 @@ toxic - poisons
 
 	disruption = 12
 
+	color_red = 0.2
+	color_green = 0.2
+	color_blue = 1
+
 //Any special things when it hits shit?
 	on_hit(atom/hit)
 		if(istype(hit,/obj/window))

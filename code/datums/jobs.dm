@@ -97,7 +97,7 @@
 				I.implanted(M)
 
 			if (src.special_spawn_location && !no_special_spawn)
-				M.loc = locate(spawn_x,spawn_y,spawn_z)
+				M.set_loc(locate(spawn_x,spawn_y,spawn_z))
 
 			if (ishuman(M) && src.bio_effects)
 				var/list/picklist = params2list(src.bio_effects)

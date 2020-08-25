@@ -156,7 +156,7 @@ var/maniac_previous_victim = "Unknown"
 				playsound(src.loc, 'sound/machines/whistlealert.ogg', 50, 1)
 				icon_state = "pr1_1"
 				flick("pr1_a",src)
-				for(var/obj/machinery/door/poddoor/P in doors)
+				for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 					if (P.id == src.id)
 						if (!P.density)
 							SPAWN_DBG( 0 )

@@ -243,7 +243,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(traitors))
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")

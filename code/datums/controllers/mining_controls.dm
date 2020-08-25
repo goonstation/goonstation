@@ -1,7 +1,6 @@
 var/datum/mining_controller/mining_controls
 
 var/list/asteroid_blocked_turfs = list()
-var/turf_spawn_edge_limit = 5
 
 /datum/mining_controller
 	var/mining_z = 4

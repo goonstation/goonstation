@@ -44211,7 +44211,6 @@
 "bQZ" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "bRa" = (
