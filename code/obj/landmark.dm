@@ -114,6 +114,16 @@ var/global/list/job_start_locations = list()
 		T.interesting = src.interesting
 		..()
 
+// Artifact Infrastructure Procs
+
+/obj/landmark/artifact
+	name = LANDMARK_ARTIFACT_SPAWN
+	icon_state = "x3"
+	var/spawnchance = 100 // prob chance out of 100 to spawn artifact at game start
+	New()
+		src.data = src.spawnchance
+		..()
+
 // LONG RANGE TELEPORTER
 // consider refactoring to be associative the other way around later
 

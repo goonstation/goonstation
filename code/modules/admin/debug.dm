@@ -434,10 +434,12 @@ var/global/debug_messages = 0
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/S = locate(text("start*AI"))
-		if ((istype(S, /obj/landmark/start) && istype(S.loc, /turf)))
+		var/turf/new_loc
+		if (job_start_locations["AI"])
+			new_loc pick(job_start_locations["AI"])
+		if (new_loc)
 			boutput(M, "<span class='notice'><B>You have been teleported to your new starting location!</B></span>")
-			M.set_loc(S.loc)
+			M.set_loc(new_loc)
 			M.buckled = null
 		message_admins("<span class='alert'>Admin [key_name(src)] AIized [key_name(M)]!</span>")
 		logTheThing("admin", src, M, "AIized [constructTarget(M,"admin")]")

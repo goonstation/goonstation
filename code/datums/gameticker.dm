@@ -227,13 +227,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		mode.post_post_setup()
 
-		for(var/obj/landmark/artifact/A in landmarks)
-			LAGCHECK(LAG_LOW)
-			if (prob(A.spawnchance))
-				if (A.spawnpath)
-					new A.spawnpath(A.loc)
-				else
-					Artifact_Spawn(A.loc)
+		for(var/turf/T in landmarks[LANDMARK_ARTIFACT_SPAWN])
+			var/spawnchance = landmarks[LANDMARK_ARTIFACT_SPAWN][T]
+			if (prob(spawnchance))
+				Artifact_Spawn(T)
 
 		var/list/lootspawn = list()
 		for(var/obj/landmark/S in landmarks)//world)

@@ -109,12 +109,8 @@
 	mind.transfer_to(O)
 	mind.assigned_role = "AI"
 
-	if (!mobile && !do_not_move)
-		var/obj/loc_landmark
-		loc_landmark = locate(text("start*AI"))
-
-		if(loc_landmark && loc_landmark.loc)
-			O.set_loc(loc_landmark.loc)
+	if (!mobile && !do_not_move && job_start_locations["AI"])
+		O.set_loc(pick(job_start_locations["AI"]))
 
 	boutput(O, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
 	boutput(O, "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>")
