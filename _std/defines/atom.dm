@@ -1,4 +1,5 @@
 //where did the contents of _setup.dm go? "gone, reduced to atom"
+
 //temp_flags lol for atoms and im gonna be constantly adding and removing these
 //this doesn't entirely make sense, cause some other flags are temporary too! ok im runnign otu OF FUCKING SPACE
 #define SPACE_PUSHING 1 //used for removing us from mantapush list when we get deleted

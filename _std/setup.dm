@@ -1,9 +1,4 @@
-/* Protip: Prepending an underscore to this file puts it at the top of the compile order,
-// so that it already has the defines for the later files that use them.
 // PLEASE DONT ADD STUFF TO THIS THAT ISNT DIRECTLY RELATED TO GAME SETUP
-*/
-
-
 
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1 //Uncomment this to just skip everything possible and get into the game asap.
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1 // uncomment this to use atlas as the single map. will horribly break things but speeds up compile/boot times.
@@ -39,23 +34,6 @@
 // Defines the Mining Z level, change this when the map changes
 // all this does is set the z-level to be ignored by erebite explosion admin log messages
 // if you want to see all erebite explosions set this to 0 or -1 or something
-
-#define TIME_DILATION_ENABLED 1
-#define MIN_TICKLAG 0.4 /// min value ticklag can be
-#define OVERLOADED_WORLD_TICKLAG 1 /// max value ticklag can be
-#define TICKLAG_DILATION_INC 0.2 /// how ticklag much to increase by when appropriate
-#define TICKLAG_DILATION_DEC 0.2 /// how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
-#define TICKLAG_DILATION_THRESHOLD 5 // these values dont make sense to you? read the math in gameticker
-#define TICKLAG_NORMALIZATION_THRESHOLD 0.3 // these values dont make sense to you? read the math in gameticker
-#define TICKLAG_DILATE_INTERVAL 20
-
-#define OVERLOAD_PLAYERCOUNT 95 /// when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
-#define OSHAN_LIGHT_OVERLOAD 18 /// when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
-#define SLOW_LIFE_PLAYERCOUNT 65 /// whenn pcount is >= this number, slow Life() processing a bit
-#define SLOWEST_LIFE_PLAYERCOUNT 85 /// whenn pcount is >= this number, slow Life() processing a lot
-
-#define DEFAULT_CLICK_DELAY MIN_TICKLAG //used to be 1
-#define CLICK_GRACE_WINDOW 0 //2.5
 
 // gameticker
 #define GAME_STATE_WORLD_INIT	1
@@ -130,4 +108,18 @@ var/ZLOG_START_TIME
 #ifndef SERVER_SIDE_PROFILING
 	#define SERVER_SIDE_PROFILING 1
 #endif
+#endif
+
+//Amount of 1 Second ticks to spend in the pregame lobby before roundstart. Has been 150 seconds for a couple years.
+#define PREGAME_LOBBY_TICKS 150	// raised from 120 to 180 to accomodate the v500 ads, then raised back down to 150 after Z5 was introduced.
+
+//The value of mapvotes. A passive vote is one done through player preferences, an active vote is one where the player actively chooses a map
+#define MAPVOTE_PASSIVE_WEIGHT 1.0
+#define MAPVOTE_ACTIVE_WEIGHT 1.0
+
+//what counts as participation?
+#ifdef RP_MODE
+#define MAX_PARTICIPATE_TIME 80 MINUTES //the maximum shift time before it doesnt count as "participating" in the round
+#else
+#define MAX_PARTICIPATE_TIME 40 MINUTES //ditto above
 #endif
