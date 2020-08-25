@@ -1,5 +1,9 @@
 
 (t)tue aug 25 20
+(u)zjdtmkhzt
+(p)1939
+(e)🆕|feature
+(*)Lots of smaller artifact-related bugs were fixed, so artifacts may behave a little differently than they used to. Mysterious!
 (u)Superlagg
 (p)1243
 (e)⚖🆕|balance, feature
