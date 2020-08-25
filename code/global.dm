@@ -492,19 +492,9 @@ var/global
 	list/prisonwarped = list()	//list of players already warped
 	list/wormholeturfs = list()
 	list/halloweenspawn = list()
-	list/icefall = list() // list of locations for people to fall if they enter the deep abyss on the ice moon
-	list/iceelefall = list() // list of locations for people to fall if they enter the ice moon elevator shaft
-	list/deepfall = list() // list of locations for people to fall into the precursor pit area
-	list/ancientfall = list() // list of locations for people to fall into the ancient pit area
-	list/greekfall = list() // list of locations for people to fall into the greek pit area
-	list/bioelefall = list() // biodome elevator shaft
 	bioele_accidents = 0
 	bioele_shifts_since_accident = 0
-	list/moonfall_hemera = list() //Hemera lunar office elevator shaft
-	list/moonfall_museum = list() //Lunar museum elevator shaft
-	list/seafall = list() // oshan trench elevator
 	list/escape_pod_success = list() // escape pods flying to the shuttle
-	list/polarisfall = list() // list of locations for people to fall if they enter the deep in the trench
 
 	list/shittybills = list()
 	list/johnbills = list()

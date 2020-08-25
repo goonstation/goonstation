@@ -1724,19 +1724,21 @@
 		name = "broken staircase"
 		desc = "You can't see the bottom."
 		icon_state = "black"
+		var/target_landmark = LANDMARK_FALL_ANCIENT
 
 		Entered(atom/A as mob|obj)
 			if (isobserver(A) || (istype(A, /obj/critter) && A:flying))
 				return ..()
 
-			if (ancientfall.len)
-				var/turf/T = pick(ancientfall)
+			var/turf/T = pick_landmark(target_landmark)
+			if(T)
 				fall_to(T, A)
 				return
 			else ..()
 
 		shaft
 			name = "Elevator Shaft"
+			target_landmark = LANDMARK_FALL_BIO_ELE
 
 			Entered(atom/A as mob|obj)
 				if (istype(A, /mob) && !istype(A, /mob/dead))
@@ -1772,8 +1774,8 @@
 				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
 					return ..()
 
-				if (deepfall.len)
-					var/turf/T = pick(deepfall)
+				var/turf/T = pick_landmark(LNADMARK_FALL_DEEP)
+				if(T)
 					fall_to(T, A)
 					return
 				else ..()

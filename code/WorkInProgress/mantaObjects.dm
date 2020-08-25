@@ -1628,8 +1628,8 @@ var/obj/manta_speed_lever/mantaLever = null
 		if (isobserver(A) || isintangible(A))
 			return ..()
 
-		if (polarisfall.len)
-			var/turf/T = pick(polarisfall)
+		var/turf/T = pick_landmark(LANDMARK_FALL_POLARIS)
+		if(T)
 			fall_to(T, A)
 			return
 		else ..()
