@@ -2333,7 +2333,7 @@ var/global/noir = 0
 						logTheThing("admin", usr, null, "teleported all players to the prison zone.")
 						logTheThing("diary", usr, null, "teleported all players to the prison zone.", "admin")
 						for(var/mob/living/carbon/human/H in mobs)
-							var/turf/loc = find_loc(H)
+							var/turf/loc = get_turf(H)
 							var/security = 0
 							if(loc.z > 1 || prisonwarped.Find(H))
 								//don't warp them if they aren't ready or are already there
