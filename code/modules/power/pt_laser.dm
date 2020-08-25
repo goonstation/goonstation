@@ -389,7 +389,7 @@
 			src.charging = !src.charging
 			. = TRUE
 		if("setInput")
-			src.input_number = params["setInput"]
+			src.input_number = clamp(params["setInput"], 1, 999)
 			src.chargelevel = src.input_number * src.input_multi
 			. = TRUE
 		if("inputW")
@@ -417,7 +417,7 @@
 			src.online = !src.online
 			. = TRUE
 		if("setOutput")
-			src.output_number = params["setOutput"]
+			src.output_number = clamp(params["setOutput"], 0, 999)
 			src.output = src.output_number * src.output_multi
 			. = TRUE
 		if("outputMW")
