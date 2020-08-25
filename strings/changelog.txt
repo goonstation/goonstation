@@ -1,5 +1,9 @@
 
 (t)tue aug 25 20
+(u)zjdtmkhzt
+(p)1891
+(e)⚖|balance
+(+)AIs and cyborgs now have su access at terminals.
 (u)RichardGere
 (p)1802
 (e)🆕📄|feature, tgui
