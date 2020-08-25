@@ -286,13 +286,13 @@
 
 	if (istype(W,/obj/item/circuitboard))
 		var/obj/item/circuitboard/CIRCUITBOARD = W
-		src.visible_message("<b>[user.name]</b>offers the [CIRCUITBOARD] to the artifact.</span>")
+		src.visible_message("<b>[user.name]</b> offers the [CIRCUITBOARD] to the artifact.</span>")
 		src.ArtifactStimulus("data", 1)
 		return 0
 
 	if (istype(W,/obj/item/disk/data))
 		var/obj/item/disk/data/DISK = W
-		src.visible_message("<b>[user.name]</b>offers the [DISK] to the artifact.</span>")
+		src.visible_message("<b>[user.name]</b> offers the [DISK] to the artifact.</span>")
 		src.ArtifactStimulus("data", 1)
 		return 0
 
