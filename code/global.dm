@@ -487,7 +487,6 @@ var/global
 
 	datum/dj_panel/dj_panel = new()
 
-	list/rp_latejoin = list()
 	list/prisonwarped = list()	//list of players already warped
 	list/wormholeturfs = list()
 	list/halloweenspawn = list()

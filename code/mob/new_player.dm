@@ -306,8 +306,8 @@ mob/new_player
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived through an alternative mode of travel! Good luck!</h3>")
 			else if (map_settings && map_settings.arrivals_type == MAP_SPAWN_CRYO)
 				var/obj/cryotron/starting_loc = null
-				if (ishuman(character) && rp_latejoin && rp_latejoin.len)
-					starting_loc = pick(rp_latejoin)
+				if (ishuman(character) && by_type[/obj/cryotron])
+					starting_loc = pick(by_type[/obj/cryotron])
 
 				if (istype(starting_loc))
 					starting_loc.add_person_to_queue(character, JOB)
