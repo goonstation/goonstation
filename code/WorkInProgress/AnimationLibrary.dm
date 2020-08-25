@@ -489,7 +489,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		flick(muzzle_anim,muzzleflash)
 	muzzleflash.icon_state = muzzle_anim
 
-	animate(time=0.4 SECONDS)
+	animate(muzzleflash, time=0.4 SECONDS)
 	animate(alpha=0, easing=SINE_EASING, time=0.2 SECONDS)
 
 	SPAWN_DBG(0.6 SECONDS)
