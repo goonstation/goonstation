@@ -486,6 +486,9 @@
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
 
+	if(HAS_MOB_PROPERTY(src, PROP_PROTANOPIA))
+		src.client?.color = list(MATRIX_PROTANOPIA)
+
 	return
 
 /mob/Logout()

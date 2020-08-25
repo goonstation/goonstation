@@ -1,5 +1,31 @@
 
 (t)tue aug 25 20
+(u)Superlagg
+(p)1831
+(e)⚖🆕|balance, feature
+(*)Werewolves now talk and see like a dog.
+(u)Carbadox
+(p)1884
+(e)🆕|feature
+(+)Added a trait to replace your trinket with a lunchbox.
+(+)Added a dozen of empty lunchboxes to the Kitchen vendor. Now chefs can prepare packed lunches for the whole crew! Maybe you'll cute handwritten note (or maybe death threat, who knows).
+(u)Janonas
+(p)1873
+(e)🆕🎨|feature, sprites
+(*)Added a new botany plant, Ipecacuanha - use it to create a powerful emetic!
+(u)Kubius
+(p)1943
+(e)🗺|mapping
+(+)Kondaru fix batch time again! Prominently, gene power module and more defibs.
+(u)zjdtmkhzt
+(p)1939
+(e)🆕|feature
+(*)Lots of smaller artifact-related bugs were fixed, so artifacts may behave a little differently than they used to. Mysterious!
+(u)Superlagg
+(p)1243
+(e)⚖🆕|balance, feature
+(*)Tox, brain, and oxy medkits now have more useful auto-injectors!
+(+)Added a new emergency medkit specifically for deep crit. Ask your local QM or salesbot today!
 (u)ThePotato97
 (p)1846
 (e)|
