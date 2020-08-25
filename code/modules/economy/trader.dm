@@ -571,7 +571,7 @@
 
 		var/pickprename = pick("Honest","Fair","Merchant","Trader","Kosher","Real Deal","Dealer", "Old", "Ol'", "Zesty", "Sassy", "Bargain", "Discount", "Uncle", "Big", "Little")
 		//var/pickfirstname = pick(first_names)
-		var/picklastname = pick(last_names)
+		var/picklastname = pick_string_autokey("names/last.txt")
 		src.name = "[pickprename] [picklastname]"
 
 		greeting= {"WELL HI THERE, STEP RIGHT UP AND BUY MY STUFF!"}
@@ -1003,7 +1003,7 @@
 			for(var/mob/M in AIviewers(src))
 				boutput(M, "<B>[src.name]</B> buzzes excitedly! \"BZZ?? BZZ!!\"")
 				M.unlock_medal("Bombini is missing!", 1)
-				karma_update(15, "SAINT", src)
+				M.add_karma(15) // This line originally tried to give the karma to Bombini. Definitely a bug but I like to imagine that she just managed to pickpocket your karma or something.
 			user.u_equip(W)
 			qdel(W)
 		else

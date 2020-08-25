@@ -121,8 +121,6 @@
 		affected[T] = existing_hotspot.temperature
 		if (need_expose && expose_temp)
 			T.hotspot_expose(expose_temp, existing_hotspot.volume)
-			if (T == ff_debug_turf && ff_debugger)
-				boutput(ff_debugger, "<span style='color:#ff8800'>Fireflash affecting tile at [showCoords(T.x, T.y, T.z)], exposing to temperature [expose_temp], central tile is at [showCoords(Ce.x, Ce.y, Ce.z)], previous temperature: [prev_temp]</span>")
 		if(istype(T, /turf/simulated/floor)) T:burn_tile()
 		for (var/mob/living/L in T)
 			L.update_burning(min(55, max(0, expose_temp - 100 / 550)))

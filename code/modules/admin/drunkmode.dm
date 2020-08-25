@@ -55,7 +55,6 @@ var/list/dangerousVerbs = list(\
 /client/proc/check_gang_scores,\
 /client/proc/critter_creator_debug,\
 /client/proc/debug_deletions,\
-/client/proc/Debug2,\
 /client/proc/cmd_modify_controller_variables,\
 /client/proc/cmd_modify_ticker_variables,\
 /client/proc/find_thing,\

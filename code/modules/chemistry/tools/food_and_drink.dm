@@ -369,12 +369,12 @@
 					var/item_slot = M.get_slot_from_item(src)
 					if(item_slot)
 						M.u_equip(src)
-						src.loc = null
+						src.set_loc(null)
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
 							H.force_equip(I,item_slot) // mobs don't have force_equip
 							return
-			drop.loc = get_turf(src.loc)
+			drop.set_loc(get_turf(src.loc))
 
 /obj/item/reagent_containers/food/snacks/bite
 	name = "half-digested food chunk"
@@ -724,7 +724,7 @@
 
 			user.visible_message("<b>[user]</b> pours [L] into [src].", "You pour [L] into [src].")
 
-			S.loc = get_turf(src)
+			S.set_loc(get_turf(src))
 			qdel(src)
 
 
@@ -1239,11 +1239,11 @@
 		if(!(usr == over_object)) return
 		if(!istype(usr, /mob/living/carbon)) return
 		var/mob/living/carbon/C = usr
-		
+
 		var/maybe_too_clumsy = FALSE
 		var/maybe_too_tipsy = FALSE
 		var/too_drunk = FALSE
-		if(C.bioHolder) 
+		if(C.bioHolder)
 			maybe_too_clumsy = C.bioHolder.HasEffect("clumsy") && prob(50)
 		if(C.reagents.reagent_list["ethanol"])
 			maybe_too_tipsy = (C.reagents.reagent_list["ethanol"].volume >= 50) && prob(50)
@@ -1258,14 +1258,14 @@
 			if (!C.hasStatus("weakened"))
 				//Make them fall over, they lost their balance.
 				C.changeStatus("weakened", 2 SECONDS)
-		else 
+		else
 			actions.start(new /datum/action/bar/icon/drinkingglass_chug(C, src), C)
 		return
 
 	throw_impact(var/atom/A)
 		..()
 		src.smash(A)
-		
+
 //this action accepts a target that is not the owner, incase we want to allow forced chugging.
 /datum/action/bar/icon/drinkingglass_chug
 	duration = 0.5 SECONDS
@@ -1301,7 +1301,7 @@
 		..()
 		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
 		return
-	
+
 	onUpdate()
 		..()
 		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
@@ -1310,9 +1310,9 @@
 	onInterrupt(flag)
 		..()
 		target.visible_message("[target.name] couldn't drink everything in the [glass.name].")
-	
+
 	onEnd()
-	
+
 		if (glass.reagents.total_volume) //Take a sip
 			glass.reagents.reaction(target, INGEST, glass.gulp_size)
 			glass.reagents.trans_to(target, min(glass.reagents.total_volume, glass.gulp_size))

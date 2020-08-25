@@ -27,10 +27,7 @@
 		else
 			character.set_loc(ASLoc)
 
-		src.loc = null // Same as wraith/blob creation proc. Trying to narrow down a bug which
-		var/this = src // inexplicably (and without runtimes) caused another proc to fail, and
-		src = null // might as well give this a try. I suppose somebody else ran into the same problem?
-		qdel(this)
+		qdel(src)
 		return character
 
 	else
@@ -45,10 +42,7 @@
 			else
 				character.set_loc(ASLoc)
 
-			src.loc = null
-			var/this = src
-			src = null
-			qdel(this)
+			qdel(src)
 			return character
 
 		var/mob/new_player/respawned = new() // C&P from respawn_target(), which couldn't be adapted easily.
@@ -58,10 +52,7 @@
 		respawned.Login()
 		respawned.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 
-		src.loc = null
-		var/this = src
-		src = null
-		qdel(this)
+		qdel(src)
 
 		logTheThing("debug", respawned, null, "Humanize() failed. Player was respawned instead.")
 		message_admins("Humanize() failed. [key_name(respawned)] was respawned instead.")
@@ -94,7 +85,8 @@
 	src.icon = null
 	src.invisibility = 101
 	for(var/t in src.organs)
-		qdel(src.organs[text("[]", t)])
+		qdel(src.organs[t])
+		src.organs[t] = null
 
 	return ..()
 
@@ -160,6 +152,7 @@
 	O.verbs += /mob/living/silicon/ai/verb/access_internal_radio
 	O.verbs += /mob/living/silicon/ai/verb/access_internal_pda
 	O.verbs += /mob/living/silicon/ai/proc/ai_colorchange
+	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 	O.job = "AI"
 
 	SPAWN_DBG(0)
@@ -882,7 +875,7 @@ var/respawn_arena_enabled = 0
 	set desc = "Visit the Respawn Arena to earn a respawn!"
 	set category = "Ghost"
 
-	if(!it_is_ass_day && !respawn_arena_enabled)
+	if(!ASS_JAM && !respawn_arena_enabled)
 		boutput(src,"The respawn arena is not open right now. Tough luck!")
 		return
 
@@ -955,7 +948,6 @@ var/respawn_arena_enabled = 0
 		O.mind.key = key
 		O.mind.current = O
 		ticker.minds += O.mind
-	src.loc = null
 	qdel(src)
 	boutput(O, "<B>You are a flockmind, the collective machine consciousness of a flock of drones! Your existence is tied to your flock! Ensure that it survives and thrives!</B>")
 	boutput(O, "<B>Silicon units are able to detect your transmissions and messages (with some signal corruption), so exercise caution in what you say.</B>")
@@ -981,7 +973,6 @@ var/respawn_arena_enabled = 0
 			O.mind.key = key
 			O.mind.current = O
 			ticker.minds += O.mind
-		src.loc = null
 		qdel(src)
 
 		boutput(O, "<span class='bold'>You are a flocktrace, a partition of the flock's collective computation!</span>")

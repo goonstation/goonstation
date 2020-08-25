@@ -23,7 +23,7 @@ var/global/datum/controller/process/tgui/tgui_process
 	setup()
 		name = "tgui"
 		schedule_interval = 9 DECI SECONDS
-		basehtml = grabResource("tgui/tgui.html") // [GOONSTATION-ADD]
+		basehtml = grabResource("tgui/tgui.html") // |GOONSTATION-ADD|
 		tgui_process = src
 
 	doWork()

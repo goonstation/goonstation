@@ -3,7 +3,7 @@
 	desc = "Enables vestigal non-mammal traits in the subject's body."
 	id = "lizard"
 	mutantrace_option = "Lizard"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
 	probability = 33
 	msgGain = "Your skin feels oddly dry."
 	msgLose = "Your scales fall off."
@@ -116,7 +116,7 @@
 	id = "monkey"
 	mutantrace_option = "Monkey"
 	mutantrace_path = /datum/mutantrace/monkey
-	research_level = 3
+	research_level = EFFECT_RESEARCH_ACTIVATED
 	msgGain = "You go bananas!"
 	msgLose = "You do the evolution."
 	icon_state  = "monkey"

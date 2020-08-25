@@ -97,16 +97,16 @@ datum/preferences
 		//real_name = random_name(src.gender)
 		if (src.gender == MALE)
 			if (first)
-				src.name_first = capitalize(pick(first_names_male))
+				src.name_first = capitalize(pick_string_autokey("names/first_male.txt"))
 			if (middle)
-				src.name_middle = capitalize(pick(first_names_male))
+				src.name_middle = capitalize(pick_string_autokey("names/first_male.txt"))
 		else
 			if (first)
-				src.name_first = capitalize(pick(first_names_female))
+				src.name_first = capitalize(pick_string_autokey("names/first_female.txt"))
 			if (middle)
-				src.name_middle = capitalize(pick(first_names_female))
+				src.name_middle = capitalize(pick_string_autokey("names/first_female.txt"))
 		if (last)
-			src.name_last = capitalize(pick(last_names))
+			src.name_last = capitalize(pick_string_autokey("names/last.txt"))
 		src.real_name = src.name_first + " " + src.name_last
 
 	proc/randomizeLook() // im laze
@@ -1405,9 +1405,9 @@ $(function() {
 
 				if ("random")
 					if (src.gender == MALE)
-						new_name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
+						new_name = capitalize(pick_string_autokey("names/first_male.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 					else
-						new_name = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
+						new_name = capitalize(pick_string_autokey("names/first_female.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 					randomizeLook()
 			if (new_name)
 				if (length(new_name) >= 26)
@@ -1442,9 +1442,9 @@ $(function() {
 					new_name = capitalize(new_name)
 				if ("random")
 					if (src.gender == MALE)
-						new_name = capitalize(pick(first_names_male))
+						new_name = capitalize(pick_string_autokey("names/first_male.txt"))
 					else
-						new_name = capitalize(pick(first_names_female))
+						new_name = capitalize(pick_string_autokey("names/first_female.txt"))
 			if (new_name)
 				src.name_first = new_name
 				src.real_name = src.name_first + " " + src.name_last
@@ -1468,9 +1468,9 @@ $(function() {
 					new_name = capitalize(new_name)
 				if ("random")
 					if (src.gender == MALE)
-						new_name = capitalize(pick(first_names_male))
+						new_name = capitalize(pick_string_autokey("names/first_male.txt"))
 					else
-						new_name = capitalize(pick(first_names_female))
+						new_name = capitalize(pick_string_autokey("names/first_female.txt"))
 			src.name_middle = new_name // don't need to check if there is one in case someone wants no middle name I guess
 // -------------------------------------------
 		if (link_tags["last_name"])
@@ -1498,7 +1498,7 @@ $(function() {
 						return
 					new_name = capitalize(new_name)
 				if ("random")
-					new_name = capitalize(pick(last_names))
+					new_name = capitalize(pick_string_autokey("names/last.txt"))
 			if (new_name)
 				src.name_last = new_name
 				src.real_name = src.name_first + " " + src.name_last
@@ -2285,10 +2285,10 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		H.sound_scream = AH.screamsounds[pick(AH.gender == MALE ? male_screams : female_screams)]
 	if (H && change_name)
 		if (AH.gender == FEMALE)
-			H.real_name = pick(first_names_female)
+			H.real_name = pick_string_autokey("names/first_female.txt")
 		else
-			H.real_name = pick(first_names_male)
-		H.real_name += " [pick(last_names)]"
+			H.real_name = pick_string_autokey("names/first_male.txt")
+		H.real_name += " [pick_string_autokey("names/last.txt")]"
 
 	AH.voicetype = RANDOM_HUMAN_VOICE
 

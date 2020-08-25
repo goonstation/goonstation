@@ -2060,8 +2060,6 @@ var/global/noir = 0
 							removed_paths += dirty_path
 						else if (!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
 							removed_paths += dirty_path
-						else if (dirty_path in do_not_spawn && src.level < LEVEL_PA)
-							removed_paths += dirty_path
 						else if (ispath(path, /mob) && src.level < LEVEL_PA)
 							removed_paths += dirty_path
 						else
@@ -2797,7 +2795,7 @@ var/global/noir = 0
 					if ("yeolde")
 						if (src.level >= LEVEL_PA)
 							message_admins("[key_name(usr)] began replacing all Z1 airlocks with wooden doors.")
-							for (var/obj/machinery/door/D in doors)
+							for (var/obj/machinery/door/D in by_type[/obj/machinery/door])
 								if (atom_emergency_stop)
 									message_admins("[key_name(usr)]'s command to replace all Z1 airlocks with wooden doors was terminated due to the atom emerygency stop!")
 									return
@@ -3005,7 +3003,7 @@ var/global/noir = 0
 							input2 = zalgoify(input, rand(0,3), rand(0, 3), rand(0, 3))
 
 							if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for (var/obj/machinery/communications_dish/C in comm_dishes)
+								for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 									C.add_centcom_report("[command_name()] Update", input)
 
 								var/sound_to_play = "sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg"
@@ -3025,7 +3023,7 @@ var/global/noir = 0
 							var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
 
 							if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for (var/obj/machinery/communications_dish/C in comm_dishes)
+								for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 									C.add_centcom_report("[command_name()] Update", input)
 
 								var/sound_to_play = "sound/ambience/spooky/Void_Calls.ogg"
@@ -3235,7 +3233,7 @@ var/global/noir = 0
 									if(!M) continue
 									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-									var/turf/mob_loc = get_turf_loc(M)
+									var/turf/mob_loc = get_turf(M)
 									dat += "<td>[mob_loc.loc]</td></tr>"
 								dat += "</table>"
 
@@ -3767,8 +3765,8 @@ var/global/noir = 0
 
 		if ("toggle_dj")
 			var/mob/M = (href_list["target"] ? locate(href_list["target"]) : null)
-			if(M && M.client)
-				toggledj(M.client, usr.client)
+			if(M?.client)
+				global.dj_panel.toggledj(M.client, usr.client)
 			else
 				alert ("No client found, sorry.")
 

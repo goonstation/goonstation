@@ -55,7 +55,8 @@
 	return precondition() * weight * score_target(get_best_target(get_targets()))
 
 /datum/aiTask/timed/targeted/trilobite/on_tick()
-	if (HAS_MOB_PROPERTY(holder.owner, PROP_CANTMOVE))
+	var/mob/living/critter/owncritter = holder.owner
+	if (HAS_MOB_PROPERTY(owncritter, PROP_CANTMOVE))
 		return
 
 	if(!holder.target)
@@ -64,14 +65,14 @@
 			var/list/possible = get_targets()
 			if (possible.len)
 				holder.target = pick(possible)
-	if(holder.target && holder.target.z == holder.owner.z)
+	if(holder.target && holder.target.z == owncritter.z)
 		var/mob/living/M = holder.target
 		if(!isalive(M))
 			holder.target = null
 			holder.target = get_best_target(get_targets())
 			if(!holder.target)
 				return ..() // try again next tick
-		var/dist = get_dist(holder.owner, M)
+		var/dist = get_dist(owncritter, M)
 		if (dist > 2)
 			holder.move_to(M)
 		else
@@ -79,17 +80,17 @@
 
 		if (dist < 4)
 			if (M.equipped())
-				holder.owner.a_intent = prob(66) ? INTENT_DISARM : INTENT_HARM
+				owncritter.a_intent = prob(66) ? INTENT_DISARM : INTENT_HARM
 			else
-				holder.owner.a_intent = INTENT_HARM
+				owncritter.a_intent = INTENT_HARM
 
-			holder.owner.hud.update_intent()
-			holder.owner.dir = get_dir(holder.owner, M)
+			owncritter.hud.update_intent()
+			owncritter.dir = get_dir(owncritter, M)
 
 			var/list/params = list()
 			params["left"] = 1
 			params["ai"] = 1
-			holder.owner.hand_range_attack(M, params)
+			owncritter.hand_range_attack(M, params)
 
 	..()
 
@@ -183,7 +184,8 @@
 		. = !(holder.target)
 
 /datum/aiTask/timed/targeted/flee_and_shoot/on_tick()
-	if (HAS_MOB_PROPERTY(holder.owner, PROP_CANTMOVE))
+	var/mob/living/critter/owncritter = holder.owner
+	if (HAS_MOB_PROPERTY(owncritter, PROP_CANTMOVE))
 		return
 
 	if(!holder.target)
@@ -193,7 +195,7 @@
 		if (!holder.target)
 			holder.wait()
 
-	if(holder.target && holder.target.z == holder.owner.z)
+	if(holder.target && holder.target.z == owncritter.z)
 		if (ismob(holder.target))
 			var/mob/living/M = holder.target
 			if(!isalive(M))
@@ -202,22 +204,22 @@
 				if(!holder.target)
 					return ..() // try again next tick
 
-		var/dist = get_dist(holder.owner, holder.target)
+		var/dist = get_dist(owncritter, holder.target)
 		if (dist > target_range)
 			holder.target = null
 			return ..()
 
 		holder.move_away(holder.target,target_range)
 
-		holder.owner.a_intent = INTENT_HARM
+		owncritter.a_intent = INTENT_HARM
 
-		holder.owner.hud.update_intent()
-		holder.owner.dir = get_dir(holder.owner, holder.target)
+		owncritter.hud.update_intent()
+		owncritter.dir = get_dir(owncritter, holder.target)
 
 		var/list/params = list()
 		params["left"] = 1
 		params["ai"] = 1
-		holder.owner.hand_range_attack(holder.target, params)
+		owncritter.hand_range_attack(holder.target, params)
 
 	..()
 
@@ -292,7 +294,8 @@
 	return precondition() * weight * score_target(get_best_target(get_targets()))
 
 /datum/aiTask/timed/targeted/pikaia/on_tick()
-	if (HAS_MOB_PROPERTY(holder.owner, PROP_CANTMOVE) || !isalive(holder.owner))
+	var/mob/living/critter/owncritter = holder.owner
+	if (HAS_MOB_PROPERTY(owncritter, PROP_CANTMOVE) || !isalive(owncritter))
 		return
 
 	if(!holder.target)
@@ -301,8 +304,8 @@
 			var/list/possible = get_targets()
 			if (possible.len)
 				holder.target = pick(possible)
-	if(holder.target && holder.target.z == holder.owner.z)
-		var/dist = get_dist(holder.owner, holder.target)
+	if(holder.target && holder.target.z == owncritter.z)
+		var/dist = get_dist(owncritter, holder.target)
 		if (dist >= 1)
 			if (prob(80))
 				holder.move_to(holder.target,0)
@@ -319,28 +322,28 @@
 				if(!holder.target)
 					return ..() // try again next tick
 			if (dist <= 1)
-				holder.owner.a_intent = INTENT_GRAB
-				holder.owner.hud.update_intent()
-				holder.owner.dir = get_dir(holder.owner, M)
+				owncritter.a_intent = INTENT_GRAB
+				owncritter.hud.update_intent()
+				owncritter.dir = get_dir(owncritter, M)
 
 				var/list/params = list()
 				params["left"] = 1
 
-				if (!holder.owner.equipped())
-					holder.owner.hand_attack(M, params)
+				if (!owncritter.equipped())
+					owncritter.hand_attack(M, params)
 				else
-					var/obj/item/grab/G = holder.owner.equipped()
+					var/obj/item/grab/G = owncritter.equipped()
 					if (istype(G))
 						if (G.affecting == null || G.assailant == null || G.disposed) //ugly safety
-							holder.owner.drop_item()
+							owncritter.drop_item()
 
 						if (G.state <= GRAB_PASSIVE)
-							G.attack_self(holder.owner)
+							G.attack_self(owncritter)
 						else
-							holder.owner.emote("flip")
+							owncritter.emote("flip")
 							holder.move_away(holder.target,1)
 					else
-						holder.owner.drop_item()
+						owncritter.drop_item()
 		else
 			holder.move_circ(holder.target,target_range+8)
 

@@ -49,7 +49,7 @@
 	proc/init(var/obj/machinery/disposal/D)
 		gas = D.air_contents.remove_ratio(1)	// transfer gas resv. into holder object
 
-		// loc = null makes some stuff grumpy, ok?
+		// set_loc(null makes some stuff grumpy, ok?)
 		if(D.trunk)
 			src.set_loc(D.trunk)
 		else
@@ -74,7 +74,7 @@
 			D.expel(src)	// no trunk connected, so expel immediately
 			return
 
-		loc = D.trunk
+		set_loc(D.trunk)
 		active = 1
 		dir = DOWN
 		SPAWN_DBG(1 DECI SECOND)
@@ -994,7 +994,7 @@
 						newLoaf.loaf_factor++
 
 					H.contents -= newIngredient
-					newIngredient.loc = null
+					newIngredient.set_loc(null)
 					newIngredient = null
 
 					//LAGCHECK(LAG_MED)

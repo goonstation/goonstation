@@ -12,10 +12,9 @@ var/global/list/queue_stat_list = list()
 #endif
 
 // dumb, bad
-var/list/extra_resources = list('code/pressstart2p.ttf', 'ibmvga9.ttf', 'inhumanbb.ttf', 'xfont.ttf')
+var/list/extra_resources = list('code/pressstart2p.ttf', 'ibmvga9.ttf', 'xfont.ttf')
 // Press Start 2P - 6px
 // PxPlus IBM VGA9 - 12px
-//Inhuman BB - 12px
 
 
 // -------------------- GLOBAL VARS --------------------
@@ -27,50 +26,22 @@ var/global
 	lagcheck_enabled = 0
 
 	datum/datacore/data_core = null
+
 	obj/overlay/plmaster = null
 	obj/overlay/slmaster = null
-	obj/overlay/w1master = null
-	obj/overlay/w2master = null
-	obj/overlay/w3master = null
-
-	icon/aiIcon = icon('icons/mob/16.dmi',"ai",SOUTH,1) //Used for AI chat icon.
-	icon/roboIcon = icon('icons/mob/16.dmi',"robo",SOUTH,1)
-	icon/headIcon = icon('icons/mob/16.dmi',"head",SOUTH,1)
-	icon/sciIcon = icon('icons/mob/16.dmi',"sci",SOUTH,1)
-	icon/medIcon = icon('icons/mob/16.dmi',"med",SOUTH,1)
-	icon/engIcon = icon('icons/mob/16.dmi',"eng",SOUTH,1)
-	icon/secIcon = icon('icons/mob/16.dmi',"sec",SOUTH,1)
-	icon/qmIcon = icon('icons/mob/16.dmi',"qm",SOUTH,1)
-	icon/civIcon = icon('icons/mob/16.dmi',"civ",SOUTH,1)
-	icon/syndieIcon = icon('icons/mob/16.dmi',"syndie",SOUTH,1)
-	icon/syndiebossIcon = icon('icons/mob/16.dmi',"syndieboss",SOUTH,1)
-	icon/capIcon = icon('icons/mob/16.dmi',"cap",SOUTH,1)
-	icon/rdIcon = icon('icons/mob/16.dmi',"rd",SOUTH,1)
-	icon/mdIcon = icon('icons/mob/16.dmi',"md",SOUTH,1)
-	icon/ceIcon = icon('icons/mob/16.dmi',"ce",SOUTH,1)
-	icon/hopIcon = icon('icons/mob/16.dmi',"hop",SOUTH,1)
-	icon/hosIcon = icon('icons/mob/16.dmi',"hos",SOUTH,1)
-	icon/clownIcon = icon('icons/mob/16.dmi',"clown",SOUTH,1)
-	icon/ntIcon = icon('icons/mob/16.dmi',"nt",SOUTH,1)
 
 	turf/buzztile = null
 
-	//obj/hud/main_hud1 = null
-
-	list/list/by_type = list()
+	list/list/by_type = list() // contains lists of objects indexed by their type based on START_TRACKING / STOP_TRACKING
 
 	obj/screen/renderSourceHolder
 	obj/overlay/zamujasa/round_start_countdown/game_start_countdown	// Countdown clock for round start
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
 	list/image/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
 	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
-	list/cameras = list()
 	list/clients = list()
 	list/mobs = list()
 	list/ai_mobs = list()
-	list/AIs = list() //sorry, quicker loop through when we searching for AIs
-	list/doors = list()
-	list/allcables = list()
 	list/atmos_machines = list() // need another list to pull atmos machines out of the main machine loop and in with the pipe networks
 	list/processing_items = list()
 	list/health_update_queue = list()
@@ -83,10 +54,8 @@ var/global
 	datum/hotspot_controller/hotspot_controller = new
 		//items that ask to be called every cycle
 
-	//list/total_deletes = list() //List of things totally deleted
 	list/critters = list()
 	list/pets = list() //station pets
-	list/ghost_drones = list()
 	list/muted_keys = list()
 
 	server_start_time = 0
@@ -109,11 +78,7 @@ var/global
 
 	list/factions = list()
 
-	list/lockers_and_crates = list()
-
 	list/traitList = list() //List of trait objects
-
-	//IRC_alerted_keys = list()
 
 	list/spawned_in_keys = list() //Player keys that have played this round, to prevent that "jerk gets deleted by a bug, gets to respawn" thing.
 
@@ -123,16 +88,7 @@ var/global
 
 	list/spacePushList = list()
 
-	list/bad_smoke_list = list()
-
 	list/nervous_mobs = list()
-
-	list/comm_dishes = list()
-
-	list/conveyor_switches = list()
-
-
-	//list/disposed_things_that_dont_work = list()
 
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
@@ -426,12 +382,6 @@ var/global
 	"Yesteryear",
 	"Zeyada")
 
-	skipupdate = 0
-	///////////////
-	event = 0
-	//blobevent = 0
-	///////////////
-
 	//april fools
 	manualbreathing = 0
 	manualblinking = 0
@@ -449,7 +399,6 @@ var/global
 	hublog = null
 	game_version = "Goon Station 13 (r" + vcs_revision + ")"
 
-	going = 1.0
 	master_mode = "traitor"
 
 	host = null
@@ -472,12 +421,8 @@ var/global
 	pull_slowing = 0
 	suicide_allowed = 1
 	dna_ident = 1
-	special_respawning = 1
 	abandon_allowed = 1
 	enter_allowed = 1
-	shuttle_frozen = 0
-	shuttle_left = 0
-	turd_location = 0
 	johnbus_location = 1
 	johnbus_destination = 0
 	johnbus_active = 0
@@ -488,7 +433,6 @@ var/global
 	toggles_enabled = 1
 	announce_banlogin = 1
 	announce_jobbans = 0
-	station_creepified = 0
 
 
 	outpost_destroyed = 0
@@ -497,15 +441,11 @@ var/global
 	blowout = 0
 	farty_party = 0
 	deep_farting = 0
-	ass_day = 0
 
 	turf/unsimulated/wall/titlecard/lobby_titlecard
 
 	total_souls_sold = 0
 	total_souls_value = 0
-
-	/*total_corrupted_terrain = 0
-	total_corruptible_terrain = 0*/
 
 	///////////////
 	//Radio network passwords
@@ -543,15 +483,9 @@ var/global
 	list/onlineAdmins = list(  )
 	list/whitelistCkeys = list(  )
 	list/bypassCapCkeys = list(  )
-	list/shuttles = list(  )
-	list/reg_dna = list(  )
-//	list/traitobj = list(  )
 	list/warned_keys = list()	// tracking warnings per round, i guess
 
-	chui/window/dj_panel/admin_dj = new()
-
-	CELLRATE = 0.002  // multiplier for watts per tick <> cell storage (eg: .002 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
-	CHARGELEVEL = 0.001 // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
+	datum/dj_panel/dj_panel = new()
 
 	list/monkeystart = list()
 	list/wizardstart = list()
@@ -572,10 +506,8 @@ var/global
 	list/blobstart = list()
 	list/kudzustart = list()
 	list/peststart = list()
-	list/blobs = list()
 	list/wormholeturfs = list()
 	list/halloweenspawn = list()
-	list/nuclear_auths = list()
 	list/telesci = list() // special turfs from map landmarks to always allow telescience to access
 						  // telesci landmarks add a 3z3 area centered on themselves to this list
 	list/icefall = list() // list of locations for people to fall if they enter the deep abyss on the ice moon
@@ -598,8 +530,6 @@ var/global
 	list/shittybills = list()
 	list/johnbills = list()
 	list/otherbills = list()
-	list/tourguides = list()
-	list/npcmonkeypals = list()
 	list/teleport_jammers = list()
 
 
@@ -611,7 +541,6 @@ var/global
 	datum/wage_system/wagesystem
 	datum/shipping_market/shippingmarket
 
-	datum/station_state/start_state = null
 	datum/configuration/config = null
 	datum/sun/sun = null
 
@@ -619,11 +548,6 @@ var/global
 	datum/admin_changelog/admin_changelog = null
 
 	list/datum/powernet/powernets = null
-
-	Debug = 0	// global debug switch
-	Debug2 = 0
-
-	shuttlecoming = 0
 
 	join_motd = null
 	rules = null
@@ -671,9 +595,6 @@ var/global
 
 	//SpyGuy: The reagents cache is now an associative list
 	list/reagents_cache = list()
-
-	// if you want stuff to not be spawnable by the list or buildmode, put it in here:
-	list/do_not_spawn = list("/obj/bhole","/obj/item/old_grenade/graviton","/mob/living/carbon/human/krampus")
 
 	// list of miscreants since mode is irrelevant
 	list/miscreants = list()
@@ -749,8 +670,6 @@ var/global
 	"l_leg" = "left leg",
 	"r_leg" = "right leg")
 
-	switchMap = null
-
 	transparentColor = "#ff00e4"
 
 	pregameHTML = null
@@ -806,7 +725,7 @@ var/global
 /proc/addAIImage(var/image/I, var/key)
 	if(I && length(key))
 		aiImages[key] = I
-		for(var/mob/M in AIs)
+		for(var/mob/M in by_type[/mob/living/silicon/ai])
 			if (M.client)
 				M << I
 		return I
