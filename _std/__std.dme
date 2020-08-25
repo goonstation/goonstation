@@ -1,6 +1,8 @@
 /** Standard library inclusion .dme
  * Treat this as the normal .dme, but for things in the _std folder. The inclusion paths are scoped to it.
  * This needs to be this way, otherwise DM freaks out about .dm inclusions not inside //BEGIN_INCLUDE
+ * you need to manually add entries to this file - make sure theyre not being added to goonstation.dme
+ * the order that things are compiled in is important. please stick with alphabetical order unless it wont compile in alphabetical order.
  */
 
 #include "__build.dm" //this controls how a lot of our defines and macros and code is compiled, so it absolutely needs to be the first
@@ -8,7 +10,7 @@
 #include "defines\_units.dm" //this has some unit defines that a lot of other macros/defines use, so it needs to go near the start too
 #include "macros\macros.dm" //this has to be near the start because of course it does. will dejank in the future.
 #include "defines\obj.dm" //ditto above
-#include "defines\lagcheck.dm" //ditto above
+#include "defines\lag.dm" //ditto above
 #include "defines\item.dm" //ditto above
 #include "color.dm"
 #include "datum.dm"
@@ -26,47 +28,34 @@
 #include "defines\accessLevels.dm"
 #include "defines\actions.dm"
 #include "defines\admin.dm"
-#include "defines\airlock.dm"
 #include "defines\atom.dm"
 #include "defines\bioeffect.dm"
 #include "defines\blocking.dm"
-#include "defines\bool.dm"
 #include "defines\chemistry.dm"
+#include "defines\client.dm"
 #include "defines\clothing.dm"
 #include "defines\combat.dm"
 #include "defines\component_defines.dm"
 #include "defines\computer.dm"
 #include "defines\construction.dm"
 #include "defines\critter.dm"
-#include "defines\cruiser.dm"
-#include "defines\delqueue.dm"
 #include "defines\dialogue.dm"
-#include "defines\fluid_pipes.dm"
-#include "defines\hearing.dm"
+#include "defines\door.dm"
+#include "defines\fluid.dm"
 #include "defines\input.dm"
 //#include "defines\item.dm" //temporarily moved up in the compile order because of PATHFINDING.DM AGAIN!!!! UGGHGHGHGHGHGHHG!!!
-#include "defines\item_rarity.dm"
 #include "defines\jobs.dm"
-//#include "defines\lagcheck.dm" //temporarily moved up in the compile order because of course a pathfinding.dm uses it. UGHHHHHHHH!
-#include "defines\lightcycles.dm"
-#include "defines\materials.dm"
+//#include "defines\lag.dm" //temporarily moved up in the compile order because of course a pathfinding.dm uses it. UGHHHHHHHH!
+#include "defines\logic.dm"
 #include "defines\message_lengths.dm"
-#include "defines\mining_z_gen.dm"
 #include "defines\mob.dm"
-#include "defines\mob_damage.dm"
 #include "defines\movement.dm"
 //#include "defines\obj.dm" //temporarily moved up in the compile order, because pathfinding.dm relies on it. because of course. UGHHH
-#include "defines\ocean_generation.dm"
-#include "defines\participation.dm"
 #include "defines\pathology.dm"
-#include "defines\pools.dm"
 #include "defines\preferences.dm"
 #include "defines\process.dm"
 #include "defines\projectiles.dm"
 #include "defines\radio.dm"
-#include "defines\savefile.dm"
-#include "defines\ship_alert.dm"
-#include "defines\shoes.dm"
 #include "defines\shuttle.dm"
 #include "defines\sight.dm"
 #include "defines\sound.dm"
@@ -74,10 +63,13 @@
 #include "defines\stamina.dm"
 #include "defines\status_effects.dm"
 #include "defines\temperatures.dm"
+#include "defines\time.dm"
 #include "defines\tooltips.dm"
 #include "defines\turf.dm"
 #include "defines\ui.dm"
-#include "defines\year.dm"
+#include "defines\vehicles.dm"
+#include "defines\watermap.dm"
+#include "defines\worldgen.dm"
 #include "macros\antag_popups.dm"
 #include "macros\antagchecks.dm"
 #include "macros\atmos.dm"

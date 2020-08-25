@@ -52,3 +52,12 @@
 #define DAMAGE_CRUSH 16					// crushing damage is technically blunt damage, but it causes bleeding
 #define DEFAULT_BLOOD_COLOR "#990000"	// speak for yourself, as a shapeshifting illuminati lizard, my blood is somewhere between lime and leaf green
 #define DAMAGE_TYPE_TO_STRING(x) (x == DAMAGE_BLUNT ? "blunt" : x == DAMAGE_CUT ? "cut" : x == DAMAGE_STAB ? "stab" : x == DAMAGE_BURN ? "burn" : x == DAMAGE_CRUSH ? "crush" : "")
+
+//item rarity stuff
+#define ITEM_RARITY_POOR 1
+#define ITEM_RARITY_COMMON 2
+#define ITEM_RARITY_UNCOMMON 3
+#define ITEM_RARITY_RARE 4
+#define ITEM_RARITY_EPIC 5
+#define ITEM_RARITY_LEGENDARY 6
+#define ITEM_RARITY_MYTHIC 7

@@ -1,3 +1,7 @@
+#define CURRENT_SPACE_YEAR 2053
+
+//DAY AND NIGHT CYCLES
+
 // m = 127 + cos(BUILD_TIME_HOUR / 12 * (pi * 2) * 127
 // Oshan light cycles every 12 hours by suggestion from cogwerks,
 // to give people more chances to see different values

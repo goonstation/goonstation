@@ -67,3 +67,9 @@
 #define STEP_PRIORITY_MED 1
 #define STEP_PRIORITY_LOW 0.5
 #define STEP_PRIORITY_NONE 0
+
+//shoe laces!
+#define LACES_NORMAL 0
+#define LACES_TIED 1
+#define LACES_CUT 2
+#define LACES_NONE -1
