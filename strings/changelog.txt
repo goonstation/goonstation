@@ -1,4 +1,26 @@
 
+(t)tue aug 25 20
+(u)ThePotato97
+(p)1846
+(e)|
+(+)Fixed the Infravision trait.
+(u)Michaellaneous
+(p)1918
+(e)⚖|balance
+(+)Medium and small spiders now can't grab people anymore.
+(u)Jawns
+(p)1927
+(e)🐛|bug
+(+)Ghost drone popsicle duplication feature removed
+(u)zjdtmkhzt
+(p)1891
+(e)⚖|balance
+(+)AIs and cyborgs now have su access at terminals.
+(u)RichardGere
+(p)1802
+(e)🆕📄|feature, tgui
+(*)Gas canisters and tanks have had their UIs updated. Report any bugs!
+(+)Fixed a bug where remote signalers attached to canister bombs didn't properly turn off the safety.
 (t)mon aug 24 20
 (u)zjdtmkhzt
 (p)1920

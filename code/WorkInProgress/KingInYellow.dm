@@ -122,7 +122,7 @@
 				return
 
 			. = list()
-			if (readers.len && reader in readers)
+			if (readers.len && (reader in readers))
 				. += "<br>You frantically read the play again..."
 				. += "You feel as if you're about to faint."
 				reader.drowsyness += 3
