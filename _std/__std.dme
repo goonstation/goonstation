@@ -12,6 +12,7 @@
 #include "macros\_macros.dm"
 #include "macros\spaceman_dmm.dm"
 #include "defines\_admin.dm"
+#include "defines\_bioeffect.dm"
 #include "defines\_input.dm"
 #include "defines\_jobs.dm"
 #include "defines\_shuttle.dm"

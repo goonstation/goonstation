@@ -696,7 +696,7 @@
 	//src.icon_state = "dead"
 
 	if (!src.suiciding)
-		if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
+		if (emergency_shuttle?.location == SHUTTLE_LOC_STATION)
 			src.unlock_medal("HUMANOID MUST NOT ESCAPE", 1)
 
 		if (src.hasStatus("handcuffed"))
@@ -2289,7 +2289,7 @@
 	..()
 
 	if (src.bioHolder)
-		bioHolder.RemoveAllEffects(effectTypeDisability)
+		bioHolder.RemoveAllEffects(EFFECT_TYPE_DISABILITY)
 
 	if (src.sims)
 		for (var/name in sims.motives)

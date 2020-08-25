@@ -297,7 +297,6 @@ var/list/admin_verbs = list(
 		/client/proc/sendmobs,
 		/client/proc/gettraitors,
 		/client/proc/getnontraitors,
-		/client/proc/Debug2,
 		/datum/admins/proc/adrev,
 		/datum/admins/proc/adspawn,
 		/datum/admins/proc/adjump,

@@ -25,8 +25,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\__secret_public.dme"
 
 // BEGIN_INCLUDE
-#include "_std\defines\__units.dm"
-#include "_std\defines\_shuttle.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\base_lighting.dm"
@@ -404,7 +402,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\webelements\textarea.dm"
 #include "code\datums\webelements\title.dm"
 #include "code\lists\jobs.dm"
-#include "code\lists\names.dm"
 #include "code\lists\nt.dm"
 #include "code\lists\tips.dm"
 #include "code\mob\dead.dm"

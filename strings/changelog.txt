@@ -1,5 +1,26 @@
 
+(t)mon aug 24 20
+(u)zjdtmkhzt
+(p)1920
+(e)🆕|feature
+(+)The pitcher in the artifact lab should now actually scale its power properly for force artifacts.
+(u)pali
+(p)1913
+(e)🆕|feature
+(+)Muzzle flashes now emit a bit of light.
+(u)Michaellaneous
+(p)1919
+(e)|
+(+)Added logic to allow bowls to be recycled
+(u)Michaellaneous
+(p)1915
+(e)🗺|mapping
+(+)Added siren helmets to gimmick wardrobe and removed the hardcoded items from maps
 (t)sun aug 23 20
+(u)Zamujasa
+(*)Updated the round setup stuff. The countdown now starts immediately, and the game setup takes place while the countdown is running. This means rounds start about 2-3 minutes faster on average.
+(*)Map voting is enabled with 60 seconds left on the countdown rather than after setup completes.
+(*)If setup hasn't finished yet, the countdown will automatically stop at 30 seconds until it finishes.
 (u)adharainspace
 (p)1887
 (e)🆕|feature

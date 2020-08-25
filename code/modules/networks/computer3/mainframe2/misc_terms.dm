@@ -3758,6 +3758,10 @@
 					to_toss.set_loc(src.loc)
 					src.visible_message("<b>[src.name]</b> launches [to_toss]!")
 					playsound(src.loc, "sound/effects/syringeproj.ogg", 50, 1)
+					to_toss.throwforce += throw_strength/4 // adds up to 25
+					SPAWN_DBG(1.5 SECONDS)
+						if (to_toss)
+							to_toss.throwforce -= throw_strength/4
 					to_toss.throw_at(get_edge_target_turf(src, src.dir), throw_strength, (throw_strength/50))
 
 				if (!src.active)
@@ -3937,6 +3941,7 @@
 		if (istype(I.artifact,/datum/artifact/))
 			var/datum/artifact/ARTDATA = I.artifact
 			var/stimforce = M.throwforce
+			I.ArtifactStimulus("force", stimforce)
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
 			if (src.sensed[2] != 0 && ARTDATA.faults.len)
@@ -3955,6 +3960,7 @@
 		if (istype(I.artifact,/datum/artifact/))
 			var/datum/artifact/ARTDATA = I.artifact
 			var/stimforce = P.power
+			I.ArtifactStimulus("force", stimforce)
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
 
