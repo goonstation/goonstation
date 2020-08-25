@@ -1,4 +1,10 @@
 
+(t)tue aug 25 20
+(u)RichardGere
+(p)1802
+(e)🆕📄|feature, tgui
+(*)Gas canisters and tanks have had their UIs updated. Report any bugs!
+(+)Fixed a bug where remote signalers attached to canister bombs didn't properly turn off the safety.
 (t)mon aug 24 20
 (u)zjdtmkhzt
 (p)1920
