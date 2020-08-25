@@ -6,3 +6,4 @@
 #define LANDMARK_KUDZUSTART "kudzustart"
 #define LANDMARK_SYNDICATE "Syndicate-Spawn"
 #define LANDMARK_SYNDICATE_BOSS "SR Syndicate-Spawn"
+#define LANDMARK_OBSERVER "Observer-Start"
