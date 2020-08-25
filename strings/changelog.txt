@@ -1,5 +1,9 @@
 
 (t)tue aug 25 20
+(u)Superlagg
+(p)1831
+(e)⚖🆕|balance, feature
+(*)Werewolves now talk and see like a dog.
 (u)Carbadox
 (p)1884
 (e)🆕|feature
