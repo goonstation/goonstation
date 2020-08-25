@@ -3,6 +3,7 @@
 
 #define LANDMARK_PESTSTART "peststart"
 #define LANDMARK_LATEJOIN "latejoin"
+#define LANDMARK_LATEJOIN_MISSILE "latejoin missile"
 #define LANDMARK_NEW_PLAYER "new_player"
 #define LANDMARK_MONKEY "monkey"
 #define LANDMARK_BLOBSTART "blobstart"

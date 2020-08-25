@@ -84,9 +84,13 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/latejoin_missile
 	name = "missile latejoin spawn marker"
+	name_override = LANDMARK_LATEJOIN_MISSILE
 	icon_state = "x"
 	dir = NORTH
 
+	New()
+		src.data = src.dir // save dir
+		..()
 	north
 		name = "missile latejoin spawn marker (north)"
 		dir = NORTH
