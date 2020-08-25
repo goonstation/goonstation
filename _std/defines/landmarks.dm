@@ -42,6 +42,7 @@
 #define LANDMARK_AI_GUNBOT_SHUTTLE "AIgunbotshuttle" // MALF AI module thing
 #define LANDMARK_BIGBOOM "bigboom" // unfinished Manta event
 #define LANDMARK_TUTORIAL_START "tutorial_start_marker"
+#define LANDMARK_CRUISER_ENTRANCE "cruiser_entrance"
 
 // VR networks
 

@@ -48,12 +48,15 @@ var/global/list/job_start_locations = list()
 				job_start_locations[src.name] += src.loc
 		..()
 
+// actual landmarks follow
+// most of these are here just for backwards compatibility
+
 /obj/landmark/start/latejoin
 	name = LANDMARK_LATEJOIN
 	add_to_landmarks = TRUE
 
 /obj/landmark/cruiser_entrance
-	name = "cruiser_entrance"
+	name = LANDMARK_CRUISER_ENTRANCE
 
 /obj/landmark/escape_pod_succ
 	name = LANDMARK_ESCAPE_POD_SUCCESS
