@@ -696,7 +696,7 @@
 	//src.icon_state = "dead"
 
 	if (!src.suiciding)
-		if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
+		if (emergency_shuttle?.location == SHUTTLE_LOC_STATION)
 			src.unlock_medal("HUMANOID MUST NOT ESCAPE", 1)
 
 		if (src.hasStatus("handcuffed"))
@@ -977,13 +977,13 @@
 		attack_twitch(src)
 		I.layer = initial(I.layer)
 		var/yeet = 0 // what the fuck am I doing
-
-		if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
-			yeet_chance = 1
-		if(src.mind.karma < 0) //you come and go, you come and go.
-			yeet_chance = 0
-		if(src.mind.karma < 50 && src.mind.karma >= 0)
-			yeet_chance = 0.1
+		if(src.mind)
+			if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
+				yeet_chance = 1
+			if(src.mind.karma < 0) //you come and go, you come and go.
+				yeet_chance = 0
+			if(src.mind.karma < 50 && src.mind.karma >= 0)
+				yeet_chance = 0.1
 
 		if(prob(yeet_chance))
 			src.visible_message("<span class='alert'>[src] yeets [I].</span>")
@@ -2289,7 +2289,7 @@
 	..()
 
 	if (src.bioHolder)
-		bioHolder.RemoveAllEffects(effectTypeDisability)
+		bioHolder.RemoveAllEffects(EFFECT_TYPE_DISABILITY)
 
 	if (src.sims)
 		for (var/name in sims.motives)

@@ -1,8 +1,5 @@
 var/list/recently_dead = new/list()
 var/datum/vote_manager/vote_manager = new/datum/vote_manager()
-var/list/vote_log = new/list()
-var/const/max_votes_per_round = 2
-var/const/recently_time = 6000 // 10 mins
 
 //commented out for assjam modevote
 /**

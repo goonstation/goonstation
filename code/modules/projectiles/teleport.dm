@@ -25,6 +25,10 @@
 	//Can we pass windows
 	window_pass = 0
 
+	color_red = 0.2
+	color_green = 0.2
+	color_blue = 1
+
 	var/obj/item/target = null
 	var/failchance = 5
 

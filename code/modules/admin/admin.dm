@@ -1905,11 +1905,11 @@ var/global/noir = 0
 
 			//they're nothing so turn them into a traitor!
 			if(ishuman(M) || isAI(M) || isrobot(M) || ismobcritter(M))
-				var/traitorize = "Cancel"
-				traitorize = alert("Is not a traitor, make Traitor?", "Traitor", "Yes", "Cancel")
-				if(traitorize == "Cancel")
+				var/antagonize = "Cancel"
+				antagonize = alert("Is not an antagonist, make antagonist?", "antagonist", "Yes", "Cancel")
+				if(antagonize == "Cancel")
 					return
-				if(traitorize == "Yes")
+				if(antagonize == "Yes")
 					if (issilicon(M))
 						evilize(M, "traitor")
 					else if (ismobcritter(M))
@@ -1976,13 +1976,13 @@ var/global/noir = 0
 				if (src.level >= LEVEL_CODER)
 					dat += {"
 							<A href='?src=\ref[src];action=chgadlvl;type=Coder;target=\ref[C]'>Coder</A><BR>
-							<A href='?src=\ref[src];action=chgadlvl;type=Administrator;target=\ref[C]'>Administrator</A><BR>
 							"}
 				if (src.level >= LEVEL_ADMIN)
+					dat += "<A href='?src=\ref[src];action=chgadlvl;type=Administrator;target=\ref[C]'>Administrator</A><BR>"
 					dat += "<A href='?src=\ref[src];action=chgadlvl;type=Primary Administrator;target=\ref[C]'>Primary Administrator</A><BR>"
 				if (src.level >= LEVEL_PA)
 					dat += {"
-							<A href='?src=\ref[src];action=chgadlvl;type=Administrator;target=\ref[C]'>Administrator</A><BR>
+							<A href='?src=\ref[src];action=chgadlvl;type=Intermediate Administrator;target=\ref[C]'>Intermediate Administrator</A><BR>
 							<A href='?src=\ref[src];action=chgadlvl;type=Secondary Administrator;target=\ref[C]'>Secondary Administrator</A><BR>
 							<A href='?src=\ref[src];action=chgadlvl;type=Moderator;target=\ref[C]'>Moderator</A><BR>
 							<A href='?src=\ref[src];action=chgadlvl;type=Ayn Rand%27s Armpit;target=\ref[C]'>Ayn Rand's Armpit</A><BR>
@@ -2059,8 +2059,6 @@ var/global/noir = 0
 						if (!path)
 							removed_paths += dirty_path
 						else if (!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
-							removed_paths += dirty_path
-						else if (dirty_path in do_not_spawn && src.level < LEVEL_PA)
 							removed_paths += dirty_path
 						else if (ispath(path, /mob) && src.level < LEVEL_PA)
 							removed_paths += dirty_path
@@ -2797,7 +2795,7 @@ var/global/noir = 0
 					if ("yeolde")
 						if (src.level >= LEVEL_PA)
 							message_admins("[key_name(usr)] began replacing all Z1 airlocks with wooden doors.")
-							for (var/obj/machinery/door/D in doors)
+							for (var/obj/machinery/door/D in by_type[/obj/machinery/door])
 								if (atom_emergency_stop)
 									message_admins("[key_name(usr)]'s command to replace all Z1 airlocks with wooden doors was terminated due to the atom emerygency stop!")
 									return
@@ -3005,7 +3003,7 @@ var/global/noir = 0
 							input2 = zalgoify(input, rand(0,3), rand(0, 3), rand(0, 3))
 
 							if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for (var/obj/machinery/communications_dish/C in comm_dishes)
+								for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 									C.add_centcom_report("[command_name()] Update", input)
 
 								var/sound_to_play = "sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg"
@@ -3025,7 +3023,7 @@ var/global/noir = 0
 							var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
 
 							if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for (var/obj/machinery/communications_dish/C in comm_dishes)
+								for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 									C.add_centcom_report("[command_name()] Update", input)
 
 								var/sound_to_play = "sound/ambience/spooky/Void_Calls.ogg"
@@ -3160,6 +3158,8 @@ var/global/noir = 0
 						src.owner:debug_variables(world)
 					if("globals")
 						src.owner:debug_variables("GLOB")
+					if("globalprocs")
+						src.owner:show_proc_list(null)
 			else
 				alert("You need to be at least a Coder to use debugging secrets.")
 
@@ -3233,7 +3233,7 @@ var/global/noir = 0
 									if(!M) continue
 									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-									var/turf/mob_loc = get_turf_loc(M)
+									var/turf/mob_loc = get_turf(M)
 									dat += "<td>[mob_loc.loc]</td></tr>"
 								dat += "</table>"
 
@@ -3765,8 +3765,8 @@ var/global/noir = 0
 
 		if ("toggle_dj")
 			var/mob/M = (href_list["target"] ? locate(href_list["target"]) : null)
-			if(M && M.client)
-				toggledj(M.client, usr.client)
+			if(M?.client)
+				global.dj_panel.toggledj(M.client, usr.client)
 			else
 				alert ("No client found, sorry.")
 
@@ -4063,6 +4063,7 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsdebug;type=overlaysrem'>(Remove)</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=world'>World</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=globals'>Global Variables</A>
+					<A href='?src=\ref[src];action=secretsdebug;type=globalprocs'>Global Procs</A>
 				"}
 
 		dat += "</div>"

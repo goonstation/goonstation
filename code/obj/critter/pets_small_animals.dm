@@ -74,6 +74,17 @@
 			src.atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)
 			src.atk_disease_prob = 10
 			src.atkcarbon = 1
+
+/obj/critter/mouse/mad
+	name = "rabid space mouse"
+	desc = "A mouth-foaming cheese and flesh eating mouse. In space."
+	health = 10
+	chases_food = 0
+	feed_text = "squeaks viciously!"
+	atk_delay = 10
+	atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)
+	atk_disease_prob = 35
+	atkcarbon = 1
 /*
 	CritterAttack(mob/living/M)
 		src.attacking = 1
@@ -195,20 +206,6 @@
 	name = "Morty"
 	generic = 0
 
-var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "Litterbox",
-"Reginald", "Poosycat", "Dr. Purrsworthy", "Lt. Scratches", "Michael Catson",
-"Fluffy", "Mr. Purrfect", "Lord Furstooth", "Lion-O", "Johnathan", "Gary Catglitter",
-"Chat de Gaulle", "Ratbag",
-"Baron Fuzzykins, Defiler of Carpets", "Robert Meowgabe", "Chairman Meow", "Bacon",
-"Prunella", "Poonella", "SEXCOPTER", "Fat, Lazy Piece of Shit", "Jones Mk. II",
-"Jones Mk. III", "Jones Mk. IV", "Jones Mk.V", "Mr. Meowgi",
-"Furrston von Purringsworth", "Garfadukecliff", "SyndiCat", "Rosa Fluffemberg",
-"Karl Meowx", "Margaret Scratcher", "Marcel Purroust", "Franz Katka", "Das Katpital",
-"Proletaricat", "Perestroikat", "Mewy P. Newton", "Fidel Catstro", "George Lucats",
-"Lin Miao", "Felix Purrzhinsky", "Pol Pet", "Piggy", "Long Kitty", "Caterella", "Aristocat",
-"Arthur Cat Clarke", "Prick", "Pantalaimon", "Purrsula K. Le Guin", "Douglas Pat 'Ems",
-"Gato", "Zebra", "Possum", "Myst", "Too", "P", "Z", "Catopus")
-
 // hi I added my childhood cats' names to the list cause I miss em, they aren't really funny names but they were great cats
 // remove em if you want I guess
 // - Haine
@@ -240,7 +237,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 			src.is_pet = 1
 		..()
 		if (src.randomize_cat)
-			src.name = pick(cat_names)
+			src.name = pick_string_autokey("names/cats.txt")
 
 #ifdef HALLOWEEN
 			src.cattype = 3 //Black cats for halloween.
@@ -293,20 +290,22 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 			..()
 
 	CritterAttack(mob/M)
-		if (ismob(M))
-			src.attacking = 1
-			var/attackCount = (src.catnip ? rand(4,8) : 1)
-			while (attackCount-- > 0)
-				src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-				if (ismob(M))
-					random_brute_damage(src.target, 3,1)
-				else if (istype(M, /obj/critter)) //robust cat simulation.
-					var/obj/critter/C = src.target
-					C.health -= 2
-					if (C.health <= 0 && C.alive)
-						C.CritterDeath()
-						src.attacking = 0
-				sleep(0.2 SECONDS)
+		if(istype(M, /mob/living/critter/small_animal/mouse/weak/mentor) && prob(90))
+			src.visible_message("<span class='combat'><B>[src]</B> tries to bite [src.target] but \the [src.target] dodges nimbly!</span>")
+			return
+		src.attacking = 1
+		var/attackCount = (src.catnip ? rand(4,8) : 1)
+		while (attackCount-- > 0)
+			src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
+			if (ismob(M))
+				random_brute_damage(src.target, 3,1)
+			else if (istype(M, /obj/critter)) //robust cat simulation.
+				var/obj/critter/C = src.target
+				C.health -= 2
+				if (C.health <= 0 && C.alive)
+					C.CritterDeath()
+					src.attacking = 0
+			sleep(0.2 SECONDS)
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
@@ -440,7 +439,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	desc = "Although this cat is vegan, it's still a carnivore."
 
 	New()
-		name = pick(cat_names)
+		name = pick_string_autokey("names/cats.txt")
 		..()
 
 /obj/critter/dog/george

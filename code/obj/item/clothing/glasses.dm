@@ -316,8 +316,8 @@
 				pinhole = 1
 				block_eye = null
 				equipper.u_equip(src)
-				theEye.loc = W
-				src.loc = W
+				theEye.set_loc(W)
+				src.set_loc(W)
 				equipper = null
 				user.show_message("<span class='alert'>You stab a hole in [src].  Unfortunately, you also stab a hole in your [theEye] and when you pull [W] away your eye comes with it!!</span>")
 

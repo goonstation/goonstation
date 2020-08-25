@@ -160,7 +160,7 @@
 
 		src.net_id = generate_net_id(src)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN_DBG(1 SECONDS)
 
 			if(!src.link)
 				var/turf/T = get_turf(src)
@@ -3758,6 +3758,10 @@
 					to_toss.set_loc(src.loc)
 					src.visible_message("<b>[src.name]</b> launches [to_toss]!")
 					playsound(src.loc, "sound/effects/syringeproj.ogg", 50, 1)
+					to_toss.throwforce += throw_strength/4 // adds up to 25
+					SPAWN_DBG(1.5 SECONDS)
+						if (to_toss)
+							to_toss.throwforce -= throw_strength/4
 					to_toss.throw_at(get_edge_target_turf(src, src.dir), throw_strength, (throw_strength/50))
 
 				if (!src.active)
@@ -3790,6 +3794,8 @@
 
 		if (I.w_class < 4)
 			if (src.contents.len < src.setup_max_objects)
+				if(I.cant_drop)
+					return
 				if (mag)
 					mag.dropItem(0)
 				else
@@ -3894,12 +3900,16 @@
 				boutput(user, "<span class='alert'>There's already something on the stand!</span>")
 				return
 			else
+				if(I.cant_drop)
+					return
 				if (mag)
 					mag.dropItem(0)
 				else
 					user.drop_item()
 				I.set_loc(src.loc)
 		else
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -3931,6 +3941,7 @@
 		if (istype(I.artifact,/datum/artifact/))
 			var/datum/artifact/ARTDATA = I.artifact
 			var/stimforce = M.throwforce
+			I.ArtifactStimulus("force", stimforce)
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
 			if (src.sensed[2] != 0 && ARTDATA.faults.len)
@@ -3949,6 +3960,7 @@
 		if (istype(I.artifact,/datum/artifact/))
 			var/datum/artifact/ARTDATA = I.artifact
 			var/stimforce = P.power
+			I.ArtifactStimulus("force", stimforce)
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
 
@@ -4046,6 +4058,8 @@
 				return
 
 		if (!src.contents.len)
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -4124,7 +4138,7 @@
 
 						src.sensed[3] = A.react_elec[3]
 
-						if (A.artitype == "eldritch")
+						if (A.artitype.name == "eldritch")
 							src.sensed[3] += rand(-7,7)
 
 						for(var/datum/artifact_fault in A.faults)
@@ -4212,6 +4226,8 @@
 				return
 
 		if (!src.contents.len)
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -4285,13 +4301,13 @@
 							// Density
 							var/density = A.react_xray[1]
 
-							if (A.artitype == "eldritch" && prob(33))
+							if (A.artitype.name == "eldritch" && prob(33))
 								var/randval = rand(-2,6)
 								if (prob(50))
 									density *= rand(-2,6)
 								else
 									density /= (randval == 0 ? 1 : randval)
-							if (A.artitype == "eldritch" && prob(6))
+							if (A.artitype.name == "eldritch" && prob(6))
 								density = 666
 
 							src.sensed[1] = density
@@ -4299,10 +4315,10 @@
 							// Structural Consistency
 							var/consistency = A.react_xray[2]
 
-							if (consistency > 85 && A.artitype == "martian")
+							if (consistency > 85 && A.artitype.name == "martian")
 								consistency = 85
 
-							if (A.artitype == "eldritch" && prob(20))
+							if (A.artitype.name == "eldritch" && prob(20))
 								consistency *= rand(2,6)
 
 							src.sensed[2] = consistency
@@ -4313,11 +4329,12 @@
 							for (var/datum/artifact_fault in A.faults)
 								integrity -= 7
 
-							if (A.artitype == "eldritch" && prob(33))
+							if (A.artitype.name == "eldritch" && prob(33))
 								if (prob(50)) integrity *= rand(2,4)
 								else integrity /= rand(2,4)
 
-							if (integrity > 80 && A.artitype == "martian")
+							if (integrity > 80 && A.artitype.name == "martian")
+
 								integrity = 80
 
 							if (integrity < 0) src.sensed[3] = "< 1"
@@ -4325,9 +4342,9 @@
 
 							// Radiation Response
 							var/responsive = A.react_xray[4]
-							if (A.artitype == "martian")
+							if (A.artitype.name == "martian")
 								responsive -= 3
-							if (A.artitype == "eldritch" && prob(33))
+							if (A.artitype.name == "eldritch" && prob(33))
 								responsive += rand(-2,2)
 							if (responsive <= src.radstrength)
 								src.sensed[4] = "WEAK RESPONSE"
@@ -4343,11 +4360,11 @@
 
 							// Special Features
 							src.sensed[5] = A.react_xray[5]
-							if (A.artitype == "martian")
+							if (A.artitype.name == "martian")
 								src.sensed[5] += ",ORGANIC"
 							if (M.contents.len)
 								src.sensed[5] += ",CONTAINS OTHER OBJECT"
-							if (A.artitype == "eldritch" && prob(6))
+							if (A.artitype.name == "eldritch" && prob(6))
 								src.sensed[5] = "ERROR"
 
 							M.ArtifactStimulus("radiate", src.radstrength)
@@ -4429,6 +4446,8 @@
 		if (locate(/obj/) in src.loc.contents)
 			..()
 		else
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else

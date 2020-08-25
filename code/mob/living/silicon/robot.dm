@@ -165,7 +165,7 @@
 		if (src.shell)
 			if (!(src in available_ai_shells))
 				available_ai_shells += src
-			for (var/mob/living/silicon/ai/AI in AIs)
+			for (var/mob/living/silicon/ai/AI in by_type[/mob/living/silicon/ai])
 				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
 			if (!src.ai_interface)
 				src.ai_interface = new(src)
@@ -177,7 +177,7 @@
 				src.emagged = frame_emagged
 		SPAWN_DBG (4)
 			if (!src.connected_ai && !syndicate && !(src.dependent || src.shell))
-				for(var/mob/living/silicon/ai/A in AIs)
+				for(var/mob/living/silicon/ai/A in by_type[/mob/living/silicon/ai])
 					src.connected_ai = A
 					A.connected_robots += src
 					break
@@ -657,7 +657,7 @@
 			src.internal_pda.name = "[src.name]'s Internal PDA Unit"
 			src.internal_pda.owner = "[src]"
 		if (!src.syndicate && !src.connected_ai)
-			for (var/mob/living/silicon/ai/A in AIs)
+			for (var/mob/living/silicon/ai/A in by_type[/mob/living/silicon/ai])
 				src.connected_ai = A
 				A.connected_robots += src
 				break
@@ -1168,7 +1168,7 @@
 					available_ai_shells += src
 					src.real_name = "AI Cyborg Shell [copytext("\ref[src]", 6, 11)]"
 					src.name = src.real_name
-				for (var/mob/living/silicon/ai/AI in AIs)
+				for (var/mob/living/silicon/ai/AI in by_type[/mob/living/silicon/ai])
 					boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
 				src.shell = 1
 				update_appearance()
@@ -1760,7 +1760,7 @@
 					var/obj/item/IT = I
 					IT.dropped(src) // Handle light datums and the like.
 				if (I in module.tools)
-					I.loc = module
+					I.set_loc(module)
 				else
 					qdel(I)
 			src.module_active = null

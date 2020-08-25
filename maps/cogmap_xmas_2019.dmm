@@ -1582,7 +1582,7 @@
 /area/station/security/armory)
 "adP" = (
 /obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/flamethrower/loaded,
+/obj/item/flamethrower/assembled/loaded,
 /turf/simulated/floor/caution/west,
 /area/station/security/armory)
 "adQ" = (
@@ -14934,8 +14934,6 @@
 /area/station/security/main)
 "aGP" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "aGQ" = (
@@ -27062,7 +27060,6 @@
 /obj/grille/steel,
 /obj/item/basketball{
 	desc = "Something beautiful overwhelms you when you look at this ball.";
-	layer = 9;
 	name = "barkley's basketball"
 	},
 /obj/decal/poster/wallsign/gym,

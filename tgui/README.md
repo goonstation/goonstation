@@ -176,6 +176,10 @@ use in tgui. Each theme must be registered in `webpack.config.js` file.
 
 See: [Component Reference](docs/component-reference.md).
 
+## FontAwesome Icon
+
+For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/v5.14.0/icons?d=gallery&s=regular,solid&m=free)
+
 ## License
 
 Source code is covered by /tg/station's parent license - **AGPL-3.0**

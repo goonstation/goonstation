@@ -11,26 +11,6 @@ var/global/debug_messages = 0
 	logTheThing("diary", usr, null, "toggled debug messages [debug_messages ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled debug messages [debug_messages ? "on" : "off"]")
 
-/client/proc/Debug2()
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	set name = "Debug-Game"
-	admin_only
-	if(src.holder.rank == "Coder")
-		Debug2 = !Debug2
-
-		boutput(src, "Debugging [Debug2 ? "On" : "Off"]")
-		logTheThing("admin", src, null, "toggled debugging to [Debug2]")
-		logTheThing("diary", src, null, "toggled debugging to [Debug2]", "admin")
-	else if(src.holder.rank == "Host")
-		Debug2 = !Debug2
-
-		boutput(src, "Debugging [Debug2 ? "On" : "Off"]")
-		logTheThing("admin", src, null, "toggled debugging to [Debug2]")
-		logTheThing("diary", src, null, "toggled debugging to [Debug2]", "admin")
-	else
-		alert("Coders only baby")
-		return
-
 /client/proc/debug_deletions()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Deletions"
@@ -300,28 +280,61 @@ var/global/debug_messages = 0
 			target = null
 	doCallProc(target)
 
-/proc/doCallProc(target = null)
+/proc/doCallProc(target = null, procname = null) // also accepts actual proc
 	var/returnval = null
-	var/procname = input("Procpath (ex. /proc/bust_lights)","path:", null) as null|text
+	if(isnull(procname))
+		procname = input("Procpath (ex. bust_lights)","path:", null) as null|text
 	if (isnull(procname))
 		return
 
 	var/list/listargs = get_proccall_arglist()
 
-	if (target)
+	var/list/name_list
+
+	if(istext(procname))
+		if(copytext(procname, 1, 6) == "proc/")
+			procname = copytext(procname, 6)
+		else if(copytext(procname, 1, 7) == "/proc/")
+			procname = copytext(procname, 7)
+		name_list = list(procname, "proc/" + procname, "/proc/" + procname, "verb/" + procname)
+	else // is an actual proc, not a name
+		name_list = list(procname)
+
+	if(target)
 		boutput(usr, "<span class='notice'>Calling '[procname]' with [islist(listargs) ? listargs.len : "0"] arguments on '[target]'</span>")
-		if(islist(listargs) && listargs.len)
-			returnval = call(target,procname)(arglist(listargs))
-		else
-			returnval = call(target,procname)()
 	else
 		boutput(usr, "<span class='notice'>Calling '[procname]' with [islist(listargs) ? listargs.len : "0"] arguments</span>")
-		if(islist(listargs) && listargs.len)
-			returnval = call(procname)(arglist(listargs))
-		else
-			returnval = call(procname)()
 
-	boutput(usr, "<span class='notice'>Proc returned: [json_encode(returnval)]</span>")
+	var/success = FALSE
+	for(var/actual_proc in name_list)
+		try
+			if (target)
+				if(islist(listargs) && listargs.len)
+					returnval = call(target,actual_proc)(arglist(listargs))
+				else
+					returnval = call(target,actual_proc)()
+			else
+				if(islist(listargs) && listargs.len)
+					returnval = call(actual_proc)(arglist(listargs))
+				else
+					returnval = call(actual_proc)()
+			success = TRUE
+			break
+		catch(var/exception/e)
+			if(e.name != "bad proc" && copytext(e.name, 1, 15) != "undefined proc") // fuck u byond
+				boutput(usr, "<span class='alert'>Exception occured! <a style='color: #88f;' href='byond://winset?command=View-Runtimes'>View Runtimes</a></span>")
+				throw e
+
+	if(!success)
+		boutput(usr, "<span class='alert'>Proc [procname] not found!</span>")
+		return
+
+	var/pretty_returnval = returnval
+	if(istype(returnval, /datum) || istype(returnval, /client))
+		pretty_returnval = "<a href='byond://?src=\ref[usr.client];Refresh=\ref[returnval]'>[returnval] \ref[returnval]</a>"
+	else
+		pretty_returnval = json_encode(returnval)
+	boutput(usr, "<span class='notice'>Proc returned: [pretty_returnval]</span>")
 	return
 
 /proc/get_proccall_arglist()
@@ -676,10 +689,10 @@ body
 				gas.oxygen = 10000
 				gas.temperature = 10000
 				T.assume_air(gas)
-			for (var/obj/machinery/door/airlock/maintenance/door in doors)
+			for (var/obj/machinery/door/airlock/maintenance/door in by_type[/obj/machinery/door])
 				LAGCHECK(LAG_LOW)
 				qdel(door)
-			for (var/obj/machinery/door/firedoor/door in doors)
+			for (var/obj/machinery/door/firedoor/door in by_type[/obj/machinery/door])
 				LAGCHECK(LAG_LOW)
 				qdel(door)
 		if ("Chemist's Delight")
@@ -896,7 +909,7 @@ var/global/debug_camera_paths = 0
 
 proc/display_camera_paths()
 	remove_camera_paths() //Clean up any old ones laying around before displaying this
-	for (var/obj/machinery/camera/C in cameras)
+	for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 		if (C.c_north)
 			camera_path_list.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(C.loc, C.c_north.loc)))
 

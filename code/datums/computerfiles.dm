@@ -158,16 +158,12 @@
 		return null
 
 	disposing()
-		if (Debug2)
-			logTheThing("debug", null, null, "<b>Computer Datum:</b> disposing() called on [src.type] \ref[src] [src.name]")
 		// same as above, XOXOXO. -singh
 		//if(holder && holding_folder)
 		//	holding_folder.remove_file(src)
 		..()
 
 	disposing()
-		if (Debug2)
-			logTheThing("debug", null, null, "<b>Computer Datum:</b> dispose() called on [src.type] \ref[src] [src.name]")
 		if (holding_folder)
 			holding_folder.remove_file(src)
 			src.holding_folder = null

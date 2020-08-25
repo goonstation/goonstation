@@ -176,6 +176,8 @@
 						if(2 to 6)
 							items += /obj/item/gun/energy/phaser_gun
 							item_amounts += 1
+							items += /obj/item/storage/firstaid/crit
+							item_amounts += 1
 						if(7 to 10)
 							for (var/i = 1, i < rand(4,10), i++)
 								items += pick(/obj/item/chem_grenade/incendiary, /obj/item/chem_grenade/cryo, /obj/item/chem_grenade/shock, /obj/item/chem_grenade/pepper, prob(10); /obj/item/chem_grenade/sarin)

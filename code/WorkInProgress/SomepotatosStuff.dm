@@ -172,7 +172,7 @@ world/proc/updateCameraVisibility()
 			t.aiImage.override = 1
 			t.aiImage.name = " "
 		aiDirty = 1
-	for(var/obj/machinery/camera/C in cameras)
+	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 		for(var/turf/t in view(7, C))
 			//var/dist = get_dist(t, C)
 			t.aiImage.alpha = 0
@@ -264,7 +264,7 @@ world/proc/updateCameraVisibility()
 	.=..()
 	for(var/turf/t in range(7, src))
 		t.cameraTotal = 0
-	for(var/obj/machinery/camera/C in cameras)
+	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 		if( get_dist(C.loc, src) <= 7 )
 			var/list/inview = view(7,C)
 			for(var/turf/t in range(7, C))

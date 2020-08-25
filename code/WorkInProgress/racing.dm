@@ -571,7 +571,7 @@
 
 	proc/returntoline()
 		if(returnloc)
-			loc = returnloc
+			set_loc(returnloc)
 			dir = returndir
 
 /obj/racing_clowncar/kart/red

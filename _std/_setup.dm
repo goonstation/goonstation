@@ -148,8 +148,8 @@
 #define AST_NUMPREFABS 18     //How many prefabs to place. It'll try it's hardest to place this many at the very least. You're basically guaranteed this amount of prefabs.
 #define AST_NUMPREFABSEXTRA 6//Up to how many extra prefabs to place randomly. You might or might not get these extra ones.
 #else
-#define AST_NUMPREFABS 5     //How many prefabs to place. It'll try it's hardest to place this many at the very least. You're basically guaranteed this amount of prefabs.
-#define AST_NUMPREFABSEXTRA 3//Up to how many extra prefabs to place randomly. You might or might not get these extra ones.
+#define AST_NUMPREFABS 11     //How many prefabs to place. It'll try it's hardest to place this many at the very least. You're basically guaranteed this amount of prefabs.
+#define AST_NUMPREFABSEXTRA 5//Up to how many extra prefabs to place randomly. You might or might not get these extra ones.
 #endif
 
 #define AST_MAPSEEDBORDER 10 //Min distance from map edge for seeds.
@@ -977,12 +977,6 @@ proc/default_frequency_color(freq)
 #define SHIP_ALERT_GOOD 0
 #define SHIP_ALERT_BAD 1
 
-// where you at, dawg, where you where you at, shuttle_controller.dm
-#define SHUTTLE_LOC_CENTCOM 0
-#define SHUTTLE_LOC_STATION 1
-#define SHUTTLE_LOC_TRANSIT 1.5
-#define SHUTTLE_LOC_RETURNED 2
-
 //moved from guardbot.dm because i wanna use this list of buddy hats on some critters
 #define BUDDY_HATS list("detective","hoscap","hardhat","hosberet","ntberet","chef","souschef","captain","centcom","centcom-red","tophat","ptophat","mjhat","plunger","cakehat0","cakehat1","butt","santa","yellow","blue","red","green","black","white","psyche","wizard","wizardred","wizardpurple","witch","obcrown","macrown","safari","dolan","viking","mailcap","bikercap","paper","apprentice","chavcap","policehelm","captain-fancy","rank-fancy","mime_beret","mime_bowler")
 
@@ -1150,6 +1144,9 @@ var/ZLOG_START_TIME
 //Logged whenever you try to View Variables a thing
 #define AUDIT_VIEW_VARIABLES (1 << 1)
 
+//Color matrices		// vv Values modified from those obtained from https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
+#define MATRIX_PROTANOPIA 0.55,0.45,0.000,0.55,0.45,0.000,0.000,0.25,1.0,0.0,0.0,0.0
+
 //PATHOLOGY REMOVAL
 //#define CREATE_PATHOGENS 1
 
@@ -1164,3 +1161,14 @@ var/ZLOG_START_TIME
 	#define SERVER_SIDE_PROFILING 1
 #endif
 #endif
+
+// i_dont_want_to_make_a_whole_new_file_for_one_goddamned_define.jpg
+#ifdef RP_MODE
+#define MAX_PARTICIPATE_TIME 80 MINUTES //the maximum shift time before it doesnt count as "participating" in the round
+#else
+#define MAX_PARTICIPATE_TIME 40 MINUTES //ditto above
+#endif
+
+
+#define CELLRATE 0.002  // multiplier for watts per tick <> cell storage (eg: .002 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
+#define CHARGELEVEL 0.001 // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)

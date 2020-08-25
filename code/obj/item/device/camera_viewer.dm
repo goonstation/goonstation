@@ -13,7 +13,7 @@
 		user.unlock_medal("Peeping Tom", 1)
 
 		var/list/L = list()
-		for (var/obj/machinery/camera/C in cameras)
+		for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 			L.Add(C)
 			LAGCHECK(LAG_LOW)
 

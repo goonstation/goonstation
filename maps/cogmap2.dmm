@@ -13327,7 +13327,6 @@
 /obj/machinery/light,
 /obj/item/basketball{
 	desc = "Something beautiful overwhelms you when you look at this ball.";
-	layer = 9;
 	name = "barkley's basketball"
 	},
 /obj/fireworksbox,
@@ -44212,7 +44211,6 @@
 "bQZ" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "bRa" = (

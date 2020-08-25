@@ -98,7 +98,7 @@
 						card = stack.draw_card(card, null, 1)
 						if (card.loc != M)
 							if (!M.put_in_hand(card))
-								card.loc = M.loc
+								card.set_loc(M.loc)
 				else
 					boutput(M, "<span class='alert'>You cannot draw cards right now.</span>")
 			if (HOLDER_ROLE_GIBBED)
@@ -144,7 +144,7 @@
 					phase_arguments--
 					holder.card = card
 					M.u_equip(card)
-					card.loc = holder
+					card.set_loc(holder)
 					update_game_status("Player [active_player] plays [face_up ? "creature [card.card_name]" : "a creature face down"].")
 		show_informational()
 
@@ -166,7 +166,7 @@
 		M.eye = area_indicator
 		var/obj/griffening_card_holder/deck_area = deck_holder[playerid]
 		deck_area.card = deck
-		deck.loc = deck_area
+		deck.set_loc(deck_area)
 		if (!game_id)
 			game_id = next_game_id
 			next_game_id++

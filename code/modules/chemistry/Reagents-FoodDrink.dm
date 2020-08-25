@@ -1917,10 +1917,11 @@ datum
 			viscosity = 0.5
 			minimum_reaction_temperature = -INFINITY
 
+#if ASS_JAM
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(it_is_ass_day)
-					if (exposed_temperature > (T0C + 50))
-						holder.add_reagent("chemilin", 10, donotreact = 1)
+				if (exposed_temperature > (T0C + 50))
+					holder.add_reagent("chemilin", 10, donotreact = 1)
+#endif
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
@@ -2409,8 +2410,8 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if ( (method==TOUCH && prob(33)) || method==INGEST)
-					if(M.bioHolder.HasAnyEffect(effectTypePower) && prob(4))
-						M.bioHolder.RemoveAllEffects(effectTypePower)
+					if(M.bioHolder.HasAnyEffect(EFFECT_TYPE_POWER) && prob(4))
+						M.bioHolder.RemoveAllEffects(EFFECT_TYPE_POWER)
 						boutput(M, "You feel plain.")
 				return
 

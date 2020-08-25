@@ -32,7 +32,6 @@
 			A.set_loc(T)
 		robogibs(T)
 		moved_on_flooring = 0
-		src.loc = null
 		..()
 
 	//disposing()

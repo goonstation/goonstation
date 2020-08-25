@@ -812,6 +812,7 @@
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/werewolf
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/werewolf
 	ignore_missing_limbs = 0
+	var/old_client_color = null
 
 	New()
 		..()
@@ -825,6 +826,10 @@
 
 			var/duration = 3000
 			var/datum/ailment_data/disease/D = mob.find_ailment_by_type(/datum/ailment/disease/lycanthropy/)
+
+			mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
+			mob.bioHolder.AddEffect("accent_scoob", null, null, 0, 1)
+
 			if(D)
 				D.cycles++
 				duration = rand(2000, 4000) * D.cycles
@@ -839,6 +844,8 @@
 			mob.remove_stam_mod_regen("werewolf")
 			mob.remove_stun_resist_mod("werewolf")
 			mob.max_health -= 30
+			mob.bioHolder.RemoveEffect("protanopia")
+			mob.bioHolder.RemoveEffect("accent_scoob")
 
 			if (!isnull(src.original_name))
 				mob.real_name = src.original_name

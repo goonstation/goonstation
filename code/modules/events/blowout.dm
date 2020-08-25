@@ -18,7 +18,7 @@
 		world << siren
 		command_alert("Extreme levels of radiation detected approaching the [station_or_ship()]. All personnel have [timetoreach].[timetoreachsec] seconds to enter a maintenance tunnel or radiation safezone. Maintenance doors have temporarily had their access requirements removed. This is not a test.", "Anomaly Alert")
 
-		for (var/obj/machinery/door/airlock/A in doors)
+		for (var/obj/machinery/door/airlock/A in by_type[/obj/machinery/door])
 			LAGCHECK(LAG_LOW)
 			if (A.z != 1)
 				break

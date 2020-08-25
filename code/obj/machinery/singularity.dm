@@ -480,6 +480,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				src.cleanup(2)
 				src.cleanup(4)
 				src.cleanup(8)
+				for(var/dir in cardinal)
+					src.UpdateOverlays(null, "field_start_[dir]")
+					src.UpdateOverlays(null, "field_end_[dir]")
 
 /obj/machinery/field_generator/proc/setup_field(var/NSEW = 0)
 	var/turf/T = src.loc
@@ -514,6 +517,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(isnull(G))
 		return
+
+	src.UpdateOverlays(image('icons/obj/singularity.dmi', "Contain_F_Start", dir=NSEW, layer=(dir == NORTH ? src.layer - 1 : FLOAT_LAYER)), "field_start_[NSEW]")
+	G.UpdateOverlays(image('icons/obj/singularity.dmi', "Contain_F_End", dir=NSEW, layer=(dir == SOUTH ? src.layer - 1 : FLOAT_LAYER)), "field_end_[NSEW]")
 
 	T2 = src.loc
 
@@ -628,6 +634,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/turf/T = src.loc
 	var/turf/T2 = src.loc
 
+	src.UpdateOverlays(null, "field_start_[NSEW]")
+
 	for(var/dist = 0, dist <= 9, dist += 1) // checks out to 8 tiles away for fields
 		T = get_step(T2, NSEW)
 		T2 = T
@@ -637,6 +645,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		if(locate(/obj/machinery/field_generator) in T)
 			G = (locate(/obj/machinery/field_generator) in T)
+			G.UpdateOverlays(null, "field_end_[NSEW]")
 			if(!G.active)
 				break
 

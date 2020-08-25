@@ -892,11 +892,13 @@ var/datum/action_controller/actions
 		img = image('icons/ui/actions.dmi',src,"bar",6)
 		icon = initial(icon)
 		icon_state = initial(icon_state)
+		..()
 
 	pooled()
 		loc = null
 		attached_objs = list()
 		overlays.len = 0
+		..()
 
 /obj/actions/border
 	layer = 100
@@ -910,11 +912,13 @@ var/datum/action_controller/actions
 		img = image('icons/ui/actions.dmi',src,"border",5)
 		icon = initial(icon)
 		icon_state = initial(icon_state)
+		..()
 
 	pooled()
 		loc = null
 		attached_objs = list()
 		overlays.len = 0
+		..()
 
 //Use this to start the action
 //actions.start(new/datum/action/bar/private/icon/magPicker(item, picker), usr)

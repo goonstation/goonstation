@@ -134,6 +134,10 @@
 		if(!message || !unlocked || get_time() > 0) return
 		var/area/A = get_area(src)
 
+		if(user.bioHolder.HasEffect("mute"))
+			boutput(user, "You try to speak into \the [src] but you can't since you are mute.")
+			return
+
 		logTheThing("say", user, null, "created a command report: [message]")
 		logTheThing("diary", user, null, "created a command report: [message]", "say")
 

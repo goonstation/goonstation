@@ -950,7 +950,7 @@
 
 	onUpdate()
 		..()
-		if(!DIST_CHECK(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
+		if(!IN_RANGE(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -960,7 +960,7 @@
 
 	onStart()
 		..()
-		if(!DIST_CHECK(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
+		if(!IN_RANGE(src.owner, src.vendor, 1) || src.vendor == null || src.owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1370,6 +1370,7 @@
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/mechanicbook, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/andcomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/association, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/math, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/button, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/buttonPanel, 30)
@@ -1564,6 +1565,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/chopsticks_package, 5)
 		product_list += new/datum/data/vending_product(/obj/item/plate/tray, 3)
 		product_list += new/datum/data/vending_product(/obj/surgery_tray/kitchen_island, 2)
+		product_list += new/datum/data/vending_product(/obj/item/storage/lunchbox, 12)
 		product_list += new/datum/data/vending_product(/obj/item/ladle, 1)
 		product_list += new/datum/data/vending_product(/obj/item/soup_pot, 1)
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/rollingpin, 2)
@@ -2043,6 +2045,7 @@
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/card_manual, 10, cost=1)
 		product_list += new/datum/data/vending_product(/obj/item/paper/yachtdice, 20, cost=2)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/grifening, 10, cost=15)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/trading, 5, cost=60)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/booster, 20, cost=20)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/suit, 10, cost=15)

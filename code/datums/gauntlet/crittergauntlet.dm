@@ -250,7 +250,6 @@
 					for (var/obj/critter/C in gauntlet)
 						if (!C.alive)
 							showswirl(get_turf(C))
-							C.loc = null
 							qdel(C)
 						else
 							live++
@@ -281,7 +280,7 @@
 		announceAll("The Critter Gauntlet match concluded at level [current_level].")
 		if (current_level > 50)
 			var/command_report = "A Critter Gauntlet match has concluded at level [current_level]. Congratulations to: [moblist_names]."
-			for (var/obj/machinery/communications_dish/C in comm_dishes)
+			for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 				C.add_centcom_report("[command_name()] Update", command_report)
 
 			command_alert(command_report, "Critter Gauntlet match finished")
