@@ -1216,6 +1216,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/heater,
+/obj/landmark/artifact,
 /turf/simulated/floor/caution/west,
 /area/station/science/artifact)
 "atI" = (
@@ -19552,6 +19553,12 @@
 	dir = 4
 	},
 /area/station/hydroponics)
+"gaH" = (
+/obj/landmark/artifact,
+/turf/simulated/floor/airless/engine,
+/area/station/routingdepot/eva{
+	name = "Router Cabinet"
+	})
 "gaQ" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -40884,6 +40891,12 @@
 	},
 /turf/simulated/floor/caution/north,
 /area/station/science/lab)
+"mpK" = (
+/obj/landmark/artifact,
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/station/science/artifact)
 "mpN" = (
 /obj/player_piano,
 /obj/machinery/light/emergency{
@@ -78404,7 +78417,7 @@
 	},
 /area/station/hangar/main)
 "wQa" = (
-/obj/storage/secure/closet/personal,
+/obj/landmark/artifact,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/SWmaint)
 "wQc" = (
@@ -108157,7 +108170,7 @@ aJu
 afq
 aMZ
 biL
-wWD
+gaH
 wWD
 bjH
 biL
@@ -120595,7 +120608,7 @@ vBU
 hhc
 vBU
 yaW
-kHX
+mpK
 xLb
 gDW
 jTq
@@ -120897,7 +120910,7 @@ qBR
 vuq
 wmg
 yaW
-kHX
+mpK
 xMA
 yhf
 kuq
