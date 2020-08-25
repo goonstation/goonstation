@@ -299,20 +299,12 @@
 
 	New()
 		..()
-		name = "[pick(COLA_prefixes)] [pick(COLA_suffixes)]"
+		name = "[pick_string("chemistry_tools.txt", "COLA_prefixes")] [pick_string("chemistry_tools.txt", "COLA_suffixes")]"
 		var/n = rand(1,26)
 		icon_state = "cola-[n]"
 		reagents.add_reagent("cola, 20")
 		reagents.add_reagent("VHFCS, 10")
-		reagents.add_reagent(pick(COLA_flavors), 5,3)
-
-///////////
-
-/var/list/COLA_prefixes = strings("chemistry_tools.txt", "COLA_prefixes")
-/var/list/COLA_suffixes = strings("chemistry_tools.txt", "COLA_suffixes")
-/var/list/COLA_flavors = strings("chemistry_tools.txt", "COLA_flavors")
-
-///////////
+		reagents.add_reagent(pick_string("chemistry_tools.txt", "COLA_flavors"), 5, 3)
 
 /obj/item/reagent_containers/food/drinks/peach
 	name = "Delightful Dan's Peachy Punch"

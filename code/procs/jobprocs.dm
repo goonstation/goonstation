@@ -385,7 +385,7 @@
 			else if (src.traitHolder)
 				//Has the immigrant trait - they're hiding in a random locker
 				var/list/obj/storage/SL = list()
-				for(var/obj/storage/S in lockers_and_crates)
+				for(var/obj/storage/S in by_type[/obj/storage])
 					// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post
 					if(S.z == 1 && !S.open && !istype(S, /obj/storage/secure) && !istype(S, /obj/storage/crate/loot) && !istype(get_area(S), /area/listeningpost))
 						var/turf/simulated/T = S.loc
@@ -541,7 +541,7 @@
 	if (trinket) // rewrote this a little bit so hopefully people will always get their trinket
 		src.trinket = trinket
 		src.trinket.event_handler_flags |= IS_TRINKET
-		trinket.name = "[src.real_name][pick(trinket_names)] [trinket.name]"
+		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 		trinket.quality = rand(5,80)
 		var/equipped = 0
 		if (istype(src.back, /obj/item/storage) && src.equip_if_possible(trinket, slot_in_backpack))
@@ -729,8 +729,3 @@ var/list/trinket_safelist = list(/obj/item/basketball,/obj/item/instrument/bikeh
 /obj/item/toy/plush/small/bee, /obj/item/paper/book/the_trial, /obj/item/paper/book/deep_blue_sea, /obj/item/clothing/suit/bedsheet/cape/red, /obj/item/disk/data/cartridge/clown,
 /obj/item/clothing/mask/cigarette/cigar, /obj/item/device/light/sparkler, /obj/item/toy/sponge_capsule, /datum/plant/fruit/pear, /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm,
 /obj/item/seed/alien)
-
-var/list/trinket_names = list("'s dad's","'s mom's", "'s grampa's", "'s grandma's", "'s favorite", "'s trusty", "'s favorite", "'s heirloom", "'s pet",
-"'s beloved", "'s lucky", "'s best", "'s antique", "'s old", "'s ol'", "'s prized", "'s neat", "'s good old", "'s good ol'", "'s son's", "'s daughter's",
-"'s aunt's", "'s uncle's", "'s finest", "'s shiniest", "'s lovely", "'s stupid", "'s prize winning", "'s top shelf", "'s 'prize winning'", "'s 'top shelf'",
-"'s autographed", "'s monogramed", "'s bejazzled", "'s jewel encrusted", "'s fanciest", "'s worn out", "'s custom", "'s luxurious", "'s superb", "'s precious")

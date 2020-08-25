@@ -417,4 +417,3 @@
 					var/turf/T = get_turf(owner)
 					T.fluid_react_single("water",5)
 		return
-

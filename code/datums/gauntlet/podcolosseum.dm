@@ -324,7 +324,7 @@
 		announceAll("The Pod Colosseum match concluded. Final score: [score].")
 		if (score > 10000)
 			var/command_report = "A Pod Colosseum match has concluded with score [score]. Congratulations to: [moblist_names]."
-			for (var/obj/machinery/communications_dish/C in comm_dishes)
+			for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 				C.add_centcom_report("[command_name()] Update", command_report)
 
 			command_alert(command_report, "Pod Colosseum match finished")

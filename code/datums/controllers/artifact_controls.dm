@@ -79,6 +79,10 @@ var/datum/artifact_controller/artifact_controls
 				dat += "in [T.loc]<br>"
 
 			dat += "[O.name], [A.artitype.name], [A.type]<br>"
+			for(var/trigger in A.triggers)
+				dat += "[trigger] "
+			if(A.triggers.len)
+				dat += "<br>"
 
 			dat += "<a href='byond://?src=\ref[src];Activate=\ref[O]'>"
 			if (!A.activated)

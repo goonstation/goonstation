@@ -186,8 +186,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		if (!src)
 			return
 
-		for (var/obj/machinery/port_a_brig/M in portable_machinery)//world)
-			LAGCHECK(LAG_LOW)
+		for (var/obj/machinery/port_a_brig/M in portable_machinery)
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -207,8 +206,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		if (!src)
 			return
 
-		for (var/obj/machinery/sleeper/port_a_medbay/M in portable_machinery)//world)
-			LAGCHECK(LAG_LOW)
+		for (var/obj/machinery/sleeper/port_a_medbay/M in portable_machinery)
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -229,8 +227,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		if (!src)
 			return
 
-		for (var/obj/storage/closet/port_a_sci/M in portable_machinery)//world)
-			LAGCHECK(LAG_LOW)
+		for (var/obj/storage/closet/port_a_sci/M in portable_machinery)
 			/*var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue*/
@@ -250,8 +247,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		if (!src)
 			return
 
-		for (var/obj/machinery/vending/port_a_nanomed/M in portable_machinery)//world)
-			LAGCHECK(LAG_LOW)
+		for (var/obj/machinery/vending/port_a_nanomed/M in portable_machinery)
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -271,8 +267,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		if (!src)
 			return
 
-		for (var/obj/machinery/computer/genetics/portable/M in portable_machinery)//world)
-			LAGCHECK(LAG_LOW)
+		for (var/obj/machinery/computer/genetics/portable/M in portable_machinery)
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue

@@ -1,4 +1,3 @@
-var/atmos_suspend = 0
 /*
 Overview:
 	The air_master global variable is the workhorse for the system.

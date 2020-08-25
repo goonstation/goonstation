@@ -120,7 +120,7 @@
 	var/player_modifier = 0
 
 	proc/early_warning()
-		for (var/obj/machinery/communications_dish/C in comm_dishes)
+		for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 			C.add_centcom_report("[command_name()] Update", early_warning_text)
 
 		if (!early_warning_heading)
@@ -129,7 +129,7 @@
 			command_alert(early_warning_text, early_warning_heading)
 
 	proc/set_up()
-		for (var/obj/machinery/communications_dish/C in comm_dishes)
+		for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 			C.add_centcom_report("[command_name()] Update", warning_text)
 
 		if (!warning_heading)

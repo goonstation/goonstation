@@ -654,7 +654,7 @@ proc/get_angle(atom/a, atom/b)
 /proc/sortmobs()
 
 	var/list/mob_list = list()
-	for(var/mob/living/silicon/ai/M in AIs)
+	for(var/mob/living/silicon/ai/M in by_type[/mob/living/silicon/ai])
 		mob_list.Add(M)
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/dead/aieye/M in mobs)
@@ -2598,3 +2598,9 @@ proc/weighted_pick(list/choices)
 		if(weighted_num <= running_total)
 			return key
 	return
+
+proc/keep_truthy(some_list)
+	. = list()
+	for(var/x in some_list)
+		if(x)
+			. += x

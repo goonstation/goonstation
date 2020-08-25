@@ -571,7 +571,7 @@
 
 		var/pickprename = pick("Honest","Fair","Merchant","Trader","Kosher","Real Deal","Dealer", "Old", "Ol'", "Zesty", "Sassy", "Bargain", "Discount", "Uncle", "Big", "Little")
 		//var/pickfirstname = pick(first_names)
-		var/picklastname = pick(last_names)
+		var/picklastname = pick_string_autokey("names/last.txt")
 		src.name = "[pickprename] [picklastname]"
 
 		greeting= {"WELL HI THERE, STEP RIGHT UP AND BUY MY STUFF!"}

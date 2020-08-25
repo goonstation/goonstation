@@ -217,7 +217,7 @@
 				heavenly_spawn(S)
 				return
 #endif
-		for(var/obj/machinery/door/poddoor/P in doors)
+		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 			if (P.id == "qm_dock")
 				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
 				SPAWN_DBG(SUPPLY_OPEN_TIME)

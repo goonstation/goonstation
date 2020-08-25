@@ -19,10 +19,6 @@
 	attack_hand(mob/user as mob)
 		return MouseDrop(user)
 
-	New()
-		..()
-		lockers_and_crates.Add(src)
-
 /obj/item/storage/wall/emergency
 	name = "emergency supplies"
 	desc = "A wall-mounted storage container that has a few emergency supplies in it."
