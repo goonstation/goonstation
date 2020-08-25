@@ -1330,14 +1330,6 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	event_effect()
 		..()
-		var/list/EV = list()
-		//var/delay = rand(2000,3000) hissssss
-		//var/obj/effect/boommarker/B = /obj/effect/boommarker
-		for(var/obj/landmark/S in landmarks)//world)
-			if (S.name == "bigboom")
-				EV.Add(S.loc)
-		var/bigboommark = pick(EV)
-
 		var/list/eligible = by_type[/obj/machinery/mantapropulsion].Copy()
 		for(var/i=0, i<3, i++)
 			var/obj/machinery/mantapropulsion/big/P = pick(eligible)
@@ -1345,7 +1337,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			eligible.Remove(P)
 			sleep(1 SECOND)
 
-		new /obj/effect/boommarker(bigboommark)
+		new /obj/effect/boommarker(pick_landmark(LANDMARK_BIGBOOM))
 #endif
 
 

@@ -63,7 +63,7 @@ var/global/list/job_start_locations = list()
 		..()
 
 /obj/landmark/tutorial_start
-	name = "tutorial_start_marker"
+	name = LANDMARK_TUTORIAL_START
 
 /obj/landmark/halloween
 	name = LANDMARK_HALLOWEED_SPAWN
@@ -99,7 +99,7 @@ var/global/list/job_start_locations = list()
 	name = LANDMARK_ASS_ARENA_SPAWN
 	icon_state = "x"
 
-obj/landmark/interesting
+/obj/landmark/interesting
 	// Use this to place cryptic clues to be picked up by the T-ray, because trying to remember which floortile you varedited is shit. For objects and mobs, just varedit.
 	name = "Interesting turf spawner"
 	desc = "Sets the var/interesting of the target turf, then deletes itself"
@@ -111,14 +111,16 @@ obj/landmark/interesting
 		T.interesting = src.interesting
 		..()
 
-obj/landmark/lrt //for use with long range teleporter locations, please add new subtypes of this for new locations and use those
+// LONG RANGE TELEPORTER
+// consider refactoring to be associative the other way around later
+
+/obj/landmark/lrt //for use with long range teleporter locations, please add new subtypes of this for new locations and use those
 	name = "lrt landmark"
-	var/turf/held_turf = null //a reference to the turf its on
+	name_override = LANDMARK_LRT
 
 	New()
+		src.data = src.name // store name
 		..()
-		if (get_turf(src))
-			src.held_turf = get_turf(src)
 
 /obj/landmark/lrt/gemv
 	name = "Geminorum V"

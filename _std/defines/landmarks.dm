@@ -13,6 +13,8 @@
 #define LANDMARK_BUBS_BEE_JOB "bubsbeejob"
 #define LANDMARK_MAGNET_CENTER "magnet_center"
 #define MANDMARK_MAGNET_SHIELD "magnet_shield"
+#define LANDMARK_BOXING_RING "boxing ring"
+#define LANDMARK_GPS_WAYPOINT "GPS Waypoint"
 
 // nukies
 
@@ -26,17 +28,20 @@
 
 // misc and unused
 
-#define LANDMARK_TWITCHY_BILL_RESPAWN "shitty_bill_respawn"
-#define LANDMARK_PRISONWARP "prisonwarp"
-#define LANDMARK_PRISONSECURITYWARP "prisonsecuritywarp"
+#define LANDMARK_TWITCHY_BILL_RESPAWN "shitty_bill_respawn" // Twitch Plays Shitty Bill respawn points
+#define LANDMARK_PRISONWARP "prisonwarp" // unused I think
+#define LANDMARK_PRISONSECURITYWARP "prisonsecuritywarp" // same
 #define LANDMARK_THUNDERDOME_1 "tdome1"
 #define LANDMARK_THUNDERDOME_2 "tdome2"
 #define LANDMARK_BATTLE_ROYALE_SPAWN "battle-royale-spawn"
-#define LANDMARK_ESCAPE_POD_SUCCESS "escape_pod_success"
-#define LANDMARK_ASS_ARENA_SPAWN "ass_arena_spawn"
+#define LANDMARK_ESCAPE_POD_SUCCESS "escape_pod_success" // escape pods go here when they don't fail
+#define LANDMARK_ASS_ARENA_SPAWN "ass_arena_spawn" // Ass Jam respawn arena spawns
 #define LANDMARK_MALF_GEAR_CLOSET "Malf-Gear-Closet"
-#define LANDMARK_AI_SAT "AI-Sat"
-#define LANDMARK_TELEPORT_SCROLL "Teleport-Scroll"
+#define LANDMARK_AI_SAT "AI-Sat" // AI Satellite for AI MALF
+#define LANDMARK_TELEPORT_SCROLL "Teleport-Scroll" // waldo scrolls
+#define LANDMARK_AI_GUNBOT_SHUTTLE "AIgunbotshuttle" // MALF AI module thing
+#define LANDMARK_BIGBOOM "bigboom" // unfinished Manta event
+#define LANDMARK_TUTORIAL_START "tutorial_start_marker"
 
 // VR networks
 
@@ -61,4 +66,6 @@
 // misc adventure zone stuff
 
 #define LANDMARK_TELESCI "telesci" // allowed turfs for telesci
+#define LANDMARK_LRT "lrt landmark"
 #define LANDMARK_SAMOSTREL_WARP "samostrel"
+#define LANDMARK_EVIL_CHEF_CORPSE "evilchef_corpse"
