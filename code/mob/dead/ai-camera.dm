@@ -689,6 +689,10 @@ var/list/camImages = list()
 var/aiDirty = 2
 world/proc/updateCameraVisibility()
 	if(!aiDirty) return
+#ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
+	// I don't wanna wait for this camera setup shit just GO
+	return
+#endif
 	if(aiDirty == 2)
 		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
 		ma.plane = PLANE_HUD
