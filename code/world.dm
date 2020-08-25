@@ -1,5 +1,13 @@
-//START BASIC WORLD DEFINES
-world
+/**
+  * # World
+  *
+  * If you think this Universe is bad, you should see some of the others. ~ Philip K. Dick
+  *
+  * The byond world object stores some basic byond level config, and has a few hub specific procs for managing hub visiblity
+  *
+  * The world /New() is the root of where a round itself begins
+  */
+/world
 	mob = /mob/new_player
 
 	#ifdef MOVING_SUB_MAP //Defined in the map-specific .dm configuration file.
@@ -13,8 +21,6 @@ world
 	area = /area
 
 	view = "15x15"
-
-//END BASIC WORLD DEFINES
 
 
 //Let's clarify something. I don't know if it needs clarifying, but here I go anyways.
@@ -512,11 +518,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 	mapSwitcher = new()
 
-	//is_it_ass_day() // ASS DAY!
-	// Ass Day is set at compile time now, not runtime
-
-	//create_random_station() //--Disabled because it's making initial geometry stuff take forever. Feel free to re-enable it if it's just throwing off the time count and not actually adding workload.
-
 	Z_LOG_DEBUG("World/Init", "Telemanager setup...")
 	tele_man = new()
 	tele_man.setup()
@@ -541,8 +542,11 @@ var/f_color_selector_handler/F_Color_Selector
 	UPDATE_TITLE_STATUS("Starting processes")
 	Z_LOG_DEBUG("World/Init", "Process scheduler setup...")
 	processScheduler = new /datum/controller/processScheduler
-	processScheduler.deferSetupFor(/datum/controller/process/ticker)
 	processSchedulerView = new /datum/processSchedulerView
+	var/datum/controller/process/tgui/tgui_process = processScheduler.addNowSkipSetup(/datum/controller/process/tgui)
+	var/datum/controller/process/ticker/ticker_process = processScheduler.addNowSkipSetup(/datum/controller/process/ticker)
+	tgui_process.setup()
+	ticker_process.setup()
 
 	Z_LOG_DEBUG("World/Init", "Building area sims scores...")
 	if (global_sims_mode)
@@ -601,7 +605,7 @@ var/f_color_selector_handler/F_Color_Selector
 	build_qm_categories()
 
 	#if SKIP_Z5_SETUP == 0
-	UPDATE_TITLE_STATUS("Buliding mining level")
+	UPDATE_TITLE_STATUS("Building mining level")
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
 	#endif
@@ -772,12 +776,17 @@ var/f_color_selector_handler/F_Color_Selector
 	if (abandon_allowed)
 		features += "respawn allowed"
 
-	//if (config && config.allow_ai)
-	//	features += "AI"
+	if (abandon_allowed)
+		features += "respawn allowed"
+
+#if ASS_JAM
+	features += "Ass Jam"
+#endif
 
 	var/n = 0
-	for (var/client/C)
-		n++
+	for (var/client/C in clients)
+		if (C)
+			n++
 
 	if (n > 1)
 		features += "~[n] players"
@@ -1293,7 +1302,7 @@ var/f_color_selector_handler/F_Color_Selector
 							if (C.player_mode && !C.player_mode_ahelp)
 								continue
 							else
-								boutput(C, "<span class='notice'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [msg]</span>")
+								boutput(C, "<span class='ahelp'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [msg]</span>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -1527,7 +1536,7 @@ var/f_color_selector_handler/F_Color_Selector
 					game_end_delayer = plist["nick"]
 					logTheThing("admin", null, null, "[game_end_delayer] delayed the server restart from Discord.")
 					logTheThing("diary", null, null, "[game_end_delayer] delayed the server restart from Discord.", "admin")
-					message_admins("<span class='internal>[game_end_delayer] delayed the server restart from Discord.</span>")
+					message_admins("<span class='internal'>[game_end_delayer] delayed the server restart from Discord.</span>")
 					ircmsg["msg"] = "Server restart delayed. Use undelay to cancel this."
 				else
 					ircmsg["msg"] = "The server restart is already delayed, use undelay to cancel this."
@@ -1546,7 +1555,7 @@ var/f_color_selector_handler/F_Color_Selector
 					game_end_delayer = plist["nick"]
 					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from Discord.")
 					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from Discord.", "admin")
-					message_admins("<span class='internal>[game_end_delayer] removed the restart delay from Discord.</span>")
+					message_admins("<span class='internal'>[game_end_delayer] removed the restart delay from Discord.</span>")
 					game_end_delayer = null
 					ircmsg["msg"] = "Removed the restart delay."
 					return ircbot.response(ircmsg)

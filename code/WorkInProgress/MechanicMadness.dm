@@ -269,7 +269,7 @@
 				src.the_trigger = (locate(/obj/item/mechanics/trigger/trigger) in src.contents)
 				if (!istype(src.the_trigger)) //no trigger?
 					for(var/obj/item in src.contents)
-						item.loc=get_turf(src) // kick out any mechcomp
+						item.set_loc(get_turf(src)) // kick out any mechcomp
 					qdel(src) // delet
 					return false
 			return true
@@ -326,11 +326,13 @@
 		icon_state = icon_up
 		return
 
-
-
-
-//Global list of telepads so we don't have to loop through the entire world aaaahhh.
-var/list/mechanics_telepads = new/list()
+// Put these into Mechanic's locker
+/obj/item/electronics/frame/mech_cabinet
+	name = "Component Cabinet frame"
+	store_type = /obj/item/storage/mechanics/housing_large
+	viewstat = 2
+	secured = 2
+	icon_state = "dbox"
 
 /obj/item/mechanics
 	name = "testhing"
@@ -338,6 +340,7 @@ var/list/mechanics_telepads = new/list()
 	icon_state = "comp_unk"
 	item_state = "swat_suit"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	plane = PLANE_NOSHADOW_BELOW
 	w_class = 1.0
 	level = 2
 	var/cabinet_banned = false // whether or not this component is prevented from being anchored in cabinets
@@ -696,6 +699,7 @@ var/list/mechanics_telepads = new/list()
 	cooldown_time = 5 SECONDS
 	var/paper_name = "thermal paper"
 	cabinet_banned = true
+	plane = PLANE_DEFAULT
 
 	New()
 		..()
@@ -1342,7 +1346,7 @@ var/list/mechanics_telepads = new/list()
 
 		if(!R) return
 
-		if(input.signal in R)
+		if(R.Find(input.signal))
 			if(replacesignal)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,input)
 			else
@@ -2162,14 +2166,14 @@ var/list/mechanics_telepads = new/list()
 
 	New()
 		..()
-		mechanics_telepads.Add(src)
+		START_TRACKING
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activate")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"setID", "setidmsg")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Teleporter ID","setID")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Send-only Mode","toggleSendOnly")
 
 	disposing()
-		mechanics_telepads.Remove(src)
+		STOP_TRACKING
 		return ..()
 
 	proc/setID(obj/item/W as obj, mob/user as mob)
@@ -2211,7 +2215,7 @@ var/list/mechanics_telepads = new/list()
 		playsound(src.loc, "sound/mksounds/boost.ogg", 50, 1)
 		var/list/destinations = new/list()
 
-		for(var/obj/item/mechanics/telecomp/T in mechanics_telepads)
+		for(var/obj/item/mechanics/telecomp/T in by_type[/obj/item/mechanics/telecomp])
 			if(T == src || T.level == 2 || !isturf(T.loc)  || isrestrictedz(T.z)|| T.send_only) continue
 
 #ifdef UNDERWATER_MAP
@@ -2483,6 +2487,7 @@ var/list/mechanics_telepads = new/list()
 	icon_state = "comp_button"
 	var/icon_up = "comp_button"
 	var/icon_down = "comp_button1"
+	plane = PLANE_DEFAULT
 	density = 1
 
 	New()
@@ -2491,6 +2496,7 @@ var/list/mechanics_telepads = new/list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return 1
+		if(ispulsingtool(W)) return // Don't press the button with a multitool, it brings up the config menu instead
 		return attack_hand(user)
 
 	attack_hand(mob/user as mob)
@@ -2620,7 +2626,7 @@ var/list/mechanics_telepads = new/list()
 	proc/removeGun(obj/item/W as obj, mob/user as mob)
 		if(Gun)
 			logTheThing("station", user, null, "removes [Gun] from [src] at [log_loc(src)].")
-			Gun.loc = get_turf(src)
+			Gun.set_loc(get_turf(src))
 			Gun = null
 			tooltip_flags &= ~REBUILD_ALWAYS
 			return 1
@@ -2635,7 +2641,7 @@ var/list/mechanics_telepads = new/list()
 				logTheThing("station", usr, null, "adds [W] to [src] at [log_loc(src)].")
 				usr.drop_item()
 				Gun = W
-				Gun.loc = src
+				Gun.set_loc(src)
 				tooltip_flags |= REBUILD_ALWAYS
 				return 1
 			else
@@ -2647,11 +2653,11 @@ var/list/mechanics_telepads = new/list()
 	proc/getTarget()
 		var/atom/trg = get_turf(src)
 		for(var/mob/living/L in trg)
-			return get_turf_loc(L)
+			return get_turf(L)
 		for(var/i=0, i<7, i++)
 			trg = get_step(trg, src.dir)
 			for(var/mob/living/L in trg)
-				return get_turf_loc(L)
+				return get_turf(L)
 		return get_edge_target_turf(src, src.dir)
 
 	proc/fire(var/datum/mechanicsMessage/input)
@@ -2765,7 +2771,7 @@ var/list/mechanics_telepads = new/list()
 	proc/removeInstrument(obj/item/W as obj, mob/user as mob)
 		if(instrument)
 			logTheThing("station", user, null, "removes [instrument] from [src] at [log_loc(src)].")
-			instrument.loc = get_turf(src)
+			instrument.set_loc(get_turf(src))
 			instrument = null
 			tooltip_rebuild = 1
 			return 1
@@ -2807,7 +2813,7 @@ var/list/mechanics_telepads = new/list()
 			boutput(usr, "You put [W] inside [src].")
 			logTheThing("station", usr, null, "adds [W] to [src] at [log_loc(src)].")
 			usr.drop_item()
-			instrument.loc = src
+			instrument.set_loc(src)
 			tooltip_rebuild = 1
 			return 1
 		return 0
@@ -2815,12 +2821,16 @@ var/list/mechanics_telepads = new/list()
 	proc/fire(var/datum/mechanicsMessage/input)
 		if (level == 2 || !isReady() || !instrument) return
 		LIGHT_UP_HOUSING
-		unReady(delay)
 		var/signum = text2num(input.signal)
-		if (signum &&((signum >= 0.4 && signum <= 2) ||(signum <= -0.4 && signum >= -2) || pitchUnlocked))
+		if (signum &&((signum >= 0.1 && signum <= 2) ||(signum <= -0.1 && signum >= -2) || pitchUnlocked))
+			var/mod_delay = delay
+			if(abs(signum) < 1)
+				mod_delay /= abs(signum)
+			unReady(mod_delay)
 			flick("comp_instrument1", src)
 			playsound(get_turf(src), sounds, volume, 0, 0, signum)
 		else
+			unReady(delay)
 			flick("comp_instrument1", src)
 			playsound(get_turf(src), sounds, volume, 1)
 			return

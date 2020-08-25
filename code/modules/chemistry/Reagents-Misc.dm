@@ -13,22 +13,15 @@ datum
 			volatility = 3
 			minimum_reaction_temperature = -INFINITY
 
-			// These figures are for original nitro explosions, new calculation is strictly linear <-- false by zewaka
-			// power = SQRT(10V)
-			// 0.1 -> 1
-			// 0.2 -> 2
-			// 0.9 -> 3
-			// 1.6 -> 4
-			// 10 -> 10
-			// 250 -> 50
-			// 1000 -> 100
+			// These figures are for new nitro explosions
+			// brisance = 0.4
 
-			// brisance = LOG10(10V)
-			// 1 -> 1
-			// 10 -> 2
-			// 100 -> 3
-			// 1000 -> 4
-			// ...
+			// power = (12.5V)^(2/3)
+			// 0.1 -> 1
+			// 1 -> 5
+			// 10 -> 25
+			// 100 -> 116
+			// 1000 -> 538
 
 			// explosive properties
 			// relatively inert as a solid (T <= 14°C)
@@ -46,9 +39,7 @@ datum
 							context = "Fingerprints: [jointext(fh, "")]"
 
 					logTheThing("combat", usr, null, "is associated with a nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)]. Context: [context].")
-
-					explosion_new(usr, T, sqrt(10 * (volume/covered_turf.len)), min(log(10 * (volume/covered_turf.len), 10), 1)) // Because people were being shit // okay its back but harder to handle
-					//explosion_new(usr, T, min(volume * 6 / 21, 250)) // 6 is power needed to cause ex_act(1) in explosion_new, 21 is the minimum # of units we want required to cause a gib-capable explosion. 250 is just a guess in case someone goes insane with an artbeaker/chemicompiler
+					explosion_new(usr, T, (12.5 * min(volume/covered_turf.len, 1000))**(2/3), 0.4) // Because people were being shit // okay its back but harder to handle // okay sci can have a little radius, as a treat
 				holder.del_reagent("nitroglycerin")
 				if (del_holder)
 					if(ismob(holder.my_atom))
@@ -490,7 +481,7 @@ datum
 				if (volume < 5 || istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility) return
 				O.visible_message("<span class='alert'>The [O] comes to life!</span>")
 				var/obj/critter/livingobj/L = new/obj/critter/livingobj(O.loc)
-				O.loc = L
+				O.set_loc(L)
 				L.name = "Living [O.name]"
 				L.desc = "[O.desc]. It appears to be alive!"
 				L.overlays += O
@@ -1042,13 +1033,13 @@ datum
 			fluid_b = 192
 			transparency = 255
 			viscosity = 0.15
+			var/static/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","penteticacid","oculine","epinephrine","mannitol","synthflesh", "saline", "anti_rad", "salicylic_acid", "menthol", "silver_sulfadiazine"/*,"coffee", "sugar", "espresso", "energydrink", "ephedrine", "crank"*/) //these last ones are probably an awful idea. Uncomment to buff booster a decent amount
 
 			on_mob_life(var/mob/M, var/mult = 1)
-
 				for (var/i = 1, i <= booster_enzyme_reagents_to_check.len, i++)
 					var/check_amount = holder.get_reagent_amount(booster_enzyme_reagents_to_check[i])
 					if (check_amount && check_amount < 18)
-						holder.add_reagent("[booster_enzyme_reagents_to_check[i]]", min(2 * mult, 20-check_amount))
+						holder.add_reagent(booster_enzyme_reagents_to_check[i], min(2 * mult, 20-check_amount))
 				..()
 				return
 
@@ -2013,7 +2004,7 @@ datum
 						if(prob(1)) // i hate you all, players
 							H.visible_message("<span class='alert bold'>[H] is torn apart from the inside as some weird floaty thing rips its way out of their body! Holy fuck!!</span>")
 							var/mob/living/critter/flock/bit/B = new()
-							B.loc = get_turf(H)
+							B.set_loc(get_turf(H))
 							H.gib()
 					else
 						// DO SPOOKY THINGS

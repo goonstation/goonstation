@@ -119,6 +119,8 @@ MATERIAL
 			var/obj/item/sheet/new_stack = new /obj/item/sheet(get_turf(usr))
 			if(src.material)
 				new_stack.setMaterial(src.material)
+			if (src.reinforcement)
+				new_stack.set_reinforcement(src.reinforcement)
 			new_stack.amount = splitnum
 			new_stack.attack_hand(user)
 			new_stack.add_fingerprint(user)
@@ -771,9 +773,9 @@ MATERIAL
 			var/turf/T = usr.loc
 			SPAWN_DBG(1.5 SECONDS)
 				if (T == usr.loc && !usr.getStatusDuration("weakened") && !usr.getStatusDuration("stunned"))
-					src.consume_rods(2)
 					var/atom/G = new /obj/grille(usr.loc)
 					G.setMaterial(src.material)
+					src.consume_rods(2)
 					logTheThing("station", usr, null, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(usr)].")
 		src.add_fingerprint(user)
 		return

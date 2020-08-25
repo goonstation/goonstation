@@ -90,7 +90,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(leaders))
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
@@ -178,7 +178,7 @@
 		text = ""
 		if(leader_mind.current)
 			text += "[leader_mind.current.real_name]"
-			var/turf/T = get_turf_loc(leader_mind.current)
+			var/turf/T = get_turf(leader_mind.current)
 			if(isdead(leader_mind.current))
 				text += " (Dead)"
 			else

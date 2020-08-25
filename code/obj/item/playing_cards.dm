@@ -350,7 +350,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/playing_cards))
 			var/obj/item/playing_cards/C = W
-			if(user.a_intent == "disarm")
+			if(user.a_intent == INTENT_DISARM && isturf(src.loc))
 				user.u_equip(C)
 				C.set_loc(src.loc)
 				C.pixel_x = src.pixel_x
@@ -631,7 +631,7 @@
 			src.card_human += H
 		for (var/mob/living/silicon/robot/R in mobs)
 			src.card_cyborg += R
-		for (var/mob/living/silicon/ai/A in AIs)
+		for (var/mob/living/silicon/ai/A in by_type[/mob/living/silicon/ai])
 			src.card_ai += A
 		card_type_mob = childrentypesof(/datum/playing_card/griffening/creature/mob)
 		card_type_friend = childrentypesof(/datum/playing_card/griffening/creature/friend)

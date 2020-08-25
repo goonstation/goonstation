@@ -160,7 +160,7 @@
 
 		src.net_id = generate_net_id(src)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN_DBG(1 SECONDS)
 
 			if(!src.link)
 				var/turf/T = get_turf(src)
@@ -3758,6 +3758,10 @@
 					to_toss.set_loc(src.loc)
 					src.visible_message("<b>[src.name]</b> launches [to_toss]!")
 					playsound(src.loc, "sound/effects/syringeproj.ogg", 50, 1)
+					to_toss.throwforce += throw_strength/4 // adds up to 25
+					SPAWN_DBG(1.5 SECONDS)
+						if (to_toss)
+							to_toss.throwforce -= throw_strength/4
 					to_toss.throw_at(get_edge_target_turf(src, src.dir), throw_strength, (throw_strength/50))
 
 				if (!src.active)
@@ -3790,6 +3794,8 @@
 
 		if (I.w_class < 4)
 			if (src.contents.len < src.setup_max_objects)
+				if(I.cant_drop)
+					return
 				if (mag)
 					mag.dropItem(0)
 				else
@@ -3894,12 +3900,16 @@
 				boutput(user, "<span class='alert'>There's already something on the stand!</span>")
 				return
 			else
+				if(I.cant_drop)
+					return
 				if (mag)
 					mag.dropItem(0)
 				else
 					user.drop_item()
 				I.set_loc(src.loc)
 		else
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -3931,6 +3941,7 @@
 		if (istype(I.artifact,/datum/artifact/))
 			var/datum/artifact/ARTDATA = I.artifact
 			var/stimforce = M.throwforce
+			I.ArtifactStimulus("force", stimforce)
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
 			if (src.sensed[2] != 0 && ARTDATA.faults.len)
@@ -3949,6 +3960,7 @@
 		if (istype(I.artifact,/datum/artifact/))
 			var/datum/artifact/ARTDATA = I.artifact
 			var/stimforce = P.power
+			I.ArtifactStimulus("force", stimforce)
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
 
@@ -4046,6 +4058,8 @@
 				return
 
 		if (!src.contents.len)
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -4212,6 +4226,8 @@
 				return
 
 		if (!src.contents.len)
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else
@@ -4429,6 +4445,8 @@
 		if (locate(/obj/) in src.loc.contents)
 			..()
 		else
+			if(I.cant_drop)
+				return
 			if (mag)
 				mag.dropItem(0)
 			else

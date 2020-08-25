@@ -673,7 +673,7 @@
 
 /datum/commodity/drugs/cannabis
 	comname = "Cannabis"
-	comtype = /obj/item/plant/herb/cannabis/spawnable
+	comtype = /obj/item/plant/herb/cannabis
 	price = 150
 	baseprice = 150
 	upperfluc = 100
@@ -681,7 +681,7 @@
 
 /datum/commodity/drugs/cannabis_mega
 	comname = "Rainbow Cannabis"
-	comtype = /obj/item/plant/herb/cannabis/mega/spawnable
+	comtype = /obj/item/plant/herb/cannabis/mega
 	price = 700
 	baseprice = 700
 	upperfluc = 500
@@ -689,7 +689,7 @@
 
 /datum/commodity/drugs/cannabis_white
 	comname = "White Cannabis"
-	comtype = /obj/item/plant/herb/cannabis/white/spawnable
+	comtype = /obj/item/plant/herb/cannabis/white
 	price = 450
 	baseprice = 450
 	upperfluc = 200
@@ -697,7 +697,7 @@
 
 /datum/commodity/drugs/cannabis_omega
 	comname = "Omega Cannabis"
-	comtype = /obj/item/plant/herb/cannabis/omega/spawnable
+	comtype = /obj/item/plant/herb/cannabis/omega
 	price = 2500
 	baseprice = 2500
 	upperfluc = 2000
@@ -1948,6 +1948,30 @@
 	baseprice = 1200
 	upperfluc = 100
 	lowerfluc = -100
+
+/datum/commodity/medical/firstaidC
+	comname = "First Aid Kit - Critical"
+	comtype = /obj/item/storage/firstaid/crit
+	price = 10000
+	baseprice = 10000
+	upperfluc = 2000
+	lowerfluc = -2000
+
+/datum/commodity/medical/injectorPent
+	comname = "Auto-Injector - Pentetic Acid"
+	comtype = /obj/item/reagent_containers/emergency_injector/pentetic_acid
+	price = 2000
+	baseprice = 2000
+	upperfluc = 500
+	lowerfluc = -700
+
+/datum/commodity/medical/injectorPerf
+	comname = "Auto-Injector - Perfluorodecalin"
+	comtype = /obj/item/reagent_containers/emergency_injector/perf
+	price = 800
+	baseprice = 800
+	upperfluc = 500
+	lowerfluc = -700
 
 /datum/commodity/medical/ether
 	comname = "Ether"

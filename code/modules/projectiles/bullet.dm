@@ -964,7 +964,7 @@ toxic - poisons
 
 	New(var/atom/sloc)
 		if(!sloc) return
-		src.loc = sloc
+		src.set_loc(sloc)
 		for(var/mob/M in src.loc)
 			Crossed(M)
 		return ..()
@@ -1201,13 +1201,13 @@ toxic - poisons
 		if (src.has_grenade !=0)
 			if (src.CHEM != null)
 				if (T)
-					src.CHEM.loc = T
+					src.CHEM.set_loc(T)
 				src.CHEM = null
 				src.has_grenade = 0
 				return 1
 			else if (src.OLD != null)
 				if (T)
-					src.OLD.loc = T
+					src.OLD.set_loc(T)
 				src.OLD = null
 				src.has_grenade = 0
 				return 1
@@ -1219,14 +1219,14 @@ toxic - poisons
 	proc/det(var/turf/T)
 		if (T && src.has_det == 0 && src.has_grenade != 0)
 			if (src.CHEM != null)
-				src.CHEM.loc = T
+				src.CHEM.set_loc(T)
 				src.has_det = 1
 				SPAWN_DBG(1 DECI SECOND)
 					src.CHEM.explode()
 				src.has_grenade = 0
 				return
 			else if (src.OLD != null)
-				src.OLD.loc = T
+				src.OLD.set_loc(T)
 				src.has_det = 1
 				SPAWN_DBG(1 DECI SECOND)
 					src.OLD.prime()

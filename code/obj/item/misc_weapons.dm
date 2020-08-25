@@ -852,7 +852,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "fireaxe"
 	item_state = "fireaxe"
-	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY
+	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY | ONBELT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items to 4 times as much damage to doors.
 	hit_type = DAMAGE_CUT
 	click_delay = 10

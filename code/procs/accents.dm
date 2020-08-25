@@ -806,7 +806,7 @@
 	P.string = upper ? uppertext(new_string) : new_string
 	P.chars_used = used
 	return P
-/* nnnoooooope! 
+/* nnnoooooope!
 /proc/wonk_parse(var/string)
 	string = lowertext(string)
 	if(prob(1))
@@ -904,7 +904,7 @@
 
 	return modded
 
-/* it's 2020 come on. 
+/* it's 2020 come on.
 /proc/wonkify(var/string)
 	return wonk_parse(string)
 */
@@ -1574,6 +1574,27 @@ var/list/zalgo_mid = list(
 
 	return modded
 
+
+/**
+* uwutalk
+*
+* owo-talk version 2.
+* Nyo it's sewious!
+*/
+/proc/uwutalk(var/string)
+	var/regex/a1 = new(@"r|l", "g")
+	var/regex/a2 = new(@"R|L", "g")
+	// These are so that "no", "No", and "NO" become "nyo", "Nyo", and "NYO".
+	// Otherwise you end up with "nyoT wIKE THIS"
+	var/regex/a3 = new(@"n([aeiou])", "g")
+	var/regex/a4 = new(@"N([aeiou])", "g")
+	var/regex/a5 = new(@"N([AEIOU])", "g")
+	string = a1.Replace(string, "w")
+	string = a2.Replace(string, "W")
+	string = a3.Replace(string, @"ny$1")
+	string = a4.Replace(string, @"Ny$1")
+	string = a5.Replace(string, @"NY$1")
+	return string
 
 /proc/tabarnak(var/string)
 	var/modded = ""

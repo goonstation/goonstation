@@ -146,10 +146,10 @@
 			src.add_contents(W)
 			T.hud.remove_item(W)
 		else
-			user.u_equip(W)
-			W.dropped(user)
 			src.add_contents(W)
+			user.u_equip(W)
 		hud.add_item(W)
+		update_icon()
 		add_fingerprint(user)
 		animate_storage_rustle(src)
 		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))

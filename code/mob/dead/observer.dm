@@ -164,7 +164,7 @@
 	src.visible_message("<span class='alert'><b>[src] is busted!</b></span>","<span class='alert'>You are demateralized into a state of further death!</span>")
 
 	if (wig)
-		wig.loc = src.loc
+		wig.set_loc(src.loc)
 	new /obj/item/reagent_containers/food/snacks/ectoplasm(get_turf(src))
 	overlays.len = 0
 	log_shot(P,src)
@@ -249,9 +249,11 @@
 	if(!isdead(src))
 		if (src.hibernating == 1)
 			var/confirm = alert("Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", "Yes", "No")
-			if(confirm)
+			if(confirm == "Yes")
 				src.ghostize()
 				qdel(src)
+			else
+				return
 		else if(prob(5))
 			src.show_text("You strain really hard. I mean, like, really, REALLY hard but you still can't become a ghost!", "blue")
 		else
@@ -478,7 +480,7 @@
 /mob/dead/observer/proc/reenter_corpse()
 	set category = null
 	set name = "Re-enter Corpse"
-	if(!corpse)
+	if(!corpse || corpse.disposed)
 		alert("You don't have a corpse!")
 		return
 	if(src.client && src.client.holder && src.client.holder.state == 2)

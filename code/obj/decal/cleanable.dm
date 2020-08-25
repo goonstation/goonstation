@@ -1664,6 +1664,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				else
 					return
 				burn_time--
+
+			if (on_fire)
+				overlays -= on_fire
+				on_fire = null
+				burn_time = initial(burn_time)
 			pool(src)
 
 	reagent_act(id, volume)

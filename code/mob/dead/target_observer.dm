@@ -34,7 +34,6 @@ var/list/observers = list()
 			my_ghost.set_loc(get_turf(src))
 		my_ghost = null
 		target = null
-		src.loc = null
 
 
 		for (var/datum/hud/H in huds)
@@ -59,7 +58,6 @@ var/list/observers = list()
 			my_ghost.set_loc(get_turf(src))
 		my_ghost = null
 		target = null
-		src.loc = null
 
 		..()
 
@@ -82,11 +80,7 @@ var/list/observers = list()
 		return
 
 	process_move(keys)
-		if (istype(src,/mob/dead/target_observer))
-			var/mob/dead/target_observer/O = src
-			O.stop_observing()
-			return
-		. = ..()
+		src.stop_observing()
 
 	apply_camera(client/C)
 		var/mob/living/M = src.target
@@ -122,7 +116,7 @@ var/list/observers = list()
 			return
 		//Let's have a proc so as to make it easier to reassign an observer.
 		src.target = target
-		loc = target
+		src.set_loc(target)
 
 		set_eye(target)
 

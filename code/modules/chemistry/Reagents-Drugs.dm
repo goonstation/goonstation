@@ -326,7 +326,7 @@ datum
 				if(prob(9))
 					M.playsound_local(M.loc, pick("explosion", "punch", 'sound/vox/poo-vox.ogg', "clownstep", 'sound/weapons/armbomb.ogg', 'sound/weapons/Gunshot.ogg'), 50, 1)
 				if(prob(8))
-					boutput(M, "<b>You hear a voice in your head... <i>[pick(loggedsay)]</i></b>")
+					boutput(M, "<b>You hear a voice in your head... <i>[pick_string_autokey("loggedsay.txt")]</i></b>")
 				..()
 				return
 
@@ -634,7 +634,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 15)
 				if(prob(8))
-					boutput(M, "<b>You hear a voice in your head... <i>[pick(loggedsay)]</i></b>")
+					boutput(M, "<b>You hear a voice in your head... <i>[pick_string_autokey("loggedsay.txt")]</i></b>")
 				if(prob(8))
 					M.emote(pick("scream","cry","laugh","moan","shiver"))
 				if(prob(3))

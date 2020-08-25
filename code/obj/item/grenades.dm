@@ -1155,7 +1155,7 @@ PIPE BOMBS + CONSTRUCTION
 				boutput(user, "<span class='notice'>You stuff [W] into the [item_mods.len == 0 ? "first" : "second"] pipe.</span>")
 				item_mods += W
 				user.u_equip(W)
-				W.loc = src
+				W.set_loc(src)
 
 		if(istype(W, /obj/item/reagent_containers/) && state == 2)
 			var/ok = 0

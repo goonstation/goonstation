@@ -558,7 +558,7 @@
 	name = "paper- 'IOU'"
 	New()
 		..()
-		var/iou_name = pick(uppercase_letters) + " " + pick(last_names)
+		var/iou_name = pick(uppercase_letters) + " " + pick_string_autokey("names/last.txt")
 		if (prob(1))
 			iou_name = pick("L Alliman", "J Antonsson") // we're stealin all ur stuff >:D
 		var/iou_thing = pick("gold bar", "telecrystal", "skull", "football", "human arm", "human arm", "human leg", "human leg", "[pick("pile", "wad")] of cash",\

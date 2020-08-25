@@ -1,3 +1,5 @@
+#define TURF_SPAWN_EDGE_LIMIT 5
+
 /datum/mining_encounter
 	var/name = null
 	var/info = null
@@ -632,10 +634,10 @@
 		if (TF.loc.type != /area)
 			asteroid_blocked_turfs += TF
 			continue
-		if (TF.x <= turf_spawn_edge_limit || TF.x >= world.maxx - turf_spawn_edge_limit)
+		if (TF.x <= TURF_SPAWN_EDGE_LIMIT || TF.x >= world.maxx - TURF_SPAWN_EDGE_LIMIT)
 			asteroid_blocked_turfs += TF
 			continue
-		if (TF.y <= turf_spawn_edge_limit || TF.y >= world.maxy - turf_spawn_edge_limit)
+		if (TF.y <= TURF_SPAWN_EDGE_LIMIT || TF.y >= world.maxy - TURF_SPAWN_EDGE_LIMIT)
 			asteroid_blocked_turfs += TF
 			continue
 		for (var/obj/O in TF.contents)
@@ -961,3 +963,5 @@
 			amount++
 			continue
 		AST.set_event(E)
+
+#undef TURF_SPAWN_EDGE_LIMIT

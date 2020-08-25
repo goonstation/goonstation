@@ -32,6 +32,7 @@
 		src.transform = null
 		src.override_state = null
 		animate(src)
+		..()
 
 	disposing()
 		particleMaster.active_particles -= src

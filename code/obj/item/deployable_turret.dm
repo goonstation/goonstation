@@ -28,10 +28,10 @@
 
 	attack_self(mob/user as mob)
 		user.show_message("You assemble the turret parts.")
-		src.loc = get_turf(user)
+		src.set_loc(get_turf(user))
 		src.spawn_turret(user.dir)
 		user.u_equip(src)
-		src.loc = get_turf(user)
+		src.set_loc(get_turf(user))
 		qdel(src)
 
 	proc/spawn_turret(var/direct)

@@ -1,5 +1,151 @@
 
+(t)tue aug 25 20
+(u)Superlagg
+(p)1243
+(e)⚖🆕|balance, feature
+(*)Tox, brain, and oxy medkits now have more useful auto-injectors!
+(+)Added a new emergency medkit specifically for deep crit. Ask your local QM or salesbot today!
+(u)ThePotato97
+(p)1846
+(e)|
+(+)Fixed the Infravision trait.
+(u)Michaellaneous
+(p)1918
+(e)⚖|balance
+(+)Medium and small spiders now can't grab people anymore.
+(u)Jawns
+(p)1927
+(e)🐛|bug
+(+)Ghost drone popsicle duplication feature removed
+(u)zjdtmkhzt
+(p)1891
+(e)⚖|balance
+(+)AIs and cyborgs now have su access at terminals.
+(u)RichardGere
+(p)1802
+(e)🆕📄|feature, tgui
+(*)Gas canisters and tanks have had their UIs updated. Report any bugs!
+(+)Fixed a bug where remote signalers attached to canister bombs didn't properly turn off the safety.
+(t)mon aug 24 20
+(u)zjdtmkhzt
+(p)1920
+(e)🆕|feature
+(+)The pitcher in the artifact lab should now actually scale its power properly for force artifacts.
+(u)pali
+(p)1913
+(e)🆕|feature
+(+)Muzzle flashes now emit a bit of light.
+(u)Michaellaneous
+(p)1919
+(e)|
+(+)Added logic to allow bowls to be recycled
+(u)Michaellaneous
+(p)1915
+(e)🗺|mapping
+(+)Added siren helmets to gimmick wardrobe and removed the hardcoded items from maps
+(t)sun aug 23 20
+(u)Zamujasa
+(*)Updated the round setup stuff. The countdown now starts immediately, and the game setup takes place while the countdown is running. This means rounds start about 2-3 minutes faster on average.
+(*)Map voting is enabled with 60 seconds left on the countdown rather than after setup completes.
+(*)If setup hasn't finished yet, the countdown will automatically stop at 30 seconds until it finishes.
+(u)adharainspace
+(p)1887
+(e)🆕|feature
+(*)what counts as round participation should be more consistent now.
+(u)Michaellaneous
+(p)1912
+(e)🗺|mapping
+(+)Oshan - Removed duplicate items already present in adventure chest.
+(t)sat aug 22 20
+(u)Superlagg
+(p)1894
+(e)⚖|balance
+(+)X-Drones are now much more expensive to manufacture.
+(t)thu aug 20 20
+(u)zjdtmkhzt
+(p)1883
+(e)⚖|balance
+(+)General Manufacturers can now produce rods directly.
+(t)wed aug 19 20
+(u)adharainspace
+(p)1876
+(e)🐛|bug
+(*)manta should be able to start/stop effectively now, instead of being broken.
+(u)adharainspace
+(p)1874
+(e)|
+(*)adds a 20 rounds played requirement to be a ghostdrone
+(u)adharainspace
+(p)1832
+(e)🆕|feature
+(*)adds a 13 round timegate to security.
+(u)Tarmunora
+(p)1850
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Added tactical flamethrower for nukeop firebrands! Sprites by Schwick
+(u)Aft2001
+(p)1852
+(e)🆕🎨|feature, sprites
+(+)Adds 1 new status option for AI, "Text", which is a scrolling text screen. Your AI color will change the color of the lines
+(u)Emcee-Gore
+(p)1823
+(e)⚖|balance
+(+)Increased prefab generation for Z5.
+(u)Emcee-Gore
+(p)1822
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Added a cozy drug den to the Z5 generation! Beware of space madness!
+(+)Lowered maximum rockworm prefab spawns.
+(u)Emcee-Gore
+(p)1829
+(e)🆕|feature
+(+)Added a Spacemen the Grifening rulebook to the appropriate vending machine.
+(t)tue aug 18 20
+(u)adharainspace
+(p)1851
+(e)🆕|feature
+(*)fixes an oversight that made diseases (like avian flu) much slower than intended.
+(u)Marksman2539
+(p)1858
+(e)🐛🗺|bug, mapping
+(+)Horizon armory is now accessible.
+(t)mon aug 17 20
+(u)Comradef191
+(p)1824
+(e)🗺|mapping
+(+)Completely rewired Mushroom Station, Moved the Hanger & Re-Added the Arrivals Shuttle.
+(+)Mushroom Station now has a few Cyborg Docking Stations scattered around Maintenance.
+(u)UUID
+(p)1847
+(e)🐛|bug
+(*)Humans are once again allowed to voluntarily enter the port-a-puke.
+(u)pali
+(p)1839
+(e)🐛|bug
+(*)Mentor mouse ping hotkey is now ctrl+click and players can whisper back using F3 if they have a mouse in their pocket. Other misc mentor mouse improvements.
+(t)sun aug 16 20
+(u)Tarmunora
+(p)1793
+(e)⚖|balance
+(+)Adjusted nitroglycerin explosions.
+(t)sat aug 15 20
+(u)Jawns
+(p)1709
+(e)⚖🐛|balance, bug
+(+)Sketchy D-5 now takes both grown and crate weed
+(u)glassofmilk
+(p)1809
+(e)🆕|feature
+(+)Replace Component Cabinets in Mechanic's lockers with frames to save space
 (t)fri aug 14 20
+(u)Zamujasa
+(*)Turned on Oshan's lag generator.
+(*)If it's *too* laggy, it'll be turned off again.
+(*)Also, I hope you aren't afraid of the dark.
+(u)Kubius
+(p)1811
+(e)🆕🗺|feature, mapping
+(+)Miscellaneous Kondaru improvements, primarily more stuff in maintenance.
 (u)MarkNstein
 (p)1525
 (e)⚖🔄|balance, rework

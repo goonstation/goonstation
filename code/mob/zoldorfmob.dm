@@ -365,10 +365,7 @@
 			namestring +="dorf"
 		Z.real_name = src.real_name
 
-		src.loc = null
-		var/this = src
-		src = null
-		qdel(this)
+		qdel(src)
 
 		pz.name = namestring
 		Z.name = namestring
