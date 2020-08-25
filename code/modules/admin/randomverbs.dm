@@ -66,7 +66,7 @@
 			if (!M || !ismob(M) || (M && isobserver(M)))
 				return
 
-			var/PLoc = prisonwarp ? pick(prisonwarp) : null
+			var/PLoc = pick_landmark(LANDMARK_PRISONWARP)
 			if (PLoc)
 				M.changeStatus("paralysis", 80)
 				M.set_loc(PLoc)
