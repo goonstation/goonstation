@@ -889,8 +889,7 @@ var/respawn_arena_enabled = 0
 		newbody.key = src.key
 	equip_battler(newbody)
 	newbody.set_clothing_icon_dirty()
-	var/obj/landmark/ass_arena_spawn/place = pick(ass_arena_spawn)
-	newbody.set_loc(place.loc)
+	newbody.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
 	return
 
 ///////////////////

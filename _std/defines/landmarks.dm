@@ -12,7 +12,7 @@
 #define LANDMARK_HALLOWEED_SPAWN "halloween spawn"
 #define LANDMARK_BUBS_BEE_JOB "bubsbeejob"
 #define LANDMARK_MAGNET_CENTER "magnet_center"
-#define MANDMARK_MAGNET_SHIELD "magnet_shield"
+#define LANDMARK_MAGNET_SHIELD "magnet_shield"
 #define LANDMARK_BOXING_RING "boxing ring"
 #define LANDMARK_GPS_WAYPOINT "GPS Waypoint"
 

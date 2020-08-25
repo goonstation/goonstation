@@ -21,7 +21,7 @@ Contents:
 	ex_act(severity)
 		return
 
-	Entered(atom/A as mob|obj)
+	Entered(atom/movable/A as mob|obj)
 		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
 			return ..()
 		var/turf/T = pick_landmark(LANDMARK_FALL_ICE_ELE)

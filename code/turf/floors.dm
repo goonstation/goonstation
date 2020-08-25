@@ -1697,7 +1697,7 @@
 	icon_state = "gauntwall"
 // --------------------------------------------
 
-/turf/proc/fall_to(var/turf/T, var/atom/A)
+/turf/proc/fall_to(var/turf/T, var/atom/movable/A)
 	if(istype(A, /obj/overlay/tile_effect)) //Ok enough light falling places. Fak.
 		return
 	if (isturf(T))

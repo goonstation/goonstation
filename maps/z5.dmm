@@ -246,7 +246,7 @@
 "eL" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/shuttle/mining/space)
 "eM" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/mining/space)
 "eN" = (/turf/simulated/wall/r_wall{icon = 'icons/misc/evilreaverstation.dmi'; icon_state = "old_rwall"},/area/diner/hallway/docking)
-"eO" = (/obj/decal/cleanable/dirt,/obj/landmark{name = "shitty_bill"},/turf/simulated/floor/carpet{icon_state = "red2"},/area/diner/dining)
+"eO" = (/obj/decal/cleanable/dirt,/mob/living/carbon/human/biker,/turf/simulated/floor/carpet{icon_state = "red2"},/area/diner/dining)
 "eP" = (/turf/simulated/wall/r_wall{icon = 'icons/misc/evilreaverstation.dmi'; icon_state = "old_rwall"},/area/diner/motel)
 "eQ" = (/turf/simulated/floor/plating/scorched,/area/diner/hangar)
 "eR" = (/turf/simulated/floor/plating,/area/diner/hangar)
