@@ -84,7 +84,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	boutput(player.current, "<B>Objective</B>: Defeat all other battlers!")
 	player.current.nodamage = 1 // No murder on the battle shuttle
 		// Stuff them on the shuttle
-	player.current.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN)
+	player.current.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 	equip_battler(player.current)
 	SPAWN_DBG(MAX_TIME_ON_SHUTTLE)
 		if(istype(get_area(player.current),/area/shuttle/escape/transit/battle_shuttle))
