@@ -488,7 +488,6 @@ var/global
 	datum/dj_panel/dj_panel = new()
 
 	list/battle_royale_spawn = list()
-	list/newplayer_start = list()
 	list/rp_latejoin = list()
 	list/prisonwarped = list()	//list of players already warped
 	list/wormholeturfs = list()
