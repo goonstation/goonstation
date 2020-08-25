@@ -3,7 +3,7 @@
 (u)Carbadox
 (p)1884
 (e)🆕|feature
-(*)Lunchboxes have been removed from the Spacebux purchase list. From now on, you can instead purchase it in your traits menu.
+(+)Added a trait to replace your trinket with a lunchbox.
 (+)Added a dozen of empty lunchboxes to the Kitchen vendor. Now chefs can prepare packed lunches for the whole crew! Maybe you'll cute handwritten note (or maybe death threat, who knows).
 (u)Janonas
 (p)1873
