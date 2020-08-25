@@ -223,8 +223,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		ircbot.event("roundstart")
 		mode.post_setup()
 
-		cleanup_landmarks()
-
 		event_wormhole_buildturflist()
 
 		mode.post_post_setup()
@@ -857,9 +855,3 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			return
 //Anything else, like sandbox, return.
 */
-
-/datum/controller/gameticker/proc/cleanup_landmarks()
-	for(var/obj/landmark/start/S in landmarks)
-		//Deleting Startpoints but we need the ai point to AI-ize people later
-		if (S.name != "AI")
-			S.dispose()
