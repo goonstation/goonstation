@@ -6,7 +6,6 @@
 /atom/movable/var/tmp/throw_pixel = 1		//1 if the pixel vars will be adjusted depending on aiming/mouse params, on impact.
 /atom/movable/var/tmp/last_throw_x = 0
 /atom/movable/var/tmp/last_throw_y = 0
-/mob/var/tmp/gib_flag = 0 	      //Sorry about this.
 
 /atom/movable/proc/hit_check()
 	if(src.throwing)
@@ -28,169 +27,29 @@
 					src.throw_impact(A)
 					src.throwing = 0
 
-
 /atom/movable/proc/throw_begin(atom/target)
-	return
+
+// when an atom gets hit by a thrown object, returns the sound to play
+/atom/proc/hitby(atom/movable/AM)
+	SHOULD_CALL_PARENT(TRUE)
 
 /atom/movable/proc/throw_end(list/params, turf/thrown_from) //throw ends (callback regardless of whether we impacted something)
-	return
-
-/atom/movable/proc/throw_impact(atom/hit_atom, list/params)
-	var/turf/t = get_turf(hit_atom)
-	if( t && t.loc && t.loc:sanctuary ) return
-	var/impact_sfx = 0
-
-	if (isliving(hit_atom))
-		impact_sfx = 'sound/impact_sounds/Generic_Hit_2.ogg'
-
-		if(iscarbon(hit_atom))
-			var/mob/living/carbon/human/C = hit_atom //fuck you, monkeys
-			var/turf/T = get_turf(C)
-			var/turf/U = get_step(C, C.dir)
-
-
-			if(C && istype(src, /atom/movable))
-				var/atom/movable/A = src
-				if (C.find_type_in_hand(/obj/item/bat))
-					if (prob(1))
-						A.throw_at(get_edge_target_turf(C,get_dir(C, U)), 50, 60)
-						playsound(T, 'sound/items/woodbat.ogg', 50, 1)
-						playsound(T, 'sound/items/batcheer.ogg', 50, 1)
-						C.visible_message("<span class='alert'>[C] hits the [src.name] with the bat and scores a HOMERUN! Woah!!!!</span>")
-					else
-						A.throw_at(get_edge_target_turf(C,get_dir(C, U)), 50, 25)
-						playsound(T, 'sound/items/woodbat.ogg', 50, 1)
-						C.visible_message("<span class='alert'>[C] hits the [src.name] with the bat!</span>")
-
-					return 1
-
-	if(src.material) src.material.triggerOnAttack(src, src, hit_atom)
-
 	if (throw_pixel && islist(params) && params["icon-y"] && params["icon-x"])
 		src.pixel_x = text2num(params["icon-x"]) - 16
 		src.pixel_y = text2num(params["icon-y"]) - 16
 
+/atom/movable/proc/throw_impact(atom/hit_atom, list/params)
+	var/area/AR = get_area(hit_atom)
+	if(AR?.sanctuary)
+		return
+
+	src.material?.triggerOnAttack(src, src, hit_atom)
 	for(var/atom/A in hit_atom)
-		if(A.material)
-			A.material.triggerOnAttacked(A, src, hit_atom, src)
+		A.material?.triggerOnAttacked(A, src, hit_atom, src)
 
-	if (reagents)
-		reagents.physical_shock(20)
-
-	if (isliving(hit_atom))
-		var/mob/living/L = hit_atom
-		actions.interrupt(L, INTERRUPT_ATTACKED)
-		//bleed check here
-		if (L.can_bleed && isitem(src))
-			if ((src:hit_type == DAMAGE_STAB && prob(20)) || (src:hit_type == DAMAGE_CUT && prob(40)))
-				take_bleeding_damage(L, null, src.throwforce * 0.5, src:hit_type)
-				impact_sfx = 'sound/impact_sounds/Flesh_Stab_3.ogg'
-
-		if (ishuman(hit_atom)) // Haine fix for undefined proc or verb /mob/living/carbon/wall/meatcube/juggling()
-			var/mob/living/carbon/human/C = hit_atom //fuck you, monkeys
-
-			if (!ismob(src))
-				if (C.juggling())
-					if (prob(40))
-						C.visible_message("<span class='alert'><b>[C]<b> gets hit in the face by [src]!</span>")
-						C.TakeDamageAccountArmor("head", src.throwforce, 0)
-					else
-						if (prob(C.juggling.len * 5)) // might drop stuff while already juggling things
-							C.drop_juggle()
-						else
-							C.add_juggle(src)
-					return
-
-			if(((C.in_throw_mode && C.a_intent == "help") || (C.client && C.client.check_key(KEY_THROW))) && !C.equipped())
-				if((C.hand && (!C.limbs.l_arm)) || (!C.hand && (!C.limbs.r_arm)) || C.hasStatus("handcuffed") || (prob(60) && C.bioHolder.HasEffect("clumsy")) || ismob(src) || (throw_traveled <= 1 && last_throw_x == src.x && last_throw_y == src.y))
-					C.visible_message("<span class='alert'>[C] has been hit by [src].</span>") //you're all thumbs!!!
-					// Added log_reagents() calls for drinking glasses. Also the location (Convair880).
-					logTheThing("combat", C, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
-					random_brute_damage(C, src.throwforce,1)
-
-				#ifdef DATALOGGER
-					game_stats.Increment("violence")
-				#endif
-
-					if(src.throwforce >= 40)
-						C.throw_at(get_edge_target_turf(C,get_dir(src, C)), 10, 1)
-						C.changeStatus("stunned", 3 SECONDS)
-
-					if(ismob(src)) src:throw_impacted(hit_atom)
-
-				else
-					src.attack_hand(C)	// nice catch, hayes. don't ever fuckin do it again
-					C.visible_message("<span class='alert'>[C] catches the [src.name]!</span>")
-					logTheThing("combat", C, null, "catches [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
-					C.throw_mode_off()
-				#ifdef DATALOGGER
-					game_stats.Increment("catches")
-				#endif
-
-			else  //normmal thingy hit me
-				if (src.throwing & THROW_CHAIRFLIP)
-					C.visible_message("<span class='alert'>[src] slams into [C] midair!</span>")
-				else
-					C.visible_message("<span class='alert'>[C] has been hit by [src].</span>")
-					random_brute_damage(C, src.throwforce,1)
-
-					logTheThing("combat", C, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
-
-
-			#ifdef DATALOGGER
-				game_stats.Increment("violence")
-			#endif
-
-				if(src.throwforce >= 40)
-					C.throw_at(get_edge_target_turf(C,get_dir(src, C)), 10, 1)
-					C.changeStatus("stunned", 3 SECONDS)
-
-				if(ismob(src)) src:throw_impacted(hit_atom)
-
-
-		else if(issilicon(hit_atom))
-			var/mob/living/silicon/S = hit_atom
-			S.visible_message("<span class='alert'>[S] has been hit by [src].</span>")
-			logTheThing("combat", S, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(S)].")
-			random_brute_damage(S, src.throwforce,1)
-
-		#ifdef DATALOGGER
-			game_stats.Increment("violence")
-		#endif
-
-			if(src.throwforce >= 40)
-				S.throw_at(get_edge_target_turf(S,get_dir(src, S)), 10, 1)
-
-			if(ismob(src)) src:throw_impacted(hit_atom)
-
-			impact_sfx = impact_sfx = 'sound/impact_sounds/Metal_Clang_3.ogg'
-
-
-	else if(isobj(hit_atom))
-		var/obj/O = hit_atom
-		if(!O.anchored) step(O, src.dir)
-		O.hitby(src)
-		if(ismob(src)) src:throw_impacted(hit_atom)
-		if(O && src.throwforce >= 40)
-			if(!O.anchored && !O.throwing)
-				O.throw_at(get_edge_target_turf(O,get_dir(src, O)), 10, 1)
-			else if(src.throwforce >= 80 && !isrestrictedz(O.z))
-				O.meteorhit(src)
-
-	else if(isturf(hit_atom))
-		var/turf/T = hit_atom
-		if(T.density)
-			//SPAWN_DBG(0.2 SECONDS) step(src, turn(src.dir, 180))
-			if(ismob(src)) src:throw_impacted(hit_atom)
-			/*if(istype(hit_atom, /turf/simulated/wall) && isitem(src))
-				var/turf/simulated/wall/W = hit_atom
-				W.take_hit(src)*/
-			if(src.throwforce >= 80)
-				T.meteorhit(src)
-
-			impact_sfx = impact_sfx = 'sound/impact_sounds/Generic_Stab_1.ogg'
-
-	if (impact_sfx && src)
+	reagents?.physical_shock(20)
+	var/impact_sfx = hit_atom.hitby(src)
+	if(src && impact_sfx)
 		playsound(src, impact_sfx, 40, 1)
 
 /atom/movable/Bump(atom/O)
@@ -204,8 +63,7 @@
 	if(!throwing_controller) return
 	if(!target) return
 	if(src.anchored && !allow_anchored) return
-	if(reagents)
-		reagents.physical_shock(14)
+	reagents?.physical_shock(14)
 	src.throwing = throw_type
 
 	if (src.throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT | THROW_SLIP))
