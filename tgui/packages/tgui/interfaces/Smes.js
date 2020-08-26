@@ -22,7 +22,6 @@ export const Smes = (props, context) => {
     capacity,
     inputAttempt,
     inputting,
-    inputStartUp,
     inputLevel,
     inputLevelMax,
     inputAvailable,

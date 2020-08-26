@@ -228,7 +228,6 @@
 	data["charge"] = src.charge
 	data["inputAttempt"] = src.chargemode
 	data["inputting"] = src.charging
-	data["inputStartUp"] = src.chargecount //smes waits before charging
 	data["inputLevel"] = src.chargelevel
 	data["inputLevelMax"] = SMESMAXCHARGELEVEL
 	data["inputAvailable"] = src.lastexcess
