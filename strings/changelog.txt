@@ -1,5 +1,9 @@
 
 (t)wed aug 26 20
+(u)Michaellaneous
+(p)1957
+(e)|
+(+)ai eyes and ai in general cannot remove cells from opened APCs anymore
 (u)Superlagg
 (p)1888
 (e)🆕|feature
