@@ -1,5 +1,11 @@
 
 (t)wed aug 26 20
+(u)Superlagg
+(p)1777
+(e)⚖🆕|balance, feature
+(*)Added the Lawbringer and egun to the Guardbuddy whitelist. They promise not to hurt anyone with them, though.
+(+)Added several gimmick weapons to the Guardbuddy whitelist.
+(+)Guardbuddies are much more helpful if you're trying to change their parts, and can operate a wider variety of gunlike objects.
 (u)Sovexe
 (p)1948
 (e)🆕📄|feature, tgui
