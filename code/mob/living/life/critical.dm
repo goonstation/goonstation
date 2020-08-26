@@ -22,7 +22,7 @@
 			switch(owner.health)
 				if (-INFINITY to -100)
 					owner.take_oxygen_deprivation(1 * mult)
-					if (prob(percentmult(owner.health * -0.1, mult)))
+					if (prob(percentmult(owner.health * -0.1, mult)) && !HAS_MOB_PROPERTY(owner, PROP_DEFIBRILLATED))
 						owner.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 						//boutput(world, "\b LOG: ADDED FLATLINE TO [src].")
 					if (prob(percentmult(owner.health * -0.2, mult)))

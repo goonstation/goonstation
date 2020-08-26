@@ -11,6 +11,8 @@
 				targets += M
 	return targets
 
+
+
 /datum/aiTask/timed/targeted/human
 	frustration_check()
 		.= 0
@@ -24,6 +26,58 @@
 			. = !(holder.target && isalive(M))
 		else
 			. = !(holder.target)
+
+/datum/aiTask/timed/targeted/human/get_weapon
+	name = "getting strapped"
+	minimum_task_ticks = 3
+	maximum_task_ticks = 5
+	target_range = 5
+	frustration_threshold = 2
+	var/last_seek = 0
+
+	get_targets()
+		var/list/targets = list()
+		if(holder.owner)
+			for(var/obj/item/gun/G in view(target_range, holder.owner))
+				if(G.canshoot())
+					targets += G
+			if(!targets.len)
+				for(var/obj/item/I in view(target_range, holder.owner))
+					if(I.force >= 3)
+						targets += I
+		return targets
+
+	next_task()
+		if(holder.ownhuman.equipped())
+			return transition_task
+		return null
+
+	on_tick()
+		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+			return
+
+		if(!holder.target)
+			if (world.time > last_seek + 4 SECONDS)
+				last_seek = world.time
+				var/list/possible = get_targets()
+				if (possible.len)
+					holder.target = pick(possible)
+
+		if(holder.target && holder.target.z == holder.ownhuman.z)
+			var/dist = get_dist(holder.ownhuman, holder.target)
+			if (dist >= 1)
+				if (prob(80))
+					holder.move_to(holder.target,0)
+				else
+					holder.move_circ(holder.target)
+			else
+				holder.stop_move()
+
+			if (dist <= 1)
+				holder.ownhuman.put_in_hand_or_drop(holder.target)
+
+
+
 
 /datum/aiTask/timed/targeted/human/flee
 	name = "running away"
@@ -68,7 +122,7 @@
 
 /datum/aiTask/timed/targeted/human/boxing/
 	name = "boxing"
-	minimum_task_ticks = 7
+	minimum_task_ticks = 10
 	maximum_task_ticks = 26
 	target_range = 8
 	frustration_threshold = 5
@@ -113,7 +167,7 @@
 					if (!holder.ownhuman.equipped())
 						holder.ownhuman.hand_attack(M, params)
 				if(prob(25))
-					holder.move_circ(holder.target,target_range)
+					holder.move_circ(holder.target,2)
 
 		..()
 
@@ -178,7 +232,7 @@
 						else
 							holder.ownhuman.drop_item()
 			else
-				holder.move_circ(holder.target,target_range+8)
+				holder.move_circ(holder.target,target_range)
 
 		..()
 

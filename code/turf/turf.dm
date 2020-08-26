@@ -862,10 +862,8 @@
 	#endif
 		lobby_titlecard = src
 
-#ifndef RP_MODE
 		if (!player_capa)
 			encourage()
-#endif
 
 	proc/encourage()
 		var/obj/overlay/clickable = new/obj/overlay(src)
