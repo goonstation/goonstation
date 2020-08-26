@@ -1,5 +1,9 @@
 
 (t)wed aug 26 20
+(u)Sovexe
+(p)1948
+(e)🆕📄|feature, tgui
+(+)Converted SMES to TGUI
 (u)ThePotato97
 (p)1956
 (e)|
