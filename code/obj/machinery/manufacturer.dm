@@ -396,54 +396,13 @@
 			onclose(user, "manufact")
 			return
 
-		dat += "<div id='info'>"
+		dat += "<div id='products'>"
 
-		// -----------------------------------------------------------
-		// -----------------------------------------------------------
-		// This is the part that shows the current production and shit
-		// if (src.mode == "halt")
-		// 	dat += "<br><A href='?src=\ref[src];continue=1'><u><b>Resume Production</b></u></a>"
-		// -----------------------------------------------------------
-		// -----------------------------------------------------------
-
-		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
-		if(scan)
-			var/datum/data/record/account = null
-			account = FindBankAccountByName(src.scan.registered)
-			if (account)
-				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<br>"
-		dat+= src.temp
-
-		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
-		for(var/obj/machinery/ore_cloud_storage_container/S in by_type[/obj/machinery/ore_cloud_storage_container])
-			if(S.broken)
-				continue
-			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
-			var/list/ores = S.ores
-			for(var/ore in ores)
-				var/datum/ore_cloud_data/OCD = ores[ore]
-				if(!OCD.for_sale || !OCD.amount)
-					continue
-				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(OCD.price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
-				dat += "[ore]: [OCD.amount] ($[OCD.price+taxes+(!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0)]/ore) (<A href='?src=\ref[src];purchase=1;storage=\ref[S];ore=[ore]'>Purchase</A>)<br>"
-
-		dat += "</small><HR>"
-
-		dat += build_material_list(user)
-		dat += build_control_panel(user)
-
-		dat += "</div><div id='products'>"
-
-
-		dat += "<B>Available Schematics</B><br>"
-		if(istext(src.search))
-			dat += " <small>(Search: \"[html_encode(src.search)]\")</small>"
-		if(istext(src.category))
-			dat += " <small>(Filter: \"[html_encode(src.category)]\")</small>"
-
-		// ------------------------------------------------------------------
-		// - Temporary comment so I can find this later                     -
-		// ------------------------------------------------------------------
+		// dat += "<B>Available Schematics</B><br>"
+		// if(istext(src.search))
+		// 	dat += " <small>(Search: \"[html_encode(src.search)]\")</small>"
+		// if(istext(src.category))
+		// 	dat += " <small>(Filter: \"[html_encode(src.category)]\")</small>"
 
 		// Get the list of stuff we can print ...
 		var/list/products = src.available + src.download
@@ -485,10 +444,36 @@
 			<span class='time'>[A.time && src.speed ? round((A.time / src.speed)) : "??"] sec.</span>
 		</div>"}
 
-		dat += "</div>"
+		dat += "</div><div id='info'>"
+		dat += build_material_list(user)
+
+		// This is not re-formatted yet just b/c i don't wanna mess with it
+		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
+		if(scan)
+			var/datum/data/record/account = null
+			account = FindBankAccountByName(src.scan.registered)
+			if (account)
+				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<br>"
+		dat+= src.temp
+		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
+		for(var/obj/machinery/ore_cloud_storage_container/S in by_type[/obj/machinery/ore_cloud_storage_container])
+			if(S.broken)
+				continue
+			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
+			var/list/ores = S.ores
+			for(var/ore in ores)
+				var/datum/ore_cloud_data/OCD = ores[ore]
+				if(!OCD.for_sale || !OCD.amount)
+					continue
+				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(OCD.price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
+				dat += "[ore]: [OCD.amount] ($[OCD.price+taxes+(!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0)]/ore) (<A href='?src=\ref[src];purchase=1;storage=\ref[S];ore=[ore]'>Purchase</A>)<br>"
+
+		dat += "</small><HR>"
+
+		dat += build_control_panel(user)
 
 
-		user.Browse(HTML + dat.Join(), "window=manufact;size=1100x600")
+		user.Browse(HTML + dat.Join(), "window=manufact;size=1111x600")
 		onclose(user, "manufact")
 
 		interact_particle(user,src)
