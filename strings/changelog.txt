@@ -1,5 +1,9 @@
 
 (t)wed aug 26 20
+(u)ThePotato97
+(p)1956
+(e)|
+(+)Monkey doesn't burn itself when going bump anymore.
 (u)Michaellaneous
 (p)1957
 (e)|
