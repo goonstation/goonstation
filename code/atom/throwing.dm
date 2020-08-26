@@ -32,7 +32,7 @@
 /atom/proc/throw_begin(atom/target)
 	return
 
-/atom/proc/throw_end(list/params) //throw ends (callback regardless of whether we impacted something)
+/atom/proc/throw_end(list/params, turf/thrown_from) //throw ends (callback regardless of whether we impacted something)
 	return
 
 /atom/movable/proc/throw_impact(atom/hit_atom, list/params)
@@ -212,9 +212,10 @@
 
 /atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
-	if (!target) return
-	if (src.anchored && !allow_anchored) return
-	if (reagents)
+	if(!throwing_controller) return
+	if(!target) return
+	if(src.anchored && !allow_anchored) return
+	if(reagents)
 		reagents.physical_shock(14)
 	src.throwing = throw_type
 
@@ -228,162 +229,36 @@
 	src.last_throw_y = src.y
 	src.throw_begin(target)
 
-	//Gotta do this in 4 steps or byond decides that the best way to interpolate between (0 and) 180 and 360 is to just flip the icon over, not turn it.
-	if(!istype(src)) return
-
 	var/matrix/transform_original = src.transform
 	if (src.throw_spin == 1 && !(throwing & THROW_SLIP))
 		animate(src, transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 
-	var/hitAThing = 0
-	var/target_true_x = target.x
-	var/target_true_y = target.y
-
-	if (isobj(target.loc))
-		var/obj/container = target.loc
-		if (target in container.contents)
-			target_true_x = container.x
-			target_true_y = container.y
-
+	var/turf/targets_turf = get_turf(target)
+	var/target_true_x = targets_turf.x
+	var/target_true_y = targets_turf.y
 
 	var/dist_x = abs(target_true_x - src.x)
 	var/dist_y = abs(target_true_y - src.y)
 
-	var/dx
-	if (target_true_x  > src.x)
-		dx = EAST
-	else
-		dx = WEST
+	var/datum/thrown_thing/thr = new(
+		thing = src,
+		target = target,
+		error = dist_x > dist_y ? dist_x/2 - dist_y : dist_y/2 - dist_x,
+		speed = speed,
+		dx = target_true_x  > src.x ? EAST : WEST,
+		dy = target_true_y  > src.y ? NORTH : SOUTH,
+		dist_x = dist_x,
+		dist_y = dist_y,
+		range = range,
+		target_x = target_true_x,
+		target_y = target_true_y,
+		transform_original = transform_original,
+		params = params,
+		thrown_from = thrown_from,
+		return_target = usr // gross
+	)
 
-	var/dy
-	if (target_true_y  > src.y)
-		dy = NORTH
-	else
-		dy = SOUTH
-
-	var/dist_travelled = 0
-	var/dist_since_sleep = 0
-
-	if(dist_x > dist_y)
-		var/error = dist_x/2 - dist_y
-		var/turf/T = src.loc
-		while (target && ( (((src.x < target_true_x && dx == EAST) || (src.x > target_true_x && dx == WEST)) && dist_travelled < range) || (T && T.throw_unlimited) || src.throw_unlimited) && src.throwing && isturf(src.loc))
-			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
-#if ASS_JAM
-			while(src.throwing_paused)//timestop effect
-				sleep(1 SECOND)
-#endif
-			if(error < 0)
-				var/atom/step = get_step(src, dy)
-				if(!step || step == src.loc) // going off the edge of the map makes get_step return null, don't let things go off the edge
-					break
-				src.glide_size = (32 / (1/speed)) * world.tick_lag
-				if (!Move(step))  // Grayshift: Race condition fix. Bump proc calls are delayed past the end of the loop and won't trigger end condition
-					hitAThing = 1 // of !throwing on their own, so manually checking if Move failed as end condition
-					break
-				src.glide_size = (32 / (1/speed)) * world.tick_lag
-				hit_check()
-				error += dist_x
-				dist_travelled++
-				src.throw_count++
-				dist_since_sleep++
-				if(dist_since_sleep >= speed)
-					dist_since_sleep = 0
-					sleep(0.1 SECONDS)
-			else
-				var/atom/step = get_step(src, dx)
-				if(!step || step == src.loc) // going off the edge of the map makes get_step return null, don't let things go off the edge
-					break
-				src.glide_size = (32 / (1/speed)) * world.tick_lag
-				if (!Move(step))
-					hitAThing = 1
-					break
-				src.glide_size = (32 / (1/speed)) * world.tick_lag
-				hit_check()
-				error -= dist_y
-				dist_travelled++
-				src.throw_count++
-				dist_since_sleep++
-				if(dist_since_sleep >= speed)
-					dist_since_sleep = 0
-					sleep(0.1 SECONDS)
-			T = src.loc
-	else
-		var/error = dist_y/2 - dist_x
-		var/turf/T = src.loc
-		while (target && ( (((src.y < target_true_y && dy == NORTH) || (src.y > target_true_y && dy == SOUTH)) && dist_travelled < range) || (T && T.throw_unlimited) || src.throw_unlimited) && src.throwing && isturf(src.loc))
-			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
-#if ASS_JAM
-			while(src.throwing_paused)//timestop effect
-				sleep(1 SECOND)
-#endif
-			if(error < 0)
-				var/atom/step = get_step(src, dx)
-				if(!step || step == src.loc) // going off the edge of the map makes get_step return null, don't let things go off the edge
-					break
-				src.glide_size = (32 / (1/speed)) * world.tick_lag
-				if (!Move(step))
-					hitAThing = 1
-					break
-				src.glide_size = (32 / (1/speed)) * world.tick_lag
-				hit_check()
-				error += dist_y
-				dist_travelled++
-				src.throw_count++
-				dist_since_sleep++
-				if(dist_since_sleep >= speed)
-					dist_since_sleep = 0
-					sleep(0.1 SECONDS)
-			else
-				var/atom/step = get_step(src, dy)
-				if(!step || step == src.loc) // going off the edge of the map makes get_step return null, don't let things go off the edge
-					break
-				src.glide_size = (32 / (1/speed)) * world.tick_lag
-				if (!Move(step))
-					hitAThing = 1
-					break
-				src.glide_size = (32 / (1/speed)) * world.tick_lag
-				hit_check()
-				error -= dist_x
-				dist_travelled++
-				src.throw_count++
-				dist_since_sleep++
-				if(dist_since_sleep >= speed)
-					dist_since_sleep = 0
-					sleep(0.1 SECONDS)
-			T = src.loc
-
-	//done throwing, either because it hit something or it finished moving
-
-	animate(src, transform = transform_original)
-
-	src.throw_end(params)
-
-	if (hitAThing)
-		params = null// if we hit something don't use the pixel x/y from the click params
-
-	src.throwing = 0
-	src.throw_unlimited = 0
-
-
-	//Wire note: Small fix stemming from pie science. Throw a pie at yourself! Whoa!
-	//if (target == usr)
-	//	src.throw_impact(target)
-	//	src.throwing = 0
-	//Somepotato note: this is gross. Way to make wireless killing machines!!!
-
-	throw_traveled = dist_travelled //dist traveled is super innacurrate, especially when stacking throws
-	if (thrown_from)//if we have htis param we should use it to get the REAL distance.
-		throw_traveled = get_dist(get_turf(src),get_turf(thrown_from))
-
-	if(isobj(src)) src:throw_impact(get_turf(src), params)
-
-	src.throw_traveled = 0
-	src.throw_count = 0
-
-	if(target != usr && src.throw_return) throw_at(usr, src.throw_range, src.throw_speed)
-	//testing boomrang stuff
-	//throw_at(atom/target, range, speed)//
-	//if(target != usr) throw_at(usr, 10, 1)
+	LAZYLISTADD(throwing_controller.thrown, thr)
+	throwing_controller.start()
