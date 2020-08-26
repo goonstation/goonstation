@@ -241,16 +241,21 @@
 		<title>[src.name]</title>
 		<style type='text/css'>
 
+			/* will probaby break chui, dont care */
+			body { background: #222; color: white; font-family: Tahoma, sans-serif; }
+			a { color: #88f; }
+
 			.l { text-align: left; } .r { text-align: right; } .c { text-align: center; }
 			.buttonlink { background: #66c; min-width: 1.1em; height: 1.2em; padding: 0.2em 0.2em; margin-bottom: 2px; border-radius: 4px; font-size: 90%; color: white; text-decoration: none; display: inline-block; vertical-align: middle; }
-			thead { background: rgba(160, 160, 160, 0.6); }
+			thead { background: #555555; }
 
 			table {
 				border-collapse: collapse;
 				width: 100%;
 				}
-			.outline td, .outline tr {
-				border: 1px solid black;
+			td, th { padding: 0.2em; 0.5em; }
+			.outline td, .outline th {
+				border: 1px solid #666;
 			}
 
 			img, a img {
@@ -262,7 +267,7 @@
 				right: 0.5em;
 				top: 0;
 				width: 25%;
-				padding: 0.25em;
+				padding: 0.5em;
 				}
 
 			#products {
@@ -279,8 +284,9 @@
 				width: 12em;
 				padding: 0.25em 0.5em;
 				border-radius: 5px;
-				background: #eee;
 				margin: 0.5em;
+				background: #555;
+				box-shadow: 3px 3px 0 2px #000;
 				}
 
 			.queue {
@@ -313,8 +319,8 @@
 				-ms-interpolation-mode: nearest-neighbor; /* pixels go cronch */
 				}
 			.product.disabled {
-				background: #bbb;
-				color: #555;
+				background: #333;
+				color: #aaa;
 			}
 			.required {
 				display: none;
@@ -322,6 +328,7 @@
 
 			.product:hover {
 				cursor: pointer;
+				background: #666;
 			}
 			.product:hover .required {
 				display: block;
@@ -335,7 +342,7 @@
 				top: 0;
 				left: 0;
 				right: 0;
-				background: white;
+				background: #333;
 				border: 1px solid #888888;
 				padding: 0.25em 0.5em;
 				margin: 0.25em 0.5em;
@@ -344,7 +351,7 @@
 				border-radius: 5px;
 				}
 			.mat-missing {
-				color: red;
+				color: #f66;
 			}
 		</style>
 		<script type="text/javascript">
@@ -1621,6 +1628,10 @@
 		var/list/speed_opts = list()
 		for (var/i in 1 to (src.hacked ? 5 : 3))
 			speed_opts += "<a href='?src=\ref[src];speed=[i]' class='buttonlink' style='[i == src.speed ? "font-weight: bold; background: #6c6;" : ""]'>[i]</a>"
+
+		if (src.speed > (src.hacked ? 5 : 3))
+			// sometimes people get these set to wacky values
+			speed_opts += "<a href='?src=\ref[src];speed=[i]' class='buttonlink' style='font-weight: bold; background: #c66;'>[src.speed]</a>"
 
 		dat += {"
 			<br>
