@@ -93,8 +93,7 @@
 				if (C.juggling())
 					if (prob(40))
 						C.visible_message("<span class='alert'><b>[C]<b> gets hit in the face by [src]!</span>")
-						if (hasvar(src, "throwforce"))
-							C.TakeDamageAccountArmor("head", src:throwforce, 0)
+						C.TakeDamageAccountArmor("head", src.throwforce, 0)
 					else
 						if (prob(C.juggling.len * 5)) // might drop stuff while already juggling things
 							C.drop_juggle()
@@ -107,14 +106,13 @@
 					C.visible_message("<span class='alert'>[C] has been hit by [src].</span>") //you're all thumbs!!!
 					// Added log_reagents() calls for drinking glasses. Also the location (Convair880).
 					logTheThing("combat", C, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
-					if(src.vars.Find("throwforce"))
-						random_brute_damage(C, src:throwforce,1)
+					random_brute_damage(C, src.throwforce,1)
 
 				#ifdef DATALOGGER
 					game_stats.Increment("violence")
 				#endif
 
-					if(src.vars.Find("throwforce") && src:throwforce >= 40)
+					if(src.throwforce >= 40)
 						C.throw_at(get_edge_target_turf(C,get_dir(src, C)), 10, 1)
 						C.changeStatus("stunned", 3 SECONDS)
 
@@ -134,8 +132,7 @@
 					C.visible_message("<span class='alert'>[src] slams into [C] midair!</span>")
 				else
 					C.visible_message("<span class='alert'>[C] has been hit by [src].</span>")
-					if(src.vars.Find("throwforce"))
-						random_brute_damage(C, src:throwforce,1)
+					random_brute_damage(C, src.throwforce,1)
 
 					logTheThing("combat", C, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
 
@@ -144,7 +141,7 @@
 				game_stats.Increment("violence")
 			#endif
 
-				if(src.vars.Find("throwforce") && src:throwforce >= 40)
+				if(src.throwforce >= 40)
 					C.throw_at(get_edge_target_turf(C,get_dir(src, C)), 10, 1)
 					C.changeStatus("stunned", 3 SECONDS)
 
@@ -155,14 +152,13 @@
 			var/mob/living/silicon/S = hit_atom
 			S.visible_message("<span class='alert'>[S] has been hit by [src].</span>")
 			logTheThing("combat", S, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(S)].")
-			if(src.vars.Find("throwforce"))
-				random_brute_damage(S, src:throwforce,1)
+			random_brute_damage(S, src.throwforce,1)
 
 		#ifdef DATALOGGER
 			game_stats.Increment("violence")
 		#endif
 
-			if(src.vars.Find("throwforce") && src:throwforce >= 40)
+			if(src.throwforce >= 40)
 				S.throw_at(get_edge_target_turf(S,get_dir(src, S)), 10, 1)
 
 			if(ismob(src)) src:throw_impacted(hit_atom)
@@ -175,10 +171,10 @@
 		if(!O.anchored) step(O, src.dir)
 		O.hitby(src)
 		if(ismob(src)) src:throw_impacted(hit_atom)
-		if(O && src.vars.Find("throwforce") && src:throwforce >= 40)
+		if(O && src.throwforce >= 40)
 			if(!O.anchored && !O.throwing)
 				O.throw_at(get_edge_target_turf(O,get_dir(src, O)), 10, 1)
-			else if(src:throwforce >= 80 && !isrestrictedz(O.z))
+			else if(src.throwforce >= 80 && !isrestrictedz(O.z))
 				O.meteorhit(src)
 
 	else if(isturf(hit_atom))
@@ -189,7 +185,7 @@
 			/*if(istype(hit_atom, /turf/simulated/wall) && isitem(src))
 				var/turf/simulated/wall/W = hit_atom
 				W.take_hit(src)*/
-			if(src.vars.Find("throwforce") && src:throwforce >= 80)
+			if(src.throwforce >= 80)
 				T.meteorhit(src)
 
 			impact_sfx = impact_sfx = 'sound/impact_sounds/Generic_Stab_1.ogg'
