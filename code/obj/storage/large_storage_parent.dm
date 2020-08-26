@@ -286,7 +286,7 @@
 					L.changeStatus("weakened", 4 SECONDS)
 				if (prob(25))
 					L.show_text("You hit your head on [no_go]!", "red")
-					L.TakeDamage("head", 0, 10)
+					L.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 
 			. = 0
 		else
