@@ -6,14 +6,8 @@
  */
 
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Divider, NoticeBox, ProgressBar, Search } from '../components';
+import { Box, Button, ProgressBar, Search, LabeledList, Divider } from '../components';
 import { Window } from '../layouts';
-
-const DisposalChuteState = {
-  Off: 0,
-  Charging: 1,
-  Charged: 2,
-};
 
 export const DisposalChute = (props, context) => {
   const { act, data } = useBackend(context);
@@ -22,122 +16,95 @@ export const DisposalChute = (props, context) => {
     name,
     destinations = null,
     destinationTag,
+    flush,
+    mode,
+    pressure,
   } = data;
+
+  const DisposalChuteState = {
+    Off: 0,
+    Charging: 1,
+    Charged: 2,
+  };
+
+  const pumpState = (
+    (mode===DisposalChuteState.Charged && 'good')
+    || (mode===DisposalChuteState.Charging && 'average')
+    || 'bad'
+  );
 
   return (
     <Window
-      resizable
       title={name}
-      width={360}
-      height={destinations ? 350 : 220}>
+      width={355}
+      height={destinations ? 350 : 140}>
       <Window.Content scrollable={destinations}>
-        <PumpStatus />
-        <PumpControl />
-        <EjectButton />
+        <LabeledList>
+          <LabeledList.Item label="Current Pressure" />
+        </LabeledList>
+        <ProgressBar
+          mt="0.5em"
+          ranges={{
+            good: [1, Infinity],
+            average: [0.75, 1],
+            bad: [-Infinity, 0.75],
+          }}
+          value={pressure} />
         <Divider />
-        <PressureStatus />
-        <Divider />
-        <ToggleHandle />
+        <LabeledList>
+          <LabeledList.Item
+            label="Air Pump"
+            buttons={
+              <Button
+                icon="power-off"
+                content={mode ? 'Enabled' : 'Disabled'}
+                color={mode ? 'green' : 'red'}
+                onClick={() => act('togglePump')} />
+            } >
+            <Box color={pumpState} >
+              {(mode===DisposalChuteState.Charged && 'Ready')
+               || (mode===DisposalChuteState.Charging && 'Pressurizing')
+               || 'Inactive'}
+            </Box>
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="Chute Handle"
+            buttons={
+              <Button
+                icon={destinations ? "envelope" : "trash-alt"}
+                content={flush ? "Engaged" : "Disengaged"}
+                onClick={() => act('toggleHandle')} />
+            } >
+            <Button
+              content="Eject Contents"
+              icon="eject"
+              onClick={() => act('eject')} />
+          </LabeledList.Item>
+        </LabeledList>
         {destinations && (
           <>
-            <Box mb="0.5em">
-              <strong>Current Destination: {destinationTag}</strong>
+            <Divider />
+            <LabeledList>
+              <LabeledList.Item
+                label="Destination"
+                buttons={
+                  <Button
+                    icon="search"
+                    content="Rescan"
+                    onClick={() => act('rescanDest')} />
+                } >
+                {destinationTag}
+              </LabeledList.Item>
+            </LabeledList>
+            <Box mt="0.5em">
+              <DestinationSearch
+                destinations={destinations}
+                destinationTag={destinationTag} />
             </Box>
-            <Box mb="0.5em">
-              <Button
-                icon="search"
-                content="Rescan Destinations"
-                onClick={() => act('rescanDest')}
-              />
-            </Box>
-            <DestinationSearch
-              destinations={destinations}
-              destinationTag={destinationTag} />
           </>
         )}
       </Window.Content>
     </Window>
-  );
-};
-
-const PumpStatus = (props, context) => {
-  const { data } = useBackend(context);
-  const { mode } = data;
-
-  return (
-    <NoticeBox
-      info={mode===DisposalChuteState.Off}
-      danger={mode===DisposalChuteState.Charging}
-      success={mode===DisposalChuteState.Charged}
-      textAlign="center">
-
-      Pump Status: {mode===DisposalChuteState.Charged ? 'Ready' : (mode===DisposalChuteState.Charging ? 'Pressurizing' : 'Inactive')}
-    </NoticeBox>
-  );
-};
-
-const PumpControl = (props, context) => {
-  const { act, data } = useBackend(context);
-  const {
-    mode,
-  } = data;
-  return (
-    <Box mb="0.5em">
-      <strong>Air Pump </strong>
-      <Button
-        icon="power-off"
-        content={mode ? 'Enabled' : 'Disabled'}
-        onClick={() => act('togglePump')}
-      />
-    </Box>
-  );
-};
-
-const EjectButton = (props, context) => {
-  const { act } = useBackend(context);
-  return (
-    <Box mb="0.5em">
-      <Button
-        content="Eject Contents"
-        icon="eject"
-        onClick={() => act('eject')} />
-    </Box>
-  );
-};
-
-const ranges = {
-  good: [1, Infinity],
-  average: [0.75, 1],
-  bad: [-Infinity, 0.75],
-};
-
-const PressureStatus = (props, context) => {
-  const { data } = useBackend(context);
-  const { pressure } = data;
-  return (
-    <>
-      <Box mb="0.5em">
-        <strong>Current Pressure</strong>
-      </Box>
-      <ProgressBar
-        ranges={ranges}
-        value={pressure} />
-    </>
-  );
-};
-
-const ToggleHandle = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { destinations, flush } = data;
-  return (
-    <Box mb="0.5em">
-      <strong>Chute Handle </strong>
-      <Button
-        icon={destinations ? "envelope" : "trash-alt"}
-        content={flush ? "Engaged" : "Disengaged"}
-        onClick={() => act('toggleHandle')}
-      />
-    </Box>
   );
 };
 
