@@ -240,8 +240,14 @@
 		var/HTML = {"
 		<title>[src.name]</title>
 		<style type='text/css'>
+
+			.l { text-align: left; } .r { text-align: right; } .c { text-align: center; }
+			.buttonlink { background: #66c; min-width: 1.1em; height: 1.2em; padding: 0.2em 0.2em; margin-bottom: 2px; border-radius: 4px; font-size: 90%; color: white; text-decoration: none; display: inline-block; vertical-align: middle; }
+			thead { background: rgba(160, 160, 160, 0.6); }
+
 			table {
 				border-collapse: collapse;
+				width: 100%;
 				}
 			.outline td, .outline tr {
 				border: 1px solid black;
@@ -251,33 +257,105 @@
 				border: 0;
 				}
 
-			.product {
-				display: block;
-				float: left;
-				width: 20em;
+			#info {
+				position: absolute;
+				right: 0.5em;
+				top: 0;
+				width: 25%;
+				padding: 0.25em;
+				}
+
+			#products {
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 73%;
+				padding: 0.25em;
+			}
+
+			.queue, .product {
+				position: relative;
+				display: inline-block;
+				width: 12em;
 				padding: 0.25em 0.5em;
 				border-radius: 5px;
 				background: #eee;
 				margin: 0.5em;
 				}
+
+			.queue {
+				vertical-align: middle;
+				clear: both;
+				}
+			.queue .icon {
+				float: left;
+				margin: 0.2em;
+				}
+			.product {
+				vertical-align: top;
+				text-align: center;
+				}
 			.product .time {
-				float: right;
+				position: absolute;
+				bottom: 0.3em;
+				right: 0.3em;
+				}
+			.product .mats {
+				position: absolute;
+				bottom: 0.3em;
+				left: 0.3em;
 				}
 			.product .icon {
-				float: left;
+				display: block;
+				height: 64px;
+				width: 64px;
+				margin: 0.2em auto 0.5em auto;
+				-ms-interpolation-mode: nearest-neighbor; /* pixels go cronch */
 				}
 			.product.disabled {
-				background: #ddd;
+				background: #bbb;
 				color: #555;
 			}
+			.required {
+				display: none;
+				}
+
+			.product:hover {
+				cursor: pointer;
+			}
+			.product:hover .required {
+				display: block;
+				position: absolute;
+				left: 0;
+				right: 0;
+				}
+
+			.required div {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				background: white;
+				border: 1px solid #888888;
+				padding: 0.25em 0.5em;
+				margin: 0.25em 0.5em;
+				font-size: 80%;
+				text-align: left;
+				border-radius: 5px;
+				}
 			.mat-missing {
 				color: red;
 			}
 		</style>
+		<script type="text/javascript">
+			function product(ref) {
+				window.location = "?src=\ref[src];disp=" + ref;
+			}
+		</script>
 		"}
 
 
-		var/list/dat = list("<B>[src.name]</B>")
+		var/list/dat = list()
 
 		if (src.panelopen || isAI(user))
 			var/list/manuwires = list(
@@ -318,23 +396,17 @@
 			onclose(user, "manufact")
 			return
 
-		if (src.error)
-			dat += "<br><font face=\"fixedsys\" size=\"2\" color=\"#FF0000\"><b>ERROR: [src.error]</b></font>"
-		if (src.mode == "halt")
-			dat += "<br><A href='?src=\ref[src];continue=1'><u><b>Resume Production</b></u></a>"
-		else if (src.mode == "working")
-			var/datum/manufacture/M = src.queue[1]
-			if (istype(M,/datum/manufacture/))
-				var/TL = src.timeleft
-				if (src.speed != 0)
-					TL = round(TL / src.speed)
-				dat += "<br><small>Current: [M.name] (ETC: [TL]) | <A href='?src=\ref[src];pause=1'><u><b>Pause</b></u></a></small>"
+		dat += "<div id='info'>"
 
-		dat += build_control_panel()
-		dat += "<br>"
-		dat += build_material_list()
+		// -----------------------------------------------------------
+		// -----------------------------------------------------------
+		// This is the part that shows the current production and shit
+		// if (src.mode == "halt")
+		// 	dat += "<br><A href='?src=\ref[src];continue=1'><u><b>Resume Production</b></u></a>"
+		// -----------------------------------------------------------
+		// -----------------------------------------------------------
 
-		dat +="<HR><B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
+		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
 		if(scan)
 			var/datum/data/record/account = null
 			account = FindBankAccountByName(src.scan.registered)
@@ -357,103 +429,66 @@
 
 		dat += "</small><HR>"
 
-		if (!page)
-			dat += "<B>Available Schematics</B><br>"
-			if(istext(src.search))
-				dat += " <small>(Search: \"[html_encode(src.search)]\")</small>"
-			if(istext(src.category))
-				dat += " <small>(Filter: \"[html_encode(src.category)]\")</small>"
+		dat += build_material_list(user)
+		dat += build_control_panel(user)
 
-			// ------------------------------------------------------------------
-			// - Temporary comment so I can find this later                     -
-			// ------------------------------------------------------------------
+		dat += "</div><div id='products'>"
 
-			// Get the list of stuff we can print ...
-			var/list/products = src.available + src.download
-			if (src.hacked)
-				products += src.hidden
 
-			// Then make it
-			var/can_be_made = 0
-			for(var/datum/manufacture/A in products)
-				var/list/mats_used = get_materials_needed(A)
+		dat += "<B>Available Schematics</B><br>"
+		if(istext(src.search))
+			dat += " <small>(Search: \"[html_encode(src.search)]\")</small>"
+		if(istext(src.category))
+			dat += " <small>(Filter: \"[html_encode(src.category)]\")</small>"
 
-				if (istext(src.search) && !findtext(A.name, src.search, 1, null))
-					continue
-				else if (istext(src.category) && src.category != A.category)
-					continue
+		// ------------------------------------------------------------------
+		// - Temporary comment so I can find this later                     -
+		// ------------------------------------------------------------------
 
-				// if (A.item_outputs)
-				// 	dat += "\icon[A.item_outputs[1]]"
+		// Get the list of stuff we can print ...
+		var/list/products = src.available + src.download
+		if (src.hacked)
+			products += src.hidden
 
-				can_be_made = (mats_used.len >= A.item_paths.len)
-				// if (mats_used.len < A.item_paths.len)
-				// 	dat += "<BR><font color = 'red'><b><u>[A.name]</u></b></font> "		//change this name to red if can't be made
-				// else
-				// 	dat += "<BR><A href='?src=\ref[src];disp=\ref[A]'><b><u>[A.name]</u></b></A> "
+		// Then make it
+		var/can_be_made = 0
+		for(var/datum/manufacture/A in products)
+			var/list/mats_used = get_materials_needed(A)
 
-				// if (istext(A.category))
-				// 	dat += "([A.category])"
-				// dat += "<br>"
+			if (istext(src.search) && !findtext(A.name, src.search, 1, null))
+				continue
+			else if (istext(src.category) && src.category != A.category)
+				continue
 
-				var/icon_text = ""
-				if (A.item_outputs)
-					var/icon_rsc = getItemIcon(A.item_outputs[1])
-					user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-					icon_text = "<img class='icon' src='[icon_rsc]'>"
+			can_be_made = (mats_used.len >= A.item_paths.len)
 
-				dat += {"
-		<a class='product[can_be_made ? "" : " disabled"]'>
-			<span class='time'>[A.time && src.speed ? round((A.time / src.speed)) : "??"] &#9201;</span>
-			[icon_text]
-			<strong>[A.name]</strong>
+			var/icon_text = ""
+			if (A.item_outputs)
+				var/icon_rsc = getItemIcon(A.item_outputs[1])
+				user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				icon_text = "<img class='icon' src='[icon_rsc]'>"
+
+			var/list/material_text = list()
+			var/list/material_count = 0
+			for (var/i in 1 to A.item_paths.len)
+				material_count += A.item_amounts[i]
+				material_text += {"
+				<span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]] [A.item_names[i]]</span>
 				"}
 
-				for (var/i in 1 to A.item_paths.len)
-					// if (i != 1) dat += ", "
-					dat += {"
-					<br><span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]] [A.item_names[i]]</span>
-					"}
-					// if (mats_used[A.item_paths[i]])
-					// 	dat += "[A.item_amounts[i]] [A.item_names[i]]"
-					// else
-					// 	dat += "<font color = 'red'>[A.item_amounts[i]] [A.item_names[i]]</font>"		//change this line to red if missing mats
+			dat += {"
+		<div class='product[can_be_made ? "" : " disabled"]' onclick='product("\ref[A]");'>
+			<strong>[A.name]</strong>
+			<div class='required'><div>[material_text.Join("<br>")]</div></div>
+			[icon_text]
+			<span class='mats'>[material_count] mat.</span>
+			<span class='time'>[A.time && src.speed ? round((A.time / src.speed)) : "??"] sec.</span>
+		</div>"}
 
-				// if (A.time == 0 || src.speed == 0)
-				// 	dat += "<br><b>Time:</b> ERROR<br>"
-				// else
-				// 	dat += "<br><b>Time:</b> [round((A.time / src.speed))] Seconds<br>"
-				dat += {"</a>"}
+		dat += "</div>"
 
 
-		else if (page == 1)
-			dat += "<B>Production Queue</B> <A href='?src=\ref[src];clearQ=1'>(Clear)</A>"
-			if (src.queue.len > 0)
-				var/queue_num = 1
-				var/cumulative_time = 0
-				var/timeleft = src.timeleft
-				var/datum/manufacture/M = src.queue[1]
-				if (istype(M,/datum/manufacture/) && src.speed != 0 && timeleft != 0)
-					timeleft = round(timeleft / src.speed)
-				cumulative_time = timeleft
-				for(var/datum/manufacture/A in src.queue)
-					if (queue_num == 1)
-						dat += "<BR><small><b><u>Current Production: [A.name] (ETC: [timeleft])</b></u></A>"
-						if (src.mode != "working")
-							dat += " <A href='?src=\ref[src];removefromQ=[queue_num]'>(Remove)</A>"
-					else
-						if (src.speed != 0)
-							cumulative_time += round(A.time / src.speed)
-						else
-							cumulative_time += A.time
-						dat += "<BR>[queue_num]) [A.name] (ETC: [cumulative_time]) <A href='?src=\ref[src];removefromQ=[queue_num]'>(Remove)</A>"
-					queue_num++
-			else
-				dat += "<BR>Queue is empty."
-
-		dat += "<hr>"
-
-		user.Browse(HTML + dat.Join(), "window=manufact;size=800x500")
+		user.Browse(HTML + dat.Join(), "window=manufact;size=1100x600")
 		onclose(user, "manufact")
 
 		interact_particle(user,src)
@@ -1523,7 +1558,7 @@
 	proc/build_material_list()
 		var/list/dat = list()
 		dat += {"
-<table>
+<table class="outline" style="width: 100%;">
 	<thead>
 		<tr><th colspan='2'>Loaded Materials</th></tr>
 	</thead>
@@ -1533,68 +1568,128 @@
 			var/datum/material/mat = getMaterial(mat_id)
 			dat += {"
 		<tr>
-			<td><a href='?src=\ref[src];eject=[mat_id]'>[mat]</a></td>
-			<td style='text-align: right;'>[src.resource_amounts[mat_id]]</td>
+			<td><a href='?src=\ref[src];eject=[mat_id]' class='buttonlink'>&#9167;</a> [mat]</td>
+			<td class='r'>[src.resource_amounts[mat_id]]</td>
 		</tr>
 			"}
 		if (dat.len == 1)
 			dat += {"
 		<tr>
-			<td colspan='2' style='text-align: center;'>No materials loaded.</td>
+			<td colspan='2' class='c'>No materials loaded.</td>
 		</tr>
 			"}
 
-		for(var/current_id in src.reagents.reagent_list)
-			var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
+
+		if (src.reagents.total_volume > 0)
 			dat += {"
+		<tr><th colspan='2'>Loaded Reagents</th></tr>
+			"}
+			for(var/current_id in src.reagents.reagent_list)
+				var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
+				dat += {"
 		<tr>
 			<td><a href='?src=\ref[src];flush=[current_reagent.name]'>[current_reagent.name]</a></td>
-			<td style='text-align: right;'>[current_reagent.volume] units</td>
+			<td class='r'>[current_reagent.volume] units</td>
 		</tr>
+				"}
+
+		if (src.beaker)
+			dat += {"
+		<tr><th colspan='2'>Container</th></tr>
 			"}
 
 			dat += {"
+		<tr><td colspan='2'><a href='?src=\ref[src];ejectbeaker=\ref[src.beaker]' class='buttonlink'>&#9167;</a> [src.beaker.name]<br>([round(src.beaker.reagents.total_volume)]/[src.beaker.reagents.maximum_volume])</td></tr>
+		<tr><td class='c'>
+			"}
+			if (src.reagents.total_volume && src.beaker.reagents.total_volume < src.beaker.reagents.maximum_volume)
+				dat += {"
+				<a href='?src=\ref[src];transto=\ref[src.beaker]'>Transfer<br>Machine &rarr; Container</a>
+				"}
+			else
+				dat += {"
+				&nbsp;
+				"}
+
+			dat += {"
+		</td><td class='c'>
+			"}
+
+			if (src.beaker.reagents.total_volume > 0)
+				dat += {"
+				<a href='?src=\ref[src];transfrom=\ref[src.beaker]'>Transfer<br>Container &rarr; Machine</a>"
+				"}
+
+			dat += {"
+		</td></tr>
+			"}
+		dat += {"
 	</tbody>
 </table>
 			"}
 
 		return dat.Join()
 
-	proc/build_control_panel()
+	proc/build_control_panel(mob/user as mob)
 		var/list/dat = list()
 
-		if (src.page == 1)
-			dat += "<br><u><A href='?src=\ref[src];page=0'>Production List</A> | <b>Queue:</b> [src.queue.len]</u>"
-		else
-			dat += "<br><u><b>Production List</b> | <A href='?src=\ref[src];page=1'>Queue:</A> [src.queue.len]</u>"
+		var/list/speed_opts = list()
+		for (var/i in 1 to (src.hacked ? 5 : 3))
+			speed_opts += "<a href='?src=\ref[src];speed=[i]' class='buttonlink' style='[i == src.speed ? "font-weight: bold; background: #6c6;" : ""]'>[i]</a>"
 
-		if (src.mode == "working" && src.queue.len > 0)
-			dat += "<br><b>Current Production:</b> <u>[src.queue[1]]</u>"
-		else
-			dat += "<br><b>Current Production:</b> None"
+		dat += {"
+			<br>
+			<table style='width: 100%:'>
+				<thead><tr><th style='width: 50%:'>Speed</th><th style='width: 50%:'>Repeat</th></tr></thead>
+				<tbody><tr>
+					<td class='c'>[speed_opts.Join(" ")]</td>
+					<td class='c'><a href='?src=\ref[src];repeat=1'>[src.repeat ? "Yes" : "No"]</a></td>
+				</tr></tbody>
+			</table>
 
-		dat += "<HR>"
-		dat += "<b><A href='?src=\ref[src];speed=1'>Speed:</A></b> [src.speed]"
-		dat += " | <A href='?src=\ref[src];repeat=1'><b>Repeat: [src.repeat ? "On" : "Off"]</b></A>"
-		dat += "<br>"
+			"}
+		if (src.error)
+			dat += "<br><b>ERROR: [src.error]</b><br>"
 
-		dat += "<br>"
+		var/queue_num = 1
+		for(var/datum/manufacture/A in src.queue)
 
-		if (src.beaker)
-			dat += "<A href='?src=\ref[src];ejectbeaker=\ref[src.beaker]'><b>Receptacle:</b></a> [src.beaker.name]"
-			if (src.beaker.reagents.total_volume < src.beaker.reagents.maximum_volume)
-				dat += " <A href='?src=\ref[src];transto=\ref[src.beaker]'>(Transfer to Receptacle)</a>"
-			if (src.beaker.reagents.total_volume > 0)
-				dat += " <A href='?src=\ref[src];transfrom=\ref[src.beaker]'>(Transfer to Unit)</a>"
-		else
-			dat += "No reagent receptacle inserted."
+			var/time_number = 0
+			var/remove_link = ""
+			var/pause_link = ""
+			if (queue_num == 1)
+				if (istype(A,/datum/manufacture/) && src.speed != 0 && timeleft != 0)
+					time_number = round(src.timeleft / src.speed)
+				pause_link = (src.mode == "working" ? "<a href='?src=\ref[src];pause=1' class='buttonlink'>&#9208; Pause</a>" : "<a href='?src=\ref[src];continue=1' class='buttonlink'>&#57914; Resume</a>") + "<br>"
+			else
+				time_number = A.time && src.speed ? round(A.time / src.speed) : "??"
+				pause_link = ""
 
-		dat += "<br>"
+			if (src.mode != "working" || queue_num != 1)
+				remove_link = "<a href='?src=\ref[src];removefromQ=[queue_num]' class='buttonlink'>&#128465; Remove</a>"
+			else
+				// shut up
+				remove_link = "&#8987; Working..."
 
-		if (!src.page)
-			dat += "<A href='?src=\ref[src];category=1'>Filter</A> | <A href='?src=\ref[src];search=1'>Search</A>"
+			var/icon_text = ""
+			if (A.item_outputs)
+				var/icon_rsc = getItemIcon(A.item_outputs[1])
+				usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
-		dat += "</small>"
+			dat += {"
+		<div class='queue'>
+			[icon_text]
+			<strong>[A.name]</strong>
+			<br>[time_number] sec.
+		</div><div style='display: inline-block; vertical-align: middle;'>
+		[pause_link]
+		[remove_link]
+		</div>
+		<br>
+		"}
+
+			queue_num++
 
 		return dat.Join()
 
