@@ -47,6 +47,9 @@
 	for(var/atom/A in hit_atom)
 		A.material?.triggerOnAttacked(A, src, hit_atom, src)
 
+	if(!hit_atom)
+		return
+
 	reagents?.physical_shock(20)
 	var/impact_sfx = hit_atom.hitby(src)
 	if(src && impact_sfx)
