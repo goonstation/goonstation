@@ -1,6 +1,3 @@
-var/global/turf/ff_debug_turf = null
-var/global/client/ff_debugger = null
-
 /turf
 	icon = 'icons/turf/floors.dmi'
 	plane = PLANE_FLOOR //See _plane.dm, required for shadow effect
@@ -20,14 +17,6 @@ var/global/client/ff_debugger = null
 
 	proc/burn_down()
 		return
-
-	proc/debug_fireflash_here()
-		set name = "Debug Fireflash Here"
-		set popup_menu = 1
-		SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
-		set desc = "Debug-print the effects of all fireflashes affecting this tile."
-		ff_debug_turf = src
-		ff_debugger = usr.client
 
 		//Properties for open tiles (/floor)
 	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
@@ -68,7 +57,7 @@ var/global/client/ff_debugger = null
 
 	Del()
 		if (cameras && cameras.len)
-			for (var/obj/machinery/camera/C in cameras)
+			for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 				C.coveredTiles -= src
 		cameras = null
 		..()
@@ -1035,7 +1024,7 @@ Other Goonstation servers:[serverList]"}
 
 	if (A.z == 1 && zlevel != A.z)
 		if (!(isitem(A) && A:w_class <= 2))
-			for (var/obj/machinery/communications_dish/C in comm_dishes)
+			for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 				C.add_cargo_logs(A)
 
 	A.z = zlevel

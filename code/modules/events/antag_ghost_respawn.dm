@@ -222,9 +222,9 @@
 
 					SPAWN_DBG (0)
 						if (R.gender && R.gender == "female")
-							R.real_name = wiz_female.len ? pick(wiz_female) : "Witch"
+							R.real_name = pick_string_autokey("names/wizard_female.txt")
 						else
-							R.real_name = wiz_male.len ? pick(wiz_male) : "Wizard"
+							R.real_name = pick_string_autokey("names/wizard_male.txt")
 						R.choose_name(3, "wizard")
 
 				else

@@ -76,7 +76,7 @@
 
 		contextLayout = new /datum/contextLayout/flexdefault(4, 32, 32)
 
-		genetics_computers += src
+		START_TRACKING
 		screenoverlay = SafeGetOverlayImage("screen", 'icons/obj/64x64.dmi', "genebooth_screen")
 		screenoverlay.blend_mode = BLEND_MULTIPLY
 		screenoverlay.layer = src.layer + 0.2
@@ -95,7 +95,7 @@
 		workingoverlay.layer = src.layer + 0.1
 
 	disposing()
-		genetics_computers -= src
+		STOP_TRACKING
 		..()
 
 

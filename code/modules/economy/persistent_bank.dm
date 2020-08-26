@@ -103,8 +103,9 @@
 			ret += "<p style=\"text-align:left;\">Antagonist - No tax!</p>"
 		if (pilot)
 			ret += "<p style=\"text-align:left;\">Pilot's bonus ....<span style=\"float:right;\"><b>+ [pilot_bonus] </b></span> </p>"
-		if (it_is_ass_day)
+#if ASS_JAM
 			ret += "<p style=\"text-align:left;\">2X ASS DAY BONUS!</p>"
+#endif
 
 		ret += "<hr>"
 		ret += "<big><b><p style=\"text-align:left;\">PAYOUT ..... <span style=\"float:right;\">[final_payout]</span> </p></b></big><br>"

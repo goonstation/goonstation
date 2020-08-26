@@ -30,6 +30,7 @@ var/list/detailed_spawn_dbg = list()
 
 // pick strings from cache-- code/procs/string_cache.dm
 #define pick_string(filename, key) pick(strings(filename, key))
+#define pick_string_autokey(filename) pick(strings(filename, null))
 
 #define DEBUG_MESSAGE(x) if (debug_messages) message_coders(x)
 #define DEBUG_MESSAGE_VARDBG(x,d) if (debug_messages) message_coders_vardbg(x,d)

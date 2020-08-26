@@ -873,6 +873,7 @@
 	* ignore them they'll be fixed later, please use this proc in the future
   */
 /atom/movable/proc/set_loc(var/newloc as turf|mob|obj in world)
+	SHOULD_CALL_PARENT(TRUE)
 	if (loc == newloc)
 		return src
 

@@ -125,7 +125,7 @@
 										sims.affectMotive("fun", 4)
 									if (src.mind)
 										if (M.mind && M.mind.assigned_role == "Geneticist")
-											karma_update(10, "SAINT", src)
+											src.add_karma(10)
 									fart_on_other = 1
 									break
 								else if (istype(A,/obj/item/storage/bible))
@@ -313,7 +313,7 @@
 							else
 								message = "<B>[src]</b> [act]s."
 								maptext_out = "<I>[act]s [param]</I>"
-								karma_update(2, "SAINT", src)
+								src.add_karma(2)
 
 				else
 					message = "<B>[src]</B> struggles to move."
@@ -593,8 +593,8 @@
 						SPAWN_DBG(1 SECOND)
 							hat.set_loc(src.loc)
 							src.head = null
+							src.add_karma(-10)
 							src.gib()
-							karma_update(10, "SIN", src)
 					else if (istype(src.head, /obj/item/clothing/head) && !istype(src.head, /obj/item/clothing/head/fedora))
 						src.show_text("This hat just isn't [pick("fancy", "suave", "manly", "sexerific", "majestic", "euphoric")] enough for that!", "red")
 						//maptext_out = "<I>tips hat</I>"
@@ -639,7 +639,7 @@
 						hat.icon_state = "hoscap-smash"
 					src.drop_from_slot(hat) // we're done here, drop that hat!
 					if(src.mind && src.mind.assigned_role != "Head of Security")
-						karma_update(5, "SAINT", src)
+						src.add_karma(5)
 				else
 					message = "<B>[src]</B> tries to move [his_or_her(src)] arm and grumbles."
 				m_type = 1
@@ -794,7 +794,7 @@
 				message = "<B>[src]</B> shakes [his_or_her(src)] ass!"
 				maptext_out = "<I>shakes [his_or_her(src)] ass!</I>"
 				m_type = 1
-				karma_update(3, "SIN", src)
+				src.add_karma(-3)
 
 				SPAWN_DBG (5)
 					var/beeMax = 15
@@ -953,7 +953,7 @@
 					maptext_out = "<I>shuffles a bit and smirks broadly</I>"
 				m_type = 1
 				if (src.mind)
-					karma_update(2, "SIN", src)
+					src.add_karma(-2)
 
 			if ("nosepick","picknose")
 				if (!src.restrained())
@@ -964,7 +964,7 @@
 					maptext_out = "<I>sniffs and scrunches their face up irritably</I>"
 				m_type = 1
 				if (src.mind)
-					karma_update(1, "SIN", src)
+					src.add_karma(-1)
 
 			if ("flex","flexmuscles")
 				if (!src.restrained())
@@ -1188,7 +1188,7 @@
 									message = "<B>[src]</B> offers [M] a highfive, but [M] leaves [him_or_her(src)] hanging!"
 									maptext_out = "<I>tries to highfive [M] but is left hanging!</I>"
 									if (M.mind)
-										karma_update(5, "SIN", src)
+										src.add_karma(-5)
 							else
 								message = "<B>[src]</B> highfives [M]!"
 								maptext_out = "<I>highfives [M]!</I>"
@@ -1488,7 +1488,7 @@
 									break
 
 								responseBee.dance_response()
-								karma_update(1, "SAINT", src)
+								src.add_karma(1)
 
 							LAGCHECK(LAG_MED)
 							var/parrotMax = 15
@@ -1529,7 +1529,7 @@
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
-
+					var/combatflip = 0
 					//TODO: space flipping
 					//if ((!src.restrained()) && (!src.lying) && (istype(src.loc, /turf/space)))
 					//	message = "<B>[src]</B> does a flip!"
@@ -1625,6 +1625,7 @@
 									logTheThing("combat", src, G.affecting, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
 									M.lastattacker = src
 									M.lastattackertime = world.time
+									combatflip = 1
 									if (iswrestler(src))
 										if (prob(50))
 											M.ex_act(3) // this is hilariously overpowered, but WHATEVER!!!
@@ -1684,7 +1685,7 @@
 										if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))
 											src.remove_stamina(STAMINA_FLIP_COST)
 											src.stamina_stun()
-
+										combatflip = 1
 										message = "<span class='alert'><B>[src]</B> flips into [M]!</span>"
 										logTheThing("combat", src, M, "flips into [constructTarget(M,"combat")]")
 										src.changeStatus("weakened", 6 SECONDS)
@@ -1697,7 +1698,8 @@
 									else
 										message = "<B>[src]</B> flips in [M]'s general direction."
 									break
-
+					if(combatflip)
+						actions.interrupt(src, INTERRUPT_ACT)
 					if (src.lying)
 						message = "<B>[src]</B> flops on the floor like a fish."
 					// If there is a chest item, see if its reagents can be dumped into the body
@@ -1996,13 +1998,13 @@
 						I = P.ID_card
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm))
 					src.show_text("You can't do that without arms!")
-				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || it_is_ass_day || istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
+				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || ASS_JAM || istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
 					var/obj/item/card/id/dabbing_license/dab_id = null
 					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
 						dab_id = I
 						dab_id.dab_count++
 						dab_id.tooltip_rebuild = 1
-					karma_update(4, "SIN", src)
+					src.add_karma(-4)
 					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
 						// determine the name of the perp (goes by ID if wearing one)
 						var/perpname = src.name
@@ -2184,11 +2186,8 @@
 		animate(left_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		animate(right_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		sleep(0.5 SECONDS)
-		torso.loc = null
 		qdel(torso)
-		right_arm.loc = null
 		qdel(right_arm)
-		left_arm.loc = null
 		qdel(left_arm)
 		REMOVE_MOB_PROPERTY(H, PROP_CANTMOVE, "dabbify")
 		H.update_canmove()

@@ -220,7 +220,7 @@
 /obj/rack,
 /obj/item/clothing/under/misc/tourist,
 /obj/item/storage/belt/hunter,
-/turf/space/fluid,
+/turf/simulated/floor/damaged1,
 /turf/simulated/floor/airless/plating/damaged2,
 /area)
 "aaB" = (
@@ -243,12 +243,12 @@
 	on = 1
 	},
 /obj/item/pen/fancy,
-/turf/space,
+/turf/simulated/floor/damaged1,
 /turf/simulated/floor/airless/plating/damaged2,
 /area)
 "aaE" = (
 /obj/machinery/light/small/floor/warm,
-/turf/space,
+/turf/simulated/floor/damaged1,
 /turf/simulated/floor/airless/plating/damaged2,
 /area)
 "aaF" = (
@@ -785,7 +785,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/brig,
-/turf/simulated/floor/airless/stairs/wide,
+/turf/simulated/floor/stairs/wide,
 /area/station/hallway/primary/east)
 "abO" = (
 /obj/machinery/door_control{
@@ -3182,7 +3182,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/airless/stairs/wide/middle,
+/turf/simulated/floor/stairs/wide/middle,
 /area/station/hallway/primary/east)
 "agG" = (
 /obj/machinery/microscope,
@@ -13183,18 +13183,6 @@
 /area/station/science/teleporter)
 "aDD" = (
 /obj/storage/crate/adventure,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/sandwich/pb,
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom"
-	},
-/obj/item/paper/book/critter_compendium,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 5
 	},
@@ -27819,7 +27807,7 @@
 	name = "mechanics mail router"
 	},
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/airless/stairs/wide/other,
+/turf/simulated/floor/stairs/wide/other,
 /area/station/hallway/primary/east)
 "bns" = (
 /obj/disposalpipe/segment,
@@ -38692,7 +38680,7 @@
 /turf/simulated/floor/grass,
 /area)
 "bNJ" = (
-/turf/space/fluid,
+/turf/simulated/floor/damaged1,
 /turf/simulated/floor/airless/plating/damaged2,
 /area)
 "bNK" = (
@@ -38919,7 +38907,7 @@
 	},
 /area/station/quartermaster/refinery)
 "bOo" = (
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bOp" = (
 /obj/wingrille_spawn/auto,
@@ -39046,7 +39034,7 @@
 /area/station/medical/staff)
 "bOI" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/plating/damaged1,
+/turf/simulated/floor/damaged1,
 /area)
 "bOJ" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
@@ -39058,7 +39046,7 @@
 /area/station/storage/emergency2)
 "bOL" = (
 /obj/rack,
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bOM" = (
 /obj/cable{
@@ -39180,7 +39168,7 @@
 	icon = 'icons/turf/shuttle.dmi';
 	name = "rusted hatch"
 	},
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bPa" = (
 /obj/decal/fakeobjects/operatorconsole,
@@ -39381,12 +39369,12 @@
 /area)
 "bPy" = (
 /obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bPz" = (
 /obj/item/clothing/suit/space/santa,
 /obj/item/clothing/head/helmet/space/santahat,
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bPA" = (
 /obj/machinery/door/airlock/pyro/security/alt{
@@ -39650,7 +39638,7 @@
 /obj/item/reagent_containers/food/snacks/ice_cream_cone,
 /obj/item/reagent_containers/food/snacks/ice_cream_cone,
 /obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bQd" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
@@ -39984,7 +39972,7 @@
 "bQP" = (
 /obj/table/wood,
 /obj/item/reagent_containers/food/snacks/steak_h,
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bQQ" = (
 /obj/stool/chair/red{
@@ -40499,7 +40487,7 @@
 /area)
 "bRW" = (
 /obj/stool,
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bRX" = (
 /obj/item/paper,
@@ -40633,7 +40621,7 @@
 /obj/table/wood,
 /obj/item/device/igniter,
 /obj/item/cigpacket/menthol,
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bSq" = (
 /obj/decal/cleanable/dirt,

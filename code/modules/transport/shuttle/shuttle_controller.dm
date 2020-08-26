@@ -1,12 +1,4 @@
 // Controls the emergency shuttle
-#define SHUTTLE_TRANSIT 1
-
-// these define the time taken for the shuttle to get to SS13
-// and the time before it leaves again
-#define SHUTTLEARRIVETIME 360		// 6 minutes = 360 seconds
-#define SHUTTLELEAVETIME 120		// 2 minutes = 120 seconds
-#define SHUTTLETRANSITTIME 120		// 2 minutes = 120 seconds
-
 var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 
 datum/shuttle_controller

@@ -69,7 +69,7 @@
 			if (ismob(loc))
 				var/mob/owner = loc
 				owner.u_equip(src)
-			loc = newloc
+			set_loc(newloc)
 			return src
 		src.use(amt)
 		var/obj/item/neon_lining/C = new /obj/item/neon_lining(newloc)

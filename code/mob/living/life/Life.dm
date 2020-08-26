@@ -1,5 +1,3 @@
-var/global/life_pause_check = 0
-
 /datum/lifeprocess
 	var/mob/living/owner
 	var/last_process = 0
@@ -183,7 +181,6 @@ var/global/life_pause_check = 0
 
 	var/life_time_passed = max(tick_spacing, TIME - last_life_tick)
 
-	life_pause_check = 0
 	// Jewel's attempted fix for: null.return_air()
 	// These objects should be garbage collected the next tick, so it's not too bad if it's not breathing I think? I might be totallly wrong here.
 	if (loc)
@@ -419,7 +416,7 @@ var/global/life_pause_check = 0
 
 	if (src.item && src.item.loc != src) //ZeWaka: Fix for null.loc
 		if (isturf(src.item.loc))
-			src.item.loc = src
+			src.item.set_loc(src)
 		else
 			src.death(0)
 
@@ -513,7 +510,7 @@ var/global/life_pause_check = 0
 		if (src.mind.stealth_objective)
 			for (var/datum/objective/O in src.mind.objectives)
 				if (istype(O, /datum/objective/specialist/stealth))
-					var/turf/T = get_turf_loc(src)
+					var/turf/T = get_turf(src)
 					if (T && isturf(T) && (istype(T, /turf/space) || T.loc.name == "Space" || T.loc.name == "Ocean" || T.z != 1))
 						O:score = max(0, O:score - 1)
 						if (prob(20))

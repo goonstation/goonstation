@@ -3,7 +3,6 @@
 */
 
 var/global/area/current_battle_spawn = null
-var/global/list/battle_equipment = null
 var/global/list/datum/mind/battle_pass_holders = list()
 
 #define TIME_BETWEEN_SHUTTLE_MOVES 50
@@ -174,7 +173,7 @@ proc/hide_weapons_everywhere()
 	murder_supplies.Add(/obj/item/gun/kinetic/pistol)
 
 
-	for(var/obj/O in lockers_and_crates) // imcoder
+	for(var/obj/O in by_type[/obj/storage]) // imcoder
 		if(prob(33))
 			weapon = pick(murder_supplies)
 			new weapon(O)

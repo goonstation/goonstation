@@ -136,7 +136,7 @@
 				if (get_dir(src,target) in cardinal)
 					src.visible_message("<span class='notice'><b>[user] mounts [src] on [target].</b></span>")
 					user.drop_item()
-					src.loc = get_turf(user)
+					src.set_loc(get_turf(user))
 					src.mounted = 1
 					src.anchored = 1
 					src.dir = get_dir(src, target)

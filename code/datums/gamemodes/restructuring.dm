@@ -32,7 +32,7 @@
 
 	target.store_memory("Head office has ordered your downsizing. Ruh roh", 0)
 
-	for(var/mob/living/silicon/ai/M in AIs)
+	for(var/mob/living/silicon/ai/M in by_type[/mob/living/silicon/ai])
 		boutput(M, "These are your laws now:")
 		M.set_zeroth_law("[target_desc] is not human.")
 		M.show_laws()

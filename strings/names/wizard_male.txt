@@ -1,21 +1,22 @@
-Gandalf
-The Witch King
-Rincewind
-Shazam
-Merlin
-Voldemort
-Dumbledore
-Snape
-Wizard Whitebeard
-Prospero
-Elminster
-Rasputin
-Thulsa Doom
-Lord Zedd
-Zordon
-Constantine
-Faust
-Doctor Strange
-Mr. Mxyzptlk
-Astaroth
-Nemesis the Warlock
+names@=
+	Gandalf
+	The Witch King
+	Rincewind
+	Shazam
+	Merlin
+	Voldemort
+	Dumbledore
+	Snape
+	Wizard Whitebeard
+	Prospero
+	Elminster
+	Rasputin
+	Thulsa Doom
+	Lord Zedd
+	Zordon
+	Constantine
+	Faust
+	Doctor Strange
+	Mr. Mxyzptlk
+	Astaroth
+	Nemesis the Warlock

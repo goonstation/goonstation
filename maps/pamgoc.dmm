@@ -56466,8 +56466,6 @@
 /area/station/crew_quarters/locker)
 "cel" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "cem" = (

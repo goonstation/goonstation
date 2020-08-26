@@ -57,7 +57,7 @@
 				color_mod_b *= R_E.color_b
 
 			if (human_owner.druggy)
-				human_owner.vision.animate_color_mod(rgb(rand(0, 255), rand(0, 255), rand(0, 255)), 15)
+				human_owner.vision.animate_color_mod(rgb(rand(80, 255), rand(80, 255), rand(80, 255)), 15)
 			else
 				human_owner.vision.set_color_mod(rgb(color_mod_r, color_mod_g, color_mod_b))
 

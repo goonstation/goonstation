@@ -12,6 +12,8 @@ export class TimeDisplay extends Component {
   constructor(props) {
     super(props);
     this.timer = null;
+    this.timing = false;
+    this.format = null;
     this.last_seen_value = undefined;
     this.state = {
       value: 0,
@@ -24,7 +26,7 @@ export class TimeDisplay extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.auto !== undefined) {
+    if (this.props.timing) {
       clearInterval(this.timer);
       this.timer = setInterval(() => this.tick(), 1000); // every 1 s
     }
@@ -42,7 +44,7 @@ export class TimeDisplay extends Component {
   }
 
   componentDidMount() {
-    if (this.props.auto !== undefined) {
+    if (this.props.timing) {
       this.timer = setInterval(() => this.tick(), 1000); // every 1 s
     }
   }
@@ -51,19 +53,32 @@ export class TimeDisplay extends Component {
     clearInterval(this.timer);
   }
 
+  static getDerivedStateFromProps(nextProps) {
+    if (nextProps.timing) {
+      return null;
+    }
+    return { value: nextProps.value };
+  }
+
+  static defaultFormat(value) {
+    const seconds = toFixed(Math.floor((value/10) % 60)).padStart(2, "0");
+    const minutes = toFixed(Math.floor((value/(10*60)) % 60)).padStart(2, "0");
+    const hours = toFixed(Math.floor((value/(10*60*60)) % 24)).padStart(2, "0");
+    return `${hours}:${minutes}:${seconds}`;
+  }
+
   render() {
     const val = this.state.value;
+
     // Directly display weird stuff
     if (!isSafeNumber(val)) {
       return this.state.value || null;
     }
-    // THERE IS AS YET INSUFFICIENT DATA FOR A MEANINGFUL ANSWER
-    // HH:MM:SS
-    // 00:02:13
-    const seconds = toFixed(Math.floor((val/10) % 60)).padStart(2, "0");
-    const minutes = toFixed(Math.floor((val/(10*60)) % 60)).padStart(2, "0");
-    const hours = toFixed(Math.floor((val/(10*60*60)) % 24)).padStart(2, "0");
-    const formattedValue = `${hours}:${minutes}:${seconds}`;
-    return formattedValue;
+
+    if (this.props.format) {
+      return this.props.format(val);
+    } else {
+      return this.defaultFormat(val);
+    }
   }
 }

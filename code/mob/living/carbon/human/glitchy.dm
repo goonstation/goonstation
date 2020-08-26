@@ -42,7 +42,7 @@
 		return 1.0 + 0.5*(30 - rand(1,120))/80
 
 	proc/rename_self()
-		var/assembled_name = pick(first_names_male) + " " + pick(last_names)
+		var/assembled_name = pick_string_autokey("names/first_male.txt") + " " + pick_string_autokey("names/last.txt")
 		assembled_name = corruptText(assembled_name,75)
 		src.real_name = assembled_name
 
