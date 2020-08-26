@@ -227,7 +227,7 @@
 				// HE HE U BUNPED YOUR HEAD
 				if (prob(25))
 					ownerMob.changeStatus("weakened", 4 SECONDS)
-					ownerMob.TakeDamage("head", 0, 10)
+					ownerMob.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 					playsound(the_railing, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, -1)
 					for(var/mob/O in AIviewers(ownerMob))
 						O.show_text("[ownerMob] bumps [his_or_her(ownerMob)] head on \the [bunp].[prob(30) ? pick(" Oof, that looked like it hurt!", " Is [he_or_she(ownerMob)] okay?", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]", "red")
