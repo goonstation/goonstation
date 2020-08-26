@@ -224,9 +224,8 @@
 
 /obj/machinery/power/smes/ui_data(mob/user)
 	var/list/data = list()
-	data["capacityPercent"] = (src.charge / src.capacity * 100)
+	data["capacity"] = src.capacity
 	data["charge"] = src.charge
-	data["formattedCharge"] = engineering_notation(src.charge)
 	data["inputAttempt"] = src.chargemode
 	data["inputting"] = src.charging
 	data["inputStartUp"] = src.chargecount //smes waits before charging
@@ -243,17 +242,17 @@
 	if(..())
 		return
 	switch(action)
-		if("tryinput") //toggle charging
+		if("toggle-input")
 			src.chargemode = !src.chargemode
 			if (!chargemode)
 				charging = 0
 			src.updateicon()
 			. = TRUE
-		if("tryoutput") //toggle output
+		if("toggle-output")
 			src.online = !src.online
 			src.updateicon()
 			. = TRUE
-		if("input")
+		if("set-input")
 			var/target = params["target"]
 			var/adjust = params["adjust"]
 			if(target == "min")
@@ -268,7 +267,7 @@
 			else if(text2num(target) != null) //set by drag
 				src.chargelevel = clamp(text2num(target), 0 , SMESMAXCHARGELEVEL)
 				. = TRUE
-		if("output")
+		if("set-output")
 			var/target = params["target"]
 			var/adjust = params["adjust"]
 			if(target == "min")
