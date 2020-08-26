@@ -246,4 +246,4 @@
 			playsound(T, 'sound/items/woodbat.ogg', 50, 1)
 			src.visible_message("<span class='alert'>[src] hits \the [AM] with the bat!</span>")
 	else
-		..()
+		. = ..()

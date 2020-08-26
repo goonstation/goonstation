@@ -520,6 +520,8 @@
 
 /obj/hitby(atom/movable/AM)
 	. = ..()
+	if(!.)
+		. = 'sound/impact_sounds/Generic_Stab_1.ogg'
 	if(!src.anchored)
 		step(src, AM.dir)
 	if(AM.throwforce >= 40)
