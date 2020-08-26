@@ -206,7 +206,7 @@
 	..()
 	return
 
-/atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
+/atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 	if(!throwing_controller) return
 	if(!target) return
@@ -224,6 +224,8 @@
 	src.last_throw_x = src.x
 	src.last_throw_y = src.y
 	src.throw_begin(target)
+
+	src.throwforce += bonus_throwforce
 
 	var/matrix/transform_original = src.transform
 	if (src.throw_spin == 1 && !(throwing & THROW_SLIP))
@@ -253,7 +255,8 @@
 		transform_original = transform_original,
 		params = params,
 		thrown_from = thrown_from,
-		return_target = usr // gross
+		return_target = usr, // gross
+		bonus_throwforce = bonus_throwforce
 	)
 
 	LAZYLISTADD(throwing_controller.thrown, thr)

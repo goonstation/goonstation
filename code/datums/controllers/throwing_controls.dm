@@ -14,11 +14,13 @@
 	var/list/params
 	var/turf/thrown_from
 	var/atom/return_target
+	var/bonus_throwforce = 0
 	var/hitAThing = FALSE
 	var/dist_travelled = 0
 
 	New(atom/movable/thing, atom/target, error, speed, dx, dy, dist_x, dist_y, range,
-			target_x, target_y, matrix/transform_original, list/params, turf/thrown_from, atom/return_target)
+			target_x, target_y, matrix/transform_original, list/params, turf/thrown_from, atom/return_target,
+			bonus_throwforce=0)
 		src.thing = thing
 		src.target = target
 		src.error = error
@@ -34,6 +36,7 @@
 		src.params = params
 		src.thrown_from = thrown_from
 		src.return_target = return_target
+		src.bonus_throwforce = bonus_throwforce
 		..()
 
 var/global/datum/controller/throwing/throwing_controller = new
@@ -115,6 +118,8 @@ var/global/datum/controller/throwing/throwing_controller = new
 
 			thing.throw_traveled = 0
 			thing.throw_count = 0
+
+			thing.throwforce -= thr.bonus_throwforce
 
 			if(thr.target != thr.return_target && thing.throw_return)
 				thing.throw_at(thr.return_target, thing.throw_range, thing.throw_speed)
