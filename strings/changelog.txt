@@ -1,5 +1,39 @@
 
+(t)wed aug 26 20
 (t)tue aug 25 20
+(u)glassofmilk
+(p)1826
+(e)🆕🎨|feature, sprites
+(*)Added the new Association Component - a MechComp piece that stores key/value pairs
+(u)Tarmunora
+(p)1942
+(e)⚖|balance
+(+)Changed suplexing to interrupt some action bars, notably shambler devour
+(u)Superlagg
+(p)1900
+(e)🆕|feature
+(+)You now keep your held item if you were an antag at any point in the round, or you finish the round in the cryotron.
+(u)Superlagg
+(p)1831
+(e)⚖🆕|balance, feature
+(*)Werewolves now talk and see like a dog.
+(u)Carbadox
+(p)1884
+(e)🆕|feature
+(+)Added a trait to replace your trinket with a lunchbox.
+(+)Added a dozen of empty lunchboxes to the Kitchen vendor. Now chefs can prepare packed lunches for the whole crew! Maybe you'll cute handwritten note (or maybe death threat, who knows).
+(u)Janonas
+(p)1873
+(e)🆕🎨|feature, sprites
+(*)Added a new botany plant, Ipecacuanha - use it to create a powerful emetic!
+(u)Kubius
+(p)1943
+(e)🗺|mapping
+(+)Kondaru fix batch time again! Prominently, gene power module and more defibs.
+(u)zjdtmkhzt
+(p)1939
+(e)🆕|feature
+(*)Lots of smaller artifact-related bugs were fixed, so artifacts may behave a little differently than they used to. Mysterious!
 (u)Superlagg
 (p)1243
 (e)⚖🆕|balance, feature

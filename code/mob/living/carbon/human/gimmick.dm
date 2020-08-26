@@ -839,9 +839,26 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 /mob/living/carbon/human/secret
 	unobservable = 1
 
+/datum/aiHolder/human/yank
+	New()
+		..()
+		var/datum/aiTask/timed/targeted/human/suplex/A = get_instance(/datum/aiTask/timed/targeted/human/suplex, list(src))
+		var/datum/aiTask/timed/targeted/human/boxing/B = get_instance(/datum/aiTask/timed/targeted/human/boxing, list(src))
+		var/datum/aiTask/timed/targeted/human/get_weapon/C = get_instance(/datum/aiTask/timed/targeted/human/get_weapon, list(src))
+		var/datum/aiTask/timed/targeted/human/boxing/D = get_instance(/datum/aiTask/timed/targeted/human/boxing, list(src))
+		var/datum/aiTask/timed/targeted/human/flee/F = get_instance(/datum/aiTask/timed/targeted/human/flee, list(src))
+		F.transition_task = B
+		B.transition_task = C
+		C.transition_task = D
+		D.transition_task = A
+		A.transition_task = F
+		default_task = B
+
 // This is Big Yank, one of John Bill's old buds. Yank owes John a favor. He's a Juicer.
 /mob/living/carbon/human/big_yank
 	gender = MALE
+	is_npc = 1
+	uses_mobai = 1
 
 	New()
 		..()
@@ -859,6 +876,11 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/chief_engineer, slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses, slot_glasses)
 
+			src.ai = new /datum/aiHolder/human/yank(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
+			src.ai.enabled = 0
+
 
 	attack_hand(mob/M)
 		..()
@@ -869,6 +891,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			return
 		if (prob(30))
 			say(pick("Hey you better back off [pick_string("johnbill.txt", "insults")]- I'm busy.","You feelin lucky, [pick_string("johnbill.txt", "insults")]?"))
+			src.ai.target = null
+			src.ai.enabled = 0
 
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/tug/invoice))
@@ -884,12 +908,11 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			return
 		if(prob(20))
 			say(pick("Oh no you don't - not today, not ever!","Nice try asshole, but I ain't goin' down so easy!","Gonna take more than that to take out THIS Juicer!","You wanna fuck around bucko? You wanna try your luck?"))
-		src.target = M
-		src.ai_state = 2
-		src.ai_threatened = world.timeofday
-		src.ai_target = M
-		src.a_intent = INTENT_HARM
-		src.ai_set_active(1)
+			src.ai.interrupt()
+		src.ai.target = M
+		src.ai.enabled = 1
+
+
 
 #if ASS_JAM //explodey yank
 		say("Feel My Wrath.")

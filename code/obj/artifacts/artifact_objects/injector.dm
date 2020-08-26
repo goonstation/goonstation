@@ -17,7 +17,7 @@
 
 	post_setup()
 		var/list/potential_reagents = list()
-		switch(artitype)
+		switch(artitype.name)
 			if ("ancient")
 				// industrial heavy machinery kinda stuff
 				potential_reagents = list("nanites","liquid plasma","mercury","lithium","plasma","radium","uranium","cryostylane")
