@@ -361,8 +361,7 @@
 	cast(atom/T)
 		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/ammo = new egg_path(holder.owner.loc)
 		ammo.parent = holder.owner
-		SPAWN_DBG(1)
-			ammo.throw_at(T, 32, 2)
+		ammo.throw_at(T, 32, 2)
 		doCooldown()
 
 		if (istype(holder.owner, /mob/living/critter/spider/clownqueen))

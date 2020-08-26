@@ -118,6 +118,4 @@ var/global/datum/controller/throwing/throwing_controller = new
 
 			if(thr.target != thr.return_target && thing.throw_return)
 				thing.throw_at(thr.return_target, thing.throw_range, thing.throw_speed)
-
-		/// STOP THROWING GOTO END ///
 	return TRUE

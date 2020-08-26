@@ -1525,9 +1525,7 @@ keeping this here because I want to make something else with it eventually
 				var/target = get_offset_target_turf(get_turf(src), rand(5)-rand(5), rand(5)-rand(5))
 				falling.set_loc(get_turf(src))
 
-				SPAWN_DBG(1 DECI SECOND)
-					if(falling)
-						falling.throw_at(target, 1, 1)
+				falling?.throw_at(target, 1, 1)
 
 
 	attackby(obj/item/W as obj, mob/user as mob, params)

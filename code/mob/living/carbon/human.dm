@@ -1008,16 +1008,16 @@
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 40, 1, 0.1)
 
-		SPAWN_DBG(I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from))
-			if(yeet)
-				new/obj/effect/supplyexplosion(I.loc)
+		I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from)
+		if(yeet)
+			new/obj/effect/supplyexplosion(I.loc)
 #if ASS_JAM
-				explosion_new(I,get_turf(I),20,1)
+			explosion_new(I,get_turf(I),20,1)
 #else
-				playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+			playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 #endif
-				for(var/mob/M in view(7, I.loc))
-					shake_camera(M, 20, 1)
+			for(var/mob/M in view(7, I.loc))
+				shake_camera(M, 20, 1)
 
 		if (mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in grabbed_by)

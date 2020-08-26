@@ -585,8 +585,7 @@
 					slice.Eat(dork, dork)
 				else
 					var/target = get_turf(pick(orange(4, src)))
-					SPAWN_DBG(0)
-						slice.throw_at(target, rand(0, 10), rand(1, 4))
+					slice.throw_at(target, rand(0, 10), rand(1, 4))
 				n_slices--
 			sleep(0.1 SECONDS)
 			qdel(src)

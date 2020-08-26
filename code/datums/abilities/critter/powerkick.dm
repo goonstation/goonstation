@@ -56,8 +56,7 @@
 					else
 						var/turf/T = get_edge_target_turf(ow, get_dir(ow, get_step_away(O, ow)))
 						if (T && isturf(T) && !O.anchored)
-							SPAWN_DBG(0)
-								O.throw_at(T, 5, 2)
+							O.throw_at(T, 5, 2)
 				if (1)
 					return
 
@@ -85,9 +84,8 @@
 
 			var/turf/T = get_edge_target_turf(M, get_dir(M, get_step_away(target, M)))
 			if (T && isturf(T))
-				SPAWN_DBG(0)
-					M.throw_at(T, 5, 2)
-					M.changeStatus("stunned", 1 SECOND)
+				M.throw_at(T, 5, 2)
+				M.changeStatus("stunned", 1 SECOND)
 
 			logTheThing("combat", M, target, "uses Power Kick on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0

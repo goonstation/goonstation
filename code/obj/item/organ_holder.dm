@@ -1498,8 +1498,7 @@
 						O.throwforce += 5
 						SPAWN_DBG(0.8 SECONDS)
 							O.throwforce -= 5
-						SPAWN_DBG(0)
-							O.throw_at(target, 8, 3)
+						O.throw_at(target, 8, 3)
 						linked_organ.take_damage(3)
 						sleep(0.1 SECONDS)
 						if(linked_organ.broken || !L.stomach_process.len)

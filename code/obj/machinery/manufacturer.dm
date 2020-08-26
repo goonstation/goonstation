@@ -1453,8 +1453,7 @@
 					break
 				X = pick(src.contents)
 				X.set_loc(src.loc)
-				SPAWN_DBG(0)
-					X.throw_at(pick(src.nearby_turfs), 16, 3)
+				X.throw_at(pick(src.nearby_turfs), 16, 3)
 				to_throw--
 		if (src.queue.len > 1 && prob(20))
 			var/list_counter = 0

@@ -120,8 +120,7 @@
 		M.remove_stamina(80 + power) //lotsa stamina damage whoa!!
 
 		var/turf/throw_at = get_edge_target_turf(src, src.dir)
-		SPAWN_DBG(0)
-			M.throw_at(throw_at, 10, 2)
+		M.throw_at(throw_at, 10, 2)
 		playsound(src.loc, "swing_hit", 40, 1)
 		logTheThing("station", src, target, "tackles [target] using football gear [log_loc(src)].")
 	else if(isturf(target))
