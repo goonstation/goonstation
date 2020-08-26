@@ -1,5 +1,10 @@
 
 (t)wed aug 26 20
+(u)Superlagg
+(p)1888
+(e)🆕|feature
+(+)Rechargers and manufacturers should no longer take ages to work when exposed to spacelag.
+(+)Manufacturers should now deliver the thing you want it to make in the amount of time it promises.
 (u)BatElite
 (p)1955
 (e)🎨|sprites
