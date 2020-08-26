@@ -1,3 +1,9 @@
+#define IS_NOT_BEEPSKY_AND_HAS_SOME_GENERIC_BATON 0				// Just some everyday bot on the beat
+#define IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON 1						// Full-assed Beepsky
+#define IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON 2				// A Beepsky brand secboton
+#define IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON 3						// A generic-ass shitcurity baton
+#define IS_NOT_BEEPSKY_BUT_HAS_A_GENERIC_SPECIAL_BATON 4	// A generic, non-Beepsky brand secboton
+
 /obj/machinery/bot/secbot
 	name = "Securitron"
 #ifdef HALLOWEEN
@@ -32,7 +38,7 @@
 	var/check_records = 1 //Does it check security records?
 	var/arrest_type = 0 //If true, don't handcuff
 	var/report_arrests = 0 //If true, report arrests over PDA messages.
-
+	var/is_beepsky = IS_NOT_BEEPSKY_AND_HAS_SOME_GENERIC_BATON	// How Beepsky are we?
 	var/botcard_access = "Head of Security" //Job access for doors.
 	var/hat = null //Add an overlay from bots/aibots.dmi with this state.  hats.
 	var/our_baton_type = /obj/item/baton/secbot
@@ -72,7 +78,7 @@
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
 
 	var/last_attack = 0
-	var/attack_per_step = 0
+	var/attack_per_step = 0 // Tries to attack every step. 1 = 75% chance to attack, 2 = 25% chance to attack
 
 	disposing()
 		if(mover)
@@ -96,7 +102,8 @@
 	idcheck = 1
 	auto_patrol = 1
 	report_arrests = 1
-	loot_baton_type = /obj/item/baton
+	loot_baton_type = /obj/item/baton/beepsky
+	is_beepsky = IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON
 	hat = "nt"
 	attack_per_step = 1
 
@@ -168,6 +175,7 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "helmet_signaler"
 	item_state = "helmet"
+	var/is_dead_beepsky = 0
 	var/build_step = 0
 	var/created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 	var/beacon_freq = 1445 //If it's running on another beacon circuit I guess
@@ -420,7 +428,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 	Move(var/turf/NewLoc, direct)
 		var/oldloc = src.loc
 		..()
-		if (src.attack_per_step && prob(75))
+		if (src.attack_per_step && prob(src.attack_per_step == 2 ? 25 : 75))
 			if (oldloc != NewLoc && world.time != last_attack)
 				if (mode == SECBOT_HUNT && target)
 					if (get_dist(src, src.target) <= 1)
@@ -1058,15 +1066,20 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		Sa.created_name = src.name
 		Sa.beacon_freq = src.beacon_freq
 		Sa.hat = src.hat
+		if (src.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || src.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON)	// Being Beepsky doesnt give you his baton, but it does mean you're him
+			Sa.is_dead_beepsky = 1
 		new /obj/item/device/prox_sensor(Tsec)
 
 		// Not charged when dropped (ran on Beepsky's internal battery or whatever).
-		if (loot_baton_type == /obj/item/baton)
+		if (istype(loot_baton_type, /obj/item/baton)) // Now we can drop *any* baton!
 			var/obj/item/baton/B = new loot_baton_type(Tsec)
 			B.status = 0
 			B.process_charges(-INFINITY)
+			if (src.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || src.is_beepsky == IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON)	// Holding Beepsky's baton doesnt make you him, but it does mean you're holding his baton
+				B.name = "Beepsky's stun baton"
+				B.beepsky_held_this = 1 // Just as a flag so we can know if this baton used to be Beepsky's. Maybe secbots just dont like people walking around with his sidearm vOv
 		else
-			new loot_baton_type
+			new loot_baton_type(Tsec)
 
 		if (prob(50))
 			new /obj/item/parts/robot_parts/arm/left(Tsec)
@@ -1185,6 +1198,53 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		user.u_equip(W)
 		qdel(W)
 
+	else if (istype(W, /obj/item/baton/) && src.build_step >= 3)
+		if (istype(W, /obj/item/baton/beepsky))	// If we used Beepsky's dropped baton
+			var/obj/item/baton/Y = W
+			if (src.is_dead_beepsky)							// on Beepsky's corpse
+				boutput(user, "You return Officer Beepsky his trusty baton, reassembling the Securitron! Beep boop.")
+				new /obj/machinery/bot/secbot/beepsky(get_turf(src))
+				qdel(src)
+				user.u_equip(W)
+				qdel(W)
+			else												// On any other securitron assembly?
+				boutput(user, "You give the [src] [W] and connect a cable in the arm to the baton's parallel port, completing the Securitron! Beep boop.")
+				var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
+				S.beacon_freq = src.beacon_freq
+				S.hat = src.hat
+				S.name = src.created_name		// We get an upgraded securitron
+				S.attack_per_step = 2				// 25% chance to attack_on_move, as opposed to 75%
+				S.loot_baton_type = W.type	// So we can drop it all over again.
+				if (Y.beepsky_held_this == 1)
+					S.is_beepsky = IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON	// So we drop Beepsky's baton, and not just some generic secbot one
+				else
+					S.is_beepsky = IS_NOT_BEEPSKY_BUT_HAS_A_GENERIC_SPECIAL_BATON // So we drop some generic secboton
+				qdel(src)
+				user.u_equip(W)
+				qdel(W)
+		else												// If we used any old stun baton
+			if (src.is_dead_beepsky)	// On Beepsky's corpse
+				boutput(user, "You give Officer Beepsky a stun baton, reassembling the Securitron! Beep boop.")
+				var/obj/machinery/bot/secbot/beepsky/S = new /obj/machinery/bot/secbot/beepsky(get_turf(src))
+				S.attack_per_step = 0		// We just get a surly head of robosecurity
+				S.is_beepsky = IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON // So Beepsky's corpse is his corpse
+				S.loot_baton_type = W.type	// Our baton isn't special
+				qdel(src)
+				user.u_equip(W)
+				qdel(W)
+			else											// On any other securitron assembly?
+				boutput(user, "You give the [src] a stun baton, completing the Securitron! Beep boop.")
+				var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
+				S.beacon_freq = src.beacon_freq
+				S.hat = src.hat
+				S.name = src.created_name
+				S.attack_per_step = 0		// We get a loot pinata
+				S.is_beepsky = IS_NOT_BEEPSKY_AND_HAS_SOME_GENERIC_BATON // You're still not Beepsky
+				S.loot_baton_type = W.type	// Our baton isn't special either
+				qdel(src)
+				user.u_equip(W)
+				qdel(W)
+
 	else if (istype(W, /obj/item/rods) && src.build_step == 3)
 		if (W.amount < 1)
 			boutput(user, "You need a non-zero amount of rods. How did you even do that?")
@@ -1202,6 +1262,13 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		var/obj/item/cable_coil/C = W
 		if (!C.use(5))
 			boutput(user, "You need a longer length of cable! A length of five should be enough.")
+		else if (src.is_dead_beepsky)	// On Beepsky's corpse
+			boutput(user, "You add wires to Officer Beepsky, reassembling the Securitron! Beep boop.")
+			var/obj/machinery/bot/secbot/beepsky/S = new /obj/machinery/bot/secbot/beepsky(get_turf(src))
+			S.attack_per_step = 0		// We just get a surly head of robosecurity
+			S.is_beepsky = IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON	// So Beepsky's corpse is his corpse
+			S.loot_baton_type = /obj/item/scrap	// our baton's a hunk of junk!
+			qdel(src)
 		else
 			src.build_step++
 			boutput(user, "You add the wires to the rod, completing the Securitron! Beep boop.")
@@ -1221,3 +1288,9 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			return
 
 		src.created_name = t
+
+#undef IS_NOT_BEEPSKY_AND_HAS_SOME_GENERIC_BATON
+#undef IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON
+#undef IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON
+#undef IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON
+#undef IS_NOT_BEEPSKY_BUT_HAS_A_GENERIC_SPECIAL_BATON

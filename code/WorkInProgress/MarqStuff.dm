@@ -435,8 +435,13 @@
 			reagents.reaction(target, 2)
 			reagents.trans_to(target, reagents.total_volume)
 			take_bleeding_damage(target, null, 8, DAMAGE_STAB)
+<<<<<<< HEAD
 			if (fusedmaterial)
 				fusedmaterial.triggerOnAttack(src, user, target)
+=======
+			if (head_material)
+				head_material.triggerOnAttack(src, user, target)
+>>>>>>> 093b5813678b9d772ee9bbe47feff76265dfcdbb
 			return 1
 		else
 			var/obj/item/I = target
@@ -501,7 +506,7 @@
 			icon_state = "quiver-[min(contents.len, 4)]"
 		else
 			user.u_equip(I)
-			I.loc = src
+			I.set_loc(src)
 			maptext = "[contents.len]"
 			icon_state = "quiver-[min(contents.len, 4)]"
 
@@ -608,7 +613,15 @@
 				var/obj/item/arrow/I = Q.getArrow(user)
 				if(I)
 					loaded = I
-					I.loc = src
+					I.set_loc(src)
+					overlays += I
+					Q.updateApperance()
+			if(istype(H.belt, /obj/item/quiver))
+				var/obj/item/quiver/Q = H.belt
+				var/obj/item/arrow/I = Q.getArrow(user)
+				if(I)
+					loaded = I
+					I.set_loc(src)
 					overlays += I
 					Q.updateApperance()
 			if(istype(H.belt, /obj/item/quiver))
@@ -753,4 +766,4 @@
 			overlays += I
 			user.u_equip(I)
 			loaded = I
-			I.loc = src
+			I.set_loc(src)

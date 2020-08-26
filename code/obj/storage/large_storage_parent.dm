@@ -19,6 +19,7 @@
 	throwforce = 10
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	p_class = 2.5
+	var/intact_frame = 1 //Variable to create crates and fridges which cannot be closed anymore.
 	var/secure = 0
 	var/personal = 0
 	var/registered = null
@@ -52,6 +53,7 @@
 	var/made_stuff
 	New()
 		..()
+		START_TRACKING
 		SPAWN_DBG(1 DECI SECOND)
 			src.update_icon()
 
@@ -60,10 +62,8 @@
 					if (src.is_acceptable_content(O))
 						O.set_loc(src)
 
-		lockers_and_crates.Add(src)
-
 	disposing()
-		lockers_and_crates.Remove(src)
+		STOP_TRACKING
 		..()
 
 	proc/make_my_stuff() // use this rather than overriding the container's New()
@@ -518,6 +518,9 @@
 		if (!src.can_close())
 			visible_message("<span class='alert'>[src] can't close; looks like it's too full!</span>")
 			return 0
+		if (!src.intact_frame())
+			visible_message("<span class='alter'>[src] can't close; the door is completely bend out of shape!</span>")
+			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_open())
 			visible_message("<span class='alert'>It won't budge!</span>")
@@ -538,8 +541,7 @@
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
-				for (var/obj/storage/O in lockers_and_crates)
-					LAGCHECK(LAG_LOW)
+				for (var/obj/storage/O in by_type[/obj/storage])
 					if (O.z != src.z || O.open || !O.can_open())
 						continue
 					myPals.Add(O)
@@ -591,6 +593,11 @@
 				return 0
 		return 1
 
+	proc/intact_frame()
+		if (!src.intact_frame)
+			return 0
+		return 1
+
 	proc/dump_contents(var/mob/user)
 		if(src.spawn_contents && make_my_stuff()) //Make the stuff when the locker is first opened.
 			spawn_contents = null
@@ -612,6 +619,10 @@
 		if (user)
 			return src.open(null,user)
 		return src.open()
+
+	proc/unlock()
+		if (src.locked)
+			src.locked = !src.locked
 
 	proc/bust_out()
 		if (src.health)

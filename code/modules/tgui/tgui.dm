@@ -47,10 +47,10 @@
  * return datum/tgui The requested UI.
  */
 /datum/tgui/New(mob/user, datum/src_object, interface, title)
-	log_tgui(user, "new [interface] fancy [user.client.preferences.tgui_fancy]") // client.preferences [GOONSTATION-CHANGE]
+	log_tgui(user, "new [interface] fancy [user.client.preferences.tgui_fancy]") // client.preferences |GOONSTATION-CHANGE|
 	src.user = user
 	src.src_object = src_object
-	src.window_key = "\ref[src_object]-main" // REF doesn't exist [GOONSTATION-CHANGE]
+	src.window_key = "\ref[src_object]-main" // REF doesn't exist |GOONSTATION-CHANGE|
 	src.interface = interface
 	if(title)
 		src.title = title
@@ -75,7 +75,10 @@
 	opened_at = world.time
 	window.acquire_lock(src)
 	if(!window.is_ready())
-		window.initialize(inline_assets = list(get_assets(/datum/asset/group/base_tgui)))
+		window.initialize(inline_assets = list(
+			get_assets(/datum/asset/basic/tgui_common),
+			get_assets(/datum/asset/group/base_tgui)
+			))
 	else
 		window.send_message("ping")
 	for(var/datum/asset/asset in src_object.ui_assets(user))
@@ -193,9 +196,13 @@
 			"fancy" = user.client.preferences.tgui_fancy,
 			"locked" = user.client.preferences.tgui_lock,
 		),
+		"client" = list(
+			"ckey" = user.client.ckey,
+			"address" = user.client.address,
+			"computer_id" = user.client.computer_id,
+		),
 		"user" = list(
 			"name" = "[user]",
-			"ckey" = "[user.ckey]",
 			"observer" = isobserver(user),
 		),
 	)
@@ -215,7 +222,7 @@
  * Run an update cycle for this UI. Called internally by tgui_process
  * every second or so.
  */
-/datum/tgui/proc/process(force = FALSE) // /process doesn't exist on datums here [GOONSTATION-ADD]
+/datum/tgui/proc/process(force = FALSE) // /process doesn't exist on datums here |GOONSTATION-ADD|
 	if(closing)
 		return
 	var/datum/host = src_object.ui_host(user)
@@ -268,7 +275,10 @@
 		return FALSE
 	switch(type)
 		if("ready")
-			initialized = TRUE
+			if(!initialized)
+				initialized = TRUE
+			else // user refreshed the window
+				send_full_update(null, TRUE)
 		if("pingReply")
 			initialized = TRUE
 		if("suspend")

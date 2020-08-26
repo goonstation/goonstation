@@ -291,7 +291,7 @@
 		TO.ghostize()
 
 	for(var/mob/m in src) //just in case...
-		m.loc = src.loc
+		m.set_loc(src.loc)
 		m.ghostize()
 
 	if (ghost && ghost.corpse == src)
@@ -478,18 +478,24 @@
 	src.need_update_item_abilities = 1
 	src.antagonist_overlay_refresh(1, 0)
 
-	if (ass_day)
+#if ASS_JAM
 		ass_day_popup(src)
+#endif
 
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
+
+	if(HAS_MOB_PROPERTY(src, PROP_PROTANOPIA))
+		src.client?.color = list(MATRIX_PROTANOPIA)
 
 	return
 
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
+
+	tgui_process?.on_logout(src)
 
 	if (src.last_client && !src.key) // lets see if not removing the HUD from disconnecting players helps with the crashes
 		for (var/datum/hud/hud in src.huds)
@@ -724,6 +730,10 @@
 	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
 		use_movement_controller = null
 
+	if(istype(src.loc, /obj/machinery/vehicle/) && src.loc != new_loc)
+		var/obj/machinery/vehicle/V = src.loc
+		V.eject(src)
+
 	. = ..(new_loc)
 	src.loc_pixel_x = new_pixel_x
 	src.loc_pixel_y = new_pixel_y
@@ -902,8 +912,7 @@
 			return I
 
 /mob/dead/unequip_all(var/delete_stuff=0)
-	var/obj/ecto = new/obj/item/reagent_containers/food/snacks/ectoplasm
-	ecto.loc = src.loc
+	new/obj/item/reagent_containers/food/snacks/ectoplasm(src.loc)
 
 /mob/proc/get_unequippable()
 	return
@@ -1166,8 +1175,6 @@
 			if (W)
 				W.layer = initial(W.layer)
 
-			var/turf/T = get_turf(src.loc)
-			T.Entered(W)
 			u_equip(W)
 			.= 1
 		else
@@ -2601,11 +2608,11 @@
 /proc/random_name(var/gen = MALE)
 	var/return_name
 	if (gen == MALE)
-		return_name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
+		return_name = capitalize(pick_string_autokey("names/first_male.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 	else if (gen == FEMALE)
-		return_name = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
+		return_name = capitalize(pick_string_autokey("names/first_female.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 	else
-		return_name = capitalize(pick(first_names_male + first_names_female) + " " + capitalize(pick(last_names)))
+		return_name = capitalize(pick_string_autokey("names/first_[prob(50)?"fe":""]male.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 	return return_name
 
 /mob/OnMove(source = null)
@@ -2876,3 +2883,6 @@
 	if (items.len)
 		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
 		A.interact(src)
+
+/mob/proc/add_karma(how_much)
+	src?.mind.add_karma(how_much)

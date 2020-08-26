@@ -19,18 +19,18 @@ proc/is_teleportation_allowed(var/turf/T)
 			var/obj/machinery/telejam/TJ = atom
 			if (!TJ.active)
 				continue
-			if(DIST_CHECK(TJ, T, TJ.range))
+			if(IN_RANGE(TJ, T, TJ.range))
 				return 0
 		if (istype(atom, /obj/item/device/flockblocker))
 			var/obj/item/device/flockblocker/F = atom
 			if (!F.active)
 				continue
-			if(DIST_CHECK(F, T, F.range))
+			if(IN_RANGE(F, T, F.range))
 				return 0
 
 	for (var/X in by_type[/obj/blob/nucleus])
 		var/obj/blob/nucleus/N = X
-		if(DIST_CHECK(N, T, 3))
+		if(IN_RANGE(N, T, 3))
 			return 0
 
 	// first check the always allowed turfs from map landmarks

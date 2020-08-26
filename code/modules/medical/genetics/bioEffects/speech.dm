@@ -3,7 +3,7 @@
 	desc = "Hinders nerve transmission to and from the speech center of the brain, resulting in faltering speech."
 	id = "stutter"
 	probability = 40
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "Y-you f.. feel a.. a bit n-n-nervous."
 	msgLose = "You don't feel nervous anymore."
@@ -25,7 +25,7 @@
 	name = "Frontal Gyrus Alteration Type-S"
 	desc = "Causes the speech center of the subject's brain to produce large amounts of seratonin when engaged."
 	id = "accent_smiling"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel like you want to smile and smile and smile forever :)"
 	msgLose = "You don't feel like smiling anymore. :("
@@ -46,7 +46,7 @@
 	name = "Frontal Gyrus Alteration Type-E"
 	desc = "Forces the language center of the subject's brain to drawl out sentences in a funky manner."
 	id = "accent_elvis"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel funky."
 	msgLose = "You feel a little less conversation would be great."
@@ -67,7 +67,7 @@
 	name = "Frontal Gyrus Alteration Type-C"
 	desc = "Forces the language center of the subject's brain to construct sentences in a more rudimentary manner."
 	id = "accent_chav"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "Ye feel like a reet prat like, innit?"
 	msgLose = "You no longer feel like being rude and sassy."
@@ -88,7 +88,7 @@
 	name = "Frontal Gyrus Alteration Type-F"
 	desc = "Forces the language center of the subject's brain to construct sentences in the manner of a highlander."
 	id = "accent_scots"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "Och aye! You feel like a true Scot!"
 	msgLose = "You weren't a true Scot after all."
@@ -109,7 +109,7 @@
 	name = "Frontal Gyrus Alteration Type-B"
 	desc = "Forces the language center of the subject's brain to construct sentences in a vaguely norse manner."
 	id = "accent_swedish"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel Swedish, however that works."
 	msgLose = "The feeling of Swedishness passes."
@@ -130,7 +130,7 @@
 	name = "Frontal Gyrus Alteration Type-FI"
 	desc = "Forces the language center of the subject's brain to construct sentences in a manner not conclusively proven to exist by scientists."
 	id = "accent_finnish"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "Sauna and birch beatings! Hyvä!"
 	msgLose = "The lure of the sauna subsides..."
@@ -151,7 +151,7 @@
 	name = "Frontal Gyrus Alteration Type-T"
 	desc = "Forces the langua.... what!? What the fuck is this? What happened here!? Gods have mercy on our souls."
 	id = "accent_tommy"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel torn apart!"
 	msgLose = "You pull yourself together."
@@ -172,7 +172,7 @@
 	name = "Frontal Gyrus Alteration Type-W"
 	desc = "unfunny"
 	id = "accent_wonk"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "Fuckable owwwwwwwls!"
 	msgLose = "More like honk."
@@ -194,7 +194,7 @@
 	name = "Frontal Gyrus Alteration Type-CS"
 	desc = "Causes the speech center of the subject's brain to become, uh. Well, <i>something</i> happens to it."
 	id = "accent_comic"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "<font face='Comic Sans MS'>You feel great!!</font>"
 	msgLose = "You feel okay."
@@ -225,7 +225,7 @@
 	name = "Frontal Gyrus Alteration Type-D"
 	desc = "Causes the subject to have impaired control over their oral muscles, resulting in malformed speech."
 	id = "slurring"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel like your tongue's made out of lead."
 	msgLose = "You feel less tongue-tied."
@@ -247,7 +247,7 @@
 	desc = "Heavily corrupts the part of the brain responsible for forming spoken sentences."
 	id = "unintelligable"
 	isBad = 1
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	blockCount = 4
 	blockGaps = 4
 	msgGain = "You can't seem to form any coherent thoughts!"
@@ -270,7 +270,7 @@
 	name = "Frontal Gyrus Alteration Type-O"
 	desc = "Causes the language center of the brain to have difficulty processing vowels."
 	id = "vowelitis"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel a bit tongue-tied."
 	msgLose = "You no longer feel tongue-tied."
 	reclaim_fail = 10
@@ -326,7 +326,7 @@
 	name = "High-Pressure Larynx"
 	desc = "Vastly increases airflow speed and capacity through the subject's larynx."
 	id = "loud_voice"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	msgGain = "YOU SUDDENLY FEEL LIKE SHOUTING A WHOLE LOT!!!"
 	msgLose = "You no longer feel the need to raise your voice."
 	reclaim_fail = 10
@@ -352,7 +352,7 @@
 	name = "Frontal Gyrus Alteration Type-R"
 	desc = "Causes the language center of the brain to process speech in reverse."
 	id = "reversed_speech"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	msgGain = ".sdrawkcab tib a leef uoY"
 	msgLose = "You feel the right way around."
 	reclaim_fail = 10
@@ -374,7 +374,7 @@
 	name = "Constricted Larynx"
 	desc = "Decreases airflow speed and capacity through the subject's larynx."
 	id = "quiet_voice"
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	msgGain = "...you feel like being quiet..."
 	msgLose = "You no longer feel the need to keep your voice down."
 	reclaim_fail = 10
@@ -407,7 +407,7 @@
 	name = "Eldritch Speech"
 	desc = "The subject's larynx is channeling a chaotic dimension of elder beings."
 	id = "accent_zalgo"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "HE COMES"
 	msgLose = "You feel sane again."
@@ -436,7 +436,7 @@
 	name = "Void"
 	desc = "The subject's speech appears to come from multiple, shunted locations."
 	id = "accent_void"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "Ah, friend! It's so good to be able to speak again!"
 	msgLose = "Your voice is only yours again."
@@ -468,7 +468,7 @@
 	name = "yee"
 	desc = "yee"
 	id = "accent_yee"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "yee"
 	msgLose = "nee"
@@ -567,7 +567,7 @@
 	name = "Frontal Gyrus Alteration Type-W"
 	desc = "Reconstructs the language center of the subject's brain to create less threatening speech patterns."
 	id = "accent_owo"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feew weawwy good!"
 	msgLose = "You feel really good!"
@@ -588,11 +588,36 @@
 		message = owotalk(message)
 		return message
 
+/datum/bioEffect/speech/uwuwhatsthis //God is Dead
+	// okay this one is less creepy/weird than the owo one because it
+	// doesn't have the awkward prefix/suffixes. It's more like an actual accent.
+	// And also horrible.
+	name = "Frontal Gyrus Alteration Type-U"
+	desc = "Reconstructs the language center of the subject's brain to create less threatening speech patterns."
+	id = "accent_uwu"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Oh nyo. uwu"
+	msgLose = "Nyo more funny talking."
+	probability = 10 // yes... ha ha ha... YES
+	reclaim_fail = 10
+	lockProb = 25
+	lockedGaps = 2
+	lockedDiff = 2
+	lockedChars = list("G","C")
+	lockedTries = 3
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = uwutalk(message)
+		return message
+
 /datum/bioEffect/speech/literalowotalk
 	name = "Frontal Gyrus Alteration Type-OWO"
 	desc = "Reconstructs the language center of the subject's brain, shutting most of it down and allowing for a very limited functionality."
 	id = "accent_literalowo"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "Owo wowo wowow owow!"
 	msgLose = "You feel like your vocabulary has expanded!"
@@ -635,7 +660,7 @@
 	name = "Frontal Gyrus Alteration Type-Q"
 	desc = "Forces the language center of the subject's brain to construct rude and vaguely-canadian sentences."
 	id = "accent_french"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel like your province is a nation, however that works."
 	msgLose = "The feeling of Independence passes."
@@ -656,7 +681,7 @@
 	name = "Frontal Gyrus Alteration Type-Y"
 	desc = "Forces the language center of the subject's brain to construct sentences in the manner of a northerner."
 	id = "accent_tyke"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel like you're on Ilkley Moor without a hat."
 	msgLose = "You never want to hear a brass band again."
@@ -673,3 +698,23 @@
 		message = yorkify(message)
 		return message
 
+/datum/bioEffect/speech/scoob
+	name = "Frontal Gyrus Alteration Type-SD"
+	desc = "Forces the language center of the subject's brain to bark out sentences like a dog."
+	id = "accent_scoob"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "You feel like you've got some work to do now."
+	msgLose = "You feel like you've found yourself."
+	reclaim_fail = 10
+	lockProb = 25
+	lockedGaps = 2
+	lockedDiff = 2
+	lockedChars = list("G","C")
+	lockedTries = 3
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = scoobify(message)
+		return message

@@ -172,7 +172,6 @@
 	for(var/mob/dead/aieye/E in src.contents)
 		E.cancel_camera()
 
-	observers.len = 0
 	if (src.static_image)
 		mob_static_icons.Remove(src.static_image)
 		src.static_image = null
@@ -982,10 +981,11 @@
 			T = get_step(T, EAST)
 		*/
 		chat_text = make_chat_maptext(src, messages[1], "color: [src.last_chat_color];" + src.speechpopupstyle)
-		chat_text.measure(src.client)
-		for(var/image/chat_maptext/I in src.chat_text.lines)
-			if(I != chat_text)
-				I.bump_up(chat_text.measured_height)
+		if(chat_text)
+			chat_text.measure(src.client)
+			for(var/image/chat_maptext/I in src.chat_text.lines)
+				if(I != chat_text)
+					I.bump_up(chat_text.measured_height)
 
 	var/rendered = null
 	if (length(heard_a))

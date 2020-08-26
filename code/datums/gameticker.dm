@@ -42,6 +42,53 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 /datum/controller/gameticker/proc/pregame()
 
+	pregame_timeleft = PREGAME_LOBBY_TICKS
+	boutput(world, "<B><FONT style='notice'>Welcome to the pre-game lobby!</FONT></B><br>Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds.")
+	#if ASS_JAM
+	vote_manager.active_vote = new/datum/vote_new/mode("everyone-is-a-traitor")
+	boutput(world, "<B>ASS JAM: Everyone-Is-A-Traitor Mode vote has been started: [newVoteLinkStat.chat_link()] (120 seconds remaining)<br>(or click on the Status map as you do for map votes)</B>")
+	#endif
+
+	// let's try doing this here, yoloooo
+	// zamu 20200823: idk if this is even getting called...
+	//if (mining_controls && mining_controls.mining_z && mining_controls.mining_z_asteroids_max)
+	//	mining_controls.spawn_mining_z_asteroids()
+
+	if(master_mode == "battle_royale")
+		lobby_titlecard.icon_state += "_battle_royale"
+
+	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
+	for(var/mob/new_player/C in world)
+		C.ready = 1
+	pregame_timeleft = 1
+	#endif
+
+	var/did_mapvote = 0
+	var/obj/overlay/zamujasa/round_start_countdown/timer/title_countdown = new()
+	while (current_state <= GAME_STATE_PREGAME)
+		sleep(1 SECOND)
+		// Start the countdown as normal, but hold it at 30 seconds until setup is complete
+		if (!game_start_delayed && (pregame_timeleft > 30 || current_state == GAME_STATE_PREGAME))
+			pregame_timeleft--
+
+			if (pregame_timeleft <= 60 && !did_mapvote)
+				// do it here now instead of before the countdown
+				// as part of the early start most people might not even see it at 150
+				// so this makes it show up a minute before the game starts
+				handle_mapvote()
+				did_mapvote = 1
+
+			if (title_countdown)
+				title_countdown.update_time(pregame_timeleft)
+		else if(title_countdown)
+			title_countdown.update_time(-1)
+
+
+		if(pregame_timeleft <= 0)
+			current_state = GAME_STATE_SETTING_UP
+			qdel(title_countdown)
+			qdel(game_start_countdown)
+
 #ifdef SERVER_SIDE_PROFILING
 #ifdef SERVER_SIDE_PROFILING_PREGAME
 #warn Profiler will output at pregame stage
@@ -61,73 +108,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #endif
 #endif
 
-	var/obj/overlay/countdown_clock = new/obj/overlay()
-	if (lobby_titlecard)
-		countdown_clock.x = lobby_titlecard.x + 7
-		countdown_clock.y = lobby_titlecard.y + 2
-		countdown_clock.z = lobby_titlecard.z
-		countdown_clock.layer = lobby_titlecard.layer + 1
-	else
-		// oops
-		countdown_clock.x = 7
-		countdown_clock.y = 2
-		countdown_clock.z = 1
-		countdown_clock.layer = 1
-
-	countdown_clock.maptext = ""
-	countdown_clock.maptext_width = 320
-	countdown_clock.maptext_x = -(320 / 2) + 16
-	countdown_clock.maptext_height = 320
-	countdown_clock.plane = 100
-
-
-	pregame_timeleft = PREGAME_LOBBY_TICKS
-	boutput(world, "<B><FONT style='notice'>Welcome to the pre-game lobby!</FONT></B>")
-	boutput(world, "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds")
-	#if ASS_JAM
-	vote_manager.active_vote = new/datum/vote_new/mode("assday")
-	boutput(world, "<B>ASS JAM: Ass Day Classic vote has been started: [newVoteLinkStat.chat_link()] (120 seconds remaining)<br>(or click on the Status map as you do for map votes)</B>")
-	#endif
-
-	// let's try doing this here, yoloooo
-	if (mining_controls && mining_controls.mining_z && mining_controls.mining_z_asteroids_max)
-		mining_controls.spawn_mining_z_asteroids()
-
-	if(master_mode == "battle_royale")
-		lobby_titlecard.icon_state += "_battle_royale"
-
-	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
-	for(var/mob/new_player/C in world)
-		C.ready = 1
-	pregame_timeleft = 0
-	#endif
-
-	handle_mapvote()
-
-	while(current_state <= GAME_STATE_PREGAME)
-		sleep(1 SECOND)
-		if (!game_start_delayed)
-			pregame_timeleft--
-			if (countdown_clock)
-				// just in case some nerd deletes it or it otherwise goes away
-				var/timeLeftColor
-				switch (pregame_timeleft)
-					if (90 to INFINITY)
-						timeLeftColor = "#33dd33"
-					if (60 to 90)
-						timeLeftColor = "#ffff00"
-					if (30 to 60)
-						timeLeftColor = "#ffb400"
-					if (0 to 30)
-						timeLeftColor = "#ff6666"
-				countdown_clock.maptext = "<span class='c ol vga vb'>Round begins in<br><span style='color: [timeLeftColor]; font-size: 36px;'>[pregame_timeleft]</span></span>"
-		else if(countdown_clock)
-			countdown_clock.maptext = "<span class='c ol vga vb'>Round begins in<br><span style='color: #888888; font-size: 36px;'>soon</span></span>"
-
-
-		if(pregame_timeleft <= 0)
-			current_state = GAME_STATE_SETTING_UP
-			qdel(countdown_clock)
 
 	SPAWN_DBG(0) setup()
 
@@ -183,7 +163,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	ooc_allowed = 0
 	boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #else
-	if (it_is_ass_day || istype(src.mode, /datum/game_mode/construction))
+	if (ASS_JAM || istype(src.mode, /datum/game_mode/construction))
 		looc_allowed = 1
 		boutput(world, "<B>LOOC has been automatically enabled.</B>")
 	else
@@ -484,7 +464,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				if (game_end_delayed == 1)
 					roundend_countdown.update_delayed()
 
-					message_admins("<span class='internal>Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]. Remove the delay for an immediate restart.</span>")
+					message_admins("<span class='internal'>Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]. Remove the delay for an immediate restart.</span>")
 					game_end_delayed = 2
 					var/ircmsg[] = new()
 					ircmsg["msg"] = "Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]."
@@ -527,6 +507,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if(isalive(P) && in_centcom(P)) pets_rescued++
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] Processing end-of-round generic medals")
+	var/list/all_the_baddies = ticker.mode.traitors + ticker.mode.token_players + ticker.mode.Agimmicks + ticker.mode.former_antagonists
 	for(var/mob/living/player in mobs)
 		if (player.client)
 			if (!isdead(player))
@@ -599,7 +580,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	boutput(world, score_tracker.heisenhat_stats())
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] ai law display")
-	for (var/mob/living/silicon/ai/aiPlayer in AIs)
+	for (var/mob/living/silicon/ai/aiPlayer in by_type[/mob/living/silicon/ai])
 		if (!isdead(aiPlayer))
 			boutput(world, "<b>The AI, [aiPlayer.name] ([aiPlayer.get_message_mob().key]) had the following laws at the end of the game:</b>")
 		else
@@ -677,23 +658,23 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			//check if escaped
 			//if we are dead - get the location of our corpse
 			var/player_body_escaped = in_centcom(player)
-			var/player_dead = isdead(player) || isVRghost(player) || isghostcritter(player)
+			var/player_loses_held_item = isdead(player) || isVRghost(player) || isghostcritter(player)
 			if (istype(player,/mob/dead/observer))
-				player_dead = 1
+				player_loses_held_item = 1
 				var/mob/dead/observer/O = player
 				if (O.corpse)
 					player_body_escaped = in_centcom(O.corpse)
 				else
 					player_body_escaped = 0
 			else if (istype(player,/mob/dead/target_observer))
-				player_dead = 1
+				player_loses_held_item = 1
 				var/mob/dead/target_observer/O = player
 				if (O.corpse)
 					player_body_escaped = in_centcom(O.corpse)
 				else
 					player_body_escaped = 0
 			else if (isghostdrone(player))
-				player_dead = 1
+				player_loses_held_item = 1
 				player_body_escaped = 0
 
 			//AI doesn't need to escape
@@ -701,25 +682,27 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				player_body_escaped = 1
 				if (isAIeye(player))
 					var/mob/dead/aieye/E = player
-					player_dead = isdead(E.mainframe)
+					player_loses_held_item = isdead(E.mainframe)
 
 			if (!escape_possible)
 				player_body_escaped = 1
 				if (istype(mode, /datum/game_mode/nuclear)) //bleh the nuke thing kills everyone
-					player_dead = 0
+					player_loses_held_item = 0
 
 			if (player_body_escaped)
 				bank_earnings.escaped = 1
 			else
 				earnings = (earnings/4)
 				bank_earnings.escaped = 0
-				player_dead = 1
+				player_loses_held_item = 1
 
 			//handle traitors
-			if (player.mind && ticker.mode.traitors.Find(player.mind))
+			if (player.mind && ticker.mode.traitors.Find(player.mind)) // Roundstart people get the full bonus
 				earnings = job_wage
 				bank_earnings.badguy = 1
-				player_dead = 0
+				player_loses_held_item = 0
+			else if (istype(player.loc, /obj/cryotron) || player.mind && all_the_baddies.Find(player.mind)) // Cryo'd or was a baddie at any point? Keep your shit, but you don't get the extra bux
+				player_loses_held_item = 0
 			//some might not actually have a wage
 			if (isnukeop(player) ||  (isblob(player) && (player.mind && player.mind.special_role == "blob")) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == "wizard")) )
 				bank_earnings.wage_base = 0 //only effects the end of round display
@@ -732,8 +715,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					earnings += 100; // ALL CREW OBJECTIVE SBUX BONUS
 					bank_earnings.all_objs = 100
 
-			if (it_is_ass_day)
+#if ASS_JAM
 				earnings *= 2
+#endif
 
 			//pilot's bonus check and reward
 			var/pilot_bonus = 500 //for receipt
@@ -763,7 +747,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					// Fix for persistent_bank-is-NaN bug
 					if (player.client.persistent_bank != player.client.persistent_bank)
 						player.client.set_persistent_bank(50000)
-					if (player_dead)
+					if (player_loses_held_item)
 						player.client.set_last_purchase(0)
 
 					bank_earnings.pilot_bonus = pilot_bonus

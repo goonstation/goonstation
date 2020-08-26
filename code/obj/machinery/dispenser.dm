@@ -79,7 +79,7 @@
 
 	return data
 
-/obj/machinery/dispenser/ui_act(action, params)
+/obj/machinery/dispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
 	switch(action)

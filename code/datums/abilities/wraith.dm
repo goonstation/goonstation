@@ -385,7 +385,7 @@
 				return 1
 			O.visible_message("<span class='alert'>The [O] comes to life!</span>")
 			var/obj/critter/livingobj/L = new/obj/critter/livingobj(O.loc)
-			O.loc = L
+			O.set_loc(L)
 			L.name = "Living [O.name]"
 			L.desc = "[O.desc]. It appears to be alive!"
 			L.overlays += O
@@ -395,7 +395,7 @@
 			L.aggressive = 1
 			L.atkcarbon = 1
 			L.atksilicon = 1
-			L.opensdoors = 1
+			L.opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 			L.stunprob = 15
 			L.original_object = O
 			animate_levitate(L, -1, 30)

@@ -52,6 +52,8 @@
 			if (!source && (!ticker.mode || ticker.mode.latejoin_antag_compatible == 0 || late_traitors == 0))
 				message_admins("Sleeper Agents are disabled in this game mode, aborting.")
 				return
+			if (emergency_shuttle.online)
+				return
 		message_admins("<span class='internal'>Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]</span>")
 		logTheThing("admin", null, null, "Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]")
 		SPAWN_DBG(0)

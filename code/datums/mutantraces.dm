@@ -812,6 +812,7 @@
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/werewolf
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/werewolf
 	ignore_missing_limbs = 0
+	var/old_client_color = null
 
 	New()
 		..()
@@ -825,6 +826,10 @@
 
 			var/duration = 3000
 			var/datum/ailment_data/disease/D = mob.find_ailment_by_type(/datum/ailment/disease/lycanthropy/)
+
+			mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
+			mob.bioHolder.AddEffect("accent_scoob", null, null, 0, 1)
+
 			if(D)
 				D.cycles++
 				duration = rand(2000, 4000) * D.cycles
@@ -839,6 +844,8 @@
 			mob.remove_stam_mod_regen("werewolf")
 			mob.remove_stun_resist_mod("werewolf")
 			mob.max_health -= 30
+			mob.bioHolder.RemoveEffect("protanopia")
+			mob.bioHolder.RemoveEffect("accent_scoob")
 
 			if (!isnull(src.original_name))
 				mob.real_name = src.original_name
@@ -965,18 +972,10 @@
 	var/table_hide = 0
 
 	New(var/mob/living/carbon/human/M)
-		if (M)
-			if (M.flags & TABLEPASS)
-				had_tablepass = 1
-			else
-				M.flags ^= TABLEPASS
 		M.add_stam_mod_max("monkey", -50)
 		..()
 
 	disposing()
-		if(mob && !had_tablepass)
-			mob.flags ^= TABLEPASS
-
 		if (ishuman(mob))
 			mob:remove_stam_mod_max("monkey")
 		..()
@@ -986,8 +985,6 @@
 
 	custom_attack(atom/target) // Fixed: monkeys can click-hide under every table now, not just the parent type. Also added beds (Convair880).
 		if(istype(target, /obj/machinery/optable/))
-			do_table_hide(target)
-		if(istype(target, /obj/table/))
 			do_table_hide(target)
 		if(istype(target, /obj/stool/bed/))
 			do_table_hide(target)

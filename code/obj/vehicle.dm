@@ -2154,7 +2154,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 	//pick up crates with forklift
 	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart)) && get_dist(A, src) <= 1 && src.rider == usr && helditems.len != helditems_maximum && !broken)
-		A.loc = src
+		A.set_loc(src)
 		helditems.Add(A)
 		update_overlays()
 		boutput(usr, "<span class='notice'><B>You pick up the [A.name].</B></span>")
@@ -2223,7 +2223,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			boutput(usr, "<span class='notice'><B>You leave [helditems.len] crates on [src.loc].</B></span>")
 
 		for (var/obj/HI in helditems)
-			HI.loc = src.loc
+			HI.set_loc(src.loc)
 
 		helditems.len = 0
 		update_overlays()

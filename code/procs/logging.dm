@@ -14,10 +14,11 @@ Example out of game log call:
 #define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
 #define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
 
-var/global/roundLog_name = "data/logs/full/[time2text(world.realtime, "YYYY-MM-DD-hh-mm")].html"
-var/global/roundLog = file("data/logs/full/[time2text(world.realtime, "YYYY-MM-DD-hh-mm")].html")
+var/global/roundLog_date = time2text(world.realtime, "YYYY-MM-DD-hh-mm")
+var/global/roundLog_name = "data/logs/full/[roundLog_date].html"
+var/global/roundLog = file(roundLog_name)
 var/global/disable_log_lists = 0
-
+var/global/first_adminhelp_happened = 0
 
 /proc/logTheThing(type, source, target, text, diaryType)
 	var/diaryLogging
@@ -122,7 +123,7 @@ var/global/disable_log_lists = 0
 	else if(istype(user_or_client, /client))
 		var/client/client = user_or_client
 		entry += "[client.ckey]"
-	entry += " | [text]\n"
+	entry += " | [text]<br>"
 	WRITE_LOG(roundLog_name, entry)
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */

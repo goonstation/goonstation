@@ -299,7 +299,7 @@
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
 */
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 		if(! (C.status & (BROKEN|NOPOWER) ) )
 			C.messagetitle.Add("Cent. Com. Status Summary")
 			C.messagetext.Add(intercepttext)

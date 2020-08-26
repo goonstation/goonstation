@@ -31,6 +31,7 @@
 		if(silenced)
 			current_projectile.shot_sound = 'sound/machines/click.ogg'
 		..()
+		src.update_icon()
 
 	examine()
 		. = ..()
@@ -45,6 +46,10 @@
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
+		if (src.ammo)
+			inventory_counter.update_number(src.ammo.amount_left)
+		else
+			inventory_counter.update_text("-")
 		return 0
 
 	canshoot()
@@ -168,7 +173,7 @@
 						for (var/i = 1, i <= number_of_casings, i++)
 							var/obj/item/casing/C = new src.current_projectile.casing(T)
 							C.forensic_ID = src.forensic_ID
-							C.loc = T
+							C.set_loc(T)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -186,7 +191,7 @@
 						for (var/i = 1, i <= number_of_casings, i++)
 							var/obj/item/casing/C = new src.current_projectile.casing(T)
 							C.forensic_ID = src.forensic_ID
-							C.loc = T
+							C.set_loc(T)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -202,7 +207,7 @@
 				while (src.casings_to_eject > 0)
 					C = new src.current_projectile.casing(T)
 					C.forensic_ID = src.forensic_ID
-					C.loc = T
+					C.set_loc(T)
 					src.casings_to_eject--
 		return
 
@@ -257,6 +262,11 @@
 	shotgun_gray
 		icon_state = "shotgun_gray"
 		desc = "An gray shotgun shell."
+
+	cannon
+		icon_state = "rifle"
+		desc = "A cannon shell."
+		w_class = 2
 
 	grenade
 		w_class = 2
@@ -359,6 +369,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (src.ammo.amount_left < 1)
 			src.icon_state = "faith-empty"
 		else
@@ -440,6 +451,7 @@
 	force = 7.0
 	caliber = 0.355
 	max_ammo_capacity = 18
+	auto_eject = 1
 
 	New()
 		if (prob(30))
@@ -459,6 +471,7 @@
 			spread_angle = 0
 
 	update_icon()
+		..()
 		if (src.item_state == "clock-188-black")
 			if (src.ammo.amount_left < 1)
 				src.icon_state = "clock-188-black_empty"
@@ -668,6 +681,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (src.ammo.amount_left < 1)
 			src.icon_state = "silenced_empty"
 		else
@@ -688,7 +702,7 @@
 		..()
 
 	shoot(var/target,var/start ,var/mob/user)
-		var/turf/T = get_turf_loc(src)
+		var/turf/T = get_turf(src)
 
 		if (!istype(T.loc, /area/sim))
 			boutput(user, "<span class='alert'>You can't use the guns outside of the combat simulation, fuckhead!</span>")
@@ -771,6 +785,7 @@
 		return
 
 	update_icon()
+		..()
 		if (src.ammo.amount_left < 1)
 			src.icon_state = "rpg7_empty"
 			src.item_state = "rpg7_empty"
@@ -812,6 +827,7 @@
 	New()
 		ammo = new/obj/item/ammo/bullets/airzooka
 		current_projectile = new/datum/projectile/bullet/airzooka
+		..()
 
 /obj/item/gun/kinetic/smg //testing keelin's continuous fire POC
 	name = "submachine gun"
@@ -852,6 +868,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (src.ammo.amount_left < 1)
 			src.icon_state = "9mm_pistol_empty"
 		else
@@ -896,10 +913,16 @@
 		current_projectile = new/datum/projectile/special/spreader/buckshot_burst/
 		..()
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+/*  //  how about not putting a goddamn irl suicide threat into the game??? fuck this content
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 /obj/item/gun/kinetic/tactical_shotgun/oblivion //"I've a gun named Oblivion that'll take all the pain away.. All our pain away..."
 	name = "Oblivion"
 	New()
 		return
+
+*/ /////////////////////////////////////////////////////////////////////////////////////////
 
 // assault
 /obj/item/gun/kinetic/assault_rifle
@@ -965,7 +988,7 @@
 	force = 5
 	caliber = 0.308
 	max_ammo_capacity = 100
-	auto_eject = 0
+	auto_eject = 1
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	object_flags = NO_ARM_ATTACH
@@ -1008,12 +1031,13 @@
 
 	can_dual_wield = 0
 
-	slowdown = 5
-	slowdown_time = 10
+	slowdown = 10
+	slowdown_time = 15
 
 	two_handed = 1
 	w_class = 4
 	muzzle_flash = "muzzle_flash_launch"
+
 
 	New()
 		ammo = new/obj/item/ammo/bullets/cannon/single
@@ -1023,6 +1047,8 @@
 	setupProperties()
 		..()
 		setProperty("movespeed", 0.3)
+
+
 
 // demo
 /obj/item/gun/kinetic/grenade_launcher
@@ -1277,6 +1303,45 @@
 			src.addOverlayComposition(/datum/overlayComposition/sniper_scope)
 		playsound(get_turf(src), "sound/weapons/scope.ogg", 50, 1)
 		break
+
+
+// WIP //////////////////////////////////
+/*/obj/item/gun/kinetic/sniper/antimateriel
+	name = "M20-S antimateriel cannon"
+	desc = "A ruthlessly powerful rifle chambered for a 20mm cannon round. Built to destroy vehicles and infrastructure at range."
+	icon = 'icons/obj/64x32.dmi'
+	icon_state = "antimateriel"
+	item_state = "cannon"
+	wear_image_icon = 'icons/mob/back.dmi'
+	force = 10
+	caliber = 0.787
+	max_ammo_capacity = 5
+	auto_eject = 1
+
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
+	object_flags = NO_ARM_ATTACH
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+
+	can_dual_wield = 0
+
+	slowdown = 5
+	slowdown_time = 10
+
+	two_handed = 1
+	w_class = 4
+	muzzle_flash = "muzzle_flash_launch"
+
+
+	New()
+		ammo = new/obj/item/ammo/bullets/cannon
+		current_projectile = new/datum/projectile/bullet/cannon
+		snipermove = new/datum/movement_controller/sniper_look()
+		..()
+
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 0.3)*/
 
 /obj/item/gun/kinetic/flintlockpistol
 	name = "flintlock pistol"

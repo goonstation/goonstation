@@ -18,6 +18,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	contraband = 4
 	hide_attack = 2 //Point blanking... gross
 	pickup_sfx = "sound/items/pickup_gun.ogg"
+	inventory_counter_enabled = 1
 
 	var/continuous = 0 //If 1, fire pixel based while button is held.
 	var/c_interval = 3 //Interval between shots while button is held.
@@ -47,7 +48,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/shoot_delay = 4
 
 	var/muzzle_flash = null //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
-	var/list/muzzle_flash_simplelight_color
 
 	buildTooltipContent()
 		. = ..()

@@ -31,7 +31,7 @@
 	generate_worldgen()
 		src.update_icon()
 
-	disposing()
+	Del()
 		src.RL_SetSprite(null)
 		..()
 
@@ -312,8 +312,26 @@
 	the_tuff_stuff
 		explosion_resistance = 7
 
+	dark1
+		color = "#dddddd"
+
+	dark2
+		color = "#bbbbbb"
+
+	dark3
+		color = "#999999"
+
+	dark4
+		color = "#777777"
+
 	red
 		color = "#ff9999"
+
+	orange
+		color = "#ffc599"
+
+	brown
+		color = "#d4ab8c"
 
 	green
 		color = "#9ec09e"
@@ -351,10 +369,26 @@
 		for (var/obj/window/auto/O in orange(1,src))
 			O.update_icon()
 
+	dark1
+		color = "#dddddd"
 
+	dark2
+		color = "#bbbbbb"
+
+	dark3
+		color = "#999999"
+
+	dark4
+		color = "#777777"
 
 	red
 		color = "#ff9999"
+
+	orange
+		color = "#ffc599"
+
+	brown
+		color = "#d4ab8c"
 
 	green
 		color = "#9ec09e"
@@ -528,7 +562,7 @@
 	generate_worldgen()
 		src.update_icon()
 
-	disposing()
+	Del()
 		src.RL_SetSprite(null)
 		..()
 

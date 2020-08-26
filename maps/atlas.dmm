@@ -2984,7 +2984,7 @@
 	pixel_y = 21
 	},
 /obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/flamethrower/loaded,
+/obj/item/flamethrower/assembled/loaded,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},

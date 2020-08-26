@@ -283,6 +283,26 @@
 	desc = "A tough and waxy root. It is well-regarded as an ingredient in burn salve."
 	icon_state = "commol"
 
+/obj/item/plant/herb/ipecacuanha
+	name = "ipecacuanha root"
+	crop_suffix	= " root"
+	desc = "This thick root is covered in abnormal ammounts of bark. A powerful emetic can be extracted from it."
+	icon_state = "ipecacuanha"
+
+/obj/item/plant/herb/ipecacuanha/invigorating
+	name = "ipecacuanha root"
+	crop_suffix	= " root"
+	desc = "This thick root is covered in abnormal ammounts of bark. A powerful emetic can be extracted from it. This one is strangely veinous"
+	icon_state = "ipecacuanhainvigorating"
+
+/obj/item/plant/herb/ipecacuanha/bilious
+	name = "ipecacuanha root"
+	crop_suffix = " root"
+	desc = "This thick root is covered in abnormal ammounts of bark. A powerful emetic can be extracted from it. This one looks particularly revolting"
+	icon_state = "ipecacuanhabilious"
+	brewable = 1
+	brew_result = "gvomit"
+
 /obj/item/plant/herb/sassafras
 	name = "sassafras root"
 	crop_suffix	= " root"

@@ -69,23 +69,23 @@
 #define DIALOGUE_HOLD 2
 
 #define TIME_DILATION_ENABLED 1
-#define MIN_TICKLAG 0.4 //min value ticklag can be
-#define OVERLOADED_WORLD_TICKLAG 1 //max value ticklag can be
-#define TICKLAG_DILATION_INC 0.2 //how much to increase by when appropriate
-#define TICKLAG_DILATION_DEC 0.2 //how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
-#define TICKLAG_DILATION_THRESHOLD 5 //these values dont make sense to you? read the math in gameticker
-#define TICKLAG_NORMALIZATION_THRESHOLD 0.3 //these values dont make sense to you? read the math in gameticker
+#define MIN_TICKLAG 0.4 /// min value ticklag can be
+#define OVERLOADED_WORLD_TICKLAG 1 /// max value ticklag can be
+#define TICKLAG_DILATION_INC 0.2 /// how ticklag much to increase by when appropriate
+#define TICKLAG_DILATION_DEC 0.2 /// how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
+#define TICKLAG_DILATION_THRESHOLD 5 // these values dont make sense to you? read the math in gameticker
+#define TICKLAG_NORMALIZATION_THRESHOLD 0.3 // these values dont make sense to you? read the math in gameticker
 #define TICKLAG_DILATE_INTERVAL 20
 
-#define OVERLOAD_PLAYERCOUNT 95 //when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
-#define OSHAN_LIGHT_OVERLOAD 18 //when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
-#define SLOW_LIFE_PLAYERCOUNT 65 //whenn pcount is >= this number, slow Life() processing a bit
-#define SLOWEST_LIFE_PLAYERCOUNT 85 //whenn pcount is >= this number, slow Life() processing a lot
+#define OVERLOAD_PLAYERCOUNT 95 /// when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
+#define OSHAN_LIGHT_OVERLOAD 18 /// when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
+#define SLOW_LIFE_PLAYERCOUNT 65 /// whenn pcount is >= this number, slow Life() processing a bit
+#define SLOWEST_LIFE_PLAYERCOUNT 85 /// whenn pcount is >= this number, slow Life() processing a lot
 
 
 #define DEFAULT_CLICK_DELAY MIN_TICKLAG //used to be 1
 #define COMBAT_CLICK_DELAY 10
-#define CLICK_GRACE_WINDOW 0//2.5
+#define CLICK_GRACE_WINDOW 0 //2.5
 
 #define COMBAT_BLOCK_DELAY (2)
 
@@ -148,8 +148,8 @@
 #define AST_NUMPREFABS 18     //How many prefabs to place. It'll try it's hardest to place this many at the very least. You're basically guaranteed this amount of prefabs.
 #define AST_NUMPREFABSEXTRA 6//Up to how many extra prefabs to place randomly. You might or might not get these extra ones.
 #else
-#define AST_NUMPREFABS 5     //How many prefabs to place. It'll try it's hardest to place this many at the very least. You're basically guaranteed this amount of prefabs.
-#define AST_NUMPREFABSEXTRA 3//Up to how many extra prefabs to place randomly. You might or might not get these extra ones.
+#define AST_NUMPREFABS 11     //How many prefabs to place. It'll try it's hardest to place this many at the very least. You're basically guaranteed this amount of prefabs.
+#define AST_NUMPREFABSEXTRA 5//Up to how many extra prefabs to place randomly. You might or might not get these extra ones.
 #endif
 
 #define AST_MAPSEEDBORDER 10 //Min distance from map edge for seeds.
@@ -160,7 +160,6 @@
 #define MIN_EFFECTIVE_RAD 3 //How many rads after resistances before it actually does anything. Example: This is set to 3, someone takes rad damage that is reduced to 2 by resistances. Nothing happens as its below the min. of 3.
 #define FIRE_DAMAGE_MODIFIER 0.0215 //Higher values result in more external fire damage to the skin (default 0.0215)
 #define AIR_DAMAGE_MODIFIER 2.025 //More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
-#define INFINITY 1e31 //closer then enough
 
 //#define nround(x, n) round(x, 10 ** n)
 //#define floor(x) round(x)
@@ -173,8 +172,6 @@
 #define MAX_MESSAGE_LEN 1024
 #define MOB_NAME_MAX_LENGTH 50
 
-
-
 #define T0C 273.15					// 0degC
 #define T20C 293.15					// 20degC
 #define TCMB 2.7					// -270.3degC
@@ -186,8 +183,47 @@
 #define BURNING_LV2 200 //Lv2 ^^
 #define BURNING_LV3 400 //Lv3 ^^
 
-#define OCEAN_COLOR "#4DA0FD"
-#define OCEAN_LIGHT  rgb(0.160 * 255, 0.60 * 255, 1.00 * 255, 0.65 * 255)
+// Changing up some of the values here
+// Originals:
+// #define OCEAN_COLOR "#4DA0FD"
+// #define OCEAN_LIGHT  rgb(0.160 * 255, 0.60 * 255, 1.00 * 255, 0.65 * 255)
+
+// Ocean color slightly brighter to compensate for lighting handling the coloring
+#define OCEAN_COLOR "#afd4ff"
+
+// m = 127 + cos(BUILD_TIME_HOUR / 12 * (pi * 2) * 127
+// Oshan light cycles every 12 hours by suggestion from cogwerks,
+// to give people more chances to see different values
+// Right now it's just a very simple dark-to-light-to-dark color shift
+// in theory we could adjust it as Centcom does to have different colors
+// during sunrise/sunset
+#if (BUILD_TIME_HOUR == 0) || (BUILD_TIME_HOUR - 12 == 0)
+	#define OCEAN_LIGHT  rgb(0.160 *   0, 0.60 *   0, 1.00 *   0, 0.65 * 255)
+#elif (BUILD_TIME_HOUR == 1) || (BUILD_TIME_HOUR - 12 == 1)
+	#define OCEAN_LIGHT  rgb(0.160 *  18, 0.60 *  18, 1.00 *  18, 0.65 * 255)
+#elif (BUILD_TIME_HOUR == 2) || (BUILD_TIME_HOUR - 12 == 2)
+	#define OCEAN_LIGHT  rgb(0.160 *  63, 0.60 *  63, 1.00 *  63, 0.65 * 255)
+#elif (BUILD_TIME_HOUR == 3) || (BUILD_TIME_HOUR - 12 == 3)
+	#define OCEAN_LIGHT  rgb(0.160 * 125, 0.60 * 125, 1.00 * 125, 0.65 * 255)
+#elif (BUILD_TIME_HOUR == 4) || (BUILD_TIME_HOUR - 12 == 4)
+	#define OCEAN_LIGHT  rgb(0.160 * 187, 0.60 * 187, 1.00 * 187, 0.65 * 255)
+#elif (BUILD_TIME_HOUR == 5) || (BUILD_TIME_HOUR - 12 == 5)
+	#define OCEAN_LIGHT  rgb(0.160 * 236, 0.60 * 236, 1.00 * 236, 0.65 * 255)
+#elif (BUILD_TIME_HOUR == 6) || (BUILD_TIME_HOUR - 12 == 6)
+	#define OCEAN_LIGHT  rgb(0.160 * 255, 0.60 * 255, 1.00 * 255, 0.65 * 255)
+#elif (BUILD_TIME_HOUR == 7) || (BUILD_TIME_HOUR - 12 == 7)
+	#define OCEAN_LIGHT  rgb(0.160 * 236, 0.60 * 236, 1.00 * 236, 0.65 * 255)
+#elif (BUILD_TIME_HOUR == 8) || (BUILD_TIME_HOUR - 12 == 8)
+	#define OCEAN_LIGHT  rgb(0.160 * 187, 0.60 * 187, 1.00 * 187, 0.65 * 255)
+#elif (BUILD_TIME_HOUR == 9) || (BUILD_TIME_HOUR - 12 == 9)
+	#define OCEAN_LIGHT  rgb(0.160 * 125, 0.60 * 125, 1.00 * 125, 0.65 * 255)
+#elif (BUILD_TIME_HOUR == 10) || (BUILD_TIME_HOUR - 12 == 10)
+	#define OCEAN_LIGHT  rgb(0.160 *  63, 0.60 *  63, 1.00 *  63, 0.65 * 255)
+#elif (BUILD_TIME_HOUR == 11) || (BUILD_TIME_HOUR - 12 == 11)
+	#define OCEAN_LIGHT  rgb(0.160 *  18, 0.60 *  18, 1.00 *  18, 0.65 * 255)
+#endif
+
+
 #define TRENCH_LIGHT rgb(0.025 * 255, 0.05 * 255, 0.15 * 255, 0.70 * 255)
 
 // Defines the Mining Z level, change this when the map changes
@@ -709,6 +745,11 @@ proc/default_frequency_color(freq)
 #define D_TOXIC 48
 #define D_SPECIAL 128
 
+//Projectile reflection defines
+#define PROJ_NO_HEADON_BOUNCE 1
+#define PROJ_HEADON_BOUNCE 2
+#define PROJ_RAPID_HEADON_BOUNCE 3
+
 //Missing limb flags
 #define LIMB_LEFT_ARM 1
 #define LIMB_RIGHT_ARM 2
@@ -936,12 +977,6 @@ proc/default_frequency_color(freq)
 #define SHIP_ALERT_GOOD 0
 #define SHIP_ALERT_BAD 1
 
-// where you at, dawg, where you where you at, shuttle_controller.dm
-#define SHUTTLE_LOC_CENTCOM 0
-#define SHUTTLE_LOC_STATION 1
-#define SHUTTLE_LOC_TRANSIT 1.5
-#define SHUTTLE_LOC_RETURNED 2
-
 //moved from guardbot.dm because i wanna use this list of buddy hats on some critters
 #define BUDDY_HATS list("detective","hoscap","hardhat","hosberet","ntberet","chef","souschef","captain","centcom","centcom-red","tophat","ptophat","mjhat","plunger","cakehat0","cakehat1","butt","santa","yellow","blue","red","green","black","white","psyche","wizard","wizardred","wizardpurple","witch","obcrown","macrown","safari","dolan","viking","mailcap","bikercap","paper","apprentice","chavcap","policehelm","captain-fancy","rank-fancy","mime_beret","mime_bowler")
 
@@ -1034,14 +1069,14 @@ proc/default_frequency_color(freq)
 //Ass Jam! enables a bunch of wacky and not-good features. BUILD LOCALLY!!!
 #ifdef RP_MODE
 #define ASS_JAM 0
-#elif BUILD_TIME_DAY == 13
-#define ASS_JAM 0
+#elif BUILD_TIME_DAY == 13 && defined(ASS_JAM_ENABLED)
+#define ASS_JAM 1
 #else
 #define ASS_JAM 0
 #endif
 
-// time for johns madden
-#define FOOTBALL_MODE 0
+/// time for johns madden
+#define FOOTBALL_MODE 1
 
 
 #if ASS_JAM
@@ -1068,7 +1103,7 @@ var/ZLOG_START_TIME
 #define CRITTER_REACTION_LIMIT 50
 #define CRITTER_REACTION_CHECK(x) if (x++ > CRITTER_REACTION_LIMIT) return
 
-//Activates the viscontents warps
+/// Activates the viscontents warps
 #define NON_EUCLIDEAN 1
 
 #define CURRENT_SPACE_YEAR 2053
@@ -1080,63 +1115,11 @@ var/ZLOG_START_TIME
 #define DEFAULT_RESPAWN_TIME 18000
 #define RESPAWNS_ENABLED 0
 
-#if DM_BUILD > 1490
-#define lentext length
-#endif
-
 #define VOLUME_CHANNEL_MASTER 0
 #define VOLUME_CHANNEL_GAME 1
 #define VOLUME_CHANNEL_AMBIENT 2
 #define VOLUME_CHANNEL_RADIO 3
 #define VOLUME_CHANNEL_ADMIN 4
-
-//ex:  var/time = 10 SECONDS
-#define SECONDS *10
-#define MINUTES *600
-#define HOURS *36000
-
-#define SECOND SECONDS
-#define MINUTE MINUTES
-#define HOUR HOURS
-
-#define WATTS *1
-#define METERS *1
-#define KILOGRAMS *1
-#define AMPERES *1
-#define KELVIN *1
-#define MOLES *1
-#define CANDELAS *1
-
-#define WATT WATTS
-#define METER METERS
-#define KILOGRAM KILOGRAMS
-#define AMPERE AMPERES
-#define AMP AMPERES
-#define AMPS AMPERES
-#define MOLE MOLES
-#define CANDELA CANDELAS
-
-#define YOTTA *(10**24)
-#define ZETTA *(10**21)
-#define EXA   *(10**18)
-#define PETA  *(10**15)
-#define TERA  *(10**12)
-#define GIGA  *(10**9)
-#define MEGA  *(10**6)
-#define KILO  *(10**3)
-#define HECTO *(10**2)
-#define DEKA  *(10**1)
-
-#define DECI  *(10**-1)
-#define CENTI *(10**-2)
-#define MILLI *(10**-3)
-#define MICRO *(10**-6)
-#define NANO  *(10**-9)
-#define PICO  *(10**-12)
-#define FEMTO *(10**-15)
-#define ATTO  *(10**-18)
-#define ZEPTO *(10**-21)
-#define YOCTO *(10**-24)
 
 //table defines
 #define TABLE_DISASSEMBLE 0
@@ -1150,11 +1133,19 @@ var/ZLOG_START_TIME
 #define RAILING_UNFASTEN 1
 #define RAILING_FASTEN 2
 
+//critter defines
+#define OBJ_CRITTER_OPENS_DOORS_NONE 0
+#define OBJ_CRITTER_OPENS_DOORS_PUBLIC 1
+#define OBJ_CRITTER_OPENS_DOORS_ANY 2
+
 //Auditing
 //Whether or not a potentially suspicious action gets denied by the code.
 #define AUDIT_ACCESS_DENIED (0 << 1)
 //Logged whenever you try to View Variables a thing
 #define AUDIT_VIEW_VARIABLES (1 << 1)
+
+//Color matrices		// vv Values modified from those obtained from https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
+#define MATRIX_PROTANOPIA 0.55,0.45,0.000,0.55,0.45,0.000,0.000,0.25,1.0,0.0,0.0,0.0
 
 //PATHOLOGY REMOVAL
 //#define CREATE_PATHOGENS 1
@@ -1170,3 +1161,14 @@ var/ZLOG_START_TIME
 	#define SERVER_SIDE_PROFILING 1
 #endif
 #endif
+
+// i_dont_want_to_make_a_whole_new_file_for_one_goddamned_define.jpg
+#ifdef RP_MODE
+#define MAX_PARTICIPATE_TIME 80 MINUTES //the maximum shift time before it doesnt count as "participating" in the round
+#else
+#define MAX_PARTICIPATE_TIME 40 MINUTES //ditto above
+#endif
+
+
+#define CELLRATE 0.002  // multiplier for watts per tick <> cell storage (eg: .002 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
+#define CHARGELEVEL 0.001 // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)

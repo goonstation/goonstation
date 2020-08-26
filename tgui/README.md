@@ -40,7 +40,6 @@ You will need these programs to start developing in tgui:
 - [Node v12.13+](https://nodejs.org/en/download/)
 - [Yarn v1.19+](https://yarnpkg.com/en/docs/install)
 - Some kind of terminal, whether it in be a Unix-like environment, or a Windows one.
-- **A git version that supports symlinks.** If using Git for Windows, be sure to *install* it with symlink support!
 
 ## Usage
 
@@ -118,6 +117,10 @@ Note that in Windows, you have to go through Advanced System Settings,
 System Properties and then open Environment Variables window to do the
 same thing. You may need to reboot after this.
 
+**`Script error.` on CDN-originating .js files**
+
+Add `crossorigin="anonymous"` to the script tags in your downloaded tgui-window-x.html file found in your BYOND cache.
+
 ## Developer Tools
 
 When developing with `tgui-dev-server`, you will have access to certain
@@ -172,6 +175,10 @@ use in tgui. Each theme must be registered in `webpack.config.js` file.
 ## Component Reference
 
 See: [Component Reference](docs/component-reference.md).
+
+## FontAwesome Icon
+
+For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/v5.14.0/icons?d=gallery&s=regular,solid&m=free)
 
 ## License
 

@@ -114,6 +114,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_death_confetti,
 		/client/proc/cmd_admin_unhandcuff,
 		/client/proc/admin_toggle_lighting,
+		/client/proc/cmd_admin_managebioeffect,
 
 		/client/proc/debug_deletions,
 
@@ -259,6 +260,7 @@ var/list/admin_verbs = list(
 		/client/proc/show_admin_lag_hacks,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
+		/datum/admins/proc/supplydrop_spawn_obj,
 
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
@@ -295,7 +297,6 @@ var/list/admin_verbs = list(
 		/client/proc/sendmobs,
 		/client/proc/gettraitors,
 		/client/proc/getnontraitors,
-		/client/proc/Debug2,
 		/datum/admins/proc/adrev,
 		/datum/admins/proc/adspawn,
 		/datum/admins/proc/adjump,
@@ -328,6 +329,10 @@ var/list/admin_verbs = list(
 		/client/proc/dereplace_space,
 		/client/proc/ghostdroneAll,
 		/client/proc/showPregameHTML,
+
+		/client/proc/call_proc,
+		/client/proc/call_proc_all,
+		/client/proc/debug_global_variable,
 
 		// /client/proc/admin_airborne_fluid,
 		// /client/proc/replace_space,
@@ -1443,16 +1448,14 @@ var/list/fun_images = list()
 		return
 
 	if(new_grenade)
-		var/obj/item/old_grenade/thing_thrower/nade = new
+		var/obj/item/old_grenade/thing_thrower/nade = new(usr.loc)
 		nade.count = input("How many things?", "How many things?", 8) as null|num
 		nade.payload = obj_path
-		nade.loc = usr.loc
 		nade.name = "mysterious grenade"
 		nade.desc = "There could be anything inside this."
 	else
-		var/obj/item/old_grenade/banana/nade = new /obj/item/old_grenade/banana
+		var/obj/item/old_grenade/banana/nade = new /obj/item/old_grenade/banana(usr.loc)
 		nade.payload = obj_path
-		nade.loc = usr.loc
 		nade.name = "mysterious grenade"
 		nade.desc = "There could be anything inside this."
 	logTheThing("admin", src, null, "spawned a custom grenade at [usr.loc]")
@@ -1815,8 +1818,12 @@ var/list/fun_images = list()
 
 
 	if (parameters["right"])
-		var/list/atoms = list(get_turf(A))
-		for(var/thing in get_turf(A))
+		var/turf/clicked_turf = get_turf(A)
+		var/x_shift = round(text2num(parameters["icon-x"]) / 32)
+		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
+		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
+		var/list/atoms = list(clicked_turf)
+		for(var/thing in clicked_turf)
 			var/atom/atom = thing
 			atoms += atom
 		if (atoms.len)
@@ -1846,8 +1853,8 @@ var/list/fun_images = list()
 			C.cmd_admin_get_mobject(A)
 		if("Follow Thing")
 			C.admin_follow_mobject(A)
-		if("Check Bioeffects")
-			C.cmd_admin_checkbioeffect(A)
+		if("Manage Bioeffects")
+			C.cmd_admin_managebioeffect(A)
 		if("Manage Abilities")
 			C.cmd_admin_manageabils(A)
 		if("Add Reagents")
@@ -1904,7 +1911,10 @@ var/list/fun_images = list()
 			C.getturftelesci(A)
 
 		if ("Possess")
-			possess(A)
+			if(istype(A, /mob))
+				possessmob(A)
+			else
+				possess(A)
 		if ("Create Poster")
 			C.generate_poster(A)
 

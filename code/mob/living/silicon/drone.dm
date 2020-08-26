@@ -435,16 +435,16 @@
 					var/mob/living/silicon/drone/D = new /mob/living/silicon/drone(src.loc)
 					if (part_cell)
 						D.cell = part_cell
-						part_cell.loc = D
+						part_cell.set_loc(D)
 					if (part_radio)
 						D.radio = part_radio
-						part_radio.loc = D
+						part_radio.set_loc(D)
 					if (part_propulsion)
 						D.propulsion = part_propulsion
-						part_propulsion.loc = D
+						part_propulsion.set_loc(D)
 					if (part_plating)
 						D.plating = part_plating
-						part_plating.loc = D
+						part_plating.set_loc(D)
 					qdel(src)
 				else
 					boutput(user, "<span class='alert'>There's lots of good times to use a wrench, but this isn't one of them.</span>")

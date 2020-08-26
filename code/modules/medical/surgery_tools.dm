@@ -658,7 +658,7 @@ CONTAINS:
 	proc/put_back_defib(var/mob/living/M)
 		if (src.defib)
 			M.drop_item(defib)
-			src.defib.loc = src
+			src.defib.set_loc(src)
 			src.defib.parent = null
 		if (islist(M.move_laying))
 			M.move_laying -= src.defib
@@ -1561,10 +1561,12 @@ keeping this here because I want to make something else with it eventually
 		return
 
 	proc/attach(obj/item/I as obj)
+		if(I.anchored) return
 		src.attached_objs.Add(I) // attach the item to the table
 		I.glide_size = 0 // required for smooth movement with the tray
 		// register for pickup, register for being pulled off the table, register for item deletion while attached to table
-		RegisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING), .proc/detach)
+		SPAWN_DBG(0)
+			RegisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING), .proc/detach)
 
 	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
 		src.attached_objs.Remove(I)

@@ -53,6 +53,7 @@
 	var/bio_effects = null
 	var/objective = null
 	var/spawn_miscreant = 0
+	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
 
 	New()
 		..()
@@ -96,7 +97,7 @@
 				I.implanted(M)
 
 			if (src.special_spawn_location && !no_special_spawn)
-				M.loc = locate(spawn_x,spawn_y,spawn_z)
+				M.set_loc(locate(spawn_x,spawn_y,spawn_z))
 
 			if (ishuman(M) && src.bio_effects)
 				var/list/picklist = params2list(src.bio_effects)
@@ -149,6 +150,7 @@
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_card = /obj/item/card/id/gold
 	slot_belt = /obj/item/device/pda2/captain
+	slot_back = /obj/item/storage/backpack/captain
 	slot_jump = /obj/item/clothing/under/rank/captain
 	slot_suit = /obj/item/clothing/suit/armor/captain
 	slot_foot = /obj/item/clothing/shoes/swat
@@ -466,6 +468,7 @@
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_poc2 = /obj/item/requisition_token/security
+	rounds_needed_to_play = 13 //ss13, and also seems like a good number to go with
 
 	New()
 		..()
@@ -2250,13 +2253,8 @@
 /datum/job/special/meatcube
 	name = "Meatcube"
 	linkcolor = "#FF0000"
-#if ASS_JAM
-	announce_on_join = 1
-	limit = 300
-#else
 	limit = 0
 	allow_traitors = 0
-#endif
 	slot_ears = null
 	slot_card = null
 	slot_back = null

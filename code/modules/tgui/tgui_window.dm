@@ -59,18 +59,18 @@
 	var/html = tgui_process.basehtml
 	html = replacetextEx(html, "\[tgui:windowId]", id)
 
-	// Process inline assets [GOONSTATION-CHANGE]
+	// Process inline assets |GOONSTATION-CHANGE|
 	var/list/inline_styles = list()
 	var/list/inline_scripts = list()
 
-	// Handle CDN Assets, Goonstation-style [GOONSTATION-ADD]
+	// Handle CDN Assets, Goonstation-style |GOONSTATION-ADD|
 	for(var/datum/asset/asset in inline_assets)
 		if (istype(asset, /datum/asset/group))
 			var/datum/asset/group/g = asset
 			for(var/subasset in g.subassets)
 				handle_cdn_asset(get_assets(subasset), inline_styles, inline_scripts)
 		else
-			handle_cdn_asset(get_assets(asset), inline_styles, inline_scripts)
+			handle_cdn_asset(get_assets(asset.type), inline_styles, inline_scripts)
 
 	html = replacetextEx(html, "<!-- tgui:styles -->", inline_styles.Join())
 	html = replacetextEx(html, "<!-- tgui:scripts -->", inline_scripts.Join())
@@ -80,7 +80,7 @@
 	// Instruct the client to signal UI when the window is closed.
 	winset(client, id, "on-close=\"uiclose [id]\"")
 
-/** [GOONSTATION-ADD]
+/** |GOONSTATION-ADD|
  * private
  *
  * Does Goonstation CDN shit to assets, essentially either throws in the url or the filepath to the asset.

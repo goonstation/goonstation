@@ -1250,6 +1250,9 @@
 		return
 	if (!user)
 		return
+	if (ispryingtool(C))
+		boutput(user, "<span class='alert'>You can't pry apart reinforced flooring! You'll have to loosen it with a welder or wrench instead.</span>")
+		return
 	if (istype(C, /obj/item/pen))
 		var/obj/item/pen/P = C
 		P.write_on_turf(src, user, params)
@@ -1390,6 +1393,8 @@
 
 	if(broken || burnt)
 		boutput(user, "<span class='alert'>You remove the broken plating.</span>")
+	else if (istype(src,/turf/simulated/floor/engine))
+		boutput(user, "<span class='alert'>You can't pry apart reinforced flooring!</span>")
 	else
 		var/atom/A = new /obj/item/tile(src)
 		if(src.material)
@@ -1607,7 +1612,7 @@
 		if(I)
 			if(istype(I,/obj/item/cable_coil))
 				var/obj/item/cable_coil/C = I
-				if((get_dist(user,F)<2) & (get_dist(user,src)<2))
+				if((get_dist(user,F)<2) && (get_dist(user,src)<2))
 					C.move_callback(user, F, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////

@@ -22,7 +22,6 @@
 	var/only_local_looc = 0
 	var/deadchatoff = 0
 	var/local_deadchat = 0
-	var/last_adminhelp = 0
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
@@ -56,6 +55,7 @@
 	var/antag_tokens //Number of antagonist tokens available to the player
 	var/using_antag_token = 0 //Set when the player readies up at round start, and opts to redeem a token.
 
+	var/persistent_bank_valid = FALSE
 	var/persistent_bank = 0 //cross-round persistent cash value (is increased as a function of job paycheck + station score)
 	var/persistent_bank_item = 0 //Name of a bank item that may have persisted from a previous round. (Using name because I'm assuming saving a string is better than saving a whole datum)
 
@@ -381,10 +381,10 @@
 			if (src.holder && rank_to_level(src.holder.rank) >= LEVEL_MOD) // No admin changelog for goat farts (Convair880).
 				admin_changes()
 #endif
-			if (it_is_ass_day)
+#if ASS_JAM
 				src.verbs += /client/proc/cmd_ass_day_rules
 				src.cmd_ass_day_rules()
-
+#endif
 
 			if (src.byond_version < 513 || src.byond_build < 1526)
 				if (alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", "Yes", "No") == "Yes")
@@ -618,6 +618,9 @@
 	//var/bank = 0
 	//PB[ckey] >> bank
 	//if (!bank)
+
+	persistent_bank_valid = cloud_available()
+
 	persistent_bank = cloud_get( "persistent_bank" ) ? text2num(cloud_get( "persistent_bank" )) : 0
 	//	return
 	//else
@@ -666,6 +669,10 @@
 
 //MBC TODO : DO SOME LOGGING ON ADD_TO_BANK() AND TRY_BANK_PURCHASE()
 /client/proc/add_to_bank(amt as num)
+	if(!persistent_bank_valid)
+		load_persistent_bank()
+		if(!persistent_bank_valid)
+			return
 	var/new_bank_value = persistent_bank + amt
 	src.set_persistent_bank(new_bank_value)
 
@@ -772,6 +779,30 @@ var/global/curr_day = null
 	set name = "Ping"
 	boutput(usr, "Pong")
 
+/client/verb/changeServer(var/server as text)
+	set name = "Change Server"
+	set hidden = 1
+	var/serverURL
+	var/serverName
+	switch (server)
+		if (1, "rp")
+			serverName = "Goonstation Roleplay"
+			serverURL = "byond://goon1.goonhub.com:26100"
+		if (2, "main")
+			serverName = "Goonstation"
+			serverURL = "byond://goon2.goonhub.com:26200"
+		if (3, "main2")
+			serverName = "Goonstation Roleplay Overflow"
+			serverURL = "byond://goon3.goonhub.com:26300"
+		if (4, "main3")
+			serverName = "Goonstation Overflow"
+			serverURL = "byond://goon4.goonhub.com:26400"
+
+	if (serverURL)
+		boutput(usr, "You are being redirected to [serverName]...")
+		usr << link(serverURL)
+
+
 /*
 /client/verb/Newcastcycle()
 	set hidden = 1
@@ -803,7 +834,7 @@ var/global/curr_day = null
 		return
 
 	// Tgui Topic middleware
-	if(!tgui_Topic(href_list))
+	if(tgui_Topic(href_list))
 		return
 
 	var/mob/M
@@ -821,7 +852,7 @@ var/global/curr_day = null
 				t = strip_html(t,500)
 			if (!( t ))
 				return
-			boutput(src.mob, "<span class='notice' class=\"bigPM\">Admin PM to-<b>[target] (Discord)</b>: [t]</span>")
+			boutput(src.mob, "<span class='ahelp' class=\"bigPM\">Admin PM to-<b>[target] (Discord)</b>: [t]</span>")
 			logTheThing("admin_help", src, null, "<b>PM'd [target]</b>: [t]")
 			logTheThing("diary", src, null, "PM'd [target]: [t]", "ahelp")
 
@@ -841,7 +872,7 @@ var/global/curr_day = null
 					if (C.player_mode && !C.player_mode_ahelp)
 						continue
 					else
-						boutput(K, "<span class='internal'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</span>")
+						boutput(K, "<span class='ahelp'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</span>")
 
 		if ("priv_msg")
 			do_admin_pm(href_list["target"], usr) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.

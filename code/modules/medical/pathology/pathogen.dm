@@ -980,6 +980,7 @@ datum/pathogen
 	unpooled()
 		clear()
 		setup(0, null, 0)
+		..()
 
 	proc/create_weak()
 		randomize(0)
@@ -1561,7 +1562,7 @@ proc/num2hexoc(num, pad)
 
 // One's complement reverse engineering of a hexadecimal one's complement representation to a base 10 signed number
 proc/hex2numoc(var/num)
-	var/len = lentext(num)
+	var/len = length(num)
 	var/max = 7
 	for (var/i = len - 1, i > 0, i--)
 		max = max * 16 + 15
