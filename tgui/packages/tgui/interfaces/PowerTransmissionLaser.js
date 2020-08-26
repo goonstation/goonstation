@@ -7,6 +7,7 @@
 
 import { useBackend } from '../backend';
 import { Box, Button, ColorBox, Divider, Knob, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
+import { formatMoney, formatPower, formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
 export const PowerTransmissionLaser = (props, context) => {
@@ -19,13 +20,13 @@ export const PowerTransmissionLaser = (props, context) => {
     <Window
       title={name}
       width="310"
-      height="565">
+      height="485">
       <Window.Content>
         <Status />
         <InputControls />
         <OutputControls />
         <NoticeBox success>
-          Earned Credits : {Math.floor(lifetimeEarnings)} Credits
+          Earned Credits : {formatMoney(lifetimeEarnings)}
         </NoticeBox>
       </Window.Content>
     </Window>
@@ -35,13 +36,9 @@ export const PowerTransmissionLaser = (props, context) => {
 const Status = (props, context) => {
   const { data } = useBackend(context);
   const {
+    capacity,
     charge,
-    excessPower,
     gridLoad,
-    inputLevel,
-    isCharging,
-    isFiring,
-    outputLevel,
     totalGridPower,
   } = data;
 
@@ -49,62 +46,30 @@ const Status = (props, context) => {
     <Section title="Status">
       <LabeledList>
         <LabeledList.Item
-          label="Stored Capacity"
-          labelColor="white"
-          textAlign="right">
-          {charge}J
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Current Input Setting"
-          labelColor="white"
-          textAlign="right">
-          {inputLevel}W
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Optimal Input Setting"
-          labelColor="white"
-          textAlign="right">
-          {excessPower}W
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Charging Status"
-          labelColor="white"
-          textAlign="right">
-          {isCharging ? 'Online ' : 'Offline '}
-          <ColorBox
-            color={isCharging ? 'green' : 'red'} />
+          label="Reserve Power" >
+          {formatSiUnit(charge, 0, 'J')}
         </LabeledList.Item>
       </LabeledList>
-      <Divider />
-      <Box
-        mb="0.5em"
-        bold>
-        Power Grid Saturation
-      </Box>
       <ProgressBar
+        mt="0.5em"
+        mb="0.5em"
+        ranges={{
+          good: [0.8, Infinity],
+          average: [0.5, 0.8],
+          bad: [-Infinity, 0.5],
+        }}
+        value={charge / capacity} />
+      <LabeledList>
+        <LabeledList.Item label="Grid Saturation" />
+      </LabeledList>
+      <ProgressBar
+        mt="0.5em"
         ranges={{
           good: [0.8, Infinity],
           average: [0.5, 0.8],
           bad: [-Infinity, 0.5],
         }}
         value={gridLoad / totalGridPower} />
-      <Divider />
-      <LabeledList>
-        <LabeledList.Item
-          label="Current Output Setting"
-          labelColor="white"
-          textAlign="right">
-          {outputLevel}W
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Laser Status"
-          labelColor="white"
-          textAlign="right">
-          {isFiring ? 'Online ' : 'Offline '}
-          <ColorBox
-            color={isFiring ? 'green' : 'red'} />
-        </LabeledList.Item>
-      </LabeledList>
     </Section>
   );
 };
@@ -113,6 +78,8 @@ const InputControls = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     chargingEnabled,
+    excessPower,
+    isCharging,
     inputLevel,
     inputNumber,
     inputMultiplier,
@@ -120,21 +87,34 @@ const InputControls = (props, context) => {
 
   return (
     <Section title="Input Controls">
-      <Box mb="0.5em">
-        <strong>Charging Circuit </strong>
-        <Button
-          icon="power-off"
-          content={chargingEnabled ? 'Enabled' : 'Disabled'}
-          color={chargingEnabled ? 'green' : 'red'}
-          onClick={() => act('toggleInput')} />
-      </Box>
-      <Box mb="0.5em">
-        <strong>Input Level : {inputLevel}W</strong>
-      </Box>
-      <Box mb="0.5em">
+      <LabeledList>
+        <LabeledList.Item
+          label="Input Circuit"
+          buttons={
+            <Button
+              icon="power-off"
+              content={chargingEnabled ? 'Enabled' : 'Disabled'}
+              color={chargingEnabled ? 'green' : 'red'}
+              onClick={() => act('toggleInput')} />
+          } >
+          <Box color={(isCharging && 'good' || 'bad')} >
+            {isCharging ? 'Online' : 'Offline'}
+          </Box>
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Input Level" >
+          {formatPower(inputLevel)}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Optimal" >
+          {formatPower(excessPower)}
+        </LabeledList.Item>
+      </LabeledList>
+      <Box mt="0.5em">
         <Knob
           mr="0.5em"
           animated
+          size={1.25}
           inline
           minValue={1}
           maxValue={999}
@@ -168,6 +148,7 @@ const InputControls = (props, context) => {
 const OutputControls = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    isFiring,
     laserEnabled,
     outputLevel,
     outputNumber,
@@ -176,20 +157,27 @@ const OutputControls = (props, context) => {
 
   return (
     <Section title="Output Controls">
-      <Box mb="0.5em">
-        <strong>Laser Circuit </strong>
-        <Button
-          icon="power-off"
-          content={laserEnabled ? 'Enabled' : 'Disabled'}
-          color={laserEnabled ? 'green' : 'red'}
-          onClick={() => act('toggleOutput')} />
-      </Box>
-      <Box mb="0.5em">
-        <strong>Output Level : {outputLevel}W</strong>
-      </Box>
-      <Box mb="0.5em">
+      <LabeledList>
+        <LabeledList.Item label="Laser Circuit"
+          buttons={
+            <Button
+              icon="power-off"
+              content={laserEnabled ? 'Enabled' : 'Disabled'}
+              color={laserEnabled ? 'green' : 'red'}
+              onClick={() => act('toggleOutput')} />
+          } >
+          <Box color={isFiring ? 'green' : 'red'}>
+            {isFiring ? 'Online' : 'Offline'}
+          </Box>
+        </LabeledList.Item>
+        <LabeledList.Item label="Output Level">
+          {formatPower(outputLevel)}
+        </LabeledList.Item>
+      </LabeledList>
+      <Box mt="0.5em">
         <Knob
           mr="0.5em"
+          size={1.25}
           animated
           inline
           minValue={1}

@@ -362,11 +362,12 @@
 
 /obj/machinery/power/pt_laser/ui_data(mob/user)
 	var/list/data = list()
-	data["charge"] = engineering_notation(src.charge)
+	data["capacity"] = src.capacity
+	data["charge"] = src.charge
 	data["chargingEnabled"] = src.charging
-	data["excessPower"] = engineering_notation(src.excess)
+	data["excessPower"] = src.excess
 	data["gridLoad"] = src.terminal.powernet.load
-	data["inputLevel"] = engineering_notation(src.chargelevel)
+	data["inputLevel"] = src.chargelevel
 	data["inputMultiplier"] = src.input_multi
 	data["inputNumber"] = src.input_number
 	data["isCharging"] = src.is_charging
@@ -374,7 +375,7 @@
 	data["laserEnabled"] = src.online
 	data["lifetimeEarnings"] = src.lifetime_earnings
 	data["name"] = src.name
-	data["outputLevel"] = engineering_notation(src.output)
+	data["outputLevel"] = src.output
 	data["outputMultiplier"] = src.output_multi
 	data["outputNumber"] = src.output_number
 	data["totalGridPower"] = src.terminal.powernet.avail
@@ -415,6 +416,7 @@
 		//Output controls
 		if("toggleOutput")
 			src.online = !src.online
+			if(!online) stop_firing()
 			. = TRUE
 		if("setOutput")
 			src.output_number = clamp(params["setOutput"], 1, 999)
