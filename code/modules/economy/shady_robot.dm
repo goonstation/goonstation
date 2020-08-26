@@ -145,7 +145,7 @@
 		target = pick(locs)
 
 		showswirl(src.loc)
-		src.loc = target
+		src.set_loc(target)
 		showswirl(target)
 
 		//reset stuff to default

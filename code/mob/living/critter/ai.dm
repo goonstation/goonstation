@@ -1,7 +1,8 @@
 var/list/ai_move_scheduled = list()
 
 /datum/aiHolder
-	var/mob/living/critter/owner = null
+	var/mob/living/owner = null
+	var/mob/living/carbon/human/ownhuman = null // for use when you would normally cast holder.owner as human for a proc.
 	var/atom/target = null // the simplest blackboard ever
 	var/datum/aiTask/current_task = null  // what the critter is currently doing
 	var/datum/aiTask/default_task = null  // what behavior the critter will fall back on
@@ -19,6 +20,8 @@ var/list/ai_move_scheduled = list()
 	New(var/mob/M)
 		..()
 		owner = M
+		if(istype(M, /mob/living/carbon/human))
+			ownhuman = M
 		if (exclude_from_mobs_list)
 			mobs.Remove(M)
 			M.mob_flags |= LIGHTWEIGHT_AI_MOB
@@ -33,6 +36,7 @@ var/list/ai_move_scheduled = list()
 				mobs.Add(owner)
 			ai_mobs.Remove(owner)
 			owner = null
+			ownhuman = null
 
 		target = null
 		if(current_task)

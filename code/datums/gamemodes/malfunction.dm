@@ -20,7 +20,7 @@
 		if (A.name == "Malf-Gear-Closet")
 			new /obj/storage/closet/syndicate/malf(A.loc)
 			A.dispose()
-	for (var/mob/living/silicon/ai/aiplayer in AIs)
+	for (var/mob/living/silicon/ai/aiplayer in by_type[/mob/living/silicon/ai])
 		malf_ai += aiplayer.mind
 
 	/*if(malf_ai.len < 1)

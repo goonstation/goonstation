@@ -184,7 +184,6 @@
 			src.desk_drawer = null
 			qdel(O)
 
-		loc = null
 		if (!OL)
 			return
 		if (!(locate(/obj/table) in OL) && !(locate(/obj/rack) in OL))

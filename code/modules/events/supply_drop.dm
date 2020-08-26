@@ -34,7 +34,7 @@
 	var/gib_mobs = TRUE
 
 	New(var/atom/location, var/preDropTime = 100, var/obj_path, var/no_lootbox)
-		src.loc = location
+		src.set_loc(location)
 		SPAWN_DBG(preDropTime)
 			if (gib_mobs)
 				new/obj/effect/supplydrop(src.loc, obj_path, no_lootbox)

@@ -47,8 +47,10 @@
 			src.times_to_play = rand(2, 3)
 			if(prob(5))
 				src.times_to_play = 10
+
+	post_setup()
 		var/harmprob = 5
-		if (src.artitype == "eldritch")
+		if (src.artitype.name == "eldritch")
 			harmprob += 20
 		if (prob(harmprob))
 			src.harmful = 1

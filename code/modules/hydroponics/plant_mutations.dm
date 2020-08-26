@@ -343,6 +343,24 @@
 	assoc_reagents = list("phlogiston")
 	chance = 10
 
+// Ipecacuanha Mutations
+
+/datum/plantmutation/ipecacuanha/bilious
+	name = "Bilious Ipecacuanha"
+	name_prefix = "Bilious "
+	iconmod = "IpecacuanhaBilious"
+	crop = /obj/item/plant/herb/ipecacuanha/bilious
+	assoc_reagents = list("vomit","sewage","bitters")
+	chance = 10
+
+/datum/plantmutation/ipecacuanha/invigorating
+	name = "Invigorating Ipecacuanha"
+	name_prefix = "Invigorating "
+	iconmod = "IpecacuanhaInvigorating"
+	crop = /obj/item/plant/herb/ipecacuanha/invigorating
+	assoc_reagents = list("synaptizine")
+	chance = 10
+
 // Venne Mutations
 
 /datum/plantmutation/venne/toxic

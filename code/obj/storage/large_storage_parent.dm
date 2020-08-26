@@ -53,6 +53,7 @@
 	var/made_stuff
 	New()
 		..()
+		START_TRACKING
 		SPAWN_DBG(1 DECI SECOND)
 			src.update_icon()
 
@@ -61,10 +62,8 @@
 					if (src.is_acceptable_content(O))
 						O.set_loc(src)
 
-		lockers_and_crates.Add(src)
-
 	disposing()
-		lockers_and_crates.Remove(src)
+		STOP_TRACKING
 		..()
 
 	proc/make_my_stuff() // use this rather than overriding the container's New()
@@ -287,7 +286,7 @@
 					L.changeStatus("weakened", 4 SECONDS)
 				if (prob(25))
 					L.show_text("You hit your head on [no_go]!", "red")
-					L.TakeDamage("head", 0, 10)
+					L.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 
 			. = 0
 		else
@@ -542,8 +541,7 @@
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
-				for (var/obj/storage/O in lockers_and_crates)
-					LAGCHECK(LAG_LOW)
+				for (var/obj/storage/O in by_type[/obj/storage])
 					if (O.z != src.z || O.open || !O.can_open())
 						continue
 					myPals.Add(O)

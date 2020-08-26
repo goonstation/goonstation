@@ -999,21 +999,23 @@
 
 /obj/roulette_table_w //Big thanks to Haine for the sprite and parts of the code!
 	name = "roulette wheel"
-	desc = "A table with a roulette wheel and a little ball. Even numbers seem to be red, odd numbers seem to be black. 0 and 00 seem to be green."
+	desc = "A table with a built-in roulette wheel and a little ball. The numbers are evenly distributed between black and red, except for the zero which is green. Unlike most of tables you'd find in America, this one only has a single zero, lowering the house edge to about 2.7% on almost every bet. Truly generous."
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "roulette_w0"
 	anchored = 1
 	density = 1
-	var/resultcolor = 5
 	var/running = 0
 	var/run_time = 40
 	var/last_result = "red"
 	var/list/nums_red = list(1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36)
 	var/list/nums_black = list(2,4,6,8,10,11,13,15,17,20,22,24,26,28,29,31,33,35)
-	var/list/nums_green = list(37,38)
+	var/last_result_text = null
 
 	attack_hand(mob/user)
 		src.spin(user)
+
+	get_desc()
+		return last_result_text ? "<br>The ball is currently on [last_result_text]." : ""
 
 	proc/update_icon()
 		if (running == 0)
@@ -1033,26 +1035,36 @@
 			src.visible_message("[src] starts spinning!")
 		src.running = 1
 		update_icon()
-		var/real_run_time = rand(max(src.run_time - 10, 1), (src.run_time + 10))
-		sleep(real_run_time)
-		src.last_result = rand(1,38) // 1-36 are regular numbers to land on, 37 and 38 are 0 and 00 respectively
-		if (last_result in nums_red)
-			src.resultcolor = "red"
-		if (last_result in nums_black)
-			src.resultcolor = "black"
-		if (last_result in nums_green)
-			src.resultcolor = "green"
+		var/real_run_time = rand(src.run_time - 10, src.run_time + 10)
+		sleep(real_run_time - 10)
+		playsound(src.loc, "sound/items/coindrop.ogg", 30, 1)
+		sleep(1 SECOND)
 
-		src.visible_message("<span class='success'>[src] lands on [src.last_result > 37 ? "00" : src.last_result > 36 ? "0" : src.last_result] [src.resultcolor]!</span>")
+		src.last_result = rand(0,36)
+		var/result_color = ""
+		var/background_color = ""
+		if (last_result in nums_red)
+			result_color = "red"
+			background_color = "#aa3333"
+		else if (last_result in nums_black)
+			result_color = "black"
+			background_color = "#444444"
+		else
+			result_color = "green"
+			background_color = "#33aa33"
+
+		last_result_text = "<span style='padding: 0 0.5em; color: white; background-color: [background_color];'>[src.last_result]</span> [result_color]"
+		src.visible_message("<span class='success'>[src] lands on [last_result_text]!</span>")
 		src.running = 0
 		update_icon()
-		src.maptext = text("<span style='color:[resultcolor];font:bold'>[] []</span>", src.last_result > 37 ? "00" : src.last_result > 36 ? "0" : src.last_result, length(resultcolor) ? uppertext(resultcolor[1]) : "")
-		src.maptext_width = 64
-		src.maptext_x= 32
-		src.maptext_y= 32
-		SPAWN_DBG(5 SECONDS)
+		sleep(1 SECONDS)
+		src.maptext_x = -1
+		src.maptext_y = 8
+		src.maptext = "<span class='xfont sh c vm' style='background: [background_color];'> [src.last_result] </span>"
+		SPAWN_DBG(4 SECONDS)
 			src.maptext = ""
-// "<span style='color:black'><b>33 B</b></span>"
+
+
 /obj/decal/fakeobjects/turbinetest
 		name = "TEMP"
 		desc = "TEMP"

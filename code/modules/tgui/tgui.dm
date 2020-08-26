@@ -275,7 +275,10 @@
 		return FALSE
 	switch(type)
 		if("ready")
-			initialized = TRUE
+			if(!initialized)
+				initialized = TRUE
+			else // user refreshed the window
+				send_full_update(null, TRUE)
 		if("pingReply")
 			initialized = TRUE
 		if("suspend")

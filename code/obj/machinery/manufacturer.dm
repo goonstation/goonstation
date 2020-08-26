@@ -125,10 +125,10 @@
 		src.transmit_connection = null
 
 		for (var/obj/O in src.contents)
-			O.loc = src.loc
+			O.set_loc(src.loc)
 		for (var/mob/M in src.contents)
 			// unlikely as this is to happen we might as well make sure everything is purged
-			M.loc = src.loc
+			M.set_loc(src.loc)
 
 		..()
 
@@ -153,16 +153,16 @@
 			if(3)
 				. += "<span class='alert'>It's partially dismantled. To deconstruct it, use a wrench. To repair it, add some cable.</span>"
 
-	process()
+	process(var/mult)
 		if (status & NOPOWER)
 			return
 
-		power_usage = src.powconsumption + 200
+		power_usage = src.powconsumption + 200 * mult
 		..()
 		if (src.mode == "working")
 			if (src.malfunction && prob(8))
 				src.flip_out()
-			src.timeleft -= src.speed * 2
+			src.timeleft -= src.speed * 4.4 * mult
 			use_power(src.powconsumption)
 			if (src.timeleft < 1)
 				src.output_loop(src.queue[1])
