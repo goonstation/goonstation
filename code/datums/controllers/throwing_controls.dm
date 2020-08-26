@@ -92,10 +92,13 @@ var/global/datum/controller/throwing/throwing_controller = new
 				end_throwing = TRUE
 				break
 			thing.glide_size = (32 / (1/thr.speed)) * world.tick_lag
-			thing.hit_check()
+			var/hit_thing = thing.hit_check()
 			thr.error += thr.error > 0 ? -min(thr.dist_x, thr.dist_y) : max(thr.dist_x, thr.dist_y)
 			thr.dist_travelled++
-			thing.throw_count++
+			thing.throw_count++ // if hit_check stopped us let's end this now
+			if(!thing.throwing || hit_thing)
+				end_throwing = TRUE
+				break
 
 		if(end_throwing)
 			thrown -= thr

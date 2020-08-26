@@ -7,6 +7,7 @@
 /atom/movable/var/tmp/last_throw_x = 0
 /atom/movable/var/tmp/last_throw_y = 0
 
+// returns true if hit
 /atom/movable/proc/hit_check()
 	if(src.throwing)
 		for(var/thing in get_turf(src))
@@ -19,13 +20,13 @@
 				if (!L.throws_can_hit_me) continue
 				if (L.lying) continue
 				src.throw_impact(A)
-				src.throwing = 0
+				. = TRUE
 			// **TODO: Better behaviour for windows
 			// which are dense, but shouldn't always stop movement
 			if(isobj(A))
 				if(!A.CanPass(src, src.loc, 1.5))
 					src.throw_impact(A)
-					src.throwing = 0
+					. = TRUE
 
 /atom/movable/proc/throw_begin(atom/target)
 
