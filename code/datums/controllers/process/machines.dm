@@ -77,9 +77,11 @@ datum/controller/process/machines
 		#ifdef MACHINE_PROCESSING_DEBUG
 				var/t = world.time
 		#endif
-				mult = clamp(TIME - machine.last_process, machine.base_tick_spacing*(2**(machine.processing_tier-1)), machine.cap_base_tick_spacing*(2**(machine.processing_tier-1))) / (machine.base_tick_spacing*(2**(machine.processing_tier-1)))
-				machine.process(mult)
-				machine.last_process = TIME
+				var/base_spacing = machine.base_tick_spacing*(2**(machine.processing_tier-1))	// The ideal time a machine in any given tier should take
+				var/max_spacing = machine.cap_base_tick_spacing*(2**(machine.processing_tier-1))	// The most time we're willing to give it
+				mult = clamp(TIME - machine.last_process, base_spacing, max_spacing) / base_spacing	// (time it took between processes) / (time it should've taken) = (do certain things this much more)
+				machine.process(mult)	// Passes the mult as an arg of process(), so it can be accessible by ~any~ machine! Even Guardbots!
+				machine.last_process = TIME	// set the last time the machine processed to now, so we can compare it next loop
 		#ifdef MACHINE_PROCESSING_DEBUG
 				register_machine_time(machine, world.time - t)
 		#endif
