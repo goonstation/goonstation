@@ -945,22 +945,21 @@
 			if(active) return
 			particleMaster.SpawnSystem(new /datum/particleSystem/gravaccel(src.loc, src.dir))
 			SPAWN_DBG(0)
-				if(src)
-					icon_state = "[under_floor ? "u":""]comp_accel1"
-					active = 1
-					SPAWN_DBG(0) drivecurrent()
-					SPAWN_DBG(0.5 SECONDS) drivecurrent()
-				sleep(3 SECONDS)
-				if(src)
-					icon_state = "[under_floor ? "u":""]comp_accel"
-					active = 0
+				icon_state = "[under_floor ? "u":""]comp_accel1"
+				active = 1
+				drivecurrent()
+				sleep(0.5 SECONDS)
+				drivecurrent()
+				sleep(2.5 SECONDS)
+				icon_state = "[under_floor ? "u":""]comp_accel"
+				active = 0
 		return
 
 	proc/throwstuff(atom/movable/AM as mob|obj)
 		if(level == 2 || AM.anchored || AM == src) return
 		if(AM.throwing) return
 		var/atom/target = get_edge_target_turf(AM, src.dir)
-		SPAWN_DBG(0) AM.throw_at(target, 50, 1)
+		AM.throw_at(target, 50, 1)
 		return
 
 	HasEntered(atom/movable/AM as mob|obj)

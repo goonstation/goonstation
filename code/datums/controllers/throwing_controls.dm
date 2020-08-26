@@ -33,7 +33,7 @@
 		src.transform_original = transform_original
 		src.params = params
 		src.thrown_from = thrown_from
-		src.return_target return_target
+		src.return_target = return_target
 		..()
 
 var/global/datum/controller/throwing/throwing_controller = new
@@ -61,6 +61,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 		if(thing.throwing_paused)//timestop effect
 			continue
 #endif
+		var/end_throwing = FALSE
 		for(var/i in 1 to thr.speed)
 			var/turf/T = thing.loc
 			if( !(
@@ -74,49 +75,49 @@ var/global/datum/controller/throwing/throwing_controller = new
 							thing.throw_unlimited
 						)
 					))
-				goto stop_throwing
+				end_throwing = TRUE
+				break
 			var/choose_x = thr.error > 0
 			if(thr.dist_y > thr.dist_x) choose_x = !choose_x
 			var/turf/next = get_step(thing, choose_x ? thr.dx : thr.dy)
 			if(!next || next == T) // going off the edge of the map makes get_step return null, don't let things go off the edge
-				goto stop_throwing
+				end_throwing = TRUE
+				break
 			thing.glide_size = (32 / (1/thr.speed)) * world.tick_lag
 			if (!thing.Move(next))  // Grayshift: Race condition fix. Bump proc calls are delayed past the end of the loop and won't trigger end condition
 				thr.hitAThing = TRUE // of !throwing on their own, so manually checking if Move failed as end condition
-				goto stop_throwing
+				end_throwing = TRUE
+				break
 			thing.glide_size = (32 / (1/thr.speed)) * world.tick_lag
 			thing.hit_check()
 			thr.error += thr.error > 0 ? -min(thr.dist_x, thr.dist_y) : max(thr.dist_x, thr.dist_y)
 			thr.dist_travelled++
 			thing.throw_count++
 
-		continue
-		/// STOP THROWING GOTO BEGIN ///
-		stop_throwing:
+		if(end_throwing)
+			thrown -= thr
+			animate(thing, transform=thr.transform_original)
+			thing.throw_end(thr.params, thrown_from=thr.thrown_from)
 
-		thrown -= thr
-		animate(thing, transform=thr.transform_original)
-		thing.throw_end(thr.params, thrown_from=thrown_from)
+			if(thr.hitAThing)
+				thr.params = null// if we hit something don't use the pixel x/y from the click params
 
-		if(thr.hitAThing)
-			thr.params = null// if we hit something don't use the pixel x/y from the click params
+			thing.throwing = 0
+			thing.throw_unlimited = 0
 
-		thing.throwing = 0
-		thing.throw_unlimited = 0
+			thing.throw_traveled = thr.dist_travelled //dist traveled is super innacurrate, especially when stacking throws
+			if (thr.thrown_from) //if we have this param we should use it to get the REAL distance.
+				thing.throw_traveled = get_dist(get_turf(thing), get_turf(thr.thrown_from))
 
-		thing.throw_traveled = thr.dist_travelled //dist traveled is super innacurrate, especially when stacking throws
-		if (thr.thrown_from) //if we have this param we should use it to get the REAL distance.
-			thing.throw_traveled = get_dist(get_turf(thing), get_turf(thr.thrown_from))
+			if(isobj(thing))
+				var/obj/O = thing
+				O.throw_impact(get_turf(thing), thr.params)
 
-		if(isobj(thing))
-			var/obj/O = thing
-			O.throw_impact(get_turf(thing), thr.params)
+			thing.throw_traveled = 0
+			thing.throw_count = 0
 
-		thing.throw_traveled = 0
-		thing.throw_count = 0
-
-		if(thr.target != thr.return_target && thing.throw_return)
-			thing.throw_at(thr.return_target, thing.throw_range, thing.throw_speed)
+			if(thr.target != thr.return_target && thing.throw_return)
+				thing.throw_at(thr.return_target, thing.throw_range, thing.throw_speed)
 
 		/// STOP THROWING GOTO END ///
 	return TRUE
