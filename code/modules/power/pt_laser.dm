@@ -1,7 +1,5 @@
 #define PTLEFFICIENCY 0.1
-#define PTLMAXINPUT 1e12
-#define PTLMAXOUTPUT 999e10
-#define PTLMINOUTPUT 1e6
+#define PTLMINOUTPUT 1 MEGA WATT
 
 /obj/machinery/power/pt_laser
 	name = "power transmission laser"
@@ -14,12 +12,12 @@
 	bound_height = 96
 	bound_width = 96
 	var/range = 100			//how far the beam goes, set to max(world.maxx,world.maxy) in New()
-	var/output = PTLMINOUTPUT		//power output of the beam
+	var/output = 0		//power output of the beam
 	var/capacity = 1e15
 	var/charge = 0
 	var/charging = 0
 	var/load_last_tick = 0	//how much load did we put on the network last tick?
-	var/chargelevel = 1		//Power input
+	var/chargelevel = 0		//Power input
 	var/online = FALSE
 	var/obj/machinery/power/terminal/terminal = null
 	var/firing = FALSE			//laser is currently active
@@ -30,8 +28,8 @@
 	var/selling = FALSE
 	var/autorefresh = 1		//whether to autorefresh the browser menu. set to 0 while awaiting input() so it doesn't take focus away.
 	var/laser_process_counter = 0
-	var/input_number = 1
-	var/output_number = 1
+	var/input_number = 0
+	var/output_number = 0
 	var/input_multi = 1		//for kW, MW, GW etc
 	var/output_multi = 1e6
 	var/emagged = FALSE
@@ -133,7 +131,7 @@
 
 	if(online) // if it's switched on
 		if(!firing) //not firing
-			if(charge >= abs(output)) //have power to fire
+			if(charge >= abs(output) && (abs(output) >= PTLMINOUTPUT)) //have power to fire
 				if(laser_parts.len == 0)
 					start_firing() //creates all the laser objects then activates the right ones
 				else
@@ -142,7 +140,7 @@
 				charge -= abs(output)
 				if(selling)
 					power_sold()
-		else if(charge < abs(output)) //firing but not enough charge to sustain
+		else if(charge < abs(output) && (abs(src.output) >= PTLMINOUTPUT)) //firing but not enough charge to sustain
 			stop_firing()
 		else //firing and have enough power to carry on
 			for(var/mob/living/L in affecting_mobs) //has to happen every tick
@@ -389,7 +387,7 @@
 			src.charging = !src.charging
 			. = TRUE
 		if("setInput")
-			src.input_number = clamp(params["setInput"], 1, 999)
+			src.input_number = clamp(params["setInput"], 0, 999)
 			src.chargelevel = src.input_number * src.input_multi
 			. = TRUE
 		if("inputW")
@@ -418,7 +416,7 @@
 			if(!online) stop_firing()
 			. = TRUE
 		if("setOutput")
-			src.output_number = clamp(params["setOutput"], 1, 999)
+			src.output_number = clamp(params["setOutput"], 0, 999)
 			src.output = src.output_number * src.output_multi
 			. = TRUE
 		if("outputMW")
@@ -574,3 +572,6 @@
 			return 1 //tells the caller to remove L from the laser's affecting_mobs
 
 	return 0
+
+#undef PTLEFFICIENCY
+#undef PTLMINOUTPUT

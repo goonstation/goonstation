@@ -97,8 +97,13 @@ const InputControls = (props, context) => {
               color={chargingEnabled ? 'green' : 'red'}
               onClick={() => act('toggleInput')} />
           } >
-          <Box color={(isCharging && 'good' || 'bad')} >
-            {isCharging ? 'Online' : 'Offline'}
+          <Box
+            color={(isCharging && 'good')
+              || (chargingEnabled && 'average')
+              || 'bad'}>
+            {(isCharging && 'Online')
+              || (chargingEnabled && 'Idle')
+              || 'Offline'}
           </Box>
         </LabeledList.Item>
         <LabeledList.Item
@@ -116,7 +121,8 @@ const InputControls = (props, context) => {
           animated
           size={1.25}
           inline
-          minValue={1}
+          step={5}
+          minValue={0}
           maxValue={999}
           value={inputNumber}
           onDrag={(e, setInput) => act('setInput', { setInput })} />
@@ -166,8 +172,13 @@ const OutputControls = (props, context) => {
               color={laserEnabled ? 'green' : 'red'}
               onClick={() => act('toggleOutput')} />
           } >
-          <Box color={isFiring ? 'green' : 'red'}>
-            {isFiring ? 'Online' : 'Offline'}
+          <Box
+            color={(isFiring && 'good')
+              || (laserEnabled && 'average')
+              || 'bad'}>
+            {(isFiring && 'Online')
+              || (laserEnabled && 'Idle')
+              || 'Offline'}
           </Box>
         </LabeledList.Item>
         <LabeledList.Item label="Output Level">
@@ -180,7 +191,9 @@ const OutputControls = (props, context) => {
           size={1.25}
           animated
           inline
-          minValue={1}
+          step={5}
+          stepPixelSize={2}
+          minValue={0}
           maxValue={999}
           value={outputNumber}
           onDrag={(e, setOutput) => act('setOutput', { setOutput })} />
