@@ -139,20 +139,20 @@
 
 					if (!src.message_mode)
 
-						. += {"<a href='byond://?src=\ref[src];message_func=ringer'>Ringer: [src.message_silent == 1 ? "Off" : "On"]</a> | 
-						<a href='byond://?src=\ref[src];message_func=on'>Send / Receive: [src.message_on == 1 ? "On" : "Off"]</a> | 
+						. += {"<a href='byond://?src=\ref[src];message_func=ringer'>Ringer: [src.message_silent == 1 ? "Off" : "On"]</a> |
+						<a href='byond://?src=\ref[src];message_func=on'>Send / Receive: [src.message_on == 1 ? "On" : "Off"]</a> |
 						<a href='byond://?src=\ref[src];input=tone'>Set Ringtone</a><br>
-						<a href='byond://?src=\ref[src];message_mode=1'>Messages</a> | 
+						<a href='byond://?src=\ref[src];message_mode=1'>Messages</a> |
 						<a href='byond://?src=\ref[src];message_mode=2'>Groups</a><br>
 
 						<font size=2><a href='byond://?src=\ref[src];message_func=scan'>Scan</a></font><br>
-						<b>Detected PDAs</b><br>
+						<b>Detected PDAs</b><br>"}
 
-						<ul>"}
-
-						var/count = 0
-
-						if (src.message_on)
+						if (!src.message_on)
+							. += "Please turn on Send/Receive to the scan function."
+						else
+							. += "<ul>"
+							var/count = 0
 							if(expand_departments_list)
 								. += "<a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>*Collapse DEPT list*</a>"
 								for (var/department_id in page_departments)
@@ -181,14 +181,13 @@
 
 								</li>"}
 								count++
+							. += "</ul>"
 
-						. += "</ul>"
-
-						if (count == 0 && !page_departments.len)
-							. += "None detected.<br>"
+							if (count == 0 && !page_departments.len)
+								. += "None detected.<br>"
 
 					else if (src.message_mode == 1)
-						. += {"<a href='byond://?src=\ref[src];message_func=clear'>Clear</a> | 
+						. += {"<a href='byond://?src=\ref[src];message_func=clear'>Clear</a> |
 						<a href='byond://?src=\ref[src];message_mode=0'>Back</a><br>
 
 						<h4>Messages</h4>"}
@@ -197,7 +196,7 @@
 						. += "<br>"
 
 					else
-						. += {"<a href='byond://?src=\ref[src];input=mailgroup'>Join/create group</a> | 
+						. += {"<a href='byond://?src=\ref[src];input=mailgroup'>Join/create group</a> |
 						<a href='byond://?src=\ref[src];message_mode=0'>Back</a><br>
 						<h4>Groups</h4>"}
 
