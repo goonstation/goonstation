@@ -9,7 +9,7 @@
 (*)This is still very much a work in progress, so there will probably be issues. Please report bugs using the button in the top right.
 (+)Manufacturer speeds have been adjusted: lower speeds use much less power, higher speeds use considerably more.
 (+)Manufacturer times for some items have been changed across the board as part of a change to real-time.
-(+)The "search" and "filter" options are missing. They'll be back sooner or later.
+(+)The "search" and "filter" options are missing. They'll be back sooner or later, probably.
 (u)Michaellaneous
 (p)1959
 (e)🆕|feature
