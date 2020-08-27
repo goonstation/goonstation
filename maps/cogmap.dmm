@@ -27239,10 +27239,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/maintenance/disposal)
 "bgD" = (
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
+/obj/reagent_dispensers/still/shittystill,
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment/ejection{
 	dir = 4

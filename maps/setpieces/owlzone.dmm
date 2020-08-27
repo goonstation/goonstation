@@ -6837,7 +6837,7 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt,
-/obj/reagent_dispensers/beerkeg,
+/obj/reagent_dispensers/still/shittystill,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -9709,7 +9709,7 @@
 	name = "table"
 	},
 /obj/item/device/radio/intercom/adventure/syndcommand{
-	
+
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/office)

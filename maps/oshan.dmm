@@ -44429,7 +44429,7 @@
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
 "ccY" = (
-/obj/reagent_dispensers/still,
+/obj/reagent_dispensers/still/shittystill,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/diner/kitchen)

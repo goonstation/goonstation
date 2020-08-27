@@ -120,7 +120,7 @@
 "cp" = (/turf/simulated/floor/scorched,/area/diner/hangar)
 "cq" = (/obj/machinery/vending/coffee,/turf/simulated/floor/damaged2,/area/diner/hangar)
 "cr" = (/obj/table/wood/round/auto,/turf/simulated/floor/carpet/green/fancy,/area/diner/motel/observatory)
-"cs" = (/obj/decal/cleanable/dirt,/obj/reagent_dispensers/still,/turf/simulated/floor/plating/damaged1,/area/diner/kitchen)
+"cs" = (/obj/decal/cleanable/dirt,/obj/reagent_dispensers/still/shittystill,/turf/simulated/floor/plating/damaged1,/area/diner/kitchen)
 "ct" = (/obj/decal/cleanable/dirt,/obj/table/reinforced/auto,/obj/item/storage/box/beakerbox,/obj/item/kitchen/utensil/knife,/obj/machinery/light/small{dir = 1; status = 2},/turf/simulated/floor/plating/scorched,/area/diner/kitchen)
 "cu" = (/obj/decal/cleanable/dirt,/obj/kitchenspike,/turf/simulated/floor/plating/damaged3,/area/diner/kitchen)
 "cv" = (/obj/storage/crate{name = "Cone Crate"},/obj/item/reagent_containers/food/snacks/ice_cream_cone,/obj/item/reagent_containers/food/snacks/ice_cream_cone,/obj/item/reagent_containers/food/snacks/ice_cream_cone,/obj/item/reagent_containers/food/snacks/ice_cream_cone,/obj/item/reagent_containers/food/snacks/ice_cream_cone,/obj/item/reagent_containers/food/snacks/ice_cream_cone,/obj/item/reagent_containers/food/snacks/condiment/chocchips,/turf/simulated/floor/plating,/area/diner/kitchen)

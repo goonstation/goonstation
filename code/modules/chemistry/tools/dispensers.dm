@@ -566,7 +566,7 @@
 	name = "shitty still"
 	desc = "Looks like it some sort of makeshift distillery, made out of salvaged parts."
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "shittystill"
+	icon_state = "shittystillFIN"
 	amount_per_transfer_from_this = 20
 	var/list/random_reagents_list = list("barium","flourine","lithium","magnesium","mercury",\
 "oxygen","phosphorus","plasma","potassium","radium","silver","sugar","hydrogen","water",\
