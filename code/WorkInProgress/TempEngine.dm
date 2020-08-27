@@ -75,43 +75,13 @@
 	icon_state = "power"
 	density = 1
 	anchored = 1
-/chui/window/teg
-	name = "Thermoelectric Generator"
-	GetBody()
-		var/list/built = list("<B>Thermo-Electric Generator</B><HR>")
-		var/obj/machinery/power/generatorTemp/us = theAtom
-		if(!us || !istype(us)) return "?"
-		built += "Output: [template("powah", engineering_notation(us.lastgen))]W<BR><BR>"
 
-		built += "<B>Hot loop</B><BR>"
-		built += "Temperature Inlet: [template("hotInletTemp", round(us.circ1.air1.temperature, 0.1))] K Outlet: [template("hotOutletTemp", round(us.circ1.air2.temperature, 0.1))] K<BR>"//[] round(
-		built += "Pressure Inlet: [template("hotInletPres", round(MIXTURE_PRESSURE(us.circ1.air1), 0.1))] kPa Outlet: [template("hotOutletPres", round(MIXTURE_PRESSURE(us.circ1.air2), 0.1))] kPa<BR>"//[]
-
-		built += "<B>Cold loop</B><BR>"
-		built += "Temperature Inlet: [template("coldInletTemp", round(us.circ2.air1.temperature, 0.1))] K  Outlet: [template("coldOutletTemp", round(us.circ2.air2.temperature, 0.1))] K<BR>"
-		built += "Pressure Inlet: [template("coldInletPres", round(MIXTURE_PRESSURE(us.circ2.air1), 0.1))] kPa  Outlet: [template("coldOutletPres", round(MIXTURE_PRESSURE(us.circ2.air2), 0.1))] kPa<BR>"
-		return built.Join("")
-	proc/UpdateTEG()
-		var/obj/machinery/power/generatorTemp/us = theAtom
-		if(!us || !istype(us)) return "?"
-		SetVars(list(
-			"powah" = engineering_notation(us.lastgen),
-			"hotInletTemp" = round(us.circ1.air1.temperature, 0.1),
-			"hotOutletTemp" = round(us.circ1.air2.temperature, 0.1),
-			"hotInletPres" = round(MIXTURE_PRESSURE(us.circ1.air1), 0.1),
-			"hotOutletPres" = round(MIXTURE_PRESSURE(us.circ1.air2), 0.1),
-			"coldInletTemp" = round(us.circ2.air1.temperature, 0.1),
-			"coldOutletTemp" = round(us.circ2.air2.temperature, 0.1),
-			"coldInletPres" = round(MIXTURE_PRESSURE(us.circ2.air1), 0.1),
-			"coldOutletPres" = round(MIXTURE_PRESSURE(us.circ2.air2), 0.1)
-		))
 /obj/machinery/power/generatorTemp
 	name = "generator"
 	desc = "A high efficiency thermoelectric generator."
 	icon_state = "teg"
 	anchored = 1
 	density = 1
-	var/chui/window/teg/window
 	//var/lightsbusted = 0
 
 	var/obj/machinery/atmospherics/binary/circulatorTemp/circ1
@@ -151,8 +121,6 @@
 
 		light = new /datum/light/point
 		light.attach(src)
-
-		window = new(src)
 
 		SPAWN_DBG(0.5 SECONDS)
 			src.circ1 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,WEST)
@@ -281,8 +249,6 @@
 				running = 1
 			SPAWN_DBG(0.5 SECONDS)
 				spam_limiter = 0
-
-		window.UpdateTEG()
 
 // engine looping sounds and hazards
 		if (lastgenlev > 0)
@@ -459,36 +425,52 @@
 			target = pick(next)
 
 
-	attack_ai(mob/user)
-		if(status & (BROKEN|NOPOWER)) return
 
-		interacted(user)
+/*
+/obj/machinery/power/generatorTemp/ui_state(mob/user)
+	return tgui_default_state
 
-	attack_hand(mob/user)
+/obj/machinery/power/generatorTemp/ui_status(mob/user, datum/ui_state/state)
+	return min(
+		state.can_use_topic(src, user),
+		tgui_broken_state.can_use_topic(src, user),
+		tgui_not_incapacitated_state.can_use_topic(src, user)
+	)*/
 
-		add_fingerprint(user)
+/obj/machinery/power/generatorTemp/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "TEG", src.name)
+		ui.open()
 
-		if(status & (BROKEN|NOPOWER)) return
-
-		interacted(user)
-
-	proc/interacted(mob/user)
-		window.Subscribe(user.client)
-		return 1
-
-	Topic(href, href_list)
-		..()
-
-		if( href_list["close"] )
-			usr.Browse(null, "window=teg")
-			src.remove_dialog(usr)
-			return 0
-
-		return 1
-
-	power_change()
-		..()
-		updateicon()
+/obj/machinery/power/generatorTemp/ui_data(mob/user)
+	var/list/data = list()
+	data["output"] = src.lastgen
+	if(src.circ1)
+		data["hotCircStatus"] = src.circ1
+		data["hotInletTemp"] = src.circ1.air1.temperature
+		data["hotOutletTemp"] = src.circ1.air2.temperature
+		data["hotInletPres"] = MIXTURE_PRESSURE(src.circ1.air1)
+		data["hotOutletPres"] = MIXTURE_PRESSURE(src.circ1.air2)
+	else
+		data["hotCircStatus"] = null
+		data["hotInletTemp"] = 0
+		data["hotOutletTemp"] = 0
+		data["hotInletPres"] = 0
+		data["hotOutletPres"] = 0
+	if(src.circ2)
+		data["coldCircStatus"] = src.circ2
+		data["coldInletTemp"] = src.circ2.air1.temperature
+		data["coldOutletTemp"] = src.circ2.air2.temperature
+		data["coldInletPres"] = MIXTURE_PRESSURE(src.circ2?.air1)
+		data["coldOutletPres"] = MIXTURE_PRESSURE(src.circ2?.air2)
+	else
+		data["coldCircStatus"] = null
+		data["coldInletTemp"] = 0
+		data["coldOutletTemp"] = 0
+		data["coldInletPres"] = 0
+		data["coldOutletPres"] = 0
+	return data
 
 /obj/machinery/atmospherics/unary/furnace_connector
 
