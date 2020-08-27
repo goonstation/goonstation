@@ -5482,6 +5482,12 @@
 	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/crewquarters/cryotron)
+"bJD" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "bKG" = (
 /obj/table/wood/auto,
 /obj/item/ghostboard,
@@ -15272,6 +15278,13 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area)
+"eHX" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "eIb" = (
 /obj/machinery/light{
 	dir = 1;
@@ -21276,10 +21289,8 @@
 /area/station/hallway/secondary/north)
 "gzN" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/escape{
-	dir = 4
-	},
-/area/station/engine/engineering/ce)
+/turf/simulated/floor/plating,
+/area/station/hangar/engine)
 "gzV" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/horizontal,
@@ -23351,6 +23362,12 @@
 /area/station/crew_quarters/quarters{
 	name = "Chapel Reception"
 	})
+"hgj" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "hgl" = (
 /obj/machinery/light/small/harsh{
 	dir = 4;
@@ -26109,6 +26126,12 @@
 "hXh" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/mining)
+"hXi" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "hXl" = (
 /obj/stool/chair{
 	dir = 1
@@ -28670,6 +28693,10 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"iMf" = (
+/obj/machinery/atmospherics/pipe/manifold/east,
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/kitchen/freezer)
 "iMi" = (
 /obj/decal/stage_edge/alt,
 /obj/storage/secure/closet/personal,
@@ -29758,6 +29785,12 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"jeR" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "jeX" = (
 /obj/table/reinforced/auto,
 /obj/bedsheetbin,
@@ -30998,6 +31031,16 @@
 /obj/machinery/neosmelter,
 /turf/simulated/floor/engine,
 /area/station/storage/warehouse)
+"jya" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	dir = 4;
+	icon_state = "bdoormid1"
+	},
+/turf/simulated/floor/shuttlebay{
+	icon_state = "engine_caution_east"
+	},
+/area/station/hangar/engine)
 "jyi" = (
 /obj/rack,
 /obj/item/clothing/suit/bio_suit/paramedic,
@@ -40853,6 +40896,7 @@
 /area/station/quartermaster/office)
 "mpn" = (
 /obj/storage/closet/emergency,
+/obj/machinery/atmospherics/pipe/simple/overfloor/southeast,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "mpv" = (
@@ -44101,6 +44145,7 @@
 /turf/simulated/floor/engine,
 /area/station/chemistry)
 "nnY" = (
+/obj/machinery/atmospherics/pipe/simple/junction,
 /turf/simulated/floor/specialroom/freezer/white,
 /area/station/crew_quarters/kitchen/freezer)
 "nob" = (
@@ -51708,8 +51753,8 @@
 /obj/item/clothing/head/emerg,
 /obj/item/tank/emergency_oxygen,
 /obj/item/clothing/mask/breath,
-/turf/simulated/floor,
-/area/station/engine/engineering/ce)
+/turf/simulated/floor/plating,
+/area/station/hangar/engine)
 "pBt" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -54871,6 +54916,10 @@
 /obj/item/device/multitool,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"qAN" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northeast,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "qAS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -55711,6 +55760,9 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"qNj" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/hangar/engine)
 "qNq" = (
 /obj/storage/closet/law,
 /turf/simulated/floor/wood/two,
@@ -57778,12 +57830,12 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "rrz" = (
-/obj/machinery/atmospherics/pipe/simple/overfloor/vertical,
 /obj/machinery/space_heater,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/machinery/atmospherics/pipe/simple/overfloor/northwest,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "rrM" = (
@@ -62257,6 +62309,12 @@
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/south,
 /area/station/medical/medbay/lobby)
+"sDI" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 6
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/kitchen/freezer)
 "sDO" = (
 /turf/simulated/floor/circuit/white,
 /area/station/science/teleporter)
@@ -67108,6 +67166,10 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
+"tRE" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "tRL" = (
 /obj/machinery/light{
 	dir = 1;
@@ -67481,6 +67543,14 @@
 	dir = 4
 	},
 /area/station/science/lab)
+"tYi" = (
+/obj/machinery/vehicle/escape_pod{
+	dir = 4
+	},
+/turf/simulated/floor/shuttlebay{
+	icon_state = "engine_caution_west"
+	},
+/area/station/hangar/engine)
 "tYn" = (
 /obj/critter/turtle/sylvester/HoS,
 /turf/simulated/floor/redblack{
@@ -77736,16 +77806,6 @@
 "wGk" = (
 /turf/space,
 /area/supply/spawn_point)
-"wGl" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
-	dir = 4;
-	icon_state = "bdoormid1"
-	},
-/turf/simulated/floor/shuttlebay{
-	icon_state = "engine_caution_east"
-	},
-/area/station/engine/engineering/ce)
 "wGm" = (
 /obj/cable,
 /obj/cable{
@@ -82313,13 +82373,8 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "xQx" = (
-/obj/machinery/vehicle/escape_pod{
-	dir = 4
-	},
-/turf/simulated/floor/shuttlebay{
-	icon_state = "engine_caution_west"
-	},
-/area/station/engine/engineering/ce)
+/turf/simulated/floor/plating,
+/area/station/hangar/engine)
 "xQE" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/cable{
@@ -138164,12 +138219,12 @@ tYM
 tIa
 cJP
 agh
-wqF
+sDI
 nnY
-rvU
-rvU
-koD
-rvU
+tRE
+tRE
+eHX
+hXi
 eWI
 wqF
 twg
@@ -138466,12 +138521,12 @@ tYM
 aHM
 fam
 mpn
-wqF
+iMf
 nnY
-rvU
+qAN
 rvU
 koD
-rvU
+jeR
 cLu
 wqF
 ika
@@ -138770,10 +138825,10 @@ bWZ
 rrz
 wqF
 lge
-rvU
-rvU
-koD
-rvU
+bJD
+tRE
+eHX
+hgj
 vzW
 wqF
 oRW
@@ -157181,7 +157236,7 @@ vgO
 gIy
 cFt
 pAY
-mOR
+qNj
 aJu
 aJu
 aJu
@@ -157483,7 +157538,7 @@ hZR
 vgO
 kyt
 gzN
-mOR
+qNj
 aJu
 aJu
 aJu
@@ -157785,7 +157840,7 @@ pxv
 ebR
 cFt
 xQx
-mOR
+qNj
 aoy
 aJu
 aJu
@@ -158086,8 +158141,8 @@ mOR
 mOR
 mOR
 mOR
-wGl
-mOR
+xQx
+qNj
 aJu
 aJu
 aJu
@@ -158388,8 +158443,8 @@ bYJ
 alS
 nBs
 bYJ
-aJu
-aJu
+xQx
+qNj
 aJu
 aJu
 aJu
@@ -158690,8 +158745,8 @@ bYJ
 cHI
 fWv
 bYJ
-aJu
-aJu
+xQx
+bUx
 aJu
 aJu
 aJu
@@ -158992,8 +159047,8 @@ sLA
 xza
 tXS
 bYJ
-aJu
-aJu
+xQx
+qNj
 aJu
 aJu
 aJu
@@ -159294,8 +159349,8 @@ bYJ
 bYJ
 bYJ
 bYJ
-ydz
-ydz
+xQx
+qNj
 ydz
 ydz
 ydz
@@ -159596,8 +159651,8 @@ bYJ
 alS
 nBs
 bYJ
-aJu
-aJu
+xQx
+qNj
 aJu
 aJu
 aJu
@@ -159898,8 +159953,8 @@ bYJ
 cHI
 fWv
 bYJ
-aJu
-aJu
+gzN
+qNj
 aJu
 aJu
 aJu
@@ -160200,8 +160255,8 @@ sLA
 xza
 tXS
 bYJ
-aJu
-aJu
+tYi
+qNj
 aJu
 aJu
 aJu
@@ -160502,8 +160557,8 @@ bYJ
 bYJ
 bYJ
 bYJ
-ath
-ath
+jya
+qNj
 ath
 ath
 ath
