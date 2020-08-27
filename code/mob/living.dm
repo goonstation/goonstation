@@ -215,21 +215,16 @@
 		<div style="background: black; padding: 0.1em; color: #f33; text-align: center; font-size: 150%; font-weight: bold;">
 			[youdied]
 		</div>
-		<div style=" text-align: center;">
-			[!gibbed ? {"
-				<a href="byond://winset?command=Ghost" style="display: inline-block; font-size: 130%; font-weight: bold;">Become a Ghost</a>
-				<br><em style="color: #666; font-size: 75%;">You can also use the "<a href="byond://winset?command=Ghost" style="font-family: 'Consolas', monospace;">Ghost</a>" command to observe.</em><br><br>
-			"} : ""]
 		<strong>You may be revived if someone clones you.</strong>
 		<br>Otherwise, you'll have to wait for the next round.
 		<br>
-		<br>There's still plenty to do, even while dead! Click the "Become a Ghost" button and you'll be free to select any of the provided below options.
+		<br>There's still plenty to do, even while dead!
 		<br><strong><a href='byond://winset?command=Afterlife-Bar'>Visit the Afterlife Bar</a> &bull; <a href='byond://winset?command=Enter-VR'>Enter Virtual Reality</a>
 			<br><a href='byond://winset?command=Enter-Ghostdrone-Queue'>Become a Ghost Drone</a> &bull; <a href='byond://winset?command=Respawn-as-Animal'>Become a Critter</a></strong>
 		</div>
 	</div>
 		"})
-
+	src.become_ghost()
 	return ..(gibbed)
 
 /mob/living/Login()
