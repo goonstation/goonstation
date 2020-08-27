@@ -232,7 +232,7 @@
 						else
 							holder.ownhuman.drop_item()
 			else
-				holder.move_circ(holder.target,target_range)
+				holder.move_circ(holder.target,2)
 
 		..()
 
