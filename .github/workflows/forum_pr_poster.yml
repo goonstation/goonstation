@@ -1,6 +1,6 @@
 name: "Post Labeled PRs to the Forum"
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - master
     types:
@@ -33,7 +33,7 @@ jobs:
         FORUM_LOGOUT_KEY: ${{ secrets.FORUM_LOGOUT_KEY }}
         FORUM_POST_KEY: ${{ secrets.FORUM_POST_KEY }}
         FORUM_PASSWORD: ${{ secrets.FORUM_PASSWORD }}
-        FORUM_USERNAME: "test_account"
+        FORUM_USERNAME: "github_bot"
         SUBFORUM_ID: 8 # Ideas & Suggestions
         POST_ICON: 11 # ℹ
         SUBJECT_PREFIX: "[PR] "
