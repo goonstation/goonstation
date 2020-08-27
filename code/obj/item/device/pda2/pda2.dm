@@ -428,13 +428,11 @@
 		C.set_loc(src)
 		if (isnull(src.cartridge))
 			boutput(user, "<span class='notice'>You insert [C] into [src].</span>")
-			src.cartridge = C
-			src.updateSelfDialog()
 		else
 			boutput(user, "<span class='notice'>You remove the old cartridge and insert [C] into [src].</span>")
 			user.put_in_hand_or_eject(src.cartridge)
-			src.cartridge = C
-			src.updateSelfDialog()
+		src.cartridge = C
+		src.updateSelfDialog()
 
 	else if (istype(C, /obj/item/device/pda_module))
 		if(src.closed)
