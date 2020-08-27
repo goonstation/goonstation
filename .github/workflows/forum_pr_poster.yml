@@ -1,8 +1,6 @@
 name: "Post Labeled PRs to the Forum"
 on:
   pull_request_target:
-    branches:
-      - master
     types:
       - labeled
 
