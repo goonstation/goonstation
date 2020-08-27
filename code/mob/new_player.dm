@@ -334,7 +334,7 @@ mob/new_player
 				battlemode.battle_shuttle_spawn(character.mind)
 			else
 				var/starting_loc = null
-				starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(1, 1, 1))
+				starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(round(world.maxx / 2), round(world.maxy / 2), 1))
 				character.set_loc(starting_loc)
 
 			if (isliving(character))
