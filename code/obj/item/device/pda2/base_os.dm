@@ -139,10 +139,10 @@
 
 					if (!src.message_mode)
 
-						. += {"<a href='byond://?src=\ref[src];message_func=ringer'>Ringer: [src.message_silent == 1 ? "Off" : "On"]</a> |
-						<a href='byond://?src=\ref[src];message_func=on'>Send / Receive: [src.message_on == 1 ? "On" : "Off"]</a> |
+						. += {"<a href='byond://?src=\ref[src];message_func=ringer'>Ringer: [src.message_silent == 1 ? "Off" : "On"]</a> | 
+						<a href='byond://?src=\ref[src];message_func=on'>Send / Receive: [src.message_on == 1 ? "On" : "Off"]</a> | 
 						<a href='byond://?src=\ref[src];input=tone'>Set Ringtone</a><br>
-						<a href='byond://?src=\ref[src];message_mode=1'>Messages</a> |
+						<a href='byond://?src=\ref[src];message_mode=1'>Messages</a> | 
 						<a href='byond://?src=\ref[src];message_mode=2'>Groups</a><br>
 
 						<font size=2><a href='byond://?src=\ref[src];message_func=scan'>Scan</a></font><br>
