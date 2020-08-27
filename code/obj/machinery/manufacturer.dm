@@ -67,6 +67,8 @@
 	var/datum/radio_frequency/transmit_connection = null
 	var/net_id = null
 
+	var/datum/action/action_bar = null
+
 #define WIRE_EXTEND 1
 #define WIRE_POWER 2
 #define WIRE_MALF 3
@@ -158,6 +160,13 @@
 
 		power_usage = src.powconsumption + 200
 		..()
+
+		if (src.mode == "working")
+			use_power(src.powconsumption)
+
+		if (src.electrified > 0)
+			src.electrified--
+		/*
 		if (src.mode == "working")
 			if (src.malfunction && prob(8))
 				src.flip_out()
@@ -172,9 +181,22 @@
 						src.visible_message("<span class='notice'>[src] finishes its production queue.</span>")
 						src.mode = "ready"
 						src.build_icon()
+		*/
 
-		if (src.electrified > 0)
-			src.electrified--
+	proc/finish_work()
+
+		output_loop(src.queue[1])
+		if (!src.repeat)
+			src.queue -= src.queue[1]
+
+		if (src.queue.len < 1)
+			src.manual_stop = 0
+			playsound(src.loc, src.sound_happy, 50, 1)
+			src.visible_message("<span class='notice'>[src] finishes its production queue.</span>")
+			src.mode = "ready"
+			src.build_icon()
+
+		src.updateUsrDialog()
 
 	ex_act(severity)
 		switch(severity)
@@ -448,7 +470,7 @@
 			<div class='required'><div>[material_text.Join("<br>")]</div></div>
 			[icon_text]
 			<span class='mats'>[material_count] mat.</span>
-			<span class='time'>[A.time && src.speed ? round((A.time / src.speed)) : "??"] sec.</span>
+			<span class='time'>[A.time && src.speed ? round(A.time / src.speed / 10, 0.1) : "??"] sec.</span>
 		</div>"}
 
 		dat += "</div><div id='info'>"
@@ -608,6 +630,8 @@
 			if (href_list["pause"])
 				src.mode = "halt"
 				src.build_icon()
+				if (src.action_bar)
+					src.action_bar.interrupt(INTERRUPT_ALWAYS)
 
 			if (href_list["disp"])
 				var/datum/manufacture/I = locate(href_list["disp"])
@@ -1385,9 +1409,13 @@
 				src.powconsumption += 3000
 				src.timeleft += rand(2,6)
 				src.timeleft *= 1.5
+			src.timeleft /= src.speed
 		playsound(src.loc, src.sound_beginwork, 50, 1, 0, 3)
 		src.mode = "working"
 		src.build_icon()
+
+		src.action_bar = actions.start(new/datum/action/bar/manufacturer(src, src.timeleft), src)
+
 
 	proc/output_loop(var/datum/manufacture/M)
 
@@ -1417,12 +1445,6 @@
 
 			src.remove_materials(M)
 
-		if (src.repeat)
-			if (!mcheck)
-				src.queue -= M
-		else
-			src.queue -= M
-		src.begin_work(1)
 		return
 
 	proc/dispense_product(var/product,var/datum/manufacture/M)
@@ -1631,7 +1653,7 @@
 
 		if (src.speed > (src.hacked ? 5 : 3))
 			// sometimes people get these set to wacky values
-			speed_opts += "<a href='?src=\ref[src];speed=[i]' class='buttonlink' style='font-weight: bold; background: #c66;'>[src.speed]</a>"
+			speed_opts += "<a href='?src=\ref[src];speed=[src.speed]' class='buttonlink' style='font-weight: bold; background: #c66;'>[src.speed]</a>"
 
 		dat += {"
 			<br>
@@ -1654,12 +1676,13 @@
 			var/remove_link = ""
 			var/pause_link = ""
 			if (queue_num == 1)
-				if (istype(A,/datum/manufacture/) && src.speed != 0 && timeleft != 0)
-					time_number = round(src.timeleft / src.speed)
+				// if (istype(A,/datum/manufacture/) && src.speed != 0 && timeleft != 0)
+				// 	time_number = round(src.timeleft / src.speed)
 				pause_link = (src.mode == "working" ? "<a href='?src=\ref[src];pause=1' class='buttonlink'>&#9208; Pause</a>" : "<a href='?src=\ref[src];continue=1' class='buttonlink'>&#57914; Resume</a>") + "<br>"
 			else
-				time_number = A.time && src.speed ? round(A.time / src.speed) : "??"
 				pause_link = ""
+
+			time_number = A.time && src.speed ? round(A.time / src.speed / 10, 0.1) : "??"
 
 			if (src.mode != "working" || queue_num != 1)
 				remove_link = "<a href='?src=\ref[src];removefromQ=[queue_num]' class='buttonlink'>&#128465; Remove</a>"
@@ -2326,3 +2349,48 @@
 #undef WIRE_MALF
 #undef WIRE_SHOCK
 #undef MAX_QUEUE_LENGTH
+
+
+
+// -------------------
+/datum/action/bar/manufacturer
+	duration = 1000
+	id = "manufacturer"
+	var/obj/machinery/manufacturer/MA
+	var/completed = 0
+
+	New(machine, dur)
+		MA = machine
+		duration = dur
+		..()
+
+	onUpdate()
+		..()
+		if (MA.malfunction && prob(8))
+			MA.flip_out()
+
+		if (MA.status & (NOPOWER | BROKEN))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onInterrupt()
+		..()
+		// Kind of a gross hack to store the time remaining on pause.
+		MA.timeleft = (src.started + src.duration) - world.time
+		MA.manual_stop = 0
+		MA.error = null
+		MA.mode = "ready"
+		MA.build_icon()
+
+	onEnd()
+		..()
+		src.completed = 1
+		MA.finish_work()
+		// call dispense
+
+	onDelete()
+		..()
+		MA.action_bar = null
+		if (src.completed && MA.queue.len)
+			SPAWN_DBG(1)
+				MA.begin_work(1)
