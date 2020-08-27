@@ -72,6 +72,7 @@ var/global
 	list/mob_static_icons = list() // these are the images that are actually seen by ghostdrones instead of whatever mob
 	list/orbicons = list()
 	list/browse_item_icons = list()
+	list/browse_item_clients = list()
 
 	list/rewardDB = list() //Contains instances of the reward datums
 	list/materialRecipes = list() //Contains instances of the material recipe datums
@@ -709,7 +710,7 @@ var/global
 		aiImages.Remove(key)
 	return
 
-/proc/getItemIcon(var/atom/path, var/state, var/dir)
+/proc/getItemIcon(var/atom/path, var/state, var/dir, var/client/C)
 
 	if (!state)
 		state = initial(path.icon_state)
@@ -717,9 +718,13 @@ var/global
 		dir = initial(path.dir)
 
 	var/key = replacetext("[path]-[state]-[dir].png", "/", "~")
-	if (browse_item_icons[key])
-		return key
-	else
+	if (!browse_item_icons[key])
 		browse_item_icons[key] = new/icon(initial(path.icon), state, dir)
-		return key
+	if (C && !(C in browse_item_clients[key]))
+		if (!browse_item_clients[key])
+			browse_item_clients[key] = list()
+		C << browse_rsc(browse_item_icons[key], key)
+		browse_item_clients[key] += C
+
+	return key
 

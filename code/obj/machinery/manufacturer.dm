@@ -451,14 +451,14 @@
 			var/icon_text = ""
 			// @todo probably refactor this since it's copy pasted twice now.
 			if (A.item_outputs)
-				var/icon_rsc = getItemIcon(A.item_outputs[1])
-				user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
+				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 			if (istype(A, /datum/manufacture/mechanics))
 				var/datum/manufacture/mechanics/F = A
-				var/icon_rsc = getItemIcon(F.frame_path)
-				user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
+				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 			var/list/material_text = list()
@@ -1702,14 +1702,14 @@
 
 			var/icon_text = ""
 			if (A.item_outputs)
-				var/icon_rsc = getItemIcon(A.item_outputs[1])
-				usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
+				// usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 			if (istype(A, /datum/manufacture/mechanics))
 				var/datum/manufacture/mechanics/F = A
-				var/icon_rsc = getItemIcon(F.frame_path)
-				user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
+				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 
