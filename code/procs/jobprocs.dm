@@ -314,8 +314,6 @@
 		boutput(src, "<span class='alert'><b>Something went wrong setting up your rank and equipment! Report this to a coder.</b></span>")
 		return
 
-	//if(JOB.name == "Captain")
-		//boutput(world, "<b>[src] is the Captain!</b>")
 	if (JOB.announce_on_join)
 		SPAWN_DBG(1 SECOND)
 			boutput(world, "<b>[src.name] is the [JOB.name]!</b>")
@@ -324,31 +322,16 @@
 	src.mind.assigned_role = JOB.name
 
 	if (!joined_late)
-		if ((ticker && ticker.mode && !istype(ticker.mode, /datum/game_mode/construction)) && JOB.name != "Tourist")
-			var/obj/S = null
+		if (ticker?.mode && !istype(ticker.mode, /datum/game_mode/construction))
 			if (job_start_locations && islist(job_start_locations[JOB.name]))
-				var/list/locations = job_start_locations[JOB.name]
-				S = pick(locations)
-				if (locate(/mob) in S.loc)
-					for (var/i=5, i>0, i--)
-						S = pick(locations)
-						if (!(locate(/mob) in S.loc))
-							break
-			else
-				for (var/obj/landmark/start/sloc in landmarks)//world)
-					LAGCHECK(LAG_LOW)
-					if (sloc.name != JOB.name)
-						continue
-					if (locate(/mob) in sloc.loc)
-						continue
-					S = sloc
-					break
-			if (!S)
-				S = locate("start*[JOB.name]") // use old stype
-			if (istype(S, /obj/landmark/start) && isturf(S.loc))
-				src.set_loc(S.loc)
+				var/tries = 8
+				var/turf/T
+				do
+					T = pick(job_start_locations[JOB.name])
+				while((locate(/mob) in T) && tries--)
+				src.set_loc(T)
 		else
-			src.set_loc(pick(latejoin))
+			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 	else
 		src.unlock_medal("Fish", 1)
 

@@ -34,7 +34,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			return 0
 
 	// first check the always allowed turfs from map landmarks
-	if (T in telesci)
+	if (T in landmarks[LANDMARK_TELESCI])
 		return 1
 
 	if ((istype(T.loc,/area) && T.loc:teleport_blocked) || isrestrictedz(T.z))

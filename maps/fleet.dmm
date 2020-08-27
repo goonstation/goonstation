@@ -19477,7 +19477,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/specialroom/arcade,
@@ -21943,7 +21943,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Pq" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/pool/no_animate,

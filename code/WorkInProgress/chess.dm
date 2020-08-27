@@ -75,6 +75,8 @@ obj/chessbutton
 
 
 obj/landmark/chess
+	add_to_landmarks = FALSE
+	deleted_on_start = FALSE
 
 	proc/lets_fuckin_start_this_party()
 		switch(src.name)

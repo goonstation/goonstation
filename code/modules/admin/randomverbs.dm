@@ -48,7 +48,7 @@
 			if (!M || !ismob(M))
 				return
 
-			var/ASLoc = latejoin.len ? pick(latejoin) : locate(1, 1, 1)
+			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN, locate(1, 1, 1))
 			if (ASLoc)
 				M.set_loc(ASLoc)
 
@@ -66,7 +66,7 @@
 			if (!M || !ismob(M) || (M && isobserver(M)))
 				return
 
-			var/PLoc = prisonwarp ? pick(prisonwarp) : null
+			var/PLoc = pick_landmark(LANDMARK_PRISONWARP)
 			if (PLoc)
 				M.changeStatus("paralysis", 80)
 				M.set_loc(PLoc)

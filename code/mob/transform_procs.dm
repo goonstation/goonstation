@@ -4,7 +4,7 @@
 		return
 
 	var/currentLoc = src.loc
-	var/ASLoc = pick(latejoin)
+	var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 
 	// They could be in a pod or whatever, which would have unfortunate results when respawned.
 	if (!isturf(src.loc))
@@ -109,12 +109,8 @@
 	mind.transfer_to(O)
 	mind.assigned_role = "AI"
 
-	if (!mobile && !do_not_move)
-		var/obj/loc_landmark
-		loc_landmark = locate(text("start*AI"))
-
-		if(loc_landmark && loc_landmark.loc)
-			O.set_loc(loc_landmark.loc)
+	if (!mobile && !do_not_move && job_start_locations["AI"])
+		O.set_loc(pick(job_start_locations["AI"]))
 
 	boutput(O, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
 	boutput(O, "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>")
@@ -176,7 +172,7 @@
 	if (!(T && isturf(T)))
 		T = get_turf(src)
 	/*if (!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/ASLoc = pick(latejoin)
+		var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 		if (ASLoc)
 			W.set_loc(ASLoc)
 		else
@@ -413,7 +409,7 @@
 
 		var/turf/T = get_turf(src)
 		if (!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
-			var/ASLoc = pick(latejoin)
+			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 			if (ASLoc)
 				W.set_loc(ASLoc)
 			else
@@ -497,7 +493,7 @@
 	W.life_timer = life
 
 	if (!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/ASLoc = pick(latejoin)
+		var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 		if (ASLoc)
 			W.set_loc(ASLoc)
 		else
@@ -637,19 +633,10 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 			return
 		// you can be an animal
 		// get spawnpoints
-		var/list/spawns = list()
-		for(var/obj/landmark/L in landmarks)
-			if (L.name == "peststart")
-				spawns.Add(L.loc)
-			LAGCHECK(LAG_LOW)
-		var/turf/spawnpoint = get_turf(src)
-		if(spawns.len >= 1)
-			spawnpoint = pick(spawns)
-		else
-			spawnpoint = latejoin.len ? pick(latejoin) : spawnpoint
-		// be critter
 
-
+		var/turf/spawnpoint = pick_landmark(LANDMARK_PESTSTART)
+		if(!spawnpoint)
+			spawnpoint = pick_landmark(LANDMARK_LATEJOIN, get_turf(src))
 		src.make_ghost_critter(spawnpoint)
 
 
@@ -868,7 +855,6 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	return
 
-var/list/ass_arena_spawn = list()
 var/respawn_arena_enabled = 0
 /mob/dead/observer/verb/go_to_respawn_arena()
 	set name = "Fight for your life"
@@ -899,8 +885,7 @@ var/respawn_arena_enabled = 0
 		newbody.key = src.key
 	equip_battler(newbody)
 	newbody.set_clothing_icon_dirty()
-	var/obj/landmark/ass_arena_spawn/place = pick(ass_arena_spawn)
-	newbody.set_loc(place.loc)
+	newbody.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
 	return
 
 ///////////////////
@@ -930,13 +915,13 @@ var/respawn_arena_enabled = 0
 
 	var/turf/T = get_turf(src)
 	if (!(T && isturf(T)) || (isghostrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+		var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 		if (OS)
 			O.set_loc(OS)
 		else
 			O.z = 1
 	else
-		O.set_loc(pick(latejoin))
+		O.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 	if (src.mind)
 		src.mind.transfer_to(O)

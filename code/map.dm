@@ -42,7 +42,6 @@ var/global/list/mapNames = list(
 /obj/landmark/map
 	name = "map_setting"
 	icon_state = "x3"
-	invisibility = 101
 
 	New()
 		if (src.name != "map_setting")
