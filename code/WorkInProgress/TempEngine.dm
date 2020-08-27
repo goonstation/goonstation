@@ -448,8 +448,8 @@
 		data["hotCircStatus"] = src.circ1
 		data["hotInletTemp"] = src.circ1.air1.temperature
 		data["hotOutletTemp"] = src.circ1.air2.temperature
-		data["hotInletPres"] = MIXTURE_PRESSURE(src.circ1.air1)
-		data["hotOutletPres"] = MIXTURE_PRESSURE(src.circ1.air2)
+		data["hotInletPres"] = MIXTURE_PRESSURE(src.circ1.air1) KILO PASCALS
+		data["hotOutletPres"] = MIXTURE_PRESSURE(src.circ1.air2) KILO PASCALS
 	else
 		data["hotCircStatus"] = null
 		data["hotInletTemp"] = 0
@@ -460,8 +460,8 @@
 		data["coldCircStatus"] = src.circ2
 		data["coldInletTemp"] = src.circ2.air1.temperature
 		data["coldOutletTemp"] = src.circ2.air2.temperature
-		data["coldInletPres"] = MIXTURE_PRESSURE(src.circ2?.air1)
-		data["coldOutletPres"] = MIXTURE_PRESSURE(src.circ2?.air2)
+		data["coldInletPres"] = MIXTURE_PRESSURE(src.circ2?.air1) KILO PASCALS
+		data["coldOutletPres"] = MIXTURE_PRESSURE(src.circ2?.air2) KILO PASCALS
 	else
 		data["coldCircStatus"] = null
 		data["coldInletTemp"] = 0
