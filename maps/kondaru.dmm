@@ -4838,7 +4838,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor/carpet/grime,
@@ -13266,7 +13266,7 @@
 	on = 1;
 	target_pressure = 1000
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor/redblack,
@@ -19172,7 +19172,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "aRD" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/cable{
@@ -19709,7 +19709,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "aSF" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/light,
@@ -24582,7 +24582,7 @@
 /turf/simulated/floor/red/checker,
 /area/station/maintenance)
 "bdK" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass,
@@ -37899,7 +37899,7 @@
 /area/station/security/brig)
 "bIj" = (
 /obj/stool/bench/red/auto,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /turf/simulated/floor/grime,
@@ -46816,7 +46816,7 @@
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "cbc" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -51176,7 +51176,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/specialroom/arcade,
@@ -56384,7 +56384,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "pJk" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor/grass,
@@ -56719,7 +56719,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "rPP" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor/white,
@@ -56913,7 +56913,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/south)
 "sMt" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor,

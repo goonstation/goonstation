@@ -12,7 +12,7 @@
 		..()
 
 		if (!A) //manually called outside of BR gamemode
-			A = get_area(pick(peststart))
+			A = get_area(pick_landmark(LANDMARK_PESTSTART))
 		logTheThing("admin",null,null,"Supply drop at [A]")
 		var/list/turfs = get_area_turfs(A,1)
 		if (!turfs)	DEBUG_MESSAGE("Getting turfs failed for [A]")

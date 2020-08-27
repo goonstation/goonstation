@@ -223,33 +223,14 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		ircbot.event("roundstart")
 		mode.post_setup()
 
-		cleanup_landmarks()
-
 		event_wormhole_buildturflist()
 
 		mode.post_post_setup()
 
-		for(var/obj/landmark/artifact/A in landmarks)
-			LAGCHECK(LAG_LOW)
-			if (prob(A.spawnchance))
-				if (A.spawnpath)
-					new A.spawnpath(A.loc)
-				else
-					Artifact_Spawn(A.loc)
-
-		var/list/lootspawn = list()
-		for(var/obj/landmark/S in landmarks)//world)
-			if (S.name == "Loot spawn")
-				lootspawn.Add(S.loc)
-			LAGCHECK(LAG_LOW)
-		if(lootspawn.len)
-			var/lootamt = rand(5,15)
-			while(lootamt > 0)
-				LAGCHECK(LAG_LOW)
-				var/lootloc = lootspawn.len ? pick(lootspawn) : null
-				if (lootloc && prob(75))
-					new/obj/storage/crate/loot(lootloc)
-				--lootamt
+		for(var/turf/T in landmarks[LANDMARK_ARTIFACT_SPAWN])
+			var/spawnchance = landmarks[LANDMARK_ARTIFACT_SPAWN][T]
+			if (prob(spawnchance))
+				Artifact_Spawn(T)
 
 		shippingmarket.get_market_timeleft()
 
@@ -320,7 +301,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					player.close_spawn_windows()
 					var/mob/wraith/W = player.make_wraith()
 					if (W)
-						W.set_loc(pick(observer_start))
+						W.set_loc(pick_landmark(LANDMARK_OBSERVER))
 						logTheThing("debug", W, null, "<b>Late join</b>: assigned antagonist role: wraith.")
 						antagWeighter.record(role = "wraith", ckey = W.ckey)
 
@@ -328,7 +309,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					player.close_spawn_windows()
 					var/mob/living/intangible/blob_overmind/B = player.make_blob()
 					if (B)
-						B.set_loc(pick(observer_start))
+						B.set_loc(pick_landmark(LANDMARK_OBSERVER))
 						logTheThing("debug", B, null, "<b>Late join</b>: assigned antagonist role: blob.")
 						antagWeighter.record(role = "blob", ckey = B.ckey)
 
@@ -336,7 +317,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					player.close_spawn_windows()
 					var/mob/living/intangible/flock/flockmind/F = player.make_flockmind()
 					if (F)
-						F.set_loc(pick(observer_start))
+						F.set_loc(pick_landmark(LANDMARK_OBSERVER))
 						logTheThing("debug", F, null, "<b>Late join</b>: assigned antagonist role: flockmind.")
 						antagWeighter.record(role = "flockmind", ckey = F.ckey)
 
@@ -860,9 +841,3 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			return
 //Anything else, like sandbox, return.
 */
-
-/datum/controller/gameticker/proc/cleanup_landmarks()
-	for(var/obj/landmark/start/S in landmarks)
-		//Deleting Startpoints but we need the ai point to AI-ize people later
-		if (S.name != "AI")
-			S.dispose()

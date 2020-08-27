@@ -158,14 +158,6 @@
 		if (linked_rings.len > 0) found++
 		return found
 
-/proc/find_loc(obj/R as obj)
-	if (!R)	return null
-	var/turf/T = R.loc
-	while(!istype(T, /turf))
-		T = T.loc
-		if(!T || istype(T, /area))	return null
-	return T
-
 /proc/do_teleport(atom/movable/M as mob|obj, atom/destination, precision, var/use_teleblocks = 1, var/sparks = 1)
 	if(istype(M, /obj/effects))
 		qdel(M)

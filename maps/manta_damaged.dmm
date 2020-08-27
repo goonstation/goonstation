@@ -1652,7 +1652,7 @@
 	icon_state = "gangtag22";
 	pixel_x = 28
 	},
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
 /obj/machinery/light/incandescent/small{
 	icon_state = "bulb1";
 	dir = 4
@@ -1811,7 +1811,7 @@
 /obj/stool/chair/wooden{
 	dir = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "shitty_bill"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -1968,7 +1968,7 @@
 /area/diner/kitchen)
 "aez" = (
 /obj/stool/chair/wooden,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "don_glab"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -2017,7 +2017,7 @@
 /area/diner/kitchen)
 "aeH" = (
 /obj/stool/bar,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "father_jack"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -18982,7 +18982,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /turf/simulated/floor/damaged2,
@@ -23540,7 +23540,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/research)
 "aYL" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/cable{
@@ -27615,7 +27615,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "bgR" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/cable{
@@ -30089,7 +30089,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "blN" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/scorched2,
@@ -30103,7 +30103,7 @@
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "blP" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/shrub,

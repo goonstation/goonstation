@@ -168,13 +168,8 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
 			return ..()
 
-		if (isHemera && moonfall_hemera.len)
-			var/turf/T = pick(moonfall_hemera)
-			fall_to(T, A)
-			return
-
-		else if (!isHemera && moonfall_museum.len)
-			var/turf/T = pick(moonfall_museum)
+		var/turf/T = pick_landmark(isHemera ? LANDMARK_FALL_MOON_HEMERA : LANDMARK_FALL_MOON_MUSEUM)
+		if (T)
 			fall_to(T, A)
 			return
 

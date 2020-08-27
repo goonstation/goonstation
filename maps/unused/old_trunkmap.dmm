@@ -3128,7 +3128,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "agO" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/white,
@@ -3180,7 +3180,7 @@
 /area/station/medical/cdc)
 "agU" = (
 /obj/window/reinforced/west,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/white,
@@ -3344,7 +3344,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "ahq" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/light{
@@ -4360,7 +4360,7 @@
 /area/station/bridge)
 "ajz" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -4617,7 +4617,7 @@
 /turf/simulated/floor,
 /area/station/medical/research)
 "ajV" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor,
@@ -9973,7 +9973,7 @@
 "awC" = (
 /obj/machinery/light,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -10363,7 +10363,7 @@
 	},
 /area/station/chapel/main)
 "axw" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor{
@@ -13579,7 +13579,7 @@
 /area/station/crew_quarters/bar)
 "aFE" = (
 /obj/table/auto,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -14470,7 +14470,7 @@
 /area/station/crew_quarters/bar)
 "aHL" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -16726,7 +16726,7 @@
 /area/station/crew_quarters/cafeteria)
 "aNB" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/cafeteria)
@@ -17397,7 +17397,7 @@
 	amount = 50
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/storage/primary)
@@ -17638,7 +17638,7 @@
 /obj/item/crowbar,
 /obj/machinery/light,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/device/flash,
 /turf/simulated/floor/red/side{
@@ -18293,7 +18293,7 @@
 /area/station/hallway/primary/central)
 "aQW" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -18529,7 +18529,7 @@
 /area/station/quartermaster)
 "aRA" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/quartermaster)
@@ -19319,7 +19319,7 @@
 /area/station/maintenance/south)
 "aTr" = (
 /obj/table/reinforced/auto,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor{
@@ -19444,7 +19444,7 @@
 /area/station/quartermaster/storage)
 "aTH" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light_switch{
 	pixel_x = 25
@@ -20585,7 +20585,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/science)
@@ -20649,7 +20649,7 @@
 /area/station/science/lab)
 "aWi" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -21927,7 +21927,7 @@
 	d1 = 2;
 	d2 = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor,
@@ -22191,7 +22191,7 @@
 /area/station/hydroponics)
 "aZF" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/hydroponics)
@@ -22531,7 +22531,7 @@
 /turf/simulated/floor,
 /area/station/science)
 "bag" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor,
@@ -22913,7 +22913,7 @@
 	d1 = 1;
 	d2 = 2
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor,
@@ -23428,7 +23428,7 @@
 "bcq" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -23859,7 +23859,7 @@
 	c_tag = "Jury Box";
 	dir = 4
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor,
@@ -24099,7 +24099,7 @@
 /turf/simulated/floor,
 /area/station/chemistry)
 "bdV" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor,
@@ -24334,7 +24334,7 @@
 	d1 = 1;
 	d2 = 2
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor,
@@ -24608,7 +24608,7 @@
 	pixel_y = 10
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/extinguisher,
 /turf/simulated/floor/white,
@@ -25630,7 +25630,7 @@
 /area/station/crew_quarters/fitness)
 "bhp" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
@@ -26065,7 +26065,7 @@
 /area/station/hallway/primary/south)
 "biD" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -26896,7 +26896,7 @@
 /turf/simulated/floor,
 /area/station/atmos)
 "bkn" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor,
@@ -27054,7 +27054,7 @@
 	d1 = 1;
 	d2 = 2
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/black,
@@ -27942,7 +27942,7 @@
 /area/station/crew_quarters/locker)
 "bmN" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
@@ -31159,7 +31159,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor,
