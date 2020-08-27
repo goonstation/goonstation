@@ -9,8 +9,7 @@ on:
 jobs:
   post-to-forums:
     runs-on: ubuntu-latest
-    if: github.repository == 'goonstation/goonstation'
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'input wanted') }}
+    if: ${{ github.repository == 'goonstation/goonstation' && contains(github.event.pull_request.labels.*.name, 'input wanted') }}
     steps:
     - uses: actions/checkout@v2
     - name: Get The Script
