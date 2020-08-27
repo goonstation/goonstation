@@ -424,16 +424,9 @@
 			last = target
 			target = pick(next)
 
-/*
-/obj/machinery/power/generatorTemp/ui_state(mob/user)
-	return tgui_default_state
-
-/obj/machinery/power/generatorTemp/ui_status(mob/user, datum/ui_state/state)
-	return min(
-		state.can_use_topic(src, user),
-		tgui_broken_state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)*/
+	power_change()
+		..()
+		updateicon()
 
 /obj/machinery/power/generatorTemp/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -469,6 +462,8 @@
 		data["coldInletPres"] = 0
 		data["coldOutletPres"] = 0
 	return data
+
+
 
 /obj/machinery/atmospherics/unary/furnace_connector
 
