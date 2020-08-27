@@ -19,7 +19,9 @@
 	update_icon()
 		..()
 		if(src.delivery_destination)
-			src.overlays += "crate-barcode"
+			src.UpdateOverlays(image(src.icon, "crate-barcode"), "barcode")
+		else
+			src.UpdateOverlays(null, "barcode")
 
 
 	CanPass(atom/movable/mover, turf/target)
