@@ -44884,7 +44884,7 @@
 /turf/simulated/floor/plating,
 /area/station/routingdepot)
 "bSy" = (
-/obj/reagent_dispensers/still/shittystill
+/obj/reagent_dispensers/still/shittystill,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/plating/scorched,
 /area/station/routingdepot)
