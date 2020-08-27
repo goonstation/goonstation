@@ -164,8 +164,8 @@
 				if (dist <= 1)
 					holder.ownhuman.a_intent = INTENT_HARM
 					holder.ownhuman.dir = get_dir(holder.ownhuman, M)
-					if (!holder.ownhuman.equipped())
-						holder.ownhuman.hand_attack(M, params)
+
+					holder.ownhuman.hand_attack(M, params)
 				if(prob(25))
 					holder.move_circ(holder.target,2)
 
@@ -232,7 +232,7 @@
 						else
 							holder.ownhuman.drop_item()
 			else
-				holder.move_circ(holder.target,target_range)
+				holder.move_circ(holder.target,2)
 
 		..()
 

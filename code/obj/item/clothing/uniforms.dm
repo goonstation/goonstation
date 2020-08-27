@@ -201,7 +201,7 @@
 
 	aro
 		name = "aro pride jumpsuit"
-		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the aromatic pride flag."
+		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the aromantic pride flag."
 		icon_state ="aro"
 		item_state = "aro"
 
