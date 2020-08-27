@@ -424,8 +424,6 @@
 			last = target
 			target = pick(next)
 
-
-
 /*
 /obj/machinery/power/generatorTemp/ui_state(mob/user)
 	return tgui_default_state
