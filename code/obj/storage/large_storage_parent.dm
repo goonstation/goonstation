@@ -88,10 +88,10 @@
 			flick(src.closing_anim,src)
 			src.icon_state = src.icon_closed
 
-		if (src.overlays)
-			src.overlays = list()
 		if (src.welded)
-			src.overlays += src.icon_welded
+			src.UpdateOverlays(image(src.icon, src.icon_welded), "welded")
+		else
+			src.UpdateOverlays(null, "welded")
 
 	emp_act()
 		if (!src.open && src.contents.len)
@@ -286,7 +286,7 @@
 					L.changeStatus("weakened", 4 SECONDS)
 				if (prob(25))
 					L.show_text("You hit your head on [no_go]!", "red")
-					L.TakeDamage("head", 0, 10)
+					L.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 
 			. = 0
 		else
@@ -814,11 +814,14 @@
 
 		if(!src.open || always_display_locks)
 			if (src.emagged)
-				src.overlays += src.icon_sparks
+				src.UpdateOverlays(image(src.icon, src.icon_sparks), "sparks")
 			else if (src.locked)
-				src.overlays += src.icon_redlight
+				src.UpdateOverlays(image(src.icon, src.icon_redlight), "light")
 			else
-				src.overlays += src.icon_greenlight
+				src.UpdateOverlays(image(src.icon, src.icon_greenlight), "light")
+		else
+			src.UpdateOverlays(null, "sparks")
+			src.UpdateOverlays(null, "light")
 
 	receive_signal(datum/signal/signal)
 		if (!src.radio_control)

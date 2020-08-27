@@ -479,12 +479,15 @@
 	src.antagonist_overlay_refresh(1, 0)
 
 #if ASS_JAM
-		ass_day_popup(src)
+	ass_day_popup(src)
 #endif
 
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
+
+	if(HAS_MOB_PROPERTY(src, PROP_PROTANOPIA))
+		src.client?.color = list(MATRIX_PROTANOPIA)
 
 	return
 
@@ -2219,20 +2222,18 @@
 /mob/onVarChanged(variable, oldval, newval)
 	update_clothing()
 
-/mob/proc/throw_impacted(var/atom/hit) //Called when mob hits something after being thrown.
+/mob/throw_impact(atom/hit, list/params)
+	if(!isturf(hit) || hit.density)
+		if (throw_traveled <= 410)
+			if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
+				random_brute_damage(src, min((6 + (throw_traveled / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
+				if (!src.hasStatus("weakened"))
+					src.changeStatus("weakened", 2 SECONDS)
+					src.force_laydown_standup()
+		else
+			src.gib()
 
-	if (throw_traveled <= 410)
-		if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
-			random_brute_damage(src, min((6 + (throw_traveled / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
-			if (!src.hasStatus("weakened"))
-				src.changeStatus("weakened", 2 SECONDS)
-				src.force_laydown_standup()
-	else
-		if (src.gib_flag) return
-		src.gib_flag = 1
-		src.gib()
-
-	return
+	return ..()
 
 /mob/proc/full_heal()
 	src.HealDamage("All", 100000, 100000)

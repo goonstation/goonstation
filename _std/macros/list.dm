@@ -1,3 +1,4 @@
+#define shuffle_list(x) do { var/listlen = length(x); for(var/i in 1 to listlen) x.Swap(i, rand(i, listlen)) } while (0)
 
 #define LAZYLISTINIT(L) \
 	if (!L) \
@@ -14,6 +15,12 @@
 			L = null; \
 		} \
 	} \
+
+#define REMOVE_FROM_UNSORTED(L, INDEX) \
+	{ \
+		L[INDEX] = L[length(L)]; \
+		L.len-- \
+	}
 
 /proc/uniquelist(var/list/L)
 	. = list()

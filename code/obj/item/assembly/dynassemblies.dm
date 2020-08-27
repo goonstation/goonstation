@@ -147,10 +147,8 @@ For hairball DynAssemblies see: jonescity.dm
 	onEnd()
 		..()
 		user.visible_message("<span class='notice'><b>[user.name]</b> drops the materials in their hands to secure the assembly.</span>")
-		user.hand = !user.hand
-		user.drop_item()
-		user.hand = !user.hand
-		user.drop_item()
+		if(assembly.loc == user)
+			user.drop_item(assembly)
 		assembly.createproduct(user)
 		assembly.dispose()
 

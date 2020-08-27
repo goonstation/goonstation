@@ -324,16 +324,14 @@
 				var/mob/M = loaded
 				M.set_loc(start)
 				M.dir = src.dir
-				SPAWN_DBG(0)
-					M.throw_at(target, 600, 2)
+				M.throw_at(target, 600, 2)
 
 
 			else if(istype(loaded, /obj/storage/closet))
 				var/obj/storage/closet/C = loaded
 				C.set_loc(start)
 				C.dir = src.dir
-				SPAWN_DBG(0)
-					C.throw_at(target, 600, 2)
+				C.throw_at(target, 600, 2)
 
 			else if(istype(loaded, /obj/torpedo))
 				var/obj/torpedo/T = loaded

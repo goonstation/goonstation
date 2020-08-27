@@ -1110,10 +1110,9 @@ obj/critter/madnessowl/switchblade
 			animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 			var/turf/T = get_edge_target_turf(user, get_dir(user, get_step_away(user, src)))
 			if (T && isturf(T))
-				SPAWN_DBG(0)
-					user.throw_at(T, 3, 2)
-					user.changeStatus("weakened", 5)
-					user.changeStatus("stunned", 5)
+				user.throw_at(T, 3, 2)
+				user.changeStatus("weakened", 5)
+				user.changeStatus("stunned", 5)
 
 
 		if (src.alive && src.health <= 0) src.CritterDeath()

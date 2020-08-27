@@ -70,6 +70,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		..()
 //This crap is here so nothing can destroy it.
 	hitby()
+		SHOULD_CALL_PARENT(FALSE)
 	reagent_act()
 	bullet_act()
 	ex_act()
