@@ -71,6 +71,7 @@ var/global
 	list/default_mob_static_icons = list() // new mobs grab copies of these for themselves, or if their chosen type doesn't exist in the list, they generate their own and add it
 	list/mob_static_icons = list() // these are the images that are actually seen by ghostdrones instead of whatever mob
 	list/orbicons = list()
+	list/browse_item_icons = list()
 
 	list/rewardDB = list() //Contains instances of the reward datums
 	list/materialRecipes = list() //Contains instances of the material recipe datums
@@ -707,3 +708,18 @@ var/global
 		aiImages[key] = null
 		aiImages.Remove(key)
 	return
+
+/proc/getItemIcon(var/atom/path, var/state, var/dir)
+
+	if (!state)
+		state = initial(path.icon_state)
+	if (!dir)
+		dir = initial(path.dir)
+
+	var/key = replacetext("[path]-[state]-[dir].png", "/", "~")
+	if (browse_item_icons[key])
+		return key
+	else
+		browse_item_icons[key] = new/icon(initial(path.icon), state, dir)
+		return key
+

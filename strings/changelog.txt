@@ -1,5 +1,15 @@
 
 (t)thu aug 27 20
+(u)Zamujasa
+(e)⚖🆕|balance, feature
+(*)Major manufacturer UI update.
+(*)Rather than a straight list, manufacturers now show a grid of items they can produce. This includes reverse-engineering fabricators, which will show the eventual item made by a frame.
+(*)The manufacturer queue is always visible, rather than being on a separate page.
+(*)Manufacturers now show an action bar showing progress.
+(*)This is still very much a work in progress, so there will probably be issues. Please report bugs using the button in the top right.
+(+)Manufacturer speeds have been adjusted: lower speeds use much less power, higher speeds use considerably more.
+(+)Manufacturer times for some items have been changed across the board as part of a change to real-time.
+(+)The "search" and "filter" options are missing. They'll be back sooner or later.
 (u)Michaellaneous
 (p)1959
 (e)🆕|feature
