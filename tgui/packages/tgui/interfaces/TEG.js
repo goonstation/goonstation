@@ -64,7 +64,7 @@ export const TEG = (props, context) => {
         <Section title="Hot Loop">
           <LabeledList>
             <LabeledList.Item
-              label="Intlet Temp"
+              label="Inlet Temp"
               textAlign="right" >
               {(hotInletTemp >= 1000 && hotInletTemp.toExponential(3) + ' K')
                 || hotInletTemp + ' K'}
@@ -77,9 +77,9 @@ export const TEG = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Divider />
             <LabeledList.Item
-              label="Intlet Pressure"
+              label="Inlet Pressure"
               textAlign="right" >
-              {formatSiUnit(Math.max(hotInletPres, 1), 0, 'Pa')}
+              {formatSiUnit(Math.max(hotInletPres, 0), 1, 'Pa')}
             </LabeledList.Item>
             <LabeledList.Item
               label="Outlet Pressure"
