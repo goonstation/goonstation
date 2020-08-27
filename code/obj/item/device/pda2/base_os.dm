@@ -149,7 +149,7 @@
 						<b>Detected PDAs</b><br>"}
 
 						if (!src.message_on)
-							. += "Please turn on Send/Receive to the scan function."
+							. += "Please turn on Send/Receive to use the scan function."
 						else
 							. += "<ul>"
 							var/count = 0
