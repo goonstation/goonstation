@@ -21,7 +21,9 @@
 	New()
 		..()
 		src.react_heat[2] = "VOLATILE REACTION DETECTED"
-		if (artitype != "eldritch" && prob(5))
+
+	post_setup()
+		if (artitype.name != "eldritch" && prob(5))
 			dud = 1
 
 	effect_activate(var/obj/O)
@@ -139,12 +141,13 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(10000)
+		var/datum/reagents/R = new/datum/reagents(1000)
 		reagents = R
 		R.my_atom = src
 
 /datum/artifact/bomb/chemical
 	associated_object = /obj/artifact/bomb/chemical
+	rarity_class = 2
 	explode_delay = 0
 	react_xray = list(5,65,20,11,"HOLLOW")
 	validtypes = list("ancient","martian","eldritch","precursor")
@@ -156,7 +159,7 @@
 	post_setup()
 		payload_type = rand(0,1)
 		var/list/potential_reagents = list()
-		switch(artitype)
+		switch(artitype.name)
 			if ("ancient")
 				// industrial heavy machinery kinda stuff
 				potential_reagents = list("nanites","liquid plasma","mercury","lithium","plasma","radium","uranium","phlogiston",

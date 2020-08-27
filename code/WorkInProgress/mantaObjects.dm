@@ -70,6 +70,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		..()
 //This crap is here so nothing can destroy it.
 	hitby()
+		SHOULD_CALL_PARENT(FALSE)
 	reagent_act()
 	bullet_act()
 	ex_act()
@@ -1330,14 +1331,6 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	event_effect()
 		..()
-		var/list/EV = list()
-		//var/delay = rand(2000,3000) hissssss
-		//var/obj/effect/boommarker/B = /obj/effect/boommarker
-		for(var/obj/landmark/S in landmarks)//world)
-			if (S.name == "bigboom")
-				EV.Add(S.loc)
-		var/bigboommark = pick(EV)
-
 		var/list/eligible = by_type[/obj/machinery/mantapropulsion].Copy()
 		for(var/i=0, i<3, i++)
 			var/obj/machinery/mantapropulsion/big/P = pick(eligible)
@@ -1345,7 +1338,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			eligible.Remove(P)
 			sleep(1 SECOND)
 
-		new /obj/effect/boommarker(bigboommark)
+		new /obj/effect/boommarker(pick_landmark(LANDMARK_BIGBOOM))
 #endif
 
 
@@ -1627,9 +1620,13 @@ var/obj/manta_speed_lever/mantaLever = null
 	Entered(atom/A as mob|obj)
 		if (isobserver(A) || isintangible(A))
 			return ..()
+		if(ismovable(A))
+			var/atom/movable/AM = A
+			if(AM.anchored)
+				return ..()
 
-		if (polarisfall.len)
-			var/turf/T = pick(polarisfall)
+		var/turf/T = pick_landmark(LANDMARK_FALL_POLARIS)
+		if(T)
 			fall_to(T, A)
 			return
 		else ..()

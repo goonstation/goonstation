@@ -588,6 +588,30 @@
 		if (prob(emote_prob))
 			L.emote(emote_type)
 
+/datum/bioEffect/colorblindness
+	name = "Protanopia"
+	desc = "Selectively inhibits the L-cones in the subject's eyes, causing red-green colorblindness."
+	id = "protanopia"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Everything starts looking a lot more yellow."
+	msgLose = "You notice a few extra colors."
+	probability = 99
+	icon_state  = "bad"
+	var/list/protanopia_matrix = list(MATRIX_PROTANOPIA)
+
+	OnAdd()
+		src.removed = 0
+		APPLY_MOB_PROPERTY(owner, PROP_PROTANOPIA, src)
+		owner.client?.color = protanopia_matrix
+		return
+
+	OnRemove()
+		src.removed = 1
+		REMOVE_MOB_PROPERTY(owner, PROP_PROTANOPIA, src)
+		owner.client?.color = null
+		return
+
 /datum/bioEffect/emoter/screamer
 	name = "Paranoia"
 	desc = "Causes the subject to become easily startled."

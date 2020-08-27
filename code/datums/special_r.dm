@@ -33,13 +33,13 @@ datum/special_respawn
 
 	proc/spawn_syndies(var/number = 3)
 		var/r_number = 0
-		var/B = pick(syndicatestart)
+		var/B = pick_landmark(LANDMARK_SYNDICATE)
 
 		if(!B)	return
 		for(var/c = 0, c < number, c++)
 			var/player = find_player("a syndicate agent")
 			if(player)
-				var/check = spawn_character_human("[syndicate_name()] Operative #[c+1]",player,B,"syndie")
+				var/check = spawn_character_human("[syndicate_name()] Operative #[c+1]", player, pick_landmark(LANDMARK_SYNDICATE), "syndie")
 				if(!check)
 					break
 				r_number ++
@@ -47,32 +47,14 @@ datum/special_respawn
 					if(player && !player:client)
 						qdel(player)
 
-		for (var/obj/landmark/A in landmarks)//world)
-			LAGCHECK(LAG_LOW)
-			if (A.name == "Syndicate-Gear-Closet")
-				new /obj/storage/closet/syndicate/personal(A.loc)
-				A.dispose()
-				continue
-
-			if (A.name == "Syndicate-Bomb")
-				new /obj/item/ammo/bullets/a357(A.loc)
-				A.dispose()
-				continue
-
-			if (A.name == "Nuclear-Closet")
-				new /obj/storage/closet/syndicate/nuclear(A.loc)
-				A.dispose()
-				continue
-
-			if (A.name == "Breaching-Charges")
-				new /obj/item/breaching_charge/thermite(A.loc)
-				new /obj/item/breaching_charge/thermite(A.loc)
-				new /obj/item/breaching_charge/thermite(A.loc)
-				new /obj/item/breaching_charge/thermite(A.loc)
-				new /obj/item/breaching_charge/thermite(A.loc)
-				A.dispose()
-				continue
-
+		new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
+		for(var/turf/T in landmarks[LANDMARK_SYNDICATE_GEAR_CLOSET])
+			new /obj/storage/closet/syndicate/personal(T)
+		for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BOMB])
+		new /obj/spawner/newbomb/timer/syndicate(pick_landmark(LANDMARK_SYNDICATE_BOMB))
+		for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BREACHING_CHARGES])
+			for(var/i = 1 to 5)
+				new /obj/item/breaching_charge/thermite(T)
 
 		message_admins("[r_number] syndicate agents spawned at Syndicate Station.")
 		return
@@ -86,7 +68,7 @@ datum/special_respawn
 			else
 				player = src.find_player("a person")
 			if(player)
-				var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(pick(latejoin))
+				var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(pick_landmark(LANDMARK_LATEJOIN))
 				if(!player.mind)
 					player.mind = new (player)
 				player.mind.transfer_to(M)
@@ -111,7 +93,7 @@ datum/special_respawn
 			else
 				player = src.find_player("a person")
 			if(player)
-				var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(pick(latejoin))
+				var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(pick_landmark(LANDMARK_LATEJOIN))
 				SPAWN_DBG(0)
 					M.JobEquipSpawned(job.name)
 
@@ -134,7 +116,7 @@ datum/special_respawn
 		for(var/c = 0, c < number, c++)
 			var/mob/player = find_player("a person")
 			if(player)
-				var/mob/M = new blType(pick(latejoin))
+				var/mob/M = new blType(pick_landmark(LANDMARK_LATEJOIN))
 				if(!player.mind)
 
 					player.mind = new (player)

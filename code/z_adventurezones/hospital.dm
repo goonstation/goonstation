@@ -4,8 +4,6 @@
 var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 'sound/ambience/spooky/Hospital_Haunted1.ogg', 'sound/ambience/spooky/Hospital_Haunted2.ogg',
 	'sound/ambience/spooky/Hospital_Drone3.ogg', 'sound/ambience/spooky/Hospital_Haunted3.ogg', 'sound/ambience/spooky/Hospital_Feedback.ogg', 'sound/ambience/spooky/Hospital_Drone2.ogg', 'sound/ambience/spooky/Hospital_ScaryChimes.ogg')
 
-var/list/samostrel_warps = list()
-
 /area/hospital
 	name = "Ainley Staff Retreat Center"
 	icon_state = "purple"
@@ -208,11 +206,10 @@ var/list/samostrel_warps = list()
 			//playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 			target.change_eye_blurry(10)
 			boutput(target, "<span><B>no no no no no no no no no no no no non&#9617;NO&#9617;NNnNNO</B></span>")
-			if (samostrel_warps && samostrel_warps.len)
-
+			if (LANDMARK_SAMOSTREL_WARP in landmarks)
 				var/target_original_loc = target.loc
 				target.setStatus("paralysis", max(target.getStatusDuration("paralysis"), 100))
-				do_teleport(target, pick(samostrel_warps), 0)
+				do_teleport(target, pick_landmark(LANDMARK_SAMOSTREL_WARP), 0)
 
 				if (ishuman(target))
 					var/atom/movable/overlay/animation = new(target_original_loc)

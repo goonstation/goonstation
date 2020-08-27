@@ -74,8 +74,8 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 	// Respawn player.
 	var/mob/L
-	var/ASLoc = latejoin.len ? pick(latejoin) : null // picking from an empty list causes a runtime
-	var/WSLoc = wizardstart.len ? pick(wizardstart) : null
+	var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
+	var/WSLoc = job_start_locations["wizard"] ? pick(job_start_locations["wizard"]) : null
 
 	if (!ASLoc)
 		message_admins("Couldn't set up [which_one == 0 ? "Santa Claus" : "Krampus"] respawn (no late-join landmark found).")

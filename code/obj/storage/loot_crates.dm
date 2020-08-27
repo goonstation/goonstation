@@ -385,13 +385,12 @@
 	update_icon()
 		if(open) icon_state = icon_opened
 		else icon_state = icon_closed
-		src.overlays = null
 
 		if (src.locked)
 			light.color = "#FF0000"
 		else
 			light.color = "#00FF00"
-		src.overlays += src.light
+		src.UpdateOverlays(src.light, "light")
 
 		switch(tier)
 			if(2)
@@ -400,7 +399,7 @@
 				stripes.color = "#C00000"
 			else
 				stripes.color = "#00C000"
-		src.overlays += src.stripes
+		src.UpdateOverlays(src.stripes, "stripes")
 
 // LOCKS
 
