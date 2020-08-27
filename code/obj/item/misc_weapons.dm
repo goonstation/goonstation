@@ -1458,8 +1458,7 @@ obj/item/whetstone
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if(istype (M) | !isdead(M))
 			var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
-			SPAWN_DBG(0)
-				M.throw_at(throw_target, 2, 2)
+			M.throw_at(throw_target, 2, 2)
 			if(force <= maximum_force)
 				force += 5
 				boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")

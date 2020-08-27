@@ -604,7 +604,7 @@ datum
 			taste = "moving"
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if (prob(15 * mult))
+				if (prob(percentmult(15, mult)))
 					if (isrestrictedz(M.z))
 						boutput(M, "<span class='notice'>You feel strange. Almost a sense of guilt.</span>")
 						return
@@ -2197,11 +2197,11 @@ datum
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				for (var/datum/ailment_data/disease/virus in M.ailments)
-					if (prob(5 * mult) && istype(virus.master,/datum/ailment/disease/cold))
+					if (prob(percentmult(5, mult)) && istype(virus.master,/datum/ailment/disease/cold))
 						M.cure_disease(virus)
-					if (prob(3 * mult) && istype(virus.master,/datum/ailment/disease/flu))
+					if (prob(percentmult(3, mult)) && istype(virus.master,/datum/ailment/disease/flu))
 						M.cure_disease(virus)
-					if (prob(3 * mult) && istype(virus.master,/datum/ailment/disease/food_poisoning))
+					if (prob(percentmult(3, mult)) && istype(virus.master,/datum/ailment/disease/food_poisoning))
 						M.cure_disease(virus)
 				if (prob(11))
 					M.show_text("You feel calm and relaxed.", "blue")

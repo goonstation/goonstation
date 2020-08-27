@@ -71,6 +71,8 @@ var/global
 	list/default_mob_static_icons = list() // new mobs grab copies of these for themselves, or if their chosen type doesn't exist in the list, they generate their own and add it
 	list/mob_static_icons = list() // these are the images that are actually seen by ghostdrones instead of whatever mob
 	list/orbicons = list()
+	list/browse_item_icons = list()
+	list/browse_item_clients = list()
 
 	list/rewardDB = list() //Contains instances of the reward datums
 	list/materialRecipes = list() //Contains instances of the material recipe datums
@@ -487,46 +489,11 @@ var/global
 
 	datum/dj_panel/dj_panel = new()
 
-	list/monkeystart = list()
-	list/wizardstart = list()
-	list/predstart = list()
-	list/syndicatestart = list()
-	list/battle_royale_spawn = list()
-	list/newplayer_start = list()
-	list/latejoin = list()
-	list/rp_latejoin = list()
-	list/observer_start = list()
-	list/clownstart = list()
-	list/prisonwarp = list()	//prisoners go to these
-	//list/mazewarp = list()
-	list/tdome1 = list()
-	list/tdome2 = list()
-	list/prisonsecuritywarp = list()	//prison security goes to these
 	list/prisonwarped = list()	//list of players already warped
-	list/blobstart = list()
-	list/kudzustart = list()
-	list/peststart = list()
 	list/wormholeturfs = list()
-	list/halloweenspawn = list()
-	list/telesci = list() // special turfs from map landmarks to always allow telescience to access
-						  // telesci landmarks add a 3z3 area centered on themselves to this list
-	list/icefall = list() // list of locations for people to fall if they enter the deep abyss on the ice moon
-	list/iceelefall = list() // list of locations for people to fall if they enter the ice moon elevator shaft
-	list/deepfall = list() // list of locations for people to fall into the precursor pit area
-	list/ancientfall = list() // list of locations for people to fall into the ancient pit area
-	list/greekfall = list() // list of locations for people to fall into the greek pit area
-	list/bioelefall = list() // biodome elevator shaft
 	bioele_accidents = 0
 	bioele_shifts_since_accident = 0
-	list/moonfall_hemera = list() //Hemera lunar office elevator shaft
-	list/moonfall_museum = list() //Lunar museum elevator shaft
-	list/seafall = list() // oshan trench elevator
-	list/escape_pod_success = list() // escape pods flying to the shuttle
-	list/polarisfall = list() // list of locations for people to fall if they enter the deep in the trench
 
-#ifdef TWITCH_BOT_ALLOWED
-	list/billspawn = list() // shitty bill twitch bot respawn
-#endif
 	list/shittybills = list()
 	list/johnbills = list()
 	list/otherbills = list()
@@ -742,3 +709,22 @@ var/global
 		aiImages[key] = null
 		aiImages.Remove(key)
 	return
+
+/proc/getItemIcon(var/atom/path, var/state, var/dir, var/client/C)
+
+	if (!state)
+		state = initial(path.icon_state)
+	if (!dir)
+		dir = initial(path.dir)
+
+	var/key = replacetext("[path]-[state]-[dir].png", "/", "~")
+	if (!browse_item_icons[key])
+		browse_item_icons[key] = new/icon(initial(path.icon), state, dir)
+	if (C && !(C in browse_item_clients[key]))
+		if (!browse_item_clients[key])
+			browse_item_clients[key] = list()
+		C << browse_rsc(browse_item_icons[key], key)
+		browse_item_clients[key] += C
+
+	return key
+

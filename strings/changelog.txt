@@ -1,5 +1,65 @@
 
+(t)thu aug 27 20
+(u)Zamujasa
+(e)⚖🆕|balance, feature
+(*)Major manufacturer UI update.
+(*)Rather than a straight list, manufacturers now show a grid of items they can produce. This includes reverse-engineering fabricators, which will show the eventual item made by a frame.
+(*)The manufacturer queue is always visible, rather than being on a separate page.
+(*)Manufacturers now show an action bar showing progress.
+(*)This is still very much a work in progress, so there will probably be issues. Please report bugs using the button in the top right.
+(+)Manufacturer speeds have been adjusted: lower speeds use much less power, higher speeds use considerably more.
+(+)Manufacturer times for some items have been changed across the board as part of a change to real-time.
+(+)The "search" and "filter" options are missing. They'll be back sooner or later, probably.
+(u)Michaellaneous
+(p)1959
+(e)🆕|feature
+(+)Slotting in a cartridge into a PDA now ejects the old one, if present
+(t)wed aug 26 20
+(u)Superlagg
+(p)1842
+(e)⚖🆕|balance, feature
+(*)Defibrillators now prevent cardiac arrest for a few seconds, and make it more likely for subsequent shocks to cure cardiac arrest.
+(+)Defibrillators are now about 60% less effective at curing robotic transformation.
+(u)Superlagg
+(p)1777
+(e)⚖🆕|balance, feature
+(*)Added the Lawbringer and egun to the Guardbuddy whitelist. They promise not to hurt anyone with them, though.
+(+)Added several gimmick weapons to the Guardbuddy whitelist.
+(+)Guardbuddies are much more helpful if you're trying to change their parts, and can operate a wider variety of gunlike objects.
+(u)Sovexe
+(p)1948
+(e)🆕📄|feature, tgui
+(+)Converted SMES to TGUI
+(u)ThePotato97
+(p)1956
+(e)|
+(+)Monkey doesn't burn itself when going bump anymore.
+(u)Michaellaneous
+(p)1957
+(e)|
+(+)ai eyes and ai in general cannot remove cells from opened APCs anymore
+(u)Superlagg
+(p)1888
+(e)🆕|feature
+(+)Rechargers and manufacturers should no longer take ages to work when exposed to spacelag.
+(+)Manufacturers should now deliver the thing you want it to make in the amount of time it promises.
+(u)BatElite
+(p)1955
+(e)🎨|sprites
+(+)Bees can wear butts again!
 (t)tue aug 25 20
+(u)glassofmilk
+(p)1826
+(e)🆕🎨|feature, sprites
+(*)Added the new Association Component - a MechComp piece that stores key/value pairs
+(u)Tarmunora
+(p)1942
+(e)⚖|balance
+(+)Changed suplexing to interrupt some action bars, notably shambler devour
+(u)Superlagg
+(p)1900
+(e)🆕|feature
+(+)You now keep your held item if you were an antag at any point in the round, or you finish the round in the cryotron.
 (u)Superlagg
 (p)1831
 (e)⚖🆕|balance, feature

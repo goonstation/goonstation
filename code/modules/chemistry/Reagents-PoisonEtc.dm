@@ -214,7 +214,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(rand(10,30) * mult)
-				if(prob(30 * mult))
+				if(prob(percentmult(30, mult)))
 					var/atom/my_atom = holder.my_atom
 					var/turf/location = 0
 					if (my_atom)

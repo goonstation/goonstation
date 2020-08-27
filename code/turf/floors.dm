@@ -1697,7 +1697,7 @@
 	icon_state = "gauntwall"
 // --------------------------------------------
 
-/turf/proc/fall_to(var/turf/T, var/atom/A)
+/turf/proc/fall_to(var/turf/T, var/atom/movable/A)
 	if(istype(A, /obj/overlay/tile_effect)) //Ok enough light falling places. Fak.
 		return
 	if (isturf(T))
@@ -1712,8 +1712,7 @@
 			M.changeStatus("paralysis", 70)
 			SPAWN_DBG(0)
 				playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
-		T.contents += A
-		T.Entered(A)
+		A.set_loc(T)
 		return
 
 /turf/unsimulated/floor/setpieces
@@ -1724,19 +1723,21 @@
 		name = "broken staircase"
 		desc = "You can't see the bottom."
 		icon_state = "black"
+		var/target_landmark = LANDMARK_FALL_ANCIENT
 
 		Entered(atom/A as mob|obj)
 			if (isobserver(A) || (istype(A, /obj/critter) && A:flying))
 				return ..()
 
-			if (ancientfall.len)
-				var/turf/T = pick(ancientfall)
+			var/turf/T = pick_landmark(target_landmark)
+			if(T)
 				fall_to(T, A)
 				return
 			else ..()
 
 		shaft
 			name = "Elevator Shaft"
+			target_landmark = LANDMARK_FALL_BIO_ELE
 
 			Entered(atom/A as mob|obj)
 				if (istype(A, /mob) && !istype(A, /mob/dead))
@@ -1772,8 +1773,8 @@
 				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
 					return ..()
 
-				if (deepfall.len)
-					var/turf/T = pick(deepfall)
+				var/turf/T = pick_landmark(LANDMARK_FALL_DEEP)
+				if(T)
 					fall_to(T, A)
 					return
 				else ..()

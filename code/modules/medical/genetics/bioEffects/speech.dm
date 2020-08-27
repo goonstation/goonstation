@@ -702,7 +702,7 @@
 	name = "Frontal Gyrus Alteration Type-SD"
 	desc = "Forces the language center of the subject's brain to bark out sentences like a dog."
 	id = "accent_scoob"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel like you've got some work to do now."
 	msgLose = "You feel like you've found yourself."
