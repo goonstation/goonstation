@@ -396,7 +396,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				if (prob(35*mult) && ishuman(M))
+				if (prob(percentmult(35, mult)) && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if (H.reagents && H.reagents.has_reagent("stable_omega_hairgrownium"))
 						omega_hairgrownium_drop_hair(H)
@@ -420,7 +420,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				if (prob(35*mult) && ishuman(M))
+				if (prob(percentmult(35, mult)) && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if (H.reagents && H.reagents.has_reagent("unstable_omega_hairgrownium"))
 						omega_hairgrownium_drop_hair(H)
