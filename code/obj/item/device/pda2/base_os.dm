@@ -187,7 +187,7 @@
 								. += "None detected.<br>"
 
 					else if (src.message_mode == 1)
-						. += {"<a href='byond://?src=\ref[src];message_func=clear'>Clear</a> |
+						. += {"<a href='byond://?src=\ref[src];message_func=clear'>Clear</a> | 
 						<a href='byond://?src=\ref[src];message_mode=0'>Back</a><br>
 
 						<h4>Messages</h4>"}
@@ -196,7 +196,7 @@
 						. += "<br>"
 
 					else
-						. += {"<a href='byond://?src=\ref[src];input=mailgroup'>Join/create group</a> |
+						. += {"<a href='byond://?src=\ref[src];input=mailgroup'>Join/create group</a> | 
 						<a href='byond://?src=\ref[src];message_mode=0'>Back</a><br>
 						<h4>Groups</h4>"}
 
