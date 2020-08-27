@@ -7,7 +7,7 @@ on:
 jobs:
   post-to-forums:
     runs-on: ubuntu-latest
-    if: ${{ github.repository == 'goonstation/goonstation' && github.event.label == 'input wanted' }}
+    if: ${{ github.repository == 'goonstation/goonstation' && github.event.label.name == 'input wanted' }}
     steps:
     - name: Get The Script
       run: |
