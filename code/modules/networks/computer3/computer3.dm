@@ -63,6 +63,12 @@
 			setup_starting_peripheral2 = /obj/item/peripheral/printer
 			setup_starting_program = /datum/computer/file/terminal_program/medical_records
 
+#if ASS_JAM
+			New()
+				. = ..()
+				ADD_MORTY(6, 13, 9, 9)
+#endif
+
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
 				icon_state = "medicalcomputer1"

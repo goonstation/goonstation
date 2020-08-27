@@ -1,4 +1,37 @@
 
+(t)wed aug 26 20
+(u)Superlagg
+(p)1842
+(e)⚖🆕|balance, feature
+(*)Defibrillators now prevent cardiac arrest for a few seconds, and make it more likely for subsequent shocks to cure cardiac arrest.
+(+)Defibrillators are now about 60% less effective at curing robotic transformation.
+(u)Superlagg
+(p)1777
+(e)⚖🆕|balance, feature
+(*)Added the Lawbringer and egun to the Guardbuddy whitelist. They promise not to hurt anyone with them, though.
+(+)Added several gimmick weapons to the Guardbuddy whitelist.
+(+)Guardbuddies are much more helpful if you're trying to change their parts, and can operate a wider variety of gunlike objects.
+(u)Sovexe
+(p)1948
+(e)🆕📄|feature, tgui
+(+)Converted SMES to TGUI
+(u)ThePotato97
+(p)1956
+(e)|
+(+)Monkey doesn't burn itself when going bump anymore.
+(u)Michaellaneous
+(p)1957
+(e)|
+(+)ai eyes and ai in general cannot remove cells from opened APCs anymore
+(u)Superlagg
+(p)1888
+(e)🆕|feature
+(+)Rechargers and manufacturers should no longer take ages to work when exposed to spacelag.
+(+)Manufacturers should now deliver the thing you want it to make in the amount of time it promises.
+(u)BatElite
+(p)1955
+(e)🎨|sprites
+(+)Bees can wear butts again!
 (t)tue aug 25 20
 (u)glassofmilk
 (p)1826
