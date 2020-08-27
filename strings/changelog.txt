@@ -1,4 +1,9 @@
 
+(t)thu aug 27 20
+(u)Michaellaneous
+(p)1959
+(e)🆕|feature
+(+)Slotting in a cartridge into a PDA now ejects the old one, if present
 (t)wed aug 26 20
 (u)Superlagg
 (p)1842

@@ -220,8 +220,7 @@ datum/shuttle_controller
 										boutput( O.buckled_guy, "<span class='alert'>The [O] shoots off due to being unsecured!</span>" )
 										O.unbuckle()
 									if( target )
-										SPAWN_DBG(0)
-											O.throw_at( target, 25, 1 )//dear god I am sorry in advance for doing this
+										O.throw_at( target, 25, 1 )//dear god I am sorry in advance for doing this
 							else if(istype( A, /mob ))
 								var/mob/M = A
 								shake_camera(M, 32, 4)
@@ -240,14 +239,13 @@ datum/shuttle_controller
 
 										if (prob(50) || bonus_stun)
 											var/atom/target = get_edge_target_turf(M, pick(alldirs))
-											SPAWN_DBG(0)
-												if (target)
-													if (M.buckled) M.buckled.unbuckle()
-													M.throw_at(target, 25, 1)
-													if (bonus_stun)
-														M.changeStatus("paralysis", 60)
-														M.playsound_local(target, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-														M.show_text("You are thrown off the chair! [prob(50) ? "Standing on that during takeoff was a terrible idea!" : null]", "red")
+											if (target)
+												if (M.buckled) M.buckled.unbuckle()
+												M.throw_at(target, 25, 1)
+												if (bonus_stun)
+													M.changeStatus("paralysis", 60)
+													M.playsound_local(target, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+													M.show_text("You are thrown off the chair! [prob(50) ? "Standing on that during takeoff was a terrible idea!" : null]", "red")
 
 										if (!bonus_stun)
 											M.show_text("You are thrown about as the shuttle launches due to not being securely buckled in!", "red")

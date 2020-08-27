@@ -120,8 +120,7 @@
 		M.remove_stamina(80 + power) //lotsa stamina damage whoa!!
 
 		var/turf/throw_at = get_edge_target_turf(src, src.dir)
-		SPAWN_DBG(0)
-			M.throw_at(throw_at, 10, 2)
+		M.throw_at(throw_at, 10, 2)
 		playsound(src.loc, "swing_hit", 40, 1)
 		logTheThing("station", src, target, "tackles [target] using football gear [log_loc(src)].")
 	else if(isturf(target))
@@ -249,7 +248,7 @@
 	ex_act(severity)
 		return
 
-/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
+/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
 	src.icon_state = "football_air"
 	..()
 

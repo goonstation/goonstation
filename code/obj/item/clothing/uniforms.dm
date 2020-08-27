@@ -900,6 +900,7 @@
 /obj/item/clothing/under/shirt_pants
 	name = "shirt and pants"
 	desc = "A button-down shirt and some pants."
+	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
 	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 	icon_state = "shirt_n_pant-b"
 	item_state = "shirt_n_pant-b"

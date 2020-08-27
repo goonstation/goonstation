@@ -361,19 +361,6 @@ var/list/statusGroupLimits = list("Food"=4)
 		icon_state = "heart+"
 		unique = 1
 		maxDuration = 12 SECONDS // Just slightly longer than a defib's charge cycle
-		var/mob/living/carbon/human/H
-
-		onAdd(var/optional=null)
-			. = ..()
-			if (ismob(owner))
-				var/mob/mob_owner = owner
-				APPLY_MOB_PROPERTY(mob_owner, PROP_DEFIBRILLATED, src.type)
-
-		onRemove()
-			if (ismob(owner))
-				var/mob/mob_owner = owner
-				REMOVE_MOB_PROPERTY(mob_owner, PROP_DEFIBRILLATED, src.type)
-			. = ..()
 
 		getTooltip()
 			return "You've been zapped in a way your heart seems to like!<br>You feel more resistant to cardiac arrest, and more likely for subsequent defibrillating shocks to restart your heart if it stops!"

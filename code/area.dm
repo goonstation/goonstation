@@ -678,9 +678,8 @@
 		if (!isobserver(Obj) && !isintangible(Obj) && !iswraith(Obj) && !istype(Obj,/obj/machinery/vehicle/escape_pod))
 			var/atom/target = get_edge_target_turf(src, src.throw_dir)
 			if (OldLoc && isturf(OldLoc))
-				SPAWN_DBG(0)
-					if (target && Obj)
-						Obj.throw_at(target, 1, 1)
+				if (target && Obj)
+					Obj?.throw_at(target, 1, 1)
 
 	Exited(atom/movable/Obj)
 		..()

@@ -22,7 +22,7 @@
 			switch(owner.health)
 				if (-INFINITY to -100)
 					owner.take_oxygen_deprivation(1 * mult)
-					if (prob(owner.health * -0.1  * mult) && !HAS_MOB_PROPERTY(owner, PROP_DEFIBRILLATED))
+					if (prob(owner.health * -0.1  * mult) && !owner.hasStatus("defibbed"))
 						owner.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 						//boutput(world, "\b LOG: ADDED FLATLINE TO [src].")
 					if (prob(owner.health * -0.2  * mult))
@@ -84,6 +84,6 @@
 				var/deathchance = min(99, ((owner.get_brain_damage() * -5) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.01)
 				if (prob(deathchance))
 					owner.death()
-				
+
 
 		..()
