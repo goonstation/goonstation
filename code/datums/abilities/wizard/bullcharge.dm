@@ -45,7 +45,7 @@
 					some_idiot.changeStatus("weakened", 3 SECONDS)
 					some_idiot.TakeDamage("chest", 33, 0, 0, DAMAGE_BLUNT)//it's magic. no armor 4 u
 				affected += M
-				SPAWN_DBG(0) M.throw_at(get_edge_cheap(T, B.dir), 30, 1)
+				M.throw_at(get_edge_cheap(T, B.dir), 30, 1)
 			sleep(0.1 SECONDS)
 
 		qdel(B)
