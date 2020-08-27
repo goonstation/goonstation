@@ -451,8 +451,15 @@
 			can_be_made = (mats_used.len >= A.item_paths.len)
 
 			var/icon_text = ""
+			// @todo probably refactor this since it's copy pasted twice now.
 			if (A.item_outputs)
 				var/icon_rsc = getItemIcon(A.item_outputs[1])
+				user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				icon_text = "<img class='icon' src='[icon_rsc]'>"
+
+			if (istype(A, /datum/manufacture/mechanics))
+				var/datum/manufacture/mechanics/F = A
+				var/icon_rsc = getItemIcon(F.frame_path)
 				user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
@@ -1402,8 +1409,14 @@
 			else
 				src.materials_in_use = mats_used
 
-			src.powconsumption = 1500
-			src.powconsumption *= src.speed * 1.5
+			// speed/power usage
+			// spd   time    new     old (1500 * speed * 1.5)
+			// 1:    10.0s     750   2250
+			// 2:     5.0s    3000   4500
+			// 3:     3.3s    6750   6750
+			// 4:     2.5s   12000   9000
+			// 5:     2.0s   18750  11250
+			src.powconsumption = 750 * src.speed ** 2
 			src.timeleft = M.time
 			if (src.malfunction)
 				src.powconsumption += 3000
@@ -1695,6 +1708,13 @@
 				var/icon_rsc = getItemIcon(A.item_outputs[1])
 				usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 				icon_text = "<img class='icon' src='[icon_rsc]'>"
+
+			if (istype(A, /datum/manufacture/mechanics))
+				var/datum/manufacture/mechanics/F = A
+				var/icon_rsc = getItemIcon(F.frame_path)
+				user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				icon_text = "<img class='icon' src='[icon_rsc]'>"
+
 
 			dat += {"
 		<div class='queue'>
