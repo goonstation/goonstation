@@ -13,7 +13,6 @@
 	dir = 4
 	bound_height = 96
 	bound_width = 96
-	flags = TGUI_INTERACTIVE
 	var/range = 100			//how far the beam goes, set to max(world.maxx,world.maxy) in New()
 	var/output = PTLMINOUTPUT		//power output of the beam
 	var/capacity = 1e15
