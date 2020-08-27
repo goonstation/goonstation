@@ -16,10 +16,11 @@ deadguy@=Oh damn, there goes@,Let's smoke a fat one fer@,Light one up fer@,Take 
 murraycompliment@=fine@,okay@,neato@,decent@,allright@,juicy
 grilladvice@=you're gonna wanna flip that@,you got a nice sear going on that@,you really gotta seal in the juices on a grilled@,all you want is salt and pepper on that@,gonna need a few more minutes on that@,I ever tell you how to grill a@,lemme show you how to grill a real@,let me at that@,what a mouthwatering@,I can already taste that@,oh man, now THAT is a good, juicy
 stories1@=
+	that time i got a New York strip fer four bucks and change
 	the time I got fined fer tax evasion
 	the time I stole a bus
 	the time I got busted
-	corea
+	second corea
 	the Italians
 	the time I lost the code
 	the time I technically did a war crime
@@ -91,8 +92,10 @@ stories1@=
 	the right way to untangle headphones
 	where to find a real banana nowadays
 	how to understand an orange
-	 model trains
-	 how to grill the meats They don't want you to grill
+	model trains
+	how to grill the meats They don't want you to grill
 	my illegal juicin' techniques? -wait wait, is this a setup?
 	where the real good plum sauce is hidden away
-	what they actually put in the 'rillos?
+	what they actually put in the 'rillos
+	the Sin of all Flesh
+
