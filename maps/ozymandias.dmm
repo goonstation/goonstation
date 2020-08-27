@@ -511,7 +511,7 @@
 /turf/simulated/floor/plating,
 /area/station/mining/refinery)
 "ajt" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass,
@@ -9864,7 +9864,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/aviary)
 "dbc" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/decal/tile_edge/line/green{
@@ -23252,7 +23252,7 @@
 /obj/stool/chair/office/green{
 	dir = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor,
@@ -25682,7 +25682,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "hQq" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor,
@@ -42139,7 +42139,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -52405,7 +52405,7 @@
 	name = "Engineering Air Hookups"
 	})
 "pMt" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/atmospherics/pipe/simple{
@@ -55225,7 +55225,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor/engine/caution/west,
@@ -57853,7 +57853,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "rsy" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/cable{
@@ -59128,7 +59128,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /turf/simulated/floor/grime,
@@ -59259,7 +59259,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor/plating/random,
@@ -60487,7 +60487,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
 "sdP" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/atmospherics/pipe/simple{
@@ -75175,7 +75175,7 @@
 /area/listeningpost)
 "vZz" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/plating/random,
