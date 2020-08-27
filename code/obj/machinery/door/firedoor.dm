@@ -17,7 +17,6 @@
 	proc/setup()
 		for (var/obj/machinery/door/D in src.loc)
 			var/obj/machinery/door/firedoor/pyro/P = new/obj/machinery/door/firedoor/pyro(src.loc)
-			P.loc = src.loc
 			P.dir = D.dir
 			P.layer = D.layer + 0.01
 			break

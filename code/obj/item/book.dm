@@ -2868,6 +2868,12 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 		name = "Medbay Pocket Guide"
 		icon_state = "mediguide"
 
+#if ASS_JAM
+		New()
+			. = ..()
+			ADD_MORTY(12, 14, 9, 9)
+#endif
+
 		info = {"<body><h1>NT MEDICAL DIVISION</h1>
 		<h2>Introductory briefing for aspiring Medical Doctors!</h2>
 		<br>

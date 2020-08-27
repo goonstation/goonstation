@@ -127,7 +127,7 @@
 	pixel_x = -16
 	mouse_opacity = 0
 	New(var/atom/location)
-		src.loc = location
+		src.set_loc(location)
 		SPAWN_DBG(2 SECONDS) qdel(src)
 		return ..(location)
 
@@ -142,7 +142,7 @@
 	pixel_x = -16
 	mouse_opacity = 0
 	New(var/atom/location)
-		src.loc = location
+		src.set_loc(location)
 		SPAWN_DBG(2 SECONDS) qdel(src)
 		return ..(location)
 
@@ -670,12 +670,12 @@ obj/decal/fakeobjects/teleport_pad
 	name = "QM Navigation Guide"
 	desc = "The quartermaster is in this direction."
 	icon_state = "guide_qm"
-	
+
 /obj/decal/tile_edge/floorguide/hop
 	name = "Head Of Personnel Navigation Guide"
 	desc = "The Head of Personnel's office is in this direction."
 	icon_state = "guide_hop"
-	
+
 /obj/decal/tile_edge/floorguide/ai
 	name = "AI Navigation Guide"
 	desc = "The AI core is in this direction."

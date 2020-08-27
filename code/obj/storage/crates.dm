@@ -19,7 +19,9 @@
 	update_icon()
 		..()
 		if(src.delivery_destination)
-			src.overlays += "crate-barcode"
+			src.UpdateOverlays(image(src.icon, "crate-barcode"), "barcode")
+		else
+			src.UpdateOverlays(null, "barcode")
 
 
 	CanPass(atom/movable/mover, turf/target)
@@ -73,6 +75,11 @@
 	icon_state = "medicalcrate"
 	icon_opened = "medicalcrateopen"
 	icon_closed = "medicalcrate"
+#if ASS_JAM
+	update_icon()
+		. = ..()
+		ADD_MORTY(14, 5, 5, 5)
+#endif
 
 /obj/storage/crate/medical/morgue
 	name = "morgue supplies crate"

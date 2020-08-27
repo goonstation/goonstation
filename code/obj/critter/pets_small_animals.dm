@@ -206,20 +206,6 @@
 	name = "Morty"
 	generic = 0
 
-var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "Litterbox",
-"Reginald", "Poosycat", "Dr. Purrsworthy", "Lt. Scratches", "Michael Catson",
-"Fluffy", "Mr. Purrfect", "Lord Furstooth", "Lion-O", "Johnathan", "Gary Catglitter",
-"Chat de Gaulle", "Ratbag",
-"Baron Fuzzykins, Defiler of Carpets", "Robert Meowgabe", "Chairman Meow", "Bacon",
-"Prunella", "Poonella", "SEXCOPTER", "Fat, Lazy Piece of Shit", "Jones Mk. II",
-"Jones Mk. III", "Jones Mk. IV", "Jones Mk.V", "Mr. Meowgi",
-"Furrston von Purringsworth", "Garfadukecliff", "SyndiCat", "Rosa Fluffemberg",
-"Karl Meowx", "Margaret Scratcher", "Marcel Purroust", "Franz Katka", "Das Katpital",
-"Proletaricat", "Perestroikat", "Mewy P. Newton", "Fidel Catstro", "George Lucats",
-"Lin Miao", "Felix Purrzhinsky", "Pol Pet", "Piggy", "Long Kitty", "Caterella", "Aristocat",
-"Arthur Cat Clarke", "Prick", "Pantalaimon", "Purrsula K. Le Guin", "Douglas Pat 'Ems",
-"Gato", "Zebra", "Possum", "Myst", "Too", "P", "Z", "Catopus")
-
 // hi I added my childhood cats' names to the list cause I miss em, they aren't really funny names but they were great cats
 // remove em if you want I guess
 // - Haine
@@ -251,7 +237,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 			src.is_pet = 1
 		..()
 		if (src.randomize_cat)
-			src.name = pick(cat_names)
+			src.name = pick_string_autokey("names/cats.txt")
 
 #ifdef HALLOWEEN
 			src.cattype = 3 //Black cats for halloween.
@@ -453,7 +439,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 	desc = "Although this cat is vegan, it's still a carnivore."
 
 	New()
-		name = pick(cat_names)
+		name = pick_string_autokey("names/cats.txt")
 		..()
 
 /obj/critter/dog/george

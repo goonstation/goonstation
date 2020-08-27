@@ -124,7 +124,7 @@
 	proc/beginFab()
 		active = 1
 		icon_state = "fab-mov"
-		holo.loc = src.loc
+		holo.set_loc(src.loc)
 		var/turf/outputLoc = get_turf(src.loc) //this shouldn't be unset going into the proc due to being set prior, but I wanted to be sure
 		var/progress = 0
 		var/noiseThreshold = (0.8 * fabTime) - 2 //don't play noises all the way till the end as they carry on a bit
@@ -144,8 +144,8 @@
 				f.dir = override_dir
 			else
 				f.dir = src.dir
-			f.loc = src.loc
-		holo.loc = src
+			f.set_loc(src.loc)
+		holo.set_loc(src)
 		holo.alpha = 5
 		active = 0
 		icon_state = "fab-still"

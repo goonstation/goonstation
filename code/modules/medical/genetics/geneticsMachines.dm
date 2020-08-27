@@ -10,8 +10,6 @@
 #define GENETICS_EMITTERS 3
 #define GENETICS_RECLAIMER 4
 
-var/list/genetics_computers = list()
-
 /obj/machinery/computer/genetics
 	name = "genetics console"
 	icon = 'icons/obj/computer.dmi'
@@ -42,7 +40,7 @@ var/list/genetics_computers = list()
 
 /obj/machinery/computer/genetics/New()
 	..()
-	genetics_computers += src
+	START_TRACKING
 	SPAWN_DBG(0.5 SECONDS)
 		src.scanner = locate(/obj/machinery/genetics_scanner, orange(1,src))
 		return
@@ -56,7 +54,7 @@ var/list/genetics_computers = list()
 
 
 /obj/machinery/computer/genetics/disposing()
-	genetics_computers -= src
+	STOP_TRACKING
 	..()
 
 
@@ -478,13 +476,13 @@ var/list/genetics_computers = list()
 		if(globalInstance != null)
 			var/name_string = "Unknown Mutation"
 			var/desc_string = "Research on a non-active instance of this gene is required."
-			if (globalInstance.research_level == 3)
+			if (globalInstance.research_level == EFFECT_RESEARCH_ACTIVATED)
 				name_string = globalInstance.name
 				desc_string = globalInstance.desc
-			else if (globalInstance.research_level == 2)
+			else if (globalInstance.research_level == EFFECT_RESEARCH_DONE)
 				name_string = E.name
 				desc_string = E.desc
-			else if (globalInstance.research_level == 1)
+			else if (globalInstance.research_level == EFFECT_RESEARCH_IN_PROGRESS)
 				desc_string = "Research on this gene is currently in progress."
 
 			html_list += "<p><b>[name_string]</b><br>[desc_string]</p>"
@@ -519,13 +517,13 @@ var/list/genetics_computers = list()
 		if(globalInstance != null)
 			var/name_string = "Unknown Mutation"
 			var/desc_string = "Research on a non-active instance of this gene is required."
-			if (globalInstance.research_level == 3)
+			if (globalInstance.research_level == EFFECT_RESEARCH_ACTIVATED)
 				name_string = globalInstance.name
 				desc_string = globalInstance.desc
-			else if (globalInstance.research_level == 2)
+			else if (globalInstance.research_level == EFFECT_RESEARCH_DONE)
 				name_string = E.name
 				desc_string = E.desc
-			else if (globalInstance.research_level == 1)
+			else if (globalInstance.research_level == EFFECT_RESEARCH_IN_PROGRESS)
 				desc_string = "Research on this gene is currently in progress."
 
 			html_list += "<p><b>[name_string]</b><br>[desc_string]</p>"
@@ -664,7 +662,7 @@ var/list/genetics_computers = list()
 				var/datum/bioEffect/NEWBE = new GR.result(src)
 				saved_mutations += NEWBE
 				var/datum/bioEffect/GBE = NEWBE.get_global_instance()
-				GBE.research_level = max(GBE.research_level,3) // counts as researching it
+				GBE.research_level = max(GBE.research_level, EFFECT_RESEARCH_ACTIVATED) // counts as researching it
 				for (var/X in combining)
 					saved_mutations -= X
 					combining -= X
@@ -756,7 +754,7 @@ var/list/genetics_computers = list()
 		var/booth_effect_desc = input(usr, "Please enter a product description.", "$$$", "") as null|text
 		booth_effect_desc = strip_html(booth_effect_desc,280)
 
-		for (var/obj/machinery/genetics_booth/GB in genetics_computers)
+		for (var/obj/machinery/genetics_booth/GB in by_type[/obj/machinery/genetics_booth])
 			var/already_has = 0
 			for (var/datum/geneboothproduct/P in GB.offered_genes)
 				if (P.id == E.id)
@@ -1362,11 +1360,11 @@ var/list/genetics_computers = list()
 				var/datum/bioEffect/BE
 				for(var/X in bioEffectList)
 					BE = bioEffectList[X]
-					if (!BE.scanner_visibility || BE.research_level < 2)
+					if (!BE.scanner_visibility || BE.research_level < EFFECT_RESEARCH_DONE)
 						continue
-					if (BE.research_level == 2)
+					if (BE.research_level == EFFECT_RESEARCH_DONE)
 						html_list += "- <a href=\"javascript:goBYOND('researched_mutation=\ref[BE]')\">[BE.name]</a><br>"
-					else if (BE.research_level == 3)
+					else if (BE.research_level == EFFECT_RESEARCH_ACTIVATED)
 						html_list += "* <a href=\"javascript:goBYOND('researched_mutation=\ref[BE]')\">[BE.name]</a><br>"
 				html_list += "</p>"
 
@@ -1472,7 +1470,7 @@ var/list/genetics_computers = list()
 				var/datum/bioEffect/BE
 				for (var/X in bioEffectList)
 					BE = bioEffectList[X]
-					if (BE.effectType == effectTypeMutantRace && BE.research_level >= 2 && BE.mutantrace_option)
+					if (BE.effectType == EFFECT_TYPE_MUTANTRACE && BE.research_level >= 2 && BE.mutantrace_option)
 						options += BE
 					else continue
 

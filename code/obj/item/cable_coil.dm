@@ -104,7 +104,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			if (ismob(loc))
 				var/mob/owner = loc
 				owner.u_equip(src)
-			loc = newloc
+			set_loc(newloc)
 			return src
 		src.use(amt)
 		var/obj/item/cable_coil/C = new /obj/item/cable_coil(newloc)

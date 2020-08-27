@@ -54,7 +54,7 @@
 
 			SPAWN_DBG(0)
 				var/obj/machinery/door/poddoor/door = null
-				for(var/obj/machinery/door/poddoor/P in doors)
+				for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 					if (P.id == driver.id)
 						door = P
 						SPAWN_DBG(0)

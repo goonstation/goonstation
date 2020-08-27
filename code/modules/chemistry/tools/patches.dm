@@ -191,7 +191,7 @@
 				user.drop_item(src)
 				//user.u_equip(src)
 				//qdel(src)
-				src.loc = M
+				src.set_loc(M)
 				if (isliving(M))
 					var/mob/living/L = M
 					L.skin_process += src
@@ -406,7 +406,7 @@
 	attack_self(var/mob/user)
 		if (patches.len)
 			var/obj/item/reagent_containers/patch/P = patches[patches.len]
-			P.loc = user.loc
+			P.set_loc(user.loc)
 			patches -= P
 			update_overlay()
 			boutput(user, "<span class='notice'>You remove [P] from the stack.</span>")
@@ -427,7 +427,7 @@
 					U.contents -= target
 					if (U.hud)
 						U.hud.update()
-				target.loc = src
+				target.set_loc(src)
 				patches += target
 				update_overlay()
 				boutput(user, "<span class='notice'>You add [target] to the stack.</span>")
@@ -643,6 +643,6 @@
 				..()
 				user.show_text("[M] is finished healing and powers down automatically.", "blue")
 				return
-		
+
 		looped++
 		src.onRestart()

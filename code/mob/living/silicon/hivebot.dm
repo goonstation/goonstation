@@ -581,8 +581,7 @@
 						var/turf/T = get_edge_target_turf(user, user.dir)
 						if (isturf(T))
 							src.visible_message("<span class='alert'><B>[user] savagely punches [src], sending them flying!</B></span>")
-							SPAWN_DBG (0)
-								src.throw_at(T, 10, 2)
+							src.throw_at(T, 10, 2)
 				/*if (user.glove_weaponcheck())
 					user.energyclaws_attack(src)*/
 				else

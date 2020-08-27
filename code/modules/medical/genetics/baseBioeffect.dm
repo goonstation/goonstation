@@ -1,12 +1,4 @@
-//Defines don't work correctly here because FUCK BYOND ARGH
-//#define effectTypeMutantRace 1
-//#define effectTypeDisability 2
-//#define effectTypePower 3
-//SO INSTEAD , GLOBAL VARS. GEE THANKS BYOND.
-var/const/effectTypeMutantRace = 1
-var/const/effectTypeDisability = 2
-var/const/effectTypePower = 3
-var/const/effectTypeFood = 4
+//Effect type defines in _std/_defines/bioeffect.dm
 
 /datum/bioEffect
 	var/name = "" //Name of the effect.
@@ -15,11 +7,10 @@ var/const/effectTypeFood = 4
 	var/researched_desc = null // You get this in mutation research if you've activated the effect
 	var/datum/bioEffect/global_instance = null // bioeffectlist version of this effect
 	var/datum/bioEffect/power/global_instance_power = null //just a power casted version of global instance
-	var/research_level = 0
-	// 0 = not, 1 = in progress, 2 = done, 3 = activated
+	var/research_level = EFFECT_RESEARCH_NONE
 	var/research_finish_time = 0
 
-	var/effectType = effectTypeDisability //Used to categorize effects. Mostly used for MutantRaces to prevent the mob from getting more than one.
+	var/effectType = EFFECT_TYPE_DISABILITY //Used to categorize effects. Mostly used for MutantRaces to prevent the mob from getting more than one.
 	var/mutantrace_option = null
 	var/isBad = 0         //Is this a bad effect? Used to determine which effects to use for certain things (radiation etc).
 
@@ -86,6 +77,9 @@ var/const/effectTypeFood = 4
 		return ..()
 
 	disposing()
+		if(src.holder)
+			src.holder.RemovePoolEffect(src)
+			src.holder.RemoveEffect(src.id)
 		if(!removed)
 			src.OnRemove()
 		holder = null
