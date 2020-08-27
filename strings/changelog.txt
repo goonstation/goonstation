@@ -1,9 +1,5 @@
 
 (t)thu aug 27 20
-(u)Kubius
-(p)1944
-(e)🆕🗺|feature, mapping
-(*)Added a new station, Ozymandias.
 (u)Zamujasa
 (e)⚖🆕|balance, feature
 (*)Major manufacturer UI update.
