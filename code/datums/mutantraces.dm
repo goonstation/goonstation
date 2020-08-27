@@ -455,13 +455,15 @@
 
 	New(var/mob/living/carbon/human/H)
 		..()
+
+		detail_1 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-1", layer = MOB_LIMB_LAYER+0.1)
+		detail_2 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-2", layer = MOB_LIMB_LAYER+0.2)
+		detail_3 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-3", layer = MOB_LIMB_LAYER+0.3)
+		detail_over_suit = image('icons/effects/genetics.dmi', icon_state="lizard_over_suit", layer = MOB_LAYER_BASE+0.3)
+
 		if(ishuman(mob))
 			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
 
-			detail_1 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-1", layer = MOB_LIMB_LAYER+0.1)
-			detail_2 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-2", layer = MOB_LIMB_LAYER+0.2)
-			detail_3 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-3", layer = MOB_LIMB_LAYER+0.3)
-			detail_over_suit = image('icons/effects/genetics.dmi', icon_state="lizard_over_suit", layer = MOB_LAYER_BASE+0.3)
 
 			hex_to_rgb_list(aH.customization_first_color)
 
@@ -1559,14 +1561,14 @@
 
 	New(var/mob/living/carbon/human/H)
 		..()
+
+		detail_1 = image('icons/effects/genetics.dmi', icon_state="cow_detail-1", layer = MOB_LIMB_LAYER+0.1)
+		detail_over_suit = image('icons/effects/genetics.dmi', icon_state="cow_over_suit", layer = MOB_LAYER_BASE+0.3)
+
 		if(ishuman(mob))
 			var/datum/appearanceHolder/aH = mob.bioHolder.mobAppearance
 
-			detail_1 = image('icons/effects/genetics.dmi', icon_state="cow_detail-1", layer = MOB_LIMB_LAYER+0.1)
-			detail_over_suit = image('icons/effects/genetics.dmi', icon_state="cow_over_suit", layer = MOB_LAYER_BASE+0.3)
-
 			hex_to_rgb_list(aH.customization_first_color)
-
 			detail_1.color = fix_colors(aH.customization_first_color)
 
 			mob.update_face()

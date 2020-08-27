@@ -12,7 +12,6 @@ datum/preferences
 	var/age = 30
 	var/pin = null
 	var/blType = "A+"
-	var/species = "Human"
 
 	var/flavor_text // I'm gunna regret this aren't I
 	// These notes are put in the datacore records on the start of the round
@@ -176,30 +175,36 @@ datum/preferences
 			src.preview_icon.Blend(AH.s_tone, ICON_MULTIPLY)
 
 		var/hairicon = 'icons/mob/human_hair.dmi'
-		var/customization_first_r = customization_styles[AH.customization_first]
-		var/customization_second_r = customization_styles[AH.customization_second]
-		var/customization_third_r = customization_styles[AH.customization_third]
-
-		if (!customization_first_r)
-			customization_first_r = "None"
-		if (!customization_second_r)
-			customization_second_r = "None"
-		if (!customization_third_r)
-			customization_third_r = "none"
+		var/customization_first_r = null
+		var/customization_second_r = null
+		var/customization_third_r = null
 
 		if (pick_species?.icon && pick_species?.icon_state)
 			hairicon = pick_species.icon
-			if (pick_species?.override_hair)
-				if (pick_species?.detail_1)
-					customization_first_r = pick_species.detail_1.icon_state
-			if (pick_species?.override_beard)
-				if (pick_species?.detail_2)
-					customization_second_r = pick_species.detail_2.icon_state
-			if (pick_species?.override_detail)
-				if (pick_species?.detail_3)
-					customization_third_r = pick_species.detail_3.icon_state
+			if (pick_species?.detail_1)
+				customization_first_r = pick_species.detail_1.icon_state
+			else
+				customization_first_r = "blank_c"
+			if (pick_species?.detail_2)
+				customization_second_r = pick_species.detail_2.icon_state
+			else
+				customization_second_r = "blank_c"
+			if (pick_species?.detail_3)
+				customization_third_r = pick_species.detail_3.icon_state
+			else
+				customization_third_r = "blank_c"
+		else
+			customization_first_r = customization_styles[AH.customization_first]
+			if (!customization_first_r)
+				customization_first_r = "None"
+			customization_second_r = customization_styles[AH.customization_second]
+			if (!customization_second_r)
+				customization_second_r = "None"
+			customization_third_r = customization_styles[AH.customization_third]
+			if (!customization_third_r)
+				customization_third_r = "none"
 
-		var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = "eyes", "dir" = src.spessman_direction)
+		var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = pick_species ? "none" : "eyes", "dir" = src.spessman_direction)
 		if (is_valid_color_string(AH.e_color))
 			eyes_s.Blend(AH.e_color, ICON_MULTIPLY)
 		else
@@ -207,7 +212,7 @@ datum/preferences
 
 		var/icon/hair_s = new/icon("icon" = hairicon, "icon_state" = customization_first_r, "dir" = src.spessman_direction)
 		var/first_color_string = AH.customization_first_color
-		if (pick_species?.name == "Lizard" || pick_species?.name == "Cow")
+		if (pick_species?.name == "lizard" || pick_species?.name == "cow")
 			first_color_string = fix_colors(AH.customization_first_color)
 		else if (pick_species?.override_skintone)
 			first_color_string = "#FFFFFF"
@@ -218,7 +223,7 @@ datum/preferences
 
 		var/icon/facial_s = new/icon("icon" = hairicon, "icon_state" = customization_second_r, "dir" = src.spessman_direction)
 		var/second_color_string = AH.customization_second_color
-		if (pick_species?.name == "Lizard")
+		if (pick_species?.name == "lizard")
 			second_color_string = fix_colors(AH.customization_second_color)
 		else if (pick_species?.override_skintone)
 			second_color_string = "#FFFFFF"
@@ -229,7 +234,7 @@ datum/preferences
 
 		var/icon/detail_s = new/icon("icon" = hairicon, "icon_state" = customization_third_r, "dir" = src.spessman_direction)
 		var/third_color_string = AH.customization_third_color
-		if (pick_species?.name == "Lizard")
+		if (pick_species?.name == "lizard")
 			third_color_string = fix_colors(AH.customization_third_color)
 		else if (pick_species?.override_skintone)
 			third_color_string = "#FFFFFF"

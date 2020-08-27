@@ -96,6 +96,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		s_tone = toCopy.s_tone
 
+		spawn_species = toCopy.spawn_species
+
 		underwear = toCopy.underwear
 		u_color = toCopy.u_color
 
