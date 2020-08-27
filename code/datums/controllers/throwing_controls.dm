@@ -115,9 +115,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 			if (thr.thrown_from) //if we have this param we should use it to get the REAL distance.
 				thing.throw_traveled = get_dist(get_turf(thing), get_turf(thr.thrown_from))
 
-			if(isobj(thing))
-				var/obj/O = thing
-				O.throw_impact(get_turf(thing), thr.params)
+			thing.throw_impact(get_turf(thing), thr.params)
 
 			thing.throw_traveled = 0
 			thing.throw_count = 0
