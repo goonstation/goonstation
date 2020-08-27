@@ -25,7 +25,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/customization_third_color = "#101010"
 	var/customization_third = "None"
 
-	var/spawn_species = "Human"
+	var/datum/mutantrace/spawn_species = null
 
 	var/e_color = "#101010"
 

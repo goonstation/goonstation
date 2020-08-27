@@ -620,7 +620,7 @@ a.latejoin-card:hover {
 
 		client.preferences.copy_to(new_character,src)
 		if(new_character.bioHolder.mobAppearance.spawn_species)
-			new_character.set_mutantrace(list_of_species[new_character.bioHolder.mobAppearance.spawn_species])
+			new_character.set_mutantrace(new_character.bioHolder.mobAppearance.spawn_species)
 		var/client/C = client
 		mind.transfer_to(new_character)
 

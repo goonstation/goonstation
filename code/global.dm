@@ -114,12 +114,6 @@ var/global
 	"Colorblind" = 'icons/mob/hud_human_new_colorblind.dmi',
 	"Vaporized" = 'icons/mob/hud_human_vapor.dmi')
 
-	list/list_of_species = list("Human" = null,
-	"Lizard" = /datum/mutantrace/lizard,
-	"Cow" = /datum/mutantrace/cow,
-	"Roach" = /datum/mutantrace/roach,
-	"Skeleton" = /datum/mutantrace/skeleton)
-
 	list/customization_styles = list("None" = "none",
 	/*Short*/
 	"Afro" = "afro",
