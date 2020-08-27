@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2020
+ * @author Sovexe (https://github.com/Sovexe)
+ * @license ISC
+ */
+
 import { useBackend } from '../backend';
 import { LabeledList, Section, Box } from '../components';
 import { formatPower, formatSiUnit } from '../format';
@@ -72,12 +79,12 @@ export const TEG = (props, context) => {
             <LabeledList.Item
               label="Intlet Pressure"
               textAlign="right" >
-              {formatSiUnit(Math.max(hotInletPres, 0), 0, 'Pa')}
+              {formatSiUnit(Math.max(hotInletPres, 1), 0, 'Pa')}
             </LabeledList.Item>
             <LabeledList.Item
               label="Outlet Pressure"
               textAlign="right" >
-              {formatSiUnit(hotOutletPres, 0, 'Pa')}
+              {formatSiUnit(hotOutletPres, 1, 'Pa')}
             </LabeledList.Item>
           </LabeledList>
         </Section>
@@ -99,12 +106,12 @@ export const TEG = (props, context) => {
             <LabeledList.Item
               label="Inlet Pressure"
               textAlign="right" >
-              {formatSiUnit(Math.max(coldInletPres, 0), 0, 'Pa')}
+              {formatSiUnit(Math.max(coldInletPres, 0), 1, 'Pa')}
             </LabeledList.Item>
             <LabeledList.Item
               label="Outlet Pressure"
               textAlign="right" >
-              {formatSiUnit(coldOutletPres, 0, 'Pa')}
+              {formatSiUnit(coldOutletPres, 1, 'Pa')}
             </LabeledList.Item>
           </LabeledList>
         </Section>
