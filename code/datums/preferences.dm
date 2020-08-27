@@ -162,14 +162,17 @@ datum/preferences
 			return
 
 		src.preview_icon = null
-		var/datum/mutantrace/pick_species = list_of_species[src.species]
-		if(src.species == "Human")
-			src.preview_icon = new /icon('icons/mob/human.dmi', "body_[src.gender == MALE ? "m" : "f"]", "dir" = src.spessman_direction)
-		else
+		var/datum/mutantrace/start_pick_species = list_of_species[AH.spawn_species]
+		var/datum/mutantrace/pick_species = null
+		if (list_of_species[AH.spawn_species])
+			pick_species = new start_pick_species
+		if(pick_species?.icon && pick_species?.icon_state)
 			src.preview_icon = new /icon(pick_species.icon, pick_species.icon_state, "dir" = src.spessman_direction)
+		else
+			src.preview_icon = new /icon('icons/mob/human.dmi', "body_[src.gender == MALE ? "m" : "f"]", "dir" = src.spessman_direction)
 
 		// Skin tone
-		if (AH.s_tone && src.species == "Human")
+		if (AH.s_tone && (!pick_species || !pick_species.override_skintone))
 			src.preview_icon.Blend(AH.s_tone, ICON_MULTIPLY)
 
 		var/hairicon = 'icons/mob/human_hair.dmi'
@@ -184,7 +187,7 @@ datum/preferences
 		if (!customization_third_r)
 			customization_third_r = "none"
 
-		if (src.species != "Human")
+		if (pick_species?.icon && pick_species?.icon_state)
 			hairicon = pick_species.icon
 			if (pick_species?.override_hair)
 				if (pick_species?.detail_1)
@@ -195,7 +198,6 @@ datum/preferences
 			if (pick_species?.override_detail)
 				if (pick_species?.detail_3)
 					customization_third_r = pick_species.detail_3.icon_state
-			if (pick_species?.override_eyes)
 
 		var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = "eyes", "dir" = src.spessman_direction)
 		if (is_valid_color_string(AH.e_color))
@@ -205,7 +207,7 @@ datum/preferences
 
 		var/icon/hair_s = new/icon("icon" = hairicon, "icon_state" = customization_first_r, "dir" = src.spessman_direction)
 		var/first_color_string = AH.customization_first_color
-		if (src.species == "Lizard" || src.species == "Cow")
+		if (pick_species?.name == "Lizard" || pick_species?.name == "Cow")
 			first_color_string = fix_colors(AH.customization_first_color)
 		else if (pick_species?.override_skintone)
 			first_color_string = "#FFFFFF"
@@ -216,7 +218,7 @@ datum/preferences
 
 		var/icon/facial_s = new/icon("icon" = hairicon, "icon_state" = customization_second_r, "dir" = src.spessman_direction)
 		var/second_color_string = AH.customization_second_color
-		if (src.species == "Lizard")
+		if (pick_species?.name == "Lizard")
 			second_color_string = fix_colors(AH.customization_second_color)
 		else if (pick_species?.override_skintone)
 			second_color_string = "#FFFFFF"
@@ -227,7 +229,7 @@ datum/preferences
 
 		var/icon/detail_s = new/icon("icon" = hairicon, "icon_state" = customization_third_r, "dir" = src.spessman_direction)
 		var/third_color_string = AH.customization_third_color
-		if (src.species == "Lizard")
+		if (pick_species?.name == "Lizard")
 			third_color_string = fix_colors(AH.customization_third_color)
 		else if (pick_species?.override_skintone)
 			third_color_string = "#FFFFFF"
@@ -238,7 +240,7 @@ datum/preferences
 
 		var/underwear_style = underwear_styles[AH.underwear]
 		var/icon/underwear_s = new/icon("icon" = 'icons/mob/human_underwear.dmi', "icon_state" = "[underwear_style]", "dir" = src.spessman_direction)
-		if(src.species == "Human")
+		if(!pick_species)
 			if (is_valid_color_string(AH.u_color))
 				underwear_s.Blend(AH.u_color, ICON_MULTIPLY)
 
@@ -681,7 +683,7 @@ $(function() {
 			Species<span class="info-thing" title="Your character's species. Note that robots and the AI might not consider you human if you set this to something other than human!">?</span>
 		</th>
 		<td>
-			[generate_select_table("species", AH.spawn_species, species)]
+			[generate_select_table("species", AH.spawn_species, list_of_species)]
 		</td>
 	</tr>"}
 		LAGCHECK(80)
