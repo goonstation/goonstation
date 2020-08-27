@@ -122,7 +122,7 @@ var/global/list/mapNames = list(
 		// map limits
 		if(job_limits_from_landmarks)
 			for(var/datum/job/J in job_controls.staple_jobs)
-				if(J.name in job_start_locations)
+				if(J.map_can_autooverride && (J.name in job_start_locations))
 					J.limit = length(job_start_locations[J.name])
 
 		for(var/datum/job/J in job_controls.staple_jobs + job_controls.special_jobs)
