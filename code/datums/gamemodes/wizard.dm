@@ -61,11 +61,10 @@
 			continue
 		if(istype(wizard))
 			wizard.special_role = "wizard"
-			if(wizardstart.len == 0)
+			if(!pick(job_start_locations["wizard"]))
 				boutput(wizard.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 			else
-				var/starting_loc = pick(wizardstart)
-				wizard.current.set_loc(starting_loc)
+				wizard.current.set_loc(pick(job_start_locations["wizard"]))
 			bestow_objective(wizard,/datum/objective/regular/assassinate)
 			bestow_objective(wizard,/datum/objective/regular/assassinate)
 			bestow_objective(wizard,/datum/objective/regular/assassinate)

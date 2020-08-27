@@ -681,7 +681,7 @@
 	var/sim_delay = 300 //Time until next simulation.
 	power_usage = 200
 
-	var/vr_landmark = "bombtest-bomb" //Landmark where the ~vr bomb~ spawns.
+	var/vr_landmark = LANDMARK_VR_BOMB
 
 	power_change()
 		if(powered())
@@ -882,14 +882,14 @@
 			if(vrbomb)
 				qdel(vrbomb)
 
-			var/obj/landmark/B = locate("landmark*[vr_landmark]")
+			var/turf/B = pick_landmark(vr_landmark)
 			if(!B)
 				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
 				src.visible_message("[src] emits a somber ping.")
 				return
 
 			vrbomb = new
-			vrbomb.set_loc(B.loc)
+			vrbomb.set_loc(B)
 			vrbomb.anchored = 1
 			vrbomb.tester = src
 
@@ -3758,11 +3758,7 @@
 					to_toss.set_loc(src.loc)
 					src.visible_message("<b>[src.name]</b> launches [to_toss]!")
 					playsound(src.loc, "sound/effects/syringeproj.ogg", 50, 1)
-					to_toss.throwforce += throw_strength/4 // adds up to 25
-					SPAWN_DBG(1.5 SECONDS)
-						if (to_toss)
-							to_toss.throwforce -= throw_strength/4
-					to_toss.throw_at(get_edge_target_turf(src, src.dir), throw_strength, (throw_strength/50))
+					to_toss.throw_at(get_edge_target_turf(src, src.dir), throw_strength, throw_strength/50, bonus_throwforce=throw_strength/4)
 
 				if (!src.active)
 					src.visible_message("<b>[src.name]</b> pings.")

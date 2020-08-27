@@ -405,22 +405,20 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
 		var/list/turf/targets = list()
 		for(var/turf/T in view(8, src))
 			targets += T
+		var/list/atom/movable/to_densify = list()
 		for(var/atom/movable/AM in src)
 			if(istype(AM, /obj/screen))
 				continue
 			AM.transform = null
 			AM.set_loc(get_turf(src))
-			SPAWN_DBG(0)
-				var/orig_anchored = AM.anchored
-				var/orig_density = AM.density
-				AM.anchored = 0
-				AM.density = 0
-				AM.throw_at(pick(targets), rand(1, 10), rand(1, 15))
-				AM.anchored = orig_anchored
-				sleep(0.5 SECONDS)
-				AM.density = orig_density
+			if(AM.density)
+				to_densify += AM
+			AM.density = 0
+			AM.throw_at(pick(targets), rand(1, 10), rand(1, 15), allow_anchored=TRUE)
 		. = ..()
 		SPAWN_DBG(1 SECOND)
+			for(var/atom/movable/AM in to_densify)
+				AM.density = TRUE
 			src.transforming = 1
 			src.canmove = 0
 			src.icon = null

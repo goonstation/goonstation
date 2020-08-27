@@ -58,12 +58,10 @@ var/maniac_previous_victim = "Unknown"
 				target.ckey = "" // disconnect the player so they rejoin wondering what the hell happened
 				sleep(0)
 				var/mob/dead/observer/ghost = new/mob/dead/observer
-				for (var/obj/landmark/A in landmarks)//world)
-					LAGCHECK(LAG_LOW)
-					if (A.name == "evilchef_corpse")
-						ghost.set_loc(A.loc)
-						var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(A.loc)
-						meat.name = "[victimname] meat"
+				for(var/turf/T in landmarks[LANDMARK_EVIL_CHEF_CORPSE])
+					ghost.set_loc(T)
+					var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(T)
+					meat.name = "[victimname] meat"
 				ghost.ckey = victimkey
 				ghost.name = victimname // should've added this sooner
 				ghost.real_name = victimname

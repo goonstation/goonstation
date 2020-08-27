@@ -840,10 +840,9 @@
 			flick(src.icon_vend,src)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
 		src.generate_HTML(1)
-		SPAWN_DBG(0)
-			throw_item.throw_at(target, 16, 3)
-			src.visible_message("<span class='alert'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
-			postvend_effect()
+		throw_item.throw_at(target, 16, 3)
+		src.visible_message("<span class='alert'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
+		postvend_effect()
 		return 1
 	return 0
 
@@ -1082,6 +1081,13 @@
 	lr = 1
 	lg = 0.88
 	lb = 0.88
+
+#if ASS_JAM
+	New()
+		. = ..()
+		if(src.type == /obj/machinery/vending/medical)
+			ADD_MORTY(7, 8, 12, 12)
+#endif
 
 	create_products()
 		..()

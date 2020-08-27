@@ -826,10 +826,10 @@ var/global/noir = 0
 				var/team
 				var/type = href_list["type"]
 				if (type == "1")
-					M.set_loc(pick(tdome1))
+					M.set_loc(pick_landmark(LANDMARK_THUNDERDOME_1))
 					team = "Team 1"
 				else if (type == "2")
-					M.set_loc(pick(tdome2))
+					M.set_loc(pick_landmark(LANDMARK_THUNDERDOME_2))
 					team = "Team 2"
 
 				logTheThing("admin", usr, M, "sent [constructTarget(M,"admin")] to the thunderdome. ([team])")
@@ -2333,7 +2333,7 @@ var/global/noir = 0
 						logTheThing("admin", usr, null, "teleported all players to the prison zone.")
 						logTheThing("diary", usr, null, "teleported all players to the prison zone.", "admin")
 						for(var/mob/living/carbon/human/H in mobs)
-							var/turf/loc = find_loc(H)
+							var/turf/loc = get_turf(H)
 							var/security = 0
 							if(loc.z > 1 || prisonwarped.Find(H))
 								//don't warp them if they aren't ready or are already there
@@ -2345,12 +2345,11 @@ var/global/noir = 0
 										security++
 							if(!security)
 								//teleport person to cell
-								H.set_loc(pick(prisonwarp))
+								H.set_loc(pick_landmark(LANDMARK_PRISONWARP))
 							else
 								//teleport security person
-								H.set_loc(pick(prisonsecuritywarp))
+								H.set_loc(pick_landmark(LANDMARK_PRISONSECURITYWARP))
 							prisonwarped += H
-							LAGCHECK(LAG_LOW)
 					if("traitor_all")
 						if (src.level >= LEVEL_SA)
 							if(!ticker)

@@ -848,8 +848,7 @@
 		M.changeStatus("stunned", 80)
 		M.changeStatus("weakened", 5 SECONDS)
 		var/turf/target = get_edge_target_turf(ship, ship.dir)
-		SPAWN_DBG(0)
-			M.throw_at(target, 4, 2)
+		M.throw_at(target, 4, 2)
 		playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		in_bump = 0

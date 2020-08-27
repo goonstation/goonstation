@@ -404,18 +404,17 @@
 	Entered(atom/movable/A as mob|obj)
 		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
 			return ..()
-		if (icefall.len)
-			var/turf/T = pick(seafall)
-			if (isturf(T))
-				visible_message("<span class='alert'>[A] falls down [src]!</span>")
-				if (ismob(A))
-					var/mob/M = A
-					random_brute_damage(M, 25)
-					M.changeStatus("weakened", 5 SECONDS)
-					M.emote("scream")
-					playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
-				A.set_loc(T)
-				return
+		var/turf/T = pick_landmark(LANDMARK_FALL_SEA)
+		if (isturf(T))
+			visible_message("<span class='alert'>[A] falls down [src]!</span>")
+			if (ismob(A))
+				var/mob/M = A
+				random_brute_damage(M, 25)
+				M.changeStatus("weakened", 5 SECONDS)
+				M.emote("scream")
+				playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+			A.set_loc(T)
+			return
 		else ..()
 
 /obj/machinery/computer/sea_elevator

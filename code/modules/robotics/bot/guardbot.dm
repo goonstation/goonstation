@@ -1447,8 +1447,7 @@
 			throwparts += new /obj/item/guardbot_frame(T)
 			for(var/obj/O in throwparts) //This is why it is called "throwparts"
 				var/edge = get_edge_target_turf(src, pick(alldirs))
-				SPAWN_DBG(0)
-					O.throw_at(edge, 100, 4)
+				O.throw_at(edge, 100, 4)
 
 			SPAWN_DBG(0) //Delete the overlay when finished with it.
 				src.on = 0
