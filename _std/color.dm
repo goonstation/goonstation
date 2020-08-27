@@ -108,3 +108,6 @@
 
 /proc/random_color()
 	return rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+
+//Color matrices		// vv Values modified from those obtained from https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
+#define MATRIX_PROTANOPIA 0.55,0.45,0.000,0.55,0.45,0.000,0.000,0.25,1.0,0.0,0.0,0.0

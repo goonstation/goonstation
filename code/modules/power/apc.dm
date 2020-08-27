@@ -532,7 +532,7 @@ var/zapLimiter = 0
 
 	interact_particle(user,src)
 
-	if(opened && (!issilicon(user) || isghostdrone(user)))
+	if(opened && (!issilicon(user) || isghostdrone(user) || !isAI(user)))
 		if(cell)
 			user.put_in_hand_or_drop(cell)
 			cell.updateicon()
