@@ -1082,13 +1082,6 @@
 	lg = 0.88
 	lb = 0.88
 
-#if ASS_JAM
-	New()
-		. = ..()
-		if(src.type == /obj/machinery/vending/medical)
-			ADD_MORTY(7, 8, 12, 12)
-#endif
-
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 12)

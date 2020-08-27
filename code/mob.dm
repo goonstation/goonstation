@@ -479,7 +479,7 @@
 	src.antagonist_overlay_refresh(1, 0)
 
 #if ASS_JAM
-	ass_day_popup(src)
+		ass_day_popup(src)
 #endif
 
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
