@@ -518,6 +518,7 @@
 
 	var/T = pick(trinket_safelist)
 	var/obj/item/trinket = null
+	var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 		trinket = null //You better stay null, you hear me!
@@ -535,6 +536,8 @@
 			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("smoker"))
 		trinket = new/obj/item/device/light/zippo(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
+		trinket = new random_lunchbox_path(src)
 	else
 		trinket = new T(src)
 

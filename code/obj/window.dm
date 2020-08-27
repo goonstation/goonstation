@@ -732,6 +732,7 @@
 
 	attackby()
 	hitby()
+		SHOULD_CALL_PARENT(FALSE)
 	reagent_act()
 	bullet_act()
 	ex_act()
