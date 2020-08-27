@@ -36,7 +36,7 @@ rcd light flash thingy on matter drain
 /client/proc/fireproof_core()
 	set category = "AI Modules"
 	set name = "Fireproof Core"
-	for(var/mob/living/silicon/ai/ai in AIs)
+	for(var/mob/living/silicon/ai/ai in by_type[/mob/living/silicon/ai])
 		ai.fire_res_on_core = 1
 	usr.verbs -= /client/proc/fireproof_core
 	boutput(usr, "<span class='alert'>Core fireproofed.</span>")

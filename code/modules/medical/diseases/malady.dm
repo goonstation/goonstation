@@ -502,7 +502,7 @@
 			affected_mob.take_oxygen_deprivation(1)
 			if (prob(8))
 				affected_mob.emote(pick("twitch", "gasp"))
-			if (prob(1)) // down from 5
+			if (prob(1) && !affected_mob.hasStatus("defibbed")) // down from 5
 				affected_mob.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 
 /* -------------------- Cardiac Arrest -------------------- */

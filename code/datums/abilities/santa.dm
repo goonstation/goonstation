@@ -238,7 +238,7 @@
 						break
 				if(clear)
 					L+=T
-		holder.owner.loc = pick(L)
+		holder.owner.set_loc(pick(L))
 
 /datum/targetable/santa/banish
 	name = "Banish Krampus"

@@ -1,4 +1,142 @@
 
+(t)thu aug 27 20
+(u)Michaellaneous
+(p)1959
+(e)🆕|feature
+(+)Slotting in a cartridge into a PDA now ejects the old one, if present
+(t)wed aug 26 20
+(u)Superlagg
+(p)1842
+(e)⚖🆕|balance, feature
+(*)Defibrillators now prevent cardiac arrest for a few seconds, and make it more likely for subsequent shocks to cure cardiac arrest.
+(+)Defibrillators are now about 60% less effective at curing robotic transformation.
+(u)Superlagg
+(p)1777
+(e)⚖🆕|balance, feature
+(*)Added the Lawbringer and egun to the Guardbuddy whitelist. They promise not to hurt anyone with them, though.
+(+)Added several gimmick weapons to the Guardbuddy whitelist.
+(+)Guardbuddies are much more helpful if you're trying to change their parts, and can operate a wider variety of gunlike objects.
+(u)Sovexe
+(p)1948
+(e)🆕📄|feature, tgui
+(+)Converted SMES to TGUI
+(u)ThePotato97
+(p)1956
+(e)|
+(+)Monkey doesn't burn itself when going bump anymore.
+(u)Michaellaneous
+(p)1957
+(e)|
+(+)ai eyes and ai in general cannot remove cells from opened APCs anymore
+(u)Superlagg
+(p)1888
+(e)🆕|feature
+(+)Rechargers and manufacturers should no longer take ages to work when exposed to spacelag.
+(+)Manufacturers should now deliver the thing you want it to make in the amount of time it promises.
+(u)BatElite
+(p)1955
+(e)🎨|sprites
+(+)Bees can wear butts again!
+(t)tue aug 25 20
+(u)glassofmilk
+(p)1826
+(e)🆕🎨|feature, sprites
+(*)Added the new Association Component - a MechComp piece that stores key/value pairs
+(u)Tarmunora
+(p)1942
+(e)⚖|balance
+(+)Changed suplexing to interrupt some action bars, notably shambler devour
+(u)Superlagg
+(p)1900
+(e)🆕|feature
+(+)You now keep your held item if you were an antag at any point in the round, or you finish the round in the cryotron.
+(u)Superlagg
+(p)1831
+(e)⚖🆕|balance, feature
+(*)Werewolves now talk and see like a dog.
+(u)Carbadox
+(p)1884
+(e)🆕|feature
+(+)Added a trait to replace your trinket with a lunchbox.
+(+)Added a dozen of empty lunchboxes to the Kitchen vendor. Now chefs can prepare packed lunches for the whole crew! Maybe you'll cute handwritten note (or maybe death threat, who knows).
+(u)Janonas
+(p)1873
+(e)🆕🎨|feature, sprites
+(*)Added a new botany plant, Ipecacuanha - use it to create a powerful emetic!
+(u)Kubius
+(p)1943
+(e)🗺|mapping
+(+)Kondaru fix batch time again! Prominently, gene power module and more defibs.
+(u)zjdtmkhzt
+(p)1939
+(e)🆕|feature
+(*)Lots of smaller artifact-related bugs were fixed, so artifacts may behave a little differently than they used to. Mysterious!
+(u)Superlagg
+(p)1243
+(e)⚖🆕|balance, feature
+(*)Tox, brain, and oxy medkits now have more useful auto-injectors!
+(+)Added a new emergency medkit specifically for deep crit. Ask your local QM or salesbot today!
+(u)ThePotato97
+(p)1846
+(e)|
+(+)Fixed the Infravision trait.
+(u)Michaellaneous
+(p)1918
+(e)⚖|balance
+(+)Medium and small spiders now can't grab people anymore.
+(u)Jawns
+(p)1927
+(e)🐛|bug
+(+)Ghost drone popsicle duplication feature removed
+(u)zjdtmkhzt
+(p)1891
+(e)⚖|balance
+(+)AIs and cyborgs now have su access at terminals.
+(u)RichardGere
+(p)1802
+(e)🆕📄|feature, tgui
+(*)Gas canisters and tanks have had their UIs updated. Report any bugs!
+(+)Fixed a bug where remote signalers attached to canister bombs didn't properly turn off the safety.
+(t)mon aug 24 20
+(u)zjdtmkhzt
+(p)1920
+(e)🆕|feature
+(+)The pitcher in the artifact lab should now actually scale its power properly for force artifacts.
+(u)pali
+(p)1913
+(e)🆕|feature
+(+)Muzzle flashes now emit a bit of light.
+(u)Michaellaneous
+(p)1919
+(e)|
+(+)Added logic to allow bowls to be recycled
+(u)Michaellaneous
+(p)1915
+(e)🗺|mapping
+(+)Added siren helmets to gimmick wardrobe and removed the hardcoded items from maps
+(t)sun aug 23 20
+(u)Zamujasa
+(*)Updated the round setup stuff. The countdown now starts immediately, and the game setup takes place while the countdown is running. This means rounds start about 2-3 minutes faster on average.
+(*)Map voting is enabled with 60 seconds left on the countdown rather than after setup completes.
+(*)If setup hasn't finished yet, the countdown will automatically stop at 30 seconds until it finishes.
+(u)adharainspace
+(p)1887
+(e)🆕|feature
+(*)what counts as round participation should be more consistent now.
+(u)Michaellaneous
+(p)1912
+(e)🗺|mapping
+(+)Oshan - Removed duplicate items already present in adventure chest.
+(t)sat aug 22 20
+(u)Superlagg
+(p)1894
+(e)⚖|balance
+(+)X-Drones are now much more expensive to manufacture.
+(t)thu aug 20 20
+(u)zjdtmkhzt
+(p)1883
+(e)⚖|balance
+(+)General Manufacturers can now produce rods directly.
 (t)wed aug 19 20
 (u)adharainspace
 (p)1876

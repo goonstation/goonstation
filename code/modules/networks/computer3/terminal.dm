@@ -117,7 +117,7 @@ file_save - Save file to local disk."}
 					var/datum/signal/newsig = new
 					newsig.data["registered"] = isAI(usr) ? "AI" : "CYBORG"
 					newsig.data["assignment"] = "AI"
-					newsig.data["access"] = "0"
+					newsig.data["access"] = "34"
 
 					SPAWN_DBG (4)
 						switch( src.receive_command(src.master, "card_authed", newsig) )

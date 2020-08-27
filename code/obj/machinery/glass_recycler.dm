@@ -44,6 +44,8 @@
 				if (istype(W,/obj/item/reagent_containers/food/drinks/bottle))
 					var/obj/item/reagent_containers/food/drinks/bottle/B = W
 					if (!B.broken) glass_amt += 1
+				else
+					glass_amt += W.amount
 			else
 				glass_amt += W.amount
 			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")

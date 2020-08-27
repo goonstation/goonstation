@@ -16,6 +16,9 @@
 			if (kit_styles && kit_styles.len)
 				icon_state = pick(kit_styles)
 				item_state = icon_state
+#if ASS_JAM
+		ADD_MORTY(13, 11, 5, 5)
+#endif
 
 /obj/item/storage/firstaid/regular
 	icon_state = "firstaid1"
@@ -71,28 +74,48 @@
 	name = "toxin first aid"
 	icon_state = "toxin1"
 	item_state = "toxin1"
-	desc = "A medical kit designed to counter poisoning by common toxins. Contains three pills and syringes, and a health analyzer to determine the health of the patient."
+	desc = "A medical kit designed to counter radiation and poisoning by common toxins. Contains two pills each of anti-toxin and anti-radiation medicine, a syringe of a powerful purgative, and a health analyzer to determine the health of the patient."
 	kit_styles = list("toxin1", "toxin2", "toxin3", "toxin4")
-	spawn_contents = list(/obj/item/reagent_containers/syringe/antitoxin = 3,\
-	/obj/item/reagent_containers/pill/antitox = 3,\
+	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/epinephrine,\
+	/obj/item/reagent_containers/emergency_injector/charcoal = 1,\
+	/obj/item/reagent_containers/pill/antirad = 2,\
+	/obj/item/reagent_containers/pill/antitox = 2,\
 	/obj/item/device/analyzer/healthanalyzer)
 
 /obj/item/storage/firstaid/oxygen
 	name = "oxygen deprivation first aid"
 	icon_state = "O21"
 	item_state = "O21"
-	desc = "A first aid kit that contains four pills of salbutamol, which is able to counter injuries caused by suffocation. Also contains a health analyzer to determine the health of the patient."
+	desc = "A first aid kit that contains three pills and two auto-injectors of salbutamol, which is able to counter injuries caused by suffocation. Also contains a health analyzer to determine the health of the patient."
 	kit_styles = list("O21", "O22", "O23", "O24")
-	spawn_contents = list(/obj/item/reagent_containers/pill/salbutamol = 4,\
+	spawn_contents = list(/obj/item/reagent_containers/pill/salbutamol = 3,\
+	/obj/item/reagent_containers/emergency_injector/salbutamol = 2,\
+	/obj/item/reagent_containers/emergency_injector/epinephrine,\
 	/obj/item/device/analyzer/healthanalyzer)
 
 /obj/item/storage/firstaid/brain
 	name = "neurological damage first aid"
 	icon_state = "brain1"
 	item_state = "brain1"
-	desc = "A medical kit that contains four pills of mannitol, which can heal brain damage. Also contains a health analyzer to determine the health of the patient."
+	desc = "A medical kit that contains three pills and two auto-injectors of mannitol, which can heal brain damage. Also contains a health analyzer to determine the health of the patient."
 	kit_styles = list("brain1", "brain2", "brain3")
-	spawn_contents = list(/obj/item/reagent_containers/pill/mannitol = 4,\
+	spawn_contents = list(/obj/item/reagent_containers/pill/mannitol = 3,\
+	/obj/item/reagent_containers/emergency_injector/mannitol = 2,\
+	/obj/item/reagent_containers/emergency_injector/epinephrine,\
+	/obj/item/device/analyzer/healthanalyzer)
+
+/obj/item/storage/firstaid/crit
+	name = "emergency critical-condition first aid"
+	icon_state = "berserk1"
+	item_state = "berserk1"
+	desc = "An all-in-one emergency crash-kit designed to bring a critically wounded patient back from the brink of death. Contains cardiac stimulants, cerebral anti-edemics, and blood-oxygenation agents, all in convenient auto-injector form. Also contains an upgraded health analyzer to determine the health of the patient."
+	kit_styles = list("berserk1", "berserk2", "berserk3")
+	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/mannitol = 1,\
+	/obj/item/reagent_containers/emergency_injector/perf = 1,\
+	/obj/item/reagent_containers/emergency_injector/atropine = 1,\
+	/obj/item/reagent_containers/emergency_injector/saline,\
+	/obj/item/reagent_containers/emergency_injector/synaptizine = 1,\
+	/obj/item/reagent_containers/emergency_injector/epinephrine = 1,\
 	/obj/item/device/analyzer/healthanalyzer)
 
 // Medkit filled with old crud for shady QM merchants (Convair880).
@@ -236,6 +259,11 @@
 	icon_state = "health_upgr"
 	desc = "A box containing health analyzer reagent scan upgrade cards."
 	spawn_contents = list(/obj/item/device/analyzer/healthanalyzer_upgrade = 7)
+#if ASS_JAM
+	New()
+		..()
+		ADD_MORTY(13, 9, 7, 7)
+#endif
 
 /obj/item/storage/box/iv_box
 	name = "\improper IV drip box"
@@ -341,6 +369,12 @@
 	desc = "A wall-mounted storage container that has a few medical supplies in it."
 	icon_state = "minimed"
 	spawn_contents = list()
+
+#if ASS_JAM
+	New()
+		. = ..()
+		ADD_MORTY(10, 7, 12, 12)
+#endif
 
 	make_my_stuff()
 		..()

@@ -177,7 +177,6 @@ var/mutable_appearance/fluid_ma
 		is_setup = 0
 		blocked_dirs = 0
 		blocked_perspective_objects["[dir]"] = 0
-		src.loc = null
 		my_depth_level = 0
 
 		..()

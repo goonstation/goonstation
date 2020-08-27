@@ -27,7 +27,7 @@
 		return
 
 	if (client.mob.mind)
-		karma_update(1, "SIN", client.mob)
+		client.mob.add_karma(-1)
 
 //	for_no_raisin(client.mob, msg)
 
@@ -45,6 +45,15 @@
 	boutput(client.mob, "<span class='ahelp'><font size='3'><b><span class='alert'>HELP: </span> You</b>: [msg]</font></span>")
 	logTheThing("admin_help", client.mob, null, "HELP: [msg]")
 	logTheThing("diary", client.mob, null, "HELP: [msg]", "ahelp")
+
+	if (!first_adminhelp_happened)
+		first_adminhelp_happened = 1
+		var/ircmsg[] = new()
+		ircmsg["key"] = "Loggo"
+		ircmsg["name"] = "First Adminhelp Notice"
+		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
+		ircbot.export("help", ircmsg)
+
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
 	ircmsg["name"] = client.mob.real_name
@@ -152,7 +161,7 @@
 		return
 
 	if (client.mob.mind)
-		karma_update(1, "SIN", src)
+		src.add_karma(-1)
 
 	boutput(client.mob, "<B>You whisper a silent prayer,</B> <I>\"[msg]\"</I>")
 	logTheThing("admin_help", client.mob, null, "PRAYER: [msg]")
@@ -247,4 +256,4 @@
 				if (K.client.player_mode && !K.client.player_mode_ahelp)
 					continue
 				else
-					boutput(K, "<span class='internal'><b>PM: [key_name(user,0,0)][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
+					boutput(K, "<span class='ahelp'><b>PM: [key_name(user,0,0)][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")

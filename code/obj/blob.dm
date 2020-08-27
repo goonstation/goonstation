@@ -142,7 +142,6 @@ var/image/blob_icon_cache
 		in_disposing = 1
 		var/datum/controller/process/blob/B = get_master_blob_controller()
 		B.blobs -= src
-		blobs -= src
 		if (istype(overmind))
 			overmind.blobs -= src
 			if (gen_rate_value > 0)

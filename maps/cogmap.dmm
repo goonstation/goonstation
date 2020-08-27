@@ -8442,7 +8442,7 @@
 /area/station/crew_quarters/cafeteria)
 "atC" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "atD" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/table/reinforced/auto,
@@ -8457,10 +8457,10 @@
 	},
 /obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "atE" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "atF" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -8584,7 +8584,7 @@
 /obj/item/gun/russianrevolver,
 /obj/item/storage/firstaid/toxin,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "atR" = (
 /obj/storage/cart,
 /turf/simulated/floor/grime,
@@ -8973,10 +8973,10 @@
 	},
 /obj/machinery/vending/alcohol,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "auR" = (
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "auS" = (
 /obj/stool,
 /obj/machinery/firealarm{
@@ -8985,7 +8985,7 @@
 	},
 /obj/item/clothing/head/helmet/space/santahat,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "auT" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -8995,7 +8995,7 @@
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "auU" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -9516,7 +9516,7 @@
 	name = "Barman"
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "awe" = (
 /obj/cable{
 	d1 = 1;
@@ -9524,7 +9524,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "awf" = (
 /obj/cable{
 	d1 = 4;
@@ -9539,7 +9539,7 @@
 /obj/access_spawn/bar,
 /obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "awg" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -10187,7 +10187,7 @@
 	name = "Cafeteria Intercom"
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "axt" = (
 /obj/storage/secure/closet/civilian/bartender,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -10197,7 +10197,7 @@
 /obj/item/reagent_containers/food/drinks/bottle,
 /obj/item/reagent_containers/food/drinks/bottle,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "axu" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
@@ -10212,7 +10212,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/bar)
+/area/station/crew_quarters/baroffice)
 "axw" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -14595,8 +14595,6 @@
 /area/station/security/main)
 "aGy" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "aGz" = (

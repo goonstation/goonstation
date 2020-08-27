@@ -284,7 +284,7 @@
 
 	logTheThing("station", user, null, "toggled the [src.name] at [log_loc(src)].")
 
-	for (var/obj/machinery/door/poddoor/M in doors)
+	for (var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			if (M.density)
 				M.open()
@@ -297,7 +297,7 @@
 					SPAWN_DBG(src.timer)
 						M.open()
 
-	for (var/obj/machinery/door/airlock/M in doors)
+	for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			if (M.density)
 				M.open()
@@ -363,7 +363,7 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/door/poddoor/M in doors)
+	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			M.open()
 
@@ -375,7 +375,7 @@
 
 	sleep(5 SECONDS)
 
-	for(var/obj/machinery/door/poddoor/M in doors)
+	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			M.close()
 
@@ -725,7 +725,7 @@
 			return
 		use_power(5)
 
-		for(var/obj/machinery/door/poddoor/M in doors)
+		for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)
 				if (M.density)
 					M.open()
@@ -749,7 +749,7 @@
 					return
 				use_power(5)
 
-				for(var/obj/machinery/door/poddoor/M in doors)
+				for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 					if (M.id == src.id)
 						if (M.density)
 							M.open()

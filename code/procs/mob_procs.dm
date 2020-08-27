@@ -140,8 +140,7 @@
 		src.pulling = null
 
 		var/turf/T = get_ranged_target_turf(src, src.last_move_dir, throw_range)
-		SPAWN_DBG(0)
-			src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
+		src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
 		.= 1
 
 /mob/living/carbon/human/slip(walking_matters = 1, running = 0, ignore_actual_delay = 0)

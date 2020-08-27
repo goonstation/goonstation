@@ -639,7 +639,7 @@
 		else if (amount <= 9999)
 			src.maptext = "<div style='font-size:8px; color:maroon;text-align:center;'>[amount]</div>"
 			src.maptext_y = 8
-		else 
+		else
 			src.maptext = "<div style='font-size:8px; color:maroon;text-align:center;'>+</div>"
 			src.maptext_y = 8
 
@@ -698,8 +698,7 @@
 		if (prob(20))
 			var/turf/target = get_edge_target_turf(user, get_dir(user, M))
 			user.visible_message("<span class='alert'>[user] sends [M] flying with mighty oak-like strength!</span>")
-			SPAWN_DBG(0)
-				M.throw_at(target, 5, 1)
+			M.throw_at(target, 5, 1)
 
 /obj/item/kudzu/kudzumen_vine/proc/build_buttons()
 	if (src.contextActions != null)	//dont need rebuild
@@ -755,7 +754,7 @@
 			return
 
 		kudzu.growth = 1
-		kudzu.update_self()		
+		kudzu.update_self()
 		new creation_path(get_turf(kudzu))
 
 

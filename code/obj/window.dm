@@ -147,7 +147,6 @@
 		src.health = max(0,min(src.health - amount,src.health_max))
 
 		if (src.health == 0 && nosmash)
-			loc = null
 			qdel(src)
 		else if (src.health == 0 && !nosmash)
 			smash()
@@ -207,7 +206,6 @@
 		src.health = max(0,min(src.health - amount,src.health_max))
 		if (src.health == 0)
 			if (nosmash)
-				loc = null
 				qdel(src)
 			else
 				smash()
@@ -734,6 +732,7 @@
 
 	attackby()
 	hitby()
+		SHOULD_CALL_PARENT(FALSE)
 	reagent_act()
 	bullet_act()
 	ex_act()
