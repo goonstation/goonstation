@@ -987,7 +987,7 @@ var/list/mechanics_telepads = new/list()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"zap", "eleczap")
 
-proc/eleczap(var/datum/mechanicsMessage/input)
+	proc/eleczap(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		elecflash(src.loc)
