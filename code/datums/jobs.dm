@@ -86,9 +86,6 @@
 						return
 					R.fields["imp"] = "\ref[I]"
 
-					if(H.traitHolder && H.traitHolder.traits.len)
-						R.fields["traits"] = H.traitHolder.traits.Copy()
-
 			var/give_access_implant = ismobcritter(M)
 			if(!spawn_id && (access.len > 0 || access.len == 1 && access[1] != access_fuck_all))
 				give_access_implant = 1
