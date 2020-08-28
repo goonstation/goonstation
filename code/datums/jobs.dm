@@ -76,15 +76,12 @@
 				if(ishuman(M)) H.implant.Add(I)
 				I.implanted(M)
 				if (src.receives_disk && ishuman(M))
-					if (!istype(H.back, /obj/item/storage))
-						return
-					var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back
-					if (!D)
-						return
-					var/datum/computer/file/clone/R = locate(/datum/computer/file/clone/) in D.root.contents
-					if (!R)
-						return
-					R.fields["imp"] = "\ref[I]"
+					if (istype(H.back, /obj/item/storage))
+						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back
+						if (D)
+							var/datum/computer/file/clone/R = locate(/datum/computer/file/clone/) in D.root.contents
+							if (R)
+								R.fields["imp"] = "\ref[I]"
 
 			var/give_access_implant = ismobcritter(M)
 			if(!spawn_id && (access.len > 0 || access.len == 1 && access[1] != access_fuck_all))
