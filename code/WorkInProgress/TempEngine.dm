@@ -463,8 +463,6 @@
 		data["coldOutletPres"] = 0
 	return data
 
-
-
 /obj/machinery/atmospherics/unary/furnace_connector
 
 	icon = 'icons/obj/atmospherics/heat_reservoir.dmi'
