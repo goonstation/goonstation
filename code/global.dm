@@ -739,11 +739,10 @@ var/global
 /proc/sendItemIcons(var/client/C)
 	for (var/key in browse_item_icons)
 		getItemIcon(key = key, C = C)
-		LAGCHECK(LAG_REALTIME)
+		LAGCHECK(LAG_HIGH)
 
 /// Sends all item icons to all clients. Used at world startup to preload things.
 /proc/sendItemIconsToAll()
+	browse_item_initial_done = 1
 	for (var/client/C in clients)
 		sendItemIcons(C)
-		sleep(1)
-	browse_item_initial_done = 1
