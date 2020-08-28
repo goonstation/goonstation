@@ -977,6 +977,54 @@ var/list/mechanics_telepads = new/list()
 		icon_state = "[under_floor ? "u":""]comp_accel"
 		return
 
+/obj/item/mechanics/Zapper
+	name = "Floor Zapper"
+	desc = "Its pretty shocking"
+	icon_state = "comp_zap"
+	can_rotate = 0
+	cabinet_banned = true // non-functional
+	var/active = 0
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+
+	New()
+		..()
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activateproc")
+
+	proc/drivecurrent()
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		var/count = 0
+		for(var/atom/movable/M in src.loc)
+			if(M.anchored) continue
+			count++
+			if(M == src) continue
+			zapstuff(M)
+			if(count > 50) return
+			if(world.tick_usage > 100) return //fuck it, failsafe
+
+	proc/activateproc(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		if(input)
+			if(active) return
+			SPAWN_DBG(0)
+				if(src)
+					active = 1
+					SPAWN_DBG(0) drivecurrent()
+					SPAWN_DBG(0.5 SECONDS) drivecurrent()
+				sleep(3 SECONDS)
+				if(src)
+					active = 0
+		return
+
+	proc/zapstuff(atom/movable/AM as mob|obj)
+		if(level == 2) return
+		elecflash(holder.my_atom.loc)
+		return
+
+	updateIcon()
+		icon_state = "[under_floor ? "u":""]comp_zap"
+		return
+
 /obj/item/mechanics/pausecomp
 	name = "Delay Component"
 	desc = ""
