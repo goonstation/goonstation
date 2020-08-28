@@ -990,7 +990,7 @@ var/list/mechanics_telepads = new/list()
 	proc/eleczap(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
-		elecflash(src.loc)
+		elecflash(src.loc,0, power=3, exclude_center = 0)
 		return
 		
 	updateIcon()
