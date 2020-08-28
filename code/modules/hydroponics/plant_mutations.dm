@@ -443,7 +443,7 @@
 	PTrange = list(420,null)
 	chance = 100
 	assoc_reagents = list("LSD","suicider","space_drugs","mercury","lithium",
-	"atropine", "ephedrine", "haloperidol","methamphetamine","THC","capsaicin","psilocybin","hairgrownium",
+	"atropine", "ephedrine", "haloperidol","methamphetamine","thc","capsaicin","psilocybin","hairgrownium",
 	"ectoplasm","bathsalts","itching","crank","krokodil","catdrugs","histamine")
 
 // Fungus Mutations
