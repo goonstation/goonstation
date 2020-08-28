@@ -6972,6 +6972,9 @@
 /area/station/hangar/sec)
 "aqf" = (
 /obj/table/auto,
+/obj/machinery/defib_mount{
+	pixel_y = 2
+	},
 /obj/item/storage/firstaid/regular,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/reagent_containers/syringe,

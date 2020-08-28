@@ -45131,6 +45131,10 @@
 /area/station/security/brig)
 "bXr" = (
 /obj/table/reinforced/auto,
+/obj/machinery/defib_mount{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /obj/item/storage/firstaid/regular,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/reagent_containers/syringe,
