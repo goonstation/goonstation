@@ -977,7 +977,7 @@ var/list/mechanics_telepads = new/list()
 		icon_state = "[under_floor ? "u":""]comp_accel"
 		return
 
-/obj/item/mechanics/Zapper
+/obj/item/mechanics/zapper
 	name = "Floor Zapper"
 	desc = "Its pretty shocking"
 	icon_state = "comp_zap"
