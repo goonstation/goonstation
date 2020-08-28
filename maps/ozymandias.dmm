@@ -48448,6 +48448,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/blind_switch/area/east{
+	pixel_y = 11
+	},
 /turf/simulated/floor/carpet/purple/fancy/edge/se,
 /area/station/crew_quarters/hor/horprivate)
 "oAX" = (
@@ -61768,6 +61771,7 @@
 /obj/item/device/radio/intercom/medical{
 	dir = 8
 	},
+/obj/blind_switch/area/east,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "sxd" = (
@@ -75686,6 +75690,14 @@
 "wfU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routingdepot/engine)
+"wfW" = (
+/obj/blind_switch/area/north,
+/turf/simulated/floor/greenblack{
+	dir = 8
+	},
+/area/station/crew_quarters/hor{
+	name = "Research Director's Office"
+	})
 "wfZ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/disposal)
@@ -117283,7 +117295,7 @@ dBO
 uVw
 mee
 xhT
-nie
+wfW
 nie
 nPY
 rUC
