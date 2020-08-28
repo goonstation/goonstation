@@ -1683,7 +1683,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 					overlays -= on_fire
 					on_fire = null
 					burn_time = initial(burn_time)
-		else if (id == "ff-foam")
+		else if (id == "ff_foam")
 			if (on_fire)
 				overlays -= on_fire
 				on_fire = null
