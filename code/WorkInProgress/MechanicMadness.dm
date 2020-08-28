@@ -989,11 +989,12 @@ var/list/mechanics_telepads = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"zap", "activateproc")
 
 proc/activateproc(var/datum/mechanicsMessage/input)
-		if(level == 2 || !isReady()) return
-		unReady()
-		LIGHT_UP_HOUSING
-		elecflash(src.loc)
-		return
+		if(level == 1 || !isReady())
+			if(input)
+				unReady()
+				LIGHT_UP_HOUSING
+				elecflash(src.loc)
+		return // not working AAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
 /obj/item/mechanics/pausecomp
 	name = "Delay Component"
