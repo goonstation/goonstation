@@ -33,8 +33,28 @@
 						holder.RemovePoolEffect(src)
 					if(id == "hemochromia_unknown")
 						if(4 >= rand(13))
-							typeRange = 8 //Placeholder for the name-based thing. Delete later.
-							//Name-based thing here.
+							switch(H.bioHolder.bloodType)
+								if("A+")
+									if(pick(1, 2) == 1)
+										typeRange = 1
+									else
+										typeRange = 2
+								if("A-") typeRange = 3
+								if("B+") typeRange = 4
+								if("B-") typeRange = 5
+								if("AB+") typeRange = 6
+								if("O-") typeRange = 7
+								if("O+") typeRange = 8
+								if("AB-")
+									if(pick(1, 2) == 1)
+										typeRange = 9
+									else
+										typeRange = 10
+								else 
+									if(pick(1, 2, 3) == 1)
+										typeRange = 12
+									else
+										typeRange = 11
 						else
 							typeRange = rand(1,12)
 						var/datum/bioEffect/NEW = null
@@ -62,6 +82,7 @@
 	desc = "Causes the subject's blood cells to take on a scarlet coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_rust"
 	effectType = effectTypeMutantRace
+	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
 	lockProb = 5
@@ -96,6 +117,7 @@
 	desc = "Causes the subject's blood cells to take on a copper coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_bronze"
 	effectType = effectTypeMutantRace
+	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
 	lockProb = 5
@@ -130,6 +152,7 @@
 	desc = "Causes the subject's blood cells to take on a brass coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_gold"
 	effectType = effectTypeMutantRace
+	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
 	lockProb = 10
@@ -164,6 +187,7 @@
 	desc = "Causes the subject's blood cells to take on a chartreuse coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_lime"
 	effectType = effectTypeMutantRace
+	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
 	lockProb = 15
@@ -198,6 +222,7 @@
 	desc = "Causes the subject's blood cells to take on a verdant coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_olive"
 	effectType = effectTypeMutantRace
+	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
 	lockProb = 20
@@ -232,6 +257,7 @@
 	desc = "Causes the subject's blood cells to take on an emerald coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_jade"
 	effectType = effectTypeMutantRace
+	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
 	lockProb = 25
@@ -266,6 +292,7 @@
 	desc = "Causes the subject's blood cells to take on a cyan coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_teal"
 	effectType = effectTypeMutantRace
+	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
 	lockProb = 30
@@ -300,6 +327,7 @@
 	desc = "Causes the subject's blood cells to take on a cerulean coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_cobalt"
 	effectType = effectTypeMutantRace
+	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
 	lockProb = 35
@@ -334,6 +362,7 @@
 	desc = "Causes the subject's blood cells to take on an azure coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_indigo"
 	effectType = effectTypeMutantRace
+	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
 	lockProb = 40
@@ -368,6 +397,7 @@
 	desc = "Causes the subject's blood cells to take on a lavander coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_purple"
 	effectType = effectTypeMutantRace
+	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
 	lockProb = 45
@@ -402,6 +432,7 @@
 	desc = "Causes the subject's blood cells to take on a plum coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_violet"
 	effectType = effectTypeMutantRace
+	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
 	lockProb = 50
@@ -436,6 +467,7 @@
 	desc = "Causes the subject's blood cells to take on a magenta coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_fuschia"
 	effectType = effectTypeMutantRace
+	msgGain = "You feel a bit less soft."
 	msgLose = "You feel lightheaded for a moment."
 	reclaim_fail = 10
 	lockProb = 55
