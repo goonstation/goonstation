@@ -53,6 +53,9 @@
 #elif defined(MAP_OVERRIDE_KONDARU)
 #include "kondaru.dm"
 
+#elif defined(MAP_OVERRIDE_OZYMANDIAS)
+#include "ozymandias.dm"
+
 #elif defined(MAP_OVERRIDE_FLEET)
 #include "fleet.dm"
 

@@ -1,5 +1,10 @@
 
 (t)thu aug 27 20
+(u)Michaellaneous
+(p)1971
+(e)|
+(+)Ejecting beaker from chem dispensers now go into hand
+(+)Putting beaker into chem dispenser now opens interface
 (u)Zamujasa
 (e)⚖🆕|balance, feature
 (*)Major manufacturer UI update.

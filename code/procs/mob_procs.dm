@@ -144,7 +144,7 @@
 		.= 1
 
 /mob/living/carbon/human/slip(walking_matters = 1, running = 0, ignore_actual_delay = 0)
-	..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
+	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
 
 
 /mob/living/carbon/human/proc/skeletonize()
