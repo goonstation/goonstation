@@ -371,7 +371,7 @@
 			inventory.color = "#[randcol]"
 			onhead.color = "#[randcol]"
 
-		src.overlays += inventory
+		src.UpdateOverlays(inventory, "surgmaskcolour")
 		src.wear_image.overlays += onhead
 
 /obj/item/paper_mask
