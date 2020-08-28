@@ -11,7 +11,7 @@
 /datum/ailment/disease/berserker/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	if (..())
 		return
-	if (affected_mob.reagents.has_reagent("THC"))
+	if (affected_mob.reagents.has_reagent("thc"))
 		boutput(affected_mob, "<span class='notice'>You mellow out.</span>")
 		affected_mob.cure_disease(D)
 		return
