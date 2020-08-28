@@ -986,15 +986,13 @@ var/list/mechanics_telepads = new/list()
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"zap", "activateproc")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"zap", "eleczap")
 
-proc/activateproc(var/datum/mechanicsMessage/input)
-		if(level == 1 || !isReady())
-			if(input)
-				unReady()
-				LIGHT_UP_HOUSING
-				elecflash(src.loc)
-		return // not working AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+proc/eleczap(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		elecflash(src.loc)
+		return
 
 /obj/item/mechanics/pausecomp
 	name = "Delay Component"
