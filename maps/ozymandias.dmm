@@ -654,7 +654,6 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/instrument/whistle,
-/obj/machinery/recharger/wall/sticky,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-8"
@@ -8253,6 +8252,7 @@
 "cDH" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/east,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -10254,6 +10254,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/crew_quarters/hop)
 "dhZ" = (
@@ -13785,6 +13786,11 @@
 /area/station/hallway/primary/south)
 "elj" = (
 /obj/machinery/vending/medical,
+/obj/machinery/door_control{
+	id = "medibackdoor";
+	name = "Cloning Concourse Exit";
+	pixel_x = 24
+	},
 /turf/simulated/floor/bluewhite/corner,
 /area/station/medical/medbay)
 "elo" = (
@@ -15369,6 +15375,11 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/door_control{
+	id = "bridgecustoms";
+	name = "Bridge Lobby Control";
+	pixel_x = -24
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/customs{
 	name = "Bridge Reception"
@@ -15895,15 +15906,9 @@
 	name = "Medical Hangar"
 	})
 "eRh" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/bridge{
-	name = "Bridge Command Center"
-	})
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/grey,
+/area/station/chapel/main)
 "eRl" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating,
@@ -22384,13 +22389,9 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "gQH" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/bridge/captain)
+/obj/machinery/light_switch/west,
+/turf/simulated/floor/black,
+/area/station/chapel/main)
 "gQI" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -22503,7 +22504,10 @@
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
 "gSU" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	id = "medibackdoor";
+	name = "Medbay"
+	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /turf/simulated/floor/redwhite{
@@ -22529,6 +22533,7 @@
 	pixel_x = -1;
 	pixel_y = 5
 	},
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -23356,6 +23361,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/stairs/wide{
 	dir = 4
 	},
@@ -26943,6 +26949,7 @@
 /turf/simulated/floor/neutral/side,
 /area/station/crew_quarters/quartersA)
 "ilv" = (
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/delivery,
 /area/station/hydroponics)
 "ilz" = (
@@ -29919,6 +29926,9 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/machinery/light_switch/west{
+	pixel_y = -12
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
 "jgL" = (
@@ -30150,6 +30160,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/black,
 /area/station/bridge/customs{
 	name = "Bridge Reception"
@@ -35704,9 +35715,14 @@
 /turf/simulated/floor/grey,
 /area/station/medical/robotics)
 "kRB" = (
-/obj/lattice,
-/turf/space,
-/area/station/bridge/captain)
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/door_control{
+	id = "crusher";
+	name = "Crusher Door Control";
+	pixel_x = -24
+	},
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/disposal)
 "kRG" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -36533,15 +36549,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"ldX" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/station/bridge{
-	name = "Bridge Command Center"
-	})
 "ldY" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
@@ -37179,12 +37186,6 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/airless/black,
 /area)
-"lmD" = (
-/obj/lattice,
-/turf/space,
-/area/station/bridge{
-	name = "Bridge Command Center"
-	})
 "lmF" = (
 /obj/table/reinforced/auto,
 /obj/item/clipboard,
@@ -39432,15 +39433,6 @@
 "lVb" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
-"lVd" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/station/bridge{
-	name = "Bridge Command Center"
-	})
 "lVg" = (
 /obj/cable{
 	d2 = 2;
@@ -40309,6 +40301,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quarters{
 	name = "Chapel Reception"
@@ -40362,6 +40355,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/blind_switch/area/east,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
 "mhk" = (
@@ -41262,15 +41256,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/engineering/private)
-"muc" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/station/bridge{
-	name = "Bridge Command Center"
-	})
 "muo" = (
 /obj/machinery/light{
 	dir = 8;
@@ -42800,15 +42785,6 @@
 /area/station/atmos/hookups/east{
 	name = "Command Air Hookups"
 	})
-"mSd" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/station/bridge{
-	name = "Bridge Command Center"
-	})
 "mSg" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4
@@ -42830,6 +42806,7 @@
 	desc = "Wow! Crate may or may not still contain bottles.";
 	name = "Bottles in a Crate"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner{
 	name = "Hydroponics Storeroom"
@@ -48519,6 +48496,7 @@
 /obj/stool/chair/red{
 	dir = 8
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
@@ -50133,7 +50111,9 @@
 /area/station/hallway/primary/south)
 "paN" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+	dir = 4;
+	id = "medifrontdoor";
+	name = "Treatment Center"
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -50470,13 +50450,6 @@
 	dir = 8
 	},
 /area/station/engine/gas)
-"pho" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/station/bridge/captain)
 "php" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/redwhite/corner{
@@ -52692,7 +52665,9 @@
 	density = 0;
 	icon = 'icons/obj/airtunnel.dmi';
 	id = "vigilatornord";
-	pixel_y = 32
+	pixel_y = 32;
+	req_access = null;
+	req_access_txt = "44"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -54582,6 +54557,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/grey,
 /area/station/engine/engineering/ce)
 "quZ" = (
@@ -54717,15 +54693,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/engine)
-"qxG" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/station/bridge{
-	name = "Bridge Command Center"
-	})
 "qxO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -54897,6 +54864,7 @@
 /obj/machinery/alarm{
 	pixel_y = 24
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "qAB" = (
@@ -62597,6 +62565,11 @@
 /area/station/science)
 "sHf" = (
 /obj/machinery/vending/medical,
+/obj/machinery/door_control{
+	id = "medifrontdoor";
+	name = "Treatment Center Exit";
+	pixel_x = -24
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -64620,14 +64593,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/engine/engineering)
-"tiw" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/station/bridge{
-	name = "Bridge Command Center"
-	})
 "tiE" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/info{
@@ -64666,12 +64631,6 @@
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
-"tiV" = (
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/station/bridge{
-	name = "Bridge Command Center"
-	})
 "tjf" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4;
@@ -69445,10 +69404,8 @@
 "uzp" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26;
-	pixel_y = 1
+/obj/item/device/radio/intercom/security{
+	dir = 8
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -74004,7 +73961,10 @@
 	name = "Bridge Command Center"
 	})
 "vGM" = (
-/obj/machinery/door/airlock/pyro/glass/command,
+/obj/machinery/door/airlock/pyro/glass/command{
+	id = "bridgecustoms";
+	name = "Bridge Lobby"
+	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/grey,
 /area/station/bridge/customs{
@@ -74714,9 +74674,6 @@
 "vQQ" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/chapel/main)
-"vQS" = (
-/turf/space,
-/area/station/bridge/captain)
 "vQX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -76792,13 +76749,16 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/item/device/radio/intercom/security{
-	dir = 8
-	},
 /obj/machinery/door_control{
 	id = "secfront";
 	name = "Lobby Door Control";
-	pixel_x = 24
+	pixel_x = 24;
+	pixel_y = -12
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 26;
+	pixel_y = 1
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -78803,7 +78763,15 @@
 /obj/machinery/clone_scanner,
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/light_switch/west,
+/obj/machinery/door_control{
+	id = "genefrontdoor";
+	name = "Genetic Research Exit";
+	pixel_x = -24;
+	pixel_y = 6
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = -4
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -80265,6 +80233,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/blind_switch/area/west,
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce)
 "xou" = (
@@ -82120,11 +82089,6 @@
 /obj/item/storage/fanny,
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/crew_quarters/quartersA)
-"xMo" = (
-/turf/space,
-/area/station/bridge{
-	name = "Bridge Command Center"
-	})
 "xMA" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -83573,7 +83537,9 @@
 /area/station/quartermaster/office)
 "ygm" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+	dir = 4;
+	id = "genefrontdoor";
+	name = "Genetic Research"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/access_spawn/medlab,
@@ -115654,7 +115620,7 @@ qcw
 qcw
 vIE
 utx
-rQr
+kRB
 tvo
 wfZ
 xfK
@@ -121972,7 +121938,7 @@ kDW
 jIv
 tcP
 kjO
-tmh
+gQH
 aCA
 qjc
 qUa
@@ -126493,7 +126459,7 @@ mKF
 xtI
 oJG
 tIK
-xtQ
+eRh
 pHZ
 cew
 lNI
@@ -139997,17 +139963,17 @@ wCV
 xce
 rzN
 wGS
-xMo
-qxG
-xMo
+aJu
+wqf
+aJu
 tPd
 kJk
 kzs
 tpR
 tPd
-xMo
-qxG
-xMo
+aJu
+wqf
+aJu
 vsf
 rbG
 jAZ
@@ -140299,8 +140265,8 @@ wCV
 xce
 tGU
 wGS
-tiw
-lmD
+ydz
+wCE
 oly
 lPw
 eaU
@@ -140308,8 +140274,8 @@ gfK
 rgv
 lPw
 wfK
-lmD
-tiw
+wCE
+ydz
 qUx
 vFE
 sRm
@@ -140601,7 +140567,7 @@ wCV
 xce
 rzN
 wGS
-xMo
+aJu
 oly
 lTU
 qcH
@@ -140611,7 +140577,7 @@ gPF
 tkF
 bzu
 wfK
-xMo
+aJu
 iOI
 lWI
 lFN
@@ -140903,7 +140869,7 @@ wCV
 xce
 rzN
 wGS
-xMo
+aJu
 tPd
 xlw
 lTs
@@ -140913,7 +140879,7 @@ sXN
 sav
 rQf
 tPd
-xMo
+aJu
 wUX
 dTO
 lMH
@@ -141205,7 +141171,7 @@ wCV
 xce
 rzN
 wGS
-mSd
+qTl
 tPd
 kjy
 qLn
@@ -141215,7 +141181,7 @@ jjp
 itA
 uFt
 tPd
-xMo
+aJu
 mdZ
 jWT
 vTX
@@ -141507,7 +141473,7 @@ lvL
 oWv
 wGS
 wpN
-tiV
+xYZ
 lPw
 esp
 ctM
@@ -141517,7 +141483,7 @@ wUQ
 qLn
 ohv
 tPd
-xMo
+aJu
 wJu
 hKz
 gfz
@@ -141809,7 +141775,7 @@ wCV
 xce
 tGU
 wGS
-muc
+ygY
 tPd
 bhM
 qLn
@@ -141819,7 +141785,7 @@ qLn
 qLn
 obp
 tPd
-xMo
+aJu
 wJu
 rbX
 jiw
@@ -142111,7 +142077,7 @@ wCV
 xce
 rzN
 wGS
-xMo
+aJu
 tPd
 sVI
 mgJ
@@ -142121,7 +142087,7 @@ qLn
 kZI
 nOG
 tPd
-xMo
+aJu
 wJu
 hfd
 khl
@@ -142413,7 +142379,7 @@ wCV
 xce
 rzN
 wGS
-xMo
+aJu
 bzu
 wfK
 oCk
@@ -142423,7 +142389,7 @@ mBF
 esO
 oly
 lTU
-xMo
+aJu
 lEH
 fim
 wis
@@ -142715,8 +142681,8 @@ ylR
 vfZ
 rzN
 wGS
-tiw
-lmD
+ydz
+wCE
 bzu
 iUo
 iUo
@@ -142724,9 +142690,9 @@ lPw
 iUo
 iUo
 lTU
-lmD
-tiw
-kRB
+wCE
+ydz
+wCE
 lEH
 qgo
 wUX
@@ -142734,8 +142700,8 @@ aPu
 jxi
 qgo
 wUX
-vQS
-vQS
+aJu
+aJu
 tna
 eGZ
 tna
@@ -143018,25 +142984,25 @@ pCE
 rzN
 wGS
 wGS
-qxG
-xMo
-xMo
-lVd
-eRh
-ldX
-xMo
-xMo
-qxG
-vQS
-pho
-vQS
-vQS
-gQH
-vQS
-vQS
-pho
-vQS
-vQS
+wqf
+aJu
+aJu
+fdT
+tpT
+xGX
+aJu
+aJu
+wqf
+aJu
+wqf
+aJu
+aJu
+tpT
+aJu
+aJu
+wqf
+aJu
+aJu
 vTp
 vTp
 dTi
@@ -154472,8 +154438,8 @@ wqf
 aJu
 aJu
 aJu
-wqf
 aJu
+wqf
 aJu
 aJu
 rFS
@@ -154774,8 +154740,8 @@ ygY
 ath
 ath
 ath
-ygY
 ath
+wCE
 ath
 ath
 wCE
@@ -155077,7 +155043,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 fdT
@@ -155379,7 +155345,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 fdT
@@ -155681,9 +155647,9 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
+fdT
+ath
+ath
 jIN
 smL
 xYZ
@@ -155983,7 +155949,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 tpT
@@ -156285,7 +156251,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 tpT
@@ -156587,9 +156553,9 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
+fdT
+ath
+ath
 tpT
 sqv
 ssG
@@ -156889,7 +156855,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 tpT
@@ -157191,7 +157157,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 tpT
@@ -157493,7 +157459,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 tpT
@@ -157795,7 +157761,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 tpT
@@ -158097,7 +158063,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 tpT
@@ -158399,9 +158365,9 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
+fdT
+ath
+ath
 tpT
 svH
 ssG
@@ -158701,7 +158667,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 tpT
@@ -159003,7 +158969,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 tpT
@@ -159305,9 +159271,9 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
+fdT
+ath
+ath
 rGg
 xYZ
 xYZ
@@ -159607,7 +159573,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 wqf
@@ -159909,7 +159875,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 wqf
@@ -160211,7 +160177,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 wqf
@@ -160513,7 +160479,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 wqf
@@ -160815,7 +160781,7 @@ ath
 ath
 ath
 ath
-ath
+wCE
 ath
 ath
 wCE
@@ -161117,7 +161083,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 wqf
@@ -161419,7 +161385,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 aJu
 wqf
@@ -161721,7 +161687,7 @@ ath
 ath
 ath
 ath
-ath
+ygY
 ath
 ath
 ygY
