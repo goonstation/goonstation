@@ -201,7 +201,7 @@
 
 		ecoli
 			amount = 136
-			reagent_id = "e.coli"
+			reagent_id = "ecoli"
 
 		crank
 			amount = 145
