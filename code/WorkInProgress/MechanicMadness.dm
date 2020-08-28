@@ -978,20 +978,30 @@ var/list/mechanics_telepads = new/list()
 		return
 
 /obj/item/mechanics/zapper
-	name = "Floor Zapper"
+	name = "Tesla Coil"
 	desc = ""
 	icon_state = "comp_zap"
-	cooldown_time = 2 SECONDS
+	var/zap_power = 2
 
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"zap", "eleczap")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Power","setPower")
 
 	proc/eleczap(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
-		elecflash(src.loc,0, power=3, exclude_center = 0)
+		elecflash(src.loc,0, power = zap_power, exclude_center = 0)
 		return
+		
+	proc/setPower(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user,"Please enter Power(1 - 7):","Power setting", zap_power) as num
+		if(!in_range(src, user) || user.stat)
+			return 0
+		inp = clamp(round(inp), 1, 7)
+		zap_power = inp
+		boutput(user, "Power set to [inp]")
+		return 1
 		
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_zap"
