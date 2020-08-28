@@ -99,6 +99,9 @@
 			APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
 		if(ishuman(M))
 			src.mob = M
+			var/datum/appearanceHolder/AHM = mob?.bioHolder?.mobAppearance
+			if (AHM)
+				AHM.mutant_race = src.type
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for(var/obj/item/clothing/W in restricted)
 				if (istype(W,/obj/item/clothing))
