@@ -1,5 +1,9 @@
 
 (t)fri aug 28 20
+(u)Jawns
+(p)1922
+(e)🆕|feature
+(*)New Chief Engineer objective rewards excessive competence
 (u)BatElite
 (p)1981
 (e)🆕🎨|feature, sprites
