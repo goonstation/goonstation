@@ -1505,7 +1505,5 @@ obj/item/whetstone
 	stamina_cost = 30
 
 	New()
-		AddComponent(/datum/component/barber/haircut)
-		AddComponent(/datum/component/toggle_tool_use)
 		..()
 		BLOCK_ROD
