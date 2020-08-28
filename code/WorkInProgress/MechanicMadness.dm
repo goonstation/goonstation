@@ -1018,7 +1018,7 @@ var/list/mechanics_telepads = new/list()
 
 	proc/zapstuff(atom/movable/AM as mob|obj)
 		if(level == 2) return
-		elecflash(holder.my_atom.loc)
+		elecflash(src.loc)
 		return
 
 	updateIcon()
