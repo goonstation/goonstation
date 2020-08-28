@@ -32,7 +32,7 @@
 /obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "AiAirlock", name)
+		ui = new(user, src, "AiAirlock", src.name)
 		ui.open()
 	return TRUE
 
@@ -66,6 +66,14 @@
 	data["wires"] = wire
 	return data
 
+/obj/machinery/power/smes/ui_state(mob/user)
+	return tgui_default_state
+
+obj/machinery/door/airlock/ui_status(mob/user, datum/ui_state/state)
+	if(issilicon(user))
+		return 2
+	return UI_CLOSE
+
 /obj/machinery/door/airlock/ui_act(action, params)
 	if(..())
 		return
@@ -96,10 +104,10 @@
 			shock_perm(usr)
 			. = TRUE
 		if("idscan-toggle")
-			idscantoggle()
+			idscantoggle(usr)
 			. = TRUE
 		if("bolt-toggle")
-			toggle_bolt()
+			toggle_bolt(usr)
 			. = TRUE
 		if("open-close")
 			user_toggle_open(usr)
