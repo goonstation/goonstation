@@ -28,19 +28,15 @@
 				if(!istype(H.loc, /obj/machinery/genetics_scanner))
 					if(H.bioHolder.HasEffectInEither("hemochromia_rust" || "hemochromia_bronze" || "hemochromia_gold" || "hemochromia_lime" || "hemochromia_olive" || "hemochromia_jade" || "hemochromia_teal" || "hemochromia_cobalt" || "hemochromia_indigo" || "hemochromia_purple" || "hemochromia_violet" || "hemochromia_fuschia"))
 						duplicateCheck = 1
-						boutput(owner, "<span class='alert'>Duplicate hemochromia instance detected!</span>") //Debug message. Delete it later, future me.
 					if(duplicateCheck != 0)
-						boutput(owner, "<span class='alert'>You already have hemochromia! Deleting [id] instance.</span>") //Debug message. Delete it later, future me.
 						holder.RemoveEffect(src.id)
 						holder.RemovePoolEffect(src)
 					if(id == "hemochromia_unknown")
 						if(4 >= rand(13))
 							typeRange = 8 //Placeholder for the name-based thing. Delete later.
 							//Name-based thing here.
-							boutput(owner, "<span class='alert'>Fate remembers your assigned color.</span>") //Debug message. Delete it later, future me.
 						else
 							typeRange = rand(1,12)
-							boutput(owner, "<span class='alert'>Fate is blind sometimes.</span>") //Debug message. Delete it later, future me.
 						var/datum/bioEffect/NEW = null
 						switch(typeRange)
 							if(2) NEW = new /datum/bioEffect/hemochromia/bronze()
@@ -56,12 +52,8 @@
 							if(12) NEW = new /datum/bioEffect/hemochromia/fuschia()
 							else NEW = new /datum/bioEffect/hemochromia/rust()
 
-						boutput(owner, "<span class='alert'>Stable hemochromia instance applied. Type number: [typeRange].</span>") //Debug message. Delete it later, future me.
 						if(duplicateCheck == 0)
 							H.bioHolder.AddEffectInstance(NEW,1)
-							boutput(owner, "<span class='alert'>Breakdown complete! Deleting Type-U instance.</span>") //Debug message. Delete it later, future me.
-						else
-							boutput(owner, "<span class='alert'>Breakdown failed! Deleting Type-U instance.</span>") //Debug message. Delete it later, future me.
 						holder.RemoveEffect(src.id)
 						holder.RemovePoolEffect(src)
 
@@ -86,21 +78,18 @@
 		blood_color_R = rand(254, 46)
 		blood_color_G = rand(0, 0)
 		blood_color_B = rand(0, 2)
-		boutput(owner, "<span class='alert'>Future blood color discovered. RGB: [blood_color_R], [blood_color_G], [blood_color_B]. </span>") //Debug message. Delete it later, future me.
 
 	OnLife()
 		if(prob(12))
 			if(ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
-				boutput(owner, "<span class='alert'>Blood color changed.</span>") //Debug message. Delete it later, future me.
 
 	OnRemove()
 		..()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.blood_color = DEFAULT_BLOOD_COLOR
-			boutput(owner, "<span class='alert'>Blood color reset.</span>") //Debug message. Delete it later, future me.
 
 /datum/bioEffect/hemochromia/bronze
 	name = "Hemochromia Type-B"
@@ -118,6 +107,24 @@
 	occur_in_genepools = 0
 	research_level = 2
 
+	OnAdd()
+		..()
+		blood_color_R = rand(255, 68)
+		blood_color_G = rand(122, 10)
+		blood_color_B = rand(1, 0)
+
+	OnLife()
+		if(prob(12))
+			if(ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+
+	OnRemove()
+		..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.blood_color = DEFAULT_BLOOD_COLOR
+
 /datum/bioEffect/hemochromia/gold
 	name = "Hemochromia Type-G"
 	desc = "Causes the subject's blood cells to take on a brass coloration. Also slightly increases blood viscosity."
@@ -133,6 +140,24 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+
+	OnAdd()
+		..()
+		blood_color_R = rand(244, 101)
+		blood_color_G = rand(218, 84)
+		blood_color_B = rand(20, 4)
+
+	OnLife()
+		if(prob(12))
+			if(ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+
+	OnRemove()
+		..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.blood_color = DEFAULT_BLOOD_COLOR
 
 /datum/bioEffect/hemochromia/lime
 	name = "Hemochromia Type-L"
@@ -150,6 +175,24 @@
 	occur_in_genepools = 0
 	research_level = 2
 
+	OnAdd()
+		..()
+		blood_color_R = rand(135, 105)
+		blood_color_G = rand(199, 153)
+		blood_color_B = rand(0, 0)
+
+	OnLife()
+		if(prob(12))
+			if(ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+
+	OnRemove()
+		..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.blood_color = DEFAULT_BLOOD_COLOR
+
 /datum/bioEffect/hemochromia/olive
 	name = "Hemochromia Type-O"
 	desc = "Causes the subject's blood cells to take on a verdant coloration. Also slightly increases blood viscosity."
@@ -165,6 +208,24 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+
+	OnAdd()
+		..()
+		blood_color_R = rand(112, 25)
+		blood_color_G = rand(147, 35)
+		blood_color_B = rand(5, 0)
+
+	OnLife()
+		if(prob(12))
+			if(ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+
+	OnRemove()
+		..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.blood_color = DEFAULT_BLOOD_COLOR
 
 /datum/bioEffect/hemochromia/jade
 	name = "Hemochromia Type-J"
@@ -182,6 +243,24 @@
 	occur_in_genepools = 0
 	research_level = 2
 
+	OnAdd()
+		..()
+		blood_color_R = rand(0, 1)
+		blood_color_G = rand(216, 56)
+		blood_color_B = rand(105, 24)
+
+	OnLife()
+		if(prob(12))
+			if(ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+
+	OnRemove()
+		..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.blood_color = DEFAULT_BLOOD_COLOR
+
 /datum/bioEffect/hemochromia/teal
 	name = "Hemochromia Type-T"
 	desc = "Causes the subject's blood cells to take on a cyan coloration. Also slightly increases blood viscosity."
@@ -197,6 +276,24 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+
+	OnAdd()
+		..()
+		blood_color_R = rand(0, 0)
+		blood_color_G = rand(205, 82)
+		blood_color_B = rand(200, 80)
+
+	OnLife()
+		if(prob(12))
+			if(ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+
+	OnRemove()
+		..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.blood_color = DEFAULT_BLOOD_COLOR
 
 /datum/bioEffect/hemochromia/cobalt
 	name = "Hemochromia Type-C"
@@ -219,21 +316,18 @@
 		blood_color_R = rand(29, 0)
 		blood_color_G = rand(104, 24)
 		blood_color_B = rand(255, 78)
-		boutput(owner, "<span class='alert'>Future blood color discovered. RGB: [blood_color_R], [blood_color_G], [blood_color_B]. </span>") //Debug message. Delete it later, future me.
 
 	OnLife()
 		if(prob(12))
 			if(ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
-				boutput(owner, "<span class='alert'>Blood color changed.</span>") //Debug message. Delete it later, future me.
 
 	OnRemove()
 		..()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.blood_color = DEFAULT_BLOOD_COLOR
-			boutput(owner, "<span class='alert'>Blood color reset.</span>") //Debug message. Delete it later, future me.
 
 /datum/bioEffect/hemochromia/indigo
 	name = "Hemochromia Type-I"
@@ -251,6 +345,24 @@
 	occur_in_genepools = 0
 	research_level = 2
 
+	OnAdd()
+		..()
+		blood_color_R = rand(84, 14)
+		blood_color_G = rand(25, 3)
+		blood_color_B = rand(255, 69)
+
+	OnLife()
+		if(prob(12))
+			if(ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+
+	OnRemove()
+		..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.blood_color = DEFAULT_BLOOD_COLOR
+
 /datum/bioEffect/hemochromia/purple
 	name = "Hemochromia Type-P"
 	desc = "Causes the subject's blood cells to take on a lavander coloration. Also slightly increases blood viscosity."
@@ -266,6 +378,24 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+
+	OnAdd()
+		..()
+		blood_color_R = rand(136, 57)
+		blood_color_G = rand(61, 1)
+		blood_color_B = rand(214, 92)
+
+	OnLife()
+		if(prob(12))
+			if(ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+
+	OnRemove()
+		..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.blood_color = DEFAULT_BLOOD_COLOR
 
 /datum/bioEffect/hemochromia/violet
 	name = "Hemochromia Type-V"
@@ -283,6 +413,24 @@
 	occur_in_genepools = 0
 	research_level = 2
 
+	OnAdd()
+		..()
+		blood_color_R = rand(208, 93)
+		blood_color_G = rand(26, 0)
+		blood_color_B = rand(206, 91)
+
+	OnLife()
+		if(prob(12))
+			if(ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+
+	OnRemove()
+		..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.blood_color = DEFAULT_BLOOD_COLOR
+
 /datum/bioEffect/hemochromia/fuschia
 	name = "Hemochromia Type-F"
 	desc = "Causes the subject's blood cells to take on a magenta coloration. Also slightly increases blood viscosity."
@@ -298,3 +446,21 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+
+	OnAdd()
+		..()
+		blood_color_R = rand(238, 91)
+		blood_color_G = rand(15, 1)
+		blood_color_B = rand(124, 52)
+
+	OnLife()
+		if(prob(12))
+			if(ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+
+	OnRemove()
+		..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.blood_color = DEFAULT_BLOOD_COLOR
