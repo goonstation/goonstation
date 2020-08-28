@@ -244,6 +244,9 @@
 				H.image_cust_one.pixel_y = initial(H.image_cust_one.pixel_y)
 				H.image_cust_two.pixel_y = initial(H.image_cust_two.pixel_y)
 				H.image_cust_three.pixel_y = initial(H.image_cust_three.pixel_y)
+				var/datum/appearanceHolder/AHM = H?.bioHolder?.mobAppearance
+				if (AHM)
+					AHM.mutant_race = null
 
 				// And the other way around (Convair880).
 				if (src.r_limb_arm_type_mutantrace)
