@@ -990,10 +990,9 @@ var/list/mechanics_telepads = new/list()
 
 proc/activateproc(var/datum/mechanicsMessage/input)
 		if(level == 2 || !isReady()) return
-		if(input)
-			unReady()
-			LIGHT_UP_HOUSING
-			elecflash(src.loc)
+		unReady()
+		LIGHT_UP_HOUSING
+		elecflash(src.loc)
 		return
 
 /obj/item/mechanics/pausecomp
