@@ -382,7 +382,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon_base = "sec_glass"
 	req_access = list(access_security)
 
-/obj/machinery/door/airlock/pyro/glass/med 
+/obj/machinery/door/airlock/pyro/glass/med
 	icon_state = "med_glass_closed"
 	icon_base = "med_glass"
 	req_access = null
@@ -458,7 +458,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
 	req_access = null
-	
+
 /obj/machinery/door/airlock/gannets
 	name = "airlock"
 	icon = 'icons/obj/doors/destiny.dmi'
@@ -1028,6 +1028,7 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/attack_ai(mob/user as mob)
+	return ui_interact(user)
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
 		return
 
@@ -1191,6 +1192,84 @@ About the new airlock wires panel:
 				return
 	..()
 
+/obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "Airlock", name)
+		ui.open()
+
+/obj/machinery/door/airlock/ui_data(mob/user)
+	var/list/data = list()
+
+	data["netId"] = src.net_id;
+
+	data["wires"] = src.wires
+
+	if(src.signalers)
+		data["signalers"] = src.signalers
+
+	return data
+
+/obj/machinery/door/airlock/ui_static_data(mob/user)
+	var/list/static_data = list()
+
+	static_data["wireColors"] = list(
+		"Orange" = 1,
+		"Pink" = 2,
+		"White" = 3,
+		"Yellow" = 4,
+		"Red" = 5,
+		"Blue" = 6,
+		"Green" = 7,
+		"Grey" = 8,
+		"Olive" = 9,
+		"Teal" = 10,
+	)
+
+	static_data["airlockFlags"] = list(
+		"IDSCAN" = AIRLOCK_WIRE_IDSCAN,
+		"MAIN_POWER1" = AIRLOCK_WIRE_MAIN_POWER1,
+		"MAIN_POWER2" = AIRLOCK_WIRE_MAIN_POWER2,
+		"DOOR_BOLTS" = AIRLOCK_WIRE_DOOR_BOLTS,
+		"BACKUP_POWER1" = AIRLOCK_WIRE_BACKUP_POWER1,
+		"BACKUP_POWER2" = AIRLOCK_WIRE_BACKUP_POWER2,
+		"OPEN_DOOR" = AIRLOCK_WIRE_OPEN_DOOR,
+		"AI_CONTROL" = AIRLOCK_WIRE_AI_CONTROL,
+		"ELECTRIFY" = AIRLOCK_WIRE_ELECTRIFY,
+		"SAFETY" = AIRLOCK_WIRE_SAFETY,
+	)
+
+	return static_data
+
+/obj/machinery/door/airlock/ui_state(mob/user)
+	return tgui_physical_state
+
+/obj/machinery/door/airlock/ui_status(mob/user)
+  return min(
+		tgui_default_state.can_use_topic(src, user),
+		tgui_not_incapacitated_state.can_use_topic(src, user)
+	)
+
+/obj/machinery/door/airlock/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("cut")
+			var/which_wire = params["wireColor"]
+			if(isnum(which_wire))
+				src.cut(airlockIndexToWireColor[which_wire])
+				. = TRUE
+		if("mend")
+			var/which_wire = params["wireColor"]
+			if(isnum(which_wire))
+				src.mend(airlockIndexToWireColor[which_wire])
+				. = TRUE
+		if("pulse")
+			var/which_wire = params["wireColor"]
+			if(isnum(which_wire))
+				src.pulse(airlockIndexToWireColor[which_wire])
+				. = TRUE
+
 /obj/machinery/door/airlock/proc/show_html(mob/user as mob)
 	if (!user)
 		return
@@ -1249,6 +1328,8 @@ About the new airlock wires panel:
 		return
 
 	if (src.p_open)
+		if (!user.find_type_in_hand(/obj/item/wrench))
+			return ui_interact(user)
 		src.add_dialog(user)
 		var/list/t1 = list(text("<B>Access Panel</B><br><br>"))
 		t1 += "An identifier is engraved under the airlock's card sensors: <i>[net_id]</i><br><br>"
@@ -1256,15 +1337,15 @@ About the new airlock wires panel:
 		//t1 += text("[]: ", airlockFeatureNames[airlockWireColorToIndex[9]])
 		var/list/wires = list(
 			"Orange" = 1,
-			"Dark red" = 2,
+			"Pink" = 2,
 			"White" = 3,
 			"Yellow" = 4,
 			"Red" = 5,
 			"Blue" = 6,
 			"Green" = 7,
 			"Grey" = 8,
-			"Black" = 9,
-			"Translucent" = 10,
+			"Olive" = 9,
+			"Teal" = 10,
 		)
 		for(var/wiredesc in wires)
 			var/is_uncut = src.wires & airlockWireColorToFlag[wires[wiredesc]]
