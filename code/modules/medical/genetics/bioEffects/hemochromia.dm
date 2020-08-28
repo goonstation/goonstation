@@ -15,6 +15,11 @@
 	stability_loss = 5
 	var/typeRange = 0
 	var/duplicateCheck = 0
+	var/blood_color_R
+	var/blood_color_G
+	var/blood_color_B
+
+
 
 	OnLife()
 		if(ishuman(owner))
@@ -75,6 +80,27 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+
+	OnAdd()
+		..()
+		blood_color_R = rand(254, 46)
+		blood_color_G = rand(0, 0)
+		blood_color_B = rand(0, 2)
+		boutput(owner, "<span class='alert'>Future blood color discovered. RGB: [blood_color_R], [blood_color_G], [blood_color_B]. </span>") //Debug message. Delete it later, future me.
+
+	OnLife()
+		if(prob(12))
+			if(ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+				boutput(owner, "<span class='alert'>Blood color changed.</span>") //Debug message. Delete it later, future me.
+
+	OnRemove()
+		..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.blood_color = DEFAULT_BLOOD_COLOR
+			boutput(owner, "<span class='alert'>Blood color reset.</span>") //Debug message. Delete it later, future me.
 
 /datum/bioEffect/hemochromia/bronze
 	name = "Hemochromia Type-B"
@@ -187,6 +213,27 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+
+	OnAdd()
+		..()
+		blood_color_R = rand(29, 0)
+		blood_color_G = rand(104, 24)
+		blood_color_B = rand(255, 78)
+		boutput(owner, "<span class='alert'>Future blood color discovered. RGB: [blood_color_R], [blood_color_G], [blood_color_B]. </span>") //Debug message. Delete it later, future me.
+
+	OnLife()
+		if(prob(12))
+			if(ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+				boutput(owner, "<span class='alert'>Blood color changed.</span>") //Debug message. Delete it later, future me.
+
+	OnRemove()
+		..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.blood_color = DEFAULT_BLOOD_COLOR
+			boutput(owner, "<span class='alert'>Blood color reset.</span>") //Debug message. Delete it later, future me.
 
 /datum/bioEffect/hemochromia/indigo
 	name = "Hemochromia Type-I"
