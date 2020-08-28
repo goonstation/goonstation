@@ -46,7 +46,8 @@
 		..()
 		src.setItemSpecial(/datum/item_special/double) // should be doable even in barbermode
 		AddComponent(/datum/component/transfer_on_attack)
-		AddComponent(/datum/component/barber)
+		AddComponent(/datum/component/barber/haircut)
+		AddComponent(/datum/component/toggle_tool_use)
 		BLOCK_KNIFE
 
 	attack(mob/M as mob, mob/user as mob)
@@ -54,31 +55,15 @@
 			return 1
 		if (snip_surgery(M, user))
 			return 1
-
-		var/barber_result = (SEND_SIGNAL(src, COMSIG_ITEM_BARBER, M, user, HAIRCUT))
-
-		if (barber_result & BARBERY_SUCCESSFUL)
-			return 1
-		if (src.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
-			if (barber_result & BARBERY_FAILURE) // failure doesnt return a message, less-than-successes do
-				boutput(user, "<span class='notice'>You poke [M] with your [src]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
-			return 1
-		if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-			src.reagents.trans_to(M,5)
-			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		..()
 
 	attack_self(mob/user)
 		. = ..()
-		SEND_SIGNAL(src, COMSIG_ITEM_TOGGLE_TOOLONLY, user, 0, 0)
+		SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user, 0, 0)
 
 	dropped()
 		. = ..()
-		SEND_SIGNAL(src, COMSIG_ITEM_TOGGLE_TOOLONLY, null, 1, 1)
-
-	throw_begin(atom/target)
-		SEND_SIGNAL(src, COMSIG_ITEM_TOGGLE_TOOLONLY, null, 1, 1)
-		return ..(target)
+		SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, null, 1, 1)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -112,37 +97,22 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/double) // should be doable even in barbermode
+		AddComponent(/datum/component/transfer_on_attack)
+		AddComponent(/datum/component/barber/shave)
+		AddComponent(/datum/component/toggle_tool_use)
 		BLOCK_KNIFE
 
 	attack(mob/M as mob, mob/user as mob)
 		if (scalpel_surgery(M, user))
 			return 1
 
-		var/barber_result = (SEND_SIGNAL(src, COMSIG_ITEM_BARBER, M, user, SHAVE))
-
-		if (barber_result & BARBERY_SUCCESSFUL)
-			return 1
-		if (src.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
-			if (barber_result & BARBERY_FAILURE) // failure doesnt return a message, less-than-successes do
-				boutput(user, "<span class='notice'>You poke [M] with your [src]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
-			return 1
-		if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-			src.reagents.trans_to(M,5)
-			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
-		else
-			..()
-
 	attack_self(mob/user)
 		. = ..()
-		SEND_SIGNAL(src, COMSIG_ITEM_TOGGLE_TOOLONLY, user, 0, 0)
+		SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user, 0, 0)
 
 	dropped()
 		. = ..()
-		SEND_SIGNAL(src, COMSIG_ITEM_TOGGLE_TOOLONLY, null, 1, 1)
-
-	throw_begin(atom/target)
-		SEND_SIGNAL(src, COMSIG_ITEM_TOGGLE_TOOLONLY, null, 1, 1)
-		return ..(target)
+		SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, null, 1, 1)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

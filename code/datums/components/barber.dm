@@ -1,38 +1,78 @@
 #define HAIRCUT 1
 #define SHAVE 2
-#define BARBERY_FAILURE 1	// if barbering is not successful and does not display a message
-#define BARBERY_SUCCESSFUL 2 // if barbering is successful, don't attack em
-#define BARBERY_RESOLVABLE 4 // if barbering is not successful, but gives a message
+#define BARBERY_FAILURE 4	// if barbering is not successful and does not display a message
+#define BARBERY_SUCCESSFUL 1 // if barbering is successful, don't attack em
+#define BARBERY_RESOLVABLE 2 // if barbering is not successful, but gives a message
 
+/datum/component/toggle_tool_use
+/datum/component/toggle_tool_use/Initialize()
+	if(!istype(parent, /obj/item))
+		return COMPONENT_INCOMPATIBLE
+	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED, COMSIG_ATTACKBY), .proc/toggle_force_use_as_tool)
+
+	// this proc is supposed to make certain tools less accidentally deadly for inexperienced players to use
+	// when force_use_as_tool is set, all intents will try to do their tool-thing, and if it can't, return a message saying they're using it wrong
+	// if not set, help intent will still attempt tool, but you'll shank them if it doesn't work out
+/datum/component/toggle_tool_use/proc/toggle_force_use_as_tool(var/obj/item/thing, mob/user, var/be_quiet = 1, var/quiet_reset)
+	if(quiet_reset)
+		thing.force_use_as_tool = 0
+		thing.dir = SOUTH
+		return
+	thing.force_use_as_tool = !thing.force_use_as_tool
+	if (thing.force_use_as_tool)
+		thing.dir = WEST
+	else
+		thing.dir = SOUTH
+	if(be_quiet || !user)
+		return
+
+	var/list/cool_grip_adj = list("a sick", "a wicked", "a deadly", "a menacing", "an edgy", "a tacticool", "a sweaty", "an awkward")
+	var/list/cool_grip1 = list("combat", "fightlord", "guerilla", "hidden", "space", "syndie", "double-reverse", "\"triple-dog-dare-ya\"", "stain-buster's")
+	var/list/cool_grip2a = list("blade", "cyber", "street", "assistant", "comedy", "butcher", "edge", "beast", "heck", "crud", "ass")
+	var/list/cool_grip2b = list("master", "slayer", "fighter", "militia", "space", "syndie", "lord", "blaster", "beef", "tyrannosaurus")
+	var/list/wheredWeSeeIt = list("saw the clown do", "saw the captain do", "saw the head of security do",\
+														"saw someone in a red spacesuit do", "saw a floating saw do", "saw on TV",\
+														"saw one of the diner dudes do", "saw just about every assistant do")
+	var/cool_grip3 = "[pick(wheredWeSeeIt)] [pick("once", "once or twice")]"
+
+	if(thing.force_use_as_tool)
+		user.visible_message("[user] assumes a less hostile grip on the [thing].",\
+													"You change your grip on the [thing], so as to use it more as a tool than a weapon.")
+	else
+		user.visible_message("[user] wields the [thing] a with [pick(cool_grip_adj)] [pick(cool_grip1)] [pick(cool_grip2a)][pick(cool_grip2b)] [pick("style", "grip")] that they probably [pick(cool_grip3)]!",\
+													"You wield the [thing] with [pick(cool_grip_adj)] [pick(cool_grip1)] [pick(cool_grip2a)][pick(cool_grip2b)] [pick("style", "grip")] that you [pick(cool_grip3)]! It makes it just about impossible to use as a tool!")
+
+/datum/component/toggle_tool_use/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ATTACKBY)
+	UnregisterSignal(parent, COMSIG_ITEM_DROPPED)
+	. = ..()
 
 /datum/component/barber
 /datum/component/barber/Initialize()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, list(COMSIG_ITEM_BARBER), .proc/do_haircare)
-	RegisterSignal(parent, list(COMSIG_ITEM_TOGGLE_TOOLONLY), .proc/toggle_force_use_as_tool)
 
-/datum/component/barber/proc/do_haircare(var/obj/item/I, var/mob/M, var/mob/user, var/barbering_type)
-	switch(barbering_type)
-		if (HAIRCUT)
-			. = do_haircut(M, user, I)
-		if (SHAVE)
-			. = do_shave(M, user, I)
-	return
+/datum/component/barber/haircut
+/datum/component/barber/haircut/Initialize()
+	RegisterSignal(parent, list(COMSIG_MOB_ATTACKED_PRE), .proc/do_haircut)
+
+/datum/component/barber/shave
+/datum/component/barber/shave/Initialize()
+	RegisterSignal(parent, list(COMSIG_MOB_ATTACKED_PRE), .proc/do_shave)
 
 /datum/component/barber/proc/do_haircut(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob, var/obj/item/thing)
 	if(!M || !user || (user.a_intent != INTENT_HELP && !thing.force_use_as_tool))
-		return BARBERY_FAILURE // Who's cutting whose hair, now?
+		. = BARBERY_FAILURE // Who's cutting whose hair, now?
 
 	var/mob/living/carbon/human/H = M
 	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
 		boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
-		return BARBERY_RESOLVABLE
+		. = BARBERY_RESOLVABLE
 
 	if(M.bioHolder.mobAppearance.customization_first == "None")
 		boutput(user, "<span class='alert'>There is nothing to cut!</span>")
-		return BARBERY_RESOLVABLE
+		. = BARBERY_RESOLVABLE
 
 	if(!mutant_barber_fluff(M, user, "haircut"))
 		return BARBERY_SUCCESSFUL
@@ -42,43 +82,49 @@
 	if (new_style)
 		if(M.bioHolder.mobAppearance.customization_first == "Balding" && new_style != "None")
 			boutput(user, "<span class='alert'>Not enough hair!</span>")
-			return BARBERY_RESOLVABLE
+			. = BARBERY_RESOLVABLE
 
 	if(!new_style)
 		boutput(user, "Never mind.")
-		return BARBERY_RESOLVABLE
+		. = BARBERY_RESOLVABLE
 
-	actions.start(new/datum/action/bar/haircut(M, user, get_barbery_conditions(M, user), new_style), user)
-	return BARBERY_SUCCESSFUL
+	if (!.)
+		actions.start(new/datum/action/bar/haircut(M, user, get_barbery_conditions(M, user), new_style), user)
+		return BARBERY_SUCCESSFUL
+	else if (thing.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
+		if (. & BARBERY_FAILURE) // failure doesnt return a message, less-than-successes do
+			boutput(user, "<span class='notice'>You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
+		return 1
+	return 0
 
 /datum/component/barber/proc/do_shave(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob, var/obj/item/thing)
 	if(!M || !user || (user.a_intent != INTENT_HELP && !thing.force_use_as_tool))
-		return BARBERY_FAILURE // Who's cutting whose hair, now?
+		. = BARBERY_FAILURE // Who's cutting whose hair, now?
 
 	var/mob/living/carbon/human/H = M
 	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
 		boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
-		return BARBERY_RESOLVABLE
+		. = BARBERY_RESOLVABLE
 
 	if(M.bioHolder.mobAppearance.customization_second == "None")
 		boutput(user, "<span class='alert'>You can't get a closer shave than that!</span>")
-		return BARBERY_RESOLVABLE
+		. = BARBERY_RESOLVABLE
 
 	if(issilicon(M))
 		boutput(user, "<span class='alert'>Shave a robot? Shave a robot!?? SHAVE A ROBOT?!?!??</span>")
-		return BARBERY_RESOLVABLE
+		. = BARBERY_RESOLVABLE
 
 	if(!ishuman(M))
 		boutput(user, "You don't know how to shave that! At least without cutting its face off.")
-		return BARBERY_RESOLVABLE
+		. = BARBERY_RESOLVABLE
 
 	if(iswizard(M))
 		if (user == M)
 			boutput(user, "<span style='font-size: 1.5em; font-weight:bold; color:red'>And just what do you think you're doing?</span>\
 							<br>It took you <span class='alert'>years</span> to grow that <span style='font-family: Dancing Script, cursive;'>majestic</span> thing!\
 							<br>To even <span style='font-family: Dancing Script, cursive;'>fathom</span> an existence without it fills the [voidSpeak("void")] where your soul used to be with <span class='alert'>RAGE.</span>")
-			return BARBERY_RESOLVABLE
+			. = BARBERY_RESOLVABLE
 		thing.visible_message("<span class='alert'><b>[user]</b> quickly shaves off [M]'s beard!</span>")
 		M.bioHolder.AddEffect("arcane_shame", timeleft = 120)
 		M.bioHolder.mobAppearance.customization_second = "None"
@@ -90,7 +136,7 @@
 
 
 	if(!mutant_barber_fluff(M, user, "shave"))
-		return BARBERY_RESOLVABLE
+		. = BARBERY_RESOLVABLE
 	var/list/mustaches =list("Watson", "Chaplin", "Selleck", "Van Dyke", "Hogan")
 	var/list/beards  = list("Neckbeard", "Elvis", "Abe", "Chinstrap", "Hipster", "Wizard")
 	var/list/full = list("Goatee", "Full Beard", "Long Beard")
@@ -99,21 +145,27 @@
 
 		if((new_style in full) && (!(M.bioHolder.mobAppearance.customization_second in full)))
 			boutput(user, "<span class='alert'>[M] doesn't have enough facial hair!</span>")
-			return BARBERY_RESOLVABLE
+			. = BARBERY_RESOLVABLE
 
 		if((new_style in beards) && (M.bioHolder.mobAppearance.customization_second in mustaches))
 			boutput(user, "<span class='alert'>[M] doesn't have a beard!</span>")
-			return BARBERY_RESOLVABLE
+			. = BARBERY_RESOLVABLE
 
 		if((new_style in mustaches) && (M.bioHolder.mobAppearance.customization_second in beards))
 			boutput(user, "<span class='alert'>[M] doesn't have a mustache!</span>")
-			return BARBERY_RESOLVABLE
+			. = BARBERY_RESOLVABLE
 	else
 		boutput(user, "Never mind.")
 		return BARBERY_SUCCESSFUL
 
-	actions.start(new/datum/action/bar/shave(M, user, get_barbery_conditions(M, user), new_style), user)
-	return BARBERY_SUCCESSFUL
+	if (!.)
+		actions.start(new/datum/action/bar/shave(M, user, get_barbery_conditions(M, user), new_style), user)
+		return BARBERY_SUCCESSFUL
+	else if (thing.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
+		if (. & BARBERY_FAILURE) // failure doesnt return a message, less-than-successes do
+			boutput(user, "<span class='notice'>You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
+		return 1
+	return 0
 
 /datum/component/barber/proc/get_barbery_conditions(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
 	if(!ishuman(M))
@@ -367,43 +419,11 @@
 				boutput(user, "You're not quite sure what that is, but decide to cut its hair anyway. If it has any.")
 	return 1
 
-// this proc is supposed to make certain tools less accidentally deadly for inexperienced players to use
-// when force_use_as_tool is set, all intents will try to do their tool-thing, and if it can't, return a message saying they're using it wrong
-// if not set, help intent will still attempt tool, but you'll shank them if it doesn't work out
-/datum/component/barber/proc/toggle_force_use_as_tool(var/obj/item/thing, mob/user, var/be_quiet = 1, var/quiet_reset)
-	if(quiet_reset)
-		thing.force_use_as_tool = 0
-		thing.dir = SOUTH
-		return
-	thing.force_use_as_tool = !thing.force_use_as_tool
-	if (thing.force_use_as_tool)
-		thing.dir = WEST
-	else
-		thing.dir = SOUTH
-	if(be_quiet || !user)
-		return
-
-	var/list/cool_grip_adj = list("a sick", "a wicked", "a deadly", "a menacing", "an edgy", "a tacticool", "a sweaty", "an awkward")
-	var/list/cool_grip1 = list("combat", "fightlord", "guerilla", "hidden", "space", "syndie", "double-reverse", "\"triple-dog-dare-ya\"", "stain-buster's")
-	var/list/cool_grip2a = list("blade", "cyber", "street", "assistant", "comedy", "butcher", "edge", "beast", "heck", "crud", "ass")
-	var/list/cool_grip2b = list("master", "slayer", "fighter", "militia", "space", "syndie", "lord", "blaster", "beef", "tyrannosaurus")
-	var/list/wheredWeSeeIt = list("saw the clown do", "saw the captain do", "saw the head of security do",\
-														"saw someone in a red spacesuit do", "saw a floating saw do", "saw on TV",\
-														"saw one of the diner dudes do", "saw just about every assistant do")
-	var/cool_grip3 = "[pick(wheredWeSeeIt)] [pick("once", "once or twice")]"
-
-	if(thing.force_use_as_tool)
-		user.visible_message("[user] assumes a less hostile grip on the [thing].",\
-													"You change your grip on the [thing], so as to use it more as a tool than a weapon.")
-	else
-		user.visible_message("[user] wields the [thing] a with [pick(cool_grip_adj)] [pick(cool_grip1)] [pick(cool_grip2a)][pick(cool_grip2b)] [pick("style", "grip")] that they probably [pick(cool_grip3)]!",\
-													"You wield the [thing] with [pick(cool_grip_adj)] [pick(cool_grip1)] [pick(cool_grip2a)][pick(cool_grip2b)] [pick("style", "grip")] that you [pick(cool_grip3)]! It makes it just about impossible to use as a tool!")
 
 
 
 /datum/component/barber/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_BARBER)
-	UnregisterSignal(parent, COMSIG_ITEM_TOGGLE_TOOLONLY)
+	UnregisterSignal(parent, COMSIG_MOB_ATTACKED_PRE)
 	. = ..()
 
 /datum/action/bar/haircut

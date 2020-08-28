@@ -704,11 +704,15 @@
 /atom/proc/hitby(atom/movable/AM as mob|obj)
 	return
 
+#define DONT_ATTACK 1
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
 /atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+	if((SEND_SIGNAL(src, COMSIG_ATTACKBY, W, user, params, is_special)) & DONT_ATTACK)
+		return
 	if (user && W && !(W.flags & SUPPRESSATTACK))  //!( istype(W, /obj/item/grab)  || istype(W, /obj/item/spraybottle) || istype(W, /obj/item/card/emag)))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
 	return
+#undef DONT_ATTACK
 
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
 /atom/proc/setTexture(var/texture = "damaged", var/blendMode = BLEND_MULTIPLY, var/key = "texture")
