@@ -1014,13 +1014,13 @@
 		score += O.reagents.get_reagent_amount("crank")*1.5
 		score += O.reagents.get_reagent_amount("LSD")/2
 		score += O.reagents.get_reagent_amount("space_drugs")/4
-		score += O.reagents.get_reagent_amount("THC")/8
+		score += O.reagents.get_reagent_amount("thc")/8
 		score += O.reagents.get_reagent_amount("psilocybin")/2
 		score += O.reagents.get_reagent_amount("krokodil")
 		score += O.reagents.get_reagent_amount("catdrugs")
 		score += O.reagents.get_reagent_amount("methamphetamine")*1.5 //meth
 
-		if(istype(O, /obj/item/plant/herb/cannabis) && O.reagents.get_reagent_amount("THC") == 0)
+		if(istype(O, /obj/item/plant/herb/cannabis) && O.reagents.get_reagent_amount("thc") == 0)
 			score += 7
 		return round(score)
 
