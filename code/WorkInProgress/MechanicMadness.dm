@@ -995,10 +995,10 @@ var/list/mechanics_telepads = new/list()
 		return
 		
 	proc/setPower(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Power(1 - 7):","Power setting", zap_power) as num
+		var/inp = input(user,"Please enter Power(1 - 6):","Power setting", zap_power) as num
 		if(!in_range(src, user) || user.stat)
 			return 0
-		inp = clamp(round(inp), 1, 7)
+		inp = clamp(round(inp), 1, 6)
 		zap_power = inp
 		boutput(user, "Power set to [inp]")
 		return 1
