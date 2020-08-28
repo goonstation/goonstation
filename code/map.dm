@@ -116,6 +116,20 @@ var/global/list/mapNames = list(
 		"the robotics lab" = list(/area/station/medical/robotics))
 //		"the public pool" = list(/area/station/crew_quarters/pool))
 
+	var/job_limits_from_landmarks = FALSE /// if TRUE each job with a landmark will get as many slots as many landmarks there are (jobs without a landmark left on default)
+	var/list/job_limits_override = list() /// assoc list of the form `job_type=limit` to override other job settings, works on gimmick jobs too
+
+	proc/init() /// Map-specific initialization, feel free to override for your map!
+		// map limits
+		if(job_limits_from_landmarks)
+			for(var/datum/job/J in job_controls.staple_jobs)
+				if(J.map_can_autooverride && (J.name in job_start_locations))
+					J.limit = length(job_start_locations[J.name])
+
+		for(var/datum/job/J in job_controls.staple_jobs + job_controls.special_jobs)
+			if(J.type in src.job_limits_override)
+				J.limit = src.job_limits_override[J.type]
+
 /datum/map_settings/donut2
 	name = "DONUT2"
 	goonhub_map = "https://goonhub.com/maps/donut2"
@@ -747,6 +761,10 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+	job_limits_override = list(
+		/datum/job/civilian/clown = 2 // pamgoc can have a little clown, as a treat
+	)
 
 /datum/map_settings/oshan
 	name = "OSHAN"
