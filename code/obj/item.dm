@@ -1176,7 +1176,8 @@
 	msgs.logs = list()
 	msgs.logc("attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)])")
 
-	SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src)
+	if(SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src) & ATTACK_PRE_DONT_ATTACK)
+		return
 	var/stam_crit_pow = src.stamina_crit_chance
 	if (prob(stam_crit_pow))
 		msgs.stamina_crit = 1
