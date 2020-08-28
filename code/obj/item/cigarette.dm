@@ -341,7 +341,7 @@
 	name = "dried up joint"
 	desc = "An ancient joint, it's paper now resembles the burial shroud of an egyptian king. There's no telling what the roller could have twisted up in here."
 	nic_free = 1
-	flavor = "THC"
+	flavor = "thc"
 
 /obj/item/clothing/mask/cigarette/random
 	name = "laced cigarette"
@@ -360,7 +360,7 @@
 	name = "dried up joint"
 	desc = "An ancient joint, it's paper now resembles the burial shroud of an egyptian king. There's no telling what the roller could have twisted up in here."
 	nic_free = 1
-	flavor = "THC"
+	flavor = "thc"
 
 /obj/item/clothing/mask/cigarette/cigar
 	name = "cigar"
@@ -444,7 +444,7 @@
 	buttdesc = "Ain't half the 'Rillo it used to be."
 
 	New()
-		src.flavor = pick("CBD","CBD","CBD","CBD","THC","THC","THC","THC","silicate","antihol","mutadone","rum","mutagen","toxin","water_holy","fuel","salbutamol","haloperidol",
+		src.flavor = pick("cbd","cbd","cbd","cbd","thc","thc","thc","thc","silicate","antihol","mutadone","rum","mutagen","toxin","water_holy","fuel","salbutamol","haloperidol",
 		"cryoxadone","cryostylane","omnizine","jenkem","vomit","carpet","charcoal","blood","cheese","bilk","atropine",
 		"lexorin","teporone","mannitol","spaceacillin","saltpetre","anti_rad","insulin","gvomit","milk","colors","diluted_fliptonium",
 		"something","honey_tea","tea","coffee","chocolate","guacamole","juice_pickle","vanilla","enriched_msg","egg","aranesp",
@@ -452,8 +452,8 @@
 		..()
 		if (src && src.reagents) //Warc: copied ZeWaka's copy of Wire's fix for null.remove_any() way above
 			src.reagents.remove_any(15)
-			src.reagents.add_reagent(pick("CBD","mucus","ethanol","glitter","methamphetamine","uranium","pepperoni","poo","quebon","jenkem","cryoxadone","kerosene","cryostylane","ectoplasm","gravy","cheese","paper","carpet","ants","enriched_msg","THC","THC","THC","bee","coffee","fuel","salbutamol","milk","grog"),5)
-			src.reagents.add_reagent(pick("CBD","mucus","ethanol","glitter","methamphetamine","uranium","pepperoni","poo","quebon","jenkem","cryoxadone","kerosene","cryostylane","ectoplasm","gravy","cheese","paper","carpet","ants","enriched_msg","THC","THC","THC","bee","coffee","fuel","salbutamol","milk","grog"),5)
+			src.reagents.add_reagent(pick("cbd","mucus","ethanol","glitter","methamphetamine","uranium","pepperoni","poo","quebon","jenkem","cryoxadone","kerosene","cryostylane","ectoplasm","gravy","cheese","paper","carpet","ants","enriched_msg","thc","thc","thc","bee","coffee","fuel","salbutamol","milk","grog"),5)
+			src.reagents.add_reagent(pick("cbd","mucus","ethanol","glitter","methamphetamine","uranium","pepperoni","poo","quebon","jenkem","cryoxadone","kerosene","cryostylane","ectoplasm","gravy","cheese","paper","carpet","ants","enriched_msg","thc","thc","thc","bee","coffee","fuel","salbutamol","milk","grog"),5)
 			if(prob(5))
 				src.reagents.add_reagent("triplemeth",5)
 
@@ -471,7 +471,7 @@
 		"cryoxadone","cryostylane","omnizine","jenkem","vomit","carpet","charcoal","blood","cheese","bilk","atropine",
 		"lexorin","teporone","mannitol","spaceacillin","saltpetre","anti_rad","insulin","gvomit","milk","colors","diluted_fliptonium",
 		"something","honey_tea","tea","coffee","chocolate","guacamole","juice_pickle","vanilla","enriched_msg","egg","aranesp",
-		"paper","bread","green_goop","black_goop", "mint_tea", "juice_peach", "ageinium", "synaptizine", "plasma", "morphine","oculine","CBD")
+		"paper","bread","green_goop","black_goop", "mint_tea", "juice_peach", "ageinium", "synaptizine", "plasma", "morphine","oculine","cbd")
 		src.name = "[reagent_id_to_name(src.flavor)]-laced cigarette"
 		..()
 
