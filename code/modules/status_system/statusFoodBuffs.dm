@@ -19,7 +19,7 @@
 				src.delStatus(id_no_big)
 
 		var/bite_time = 600
-		if (src.reagents && src.reagents.has_reagent("THC"))
+		if (src.reagents && src.reagents.has_reagent("thc"))
 			bite_time = 1200
 		if (eaten)
 			if (eaten.quality >= 5)
