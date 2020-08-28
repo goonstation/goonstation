@@ -435,13 +435,8 @@
 			reagents.reaction(target, 2)
 			reagents.trans_to(target, reagents.total_volume)
 			take_bleeding_damage(target, null, 8, DAMAGE_STAB)
-<<<<<<< HEAD
 			if (fusedmaterial)
 				fusedmaterial.triggerOnAttack(src, user, target)
-=======
-			if (head_material)
-				head_material.triggerOnAttack(src, user, target)
->>>>>>> 093b5813678b9d772ee9bbe47feff76265dfcdbb
 			return 1
 		else
 			var/obj/item/I = target
