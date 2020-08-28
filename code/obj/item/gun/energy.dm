@@ -1164,7 +1164,6 @@
 		var/turf/tgt = get_turf(M)
 		if(isrestrictedz(us.z) || isrestrictedz(tgt.z))
 			boutput(user, "\The [src.name] jams!")
-			message_admins("[key_name(usr)] is a nerd and tried to fire a pickpocket gun in a restricted z-level at [showCoords(us.x, us.y, us.z)].")
 			return
 		return ..(M, user)
 

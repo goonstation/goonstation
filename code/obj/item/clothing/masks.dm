@@ -354,6 +354,26 @@
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 10)
 
+	New()
+		..()
+		var/image/inventory = image('icons/obj/clothing/item_masks.dmi', "")
+		var/image/onhead = image('icons/mob/mask.dmi', "")
+
+		if (prob(1))
+			name = "surgical face bee-ld"
+			inventory.icon_state = "surgicalshield-bee"
+			onhead.icon_state = "surgicalshield-bee"
+			desc = "For those really, <i>really</i> messy surgeries where you also want to look like a dork."
+		else
+			inventory.icon_state = "surgicalshield-overlay"
+			onhead.icon_state = "surgicalshield-overlay"
+			var/randcol = random_hex(6)
+			inventory.color = "#[randcol]"
+			onhead.color = "#[randcol]"
+
+		src.UpdateOverlays(inventory, "surgmaskcolour")
+		src.wear_image.overlays += onhead
+
 /obj/item/paper_mask
 	name = "unfinished paper mask"
 	icon = 'icons/obj/items/items.dmi'

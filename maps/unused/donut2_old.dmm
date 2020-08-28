@@ -9792,7 +9792,7 @@
 /area/crew_quarters/quarters)
 "atZ" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/crate,
 /obj/item/clothing/under/princess,
@@ -28048,7 +28048,7 @@
 /area/crew_quarters/juryroom)
 "beu" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/juryroom)
@@ -28384,7 +28384,7 @@
 "bfe" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -31555,7 +31555,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
@@ -49700,9 +49700,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless,
 /area)
 "cbZ" = (
@@ -60623,9 +60621,7 @@
 /turf/simulated/wall/asteroid,
 /area)
 "cxw" = (
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area)
 "cxx" = (

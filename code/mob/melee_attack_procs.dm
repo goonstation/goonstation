@@ -1251,8 +1251,7 @@
 				var/turf/T = get_edge_target_turf(src, src.dir)
 				if (isturf(T))
 					src.visible_message("<span class='alert'><B>[src] savagely punches [target], sending them flying!</B></span>")
-					SPAWN_DBG (0)
-						target.throw_at(T, 10, 2)
+					target.throw_at(T, 10, 2)
 
 	if (src.bioHolder.HasEffect("revenant"))
 		var/datum/bioEffect/hidden/revenant/R = src.bioHolder.GetEffect("revenant")
@@ -1285,8 +1284,7 @@
 	T.changeStatus("weakened", 5 SECONDS)
 	var/turf/throwpoint = get_edge_target_turf(H, get_dir(H, T))
 	if (throwpoint && isturf(throwpoint))
-		SPAWN_DBG(0)
-			T.throw_at(throwpoint, 10, 2)
+		T.throw_at(throwpoint, 10, 2)
 
 	return
 

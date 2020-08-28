@@ -1767,10 +1767,10 @@
 
 			var/obj/portal/P = unpool(/obj/portal)
 			P.set_loc(get_turf(src))
-			var/obj/landmark/L = pick(escape_pod_success)
-			src.dir = L.dir
-			P.target = L.loc
-			src.set_loc(L.loc)
+			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
+			src.dir = landmarks[LANDMARK_ESCAPE_POD_SUCCESS][T]
+			P.target = T
+			src.set_loc(T)
 
 			logTheThing("station", src, null, "creates an escape portal at [log_loc(src)].")
 

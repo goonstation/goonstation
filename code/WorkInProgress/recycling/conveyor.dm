@@ -5,7 +5,11 @@
 
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
+#ifndef IN_MAP_EDITOR
 	icon_state = "conveyor0"
+#else
+	icon_state = "conveyor0-map"
+#endif
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = 1

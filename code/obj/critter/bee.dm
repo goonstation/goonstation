@@ -42,11 +42,11 @@
 	var/cant_take_hat = 0 // maybe they already have a hat, or maybe they just don't want a hat?  I dunno, bees are allowed to have their own fashion sense
 	var/royal = 0 // maybe they'll have a little crown  c:
 	var/list/hat_list = list("detective","hoscap","hardhat0","hardhat1","hosberet","ntberet","chef","souschef",
-	"captain","centcom","centcom-red","tophat","ptophat","mjhat","plunger","cakehat0","cakehat1","butt","santa",
-	"yellow","blue","red","green","black","white","psyche","wizard","wizardred","wizardpurple","witch",
-	"obcrown","macrown","safari","viking","dolan","camhat","redcamhat","mailcap","paper","policehelm",
-	"bikercap","apprentice","chavcap","flatcap","ntberet","captain-fancy","rank-fancy","mime_beret","mime_bowler",
-	"buckethat")
+	"captain","centcom","centcom-red","tophat","ptophat","mjhat","plunger","cakehat0","cakehat1",
+	"butt-nc","butt-plant","butt-cyber","purplebutt","santa","yellow","blue","red","green","black","white",
+	"psyche","wizard","wizardred","wizardpurple","witch","obcrown","macrown","safari","viking","dolan",
+	"camhat","redcamhat","mailcap","paper","policehelm","bikercap","apprentice","chavcap","flatcap","ntberet",
+	"captain-fancy","rank-fancy","mime_beret","mime_bowler","buckethat")
 
 	var/sleep_y_offset = 5 // this amount removed from the hat's pixel_y on sleep or death
 	var/hat_y_offset = 0
@@ -497,13 +497,12 @@
 			//1 am to 9 am cst is a little offset from the Real Bubs Jobtime
 			//of course, this is tied to the server's local time so G4 will be different
 			if (. >= 1 && . < 9)
-				var/obj/landmark/bubs_bee_job = locate("landmark*bubsbeejob")
-				if (istype(bubs_bee_job))
+				var/turf/T = pick_landmark(LANDMARK_BUBS_BEE_JOB)
+				if (istype(T))
 					src.hat = new /obj/item/clothing/head/flatcap (src)
 					src.hat_that_bee(src.hat)
 					src.update_icon()
-
-					src.set_loc(get_turf(bubs_bee_job))
+					src.set_loc(T)
 
 			return 1
 

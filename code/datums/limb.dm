@@ -722,8 +722,7 @@
 				if (prob(66) && T && isturf(T))
 					user.visible_message("<span class='alert'><B>[user] mauls [victim] viciously, sending them flying!</B></span>")
 					victim.health -= 6 * victim.brutevuln
-					SPAWN_DBG (0)
-						victim.throw_at(T, 10, 2)
+					victim.throw_at(T, 10, 2)
 				else
 					user.visible_message("<span class='alert'><B>[user] savagely slashes [victim]!</span>")
 					victim.health -= 4 * victim.brutevuln
@@ -736,8 +735,7 @@
 				if (prob(66) && T && isturf(T))
 					user.visible_message("<span class='alert'><B>[user] savagely punches [victim], sending them flying!</B></span>")
 					victim.health -= 6 * victim.brutevuln
-					SPAWN_DBG (0)
-						victim.throw_at(T, 10, 2)
+					victim.throw_at(T, 10, 2)
 				else
 					user.visible_message("<span class='alert'><B>[user] punches [victim]!</span>")
 					victim.health -= 4 * victim.brutevuln
@@ -1138,8 +1136,7 @@
 			if (isitem(O) && !O.anchored)
 				playsound(user,'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, pitch = 1.7)
 				var/turf/throw_to = get_edge_target_turf(user, get_dir(user,target))
-				SPAWN_DBG(0)
-					O.throw_at(throw_to, 8, 2)
+				O.throw_at(throw_to, 8, 2)
 
 		..()
 		return
@@ -1380,7 +1377,6 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 			if (prob(66) && T && isturf(T))
 				user.visible_message("<span class='alert'><B>[user] savagely punches [victim], sending them flying!</B></span>")
 				victim.health -= 6 * victim.brutevuln
-				SPAWN_DBG (0)
 				victim.throw_at(T, 10, 2)
 			else
 				user.visible_message("<span class='alert'><B>[user] punches [victim]!</span>")

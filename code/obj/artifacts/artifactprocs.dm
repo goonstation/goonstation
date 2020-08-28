@@ -1,27 +1,3 @@
-// Artifact Infrastructure Procs
-
-/obj/landmark/artifact
-	name = "artifact spawner"
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "x3"
-	anchored = 1.0
-	var/spawnchance = 100 // prob chance out of 100 to spawn artifact at game start
-	var/spawnpath = null  // if you want a landmark to spawn a specific artifact rather than a random one
-
-/obj/landmark/artifact/seed
-	name = "artifact seed spawner"
-	spawnpath = /obj/item/seed/alien
-
-/obj/landmark/artifact/cannabis_seed
-	name = "cannabis seed spawner"
-	spawnpath = /obj/item/seed/cannabis
-	// not actually an artifact but eh seeds are behaving oddly
-
-/obj/landmark/artifact/kudzu
-	name = "living kudzu spawner"
-	spawnpath = /obj/spacevine/living
-	// yeah kudzu isn't an artifact either whoops
-
 /proc/Artifact_Spawn(var/atom/T,var/forceartitype)
 	if (!T)
 		return

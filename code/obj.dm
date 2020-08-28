@@ -517,3 +517,15 @@
 	src.visible_message("<span class='alert'><b>[src]</b> emits a loud thump and rattles a bit.</span>")
 
 	animate_storage_thump(src)
+
+/obj/hitby(atom/movable/AM)
+	. = ..()
+	if(!.)
+		. = 'sound/impact_sounds/Generic_Stab_1.ogg'
+	if(!src.anchored)
+		step(src, AM.dir)
+	if(AM.throwforce >= 40)
+		if(!src.anchored && !src.throwing)
+			src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
+		else if(AM.throwforce >= 80 && !isrestrictedz(src.z))
+			src.meteorhit(AM)

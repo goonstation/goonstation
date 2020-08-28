@@ -207,8 +207,8 @@
 		if (isobserver(A))
 			return ..()
 
-		if (greekfall.len)
-			var/turf/T = pick(greekfall)
+		var/turf/T = pick_landmark(LANDMARK_FALL_GREEK)
+		if(T)
 			fall_to(T, A)
 			return
 		else ..()

@@ -54,11 +54,10 @@
 
 		var/turf/T = get_edge_target_turf(M, get_dir(M, get_step_away(target, M)))
 		if (!fake && T && isturf(T))
-			SPAWN_DBG(0)
-				target.throw_at(T, 3, 2)
-				target.changeStatus("weakened", 2 SECONDS)
-				target.changeStatus("stunned", 2 SECONDS)
-				target.force_laydown_standup()
+			target.throw_at(T, 3, 2)
+			target.changeStatus("weakened", 2 SECONDS)
+			target.changeStatus("stunned", 2 SECONDS)
+			target.force_laydown_standup()
 
 		logTheThing("combat", M, target, "uses the [fake ? "fake " : ""]kick wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0

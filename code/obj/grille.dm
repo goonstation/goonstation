@@ -25,6 +25,9 @@
 		update_icon()
 
 	steel
+#ifdef IN_MAP_EDITOR
+		icon_state = "grille-0"
+#endif
 		New()
 			..()
 			var/datum/material/M = getMaterial("steel")

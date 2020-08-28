@@ -1,3 +1,18 @@
+//debug stuff (used for if something is being hard deleted thru debug commands)
+#define DELETE_STOP 0
+#define DELETE_RUNNING 1
+#define DELETE_CHECK 2
+
+//admin levels
+#define LEVEL_HOST 6
+#define LEVEL_CODER 5
+#define LEVEL_ADMIN 4
+#define LEVEL_PA 3
+#define LEVEL_IA 2
+#define LEVEL_SA 1
+#define LEVEL_MOD 0
+#define LEVEL_BABBY -1
+
 // verb categories
 #define ADMIN_CAT_PREFIX "🇦"
 
@@ -22,3 +37,10 @@ var/global/list/toggleable_admin_verb_categories = list(
 	ADMIN_CAT_FUN,
 	ADMIN_CAT_DEBUG
 )
+
+//i think this is the best place for this?
+//Auditing
+//Whether or not a potentially suspicious action gets denied by the code.
+#define AUDIT_ACCESS_DENIED (0 << 1)
+//Logged whenever you try to View Variables a thing
+#define AUDIT_VIEW_VARIABLES (1 << 1)

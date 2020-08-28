@@ -395,15 +395,10 @@
 		if (!I)
 			return
 
-		I.throwforce += 8 //Ugly. Who cares.
-		SPAWN_DBG(1.5 SECONDS)
-			if (I)
-				I.throwforce -= 8
-
 		I.set_loc(get_turf(src.loc))
 		I.dropped()
 		src.hud.remove_item(I) //fix the funky UI stuff
 		I.layer = initial(I.layer)
-		I.throw_at(target, 8, 2)
+		I.throw_at(target, 8, 2, bonus_throwforce=8)
 
 		playsound(src, 'sound/effects/singsuck.ogg', 40, 1)

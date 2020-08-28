@@ -110,7 +110,7 @@
 		if (stage > master.max_stages)
 			stage = master.max_stages
 
-		if (prob(stage_prob * mult) && stage < master.max_stages)
+		if (prob(percentmult(stage_prob, mult)) && stage < master.max_stages)
 			stage++
 
 		master.stage_act(affected_mob,src)
@@ -170,7 +170,7 @@
 		var/advance_prob = stage_prob
 		if (state == "Acute")
 			advance_prob *= 2
-		advance_prob = clamp((advance_prob * mult), 0, 100)
+		advance_prob = clamp(percentmult(advance_prob, mult), 0, 100)
 
 		if (prob(advance_prob))
 			if (state == "Remissive")
@@ -183,11 +183,11 @@
 
 		// Common cures
 		if (cure != "Incurable")
-			if (cure == "Sleep" && affected_mob.sleeping && prob(33 * mult))
+			if (cure == "Sleep" && affected_mob.sleeping && prob(percentmult(33, mult)))
 				state = "Remissive"
 				return 1
 
-			else if (cure == "Self-Curing" && prob(5 * mult))
+			else if (cure == "Self-Curing" && prob(percentmult(5, mult)))
 				state = "Remissive"
 				return 1
 
@@ -209,7 +209,7 @@
 						var/we_are_cured = 0
 						var/reagcure_prob = reagentcure[current_id]
 						if (isnum(reagcure_prob))
-							if (prob(max((reagcure_prob * mult), 100)))
+							if (prob(max((percentmult(reagcure_prob, mult)), 100)))
 								we_are_cured = 1
 						else if (islist(reagcure_prob)) // we want to roll more than one prob() in order to succeed, aka we want a very low chance
 							var/list/cureprobs = reagcure_prob
@@ -217,11 +217,11 @@
 							for (var/thing in cureprobs)
 								if (!isnum(thing))
 									continue
-								if (!prob(max((thing * mult), 100)))
+								if (!prob(max(percentmult(thing, mult), 100)))
 									success = 0
 							if (success)
 								we_are_cured = 1
-						else if (prob(max((recureprob * mult), 100)))
+						else if (prob(max(percentmult(recureprob, mult), 100)))
 							we_are_cured = 1
 						if (we_are_cured)
 							state = "Remissive"
@@ -276,7 +276,7 @@
 		if (stage > master.max_stages)
 			stage = master.max_stages
 
-		if (prob(stage_prob * mult) && stage < master.max_stages)
+		if (prob(percentmult(stage_prob, mult)) && stage < master.max_stages)
 			stage++
 
 
@@ -528,6 +528,7 @@
 	return null
 
 /mob/living/proc/Virus_ShockCure(var/probcure = 50)
+	src.changeStatus("defibbed", (12 SECONDS * (probcure * 0.1))) // also makes it *slightly* harder to shitsec someone to death
 	for (var/datum/ailment_data/V in src.ailments)
 		if (V.cure == "Electric Shock" && prob(probcure))
 			src.cure_disease(V)

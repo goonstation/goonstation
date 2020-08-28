@@ -406,6 +406,13 @@
 	else if (A.y >= (world.maxy - 1))
 		edge_step(A, 0, 3)
 
+/turf/hitby(atom/movable/AM)
+	. = ..()
+	if(src.density)
+		if(AM.throwforce >= 80)
+			src.meteorhit(AM)
+		. = 'sound/impact_sounds/Generic_Stab_1.ogg'
+
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
 		if(O.level == 1)
@@ -817,7 +824,11 @@
 	density = 1
 	pathable = 0
 	turf_flags = ALWAYS_SOLID_FLUID
+#ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
 	plane = PLANE_WALL
+#else
+	plane = PLANE_FLOOR
+#endif
 
 /turf/unsimulated/wall/solidcolor
 	name = "invisible solid turf"
@@ -862,10 +873,8 @@
 	#endif
 		lobby_titlecard = src
 
-#ifndef RP_MODE
 		if (!player_capa)
 			encourage()
-#endif
 
 	proc/encourage()
 		var/obj/overlay/clickable = new/obj/overlay(src)
