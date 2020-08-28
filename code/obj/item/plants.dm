@@ -91,7 +91,7 @@
 	desc = "Leafs for reefin'!"
 	icon_state = "cannabisleaf"
 	brewable = 1
-	brew_result = list("THC", "CBD")
+	brew_result = list("thc", "cbd")
 	module_research = list("vice" = 10)
 	module_research_type = /obj/item/plant/herb/cannabis
 	contraband = 1
@@ -102,22 +102,22 @@
 		var/datum/reagents/R = new/datum/reagents(85)
 		reagents = R
 		R.my_atom = src
-		R.add_reagent("THC", 60)
-		R.add_reagent("CBD", 20)
+		R.add_reagent("thc", 60)
+		R.add_reagent("cbd", 20)
 
 /obj/item/plant/herb/cannabis/mega
 	name = "cannabis leaf"
 	crop_prefix = "rainbow "
 	desc = "Is it supposed to be glowing like that...?"
 	icon_state = "megaweedleaf"
-	brew_result = list("THC", "LSD")
+	brew_result = list("thc", "LSD")
 
 /obj/item/plant/herb/cannabis/mega/spawnable
 	make_reagents()
 		var/datum/reagents/R = new/datum/reagents(85)
 		reagents = R
 		R.my_atom = src
-		R.add_reagent("THC", 40)
+		R.add_reagent("thc", 40)
 		R.add_reagent("LSD", 40)
 
 /obj/item/plant/herb/cannabis/black
@@ -125,14 +125,14 @@
 	crop_prefix = "black "
 	desc = "Looks a bit dark. Oh well."
 	icon_state = "blackweedleaf"
-	brew_result = list("THC", "cyanide")
+	brew_result = list("thc", "cyanide")
 
 /obj/item/plant/herb/cannabis/black/spawnable
 	make_reagents()
 		var/datum/reagents/R = new/datum/reagents(85)
 		reagents = R
 		R.my_atom = src
-		R.add_reagent("THC", 40)
+		R.add_reagent("thc", 40)
 		R.add_reagent("cyanide", 40)
 
 /obj/item/plant/herb/cannabis/white
@@ -140,14 +140,14 @@
 	crop_prefix = "white "
 	desc = "It feels smooth and nice to the touch."
 	icon_state = "whiteweedleaf"
-	brew_result = list("THC", "omnizine")
+	brew_result = list("thc", "omnizine")
 
 /obj/item/plant/herb/cannabis/white/spawnable
 	make_reagents()
 		var/datum/reagents/R = new/datum/reagents(85)
 		reagents = R
 		R.my_atom = src
-		R.add_reagent("THC", 40)
+		R.add_reagent("thc", 40)
 		R.add_reagent("omnizine", 40)
 
 /obj/item/plant/herb/cannabis/omega
@@ -155,7 +155,7 @@
 	crop_prefix = "glowing "
 	desc = "You feel dizzy looking at it. What the fuck?"
 	icon_state = "Oweedleaf"
-	brew_result = list("THC", "LSD", "suicider", "space_drugs", "mercury", "lithium", "atropine", "haloperidol", "methamphetamine",\
+	brew_result = list("thc", "LSD", "suicider", "space_drugs", "mercury", "lithium", "atropine", "haloperidol", "methamphetamine",\
 	"capsaicin", "psilocybin", "hairgrownium", "ectoplasm", "bathsalts", "itching", "crank", "krokodil", "catdrugs", "histamine")
 
 /obj/item/plant/herb/cannabis/omega/spawnable
@@ -163,7 +163,7 @@
 		var/datum/reagents/R = new/datum/reagents(800)
 		reagents = R
 		R.my_atom = src
-		R.add_reagent("THC", 40)
+		R.add_reagent("thc", 40)
 		R.add_reagent("LSD", 40)
 		R.add_reagent("suicider", 40)
 		R.add_reagent("space_drugs", 40)
@@ -172,7 +172,7 @@
 		R.add_reagent("atropine", 40)
 		R.add_reagent("haloperidol", 40)
 		R.add_reagent("methamphetamine", 40)
-		R.add_reagent("THC", 40)
+		R.add_reagent("thc", 40)
 		R.add_reagent("capsaicin", 40)
 		R.add_reagent("psilocybin", 40)
 		R.add_reagent("hairgrownium", 40)
@@ -199,7 +199,7 @@
 	desc = "A leaf from the twobacco plant. This could probably be smoked- wait, is it already smoking?"
 	icon_state = "twobacco"
 	brewable = 1
-	brew_result = list("nicotine2")
+	brew_result = list("nicotwaine")
 
 /obj/item/plant/wheat
 	name = "wheat"
