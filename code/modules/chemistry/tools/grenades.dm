@@ -250,8 +250,8 @@
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
 
-		B1.reagents.add_reagent("ff-foam", 30)
-		B2.reagents.add_reagent("ff-foam", 30)
+		B1.reagents.add_reagent("ff_foam", 30)
+		B2.reagents.add_reagent("ff_foam", 30)
 
 		beakers += B1
 		beakers += B2
