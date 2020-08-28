@@ -438,10 +438,6 @@
 					var/datum/abilityHolder/A = src.abilityHolder.deepCopy()
 					R.fields["abilities"] = A
 
-				R.fields["traits"] = list()
-				if(src.traitHolder && src.traitHolder.traits.len)
-					R.fields["traits"] = src.traitHolder.traits.Copy()
-
 				R.fields["imp"] = null
 				R.fields["mind"] = src.mind
 				R.name = "CloneRecord-[ckey(src.real_name)]"
