@@ -456,6 +456,9 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				var/obj/item/storage/backpack = M.back
 				new /obj/item/tank/emergency_oxygen(backpack) // oh boy they'll need this if they are unlucky
 				backpack.hud.update()
+			var/mob/living/carbon/human/H = M
+			if(istype(H))
+				H.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
 			missile.reset_to_random_pos()
 			missile.lunch(M)
 			return 1
