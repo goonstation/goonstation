@@ -1,4 +1,9 @@
 
+(t)fri aug 28 20
+(u)makkipakki
+(p)1923
+(e)🆕🗺|feature, mapping
+(*)Added a table-mounted defibrillator to the security department.
 (t)thu aug 27 20
 (u)Michaellaneous
 (p)1971
