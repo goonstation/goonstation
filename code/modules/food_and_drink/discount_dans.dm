@@ -460,7 +460,7 @@
 			if (2)
 				src.name = "Hungry Dan's Self-Microwaving Meals - Partially Baked Spring Chicken Flavor" //So spring it's an egg
 				src.desc = "A self-heating TV dinner. Is... this still moving? You should probably use a fork."
-				src.initial_reagents["THC"] = 4.20
+				src.initial_reagents["thc"] = 4.20
 				src.initial_reagents["oil"] = 10
 				if (prob(5))
 					src.initial_reagents["flaptonium"] = 5 //the egg hatched
