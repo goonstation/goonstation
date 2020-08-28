@@ -443,7 +443,7 @@ datum
 			transparency = 190
 			alch_strength = 0.25 //half vodka by content, half vodka strength
 
-		fooddrink/alcoholic/cocktail_bloodymary
+		fooddrink/alcoholic/bloody_mary
 			name = "Bloody Mary"
 			id = "bloody_mary"
 			description = "Mixed tomato juice and vodka."
@@ -455,7 +455,7 @@ datum
 			transparency = 190
 			alch_strength = 0.25
 
-		fooddrink/alcoholic/cocktail_bloodyscary
+		fooddrink/alcoholic/bloody_scary
 			name = "Bloody Scary"
 			id = "bloody_scary"
 			description = "A mix of vodka and the blood of a terrible Other Thing."
@@ -780,7 +780,7 @@ datum
 				..()
 				return
 
-		fooddrink/alcoholic/Manhattan
+		fooddrink/alcoholic/manhattan
 			name = "Manhattan"
 			id = "manhattan"
 			fluid_r = 164
@@ -1137,12 +1137,12 @@ datum
 			alch_strength = 0.25
 			description = "DUUUUUUUUUUUUUUUUUUUUDE"
 			reagent_state = LIQUID
-			//Decays into ethanol and THC
+			//Decays into ethanol and thc
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(prob(10))
-					M.reagents.add_reagent("THC", rand(1,10) * mult)
+					M.reagents.add_reagent("thc", rand(1,10) * mult)
 				..()
 				return
 
@@ -1730,7 +1730,7 @@ datum
 							explosion(M, T, -1, -1, 1, 1)
 						if(2)
 							boutput(M, "<span class='alert'>So juicy!</span>")
-							M.reagents.add_reagent(pick("capsaicin","psilocybin","LSD","THC","ethanol","poo","omnizine","methamphetamine","haloperidol","mutagen","radium","acid","mercury","space_drugs","morphine"), rand(10,40))
+							M.reagents.add_reagent(pick("capsaicin","psilocybin","LSD","thc","ethanol","poo","omnizine","methamphetamine","haloperidol","mutagen","radium","acid","mercury","space_drugs","morphine"), rand(10,40))
 						if(3)
 							boutput(M, "<span class='notice'>How refreshing!</span>")
 							M.HealDamage("All", 30, 30)
@@ -1740,7 +1740,7 @@ datum
 						if(4)
 							boutput(M, "<span class='notice'>This flavor is out of this world!</span>")
 							M.reagents.add_reagent("space_drugs", 30)
-							M.reagents.add_reagent("THC", 30)
+							M.reagents.add_reagent("thc", 30)
 							M.reagents.add_reagent("LSD", 30)
 							M.reagents.add_reagent("psilocybin", 30)
 						if(5)
@@ -1860,7 +1860,7 @@ datum
 							boutput(L, "<span class='alert'>Oh christ too hot!!!!</span>")
 							L.update_burning(25)
 
-		fooddrink/space_cola
+		fooddrink/cola
 			name = "cola"
 			id = "cola"
 			description = "A refreshing beverage."
@@ -3058,7 +3058,7 @@ datum
 			thirst_value = 1.5
 			bladder_value = -1.5
 
-		fooddrink/juice_pinapple
+		fooddrink/juice_pineapple
 			name = "pineapple juice"
 			id = "juice_pineapple"
 			fluid_r = 255

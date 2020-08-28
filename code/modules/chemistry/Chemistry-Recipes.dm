@@ -1292,7 +1292,7 @@ datum
 			name = "Gin and Chronic"
 			id = "gchronic"
 			result = "gchronic"
-			required_reagents = list("gtonic" = 1, "THC" = 1)
+			required_reagents = list("gtonic" = 1, "thc" = 1)
 			result_amount = 2
 			mix_phrase = "Dude. Dude. You're, like, a genius."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -2529,7 +2529,7 @@ datum
 			name = "CLF3 + FF Explosion"
 			id = "clf3_firefoam"
 			result = "clf3_firefoam"
-			required_reagents = list("infernite" = 1, "ff-foam" = 1)
+			required_reagents = list("infernite" = 1, "ff_foam" = 1)
 			instant = 1
 			mix_phrase = "The substance violently detonates!"
 			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
@@ -3006,8 +3006,8 @@ datum
 
 		firefoam
 			name = "Firefighting foam"
-			id = "ff-foam"
-			result = "ff-foam"
+			id = "ff_foam"
+			result = "ff_foam"
 			required_reagents = list("chlorine" = 1, "carbon" = 1, "sulfur" = 1)
 			result_amount = 3
 			mix_phrase = "The mixture bubbles gently."
@@ -3227,14 +3227,14 @@ datum
 			name = "Filgrastim"
 			id = "filgrastim"
 			result = "filgrastim"
-			required_reagents = list("blood" = 1, "dna_mutagen" = 1, "e.coli" = 1, "spaceacillin" = 1)
+			required_reagents = list("blood" = 1, "dna_mutagen" = 1, "ecoli" = 1, "spaceacillin" = 1)
 			result_amount = 2
 
 		ecoli // needed for filgrastim vOv
 			name = "E.Coli Bacteria"
-			id = "e.coli"
-			result = "e.coli"
-			required_reagents = list("poo" = 1, "bacterialmedium" = 1)
+			id = "ecoli"
+			result = "ecoli"
+			required_reagents = list("poo" = 1, "bacterial_medium" = 1)
 			result_amount = 1
 
 		catdrugs
@@ -3780,7 +3780,7 @@ datum
 		/* It's me. I'm the new merculite.
 		nitrogen_triiodide
 			name = "Nitrogen Triiodide"
-			id = "nitrogentriiodide"
+			id = "nitrotri_parent"
 			result = "nitrotri_wet"
 			required_reagents = list("lube" = 1, "iodine" = 2, "silver" = 1, "fluorine" = 1, "cryostylane" = 1) //, "perfluorodecalin" = 1, "oil" = 1, "chlorine" = 1)
 			required_temperature = - 233 // -30 degrees celsius
@@ -3897,8 +3897,8 @@ datum
 
 		king_readsterium
 			name = "King Readsterium"
-			id = "badmanjuice"
-			result = "badmanjuice"
+			id = "king_readsterium"
+			result = "king_readsterium"
 			required_reagents = list("transparium" = 1, "glitter" = 1, "port" = 1, "cholesterol" = 1 )
 			result_amount = 2.5
 			mix_phrase = "The mixture swirls and bubbles becoming blue, you can hear faint music emanating from the it."
@@ -3906,8 +3906,8 @@ datum
 
 		bubsium
 			name = "Bubsium"
-			id = "bubs"
-			result = "bubs"
+			id = "bubsium"
+			result = "bubsium"
 			required_reagents = list("bee" = 2, "cholesterol" = 1, "pepperoni" = 1, "bourbon" = 1)
 			result_amount = 3
 			mix_phrase = "The mixture turns yellowish and emits a loud grumping sound"

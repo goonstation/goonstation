@@ -368,9 +368,9 @@ datum
 				..()
 				return
 
-		drug/THC
+		drug/thc
 			name = "tetrahydrocannabinol"
-			id = "THC"
+			id = "thc"
 			description = "A mild psychoactive chemical extracted from the cannabis plant."
 			reagent_state = LIQUID
 			fluid_r = 0
@@ -397,9 +397,9 @@ datum
 				..()
 				return
 
-		drug/CBD
+		drug/cbd
 			name = "cannabidiol"
-			id = "CBD"
+			id = "cbd"
 			description = "A non-psychoactive phytocannabinoid extracted from the cannabis plant."
 			reagent_state = LIQUID
 			fluid_r = 0
@@ -421,7 +421,7 @@ datum
 					M.change_misstep_chance(-5 * mult)
 					M.delStatus("weakened")
 				if (holder.get_reagent_amount(src.id) >= 70 && prob(25))
-					if (holder.get_reagent_amount("THC") <= 20)
+					if (holder.get_reagent_amount("thc") <= 20)
 						M.drowsyness = 10
 				if(prob(25))
 					M.HealDamage("All", 2 * mult, 0)
@@ -517,9 +517,9 @@ datum
 						M.take_toxin_damage(6 * mult)
 						M.take_oxygen_deprivation(20 * mult)
 
-		drug/nicotine/nicotine2
+		drug/nicotine/nicotwaine
 			name = "nicotwaine"
-			id = "nicotine2"
+			id = "nicotwaine"
 			description = "A highly addictive stimulant derived from the twobacco plant."
 			addiction_prob = 100
 			overdose = 70
@@ -528,14 +528,14 @@ datum
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("r_nicotine2", 3)
+					remove_buff = M.add_stam_mod_regen("r_nicotwaine", 3)
 				..()
 
 			on_remove()
 				if(remove_buff)
 					if(ismob(holder?.my_atom))
 						var/mob/M = holder.my_atom
-						remove_buff = M.remove_stam_mod_regen("r_nicotine2")
+						remove_buff = M.remove_stam_mod_regen("r_nicotwaine")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)

@@ -616,7 +616,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				return
 
-		combustible/liquiddarkmatter
+		combustible/ldmatter
 			name = "liquid dark matter"
 			id = "ldmatter"
 			description = "What has science done ... It's concentrated dark matter in liquid form. And i thought you needed plutonic quarks for that."
@@ -855,7 +855,7 @@ datum
 						D.reagents.add_reagent("blackpowder", 5, null)
 				return
 
-		combustible/nitrogentriiodide
+		combustible/nitrotri_parent
 			//This is the parent and should not be spawned
 			name = "Nitrogen Triiodide"
 			id = "nitrotri_parent"
@@ -925,7 +925,7 @@ datum
 			reaction_temperature(exposed_temperature, exposed_volume)
 				dry()
 
-		combustible/nitrogentriiodide/wet
+		combustible/nitrotri_parent/nitrotri_wet
 			id = "nitrotri_wet"
 			volatility = 2
 			viscosity = 0.3
@@ -942,7 +942,7 @@ datum
 
 
 
-		combustible/nitrogentriiodide/dry
+		combustible/nitrotri_parent/nitrotri_dry
 			id = "nitrotri_dry"
 			volatility = 2.5
 			description = "A chemical that is stable when in liquid form, but becomes extremely volatile when dry. This is dry. Uh oh."

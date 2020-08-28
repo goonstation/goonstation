@@ -1279,7 +1279,7 @@ datum
 				P.growth -= rand(1,2)
 				P.HYPmutateplant(1)
 
-		harmful/formaldehyde/werewolf_serum_fake1
+		harmful/formaldehyde/werewolf_part1
 			name = "Werewolf Serum Precursor Alpha"
 			id = "werewolf_part1"
 			description = "A strange and poisonous lupine compound."
@@ -1289,7 +1289,7 @@ datum
 			fluid_b = 147
 			transparency = 150
 
-		harmful/omega_mutagen/werewolf_serum_fake2
+		harmful/omega_mutagen/werewolf_part2
 			name = "Werewolf Serum Precursor Beta"
 			id = "werewolf_part2"
 			description = "A potent and very unstable mutagenic substance."

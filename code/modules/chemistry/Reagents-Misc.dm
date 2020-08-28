@@ -595,9 +595,9 @@ datum
 				src = null
 				return
 
-		fffoam
+		ff_foam
 			name = "firefighting foam"
-			id = "ff-foam"
+			id = "ff_foam"
 			description = "Carbon Tetrachloride is a foam used for fire suppression."
 			reagent_state = LIQUID
 			fluid_r = 195
@@ -1043,7 +1043,7 @@ datum
 				..()
 				return
 
-		space_cleaner // COGWERKS CHEM REVISION PROJECT. ethanol, ammonia + water - treat like a shitty version of windex
+		cleaner // COGWERKS CHEM REVISION PROJECT. ethanol, ammonia + water - treat like a shitty version of windex
 			name = "space cleaner"
 			id = "cleaner"
 			description = "A compound used to clean things. It has a sharp, unpleasant odor." // cogwerks- THIS IS NOT BLEACH ARGHHHH
@@ -1346,7 +1346,7 @@ datum
 			fluid_b = 10
 			transparency = 50
 
-		werewolf_serum_fake3
+		werewolf_part3
 			name = "Werewolf Serum Precursor Gamma"
 			id = "werewolf_part3"
 			description = "A direct precursor to a special, targeted mutagen."
@@ -1356,7 +1356,7 @@ datum
 			fluid_b = 103
 			transparency = 10
 
-		werewolf_serum_fake4
+		werewolf_part4
 			name = "Imperfect Werewolf Serum"
 			id = "werewolf_part4"
 			description = "A flawed isomer of a special, targeted mutagen.  If only it were perfected..."
@@ -2922,7 +2922,7 @@ datum
 					P.health++
 
 
-		plant_nutrients
+		saltpetre
 			name = "saltpetre"
 			id = "saltpetre"
 			description = "Potassium nitrate, commonly used for fertilizer, cured meats and fireworks production."
@@ -3599,7 +3599,7 @@ datum
 
 		king_readsterium
 			name = "King Readsterium"
-			id = "badmanjuice"
+			id = "king_readsterium"
 			description = "Essence of a King, and a very bad man, known to attract the attention of a certain Senator."
 			reagent_state = LIQUID
 			penetrates_skin = 1
@@ -3642,7 +3642,7 @@ datum
 
 		bubsium
 			name = "Bubsium"
-			id = "bubs"
+			id = "bubsium"
 			description = "The liquified and concentrated essence of the mysterious character Bubs."
 			reagent_state = LIQUID
 			penetrates_skin = 1
@@ -3875,7 +3875,7 @@ datum
 			id = "good_cement"
 			description = "A great mixture of different minerals and chemicals that binds with an aggregate to form a rock-solid... solid."
 
-		cement/ok_cement
+		cement/okay_cement
 			name = "cement"
 			id = "okay_cement"
 			description = "A mixture of different minerals and chemicals that binds with an aggregate to form a rock-solid... solid."

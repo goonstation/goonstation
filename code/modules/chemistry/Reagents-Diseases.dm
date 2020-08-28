@@ -65,7 +65,7 @@ datum
 			transparency = 0
 			disease = /datum/ailment/disease/cluwneing_around
 
-		disease/lycanthropy //Please never give this an actual recipe .I
+		disease/werewolf_serum //Please never give this an actual recipe .I
 			name = "werewolf serum"
 			id = "werewolf_serum"
 			description = "A mutagenic substance associated with a mythical beast."
@@ -253,7 +253,7 @@ datum
 
 		disease/ecoli // Food Poisoning 2
 			name = "e.coli bacteria"
-			id = "e.coli"
+			id = "ecoli"
 			description = "A nasty bacteria found in contaminated food and biological waste products."
 			reagent_state = LIQUID
 			//minimum_to_infect = 0
@@ -523,23 +523,23 @@ datum
 			description = "An agent which can be used to create a specialized cure for a cellular mutative pathogen"
 			reagent_state = 2
 
-		bacterialmedium
+		bacterial_medium
 			name = "Bacterial Medium"
-			id = "bacterialmedium"
+			id = "bacterial_medium"
 			description = "A solution useful for the cultivation of bacteria."
 			reagent_state = 2
 			pathogen_nutrition = list("water", "sugar", "sodium", "iron", "nitrogen")
 
-		parasiticmedium
+		parasitic_medium
 			name = "Parasitic Medium"
-			id = "parasiticmedium"
+			id = "parasitic_medium"
 			description = "A solution useful for the cultivation of parasites."
 			reagent_state = 2
 			pathogen_nutrition = list("water", "sugar", "sodium", "iron", "nitrogen")
 
-		fungalmedium
+		fungal_medium
 			name = "Fungal Medium"
-			id = "fungalmedium"
+			id = "fungal_medium"
 			description = "A solution encouraging the growth of fungi."
 			reagent_state = 2
 			pathogen_nutrition = list("water", "sugar", "sodium", "iron", "nitrogen")
