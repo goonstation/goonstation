@@ -307,7 +307,7 @@
 /obj/item/reagent_containers/glass/vial/prepared/fungus
 	FM = /datum/microbody/fungi
 
-/obj/item/reagent_containers/glass/beaker/parasiticmedium
+/obj/item/reagent_containers/glass/beaker/parasitic_medium
 	name = "Beaker of Parasitic Medium"
 	desc = "A mix of blood and flesh; fertile ground for some microbes."
 
@@ -315,7 +315,7 @@
 
 	New()
 		..()
-		src.reagents.add_reagent("parasiticmedium", 50)
+		src.reagents.add_reagent("parasitic_medium", 50)
 
 /obj/item/reagent_containers/glass/beaker/egg
 	name = "Beaker of Eggs"
@@ -345,7 +345,7 @@
 
 	New()
 		..()
-		src.reagents.add_reagent("bacterialmedium", 50)
+		src.reagents.add_reagent("bacterial_medium", 50)
 
 /obj/item/reagent_containers/glass/beaker/fungal
 	name = "Beaker of Fungal Growth Medium"
@@ -355,7 +355,7 @@
 
 	New()
 		..()
-		src.reagents.add_reagent("fungalmedium", 50)
+		src.reagents.add_reagent("fungal_medium", 50)
 
 /obj/item/reagent_containers/glass/beaker/antiviral
 	name = "Beaker of Antiviral Agent"

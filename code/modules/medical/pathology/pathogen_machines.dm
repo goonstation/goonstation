@@ -1720,7 +1720,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/bloodslide, 50)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/vial, 25)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/petridish, 8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/parasiticmedium, 20)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/parasitic_medium, 20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/fungal, 20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/bacterial, 20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/egg, 20)

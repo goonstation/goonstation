@@ -119,7 +119,7 @@ datum/microbody/bacteria
 
 	seqMax = 25
 
-	growth_medium = "bacterialmedium"
+	growth_medium = "bacterial_medium"
 
 	cure_base = "spaceacillin"
 	vaccination = 1
@@ -141,7 +141,7 @@ datum/microbody/fungi
 
 	activity = list(10, 10, 10, 10, 10)
 
-	growth_medium = "fungalmedium"
+	growth_medium = "fungal_medium"
 
 	cure_base = "biocide"
 	vaccination = 1
@@ -164,7 +164,7 @@ datum/microbody/parasite
 
 	seqMax = 18
 
-	growth_medium = "parasiticmedium"
+	growth_medium = "parasitic_medium"
 
 	cure_base = "biocide"
 
