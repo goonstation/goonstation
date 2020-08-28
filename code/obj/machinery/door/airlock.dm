@@ -70,9 +70,9 @@
 	return tgui_default_state
 
 obj/machinery/door/airlock/ui_status(mob/user, datum/ui_state/state)
-	if(issilicon(user))
-		return 2
-	return UI_CLOSE
+		return min(
+			tgui_silicon_state.can_use_topic(src, user)
+		)
 
 /obj/machinery/door/airlock/ui_act(action, params)
 	if(..())
