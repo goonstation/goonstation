@@ -203,7 +203,7 @@
 	dir = 0				// dir will contain dominant direction for junction pipes
 	var/health = 10 	// health points 0-10
 	layer = DISPOSAL_PIPE_LAYER
-	// plane = PLANE_FLOOR // set in New because you want to see pipes in the map editor :/
+	plane = PLANE_FLOOR
 	var/base_icon_state	// initial icon state on map
 	var/list/mail_tag = null // Tag of mail group for switching pipes
 
@@ -211,7 +211,6 @@
 
 	// new pipe, set the icon_state as on map
 	New()
-		src.plane = PLANE_FLOOR
 		..()
 		base_icon_state = icon_state
 		pipeimg = image(src.icon, src.loc, src.icon_state, 3, dir)

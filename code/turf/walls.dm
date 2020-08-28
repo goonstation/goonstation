@@ -2,7 +2,11 @@
 	name = "wall"
 	desc = "Looks like a regular wall."
 	icon = 'icons/turf/walls.dmi'
+#ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
 	plane = PLANE_WALL
+#else
+	plane = PLANE_FLOOR
+#endif
 	opacity = 1
 	density = 1
 	blocks_air = 1
