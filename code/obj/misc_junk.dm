@@ -591,7 +591,7 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH
 	var/emagged = 0
 	var/last_used = 0
-	var/list/safe_smokables = list("nicotine", "THC", "CBD")
+	var/list/safe_smokables = list("nicotine", "thc", "cbd")
 	var/datum/effects/system/bad_smoke_spread/smoke
 	var/range = 1
 
@@ -603,7 +603,7 @@
 			src.smoke.set_up(1, 0, usr.loc)
 		if (prob(5))
 			src.reagents.clear_reagents()
-			src.reagents.add_reagent("THC", 50) //blaze it
+			src.reagents.add_reagent("thc", 50) //blaze it
 
 
 	proc/check_whitelist(var/mob/user as mob)
