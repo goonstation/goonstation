@@ -982,7 +982,6 @@ var/list/mechanics_telepads = new/list()
 	desc = ""
 	icon_state = "comp_zap"
 	cooldown_time = 2 SECONDS
-	cabinet_banned = true // non-functional
 
 	New()
 		..()
