@@ -28,6 +28,162 @@
 	shock - has a chance of electrocuting its target.
 */
 
+
+/obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AiAirlock", name)
+		ui.open()
+	return TRUE
+
+/obj/machinery/door/airlock/ui_data()
+	var/list/data = list()
+
+	var/list/power = list()
+	power["main"] = secondsMainPowerLost ? 0 : 2 // boolean
+	power["main_timeleft"] = secondsMainPowerLost
+	power["backup"] = secondsBackupPowerLost ? 0 : 2 // boolean
+	power["backup_timeleft"] = secondsBackupPowerLost
+	data["power"] = power
+
+	data["shock"] = secondsElectrified == 0 ? 2 : 0
+	data["shock_timeleft"] = secondsElectrified
+	data["id_scanner"] = !aiDisabledIdScanner
+	data["locked"] = locked // bolted
+	data["welded"] = welded // welded
+	data["opened"] = !density // opened
+
+	var/list/wire = list()
+	wire["main_1"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)
+	wire["main_2"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)
+	wire["backup_1"] = !src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER1)
+	wire["backup_2"] = !src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER2)
+	wire["shock"] = !src.isWireCut(AIRLOCK_WIRE_ELECTRIFY)
+	wire["id_scanner"] = !src.isWireCut(AIRLOCK_WIRE_IDSCAN)
+	wire["bolts"] = !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS)
+	wire["safe"] = !src.isWireCut(AIRLOCK_WIRE_SAFETY)
+
+	data["wires"] = wire
+	return data
+
+/obj/machinery/door/airlock/ui_act(action, params)
+	if(..())
+		return
+	if(!src.allowed(usr))
+		return
+	switch(action)
+		if("disrupt-main")
+			if(!secondsMainPowerLost)
+				loseMainPower()
+				update_icon()
+			else
+				boutput(usr, "<span class='warning'>Main power is already offline.</span>")
+			. = TRUE
+		if("disrupt-backup")
+			if(!secondsBackupPowerLost)
+				loseBackupPower()
+				update_icon()
+			else
+				boutput(usr, "<span class='warning'>Backup power is already offline.</span>")
+			. = TRUE
+		if("shock-restore")
+			shock_restore(usr)
+			. = TRUE
+		if("shock-temp")
+			shock_temp(usr)
+			. = TRUE
+		if("shock-perm")
+			shock_perm(usr)
+			. = TRUE
+		if("idscan-toggle")
+			idscantoggle()
+			. = TRUE
+		if("bolt-toggle")
+			toggle_bolt()
+			. = TRUE
+		if("open-close")
+			user_toggle_open(usr)
+			. = TRUE
+
+/obj/machinery/door/airlock/proc/shock_temp(mob/user)
+	//electrify door for 30 seconds
+	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
+		boutput(usr, text("The electrification wire has been cut.<br><br>"))
+	else if (src.secondsElectrified==-1)
+		boutput(usr, text("The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.<br><br>"))
+	else if (src.secondsElectrified!=0)
+		boutput(usr, text("The door is already electrified. You can't re-electrify it while it's already electrified.<br><br>"))
+	else
+		if(alert("Are you sure? Electricity might harm a human!",,"Yes","No") == "Yes")
+			src.secondsElectrified = 30
+			logTheThing("combat", usr, null, "electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
+			message_admins("[key_name(usr)] electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
+			SPAWN_DBG(1 SECOND)
+				while (src.secondsElectrified>0)
+					src.secondsElectrified-=1
+					if (src.secondsElectrified<0)
+						src.secondsElectrified = 0
+					sleep(1 SECOND)
+
+/obj/machinery/door/airlock/proc/toggle_bolt(mob/user)
+	if (src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+		boutput(usr, "You can't drop the door bolts - The door bolt dropping wire has been cut.")
+		return
+	if(src.locked)
+		if(!src.arePowerSystemsOn())
+			boutput(user, "The door has no power - you can't raise the door bolts.")
+		else
+			src.locked = 0
+			update_icon()
+	else
+		src.locked = 1
+		update_icon()
+
+/obj/machinery/door/airlock/proc/shock_perm(mob/user)
+	//electrify door indefinitely
+	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
+		boutput(usr, text("The electrification wire has been cut.<br><br>"))
+	else if (src.secondsElectrified==-1)
+		boutput(usr, text("The door is already indefinitely electrified.<br><br>"))
+	else if (src.secondsElectrified!=0)
+		boutput(usr, text("The door is already electrified. You can't re-electrify it while it's already electrified.<br><br>"))
+	else
+		if(alert("Are you sure? Electricity might harm a human!",,"Yes","No") == "Yes")
+			logTheThing("combat", usr, null, "electrified airlock ([src]) at [log_loc(src)] indefinitely.")
+			message_admins("[key_name(usr)] electrified airlock ([src]) at [log_loc(src)] indefinitely.")
+			src.secondsElectrified = -1
+
+/obj/machinery/door/airlock/proc/shock_restore(mob/user)
+	//un-electrify door
+	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
+		boutput(usr, text("Can't un-electrify the airlock - The electrification wire is cut.<br><br>"))
+	else if (src.secondsElectrified!=0)
+		src.secondsElectrified = 0
+		logTheThing("combat", usr, null, "de-electrified airlock ([src]) at [log_loc(src)].")
+		message_admins("[key_name(usr)] de-electrified airlock ([src]) at [log_loc(src)].")
+
+
+/obj/machinery/door/airlock/proc/idscantoggle(mob/user)
+	//enable/disable ID scanner
+	if (src.isWireCut(AIRLOCK_WIRE_IDSCAN))
+		boutput(usr, "The IdScan wire has been cut - So, you can't disable it, but it is already disabled anyways.")
+	else
+		aiDisabledIdScanner = !aiDisabledIdScanner
+
+
+/obj/machinery/door/airlock/proc/user_toggle_open(mob/user)
+	if(!src.allowed(usr))
+		return
+	if(welded)
+		boutput(usr, text("<span class='warning'>The airlock has been welded shut!</span>"))
+	else if(locked)
+		boutput(usr, text("<span class='warning'>The door bolts are down!</span>"))
+	else if(!density)
+		close()
+	else
+		open()
+
+
 //This generates the randomized airlock wire assignments for the game.
 /proc/RandomAirlockWires()
 	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
@@ -382,7 +538,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon_base = "sec_glass"
 	req_access = list(access_security)
 
-/obj/machinery/door/airlock/pyro/glass/med 
+/obj/machinery/door/airlock/pyro/glass/med
 	icon_state = "med_glass_closed"
 	icon_base = "med_glass"
 	req_access = null
@@ -458,7 +614,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
 	req_access = null
-	
+
 /obj/machinery/door/airlock/gannets
 	name = "airlock"
 	icon = 'icons/obj/doors/destiny.dmi'
@@ -1035,8 +1191,8 @@ About the new airlock wires panel:
 		if (src.canAIHack())
 			src.hack(user)
 			return
-
-	//Separate interface for the AI.
+	ui_interact(user)
+	/* //Separate interface for the AI.
 	src.add_dialog(user)
 	var/t1 = text("<B>Airlock Control</B><br><br>")
 	t1 += "The access sensor reports the net identifier for this airlock is <i>[net_id]</i><br><br>"
@@ -1125,7 +1281,7 @@ About the new airlock wires panel:
 	t1 += text("<p><a href='?src=\ref[];close=1'>Close Window</a></p>", src)
 	user << browse(t1, "window=airlock")
 	onclose(user, "airlock")
-
+ */
 //aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door
 //aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door
 
@@ -1295,6 +1451,8 @@ About the new airlock wires panel:
 	else
 		..(user)
 	return
+
+
 
 
 /obj/machinery/door/airlock/Topic(href, href_list)
