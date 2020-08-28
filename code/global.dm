@@ -71,8 +71,10 @@ var/global
 	list/default_mob_static_icons = list() // new mobs grab copies of these for themselves, or if their chosen type doesn't exist in the list, they generate their own and add it
 	list/mob_static_icons = list() // these are the images that are actually seen by ghostdrones instead of whatever mob
 	list/orbicons = list()
+
 	list/browse_item_icons = list()
 	list/browse_item_clients = list()
+	browse_item_initial_done = 0
 
 	list/rewardDB = list() //Contains instances of the reward datums
 	list/materialRecipes = list() //Contains instances of the material recipe datums
@@ -710,16 +712,19 @@ var/global
 		aiImages.Remove(key)
 	return
 
-/proc/getItemIcon(var/atom/path, var/state, var/dir, var/client/C)
+/// Generates item icons for manufacturers and other things, used in UI dialogs. Sends to client if needed.
+// Note that a client that clears its cache won't get new icons. Deal with it. BYOND's browse_rsc is shite.
+/proc/getItemIcon(var/atom/path, var/state, var/dir, var/key = null, var/client/C)
+	if (!key)
+		if (!state)
+			state = initial(path.icon_state)
+		if (!dir)
+			dir = initial(path.dir)
 
-	if (!state)
-		state = initial(path.icon_state)
-	if (!dir)
-		dir = initial(path.dir)
+		key = replacetext("[path]-[state]-[dir].png", "/", "~")
+		if (!browse_item_icons[key])
+			browse_item_icons[key] = new/icon(initial(path.icon), state, dir)
 
-	var/key = replacetext("[path]-[state]-[dir].png", "/", "~")
-	if (!browse_item_icons[key])
-		browse_item_icons[key] = new/icon(initial(path.icon), state, dir)
 	if (C && !(C in browse_item_clients[key]))
 		if (!browse_item_clients[key])
 			browse_item_clients[key] = list()
@@ -728,3 +733,17 @@ var/global
 
 	return key
 
+/// Sends all of the item icons to a client. Kinda gross, but whatever.
+// The worst part of this is that client latency impacts this, so someone who is running slow
+// is probably gonna break everything.
+/proc/sendItemIcons(var/client/C)
+	for (var/key in browse_item_icons)
+		getItemIcon(key = key, C = C)
+		LAGCHECK(LAG_REALTIME)
+
+/// Sends all item icons to all clients. Used at world startup to preload things.
+/proc/sendItemIconsToAll()
+	for (var/client/C in clients)
+		sendItemIcons(C)
+		sleep(1)
+	browse_item_initial_done = 1

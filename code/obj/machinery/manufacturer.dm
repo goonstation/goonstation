@@ -2411,3 +2411,11 @@
 		if (src.completed && MA.queue.len)
 			SPAWN_DBG(1)
 				MA.begin_work(1)
+
+
+
+/proc/build_manufacturer_icons()
+	// pre-build all the icons for shit manufacturers make
+	for (var/datum/manufacture/P in childrentypesof(/datum/manufacture))
+		if (P.item_outputs)
+			getItemIcon(P.item_outputs[1])

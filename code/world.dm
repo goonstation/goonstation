@@ -596,6 +596,7 @@ var/f_color_selector_handler/F_Color_Selector
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
 	build_camera_network()
+	build_manufacturer_icons()
 	clothingbooth_setup()
 #if ASS_JAM
 	ass_jam_init()
@@ -618,6 +619,10 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
 	aiDirty = 2
 	world.updateCameraVisibility()
+
+	UPDATE_TITLE_STATUS("Preloading client data...")
+	Z_LOG_DEBUG("World/Init", "Transferring manuf. icons to clients...")
+	sendItemIconsToAll()
 
 	UPDATE_TITLE_STATUS("Starting processes")
 	Z_LOG_DEBUG("World/Init", "Setting up process scheduler...")
