@@ -88,7 +88,7 @@
 		if(check_target_immunity( M )) continue
 		boutput(M, "<span class='alert'>You feel extremely strange!</span>")
 		M.reagents.add_reagent("LSD", 20)
-		M.reagents.add_reagent("THC", 20)
+		M.reagents.add_reagent("thc", 20)
 		M.reagents.add_reagent("psilocybin", 20)
 
 /mob/living/proc/PAND_Flashbang(var/protectuser = 1)
