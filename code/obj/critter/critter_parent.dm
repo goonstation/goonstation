@@ -833,7 +833,7 @@
 							src.attacking = 0
 						else
 							if(M!=null)
-								if (M.health < 0)
+								if (M.health <= 0 || !isalive(M))
 									src.task = "thinking"
 									src.target = null
 									src.anchored = initial(src.anchored)
