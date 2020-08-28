@@ -641,5 +641,5 @@
 	iconmod = "Twobacco"
 	PTrange = list(30,null)
 	crop = /obj/item/plant/herb/tobacco/twobacco
-	assoc_reagents = list("nicotine2")
+	assoc_reagents = list("nicotwaine")
 	chance = 50
