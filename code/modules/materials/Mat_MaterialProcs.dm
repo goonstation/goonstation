@@ -39,7 +39,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 	execute(var/mob/M, var/obj/item/I)
 		M.TakeDamage("chest", 10, 0)
-		M.reagents.add_reagent("e.coli", 20)
+		M.reagents.add_reagent("ecoli", 20)
 		return
 
 /datum/materialProc/ethereal_add
