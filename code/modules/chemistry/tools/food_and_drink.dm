@@ -49,7 +49,7 @@
 			boutput(M, "<span class='notice'>That tasted amazing!</span>")
 			healing *= 2
 
-		if (src.reagents && src.reagents.has_reagent("THC"))
+		if (src.reagents && src.reagents.has_reagent("thc"))
 			boutput(M, "<span class='notice'>Wow this tastes really good man!!</span>")
 			healing *= 2
 
