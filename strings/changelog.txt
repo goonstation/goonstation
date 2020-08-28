@@ -1,5 +1,9 @@
 
 (t)fri aug 28 20
+(u)BatElite
+(p)1981
+(e)🆕🎨|feature, sprites
+(+)Surgical face shields now come in many stylish colours. You might even get lucky and find the rare variant!
 (u)makkipakki
 (p)1923
 (e)🆕🗺|feature, mapping
