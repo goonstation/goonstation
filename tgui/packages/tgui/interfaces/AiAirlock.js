@@ -71,17 +71,17 @@ export const AiAirlock = (props, context) => {
                 <Fragment>
                   <Button
                     icon="wrench"
-                    disabled={!(data.wires.shock && !data.shock)}
+                    disabled={!(data.wires.shock && !data.shock && !data.power.main && !data.power.backup)}
                     content="Restore"
                     onClick={() => act('shock-restore')} />
                   <Button
                     icon="bolt"
-                    disabled={!data.wires.shock || !data.shock}
+                    disabled={!data.wires.shock || !data.shock || !data.power.main && !data.power.backup}
                     content="Temporary"
                     onClick={() => act('shock-temp')} />
                   <Button
                     icon="bolt"
-                    disabled={!data.wires.shock || !data.shock}
+                    disabled={!data.wires.shock || !data.shock || !data.power.main && !data.power.backup}
                     content="Permanent"
                     onClick={() => act('shock-perm')} />
                 </Fragment>
@@ -107,7 +107,7 @@ export const AiAirlock = (props, context) => {
                   icon={data.id_scanner ? 'power-off' : 'times'}
                   content={data.id_scanner ? 'Enabled' : 'Disabled'}
                   selected={data.id_scanner}
-                  disabled={!data.wires.id_scanner}
+                  disabled={!data.wires.id_scanner || !data.power.main && !data.power.backup}
                   onClick={() => act('idscan-toggle')} />
               )}>
               {!data.wires.id_scanner && '[Wires have been cut!]'}
@@ -121,7 +121,7 @@ export const AiAirlock = (props, context) => {
                   icon={data.locked ? 'lock' : 'unlock'}
                   content={data.locked ? 'Lowered' : 'Raised'}
                   selected={data.locked}
-                  disabled={!data.wires.bolts}
+                  disabled={!data.wires.bolts || !data.power.main && !data.power.backup}
                   onClick={() => act('bolt-toggle')} />
               )}>
               {!data.wires.bolts && '[Wires have been cut!]'}
@@ -135,7 +135,7 @@ export const AiAirlock = (props, context) => {
                   icon={data.opened ? 'sign-out-alt' : 'sign-in-alt'}
                   content={data.opened ? 'Open' : 'Closed'}
                   selected={data.opened}
-                  disabled={(data.locked || data.welded)}
+                  disabled={(data.locked || data.welded) || !data.power.main && !data.power.backup}
                   onClick={() => act('open-close')} />
               )}>
               {!!(data.locked || data.welded) && (

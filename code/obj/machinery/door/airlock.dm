@@ -71,7 +71,9 @@
 
 obj/machinery/door/airlock/ui_status(mob/user, datum/ui_state/state)
 		return min(
-			tgui_silicon_state.can_use_topic(src, user)
+			tgui_silicon_state.can_use_topic(src, user),
+			tgui_broken_state.can_use_topic(src, user),
+			tgui_not_incapacitated_state.can_use_topic(src, user)
 		)
 
 /obj/machinery/door/airlock/ui_act(action, params)
@@ -79,20 +81,22 @@ obj/machinery/door/airlock/ui_status(mob/user, datum/ui_state/state)
 		return
 	if(!src.allowed(usr))
 		return
+	if(!src.arePowerSystemsOn())
+		return
 	switch(action)
 		if("disrupt-main")
 			if(!secondsMainPowerLost)
 				loseMainPower()
 				update_icon()
 			else
-				boutput(usr, "<span class='warning'>Main power is already offline.</span>")
+				boutput(usr, "<span class='alert'>Main power is already offline.</span>")
 			. = TRUE
 		if("disrupt-backup")
 			if(!secondsBackupPowerLost)
 				loseBackupPower()
 				update_icon()
 			else
-				boutput(usr, "<span class='warning'>Backup power is already offline.</span>")
+				boutput(usr, "<span class='alert'>Backup power is already offline.</span>")
 			. = TRUE
 		if("shock-restore")
 			shock_restore(usr)
@@ -141,8 +145,8 @@ obj/machinery/door/airlock/ui_status(mob/user, datum/ui_state/state)
 		if(!src.arePowerSystemsOn())
 			boutput(user, "The door has no power - you can't raise the door bolts.")
 		else
-			src.locked = 0
-			update_icon()
+		src.locked = 0
+		update_icon()
 	else
 		src.locked = 1
 		update_icon()
