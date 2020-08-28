@@ -235,7 +235,7 @@ ABSTRACT_TYPE(/datum/objective/crew/botanist)
 		check_completion()
 			for(var/obj/item/X in world)
 				var/obj/item/clothing/mask/cigarette/W = X
-				if (istype(W) && W.reagents && W.reagents.has_reagent("THC"))
+				if (istype(W) && W.reagents && W.reagents.has_reagent("thc"))
 					if (istype(get_area(W), /area/station/hydroponics))
 						return 0
 				var/obj/item/plant/herb/cannabis/C = X
