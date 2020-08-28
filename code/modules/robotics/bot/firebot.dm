@@ -312,7 +312,7 @@
 		var/turf/my_target = pick(the_targets)
 		var/datum/reagents/R = new/datum/reagents(15)
 		R.add_reagent("water", 2)
-		R.add_reagent("ff-foam", 8)
+		R.add_reagent("ff_foam", 8)
 		if (src.setup_party)	// heh
 			R.add_reagent("glitter_harmless", 5)
 		W.spray_at(my_target, R)
