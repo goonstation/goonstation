@@ -13,8 +13,8 @@
 	// this proc is supposed to make certain tools less accidentally deadly for inexperienced players to use
 	// when force_use_as_tool is set, all intents will try to do their tool-thing, and if it can't, return a message saying they're using it wrong
 	// if not set, help intent will still attempt tool, but you'll shank them if it doesn't work out
-/datum/component/toggle_tool_use/proc/toggle_force_use_as_tool(var/obj/item/thing, mob/user, var/be_quiet = 1, var/quiet_reset)
-	if(quiet_reset)
+/datum/component/toggle_tool_use/proc/toggle_force_use_as_tool(var/obj/item/thing, mob/user)
+	if(!user)
 		thing.force_use_as_tool = 0
 		thing.dir = SOUTH
 		return
@@ -23,8 +23,6 @@
 		thing.dir = WEST
 	else
 		thing.dir = SOUTH
-	if(be_quiet || !user)
-		return
 
 	var/list/cool_grip_adj = list("a sick", "a wicked", "a deadly", "a menacing", "an edgy", "a tacticool", "a sweaty", "an awkward")
 	var/list/cool_grip1 = list("combat", "fightlord", "guerilla", "hidden", "space", "syndie", "double-reverse", "\"triple-dog-dare-ya\"", "stain-buster's")
@@ -54,15 +52,15 @@
 
 /datum/component/barber/haircut
 /datum/component/barber/haircut/Initialize()
-	RegisterSignal(parent, list(COMSIG_MOB_ATTACKED_PRE), .proc/do_haircut)
+	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_PRE), .proc/do_haircut)
 
 /datum/component/barber/shave
 /datum/component/barber/shave/Initialize()
-	RegisterSignal(parent, list(COMSIG_MOB_ATTACKED_PRE), .proc/do_shave)
+	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_PRE), .proc/do_shave)
 
-/datum/component/barber/proc/do_haircut(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob, var/obj/item/thing)
+/datum/component/barber/proc/do_haircut(var/obj/item/thing, mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
 	if(!M || !user || (user.a_intent != INTENT_HELP && !thing.force_use_as_tool))
-		. = BARBERY_FAILURE // Who's cutting whose hair, now?
+		return 0 // Who's cutting whose hair, now?
 
 	var/mob/living/carbon/human/H = M
 	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
@@ -77,29 +75,25 @@
 	if(!mutant_barber_fluff(M, user, "haircut"))
 		return BARBERY_SUCCESSFUL
 
-	var/new_style = input(user, "Please select style", "Style")  as null|anything in customization_styles + customization_styles_gimmick
+	if(. && thing.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
+		boutput(user, "<span class='notice'>You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
+		return ATTACK_PRE_DONT_ATTACK
 
-	if (new_style)
-		if(M.bioHolder.mobAppearance.customization_first == "Balding" && new_style != "None")
-			boutput(user, "<span class='alert'>Not enough hair!</span>")
-			. = BARBERY_RESOLVABLE
+	SPAWN_DBG(0)
+		var/new_style = input(user, "Please select style", "Style")  as null|anything in customization_styles + customization_styles_gimmick
 
-	if(!new_style)
-		boutput(user, "Never mind.")
-		. = BARBERY_RESOLVABLE
+		if (new_style)
+			if(M.bioHolder.mobAppearance.customization_first == "Balding" && new_style != "None")
+				boutput(user, "<span class='alert'>Not enough hair!</span>")
+		if(!new_style)
+			boutput(user, "Never mind.")
 
-	if (!.)
 		actions.start(new/datum/action/bar/haircut(M, user, get_barbery_conditions(M, user), new_style), user)
-		return BARBERY_SUCCESSFUL
-	else if (thing.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
-		if (. & BARBERY_FAILURE) // failure doesnt return a message, less-than-successes do
-			boutput(user, "<span class='notice'>You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
-		return 1
-	return 0
+	return ATTACK_PRE_DONT_ATTACK
 
-/datum/component/barber/proc/do_shave(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob, var/obj/item/thing)
+/datum/component/barber/proc/do_shave(var/obj/item/thing, mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
 	if(!M || !user || (user.a_intent != INTENT_HELP && !thing.force_use_as_tool))
-		. = BARBERY_FAILURE // Who's cutting whose hair, now?
+		return 0 // Who's cutting whose hair, now?
 
 	var/mob/living/carbon/human/H = M
 	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
@@ -132,40 +126,33 @@
 		M.set_face_icon_dirty()
 		M.emote("cry")
 		M.emote("scream")
-		return BARBERY_SUCCESSFUL
+		return BARBERY_SUCCESSFUL // gottem
 
 
 	if(!mutant_barber_fluff(M, user, "shave"))
 		. = BARBERY_RESOLVABLE
-	var/list/mustaches =list("Watson", "Chaplin", "Selleck", "Van Dyke", "Hogan")
-	var/list/beards  = list("Neckbeard", "Elvis", "Abe", "Chinstrap", "Hipster", "Wizard")
-	var/list/full = list("Goatee", "Full Beard", "Long Beard")
-	var/new_style = input(user, "Please select facial style", "Facial Style")  as null|anything in mustaches + beards + full
-	if (new_style)
 
-		if((new_style in full) && (!(M.bioHolder.mobAppearance.customization_second in full)))
-			boutput(user, "<span class='alert'>[M] doesn't have enough facial hair!</span>")
-			. = BARBERY_RESOLVABLE
+	if(. && thing.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
+		boutput(user, "<span class='notice'>You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
+		return ATTACK_PRE_DONT_ATTACK
 
-		if((new_style in beards) && (M.bioHolder.mobAppearance.customization_second in mustaches))
-			boutput(user, "<span class='alert'>[M] doesn't have a beard!</span>")
-			. = BARBERY_RESOLVABLE
-
-		if((new_style in mustaches) && (M.bioHolder.mobAppearance.customization_second in beards))
-			boutput(user, "<span class='alert'>[M] doesn't have a mustache!</span>")
-			. = BARBERY_RESOLVABLE
-	else
-		boutput(user, "Never mind.")
-		return BARBERY_SUCCESSFUL
-
-	if (!.)
+	SPAWN_DBG(0)
+		var/list/mustaches =list("Watson", "Chaplin", "Selleck", "Van Dyke", "Hogan")
+		var/list/beards  = list("Neckbeard", "Elvis", "Abe", "Chinstrap", "Hipster", "Wizard")
+		var/list/full = list("Goatee", "Full Beard", "Long Beard")
+		var/new_style = input(user, "Please select facial style", "Facial Style")  as null|anything in mustaches + beards + full
+		if (new_style)
+			if((new_style in full) && (!(M.bioHolder.mobAppearance.customization_second in full)))
+				boutput(user, "<span class='alert'>[M] doesn't have enough facial hair!</span>")
+			if((new_style in beards) && (M.bioHolder.mobAppearance.customization_second in mustaches))
+				boutput(user, "<span class='alert'>[M] doesn't have a beard!</span>")
+			if((new_style in mustaches) && (M.bioHolder.mobAppearance.customization_second in beards))
+				boutput(user, "<span class='alert'>[M] doesn't have a mustache!</span>")
+		else
+			boutput(user, "Never mind.")
 		actions.start(new/datum/action/bar/shave(M, user, get_barbery_conditions(M, user), new_style), user)
-		return BARBERY_SUCCESSFUL
-	else if (thing.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
-		if (. & BARBERY_FAILURE) // failure doesnt return a message, less-than-successes do
-			boutput(user, "<span class='notice'>You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
-		return 1
-	return 0
+
+	return ATTACK_PRE_DONT_ATTACK
 
 /datum/component/barber/proc/get_barbery_conditions(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
 	if(!ishuman(M))

@@ -62,6 +62,8 @@
 #define COMSIG_ITEM_DROPPED "itm_drop"
 /// When an item is used to attack a mob
 #define COMSIG_ITEM_ATTACK_POST "itm_atk_post"
+/// When an item is used to attack a mob before it actually hurts the mob
+#define COMSIG_ITEM_ATTACK_PRE "itm_atk_pre"
 
 // blocking signals
 /// After  an item block is set up
