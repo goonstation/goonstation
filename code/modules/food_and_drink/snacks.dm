@@ -2158,9 +2158,6 @@
 	heal_amt = 6
 	initial_reagents = list("enriched_msg"=1)
 
-// boy i wish byond had static members doop doop
-var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
-
 /obj/item/reagent_containers/food/snacks/candy/jellybean/
 	name = "jelly bean"
 	desc = "YOU SHOULDN'T SEE THIS OBJECT"

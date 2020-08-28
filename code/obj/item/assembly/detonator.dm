@@ -88,15 +88,15 @@
 			if (istype(W, /obj/item/tank/plasma))
 				src.setDetState(1)
 				user.u_equip(W)
-				W.loc = src
+				W.set_loc(src)
 				W.master = src
 				W.layer = initial(src.layer)
 				src.part_t = W
 				src.add_fingerprint(user)
 				user.show_message("<span class='notice'>You insert the [W.name] into the slot.</span>")
 			else if (issnippingtool(W))
-				src.part_ig.loc = user.loc
-				src.part_mt.loc = user.loc
+				src.part_ig.set_loc(user.loc)
+				src.part_mt.set_loc(user.loc)
 				src.part_ig.master = null
 				src.part_mt.master = null
 				src.part_ig = null
@@ -112,7 +112,7 @@
 				user.show_message("<span class='alert'>The plasma tank must be firmly secured to the assembly first.</span>")
 			else if (ispryingtool(W))
 				src.setDetState(0)
-				src.part_t.loc = user.loc
+				src.part_t.set_loc(user.loc)
 				src.part_t.master = null
 				src.part_t = null
 				user.show_message("<span class='notice'>You pry the plasma tank out of the assembly.</span>")
@@ -140,7 +140,7 @@
 			if (istype(W, /obj/item/device/timer))
 				src.setDetState(4)
 				user.u_equip(W)
-				W.loc = src
+				W.set_loc(src)
 				W.master = src
 				W.layer = initial(src.layer)
 				src.part_fs = W
@@ -150,21 +150,21 @@
 			else if (issnippingtool(W))
 				src.setDetState(2)
 				var/obj/item/cable_coil/C = new /obj/item/cable_coil(user, 6)
-				C.loc = user.loc
+				C.set_loc(user.loc)
 				user.show_message("<span class='notice'>You cut the wiring on the assembly.</span>")
 		if (4)
 			if (issnippingtool(W))
 				src.setDetState(3)
-				src.part_fs.loc = user.loc
+				src.part_fs.set_loc(user.loc)
 				src.part_fs.master = null
 				src.part_fs = null
 				if (src.trigger)
-					src.trigger.loc = user.loc
+					src.trigger.set_loc(user.loc)
 					src.trigger.master = null
 					src.trigger = null
 					user.show_message("<span class='alert'>The triggering device falls off the assembly.</span>")
 				for (var/obj/item/a in src.attachments)
-					a.loc = user.loc
+					a.set_loc(user.loc)
 					a.master = null
 					a.layer = initial(a.layer)
 					src.clear_attachment(a)
@@ -180,7 +180,7 @@
 				options += "cancel"
 				var/target = input("Which device do you want to remove?", "Device to remove", "cancel") in options
 				if (target == src.trigger)
-					src.trigger.loc = user.loc
+					src.trigger.set_loc(user.loc)
 					src.trigger.master = null
 					src.trigger = null
 					user.show_message("<span class='notice'>You remove the triggering device from the assembly.</span>")
@@ -188,7 +188,7 @@
 					return
 				else
 					var/obj/item/T = target
-					T.loc = user.loc
+					T.set_loc(user.loc)
 					T.master = null
 					T.detonator_act("detach", src)
 					src.clear_attachment(target)
@@ -200,7 +200,7 @@
 				if (src.trigger)
 					user.show_message("<span class='alert'>There is a trigger already screwed onto the assembly.</span>")
 				else
-					W.loc = src
+					W.set_loc(src)
 					W.master = src
 					W.layer = initial(W.layer)
 					user.u_equip(W)
@@ -209,7 +209,7 @@
 					setDescription()
 			else if (istype(W, /obj/item/paper))
 				src.note = W:info
-				W.loc = null
+				W.set_loc(null)
 				W.master = null
 				W.layer = null
 				user.u_equip(W)
@@ -217,7 +217,7 @@
 				pool(W)
 			else if (W.is_detonator_attachment())
 				if (src.attachments.len < 3)
-					W.loc = src
+					W.set_loc(src)
 					W.master = src
 					W.layer = initial(W.layer)
 					user.u_equip(W)
@@ -304,6 +304,7 @@
 /obj/item/assembly/detonator/proc/failsafe_engage()
 	if (src.part_fs.timing)
 		return
+	src.safety = 0
 	src.part_fs.timing = 1
 	src.part_fs.c_state(1)
 	if (!(src in processing_items))

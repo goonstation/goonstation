@@ -1,4 +1,3 @@
-var/atmos_suspend = 0
 /*
 Overview:
 	The air_master global variable is the workhorse for the system.
@@ -165,12 +164,12 @@ datum
 						groups_to_rebuild += air_group
 
 				update_space_sample()
-					if (!space_sample || !space_sample.turf_flags & CAN_BE_SPACE_SAMPLE)
+					if (!space_sample || !(space_sample.turf_flags & CAN_BE_SPACE_SAMPLE))
 						if (map_currently_underwater)
 							space_sample = locate(/turf/space/fluid)
 						else
 							space_sample = locate(/turf/space)
-						return space_sample
+					return space_sample
 
 			setup(datum/controller/process/air_system/controller)
 				set_controller(controller)

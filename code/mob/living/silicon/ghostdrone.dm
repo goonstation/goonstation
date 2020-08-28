@@ -35,7 +35,6 @@
 
 	New()
 		..()
-		ghost_drones += src
 		hud = new(src)
 		src.attach_hud(hud)
 		//src.sight |= SEE_TURFS //Uncomment for meson-like vision. I'm not a fan of it though. -Wire
@@ -128,7 +127,6 @@
 	death(gibbed)
 		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
 		setdead(src)
-		ghost_drones -= src
 		if (src.mind)
 			src.mind.dnr = 0
 		if (src.client)
@@ -179,8 +177,6 @@
 		hud.update_pulling()
 
 	disposing()
-		if (src in ghost_drones)
-			ghost_drones -= src
 		if (src in available_ghostdrones)
 			available_ghostdrones -= src
 		..()

@@ -101,7 +101,7 @@
 /turf/simulated/floor/grass/random/alt,
 /area/station/aviary)
 "aar" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/grass/random/alt,
@@ -5188,7 +5188,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/crew_quarters/lounge_port)
 "ajI" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /obj/machinery/light{
@@ -10518,7 +10518,7 @@
 	name = "autoname - Entertainment";
 	network = "Zeta"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /obj/machinery/light{
@@ -12886,7 +12886,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor/grass/random,
@@ -19540,7 +19540,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "aIV" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/random,
@@ -20910,7 +20910,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/research)
 "aKV" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/window/reinforced/east,
@@ -21668,7 +21668,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "aMc" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor/white,
@@ -32304,7 +32304,7 @@
 /turf/simulated/pool/no_animate,
 /area/station/crew_quarters/pool)
 "beK" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/pool/no_animate,
@@ -33691,6 +33691,10 @@
 /obj/table/reinforced/auto,
 /obj/window/crystal/reinforced/north,
 /obj/machinery/light_switch/west,
+/obj/machinery/defib_mount{
+	pixel_x = 2;
+	pixel_y = -4
+	},
 /obj/item/paper/Port_A_Brig,
 /obj/item/remote/porter/port_a_brig,
 /obj/window/crystal/reinforced/north,
@@ -36240,7 +36244,7 @@
 /area/station/security/brig)
 "bli" = (
 /obj/item/device/radio/beacon,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /turf/simulated/floor/grime,
@@ -37748,9 +37752,6 @@
 "bnQ" = (
 /obj/window/reinforced/east,
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
@@ -42167,7 +42168,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor/engine,

@@ -12,7 +12,7 @@
 	var/lining_icon_state = 1													//This is used for choosing the proper icon state for reasons stated in the lining_pattern comment.
 	var/datum/light/light														//The light. Obviously.
 	var/image/glow																//The overlay image which hosts the glowing parts.
-	
+
 	New()
 		. = ..()
 		glow = image('icons/obj/decals/neon_lining.dmi', "blue2_1")
@@ -20,7 +20,7 @@
 		src.UpdateOverlays(glow, "glow")
 		light = new /datum/light/point
 		light.set_brightness(0.1)
-		if (lining_color == "pink")			
+		if (lining_color == "pink")
 			light.set_color(108, 7, 67)
 		else if (lining_color == "yellow")
 			light.set_color(126, 114, 54)
@@ -30,7 +30,7 @@
 		light.enable()
 
 	proc/lining_update_icon()
-		if (lining_color == "pink")			
+		if (lining_color == "pink")
 			light.set_color(108, 7, 67)
 		else if (lining_color == "yellow")
 			light.set_color(126, 114, 54)
@@ -47,7 +47,7 @@
 				lining_icon_state = (lining_pattern + 1) / 2
 			else															//0 & 2
 				lining_icon_state = (lining_pattern / 2) + 1
-		
+
 		if (lining_pattern % 2)												//1,3,5,7
 			if (lining_rotation == 0)
 				dir = 2

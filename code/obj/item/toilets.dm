@@ -2,7 +2,6 @@
 CONTAINS:
 TOILET
 */
-var/list/all_toilets = null
 
 /obj/item/storage/toilet
 	name = "toilet"
@@ -22,13 +21,10 @@ var/list/all_toilets = null
 #endif
 /obj/item/storage/toilet/New()
 	..()
-	if (!islist(all_toilets))
-		all_toilets = list()
-	all_toilets.Add(src)
+	START_TRACKING
 
 /obj/item/storage/toilet/disposing()
-	if (islist(all_toilets))
-		all_toilets.Remove(src)
+	STOP_TRACKING
 	..()
 
 /obj/item/storage/toilet/attackby(obj/item/W as obj, mob/user as mob)
@@ -65,13 +61,10 @@ var/list/all_toilets = null
 
 			var/list/destinations = list()
 
-			if (islist(all_toilets) && all_toilets.len)
-				for (var/obj/item/storage/toilet/T in all_toilets)
-					if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z) || (istype(T.loc,/area) && T.loc:teleport_blocked))
-						continue
-					destinations.Add(T)
-			else
-				destinations.Add(src)
+			for (var/obj/item/storage/toilet/T in by_type[/obj/item/storage/toilet])
+				if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z) || (istype(T.loc,/area) && T.loc:teleport_blocked))
+					continue
+				destinations.Add(T)
 
 			if (destinations.len)
 				var/atom/picked = pick(destinations)
@@ -137,7 +130,7 @@ var/list/all_toilets = null
 
 	user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and flushes it, giving [him_or_her(user)]self an atomic swirlie!</b></span>")
 	var/obj/head = user.organHolder.drop_organ("head")
-	if (src.clogged >= 1 || src.contents.len >= 7 || !(islist(all_toilets) && all_toilets.len))
+	if (src.clogged >= 1 || src.contents.len >= 7)
 		head.set_loc(src.loc)
 		playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 1)
 		src.visible_message("<span class='notice'>[head] floats up out of the clogged [src.name]!</span>")
@@ -148,7 +141,7 @@ var/list/all_toilets = null
 				O.vomit()
 	else
 		var/list/emergeplaces = list()
-		for (var/obj/item/storage/toilet/T in all_toilets)
+		for (var/obj/item/storage/toilet/T in by_type[/obj/item/storage/toilet])
 			if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z)) continue
 			emergeplaces.Add(T)
 		if (emergeplaces.len)

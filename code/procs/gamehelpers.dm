@@ -212,11 +212,11 @@ var/obj/item/dummy/click_dummy = new
 	. = list()
 
 	var/turf/T = get_turf(center)
-	for (var/mob/living/silicon/ai/theAI in AIs)
+	for (var/mob/living/silicon/ai/theAI in by_type[/mob/living/silicon/ai])
 		if (theAI.deployed_to_eyecam)
 			var/mob/dead/aieye/AIeye = theAI.eyecam
 //			if (AIeye in view(center, distance))
-			if(DIST_CHECK(center, AIeye, distance) && T.cameras && T.cameras.len)
+			if(IN_RANGE(center, AIeye, distance) && T.cameras && T.cameras.len)
 				. += AIeye
 				. += theAI
 		//if (istype(theAI.current) && (theAI.current in view(center, distance)) )

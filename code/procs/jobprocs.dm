@@ -314,8 +314,6 @@
 		boutput(src, "<span class='alert'><b>Something went wrong setting up your rank and equipment! Report this to a coder.</b></span>")
 		return
 
-	//if(JOB.name == "Captain")
-		//boutput(world, "<b>[src] is the Captain!</b>")
 	if (JOB.announce_on_join)
 		SPAWN_DBG(1 SECOND)
 			boutput(world, "<b>[src.name] is the [JOB.name]!</b>")
@@ -324,31 +322,16 @@
 	src.mind.assigned_role = JOB.name
 
 	if (!joined_late)
-		if ((ticker && ticker.mode && !istype(ticker.mode, /datum/game_mode/construction)) && JOB.name != "Tourist")
-			var/obj/S = null
+		if (ticker?.mode && !istype(ticker.mode, /datum/game_mode/construction))
 			if (job_start_locations && islist(job_start_locations[JOB.name]))
-				var/list/locations = job_start_locations[JOB.name]
-				S = pick(locations)
-				if (locate(/mob) in S.loc)
-					for (var/i=5, i>0, i--)
-						S = pick(locations)
-						if (!(locate(/mob) in S.loc))
-							break
-			else
-				for (var/obj/landmark/start/sloc in landmarks)//world)
-					LAGCHECK(LAG_LOW)
-					if (sloc.name != JOB.name)
-						continue
-					if (locate(/mob) in sloc.loc)
-						continue
-					S = sloc
-					break
-			if (!S)
-				S = locate("start*[JOB.name]") // use old stype
-			if (istype(S, /obj/landmark/start) && isturf(S.loc))
-				src.set_loc(S.loc)
+				var/tries = 8
+				var/turf/T
+				do
+					T = pick(job_start_locations[JOB.name])
+				while((locate(/mob) in T) && tries--)
+				src.set_loc(T)
 		else
-			src.set_loc(pick(latejoin))
+			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 	else
 		src.unlock_medal("Fish", 1)
 
@@ -385,7 +368,7 @@
 			else if (src.traitHolder)
 				//Has the immigrant trait - they're hiding in a random locker
 				var/list/obj/storage/SL = list()
-				for(var/obj/storage/S in lockers_and_crates)
+				for(var/obj/storage/S in by_type[/obj/storage])
 					// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post
 					if(S.z == 1 && !S.open && !istype(S, /obj/storage/secure) && !istype(S, /obj/storage/crate/loot) && !istype(get_area(S), /area/listeningpost))
 						var/turf/simulated/T = S.loc
@@ -518,6 +501,7 @@
 
 	var/T = pick(trinket_safelist)
 	var/obj/item/trinket = null
+	var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 		trinket = null //You better stay null, you hear me!
@@ -535,13 +519,15 @@
 			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("smoker"))
 		trinket = new/obj/item/device/light/zippo(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
+		trinket = new random_lunchbox_path(src)
 	else
 		trinket = new T(src)
 
 	if (trinket) // rewrote this a little bit so hopefully people will always get their trinket
 		src.trinket = trinket
 		src.trinket.event_handler_flags |= IS_TRINKET
-		trinket.name = "[src.real_name][pick(trinket_names)] [trinket.name]"
+		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 		trinket.quality = rand(5,80)
 		var/equipped = 0
 		if (istype(src.back, /obj/item/storage) && src.equip_if_possible(trinket, slot_in_backpack))
@@ -729,8 +715,3 @@ var/list/trinket_safelist = list(/obj/item/basketball,/obj/item/instrument/bikeh
 /obj/item/toy/plush/small/bee, /obj/item/paper/book/the_trial, /obj/item/paper/book/deep_blue_sea, /obj/item/clothing/suit/bedsheet/cape/red, /obj/item/disk/data/cartridge/clown,
 /obj/item/clothing/mask/cigarette/cigar, /obj/item/device/light/sparkler, /obj/item/toy/sponge_capsule, /datum/plant/fruit/pear, /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm,
 /obj/item/seed/alien)
-
-var/list/trinket_names = list("'s dad's","'s mom's", "'s grampa's", "'s grandma's", "'s favorite", "'s trusty", "'s favorite", "'s heirloom", "'s pet",
-"'s beloved", "'s lucky", "'s best", "'s antique", "'s old", "'s ol'", "'s prized", "'s neat", "'s good old", "'s good ol'", "'s son's", "'s daughter's",
-"'s aunt's", "'s uncle's", "'s finest", "'s shiniest", "'s lovely", "'s stupid", "'s prize winning", "'s top shelf", "'s 'prize winning'", "'s 'top shelf'",
-"'s autographed", "'s monogramed", "'s bejazzled", "'s jewel encrusted", "'s fanciest", "'s worn out", "'s custom", "'s luxurious", "'s superb", "'s precious")

@@ -164,7 +164,7 @@
 	src.visible_message("<span class='alert'><b>[src] is busted!</b></span>","<span class='alert'>You are demateralized into a state of further death!</span>")
 
 	if (wig)
-		wig.loc = src.loc
+		wig.set_loc(src.loc)
 	new /obj/item/reagent_containers/food/snacks/ectoplasm(get_turf(src))
 	overlays.len = 0
 	log_shot(P,src)
@@ -249,9 +249,11 @@
 	if(!isdead(src))
 		if (src.hibernating == 1)
 			var/confirm = alert("Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", "Yes", "No")
-			if(confirm)
+			if(confirm == "Yes")
 				src.ghostize()
 				qdel(src)
+			else
+				return
 		else if(prob(5))
 			src.show_text("You strain really hard. I mean, like, really, REALLY hard but you still can't become a ghost!", "blue")
 		else
@@ -270,11 +272,7 @@
 		var/mob/dead/observer/O = new/mob/dead/observer(src)
 		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
 		if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
-			var/OS = observer_start.len ? pick(observer_start) : locate(150, 150, 1)
-			if (OS)
-				O.set_loc(OS)
-			else
-				O.z = 1
+			O.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 		if (client) client.color = null  //needed for mesons dont kill me thx - ZeWaka
 		if (src.client && src.client.holder && src.stat !=2)
 			// genuinely not sure what this is here for since we're setting the
@@ -433,7 +431,7 @@
 	if(!canmove) return
 
 	if (NewLoc && isghostrestrictedz(src.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder && !src.client.holder.tempmin))
-		var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+		var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 		if (OS)
 			src.set_loc(OS)
 		else
@@ -786,6 +784,4 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 		src.client.mob = newobs
 	set_loc(newobs)
 	if (isghostrestrictedz(newobs.z) && !restricted_z_allowed(newobs, get_turf(newobs)) && !(src.client && src.client.holder))
-		var/OS = observer_start.len ? pick(observer_start) : locate(150, 150, 1)
-		if (OS)
-			newobs.set_loc(OS)
+		newobs.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))

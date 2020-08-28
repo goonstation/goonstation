@@ -517,9 +517,7 @@
 
 			AM.set_loc(src.loc)
 			AM.pipe_eject(0)
-			SPAWN_DBG(1 DECI SECOND)
-				if(AM)
-					AM.throw_at(target, 5, 1)
+			AM.throw_at(target, 5, 1)
 
 		H.vent_gas(loc)
 		qdel(H)

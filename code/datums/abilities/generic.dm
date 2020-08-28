@@ -144,7 +144,7 @@
 					src.changeStatus("weakened", 3 SECONDS * effect_mult)
 				src.force_laydown_standup()
 
-/mob/throw_end(list/params)
+/mob/throw_end(list/params, turf/thrown_from)
 	if (src.throwing & THROW_CHAIRFLIP)
 		src.changeStatus("weakened", 2.8 SECONDS)
 		src.force_laydown_standup()

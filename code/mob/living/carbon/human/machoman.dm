@@ -94,8 +94,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				M.changeStatus("stunned", 80)
 				M.changeStatus("weakened", 5 SECONDS)
 				var/turf/target = get_edge_target_turf(src, src.dir)
-				SPAWN_DBG(0)
-					M.throw_at(target, 10, 2)
+				M.throw_at(target, 10, 2)
 				playsound(src.loc, "swing_hit", 40, 1)
 			else if (isobj(AM))
 				var/obj/O = AM

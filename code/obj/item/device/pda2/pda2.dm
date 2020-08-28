@@ -423,10 +423,14 @@
 		if (U.try_deliver(C, user))
 			return
 
-	if (istype(C, /obj/item/disk/data/cartridge) && isnull(src.cartridge))
+	if (istype(C, /obj/item/disk/data/cartridge))
 		user.drop_item()
 		C.set_loc(src)
-		boutput(user, "<span class='notice'>You insert [C] into [src].</span>")
+		if (isnull(src.cartridge))
+			boutput(user, "<span class='notice'>You insert [C] into [src].</span>")
+		else
+			boutput(user, "<span class='notice'>You remove the old cartridge and insert [C] into [src].</span>")
+			user.put_in_hand_or_eject(src.cartridge)
 		src.cartridge = C
 		src.updateSelfDialog()
 
@@ -706,7 +710,7 @@
 			playsound(get_turf(src), "sound/machines/twobeep.ogg", 35, 1)
 
 			for (var/atom in mobs)
-				if (!atom) break
+				if (!atom) continue
 				var/mob/O = atom
 				if (get_dist(get_turf(src),O) <= 3)
 					O.show_message(text("[bicon(src)] *[alert_message]*"))

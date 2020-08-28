@@ -454,7 +454,7 @@
 	if(istype(O,/obj/machinery/rkit))
 		return
 	if(istype(O,/obj/))
-		if(O.mats == 0 || (O.is_syndicate != 0 && src.is_syndicate == 0))
+		if(O.mats == 0 || O.disposed || (O.is_syndicate != 0 && src.is_syndicate == 0))
 			// if this item doesn't have mats defined or was constructed or
 			// attempting to scan a syndicate item and this is a normal scanner
 			boutput(user, "<span class='alert'>The structure of this object is not compatible with the scanner.</span>")
@@ -646,16 +646,16 @@
 
 			if("blueprint")
 				if(href_list["op"])
-					if (src.no_print_spam && world.time < src.no_print_spam + 50)
+					if (src.no_print_spam && world.time < src.no_print_spam + 25)
 						usr.show_text("[src] isn't done with the previous print job.", "red")
 					else
 						var/datum/electronics/scanned_item/O = locate(href_list["op"]) in mechanic_controls.scanned_items
 						if (istype(O.blueprint, /datum/manufacture/mechanics/))
 							usr.show_text("Print job started...", "blue")
 							var/datum/manufacture/mechanics/M = O.blueprint
-							playsound(src.loc, 'sound/machines/printer_thermal.ogg', 50, 1)
+							playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
 							src.no_print_spam = world.time
-							SPAWN_DBG (50)
+							SPAWN_DBG (25)
 								if (src)
 									new /obj/item/paper/manufacturer_blueprint(src.loc, M)
 

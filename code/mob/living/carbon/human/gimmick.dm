@@ -221,24 +221,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 
 /// BILL SPEECH STUFF
 
-var/list/BILL_greetings = strings("shittybill.txt", "greetings")
-var/list/BILL_rude = strings("shittybill.txt", "rude")
-var/list/BILL_insults = strings("shittybill.txt", "insults")
-var/list/BILL_people = strings("shittybill.txt", "people")
-var/list/BILL_question = strings("shittybill.txt", "question")
-var/list/BILL_item = strings("shittybill.txt", "item")
-var/list/BILL_drugs = strings("shittybill.txt", "drugs")
-var/list/BILL_nouns = strings("shittybill.txt", "nouns")
-var/list/BILL_verbs = strings("shittybill.txt", "verbs")
-var/list/BILL_stories = strings("shittybill.txt", "stories1") + strings("shittybill.txt", "stories2") + strings("shittybill.txt", "stories3")
-var/list/BILL_doMiss = strings("shittybill.txt", "domiss")
-var/list/BILL_dontMiss = strings("shittybill.txt", "dontmiss")
-var/list/BILL_friends = strings("shittybill.txt", "friends")
-var/list/BILL_friendActions = strings("shittybill.txt", "friendsactions")
-var/list/BILL_emotes = strings("shittybill.txt", "emotes")
-var/list/BILL_deadguy = strings("shittybill.txt", "deadguy")
-var/list/BILL_murray = strings("shittybill.txt", "murraycompliment")
-
+#define BILL_PICK(WHAT) pick_string("shittybill.txt", WHAT)
 
 proc/empty_mouse_params()//TODO MOVE THIS!!!
 	.= list()
@@ -436,11 +419,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 							twitch_mob = C.mob
 
 				if (twitch_mob && isdead(twitch_mob))
-					var/mob/living/carbon/human/biker/newbody = 0
-					if (!billspawn.len)
-						newbody = new/mob/living/carbon/human/biker(get_turf(twitch_mob))
-					else
-						newbody = new/mob/living/carbon/human/biker(pick(billspawn))
+					var/mob/living/carbon/human/biker/newbody =  = new(pick_landmark(LANDMARK_TWITCHY_BILL_RESPAWN, get_turf(twitch_mob)))
 
 					if (newbody)
 						twitch_mob.mind.transfer_to(newbody)
@@ -494,7 +473,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			if(src.canmove && prob(20) && isturf(src.loc))
 				step(src, pick(NORTH, SOUTH, EAST, WEST))
 			if(prob(2))
-				SPAWN_DBG(0) emote(pick(BILL_emotes))
+				SPAWN_DBG(0) emote(BILL_PICK("emotes"))
 
 			if(prob(talk_prob))
 				src.speak()
@@ -502,7 +481,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	proc/speak()
 		SPAWN_DBG(0)
 
-			var/obj/machinery/bot/guardbot/old/tourguide/murray = pick(tourguides)
+			var/obj/machinery/bot/guardbot/old/tourguide/murray = pick(by_type[/obj/machinery/bot/guardbot/old/tourguide])
 			if (murray && get_dist(src,murray) > 7)
 				murray = null
 			if (istype(murray))
@@ -521,14 +500,14 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 			if(dead_mobs && dead_mobs.len > 0 && prob(60)) //SpyGuy for undefined var/len (what the heck)
 				var/mob/M = pick(dead_mobs)
-				say("[pick(BILL_deadguy)] [M.name]...")
+				say("[BILL_PICK("deadguy")] [M.name]...")
 			else if (alive_mobs.len > 0)
 				if (murray && !greeted_murray)
 					greeted_murray = 1
-					say("[pick(BILL_greetings)] Murray! How's it [pick(BILL_verbs)]?")
+					say("[BILL_PICK("greetings")] Murray! How's it [BILL_PICK("verbs")]?")
 					SPAWN_DBG(rand(20,40))
 						if (murray && murray.on && !murray.idle)
-							murray.speak("Hi, Bill! It's [pick(BILL_murray)] to see you again!")
+							murray.speak("Hi, Bill! It's [BILL_PICK("murraycompliment")] to see you again!")
 
 				else
 					var/mob/M = pick(alive_mobs)
@@ -536,40 +515,40 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 					switch(speech_type)
 						if(1)
-							say("[pick(BILL_greetings)] [M.name].")
+							say("[BILL_PICK("greetings")] [M.name].")
 
 						if(2)
-							say("[pick(BILL_question)] you lookin' at, [pick(BILL_insults)]?")
+							say("[BILL_PICK("question")] you lookin' at, [BILL_PICK("insults")]?")
 
 						if(3)
-							say("You a [pick(BILL_people)]?")
+							say("You a [BILL_PICK("people")]?")
 
 						if(4)
-							say("[pick(BILL_rude)], gimme yer [pick(BILL_item)].")
+							say("[BILL_PICK("rude")], gimme yer [BILL_PICK("item")].")
 
 						if(5)
-							say("Got a light, [pick(BILL_insults)]?")
+							say("Got a light, [BILL_PICK("insults")]?")
 
 						if(6)
-							say("Nice [pick(BILL_nouns)], [pick(BILL_insults)].")
+							say("Nice [BILL_PICK("deadguy")], [BILL_PICK("insults")].")
 
 						if(7)
-							say("Got any [pick(BILL_drugs)]?")
+							say("Got any [BILL_PICK("drugs")]?")
 
 						if(8)
-							say("I ever tell you 'bout [pick(BILL_stories)]?")
+							say("I ever tell you 'bout [BILL_PICK("stories")]?")
 
 						if(9)
-							say("You [pick(BILL_verbs)]?")
+							say("You [BILL_PICK("verbs")]?")
 
 						if(10)
 							if (prob(50))
-								say("Man, I sure miss [pick(BILL_doMiss)].")
+								say("Man, I sure miss [BILL_PICK("domiss")].")
 							else
-								say("Man, I sure don't miss [pick(BILL_dontMiss)].")
+								say("Man, I sure don't miss [BILL_PICK("dontmiss")].")
 
 						if(11)
-							say("I think my [pick(BILL_friends)] [pick(BILL_friendActions)].")
+							say("I think my [BILL_PICK("friends")] [BILL_PICK("friendsactions")].")
 /* commenting out the bartender stuff because he aint around much. replacing with john bill retorts.
 					if (prob(10))
 						SPAWN_DBG(4 SECONDS)
@@ -609,12 +588,12 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 									else if (prob(50))
 										MJ.say("Oh yeah, sure [src], I remember. I do.")
 									else
-										MJ.say("Sounds a lot like [pick(JOHN_stories)], doesn't it?")
+										MJ.say("Sounds a lot like [pick_string("johnbill.txt", "stories")], doesn't it?")
 								if (9)
 									if (prob(30))
 										MJ.say("Only once, in college, and I didn't inhale.")
 									else
-										MJ.say("Nah, I'd rather [pick(JOHN_verbs)].")
+										MJ.say("Nah, I'd rather [pick_string("johnbill.txt", "verbs")].")
 								else
 									MJ.speak()
 
@@ -624,13 +603,13 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
 			SPAWN_DBG(1 SECOND)
-				say("Hard to believe, but I think my [pick(BILL_friends)] would be proud to see it.")
+				say("Hard to believe, but I think my [BILL_PICK("friends")] would be proud to see it.")
 			return
 		if (istype(W, /obj/item/paper/postcard/owlery))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
 			SPAWN_DBG(1 SECOND)
-				say("Yep, can't wait to go on that trip! That [pick(JOHN_insults)] oughta be here soon!")
+				say("Yep, can't wait to go on that trip! That [pick_string("johnbill.txt", "insults")] oughta be here soon!")
 			return
 		if (istype(W, /obj/item/ursium/U))
 			say("These things are everywhere. Got anything more exotic?")
@@ -660,7 +639,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			var/mob/living/carbon/human/john/J = JB
 			if (get_dist(J,src) <= 7)
 				if((!J.ai_active) || prob(25))
-					J.say("That's my brother, you [pick(JOHN_insults)]!")
+					J.say("That's my brother, you [pick_string("johnbill.txt", "insults")]!")
 				J.target = M
 				J.ai_set_active(1)
 				J.a_intent = INTENT_HARM
@@ -673,7 +652,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		..()
 		SPAWN_DBG(0)
 			src.gender = "male"
-			src.real_name = pick("Slick", "Fast", "Frugal", "Thrifty", "Clever", "Shifty") + " " + pick(first_names_male)
+			src.real_name = pick("Slick", "Fast", "Frugal", "Thrifty", "Clever", "Shifty") + " " + pick_string_autokey("names/first_male.txt")
 			src.equip_new_if_possible(/obj/item/clothing/shoes/black, slot_shoes)
 			src.equip_new_if_possible(/obj/item/clothing/under/gimmick/merchant, slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/suit/merchant, slot_wear_suit)
@@ -800,7 +779,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
 			SPAWN_DBG(1 SECOND)
-				say("Oh yeah sure, I seen it. That ol- how would he say it, [pick(BILL_insults)]? He won't stop going on and on and on...")
+				say("Oh yeah sure, I seen it. That ol- how would he say it, [BILL_PICK("insults")]? He won't stop going on and on and on...")
 		..()
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
@@ -860,9 +839,26 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 /mob/living/carbon/human/secret
 	unobservable = 1
 
+/datum/aiHolder/human/yank
+	New()
+		..()
+		var/datum/aiTask/timed/targeted/human/suplex/A = get_instance(/datum/aiTask/timed/targeted/human/suplex, list(src))
+		var/datum/aiTask/timed/targeted/human/boxing/B = get_instance(/datum/aiTask/timed/targeted/human/boxing, list(src))
+		var/datum/aiTask/timed/targeted/human/get_weapon/C = get_instance(/datum/aiTask/timed/targeted/human/get_weapon, list(src))
+		var/datum/aiTask/timed/targeted/human/boxing/D = get_instance(/datum/aiTask/timed/targeted/human/boxing, list(src))
+		var/datum/aiTask/timed/targeted/human/flee/F = get_instance(/datum/aiTask/timed/targeted/human/flee, list(src))
+		F.transition_task = B
+		B.transition_task = C
+		C.transition_task = D
+		D.transition_task = A
+		A.transition_task = F
+		default_task = B
+
 // This is Big Yank, one of John Bill's old buds. Yank owes John a favor. He's a Juicer.
 /mob/living/carbon/human/big_yank
 	gender = MALE
+	is_npc = 1
+	uses_mobai = 1
 
 	New()
 		..()
@@ -880,6 +876,11 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/chief_engineer, slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses, slot_glasses)
 
+			src.ai = new /datum/aiHolder/human/yank(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
+			src.ai.enabled = 0
+
 
 	attack_hand(mob/M)
 		..()
@@ -889,14 +890,16 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		if(isdead(src))
 			return
 		if (prob(30))
-			say(pick("Hey you better back off [pick(JOHN_insults)]- I'm busy.","You feelin lucky, [pick(JOHN_insults)]?"))
+			say(pick("Hey you better back off [pick_string("johnbill.txt", "insults")]- I'm busy.","You feelin lucky, [pick_string("johnbill.txt", "insults")]?"))
+			src.ai.target = null
+			src.ai.enabled = 0
 
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/tug/invoice))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
 			SPAWN_DBG(1 SECOND)
-				say(pick("Brudder, I did that job months ago. Fuck outta here with that.","Oh come on, quit wastin my time [pick(JOHN_insults)]."))
+				say(pick("Brudder, I did that job months ago. Fuck outta here with that.","Oh come on, quit wastin my time [pick_string("johnbill.txt", "insults")]."))
 			return
 		..()
 
@@ -905,15 +908,16 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			return
 		if(prob(20))
 			say(pick("Oh no you don't - not today, not ever!","Nice try asshole, but I ain't goin' down so easy!","Gonna take more than that to take out THIS Juicer!","You wanna fuck around bucko? You wanna try your luck?"))
-		src.target = M
-		src.ai_state = 2
-		src.ai_threatened = world.timeofday
-		src.ai_target = M
-		src.a_intent = INTENT_HARM
-		src.ai_set_active(1)
+			src.ai.interrupt()
+		src.ai.target = M
+		src.ai.enabled = 1
+
+
 
 #if ASS_JAM //explodey yank
 		say("Feel My Wrath.")
 		explosion_new(src, src.loc, 20)
 		src.gib()
 #endif
+
+#undef BILL_PICK
