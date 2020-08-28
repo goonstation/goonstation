@@ -979,50 +979,21 @@ var/list/mechanics_telepads = new/list()
 
 /obj/item/mechanics/zapper
 	name = "Floor Zapper"
-	desc = "Its pretty shocking"
+	desc = ""
 	icon_state = "comp_zap"
-	can_rotate = 0
+	cooldown_time = 2 SECONDS
 	cabinet_banned = true // non-functional
-	var/active = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activateproc")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"zap", "activateproc")
 
-	proc/drivecurrent()
-		if(level == 2) return
-		LIGHT_UP_HOUSING
-		var/count = 0
-		for(var/atom/movable/M in src.loc)
-			if(M.anchored) continue
-			count++
-			if(M == src) continue
-			zapstuff(M)
-			if(count > 50) return
-			if(world.tick_usage > 100) return //fuck it, failsafe
-
-	proc/activateproc(var/datum/mechanicsMessage/input)
-		if(level == 2) return
+proc/activateproc(var/datum/mechanicsMessage/input)
+		if(level == 2 || !isReady()) return
 		if(input)
-			if(active) return
-			SPAWN_DBG(0)
-				if(src)
-					active = 1
-					SPAWN_DBG(0) drivecurrent()
-					SPAWN_DBG(0.5 SECONDS) drivecurrent()
-				sleep(3 SECONDS)
-				if(src)
-					active = 0
-		return
-
-	proc/zapstuff(atom/movable/AM as mob|obj)
-		if(level == 2) return
-		elecflash(src.loc)
-		return
-
-	updateIcon()
-		icon_state = "[under_floor ? "u":""]comp_zap"
+			unReady()
+			LIGHT_UP_HOUSING
+			elecflash(src.loc)
 		return
 
 /obj/item/mechanics/pausecomp
