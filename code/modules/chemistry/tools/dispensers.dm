@@ -146,7 +146,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("ff-foam",1000)
+		reagents.add_reagent("ff_foam",1000)
 
 /obj/reagent_dispensers/watertank
 	name = "watertank"
@@ -313,10 +313,10 @@
 			var/datum/reagents/R = new/datum/reagents(4000)
 			reagents = R
 			R.my_atom = src
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("cbd","thc","urine","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("cbd","thc","urine","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("cbd","thc","urine","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("cbd","thc","urine","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent("water",600)
 			src.update_icon()
 		name = "discolored water fountain"
