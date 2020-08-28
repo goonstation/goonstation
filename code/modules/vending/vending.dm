@@ -1379,6 +1379,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/dispatchcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/gunholder/recharging, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/filecomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/zapper, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/flushcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/accelerator, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/gunholder, 30)
