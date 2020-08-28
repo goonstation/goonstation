@@ -26,7 +26,6 @@
 	var/list/affecting_mobs = list()//mobs in the path of the beam
 	var/list/blocking_objects = list()	//the objects blocking the laser, if any
 	var/selling = FALSE
-	var/autorefresh = 1		//whether to autorefresh the browser menu. set to 0 while awaiting input() so it doesn't take focus away.
 	var/laser_process_counter = 0
 	var/input_number = 0
 	var/output_number = 0
@@ -164,9 +163,6 @@
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
 		updateicon()
-
-	if(autorefresh)
-		src.updateDialog()
 
 /obj/machinery/power/pt_laser/proc/power_sold()
 	if (round(output) == 0)
