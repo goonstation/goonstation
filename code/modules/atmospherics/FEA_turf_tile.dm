@@ -364,7 +364,7 @@ turf
 								enemy_tile.archive()
 #endif
 							if(enemy_tile.parent) //apply tile to group sharing
-								var/datum/air_group/sharegroup = enemy_tile.parent
+								var/datum/air_group/sharegroup = enemy_tile.parent //move tile's group to a new variable so we're not referencing multiple layers deep
 								if(sharegroup.group_processing)
 									if(sharegroup.current_cycle < current_cycle)
 										if(sharegroup.air.check_gas_mixture(air))
