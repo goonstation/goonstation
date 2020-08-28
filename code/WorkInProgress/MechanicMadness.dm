@@ -992,6 +992,10 @@ var/list/mechanics_telepads = new/list()
 		LIGHT_UP_HOUSING
 		elecflash(src.loc)
 		return
+		
+	updateIcon()
+		icon_state = "[under_floor ? "u":""]comp_zap"
+		return
 
 /obj/item/mechanics/pausecomp
 	name = "Delay Component"
