@@ -40,13 +40,13 @@
 	var/list/data = list()
 
 	var/list/power = list()
-	power["main"] = secondsMainPowerLost ? 0 : 2 // boolean
+	power["main"] = secondsMainPowerLost // boolean
 	power["main_timeleft"] = secondsMainPowerLost
-	power["backup"] = secondsBackupPowerLost ? 0 : 2 // boolean
+	power["backup"] = secondsBackupPowerLost // boolean
 	power["backup_timeleft"] = secondsBackupPowerLost
 	data["power"] = power
 
-	data["shock"] = secondsElectrified == 0 ? 2 : 0
+	data["shock"] = !secondsElectrified
 	data["shock_timeleft"] = secondsElectrified
 	data["id_scanner"] = !aiDisabledIdScanner
 	data["locked"] = locked // bolted

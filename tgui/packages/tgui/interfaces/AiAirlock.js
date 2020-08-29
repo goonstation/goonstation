@@ -4,13 +4,9 @@ import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 const dangerMap = {
-  2: {
+  1: {
     color: 'good',
     localStatusText: 'Offline',
-  },
-  1: {
-    color: 'average',
-    localStatusText: 'Caution',
   },
   0: {
     color: 'bad',
@@ -111,7 +107,7 @@ export const AiAirlock = (props, context) => {
                   content={data.id_scanner ? 'Enabled' : 'Disabled'}
                   selected={data.id_scanner}
                   disabled={!data.wires.id_scanner
-                    || !data.power.main && !data.power.backup}
+                    || (!data.power.main && !data.power.backup)}
                   onClick={() => act('idscan-toggle')} />
               )}>
               {!data.wires.id_scanner && '[Wires have been cut!]'}
@@ -126,7 +122,7 @@ export const AiAirlock = (props, context) => {
                   content={data.locked ? 'Lowered' : 'Raised'}
                   selected={data.locked}
                   disabled={!data.wires.bolts
-                    || !data.power.main && !data.power.backup}
+                    || (!data.power.main && !data.power.backup)}
                   onClick={() => act('bolt-toggle')} />
               )}>
               {!data.wires.bolts && '[Wires have been cut!]'}
@@ -141,7 +137,7 @@ export const AiAirlock = (props, context) => {
                   content={data.opened ? 'Open' : 'Closed'}
                   selected={data.opened}
                   disabled={(data.locked || data.welded)
-                    || !data.power.main && !data.power.backup}
+                    || (!data.power.main && !data.power.backup)}
                   onClick={() => act('open-close')} />
               )}>
               {!!(data.locked || data.welded) && (
