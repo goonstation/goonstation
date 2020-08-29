@@ -13,6 +13,7 @@
 	lockedChars = list("A","T","C","G")
 	lockedTries = 12
 	stability_loss = 5
+	icon_state  = "hemochromia_unknown"
 	var/typeRange = 0
 	var/duplicateCheck = 0
 	var/blood_color_R
@@ -93,6 +94,7 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+	icon_state  = "hemochromia_rust"
 
 	OnAdd()
 		..()
@@ -101,10 +103,12 @@
 		blood_color_B = rand(0, 2)
 
 	OnLife()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.blood_volume < 500 && H.blood_volume > 0)
+				H.blood_volume += 2
 		if(prob(12))
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+			H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
 	OnRemove()
 		..()
@@ -128,6 +132,7 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+	icon_state  = "hemochromia_bronze"
 
 	OnAdd()
 		..()
@@ -136,10 +141,12 @@
 		blood_color_B = rand(1, 0)
 
 	OnLife()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.blood_volume < 500 && H.blood_volume > 0)
+				H.blood_volume += 2
 		if(prob(12))
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+			H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
 	OnRemove()
 		..()
@@ -163,6 +170,7 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+	icon_state  = "hemochromia_gold"
 
 	OnAdd()
 		..()
@@ -171,10 +179,12 @@
 		blood_color_B = rand(20, 4)
 
 	OnLife()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.blood_volume < 500 && H.blood_volume > 0)
+				H.blood_volume += 2
 		if(prob(12))
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+			H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
 	OnRemove()
 		..()
@@ -198,6 +208,7 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+	icon_state  = "hemochromia_lime"
 
 	OnAdd()
 		..()
@@ -206,10 +217,12 @@
 		blood_color_B = rand(0, 0)
 
 	OnLife()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.blood_volume < 500 && H.blood_volume > 0)
+				H.blood_volume += 2
 		if(prob(12))
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+			H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
 	OnRemove()
 		..()
@@ -233,6 +246,7 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+	icon_state  = "hemochromia_olive"
 
 	OnAdd()
 		..()
@@ -241,10 +255,12 @@
 		blood_color_B = rand(5, 0)
 
 	OnLife()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.blood_volume < 500 && H.blood_volume > 0)
+				H.blood_volume += 2
 		if(prob(12))
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+			H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
 	OnRemove()
 		..()
@@ -268,6 +284,7 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+	icon_state  = "hemochromia_jade"
 
 	OnAdd()
 		..()
@@ -276,10 +293,12 @@
 		blood_color_B = rand(105, 24)
 
 	OnLife()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.blood_volume < 500 && H.blood_volume > 0)
+				H.blood_volume += 2
 		if(prob(12))
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+			H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
 	OnRemove()
 		..()
@@ -303,6 +322,7 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+	icon_state  = "hemochromia_teal"
 
 	OnAdd()
 		..()
@@ -311,10 +331,12 @@
 		blood_color_B = rand(200, 80)
 
 	OnLife()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.blood_volume < 500 && H.blood_volume > 0)
+				H.blood_volume += 2
 		if(prob(12))
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+			H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
 	OnRemove()
 		..()
@@ -338,6 +360,7 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+	icon_state  = "hemochromia_cobalt"
 
 	OnAdd()
 		..()
@@ -346,10 +369,12 @@
 		blood_color_B = rand(255, 78)
 
 	OnLife()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.blood_volume < 500 && H.blood_volume > 0)
+				H.blood_volume += 2
 		if(prob(12))
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+			H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
 	OnRemove()
 		..()
@@ -373,6 +398,7 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+	icon_state  = "hemochromia_indigo"
 
 	OnAdd()
 		..()
@@ -381,10 +407,12 @@
 		blood_color_B = rand(255, 69)
 
 	OnLife()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.blood_volume < 500 && H.blood_volume > 0)
+				H.blood_volume += 2
 		if(prob(12))
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+			H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
 	OnRemove()
 		..()
@@ -408,6 +436,7 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+	icon_state  = "hemochromia_purple"
 
 	OnAdd()
 		..()
@@ -416,10 +445,12 @@
 		blood_color_B = rand(214, 92)
 
 	OnLife()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.blood_volume < 500 && H.blood_volume > 0)
+				H.blood_volume += 2
 		if(prob(12))
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+			H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
 	OnRemove()
 		..()
@@ -443,6 +474,7 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+	icon_state  = "hemochromia_violet"
 
 	OnAdd()
 		..()
@@ -451,10 +483,12 @@
 		blood_color_B = rand(206, 91)
 
 	OnLife()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.blood_volume < 500 && H.blood_volume > 0)
+				H.blood_volume += 2
 		if(prob(12))
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+			H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
 	OnRemove()
 		..()
@@ -478,6 +512,7 @@
 	stability_loss = 5
 	occur_in_genepools = 0
 	research_level = 2
+	icon_state  = "hemochromia_fuschia"
 
 	OnAdd()
 		..()
@@ -486,10 +521,12 @@
 		blood_color_B = rand(124, 52)
 
 	OnLife()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.blood_volume < 500 && H.blood_volume > 0)
+				H.blood_volume += 2
 		if(prob(12))
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+			H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
 
 	OnRemove()
 		..()
