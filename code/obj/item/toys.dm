@@ -21,7 +21,7 @@
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
 	/obj/item/toy/plush/small/penguin/cool)
-	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca, /obj/item/toy/plush/small/tuba)
+	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca, /obj/item/toy/plush/small/tuba, /obj/item/toy/plush/small/chris)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	src.add_dialog(user)
@@ -178,6 +178,10 @@
 /obj/item/toy/plush/small/tuba
 	name = "Tuba the rat"
 	icon_state = "tuba"
+
+/obj/item/toy/plush/small/chris
+	name = "Chris the goat"
+	icon_state = "chris"
 
 /obj/item/toy/sword
 	name = "toy sword"
