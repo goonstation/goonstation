@@ -106,7 +106,7 @@
 /turf/simulated/floor/grass/random/alt,
 /area/station/aviary)
 "aar" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/grass/random/alt,
@@ -642,7 +642,7 @@
 	icon_state = "0-8"
 	},
 /obj/item/device/radio/intercom/security{
-	
+
 	},
 /obj/machinery/light/emergency{
 	icon_state = "ebulb1";
@@ -5507,7 +5507,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/crew_quarters/lounge_port)
 "ajI" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /obj/machinery/light{
@@ -7918,7 +7918,7 @@
 	name = "autoname - Entertainment";
 	network = "Zeta"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /obj/machinery/light{
@@ -9281,7 +9281,7 @@
 	id = "crematorium"
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
@@ -9297,7 +9297,7 @@
 "aqn" = (
 /obj/storage/closet/coffin,
 /obj/item/device/radio/intercom/security{
-	
+
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -10224,7 +10224,7 @@
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/catering{
-	
+
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -13423,7 +13423,7 @@
 	icon_state = "line1";
 	dir = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor/grass/random,
@@ -13964,7 +13964,7 @@
 	icon_state = "line3"
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -17831,7 +17831,7 @@
 /area/station/medical/robotics)
 "aFk" = (
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/stairs{
 	dir = 8;
@@ -19025,7 +19025,7 @@
 /obj/shrub,
 /obj/item/cigpacket,
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/machinery/light/emergency{
 	dir = 8
@@ -19064,7 +19064,7 @@
 	d2 = 2
 	},
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/white/checker,
@@ -20009,7 +20009,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/red,
@@ -20242,7 +20242,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "aIV" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/random,
@@ -21641,7 +21641,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/research)
 "aKV" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/window/reinforced/east,
@@ -22428,7 +22428,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "aMc" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor/white,
@@ -22808,7 +22808,7 @@
 	name = "autoname - SS13"
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/machinery/autoclave,
 /turf/simulated/floor/purplewhite/corner{
@@ -23696,7 +23696,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/purple,
 /area/station/science/research_director{
@@ -23751,7 +23751,7 @@
 	network = "Zeta"
 	},
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /turf/simulated/floor/purple,
 /area/station/science/research_director{
@@ -27732,7 +27732,7 @@
 	pltanks = 15
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
@@ -27889,7 +27889,7 @@
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/landmark/start{
 	name = "Geneticist"
@@ -32212,7 +32212,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
@@ -32505,7 +32505,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom/brig{
-	
+
 	},
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1";
@@ -33177,7 +33177,7 @@
 	d2 = 4
 	},
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /turf/simulated/floor/engine,
 /area/station/testchamber)
@@ -33620,7 +33620,7 @@
 /turf/simulated/pool/no_animate,
 /area/station/crew_quarters/pool)
 "beK" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/pool/no_animate,
@@ -39154,7 +39154,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
@@ -39269,9 +39269,6 @@
 "bnQ" = (
 /obj/window/reinforced/east,
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
@@ -40067,7 +40064,7 @@
 	},
 /obj/machinery/light_switch/west,
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/engine{
@@ -41069,7 +41066,7 @@
 	network = "SS13"
 	},
 /obj/item/device/radio/intercom/cargo{
-	
+
 	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/black,
@@ -43879,7 +43876,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor/engine,
@@ -44929,7 +44926,7 @@
 	icon_state = "0-8"
 	},
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
@@ -45104,7 +45101,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)

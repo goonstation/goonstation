@@ -291,7 +291,7 @@
 		TO.ghostize()
 
 	for(var/mob/m in src) //just in case...
-		m.loc = src.loc
+		m.set_loc(src.loc)
 		m.ghostize()
 
 	if (ghost && ghost.corpse == src)
@@ -478,18 +478,24 @@
 	src.need_update_item_abilities = 1
 	src.antagonist_overlay_refresh(1, 0)
 
-	if (ass_day)
-		ass_day_popup(src)
+#if ASS_JAM
+	ass_day_popup(src)
+#endif
 
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
+
+	if(HAS_MOB_PROPERTY(src, PROP_PROTANOPIA))
+		src.client?.color = list(MATRIX_PROTANOPIA)
 
 	return
 
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
+
+	tgui_process?.on_logout(src)
 
 	if (src.last_client && !src.key) // lets see if not removing the HUD from disconnecting players helps with the crashes
 		for (var/datum/hud/hud in src.huds)
@@ -906,8 +912,7 @@
 			return I
 
 /mob/dead/unequip_all(var/delete_stuff=0)
-	var/obj/ecto = new/obj/item/reagent_containers/food/snacks/ectoplasm
-	ecto.loc = src.loc
+	new/obj/item/reagent_containers/food/snacks/ectoplasm(src.loc)
 
 /mob/proc/get_unequippable()
 	return
@@ -1556,8 +1561,6 @@
 /mob/proc/remove()
 	if (istype(src, /mob/dead/observer) || istype(src, /mob/dead/target_observer))
 		return
-
-	// I removed the sending mob to observer_start part because ghostize() takes care of it
 
 	src.death()
 	src.transforming = 1
@@ -2217,20 +2220,18 @@
 /mob/onVarChanged(variable, oldval, newval)
 	update_clothing()
 
-/mob/proc/throw_impacted(var/atom/hit) //Called when mob hits something after being thrown.
+/mob/throw_impact(atom/hit, list/params)
+	if(!isturf(hit) || hit.density)
+		if (throw_traveled <= 410)
+			if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
+				random_brute_damage(src, min((6 + (throw_traveled / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
+				if (!src.hasStatus("weakened"))
+					src.changeStatus("weakened", 2 SECONDS)
+					src.force_laydown_standup()
+		else
+			src.gib()
 
-	if (throw_traveled <= 410)
-		if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
-			random_brute_damage(src, min((6 + (throw_traveled / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
-			if (!src.hasStatus("weakened"))
-				src.changeStatus("weakened", 2 SECONDS)
-				src.force_laydown_standup()
-	else
-		if (src.gib_flag) return
-		src.gib_flag = 1
-		src.gib()
-
-	return
+	return ..()
 
 /mob/proc/full_heal()
 	src.HealDamage("All", 100000, 100000)
@@ -2603,11 +2604,11 @@
 /proc/random_name(var/gen = MALE)
 	var/return_name
 	if (gen == MALE)
-		return_name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
+		return_name = capitalize(pick_string_autokey("names/first_male.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 	else if (gen == FEMALE)
-		return_name = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
+		return_name = capitalize(pick_string_autokey("names/first_female.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 	else
-		return_name = capitalize(pick(first_names_male + first_names_female) + " " + capitalize(pick(last_names)))
+		return_name = capitalize(pick_string_autokey("names/first_[prob(50)?"fe":""]male.txt") + " " + capitalize(pick_string_autokey("names/last.txt")))
 	return return_name
 
 /mob/OnMove(source = null)
@@ -2878,3 +2879,6 @@
 	if (items.len)
 		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
 		A.interact(src)
+
+/mob/proc/add_karma(how_much)
+	src?.mind.add_karma(how_much)

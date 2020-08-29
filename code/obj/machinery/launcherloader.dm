@@ -1,6 +1,10 @@
 /obj/machinery/launcher_loader
 	icon = 'icons/obj/stationobjs.dmi'
+#ifndef IN_MAP_EDITOR
 	icon_state = "launcher_loader_0"
+#else
+	icon_state = "launcher_loader_0-map"
+#endif
 	name = "Automatic mass-driver loader (AMDL)"
 	desc = "An automated, hydraulic mass-driver loader."
 	density = 0
@@ -54,7 +58,7 @@
 
 			SPAWN_DBG(0)
 				var/obj/machinery/door/poddoor/door = null
-				for(var/obj/machinery/door/poddoor/P in doors)
+				for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 					if (P.id == driver.id)
 						door = P
 						SPAWN_DBG(0)

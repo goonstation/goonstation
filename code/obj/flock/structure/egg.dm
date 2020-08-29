@@ -27,7 +27,7 @@
 	if(elapsed >= build_time)
 		src.visible_message("<span class='notice'>[src] breaks open!</span>")
 		new /mob/living/critter/flock/drone(get_turf(src), src.flock)
-		src.loc = null
+		src.set_loc(null)
 		SPAWN_DBG(1 SECOND)
 			if(src.flock)
 				src.flock.removeDrone(src)

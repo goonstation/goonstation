@@ -49,7 +49,7 @@
 	proc/init(var/obj/machinery/disposal/D)
 		gas = D.air_contents.remove_ratio(1)	// transfer gas resv. into holder object
 
-		// loc = null makes some stuff grumpy, ok?
+		// set_loc(null makes some stuff grumpy, ok?)
 		if(D.trunk)
 			src.set_loc(D.trunk)
 		else
@@ -74,7 +74,7 @@
 			D.expel(src)	// no trunk connected, so expel immediately
 			return
 
-		loc = D.trunk
+		set_loc(D.trunk)
 		active = 1
 		dir = DOWN
 		SPAWN_DBG(1 DECI SECOND)
@@ -326,9 +326,7 @@
 			for(var/atom/movable/AM in H)
 				AM.set_loc(T)
 				AM.pipe_eject(direction)
-				SPAWN_DBG(1 DECI SECOND)
-					if(AM)
-						AM.throw_at(target, 100, 1)
+				AM?.throw_at(target, 100, 1)
 			H.vent_gas(T)
 			pool(H)
 
@@ -340,9 +338,7 @@
 
 				AM.set_loc(T)
 				AM.pipe_eject(0)
-				SPAWN_DBG(1 DECI SECOND)
-					if(AM)
-						AM.throw_at(target, 5, 1)
+				AM?.throw_at(target, 5, 1)
 
 			H.vent_gas(T)	// all gas vent to turf
 			pool(H)
@@ -994,7 +990,7 @@
 						newLoaf.loaf_factor++
 
 					H.contents -= newIngredient
-					newIngredient.loc = null
+					newIngredient.set_loc(null)
 					newIngredient = null
 
 					//LAGCHECK(LAG_MED)
@@ -1211,8 +1207,7 @@
 			return
 		if(src.loc == get_turf(src))
 			var/edge = get_edge_target_turf(src, pick(alldirs))
-			SPAWN_DBG(0)
-				src.throw_at(edge, 100, 1)
+			src.throw_at(edge, 100, 1)
 		if (istype(src.loc,/obj/))
 			if (prob(33))
 				var/obj/container = src.loc
@@ -1398,8 +1393,7 @@
 			for(var/atom/movable/AM in H)
 				AM.set_loc(src.loc)
 				AM.pipe_eject(dir)
-				SPAWN_DBG(1 DECI SECOND)
-					AM.throw_at(stuff_chucking_target, 3, 1)
+				AM.throw_at(stuff_chucking_target, 3, 1)
 			H.vent_gas(src.loc)
 			pool(H)
 
@@ -1469,8 +1463,7 @@
 			for (var/atom/movable/AM in things_to_dump)
 				AM.set_loc(src.loc)
 				AM.pipe_eject(dir)
-				SPAWN_DBG(1 DECI SECOND)
-					AM.throw_at(stuff_chucking_target, 3, 1)
+				AM.throw_at(stuff_chucking_target, 3, 1)
 			if (H.contents.len < 1)
 				H.vent_gas(src.loc)
 				pool(H)
@@ -1838,8 +1831,7 @@
 		for(var/atom/movable/AM in H)
 			AM.set_loc(src.loc)
 			AM.pipe_eject(dir)
-			SPAWN_DBG(1 DECI SECOND)
-				AM.throw_at(target, src.throw_range, 1)
+			AM.throw_at(target, src.throw_range, 1)
 		H.vent_gas(src.loc)
 		pool(H)
 
@@ -1918,8 +1910,7 @@
 		for(var/atom/movable/AM in H)
 			AM.set_loc(src.loc)
 			AM.pipe_eject(dir)
-			SPAWN_DBG(1 DECI SECOND)
-				AM.throw_at(target, 10, 10) //This is literally the only thing that was changed in this, otherwise it booted them way too close.
+			AM.throw_at(target, 10, 10) //This is literally the only thing that was changed in this, otherwise it booted them way too close.
 		H.vent_gas(src.loc)
 		pool(H)
 

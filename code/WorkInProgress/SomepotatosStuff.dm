@@ -43,12 +43,7 @@
 
 
 /obj/landmark/gps_waypoint
-	name = "GPS Waypoint"
-	New()
-		..()
-		if(name != "GPS Waypoint") return
-		var/area/A = get_area(src)
-		name = A.name
+	name = LANDMARK_GPS_WAYPOINT
 
 /client/var/list/GPS_Path
 /client/var/list/GPS_Images
@@ -63,20 +58,22 @@
 	var/list/targets = list()
 	var/list/wtfbyond = list()
 	var/turf/OT = get_turf(src)
-	for( var/obj/landmark/gps_waypoint/wp in landmarks)//world )
+	for(var/turf/wp in landmarks[LANDMARK_GPS_WAYPOINT])
 		var/path = AStar(OT, get_turf(wp), /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=175)
 		if(path)
-			targets[wp.name] = wp
-			wtfbyond[++wtfbyond.len] = wp.name
+			var/area/area = get_area(wp)
+			var/name = area.name
+			targets[name] = wp
+			wtfbyond[++wtfbyond.len] = name
 
 	if(!targets.len)
 		boutput( usr, "No targets found! Try again later!" )
 		return
-	world << targets.len
+
 	var/target = input("Choose a destination!") in wtfbyond|null
 	if(!target || !src.client) return
 	target = targets[target]
-	var/turf/dest = get_turf(target)
+	var/turf/dest = target
 	if(dest.z != OT.z)
 		boutput(usr, "You are on a different z-level!")
 		return
@@ -172,7 +169,7 @@ world/proc/updateCameraVisibility()
 			t.aiImage.override = 1
 			t.aiImage.name = " "
 		aiDirty = 1
-	for(var/obj/machinery/camera/C in cameras)
+	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 		for(var/turf/t in view(7, C))
 			//var/dist = get_dist(t, C)
 			t.aiImage.alpha = 0
@@ -264,7 +261,7 @@ world/proc/updateCameraVisibility()
 	.=..()
 	for(var/turf/t in range(7, src))
 		t.cameraTotal = 0
-	for(var/obj/machinery/camera/C in cameras)
+	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
 		if( get_dist(C.loc, src) <= 7 )
 			var/list/inview = view(7,C)
 			for(var/turf/t in range(7, C))

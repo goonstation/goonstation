@@ -31,6 +31,7 @@ var/global/list/mapNames = list(
 	"Samedi" = 			list("id" = "SAMEDI", 		"settings" = "samedi", 			"playerPickable" = ASS_JAM),
 	"1 pamgoC" = 		list("id" = "PAMGOC", 		"settings" = "pamgoc", 			"playerPickable" = ASS_JAM),
 	"Kondaru" = 		list("id" = "KONDARU", "settings" = "kondaru", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 80),
+	"Ozymandias" = 		list("id" = "OZYMANDIAS", "settings" = "ozymandias", 				"playerPickable" = 0, 	"MinPlayersAllowed" = 40),
 	"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = ASS_JAM),
 	"Icarus" = 			list("id" = "ICARUS",		"settings" = "icarus",				"playerPickable" = ASS_JAM),
 	"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,				"MaxPlayersAllowed" = 30),
@@ -42,7 +43,6 @@ var/global/list/mapNames = list(
 /obj/landmark/map
 	name = "map_setting"
 	icon_state = "x3"
-	invisibility = 101
 
 	New()
 		if (src.name != "map_setting")
@@ -115,6 +115,20 @@ var/global/list/mapNames = list(
 		"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
 		"the robotics lab" = list(/area/station/medical/robotics))
 //		"the public pool" = list(/area/station/crew_quarters/pool))
+
+	var/job_limits_from_landmarks = FALSE /// if TRUE each job with a landmark will get as many slots as many landmarks there are (jobs without a landmark left on default)
+	var/list/job_limits_override = list() /// assoc list of the form `job_type=limit` to override other job settings, works on gimmick jobs too
+
+	proc/init() /// Map-specific initialization, feel free to override for your map!
+		// map limits
+		if(job_limits_from_landmarks)
+			for(var/datum/job/J in job_controls.staple_jobs)
+				if(J.map_can_autooverride && (J.name in job_start_locations))
+					J.limit = length(job_start_locations[J.name])
+
+		for(var/datum/job/J in job_controls.staple_jobs + job_controls.special_jobs)
+			if(J.type in src.job_limits_override)
+				J.limit = src.job_limits_override[J.type]
 
 /datum/map_settings/donut2
 	name = "DONUT2"
@@ -520,6 +534,48 @@ var/global/list/mapNames = list(
 		"the artifact lab" = list(/area/station/science/artifact),
 		"the janitor's office" = list(/area/station/janitor))
 
+/datum/map_settings/ozymandias
+	name = "OZYMANDIAS"
+	goonhub_map = "https://i.imgur.com/COYgNvN.jpg"
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+	auto_walls = 1
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = 1
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
+	escape_centcom = /area/shuttle/escape/centcom/cogmap2
+	escape_transit = /area/shuttle/escape/transit/cogmap2
+	escape_station = /area/shuttle/escape/station/cogmap2
+	escape_dir = EAST
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+	valid_nuke_targets = list("the security equipment wing" = list(/area/station/security/equipment),
+		"the central research sector hub" = list(/area/station/science),
+		"the quartermasters' office" = list(/area/station/quartermaster/office),
+		"the thermo-electric generator room" = list(/area/station/engine/core),
+		"the basketball court" = list(/area/station/crew_quarters/fitness),
+		"the medbay's central loop" = list(/area/station/medical/medbay),
+		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
+		"the data center" = list(/area/station/crew_quarters/info),
+		"the artifact lab" = list(/area/station/science/artifact),
+		"the chapel reception hall" = list(/area/station/crew_quarters/quarters))
+
 /datum/map_settings/fleet
 	name = "FLEET"
 	display_name = "Bellerophon Fleet"
@@ -705,6 +761,10 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+	job_limits_override = list(
+		/datum/job/civilian/clown = 2 // pamgoc can have a little clown, as a treat
+	)
 
 /datum/map_settings/oshan
 	name = "OSHAN"

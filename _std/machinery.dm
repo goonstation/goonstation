@@ -1,3 +1,39 @@
+//this file is not in defines or macros because this one is kind of a frankenstein
+#define NETWORK_MACHINE_RESET_DELAY 40 //Time (in 1/10 of a second) before we can be manually reset again (machines).
+
+//communications stuff
+#define TRANSMISSION_WIRE	0
+#define TRANSMISSION_RADIO	1
+
+//lighting stuff
+#define LIGHT_OK 0
+#define LIGHT_EMPTY 1
+#define LIGHT_BROKEN 2
+#define LIGHT_BURNED 3
+
+//apc stuff
+#define EQUIP 1
+#define LIGHT 2
+#define ENVIRON 3
+#define TOTAL 4	//for total power used only
+
+// bitflags for machine stat variable
+#define BROKEN 1		// machine non-functional
+#define NOPOWER 2		// no available power
+#define POWEROFF 4		// machine shut down, but may still draw a trace amount
+#define MAINT 8			// under maintainance
+#define HIGHLOAD 16		// using a lot of power
+
+//recharger stuff
+#define CELLRATE 0.002  // multiplier for watts per tick <> cell storage (eg: .002 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
+#define CHARGELEVEL 0.001 // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
+
+//red smashy button stuff
+#define SHIP_ALERT_GOOD 0
+#define SHIP_ALERT_BAD 1
+
+#define DATA_TERMINAL_IS_VALID_MASTER(terminal, master) (master && (get_turf(master) == terminal.loc))
+
 #define PROCESSING_FULL      1
 #define PROCESSING_HALF      2
 #define PROCESSING_QUARTER   3
