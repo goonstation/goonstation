@@ -448,7 +448,12 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/beebo,
 /datum/figure_info/romillybartlesby,
 /datum/figure_info/dillbehrt,
-/datum/figure_info/listelsheerfield)
+/datum/figure_info/listelsheerfield,
+/datum/figure_info/raphaelzahel,
+/datum/figure_info/derekclarke,
+/datum/figure_info/fartcan,
+/datum/figure_info/tomato
+)
 
 /datum/figure_info
 	var/name = "staff assistant"
@@ -808,6 +813,22 @@ var/list/figure_patreon_rarity = list(\
 	listelsheerfield
 		name = "\improper Listel Sheerfield"
 		icon_state = "listelsheerfield"
+
+	raphaelzahel
+		name = "\improper Raphael Zahel"
+		icon_state = "raphaelzahel"
+
+	derekclarke
+		name = "\improper Derek Clarke"
+		icon_state = "derekclarke"
+
+	fartcan
+		name = "\improper Fart Canister"
+		icon_state = "fartcan"
+
+	tomato
+		name = "\improper Tomato"
+		icon_state = "tomato"
 
 #ifdef XMAS
 	santa
