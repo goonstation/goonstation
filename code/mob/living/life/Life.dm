@@ -709,7 +709,7 @@ var/global/life_pause_check = 0
 
 		// Resistance from Clothing
 		protection += GET_MOB_PROPERTY(src, PROP_RANGEDPROT)
-
+		protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/3 //enchanted clothing isn't that bulletproof
 		return protection
 
 	get_melee_protection(zone, damage_type)
@@ -729,7 +729,7 @@ var/global/life_pause_check = 0
 				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY)
 			else //can only be head
 				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD)
-
+			protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/2
 			//protection from blocks
 			var/obj/item/grab/block/G = src.check_block()
 			if (G)

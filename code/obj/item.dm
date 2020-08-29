@@ -130,7 +130,7 @@
 
 		if(src.properties && src.properties.len)
 			for(var/datum/objectProperty/P in src.properties)
-				if(!istype(P, /datum/objectProperty/inline))
+				if(!P.hidden)
 					. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
 
 		//itemblock tooltip additions
@@ -138,10 +138,11 @@
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: "
 			for(var/obj/item/grab/block/B in src)
 				if(B.properties && B.properties.len)
-					for(var/datum/objectProperty/inline/P in B.properties)
-						. += "<img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> "
 					for(var/datum/objectProperty/P in B.properties)
-						if(!istype(P, /datum/objectProperty/inline))
+						if(P.inline)
+							. += "<img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> "
+					for(var/datum/objectProperty/P in B.properties)
+						if(!P.hidden)
 							. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]"
 			for (var/datum/component/C in src.GetComponents(/datum/component/itemblock))
 				. += jointext(C.getTooltipDesc(), "")
