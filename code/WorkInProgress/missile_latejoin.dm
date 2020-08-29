@@ -1,4 +1,5 @@
 #define MISSILE_SPAWN_MOVEDELAY 1
+#define MISSILE_FLOORS_TO_STOP 4
 
 /obj/arrival_missile
 	name = "human capsule missile"
@@ -74,7 +75,7 @@
 	proc/move_self()
 		var/glide = 0
 
-		while (moved_on_flooring <= 4)
+		while (moved_on_flooring <= MISSILE_FLOORS_TO_STOP)
 			glide = (32 / MISSILE_SPAWN_MOVEDELAY) * world.tick_lag// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
 			src.glide_size = glide
 			src.animate_movement = SLIDE_STEPS
@@ -90,8 +91,15 @@
 			sleep(MISSILE_SPAWN_MOVEDELAY)
 
 			var/area/AR = get_area(src)
-			if (istype(get_turf(src), /turf/simulated/floor) && !AR.teleport_blocked)
-				moved_on_flooring++
+			var/turf/T = get_turf(src)
+			if (istype(T, /turf/simulated/floor) && !AR.teleport_blocked && !T.density)
+				var/ok = TRUE
+				for(var/atom/A in T)
+					if(A.density)
+						ok = FALSE
+						break
+				if(ok)
+					moved_on_flooring++
 
 		pool(src)
 
