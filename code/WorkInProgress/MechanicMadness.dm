@@ -989,12 +989,11 @@ var/list/mechanics_telepads = new/list()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"zap", "eleczap")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Power","setPower")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Radius","setRadius")
 
 	proc/eleczap(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
-		elecflash(src.loc, radius = zap_radius, power = zap_power, exclude_center = 0)
+		elecflash(src.loc, 0, power = zap_power, exclude_center = 0)
 		return
 		
 	proc/setPower(obj/item/W as obj, mob/user as mob)
@@ -1004,15 +1003,6 @@ var/list/mechanics_telepads = new/list()
 		inp = clamp(round(inp), 1, 6)
 		zap_power = inp
 		boutput(user, "Power set to [inp]")
-		return 1
-		
-	proc/setRadius(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Radius(1 - 3):","Radius setting", zap_radius) as num
-		if(!in_range(src, user) || user.stat)
-			return 0
-		inp = clamp(round(inp), 1, 3)
-		zap_radius = inp - 1
-		boutput(user, "Radius set to [inp]")
 		return 1
 		
 	updateIcon()
