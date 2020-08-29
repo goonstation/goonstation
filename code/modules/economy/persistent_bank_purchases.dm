@@ -448,7 +448,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 	missile_arrival
 		name = "Missile Arrival"
-		cost = 40000
+		cost = 20000
 
 		Create(var/mob/living/M)
 			var/obj/arrival_missile/missile = unpool(/obj/arrival_missile)
