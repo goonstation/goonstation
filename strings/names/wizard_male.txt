@@ -42,3 +42,5 @@ names@=
 	Vermoulian the Dream-Walker
 	Zahoulik-Khuntze
 	Zanzel Melancthones
+	Oz the Great and Terrible
+	The Whizzard
