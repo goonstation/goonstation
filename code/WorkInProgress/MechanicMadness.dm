@@ -970,6 +970,36 @@
 		icon_state = "[under_floor ? "u":""]comp_accel"
 		return
 
+/obj/item/mechanics/zapper
+	name = "Tesla Coil"
+	desc = ""
+	icon_state = "comp_zap"
+	cooldown_time = 1 SECOND
+	var/zap_power = 2
+	var/zap_radius = 0
+
+	New()
+		..()
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"zap", "eleczap")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Power","setPower")
+
+	proc/eleczap(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		elecflash(src.loc, 0, power = zap_power, exclude_center = 0)
+		
+	proc/setPower(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user,"Please enter Power(1 - 6):","Power setting", zap_power) as num
+		if(!in_range(src, user) || user.stat)
+			return 0
+		inp = clamp(round(inp), 1, 6)
+		zap_power = inp
+		boutput(user, "Power set to [inp]")
+		return 1
+		
+	updateIcon()
+		icon_state = "[under_floor ? "u":""]comp_zap"
+
 /obj/item/mechanics/pausecomp
 	name = "Delay Component"
 	desc = ""
