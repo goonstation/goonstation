@@ -29,3 +29,4 @@ names@=
 	Scarlet Witch
 	Sea Hag
 	Zatanna
+	Sybel
