@@ -981,6 +981,7 @@ var/list/mechanics_telepads = new/list()
 	name = "Tesla Coil"
 	desc = ""
 	icon_state = "comp_zap"
+	cooldown_time = 1 SECONDS
 	var/zap_power = 2
 
 	New()
