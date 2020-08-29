@@ -382,7 +382,7 @@
 					html += debug_variable(L[index], L[L[index]], value, level + 1)
 				else
 					html += debug_variable("[index]", L[index], value, level + 1)
-			if(L.len < 1500)
+			if(L.len > 1500)
 				html += "<tr><th>\[...\]</th><td><em class='value'>...</em></td>"
 
 			html += "</tbody></table>"
