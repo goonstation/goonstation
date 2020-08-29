@@ -145,8 +145,8 @@ obj/machinery/door/airlock/ui_status(mob/user, datum/ui_state/state)
 		if(!src.arePowerSystemsOn())
 			boutput(user, "The door has no power - you can't raise the door bolts.")
 		else
-		src.locked = 0
-		update_icon()
+			src.locked = 0
+			update_icon()
 	else
 		src.locked = 1
 		update_icon()
