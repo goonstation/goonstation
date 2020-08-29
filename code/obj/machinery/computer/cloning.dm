@@ -20,6 +20,7 @@
 
 	var/allow_dead_scanning = 0 //Can the dead be scanned in the cloner?
 	var/portable = 0 //override new() proc and proximity check, for port-a-clones
+	var/currenthealth = ""
 
 	var/allow_mind_erasure = 0 // Can you erase minds?
 	var/mindwipe = 0 //Is mind wiping active?
@@ -180,10 +181,48 @@
 /obj/machinery/computer/cloning/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
+
+
+/obj/machinery/computer/cloning/ui_data(mob/user)
+	. = list()
+	.["clone_records"] = list()
+	for (var/datum/data/r in records)
+		var/obj/item/implant/health/H = locate(r["fields"]["imp"])
+		if ((H) && (istype(H)))
+			currenthealth = H.sensehealth()
+		else
+			currenthealth = "Unable to locate implant"
+		var/list/data = list(
+			name = r["fields"]["name"],
+			id = r["fields"]["id"],
+			health = currenthealth
+			//max_amount = R.max_amount,
+			//ref = REF(R),
+			//premium = TRUE
+		)
+		.["clone_records"] += list(data)
+
+/obj/machinery/computer/cloning/ui_state(mob/user)
+	return tgui_default_state
+
+/* /obj/machinery/computer/cloning/ui_status(mob/user, datum/ui_state/state)
+	return min(
+		state.can_use_topic(src, user),
+		tgui_broken_state.can_use_topic(src, user),
+		tgui_not_incapacitated_state.can_use_topic(src, user)
+	) */
+
+
+/obj/machinery/computer/cloning/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "CloningConsole", src.name)
+		ui.open()
+
 /obj/machinery/computer/cloning/attack_hand(mob/user as mob)
 	src.add_dialog(user)
 	add_fingerprint(user)
-
+	ui_interact(user)
 	if(status & (BROKEN|NOPOWER))
 		return
 
