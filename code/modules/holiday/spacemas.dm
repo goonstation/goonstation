@@ -74,8 +74,8 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 	// Respawn player.
 	var/mob/L
-	var/ASLoc = latejoin.len ? pick(latejoin) : null // picking from an empty list causes a runtime
-	var/WSLoc = wizardstart.len ? pick(wizardstart) : null
+	var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
+	var/WSLoc = job_start_locations["wizard"] ? pick(job_start_locations["wizard"]) : null
 
 	if (!ASLoc)
 		message_admins("Couldn't set up [which_one == 0 ? "Santa Claus" : "Krampus"] respawn (no late-join landmark found).")
@@ -282,8 +282,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		O.set_clothing_icon_dirty()
 		return
 
-var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev","Puffles","Boop","Akiak","Willy","Aga","Snuffles","Tonaph","Suortin","Anana","Ananas","Pineapple","Munchkin","Asiaq","Niko","Roman","Chu","Corazon")
-
 /obj/critter/sealpup
 	name = "space seal pup"
 	desc = "A seal pup, in space, aww."
@@ -302,7 +300,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 
 	New()
 		..()
-		src.name = pick(seal_names)
+		src.name = pick_string_autokey("names/seals.txt")
 
 	CritterDeath()
 		if (!src.alive) return
@@ -822,7 +820,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 							break
 					if(clear)
 						L+=T
-			src.loc = pick(L)
+			src.set_loc(pick(L))
 
 			SPAWN_DBG(30 SECONDS)
 				boutput(src, "<span class='notice'>You may now teleport again.</span>")
@@ -918,7 +916,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 				playsound(M.loc, "fleshbr1.ogg", attack_volume, 1, -1)
 				playsound(M.loc, "loudcrunch2.ogg", attack_volume, 1, -1)
 				if (istype(M.loc,/turf/))
-					src.loc = M.loc
+					src.set_loc(M.loc)
 			else if(isobj(AM))
 				var/obj/O = AM
 				if(O.density)
@@ -985,7 +983,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			src.visible_message("<span class='alert'><B>[src] leaps high into the air, heading right for [M]!</B></span>")
 			animate_fading_leap_up(src)
 			sleep(2.5 SECONDS)
-			src.loc = target
+			src.set_loc(target)
 			playsound(src.loc, "sound/voice/animal/bull.ogg", 50, 1, 0, 0.8)
 			animate_fading_leap_down(src)
 			SPAWN_DBG(0)
@@ -1063,7 +1061,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 							break
 					if(clear)
 						L+=T
-			src.loc = pick(L)
+			src.set_loc(pick(L))
 
 			usr.set_loc(pick(L))
 			smoke.start()
@@ -1111,7 +1109,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 					src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_crush
 					var/mob/living/carbon/human/H = G.affecting
 					src.visible_message("<span class='alert'><B>[src] begins squeezing [H] in \his hand!</B></span>")
-					H.loc = src.loc
+					H.set_loc(src.loc)
 					while (!isdead(H))
 						if (src.stat || src.transforming || get_dist(src,H) > 1)
 							boutput(src, "<span class='alert'>Your victim escaped! Curses!</span>")
@@ -1151,7 +1149,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 				if(ishuman(G.affecting))
 					var/mob/living/carbon/human/H = G.affecting
 					src.visible_message("<span class='alert'><B>[src] raises [H] up to \his mouth! Oh shit!</B></span>")
-					H.loc = src.loc
+					H.set_loc(src.loc)
 					sleep(6 SECONDS)
 					if (src.stat || src.transforming || get_dist(src,H) > 1)
 						boutput(src, "<span class='alert'>Your prey escaped! Curses!</span>")

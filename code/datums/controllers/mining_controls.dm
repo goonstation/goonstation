@@ -1,7 +1,6 @@
 var/datum/mining_controller/mining_controls
 
 var/list/asteroid_blocked_turfs = list()
-var/turf_spawn_edge_limit = 5
 
 /datum/mining_controller
 	var/mining_z = 4
@@ -73,16 +72,14 @@ var/turf_spawn_edge_limit = 5
 				qdel(MC)
 
 	proc/setup_mining_landmarks()
-		for (var/obj/landmark/magnet_center/MC in landmarks)//world)
-			magnetic_center = get_turf(MC)
-			magnet_area = get_area(MC)
-			MC.dispose()
+		for(var/turf/T in landmarks[LANDMARK_MAGNET_CENTER])
+			magnetic_center = T
+			magnet_area = get_area(T)
 			break
 
-		for (var/obj/landmark/magnet_shield/MS in landmarks)//world)
-			var/obj/forcefield/mining/S = new /obj/forcefield/mining(get_turf(MS))
+		for(var/turf/T in landmarks[LANDMARK_MAGNET_SHIELD])
+			var/obj/forcefield/mining/S = new /obj/forcefield/mining(T)
 			magnet_shields += S
-			MS.dispose()
 
 	proc/spawn_mining_z_asteroids(var/amt, var/zlev)
 		SPAWN_DBG(0)

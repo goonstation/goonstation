@@ -542,8 +542,11 @@ var/f_color_selector_handler/F_Color_Selector
 	UPDATE_TITLE_STATUS("Starting processes")
 	Z_LOG_DEBUG("World/Init", "Process scheduler setup...")
 	processScheduler = new /datum/controller/processScheduler
-	processScheduler.deferSetupFor(/datum/controller/process/ticker)
 	processSchedulerView = new /datum/processSchedulerView
+	var/datum/controller/process/tgui/tgui_process = processScheduler.addNowSkipSetup(/datum/controller/process/tgui)
+	var/datum/controller/process/ticker/ticker_process = processScheduler.addNowSkipSetup(/datum/controller/process/ticker)
+	tgui_process.setup()
+	ticker_process.setup()
 
 	Z_LOG_DEBUG("World/Init", "Building area sims scores...")
 	if (global_sims_mode)
@@ -593,6 +596,7 @@ var/f_color_selector_handler/F_Color_Selector
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
 	build_camera_network()
+	build_manufacturer_icons()
 	clothingbooth_setup()
 #if ASS_JAM
 	ass_jam_init()
@@ -616,6 +620,10 @@ var/f_color_selector_handler/F_Color_Selector
 	aiDirty = 2
 	world.updateCameraVisibility()
 
+	UPDATE_TITLE_STATUS("Preloading client data...")
+	Z_LOG_DEBUG("World/Init", "Transferring manuf. icons to clients...")
+	sendItemIconsToAll()
+
 	UPDATE_TITLE_STATUS("Starting processes")
 	Z_LOG_DEBUG("World/Init", "Setting up process scheduler...")
 	processScheduler.setup()
@@ -623,6 +631,9 @@ var/f_color_selector_handler/F_Color_Selector
 	UPDATE_TITLE_STATUS("Reticulating splines")
 	Z_LOG_DEBUG("World/Init", "Initializing worldgen...")
 	initialize_worldgen()
+
+	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
+	map_settings.init()
 
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
@@ -642,7 +653,6 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Init() complete")
 	TgsInitializationComplete()
 	//sleep_offline = 1
-
 
 	// Biodome elevator accident stats
 	bioele_load_stats()

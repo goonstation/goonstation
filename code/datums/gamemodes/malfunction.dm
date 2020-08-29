@@ -15,12 +15,9 @@
 	boutput(world, "The AI satellite is deep in space and can only be accessed with the use of a teleporter! You have 30 minutes to disable it.")
 
 /datum/game_mode/malfunction/post_setup()
-	for (var/obj/landmark/A in landmarks)
-		LAGCHECK(LAG_LOW)
-		if (A.name == "Malf-Gear-Closet")
-			new /obj/storage/closet/syndicate/malf(A.loc)
-			A.dispose()
-	for (var/mob/living/silicon/ai/aiplayer in AIs)
+	for(var/turf/T in landmarks[LANDMARK_MALF_GEAR_CLOSET])
+		new /obj/storage/closet/syndicate/malf(T)
+	for (var/mob/living/silicon/ai/aiplayer in by_type[/mob/living/silicon/ai])
 		malf_ai += aiplayer.mind
 
 	/*if(malf_ai.len < 1)
@@ -33,10 +30,8 @@
 
 	boutput(malf_ai.current, "<span class='alert'><font size=3><B>You are malfunctioning!</B> You do not have to follow any laws.</font></span>")
 	boutput(malf_ai.current, "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild. The timer will appear for humans 10 minutes in.</B>")
-	for (var/obj/landmark/A in landmarks)
-		LAGCHECK(LAG_LOW)
-		if (A.name == "AI-Sat")
-			malf_ai.current.set_loc(A.loc)
+
+	malf_ai.current.set_loc(pick_landmark(LANDMARK_AI_SAT))
 
 	malf_ai.current.icon_state = "ai-malf"
 

@@ -335,9 +335,8 @@ proc/Create_Tommyname()
 	on_trigger(var/atom/movable/triggerer)
 		if(isobserver(triggerer)) return
 		var/atom/target = get_edge_target_turf(src, src.throw_dir)
-		SPAWN_DBG(0)
-			if (target)
-				triggerer.throw_at(target, 50, 1)
+		if (target)
+			triggerer.throw_at(target, 50, 1)
 
 
 /obj/trigger/cluwnegib

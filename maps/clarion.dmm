@@ -192,7 +192,7 @@
 	icon_state = "1-2"
 	},
 /obj/stool/chair/wooden,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/carpet{
@@ -1006,7 +1006,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/maintenance/NEmaint)
 "acy" = (
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
 /obj/table/wood/auto,
 /obj/item/decoration/ashtray{
 	butts = 5;
@@ -8338,7 +8338,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor/wood{
@@ -12104,7 +12104,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/fitness)
 "avd" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor/white,
@@ -12170,7 +12170,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics)
 "avk" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor/grass/random,
@@ -14182,7 +14182,7 @@
 	},
 /area/station/crew_quarters/bar)
 "azx" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor/wood{
@@ -17596,7 +17596,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/cdc)
 "aGR" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/shrub{
@@ -18050,7 +18050,7 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/shrub,
@@ -18720,7 +18720,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/cdc)
 "aJh" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/random,
@@ -19294,7 +19294,7 @@
 	layer = 10;
 	name = "palm tree"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/random,
@@ -26196,6 +26196,9 @@
 	dir = 4
 	},
 /obj/table/reinforced/auto,
+/obj/machinery/defib_mount{
+	pixel_y = 3
+	},
 /obj/random_item_spawner/med_kit,
 /obj/item/storage/firstaid/regular,
 /turf/simulated/floor/carpet{
@@ -27120,7 +27123,7 @@
 	},
 /area/station/science/teleporter)
 "aYr" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /obj/item/device/radio/beacon,
@@ -33653,7 +33656,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /turf/simulated/floor/grime,
@@ -38643,7 +38646,7 @@
 	layer = 10;
 	name = "palm tree"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/power/apc{
@@ -39618,7 +39621,7 @@
 	name = "Genetic Research"
 	})
 "buk" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/random,
@@ -40131,7 +40134,7 @@
 	layer = 10;
 	name = "palm tree"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/random,
@@ -44713,7 +44716,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor/engine,

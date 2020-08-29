@@ -4623,6 +4623,9 @@
 /area/station/bridge/captain)
 "mt" = (
 /obj/table/auto,
+/obj/machinery/defib_mount{
+	pixel_y = 2
+	},
 /obj/item/kitchen/food_box/donut_box{
 	desc = "How are these not stale?";
 	name = "Robust Donuts"

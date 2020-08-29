@@ -158,6 +158,7 @@
 	name = "standard cyborg head"
 	desc = "A serviceable head unit for a potential cyborg."
 	icon_state_base = "head"
+	icon_state = "head-generic"
 	slot = "head"
 	max_health = 175
 	var/obj/item/organ/brain/brain = null
@@ -293,6 +294,7 @@
 	name = "sturdy cyborg head"
 	desc = "A reinforced head unit capable of taking more abuse than usual."
 	appearanceString = "sturdy"
+	icon_state = "head-sturdy"
 	max_health = 225
 	weight = 0.2
 
@@ -346,6 +348,7 @@
 	name = "heavy cyborg head"
 	desc = "A heavily reinforced head unit intended for use on cyborgs that perform tough and dangerous work."
 	appearanceString = "heavy"
+	icon_state = "head-heavy"
 	max_health = 350
 	weight = 0.4
 
@@ -374,6 +377,7 @@
 	name = "light cyborg head"
 	desc = "A cyborg head with little reinforcement, to be built in times of scarce resources."
 	appearanceString = "light"
+	icon_state = "head-light"
 	max_health = 50
 	robot_movement_modifier = /datum/movement_modifier/robot_part/head
 
@@ -381,6 +385,7 @@
 	name = "antique cyborg head"
 	desc = "Looks like a discarded prop from some sorta low-budget scifi movie."
 	appearanceString = "android"
+	icon_state = "head-android"
 	max_health = 150
 	visible_eyes = 0
 	robot_movement_modifier = /datum/movement_modifier/robot_part/head
@@ -389,6 +394,7 @@
 	name = "standard cyborg chest"
 	desc = "The centerpiece of any cyborg. It wouldn't get very far without it."
 	icon_state_base = "body"
+	icon_state = "body-generic"
 	slot = "chest"
 	max_health = 250
 	var/wires = 0
@@ -460,6 +466,7 @@
 	name = "light cyborg chest"
 	desc = "A bare-bones cyborg chest designed for the least consumption of resources."
 	appearanceString = "light"
+	icon_state = "body-light"
 	max_health = 75
 
 /obj/item/parts/robot_parts/arm
@@ -533,6 +540,7 @@
 	name = "standard cyborg left arm"
 	slot = "l_arm"
 	icon_state_base = "l_arm"
+	icon_state = "l_arm-generic"
 	handlistPart = "armL-generic"
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -556,6 +564,7 @@
 /obj/item/parts/robot_parts/arm/left/sturdy
 	name = "sturdy cyborg left arm"
 	appearanceString = "sturdy"
+	icon_state = "l_arm-sturdy"
 	max_health = 100
 	weight = 0.2
 
@@ -583,12 +592,14 @@
 /obj/item/parts/robot_parts/arm/left/heavy
 	name = "heavy cyborg left arm"
 	appearanceString = "heavy"
+	icon_state = "l_arm-heavy"
 	max_health = 175
 	weight = 0.4
 
 /obj/item/parts/robot_parts/arm/left/light
 	name = "light cyborg left arm"
 	appearanceString = "light"
+	icon_state = "l_arm-light"
 	max_health = 25
 	handlistPart = "armL-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_left
@@ -598,6 +609,7 @@
 	icon_state = "r_arm"
 	slot = "r_arm"
 	icon_state_base = "r_arm"
+	icon_state = "r_arm-generic"
 	handlistPart = "armR-generic"
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -621,6 +633,7 @@
 /obj/item/parts/robot_parts/arm/right/sturdy
 	name = "sturdy cyborg right arm"
 	appearanceString = "sturdy"
+	icon_state = "r_arm-sturdy"
 	max_health = 100
 	weight = 0.2
 
@@ -648,12 +661,14 @@
 /obj/item/parts/robot_parts/arm/right/heavy
 	name = "heavy cyborg right arm"
 	appearanceString = "heavy"
+	icon_state = "r_arm-heavy"
 	max_health = 175
 	weight = 0.4
 
 /obj/item/parts/robot_parts/arm/right/light
 	name = "light cyborg right arm"
 	appearanceString = "light"
+	icon_state = "r_arm-light"
 	max_health = 25
 	handlistPart = "armR-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_right
@@ -753,12 +768,14 @@
 	name = "standard cyborg left leg"
 	slot = "l_leg"
 	icon_state_base = "l_leg"
+	icon_state = "l_leg-generic"
 	step_image_state = "footprintsL"
 	movement_modifier = /datum/movement_modifier/robotleg_left
 
 /obj/item/parts/robot_parts/leg/left/light
 	name = "light cyborg left leg"
 	appearanceString = "light"
+	icon_state = "l_leg-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_left
 
@@ -767,6 +784,7 @@
 	name = "left cyborg tread"
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
+	icon_state = "l_leg-treads"
 	max_health = 100
 	powerdrain = 2.5
 	step_image_state = "tracksL"
@@ -777,12 +795,14 @@
 	name = "standard cyborg right leg"
 	slot = "r_leg"
 	icon_state_base = "r_leg"
+	icon_state = "r_leg-generic"
 	step_image_state = "footprintsR"
 	movement_modifier = /datum/movement_modifier/robotleg_right
 
 /obj/item/parts/robot_parts/leg/right/light
 	name = "light cyborg right leg"
 	appearanceString = "light"
+	icon_state = "r_leg-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_right
 
@@ -790,6 +810,7 @@
 	name = "right cyborg tread"
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
+	icon_state = "r_leg-treads"
 	max_health = 100
 	powerdrain = 2.5
 	step_image_state = "tracksR"
@@ -801,6 +822,7 @@
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	slot = "leg_both"
 	appearanceString = "treads"
+	icon_state = "legs-treads"
 	max_health = 100
 	powerdrain = 5
 	step_image_state = "tracks-w"
@@ -813,6 +835,7 @@
 	desc = "Nobody said this is safe."
 	slot = "leg_both"
 	appearanceString = "thruster"
+	icon_state = "legs-thruster"
 	max_health = 100
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.
@@ -822,6 +845,7 @@
 	name = "left thruster assembly"
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
 	appearanceString = "thruster"
+	icon_state = "l_leg-thruster"
 	max_health = 100
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.
@@ -832,6 +856,7 @@
 	name = "right thruster assembly"
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
 	appearanceString = "thruster"
+	icon_state = "r_leg-thruster"
 	max_health = 100
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.
@@ -1104,7 +1129,7 @@
 		else if (O.ai_interface)
 			if (!(O in available_ai_shells))
 				available_ai_shells += O
-			for (var/mob/living/silicon/ai/AI in AIs)
+			for (var/mob/living/silicon/ai/AI in by_type[/mob/living/silicon/ai])
 				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
 			O.shell = 1
 		else if (istype(O.brain, /obj/item/organ/brain/latejoin))
@@ -1264,6 +1289,7 @@
 	handlistPart = "hand_left_reli"
 	var/name_thing = "reli"
 	appearanceString = "reli"
+	icon_state = "l_arm-reli"
 	streak_decal = /obj/decal/cleanable/reliquaryblood
 	streak_descriptor = "blood"
 
@@ -1286,6 +1312,7 @@
 	handlistPart = "hand_right_reli"
 	var/name_thing = "reli"
 	appearanceString = "reli"
+	icon_state = "r_arm-reli"
 	streak_decal = /obj/decal/cleanable/reliquaryblood
 	streak_descriptor = "blood"
 
@@ -1308,6 +1335,7 @@
 	handlistPart = "foot_left_reli"
 	var/name_thing = "reli"
 	appearanceString = "reli"
+	icon_state = "l_leg-reli"
 	streak_decal = /obj/decal/cleanable/reliquaryblood
 	streak_descriptor = "blood"
 
@@ -1330,6 +1358,7 @@
 	handlistPart = "foot_right_reli"
 	var/name_thing = "reli"
 	appearanceString = "reli"
+	icon_state = "r-leg-reli"
 	streak_decal = /obj/decal/cleanable/reliquaryblood
 	streak_descriptor = "blood"
 

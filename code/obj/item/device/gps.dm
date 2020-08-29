@@ -1,5 +1,3 @@
-var/global/list/all_GPSs = list()
-
 /obj/item/device/gps
 	name = "space GPS"
 	desc = "Tells you your coordinates based on the nearest coordinate beacon."
@@ -102,7 +100,7 @@ var/global/list/all_GPSs = list()
 		HTML += "<hr>"
 
 		HTML += "<div class='gps group'><b>GPS Units</b></div>"
-		for (var/obj/item/device/gps/G in all_GPSs)//world)
+		for (var/obj/item/device/gps/G in by_type[/obj/item/device/gps])
 			LAGCHECK(LAG_LOW)
 			if (G.allowtrack == 1)
 				var/turf/T = get_turf(G.loc)
@@ -113,7 +111,7 @@ var/global/list/all_GPSs = list()
 				HTML += "<br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"
 
 		HTML += "<div class='gps group'><b>Tracking Implants</b></div>"
-		for (var/obj/item/implant/tracking/imp in tracking_implants)//world)
+		for (var/obj/item/implant/tracking/imp in by_type[/obj/item/implant/tracking])
 			LAGCHECK(LAG_LOW)
 			if (isliving(imp.loc))
 				var/turf/T = get_turf(imp.loc)
@@ -204,9 +202,7 @@ var/global/list/all_GPSs = list()
 		..()
 		serial = rand(4201,7999)
 		desc += " Its serial code is [src.serial]-[identifier]."
-		if (!islist(all_GPSs))
-			all_GPSs = list()
-		all_GPSs.Add(src)
+		START_TRACKING
 		if (radio_controller)
 			src.net_id = generate_net_id(src)
 			radio_control = radio_controller.add_object(src, "[frequency]")
@@ -271,13 +267,7 @@ var/global/list/all_GPSs = list()
 		SPAWN_DBG(0.5 SECONDS) .()
 
 	disposing()
-		..()
-		if (islist(all_GPSs))
-			all_GPSs.Remove(src)
-
-	disposing()
-		if (islist(all_GPSs))
-			all_GPSs.Remove(src)
+		STOP_TRACKING
 		if (radio_controller)
 			radio_controller.remove_object(src, "[src.frequency]")
 		..()

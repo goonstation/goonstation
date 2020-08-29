@@ -44,8 +44,7 @@
 					M.changeStatus("stunned", 2 SECONDS)
 					M.emote("scream")
 					if (throws)
-						SPAWN_DBG(0)
-							M.throw_at(original_target, 20, 2)
+						M.throw_at(original_target, 20, 2)
 		return 0
 
 

@@ -696,7 +696,7 @@
 	//src.icon_state = "dead"
 
 	if (!src.suiciding)
-		if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
+		if (emergency_shuttle?.location == SHUTTLE_LOC_STATION)
 			src.unlock_medal("HUMANOID MUST NOT ESCAPE", 1)
 
 		if (src.hasStatus("handcuffed"))
@@ -759,7 +759,7 @@
 		if(istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport))
 			reappear_turf = get_turf(src)
 		else
-			reappear_turf = pick(wizardstart)
+			reappear_turf = pick(job_start_locations["wizard"])
 
 	////////////////Set up the new body./////////////////
 
@@ -977,13 +977,13 @@
 		attack_twitch(src)
 		I.layer = initial(I.layer)
 		var/yeet = 0 // what the fuck am I doing
-
-		if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
-			yeet_chance = 1
-		if(src.mind.karma < 0) //you come and go, you come and go.
-			yeet_chance = 0
-		if(src.mind.karma < 50 && src.mind.karma >= 0)
-			yeet_chance = 0.1
+		if(src.mind)
+			if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
+				yeet_chance = 1
+			if(src.mind.karma < 0) //you come and go, you come and go.
+				yeet_chance = 0
+			if(src.mind.karma < 50 && src.mind.karma >= 0)
+				yeet_chance = 0.1
 
 		if(prob(yeet_chance))
 			src.visible_message("<span class='alert'>[src] yeets [I].</span>")
@@ -1008,16 +1008,16 @@
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 40, 1, 0.1)
 
-		SPAWN_DBG(I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from))
-			if(yeet)
-				new/obj/effect/supplyexplosion(I.loc)
+		I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from)
+		if(yeet)
+			new/obj/effect/supplyexplosion(I.loc)
 #if ASS_JAM
-				explosion_new(I,get_turf(I),20,1)
+			explosion_new(I,get_turf(I),20,1)
 #else
-				playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+			playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 #endif
-				for(var/mob/M in view(7, I.loc))
-					shake_camera(M, 20, 1)
+			for(var/mob/M in view(7, I.loc))
+				shake_camera(M, 20, 1)
 
 		if (mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in grabbed_by)
@@ -2289,7 +2289,7 @@
 	..()
 
 	if (src.bioHolder)
-		bioHolder.RemoveAllEffects(effectTypeDisability)
+		bioHolder.RemoveAllEffects(EFFECT_TYPE_DISABILITY)
 
 	if (src.sims)
 		for (var/name in sims.motives)
@@ -3237,3 +3237,56 @@
 /mob/living/carbon/human/proc/check_for_intent_trigger()
 	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER))
 		src.equipped().intent_switch_trigger(src)
+
+/mob/living/carbon/human/hitby(atom/movable/AM)
+	. = ..()
+
+	if(isobj(AM) && src.juggling())
+		if (prob(40))
+			src.visible_message("<span class='alert'><b>[src]<b> gets hit in the face by [AM]!</span>")
+			src.TakeDamageAccountArmor("head", AM.throwforce, 0)
+		else
+			if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
+				src.drop_juggle()
+			else
+				src.add_juggle(AM)
+		return
+
+	if(((src.in_throw_mode && src.a_intent == "help") || src.client?.check_key(KEY_THROW)) && !src.equipped())
+		if((src.hand && (!src.limbs.l_arm)) || (!src.hand && (!src.limbs.r_arm)) || src.hasStatus("handcuffed") || (prob(60) && src.bioHolder.HasEffect("clumsy")) || ismob(AM) || (throw_traveled <= 1 && last_throw_x == AM.x && last_throw_y == AM.y))
+			src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
+			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+			random_brute_damage(src, AM.throwforce,1)
+
+			#ifdef DATALOGGER
+			game_stats.Increment("violence")
+			#endif
+
+			if(AM.throwforce >= 40)
+				src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
+				src.changeStatus("stunned", 3 SECONDS)
+
+		else
+			AM.attack_hand(src)	// nice catch, hayes. don't ever fuckin do it again
+			src.visible_message("<span class='alert'>[src] catches the [AM.name]!</span>")
+			logTheThing("combat", src, null, "catches [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+			src.throw_mode_off()
+			#ifdef DATALOGGER
+			game_stats.Increment("catches")
+			#endif
+
+	else  //normmal thingy hit me
+		if (AM.throwing & THROW_CHAIRFLIP)
+			src.visible_message("<span class='alert'>[AM] slams into [src] midair!</span>")
+		else
+			src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
+			random_brute_damage(src, AM.throwforce,1)
+			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+
+		#ifdef DATALOGGER
+		game_stats.Increment("violence")
+		#endif
+
+		if(AM.throwforce >= 40)
+			src.throw_at(get_edge_target_turf(src, get_dir(AM, src)), 10, 1)
+			src.changeStatus("stunned", 3 SECONDS)

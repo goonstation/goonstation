@@ -640,7 +640,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/observatory)
 "abF" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/black,
@@ -11498,7 +11498,7 @@
 /area/station/crew_quarters/cafeteria)
 "azu" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -11780,7 +11780,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics)
 "azX" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor,
@@ -15389,8 +15389,6 @@
 /area/station/security/main)
 "aHn" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "aHo" = (
@@ -18723,7 +18721,7 @@
 	},
 /area/station/crew_quarters/pool)
 "aNW" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/poolwater,
@@ -35580,7 +35578,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor{
@@ -36406,7 +36404,7 @@
 	icon_state = "on";
 	on = 1
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor/engine/vacuum,
@@ -45342,7 +45340,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "bOf" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor,
@@ -53597,7 +53595,7 @@
 	name = "Supply Lobby"
 	})
 "cec" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor,
@@ -60854,7 +60852,7 @@
 /turf/simulated/floor/white,
 /area/station/chemistry)
 "csD" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/purplewhite/corner{
@@ -64556,7 +64554,7 @@
 	},
 /area/station/medical/research)
 "czO" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass{
@@ -64888,7 +64886,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "cAw" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/light,

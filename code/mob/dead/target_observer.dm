@@ -34,7 +34,6 @@ var/list/observers = list()
 			my_ghost.set_loc(get_turf(src))
 		my_ghost = null
 		target = null
-		src.loc = null
 
 
 		for (var/datum/hud/H in huds)
@@ -59,7 +58,6 @@ var/list/observers = list()
 			my_ghost.set_loc(get_turf(src))
 		my_ghost = null
 		target = null
-		src.loc = null
 
 		..()
 
@@ -118,7 +116,7 @@ var/list/observers = list()
 			return
 		//Let's have a proc so as to make it easier to reassign an observer.
 		src.target = target
-		loc = target
+		src.set_loc(target)
 
 		set_eye(target)
 
@@ -162,7 +160,7 @@ var/list/observers = list()
 			if (src.mind)
 				mind.transfer_to(my_ghost)
 
-			var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (target)
 				var/turf/T = get_turf(target)
 				if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && (restricted_z_allowed(my_ghost, T) || (my_ghost.client && my_ghost.client.holder)))))

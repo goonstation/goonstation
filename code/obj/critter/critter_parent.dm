@@ -758,7 +758,7 @@
 						if (food_target.reagents && food_target.reagents.total_volume > 0 && src.reagents.total_volume < 30)
 							food_target.reagents.trans_to(src, 5)
 					if (src.food_target != null && src.food_target.amount <= 0)
-						src.food_target.loc = null
+						src.food_target.set_loc(null)
 						SPAWN_DBG(1 SECOND)
 							qdel(src.food_target)
 						src.task = "thinking"
@@ -833,7 +833,7 @@
 							src.attacking = 0
 						else
 							if(M!=null)
-								if (M.health < 0)
+								if (M.health <= 0 || !isalive(M))
 									src.task = "thinking"
 									src.target = null
 									src.anchored = initial(src.anchored)
@@ -1170,7 +1170,7 @@
 
 				if (shouldThrow && T)
 					newCritter.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
-				
+
 				//hack. Clownspider queens keep track of their babies.
 				if (istype(src.parent, /mob/living/critter/spider/clownqueen))
 					var/mob/living/critter/spider/clownqueen/queen = src.parent

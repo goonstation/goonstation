@@ -1,3 +1,10 @@
+(t)sun aug 23 20
+(u)Zamujasa
+(*)Round start has a few more details in the countdown.
+(*)Round start countdown begins IMMEDIATELY rather than waiting.
+(*)Round start will hold at 30 seconds if the game isn't done being set up yet.
+(*)Messing with the game panel and the like still needs to wait until "Ready" in the list.
+(*)tgui interfaces like the dj panel should work immediately but probably won't auto-update
 (t)mon aug 17 20
 (u)pali
 (*)Proc calling is now available to Administrator rank.

@@ -643,7 +643,7 @@
 /area/station/bridge)
 "abf" = (
 /obj/item/device/radio/intercom/AI{
-	
+
 	},
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
@@ -696,7 +696,7 @@
 /area/station/hallway/starboardupperhallway)
 "abo" = (
 /obj/item/device/radio/intercom/brig{
-	
+
 	},
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
@@ -729,19 +729,19 @@
 /area/station/security/porttorpedoes)
 "abt" = (
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "abu" = (
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "abv" = (
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
@@ -1652,7 +1652,7 @@
 	icon_state = "gangtag22";
 	pixel_x = 28
 	},
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
 /obj/machinery/light/incandescent/small{
 	icon_state = "bulb1";
 	dir = 4
@@ -1811,7 +1811,7 @@
 /obj/stool/chair/wooden{
 	dir = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "shitty_bill"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -1968,7 +1968,7 @@
 /area/diner/kitchen)
 "aez" = (
 /obj/stool/chair/wooden,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "don_glab"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -2017,7 +2017,7 @@
 /area/diner/kitchen)
 "aeH" = (
 /obj/stool/bar,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "father_jack"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -3207,7 +3207,7 @@
 	icon_state = "chair-b"
 	},
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -4421,7 +4421,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "alv" = (
 /obj/item/device/radio/intercom/catering{
-	
+
 	},
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
@@ -6571,7 +6571,7 @@
 /area/station/medical/medbay/lobby)
 "apN" = (
 /obj/item/device/radio/intercom/security{
-	
+
 	},
 /turf/simulated/floor/damaged1,
 /area/station/bridge)
@@ -7023,7 +7023,7 @@
 /area/station/science/artifact)
 "aqB" = (
 /obj/item/device/radio/intercom/cargo{
-	
+
 	},
 /turf/simulated/floor/damaged4,
 /area/station/bridge)
@@ -7390,7 +7390,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/item/paper/book/medical_guide,
 /obj/access_spawn/research,
@@ -8930,7 +8930,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/shieldgenerator/energy_shield,
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
-	
+
 	},
 /turf/simulated/floor/bot,
 /area/station/engine/storage)
@@ -9409,7 +9409,7 @@
 "awi" = (
 /obj/machinery/fluid_canister,
 /obj/item/device/radio/intercom/loudspeaker/speaker/north{
-	
+
 	},
 /turf/simulated/floor/bot,
 /area/station/engine/storage)
@@ -10607,7 +10607,7 @@
 /area/station/engine/engineering/breakroom)
 "ayF" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/north{
-	
+
 	},
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/machinery/camera{
@@ -11325,7 +11325,7 @@
 /area/station/crew_quarters/quarters)
 "aAb" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
-	
+
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -11771,7 +11771,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom/loudspeaker/speaker/north{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
@@ -12124,7 +12124,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
@@ -12301,7 +12301,7 @@
 /area/station/turret_protected/ai_upload_foyer)
 "aBY" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/north{
-	
+
 	},
 /obj/machinery/guardbot_dock,
 /obj/cable{
@@ -18982,7 +18982,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /turf/simulated/floor/damaged2,
@@ -20171,7 +20171,7 @@
 	d2 = 4
 	},
 /obj/item/device/radio/intercom/security{
-	
+
 	},
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
@@ -22489,7 +22489,6 @@
 	pixel_y = 26;
 	text = "NF"
 	},
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -23541,7 +23540,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/research)
 "aYL" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/cable{
@@ -26743,7 +26742,7 @@
 /obj/table/wood/auto,
 /obj/item/storage/bible,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "purple1"
@@ -27616,7 +27615,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "bgR" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/cable{
@@ -30090,7 +30089,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "blN" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/scorched2,
@@ -30104,7 +30103,7 @@
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "blP" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/shrub,
@@ -41263,7 +41262,7 @@
 	nostick = 1
 	},
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -42010,7 +42009,7 @@
 "bKV" = (
 /obj/landmark/artifact,
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -46502,7 +46501,7 @@
 /area/station/engine/engineering/breakroom)
 "bVm" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
-	
+
 	},
 /turf/simulated/floor/damaged5,
 /area/station/engine/storage)
@@ -46540,7 +46539,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
-	
+
 	},
 /turf/simulated/floor/damaged5,
 /area/station/engine/inner)
@@ -46627,7 +46626,7 @@
 /area/station/engine/inner)
 "bVB" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
-	
+
 	},
 /turf/simulated/floor/damaged2,
 /area/station/engine/monitoring)

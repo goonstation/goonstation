@@ -35,11 +35,12 @@
 		// ensuring that its location is actually the center of the damn thing
 		// this keeps it from needing to move mobs one over,
 		// and stops the "decompression" from coming out the left side
-		rp_latejoin += src
+		START_TRACKING
 		processing_items += src
 		x += 1
 
 	disposing()
+		STOP_TRACKING
 		var/turf/T = get_turf(src)
 		for (var/mob/M in src)
 			M.set_loc(T)

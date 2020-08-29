@@ -144,15 +144,15 @@
 
 		if (candidates.len)
 			var/list/EV = list()
-			for(var/obj/landmark/S in landmarks)
-				if (S.name == "peststart")
-					EV.Add(S.loc)
-				LAGCHECK(LAG_HIGH)
 
-			EV += (clownstart + monkeystart + blobstart + kudzustart)
+			EV += landmarks[LANDMARK_PESTSTART]
+			EV += landmarks[LANDMARK_MONKEY]
+			EV += landmarks[LANDMARK_BLOBSTART]
+			EV += landmarks[LANDMARK_KUDZUSTART]
+			EV += job_start_locations["Clown"]
 
 			if(!EV.len)
-				EV += latejoin
+				EV += landmarks[LANDMARK_LATEJOIN]
 				if (!EV.len)
 					message_admins("Pests event couldn't find a pest landmark!")
 					cleanup_event()

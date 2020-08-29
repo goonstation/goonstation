@@ -354,6 +354,17 @@ var/list/statusGroupLimits = list("Food"=4)
 		src.owner = null
 		..()
 
+	defibbed
+		id = "defibbed"
+		name = "Defibrillated"
+		desc = "You've been zapped in a way your heart seems to like."
+		icon_state = "heart+"
+		unique = 1
+		maxDuration = 12 SECONDS // Just slightly longer than a defib's charge cycle
+
+		getTooltip()
+			return "You've been zapped in a way your heart seems to like!<br>You feel more resistant to cardiac arrest, and more likely for subsequent defibrillating shocks to restart your heart if it stops!"
+
 	maxhealth
 		id = "maxhealth"
 		name = ""

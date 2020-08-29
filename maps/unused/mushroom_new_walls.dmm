@@ -543,8 +543,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
@@ -1849,7 +1848,7 @@
 	},
 /area/station/hangar/main)
 "afo" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /obj/machinery/light{
@@ -2647,8 +2646,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /turf/simulated/floor,
 /area/station/storage/autolathe)
@@ -3100,8 +3098,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /turf/simulated/floor/escape{
 	dir = 1
@@ -4211,8 +4208,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/office)
@@ -6445,8 +6441,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -8819,8 +8814,7 @@
 /obj/item/parts/robot_parts/arm/right,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
@@ -9275,8 +9269,7 @@
 "aya" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
@@ -10291,8 +10284,7 @@
 /obj/machinery/computer/cloning,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -13627,8 +13619,7 @@
 "aJT" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
@@ -14056,8 +14047,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -14072,8 +14062,7 @@
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture";
-	pixel_y = 21;
-	rigged = 0
+	pixel_y = 21
 	},
 /turf/simulated/floor{
 	icon_state = "0,6";
@@ -14200,8 +14189,7 @@
 /obj/item/clothing/gloves/yellow,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -14311,8 +14299,7 @@
 /obj/machinery/guardbot_dock,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -14616,8 +14603,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/purple/corner{
 	dir = 1
@@ -15386,8 +15372,7 @@
 /obj/item/assembly/time_ignite,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -16382,7 +16367,7 @@
 /area/station/crew_quarters/cafeteria)
 "aRC" = (
 /obj/table/reinforced/bar/auto,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor{
@@ -23152,9 +23137,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "bkk" = (
-/obj/landmark{
-	name = "Loot spawn"
-	},
+/obj/landmark/spawner/loot,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -23396,8 +23379,7 @@
 "bli" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/caution/west,
 /area/listeningpost/power)
@@ -24293,7 +24275,7 @@
 	},
 /area/station/security/brig)
 "bnK" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /obj/cable{
@@ -24305,7 +24287,7 @@
 	},
 /area/station/crew_quarters/pool)
 "bnL" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/light,
@@ -24680,7 +24662,7 @@
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "boX" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass,
@@ -24722,7 +24704,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/research)
 "bpd" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /obj/cable{
@@ -24733,7 +24715,7 @@
 	},
 /area/station/engine/inner)
 "bpe" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor/black,
@@ -25965,7 +25947,7 @@
 	},
 /area/station/turret_protected/Zeta)
 "bsF" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor/wood/two,
@@ -25988,13 +25970,13 @@
 	},
 /area/station/mining/magnet)
 "bsH" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
 "bsI" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /obj/cable,
@@ -26099,13 +26081,13 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters)
 "bsS" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor,
 /area/station/hydroponics)
 "bsT" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor/engine,
@@ -27844,7 +27826,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "gWu" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/cable{

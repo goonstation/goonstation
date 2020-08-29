@@ -30,10 +30,10 @@
 
 		if (H && H.ears && istype (H.ears,/obj/item/device/radio/headset))
 			var/obj/item/device/radio/headset/headset = H.ears
-			if (headset.bicon_override && findtext(mimic_message,";") || findtext(mimic_message,":"))
+			if (headset.icon_override && findtext(mimic_message,";") || findtext(mimic_message,":"))
 				var/radio_override = input("Select a radio frequency to disguise as...", "Mimic Radio Message.", null, null) as null|anything in list("head","sec","eng","sci","med","qm","civ","cap","rd","md","ce","hop","hos","clown")
 				if (radio_override)
-					headset.bicon_override = radio_override
+					headset.icon_override = radio_override
 
 		logTheThing("say", holder.owner, mimic_name, "[mimic_message] (<b>Mimicing ([constructTarget(mimic_name,"say")])</b>)")
 		var/original_name = holder.owner.real_name
@@ -43,7 +43,7 @@
 
 		if (H && H.ears && istype (H.ears,/obj/item/device/radio/headset))
 			var/obj/item/device/radio/headset/headset = H.ears
-			if (headset.bicon_override)
-				headset.bicon_override = initial(headset.bicon_override)
+			if (headset.icon_override)
+				headset.icon_override = initial(headset.icon_override)
 
 		return 0

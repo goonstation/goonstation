@@ -702,9 +702,6 @@
 /atom/proc/attack_ai(mob/user as mob)
 	return
 
-/atom/proc/hitby(atom/movable/AM as mob|obj)
-	return
-
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
 /atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
 	if (user && W && !(W.flags & SUPPRESSATTACK))  //!( istype(W, /obj/item/grab)  || istype(W, /obj/item/spraybottle) || istype(W, /obj/item/card/emag)))
@@ -873,6 +870,7 @@
 	* ignore them they'll be fixed later, please use this proc in the future
   */
 /atom/movable/proc/set_loc(var/newloc as turf|mob|obj in world)
+	SHOULD_CALL_PARENT(TRUE)
 	if (loc == newloc)
 		return src
 
