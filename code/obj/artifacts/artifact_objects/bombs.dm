@@ -183,8 +183,11 @@
 		if (potential_reagents.len > 0)
 			var/looper = rand(2,8)
 			while (looper > 0)
+				var/reagent = pick(potential_reagents)
+				if(payload_type == 3 && ban_from_fluid.Find(reagent)) // do not pick stuff that is banned from fluid dump
+					continue
 				looper--
-				payload_reagents += pick(potential_reagents)
+				payload_reagents += reagent
 
 		recharge_delay = rand(200,800)
 
@@ -196,22 +199,6 @@
 
 		for (var/X in payload_reagents)
 			reaction_reagents += X
-
-		/*
-		switch (payload_type)
-			if(0)
-				reaction_reagents += "fluorosurfactant"
-				reaction_reagents += "water"
-			if(1)
-				reaction_reagents += "potassium"
-				reaction_reagents += "sugar"
-				reaction_reagents += "phosphorus"
-			if(2)
-				reaction_reagents += "chlorine"
-				reaction_reagents += "sugar"
-				reaction_reagents += "hydrogen"
-				reaction_reagents += "platinum"
-		*/
 
 		var/amountper = 0
 		if (reaction_reagents.len > 0)
@@ -229,9 +216,9 @@
 				s.set_up(O.reagents.total_volume, location, O.reagents, 0)
 				s.start()
 			if(1)
-				smoke_reaction(O.reagents, 10, get_turf(O))
+				O.reagents.smoke_start(10)
 			if(2)
-
+				O.reagents.smoke_start(10,1)
 			if(3)
 				location.fluid_react(O.reagents, O.reagents.total_volume)
 
