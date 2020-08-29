@@ -35,7 +35,7 @@ datum/controller/process/items
 	doWork()
 		var/c
 		for(var/i in global.processing_items)
-			if (!i || i.pooled || i.qdeled) //if the object was pooled or qdeled we have to remove it from this list... otherwise the lagchecks cause this loop to hold refs and block GC!!!
+			if (!i || i:pooled || i:qdeled) //if the object was pooled or qdeled we have to remove it from this list... otherwise the lagchecks cause this loop to hold refs and block GC!!!
 				global.processing_items -= i
 			i:process()
 			if (!(c++ % 20))
