@@ -976,7 +976,6 @@
 	icon_state = "comp_zap"
 	cooldown_time = 1 SECOND
 	var/zap_power = 2
-	var/zap_radius = 0
 
 	New()
 		..()
