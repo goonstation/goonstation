@@ -152,12 +152,12 @@
 	react_xray = list(5,65,20,11,"HOLLOW")
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/heat,/datum/artifact_trigger/carbon_touch)
-	var/payload_type = 0 // 0 for smoke, 1 for foam
+	var/payload_type = 0 // 0 for smoke, 1 for foam, 2 for propellant, 3 for just dumping fluids
 	var/recharge_delay = 600
 	var/list/payload_reagents = list()
 
 	post_setup()
-		payload_type = rand(0,1)
+		payload_type = rand(0,3)
 		var/list/potential_reagents = list()
 		switch(artitype.name)
 			if ("ancient")
@@ -197,13 +197,21 @@
 		for (var/X in payload_reagents)
 			reaction_reagents += X
 
-		if (payload_type)
-			reaction_reagents += "fluorosurfactant"
-			reaction_reagents += "water"
-		else
-			reaction_reagents += "potassium"
-			reaction_reagents += "sugar"
-			reaction_reagents += "phosphorus"
+		/*
+		switch (payload_type)
+			if(0)
+				reaction_reagents += "fluorosurfactant"
+				reaction_reagents += "water"
+			if(1)
+				reaction_reagents += "potassium"
+				reaction_reagents += "sugar"
+				reaction_reagents += "phosphorus"
+			if(2)
+				reaction_reagents += "chlorine"
+				reaction_reagents += "sugar"
+				reaction_reagents += "hydrogen"
+				reaction_reagents += "platinum"
+		*/
 
 		var/amountper = 0
 		if (reaction_reagents.len > 0)
@@ -214,13 +222,18 @@
 		for (var/X in reaction_reagents)
 			O.reagents.add_reagent(X,amountper)
 
-		if (payload_type)
-			var/turf/location = get_turf(O)
-			var/datum/effects/system/foam_spread/s = new()
-			s.set_up(O.reagents.total_volume, location, O.reagents, 0)
-			s.start()
-		else
-			smoke_reaction(O.reagents, 4, get_turf(O))
+		var/turf/location = get_turf(O)
+		switch(payload_type)
+			if(0)
+				var/datum/effects/system/foam_spread/s = new()
+				s.set_up(O.reagents.total_volume, location, O.reagents, 0)
+				s.start()
+			if(1)
+				smoke_reaction(O.reagents, 10, get_turf(O))
+			if(2)
+
+			if(3)
+				location.fluid_react(O.reagents, O.reagents.total_volume)
 
 		O.reagents.clear_reagents()
 
