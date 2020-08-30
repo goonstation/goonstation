@@ -1,5 +1,9 @@
 
 (t)sun aug 30 20
+(u)Superlagg
+(p)1988
+(e)🆕|feature
+(+)Certain transformations inherit the target's mutant race.
 (u)Sartorius7
 (p)1985
 (e)🆕|feature
