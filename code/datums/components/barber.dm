@@ -100,7 +100,7 @@
 				return
 		else
 			boutput(user, "Never mind.")
-			return ATTACK_PRE_DONT_ATTACK
+			return
 
 		actions.start(new/datum/action/bar/haircut(M, user, get_barbery_conditions(M, user), new_style), user)
 	return ATTACK_PRE_DONT_ATTACK
