@@ -1322,51 +1322,6 @@ About the new airlock wires panel:
 				else
 					. = src.attach_signaler(which_wire+1, usr)
 
-/obj/machinery/door/airlock/proc/show_html(mob/user as mob)
-	if (!user)
-		return
-
-	if (!istext(src.HTML))
-		src.generate_html()
-
-	user << browse(src.HTML, "window=airlock")
-
-/obj/machinery/door/airlock/proc/generate_html()
-	src.HTML = "<B>Access Panel</B><br><br>"
-	src.HTML += "An identifier is engraved under the airlock's card sensors: <i>[net_id]</i><br><br>"
-
-	var/list/wires = list("Orange" = 1,
-		"Dark red" = 2,
-		"White" = 3,
-		"Yellow" = 4,
-		"Red" = 5,
-		"Blue" = 6,
-		"Green" = 7,
-		"Grey" = 8,
-		"Black" = 9,
-		"Translucent" = 10)
-
-	for (var/wiredesc in wires)
-		var/is_uncut = src.wires & airlockWireColorToFlag[wires[wiredesc]]
-		src.HTML += "[wiredesc] wire: "
-		if (!is_uncut)
-			src.HTML += "<a href='?src=\ref[src];wires=[wires[wiredesc]]'>Mend</a>"
-		else
-			src.HTML += "<a href='?src=\ref[src];wires=[wires[wiredesc]]'>Cut</a> "
-			src.HTML += "<a href='?src=\ref[src];pulse=[wires[wiredesc]]'>Pulse</a> "
-			if (src.signalers[wires[wiredesc]])
-				src.HTML += "<a href='?src=\ref[src];remove-signaler=[wires[wiredesc]]'>Detach signaler</a>"
-			else
-				src.HTML += "<a href='?src=\ref[src];signaler=[wires[wiredesc]]'>Attach signaler</a>"
-		src.HTML += "<br>"
-
-	src.HTML += {"<br>[src.locked ? "The door bolts have fallen!" : "The door bolts look up."]<br>
-	[(src.arePowerSystemsOn() && !(status & NOPOWER)) ? "The test light is on." : "The test light is off!"]<br>
-	[src.aiControlDisabled==0 ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."]<br>
-	[src.safety ? "The green light is blinking!" : "The green light is off!"]"}
-
-	src.HTML += "<p><a href='?src=\ref[src];close=1'>Close</a></p>"
-
 /obj/machinery/door/airlock/attack_hand(mob/user as mob)
 	if (!issilicon(user))
 		if (src.isElectrified())
