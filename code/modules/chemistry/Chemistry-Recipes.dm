@@ -3632,13 +3632,13 @@ datum
 					holder.remove_reagent("werewolf_serum",created_volume + 1)
 				return
 
-		 vampire_serum
-		 	name = "Vampire Serum Omega"
-		 	id = "vampire_serum"
-		 	result =  "vampire_serum"
-		 	required_reagents = list("bloodc" = 1, "water_holy" = 1, "werewolf_serum" = 1)
-		 	result_amount = 3
-		 	mix_phrase = "The substance gives off a coppery stink."
+		vampire_serum
+			name = "Vampire Serum Omega"
+			id = "vampire_serum"
+			result =  "vampire_serum"
+			required_reagents = list("bloodc" = 1, "water_holy" = 1, "werewolf_serum" = 1)
+			result_amount = 3
+			mix_phrase = "The substance gives off a coppery stink."
 
 			//Super hairgrownium + Tongue of dog + Stable mutagen + Grog + Glowing Slurry + Aconitum
 
