@@ -223,7 +223,7 @@
 
 		points -= cost
 
-	proc/addPoints(add_points)
+	proc/addPoints(add_points, target_ah_type)
 		if (!usesPoints)
 			return
 
