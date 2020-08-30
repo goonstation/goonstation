@@ -1,6 +1,10 @@
 
 (t)sun aug 30 20
 (u)Sartorius7
+(p)1985
+(e)🆕|feature
+(*)More trinket prefixes!
+(u)Sartorius7
 (p)1984
 (e)🆕|feature
 (+)Many, many more wizard names for the game to pick from!
