@@ -57,7 +57,7 @@
 
 
 /datum/component/consume/organheal
-	var/list/organ2hp = list(/obj/item/organ/head=20,/obj/item/skull=0,/obj/item/organ/brain=30,/obj/item/organ/chest=30,/obj/item/organ/heart=20,/obj/item/organ/appendix=0,/obj/item/clothing/head/butt=6)
+	var/static/list/organ2hp = list(/obj/item/organ/head=20,/obj/item/skull=0,/obj/item/organ/brain=30,/obj/item/organ/chest=30,/obj/item/organ/heart=20,/obj/item/organ/appendix=0,/obj/item/clothing/head/butt=6)
 	var/base_HPup = 5
 
 /datum/component/consume/organheal/Initialize()
