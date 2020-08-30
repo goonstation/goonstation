@@ -16,12 +16,18 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 /datum/appearanceHolder
 	//Holds all the appearance information.
+	//_carry holds our "actual" color, in case it changes and we want the old one back
+	var/mob_color_flags = (HAS_HAIR_COLORED_HAIR)
+
+	var/customization_first_color_carry = "#101010"
 	var/customization_first_color = "#101010"
 	var/customization_first = "Trimmed"
 
+	var/customization_second_color_carry = "#101010"
 	var/customization_second_color = "#101010"
 	var/customization_second = "None"
 
+	var/customization_third_color_carry = "#101010"
 	var/customization_third_color = "#101010"
 	var/customization_third = "None"
 
@@ -81,14 +87,19 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/CopyOther(var/datum/appearanceHolder/toCopy)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
+		customization_first_color_carry = toCopy.customization_first_color_carry
 		customization_first_color = toCopy.customization_first_color
 		customization_first = toCopy.customization_first
 
+		customization_second_color_carry = toCopy.customization_second_color_carry
 		customization_second_color = toCopy.customization_second_color
 		customization_second = toCopy.customization_second
 
+		customization_third_color_carry = toCopy.customization_third_color_carry
 		customization_third_color = toCopy.customization_third_color
 		customization_third = toCopy.customization_third
+
+		mob_color_flags = toCopy.mob_color_flags
 
 		e_color = toCopy.e_color
 

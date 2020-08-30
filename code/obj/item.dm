@@ -369,13 +369,9 @@
 		SPAWN_DBG (10)
 			if (!src || !M || !user)
 				return 0
-			// Why not, I guess. Adds a bit of flavour (Convair880).
-			if (iswerewolf(M) && istype(src, /obj/item/organ/))
-				M.show_text("Mmmmm, tasty organs. How refreshing.", "blue")
-				M.HealDamage("All", 5, 5)
-
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 			"<span class='alert'>You finish eating [src].</span>")
+			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
 			user.u_equip(src)
 			qdel(src)
 		return 1
@@ -411,13 +407,10 @@
 		SPAWN_DBG (10)
 			if (!src || !M || !user)
 				return 0
-			// Ditto (Convair880).
-			if (iswerewolf(M) && istype(src, /obj/item/organ/))
-				M.show_text("Mmmmm, tasty organs. How refreshing.", "blue")
-				M.HealDamage("All", 5, 5)
 
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 			"<span class='alert'>You finish eating [src].</span>")
+			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
 			user.u_equip(src)
 			qdel(src)
 		return 1

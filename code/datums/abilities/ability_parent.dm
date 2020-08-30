@@ -223,6 +223,12 @@
 
 		points -= cost
 
+	proc/addPoints(add_points)
+		if (!usesPoints)
+			return
+
+		points += add_points
+
 	proc/suspendAllAbilities()
 		src.suspended = src.abilities.Copy()
 		src.abilities.len = 0
@@ -1190,6 +1196,12 @@
 	deductPoints(cost)
 		for (var/datum/abilityHolder/H in holders)
 			H.deductPoints(cost)
+
+	addPoints(add_points, var/datum/abilityHolder/w_list)
+		for (var/datum/abilityHolder/H in holders)
+			if (w_list && !istype(H, w_list))
+				continue
+			H.addPoints(add_points)
 
 	suspendAllAbilities()
 		for (var/datum/abilityHolder/H in holders)
