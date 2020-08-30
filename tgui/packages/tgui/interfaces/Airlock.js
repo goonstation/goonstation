@@ -1,8 +1,6 @@
 import { useBackend } from '../backend';
-import { Fragment } from 'inferno';
-import { Box, Button, Flex, LabeledList, Section, ColorBox, Divider, NoticeBox, Table } from '../components';
+import { Box, Button, Flex, LabeledList, Section, Divider } from '../components';
 import { Window } from '../layouts';
-import { LabeledListDivider } from '../components/LabeledList';
 
 export const Airlock = (props, context) => {
   const { act, data } = useBackend(context);
