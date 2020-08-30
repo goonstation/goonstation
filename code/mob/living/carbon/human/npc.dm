@@ -15,6 +15,7 @@
 			src.mind = new(src)
 			if (src.name == "human")
 				randomize_look(src, 1, 1, 1, 1, 1, 0) // change gender/bloodtype/age/name/underwear, keep bioeffects
+				src.organHolder.head.update_icon()
 		SPAWN_DBG(1 SECOND)
 			set_clothing_icon_dirty()
 		SPAWN_DBG(2 SECONDS)
