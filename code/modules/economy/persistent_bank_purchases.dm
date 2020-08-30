@@ -34,6 +34,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/corpse,\
 	new /datum/bank_purchaseable/space_diner,\
 	new /datum/bank_purchaseable/mail_order,\
+	new /datum/bank_purchaseable/missile_arrival,\
 	new /datum/bank_purchaseable/lunchbox,\
 
 	new /datum/bank_purchaseable/critter_respawn,\
@@ -444,6 +445,23 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				M.set_loc(S)
 				shippingmarket.receive_crate(S)
 				return 1
+
+	missile_arrival
+		name = "Missile Arrival"
+		cost = 20000
+
+		Create(var/mob/living/M)
+			var/obj/arrival_missile/missile = unpool(/obj/arrival_missile)
+			if(istype(M.back, /obj/item/storage))
+				var/obj/item/storage/backpack = M.back
+				new /obj/item/tank/emergency_oxygen(backpack) // oh boy they'll need this if they are unlucky
+				backpack.hud.update()
+			var/mob/living/carbon/human/H = M
+			if(istype(H))
+				H.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+			missile.reset_to_random_pos()
+			missile.lunch(M)
+			return 1
 
 	critter_respawn
 		name = "Alt Ghost Critter"
