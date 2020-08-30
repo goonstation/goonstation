@@ -1,5 +1,9 @@
 
 (t)sun aug 30 20
+(u)Sartorius7
+(p)1984
+(e)🆕|feature
+(+)Many, many more wizard names for the game to pick from!
 (u)Flaborized
 (p)1994
 (e)🎨|sprites
