@@ -1,18 +1,14 @@
 name: "Post Labeled PRs to the Forum"
 on:
-  pull_request:
-    branches:
-      - master
+  pull_request_target:
     types:
       - labeled
 
 jobs:
   post-to-forums:
     runs-on: ubuntu-latest
-    if: github.repository == 'goonstation/goonstation'
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'input wanted') }}
+    if: ${{ github.repository == 'goonstation/goonstation' && github.event.label.name == 'input wanted' }}
     steps:
-    - uses: actions/checkout@v2
     - name: Get The Script
       run: |
         wget "https://raw.githubusercontent.com/${{ github.repository }}/master/.github/post_to_forums.py"
@@ -34,7 +30,7 @@ jobs:
         FORUM_LOGOUT_KEY: ${{ secrets.FORUM_LOGOUT_KEY }}
         FORUM_POST_KEY: ${{ secrets.FORUM_POST_KEY }}
         FORUM_PASSWORD: ${{ secrets.FORUM_PASSWORD }}
-        FORUM_USERNAME: "test_account"
+        FORUM_USERNAME: "github_bot"
         SUBFORUM_ID: 8 # Ideas & Suggestions
         POST_ICON: 11 # ℹ
         SUBJECT_PREFIX: "[PR] "

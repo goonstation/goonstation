@@ -245,6 +245,8 @@
 			send_beaker_details()
 			send_reagent_details(0)
 		src.update_icon()
+		src.add_dialog(user)
+		ch_window.Subscribe(user.client)
 
 	handle_event(var/event, var/sender)
 		if (event == "reagent_holder_update")
@@ -338,8 +340,7 @@
 
 		else if (href_list["eject"])
 			if (beaker)
-				// should this use "put in hands or drop"? seems like a better idea. idk
-				beaker:set_loc(src.output_target ? src.output_target : get_turf(src))
+				usr.put_in_hand_or_drop(beaker)
 				beaker = null
 			else
 				var/obj/item/I = usr.equipped()

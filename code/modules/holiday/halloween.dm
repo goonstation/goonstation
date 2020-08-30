@@ -27,18 +27,6 @@
 //deathbutton to deathbutton.dm
 
 /*
- *	HALLOWEEN LANDMARK
- */
-/obj/landmark/halloween
-	name = "halloween spawn"
-
-	New()
-		..()
-		if(istype(src.loc, /turf))
-			halloweenspawn.Add(src.loc)
-		qdel(src)
-
-/*
  *	DEATH PLAQUE
  */
 
@@ -173,7 +161,7 @@
 		return
 
 	proc/telehop()
-		var/turf/T = pick(blobstart)
+		var/turf/T = pick_landmark(LANDMARK_BLOBSTART)
 		if(T)
 			src.visible_message("<span class='alert'>[src] disappears!</span>")
 			playsound(src.loc,"sound/effects/singsuck.ogg", 100, 1)

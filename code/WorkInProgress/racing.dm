@@ -511,12 +511,7 @@
 		..()
 		returndir = dir
 		if(returnpoint)
-			for (var/obj/landmark/A in landmarks)//world)
-				LAGCHECK(LAG_LOW)
-				if (A.name == returnpoint)
-					returnloc = A.loc
-					return
-			returnloc = null
+			returnloc = pick_landmark(returnpoint)
 
 	enter()
 		set src in oview(1)

@@ -1,4 +1,42 @@
 
+(t)sun aug 30 20
+(u)Flaborized
+(p)1994
+(e)🎨|sprites
+(+)Furnaces, floppy disks, flashbangs and jukeboxes now have new sprites.
+(t)fri aug 28 20
+(u)Jawns
+(p)1922
+(e)🆕|feature
+(*)New Chief Engineer objective rewards excessive competence
+(u)BatElite
+(p)1981
+(e)🆕🎨|feature, sprites
+(+)Surgical face shields now come in many stylish colours. You might even get lucky and find the rare variant!
+(u)makkipakki
+(p)1923
+(e)🆕🗺|feature, mapping
+(*)Added a table-mounted defibrillator to the security department.
+(t)thu aug 27 20
+(u)Michaellaneous
+(p)1971
+(e)|
+(+)Ejecting beaker from chem dispensers now go into hand
+(+)Putting beaker into chem dispenser now opens interface
+(u)Zamujasa
+(e)⚖🆕|balance, feature
+(*)Major manufacturer UI update.
+(*)Rather than a straight list, manufacturers now show a grid of items they can produce. This includes reverse-engineering fabricators, which will show the eventual item made by a frame.
+(*)The manufacturer queue is always visible, rather than being on a separate page.
+(*)Manufacturers now show an action bar showing progress.
+(*)This is still very much a work in progress, so there will probably be issues. Please report bugs using the button in the top right.
+(+)Manufacturer speeds have been adjusted: lower speeds use much less power, higher speeds use considerably more.
+(+)Manufacturer times for some items have been changed across the board as part of a change to real-time.
+(+)The "search" and "filter" options are missing. They'll be back sooner or later, probably.
+(u)Michaellaneous
+(p)1959
+(e)🆕|feature
+(+)Slotting in a cartridge into a PDA now ejects the old one, if present
 (t)wed aug 26 20
 (u)Superlagg
 (p)1842

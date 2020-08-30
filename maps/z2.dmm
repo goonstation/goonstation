@@ -16198,18 +16198,18 @@
 /area/crater/biodome/north)
 "aLZ" = (
 /obj/table/reinforced/auto,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /obj/spacevine{
 	density = 1;
 	icon_state = "vine-med1"
 	},
 /obj/item/injector_belt,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
 "aMa" = (
 /obj/table/reinforced/auto,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /obj/item/reagent_containers/glass/compostbag,
 /obj/spacevine{
 	density = 1;
@@ -16263,7 +16263,7 @@
 /area/crater/biodome/north)
 "aMf" = (
 /obj/table/reinforced/auto,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /obj/item/reagent_containers/glass/wateringcan,
 /obj/spacevine{
 	density = 1;
@@ -16273,8 +16273,8 @@
 /area/crater/biodome/north)
 "aMg" = (
 /obj/table/reinforced/auto,
-/obj/landmark/artifact/seed,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
+/obj/item/seed/alien,
 /obj/item/satchel/hydro,
 /obj/spacevine{
 	density = 1;
@@ -22705,7 +22705,7 @@
 "bcI" = (
 /obj/table/reinforced/auto,
 /obj/item/plantanalyzer,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/south)
 "bcJ" = (
@@ -22718,7 +22718,7 @@
 /area/crater/biodome/south)
 "bcK" = (
 /obj/table/reinforced/auto,
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/south)
 "bcL" = (
@@ -38011,10 +38011,9 @@
 	},
 /area/sim/racing_track)
 "bMV" = (
-/obj/landmark/start,
-/obj/landmark/start{
-	name = "shit"
-	},
+/obj/landmark{
+	name = "new_player"
+},
 /turf/unsimulated/floor/setpieces/gauntlet{
 	desc = "Everything begins right here.";
 	icon_state = "gauntfloorHearts";
@@ -53211,7 +53210,7 @@
 /obj/machinery/computer/shuttle_bus/embedded/south{
 	plane = -94
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "john_bill"
 	},
 /turf/simulated/floor/shuttle{
@@ -61583,7 +61582,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/landmark/viscontents_spawn{
@@ -68970,7 +68969,7 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "dhV" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_syndicate"
 	},
 /obj/cable{

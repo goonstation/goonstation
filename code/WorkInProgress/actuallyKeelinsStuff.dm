@@ -3910,7 +3910,7 @@ var/list/lag_list = new/list()
 		switch(alert("Travel back to ss13?",,"Yes","No"))
 			if("Yes")
 				user.loc.loc.Exited(user)
-				user.set_loc(pick(latejoin))
+				user.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 			if("No")
 				return
 

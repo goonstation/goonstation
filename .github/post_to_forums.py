@@ -34,13 +34,6 @@ def markdown_to_mybb(markdown):
 	return result
 
 def post_thread(subject, contents, icon="-1"):
-	from pprint import pprint
-	pprint(LOGIN)
-	pprint(LOGOUT)
-	print(subject)
-	print(contents)
-	print(icon)
-
 	rand_int = randint(0,1000000)
 	random_string = str(rand_int)
 	n = hashlib.md5()
@@ -69,7 +62,6 @@ def post_thread(subject, contents, icon="-1"):
 		"attachmentact": "",
 		"quoted_ids": ""
 	}
-	pprint(POST_DATA)
 
 	r = s.post(URL + "/newthread.php?fid={}&processed=1".format(os.environ["SUBFORUM_ID"]), files={k: (None, v) for k, v in POST_DATA.items()})
 	print("Posted thread {} with status code: {}".format(r.url, r.status_code))
