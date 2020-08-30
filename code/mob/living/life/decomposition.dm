@@ -12,16 +12,18 @@
 			if (H.loc == T && T.temp_flags & HAS_KUDZU) //only infect if on the floor
 				H.infect_kudzu()
 
-			var/suspend_rot = 0
+			var/suspend_rot = \
+					istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell) || \
+					istype(owner.loc, /obj/morgue) || \
+					T.type == /turf/space || \
+					owner.reagents?.has_reagent("formaldehyde")
 			if (H.decomp_stage >= 4)
-				suspend_rot = (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell) || istype(owner.loc, /obj/morgue) || (owner.reagents && owner.reagents.has_reagent("formaldehyde")))
 				if (!(suspend_rot || istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded)))
 					icky_icky_miasma(T)
 				return ..()
 
 			if (H.mutantrace)
 				return ..()
-			suspend_rot = (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell) || istype(owner.loc, /obj/morgue) || (owner.reagents && owner.reagents.has_reagent("formaldehyde")))
 			var/env_temp = 0
 			// cogwerks note: both the cryo cell and morgue things technically work, but the corpse rots instantly when removed
 			// if it has been in there longer than the next decomp time that was initiated before the corpses went in. fuck!
@@ -30,7 +32,7 @@
 			// hello I fixed the thing by making it so that next_decomp_time is added to even if src is in a morgue/cryo or they have formaldehyde in them - haine
 			if (!suspend_rot && environment)
 				env_temp = environment.temperature
-				H.next_decomp_time -= min(30, max(round((env_temp - T20C)/10), -60))
+				H.next_decomp_time -= clamp(round((env_temp - T20C)/10), -60, 30)
 				if(!(istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded)))
 					icky_icky_miasma(T)
 
