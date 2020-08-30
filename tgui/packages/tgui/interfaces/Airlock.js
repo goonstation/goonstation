@@ -1,24 +1,35 @@
 import { useBackend } from '../backend';
 import { Fragment } from 'inferno';
-import { Box, Button, Flex, LabeledList, Section, ColorBox, Divider, NoticeBox } from '../components';
+import { Box, Button, Flex, LabeledList, Section, ColorBox, Divider, NoticeBox, Table } from '../components';
 import { Window } from '../layouts';
 import { LabeledListDivider } from '../components/LabeledList';
 
 export const Airlock = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    signalers,
     wireColors,
+    wireStates,
     netId,
+    powerIsOn,
+    boltsAreUp,
+    aiControlDisabled,
+    safety,
   } = data;
 
-  let wires = Object.keys(wireColors);
+  const handleWireInteract = (wireColorIndex, action) => {
+    act(action, { wireColorIndex });
+  };
+
+  const wires = Object.keys(wireColors);
 
   return (
     <Window
-      height={460}
-      width={360}>
+      height={480}
+      width={370}>
       <Window.Content>
-        <Section title="Access panel">
+        <Section
+          title="Access panel">
           <Box>
             {"An identifier is engraved under the airlock's card sensors:"} <Box inline italic>{netId}</Box>
           </Box>
@@ -27,19 +38,38 @@ export const Airlock = (props, context) => {
             { wires.map((entry, i) => (
               <LabeledList.Item
                 key={entry}
-                label={(entry + " wire").replace('Black', 'Olive').replace('Dark red', 'Pink').replace('Translucent', 'Teal')}
-                labelColor={entry.toLowerCase().replace(/\s/g, '').replace('black', 'olive').replace('darkred', 'pink').replace('translucent', 'teal')}>
-                <Button
-                  icon="cut"
-                  content={"Cut"} />
-                <Button
-                  ml={0.5}
-                  icon="bolt"
-                  content={"Pulse"} />
-                <Button
-                  ml={0.5}
-                  icon="broadcast-tower"
-                  content={"Attach Signaler"} />
+                label={(entry + " wire")}
+                labelColor={entry.toLowerCase()}>
+                {
+                  !wireStates[i]
+                    ? (
+                      <Box
+                        height={1.8} >
+                        <Button
+                          icon="cut"
+                          content="Cut"
+                          onClick={() => handleWireInteract(i, "cut")} />
+                        <Button
+                          icon="bolt"
+                          content={"Pulse"}
+                          onClick={() => handleWireInteract(i, "pulse")} />
+                        <Button
+                          icon="broadcast-tower"
+                          width={10}
+                          className="airlock-wires-btn"
+                          selected={!!(signalers[i])}
+                          content={!(signalers[i]) ? "Attach Signaler" : "Detach Signaler"}
+                          onClick={() => handleWireInteract(i, "signaler")} />
+                      </Box>
+                    )
+                    : (
+                      <Button
+                        content={"Mend"}
+                        color="green"
+                        height={1.8}
+                        onClick={() => handleWireInteract(i, "mend")} />
+                    )
+                }
               </LabeledList.Item>
             )) }
           </LabeledList>
@@ -50,13 +80,13 @@ export const Airlock = (props, context) => {
               <LabeledList>
                 <LabeledList.Item
                   label="Door bolts"
-                  color="green">
-                  {"Disengaged"}
+                  color={boltsAreUp ? "green" : "red"}>
+                  {boltsAreUp ? "Disengaged" : "Engaged"}
                 </LabeledList.Item>
                 <LabeledList.Item
                   label="Test light"
-                  color="green">
-                  {"Active"}
+                  color={powerIsOn ? "green" : "red"}>
+                  {powerIsOn ? "Active" : "Inactive"}
                 </LabeledList.Item>
               </LabeledList>
             </Flex.Item>
@@ -64,13 +94,13 @@ export const Airlock = (props, context) => {
               <LabeledList>
                 <LabeledList.Item
                   label="AI control"
-                  color="green">
-                  {"Enabled"}
+                  color={!aiControlDisabled ? "green" : "red"}>
+                  {!aiControlDisabled ? "Enabled" : "Disabled"}
                 </LabeledList.Item>
                 <LabeledList.Item
                   label="Safety light"
-                  color="green">
-                  {"Active"}
+                  color={safety ? "green" : "red"}>
+                  {safety ? "Active" : "Inactive"}
                 </LabeledList.Item>
               </LabeledList>
             </Flex.Item>

@@ -45,6 +45,7 @@
 @include meta.load-css('./interfaces/CyborgModuleRewriter.scss');
 @include meta.load-css('./interfaces/GasCanister.scss');
 @include meta.load-css('./interfaces/PortableAtmos.scss');
+@include meta.load-css('./interfaces/Airlock.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

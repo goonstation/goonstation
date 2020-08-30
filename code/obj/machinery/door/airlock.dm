@@ -81,6 +81,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/spawnPowerRestoreRunning = 0
 	var/welded = null
 	var/wires = 1023 //goddd use bitflag defines please
+	var/list/wire_colors = list("Orange" = 1, "Pink" = 2, "White" = 3, "Yellow" = 4, "Red" = 5, "Blue" = 6, "Green" = 7, "Grey" = 8, "Olive" = 9, "Teal" = 10)
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
 	var/aiDisabledIdScanner = 0
 	var/aiHacking = 0
@@ -650,6 +651,16 @@ About the new airlock wires panel:
 	play_animation("deny")
 	playsound(get_turf(src), src.sound_deny_temp, 100, 0)
 
+/obj/machinery/door/airlock/proc/try_pulse(var/wireColor, mob/user)
+	if (!user.find_tool_in_hand(TOOL_PULSING))
+		boutput(user, "You need a multitool or similar!")
+		return FALSE
+	if (src.isWireColorCut(wireColor))
+		boutput(user, "You can't pulse a cut wire.")
+		return FALSE
+	src.pulse(wireColor)
+	return TRUE
+
 /obj/machinery/door/airlock/proc/pulse(var/wireColor)
 	//var/wireFlag = airlockWireColorToFlag[wireColor] //not used in this function
 	var/wireIndex = airlockWireColorToIndex[wireColor]
@@ -671,6 +682,7 @@ About the new airlock wires panel:
 				logTheThing("station",usr,null,"[usr] has bolted a door at [log_loc(src)].")
 				boutput(usr, "You hear a click from the bottom of the door.")
 				src.updateUsrDialog()
+				tgui_process.update_uis(src)
 			else
 				if(src.arePowerSystemsOn()) //only can raise bolts if power's on
 					src.locked = 0
@@ -691,12 +703,14 @@ About the new airlock wires panel:
 			else if (src.aiControlDisabled == -1)
 				src.aiControlDisabled = 2
 			src.updateDialog()
+			tgui_process.update_uis(src)
 			SPAWN_DBG(1 SECOND)
 				if (src.aiControlDisabled == 1)
 					src.aiControlDisabled = 0
 				else if (src.aiControlDisabled == 2)
 					src.aiControlDisabled = -1
 				src.updateDialog()
+				tgui_process.update_uis(src)
 			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
 		if (AIRLOCK_WIRE_ELECTRIFY)
@@ -728,6 +742,44 @@ About the new airlock wires panel:
 			src.safety = 1
 			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
+
+/obj/machinery/door/airlock/proc/attach_signaler(var/wireColor, mob/user)
+	if(!istype(user.equipped(), /obj/item/device/radio/signaler))
+		boutput(user, "You need a signaller!")
+		return FALSE
+	if(src.isWireColorCut(wireColor))
+		boutput(user, "You can't attach a signaller to a cut wire.")
+		return FALSE
+
+	var/obj/item/device/radio/signaler/R = user.equipped()
+	if(!R.b_stat)
+		boutput(user, "This radio can't be attached!")
+		return FALSE
+
+	user.drop_item()
+	R.set_loc(src)
+	R.airlock_wire = wireColor
+	src.signalers[wireColor] = R
+
+/obj/machinery/door/airlock/proc/detach_signaler(var/wireColor, mob/user)
+	if(!(src.signalers[wireColor]))
+		boutput(user, "There's no signaler attached to that wire!")
+		return FALSE
+	var/obj/item/device/radio/signaler/R = src.signalers[wireColor]
+	//R.set_loc(user.loc)
+	user.put_in_hand_or_drop(R)
+	R.airlock_wire = null
+	src.signalers[wireColor] = null
+
+	return TRUE
+
+/obj/machinery/door/airlock/proc/try_cut(var/wireColor, mob/user)
+	if(!user.find_tool_in_hand(TOOL_SNIPPING))
+		boutput(user, "You need a snipping tool!")
+		return FALSE
+	src.cut(wireColor)
+
+	return TRUE
 
 /obj/machinery/door/airlock/proc/cut(var/wireColor)
 	var/wireFlag = airlockWireColorToFlag[wireColor]
@@ -773,6 +825,15 @@ About the new airlock wires panel:
 			logTheThing("station", usr, null, "permanently disabled the safety of an airlock at [log_loc(src)] by cutting the safety wire.")
 			src.safety = 0
 
+	tgui_process.update_uis(src)
+
+/obj/machinery/door/airlock/proc/try_mend(var/wireColor, mob/user)
+	if(!user.find_tool_in_hand(TOOL_SNIPPING))
+		boutput(user, "You need a snipping tool to mend the wire!")
+		return FALSE
+	src.mend(wireColor)
+
+	return TRUE
 
 /obj/machinery/door/airlock/proc/mend(var/wireColor)
 	var/wireFlag = airlockWireColorToFlag[wireColor]
@@ -806,6 +867,8 @@ About the new airlock wires panel:
 		if(AIRLOCK_WIRE_SAFETY)
 			logTheThing("station", usr, null, "re-enabled the safety of an airlock at [log_loc(src)] by mending the safety wire.")
 			src.safety = 1
+
+	tgui_process.update_uis(src)
 
 /obj/machinery/door/airlock/proc/isElectrified()
 	return (src.secondsElectrified != 0)
@@ -857,15 +920,18 @@ About the new airlock wires panel:
 					if ((!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)) && (!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)))
 						src.secondsMainPowerLost -= 1
 						src.updateDialog()
+						tgui_process.update_uis(src)
 					cont = 1
 
 				if (src.secondsBackupPowerLost>0)
 					if ((!src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER1)) && (!src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER2)))
 						src.secondsBackupPowerLost -= 1
 						src.updateDialog()
+						tgui_process.update_uis(src)
 					cont = 1
 			src.spawnPowerRestoreRunning = 0
 			src.updateDialog()
+			tgui_process.update_uis(src)
 
 /obj/machinery/door/airlock/proc/loseBackupPower()
 	if (src.secondsBackupPowerLost < 60)
@@ -1201,52 +1267,35 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/ui_data(mob/user)
 	var/list/data = list()
 
-	data["netId"] = src.net_id;
-
-	data["wires"] = src.wires
-
 	if(src.signalers)
 		data["signalers"] = src.signalers
+
+	data["powerIsOn"] = src.arePowerSystemsOn() && !(status & NOPOWER)
+	data["boltsAreUp"] = !src.locked
+	data["aiControlDisabled"] = src.aiControlDisabled
+	data["safety"] = src.safety
+
+	var/list/wire_states = list()
+	for(var/I in src.wire_colors)
+		wire_states += src.isWireCut(airlockWireColorToIndex[src.wire_colors[I]])
+	data["wireStates"] = wire_states
 
 	return data
 
 /obj/machinery/door/airlock/ui_static_data(mob/user)
 	var/list/static_data = list()
 
-	static_data["wireColors"] = list(
-		"Orange" = 1,
-		"Pink" = 2,
-		"White" = 3,
-		"Yellow" = 4,
-		"Red" = 5,
-		"Blue" = 6,
-		"Green" = 7,
-		"Grey" = 8,
-		"Olive" = 9,
-		"Teal" = 10,
-	)
-
-	static_data["airlockFlags"] = list(
-		"IDSCAN" = AIRLOCK_WIRE_IDSCAN,
-		"MAIN_POWER1" = AIRLOCK_WIRE_MAIN_POWER1,
-		"MAIN_POWER2" = AIRLOCK_WIRE_MAIN_POWER2,
-		"DOOR_BOLTS" = AIRLOCK_WIRE_DOOR_BOLTS,
-		"BACKUP_POWER1" = AIRLOCK_WIRE_BACKUP_POWER1,
-		"BACKUP_POWER2" = AIRLOCK_WIRE_BACKUP_POWER2,
-		"OPEN_DOOR" = AIRLOCK_WIRE_OPEN_DOOR,
-		"AI_CONTROL" = AIRLOCK_WIRE_AI_CONTROL,
-		"ELECTRIFY" = AIRLOCK_WIRE_ELECTRIFY,
-		"SAFETY" = AIRLOCK_WIRE_SAFETY,
-	)
+	static_data["wireColors"] = src.wire_colors
+	static_data["netId"] = src.net_id;
 
 	return static_data
 
 /obj/machinery/door/airlock/ui_state(mob/user)
-	return tgui_physical_state
+	return tgui_default_state
 
-/obj/machinery/door/airlock/ui_status(mob/user)
+/obj/machinery/door/airlock/ui_status(mob/user, datum/ui_state/state)
   return min(
-		tgui_default_state.can_use_topic(src, user),
+		state.can_use_topic(src, user),
 		tgui_not_incapacitated_state.can_use_topic(src, user)
 	)
 
@@ -1255,20 +1304,24 @@ About the new airlock wires panel:
 		return
 	switch(action)
 		if("cut")
-			var/which_wire = params["wireColor"]
+			var/which_wire = params["wireColorIndex"]
 			if(isnum(which_wire))
-				src.cut(airlockIndexToWireColor[which_wire])
-				. = TRUE
+				. = src.try_cut(which_wire+1, usr)
 		if("mend")
-			var/which_wire = params["wireColor"]
+			var/which_wire = params["wireColorIndex"]
 			if(isnum(which_wire))
-				src.mend(airlockIndexToWireColor[which_wire])
-				. = TRUE
+				. = src.try_mend(which_wire+1, usr)
 		if("pulse")
-			var/which_wire = params["wireColor"]
+			var/which_wire = params["wireColorIndex"]
 			if(isnum(which_wire))
-				src.pulse(airlockIndexToWireColor[which_wire])
-				. = TRUE
+				. = src.try_pulse(which_wire+1, usr)
+		if("signaler")
+			var/which_wire = params["wireColorIndex"]
+			if(isnum(which_wire))
+				if(src.signalers[which_wire])
+					. = src.detach_signaler(which_wire, usr)
+				else
+					. = src.attach_signaler(which_wire, usr)
 
 /obj/machinery/door/airlock/proc/show_html(mob/user as mob)
 	if (!user)
@@ -1969,10 +2022,6 @@ obj/machinery/door/airlock
 				src.secondsElectrified = 0
 	return
 
-/obj/machinery/door/airlock/proc/isthedoorwirecutfordummies()
-	var/wireFlag = airlockIndexToFlag[AIRLOCK_WIRE_DOOR_BOLTS]
-	return ((src.wires & wireFlag) == 0)
-
 /obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)
 	..()
 
@@ -2011,7 +2060,7 @@ obj/machinery/door/airlock
 		var/obj/machinery/door/airlock/D = src
 		if (D.aiControlDisabled > 0)
 			return
-		if (D.isthedoorwirecutfordummies())
+		if (D.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 			boutput(src, "The door bolt drop wire is cut - you can't change the door bolts.")
 		else
 			if (D.locked)
