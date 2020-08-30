@@ -97,7 +97,7 @@
 /obj/item/shipcomponent/engine/zero
 	name = "Warp-0 Engine"
 	desc = "An old prototype engine"
-	powergenerated = 195
+	powergenerated = 190
 	currentgen = 190
 	warprecharge = -1 //This disables the ability to create wormholes completely.
 	speedmod = 2
