@@ -2,7 +2,7 @@
 	topBarRendered = 1
 	points = 0
 	regenRate = 0	// eat some kidneys or something
-	pointName = "Stemcells"
+	pointName = "Metachroitic Factor"
 
 /datum/targetable/lizardAbility
 	icon = 'icons/mob/genetics_powers.dmi'
