@@ -456,6 +456,12 @@
 			user.update_inhands()
 			user.show_text("<B>You flip \the [src] and grab it by the base!", "red")
 
+	dropped(mob/user)
+		if (src.flipped)
+			src.flipped = false
+			src.update_icon()
+			user.update_inhands()
+
 /////////////////////////////////////////////// Subtypes //////////////////////////////////////////////////////
 
 /obj/item/baton/secbot
@@ -511,7 +517,7 @@
 	icon_off = "ntso-baton-c"
 	var/icon_off_open = "ntso-baton-a-0"
 	item_on = "ntso-baton-a"
-	item_off = "nsto-baton-c"
+	item_off = "ntso-baton-c"
 	var/item_off_open = "ntso-baton-d"
 	flick_baton_active = "ntso-baton-a-1"
 	w_class = 2	//2 when closed, 4 when extended
