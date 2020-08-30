@@ -651,14 +651,14 @@ About the new airlock wires panel:
 	play_animation("deny")
 	playsound(get_turf(src), src.sound_deny_temp, 100, 0)
 
-/obj/machinery/door/airlock/proc/try_pulse(var/wireColor, mob/user)
+/obj/machinery/door/airlock/proc/try_pulse(var/wire_color, mob/user)
 	if (!user.find_tool_in_hand(TOOL_PULSING))
 		boutput(user, "You need a multitool or similar!")
 		return FALSE
-	if (src.isWireColorCut(wireColor))
+	if (src.isWireColorCut(wire_color))
 		boutput(user, "You can't pulse a cut wire.")
 		return FALSE
-	src.pulse(wireColor)
+	src.pulse(wire_color)
 	return TRUE
 
 /obj/machinery/door/airlock/proc/pulse(var/wireColor)
@@ -743,11 +743,11 @@ About the new airlock wires panel:
 			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
 
-/obj/machinery/door/airlock/proc/attach_signaler(var/wireColor, mob/user)
+/obj/machinery/door/airlock/proc/attach_signaler(var/wire_color, mob/user)
 	if(!istype(user.equipped(), /obj/item/device/radio/signaler))
 		boutput(user, "You need a signaller!")
 		return FALSE
-	if(src.isWireColorCut(wireColor))
+	if(src.isWireColorCut(wire_color))
 		boutput(user, "You can't attach a signaller to a cut wire.")
 		return FALSE
 
@@ -758,26 +758,30 @@ About the new airlock wires panel:
 
 	user.drop_item()
 	R.set_loc(src)
-	R.airlock_wire = wireColor
-	src.signalers[wireColor] = R
-
-/obj/machinery/door/airlock/proc/detach_signaler(var/wireColor, mob/user)
-	if(!(src.signalers[wireColor]))
-		boutput(user, "There's no signaler attached to that wire!")
-		return FALSE
-	var/obj/item/device/radio/signaler/R = src.signalers[wireColor]
-	//R.set_loc(user.loc)
-	user.put_in_hand_or_drop(R)
-	R.airlock_wire = null
-	src.signalers[wireColor] = null
+	R.airlock_wire = wire_color
+	src.signalers[wire_color] = R
+	tgui_process.update_uis(src)
 
 	return TRUE
 
-/obj/machinery/door/airlock/proc/try_cut(var/wireColor, mob/user)
+/obj/machinery/door/airlock/proc/detach_signaler(var/wire_color, mob/user)
+	if(!(src.signalers[wire_color]))
+		boutput(user, "There's no signaler attached to that wire!")
+		return FALSE
+	var/obj/item/device/radio/signaler/R = src.signalers[wire_color]
+	//R.set_loc(user.loc)
+	user.put_in_hand_or_drop(R)
+	R.airlock_wire = null
+	src.signalers[wire_color] = null
+	tgui_process.update_uis(src)
+
+	return TRUE
+
+/obj/machinery/door/airlock/proc/try_cut(var/wire_color, mob/user)
 	if(!user.find_tool_in_hand(TOOL_SNIPPING))
 		boutput(user, "You need a snipping tool!")
 		return FALSE
-	src.cut(wireColor)
+	src.cut(wire_color)
 
 	return TRUE
 
@@ -827,11 +831,11 @@ About the new airlock wires panel:
 
 	tgui_process.update_uis(src)
 
-/obj/machinery/door/airlock/proc/try_mend(var/wireColor, mob/user)
+/obj/machinery/door/airlock/proc/try_mend(var/wire_color, mob/user)
 	if(!user.find_tool_in_hand(TOOL_SNIPPING))
 		boutput(user, "You need a snipping tool to mend the wire!")
 		return FALSE
-	src.mend(wireColor)
+	src.mend(wire_color)
 
 	return TRUE
 
@@ -1318,10 +1322,10 @@ About the new airlock wires panel:
 		if("signaler")
 			var/which_wire = params["wireColorIndex"]
 			if(isnum(which_wire))
-				if(src.signalers[which_wire])
-					. = src.detach_signaler(which_wire, usr)
+				if(src.signalers[which_wire+1])
+					. = src.detach_signaler(which_wire+1, usr)
 				else
-					. = src.attach_signaler(which_wire, usr)
+					. = src.attach_signaler(which_wire+1, usr)
 
 /obj/machinery/door/airlock/proc/show_html(mob/user as mob)
 	if (!user)

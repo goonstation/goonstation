@@ -25,7 +25,7 @@ export const Airlock = (props, context) => {
 
   return (
     <Window
-      height={480}
+      height={460}
       width={370}>
       <Window.Content>
         <Section
