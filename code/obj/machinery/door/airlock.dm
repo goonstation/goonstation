@@ -761,7 +761,6 @@ About the new airlock wires panel:
 	R.airlock_wire = wire_color
 	src.signalers[wire_color] = R
 	tgui_process.update_uis(src)
-
 	return TRUE
 
 /obj/machinery/door/airlock/proc/detach_signaler(var/wire_color, mob/user)
@@ -774,7 +773,6 @@ About the new airlock wires panel:
 	R.airlock_wire = null
 	src.signalers[wire_color] = null
 	tgui_process.update_uis(src)
-
 	return TRUE
 
 /obj/machinery/door/airlock/proc/try_cut(var/wire_color, mob/user)
@@ -782,7 +780,6 @@ About the new airlock wires panel:
 		boutput(user, "You need a snipping tool!")
 		return FALSE
 	src.cut(wire_color)
-
 	return TRUE
 
 /obj/machinery/door/airlock/proc/cut(var/wireColor)
@@ -836,7 +833,6 @@ About the new airlock wires panel:
 		boutput(user, "You need a snipping tool to mend the wire!")
 		return FALSE
 	src.mend(wire_color)
-
 	return TRUE
 
 /obj/machinery/door/airlock/proc/mend(var/wireColor)

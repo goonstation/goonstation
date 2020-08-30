@@ -42,6 +42,7 @@ $bg-map: colors.$bg-map !default;
   }
 
   &:active {
+    transition: background-color 100ms;
     background-color: lighten($color, 60%);
   }
 }
