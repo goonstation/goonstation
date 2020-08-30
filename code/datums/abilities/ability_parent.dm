@@ -1197,9 +1197,9 @@
 		for (var/datum/abilityHolder/H in holders)
 			H.deductPoints(cost)
 
-	addPoints(add_points, var/datum/abilityHolder/w_list)
+	addPoints(add_points, target_ah_type)
 		for (var/datum/abilityHolder/H in holders)
-			if (w_list && !istype(H, w_list))
+			if (w_list && !istype(H, target_ah_type))
 				continue
 			H.addPoints(add_points)
 
