@@ -205,23 +205,33 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 			var/obj/decal/cleanable/blood/dynamic/blood = possible_cleanable
 			var/blood_dna = blood.blood_DNA
 			var/blood_type = blood.blood_type
+			var/blood_fluid_color = blood.color
 			var/is_tracks = istype(possible_cleanable,/obj/decal/cleanable/blood/dynamic/tracks)
-			if (blood.reagents && blood.reagents.total_volume >= 13 || src.active_liquid || grab_any_amount)
+			if (blood.reagents?.total_volume >= 13 || src.active_liquid || grab_any_amount)
 				if (blood.reagents)
 					var/datum/reagents/R = new(blood.reagents.maximum_volume) //Store reagents, delete cleanable, and then fluid react. prevents recursion
 					blood.reagents.copy_to(R)
 					var/blood_volume = blood.reagents.total_volume
 					blood.clean_forensic()
+					for(var/reagent_id in R.reagent_list)
+						var/datum/reagent/reagent = R.reagent_list[reagent_id]
+						if(istype(reagent, /datum/reagent/blood))
+							var/list/list_color = hex_to_rgb_list(blood_fluid_color)
+							reagent.fluid_r = list_color["r"]
+							reagent.fluid_g = list_color["g"]
+							reagent.fluid_b = list_color["b"]
 					src.fluid_react(R,is_tracks ? 0 : blood_volume)
 				else
 					var/reagent = blood.sample_reagent
 					var/amt = blood.reagents.total_volume
 					blood.clean_forensic()
 					src.fluid_react_single(reagent,is_tracks ? 0 : amt)
+					src.active_liquid?.group.reagents.reagent_list[reagent].color = blood_fluid_color
+					src.active_liquid?.color = blood_fluid_color
 
 				if (src.active_liquid)
 					src.active_liquid.blood_DNA = blood_dna
-					src.active_liquid.blood_type = blood_type
+					src.active_liquid.blood_type = blood_type //If you break blood liquid so it'll still be red even if it's not supposed to (Hemochromia, other species, etc.) I will personally listen to you bleed while I smell you die.
 				return 1
 		return 0
 
