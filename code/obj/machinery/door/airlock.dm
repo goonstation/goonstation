@@ -1098,7 +1098,6 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/attack_ai(mob/user as mob)
-	return ui_interact(user)
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
 		return
 
@@ -1385,46 +1384,7 @@ About the new airlock wires panel:
 		return
 
 	if (src.p_open)
-		if (!user.find_type_in_hand(/obj/item/wrench))
-			return ui_interact(user)
-		src.add_dialog(user)
-		var/list/t1 = list(text("<B>Access Panel</B><br><br>"))
-		t1 += "An identifier is engraved under the airlock's card sensors: <i>[net_id]</i><br><br>"
-
-		//t1 += text("[]: ", airlockFeatureNames[airlockWireColorToIndex[9]])
-		var/list/wires = list(
-			"Orange" = 1,
-			"Pink" = 2,
-			"White" = 3,
-			"Yellow" = 4,
-			"Red" = 5,
-			"Blue" = 6,
-			"Green" = 7,
-			"Grey" = 8,
-			"Olive" = 9,
-			"Teal" = 10,
-		)
-		for(var/wiredesc in wires)
-			var/is_uncut = src.wires & airlockWireColorToFlag[wires[wiredesc]]
-			t1 += "[wiredesc] wire: "
-			if(!is_uncut)
-				t1 += "<a href='?src=\ref[src];wires=[wires[wiredesc]]'>Mend</a>"
-			else
-				t1 += "<a href='?src=\ref[src];wires=[wires[wiredesc]]'>Cut</a> "
-				t1 += "<a href='?src=\ref[src];pulse=[wires[wiredesc]]'>Pulse</a> "
-				if(src.signalers[wires[wiredesc]])
-					t1 += "<a href='?src=\ref[src];remove-signaler=[wires[wiredesc]]'>Detach signaler</a>"
-				else
-					t1 += "<a href='?src=\ref[src];signaler=[wires[wiredesc]]'>Attach signaler</a>"
-			t1 += "<br>"
-
-		t1 += text("<br>[]<br>[]<br>[]<br>[]", (src.locked ? "The door bolts have fallen!" : "The door bolts look up."), ((src.arePowerSystemsOn() && !(status & NOPOWER)) ? "The test light is on." : "The test light is off!"), (src.aiControlDisabled==0 ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."), (src.safety ? "The green light is blinking!" : "The green light is off!"))
-
-		t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>", src)
-
-		user.Browse(t1.Join(), "window=airlock")
-		onclose(user, "airlock")
-
+		ui_interact(user)
 		interact_particle(user,src)
 	//clicking with no access, door closed, and help intent, and panel closed to knock
 	else if (!src.allowed(user) && (user.a_intent == INTENT_HELP) && src.density && src.requiresID())
@@ -1443,61 +1403,6 @@ About the new airlock wires panel:
 		usr.Browse(null, "window=airlock")
 		src.remove_dialog(usr)
 		return
-	if (!isAIeye(usr))
-		if (!isrobot(usr) && !ishivebot(usr))
-			if (!src.p_open)
-				return
-		if ((in_range(src, usr) && istype(src.loc, /turf)))
-			src.add_dialog(usr)
-			if (href_list["wires"])
-				var/t1 = text2num(href_list["wires"])
-				if (!usr.find_tool_in_hand(TOOL_SNIPPING))
-					boutput(usr, "You need a snipping tool!")
-					return
-				if (src.isWireColorCut(t1))
-					src.mend(t1)
-				else
-					src.cut(t1)
-			else if (href_list["pulse"])
-				var/t1 = text2num(href_list["pulse"])
-				if (!usr.find_tool_in_hand(TOOL_PULSING))
-					boutput(usr, "You need a multitool or similar!")
-					return
-				else if (src.isWireColorCut(t1))
-					boutput(usr, "You can't pulse a cut wire.")
-					return
-				else
-					src.pulse(t1)
-			else if(href_list["signaler"])
-				var/wirenum = text2num(href_list["signaler"])
-				if(!istype(usr.equipped(), /obj/item/device/radio/signaler))
-					boutput(usr, "You need a signaller!")
-					return
-				if(src.isWireColorCut(wirenum))
-					boutput(usr, "You can't attach a signaller to a cut wire.")
-					return
-				var/obj/item/device/radio/signaler/R = usr.equipped()
-				if(!R.b_stat)
-					boutput(usr, "This radio can't be attached!")
-					return
-				var/mob/M = usr
-				M.drop_item()
-				R.set_loc(src)
-				R.airlock_wire = wirenum
-				src.signalers[wirenum] = R
-			else if(href_list["remove-signaler"])
-				var/wirenum = text2num(href_list["remove-signaler"])
-				if(!(src.signalers[wirenum]))
-					boutput(usr, "There's no signaller attached to that wire!")
-					return
-				var/obj/item/device/radio/signaler/R = src.signalers[wirenum]
-				R.set_loc(usr.loc)
-				R.airlock_wire = null
-				src.signalers[wirenum] = null
-
-		src.update_icon()
-		add_fingerprint(usr)
-		src.updateUsrDialog()
 	if(issilicon(usr) || isAI(usr))
 		//AI
 		if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
