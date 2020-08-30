@@ -1,5 +1,9 @@
 
 (t)sun aug 30 20
+(u)pali
+(p)1987
+(e)🆕🎨|feature, sprites
+(*)New expensive spacebux purchase to arrive to the station in an Oshan style arrival missile.
 (u)Superlagg
 (p)1988
 (e)🆕|feature
