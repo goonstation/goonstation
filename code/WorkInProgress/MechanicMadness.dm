@@ -269,7 +269,7 @@
 				src.the_trigger = (locate(/obj/item/mechanics/trigger/trigger) in src.contents)
 				if (!istype(src.the_trigger)) //no trigger?
 					for(var/obj/item in src.contents)
-						item.loc=get_turf(src) // kick out any mechcomp
+						item.set_loc(get_turf(src)) // kick out any mechcomp
 					qdel(src) // delet
 					return false
 			return true
@@ -333,10 +333,6 @@
 	viewstat = 2
 	secured = 2
 	icon_state = "dbox"
-
-
-//Global list of telepads so we don't have to loop through the entire world aaaahhh.
-var/list/mechanics_telepads = new/list()
 
 /obj/item/mechanics
 	name = "testhing"
@@ -689,9 +685,7 @@ var/list/mechanics_telepads = new/list()
 
 			AM.set_loc(src.loc)
 			AM.pipe_eject(0)
-			SPAWN_DBG(1 DECI SECOND)
-				if(AM)
-					AM.throw_at(target, 5, 1)
+			AM?.throw_at(target, 5, 1)
 
 		H.vent_gas(loc)
 		pool(H)
@@ -949,22 +943,21 @@ var/list/mechanics_telepads = new/list()
 			if(active) return
 			particleMaster.SpawnSystem(new /datum/particleSystem/gravaccel(src.loc, src.dir))
 			SPAWN_DBG(0)
-				if(src)
-					icon_state = "[under_floor ? "u":""]comp_accel1"
-					active = 1
-					SPAWN_DBG(0) drivecurrent()
-					SPAWN_DBG(0.5 SECONDS) drivecurrent()
-				sleep(3 SECONDS)
-				if(src)
-					icon_state = "[under_floor ? "u":""]comp_accel"
-					active = 0
+				icon_state = "[under_floor ? "u":""]comp_accel1"
+				active = 1
+				drivecurrent()
+				sleep(0.5 SECONDS)
+				drivecurrent()
+				sleep(2.5 SECONDS)
+				icon_state = "[under_floor ? "u":""]comp_accel"
+				active = 0
 		return
 
 	proc/throwstuff(atom/movable/AM as mob|obj)
 		if(level == 2 || AM.anchored || AM == src) return
 		if(AM.throwing) return
 		var/atom/target = get_edge_target_turf(AM, src.dir)
-		SPAWN_DBG(0) AM.throw_at(target, 50, 1)
+		AM.throw_at(target, 50, 1)
 		return
 
 	HasEntered(atom/movable/AM as mob|obj)
@@ -2170,14 +2163,14 @@ var/list/mechanics_telepads = new/list()
 
 	New()
 		..()
-		mechanics_telepads.Add(src)
+		START_TRACKING
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activate")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"setID", "setidmsg")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Teleporter ID","setID")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Send-only Mode","toggleSendOnly")
 
 	disposing()
-		mechanics_telepads.Remove(src)
+		STOP_TRACKING
 		return ..()
 
 	proc/setID(obj/item/W as obj, mob/user as mob)
@@ -2219,7 +2212,7 @@ var/list/mechanics_telepads = new/list()
 		playsound(src.loc, "sound/mksounds/boost.ogg", 50, 1)
 		var/list/destinations = new/list()
 
-		for(var/obj/item/mechanics/telecomp/T in mechanics_telepads)
+		for(var/obj/item/mechanics/telecomp/T in by_type[/obj/item/mechanics/telecomp])
 			if(T == src || T.level == 2 || !isturf(T.loc)  || isrestrictedz(T.z)|| T.send_only) continue
 
 #ifdef UNDERWATER_MAP
@@ -2630,7 +2623,7 @@ var/list/mechanics_telepads = new/list()
 	proc/removeGun(obj/item/W as obj, mob/user as mob)
 		if(Gun)
 			logTheThing("station", user, null, "removes [Gun] from [src] at [log_loc(src)].")
-			Gun.loc = get_turf(src)
+			Gun.set_loc(get_turf(src))
 			Gun = null
 			tooltip_flags &= ~REBUILD_ALWAYS
 			return 1
@@ -2645,7 +2638,7 @@ var/list/mechanics_telepads = new/list()
 				logTheThing("station", usr, null, "adds [W] to [src] at [log_loc(src)].")
 				usr.drop_item()
 				Gun = W
-				Gun.loc = src
+				Gun.set_loc(src)
 				tooltip_flags |= REBUILD_ALWAYS
 				return 1
 			else
@@ -2657,11 +2650,11 @@ var/list/mechanics_telepads = new/list()
 	proc/getTarget()
 		var/atom/trg = get_turf(src)
 		for(var/mob/living/L in trg)
-			return get_turf_loc(L)
+			return get_turf(L)
 		for(var/i=0, i<7, i++)
 			trg = get_step(trg, src.dir)
 			for(var/mob/living/L in trg)
-				return get_turf_loc(L)
+				return get_turf(L)
 		return get_edge_target_turf(src, src.dir)
 
 	proc/fire(var/datum/mechanicsMessage/input)
@@ -2775,7 +2768,7 @@ var/list/mechanics_telepads = new/list()
 	proc/removeInstrument(obj/item/W as obj, mob/user as mob)
 		if(instrument)
 			logTheThing("station", user, null, "removes [instrument] from [src] at [log_loc(src)].")
-			instrument.loc = get_turf(src)
+			instrument.set_loc(get_turf(src))
 			instrument = null
 			tooltip_rebuild = 1
 			return 1
@@ -2817,7 +2810,7 @@ var/list/mechanics_telepads = new/list()
 			boutput(usr, "You put [W] inside [src].")
 			logTheThing("station", usr, null, "adds [W] to [src] at [log_loc(src)].")
 			usr.drop_item()
-			instrument.loc = src
+			instrument.set_loc(src)
 			tooltip_rebuild = 1
 			return 1
 		return 0
@@ -2935,6 +2928,148 @@ var/list/mechanics_telepads = new/list()
 				return
 		if(. == .)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
+
+/obj/item/mechanics/association
+	name = "Association Component"
+	desc = ""
+	icon_state = "comp_ass"
+	var/list/map
+	var/mode = 0 // 0=Mutable, 1=Immutable, 2=List
+
+	New()
+		..()
+		map = list()
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "add association(s)", "addItems")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "remove association", "removeItem")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "send value", "sendValue")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set mode", "setMode")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "add association", "addItemManual")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "remove association", "removeItemManual")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "view all associations", "getMapAsString")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "clear all associations", "clear")
+
+	get_desc()
+		. += {"<br><span class='notice'>Mode: [mode == 0 ? "Mutable" : mode == 1 ? "Immutable" : "List"]<br>
+		[getDescAssociations()]</span>"}
+
+	proc/getDescAssociations()
+		var/list/mapLines = new/list()
+		var/endloop = min(10, map.len)
+		for (var/i = 1 to endloop)
+			if (!isnull(map[i]))
+				var/key = map[i]
+				var/val = map[key]
+				mapLines.Add("[key]: [val]")
+		if (map.len > 10)
+			mapLines.Add("Use a multitool to view all associations")
+		return length(mapLines) ? mapLines.Join("<br>") : ""
+
+	proc/getMapAsString(obj/item/W as obj, mob/user as mob)
+		var/list/mapLines = new/list()
+		for (var/key in map)
+			mapLines.Add("[key]: [map[key]]")
+		boutput(user, "[length(mapLines) ? mapLines.Join("<br>") : ""]")
+
+	proc/addItems(var/datum/mechanicsMessage/input)
+		if (level == 2 || !input) return
+		LIGHT_UP_HOUSING
+		var/list/inputList = params2list(input.signal)
+		var/added = 0
+		for (var/inputKey in inputList)
+			if (isnull(inputList[inputKey]) || inputList[inputKey] == "" || (islist(inputList[inputKey]) && inputList[inputKey][1] == "")) continue
+			var/list/inputValue = islist(inputList[inputKey]) ? inputList[inputKey] : list(inputList[inputKey])
+			if (mode == 0) // Mutable
+				if (isnull(map[inputKey])) map.Add(inputKey)
+				map[inputKey] = inputValue[1]
+				added = 1
+			else if (mode == 1) // Immutable
+				if (!isnull(map[inputKey])) continue
+				map.Add(inputKey)
+				map[inputKey] = inputValue[1]
+				added = 1
+			else // List
+				if (isnull(map[inputKey]))
+					map.Add(inputKey)
+					map[inputKey] = inputValue.Join(",")
+				else
+					map[inputKey] = "[map[inputKey]],[inputValue.Join(",")]"
+				added = 1
+
+		if (added)
+			animate_flash_color_fill(src,"#00FF00",2, 2)
+			tooltip_rebuild = 1
+
+	proc/removeItem(var/datum/mechanicsMessage/input)
+		if (level == 2 || !input) return
+		LIGHT_UP_HOUSING
+		if (isnull(map[input.signal])) return
+		map.Remove(input.signal)
+		animate_flash_color_fill(src,"#00FF00",2, 2)
+		tooltip_rebuild = 1
+
+	proc/sendValue(var/datum/mechanicsMessage/input)
+		if (level == 2 || !input) return
+		LIGHT_UP_HOUSING
+		if (isnull(map[input.signal])) return
+		input.signal = map[input.signal]
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
+		animate_flash_color_fill(src,"#00FF00",2, 2)
+
+	proc/setMode(obj/item/W as obj, mob/user as mob)
+		var/input = input(user, "Set mode", "Association Component") in list("Mutable", "Immutable", "List", "*CANCEL*")
+		if (!in_range(src, user) || user.stat) return 0
+		if (!input || input == "*CANCEL*") return 0
+		mode = input == "Mutable" ? 0 : input == "Immutable" ? 1 : 2
+		boutput(user, "Mode set to [input]")
+		tooltip_rebuild = 1
+		return 1
+
+	proc/addItemManual(obj/item/W as obj, mob/user as mob)
+		var/inputKey = input(user, "Add key", "Association Component") as text
+		if (isnull(inputKey)) return 0
+		var/inputValue = input(user, "Add value", "Association Component") as text
+		if (isnull(inputKey)) return 0
+		if (!in_range(src, user) || user.stat) return 0
+		if (mode == 0) // Mutable
+			if (isnull(map[inputKey])) map.Add(inputKey)
+			map[inputKey] = inputValue
+		else if (mode == 1) // Immutable
+			if (!isnull(map[inputKey]))
+				boutput(user, "IMMUTABLE MODE ERROR: An association already exists for that key")
+				return 0
+			map.Add(inputKey)
+			map[inputKey] = inputValue
+		else // List
+			if (isnull(map[inputKey]))
+				map.Add(inputKey)
+				map[inputKey] = inputValue
+			else
+				map[inputKey] = "[map[inputKey]],[inputValue]"
+		boutput(user, "Set value of [inputKey] to [map[inputKey]]")
+		tooltip_rebuild = 1
+		return 1
+
+	proc/removeItemManual(obj/item/W as obj, mob/user as mob)
+		if (!length(map))
+			boutput(user, "<span class='alert'>[src] has no associations - there's nothing to remove!</span>")
+			return 0
+		var/input = input(user, "Remove association", "Association Component") in map + "*CANCEL*"
+		if (!in_range(src, user) || user.stat) return 0
+		if (!input || input == "*CANCEL*") return 0
+		var/removedValue = map[input]
+		map.Remove(input)
+		boutput(user, "Removed key [input] and value [removedValue]")
+		tooltip_rebuild = 1
+		return 1
+
+	proc/clear(obj/item/W as obj, mob/user as mob)
+		map.Cut()
+		boutput(user, "Associations map cleared")
+		return 1
+
+	updateIcon()
+		icon_state = "[under_floor ? "u" : ""]comp_ass"
+		return
 
 /obj/mecharrow
 	name = ""

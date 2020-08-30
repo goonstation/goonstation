@@ -580,9 +580,8 @@
 				M.TakeDamageAccountArmor("chest", power * 1.3, 0, 0, DAMAGE_BLUNT)
 				M.remove_stamina(power)
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
-				SPAWN_DBG(0)
-					M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
-				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+				M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
+				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 				SPAWN_DBG(2.5 SECONDS)
 					if(M.health > 0)
 						vehicular_manslaughter = 0 //we now check if person was sent into crit after hit, if they did we get the achievement
@@ -596,7 +595,7 @@
 					var/turf/simulated/wall/T = target
 					T.dismantle_wall(1)
 
-				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 			else if (isobj(target) && power >= req_smash_velocity)
 				var/obj/O = target
 
@@ -627,7 +626,7 @@
 					var/obj/machinery/portable_atmospherics/canister/C = O
 					C.health -= power
 					C.healthcheck()
-				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 

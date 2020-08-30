@@ -307,7 +307,6 @@
 
 	pooled()
 		..()
-		loc = null
 		icon = null
 		icon_state = null
 

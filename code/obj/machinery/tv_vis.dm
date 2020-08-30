@@ -1,5 +1,5 @@
 /obj/landmark/boxing_ring
-	name = "boxing ring"
+	name = LANDMARK_BOXING_RING
 
 
 	//disabling this for now bcause somepotato says its costly on client fps stuff
@@ -80,7 +80,7 @@
 	//loops through world looking for appropriate cameras. currently using sunglasses/camera, should make upgradable HUD but I don't have access to that
 	proc/detect_cameras()
 		var/count = 1
-		for (var/obj/landmark/boxing_ring/BR in landmarks)
+		for(var/turf/BR in landmarks[LANDMARK_BOXING_RING])
 			cameras["HUD[count]"] = BR
 			count++
 			break

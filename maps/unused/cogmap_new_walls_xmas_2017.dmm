@@ -269,7 +269,7 @@
 "aaS" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -521,7 +521,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "abw" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/black,
@@ -11052,7 +11052,7 @@
 /area/station/crew_quarters/cafeteria)
 "ayL" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -11333,7 +11333,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics)
 "azo" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor,
@@ -14832,8 +14832,6 @@
 /area/station/security/main)
 "aGy" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "aGz" = (
@@ -18053,7 +18051,7 @@
 	},
 /area/station/crew_quarters/pool)
 "aMW" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/pool/no_animate,
@@ -26169,7 +26167,7 @@
 /area/station/crew_quarters/heads)
 "bdc" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -27520,7 +27518,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
@@ -28819,7 +28817,7 @@
 "bim" = (
 /obj/machinery/space_heater,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/purple/side{
 	dir = 5
@@ -34233,7 +34231,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor/carpet{
@@ -42842,7 +42840,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	d1 = 1;
@@ -44161,7 +44159,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "bMT" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor,
@@ -44986,7 +44984,7 @@
 	icon_state = "1-8"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
@@ -52065,7 +52063,7 @@
 	name = "Supply Lobby"
 	})
 "ccu" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor,
@@ -53288,7 +53286,7 @@
 	d1 = 1;
 	d2 = 2
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor,
@@ -56484,7 +56482,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -59221,7 +59219,7 @@
 /turf/simulated/floor/white,
 /area/station/chemistry)
 "cqu" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/purplewhite/corner{
@@ -62808,7 +62806,7 @@
 	},
 /area/station/medical/research)
 "cxr" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass{
@@ -63072,7 +63070,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cxS" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/light,

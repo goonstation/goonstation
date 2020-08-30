@@ -872,6 +872,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/werewolf/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/werewolf/left
 	ignore_missing_limbs = 0
+	var/old_client_color = null
 	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_SPECIAL_HEAD | BUILT_FROM_PIECES)
 	mutant_folder = 'icons/mob/werewolf.dmi'
 	special_head = HEAD_WEREWOLF
@@ -890,6 +891,10 @@
 
 			var/duration = 3000
 			var/datum/ailment_data/disease/D = mob.find_ailment_by_type(/datum/ailment/disease/lycanthropy/)
+
+			mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
+			mob.bioHolder.AddEffect("accent_scoob", null, null, 0, 1)
+
 			if(D)
 				D.cycles++
 				duration = rand(2000, 4000) * D.cycles
@@ -904,6 +909,8 @@
 			mob.remove_stam_mod_regen("werewolf")
 			mob.remove_stun_resist_mod("werewolf")
 			mob.max_health -= 30
+			mob.bioHolder.RemoveEffect("protanopia")
+			mob.bioHolder.RemoveEffect("accent_scoob")
 
 			if (!isnull(src.original_name))
 				mob.real_name = src.original_name

@@ -533,10 +533,7 @@
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
-	//sanctuary = 1//waka waka bang bang
 	teleport_blocked = 2
-	//blocked = 1
-	//blocked_waypoint = /obj/landmark/block_waypoint/shuttle
 
 /area/shuttle/arrival/pre_game
 	icon_state = "shuttle2"
@@ -681,9 +678,8 @@
 		if (!isobserver(Obj) && !isintangible(Obj) && !iswraith(Obj) && !istype(Obj,/obj/machinery/vehicle/escape_pod))
 			var/atom/target = get_edge_target_turf(src, src.throw_dir)
 			if (OldLoc && isturf(OldLoc))
-				SPAWN_DBG(0)
-					if (target && Obj)
-						Obj.throw_at(target, 1, 1)
+				if (target && Obj)
+					Obj?.throw_at(target, 1, 1)
 
 	Exited(atom/movable/Obj)
 		..()
@@ -3193,7 +3189,7 @@ area/station/security/visitation
 		for (var/obj/machinery/camera/C in orange(source, 7))
 			cameras += C
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/aiPlayer in AIs)
+		for (var/mob/living/silicon/aiPlayer in by_type[/mob/living/silicon/ai])
 			if (state == 1)
 				aiPlayer.cancelAlarm("Power", src, source)
 			else
@@ -3218,7 +3214,7 @@ area/station/security/visitation
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/ai/aiPlayer in AIs)
+		for (var/mob/living/silicon/ai/aiPlayer in by_type[/mob/living/silicon/ai])
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
 			LAGCHECK(LAG_HIGH)
 		for (var/obj/machinery/computer/atmosphere/alerts/a in machine_registry[MACHINES_ATMOSALERTS])
@@ -3237,7 +3233,7 @@ area/station/security/visitation
 		for (var/obj/machinery/firealarm/F in src)
 			F.icon_state = "fire0"
 			LAGCHECK(LAG_HIGH)
-		for (var/mob/living/silicon/ai/aiPlayer in AIs)
+		for (var/mob/living/silicon/ai/aiPlayer in by_type[/mob/living/silicon/ai])
 			aiPlayer.cancelAlarm("Fire", src, src)
 			LAGCHECK(LAG_HIGH)
 		for (var/obj/machinery/computer/atmosphere/alerts/a in machine_registry[MACHINES_ATMOSALERTS])

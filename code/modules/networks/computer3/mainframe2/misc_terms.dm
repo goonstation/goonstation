@@ -681,7 +681,7 @@
 	var/sim_delay = 300 //Time until next simulation.
 	power_usage = 200
 
-	var/vr_landmark = "bombtest-bomb" //Landmark where the ~vr bomb~ spawns.
+	var/vr_landmark = LANDMARK_VR_BOMB
 
 	power_change()
 		if(powered())
@@ -882,14 +882,14 @@
 			if(vrbomb)
 				qdel(vrbomb)
 
-			var/obj/landmark/B = locate("landmark*[vr_landmark]")
+			var/turf/B = pick_landmark(vr_landmark)
 			if(!B)
 				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
 				src.visible_message("[src] emits a somber ping.")
 				return
 
 			vrbomb = new
-			vrbomb.set_loc(B.loc)
+			vrbomb.set_loc(B)
 			vrbomb.anchored = 1
 			vrbomb.tester = src
 
@@ -3758,7 +3758,7 @@
 					to_toss.set_loc(src.loc)
 					src.visible_message("<b>[src.name]</b> launches [to_toss]!")
 					playsound(src.loc, "sound/effects/syringeproj.ogg", 50, 1)
-					to_toss.throw_at(get_edge_target_turf(src, src.dir), throw_strength, (throw_strength/50))
+					to_toss.throw_at(get_edge_target_turf(src, src.dir), throw_strength, throw_strength/50, bonus_throwforce=throw_strength/4)
 
 				if (!src.active)
 					src.visible_message("<b>[src.name]</b> pings.")
@@ -3914,15 +3914,15 @@
 
 		return
 
-	Bumped(M as mob|obj)
+	hitby(M as mob|obj)
 		if (src.density)
 			for (var/obj/item/I in src.loc.contents)
-				I.Bumped(M)
+				I.hitby(M)
 				if (istype(I.artifact,/datum/artifact/) && isitem(M))
 					var/obj/item/ITM = M
 					var/obj/ART = I
 					src.impactpad_senseforce(ART, ITM)
-				return
+		..()
 
 	bullet_act(var/obj/projectile/P)
 		if (src.density)
@@ -4132,7 +4132,7 @@
 
 						src.sensed[3] = A.react_elec[3]
 
-						if (A.artitype == "eldritch")
+						if (A.artitype.name == "eldritch")
 							src.sensed[3] += rand(-7,7)
 
 						for(var/datum/artifact_fault in A.faults)
@@ -4295,13 +4295,13 @@
 							// Density
 							var/density = A.react_xray[1]
 
-							if (A.artitype == "eldritch" && prob(33))
+							if (A.artitype.name == "eldritch" && prob(33))
 								var/randval = rand(-2,6)
 								if (prob(50))
 									density *= rand(-2,6)
 								else
 									density /= (randval == 0 ? 1 : randval)
-							if (A.artitype == "eldritch" && prob(6))
+							if (A.artitype.name == "eldritch" && prob(6))
 								density = 666
 
 							src.sensed[1] = density
@@ -4309,10 +4309,10 @@
 							// Structural Consistency
 							var/consistency = A.react_xray[2]
 
-							if (consistency > 85 && A.artitype == "martian")
+							if (consistency > 85 && A.artitype.name == "martian")
 								consistency = 85
 
-							if (A.artitype == "eldritch" && prob(20))
+							if (A.artitype.name == "eldritch" && prob(20))
 								consistency *= rand(2,6)
 
 							src.sensed[2] = consistency
@@ -4323,11 +4323,12 @@
 							for (var/datum/artifact_fault in A.faults)
 								integrity -= 7
 
-							if (A.artitype == "eldritch" && prob(33))
+							if (A.artitype.name == "eldritch" && prob(33))
 								if (prob(50)) integrity *= rand(2,4)
 								else integrity /= rand(2,4)
 
-							if (integrity > 80 && A.artitype == "martian")
+							if (integrity > 80 && A.artitype.name == "martian")
+
 								integrity = 80
 
 							if (integrity < 0) src.sensed[3] = "< 1"
@@ -4335,9 +4336,9 @@
 
 							// Radiation Response
 							var/responsive = A.react_xray[4]
-							if (A.artitype == "martian")
+							if (A.artitype.name == "martian")
 								responsive -= 3
-							if (A.artitype == "eldritch" && prob(33))
+							if (A.artitype.name == "eldritch" && prob(33))
 								responsive += rand(-2,2)
 							if (responsive <= src.radstrength)
 								src.sensed[4] = "WEAK RESPONSE"
@@ -4353,11 +4354,11 @@
 
 							// Special Features
 							src.sensed[5] = A.react_xray[5]
-							if (A.artitype == "martian")
+							if (A.artitype.name == "martian")
 								src.sensed[5] += ",ORGANIC"
 							if (M.contents.len)
 								src.sensed[5] += ",CONTAINS OTHER OBJECT"
-							if (A.artitype == "eldritch" && prob(6))
+							if (A.artitype.name == "eldritch" && prob(6))
 								src.sensed[5] = "ERROR"
 
 							M.ArtifactStimulus("radiate", src.radstrength)

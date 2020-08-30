@@ -81,7 +81,7 @@
 			if("uranium")
 				src.ArtifactStimulus("radiate", round(volume / 2))
 			if("dna_mutagen","mutagen","omega_mutagen")
-				if (A.artitype == "martian")
+				if (A.artitype.name == "martian")
 					ArtifactDevelopFault(80)
 			if("phlogiston","dbreath","el_diablo","thermite","thalmerite","argine")
 				src.ArtifactStimulus("heat", 310 + (volume * 5))
@@ -134,7 +134,7 @@
 				src.ArtifactStimulus("radiate", P.power)
 		..()
 
-	Bumped(M as mob|obj)
+	hitby(M as mob|obj)
 		if (isitem(M))
 			var/obj/item/ITM = M
 			src.ArtifactStimulus("force", ITM.throwforce)
@@ -231,7 +231,7 @@
 			if("uranium")
 				src.ArtifactStimulus("radiate", round(volume / 2))
 			if("dna_mutagen","mutagen","omega_mutagen")
-				if (A.artitype == "martian")
+				if (A.artitype.name == "martian")
 					ArtifactDevelopFault(80)
 			if("phlogiston","dbreath","el_diablo")
 				src.ArtifactStimulus("heat", 310 + (volume * 5))
@@ -281,7 +281,7 @@
 				src.ArtifactStimulus("radiate", P.power)
 		..()
 
-	Bumped(M as mob|obj)
+	hitby(M as mob|obj)
 		if (isitem(M))
 			var/obj/item/ITM = M
 			src.ArtifactStimulus("force", ITM.throwforce)
@@ -325,6 +325,14 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.Artifact_attackby(W,user))
 			..()
+
+	hitby(M as mob|obj)
+		if (isitem(M))
+			var/obj/item/ITM = M
+			src.ArtifactStimulus("force", ITM.throwforce)
+			for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
+				I.impactpad_senseforce(src, ITM)
+		..()
 
 /obj/artifact_spawner
 	// pretty much entirely for debugging/gimmick use

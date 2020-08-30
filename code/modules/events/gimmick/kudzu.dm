@@ -54,10 +54,10 @@
 
 	event_effect(var/source, var/aggressive, var/startturf)
 		..()
-		if ((!islist(kudzustart) || !kudzustart.len) && !isturf(startturf))
+		if (!landmarks[LANDMARK_KUDZUSTART] && !isturf(startturf))
 			message_admins("Error starting event, no kudzu start landmarks. Process aborted.")
 			return
-		var/kudzloc = isturf(startturf) ? startturf : pick(kudzustart)
+		var/kudzloc = isturf(startturf) ? startturf : pick_landmark(LANDMARK_KUDZUSTART)
 		if (prob(1) || aggressive)
 			var/obj/spacevine/alien/living/L = new /obj/spacevine/alien/living(kudzloc, KUDZU_TO_SPREAD_INITIAL)
 			L.set_loc(kudzloc)

@@ -12,9 +12,6 @@ turf
 
 	simulated
 		hotspot_expose(exposed_temperature, exposed_volume, soh,electric = 0)
-			if (src == ff_debug_turf && ff_debugger)
-				boutput(ff_debugger, "<span style='color:#ff8800'>Fireflash affecting tile at [showCoords(x, y, z)]</span>")
-
 			var/datum/gas_mixture/air_contents = return_air()
 			if(src.material)
 				src.material.triggerTemp(src, exposed_temperature)
@@ -25,7 +22,7 @@ turf
 			if (electric) //mbc : i'm putting electric zaps on here because eleczaps ALWAYS happen alongside hotspot expose and i dont want to loop all atoms twice
 				for(var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.
 					item.temperature_expose(null, exposed_temperature, exposed_volume)
-					if (item.flags & FLUID_SUBMERGE)
+					if (item?.flags & FLUID_SUBMERGE)
 						item.electric_expose(electric)
 			else
 				for(var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.

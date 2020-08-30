@@ -1703,7 +1703,7 @@
 /turf/simulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "ep" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_syndicate"
 	},
 /obj/cable{

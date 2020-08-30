@@ -69,7 +69,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			var/mob/living/carbon/human/H = M
 			equip_success = 1
 			var/obj/I = new path(H.loc)
-			I.name = "[H.real_name][pick(trinket_names)] [I.name]"
+			I.name = "[H.real_name][pick_string("trinkets.txt", "modifiers")] [I.name]"
 			I.quality = rand(5,80)
 			var/equipped = 0
 			if (istype(H.back, /obj/item/storage) && H.equip_if_possible(I, H.slot_in_backpack))

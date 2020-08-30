@@ -415,7 +415,7 @@ td {
 				show_interface(usr.client, D)
 				return
 			D.tools += current
-			current.loc = D
+			current.set_loc(D)
 			current = null
 			boutput(usr, "<span class='notice'>Added item to module!</span>")
 		show_interface(usr.client, D)
@@ -692,3 +692,19 @@ var/global/list/module_editors = list()
 
 /mob/living/silicon/electric_expose(var/power = 1)
 	return 0
+
+/mob/living/silicon/hitby(atom/movable/AM)
+	. = ..()
+
+	src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
+	logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+	random_brute_damage(src, AM.throwforce,1)
+
+	#ifdef DATALOGGER
+	game_stats.Increment("violence")
+	#endif
+
+	if(AM.throwforce >= 40)
+		src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
+
+	. = 'sound/impact_sounds/Metal_Clang_3.ogg'

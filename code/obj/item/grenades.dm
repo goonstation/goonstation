@@ -148,8 +148,7 @@ PIPE BOMBS + CONSTRUCTION
 				var/atom/movable/thing = new payload(T)
 				var/turf/target = locate(T.x + rand(-4, 4), T.y + rand(-4, 4), T.z)
 				if(target)
-					SPAWN_DBG(0)
-						thing.throw_at(target, rand(0, 10), rand(1, 4))
+					thing.throw_at(target, rand(0, 10), rand(1, 4))
 		qdel(src)
 		return
 
@@ -1155,7 +1154,7 @@ PIPE BOMBS + CONSTRUCTION
 				boutput(user, "<span class='notice'>You stuff [W] into the [item_mods.len == 0 ? "first" : "second"] pipe.</span>")
 				item_mods += W
 				user.u_equip(W)
-				W.loc = src
+				W.set_loc(src)
 
 		if(istype(W, /obj/item/reagent_containers/) && state == 2)
 			var/ok = 0
@@ -1364,8 +1363,7 @@ PIPE BOMBS + CONSTRUCTION
 							var/yank_distance = 1
 							if (prob(50))
 								yank_distance = 2
-							SPAWN_DBG(0)
-								M.throw_at(T, yank_distance, 2)
+							M.throw_at(T, yank_distance, 2)
 				for (var/obj/O in view(1,src.loc))
 					O.throw_at(T, 2, 2)
 			if (extra_shrapnel)
@@ -1468,9 +1466,7 @@ PIPE BOMBS + CONSTRUCTION
 		for (var/i = 1, i <= how_many_miniatures, i++)
 			var/obj/critter/gunbot/drone/miniature_syndie/O = new /obj/critter/gunbot/drone/miniature_syndie(get_turf(src))
 			var/atom/target = get_edge_target_turf(src, pick(alldirs))
-			SPAWN_DBG(0)
-				O.throw_at(target,4,3)
-				//O.process
+			O.throw_at(target,4,3)
 
 		..()
 

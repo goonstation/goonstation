@@ -4122,7 +4122,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor,
@@ -8521,7 +8521,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /turf/simulated/floor/grime,
@@ -31671,25 +31671,25 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bfv" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "bfw" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/observatory)
 "bfx" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor,
 /area/station/hydroponics)
 "bfy" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor,
@@ -31697,7 +31697,7 @@
 	name = "Supply Lobby"
 	})
 "bfz" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/light,
@@ -31706,7 +31706,7 @@
 	},
 /area/station/medical/research)
 "bfA" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass{
@@ -31714,7 +31714,7 @@
 	},
 /area/station/medical/research)
 "bfB" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/purplewhite/corner{
@@ -31722,7 +31722,7 @@
 	},
 /area/station/chemistry)
 "bfC" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /turf/simulated/pool/no_animate,
@@ -33076,7 +33076,7 @@
 /area/station/crew_quarters/cafeteria)
 "biC" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -55394,7 +55394,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor/carpet{
@@ -56466,8 +56466,6 @@
 /area/station/crew_quarters/locker)
 "cel" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/head/helmet/siren,
-/obj/item/clothing/head/helmet/siren,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "cem" = (

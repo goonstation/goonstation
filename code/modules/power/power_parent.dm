@@ -84,7 +84,7 @@ var/makingpowernetssince = 0
 	var/netcount = 0
 	powernets = list()
 
-	for(var/obj/cable/PC in allcables)
+	for(var/obj/cable/PC in by_type[/obj/cable])
 		PC.netnum = 0
 	LAGCHECK(LAG_MED)
 
@@ -93,13 +93,10 @@ var/makingpowernetssince = 0
 			M.netnum = 0
 	LAGCHECK(LAG_MED)
 
-	for(var/obj/cable/PC in allcables)
+	for(var/obj/cable/PC in by_type[/obj/cable])
 		if(!PC.netnum)
-			if(Debug) world.log << "Starting mpn at [PC.x],[PC.y] ([PC.d1]/[PC.d2]) #[netcount]"
 			powernet_nextlink(PC, ++netcount)
 		LAGCHECK(LAG_MED)
-
-	if(Debug) world.log << "[netcount] powernets found"
 
 	for(var/L = 1 to netcount)
 		var/datum/powernet/PN = new()
@@ -107,7 +104,7 @@ var/makingpowernetssince = 0
 		powernets += PN
 		PN.number = L
 
-	for(var/obj/cable/C in allcables)
+	for(var/obj/cable/C in by_type[/obj/cable])
 		if(!C.netnum) continue
 		var/datum/powernet/PN = powernets[C.netnum]
 		PN.cables += C
@@ -288,16 +285,9 @@ var/makingpowernetssince = 0
 
 	var/list/P2 = power_list(T2, C, C.d2)	// what joins on to cut cable in dir2
 
-	if(Debug)
-		for(var/obj/O in P1)
-			world.log << "P1: [O] at [O.x] [O.y] : [istype(O, /obj/cable) ? "[O:d1]/[O:d2]" : null] "
-		for(var/obj/O in P2)
-			world.log << "P2: [O] at [O.x] [O.y] : [istype(O, /obj/cable) ? "[O:d1]/[O:d2]" : null] "
-
 	if(P1.len == 0 || P2.len ==0)			// if nothing in either list, then the cable was an endpoint
 											// no need to rebuild the powernet, just remove cut cable from the list
 		cables -= C
-		if(Debug) world.log << "Was end of cable"
 		return
 
 	if(makingpowernets)
@@ -343,8 +333,6 @@ var/makingpowernetssince = 0
 		powernets += PN
 		PN.number = powernets.len
 
-		if(Debug) world.log << "Was not looped: spliting PN#[number] ([cables.len];[nodes.len])"
-
 		for(var/obj/cable/OC in cables)
 			if(!OC.netnum)		// non-connected cables will have netnum==0, since they weren't reached by propagation
 				OC.netnum = PN.number
@@ -363,13 +351,7 @@ var/makingpowernetssince = 0
 					PN.data_nodes += OM
 			LAGCHECK(LAG_MED)
 
-		if(Debug)
-			world.log << "Old PN#[number] : ([cables.len];[nodes.len])"
-			world.log << "New PN#[PN.number] : ([PN.cables.len];[PN.nodes.len])"
-
 	else
-		if(Debug)
-			world.log << "Was looped."
 		//there is a loop, so nothing to be done
 		return
 

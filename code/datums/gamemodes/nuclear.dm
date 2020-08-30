@@ -28,10 +28,9 @@
 	boutput(world, "<B>[syndicate_name()] operatives are approaching [station_name(1)]! They intend to destroy the [station_or_ship()] with a nuclear warhead.</B>")
 
 /datum/game_mode/nuclear/pre_setup()
-	var/the_spawn = syndicatestart && islist(syndicatestart) && syndicatestart.len ? pick(syndicatestart) : null
 	var/list/possible_syndicates = list()
 
-	if (!the_spawn)
+	if (!landmarks[LANDMARK_SYNDICATE])
 		boutput(world, "<span class='alert'><b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b></span>")
 		return 0
 
@@ -168,10 +167,6 @@
 	return 1
 
 /datum/game_mode/nuclear/post_setup()
-	var/synd_spawn = pick(syndicatestart)
-	var/obj/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
-	var/obj/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
-
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
 	var/leader_selected = 0
 
@@ -180,9 +175,6 @@
 	var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
 
 	for(var/datum/mind/synd_mind in syndicates)
-		synd_spawn = pick(syndicatestart) // So they don't all spawn on the same tile.
-		synd_mind.current.set_loc(synd_spawn)
-
 		bestow_objective(synd_mind,/datum/objective/specialist/nuclear)
 
 		var/obj_count = 1
@@ -195,6 +187,9 @@
 		boutput(synd_mind.current, "We have identified a major structural weakness in the [station_or_ship()]'s design. Arm the bomb in <B>[src.target_location_name]</B> to obliterate [station_name(1)].")
 
 		if(!leader_selected)
+			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE_BOSS))
+			if(!synd_mind.current.loc)
+				synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 			equip_syndicate(synd_mind.current, 1)
 			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, target_location_name)
@@ -205,6 +200,7 @@
 				new /obj/item/pinpointer/disk(synd_mind.current.loc)
 			leader_selected = 1
 		else
+			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			var/callsign = pick(callsign_list)
 			synd_mind.current.real_name = "[syndicate_name()] Operative [callsign]" //new naming scheme
 			callsign_list -= callsign
@@ -214,32 +210,16 @@
 		synd_mind.current.antagonist_overlay_refresh(1, 0)
 		SHOW_NUKEOP_TIPS(synd_mind.current)
 
-	if(nuke_spawn)
-		the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
+	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
+	new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
 
-	if(closet_spawn)
-		new /obj/storage/closet/syndicate/nuclear(closet_spawn.loc)
-
-	for (var/obj/landmark/A in landmarks)//world)
-		LAGCHECK(LAG_LOW)
-		if (A.name == "Syndicate-Gear-Closet")
-			new /obj/storage/closet/syndicate/personal(A.loc)
-			A.dispose()
-			continue
-
-		if (A.name == "Syndicate-Bomb")
-			new /obj/spawner/newbomb/timer/syndicate(A.loc)
-			A.dispose()
-			continue
-
-		if (A.name == "Breaching-Charges")
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			A.dispose()
-			continue
+	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_GEAR_CLOSET])
+		new /obj/storage/closet/syndicate/personal(T)
+	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BOMB])
+	new /obj/spawner/newbomb/timer/syndicate(pick_landmark(LANDMARK_SYNDICATE_BOMB))
+	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BREACHING_CHARGES])
+		for(var/i = 1 to 5)
+			new /obj/item/breaching_charge/thermite(T)
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
@@ -426,7 +406,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(ticker.minds))
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")

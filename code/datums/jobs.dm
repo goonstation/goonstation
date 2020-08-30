@@ -54,6 +54,7 @@
 	var/objective = null
 	var/spawn_miscreant = 0
 	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
+	var/map_can_autooverride = 1 // if set to 0 map can't change limit on this job automatically (it can still set it manually)
 
 	New()
 		..()
@@ -97,7 +98,7 @@
 				I.implanted(M)
 
 			if (src.special_spawn_location && !no_special_spawn)
-				M.loc = locate(spawn_x,spawn_y,spawn_z)
+				M.set_loc(locate(spawn_x,spawn_y,spawn_z))
 
 			if (ishuman(M) && src.bio_effects)
 				var/list/picklist = params2list(src.bio_effects)
@@ -894,6 +895,7 @@
 	no_jobban_from_this_job = 1
 	low_priority_job = 1
 	cant_allocate_unwanted = 1
+	map_can_autooverride = 0
 	slot_jump = /obj/item/clothing/under/rank
 	slot_foot = /obj/item/clothing/shoes/black
 

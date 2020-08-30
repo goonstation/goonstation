@@ -164,7 +164,7 @@
 		else
 			remove_stage = 3
 
-		object.loc = src.holder.loc
+		object.set_loc(src.holder.loc)
 		var/direction = src.holder.dir
 
 		//https://forum.ss13.co/showthread.php?tid=1774

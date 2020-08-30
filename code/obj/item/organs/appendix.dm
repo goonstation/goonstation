@@ -27,7 +27,7 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() < FAIL_DAMAGE && prob(10 * mult))
+		if (src.get_damage() < FAIL_DAMAGE && prob(percentmult(10, mult)))
 			var/reagID = pick("saline", "salbutamol", "salicylic_acid", "charcoal")
 			donor.reagents.add_reagent(reagID, reagID == "salicyclic_acid" ? 3 : 4) //salicyclic has very low depletion, reduce chances of overdose
 
@@ -37,7 +37,7 @@
 			donor.setStatus("weakened", 3 SECONDS)
 
 			donor.reagents.add_reagent("salbutamol", 20) //copied mostly from robusttec
-			donor.reagents.add_reagent("epinephrine", 15) 
+			donor.reagents.add_reagent("epinephrine", 15)
 			donor.reagents.add_reagent("omnizine", 15) //reduced omnizine amount
 			donor.reagents.add_reagent("teporone", 20)
 			#ifdef CREATE_PATHOGENS

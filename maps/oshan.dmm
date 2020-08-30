@@ -220,7 +220,7 @@
 /obj/rack,
 /obj/item/clothing/under/misc/tourist,
 /obj/item/storage/belt/hunter,
-/turf/space/fluid,
+/turf/simulated/floor/damaged1,
 /turf/simulated/floor/airless/plating/damaged2,
 /area)
 "aaB" = (
@@ -243,12 +243,12 @@
 	on = 1
 	},
 /obj/item/pen/fancy,
-/turf/space,
+/turf/simulated/floor/damaged1,
 /turf/simulated/floor/airless/plating/damaged2,
 /area)
 "aaE" = (
 /obj/machinery/light/small/floor/warm,
-/turf/space,
+/turf/simulated/floor/damaged1,
 /turf/simulated/floor/airless/plating/damaged2,
 /area)
 "aaF" = (
@@ -785,7 +785,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/brig,
-/turf/simulated/floor/airless/stairs/wide,
+/turf/simulated/floor/stairs/wide,
 /area/station/hallway/primary/east)
 "abO" = (
 /obj/machinery/door_control{
@@ -3182,7 +3182,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/airless/stairs/wide/middle,
+/turf/simulated/floor/stairs/wide/middle,
 /area/station/hallway/primary/east)
 "agG" = (
 /obj/machinery/microscope,
@@ -4213,9 +4213,7 @@
 	})
 "ajb" = (
 /obj/storage/secure/closet/animal,
-/obj/landmark{
-	name = "monkeyspawn_inside"
-	},
+/obj/landmark/spawner/inside/monkey,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 26;
@@ -5152,7 +5150,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "alm" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/overlay{
@@ -5713,7 +5711,7 @@
 	},
 /area/station/medical/dome)
 "amo" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/machinery/light/incandescent/warm,
@@ -7488,6 +7486,10 @@
 /area/station/security/main)
 "aql" = (
 /obj/table/reinforced/auto,
+/obj/machinery/defib_mount{
+	pixel_x = -2;
+	pixel_y = 2
+	},
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/syringe,
 /obj/machinery/light/incandescent/cool,
@@ -12333,7 +12335,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/cable{
@@ -13183,18 +13185,6 @@
 /area/station/science/teleporter)
 "aDD" = (
 /obj/storage/crate/adventure,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/sandwich/pb,
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom"
-	},
-/obj/item/paper/book/critter_compendium,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 5
 	},
@@ -17101,7 +17091,7 @@
 	name = "Catering Hangar"
 	})
 "aMH" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor/grass,
@@ -19960,7 +19950,7 @@
 /turf/space/fluid,
 /area)
 "aTv" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "seamonkeyspawn"
 	},
 /turf/space/fluid,
@@ -21082,8 +21072,8 @@
 /obj/item/fish/salmon,
 /obj/item/fish/salmon,
 /obj/item/fish/salmon,
-/obj/landmark/artifact/cannabis_seed,
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
+/obj/item/seed/cannabis,
 /turf/simulated/martian/floor,
 /area)
 "aWJ" = (
@@ -26883,7 +26873,7 @@
 	},
 /area/station/crew_quarters/bar)
 "bkZ" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -27170,7 +27160,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor,
@@ -27819,7 +27809,7 @@
 	name = "mechanics mail router"
 	},
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/airless/stairs/wide/other,
+/turf/simulated/floor/stairs/wide/other,
 /area/station/hallway/primary/east)
 "bns" = (
 /obj/disposalpipe/segment,
@@ -29951,7 +29941,7 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor/black,
@@ -30280,7 +30270,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "btk" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
 /obj/landmark/boxing_ring,
@@ -34340,7 +34330,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bCX" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor,
@@ -38144,7 +38134,7 @@
 /turf/simulated/floor/bot,
 /area/station/security/checkpoint/sec_foyer)
 "bMk" = (
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /turf/simulated/floor/grass,
 /area)
 "bMl" = (
@@ -38666,7 +38656,7 @@
 	},
 /area/station/crew_quarters/courtroom)
 "bNF" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor/wood,
@@ -38692,7 +38682,7 @@
 /turf/simulated/floor/grass,
 /area)
 "bNJ" = (
-/turf/space/fluid,
+/turf/simulated/floor/damaged1,
 /turf/simulated/floor/airless/plating/damaged2,
 /area)
 "bNK" = (
@@ -38871,7 +38861,7 @@
 /obj/shrub{
 	dir = 10
 	},
-/obj/landmark/artifact/seed,
+/obj/item/seed/alien,
 /obj/item/seed/cannabis,
 /obj/item/seed/cannabis,
 /turf/simulated/floor/black,
@@ -38919,7 +38909,7 @@
 	},
 /area/station/quartermaster/refinery)
 "bOo" = (
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bOp" = (
 /obj/wingrille_spawn/auto,
@@ -38943,7 +38933,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bOu" = (
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "monkeyspawn_stirstir"
 	},
 /obj/disposalpipe/segment/brig,
@@ -39046,7 +39036,7 @@
 /area/station/medical/staff)
 "bOI" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/plating/damaged1,
+/turf/simulated/floor/damaged1,
 /area)
 "bOJ" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
@@ -39058,7 +39048,7 @@
 /area/station/storage/emergency2)
 "bOL" = (
 /obj/rack,
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bOM" = (
 /obj/cable{
@@ -39180,7 +39170,7 @@
 	icon = 'icons/turf/shuttle.dmi';
 	name = "rusted hatch"
 	},
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bPa" = (
 /obj/decal/fakeobjects/operatorconsole,
@@ -39381,12 +39371,12 @@
 /area)
 "bPy" = (
 /obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bPz" = (
 /obj/item/clothing/suit/space/santa,
 /obj/item/clothing/head/helmet/space/santahat,
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bPA" = (
 /obj/machinery/door/airlock/pyro/security/alt{
@@ -39650,7 +39640,7 @@
 /obj/item/reagent_containers/food/snacks/ice_cream_cone,
 /obj/item/reagent_containers/food/snacks/ice_cream_cone,
 /obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bQd" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
@@ -39984,7 +39974,7 @@
 "bQP" = (
 /obj/table/wood,
 /obj/item/reagent_containers/food/snacks/steak_h,
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bQQ" = (
 /obj/stool/chair/red{
@@ -40499,7 +40489,7 @@
 /area)
 "bRW" = (
 /obj/stool,
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bRX" = (
 /obj/item/paper,
@@ -40633,7 +40623,7 @@
 /obj/table/wood,
 /obj/item/device/igniter,
 /obj/item/cigpacket/menthol,
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area)
 "bSq" = (
 /obj/decal/cleanable/dirt,
@@ -43762,7 +43752,7 @@
 /obj/stool/chair/wooden{
 	dir = 8
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "father_jack"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -43847,7 +43837,7 @@
 /area/diner/bathroom)
 "cbc" = (
 /obj/stool/chair/wooden,
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "don_glab"
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -43889,7 +43879,7 @@
 	icon_state = "gangtag22";
 	pixel_x = 28
 	},
-/obj/landmark/artifact/cannabis_seed,
+/obj/item/seed/cannabis,
 /obj/machinery/light/incandescent/small{
 	dir = 4
 	},
@@ -43961,7 +43951,7 @@
 /obj/stool/chair/wooden{
 	dir = 4
 	},
-/obj/landmark{
+/obj/landmark/spawner{
 	name = "shitty_bill"
 	},
 /turf/simulated/floor/specialroom/bar,

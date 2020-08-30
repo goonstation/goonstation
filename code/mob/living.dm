@@ -232,6 +232,50 @@
 
 	return ..(gibbed)
 
+/mob/living/verb/afterlife_bar()
+	set src = usr
+	set hidden = TRUE
+	set name = "Afterlife Bar"
+	if(isdead(src))
+		var/mob/dead/observer/ghost = src.ghostize()
+		usr = ghost
+		ghost.go_to_deadbar()
+	else
+		boutput(usr, "<span class='alert'>You are not dead yet!</span>")
+
+/mob/living/verb/enter_ghostdrone_queue()
+	set src = usr
+	set hidden = TRUE
+	set name = "Enter Ghostdrone Queue"
+	if(isdead(src))
+		var/mob/dead/observer/ghost = src.ghostize()
+		usr = ghost
+		ghost.enter_ghostdrone_queue()
+	else
+		boutput(usr, "<span class='alert'>You are not dead yet!</span>")
+
+/mob/living/verb/enter_vr()
+	set src = usr
+	set hidden = TRUE
+	set name = "Enter VR"
+	if(isdead(src))
+		var/mob/dead/observer/ghost = src.ghostize()
+		usr = ghost
+		ghost.go_to_vr()
+	else
+		boutput(usr, "<span class='alert'>You are not dead yet!</span>")
+
+/mob/living/verb/respawn_as_animal()
+	set src = usr
+	set hidden = TRUE
+	set name = "Respawn as Animal"
+	if(isdead(src))
+		var/mob/dead/observer/ghost = src.ghostize()
+		usr = ghost
+		ghost.respawn_as_animal()
+	else
+		boutput(usr, "<span class='alert'>You are not dead yet!</span>")
+
 /mob/living/Login()
 	..()
 	if(!isdead(src))
@@ -1749,3 +1793,12 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	return shock_damage
 
+/mob/living/hitby(atom/movable/AM)
+	. = 'sound/impact_sounds/Generic_Hit_2.ogg'
+	actions.interrupt(src, INTERRUPT_ATTACKED)
+	if (src.can_bleed && isitem(AM))
+		var/obj/item/I = AM
+		if ((I.hit_type == DAMAGE_STAB && prob(20)) || (I.hit_type == DAMAGE_CUT && prob(40)))
+			take_bleeding_damage(src, null, I.throwforce * 0.5, I.hit_type)
+			. = 'sound/impact_sounds/Flesh_Stab_3.ogg'
+	..()
