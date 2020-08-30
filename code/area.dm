@@ -2918,6 +2918,11 @@ area/station/security/visitation
 	sound_environment = 12
 	do_not_irradiate = 1
 
+/area/station/turret_protected/ai_module_storage
+	name = "AI Module Storage"
+	icon_state = "ai_module_storage"
+	sound_environment = 12
+
 /area/station/turret_protected/ai_upload_foyer
 	name = "AI Upload Foyer"
 	icon_state = "ai_foyer"
@@ -2936,7 +2941,7 @@ area/station/security/visitation
 
 /area/station/turret_protected/AIsat
 	name = "AI Satellite"
-	icon_state = "ai_chamber"
+	icon_state = "ai_satellite"
 	sound_environment = 12
 	do_not_irradiate = 1
 
