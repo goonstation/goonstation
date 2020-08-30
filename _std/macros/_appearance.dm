@@ -14,7 +14,7 @@
 #define HEAD_RELI 12
 
 //tail defines
-#define TAIL_HUMAN 0
+#define TAIL_NONE 0
 #define TAIL_MONKEY 1
 #define TAIL_LIZARD 2
 #define TAIL_COW 3
