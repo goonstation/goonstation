@@ -3,34 +3,29 @@
 #define BARBERY_FAILURE 4	// if barbering is not successful and does not display a message
 #define BARBERY_SUCCESSFUL 1 // if barbering is successful, don't attack em
 #define BARBERY_RESOLVABLE 2 // if barbering is not successful, but gives a message
+#define TOOLMODE_DEACTIVATED SOUTH // points the thing to its default direction when not-tool
+#define TOOLMODE_ACTIVATED WEST // flips around the grip to point this way when tool
 
 /datum/component/toggle_tool_use
 /datum/component/toggle_tool_use/Initialize()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/on_drop)
-	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/on_attackself)
+	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle_force_use_as_tool)
 
 	// this proc is supposed to make certain tools less accidentally deadly for inexperienced players to use
 	// when force_use_as_tool is set, all intents will try to do their tool-thing, and if it can't, return a message saying they're using it wrong
 	// if not set, help intent will still attempt tool, but you'll shank them if it doesn't work out
 /datum/component/toggle_tool_use/proc/on_drop(var/obj/item/thing, mob/user)
 	thing.force_use_as_tool = 0
-	thing.dir = SOUTH
-
-/datum/component/toggle_tool_use/proc/on_attackself(var/obj/item/thing, mob/user)
-	toggle_force_use_as_tool(thing, user)
+	thing.dir = TOOLMODE_DEACTIVATED
 
 /datum/component/toggle_tool_use/proc/toggle_force_use_as_tool(var/obj/item/thing, mob/user)
-	if(!user)
-		thing.force_use_as_tool = 0
-		thing.dir = SOUTH
-		return
 	thing.force_use_as_tool = !thing.force_use_as_tool
 	if (thing.force_use_as_tool)
-		thing.dir = WEST
+		thing.dir = TOOLMODE_ACTIVATED // We're just flipping the tool around to we don't hurt anyone
 	else
-		thing.dir = SOUTH
+		thing.dir = TOOLMODE_DEACTIVATED // Flip it back around so we can actually hurt people if we want to
 
 	var/list/cool_grip_adj = list("a sick", "a wicked", "a deadly", "a menacing", "an edgy", "a tacticool", "a sweaty", "an awkward")
 	var/list/cool_grip1 = list("combat", "fightlord", "guerilla", "hidden", "space", "syndie", "double-reverse", "\"triple-dog-dare-ya\"", "stain-buster's")
@@ -162,12 +157,16 @@
 		if (new_style)
 			if((new_style in full) && (!(M.bioHolder.mobAppearance.customization_second in full)))
 				boutput(user, "<span class='alert'>[M] doesn't have enough facial hair!</span>")
+				return
 			if((new_style in beards) && (M.bioHolder.mobAppearance.customization_second in mustaches))
 				boutput(user, "<span class='alert'>[M] doesn't have a beard!</span>")
+				return
 			if((new_style in mustaches) && (M.bioHolder.mobAppearance.customization_second in beards))
 				boutput(user, "<span class='alert'>[M] doesn't have a mustache!</span>")
+				return
 		else
 			boutput(user, "Never mind.")
+			return
 		actions.start(new/datum/action/bar/shave(M, user, get_barbery_conditions(M, user), new_style), user)
 
 	return ATTACK_PRE_DONT_ATTACK
@@ -604,3 +603,5 @@
 #undef BARBERY_FAILURE
 #undef BARBERY_SUCCESSFUL
 #undef BARBERY_RESOLVABLE
+#undef TOOLMODE_DEACTIVATED
+#undef TOOLMODE_ACTIVATED

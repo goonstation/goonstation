@@ -97,6 +97,7 @@
 	attack(mob/M as mob, mob/user as mob)
 		if (scalpel_surgery(M, user))
 			return 1
+		..()
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
