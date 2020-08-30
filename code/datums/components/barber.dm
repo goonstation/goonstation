@@ -15,7 +15,8 @@
 	// when force_use_as_tool is set, all intents will try to do their tool-thing, and if it can't, return a message saying they're using it wrong
 	// if not set, help intent will still attempt tool, but you'll shank them if it doesn't work out
 /datum/component/toggle_tool_use/proc/on_drop(var/obj/item/thing, mob/user)
-	toggle_force_use_as_tool(thing)
+	thing.force_use_as_tool = 0
+	thing.dir = SOUTH
 
 /datum/component/toggle_tool_use/proc/on_attackself(var/obj/item/thing, mob/user)
 	toggle_force_use_as_tool(thing, user)
