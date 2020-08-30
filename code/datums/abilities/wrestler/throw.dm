@@ -118,16 +118,15 @@
 
 			var/turf/T = get_edge_target_turf(M, M.dir)
 			if (T && isturf(T))
-				SPAWN_DBG(0)
-					if (!isdead(HH))
-						HH.emote("scream")
-					if (!fake)
-						HH.throw_at(T, 10, 4)
-						HH.changeStatus("weakened", 2 SECONDS)
-						HH.force_laydown_standup()
-						HH.change_misstep_chance(33)
-					else
-						HH.throw_at(T, 3, 1)
+				if (!isdead(HH))
+					HH.emote("scream")
+				if (!fake)
+					HH.throw_at(T, 10, 4)
+					HH.changeStatus("weakened", 2 SECONDS)
+					HH.force_laydown_standup()
+					HH.change_misstep_chance(33)
+				else
+					HH.throw_at(T, 3, 1)
 
 
 			logTheThing("combat", M, HH, "uses the [fake ? "fake " : ""]throw wrestling move on [constructTarget(HH,"combat")] at [log_loc(M)].")

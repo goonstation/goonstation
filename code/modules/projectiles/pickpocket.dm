@@ -124,7 +124,7 @@
 						hat.set_loc(M.loc)
 						hat.dropped(M)
 						hat.layer = initial(hat.layer)
-						SPAWN_DBG(0) hat.throw_at(get_edge_target_turf(hat, pick(alldirs)), 50, 1) // Using gravitor accelerator figures because why not
+						hat.throw_at(get_edge_target_turf(hat, pick(alldirs)), 50, 1) // Using gravitor accelerator figures because why not
 					else if (M.glasses) // Smash eyewear
 						var/obj/item/clothing/glasses/broke = M.glasses
 						boutput(M, "Your [broke] is ripped from your face and crushed into pieces! What the hell!")

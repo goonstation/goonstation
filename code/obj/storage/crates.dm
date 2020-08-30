@@ -19,7 +19,9 @@
 	update_icon()
 		..()
 		if(src.delivery_destination)
-			src.overlays += "crate-barcode"
+			src.UpdateOverlays(image(src.icon, "crate-barcode"), "barcode")
+		else
+			src.UpdateOverlays(null, "barcode")
 
 
 	CanPass(atom/movable/mover, turf/target)
@@ -329,6 +331,7 @@
 /obj/storage/crate/wooden
 	name = "wooden crate"
 	desc = "A wooden crate."
+	icon_state = "woodencrate1"
 	New()
 		var/n = rand(1,9)
 		icon_state = "woodencrate[n]"

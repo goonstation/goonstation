@@ -398,7 +398,7 @@
 			if (is_athletic_jump) // athletic jumps are more athletic!!
 				the_text = "[ownerMob] swooces right over [the_railing]!"
 			M.show_text("[the_text]", "red")
-		logTheThing("combat", ownerMob, the_railing, "[is_athletic_jump ? "leaps over %the_railing% with [his_or_her(ownerMob)] athletic trait" : "crawls over %the_railing%"].")
+		// logTheThing("combat", ownerMob, the_railing, "[is_athletic_jump ? "leaps over [the_railing] with [his_or_her(ownerMob)] athletic trait" : "crawls over [the_railing%]].")
 
 /* ======================================== */
 /* ---------------------------------------- */

@@ -781,10 +781,9 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 						src.visible_message("<span class='alert'><B>\the [src]'s door flies open and a gout of flame erupts from within!</span>")
 						fireflash(src, 2)
 						for(var/mob/living/carbon/M in temp)
-							SPAWN_DBG(0)
-								M.update_burning(100)
-								var/turf/T = get_edge_target_turf(M, turn(NORTH, rand(0,7) * 45))
-								M.throw_at(T,100, 2)
+							M.update_burning(100)
+							var/turf/T = get_edge_target_turf(M, turn(NORTH, rand(0,7) * 45))
+							M.throw_at(T,100, 2)
 
 					if(3 to 10) //Hitchhiker friend!
 						var/obj/critter/C = pick(possible_new_friend)

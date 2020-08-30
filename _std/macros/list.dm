@@ -16,6 +16,12 @@
 		} \
 	} \
 
+#define REMOVE_FROM_UNSORTED(L, INDEX) \
+	{ \
+		L[INDEX] = L[length(L)]; \
+		L.len-- \
+	}
+
 /proc/uniquelist(var/list/L)
 	. = list()
 	for(var/item in L)

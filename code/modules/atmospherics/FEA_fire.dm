@@ -22,7 +22,7 @@ turf
 			if (electric) //mbc : i'm putting electric zaps on here because eleczaps ALWAYS happen alongside hotspot expose and i dont want to loop all atoms twice
 				for(var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.
 					item.temperature_expose(null, exposed_temperature, exposed_volume)
-					if (item.flags & FLUID_SUBMERGE)
+					if (item?.flags & FLUID_SUBMERGE)
 						item.electric_expose(electric)
 			else
 				for(var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.

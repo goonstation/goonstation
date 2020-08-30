@@ -997,10 +997,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 					message = "<B>[src]</B> kicks [M]!"
 					var/turf/T = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
 					if (T && isturf(T))
-						SPAWN_DBG(0)
-							M.throw_at(T, 100, 2)
-							M.changeStatus("weakened", 1 SECOND)
-							M.changeStatus("stunned", 2 SECONDS)
+						M.throw_at(T, 100, 2)
+						M.changeStatus("weakened", 1 SECOND)
+						M.changeStatus("stunned", 2 SECONDS)
 					break
 
 		if ("scream")
