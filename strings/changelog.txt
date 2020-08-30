@@ -1,4 +1,9 @@
 
+(t)sun aug 30 20
+(u)Flaborized
+(p)1994
+(e)🎨|sprites
+(+)Furnaces, floppy disks, flashbangs and jukeboxes now have new sprites.
 (t)fri aug 28 20
 (u)Jawns
 (p)1922
