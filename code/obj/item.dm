@@ -832,6 +832,8 @@
 			I.remove_from_mob()
 			I.set_item(src)
 
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
+
 	if(chokehold)
 		chokehold.attack_self(user)
 

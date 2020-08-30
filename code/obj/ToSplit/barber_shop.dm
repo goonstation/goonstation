@@ -57,14 +57,6 @@
 			return 1
 		..()
 
-	attack_self(mob/user)
-		. = ..()
-		SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user, 0, 0)
-
-	dropped()
-		. = ..()
-		SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, null, 1, 1)
-
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))

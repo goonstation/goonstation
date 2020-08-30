@@ -8,11 +8,18 @@
 /datum/component/toggle_tool_use/Initialize()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED, COMSIG_ATTACKBY), .proc/toggle_force_use_as_tool)
+	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/on_drop)
+	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/on_attackself)
 
 	// this proc is supposed to make certain tools less accidentally deadly for inexperienced players to use
 	// when force_use_as_tool is set, all intents will try to do their tool-thing, and if it can't, return a message saying they're using it wrong
 	// if not set, help intent will still attempt tool, but you'll shank them if it doesn't work out
+/datum/component/toggle_tool_use/proc/on_drop(var/obj/item/thing)
+	toggle_force_use_as_tool(thing)
+
+/datum/component/toggle_tool_use/proc/on_attackself(var/obj/item/thing, mob/user)
+	toggle_force_use_as_tool(thing, user)
+
 /datum/component/toggle_tool_use/proc/toggle_force_use_as_tool(var/obj/item/thing, mob/user)
 	if(!user)
 		thing.force_use_as_tool = 0
@@ -41,7 +48,7 @@
 													"You wield the [thing] with [pick(cool_grip_adj)] [pick(cool_grip1)] [pick(cool_grip2a)][pick(cool_grip2b)] [pick("style", "grip")] that you [pick(cool_grip3)]! It makes it just about impossible to use as a tool!")
 
 /datum/component/toggle_tool_use/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ATTACKBY)
+	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 	UnregisterSignal(parent, COMSIG_ITEM_DROPPED)
 	. = ..()
 
@@ -75,9 +82,13 @@
 	if(!mutant_barber_fluff(M, user, "haircut"))
 		return BARBERY_SUCCESSFUL
 
-	if(. && thing.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
-		boutput(user, "<span class='notice'>You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
-		return ATTACK_PRE_DONT_ATTACK
+	if(.)
+		if (thing.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
+			if (. != BARBERY_RESOLVABLE)
+				boutput(user, "<span class='notice'>You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
+			return ATTACK_PRE_DONT_ATTACK
+		else
+			return 0
 
 	SPAWN_DBG(0)
 		var/new_style = input(user, "Please select style", "Style")  as null|anything in customization_styles + customization_styles_gimmick
@@ -85,8 +96,10 @@
 		if (new_style)
 			if(M.bioHolder.mobAppearance.customization_first == "Balding" && new_style != "None")
 				boutput(user, "<span class='alert'>Not enough hair!</span>")
-		if(!new_style)
+				return ATTACK_PRE_DONT_ATTACK
+		else
 			boutput(user, "Never mind.")
+			return ATTACK_PRE_DONT_ATTACK
 
 		actions.start(new/datum/action/bar/haircut(M, user, get_barbery_conditions(M, user), new_style), user)
 	return ATTACK_PRE_DONT_ATTACK
@@ -132,9 +145,13 @@
 	if(!mutant_barber_fluff(M, user, "shave"))
 		. = BARBERY_RESOLVABLE
 
-	if(. && thing.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
-		boutput(user, "<span class='notice'>You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
-		return ATTACK_PRE_DONT_ATTACK
+	if(.)
+		if (thing.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
+			if (. != BARBERY_RESOLVABLE)
+				boutput(user, "<span class='notice'>You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
+			return ATTACK_PRE_DONT_ATTACK
+		else
+			return 0
 
 	SPAWN_DBG(0)
 		var/list/mustaches =list("Watson", "Chaplin", "Selleck", "Van Dyke", "Hogan")
