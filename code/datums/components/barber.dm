@@ -97,7 +97,7 @@
 		if (new_style)
 			if(M.bioHolder.mobAppearance.customization_first == "Balding" && new_style != "None")
 				boutput(user, "<span class='alert'>Not enough hair!</span>")
-				return ATTACK_PRE_DONT_ATTACK
+				return
 		else
 			boutput(user, "Never mind.")
 			return ATTACK_PRE_DONT_ATTACK
