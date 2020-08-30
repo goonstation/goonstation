@@ -13,6 +13,17 @@
 #define HEAD_VAMPZOMBIE 11
 #define HEAD_RELI 12
 
+//tail defines
+#define TAIL_HUMAN 0
+#define TAIL_MONKEY 1
+#define TAIL_LIZARD 2
+#define TAIL_COW 3
+#define TAIL_WEREWOLF 4
+#define TAIL_SKELETON 5	// skullception *shrug*
+#define TAIL_SEAMONKEY 6
+#define TAIL_CAT 7
+#define TAIL_ROACH 8
+
 //appearance bitflags cus im tired of tracking down a million different vars that rarely do what they should
 #define IS_MUTANT								1	// so far just makes fat mutants render as male
 
