@@ -521,7 +521,7 @@
 	disposing()
 		if(ishuman(mob))
 			var/datum/component/C = mob.GetComponent(/datum/component/consume/organpoints)
-			if (C) C.RemoveComponent(/datum/component/consume/organpoints)
+			C?.RemoveComponent(/datum/component/consume/organpoints)
 			var/mob/living/carbon/human/L = mob
 			L.abilityHolder.removeAbility(/datum/targetable/lizardAbility/colorshift)
 			L.abilityHolder.removeAbility(/datum/targetable/lizardAbility/colorchange)
