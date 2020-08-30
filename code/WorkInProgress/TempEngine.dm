@@ -116,6 +116,9 @@
 	var/sound_bellalert = 'sound/machines/bellalert.ogg'
 	var/sound_warningbuzzer = 'sound/machines/warning-buzzer.ogg'
 
+	var/list/history = list()
+	var/history_max = 50
+
 	New()
 		..()
 
@@ -219,6 +222,10 @@
 
 				lastgen = energy_transfer*efficiency
 				add_avail(lastgen)
+
+				src.history += src.lastgen
+				if (src.history.len > src.history_max)
+					src.history.Cut(1, 2) //drop the oldest entry
 
 				cold_air.temperature += energy_transfer*(1-efficiency)/cold_air_heat_capacity // pass the remaining energy through to the cold side
 
@@ -437,6 +444,7 @@
 /obj/machinery/power/generatorTemp/ui_data(mob/user)
 	var/list/data = list()
 	data["output"] = src.lastgen
+	data["history"] = src.history
 	if(src.circ1)
 		data["hotCircStatus"] = src.circ1
 		data["hotInletTemp"] = src.circ1.air1.temperature

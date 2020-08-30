@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { LabeledList, Section, Box } from '../components';
+import { Box, Chart, LabeledList, Section, Divider } from '../components';
 import { formatPower, formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
@@ -14,6 +14,7 @@ export const TEG = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     output,
+    history,
     hotCircStatus,
     hotInletTemp,
     hotOutletTemp,
@@ -25,12 +26,25 @@ export const TEG = (props, context) => {
     coldInletPres,
     coldOutletPres,
   } = data;
+  const historyData = history.map((value, i) => [i, value]);
+  const historyMax = Math.max(...history);
   return (
     <Window
-      height="430"
+      height="520"
       width="300" >
       <Window.Content>
         <Section title="Status">
+          <LabeledList>
+            <LabeledList.Item label="Output History" />
+          </LabeledList>
+          <Chart.Line
+            height="5em"
+            data={historyData}
+            rangeX={[0, historyData.length - 1]}
+            rangeY={[0, historyMax]}
+            strokeColor="rgba(1, 184, 170, 1)"
+            fillColor="rgba(1, 184, 170, 0.25)" />
+          <Divider />
           <LabeledList>
             <LabeledList.Item
               label="Energy Output"
