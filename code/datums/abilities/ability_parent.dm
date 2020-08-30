@@ -1199,7 +1199,7 @@
 
 	addPoints(add_points, target_ah_type)
 		for (var/datum/abilityHolder/H in holders)
-			if (w_list && !istype(H, target_ah_type))
+			if (target_ah_type && !istype(H, target_ah_type))
 				continue
 			H.addPoints(add_points)
 
