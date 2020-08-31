@@ -975,6 +975,7 @@
 	desc = ""
 	icon_state = "comp_zap"
 	cooldown_time = 1 SECOND
+	cabinet_banned = true
 	var/zap_power = 2
 
 	New()
@@ -988,10 +989,10 @@
 		elecflash(src.loc, 0, power = zap_power, exclude_center = 0)
 		
 	proc/setPower(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Power(1 - 6):","Power setting", zap_power) as num
+		var/inp = input(user,"Please enter Power(1 - 3):","Power setting", zap_power) as num
 		if(!in_range(src, user) || user.stat)
 			return 0
-		inp = clamp(round(inp), 1, 6)
+		inp = clamp(round(inp), 1, 3)
 		zap_power = inp
 		boutput(user, "Power set to [inp]")
 		return 1
