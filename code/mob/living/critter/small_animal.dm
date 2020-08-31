@@ -2012,6 +2012,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 8
 	health_burn = 8
 	var/butterflytype = 1
+	isFlying = 1
 
 	New()
 		..()
@@ -2103,6 +2104,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_walk_delay = 1.8
 	health_brute = 8
 	health_burn = 8
+	isFlying = 1
 
 	New()
 		..()
@@ -2166,6 +2168,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_walk_delay = 1.8
 	health_brute = 8
 	health_burn = 8
+	isFlying = 1
 
 	New()
 		..()
