@@ -1088,12 +1088,13 @@
 /obj/item/proc/attack(mob/M as mob, mob/user as mob, def_zone, is_special = 0)
 	if (!M || !user) // not sure if this is the right thing...
 		return
-	if (src.Eat(M, user)) // All those checks were done in there anyway
-		return
 
 	if (surgeryCheck(M, user))		// Check for surgery-specific actions
 		if(insertChestItem(M, user))	// Puting item in patient's chest
 			return
+
+	if (src.Eat(M, user)) // All those checks were done in there anyway
+		return
 
 	if (src.flags & SUPPRESSATTACK)
 		logTheThing("combat", user, M, "uses [src] ([type], object name: [initial(name)]) on [constructTarget(M,"combat")]")
