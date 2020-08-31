@@ -2411,3 +2411,24 @@
 		if (src.completed && MA.queue.len)
 			SPAWN_DBG(1)
 				MA.begin_work(1)
+
+
+
+/proc/build_manufacturer_icons()
+	// pre-build all the icons for shit manufacturers make
+	for (var/type in typesof(/datum/manufacture))
+		var/datum/manufacture/P = type
+		if (ispath(P, /datum/manufacture/mechanics))
+			var/datum/manufacture/mechanics/M = P
+			if (!initial(M.frame_path))
+				continue
+			getItemIcon(initial(M.frame_path))
+
+		else
+			// temporarily create this so we can get the list from it
+			// i tried very hard to use initial() here and got nowhere,
+			// but the fact it's a list seems to not really go well with it
+			// maybe someone else can get it to work.
+			var/datum/manufacture/I = new P
+			if (I && I.item_outputs[1])
+				getItemIcon(I.item_outputs[1])

@@ -1,5 +1,47 @@
 
+(t)mon aug 31 20
+(u)pali
+(+)Monkey vaulting over tables is now less buggy and just generally tweaked in several ways.
+(t)sun aug 30 20
+(u)pali
+(p)1987
+(e)🆕🎨|feature, sprites
+(*)New expensive spacebux purchase to arrive to the station in an Oshan style arrival missile.
+(u)Superlagg
+(p)1988
+(e)🆕|feature
+(+)Certain transformations inherit the target's mutant race.
+(u)Sartorius7
+(p)1985
+(e)🆕|feature
+(*)More trinket prefixes!
+(u)Sartorius7
+(p)1984
+(e)🆕|feature
+(+)Many, many more wizard names for the game to pick from!
+(u)Flaborized
+(p)1994
+(e)🎨|sprites
+(+)Furnaces, floppy disks, flashbangs and jukeboxes now have new sprites.
+(t)fri aug 28 20
+(u)Jawns
+(p)1922
+(e)🆕|feature
+(*)New Chief Engineer objective rewards excessive competence
+(u)BatElite
+(p)1981
+(e)🆕🎨|feature, sprites
+(+)Surgical face shields now come in many stylish colours. You might even get lucky and find the rare variant!
+(u)makkipakki
+(p)1923
+(e)🆕🗺|feature, mapping
+(*)Added a table-mounted defibrillator to the security department.
 (t)thu aug 27 20
+(u)Michaellaneous
+(p)1971
+(e)|
+(+)Ejecting beaker from chem dispensers now go into hand
+(+)Putting beaker into chem dispenser now opens interface
 (u)Zamujasa
 (e)⚖🆕|balance, feature
 (*)Major manufacturer UI update.

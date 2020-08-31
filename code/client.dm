@@ -530,6 +530,11 @@
 
 	if(src.holder && src.holder.level >= LEVEL_CODER)
 		src.control_freak = 0
+
+	if (browse_item_initial_done)
+		SPAWN_DBG(0)
+			sendItemIcons(src)
+
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
 	login_success = 1

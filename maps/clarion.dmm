@@ -26196,6 +26196,9 @@
 	dir = 4
 	},
 /obj/table/reinforced/auto,
+/obj/machinery/defib_mount{
+	pixel_y = 3
+	},
 /obj/random_item_spawner/med_kit,
 /obj/item/storage/firstaid/regular,
 /turf/simulated/floor/carpet{

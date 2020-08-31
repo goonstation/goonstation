@@ -1142,8 +1142,8 @@ datum
 				var/turf/simulated/T = target
 				if (istype(T) && T.wet) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
 					src = null
-					if (T.wet >= 1) return
-					T.wet = 1
+					if (T.wet >= 2) return
+					T.wet = 2
 					if (!locate(/obj/decal/cleanable/oil) in T)
 						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 						switch(volume)

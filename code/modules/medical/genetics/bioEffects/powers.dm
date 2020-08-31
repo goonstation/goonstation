@@ -453,7 +453,8 @@
 				owner.bioHolder.CopyOther(H.bioHolder, copyAppearance = 1, copyPool = 0, copyEffectBlocks = 0, copyActiveEffects = 0)
 				owner.real_name = H.real_name
 				owner.name = H.name
-
+				if(owner.bioHolder?.mobAppearance?.mutant_race)
+					owner.set_mutantrace(owner.bioHolder.mobAppearance.mutant_race)
 		return
 
 	cast_misfire(atom/target)

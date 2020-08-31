@@ -7486,6 +7486,10 @@
 /area/station/security/main)
 "aql" = (
 /obj/table/reinforced/auto,
+/obj/machinery/defib_mount{
+	pixel_x = -2;
+	pixel_y = 2
+	},
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/syringe,
 /obj/machinery/light/incandescent/cool,
