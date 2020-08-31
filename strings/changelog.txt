@@ -1,4 +1,7 @@
 
+(t)mon aug 31 20
+(u)pali
+(+)Monkey vaulting over tables is now less buggy and just generally tweaked in several ways.
 (t)sun aug 30 20
 (u)pali
 (p)1987
