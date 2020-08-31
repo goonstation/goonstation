@@ -747,6 +747,7 @@ About the new airlock wires panel:
 	if(!istype(user.equipped(), /obj/item/device/radio/signaler))
 		boutput(user, "You need a signaler!")
 		return FALSE
+
 	if(src.isWireColorCut(wire_color))
 		boutput(user, "You can't attach a signaler to a cut wire.")
 		return FALSE
@@ -767,6 +768,7 @@ About the new airlock wires panel:
 	if(!(src.signalers[wire_color]))
 		boutput(user, "There's no signaler attached to that wire!")
 		return FALSE
+
 	var/obj/item/device/radio/signaler/R = src.signalers[wire_color]
 	user.put_in_hand_or_drop(R)
 	R.airlock_wire = null
@@ -778,6 +780,7 @@ About the new airlock wires panel:
 	if(!user.find_tool_in_hand(TOOL_SNIPPING))
 		boutput(user, "You need a snipping tool!")
 		return FALSE
+
 	src.cut(wire_color)
 	return TRUE
 
