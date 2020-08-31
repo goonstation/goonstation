@@ -96,7 +96,8 @@ client
 		game_display = new
 		src.screen += game_display
 
-		for(var/obj/screen/plane_parent/pl)
+		for(var/_pl in src.plane_parents)
+			var/obj/screen/plane_parent/pl = _pl
 			var/obj/screen/plane_display/display = new(pl)
 			plane_displays += display
 			if(!pl.is_screen)
