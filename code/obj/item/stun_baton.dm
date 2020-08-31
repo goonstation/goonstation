@@ -437,9 +437,9 @@
 			if (src.flipped) //swapping hands triggers the intent switch too, so we dont wanna spam that
 				return
 			src.flipped = true
-			animate(src, transform = turn(matrix(), 120), time = 7 CENTI SECONDS) //turn partially
-			animate(transform = turn(matrix(), 240), time = 7 CENTI SECONDS) //turn the rest of the way
-			animate(transform = turn(matrix(), 180), time = 4 CENTI SECONDS) //finish up at the right spot
+			animate(src, transform = turn(matrix(), 120), time = 0.07 SECONDS) //turn partially
+			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS) //turn the rest of the way
+			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS) //finish up at the right spot
 			src.transform = null //clear it before updating icon
 			src.update_icon()
 			user.update_inhands()
@@ -448,9 +448,9 @@
 			if (!src.flipped) //swapping hands triggers the intent switch too, so we dont wanna spam that
 				return
 			src.flipped = false
-			animate(src, transform = turn(matrix(), 120), time = 7 CENTI SECONDS) //turn partially
-			animate(transform = turn(matrix(), 240), time = 7 CENTI SECONDS) //turn the rest of the way
-			animate(transform = turn(matrix(), 180), time = 4 CENTI SECONDS) //finish up at the right spot
+			animate(src, transform = turn(matrix(), 120), time = 0.07 SECONDS) //turn partially
+			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS) //turn the rest of the way
+			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS) //finish up at the right spot
 			src.transform = null //clear it before updating icon
 			src.update_icon()
 			user.update_inhands()
@@ -461,6 +461,7 @@
 			src.flipped = false
 			src.update_icon()
 			user.update_inhands()
+			..()
 
 /////////////////////////////////////////////// Subtypes //////////////////////////////////////////////////////
 
