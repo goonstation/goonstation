@@ -382,7 +382,7 @@
 		if (ishuman(src))
 			if (src.traitHolder && !src.traitHolder.hasTrait("immigrant"))
 				src:spawnId(rank)
-			else if (src.traitHolder)
+			else if (src.traitHolder && src.traitHolder.hasTrait("immigrant"))
 				//Has the immigrant trait - they're hiding in a random locker
 				var/list/obj/storage/SL = list()
 				for(var/obj/storage/S in lockers_and_crates)
@@ -395,6 +395,35 @@
 
 				if(SL.len > 0)
 					src.set_loc(pick(SL))
+
+			else if (src.traitHolder && src.traitHolder.hasTrait("pilot")) 		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
+				#ifdef UNDERWATER_MAP											//This part of the code executes only if the map is an underwater one.
+				var/list/obj/SL = list()
+				for(var/obj/critter/gunbot/drone/S in critters)
+					if(S.z == 5)
+						var/turf/simulated/T = S.loc
+						SL.Add(T)
+				src.set_loc(pick(SL))
+				var/turf/simulated/T = src.loc
+				for(var/obj/critter/gunbot/drone/SD in T)
+					qdel(SD)
+				var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/civilian(src.loc)
+				V.engine = new/obj/item/shipcomponent/engine/zero
+				V.pilot = src
+
+				#else 															//This part of the code executes only if the map is a space one.
+				for(var/obj/critter/gunbot/drone/S in critters)
+					if(S.z != 1 && S.z != isrestrictedz)
+						var/turf/simulated/T = S.loc
+						SL.Add(T)
+				src.set_loc(pick(SL))
+				var/turf/simulated/T = src.loc
+				for(var/obj/critter/gunbot/drone/SD in T)
+					qdel(SD)
+				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt(src.loc)
+				V.engine = new/obj/item/shipcomponent/engine/zero
+				V.pilot = src
+				#endif
 
 			if (prob(10) && islist(random_pod_codes) && random_pod_codes.len)
 				var/obj/machinery/vehicle/V = pick(random_pod_codes)
