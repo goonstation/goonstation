@@ -17,6 +17,7 @@
 	var/bonus_throwforce = 0
 	var/hitAThing = FALSE
 	var/dist_travelled = 0
+	var/speed_error = 0
 
 	New(atom/movable/thing, atom/target, error, speed, dx, dy, dist_x, dist_y, range,
 			target_x, target_y, matrix/transform_original, list/params, turf/thrown_from, atom/return_target,
@@ -65,7 +66,9 @@ var/global/datum/controller/throwing/throwing_controller = new
 			continue
 #endif
 		var/end_throwing = FALSE
-		for(var/i in 1 to thr.speed)
+		var/int_speed = round(thr.speed + thr.speed_error)
+		thr.speed_error += thr.speed - int_speed
+		for(var/i in 1 to int_speed)
 			var/turf/T = thing.loc
 			if( !(
 					thr.target && thing.throwing && isturf(T) && \
