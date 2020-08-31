@@ -745,10 +745,10 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/proc/attach_signaler(var/wire_color, mob/user)
 	if(!istype(user.equipped(), /obj/item/device/radio/signaler))
-		boutput(user, "You need a signaller!")
+		boutput(user, "You need a signaler!")
 		return FALSE
 	if(src.isWireColorCut(wire_color))
-		boutput(user, "You can't attach a signaller to a cut wire.")
+		boutput(user, "You can't attach a signaler to a cut wire.")
 		return FALSE
 
 	var/obj/item/device/radio/signaler/R = user.equipped()
