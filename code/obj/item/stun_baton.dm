@@ -423,17 +423,17 @@
 		src.do_flip_stuff(user, user.a_intent)
 
 	attack_hand(var/mob/user)
-		if (src.flipped && user.a_intent != "harm")
+		if (src.flipped && user.a_intent != INTENT_HARM)
 			user.show_text("You flip \the [src] the right way around as you grab it.")
 			src.flipped = false
 			src.update_icon()
 			user.update_inhands()
-		else if (user.a_intent == "harm")
-			src.do_flip_stuff(user, "harm")
+		else if (user.a_intent == INTENT_HARM)
+			src.do_flip_stuff(user, INTENT_HARM)
 		..()
 
 	proc/do_flip_stuff(var/mob/user, var/intent)
-		if (intent == "harm")
+		if (intent == INTENT_HARM)
 			if (src.flipped) //swapping hands triggers the intent switch too, so we dont wanna spam that
 				return
 			src.flipped = true
