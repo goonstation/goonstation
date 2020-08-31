@@ -455,12 +455,28 @@
 	//Wow, we copy+pasted the heck out of this... (Source is chemistry-tools dm)
 	attack_self(mob/user as mob)
 		if (src.splash_all_contents)
-			boutput(user, "<span class='notice'>You tighten your grip on the [src].</span>")
+			boutput(user, "<span class='notice'>You tighten your grip on the [src]. You can apply its contents onto things with more control now.</span>")
+			src.desc = "[initial(src.desc)] Your grip on it is tight. You'll apply [src.amount_per_transfer_from_this] units of its contents on things."
 			src.splash_all_contents = 0
 		else
 			boutput(user, "<span class='notice'>You loosen your grip on the [src].</span>")
+			src.desc = "[initial(src.desc)] Your grip on it is loose. You'll splash everything in it onto things."
 			src.splash_all_contents = 1
 		return
+
+	pickup(var/mob/user)
+		..()
+		src.desc = "[initial(src.desc)] Your grip on it is loose. You'll splash everything in it onto things."
+
+	dropped(var/mob/user)
+		..()
+		src.splash_all_contents = 1
+		src.desc = initial(src.desc)
+
+	unequipped(var/mob/user)
+		..()
+		src.splash_all_contents = 1
+		src.desc = initial(src.desc)
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		// in this case m is the consumer and user is the one holding it
