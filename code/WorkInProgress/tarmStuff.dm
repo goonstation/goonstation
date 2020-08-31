@@ -1,6 +1,6 @@
 //GUNS GUNS GUNS
 /obj/item/gun/kinetic/light_machine_gun/fullauto
-	name = "M90 machine gun"
+	name = "M91 machine gun"
 	desc = "Looks pretty heavy to me. Hold shift to begin automatic fire!"
 	icon = 'icons/obj/64x32.dmi'
 	slowdown = 0
@@ -10,7 +10,7 @@
 	New()
 		..()
 		ammo.amount_left=1000
-		AddComponent(/datum/component/holdertargeting/fullauto)
+		AddComponent(/datum/component/holdertargeting/fullauto, 4 DECI SECONDS, 1.5 DECI SECONDS, 0.5)
 
 
 /mob/living/proc/betterdir()
@@ -23,19 +23,19 @@
 	proctype = .proc/begin_shootloop
 	var/turf/target
 	var/shooting
-	var/delaystart = 4 DECI SECONDS
-	var/delaymin = 1 DECI SECOND
-	var/rampfactor = 0.9
+	var/delaystart
+	var/delaymin
+	var/rampfactor
 	var/obj/item/gun/G
 
-	Initialize(delaystart = initial(delaystart), delaymin=initial(delaymin), rampfactor=initial(rampfactor))
+	Initialize(_delaystart = 4 DECI SECONDS, _delaymin=1 DECI SECOND, _rampfactor=0.9)
 		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
 			return COMPONENT_INCOMPATIBLE
 		else
 			G = parent
-			src.delaystart = delaystart
-			src.delaymin = delaymin
-			src.rampfactor = rampfactor
+			src.delaystart = _delaystart
+			src.delaymin = _delaymin
+			src.rampfactor = _rampfactor
 	on_dropped(datum/source, mob/user)
 		. = ..()
 		src.shooting = 0
@@ -53,9 +53,10 @@
 			src.shootloop(user)
 
 /datum/component/holdertargeting/fullauto/proc/retarget(mob/M, atom/target, params)
-	src.target = get_turf(target)
-	G.suppress_fire_msg = 0
-
+	if(istype(target))
+		src.target = get_turf(target)
+		G.suppress_fire_msg = 0
+		return RETURN_CANCEL_CLICK
 
 /datum/component/holdertargeting/fullauto/proc/shootloop(mob/living/L)
 	var/delay = delaystart
@@ -127,18 +128,19 @@
 			src.targetloop(user)
 
 /datum/component/holdertargeting/smartgun/proc/shootemall(mob/user, atom/target, params)
-	if(shooting) return
-	if(targetting)
-		shooting = 1
-		shootloop:
-			for(var/mob/M in targets)
-				for(var/i in 1 to targets[M])
-					if(!shooting || !G.canshoot())
-						break shootloop
-					G.shoot(get_turf(M),get_turf(user),user)
-					sleep(1)
-		targets.len = 0
-		shooting = 0
+	if(targetting && !shooting)
+		SPAWN_DBG(0)
+			shooting = 1
+			shootloop:
+				for(var/mob/M in targets)
+					for(var/i in 1 to targets[M])
+						if(!shooting || !G.canshoot())
+							break shootloop
+						G.shoot(get_turf(M),get_turf(user),user)
+						sleep(1)
+			targets.len = 0
+			shooting = 0
+		return RETURN_CANCEL_CLICK
 
 /datum/component/holdertargeting/smartgun/proc/targetloop(mob/living/user)
 	var/ding = 0

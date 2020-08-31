@@ -151,8 +151,10 @@
 #define COMSIG_OBJ_CRITTER_DEATH "obj_critter_death"
 
 /// general return values //
-#define RETURN_SUCCESS 0x001
-#define RETURN_FAILURE 0x002
+// it is a mystery
+
 /// signal specific return values
 // COMSIG_LIVING_SPRINT_START
 #define RETURN_SPRINT_OVERRIDDEN 0x001000
+// COMSIG_MOB_CLICK
+#define RETURN_CANCEL_CLICK 0x001000
