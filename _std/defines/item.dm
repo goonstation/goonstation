@@ -61,3 +61,6 @@
 #define ITEM_RARITY_EPIC 5
 #define ITEM_RARITY_LEGENDARY 6
 #define ITEM_RARITY_MYTHIC 7
+
+// item comp defs
+#define GOOD_4_ME_2_EAT 1

@@ -348,9 +348,10 @@
 
 //disgusting proc. merge with foods later. PLEASE
 /obj/item/proc/Eat(var/mob/M as mob, var/mob/user)
-	if (!src.edible && !(src.material && src.material.edible))
-		return 0
 	if (!iscarbon(M) && !ismobcritter(M))
+		return 0
+	var/edibility_override = SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PRE, user, src)
+	if (!src.edible && !(src.material && src.material.edible) && !(edibility_override & GOOD_4_ME_2_EAT))
 		return 0
 
 	if (M == user)
@@ -1087,7 +1088,7 @@
 /obj/item/proc/attack(mob/M as mob, mob/user as mob, def_zone, is_special = 0)
 	if (!M || !user) // not sure if this is the right thing...
 		return
-	if ((src.edible && (ishuman(M) || ismobcritter(M)) || (src.material && src.material.edible)) && src.Eat(M, user))
+	if (src.Eat(M, user)) // All those checks were done in there anyway
 		return
 
 	if (surgeryCheck(M, user))		// Check for surgery-specific actions

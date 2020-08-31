@@ -1194,24 +1194,24 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 		else
 			var/image/mutant_image
 			src.body_standing.overlays += image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)
-			if (AHol.mob_color_flags & DETAIL_1)
+			if (AHol.mob_color_flags & BODY_DETAIL_1)
 				mutant_image = src.mutantrace.detail_1
 				mutant_image.color = src.bioHolder?.mobAppearance.customization_first_color
 				src.body_standing.overlays += mutant_image
 
-			if (AHol.mob_color_flags & DETAIL_2)
+			if (AHol.mob_color_flags & BODY_DETAIL_2)
 				mutant_image = src.mutantrace.detail_2
 				mutant_image.color = src.bioHolder?.mobAppearance.customization_second_color
 				src.body_standing.overlays += mutant_image
 
-			if (AHol.mob_color_flags & DETAIL_3)
+			if (AHol.mob_color_flags & BODY_DETAIL_3)
 				mutant_image = src.mutantrace.detail_3
 				mutant_image.color = src.bioHolder?.mobAppearance.customization_third_color
 				src.body_standing.overlays += mutant_image
 
-			if (AHol.mob_color_flags & DETAIL_OVERSUIT_1)
+			if (AHol.mob_color_flags & BODY_DETAIL_OVERSUIT_1)
 				mutant_image = src.mutantrace.detail_over_suit
-				if (AHol.mob_color_flags & DETAIL_OVERSUIT_IS_COLORFUL)
+				if (AHol.mob_color_flags & BODY_DETAIL_OVERSUIT_IS_COLORFUL)
 					mutant_image.color = src.bioHolder?.mobAppearance.customization_first_color
 				else
 					mutant_image.color = "#FFFFFF"

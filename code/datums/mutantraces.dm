@@ -488,28 +488,23 @@
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "lizard"
-	mutant_color_flags = (DETAIL_1 | DETAIL_2 | DETAIL_3 | HAS_HAIR_COLORED_DETAILS | DETAIL_OVERSUIT_1 | DETAIL_OVERSUIT_IS_COLORFUL | FIX_COLORS)
+	mutant_color_flags = (BODY_DETAIL_1 | BODY_DETAIL_2 | BODY_DETAIL_3 | HAS_HAIR_COLORED_DETAILS | BODY_DETAIL_OVERSUIT_1 | BODY_DETAIL_OVERSUIT_IS_COLORFUL | FIX_COLORS)
 
 	New(var/mob/living/carbon/human/H)
 		..()
-		if(ishuman(mob))
-			mob.AddComponent(/datum/component/consume/organpoints)
+		if(ishuman(H))
+			H.give_lizard_powers()
+			H.AddComponent(/datum/component/consume/organpoints, /datum/abilityHolder/lizard)
+			H.AddComponent(/datum/component/consume/can_eat_inedible_organs)
 
 			detail_1 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-1", layer = MOB_LIMB_LAYER+0.1)
 			detail_2 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-2", layer = MOB_LIMB_LAYER+0.2)
 			detail_3 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-3", layer = MOB_LIMB_LAYER+0.3)
 			detail_over_suit = image('icons/effects/genetics.dmi', icon_state="lizard_over_suit", layer = MOB_LAYER_BASE+0.3)
 
-			mob.update_face()
-			mob.update_body()
-			mob.update_clothing()
-
-			var/datum/abilityHolder/lizard/W = mob.get_ability_holder(/datum/abilityHolder/lizard)
-			if (!W)
-				W = mob.add_ability_holder(/datum/abilityHolder/lizard)
-
-			W.addAbility(/datum/targetable/lizardAbility/colorshift)
-			W.addAbility(/datum/targetable/lizardAbility/colorchange)
+			H.update_face()
+			H.update_body()
+			H.update_clothing()
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
@@ -520,11 +515,12 @@
 
 	disposing()
 		if(ishuman(mob))
-			var/datum/component/C = mob.GetComponent(/datum/component/consume/organpoints)
-			C?.RemoveComponent(/datum/component/consume/organpoints)
 			var/mob/living/carbon/human/L = mob
-			L.abilityHolder.removeAbility(/datum/targetable/lizardAbility/colorshift)
-			L.abilityHolder.removeAbility(/datum/targetable/lizardAbility/colorchange)
+			var/datum/component/C = L.GetComponent(/datum/component/consume/organpoints)
+			C?.RemoveComponent(/datum/component/consume/organpoints)
+			var/datum/component/D = L.GetComponent(/datum/component/consume/can_eat_inedible_organs)
+			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
+			L.remove_lizard_powers()
 		. = ..()
 
 /datum/mutantrace/zombie
@@ -847,10 +843,12 @@
 	ignore_missing_limbs = 0
 	var/old_client_color = null
 
+
 	New()
 		..()
 		if (mob)
 			mob.AddComponent(/datum/component/consume/organheal)
+			mob.AddComponent(/datum/component/consume/can_eat_inedible_organs, 1) // can also eat heads
 			mob.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
 			mob.add_stam_mod_regen("werewolf", 9) //mbc : these increase as they feast now. reduced!
 			mob.add_stun_resist_mod("werewolf", 40)
@@ -875,7 +873,9 @@
 	disposing()
 		if (mob)
 			var/datum/component/C = mob.GetComponent(/datum/component/consume/organheal)
-			if (C) C.RemoveComponent(/datum/component/consume/organheal)
+			C?.RemoveComponent(/datum/component/consume/organheal)
+			var/datum/component/D = mob.GetComponent(/datum/component/consume/can_eat_inedible_organs)
+			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
 			mob.remove_stam_mod_max("werewolf")
 			mob.remove_stam_mod_regen("werewolf")
 			mob.remove_stun_resist_mod("werewolf")
@@ -1599,7 +1599,7 @@
 	allow_fat = 1
 	override_attack = 0
 	voice_override = "cow"
-	mutant_color_flags = (HAS_HAIR_COLORED_DETAILS | DETAIL_1 | DETAIL_OVERSUIT_1 | FIX_COLORS)
+	mutant_color_flags = (HAS_HAIR_COLORED_DETAILS | BODY_DETAIL_1 | BODY_DETAIL_OVERSUIT_1 | FIX_COLORS)
 
 	New(var/mob/living/carbon/human/H)
 		..()

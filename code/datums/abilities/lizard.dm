@@ -1,3 +1,22 @@
+/mob/living/carbon/human/proc/give_lizard_powers()
+	if (ishuman(src)) // not4long
+		var/datum/abilityHolder/lizard/A = src.get_ability_holder(/datum/abilityHolder/lizard)
+		if (A && istype(A))
+			return
+		var/datum/abilityHolder/lizard/W = src.add_ability_holder(/datum/abilityHolder/lizard)
+		W.addAbility(/datum/targetable/lizardAbility/colorshift)
+		W.addAbility(/datum/targetable/lizardAbility/colorchange)
+	else return
+
+/mob/living/carbon/human/proc/remove_lizard_powers()
+	if (ishuman(src))
+		var/datum/abilityHolder/lizard/W = src.get_ability_holder(/datum/abilityHolder/lizard)
+		if (W && istype(W))
+			W.removeAbility(/datum/targetable/lizardAbility/colorshift)
+			W.removeAbility(/datum/targetable/lizardAbility/colorchange)
+			src.remove_ability_holder(/datum/abilityHolder/lizard)
+	else return
+
 /datum/abilityHolder/lizard
 	topBarRendered = 1
 	points = 0
