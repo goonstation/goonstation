@@ -1,8 +1,6 @@
 #define HAIRCUT 1
 #define SHAVE 2
-#define BARBERY_FAILURE 4	// if barbering is not successful and does not display a message
-#define BARBERY_SUCCESSFUL 1 // if barbering is successful, don't attack em
-#define BARBERY_RESOLVABLE 2 // if barbering is not successful, but gives a message
+#define BARBERY_FAILURE 2 // if barbering is not successful, but gives a message
 #define TOOLMODE_DEACTIVATED SOUTH // points the thing to its default direction when not-tool
 #define TOOLMODE_ACTIVATED WEST // flips around the grip to point this way when tool
 
@@ -10,13 +8,13 @@
 /datum/component/toggle_tool_use/Initialize()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/on_drop)
+	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_PICKUP), .proc/on_drop_or_pickup)
 	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle_force_use_as_tool)
 
 	// this proc is supposed to make certain tools less accidentally deadly for inexperienced players to use
 	// when force_use_as_tool is set, all intents will try to do their tool-thing, and if it can't, return a message saying they're using it wrong
 	// if not set, help intent will still attempt tool, but you'll shank them if it doesn't work out
-/datum/component/toggle_tool_use/proc/on_drop(var/obj/item/thing, mob/user)
+/datum/component/toggle_tool_use/proc/on_drop_or_pickup(var/obj/item/thing, mob/user)
 	thing.force_use_as_tool = 0
 	thing.dir = TOOLMODE_DEACTIVATED
 
@@ -45,6 +43,7 @@
 
 /datum/component/toggle_tool_use/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
+	UnregisterSignal(parent, COMSIG_ITEM_PICKUP)
 	UnregisterSignal(parent, COMSIG_ITEM_DROPPED)
 	. = ..()
 
@@ -65,23 +64,23 @@
 	if(!M || !user || (user.a_intent != INTENT_HELP && !thing.force_use_as_tool))
 		return 0 // Who's cutting whose hair, now?
 
+	var/non_murderous_failure = 0
 	var/mob/living/carbon/human/H = M
 	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
 		boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
-		. = BARBERY_RESOLVABLE
+		non_murderous_failure = BARBERY_FAILURE
 
 	if(M.bioHolder.mobAppearance.customization_first == "None")
 		boutput(user, "<span class='alert'>There is nothing to cut!</span>")
-		. = BARBERY_RESOLVABLE
+		non_murderous_failure = BARBERY_FAILURE
 
 	if(!mutant_barber_fluff(M, user, "haircut"))
-		return BARBERY_SUCCESSFUL
+		return ATTACK_PRE_DONT_ATTACK
 
-	if(.)
+	if(non_murderous_failure)
 		if (thing.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
-			if (. != BARBERY_RESOLVABLE)
-				boutput(user, "<span class='notice'>You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
+			boutput(user, "<span class='notice'>You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
 			return ATTACK_PRE_DONT_ATTACK
 		else
 			return 0
@@ -104,30 +103,31 @@
 	if(!M || !user || (user.a_intent != INTENT_HELP && !thing.force_use_as_tool))
 		return 0 // Who's cutting whose hair, now?
 
+	var/non_murderous_failure = 0
 	var/mob/living/carbon/human/H = M
 	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
 		boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
-		. = BARBERY_RESOLVABLE
+		non_murderous_failure = BARBERY_FAILURE
 
 	if(M.bioHolder.mobAppearance.customization_second == "None")
 		boutput(user, "<span class='alert'>You can't get a closer shave than that!</span>")
-		. = BARBERY_RESOLVABLE
+		non_murderous_failure = BARBERY_FAILURE
 
 	if(issilicon(M))
 		boutput(user, "<span class='alert'>Shave a robot? Shave a robot!?? SHAVE A ROBOT?!?!??</span>")
-		. = BARBERY_RESOLVABLE
+		non_murderous_failure = BARBERY_FAILURE
 
 	if(!ishuman(M))
 		boutput(user, "You don't know how to shave that! At least without cutting its face off.")
-		. = BARBERY_RESOLVABLE
+		non_murderous_failure = BARBERY_FAILURE
 
 	if(iswizard(M))
 		if (user == M)
 			boutput(user, "<span style='font-size: 1.5em; font-weight:bold; color:red'>And just what do you think you're doing?</span>\
 							<br>It took you <span class='alert'>years</span> to grow that <span style='font-family: Dancing Script, cursive;'>majestic</span> thing!\
 							<br>To even <span style='font-family: Dancing Script, cursive;'>fathom</span> an existence without it fills the [voidSpeak("void")] where your soul used to be with <span class='alert'>RAGE.</span>")
-			. = BARBERY_RESOLVABLE
+			non_murderous_failure = BARBERY_FAILURE
 		thing.visible_message("<span class='alert'><b>[user]</b> quickly shaves off [M]'s beard!</span>")
 		M.bioHolder.AddEffect("arcane_shame", timeleft = 120)
 		M.bioHolder.mobAppearance.customization_second = "None"
@@ -135,16 +135,15 @@
 		M.set_face_icon_dirty()
 		M.emote("cry")
 		M.emote("scream")
-		return BARBERY_SUCCESSFUL // gottem
+		return ATTACK_PRE_DONT_ATTACK // gottem
 
 
 	if(!mutant_barber_fluff(M, user, "shave"))
-		. = BARBERY_RESOLVABLE
+		non_murderous_failure = BARBERY_FAILURE
 
-	if(.)
+	if(non_murderous_failure)
 		if (thing.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
-			if (. != BARBERY_RESOLVABLE)
-				boutput(user, "<span class='notice'>You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
+			boutput(user, "<span class='notice'>You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first.</span>")
 			return ATTACK_PRE_DONT_ATTACK
 		else
 			return 0
@@ -601,7 +600,5 @@
 #undef HAIRCUT
 #undef SHAVE
 #undef BARBERY_FAILURE
-#undef BARBERY_SUCCESSFUL
-#undef BARBERY_RESOLVABLE
 #undef TOOLMODE_DEACTIVATED
 #undef TOOLMODE_ACTIVATED

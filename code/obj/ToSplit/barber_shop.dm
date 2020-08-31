@@ -9,9 +9,6 @@
 #define HAIR_2_FUCKED 2
 #define HAIR_3_FUCKED 4
 #define EYES_FUCKED 8
-#define BARBERY_FAILURE 1	// if barbering is not successful and does not display a message
-#define BARBERY_SUCCESSFUL 2 // if barbering is successful, don't attack em
-#define BARBERY_RESOLVABLE 4 // if barbering is not successful, but gives a message
 
 /obj/item/clothing/head/wig
 	name = "toupée"
@@ -445,6 +442,3 @@
 #undef EYES_FUCKED
 #undef HAIRCUT
 #undef SHAVE
-#undef BARBERY_FAILURE
-#undef BARBERY_SUCCESSFUL
-#undef BARBERY_RESOLVABLE
