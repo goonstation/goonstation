@@ -671,8 +671,8 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		reagentlefttotransfer -= reagentperturf
 		spray_turf(currentturf,reagentperturf, reagsource)
 		reagentperturf += increment
-		if(currentturf.reagents)
-			currentturf.reagents.set_reagent_temp(spray_temperature, TRUE)
+		if(lit)
+			currentturf?.reagents?.set_reagent_temp(spray_temperature, TRUE)
 			spray_temperature = max(0,min(spray_temperature - temp_loss_per_tile, 700))
 
 		var/logString = log_reagents(reagsource)
