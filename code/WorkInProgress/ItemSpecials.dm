@@ -976,6 +976,8 @@
 						on_hit(A,2)
 						attacked += A
 						hit = 1
+						if (ishuman(user) && master  && istype(master, /obj/item/clothing/gloves))
+							user.unlock_medal("High Five!", 1)
 						break
 				if (!hit)
 					SPAWN_DBG(secondhit_delay)
@@ -997,8 +999,6 @@
 						G.icon_state = "yellow"
 						G.item_state = "ygloves"
 						user.update_clothing() // Was missing (Convair880).
-
-					if (G.uses <= 0)
 						user.show_text("The gloves are no longer electrically charged.", "red")
 						G.overridespecial = 0
 					else
