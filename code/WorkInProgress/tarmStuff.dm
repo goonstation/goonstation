@@ -205,8 +205,11 @@
 		src.setProperty("enchantweapon", currentench+incr)
 	else
 		return
-	src.remove_prefixes("+[currentench]")
-	src.name_prefix("+[currentench+incr]")
-	src.rarity = max(src.rarity, round((currentench+incr+1)/2) + 2)
+	src.remove_prefixes("[currentench>0?"+":""][currentench]")
+	if(currentench+incr)
+		src.name_prefix("[(currentench+incr)>0?"+":""][currentench+incr]")
+		src.rarity = max(src.rarity, round((currentench+incr+1)/2) + 2)
+	else
+		src.rarity = initial(src.rarity)
 	src.tooltip_rebuild = 1
 	src.UpdateName()
