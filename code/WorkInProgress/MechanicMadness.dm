@@ -344,6 +344,7 @@
 	w_class = 1.0
 	level = 2
 	var/cabinet_banned = false // whether or not this component is prevented from being anchored in cabinets
+	var/one_per_tile = false // if true makes it s othat only one component can be wrenched on the tile
 	var/under_floor = 0
 	var/can_rotate = 0
 	var/cooldown_time = 3 SECONDS
