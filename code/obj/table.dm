@@ -383,6 +383,9 @@
 			duration += 1 SECOND
 		return target
 
+	do_bunp()
+		return FALSE // no bunp
+
 	sendOwner()
 		var/const/throw_speed = 0.5
 		if (istype(ownerMob, /mob/living/carbon/human))
