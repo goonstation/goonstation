@@ -146,7 +146,7 @@
 /datum/action/bar/icon/railing_jump
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "railing_deconstruct"
+	id = "railing_jump"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "railing_jump"
 	var/mob/ownerMob

@@ -367,6 +367,7 @@
 //Replacement for monkies walking through tables: They now parkour over them.
 //Note: Max count of tables traversable is 2 more than the iteration limit
 /datum/action/bar/icon/railing_jump/table_jump
+	id = "table_jump"
 	var/const/throw_range = 7
 	var/const/iteration_limit = 5
 
