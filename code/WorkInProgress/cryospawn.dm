@@ -107,7 +107,7 @@
 
 		//sleep(1.9 SECONDS)
 		SPAWN_DBG(1.9 SECONDS)
-			if (!thePerson)
+			if (!thePerson || thePerson.loc != src)
 				busy = 0
 				return (folks_to_spawn.len != 0)
 			var/turf/firstLoc = locate(src.x, src.y, src.z)
