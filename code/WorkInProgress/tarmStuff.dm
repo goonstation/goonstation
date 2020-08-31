@@ -146,3 +146,67 @@
 			c_firing = 0
 		else
 			..()
+
+/obj/item/enchantment_scroll
+	name = "Scroll of Enchantment"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "scroll_seal"
+	flags = FPRINT | TABLEPASS
+	w_class = 2.0
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	item_state = "paper"
+	throw_speed = 4
+	throw_range = 20
+	desc = "Like a temporary tattoo of magical runes! Slap it on an item, and watch the magic happen."
+
+	afterattack(atom/target, mob/user, reach, params)
+		if(istype(target, /obj/item))
+			var/obj/item/I = target
+			var/currentench = 0
+			var/success = 0
+			var/incr = 0
+			if(istype(I, /obj/item/clothing))
+				currentench = I.getProperty("enchantarmor")
+				if(currentench <= 2 || !rand(0, currentench))
+					incr = (currentench <= 2) ? rand(1, 3) : 1
+					I.setProperty("enchantarmor", currentench+incr)
+					success = 1
+			else if(I.force >= 5)
+				currentench = I.getProperty("enchantweapon")
+				if(currentench <= 2 || !rand(0, currentench))
+					incr = (currentench <= 2) ? rand(1, 3) : 1
+					I.setProperty("enchantweapon", currentench+incr)
+					success = 1
+			else
+				return ..()
+			if(success)
+				var/turf/T = get_turf(target)
+				playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
+				user.visible_message("<span class='notice'>As [user] slaps \the [src] onto \the [target], \the [target] glows with a faint light[(currentench+incr >= 3) ? " and vibrates violently!" : "."]</span>")
+				I.remove_prefixes("+[currentench]")
+				I.name_prefix("+[currentench+incr]")
+				I.rarity = max(I.rarity, round((currentench+incr+1)/2) + 2)
+				I.tooltip_rebuild = 1
+				I.UpdateName()
+			else
+				user.visible_message("<span class='notice'>As [user] brings \the [src] towards \the [target], \the [target] shudders violently and turns to dust!</span>")
+				qdel(I)
+			qdel(src)
+		else
+			return ..()
+
+/obj/item/proc/enchant(incr)
+	var/currentench = 0
+	if(istype(src, /obj/item/clothing))
+		currentench = src.getProperty("enchantarmor")
+		src.setProperty("enchantarmor", currentench+incr)
+	else if(src.force >= 5)
+		currentench = src.getProperty("enchantweapon")
+		src.setProperty("enchantweapon", currentench+incr)
+	else
+		return
+	src.remove_prefixes("+[currentench]")
+	src.name_prefix("+[currentench+incr]")
+	src.rarity = max(src.rarity, round((currentench+incr+1)/2) + 2)
+	src.tooltip_rebuild = 1
+	src.UpdateName()
