@@ -1,3 +1,4 @@
+//GUNS GUNS GUNS
 /obj/item/gun/kinetic/light_machine_gun/fullauto
 	name = "M90 machine gun"
 	desc = "Looks pretty heavy to me. Hold shift to begin automatic fire!"
@@ -15,7 +16,6 @@
 /mob/living/proc/betterdir()
 	return ((src.dir in ordinal) || (src.last_move_dir in cardinal)) ? src.dir : src.last_move_dir
 
-
 /datum/component/holdertargeting/fullauto
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	signals = list(COMSIG_LIVING_SPRINT_START)
@@ -28,12 +28,14 @@
 	var/rampfactor = 0.9
 	var/obj/item/gun/G
 
-	Initialize()
+	Initialize(delaystart = initial(delaystart), delaymin=initial(delaymin), rampfactor=initial(rampfactor))
 		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
 			return COMPONENT_INCOMPATIBLE
 		else
 			G = parent
-
+			src.delaystart = delaystart
+			src.delaymin = delaymin
+			src.rampfactor = rampfactor
 	on_dropped(datum/source, mob/user)
 		. = ..()
 		src.shooting = 0
@@ -86,67 +88,89 @@
 /obj/item/gun/kinetic/pistol/smart
 	name = "smart pistol"
 	silenced = 1
+	New()
+		..()
+		ammo.amount_left = 30
+		AddComponent(/datum/component/holdertargeting/smartgun)
+
+/datum/component/holdertargeting/smartgun
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	signals = list(COMSIG_LIVING_SPRINT_START)
+	mobtype = /mob/living
+	proctype = .proc/begin_targetloop
+	var/turf/target
 	var/list/targets = list()
 	var/targetting = 0
+	var/shooting = 0
+	var/maxlocks = 3
+	var/obj/item/gun/G
 
-	dropped(mob/M)
-		remove_self(M)
-		..()
+	Initialize()
+		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
+			return COMPONENT_INCOMPATIBLE
+		else
+			G = parent
 
-	proc/remove_self(var/mob/living/M)
-		if (ishuman(M))
-			UnregisterSignal(M, COMSIG_LIVING_SPRINT_START)
+	on_dropped(datum/source, mob/user)
+		. = ..()
+		src.shooting = 0
 		src.targetting = 0
+		src.targets.len = 0
 
-	attack_hand(mob/user as mob)
-		if (..() && ishuman(user))
-			RegisterSignal(user, COMSIG_LIVING_SPRINT_START, .proc/begin_targetloop)
+/datum/component/holdertargeting/smartgun/proc/begin_targetloop(mob/living/user)
+	if(!targetting)
+		targetting = 1
+		targets.len = 0
+		APPLY_MOB_PROPERTY(user, PROP_CANTSPRINT, src)
+		RegisterSignal(user, COMSIG_MOB_CLICK, .proc/shootemall)
+		SPAWN_DBG(0)
+			src.targetloop(user)
 
-	proc/begin_targetloop(mob/living/L)
-		if(!targetting)
-			targetting = 1
-			targets.len = 0
-			APPLY_MOB_PROPERTY(L, PROP_CANTSPRINT, src)
-			SPAWN_DBG(0)
-				src.targetloop(L)
-
-
-	proc/targetloop(mob/living/L)
-		var/ding = 0
-		var/shotcount = 0
-		while(targetting)
-			sleep(1 SECOND)
-			ding = 0
-			for(var/mob/M in view(7, usr))
-				if(!src || !(L?.client.check_key(KEY_RUN)))
-					targetting = 0
-					break
-				if(in_cone_of_vision(usr, M) && !(targets[M] >= 3 || istype(M.get_id(), /obj/item/card/id/syndicate)) && shotcount < src.ammo.amount_left)
-					targets[M] = targets[M] ? targets[M] + 1 : 1
-					ding = 1
-					shotcount++
-					continue
-			if(ding)
-				L.playsound_local(L, "sound/machines/chime.ogg", 5, 0)
-		//loop ended - reset values
-		REMOVE_MOB_PROPERTY(L, PROP_CANTSPRINT, src)
-
-	proc/validtarget(mob/M)
-		return !(targets[M] >= 3 || istype(M.get_id(), /obj/item/card/id/syndicate))
-
-	pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
-		if(c_firing) return
-		if(targetting)
-			c_firing = 1
+/datum/component/holdertargeting/smartgun/proc/shootemall(mob/user, atom/target, params)
+	if(shooting) return
+	if(targetting)
+		shooting = 1
+		shootloop:
 			for(var/mob/M in targets)
 				for(var/i in 1 to targets[M])
-					src.shoot(get_turf(M),get_turf(usr),usr)
+					if(!shooting || !G.canshoot())
+						break shootloop
+					G.shoot(get_turf(M),get_turf(user),user)
 					sleep(1)
-			targets.len = 0
-			c_firing = 0
-		else
-			..()
+		targets.len = 0
+		shooting = 0
 
+/datum/component/holdertargeting/smartgun/proc/targetloop(mob/living/user)
+	var/ding = 0
+	var/shotcount = 0
+	while(targetting)
+		sleep(1 SECOND)
+		ding = 0
+		for(var/mob/M in view(7, user))
+			if(!G || !(user?.client.check_key(KEY_RUN)))
+				targetting = 0
+				break
+			if(in_cone_of_vision(user, M) && !(targets[M] >= 3 || istype(M.get_id(), /obj/item/card/id/syndicate)) && shotcount < checkshots(G))
+				targets[M] = targets[M] ? targets[M] + 1 : 1
+				ding = 1
+				shotcount++
+				continue
+		if(ding)
+			user.playsound_local(user, "sound/machines/chime.ogg", 5, 0)
+	//loop ended - reset values
+	REMOVE_MOB_PROPERTY(user, PROP_CANTSPRINT, src)
+	UnregisterSignal(user, COMSIG_MOB_CLICK)
+
+/datum/component/holdertargeting/smartgun/proc/checkshots(obj/item/gun/G)
+	if(istype(G, /obj/item/gun/kinetic))
+		var/obj/item/gun/kinetic/K = G
+		return round(K.ammo.amount_left * K.current_projectile.cost)
+	else if(istype(G, /obj/item/gun/energy))
+		var/obj/item/gun/energy/E = G
+		return round(E.cell.charge * E.current_projectile.cost)
+	else return G.canshoot() * INFINITY //idk, just let it happen
+
+//magical crap
 /obj/item/enchantment_scroll
 	name = "Scroll of Enchantment"
 	icon = 'icons/obj/wizard.dmi'
