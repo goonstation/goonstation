@@ -373,11 +373,12 @@
 
 	getLandingLoc()
 		var/iteration = 0
-		var/turf/target = get_step(the_railing, ownerMob.dir)
+		var/dir = get_dir(ownerMob, the_railing)
+		var/turf/target = get_step(the_railing, dir)
 		var/obj/table/maybe_table = locate(/obj/table) in target
 		while(maybe_table && iteration < iteration_limit)
 			iteration++
-			target = get_step(target, ownerMob.dir)
+			target = get_step(target, dir)
 			maybe_table = locate(/obj/table) in target
 			duration += 1 SECOND
 		return target
