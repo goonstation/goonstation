@@ -1662,6 +1662,7 @@ datum
 					ai_was_active = H.ai_active
 					H.ai_init() //:getin:
 					H.ai_aggressive = 1 //Fak
+					H.ai_calm_down = 0
 					logTheThing("combat", H, null, "has their AI enabled by [src.id]")
 					H.playsound_local(H, 'sound/effects/Heart Beat.ogg', 50, 1)
 					lastSpook = world.time
@@ -1742,6 +1743,7 @@ datum
 					//if(!ai_was_active)
 					H.ai_stop()
 					H.ai_aggressive = initial(H.ai_aggressive)
+					H.ai_calm_down = initial(H.ai_calm_down)
 					H.ai_suicidal = 0
 					if (data >= 30)
 						H.remove_stam_mod_regen(src.id) //Not so buff
