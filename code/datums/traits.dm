@@ -895,6 +895,16 @@
 	cleanName = "Stowaway"
 	desc = "You spawn hidden away on-station without an ID or PDA."
 	id = "immigrant"
+	category = "background"
+	points = 1
+	isPositive = 0
+
+obj/trait/pilot
+	name = "Pilot (+1)"
+	cleanName = "Pilot"
+	desc = "You spawn in a pod off-station with a Space GPS but without an ID and PDA."
+	id = "pilot"
+	category = "background"
 	points = 1
 	isPositive = 0
 
