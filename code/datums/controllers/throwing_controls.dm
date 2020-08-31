@@ -15,13 +15,14 @@
 	var/turf/thrown_from
 	var/atom/return_target
 	var/bonus_throwforce = 0
+	var/end_throw_callback
 	var/hitAThing = FALSE
 	var/dist_travelled = 0
 	var/speed_error = 0
 
 	New(atom/movable/thing, atom/target, error, speed, dx, dy, dist_x, dist_y, range,
 			target_x, target_y, matrix/transform_original, list/params, turf/thrown_from, atom/return_target,
-			bonus_throwforce=0)
+			bonus_throwforce=0, end_throw_callback=null)
 		src.thing = thing
 		src.target = target
 		src.error = error
@@ -38,6 +39,7 @@
 		src.thrown_from = thrown_from
 		src.return_target = return_target
 		src.bonus_throwforce = bonus_throwforce
+		src.end_throw_callback = end_throw_callback
 		..()
 
 var/global/datum/controller/throwing/throwing_controller = new
@@ -105,6 +107,10 @@ var/global/datum/controller/throwing/throwing_controller = new
 
 		if(end_throwing)
 			thrown -= thr
+			if(thr.end_throw_callback)
+				if(call(thr.end_throw_callback)(thr)) // return 1 to continue the throw, might be useful!
+					thrown += thr
+					continue
 			animate(thing, transform=thr.transform_original)
 			thing.throw_end(thr.params, thrown_from=thr.thrown_from)
 
