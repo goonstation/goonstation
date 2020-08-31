@@ -768,7 +768,6 @@ About the new airlock wires panel:
 		boutput(user, "There's no signaler attached to that wire!")
 		return FALSE
 	var/obj/item/device/radio/signaler/R = src.signalers[wire_color]
-	//R.set_loc(user.loc)
 	user.put_in_hand_or_drop(R)
 	R.airlock_wire = null
 	src.signalers[wire_color] = null
