@@ -42,7 +42,7 @@
 				for (var/turf/simulated/wall/auto/W in orange(1,src))
 					W.update_icon()
 
-	disposing()
+	Del()
 		src.RL_SetSprite(null)
 		if (floor_underlay)
 			qdel(floor_underlay)

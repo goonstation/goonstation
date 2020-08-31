@@ -105,7 +105,7 @@
 			src.mind.current = src
 			ticker.minds += src.mind
 	// move controller into ourselves
-	pilot.loc = src
+	pilot.set_loc(src)
 	controller = pilot
 	if(src.client)
 		src.client.color = null // stop being all fucked up and weird aaaagh
@@ -122,7 +122,7 @@
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 	if(controller)
 		// move controller out
-		controller.loc = get_turf(src)
+		controller.set_loc(get_turf(src))
 		// move us over to the controller
 		var/datum/mind/mind = src.mind
 		if (mind)
@@ -316,7 +316,7 @@
 				var/anything_tumbled = 0
 				for(var/obj/O in I.contents)
 					if(istype(O, /obj/item))
-						O.loc = src.loc
+						O.set_loc(src.loc)
 						anything_tumbled = 1
 					else
 						qdel(O)
@@ -592,7 +592,7 @@
 		if(src.flock)
 			src.flock.registerUnit(B)
 		SPAWN_DBG(0.2 SECONDS)
-			B.loc = pick(candidate_turfs)
+			B.set_loc(pick(candidate_turfs))
 	sleep(0.1 SECONDS) // make sure the animation finishes
 	// finally, away with us
 	src.ghostize()

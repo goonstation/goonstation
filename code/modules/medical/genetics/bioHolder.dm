@@ -47,6 +47,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/mob/owner = null
 	var/datum/bioHolder/parentHolder = null
 
+	var/datum/mutantrace/mutant_race = null
+
 	var/gender = MALE
 	var/pronouns = 0		//1 if using neutral pronouns (they/their);  0 if using gendered pronouns matching their gender var
 	var/screamsound = "male"
@@ -99,6 +101,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		gender = toCopy.gender
 		pronouns = toCopy.pronouns
+		mutant_race = toCopy.mutant_race
 
 		screamsound = toCopy.screamsound
 		fartsound = toCopy.fartsound
@@ -140,6 +143,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (progress > 7 || prob(progress * 10))
 			gender = toCopy.gender
 			pronouns = toCopy.pronouns
+			mutant_race = toCopy.mutant_race
 
 		if(progress >= 10) //Finalize the copying here, with anything we may have missed.
 			src.CopyOther(toCopy)
@@ -220,7 +224,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mobAppearance.parentHolder = src
 
 		if(owner)
-			reg_dna[Uid] = owner:real_name
 			ownerName = owner:real_name
 
 		BuildEffectPool()
@@ -261,7 +264,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (grant_research)
 			if (global_BE.research_level < 2)
 				genResearch.mutations_researched++
-			global_BE.research_level = max(global_BE.research_level,3)
+			global_BE.research_level = max(global_BE.research_level, EFFECT_RESEARCH_ACTIVATED)
 
 		//AddEffect(E.id)
 		//effectPool.Remove(E)
@@ -503,7 +506,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if(istype(newEffect))
 			for(var/datum/bioEffect/curr_id in effects)
 				var/datum/bioEffect/curr = effects[curr_id]
-				if(curr && curr.type == effectTypeMutantRace && newEffect.type == effectTypeMutantRace)
+				if(curr && curr.type == EFFECT_TYPE_MUTANTRACE && newEffect.type == EFFECT_TYPE_MUTANTRACE)
 					//Can only have one mutant race.
 					RemoveEffect(curr.id)
 					break //Since this cleaning is always done we just ousted the only mutantrace in effects

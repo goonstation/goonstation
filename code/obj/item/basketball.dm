@@ -52,7 +52,7 @@
 			M.changeStatus("stunned", 2 SECONDS)
 			return
 
-/obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
+/obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
 	src.icon_state = "bball_spin"
 	..()
 
@@ -136,7 +136,7 @@
 				if (get_dir(src,target) in cardinal)
 					src.visible_message("<span class='notice'><b>[user] mounts [src] on [target].</b></span>")
 					user.drop_item()
-					src.loc = get_turf(user)
+					src.set_loc(get_turf(user))
 					src.mounted = 1
 					src.anchored = 1
 					src.dir = get_dir(src, target)
@@ -288,7 +288,7 @@
 					return
 	return
 
-/obj/item/bloodbowlball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
+/obj/item/bloodbowlball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
 	src.icon_state = "bloodbowlball_air"
 	..()
 

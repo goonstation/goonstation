@@ -550,6 +550,15 @@
 	isPositive = 1
 	category = "trinkets"
 
+/obj/trait/lunchbox
+	name = "Lunchbox (-1) \[Trinkets\]"
+	cleanName = "Lunchbox"
+	desc = "Start your shift with a cute little lunchbox, packed with all your favourite foods!"
+	id = "lunchbox"
+	points = -1
+	isPositive = 1
+	category = "trinkets"
+
 // Skill - Undetermined Border
 
 /obj/trait/smoothtalker
@@ -984,22 +993,6 @@
 	icon_state = "placeholder"
 	points = 1
 	isPositive = 0
-
-/obj/trait/bigbutt
-	name = "Dummy Thick (-2)"
-	desc = "Your buttocks are stubbornly chunky, and they clap together even when sneaking around."
-	id = "bigbutt"
-	icon_state = "bigbutt"
-	points = -2
-	isPositive = 0
-	isMoveTrait = 1
-
-	onMove(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if(H.footstep >= 3)
-				playsound(H.loc, "sound/impact_sounds/Slap.ogg", 40, 1)
-		return
 
 /obj/trait/allears
 	name = "All Ears (+1) \[Trinkets\]"

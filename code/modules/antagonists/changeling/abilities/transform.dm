@@ -100,7 +100,9 @@
 		C.real_name = target_name
 		C.bioHolder.CopyOther(D)
 		C.bioHolder.RemoveEffect("husk")
-		if (istype(C))
+		if (C.bioHolder?.mobAppearance?.mutant_race)
+			C.set_mutantrace(C.bioHolder.mobAppearance.mutant_race)
+		else
 			C.set_mutantrace(null)
 		C.update_face()
 		C.update_body()

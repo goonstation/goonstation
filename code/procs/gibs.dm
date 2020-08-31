@@ -91,8 +91,7 @@
 				var/mob/M = I.loc
 				M.u_equip(I)
 			I.set_loc(location)
-			SPAWN_DBG(0)
-				I.throw_at(target, 12, 3)
+			I.throw_at(target, 12, 3)
 
 /proc/robogibs(atom/location, var/list/diseases)
 	var/obj/decal/cleanable/robot_debris/gib = null

@@ -50,7 +50,7 @@
 				var/turf/T = get_turf(loc)
 				if (!T)
 					logTheThing("admin", usr, null, "additionally, no turf could be found at creation loc [loc]")
-					var/ASLoc = pick(latejoin)
+					var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 					if (ASLoc)
 						src.set_loc(ASLoc)
 					else
@@ -225,7 +225,7 @@
 				. = ..()
 			if (src.item.loc != src)
 				if (isturf(src.item.loc))
-					src.item.loc = src
+					src.item.set_loc(src)
 				else
 					src.death(0)
 
@@ -257,7 +257,7 @@
 				var/mob/dead/observer/O = new/mob/dead/observer()
 				O.set_loc(get_turf(src))
 				if (isrestrictedz(src.z) && !restricted_z_allowed(src, get_turf(src)) && !(src.client && src.client.holder))
-					var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 					if (OS)
 						O.set_loc(OS)
 					else

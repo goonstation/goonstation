@@ -12,7 +12,8 @@
 
 			if (!isdead(owner))
 				for (var/datum/ailment_data/am in owner.ailments)
-					am.stage_act()
+					var/mult = src.get_multiplier()
+					am.stage_act(mult)
 
 		if (prob(40))
 			for (var/obj/decal/cleanable/blood/B in view(2, owner))

@@ -14,7 +14,7 @@ export const SlotMachine = (props, context) => {
     <Window
       title="Slot Machine"
       width={375}
-      height={175}>
+      height={190}>
       <Window.Content>
         { !scannedCard ? (
           <InsertCard />

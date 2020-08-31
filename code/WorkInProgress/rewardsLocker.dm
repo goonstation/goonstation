@@ -875,7 +875,7 @@
 
 /datum/achievementReward/bloodflood
 	title = "(Fancy Gib) Plague of Blood"
-	desc = "You're gonna get ripped to shreds, probably."
+	desc = "This will cleanse you of Original Sin (permanently)."
 	required_medal = "Original Sin"
 	// once_per_round = 0
 

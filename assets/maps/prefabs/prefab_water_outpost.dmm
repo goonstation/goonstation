@@ -14,7 +14,7 @@
 "n" = (/obj/machinery/light/incandescent/small,/turf/simulated/floor/sanitary/white,/area/deserted_outpost)
 "o" = (/obj/machinery/door/airlock/pyro,/turf/simulated/floor/stairs/dark,/area/deserted_outpost)
 "p" = (/obj/machinery/door/airlock/pyro,/turf/simulated/floor/grey/blackgrime/other,/area/deserted_outpost)
-"q" = (/obj/shrub/dead{name = "dead shrub"},/obj/landmark/artifact/kudzu,/turf/simulated/floor/grey,/area/deserted_outpost)
+"q" = (/obj/shrub/dead{name = "dead shrub"},/obj/spacevine/living,/turf/simulated/floor/grey,/area/deserted_outpost)
 "r" = (/turf/simulated/floor/grey,/area/deserted_outpost)
 "s" = (/obj/shrub/dead{name = "dead shrub"},/turf/simulated/floor/grey,/area/deserted_outpost)
 "t" = (/obj/stool/bed,/obj/item/clothing/suit/bedsheet,/turf/simulated/floor/grey/blackgrime/other,/area/deserted_outpost)

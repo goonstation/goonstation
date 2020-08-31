@@ -22,6 +22,7 @@ var
 									/obj/decal/cleanable = 800,
 									/obj/overlay/tile_effect/lighting = 1000) //fine ok its smaller now! //edit : ok actually maybe this matters lets make it biger
 /datum/proc/pooled(var/pooltype)
+	SHOULD_CALL_PARENT(TRUE)
 	dispose()
 	if(istype(src, /atom/movable))
 		var/atom/movable/AM = src
@@ -33,6 +34,7 @@ var
 	pooled = 1
 
 /datum/proc/unpooled(var/pooltype)
+	SHOULD_CALL_PARENT(TRUE)
 	disposed = 0
 	pooled = 0
 

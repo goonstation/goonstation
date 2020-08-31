@@ -350,6 +350,7 @@ CONTAINS:
 	var/charge_time = 100
 	var/emagged = 0
 	var/makeshift = 0
+	var/talk2me = 1
 	var/obj/item/cell/cell = null
 	mats = 10
 
@@ -393,6 +394,10 @@ CONTAINS:
 				set_icon_state("[src.icon_base]-on")
 				playsound(user.loc, "sound/weapons/flash.ogg", 75, 1, pitch = 0.88)
 
+	attack_self(mob/user as mob)
+		user.show_text("You [talk2me ? "disable" : "enable"] the [src]'s verbal alert system.")
+		src.talk2me = !src.talk2me
+
 	proc/do_the_shocky_thing(mob/user as mob)
 		if (src.charged == 0)
 			user.show_text("[src] is still charging!", "red")
@@ -407,6 +412,10 @@ CONTAINS:
 			set_icon_state("[src.icon_base]-on")
 			playsound(src.loc, "sound/weapons/flash.ogg", 75, 1, pitch = 0.88)
 		return 1
+
+	proc/speak(var/message)	// lifted entirely from bot_parent.dm
+		if (src.talk2me)
+			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
 
 	disposing()
 		..()
@@ -465,14 +474,24 @@ CONTAINS:
 		if (patient.bioHolder.HasEffect("resist_electric"))
 			patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond at all!</span>",\
 			"<span class='notice'>You resist the shock!</span>")
+			speak("ERROR: Unable to complete circuit for shock delivery!")
 			return 1
 
 		else if (isdead(patient))
 			patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond at all!</span>")
+			speak("ERROR: Patient is deceased.")
 			return 1
 
 		else
-			patient.Virus_ShockCure(100)
+
+			if ((patient.hasStatus("defibbed") && prob(90)) || prob(75)) // it was a 100% chance before... probably
+				patient.cure_disease_by_path(/datum/ailment/malady/flatline)
+			if (!patient.find_ailment_by_type(/datum/ailment/malady/flatline))
+				speak("Normal cardiac rhythm restored.")
+			else
+				speak("Lethal dysrhythmia detected. Patient is still in cardiac arrest!")
+			patient.Virus_ShockCure(35)	// so it doesnt have a 100% chance to cure roboTF
+			patient.setStatus("defibbed", user == patient ? 6 SECONDS : 12 SECONDS)
 
 			if (ishuman(patient)) //remove later when we give nonhumans pathogen / organ response?
 				var/mob/living/carbon/human/H = patient
@@ -486,11 +505,17 @@ CONTAINS:
 				else if (patient.health < 0)
 					if (sumdamage >= 90)
 						user.show_text("<b>[patient]</b> looks horribly injured. Resuscitation alone may not help revive them.", "red")
+						speak("Patient has life-threatening injuries. Patient is unlikely to survive unless these wounds are treated.")
 					if (prob(66))
 						patient.visible_message("<span class='notice'><b>[patient]</b> inhales deeply!</span>")
 						patient.take_oxygen_deprivation(-50)
 						if (H.organHolder && H.organHolder.heart)
 							H.get_organ("heart").heal_damage(10,10,10)
+					else if (patient.hasStatus("defibbed")) // Always gonna get *something* if you keep shocking them
+						patient.visible_message("<span class='notice'><b>[patient]</b> inhales sharply!</span>")
+						patient.take_oxygen_deprivation(-10)
+						if (H.organHolder && H.organHolder.heart)
+							H.get_organ("heart").heal_damage(3,3,3)
 					else
 						patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond!</span>")
 
@@ -498,29 +523,22 @@ CONTAINS:
 				var/adjust = cell.charge
 				if (adjust <= 0) // bwuh??
 					adjust = 1000 // fu
-				patient.changeStatus("paralysis", min(0.001 * adjust, 10) * 10)
-				patient.changeStatus("stunned", min(0.002 * adjust, 10) * 10)
-				patient.changeStatus("weakened", min(0.002 * adjust, 10) * 10)
+				patient.changeStatus("paralysis", min(0.002 * adjust, 10) * 10)
 				patient.stuttering += min(0.005 * adjust, 25)
 				//DEBUG_MESSAGE("[src]'s defibrillate(): adjust = [adjust], paralysis + [min(0.001 * adjust, 5)], stunned + [min(0.002 * adjust, 10)], weakened + [min(0.002 * adjust, 10)], stuttering + [min(0.005 * adjust, 25)]")
 
 			else if (faulty)
-				patient.changeStatus("paralysis", 1 SECOND)
-				patient.changeStatus("stunned", 2 SECONDS)
-				patient.changeStatus("weakened", 2 SECONDS)
+				patient.changeStatus("paralysis", 1.5 SECONDS)
 				patient.stuttering += 5
 			else
 #ifdef USE_STAMINA_DISORIENT
 				if (emagged)
 					patient.do_disorient(130, weakened = 50, stunned = 50, paralysis = 40, disorient = 60, remove_stamina_below_zero = 0)
 				else
-					patient.changeStatus("paralysis", 40)
-					patient.changeStatus("stunned", 50)
-					patient.changeStatus("weakened", 5 SECONDS)
+					patient.changeStatus("paralysis", 50)
 #else
-				patient.changeStatus("paralysis", 40)
-				patient.changeStatus("stunned", 50)
-				patient.changeStatus("weakened", 5 SECONDS)
+				patient.changeStatus("paralysis", 50)
+
 #endif
 				patient.stuttering += 10
 
@@ -658,7 +676,7 @@ CONTAINS:
 	proc/put_back_defib(var/mob/living/M)
 		if (src.defib)
 			M.drop_item(defib)
-			src.defib.loc = src
+			src.defib.set_loc(src)
 			src.defib.parent = null
 		if (islist(M.move_laying))
 			M.move_laying -= src.defib
@@ -1525,9 +1543,7 @@ keeping this here because I want to make something else with it eventually
 				var/target = get_offset_target_turf(get_turf(src), rand(5)-rand(5), rand(5)-rand(5))
 				falling.set_loc(get_turf(src))
 
-				SPAWN_DBG(1 DECI SECOND)
-					if(falling)
-						falling.throw_at(target, 1, 1)
+				falling?.throw_at(target, 1, 1)
 
 
 	attackby(obj/item/W as obj, mob/user as mob, params)
