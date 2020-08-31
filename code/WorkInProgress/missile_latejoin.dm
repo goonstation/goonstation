@@ -11,6 +11,7 @@
 	bound_width = 32
 	bound_height = 64
 	layer = 30
+	flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	dir = NORTH
 	var/move_dir = NORTH
 	var/moved_on_flooring = 0
