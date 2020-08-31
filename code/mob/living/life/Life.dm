@@ -709,7 +709,7 @@ var/global/life_pause_check = 0
 
 		// Resistance from Clothing
 		protection += GET_MOB_PROPERTY(src, PROP_RANGEDPROT)
-		protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/3 //enchanted clothing isn't that bulletproof
+		protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/10 //enchanted clothing isn't that bulletproof at all
 		return protection
 
 	get_melee_protection(zone, damage_type)
