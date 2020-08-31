@@ -824,7 +824,11 @@
 	density = 1
 	pathable = 0
 	turf_flags = ALWAYS_SOLID_FLUID
+#ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
 	plane = PLANE_WALL
+#else
+	plane = PLANE_FLOOR
+#endif
 
 /turf/unsimulated/wall/solidcolor
 	name = "invisible solid turf"

@@ -632,6 +632,9 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Initializing worldgen...")
 	initialize_worldgen()
 
+	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
+	map_settings.init()
+
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
 	Z_LOG_DEBUG("World/Init", "Now in pre-game state.")
@@ -650,7 +653,6 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Init() complete")
 	TgsInitializationComplete()
 	//sleep_offline = 1
-
 
 	// Biodome elevator accident stats
 	bioele_load_stats()
