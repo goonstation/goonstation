@@ -173,7 +173,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 
 	equipped(var/mob/user, var/slot)
 		..()
-		if(slot == SLOT_WEAR_MASM)
+		if(slot == SLOT_WEAR_MASK)
 			owner = user
 			if (container && container.reagents.total_volume && condition)
 				active = 1

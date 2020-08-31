@@ -12,7 +12,7 @@
 		..()
 
 		if (!A) //manually called outside of BR gamemode
-			A = get_area(pick(peststart))
+			A = get_area(pick_landmark(LANDMARK_PESTSTART))
 		logTheThing("admin",null,null,"Supply drop at [A]")
 		var/list/turfs = get_area_turfs(A,1)
 		if (!turfs)	DEBUG_MESSAGE("Getting turfs failed for [A]")
@@ -34,7 +34,7 @@
 	var/gib_mobs = TRUE
 
 	New(var/atom/location, var/preDropTime = 100, var/obj_path, var/no_lootbox)
-		src.loc = location
+		src.set_loc(location)
 		SPAWN_DBG(preDropTime)
 			if (gib_mobs)
 				new/obj/effect/supplydrop(src.loc, obj_path, no_lootbox)

@@ -21,6 +21,7 @@ var/zapLimiter = 0
 	name = "area power controller"
 	icon_state = "apc0"
 	anchored = 1
+	plane = PLANE_NOSHADOW_ABOVE
 	req_access = list(access_engineering_power)
 	object_flags = CAN_REPROGRAM_ACCESS
 	netnum = -1		// set so that APCs aren't found as powernet nodes
@@ -531,7 +532,7 @@ var/zapLimiter = 0
 
 	interact_particle(user,src)
 
-	if(opened && (!issilicon(user) || isghostdrone(user)))
+	if(opened && (!issilicon(user) || isghostdrone(user) || !isAI(user)))
 		if(cell)
 			user.put_in_hand_or_drop(cell)
 			cell.updateicon()

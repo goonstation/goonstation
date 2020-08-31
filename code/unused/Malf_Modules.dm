@@ -36,7 +36,7 @@ rcd light flash thingy on matter drain
 /client/proc/fireproof_core()
 	set category = "AI Modules"
 	set name = "Fireproof Core"
-	for(var/mob/living/silicon/ai/ai in AIs)
+	for(var/mob/living/silicon/ai/ai in by_type[/mob/living/silicon/ai])
 		ai.fire_res_on_core = 1
 	usr.verbs -= /client/proc/fireproof_core
 	boutput(usr, "<span class='alert'>Core fireproofed.</span>")
@@ -135,11 +135,8 @@ rcd light flash thingy on matter drain
 	uses = 1
 
 /client/proc/attack_shuttle()
-	for (var/obj/landmark/A in landmarks)
-		LAGCHECK(LAG_LOW)
-		if (A.name == "AIgunbotshuttle")
-			new /obj/critter/gunbot(A.loc)
-			A.dispose()
+	for(var/turf/T in landmarks[LANDMARK_AI_GUNBOT_SHUTTLE])
+		new /obj/critter/gunbot(T)
 	usr.verbs -= /client/proc/attack_shuttle
 
 

@@ -604,7 +604,7 @@ datum
 			taste = "moving"
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if (prob(15 * mult))
+				if (prob(percentmult(15, mult)))
 					if (isrestrictedz(M.z))
 						boutput(M, "<span class='notice'>You feel strange. Almost a sense of guilt.</span>")
 						return
@@ -1917,10 +1917,11 @@ datum
 			viscosity = 0.5
 			minimum_reaction_temperature = -INFINITY
 
+#if ASS_JAM
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(it_is_ass_day)
-					if (exposed_temperature > (T0C + 50))
-						holder.add_reagent("chemilin", 10, donotreact = 1)
+				if (exposed_temperature > (T0C + 50))
+					holder.add_reagent("chemilin", 10, donotreact = 1)
+#endif
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
@@ -2196,11 +2197,11 @@ datum
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				for (var/datum/ailment_data/disease/virus in M.ailments)
-					if (prob(5 * mult) && istype(virus.master,/datum/ailment/disease/cold))
+					if (prob(percentmult(5, mult)) && istype(virus.master,/datum/ailment/disease/cold))
 						M.cure_disease(virus)
-					if (prob(3 * mult) && istype(virus.master,/datum/ailment/disease/flu))
+					if (prob(percentmult(3, mult)) && istype(virus.master,/datum/ailment/disease/flu))
 						M.cure_disease(virus)
-					if (prob(3 * mult) && istype(virus.master,/datum/ailment/disease/food_poisoning))
+					if (prob(percentmult(3, mult)) && istype(virus.master,/datum/ailment/disease/food_poisoning))
 						M.cure_disease(virus)
 				if (prob(11))
 					M.show_text("You feel calm and relaxed.", "blue")
@@ -2409,8 +2410,8 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if ( (method==TOUCH && prob(33)) || method==INGEST)
-					if(M.bioHolder.HasAnyEffect(effectTypePower) && prob(4))
-						M.bioHolder.RemoveAllEffects(effectTypePower)
+					if(M.bioHolder.HasAnyEffect(EFFECT_TYPE_POWER) && prob(4))
+						M.bioHolder.RemoveAllEffects(EFFECT_TYPE_POWER)
 						boutput(M, "You feel plain.")
 				return
 

@@ -5,7 +5,11 @@
 
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
+#ifndef IN_MAP_EDITOR
 	icon_state = "conveyor0"
+#else
+	icon_state = "conveyor0-map"
+#endif
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = 1
@@ -409,7 +413,7 @@
 
 /obj/machinery/conveyor_switch/New()
 	..()
-	conveyor_switches += src
+	START_TRACKING
 	update()
 
 	SPAWN_DBG(0.5 SECONDS)		// allow map load
@@ -423,7 +427,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
 
 /obj/machinery/conveyor_switch/disposing()
-	conveyor_switches -= src
+	STOP_TRACKING
 	for(var/obj/machinery/conveyor/C in conveyors)
 		C.owner = null
 	conveyors = null
@@ -474,7 +478,7 @@
 	update()
 
 	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in conveyor_switches)
+	for(var/obj/machinery/conveyor_switch/S in by_type[/obj/machinery/conveyor_switch])
 		if(S.id == src.id)
 			S.position = position
 			S.update()
@@ -606,7 +610,7 @@
 			update_icon()
 
 	proc/update_belts()
-		for(var/obj/machinery/conveyor_switch/S in conveyor_switches)
+		for(var/obj/machinery/conveyor_switch/S in by_type[/obj/machinery/conveyor_switch])
 			if(S.id == "carousel")
 				for(var/obj/machinery/conveyor/C in S.conveyors)
 					C.move_lag = max(initial(C.move_lag) - speedup, 0.1)

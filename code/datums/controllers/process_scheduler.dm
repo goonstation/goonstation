@@ -40,6 +40,8 @@ var/global/datum/controller/processScheduler/processScheduler
 
 	// Setup for these processes will be deferred until all the other processes are set up.
 	var/tmp/list/deferredSetupList = new
+	var/tmp/list/alreadyCreatedPathsList = new
+	var/tmp/list/alreadyCreatedList = new
 
 	var/tmp/currentTick = 0
 
@@ -63,6 +65,12 @@ var/global/datum/controller/processScheduler/processScheduler
 	if (!(processPath in deferredSetupList))
 		deferredSetupList += processPath
 
+/datum/controller/processScheduler/proc/addNowSkipSetup(var/processPath)
+	src.alreadyCreatedPathsList += processPath
+	var/newProcess = new processPath(src)
+	src.alreadyCreatedList += newProcess
+	return newProcess
+
 /datum/controller/processScheduler/proc/setup()
 	// There can be only one
 	if(processScheduler && (processScheduler != src))
@@ -72,11 +80,15 @@ var/global/datum/controller/processScheduler/processScheduler
 	var/process
 	// Add all the processes we can find, except for the ticker
 	for (process in childrentypesof(/datum/controller/process))
-		if (!(process in deferredSetupList))
+		if (!(process in deferredSetupList) && !(process in alreadyCreatedPathsList))
 			addProcess(new process(src))
 
 	for (process in deferredSetupList)
 		addProcess(new process(src))
+
+	for (process in alreadyCreatedList)
+		// already created and set up so just add it.
+		addProcess(process, TRUE)
 
 /datum/controller/processScheduler/proc/start()
 	isRunning = 1
@@ -137,7 +149,7 @@ var/global/datum/controller/processScheduler/processScheduler
 			delay += process_run_interval * world.tick_lag
 		queued.len = 0
 
-/datum/controller/processScheduler/proc/addProcess(var/datum/controller/process/process)
+/datum/controller/processScheduler/proc/addProcess(var/datum/controller/process/process, var/skipSetup = 0)
 	// zamu here, sorry for making this dumb thing
 	if (game_start_countdown)
 		var/procname = copytext("[process.type]", findlasttext("[process.type]", "/", -1) + 1)
@@ -162,7 +174,8 @@ var/global/datum/controller/processScheduler/processScheduler
 	recordEnd(process, 0)
 
 	// Set up process
-	process.setup()
+	if (!skipSetup)
+		process.setup()
 
 	// Save process in the name -> process map
 	nameToProcessMap[process.name] = process
@@ -331,8 +344,3 @@ var/global/datum/controller/processScheduler/processScheduler
 	if (hasProcess(processName))
 		var/datum/controller/process/process = nameToProcessMap[processName]
 		usr.client.debug_variables(process)
-
-/datum/controller/processScheduler/proc/sign(var/x)
-	if (x == 0)
-		return 1
-	return x / abs(x)

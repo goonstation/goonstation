@@ -53,6 +53,8 @@
 	var/bio_effects = null
 	var/objective = null
 	var/spawn_miscreant = 0
+	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
+	var/map_can_autooverride = 1 // if set to 0 map can't change limit on this job automatically (it can still set it manually)
 
 	New()
 		..()
@@ -74,11 +76,13 @@
 				I.implanted = 1
 				if(ishuman(M)) H.implant.Add(I)
 				I.implanted(M)
-				if (receives_disk && ishuman(M))
+				if (src.receives_disk && ishuman(M))
 					if (istype(H.back, /obj/item/storage))
 						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back
 						if (D)
-							D.data["imp"] = "\ref[I]"
+							var/datum/computer/file/clone/R = locate(/datum/computer/file/clone/) in D.root.contents
+							if (R)
+								R.fields["imp"] = "\ref[I]"
 
 			var/give_access_implant = ismobcritter(M)
 			if(!spawn_id && (access.len > 0 || access.len == 1 && access[1] != access_fuck_all))
@@ -96,7 +100,7 @@
 				I.implanted(M)
 
 			if (src.special_spawn_location && !no_special_spawn)
-				M.loc = locate(spawn_x,spawn_y,spawn_z)
+				M.set_loc(locate(spawn_x,spawn_y,spawn_z))
 
 			if (ishuman(M) && src.bio_effects)
 				var/list/picklist = params2list(src.bio_effects)
@@ -467,6 +471,7 @@
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_poc2 = /obj/item/requisition_token/security
+	rounds_needed_to_play = 13 //ss13, and also seems like a good number to go with
 
 	New()
 		..()
@@ -892,6 +897,7 @@
 	no_jobban_from_this_job = 1
 	low_priority_job = 1
 	cant_allocate_unwanted = 1
+	map_can_autooverride = 0
 	slot_jump = /obj/item/clothing/under/rank
 	slot_foot = /obj/item/clothing/shoes/black
 

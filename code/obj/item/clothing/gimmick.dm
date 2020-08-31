@@ -335,7 +335,7 @@
 /obj/item/clothing/mask/cursedclown_hat/equipped(var/mob/user, var/slot)
 	..()
 	var/mob/living/carbon/human/Victim = user
-	if(istype(Victim) && slot == SLOT_WEAR_MASM)
+	if(istype(Victim) && slot == SLOT_WEAR_MASK)
 		boutput(user, "<span class='alert'><B> The mask grips your face!</B></span>")
 		src.desc = "This is never coming off... oh god..."
 		// Mostly for spawning a cluwne car and clothes manually.

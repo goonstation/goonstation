@@ -1,27 +1,3 @@
-// Artifact Infrastructure Procs
-
-/obj/landmark/artifact
-	name = "artifact spawner"
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "x3"
-	anchored = 1.0
-	var/spawnchance = 100 // prob chance out of 100 to spawn artifact at game start
-	var/spawnpath = null  // if you want a landmark to spawn a specific artifact rather than a random one
-
-/obj/landmark/artifact/seed
-	name = "artifact seed spawner"
-	spawnpath = /obj/item/seed/alien
-
-/obj/landmark/artifact/cannabis_seed
-	name = "cannabis seed spawner"
-	spawnpath = /obj/item/seed/cannabis
-	// not actually an artifact but eh seeds are behaving oddly
-
-/obj/landmark/artifact/kudzu
-	name = "living kudzu spawner"
-	spawnpath = /obj/spacevine/living
-	// yeah kudzu isn't an artifact either whoops
-
 /proc/Artifact_Spawn(var/atom/T,var/forceartitype)
 	if (!T)
 		return
@@ -163,6 +139,8 @@
 	if (!src.ArtifactSanityCheck())
 		return 1
 	var/datum/artifact/A = src.artifact
+	if(A.internal_name)
+		src.name = A.internal_name
 	if (A.activated)
 		return 1
 	if (A.triggers.len < 1 && !A.automatic_activation)
@@ -286,13 +264,13 @@
 
 	if (istype(W,/obj/item/circuitboard))
 		var/obj/item/circuitboard/CIRCUITBOARD = W
-		src.visible_message("<b>[user.name]</b>offers the [CIRCUITBOARD] to the artifact.</span>")
+		src.visible_message("<b>[user.name]</b> offers the [CIRCUITBOARD] to the artifact.</span>")
 		src.ArtifactStimulus("data", 1)
 		return 0
 
 	if (istype(W,/obj/item/disk/data))
 		var/obj/item/disk/data/DISK = W
-		src.visible_message("<b>[user.name]</b>offers the [DISK] to the artifact.</span>")
+		src.visible_message("<b>[user.name]</b> offers the [DISK] to the artifact.</span>")
 		src.ArtifactStimulus("data", 1)
 		return 0
 
@@ -338,7 +316,7 @@
 	var/datum/artifact/A = src.artifact
 
 	// Possible stimuli = force, elec, radiate, heat
-	switch(A.artitype)
+	switch(A.artitype.name)
 		if("martian") // biotech, so anything that'd probably kill a living thing works on them too
 			if(stimtype == "force")
 				if (strength >= 30)
@@ -450,7 +428,7 @@
 
 	var/turf/T = get_turf(src)
 	if (istype(T,/turf/))
-		switch(A.artitype)
+		switch(A.artitype.name)
 			if("ancient")
 				T.visible_message("<span class='alert'><B>[src] sparks and sputters violently before falling apart!</B></span>")
 			if("martian")
@@ -480,7 +458,7 @@
 		return
 	var/datum/artifact/A = src.artifact
 
-	if (A.artitype == "eldritch")
+	if (A.artitype.name == "eldritch")
 		faultprob *= 2 // eldritch artifacts fucking hate you and are twice as likely to go faulty
 	faultprob = max(0,min(faultprob,100))
 

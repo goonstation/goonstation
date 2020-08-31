@@ -316,8 +316,8 @@
 				pinhole = 1
 				block_eye = null
 				equipper.u_equip(src)
-				theEye.loc = W
-				src.loc = W
+				theEye.set_loc(W)
+				src.set_loc(W)
 				equipper = null
 				user.show_message("<span class='alert'>You stab a hole in [src].  Unfortunately, you also stab a hole in your [theEye] and when you pull [W] away your eye comes with it!!</span>")
 
@@ -349,7 +349,7 @@
 	desc = "A pair of VR goggles running a personal simulation."
 	icon_state = "vr"
 	item_state = "sunglasses"
-	var/network = "det_net"
+	var/network = LANDMARK_VR_DET_NET
 
 	setupProperties()
 		..()
@@ -391,10 +391,10 @@
 		return
 
 /obj/item/clothing/glasses/vr/arcade
-	network = "arcadevr"
+	network = LANDMARK_VR_ARCADE
 
 /obj/item/clothing/glasses/vr/bomb
-	network = "bombtest"
+	network = LANDMARK_VR_BOMBTEST
 
 /obj/item/clothing/glasses/healthgoggles
 	name = "\improper ProDoc Healthgoggles"

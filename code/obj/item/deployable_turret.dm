@@ -28,10 +28,10 @@
 
 	attack_self(mob/user as mob)
 		user.show_message("You assemble the turret parts.")
-		src.loc = get_turf(user)
+		src.set_loc(get_turf(user))
 		src.spawn_turret(user.dir)
 		user.u_equip(src)
-		src.loc = get_turf(user)
+		src.set_loc(get_turf(user))
 		qdel(src)
 
 	proc/spawn_turret(var/direct)
@@ -51,8 +51,7 @@
 		src.damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
 	*/
 
-	throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0)
-		..()
+	throw_end(list/params, turf/thrown_from)
 		if(src.quick_deploy_fuel > 0)
 			var/turf/thrown_to = get_turf(src)
 			var/spawn_direction = get_dir(thrown_to,thrown_from)

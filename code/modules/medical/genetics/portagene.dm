@@ -16,8 +16,6 @@
 		portable_machinery.Add(src)
 
 		src.homeloc = src.loc
-
-		genetics_computers += src
 		return
 
 	disposing()

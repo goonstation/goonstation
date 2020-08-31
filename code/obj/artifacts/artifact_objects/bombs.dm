@@ -21,7 +21,9 @@
 	New()
 		..()
 		src.react_heat[2] = "VOLATILE REACTION DETECTED"
-		if (artitype != "eldritch" && prob(5))
+
+	post_setup()
+		if (artitype.name != "eldritch" && prob(5))
 			dud = 1
 
 	effect_activate(var/obj/O)
@@ -139,24 +141,25 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(10000)
+		var/datum/reagents/R = new/datum/reagents(1000)
 		reagents = R
 		R.my_atom = src
 
 /datum/artifact/bomb/chemical
 	associated_object = /obj/artifact/bomb/chemical
+	rarity_class = 2
 	explode_delay = 0
 	react_xray = list(5,65,20,11,"HOLLOW")
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/heat,/datum/artifact_trigger/carbon_touch)
-	var/payload_type = 0 // 0 for smoke, 1 for foam
+	var/payload_type = 0 // 0 for smoke, 1 for foam, 2 for propellant, 3 for just dumping fluids
 	var/recharge_delay = 600
 	var/list/payload_reagents = list()
 
 	post_setup()
-		payload_type = rand(0,1)
+		payload_type = rand(0,3)
 		var/list/potential_reagents = list()
-		switch(artitype)
+		switch(artitype.name)
 			if ("ancient")
 				// industrial heavy machinery kinda stuff
 				potential_reagents = list("nanites","liquid plasma","mercury","lithium","plasma","radium","uranium","phlogiston",
@@ -180,8 +183,11 @@
 		if (potential_reagents.len > 0)
 			var/looper = rand(2,8)
 			while (looper > 0)
+				var/reagent = pick(potential_reagents)
+				if(payload_type == 3 && ban_from_fluid.Find(reagent)) // do not pick stuff that is banned from fluid dump
+					continue
 				looper--
-				payload_reagents += pick(potential_reagents)
+				payload_reagents += reagent
 
 		recharge_delay = rand(200,800)
 
@@ -194,14 +200,6 @@
 		for (var/X in payload_reagents)
 			reaction_reagents += X
 
-		if (payload_type)
-			reaction_reagents += "fluorosurfactant"
-			reaction_reagents += "water"
-		else
-			reaction_reagents += "potassium"
-			reaction_reagents += "sugar"
-			reaction_reagents += "phosphorus"
-
 		var/amountper = 0
 		if (reaction_reagents.len > 0)
 			amountper = round(O.reagents.maximum_volume / reaction_reagents.len)
@@ -211,13 +209,18 @@
 		for (var/X in reaction_reagents)
 			O.reagents.add_reagent(X,amountper)
 
-		if (payload_type)
-			var/turf/location = get_turf(O)
-			var/datum/effects/system/foam_spread/s = new()
-			s.set_up(O.reagents.total_volume, location, O.reagents, 0)
-			s.start()
-		else
-			smoke_reaction(O.reagents, 4, get_turf(O))
+		var/turf/location = get_turf(O)
+		switch(payload_type)
+			if(0)
+				var/datum/effects/system/foam_spread/s = new()
+				s.set_up(O.reagents.total_volume, location, O.reagents, 0)
+				s.start()
+			if(1)
+				O.reagents.smoke_start(10)
+			if(2)
+				O.reagents.smoke_start(10,1)
+			if(3)
+				location.fluid_react(O.reagents, O.reagents.total_volume)
 
 		O.reagents.clear_reagents()
 

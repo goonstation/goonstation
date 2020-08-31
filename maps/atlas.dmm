@@ -2984,7 +2984,7 @@
 	pixel_y = 21
 	},
 /obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/flamethrower/loaded,
+/obj/item/flamethrower/assembled/loaded,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -4623,6 +4623,9 @@
 /area/station/bridge/captain)
 "mt" = (
 /obj/table/auto,
+/obj/machinery/defib_mount{
+	pixel_y = 2
+	},
 /obj/item/kitchen/food_box/donut_box{
 	desc = "How are these not stale?";
 	name = "Robust Donuts"

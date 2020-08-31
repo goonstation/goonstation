@@ -73,7 +73,7 @@
 		if (src.health <= 0)
 			src.death()
 		else if (W.force)
-			if(ishuman(user) || ismonkey(user))
+			if(ishuman(user), ismonkey(user))
 				src.target = user
 				src.state = 1
 		..()
