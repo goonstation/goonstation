@@ -9,6 +9,7 @@
 	var/status = "Normal"
 	var/speedmod = 2 // how fast should the vehicle be, lower is faster
 	var/wormholeQueued = 0 //so users cant open a million inputs and bypass all cooldowns
+	var/returnAllowed = 1 //If 0, prevents the usage of the "return to station Z-level" ability.
 	power_used = 0
 	system = "Engine"
 	icon_state = "engine-1"
@@ -102,3 +103,4 @@
 	warprecharge = -1 //This disables the ability to create wormholes completely.
 	speedmod = 2
 	icon_state = "engine-4"
+	returnAllowed = 0
