@@ -30,6 +30,7 @@
 	var/c_flags = null
 	var/tooltip_flags = null
 	var/item_function_flags = null
+	var/force_use_as_tool = 0
 
 	pressure_resistance = 50
 	var/obj/item/master = null
@@ -831,6 +832,8 @@
 			I.remove_from_mob()
 			I.set_item(src)
 
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
+
 	if(chokehold)
 		chokehold.attack_self(user)
 
@@ -1176,6 +1179,8 @@
 	msgs.logc("attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)])")
 
 	SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, M, user) & ATTACK_PRE_DONT_ATTACK)
+		return
 	var/stam_crit_pow = src.stamina_crit_chance
 	if (prob(stam_crit_pow))
 		msgs.stamina_crit = 1
