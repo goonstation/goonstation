@@ -386,17 +386,15 @@
 	do_bunp()
 		return FALSE // no bunp
 
+	proc/unset_tablepass_callback(datum/thrown_thing/thr)
+		thr.thing.flags &= ~TABLEPASS
+
 	sendOwner()
 		var/const/throw_speed = 0.5
-		if (istype(ownerMob, /mob/living/carbon/human))
-			var/mob/living/carbon/human/M = ownerMob
-			if (!(M.flags & TABLEPASS))
-				var/tables_traveled = duration/(1 SECONDS)
-				SPAWN_DBG((tables_traveled/throw_speed) DECI SECONDS)
-					M.flags &= !TABLEPASS
-			M.flags ^= TABLEPASS
-
-		ownerMob.throw_at(jump_target, throw_range, throw_speed)
+		var/datum/thrown_thing/thr = ownerMob.throw_at(jump_target, throw_range, throw_speed)
+		if(!(ownerMob.flags & TABLEPASS))
+			ownerMob.flags |= TABLEPASS
+			thr.end_throw_callback = .proc/unset_tablepass_callback
 		for(var/O in AIviewers(ownerMob))
 			var/mob/M = O //inherently typed list
 			var/the_text = "[ownerMob] jumps over [the_railing]."
