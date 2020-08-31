@@ -68,6 +68,8 @@
 
 	var/datum/movement_modifier/movement_modifier
 
+	var/decomposes = TRUE
+
 
 	proc/say_filter(var/message)
 		return message
@@ -691,6 +693,7 @@
 	icon_state = "skeleton"
 	icon_override_static = 1
 	voice_override = "skelly"
+	decomposes = FALSE
 
 	New(var/mob/living/carbon/human/M)
 		..()

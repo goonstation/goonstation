@@ -74,7 +74,7 @@
 	var/yeet_chance = 0.1 //yeet
 
 	var/decomp_stage = 0 // 1 = bloat, 2 = decay, 3 = advanced decay, 4 = skeletonized
-	var/next_decomp_time = 0
+	var/time_until_decomposition = 0
 	var/uses_damage_overlays = 1 //If set to 0, the mob won't receive any damage overlays.
 
 	var/datum/mutantrace/mutantrace = null
@@ -681,7 +681,7 @@
 		var/obj/item/clothing/suit/armor/suicide_bomb/A = src.wear_suit
 		A.trigger(src)
 
-	src.next_decomp_time = world.time + rand(480,900)*10
+	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		src.mind.register_death()

@@ -32,7 +32,7 @@
 		robot_owner = null
 		critter_owner = null
 
-	proc/process(var/datum/gas_mixture/environment)
+	proc/process(var/datum/gas_mixture/environment, mult)
 		last_process = TIME
 
 	proc/get_multiplier()
@@ -181,6 +181,8 @@
 
 	var/life_time_passed = max(tick_spacing, TIME - last_life_tick)
 
+	var/life_mult = life_time_passed / tick_spacing
+
 	// Jewel's attempted fix for: null.return_air()
 	// These objects should be garbage collected the next tick, so it's not too bad if it's not breathing I think? I might be totallly wrong here.
 	if (loc)
@@ -200,7 +202,7 @@
 			L.process(environment)
 
 		for (var/obj/item/implant/I in src.implant)
-			I.on_life((life_time_passed / tick_spacing))
+			I.on_life(life_mult)
 
 		update_item_abilities()
 
@@ -208,7 +210,7 @@
 
 		if (!isdead(src)) //still breathing
 			//do on_life things for components?
-			SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, (life_time_passed / tick_spacing))
+			SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, life_mult)
 
 			if (last_no_gravity != src.no_gravity)
 				if(src.no_gravity)
@@ -244,13 +246,13 @@
 					src.updateOverlaysClient(x.client)
 
 		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-			G.process((life_time_passed / tick_spacing))
+			G.process(life_mult)
 
 		if (!can_act(M=src,include_cuffs=0))
 			actions.interrupt(src, INTERRUPT_STUNNED)
 
 		if (src.abilityHolder)
-			src.abilityHolder.onLife((life_time_passed / tick_spacing))
+			src.abilityHolder.onLife(life_mult)
 
 	last_life_tick = TIME
 
