@@ -1,4 +1,3 @@
-// sniper
 /obj/item/gun/kinetic/light_machine_gun/fullauto
 	name = "M90 machine gun"
 	desc = "Looks pretty heavy to me. Hold shift to begin automatic fire!"
@@ -10,54 +9,67 @@
 	New()
 		..()
 		ammo.amount_left=1000
+		AddComponent(/datum/component/holdertargeting/fullauto)
 
-	dropped(mob/M)
-		remove_self(M)
-		..()
-
-	proc/remove_self(var/mob/living/M)
-		if (ishuman(M))
-			UnregisterSignal(M, COMSIG_LIVING_SPRINT_START)
-		src.shooting = 0
-
-	attack_hand(mob/user as mob)
-		if (..() && ishuman(user))
-			RegisterSignal(user, COMSIG_LIVING_SPRINT_START, .proc/begin_shootloop)
-
-	proc/begin_shootloop(mob/living/L)
-		if(!shooting)
-			shooting = 1
-			target = null
-			current_projectile.shot_number = 1
-			current_projectile.cost = 1
-			current_projectile.shot_delay = 1.5
-			APPLY_MOB_PROPERTY(L, PROP_CANTSPRINT, src)
-			SPAWN_DBG(0)
-				src.shootloop(L)
-
-	proc/shootloop(mob/living/L)
-		var/delay = 1.5 DECI SECONDS
-		while(shooting && canshoot() && L?.client.check_key(KEY_RUN))
-			src.shoot(target ? target : get_step(L, L.betterdir()), get_turf(L), L)
-			src.suppress_fire_msg = 1
-			sleep(max(delay*=0.9, 1.5))
-		//loop ended - reset values
-		shooting = 0
-		REMOVE_MOB_PROPERTY(L, PROP_CANTSPRINT, src)
-		current_projectile.shot_number = initial(current_projectile.shot_number)
-		current_projectile.cost = initial(current_projectile.cost)
-		current_projectile.shot_delay = initial(current_projectile.shot_delay)
-		suppress_fire_msg = 0
-
-	pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
-		if(shooting)
-			src.target = get_turf(target)
-			src.suppress_fire_msg = 0
-		else
-			..()
 
 /mob/living/proc/betterdir()
 	return ((src.dir in ordinal) || (src.last_move_dir in cardinal)) ? src.dir : src.last_move_dir
+
+
+/datum/component/holdertargeting/fullauto
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	signals = list(COMSIG_LIVING_SPRINT_START)
+	mobtype = /mob/living
+	proctype = .proc/begin_shootloop
+	var/turf/target
+	var/shooting
+	var/delaystart = 4 DECI SECONDS
+	var/delaymin = 1 DECI SECOND
+	var/rampfactor = 0.9
+	var/obj/item/gun/G
+
+	Initialize()
+		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
+			return COMPONENT_INCOMPATIBLE
+		else
+			G = parent
+
+	on_dropped(datum/source, mob/user)
+		. = ..()
+		src.shooting = 0
+
+/datum/component/holdertargeting/fullauto/proc/begin_shootloop(mob/living/user)
+	if(!shooting)
+		shooting = 1
+		target = null
+		G.current_projectile.shot_number = 1
+		G.current_projectile.cost = 1
+		G.current_projectile.shot_delay = 1.5
+		APPLY_MOB_PROPERTY(user, PROP_CANTSPRINT, G)
+		RegisterSignal(user, COMSIG_MOB_CLICK, .proc/retarget)
+		SPAWN_DBG(0)
+			src.shootloop(user)
+
+/datum/component/holdertargeting/fullauto/proc/retarget(mob/M, atom/target, params)
+	src.target = get_turf(target)
+	G.suppress_fire_msg = 0
+
+
+/datum/component/holdertargeting/fullauto/proc/shootloop(mob/living/L)
+	var/delay = delaystart
+	while(shooting && G.canshoot() && L?.client.check_key(KEY_RUN))
+		G.shoot(target ? target : get_step(L, L.betterdir()), get_turf(L), L)
+		G.suppress_fire_msg = 1
+		sleep(max(delay*=rampfactor, delaymin))
+	//loop ended - reset values
+	shooting = 0
+	REMOVE_MOB_PROPERTY(L, PROP_CANTSPRINT, G)
+	G.current_projectile.shot_number = initial(G.current_projectile.shot_number)
+	G.current_projectile.cost = initial(G.current_projectile.cost)
+	G.current_projectile.shot_delay = initial(G.current_projectile.shot_delay)
+	G.suppress_fire_msg = 0
+	UnregisterSignal(L, COMSIG_MOB_CLICK)
+
 
 
 /obj/item/gun/kinetic/pistol/autoaim
