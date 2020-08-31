@@ -25,6 +25,9 @@
 				boutput(M, "<span class='alert'>[psource] [created_volume >= 10 ? "crushes you as it implodes!" : "compresses around you tightly for a moment!"]</span>")
 
 			if (created_volume >= 10)
+				if (!istype(psource, /obj/icecube))
+					for (var/mob/living/M in psource)
+						M.make_cube(life = INFINITY, T = get_turf(M))
 				for (var/atom/movable/O in psource)
 					O.set_loc(source)
 				psource:visible_message("<span class='alert'>[psource] implodes!</span>")
