@@ -120,6 +120,8 @@
 	return
 
 /client/Del()
+	DEBUG_MESSAGE("CLIENT DEL of [src.ckey]")
+	logTheThing("debug", null, null, "[src.ckey] has disconnected.")
 	if (player_capa && src.login_success)
 		player_cap_grace[src.ckey] = TIME + 2 MINUTES
 
