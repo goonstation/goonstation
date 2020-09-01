@@ -699,6 +699,28 @@
 	points = -2
 	isPositive = 1
 
+//Category: Background.
+
+/obj/trait/immigrant
+	name = "Stowaway (+1) \[Background\]"
+	cleanName = "Stowaway"
+	desc = "You spawn hidden away on-station without an ID or PDA."
+	id = "immigrant"
+	icon_state = "stowaway"
+	category = "background"
+	points = 1
+	isPositive = 0
+
+obj/trait/pilot
+	name = "Pilot (+1) \[Background\]"
+	cleanName = "Pilot"
+	desc = "You spawn in a pod off-station with a Space GPS and proper protection but without an ID and PDA."
+	id = "pilot"
+	icon_state = "pilot"
+	category = "background"
+	points = 1
+	isPositive = 0
+
 // NO CATEGORY - Grey Border
 
 /obj/trait/hemo
@@ -889,24 +911,6 @@
 	icon_state = "smoker"
 	points = -1
 	isPositive = 1
-
-/obj/trait/immigrant
-	name = "Stowaway (+1)"
-	cleanName = "Stowaway"
-	desc = "You spawn hidden away on-station without an ID or PDA."
-	id = "immigrant"
-	category = "background"
-	points = 1
-	isPositive = 0
-
-obj/trait/pilot
-	name = "Pilot (+1)"
-	cleanName = "Pilot"
-	desc = "You spawn in a pod off-station with a Space GPS and proper protection but without an ID and PDA."
-	id = "pilot"
-	category = "background"
-	points = 1
-	isPositive = 0
 
 /obj/trait/nervous
 	name = "Nervous (+1)"
