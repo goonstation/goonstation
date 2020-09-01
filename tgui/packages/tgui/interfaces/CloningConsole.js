@@ -40,7 +40,7 @@ export const CloningConsole = (props, context) => {
   const IsCloneSlaved = Boolean(data.cloneslave);
   return (
     <Window
-      theme={IsCloneSlaved ? 'syndicate' : ''}
+      theme={IsCloneSlaved ? 'syndicate' : 'ntos'}
       width={540}
       height={550}>
       <Window.Content scrollable>
