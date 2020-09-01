@@ -345,6 +345,7 @@
 	level = 2
 	var/cabinet_banned = false // whether or not this component is prevented from being anchored in cabinets
 	var/one_per_tile = false // if true makes it so that only one component can be wrenched on the tile
+	var/own_id = "/obj/item/mechanics" // im bad at BYOND code okay? (used for one_per_tile, no need to use otherwise)
 	var/under_floor = 0
 	var/can_rotate = 0
 	var/cooldown_time = 3 SECONDS
@@ -428,11 +429,11 @@
 					if(IN_CABINET && src.cabinet_banned)
 						boutput(usr,"<span class='alert'>[src] is not allowed in component housings.</span>")
 						return
-					// if(src.one_per_tile)
-						// for(var/obj/item/mechanics/Z in src.loc)
-							// if (!istype(Z, obj/item/mechanics/src) && Z.level == 1)
-							// boutput(usr,"<span class='alert'>No matter how hard you try, you are not able to think of a way to fit more than one [src] on a single tile.</span>")
-							// return
+					if(src.one_per_tile)
+						for(var/obj/item/mechanics/Z in src.loc)
+							if ((Z.own_id == src.own_id) && Z.level == 1)
+							boutput(usr,"<span class='alert'>No matter how hard you try, you are not able to think of a way to fit more than one [src] on a single tile.</span>")
+							return
 					boutput(user, "You attach the [src] to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
 					logTheThing("station", usr, null, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
@@ -982,6 +983,8 @@
 	icon_state = "comp_zap"
 	cooldown_time = 1 SECOND
 	cabinet_banned = true
+	one_per_tile = true
+	own_id = "/obj/item/mechanics/zapper"
 	var/zap_power = 2
 
 	New()
