@@ -114,6 +114,8 @@ var/global/datum/controller/throwing/throwing_controller = new
 				if(call(thr.end_throw_callback)(thr)) // return 1 to continue the throw, might be useful!
 					thrown += thr
 					continue
+			if(!thing || thing.disposed)
+				continue
 			animate(thing, transform=thr.transform_original)
 			thing.throw_end(thr.params, thrown_from=thr.thrown_from)
 
