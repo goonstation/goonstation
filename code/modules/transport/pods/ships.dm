@@ -127,6 +127,17 @@
 
 ////////armed civ putt
 
+obj/machinery/vehicle/miniputt/pilot
+	New()
+		. = ..()
+		src.engine = new /obj/item/shipcomponent/engine/zero
+		src.engine.ship = src
+		src.components += src.engine
+		
+		myhud.update_systems()
+		myhud.update_states()
+		return
+
 /obj/machinery/vehicle/miniputt/armed
 	New()
 		..()

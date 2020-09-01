@@ -1723,6 +1723,19 @@
 		..()
 		Install(new /obj/item/shipcomponent/locomotion/treads(src))
 
+/obj/machinery/vehicle/tank/minisub/pilot
+	body_type = "minisub"
+	icon_state = "secsub_body"
+	health = 150
+	maxhealth = 150
+
+
+	New()
+		..()
+		Install(new /obj/item/shipcomponent/engine/zero(src))
+		myhud.update_systems()
+		myhud.update_states()
+
 /obj/machinery/vehicle/tank/minisub/secsub
 	body_type = "minisub"
 	icon_state = "secsub_body"
