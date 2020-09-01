@@ -46,7 +46,7 @@ AI MODULES
 		return "This law does not exist."
 
 
-	proc/install(var/obj/machinery/computer/aiupload/comp, user)
+	proc/install(obj/machinery/computer/aiupload/comp, user)
 		if (comp.status & NOPOWER)
 			boutput(user, "\The [comp] has no power!")
 			return
