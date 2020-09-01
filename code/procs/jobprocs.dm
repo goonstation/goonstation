@@ -494,6 +494,21 @@
 				B.badge_owner_name = src.real_name
 				B.badge_owner_job = src.job
 
+	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
+		var/obj/item/tank/emergency_oxygen/E = new /obj/item/tank/emergency_oxygen(src)
+		src.equip_if_possible(E, slot_in_backpack)
+		#ifdef UNDERWATER_MAP
+		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src)
+		src.equip_if_possible(SSW, slot_in_backpack)
+		var/obj/item/clothing/head/helmet/space/engineer/diving/civilian/SHW = new /obj/item/clothing/head/helmet/space/engineer/diving/civilian(src)
+		src.equip_if_possible(SHW, slot_in_backpack)
+		#else
+		var/obj/item/clothing/suit/space/emerg/SSS = new /obj/item/clothing/suit/space/emerg(src)
+		src.equip_if_possible(SSS, slot_in_backpack)
+		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src)
+		src.equip_if_possible(SHS, slot_in_backpack)
+		#endif
+
 	if (JOB.slot_jump)
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
 
