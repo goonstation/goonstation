@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section, Modal, Flex, Icon, Box } from '../components';
+import { Button, LabeledList, Section, Modal, Flex, Icon, Box, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 const dangerMap = {
@@ -27,7 +27,7 @@ export const AiAirlock = (props, context) => {
   return (
     <Window
       width={500}
-      height={315}>
+      height={365}>
       {!!isDisabled && (
         <Modal
           fontSize="20px"
@@ -48,9 +48,9 @@ export const AiAirlock = (props, context) => {
         </Modal>
       )}
       <Window.Content>
-        {config.status}
         <PowerStatus />
         <AccessAndDoorControl />
+        <Electrify />
       </Window.Content>
     </Window>
   );
@@ -84,9 +84,9 @@ const PowerStatus = (props, context) => {
           {MainPower ? 'Online' : 'Offline'}
           {' '}
           {(!data.wires.main_1 || !data.wires.main_2)
-             && '[Wires have been cut!]'
-             || (data.power.main_timeleft > 0
-               && `[${data.power.main_timeleft}s]`)}
+            && '[Wires have been cut!]'
+            || (data.power.main_timeleft > 0
+              && `[${data.power.main_timeleft}s]`)}
         </LabeledList.Item>
         <LabeledList.Item
           label="Backup"
@@ -101,43 +101,9 @@ const PowerStatus = (props, context) => {
           {BackupPower ? 'Online' : 'Offline'}
           {' '}
           {(!data.wires.backup_1 || !data.wires.backup_2)
-             && '[Wires have been cut!]'
-             || (data.power.backup_timeleft > 0
-               && `[${data.power.backup_timeleft}s]`)}
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Electrify"
-          color={statusElectrify.color}
-          buttons={(
-            <Fragment>
-              <Button
-                icon="wrench"
-                disabled={(!data.wires.shock) || (shocked)
-                   || (!MainPower && !BackupPower)}
-                content="Restore"
-                onClick={() => act('shock-restore')} />
-              <Button
-                icon="bolt"
-                disabled={(!data.wires.shock) || (!shocked)
-                   || (!MainPower && !BackupPower)}
-                content="Temporary"
-                onClick={() => act('shock-temp')} />
-              <Button
-                icon="bolt"
-                disabled={(!data.wires.shock) || (!shocked)
-                   || (!MainPower && !BackupPower)}
-                content="Permanent"
-                onClick={() => act('shock-perm')} />
-            </Fragment>
-          )}>
-          {data.shock === 1 ? 'Safe' : 'Electrified'}
-          {' '}
-          {!data.wires.shock
-           && '[Wires have been cut!]'
-         || (data.shock_timeleft > 0
-       && `[${data.shock_timeleft}s]`)
-     || (data.shock_timeleft === -1
-       && '[Permanent]')}
+            && '[Wires have been cut!]'
+            || (data.power.backup_timeleft > 0
+              && `[${data.power.backup_timeleft}s]`)}
         </LabeledList.Item>
       </LabeledList>
     </Section>
@@ -205,5 +171,62 @@ const AccessAndDoorControl = (props, context) => {
         </LabeledList.Item>
       </LabeledList>
     </Section>
+  );
+};
+
+
+const Electrify = (props, context) => {
+  const { act, data } = useBackend(context);
+  const MainPower = (data.power.main_timeleft === 0);
+  const BackupPower = (data.power.backup_timeleft === 0);
+  const shocked = (data.shock === 1);
+  const statusElectrify = dangerMap[data.shock]
+  || dangerMap[0];
+  const statusMain = dangerMap[Number((data.power.main_timeleft === 0))]
+  || dangerMap[0];
+  const statusBackup = dangerMap[Number((data.power.backup_timeleft === 0))]
+  || dangerMap[0];
+
+  return (
+    <NoticeBox danger>
+      <Section title="Danger Zone" m={-1}>
+        <LabeledList>
+          <LabeledList.Item
+            label="Electrify"
+            color={statusElectrify.color}
+            buttons={(
+              <Fragment>
+                <Button
+                  icon="wrench"
+                  disabled={(!data.wires.shock) || (shocked)
+                  || (!MainPower && !BackupPower)}
+                  content="Restore"
+                  onClick={() => act('shock-restore')} />
+                <Button
+                  icon="bolt"
+                  disabled={(!data.wires.shock) || (!shocked)
+                  || (!MainPower && !BackupPower)}
+                  content="Temporary"
+                  onClick={() => act('shock-temp')} />
+                <Button
+                  icon="bolt"
+                  disabled={(!data.wires.shock) || (!shocked)
+                  || (!MainPower && !BackupPower)}
+                  content="Permanent"
+                  onClick={() => act('shock-perm')} />
+              </Fragment>
+            )}>
+            {data.shock === 1 ? 'Safe' : 'Electrified'}
+            {' '}
+            {!data.wires.shock
+          && '[Wires have been cut!]'
+          || (data.shock_timeleft > 0
+          && `[${data.shock_timeleft}s]`)
+          || (data.shock_timeleft === -1
+          && '[Permanent]')}
+          </LabeledList.Item>
+        </LabeledList>
+      </Section>
+    </NoticeBox>
   );
 };
