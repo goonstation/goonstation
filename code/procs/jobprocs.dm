@@ -398,34 +398,26 @@
 
 			if (src.traitHolder && src.traitHolder.hasTrait("pilot"))							//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
 				var/list/turf/SL = list()
-				#ifdef UNDERWATER_MAP															//This part of the code executes only if the map is an underwater one.
+				#ifdef UNDERWATER_MAP
 				for(var/obj/critter/gunbot/drone/S in critters)
 					if(S.z == 5)
 						var/turf/T = get_turf(S)
 						SL.Add(T)
-				var/turf/TF = pick(SL)
-				if (TF)																			//Sanity check.
-					src.set_loc(TF)
-				TF = src.loc
-				for(var/obj/critter/gunbot/drone/SD in TF)
-					qdel(SD)
 				var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(src.loc)
-				V.finish_board_pod(src)
-
-				#else 																			//This part of the code executes only if the map is a space one.
+				#else																			//This part of the code executes only if the map is a space one.
 				for(var/obj/critter/gunbot/drone/S in critters)
 					if(S.z != 1 && !isrestrictedz(S.z))
 						var/turf/T = get_turf(S)
 						SL.Add(T)
+				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(src.loc)
+				#endif
 				var/turf/TF = pick(SL)
-				if (TF)																			//Sanity check.
+				if (TF)                                                                            //Sanity check.
 					src.set_loc(TF)
 				TF = src.loc
 				for(var/obj/critter/gunbot/drone/SD in TF)
 					qdel(SD)
-				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(src.loc)
 				V.finish_board_pod(src)
-				#endif
 				src:spawnId(rank)
 
 			if (prob(10) && islist(random_pod_codes) && random_pod_codes.len)
