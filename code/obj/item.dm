@@ -124,23 +124,27 @@
 		. += "<hr>"
 		if(rarity >= 4)
 			. += "<div><img src='[resource("images/tooltips/rare.gif")]' alt='' class='icon' /><span>Rare item</span></div>"
+		//combat stats
 		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [src.throwforce ? src.throwforce : "0"] thrown dmg</span></div>"
 		if (src.stamina_cost || src.stamina_damage)
 			. += "<div><img src='[resource("images/tooltips/stamina.png")]' alt='' class='icon' /><span>Stamina: [src.stamina_damage ? src.stamina_damage : "0"] dmg, [stamina_cost] consumed per swing</span></div>"
 
+		//standard object properties
 		if(src.properties && src.properties.len)
 			for(var/datum/objectProperty/P in src.properties)
 				if(!P.hidden)
 					. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
 
-		//itemblock tooltip additions
+		//Blocking section
 		if(src.c_flags & HAS_GRAB_EQUIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: "
 			for(var/obj/item/grab/block/B in src)
 				if(B.properties && B.properties.len)
+					//inline-blocking-based properties (disorient resist and damage-type blocks)
 					for(var/datum/objectProperty/P in B.properties)
 						if(P.inline)
 							. += "<img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> "
+					//blocking-based properties
 					for(var/datum/objectProperty/P in B.properties)
 						if(!P.hidden)
 							. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]"
@@ -149,12 +153,15 @@
 		else if(src.c_flags & BLOCK_TOOLTIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: RESIST with this item for more info"
 
+		//item specials
+		//unarmed special overrides from gloves
 		if(istype(src, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/G = src
 			if(G.specialoverride && G.overridespecial)
 				var/content = resource("images/tooltips/[G.specialoverride.image].png")
 				. += "<br>Unarmed special attack override:<br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[G.specialoverride.name]: [G.specialoverride.getDesc()]</div>"
 			. = jointext(., "")
+		//standard item specials
 		if(special && !istype(special, /datum/item_special/simple))
 			var/content = resource("images/tooltips/[special.image].png")
 			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]<br>To execute a special, use HARM or DISARM intent and click a far-away tile.</div>"

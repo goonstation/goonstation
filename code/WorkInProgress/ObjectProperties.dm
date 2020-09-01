@@ -101,8 +101,9 @@ var/list/globalPropList = null
 	var/tooltipImg = "" //Stored in browserassets\images\tooltips
 	var/defaultValue = 1 //Default value. Used to get an idea of what's "normal" for any given property.
 	var/goodDirection = 1 //Dumb name. Tells us which direction the number should grow in for it to be considered "good", 1=positive, -1 negative
-	var/hidden = 0
-	var/inline = 0
+	var/hidden = 0 //does not get printed in item tooltips
+	var/inline = 0 //For use on properties on blocks only: gets printed in the the blocking-inline section of tooltips
+				   //ignores hidden (and should be used with hidden unless you want it printed both in the inline section and with the rest of the properties)
 
 	proc/onAdd(var/obj/owner, var/value) //When property is added to an object
 		return
