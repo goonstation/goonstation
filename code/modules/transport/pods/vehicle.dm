@@ -1725,7 +1725,6 @@
 
 /obj/machinery/vehicle/tank/minisub/pilot
 	body_type = "minisub"
-	icon_state = "secsub_body"
 	health = 150
 	maxhealth = 150
 
