@@ -50,7 +50,7 @@ NOT OKAY: var/list/hats = concrete_typesof(/obj/item/clothing/head)
           hats -= /obj/item/clothing/head/hosberet
 */
 var/global/list/cached_concrete_types
-proc/concrete_typesof(type)
+proc/concrete_typesof(type, cache=TRUE)
 	if(isnull(cached_concrete_types))
 		cached_concrete_types = list()
 	if(type in cached_concrete_types)
@@ -59,7 +59,8 @@ proc/concrete_typesof(type)
 	for(var/subtype in typesof(type))
 		if(!IS_ABSTRACT(subtype))
 			. += subtype
-	cached_concrete_types[type] = .
+	if(cache)
+		cached_concrete_types[type] = .
 
 /*
 The same thing but now you can filter the types using a proc. Also cached.
