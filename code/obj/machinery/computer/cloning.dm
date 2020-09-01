@@ -14,8 +14,6 @@
 	var/temp = "Initializing System..."
 	var/menu = 1 //Which menu screen to display
 	var/list/records = list()
-	var/datum/data/record/active_record = null
-	var/datum/data/record/selected_record = null
 	var/obj/item/disk/data/floppy/diskette = null //Mostly so the geneticist can steal somebody's identity while pretending to give them a handy backup profile.
 	var/held_credit = 5000 // one free clone
 	var/hasimplant
