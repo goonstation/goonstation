@@ -411,11 +411,10 @@
 						SL.Add(T)
 				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(src.loc)
 				#endif
-				var/turf/TF = pick(SL)
-				if (TF)                                                                            //Sanity check.
+				if (SL.len > 0)
+					var/turf/TF = pick(SL)																	//Sanity check.
 					src.set_loc(TF)
-				TF = src.loc
-				for(var/obj/critter/gunbot/drone/SD in TF)
+				for(var/obj/critter/gunbot/drone/SD in src.loc)
 					qdel(SD)
 				V.finish_board_pod(src)
 				src:spawnId(rank)
