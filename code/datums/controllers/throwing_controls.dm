@@ -71,6 +71,9 @@ var/global/datum/controller/throwing/throwing_controller = new
 		var/int_speed = round(thr.speed + thr.speed_error)
 		thr.speed_error += thr.speed - int_speed
 		for(var/i in 1 to int_speed)
+			if(!thing || thing.disposed)
+				end_throwing = TRUE
+				break
 			var/turf/T = thing.loc
 			if( !(
 					thr.target && thing.throwing && isturf(T) && \
