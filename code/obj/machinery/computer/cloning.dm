@@ -178,8 +178,8 @@
 	return
 
 /obj/machinery/computer/cloning/ui_act(action, params)
-	//if(..())
-	//	return
+	if(..())
+		return
 	switch(action)
 		if("delete")
 			var/selected_record =	find_record(params["ckey"])

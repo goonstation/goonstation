@@ -109,6 +109,7 @@ const Functions = (props, context) => {
         </Box>
         <Box pt={2}>
           <Button
+            color={GeneticAnalysis ? 'good' : 'bad'}
             content={GeneticAnalysis ? 'Enabled' : 'Disabled'}
             onClick={() => act('ToggleGeneticAnalysis')} />
         </Box>
@@ -128,6 +129,7 @@ const Functions = (props, context) => {
           </Box>
           <Box pt={2}>
             <Button
+              color={GeneticAnalysis ? 'good' : 'bad'}
               content={WipeActive ? 'Enabled' : "Disabled"}
               onClick={() => act('MindWipeToggle')} />
           </Box>
@@ -201,6 +203,7 @@ const UpperBar = (props, context) => {
       </LabeledList>
       <Box pt={2}>
         <Button px={(OccupantScanned ? 2 : (ScannerGone ? 1 : 3.8))}
+          color={(OccupantScanned ? 'average' : (ScannerGone ? 'bad' : 'good'))}
           disabled={OccupantScanned | ScannerGone}
           content={(OccupantScanned ? 'Scanned' : (ScannerGone ? 'No Scanner Detected' : 'Scan'))}
           onClick={() => act('scan')} />
@@ -281,6 +284,7 @@ const Records = (props, context) => {
               <Box inline>
                 <Button
                   mt={1.2}
+                  color={'bad'}
                   content={"Delete"}
                   onClick={() => act('delete', { ckey: record.ckey })} />
               </Box>
@@ -299,6 +303,7 @@ const Records = (props, context) => {
             <Table.Cell textAlign="center">
               <Box inline>
                 <Button
+                  color={'good'}
                   mt={1.2}
                   content={"Clone"}
                   onClick={() => act('clone', { ckey: record.ckey })} />
