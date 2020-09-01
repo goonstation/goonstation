@@ -1783,6 +1783,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	chase_text = "boogies right into"
 	atk_brute_amt = 5
 	generic = 0
+	var/emagged = 0
 	var/dance_forever = 0
 	death_text = "%src% stops dancing forever."
 
@@ -1793,6 +1794,13 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				src.visible_message("<b>[src]</b> [msg]!",2)
 			src.icon_state = pick("boogie-d1","boogie-d2","boogie-d3")
 			// maybe later make it ambient play a short chiptune here later or at least some new sound effect
+			if (emagged)
+				SPAWN_DBG(0.5 SECONDS)
+					LAGCHECK(LAG_MED)
+					for (var/mob/living/carbon/human/responseMonkey in orange(2, src)) // they don't have to be monkeys, but it's signifying monkey code
+						if (responseMonkey.stat || responseMonkey.getStatusDuration("paralysis") || responseMonkey.sleeping || responseMonkey.getStatusDuration("stunned"))
+							continue
+						responseMonkey.emote("dance")
 			SPAWN_DBG(20 SECONDS)
 				if (src) src.icon_state = "boogie"
 
@@ -1826,6 +1834,15 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			return
 		else
 			. = ..()
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!src.emagged)
+			if(user)
+				boutput(user, "<span class='alert'>You short out the [src]'s dancing intensity setting to 'flashmob'.</span>")
+			src.visible_message("<span class='alert'><b>[src] lights up with determination!</b></span>")
+			src.emagged = 1
+			return 1
+		return 0
 
 /obj/critter/meatslinky // ferrets for wire
 	name = "space ferret"
